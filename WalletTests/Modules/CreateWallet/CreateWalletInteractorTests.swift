@@ -4,6 +4,7 @@ import Cuckoo
 
 class CreateWalletInteractorTests: XCTestCase {
 
+    private var mockRouter: MockCreateWalletRouter!
     private var mockPresenter: MockCreateWalletPresenterProtocol!
     private var mockDataProvider: MockCreateWalletDataProviderProtocol!
     private var interactor: CreateWalletInteractor!
@@ -11,9 +12,10 @@ class CreateWalletInteractorTests: XCTestCase {
     override func setUp() {
         super.setUp()
 
+        mockRouter = MockCreateWalletRouter()
         mockPresenter = MockCreateWalletPresenterProtocol()
         mockDataProvider = MockCreateWalletDataProviderProtocol()
-        interactor = CreateWalletInteractor(presenter: mockPresenter, dataProvider: mockDataProvider)
+        interactor = CreateWalletInteractor(router: mockRouter, presenter: mockPresenter, dataProvider: mockDataProvider)
     }
 
     override func tearDown() {
@@ -50,6 +52,16 @@ class CreateWalletInteractorTests: XCTestCase {
         interactor.viewDidLoad()
 
         verify(mockPresenter).showError()
+    }
+
+    func testClosesWhenCancelTapped() {
+        stub(mockRouter) { mock in
+            when(mock.close()).thenDoNothing()
+        }
+
+        interactor.cancelDidTap()
+
+        verify(mockRouter).close()
     }
 
 }

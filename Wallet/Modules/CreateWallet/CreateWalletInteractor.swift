@@ -2,10 +2,12 @@ import Foundation
 
 class CreateWalletInteractor: CreateWalletViewDelegate {
 
+    let router: CreateWalletRouterProtocol
     let presenter: CreateWalletPresenterProtocol
     let dataProvider: CreateWalletDataProviderProtocol
 
-    init(presenter: CreateWalletPresenterProtocol, dataProvider: CreateWalletDataProviderProtocol) {
+    init(router: CreateWalletRouterProtocol, presenter: CreateWalletPresenterProtocol, dataProvider: CreateWalletDataProviderProtocol) {
+        self.router = router
         self.presenter = presenter
         self.dataProvider = dataProvider
     }
@@ -17,6 +19,10 @@ class CreateWalletInteractor: CreateWalletViewDelegate {
         }
 
         presenter.show(words: words)
+    }
+
+    func cancelDidTap() {
+        router.close()
     }
 
 }

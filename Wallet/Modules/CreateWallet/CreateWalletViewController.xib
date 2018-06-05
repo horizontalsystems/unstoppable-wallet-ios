@@ -22,18 +22,34 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Eyf-4m-z3g">
-                    <rect key="frame" x="20" y="40" width="335" height="607"/>
+                    <rect key="frame" x="166" y="323.5" width="43" height="20.5"/>
                     <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HEt-RK-wcy">
+                    <rect key="frame" x="20" y="617" width="48" height="30"/>
+                    <state key="normal" title="Cancel"/>
+                    <connections>
+                        <action selector="cancelDidTap" destination="-1" eventType="touchUpInside" id="Hdo-OO-3qk"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oxs-JH-D62">
+                    <rect key="frame" x="309" y="617" width="46" height="30"/>
+                    <state key="normal" title="Create"/>
+                    <connections>
+                        <action selector="createDidTap" destination="-1" eventType="touchUpInside" id="hcw-hc-jW2"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="Eyf-4m-z3g" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="20" id="5uJ-3z-aKZ"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="Eyf-4m-z3g" secondAttribute="trailing" constant="20" id="PG6-hj-TIa"/>
-                <constraint firstItem="Eyf-4m-z3g" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="20" id="bT5-Er-6Ce"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="Eyf-4m-z3g" secondAttribute="bottom" constant="20" id="ntt-Xa-WT1"/>
+                <constraint firstItem="HEt-RK-wcy" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="20" id="0lJ-Zr-WhM"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="oxs-JH-D62" secondAttribute="bottom" constant="20" id="4Nd-Ox-OLZ"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="oxs-JH-D62" secondAttribute="trailing" constant="20" id="Hgw-50-h5u"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="HEt-RK-wcy" secondAttribute="bottom" constant="20" id="VBt-BD-Tsy"/>
+                <constraint firstItem="Eyf-4m-z3g" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="eeG-9A-Qj4"/>
+                <constraint firstItem="Eyf-4m-z3g" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="pSn-gs-CL2"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
         </view>

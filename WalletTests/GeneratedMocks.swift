@@ -1,4 +1,4 @@
-// MARK: - Mocks generated from file: Wallet/Modules/CreateWallet/CreateWalletRouter.swift at 2018-06-05 11:03:13 +0000
+// MARK: - Mocks generated from file: Wallet/Modules/CreateWallet/CreateWalletRouter.swift at 2018-06-05 11:44:51 +0000
 
 
 import Cuckoo
@@ -18,6 +18,18 @@ class MockCreateWalletRouter: CreateWalletRouter, Cuckoo.ClassMock {
     
 
     
+    // ["name": "close", "returnSignature": "", "fullyQualifiedName": "close()", "parameterSignature": "", "parameterSignatureWithoutNames": "", "inputTypes": "", "isThrowing": false, "isInit": false, "isOverriding": true, "hasClosureParams": false, "@type": "ClassMethod", "accessibility": "", "parameterNames": "", "call": "", "parameters": [], "returnType": "Void", "isOptional": false, "stubFunction": "Cuckoo.ClassStubNoReturnFunction"]
+     override func close()  {
+        
+            return cuckoo_manager.call("close()",
+                parameters: (),
+                superclassCall:
+                    
+                    super.close()
+                    )
+        
+    }
+    
 
 	struct __StubbingProxy_CreateWalletRouter: Cuckoo.StubbingProxy {
 	    private let cuckoo_manager: Cuckoo.MockManager
@@ -26,6 +38,11 @@ class MockCreateWalletRouter: CreateWalletRouter, Cuckoo.ClassMock {
 	        self.cuckoo_manager = manager
 	    }
 	    
+	    
+	    func close() -> Cuckoo.ClassStubNoReturnFunction<()> {
+	        let matchers: [Cuckoo.ParameterMatcher<Void>] = []
+	        return .init(stub: cuckoo_manager.createStub(for: MockCreateWalletRouter.self, method: "close()", parameterMatchers: matchers))
+	    }
 	    
 	}
 
@@ -43,6 +60,12 @@ class MockCreateWalletRouter: CreateWalletRouter, Cuckoo.ClassMock {
 	    
 	
 	    
+	    @discardableResult
+	    func close() -> Cuckoo.__DoNotUse<Void> {
+	        let matchers: [Cuckoo.ParameterMatcher<Void>] = []
+	        return cuckoo_manager.verify("close()", callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+	    }
+	    
 	}
 
 }
@@ -52,6 +75,10 @@ class MockCreateWalletRouter: CreateWalletRouter, Cuckoo.ClassMock {
 
     
 
+    
+     override func close()  {
+        return DefaultValueRegistry.defaultValue(for: Void.self)
+    }
     
 }
 
@@ -79,6 +106,18 @@ class MockCreateWalletViewDelegate: CreateWalletViewDelegate, Cuckoo.ProtocolMoc
         
     }
     
+    // ["name": "cancelDidTap", "returnSignature": "", "fullyQualifiedName": "cancelDidTap()", "parameterSignature": "", "parameterSignatureWithoutNames": "", "inputTypes": "", "isThrowing": false, "isInit": false, "isOverriding": false, "hasClosureParams": false, "@type": "ProtocolMethod", "accessibility": "", "parameterNames": "", "call": "", "parameters": [], "returnType": "Void", "isOptional": false, "stubFunction": "Cuckoo.ProtocolStubNoReturnFunction"]
+     func cancelDidTap()  {
+        
+            return cuckoo_manager.call("cancelDidTap()",
+                parameters: (),
+                superclassCall:
+                    
+                    Cuckoo.MockManager.crashOnProtocolSuperclassCall()
+                    )
+        
+    }
+    
 
 	struct __StubbingProxy_CreateWalletViewDelegate: Cuckoo.StubbingProxy {
 	    private let cuckoo_manager: Cuckoo.MockManager
@@ -91,6 +130,11 @@ class MockCreateWalletViewDelegate: CreateWalletViewDelegate, Cuckoo.ProtocolMoc
 	    func viewDidLoad() -> Cuckoo.ProtocolStubNoReturnFunction<()> {
 	        let matchers: [Cuckoo.ParameterMatcher<Void>] = []
 	        return .init(stub: cuckoo_manager.createStub(for: MockCreateWalletViewDelegate.self, method: "viewDidLoad()", parameterMatchers: matchers))
+	    }
+	    
+	    func cancelDidTap() -> Cuckoo.ProtocolStubNoReturnFunction<()> {
+	        let matchers: [Cuckoo.ParameterMatcher<Void>] = []
+	        return .init(stub: cuckoo_manager.createStub(for: MockCreateWalletViewDelegate.self, method: "cancelDidTap()", parameterMatchers: matchers))
 	    }
 	    
 	}
@@ -115,6 +159,12 @@ class MockCreateWalletViewDelegate: CreateWalletViewDelegate, Cuckoo.ProtocolMoc
 	        return cuckoo_manager.verify("viewDidLoad()", callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
 	    }
 	    
+	    @discardableResult
+	    func cancelDidTap() -> Cuckoo.__DoNotUse<Void> {
+	        let matchers: [Cuckoo.ParameterMatcher<Void>] = []
+	        return cuckoo_manager.verify("cancelDidTap()", callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+	    }
+	    
 	}
 
 }
@@ -126,6 +176,10 @@ class MockCreateWalletViewDelegate: CreateWalletViewDelegate, Cuckoo.ProtocolMoc
 
     
      func viewDidLoad()  {
+        return DefaultValueRegistry.defaultValue(for: Void.self)
+    }
+    
+     func cancelDidTap()  {
         return DefaultValueRegistry.defaultValue(for: Void.self)
     }
     
@@ -143,7 +197,7 @@ class MockCreateWalletViewProtocol: CreateWalletViewProtocol, Cuckoo.ProtocolMoc
     
 
     
-    // ["name": "show", "returnSignature": "", "fullyQualifiedName": "show(words: [String])", "parameterSignature": "words: [String]", "parameterSignatureWithoutNames": "words: [String]", "inputTypes": "[String]", "isThrowing": false, "isInit": false, "isOverriding": false, "hasClosureParams": false, "@type": "ProtocolMethod", "accessibility": "", "parameterNames": "words", "call": "words: words", "parameters": [CuckooGeneratorFramework.MethodParameter(label: Optional("words"), name: "words", type: "[String]", range: CountableRange(554..<569), nameRange: CountableRange(554..<559))], "returnType": "Void", "isOptional": false, "stubFunction": "Cuckoo.ProtocolStubNoReturnFunction"]
+    // ["name": "show", "returnSignature": "", "fullyQualifiedName": "show(words: [String])", "parameterSignature": "words: [String]", "parameterSignatureWithoutNames": "words: [String]", "inputTypes": "[String]", "isThrowing": false, "isInit": false, "isOverriding": false, "hasClosureParams": false, "@type": "ProtocolMethod", "accessibility": "", "parameterNames": "words", "call": "words: words", "parameters": [CuckooGeneratorFramework.MethodParameter(label: Optional("words"), name: "words", type: "[String]", range: CountableRange(840..<855), nameRange: CountableRange(840..<845))], "returnType": "Void", "isOptional": false, "stubFunction": "Cuckoo.ProtocolStubNoReturnFunction"]
      func show(words: [String])  {
         
             return cuckoo_manager.call("show(words: [String])",
@@ -219,7 +273,7 @@ class MockCreateWalletPresenterProtocol: CreateWalletPresenterProtocol, Cuckoo.P
     
 
     
-    // ["name": "show", "returnSignature": "", "fullyQualifiedName": "show(words: [String])", "parameterSignature": "words: [String]", "parameterSignatureWithoutNames": "words: [String]", "inputTypes": "[String]", "isThrowing": false, "isInit": false, "isOverriding": false, "hasClosureParams": false, "@type": "ProtocolMethod", "accessibility": "", "parameterNames": "words", "call": "words: words", "parameters": [CuckooGeneratorFramework.MethodParameter(label: Optional("words"), name: "words", type: "[String]", range: CountableRange(629..<644), nameRange: CountableRange(629..<634))], "returnType": "Void", "isOptional": false, "stubFunction": "Cuckoo.ProtocolStubNoReturnFunction"]
+    // ["name": "show", "returnSignature": "", "fullyQualifiedName": "show(words: [String])", "parameterSignature": "words: [String]", "parameterSignatureWithoutNames": "words: [String]", "inputTypes": "[String]", "isThrowing": false, "isInit": false, "isOverriding": false, "hasClosureParams": false, "@type": "ProtocolMethod", "accessibility": "", "parameterNames": "words", "call": "words: words", "parameters": [CuckooGeneratorFramework.MethodParameter(label: Optional("words"), name: "words", type: "[String]", range: CountableRange(915..<930), nameRange: CountableRange(915..<920))], "returnType": "Void", "isOptional": false, "stubFunction": "Cuckoo.ProtocolStubNoReturnFunction"]
      func show(words: [String])  {
         
             return cuckoo_manager.call("show(words: [String])",
@@ -305,6 +359,82 @@ class MockCreateWalletPresenterProtocol: CreateWalletPresenterProtocol, Cuckoo.P
     }
     
      func showError()  {
+        return DefaultValueRegistry.defaultValue(for: Void.self)
+    }
+    
+}
+
+
+class MockCreateWalletRouterProtocol: CreateWalletRouterProtocol, Cuckoo.ProtocolMock {
+    typealias MocksType = CreateWalletRouterProtocol
+    typealias Stubbing = __StubbingProxy_CreateWalletRouterProtocol
+    typealias Verification = __VerificationProxy_CreateWalletRouterProtocol
+    let cuckoo_manager = Cuckoo.MockManager(hasParent: false)
+
+    
+
+    
+
+    
+    // ["name": "close", "returnSignature": "", "fullyQualifiedName": "close()", "parameterSignature": "", "parameterSignatureWithoutNames": "", "inputTypes": "", "isThrowing": false, "isInit": false, "isOverriding": false, "hasClosureParams": false, "@type": "ProtocolMethod", "accessibility": "", "parameterNames": "", "call": "", "parameters": [], "returnType": "Void", "isOptional": false, "stubFunction": "Cuckoo.ProtocolStubNoReturnFunction"]
+     func close()  {
+        
+            return cuckoo_manager.call("close()",
+                parameters: (),
+                superclassCall:
+                    
+                    Cuckoo.MockManager.crashOnProtocolSuperclassCall()
+                    )
+        
+    }
+    
+
+	struct __StubbingProxy_CreateWalletRouterProtocol: Cuckoo.StubbingProxy {
+	    private let cuckoo_manager: Cuckoo.MockManager
+	
+	    init(manager: Cuckoo.MockManager) {
+	        self.cuckoo_manager = manager
+	    }
+	    
+	    
+	    func close() -> Cuckoo.ProtocolStubNoReturnFunction<()> {
+	        let matchers: [Cuckoo.ParameterMatcher<Void>] = []
+	        return .init(stub: cuckoo_manager.createStub(for: MockCreateWalletRouterProtocol.self, method: "close()", parameterMatchers: matchers))
+	    }
+	    
+	}
+
+	struct __VerificationProxy_CreateWalletRouterProtocol: Cuckoo.VerificationProxy {
+	    private let cuckoo_manager: Cuckoo.MockManager
+	    private let callMatcher: Cuckoo.CallMatcher
+	    private let sourceLocation: Cuckoo.SourceLocation
+	
+	    init(manager: Cuckoo.MockManager, callMatcher: Cuckoo.CallMatcher, sourceLocation: Cuckoo.SourceLocation) {
+	        self.cuckoo_manager = manager
+	        self.callMatcher = callMatcher
+	        self.sourceLocation = sourceLocation
+	    }
+	
+	    
+	
+	    
+	    @discardableResult
+	    func close() -> Cuckoo.__DoNotUse<Void> {
+	        let matchers: [Cuckoo.ParameterMatcher<Void>] = []
+	        return cuckoo_manager.verify("close()", callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+	    }
+	    
+	}
+
+}
+
+ class CreateWalletRouterProtocolStub: CreateWalletRouterProtocol {
+    
+
+    
+
+    
+     func close()  {
         return DefaultValueRegistry.defaultValue(for: Void.self)
     }
     
@@ -463,7 +593,7 @@ class MockCreateWalletDataProvider: CreateWalletDataProvider, Cuckoo.ClassMock {
 }
 
 
-// MARK: - Mocks generated from file: Wallet/Modules/Guest/GuestRouter.swift at 2018-06-05 11:03:13 +0000
+// MARK: - Mocks generated from file: Wallet/Modules/Guest/GuestRouter.swift at 2018-06-05 11:44:51 +0000
 
 
 import Cuckoo

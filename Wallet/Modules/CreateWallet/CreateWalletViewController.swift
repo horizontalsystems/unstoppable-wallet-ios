@@ -26,4 +26,11 @@ class CreateWalletViewController: UIViewController, CreateWalletViewProtocol {
         wordsLabel?.text = words.enumerated().map { "\($0 + 1). \($1)" }.joined(separator: "\n")
     }
 
+    @IBAction func cancelDidTap() {
+        delegate.cancelDidTap()
+    }
+
+    @IBAction func createDidTap() {
+    }
+
 }
