@@ -25,6 +25,7 @@ protocol CreateWalletViewProtocol: class {
 
 protocol CreateWalletPresenterProtocol {
     func show(words: [String])
+    func showError()
 }
 
 protocol CreateWalletDataProviderProtocol {

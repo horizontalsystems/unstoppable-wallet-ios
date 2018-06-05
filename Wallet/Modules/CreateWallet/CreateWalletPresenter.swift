@@ -8,4 +8,8 @@ class CreateWalletPresenter: CreateWalletPresenterProtocol {
         view?.show(wordsString: words.joined(separator: " "))
     }
 
+    func showError() {
+
+    }
+
 }

@@ -4,8 +4,8 @@ import Cuckoo
 
 class GuestInteractorTests: XCTestCase {
 
-    var interactor: GuestInteractor!
     private var mockRouter: MockGuestRouterProtocol!
+    private var interactor: GuestInteractor!
 
     override func setUp() {
         super.setUp()

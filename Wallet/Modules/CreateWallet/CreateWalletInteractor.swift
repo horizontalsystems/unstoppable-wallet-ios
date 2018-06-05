@@ -12,6 +12,7 @@ class CreateWalletInteractor: CreateWalletViewDelegate {
 
     func viewDidLoad() {
         guard let words = dataProvider.generateWords() else {
+            presenter.showError()
             return
         }
 
