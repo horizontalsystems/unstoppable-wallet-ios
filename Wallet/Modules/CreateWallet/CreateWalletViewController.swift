@@ -22,8 +22,8 @@ class CreateWalletViewController: UIViewController, CreateWalletViewProtocol {
         delegate.viewDidLoad()
     }
 
-    func show(wordsString: String) {
-        wordsLabel?.text = wordsString
+    func show(words: [String]) {
+        wordsLabel?.text = words.enumerated().map { "\($0 + 1). \($1)" }.joined(separator: "\n")
     }
 
 }

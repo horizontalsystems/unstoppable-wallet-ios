@@ -25,15 +25,14 @@ class CreateWalletPresenterTests: XCTestCase {
 
     func testShowsWords() {
         let words = ["hello", "world"]
-        let wordsString = "hello world"
 
         stub(mockView) { mock in
-            when(mock.show(wordsString: anyString())).thenDoNothing()
+            when(mock.show(words: any())).thenDoNothing()
         }
 
         presenter.show(words: words)
 
-        verify(mockView).show(wordsString: equal(to: wordsString))
+        verify(mockView).show(words: equal(to: words))
     }
 
 }

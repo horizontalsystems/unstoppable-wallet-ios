@@ -1,4 +1,4 @@
-// MARK: - Mocks generated from file: Wallet/Modules/CreateWallet/CreateWalletRouter.swift at 2018-06-05 09:37:00 +0000
+// MARK: - Mocks generated from file: Wallet/Modules/CreateWallet/CreateWalletRouter.swift at 2018-06-05 11:03:13 +0000
 
 
 import Cuckoo
@@ -143,11 +143,11 @@ class MockCreateWalletViewProtocol: CreateWalletViewProtocol, Cuckoo.ProtocolMoc
     
 
     
-    // ["name": "show", "returnSignature": "", "fullyQualifiedName": "show(wordsString: String)", "parameterSignature": "wordsString: String", "parameterSignatureWithoutNames": "wordsString: String", "inputTypes": "String", "isThrowing": false, "isInit": false, "isOverriding": false, "hasClosureParams": false, "@type": "ProtocolMethod", "accessibility": "", "parameterNames": "wordsString", "call": "wordsString: wordsString", "parameters": [CuckooGeneratorFramework.MethodParameter(label: Optional("wordsString"), name: "wordsString", type: "String", range: CountableRange(554..<573), nameRange: CountableRange(554..<565))], "returnType": "Void", "isOptional": false, "stubFunction": "Cuckoo.ProtocolStubNoReturnFunction"]
-     func show(wordsString: String)  {
+    // ["name": "show", "returnSignature": "", "fullyQualifiedName": "show(words: [String])", "parameterSignature": "words: [String]", "parameterSignatureWithoutNames": "words: [String]", "inputTypes": "[String]", "isThrowing": false, "isInit": false, "isOverriding": false, "hasClosureParams": false, "@type": "ProtocolMethod", "accessibility": "", "parameterNames": "words", "call": "words: words", "parameters": [CuckooGeneratorFramework.MethodParameter(label: Optional("words"), name: "words", type: "[String]", range: CountableRange(554..<569), nameRange: CountableRange(554..<559))], "returnType": "Void", "isOptional": false, "stubFunction": "Cuckoo.ProtocolStubNoReturnFunction"]
+     func show(words: [String])  {
         
-            return cuckoo_manager.call("show(wordsString: String)",
-                parameters: (wordsString),
+            return cuckoo_manager.call("show(words: [String])",
+                parameters: (words),
                 superclassCall:
                     
                     Cuckoo.MockManager.crashOnProtocolSuperclassCall()
@@ -164,9 +164,9 @@ class MockCreateWalletViewProtocol: CreateWalletViewProtocol, Cuckoo.ProtocolMoc
 	    }
 	    
 	    
-	    func show<M1: Cuckoo.Matchable>(wordsString: M1) -> Cuckoo.ProtocolStubNoReturnFunction<(String)> where M1.MatchedType == String {
-	        let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: wordsString) { $0 }]
-	        return .init(stub: cuckoo_manager.createStub(for: MockCreateWalletViewProtocol.self, method: "show(wordsString: String)", parameterMatchers: matchers))
+	    func show<M1: Cuckoo.Matchable>(words: M1) -> Cuckoo.ProtocolStubNoReturnFunction<([String])> where M1.MatchedType == [String] {
+	        let matchers: [Cuckoo.ParameterMatcher<([String])>] = [wrap(matchable: words) { $0 }]
+	        return .init(stub: cuckoo_manager.createStub(for: MockCreateWalletViewProtocol.self, method: "show(words: [String])", parameterMatchers: matchers))
 	    }
 	    
 	}
@@ -186,9 +186,9 @@ class MockCreateWalletViewProtocol: CreateWalletViewProtocol, Cuckoo.ProtocolMoc
 	
 	    
 	    @discardableResult
-	    func show<M1: Cuckoo.Matchable>(wordsString: M1) -> Cuckoo.__DoNotUse<Void> where M1.MatchedType == String {
-	        let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: wordsString) { $0 }]
-	        return cuckoo_manager.verify("show(wordsString: String)", callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+	    func show<M1: Cuckoo.Matchable>(words: M1) -> Cuckoo.__DoNotUse<Void> where M1.MatchedType == [String] {
+	        let matchers: [Cuckoo.ParameterMatcher<([String])>] = [wrap(matchable: words) { $0 }]
+	        return cuckoo_manager.verify("show(words: [String])", callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
 	    }
 	    
 	}
@@ -201,7 +201,7 @@ class MockCreateWalletViewProtocol: CreateWalletViewProtocol, Cuckoo.ProtocolMoc
     
 
     
-     func show(wordsString: String)  {
+     func show(words: [String])  {
         return DefaultValueRegistry.defaultValue(for: Void.self)
     }
     
@@ -219,7 +219,7 @@ class MockCreateWalletPresenterProtocol: CreateWalletPresenterProtocol, Cuckoo.P
     
 
     
-    // ["name": "show", "returnSignature": "", "fullyQualifiedName": "show(words: [String])", "parameterSignature": "words: [String]", "parameterSignatureWithoutNames": "words: [String]", "inputTypes": "[String]", "isThrowing": false, "isInit": false, "isOverriding": false, "hasClosureParams": false, "@type": "ProtocolMethod", "accessibility": "", "parameterNames": "words", "call": "words: words", "parameters": [CuckooGeneratorFramework.MethodParameter(label: Optional("words"), name: "words", type: "[String]", range: CountableRange(633..<648), nameRange: CountableRange(633..<638))], "returnType": "Void", "isOptional": false, "stubFunction": "Cuckoo.ProtocolStubNoReturnFunction"]
+    // ["name": "show", "returnSignature": "", "fullyQualifiedName": "show(words: [String])", "parameterSignature": "words: [String]", "parameterSignatureWithoutNames": "words: [String]", "inputTypes": "[String]", "isThrowing": false, "isInit": false, "isOverriding": false, "hasClosureParams": false, "@type": "ProtocolMethod", "accessibility": "", "parameterNames": "words", "call": "words: words", "parameters": [CuckooGeneratorFramework.MethodParameter(label: Optional("words"), name: "words", type: "[String]", range: CountableRange(629..<644), nameRange: CountableRange(629..<634))], "returnType": "Void", "isOptional": false, "stubFunction": "Cuckoo.ProtocolStubNoReturnFunction"]
      func show(words: [String])  {
         
             return cuckoo_manager.call("show(words: [String])",
@@ -463,7 +463,7 @@ class MockCreateWalletDataProvider: CreateWalletDataProvider, Cuckoo.ClassMock {
 }
 
 
-// MARK: - Mocks generated from file: Wallet/Modules/Guest/GuestRouter.swift at 2018-06-05 09:37:00 +0000
+// MARK: - Mocks generated from file: Wallet/Modules/Guest/GuestRouter.swift at 2018-06-05 11:03:13 +0000
 
 
 import Cuckoo

@@ -20,7 +20,7 @@ protocol CreateWalletViewDelegate {
 }
 
 protocol CreateWalletViewProtocol: class {
-    func show(wordsString: String)
+    func show(words: [String])
 }
 
 protocol CreateWalletPresenterProtocol {
