@@ -19,7 +19,7 @@ class GuestRouter: GuestRouterProtocol {
     }
 
     func showRestoreWallet() {
-
+        viewController?.present(RestoreWalletRouter.viewController, animated: true)
     }
 }
 

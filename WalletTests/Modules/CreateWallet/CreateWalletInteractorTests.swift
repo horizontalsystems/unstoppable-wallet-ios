@@ -19,6 +19,7 @@ class CreateWalletInteractorTests: XCTestCase {
     }
 
     override func tearDown() {
+        mockRouter = nil
         mockPresenter = nil
         mockDataProvider = nil
         interactor = nil

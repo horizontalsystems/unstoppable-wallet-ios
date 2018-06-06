@@ -4,25 +4,10 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>WalletTests.xcscheme</key>
+		<key>RestoreWalletInteractorTests.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>7</integer>
-		</dict>
-		<key>GuestInteractorTests.testRoutesToCreateWallet.xcscheme</key>
-		<dict>
-			<key>orderHint</key>
-			<integer>8</integer>
-		</dict>
-		<key>GuestInteractorTests.xcscheme</key>
-		<dict>
-			<key>orderHint</key>
-			<integer>9</integer>
-		</dict>
-		<key>CreateWalletInteractorTests.xcscheme</key>
-		<dict>
-			<key>orderHint</key>
-			<integer>10</integer>
 		</dict>
 	</dict>
 </dict>
