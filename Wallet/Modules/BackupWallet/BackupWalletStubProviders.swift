@@ -3,13 +3,17 @@ import BitcoinKit
 import Darwin
 
 class WalletManager: BackupWalletWordsProviderProtocol {
+
+    static let words = (try? Mnemonic.generate()) ?? []
+
     func getWords() -> [String] {
-        return ["burden", "swap", "fabric", "book", "palm", "main", "salute", "raw", "core", "reflect", "parade", "tone"]
-        //        return (try? Mnemonic.generate()) ?? []
+        return WalletManager.words
     }
+
 }
 
 class RandomProvider: BackupWalletRandomIndexesProviderProtocol {
+
     func getRandomIndexes(count: Int) -> [Int] {
         var indexes = [Int]()
 
@@ -22,4 +26,5 @@ class RandomProvider: BackupWalletRandomIndexesProviderProtocol {
 
         return indexes
     }
+
 }
