@@ -736,7 +736,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = bitcoin.wallet.dev;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "bitcoin.wallet.dev Dev";
+				PROVISIONING_PROFILE_SPECIFIER = "bitcoin.wallet.dev AdHoc";
 				SWIFT_OBJC_BRIDGING_HEADER = "Wallet/Wallet-Bridging-Header.h";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 1;
