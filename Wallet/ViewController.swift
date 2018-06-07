@@ -48,7 +48,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         let destAddress = "2NG3Z8ov5MeLZpZtaiQHErQM5NTvyNDB2xq"
 //        let destAddress = "mnopQ2S29rhuKLikR2NfNBztchxkm2CJfZ"
 
-        print("PRIVATE KEY: \(fromPrivateKey.raw.hex)")
+//        print("PRIVATE KEY: \(fromPrivateKey.raw.hex)")
 
         for i in 0...20 {
             if let address = try? hdWallet.receiveAddress(index: UInt32(i)) {
@@ -80,7 +80,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                     self?.currentBalanceLabel?.text = String(format: "%.08f BTC", Double(totalValue) / 100000000)
 
                     if let unspentOutput = data.unspentOutputs.first {
-                        self?.createTransaction(unspentOutput: unspentOutput, privateKey: fromPrivateKey.raw, destinationAddressString: destAddress, changeAddressString: changeAddress)
+//                        self?.createTransaction(unspentOutput: unspentOutput, privateKey: fromPrivateKey.raw, destinationAddressString: destAddress, changeAddressString: changeAddress)
                     }
                 })
                 .disposed(by: disposeBag)

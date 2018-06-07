@@ -324,8 +324,8 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = D3373DC620C658660082BC4A /* Build configuration list for PBXNativeTarget "WalletTests" */;
 			buildPhases = (
-				D3373DC920C67A250082BC4A /* Cuckoo */,
 				1E1B364F369B6840CFAA3840 /* [CP] Check Pods Manifest.lock */,
+				D3373DC920C67A250082BC4A /* Cuckoo */,
 				D3373DBB20C658660082BC4A /* Sources */,
 				D3373DBC20C658660082BC4A /* Frameworks */,
 				D3373DBD20C658660082BC4A /* Resources */,
