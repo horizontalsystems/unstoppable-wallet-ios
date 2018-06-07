@@ -7,13 +7,27 @@ class GuestRouter {
 extension GuestRouter: GuestRouterProtocol {
 
     func showBackupWallet() {
-        if let controller = BackupWalletModule.viewController {
+        if let controller = BackupWalletRouter.viewController {
             viewController?.present(controller, animated: true)
         }
     }
 
     func showRestoreWallet() {
 //        viewController?.present(RestoreWalletModule.viewController, animated: true)
+    }
+
+}
+
+extension GuestRouter {
+
+    static var viewController: UIViewController {
+        let router = GuestRouter()
+        let presenter = GuestPresenter(router: router)
+        let viewController = GuestViewController(viewDelegate: presenter)
+
+        router.viewController = viewController
+
+        return viewController
     }
 
 }

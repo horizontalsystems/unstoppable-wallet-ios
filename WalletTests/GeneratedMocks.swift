@@ -1,61 +1,10 @@
-// MARK: - Mocks generated from file: Wallet/Modules/BackupWallet/BackupWalletModule.swift at 2018-06-07 06:15:44 +0000
+// MARK: - Mocks generated from file: Wallet/Modules/BackupWallet/BackupWalletModule.swift at 2018-06-07 07:57:37 +0000
 
 
 import Cuckoo
 @testable import Wallet
 
-import BitcoinKit
-import Darwin
 import Foundation
-
-class MockBackupWalletModule: BackupWalletModule, Cuckoo.ClassMock {
-    typealias MocksType = BackupWalletModule
-    typealias Stubbing = __StubbingProxy_BackupWalletModule
-    typealias Verification = __VerificationProxy_BackupWalletModule
-    let cuckoo_manager = Cuckoo.MockManager(hasParent: true)
-
-    
-
-    
-
-    
-
-	struct __StubbingProxy_BackupWalletModule: Cuckoo.StubbingProxy {
-	    private let cuckoo_manager: Cuckoo.MockManager
-	
-	    init(manager: Cuckoo.MockManager) {
-	        self.cuckoo_manager = manager
-	    }
-	    
-	    
-	}
-
-	struct __VerificationProxy_BackupWalletModule: Cuckoo.VerificationProxy {
-	    private let cuckoo_manager: Cuckoo.MockManager
-	    private let callMatcher: Cuckoo.CallMatcher
-	    private let sourceLocation: Cuckoo.SourceLocation
-	
-	    init(manager: Cuckoo.MockManager, callMatcher: Cuckoo.CallMatcher, sourceLocation: Cuckoo.SourceLocation) {
-	        self.cuckoo_manager = manager
-	        self.callMatcher = callMatcher
-	        self.sourceLocation = sourceLocation
-	    }
-	
-	    
-	
-	    
-	}
-
-}
-
- class BackupWalletModuleStub: BackupWalletModule {
-    
-
-    
-
-    
-}
-
 
 class MockBackupWalletViewDelegate: BackupWalletViewDelegate, Cuckoo.ProtocolMock {
     typealias MocksType = BackupWalletViewDelegate
@@ -128,7 +77,7 @@ class MockBackupWalletViewDelegate: BackupWalletViewDelegate, Cuckoo.ProtocolMoc
         
     }
     
-    // ["name": "validateDidTap", "returnSignature": "", "fullyQualifiedName": "validateDidTap(confirmationWords: [Int: String])", "parameterSignature": "confirmationWords: [Int: String]", "parameterSignatureWithoutNames": "confirmationWords: [Int: String]", "inputTypes": "[Int: String]", "isThrowing": false, "isInit": false, "isOverriding": false, "hasClosureParams": false, "@type": "ProtocolMethod", "accessibility": "", "parameterNames": "confirmationWords", "call": "confirmationWords: confirmationWords", "parameters": [CuckooGeneratorFramework.MethodParameter(label: Optional("confirmationWords"), name: "confirmationWords", type: "[Int: String]", range: CountableRange(834..<866), nameRange: CountableRange(834..<851))], "returnType": "Void", "isOptional": false, "stubFunction": "Cuckoo.ProtocolStubNoReturnFunction"]
+    // ["name": "validateDidTap", "returnSignature": "", "fullyQualifiedName": "validateDidTap(confirmationWords: [Int: String])", "parameterSignature": "confirmationWords: [Int: String]", "parameterSignatureWithoutNames": "confirmationWords: [Int: String]", "inputTypes": "[Int: String]", "isThrowing": false, "isInit": false, "isOverriding": false, "hasClosureParams": false, "@type": "ProtocolMethod", "accessibility": "", "parameterNames": "confirmationWords", "call": "confirmationWords: confirmationWords", "parameters": [CuckooGeneratorFramework.MethodParameter(label: Optional("confirmationWords"), name: "confirmationWords", type: "[Int: String]", range: CountableRange(225..<257), nameRange: CountableRange(225..<242))], "returnType": "Void", "isOptional": false, "stubFunction": "Cuckoo.ProtocolStubNoReturnFunction"]
      func validateDidTap(confirmationWords: [Int: String])  {
         
             return cuckoo_manager.call("validateDidTap(confirmationWords: [Int: String])",
@@ -279,7 +228,7 @@ class MockBackupWalletViewProtocol: BackupWalletViewProtocol, Cuckoo.ProtocolMoc
     
 
     
-    // ["name": "show", "returnSignature": "", "fullyQualifiedName": "show(words: [String])", "parameterSignature": "words: [String]", "parameterSignatureWithoutNames": "words: [String]", "inputTypes": "[String]", "isThrowing": false, "isInit": false, "isOverriding": false, "hasClosureParams": false, "@type": "ProtocolMethod", "accessibility": "", "parameterNames": "words", "call": "words: words", "parameters": [CuckooGeneratorFramework.MethodParameter(label: Optional("words"), name: "words", type: "[String]", range: CountableRange(928..<943), nameRange: CountableRange(928..<933))], "returnType": "Void", "isOptional": false, "stubFunction": "Cuckoo.ProtocolStubNoReturnFunction"]
+    // ["name": "show", "returnSignature": "", "fullyQualifiedName": "show(words: [String])", "parameterSignature": "words: [String]", "parameterSignatureWithoutNames": "words: [String]", "inputTypes": "[String]", "isThrowing": false, "isInit": false, "isOverriding": false, "hasClosureParams": false, "@type": "ProtocolMethod", "accessibility": "", "parameterNames": "words", "call": "words: words", "parameters": [CuckooGeneratorFramework.MethodParameter(label: Optional("words"), name: "words", type: "[String]", range: CountableRange(319..<334), nameRange: CountableRange(319..<324))], "returnType": "Void", "isOptional": false, "stubFunction": "Cuckoo.ProtocolStubNoReturnFunction"]
      func show(words: [String])  {
         
             return cuckoo_manager.call("show(words: [String])",
@@ -291,7 +240,7 @@ class MockBackupWalletViewProtocol: BackupWalletViewProtocol, Cuckoo.ProtocolMoc
         
     }
     
-    // ["name": "showConfirmation", "returnSignature": "", "fullyQualifiedName": "showConfirmation(withIndexes: [Int])", "parameterSignature": "withIndexes indexes: [Int]", "parameterSignatureWithoutNames": "indexes: [Int]", "inputTypes": "[Int]", "isThrowing": false, "isInit": false, "isOverriding": false, "hasClosureParams": false, "@type": "ProtocolMethod", "accessibility": "", "parameterNames": "indexes", "call": "withIndexes: indexes", "parameters": [CuckooGeneratorFramework.MethodParameter(label: Optional("withIndexes"), name: "indexes", type: "[Int]", range: CountableRange(971..<997), nameRange: CountableRange(971..<982))], "returnType": "Void", "isOptional": false, "stubFunction": "Cuckoo.ProtocolStubNoReturnFunction"]
+    // ["name": "showConfirmation", "returnSignature": "", "fullyQualifiedName": "showConfirmation(withIndexes: [Int])", "parameterSignature": "withIndexes indexes: [Int]", "parameterSignatureWithoutNames": "indexes: [Int]", "inputTypes": "[Int]", "isThrowing": false, "isInit": false, "isOverriding": false, "hasClosureParams": false, "@type": "ProtocolMethod", "accessibility": "", "parameterNames": "indexes", "call": "withIndexes: indexes", "parameters": [CuckooGeneratorFramework.MethodParameter(label: Optional("withIndexes"), name: "indexes", type: "[Int]", range: CountableRange(362..<388), nameRange: CountableRange(362..<373))], "returnType": "Void", "isOptional": false, "stubFunction": "Cuckoo.ProtocolStubNoReturnFunction"]
      func showConfirmation(withIndexes indexes: [Int])  {
         
             return cuckoo_manager.call("showConfirmation(withIndexes: [Int])",
@@ -487,7 +436,7 @@ class MockBackupWalletPresenterDelegate: BackupWalletPresenterDelegate, Cuckoo.P
         
     }
     
-    // ["name": "validate", "returnSignature": "", "fullyQualifiedName": "validate(confirmationWords: [Int: String])", "parameterSignature": "confirmationWords: [Int: String]", "parameterSignatureWithoutNames": "confirmationWords: [Int: String]", "inputTypes": "[Int: String]", "isThrowing": false, "isInit": false, "isOverriding": false, "hasClosureParams": false, "@type": "ProtocolMethod", "accessibility": "", "parameterNames": "confirmationWords", "call": "confirmationWords: confirmationWords", "parameters": [CuckooGeneratorFramework.MethodParameter(label: Optional("confirmationWords"), name: "confirmationWords", type: "[Int: String]", range: CountableRange(1201..<1233), nameRange: CountableRange(1201..<1218))], "returnType": "Void", "isOptional": false, "stubFunction": "Cuckoo.ProtocolStubNoReturnFunction"]
+    // ["name": "validate", "returnSignature": "", "fullyQualifiedName": "validate(confirmationWords: [Int: String])", "parameterSignature": "confirmationWords: [Int: String]", "parameterSignatureWithoutNames": "confirmationWords: [Int: String]", "inputTypes": "[Int: String]", "isThrowing": false, "isInit": false, "isOverriding": false, "hasClosureParams": false, "@type": "ProtocolMethod", "accessibility": "", "parameterNames": "confirmationWords", "call": "confirmationWords: confirmationWords", "parameters": [CuckooGeneratorFramework.MethodParameter(label: Optional("confirmationWords"), name: "confirmationWords", type: "[Int: String]", range: CountableRange(592..<624), nameRange: CountableRange(592..<609))], "returnType": "Void", "isOptional": false, "stubFunction": "Cuckoo.ProtocolStubNoReturnFunction"]
      func validate(confirmationWords: [Int: String])  {
         
             return cuckoo_manager.call("validate(confirmationWords: [Int: String])",
@@ -593,7 +542,7 @@ class MockBackupWalletPresenterProtocol: BackupWalletPresenterProtocol, Cuckoo.P
     
 
     
-    // ["name": "didFetch", "returnSignature": "", "fullyQualifiedName": "didFetch(words: [String])", "parameterSignature": "words: [String]", "parameterSignatureWithoutNames": "words: [String]", "inputTypes": "[String]", "isThrowing": false, "isInit": false, "isOverriding": false, "hasClosureParams": false, "@type": "ProtocolMethod", "accessibility": "", "parameterNames": "words", "call": "words: words", "parameters": [CuckooGeneratorFramework.MethodParameter(label: Optional("words"), name: "words", type: "[String]", range: CountableRange(1304..<1319), nameRange: CountableRange(1304..<1309))], "returnType": "Void", "isOptional": false, "stubFunction": "Cuckoo.ProtocolStubNoReturnFunction"]
+    // ["name": "didFetch", "returnSignature": "", "fullyQualifiedName": "didFetch(words: [String])", "parameterSignature": "words: [String]", "parameterSignatureWithoutNames": "words: [String]", "inputTypes": "[String]", "isThrowing": false, "isInit": false, "isOverriding": false, "hasClosureParams": false, "@type": "ProtocolMethod", "accessibility": "", "parameterNames": "words", "call": "words: words", "parameters": [CuckooGeneratorFramework.MethodParameter(label: Optional("words"), name: "words", type: "[String]", range: CountableRange(695..<710), nameRange: CountableRange(695..<700))], "returnType": "Void", "isOptional": false, "stubFunction": "Cuckoo.ProtocolStubNoReturnFunction"]
      func didFetch(words: [String])  {
         
             return cuckoo_manager.call("didFetch(words: [String])",
@@ -605,7 +554,7 @@ class MockBackupWalletPresenterProtocol: BackupWalletPresenterProtocol, Cuckoo.P
         
     }
     
-    // ["name": "didFetch", "returnSignature": "", "fullyQualifiedName": "didFetch(confirmationIndexes: [Int])", "parameterSignature": "confirmationIndexes indexes: [Int]", "parameterSignatureWithoutNames": "indexes: [Int]", "inputTypes": "[Int]", "isThrowing": false, "isInit": false, "isOverriding": false, "hasClosureParams": false, "@type": "ProtocolMethod", "accessibility": "", "parameterNames": "indexes", "call": "confirmationIndexes: indexes", "parameters": [CuckooGeneratorFramework.MethodParameter(label: Optional("confirmationIndexes"), name: "indexes", type: "[Int]", range: CountableRange(1339..<1373), nameRange: CountableRange(1339..<1358))], "returnType": "Void", "isOptional": false, "stubFunction": "Cuckoo.ProtocolStubNoReturnFunction"]
+    // ["name": "didFetch", "returnSignature": "", "fullyQualifiedName": "didFetch(confirmationIndexes: [Int])", "parameterSignature": "confirmationIndexes indexes: [Int]", "parameterSignatureWithoutNames": "indexes: [Int]", "inputTypes": "[Int]", "isThrowing": false, "isInit": false, "isOverriding": false, "hasClosureParams": false, "@type": "ProtocolMethod", "accessibility": "", "parameterNames": "indexes", "call": "confirmationIndexes: indexes", "parameters": [CuckooGeneratorFramework.MethodParameter(label: Optional("confirmationIndexes"), name: "indexes", type: "[Int]", range: CountableRange(730..<764), nameRange: CountableRange(730..<749))], "returnType": "Void", "isOptional": false, "stubFunction": "Cuckoo.ProtocolStubNoReturnFunction"]
      func didFetch(confirmationIndexes indexes: [Int])  {
         
             return cuckoo_manager.call("didFetch(confirmationIndexes: [Int])",
@@ -902,7 +851,7 @@ class MockBackupWalletRandomIndexesProviderProtocol: BackupWalletRandomIndexesPr
     
 
     
-    // ["name": "getRandomIndexes", "returnSignature": " -> [Int]", "fullyQualifiedName": "getRandomIndexes(count: Int) -> [Int]", "parameterSignature": "count: Int", "parameterSignatureWithoutNames": "count: Int", "inputTypes": "Int", "isThrowing": false, "isInit": false, "isOverriding": false, "hasClosureParams": false, "@type": "ProtocolMethod", "accessibility": "", "parameterNames": "count", "call": "count: count", "parameters": [CuckooGeneratorFramework.MethodParameter(label: Optional("count"), name: "count", type: "Int", range: CountableRange(1655..<1665), nameRange: CountableRange(1655..<1660))], "returnType": "[Int]", "isOptional": false, "stubFunction": "Cuckoo.ProtocolStubFunction"]
+    // ["name": "getRandomIndexes", "returnSignature": " -> [Int]", "fullyQualifiedName": "getRandomIndexes(count: Int) -> [Int]", "parameterSignature": "count: Int", "parameterSignatureWithoutNames": "count: Int", "inputTypes": "Int", "isThrowing": false, "isInit": false, "isOverriding": false, "hasClosureParams": false, "@type": "ProtocolMethod", "accessibility": "", "parameterNames": "count", "call": "count: count", "parameters": [CuckooGeneratorFramework.MethodParameter(label: Optional("count"), name: "count", type: "Int", range: CountableRange(1046..<1056), nameRange: CountableRange(1046..<1051))], "returnType": "[Int]", "isOptional": false, "stubFunction": "Cuckoo.ProtocolStubFunction"]
      func getRandomIndexes(count: Int)  -> [Int] {
         
             return cuckoo_manager.call("getRandomIndexes(count: Int) -> [Int]",
@@ -967,214 +916,13 @@ class MockBackupWalletRandomIndexesProviderProtocol: BackupWalletRandomIndexesPr
 }
 
 
-class MockWalletManager: WalletManager, Cuckoo.ClassMock {
-    typealias MocksType = WalletManager
-    typealias Stubbing = __StubbingProxy_WalletManager
-    typealias Verification = __VerificationProxy_WalletManager
-    let cuckoo_manager = Cuckoo.MockManager(hasParent: true)
-
-    
-
-    
-
-    
-    // ["name": "getWords", "returnSignature": " -> [String]", "fullyQualifiedName": "getWords() -> [String]", "parameterSignature": "", "parameterSignatureWithoutNames": "", "inputTypes": "", "isThrowing": false, "isInit": false, "isOverriding": true, "hasClosureParams": false, "@type": "ClassMethod", "accessibility": "", "parameterNames": "", "call": "", "parameters": [], "returnType": "[String]", "isOptional": false, "stubFunction": "Cuckoo.ClassStubFunction"]
-     override func getWords()  -> [String] {
-        
-            return cuckoo_manager.call("getWords() -> [String]",
-                parameters: (),
-                superclassCall:
-                    
-                    super.getWords()
-                    )
-        
-    }
-    
-
-	struct __StubbingProxy_WalletManager: Cuckoo.StubbingProxy {
-	    private let cuckoo_manager: Cuckoo.MockManager
-	
-	    init(manager: Cuckoo.MockManager) {
-	        self.cuckoo_manager = manager
-	    }
-	    
-	    
-	    func getWords() -> Cuckoo.ClassStubFunction<(), [String]> {
-	        let matchers: [Cuckoo.ParameterMatcher<Void>] = []
-	        return .init(stub: cuckoo_manager.createStub(for: MockWalletManager.self, method: "getWords() -> [String]", parameterMatchers: matchers))
-	    }
-	    
-	}
-
-	struct __VerificationProxy_WalletManager: Cuckoo.VerificationProxy {
-	    private let cuckoo_manager: Cuckoo.MockManager
-	    private let callMatcher: Cuckoo.CallMatcher
-	    private let sourceLocation: Cuckoo.SourceLocation
-	
-	    init(manager: Cuckoo.MockManager, callMatcher: Cuckoo.CallMatcher, sourceLocation: Cuckoo.SourceLocation) {
-	        self.cuckoo_manager = manager
-	        self.callMatcher = callMatcher
-	        self.sourceLocation = sourceLocation
-	    }
-	
-	    
-	
-	    
-	    @discardableResult
-	    func getWords() -> Cuckoo.__DoNotUse<[String]> {
-	        let matchers: [Cuckoo.ParameterMatcher<Void>] = []
-	        return cuckoo_manager.verify("getWords() -> [String]", callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
-	    }
-	    
-	}
-
-}
-
- class WalletManagerStub: WalletManager {
-    
-
-    
-
-    
-     override func getWords()  -> [String] {
-        return DefaultValueRegistry.defaultValue(for: [String].self)
-    }
-    
-}
-
-
-class MockRandomProvider: RandomProvider, Cuckoo.ClassMock {
-    typealias MocksType = RandomProvider
-    typealias Stubbing = __StubbingProxy_RandomProvider
-    typealias Verification = __VerificationProxy_RandomProvider
-    let cuckoo_manager = Cuckoo.MockManager(hasParent: true)
-
-    
-
-    
-
-    
-    // ["name": "getRandomIndexes", "returnSignature": " -> [Int]", "fullyQualifiedName": "getRandomIndexes(count: Int) -> [Int]", "parameterSignature": "count: Int", "parameterSignatureWithoutNames": "count: Int", "inputTypes": "Int", "isThrowing": false, "isInit": false, "isOverriding": true, "hasClosureParams": false, "@type": "ClassMethod", "accessibility": "", "parameterNames": "count", "call": "count: count", "parameters": [CuckooGeneratorFramework.MethodParameter(label: Optional("count"), name: "count", type: "Int", range: CountableRange(2043..<2053), nameRange: CountableRange(2043..<2048))], "returnType": "[Int]", "isOptional": false, "stubFunction": "Cuckoo.ClassStubFunction"]
-     override func getRandomIndexes(count: Int)  -> [Int] {
-        
-            return cuckoo_manager.call("getRandomIndexes(count: Int) -> [Int]",
-                parameters: (count),
-                superclassCall:
-                    
-                    super.getRandomIndexes(count: count)
-                    )
-        
-    }
-    
-
-	struct __StubbingProxy_RandomProvider: Cuckoo.StubbingProxy {
-	    private let cuckoo_manager: Cuckoo.MockManager
-	
-	    init(manager: Cuckoo.MockManager) {
-	        self.cuckoo_manager = manager
-	    }
-	    
-	    
-	    func getRandomIndexes<M1: Cuckoo.Matchable>(count: M1) -> Cuckoo.ClassStubFunction<(Int), [Int]> where M1.MatchedType == Int {
-	        let matchers: [Cuckoo.ParameterMatcher<(Int)>] = [wrap(matchable: count) { $0 }]
-	        return .init(stub: cuckoo_manager.createStub(for: MockRandomProvider.self, method: "getRandomIndexes(count: Int) -> [Int]", parameterMatchers: matchers))
-	    }
-	    
-	}
-
-	struct __VerificationProxy_RandomProvider: Cuckoo.VerificationProxy {
-	    private let cuckoo_manager: Cuckoo.MockManager
-	    private let callMatcher: Cuckoo.CallMatcher
-	    private let sourceLocation: Cuckoo.SourceLocation
-	
-	    init(manager: Cuckoo.MockManager, callMatcher: Cuckoo.CallMatcher, sourceLocation: Cuckoo.SourceLocation) {
-	        self.cuckoo_manager = manager
-	        self.callMatcher = callMatcher
-	        self.sourceLocation = sourceLocation
-	    }
-	
-	    
-	
-	    
-	    @discardableResult
-	    func getRandomIndexes<M1: Cuckoo.Matchable>(count: M1) -> Cuckoo.__DoNotUse<[Int]> where M1.MatchedType == Int {
-	        let matchers: [Cuckoo.ParameterMatcher<(Int)>] = [wrap(matchable: count) { $0 }]
-	        return cuckoo_manager.verify("getRandomIndexes(count: Int) -> [Int]", callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
-	    }
-	    
-	}
-
-}
-
- class RandomProviderStub: RandomProvider {
-    
-
-    
-
-    
-     override func getRandomIndexes(count: Int)  -> [Int] {
-        return DefaultValueRegistry.defaultValue(for: [Int].self)
-    }
-    
-}
-
-
-// MARK: - Mocks generated from file: Wallet/Modules/Guest/GuestModule.swift at 2018-06-07 06:15:44 +0000
+// MARK: - Mocks generated from file: Wallet/Modules/Guest/GuestModule.swift at 2018-06-07 07:57:37 +0000
 
 
 import Cuckoo
 @testable import Wallet
 
 import Foundation
-
-class MockGuestModule: GuestModule, Cuckoo.ClassMock {
-    typealias MocksType = GuestModule
-    typealias Stubbing = __StubbingProxy_GuestModule
-    typealias Verification = __VerificationProxy_GuestModule
-    let cuckoo_manager = Cuckoo.MockManager(hasParent: true)
-
-    
-
-    
-
-    
-
-	struct __StubbingProxy_GuestModule: Cuckoo.StubbingProxy {
-	    private let cuckoo_manager: Cuckoo.MockManager
-	
-	    init(manager: Cuckoo.MockManager) {
-	        self.cuckoo_manager = manager
-	    }
-	    
-	    
-	}
-
-	struct __VerificationProxy_GuestModule: Cuckoo.VerificationProxy {
-	    private let cuckoo_manager: Cuckoo.MockManager
-	    private let callMatcher: Cuckoo.CallMatcher
-	    private let sourceLocation: Cuckoo.SourceLocation
-	
-	    init(manager: Cuckoo.MockManager, callMatcher: Cuckoo.CallMatcher, sourceLocation: Cuckoo.SourceLocation) {
-	        self.cuckoo_manager = manager
-	        self.callMatcher = callMatcher
-	        self.sourceLocation = sourceLocation
-	    }
-	
-	    
-	
-	    
-	}
-
-}
-
- class GuestModuleStub: GuestModule {
-    
-
-    
-
-    
-}
-
 
 class MockGuestViewDelegate: GuestViewDelegate, Cuckoo.ProtocolMock {
     typealias MocksType = GuestViewDelegate
@@ -1382,62 +1130,13 @@ class MockGuestRouterProtocol: GuestRouterProtocol, Cuckoo.ProtocolMock {
 }
 
 
-// MARK: - Mocks generated from file: Wallet/Modules/RestoreWallet/RestoreWalletModule.swift at 2018-06-07 06:15:44 +0000
+// MARK: - Mocks generated from file: Wallet/Modules/RestoreWallet/RestoreWalletModule.swift at 2018-06-07 07:57:37 +0000
 
 
 import Cuckoo
 @testable import Wallet
 
 import Foundation
-
-class MockRestoreWalletModule: RestoreWalletModule, Cuckoo.ClassMock {
-    typealias MocksType = RestoreWalletModule
-    typealias Stubbing = __StubbingProxy_RestoreWalletModule
-    typealias Verification = __VerificationProxy_RestoreWalletModule
-    let cuckoo_manager = Cuckoo.MockManager(hasParent: true)
-
-    
-
-    
-
-    
-
-	struct __StubbingProxy_RestoreWalletModule: Cuckoo.StubbingProxy {
-	    private let cuckoo_manager: Cuckoo.MockManager
-	
-	    init(manager: Cuckoo.MockManager) {
-	        self.cuckoo_manager = manager
-	    }
-	    
-	    
-	}
-
-	struct __VerificationProxy_RestoreWalletModule: Cuckoo.VerificationProxy {
-	    private let cuckoo_manager: Cuckoo.MockManager
-	    private let callMatcher: Cuckoo.CallMatcher
-	    private let sourceLocation: Cuckoo.SourceLocation
-	
-	    init(manager: Cuckoo.MockManager, callMatcher: Cuckoo.CallMatcher, sourceLocation: Cuckoo.SourceLocation) {
-	        self.cuckoo_manager = manager
-	        self.callMatcher = callMatcher
-	        self.sourceLocation = sourceLocation
-	    }
-	
-	    
-	
-	    
-	}
-
-}
-
- class RestoreWalletModuleStub: RestoreWalletModule {
-    
-
-    
-
-    
-}
-
 
 class MockRestoreWalletViewDelegate: RestoreWalletViewDelegate, Cuckoo.ProtocolMock {
     typealias MocksType = RestoreWalletViewDelegate

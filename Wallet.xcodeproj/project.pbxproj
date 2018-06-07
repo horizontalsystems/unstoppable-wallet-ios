@@ -29,6 +29,7 @@
 		11B35E0E5714E8A2F4B2D2E7 /* UnspentOutput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35A742770B11CA83B7BD0 /* UnspentOutput.swift */; };
 		11B35E9C0E8F38C063A48367 /* BackupWalletPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B355771A1D96DB96FBC975 /* BackupWalletPresenter.swift */; };
 		11B35F56DE01B03CCFB49E32 /* BackupWalletInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B353A3B460BF1B24349F9F /* BackupWalletInteractor.swift */; };
+		11B35FE3B7C94E0CB9CDFB99 /* BackupWalletStubProviders.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35E8FAD4459A09E979332 /* BackupWalletStubProviders.swift */; };
 		4FFC912E7E11D506DC05EFA7 /* Pods_WalletTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5F5D323E150F570A893EA81 /* Pods_WalletTests.framework */; };
 		D3285F4620BD158E00644076 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3285F4520BD158E00644076 /* AppDelegate.swift */; };
 		D3285F4820BD158E00644076 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3285F4720BD158E00644076 /* ViewController.swift */; };
@@ -82,6 +83,7 @@
 		11B35D66E95B16C32E3796E8 /* BackupWalletRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackupWalletRouter.swift; sourceTree = "<group>"; };
 		11B35DA289721CFEFD099C7A /* TransactionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionCell.swift; sourceTree = "<group>"; };
 		11B35E402C000B78E52BD5EE /* BackupWalletPresenterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackupWalletPresenterTests.swift; sourceTree = "<group>"; };
+		11B35E8FAD4459A09E979332 /* BackupWalletStubProviders.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackupWalletStubProviders.swift; sourceTree = "<group>"; };
 		11B35FB8A495A565BAA856C9 /* Transaction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Transaction.swift; sourceTree = "<group>"; };
 		11B35FF2D2C084366AA66F32 /* GuestPresenterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GuestPresenterTests.swift; sourceTree = "<group>"; };
 		44984157887C0BA41381ADE2 /* Pods-Wallet.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Wallet.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Wallet/Pods-Wallet.debug.xcconfig"; sourceTree = "<group>"; };
@@ -174,6 +176,7 @@
 				D3373DB820C564450082BC4A /* BackupWalletWordsController.xib */,
 				D348A77420C7D34100803B9E /* BackupWalletConfirmationController.swift */,
 				D348A77520C7D34100803B9E /* BackupWalletConfirmationController.xib */,
+				11B35E8FAD4459A09E979332 /* BackupWalletStubProviders.swift */,
 			);
 			path = BackupWallet;
 			sourceTree = "<group>";
@@ -529,6 +532,7 @@
 				11B35DA379AE43A774D84246 /* BackupWalletModule.swift in Sources */,
 				11B35DD6FFE1E112E9FCC63E /* GuestModule.swift in Sources */,
 				11B35BFADC930EF5007A177F /* RestoreWalletModule.swift in Sources */,
+				11B35FE3B7C94E0CB9CDFB99 /* BackupWalletStubProviders.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

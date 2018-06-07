@@ -1,23 +1,4 @@
 import Foundation
-import BitcoinKit
-import Darwin
-
-class BackupWalletModule {
-
-    static var viewController: UIViewController? {
-        let router = BackupWalletRouter()
-        let interactor = BackupWalletInteractor(wordsProvider: WalletManager(), indexesProvider: RandomProvider())
-        let presenter = BackupWalletPresenter(delegate: interactor, router: router)
-        let viewController = BackupWalletNavigationController(viewDelegate: presenter)
-
-        interactor.presenter = presenter
-        presenter.view = viewController
-        router.viewController = viewController
-
-        return viewController
-    }
-
-}
 
 protocol BackupWalletViewDelegate {
     func cancelDidTap()
@@ -59,26 +40,4 @@ protocol BackupWalletWordsProviderProtocol {
 
 protocol BackupWalletRandomIndexesProviderProtocol {
     func getRandomIndexes(count: Int) -> [Int]
-}
-
-class WalletManager: BackupWalletWordsProviderProtocol {
-    func getWords() -> [String] {
-        return ["burden", "swap", "fabric", "book", "palm", "main", "salute", "raw", "core", "reflect", "parade", "tone"]
-//        return (try? Mnemonic.generate()) ?? []
-    }
-}
-
-class RandomProvider: BackupWalletRandomIndexesProviderProtocol {
-    func getRandomIndexes(count: Int) -> [Int] {
-        var indexes = [Int]()
-
-        while indexes.count < count {
-            let index = Int(arc4random_uniform(12) + 1)
-            if !indexes.contains(index) {
-                indexes.append(index)
-            }
-        }
-
-        return indexes
-    }
 }
