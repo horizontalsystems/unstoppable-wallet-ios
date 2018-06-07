@@ -3,7 +3,13 @@ use_frameworks!
 
 inhibit_all_warnings!
 
+workspace 'Wallet'
+
+project 'Wallet/Wallet'
+
 target :Wallet do
+  project 'Wallet/Wallet'
+
   pod 'BitcoinKit', git: "https://github.com/ealymbaev/BitcoinKit"
   pod 'Alamofire'
   pod 'ObjectMapper'
@@ -13,5 +19,7 @@ target :Wallet do
 end
 
 target :WalletTests do
+  project 'Wallet/Wallet'
+
   pod "Cuckoo"
 end

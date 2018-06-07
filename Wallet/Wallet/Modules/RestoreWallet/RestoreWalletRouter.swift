@@ -23,7 +23,9 @@ extension RestoreWalletRouter {
         presenter.view = viewController
         router.viewController = viewController
 
-        return viewController
+        let navigationController = UINavigationController(rootViewController: viewController)
+        navigationController.navigationBar.barStyle = .blackTranslucent
+        return navigationController
     }
 
 }

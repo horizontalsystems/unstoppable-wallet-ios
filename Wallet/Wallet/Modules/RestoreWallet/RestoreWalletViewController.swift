@@ -4,6 +4,8 @@ class RestoreWalletViewController: UIViewController {
 
     let viewDelegate: RestoreWalletViewDelegate
 
+    @IBOutlet weak var wordsTextView: UITextView?
+
     init(viewDelegate: RestoreWalletViewDelegate) {
         self.viewDelegate = viewDelegate
 
@@ -16,10 +18,23 @@ class RestoreWalletViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        title = "Restore Wallet"
+
+        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancelDidTap))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(doneDidTap))
     }
 
-    @IBAction func cancelDidTap() {
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+
+    @objc func cancelDidTap() {
         viewDelegate.cancelDidTap()
+    }
+
+    @objc func doneDidTap() {
+
     }
 
 }

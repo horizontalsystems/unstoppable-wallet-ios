@@ -13,7 +13,7 @@ extension GuestRouter: GuestRouterProtocol {
     }
 
     func showRestoreWallet() {
-//        viewController?.present(RestoreWalletModule.viewController, animated: true)
+        viewController?.present(RestoreWalletRouter.viewController, animated: true)
     }
 
 }
