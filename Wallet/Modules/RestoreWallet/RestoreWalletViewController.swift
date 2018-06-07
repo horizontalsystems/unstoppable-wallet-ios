@@ -1,11 +1,11 @@
 import UIKit
 
-class RestoreWalletViewController: UIViewController, RestoreWalletViewProtocol {
+class RestoreWalletViewController: UIViewController {
 
-    let delegate: RestoreWalletViewDelegate
+    let viewDelegate: RestoreWalletViewDelegate
 
-    init(delegate: RestoreWalletViewDelegate) {
-        self.delegate = delegate
+    init(viewDelegate: RestoreWalletViewDelegate) {
+        self.viewDelegate = viewDelegate
 
         super.init(nibName: String(describing: RestoreWalletViewController.self), bundle: nil)
     }
@@ -19,7 +19,11 @@ class RestoreWalletViewController: UIViewController, RestoreWalletViewProtocol {
     }
 
     @IBAction func cancelDidTap() {
-        delegate.cancelDidTap()
+        viewDelegate.cancelDidTap()
     }
+
+}
+
+extension RestoreWalletViewController: RestoreWalletViewProtocol {
 
 }

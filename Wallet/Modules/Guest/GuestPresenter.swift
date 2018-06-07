@@ -1,6 +1,6 @@
 import Foundation
 
-class GuestInteractor: GuestInteractorProtocol {
+class GuestPresenter {
 
     private let router: GuestRouterProtocol
 
@@ -8,8 +8,12 @@ class GuestInteractor: GuestInteractorProtocol {
         self.router = router
     }
 
+}
+
+extension GuestPresenter: GuestViewDelegate {
+
     func createNewWalletDidTap() {
-        router.showCreateWallet()
+        router.showBackupWallet()
     }
 
     func restoreWalletDidTap() {

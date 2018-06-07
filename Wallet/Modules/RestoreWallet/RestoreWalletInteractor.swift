@@ -1,17 +1,9 @@
 import Foundation
 
-class RestoreWalletInteractor: RestoreWalletViewDelegate {
+class RestoreWalletInteractor {
+    weak var presenter: RestoreWalletPresenterProtocol?
+}
 
-    let router: RestoreWalletRouterProtocol
-    let presenter: RestoreWalletPresenterProtocol
-
-    init(router: RestoreWalletRouterProtocol, presenter: RestoreWalletPresenterProtocol) {
-        self.router = router
-        self.presenter = presenter
-    }
-
-    func cancelDidTap() {
-        router.close()
-    }
+extension RestoreWalletInteractor: RestoreWalletPresenterDelegate {
 
 }

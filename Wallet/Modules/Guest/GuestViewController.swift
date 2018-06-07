@@ -2,10 +2,10 @@ import UIKit
 
 class GuestViewController: UIViewController {
 
-    let interactor: GuestInteractorProtocol
+    let viewDelegate: GuestViewDelegate
 
-    init(interactor: GuestInteractorProtocol) {
-        self.interactor = interactor
+    init(viewDelegate: GuestViewDelegate) {
+        self.viewDelegate = viewDelegate
 
         super.init(nibName: String(describing: GuestViewController.self), bundle: nil)
     }
@@ -19,12 +19,16 @@ class GuestViewController: UIViewController {
 
     }
 
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+
     @IBAction func createNewWalletDidTap() {
-        interactor.createNewWalletDidTap()
+        viewDelegate.createNewWalletDidTap()
     }
 
     @IBAction func restoreWalletDidTap() {
-        interactor.restoreWalletDidTap()
+        viewDelegate.restoreWalletDidTap()
     }
 
 }

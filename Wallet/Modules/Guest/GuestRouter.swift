@@ -1,34 +1,19 @@
 import Foundation
 
-class GuestRouter: GuestRouterProtocol {
+class GuestRouter {
+    weak var viewController: UIViewController?
+}
 
-    private weak var viewController: UIViewController?
+extension GuestRouter: GuestRouterProtocol {
 
-    static var viewController: UIViewController {
-        let router = GuestRouter()
-        let interactor = GuestInteractor(router: router)
-        let viewController = GuestViewController(interactor: interactor)
-
-        router.viewController = viewController
-
-        return viewController
-    }
-
-    func showCreateWallet() {
-        viewController?.present(CreateWalletRouter.viewController, animated: true)
+    func showBackupWallet() {
+        if let controller = BackupWalletModule.viewController {
+            viewController?.present(controller, animated: true)
+        }
     }
 
     func showRestoreWallet() {
-        viewController?.present(RestoreWalletRouter.viewController, animated: true)
+//        viewController?.present(RestoreWalletModule.viewController, animated: true)
     }
-}
 
-protocol GuestInteractorProtocol {
-    func createNewWalletDidTap()
-    func restoreWalletDidTap()
-}
-
-protocol GuestRouterProtocol {
-    func showCreateWallet()
-    func showRestoreWallet()
 }

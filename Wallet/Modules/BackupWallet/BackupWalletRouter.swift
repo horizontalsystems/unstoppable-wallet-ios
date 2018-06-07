@@ -1,10 +1,10 @@
 import Foundation
 
-class RestoreWalletRouter {
+class BackupWalletRouter {
     weak var viewController: UIViewController?
 }
 
-extension RestoreWalletRouter: RestoreWalletRouterProtocol {
+extension BackupWalletRouter: BackupWalletRouterProtocol {
 
     func close() {
         viewController?.dismiss(animated: true)

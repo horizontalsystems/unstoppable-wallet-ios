@@ -21,26 +21,60 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wxk-hg-MwX">
-                    <rect key="frame" x="124" y="547" width="127" height="30"/>
-                    <state key="normal" title="Create New Wallet"/>
+                    <rect key="frame" x="44" y="507" width="287" height="50"/>
+                    <color key="backgroundColor" red="0.96862745100000003" green="0.71764705880000002" blue="0.19215686269999999" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="50" id="qXW-bI-cXf"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
+                    <state key="normal" title="Create New Wallet">
+                        <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </state>
                     <connections>
                         <action selector="createNewWalletDidTap" destination="-1" eventType="touchUpInside" id="w4P-UQ-3za"/>
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fo4-vG-xAd">
-                    <rect key="frame" x="138" y="597" width="99" height="30"/>
-                    <state key="normal" title="Restore Wallet"/>
+                    <rect key="frame" x="44" y="577" width="287" height="50"/>
+                    <color key="backgroundColor" red="0.96862745100000003" green="0.71764705880000002" blue="0.19215686269999999" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="50" id="adS-aA-KcD"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
+                    <state key="normal" title="Restore Wallet">
+                        <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </state>
                     <connections>
                         <action selector="restoreWalletDidTap" destination="-1" eventType="touchUpInside" id="Hzd-aK-spu"/>
                     </connections>
                 </button>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Welcome to Crypton" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iEi-nu-UKi">
+                    <rect key="frame" x="44" y="64" width="287" height="119.5"/>
+                    <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="50"/>
+                    <color key="textColor" red="0.96862745098039216" green="0.71764705882352942" blue="0.19215686274509802" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="The best of the best crypto wallet ever and ever and ever" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a9W-OB-fKT">
+                    <rect key="frame" x="44" y="203.5" width="287" height="41"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" red="0.78431372549019607" green="0.7803921568627451" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
-            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color key="backgroundColor" red="0.12941176470588234" green="0.12941176470588234" blue="0.12941176470588234" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="fo4-vG-xAd" secondAttribute="bottom" constant="40" id="51y-sK-7TU"/>
-                <constraint firstItem="fo4-vG-xAd" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="TMX-8P-t78"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="Wxk-hg-MwX" secondAttribute="trailing" constant="44" id="T0A-tC-8Ny"/>
                 <constraint firstItem="fo4-vG-xAd" firstAttribute="top" secondItem="Wxk-hg-MwX" secondAttribute="bottom" constant="20" id="UKa-N7-oHD"/>
-                <constraint firstItem="Wxk-hg-MwX" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="aAL-JK-KZX"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="iEi-nu-UKi" secondAttribute="trailing" constant="44" id="ZBd-wS-O46"/>
+                <constraint firstItem="Wxk-hg-MwX" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="44" id="e6J-n4-Mgg"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="a9W-OB-fKT" secondAttribute="trailing" constant="44" id="fTO-GC-pVD"/>
+                <constraint firstItem="iEi-nu-UKi" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="44" id="fnE-aY-6XO"/>
+                <constraint firstItem="a9W-OB-fKT" firstAttribute="top" secondItem="iEi-nu-UKi" secondAttribute="bottom" constant="20" id="foY-ZP-bdP"/>
+                <constraint firstItem="fo4-vG-xAd" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="44" id="gal-sL-Fc0"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="fo4-vG-xAd" secondAttribute="trailing" constant="44" id="hSU-9C-QZI"/>
+                <constraint firstItem="a9W-OB-fKT" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="44" id="nI7-lB-eQ9"/>
+                <constraint firstItem="iEi-nu-UKi" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="44" id="rte-IX-xOd"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
         </view>
