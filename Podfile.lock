@@ -7,7 +7,7 @@ PODS:
 
 DEPENDENCIES:
   - Alamofire
-  - BitcoinKit (from `https://github.com/kishikawakatsumi/BitcoinKit`)
+  - BitcoinKit (from `https://github.com/ealymbaev/BitcoinKit`)
   - Cuckoo
   - ObjectMapper
   - RxSwift
@@ -21,12 +21,12 @@ SPEC REPOS:
 
 EXTERNAL SOURCES:
   BitcoinKit:
-    :git: https://github.com/kishikawakatsumi/BitcoinKit
+    :git: https://github.com/ealymbaev/BitcoinKit
 
 CHECKOUT OPTIONS:
   BitcoinKit:
-    :commit: 92ba98d49bc5a3b2aa3d7327b9864f92f2e898f3
-    :git: https://github.com/kishikawakatsumi/BitcoinKit
+    :commit: c2a181eb007b6272fd77758a87630283151eafbd
+    :git: https://github.com/ealymbaev/BitcoinKit
 
 SPEC CHECKSUMS:
   Alamofire: e4fa87002c137ba2d8d634d2c51fabcda0d5c223
@@ -35,6 +35,6 @@ SPEC CHECKSUMS:
   ObjectMapper: 20505058f54e5c3ca69e1d6de9897d152a5369a6
   RxSwift: e49536837d9901277638493ea537394d4b55f570
 
-PODFILE CHECKSUM: ca38827c0ad5da6b771a4456e381acdbeddf11bd
+PODFILE CHECKSUM: 39dfaabcdceaa72cf35f7438337508fba3e039b4
 
 COCOAPODS: 1.5.3

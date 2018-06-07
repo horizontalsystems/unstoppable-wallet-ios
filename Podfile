@@ -4,7 +4,7 @@ use_frameworks!
 inhibit_all_warnings!
 
 target :Wallet do
-  pod 'BitcoinKit', git: "https://github.com/kishikawakatsumi/BitcoinKit"
+  pod 'BitcoinKit', git: "https://github.com/ealymbaev/BitcoinKit"
   pod 'Alamofire'
   pod 'ObjectMapper'
   pod 'RxSwift'
