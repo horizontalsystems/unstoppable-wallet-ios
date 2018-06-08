@@ -18,6 +18,8 @@ class WalletViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        title = "Balance"
     }
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
