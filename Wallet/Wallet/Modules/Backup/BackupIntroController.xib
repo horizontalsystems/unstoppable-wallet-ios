@@ -13,6 +13,10 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="BackupIntroController" customModule="Wallet" customModuleProvider="target">
             <connections>
+                <outlet property="backupButton" destination="Jee-WA-CMB" id="LCU-Nd-s5S"/>
+                <outlet property="laterButton" destination="pIX-BW-CyK" id="c9s-KL-nDl"/>
+                <outlet property="subtitleLabel" destination="Zlk-Zr-c6R" id="z76-eQ-S9B"/>
+                <outlet property="titleLabel" destination="pQl-Ny-Bwc" id="Skp-dU-GRU"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>

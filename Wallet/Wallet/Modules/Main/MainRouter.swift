@@ -30,6 +30,7 @@ extension MainRouter {
     private static var walletNavigation: UIViewController {
         let navigation = UINavigationController(rootViewController: WalletRouter.viewController)
         navigation.navigationBar.barStyle = .blackTranslucent
+        navigation.navigationBar.tintColor = .walletOrange
         if #available(iOS 11.0, *) {
             navigation.navigationBar.prefersLargeTitles = true
         }

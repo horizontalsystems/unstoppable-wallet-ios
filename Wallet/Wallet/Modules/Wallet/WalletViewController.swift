@@ -9,7 +9,7 @@ class WalletViewController: UIViewController {
 
         super.init(nibName: String(describing: WalletViewController.self), bundle: nil)
 
-        tabBarItem = UITabBarItem(title: "Balance", image: UIImage(named: "balance.tab_bar_item"), tag: 0)
+        tabBarItem = UITabBarItem(title: "wallet.tab_bar_item".localized, image: UIImage(named: "balance.tab_bar_item"), tag: 0)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -19,11 +19,17 @@ class WalletViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        title = "Balance"
+        title = "wallet.title".localized
+
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Backup", style: .plain, target: self, action: #selector(openBackup))
     }
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
+    }
+
+    @objc func openBackup() {
+        present(BackupRouter.viewController, animated: true)
     }
 
 }

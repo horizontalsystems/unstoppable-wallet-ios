@@ -20,7 +20,7 @@ class MainViewController: UITabBarController {
         super.viewDidLoad()
 
         tabBar.barStyle = .black
-        tabBar.tintColor = UIColor(hex: 0xf7b731)
+        tabBar.tintColor = .walletOrange
         tabBar.unselectedItemTintColor = UIColor(hex: 0x8a8a8f)
     }
 

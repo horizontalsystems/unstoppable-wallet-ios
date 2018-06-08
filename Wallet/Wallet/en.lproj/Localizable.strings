@@ -1,0 +1,28 @@
+"guest.title" = "Satoshi Wallet";
+"guest.subtitle" = "The satoshi is currently the smallest unit of the bitcoin currency recorded on the block chain. It is a one hundred millionth of a single bitcoin.\n\nThe unit has been named in collective homage to the original creator of Bitcoin, Satoshi Nakamoto";
+"guest.create_wallet" = "Create Wallet";
+"guest.restore_wallet" = "Restore Wallet";
+
+"backup.intro.title" = "Backup";
+"backup.intro.subtitle" = "Your paper key is the only way to restore your Satoshi if you lost, stolen, broken, or upgraded.\n\nWe will show you a list of words to write down on a piece of paper and keep safe.";
+"backup.intro.later" = "Later";
+"backup.intro.backup_now" = "Backup Now";
+
+"backup.words.description" = "Write down on paper and keep safe:";
+"backup.words.back" = "Back";
+"backup.words.proceed" = "Proceed";
+
+"backup.confirmation.description" = "Enter the following words from your paper key:";
+"backup.confirmation.back" = "Back";
+"backup.confirmation.confirm" = "Confirm";
+"backup.confirmation.failure_alert.text" = "Entered words do not match";
+"backup.confirmation.failure_alert.ok" = "OK";
+
+"wallet.title" = "Balance";
+"wallet.tab_bar_item" = "Balance";
+
+"transactions.title" = "Transactions";
+"transactions.tab_bar_item" = "Transactions";
+
+"settings.title" = "Settings";
+"settings.tab_bar_item" = "Settings";

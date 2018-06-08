@@ -9,7 +9,7 @@ class SettingsViewController: UIViewController {
 
         super.init(nibName: String(describing: SettingsViewController.self), bundle: nil)
 
-        tabBarItem = UITabBarItem(title: "Settings", image: UIImage(named: "settings.tab_bar_item"), tag: 0)
+        tabBarItem = UITabBarItem(title: "settings.tab_bar_item".localized, image: UIImage(named: "settings.tab_bar_item"), tag: 0)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -19,7 +19,7 @@ class SettingsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        title = "Settings"
+        title = "settings.title".localized
     }
 
     override var preferredStatusBarStyle: UIStatusBarStyle {

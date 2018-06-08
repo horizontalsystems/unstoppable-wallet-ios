@@ -13,6 +13,9 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="BackupWordsController" customModule="Wallet" customModuleProvider="target">
             <connections>
+                <outlet property="backButton" destination="vJf-He-ljv" id="tFY-Bn-VR3"/>
+                <outlet property="descriptionLabel" destination="Qx9-XV-vRB" id="1bR-Hm-0tr"/>
+                <outlet property="proceedButton" destination="gH0-TS-XHt" id="pzw-4J-SEv"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
                 <outlet property="wordsLabel" destination="Eyf-4m-z3g" id="54S-DA-4KZ"/>
             </connections>

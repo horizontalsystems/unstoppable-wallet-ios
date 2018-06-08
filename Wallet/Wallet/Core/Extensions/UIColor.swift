@@ -11,4 +11,6 @@ extension UIColor {
         )
     }
 
+    static var walletOrange: UIColor = UIColor(hex: 0xf7b731)
+
 }

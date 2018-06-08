@@ -12,6 +12,10 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="GuestViewController" customModule="Wallet" customModuleProvider="target">
             <connections>
+                <outlet property="createButton" destination="Wxk-hg-MwX" id="VpX-L8-N1H"/>
+                <outlet property="restoreButton" destination="fo4-vG-xAd" id="kD0-bi-ece"/>
+                <outlet property="subtitleLabel" destination="a9W-OB-fKT" id="Pfp-GY-p1O"/>
+                <outlet property="titleLabel" destination="iEi-nu-UKi" id="UTd-3x-g6l"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>

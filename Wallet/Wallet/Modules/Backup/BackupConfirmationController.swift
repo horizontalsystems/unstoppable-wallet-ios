@@ -5,10 +5,13 @@ class BackupConfirmationController: UIViewController {
     let viewDelegate: BackupViewDelegate
     let indexes: [Int]
 
+    @IBOutlet weak var descriptionLabel: UILabel?
     @IBOutlet weak var firstIndexLabel: UILabel?
     @IBOutlet weak var secondIndexLabel: UILabel?
     @IBOutlet weak var firstTextField: UITextField?
     @IBOutlet weak var secondTextField: UITextField?
+    @IBOutlet weak var backButton: UIButton?
+    @IBOutlet weak var confirmButton: UIButton?
 
     init(indexes: [Int], viewDelegate: BackupViewDelegate) {
         self.indexes = indexes
@@ -23,6 +26,10 @@ class BackupConfirmationController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        descriptionLabel?.text = "backup.confirmation.description".localized
+        backButton?.setTitle("backup.confirmation.back".localized, for: .normal)
+        confirmButton?.setTitle("backup.confirmation.confirm".localized, for: .normal)
 
         firstIndexLabel?.text = "\(indexes[0])."
         secondIndexLabel?.text = "\(indexes[1])."
@@ -43,8 +50,8 @@ class BackupConfirmationController: UIViewController {
     }
 
     func showValidationFailure() {
-        let alert = UIAlertController(title: "Validation Failure", message: "Entered words do not match", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        let alert = UIAlertController(title: nil, message: "backup.confirmation.failure_alert.text".localized, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "backup.confirmation.failure_alert.ok".localized, style: .default))
         present(alert, animated: true)
     }
 

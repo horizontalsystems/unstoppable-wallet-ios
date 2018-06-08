@@ -17,6 +17,7 @@
 		11B3531C51A0413CE9E255F2 /* GuestPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B350896FD41EC360BF7C25 /* GuestPresenter.swift */; };
 		11B353288472DE6900D80937 /* RestoreInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35B73F0C6D8B024361AF0 /* RestoreInteractor.swift */; };
 		11B353814993068D6DD2E3D6 /* MainModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35B96D2BC5994AC8EC794 /* MainModule.swift */; };
+		11B3538285F6775A3BDA1B22 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B357CB2B48B51957A1275C /* String.swift */; };
 		11B3538BCEB71A64DB75C141 /* TransactionsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3569AE7CDF7E217CAB4EE /* TransactionsPresenter.swift */; };
 		11B353DE19A64319CBE588D9 /* TransactionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35DA289721CFEFD099C7A /* TransactionCell.swift */; };
 		11B3546128004E2E5F3CD23A /* RestorePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35BAEE22C144B33661819 /* RestorePresenter.swift */; };
@@ -24,6 +25,7 @@
 		11B356C850CF9D3ED8AB8F31 /* RestoreInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B351381CFD795B26A63D7E /* RestoreInteractorTests.swift */; };
 		11B357613EB9379724943733 /* SettingsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B358E99DF63240BDC45AC5 /* SettingsPresenter.swift */; };
 		11B35799F8F13270FC63ADA5 /* Transaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35FB8A495A565BAA856C9 /* Transaction.swift */; };
+		11B3586C585791EA7ADD161E /* LocalizationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35F871B19631695FB5EF5 /* LocalizationHelper.swift */; };
 		11B358A760BD438603221A95 /* BackupInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35D009B0B81FD2595D72B /* BackupInteractorTests.swift */; };
 		11B358FC0506C474AED7C3AA /* SettingsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35579A4D79791ACF1BC91 /* SettingsRouter.swift */; };
 		11B35A9409FD0D29BCFF7CC6 /* MainRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35D163D12BE823AF54E97 /* MainRouter.swift */; };
@@ -69,6 +71,7 @@
 		D3B62A9320CA467E005A9F80 /* TransactionsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D3B62A9120CA467E005A9F80 /* TransactionsViewController.xib */; };
 		D3B62A9620CA46EB005A9F80 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3B62A9420CA46EB005A9F80 /* SettingsViewController.swift */; };
 		D3B62A9720CA46EB005A9F80 /* SettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D3B62A9520CA46EB005A9F80 /* SettingsViewController.xib */; };
+		D3B62A9A20CA73A0005A9F80 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = D3B62A9C20CA73A0005A9F80 /* Localizable.strings */; };
 		ED00FF1BB226F7DD21685D86 /* Pods_Wallet.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B387EF06E93BBDBAEEFF66EE /* Pods_Wallet.framework */; };
 /* End PBXBuildFile section */
 
@@ -98,6 +101,7 @@
 		11B3569AE7CDF7E217CAB4EE /* TransactionsPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionsPresenter.swift; sourceTree = "<group>"; };
 		11B356A624E0982E0D90F9BB /* WalletPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletPresenter.swift; sourceTree = "<group>"; };
 		11B356CEB7192CE21DD1BC8B /* BackupModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackupModule.swift; sourceTree = "<group>"; };
+		11B357CB2B48B51957A1275C /* String.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		11B358586003E20B167B1442 /* RestoreModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestoreModule.swift; sourceTree = "<group>"; };
 		11B358E99DF63240BDC45AC5 /* SettingsPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsPresenter.swift; sourceTree = "<group>"; };
 		11B359E7A75E6B92D1305F40 /* MainPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainPresenter.swift; sourceTree = "<group>"; };
@@ -117,6 +121,7 @@
 		11B35DDABED90E97417092F5 /* WalletRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletRouter.swift; sourceTree = "<group>"; };
 		11B35E402C000B78E52BD5EE /* BackupPresenterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackupPresenterTests.swift; sourceTree = "<group>"; };
 		11B35E8FAD4459A09E979332 /* BackupStubProviders.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackupStubProviders.swift; sourceTree = "<group>"; };
+		11B35F871B19631695FB5EF5 /* LocalizationHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalizationHelper.swift; sourceTree = "<group>"; };
 		11B35FB8A495A565BAA856C9 /* Transaction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Transaction.swift; sourceTree = "<group>"; };
 		11B35FE128D9CEE89C9F0F6B /* SettingsModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsModule.swift; sourceTree = "<group>"; };
 		11B35FF2D2C084366AA66F32 /* GuestPresenterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GuestPresenterTests.swift; sourceTree = "<group>"; };
@@ -156,6 +161,7 @@
 		D3B62A9120CA467E005A9F80 /* TransactionsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TransactionsViewController.xib; sourceTree = "<group>"; };
 		D3B62A9420CA46EB005A9F80 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		D3B62A9520CA46EB005A9F80 /* SettingsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingsViewController.xib; sourceTree = "<group>"; };
+		D3B62A9B20CA73A0005A9F80 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		D5F5D323E150F570A893EA81 /* Pods_WalletTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WalletTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E0167CDDDE72AD25821A2E28 /* Pods-Wallet.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Wallet.debug.xcconfig"; path = "../Pods/Target Support Files/Pods-Wallet/Pods-Wallet.debug.xcconfig"; sourceTree = "<group>"; };
 		FBB4716F707E0CDB8833815B /* Pods-WalletTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WalletTests.release.xcconfig"; path = "../Pods/Target Support Files/Pods-WalletTests/Pods-WalletTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -227,6 +233,7 @@
 			isa = PBXGroup;
 			children = (
 				11B35D02A4639155F5453ABB /* UIColor.swift */,
+				11B357CB2B48B51957A1275C /* String.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -255,6 +262,7 @@
 			isa = PBXGroup;
 			children = (
 				11B351FA9EE5A867FC6760C5 /* Extensions */,
+				11B358A1A370E4E3F518241F /* Helpers */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -295,6 +303,14 @@
 				D3B62A9120CA467E005A9F80 /* TransactionsViewController.xib */,
 			);
 			path = Transactions;
+			sourceTree = "<group>";
+		};
+		11B358A1A370E4E3F518241F /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				11B35F871B19631695FB5EF5 /* LocalizationHelper.swift */,
+			);
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 		11B358D87B2EDEB8BE8F133B /* Settings */ = {
@@ -396,6 +412,7 @@
 				D3285F4520BD158E00644076 /* AppDelegate.swift */,
 				D3373DB120C52F640082BC4A /* LaunchScreen.xib */,
 				D3285F5120BD158F00644076 /* Info.plist */,
+				D3B62A9C20CA73A0005A9F80 /* Localizable.strings */,
 				D3373DAA20BFB0260082BC4A /* Wallet-Bridging-Header.h */,
 				D3285F4720BD158E00644076 /* ViewController.swift */,
 				11B3500BCB1B34AD75DC8624 /* NetworkManager.swift */,
@@ -513,6 +530,7 @@
 				D3B62A8B20CA40DC005A9F80 /* MainViewController.xib in Resources */,
 				D3B62A9720CA46EB005A9F80 /* SettingsViewController.xib in Resources */,
 				D348A77320C7C58900803B9E /* BackupIntroController.xib in Resources */,
+				D3B62A9A20CA73A0005A9F80 /* Localizable.strings in Resources */,
 				D3285F4D20BD158F00644076 /* Assets.xcassets in Resources */,
 				11B35319892846CB42A23599 /* GuestViewController.xib in Resources */,
 				D3373DBA20C564450082BC4A /* BackupWordsController.xib in Resources */,
@@ -673,6 +691,8 @@
 				11B357613EB9379724943733 /* SettingsPresenter.swift in Sources */,
 				11B358FC0506C474AED7C3AA /* SettingsRouter.swift in Sources */,
 				11B3522E2CF47724A4ECD9CE /* UIColor.swift in Sources */,
+				11B3586C585791EA7ADD161E /* LocalizationHelper.swift in Sources */,
+				11B3538285F6775A3BDA1B22 /* String.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -697,6 +717,17 @@
 			targetProxy = D3373DC420C658660082BC4A /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		D3B62A9C20CA73A0005A9F80 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D3B62A9B20CA73A0005A9F80 /* en */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		D3285F5220BD158F00644076 /* Debug */ = {

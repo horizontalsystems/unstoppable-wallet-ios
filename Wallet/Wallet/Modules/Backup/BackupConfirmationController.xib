@@ -13,6 +13,9 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="BackupConfirmationController" customModule="Wallet" customModuleProvider="target">
             <connections>
+                <outlet property="backButton" destination="yQ1-tl-QeG" id="bkV-bc-t4Y"/>
+                <outlet property="confirmButton" destination="ds8-fE-ysI" id="9xi-L2-mQ5"/>
+                <outlet property="descriptionLabel" destination="7xW-yq-vhA" id="QpQ-aZ-ZbG"/>
                 <outlet property="firstIndexLabel" destination="b9a-cs-ALa" id="Xaw-oS-Atz"/>
                 <outlet property="firstTextField" destination="UyM-bb-LSD" id="sva-XU-FI7"/>
                 <outlet property="secondIndexLabel" destination="sUf-lC-5d5" id="9mj-cd-rZh"/>
