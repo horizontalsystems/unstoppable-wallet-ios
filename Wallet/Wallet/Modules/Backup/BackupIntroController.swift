@@ -1,13 +1,13 @@
 import UIKit
 
-class BackupWalletIntroController: UIViewController {
+class BackupIntroController: UIViewController {
 
-    let viewDelegate: BackupWalletViewDelegate
+    let viewDelegate: BackupViewDelegate
 
-    init(viewDelegate: BackupWalletViewDelegate) {
+    init(viewDelegate: BackupViewDelegate) {
         self.viewDelegate = viewDelegate
 
-        super.init(nibName: String(describing: BackupWalletIntroController.self), bundle: nil)
+        super.init(nibName: String(describing: BackupIntroController.self), bundle: nil)
     }
 
     required init?(coder aDecoder: NSCoder) {

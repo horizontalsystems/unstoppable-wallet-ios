@@ -1,13 +1,13 @@
 import UIKit
 
-class BalanceViewController: UIViewController {
+class WalletViewController: UIViewController {
 
-    let viewDelegate: BalanceViewDelegate
+    let viewDelegate: WalletViewDelegate
 
-    init(viewDelegate: BalanceViewDelegate) {
+    init(viewDelegate: WalletViewDelegate) {
         self.viewDelegate = viewDelegate
 
-        super.init(nibName: String(describing: BalanceViewController.self), bundle: nil)
+        super.init(nibName: String(describing: WalletViewController.self), bundle: nil)
 
         tabBarItem = UITabBarItem(title: "Balance", image: UIImage(named: "balance.tab_bar_item"), tag: 0)
     }

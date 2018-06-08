@@ -1,4 +1,4 @@
-import Foundation
+import UIKit
 
 class MainRouter {
     weak var viewController: UIViewController?
@@ -15,7 +15,7 @@ extension MainRouter {
         let presenter = MainPresenter(router: router)
 
         let viewControllers = [
-            BalanceRouter.viewController,
+            WalletRouter.viewController,
             TransactionsRouter.viewController,
             SettingsRouter.viewController
         ]

@@ -9,62 +9,62 @@
 /* Begin PBXBuildFile section */
 		11B350021803A9BE10492F30 /* GuestRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35ADA6828A0EF11976938 /* GuestRouter.swift */; };
 		11B350EBB160E6A0C679BD3C /* GuestPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35FF2D2C084366AA66F32 /* GuestPresenterTests.swift */; };
-		11B35199B905F813F626AD3C /* BackupWalletPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35E402C000B78E52BD5EE /* BackupWalletPresenterTests.swift */; };
+		11B35199B905F813F626AD3C /* BackupPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35E402C000B78E52BD5EE /* BackupPresenterTests.swift */; };
 		11B3522E2CF47724A4ECD9CE /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35D02A4639155F5453ABB /* UIColor.swift */; };
 		11B352919DB96F08A6CD6885 /* SettingsModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35FE128D9CEE89C9F0F6B /* SettingsModule.swift */; };
 		11B352F241E85176E38286FF /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3500BCB1B34AD75DC8624 /* NetworkManager.swift */; };
 		11B35319892846CB42A23599 /* GuestViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 11B35119CB772BB43AE8B1D5 /* GuestViewController.xib */; };
 		11B3531C51A0413CE9E255F2 /* GuestPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B350896FD41EC360BF7C25 /* GuestPresenter.swift */; };
-		11B353288472DE6900D80937 /* RestoreWalletInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35B73F0C6D8B024361AF0 /* RestoreWalletInteractor.swift */; };
+		11B353288472DE6900D80937 /* RestoreInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35B73F0C6D8B024361AF0 /* RestoreInteractor.swift */; };
 		11B353814993068D6DD2E3D6 /* MainModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35B96D2BC5994AC8EC794 /* MainModule.swift */; };
 		11B3538BCEB71A64DB75C141 /* TransactionsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3569AE7CDF7E217CAB4EE /* TransactionsPresenter.swift */; };
 		11B353DE19A64319CBE588D9 /* TransactionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35DA289721CFEFD099C7A /* TransactionCell.swift */; };
-		11B3546128004E2E5F3CD23A /* RestoreWalletPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35BAEE22C144B33661819 /* RestoreWalletPresenter.swift */; };
+		11B3546128004E2E5F3CD23A /* RestorePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35BAEE22C144B33661819 /* RestorePresenter.swift */; };
 		11B356949FB74ACE63ABB6E0 /* GuestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B353D57AB36A9CF4DEE090 /* GuestViewController.swift */; };
-		11B356C850CF9D3ED8AB8F31 /* RestoreWalletInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B351381CFD795B26A63D7E /* RestoreWalletInteractorTests.swift */; };
+		11B356C850CF9D3ED8AB8F31 /* RestoreInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B351381CFD795B26A63D7E /* RestoreInteractorTests.swift */; };
 		11B357613EB9379724943733 /* SettingsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B358E99DF63240BDC45AC5 /* SettingsPresenter.swift */; };
 		11B35799F8F13270FC63ADA5 /* Transaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35FB8A495A565BAA856C9 /* Transaction.swift */; };
-		11B358A760BD438603221A95 /* BackupWalletInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35D009B0B81FD2595D72B /* BackupWalletInteractorTests.swift */; };
+		11B358A760BD438603221A95 /* BackupInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35D009B0B81FD2595D72B /* BackupInteractorTests.swift */; };
 		11B358FC0506C474AED7C3AA /* SettingsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35579A4D79791ACF1BC91 /* SettingsRouter.swift */; };
 		11B35A9409FD0D29BCFF7CC6 /* MainRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35D163D12BE823AF54E97 /* MainRouter.swift */; };
-		11B35B13C3F8532568AE83E5 /* BalanceModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35DC5A4019EA28C92B1E7 /* BalanceModule.swift */; };
+		11B35B13C3F8532568AE83E5 /* WalletModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35DC5A4019EA28C92B1E7 /* WalletModule.swift */; };
 		11B35B69063AB2169EE50580 /* MainPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B359E7A75E6B92D1305F40 /* MainPresenter.swift */; };
 		11B35B99F2CB665E76E66A91 /* TransactionsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3520E9F70FFB8CC2D25A3 /* TransactionsRouter.swift */; };
-		11B35BA21EAB383C3DE6FA5A /* BalanceRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35DDABED90E97417092F5 /* BalanceRouter.swift */; };
+		11B35BA21EAB383C3DE6FA5A /* WalletRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35DDABED90E97417092F5 /* WalletRouter.swift */; };
 		11B35BBF5B172D88906E2605 /* UnspentOutputData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35CD9637FC4BCD0453C46 /* UnspentOutputData.swift */; };
-		11B35BCBBF60CA8A041E97B0 /* BackupWalletRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35D66E95B16C32E3796E8 /* BackupWalletRouter.swift */; };
-		11B35BCEC18400181DF64491 /* RestoreWalletRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35142DB758C8B2397D115 /* RestoreWalletRouter.swift */; };
-		11B35BFADC930EF5007A177F /* RestoreWalletModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B358586003E20B167B1442 /* RestoreWalletModule.swift */; };
-		11B35CBAB5F1BF7AAF6543A3 /* BalancePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B356A624E0982E0D90F9BB /* BalancePresenter.swift */; };
+		11B35BCBBF60CA8A041E97B0 /* BackupRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35D66E95B16C32E3796E8 /* BackupRouter.swift */; };
+		11B35BCEC18400181DF64491 /* RestoreRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35142DB758C8B2397D115 /* RestoreRouter.swift */; };
+		11B35BFADC930EF5007A177F /* RestoreModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B358586003E20B167B1442 /* RestoreModule.swift */; };
+		11B35CBAB5F1BF7AAF6543A3 /* WalletPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B356A624E0982E0D90F9BB /* WalletPresenter.swift */; };
 		11B35CCB29E73CAB6D26C949 /* TransactionsModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35687F7521B1F22786638 /* TransactionsModule.swift */; };
-		11B35DA379AE43A774D84246 /* BackupWalletModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B356CEB7192CE21DD1BC8B /* BackupWalletModule.swift */; };
+		11B35DA379AE43A774D84246 /* BackupModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B356CEB7192CE21DD1BC8B /* BackupModule.swift */; };
 		11B35DD6FFE1E112E9FCC63E /* GuestModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35BC220F1D90BF6BF3AAF /* GuestModule.swift */; };
 		11B35E0E5714E8A2F4B2D2E7 /* UnspentOutput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35A742770B11CA83B7BD0 /* UnspentOutput.swift */; };
-		11B35E9C0E8F38C063A48367 /* BackupWalletPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B355771A1D96DB96FBC975 /* BackupWalletPresenter.swift */; };
-		11B35F56DE01B03CCFB49E32 /* BackupWalletInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B353A3B460BF1B24349F9F /* BackupWalletInteractor.swift */; };
-		11B35FE3B7C94E0CB9CDFB99 /* BackupWalletStubProviders.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35E8FAD4459A09E979332 /* BackupWalletStubProviders.swift */; };
+		11B35E9C0E8F38C063A48367 /* BackupPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B355771A1D96DB96FBC975 /* BackupPresenter.swift */; };
+		11B35F56DE01B03CCFB49E32 /* BackupInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B353A3B460BF1B24349F9F /* BackupInteractor.swift */; };
+		11B35FE3B7C94E0CB9CDFB99 /* BackupStubProviders.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35E8FAD4459A09E979332 /* BackupStubProviders.swift */; };
 		4FFC912E7E11D506DC05EFA7 /* Pods_WalletTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5F5D323E150F570A893EA81 /* Pods_WalletTests.framework */; };
 		D3285F4620BD158E00644076 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3285F4520BD158E00644076 /* AppDelegate.swift */; };
 		D3285F4820BD158E00644076 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3285F4720BD158E00644076 /* ViewController.swift */; };
 		D3285F4D20BD158F00644076 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D3285F4C20BD158F00644076 /* Assets.xcassets */; };
 		D3373D9520BEC7B30082BC4A /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3373D9420BEC7B30082BC4A /* AVFoundation.framework */; };
 		D3373DB220C52F640082BC4A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = D3373DB120C52F640082BC4A /* LaunchScreen.xib */; };
-		D3373DB920C564450082BC4A /* BackupWalletWordsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3373DB720C564450082BC4A /* BackupWalletWordsController.swift */; };
-		D3373DBA20C564450082BC4A /* BackupWalletWordsController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D3373DB820C564450082BC4A /* BackupWalletWordsController.xib */; };
+		D3373DB920C564450082BC4A /* BackupWordsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3373DB720C564450082BC4A /* BackupWordsController.swift */; };
+		D3373DBA20C564450082BC4A /* BackupWordsController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D3373DB820C564450082BC4A /* BackupWordsController.xib */; };
 		D3373DCB20C67B5B0082BC4A /* GeneratedMocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3373DCA20C67B5B0082BC4A /* GeneratedMocks.swift */; };
-		D3373DCE20C6B21C0082BC4A /* RestoreWalletViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3373DCC20C6B21C0082BC4A /* RestoreWalletViewController.swift */; };
-		D3373DCF20C6B21C0082BC4A /* RestoreWalletViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D3373DCD20C6B21C0082BC4A /* RestoreWalletViewController.xib */; };
-		D348A76E20C7C44500803B9E /* BackupWalletNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D348A76C20C7C44500803B9E /* BackupWalletNavigationController.swift */; };
-		D348A76F20C7C44500803B9E /* BackupWalletNavigationController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D348A76D20C7C44500803B9E /* BackupWalletNavigationController.xib */; };
-		D348A77220C7C58900803B9E /* BackupWalletIntroController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D348A77020C7C58900803B9E /* BackupWalletIntroController.swift */; };
-		D348A77320C7C58900803B9E /* BackupWalletIntroController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D348A77120C7C58900803B9E /* BackupWalletIntroController.xib */; };
-		D348A77620C7D34100803B9E /* BackupWalletConfirmationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D348A77420C7D34100803B9E /* BackupWalletConfirmationController.swift */; };
-		D348A77720C7D34100803B9E /* BackupWalletConfirmationController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D348A77520C7D34100803B9E /* BackupWalletConfirmationController.xib */; };
+		D3373DCE20C6B21C0082BC4A /* RestoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3373DCC20C6B21C0082BC4A /* RestoreViewController.swift */; };
+		D3373DCF20C6B21C0082BC4A /* RestoreViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D3373DCD20C6B21C0082BC4A /* RestoreViewController.xib */; };
+		D348A76E20C7C44500803B9E /* BackupNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D348A76C20C7C44500803B9E /* BackupNavigationController.swift */; };
+		D348A76F20C7C44500803B9E /* BackupNavigationController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D348A76D20C7C44500803B9E /* BackupNavigationController.xib */; };
+		D348A77220C7C58900803B9E /* BackupIntroController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D348A77020C7C58900803B9E /* BackupIntroController.swift */; };
+		D348A77320C7C58900803B9E /* BackupIntroController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D348A77120C7C58900803B9E /* BackupIntroController.xib */; };
+		D348A77620C7D34100803B9E /* BackupConfirmationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D348A77420C7D34100803B9E /* BackupConfirmationController.swift */; };
+		D348A77720C7D34100803B9E /* BackupConfirmationController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D348A77520C7D34100803B9E /* BackupConfirmationController.xib */; };
 		D3B62A8320C9522A005A9F80 /* CoreBitcoin.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3373DAF20BFB4FE0082BC4A /* CoreBitcoin.framework */; };
 		D3B62A8A20CA40DC005A9F80 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3B62A8820CA40DC005A9F80 /* MainViewController.swift */; };
 		D3B62A8B20CA40DC005A9F80 /* MainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D3B62A8920CA40DC005A9F80 /* MainViewController.xib */; };
-		D3B62A8E20CA436F005A9F80 /* BalanceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3B62A8C20CA436F005A9F80 /* BalanceViewController.swift */; };
-		D3B62A8F20CA436F005A9F80 /* BalanceViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D3B62A8D20CA436F005A9F80 /* BalanceViewController.xib */; };
+		D3B62A8E20CA436F005A9F80 /* WalletViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3B62A8C20CA436F005A9F80 /* WalletViewController.swift */; };
+		D3B62A8F20CA436F005A9F80 /* WalletViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D3B62A8D20CA436F005A9F80 /* WalletViewController.xib */; };
 		D3B62A9220CA467E005A9F80 /* TransactionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3B62A9020CA467E005A9F80 /* TransactionsViewController.swift */; };
 		D3B62A9320CA467E005A9F80 /* TransactionsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D3B62A9120CA467E005A9F80 /* TransactionsViewController.xib */; };
 		D3B62A9620CA46EB005A9F80 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3B62A9420CA46EB005A9F80 /* SettingsViewController.swift */; };
@@ -87,36 +87,36 @@
 		11B3500BCB1B34AD75DC8624 /* NetworkManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		11B350896FD41EC360BF7C25 /* GuestPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GuestPresenter.swift; sourceTree = "<group>"; };
 		11B35119CB772BB43AE8B1D5 /* GuestViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GuestViewController.xib; sourceTree = "<group>"; };
-		11B351381CFD795B26A63D7E /* RestoreWalletInteractorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestoreWalletInteractorTests.swift; sourceTree = "<group>"; };
-		11B35142DB758C8B2397D115 /* RestoreWalletRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestoreWalletRouter.swift; sourceTree = "<group>"; };
+		11B351381CFD795B26A63D7E /* RestoreInteractorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestoreInteractorTests.swift; sourceTree = "<group>"; };
+		11B35142DB758C8B2397D115 /* RestoreRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestoreRouter.swift; sourceTree = "<group>"; };
 		11B3520E9F70FFB8CC2D25A3 /* TransactionsRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionsRouter.swift; sourceTree = "<group>"; };
-		11B353A3B460BF1B24349F9F /* BackupWalletInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackupWalletInteractor.swift; sourceTree = "<group>"; };
+		11B353A3B460BF1B24349F9F /* BackupInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackupInteractor.swift; sourceTree = "<group>"; };
 		11B353D57AB36A9CF4DEE090 /* GuestViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GuestViewController.swift; sourceTree = "<group>"; };
-		11B355771A1D96DB96FBC975 /* BackupWalletPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackupWalletPresenter.swift; sourceTree = "<group>"; };
+		11B355771A1D96DB96FBC975 /* BackupPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackupPresenter.swift; sourceTree = "<group>"; };
 		11B35579A4D79791ACF1BC91 /* SettingsRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsRouter.swift; sourceTree = "<group>"; };
 		11B35687F7521B1F22786638 /* TransactionsModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionsModule.swift; sourceTree = "<group>"; };
 		11B3569AE7CDF7E217CAB4EE /* TransactionsPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionsPresenter.swift; sourceTree = "<group>"; };
-		11B356A624E0982E0D90F9BB /* BalancePresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BalancePresenter.swift; sourceTree = "<group>"; };
-		11B356CEB7192CE21DD1BC8B /* BackupWalletModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackupWalletModule.swift; sourceTree = "<group>"; };
-		11B358586003E20B167B1442 /* RestoreWalletModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestoreWalletModule.swift; sourceTree = "<group>"; };
+		11B356A624E0982E0D90F9BB /* WalletPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletPresenter.swift; sourceTree = "<group>"; };
+		11B356CEB7192CE21DD1BC8B /* BackupModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackupModule.swift; sourceTree = "<group>"; };
+		11B358586003E20B167B1442 /* RestoreModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestoreModule.swift; sourceTree = "<group>"; };
 		11B358E99DF63240BDC45AC5 /* SettingsPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsPresenter.swift; sourceTree = "<group>"; };
 		11B359E7A75E6B92D1305F40 /* MainPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainPresenter.swift; sourceTree = "<group>"; };
 		11B35A742770B11CA83B7BD0 /* UnspentOutput.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnspentOutput.swift; sourceTree = "<group>"; };
 		11B35ADA6828A0EF11976938 /* GuestRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GuestRouter.swift; sourceTree = "<group>"; };
-		11B35B73F0C6D8B024361AF0 /* RestoreWalletInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestoreWalletInteractor.swift; sourceTree = "<group>"; };
+		11B35B73F0C6D8B024361AF0 /* RestoreInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestoreInteractor.swift; sourceTree = "<group>"; };
 		11B35B96D2BC5994AC8EC794 /* MainModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainModule.swift; sourceTree = "<group>"; };
-		11B35BAEE22C144B33661819 /* RestoreWalletPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestoreWalletPresenter.swift; sourceTree = "<group>"; };
+		11B35BAEE22C144B33661819 /* RestorePresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestorePresenter.swift; sourceTree = "<group>"; };
 		11B35BC220F1D90BF6BF3AAF /* GuestModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GuestModule.swift; sourceTree = "<group>"; };
 		11B35CD9637FC4BCD0453C46 /* UnspentOutputData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnspentOutputData.swift; sourceTree = "<group>"; };
-		11B35D009B0B81FD2595D72B /* BackupWalletInteractorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackupWalletInteractorTests.swift; sourceTree = "<group>"; };
+		11B35D009B0B81FD2595D72B /* BackupInteractorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackupInteractorTests.swift; sourceTree = "<group>"; };
 		11B35D02A4639155F5453ABB /* UIColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 		11B35D163D12BE823AF54E97 /* MainRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainRouter.swift; sourceTree = "<group>"; };
-		11B35D66E95B16C32E3796E8 /* BackupWalletRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackupWalletRouter.swift; sourceTree = "<group>"; };
+		11B35D66E95B16C32E3796E8 /* BackupRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackupRouter.swift; sourceTree = "<group>"; };
 		11B35DA289721CFEFD099C7A /* TransactionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionCell.swift; sourceTree = "<group>"; };
-		11B35DC5A4019EA28C92B1E7 /* BalanceModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BalanceModule.swift; sourceTree = "<group>"; };
-		11B35DDABED90E97417092F5 /* BalanceRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BalanceRouter.swift; sourceTree = "<group>"; };
-		11B35E402C000B78E52BD5EE /* BackupWalletPresenterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackupWalletPresenterTests.swift; sourceTree = "<group>"; };
-		11B35E8FAD4459A09E979332 /* BackupWalletStubProviders.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackupWalletStubProviders.swift; sourceTree = "<group>"; };
+		11B35DC5A4019EA28C92B1E7 /* WalletModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletModule.swift; sourceTree = "<group>"; };
+		11B35DDABED90E97417092F5 /* WalletRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletRouter.swift; sourceTree = "<group>"; };
+		11B35E402C000B78E52BD5EE /* BackupPresenterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackupPresenterTests.swift; sourceTree = "<group>"; };
+		11B35E8FAD4459A09E979332 /* BackupStubProviders.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackupStubProviders.swift; sourceTree = "<group>"; };
 		11B35FB8A495A565BAA856C9 /* Transaction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Transaction.swift; sourceTree = "<group>"; };
 		11B35FE128D9CEE89C9F0F6B /* SettingsModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsModule.swift; sourceTree = "<group>"; };
 		11B35FF2D2C084366AA66F32 /* GuestPresenterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GuestPresenterTests.swift; sourceTree = "<group>"; };
@@ -135,23 +135,23 @@
 		D3373DAA20BFB0260082BC4A /* Wallet-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Wallet-Bridging-Header.h"; sourceTree = "<group>"; };
 		D3373DAF20BFB4FE0082BC4A /* CoreBitcoin.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = CoreBitcoin.framework; sourceTree = "<group>"; };
 		D3373DB120C52F640082BC4A /* LaunchScreen.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LaunchScreen.xib; sourceTree = "<group>"; };
-		D3373DB720C564450082BC4A /* BackupWalletWordsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupWalletWordsController.swift; sourceTree = "<group>"; };
-		D3373DB820C564450082BC4A /* BackupWalletWordsController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BackupWalletWordsController.xib; sourceTree = "<group>"; };
+		D3373DB720C564450082BC4A /* BackupWordsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupWordsController.swift; sourceTree = "<group>"; };
+		D3373DB820C564450082BC4A /* BackupWordsController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BackupWordsController.xib; sourceTree = "<group>"; };
 		D3373DBF20C658660082BC4A /* WalletTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WalletTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D3373DC320C658660082BC4A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D3373DCA20C67B5B0082BC4A /* GeneratedMocks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneratedMocks.swift; sourceTree = "<group>"; };
-		D3373DCC20C6B21C0082BC4A /* RestoreWalletViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestoreWalletViewController.swift; sourceTree = "<group>"; };
-		D3373DCD20C6B21C0082BC4A /* RestoreWalletViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RestoreWalletViewController.xib; sourceTree = "<group>"; };
-		D348A76C20C7C44500803B9E /* BackupWalletNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupWalletNavigationController.swift; sourceTree = "<group>"; };
-		D348A76D20C7C44500803B9E /* BackupWalletNavigationController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BackupWalletNavigationController.xib; sourceTree = "<group>"; };
-		D348A77020C7C58900803B9E /* BackupWalletIntroController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupWalletIntroController.swift; sourceTree = "<group>"; };
-		D348A77120C7C58900803B9E /* BackupWalletIntroController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BackupWalletIntroController.xib; sourceTree = "<group>"; };
-		D348A77420C7D34100803B9E /* BackupWalletConfirmationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupWalletConfirmationController.swift; sourceTree = "<group>"; };
-		D348A77520C7D34100803B9E /* BackupWalletConfirmationController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BackupWalletConfirmationController.xib; sourceTree = "<group>"; };
+		D3373DCC20C6B21C0082BC4A /* RestoreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestoreViewController.swift; sourceTree = "<group>"; };
+		D3373DCD20C6B21C0082BC4A /* RestoreViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RestoreViewController.xib; sourceTree = "<group>"; };
+		D348A76C20C7C44500803B9E /* BackupNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupNavigationController.swift; sourceTree = "<group>"; };
+		D348A76D20C7C44500803B9E /* BackupNavigationController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BackupNavigationController.xib; sourceTree = "<group>"; };
+		D348A77020C7C58900803B9E /* BackupIntroController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupIntroController.swift; sourceTree = "<group>"; };
+		D348A77120C7C58900803B9E /* BackupIntroController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BackupIntroController.xib; sourceTree = "<group>"; };
+		D348A77420C7D34100803B9E /* BackupConfirmationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupConfirmationController.swift; sourceTree = "<group>"; };
+		D348A77520C7D34100803B9E /* BackupConfirmationController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BackupConfirmationController.xib; sourceTree = "<group>"; };
 		D3B62A8820CA40DC005A9F80 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		D3B62A8920CA40DC005A9F80 /* MainViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainViewController.xib; sourceTree = "<group>"; };
-		D3B62A8C20CA436F005A9F80 /* BalanceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceViewController.swift; sourceTree = "<group>"; };
-		D3B62A8D20CA436F005A9F80 /* BalanceViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BalanceViewController.xib; sourceTree = "<group>"; };
+		D3B62A8C20CA436F005A9F80 /* WalletViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletViewController.swift; sourceTree = "<group>"; };
+		D3B62A8D20CA436F005A9F80 /* WalletViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WalletViewController.xib; sourceTree = "<group>"; };
 		D3B62A9020CA467E005A9F80 /* TransactionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionsViewController.swift; sourceTree = "<group>"; };
 		D3B62A9120CA467E005A9F80 /* TransactionsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TransactionsViewController.xib; sourceTree = "<group>"; };
 		D3B62A9420CA46EB005A9F80 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
@@ -198,29 +198,29 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
-		11B351A958188BFC3A37003F /* Balance */ = {
+		11B351A958188BFC3A37003F /* Wallet */ = {
 			isa = PBXGroup;
 			children = (
-				11B35DC5A4019EA28C92B1E7 /* BalanceModule.swift */,
-				11B35DDABED90E97417092F5 /* BalanceRouter.swift */,
-				11B356A624E0982E0D90F9BB /* BalancePresenter.swift */,
-				D3B62A8C20CA436F005A9F80 /* BalanceViewController.swift */,
-				D3B62A8D20CA436F005A9F80 /* BalanceViewController.xib */,
+				11B35DC5A4019EA28C92B1E7 /* WalletModule.swift */,
+				11B35DDABED90E97417092F5 /* WalletRouter.swift */,
+				11B356A624E0982E0D90F9BB /* WalletPresenter.swift */,
+				D3B62A8C20CA436F005A9F80 /* WalletViewController.swift */,
+				D3B62A8D20CA436F005A9F80 /* WalletViewController.xib */,
 			);
-			path = Balance;
+			path = Wallet;
 			sourceTree = "<group>";
 		};
-		11B351DB654E3B13593BF465 /* RestoreWallet */ = {
+		11B351DB654E3B13593BF465 /* Restore */ = {
 			isa = PBXGroup;
 			children = (
-				11B358586003E20B167B1442 /* RestoreWalletModule.swift */,
-				11B35142DB758C8B2397D115 /* RestoreWalletRouter.swift */,
-				11B35B73F0C6D8B024361AF0 /* RestoreWalletInteractor.swift */,
-				11B35BAEE22C144B33661819 /* RestoreWalletPresenter.swift */,
-				D3373DCC20C6B21C0082BC4A /* RestoreWalletViewController.swift */,
-				D3373DCD20C6B21C0082BC4A /* RestoreWalletViewController.xib */,
+				11B358586003E20B167B1442 /* RestoreModule.swift */,
+				11B35142DB758C8B2397D115 /* RestoreRouter.swift */,
+				11B35B73F0C6D8B024361AF0 /* RestoreInteractor.swift */,
+				11B35BAEE22C144B33661819 /* RestorePresenter.swift */,
+				D3373DCC20C6B21C0082BC4A /* RestoreViewController.swift */,
+				D3373DCD20C6B21C0082BC4A /* RestoreViewController.xib */,
 			);
-			path = RestoreWallet;
+			path = Restore;
 			sourceTree = "<group>";
 		};
 		11B351FA9EE5A867FC6760C5 /* Extensions */ = {
@@ -231,24 +231,24 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
-		11B3522E3A62CE13EB0C958B /* BackupWallet */ = {
+		11B3522E3A62CE13EB0C958B /* Backup */ = {
 			isa = PBXGroup;
 			children = (
-				11B356CEB7192CE21DD1BC8B /* BackupWalletModule.swift */,
-				11B35D66E95B16C32E3796E8 /* BackupWalletRouter.swift */,
-				11B353A3B460BF1B24349F9F /* BackupWalletInteractor.swift */,
-				11B355771A1D96DB96FBC975 /* BackupWalletPresenter.swift */,
-				D348A76C20C7C44500803B9E /* BackupWalletNavigationController.swift */,
-				D348A76D20C7C44500803B9E /* BackupWalletNavigationController.xib */,
-				D348A77020C7C58900803B9E /* BackupWalletIntroController.swift */,
-				D348A77120C7C58900803B9E /* BackupWalletIntroController.xib */,
-				D3373DB720C564450082BC4A /* BackupWalletWordsController.swift */,
-				D3373DB820C564450082BC4A /* BackupWalletWordsController.xib */,
-				D348A77420C7D34100803B9E /* BackupWalletConfirmationController.swift */,
-				D348A77520C7D34100803B9E /* BackupWalletConfirmationController.xib */,
-				11B35E8FAD4459A09E979332 /* BackupWalletStubProviders.swift */,
+				11B356CEB7192CE21DD1BC8B /* BackupModule.swift */,
+				11B35D66E95B16C32E3796E8 /* BackupRouter.swift */,
+				11B353A3B460BF1B24349F9F /* BackupInteractor.swift */,
+				11B355771A1D96DB96FBC975 /* BackupPresenter.swift */,
+				D348A76C20C7C44500803B9E /* BackupNavigationController.swift */,
+				D348A76D20C7C44500803B9E /* BackupNavigationController.xib */,
+				D348A77020C7C58900803B9E /* BackupIntroController.swift */,
+				D348A77120C7C58900803B9E /* BackupIntroController.xib */,
+				D3373DB720C564450082BC4A /* BackupWordsController.swift */,
+				D3373DB820C564450082BC4A /* BackupWordsController.xib */,
+				D348A77420C7D34100803B9E /* BackupConfirmationController.swift */,
+				D348A77520C7D34100803B9E /* BackupConfirmationController.xib */,
+				11B35E8FAD4459A09E979332 /* BackupStubProviders.swift */,
 			);
-			path = BackupWallet;
+			path = Backup;
 			sourceTree = "<group>";
 		};
 		11B3546BA60E06900F58BA94 /* Core */ = {
@@ -263,10 +263,10 @@
 			isa = PBXGroup;
 			children = (
 				11B35E6ACAC42984FD7E8BA4 /* Guest */,
-				11B3522E3A62CE13EB0C958B /* BackupWallet */,
-				11B351DB654E3B13593BF465 /* RestoreWallet */,
+				11B3522E3A62CE13EB0C958B /* Backup */,
+				11B351DB654E3B13593BF465 /* Restore */,
 				11B35597F6C8570E3C7ABFBF /* Main */,
-				11B351A958188BFC3A37003F /* Balance */,
+				11B351A958188BFC3A37003F /* Wallet */,
 				11B3564BD80DA937DE5060DD /* Transactions */,
 				11B358D87B2EDEB8BE8F133B /* Settings */,
 			);
@@ -309,20 +309,20 @@
 			path = Settings;
 			sourceTree = "<group>";
 		};
-		11B35960726074449A17AAAB /* RestoreWallet */ = {
+		11B35960726074449A17AAAB /* Restore */ = {
 			isa = PBXGroup;
 			children = (
-				11B351381CFD795B26A63D7E /* RestoreWalletInteractorTests.swift */,
+				11B351381CFD795B26A63D7E /* RestoreInteractorTests.swift */,
 			);
-			path = RestoreWallet;
+			path = Restore;
 			sourceTree = "<group>";
 		};
 		11B35A1D12389D09984007C1 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
 				11B35EEFC20B3D7A4F474D3B /* Guest */,
-				11B35FC86F7693583B779C58 /* BackupWallet */,
-				11B35960726074449A17AAAB /* RestoreWallet */,
+				11B35FC86F7693583B779C58 /* Backup */,
+				11B35960726074449A17AAAB /* Restore */,
 			);
 			path = Modules;
 			sourceTree = "<group>";
@@ -347,13 +347,13 @@
 			path = Guest;
 			sourceTree = "<group>";
 		};
-		11B35FC86F7693583B779C58 /* BackupWallet */ = {
+		11B35FC86F7693583B779C58 /* Backup */ = {
 			isa = PBXGroup;
 			children = (
-				11B35D009B0B81FD2595D72B /* BackupWalletInteractorTests.swift */,
-				11B35E402C000B78E52BD5EE /* BackupWalletPresenterTests.swift */,
+				11B35D009B0B81FD2595D72B /* BackupInteractorTests.swift */,
+				11B35E402C000B78E52BD5EE /* BackupPresenterTests.swift */,
 			);
-			path = BackupWallet;
+			path = Backup;
 			sourceTree = "<group>";
 		};
 		95AD93BB0A2D5F5C4A435252 /* Frameworks */ = {
@@ -505,17 +505,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				D3373DB220C52F640082BC4A /* LaunchScreen.xib in Resources */,
-				D348A77720C7D34100803B9E /* BackupWalletConfirmationController.xib in Resources */,
-				D3373DCF20C6B21C0082BC4A /* RestoreWalletViewController.xib in Resources */,
-				D3B62A8F20CA436F005A9F80 /* BalanceViewController.xib in Resources */,
-				D348A76F20C7C44500803B9E /* BackupWalletNavigationController.xib in Resources */,
+				D348A77720C7D34100803B9E /* BackupConfirmationController.xib in Resources */,
+				D3373DCF20C6B21C0082BC4A /* RestoreViewController.xib in Resources */,
+				D3B62A8F20CA436F005A9F80 /* WalletViewController.xib in Resources */,
+				D348A76F20C7C44500803B9E /* BackupNavigationController.xib in Resources */,
 				D3B62A9320CA467E005A9F80 /* TransactionsViewController.xib in Resources */,
 				D3B62A8B20CA40DC005A9F80 /* MainViewController.xib in Resources */,
 				D3B62A9720CA46EB005A9F80 /* SettingsViewController.xib in Resources */,
-				D348A77320C7C58900803B9E /* BackupWalletIntroController.xib in Resources */,
+				D348A77320C7C58900803B9E /* BackupIntroController.xib in Resources */,
 				D3285F4D20BD158F00644076 /* Assets.xcassets in Resources */,
 				11B35319892846CB42A23599 /* GuestViewController.xib in Resources */,
-				D3373DBA20C564450082BC4A /* BackupWalletWordsController.xib in Resources */,
+				D3373DBA20C564450082BC4A /* BackupWordsController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -596,8 +596,8 @@
 			);
 			inputPaths = (
 				"$(SRCROOT)/Wallet/Modules/Guest/GuestModule.swift",
-				"$(SRCROOT)/Wallet/Modules/BackupWallet/BackupWalletModule.swift",
-				"$(SRCROOT)/Wallet/Modules/RestoreWallet/RestoreWalletModule.swift",
+				"$(SRCROOT)/Wallet/Modules/Backup/BackupModule.swift",
+				"$(SRCROOT)/Wallet/Modules/Restore/RestoreModule.swift",
 			);
 			name = Cuckoo;
 			outputPaths = (
@@ -634,38 +634,38 @@
 				D3285F4820BD158E00644076 /* ViewController.swift in Sources */,
 				D3285F4620BD158E00644076 /* AppDelegate.swift in Sources */,
 				11B352F241E85176E38286FF /* NetworkManager.swift in Sources */,
-				D348A77220C7C58900803B9E /* BackupWalletIntroController.swift in Sources */,
+				D348A77220C7C58900803B9E /* BackupIntroController.swift in Sources */,
 				D3B62A9220CA467E005A9F80 /* TransactionsViewController.swift in Sources */,
 				11B35E0E5714E8A2F4B2D2E7 /* UnspentOutput.swift in Sources */,
 				11B35BBF5B172D88906E2605 /* UnspentOutputData.swift in Sources */,
 				D3B62A9620CA46EB005A9F80 /* SettingsViewController.swift in Sources */,
-				D348A76E20C7C44500803B9E /* BackupWalletNavigationController.swift in Sources */,
+				D348A76E20C7C44500803B9E /* BackupNavigationController.swift in Sources */,
 				D3B62A8A20CA40DC005A9F80 /* MainViewController.swift in Sources */,
 				11B353DE19A64319CBE588D9 /* TransactionCell.swift in Sources */,
-				D3B62A8E20CA436F005A9F80 /* BalanceViewController.swift in Sources */,
-				D3373DB920C564450082BC4A /* BackupWalletWordsController.swift in Sources */,
+				D3B62A8E20CA436F005A9F80 /* WalletViewController.swift in Sources */,
+				D3373DB920C564450082BC4A /* BackupWordsController.swift in Sources */,
 				11B35799F8F13270FC63ADA5 /* Transaction.swift in Sources */,
 				11B356949FB74ACE63ABB6E0 /* GuestViewController.swift in Sources */,
-				D348A77620C7D34100803B9E /* BackupWalletConfirmationController.swift in Sources */,
+				D348A77620C7D34100803B9E /* BackupConfirmationController.swift in Sources */,
 				11B350021803A9BE10492F30 /* GuestRouter.swift in Sources */,
-				D3373DCE20C6B21C0082BC4A /* RestoreWalletViewController.swift in Sources */,
+				D3373DCE20C6B21C0082BC4A /* RestoreViewController.swift in Sources */,
 				11B3531C51A0413CE9E255F2 /* GuestPresenter.swift in Sources */,
-				11B35BCBBF60CA8A041E97B0 /* BackupWalletRouter.swift in Sources */,
-				11B35E9C0E8F38C063A48367 /* BackupWalletPresenter.swift in Sources */,
-				11B35F56DE01B03CCFB49E32 /* BackupWalletInteractor.swift in Sources */,
-				11B35BCEC18400181DF64491 /* RestoreWalletRouter.swift in Sources */,
-				11B353288472DE6900D80937 /* RestoreWalletInteractor.swift in Sources */,
-				11B3546128004E2E5F3CD23A /* RestoreWalletPresenter.swift in Sources */,
-				11B35DA379AE43A774D84246 /* BackupWalletModule.swift in Sources */,
+				11B35BCBBF60CA8A041E97B0 /* BackupRouter.swift in Sources */,
+				11B35E9C0E8F38C063A48367 /* BackupPresenter.swift in Sources */,
+				11B35F56DE01B03CCFB49E32 /* BackupInteractor.swift in Sources */,
+				11B35BCEC18400181DF64491 /* RestoreRouter.swift in Sources */,
+				11B353288472DE6900D80937 /* RestoreInteractor.swift in Sources */,
+				11B3546128004E2E5F3CD23A /* RestorePresenter.swift in Sources */,
+				11B35DA379AE43A774D84246 /* BackupModule.swift in Sources */,
 				11B35DD6FFE1E112E9FCC63E /* GuestModule.swift in Sources */,
-				11B35BFADC930EF5007A177F /* RestoreWalletModule.swift in Sources */,
-				11B35FE3B7C94E0CB9CDFB99 /* BackupWalletStubProviders.swift in Sources */,
+				11B35BFADC930EF5007A177F /* RestoreModule.swift in Sources */,
+				11B35FE3B7C94E0CB9CDFB99 /* BackupStubProviders.swift in Sources */,
 				11B353814993068D6DD2E3D6 /* MainModule.swift in Sources */,
 				11B35A9409FD0D29BCFF7CC6 /* MainRouter.swift in Sources */,
 				11B35B69063AB2169EE50580 /* MainPresenter.swift in Sources */,
-				11B35B13C3F8532568AE83E5 /* BalanceModule.swift in Sources */,
-				11B35BA21EAB383C3DE6FA5A /* BalanceRouter.swift in Sources */,
-				11B35CBAB5F1BF7AAF6543A3 /* BalancePresenter.swift in Sources */,
+				11B35B13C3F8532568AE83E5 /* WalletModule.swift in Sources */,
+				11B35BA21EAB383C3DE6FA5A /* WalletRouter.swift in Sources */,
+				11B35CBAB5F1BF7AAF6543A3 /* WalletPresenter.swift in Sources */,
 				11B35B99F2CB665E76E66A91 /* TransactionsRouter.swift in Sources */,
 				11B3538BCEB71A64DB75C141 /* TransactionsPresenter.swift in Sources */,
 				11B35CCB29E73CAB6D26C949 /* TransactionsModule.swift in Sources */,
@@ -682,9 +682,9 @@
 			files = (
 				D3373DCB20C67B5B0082BC4A /* GeneratedMocks.swift in Sources */,
 				11B350EBB160E6A0C679BD3C /* GuestPresenterTests.swift in Sources */,
-				11B358A760BD438603221A95 /* BackupWalletInteractorTests.swift in Sources */,
-				11B35199B905F813F626AD3C /* BackupWalletPresenterTests.swift in Sources */,
-				11B356C850CF9D3ED8AB8F31 /* RestoreWalletInteractorTests.swift in Sources */,
+				11B358A760BD438603221A95 /* BackupInteractorTests.swift in Sources */,
+				11B35199B905F813F626AD3C /* BackupPresenterTests.swift in Sources */,
+				11B356C850CF9D3ED8AB8F31 /* RestoreInteractorTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

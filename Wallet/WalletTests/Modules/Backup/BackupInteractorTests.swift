@@ -2,12 +2,12 @@ import XCTest
 import Cuckoo
 @testable import Wallet
 
-class BackupWalletInteractorTests: XCTestCase {
+class BackupInteractorTests: XCTestCase {
 
-    private var mockPresenter: MockBackupWalletPresenterProtocol!
-    private var mockWordsProvider: MockBackupWalletWordsProviderProtocol!
-    private var mockIndexesProvider: MockBackupWalletRandomIndexesProviderProtocol!
-    private var interactor: BackupWalletInteractor!
+    private var mockPresenter: MockBackupPresenterProtocol!
+    private var mockWordsProvider: MockBackupWordsProviderProtocol!
+    private var mockIndexesProvider: MockBackupRandomIndexesProviderProtocol!
+    private var interactor: BackupInteractor!
 
     private let words = ["burden", "swap", "fabric", "book", "palm", "main", "salute", "raw", "core", "reflect", "parade", "tone"]
     private let indexes = [2, 11]
@@ -15,10 +15,10 @@ class BackupWalletInteractorTests: XCTestCase {
     override func setUp() {
         super.setUp()
 
-        mockPresenter = MockBackupWalletPresenterProtocol()
-        mockWordsProvider = MockBackupWalletWordsProviderProtocol()
-        mockIndexesProvider = MockBackupWalletRandomIndexesProviderProtocol()
-        interactor = BackupWalletInteractor(wordsProvider: mockWordsProvider, indexesProvider: mockIndexesProvider)
+        mockPresenter = MockBackupPresenterProtocol()
+        mockWordsProvider = MockBackupWordsProviderProtocol()
+        mockIndexesProvider = MockBackupRandomIndexesProviderProtocol()
+        interactor = BackupInteractor(wordsProvider: mockWordsProvider, indexesProvider: mockIndexesProvider)
 
         interactor.presenter = mockPresenter
 

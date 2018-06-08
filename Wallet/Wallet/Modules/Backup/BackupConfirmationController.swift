@@ -1,8 +1,8 @@
 import UIKit
 
-class BackupWalletConfirmationController: UIViewController {
+class BackupConfirmationController: UIViewController {
 
-    let viewDelegate: BackupWalletViewDelegate
+    let viewDelegate: BackupViewDelegate
     let indexes: [Int]
 
     @IBOutlet weak var firstIndexLabel: UILabel?
@@ -10,11 +10,11 @@ class BackupWalletConfirmationController: UIViewController {
     @IBOutlet weak var firstTextField: UITextField?
     @IBOutlet weak var secondTextField: UITextField?
 
-    init(indexes: [Int], viewDelegate: BackupWalletViewDelegate) {
+    init(indexes: [Int], viewDelegate: BackupViewDelegate) {
         self.indexes = indexes
         self.viewDelegate = viewDelegate
 
-        super.init(nibName: String(describing: BackupWalletConfirmationController.self), bundle: nil)
+        super.init(nibName: String(describing: BackupConfirmationController.self), bundle: nil)
     }
 
     required init?(coder aDecoder: NSCoder) {

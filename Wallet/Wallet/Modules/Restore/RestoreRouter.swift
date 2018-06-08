@@ -1,10 +1,10 @@
 import Foundation
 
-class RestoreWalletRouter {
+class RestoreRouter {
     weak var viewController: UIViewController?
 }
 
-extension RestoreWalletRouter: RestoreWalletRouterProtocol {
+extension RestoreRouter: RestoreRouterProtocol {
 
     func close() {
         viewController?.dismiss(animated: true)
@@ -12,13 +12,13 @@ extension RestoreWalletRouter: RestoreWalletRouterProtocol {
 
 }
 
-extension RestoreWalletRouter {
+extension RestoreRouter {
 
     static var viewController: UIViewController {
-        let router = RestoreWalletRouter()
-        let interactor = RestoreWalletInteractor()
-        let presenter = RestoreWalletPresenter(delegate: interactor, router: router)
-        let viewController = RestoreWalletViewController(viewDelegate: presenter)
+        let router = RestoreRouter()
+        let interactor = RestoreInteractor()
+        let presenter = RestorePresenter(delegate: interactor, router: router)
+        let viewController = RestoreViewController(viewDelegate: presenter)
 
         presenter.view = viewController
         router.viewController = viewController

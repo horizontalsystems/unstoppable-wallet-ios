@@ -1,6 +1,6 @@
 import Foundation
 
-protocol BackupWalletViewDelegate {
+protocol BackupViewDelegate {
     func cancelDidTap()
     func showWordsDidTap()
     func hideWordsDidTap()
@@ -9,7 +9,7 @@ protocol BackupWalletViewDelegate {
     func validateDidTap(confirmationWords: [Int: String])
 }
 
-protocol BackupWalletViewProtocol: class {
+protocol BackupViewProtocol: class {
     func show(words: [String])
     func showConfirmation(withIndexes indexes: [Int])
     func hideWords()
@@ -17,27 +17,27 @@ protocol BackupWalletViewProtocol: class {
     func showValidationFailure()
 }
 
-protocol BackupWalletPresenterDelegate {
+protocol BackupPresenterDelegate {
     func fetchWords()
     func fetchConfirmationIndexes()
     func validate(confirmationWords: [Int: String])
 }
 
-protocol BackupWalletPresenterProtocol: class {
+protocol BackupPresenterProtocol: class {
     func didFetch(words: [String])
     func didFetch(confirmationIndexes indexes: [Int])
     func didValidateSuccess()
     func didValidateFailure()
 }
 
-protocol BackupWalletRouterProtocol {
+protocol BackupRouterProtocol {
     func close()
 }
 
-protocol BackupWalletWordsProviderProtocol {
+protocol BackupWordsProviderProtocol {
     func getWords() -> [String]
 }
 
-protocol BackupWalletRandomIndexesProviderProtocol {
+protocol BackupRandomIndexesProviderProtocol {
     func getRandomIndexes(count: Int) -> [Int]
 }

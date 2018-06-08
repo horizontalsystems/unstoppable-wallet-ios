@@ -1,19 +1,19 @@
 import Foundation
 
-class BackupWalletInteractor {
+class BackupInteractor {
 
-    weak var presenter: BackupWalletPresenterProtocol?
-    var wordsProvider: BackupWalletWordsProviderProtocol
-    var indexesProvider: BackupWalletRandomIndexesProviderProtocol
+    weak var presenter: BackupPresenterProtocol?
+    var wordsProvider: BackupWordsProviderProtocol
+    var indexesProvider: BackupRandomIndexesProviderProtocol
 
-    init(wordsProvider: BackupWalletWordsProviderProtocol, indexesProvider: BackupWalletRandomIndexesProviderProtocol) {
+    init(wordsProvider: BackupWordsProviderProtocol, indexesProvider: BackupRandomIndexesProviderProtocol) {
         self.wordsProvider = wordsProvider
         self.indexesProvider = indexesProvider
     }
 
 }
 
-extension BackupWalletInteractor: BackupWalletPresenterDelegate {
+extension BackupInteractor: BackupPresenterDelegate {
 
     func fetchWords() {
         presenter?.didFetch(words: wordsProvider.getWords())

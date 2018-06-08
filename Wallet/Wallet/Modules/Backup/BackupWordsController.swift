@@ -1,17 +1,17 @@
 import UIKit
 
-class BackupWalletWordsController: UIViewController {
+class BackupWordsController: UIViewController {
 
-    let viewDelegate: BackupWalletViewDelegate
+    let viewDelegate: BackupViewDelegate
 
     @IBOutlet weak var wordsLabel: UILabel?
     let words: [String]
 
-    init(words: [String], viewDelegate: BackupWalletViewDelegate) {
+    init(words: [String], viewDelegate: BackupViewDelegate) {
         self.words = words
         self.viewDelegate = viewDelegate
 
-        super.init(nibName: String(describing: BackupWalletWordsController.self), bundle: nil)
+        super.init(nibName: String(describing: BackupWordsController.self), bundle: nil)
     }
 
     required init?(coder aDecoder: NSCoder) {

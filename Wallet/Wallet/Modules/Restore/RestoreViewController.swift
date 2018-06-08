@@ -1,15 +1,15 @@
 import UIKit
 
-class RestoreWalletViewController: UIViewController {
+class RestoreViewController: UIViewController {
 
-    let viewDelegate: RestoreWalletViewDelegate
+    let viewDelegate: RestoreViewDelegate
 
     @IBOutlet weak var wordsTextView: UITextView?
 
-    init(viewDelegate: RestoreWalletViewDelegate) {
+    init(viewDelegate: RestoreViewDelegate) {
         self.viewDelegate = viewDelegate
 
-        super.init(nibName: String(describing: RestoreWalletViewController.self), bundle: nil)
+        super.init(nibName: String(describing: RestoreViewController.self), bundle: nil)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -39,6 +39,6 @@ class RestoreWalletViewController: UIViewController {
 
 }
 
-extension RestoreWalletViewController: RestoreWalletViewProtocol {
+extension RestoreViewController: RestoreViewProtocol {
 
 }

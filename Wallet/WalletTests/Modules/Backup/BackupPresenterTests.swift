@@ -2,12 +2,12 @@ import XCTest
 import Cuckoo
 @testable import Wallet
 
-class BackupWalletPresenterTests: XCTestCase {
+class BackupPresenterTests: XCTestCase {
 
-    private var mockRouter: MockBackupWalletRouterProtocol!
-    private var mockDelegate: MockBackupWalletPresenterDelegate!
-    private var mockView: MockBackupWalletViewProtocol!
-    private var presenter: BackupWalletPresenter!
+    private var mockRouter: MockBackupRouterProtocol!
+    private var mockDelegate: MockBackupPresenterDelegate!
+    private var mockView: MockBackupViewProtocol!
+    private var presenter: BackupPresenter!
 
     private let words = ["burden", "swap", "fabric", "book", "palm", "main", "salute", "raw", "core", "reflect", "parade", "tone"]
     private let indexes = [2, 11]
@@ -15,10 +15,10 @@ class BackupWalletPresenterTests: XCTestCase {
     override func setUp() {
         super.setUp()
 
-        mockRouter = MockBackupWalletRouterProtocol()
-        mockDelegate = MockBackupWalletPresenterDelegate()
-        mockView = MockBackupWalletViewProtocol()
-        presenter = BackupWalletPresenter(delegate: mockDelegate, router: mockRouter)
+        mockRouter = MockBackupRouterProtocol()
+        mockDelegate = MockBackupPresenterDelegate()
+        mockView = MockBackupViewProtocol()
+        presenter = BackupPresenter(delegate: mockDelegate, router: mockRouter)
 
         presenter.view = mockView
 

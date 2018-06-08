@@ -1,19 +1,19 @@
 import Foundation
 
-class BackupWalletPresenter {
+class BackupPresenter {
 
-    let delegate: BackupWalletPresenterDelegate
-    let router: BackupWalletRouterProtocol
-    weak var view: BackupWalletViewProtocol?
+    let delegate: BackupPresenterDelegate
+    let router: BackupRouterProtocol
+    weak var view: BackupViewProtocol?
 
-    init(delegate: BackupWalletPresenterDelegate, router: BackupWalletRouterProtocol) {
+    init(delegate: BackupPresenterDelegate, router: BackupRouterProtocol) {
         self.delegate = delegate
         self.router = router
     }
 
 }
 
-extension BackupWalletPresenter: BackupWalletPresenterProtocol {
+extension BackupPresenter: BackupPresenterProtocol {
 
     func didFetch(words: [String]) {
         view?.show(words: words)
@@ -33,7 +33,7 @@ extension BackupWalletPresenter: BackupWalletPresenterProtocol {
 
 }
 
-extension BackupWalletPresenter: BackupWalletViewDelegate {
+extension BackupPresenter: BackupViewDelegate {
 
     func cancelDidTap() {
         router.close()

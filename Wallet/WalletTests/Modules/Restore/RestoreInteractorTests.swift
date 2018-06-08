@@ -2,14 +2,14 @@ import XCTest
 import Cuckoo
 @testable import Wallet
 
-class RestoreWalletInteractorTests: XCTestCase {
+class RestoreInteractorTests: XCTestCase {
 
-    private var interactor: RestoreWalletInteractor!
+    private var interactor: RestoreInteractor!
 
     override func setUp() {
         super.setUp()
 
-        interactor = RestoreWalletInteractor()
+        interactor = RestoreInteractor()
     }
 
     override func tearDown() {
