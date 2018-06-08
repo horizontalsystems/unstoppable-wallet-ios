@@ -14,7 +14,7 @@ class GuestPresenterTests: XCTestCase {
         presenter = GuestPresenter(router: mockRouter)
 
         stub(mockRouter) { mock in
-            when(mock.showBackupWallet()).thenDoNothing()
+            when(mock.showMain()).thenDoNothing()
             when(mock.showRestoreWallet()).thenDoNothing()
         }
     }
@@ -26,10 +26,10 @@ class GuestPresenterTests: XCTestCase {
         super.tearDown()
     }
 
-    func testRoutesToBackupWallet() {
+    func testRoutesToMain() {
         presenter.createNewWalletDidTap()
 
-        verify(mockRouter).showBackupWallet()
+        verify(mockRouter).showMain()
     }
 
     func testRoutesToRestoreWallet() {

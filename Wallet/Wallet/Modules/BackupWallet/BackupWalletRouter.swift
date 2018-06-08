@@ -14,7 +14,7 @@ extension BackupWalletRouter: BackupWalletRouterProtocol {
 
 extension BackupWalletRouter {
 
-    static var viewController: UIViewController? {
+    static var viewController: UIViewController {
         let router = BackupWalletRouter()
         let interactor = BackupWalletInteractor(wordsProvider: WalletManager(), indexesProvider: RandomProvider())
         let presenter = BackupWalletPresenter(delegate: interactor, router: router)

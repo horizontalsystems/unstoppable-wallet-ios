@@ -13,7 +13,7 @@ class GuestPresenter {
 extension GuestPresenter: GuestViewDelegate {
 
     func createNewWalletDidTap() {
-        router.showBackupWallet()
+        router.showMain()
     }
 
     func restoreWalletDidTap() {

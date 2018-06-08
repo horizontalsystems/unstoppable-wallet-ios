@@ -6,6 +6,6 @@ protocol GuestViewDelegate {
 }
 
 protocol GuestRouterProtocol {
-    func showBackupWallet()
+    func showMain()
     func showRestoreWallet()
 }
