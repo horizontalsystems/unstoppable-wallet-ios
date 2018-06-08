@@ -7,6 +7,7 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -31,7 +32,7 @@
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enter the following words from your paper key" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7xW-yq-vhA">
                     <rect key="frame" x="44" y="64" width="287" height="41"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <color key="textColor" red="0.7843137255" green="0.78039215689999997" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="textColor" name="Silver"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="of2-5t-K4c">
@@ -55,7 +56,7 @@
                             <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="alphabet" keyboardAppearance="alert" returnKeyType="next" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no"/>
                         </textField>
                     </subviews>
-                    <color key="backgroundColor" red="0.54117647058823526" green="0.54117647058823526" blue="0.5607843137254902" alpha="0.5" colorSpace="calibratedRGB"/>
+                    <color key="backgroundColor" name="Steel50"/>
                     <constraints>
                         <constraint firstItem="b9a-cs-ALa" firstAttribute="leading" secondItem="of2-5t-K4c" secondAttribute="leading" id="8z9-ou-NVT"/>
                         <constraint firstAttribute="bottom" secondItem="b9a-cs-ALa" secondAttribute="bottom" id="JbE-DK-inA"/>
@@ -88,7 +89,7 @@
                             <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="alphabet" keyboardAppearance="alert" returnKeyType="done" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no"/>
                         </textField>
                     </subviews>
-                    <color key="backgroundColor" red="0.54117647059999996" green="0.54117647059999996" blue="0.56078431370000004" alpha="0.5" colorSpace="calibratedRGB"/>
+                    <color key="backgroundColor" name="Steel50"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="44" id="KQI-WL-Sde"/>
                         <constraint firstItem="Nmq-xc-n60" firstAttribute="leading" secondItem="sUf-lC-5d5" secondAttribute="trailing" constant="10" id="OYF-Oq-ZjD"/>
@@ -102,7 +103,7 @@
                 </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ds8-fE-ysI">
                     <rect key="frame" x="146.5" y="317" width="184.5" height="50"/>
-                    <color key="backgroundColor" red="0.96862745100000003" green="0.71764705880000002" blue="0.19215686269999999" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="backgroundColor" name="Yellow"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="50" id="Mza-eQ-O6R"/>
                     </constraints>
@@ -116,7 +117,7 @@
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yQ1-tl-QeG">
                     <rect key="frame" x="44" y="317" width="92.5" height="50"/>
-                    <color key="backgroundColor" red="0.54117647059999996" green="0.54117647059999996" blue="0.56078431370000004" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="backgroundColor" name="Gray"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="50" id="W9r-vO-of0"/>
                     </constraints>
@@ -129,7 +130,7 @@
                     </connections>
                 </button>
             </subviews>
-            <color key="backgroundColor" red="0.12941176469999999" green="0.12941176469999999" blue="0.12941176469999999" alpha="1" colorSpace="calibratedRGB"/>
+            <color key="backgroundColor" name="Dark"/>
             <constraints>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="of2-5t-K4c" secondAttribute="trailing" constant="44" id="7nt-zp-PGk"/>
                 <constraint firstItem="of2-5t-K4c" firstAttribute="top" secondItem="7xW-yq-vhA" secondAttribute="bottom" constant="20" id="Afy-6N-Sok"/>
@@ -151,4 +152,21 @@
             <point key="canvasLocation" x="33.5" y="53.5"/>
         </view>
     </objects>
+    <resources>
+        <namedColor name="Dark">
+            <color red="0.15686274509803921" green="0.16862745098039217" blue="0.20784313725490197" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="Gray">
+            <color red="0.54117647058823526" green="0.54117647058823526" blue="0.5607843137254902" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="Silver">
+            <color red="0.78431372549019607" green="0.7803921568627451" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="Steel50">
+            <color red="0.54117647058823526" green="0.54117647058823526" blue="0.5607843137254902" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="Yellow">
+            <color red="0.96862745098039216" green="0.71764705882352942" blue="0.19215686274509805" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
 </document>

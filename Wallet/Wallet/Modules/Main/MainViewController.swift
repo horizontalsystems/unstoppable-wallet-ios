@@ -20,8 +20,8 @@ class MainViewController: UITabBarController {
         super.viewDidLoad()
 
         tabBar.barStyle = .black
-        tabBar.tintColor = .walletOrange
-        tabBar.unselectedItemTintColor = UIColor(hex: 0x8a8a8f)
+        tabBar.tintColor = .cryptoYellow
+        tabBar.unselectedItemTintColor = .cryptoGray
     }
 
     override var preferredStatusBarStyle: UIStatusBarStyle {

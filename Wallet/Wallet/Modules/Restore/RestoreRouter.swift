@@ -1,4 +1,4 @@
-import Foundation
+import UIKit
 
 class RestoreRouter {
     weak var viewController: UIViewController?
@@ -25,6 +25,7 @@ extension RestoreRouter {
 
         let navigationController = UINavigationController(rootViewController: viewController)
         navigationController.navigationBar.barStyle = .blackTranslucent
+        navigationController.navigationBar.tintColor = .cryptoYellow
         return navigationController
     }
 
