@@ -6,7 +6,7 @@ class BackupRouter {
         case dismissSelf
     }
 
-    weak var viewController: UIViewController?
+    weak var navigationController: UINavigationController?
 
     let dismissMode: DismissMode
 
@@ -22,11 +22,13 @@ extension BackupRouter: BackupRouterProtocol {
         case .toMain:
           navigateToMain()
         case .dismissSelf:
-            viewController?.dismiss(animated: true)
+            navigationController?.dismiss(animated: true)
         }
     }
 
     private func navigateToMain() {
+        navigationController?.topViewController?.view.endEditing(true)
+
         guard let window = UIApplication.shared.keyWindow else {
             return
         }
@@ -46,13 +48,13 @@ extension BackupRouter {
         let router = BackupRouter(dismissMode: dismissMode)
         let interactor = BackupInteractor(walletDataProvider: Factory.instance.stubWalletDataProvider, indexesProvider: Factory.instance.randomGenerator)
         let presenter = BackupPresenter(delegate: interactor, router: router)
-        let viewController = BackupNavigationController(viewDelegate: presenter)
+        let navigationController = BackupNavigationController(viewDelegate: presenter)
 
         interactor.presenter = presenter
-        presenter.view = viewController
-        router.viewController = viewController
+        presenter.view = navigationController
+        router.navigationController = navigationController
 
-        return viewController
+        return navigationController
     }
 
 }
