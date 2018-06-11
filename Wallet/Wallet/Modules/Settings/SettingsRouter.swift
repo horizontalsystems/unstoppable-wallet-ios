@@ -10,7 +10,7 @@ extension SettingsRouter: SettingsRouterProtocol {
 
 extension SettingsRouter {
 
-    static var viewController: UIViewController {
+    static func module() -> UIViewController {
         let router = SettingsRouter()
         let presenter = SettingsPresenter(router: router)
         let viewController = SettingsViewController(viewDelegate: presenter)

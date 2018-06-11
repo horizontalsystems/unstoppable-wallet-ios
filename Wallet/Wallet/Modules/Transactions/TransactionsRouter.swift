@@ -10,7 +10,7 @@ extension TransactionsRouter: TransactionsRouterProtocol {
 
 extension TransactionsRouter {
 
-    static var viewController: UIViewController {
+    static func module() -> UIViewController {
         let router = TransactionsRouter()
         let presenter = TransactionsPresenter(router: router)
         let viewController = TransactionsViewController(viewDelegate: presenter)

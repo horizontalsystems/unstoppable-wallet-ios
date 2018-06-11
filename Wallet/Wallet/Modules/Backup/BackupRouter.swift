@@ -31,7 +31,7 @@ extension BackupRouter: BackupRouterProtocol {
             return
         }
 
-        let viewController = MainRouter.viewController
+        let viewController = MainRouter.module()
 
         UIView.transition(with: window, duration: 0.5, options: .transitionCrossDissolve, animations: {
             window.rootViewController = viewController

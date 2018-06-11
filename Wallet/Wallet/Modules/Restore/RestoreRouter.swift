@@ -14,7 +14,7 @@ extension RestoreRouter: RestoreRouterProtocol {
 
 extension RestoreRouter {
 
-    static var viewController: UIViewController {
+    static func module() -> UIViewController {
         let router = RestoreRouter()
         let interactor = RestoreInteractor()
         let presenter = RestorePresenter(delegate: interactor, router: router)

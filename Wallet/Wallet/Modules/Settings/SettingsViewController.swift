@@ -20,10 +20,26 @@ class SettingsViewController: UIViewController {
         super.viewDidLoad()
 
         title = "settings.title".localized
+
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Logout", style: .plain, target: self, action: #selector(logout))
     }
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
+    }
+
+    @objc func logout() {
+        Factory.instance.userDefaultsStorage.clearWords()
+
+        guard let window = UIApplication.shared.keyWindow else {
+            return
+        }
+
+        let viewController = GuestRouter.module()
+
+        UIView.transition(with: window, duration: 0.5, options: .transitionCrossDissolve, animations: {
+            window.rootViewController = viewController
+        })
     }
 
 }

@@ -10,7 +10,7 @@ extension WalletRouter: WalletRouterProtocol {
 
 extension WalletRouter {
 
-    static var viewController: UIViewController {
+    static func module() -> UIViewController {
         let router = WalletRouter()
         let presenter = WalletPresenter(router: router)
         let viewController = WalletViewController(viewDelegate: presenter)

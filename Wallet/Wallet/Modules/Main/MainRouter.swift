@@ -9,7 +9,7 @@ extension MainRouter: MainRouterProtocol {
 
 extension MainRouter {
 
-    static var viewController: UIViewController {
+    static func module() -> UIViewController {
         let router = MainRouter()
         let interactor = MainInteractor()
         let presenter = MainPresenter(delegate: interactor, router: router)
@@ -30,7 +30,7 @@ extension MainRouter {
     }
 
     private static var walletNavigation: UIViewController {
-        let navigation = UINavigationController(rootViewController: WalletRouter.viewController)
+        let navigation = UINavigationController(rootViewController: WalletRouter.module())
         navigation.navigationBar.barStyle = .blackTranslucent
         navigation.navigationBar.tintColor = .cryptoYellow
         navigation.navigationBar.prefersLargeTitles = true
@@ -38,7 +38,7 @@ extension MainRouter {
     }
 
     private static var transactionsNavigation: UIViewController {
-        let navigation = UINavigationController(rootViewController: TransactionsRouter.viewController)
+        let navigation = UINavigationController(rootViewController: TransactionsRouter.module())
         navigation.navigationBar.barStyle = .blackTranslucent
         navigation.navigationBar.tintColor = .cryptoYellow
         navigation.navigationBar.prefersLargeTitles = true
@@ -46,7 +46,7 @@ extension MainRouter {
     }
 
     private static var settingsNavigation: UIViewController {
-        let navigation = UINavigationController(rootViewController: SettingsRouter.viewController)
+        let navigation = UINavigationController(rootViewController: SettingsRouter.module())
         navigation.navigationBar.barStyle = .blackTranslucent
         navigation.navigationBar.tintColor = .cryptoYellow
         navigation.navigationBar.prefersLargeTitles = true

@@ -2,10 +2,23 @@ import Foundation
 
 class UserDefaultsStorage: LocalStorageProtocol {
 
-    private(set) var savedWords: [String]?
+    private let keyWords = "mnemonic_words"
+
+    var savedWords: [String]? {
+        if let wordsString = UserDefaults.standard.value(forKey: keyWords) as? String {
+            return wordsString.split(separator: " ").map(String.init)
+        }
+        return nil
+    }
 
     func save(words: [String]) {
-        savedWords = words
+        UserDefaults.standard.set(words.joined(separator: " "), forKey: keyWords)
+        UserDefaults.standard.synchronize()
+    }
+
+    func clearWords() {
+        UserDefaults.standard.removeObject(forKey: keyWords)
+        UserDefaults.standard.synchronize()
     }
 
 }
