@@ -16,7 +16,7 @@ extension BackupRouter {
 
     static var viewController: UIViewController {
         let router = BackupRouter()
-        let interactor = BackupInteractor(wordsProvider: WalletManager(), indexesProvider: RandomProvider())
+        let interactor = BackupInteractor(walletDataProvider: Factory.instance.stubWalletDataProvider, indexesProvider: Factory.instance.randomGenerator)
         let presenter = BackupPresenter(delegate: interactor, router: router)
         let viewController = BackupNavigationController(viewDelegate: presenter)
 

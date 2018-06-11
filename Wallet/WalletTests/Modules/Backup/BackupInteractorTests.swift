@@ -5,25 +5,27 @@ import Cuckoo
 class BackupInteractorTests: XCTestCase {
 
     private var mockPresenter: MockBackupPresenterProtocol!
-    private var mockWordsProvider: MockBackupWordsProviderProtocol!
+    private var mockWalletDataProvider: MockWalletDataProviderProtocol!
     private var mockIndexesProvider: MockBackupRandomIndexesProviderProtocol!
     private var interactor: BackupInteractor!
 
-    private let words = ["burden", "swap", "fabric", "book", "palm", "main", "salute", "raw", "core", "reflect", "parade", "tone"]
+    private let walletData = WalletData(
+            words: ["burden", "swap", "fabric", "book", "palm", "main", "salute", "raw", "core", "reflect", "parade", "tone"]
+    )
     private let indexes = [2, 11]
 
     override func setUp() {
         super.setUp()
 
         mockPresenter = MockBackupPresenterProtocol()
-        mockWordsProvider = MockBackupWordsProviderProtocol()
+        mockWalletDataProvider = MockWalletDataProviderProtocol()
         mockIndexesProvider = MockBackupRandomIndexesProviderProtocol()
-        interactor = BackupInteractor(wordsProvider: mockWordsProvider, indexesProvider: mockIndexesProvider)
+        interactor = BackupInteractor(walletDataProvider: mockWalletDataProvider, indexesProvider: mockIndexesProvider)
 
         interactor.presenter = mockPresenter
 
-        stub(mockWordsProvider) { mock in
-            when(mock.getWords()).thenReturn(words)
+        stub(mockWalletDataProvider) { mock in
+            when(mock.walletData.get).thenReturn(walletData)
         }
         stub(mockIndexesProvider) { mock in
             when(mock.getRandomIndexes(count: 2)).thenReturn(indexes)
@@ -38,7 +40,7 @@ class BackupInteractorTests: XCTestCase {
 
     override func tearDown() {
         mockPresenter = nil
-        mockWordsProvider = nil
+        mockWalletDataProvider = nil
         mockIndexesProvider = nil
         interactor = nil
 
@@ -48,7 +50,7 @@ class BackupInteractorTests: XCTestCase {
     func testFetchWords() {
         interactor.fetchWords()
 
-        verify(mockPresenter).didFetch(words: equal(to: words))
+        verify(mockPresenter).didFetch(words: equal(to: walletData.words))
     }
 
     func testFetchConfirmationIndexes() {

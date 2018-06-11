@@ -34,10 +34,6 @@ protocol BackupRouterProtocol {
     func close()
 }
 
-protocol BackupWordsProviderProtocol {
-    func getWords() -> [String]
-}
-
 protocol BackupRandomIndexesProviderProtocol {
     func getRandomIndexes(count: Int) -> [Int]
 }

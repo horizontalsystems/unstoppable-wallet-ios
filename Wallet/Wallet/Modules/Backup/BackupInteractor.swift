@@ -3,11 +3,11 @@ import Foundation
 class BackupInteractor {
 
     weak var presenter: BackupPresenterProtocol?
-    var wordsProvider: BackupWordsProviderProtocol
+    var walletDataProvider: WalletDataProviderProtocol
     var indexesProvider: BackupRandomIndexesProviderProtocol
 
-    init(wordsProvider: BackupWordsProviderProtocol, indexesProvider: BackupRandomIndexesProviderProtocol) {
-        self.wordsProvider = wordsProvider
+    init(walletDataProvider: WalletDataProviderProtocol, indexesProvider: BackupRandomIndexesProviderProtocol) {
+        self.walletDataProvider = walletDataProvider
         self.indexesProvider = indexesProvider
     }
 
@@ -16,7 +16,7 @@ class BackupInteractor {
 extension BackupInteractor: BackupPresenterDelegate {
 
     func fetchWords() {
-        presenter?.didFetch(words: wordsProvider.getWords())
+        presenter?.didFetch(words: walletDataProvider.walletData.words)
     }
 
     func fetchConfirmationIndexes() {
@@ -24,7 +24,7 @@ extension BackupInteractor: BackupPresenterDelegate {
     }
 
     func validate(confirmationWords: [Int: String]) {
-        let words = wordsProvider.getWords()
+        let words = walletDataProvider.walletData.words
 
         for (index, word) in confirmationWords {
             if index > words.count || word != words[index - 1] {
