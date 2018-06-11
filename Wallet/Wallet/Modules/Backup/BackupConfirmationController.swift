@@ -51,7 +51,7 @@ class BackupConfirmationController: UIViewController {
 
     func showValidationFailure() {
         let alert = UIAlertController(title: nil, message: "backup.confirmation.failure_alert.text".localized, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "backup.confirmation.failure_alert.ok".localized, style: .default))
+        alert.addAction(UIAlertAction(title: "alert.ok".localized, style: .default))
         present(alert, animated: true)
     }
 

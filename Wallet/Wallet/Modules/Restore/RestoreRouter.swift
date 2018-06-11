@@ -6,6 +6,20 @@ class RestoreRouter {
 
 extension RestoreRouter: RestoreRouterProtocol {
 
+    func navigateToMain() {
+        viewController?.view.endEditing(true)
+
+        guard let window = UIApplication.shared.keyWindow else {
+            return
+        }
+
+        let controller = MainRouter.module()
+
+        UIView.transition(with: window, duration: 0.5, options: .transitionCrossDissolve, animations: {
+            window.rootViewController = controller
+        })
+    }
+
     func close() {
         viewController?.dismiss(animated: true)
     }
@@ -16,10 +30,11 @@ extension RestoreRouter {
 
     static func module() -> UIViewController {
         let router = RestoreRouter()
-        let interactor = RestoreInteractor()
+        let interactor = RestoreInteractor(mnemonic: Factory.instance.mnemonicManager, localStorage: Factory.instance.userDefaultsStorage)
         let presenter = RestorePresenter(delegate: interactor, router: router)
         let viewController = RestoreViewController(viewDelegate: presenter)
 
+        interactor.presenter = presenter
         presenter.view = viewController
         router.viewController = viewController
 

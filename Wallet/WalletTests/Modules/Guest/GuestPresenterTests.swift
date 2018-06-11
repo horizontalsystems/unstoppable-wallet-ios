@@ -25,6 +25,7 @@ class GuestPresenterTests: XCTestCase {
     }
 
     override func tearDown() {
+        mockDelegate = nil
         mockRouter = nil
         presenter = nil
 

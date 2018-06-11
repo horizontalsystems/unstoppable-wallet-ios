@@ -13,7 +13,23 @@ class RestorePresenter {
 
 }
 
+extension RestorePresenter: RestorePresenterProtocol {
+
+    func didFailToRestore() {
+        view?.showWordsValidationFailure()
+    }
+
+    func didRestoreWallet() {
+        router.navigateToMain()
+    }
+
+}
+
 extension RestorePresenter: RestoreViewDelegate {
+
+    func restoreDidTap(withWords words: [String]) {
+        delegate.restoreWallet(withWords: words)
+    }
 
     func cancelDidTap() {
         router.close()

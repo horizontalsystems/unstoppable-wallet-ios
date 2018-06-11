@@ -11,4 +11,5 @@ protocol LocalStorageProtocol {
 
 protocol MnemonicProtocol {
     func generateWords() -> [String]
+    func validate(words: [String]) -> Bool
 }

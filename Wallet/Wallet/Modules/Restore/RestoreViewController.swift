@@ -5,6 +5,7 @@ class RestoreViewController: UIViewController {
     let viewDelegate: RestoreViewDelegate
 
     @IBOutlet weak var wordsTextView: UITextView?
+    @IBOutlet weak var descriptionLabel: UILabel?
 
     init(viewDelegate: RestoreViewDelegate) {
         self.viewDelegate = viewDelegate
@@ -19,10 +20,11 @@ class RestoreViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        title = "Restore Wallet"
+        title = "restore.title".localized
+        descriptionLabel?.text = "restore.description".localized
 
-        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancelDidTap))
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(doneDidTap))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "navigation_bar.cancel".localized, style: .plain, target: self, action: #selector(cancelDidTap))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "restore.restore".localized, style: .plain, target: self, action: #selector(restoreDidTap))
     }
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -33,12 +35,19 @@ class RestoreViewController: UIViewController {
         viewDelegate.cancelDidTap()
     }
 
-    @objc func doneDidTap() {
-
+    @objc func restoreDidTap() {
+        let wordsString = wordsTextView?.text ?? ""
+        viewDelegate.restoreDidTap(withWords: wordsString.split(separator: " ").map(String.init))
     }
 
 }
 
 extension RestoreViewController: RestoreViewProtocol {
+
+    func showWordsValidationFailure() {
+        let alert = UIAlertController(title: nil, message: "restore.validation_failed".localized, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "alert.ok".localized, style: .default))
+        present(alert, animated: true)
+    }
 
 }
