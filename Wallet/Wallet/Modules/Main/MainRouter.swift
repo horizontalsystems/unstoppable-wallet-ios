@@ -5,14 +5,14 @@ class MainRouter {
 }
 
 extension MainRouter: MainRouterProtocol {
-
 }
 
 extension MainRouter {
 
     static var viewController: UIViewController {
         let router = MainRouter()
-        let presenter = MainPresenter(router: router)
+        let interactor = MainInteractor()
+        let presenter = MainPresenter(delegate: interactor, router: router)
 
         let viewControllers = [
             walletNavigation,
@@ -22,6 +22,8 @@ extension MainRouter {
 
         let viewController = MainViewController(viewDelegate: presenter, viewControllers: viewControllers)
 
+        interactor.presenter = presenter
+        presenter.view = viewController
         router.viewController = viewController
 
         return viewController

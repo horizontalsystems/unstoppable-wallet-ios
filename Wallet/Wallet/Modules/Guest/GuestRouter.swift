@@ -6,8 +6,8 @@ class GuestRouter {
 
 extension GuestRouter: GuestRouterProtocol {
 
-    func showMain() {
-        viewController?.present(MainRouter.viewController, animated: true)
+    func showBackupRoutingToMain() {
+        viewController?.present(BackupRouter.module(dismissMode: .toMain), animated: true)
     }
 
     func showRestoreWallet() {
@@ -20,9 +20,11 @@ extension GuestRouter {
 
     static var viewController: UIViewController {
         let router = GuestRouter()
-        let presenter = GuestPresenter(router: router)
+        let interactor = GuestInteractor(mnemonic: Factory.instance.mnemonicManager, localStorage: Factory.instance.userDefaultsStorage)
+        let presenter = GuestPresenter(delegate: interactor, router: router)
         let viewController = GuestViewController(viewDelegate: presenter)
 
+        interactor.presenter = presenter
         router.viewController = viewController
 
         return viewController

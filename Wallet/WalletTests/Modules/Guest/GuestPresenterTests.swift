@@ -4,17 +4,22 @@ import Cuckoo
 
 class GuestPresenterTests: XCTestCase {
 
+    private var mockDelegate: MockGuestPresenterDelegate!
     private var mockRouter: MockGuestRouterProtocol!
     private var presenter: GuestPresenter!
 
     override func setUp() {
         super.setUp()
 
+        mockDelegate = MockGuestPresenterDelegate()
         mockRouter = MockGuestRouterProtocol()
-        presenter = GuestPresenter(router: mockRouter)
+        presenter = GuestPresenter(delegate: mockDelegate, router: mockRouter)
 
+        stub(mockDelegate) { mock in
+            when(mock.createWallet()).thenDoNothing()
+        }
         stub(mockRouter) { mock in
-            when(mock.showMain()).thenDoNothing()
+            when(mock.showBackupRoutingToMain()).thenDoNothing()
             when(mock.showRestoreWallet()).thenDoNothing()
         }
     }
@@ -26,10 +31,16 @@ class GuestPresenterTests: XCTestCase {
         super.tearDown()
     }
 
-    func testRoutesToMain() {
+    func testDelegatesCreateWallet() {
         presenter.createNewWalletDidTap()
 
-        verify(mockRouter).showMain()
+        verify(mockDelegate).createWallet()
+    }
+
+    func testRoutesToBackupOnCreateWallet() {
+        presenter.didCreateWallet()
+
+        verify(mockRouter).showBackupRoutingToMain()
     }
 
     func testRoutesToRestoreWallet() {

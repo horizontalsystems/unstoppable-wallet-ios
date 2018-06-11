@@ -12,6 +12,10 @@ class Factory {
         return StubWalletDataProvider()
     })}
 
+    var userDefaultsStorage: UserDefaultsStorage { return getInstance(creator: {
+        return UserDefaultsStorage()
+    })}
+
     var randomGenerator: RandomGenerator { return getInstance(creator: {
         return RandomGenerator()
     })}

@@ -2,14 +2,19 @@ import Foundation
 
 class MainPresenter {
 
-    private let router: MainRouterProtocol
+    let delegate: MainPresenterDelegate
+    let router: MainRouterProtocol
+    weak var view: MainViewProtocol?
 
-    init(router: MainRouterProtocol) {
+    init(delegate: MainPresenterDelegate, router: MainRouterProtocol) {
+        self.delegate = delegate
         self.router = router
     }
 
 }
 
-extension MainPresenter: MainViewDelegate {
+extension MainPresenter: MainPresenterProtocol {
+}
 
+extension MainPresenter: MainViewDelegate {
 }

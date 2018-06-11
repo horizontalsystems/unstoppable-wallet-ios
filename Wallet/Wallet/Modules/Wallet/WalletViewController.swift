@@ -29,7 +29,7 @@ class WalletViewController: UIViewController {
     }
 
     @objc func openBackup() {
-        present(BackupRouter.viewController, animated: true)
+        present(BackupRouter.module(dismissMode: .dismissSelf), animated: true)
     }
 
 }

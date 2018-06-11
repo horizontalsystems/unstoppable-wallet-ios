@@ -29,3 +29,6 @@ class MainViewController: UITabBarController {
     }
 
 }
+
+extension MainViewController: MainViewProtocol {
+}

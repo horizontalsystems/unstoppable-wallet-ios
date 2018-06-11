@@ -2,6 +2,8 @@ import Foundation
 
 class StubWalletDataProvider: WalletDataProviderProtocol {
 
-    let walletData = WalletData(words: Factory.instance.mnemonicManager.generateWords())
+    var walletData: WalletData {
+        return WalletData(words: Factory.instance.userDefaultsStorage.savedWords ?? [])
+    }
 
 }

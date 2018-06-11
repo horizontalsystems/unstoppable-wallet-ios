@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		11B350021803A9BE10492F30 /* GuestRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35ADA6828A0EF11976938 /* GuestRouter.swift */; };
 		11B350EBB160E6A0C679BD3C /* GuestPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35FF2D2C084366AA66F32 /* GuestPresenterTests.swift */; };
+		11B3513A4B558F63630CF68D /* GuestInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35618B87C6BBA7D29E8E7 /* GuestInteractorTests.swift */; };
 		11B35199B905F813F626AD3C /* BackupPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35E402C000B78E52BD5EE /* BackupPresenterTests.swift */; };
 		11B3522E2CF47724A4ECD9CE /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35D02A4639155F5453ABB /* UIColor.swift */; };
 		11B352919DB96F08A6CD6885 /* SettingsModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35FE128D9CEE89C9F0F6B /* SettingsModule.swift */; };
@@ -26,6 +27,7 @@
 		11B354D04599199832DDAC94 /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35A5DE20DD6DD486FAFC0 /* Protocols.swift */; };
 		11B356949FB74ACE63ABB6E0 /* GuestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B353D57AB36A9CF4DEE090 /* GuestViewController.swift */; };
 		11B356C850CF9D3ED8AB8F31 /* RestoreInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B351381CFD795B26A63D7E /* RestoreInteractorTests.swift */; };
+		11B3573B7C7DFC4E005490F3 /* UserDefaultsStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35B079198B54EB8D609CC /* UserDefaultsStorage.swift */; };
 		11B357613EB9379724943733 /* SettingsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B358E99DF63240BDC45AC5 /* SettingsPresenter.swift */; };
 		11B35799F8F13270FC63ADA5 /* Transaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35FB8A495A565BAA856C9 /* Transaction.swift */; };
 		11B3586C585791EA7ADD161E /* LocalizationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35F871B19631695FB5EF5 /* LocalizationHelper.swift */; };
@@ -50,6 +52,8 @@
 		11B35E0E5714E8A2F4B2D2E7 /* UnspentOutput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35A742770B11CA83B7BD0 /* UnspentOutput.swift */; };
 		11B35E9C0E8F38C063A48367 /* BackupPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B355771A1D96DB96FBC975 /* BackupPresenter.swift */; };
 		11B35F56DE01B03CCFB49E32 /* BackupInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B353A3B460BF1B24349F9F /* BackupInteractor.swift */; };
+		11B35F8641C2F7F7FB23B181 /* GuestInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3566ED622AE7606EF76B9 /* GuestInteractor.swift */; };
+		11B35FE41FA9977CC36989D3 /* MainInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35B88A2D6C85E1600F3AF /* MainInteractor.swift */; };
 		4FFC912E7E11D506DC05EFA7 /* Pods_WalletTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5F5D323E150F570A893EA81 /* Pods_WalletTests.framework */; };
 		D3285F4620BD158E00644076 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3285F4520BD158E00644076 /* AppDelegate.swift */; };
 		D3285F4820BD158E00644076 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3285F4720BD158E00644076 /* ViewController.swift */; };
@@ -106,6 +110,8 @@
 		11B353D57AB36A9CF4DEE090 /* GuestViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GuestViewController.swift; sourceTree = "<group>"; };
 		11B355771A1D96DB96FBC975 /* BackupPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackupPresenter.swift; sourceTree = "<group>"; };
 		11B35579A4D79791ACF1BC91 /* SettingsRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsRouter.swift; sourceTree = "<group>"; };
+		11B35618B87C6BBA7D29E8E7 /* GuestInteractorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GuestInteractorTests.swift; sourceTree = "<group>"; };
+		11B3566ED622AE7606EF76B9 /* GuestInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GuestInteractor.swift; sourceTree = "<group>"; };
 		11B35687F7521B1F22786638 /* TransactionsModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionsModule.swift; sourceTree = "<group>"; };
 		11B3569AE7CDF7E217CAB4EE /* TransactionsPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionsPresenter.swift; sourceTree = "<group>"; };
 		11B356A624E0982E0D90F9BB /* WalletPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletPresenter.swift; sourceTree = "<group>"; };
@@ -118,7 +124,9 @@
 		11B35A5DE20DD6DD486FAFC0 /* Protocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
 		11B35A742770B11CA83B7BD0 /* UnspentOutput.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnspentOutput.swift; sourceTree = "<group>"; };
 		11B35ADA6828A0EF11976938 /* GuestRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GuestRouter.swift; sourceTree = "<group>"; };
+		11B35B079198B54EB8D609CC /* UserDefaultsStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDefaultsStorage.swift; sourceTree = "<group>"; };
 		11B35B73F0C6D8B024361AF0 /* RestoreInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestoreInteractor.swift; sourceTree = "<group>"; };
+		11B35B88A2D6C85E1600F3AF /* MainInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainInteractor.swift; sourceTree = "<group>"; };
 		11B35B96D2BC5994AC8EC794 /* MainModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainModule.swift; sourceTree = "<group>"; };
 		11B35BAEE22C144B33661819 /* RestorePresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestorePresenter.swift; sourceTree = "<group>"; };
 		11B35BC220F1D90BF6BF3AAF /* GuestModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GuestModule.swift; sourceTree = "<group>"; };
@@ -300,6 +308,7 @@
 			children = (
 				11B35B96D2BC5994AC8EC794 /* MainModule.swift */,
 				11B35D163D12BE823AF54E97 /* MainRouter.swift */,
+				11B35B88A2D6C85E1600F3AF /* MainInteractor.swift */,
 				11B359E7A75E6B92D1305F40 /* MainPresenter.swift */,
 				D3B62A8820CA40DC005A9F80 /* MainViewController.swift */,
 				D3B62A8920CA40DC005A9F80 /* MainViewController.xib */,
@@ -371,6 +380,7 @@
 				11B352AA010C205391095524 /* RandomGenerator.swift */,
 				11B359347E497B609AC15319 /* MnemonicManager.swift */,
 				11B35317EC3B04B578A23642 /* StubWalletDataProvider.swift */,
+				11B35B079198B54EB8D609CC /* UserDefaultsStorage.swift */,
 			);
 			path = Wallet;
 			sourceTree = "<group>";
@@ -380,6 +390,7 @@
 			children = (
 				11B35BC220F1D90BF6BF3AAF /* GuestModule.swift */,
 				11B35ADA6828A0EF11976938 /* GuestRouter.swift */,
+				11B3566ED622AE7606EF76B9 /* GuestInteractor.swift */,
 				11B350896FD41EC360BF7C25 /* GuestPresenter.swift */,
 				11B353D57AB36A9CF4DEE090 /* GuestViewController.swift */,
 				11B35119CB772BB43AE8B1D5 /* GuestViewController.xib */,
@@ -390,6 +401,7 @@
 		11B35EEFC20B3D7A4F474D3B /* Guest */ = {
 			isa = PBXGroup;
 			children = (
+				11B35618B87C6BBA7D29E8E7 /* GuestInteractorTests.swift */,
 				11B35FF2D2C084366AA66F32 /* GuestPresenterTests.swift */,
 			);
 			path = Guest;
@@ -734,6 +746,9 @@
 				11B354D04599199832DDAC94 /* Protocols.swift in Sources */,
 				11B35B3D57BC0A2E01C41F77 /* WalletData.swift in Sources */,
 				11B353C572FF69AE6B444AA9 /* StubWalletDataProvider.swift in Sources */,
+				11B35FE41FA9977CC36989D3 /* MainInteractor.swift in Sources */,
+				11B35F8641C2F7F7FB23B181 /* GuestInteractor.swift in Sources */,
+				11B3573B7C7DFC4E005490F3 /* UserDefaultsStorage.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -746,6 +761,7 @@
 				11B358A760BD438603221A95 /* BackupInteractorTests.swift in Sources */,
 				11B35199B905F813F626AD3C /* BackupPresenterTests.swift in Sources */,
 				11B356C850CF9D3ED8AB8F31 /* RestoreInteractorTests.swift in Sources */,
+				11B3513A4B558F63630CF68D /* GuestInteractorTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
