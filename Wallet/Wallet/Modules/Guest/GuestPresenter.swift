@@ -2,32 +2,32 @@ import Foundation
 
 class GuestPresenter {
 
-    private let delegate: GuestPresenterDelegate
-    private let router: GuestRouterProtocol
+    private let interactor: IGuestInteractor
+    private let router: IGuestRouter
 
-    init(delegate: GuestPresenterDelegate, router: GuestRouterProtocol) {
-        self.delegate = delegate
+    init(interactor: IGuestInteractor, router: IGuestRouter) {
+        self.interactor = interactor
         self.router = router
     }
 
 }
 
-extension GuestPresenter: GuestPresenterProtocol {
+extension GuestPresenter: IGuestInteractorDelegate {
 
     func didCreateWallet() {
-        router.showBackupRoutingToMain()
+        router.navigateToBackupRoutingToMain()
     }
 
 }
 
-extension GuestPresenter: GuestViewDelegate {
+extension GuestPresenter: IGuestViewDelegate {
 
-    func createNewWalletDidTap() {
-        delegate.createWallet()
+    func createWalletDidClick() {
+        interactor.createWallet()
     }
 
-    func restoreWalletDidTap() {
-        router.showRestoreWallet()
+    func restoreWalletDidClick() {
+        router.navigateToRestore()
     }
 
 }

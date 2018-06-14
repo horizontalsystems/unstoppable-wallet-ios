@@ -1,7 +1,7 @@
 import Foundation
 
 class GuestInteractor {
-    weak var presenter: GuestPresenterProtocol?
+    weak var delegate: IGuestInteractorDelegate?
 
     let mnemonic: MnemonicProtocol
     let localStorage: LocalStorageProtocol
@@ -12,11 +12,11 @@ class GuestInteractor {
     }
 }
 
-extension GuestInteractor: GuestPresenterDelegate {
+extension GuestInteractor: IGuestInteractor {
 
     func createWallet() {
         localStorage.save(words: mnemonic.generateWords())
-        presenter?.didCreateWallet()
+        delegate?.didCreateWallet()
     }
 
 }

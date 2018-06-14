@@ -1,22 +1,19 @@
 import Foundation
 
-protocol GuestViewDelegate {
-    func createNewWalletDidTap()
-    func restoreWalletDidTap()
+protocol IGuestViewDelegate {
+    func createWalletDidClick()
+    func restoreWalletDidClick()
 }
 
-protocol GuestViewProtocol: class {
-}
-
-protocol GuestPresenterDelegate {
+protocol IGuestInteractor {
     func createWallet()
 }
 
-protocol GuestPresenterProtocol: class {
+protocol IGuestInteractorDelegate: class {
     func didCreateWallet()
 }
 
-protocol GuestRouterProtocol {
-    func showBackupRoutingToMain()
-    func showRestoreWallet()
+protocol IGuestRouter {
+    func navigateToBackupRoutingToMain()
+    func navigateToRestore()
 }

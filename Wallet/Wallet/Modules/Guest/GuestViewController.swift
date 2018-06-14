@@ -2,15 +2,15 @@ import UIKit
 
 class GuestViewController: UIViewController {
 
-    let viewDelegate: GuestViewDelegate
+    let delegate: IGuestViewDelegate
 
     @IBOutlet weak var titleLabel: UILabel?
     @IBOutlet weak var subtitleLabel: UILabel?
     @IBOutlet weak var createButton: UIButton?
     @IBOutlet weak var restoreButton: UIButton?
 
-    init(viewDelegate: GuestViewDelegate) {
-        self.viewDelegate = viewDelegate
+    init(delegate: IGuestViewDelegate) {
+        self.delegate = delegate
 
         super.init(nibName: String(describing: GuestViewController.self), bundle: nil)
     }
@@ -33,11 +33,11 @@ class GuestViewController: UIViewController {
     }
 
     @IBAction func createNewWalletDidTap() {
-        viewDelegate.createNewWalletDidTap()
+        delegate.createWalletDidClick()
     }
 
     @IBAction func restoreWalletDidTap() {
-        viewDelegate.restoreWalletDidTap()
+        delegate.restoreWalletDidClick()
     }
 
 }
