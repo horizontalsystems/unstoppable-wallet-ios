@@ -1,21 +1,21 @@
 import Foundation
 
-protocol WalletViewDelegate {
-    func viewDidLoad()
-}
-
-protocol WalletViewProtocol: class {
+protocol IWalletView: class {
     func show(totalBalance: CurrencyValue)
     func show(walletBalances: [WalletBalanceViewModel])
 }
 
-protocol WalletPresenterDelegate {
+protocol IWalletViewDelegate {
+    func viewDidLoad()
+}
+
+protocol IWalletInteractor {
     func fetchWalletBalances()
 }
 
-protocol WalletPresenterProtocol: class {
+protocol IWalletInteractorDelegate: class {
     func didFetch(walletBalances: [WalletBalance])
 }
 
-protocol WalletRouterProtocol {
+protocol IWalletRouter {
 }

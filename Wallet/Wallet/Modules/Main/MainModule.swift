@@ -1,16 +1,16 @@
 import Foundation
 
-protocol MainViewDelegate {
+protocol IMainView: class {
 }
 
-protocol MainViewProtocol: class {
+protocol IMainViewDelegate {
 }
 
-protocol MainPresenterDelegate {
+protocol IMainInteractor {
 }
 
-protocol MainPresenterProtocol: class {
+protocol IMainInteractorDelegate: class {
 }
 
-protocol MainRouterProtocol {
+protocol IMainRouter {
 }

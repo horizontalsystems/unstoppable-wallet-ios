@@ -1,8 +1,8 @@
 import Foundation
 
 class MainInteractor {
-    weak var presenter: MainPresenterProtocol?
+    weak var delegate: IMainInteractorDelegate?
 }
 
-extension MainInteractor: MainPresenterDelegate {
+extension MainInteractor: IMainInteractor {
 }

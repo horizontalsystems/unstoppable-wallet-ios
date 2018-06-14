@@ -4,7 +4,7 @@ class MainRouter {
     weak var viewController: UIViewController?
 }
 
-extension MainRouter: MainRouterProtocol {
+extension MainRouter: IMainRouter {
 }
 
 extension MainRouter {
@@ -12,7 +12,7 @@ extension MainRouter {
     static func module() -> UIViewController {
         let router = MainRouter()
         let interactor = MainInteractor()
-        let presenter = MainPresenter(delegate: interactor, router: router)
+        let presenter = MainPresenter(interactor: interactor, router: router)
 
         let viewControllers = [
             walletNavigation,
@@ -22,7 +22,7 @@ extension MainRouter {
 
         let viewController = MainViewController(viewDelegate: presenter, viewControllers: viewControllers)
 
-        interactor.presenter = presenter
+        interactor.delegate = presenter
         presenter.view = viewController
         router.viewController = viewController
 

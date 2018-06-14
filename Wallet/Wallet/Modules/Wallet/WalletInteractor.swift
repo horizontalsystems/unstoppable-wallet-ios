@@ -4,7 +4,7 @@ import RxSwift
 class WalletInteractor {
     let disposeBag = DisposeBag()
 
-    weak var presenter: WalletPresenterProtocol?
+    weak var delegate: IWalletInteractorDelegate?
 
     let unspentOutputProvider: UnspentOutputProviderProtocol
 
@@ -16,7 +16,7 @@ class WalletInteractor {
 
 }
 
-extension WalletInteractor: WalletPresenterDelegate {
+extension WalletInteractor: IWalletInteractor {
 
     func fetchWalletBalances() {
         unspentOutputProvider.fetchUnspentOutputs()
@@ -35,7 +35,7 @@ extension WalletInteractor: UnspentOutputProviderDelegate {
 
         let bitcoinWallet = WalletBalance(coinValue: CoinValue(coin: Bitcoin(), value: totalValue.toDouble), conversionRate: 7240.64, conversionCurrency: DollarCurrency())
 
-        presenter?.didFetch(walletBalances: [bitcoinWallet])
+        delegate?.didFetch(walletBalances: [bitcoinWallet])
     }
 
 }

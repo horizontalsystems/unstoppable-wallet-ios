@@ -2,13 +2,13 @@ import UIKit
 
 class WalletViewController: UIViewController {
 
-    let viewDelegate: WalletViewDelegate
+    let delegate: IWalletViewDelegate
 
     @IBOutlet weak var totalLabel: UILabel?
     @IBOutlet weak var infoLabel: UILabel?
 
-    init(viewDelegate: WalletViewDelegate) {
-        self.viewDelegate = viewDelegate
+    init(viewDelegate: IWalletViewDelegate) {
+        self.delegate = viewDelegate
 
         super.init(nibName: String(describing: WalletViewController.self), bundle: nil)
 
@@ -26,7 +26,7 @@ class WalletViewController: UIViewController {
 
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Backup", style: .plain, target: self, action: #selector(openBackup))
 
-        viewDelegate.viewDidLoad()
+        delegate.viewDidLoad()
     }
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -39,7 +39,7 @@ class WalletViewController: UIViewController {
 
 }
 
-extension WalletViewController: WalletViewProtocol {
+extension WalletViewController: IWalletView {
 
     func show(totalBalance: CurrencyValue) {
         totalLabel?.text = "\(totalBalance.currency.symbol)\(totalBalance.value)"

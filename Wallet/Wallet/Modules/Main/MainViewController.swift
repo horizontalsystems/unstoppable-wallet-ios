@@ -2,9 +2,9 @@ import UIKit
 
 class MainViewController: UITabBarController {
 
-    let viewDelegate: MainViewDelegate
+    let viewDelegate: IMainViewDelegate
 
-    init(viewDelegate: MainViewDelegate, viewControllers: [UIViewController]) {
+    init(viewDelegate: IMainViewDelegate, viewControllers: [UIViewController]) {
         self.viewDelegate = viewDelegate
 
         super.init(nibName: String(describing: MainViewController.self), bundle: nil)
@@ -30,5 +30,5 @@ class MainViewController: UITabBarController {
 
 }
 
-extension MainViewController: MainViewProtocol {
+extension MainViewController: IMainView {
 }

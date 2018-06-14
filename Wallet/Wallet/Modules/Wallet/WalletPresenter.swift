@@ -2,18 +2,18 @@ import Foundation
 
 class WalletPresenter {
 
-    let delegate: WalletPresenterDelegate
-    let router: WalletRouterProtocol
-    weak var view: WalletViewProtocol?
+    let interactor: IWalletInteractor
+    let router: IWalletRouter
+    weak var view: IWalletView?
 
-    init(delegate: WalletPresenterDelegate, router: WalletRouterProtocol) {
-        self.delegate = delegate
+    init(interactor: IWalletInteractor, router: IWalletRouter) {
+        self.interactor = interactor
         self.router = router
     }
 
 }
 
-extension WalletPresenter: WalletPresenterProtocol {
+extension WalletPresenter: IWalletInteractorDelegate {
 
     func didFetch(walletBalances: [WalletBalance]) {
         var total: Double = 0
@@ -41,10 +41,10 @@ extension WalletPresenter: WalletPresenterProtocol {
 
 }
 
-extension WalletPresenter: WalletViewDelegate {
+extension WalletPresenter: IWalletViewDelegate {
 
     func viewDidLoad() {
-        delegate.fetchWalletBalances()
+        interactor.fetchWalletBalances()
     }
 
 }
