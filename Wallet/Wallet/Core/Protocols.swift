@@ -5,12 +5,12 @@ protocol WalletDataProviderProtocol {
     var walletData: WalletData { get }
 }
 
-protocol LocalStorageProtocol {
+protocol ILocalStorage {
     var savedWords: [String]? { get }
     func save(words: [String])
 }
 
-protocol MnemonicProtocol {
+protocol IMnemonic {
     func generateWords() -> [String]
     func validate(words: [String]) -> Bool
 }

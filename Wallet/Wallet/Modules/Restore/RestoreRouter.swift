@@ -4,7 +4,7 @@ class RestoreRouter {
     weak var viewController: UIViewController?
 }
 
-extension RestoreRouter: RestoreRouterProtocol {
+extension RestoreRouter: IRestoreRouter {
 
     func navigateToMain() {
         viewController?.view.endEditing(true)
@@ -31,10 +31,10 @@ extension RestoreRouter {
     static func module() -> UIViewController {
         let router = RestoreRouter()
         let interactor = RestoreInteractor(mnemonic: Factory.instance.mnemonicManager, localStorage: Factory.instance.userDefaultsStorage)
-        let presenter = RestorePresenter(delegate: interactor, router: router)
-        let viewController = RestoreViewController(viewDelegate: presenter)
+        let presenter = RestorePresenter(interactor: interactor, router: router)
+        let viewController = RestoreViewController(delegate: presenter)
 
-        interactor.presenter = presenter
+        interactor.delegate = presenter
         presenter.view = viewController
         router.viewController = viewController
 

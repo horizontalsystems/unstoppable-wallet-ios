@@ -1,24 +1,24 @@
 import Foundation
 
-protocol RestoreViewDelegate {
-    func restoreDidTap(withWords words: [String])
-    func cancelDidTap()
+protocol IRestoreView: class {
+    func showInvalidWordsError()
 }
 
-protocol RestoreViewProtocol: class {
-    func showWordsValidationFailure()
+protocol IRestoreViewDelegate {
+    func restoreDidClick(withWords words: [String])
+    func cancelDidClick()
 }
 
-protocol RestorePresenterDelegate {
-    func restoreWallet(withWords words: [String])
+protocol IRestoreInteractor {
+    func restore(withWords words: [String])
 }
 
-protocol RestorePresenterProtocol: class {
+protocol IRestoreInteractorDelegate: class {
+    func didRestore()
     func didFailToRestore()
-    func didRestoreWallet()
 }
 
-protocol RestoreRouterProtocol {
+protocol IRestoreRouter {
     func navigateToMain()
     func close()
 }

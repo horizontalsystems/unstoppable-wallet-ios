@@ -2,36 +2,36 @@ import Foundation
 
 class RestorePresenter {
 
-    let delegate: RestorePresenterDelegate
-    let router: RestoreRouterProtocol
-    weak var view: RestoreViewProtocol?
+    private let interactor: IRestoreInteractor
+    private let router: IRestoreRouter
+    weak var view: IRestoreView?
 
-    init(delegate: RestorePresenterDelegate, router: RestoreRouterProtocol) {
-        self.delegate = delegate
+    init(interactor: IRestoreInteractor, router: IRestoreRouter) {
+        self.interactor = interactor
         self.router = router
     }
 
 }
 
-extension RestorePresenter: RestorePresenterProtocol {
+extension RestorePresenter: IRestoreInteractorDelegate {
 
-    func didFailToRestore() {
-        view?.showWordsValidationFailure()
+    func didRestore() {
+        router.navigateToMain()
     }
 
-    func didRestoreWallet() {
-        router.navigateToMain()
+    func didFailToRestore() {
+        view?.showInvalidWordsError()
     }
 
 }
 
-extension RestorePresenter: RestoreViewDelegate {
+extension RestorePresenter: IRestoreViewDelegate {
 
-    func restoreDidTap(withWords words: [String]) {
-        delegate.restoreWallet(withWords: words)
+    func restoreDidClick(withWords words: [String]) {
+        interactor.restore(withWords: words)
     }
 
-    func cancelDidTap() {
+    func cancelDidClick() {
         router.close()
     }
 

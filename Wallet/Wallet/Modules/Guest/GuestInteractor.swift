@@ -3,10 +3,10 @@ import Foundation
 class GuestInteractor {
     weak var delegate: IGuestInteractorDelegate?
 
-    let mnemonic: MnemonicProtocol
-    let localStorage: LocalStorageProtocol
+    private let mnemonic: IMnemonic
+    private let localStorage: ILocalStorage
 
-    init(mnemonic: MnemonicProtocol, localStorage: LocalStorageProtocol) {
+    init(mnemonic: IMnemonic, localStorage: ILocalStorage) {
         self.mnemonic = mnemonic
         self.localStorage = localStorage
     }

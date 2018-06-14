@@ -2,13 +2,13 @@ import UIKit
 
 class RestoreViewController: UIViewController {
 
-    let viewDelegate: RestoreViewDelegate
+    let delegate: IRestoreViewDelegate
 
     @IBOutlet weak var wordsTextView: UITextView?
     @IBOutlet weak var descriptionLabel: UILabel?
 
-    init(viewDelegate: RestoreViewDelegate) {
-        self.viewDelegate = viewDelegate
+    init(delegate: IRestoreViewDelegate) {
+        self.delegate = delegate
 
         super.init(nibName: String(describing: RestoreViewController.self), bundle: nil)
     }
@@ -32,19 +32,19 @@ class RestoreViewController: UIViewController {
     }
 
     @objc func cancelDidTap() {
-        viewDelegate.cancelDidTap()
+        delegate.cancelDidClick()
     }
 
     @objc func restoreDidTap() {
         let wordsString = wordsTextView?.text ?? ""
-        viewDelegate.restoreDidTap(withWords: wordsString.split(separator: " ").map(String.init))
+        delegate.restoreDidClick(withWords: wordsString.split(separator: " ").map(String.init))
     }
 
 }
 
-extension RestoreViewController: RestoreViewProtocol {
+extension RestoreViewController: IRestoreView {
 
-    func showWordsValidationFailure() {
+    func showInvalidWordsError() {
         let alert = UIAlertController(title: nil, message: "restore.validation_failed".localized, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "alert.ok".localized, style: .default))
         present(alert, animated: true)

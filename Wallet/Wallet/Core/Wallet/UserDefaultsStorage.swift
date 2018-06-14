@@ -1,6 +1,6 @@
 import Foundation
 
-class UserDefaultsStorage: LocalStorageProtocol {
+class UserDefaultsStorage: ILocalStorage {
 
     private let keyWords = "mnemonic_words"
 

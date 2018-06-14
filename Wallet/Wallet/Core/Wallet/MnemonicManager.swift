@@ -1,7 +1,7 @@
 import Foundation
 import BitcoinKit
 
-class MnemonicManager: MnemonicProtocol {
+class MnemonicManager: IMnemonic {
 
     func generateWords() -> [String] {
         return (try? Mnemonic.generate()) ?? []

@@ -1,26 +1,26 @@
 import Foundation
 
 class RestoreInteractor {
-    weak var presenter: RestorePresenterProtocol?
+    weak var delegate: IRestoreInteractorDelegate?
 
-    let mnemonic: MnemonicProtocol
-    let localStorage: LocalStorageProtocol
+    let mnemonic: IMnemonic
+    let localStorage: ILocalStorage
 
-    init(mnemonic: MnemonicProtocol, localStorage: LocalStorageProtocol) {
+    init(mnemonic: IMnemonic, localStorage: ILocalStorage) {
         self.mnemonic = mnemonic
         self.localStorage = localStorage
     }
 
 }
 
-extension RestoreInteractor: RestorePresenterDelegate {
+extension RestoreInteractor: IRestoreInteractor {
 
-    func restoreWallet(withWords words: [String]) {
+    func restore(withWords words: [String]) {
         if mnemonic.validate(words: words) {
             localStorage.save(words: words)
-            presenter?.didRestoreWallet()
+            delegate?.didRestore()
         } else {
-            presenter?.didFailToRestore()
+            delegate?.didFailToRestore()
         }
     }
 
