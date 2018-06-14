@@ -3,11 +3,11 @@ import RxSwift
 import BitcoinKit
 
 class StubUnspentOutputProvider: UnspentOutputProviderProtocol {
-//    let disposeBag = DisposeBag()
+    let disposeBag = DisposeBag()
 
     let unspentOutputsSubject = PublishSubject<[UnspentOutput]>()
 
-    func fetchUnspentOutputs(disposeBag: DisposeBag) {
+    func fetchUnspentOutputs() {
         let seed = Mnemonic.seed(mnemonic: Factory.instance.stubWalletDataProvider.walletData.words, passphrase: "")
 
         let hdWallet = HDWallet(seed: seed, network: Network.testnet)

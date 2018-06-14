@@ -22,7 +22,7 @@ protocol SettingsProtocol {
 protocol UnspentOutputProviderProtocol {
 //    var outputsSubject: PublishSubject<[UnspentOutput]> { get }
 //    var fetchOutputsObservable: Observable<[UnspentOutput]> { get }
-    func fetchUnspentOutputs(disposeBag: DisposeBag)
+    func fetchUnspentOutputs()
 }
 
 protocol UnspentOutputProviderDelegate {

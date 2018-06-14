@@ -19,7 +19,7 @@ class WalletInteractor {
 extension WalletInteractor: WalletPresenterDelegate {
 
     func fetchWalletBalances() {
-        unspentOutputProvider.fetchUnspentOutputs(disposeBag: disposeBag)
+        unspentOutputProvider.fetchUnspentOutputs()
     }
 
 }
