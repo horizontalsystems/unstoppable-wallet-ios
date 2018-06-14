@@ -4,7 +4,6 @@
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -13,6 +12,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="WalletViewController" customModule="Wallet" customModuleProvider="target">
             <connections>
+                <outlet property="infoLabel" destination="shd-Ro-gfg" id="aLZ-qx-Bws"/>
+                <outlet property="totalLabel" destination="aBD-IK-ILw" id="aj5-Ky-6Nn"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -20,7 +21,29 @@
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Total Balance" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aBD-IK-ILw">
+                    <rect key="frame" x="20" y="40" width="335" height="18"/>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Info" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="shd-Ro-gfg">
+                    <rect key="frame" x="20" y="78" width="335" height="18"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
             <color key="backgroundColor" name="Dark"/>
+            <constraints>
+                <constraint firstItem="aBD-IK-ILw" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="20" id="DYx-00-HHc"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="aBD-IK-ILw" secondAttribute="trailing" constant="20" id="Ei6-It-Y1g"/>
+                <constraint firstItem="aBD-IK-ILw" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="20" id="MfR-Qf-TgP"/>
+                <constraint firstItem="shd-Ro-gfg" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="20" id="WAo-He-TN2"/>
+                <constraint firstAttribute="trailing" secondItem="shd-Ro-gfg" secondAttribute="trailing" constant="20" id="l8L-h8-Fzu"/>
+                <constraint firstItem="shd-Ro-gfg" firstAttribute="top" secondItem="aBD-IK-ILw" secondAttribute="bottom" constant="20" id="z6S-98-7b4"/>
+            </constraints>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
         </view>
     </objects>

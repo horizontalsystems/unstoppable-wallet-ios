@@ -12,6 +12,14 @@ class Factory {
         return StubWalletDataProvider()
     })}
 
+    var stubSettingsProvider: StubSettingsProvider { return getInstance(creator: {
+        return StubSettingsProvider()
+    })}
+
+    var stubUnspentOutputProvider: StubUnspentOutputProvider { return getInstance(creator: {
+        return StubUnspentOutputProvider()
+    })}
+
     var userDefaultsStorage: UserDefaultsStorage { return getInstance(creator: {
         return UserDefaultsStorage()
     })}

@@ -124,8 +124,9 @@ class NetworkManager {
 
 extension NetworkManager {
 
-    func unspentOutputData(forAddresses addresses: [String]) -> Observable<UnspentOutputData> {
-        return observable(forRequest: request(withMethod: .get, path: "/unspent", parameters: ["active": addresses.joined(separator: "|")]))
+    func unspentOutputs(forAddresses addresses: [String]) -> Observable<[UnspentOutput]> {
+        let wrapper: Observable<WrapperUnspentOutput> = observable(forRequest: request(withMethod: .get, path: "/unspent", parameters: ["active": addresses.joined(separator: "|")]))
+        return wrapper.map { $0.outputs }
     }
 
     func addressesData(forAddresses addresses: [String]) -> Observable<AddressesData> {

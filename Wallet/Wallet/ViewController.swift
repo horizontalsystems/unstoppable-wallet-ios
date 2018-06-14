@@ -64,26 +64,26 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             }
         }
 
-        NetworkManager.instance.unspentOutputData(forAddresses: [fromAddress])
-                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
-                .observeOn(MainScheduler.instance)
-                .subscribe(onNext: { [weak self] data in
-                    var totalValue: Int64 = 0
-
-                    for unspentOutput in data.unspentOutputs {
-                        //                        print("Value: \(unspentOutput.value), TX Output: \(unspentOutput.outputIndex), Confirmations: \(unspentOutput.confirmations)")
-                        totalValue += unspentOutput.value
-                    }
-
-                    //                    print(String(format: "Total Value: %.08f BTC", Double(totalValue) / 100000000))
-
-                    self?.currentBalanceLabel?.text = String(format: "%.08f BTC", Double(totalValue) / 100000000)
-
-                    if let unspentOutput = data.unspentOutputs.first {
-//                        self?.createTransaction(unspentOutput: unspentOutput, privateKey: fromPrivateKey.raw, destinationAddressString: destAddress, changeAddressString: changeAddress)
-                    }
-                })
-                .disposed(by: disposeBag)
+//        NetworkManager.instance.unspentOutputData(forAddresses: [fromAddress])
+//                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
+//                .observeOn(MainScheduler.instance)
+//                .subscribe(onNext: { [weak self] data in
+//                    var totalValue: Int64 = 0
+//
+//                    for unspentOutput in data.unspentOutputs {
+//                        //                        print("Value: \(unspentOutput.value), TX Output: \(unspentOutput.outputIndex), Confirmations: \(unspentOutput.confirmations)")
+//                        totalValue += unspentOutput.value
+//                    }
+//
+//                    //                    print(String(format: "Total Value: %.08f BTC", Double(totalValue) / 100000000))
+//
+//                    self?.currentBalanceLabel?.text = String(format: "%.08f BTC", Double(totalValue) / 100000000)
+//
+//                    if let unspentOutput = data.unspentOutputs.first {
+////                        self?.createTransaction(unspentOutput: unspentOutput, privateKey: fromPrivateKey.raw, destinationAddressString: destAddress, changeAddressString: changeAddress)
+//                    }
+//                })
+//                .disposed(by: disposeBag)
 
         NetworkManager.instance.addressesData(forAddresses: addresses)
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
@@ -138,7 +138,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
 
         let utxo = BTCTransactionOutput()
         utxo.value = unspentOutput.value
-        utxo.index = UInt32(unspentOutput.outputIndex)
+        utxo.index = UInt32(unspentOutput.index)
         utxo.confirmations = UInt(unspentOutput.confirmations)
         utxo.transactionHash = BTCDataFromHex(unspentOutput.transactionHash)
         utxo.script = BTCScript(data: BTCDataFromHex(unspentOutput.script))
