@@ -24,8 +24,8 @@ class Factory {
         return UserDefaultsStorage()
     })}
 
-    var randomGenerator: RandomGenerator { return getInstance(creator: {
-        return RandomGenerator()
+    var randomProvider: RandomProvider { return getInstance(creator: {
+        return RandomProvider()
     })}
 
     var mnemonicManager: MnemonicManager { return getInstance(creator: {

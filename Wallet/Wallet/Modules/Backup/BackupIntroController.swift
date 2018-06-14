@@ -2,15 +2,15 @@ import UIKit
 
 class BackupIntroController: UIViewController {
 
-    let viewDelegate: BackupViewDelegate
+    let delegate: IBackupViewDelegate
 
     @IBOutlet weak var titleLabel: UILabel?
     @IBOutlet weak var subtitleLabel: UILabel?
     @IBOutlet weak var laterButton: UIButton?
     @IBOutlet weak var backupButton: UIButton?
 
-    init(viewDelegate: BackupViewDelegate) {
-        self.viewDelegate = viewDelegate
+    init(delegate: IBackupViewDelegate) {
+        self.delegate = delegate
 
         super.init(nibName: String(describing: BackupIntroController.self), bundle: nil)
     }
@@ -33,11 +33,11 @@ class BackupIntroController: UIViewController {
     }
 
     @IBAction func backupDidTap() {
-        viewDelegate.showWordsDidTap()
+        delegate.showWordsDidClick()
     }
 
     @IBAction func cancelDidTap() {
-        viewDelegate.cancelDidTap()
+        delegate.cancelDidClick()
     }
 
 }

@@ -2,7 +2,7 @@ import UIKit
 
 class BackupConfirmationController: UIViewController {
 
-    let viewDelegate: BackupViewDelegate
+    let delegate: IBackupViewDelegate
     let indexes: [Int]
 
     @IBOutlet weak var descriptionLabel: UILabel?
@@ -13,9 +13,9 @@ class BackupConfirmationController: UIViewController {
     @IBOutlet weak var backButton: UIButton?
     @IBOutlet weak var confirmButton: UIButton?
 
-    init(indexes: [Int], viewDelegate: BackupViewDelegate) {
+    init(indexes: [Int], delegate: IBackupViewDelegate) {
         self.indexes = indexes
-        self.viewDelegate = viewDelegate
+        self.delegate = delegate
 
         super.init(nibName: String(describing: BackupConfirmationController.self), bundle: nil)
     }
@@ -41,12 +41,12 @@ class BackupConfirmationController: UIViewController {
 
     @IBAction func confirmDidTap() {
         if let firstWord = firstTextField?.text, let secondWord = secondTextField?.text {
-            viewDelegate.validateDidTap(confirmationWords: [indexes[0]: firstWord, indexes[1]: secondWord])
+            delegate.validateDidClick(confirmationWords: [indexes[0]: firstWord, indexes[1]: secondWord])
         }
     }
 
     @IBAction func backDidTap() {
-        viewDelegate.hideConfirmationDidTap()
+        delegate.hideConfirmationDidClick()
     }
 
     func showValidationFailure() {

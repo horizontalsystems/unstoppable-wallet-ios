@@ -1,32 +1,17 @@
 import Foundation
 
 class BackupRouter {
-    enum DismissMode {
-        case toMain
-        case dismissSelf
-    }
-
     weak var navigationController: UINavigationController?
-
-    let dismissMode: DismissMode
-
-    init(dismissMode: DismissMode) {
-        self.dismissMode = dismissMode
-    }
 }
 
-extension BackupRouter: BackupRouterProtocol {
+extension BackupRouter: IBackupRouter {
+
 
     func close() {
-        switch dismissMode {
-        case .toMain:
-          navigateToMain()
-        case .dismissSelf:
-            navigationController?.dismiss(animated: true)
-        }
+        navigationController?.dismiss(animated: true)
     }
 
-    private func navigateToMain() {
+    func navigateToMain() {
         navigationController?.topViewController?.view.endEditing(true)
 
         guard let window = UIApplication.shared.keyWindow else {
@@ -44,13 +29,13 @@ extension BackupRouter: BackupRouterProtocol {
 
 extension BackupRouter {
 
-    static func module(dismissMode: DismissMode) -> UIViewController {
-        let router = BackupRouter(dismissMode: dismissMode)
-        let interactor = BackupInteractor(walletDataProvider: Factory.instance.stubWalletDataProvider, indexesProvider: Factory.instance.randomGenerator)
-        let presenter = BackupPresenter(delegate: interactor, router: router)
+    static func module(dismissMode: BackupPresenter.DismissMode) -> UIViewController {
+        let router = BackupRouter()
+        let interactor = BackupInteractor(walletDataProvider: Factory.instance.stubWalletDataProvider, indexesProvider: Factory.instance.randomProvider)
+        let presenter = BackupPresenter(interactor: interactor, router: router, dismissMode: dismissMode)
         let navigationController = BackupNavigationController(viewDelegate: presenter)
 
-        interactor.presenter = presenter
+        interactor.delegate = presenter
         presenter.view = navigationController
         router.navigationController = navigationController
 

@@ -1,19 +1,35 @@
 import Foundation
 
 class BackupPresenter {
+    enum DismissMode {
+        case toMain
+        case dismissSelf
+    }
 
-    let delegate: BackupPresenterDelegate
-    let router: BackupRouterProtocol
-    weak var view: BackupViewProtocol?
+    private let interactor: IBackupInteractor
+    private let router: IBackupRouter
+    weak var view: IBackupView?
 
-    init(delegate: BackupPresenterDelegate, router: BackupRouterProtocol) {
-        self.delegate = delegate
+    private let dismissMode: DismissMode
+
+    init(interactor: IBackupInteractor, router: IBackupRouter, dismissMode: DismissMode) {
+        self.interactor = interactor
         self.router = router
+        self.dismissMode = dismissMode
+    }
+
+    private func dismiss() {
+        switch dismissMode {
+        case .toMain:
+            router.navigateToMain()
+        case .dismissSelf:
+            router.close()
+        }
     }
 
 }
 
-extension BackupPresenter: BackupPresenterProtocol {
+extension BackupPresenter: IBackupInteractorDelegate {
 
     func didFetch(words: [String]) {
         view?.show(words: words)
@@ -24,39 +40,39 @@ extension BackupPresenter: BackupPresenterProtocol {
     }
 
     func didValidateSuccess() {
-        router.close()
+        dismiss()
     }
 
     func didValidateFailure() {
-        view?.showValidationFailure()
+        view?.showConfirmationError()
     }
 
 }
 
-extension BackupPresenter: BackupViewDelegate {
+extension BackupPresenter: IBackupViewDelegate {
 
-    func cancelDidTap() {
-        router.close()
+    func cancelDidClick() {
+        dismiss()
     }
 
-    func showWordsDidTap() {
-        delegate.fetchWords()
+    func showWordsDidClick() {
+        interactor.fetchWords()
     }
 
-    func hideWordsDidTap() {
+    func hideWordsDidClick() {
         view?.hideWords()
     }
 
-    func showConfirmationDidTap() {
-        delegate.fetchConfirmationIndexes()
+    func showConfirmationDidClick() {
+        interactor.fetchConfirmationIndexes()
     }
 
-    func hideConfirmationDidTap() {
+    func hideConfirmationDidClick() {
         view?.hideConfirmation()
     }
 
-    func validateDidTap(confirmationWords: [Int: String]) {
-        delegate.validate(confirmationWords: confirmationWords)
+    func validateDidClick(confirmationWords: [Int: String]) {
+        interactor.validate(confirmationWords: confirmationWords)
     }
 
 }

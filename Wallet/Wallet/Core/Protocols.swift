@@ -1,7 +1,7 @@
 import Foundation
 import RxSwift
 
-protocol WalletDataProviderProtocol {
+protocol IWalletDataProvider {
     var walletData: WalletData { get }
 }
 
@@ -27,4 +27,8 @@ protocol UnspentOutputProviderProtocol {
 
 protocol UnspentOutputProviderDelegate {
     func didFetch(unspentOutputs: [UnspentOutput])
+}
+
+protocol IRandomProvider {
+    func getRandomIndexes(count: Int) -> [Int]
 }

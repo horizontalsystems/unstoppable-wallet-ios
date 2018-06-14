@@ -2,38 +2,39 @@ import Foundation
 
 class BackupInteractor {
 
-    weak var presenter: BackupPresenterProtocol?
-    var walletDataProvider: WalletDataProviderProtocol
-    var indexesProvider: BackupRandomIndexesProviderProtocol
+    weak var delegate: IBackupInteractorDelegate?
 
-    init(walletDataProvider: WalletDataProviderProtocol, indexesProvider: BackupRandomIndexesProviderProtocol) {
+    private var walletDataProvider: IWalletDataProvider
+    private var indexesProvider: IRandomProvider
+
+    init(walletDataProvider: IWalletDataProvider, indexesProvider: IRandomProvider) {
         self.walletDataProvider = walletDataProvider
         self.indexesProvider = indexesProvider
     }
 
 }
 
-extension BackupInteractor: BackupPresenterDelegate {
+extension BackupInteractor: IBackupInteractor {
 
     func fetchWords() {
-        presenter?.didFetch(words: walletDataProvider.walletData.words)
+        delegate?.didFetch(words: walletDataProvider.walletData.words)
     }
 
     func fetchConfirmationIndexes() {
-        presenter?.didFetch(confirmationIndexes: indexesProvider.getRandomIndexes(count: 2))
+        delegate?.didFetch(confirmationIndexes: indexesProvider.getRandomIndexes(count: 2))
     }
 
     func validate(confirmationWords: [Int: String]) {
         let words = walletDataProvider.walletData.words
 
         for (index, word) in confirmationWords {
-            if index > words.count || word != words[index - 1] {
-                presenter?.didValidateFailure()
+            if words[index - 1] != word.trimmingCharacters(in: .whitespaces) {
+                delegate?.didValidateFailure()
                 return
             }
         }
 
-        presenter?.didValidateSuccess()
+        delegate?.didValidateSuccess()
     }
 
 }

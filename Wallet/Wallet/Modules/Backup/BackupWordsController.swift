@@ -2,7 +2,7 @@ import UIKit
 
 class BackupWordsController: UIViewController {
 
-    let viewDelegate: BackupViewDelegate
+    let delegate: IBackupViewDelegate
 
     @IBOutlet weak var descriptionLabel: UILabel?
     @IBOutlet weak var wordsLabel: UILabel?
@@ -11,9 +11,9 @@ class BackupWordsController: UIViewController {
 
     let words: [String]
 
-    init(words: [String], viewDelegate: BackupViewDelegate) {
+    init(words: [String], delegate: IBackupViewDelegate) {
         self.words = words
-        self.viewDelegate = viewDelegate
+        self.delegate = delegate
 
         super.init(nibName: String(describing: BackupWordsController.self), bundle: nil)
     }
@@ -37,11 +37,11 @@ class BackupWordsController: UIViewController {
     }
 
     @IBAction func nextDidTap() {
-        viewDelegate.showConfirmationDidTap()
+        delegate.showConfirmationDidClick()
     }
 
     @IBAction func backDidTap() {
-        viewDelegate.hideWordsDidTap()
+        delegate.hideWordsDidClick()
     }
 
 }
