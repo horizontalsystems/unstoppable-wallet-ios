@@ -1,6 +1,6 @@
 import Foundation
 
-struct WalletBalance {
+struct WalletBalanceItem {
 
     let coinValue: CoinValue
     let conversionRate: Double

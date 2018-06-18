@@ -10,11 +10,11 @@ protocol IWalletViewDelegate {
 }
 
 protocol IWalletInteractor {
-    func fetchWalletBalances()
+    func notifyWalletBalances()
 }
 
 protocol IWalletInteractorDelegate: class {
-    func didFetch(walletBalances: [WalletBalance])
+    func didFetch(walletBalances: [WalletBalanceItem])
 }
 
 protocol IWalletRouter {

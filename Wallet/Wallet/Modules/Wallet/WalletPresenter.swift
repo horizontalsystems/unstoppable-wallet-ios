@@ -15,7 +15,7 @@ class WalletPresenter {
 
 extension WalletPresenter: IWalletInteractorDelegate {
 
-    func didFetch(walletBalances: [WalletBalance]) {
+    func didFetch(walletBalances: [WalletBalanceItem]) {
         var total: Double = 0
         var viewModels = [WalletBalanceViewModel]()
 
@@ -31,7 +31,7 @@ extension WalletPresenter: IWalletInteractorDelegate {
         view?.show(walletBalances: viewModels)
     }
 
-    private func viewModel(forBalance balance: WalletBalance) -> WalletBalanceViewModel {
+    private func viewModel(forBalance balance: WalletBalanceItem) -> WalletBalanceViewModel {
         return WalletBalanceViewModel(
                 coinValue: balance.coinValue,
                 convertedValue: CurrencyValue(currency: balance.conversionCurrency, value: balance.coinValue.value * balance.conversionRate),
@@ -44,7 +44,7 @@ extension WalletPresenter: IWalletInteractorDelegate {
 extension WalletPresenter: IWalletViewDelegate {
 
     func viewDidLoad() {
-        interactor.fetchWalletBalances()
+        interactor.notifyWalletBalances()
     }
 
 }
