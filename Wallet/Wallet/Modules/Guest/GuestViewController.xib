@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -25,7 +24,7 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wxk-hg-MwX">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wxk-hg-MwX" customClass="Button" customModule="Wallet" customModuleProvider="target">
                     <rect key="frame" x="44" y="507" width="287" height="50"/>
                     <color key="backgroundColor" name="Yellow"/>
                     <constraints>
@@ -35,11 +34,16 @@
                     <state key="normal" title="Create New Wallet">
                         <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </state>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                            <real key="value" value="12"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
                     <connections>
                         <action selector="createNewWalletDidTap" destination="-1" eventType="touchUpInside" id="w4P-UQ-3za"/>
                     </connections>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fo4-vG-xAd">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fo4-vG-xAd" customClass="Button" customModule="Wallet" customModuleProvider="target">
                     <rect key="frame" x="44" y="577" width="287" height="50"/>
                     <color key="backgroundColor" name="Yellow"/>
                     <constraints>
@@ -49,12 +53,17 @@
                     <state key="normal" title="Restore Wallet">
                         <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </state>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                            <real key="value" value="12"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
                     <connections>
                         <action selector="restoreWalletDidTap" destination="-1" eventType="touchUpInside" id="Hzd-aK-spu"/>
                     </connections>
                 </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Welcome to Crypton" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iEi-nu-UKi">
-                    <rect key="frame" x="44" y="64" width="287" height="119.5"/>
+                    <rect key="frame" x="44" y="60" width="287" height="119.5"/>
                     <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="50"/>
                     <color key="textColor" name="Yellow"/>
                     <nil key="highlightedColor"/>
@@ -74,8 +83,8 @@
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="iEi-nu-UKi" secondAttribute="trailing" constant="44" id="ZBd-wS-O46"/>
                 <constraint firstItem="Wxk-hg-MwX" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="44" id="e6J-n4-Mgg"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="a9W-OB-fKT" secondAttribute="trailing" constant="44" id="fTO-GC-pVD"/>
-                <constraint firstItem="iEi-nu-UKi" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="44" id="fnE-aY-6XO"/>
-                <constraint firstItem="a9W-OB-fKT" firstAttribute="top" secondItem="iEi-nu-UKi" secondAttribute="bottom" constant="20" id="foY-ZP-bdP"/>
+                <constraint firstItem="iEi-nu-UKi" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="40" id="fnE-aY-6XO"/>
+                <constraint firstItem="a9W-OB-fKT" firstAttribute="top" secondItem="iEi-nu-UKi" secondAttribute="bottom" constant="24" id="foY-ZP-bdP"/>
                 <constraint firstItem="fo4-vG-xAd" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="44" id="gal-sL-Fc0"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="fo4-vG-xAd" secondAttribute="trailing" constant="44" id="hSU-9C-QZI"/>
                 <constraint firstItem="a9W-OB-fKT" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="44" id="nI7-lB-eQ9"/>
