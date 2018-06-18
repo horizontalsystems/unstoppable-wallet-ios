@@ -15,18 +15,23 @@ protocol IMnemonic {
     func validate(words: [String]) -> Bool
 }
 
+protocol IDatabaseManager {
+    func getUnspentOutputs() -> [UnspentOutput]
+    func insert(unspentOutputs: [UnspentOutput])
+    func truncateUnspentOutputs()
+
+    func getExchangeRates() -> [String: Double]
+    func insert(exchangeRates: [String: Double])
+    func truncateExchangeRates()
+}
+
+protocol INetworkManager {
+    func getUnspentOutputs() -> Observable<[UnspentOutput]>
+    func getExchangeRates() -> Observable<[String: Double]>
+}
+
 protocol SettingsProtocol {
     var currency: Currency { get }
-}
-
-protocol IUnspentOutputProvider {
-    var unspentOutputs : [UnspentOutput] { get }
-    var subject: PublishSubject<[UnspentOutput]> { get }
-}
-
-protocol IExchangeRateProvider {
-    func getExchangeRate(forCoin coin: Coin) -> Double
-    var subject: PublishSubject<[String: Double]> { get }
 }
 
 protocol IRandomProvider {

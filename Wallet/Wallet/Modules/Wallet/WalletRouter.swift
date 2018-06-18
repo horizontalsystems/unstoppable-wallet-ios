@@ -11,7 +11,7 @@ extension WalletRouter {
 
     static func module() -> UIViewController {
         let router = WalletRouter()
-        let interactor = WalletInteractor(unspentOutputProvider: Factory.instance.stubUnspentOutputProvider, exchangeRateProvider: Factory.instance.stubExchangeRateProvider)
+        let interactor = WalletInteractor(databaseManager: Factory.instance.databaseManager, unspentOutputUpdateSubject: Factory.instance.unspentOutputUpdateSubject, exchangeRateUpdateSubject: Factory.instance.exchangeRateUpdateSubject)
         let presenter = WalletPresenter(interactor: interactor, router: router)
         let viewController = WalletViewController(viewDelegate: presenter)
 

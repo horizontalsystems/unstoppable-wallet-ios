@@ -2,6 +2,7 @@ import Foundation
 import RxSwift
 import Alamofire
 import ObjectMapper
+import BitcoinKit
 
 enum NetworkError: Error {
     case invalidRequest
@@ -29,9 +30,6 @@ class RequestRouter: URLRequestConvertible {
 }
 
 class NetworkManager {
-    static let instance = NetworkManager(apiUrl: "https://testnet.blockchain.info")
-//    static let instance = NetworkManager(apiUrl: "https://blockchain.info")
-
     let apiUrl: String
 
     required init(apiUrl: String) {
@@ -122,15 +120,37 @@ class NetworkManager {
 
 }
 
-extension NetworkManager {
+extension NetworkManager: INetworkManager {
+    func getUnspentOutputs() -> Observable<[UnspentOutput]> {
+        let seed = Mnemonic.seed(mnemonic: Factory.instance.stubWalletDataProvider.walletData.words, passphrase: "")
 
-    func unspentOutputs(forAddresses addresses: [String]) -> Observable<[UnspentOutput]> {
+        let hdWallet = HDWallet(seed: seed, network: Network.testnet)
+
+        var addresses = [String]()
+
+        for i in 0...20 {
+            if let address = try? hdWallet.receiveAddress(index: UInt32(i)) {
+                print(String(describing: address))
+                addresses.append(String(describing: address))
+            }
+        }
+
+        for i in 0...20 {
+            if let address = try? hdWallet.changeAddress(index: UInt32(i)) {
+                addresses.append(String(describing: address))
+            }
+        }
+
         let wrapper: Observable<WrapperUnspentOutput> = observable(forRequest: request(withMethod: .get, path: "/unspent", parameters: ["active": addresses.joined(separator: "|")]))
         return wrapper.map { $0.outputs }
     }
 
-    func addressesData(forAddresses addresses: [String]) -> Observable<AddressesData> {
-        return observable(forRequest: request(withMethod: .get, path: "/multiaddr", parameters: ["active": addresses.joined(separator: "|")]))
+    func getExchangeRates() -> Observable<[String: Double]> {
+        return Observable.just(["BTC": 14400])
     }
+
+//    func addressesData(forAddresses addresses: [String]) -> Observable<AddressesData> {
+//        return observable(forRequest: request(withMethod: .get, path: "/multiaddr", parameters: ["active": addresses.joined(separator: "|")]))
+//    }
 
 }
