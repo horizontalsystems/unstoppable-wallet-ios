@@ -89,7 +89,6 @@
 		D3373DCE20C6B21C0082BC4A /* RestoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3373DCC20C6B21C0082BC4A /* RestoreViewController.swift */; };
 		D3373DCF20C6B21C0082BC4A /* RestoreViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D3373DCD20C6B21C0082BC4A /* RestoreViewController.xib */; };
 		D348A76E20C7C44500803B9E /* BackupNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D348A76C20C7C44500803B9E /* BackupNavigationController.swift */; };
-		D348A76F20C7C44500803B9E /* BackupNavigationController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D348A76D20C7C44500803B9E /* BackupNavigationController.xib */; };
 		D348A77220C7C58900803B9E /* BackupIntroController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D348A77020C7C58900803B9E /* BackupIntroController.swift */; };
 		D348A77320C7C58900803B9E /* BackupIntroController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D348A77120C7C58900803B9E /* BackupIntroController.xib */; };
 		D348A77620C7D34100803B9E /* BackupConfirmationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D348A77420C7D34100803B9E /* BackupConfirmationController.swift */; };
@@ -213,7 +212,6 @@
 		D3373DCC20C6B21C0082BC4A /* RestoreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestoreViewController.swift; sourceTree = "<group>"; };
 		D3373DCD20C6B21C0082BC4A /* RestoreViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RestoreViewController.xib; sourceTree = "<group>"; };
 		D348A76C20C7C44500803B9E /* BackupNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupNavigationController.swift; sourceTree = "<group>"; };
-		D348A76D20C7C44500803B9E /* BackupNavigationController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BackupNavigationController.xib; sourceTree = "<group>"; };
 		D348A77020C7C58900803B9E /* BackupIntroController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupIntroController.swift; sourceTree = "<group>"; };
 		D348A77120C7C58900803B9E /* BackupIntroController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BackupIntroController.xib; sourceTree = "<group>"; };
 		D348A77420C7D34100803B9E /* BackupConfirmationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupConfirmationController.swift; sourceTree = "<group>"; };
@@ -334,7 +332,6 @@
 				11B353A3B460BF1B24349F9F /* BackupInteractor.swift */,
 				11B355771A1D96DB96FBC975 /* BackupPresenter.swift */,
 				D348A76C20C7C44500803B9E /* BackupNavigationController.swift */,
-				D348A76D20C7C44500803B9E /* BackupNavigationController.xib */,
 				D348A77020C7C58900803B9E /* BackupIntroController.swift */,
 				D348A77120C7C58900803B9E /* BackupIntroController.xib */,
 				D3373DB720C564450082BC4A /* BackupWordsController.swift */,
@@ -688,7 +685,6 @@
 				D348A77720C7D34100803B9E /* BackupConfirmationController.xib in Resources */,
 				D3373DCF20C6B21C0082BC4A /* RestoreViewController.xib in Resources */,
 				D3B62A8F20CA436F005A9F80 /* WalletViewController.xib in Resources */,
-				D348A76F20C7C44500803B9E /* BackupNavigationController.xib in Resources */,
 				D3B62A9E20CA88BF005A9F80 /* Theme.xcassets in Resources */,
 				D3B62A9320CA467E005A9F80 /* TransactionsViewController.xib in Resources */,
 				D3B62A8B20CA40DC005A9F80 /* MainViewController.xib in Resources */,

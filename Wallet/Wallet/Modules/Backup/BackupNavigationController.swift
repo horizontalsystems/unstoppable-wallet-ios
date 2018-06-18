@@ -7,9 +7,11 @@ class BackupNavigationController: UINavigationController {
     init(viewDelegate: IBackupViewDelegate) {
         self.viewDelegate = viewDelegate
 
-        super.init(nibName: String(describing: BackupNavigationController.self), bundle: nil)
+        super.init(nibName: nil, bundle: nil)
 
-        isNavigationBarHidden = true
+        navigationBar.barStyle = .blackTranslucent
+        navigationBar.tintColor = .cryptoYellow
+        navigationBar.prefersLargeTitles = true
         viewControllers = [BackupIntroController(delegate: viewDelegate)]
     }
 
