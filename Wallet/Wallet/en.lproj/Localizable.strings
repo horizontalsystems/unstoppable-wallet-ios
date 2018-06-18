@@ -1,8 +1,8 @@
 "alert.ok" = "OK";
 "navigation_bar.cancel" = "Cancel";
 
-"guest.title" = "Satoshi Wallet";
-"guest.subtitle" = "The satoshi is currently the smallest unit of the bitcoin currency recorded on the block chain. It is a one hundred millionth of a single bitcoin.\n\nThe unit has been named in collective homage to the original creator of Bitcoin, Satoshi Nakamoto";
+"guest.title" = "App Name";
+"guest.subtitle" = "Bitcoin, Satoshi Nakamoto";
 "guest.create_wallet" = "Create Wallet";
 "guest.restore_wallet" = "Restore Wallet";
 
