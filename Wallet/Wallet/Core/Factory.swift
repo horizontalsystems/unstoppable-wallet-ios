@@ -20,6 +20,10 @@ class Factory {
         return StubUnspentOutputProvider()
     })}
 
+    var stubExchangeRateProvider: StubExchangeRateProvider { return getInstance(creator: {
+        return StubExchangeRateProvider()
+    })}
+
     var userDefaultsStorage: UserDefaultsStorage { return getInstance(creator: {
         return UserDefaultsStorage()
     })}

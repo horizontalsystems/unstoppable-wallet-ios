@@ -19,14 +19,14 @@ protocol SettingsProtocol {
     var currency: Currency { get }
 }
 
-protocol UnspentOutputProviderProtocol {
-//    var outputsSubject: PublishSubject<[UnspentOutput]> { get }
-//    var fetchOutputsObservable: Observable<[UnspentOutput]> { get }
-    func fetchUnspentOutputs()
+protocol IUnspentOutputProvider {
+    var unspentOutputs : [UnspentOutput] { get }
+    var subject: PublishSubject<[UnspentOutput]> { get }
 }
 
-protocol UnspentOutputProviderDelegate {
-    func didFetch(unspentOutputs: [UnspentOutput])
+protocol IExchangeRateProvider {
+    func getExchangeRate(forCoin coin: Coin) -> Double
+    var subject: PublishSubject<[String: Double]> { get }
 }
 
 protocol IRandomProvider {
