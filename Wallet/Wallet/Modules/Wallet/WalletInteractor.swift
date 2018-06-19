@@ -8,22 +8,20 @@ class WalletInteractor {
     private let disposeBag = DisposeBag()
 
     private var unspentOutputs: [UnspentOutput]
-    private var exchangeRate: Double
+    private var exchangeRates: [String: Double]
 
-    init(unspentOutputProvider: IUnspentOutputProvider, exchangeRateProvider: IExchangeRateProvider) {
-        unspentOutputs = unspentOutputProvider.unspentOutputs
-        exchangeRate = exchangeRateProvider.getExchangeRate(forCoin: Bitcoin())
+    init(databaseManager: IDatabaseManager, unspentOutputUpdateSubject: PublishSubject<[UnspentOutput]>, exchangeRateUpdateSubject: PublishSubject<[String: Double]>) {
+        unspentOutputs = databaseManager.getUnspentOutputs()
+        exchangeRates = databaseManager.getExchangeRates()
 
-        unspentOutputProvider.subject.subscribeAsync(disposeBag: disposeBag, onNext: { [weak self] unspentOutputs in
+        unspentOutputUpdateSubject.subscribeAsync(disposeBag: disposeBag, onNext: { [weak self] unspentOutputs in
             self?.unspentOutputs = unspentOutputs
             self?.notifyWalletBalances()
         })
 
-        exchangeRateProvider.subject.subscribeAsync(disposeBag: disposeBag, onNext: { [weak self] exchangeRates in
-            if let rate = exchangeRates[Bitcoin().code] {
-                self?.exchangeRate = rate
-                self?.notifyWalletBalances()
-            }
+        exchangeRateUpdateSubject.subscribeAsync(disposeBag: disposeBag, onNext: { [weak self] exchangeRates in
+            self?.exchangeRates = exchangeRates
+            self?.notifyWalletBalances()
         })
     }
 
@@ -38,9 +36,12 @@ extension WalletInteractor: IWalletInteractor {
             totalValue += unspentOutput.value.toDouble
         }
 
-        let walletBalanceItem = WalletBalanceItem(coinValue: CoinValue(coin: Bitcoin(), value: totalValue), conversionRate: exchangeRate, conversionCurrency: DollarCurrency())
+        let bitcoin = Bitcoin()
 
-        delegate?.didFetch(walletBalances: [walletBalanceItem])
+        if let rate = exchangeRates[bitcoin.code] {
+            let walletBalanceItem = WalletBalanceItem(coinValue: CoinValue(coin: bitcoin, value: totalValue), conversionRate: rate, conversionCurrency: DollarCurrency())
+            delegate?.didFetch(walletBalances: [walletBalanceItem])
+        }
     }
 
 }

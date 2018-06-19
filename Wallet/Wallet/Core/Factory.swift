@@ -1,9 +1,13 @@
 import Foundation
+import RxSwift
 
 class Factory {
     static let instance = Factory()
 
     private var instances = [String: Any]()
+
+    let unspentOutputUpdateSubject = PublishSubject<[UnspentOutput]>()
+    let exchangeRateUpdateSubject = PublishSubject<[String: Double]>()
 
     private init() {
     }
@@ -16,12 +20,12 @@ class Factory {
         return StubSettingsProvider()
     })}
 
-    var stubUnspentOutputProvider: StubUnspentOutputProvider { return getInstance(creator: {
-        return StubUnspentOutputProvider()
+    var unspentOutputManager: UnspentOutputManager { return getInstance(creator: {
+        return UnspentOutputManager(databaseManager: databaseManager, networkManager: networkManager, updateSubject: unspentOutputUpdateSubject)
     })}
 
-    var stubExchangeRateProvider: StubExchangeRateProvider { return getInstance(creator: {
-        return StubExchangeRateProvider()
+    var exchangeRateManager: ExchangeRateManager { return getInstance(creator: {
+        return ExchangeRateManager(databaseManager: databaseManager, networkManager: networkManager, updateSubject: exchangeRateUpdateSubject)
     })}
 
     var userDefaultsStorage: UserDefaultsStorage { return getInstance(creator: {
@@ -34,6 +38,14 @@ class Factory {
 
     var mnemonicManager: MnemonicManager { return getInstance(creator: {
         return MnemonicManager()
+    })}
+
+    var databaseManager: DatabaseManager { return getInstance(creator: {
+        return DatabaseManager()
+    })}
+
+    var networkManager: NetworkManager { return getInstance(creator: {
+        return NetworkManager(apiUrl: "https://testnet.blockchain.info")
     })}
 
     private func getInstance<T>(creator: () -> T) -> T {

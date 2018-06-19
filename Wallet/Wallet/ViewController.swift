@@ -85,14 +85,14 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
 //                })
 //                .disposed(by: disposeBag)
 
-        NetworkManager.instance.addressesData(forAddresses: addresses)
-                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
-                .observeOn(MainScheduler.instance)
-                .subscribe(onNext: { [weak self] data in
-                    self?.transactions = data.transactions
-                    self?.tableView?.reloadData()
-                })
-                .disposed(by: disposeBag)
+//        NetworkManager.instance.addressesData(forAddresses: addresses)
+//                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
+//                .observeOn(MainScheduler.instance)
+//                .subscribe(onNext: { [weak self] data in
+//                    self?.transactions = data.transactions
+//                    self?.tableView?.reloadData()
+//                })
+//                .disposed(by: disposeBag)
 
 
         //        let transactionHex = "0200000001c534b75b584337e512954735af51892cc9e241a8ec360a86ea834c8ad4ca78b90000000000ffffffff01f00768590000000017a91400a97e390b11bef138ac80b74910373155bdc0308700000000"

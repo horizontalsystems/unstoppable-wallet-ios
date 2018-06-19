@@ -25,6 +25,7 @@ class WalletViewController: UIViewController {
         title = "wallet.title".localized
 
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Backup", style: .plain, target: self, action: #selector(openBackup))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Refresh", style: .plain, target: self, action: #selector(refresh))
 
         delegate.viewDidLoad()
     }
@@ -35,6 +36,10 @@ class WalletViewController: UIViewController {
 
     @objc func openBackup() {
         present(BackupRouter.module(dismissMode: .dismissSelf), animated: true)
+    }
+
+    @objc func refresh() {
+        Factory.instance.unspentOutputManager.refresh()
     }
 
 }
