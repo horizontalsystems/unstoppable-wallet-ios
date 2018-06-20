@@ -4,7 +4,6 @@ class BackupIntroController: UIViewController {
 
     let delegate: IBackupViewDelegate
 
-    @IBOutlet weak var titleLabel: UILabel?
     @IBOutlet weak var subtitleLabel: UILabel?
     @IBOutlet weak var laterButton: UIButton?
     @IBOutlet weak var backupButton: UIButton?
@@ -22,7 +21,8 @@ class BackupIntroController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        titleLabel?.text = "backup.intro.title".localized
+        title = "backup.intro.title".localized
+
         subtitleLabel?.text = "backup.intro.subtitle".localized
         laterButton?.setTitle("backup.intro.later".localized, for: .normal)
         backupButton?.setTitle("backup.intro.backup_now".localized, for: .normal)

@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
@@ -17,7 +16,6 @@
                 <outlet property="backupButton" destination="Jee-WA-CMB" id="LCU-Nd-s5S"/>
                 <outlet property="laterButton" destination="pIX-BW-CyK" id="c9s-KL-nDl"/>
                 <outlet property="subtitleLabel" destination="Zlk-Zr-c6R" id="z76-eQ-S9B"/>
-                <outlet property="titleLabel" destination="pQl-Ny-Bwc" id="Skp-dU-GRU"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -26,14 +24,8 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Backup" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pQl-Ny-Bwc">
-                    <rect key="frame" x="44" y="64" width="287" height="60"/>
-                    <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="50"/>
-                    <color key="textColor" name="Yellow"/>
-                    <nil key="highlightedColor"/>
-                </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zlk-Zr-c6R">
-                    <rect key="frame" x="44" y="144" width="287" height="142.5"/>
+                    <rect key="frame" x="44" y="36" width="287" height="142.5"/>
                     <string key="text">Your paper key is the only way to restore your Crypton if you lost, stolen, broken, or upgraded.
 
 We will show you a list of words to write down on a piece of paper and keep safe.</string>
@@ -41,7 +33,7 @@ We will show you a list of words to write down on a piece of paper and keep safe
                     <color key="textColor" name="Silver"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jee-WA-CMB">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jee-WA-CMB" customClass="Button" customModule="Wallet" customModuleProvider="target">
                     <rect key="frame" x="146.5" y="573" width="184.5" height="50"/>
                     <color key="backgroundColor" name="Yellow"/>
                     <constraints>
@@ -51,11 +43,16 @@ We will show you a list of words to write down on a piece of paper and keep safe
                     <state key="normal" title="Backup">
                         <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </state>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                            <real key="value" value="12"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
                     <connections>
                         <action selector="backupDidTap" destination="-1" eventType="touchUpInside" id="LbF-wX-A3J"/>
                     </connections>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pIX-BW-CyK">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pIX-BW-CyK" customClass="Button" customModule="Wallet" customModuleProvider="target">
                     <rect key="frame" x="44" y="573" width="92.5" height="50"/>
                     <color key="backgroundColor" name="Gray"/>
                     <constraints>
@@ -65,6 +62,11 @@ We will show you a list of words to write down on a piece of paper and keep safe
                     <state key="normal" title="Cancel">
                         <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </state>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                            <real key="value" value="12"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
                     <connections>
                         <action selector="cancelDidTap" destination="-1" eventType="touchUpInside" id="JL8-1Z-QTz"/>
                     </connections>
@@ -74,16 +76,13 @@ We will show you a list of words to write down on a piece of paper and keep safe
             <constraints>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="Jee-WA-CMB" secondAttribute="trailing" constant="44" id="KdV-xO-efV"/>
                 <constraint firstItem="pIX-BW-CyK" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="44" id="Ksd-r8-PKT"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="pQl-Ny-Bwc" secondAttribute="trailing" constant="44" id="NN1-K4-PET"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="Jee-WA-CMB" secondAttribute="bottom" constant="44" id="crm-dZ-gfM"/>
-                <constraint firstItem="Zlk-Zr-c6R" firstAttribute="top" secondItem="pQl-Ny-Bwc" secondAttribute="bottom" constant="20" id="diM-C6-MMA"/>
-                <constraint firstItem="pQl-Ny-Bwc" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="44" id="lfg-Q1-qGf"/>
+                <constraint firstItem="Zlk-Zr-c6R" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="16" id="diM-C6-MMA"/>
                 <constraint firstItem="Jee-WA-CMB" firstAttribute="width" secondItem="pIX-BW-CyK" secondAttribute="width" multiplier="2:1" id="mQX-y2-cCN"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="Zlk-Zr-c6R" secondAttribute="trailing" constant="44" id="n1l-55-a8g"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="pIX-BW-CyK" secondAttribute="bottom" constant="44" id="vXY-9d-ePd"/>
                 <constraint firstItem="Jee-WA-CMB" firstAttribute="leading" secondItem="pIX-BW-CyK" secondAttribute="trailing" constant="10" id="wbs-GD-qWR"/>
                 <constraint firstItem="Zlk-Zr-c6R" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="44" id="yJZ-MJ-S2T"/>
-                <constraint firstItem="pQl-Ny-Bwc" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="44" id="zLD-iC-Dwh"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
         </view>
