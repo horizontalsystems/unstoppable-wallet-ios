@@ -16,6 +16,7 @@
 "backup.intro.later" = "Later";
 "backup.intro.backup_now" = "Backup Now";
 
+"backup.words.title" = "Paper Keys";
 "backup.words.description" = "Write down on paper and keep safe:";
 "backup.words.back" = "Back";
 "backup.words.proceed" = "Proceed";
