@@ -17,12 +17,11 @@
 "backup.intro.backup_now" = "Backup Now";
 
 "backup.words.title" = "Paper Keys";
-"backup.words.description" = "Write down on paper and keep safe:";
 "backup.words.back" = "Back";
 "backup.words.proceed" = "Proceed";
 
-"backup.confirmation.description" = "Enter the following words from your paper key:";
-"backup.confirmation.back" = "Back";
+"backup.confirmation.title" = "Type the words";
+"backup.confirmation.description" = "Enter the following words from your paper key";
 "backup.confirmation.confirm" = "Confirm";
 "backup.confirmation.failure_alert.text" = "Entered words do not match";
 
