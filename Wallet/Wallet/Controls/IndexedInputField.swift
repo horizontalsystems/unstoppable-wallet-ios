@@ -98,6 +98,11 @@ class IndexedInputField: UIView, UITextFieldDelegate {
         }
         indexLabel.textColor = .cryptoSilver
 
+        textField.keyboardAppearance = .dark
+        textField.autocapitalizationType = .none
+        textField.autocorrectionType = .no
+        textField.tintColor = .white
+        
         textField.addTarget(self, action: #selector(onTextChange), for: .editingChanged)
         textField.textColor = .white
         textField.delegate = self

@@ -12,7 +12,6 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="BackupConfirmationController" customModule="Wallet" customModuleProvider="target">
             <connections>
-                <outlet property="confirmButton" destination="ds8-fE-ysI" id="9xi-L2-mQ5"/>
                 <outlet property="descriptionLabel" destination="7xW-yq-vhA" id="QpQ-aZ-ZbG"/>
                 <outlet property="firstIndexedInputField" destination="jMY-db-XFi" id="3GU-6J-xn8"/>
                 <outlet property="secondIndexedInputField" destination="eiD-Fw-U1k" id="xN9-qG-eM9"/>
@@ -30,25 +29,6 @@
                     <color key="textColor" name="Silver"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ds8-fE-ysI" customClass="Button" customModule="Wallet" customModuleProvider="target">
-                    <rect key="frame" x="44" y="253.5" width="287" height="50"/>
-                    <color key="backgroundColor" name="Yellow"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="50" id="Mza-eQ-O6R"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
-                    <state key="normal" title="Submit">
-                        <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    </state>
-                    <userDefinedRuntimeAttributes>
-                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                            <real key="value" value="12"/>
-                        </userDefinedRuntimeAttribute>
-                    </userDefinedRuntimeAttributes>
-                    <connections>
-                        <action selector="confirmDidTap" destination="-1" eventType="touchUpInside" id="HKV-lO-xlp"/>
-                    </connections>
-                </button>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jMY-db-XFi" customClass="IndexedInputField" customModule="Wallet" customModuleProvider="target">
                     <rect key="frame" x="16" y="36" width="343" height="44"/>
                     <color key="backgroundColor" name="Dark"/>
@@ -97,15 +77,12 @@
             <constraints>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="jMY-db-XFi" secondAttribute="trailing" constant="16" id="4Lz-6M-MnD"/>
                 <constraint firstItem="eiD-Fw-U1k" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="8w3-4e-09P"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="ds8-fE-ysI" secondAttribute="trailing" constant="44" id="COf-On-FBr"/>
                 <constraint firstItem="7xW-yq-vhA" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="44" id="Cyc-qa-EAe"/>
                 <constraint firstItem="7xW-yq-vhA" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="44" id="Gac-3z-m23"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="eiD-Fw-U1k" secondAttribute="trailing" constant="16" id="KQY-fj-Zsy"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="7xW-yq-vhA" secondAttribute="trailing" constant="44" id="Mwj-VW-Od6"/>
                 <constraint firstItem="jMY-db-XFi" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="16" id="NVk-Ms-mt2"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="7xW-yq-vhA" secondAttribute="trailing" constant="44" id="XF6-o8-gZU"/>
-                <constraint firstItem="ds8-fE-ysI" firstAttribute="top" secondItem="7xW-yq-vhA" secondAttribute="bottom" constant="64" id="dQh-EW-k9d"/>
-                <constraint firstItem="ds8-fE-ysI" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="44" id="gj1-aj-WDR"/>
                 <constraint firstItem="7xW-yq-vhA" firstAttribute="top" secondItem="eiD-Fw-U1k" secondAttribute="bottom" constant="16" id="ij8-e4-M3h"/>
                 <constraint firstItem="jMY-db-XFi" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="sLc-Jk-9dq"/>
                 <constraint firstItem="eiD-Fw-U1k" firstAttribute="top" secondItem="jMY-db-XFi" secondAttribute="bottom" constant="16" id="sxG-3Z-q1t"/>
@@ -123,9 +100,6 @@
         </namedColor>
         <namedColor name="Silver">
             <color red="0.78431372549019607" green="0.7803921568627451" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
-        <namedColor name="Yellow">
-            <color red="0.96862745098039216" green="0.71764705882352942" blue="0.19215686274509805" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
     </resources>
 </document>

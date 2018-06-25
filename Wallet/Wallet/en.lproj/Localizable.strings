@@ -1,5 +1,6 @@
 "alert.ok" = "OK";
 "navigation_bar.cancel" = "Cancel";
+"done" = "Done";
 
 "guest.title" = "App Name";
 "guest.subtitle" = "Bitcoin, Satoshi Nakamoto";
@@ -22,7 +23,6 @@
 
 "backup.confirmation.title" = "Type the words";
 "backup.confirmation.description" = "Enter the following words from your paper key";
-"backup.confirmation.confirm" = "Confirm";
 "backup.confirmation.failure_alert.text" = "Entered words do not match";
 
 "wallet.title" = "Balance";

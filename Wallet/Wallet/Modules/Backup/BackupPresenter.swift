@@ -67,10 +67,6 @@ extension BackupPresenter: IBackupViewDelegate {
         interactor.fetchConfirmationIndexes()
     }
 
-    func hideConfirmationDidClick() {
-        view?.hideConfirmation()
-    }
-
     func validateDidClick(confirmationWords: [Int: String]) {
         interactor.validate(confirmationWords: confirmationWords)
     }

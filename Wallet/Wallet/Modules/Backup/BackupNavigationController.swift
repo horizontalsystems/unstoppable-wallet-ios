@@ -35,10 +35,6 @@ extension BackupNavigationController: IBackupView {
         popViewController(animated: true)
     }
 
-    func hideConfirmation() {
-        popViewController(animated: true)
-    }
-
     func showConfirmationError() {
         if let confirmationController = topViewController as? BackupConfirmationController {
             confirmationController.showValidationFailure()

@@ -10,8 +10,6 @@ class BackupConfirmationController: UIViewController {
 
     @IBOutlet weak var descriptionLabel: UILabel?
 
-    @IBOutlet weak var confirmButton: UIButton?
-
     init(indexes: [Int], delegate: IBackupViewDelegate) {
         self.indexes = indexes
         self.delegate = delegate
@@ -28,7 +26,8 @@ class BackupConfirmationController: UIViewController {
 
         title = "backup.confirmation.title".localized
         descriptionLabel?.text = "backup.confirmation.description".localized
-        confirmButton?.setTitle("backup.confirmation.confirm".localized, for: .normal)
+
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "done".localized, style: .plain, target: self, action: #selector(confirmDidTap))
 
         firstIndexedInputField?.textField.returnKeyType = .next
         firstIndexedInputField?.onReturn = { [weak self] in
@@ -57,14 +56,10 @@ class BackupConfirmationController: UIViewController {
         return .lightContent
     }
 
-    @IBAction func confirmDidTap() {
+    @objc func confirmDidTap() {
         if let firstWord = firstIndexedInputField?.textField.text, let secondWord = secondIndexedInputField?.textField.text {
             delegate.validateDidClick(confirmationWords: [indexes[0]: firstWord, indexes[1]: secondWord])
         }
-    }
-
-    @IBAction func backDidTap() {
-        delegate.hideConfirmationDidClick()
     }
 
     func showValidationFailure() {
