@@ -1,4 +1,5 @@
 import UIKit
+import RealmSwift
 
 class SettingsViewController: UIViewController {
 
@@ -29,6 +30,7 @@ class SettingsViewController: UIViewController {
     }
 
     @objc func logout() {
+        SyncUser.current?.logOut()
         Factory.instance.userDefaultsStorage.clearWords()
 
         guard let window = UIApplication.shared.keyWindow else {

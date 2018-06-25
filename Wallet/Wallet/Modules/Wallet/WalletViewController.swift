@@ -39,7 +39,6 @@ class WalletViewController: UIViewController {
     }
 
     @objc func refresh() {
-        Factory.instance.unspentOutputManager.refresh()
     }
 
 }
@@ -47,7 +46,12 @@ class WalletViewController: UIViewController {
 extension WalletViewController: IWalletView {
 
     func show(totalBalance: CurrencyValue) {
-        totalLabel?.text = "\(totalBalance.currency.symbol)\(totalBalance.value)"
+        let formatter = NumberFormatter()
+        formatter.locale = Locale(identifier: "en_US")
+        formatter.numberStyle = .currency
+        if let formattedString = formatter.string(from: totalBalance.value as NSNumber) {
+            totalLabel?.text = formattedString
+        }
     }
 
     func show(walletBalances: [WalletBalanceViewModel]) {

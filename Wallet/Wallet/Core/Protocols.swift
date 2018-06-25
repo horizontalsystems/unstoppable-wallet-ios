@@ -16,13 +16,8 @@ protocol IMnemonic {
 }
 
 protocol IDatabaseManager {
-    func getUnspentOutputs() -> [UnspentOutput]
-    func insert(unspentOutputs: [UnspentOutput])
-    func truncateUnspentOutputs()
-
-    func getExchangeRates() -> [String: Double]
-    func insert(exchangeRates: [String: Double])
-    func truncateExchangeRates()
+    func getUnspentOutputs() -> Observable<DatabaseChangeset<UnspentOutput>>
+    func getExchangeRates() -> Observable<DatabaseChangeset<ExchangeRate>>
 }
 
 protocol INetworkManager {

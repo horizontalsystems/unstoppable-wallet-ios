@@ -6,9 +6,6 @@ class Factory {
 
     private var instances = [String: Any]()
 
-    let unspentOutputUpdateSubject = PublishSubject<[UnspentOutput]>()
-    let exchangeRateUpdateSubject = PublishSubject<[String: Double]>()
-
     private init() {
     }
 
@@ -18,14 +15,6 @@ class Factory {
 
     var stubSettingsProvider: StubSettingsProvider { return getInstance(creator: {
         return StubSettingsProvider()
-    })}
-
-    var unspentOutputManager: UnspentOutputManager { return getInstance(creator: {
-        return UnspentOutputManager(databaseManager: databaseManager, networkManager: networkManager, updateSubject: unspentOutputUpdateSubject)
-    })}
-
-    var exchangeRateManager: ExchangeRateManager { return getInstance(creator: {
-        return ExchangeRateManager(databaseManager: databaseManager, networkManager: networkManager, updateSubject: exchangeRateUpdateSubject)
     })}
 
     var userDefaultsStorage: UserDefaultsStorage { return getInstance(creator: {

@@ -1,22 +1,16 @@
 import Foundation
 import ObjectMapper
+import RealmSwift
 
-struct UnspentOutput {
-    let value: Int64
-    let index: Int
-    let confirmations: Int64
-    let transactionHash: String
-    let script: String
-}
+class UnspentOutput: Object {
+    @objc dynamic var value: Int = 0
+    @objc dynamic var index: Int = 0
+    @objc dynamic var confirmations: Int = 0
+    @objc dynamic var transactionHash: String = ""
+    @objc dynamic var script: String = ""
 
-extension UnspentOutput: ImmutableMappable {
-
-    init(map: Map) throws {
-        value           = try map.value("value")
-        confirmations   = try map.value("confirmations")
-        index           = try map.value("tx_output_n")
-        transactionHash = try map.value("tx_hash")
-        script          = try map.value("script")
+    override class func primaryKey() -> String? {
+        return "transactionHash"
     }
 
 }

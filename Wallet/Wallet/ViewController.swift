@@ -137,9 +137,9 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         }
 
         let utxo = BTCTransactionOutput()
-        utxo.value = unspentOutput.value
+//        utxo.value = unspentOutput.value
         utxo.index = UInt32(unspentOutput.index)
-        utxo.confirmations = UInt(unspentOutput.confirmations)
+//        utxo.confirmations = UInt(unspentOutput.confirmations)
         utxo.transactionHash = BTCDataFromHex(unspentOutput.transactionHash)
         utxo.script = BTCScript(data: BTCDataFromHex(unspentOutput.script))
 
