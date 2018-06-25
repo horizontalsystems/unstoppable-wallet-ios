@@ -16,6 +16,7 @@ target :Wallet do
   pod 'RxSwift'
   # pod 'CoreBitcoin', :podspec => 'https://raw.github.com/oleganza/CoreBitcoin/master/CoreBitcoin.podspec'
   # pod 'CoreBitcoin', :git => "https://github.com/andrewtoth/CoreBitcoin.git"
+  pod "SnapKit"
 end
 
 target :WalletTests do

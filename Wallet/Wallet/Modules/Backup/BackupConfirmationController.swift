@@ -5,13 +5,10 @@ class BackupConfirmationController: UIViewController {
     let delegate: IBackupViewDelegate
     let indexes: [Int]
 
+    @IBOutlet weak var firstIndexedInputField: IndexedInputField?
+    @IBOutlet weak var secondIndexedInputField: IndexedInputField?
+
     @IBOutlet weak var descriptionLabel: UILabel?
-    @IBOutlet weak var firstIndexLabel: UILabel?
-    @IBOutlet weak var secondIndexLabel: UILabel?
-    @IBOutlet weak var firstTextField: UITextField?
-    @IBOutlet weak var secondTextField: UITextField?
-    @IBOutlet weak var backButton: UIButton?
-    @IBOutlet weak var confirmButton: UIButton?
 
     init(indexes: [Int], delegate: IBackupViewDelegate) {
         self.indexes = indexes
@@ -27,26 +24,42 @@ class BackupConfirmationController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        title = "backup.confirmation.title".localized
         descriptionLabel?.text = "backup.confirmation.description".localized
-        backButton?.setTitle("backup.confirmation.back".localized, for: .normal)
-        confirmButton?.setTitle("backup.confirmation.confirm".localized, for: .normal)
 
-        firstIndexLabel?.text = "\(indexes[0])."
-        secondIndexLabel?.text = "\(indexes[1])."
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "done".localized, style: .plain, target: self, action: #selector(confirmDidTap))
+
+        firstIndexedInputField?.textField.returnKeyType = .next
+        firstIndexedInputField?.onReturn = { [weak self] in
+            self?.firstIndexedInputField?.textField.resignFirstResponder()
+            self?.secondIndexedInputField?.textField.becomeFirstResponder()
+        }
+        secondIndexedInputField?.textField.returnKeyType = .done
+        secondIndexedInputField?.onReturn = { [weak self] in
+            self?.confirmDidTap()
+        }
+
+        firstIndexedInputField?.indexLabel.text = "\(indexes[0])."
+        secondIndexedInputField?.indexLabel.text = "\(indexes[1])."
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        firstIndexedInputField?.textField.becomeFirstResponder()
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
     }
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
 
-    @IBAction func confirmDidTap() {
-        if let firstWord = firstTextField?.text, let secondWord = secondTextField?.text {
+    @objc func confirmDidTap() {
+        if let firstWord = firstIndexedInputField?.textField.text, let secondWord = secondIndexedInputField?.textField.text {
             delegate.validateDidClick(confirmationWords: [indexes[0]: firstWord, indexes[1]: secondWord])
         }
-    }
-
-    @IBAction func backDidTap() {
-        delegate.hideConfirmationDidClick()
     }
 
     func showValidationFailure() {

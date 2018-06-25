@@ -79,6 +79,8 @@
 		11B35FE41FA9977CC36989D3 /* MainInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35B88A2D6C85E1600F3AF /* MainInteractor.swift */; };
 		1A564D70A5B3A36B5348A656 /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5649EA05E33DEBFA508CDB /* Button.swift */; };
 		4FFC912E7E11D506DC05EFA7 /* Pods_WalletTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5F5D323E150F570A893EA81 /* Pods_WalletTests.framework */; };
+		50B7C38420D918DE0070E1E8 /* IndexedInputField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B7C38220D918DE0070E1E8 /* IndexedInputField.swift */; };
+		50B7C38520D918DE0070E1E8 /* IndexedInputField.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50B7C38320D918DE0070E1E8 /* IndexedInputField.xib */; };
 		D3285F4620BD158E00644076 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3285F4520BD158E00644076 /* AppDelegate.swift */; };
 		D3285F4820BD158E00644076 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3285F4720BD158E00644076 /* ViewController.swift */; };
 		D3285F4D20BD158F00644076 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D3285F4C20BD158F00644076 /* Assets.xcassets */; };
@@ -194,6 +196,8 @@
 		1B628DAA2C534A9B1242BE36 /* Pods-WalletTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WalletTests.debug.xcconfig"; path = "../Pods/Target Support Files/Pods-WalletTests/Pods-WalletTests.debug.xcconfig"; sourceTree = "<group>"; };
 		44984157887C0BA41381ADE2 /* Pods-Wallet.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Wallet.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Wallet/Pods-Wallet.debug.xcconfig"; sourceTree = "<group>"; };
 		4F3A4A0A241140A2DC4D2F82 /* Pods-Wallet.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Wallet.release.xcconfig"; path = "../Pods/Target Support Files/Pods-Wallet/Pods-Wallet.release.xcconfig"; sourceTree = "<group>"; };
+		50B7C38220D918DE0070E1E8 /* IndexedInputField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndexedInputField.swift; sourceTree = "<group>"; };
+		50B7C38320D918DE0070E1E8 /* IndexedInputField.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = IndexedInputField.xib; sourceTree = "<group>"; };
 		905F530FEA963E39761D928A /* Pods-WalletTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WalletTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-WalletTests/Pods-WalletTests.release.xcconfig"; sourceTree = "<group>"; };
 		B387EF06E93BBDBAEEFF66EE /* Pods_Wallet.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Wallet.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BD407AAEC19DAF24A643934E /* Pods-WalletTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WalletTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WalletTests/Pods-WalletTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -538,6 +542,8 @@
 			isa = PBXGroup;
 			children = (
 				1A5649EA05E33DEBFA508CDB /* Button.swift */,
+				50B7C38220D918DE0070E1E8 /* IndexedInputField.swift */,
+				50B7C38320D918DE0070E1E8 /* IndexedInputField.xib */,
 			);
 			path = Controls;
 			sourceTree = "<group>";
@@ -701,6 +707,7 @@
 				D3B62A8B20CA40DC005A9F80 /* MainViewController.xib in Resources */,
 				D3B62A9720CA46EB005A9F80 /* SettingsViewController.xib in Resources */,
 				D348A77320C7C58900803B9E /* BackupIntroController.xib in Resources */,
+				50B7C38520D918DE0070E1E8 /* IndexedInputField.xib in Resources */,
 				D3B62A9A20CA73A0005A9F80 /* Localizable.strings in Resources */,
 				D3285F4D20BD158F00644076 /* Assets.xcassets in Resources */,
 				11B35319892846CB42A23599 /* GuestViewController.xib in Resources */,
@@ -747,6 +754,7 @@
 				"${BUILT_PRODUCTS_DIR}/BitcoinKit/BitcoinKit.framework",
 				"${BUILT_PRODUCTS_DIR}/ObjectMapper/ObjectMapper.framework",
 				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
@@ -754,6 +762,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BitcoinKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ObjectMapper.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -878,6 +887,7 @@
 				11B3590F4A4B907B7B6CD080 /* RestoreInteractor.swift in Sources */,
 				11B355D7142B6A76B6A3502E /* WalletInteractor.swift in Sources */,
 				11B352B21983E03BF7923C89 /* BitcoinCash.swift in Sources */,
+				50B7C38420D918DE0070E1E8 /* IndexedInputField.swift in Sources */,
 				11B350EC2D4417966B03D729 /* Ethereum.swift in Sources */,
 				11B35A0FCD2E65066D22D984 /* WalletBalanceViewModel.swift in Sources */,
 				11B355FCF509626B5DB0EEC9 /* UnspentOutput.swift in Sources */,
