@@ -2,7 +2,7 @@ import Foundation
 
 protocol IWalletView: class {
     func show(totalBalance: CurrencyValue)
-    func show(walletBalances: [WalletBalanceViewModel])
+    func show(walletBalances: [WalletBalanceViewItem])
 }
 
 protocol IWalletViewDelegate {

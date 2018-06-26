@@ -54,11 +54,11 @@ extension WalletViewController: IWalletView {
         }
     }
 
-    func show(walletBalances: [WalletBalanceViewModel]) {
+    func show(walletBalances: [WalletBalanceViewItem]) {
         var info = ""
 
         for viewModel in walletBalances {
-            info += "\(viewModel.coinValue.coin.name)\n\(viewModel.convertedValue.currency.symbol)\(viewModel.convertedValue.value)\n\(viewModel.rate.currency.symbol)\(viewModel.rate.value)\n\(viewModel.coinValue.value) \(viewModel.coinValue.coin.code)\n\n"
+            info += "\(viewModel.coinValue.coin.name)\n\(viewModel.currencyValue.currency.symbol)\(viewModel.currencyValue.value)\n\(viewModel.exchangeValue.currency.symbol)\(viewModel.exchangeValue.value)\n\(viewModel.coinValue.value) \(viewModel.coinValue.coin.code)\n\n"
         }
 
         infoLabel?.text = info

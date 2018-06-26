@@ -37,16 +37,19 @@ extension WalletInteractor: IWalletInteractor {
                 .disposed(by: disposeBag)
     }
 
-    func refresh() {
+    private func refresh() {
         let items: [WalletBalanceItem] = totalValues.compactMap { totalValueMap in
             let (code, totalValue) = totalValueMap
 
             if let rate = self.exchangeRates[code] {
-                return WalletBalanceItem(coinValue: CoinValue(coin: Bitcoin(), value: totalValue), conversionRate: rate, conversionCurrency: DollarCurrency())
+                return WalletBalanceItem(coinValue: CoinValue(coin: Bitcoin(), value: totalValue), exchangeRate: rate, currency: DollarCurrency())
             }
             return nil
         }
-        delegate?.didFetch(walletBalances: items)
+
+        if !items.isEmpty {
+            delegate?.didFetch(walletBalances: items)
+        }
     }
 
 }

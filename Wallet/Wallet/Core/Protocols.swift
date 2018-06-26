@@ -21,8 +21,8 @@ protocol IDatabaseManager {
 }
 
 protocol INetworkManager {
-    func getUnspentOutputs() -> Observable<[UnspentOutput]>
-    func getExchangeRates() -> Observable<[String: Double]>
+//    func getUnspentOutputs() -> Observable<[UnspentOutput]>
+//    func getExchangeRates() -> Observable<[String: Double]>
 }
 
 protocol SettingsProtocol {
