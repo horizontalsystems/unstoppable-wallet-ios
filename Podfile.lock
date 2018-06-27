@@ -3,6 +3,8 @@ PODS:
   - BitcoinKit (0.1.2)
   - Cuckoo (0.11.3)
   - ObjectMapper (3.1.0)
+  - RxCocoa (4.1.2):
+    - RxSwift (~> 4.0)
   - RxSwift (4.1.2)
   - SnapKit (4.0.0)
 
@@ -11,6 +13,7 @@ DEPENDENCIES:
   - BitcoinKit (from `https://github.com/ealymbaev/BitcoinKit`)
   - Cuckoo
   - ObjectMapper
+  - RxCocoa
   - RxSwift
   - SnapKit
 
@@ -19,6 +22,7 @@ SPEC REPOS:
     - Alamofire
     - Cuckoo
     - ObjectMapper
+    - RxCocoa
     - RxSwift
     - SnapKit
 
@@ -36,9 +40,10 @@ SPEC CHECKSUMS:
   BitcoinKit: c24789a6eca87d3b7fe92137c549703be37a901e
   Cuckoo: 97522dd7ac6f18adba6022bdc74aa69e82ca691a
   ObjectMapper: 20505058f54e5c3ca69e1d6de9897d152a5369a6
+  RxCocoa: d88ba0f1f6abf040011a9eb4b539324fc426843a
   RxSwift: e49536837d9901277638493ea537394d4b55f570
   SnapKit: a42d492c16e80209130a3379f73596c3454b7694
 
-PODFILE CHECKSUM: 8ba9c005db3e768777709f69f69ae5c0639ad231
+PODFILE CHECKSUM: 997295d34911e4980164528777dc1475bdba2b4b
 
 COCOAPODS: 1.5.3
