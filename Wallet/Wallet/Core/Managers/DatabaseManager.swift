@@ -1,29 +1,19 @@
 import Foundation
 import RxSwift
+import RealmSwift
+import RxRealm
 
 class DatabaseManager: IDatabaseManager {
+    private let realm = RealmFactory.instance.createWalletRealm()
 
-    func getUnspentOutputs() -> [UnspentOutput] {
-        return [
-            UnspentOutput(value: 32500000, index: 0, confirmations: 0, transactionHash: "", script: ""),
-            UnspentOutput(value: 16250000, index: 0, confirmations: 0, transactionHash: "", script: "")
-        ]
+    func getUnspentOutputs() -> Observable<DatabaseChangeset<UnspentOutput>> {
+        return Observable.arrayWithChangeset(from: realm.objects(UnspentOutput.self))
+                .map { DatabaseChangeset(array: $0, changeset: $1) }
     }
 
-    func insert(unspentOutputs: [UnspentOutput]) {
-    }
-
-    func truncateUnspentOutputs() {
-    }
-
-    func getExchangeRates() -> [String: Double] {
-        return [Bitcoin().code: 7200]
-    }
-
-    func insert(exchangeRates: [String: Double]) {
-    }
-
-    func truncateExchangeRates() {
+    func getExchangeRates() -> Observable<DatabaseChangeset<ExchangeRate>> {
+        return Observable.arrayWithChangeset(from: realm.objects(ExchangeRate.self))
+                .map { DatabaseChangeset(array: $0, changeset: $1) }
     }
 
 }

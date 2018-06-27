@@ -6,23 +6,13 @@ class WalletInteractor {
     weak var delegate: IWalletInteractorDelegate?
 
     private let disposeBag = DisposeBag()
+    private let databaseManager: DatabaseManager
 
-    private var unspentOutputs: [UnspentOutput]
-    private var exchangeRates: [String: Double]
+    private var totalValues = [String: Double]()
+    private var exchangeRates = [String: Double]()
 
-    init(databaseManager: IDatabaseManager, unspentOutputUpdateSubject: PublishSubject<[UnspentOutput]>, exchangeRateUpdateSubject: PublishSubject<[String: Double]>) {
-        unspentOutputs = databaseManager.getUnspentOutputs()
-        exchangeRates = databaseManager.getExchangeRates()
-
-        unspentOutputUpdateSubject.subscribeAsync(disposeBag: disposeBag, onNext: { [weak self] unspentOutputs in
-            self?.unspentOutputs = unspentOutputs
-            self?.notifyWalletBalances()
-        })
-
-        exchangeRateUpdateSubject.subscribeAsync(disposeBag: disposeBag, onNext: { [weak self] exchangeRates in
-            self?.exchangeRates = exchangeRates
-            self?.notifyWalletBalances()
-        })
+    init(databaseManager: DatabaseManager) {
+        self.databaseManager = databaseManager
     }
 
 }
@@ -30,17 +20,35 @@ class WalletInteractor {
 extension WalletInteractor: IWalletInteractor {
 
     func notifyWalletBalances() {
-        var totalValue: Double = 0
+        databaseManager.getUnspentOutputs()
+                .subscribe(onNext: { [weak self] changeset in
+                    self?.totalValues[Bitcoin().code] = changeset.array.map { Double($0.value) / 100000000 }.reduce(0, { x, y in  x + y })
+                    self?.refresh()
+                })
+                .disposed(by: disposeBag)
 
-        for unspentOutput in unspentOutputs {
-            totalValue += unspentOutput.value.toDouble
+        databaseManager.getExchangeRates()
+                .subscribe(onNext: { [weak self] changeset in
+                    for rate in changeset.array {
+                        self?.exchangeRates[rate.code] = rate.value
+                    }
+                    self?.refresh()
+                })
+                .disposed(by: disposeBag)
+    }
+
+    private func refresh() {
+        let items: [WalletBalanceItem] = totalValues.compactMap { totalValueMap in
+            let (code, totalValue) = totalValueMap
+
+            if let rate = self.exchangeRates[code] {
+                return WalletBalanceItem(coinValue: CoinValue(coin: Bitcoin(), value: totalValue), exchangeRate: rate, currency: DollarCurrency())
+            }
+            return nil
         }
 
-        let bitcoin = Bitcoin()
-
-        if let rate = exchangeRates[bitcoin.code] {
-            let walletBalanceItem = WalletBalanceItem(coinValue: CoinValue(coin: bitcoin, value: totalValue), conversionRate: rate, conversionCurrency: DollarCurrency())
-            delegate?.didFetch(walletBalances: [walletBalanceItem])
+        if !items.isEmpty {
+            delegate?.didFetch(walletBalances: items)
         }
     }
 

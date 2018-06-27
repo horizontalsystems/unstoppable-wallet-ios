@@ -39,7 +39,6 @@ class WalletViewController: UIViewController {
     }
 
     @objc func refresh() {
-        Factory.instance.unspentOutputManager.refresh()
     }
 
 }
@@ -47,14 +46,19 @@ class WalletViewController: UIViewController {
 extension WalletViewController: IWalletView {
 
     func show(totalBalance: CurrencyValue) {
-        totalLabel?.text = "\(totalBalance.currency.symbol)\(totalBalance.value)"
+        let formatter = NumberFormatter()
+        formatter.locale = Locale(identifier: "en_US")
+        formatter.numberStyle = .currency
+        if let formattedString = formatter.string(from: totalBalance.value as NSNumber) {
+            totalLabel?.text = formattedString
+        }
     }
 
-    func show(walletBalances: [WalletBalanceViewModel]) {
+    func show(walletBalances: [WalletBalanceViewItem]) {
         var info = ""
 
         for viewModel in walletBalances {
-            info += "\(viewModel.coinValue.coin.name)\n\(viewModel.convertedValue.currency.symbol)\(viewModel.convertedValue.value)\n\(viewModel.rate.currency.symbol)\(viewModel.rate.value)\n\(viewModel.coinValue.value) \(viewModel.coinValue.coin.code)\n\n"
+            info += "\(viewModel.coinValue.coin.name)\n\(viewModel.currencyValue.currency.symbol)\(viewModel.currencyValue.value)\n\(viewModel.exchangeValue.currency.symbol)\(viewModel.exchangeValue.value)\n\(viewModel.coinValue.value) \(viewModel.coinValue.coin.code)\n\n"
         }
 
         infoLabel?.text = info

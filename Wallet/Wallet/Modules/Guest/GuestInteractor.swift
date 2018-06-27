@@ -15,8 +15,16 @@ class GuestInteractor {
 extension GuestInteractor: IGuestInteractor {
 
     func createWallet() {
-        localStorage.save(words: mnemonic.generateWords())
-        delegate?.didCreateWallet()
+        let words = mnemonic.generateWords()
+
+        RealmFactory.instance.login(onCompletion: { [weak self] user, error in
+            if let user = user {
+                self?.localStorage.save(words: words)
+                self?.delegate?.didCreateWallet()
+            } else if let error = error {
+//                self?.delegate?.didCreateWallet()
+            }
+        })
     }
 
 }

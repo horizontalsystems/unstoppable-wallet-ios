@@ -121,33 +121,33 @@ class NetworkManager {
 }
 
 extension NetworkManager: INetworkManager {
-    func getUnspentOutputs() -> Observable<[UnspentOutput]> {
-        let seed = Mnemonic.seed(mnemonic: Factory.instance.stubWalletDataProvider.walletData.words, passphrase: "")
-
-        let hdWallet = HDWallet(seed: seed, network: Network.testnet)
-
-        var addresses = [String]()
-
-        for i in 0...20 {
-            if let address = try? hdWallet.receiveAddress(index: UInt32(i)) {
-                print(String(describing: address))
-                addresses.append(String(describing: address))
-            }
-        }
-
-        for i in 0...20 {
-            if let address = try? hdWallet.changeAddress(index: UInt32(i)) {
-                addresses.append(String(describing: address))
-            }
-        }
-
-        let wrapper: Observable<WrapperUnspentOutput> = observable(forRequest: request(withMethod: .get, path: "/unspent", parameters: ["active": addresses.joined(separator: "|")]))
-        return wrapper.map { $0.outputs }
-    }
-
-    func getExchangeRates() -> Observable<[String: Double]> {
-        return Observable.just(["BTC": 14400])
-    }
+//    func getUnspentOutputs() -> Observable<[UnspentOutput]> {
+//        let seed = Mnemonic.seed(mnemonic: Factory.instance.stubWalletDataProvider.walletData.words, passphrase: "")
+//
+//        let hdWallet = HDWallet(seed: seed, network: Network.testnet)
+//
+//        var addresses = [String]()
+//
+//        for i in 0...20 {
+//            if let address = try? hdWallet.receiveAddress(index: UInt32(i)) {
+//                print(String(describing: address))
+//                addresses.append(String(describing: address))
+//            }
+//        }
+//
+//        for i in 0...20 {
+//            if let address = try? hdWallet.changeAddress(index: UInt32(i)) {
+//                addresses.append(String(describing: address))
+//            }
+//        }
+//
+//        let wrapper: Observable<WrapperUnspentOutput> = observable(forRequest: request(withMethod: .get, path: "/unspent", parameters: ["active": addresses.joined(separator: "|")]))
+//        return wrapper.map { $0.outputs }
+//    }
+//
+//    func getExchangeRates() -> Observable<[String: Double]> {
+//        return Observable.just(["BTC": 14400])
+//    }
 
 //    func addressesData(forAddresses addresses: [String]) -> Observable<AddressesData> {
 //        return observable(forRequest: request(withMethod: .get, path: "/multiaddr", parameters: ["active": addresses.joined(separator: "|")]))

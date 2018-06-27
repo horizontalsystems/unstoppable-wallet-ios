@@ -16,26 +16,26 @@ class WalletPresenter {
 extension WalletPresenter: IWalletInteractorDelegate {
 
     func didFetch(walletBalances: [WalletBalanceItem]) {
-        var total: Double = 0
-        var viewModels = [WalletBalanceViewModel]()
+        var totalBalance: Double = 0
+        var viewItems = [WalletBalanceViewItem]()
 
         for balance in walletBalances {
-            total += balance.coinValue.value * balance.conversionRate
-            viewModels.append(viewModel(forBalance: balance))
+            totalBalance += balance.coinValue.value * balance.exchangeRate
+            viewItems.append(viewItem(forBalance: balance))
         }
 
-        if let currency = walletBalances.first?.conversionCurrency {
-            view?.show(totalBalance: CurrencyValue(currency: currency, value: total))
+        if let currency = walletBalances.first?.currency {
+            view?.show(totalBalance: CurrencyValue(currency: currency, value: totalBalance))
         }
 
-        view?.show(walletBalances: viewModels)
+        view?.show(walletBalances: viewItems)
     }
 
-    private func viewModel(forBalance balance: WalletBalanceItem) -> WalletBalanceViewModel {
-        return WalletBalanceViewModel(
+    private func viewItem(forBalance balance: WalletBalanceItem) -> WalletBalanceViewItem {
+        return WalletBalanceViewItem(
                 coinValue: balance.coinValue,
-                convertedValue: CurrencyValue(currency: balance.conversionCurrency, value: balance.coinValue.value * balance.conversionRate),
-                rate: CurrencyValue(currency: balance.conversionCurrency, value: balance.conversionRate)
+                exchangeValue: CurrencyValue(currency: balance.currency, value: balance.exchangeRate),
+                currencyValue: CurrencyValue(currency: balance.currency, value: balance.coinValue.value * balance.exchangeRate)
         )
     }
 
