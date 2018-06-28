@@ -115,10 +115,10 @@ class IndexedInputField: UIView, UITextFieldDelegate {
         indexLabel.textColor = InputFieldTheme.indexColor
         indexLabel.textAlignment = .right
 
-        textField.keyboardAppearance = .dark
+        textField.keyboardAppearance = AppTheme.keyboardAppearance
         textField.autocapitalizationType = .none
         textField.autocorrectionType = .no
-        textField.tintColor = .white
+        textField.tintColor = AppTheme.textFieldTintColor
         
         textField.addTarget(self, action: #selector(textChange), for: .editingChanged)
         textField.textColor = InputFieldTheme.textColor

@@ -10,9 +10,12 @@ class RestoreViewController: KeyboardObservingViewController {
 
     let restoreDescription = "restore.description".localized
 
-    var words = [String](repeating: "", count: 12)
+//    var words = [String](repeating: "", count: 12)
+    var words = ["into", "naive", "bench", "load", "whip", "model", "casino", "depend", "melt", "anchor", "pitch", "remote"]
 
     var onReturnSubject = PublishSubject<IndexPath>()
+
+    var firstLaunch = true
 
     init(delegate: IRestoreViewDelegate) {
         self.delegate = delegate
@@ -36,11 +39,22 @@ class RestoreViewController: KeyboardObservingViewController {
         wordsCollectionView?.registerView(forClass: DescriptionCollectionHeader.self, flowSupplementaryKind: .header)
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if firstLaunch {
+            firstLaunch = false
+            if let cell = ((wordsCollectionView?.visibleCells.compactMap { $0 as? RestoreWordCell })?.filter { $0.indexPath?.item == 0 })?.first {
+                cell.inputField.textField.becomeFirstResponder()
+            }
+        }
+    }
+
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
 
     @objc func cancelDidTap() {
+        view.endEditing(true)
         delegate.cancelDidClick()
     }
 
@@ -97,7 +111,7 @@ extension RestoreViewController: UICollectionViewDelegateFlowLayout, UICollectio
 
     func onReturn(at indexPath: IndexPath) {
         guard indexPath.row + 1 < words.count else {
-            view.endEditing(true)
+            restoreDidTap()
             return
         }
 

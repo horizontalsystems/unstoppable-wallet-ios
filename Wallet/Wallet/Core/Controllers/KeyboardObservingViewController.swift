@@ -13,10 +13,17 @@ class KeyboardObservingViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        subscribeKeyboard()
     }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        if keyboardFrameDisposable == nil {
+            subscribeKeyboard()
+        }
+    }
+
+    private func subscribeKeyboard() {
         keyboardFrameDisposable = NotificationCenter.default.rx.notification(NSNotification.Name.UIKeyboardWillChangeFrame).subscribeDisposableAsync(disposeBag: disposeBag, onNext: { [unowned self] notification in
             self.onKeyboardFrameChange(notification)
         })
@@ -28,6 +35,7 @@ class KeyboardObservingViewController: UIViewController {
 
         if let disposable = keyboardFrameDisposable {
             disposable.dispose()
+            keyboardFrameDisposable = nil
         }
     }
 

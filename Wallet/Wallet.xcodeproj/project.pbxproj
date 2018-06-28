@@ -85,6 +85,7 @@
 		11B35F8641C2F7F7FB23B181 /* GuestInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3566ED622AE7606EF76B9 /* GuestInteractor.swift */; };
 		11B35FE41FA9977CC36989D3 /* MainInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35B88A2D6C85E1600F3AF /* MainInteractor.swift */; };
 		1A56460F1BB48D4E82C6E257 /* RestoreWordCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5648D3CF09FF5EBE8321EC /* RestoreWordCell.swift */; };
+		1A56465CE6EFDADE3365DF98 /* AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5649DB879A57761C09842E /* AppTheme.swift */; };
 		1A56481D88BB7B6EE8FC92C0 /* KeyboardObservingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564B7491C37F836433E06F /* KeyboardObservingViewController.swift */; };
 		1A564A46D655BA99B1C0DAF7 /* DescriptionCollectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564E60ED94EDDE153519AA /* DescriptionCollectionHeader.swift */; };
 		1A564A60B8D7970C7CA6C0D3 /* UICollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564C6D65505783F4266294 /* UICollectionView.swift */; };
@@ -216,6 +217,7 @@
 		11B35FF2D2C084366AA66F32 /* GuestPresenterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GuestPresenterTests.swift; sourceTree = "<group>"; };
 		1A5648D3CF09FF5EBE8321EC /* RestoreWordCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestoreWordCell.swift; sourceTree = "<group>"; };
 		1A564939814A9D9F47D41EEB /* InputFieldTheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputFieldTheme.swift; sourceTree = "<group>"; };
+		1A5649DB879A57761C09842E /* AppTheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppTheme.swift; sourceTree = "<group>"; };
 		1A5649EA05E33DEBFA508CDB /* Button.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
 		1A564B7491C37F836433E06F /* KeyboardObservingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardObservingViewController.swift; sourceTree = "<group>"; };
 		1A564C6D65505783F4266294 /* UICollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UICollectionView.swift; sourceTree = "<group>"; };
@@ -416,8 +418,8 @@
 				11B35DE456745A4A5B7E3116 /* Wallet */,
 				11B351CAAA3EB1437B492DD8 /* Factory.swift */,
 				11B35A5DE20DD6DD486FAFC0 /* Protocols.swift */,
-				11B35BD63BB53AE9531A2BEC /* RealmFactory.swift */,
-				11B354F13581B41655B6A6CC /* DatabaseChangeset.swift */,
+				11B35BD63BB53AE9531A2BEC,
+				11B354F13581B41655B6A6CC /* DatabaseChangeSet.swift */,
 				1A564957AE0CC0A3472AA5F7 /* Controllers */,
 				11B354F13581B41655B6A6CC /* DatabaseChangeSet.swift */,
 				11B3510E674EE0BEAB506C74 /* CollectionChangeSet.swift */,
@@ -615,6 +617,7 @@
 				D3B62A9D20CA88BF005A9F80 /* Theme.xcassets */,
 				509E3D2320E398610095452C /* RestoreTheme.swift */,
 				1A564939814A9D9F47D41EEB /* InputFieldTheme.swift */,
+				1A5649DB879A57761C09842E /* AppTheme.swift */,
 			);
 			path = Theme;
 			sourceTree = "<group>";
@@ -1014,6 +1017,7 @@
 				1A56481D88BB7B6EE8FC92C0 /* KeyboardObservingViewController.swift in Sources */,
 				1A564E291AD4D31A893B9B52 /* UIView.swift in Sources */,
 				1A564AFE8103BA974943D4E7 /* InputFieldTheme.swift in Sources */,
+				1A56465CE6EFDADE3365DF98 /* AppTheme.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
