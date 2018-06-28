@@ -39,10 +39,9 @@ class RestoreViewController: KeyboardObservingViewController {
         wordsCollectionView?.registerView(forClass: DescriptionCollectionHeader.self, flowSupplementaryKind: .header)
     }
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        //controller present animation jumps when becomeResponder is in "did appear". But here cell are not bound yet, so +0.1
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        DispatchQueue.main.async  {
             self.becomeResponder(at: IndexPath(item: 0, section: 0))
         }
     }

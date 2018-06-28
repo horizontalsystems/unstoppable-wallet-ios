@@ -418,10 +418,8 @@
 				11B35DE456745A4A5B7E3116 /* Wallet */,
 				11B351CAAA3EB1437B492DD8 /* Factory.swift */,
 				11B35A5DE20DD6DD486FAFC0 /* Protocols.swift */,
-				11B35BD63BB53AE9531A2BEC,
 				11B354F13581B41655B6A6CC /* DatabaseChangeSet.swift */,
 				1A564957AE0CC0A3472AA5F7 /* Controllers */,
-				11B354F13581B41655B6A6CC /* DatabaseChangeSet.swift */,
 				11B3510E674EE0BEAB506C74 /* CollectionChangeSet.swift */,
 			);
 			path = Core;
