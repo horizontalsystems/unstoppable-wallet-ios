@@ -31,7 +31,6 @@ class BackupConfirmationController: UIViewController {
 
         firstIndexedInputField?.textField.returnKeyType = .next
         firstIndexedInputField?.onReturn = { [weak self] in
-            self?.firstIndexedInputField?.textField.resignFirstResponder()
             self?.secondIndexedInputField?.textField.becomeFirstResponder()
         }
         secondIndexedInputField?.textField.returnKeyType = .done

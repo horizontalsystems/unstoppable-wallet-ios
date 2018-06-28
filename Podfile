@@ -14,6 +14,7 @@ target :Wallet do
   pod 'Alamofire'
   pod 'ObjectMapper'
   pod 'RxSwift'
+  pod 'RxCocoa'
   pod 'RealmSwift'
   pod "RxRealm"
   # pod 'CoreBitcoin', :podspec => 'https://raw.github.com/oleganza/CoreBitcoin/master/CoreBitcoin.podspec'

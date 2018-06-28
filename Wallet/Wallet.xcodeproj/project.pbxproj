@@ -84,10 +84,17 @@
 		11B35F56DE01B03CCFB49E32 /* BackupInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B353A3B460BF1B24349F9F /* BackupInteractor.swift */; };
 		11B35F8641C2F7F7FB23B181 /* GuestInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3566ED622AE7606EF76B9 /* GuestInteractor.swift */; };
 		11B35FE41FA9977CC36989D3 /* MainInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35B88A2D6C85E1600F3AF /* MainInteractor.swift */; };
+		1A56460F1BB48D4E82C6E257 /* RestoreWordCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5648D3CF09FF5EBE8321EC /* RestoreWordCell.swift */; };
+		1A56465CE6EFDADE3365DF98 /* AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5649DB879A57761C09842E /* AppTheme.swift */; };
+		1A56481D88BB7B6EE8FC92C0 /* KeyboardObservingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564B7491C37F836433E06F /* KeyboardObservingViewController.swift */; };
+		1A564A46D655BA99B1C0DAF7 /* DescriptionCollectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564E60ED94EDDE153519AA /* DescriptionCollectionHeader.swift */; };
+		1A564A60B8D7970C7CA6C0D3 /* UICollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564C6D65505783F4266294 /* UICollectionView.swift */; };
+		1A564AFE8103BA974943D4E7 /* InputFieldTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564939814A9D9F47D41EEB /* InputFieldTheme.swift */; };
 		1A564D70A5B3A36B5348A656 /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5649EA05E33DEBFA508CDB /* Button.swift */; };
+		1A564E291AD4D31A893B9B52 /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564CBC6EC3E2111514EC4D /* UIView.swift */; };
 		4FFC912E7E11D506DC05EFA7 /* Pods_WalletTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5F5D323E150F570A893EA81 /* Pods_WalletTests.framework */; };
+		509E3D2420E398610095452C /* RestoreTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 509E3D2320E398610095452C /* RestoreTheme.swift */; };
 		50B7C38420D918DE0070E1E8 /* IndexedInputField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B7C38220D918DE0070E1E8 /* IndexedInputField.swift */; };
-		50B7C38520D918DE0070E1E8 /* IndexedInputField.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50B7C38320D918DE0070E1E8 /* IndexedInputField.xib */; };
 		D322EBF120E4914D00C05A48 /* TransactionRecordCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D322EBEF20E4914D00C05A48 /* TransactionRecordCell.swift */; };
 		D322EBF220E4914D00C05A48 /* TransactionRecordCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D322EBF020E4914D00C05A48 /* TransactionRecordCell.xib */; };
 		D3285F4620BD158E00644076 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3285F4520BD158E00644076 /* AppDelegate.swift */; };
@@ -208,12 +215,19 @@
 		11B35FB8A495A565BAA856C9 /* Transaction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Transaction.swift; sourceTree = "<group>"; };
 		11B35FE128D9CEE89C9F0F6B /* SettingsModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsModule.swift; sourceTree = "<group>"; };
 		11B35FF2D2C084366AA66F32 /* GuestPresenterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GuestPresenterTests.swift; sourceTree = "<group>"; };
+		1A5648D3CF09FF5EBE8321EC /* RestoreWordCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestoreWordCell.swift; sourceTree = "<group>"; };
+		1A564939814A9D9F47D41EEB /* InputFieldTheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputFieldTheme.swift; sourceTree = "<group>"; };
+		1A5649DB879A57761C09842E /* AppTheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppTheme.swift; sourceTree = "<group>"; };
 		1A5649EA05E33DEBFA508CDB /* Button.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
+		1A564B7491C37F836433E06F /* KeyboardObservingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardObservingViewController.swift; sourceTree = "<group>"; };
+		1A564C6D65505783F4266294 /* UICollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UICollectionView.swift; sourceTree = "<group>"; };
+		1A564CBC6EC3E2111514EC4D /* UIView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
+		1A564E60ED94EDDE153519AA /* DescriptionCollectionHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DescriptionCollectionHeader.swift; sourceTree = "<group>"; };
 		1B628DAA2C534A9B1242BE36 /* Pods-WalletTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WalletTests.debug.xcconfig"; path = "../Pods/Target Support Files/Pods-WalletTests/Pods-WalletTests.debug.xcconfig"; sourceTree = "<group>"; };
 		44984157887C0BA41381ADE2 /* Pods-Wallet.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Wallet.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Wallet/Pods-Wallet.debug.xcconfig"; sourceTree = "<group>"; };
 		4F3A4A0A241140A2DC4D2F82 /* Pods-Wallet.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Wallet.release.xcconfig"; path = "../Pods/Target Support Files/Pods-Wallet/Pods-Wallet.release.xcconfig"; sourceTree = "<group>"; };
+		509E3D2320E398610095452C /* RestoreTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestoreTheme.swift; sourceTree = "<group>"; };
 		50B7C38220D918DE0070E1E8 /* IndexedInputField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndexedInputField.swift; sourceTree = "<group>"; };
-		50B7C38320D918DE0070E1E8 /* IndexedInputField.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = IndexedInputField.xib; sourceTree = "<group>"; };
 		905F530FEA963E39761D928A /* Pods-WalletTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WalletTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-WalletTests/Pods-WalletTests.release.xcconfig"; sourceTree = "<group>"; };
 		B387EF06E93BBDBAEEFF66EE /* Pods_Wallet.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Wallet.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BD407AAEC19DAF24A643934E /* Pods-WalletTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WalletTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WalletTests/Pods-WalletTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -334,6 +348,7 @@
 				11B35BAEE22C144B33661819 /* RestorePresenter.swift */,
 				D3373DCC20C6B21C0082BC4A /* RestoreViewController.swift */,
 				D3373DCD20C6B21C0082BC4A /* RestoreViewController.xib */,
+				1A5640A450479CFD91C0413A /* Views */,
 			);
 			path = Restore;
 			sourceTree = "<group>";
@@ -345,6 +360,8 @@
 				11B357CB2B48B51957A1275C /* String.swift */,
 				11B35B6579FEFCD43F0AD126 /* Satoshi.swift */,
 				11B351109D9C8D98BC8CC696 /* Observable.swift */,
+				1A564C6D65505783F4266294 /* UICollectionView.swift */,
+				1A564CBC6EC3E2111514EC4D /* UIView.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -401,6 +418,9 @@
 				11B35DE456745A4A5B7E3116 /* Wallet */,
 				11B351CAAA3EB1437B492DD8 /* Factory.swift */,
 				11B35A5DE20DD6DD486FAFC0 /* Protocols.swift */,
+				11B35BD63BB53AE9531A2BEC,
+				11B354F13581B41655B6A6CC /* DatabaseChangeSet.swift */,
+				1A564957AE0CC0A3472AA5F7 /* Controllers */,
 				11B354F13581B41655B6A6CC /* DatabaseChangeSet.swift */,
 				11B3510E674EE0BEAB506C74 /* CollectionChangeSet.swift */,
 			);
@@ -582,14 +602,41 @@
 			path = Backup;
 			sourceTree = "<group>";
 		};
+		1A5640A450479CFD91C0413A /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				1A5648D3CF09FF5EBE8321EC /* RestoreWordCell.swift */,
+				1A564E60ED94EDDE153519AA /* DescriptionCollectionHeader.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		1A5643D714CA2AC21A38668E /* Theme */ = {
+			isa = PBXGroup;
+			children = (
+				D3B62A9D20CA88BF005A9F80 /* Theme.xcassets */,
+				509E3D2320E398610095452C /* RestoreTheme.swift */,
+				1A564939814A9D9F47D41EEB /* InputFieldTheme.swift */,
+				1A5649DB879A57761C09842E /* AppTheme.swift */,
+			);
+			path = Theme;
+			sourceTree = "<group>";
+		};
 		1A56488F94C9D1426187C87A /* Controls */ = {
 			isa = PBXGroup;
 			children = (
 				1A5649EA05E33DEBFA508CDB /* Button.swift */,
 				50B7C38220D918DE0070E1E8 /* IndexedInputField.swift */,
-				50B7C38320D918DE0070E1E8 /* IndexedInputField.xib */,
 			);
 			path = Controls;
+			sourceTree = "<group>";
+		};
+		1A564957AE0CC0A3472AA5F7 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				1A564B7491C37F836433E06F /* KeyboardObservingViewController.swift */,
+			);
+			path = Controllers;
 			sourceTree = "<group>";
 		};
 		95AD93BB0A2D5F5C4A435252 /* Frameworks */ = {
@@ -627,7 +674,7 @@
 			isa = PBXGroup;
 			children = (
 				D3285F4C20BD158F00644076 /* Assets.xcassets */,
-				D3B62A9D20CA88BF005A9F80 /* Theme.xcassets */,
+				1A5643D714CA2AC21A38668E /* Theme */,
 				11B354AB3C3435F2D5F39EE6 /* Modules */,
 				11B356605394189E9B5EBEE0 /* Models */,
 				11B3546BA60E06900F58BA94 /* Core */,
@@ -751,7 +798,6 @@
 				D3B62A8B20CA40DC005A9F80 /* MainViewController.xib in Resources */,
 				D3B62A9720CA46EB005A9F80 /* SettingsViewController.xib in Resources */,
 				D348A77320C7C58900803B9E /* BackupIntroController.xib in Resources */,
-				50B7C38520D918DE0070E1E8 /* IndexedInputField.xib in Resources */,
 				D3B62A9A20CA73A0005A9F80 /* Localizable.strings in Resources */,
 				D3285F4D20BD158F00644076 /* Assets.xcassets in Resources */,
 				11B35319892846CB42A23599 /* GuestViewController.xib in Resources */,
@@ -799,6 +845,7 @@
 				"${BUILT_PRODUCTS_DIR}/ObjectMapper/ObjectMapper.framework",
 				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
 				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
 				"${BUILT_PRODUCTS_DIR}/RxRealm/RxRealm.framework",
 				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
@@ -810,6 +857,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ObjectMapper.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxRealm.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
@@ -895,6 +943,7 @@
 				11B356949FB74ACE63ABB6E0 /* GuestViewController.swift in Sources */,
 				D348A77620C7D34100803B9E /* BackupConfirmationController.swift in Sources */,
 				11B350021803A9BE10492F30 /* GuestRouter.swift in Sources */,
+				509E3D2420E398610095452C /* RestoreTheme.swift in Sources */,
 				D3373DCE20C6B21C0082BC4A /* RestoreViewController.swift in Sources */,
 				11B3531C51A0413CE9E255F2 /* GuestPresenter.swift in Sources */,
 				11B35BCBBF60CA8A041E97B0 /* BackupRouter.swift in Sources */,
@@ -962,6 +1011,13 @@
 				11B35EE50DDE3DED7202F3A7 /* CollectionChangeSet.swift in Sources */,
 				11B352A9672E1D863140FAB9 /* TransactionRecordViewItem.swift in Sources */,
 				11B354E052C02470D2DB1F92 /* TransactionsInteractor.swift in Sources */,
+				1A56460F1BB48D4E82C6E257 /* RestoreWordCell.swift in Sources */,
+				1A564A46D655BA99B1C0DAF7 /* DescriptionCollectionHeader.swift in Sources */,
+				1A564A60B8D7970C7CA6C0D3 /* UICollectionView.swift in Sources */,
+				1A56481D88BB7B6EE8FC92C0 /* KeyboardObservingViewController.swift in Sources */,
+				1A564E291AD4D31A893B9B52 /* UIView.swift in Sources */,
+				1A564AFE8103BA974943D4E7 /* InputFieldTheme.swift in Sources */,
+				1A56465CE6EFDADE3365DF98 /* AppTheme.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

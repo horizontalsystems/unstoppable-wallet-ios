@@ -8,6 +8,8 @@ PODS:
   - Realm/Headers (3.7.4)
   - RealmSwift (3.7.4):
     - Realm (= 3.7.4)
+  - RxCocoa (4.2.0):
+    - RxSwift (~> 4.0)
   - RxRealm (0.7.5):
     - RealmSwift (~> 3.0)
     - RxSwift (~> 4.0)
@@ -20,6 +22,7 @@ DEPENDENCIES:
   - Cuckoo
   - ObjectMapper
   - RealmSwift
+  - RxCocoa
   - RxRealm
   - RxSwift
   - SnapKit
@@ -31,6 +34,7 @@ SPEC REPOS:
     - ObjectMapper
     - Realm
     - RealmSwift
+    - RxCocoa
     - RxRealm
     - RxSwift
     - SnapKit
@@ -51,10 +55,11 @@ SPEC CHECKSUMS:
   ObjectMapper: b612bf8c8e99c4dc0bb6013a51f7c27966ed5da9
   Realm: a469bb59e33f9926102ccaea4349822c53b9117e
   RealmSwift: a45861b21c180f5cf0f122144b9759fa8dde3e9e
+  RxCocoa: 0b54909c902e1e581212a03e690bbd94032d8baa
   RxRealm: a6c6c0a07cb61f34209969ca6657734edfdfff30
   RxSwift: 99e10317ddfcc7fbe01356aafd118fde4a0be104
   SnapKit: a42d492c16e80209130a3379f73596c3454b7694
 
-PODFILE CHECKSUM: ad221d360cfc6a85f587eb3f88d2ed50a0a1bf23
+PODFILE CHECKSUM: b111c4f07c9a17181bfdbf3a30c425b5422174e8
 
 COCOAPODS: 1.5.3
