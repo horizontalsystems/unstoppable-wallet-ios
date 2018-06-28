@@ -43,7 +43,7 @@ class RestoreWordCell: UICollectionViewCell {
     }
 
     private func becomeFirstResponder(indexPath: IndexPath) {
-        if let currentIndex = self.indexPath?.item, currentIndex - indexPath.item == 1 {
+        if let currentIndex = self.indexPath?.item, currentIndex == indexPath.item {
             inputField.textField.becomeFirstResponder()
         }
     }
