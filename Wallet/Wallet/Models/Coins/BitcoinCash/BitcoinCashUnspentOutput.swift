@@ -1,8 +1,7 @@
 import Foundation
-import ObjectMapper
 import RealmSwift
 
-class UnspentOutput: Object {
+class BitcoinCashUnspentOutput: Object {
     @objc dynamic var value: Int = 0
     @objc dynamic var index: Int = 0
     @objc dynamic var confirmations: Int = 0

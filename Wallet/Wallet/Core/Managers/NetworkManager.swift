@@ -43,7 +43,7 @@ class NetworkManager {
 
         request.setValue("application/json", forHTTPHeaderField: "Accept")
 
-//        logger?.log(tag: "HTTP", text: "HTTP OUT: \(method.rawValue) \(path) \(parameters.map { String(describing: $0) } ?? "")")
+        print("HTTP OUT: \(method.rawValue) \(path) \(parameters.map { String(describing: $0) } ?? "")")
 
         return RequestRouter(request: request, encoding: method == .get ? URLEncoding.default : JSONEncoding.default, parameters: parameters)
     }
@@ -65,14 +65,14 @@ class NetworkManager {
         return observable.do(onNext: { [weak self] dataResponse in
             switch dataResponse.result {
             case .success(let result):
-//                print("HTTP IN: SUCCESS: \(dataResponse.request?.url?.path ?? ""): response = \(result)")
+                print("HTTP IN: SUCCESS: \(dataResponse.request?.url?.path ?? ""): response = \(result)")
                 ()
             case .failure:
                 let data = dataResponse.data.flatMap {
                     try? JSONSerialization.jsonObject(with: $0, options: .allowFragments)
                 }
 
-//                print("HTTP IN: ERROR: \(dataResponse.request?.url?.path ?? ""): status = \(dataResponse.response?.statusCode ?? 0), response: \(data.map { "\($0)" } ?? "nil")")
+                print("HTTP IN: ERROR: \(dataResponse.request?.url?.path ?? ""): status = \(dataResponse.response?.statusCode ?? 0), response: \(data.map { "\($0)" } ?? "nil")")
                 ()
             }
         })
@@ -121,36 +121,12 @@ class NetworkManager {
 }
 
 extension NetworkManager: INetworkManager {
-//    func getUnspentOutputs() -> Observable<[UnspentOutput]> {
-//        let seed = Mnemonic.seed(mnemonic: Factory.instance.stubWalletDataProvider.walletData.words, passphrase: "")
-//
-//        let hdWallet = HDWallet(seed: seed, network: Network.testnet)
-//
-//        var addresses = [String]()
-//
-//        for i in 0...20 {
-//            if let address = try? hdWallet.receiveAddress(index: UInt32(i)) {
-//                print(String(describing: address))
-//                addresses.append(String(describing: address))
-//            }
-//        }
-//
-//        for i in 0...20 {
-//            if let address = try? hdWallet.changeAddress(index: UInt32(i)) {
-//                addresses.append(String(describing: address))
-//            }
-//        }
-//
-//        let wrapper: Observable<WrapperUnspentOutput> = observable(forRequest: request(withMethod: .get, path: "/unspent", parameters: ["active": addresses.joined(separator: "|")]))
-//        return wrapper.map { $0.outputs }
-//    }
-//
-//    func getExchangeRates() -> Observable<[String: Double]> {
-//        return Observable.just(["BTC": 14400])
-//    }
 
-//    func addressesData(forAddresses addresses: [String]) -> Observable<AddressesData> {
-//        return observable(forRequest: request(withMethod: .get, path: "/multiaddr", parameters: ["active": addresses.joined(separator: "|")]))
-//    }
+    func getJwtToken(identity: String, pubKeys: [Int: String]) -> Observable<String> {
+        return observable(forRequest: request(withMethod: .post, path: "/BTC/testnet/wallet", parameters: ["identity": identity]), mapper: { json in
+            let jsonHash = json as! [String: String]
+            return jsonHash["token"]
+        })
+    }
 
 }

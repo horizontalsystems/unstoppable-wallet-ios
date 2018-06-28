@@ -34,7 +34,19 @@ class Factory {
     })}
 
     var networkManager: NetworkManager { return getInstance(creator: {
-        return NetworkManager(apiUrl: "https://testnet.blockchain.info")
+        return NetworkManager(apiUrl: "http://bitnode.grouvi.org:3000/api")
+    })}
+
+    var walletManager: WalletManager { return getInstance(creator: {
+        return WalletManager()
+    })}
+
+    var realmManager: RealmManager { return getInstance(creator: {
+        return RealmManager()
+    })}
+
+    var loginManager: LoginManager { return getInstance(creator: {
+        return LoginManager(networkManager: networkManager, walletManager: walletManager, realmManager: realmManager, localStorage: userDefaultsStorage)
     })}
 
     private func getInstance<T>(creator: () -> T) -> T {
