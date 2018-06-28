@@ -31,9 +31,9 @@ extension RestoreInteractor: IRestoreInteractor {
                     self.loginManager.login(withWords: words)
                 }
                 .subscribeAsync(disposeBag: disposeBag, onError: { [weak self] _ in
-                    self?.delegate?.didRestore()
-                }, onCompleted: { [weak self] in
                     self?.delegate?.didFailToRestore()
+                }, onCompleted: { [weak self] in
+                    self?.delegate?.didRestore()
                 })
     }
 
