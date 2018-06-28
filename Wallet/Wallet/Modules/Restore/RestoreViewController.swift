@@ -39,13 +39,11 @@ class RestoreViewController: KeyboardObservingViewController {
         wordsCollectionView?.registerView(forClass: DescriptionCollectionHeader.self, flowSupplementaryKind: .header)
     }
 
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        if firstLaunch {
-            firstLaunch = false
-            if let cell = ((wordsCollectionView?.visibleCells.compactMap { $0 as? RestoreWordCell })?.filter { $0.indexPath?.item == 0 })?.first {
-                cell.inputField.textField.becomeFirstResponder()
-            }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        //controller present animation jumps when becomeResponder is in "did appear". But here cell are not bound yet, so +0.1
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            self.becomeResponder(at: IndexPath(item: 0, section: 0))
         }
     }
 
@@ -88,7 +86,7 @@ extension RestoreViewController: UICollectionViewDelegateFlowLayout, UICollectio
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         if let cell = cell as? RestoreWordCell {
             cell.bind(onReturnSubject: onReturnSubject, indexPath: indexPath, index: indexPath.item + 1, word: words[indexPath.row], returnKeyType: indexPath.row + 1 < words.count ? .next : .done, onReturn: { [weak self] in
-                self?.onReturn(at: indexPath)
+                self?.becomeResponder(at: IndexPath(item: indexPath.item + 1, section: 0))
             }, onTextChange: { [weak self] string in
                 self?.onTextChange(word: string, at: indexPath)
             })
@@ -109,8 +107,8 @@ extension RestoreViewController: UICollectionViewDelegateFlowLayout, UICollectio
         return CGSize(width: width, height: height)
     }
 
-    func onReturn(at indexPath: IndexPath) {
-        guard indexPath.row + 1 < words.count else {
+    func becomeResponder(at indexPath: IndexPath) {
+        guard indexPath.row < words.count else {
             restoreDidTap()
             return
         }
