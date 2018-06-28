@@ -1,14 +1,17 @@
 import Foundation
+import RxSwift
 
 class GuestInteractor {
+    private let disposeBag = DisposeBag()
+
     weak var delegate: IGuestInteractorDelegate?
 
     private let mnemonic: IMnemonic
-    private let localStorage: ILocalStorage
+    private let loginManager: LoginManager
 
-    init(mnemonic: IMnemonic, localStorage: ILocalStorage) {
+    init(mnemonic: IMnemonic, loginManager: LoginManager) {
         self.mnemonic = mnemonic
-        self.localStorage = localStorage
+        self.loginManager = loginManager
     }
 }
 
@@ -17,13 +20,10 @@ extension GuestInteractor: IGuestInteractor {
     func createWallet() {
         let words = mnemonic.generateWords()
 
-        RealmFactory.instance.login(onCompletion: { [weak self] user, error in
-            if let user = user {
-                self?.localStorage.save(words: words)
-                self?.delegate?.didCreateWallet()
-            } else if let error = error {
-//                self?.delegate?.didCreateWallet()
-            }
+        loginManager.login(withWords: words).subscribeAsync(disposeBag: disposeBag, onError: { [weak self] _ in
+            self?.delegate?.didFailToCreateWallet()
+        }, onCompleted: { [weak self] in
+            self?.delegate?.didCreateWallet()
         })
     }
 

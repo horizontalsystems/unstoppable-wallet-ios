@@ -6,12 +6,12 @@ class WalletInteractor {
     weak var delegate: IWalletInteractorDelegate?
 
     private let disposeBag = DisposeBag()
-    private let databaseManager: DatabaseManager
+    private let databaseManager: IDatabaseManager
 
-    private var totalValues = [String: Double]()
+    private var totalValues = [Coin: Double]()
     private var exchangeRates = [String: Double]()
 
-    init(databaseManager: DatabaseManager) {
+    init(databaseManager: IDatabaseManager) {
         self.databaseManager = databaseManager
     }
 
@@ -20,9 +20,16 @@ class WalletInteractor {
 extension WalletInteractor: IWalletInteractor {
 
     func notifyWalletBalances() {
-        databaseManager.getUnspentOutputs()
+        databaseManager.getBitcoinUnspentOutputs()
                 .subscribe(onNext: { [weak self] changeset in
-                    self?.totalValues[Bitcoin().code] = changeset.array.map { Double($0.value) / 100000000 }.reduce(0, { x, y in  x + y })
+                    self?.totalValues[Bitcoin()] = changeset.array.map { Double($0.value) / 100000000 }.reduce(0, { x, y in  x + y })
+                    self?.refresh()
+                })
+                .disposed(by: disposeBag)
+
+        databaseManager.getBitcoinCashUnspentOutputs()
+                .subscribe(onNext: { [weak self] changeset in
+                    self?.totalValues[BitcoinCash()] = changeset.array.map { Double($0.value) / 100000000 }.reduce(0, { x, y in  x + y })
                     self?.refresh()
                 })
                 .disposed(by: disposeBag)
@@ -39,10 +46,10 @@ extension WalletInteractor: IWalletInteractor {
 
     private func refresh() {
         let items: [WalletBalanceItem] = totalValues.compactMap { totalValueMap in
-            let (code, totalValue) = totalValueMap
+            let (coin, totalValue) = totalValueMap
 
-            if let rate = self.exchangeRates[code] {
-                return WalletBalanceItem(coinValue: CoinValue(coin: Bitcoin(), value: totalValue), exchangeRate: rate, currency: DollarCurrency())
+            if let rate = self.exchangeRates[coin.code] {
+                return WalletBalanceItem(coinValue: CoinValue(coin: coin, value: totalValue), exchangeRate: rate, currency: DollarCurrency())
             }
             return nil
         }

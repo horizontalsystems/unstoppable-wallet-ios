@@ -1,15 +1,22 @@
 import Foundation
-import RealmSwift
+import RxSwift
 
 class RestoreInteractor {
+
+    enum ValidationError: Error {
+        case invalidWords
+    }
+
+    private let disposeBag = DisposeBag()
+
     weak var delegate: IRestoreInteractorDelegate?
 
-    let mnemonic: IMnemonic
-    let localStorage: ILocalStorage
+    private let mnemonic: IMnemonic
+    private let loginManager: LoginManager
 
-    init(mnemonic: IMnemonic, localStorage: ILocalStorage) {
+    init(mnemonic: IMnemonic, loginManager: LoginManager) {
         self.mnemonic = mnemonic
-        self.localStorage = localStorage
+        self.loginManager = loginManager
     }
 
 }
@@ -17,31 +24,17 @@ class RestoreInteractor {
 extension RestoreInteractor: IRestoreInteractor {
 
     func restore(withWords words: [String]) {
-        if mnemonic.validate(words: words) {
+        let validationObservable = mnemonic.validate(words: words) ? Observable.just(words) : Observable.error(ValidationError.invalidWords)
 
-            guard let authURL = URL(string: "https://grouvi-wallet.us1a.cloud.realm.io") else {
-                print("No auth url")
-                delegate?.didFailToRestore()
-                return
-            }
-
-            let credentials = SyncCredentials.usernamePassword(username: "ermat", password: "123")
-
-            SyncUser.logIn(with: credentials, server: authURL, onCompletion: { [weak self] user, error in
-                if let user = user {
-                    print("User: \(user)")
-
-                    self?.localStorage.save(words: words)
-                    self?.delegate?.didRestore()
-                } else if let error = error {
-                    print("Error: \(error)")
-                    self?.delegate?.didFailToRestore()
+        validationObservable
+                .flatMap { words in
+                    self.loginManager.login(withWords: words)
                 }
-            })
-
-        } else {
-            delegate?.didFailToRestore()
-        }
+                .subscribeAsync(disposeBag: disposeBag, onError: { [weak self] _ in
+                    self?.delegate?.didRestore()
+                }, onCompleted: { [weak self] in
+                    self?.delegate?.didFailToRestore()
+                })
     }
 
 }

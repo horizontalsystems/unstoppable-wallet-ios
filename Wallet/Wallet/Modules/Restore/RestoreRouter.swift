@@ -30,7 +30,7 @@ extension RestoreRouter {
 
     static func module() -> UIViewController {
         let router = RestoreRouter()
-        let interactor = RestoreInteractor(mnemonic: Factory.instance.mnemonicManager, localStorage: Factory.instance.userDefaultsStorage)
+        let interactor = RestoreInteractor(mnemonic: Factory.instance.mnemonicManager, loginManager: Factory.instance.loginManager)
         let presenter = RestorePresenter(interactor: interactor, router: router)
         let viewController = RestoreViewController(delegate: presenter)
 

@@ -57,7 +57,7 @@ extension WalletViewController: IWalletView {
     func show(walletBalances: [WalletBalanceViewItem]) {
         var info = ""
 
-        for viewModel in walletBalances {
+        for viewModel in walletBalances.reversed() {
             info += "\(viewModel.coinValue.coin.name)\n\(viewModel.currencyValue.currency.symbol)\(viewModel.currencyValue.value)\n\(viewModel.exchangeValue.currency.symbol)\(viewModel.exchangeValue.value)\n\(viewModel.coinValue.value) \(viewModel.coinValue.coin.code)\n\n"
         }
 

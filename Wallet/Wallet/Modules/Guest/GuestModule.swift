@@ -11,6 +11,7 @@ protocol IGuestInteractor {
 
 protocol IGuestInteractorDelegate: class {
     func didCreateWallet()
+    func didFailToCreateWallet()
 }
 
 protocol IGuestRouter {

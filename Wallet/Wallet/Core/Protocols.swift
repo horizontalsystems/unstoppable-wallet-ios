@@ -16,13 +16,14 @@ protocol IMnemonic {
 }
 
 protocol IDatabaseManager {
-    func getUnspentOutputs() -> Observable<DatabaseChangeset<UnspentOutput>>
-    func getExchangeRates() -> Observable<DatabaseChangeset<ExchangeRate>>
+    func getBitcoinUnspentOutputs() -> Observable<DatabaseChangeSet<BitcoinUnspentOutput>>
+    func getBitcoinCashUnspentOutputs() -> Observable<DatabaseChangeSet<BitcoinCashUnspentOutput>>
+    func getExchangeRates() -> Observable<DatabaseChangeSet<ExchangeRate>>
+    func getTransactionRecords() -> Observable<DatabaseChangeSet<TransactionRecord>>
 }
 
 protocol INetworkManager {
-//    func getUnspentOutputs() -> Observable<[UnspentOutput]>
-//    func getExchangeRates() -> Observable<[String: Double]>
+    func getJwtToken(identity: String, pubKeys: [Int: String]) -> Observable<String>
 }
 
 protocol SettingsProtocol {
