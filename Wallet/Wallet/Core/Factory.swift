@@ -49,6 +49,10 @@ class Factory {
         return LoginManager(networkManager: networkManager, walletManager: walletManager, realmManager: realmManager, localStorage: userDefaultsStorage)
     })}
 
+    var coinManager: CoinManager { return getInstance(creator: {
+        return CoinManager()
+    })}
+
     private func getInstance<T>(creator: () -> T) -> T {
         let className = String(describing: T.self)
 

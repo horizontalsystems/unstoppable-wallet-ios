@@ -70,6 +70,8 @@ extension TransactionsViewController: ITransactionsView {
             }
 
             tableView.endUpdates()
+        } else {
+            tableView.reloadData()
         }
     }
 
