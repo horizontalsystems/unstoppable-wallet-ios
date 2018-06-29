@@ -71,7 +71,6 @@
 		11B35BCEC18400181DF64491 /* RestoreRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35142DB758C8B2397D115 /* RestoreRouter.swift */; };
 		11B35BFADC930EF5007A177F /* RestoreModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B358586003E20B167B1442 /* RestoreModule.swift */; };
 		11B35C16BB5B927232B0CC6C /* LoginManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B355A302807B60A6E32FEF /* LoginManager.swift */; };
-		11B35C8A65E697F7FE0FA133 /* MnemonicWordsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35DA52A0132F1EC67824A /* MnemonicWordsList.swift */; };
 		11B35CBAB5F1BF7AAF6543A3 /* WalletPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B356A624E0982E0D90F9BB /* WalletPresenter.swift */; };
 		11B35CCB29E73CAB6D26C949 /* TransactionsModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35687F7521B1F22786638 /* TransactionsModule.swift */; };
 		11B35CE6041F88972EBB3CDE /* CurrencyValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3589DC1945CAFBEEB1EED /* CurrencyValue.swift */; };
@@ -203,7 +202,6 @@
 		11B35D54E8B848A105C9B17E /* RealmManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmManager.swift; sourceTree = "<group>"; };
 		11B35D64A5D075139531EB44 /* Bitcoin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Bitcoin.swift; sourceTree = "<group>"; };
 		11B35D66E95B16C32E3796E8 /* BackupRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackupRouter.swift; sourceTree = "<group>"; };
-		11B35DA52A0132F1EC67824A /* MnemonicWordsList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicWordsList.swift; sourceTree = "<group>"; };
 		11B35DA61939E86DD4A59378 /* DollarCurrency.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DollarCurrency.swift; sourceTree = "<group>"; };
 		11B35DC5A4019EA28C92B1E7 /* WalletModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletModule.swift; sourceTree = "<group>"; };
 		11B35DDABED90E97417092F5 /* WalletRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletRouter.swift; sourceTree = "<group>"; };
@@ -562,7 +560,6 @@
 				11B359347E497B609AC15319 /* MnemonicManager.swift */,
 				11B35317EC3B04B578A23642 /* StubWalletDataProvider.swift */,
 				11B35B079198B54EB8D609CC /* UserDefaultsStorage.swift */,
-				11B35DA52A0132F1EC67824A /* MnemonicWordsList.swift */,
 				11B358B19426A636F578B34E /* StubSettingsProvider.swift */,
 				11B353690E9FEEEE1AD692ED /* WalletWrapper.swift */,
 			);
@@ -977,7 +974,6 @@
 				11B35F8641C2F7F7FB23B181 /* GuestInteractor.swift in Sources */,
 				11B3573B7C7DFC4E005490F3 /* UserDefaultsStorage.swift in Sources */,
 				11B35D1E39102FA5DAA9F974 /* LaunchRouter.swift in Sources */,
-				11B35C8A65E697F7FE0FA133 /* MnemonicWordsList.swift in Sources */,
 				11B357D903B62DAD830E4685 /* Coin.swift in Sources */,
 				11B3590F4A4B907B7B6CD080 /* RestoreInteractor.swift in Sources */,
 				11B355D7142B6A76B6A3502E /* WalletInteractor.swift in Sources */,

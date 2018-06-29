@@ -2,7 +2,6 @@ import Foundation
 import RxSwift
 import Alamofire
 import ObjectMapper
-import BitcoinKit
 
 enum NetworkError: Error {
     case invalidRequest

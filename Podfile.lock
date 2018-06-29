@@ -45,7 +45,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   BitcoinKit:
-    :commit: c2a181eb007b6272fd77758a87630283151eafbd
+    :commit: 36cb12fe236c9e1dacddc63b59a89fe852276235
     :git: https://github.com/ealymbaev/BitcoinKit
 
 SPEC CHECKSUMS:
