@@ -50,7 +50,7 @@ extension TransactionsInteractor: ITransactionsInteractor {
                 return nil
             }
 
-            let confirmations = max(0, latestBlocHeight - transaction.blockHeight)
+            let confirmations = transaction.blockHeight == 0 ? 0 : max(0, latestBlocHeight - transaction.blockHeight + 1)
 
             return TransactionRecordViewItem(
                     transactionHash: transaction.transactionHash,
