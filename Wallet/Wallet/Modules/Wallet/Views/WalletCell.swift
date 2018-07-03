@@ -106,26 +106,8 @@ class WalletCell: UITableViewCell {
     }
 
     func bindView(balance: WalletBalanceViewItem, selected: Bool, animated: Bool = false) {
-        if animated {
-            if selected {
-                receiveButton.alpha = 0
-                payButton.alpha = 0
-                receiveButton.isHidden = false
-                payButton.isHidden = false
-            }
-            UIView.animate(withDuration: 0.2, animations: {
-                self.receiveButton.alpha = selected ? 1 : 0
-                self.payButton.alpha = selected ? 1 : 0
-            }, completion: { _ in
-                self.receiveButton.alpha = 1
-                self.payButton.alpha = 1
-                self.receiveButton.isHidden = !selected
-                self.payButton.isHidden = !selected
-            })
-        } else {
-            receiveButton.isHidden = !selected
-            payButton.isHidden = !selected
-        }
+        receiveButton.set(hidden: !selected, animated: animated)
+        payButton.set(hidden: !selected, animated: animated)
 
         nameLabel.text = balance.coinValue.coin.name
         valueLabel.text = CurrencyHelper.instance.formattedValue(for: balance.currencyValue)

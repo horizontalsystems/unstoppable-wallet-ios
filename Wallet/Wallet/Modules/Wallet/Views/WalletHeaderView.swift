@@ -33,7 +33,7 @@ class WalletHeaderView: UIView {
 
         amountLabel.snp.makeConstraints { maker in
             maker.leadingMargin.equalToSuperview().inset(self.layoutMargins)
-            maker.top.equalToSuperview().offset(8)
+            maker.top.equalToSuperview().offset(WalletTheme.cellSmallMargin)
         }
     }
 

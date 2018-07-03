@@ -65,9 +65,9 @@ extension WalletViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if let cell = cell as? WalletCell {
             cell.bind(balance: wallets[indexPath.row], selected: tableView.indexPathForSelectedRow == indexPath, onReceive: { [weak self] in
-                print("onReceive \(self?.wallets[indexPath.row])")
+                print("onReceive \(self!.wallets[indexPath.row])")
             }, onPay: { [weak self] in
-                print("onPay \(self?.wallets[indexPath.row])")
+                print("onPay \(self!.wallets[indexPath.row])")
             })
         }
     }
@@ -98,7 +98,7 @@ extension WalletViewController: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 44
+        return WalletTheme.headerHeight
     }
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
