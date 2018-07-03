@@ -20,6 +20,7 @@ protocol IDatabaseManager {
     func getBitcoinCashUnspentOutputs() -> Observable<DatabaseChangeSet<BitcoinCashUnspentOutput>>
     func getExchangeRates() -> Observable<DatabaseChangeSet<ExchangeRate>>
     func getTransactionRecords() -> Observable<DatabaseChangeSet<TransactionRecord>>
+    func getBlockchainInfos() -> Observable<DatabaseChangeSet<BlockchainInfo>>
 }
 
 protocol INetworkManager {

@@ -13,6 +13,7 @@ class RealmManager {
         _ = realm.objects(BitcoinCashUnspentOutput.self).subscribe(named: "bitcoin-cash-unspent-outputs")
         _ = realm.objects(ExchangeRate.self).subscribe(named: "exchange-rates")
         _ = realm.objects(TransactionRecord.self).subscribe(named: "transaction-records")
+        _ = realm.objects(BlockchainInfo.self).subscribe(named: "blockchain-infos")
 
         return realm
     }

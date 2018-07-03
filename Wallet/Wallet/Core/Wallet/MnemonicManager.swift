@@ -14,7 +14,7 @@ class MnemonicManager: IMnemonic {
             return false
         }
 
-        let wordsList = MnemonicWordsList.english.map(String.init)
+        let wordsList = WordList.english.map(String.init)
 
         for word in set {
             if word == "" || !wordsList.contains(word) {

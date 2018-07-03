@@ -11,7 +11,7 @@ extension TransactionsRouter {
 
     static func module() -> UIViewController {
         let router = TransactionsRouter()
-        let interactor = TransactionsInteractor(databaseManager: DatabaseManager())
+        let interactor = TransactionsInteractor(databaseManager: DatabaseManager(), coinManager: Factory.instance.coinManager)
         let presenter = TransactionsPresenter(interactor: interactor, router: router)
         let viewController = TransactionsViewController(delegate: presenter)
 

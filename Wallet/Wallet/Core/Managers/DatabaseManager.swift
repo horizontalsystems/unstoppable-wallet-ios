@@ -26,4 +26,9 @@ class DatabaseManager: IDatabaseManager {
                 .map { DatabaseChangeSet(array: $0, changeSet: $1.map { CollectionChangeSet(withRealmChangeset: $0) }) }
     }
 
+    func getBlockchainInfos() -> Observable<DatabaseChangeSet<BlockchainInfo>> {
+        return Observable.arrayWithChangeset(from: realm.objects(BlockchainInfo.self))
+                .map { DatabaseChangeSet(array: $0, changeSet: $1.map { CollectionChangeSet(withRealmChangeset: $0) }) }
+    }
+
 }
