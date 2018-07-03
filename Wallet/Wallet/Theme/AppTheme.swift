@@ -1,8 +1,8 @@
 import Foundation
 
-class AppTheme {
-    static let keyboardAppearance: UIKeyboardAppearance = .dark
-    static let textFieldTintColor: UIColor = .white
+public class AppTheme {
+    public static let keyboardAppearance: UIKeyboardAppearance = .dark
+    public static let textFieldTintColor: UIColor = .white
 
-    static let animationDuration = 0.2
+    public static let defaultAnimationDuration = 0.3
 }

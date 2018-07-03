@@ -106,8 +106,8 @@ class WalletCell: UITableViewCell {
     }
 
     func bindView(balance: WalletBalanceViewItem, selected: Bool, animated: Bool = false) {
-        receiveButton.set(hidden: !selected, animated: animated)
-        payButton.set(hidden: !selected, animated: animated)
+        receiveButton.set(hidden: !selected, animated: animated, duration: WalletTheme.buttonsAnimationDuration)
+        payButton.set(hidden: !selected, animated: animated, duration: WalletTheme.buttonsAnimationDuration)
 
         nameLabel.text = balance.coinValue.coin.name
         valueLabel.text = CurrencyHelper.instance.formattedValue(for: balance.currencyValue)

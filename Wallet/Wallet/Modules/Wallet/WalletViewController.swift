@@ -32,6 +32,7 @@ class WalletViewController: UIViewController {
 
         delegate.viewDidLoad()
 
+        tableView?.estimatedRowHeight = 0
         tableView?.registerCell(forClass: WalletCell.self)
     }
 
