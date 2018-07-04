@@ -32,6 +32,11 @@
 
 "transactions.title" = "Transactions";
 "transactions.tab_bar_item" = "Transactions";
+"all" = "all";
+"bitcoin" = "bitcoin";
+"bitcoin_cache" = "bitcoin cache";
+"etherium" = "etherium";
+
 
 "settings.title" = "Settings";
 "settings.tab_bar_item" = "Settings";

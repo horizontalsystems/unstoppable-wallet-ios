@@ -1,6 +1,11 @@
 import UIKit
 import SnapKit
 
+enum CurrencyFilter: String {
+    case all = "all", bitcoin = "bitcoin", bitcoinCahche = "bitcoin_cache", etherium = "etherium"
+
+    static let allValues: [CurrencyFilter] = [.all, .bitcoin, .bitcoinCahche, .etherium]
+}
 class TransactionsViewController: UIViewController {
 
     let delegate: ITransactionsViewDelegate
@@ -9,6 +14,8 @@ class TransactionsViewController: UIViewController {
 
     private var items = [TransactionRecordViewItem]()
     private let tableView = UITableView(frame: .zero, style: .plain)
+
+    private let filterHeaderView = TransactionCurrenciesHeaderView()
 
     init(delegate: ITransactionsViewDelegate) {
         self.delegate = delegate
@@ -95,6 +102,14 @@ extension TransactionsViewController: UITableViewDelegate, UITableViewDataSource
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 100
+    }
+
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return TransactionsFilterTheme.filterHeaderHeight
+    }
+
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        return filterHeaderView
     }
 
 }

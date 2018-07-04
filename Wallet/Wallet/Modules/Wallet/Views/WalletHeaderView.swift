@@ -17,7 +17,7 @@ class WalletHeaderView: UIView {
 
     func commonInit() {
         backgroundColor = .clear
-        let blurEffect = UIBlurEffect(style: WalletTheme.blurStyle)
+        let blurEffect = UIBlurEffect(style: AppTheme.blurStyle)
         let blurView = UIVisualEffectView(effect: blurEffect)
         addSubview(blurView)
         blurView.snp.makeConstraints { maker in

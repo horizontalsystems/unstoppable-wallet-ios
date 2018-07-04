@@ -1,8 +1,6 @@
 import Foundation
 
 class WalletTheme {
-    static let blurStyle: UIBlurEffectStyle = .dark
-
     static let amountFont = UIFont.systemFont(ofSize: 22, weight: .semibold)
     static let amountColor = UIColor.cryptoYellow
 
