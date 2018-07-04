@@ -27,6 +27,9 @@ extension UIView {
     }
 
     public func set(hidden: Bool, animated: Bool = false, duration: TimeInterval = AppTheme.defaultAnimationDuration, completion: ((Bool) -> ())? = nil) {
+        if isHidden == hidden {
+            return
+        }
         if animated {
             if !hidden {
                 alpha = 0
