@@ -11,7 +11,7 @@ class RestoreViewController: KeyboardObservingViewController {
     let restoreDescription = "restore.description".localized
 
 //    var words = [String](repeating: "", count: 12)
-    var words = ["into", "naive", "bench", "load", "whip", "model", "casino", "depend", "melt", "anchor", "pitch", "remote"]
+    var words = ["into", "naive", "bench", "load", "whip", "model", "casino", "depend", "melt", "anchor", "pitch", "remove"]
 
     var onReturnSubject = PublishSubject<IndexPath>()
 

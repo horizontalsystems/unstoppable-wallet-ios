@@ -27,6 +27,8 @@
 
 "wallet.title" = "Balance";
 "wallet.tab_bar_item" = "Balance";
+"wallet.pay" = "Pay";
+"wallet.receive" = "Receive";
 
 "transactions.title" = "Transactions";
 "transactions.tab_bar_item" = "Transactions";
