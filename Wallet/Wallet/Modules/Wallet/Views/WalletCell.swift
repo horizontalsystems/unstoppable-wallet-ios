@@ -75,6 +75,7 @@ class WalletCell: UITableViewCell {
         }
         receiveButton.backgroundColor = WalletTheme.receiveButtonBackground
         receiveButton.setTitleColor(WalletTheme.buttonsTextColor, for: .normal)
+        receiveButton.setTitleColor(WalletTheme.selectedButtonsTextColor, for: .highlighted)
         receiveButton.cornerRadius = WalletTheme.buttonCornerRadius
         receiveButton.setTitle("wallet.receive".localized, for: .normal)
         receiveButton.addTarget(self, action: #selector(receive), for: .touchUpInside)
@@ -89,6 +90,7 @@ class WalletCell: UITableViewCell {
         }
         payButton.backgroundColor = WalletTheme.payButtonBackground
         payButton.setTitleColor(WalletTheme.buttonsTextColor, for: .normal)
+        payButton.setTitleColor(WalletTheme.selectedButtonsTextColor, for: .highlighted)
         payButton.cornerRadius = WalletTheme.buttonCornerRadius
         payButton.setTitle("wallet.pay".localized, for: .normal)
         payButton.addTarget(self, action: #selector(pay), for: .touchUpInside)

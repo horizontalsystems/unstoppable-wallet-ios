@@ -14,6 +14,7 @@ class WalletTheme {
     static let buttonsTopMargin: CGFloat = 22
     static let receiveButtonBackground = UIColor.cryptoGreen
     static let buttonsTextColor = UIColor.black
+    static let selectedButtonsTextColor = UIColor.gray
     static let payButtonBackground = UIColor.cryptoYellow
     static let buttonsHeight: CGFloat = 50
     static let expandedCellHeight: CGFloat = 136

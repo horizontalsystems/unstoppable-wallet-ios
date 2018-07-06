@@ -43,6 +43,7 @@ class TransactionsViewController: UIViewController {
         tableView.registerCell(forClass: TransactionCell.self)
         tableView.separatorInset = UIEdgeInsets(top: 0, left: .greatestFiniteMagnitude, bottom: 0, right: 0)
         tableView.estimatedRowHeight = 0
+        tableView.delaysContentTouches = false
 
         view.addSubview(tableView)
         tableView.snp.makeConstraints { make in

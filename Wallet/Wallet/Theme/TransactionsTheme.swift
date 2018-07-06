@@ -2,6 +2,7 @@ import UIKit
 
 class TransactionsTheme {
     static let infoIconTintColor = UIColor.cryptoSteel50
+    static let infoIconHighlightedTintColor = UIColor.cryptoWhite50
     static let dateLabelFont = UIFont.systemFont(ofSize: 17, weight: .regular)
     static let dateLabelTextColor = UIColor.white
     static let statusLabelFont = UIFont.systemFont(ofSize: 15, weight: .regular).with(traits: .traitItalic)
