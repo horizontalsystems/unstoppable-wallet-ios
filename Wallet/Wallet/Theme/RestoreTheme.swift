@@ -1,7 +1,7 @@
 import UIKit
 
 class RestoreTheme {
-    static let descriptionFont = UIFont.systemFont(ofSize: 14)
+    static let descriptionFont = UIFont.cryptoCaption1
 
     static let descriptionHorizontalMargin: CGFloat = 44
     static let descriptionVerticalMargin: CGFloat = 10

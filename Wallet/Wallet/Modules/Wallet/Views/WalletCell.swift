@@ -73,6 +73,7 @@ class WalletCell: UITableViewCell {
             maker.top.equalTo(self.exchangeLabel.snp.bottom).offset(WalletTheme.buttonsTopMargin)
             maker.height.equalTo(WalletTheme.buttonsHeight)
         }
+        receiveButton.titleLabel?.font = WalletTheme.cellButtonFont
         receiveButton.backgroundColor = WalletTheme.receiveButtonBackground
         receiveButton.setTitleColor(WalletTheme.buttonsTextColor, for: .normal)
         receiveButton.setTitleColor(WalletTheme.selectedButtonsTextColor, for: .highlighted)
@@ -88,6 +89,7 @@ class WalletCell: UITableViewCell {
             maker.height.equalTo(WalletTheme.buttonsHeight)
             maker.width.equalTo(receiveButton)
         }
+        payButton.titleLabel?.font = WalletTheme.cellButtonFont
         payButton.backgroundColor = WalletTheme.payButtonBackground
         payButton.setTitleColor(WalletTheme.buttonsTextColor, for: .normal)
         payButton.setTitleColor(WalletTheme.selectedButtonsTextColor, for: .highlighted)

@@ -32,7 +32,7 @@ class BackupWordsController: UIViewController {
         let joinedWords = words.enumerated().map { "\($0 + 1). \($1)" }.joined(separator: "\n")
         let attributedText = wordsLabel?.attributedText as? NSMutableAttributedString
         attributedText?.mutableString.setString(joinedWords)
-        attributedText?.addAttribute(NSAttributedStringKey.font, value: UIFont.systemFont(ofSize: 22, weight: .bold), range: NSMakeRange(0, joinedWords.count))
+        attributedText?.addAttribute(NSAttributedStringKey.font, value: UIFont.cryptoTitle3, range: NSMakeRange(0, joinedWords.count))
         wordsLabel?.attributedText = attributedText
 
     }

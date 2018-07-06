@@ -1,15 +1,15 @@
 import Foundation
 
 class WalletTheme {
-    static let amountFont = UIFont.systemFont(ofSize: 22, weight: .semibold)
+    static let amountFont = UIFont.cryptoTitle3
     static let amountColor = UIColor.cryptoYellow
 
     static let cellBigMargin: CGFloat = 12
     static let cellSmallMargin: CGFloat = 8
     static let cellButtonHorizontalMargin: CGFloat = 8
-    static let cellTitleFont = UIFont.systemFont(ofSize: 17, weight: .semibold)
+    static let cellTitleFont = UIFont.cryptoHeadline
     static let cellTitleColor = UIColor.white
-    static let cellSubtitleFont = UIFont.systemFont(ofSize: 12)
+    static let cellSubtitleFont = UIFont.cryptoCaption1
     static let cellSubtitleColor = UIColor.cryptoWhite50
     static let buttonsTopMargin: CGFloat = 22
     static let receiveButtonBackground = UIColor.cryptoGreen
@@ -26,4 +26,5 @@ class WalletTheme {
 
     static let roundedBackgroundColor = UIColor.cryptoSteel50
     static let roundedBackgroundCornerRadius: CGFloat = 15
+    static let cellButtonFont = UIFont.cryptoHeadline
 }
