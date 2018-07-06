@@ -41,7 +41,7 @@ class TransactionsViewController: UIViewController {
         tableView.tableFooterView = UIView(frame: .zero)
 
         tableView.registerCell(forClass: TransactionCell.self)
-        tableView.separatorInset = UIEdgeInsets(top: 0, left: 15000, bottom: 0, right: 0)
+        tableView.separatorInset = UIEdgeInsets(top: 0, left: .greatestFiniteMagnitude, bottom: 0, right: 0)
         tableView.estimatedRowHeight = 0
 
         view.addSubview(tableView)
