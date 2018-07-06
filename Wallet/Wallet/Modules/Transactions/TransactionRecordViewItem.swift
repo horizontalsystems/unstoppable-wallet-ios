@@ -2,8 +2,8 @@ import Foundation
 
 struct TransactionRecordViewItem {
 
-    enum Status {
-        case success, pending
+    enum Status: String {
+        case success = "success", pending = "pending"
     }
 
     let transactionHash: String
@@ -14,7 +14,7 @@ struct TransactionRecordViewItem {
     let incoming: Bool
     let blockHeight: Int
     let date: Date
-    let status: Status?
-    let confirmations: Int?
+    let status: Status
+    let confirmations: Int
 
 }

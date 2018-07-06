@@ -6,3 +6,11 @@ struct CoinValue {
     let value: Double
 
 }
+
+extension CoinValue {
+
+    var formattedAmount: String {
+        return "\(value) \(coin.code)"
+    }
+
+}
