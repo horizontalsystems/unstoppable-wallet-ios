@@ -112,7 +112,7 @@ class WalletCell: UITableViewCell {
         nameLabel.text = balance.coinValue.coin.name
         valueLabel.text = CurrencyHelper.instance.formattedValue(for: balance.currencyValue)
         exchangeLabel.text = CurrencyHelper.instance.formattedValue(for: balance.exchangeValue)
-        coinLabel.text = "\(balance.coinValue.value) \(balance.coinValue.coin.code)"
+        coinLabel.text = CoinHelper.instance.formattedAmount(for: balance.coinValue)
     }
 
     @objc func receive() {

@@ -10,7 +10,7 @@ class TransactionsViewController: UIViewController {
 
     let delegate: ITransactionsViewDelegate
 
-    private let cellName = String(describing: TransactionRecordCell.self)
+    private let cellName = String(describing: TransactionCell.self)
 
     private var items = [TransactionRecordViewItem]()
     private let tableView = UITableView(frame: .zero, style: .plain)
@@ -40,7 +40,9 @@ class TransactionsViewController: UIViewController {
         tableView.dataSource = self
         tableView.tableFooterView = UIView(frame: .zero)
 
-        tableView.register(UINib(nibName: cellName, bundle: nil), forCellReuseIdentifier: cellName)
+        tableView.registerCell(forClass: TransactionCell.self)
+        tableView.separatorInset = UIEdgeInsets(top: 0, left: 15000, bottom: 0, right: 0)
+        tableView.estimatedRowHeight = 0
 
         view.addSubview(tableView)
         tableView.snp.makeConstraints { make in
@@ -95,13 +97,15 @@ extension TransactionsViewController: UITableViewDelegate, UITableViewDataSource
     }
 
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if let cell = cell as? TransactionRecordCell {
-            cell.bind(item: items[indexPath.row])
+        if let cell = cell as? TransactionCell {
+            cell.bind(item: items[indexPath.row], onInfo: {
+                print("on info")
+            })
         }
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 100
+        return TransactionsTheme.cellHeight
     }
 
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
