@@ -1,5 +1,5 @@
 import UIKit
-import BitcoinKit
+//import BitcoinKit
 import RxSwift
 
 class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
@@ -13,15 +13,15 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        guard let words = try? Mnemonic.generate(strength: .default, language: .english) else {
-            return
-        }
+//        guard let words = try? Mnemonic.generate(strength: .default, language: .english) else {
+//            return
+//        }
 
-        print("\nWords: \(words.joined(separator: " "))")
-
-        let seed = Mnemonic.seed(mnemonic: words)
-
-        print("\nSeed (\(seed.count)): \(seed.map { String($0) }.joined(separator: " "))")
+//        print("\nWords: \(words.joined(separator: " "))")
+//
+//        let seed = Mnemonic.seed(mnemonic: words)
+//
+//        print("\nSeed (\(seed.count)): \(seed.map { String($0) }.joined(separator: " "))")
 
 //        perform()
     }
@@ -31,38 +31,38 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
 
         //        print("Mnemonic: \(mnemonic.joined(separator: ", "))")
 
-        let seed = Mnemonic.seed(mnemonic: mnemonic, passphrase: "")
+//        let seed = Mnemonic.seed(mnemonic: mnemonic, passphrase: "")
 
         //        print("Seed: \(seed)")
 
-        let hdWallet = HDWallet(seed: seed, network: Network.testnet)
+//        let hdWallet = HDWallet(seed: seed, network: Network.testnet)
         //        let hdWallet = HDWallet(seed: seed, network: Network.mainnet)
 
-        var addresses = [String]()
-
-        let fromAddress = String(describing: try! hdWallet.receiveAddress(index: 1))
-        let fromPrivateKey = try! hdWallet.privateKey(index: 1)
-        let changeAddress = String(describing: try! hdWallet.changeAddress(index: 0))
-
-//        let destAddress = String(describing: try! hdWallet.receiveAddress(index: 4))
-        let destAddress = "2NG3Z8ov5MeLZpZtaiQHErQM5NTvyNDB2xq"
-//        let destAddress = "mnopQ2S29rhuKLikR2NfNBztchxkm2CJfZ"
-
-//        print("PRIVATE KEY: \(fromPrivateKey.raw.hex)")
-
-        for i in 0...20 {
-            if let address = try? hdWallet.receiveAddress(index: UInt32(i)) {
-                //                print("Receive Address \(i): \(address)")
-                addresses.append(String(describing: address))
-            }
-        }
-
-        for i in 0...20 {
-            if let address = try? hdWallet.changeAddress(index: UInt32(i)) {
-                //                print("Change Address \(i): \(address)")
-                addresses.append(String(describing: address))
-            }
-        }
+//        var addresses = [String]()
+//
+//        let fromAddress = String(describing: try! hdWallet.receiveAddress(index: 1))
+//        let fromPrivateKey = try! hdWallet.privateKey(index: 1)
+//        let changeAddress = String(describing: try! hdWallet.changeAddress(index: 0))
+//
+////        let destAddress = String(describing: try! hdWallet.receiveAddress(index: 4))
+//        let destAddress = "2NG3Z8ov5MeLZpZtaiQHErQM5NTvyNDB2xq"
+////        let destAddress = "mnopQ2S29rhuKLikR2NfNBztchxkm2CJfZ"
+//
+////        print("PRIVATE KEY: \(fromPrivateKey.raw.hex)")
+//
+//        for i in 0...20 {
+//            if let address = try? hdWallet.receiveAddress(index: UInt32(i)) {
+//                //                print("Receive Address \(i): \(address)")
+//                addresses.append(String(describing: address))
+//            }
+//        }
+//
+//        for i in 0...20 {
+//            if let address = try? hdWallet.changeAddress(index: UInt32(i)) {
+//                //                print("Change Address \(i): \(address)")
+//                addresses.append(String(describing: address))
+//            }
+//        }
 
 //        NetworkManager.instance.unspentOutputData(forAddresses: [fromAddress])
 //                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))

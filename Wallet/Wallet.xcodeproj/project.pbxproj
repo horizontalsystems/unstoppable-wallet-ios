@@ -127,7 +127,6 @@
 		D348A77320C7C58900803B9E /* BackupIntroController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D348A77120C7C58900803B9E /* BackupIntroController.xib */; };
 		D348A77620C7D34100803B9E /* BackupConfirmationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D348A77420C7D34100803B9E /* BackupConfirmationController.swift */; };
 		D348A77720C7D34100803B9E /* BackupConfirmationController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D348A77520C7D34100803B9E /* BackupConfirmationController.xib */; };
-		D3B62A8320C9522A005A9F80 /* CoreBitcoin.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3373DAF20BFB4FE0082BC4A /* CoreBitcoin.framework */; };
 		D3B62A8A20CA40DC005A9F80 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3B62A8820CA40DC005A9F80 /* MainViewController.swift */; };
 		D3B62A8B20CA40DC005A9F80 /* MainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D3B62A8920CA40DC005A9F80 /* MainViewController.xib */; };
 		D3B62A8E20CA436F005A9F80 /* WalletViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3B62A8C20CA436F005A9F80 /* WalletViewController.swift */; };
@@ -138,6 +137,8 @@
 		D3B62A9720CA46EB005A9F80 /* SettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D3B62A9520CA46EB005A9F80 /* SettingsViewController.xib */; };
 		D3B62A9A20CA73A0005A9F80 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = D3B62A9C20CA73A0005A9F80 /* Localizable.strings */; };
 		D3B62A9E20CA88BF005A9F80 /* Theme.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D3B62A9D20CA88BF005A9F80 /* Theme.xcassets */; };
+		D3FD451A20F375B300F472B9 /* WalletKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3FD451220F35A1900F472B9 /* WalletKit.framework */; };
+		D3FD451E20F375E200F472B9 /* WalletKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D3FD451220F35A1900F472B9 /* WalletKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		ED00FF1BB226F7DD21685D86 /* Pods_Wallet.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B387EF06E93BBDBAEEFF66EE /* Pods_Wallet.framework */; };
 /* End PBXBuildFile section */
 
@@ -150,6 +151,20 @@
 			remoteInfo = Wallet;
 		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		D3FD451C20F375B400F472B9 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				D3FD451E20F375E200F472B9 /* WalletKit.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		0B2B5692D7E4046733FCEBF9 /* Pods-Wallet.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Wallet.release.xcconfig"; path = "Pods/Target Support Files/Pods-Wallet/Pods-Wallet.release.xcconfig"; sourceTree = "<group>"; };
@@ -270,7 +285,6 @@
 		D3285F5120BD158F00644076 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D3373D9420BEC7B30082BC4A /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		D3373DAA20BFB0260082BC4A /* Wallet-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Wallet-Bridging-Header.h"; sourceTree = "<group>"; };
-		D3373DAF20BFB4FE0082BC4A /* CoreBitcoin.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = CoreBitcoin.framework; sourceTree = "<group>"; };
 		D3373DB120C52F640082BC4A /* LaunchScreen.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LaunchScreen.xib; sourceTree = "<group>"; };
 		D3373DB720C564450082BC4A /* BackupWordsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupWordsController.swift; sourceTree = "<group>"; };
 		D3373DB820C564450082BC4A /* BackupWordsController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BackupWordsController.xib; sourceTree = "<group>"; };
@@ -294,6 +308,7 @@
 		D3B62A9520CA46EB005A9F80 /* SettingsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingsViewController.xib; sourceTree = "<group>"; };
 		D3B62A9B20CA73A0005A9F80 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		D3B62A9D20CA88BF005A9F80 /* Theme.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Theme.xcassets; sourceTree = "<group>"; };
+		D3FD451220F35A1900F472B9 /* WalletKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = WalletKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5F5D323E150F570A893EA81 /* Pods_WalletTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WalletTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E0167CDDDE72AD25821A2E28 /* Pods-Wallet.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Wallet.debug.xcconfig"; path = "../Pods/Target Support Files/Pods-Wallet/Pods-Wallet.debug.xcconfig"; sourceTree = "<group>"; };
 		FBB4716F707E0CDB8833815B /* Pods-WalletTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WalletTests.release.xcconfig"; path = "../Pods/Target Support Files/Pods-WalletTests/Pods-WalletTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -304,7 +319,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D3B62A8320C9522A005A9F80 /* CoreBitcoin.framework in Frameworks */,
+				D3FD451A20F375B300F472B9 /* WalletKit.framework in Frameworks */,
 				D3373D9520BEC7B30082BC4A /* AVFoundation.framework in Frameworks */,
 				ED00FF1BB226F7DD21685D86 /* Pods_Wallet.framework in Frameworks */,
 			);
@@ -711,12 +726,12 @@
 		D3285F3920BD158E00644076 = {
 			isa = PBXGroup;
 			children = (
+				D3FD451220F35A1900F472B9 /* WalletKit.framework */,
 				D3285F4420BD158E00644076 /* Wallet */,
 				D3373DC020C658660082BC4A /* WalletTests */,
 				D3285F4320BD158E00644076 /* Products */,
 				06C12EBC5724C7F00AA4AF40 /* Pods */,
 				95AD93BB0A2D5F5C4A435252 /* Frameworks */,
-				D3373DAF20BFB4FE0082BC4A /* CoreBitcoin.framework */,
 			);
 			sourceTree = "<group>";
 		};
@@ -772,6 +787,7 @@
 				D3285F3F20BD158E00644076 /* Frameworks */,
 				D3285F4020BD158E00644076 /* Resources */,
 				97CACEF21CC24CEAD019C46A /* [CP] Embed Pods Frameworks */,
+				D3FD451C20F375B400F472B9 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -900,7 +916,6 @@
 			inputPaths = (
 				"${SRCROOT}/../Pods/Target Support Files/Pods-Wallet/Pods-Wallet-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
-				"${BUILT_PRODUCTS_DIR}/BitcoinKit/BitcoinKit.framework",
 				"${BUILT_PRODUCTS_DIR}/ObjectMapper/ObjectMapper.framework",
 				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
 				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
@@ -912,7 +927,6 @@
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BitcoinKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ObjectMapper.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",

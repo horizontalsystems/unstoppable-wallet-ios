@@ -1,0 +1,4 @@
+module secp256k1 {
+    private header "include/secp256k1.h"
+    link "secp256k1"
+}

@@ -21,7 +21,7 @@ class TransactionCell: UITableViewCell {
         statusLabel.textColor = TransactionsTheme.statusLabelTextColor
         amountLabel.font = TransactionsTheme.amountLabelFont
 
-        var infoImageView = TintImageView(image: UIImage(named: "Info Icon"), tintColor: TransactionsTheme.infoIconTintColor, selectedTintColor: TransactionsTheme.infoIconHighlightedTintColor)
+        let infoImageView = TintImageView(image: UIImage(named: "Info Icon"), tintColor: TransactionsTheme.infoIconTintColor, selectedTintColor: TransactionsTheme.infoIconHighlightedTintColor)
         infoButton.delegate = infoImageView
 
         contentView.addSubview(dateLabel)
@@ -55,7 +55,7 @@ class TransactionCell: UITableViewCell {
             maker.trailing.equalTo(infoButton.snp.leading)
         }
 
-        var separatorView = UIView()
+        let separatorView = UIView()
         separatorView.backgroundColor = TransactionsTheme.separatorColor
         contentView.addSubview(separatorView)
         separatorView.snp.makeConstraints { maker in

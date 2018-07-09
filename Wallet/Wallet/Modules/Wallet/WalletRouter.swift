@@ -1,4 +1,4 @@
-import Foundation
+import UIKit
 
 class WalletRouter {
     weak var viewController: UIViewController?

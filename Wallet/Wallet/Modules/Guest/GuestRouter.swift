@@ -1,4 +1,4 @@
-import Foundation
+import UIKit
 
 class GuestRouter {
     weak var viewController: UIViewController?

@@ -1,10 +1,11 @@
 import Foundation
-import BitcoinKit
+//import BitcoinKit
 
 class MnemonicManager: IMnemonic {
 
     func generateWords() -> [String] {
-        return (try? Mnemonic.generate()) ?? []
+//        return (try? Mnemonic.generate()) ?? []
+        return []
     }
 
     func validate(words: [String]) -> Bool {
@@ -14,13 +15,13 @@ class MnemonicManager: IMnemonic {
             return false
         }
 
-        let wordsList = WordList.english.map(String.init)
-
-        for word in set {
-            if word == "" || !wordsList.contains(word) {
-                return false
-            }
-        }
+//        let wordsList = WordList.english.map(String.init)
+//
+//        for word in set {
+//            if word == "" || !wordsList.contains(word) {
+//                return false
+//            }
+//        }
 
         return true
     }

@@ -1,4 +1,4 @@
-import Foundation
+import UIKit
 
 public class AppTheme {
     static let blurStyle: UIBlurEffectStyle = .dark

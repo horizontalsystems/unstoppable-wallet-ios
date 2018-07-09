@@ -1,6 +1,5 @@
 PODS:
   - Alamofire (4.7.2)
-  - BitcoinKit (0.1.2)
   - Cuckoo (0.11.3)
   - ObjectMapper (3.3.0)
   - Realm (3.7.4):
@@ -18,7 +17,6 @@ PODS:
 
 DEPENDENCIES:
   - Alamofire
-  - BitcoinKit (from `https://github.com/ealymbaev/BitcoinKit`)
   - Cuckoo
   - ObjectMapper
   - RealmSwift
@@ -39,18 +37,8 @@ SPEC REPOS:
     - RxSwift
     - SnapKit
 
-EXTERNAL SOURCES:
-  BitcoinKit:
-    :git: https://github.com/ealymbaev/BitcoinKit
-
-CHECKOUT OPTIONS:
-  BitcoinKit:
-    :commit: 36cb12fe236c9e1dacddc63b59a89fe852276235
-    :git: https://github.com/ealymbaev/BitcoinKit
-
 SPEC CHECKSUMS:
   Alamofire: e4fa87002c137ba2d8d634d2c51fabcda0d5c223
-  BitcoinKit: c24789a6eca87d3b7fe92137c549703be37a901e
   Cuckoo: 97522dd7ac6f18adba6022bdc74aa69e82ca691a
   ObjectMapper: b612bf8c8e99c4dc0bb6013a51f7c27966ed5da9
   Realm: a469bb59e33f9926102ccaea4349822c53b9117e
@@ -60,6 +48,6 @@ SPEC CHECKSUMS:
   RxSwift: 99e10317ddfcc7fbe01356aafd118fde4a0be104
   SnapKit: a42d492c16e80209130a3379f73596c3454b7694
 
-PODFILE CHECKSUM: b111c4f07c9a17181bfdbf3a30c425b5422174e8
+PODFILE CHECKSUM: a80d4bce05d42bf494979e78023276c50710704a
 
 COCOAPODS: 1.5.3

@@ -1,4 +1,4 @@
-import Foundation
+import UIKit
 
 class WalletTheme {
     static let amountFont = UIFont.cryptoTitle3
