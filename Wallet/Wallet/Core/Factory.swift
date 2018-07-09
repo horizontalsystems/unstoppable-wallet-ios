@@ -34,7 +34,7 @@ class Factory {
     })}
 
     var networkManager: NetworkManager { return getInstance(creator: {
-        return NetworkManager(apiUrl: "http://bitnode.grouvi.org:3000/api")
+        return NetworkManager(apiUrl: "http://bitnode-db.grouvi.org:3000/api")
     })}
 
     var walletManager: WalletManager { return getInstance(creator: {
