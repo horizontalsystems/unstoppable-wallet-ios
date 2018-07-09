@@ -7,9 +7,25 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		11B3511B6F41679F062F356C /* Crypto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35EBE4F0C6D40981BF52B /* Crypto.swift */; };
 		11B35D0A90AD484F62B69A1B /* WalletKitPrivate.m in Sources */ = {isa = PBXBuildFile; fileRef = 11B35C3A9EC92678307977F7 /* WalletKitPrivate.m */; };
 		11B35F8A1F85697DC88C7777 /* WalletKitPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 11B35EDCF37AAE69A74FB0F5 /* WalletKitPrivate.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		D33FD6B520F382DC00EC10DB /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D33FD6B320F3782600EC10DB /* libcrypto.a */; };
+		D33FD6BC20F385D700EC10DB /* HDPublicKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = D33FD6B820F385D700EC10DB /* HDPublicKey.swift */; };
+		D33FD6BD20F385D700EC10DB /* HDWallet.swift in Sources */ = {isa = PBXBuildFile; fileRef = D33FD6B920F385D700EC10DB /* HDWallet.swift */; };
+		D33FD6BE20F385D700EC10DB /* HDPrivateKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = D33FD6BA20F385D700EC10DB /* HDPrivateKey.swift */; };
+		D33FD6BF20F385D700EC10DB /* HDKeychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = D33FD6BB20F385D700EC10DB /* HDKeychain.swift */; };
+		D33FD6C120F3863D00EC10DB /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = D33FD6C020F3863D00EC10DB /* Network.swift */; };
+		D33FD6C320F3868C00EC10DB /* Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = D33FD6C220F3868C00EC10DB /* Address.swift */; };
+		D33FD6C620F3876200EC10DB /* PrivateKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = D33FD6C420F3876200EC10DB /* PrivateKey.swift */; };
+		D33FD6C720F3876200EC10DB /* PublicKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = D33FD6C520F3876200EC10DB /* PublicKey.swift */; };
+		D33FD6C920F3876800EC10DB /* Serialization.swift in Sources */ = {isa = PBXBuildFile; fileRef = D33FD6C820F3876800EC10DB /* Serialization.swift */; };
+		D33FD6CC20F3882200EC10DB /* VarString.swift in Sources */ = {isa = PBXBuildFile; fileRef = D33FD6CA20F3882100EC10DB /* VarString.swift */; };
+		D33FD6CD20F3882200EC10DB /* VarInt.swift in Sources */ = {isa = PBXBuildFile; fileRef = D33FD6CB20F3882100EC10DB /* VarInt.swift */; };
+		D33FD6CF20F3882900EC10DB /* Encoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = D33FD6CE20F3882900EC10DB /* Encoding.swift */; };
+		D33FD6D120F3885400EC10DB /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = D33FD6D020F3885400EC10DB /* Helpers.swift */; };
+		D33FD6D420F3890700EC10DB /* Mnemonic.swift in Sources */ = {isa = PBXBuildFile; fileRef = D33FD6D220F3890700EC10DB /* Mnemonic.swift */; };
+		D33FD6D520F3890700EC10DB /* WordList.swift in Sources */ = {isa = PBXBuildFile; fileRef = D33FD6D320F3890700EC10DB /* WordList.swift */; };
 		D3FD450A20F354EF00F472B9 /* WalletKit.h in Headers */ = {isa = PBXBuildFile; fileRef = D3FD450820F354EF00F472B9 /* WalletKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D86C75828B655BBA47496DA8 /* Pods_WalletKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 62EEC3758B9F3CFB076FF881 /* Pods_WalletKit.framework */; };
 /* End PBXBuildFile section */
@@ -17,10 +33,26 @@
 /* Begin PBXFileReference section */
 		0DCE6AF072E80FCF78CC97A3 /* Pods-WalletKit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WalletKit.debug.xcconfig"; path = "../Pods/Target Support Files/Pods-WalletKit/Pods-WalletKit.debug.xcconfig"; sourceTree = "<group>"; };
 		11B35C3A9EC92678307977F7 /* WalletKitPrivate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WalletKitPrivate.m; sourceTree = "<group>"; };
+		11B35EBE4F0C6D40981BF52B /* Crypto.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Crypto.swift; sourceTree = "<group>"; };
 		11B35EDCF37AAE69A74FB0F5 /* WalletKitPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WalletKitPrivate.h; sourceTree = "<group>"; };
 		62EEC3758B9F3CFB076FF881 /* Pods_WalletKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WalletKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A55FEE3EC60BF5F4516B2A22 /* Pods-WalletKit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WalletKit.release.xcconfig"; path = "../Pods/Target Support Files/Pods-WalletKit/Pods-WalletKit.release.xcconfig"; sourceTree = "<group>"; };
 		D33FD6B320F3782600EC10DB /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcrypto.a; path = Libraries/openssl/lib/libcrypto.a; sourceTree = "<group>"; };
+		D33FD6B820F385D700EC10DB /* HDPublicKey.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HDPublicKey.swift; sourceTree = "<group>"; };
+		D33FD6B920F385D700EC10DB /* HDWallet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HDWallet.swift; sourceTree = "<group>"; };
+		D33FD6BA20F385D700EC10DB /* HDPrivateKey.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HDPrivateKey.swift; sourceTree = "<group>"; };
+		D33FD6BB20F385D700EC10DB /* HDKeychain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HDKeychain.swift; sourceTree = "<group>"; };
+		D33FD6C020F3863D00EC10DB /* Network.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
+		D33FD6C220F3868C00EC10DB /* Address.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Address.swift; sourceTree = "<group>"; };
+		D33FD6C420F3876200EC10DB /* PrivateKey.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrivateKey.swift; sourceTree = "<group>"; };
+		D33FD6C520F3876200EC10DB /* PublicKey.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PublicKey.swift; sourceTree = "<group>"; };
+		D33FD6C820F3876800EC10DB /* Serialization.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Serialization.swift; sourceTree = "<group>"; };
+		D33FD6CA20F3882100EC10DB /* VarString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VarString.swift; sourceTree = "<group>"; };
+		D33FD6CB20F3882100EC10DB /* VarInt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VarInt.swift; sourceTree = "<group>"; };
+		D33FD6CE20F3882900EC10DB /* Encoding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Encoding.swift; sourceTree = "<group>"; };
+		D33FD6D020F3885400EC10DB /* Helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
+		D33FD6D220F3890700EC10DB /* Mnemonic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Mnemonic.swift; sourceTree = "<group>"; };
+		D33FD6D320F3890700EC10DB /* WordList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WordList.swift; sourceTree = "<group>"; };
 		D3FD450520F354EF00F472B9 /* WalletKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = WalletKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D3FD450820F354EF00F472B9 /* WalletKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WalletKit.h; sourceTree = "<group>"; };
 		D3FD450920F354EF00F472B9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -40,9 +72,53 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		11B351538CFB04CF238EA131 /* HDWallet */ = {
+			isa = PBXGroup;
+			children = (
+				D33FD6D220F3890700EC10DB /* Mnemonic.swift */,
+				D33FD6D320F3890700EC10DB /* WordList.swift */,
+				D33FD6BB20F385D700EC10DB /* HDKeychain.swift */,
+				D33FD6BA20F385D700EC10DB /* HDPrivateKey.swift */,
+				D33FD6B820F385D700EC10DB /* HDPublicKey.swift */,
+				D33FD6B920F385D700EC10DB /* HDWallet.swift */,
+			);
+			path = HDWallet;
+			sourceTree = "<group>";
+		};
+		11B35649863DB92E43F8D567 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				D33FD6D020F3885400EC10DB /* Helpers.swift */,
+				D33FD6CE20F3882900EC10DB /* Encoding.swift */,
+				D33FD6C820F3876800EC10DB /* Serialization.swift */,
+				11B35EBE4F0C6D40981BF52B /* Crypto.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		11B357B9FF089EC58748DA4C /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				D33FD6C020F3863D00EC10DB /* Network.swift */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		11B358F2406C382875DA91A2 /* Messages */ = {
+			isa = PBXGroup;
+			children = (
+				D33FD6CB20F3882100EC10DB /* VarInt.swift */,
+				D33FD6CA20F3882100EC10DB /* VarString.swift */,
+			);
+			path = Messages;
+			sourceTree = "<group>";
+		};
 		11B35DDF6BAA7B4337BA1725 /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				D33FD6C420F3876200EC10DB /* PrivateKey.swift */,
+				D33FD6C520F3876200EC10DB /* PublicKey.swift */,
+				D33FD6C220F3868C00EC10DB /* Address.swift */,
 				11B35C3A9EC92678307977F7 /* WalletKitPrivate.m */,
 				11B35EDCF37AAE69A74FB0F5 /* WalletKitPrivate.h */,
 			);
@@ -88,10 +164,14 @@
 		D3FD450720F354EF00F472B9 /* WalletKit */ = {
 			isa = PBXGroup;
 			children = (
+				11B35DDF6BAA7B4337BA1725 /* Core */,
+				11B351538CFB04CF238EA131 /* HDWallet */,
+				11B357B9FF089EC58748DA4C /* Network */,
+				11B35649863DB92E43F8D567 /* Helpers */,
+				11B358F2406C382875DA91A2 /* Messages */,
 				D3FD451620F364DF00F472B9 /* WalletKit.modulemap */,
 				D3FD450820F354EF00F472B9 /* WalletKit.h */,
 				D3FD450920F354EF00F472B9 /* Info.plist */,
-				11B35DDF6BAA7B4337BA1725 /* Core */,
 			);
 			path = WalletKit;
 			sourceTree = "<group>";
@@ -198,7 +278,23 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D33FD6C720F3876200EC10DB /* PublicKey.swift in Sources */,
+				D33FD6BE20F385D700EC10DB /* HDPrivateKey.swift in Sources */,
+				D33FD6CF20F3882900EC10DB /* Encoding.swift in Sources */,
+				D33FD6BC20F385D700EC10DB /* HDPublicKey.swift in Sources */,
+				D33FD6BD20F385D700EC10DB /* HDWallet.swift in Sources */,
 				11B35D0A90AD484F62B69A1B /* WalletKitPrivate.m in Sources */,
+				D33FD6C120F3863D00EC10DB /* Network.swift in Sources */,
+				D33FD6C620F3876200EC10DB /* PrivateKey.swift in Sources */,
+				D33FD6C320F3868C00EC10DB /* Address.swift in Sources */,
+				D33FD6D520F3890700EC10DB /* WordList.swift in Sources */,
+				D33FD6BF20F385D700EC10DB /* HDKeychain.swift in Sources */,
+				D33FD6C920F3876800EC10DB /* Serialization.swift in Sources */,
+				D33FD6CC20F3882200EC10DB /* VarString.swift in Sources */,
+				11B3511B6F41679F062F356C /* Crypto.swift in Sources */,
+				D33FD6D120F3885400EC10DB /* Helpers.swift in Sources */,
+				D33FD6CD20F3882200EC10DB /* VarInt.swift in Sources */,
+				D33FD6D420F3890700EC10DB /* Mnemonic.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
