@@ -13,7 +13,7 @@ def prepare_environment
   sh("rm -rf ~/Library/Developer/Xcode/Archives/**")
   sh("rm -rf ~/Library/MobileDevice/Provisioning\\ Profiles/**")
 
-  reset_git_repo(force: true)
+  reset_git_repo(force: true, exclude: "Libraries/*")
   clear_derived_data
 
   increment_build_number(
