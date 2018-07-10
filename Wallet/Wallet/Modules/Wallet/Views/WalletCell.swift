@@ -43,7 +43,7 @@ class WalletCell: UITableViewCell {
         valueLabel.snp.makeConstraints { maker in
             maker.leading.equalTo(self.nameLabel.snp.trailing).offset(WalletTheme.cellBigMargin)
             maker.top.equalToSuperview().offset(WalletTheme.cellSmallMargin)
-            maker.trailing.equalToSuperview().offset(-WalletTheme.cellSmallMargin)
+            maker.trailing.equalToSuperview().offset(-WalletTheme.cellBigMargin)
         }
         valueLabel.font = WalletTheme.cellTitleFont
         valueLabel.textColor = WalletTheme.cellTitleColor
@@ -61,7 +61,7 @@ class WalletCell: UITableViewCell {
         coinLabel.snp.makeConstraints { maker in
             maker.leading.equalTo(self.exchangeLabel.snp.trailing).offset(WalletTheme.cellSmallMargin)
             maker.top.equalTo(self.valueLabel.snp.bottom).offset(WalletTheme.cellBigMargin)
-            maker.trailing.equalToSuperview().offset(-WalletTheme.cellSmallMargin)
+            maker.trailing.equalToSuperview().offset(-WalletTheme.cellBigMargin)
         }
         coinLabel.font = WalletTheme.cellSubtitleFont
         coinLabel.textColor = WalletTheme.cellSubtitleColor
