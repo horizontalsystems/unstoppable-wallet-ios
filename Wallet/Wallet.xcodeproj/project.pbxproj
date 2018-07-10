@@ -542,12 +542,12 @@
 				11B35967DDBF9A9CF347A70C /* Coins */,
 				11B35039F6DE905E901EDFA9 /* Currencies */,
 				11B35B466B8FF6754E47DACD /* CoinValue.swift */,
+				1A5640B6691F4FD048C82A49 /* CoinValueHelper.swift */,
 				11B3589DC1945CAFBEEB1EED /* CurrencyValue.swift */,
 				11B35A705443145AD6D71408 /* ExchangeRate.swift */,
 				11B35F0AFFE045953BD45808 /* WalletData.swift */,
 				11B35E446D881B620F6D0A26 /* TransactionRecord.swift */,
 				11B35956C79B567DC679DD3A /* BlockchainInfo.swift */,
-				1A5640B6691F4FD048C82A49 /* CoinValueHelper.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
