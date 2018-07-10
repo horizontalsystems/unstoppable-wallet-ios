@@ -75,7 +75,7 @@ class TransactionCell: UITableViewCell {
 
         dateLabel.text = DateHelper.instance.formatTransactionTime(from: item.date)
         statusLabel.text = "transactions.\(item.status.rawValue)".localized
-        amountLabel.text = (item.incoming ? "+ " : "- ") + item.amount.formattedAmount
+        amountLabel.text = (item.incoming ? "+ " : "- ") + CoinValueHelper.formattedAmount(for: item.amount)
     }
 
 }

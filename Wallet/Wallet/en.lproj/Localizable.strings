@@ -34,7 +34,7 @@
 "transactions.tab_bar_item" = "Transactions";
 "all" = "all";
 "bitcoin" = "bitcoin";
-"bitcoin_cache" = "bitcoin cache";
+"bitcoin_cache" = "bitcoin cash";
 "etherium" = "etherium";
 "transactions.yesterday" = "Yesterday";
 "transactions.success" = "success";
