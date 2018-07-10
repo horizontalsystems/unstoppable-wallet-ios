@@ -15,7 +15,7 @@ protocol IRestoreInteractor {
 
 protocol IRestoreInteractorDelegate: class {
     func didRestore()
-    func didFailToRestore()
+    func didFailToRestore(withError error: Error)
 }
 
 protocol IRestoreRouter {

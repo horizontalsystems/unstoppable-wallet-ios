@@ -41,14 +41,6 @@ class Factory {
         return WalletManager()
     })}
 
-    var realmManager: RealmManager { return getInstance(creator: {
-        return RealmManager()
-    })}
-
-    var loginManager: LoginManager { return getInstance(creator: {
-        return LoginManager(networkManager: networkManager, walletManager: walletManager, realmManager: realmManager, localStorage: userDefaultsStorage)
-    })}
-
     var coinManager: CoinManager { return getInstance(creator: {
         return CoinManager()
     })}

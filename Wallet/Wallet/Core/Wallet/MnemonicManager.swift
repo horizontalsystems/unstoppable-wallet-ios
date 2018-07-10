@@ -3,26 +3,29 @@ import WalletKit
 
 class MnemonicManager: IMnemonic {
 
-    func generateWords() -> [String] {
-        return (try? Mnemonic.generate()) ?? []
+    enum ValidationError: Error {
+        case invalidWordsCount
+        case invalidWords
     }
 
-    func validate(words: [String]) -> Bool {
+    func generateWords() throws -> [String] {
+        return try Mnemonic.generate()
+    }
+
+    func validate(words: [String]) throws {
         let set = Set(words)
 
         guard set.count == 12 else {
-            return false
+            throw ValidationError.invalidWordsCount
         }
 
         let wordsList = WordList.english.map(String.init)
 
         for word in set {
             if word == "" || !wordsList.contains(word) {
-                return false
+                throw ValidationError.invalidWords
             }
         }
-
-        return true
     }
 
 }

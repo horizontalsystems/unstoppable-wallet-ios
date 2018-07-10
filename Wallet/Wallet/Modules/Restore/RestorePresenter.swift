@@ -19,7 +19,7 @@ extension RestorePresenter: IRestoreInteractorDelegate {
         router.navigateToMain()
     }
 
-    func didFailToRestore() {
+    func didFailToRestore(withError error: Error) {
         view?.showInvalidWordsError()
     }
 

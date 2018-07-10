@@ -4,7 +4,7 @@ import RealmSwift
 import RxRealm
 
 class DatabaseManager: IDatabaseManager {
-    private let realm = Factory.instance.realmManager.createWalletRealm()
+    private let realm = try! Realm()
 
     func getBitcoinUnspentOutputs() -> Observable<DatabaseChangeSet<BitcoinUnspentOutput>> {
         return Observable.arrayWithChangeset(from: realm.objects(BitcoinUnspentOutput.self))

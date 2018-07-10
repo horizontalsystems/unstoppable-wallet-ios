@@ -7,24 +7,24 @@ class GuestInteractor {
     weak var delegate: IGuestInteractorDelegate?
 
     private let mnemonic: IMnemonic
-    private let loginManager: LoginManager
+    private let localStorage: ILocalStorage
 
-    init(mnemonic: IMnemonic, loginManager: LoginManager) {
+    init(mnemonic: IMnemonic, localStorage: ILocalStorage) {
         self.mnemonic = mnemonic
-        self.loginManager = loginManager
+        self.localStorage = localStorage
     }
 }
 
 extension GuestInteractor: IGuestInteractor {
 
     func createWallet() {
-        let words = mnemonic.generateWords()
-
-        loginManager.login(withWords: words).subscribeAsync(disposeBag: disposeBag, onError: { [weak self] _ in
-            self?.delegate?.didFailToCreateWallet()
-        }, onCompleted: { [weak self] in
-            self?.delegate?.didCreateWallet()
-        })
+        do {
+            let words = try mnemonic.generateWords()
+            localStorage.save(words: words)
+            delegate?.didCreateWallet()
+        } catch {
+            delegate?.didFailToCreateWallet(withError: error)
+        }
     }
 
 }

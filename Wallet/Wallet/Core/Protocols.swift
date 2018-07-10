@@ -11,8 +11,8 @@ protocol ILocalStorage {
 }
 
 protocol IMnemonic {
-    func generateWords() -> [String]
-    func validate(words: [String]) -> Bool
+    func generateWords() throws -> [String]
+    func validate(words: [String]) throws
 }
 
 protocol IDatabaseManager {

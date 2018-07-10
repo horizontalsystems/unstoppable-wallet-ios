@@ -18,8 +18,8 @@ extension GuestPresenter: IGuestInteractorDelegate {
         router.navigateToBackupRoutingToMain()
     }
 
-    func didFailToCreateWallet() {
-        print("Login Error")
+    func didFailToCreateWallet(withError error: Error) {
+        print("Login Error: \(error)")
         // TODO: show error in GUI
     }
 
