@@ -13,7 +13,6 @@ class WalletWrapper {
     var identity: String {
         let publicKey = try! hdWallet.publicKey(path: "m")
         return Base58.encode(Crypto.sha256(publicKey.raw))
-        return ""
     }
 
     var pubKeys: [Int: String] {
