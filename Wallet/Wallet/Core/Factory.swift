@@ -33,8 +33,12 @@ class Factory {
         return DatabaseManager()
     })}
 
+    var testnetNetworkManager: NetworkManager { return getInstance(name: "testnetNetworkManager", creator: {
+        return NetworkManager(apiUrl: "https://testnet.blockchain.info")
+    })}
+
     var networkManager: NetworkManager { return getInstance(creator: {
-        return NetworkManager(apiUrl: "http://bitnode-db.grouvi.org:3000/api")
+        return NetworkManager(apiUrl: "https://blockchain.info")
     })}
 
     var walletManager: WalletManager { return getInstance(creator: {
@@ -45,8 +49,12 @@ class Factory {
         return CoinManager()
     })}
 
-    private func getInstance<T>(creator: () -> T) -> T {
-        let className = String(describing: T.self)
+    var syncManager: SyncManager { return getInstance(creator: {
+        return SyncManager()
+    })}
+
+    private func getInstance<T>(name: String? = nil, creator: () -> T) -> T {
+        let className = name ?? String(describing: T.self)
 
         if let instance = instances[className] as? T {
             return instance

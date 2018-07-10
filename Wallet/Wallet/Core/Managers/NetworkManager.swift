@@ -42,7 +42,7 @@ class NetworkManager {
 
         request.setValue("application/json", forHTTPHeaderField: "Accept")
 
-        print("HTTP OUT: \(method.rawValue) \(path) \(parameters.map { String(describing: $0) } ?? "")")
+        print("HTTP OUT: \(method.rawValue) \(apiUrl)\(path) \(parameters.map { String(describing: $0) } ?? "")")
 
         return RequestRouter(request: request, encoding: method == .get ? URLEncoding.default : JSONEncoding.default, parameters: parameters)
     }
@@ -61,7 +61,7 @@ class NetworkManager {
             }
         }
 
-        return observable.do(onNext: { [weak self] dataResponse in
+        return observable.do(onNext: { dataResponse in
             switch dataResponse.result {
             case .success(let result):
                 print("HTTP IN: SUCCESS: \(dataResponse.request?.url?.path ?? ""): response = \(result)")
@@ -121,10 +121,26 @@ class NetworkManager {
 
 extension NetworkManager: INetworkManager {
 
-    func getJwtToken(identity: String, pubKeys: [Int: String]) -> Observable<String> {
-        return observable(forRequest: request(withMethod: .post, path: "/BTC/testnet/wallet", parameters: ["identity": identity]), mapper: { json in
-            let jsonHash = json as! [String: String]
-            return jsonHash["token"]
+    func getUnspentOutputs(addresses: [String]) -> Observable<[UnspentOutput]> {
+        let wrapperObservable: Observable<UnspentOutputsWrapper> = observable(forRequest: request(withMethod: .get, path: "/unspent", parameters: ["active": addresses.joined(separator: "|")]))
+        return wrapperObservable.map { $0.unspentOutputs }
+    }
+
+    func getTransactions(addresses: [String]) -> Observable<[BlockchainTransaction]> {
+        let wrapperObservable: Observable<TransactionsWrapper> = observable(forRequest: request(withMethod: .get, path: "/multiaddr", parameters: ["active": addresses.joined(separator: "|")]))
+        return wrapperObservable.map { $0.transactions }
+    }
+
+    func getExchangeRates() -> Observable<[String: Double]> {
+        return observable(forRequest: request(withMethod: .get, path: "/ticker"), mapper: { json in
+            if let hash = json as? [String: [String: Any]] {
+                var rates = [String: Double]()
+                for (currencyCode, data) in hash {
+                    rates[currencyCode] = (data["last"] as! Double)
+                }
+                return rates
+            }
+            return [:]
         })
     }
 

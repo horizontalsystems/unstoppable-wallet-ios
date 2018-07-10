@@ -6,13 +6,18 @@ import RxRealm
 class DatabaseManager: IDatabaseManager {
     private let realm = try! Realm()
 
-    func getBitcoinUnspentOutputs() -> Observable<DatabaseChangeSet<BitcoinUnspentOutput>> {
-        return Observable.arrayWithChangeset(from: realm.objects(BitcoinUnspentOutput.self))
-                .map { DatabaseChangeSet(array: $0, changeSet: $1.map { CollectionChangeSet(withRealmChangeset: $0) }) }
-    }
+//    func getBitcoinUnspentOutputs() -> Observable<DatabaseChangeSet<BitcoinUnspentOutput>> {
+//        return Observable.arrayWithChangeset(from: realm.objects(BitcoinUnspentOutput.self))
+//                .map { DatabaseChangeSet(array: $0, changeSet: $1.map { CollectionChangeSet(withRealmChangeset: $0) }) }
+//    }
+//
+//    func getBitcoinCashUnspentOutputs() -> Observable<DatabaseChangeSet<BitcoinCashUnspentOutput>> {
+//        return Observable.arrayWithChangeset(from: realm.objects(BitcoinCashUnspentOutput.self))
+//                .map { DatabaseChangeSet(array: $0, changeSet: $1.map { CollectionChangeSet(withRealmChangeset: $0) }) }
+//    }
 
-    func getBitcoinCashUnspentOutputs() -> Observable<DatabaseChangeSet<BitcoinCashUnspentOutput>> {
-        return Observable.arrayWithChangeset(from: realm.objects(BitcoinCashUnspentOutput.self))
+    func getBalances() -> Observable<DatabaseChangeSet<Balance>> {
+        return Observable.arrayWithChangeset(from: realm.objects(Balance.self))
                 .map { DatabaseChangeSet(array: $0, changeSet: $1.map { CollectionChangeSet(withRealmChangeset: $0) }) }
     }
 
