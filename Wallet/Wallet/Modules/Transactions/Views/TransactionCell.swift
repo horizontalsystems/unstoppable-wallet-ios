@@ -1,4 +1,5 @@
 import UIKit
+import GrouviExtensions
 import SnapKit
 
 class TransactionCell: UITableViewCell {

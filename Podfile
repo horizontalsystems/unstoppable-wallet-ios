@@ -11,6 +11,8 @@ project 'WalletKit/WalletKit'
 target :Wallet do
   project 'Wallet/Wallet'
 
+  pod 'GrouviExtensions'
+
   pod 'Alamofire'
   pod 'ObjectMapper'
   pod 'RxSwift'

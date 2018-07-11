@@ -1,4 +1,5 @@
 import UIKit
+import GrouviExtensions
 import SnapKit
 import RxSwift
 
@@ -29,7 +30,7 @@ class RestoreWordCell: UICollectionViewCell {
     }
 
     func bind(onReturnSubject: Observable<IndexPath>, indexPath: IndexPath, index: Int, word: String, returnKeyType: UIReturnKeyType, onReturn: @escaping (() -> ()), onTextChange: @escaping ((String?) -> ())) {
-        onReturnDisposable = onReturnSubject.subscribeDisposableAsync(disposeBag: disposeBag, onNext: { [weak self] indexPath in
+        onReturnDisposable = onReturnSubject.subscribeDisposableAsync(disposeBag, onNext: { [weak self] indexPath in
             self?.becomeFirstResponder(indexPath: indexPath)
         })
         self.indexPath = indexPath
