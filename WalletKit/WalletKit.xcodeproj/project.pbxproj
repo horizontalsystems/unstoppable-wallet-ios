@@ -8,6 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		11B3511B6F41679F062F356C /* Crypto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35EBE4F0C6D40981BF52B /* Crypto.swift */; };
+		11B352145E5F28730588A837 /* ApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35C0AB587D20F2ECC40F6 /* ApiManager.swift */; };
+		11B3534067C9C4152EC2E8D9 /* Singletons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B355468DA60E83C0BFC1D4 /* Singletons.swift */; };
+		11B353EA4081799EA9387B66 /* WalletManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35B41C52992BFEA752B5D /* WalletManager.swift */; };
+		11B35AFA91B42B7FA1F6A961 /* UserDefaultsStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35924922FFB24F0D2E055 /* UserDefaultsStorage.swift */; };
+		11B35CB88A796C85CD65F9DE /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35A319F28EC3D42839D74 /* Protocols.swift */; };
 		11B35D0A90AD484F62B69A1B /* WalletKitPrivate.m in Sources */ = {isa = PBXBuildFile; fileRef = 11B35C3A9EC92678307977F7 /* WalletKitPrivate.m */; };
 		11B35F8A1F85697DC88C7777 /* WalletKitPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 11B35EDCF37AAE69A74FB0F5 /* WalletKitPrivate.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		D33FD6B520F382DC00EC10DB /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D33FD6B320F3782600EC10DB /* libcrypto.a */; };
@@ -32,6 +37,11 @@
 
 /* Begin PBXFileReference section */
 		0DCE6AF072E80FCF78CC97A3 /* Pods-WalletKit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WalletKit.debug.xcconfig"; path = "../Pods/Target Support Files/Pods-WalletKit/Pods-WalletKit.debug.xcconfig"; sourceTree = "<group>"; };
+		11B355468DA60E83C0BFC1D4 /* Singletons.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Singletons.swift; sourceTree = "<group>"; };
+		11B35924922FFB24F0D2E055 /* UserDefaultsStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDefaultsStorage.swift; sourceTree = "<group>"; };
+		11B35A319F28EC3D42839D74 /* Protocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
+		11B35B41C52992BFEA752B5D /* WalletManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletManager.swift; sourceTree = "<group>"; };
+		11B35C0AB587D20F2ECC40F6 /* ApiManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiManager.swift; sourceTree = "<group>"; };
 		11B35C3A9EC92678307977F7 /* WalletKitPrivate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WalletKitPrivate.m; sourceTree = "<group>"; };
 		11B35EBE4F0C6D40981BF52B /* Crypto.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Crypto.swift; sourceTree = "<group>"; };
 		11B35EDCF37AAE69A74FB0F5 /* WalletKitPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WalletKitPrivate.h; sourceTree = "<group>"; };
@@ -85,6 +95,16 @@
 			path = HDWallet;
 			sourceTree = "<group>";
 		};
+		11B35156C3ADDCCD4A60CCD4 /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				11B355468DA60E83C0BFC1D4 /* Singletons.swift */,
+				11B35B41C52992BFEA752B5D /* WalletManager.swift */,
+				11B35C0AB587D20F2ECC40F6 /* ApiManager.swift */,
+			);
+			path = Managers;
+			sourceTree = "<group>";
+		};
 		11B35649863DB92E43F8D567 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
@@ -121,6 +141,7 @@
 				D33FD6C220F3868C00EC10DB /* Address.swift */,
 				11B35C3A9EC92678307977F7 /* WalletKitPrivate.m */,
 				11B35EDCF37AAE69A74FB0F5 /* WalletKitPrivate.h */,
+				11B35A319F28EC3D42839D74 /* Protocols.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -172,6 +193,8 @@
 				D3FD451620F364DF00F472B9 /* WalletKit.modulemap */,
 				D3FD450820F354EF00F472B9 /* WalletKit.h */,
 				D3FD450920F354EF00F472B9 /* Info.plist */,
+				11B35156C3ADDCCD4A60CCD4 /* Managers */,
+				11B35924922FFB24F0D2E055 /* UserDefaultsStorage.swift */,
 			);
 			path = WalletKit;
 			sourceTree = "<group>";
@@ -295,6 +318,11 @@
 				D33FD6D120F3885400EC10DB /* Helpers.swift in Sources */,
 				D33FD6CD20F3882200EC10DB /* VarInt.swift in Sources */,
 				D33FD6D420F3890700EC10DB /* Mnemonic.swift in Sources */,
+				11B3534067C9C4152EC2E8D9 /* Singletons.swift in Sources */,
+				11B35CB88A796C85CD65F9DE /* Protocols.swift in Sources */,
+				11B35AFA91B42B7FA1F6A961 /* UserDefaultsStorage.swift in Sources */,
+				11B353EA4081799EA9387B66 /* WalletManager.swift in Sources */,
+				11B352145E5F28730588A837 /* ApiManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

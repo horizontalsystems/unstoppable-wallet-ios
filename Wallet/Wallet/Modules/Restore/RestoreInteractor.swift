@@ -1,28 +1,21 @@
 import Foundation
-import RxSwift
+import WalletKit
 
 class RestoreInteractor {
-
-    private let disposeBag = DisposeBag()
-
     weak var delegate: IRestoreInteractorDelegate?
 
-    private let mnemonic: IMnemonic
-    private let localStorage: ILocalStorage
+    private let walletManager: WalletManager
 
-    init(mnemonic: IMnemonic, localStorage: ILocalStorage) {
-        self.mnemonic = mnemonic
-        self.localStorage = localStorage
+    init(walletManager: WalletManager) {
+        self.walletManager = walletManager
     }
-
 }
 
 extension RestoreInteractor: IRestoreInteractor {
 
     func restore(withWords words: [String]) {
         do {
-            try mnemonic.validate(words: words)
-            localStorage.save(words: words)
+            try walletManager.restoreWallet(withWords: words)
             delegate?.didRestore()
         } catch {
             delegate?.didFailToRestore(withError: error)

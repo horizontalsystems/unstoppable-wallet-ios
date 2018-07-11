@@ -9,28 +9,12 @@ class Factory {
     private init() {
     }
 
-    var stubWalletDataProvider: StubWalletDataProvider { return getInstance(creator: {
-        return StubWalletDataProvider()
-    })}
-
     var stubSettingsProvider: StubSettingsProvider { return getInstance(creator: {
         return StubSettingsProvider()
     })}
 
-    var userDefaultsStorage: UserDefaultsStorage { return getInstance(creator: {
-        return UserDefaultsStorage()
-    })}
-
     var randomProvider: RandomProvider { return getInstance(creator: {
         return RandomProvider()
-    })}
-
-    var mnemonicManager: MnemonicManager { return getInstance(creator: {
-        return MnemonicManager()
-    })}
-
-    var databaseManager: DatabaseManager { return getInstance(creator: {
-        return DatabaseManager()
     })}
 
     var testnetNetworkManager: NetworkManager { return getInstance(name: "testnetNetworkManager", creator: {
@@ -39,10 +23,6 @@ class Factory {
 
     var networkManager: NetworkManager { return getInstance(creator: {
         return NetworkManager(apiUrl: "https://blockchain.info")
-    })}
-
-    var walletManager: WalletManager { return getInstance(creator: {
-        return WalletManager()
     })}
 
     var coinManager: CoinManager { return getInstance(creator: {
