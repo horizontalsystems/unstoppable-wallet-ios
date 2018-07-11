@@ -9,6 +9,7 @@ protocol IWalletView: class {
 
 protocol IWalletViewDelegate {
     func viewDidLoad()
+    func refresh()
 }
 
 protocol IWalletInteractor {

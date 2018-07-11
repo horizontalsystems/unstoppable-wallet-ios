@@ -52,4 +52,8 @@ extension WalletPresenter: IWalletViewDelegate {
         interactor.notifyWalletBalances()
     }
 
+    func refresh() {
+        Singletons.instance.syncManager.sync()
+    }
+
 }

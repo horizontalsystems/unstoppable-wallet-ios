@@ -1,5 +1,4 @@
 import UIKit
-import WalletKit
 
 class WalletViewController: UIViewController {
 
@@ -47,7 +46,7 @@ class WalletViewController: UIViewController {
     }
 
     @objc func refresh() {
-        Singletons.instance.syncManager.sync()
+        delegate.refresh()
     }
 
 }

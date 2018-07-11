@@ -42,7 +42,8 @@ class ApiManager {
 
         request.setValue("application/json", forHTTPHeaderField: "Accept")
 
-        print("API OUT: \(method.rawValue) \(apiUrl)\(path) \(parameters.map { String(describing: $0) } ?? "")")
+//        print("API OUT: \(method.rawValue) \(apiUrl)\(path) \(parameters.map { String(describing: $0) } ?? "")")
+        print("API OUT: \(method.rawValue) \(apiUrl)\(path)")
 
         return RequestRouter(request: request, encoding: method == .get ? URLEncoding.default : JSONEncoding.default, parameters: parameters)
     }
@@ -64,7 +65,8 @@ class ApiManager {
         return observable.do(onNext: { dataResponse in
             switch dataResponse.result {
             case .success(let result):
-                print("API IN: SUCCESS: \(dataResponse.request?.url?.path ?? ""): response = \(result)")
+//                print("API IN: SUCCESS: \(dataResponse.request?.url?.path ?? ""): response = \(result)")
+                print("API IN: SUCCESS: \(dataResponse.request?.url?.path ?? "")")
                 ()
             case .failure:
                 let data = dataResponse.data.flatMap {
