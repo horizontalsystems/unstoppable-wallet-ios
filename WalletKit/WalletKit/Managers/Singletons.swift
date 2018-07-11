@@ -16,6 +16,14 @@ public class Singletons {
         return UserDefaultsStorage()
     })}
 
+    var testnetApiManager: ApiManager { return getInstance(instanceName: "testnetApiManager", creator: {
+        return ApiManager(apiUrl: "https://testnet.blockchain.info")
+    })}
+
+    var apiManager: ApiManager { return getInstance(creator: {
+        return ApiManager(apiUrl: "https://blockchain.info")
+    })}
+
     private func getInstance<T>(instanceName: String? = nil, creator: () -> T) -> T {
         let name = instanceName ?? String(describing: T.self)
 

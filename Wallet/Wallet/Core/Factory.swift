@@ -9,20 +9,8 @@ class Factory {
     private init() {
     }
 
-    var stubSettingsProvider: StubSettingsProvider { return getInstance(creator: {
-        return StubSettingsProvider()
-    })}
-
     var randomProvider: RandomProvider { return getInstance(creator: {
         return RandomProvider()
-    })}
-
-    var testnetNetworkManager: NetworkManager { return getInstance(name: "testnetNetworkManager", creator: {
-        return NetworkManager(apiUrl: "https://testnet.blockchain.info")
-    })}
-
-    var networkManager: NetworkManager { return getInstance(creator: {
-        return NetworkManager(apiUrl: "https://blockchain.info")
     })}
 
     var coinManager: CoinManager { return getInstance(creator: {
