@@ -1,4 +1,5 @@
 import Foundation
+import WalletKit
 
 class TransactionsPresenter {
 

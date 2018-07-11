@@ -1,5 +1,6 @@
 import Foundation
 import RxSwift
+import WalletKit
 
 class WalletInteractor {
 
@@ -7,12 +8,14 @@ class WalletInteractor {
 
     private let disposeBag = DisposeBag()
     private let databaseManager: IDatabaseManager
+    private let syncManager: SyncManager
 
     private var totalValues = [String: Double]()
     private var exchangeRates = [String: Double]()
 
-    init(databaseManager: IDatabaseManager) {
+    init(databaseManager: IDatabaseManager, syncManager: SyncManager) {
         self.databaseManager = databaseManager
+        self.syncManager = syncManager
     }
 
 }
@@ -51,6 +54,11 @@ extension WalletInteractor: IWalletInteractor {
                     self?.refresh()
                 })
                 .disposed(by: disposeBag)
+
+        syncManager.syncSubject
+                .subscribeAsync(disposeBag: disposeBag, onNext: { [weak self] status in
+                    self?.delegate?.didUpdate(syncStatus: status)
+                })
     }
 
     private func refresh() {

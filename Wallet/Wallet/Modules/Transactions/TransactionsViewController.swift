@@ -1,5 +1,6 @@
 import UIKit
 import SnapKit
+import WalletKit
 
 enum CurrencyFilter: String {
     case all = "all", bitcoin = "bitcoin", bitcoinCahche = "bitcoin_cache", etherium = "etherium"

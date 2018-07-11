@@ -1,4 +1,5 @@
 import Foundation
+import WalletKit
 
 class WalletPresenter {
 
@@ -29,6 +30,10 @@ extension WalletPresenter: IWalletInteractorDelegate {
         }
 
         view?.show(walletBalances: viewItems)
+    }
+
+    func didUpdate(syncStatus: SyncManager.SyncStatus) {
+        view?.show(syncStatus: String(describing: syncStatus))
     }
 
     private func viewItem(forBalance balance: WalletBalanceItem) -> WalletBalanceViewItem {

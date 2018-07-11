@@ -1,4 +1,5 @@
 import UIKit
+import WalletKit
 
 class WalletViewController: UIViewController {
 
@@ -46,6 +47,7 @@ class WalletViewController: UIViewController {
     }
 
     @objc func refresh() {
+        Singletons.instance.syncManager.sync()
     }
 
 }
@@ -118,6 +120,10 @@ extension WalletViewController: IWalletView {
     func show(walletBalances: [WalletBalanceViewItem]) {
         wallets = walletBalances.reversed()
         tableView?.reloadData()
+    }
+
+    func show(syncStatus: String) {
+        title = "wallet.title".localized + " (\(syncStatus))"
     }
 
 }
