@@ -1,4 +1,5 @@
 import UIKit
+import WalletKit
 
 class RestoreRouter {
     weak var viewController: UIViewController?
@@ -30,7 +31,7 @@ extension RestoreRouter {
 
     static func module() -> UIViewController {
         let router = RestoreRouter()
-        let interactor = RestoreInteractor(mnemonic: Factory.instance.mnemonicManager, localStorage: Factory.instance.userDefaultsStorage)
+        let interactor = RestoreInteractor(walletManager: Singletons.instance.walletManager)
         let presenter = RestorePresenter(interactor: interactor, router: router)
         let viewController = RestoreViewController(delegate: presenter)
 

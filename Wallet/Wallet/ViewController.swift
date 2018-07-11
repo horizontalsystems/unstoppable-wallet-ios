@@ -5,7 +5,7 @@ import RxSwift
 class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     let disposeBag = DisposeBag()
 
-    var transactions = [TransactionData]()
+//    var transactions = [TransactionData]()
 
     @IBOutlet weak var currentBalanceLabel: UILabel?
     @IBOutlet weak var tableView: UITableView?
@@ -229,7 +229,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
 //    }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return transactions.count
+        return 0
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

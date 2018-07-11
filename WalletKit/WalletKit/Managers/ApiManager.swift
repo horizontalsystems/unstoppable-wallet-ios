@@ -3,7 +3,7 @@ import RxSwift
 import Alamofire
 import ObjectMapper
 
-enum NetworkError: Error {
+enum ApiError: Error {
     case invalidRequest
     case mappingError
     case noConnection
@@ -12,9 +12,9 @@ enum NetworkError: Error {
 
 class RequestRouter: URLRequestConvertible {
 
-    let request: URLRequest
-    let encoding: ParameterEncoding
-    let parameters: [String: Any]?
+    private let request: URLRequest
+    private let encoding: ParameterEncoding
+    private let parameters: [String: Any]?
 
     init(request: URLRequest, encoding: ParameterEncoding, parameters: [String: Any]?) {
         self.request = request
@@ -28,26 +28,26 @@ class RequestRouter: URLRequestConvertible {
 
 }
 
-class NetworkManager {
-    let apiUrl: String
+class ApiManager {
+    private let apiUrl: String
 
     required init(apiUrl: String) {
         self.apiUrl = apiUrl
     }
 
-    func request(withMethod method: HTTPMethod, path: String, parameters: [String: Any]? = nil) -> URLRequestConvertible {
+    private func request(withMethod method: HTTPMethod, path: String, parameters: [String: Any]? = nil) -> URLRequestConvertible {
         let baseUrl = URL(string: apiUrl)!
         var request = URLRequest(url: baseUrl.appendingPathComponent(path))
         request.httpMethod = method.rawValue
 
         request.setValue("application/json", forHTTPHeaderField: "Accept")
 
-        print("HTTP OUT: \(method.rawValue) \(path) \(parameters.map { String(describing: $0) } ?? "")")
+        print("API OUT: \(method.rawValue) \(apiUrl)\(path) \(parameters.map { String(describing: $0) } ?? "")")
 
         return RequestRouter(request: request, encoding: method == .get ? URLEncoding.default : JSONEncoding.default, parameters: parameters)
     }
 
-    func observable(forRequest request: URLRequestConvertible) -> Observable<DataResponse<Any>> {
+    private func observable(forRequest request: URLRequestConvertible) -> Observable<DataResponse<Any>> {
         let observable = Observable<DataResponse<Any>>.create { observer in
             let requestReference = Alamofire.request(request)
                     .validate()
@@ -61,24 +61,24 @@ class NetworkManager {
             }
         }
 
-        return observable.do(onNext: { [weak self] dataResponse in
+        return observable.do(onNext: { dataResponse in
             switch dataResponse.result {
             case .success(let result):
-                print("HTTP IN: SUCCESS: \(dataResponse.request?.url?.path ?? ""): response = \(result)")
+                print("API IN: SUCCESS: \(dataResponse.request?.url?.path ?? ""): response = \(result)")
                 ()
             case .failure:
                 let data = dataResponse.data.flatMap {
                     try? JSONSerialization.jsonObject(with: $0, options: .allowFragments)
                 }
 
-                print("HTTP IN: ERROR: \(dataResponse.request?.url?.path ?? ""): status = \(dataResponse.response?.statusCode ?? 0), response: \(data.map { "\($0)" } ?? "nil")")
+                print("API IN: ERROR: \(dataResponse.request?.url?.path ?? ""): status = \(dataResponse.response?.statusCode ?? 0), response: \(data.map { "\($0)" } ?? "nil")")
                 ()
             }
         })
 
     }
 
-    func observable<T>(forRequest request: URLRequestConvertible, mapper: @escaping (Any) -> T?) -> Observable<T> {
+    private func observable<T>(forRequest request: URLRequestConvertible, mapper: @escaping (Any) -> T?) -> Observable<T> {
         return self.observable(forRequest: request)
                 .flatMap { dataResponse -> Observable<T> in
                     switch dataResponse.result {
@@ -86,20 +86,20 @@ class NetworkManager {
                         if let value = mapper(result) {
                             return Observable.just(value)
                         } else {
-                            return Observable.error(NetworkError.mappingError)
+                            return Observable.error(ApiError.mappingError)
                         }
                     case .failure:
                         if let response = dataResponse.response {
                             let data = dataResponse.data.flatMap { try? JSONSerialization.jsonObject(with: $0, options: .allowFragments) }
-                            return Observable.error(NetworkError.serverError(status: response.statusCode, data: data))
+                            return Observable.error(ApiError.serverError(status: response.statusCode, data: data))
                         } else {
-                            return Observable.error(NetworkError.noConnection)
+                            return Observable.error(ApiError.noConnection)
                         }
                     }
                 }
     }
 
-    public func observable<T: ImmutableMappable>(forRequest request: URLRequestConvertible) -> Observable<[T]> {
+    func observable<T: ImmutableMappable>(forRequest request: URLRequestConvertible) -> Observable<[T]> {
         return observable(forRequest: request, mapper: { json in
             if let jsonArray = json as? [[String: Any]] {
                 return jsonArray.compactMap { try? T(JSONObject: $0) }
@@ -108,7 +108,7 @@ class NetworkManager {
         })
     }
 
-    public func observable<T: ImmutableMappable>(forRequest request: URLRequestConvertible) -> Observable<T> {
+    func observable<T: ImmutableMappable>(forRequest request: URLRequestConvertible) -> Observable<T> {
         return observable(forRequest: request, mapper: { json in
             if let jsonObject = json as? [String: Any], let object = try? T(JSONObject: jsonObject) {
                 return object
@@ -119,13 +119,29 @@ class NetworkManager {
 
 }
 
-extension NetworkManager: INetworkManager {
+extension ApiManager {
 
-    func getJwtToken(identity: String, pubKeys: [Int: String]) -> Observable<String> {
-        return observable(forRequest: request(withMethod: .post, path: "/BTC/testnet/wallet", parameters: ["identity": identity]), mapper: { json in
-            let jsonHash = json as! [String: String]
-            return jsonHash["token"]
-        })
-    }
+//    func getUnspentOutputs(addresses: [String]) -> Observable<[UnspentOutput]> {
+//        let wrapperObservable: Observable<UnspentOutputsWrapper> = observable(forRequest: request(withMethod: .get, path: "/unspent", parameters: ["active": addresses.joined(separator: "|")]))
+//        return wrapperObservable.map { $0.unspentOutputs }
+//    }
+//
+//    func getTransactions(addresses: [String]) -> Observable<[BlockchainTransaction]> {
+//        let wrapperObservable: Observable<TransactionsWrapper> = observable(forRequest: request(withMethod: .get, path: "/multiaddr", parameters: ["active": addresses.joined(separator: "|")]))
+//        return wrapperObservable.map { $0.transactions }
+//    }
+//
+//    func getExchangeRates() -> Observable<[String: Double]> {
+//        return observable(forRequest: request(withMethod: .get, path: "/ticker"), mapper: { json in
+//            if let hash = json as? [String: [String: Any]] {
+//                var rates = [String: Double]()
+//                for (currencyCode, data) in hash {
+//                    rates[currencyCode] = (data["last"] as! Double)
+//                }
+//                return rates
+//            }
+//            return [:]
+//        })
+//    }
 
 }

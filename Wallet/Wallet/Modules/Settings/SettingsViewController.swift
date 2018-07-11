@@ -1,5 +1,5 @@
 import UIKit
-import RealmSwift
+import WalletKit
 
 class SettingsViewController: UIViewController {
 
@@ -30,7 +30,7 @@ class SettingsViewController: UIViewController {
     }
 
     @objc func logout() {
-        Factory.instance.userDefaultsStorage.clearWords()
+        Singletons.instance.walletManager.removeWallet()
 
         guard let window = UIApplication.shared.keyWindow else {
             return

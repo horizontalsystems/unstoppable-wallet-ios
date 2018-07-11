@@ -15,6 +15,8 @@ class TransactionsInteractor {
     init(databaseManager: IDatabaseManager, coinManager: CoinManager) {
         self.databaseManager = databaseManager
         self.coinManager = coinManager
+
+        latestBlockHeights["BTC"] = 1500000
     }
 
 }
@@ -40,7 +42,6 @@ extension TransactionsInteractor: ITransactionsInteractor {
     }
 
     private func refresh(changeSet: CollectionChangeSet? = nil) {
-
         let items = transactionRecords.compactMap { transaction -> TransactionRecordViewItem? in
             guard let latestBlocHeight = self.latestBlockHeights[transaction.coinCode] else {
                 return nil

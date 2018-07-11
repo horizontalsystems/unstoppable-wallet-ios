@@ -1,17 +1,13 @@
 import Foundation
-import RxSwift
+import WalletKit
 
 class GuestInteractor {
-    private let disposeBag = DisposeBag()
-
     weak var delegate: IGuestInteractorDelegate?
 
-    private let mnemonic: IMnemonic
-    private let localStorage: ILocalStorage
+    private let walletManager: WalletManager
 
-    init(mnemonic: IMnemonic, localStorage: ILocalStorage) {
-        self.mnemonic = mnemonic
-        self.localStorage = localStorage
+    init(walletManager: WalletManager) {
+        self.walletManager = walletManager
     }
 }
 
@@ -19,8 +15,7 @@ extension GuestInteractor: IGuestInteractor {
 
     func createWallet() {
         do {
-            let words = try mnemonic.generateWords()
-            localStorage.save(words: words)
+            try walletManager.createWallet()
             delegate?.didCreateWallet()
         } catch {
             delegate?.didFailToCreateWallet(withError: error)

@@ -25,8 +25,13 @@ end
 target :WalletKit do
   project 'WalletKit/WalletKit'
 
+  pod 'Alamofire'
+  pod 'ObjectMapper'
+
   pod 'RxSwift'
+
   pod 'RealmSwift'
+  pod "RxRealm"
 end
 
 target :WalletTests do

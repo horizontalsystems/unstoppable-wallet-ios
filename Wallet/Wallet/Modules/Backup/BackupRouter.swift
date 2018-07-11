@@ -1,4 +1,5 @@
 import UIKit
+import WalletKit
 
 class BackupRouter {
     weak var navigationController: UINavigationController?
@@ -31,7 +32,7 @@ extension BackupRouter {
 
     static func module(dismissMode: BackupPresenter.DismissMode) -> UIViewController {
         let router = BackupRouter()
-        let interactor = BackupInteractor(walletDataProvider: Factory.instance.stubWalletDataProvider, indexesProvider: Factory.instance.randomProvider)
+        let interactor = BackupInteractor(walletManager: Singletons.instance.walletManager, indexesProvider: Factory.instance.randomProvider)
         let presenter = BackupPresenter(interactor: interactor, router: router, dismissMode: dismissMode)
         let navigationController = BackupNavigationController(viewDelegate: presenter)
 

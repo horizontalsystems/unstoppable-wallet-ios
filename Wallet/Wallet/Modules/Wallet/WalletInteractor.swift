@@ -8,7 +8,7 @@ class WalletInteractor {
     private let disposeBag = DisposeBag()
     private let databaseManager: IDatabaseManager
 
-    private var totalValues = [Coin: Double]()
+    private var totalValues = [String: Double]()
     private var exchangeRates = [String: Double]()
 
     init(databaseManager: IDatabaseManager) {
@@ -20,16 +20,25 @@ class WalletInteractor {
 extension WalletInteractor: IWalletInteractor {
 
     func notifyWalletBalances() {
-        databaseManager.getBitcoinUnspentOutputs()
-                .subscribe(onNext: { [weak self] changeset in
-                    self?.totalValues[Bitcoin()] = changeset.array.map { Double($0.value) / 100000000 }.reduce(0, { x, y in  x + y })
-                    self?.refresh()
-                })
-                .disposed(by: disposeBag)
+//        databaseManager.getBitcoinUnspentOutputs()
+//                .subscribe(onNext: { [weak self] changeset in
+//                    self?.totalValues[Bitcoin()] = changeset.array.map { Double($0.value) / 100000000 }.reduce(0, { x, y in  x + y })
+//                    self?.refresh()
+//                })
+//                .disposed(by: disposeBag)
+//
+//        databaseManager.getBitcoinCashUnspentOutputs()
+//                .subscribe(onNext: { [weak self] changeset in
+//                    self?.totalValues[BitcoinCash()] = changeset.array.map { Double($0.value) / 100000000 }.reduce(0, { x, y in  x + y })
+//                    self?.refresh()
+//                })
+//                .disposed(by: disposeBag)
 
-        databaseManager.getBitcoinCashUnspentOutputs()
+        databaseManager.getBalances()
                 .subscribe(onNext: { [weak self] changeset in
-                    self?.totalValues[BitcoinCash()] = changeset.array.map { Double($0.value) / 100000000 }.reduce(0, { x, y in  x + y })
+                    changeset.array.forEach { balance in
+                        self?.totalValues[balance.coinCode] = balance.amount
+                    }
                     self?.refresh()
                 })
                 .disposed(by: disposeBag)
@@ -46,9 +55,11 @@ extension WalletInteractor: IWalletInteractor {
 
     private func refresh() {
         let items: [WalletBalanceItem] = totalValues.compactMap { totalValueMap in
-            let (coin, totalValue) = totalValueMap
+            let (coinCode, totalValue) = totalValueMap
 
-            if let rate = self.exchangeRates[coin.code] {
+            let coin = Factory.instance.coinManager.getCoin(byCode: coinCode)
+
+            if let coin = coin, let rate = self.exchangeRates[coin.code] {
                 return WalletBalanceItem(coinValue: CoinValue(coin: coin, value: totalValue), exchangeRate: rate, currency: DollarCurrency())
             }
             return nil
