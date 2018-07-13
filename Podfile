@@ -12,6 +12,7 @@ target :Wallet do
   project 'Wallet/Wallet'
 
   pod 'GrouviExtensions'
+  pod 'GrouviActionSheet'
 
   pod 'Alamofire'
   pod 'ObjectMapper'
