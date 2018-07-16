@@ -1,4 +1,5 @@
 import UIKit
+import GrouviActionSheet
 
 class BackupConfirmationController: UIViewController {
 
@@ -57,8 +58,17 @@ class BackupConfirmationController: UIViewController {
 
     @objc func confirmDidTap() {
         if let firstWord = firstIndexedInputField?.textField.text, let secondWord = secondIndexedInputField?.textField.text {
-            delegate.validateDidClick(confirmationWords: [indexes[0]: firstWord, indexes[1]: secondWord])
+            let model = BakcupConfirmationAlertModel(onConfirm: { [weak self] in
+                self?.validate(firstWord: firstWord, secondWord: secondWord)
+            })
+            let actionSheetController = ActionSheetController(withModel: model, actionStyle: .sheet(showDismiss: false))
+            actionSheetController.contentBackgroundColor = .white
+            actionSheetController.show()
         }
+    }
+
+    func validate(firstWord: String, secondWord: String) {
+        delegate.validateDidClick(confirmationWords: [indexes[0]: firstWord, indexes[1]: secondWord])
     }
 
     func showValidationFailure() {
