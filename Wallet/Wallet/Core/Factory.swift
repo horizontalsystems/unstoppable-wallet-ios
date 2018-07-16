@@ -17,10 +17,6 @@ class Factory {
         return CoinManager()
     })}
 
-    var syncManager: SyncManager { return getInstance(creator: {
-        return SyncManager()
-    })}
-
     private func getInstance<T>(name: String? = nil, creator: () -> T) -> T {
         let className = name ?? String(describing: T.self)
 

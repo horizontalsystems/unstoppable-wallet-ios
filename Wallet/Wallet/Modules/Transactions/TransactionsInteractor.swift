@@ -1,5 +1,6 @@
 import Foundation
 import RxSwift
+import WalletKit
 
 class TransactionsInteractor {
 
@@ -31,14 +32,14 @@ extension TransactionsInteractor: ITransactionsInteractor {
                 })
                 .disposed(by: disposeBag)
 
-        databaseManager.getBlockchainInfos()
-                .subscribe(onNext: { [weak self] databaseChangeSet in
-                    for blockchainInfo in databaseChangeSet.array {
-                        self?.latestBlockHeights[blockchainInfo.coinCode] = blockchainInfo.latestBlockHeight
-                    }
-                    self?.refresh()
-                })
-                .disposed(by: disposeBag)
+//        databaseManager.getBlockchainInfos()
+//                .subscribe(onNext: { [weak self] databaseChangeSet in
+//                    for blockchainInfo in databaseChangeSet.array {
+//                        self?.latestBlockHeights[blockchainInfo.coinCode] = blockchainInfo.latestBlockHeight
+//                    }
+//                    self?.refresh()
+//                })
+//                .disposed(by: disposeBag)
     }
 
     private func refresh(changeSet: CollectionChangeSet? = nil) {

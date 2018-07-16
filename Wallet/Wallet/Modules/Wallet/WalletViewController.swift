@@ -46,6 +46,7 @@ class WalletViewController: UIViewController {
     }
 
     @objc func refresh() {
+        delegate.refresh()
     }
 
 }
@@ -118,6 +119,10 @@ extension WalletViewController: IWalletView {
     func show(walletBalances: [WalletBalanceViewItem]) {
         wallets = walletBalances.reversed()
         tableView?.reloadData()
+    }
+
+    func show(syncStatus: String) {
+        title = "wallet.title".localized + " (\(syncStatus))"
     }
 
 }

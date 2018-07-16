@@ -12,6 +12,10 @@ public class Singletons {
         return WalletManager(localStorage: userDefaultsStorage)
     })}
 
+    public var syncManager: SyncManager { return getInstance(creator: {
+        return SyncManager(walletManager: walletManager, apiManager: testnetApiManager, exchangeRatesApiManager: apiManager)
+    })}
+
     var userDefaultsStorage: UserDefaultsStorage { return getInstance(creator: {
         return UserDefaultsStorage()
     })}

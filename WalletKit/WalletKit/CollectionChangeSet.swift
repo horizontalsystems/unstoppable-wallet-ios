@@ -1,11 +1,11 @@
 import Foundation
 import RxRealm
 
-class CollectionChangeSet {
+public class CollectionChangeSet {
 
-    let deleted: [Int]
-    let inserted: [Int]
-    let updated: [Int]
+    public let deleted: [Int]
+    public let inserted: [Int]
+    public let updated: [Int]
 
     init(withRealmChangeset changeset: RealmChangeset) {
         deleted = changeset.deleted
