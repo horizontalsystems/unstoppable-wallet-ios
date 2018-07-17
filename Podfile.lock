@@ -4,7 +4,7 @@ PODS:
   - GrouviActionSheet (1.1.2):
     - GrouviExtensions
     - SnapKit (~> 4.0.0)
-  - GrouviExtensions (1.0.4):
+  - GrouviExtensions (1.1.0):
     - RxSwift (~> 4.2.0)
     - SnapKit (~> 4.0.0)
   - ObjectMapper (3.3.0)
@@ -51,7 +51,7 @@ SPEC CHECKSUMS:
   Alamofire: e4fa87002c137ba2d8d634d2c51fabcda0d5c223
   Cuckoo: 97522dd7ac6f18adba6022bdc74aa69e82ca691a
   GrouviActionSheet: e064c05e04ae21bd52e61bcbd64599a4a7856cc7
-  GrouviExtensions: 7ee128e3f30b57447fec6e50669ccba5263cd4b3
+  GrouviExtensions: 7ee1420878179d1938fc0e7bec4367bac0201ff1
   ObjectMapper: b612bf8c8e99c4dc0bb6013a51f7c27966ed5da9
   Realm: a469bb59e33f9926102ccaea4349822c53b9117e
   RealmSwift: a45861b21c180f5cf0f122144b9759fa8dde3e9e

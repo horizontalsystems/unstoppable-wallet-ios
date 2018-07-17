@@ -8,10 +8,10 @@ class WalletViewController: UIViewController {
 
     var wallets = [WalletBalanceViewItem]() {
         didSet {
-            wallets = [
+            wallets.append(contentsOf: [
                 WalletBalanceViewItem(coinValue: CoinValue(coin: Bitcoin(), value: 0.004), exchangeValue: CurrencyValue(currency: DollarCurrency(), value: 5000), currencyValue: CurrencyValue(currency: DollarCurrency(), value: 20)),
                 WalletBalanceViewItem(coinValue: CoinValue(coin: BitcoinCash(), value: 0.2), exchangeValue: CurrencyValue(currency: DollarCurrency(), value: 600), currencyValue: CurrencyValue(currency: DollarCurrency(), value: 120))
-            ]
+            ])
         }
     }
 

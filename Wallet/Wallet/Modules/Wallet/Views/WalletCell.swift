@@ -8,8 +8,8 @@ class WalletCell: UITableViewCell {
     var valueLabel = UILabel()
     var coinLabel = UILabel()
 
-    var receiveButton = UIButton()
-    var payButton = UIButton()
+    var receiveButton = RespondButton()
+    var payButton = RespondButton()
 
     var onPay: (() -> ())?
     var onReceive: (() -> ())?
@@ -61,13 +61,10 @@ class WalletCell: UITableViewCell {
             maker.top.equalTo(self.coinLabel.snp.bottom).offset(WalletTheme.buttonsTopMargin)
             maker.height.equalTo(WalletTheme.buttonsHeight)
         }
-        receiveButton.titleLabel?.font = WalletTheme.cellButtonFont
-        receiveButton.backgroundColor = WalletTheme.receiveButtonBackground
-        receiveButton.setTitleColor(WalletTheme.buttonsTextColor, for: .normal)
-        receiveButton.setTitleColor(WalletTheme.selectedButtonsTextColor, for: .highlighted)
+        receiveButton.onTap = { [weak self] in self?.receive() }
+        receiveButton.backgrounds = ButtonTheme.greenBackgroundOnDarkBackgroundDictionary
         receiveButton.cornerRadius = WalletTheme.buttonCornerRadius
-        receiveButton.setTitle("wallet.receive".localized, for: .normal)
-        receiveButton.addTarget(self, action: #selector(receive), for: .touchUpInside)
+        receiveButton.titleLabel.text = "wallet.deposit".localized
 
         roundedBackground.addSubview(payButton)
         payButton.snp.makeConstraints { maker in
@@ -77,13 +74,10 @@ class WalletCell: UITableViewCell {
             maker.height.equalTo(WalletTheme.buttonsHeight)
             maker.width.equalTo(receiveButton)
         }
-        payButton.titleLabel?.font = WalletTheme.cellButtonFont
-        payButton.backgroundColor = WalletTheme.payButtonBackground
-        payButton.setTitleColor(WalletTheme.buttonsTextColor, for: .normal)
-        payButton.setTitleColor(WalletTheme.selectedButtonsTextColor, for: .highlighted)
+        payButton.onTap = { [weak self] in self?.pay() }
+        payButton.backgrounds = ButtonTheme.yellowBackgroundOnDarkBackgroundDictionary
         payButton.cornerRadius = WalletTheme.buttonCornerRadius
-        payButton.setTitle("wallet.pay".localized, for: .normal)
-        payButton.addTarget(self, action: #selector(pay), for: .touchUpInside)
+        payButton.titleLabel.text = "wallet.send".localized
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -107,11 +101,11 @@ class WalletCell: UITableViewCell {
         coinLabel.text = CoinValueHelper.formattedAmount(for: balance.coinValue)
     }
 
-    @objc func receive() {
+    func receive() {
         onReceive?()
     }
 
-    @objc func pay() {
+    func pay() {
         onPay?()
     }
 

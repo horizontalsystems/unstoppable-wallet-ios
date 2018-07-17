@@ -4,9 +4,12 @@ import SnapKit
 
 class RespondButton: UIView, RespondViewDelegate {
     typealias Style = Dictionary<State, UIColor?>
+
     enum State {
         case disabled, selected, active
     }
+
+    var touchTransparent: Bool { return false }
 
     private let view = RespondView()
     public let titleLabel = UILabel()
