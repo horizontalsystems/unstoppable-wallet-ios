@@ -1062,8 +1062,6 @@
 				1A564C3EBB7FB859CF1BB24D /* UIFont.swift in Sources */,
 				1A5646CA592E84121AF87B07 /* Date.swift in Sources */,
 				1A5647C57BCDBB26FE4424F3 /* DateHelper.swift in Sources */,
-				1A5644AC58BEC0F1FAB1BF07 /* RespondView.swift in Sources */,
-				1A564CF4FCC70822AB77CEC6 /* TintImageView.swift in Sources */,
 				1A5642A7500FDC8E971D6C62 /* CoinValueHelper.swift in Sources */,
 				1A564B38A4E20059FBF9045C /* BakcupConfirmationAlertModel.swift in Sources */,
 				1A564B05F32651BB2C7B6E6C /* BackupCheckboxItem.swift in Sources */,
