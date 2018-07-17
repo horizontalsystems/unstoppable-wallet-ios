@@ -6,7 +6,6 @@ class WalletCell: UITableViewCell {
 
     var nameLabel = UILabel()
     var valueLabel = UILabel()
-    var exchangeLabel = UILabel()
     var coinLabel = UILabel()
 
     var receiveButton = UIButton()
@@ -41,36 +40,25 @@ class WalletCell: UITableViewCell {
 
         roundedBackground.addSubview(valueLabel)
         valueLabel.snp.makeConstraints { maker in
-            maker.leading.equalTo(self.nameLabel.snp.trailing).offset(WalletTheme.cellBigMargin)
-            maker.top.equalToSuperview().offset(WalletTheme.cellSmallMargin)
-            maker.trailing.equalToSuperview().offset(-WalletTheme.cellBigMargin)
-        }
-        valueLabel.font = WalletTheme.cellTitleFont
-        valueLabel.textColor = WalletTheme.cellTitleColor
-        valueLabel.textAlignment = .right
-
-        roundedBackground.addSubview(exchangeLabel)
-        exchangeLabel.snp.makeConstraints { maker in
             maker.leading.equalToSuperview().offset(WalletTheme.cellBigMargin)
-            maker.top.equalTo(self.nameLabel.snp.bottom).offset(WalletTheme.cellBigMargin)
+            maker.top.equalTo(self.nameLabel.snp.bottom).offset(WalletTheme.cellSmallMargin)
         }
-        exchangeLabel.font = WalletTheme.cellSubtitleFont
-        exchangeLabel.textColor = WalletTheme.cellSubtitleColor
+        valueLabel.font = WalletTheme.cellSubtitleFont
 
         roundedBackground.addSubview(coinLabel)
         coinLabel.snp.makeConstraints { maker in
-            maker.leading.equalTo(self.exchangeLabel.snp.trailing).offset(WalletTheme.cellSmallMargin)
-            maker.top.equalTo(self.valueLabel.snp.bottom).offset(WalletTheme.cellBigMargin)
+            maker.leading.equalTo(self.valueLabel.snp.trailing).offset(WalletTheme.cellSmallMargin)
+            maker.centerY.equalTo(self.valueLabel)
             maker.trailing.equalToSuperview().offset(-WalletTheme.cellBigMargin)
         }
-        coinLabel.font = WalletTheme.cellSubtitleFont
-        coinLabel.textColor = WalletTheme.cellSubtitleColor
+        coinLabel.font = WalletTheme.cellTitleFont
+        coinLabel.textColor = WalletTheme.cellTitleColor
         coinLabel.textAlignment = .right
 
         roundedBackground.addSubview(receiveButton)
         receiveButton.snp.makeConstraints { maker in
             maker.leading.equalToSuperview().offset(WalletTheme.cellSmallMargin)
-            maker.top.equalTo(self.exchangeLabel.snp.bottom).offset(WalletTheme.buttonsTopMargin)
+            maker.top.equalTo(self.coinLabel.snp.bottom).offset(WalletTheme.buttonsTopMargin)
             maker.height.equalTo(WalletTheme.buttonsHeight)
         }
         receiveButton.titleLabel?.font = WalletTheme.cellButtonFont
@@ -113,9 +101,9 @@ class WalletCell: UITableViewCell {
         receiveButton.set(hidden: !selected, animated: animated, duration: WalletTheme.buttonsAnimationDuration)
         payButton.set(hidden: !selected, animated: animated, duration: WalletTheme.buttonsAnimationDuration)
 
-        nameLabel.text = balance.coinValue.coin.name
+        nameLabel.text = "\(balance.coinValue.coin.name) (\(balance.coinValue.coin.code))"
         valueLabel.text = CurrencyHelper.instance.formattedValue(for: balance.currencyValue)
-        exchangeLabel.text = CurrencyHelper.instance.formattedValue(for: balance.exchangeValue)
+        valueLabel.textColor = balance.currencyValue.value > 0 ? WalletTheme.nonZeroBalanceTextColor : WalletTheme.zeroBalanceTextColor
         coinLabel.text = CoinValueHelper.formattedAmount(for: balance.coinValue)
     }
 

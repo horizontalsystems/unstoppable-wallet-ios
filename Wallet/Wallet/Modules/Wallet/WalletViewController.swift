@@ -6,7 +6,14 @@ class WalletViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView?
 
-    var wallets = [WalletBalanceViewItem]()
+    var wallets = [WalletBalanceViewItem]() {
+        didSet {
+            wallets = [
+                WalletBalanceViewItem(coinValue: CoinValue(coin: Bitcoin(), value: 0.004), exchangeValue: CurrencyValue(currency: DollarCurrency(), value: 5000), currencyValue: CurrencyValue(currency: DollarCurrency(), value: 20)),
+                WalletBalanceViewItem(coinValue: CoinValue(coin: BitcoinCash(), value: 0.2), exchangeValue: CurrencyValue(currency: DollarCurrency(), value: 600), currencyValue: CurrencyValue(currency: DollarCurrency(), value: 120))
+            ]
+        }
+    }
 
     var headerView = UINib(nibName: String(describing: WalletHeaderView.self), bundle: Bundle(for: WalletHeaderView.self)).instantiate(withOwner: nil, options: nil)[0] as? WalletHeaderView
 
@@ -23,6 +30,7 @@ class WalletViewController: UIViewController {
     }
 
     override func viewDidLoad() {
+        wallets = []
         super.viewDidLoad()
 
         title = "wallet.title".localized
