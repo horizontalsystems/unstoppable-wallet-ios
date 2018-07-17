@@ -9,7 +9,7 @@ class BakcupConfirmationAlertModel: BaseAlertModel {
         return "alert.cancel".localized
     }
 
-    init(onConfirm: @escaping (() -> ())) {
+    override init() {
         super.init()
 
         var confirmTexts = [NSAttributedString]()
@@ -23,7 +23,9 @@ class BakcupConfirmationAlertModel: BaseAlertModel {
         confirmTexts.append(confirmAttributed)
         confirmTexts.append(NSAttributedString(string: "backup.confirmation.delete_app_warn".localized, attributes: [NSAttributedStringKey.font: BackupConfirmationTheme.regularFont]))
 
-        let buttonItem = BackupButtonItem(tag: confirmItems.count, required: true, onTap: onConfirm)
+        let buttonItem = BackupButtonItem(tag: confirmItems.count, required: true, onTap: {
+            self.dismiss?(true)
+        })
         confirmTexts.enumerated().forEach { (index, string) in
             let item = BackupCheckboxItem(descriptionText: string, tag: index, required: true) { [weak self] view in
                 if let view = view as? BackupCheckboxView, let item = view.item {
