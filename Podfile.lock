@@ -1,7 +1,10 @@
 PODS:
   - Alamofire (4.7.2)
   - Cuckoo (0.11.3)
-  - GrouviExtensions (1.0.3):
+  - GrouviActionSheet (1.1.2):
+    - GrouviExtensions
+    - SnapKit (~> 4.0.0)
+  - GrouviExtensions (1.0.4):
     - RxSwift (~> 4.2.0)
     - SnapKit (~> 4.0.0)
   - ObjectMapper (3.3.0)
@@ -21,6 +24,7 @@ PODS:
 DEPENDENCIES:
   - Alamofire
   - Cuckoo
+  - GrouviActionSheet
   - GrouviExtensions
   - ObjectMapper
   - RealmSwift
@@ -33,6 +37,7 @@ SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - Alamofire
     - Cuckoo
+    - GrouviActionSheet
     - GrouviExtensions
     - ObjectMapper
     - Realm
@@ -45,7 +50,8 @@ SPEC REPOS:
 SPEC CHECKSUMS:
   Alamofire: e4fa87002c137ba2d8d634d2c51fabcda0d5c223
   Cuckoo: 97522dd7ac6f18adba6022bdc74aa69e82ca691a
-  GrouviExtensions: f4ae3a9043541a44cac60b9c046ec7f4f01cb2fe
+  GrouviActionSheet: e064c05e04ae21bd52e61bcbd64599a4a7856cc7
+  GrouviExtensions: 7ee128e3f30b57447fec6e50669ccba5263cd4b3
   ObjectMapper: b612bf8c8e99c4dc0bb6013a51f7c27966ed5da9
   Realm: a469bb59e33f9926102ccaea4349822c53b9117e
   RealmSwift: a45861b21c180f5cf0f122144b9759fa8dde3e9e
@@ -54,6 +60,6 @@ SPEC CHECKSUMS:
   RxSwift: 99e10317ddfcc7fbe01356aafd118fde4a0be104
   SnapKit: a42d492c16e80209130a3379f73596c3454b7694
 
-PODFILE CHECKSUM: 128d2a2f51f4bcbd9f04b36be4860e6c38ffae58
+PODFILE CHECKSUM: 2b6e561fdeee02d0b92431638ec7346ce645660d
 
 COCOAPODS: 1.5.3

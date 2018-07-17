@@ -9,8 +9,8 @@ class WalletCell: UITableViewCell {
     var exchangeLabel = UILabel()
     var coinLabel = UILabel()
 
-    var receiveButton = Button()
-    var payButton = Button()
+    var receiveButton = UIButton()
+    var payButton = UIButton()
 
     var onPay: (() -> ())?
     var onReceive: (() -> ())?
