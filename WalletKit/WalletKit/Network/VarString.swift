@@ -9,21 +9,21 @@
 import Foundation
 
 /// Variable length string can be stored using a variable length integer followed by the string itself.
-public struct VarString : ExpressibleByStringLiteral {
-    public typealias StringLiteralType = String
-    public let length: VarInt
-    public let value: String
+struct VarString : ExpressibleByStringLiteral {
+    typealias StringLiteralType = String
+    let length: VarInt
+    let value: String
 
-    public init(stringLiteral value: String) {
+    init(stringLiteral value: String) {
         self.init(value)
     }
 
-    public init(_ value: String) {
+    init(_ value: String) {
         self.value = value
         length = VarInt(value.data(using: .ascii)!.count)
     }
 
-    public func serialized() -> Data {
+    func serialized() -> Data {
         var data = Data()
         data += length.serialized()
         data += value
@@ -32,7 +32,7 @@ public struct VarString : ExpressibleByStringLiteral {
 }
 
 extension VarString : CustomStringConvertible {
-    public var description: String {
+    var description: String {
         return "\(value)"
     }
 }

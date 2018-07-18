@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		11B3508E5392895D2CBB3E7E /* BlockHeaderItemSaver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35FEEAF84E9FD41070786 /* BlockHeaderItemSaver.swift */; };
 		11B350E0BC835C79DEDFF2C7 /* TestNet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35E92D4F8CF1524F98F7A /* TestNet.swift */; };
 		11B3511B6F41679F062F356C /* Crypto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35EBE4F0C6D40981BF52B /* Crypto.swift */; };
 		11B351608EEBDC9CBA0449DB /* CollectionChangeSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B355A975909FAAC6983C9B /* CollectionChangeSet.swift */; };
@@ -21,6 +22,7 @@
 		11B3560DFA4C059AF4EFDFF7 /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35C9471A98C13983312C1 /* DatabaseManager.swift */; };
 		11B356509EA05BCD114603E0 /* Block.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B350357DF0C843FDC0C2DE /* Block.swift */; };
 		11B3567D267718668A0FF9A7 /* ServiceFlags.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B356D308DCF4BB33D9F488 /* ServiceFlags.swift */; };
+		11B356B6EEA74FC863CF0129 /* BlockHeaderItemValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35FA46CEA78297785F6C4 /* BlockHeaderItemValidator.swift */; };
 		11B356BDAF9CDC1C3BFF0BE3 /* Balance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B352F7D8C4B01793D6F3EF /* Balance.swift */; };
 		11B356D19B4382A26BA37767 /* UnspentOutput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35DB7DC88D8B31A2C3E6F /* UnspentOutput.swift */; };
 		11B356FF240295215EFC3470 /* UnspentOutputsWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35D345AE93F57E757DF39 /* UnspentOutputsWrapper.swift */; };
@@ -36,6 +38,7 @@
 		11B35AFB6F7733F41FE3EA49 /* GetHeadersMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35FF2F94006C73B7773BC /* GetHeadersMessage.swift */; };
 		11B35C2FE8DD2C09F71EBD65 /* PeerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B359FB99C46804E8CF23AC /* PeerManager.swift */; };
 		11B35C5BD54BD2A343BA6379 /* HeaderSyncerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35F930961E99C5C66E49F /* HeaderSyncerTests.swift */; };
+		11B35C8CF0CF6B11A20C2980 /* HeaderHandlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B353BC4AF64E99EC5E5887 /* HeaderHandlerTests.swift */; };
 		11B35C8F2A29CA171165BF7A /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35F3FD9CCB938B62D07EA /* Observable.swift */; };
 		11B35CB88A796C85CD65F9DE /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35A319F28EC3D42839D74 /* Protocols.swift */; };
 		11B35D0A90AD484F62B69A1B /* WalletKitPrivate.m in Sources */ = {isa = PBXBuildFile; fileRef = 11B35C3A9EC92678307977F7 /* WalletKitPrivate.m */; };
@@ -84,7 +87,6 @@
 		D33FD6D120F3885400EC10DB /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = D33FD6D020F3885400EC10DB /* Helpers.swift */; };
 		D33FD6D420F3890700EC10DB /* Mnemonic.swift in Sources */ = {isa = PBXBuildFile; fileRef = D33FD6D220F3890700EC10DB /* Mnemonic.swift */; };
 		D33FD6D520F3890700EC10DB /* WordList.swift in Sources */ = {isa = PBXBuildFile; fileRef = D33FD6D320F3890700EC10DB /* WordList.swift */; };
-		D380FD5E20FCC04400276993 /* WalletKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D380FD5D20FCC04400276993 /* WalletKitTests.swift */; };
 		D380FD6020FCC04400276993 /* WalletKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3FD450520F354EF00F472B9 /* WalletKit.framework */; };
 		D380FD6820FCC22800276993 /* GeneratedMocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = D380FD6720FCC22800276993 /* GeneratedMocks.swift */; };
 		D3FD450A20F354EF00F472B9 /* WalletKit.h in Headers */ = {isa = PBXBuildFile; fileRef = D3FD450820F354EF00F472B9 /* WalletKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -113,6 +115,7 @@
 		11B35352F3DA4C26A552C62B /* TransactionInput.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionInput.swift; sourceTree = "<group>"; };
 		11B3535CE92461E9AC1E3ADA /* Checkpoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Checkpoint.swift; sourceTree = "<group>"; };
 		11B353B145524AAE2A1B76A6 /* HeadersMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeadersMessage.swift; sourceTree = "<group>"; };
+		11B353BC4AF64E99EC5E5887 /* HeaderHandlerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeaderHandlerTests.swift; sourceTree = "<group>"; };
 		11B353F6C17A6C19CC2E7E60 /* ExchangeRate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExchangeRate.swift; sourceTree = "<group>"; };
 		11B3559B75AD75C20287ECC7 /* TransactionOuput.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionOuput.swift; sourceTree = "<group>"; };
 		11B355A975909FAAC6983C9B /* CollectionChangeSet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionChangeSet.swift; sourceTree = "<group>"; };
@@ -143,6 +146,8 @@
 		11B35F296161DE5AE61DD2EF /* TransactionsWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionsWrapper.swift; sourceTree = "<group>"; };
 		11B35F3FD9CCB938B62D07EA /* Observable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
 		11B35F930961E99C5C66E49F /* HeaderSyncerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeaderSyncerTests.swift; sourceTree = "<group>"; };
+		11B35FA46CEA78297785F6C4 /* BlockHeaderItemValidator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockHeaderItemValidator.swift; sourceTree = "<group>"; };
+		11B35FEEAF84E9FD41070786 /* BlockHeaderItemSaver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockHeaderItemSaver.swift; sourceTree = "<group>"; };
 		11B35FF2F94006C73B7773BC /* GetHeadersMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetHeadersMessage.swift; sourceTree = "<group>"; };
 		259799518A91E58BAAD1CD7A /* Pods-WalletKitTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WalletKitTests.debug.xcconfig"; path = "../Pods/Target Support Files/Pods-WalletKitTests/Pods-WalletKitTests.debug.xcconfig"; sourceTree = "<group>"; };
 		58D7D3C70E759225E76D689A /* Pods-WalletKitTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WalletKitTests.release.xcconfig"; path = "../Pods/Target Support Files/Pods-WalletKitTests/Pods-WalletKitTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -185,7 +190,6 @@
 		D33FD6D220F3890700EC10DB /* Mnemonic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Mnemonic.swift; sourceTree = "<group>"; };
 		D33FD6D320F3890700EC10DB /* WordList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WordList.swift; sourceTree = "<group>"; };
 		D380FD5B20FCC04400276993 /* WalletKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WalletKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		D380FD5D20FCC04400276993 /* WalletKitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletKitTests.swift; sourceTree = "<group>"; };
 		D380FD5F20FCC04400276993 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D380FD6720FCC22800276993 /* GeneratedMocks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneratedMocks.swift; sourceTree = "<group>"; };
 		D3FD450520F354EF00F472B9 /* WalletKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = WalletKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -241,6 +245,8 @@
 				11B35F01DB59367C7D83E8DC /* BlockSyncer.swift */,
 				11B3585593E8DC771D27C0AF /* RealmFactory.swift */,
 				11B359B3470297AD7D56387C /* HeaderHandler.swift */,
+				11B35FEEAF84E9FD41070786 /* BlockHeaderItemSaver.swift */,
+				11B35FA46CEA78297785F6C4 /* BlockHeaderItemValidator.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -339,6 +345,7 @@
 			isa = PBXGroup;
 			children = (
 				11B35F930961E99C5C66E49F /* HeaderSyncerTests.swift */,
+				11B353BC4AF64E99EC5E5887 /* HeaderHandlerTests.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -383,7 +390,6 @@
 			isa = PBXGroup;
 			children = (
 				D380FD6720FCC22800276993 /* GeneratedMocks.swift */,
-				D380FD5D20FCC04400276993 /* WalletKitTests.swift */,
 				D380FD5F20FCC04400276993 /* Info.plist */,
 				11B35CA04D90503FE86368D2 /* Managers */,
 			);
@@ -587,6 +593,8 @@
 				"$(SRCROOT)/WalletKit/Managers/PeerManager.swift",
 				"$(SRCROOT)/WalletKit/Managers/RealmFactory.swift",
 				"$(SRCROOT)/WalletKit/Network/NetworkProtocol.swift",
+				"$(SRCROOT)/WalletKit/Managers/BlockHeaderItemSaver.swift",
+				"$(SRCROOT)/WalletKit/Managers/BlockHeaderItemValidator.swift",
 			);
 			name = Cuckoo;
 			outputPaths = (
@@ -632,9 +640,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D380FD5E20FCC04400276993 /* WalletKitTests.swift in Sources */,
 				D380FD6820FCC22800276993 /* GeneratedMocks.swift in Sources */,
 				11B35C5BD54BD2A343BA6379 /* HeaderSyncerTests.swift in Sources */,
+				11B35C8CF0CF6B11A20C2980 /* HeaderHandlerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -715,6 +723,8 @@
 				11B350E0BC835C79DEDFF2C7 /* TestNet.swift in Sources */,
 				11B3577DC09E75C39C5F7D2A /* String.swift in Sources */,
 				11B351F8CD5AF19AC75F61D4 /* HeaderHandler.swift in Sources */,
+				11B3508E5392895D2CBB3E7E /* BlockHeaderItemSaver.swift in Sources */,
+				11B356B6EEA74FC863CF0129 /* BlockHeaderItemValidator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -11,12 +11,12 @@ import Foundation
 private let protocolVersion: Int32 = 70015
 private let bufferSize = 4096
 
-public class Peer : NSObject, StreamDelegate {
-    public let host: String
-    public let port: UInt32
+class Peer : NSObject, StreamDelegate {
+    let host: String
+    let port: UInt32
     let network: NetworkProtocol
 
-    public weak var delegate: PeerDelegate?
+    weak var delegate: PeerDelegate?
 
     let context = Context()
 //    var latestBlockHash: Data
@@ -67,7 +67,7 @@ public class Peer : NSObject, StreamDelegate {
         disconnect()
     }
 
-    public func connect() {
+    func connect() {
         log("connecting")
 
         CFStreamCreatePairWithSocketToHost(kCFAllocatorDefault, host as CFString, port, &readStream, &writeStream)
@@ -84,7 +84,7 @@ public class Peer : NSObject, StreamDelegate {
         outputStream.open()
     }
 
-    public func disconnect() {
+    func disconnect() {
         guard readStream != nil && readStream != nil else {
             return
         }
@@ -116,15 +116,15 @@ public class Peer : NSObject, StreamDelegate {
 ////        self.sendGetBlocksMessage()
 //    }
 
-    public func load(filters: [Data]) {
+    func load(filters: [Data]) {
         sendFilterLoadMessage(filters: filters)
     }
 
-    public func sendTransaction(transaction: TransactionMessage) {
+    func sendTransaction(transaction: TransactionMessage) {
         sendTransactionInventory(transaction: transaction)
     }
 
-    public func stream(_ stream: Stream, handle eventCode: Stream.Event) {
+    func stream(_ stream: Stream, handle eventCode: Stream.Event) {
         switch stream {
         case let stream as InputStream:
             switch eventCode {
@@ -466,7 +466,7 @@ public class Peer : NSObject, StreamDelegate {
     }
 }
 
-public protocol PeerDelegate : class {
+protocol PeerDelegate : class {
     func peerDidConnect(_ peer: Peer)
     func peerDidDisconnect(_ peer: Peer)
     func peer(_ peer: Peer, didReceiveVersionMessage message: VersionMessage)
@@ -481,15 +481,15 @@ public protocol PeerDelegate : class {
 }
 
 extension PeerDelegate {
-    public func peerDidConnect(_ peer: Peer) {}
-    public func peerDidDisconnect(_ peer: Peer) {}
-    public func peer(_ peer: Peer, didReceiveVersionMessage message: VersionMessage) {}
-    public func peer(_ peer: Peer, didReceiveAddressMessage message: AddressMessage) {}
-    public func peer(_ peer: Peer, didReceiveGetDataMessage message: GetDataMessage) {}
-    public func peer(_ peer: Peer, didReceiveInventoryMessage message: InventoryMessage) {}
-    public func peer(_ peer: Peer, didReceiveHeadersMessage message: HeadersMessage) {}
-    public func peer(_ peer: Peer, didReceiveBlockMessage message: BlockMessage, hash: Data) {}
-    public func peer(_ peer: Peer, didReceiveMerkleBlockMessage message: MerkleBlockMessage, hash: Data) {}
-    public func peer(_ peer: Peer, didReceiveTransaction transaction: TransactionMessage, hash: Data) {}
-    public func peer(_ peer: Peer, didReceiveRejectMessage message: RejectMessage) {}
+    func peerDidConnect(_ peer: Peer) {}
+    func peerDidDisconnect(_ peer: Peer) {}
+    func peer(_ peer: Peer, didReceiveVersionMessage message: VersionMessage) {}
+    func peer(_ peer: Peer, didReceiveAddressMessage message: AddressMessage) {}
+    func peer(_ peer: Peer, didReceiveGetDataMessage message: GetDataMessage) {}
+    func peer(_ peer: Peer, didReceiveInventoryMessage message: InventoryMessage) {}
+    func peer(_ peer: Peer, didReceiveHeadersMessage message: HeadersMessage) {}
+    func peer(_ peer: Peer, didReceiveBlockMessage message: BlockMessage, hash: Data) {}
+    func peer(_ peer: Peer, didReceiveMerkleBlockMessage message: MerkleBlockMessage, hash: Data) {}
+    func peer(_ peer: Peer, didReceiveTransaction transaction: TransactionMessage, hash: Data) {}
+    func peer(_ peer: Peer, didReceiveRejectMessage message: RejectMessage) {}
 }

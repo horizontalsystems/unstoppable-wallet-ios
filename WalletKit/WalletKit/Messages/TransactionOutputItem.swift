@@ -8,15 +8,15 @@
 
 import Foundation
 
-public struct TransactionOutputItem {
+struct TransactionOutputItem {
     /// Transaction Value
-    public let value: Int64
+    let value: Int64
     /// Length of the pk_script
-    public let scriptLength: VarInt
-    /// Usually contains the public key as a Bitcoin script setting up conditions to claim this output
-    public let lockingScript: Data
+    let scriptLength: VarInt
+    /// Usually contains the key as a Bitcoin script setting up conditions to claim this output
+    let lockingScript: Data
 
-    public func serialized() -> Data {
+    func serialized() -> Data {
         var data = Data()
         data += value
         data += scriptLength.serialized()
