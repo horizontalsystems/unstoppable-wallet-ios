@@ -6,6 +6,11 @@ class WalletRouter {
 }
 
 extension WalletRouter: IWalletRouter {
+
+    func onReceive(for walletBalance: WalletBalanceItem) {
+        print("open receive alert")
+    }
+
 }
 
 extension WalletRouter {

@@ -24,7 +24,7 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wxk-hg-MwX" customClass="Button" customModule="Wallet" customModuleProvider="target">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wxk-hg-MwX">
                     <rect key="frame" x="44" y="507" width="287" height="50"/>
                     <color key="backgroundColor" name="Yellow"/>
                     <constraints>
@@ -43,7 +43,7 @@
                         <action selector="createNewWalletDidTap" destination="-1" eventType="touchUpInside" id="w4P-UQ-3za"/>
                     </connections>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fo4-vG-xAd" customClass="Button" customModule="Wallet" customModuleProvider="target">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fo4-vG-xAd">
                     <rect key="frame" x="44" y="577" width="287" height="50"/>
                     <color key="backgroundColor" name="Yellow"/>
                     <constraints>

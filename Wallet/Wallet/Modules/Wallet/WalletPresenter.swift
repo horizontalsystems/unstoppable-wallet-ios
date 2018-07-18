@@ -8,6 +8,8 @@ class WalletPresenter {
     let router: IWalletRouter
     weak var view: IWalletView?
 
+    var walletBalances = [WalletBalanceItem]()
+
     init(interactor: IWalletInteractor, router: IWalletRouter) {
         self.interactor = interactor
         self.router = router
@@ -18,6 +20,8 @@ class WalletPresenter {
 extension WalletPresenter: IWalletInteractorDelegate {
 
     func didFetch(walletBalances: [WalletBalanceItem]) {
+        self.walletBalances = walletBalances
+
         var totalBalance: Double = 0
         var viewItems = [WalletBalanceViewItem]()
 
@@ -61,6 +65,16 @@ extension WalletPresenter: IWalletViewDelegate {
 
         for block in realm.objects(Block.self) {
             print("\(block.height) --- \(block.reversedHeaderHashHex)")
+        }
+    }
+
+    func onReceive(for index: Int) {
+        if index < walletBalances.count {
+            router.onReceive(for: walletBalances[index])
+        } else {
+            print("open stab wallet deposit")
+            //test stab
+
         }
     }
 
