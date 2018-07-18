@@ -110,4 +110,8 @@ extension Data {
     var hex: String {
         return reduce("") { $0 + String(format: "%02x", $1) }
     }
+
+    var reversedHex: String {
+        return Data(self.reversed()).hex
+    }
 }

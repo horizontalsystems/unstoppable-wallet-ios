@@ -1,24 +1,17 @@
 import Foundation
 
 public class WalletManager {
+    public static let shared = WalletManager()
 
     enum ValidationError: Error {
         case invalidWordsCount
         case invalidWords
     }
 
-    private let localStorage: ILocalStorage
+    let localStorage: ILocalStorage
 
     private var mnemonic: [String]!
     private var hdWallet: HDWallet!
-
-    init(localStorage: ILocalStorage) {
-        self.localStorage = localStorage
-
-        if let savedWords = localStorage.savedWords {
-            initWallet(with: savedWords)
-        }
-    }
 
     public var words: [String] {
         return mnemonic
@@ -30,6 +23,14 @@ public class WalletManager {
 
     public var hasWallet: Bool {
         return hdWallet != nil
+    }
+
+    init(localStorage: ILocalStorage = UserDefaultsStorage.shared) {
+        self.localStorage = localStorage
+
+        if let savedWords = localStorage.savedWords {
+            initWallet(with: savedWords)
+        }
     }
 
     public func createWallet() throws {
@@ -52,7 +53,7 @@ public class WalletManager {
 
     private func initWallet(with words: [String]) {
         mnemonic = words
-        hdWallet = HDWallet(seed: Mnemonic.seed(mnemonic: mnemonic), network: .testnet)
+        hdWallet = HDWallet(seed: Mnemonic.seed(mnemonic: mnemonic), network: TestNet())
     }
 
     private func validate(words: [String]) throws {

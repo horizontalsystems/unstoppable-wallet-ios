@@ -10,7 +10,7 @@ import Foundation
 import WalletKit.Private
 
 public class HDPrivateKey {
-    public let network: Network
+    let network: NetworkProtocol
     public let depth: UInt8
     public let fingerprint: UInt32
     public let childIndex: UInt32
@@ -18,7 +18,7 @@ public class HDPrivateKey {
     let raw: Data
     let chainCode: Data
 
-    public init(privateKey: Data, chainCode: Data, network: Network) {
+    init(privateKey: Data, chainCode: Data, network: NetworkProtocol) {
         self.raw = privateKey
         self.chainCode = chainCode
         self.network = network
@@ -27,14 +27,14 @@ public class HDPrivateKey {
         self.childIndex = 0
     }
 
-    public convenience init(seed: Data, network: Network) {
+    convenience init(seed: Data, network: NetworkProtocol) {
         let hmac = Crypto.hmacsha512(data: seed, key: "Bitcoin seed".data(using: .ascii)!)
         let privateKey = hmac[0..<32]
         let chainCode = hmac[32..<64]
         self.init(privateKey: privateKey, chainCode: chainCode, network: network)
     }
 
-    init(privateKey: Data, chainCode: Data, network: Network, depth: UInt8, fingerprint: UInt32, childIndex: UInt32) {
+    init(privateKey: Data, chainCode: Data, network: NetworkProtocol, depth: UInt8, fingerprint: UInt32, childIndex: UInt32) {
         self.raw = privateKey
         self.chainCode = chainCode
         self.network = network
@@ -49,7 +49,7 @@ public class HDPrivateKey {
 
     public func extended() -> String {
         var data = Data()
-        data += network.xprivkey.bigEndian
+        data += network.xPrivKey.bigEndian
         data += depth.littleEndian
         data += fingerprint.littleEndian
         data += childIndex.littleEndian

@@ -30,7 +30,7 @@ class SettingsViewController: UIViewController {
     }
 
     @objc func logout() {
-        Singletons.instance.walletManager.removeWallet()
+        WalletManager.shared.removeWallet()
 
         guard let window = UIApplication.shared.keyWindow else {
             return

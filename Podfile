@@ -35,6 +35,12 @@ target :WalletKit do
   pod "RxRealm"
 end
 
+target :WalletKitTests do
+  project 'WalletKit/WalletKit'
+
+  pod "Cuckoo"
+end
+
 target :WalletTests do
   project 'Wallet/Wallet'
 

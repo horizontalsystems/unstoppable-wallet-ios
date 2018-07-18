@@ -23,8 +23,6 @@ class MainViewController: UITabBarController {
         tabBar.barStyle = .black
         tabBar.tintColor = .cryptoYellow
         tabBar.unselectedItemTintColor = .cryptoGray
-
-        Singletons.instance.syncManager.sync()
     }
 
     override var preferredStatusBarStyle: UIStatusBarStyle {

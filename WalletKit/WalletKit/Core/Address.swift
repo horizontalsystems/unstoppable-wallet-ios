@@ -14,13 +14,13 @@ import Foundation
 /// checksum suffix, then encoding it textually as base58. The version prefix is used to both denote the network for
 /// which the address is valid.
 public struct Address {
-    public let network: Network
+    let network: NetworkProtocol
     public let publicKey: Data?
     public let publicKeyHash: Data
     public let base58: Base58Check
     public typealias Base58Check = String
 
-    public init(_ publicKey: PublicKey) {
+    init(_ publicKey: PublicKey) {
         self.network = publicKey.network
         self.publicKey = publicKey.raw
         self.publicKeyHash = Crypto.sha256ripemd160(publicKey.raw)
@@ -43,13 +43,13 @@ public struct Address {
             throw AddressError.invalid
         }
 
-        let network: Network
+        let network: NetworkProtocol
         let addressPrefix = pubKeyHash[0]
         switch addressPrefix {
-        case Network.mainnet.pubkeyhash:
-            network = .mainnet
-        case Network.testnet.pubkeyhash:
-            network = .testnet
+        case MainNet().pubKeyHash:
+            network = MainNet()
+        case TestNet().pubKeyHash:
+            network = TestNet()
         default:
             throw AddressError.wrongNetwork
         }
@@ -63,7 +63,7 @@ public struct Address {
 
 extension Address : Equatable {
     public static func ==(lhs: Address, rhs: Address) -> Bool {
-        return lhs.network == rhs.network && lhs.publicKeyHash == rhs.publicKeyHash
+        return lhs.network.name == rhs.network.name && lhs.publicKeyHash == rhs.publicKeyHash
     }
 }
 

@@ -15,7 +15,7 @@ public final class HDKeychain {
         self.privateKey = privateKey
     }
 
-    public convenience init(seed: Data, network: Network) {
+    convenience init(seed: Data, network: NetworkProtocol) {
         self.init(privateKey: HDPrivateKey(seed: seed, network: network))
     }
     /// Parses the BIP32 path and derives the chain of keychains accordingly.

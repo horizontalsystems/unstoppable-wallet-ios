@@ -3,6 +3,7 @@ import RxSwift
 import RealmSwift
 
 public class SyncManager {
+    public static let shared = SyncManager()
 
     public enum SyncStatus {
         case syncing
@@ -12,9 +13,9 @@ public class SyncManager {
 
     private let disposeBag = DisposeBag()
 
-    private let walletManager: WalletManager
-    private let apiManager: ApiManager
-    private let exchangeRatesApiManager: ApiManager
+    weak var walletManager: WalletManager?
+    weak var apiManager: ApiManager?
+    weak var exchangeRatesApiManager: ApiManager?
 
     public let syncSubject = BehaviorSubject<SyncStatus>(value: .synced)
 
@@ -24,23 +25,35 @@ public class SyncManager {
         }
     }
 
-    init(walletManager: WalletManager, apiManager: ApiManager, exchangeRatesApiManager: ApiManager) {
-        self.walletManager = walletManager
-        self.apiManager = apiManager
-        self.exchangeRatesApiManager = exchangeRatesApiManager
+    init() {
+//        let block = Block()
+//        block.height = 1353064
+//        block.headerHash = "4e372bfc458c8bc8bc392283441f2d7532d188d1c093808d3500000000000000"
+//
+//        let realm = try! Realm()
+//        try? realm.write {
+//            realm.add(block, update: true)
+//        }
+
+//        if let data = Data(hex: "00000000000000358d8093c0d188d132752d1f44832239bcc88b8c45fc2b374e") {
+//            let data = Data(data.reversed())
+//            print("DATA: \(data.hex)")
+//        }
     }
 
     public func sync() {
-        if status != .syncing {
-            initialSync()
-        }
+//        if status != .syncing {
+//            initialSync()
+//        }
+//        Singletons.instance.peerManager.connect()
     }
 
     private func initialSync() {
         status = .syncing
 
         Observable.merge(unspentOutputsObservable(), exchangeRatesObservable(), transactionsObservable())
-                .subscribeInBackground(disposeBag: disposeBag, onError: { [weak self] _ in
+                .subscribeInBackground(disposeBag: disposeBag, onError: { [weak self] error in
+                    print("SYNC ERROR: \(error)")
                     self?.status = .error
                 }, onCompleted: { [weak self] in
                     self?.status = .synced
@@ -48,7 +61,9 @@ public class SyncManager {
     }
 
     private func unspentOutputsObservable() -> Observable<Void> {
-        let apiManager = self.apiManager
+        guard let apiManager = self.apiManager else {
+            return Observable.empty()
+        }
 
         return addressesObservable().flatMap { addresses in
             return apiManager.getUnspentOutputs(addresses: addresses.map { "\($0)" })
@@ -67,6 +82,10 @@ public class SyncManager {
     }
 
     private func exchangeRatesObservable() -> Observable<Void> {
+        guard let exchangeRatesApiManager = self.exchangeRatesApiManager else {
+            return Observable.empty()
+        }
+
         return exchangeRatesApiManager.getExchangeRates()
                 .do(onNext: { rates in
                     let exchangeRate = ExchangeRate()
@@ -82,7 +101,9 @@ public class SyncManager {
     }
 
     private func transactionsObservable() -> Observable<Void> {
-        let apiManager = self.apiManager
+        guard let apiManager = self.apiManager else {
+            return Observable.empty()
+        }
 
         return addressesObservable().flatMap { addresses in
             return apiManager.getTransactions(addresses: addresses.map { "\($0)" })
@@ -115,12 +136,12 @@ public class SyncManager {
             var addresses = [Address]()
 
             for i in 0...20 {
-                if let address = try? walletManager.wallet.receiveAddress(index: UInt32(i)) {
+                if let address = try? walletManager!.wallet.receiveAddress(index: UInt32(i)) {
                     addresses.append(address)
                 }
-                if let address = try? walletManager.wallet.changeAddress(index: UInt32(i)) {
-                    addresses.append(address)
-                }
+//                if let address = try? walletManager.wallet.changeAddress(index: UInt32(i)) {
+//                    addresses.append(address)
+//                }
             }
 
             observer.onNext(addresses)

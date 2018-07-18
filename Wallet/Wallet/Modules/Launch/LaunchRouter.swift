@@ -4,7 +4,7 @@ import WalletKit
 class LaunchRouter {
 
     static func module() -> UIViewController {
-        if Singletons.instance.walletManager.hasWallet {
+        if WalletManager.shared.hasWallet {
             return MainRouter.module()
         } else {
             return GuestRouter.module()

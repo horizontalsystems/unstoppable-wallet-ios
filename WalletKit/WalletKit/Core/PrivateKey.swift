@@ -10,9 +10,9 @@ import Foundation
 
 public struct PrivateKey {
     let raw: Data
-    public let network: Network
+    let network: NetworkProtocol
 
-    public init(network: Network = .testnet) {
+    init(network: NetworkProtocol = TestNet()) {
         self.network = network
 
         func check(_ vch: [UInt8]) -> Bool {
@@ -59,10 +59,10 @@ public struct PrivateKey {
 
         let addressPrefix = checksumDropped[0]
         switch addressPrefix {
-        case Network.mainnet.privatekey:
-            network = .mainnet
-        case Network.testnet.privatekey:
-            network = .testnet
+        case MainNet().privateKey:
+            network = MainNet()
+        case TestNet().privateKey:
+            network = TestNet()
         default:
             throw PrivateKeyError.invalidFormat
         }
@@ -77,17 +77,17 @@ public struct PrivateKey {
         raw = Data(privateKey)
     }
 
-    public init(data: Data, network: Network = .testnet) {
+    init(data: Data, network: NetworkProtocol = TestNet()) {
         raw = data
         self.network = network
     }
 
-    public func publicKey() -> PublicKey {
+    func publicKey() -> PublicKey {
         return PublicKey(privateKey: self, network: network)
     }
 
-    public func toWIF() -> String {
-        let data = Data([network.privatekey]) + raw
+    func toWIF() -> String {
+        let data = Data([network.privateKey]) + raw
         let checksum = Crypto.sha256sha256(data).prefix(4)
         return Base58.encode(data + checksum)
     }
@@ -95,7 +95,7 @@ public struct PrivateKey {
 
 extension PrivateKey : Equatable {
     public static func ==(lhs: PrivateKey, rhs: PrivateKey) -> Bool {
-        return lhs.network == rhs.network && lhs.raw == rhs.raw
+        return lhs.network.name == rhs.network.name && lhs.raw == rhs.raw
     }
 }
 

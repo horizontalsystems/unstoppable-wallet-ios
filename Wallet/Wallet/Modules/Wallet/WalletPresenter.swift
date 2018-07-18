@@ -1,5 +1,6 @@
 import Foundation
 import WalletKit
+import RealmSwift
 
 class WalletPresenter {
 
@@ -32,7 +33,7 @@ extension WalletPresenter: IWalletInteractorDelegate {
         view?.show(walletBalances: viewItems)
     }
 
-    func didUpdate(syncStatus: SyncManager.SyncStatus) {
+    func didUpdate(syncStatus: WalletKit.SyncManager.SyncStatus) {
         view?.show(syncStatus: String(describing: syncStatus))
     }
 
@@ -53,7 +54,14 @@ extension WalletPresenter: IWalletViewDelegate {
     }
 
     func refresh() {
-        Singletons.instance.syncManager.sync()
+        let realm = try! Realm()
+        let count = realm.objects(Block.self).count
+
+        print("BLOCK COUNT: \(count)")
+
+        for block in realm.objects(Block.self) {
+            print("\(block.height) --- \(block.reversedHeaderHashHex)")
+        }
     }
 
 }

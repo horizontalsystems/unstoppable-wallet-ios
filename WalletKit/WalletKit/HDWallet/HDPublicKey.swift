@@ -10,7 +10,7 @@ import Foundation
 import WalletKit.Private
 
 public class HDPublicKey {
-    public let network: Network
+    let network: NetworkProtocol
     public let depth: UInt8
     public let fingerprint: UInt32
     public let childIndex: UInt32
@@ -18,7 +18,7 @@ public class HDPublicKey {
     public let raw: Data
     let chainCode: Data
 
-    init(privateKey: HDPrivateKey, network: Network) {
+    init(privateKey: HDPrivateKey, network: NetworkProtocol) {
         self.network = network
         self.raw = PublicKey.from(privateKey: privateKey.raw, compression: true)
         self.chainCode = privateKey.chainCode
@@ -27,7 +27,7 @@ public class HDPublicKey {
         self.childIndex = 0
     }
 
-    init(privateKey: HDPrivateKey, chainCode: Data, network: Network = .testnet, depth: UInt8, fingerprint: UInt32, childIndex: UInt32) {
+    init(privateKey: HDPrivateKey, chainCode: Data, network: NetworkProtocol = TestNet(), depth: UInt8, fingerprint: UInt32, childIndex: UInt32) {
         self.network = network
         self.raw = PublicKey.from(privateKey: privateKey.raw, compression: true)
         self.chainCode = chainCode
@@ -36,7 +36,7 @@ public class HDPublicKey {
         self.childIndex = childIndex
     }
 
-    init(raw: Data, chainCode: Data, network: Network = .testnet, depth: UInt8, fingerprint: UInt32, childIndex: UInt32) {
+    init(raw: Data, chainCode: Data, network: NetworkProtocol = TestNet(), depth: UInt8, fingerprint: UInt32, childIndex: UInt32) {
         self.network = network
         self.raw = raw
         self.chainCode = chainCode
@@ -47,7 +47,7 @@ public class HDPublicKey {
 
     public func extended() -> String {
         var data = Data()
-        data += network.xpubkey.bigEndian
+        data += network.xPubKey.bigEndian
         data += depth.littleEndian
         data += fingerprint.littleEndian
         data += childIndex.littleEndian
@@ -58,7 +58,7 @@ public class HDPublicKey {
     }
     
     public func toAddress() -> String {
-        let hash = Data([network.pubkeyhash]) + Crypto.sha256ripemd160(raw)
+        let hash = Data([network.pubKeyHash]) + Crypto.sha256ripemd160(raw)
         return publicKeyHashToAddress(hash)
     }
 

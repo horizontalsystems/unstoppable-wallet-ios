@@ -1,6 +1,7 @@
 import Foundation
 
 class UserDefaultsStorage: ILocalStorage {
+    static let shared = UserDefaultsStorage()
 
     private let keyWords = "mnemonic_words"
 
