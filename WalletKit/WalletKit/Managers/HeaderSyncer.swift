@@ -4,6 +4,10 @@ import RealmSwift
 class HeaderSyncer {
     static let shared = HeaderSyncer()
 
+    enum SyncError: Error {
+        case noCheckpointBlock
+    }
+
     private let hashCheckpointThreshold = 100
 
     let realmFactory: RealmFactory
@@ -14,12 +18,11 @@ class HeaderSyncer {
         self.peerManager = peerManager
     }
 
-    func sync() {
+    func sync() throws {
         let realm = realmFactory.realm
 
         guard let checkpointBlock = realm.objects(Block.self).filter("archived = %@", false).sorted(byKeyPath: "height").first else {
-            print("HeaderSyncer: No checkpoint block found")
-            return
+            throw SyncError.noCheckpointBlock
         }
 
         var hashes = [Data]()

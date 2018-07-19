@@ -36,7 +36,11 @@ extension PeerManager: PeerDelegate {
 
         peer.load(filters: addresses.map { $0.publicKeyHash })
 
-        HeaderSyncer.shared.sync()
+        do {
+            try HeaderSyncer.shared.sync()
+        } catch {
+            print("HeaderSyncer error: \(error)")
+        }
 
 //        let realm = try! Realm()
 //        if let lastBlock = realm.objects(Block.self).first {

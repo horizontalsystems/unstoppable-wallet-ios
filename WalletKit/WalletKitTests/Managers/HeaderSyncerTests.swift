@@ -56,8 +56,19 @@ class HeaderSyncerTests: XCTestCase {
     }
 
     func testSync_NoInitialBlock() {
-        headerSyncer.sync()
+        var caught = false
+
+        do {
+            try headerSyncer.sync()
+        } catch let error as HeaderSyncer.SyncError {
+            caught = true
+            XCTAssertEqual(error, HeaderSyncer.SyncError.noCheckpointBlock)
+        } catch {
+            XCTFail("Unknown exception thrown")
+        }
+
         verifyNoMoreInteractions(mockPeerManager)
+        XCTAssertTrue(caught, "noCheckpointBlock exception not thrown")
     }
 
     func testSync_OnlyInitialBlock() {
@@ -65,7 +76,7 @@ class HeaderSyncerTests: XCTestCase {
             realm.add(initialBlock)
         }
 
-        headerSyncer.sync()
+        try! headerSyncer.sync()
         verify(mockPeerManager).requestHeaders(headerHashes: equal(to: [initialBlock.headerHash]))
     }
 
@@ -81,7 +92,7 @@ class HeaderSyncerTests: XCTestCase {
         }
         createBlock(reversedHex: lastReversedHex, height: 2016 + 99)
 
-        headerSyncer.sync()
+        try! headerSyncer.sync()
         verify(mockPeerManager).requestHeaders(headerHashes: equal(to: [lastReversedHex.reversedData!, initialBlock.headerHash]))
     }
 
@@ -99,7 +110,7 @@ class HeaderSyncerTests: XCTestCase {
         }
         createBlock(reversedHex: lastReversedHex, height: 2016 + 100)
 
-        headerSyncer.sync()
+        try! headerSyncer.sync()
         verify(mockPeerManager).requestHeaders(headerHashes: equal(to: [lastReversedHex.reversedData!, firstReversedHex.reversedData!]))
     }
 
