@@ -23,10 +23,12 @@ class HeaderSyncerTests: XCTestCase {
 
         initialBlock = Block()
         initialBlock.reversedHeaderHashHex = "00000000000288d9a219419d0607fb67cc324d4b6d2945ca81eaa5e739fab81e"
+        initialBlock.headerHash = "00000000000288d9a219419d0607fb67cc324d4b6d2945ca81eaa5e739fab81e".reversedData!
         initialBlock.height = 2016
 
         let archivedBlock = Block()
         archivedBlock.reversedHeaderHashHex = "0000000000024131acaefe1b3a287865ea9a95cdc797488d6ba4592428804479"
+        archivedBlock.headerHash = "0000000000024131acaefe1b3a287865ea9a95cdc797488d6ba4592428804479".reversedData!
         archivedBlock.height = 500
         archivedBlock.archived = true
 
@@ -64,7 +66,7 @@ class HeaderSyncerTests: XCTestCase {
         }
 
         headerSyncer.sync()
-        verify(mockPeerManager).requestHeaders(headerHashes: equal(to: [initialBlock.reversedHeaderHashHex.reversedData!]))
+        verify(mockPeerManager).requestHeaders(headerHashes: equal(to: [initialBlock.headerHash]))
     }
 
     func testSync_99LastBlocks() {
@@ -80,7 +82,7 @@ class HeaderSyncerTests: XCTestCase {
         createBlock(reversedHex: lastReversedHex, height: 2016 + 99)
 
         headerSyncer.sync()
-        verify(mockPeerManager).requestHeaders(headerHashes: equal(to: [lastReversedHex.reversedData!, initialBlock.reversedHeaderHashHex.reversedData!]))
+        verify(mockPeerManager).requestHeaders(headerHashes: equal(to: [lastReversedHex.reversedData!, initialBlock.headerHash]))
     }
 
     func testSync_100LastBlocks() {
@@ -104,6 +106,7 @@ class HeaderSyncerTests: XCTestCase {
     private func createBlock(reversedHex: String, height: Int) {
         let block = Block()
         block.reversedHeaderHashHex = reversedHex
+        block.headerHash = reversedHex.reversedData!
         block.height = height
 
         try! realm.write {

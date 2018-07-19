@@ -22,6 +22,7 @@ class BlockHeaderItemSaver {
 
             let block = Block()
             block.reversedHeaderHashHex = hash.reversedHex
+            block.headerHash = hash
             block.height = currentHeight
 
             blocks.append(block)

@@ -27,8 +27,9 @@ public class SyncManager {
 
     init() {
         let block = Block()
-        block.height = 1354400
         block.reversedHeaderHashHex = "000000000000002744653e44f0db7309a31b7792b5724de9ab82497839cf1e22"
+        block.headerHash = "000000000000002744653e44f0db7309a31b7792b5724de9ab82497839cf1e22".reversedData!
+        block.height = 1354400
 
         let realm = try! Realm()
         try? realm.write {

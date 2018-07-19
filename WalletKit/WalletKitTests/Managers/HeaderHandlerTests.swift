@@ -25,6 +25,7 @@ class HeaderHandlerTests: XCTestCase {
 
         initialBlock = Block()
         initialBlock.reversedHeaderHashHex = "00000000000288d9a219419d0607fb67cc324d4b6d2945ca81eaa5e739fab81e"
+        initialBlock.headerHash = "00000000000288d9a219419d0607fb67cc324d4b6d2945ca81eaa5e739fab81e".reversedData!
         initialBlock.height = 2016
 
         stub(mockRealmFactory) { mock in
@@ -65,7 +66,7 @@ class HeaderHandlerTests: XCTestCase {
         let items = [BlockHeaderItem(version: 0, prevBlock: Data(), merkleRoot: Data(), timestamp: 0, bits: 0, nonce: 0)]
 
         stub(mockValidator) { mock in
-            when(mock.filterValidItems(initialHash: equal(to: initialBlock.reversedHeaderHashHex.reversedData!), items: equal(to: items))).thenReturn(items)
+            when(mock.filterValidItems(initialHash: equal(to: initialBlock.headerHash), items: equal(to: items))).thenReturn(items)
         }
 
         headerHandler.handle(blockHeaders: items)
@@ -78,7 +79,7 @@ class HeaderHandlerTests: XCTestCase {
         let items = [BlockHeaderItem(version: 0, prevBlock: Data(), merkleRoot: Data(), timestamp: 0, bits: 0, nonce: 0)]
 
         stub(mockValidator) { mock in
-            when(mock.filterValidItems(initialHash: equal(to: initialBlock.reversedHeaderHashHex.reversedData!), items: equal(to: items))).thenReturn([])
+            when(mock.filterValidItems(initialHash: equal(to: initialBlock.headerHash), items: equal(to: items))).thenReturn([])
         }
 
         headerHandler.handle(blockHeaders: items)

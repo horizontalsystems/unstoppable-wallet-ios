@@ -52,8 +52,9 @@ class BlockHeaderItemSaverTests: XCTestCase {
     private func verify(block: Block, item: BlockHeaderItem, height: Int) {
         let headerHash = Crypto.sha256sha256(item.serialized())
         XCTAssertEqual(block.reversedHeaderHashHex, headerHash.reversedHex)
-        XCTAssertEqual(block.archived, false)
+        XCTAssertEqual(block.headerHash, headerHash)
         XCTAssertEqual(block.height, height)
+        XCTAssertEqual(block.archived, false)
     }
 
 }

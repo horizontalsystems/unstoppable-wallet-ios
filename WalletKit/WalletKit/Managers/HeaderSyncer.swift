@@ -28,14 +28,13 @@ class HeaderSyncer {
             hashes.append(hash)
 
             if lastBlockInDatabase.height - checkpointBlock.height >= hashCheckpointThreshold,
-               let previousBlock = realm.objects(Block.self).filter("archived = %@ AND height = %@", false, lastBlockInDatabase.height - hashCheckpointThreshold + 1).first,
-               let hash = previousBlock.reversedHeaderHashHex.reversedData {
-                hashes.append(hash)
+               let previousBlock = realm.objects(Block.self).filter("archived = %@ AND height = %@", false, lastBlockInDatabase.height - hashCheckpointThreshold + 1).first {
+                hashes.append(previousBlock.headerHash)
             }
         }
 
-        if hashes.count < 2, let hash = checkpointBlock.reversedHeaderHashHex.reversedData {
-            hashes.append(hash)
+        if hashes.count < 2 {
+            hashes.append(checkpointBlock.headerHash)
         }
 
         peerManager.requestHeaders(headerHashes: hashes)

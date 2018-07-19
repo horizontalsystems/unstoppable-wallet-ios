@@ -27,12 +27,7 @@ class HeaderHandler {
             return
         }
 
-        guard let lastHash = lastBlock.reversedHeaderHashHex.reversedData else {
-            print("HeaderHandler: Invalid last block hash")
-            return
-        }
-
-        let validHeaders = validator.filterValidItems(initialHash: lastHash, items: blockHeaders)
+        let validHeaders = validator.filterValidItems(initialHash: lastBlock.headerHash, items: blockHeaders)
 
         if !validHeaders.isEmpty {
             saver.save(lastHeight: lastBlock.height, items: validHeaders)
