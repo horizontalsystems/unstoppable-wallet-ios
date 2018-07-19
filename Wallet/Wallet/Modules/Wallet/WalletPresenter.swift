@@ -72,9 +72,8 @@ extension WalletPresenter: IWalletViewDelegate {
         if index < walletBalances.count {
             router.onReceive(for: walletBalances[index])
         } else {
-            print("open stab wallet deposit")
+            DepositRouter.module(walletBalances: []).show()
             //test stab
-
         }
     }
 

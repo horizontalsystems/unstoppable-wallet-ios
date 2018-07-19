@@ -4,7 +4,6 @@ import GrouviActionSheet
 class BackupCheckboxItem: BaseActionItem {
 
     var checked = false
-    var onCheck: ((Bool) -> ())?
 
     var descriptionText: NSAttributedString
 
