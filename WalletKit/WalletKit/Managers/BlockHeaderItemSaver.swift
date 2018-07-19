@@ -18,11 +18,13 @@ class BlockHeaderItemSaver {
         for item in items {
             currentHeight += 1
 
-            let hash = Crypto.sha256sha256(item.serialized())
+            let rawHeader = item.serialized()
+            let hash = Crypto.sha256sha256(rawHeader)
 
             let block = Block()
             block.reversedHeaderHashHex = hash.reversedHex
             block.headerHash = hash
+            block.rawHeader = rawHeader
             block.height = currentHeight
 
             blocks.append(block)
