@@ -51,6 +51,12 @@ extension PeerManager: PeerDelegate {
 
     public func peer(_ peer: Peer, didReceiveMerkleBlockMessage message: MerkleBlockMessage, hash: Data) {
         print("MERKLE BLOCK: \(hash.hex)")
+
+        do {
+            try MerkleBlockHandler.shared.handle(message: message)
+        } catch {
+            print("MerkleBlockHandler error: \(error)")
+        }
     }
 
     public func peer(_ peer: Peer, didReceiveTransaction transaction: TransactionMessage, hash: Data) {

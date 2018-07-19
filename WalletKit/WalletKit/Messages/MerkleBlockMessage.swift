@@ -1,11 +1,3 @@
-//
-//  MerkleBlockMessage.swift
-//  BitcoinKit
-//
-//  Created by Kishikawa Katsumi on 2018/02/11.
-//  Copyright © 2018 Kishikawa Katsumi. All rights reserved.
-//
-
 import Foundation
 
 struct MerkleBlockMessage {
@@ -46,6 +38,14 @@ struct MerkleBlockMessage {
             flags.append(byteStream.read(UInt8.self))
         }
         return MerkleBlockMessage(blockHeaderItem: blockHeaderItem, totalTransactions: totalTransactions, numberOfHashes: numberOfHashes, hashes: hashes, numberOfFlags: numberOfFlags, flags: flags)
+    }
+
+}
+
+extension MerkleBlockMessage: Equatable {
+
+    static func ==(lhs: MerkleBlockMessage, rhs: MerkleBlockMessage) -> Bool {
+        return lhs.serialized() == rhs.serialized()
     }
 
 }
