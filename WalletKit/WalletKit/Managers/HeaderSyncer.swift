@@ -18,6 +18,7 @@ class HeaderSyncer {
         let realm = realmFactory.realm
 
         guard let checkpointBlock = realm.objects(Block.self).filter("archived = %@", false).sorted(byKeyPath: "height").first else {
+            print("HeaderSyncer: No checkpoint block found")
             return
         }
 

@@ -16,16 +16,19 @@ class HeaderHandler {
 
     func handle(blockHeaders: [BlockHeaderItem]) {
         guard !blockHeaders.isEmpty else {
+            print("HeaderHandler: Empty block headers")
             return
         }
 
         let realm = realmFactory.realm
 
         guard let lastBlock = realm.objects(Block.self).filter("archived = %@", false).sorted(byKeyPath: "height").last else {
+            print("HeaderHandler: No last block")
             return
         }
 
         guard let lastHash = lastBlock.reversedHeaderHashHex.reversedData else {
+            print("HeaderHandler: Invalid last block hash")
             return
         }
 

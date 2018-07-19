@@ -26,14 +26,14 @@ public class SyncManager {
     }
 
     init() {
-//        let block = Block()
-//        block.height = 1353064
-//        block.headerHash = "4e372bfc458c8bc8bc392283441f2d7532d188d1c093808d3500000000000000"
-//
-//        let realm = try! Realm()
-//        try? realm.write {
-//            realm.add(block, update: true)
-//        }
+        let block = Block()
+        block.height = 1354400
+        block.reversedHeaderHashHex = "000000000000002744653e44f0db7309a31b7792b5724de9ab82497839cf1e22"
+
+        let realm = try! Realm()
+        try? realm.write {
+            realm.add(block, update: true)
+        }
 
 //        if let data = Data(hex: "00000000000000358d8093c0d188d132752d1f44832239bcc88b8c45fc2b374e") {
 //            let data = Data(data.reversed())
@@ -46,6 +46,7 @@ public class SyncManager {
 //            initialSync()
 //        }
 //        Singletons.instance.peerManager.connect()
+        PeerManager.shared.connect()
     }
 
     private func initialSync() {
