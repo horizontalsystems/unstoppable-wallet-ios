@@ -27,7 +27,16 @@ class HeaderHandler {
             return
         }
 
-        let validHeaders = validator.filterValidItems(initialHash: lastBlock.headerHash, items: blockHeaders)
+        var validHeaders = [BlockHeaderItem]()
+
+        let initialHeaderItem = BlockHeaderItem.deserialize(byteStream: ByteStream(lastBlock.rawHeader))
+        for headerItem in blockHeaders {
+            if validator.isValid(item: headerItem, previousBlock: validHeaders.last ?? initialHeaderItem) {
+                validHeaders.append(headerItem)
+            } else {
+                break
+            }
+        }
 
         if !validHeaders.isEmpty {
             saver.save(lastHeight: lastBlock.height, items: validHeaders)
