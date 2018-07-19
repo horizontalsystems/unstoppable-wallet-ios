@@ -5,7 +5,7 @@ import SnapKit
 
 class DepositCollectionItemView: BaseActionItemView {
 
-    var collectionView: UICollectionView?
+    var walletsCollectionView: UICollectionView?
 
     override var item: DepositCollectionItem? { return _item as? DepositCollectionItem }
 
@@ -13,18 +13,19 @@ class DepositCollectionItemView: BaseActionItemView {
         super.initView()
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
-        collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView?.delegate = self
-        collectionView?.dataSource = self
-        collectionView?.registerCell(forClass: DepositAddressCollectionCell.self)
-        collectionView?.isPagingEnabled = true
-        collectionView?.alwaysBounceHorizontal = (item?.wallets.count ?? 1) > 1
-        collectionView?.showsHorizontalScrollIndicator = false
-        addSubview(collectionView!)
-        collectionView?.snp.makeConstraints { maker in
+        
+        walletsCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        walletsCollectionView?.delegate = self
+        walletsCollectionView?.dataSource = self
+        walletsCollectionView?.registerCell(forClass: DepositAddressCollectionCell.self)
+        walletsCollectionView?.isPagingEnabled = true
+        walletsCollectionView?.alwaysBounceHorizontal = (item?.wallets.count ?? 1) > 1
+        walletsCollectionView?.showsHorizontalScrollIndicator = false
+        addSubview(walletsCollectionView!)
+        walletsCollectionView?.snp.makeConstraints { maker in
             maker.edges.equalToSuperview()
         }
-        collectionView?.backgroundColor = .clear
+        walletsCollectionView?.backgroundColor = .clear
     }
 
     override func updateView() {
@@ -54,4 +55,18 @@ extension DepositCollectionItemView: UICollectionViewDataSource, UICollectionVie
         return collectionView.size
     }
 
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let width = scrollView.frame.width - (scrollView.contentInset.left*2)
+        let index = scrollView.contentOffset.x / width
+        let roundedIndex = round(index)
+        item?.onPageChange?(Int(roundedIndex))
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 0
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 0
+    }
 }

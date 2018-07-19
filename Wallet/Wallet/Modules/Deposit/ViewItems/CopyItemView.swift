@@ -13,6 +13,9 @@ class CopyItemView: BaseActionItemView {
         super.initView()
         copyButton.textColors = [RespondButton.State.active: DepositTheme.copyTextColor, RespondButton.State.selected: DepositTheme.copyTextSelectedColor]
         copyButton.titleLabel.text = "alert.copy".localized
+        copyButton.titleLabel.snp.remakeConstraints { maker in
+            maker.edges.equalToSuperview()
+        }
         addSubview(copyButton)
         copyButton.snp.makeConstraints { maker in
             maker.edges.equalToSuperview()

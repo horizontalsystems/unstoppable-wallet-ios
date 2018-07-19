@@ -2,9 +2,10 @@ import UIKit
 import GrouviActionSheet
 import SnapKit
 
-class DepositButtonItemView: BaseButtonItemView {
+class DepositShareButtonItemView: BaseButtonItemView {
 
-    override var item: DepositButtonItem? { return _item as? DepositButtonItem }
+    override var item: DepositShareButtonItem? { return _item as? DepositShareButtonItem
+    }
 
     override func initView() {
         super.initView()

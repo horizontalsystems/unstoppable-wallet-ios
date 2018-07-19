@@ -11,11 +11,14 @@ class PagingDotsItemView: BaseActionItemView {
 
     override func initView() {
         super.initView()
+        pageControl.isUserInteractionEnabled = false
         pageControl.pageIndicatorTintColor = DepositTheme.pageIndicatorTintColor
         pageControl.currentPageIndicatorTintColor = DepositTheme.pageIndicatorSelectedTintColor
         addSubview(pageControl)
         pageControl.snp.makeConstraints { maker in
-            maker.edges.equalToSuperview()
+            maker.top.equalToSuperview().offset(DepositTheme.pagingDotsTopMargin)
+            maker.leading.trailing.equalToSuperview()
+            maker.height.equalTo(DepositTheme.pagingDotsHeight)
         }
         pageControl.numberOfPages = item?.pagesCount ?? 0
     }

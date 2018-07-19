@@ -11,7 +11,7 @@ class PagingDotsItem: BaseActionItem {
         super.init(cellType: PagingDotsItemView.self, tag: tag, hidden: hidden, required: required)
 
         showSeparator = false
-        height = DepositTheme.pagingDotsHeight
+        height = DepositTheme.pagingHeight
     }
 
 }
