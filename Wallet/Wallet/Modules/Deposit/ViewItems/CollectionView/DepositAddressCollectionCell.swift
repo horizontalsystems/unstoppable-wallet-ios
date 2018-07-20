@@ -40,6 +40,29 @@ class DepositAddressCollectionCell: UICollectionViewCell {
         titleLabel.text = "some wallet"
         qrCodeImageView.backgroundColor = .lightGray
         addressLabel.text = wallet
+
+        qrCodeImageView.image = createQRFromString(wallet, size: CGSize(width: 150, height: 150))
+    }
+
+    func createQRFromString(_ str: String, size: CGSize) -> UIImage {
+        let stringData = str.data(using: .utf8)
+
+        let qrFilter = CIFilter(name: "CIQRCodeGenerator")!
+        qrFilter.setValue(stringData, forKey: "inputMessage")
+        qrFilter.setValue("H", forKey: "inputCorrectionLevel")
+
+        let minimalQRimage = qrFilter.outputImage!
+        // NOTE that a QR code is always square, so minimalQRimage..width === .height
+        let minimalSideLength = minimalQRimage.extent.width
+
+        let smallestOutputExtent = (size.width < size.height) ? size.width : size.height
+        let scaleFactor = smallestOutputExtent / minimalSideLength
+        let scaledImage = minimalQRimage.transformed(
+                by: CGAffineTransform(scaleX: scaleFactor, y: scaleFactor))
+
+        return UIImage(ciImage: scaledImage,
+                scale: UIScreen.main.scale,
+                orientation: .up)
     }
 
 }
