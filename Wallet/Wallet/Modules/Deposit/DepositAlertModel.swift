@@ -11,13 +11,13 @@ class DepositAlertModel: BaseAlertModel {
         super.init()
         delegate.viewDidLoad()
 
-        let wallets = ["S4DL2JHF6BS3JD1LUR76FNR8EI4", "23SD5FIBY2I4EBT6RY6V7EK7S8DH", "23SD5FIBY2I4EBT6RY6V7EK7S8DH"]
-//        let wallets = ["23SD5FIBY2I4EBT6RY6V7EK7S8DH"]
+        let coins = ["S4DL2JHF6BS3JD1LUR76FNR8EI4", "23SD5FIBY2I4EBT6RY6V7EK7S8DH", "23SD5FIBY2I4EBT6RY6V7EK7S8DH"]
+//        let coins = ["23SD5FIBY2I4EBT6RY6V7EK7S8DH"]
 
         var pagingItem: PagingDotsItem?
-        let depositItem = DepositCollectionItem(wallets: wallets, tag: 0, required: true, onPageChange: { [weak self] index in
+        let depositItem = DepositCollectionItem(wallets: coins, tag: 0, required: true, onPageChange: { index in
             pagingItem?.currentPage = index
-            self?.reload?()
+            pagingItem?.updateView?()
         })
         addItemView(depositItem)
 
@@ -26,7 +26,7 @@ class DepositAlertModel: BaseAlertModel {
         })
         addItemView(copyItem)
 
-        if wallets.count > 1 {
+        if coins.count > 1 {
             pagingItem = PagingDotsItem(pagesCount: 3, tag: 0, required: true)
             addItemView(pagingItem!)
         }

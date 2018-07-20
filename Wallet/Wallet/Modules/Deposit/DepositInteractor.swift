@@ -5,10 +5,10 @@ class DepositInteractor {
 
     weak var delegate: IDepositInteractorDelegate?
 
-    var wallets: [WalletBalanceItem]
+    var coins: [Coin]
 
-    init(wallets: [WalletBalanceItem]) {
-        self.wallets = wallets
+    init(coins: [Coin]) {
+        self.coins = coins
     }
 
 }

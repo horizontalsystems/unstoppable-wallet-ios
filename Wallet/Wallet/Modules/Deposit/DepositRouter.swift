@@ -16,9 +16,9 @@ extension DepositRouter: IDepositRouter {
 
 extension DepositRouter {
 
-    static func module(walletBalances: [WalletBalanceItem]) -> ActionSheetController {
+    static func module(coins: [Coin]) -> ActionSheetController {
         let router = DepositRouter()
-        let interactor = DepositInteractor(wallets: walletBalances)
+        let interactor = DepositInteractor(coins: coins)
         let presenter = DepositPresenter(interactor: interactor, router: router)
         let depositAlertModel = DepositAlertModel(viewDelegate: presenter)
         let viewController = ActionSheetController(withModel: depositAlertModel, actionStyle: .sheet(showDismiss: false))

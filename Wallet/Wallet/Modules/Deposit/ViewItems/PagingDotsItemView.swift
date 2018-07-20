@@ -21,6 +21,10 @@ class PagingDotsItemView: BaseActionItemView {
             maker.height.equalTo(DepositTheme.pagingDotsHeight)
         }
         pageControl.numberOfPages = item?.pagesCount ?? 0
+
+        item?.updateView = { [weak self] in
+            self?.updateView()
+        }
     }
 
     override func updateView() {
