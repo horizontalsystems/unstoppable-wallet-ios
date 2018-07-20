@@ -27,7 +27,10 @@ class MerkleBlockHandler {
         }
 
         if validator.isValid(message: message) {
-            saver.update(block: block, withMerkleBlock: message)
+            // Hash filtering logic must be hear. Only transaction hashes must be passed to saver.update
+            let transactionHashes = message.hashes
+
+            saver.update(block: block, withTransactionHashes: transactionHashes)
         }
     }
 

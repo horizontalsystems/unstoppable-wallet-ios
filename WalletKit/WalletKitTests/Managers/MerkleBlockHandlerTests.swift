@@ -35,7 +35,7 @@ class MerkleBlockHandlerTests: XCTestCase {
             when(mock.realm.get).thenReturn(realm)
         }
         stub(mockSaver) { mock in
-            when(mock.update(block: any(), withMerkleBlock: any()).thenDoNothing())
+            when(mock.update(block: any(), withTransactionHashes: any()).thenDoNothing())
         }
     }
 
@@ -59,7 +59,7 @@ class MerkleBlockHandlerTests: XCTestCase {
         }
 
         try! merkleBlockHandler.handle(message: sampleMerkleBlockMessage)
-        verify(mockSaver).update(block: equal(to: block), withMerkleBlock: equal(to: sampleMerkleBlockMessage))
+        verify(mockSaver).update(block: equal(to: block), withTransactionHashes: equal(to: sampleMerkleBlockMessage.hashes))
     }
 
     func testInvalidMerkleBlocks() {
