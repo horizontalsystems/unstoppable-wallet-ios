@@ -17,7 +17,7 @@ public class WalletManager {
         return mnemonic
     }
 
-    public var wallet: HDWallet {
+    var wallet: HDWallet {
         return hdWallet
     }
 

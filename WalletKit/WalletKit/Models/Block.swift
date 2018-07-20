@@ -8,6 +8,16 @@ public class Block: Object {
     @objc public dynamic var height: Int = 0
     @objc public dynamic var archived = false
 
+    convenience init(blockHeader: BlockHeaderItem, height: Int, archived: Bool = false) {
+        self.init()
+
+        rawHeader = blockHeader.serialized()
+        headerHash = Crypto.sha256sha256(rawHeader)
+        reversedHeaderHashHex = headerHash.reversedHex
+        self.height = height
+        self.archived = archived
+    }
+
     override public class func primaryKey() -> String? {
         return "reversedHeaderHashHex"
     }
