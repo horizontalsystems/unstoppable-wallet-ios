@@ -6,9 +6,9 @@ class HeaderHandler {
 
     let realmFactory: RealmFactory
     let validator: BlockHeaderItemValidator
-    let saver: BlockHeaderItemSaver
+    let saver: BlockSaver
 
-    init(realmFactory: RealmFactory = .shared, validator: BlockHeaderItemValidator = .shared, saver: BlockHeaderItemSaver = .shared) {
+    init(realmFactory: RealmFactory = .shared, validator: BlockHeaderItemValidator = .shared, saver: BlockSaver = .shared) {
         self.realmFactory = realmFactory
         self.validator = validator
         self.saver = saver
@@ -39,7 +39,7 @@ class HeaderHandler {
         }
 
         if !validHeaders.isEmpty {
-            saver.save(lastHeight: lastBlock.height, items: validHeaders)
+            saver.create(withHeight: lastBlock.height, fromItems: validHeaders)
         }
     }
 

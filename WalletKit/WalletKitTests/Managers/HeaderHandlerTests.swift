@@ -7,7 +7,7 @@ class HeaderHandlerTests: XCTestCase {
 
     private var mockRealmFactory: MockRealmFactory!
     private var mockValidator: MockBlockHeaderItemValidator!
-    private var mockSaver: MockBlockHeaderItemSaver!
+    private var mockSaver: MockBlockSaver!
     private var headerHandler: HeaderHandler!
 
     private var realm: Realm!
@@ -19,7 +19,7 @@ class HeaderHandlerTests: XCTestCase {
 
         mockRealmFactory = MockRealmFactory()
         mockValidator = MockBlockHeaderItemValidator()
-        mockSaver = MockBlockHeaderItemSaver()
+        mockSaver = MockBlockSaver()
         headerHandler = HeaderHandler(realmFactory: mockRealmFactory, validator: mockValidator, saver: mockSaver)
 
         realm = try! Realm(configuration: Realm.Configuration(inMemoryIdentifier: "TestRealm"))
@@ -38,7 +38,7 @@ class HeaderHandlerTests: XCTestCase {
             when(mock.realm.get).thenReturn(realm)
         }
         stub(mockSaver) { mock in
-            when(mock.save(lastHeight: any(), items: any())).thenDoNothing()
+            when(mock.create(withHeight: any(), fromItems: any())).thenDoNothing()
         }
     }
 
@@ -76,7 +76,7 @@ class HeaderHandlerTests: XCTestCase {
         }
 
         headerHandler.handle(blockHeaders: items)
-        verify(mockSaver).save(lastHeight: equal(to: initialBlock.height), items: equal(to: items))
+        verify(mockSaver).create(withHeight: equal(to: initialBlock.height), fromItems: equal(to: items))
     }
 
     func testInvalidBlocks() {
@@ -106,7 +106,7 @@ class HeaderHandlerTests: XCTestCase {
         }
 
         headerHandler.handle(blockHeaders: items)
-        verify(mockSaver).save(lastHeight: equal(to: initialBlock.height), items: equal(to: [items[0], items[1]]))
+        verify(mockSaver).create(withHeight: equal(to: initialBlock.height), fromItems: equal(to: [items[0], items[1]]))
     }
 
 }

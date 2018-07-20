@@ -1,7 +1,7 @@
 import Foundation
 
-class BlockHeaderItemSaver {
-    static let shared = BlockHeaderItemSaver()
+class BlockSaver {
+    static let shared = BlockSaver()
 
     let realmFactory: RealmFactory
 
@@ -9,10 +9,10 @@ class BlockHeaderItemSaver {
         self.realmFactory = realmFactory
     }
 
-    func save(lastHeight: Int, items: [BlockHeaderItem]) {
+    func create(withHeight height: Int, fromItems items: [BlockHeaderItem]) {
         let realm = realmFactory.realm
 
-        var currentHeight = lastHeight
+        var currentHeight = height
         var blocks = [Block]()
 
         for item in items {
@@ -33,6 +33,10 @@ class BlockHeaderItemSaver {
         try? realm.write {
             realm.add(blocks, update: true)
         }
+    }
+
+    func update(block: Block, withMerkleBlock merkleBlock: MerkleBlockMessage) {
+
     }
 
 }
