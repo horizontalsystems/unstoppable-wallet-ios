@@ -35,12 +35,12 @@ class BlockSaver {
         }
     }
 
-    func update(block: Block, withMerkleBlock merkleBlock: MerkleBlockMessage) {
+    func update(block: Block, withTransactionHashes hashes: [Data]) {
         let realm = realmFactory.realm
 
         var transactions = [Transaction]()
 
-        for hash in merkleBlock.hashes {
+        for hash in hashes {
             let transaction = Transaction()
             transaction.transactionHash = hash.reversedHex
             transaction.block = block

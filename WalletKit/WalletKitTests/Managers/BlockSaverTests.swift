@@ -64,7 +64,7 @@ class BlockSaverTests: XCTestCase {
             return
         }
 
-        saver.update(block: savedBlock, withMerkleBlock: message)
+        saver.update(block: savedBlock, withTransactionHashes: message.hashes)
         let transactions = realm.objects(Transaction.self)
 
         XCTAssertEqual(savedBlock.transactions.count, transactions.count)
