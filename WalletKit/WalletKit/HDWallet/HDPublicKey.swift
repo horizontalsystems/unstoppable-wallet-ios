@@ -20,7 +20,7 @@ public class HDPublicKey {
 
     init(privateKey: HDPrivateKey, network: NetworkProtocol) {
         self.network = network
-        self.raw = PublicKey.from(privateKey: privateKey.raw, compression: true)
+        self.raw = HDPublicKey.from(privateKey: privateKey.raw, compression: true)
         self.chainCode = privateKey.chainCode
         self.depth = 0
         self.fingerprint = 0
@@ -29,7 +29,7 @@ public class HDPublicKey {
 
     init(privateKey: HDPrivateKey, chainCode: Data, network: NetworkProtocol = TestNet(), depth: UInt8, fingerprint: UInt32, childIndex: UInt32) {
         self.network = network
-        self.raw = PublicKey.from(privateKey: privateKey.raw, compression: true)
+        self.raw = HDPublicKey.from(privateKey: privateKey.raw, compression: true)
         self.chainCode = chainCode
         self.depth = depth
         self.fingerprint = fingerprint
@@ -72,4 +72,9 @@ public class HDPublicKey {
         }
         return HDPublicKey(raw: derivedKey.publicKey!, chainCode: derivedKey.chainCode, network: network, depth: derivedKey.depth, fingerprint: derivedKey.fingerprint, childIndex: derivedKey.childIndex)
     }
+
+    static func from(privateKey raw: Data, compression: Bool = false) -> Data {
+        return _Key.computePublicKey(fromPrivateKey: raw, compression: compression)
+    }
+
 }

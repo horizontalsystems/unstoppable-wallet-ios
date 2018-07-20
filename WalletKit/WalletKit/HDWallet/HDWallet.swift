@@ -8,7 +8,7 @@
 
 import Foundation
 
-public final class HDWallet {
+final class HDWallet {
     let network: NetworkProtocol
 
 //    public var transactions: [Transaction] {
@@ -29,8 +29,8 @@ public final class HDWallet {
     private let purpose: UInt32
     private let coinType: UInt32
     var account: UInt32
-    var externalIndex: UInt32
-    var internalIndex: UInt32
+//    var externalIndex: UInt32
+//    var internalIndex: UInt32
 
     init(seed: Data, network: NetworkProtocol) {
         self.seed = seed
@@ -66,34 +66,38 @@ public final class HDWallet {
 
         // Addresses are numbered from index 0 in sequentially increasing manner. This number is used as child index in BIP32 derivation.
         // Public derivation is used at this level.
-        externalIndex = 0
-        internalIndex = 0
+//        externalIndex = 0
+//        internalIndex = 0
     }
 
 //    public func receiveAddress() throws -> Address {
 //        return Address(try publicKey())
 //    }
 
-    public func receiveAddress(index: UInt32) throws -> Address {
-        return Address(try publicKey(index: index))
+    func receiveAddress(index: Int) throws -> Address {
+        return Address(withIndex: index, external: true, hdPublicKey: try publicKey(index: index, chain: .external))
     }
 
-    public func receiveAddress(path: String) throws -> Address {
-        return Address(try publicKey(path: path))
+    func changeAddress(index: Int) throws -> Address {
+        return Address(withIndex: index, external: false, hdPublicKey: try publicKey(index: index, chain: .internal))
     }
+
+    //    func receiveAddress(path: String) throws -> Address {
+//        return Address(withHHPublicKey: try publicKey(path: path))
+//    }
 
 //    public func changeAddress() throws -> Address {
 //        return try changeAddress(index: internalIndex)
 //    }
 
-    public func changeAddress(index: UInt32) throws -> Address {
-        return try changeAddress(path: "m/\(purpose)'/\(coinType)'/\(account)'/\(Chain.internal.rawValue)/\(index)")
-    }
+//    func changeAddress(index: Int) throws -> Address {
+//        return try changeAddress(path: "m/\(purpose)'/\(coinType)'/\(account)'/\(Chain.internal.rawValue)/\(index)")
+//    }
 
-    public func changeAddress(path: String) throws -> Address {
-        let privateKey = try keychain.derivedKey(path: path)
-        return Address(privateKey.publicKey())
-    }
+//    func changeAddress(path: String) throws -> Address {
+//        let privateKey = try keychain.derivedKey(path: path)
+//        return Address(withHHPublicKey: privateKey.publicKey())
+//    }
 
 //    public func privateKey() throws -> HDPrivateKey {
 //        return try privateKey(index: externalIndex)
@@ -103,22 +107,22 @@ public final class HDWallet {
 //        return try publicKey(index: externalIndex)
 //    }
 
-    public func privateKey(index: UInt32) throws -> HDPrivateKey {
-        return try privateKey(path: "m/\(purpose)'/\(coinType)'/\(account)'/\(Chain.external.rawValue)/\(index)")
+    func privateKey(index: Int, chain: Chain) throws -> HDPrivateKey {
+        return try privateKey(path: "m/\(purpose)'/\(coinType)'/\(account)'/\(chain.rawValue)/\(index)")
     }
 
-    public func privateKey(path: String) throws -> HDPrivateKey {
+    func privateKey(path: String) throws -> HDPrivateKey {
         let privateKey = try keychain.derivedKey(path: path)
         return privateKey
     }
 
-    public func publicKey(index: UInt32) throws -> HDPublicKey {
-        return try privateKey(index: index).publicKey()
+    func publicKey(index: Int, chain: Chain) throws -> HDPublicKey {
+        return try privateKey(index: index, chain: chain).publicKey()
     }
 
-    public func publicKey(path: String) throws -> HDPublicKey {
-        return try privateKey(path: path).publicKey()
-    }
+//    func publicKey(path: String) throws -> HDPublicKey {
+//        return try privateKey(path: path).publicKey()
+//    }
 
     enum Chain : Int {
         case external

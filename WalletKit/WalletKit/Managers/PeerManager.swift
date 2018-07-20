@@ -26,13 +26,8 @@ class PeerManager {
 extension PeerManager: PeerDelegate {
 
     public func peerDidConnect(_ peer: Peer) {
-        var addresses = [Address]()
-
-        for i in 0...20 {
-            if let address = try? walletManager.wallet.receiveAddress(index: UInt32(i)) {
-                addresses.append(address)
-            }
-        }
+        let realm = RealmFactory.shared.realm
+        let addresses = realm.objects(Address.self)
 
         peer.load(filters: addresses.map { $0.publicKeyHash })
 
