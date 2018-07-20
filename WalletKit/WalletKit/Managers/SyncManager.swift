@@ -26,26 +26,54 @@ public class SyncManager {
     }
 
     init() {
-//        let block = Block()
-//        block.height = 1353064
-//        block.headerHash = "4e372bfc458c8bc8bc392283441f2d7532d188d1c093808d3500000000000000"
-//
-//        let realm = try! Realm()
-//        try? realm.write {
-//            realm.add(block, update: true)
-//        }
+        let header = BlockHeaderItem(
+                version: 536870912,
+                prevBlock: "0000000000000033c86b995b9b506e98c52af9003b8b4df43a5c695ae36280ec".reversedData!,
+                merkleRoot: "fb331ce1e2f8c1c5510b68aa0b35ee3e5a4282ea49a8eb7c3dc2d09b8e107803".reversedData!,
+                timestamp: 1532066861,
+                bits: 425766046,
+                nonce: 4145809992
+        )
 
-//        if let data = Data(hex: "00000000000000358d8093c0d188d132752d1f44832239bcc88b8c45fc2b374e") {
-//            let data = Data(data.reversed())
-//            print("DATA: \(data.hex)")
-//        }
+        let block = Block(blockHeader: header, height: 1354606)
+
+        let walletManager = WalletManager.shared
+        var addresses = [Address]()
+
+        for i in 0...4 {
+            if let address = try? walletManager.wallet.receiveAddress(index: i) {
+                addresses.append(address)
+            }
+            if let address = try? walletManager.wallet.changeAddress(index: i) {
+                addresses.append(address)
+            }
+        }
+
+        let realm = try! Realm()
+        try? realm.write {
+            realm.add(block, update: true)
+            realm.add(addresses, update: true)
+        }
+    }
+
+    public func showInfo() {
+        let realm = try! Realm()
+        let blockCount = realm.objects(Block.self).count
+        let addressCount = realm.objects(Address.self).count
+
+        print("BLOCK COUNT: \(blockCount)")
+        print("ADDRESS COUNT: \(addressCount)")
+
+        for block in realm.objects(Block.self) {
+            print("\(block.height) --- \(block.reversedHeaderHashHex)")
+        }
+        for address in realm.objects(Address.self) {
+            print("\(address.index) --- \(address.external) --- \(address.base58)")
+        }
     }
 
     public func sync() {
-//        if status != .syncing {
-//            initialSync()
-//        }
-//        Singletons.instance.peerManager.connect()
+        PeerManager.shared.connect()
     }
 
     private func initialSync() {
@@ -135,14 +163,14 @@ public class SyncManager {
         return Observable.create { observer in
             var addresses = [Address]()
 
-            for i in 0...20 {
-                if let address = try? walletManager!.wallet.receiveAddress(index: UInt32(i)) {
-                    addresses.append(address)
-                }
+//            for i in 0...20 {
+//                if let address = try? walletManager!.wallet.receiveAddress(index: UInt32(i)) {
+//                    addresses.append(address)
+//                }
 //                if let address = try? walletManager.wallet.changeAddress(index: UInt32(i)) {
 //                    addresses.append(address)
 //                }
-            }
+//            }
 
             observer.onNext(addresses)
             observer.onCompleted()

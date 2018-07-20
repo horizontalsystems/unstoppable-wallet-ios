@@ -8,15 +8,15 @@
 
 import Foundation
 
-public struct BlockMessage {
-    public let blockHeaderItem: BlockHeaderItem
+struct BlockMessage {
+    let blockHeaderItem: BlockHeaderItem
 
     /// Number of transaction entries
-    public let transactionCount: VarInt
+    let transactionCount: VarInt
     /// Block transactions, in format of "tx" command
-    public let transactions: [TransactionMessage]
+    let transactions: [TransactionMessage]
 
-    public func serialized() -> Data {
+    func serialized() -> Data {
         var data = Data()
         data += blockHeaderItem.serialized()
         data += transactionCount.serialized()
@@ -26,9 +26,9 @@ public struct BlockMessage {
         return data
     }
 
-    public static func deserialize(_ data: Data) -> BlockMessage {
+    static func deserialize(_ data: Data) -> BlockMessage {
         let byteStream = ByteStream(data)
-        let blockHeaderItem = BlockHeaderItem.deserialize(byteStream)
+        let blockHeaderItem = BlockHeaderItem.deserialize(byteStream: byteStream)
         let transactionCount = byteStream.read(VarInt.self)
         var transactions = [TransactionMessage]()
         for _ in 0..<transactionCount.underlyingValue {

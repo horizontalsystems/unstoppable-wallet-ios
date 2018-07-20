@@ -10,29 +10,29 @@ import Foundation
 
 /// When a node creates an outgoing connection, it will immediately advertise its version.
 /// The remote node will respond with its version. No further communication is possible until both peers have exchanged their version.
-public struct VersionMessage {
+struct VersionMessage {
     /// Identifies protocol version being used by the node
-    public let version: Int32
+    let version: Int32
     /// bitfield of features to be enabled for this connection
-    public let services: UInt64
+    let services: UInt64
     /// standard UNIX timestamp in seconds
-    public let timestamp: Int64
+    let timestamp: Int64
     // The network address of the node receiving this message
-    public let yourAddress: NetworkAddress
+    let yourAddress: NetworkAddress
     /* Fields below require version ≥ 106 */
     /// The network address of the node emitting this message
-    public let myAddress: NetworkAddress?
+    let myAddress: NetworkAddress?
     /// Node random nonce, randomly generated every time a version packet is sent. This nonce is used to detect connections to self.
-    public let nonce: UInt64?
+    let nonce: UInt64?
     /// User Agent (0x00 if string is 0 bytes long)
-    public let userAgent: VarString?
+    let userAgent: VarString?
     // The last block received by the emitting node
-    public let startHeight: Int32?
+    let startHeight: Int32?
     /* Fields below require version ≥ 70001 */
     /// Whether the remote peer should announce relayed transactions or not, see BIP 0037
-    public let relay: Bool?
+    let relay: Bool?
 
-    public func serialized() -> Data {
+    func serialized() -> Data {
         var data = Data()
         data += version.littleEndian
         data += services.littleEndian
@@ -46,7 +46,7 @@ public struct VersionMessage {
         return data
     }
 
-    public static func deserialize(_ data: Data) -> VersionMessage {
+    static func deserialize(_ data: Data) -> VersionMessage {
         let byteStream = ByteStream(data)
 
         let version = byteStream.read(Int32.self)

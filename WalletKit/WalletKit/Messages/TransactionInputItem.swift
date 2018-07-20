@@ -8,17 +8,17 @@
 
 import Foundation
 
-public struct TransactionInputItem {
+struct TransactionInputItem {
     /// The previous output transaction reference, as an OutPoint structure
-    public let previousOutput: TransactionOutPointItem
+    let previousOutput: TransactionOutPointItem
     /// The length of the signature script
-    public let scriptLength: VarInt
+    let scriptLength: VarInt
     /// Computational Script for confirming transaction authorization
-    public let signatureScript: Data
+    let signatureScript: Data
     /// Transaction version as defined by the sender. Intended for "replacement" of transactions when information is updated before inclusion into a block.
-    public let sequence: UInt32
+    let sequence: UInt32
 
-    public func serialized() -> Data {
+    func serialized() -> Data {
         var data = Data()
         data += previousOutput.serialized()
         data += scriptLength.serialized()

@@ -58,14 +58,7 @@ extension WalletPresenter: IWalletViewDelegate {
     }
 
     func refresh() {
-        let realm = try! Realm()
-        let count = realm.objects(Block.self).count
-
-        print("BLOCK COUNT: \(count)")
-
-        for block in realm.objects(Block.self) {
-            print("\(block.height) --- \(block.reversedHeaderHashHex)")
-        }
+        SyncManager.shared.showInfo()
     }
 
     func onReceive(for index: Int) {

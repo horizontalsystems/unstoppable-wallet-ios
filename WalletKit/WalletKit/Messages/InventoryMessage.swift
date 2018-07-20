@@ -9,20 +9,20 @@
 import Foundation
 
 /// Allows a node to advertise its knowledge of one or more objects. It can be received unsolicited, or in reply to getblocks.
-public struct InventoryMessage {
+struct InventoryMessage {
     /// Number of inventory entries
-    public let count: VarInt
+    let count: VarInt
     /// Inventory vectors
-    public let inventoryItems: [InventoryItem]
+    let inventoryItems: [InventoryItem]
 
-    public func serialized() -> Data {
+    func serialized() -> Data {
         var data = Data()
         data += count.serialized()
         data += inventoryItems.flatMap { $0.serialized() }
         return data
     }
 
-    public static func deserialize(_ data: Data) -> InventoryMessage {
+    static func deserialize(_ data: Data) -> InventoryMessage {
         let byteStream = ByteStream(data)
         let count = byteStream.read(VarInt.self)
         var items = [InventoryItem]()

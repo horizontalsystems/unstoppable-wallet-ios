@@ -26,17 +26,16 @@ class PeerManager {
 extension PeerManager: PeerDelegate {
 
     public func peerDidConnect(_ peer: Peer) {
-        var addresses = [Address]()
-
-        for i in 0...20 {
-            if let address = try? walletManager.wallet.receiveAddress(index: UInt32(i)) {
-                addresses.append(address)
-            }
-        }
+        let realm = RealmFactory.shared.realm
+        let addresses = realm.objects(Address.self)
 
         peer.load(filters: addresses.map { $0.publicKeyHash })
 
-//        headersSyncer?.sync()
+        do {
+            try HeaderSyncer.shared.sync()
+        } catch {
+            print("HeaderSyncer error: \(error)")
+        }
 
 //        let realm = try! Realm()
 //        if let lastBlock = realm.objects(Block.self).first {
@@ -47,6 +46,12 @@ extension PeerManager: PeerDelegate {
 
     public func peer(_ peer: Peer, didReceiveMerkleBlockMessage message: MerkleBlockMessage, hash: Data) {
         print("MERKLE BLOCK: \(hash.hex)")
+
+        do {
+            try MerkleBlockHandler.shared.handle(message: message)
+        } catch {
+            print("MerkleBlockHandler error: \(error)")
+        }
     }
 
     public func peer(_ peer: Peer, didReceiveTransaction transaction: TransactionMessage, hash: Data) {
@@ -62,7 +67,7 @@ extension PeerManager: PeerDelegate {
         }
 
         if !message.blockHeaders.isEmpty {
-//            headersSyncer?.handle(blockHeaders: message.blockHeaders)
+            HeaderHandler.shared.handle(blockHeaders: message.blockHeaders)
         }
     }
 

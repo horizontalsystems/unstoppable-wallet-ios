@@ -13,20 +13,20 @@ import Foundation
 /// It can be used to retrieve transactions, but only if they are in the memory pool or
 /// relay set - arbitrary access to transactions in the chain is not allowed to avoid
 /// having clients start to depend on nodes having full transaction indexes (which modern nodes do not).
-public struct GetDataMessage {
+struct GetDataMessage {
     /// Number of inventory entries
-    public let count: VarInt
+    let count: VarInt
     /// Inventory vectors
-    public let inventoryItems: [InventoryItem]
+    let inventoryItems: [InventoryItem]
 
-    public func serialized() -> Data {
+    func serialized() -> Data {
         var data = Data()
         data += count.serialized()
         data += inventoryItems.flatMap { $0.serialized() }
         return data
     }
 
-    public static func deserialize(_ data: Data) -> GetDataMessage {
+    static func deserialize(_ data: Data) -> GetDataMessage {
         let byteStream = ByteStream(data)
         let count = byteStream.read(VarInt.self).underlyingValue
         var items = [InventoryItem]()
