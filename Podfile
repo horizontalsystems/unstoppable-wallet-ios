@@ -31,6 +31,7 @@ target :WalletKit do
 
   pod 'RxSwift'
 
+  pod 'BigInt', '~> 3.1'
   pod 'RealmSwift'
   pod "RxRealm"
 end

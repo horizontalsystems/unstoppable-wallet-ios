@@ -75,7 +75,11 @@ extension PeerManager: PeerDelegate {
         }
 
         if !message.blockHeaders.isEmpty {
-            HeaderHandler.shared.handle(blockHeaders: message.blockHeaders)
+            do {
+                try HeaderHandler.shared.handle(blockHeaders: message.blockHeaders)
+            } catch {
+                print("HeaderHandler error: \(error)")
+            }
         }
     }
 
