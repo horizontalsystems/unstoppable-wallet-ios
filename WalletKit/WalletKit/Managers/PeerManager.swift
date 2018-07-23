@@ -1,10 +1,17 @@
 import Foundation
 import RealmSwift
+import RxSwift
 
 class PeerManager {
     static let shared = PeerManager()
 
+    enum Status {
+        case connected, disconnected
+    }
+
     let walletManager: WalletManager
+
+    var statusSubject: PublishSubject<Status> = PublishSubject()
 
     private let peer = Peer(network: TestNet())
 
@@ -38,6 +45,8 @@ extension PeerManager: PeerDelegate {
         let addresses = realm.objects(Address.self)
 
         peer.load(filters: addresses.map { $0.publicKeyHash })
+
+        statusSubject.onNext(.connected)
 
         do {
             try HeaderSyncer.shared.sync()
