@@ -28,14 +28,15 @@ public class SyncManager {
     init() {
         let header = BlockHeaderItem(
                 version: 536870912,
-                prevBlock: "0000000000000033c86b995b9b506e98c52af9003b8b4df43a5c695ae36280ec".reversedData!,
-                merkleRoot: "fb331ce1e2f8c1c5510b68aa0b35ee3e5a4282ea49a8eb7c3dc2d09b8e107803".reversedData!,
-                timestamp: 1532066861,
-                bits: 425766046,
-                nonce: 4145809992
+                prevBlock: "0000000000000015868cb68ade5875a83c92d3efb7afc140e98e17abf6343dee".reversedData!,
+                merkleRoot: "5fdc2a9c73000341987e8db5df903dad4f04dba5f5feedf62d00cb378c23682f".reversedData!,
+                timestamp: 1532325895,
+                bits: 424253525,
+                nonce: 1376325361
         )
 
-        let block = Block(blockHeader: header, height: 1354606)
+        let block = Block(blockHeader: header, height: 1355061)
+        block.synced = true
 
         let walletManager = WalletManager.shared
         var addresses = [Address]()
@@ -56,7 +57,7 @@ public class SyncManager {
         }
     }
 
-    public func showInfo() {
+    public func showRealmInfo() {
         let realm = try! Realm()
         let blockCount = realm.objects(Block.self).count
         let addressCount = realm.objects(Address.self).count
@@ -72,7 +73,8 @@ public class SyncManager {
         }
     }
 
-    public func sync() {
+    public func connectToPeer() {
+        BlockSyncer.shared
         PeerManager.shared.connect()
     }
 

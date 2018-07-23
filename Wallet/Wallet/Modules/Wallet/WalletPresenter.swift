@@ -58,7 +58,6 @@ extension WalletPresenter: IWalletViewDelegate {
     }
 
     func refresh() {
-        SyncManager.shared.showInfo()
     }
 
     func onReceive(for index: Int) {
