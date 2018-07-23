@@ -317,7 +317,7 @@ class Peer : NSObject, StreamDelegate {
         sendMessage(message)
     }
 
-    private func sendGetDataMessage(message: InventoryMessage) {
+    func sendGetDataMessage(message: InventoryMessage) {
         let payload = message.serialized()
         let checksum = Data(Crypto.sha256sha256(payload).prefix(4))
 

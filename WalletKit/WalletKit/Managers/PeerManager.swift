@@ -21,6 +21,14 @@ class PeerManager {
         peer.sendGetHeadersMessage(headerHashes: headerHashes)
     }
 
+    func requestBlocks(headerHashes: [Data]) {
+        let inventoryMessage = InventoryMessage(count: VarInt(headerHashes.count), inventoryItems: headerHashes.map { hash in
+            InventoryItem(type: InventoryItem.ObjectType.filteredBlockMessage.rawValue, hash: hash)
+        })
+
+        peer.sendGetDataMessage(message: inventoryMessage)
+    }
+
 }
 
 extension PeerManager: PeerDelegate {
