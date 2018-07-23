@@ -65,7 +65,7 @@ extension WalletPresenter: IWalletViewDelegate {
         if index < walletBalances.count {
             router.onReceive(for: walletBalances[index])
         } else {
-            DepositRouter.module(walletBalances: []).show()
+            DepositRouter.module(coins: []).show()
             //test stab
         }
     }
