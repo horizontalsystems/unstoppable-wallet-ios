@@ -9,6 +9,7 @@ class WalletViewController: UIViewController {
     var wallets = [WalletBalanceViewItem]() {
         didSet {
             wallets.append(contentsOf: [
+                //test stab
                 WalletBalanceViewItem(coinValue: CoinValue(coin: Bitcoin(), value: 0.004), exchangeValue: CurrencyValue(currency: DollarCurrency(), value: 5000), currencyValue: CurrencyValue(currency: DollarCurrency(), value: 20)),
                 WalletBalanceViewItem(coinValue: CoinValue(coin: BitcoinCash(), value: 0.2), exchangeValue: CurrencyValue(currency: DollarCurrency(), value: 600), currencyValue: CurrencyValue(currency: DollarCurrency(), value: 120))
             ])
@@ -76,11 +77,15 @@ extension WalletViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if let cell = cell as? WalletCell {
             cell.bind(balance: wallets[indexPath.row], selected: tableView.indexPathForSelectedRow == indexPath, onReceive: { [weak self] in
-                print("onReceive \(self!.wallets[indexPath.row])")
+                self?.onReceive(for: indexPath)
             }, onPay: { [weak self] in
                 print("onPay \(self!.wallets[indexPath.row])")
             })
         }
+    }
+
+    func onReceive(for indexPath: IndexPath) {
+        delegate.onReceive(for: indexPath.row)
     }
 
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {

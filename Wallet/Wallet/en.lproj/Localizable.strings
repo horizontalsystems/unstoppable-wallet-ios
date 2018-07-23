@@ -2,6 +2,8 @@
 "alert.cancel" = "Cancel";
 "navigation_bar.cancel" = "Cancel";
 "done" = "Done";
+"alert.copy" = "Copy";
+"alert.share" = "Share";
 
 "guest.title" = "App Name";
 "guest.subtitle" = "Bitcoin, Satoshi Nakamoto";

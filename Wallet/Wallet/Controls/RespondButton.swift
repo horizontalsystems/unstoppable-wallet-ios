@@ -31,11 +31,7 @@ class RespondButton: UIView, RespondViewDelegate {
         }
     }
 
-    public var onTap: (() -> ())? {
-        didSet {
-            view.handleTouch = onTap
-        }
-    }
+    public var onTap: (() -> ())?
 
     init(onTap: (() -> ())? = nil) {
         super.init(frame: .zero)
@@ -43,7 +39,11 @@ class RespondButton: UIView, RespondViewDelegate {
 
         view.delegate = self
         self.onTap = onTap
-        view.handleTouch = onTap
+        view.handleTouch = {
+            if self.state != .disabled {
+                self.onTap?()
+            }
+        }
         addSubview(view)
         view.snp.makeConstraints { maker in
             maker.edges.equalToSuperview()
@@ -81,7 +81,7 @@ class RespondButton: UIView, RespondViewDelegate {
 
     private func updateUI() {
         titleLabel.textColor = textColors[state] ?? .black
-        view.backgroundColor = backgrounds[state] ?? .white
+        view.backgroundColor = backgrounds[state] ?? .clear
     }
 
 }

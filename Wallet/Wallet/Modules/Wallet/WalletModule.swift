@@ -10,6 +10,7 @@ protocol IWalletView: class {
 protocol IWalletViewDelegate {
     func viewDidLoad()
     func refresh()
+    func onReceive(for index: Int)
 }
 
 protocol IWalletInteractor {
@@ -22,4 +23,5 @@ protocol IWalletInteractorDelegate: class {
 }
 
 protocol IWalletRouter {
+    func onReceive(for walletBalance: WalletBalanceItem)
 }
