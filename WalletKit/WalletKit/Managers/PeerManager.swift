@@ -1,10 +1,17 @@
 import Foundation
 import RealmSwift
+import RxSwift
 
 class PeerManager {
     static let shared = PeerManager()
 
+    enum Status {
+        case connected, disconnected
+    }
+
     let walletManager: WalletManager
+
+    var statusSubject: PublishSubject<Status> = PublishSubject()
 
     private let peer = Peer(network: TestNet())
 
@@ -22,6 +29,7 @@ class PeerManager {
     }
 
     func requestBlocks(headerHashes: [Data]) {
+        print("Request Blocks: \(headerHashes.map { $0.reversedHex }.joined(separator: ", "))")
         let inventoryMessage = InventoryMessage(count: VarInt(headerHashes.count), inventoryItems: headerHashes.map { hash in
             InventoryItem(type: InventoryItem.ObjectType.filteredBlockMessage.rawValue, hash: hash)
         })
@@ -36,8 +44,12 @@ extension PeerManager: PeerDelegate {
     public func peerDidConnect(_ peer: Peer) {
         let realm = RealmFactory.shared.realm
         let addresses = realm.objects(Address.self)
+        let filters = Array(addresses.map { $0.publicKeyHash })
 
-        peer.load(filters: addresses.map { $0.publicKeyHash })
+        print("Loading filters: \(filters.count)")
+        peer.load(filters: filters)
+
+        statusSubject.onNext(.connected)
 
         do {
             try HeaderSyncer.shared.sync()
@@ -53,7 +65,7 @@ extension PeerManager: PeerDelegate {
     }
 
     public func peer(_ peer: Peer, didReceiveMerkleBlockMessage message: MerkleBlockMessage, hash: Data) {
-        print("MERKLE BLOCK: \(hash.hex)")
+        print("MERKLE BLOCK: \(hash.reversedHex)")
 
         do {
             try MerkleBlockHandler.shared.handle(message: message)

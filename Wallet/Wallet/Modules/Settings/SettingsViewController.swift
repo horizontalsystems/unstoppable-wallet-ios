@@ -43,4 +43,12 @@ class SettingsViewController: UIViewController {
         })
     }
 
+    @IBAction func showRealmInfo() {
+        SyncManager.shared.showRealmInfo()
+    }
+
+    @IBAction func connectToPeer() {
+        SyncManager.shared.connectToPeer()
+    }
+
 }

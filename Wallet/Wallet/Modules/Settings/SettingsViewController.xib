@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -20,7 +19,35 @@
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sqi-l8-KBE">
+                    <rect key="frame" x="0.0" y="40" width="375" height="30"/>
+                    <state key="normal" title="Show Realm Info">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </state>
+                    <connections>
+                        <action selector="showRealmInfo" destination="-1" eventType="touchUpInside" id="5AU-zp-B8V"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZTg-u6-GDk">
+                    <rect key="frame" x="0.0" y="90" width="375" height="30"/>
+                    <state key="normal" title="Connect ot Peer">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </state>
+                    <connections>
+                        <action selector="connectToPeer" destination="-1" eventType="touchUpInside" id="4aD-tr-Kbw"/>
+                    </connections>
+                </button>
+            </subviews>
             <color key="backgroundColor" name="Dark"/>
+            <constraints>
+                <constraint firstItem="sqi-l8-KBE" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="20" id="G1a-q6-1IM"/>
+                <constraint firstItem="ZTg-u6-GDk" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="JUh-eD-zna"/>
+                <constraint firstItem="ZTg-u6-GDk" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="TCh-A8-nNL"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="sqi-l8-KBE" secondAttribute="trailing" id="WdD-mY-Lvp"/>
+                <constraint firstItem="ZTg-u6-GDk" firstAttribute="top" secondItem="sqi-l8-KBE" secondAttribute="bottom" constant="20" id="dMr-PJ-OiO"/>
+                <constraint firstItem="sqi-l8-KBE" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="enf-r5-grs"/>
+            </constraints>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
         </view>
     </objects>
