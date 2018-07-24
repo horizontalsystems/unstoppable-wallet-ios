@@ -58,6 +58,10 @@
 		2FA5D036020919E5369B5EDB /* MerkleBlockValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DE717AEBDC8438D99390 /* MerkleBlockValidator.swift */; };
 		2FA5D2F5F05FE2A19A575F13 /* MerkleBlockHandlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D6A8656995FB458623D0 /* MerkleBlockHandlerTests.swift */; };
 		2FA5D3CB6D79639AB784B364 /* MerkleBlockHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DF032E7ED8214D76696C /* MerkleBlockHandler.swift */; };
+		58AAA03CE2E6D76179F0743E /* DifficultyEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA83E846945B4903A0CAF /* DifficultyEncoder.swift */; };
+		58AAA234C00809393E18AAA1 /* DifficultyCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAACCCCE32481AEAC0031F /* DifficultyCalculator.swift */; };
+		58AAA90ECCBE2A17336E9F1C /* DifficultyEncoderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAE9C41E1A4BD72884023 /* DifficultyEncoderTests.swift */; };
+		58AAAE85C2D688C7BF611A0B /* DifficultyCalculatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAD9F23E03D5A549E652D /* DifficultyCalculatorTests.swift */; };
 		AB4265F77FFF1C4BF7184E94 /* Pods_WalletKitTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 95D20030A63CC8101E6A72E8 /* Pods_WalletKitTests.framework */; };
 		D31711EA20F7192400AEF61B /* Peer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31711E920F7192300AEF61B /* Peer.swift */; };
 		D31711FF20F7193000AEF61B /* PingMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31711EB20F7192F00AEF61B /* PingMessage.swift */; };
@@ -161,6 +165,10 @@
 		2FA5D6A8656995FB458623D0 /* MerkleBlockHandlerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MerkleBlockHandlerTests.swift; sourceTree = "<group>"; };
 		2FA5DE717AEBDC8438D99390 /* MerkleBlockValidator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MerkleBlockValidator.swift; sourceTree = "<group>"; };
 		2FA5DF032E7ED8214D76696C /* MerkleBlockHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MerkleBlockHandler.swift; sourceTree = "<group>"; };
+		58AAA83E846945B4903A0CAF /* DifficultyEncoder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DifficultyEncoder.swift; sourceTree = "<group>"; };
+		58AAACCCCE32481AEAC0031F /* DifficultyCalculator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DifficultyCalculator.swift; sourceTree = "<group>"; };
+		58AAAD9F23E03D5A549E652D /* DifficultyCalculatorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DifficultyCalculatorTests.swift; sourceTree = "<group>"; };
+		58AAAE9C41E1A4BD72884023 /* DifficultyEncoderTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DifficultyEncoderTests.swift; sourceTree = "<group>"; };
 		58D7D3C70E759225E76D689A /* Pods-WalletKitTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WalletKitTests.release.xcconfig"; path = "../Pods/Target Support Files/Pods-WalletKitTests/Pods-WalletKitTests.release.xcconfig"; sourceTree = "<group>"; };
 		62EEC3758B9F3CFB076FF881 /* Pods_WalletKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WalletKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		95D20030A63CC8101E6A72E8 /* Pods_WalletKitTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WalletKitTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -257,6 +265,8 @@
 				11B35FA46CEA78297785F6C4 /* BlockHeaderItemValidator.swift */,
 				2FA5DF032E7ED8214D76696C /* MerkleBlockHandler.swift */,
 				2FA5DE717AEBDC8438D99390 /* MerkleBlockValidator.swift */,
+				58AAA83E846945B4903A0CAF /* DifficultyEncoder.swift */,
+				58AAACCCCE32481AEAC0031F /* DifficultyCalculator.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -361,6 +371,8 @@
 				11B3561C0558A070D833D2E0 /* BlockSaverTests.swift */,
 				2FA5D6A8656995FB458623D0 /* MerkleBlockHandlerTests.swift */,
 				11B35507D7F6982EEF1A45BA /* BlockSyncerTests.swift */,
+				58AAAE9C41E1A4BD72884023 /* DifficultyEncoderTests.swift */,
+				58AAAD9F23E03D5A549E652D /* DifficultyCalculatorTests.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -608,6 +620,7 @@
 				"$(SRCROOT)/WalletKit/Managers/BlockSaver.swift",
 				"$(SRCROOT)/WalletKit/Managers/BlockHeaderItemValidator.swift",
 				"$(SRCROOT)/WalletKit/Managers/MerkleBlockValidator.swift",
+				"$(SRCROOT)/WalletKit/Managers/DifficultyEncoder.swift",
 			);
 			name = Cuckoo;
 			outputPaths = (
@@ -664,6 +677,8 @@
 				11B35543136818C5B03B6781 /* BlockSaverTests.swift in Sources */,
 				2FA5D2F5F05FE2A19A575F13 /* MerkleBlockHandlerTests.swift in Sources */,
 				11B35E02856C47FAC7F1C581 /* BlockSyncerTests.swift in Sources */,
+				58AAA90ECCBE2A17336E9F1C /* DifficultyEncoderTests.swift in Sources */,
+				58AAAE85C2D688C7BF611A0B /* DifficultyCalculatorTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -746,6 +761,8 @@
 				2FA5D3CB6D79639AB784B364 /* MerkleBlockHandler.swift in Sources */,
 				2FA5D036020919E5369B5EDB /* MerkleBlockValidator.swift in Sources */,
 				11B3569B6059A0F31D7C4866 /* Address.swift in Sources */,
+				58AAA03CE2E6D76179F0743E /* DifficultyEncoder.swift in Sources */,
+				58AAA234C00809393E18AAA1 /* DifficultyCalculator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

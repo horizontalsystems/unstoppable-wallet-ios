@@ -30,27 +30,16 @@ class HeaderHandler {
         var validHeaders = [BlockHeaderItem]()
 
         let initialHeaderItem = BlockHeaderItem.deserialize(byteStream: ByteStream(lastBlock.rawHeader))
-        var error: Error?
-        for (index, headerItem) in blockHeaders.enumerated() {
-            let valid: Bool
-            do {
-                if try validator.isValid(item: headerItem, previousItem: validHeaders.last ?? initialHeaderItem, previousHeight: lastBlock.height + index) {
-                    validHeaders.append(headerItem)
-                } else {
-                    break
-                }
-            } catch let err {
-                error = err
-                break
+
+        defer {
+            if !validHeaders.isEmpty {
+                saver.create(withHeight: lastBlock.height, fromItems: validHeaders)
             }
         }
 
-        if !validHeaders.isEmpty {
-            saver.create(withHeight: lastBlock.height, fromItems: validHeaders)
-        }
-
-        if let error = error {
-            throw error
+        for (index, headerItem) in blockHeaders.enumerated() {
+            try validator.validate(item: headerItem, previousItem: validHeaders.last ?? initialHeaderItem, previousHeight: lastBlock.height + index)
+            validHeaders.append(headerItem)
         }
     }
 

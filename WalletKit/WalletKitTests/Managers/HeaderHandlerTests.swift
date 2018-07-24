@@ -85,7 +85,7 @@ class HeaderHandlerTests: XCTestCase {
         let items = [BlockHeaderItem(version: 536870912, prevBlock: "0000000000000000001f1bd6d48e0fa41d054f54440a5ff3fee200bbdb37e0e5".reversedData!, merkleRoot: "df838278ff83d53e91423d5f7cefe64ef163004e18408de2374bd1b898241c78".reversedData!, timestamp: 1531798474, bits: 389315112, nonce: 2195910910)]
 
         stub(mockValidator) { mock in
-            when(mock.isValid(item: equal(to: items[0]), previousItem: equal(to: initialItem), previousHeight: initialPreviousHeight)).thenReturn(true)
+            when(mock.validate(item: equal(to: items[0]), previousItem: equal(to: initialItem!), previousHeight: initialPreviousHeight)).thenDoNothing()
         }
 
         try! headerHandler.handle(blockHeaders: items)
@@ -99,10 +99,10 @@ class HeaderHandlerTests: XCTestCase {
         let items = [BlockHeaderItem(version: 536870912, prevBlock: "0000000000000000001f1bd6d48e0fa41d054f54440a5ff3fee200bbdb37e0e5".reversedData!, merkleRoot: "df838278ff83d53e91423d5f7cefe64ef163004e18408de2374bd1b898241c78".reversedData!, timestamp: 1531798474, bits: 389315112, nonce: 2195910910)]
 
         stub(mockValidator) { mock in
-            when(mock.isValid(item: equal(to: items[0]), previousItem: equal(to: initialItem), previousHeight: initialPreviousHeight)).thenReturn(false)
+            when(mock.validate(item: equal(to: items[0]), previousItem: equal(to: initialItem), previousHeight: initialPreviousHeight)).thenThrow(BlockHeaderItemValidator.HeaderValidatorError.notEqualBits)
         }
 
-        try! headerHandler.handle(blockHeaders: items)
+        try? headerHandler.handle(blockHeaders: items)
         verifyNoMoreInteractions(mockSaver)
     }
 
@@ -116,44 +116,13 @@ class HeaderHandlerTests: XCTestCase {
 
 
         stub(mockValidator) { mock in
-            when(mock.isValid(item: equal(to: items[0]), previousItem: equal(to: initialItem), previousHeight: initialPreviousHeight)).thenReturn(true)
-            when(mock.isValid(item: equal(to: items[1]), previousItem: equal(to: items[0]), previousHeight: initialPreviousHeight + 1)).thenReturn(true)
-            when(mock.isValid(item: equal(to: items[2]), previousItem: equal(to: items[1]), previousHeight: initialPreviousHeight + 2)).thenReturn(false)
+            when(mock.validate(item: equal(to: items[0]), previousItem: equal(to: initialItem), previousHeight: initialPreviousHeight)).thenDoNothing()
+            when(mock.validate(item: equal(to: items[1]), previousItem: equal(to: items[0]), previousHeight: initialPreviousHeight + 1)).thenDoNothing()
+            when(mock.validate(item: equal(to: items[2]), previousItem: equal(to: items[1]), previousHeight: initialPreviousHeight + 2)).thenThrow(BlockHeaderItemValidator.HeaderValidatorError.notEqualBits)
         }
 
-        try! headerHandler.handle(blockHeaders: items)
+        try? headerHandler.handle(blockHeaders: items)
         verify(mockSaver).create(withHeight: equal(to: initialBlock.height), fromItems: equal(to: [items[0], items[1]]))
-    }
-
-    func testPartialValidAndWrongCheckPointBlocks() {
-        try! realm.write { realm.add(initialBlock) }
-
-        let initialPreviousHeight = 532222
-        let items = [BlockHeaderItem(version: 536870912, prevBlock: "0000000000000000001f1bd6d48e0fa41d054f54440a5ff3fee200bbdb37e0e5".reversedData!, merkleRoot: "df838278ff83d53e91423d5f7cefe64ef163004e18408de2374bd1b898241c78".reversedData!, timestamp: 1531798474, bits: 389315112, nonce: 2195910910),
-                     BlockHeaderItem(version: 536870912, prevBlock: "00000000000000000009dce52e227d46a6bdf38a8c1f2e88c6044893289c2bf0".reversedData!, merkleRoot: "43ee07fdd8892234d1d3ef85e83354ff79836ebafa1f8d94dec2858fdca16e40".reversedData!, timestamp: 1531799449, bits: 389437975, nonce: 2023890938),
-                     BlockHeaderItem(version: 536870912, prevBlock: "0000000000000000003053b2dad316ce2fc65e8ac63d59d0752d980e43934ad0".reversedData!, merkleRoot: "cbf9b7821ecfb4d5a9cbd9e2bb01729aeecfa6cef3ded7df1e325b6aa3559dae".reversedData!, timestamp: 1531800228, bits: 389437975, nonce: 3500855249)]
-
-
-        stub(mockValidator) { mock in
-            when(mock.isValid(item: equal(to: items[0]), previousItem: equal(to: initialItem), previousHeight: initialPreviousHeight)).thenReturn(true)
-            when(mock.isValid(item: equal(to: items[1]), previousItem: equal(to: items[0]), previousHeight: initialPreviousHeight + 1)).thenThrow(BlockHeaderItemValidator.HeaderValidatorError.noCheckpointBlock)
-            when(mock.isValid(item: equal(to: items[2]), previousItem: equal(to: items[1]), previousHeight: initialPreviousHeight + 2)).thenReturn(true)
-        }
-
-        var caught = false
-
-        do {
-            try headerHandler.handle(blockHeaders: items)
-        } catch let error as BlockHeaderItemValidator.HeaderValidatorError {
-            caught = true
-            XCTAssertEqual(error, BlockHeaderItemValidator.HeaderValidatorError.noCheckpointBlock)
-        } catch {
-            XCTFail("Unknown exception thrown")
-        }
-
-        XCTAssertTrue(caught, "noCheckpointBlock exception not thrown")
-
-        verify(mockSaver).create(withHeight: equal(to: initialBlock.height), fromItems: equal(to: [items[0]]))
     }
 
 }
