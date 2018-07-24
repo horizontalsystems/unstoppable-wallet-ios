@@ -89,7 +89,8 @@ class BlockSyncerTests: XCTestCase {
         peerStatusSubject.onNext(.connected)
 
         let syncedHash = "00000000000000501c12693a4125d4856737e3827db078c4f44bafd236ee3c51".reversedData!
-        let hash = "000000000000002ca33390dac7a0b98b222b762810f2dda0a00ecf2c1cdf361b".reversedData!
+        let hash1 = "000000000000002ca33390dac7a0b98b222b762810f2dda0a00ecf2c1cdf361b".reversedData!
+        let hash2 = "000000000000002d7b058a413cda4de7c54ba3ce7836fe75569f908635679afe".reversedData!
 
         let e = expectation(description: "Realm Observer")
 
@@ -101,11 +102,12 @@ class BlockSyncerTests: XCTestCase {
 
         try! realm.write {
             realm.create(Block.self, value: ["reversedHeaderHashHex": syncedHash.reversedHex, "headerHash": syncedHash, "height": 1, "archived": true, "synced": true], update: true)
-            realm.create(Block.self, value: ["reversedHeaderHashHex": hash.reversedHex, "headerHash": hash, "height": 2, "archived": false, "synced": false], update: true)
+            realm.create(Block.self, value: ["reversedHeaderHashHex": hash1.reversedHex, "headerHash": hash1, "height": 2, "archived": false, "synced": false], update: true)
+            realm.create(Block.self, value: ["reversedHeaderHashHex": hash2.reversedHex, "headerHash": hash2, "height": 3, "archived": false, "synced": false], update: true)
         }
 
         waitForExpectations(timeout: 2)
-        verify(self.mockPeerManager).requestBlocks(headerHashes: equal(to: [hash]))
+        verify(self.mockPeerManager).requestBlocks(headerHashes: equal(to: [hash1, hash2]))
 
         token.invalidate()
     }
