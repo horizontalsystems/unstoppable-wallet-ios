@@ -101,6 +101,6 @@ class MerkleBlockHandlerTests: XCTestCase {
         }
 
         try! merkleBlockHandler.handle(message: sampleMerkleBlockMessage)
-        verifyNoMoreInteractions(mockSaver)
+        verify(mockSaver).update(block: equal(to: block), withTransactionHashes: equal(to: []))
     }
 }
