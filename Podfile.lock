@@ -26,7 +26,7 @@ PODS:
 
 DEPENDENCIES:
   - Alamofire
-  - BigInt (~> 3.1)
+  - BigInt
   - Cuckoo
   - GrouviActionSheet
   - GrouviExtensions
@@ -68,6 +68,6 @@ SPEC CHECKSUMS:
   SipHash: fad90a4683e420c52ef28063063dbbce248ea6d4
   SnapKit: a42d492c16e80209130a3379f73596c3454b7694
 
-PODFILE CHECKSUM: 8897c9130d01457564cc44687a9435c2e91fc1ff
+PODFILE CHECKSUM: 13bbb614d3670e07ffeb95913edd35b4aa6e7c22
 
 COCOAPODS: 1.5.3

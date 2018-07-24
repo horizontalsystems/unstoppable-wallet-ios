@@ -62,7 +62,7 @@
 		58AAA234C00809393E18AAA1 /* DifficultyCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAACCCCE32481AEAC0031F /* DifficultyCalculator.swift */; };
 		58AAA90ECCBE2A17336E9F1C /* DifficultyEncoderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAE9C41E1A4BD72884023 /* DifficultyEncoderTests.swift */; };
 		58AAAE85C2D688C7BF611A0B /* DifficultyCalculatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAD9F23E03D5A549E652D /* DifficultyCalculatorTests.swift */; };
-		AB4265F77FFF1C4BF7184E94 /* Pods_WalletKitTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 95D20030A63CC8101E6A72E8 /* Pods_WalletKitTests.framework */; };
+		6480F0E2B4AA1D481624F935 /* Pods_WalletKitTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 95D20030A63CC8101E6A72E8 /* Pods_WalletKitTests.framework */; };
 		D31711EA20F7192400AEF61B /* Peer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31711E920F7192300AEF61B /* Peer.swift */; };
 		D31711FF20F7193000AEF61B /* PingMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31711EB20F7192F00AEF61B /* PingMessage.swift */; };
 		D317120020F7193000AEF61B /* AddressMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31711EC20F7192F00AEF61B /* AddressMessage.swift */; };
@@ -161,7 +161,6 @@
 		11B35FA46CEA78297785F6C4 /* BlockHeaderItemValidator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockHeaderItemValidator.swift; sourceTree = "<group>"; };
 		11B35FEEAF84E9FD41070786 /* BlockSaver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockSaver.swift; sourceTree = "<group>"; };
 		11B35FF2F94006C73B7773BC /* GetHeadersMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetHeadersMessage.swift; sourceTree = "<group>"; };
-		259799518A91E58BAAD1CD7A /* Pods-WalletKitTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WalletKitTests.debug.xcconfig"; path = "../Pods/Target Support Files/Pods-WalletKitTests/Pods-WalletKitTests.debug.xcconfig"; sourceTree = "<group>"; };
 		2FA5D6A8656995FB458623D0 /* MerkleBlockHandlerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MerkleBlockHandlerTests.swift; sourceTree = "<group>"; };
 		2FA5DE717AEBDC8438D99390 /* MerkleBlockValidator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MerkleBlockValidator.swift; sourceTree = "<group>"; };
 		2FA5DF032E7ED8214D76696C /* MerkleBlockHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MerkleBlockHandler.swift; sourceTree = "<group>"; };
@@ -169,8 +168,9 @@
 		58AAACCCCE32481AEAC0031F /* DifficultyCalculator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DifficultyCalculator.swift; sourceTree = "<group>"; };
 		58AAAD9F23E03D5A549E652D /* DifficultyCalculatorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DifficultyCalculatorTests.swift; sourceTree = "<group>"; };
 		58AAAE9C41E1A4BD72884023 /* DifficultyEncoderTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DifficultyEncoderTests.swift; sourceTree = "<group>"; };
-		58D7D3C70E759225E76D689A /* Pods-WalletKitTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WalletKitTests.release.xcconfig"; path = "../Pods/Target Support Files/Pods-WalletKitTests/Pods-WalletKitTests.release.xcconfig"; sourceTree = "<group>"; };
 		62EEC3758B9F3CFB076FF881 /* Pods_WalletKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WalletKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6B851FED93B7529C1E1B34B6 /* Pods-WalletKitTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WalletKitTests.debug.xcconfig"; path = "../Pods/Target Support Files/Pods-WalletKitTests/Pods-WalletKitTests.debug.xcconfig"; sourceTree = "<group>"; };
+		7AC7B1938125A8B9E14B8BE0 /* Pods-WalletKitTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WalletKitTests.release.xcconfig"; path = "../Pods/Target Support Files/Pods-WalletKitTests/Pods-WalletKitTests.release.xcconfig"; sourceTree = "<group>"; };
 		95D20030A63CC8101E6A72E8 /* Pods_WalletKitTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WalletKitTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A55FEE3EC60BF5F4516B2A22 /* Pods-WalletKit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WalletKit.release.xcconfig"; path = "../Pods/Target Support Files/Pods-WalletKit/Pods-WalletKit.release.xcconfig"; sourceTree = "<group>"; };
 		D31711E920F7192300AEF61B /* Peer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Peer.swift; sourceTree = "<group>"; };
@@ -220,7 +220,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D380FD6020FCC04400276993 /* WalletKit.framework in Frameworks */,
-				AB4265F77FFF1C4BF7184E94 /* Pods_WalletKitTests.framework in Frameworks */,
+				6480F0E2B4AA1D481624F935 /* Pods_WalletKitTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -394,8 +394,8 @@
 			children = (
 				0DCE6AF072E80FCF78CC97A3 /* Pods-WalletKit.debug.xcconfig */,
 				A55FEE3EC60BF5F4516B2A22 /* Pods-WalletKit.release.xcconfig */,
-				259799518A91E58BAAD1CD7A /* Pods-WalletKitTests.debug.xcconfig */,
-				58D7D3C70E759225E76D689A /* Pods-WalletKitTests.release.xcconfig */,
+				6B851FED93B7529C1E1B34B6 /* Pods-WalletKitTests.debug.xcconfig */,
+				7AC7B1938125A8B9E14B8BE0 /* Pods-WalletKitTests.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -481,12 +481,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = D380FD6520FCC04400276993 /* Build configuration list for PBXNativeTarget "WalletKitTests" */;
 			buildPhases = (
-				91E813F01DE84690EA845399 /* [CP] Check Pods Manifest.lock */,
+				3788084FED446D95E6641E40 /* [CP] Check Pods Manifest.lock */,
 				D380FD6620FCC1C800276993 /* Cuckoo */,
 				D380FD5720FCC04400276993 /* Sources */,
 				D380FD5820FCC04400276993 /* Frameworks */,
 				D380FD5920FCC04400276993 /* Resources */,
-				EFD8A1FFDB2C1886902F2883 /* [CP] Embed Pods Frameworks */,
+				2DFC1CE9A16F2F9B63D807C1 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -572,7 +572,41 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		91E813F01DE84690EA845399 /* [CP] Check Pods Manifest.lock */ = {
+		2DFC1CE9A16F2F9B63D807C1 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/../Pods/Target Support Files/Pods-WalletKitTests/Pods-WalletKitTests-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Cuckoo/Cuckoo.framework",
+				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/BigInt/BigInt.framework",
+				"${BUILT_PRODUCTS_DIR}/ObjectMapper/ObjectMapper.framework",
+				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
+				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/RxRealm/RxRealm.framework",
+				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/SipHash/SipHash.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Cuckoo.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BigInt.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ObjectMapper.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxRealm.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SipHash.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/../Pods/Target Support Files/Pods-WalletKitTests/Pods-WalletKitTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		3788084FED446D95E6641E40 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -628,40 +662,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "# Define output file. Change \"$PROJECT_DIR/${PROJECT_NAME}Tests\" to your test's root source folder, if it's not the default name.\nOUTPUT_FILE=\"$PROJECT_DIR/${PROJECT_NAME}Tests/GeneratedMocks.swift\"\necho \"Generated Mocks File = $OUTPUT_FILE\"\n\n# Define input directory. Change \"${PROJECT_DIR}/${PROJECT_NAME}\" to your project's root source folder, if it's not the default name.\nINPUT_DIR=\"${PROJECT_DIR}/${PROJECT_NAME}\"\necho \"Mocks Input Directory = $INPUT_DIR\"\n\n# Generate mock files, include as many input files as you'd like to create mocks for.\n\"${PODS_ROOT}/Cuckoo/run\" generate --testable \"$PROJECT_NAME\" \\\n--output \"${OUTPUT_FILE}\"";
-		};
-		EFD8A1FFDB2C1886902F2883 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${SRCROOT}/../Pods/Target Support Files/Pods-WalletKitTests/Pods-WalletKitTests-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/Cuckoo/Cuckoo.framework",
-				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
-				"${BUILT_PRODUCTS_DIR}/ObjectMapper/ObjectMapper.framework",
-				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
-				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
-				"${BUILT_PRODUCTS_DIR}/RxRealm/RxRealm.framework",
-				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
-				"${BUILT_PRODUCTS_DIR}/BigInt/BigInt.framework",
-				"${BUILT_PRODUCTS_DIR}/SipHash/SipHash.framework",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Cuckoo.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ObjectMapper.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxRealm.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BigInt.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SipHash.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/../Pods/Target Support Files/Pods-WalletKitTests/Pods-WalletKitTests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -779,7 +779,7 @@
 /* Begin XCBuildConfiguration section */
 		D380FD6320FCC04400276993 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 259799518A91E58BAAD1CD7A /* Pods-WalletKitTests.debug.xcconfig */;
+			baseConfigurationReference = 6B851FED93B7529C1E1B34B6 /* Pods-WalletKitTests.debug.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 72234W6E3D;
@@ -799,7 +799,7 @@
 		};
 		D380FD6420FCC04400276993 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 58D7D3C70E759225E76D689A /* Pods-WalletKitTests.release.xcconfig */;
+			baseConfigurationReference = 7AC7B1938125A8B9E14B8BE0 /* Pods-WalletKitTests.release.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 72234W6E3D;
