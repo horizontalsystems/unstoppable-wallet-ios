@@ -12,7 +12,7 @@ class MerkleBlockHandler {
     let validator: MerkleBlockValidator
     let saver: BlockSaver
 
-    init(realmFactory: RealmFactory = .shared, validator: MerkleBlockValidator = .shared, saver: BlockSaver = .shared) {
+    init(realmFactory: RealmFactory = .shared, validator: MerkleBlockValidator = MerkleBlockValidator(), saver: BlockSaver = .shared) {
         self.realmFactory = realmFactory
         self.validator = validator
         self.saver = saver
@@ -26,11 +26,10 @@ class MerkleBlockHandler {
             throw HandleError.blockNotFound
         }
 
-        if validator.isValid(message: message) {
-            // Hash filtering logic must be hear. Only transaction hashes must be passed to saver.update
-            let transactionHashes = message.hashes
+        try validator.validate(message: message)
 
-            saver.update(block: block, withTransactionHashes: transactionHashes)
+        if validator.txIds.count > 0 {
+            saver.update(block: block, withTransactionHashes: validator.txIds)
         }
     }
 

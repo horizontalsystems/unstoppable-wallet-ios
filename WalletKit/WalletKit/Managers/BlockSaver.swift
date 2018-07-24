@@ -49,6 +49,7 @@ class BlockSaver {
 
         try? realm.write {
             realm.add(transactions, update: true)
+            block.synced = true
         }
     }
 
