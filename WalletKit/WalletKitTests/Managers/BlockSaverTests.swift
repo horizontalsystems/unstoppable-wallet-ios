@@ -71,6 +71,8 @@ class BlockSaverTests: XCTestCase {
         for (i, transaction) in transactions.enumerated() {
             XCTAssertEqual(savedBlock.transactions[i].transactionHash, hashes[i].reversedHex)
         }
+
+        XCTAssertTrue(savedBlock.synced)
     }
 
     private func verifyBlock(block: Block, item: BlockHeaderItem, height: Int) {
