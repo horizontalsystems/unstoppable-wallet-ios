@@ -21,13 +21,10 @@ class BlockHeaderItemValidatorTests: XCTestCase {
 
         realm = try! Realm(configuration: Realm.Configuration(inMemoryIdentifier: "TestRealm"))
 
-        firstCheckPointBlock = Block()
-        firstCheckPointBlock.reversedHeaderHashHex = "0000000000000000002999e6f0537a1707b027a7ccdce1723700d51b1400be30"
-        firstCheckPointBlock.headerHash = "0000000000000000002999e6f0537a1707b027a7ccdce1723700d51b1400be30".reversedData!
-        firstCheckPointBlock.height = 530208
-
-        let previousHeaderItem = BlockHeaderItem(version: 536870912, prevBlock: "00000000000000000020c68bfc8de14bc9dd2d6cf45161a67e0c6455cf28cfd8".reversedData!, merkleRoot: "a3f40c28cc6b90b2b1bfaef0e1c394b01dd97786b6a7da5e35f26bc4a7b1e451".reversedData!, timestamp: 1530545661, bits: 389315112, nonce: 630776633)
-        firstCheckPointBlock.rawHeader = previousHeaderItem.serialized()
+        firstCheckPointBlock = Block(
+                blockHeader: BlockHeaderItem(version: 536870912, prevBlock: "00000000000000000020c68bfc8de14bc9dd2d6cf45161a67e0c6455cf28cfd8".reversedData!, merkleRoot: "a3f40c28cc6b90b2b1bfaef0e1c394b01dd97786b6a7da5e35f26bc4a7b1e451".reversedData!, timestamp: 1530545661, bits: 389315112, nonce: 630776633),
+                height: 530208
+        )
 
         stub(mockRealmFactory) { mock in
             when(mock.realm.get).thenReturn(realm)

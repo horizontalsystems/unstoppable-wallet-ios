@@ -9,6 +9,7 @@ class BlockSaverTests: XCTestCase {
     private var saver: BlockSaver!
 
     private var realm: Realm!
+    private var initialBlock: Block!
 
     override func setUp() {
         super.setUp()
@@ -17,6 +18,12 @@ class BlockSaverTests: XCTestCase {
         saver = BlockSaver(realmFactory: mockRealmFactory)
 
         realm = try! Realm(configuration: Realm.Configuration(inMemoryIdentifier: "TestRealm"))
+
+        initialBlock = Block(blockHeader: TestHelper.checkpointBlockHeader, height: 1)
+
+        try! realm.write {
+            realm.add(initialBlock)
+        }
 
         stub(mockRealmFactory) { mock in
             when(mock.realm.get).thenReturn(realm)
@@ -28,29 +35,27 @@ class BlockSaverTests: XCTestCase {
         saver = nil
 
         realm = nil
+        initialBlock = nil
 
         super.tearDown()
     }
 
     func testSave() {
-        let lastHeight = 1
-
         let items = [
             BlockHeaderItem(version: 536870912, prevBlock: "000000000000837bcdb53e7a106cf0e74bab6ae8bc96481243d31bea3e6b8c92".reversedData!, merkleRoot: "8beab73ba2318e4cbdb1c65624496bc3214d6ba93204e049fb46293a41880b9a".reversedData!, timestamp: 1506023937, bits: 453021074, nonce: 2001025151),
             BlockHeaderItem(version: 536870912, prevBlock: "00000000000025c23a19cc91ad8d3e33c2630ce1df594e1ae0bf0eabe30a9176".reversedData!, merkleRoot: "63241c065cf8240ac64772e064a9436c21dc4c75843e7e5df6ecf41d5ef6a1b4".reversedData!, timestamp: 1506024043, bits: 453021074, nonce: 1373615473)
         ]
 
-        saver.create(withHeight: lastHeight, fromItems: items)
+        saver.create(withPreviousBlock: initialBlock, fromItems: items)
 
         let blocks = realm.objects(Block.self)
 
-        XCTAssertEqual(blocks.count, 2)
-        verifyBlock(block: blocks[0], item: items[0], height: lastHeight + 1)
-        verifyBlock(block: blocks[1], item: items[1], height: lastHeight + 2)
+        XCTAssertEqual(blocks.count, 1 + 2)
+        verifyBlock(block: blocks[1], previousBlock: blocks[0], item: items[0], height: initialBlock.height + 1)
+        verifyBlock(block: blocks[2], previousBlock: blocks[1], item: items[1], height: initialBlock.height + 2)
     }
 
     func testUpdateWithMerkleBlock() {
-        let lastHeight = 1
         let blockHeaderItem = BlockHeaderItem(version: 536870912, prevBlock: "000000000000837bcdb53e7a106cf0e74bab6ae8bc96481243d31bea3e6b8c92".reversedData!, merkleRoot: "8beab73ba2318e4cbdb1c65624496bc3214d6ba93204e049fb46293a41880b9a".reversedData!, timestamp: 1506023937, bits: 453021074, nonce: 2001025151)
         let hashes = [
             "f0db27cd89551bd197bf551bf697d6eab8fea1fae982fe4b0055fdd58b1f7ee0".reversedData!,
@@ -58,7 +63,8 @@ class BlockSaverTests: XCTestCase {
         ]
         let message = MerkleBlockMessage(blockHeaderItem: blockHeaderItem, totalTransactions: 1, numberOfHashes: 2, hashes: hashes, numberOfFlags: 3, flags: [1, 0, 0])
 
-        saver.create(withHeight: lastHeight, fromItems: [blockHeaderItem])
+        saver.create(withPreviousBlock: initialBlock, fromItems: [blockHeaderItem])
+
         guard let savedBlock = realm.objects(Block.self).last else {
             XCTFail("Block not saved!")
             return
@@ -75,14 +81,14 @@ class BlockSaverTests: XCTestCase {
         XCTAssertTrue(savedBlock.synced)
     }
 
-    private func verifyBlock(block: Block, item: BlockHeaderItem, height: Int) {
+    private func verifyBlock(block: Block, previousBlock: Block, item: BlockHeaderItem, height: Int) {
         let rawHeader = item.serialized()
         let headerHash = Crypto.sha256sha256(rawHeader)
         XCTAssertEqual(block.reversedHeaderHashHex, headerHash.reversedHex)
         XCTAssertEqual(block.headerHash, headerHash)
         XCTAssertEqual(block.rawHeader, rawHeader)
         XCTAssertEqual(block.height, height)
-        XCTAssertEqual(block.archived, false)
+        XCTAssertEqual(block.previousBlock, previousBlock)
     }
 
 }
