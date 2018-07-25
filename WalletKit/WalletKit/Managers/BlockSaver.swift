@@ -9,25 +9,18 @@ class BlockSaver {
         self.realmFactory = realmFactory
     }
 
-    func create(withHeight height: Int, fromItems items: [BlockHeaderItem]) {
+    func create(withPreviousBlock previousBlock: Block, fromItems items: [BlockHeaderItem]) {
         let realm = realmFactory.realm
 
-        var currentHeight = height
         var blocks = [Block]()
 
+        var previousBlock = previousBlock
+
         for item in items {
-            currentHeight += 1
-
-            let rawHeader = item.serialized()
-            let hash = Crypto.sha256sha256(rawHeader)
-
-            let block = Block()
-            block.reversedHeaderHashHex = hash.reversedHex
-            block.headerHash = hash
-            block.rawHeader = rawHeader
-            block.height = currentHeight
-
+            let block = Block(blockHeader: item, previousBlock: previousBlock)
             blocks.append(block)
+
+            previousBlock = block
         }
 
         try? realm.write {
