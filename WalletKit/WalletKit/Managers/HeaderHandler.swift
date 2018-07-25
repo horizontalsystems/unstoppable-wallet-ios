@@ -22,7 +22,7 @@ class HeaderHandler {
 
         let realm = realmFactory.realm
 
-        guard let lastBlock = realm.objects(Block.self).filter("archived = %@", false).sorted(byKeyPath: "height").last else {
+        guard let lastBlock = realm.objects(Block.self).filter("previousBlock != nil").sorted(byKeyPath: "height").last else {
             print("HeaderHandler: No last block")
             return
         }
@@ -33,7 +33,7 @@ class HeaderHandler {
 
         defer {
             if !validHeaders.isEmpty {
-                saver.create(withHeight: lastBlock.height, fromItems: validHeaders)
+                saver.create(withPreviousBlock: lastBlock, fromItems: validHeaders)
             }
         }
 

@@ -26,17 +26,27 @@ public class SyncManager {
     }
 
     init() {
-        let header = BlockHeaderItem(
+        let preCheckPointHeader = BlockHeaderItem(
                 version: 536870912,
-                prevBlock: "0000000000000015868cb68ade5875a83c92d3efb7afc140e98e17abf6343dee".reversedData!,
-                merkleRoot: "5fdc2a9c73000341987e8db5df903dad4f04dba5f5feedf62d00cb378c23682f".reversedData!,
-                timestamp: 1532325895,
-                bits: 424253525,
-                nonce: 1376325361
+                prevBlock: "000000000000004b68d8b5453cf38c485b1b42d564b6a1d8487ec5ce662622ea".reversedData!,
+                merkleRoot: "fde234b11907f3f6d45633ab11a1ba0db59f8aabecf5879d1ef301ef091f4f44".reversedData!,
+                timestamp: 1532135309,
+                bits: 425766046,
+                nonce: 3687858789
         )
+        let preCheckpointBlock = Block(blockHeader: preCheckPointHeader, height: 1354751)
+        preCheckpointBlock.synced = true
 
-        let block = Block(blockHeader: header, height: 1355061)
-        block.synced = true
+        let checkPointHeader = BlockHeaderItem(
+                version: 536870912,
+                prevBlock: "0000000000000051bff2f64c9078fb346d6a2a209ba5c3ffa0048c6b7027e47f".reversedData!,
+                merkleRoot: "992c07e1a7b9a53ae3b8764333324396570fce24c49b8de7ed87fb1346df62a7".reversedData!,
+                timestamp: 1532137995,
+                bits: 424253525,
+                nonce: 1665657862
+        )
+        let checkpointBlock = Block(blockHeader: checkPointHeader, previousBlock: preCheckpointBlock)
+        checkpointBlock.synced = true
 
         let walletManager = WalletManager.shared
         var addresses = [Address]()
@@ -52,7 +62,8 @@ public class SyncManager {
 
         let realm = try! Realm()
         try? realm.write {
-            realm.add(block, update: true)
+            realm.add(preCheckpointBlock, update: true)
+            realm.add(checkpointBlock, update: true)
             realm.add(addresses, update: true)
         }
     }
