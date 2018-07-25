@@ -46,13 +46,10 @@ class BlockHeaderItemValidatorTests: XCTestCase {
         let item = BlockHeaderItem(version: 536870912, prevBlock: "00000000000025c23a19cc91ad8d3e33c2630ce1df594e1ae0bf0eabe30a9176".reversedData!, merkleRoot: "63241c065cf8240ac64772e064a9436c21dc4c75843e7e5df6ecf41d5ef6a1b4".reversedData!, timestamp: 1506024043, bits: 453021074, nonce: 1373615473)
         let previousHeight = 0
 
-        var caught = false
         do {
             try validator.validate(item: item, previousItem: previousItem, previousHeight: previousHeight)
         } catch let error {
-            caught = true
-
-            XCTAssertTrue(caught, "\(error) Exception Thrown")
+            XCTFail("\(error) Exception Thrown")
         }
     }
 
