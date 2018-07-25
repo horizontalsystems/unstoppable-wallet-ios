@@ -695,7 +695,6 @@
 				58AAAE85C2D688C7BF611A0B /* DifficultyCalculatorTests.swift in Sources */,
 				11B35D23B451CFB803F69CA0 /* TestHelper.swift in Sources */,
 				58AAAD7FA11B8C8973A0A363 /* TestNetBlockHeaderItemValidatorTests.swift in Sources */,
-				11B35D23B451CFB803F69CA0 /* TestHelper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
