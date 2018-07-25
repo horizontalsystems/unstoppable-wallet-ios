@@ -61,7 +61,9 @@
 		2FA5D3CB6D79639AB784B364 /* MerkleBlockHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DF032E7ED8214D76696C /* MerkleBlockHandler.swift */; };
 		58AAA03CE2E6D76179F0743E /* DifficultyEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA83E846945B4903A0CAF /* DifficultyEncoder.swift */; };
 		58AAA234C00809393E18AAA1 /* DifficultyCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAACCCCE32481AEAC0031F /* DifficultyCalculator.swift */; };
+		58AAA50990F475E10BE6EEA6 /* TestNetBlockHeaderItemValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA22A8FC4E2374CE4D10A /* TestNetBlockHeaderItemValidator.swift */; };
 		58AAA90ECCBE2A17336E9F1C /* DifficultyEncoderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAE9C41E1A4BD72884023 /* DifficultyEncoderTests.swift */; };
+		58AAAD7FA11B8C8973A0A363 /* TestNetBlockHeaderItemValidatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA1040012570F76E48D7C /* TestNetBlockHeaderItemValidatorTests.swift */; };
 		58AAAE85C2D688C7BF611A0B /* DifficultyCalculatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAD9F23E03D5A549E652D /* DifficultyCalculatorTests.swift */; };
 		6480F0E2B4AA1D481624F935 /* Pods_WalletKitTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 95D20030A63CC8101E6A72E8 /* Pods_WalletKitTests.framework */; };
 		D31711EA20F7192400AEF61B /* Peer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31711E920F7192300AEF61B /* Peer.swift */; };
@@ -167,6 +169,8 @@
 		2FA5D6A8656995FB458623D0 /* MerkleBlockHandlerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MerkleBlockHandlerTests.swift; sourceTree = "<group>"; };
 		2FA5DE717AEBDC8438D99390 /* MerkleBlockValidator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MerkleBlockValidator.swift; sourceTree = "<group>"; };
 		2FA5DF032E7ED8214D76696C /* MerkleBlockHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MerkleBlockHandler.swift; sourceTree = "<group>"; };
+		58AAA1040012570F76E48D7C /* TestNetBlockHeaderItemValidatorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestNetBlockHeaderItemValidatorTests.swift; sourceTree = "<group>"; };
+		58AAA22A8FC4E2374CE4D10A /* TestNetBlockHeaderItemValidator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestNetBlockHeaderItemValidator.swift; sourceTree = "<group>"; };
 		58AAA83E846945B4903A0CAF /* DifficultyEncoder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DifficultyEncoder.swift; sourceTree = "<group>"; };
 		58AAACCCCE32481AEAC0031F /* DifficultyCalculator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DifficultyCalculator.swift; sourceTree = "<group>"; };
 		58AAAD9F23E03D5A549E652D /* DifficultyCalculatorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DifficultyCalculatorTests.swift; sourceTree = "<group>"; };
@@ -270,6 +274,7 @@
 				2FA5DE717AEBDC8438D99390 /* MerkleBlockValidator.swift */,
 				58AAA83E846945B4903A0CAF /* DifficultyEncoder.swift */,
 				58AAACCCCE32481AEAC0031F /* DifficultyCalculator.swift */,
+				58AAA22A8FC4E2374CE4D10A /* TestNetBlockHeaderItemValidator.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -377,6 +382,7 @@
 				58AAAE9C41E1A4BD72884023 /* DifficultyEncoderTests.swift */,
 				58AAAD9F23E03D5A549E652D /* DifficultyCalculatorTests.swift */,
 				2FA5D52E9214E99DF779A25A /* MerkleBlockValidatorTests.swift */,
+				58AAA1040012570F76E48D7C /* TestNetBlockHeaderItemValidatorTests.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -684,6 +690,7 @@
 				2FA5D1FE86A626209E5D757F /* MerkleBlockValidatorTests.swift in Sources */,
 				58AAA90ECCBE2A17336E9F1C /* DifficultyEncoderTests.swift in Sources */,
 				58AAAE85C2D688C7BF611A0B /* DifficultyCalculatorTests.swift in Sources */,
+				58AAAD7FA11B8C8973A0A363 /* TestNetBlockHeaderItemValidatorTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -768,6 +775,7 @@
 				11B3569B6059A0F31D7C4866 /* Address.swift in Sources */,
 				58AAA03CE2E6D76179F0743E /* DifficultyEncoder.swift in Sources */,
 				58AAA234C00809393E18AAA1 /* DifficultyCalculator.swift in Sources */,
+				58AAA50990F475E10BE6EEA6 /* TestNetBlockHeaderItemValidator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
