@@ -21,6 +21,7 @@ extension DepositRouter {
         let interactor = DepositInteractor(coins: coins)
         let presenter = DepositPresenter(interactor: interactor, router: router)
         let depositAlertModel = DepositAlertModel(viewDelegate: presenter)
+
         let viewController = ActionSheetController(withModel: depositAlertModel, actionStyle: .sheet(showDismiss: false))
 
         interactor.delegate = presenter

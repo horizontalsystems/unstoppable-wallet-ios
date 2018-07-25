@@ -5,12 +5,32 @@ class SendAlertModel: BaseAlertModel {
 
     let delegate: ISendViewDelegate
 
-    init(viewDelegate: ISendViewDelegate) {
+    let coin: Coin
+
+    init(viewDelegate: ISendViewDelegate, coin: Coin) {
         self.delegate = viewDelegate
+        self.coin = coin
 
         super.init()
         delegate.onViewDidLoad()
+        ignoreKeyboard = false
 
+        let titleItem = SendTitleItem(coinCode: coin.code, tag: 0, required: true, onQRScan: { [weak self] in
+            self?.delegate.onScanClick()
+        })
+        addItemView(titleItem)
+
+        let sendAmountItem = SendAmountItem()
+        let sendReferenceItem = SendReferenceItem()
+        let sendConfigItem = BaseTwinItem(cellType: SendConfigTwinItemView.self, first: sendAmountItem, second: sendReferenceItem, height: SendTheme.twinHeight, tag: 1, required: true)
+        sendConfigItem.showSeparator = false
+
+        addItemView(sendConfigItem)
+
+        let sendButtonItem = SendButtonItem(tag: 2, required: true, onTap: {
+            print("on send")
+        })
+        addItemView(sendButtonItem)
     }
 
 }

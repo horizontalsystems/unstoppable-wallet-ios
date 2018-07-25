@@ -37,6 +37,13 @@
 "wallet.send" = "Send";
 "wallet.deposit" = "Deposit";
 
+"send.title" = "Send ";
+"send.address" = "Address";
+"paste" = "Paste";
+"amount" = "Amount";
+"more" = "More";
+"send" = "Send";
+
 "transactions.title" = "Transactions";
 "transactions.tab_bar_item" = "Transactions";
 "all" = "all";

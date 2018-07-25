@@ -70,4 +70,12 @@ extension WalletPresenter: IWalletViewDelegate {
         }
     }
 
+    func onPay(for index: Int) {
+        if index < walletBalances.count {
+            router.onSend(for: walletBalances[index])
+        } else {
+            SendRouter.module(coin: Bitcoin()).show()
+        }
+    }
+
 }

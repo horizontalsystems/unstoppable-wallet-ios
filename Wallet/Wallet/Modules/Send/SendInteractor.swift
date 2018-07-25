@@ -5,10 +5,10 @@ class SendInteractor {
 
     weak var delegate: ISendInteractorDelegate?
 
-    var coins: [Coin]
+    var coin: Coin
 
-    init(coins: [Coin]) {
-        self.coins = coins
+    init(coin: Coin) {
+        self.coin = coin
     }
 
 }
