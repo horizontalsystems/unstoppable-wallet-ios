@@ -21,11 +21,14 @@ class SendAlertModel: BaseAlertModel {
         addItemView(titleItem)
 
         var sendConfigItem: BaseTwinItem?
-        let sendAmountItem = SendAmountItem(onMore: {
+        let sendAmountItem = SendAmountItem(onMore: { [weak self] in
             sendConfigItem?.showFirstItem = false
-            self.reload?()
+            self?.reload?()
         })
-        let sendReferenceItem = SendReferenceItem()
+        let sendReferenceItem = SendReferenceItem(onBack: { [weak self] in
+            sendConfigItem?.showFirstItem = true
+            self?.reload?()
+        })
         sendConfigItem = BaseTwinItem(cellType: SendConfigTwinItemView.self, first: sendAmountItem, second: sendReferenceItem, height: SendTheme.twinHeight, tag: 1, required: true)
         sendConfigItem?.showSeparator = false
 

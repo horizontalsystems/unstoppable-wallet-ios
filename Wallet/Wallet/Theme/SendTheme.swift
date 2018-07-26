@@ -12,19 +12,26 @@ class SendTheme {
     static let sendButtonSideMargin: CGFloat = 16
     static let inputTintColor = UIColor.cryptoYellow
     static let shareButtonTopMargin: CGFloat = 8
+    static let referenceInputTopMargin: CGFloat = 22
     static let inputTextColor = UIColor.cryptoDark
     static let inputFont = UIFont.cryptoBody2
     static let sendButtonItemHeight: CGFloat = 74
+    static let timeLabelFont = UIFont.cryptoHeadline
+    static let timeLabelColor = UIColor.black
     static let buttonCornerRadius: CGFloat = 4
     static let inputCornerRadius: CGFloat = 6
     static let sendButtonHeight: CGFloat = 50
     static let addressHeight: CGFloat = 44
+    static let referenceInputHeight: CGFloat = 44
+    static let timeLabelTopMargin: CGFloat = 24
     static let buttonFont = UIFont.cryptoBody2
     static let buttonBorderColor = UIColor.cryptoSteel50
+    static let feeLabelColor = UIColor.cryptoGray
+    static let feeLabelFont = UIFont.cryptoHeadline
     static let buttonTextDictionary: RespondButton.Style = [.active: UIColor.cryptoDark, .selected: UIColor.cryptoDark, .disabled: UIColor.cryptoSilver]
     static let inputFieldsGap: CGFloat = 24
     static let amountHeight: CGFloat = 69
-    static let inputHeight: CGFloat = 43
+    static let amountInputHeight: CGFloat = 43
     static let separatorBackground = UIColor.cryptoLightGray
     static let moreButtonTextColor = UIColor.cryptoGreen
     static let moreButtonTextSelectedColor = UIColor.cryptoGreenPressed
@@ -40,6 +47,7 @@ class SendTheme {
     static let smallestMargin: CGFloat = 4
     static let buttonTitleMargin: CGFloat = 10
     static let currencyDropImageLeftMargin: CGFloat = 5
+    static let backButtonTopMargin:CGFloat = 19
     static let currencyDropImageSize = CGSize(width: 6, height: 5)
     static let currencyDropImageRightMargin: CGFloat = 8
 }

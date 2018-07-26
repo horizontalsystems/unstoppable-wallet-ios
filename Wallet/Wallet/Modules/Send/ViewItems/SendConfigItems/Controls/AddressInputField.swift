@@ -15,7 +15,7 @@ class AddressInputField: UIView {
         addressInputField.tintColor = SendTheme.inputTintColor
         addressInputField.textColor = SendTheme.inputTextColor
         addressInputField.font = SendTheme.inputFont
-        addressInputField.placeholder = "send.address".localized
+        addressInputField.placeholder = "send.address_placeholder".localized
 
         addSubview(pasteButton)
         pasteButton.borderWidth = 1 / UIScreen.main.scale
@@ -24,6 +24,7 @@ class AddressInputField: UIView {
         pasteButton.backgrounds = ButtonTheme.grayBackgroundDictionary
         pasteButton.textColors = SendTheme.buttonTextDictionary
         pasteButton.titleLabel.text = "paste".localized
+        pasteButton.titleLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
 
         addressInputField.snp.makeConstraints { maker in
             maker.leading.equalToSuperview().offset(SendTheme.sideMargin)

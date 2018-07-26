@@ -38,11 +38,13 @@
 "wallet.deposit" = "Deposit";
 
 "send.title" = "Send ";
-"send.address" = "Address";
+"send.address_placeholder" = "Address";
+"send.payment_reference_placeholder" = "Payment Reference";
 "paste" = "Paste";
 "amount" = "Amount";
 "more" = "More";
 "send" = "Send";
+"back" = "Back";
 
 "transactions.title" = "Transactions";
 "transactions.tab_bar_item" = "Transactions";

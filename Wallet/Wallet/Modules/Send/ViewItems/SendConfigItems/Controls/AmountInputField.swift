@@ -62,7 +62,7 @@ class AmountInputField: UIView {
             maker.trailing.equalToSuperview().offset(-SendTheme.currencyDropImageRightMargin)
         }
         separatorView.snp.makeConstraints { maker in
-            maker.top.equalToSuperview().offset(SendTheme.inputHeight)
+            maker.top.equalToSuperview().offset(SendTheme.amountInputHeight)
             maker.leading.trailing.equalToSuperview().inset(UIEdgeInsets(top: 0, left: SendTheme.buttonSideMargin, bottom: 0, right: SendTheme.buttonSideMargin))
             maker.height.equalTo(SendTheme.separatorHeight)
         }
