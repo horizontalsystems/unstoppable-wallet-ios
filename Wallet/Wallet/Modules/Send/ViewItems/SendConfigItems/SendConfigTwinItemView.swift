@@ -4,10 +4,10 @@ import GrouviActionSheet
 class SendConfigTwinItemView: BaseTwinItemView {
 
     override var firstItemInstance: BaseActionItemView {
-        return SendAmountItemView(item: BaseActionItem())
+        return SendAmountItemView(item: item?.firstItem ?? BaseActionItem())
     }
     override var secondItemInstance: BaseActionItemView {
-        return SendReferenceItemView(item: BaseActionItem())
+        return SendReferenceItemView(item: item?.secondItem ?? BaseActionItem())
     }
 
     override func updateView() {

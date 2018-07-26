@@ -20,12 +20,16 @@ class SendAlertModel: BaseAlertModel {
         })
         addItemView(titleItem)
 
-        let sendAmountItem = SendAmountItem()
+        var sendConfigItem: BaseTwinItem?
+        let sendAmountItem = SendAmountItem(onMore: {
+            sendConfigItem?.showFirstItem = false
+            self.reload?()
+        })
         let sendReferenceItem = SendReferenceItem()
-        let sendConfigItem = BaseTwinItem(cellType: SendConfigTwinItemView.self, first: sendAmountItem, second: sendReferenceItem, height: SendTheme.twinHeight, tag: 1, required: true)
-        sendConfigItem.showSeparator = false
+        sendConfigItem = BaseTwinItem(cellType: SendConfigTwinItemView.self, first: sendAmountItem, second: sendReferenceItem, height: SendTheme.twinHeight, tag: 1, required: true)
+        sendConfigItem?.showSeparator = false
 
-        addItemView(sendConfigItem)
+        addItemView(sendConfigItem!)
 
         let sendButtonItem = SendButtonItem(tag: 2, required: true, onTap: {
             print("on send")

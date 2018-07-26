@@ -35,9 +35,9 @@ class AddressInputField: UIView {
             maker.trailing.bottom.equalToSuperview().offset(-SendTheme.buttonSideMargin)
         }
         pasteButton.titleLabel.snp.remakeConstraints { maker in
-            maker.leading.equalToSuperview().offset(10)
-            maker.top.bottom.equalToSuperview().offset(0)
-            maker.trailing.equalToSuperview().offset(-10)
+            maker.leading.equalToSuperview().offset(SendTheme.buttonTitleMargin)
+            maker.top.bottom.equalToSuperview()
+            maker.trailing.equalToSuperview().offset(-SendTheme.buttonTitleMargin)
         }
     }
 

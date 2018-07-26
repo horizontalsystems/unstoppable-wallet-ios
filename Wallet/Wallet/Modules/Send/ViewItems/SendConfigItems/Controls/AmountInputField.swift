@@ -52,14 +52,14 @@ class AmountInputField: UIView {
             maker.bottom.equalTo(separatorView.snp.top).offset(-SendTheme.buttonSideMargin)
         }
         currencyButton.titleLabel.snp.remakeConstraints { maker in
-            maker.leading.equalToSuperview().offset(10)
+            maker.leading.equalToSuperview().offset(SendTheme.buttonTitleMargin)
             maker.top.bottom.equalToSuperview()
-            maker.trailing.equalTo(dropDownImageView.snp.leading).offset(-5)
+            maker.trailing.equalTo(dropDownImageView.snp.leading).offset(-SendTheme.currencyDropImageLeftMargin)
         }
         dropDownImageView.snp.makeConstraints { maker in
-            maker.size.equalTo(CGSize(width: 6, height: 5))
+            maker.size.equalTo(SendTheme.currencyDropImageSize)
             maker.centerY.equalToSuperview()
-            maker.trailing.equalToSuperview().offset(-8)
+            maker.trailing.equalToSuperview().offset(-SendTheme.currencyDropImageRightMargin)
         }
         separatorView.snp.makeConstraints { maker in
             maker.top.equalToSuperview().offset(SendTheme.inputHeight)

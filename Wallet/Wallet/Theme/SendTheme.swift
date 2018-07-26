@@ -38,4 +38,8 @@ class SendTheme {
     static let smallMargin: CGFloat = 8
     static let buttonSideMargin: CGFloat = 6
     static let smallestMargin: CGFloat = 4
+    static let buttonTitleMargin: CGFloat = 10
+    static let currencyDropImageLeftMargin: CGFloat = 5
+    static let currencyDropImageSize = CGSize(width: 6, height: 5)
+    static let currencyDropImageRightMargin: CGFloat = 8
 }

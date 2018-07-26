@@ -48,10 +48,17 @@ class SendAmountItemView: BaseActionItemView {
             maker.leading.equalToSuperview().offset(SendTheme.sideMargin)
             maker.top.equalTo(amountInputField.snp.bottom).offset(SendTheme.smallestMargin)
         }
+
+        bind()
     }
 
     override func updateView() {
         super.updateView()
+        bind()
+    }
+
+    func bind() {
+        moreButton.onTap = item?.onMore
     }
 
 }
