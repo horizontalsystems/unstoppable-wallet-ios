@@ -8,7 +8,7 @@ class HeaderHandler {
     let validator: BlockHeaderItemValidator
     let saver: BlockSaver
 
-    init(realmFactory: RealmFactory = .shared, validator: BlockHeaderItemValidator = BlockHeaderItemValidator(), saver: BlockSaver = .shared) {
+    init(realmFactory: RealmFactory = .shared, validator: BlockHeaderItemValidator = TestNetBlockHeaderItemValidator(), saver: BlockSaver = .shared) {
         self.realmFactory = realmFactory
         self.validator = validator
         self.saver = saver

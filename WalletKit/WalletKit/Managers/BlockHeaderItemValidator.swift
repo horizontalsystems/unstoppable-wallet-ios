@@ -5,49 +5,59 @@ class BlockHeaderItemValidator {
     enum HeaderValidatorError: Error {
         case noCheckpointBlock
         case noPreviousBlock
+        case noHeader
         case wrongPreviousHeaderHash
         case notEqualBits
         case notDifficultyTransitionEqualBits
     }
 
-    let realmFactory: RealmFactory
     let difficultyCalculator: DifficultyCalculator
 
-    init(realmFactory: RealmFactory = .shared, difficultyCalculator: DifficultyCalculator = .shared) {
-        self.realmFactory = realmFactory
+    init(difficultyCalculator: DifficultyCalculator = .shared) {
         self.difficultyCalculator = difficultyCalculator
     }
 
     func validate(block: Block) throws {
-//        try validateHash(header: header, previousHeader: previousHeader)
-//
-//        if isDifficultyTransitionPoint(height: previousHeight) {
-//            try validateDifficultyTransition(header: header, previousHeader: previousHeader, previousHeight: previousHeight)
-//        } else if header.bits != previousHeader.bits {
-//            throw HeaderValidatorError.notEqualBits
-//        }
+        try validateHash(block: block)
+
+        if isDifficultyTransitionPoint(height: block.height) {
+            try validateDifficultyTransition(block: block)
+        } else if block.header?.bits != block.previousBlock?.header?.bits {
+            throw HeaderValidatorError.notEqualBits
+        }
     }
 
-//    func validateHash(header: BlockHeader, previousHeader: BlockHeader) throws {
-//        guard header.previousBlockHeaderHash == Crypto.sha256sha256(previousHeader.serialized()) else {
-//            throw HeaderValidatorError.wrongPreviousHeaderHash
-//        }
-//    }
-//
-//    func validateDifficultyTransition(header: BlockHeader, previousHeader: BlockHeader, previousHeight: Int) throws {
-//        let realm = realmFactory.realm
-//
-//        guard let lastBlock = realm.objects(Block.self).filter("height = %@", previousHeight - 2015).last else {
-//            throw HeaderValidatorError.noCheckpointBlock
-//        }
-//
-//        if difficultyCalculator.difficultyAfter(header: previousHeader, checkPointBlock: lastBlock, height: previousHeight) != header.bits {
-//            throw HeaderValidatorError.notDifficultyTransitionEqualBits
-//        }
-//    }
+    func validateHash(block: Block) throws {
+        guard let previousHeader = block.previousBlock?.header else {
+            throw HeaderValidatorError.noPreviousBlock
+        }
+
+        guard let header = block.header, header.previousBlockHeaderHash == Crypto.sha256sha256(previousHeader.serialized()) else {
+            throw HeaderValidatorError.wrongPreviousHeaderHash
+        }
+    }
+
+    func validateDifficultyTransition(block: Block) throws {
+        var lastCheckPointBlock = block
+
+        for i in 0..<2016 {
+            if let block = lastCheckPointBlock.previousBlock {
+                lastCheckPointBlock = block
+            } else {
+                throw i == 2015 ? HeaderValidatorError.noCheckpointBlock : HeaderValidatorError.noPreviousBlock
+            }
+        }
+
+        guard let previousBlock = block.previousBlock else {
+            throw HeaderValidatorError.noPreviousBlock
+        }
+        if try difficultyCalculator.difficultyAfter(block: previousBlock, lastCheckPointBlock: lastCheckPointBlock) != block.header?.bits {
+            throw HeaderValidatorError.notDifficultyTransitionEqualBits
+        }
+    }
 
     func isDifficultyTransitionPoint(height: Int) -> Bool {
-        return (height + 1) % difficultyCalculator.heightInterval == 0
+        return (height) % difficultyCalculator.heightInterval == 0
     }
 
 }

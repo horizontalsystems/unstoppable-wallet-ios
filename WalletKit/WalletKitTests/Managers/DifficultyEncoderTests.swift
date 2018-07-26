@@ -22,42 +22,42 @@ class DifficultyEncoderTests: XCTestCase {
 
     func testEncodeCompact() {
         let difficulty: BigInt = BigInt("1234560000", radix: 16)!
-        let representation: UInt32 = 0x05123456
+        let representation: Int = 0x05123456
 
         XCTAssertEqual(difficultyEncoder.encodeCompact(from: difficulty), representation)
     }
 
     func testEncodeCompact_firstZero() {
         let difficulty: BigInt = BigInt("c0de000000", radix: 16)!
-        let representation: UInt32 = 0x0600c0de
+        let representation: Int = 0x0600c0de
 
         XCTAssertEqual(difficultyEncoder.encodeCompact(from: difficulty), representation)
     }
 
     func testEncodeCompact_negativeSign() {
         let difficulty: BigInt = BigInt("-40de000000", radix: 16)!
-        let representation: UInt32 = 0x05c0de00
+        let representation: Int = 0x05c0de00
 
         XCTAssertEqual(difficultyEncoder.encodeCompact(from: difficulty), representation)
     }
 
     func testDecodeCompact() {
         let difficulty: BigInt = BigInt("1234560000", radix: 16)!
-        let representation: UInt32 = 0x05123456
+        let representation: Int = 0x05123456
 
         XCTAssertEqual(difficultyEncoder.decodeCompact(bits: representation), difficulty)
     }
 
     func testDecodeCompact_firstZero() {
         let difficulty: BigInt = BigInt("c0de000000", radix: 16)!
-        let representation: UInt32 = 0x0600c0de
+        let representation: Int = 0x0600c0de
 
         XCTAssertEqual(difficultyEncoder.decodeCompact(bits: representation), difficulty)
     }
 
     func testDecodeCompact_negativeSign() {
         let difficulty: BigInt = BigInt("-40de000000", radix: 16)!
-        let representation: UInt32 = 0x05c0de00
+        let representation: Int = 0x05c0de00
 
         XCTAssertEqual(difficultyEncoder.decodeCompact(bits: representation), difficulty)
     }
