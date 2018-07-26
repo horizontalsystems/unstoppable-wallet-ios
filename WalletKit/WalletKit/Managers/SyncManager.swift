@@ -26,26 +26,26 @@ public class SyncManager {
     }
 
     init() {
-        let preCheckPointHeader = BlockHeaderItem(
+        let preCheckPointHeader = BlockHeader(
                 version: 536870912,
-                prevBlock: "000000000000004b68d8b5453cf38c485b1b42d564b6a1d8487ec5ce662622ea".reversedData!,
-                merkleRoot: "fde234b11907f3f6d45633ab11a1ba0db59f8aabecf5879d1ef301ef091f4f44".reversedData!,
+                previousBlockHeaderReversedHex: "000000000000004b68d8b5453cf38c485b1b42d564b6a1d8487ec5ce662622ea",
+                merkleRootReversedHex: "fde234b11907f3f6d45633ab11a1ba0db59f8aabecf5879d1ef301ef091f4f44",
                 timestamp: 1532135309,
                 bits: 425766046,
                 nonce: 3687858789
         )
-        let preCheckpointBlock = Block(blockHeader: preCheckPointHeader, height: 1354751)
+        let preCheckpointBlock = Block(header: preCheckPointHeader, height: 1354751)
         preCheckpointBlock.synced = true
 
-        let checkPointHeader = BlockHeaderItem(
+        let checkPointHeader = BlockHeader(
                 version: 536870912,
-                prevBlock: "0000000000000051bff2f64c9078fb346d6a2a209ba5c3ffa0048c6b7027e47f".reversedData!,
-                merkleRoot: "992c07e1a7b9a53ae3b8764333324396570fce24c49b8de7ed87fb1346df62a7".reversedData!,
+                previousBlockHeaderReversedHex: "0000000000000051bff2f64c9078fb346d6a2a209ba5c3ffa0048c6b7027e47f",
+                merkleRootReversedHex: "992c07e1a7b9a53ae3b8764333324396570fce24c49b8de7ed87fb1346df62a7",
                 timestamp: 1532137995,
                 bits: 424253525,
                 nonce: 1665657862
         )
-        let checkpointBlock = Block(blockHeader: checkPointHeader, previousBlock: preCheckpointBlock)
+        let checkpointBlock = Block(header: checkPointHeader, previousBlock: preCheckpointBlock)
         checkpointBlock.synced = true
 
         let walletManager = WalletManager.shared

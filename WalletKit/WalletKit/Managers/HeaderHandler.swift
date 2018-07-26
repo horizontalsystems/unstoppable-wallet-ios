@@ -14,8 +14,8 @@ class HeaderHandler {
         self.saver = saver
     }
 
-    func handle(blockHeaders: [BlockHeaderItem]) throws {
-        guard !blockHeaders.isEmpty else {
+    func handle(headers: [BlockHeader]) throws {
+        guard !headers.isEmpty else {
             print("HeaderHandler: Empty block headers")
             return
         }
@@ -27,19 +27,27 @@ class HeaderHandler {
             return
         }
 
-        var validHeaders = [BlockHeaderItem]()
+        var newBlocks = [Block]()
+        var previousBlock = lastBlock
 
-        let initialHeaderItem = BlockHeaderItem.deserialize(byteStream: ByteStream(lastBlock.rawHeader))
+        for header in headers {
+            let newBlock = Block(header: header, previousBlock: previousBlock)
+            newBlocks.append(newBlock)
+
+            previousBlock = newBlock
+        }
+
+        var validBlocks = [Block]()
 
         defer {
-            if !validHeaders.isEmpty {
-                saver.create(withPreviousBlock: lastBlock, fromItems: validHeaders)
+            if !validBlocks.isEmpty {
+                saver.create(blocks: validBlocks)
             }
         }
 
-        for (index, headerItem) in blockHeaders.enumerated() {
-            try validator.validate(item: headerItem, previousItem: validHeaders.last ?? initialHeaderItem, previousHeight: lastBlock.height + index)
-            validHeaders.append(headerItem)
+        for newBlock in newBlocks {
+            try validator.validate(block: newBlock)
+            validBlocks.append(newBlock)
         }
     }
 

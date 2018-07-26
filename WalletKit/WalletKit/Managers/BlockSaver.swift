@@ -9,19 +9,8 @@ class BlockSaver {
         self.realmFactory = realmFactory
     }
 
-    func create(withPreviousBlock previousBlock: Block, fromItems items: [BlockHeaderItem]) {
+    func create(blocks: [Block]) {
         let realm = realmFactory.realm
-
-        var blocks = [Block]()
-
-        var previousBlock = previousBlock
-
-        for item in items {
-            let block = Block(blockHeader: item, previousBlock: previousBlock)
-            blocks.append(block)
-
-            previousBlock = block
-        }
 
         try? realm.write {
             realm.add(blocks, update: true)

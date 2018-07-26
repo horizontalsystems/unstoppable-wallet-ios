@@ -22,16 +22,17 @@ class DifficultyCalculator {
         return min(max(timeSpan, targetTimeSpan / 4), targetTimeSpan * 4)
     }
 
-    func difficultyAfter(item: BlockHeaderItem, checkPointBlock: Block, height: Int) -> UInt32 {
-        let checkPointItem = BlockHeaderItem.deserialize(byteStream: ByteStream(checkPointBlock.rawHeader))
-        let timeSpan = limit(timeSpan: Int(item.timestamp - checkPointItem.timestamp))
-
-        var bigIntDifficulty = difficultyEncoder.decodeCompact(bits: item.bits)
-        bigIntDifficulty *= BigInt(timeSpan)
-        bigIntDifficulty /= BigInt(targetTimeSpan)
-        let newDifficulty = min(difficultyEncoder.encodeCompact(from: bigIntDifficulty), maxTargetBits)
-
-        return UInt32(newDifficulty)
+    func difficultyAfter(header: BlockHeader, checkPointBlock: Block, height: Int) -> UInt32 {
+//        let checkPointItem = BlockHeaderItem.deserialize(byteStream: ByteStream(checkPointBlock.rawHeader))
+//        let timeSpan = limit(timeSpan: Int(item.timestamp - checkPointItem.timestamp))
+//
+//        var bigIntDifficulty = difficultyEncoder.decodeCompact(bits: item.bits)
+//        bigIntDifficulty *= BigInt(timeSpan)
+//        bigIntDifficulty /= BigInt(targetTimeSpan)
+//        let newDifficulty = min(difficultyEncoder.encodeCompact(from: bigIntDifficulty), maxTargetBits)
+//
+//        return UInt32(newDifficulty)
+        return 0
     }
 
 }
