@@ -56,12 +56,6 @@ extension PeerManager: PeerDelegate {
         } catch {
             print("HeaderSyncer error: \(error)")
         }
-
-//        let realm = try! Realm()
-//        if let lastBlock = realm.objects(Block.self).first {
-//            print("Last BLock Hash: \(lastBlock.blockHash)")
-//            peer.startSync(filters: addresses.map { $0.publicKeyHash }, latestBlockHash: Data(Data(hex: lastBlock.blockHash)!.reversed()))
-//        }
     }
 
     public func peer(_ peer: Peer, didReceiveMerkleBlockMessage message: MerkleBlockMessage, hash: Data) {

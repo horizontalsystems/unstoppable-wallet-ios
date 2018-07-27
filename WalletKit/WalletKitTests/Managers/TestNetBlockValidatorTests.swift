@@ -4,9 +4,9 @@ import RealmSwift
 import BigInt
 @testable import WalletKit
 
-class TestNetBlockHeaderItemValidatorTests: XCTestCase {
+class TestNetBlockValidatorTests: XCTestCase {
 
-    private var validator: BlockHeaderItemValidator!
+    private var validator: BlockValidator!
 
     private var firstCheckPointBlock: Block!
 
@@ -15,7 +15,7 @@ class TestNetBlockHeaderItemValidatorTests: XCTestCase {
     override func setUp() {
         super.setUp()
 
-        validator = TestNetBlockHeaderItemValidator()
+        validator = TestNetBlockValidator()
 
         firstCheckPointBlock = Block(
                 header: BlockHeader(version: 536870912, previousBlockHeaderReversedHex: "00000000000000c9a91d8277c58eab3bfda59d3068142dd54216129e5597ccbd", merkleRootReversedHex: "076c5847dbde99ed49cd75d7dbe63c3d3bb9399b135d1639d6169b8a5510913b", timestamp: 1531214479, bits: 425766046, nonce: 1076882637),

@@ -2,11 +2,11 @@ import Foundation
 import RealmSwift
 
 class MerkleBlockHandler {
+    static let shared = MerkleBlockHandler()
+
     enum HandleError: Error {
         case blockNotFound
     }
-
-    static let shared = MerkleBlockHandler()
 
     let realmFactory: RealmFactory
     let validator: MerkleBlockValidator
@@ -20,6 +20,7 @@ class MerkleBlockHandler {
 
     func handle(message: MerkleBlockMessage) throws {
         let realm = realmFactory.realm
+
         let headerHash = Crypto.sha256sha256(message.blockHeaderItem.serialized())
 
         guard let block = realm.objects(Block.self).filter("reversedHeaderHashHex = %@", headerHash.reversedHex).last else {

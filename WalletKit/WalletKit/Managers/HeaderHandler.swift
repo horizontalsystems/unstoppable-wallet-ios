@@ -5,11 +5,13 @@ class HeaderHandler {
     static let shared = HeaderHandler()
 
     let realmFactory: RealmFactory
-    let validator: BlockHeaderItemValidator
+    let creator: BlockCreator
+    let validator: BlockValidator
     let saver: BlockSaver
 
-    init(realmFactory: RealmFactory = .shared, validator: BlockHeaderItemValidator = TestNetBlockHeaderItemValidator(), saver: BlockSaver = .shared) {
+    init(realmFactory: RealmFactory = .shared, creator: BlockCreator = .shared, validator: BlockValidator = TestNetBlockValidator(), saver: BlockSaver = .shared) {
         self.realmFactory = realmFactory
+        self.creator = creator
         self.validator = validator
         self.saver = saver
     }
@@ -27,16 +29,7 @@ class HeaderHandler {
             return
         }
 
-        var newBlocks = [Block]()
-        var previousBlock = lastBlock
-
-        for header in headers {
-            let newBlock = Block(header: header, previousBlock: previousBlock)
-            newBlocks.append(newBlock)
-
-            previousBlock = newBlock
-        }
-
+        let newBlocks = creator.create(fromHeaders: headers, initialBlock: lastBlock)
         var validBlocks = [Block]()
 
         defer {

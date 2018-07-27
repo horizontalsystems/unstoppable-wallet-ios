@@ -85,7 +85,7 @@ public class SyncManager {
     }
 
     public func connectToPeer() {
-        BlockSyncer.shared
+        _ = BlockSyncer.shared
         PeerManager.shared.connect()
     }
 

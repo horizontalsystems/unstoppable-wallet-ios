@@ -4,9 +4,9 @@ import RealmSwift
 import BigInt
 @testable import WalletKit
 
-class BlockHeaderItemValidatorTests: XCTestCase {
+class BlockValidatorTests: XCTestCase {
 
-    private var validator: BlockHeaderItemValidator!
+    private var validator: BlockValidator!
 
     private var firstCheckPointBlock: Block!
     private var firstBlock: Block!
@@ -14,7 +14,7 @@ class BlockHeaderItemValidatorTests: XCTestCase {
     override func setUp() {
         super.setUp()
 
-        validator = BlockHeaderItemValidator()
+        validator = BlockValidator()
 
         firstCheckPointBlock = Block(
                 header: BlockHeader(version: 536870912, previousBlockHeaderReversedHex: "00000000000000000020c68bfc8de14bc9dd2d6cf45161a67e0c6455cf28cfd8", merkleRootReversedHex: "a3f40c28cc6b90b2b1bfaef0e1c394b01dd97786b6a7da5e35f26bc4a7b1e451", timestamp: 1530545661, bits: 389315112, nonce: 630776633),
@@ -92,9 +92,9 @@ class BlockHeaderItemValidatorTests: XCTestCase {
         var caught = false
         do {
             try validator.validate(block: testBlock)
-        } catch let error as BlockHeaderItemValidator.HeaderValidatorError {
+        } catch let error as BlockValidator.ValidatorError {
             caught = true
-            XCTAssertEqual(error, BlockHeaderItemValidator.HeaderValidatorError.wrongPreviousHeaderHash)
+            XCTAssertEqual(error, BlockValidator.ValidatorError.wrongPreviousHeaderHash)
         } catch {
             XCTFail("Unknown exception thrown")
         }
@@ -114,9 +114,9 @@ class BlockHeaderItemValidatorTests: XCTestCase {
         var caught = false
         do {
             try validator.validate(block: testBlock)
-        } catch let error as BlockHeaderItemValidator.HeaderValidatorError {
+        } catch let error as BlockValidator.ValidatorError {
             caught = true
-            XCTAssertEqual(error, BlockHeaderItemValidator.HeaderValidatorError.notEqualBits)
+            XCTAssertEqual(error, BlockValidator.ValidatorError.notEqualBits)
         } catch {
             XCTFail("Unknown exception thrown")
         }
@@ -134,9 +134,9 @@ class BlockHeaderItemValidatorTests: XCTestCase {
         var caught = false
         do {
             try validator.validate(block: testBlock)
-        } catch let error as BlockHeaderItemValidator.HeaderValidatorError {
+        } catch let error as BlockValidator.ValidatorError {
             caught = true
-            XCTAssertEqual(error, BlockHeaderItemValidator.HeaderValidatorError.noCheckpointBlock)
+            XCTAssertEqual(error, BlockValidator.ValidatorError.noCheckpointBlock)
         } catch {
             XCTFail("Unknown exception thrown")
         }
@@ -154,9 +154,9 @@ class BlockHeaderItemValidatorTests: XCTestCase {
         var caught = false
         do {
             try validator.validate(block: testBlock)
-        } catch let error as BlockHeaderItemValidator.HeaderValidatorError {
+        } catch let error as BlockValidator.ValidatorError {
             caught = true
-            XCTAssertEqual(error, BlockHeaderItemValidator.HeaderValidatorError.notDifficultyTransitionEqualBits)
+            XCTAssertEqual(error, BlockValidator.ValidatorError.notDifficultyTransitionEqualBits)
         } catch {
             XCTFail("Unknown exception thrown")
         }

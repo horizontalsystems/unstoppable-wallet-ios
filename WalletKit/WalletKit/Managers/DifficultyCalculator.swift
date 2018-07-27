@@ -4,8 +4,6 @@ import BigInt
 class DifficultyCalculator {
     static let shared = DifficultyCalculator()
 
-    enum DifficultyCalculatorError: Error { case noHeader, noCheckPointHeader }
-
     private let maxTargetBits: Int = 0x1d00ffff                   // Maximum difficulty.
     var maxTargetDifficulty: BigInt { return difficultyEncoder.decodeCompact(bits: maxTargetBits) }
 
@@ -25,16 +23,9 @@ class DifficultyCalculator {
     }
 
     func difficultyAfter(block: Block, lastCheckPointBlock: Block) throws -> Int {
-        guard let item = block.header else {
-            throw DifficultyCalculatorError.noHeader
-        }
-        guard let checkPointItem = lastCheckPointBlock.header else {
-            throw DifficultyCalculatorError.noCheckPointHeader
-        }
+        let timeSpan = limit(timeSpan: block.header.timestamp - lastCheckPointBlock.header.timestamp)
 
-        let timeSpan = limit(timeSpan: item.timestamp - checkPointItem.timestamp)
-
-        var bigIntDifficulty = difficultyEncoder.decodeCompact(bits: item.bits)
+        var bigIntDifficulty = difficultyEncoder.decodeCompact(bits: block.header.bits)
         bigIntDifficulty *= BigInt(timeSpan)
         bigIntDifficulty /= BigInt(targetTimeSpan)
         let newDifficulty = min(difficultyEncoder.encodeCompact(from: bigIntDifficulty), maxTargetBits)
