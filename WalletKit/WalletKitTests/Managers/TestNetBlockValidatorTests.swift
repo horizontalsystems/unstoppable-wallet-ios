@@ -7,9 +7,7 @@ import BigInt
 class TestNetBlockValidatorTests: XCTestCase {
 
     private var validator: BlockValidator!
-
     private var firstCheckPointBlock: Block!
-
     private var previousSmallTimeSpanBlock: Block!
 
     override func setUp() {
@@ -29,9 +27,7 @@ class TestNetBlockValidatorTests: XCTestCase {
 
     override func tearDown() {
         validator = nil
-
         firstCheckPointBlock = nil
-
         previousSmallTimeSpanBlock = nil
 
         super.tearDown()

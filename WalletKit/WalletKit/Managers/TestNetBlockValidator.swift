@@ -8,7 +8,8 @@ class TestNetBlockValidator: BlockValidator {
         guard let previousBlock = block.previousBlock else {
             throw ValidatorError.noPreviousBlock
         }
-        if !isDifficultyTransitionPoint(height: previousBlock.height), previousBlock.header.timestamp > TestNetBlockValidator.testNetDiffDate {
+
+        if !isDifficultyTransitionPoint(height: block.height), previousBlock.header.timestamp > TestNetBlockValidator.testNetDiffDate {
             try validateHash(block: block)
 
             let timeDelta = block.header.timestamp - previousBlock.header.timestamp
