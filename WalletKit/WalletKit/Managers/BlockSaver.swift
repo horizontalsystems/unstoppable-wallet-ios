@@ -9,15 +9,15 @@ class BlockSaver {
         self.realmFactory = realmFactory
     }
 
-    func create(blocks: [Block]) {
+    func create(blocks: [Block]) throws {
         let realm = realmFactory.realm
 
-        try? realm.write {
+        try realm.write {
             realm.add(blocks, update: true)
         }
     }
 
-    func update(block: Block, withTransactionHashes hashes: [Data]) {
+    func update(block: Block, withTransactionHashes hashes: [Data]) throws {
         let realm = realmFactory.realm
 
         var transactions = [Transaction]()
@@ -29,7 +29,7 @@ class BlockSaver {
             transactions.append(transaction)
         }
 
-        try? realm.write {
+        try realm.write {
             realm.add(transactions, update: true)
             block.synced = true
         }

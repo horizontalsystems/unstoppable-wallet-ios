@@ -61,14 +61,37 @@ class HeaderHandlerTests: XCTestCase {
 
     func testSync_EmptyItems() {
         try! realm.write { realm.add(initialBlock) }
-        try! headerHandler.handle(headers: [])
+
+        var caught = false
+
+        do {
+            try headerHandler.handle(headers: [])
+        } catch let error as HeaderHandler.HandleError {
+            caught = true
+            XCTAssertEqual(error, HeaderHandler.HandleError.emptyHeaders)
+        } catch {
+            XCTFail("Unknown exception thrown")
+        }
+
         verifyNoMoreInteractions(mockSaver)
+        XCTAssertTrue(caught, "emptyHeaders exception not thrown")
     }
 
     func testSync_NoInitialBlock() {
-        let header = BlockHeader()
-        try! headerHandler.handle(headers: [header])
+        var caught = false
+
+        do {
+            let header = BlockHeader()
+            try headerHandler.handle(headers: [header])
+        } catch let error as HeaderHandler.HandleError {
+            caught = true
+            XCTAssertEqual(error, HeaderHandler.HandleError.noInitialBlock)
+        } catch {
+            XCTFail("Unknown exception thrown")
+        }
+
         verifyNoMoreInteractions(mockSaver)
+        XCTAssertTrue(caught, "noInitialBlock exception not thrown")
     }
 
     func testValidBlocks() {

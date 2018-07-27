@@ -4,6 +4,11 @@ import RealmSwift
 class HeaderHandler {
     static let shared = HeaderHandler()
 
+    enum HandleError: Error {
+        case emptyHeaders
+        case noInitialBlock
+    }
+
     let realmFactory: RealmFactory
     let creator: BlockCreator
     let validator: BlockValidator
@@ -18,29 +23,35 @@ class HeaderHandler {
 
     func handle(headers: [BlockHeader]) throws {
         guard !headers.isEmpty else {
-            print("HeaderHandler: Empty block headers")
-            return
+            throw HandleError.emptyHeaders
         }
 
         let realm = realmFactory.realm
 
-        guard let lastBlock = realm.objects(Block.self).filter("previousBlock != nil").sorted(byKeyPath: "height").last else {
-            print("HeaderHandler: No last block")
-            return
+        guard let initialBlock = realm.objects(Block.self).filter("previousBlock != nil").sorted(byKeyPath: "height").last else {
+            throw HandleError.noInitialBlock
         }
 
-        let newBlocks = creator.create(fromHeaders: headers, initialBlock: lastBlock)
+        let newBlocks = creator.create(fromHeaders: headers, initialBlock: initialBlock)
         var validBlocks = [Block]()
 
-        defer {
-            if !validBlocks.isEmpty {
-                saver.create(blocks: validBlocks)
+        var validationError: Error?
+
+        do {
+            for newBlock in newBlocks {
+                try validator.validate(block: newBlock)
+                validBlocks.append(newBlock)
             }
+        } catch {
+            validationError = error
         }
 
-        for newBlock in newBlocks {
-            try validator.validate(block: newBlock)
-            validBlocks.append(newBlock)
+        if !validBlocks.isEmpty {
+            try saver.create(blocks: validBlocks)
+        }
+
+        if let validationError = validationError {
+            throw validationError
         }
     }
 

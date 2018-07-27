@@ -50,7 +50,7 @@ class BlockSaverTests: XCTestCase {
                 previousBlock: block1
         )
 
-        saver.create(blocks: [block1, block2])
+        try! saver.create(blocks: [block1, block2])
 
         let blocks = realm.objects(Block.self)
 
@@ -69,14 +69,14 @@ class BlockSaverTests: XCTestCase {
 
         let block = Block(header: blockHeader, previousBlock: initialBlock)
 
-        saver.create(blocks: [block])
+        try! saver.create(blocks: [block])
 
         guard let savedBlock = realm.objects(Block.self).last else {
             XCTFail("Block not saved!")
             return
         }
 
-        saver.update(block: savedBlock, withTransactionHashes: message.hashes)
+        try! saver.update(block: savedBlock, withTransactionHashes: message.hashes)
         let transactions = realm.objects(Transaction.self)
 
         XCTAssertEqual(savedBlock.transactions.count, transactions.count)

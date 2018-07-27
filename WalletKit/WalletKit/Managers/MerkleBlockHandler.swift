@@ -28,8 +28,7 @@ class MerkleBlockHandler {
         }
 
         try validator.validate(message: message)
-
-        saver.update(block: block, withTransactionHashes: validator.txIds)
+        try saver.update(block: block, withTransactionHashes: validator.txIds)
     }
 
 }

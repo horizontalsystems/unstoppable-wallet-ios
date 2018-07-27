@@ -22,7 +22,7 @@ class BlockValidator {
 
         if isDifficultyTransitionPoint(height: block.height) {
             try validateDifficultyTransition(block: block)
-        } else if block.header?.bits != block.previousBlock?.header?.bits {
+        } else if block.header.bits != block.previousBlock?.header.bits {
             throw ValidatorError.notEqualBits
         }
     }
