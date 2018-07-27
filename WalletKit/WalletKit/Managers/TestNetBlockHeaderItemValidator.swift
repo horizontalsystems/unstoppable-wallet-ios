@@ -4,35 +4,37 @@ import BigInt
 class TestNetBlockHeaderItemValidator: BlockHeaderItemValidator {
     private static let testNetDiffDate = 1329264000 // February 16th 2012
 
-//    override func validate(item: BlockHeaderItem, previousItem: BlockHeaderItem, previousHeight: Int) throws {
-//        if !isDifficultyTransitionPoint(height: previousHeight), item.timestamp > TestNetBlockHeaderItemValidator.testNetDiffDate {
-//            try validateHash(item: item, previousItem: previousItem)
-//
-//            let timeDelta = item.timestamp - previousItem.timestamp
-//            if timeDelta >= 0, timeDelta <= difficultyCalculator.targetSpacing * 2 {
-//                let realm = realmFactory.realm
-//
-//                var height = previousHeight
-//                var cursorItem = previousItem
-//                let maxDifficulty = difficultyCalculator.maxTargetDifficulty
-//
-//                while height != 0 && !isDifficultyTransitionPoint(height: height - 1) && difficultyCalculator.difficultyEncoder.decodeCompact(bits: cursorItem.bits) == maxDifficulty {
-//                    height -= 1
-//                    guard let cursorBlock = realm.objects(Block.self).filter("height = %@", height).last else {
-//                        throw HeaderValidatorError.noPreviousBlock
-//                    }
-////                    cursorItem = BlockHeaderItem.deserialize(byteStream: ByteStream(cursorBlock.rawHeader))
-//                }
-//                let cursorDifficulty = difficultyCalculator.difficultyEncoder.decodeCompact(bits: cursorItem.bits)
-//                let itemDifficulty = difficultyCalculator.difficultyEncoder.decodeCompact(bits: item.bits)
-//
-//                if cursorDifficulty != itemDifficulty {
-//                    throw HeaderValidatorError.notEqualBits
-//                }
-//            }
-//        } else {
-//            try super.validate(item: item, previousItem: previousItem, previousHeight: previousHeight)
-//        }
-//    }
+    override func validate(block: Block) throws {
+        guard let blockHeader = block.header else {
+            throw HeaderValidatorError.noHeader
+        }
+        guard let previousBlock = block.previousBlock, let previousHeader = previousBlock.header else {
+            throw HeaderValidatorError.noPreviousBlock
+        }
+        if !isDifficultyTransitionPoint(height: previousBlock.height), previousHeader.timestamp > TestNetBlockHeaderItemValidator.testNetDiffDate {
+            try validateHash(block: block)
+
+            let timeDelta = blockHeader.timestamp - previousHeader.timestamp
+            if timeDelta >= 0, timeDelta <= difficultyCalculator.targetSpacing * 2 {
+                var cursorBlock = previousBlock
+                let maxDifficulty = difficultyCalculator.maxTargetDifficulty
+
+                while cursorBlock.height != 0 && !isDifficultyTransitionPoint(height: cursorBlock.height) && difficultyCalculator.difficultyEncoder.decodeCompact(bits: cursorBlock.header?.bits ?? 0) == maxDifficulty {
+                    guard let previousBlock = cursorBlock.previousBlock else {
+                        throw HeaderValidatorError.noPreviousBlock
+                    }
+                    cursorBlock = previousBlock
+                }
+                let cursorDifficulty = difficultyCalculator.difficultyEncoder.decodeCompact(bits: cursorBlock.header?.bits ?? 0)
+                let itemDifficulty = difficultyCalculator.difficultyEncoder.decodeCompact(bits: block.header?.bits ?? 0)
+
+                if cursorDifficulty != itemDifficulty {
+                    throw HeaderValidatorError.notEqualBits
+                }
+            }
+        } else {
+            try super.validate(block: block)
+        }
+    }
 
 }

@@ -18,7 +18,7 @@ class DifficultyEncoder {
      * Thus, all the complexities of the sign bit and using base 256 are probably an implementation accident.</p>
  */
 
-    public func decodeCompact(bits: UInt32) -> BigInt {
+    public func decodeCompact(bits: Int) -> BigInt {
         let size = (bits >> 24) & 0xFF
 
         let negativeSign = (bits >> 23) & 0x0001 == 1
@@ -32,8 +32,8 @@ class DifficultyEncoder {
         return bigInt
     }
 
-    public func encodeCompact(from bigInt: BigInt) -> UInt32 {
-        var result: UInt32 = 0
+    public func encodeCompact(from bigInt: BigInt) -> Int {
+        var result: Int = 0
 
         // make unsigned big int for get array of bytes
         let data = bigInt.magnitude.serialize()
@@ -49,14 +49,14 @@ class DifficultyEncoder {
 
         // add significant bytes to result
         for (i, byte) in byteArray.enumerated() {
-            result = result << 8 + UInt32(byte)
+            result = result << 8 + Int(byte)
             if i >= 2 {
                 break
             }
         }
 
         // add counter to result
-        result += UInt32(byteArray.count) << 24
+        result += byteArray.count << 24
 
 
         // add sign for first byte
