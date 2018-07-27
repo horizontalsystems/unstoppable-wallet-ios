@@ -5,7 +5,7 @@ import RealmSwift
 
 class MerkleBlockValidatorTests: XCTestCase {
     private var validator: MerkleBlockValidator!
-    private var blockHeaderItem: BlockHeaderItem!
+    private var blockHeader: BlockHeader!
     private var totalTransactions: UInt32!
     private var numberOfHashes: VarInt!
     private var hashes: [Data]!
@@ -16,9 +16,12 @@ class MerkleBlockValidatorTests: XCTestCase {
     override func setUp() {
         super.setUp()
 
-        blockHeaderItem = BlockHeaderItem(version: 0, prevBlock: Data(), merkleRoot: Data(hex: "2368b4465fe95716f7e8d510eafb26ee72cb843610fe0f38cfdc60561e0b50b2")!, timestamp: 0, bits: 0, nonce: 0)
+        blockHeader = BlockHeader()
+        blockHeader.merkleRoot = Data(hex: "2368b4465fe95716f7e8d510eafb26ee72cb843610fe0f38cfdc60561e0b50b2")!
+
         totalTransactions = 309
         numberOfHashes = 10
+
         hashes = [
             Data(hex: "c6232bba11b7b068995d7e26f59fb46403b9307886f0dfbeae01b075200a43c2")!,
             Data(hex: "7d3543eb3166350dd495812c3fb4fb0febc0f3a862910e29d2045bea08f1de67")!,
@@ -31,6 +34,7 @@ class MerkleBlockValidatorTests: XCTestCase {
             Data(hex: "feaa4182afe5e1542a6a27a6a933c7c80471636aa9477685dcd7aa4f18722a35")!,
             Data(hex: "8c6e45e3341a18c53b2f40ca31eb4f59ff43240ad6a9221743cf856cb015bfda")!
         ]
+
         numberOfFlags = 3
         flags = [223, 22, 0]
 
@@ -43,7 +47,7 @@ class MerkleBlockValidatorTests: XCTestCase {
 
     private func getSampleMessage() -> MerkleBlockMessage {
         return MerkleBlockMessage(
-                blockHeaderItem: blockHeaderItem, totalTransactions: totalTransactions,
+                blockHeader: blockHeader, totalTransactions: totalTransactions,
                 numberOfHashes: numberOfHashes, hashes: hashes, numberOfFlags: numberOfFlags, flags: flags
         )
     }
@@ -62,7 +66,8 @@ class MerkleBlockValidatorTests: XCTestCase {
     }
 
     func testWrongMerkleRoot() {
-        blockHeaderItem = BlockHeaderItem(version: 0, prevBlock: Data(), merkleRoot: Data(hex: "0000000000000000000000000000000000000000000000000000000000000001")!, timestamp: 0, bits: 0, nonce: 0)
+        blockHeader = BlockHeader()
+        blockHeader.merkleRoot = Data(hex: "0000000000000000000000000000000000000000000000000000000000000001")!
 
         var caught = false
         do {

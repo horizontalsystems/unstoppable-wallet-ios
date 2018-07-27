@@ -82,7 +82,7 @@ extension PeerManager: PeerDelegate {
 
         if !message.blockHeaders.isEmpty {
             do {
-//                try HeaderHandler.shared.handle(headers: message.blockHeaders)
+                try HeaderHandler.shared.handle(headers: message.blockHeaders)
             } catch {
                 print("HeaderHandler error: \(error)")
             }

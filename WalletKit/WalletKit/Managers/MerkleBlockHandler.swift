@@ -21,7 +21,7 @@ class MerkleBlockHandler {
     func handle(message: MerkleBlockMessage) throws {
         let realm = realmFactory.realm
 
-        let headerHash = Crypto.sha256sha256(message.blockHeaderItem.serialized())
+        let headerHash = Crypto.sha256sha256(message.blockHeader.serialized())
 
         guard let block = realm.objects(Block.self).filter("reversedHeaderHashHex = %@", headerHash.reversedHex).last else {
             throw HandleError.blockNotFound

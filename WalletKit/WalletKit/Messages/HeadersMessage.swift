@@ -2,7 +2,7 @@ import Foundation
 
 struct HeadersMessage {
     let count: VarInt
-    let blockHeaders: [BlockHeaderItem]
+    let blockHeaders: [BlockHeader]
 
 //    public func serialized() -> Data {
 //        var data = Data()
@@ -15,9 +15,9 @@ struct HeadersMessage {
         let byteStream = ByteStream(data)
         let count = byteStream.read(VarInt.self)
 
-        var headers = [BlockHeaderItem]()
+        var headers = [BlockHeader]()
         for _ in 0..<Int(count.underlyingValue) {
-            headers.append(BlockHeaderItem.deserialize(byteStream: byteStream))
+            headers.append(BlockHeader.deserialize(fromByteStream: byteStream))
             _ = byteStream.read(Data.self, count: 1)
         }
 

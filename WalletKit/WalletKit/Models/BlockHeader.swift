@@ -36,8 +36,10 @@ public class BlockHeader: Object {
     }
 
     static func deserialize(fromData data: Data) -> BlockHeader {
-        let byteStream = ByteStream(data)
+        return deserialize(fromByteStream: ByteStream(data))
+    }
 
+    static func deserialize(fromByteStream byteStream: ByteStream) -> BlockHeader {
         let blockHeader = BlockHeader()
 
         blockHeader.version = Int(byteStream.read(Int32.self))
