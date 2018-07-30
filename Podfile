@@ -8,31 +8,32 @@ workspace 'Wallet'
 project 'Wallet/Wallet'
 project 'WalletKit/WalletKit'
 
+def kit_pods
+  pod 'Alamofire'
+  pod 'ObjectMapper'
+
+  pod 'RxSwift'
+
+  pod 'BigInt'
+  pod 'RealmSwift'
+  pod "RxRealm"
+end
+
 target :Wallet do
   project 'Wallet/Wallet'
+
+  kit_pods
 
   pod 'GrouviExtensions'
   pod 'GrouviActionSheet'
 
-  pod 'Alamofire'
-  pod 'ObjectMapper'
-  pod 'RxSwift'
   pod 'RxCocoa'
-  pod 'RealmSwift'
-  pod "RxRealm"
   pod "SnapKit"
 end
 
 target :WalletKit do
   project 'WalletKit/WalletKit'
-
-  pod 'Alamofire'
-  pod 'ObjectMapper'
-
-  pod 'RxSwift'
-
-  pod 'RealmSwift'
-  pod "RxRealm"
+  kit_pods
 end
 
 target :WalletKitTests do

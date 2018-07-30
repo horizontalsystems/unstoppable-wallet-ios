@@ -425,10 +425,10 @@ class Peer : NSObject, StreamDelegate {
     }
 
     private func handleMerkleBlockMessage(payload: Data) {
-//        let merkleBlock = MerkleBlockMessage.deserialize(payload)
-//        let blockHash = Crypto.sha256sha256(payload.prefix(80))
-//        delegate?.peer(self, didReceiveMerkleBlockMessage: merkleBlock, hash: blockHash)
-//
+        let merkleBlock = MerkleBlockMessage.deserialize(payload)
+        let blockHash = Crypto.sha256sha256(payload.prefix(80))
+        delegate?.peer(self, didReceiveMerkleBlockMessage: merkleBlock, hash: blockHash)
+
 //        context.inventoryItems[Data(blockHash.reversed())] = nil
 //        if context.inventoryItems.isEmpty {
 //            latestBlockHash = blockHash

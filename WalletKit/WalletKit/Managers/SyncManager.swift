@@ -26,16 +26,27 @@ public class SyncManager {
     }
 
     init() {
-        let header = BlockHeaderItem(
+        let preCheckPointHeader = BlockHeader(
                 version: 536870912,
-                prevBlock: "0000000000000033c86b995b9b506e98c52af9003b8b4df43a5c695ae36280ec".reversedData!,
-                merkleRoot: "fb331ce1e2f8c1c5510b68aa0b35ee3e5a4282ea49a8eb7c3dc2d09b8e107803".reversedData!,
-                timestamp: 1532066861,
+                previousBlockHeaderReversedHex: "000000000000004b68d8b5453cf38c485b1b42d564b6a1d8487ec5ce662622ea",
+                merkleRootReversedHex: "fde234b11907f3f6d45633ab11a1ba0db59f8aabecf5879d1ef301ef091f4f44",
+                timestamp: 1532135309,
                 bits: 425766046,
-                nonce: 4145809992
+                nonce: 3687858789
         )
+        let preCheckpointBlock = Block(header: preCheckPointHeader, height: 1354751)
+        preCheckpointBlock.synced = true
 
-        let block = Block(blockHeader: header, height: 1354606)
+        let checkPointHeader = BlockHeader(
+                version: 536870912,
+                previousBlockHeaderReversedHex: "0000000000000051bff2f64c9078fb346d6a2a209ba5c3ffa0048c6b7027e47f",
+                merkleRootReversedHex: "992c07e1a7b9a53ae3b8764333324396570fce24c49b8de7ed87fb1346df62a7",
+                timestamp: 1532137995,
+                bits: 424253525,
+                nonce: 1665657862
+        )
+        let checkpointBlock = Block(header: checkPointHeader, previousBlock: preCheckpointBlock)
+        checkpointBlock.synced = true
 
         let walletManager = WalletManager.shared
         var addresses = [Address]()
@@ -51,12 +62,13 @@ public class SyncManager {
 
         let realm = try! Realm()
         try? realm.write {
-            realm.add(block, update: true)
+            realm.add(preCheckpointBlock, update: true)
+            realm.add(checkpointBlock, update: true)
             realm.add(addresses, update: true)
         }
     }
 
-    public func showInfo() {
+    public func showRealmInfo() {
         let realm = try! Realm()
         let blockCount = realm.objects(Block.self).count
         let addressCount = realm.objects(Address.self).count
@@ -72,7 +84,8 @@ public class SyncManager {
         }
     }
 
-    public func sync() {
+    public func connectToPeer() {
+        _ = BlockSyncer.shared
         PeerManager.shared.connect()
     }
 

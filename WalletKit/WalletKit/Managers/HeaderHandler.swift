@@ -4,42 +4,54 @@ import RealmSwift
 class HeaderHandler {
     static let shared = HeaderHandler()
 
+    enum HandleError: Error {
+        case emptyHeaders
+        case noInitialBlock
+    }
+
     let realmFactory: RealmFactory
-    let validator: BlockHeaderItemValidator
+    let creator: BlockCreator
+    let validator: BlockValidator
     let saver: BlockSaver
 
-    init(realmFactory: RealmFactory = .shared, validator: BlockHeaderItemValidator = .shared, saver: BlockSaver = .shared) {
+    init(realmFactory: RealmFactory = .shared, creator: BlockCreator = .shared, validator: BlockValidator = TestNetBlockValidator(), saver: BlockSaver = .shared) {
         self.realmFactory = realmFactory
+        self.creator = creator
         self.validator = validator
         self.saver = saver
     }
 
-    func handle(blockHeaders: [BlockHeaderItem]) {
-        guard !blockHeaders.isEmpty else {
-            print("HeaderHandler: Empty block headers")
-            return
+    func handle(headers: [BlockHeader]) throws {
+        guard !headers.isEmpty else {
+            throw HandleError.emptyHeaders
         }
 
         let realm = realmFactory.realm
 
-        guard let lastBlock = realm.objects(Block.self).filter("archived = %@", false).sorted(byKeyPath: "height").last else {
-            print("HeaderHandler: No last block")
-            return
+        guard let initialBlock = realm.objects(Block.self).filter("previousBlock != nil").sorted(byKeyPath: "height").last else {
+            throw HandleError.noInitialBlock
         }
 
-        var validHeaders = [BlockHeaderItem]()
+        let newBlocks = creator.create(fromHeaders: headers, initialBlock: initialBlock)
+        var validBlocks = [Block]()
 
-        let initialHeaderItem = BlockHeaderItem.deserialize(byteStream: ByteStream(lastBlock.rawHeader))
-        for headerItem in blockHeaders {
-            if validator.isValid(item: headerItem, previousBlock: validHeaders.last ?? initialHeaderItem) {
-                validHeaders.append(headerItem)
-            } else {
-                break
+        var validationError: Error?
+
+        do {
+            for newBlock in newBlocks {
+                try validator.validate(block: newBlock)
+                validBlocks.append(newBlock)
             }
+        } catch {
+            validationError = error
         }
 
-        if !validHeaders.isEmpty {
-            saver.create(withHeight: lastBlock.height, fromItems: validHeaders)
+        if !validBlocks.isEmpty {
+            try saver.create(blocks: validBlocks)
+        }
+
+        if let validationError = validationError {
+            throw validationError
         }
     }
 

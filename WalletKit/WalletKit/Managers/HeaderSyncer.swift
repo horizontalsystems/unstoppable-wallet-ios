@@ -21,17 +21,17 @@ class HeaderSyncer {
     func sync() throws {
         let realm = realmFactory.realm
 
-        guard let checkpointBlock = realm.objects(Block.self).filter("archived = %@", false).sorted(byKeyPath: "height").first else {
+        guard let checkpointBlock = realm.objects(Block.self).filter("previousBlock != nil").sorted(byKeyPath: "height").first else {
             throw SyncError.noCheckpointBlock
         }
 
         var hashes = [Data]()
 
-        if let lastBlockInDatabase = realm.objects(Block.self).filter("archived = %@ AND height > %@", false, checkpointBlock.height).sorted(byKeyPath: "height").last, let hash = lastBlockInDatabase.reversedHeaderHashHex.reversedData {
-            hashes.append(hash)
+        if let lastBlockInDatabase = realm.objects(Block.self).filter("previousBlock != nil AND height > %@", checkpointBlock.height).sorted(byKeyPath: "height").last {
+            hashes.append(lastBlockInDatabase.headerHash)
 
             if lastBlockInDatabase.height - checkpointBlock.height >= hashCheckpointThreshold,
-               let previousBlock = realm.objects(Block.self).filter("archived = %@ AND height = %@", false, lastBlockInDatabase.height - hashCheckpointThreshold + 1).first {
+               let previousBlock = realm.objects(Block.self).filter("previousBlock != nil AND height = %@", lastBlockInDatabase.height - hashCheckpointThreshold + 1).first {
                 hashes.append(previousBlock.headerHash)
             }
         }

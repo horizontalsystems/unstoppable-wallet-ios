@@ -10,7 +10,7 @@ class HeaderSyncerTests: XCTestCase {
     private var headerSyncer: HeaderSyncer!
 
     private var realm: Realm!
-    private var initialBlock: Block!
+    private var checkpointBlock: Block!
 
     override func setUp() {
         super.setUp()
@@ -21,20 +21,12 @@ class HeaderSyncerTests: XCTestCase {
 
         realm = try! Realm(configuration: Realm.Configuration(inMemoryIdentifier: "TestRealm"))
 
-        initialBlock = Block()
-        initialBlock.reversedHeaderHashHex = "00000000000288d9a219419d0607fb67cc324d4b6d2945ca81eaa5e739fab81e"
-        initialBlock.headerHash = "00000000000288d9a219419d0607fb67cc324d4b6d2945ca81eaa5e739fab81e".reversedData!
-        initialBlock.height = 2016
-
-        let archivedBlock = Block()
-        archivedBlock.reversedHeaderHashHex = "0000000000024131acaefe1b3a287865ea9a95cdc797488d6ba4592428804479"
-        archivedBlock.headerHash = "0000000000024131acaefe1b3a287865ea9a95cdc797488d6ba4592428804479".reversedData!
-        archivedBlock.height = 500
-        archivedBlock.archived = true
-
+        let preCheckpointBlock = Block(header: TestHelper.preCheckpointBlockHeader, height: TestHelper.preCheckpointBlockHeight)
         try! realm.write {
-            realm.add(archivedBlock)
+            realm.add(preCheckpointBlock)
         }
+
+        checkpointBlock = Block(header: TestHelper.checkpointBlockHeader, previousBlock: preCheckpointBlock)
 
         stub(mockRealmFactory) { mock in
             when(mock.realm.get).thenReturn(realm)
@@ -50,12 +42,12 @@ class HeaderSyncerTests: XCTestCase {
         mockRealmFactory = nil
 
         realm = nil
-        initialBlock = nil
+        checkpointBlock = nil
 
         super.tearDown()
     }
 
-    func testSync_NoInitialBlock() {
+    func testSync_NoCheckpointBlock() {
         var caught = false
 
         do {
@@ -71,58 +63,62 @@ class HeaderSyncerTests: XCTestCase {
         XCTAssertTrue(caught, "noCheckpointBlock exception not thrown")
     }
 
-    func testSync_OnlyInitialBlock() {
+    func testSync_OnlyCheckpointBlock() {
         try! realm.write {
-            realm.add(initialBlock)
+            realm.add(checkpointBlock)
         }
 
         try! headerSyncer.sync()
-        verify(mockPeerManager).requestHeaders(headerHashes: equal(to: [initialBlock.headerHash]))
+        verify(mockPeerManager).requestHeaders(headerHashes: equal(to: [checkpointBlock.headerHash]))
     }
 
     func testSync_99LastBlocks() {
         try! realm.write {
-            realm.add(initialBlock)
+            realm.add(checkpointBlock)
         }
 
         let lastReversedHex = "000000000005c9a9d1e992f46bf0c0400a45feeb39d634e0a3cdde08c3b9f512"
 
+        var previousBlock = checkpointBlock
         for i in 1...98 {
-            createBlock(reversedHex: "\(2016 + i)", height: 2016 + i)
+            previousBlock = createBlock(reversedHex: "\(2016 + i)", previousBlock: previousBlock!)
         }
-        createBlock(reversedHex: lastReversedHex, height: 2016 + 99)
+        _ = createBlock(reversedHex: lastReversedHex, previousBlock: previousBlock!)
 
         try! headerSyncer.sync()
-        verify(mockPeerManager).requestHeaders(headerHashes: equal(to: [lastReversedHex.reversedData!, initialBlock.headerHash]))
+        verify(mockPeerManager).requestHeaders(headerHashes: equal(to: [lastReversedHex.reversedData!, checkpointBlock.headerHash]))
     }
 
     func testSync_100LastBlocks() {
         try! realm.write {
-            realm.add(initialBlock)
+            realm.add(checkpointBlock)
         }
 
         let firstReversedHex = "0000000000012d1d8525ce2db0abdb3617203ccd8485ecad81e37e5a228f7036"
         let lastReversedHex = "000000000005c9a9d1e992f46bf0c0400a45feeb39d634e0a3cdde08c3b9f512"
 
-        createBlock(reversedHex: firstReversedHex, height: 2017)
+        var previousBlock = createBlock(reversedHex: firstReversedHex, previousBlock: checkpointBlock)
         for i in 2...99 {
-            createBlock(reversedHex: "\(2016 + i)", height: 2016 + i)
+            previousBlock = createBlock(reversedHex: "\(2016 + i)", previousBlock: previousBlock)
         }
-        createBlock(reversedHex: lastReversedHex, height: 2016 + 100)
+        _ = createBlock(reversedHex: lastReversedHex, previousBlock: previousBlock)
 
         try! headerSyncer.sync()
         verify(mockPeerManager).requestHeaders(headerHashes: equal(to: [lastReversedHex.reversedData!, firstReversedHex.reversedData!]))
     }
 
-    private func createBlock(reversedHex: String, height: Int) {
+    private func createBlock(reversedHex: String, previousBlock: Block) -> Block {
         let block = Block()
         block.reversedHeaderHashHex = reversedHex
         block.headerHash = reversedHex.reversedData!
-        block.height = height
+        block.previousBlock = previousBlock
+        block.height = previousBlock.height + 1
 
         try! realm.write {
             realm.add(block)
         }
+
+        return block
     }
 
 }

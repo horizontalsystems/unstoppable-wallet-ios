@@ -1,7 +1,7 @@
 import Foundation
 
 struct MerkleBlockMessage {
-    let blockHeaderItem: BlockHeaderItem
+    let blockHeader: BlockHeader
 
     /// Number of transactions in the block (including unmatched ones)
     let totalTransactions: UInt32
@@ -14,7 +14,7 @@ struct MerkleBlockMessage {
 
     func serialized() -> Data {
         var data = Data()
-        data += blockHeaderItem.serialized()
+        data += blockHeader.serialized()
         data += totalTransactions
         data += numberOfHashes.serialized()
         data += hashes.flatMap { $0 }
@@ -25,7 +25,7 @@ struct MerkleBlockMessage {
 
     static func deserialize(_ data: Data) -> MerkleBlockMessage {
         let byteStream = ByteStream(data)
-        let blockHeaderItem = BlockHeaderItem.deserialize(byteStream: byteStream)
+        let blockHeaderItem = BlockHeader.deserialize(fromByteStream: byteStream)
         let totalTransactions = byteStream.read(UInt32.self)
         let numberOfHashes = byteStream.read(VarInt.self)
         var hashes = [Data]()
@@ -37,7 +37,7 @@ struct MerkleBlockMessage {
         for _ in 0..<numberOfFlags.underlyingValue {
             flags.append(byteStream.read(UInt8.self))
         }
-        return MerkleBlockMessage(blockHeaderItem: blockHeaderItem, totalTransactions: totalTransactions, numberOfHashes: numberOfHashes, hashes: hashes, numberOfFlags: numberOfFlags, flags: flags)
+        return MerkleBlockMessage(blockHeader: blockHeaderItem, totalTransactions: totalTransactions, numberOfHashes: numberOfHashes, hashes: hashes, numberOfFlags: numberOfFlags, flags: flags)
     }
 
 }

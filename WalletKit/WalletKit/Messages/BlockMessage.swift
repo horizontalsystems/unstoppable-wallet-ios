@@ -9,7 +9,7 @@
 import Foundation
 
 struct BlockMessage {
-    let blockHeaderItem: BlockHeaderItem
+    let blockHeaderItem: BlockHeader
 
     /// Number of transaction entries
     let transactionCount: VarInt
@@ -28,7 +28,7 @@ struct BlockMessage {
 
     static func deserialize(_ data: Data) -> BlockMessage {
         let byteStream = ByteStream(data)
-        let blockHeaderItem = BlockHeaderItem.deserialize(byteStream: byteStream)
+        let blockHeaderItem = BlockHeader.deserialize(fromByteStream: byteStream)
         let transactionCount = byteStream.read(VarInt.self)
         var transactions = [TransactionMessage]()
         for _ in 0..<transactionCount.underlyingValue {
@@ -36,4 +36,5 @@ struct BlockMessage {
         }
         return BlockMessage(blockHeaderItem: blockHeaderItem, transactionCount: transactionCount, transactions: transactions)
     }
+
 }
