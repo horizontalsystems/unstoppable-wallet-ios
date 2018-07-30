@@ -29,7 +29,7 @@ class PeerManager {
     }
 
     func requestBlocks(headerHashes: [Data]) {
-        print("Request Blocks: \(headerHashes.map { $0.reversedHex }.joined(separator: ", "))")
+//        print("Request Blocks: \(headerHashes.map { $0.reversedHex }.joined(separator: ", "))")
         let inventoryMessage = InventoryMessage(count: VarInt(headerHashes.count), inventoryItems: headerHashes.map { hash in
             InventoryItem(type: InventoryItem.ObjectType.filteredBlockMessage.rawValue, hash: hash)
         })
@@ -46,7 +46,6 @@ extension PeerManager: PeerDelegate {
         let addresses = realm.objects(Address.self)
         let filters = Array(addresses.map { $0.publicKeyHash })
 
-        print("Loading filters: \(filters.count)")
         peer.load(filters: filters)
 
         statusSubject.onNext(.connected)
@@ -58,8 +57,8 @@ extension PeerManager: PeerDelegate {
         }
     }
 
-    public func peer(_ peer: Peer, didReceiveMerkleBlockMessage message: MerkleBlockMessage, hash: Data) {
-        print("MERKLE BLOCK: \(hash.reversedHex)")
+    public func peer(_ peer: Peer, didReceiveMerkleBlockMessage message: MerkleBlockMessage) {
+//        print("MERKLE BLOCK: \(Crypto.sha256sha256(message.blockHeader.serialized()).reversedHex)")
 
         do {
             try MerkleBlockHandler.shared.handle(message: message)
@@ -68,8 +67,8 @@ extension PeerManager: PeerDelegate {
         }
     }
 
-    public func peer(_ peer: Peer, didReceiveTransaction message: TransactionMessage, hash: Data) {
-        print("TRANSACTION: \(hash.hex)")
+    public func peer(_ peer: Peer, didReceiveTransaction message: TransactionMessage) {
+//        print("TRANSACTION: \(Crypto.sha256sha256(message.serialized()).reversedHex)")
 
         do {
             try TransactionHandler.shared.handle(message: message)
@@ -79,12 +78,12 @@ extension PeerManager: PeerDelegate {
     }
 
     public func peer(_ peer: Peer, didReceiveHeadersMessage message: HeadersMessage) {
-        message.blockHeaders.first.map {
-            print("First Header: \(Data(Crypto.sha256sha256($0.serialized()).reversed()).hex)")
-        }
-        message.blockHeaders.last.map {
-            print("Last Header: \(Data(Crypto.sha256sha256($0.serialized()).reversed()).hex)")
-        }
+//        message.blockHeaders.first.map {
+//            print("First Header: \(Data(Crypto.sha256sha256($0.serialized()).reversed()).hex)")
+//        }
+//        message.blockHeaders.last.map {
+//            print("Last Header: \(Data(Crypto.sha256sha256($0.serialized()).reversed()).hex)")
+//        }
 
         if !message.blockHeaders.isEmpty {
             do {
