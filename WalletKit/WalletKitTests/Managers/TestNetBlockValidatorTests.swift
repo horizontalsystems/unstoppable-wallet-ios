@@ -33,6 +33,18 @@ class TestNetBlockValidatorTests: XCTestCase {
         super.tearDown()
     }
 
+    func makeChain(block: Block, lastBlock: Block, interval: Int) {
+        var previousBlock: Block = block
+        for _ in 0..<interval {
+            let block = Block()
+            block.height = previousBlock.height - 1
+            previousBlock.previousBlock = block
+
+            previousBlock = block
+        }
+        previousBlock.previousBlock = lastBlock
+    }
+
     func testValidItem() {
         let previousBlock = Block(
                 header: BlockHeader(version: 536870912, previousBlockHeaderReversedHex: "000000000000003207f0eec08b503a1cfd436bebd534447d5617e873e565e857", merkleRootReversedHex: "cea385cdb303a11667ea0815237a3884972735847d16ddb8e249e8b85f9f6da5", timestamp: 1532135295, bits: 425766046, nonce: 1573976592),
@@ -56,7 +68,6 @@ class TestNetBlockValidatorTests: XCTestCase {
                 header: BlockHeader(version: 536870912, previousBlockHeaderReversedHex: "000000000000003207f0eec08b503a1cfd436bebd534447d5617e873e565e857", merkleRootReversedHex: "cea385cdb303a11667ea0815237a3884972735847d16ddb8e249e8b85f9f6da5", timestamp: 1532135295, bits: 425766046, nonce: 1573976592),
                 previousBlock: previousSmallTimeSpanBlock
         )
-
 
         do {
             try validator.validate(block: block)
@@ -96,6 +107,28 @@ class TestNetBlockValidatorTests: XCTestCase {
 
         let block = Block(
                 header: BlockHeader(version: 536870912, previousBlockHeaderReversedHex: "0000000000004a50ef5733ab333f718e6ef5c1995e2cfd5a7caa0875f118cd30", merkleRootReversedHex: "66d13b02f9eec87b7f4ae7b0ae15b76816ddb432cceaf01ace6c7b81b901ddc5", timestamp: 1532145052, bits: 424253525, nonce: 2794859001),
+                previousBlock: previousBlock
+        )
+
+        do {
+            try validator.validate(block: block)
+        } catch let error {
+            XCTFail("\(error) Exception Thrown")
+        }
+    }
+
+    func testValidCheckPointItem() {
+        let checkPointBlock = Block(
+                header: BlockHeader(version: 536870912, previousBlockHeaderReversedHex: "00000000000002ac6d5c058c9932f350aeef84f6e334f4e01b40be4db537f8c2", merkleRootReversedHex: "9e172a04fc387db6f273ee96b4ef50732bb4b06e494483d182c5722afd8770b3", timestamp: 1530756778, bits: 436273151, nonce: 4053884125),
+                height: 1350720
+        )
+        let previousBlock = Block(
+                header: BlockHeader(version: 536870912, previousBlockHeaderReversedHex: "00000000000000c6721126859c1f2d289eb3f9beff79388f596f332ae8d3e3a8", merkleRootReversedHex: "77bb66cd8075995f05ef82c727cfa407769ee70607f16c589f594e0dbb23f881", timestamp: 1531213571, bits: 436273151, nonce: 3537712057),
+                height: 1352735
+        )
+        makeChain(block: previousBlock, lastBlock: checkPointBlock, interval: 2014)
+        let block = Block(
+                header: BlockHeader(version: 536870912, previousBlockHeaderReversedHex: "00000000000000c9a91d8277c58eab3bfda59d3068142dd54216129e5597ccbd", merkleRootReversedHex: "076c5847dbde99ed49cd75d7dbe63c3d3bb9399b135d1639d6169b8a5510913b", timestamp: 1531214479, bits: 425766046, nonce: 1665657862),
                 previousBlock: previousBlock
         )
 
