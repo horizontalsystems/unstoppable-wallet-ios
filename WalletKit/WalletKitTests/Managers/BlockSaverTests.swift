@@ -81,7 +81,7 @@ class BlockSaverTests: XCTestCase {
 
         XCTAssertEqual(savedBlock.transactions.count, transactions.count)
         for (i, transaction) in transactions.enumerated() {
-            XCTAssertEqual(savedBlock.transactions[i].transactionHash, hashes[i].reversedHex)
+            XCTAssertEqual(savedBlock.transactions[i].reversedHashHex, hashes[i].reversedHex)
         }
 
         XCTAssertTrue(savedBlock.synced)

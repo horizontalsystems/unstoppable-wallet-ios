@@ -24,7 +24,7 @@ class TransactionHandlerTests: XCTestCase {
         realm = try! Realm(configuration: Realm.Configuration(inMemoryIdentifier: "TestRealm"))
 
         transaction = Transaction()
-        transaction.transactionHash = "3e7f350bf5c2169833ad02e8ada93a5d47862fe708cdd6c9fb4c15af59e50f70"
+        transaction.reversedHashHex = Data(hex: "3e7f350bf5c2169833ad02e8ada93a5d47862fe708cdd6c9fb4c15af59e50f70")!.reversedHex
 
         var txInputItem = TransactionInputItem(
                 previousOutput: TransactionOutPointItem(hash: Data(hex: "28c004efa76de2dc58921a9eb21fd1a0f5aa91286e7f44e5800ca9d76c105c86")!, index: 0),

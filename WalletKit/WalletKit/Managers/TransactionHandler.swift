@@ -21,8 +21,8 @@ class TransactionHandler  {
         try validator.validate(message: message)
 
         let realm = realmFactory.realm
-        let transactionHash = Crypto.sha256sha256(message.serialized()).hex
-        let transaction = realm.objects(Transaction.self).filter("transactionHash = %@", transactionHash).last
+        let reversedHashHex = Crypto.sha256sha256(message.serialized()).reversedHex
+        let transaction = realm.objects(Transaction.self).filter("reversedHashHex = %@", reversedHashHex).last
         try saver.update(transaction: transaction, withContentsOf: message)
     }
 

@@ -24,7 +24,7 @@ class BlockSaver {
 
         for hash in hashes {
             let transaction = Transaction()
-            transaction.transactionHash = hash.reversedHex
+            transaction.reversedHashHex = hash.reversedHex
             transaction.block = block
             transactions.append(transaction)
         }
