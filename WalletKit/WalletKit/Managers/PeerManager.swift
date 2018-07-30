@@ -68,8 +68,14 @@ extension PeerManager: PeerDelegate {
         }
     }
 
-    public func peer(_ peer: Peer, didReceiveTransaction transaction: TransactionMessage, hash: Data) {
+    public func peer(_ peer: Peer, didReceiveTransaction message: TransactionMessage, hash: Data) {
         print("TRANSACTION: \(hash.hex)")
+
+        do {
+            try TransactionHandler.shared.handle(message: message)
+        } catch {
+            print("TransactionHandler error: \(error)")
+        }
     }
 
     public func peer(_ peer: Peer, didReceiveHeadersMessage message: HeadersMessage) {
