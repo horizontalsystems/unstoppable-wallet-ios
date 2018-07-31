@@ -14,6 +14,7 @@
 		11B35178BC28AE1B995DE8E3 /* VarInt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B355C0072CA13ADBAC1351 /* VarInt.swift */; };
 		11B351F8CD5AF19AC75F61D4 /* HeaderHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B359B3470297AD7D56387C /* HeaderHandler.swift */; };
 		11B352145E5F28730588A837 /* ApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35C0AB587D20F2ECC40F6 /* ApiManager.swift */; };
+		11B352211E6C7036DEE86D22 /* BlockCreatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3557E78DBA78498A2511A /* BlockCreatorTests.swift */; };
 		11B3524A98464B1AC0068F5A /* DatabaseChangeSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35D1536E0568337F54F0E /* DatabaseChangeSet.swift */; };
 		11B353C1D6EDDA8E4D9DB02A /* BlockSyncer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35F01DB59367C7D83E8DC /* BlockSyncer.swift */; };
 		11B353EA4081799EA9387B66 /* WalletManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35B41C52992BFEA752B5D /* WalletManager.swift */; };
@@ -135,6 +136,7 @@
 		11B353BC4AF64E99EC5E5887 /* HeaderHandlerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeaderHandlerTests.swift; sourceTree = "<group>"; };
 		11B353F6C17A6C19CC2E7E60 /* ExchangeRate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExchangeRate.swift; sourceTree = "<group>"; };
 		11B35507D7F6982EEF1A45BA /* BlockSyncerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockSyncerTests.swift; sourceTree = "<group>"; };
+		11B3557E78DBA78498A2511A /* BlockCreatorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockCreatorTests.swift; sourceTree = "<group>"; };
 		11B3559B75AD75C20287ECC7 /* TransactionOutput.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionOutput.swift; sourceTree = "<group>"; };
 		11B355A975909FAAC6983C9B /* CollectionChangeSet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionChangeSet.swift; sourceTree = "<group>"; };
 		11B355C0072CA13ADBAC1351 /* VarInt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VarInt.swift; sourceTree = "<group>"; };
@@ -399,6 +401,7 @@
 				2FA5D52E9214E99DF779A25A /* MerkleBlockValidatorTests.swift */,
 				58AAA1040012570F76E48D7C /* TestNetBlockValidatorTests.swift */,
 				2FA5D21A2ABC16232BC8C195 /* TransactionHandlerTests.swift */,
+				11B3557E78DBA78498A2511A /* BlockCreatorTests.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -713,6 +716,7 @@
 				11B35D23B451CFB803F69CA0 /* TestHelper.swift in Sources */,
 				58AAAD7FA11B8C8973A0A363 /* TestNetBlockValidatorTests.swift in Sources */,
 				2FA5D8755D9A88357CD2CDCB /* TransactionHandlerTests.swift in Sources */,
+				11B352211E6C7036DEE86D22 /* BlockCreatorTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
