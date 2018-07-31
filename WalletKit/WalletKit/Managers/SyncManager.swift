@@ -74,14 +74,20 @@ public class SyncManager {
         let addressCount = realm.objects(Address.self).count
 
         print("BLOCK COUNT: \(blockCount)")
-        print("ADDRESS COUNT: \(addressCount)")
+        if let block = realm.objects(Block.self).first {
+            print("First Block: \(block.height) --- \(block.reversedHeaderHashHex)")
+        }
+        if let block = realm.objects(Block.self).last {
+            print("Last Block: \(block.height) --- \(block.reversedHeaderHashHex)")
+        }
 
-        for block in realm.objects(Block.self) {
-            print("\(block.height) --- \(block.reversedHeaderHashHex)")
-        }
-        for address in realm.objects(Address.self) {
-            print("\(address.index) --- \(address.external) --- \(address.base58)")
-        }
+        print("ADDRESS COUNT: \(addressCount)")
+//        if let address = realm.objects(Address.self).first {
+//            print("First Address: \(address.index) --- \(address.external) --- \(address.base58)")
+//        }
+//        if let address = realm.objects(Address.self).last {
+//            print("Last Address: \(address.index) --- \(address.external) --- \(address.base58)")
+//        }
     }
 
     public func connectToPeer() {

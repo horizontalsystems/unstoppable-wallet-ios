@@ -46,9 +46,13 @@ class Peer : NSObject, StreamDelegate {
     }
 
     func connect() {
-        queue.async {
-            self.runLoop = .current
-            self.connectAsync()
+        if runLoop == nil {
+            queue.async {
+                self.runLoop = .current
+                self.connectAsync()
+            }
+        } else {
+            print("ALREADY CONNECTED")
         }
     }
 
@@ -76,12 +80,17 @@ class Peer : NSObject, StreamDelegate {
 
         inputStream?.delegate = nil
         outputStream?.delegate = nil
-        inputStream?.remove(from: .current, forMode: .commonModes)
-        outputStream?.remove(from: .current, forMode: .commonModes)
         inputStream?.close()
         outputStream?.close()
+        inputStream?.remove(from: .current, forMode: .commonModes)
+        outputStream?.remove(from: .current, forMode: .commonModes)
         readStream = nil
         writeStream = nil
+
+        runLoop = nil
+
+        sentVersion = false
+        sentVerack = false
 
         log("DISCONNECTED")
     }
