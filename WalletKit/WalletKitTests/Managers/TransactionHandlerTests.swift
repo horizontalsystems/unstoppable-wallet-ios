@@ -22,6 +22,7 @@ class TransactionHandlerTests: XCTestCase {
         transactionHandler = TransactionHandler(realmFactory: mockRealmFactory, validator: mockValidator, saver: mockSaver)
 
         realm = try! Realm(configuration: Realm.Configuration(inMemoryIdentifier: "TestRealm"))
+        try! realm.write { realm.deleteAll() }
 
         transaction = Transaction()
         transaction.reversedHashHex = Data(hex: "3e7f350bf5c2169833ad02e8ada93a5d47862fe708cdd6c9fb4c15af59e50f70")!.reversedHex

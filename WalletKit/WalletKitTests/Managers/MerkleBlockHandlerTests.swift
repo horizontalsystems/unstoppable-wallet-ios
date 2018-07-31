@@ -23,6 +23,7 @@ class MerkleBlockHandlerTests: XCTestCase {
         merkleBlockHandler = MerkleBlockHandler(realmFactory: mockRealmFactory, validator: mockValidator, saver: mockSaver)
 
         realm = try! Realm(configuration: Realm.Configuration(inMemoryIdentifier: "TestRealm"))
+        try! realm.write { realm.deleteAll() }
 
         block = Block()
         block.reversedHeaderHashHex = "00000000000025c23a19cc91ad8d3e33c2630ce1df594e1ae0bf0eabe30a9176"

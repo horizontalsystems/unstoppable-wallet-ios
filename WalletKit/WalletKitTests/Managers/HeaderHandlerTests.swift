@@ -13,8 +13,6 @@ class HeaderHandlerTests: XCTestCase {
 
     private var realm: Realm!
 
-    private var firstCheckPointBlock: Block!
-
     private var initialBlock: Block!
     private var initialHeader: BlockHeader!
 
@@ -28,6 +26,7 @@ class HeaderHandlerTests: XCTestCase {
         headerHandler = HeaderHandler(realmFactory: mockRealmFactory, creator: mockCreator, validator: mockValidator, saver: mockSaver)
 
         realm = try! Realm(configuration: Realm.Configuration(inMemoryIdentifier: "TestRealm"))
+        try! realm.write { realm.deleteAll() }
 
         let preCheckpointBlock = Block(header: TestHelper.preCheckpointBlockHeader, height: TestHelper.preCheckpointBlockHeight)
         try! realm.write {
