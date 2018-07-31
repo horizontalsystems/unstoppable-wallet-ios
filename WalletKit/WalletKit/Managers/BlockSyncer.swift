@@ -11,19 +11,23 @@ class BlockSyncer {
 
     private var notificationToken: NotificationToken?
 
-    init(realmFactory: RealmFactory = .shared, peerManager: PeerManager = .shared) {
+    init(realmFactory: RealmFactory = .shared, peerManager: PeerManager = .shared, scheduler: ImmediateSchedulerType = ConcurrentDispatchQueueScheduler(qos: .background), queue: DispatchQueue = .global(qos: .background)) {
         self.realmFactory = realmFactory
         self.peerManager = peerManager
 
-        peerManager.statusSubject.subscribe(onNext: { [weak self] status in
-            if status == .connected {
-                self?.sync()
-            }
-        }).disposed(by: disposeBag)
+        peerManager.statusSubject
+                .observeOn(scheduler)
+                .subscribe(onNext: { [weak self] status in
+                    if status == .connected {
+                        self?.sync()
+                    }
+                }).disposed(by: disposeBag)
 
-        notificationToken = realmFactory.realm.objects(Block.self).filter("synced = %@", false).observe { [weak self] changes in
-            if case let .update(_, _, insertions, _) = changes, !insertions.isEmpty {
-                self?.sync()
+        notificationToken = realmFactory.realm.objects(Block.self).filter("synced = %@", false).observe { changes in
+            queue.async { [weak self] in
+                if case let .update(_, _, insertions, _) = changes, !insertions.isEmpty {
+                    self?.sync()
+                }
             }
         }
     }

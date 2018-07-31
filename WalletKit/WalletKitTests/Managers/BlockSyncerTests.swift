@@ -20,6 +20,8 @@ class BlockSyncerTests: XCTestCase {
         mockPeerManager = MockPeerManager()
 
         realm = try! Realm(configuration: Realm.Configuration(inMemoryIdentifier: "TestRealm"))
+        try! realm.write { realm.deleteAll() }
+
         peerStatusSubject = PublishSubject()
 
         stub(mockRealmFactory) { mock in
@@ -30,7 +32,7 @@ class BlockSyncerTests: XCTestCase {
             when(mock.statusSubject.get).thenReturn(peerStatusSubject)
         }
 
-        blockSyncer = BlockSyncer(realmFactory: mockRealmFactory, peerManager: mockPeerManager)
+        blockSyncer = BlockSyncer(realmFactory: mockRealmFactory, peerManager: mockPeerManager, scheduler: MainScheduler.instance, queue: .main)
     }
 
     override func tearDown() {
@@ -62,6 +64,7 @@ class BlockSyncerTests: XCTestCase {
 
     func testSync_OnDisconnect() {
         let hash = "000000000000002ca33390dac7a0b98b222b762810f2dda0a00ecf2c1cdf361b".reversedData!
+
         try! realm.write {
             realm.create(Block.self, value: ["reversedHeaderHashHex": hash.reversedHex, "headerHash": hash, "height": 1, "synced": false], update: true)
         }

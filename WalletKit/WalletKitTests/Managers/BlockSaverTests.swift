@@ -18,6 +18,7 @@ class BlockSaverTests: XCTestCase {
         saver = BlockSaver(realmFactory: mockRealmFactory)
 
         realm = try! Realm(configuration: Realm.Configuration(inMemoryIdentifier: "TestRealm"))
+        try! realm.write { realm.deleteAll() }
 
         initialBlock = Block(header: TestHelper.checkpointBlockHeader, height: 1)
 
