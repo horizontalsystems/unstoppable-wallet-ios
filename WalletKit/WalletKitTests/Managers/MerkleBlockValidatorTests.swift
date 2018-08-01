@@ -56,7 +56,7 @@ class MerkleBlockValidatorTests: XCTestCase {
     func testValidMerkleBlock() {
         do {
             try validator.validate(message: getSampleMessage())
-        } catch let error as Error {
+        } catch {
             print(error)
             XCTFail("Should be valid")
         }
@@ -75,7 +75,7 @@ class MerkleBlockValidatorTests: XCTestCase {
         } catch let error as MerkleBlockValidator.ValidationError {
             caught = true
             XCTAssertEqual(error, MerkleBlockValidator.ValidationError.wrongMerkleRoot)
-        } catch let error as Error {
+        } catch {
             XCTFail("Unknown Exception")
         }
 
@@ -93,7 +93,7 @@ class MerkleBlockValidatorTests: XCTestCase {
         } catch let error as MerkleBlockValidator.ValidationError {
             caught = true
             XCTAssertEqual(error, MerkleBlockValidator.ValidationError.noTransactions)
-        } catch let error as Error {
+        } catch {
             XCTFail("Unknown Exception")
         }
 
@@ -111,7 +111,7 @@ class MerkleBlockValidatorTests: XCTestCase {
         } catch let error as MerkleBlockValidator.ValidationError {
             caught = true
             XCTAssertEqual(error, MerkleBlockValidator.ValidationError.tooManyTransactions)
-        } catch let error as Error {
+        } catch {
             XCTFail("Unknown Exception")
         }
 
@@ -129,7 +129,7 @@ class MerkleBlockValidatorTests: XCTestCase {
         } catch let error as MerkleBlockValidator.ValidationError {
             caught = true
             XCTAssertEqual(error, MerkleBlockValidator.ValidationError.moreHashesThanTransactions)
-        } catch let error as Error {
+        } catch {
             XCTFail("Unknown Exception")
         }
 
@@ -147,7 +147,7 @@ class MerkleBlockValidatorTests: XCTestCase {
         } catch let error as MerkleBlockValidator.ValidationError {
             caught = true
             XCTAssertEqual(error, MerkleBlockValidator.ValidationError.matchedBitsFewerThanHashes)
-        } catch let error as Error {
+        } catch {
             XCTFail("Unknown Exception")
         }
 
@@ -165,7 +165,7 @@ class MerkleBlockValidatorTests: XCTestCase {
         } catch let error as MerkleBlockValidator.ValidationError {
             caught = true
             XCTAssertEqual(error, MerkleBlockValidator.ValidationError.unnecessaryBits)
-        } catch let error as Error {
+        } catch {
             XCTFail("Unknown Exception")
         }
 
@@ -183,7 +183,7 @@ class MerkleBlockValidatorTests: XCTestCase {
         } catch let error as MerkleBlockValidator.ValidationError {
             caught = true
             XCTAssertEqual(error, MerkleBlockValidator.ValidationError.notEnoughBits)
-        } catch let error as Error {
+        } catch {
             XCTFail("Unknown Exception")
         }
 
@@ -201,7 +201,7 @@ class MerkleBlockValidatorTests: XCTestCase {
         } catch let error as MerkleBlockValidator.ValidationError {
             caught = true
             XCTAssertEqual(error, MerkleBlockValidator.ValidationError.notEnoughHashes)
-        } catch let error as Error {
+        } catch {
             XCTFail("Unknown Exception")
         }
 
@@ -219,7 +219,7 @@ class MerkleBlockValidatorTests: XCTestCase {
         } catch let error as MerkleBlockValidator.ValidationError {
             caught = true
             XCTAssertEqual(error, MerkleBlockValidator.ValidationError.duplicatedLeftOrRightBranches)
-        } catch let error as Error {
+        } catch {
             XCTFail("Unknown Exception")
         }
 

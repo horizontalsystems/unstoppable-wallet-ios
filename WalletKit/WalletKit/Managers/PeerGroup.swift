@@ -2,8 +2,8 @@ import Foundation
 import RealmSwift
 import RxSwift
 
-class PeerManager {
-    static let shared = PeerManager()
+class PeerGroup {
+    static let shared = PeerGroup()
 
     enum Status {
         case connected, disconnected
@@ -39,7 +39,7 @@ class PeerManager {
 
 }
 
-extension PeerManager: PeerDelegate {
+extension PeerGroup: PeerDelegate {
 
     public func peerDidConnect(_ peer: Peer) {
         let realm = RealmFactory.shared.realm

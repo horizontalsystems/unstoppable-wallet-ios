@@ -27,14 +27,14 @@ class TransactionHandlerTests: XCTestCase {
         transaction = Transaction()
         transaction.reversedHashHex = Data(hex: "3e7f350bf5c2169833ad02e8ada93a5d47862fe708cdd6c9fb4c15af59e50f70")!.reversedHex
 
-        var txInputItem = TransactionInputItem(
+        let txInputItem = TransactionInputItem(
                 previousOutput: TransactionOutPointItem(hash: Data(hex: "28c004efa76de2dc58921a9eb21fd1a0f5aa91286e7f44e5800ca9d76c105c86")!, index: 0),
                 scriptLength: 72,
                 signatureScript: Data(hex: "47304402205c54aa165861bf5347683fb078a99188726ee2577e3554d0f77ad7c60a4b072902206f77f42f216e4c64585a60ec76a944fc83278524e5a0dfda31b58f94035d27be01")!,
                 sequence: 4294967295
         )
 
-        var txOutputItem = TransactionOutputItem(value: 4998000000, scriptLength: 23, lockingScript: Data(hex: "a914121e63ee09fc7e20b59d144dcce6e2700f6f1a9c87")!)
+        let txOutputItem = TransactionOutputItem(value: 4998000000, scriptLength: 23, lockingScript: Data(hex: "a914121e63ee09fc7e20b59d144dcce6e2700f6f1a9c87")!)
 
         sampleTransactionMessage = TransactionMessage(version: 1, txInCount: 1, inputs: [txInputItem], txOutCount: 1, outputs: [txOutputItem], lockTime: 0)
 
@@ -42,7 +42,7 @@ class TransactionHandlerTests: XCTestCase {
             when(mock.realm.get).thenReturn(realm)
         }
         stub(mockSaver) { mock in
-            when(mock.update(transaction: any(), withContentsOf: any()).thenDoNothing())
+            when(mock.update(transaction: any(), withContentsOf: any())).thenDoNothing()
         }
     }
 

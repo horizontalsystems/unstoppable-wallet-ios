@@ -38,8 +38,9 @@ public struct BloomFilter {
 }
 
 extension BloomFilter : CustomDebugStringConvertible {
+
     public var debugDescription: String {
-        return filter.flatMap { bits(fromByte: $0).map { $0.description }.joined() }.joined()
+        return filter.compactMap { bits(fromByte: $0).map { $0.description }.joined() }.joined()
     }
 
     enum Bit: UInt8, CustomStringConvertible {
@@ -65,4 +66,5 @@ extension BloomFilter : CustomDebugStringConvertible {
         }
         return bits
     }
+
 }

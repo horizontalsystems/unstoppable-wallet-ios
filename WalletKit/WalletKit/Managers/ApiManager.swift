@@ -65,8 +65,8 @@ class ApiManager {
         return observable.do(onNext: { dataResponse in
             switch dataResponse.result {
             case .success(let result):
-//                print("API IN: SUCCESS: \(dataResponse.request?.url?.path ?? ""): response = \(result)")
-                print("API IN: SUCCESS: \(dataResponse.request?.url?.path ?? "")")
+                print("API IN: SUCCESS: \(dataResponse.request?.url?.path ?? ""): response = \(result)")
+//                print("API IN: SUCCESS: \(dataResponse.request?.url?.path ?? "")")
                 ()
             case .failure:
                 let data = dataResponse.data.flatMap {

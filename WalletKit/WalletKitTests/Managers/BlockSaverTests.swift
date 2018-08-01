@@ -81,7 +81,7 @@ class BlockSaverTests: XCTestCase {
         let transactions = realm.objects(Transaction.self)
 
         XCTAssertEqual(savedBlock.transactions.count, transactions.count)
-        for (i, transaction) in transactions.enumerated() {
+        for i in 0..<transactions.count {
             XCTAssertEqual(savedBlock.transactions[i].reversedHashHex, hashes[i].reversedHex)
         }
 

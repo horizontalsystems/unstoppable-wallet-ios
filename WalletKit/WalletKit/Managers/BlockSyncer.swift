@@ -7,15 +7,15 @@ class BlockSyncer {
     let disposeBag = DisposeBag()
 
     let realmFactory: RealmFactory
-    let peerManager: PeerManager
+    let peerGroup: PeerGroup
 
     private var notificationToken: NotificationToken?
 
-    init(realmFactory: RealmFactory = .shared, peerManager: PeerManager = .shared, scheduler: ImmediateSchedulerType = ConcurrentDispatchQueueScheduler(qos: .background), queue: DispatchQueue = .global(qos: .background)) {
+    init(realmFactory: RealmFactory = .shared, peerGroup: PeerGroup = .shared, scheduler: ImmediateSchedulerType = ConcurrentDispatchQueueScheduler(qos: .background), queue: DispatchQueue = .global(qos: .background)) {
         self.realmFactory = realmFactory
-        self.peerManager = peerManager
+        self.peerGroup = peerGroup
 
-        peerManager.statusSubject
+        peerGroup.statusSubject
                 .observeOn(scheduler)
                 .subscribe(onNext: { [weak self] status in
                     if status == .connected {
@@ -39,7 +39,7 @@ class BlockSyncer {
         let hashes = nonSyncedBlocks.map { $0.headerHash }
 
         if !hashes.isEmpty {
-            peerManager.requestBlocks(headerHashes: Array(hashes))
+            peerGroup.requestBlocks(headerHashes: Array(hashes))
         }
     }
 

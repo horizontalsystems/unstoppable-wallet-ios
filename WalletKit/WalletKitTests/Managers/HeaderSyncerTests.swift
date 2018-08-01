@@ -6,7 +6,7 @@ import RealmSwift
 class HeaderSyncerTests: XCTestCase {
 
     private var mockRealmFactory: MockRealmFactory!
-    private var mockPeerManager: MockPeerManager!
+    private var mockPeerGroup: MockPeerGroup!
     private var headerSyncer: HeaderSyncer!
 
     private var realm: Realm!
@@ -16,8 +16,8 @@ class HeaderSyncerTests: XCTestCase {
         super.setUp()
 
         mockRealmFactory = MockRealmFactory()
-        mockPeerManager = MockPeerManager()
-        headerSyncer = HeaderSyncer(realmFactory: mockRealmFactory, peerManager: mockPeerManager)
+        mockPeerGroup = MockPeerGroup()
+        headerSyncer = HeaderSyncer(realmFactory: mockRealmFactory, peerGroup: mockPeerGroup)
 
         realm = try! Realm(configuration: Realm.Configuration(inMemoryIdentifier: "TestRealm"))
         try! realm.write { realm.deleteAll() }
@@ -32,14 +32,14 @@ class HeaderSyncerTests: XCTestCase {
         stub(mockRealmFactory) { mock in
             when(mock.realm.get).thenReturn(realm)
         }
-        stub(mockPeerManager) { mock in
+        stub(mockPeerGroup) { mock in
             when(mock.requestHeaders(headerHashes: any())).thenDoNothing()
         }
     }
 
     override func tearDown() {
         headerSyncer = nil
-        mockPeerManager = nil
+        mockPeerGroup = nil
         mockRealmFactory = nil
 
         realm = nil
@@ -60,7 +60,7 @@ class HeaderSyncerTests: XCTestCase {
             XCTFail("Unknown exception thrown")
         }
 
-        verifyNoMoreInteractions(mockPeerManager)
+        verifyNoMoreInteractions(mockPeerGroup)
         XCTAssertTrue(caught, "noCheckpointBlock exception not thrown")
     }
 
@@ -70,7 +70,7 @@ class HeaderSyncerTests: XCTestCase {
         }
 
         try! headerSyncer.sync()
-        verify(mockPeerManager).requestHeaders(headerHashes: equal(to: [checkpointBlock.headerHash]))
+        verify(mockPeerGroup).requestHeaders(headerHashes: equal(to: [checkpointBlock.headerHash]))
     }
 
     func testSync_99LastBlocks() {
@@ -87,7 +87,7 @@ class HeaderSyncerTests: XCTestCase {
         _ = createBlock(reversedHex: lastReversedHex, previousBlock: previousBlock!)
 
         try! headerSyncer.sync()
-        verify(mockPeerManager).requestHeaders(headerHashes: equal(to: [lastReversedHex.reversedData!, checkpointBlock.headerHash]))
+        verify(mockPeerGroup).requestHeaders(headerHashes: equal(to: [lastReversedHex.reversedData!, checkpointBlock.headerHash]))
     }
 
     func testSync_100LastBlocks() {
@@ -105,7 +105,7 @@ class HeaderSyncerTests: XCTestCase {
         _ = createBlock(reversedHex: lastReversedHex, previousBlock: previousBlock)
 
         try! headerSyncer.sync()
-        verify(mockPeerManager).requestHeaders(headerHashes: equal(to: [lastReversedHex.reversedData!, firstReversedHex.reversedData!]))
+        verify(mockPeerGroup).requestHeaders(headerHashes: equal(to: [lastReversedHex.reversedData!, firstReversedHex.reversedData!]))
     }
 
     private func createBlock(reversedHex: String, previousBlock: Block) -> Block {

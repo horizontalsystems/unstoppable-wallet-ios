@@ -92,7 +92,7 @@ public class SyncManager {
 
     public func connectToPeer() {
         _ = BlockSyncer.shared
-        PeerManager.shared.connect()
+        PeerGroup.shared.connect()
     }
 
     private func initialSync() {
@@ -177,10 +177,10 @@ public class SyncManager {
     }
 
     private func addressesObservable() -> Observable<[Address]> {
-        let walletManager = self.walletManager
+//        let walletManager = self.walletManager
 
         return Observable.create { observer in
-            var addresses = [Address]()
+//            var addresses = [Address]()
 
 //            for i in 0...20 {
 //                if let address = try? walletManager!.wallet.receiveAddress(index: UInt32(i)) {
@@ -191,7 +191,7 @@ public class SyncManager {
 //                }
 //            }
 
-            observer.onNext(addresses)
+//            observer.onNext(addresses)
             observer.onCompleted()
 
             return Disposables.create()

@@ -41,7 +41,7 @@
 		11B35AD94DCCE70F47E51FB8 /* BlockFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35B3DFC15E8D76C2FC6F9 /* BlockFactory.swift */; };
 		11B35AFA91B42B7FA1F6A961 /* UserDefaultsStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35924922FFB24F0D2E055 /* UserDefaultsStorage.swift */; };
 		11B35AFB6F7733F41FE3EA49 /* GetHeadersMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35FF2F94006C73B7773BC /* GetHeadersMessage.swift */; };
-		11B35C2FE8DD2C09F71EBD65 /* PeerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B359FB99C46804E8CF23AC /* PeerManager.swift */; };
+		11B35C2FE8DD2C09F71EBD65 /* PeerGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B359FB99C46804E8CF23AC /* PeerGroup.swift */; };
 		11B35C5BD54BD2A343BA6379 /* HeaderSyncerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35F930961E99C5C66E49F /* HeaderSyncerTests.swift */; };
 		11B35C8CF0CF6B11A20C2980 /* HeaderHandlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B353BC4AF64E99EC5E5887 /* HeaderHandlerTests.swift */; };
 		11B35C8F2A29CA171165BF7A /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35F3FD9CCB938B62D07EA /* Observable.swift */; };
@@ -148,7 +148,7 @@
 		11B35924922FFB24F0D2E055 /* UserDefaultsStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDefaultsStorage.swift; sourceTree = "<group>"; };
 		11B359B3470297AD7D56387C /* HeaderHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeaderHandler.swift; sourceTree = "<group>"; };
 		11B359BE3932E0E1F2AA9E76 /* BlockHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockHeader.swift; sourceTree = "<group>"; };
-		11B359FB99C46804E8CF23AC /* PeerManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PeerManager.swift; sourceTree = "<group>"; };
+		11B359FB99C46804E8CF23AC /* PeerGroup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PeerGroup.swift; sourceTree = "<group>"; };
 		11B35A319F28EC3D42839D74 /* Protocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
 		11B35AEA9C74CB8AFFFE9D8E /* ByteStream.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ByteStream.swift; sourceTree = "<group>"; };
 		11B35B3DFC15E8D76C2FC6F9 /* BlockFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockFactory.swift; sourceTree = "<group>"; };
@@ -276,7 +276,7 @@
 				11B35C0AB587D20F2ECC40F6 /* ApiManager.swift */,
 				11B352B5465818EDBA6231AF /* SyncManager.swift */,
 				11B35C9471A98C13983312C1 /* DatabaseManager.swift */,
-				11B359FB99C46804E8CF23AC /* PeerManager.swift */,
+				11B359FB99C46804E8CF23AC /* PeerGroup.swift */,
 				11B3516D55EEE65289E25278 /* HeaderSyncer.swift */,
 				11B35F01DB59367C7D83E8DC /* BlockSyncer.swift */,
 				11B3585593E8DC771D27C0AF /* RealmFactory.swift */,
@@ -678,7 +678,7 @@
 			files = (
 			);
 			inputPaths = (
-				"$(SRCROOT)/WalletKit/Managers/PeerManager.swift",
+				"$(SRCROOT)/WalletKit/Managers/PeerGroup.swift",
 				"$(SRCROOT)/WalletKit/Managers/RealmFactory.swift",
 				"$(SRCROOT)/WalletKit/Network/NetworkProtocol.swift",
 				"$(SRCROOT)/WalletKit/Managers/BlockSaver.swift",
@@ -775,7 +775,7 @@
 				D31711EA20F7192400AEF61B /* Peer.swift in Sources */,
 				11B35785C5E654AB52A81E8A /* BloomFilter.swift in Sources */,
 				11B356509EA05BCD114603E0 /* Block.swift in Sources */,
-				11B35C2FE8DD2C09F71EBD65 /* PeerManager.swift in Sources */,
+				11B35C2FE8DD2C09F71EBD65 /* PeerGroup.swift in Sources */,
 				11B357AD29DE7F94AD2FDB6F /* HeaderSyncer.swift in Sources */,
 				11B35AFB6F7733F41FE3EA49 /* GetHeadersMessage.swift in Sources */,
 				11B3575E152A018865047D4D /* HeadersMessage.swift in Sources */,

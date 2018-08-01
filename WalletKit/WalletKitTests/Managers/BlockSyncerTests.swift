@@ -7,17 +7,17 @@ import RxSwift
 class BlockSyncerTests: XCTestCase {
 
     private var mockRealmFactory: MockRealmFactory!
-    private var mockPeerManager: MockPeerManager!
+    private var mockPeerGroup: MockPeerGroup!
     private var blockSyncer: BlockSyncer!
 
     private var realm: Realm!
-    private var peerStatusSubject: PublishSubject<PeerManager.Status>!
+    private var peerStatusSubject: PublishSubject<PeerGroup.Status>!
 
     override func setUp() {
         super.setUp()
 
         mockRealmFactory = MockRealmFactory()
-        mockPeerManager = MockPeerManager()
+        mockPeerGroup = MockPeerGroup()
 
         realm = try! Realm(configuration: Realm.Configuration(inMemoryIdentifier: "TestRealm"))
         try! realm.write { realm.deleteAll() }
@@ -27,17 +27,17 @@ class BlockSyncerTests: XCTestCase {
         stub(mockRealmFactory) { mock in
             when(mock.realm.get).thenReturn(realm)
         }
-        stub(mockPeerManager) { mock in
+        stub(mockPeerGroup) { mock in
             when(mock.requestBlocks(headerHashes: any())).thenDoNothing()
             when(mock.statusSubject.get).thenReturn(peerStatusSubject)
         }
 
-        blockSyncer = BlockSyncer(realmFactory: mockRealmFactory, peerManager: mockPeerManager, scheduler: MainScheduler.instance, queue: .main)
+        blockSyncer = BlockSyncer(realmFactory: mockRealmFactory, peerGroup: mockPeerGroup, scheduler: MainScheduler.instance, queue: .main)
     }
 
     override func tearDown() {
         blockSyncer = nil
-        mockPeerManager = nil
+        mockPeerGroup = nil
         mockRealmFactory = nil
 
         realm = nil
@@ -48,7 +48,7 @@ class BlockSyncerTests: XCTestCase {
 
     func testSync_NoBlocks() {
         peerStatusSubject.onNext(.connected)
-        verify(mockPeerManager, never()).requestBlocks(headerHashes: any())
+        verify(mockPeerGroup, never()).requestBlocks(headerHashes: any())
     }
 
     func testSync_NonSyncedBlocks() {
@@ -59,7 +59,7 @@ class BlockSyncerTests: XCTestCase {
         }
 
         peerStatusSubject.onNext(.connected)
-        verify(mockPeerManager).requestBlocks(headerHashes: equal(to: [hash]))
+        verify(mockPeerGroup).requestBlocks(headerHashes: equal(to: [hash]))
     }
 
     func testSync_OnDisconnect() {
@@ -70,7 +70,7 @@ class BlockSyncerTests: XCTestCase {
         }
 
         peerStatusSubject.onNext(.disconnected)
-        verify(mockPeerManager, never()).requestBlocks(headerHashes: any())
+        verify(mockPeerGroup, never()).requestBlocks(headerHashes: any())
     }
 
     func testSync_SyncedBlocks() {
@@ -83,7 +83,7 @@ class BlockSyncerTests: XCTestCase {
         }
 
         peerStatusSubject.onNext(.connected)
-        verify(mockPeerManager).requestBlocks(headerHashes: equal(to: [hash]))
+        verify(mockPeerGroup).requestBlocks(headerHashes: equal(to: [hash]))
     }
 
     func testSync_Observe() {
@@ -108,7 +108,7 @@ class BlockSyncerTests: XCTestCase {
         }
 
         waitForExpectations(timeout: 2)
-        verify(self.mockPeerManager).requestBlocks(headerHashes: equal(to: [hash1, hash2]))
+        verify(self.mockPeerGroup).requestBlocks(headerHashes: equal(to: [hash1, hash2]))
 
         token.invalidate()
     }

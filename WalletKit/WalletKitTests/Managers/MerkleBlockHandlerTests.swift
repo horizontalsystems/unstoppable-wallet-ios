@@ -36,7 +36,7 @@ class MerkleBlockHandlerTests: XCTestCase {
             when(mock.realm.get).thenReturn(realm)
         }
         stub(mockSaver) { mock in
-            when(mock.update(block: any(), withTransactionHashes: any()).thenDoNothing())
+            when(mock.update(block: any(), withTransactionHashes: any())).thenDoNothing()
         }
         stub(mockValidator) { mock in
             when(mock.txIds).get.thenReturn(sampleMerkleBlockMessage.hashes)
