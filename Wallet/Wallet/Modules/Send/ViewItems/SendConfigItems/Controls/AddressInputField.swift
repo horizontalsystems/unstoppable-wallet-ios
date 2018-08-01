@@ -1,9 +1,14 @@
 import UIKit
+import RxSwift
+import RxCocoa
 
 class AddressInputField: UIView {
 
     var addressInputField = UITextField()
     var pasteButton = RespondButton()
+    var onAddressChange: ((String?) -> ())?
+
+    let disposeBag = DisposeBag()
 
     public init() {
         super.init(frame: .zero)
@@ -16,6 +21,9 @@ class AddressInputField: UIView {
         addressInputField.textColor = SendTheme.inputTextColor
         addressInputField.font = SendTheme.inputFont
         addressInputField.placeholder = "send.address_placeholder".localized
+        addressInputField.rx.controlEvent(.editingChanged).subscribe(onNext: { [weak self] _ in
+            self?.onAddressChange?(self?.addressInputField.text)
+        }).disposed(by: disposeBag)
 
         addSubview(pasteButton)
         pasteButton.borderWidth = 1 / UIScreen.main.scale

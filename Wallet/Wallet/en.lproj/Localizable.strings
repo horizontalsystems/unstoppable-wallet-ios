@@ -40,6 +40,7 @@
 "send.title" = "Send ";
 "send.address_placeholder" = "Address";
 "send.payment_reference_placeholder" = "Payment Reference";
+"send.insufficient_funds" = "Not available amount";
 "paste" = "Paste";
 "amount" = "Amount";
 "more" = "More";

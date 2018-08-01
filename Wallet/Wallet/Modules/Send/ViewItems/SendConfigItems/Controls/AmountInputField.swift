@@ -1,12 +1,17 @@
 import UIKit
 import SnapKit
+import RxSwift
+import RxCocoa
 
 class AmountInputField: UIView {
+    let disposeBag = DisposeBag()
 
     var amountInputField = UITextField()
     var currencyButton = RespondButton()
     var dropDownImageView = UIImageView(image: UIImage(named: "Currency Drop Down"))
     var exchangeValueLabel = UILabel()
+
+    var onAmountChange: ((String?) -> ())?
 
     public init() {
         super.init(frame: .zero)
@@ -15,10 +20,14 @@ class AmountInputField: UIView {
         cornerRadius = SendTheme.inputCornerRadius
 
         addSubview(amountInputField)
+        amountInputField.keyboardType = .decimalPad
         amountInputField.tintColor = SendTheme.inputTintColor
         amountInputField.textColor = SendTheme.inputTextColor
         amountInputField.font = SendTheme.inputFont
         amountInputField.placeholder = "amount".localized
+        amountInputField.rx.controlEvent(.editingChanged).subscribe(onNext: { [weak self] _ in
+            self?.onAmountChange?(self?.amountInputField.text)
+        }).disposed(by: disposeBag)
 
         addSubview(currencyButton)
         currencyButton.borderWidth = 1 / UIScreen.main.scale

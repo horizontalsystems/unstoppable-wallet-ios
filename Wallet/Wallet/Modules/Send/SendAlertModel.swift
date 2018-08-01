@@ -7,12 +7,22 @@ class SendAlertModel: BaseAlertModel {
 
     let coin: Coin
 
+    var sendConfigItem: BaseTwinItem?
+    let sendAmountItem: SendAmountItem
+
     init(viewDelegate: ISendViewDelegate, coin: Coin) {
         self.delegate = viewDelegate
         self.coin = coin
 
+        sendAmountItem = SendAmountItem()
+        let sendReferenceItem = SendReferenceItem()
+        sendConfigItem = BaseTwinItem(cellType: SendConfigTwinItemView.self, first: sendAmountItem, second: sendReferenceItem, height: SendTheme.twinHeight, tag: 1, required: true)
+        sendConfigItem?.showSeparator = false
+
         super.init()
-        delegate.onViewDidLoad()
+        DispatchQueue.main.async {
+            self.delegate.onViewDidLoad()
+        }
         ignoreKeyboard = false
 
         let titleItem = SendTitleItem(coinCode: coin.code, tag: 0, required: true, onQRScan: { [weak self] in
@@ -20,51 +30,66 @@ class SendAlertModel: BaseAlertModel {
         })
         addItemView(titleItem)
 
-        var sendConfigItem: BaseTwinItem?
-        let sendAmountItem = SendAmountItem(onMore: { [weak self] in
-            sendConfigItem?.showFirstItem = false
-            self?.reload?()
-        })
-        let sendReferenceItem = SendReferenceItem(onBack: { [weak self] in
-            sendConfigItem?.showFirstItem = true
-            self?.reload?()
-        })
-        sendConfigItem = BaseTwinItem(cellType: SendConfigTwinItemView.self, first: sendAmountItem, second: sendReferenceItem, height: SendTheme.twinHeight, tag: 1, required: true)
-        sendConfigItem?.showSeparator = false
 
+        sendAmountItem.onMore = { [weak self] in
+            self?.sendConfigItem?.showFirstItem = false
+            self?.reload?()
+        }
+        sendAmountItem.onPaste = { [weak self] in
+            self?.delegate.onPasteClick()
+        }
+        sendAmountItem.onCurrencyChange = { [weak self] in
+            self?.delegate.onCurrencyButtonClick()
+        }
+        sendAmountItem.onAmountEntered = { [weak self] in
+            self?.delegate.onAmountEntered(amount: $0)
+        }
+        sendReferenceItem.onBack = { [weak self] in
+            self?.sendConfigItem?.showFirstItem = true
+            self?.reload?()
+        }
         addItemView(sendConfigItem!)
 
-        let sendButtonItem = SendButtonItem(tag: 2, required: true, onTap: {
-            print("on send")
+        let sendButtonItem = SendButtonItem(tag: 2, required: true, onTap: { [weak self] in
+            self?.onSend()
         })
         addItemView(sendButtonItem)
+    }
+
+    func onSend() {
+        delegate.onSendClick(address: sendAmountItem.address)
     }
 
 }
 
 extension SendAlertModel: ISendView {
 
-    func setAddress(address: String) {
-        print("setAddress")
+    func setAddress(_ address: String?) {
+        sendAmountItem.address = address
+        sendConfigItem?.updateItems?(false)
     }
 
     func setCurrency(code: String) {
-        print("setCurrency")
+        sendAmountItem.currencyCode = code
+        sendConfigItem?.updateItems?(false)
     }
 
     func setAmount(amount: String?) {
-        print("setAmount")
+        sendAmountItem.amount = amount
+        sendConfigItem?.updateItems?(false)
     }
 
-    func setAmountHint(hint: String) {
-        print("setAmountHint")
+    func setAmountHint(hint: String, error: SendError?) {
+        sendAmountItem.hint = hint
+        sendAmountItem.error = error
+        sendConfigItem?.updateItems?(false)
     }
 
     func closeView() {
         print("closeView")
     }
 
-    func showError(error: Error) {
+    func showError(error: String) {
         print("showError")
     }
 

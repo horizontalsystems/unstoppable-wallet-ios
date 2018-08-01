@@ -59,6 +59,21 @@ class SendAmountItemView: BaseActionItemView {
 
     func bind() {
         moreButton.onTap = item?.onMore
+
+        addressInputField.pasteButton.onTap = item?.onPaste
+        addressInputField.onAddressChange = { [weak self] in self?.item?.address = $0 }
+        addressInputField.addressInputField.text = item?.address
+
+        amountInputField.currencyButton.onTap = item?.onCurrencyChange
+        amountInputField.currencyButton.titleLabel.text = item?.currencyCode
+        amountInputField.onAmountChange = { [weak self] in
+            self?.item?.amount = $0
+            self?.item?.onAmountEntered?($0)
+        }
+        amountInputField.exchangeValueLabel.text = item?.hint
+
+        errorLabel.text = item?.error?.localizedDescription ?? nil
+        amountInputField.borderColor = item?.error == nil ? SendTheme.inputBorderColor : SendTheme.errorColor
     }
 
 }

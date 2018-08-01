@@ -6,7 +6,7 @@ class SendReferenceItem: BaseActionItem {
     let deliverTimeFrame: String = "Time: ~ 24 hours"
     let feeString: String = "fee: $0,00"
 
-    let onBack: (() -> ())?
+    var onBack: (() -> ())?
 
     init(tag: Int? = nil, hidden: Bool = false, required: Bool = false, onBack: (() -> ())? = nil) {
         self.onBack = onBack
