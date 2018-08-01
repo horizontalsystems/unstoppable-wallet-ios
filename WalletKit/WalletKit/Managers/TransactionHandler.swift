@@ -17,13 +17,13 @@ class TransactionHandler  {
         self.saver = saver
     }
 
-    func handle(message: TransactionMessage) throws {
-        try validator.validate(message: message)
+    func handle(transaction: Transaction) throws {
+        try validator.validate(message: transaction)
 
         let realm = realmFactory.realm
-        let reversedHashHex = Crypto.sha256sha256(message.serialized()).reversedHex
-        let transaction = realm.objects(Transaction.self).filter("reversedHashHex = %@", reversedHashHex).last
-        try saver.update(transaction: transaction, withContentsOf: message)
+        let reversedHashHex = Crypto.sha256sha256(transaction.serialized()).reversedHex
+        let existingTransaction = realm.objects(Transaction.self).filter("reversedHashHex = %@", reversedHashHex).last
+        try saver.save(transaction: transaction, toExistingTransaction: existingTransaction)
     }
 
 }

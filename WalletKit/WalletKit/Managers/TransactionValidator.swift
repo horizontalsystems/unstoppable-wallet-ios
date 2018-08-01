@@ -7,7 +7,7 @@ class TransactionValidator {
 
     static let shared = TransactionValidator()
 
-    func validate(message: TransactionMessage) throws {
+    func validate(message: Transaction) throws {
 
     }
 }

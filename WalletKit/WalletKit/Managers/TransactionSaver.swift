@@ -9,10 +9,23 @@ class TransactionSaver {
         self.realmFactory = realmFactory
     }
 
-    func update(transaction: Transaction?, withContentsOf message: TransactionMessage) throws {
-//        let realm = realmFactory.realm
+    func save(transaction: Transaction, toExistingTransaction existingTransaction: Transaction? = nil) throws {
+        let realm = realmFactory.realm
 
+        if existingTransaction != nil {
+            transaction.block = existingTransaction!.block
+        }
 
+        for input in transaction.inputs {
+            if let previousTransaction = realm.objects(Transaction.self).filter("reversedHashHex = %@", input.previousOutputTxReversedHex.hex).last,
+               previousTransaction.outputs.count > input.previousOutputIndex {
+                input.previousOutput = previousTransaction.outputs[input.previousOutputIndex]
+            }
+        }
+
+        try realm.write {
+            realm.add(transaction, update: true)
+        }
     }
 
 }
