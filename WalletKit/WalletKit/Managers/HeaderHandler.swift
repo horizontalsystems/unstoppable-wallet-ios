@@ -10,13 +10,13 @@ class HeaderHandler {
     }
 
     let realmFactory: RealmFactory
-    let creator: BlockCreator
+    let blockFactory: BlockFactory
     let validator: BlockValidator
     let saver: BlockSaver
 
-    init(realmFactory: RealmFactory = .shared, creator: BlockCreator = .shared, validator: BlockValidator = TestNetBlockValidator(), saver: BlockSaver = .shared) {
+    init(realmFactory: RealmFactory = .shared, blockFactory: BlockFactory = .shared, validator: BlockValidator = TestNetBlockValidator(), saver: BlockSaver = .shared) {
         self.realmFactory = realmFactory
-        self.creator = creator
+        self.blockFactory = blockFactory
         self.validator = validator
         self.saver = saver
     }
@@ -32,7 +32,7 @@ class HeaderHandler {
             throw HandleError.noInitialBlock
         }
 
-        let newBlocks = creator.create(fromHeaders: headers, initialBlock: initialBlock)
+        let newBlocks = blockFactory.blocks(fromHeaders: headers, initialBlock: initialBlock)
         var validBlocks = [Block]()
 
         var validationError: Error?

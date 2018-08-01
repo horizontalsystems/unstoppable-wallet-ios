@@ -3,18 +3,18 @@ import Cuckoo
 import RealmSwift
 @testable import WalletKit
 
-class BlockCreatorTests: XCTestCase {
+class BlockFactoryTests: XCTestCase {
 
-    private var creator: BlockCreator!
+    private var factory: BlockFactory!
 
     override func setUp() {
         super.setUp()
 
-        creator = BlockCreator()
+        factory = BlockFactory()
     }
 
     override func tearDown() {
-        creator = nil
+        factory = nil
 
         super.tearDown()
     }
@@ -25,7 +25,7 @@ class BlockCreatorTests: XCTestCase {
         let header = TestHelper.checkpointBlockHeader
         let headerHash = Crypto.sha256sha256(header.serialized())
 
-        let block = creator.create(withHeader: header, previousBlock: previousBlock)
+        let block = factory.block(withHeader: header, previousBlock: previousBlock)
 
         XCTAssertEqual(block.header, header)
         XCTAssertEqual(block.previousBlock, previousBlock)
@@ -39,7 +39,7 @@ class BlockCreatorTests: XCTestCase {
         let header = TestHelper.checkpointBlockHeader
         let headerHash = Crypto.sha256sha256(header.serialized())
 
-        let block = creator.create(withHeader: header, height: height)
+        let block = factory.block(withHeader: header, height: height)
 
         XCTAssertEqual(block.header, header)
         XCTAssertEqual(block.previousBlock, nil)
@@ -57,7 +57,7 @@ class BlockCreatorTests: XCTestCase {
         let headerHash1 = Crypto.sha256sha256(header1.serialized())
         let headerHash2 = Crypto.sha256sha256(header2.serialized())
 
-        let blocks = creator.create(fromHeaders: [header1, header2], initialBlock: initialBlock)
+        let blocks = factory.blocks(fromHeaders: [header1, header2], initialBlock: initialBlock)
 
         XCTAssertEqual(blocks[0].header, header1)
         XCTAssertEqual(blocks[0].previousBlock, initialBlock)
