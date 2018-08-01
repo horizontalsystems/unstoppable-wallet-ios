@@ -22,12 +22,12 @@ class HeaderSyncerTests: XCTestCase {
         realm = try! Realm(configuration: Realm.Configuration(inMemoryIdentifier: "TestRealm"))
         try! realm.write { realm.deleteAll() }
 
-        let preCheckpointBlock = Block(header: TestHelper.preCheckpointBlockHeader, height: TestHelper.preCheckpointBlockHeight)
+        let preCheckpointBlock = BlockFactory.shared.block(withHeader: TestHelper.preCheckpointBlockHeader, height: TestHelper.preCheckpointBlockHeight)
         try! realm.write {
             realm.add(preCheckpointBlock)
         }
 
-        checkpointBlock = Block(header: TestHelper.checkpointBlockHeader, previousBlock: preCheckpointBlock)
+        checkpointBlock = BlockFactory.shared.block(withHeader: TestHelper.checkpointBlockHeader, previousBlock: preCheckpointBlock)
 
         stub(mockRealmFactory) { mock in
             when(mock.realm.get).thenReturn(realm)

@@ -34,7 +34,7 @@ public class SyncManager {
                 bits: 425766046,
                 nonce: 3687858789
         )
-        let preCheckpointBlock = Block(header: preCheckPointHeader, height: 1354751)
+        let preCheckpointBlock = BlockFactory.shared.block(withHeader: preCheckPointHeader, height: 1354751)
         preCheckpointBlock.synced = true
 
         let checkPointHeader = BlockHeader(
@@ -45,7 +45,7 @@ public class SyncManager {
                 bits: 424253525,
                 nonce: 1665657862
         )
-        let checkpointBlock = Block(header: checkPointHeader, previousBlock: preCheckpointBlock)
+        let checkpointBlock = BlockFactory.shared.block(withHeader: checkPointHeader, previousBlock: preCheckpointBlock)
         checkpointBlock.synced = true
 
         let walletManager = WalletManager.shared

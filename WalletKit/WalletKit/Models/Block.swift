@@ -12,27 +12,6 @@ public class Block: Object {
 
     let transactions = LinkingObjects(fromType: Transaction.self, property: "block")
 
-    convenience init(header: BlockHeader, previousBlock: Block) {
-        self.init(header: header)
-
-        height = previousBlock.height + 1
-        self.previousBlock = previousBlock
-    }
-
-    convenience init(header: BlockHeader, height: Int) {
-        self.init(header: header)
-
-        self.height = height
-    }
-
-    private convenience init(header: BlockHeader) {
-        self.init()
-
-        headerHash = Crypto.sha256sha256(header.serialized())
-        reversedHeaderHashHex = headerHash.reversedHex
-        self.header = header
-    }
-
     override public class func primaryKey() -> String? {
         return "reversedHeaderHashHex"
     }

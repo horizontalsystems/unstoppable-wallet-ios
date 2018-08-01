@@ -14,6 +14,7 @@
 		11B35178BC28AE1B995DE8E3 /* VarInt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B355C0072CA13ADBAC1351 /* VarInt.swift */; };
 		11B351F8CD5AF19AC75F61D4 /* HeaderHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B359B3470297AD7D56387C /* HeaderHandler.swift */; };
 		11B352145E5F28730588A837 /* ApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35C0AB587D20F2ECC40F6 /* ApiManager.swift */; };
+		11B352211E6C7036DEE86D22 /* BlockFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3557E78DBA78498A2511A /* BlockFactoryTests.swift */; };
 		11B3524A98464B1AC0068F5A /* DatabaseChangeSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35D1536E0568337F54F0E /* DatabaseChangeSet.swift */; };
 		11B353C1D6EDDA8E4D9DB02A /* BlockSyncer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35F01DB59367C7D83E8DC /* BlockSyncer.swift */; };
 		11B353EA4081799EA9387B66 /* WalletManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35B41C52992BFEA752B5D /* WalletManager.swift */; };
@@ -37,7 +38,7 @@
 		11B35851C55FBCEC25776FCB /* TransactionRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35E6985C45CC50877084D /* TransactionRecord.swift */; };
 		11B359142169EC6D44E21F59 /* ByteStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35AEA9C74CB8AFFFE9D8E /* ByteStream.swift */; };
 		11B3598874F8268BE87173B3 /* TransactionOutput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3559B75AD75C20287ECC7 /* TransactionOutput.swift */; };
-		11B35AD94DCCE70F47E51FB8 /* BlockCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35B3DFC15E8D76C2FC6F9 /* BlockCreator.swift */; };
+		11B35AD94DCCE70F47E51FB8 /* BlockFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35B3DFC15E8D76C2FC6F9 /* BlockFactory.swift */; };
 		11B35AFA91B42B7FA1F6A961 /* UserDefaultsStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35924922FFB24F0D2E055 /* UserDefaultsStorage.swift */; };
 		11B35AFB6F7733F41FE3EA49 /* GetHeadersMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35FF2F94006C73B7773BC /* GetHeadersMessage.swift */; };
 		11B35C2FE8DD2C09F71EBD65 /* PeerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B359FB99C46804E8CF23AC /* PeerManager.swift */; };
@@ -135,6 +136,7 @@
 		11B353BC4AF64E99EC5E5887 /* HeaderHandlerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeaderHandlerTests.swift; sourceTree = "<group>"; };
 		11B353F6C17A6C19CC2E7E60 /* ExchangeRate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExchangeRate.swift; sourceTree = "<group>"; };
 		11B35507D7F6982EEF1A45BA /* BlockSyncerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockSyncerTests.swift; sourceTree = "<group>"; };
+		11B3557E78DBA78498A2511A /* BlockFactoryTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockFactoryTests.swift; sourceTree = "<group>"; };
 		11B3559B75AD75C20287ECC7 /* TransactionOutput.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionOutput.swift; sourceTree = "<group>"; };
 		11B355A975909FAAC6983C9B /* CollectionChangeSet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionChangeSet.swift; sourceTree = "<group>"; };
 		11B355C0072CA13ADBAC1351 /* VarInt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VarInt.swift; sourceTree = "<group>"; };
@@ -149,7 +151,7 @@
 		11B359FB99C46804E8CF23AC /* PeerManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PeerManager.swift; sourceTree = "<group>"; };
 		11B35A319F28EC3D42839D74 /* Protocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
 		11B35AEA9C74CB8AFFFE9D8E /* ByteStream.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ByteStream.swift; sourceTree = "<group>"; };
-		11B35B3DFC15E8D76C2FC6F9 /* BlockCreator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockCreator.swift; sourceTree = "<group>"; };
+		11B35B3DFC15E8D76C2FC6F9 /* BlockFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockFactory.swift; sourceTree = "<group>"; };
 		11B35B41C52992BFEA752B5D /* WalletManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletManager.swift; sourceTree = "<group>"; };
 		11B35C0AB587D20F2ECC40F6 /* ApiManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiManager.swift; sourceTree = "<group>"; };
 		11B35C3A9EC92678307977F7 /* WalletKitPrivate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WalletKitPrivate.m; sourceTree = "<group>"; };
@@ -286,7 +288,7 @@
 				58AAA83E846945B4903A0CAF /* DifficultyEncoder.swift */,
 				58AAACCCCE32481AEAC0031F /* DifficultyCalculator.swift */,
 				58AAA22A8FC4E2374CE4D10A /* TestNetBlockValidator.swift */,
-				11B35B3DFC15E8D76C2FC6F9 /* BlockCreator.swift */,
+				11B35B3DFC15E8D76C2FC6F9 /* BlockFactory.swift */,
 				2FA5D996FAADF87022778B48 /* TransactionHandler.swift */,
 				2FA5DFD06201F8EAB887E383 /* TransactionSaver.swift */,
 				2FA5D5D429E287EC0D2EF5D2 /* TransactionValidator.swift */,
@@ -399,6 +401,7 @@
 				2FA5D52E9214E99DF779A25A /* MerkleBlockValidatorTests.swift */,
 				58AAA1040012570F76E48D7C /* TestNetBlockValidatorTests.swift */,
 				2FA5D21A2ABC16232BC8C195 /* TransactionHandlerTests.swift */,
+				11B3557E78DBA78498A2511A /* BlockFactoryTests.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -682,7 +685,7 @@
 				"$(SRCROOT)/WalletKit/Managers/BlockValidator.swift",
 				"$(SRCROOT)/WalletKit/Managers/MerkleBlockValidator.swift",
 				"$(SRCROOT)/WalletKit/Managers/DifficultyEncoder.swift",
-				"$(SRCROOT)/WalletKit/Managers/BlockCreator.swift",
+				"$(SRCROOT)/WalletKit/Managers/BlockFactory.swift",
 				"$(SRCROOT)/WalletKit/Managers/TransactionValidator.swift",
 				"$(SRCROOT)/WalletKit/Managers/TransactionSaver.swift",
 			);
@@ -713,6 +716,7 @@
 				11B35D23B451CFB803F69CA0 /* TestHelper.swift in Sources */,
 				58AAAD7FA11B8C8973A0A363 /* TestNetBlockValidatorTests.swift in Sources */,
 				2FA5D8755D9A88357CD2CDCB /* TransactionHandlerTests.swift in Sources */,
+				11B352211E6C7036DEE86D22 /* BlockFactoryTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -798,7 +802,7 @@
 				58AAA234C00809393E18AAA1 /* DifficultyCalculator.swift in Sources */,
 				58AAA50990F475E10BE6EEA6 /* TestNetBlockValidator.swift in Sources */,
 				11B355D39CB0D30F69C89F8B /* BlockHeader.swift in Sources */,
-				11B35AD94DCCE70F47E51FB8 /* BlockCreator.swift in Sources */,
+				11B35AD94DCCE70F47E51FB8 /* BlockFactory.swift in Sources */,
 				2FA5D667BF6D76E09E385ECC /* TransactionHandler.swift in Sources */,
 				2FA5DB2B3A64A307F4F422EC /* TransactionSaver.swift in Sources */,
 				2FA5D3174628208CCB42FEB2 /* TransactionValidator.swift in Sources */,

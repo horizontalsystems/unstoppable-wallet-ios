@@ -16,12 +16,12 @@ class BlockValidatorTests: XCTestCase {
 
         validator = BlockValidator()
 
-        firstCheckPointBlock = Block(
-                header: BlockHeader(version: 536870912, previousBlockHeaderReversedHex: "00000000000000000020c68bfc8de14bc9dd2d6cf45161a67e0c6455cf28cfd8", merkleRootReversedHex: "a3f40c28cc6b90b2b1bfaef0e1c394b01dd97786b6a7da5e35f26bc4a7b1e451", timestamp: 1530545661, bits: 389315112, nonce: 630776633),
-                        height: 530208
-                )
-        firstBlock = Block(
-                header: BlockHeader(version: 536870912, previousBlockHeaderReversedHex: "0000000000000000001f1bd6d48e0fa41d054f54440a5ff3fee200bbdb37e0e5", merkleRootReversedHex: "df838278ff83d53e91423d5f7cefe64ef163004e18408de2374bd1b898241c78", timestamp: 1531798474, bits: 389315112, nonce: 2195910910),
+        firstCheckPointBlock = BlockFactory.shared.block(
+                withHeader: BlockHeader(version: 536870912, previousBlockHeaderReversedHex: "00000000000000000020c68bfc8de14bc9dd2d6cf45161a67e0c6455cf28cfd8", merkleRootReversedHex: "a3f40c28cc6b90b2b1bfaef0e1c394b01dd97786b6a7da5e35f26bc4a7b1e451", timestamp: 1530545661, bits: 389315112, nonce: 630776633),
+                height: 530208
+        )
+        firstBlock = BlockFactory.shared.block(
+                withHeader: BlockHeader(version: 536870912, previousBlockHeaderReversedHex: "0000000000000000001f1bd6d48e0fa41d054f54440a5ff3fee200bbdb37e0e5", merkleRootReversedHex: "df838278ff83d53e91423d5f7cefe64ef163004e18408de2374bd1b898241c78", timestamp: 1531798474, bits: 389315112, nonce: 2195910910),
                 height: 532223
         )
     }
@@ -48,12 +48,12 @@ class BlockValidatorTests: XCTestCase {
     }
 
     func testValidItem() {
-        let firstBlock = Block(
-                header: BlockHeader(version: 536870912, previousBlockHeaderReversedHex: "000000000000837bcdb53e7a106cf0e74bab6ae8bc96481243d31bea3e6b8c92", merkleRootReversedHex: "8beab73ba2318e4cbdb1c65624496bc3214d6ba93204e049fb46293a41880b9a", timestamp: 1506023937, bits: 453021074, nonce: 2001025151),
+        let firstBlock = BlockFactory.shared.block(
+                withHeader: BlockHeader(version: 536870912, previousBlockHeaderReversedHex: "000000000000837bcdb53e7a106cf0e74bab6ae8bc96481243d31bea3e6b8c92", merkleRootReversedHex: "8beab73ba2318e4cbdb1c65624496bc3214d6ba93204e049fb46293a41880b9a", timestamp: 1506023937, bits: 453021074, nonce: 2001025151),
                 height: 1
         )
-        let testBlock = Block(
-                header: BlockHeader(version: 536870912, previousBlockHeaderReversedHex: "00000000000025c23a19cc91ad8d3e33c2630ce1df594e1ae0bf0eabe30a9176", merkleRootReversedHex: "63241c065cf8240ac64772e064a9436c21dc4c75843e7e5df6ecf41d5ef6a1b4", timestamp: 1506024043, bits: 453021074, nonce: 1373615473),
+        let testBlock = BlockFactory.shared.block(
+                withHeader: BlockHeader(version: 536870912, previousBlockHeaderReversedHex: "00000000000025c23a19cc91ad8d3e33c2630ce1df594e1ae0bf0eabe30a9176", merkleRootReversedHex: "63241c065cf8240ac64772e064a9436c21dc4c75843e7e5df6ecf41d5ef6a1b4", timestamp: 1506024043, bits: 453021074, nonce: 1373615473),
                 previousBlock: firstBlock
         )
         do {
@@ -64,8 +64,8 @@ class BlockValidatorTests: XCTestCase {
     }
 
     func testValidChangeDifficultyItem() {
-        let testBlock = Block(
-                header: BlockHeader(version: 536870912, previousBlockHeaderReversedHex: "00000000000000000009dce52e227d46a6bdf38a8c1f2e88c6044893289c2bf0", merkleRootReversedHex: "43ee07fdd8892234d1d3ef85e83354ff79836ebafa1f8d94dec2858fdca16e40", timestamp: 1531799449, bits: 389437975, nonce: 2023890938),
+        let testBlock = BlockFactory.shared.block(
+                withHeader: BlockHeader(version: 536870912, previousBlockHeaderReversedHex: "00000000000000000009dce52e227d46a6bdf38a8c1f2e88c6044893289c2bf0", merkleRootReversedHex: "43ee07fdd8892234d1d3ef85e83354ff79836ebafa1f8d94dec2858fdca16e40", timestamp: 1531799449, bits: 389437975, nonce: 2023890938),
                 previousBlock: firstBlock
         )
         makeChain(block: firstBlock, lastBlock: firstCheckPointBlock, interval: 2014)
@@ -81,12 +81,12 @@ class BlockValidatorTests: XCTestCase {
     }
 
     func testInvalidHashItem() {
-        let firstBlock = Block(
-                header: BlockHeader(version: 536870912, previousBlockHeaderReversedHex: "000000000000837bcdb53e7a106cf0e74bab6ae8bc96481243d31bea3e6b8c92", merkleRootReversedHex: "8beab73ba2318e4cbdb1c65624496bc3214d6ba93204e049fb46293a41880b9a", timestamp: 1506023937, bits: 453021074, nonce: 2001025151),
+        let firstBlock = BlockFactory.shared.block(
+                withHeader: BlockHeader(version: 536870912, previousBlockHeaderReversedHex: "000000000000837bcdb53e7a106cf0e74bab6ae8bc96481243d31bea3e6b8c92", merkleRootReversedHex: "8beab73ba2318e4cbdb1c65624496bc3214d6ba93204e049fb46293a41880b9a", timestamp: 1506023937, bits: 453021074, nonce: 2001025151),
                 height: 0
         )
-        let testBlock = Block(
-                header: BlockHeader(version: 536870912, previousBlockHeaderReversedHex: "00000000000000d0923442e1a8345b82f553786487293204746b2631a6858549", merkleRootReversedHex: "63241c065cf8240ac64772e064a9436c21dc4c75843e7e5df6ecf41d5ef6a1b4", timestamp: 1506024043, bits: 453021074, nonce: 1373615473),
+        let testBlock = BlockFactory.shared.block(
+                withHeader: BlockHeader(version: 536870912, previousBlockHeaderReversedHex: "00000000000000d0923442e1a8345b82f553786487293204746b2631a6858549", merkleRootReversedHex: "63241c065cf8240ac64772e064a9436c21dc4c75843e7e5df6ecf41d5ef6a1b4", timestamp: 1506024043, bits: 453021074, nonce: 1373615473),
                 previousBlock: firstBlock
         )
         var caught = false
@@ -103,12 +103,12 @@ class BlockValidatorTests: XCTestCase {
     }
 
     func testNoEqualBitsItem() {
-        let firstBlock = Block(
-                header: BlockHeader(version: 536870912, previousBlockHeaderReversedHex: "0000000000000000001f1bd6d48e0fa41d054f54440a5ff3fee200bbdb37e0e5", merkleRootReversedHex: "df838278ff83d53e91423d5f7cefe64ef163004e18408de2374bd1b898241c78", timestamp: 1531798474, bits: 389315112, nonce: 2195910910),
+        let firstBlock = BlockFactory.shared.block(
+                withHeader: BlockHeader(version: 536870912, previousBlockHeaderReversedHex: "0000000000000000001f1bd6d48e0fa41d054f54440a5ff3fee200bbdb37e0e5", merkleRootReversedHex: "df838278ff83d53e91423d5f7cefe64ef163004e18408de2374bd1b898241c78", timestamp: 1531798474, bits: 389315112, nonce: 2195910910),
                 height: 0
         )
-        let testBlock = Block(
-                header: BlockHeader(version: 536870912, previousBlockHeaderReversedHex: "00000000000000000009dce52e227d46a6bdf38a8c1f2e88c6044893289c2bf0", merkleRootReversedHex: "43ee07fdd8892234d1d3ef85e83354ff79836ebafa1f8d94dec2858fdca16e40", timestamp: 1531799449, bits: 389437975, nonce: 2023890938),
+        let testBlock = BlockFactory.shared.block(
+                withHeader: BlockHeader(version: 536870912, previousBlockHeaderReversedHex: "00000000000000000009dce52e227d46a6bdf38a8c1f2e88c6044893289c2bf0", merkleRootReversedHex: "43ee07fdd8892234d1d3ef85e83354ff79836ebafa1f8d94dec2858fdca16e40", timestamp: 1531799449, bits: 389437975, nonce: 2023890938),
                 previousBlock: firstBlock
         )
         var caught = false
@@ -125,8 +125,8 @@ class BlockValidatorTests: XCTestCase {
     }
 
     func testNoLastCheckPointItem() {
-        let testBlock = Block(
-                header: BlockHeader(version: 536870912, previousBlockHeaderReversedHex: "00000000000000000009dce52e227d46a6bdf38a8c1f2e88c6044893289c2bf0", merkleRootReversedHex: "43ee07fdd8892234d1d3ef85e83354ff79836ebafa1f8d94dec2858fdca16e40", timestamp: 1531799449, bits: 389437975, nonce: 2023890938),
+        let testBlock = BlockFactory.shared.block(
+                withHeader: BlockHeader(version: 536870912, previousBlockHeaderReversedHex: "00000000000000000009dce52e227d46a6bdf38a8c1f2e88c6044893289c2bf0", merkleRootReversedHex: "43ee07fdd8892234d1d3ef85e83354ff79836ebafa1f8d94dec2858fdca16e40", timestamp: 1531799449, bits: 389437975, nonce: 2023890938),
                 previousBlock: firstBlock
         )
         makeChain(block: firstBlock, lastBlock: Block(), interval: 2013)
@@ -145,8 +145,8 @@ class BlockValidatorTests: XCTestCase {
     }
 
     func testInvalidChangeDifficulty() {
-        let testBlock = Block(
-                header: BlockHeader(version: 536870912, previousBlockHeaderReversedHex: "00000000000000000009dce52e227d46a6bdf38a8c1f2e88c6044893289c2bf0", merkleRootReversedHex: "43ee07fdd8892234d1d3ef85e83354ff79836ebafa1f8d94dec2858fdca16e40", timestamp: 1531799449, bits: 389315112, nonce: 2023890938),
+        let testBlock = BlockFactory.shared.block(
+                withHeader: BlockHeader(version: 536870912, previousBlockHeaderReversedHex: "00000000000000000009dce52e227d46a6bdf38a8c1f2e88c6044893289c2bf0", merkleRootReversedHex: "43ee07fdd8892234d1d3ef85e83354ff79836ebafa1f8d94dec2858fdca16e40", timestamp: 1531799449, bits: 389315112, nonce: 2023890938),
                 previousBlock: firstBlock
         )
         makeChain(block: firstBlock, lastBlock: firstCheckPointBlock, interval: 2014)
