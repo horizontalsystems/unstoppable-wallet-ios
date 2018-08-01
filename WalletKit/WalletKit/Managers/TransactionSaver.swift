@@ -9,22 +9,41 @@ class TransactionSaver {
         self.realmFactory = realmFactory
     }
 
-    func save(transaction: Transaction, toExistingTransaction existingTransaction: Transaction? = nil) throws {
+    func create(transaction: Transaction) throws {
         let realm = realmFactory.realm
+        setPreviousOutPoints(transaction: transaction)
 
-        if existingTransaction != nil {
-            transaction.block = existingTransaction!.block
+        try realm.write {
+            realm.add(transaction, update: true)
         }
+    }
+
+    func update(transaction existingTransaction: Transaction, withContentsOfTransaction transaction: Transaction) throws {
+        let realm = realmFactory.realm
+        setPreviousOutPoints(transaction: transaction)
+
+        try realm.write {
+            existingTransaction.version = transaction.version
+            existingTransaction.lockTime = transaction.lockTime
+
+            for input in transaction.inputs {
+                existingTransaction.inputs.append(input)
+            }
+
+            for output in transaction.outputs {
+                existingTransaction.outputs.append(output)
+            }
+        }
+    }
+
+    private func setPreviousOutPoints(transaction: Transaction) {
+        let realm = realmFactory.realm
 
         for input in transaction.inputs {
             if let previousTransaction = realm.objects(Transaction.self).filter("reversedHashHex = %@", input.previousOutputTxReversedHex.hex).last,
                previousTransaction.outputs.count > input.previousOutputIndex {
                 input.previousOutput = previousTransaction.outputs[input.previousOutputIndex]
             }
-        }
-
-        try realm.write {
-            realm.add(transaction, update: true)
         }
     }
 

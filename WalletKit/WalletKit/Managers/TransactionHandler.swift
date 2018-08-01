@@ -22,8 +22,12 @@ class TransactionHandler  {
 
         let realm = realmFactory.realm
         let reversedHashHex = Crypto.sha256sha256(transaction.serialized()).reversedHex
-        let existingTransaction = realm.objects(Transaction.self).filter("reversedHashHex = %@", reversedHashHex).last
-        try saver.save(transaction: transaction, toExistingTransaction: existingTransaction)
+
+        if let existingTransaction = realm.objects(Transaction.self).filter("reversedHashHex = %@", reversedHashHex).last {
+            try saver.update(transaction: existingTransaction, withContentsOfTransaction: transaction)
+        } else {
+            try saver.create(transaction: transaction)
+        }
     }
 
 }

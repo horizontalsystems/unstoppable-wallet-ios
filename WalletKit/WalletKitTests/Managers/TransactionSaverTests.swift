@@ -37,10 +37,10 @@ class TransactionSaverTests: XCTestCase {
         super.tearDown()
     }
 
-    func testSave() {
+    func testCreate() {
         let reversedHashHex = Crypto.sha256sha256(Data(hex: sampleRawTransaction)!).reversedHex
 
-        try! saver.save(transaction: sampleTransaction)
+        try! saver.create(transaction: sampleTransaction)
         let transaction = realm.objects(Transaction.self).last!
 
         assertTransactionEqual(tx1: transaction, tx2: sampleTransaction)
@@ -55,23 +55,15 @@ class TransactionSaverTests: XCTestCase {
             realm.add(partialTransaction, update: true)
         }
 
-        try! saver.save(transaction: sampleTransaction, toExistingTransaction: partialTransaction)
+        try! saver.update(transaction: partialTransaction, withContentsOfTransaction: sampleTransaction)
         let transaction = realm.objects(Transaction.self).last!
 
-        assertTransactionEqual(tx1: partialTransaction, tx2: sampleTransaction)
-        assertTransactionEqual(tx1: partialTransaction, tx2: transaction)
+        assertTransactionEqual(tx1: transaction, tx2: partialTransaction)
         XCTAssertEqual(partialTransaction.reversedHashHex, transaction.reversedHashHex)
+        XCTAssertEqual(partialTransaction.version, transaction.version)
     }
 
-    func testRelationsNotDuplicated() {
-        try! saver.save(transaction: sampleTransaction)
-        try! saver.save(transaction: sampleTransaction)
-
-        XCTAssertEqual(realm.objects(TransactionInput.self).count, 1)
-        XCTAssertEqual(realm.objects(TransactionOutput.self).count, 1)
-    }
-
-    func testPreviousOutputLinked() {
+    func testPreviousOutputLinkedWhenCreated() {
         let sampleTransaction2 = Transaction()
         let input = TransactionInput()
         input.previousOutputTxReversedHex = Data(hex: sampleTransaction.reversedHashHex)!
@@ -83,7 +75,31 @@ class TransactionSaverTests: XCTestCase {
             realm.add(sampleTransaction, update: true)
         }
 
-        try! saver.save(transaction: sampleTransaction2)
+        try! saver.create(transaction: sampleTransaction2)
+        let transaction = realm.objects(Transaction.self).last!
+
+        assertOutputEqual(out1: transaction.inputs.first!.previousOutput!, out2: sampleTransaction.outputs.first!)
+    }
+
+    func testPreviousOutputLinkedWhenUpdated() {
+        let sampleTransaction2 = Transaction()
+        sampleTransaction2.reversedHashHex = "0000000000000000000111111111111122222222222222333333333333333000"
+
+        try! realm.write {
+            realm.add(sampleTransaction, update: true)
+            realm.add(sampleTransaction2, update: true)
+        }
+
+        let sampleTransaction3 = Transaction()
+        sampleTransaction3.reversedHashHex = "0000000000000000000111111111111122222222222222333333333333333000"
+        let input = TransactionInput()
+        input.previousOutputTxReversedHex = Data(hex: sampleTransaction.reversedHashHex)!
+        input.previousOutputIndex = sampleTransaction.outputs.first!.index
+        input.sequence = 100
+        sampleTransaction3.inputs.append(input)
+
+
+        try! saver.update(transaction: sampleTransaction2, withContentsOfTransaction: sampleTransaction3)
         let transaction = realm.objects(Transaction.self).last!
 
         assertOutputEqual(out1: transaction.inputs.first!.previousOutput!, out2: sampleTransaction.outputs.first!)

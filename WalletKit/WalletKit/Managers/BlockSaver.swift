@@ -29,8 +29,17 @@ class BlockSaver {
             transactions.append(transaction)
         }
 
+        let existingTransactions = realm.objects(Transaction.self)
+
         try realm.write {
-            realm.add(transactions, update: true)
+            for transaction in transactions {
+                if let existingTransaction = existingTransactions.filter("reversedHashHex = %@", transaction.reversedHashHex).last {
+                    existingTransaction.block = transaction.block
+                } else {
+                    realm.add(transaction, update: true)
+                }
+            }
+
             block.synced = true
         }
     }

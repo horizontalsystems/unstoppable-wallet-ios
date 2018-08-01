@@ -47,7 +47,8 @@ class TransactionHandlerTests: XCTestCase {
             when(mock.realm.get).thenReturn(realm)
         }
         stub(mockSaver) { mock in
-            when(mock.save(transaction: any(), toExistingTransaction: any())).thenDoNothing()
+            when(mock.create(transaction: any())).thenDoNothing()
+            when(mock.update(transaction: any(), withContentsOfTransaction: any())).thenDoNothing()
         }
     }
 
@@ -69,7 +70,7 @@ class TransactionHandlerTests: XCTestCase {
         }
 
         try! transactionHandler.handle(transaction: sampleTransaction)
-        verify(mockSaver).save(transaction: equal(to: sampleTransaction), toExistingTransaction: equal(to: nil))
+        verify(mockSaver).create(transaction: equal(to: sampleTransaction))
     }
 
     func testWithExistingTransaction() {
@@ -82,7 +83,7 @@ class TransactionHandlerTests: XCTestCase {
         }
 
         try! transactionHandler.handle(transaction: sampleTransaction)
-        verify(mockSaver).save(transaction: equal(to: sampleTransaction), toExistingTransaction: equal(to: transaction))
+        verify(mockSaver).update(transaction: equal(to: transaction), withContentsOfTransaction: equal(to: sampleTransaction))
     }
 
     func testWithInvalidTransaction() {
