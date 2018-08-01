@@ -17,6 +17,7 @@ class AddressInputField: UIView {
         cornerRadius = SendTheme.inputCornerRadius
 
         addSubview(addressInputField)
+        addressInputField.autocorrectionType = .no
         addressInputField.tintColor = SendTheme.inputTintColor
         addressInputField.textColor = SendTheme.inputTextColor
         addressInputField.font = SendTheme.inputFont
