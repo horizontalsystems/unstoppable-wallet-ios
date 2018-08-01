@@ -59,3 +59,12 @@ struct TransactionMessage {
         return TransactionMessage(version: version, txInCount: txInCount, inputs: inputs, txOutCount: txOutCount, outputs: outputs, lockTime: lockTime)
     }
 }
+
+
+extension TransactionMessage: Equatable {
+
+    static func ==(lhs: TransactionMessage, rhs: TransactionMessage) -> Bool {
+        return lhs.serialized() == rhs.serialized()
+    }
+
+}

@@ -7,23 +7,27 @@ class BlockSyncer {
     let disposeBag = DisposeBag()
 
     let realmFactory: RealmFactory
-    let peerManager: PeerManager
+    let peerGroup: PeerGroup
 
     private var notificationToken: NotificationToken?
 
-    init(realmFactory: RealmFactory = .shared, peerManager: PeerManager = .shared) {
+    init(realmFactory: RealmFactory = .shared, peerGroup: PeerGroup = .shared, scheduler: ImmediateSchedulerType = ConcurrentDispatchQueueScheduler(qos: .background), queue: DispatchQueue = .global(qos: .background)) {
         self.realmFactory = realmFactory
-        self.peerManager = peerManager
+        self.peerGroup = peerGroup
 
-        peerManager.statusSubject.subscribe(onNext: { [weak self] status in
-            if status == .connected {
-                self?.sync()
-            }
-        }).disposed(by: disposeBag)
+        peerGroup.statusSubject
+                .observeOn(scheduler)
+                .subscribe(onNext: { [weak self] status in
+                    if status == .connected {
+                        self?.sync()
+                    }
+                }).disposed(by: disposeBag)
 
-        notificationToken = realmFactory.realm.objects(Block.self).filter("synced = %@", false).observe { [weak self] changes in
-            if case let .update(_, _, insertions, _) = changes, !insertions.isEmpty {
-                self?.sync()
+        notificationToken = realmFactory.realm.objects(Block.self).filter("synced = %@", false).observe { changes in
+            queue.async { [weak self] in
+                if case let .update(_, _, insertions, _) = changes, !insertions.isEmpty {
+                    self?.sync()
+                }
             }
         }
     }
@@ -35,7 +39,7 @@ class BlockSyncer {
         let hashes = nonSyncedBlocks.map { $0.headerHash }
 
         if !hashes.isEmpty {
-            peerManager.requestBlocks(headerHashes: Array(hashes))
+            peerGroup.requestBlocks(headerHashes: Array(hashes))
         }
     }
 

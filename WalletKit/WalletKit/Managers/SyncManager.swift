@@ -34,7 +34,7 @@ public class SyncManager {
                 bits: 425766046,
                 nonce: 3687858789
         )
-        let preCheckpointBlock = Block(header: preCheckPointHeader, height: 1354751)
+        let preCheckpointBlock = BlockFactory.shared.block(withHeader: preCheckPointHeader, height: 1354751)
         preCheckpointBlock.synced = true
 
         let checkPointHeader = BlockHeader(
@@ -45,7 +45,7 @@ public class SyncManager {
                 bits: 424253525,
                 nonce: 1665657862
         )
-        let checkpointBlock = Block(header: checkPointHeader, previousBlock: preCheckpointBlock)
+        let checkpointBlock = BlockFactory.shared.block(withHeader: checkPointHeader, previousBlock: preCheckpointBlock)
         checkpointBlock.synced = true
 
         let walletManager = WalletManager.shared
@@ -74,19 +74,25 @@ public class SyncManager {
         let addressCount = realm.objects(Address.self).count
 
         print("BLOCK COUNT: \(blockCount)")
-        print("ADDRESS COUNT: \(addressCount)")
+        if let block = realm.objects(Block.self).first {
+            print("First Block: \(block.height) --- \(block.reversedHeaderHashHex)")
+        }
+        if let block = realm.objects(Block.self).last {
+            print("Last Block: \(block.height) --- \(block.reversedHeaderHashHex)")
+        }
 
-        for block in realm.objects(Block.self) {
-            print("\(block.height) --- \(block.reversedHeaderHashHex)")
-        }
-        for address in realm.objects(Address.self) {
-            print("\(address.index) --- \(address.external) --- \(address.base58)")
-        }
+        print("ADDRESS COUNT: \(addressCount)")
+//        if let address = realm.objects(Address.self).first {
+//            print("First Address: \(address.index) --- \(address.external) --- \(address.base58)")
+//        }
+//        if let address = realm.objects(Address.self).last {
+//            print("Last Address: \(address.index) --- \(address.external) --- \(address.base58)")
+//        }
     }
 
     public func connectToPeer() {
         _ = BlockSyncer.shared
-        PeerManager.shared.connect()
+        PeerGroup.shared.connect()
     }
 
     private func initialSync() {
@@ -171,10 +177,10 @@ public class SyncManager {
     }
 
     private func addressesObservable() -> Observable<[Address]> {
-        let walletManager = self.walletManager
+//        let walletManager = self.walletManager
 
         return Observable.create { observer in
-            var addresses = [Address]()
+//            var addresses = [Address]()
 
 //            for i in 0...20 {
 //                if let address = try? walletManager!.wallet.receiveAddress(index: UInt32(i)) {
@@ -185,7 +191,7 @@ public class SyncManager {
 //                }
 //            }
 
-            observer.onNext(addresses)
+//            observer.onNext(addresses)
             observer.onCompleted()
 
             return Disposables.create()

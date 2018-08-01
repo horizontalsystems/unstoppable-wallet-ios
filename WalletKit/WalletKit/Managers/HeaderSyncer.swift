@@ -11,11 +11,11 @@ class HeaderSyncer {
     private let hashCheckpointThreshold = 100
 
     let realmFactory: RealmFactory
-    let peerManager: PeerManager
+    let peerGroup: PeerGroup
 
-    init(realmFactory: RealmFactory = .shared, peerManager: PeerManager = .shared) {
+    init(realmFactory: RealmFactory = .shared, peerGroup: PeerGroup = .shared) {
         self.realmFactory = realmFactory
-        self.peerManager = peerManager
+        self.peerGroup = peerGroup
     }
 
     func sync() throws {
@@ -40,7 +40,7 @@ class HeaderSyncer {
             hashes.append(checkpointBlock.headerHash)
         }
 
-        peerManager.requestHeaders(headerHashes: hashes)
+        peerGroup.requestHeaders(headerHashes: hashes)
     }
 
 }
