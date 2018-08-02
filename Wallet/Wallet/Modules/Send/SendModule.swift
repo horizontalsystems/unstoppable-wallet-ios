@@ -10,6 +10,7 @@ protocol ISendView: class {
     func showError(error: String)
     func showSuccess()
     func showKeyboard()
+    func showAddressWarning(_ valid: Bool)
 }
 
 protocol ISendViewDelegate {
@@ -19,6 +20,7 @@ protocol ISendViewDelegate {
     func onViewDidLoad()
     func onViewDidAppear()
     func onAmountEntered(amount: String?)
+    func onAddressEntered(address: String?)
     func onCancelClick()
     func onSendClick(address: String?)
 }
@@ -28,6 +30,7 @@ protocol ISendInteractor {
     func getCopiedText() -> String?
     func fetchExchangeRate()
     func send(coinCode: String, address: String, amount: Double)
+    func isValid(address: String?) -> Bool
 }
 
 protocol ISendInteractorDelegate: class {

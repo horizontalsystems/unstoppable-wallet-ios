@@ -65,8 +65,12 @@ class SendAmountItemView: BaseActionItemView {
         moreButton.onTap = item?.onMore
 
         addressInputField.pasteButton.onTap = item?.onPaste
-        addressInputField.onAddressChange = { [weak self] in self?.item?.address = $0 }
+        addressInputField.onAddressChange = { [weak self] in
+            self?.item?.address = $0
+            self?.item?.onAddressEntered?($0)
+        }
         addressInputField.addressInputField.text = item?.address
+        addressInputField.borderColor = (item?.addressValid ?? true) ? SendTheme.inputBorderColor : SendTheme.errorColor
 
         amountInputField.currencyButton.onTap = item?.onCurrencyChange
         amountInputField.currencyButton.titleLabel.text = item?.currencyCode

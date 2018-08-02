@@ -8,6 +8,7 @@ class SendAmountItem: BaseActionItem {
 
     var onCurrencyChange: (() -> ())?
     var onAmountEntered: ((String?) -> ())?
+    var onAddressEntered: ((String?) -> ())?
 
     var showKeyboardOnLoad: (() -> ())?
 
@@ -17,6 +18,8 @@ class SendAmountItem: BaseActionItem {
     var hint: String?
 
     var error: SendError?
+
+    var addressValid = true
 
     init(tag: Int? = nil, hidden: Bool = false, required: Bool = false, onMore: (() -> ())? = nil) {
         self.onMore = onMore

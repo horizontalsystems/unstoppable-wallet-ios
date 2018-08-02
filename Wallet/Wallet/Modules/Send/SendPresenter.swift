@@ -81,6 +81,10 @@ extension SendPresenter: ISendViewDelegate {
         refreshAmountHint()
     }
 
+    func onAddressEntered(address: String?) {
+        view?.showAddressWarning(interactor.isValid(address: address) || (address ?? "").isEmpty)
+    }
+
     func onCancelClick() {
         print("onCancelClick")
     }
@@ -88,6 +92,8 @@ extension SendPresenter: ISendViewDelegate {
     func onSendClick(address: String?) {
         if let cryptoAmount = cryptoAmount, let address = address {
             interactor.send(coinCode: coinCode, address: address, amount: cryptoAmount)
+        } else {
+            print("stab show check fill address and amount")
         }
     }
 

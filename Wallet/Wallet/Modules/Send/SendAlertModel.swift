@@ -42,6 +42,9 @@ class SendAlertModel: BaseAlertModel {
         sendAmountItem.onAmountEntered = { [weak self] in
             self?.delegate.onAmountEntered(amount: $0)
         }
+        sendAmountItem.onAddressEntered = { [weak self] in
+            self?.delegate.onAddressEntered(address: $0)
+        }
         sendReferenceItem.onBack = { [weak self] in
             self?.sendConfigItem?.showFirstItem = true
             self?.reload?()
@@ -105,6 +108,11 @@ extension SendAlertModel: ISendView {
 
     func showKeyboard() {
         sendAmountItem.showKeyboardOnLoad?()
+    }
+
+    func showAddressWarning(_ valid: Bool) {
+        sendAmountItem.addressValid = valid
+        sendConfigItem?.updateItems?(false)
     }
 
 }
