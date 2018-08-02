@@ -12,6 +12,7 @@ class ReferenceInputField: UIView {
         cornerRadius = SendTheme.inputCornerRadius
 
         addSubview(referenceInputField)
+        referenceInputField.autocorrectionType = .no
         referenceInputField.tintColor = SendTheme.inputTintColor
         referenceInputField.textColor = SendTheme.inputTextColor
         referenceInputField.font = SendTheme.inputFont

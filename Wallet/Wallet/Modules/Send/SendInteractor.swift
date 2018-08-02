@@ -71,7 +71,7 @@ extension SendInteractor: ISendInteractor {
         guard let address = address, !address.isEmpty else {
             return false
         }
-        let pattern = "^[13][a-km-zA-HJ-NP-Z1-9]{25,34}$"
+        let pattern = "^(bc1|[13])[a-km-zA-HJ-NP-Z1-9]{25,34}$"
         let r = address.startIndex..<address.endIndex
         let r2 = address.range(of: pattern, options: .regularExpression)
         return r == r2

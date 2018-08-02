@@ -77,7 +77,7 @@ extension SendPresenter: ISendViewDelegate {
     }
 
     func onAmountEntered(amount: String?) {
-        enteredAmount = Double(amount ?? "0")
+        enteredAmount = Double(amount?.replacingOccurrences(of: ",", with: ".") ?? "0")
         refreshAmountHint()
     }
 
