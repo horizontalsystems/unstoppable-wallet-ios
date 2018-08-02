@@ -9,6 +9,8 @@ class SendAmountItem: BaseActionItem {
     var onCurrencyChange: (() -> ())?
     var onAmountEntered: ((String?) -> ())?
 
+    var showKeyboardOnLoad: (() -> ())?
+
     var address: String?
     var currencyCode: String?
     var amount: String?

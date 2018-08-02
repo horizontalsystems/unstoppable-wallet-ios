@@ -9,6 +9,7 @@ protocol ISendView: class {
     func closeView()
     func showError(error: String)
     func showSuccess()
+    func showKeyboard()
 }
 
 protocol ISendViewDelegate {
@@ -16,6 +17,7 @@ protocol ISendViewDelegate {
     func onPasteClick()
     func onCurrencyButtonClick()
     func onViewDidLoad()
+    func onViewDidAppear()
     func onAmountEntered(amount: String?)
     func onCancelClick()
     func onSendClick(address: String?)

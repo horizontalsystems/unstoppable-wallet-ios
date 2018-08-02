@@ -58,6 +58,10 @@ class SendAmountItemView: BaseActionItemView {
     }
 
     func bind() {
+        item?.showKeyboardOnLoad = { [weak self] in
+            self?.addressInputField.addressInputField.becomeFirstResponder()
+        }
+
         moreButton.onTap = item?.onMore
 
         addressInputField.pasteButton.onTap = item?.onPaste

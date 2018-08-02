@@ -4,7 +4,7 @@ import RealmSwift
 
 class SendPresenter {
 
-    let interactor: ISendInteractor
+    var interactor: ISendInteractor
     let router: ISendRouter
     weak var view: ISendView?
 
@@ -22,13 +22,13 @@ class SendPresenter {
         self.coinCode = coinCode
         self.interactor = interactor
         self.router = router
-
         baseCurrencyCode = interactor.getBaseCurrency()
     }
 
 }
 
 extension SendPresenter: ISendInteractorDelegate {
+
     func didFetchExchangeRate(exchangeRate: Double) {
         self.exchangeRate = exchangeRate
         refreshAmountHint()
@@ -72,8 +72,12 @@ extension SendPresenter: ISendViewDelegate {
         interactor.fetchExchangeRate()
     }
 
+    func onViewDidAppear() {
+        view?.showKeyboard()
+    }
+
     func onAmountEntered(amount: String?) {
-        enteredAmount = Double(amount ?? "")
+        enteredAmount = Double(amount ?? "0")
         refreshAmountHint()
     }
 
@@ -102,7 +106,7 @@ extension SendPresenter: ISendViewDelegate {
     }
 
     private func updateAmountHintView(error: SendError?) {
-        let amount = (isEnteringInCrypto ? fiatAmount : cryptoAmount) ?? 0.0
+        let amount = (isEnteringInCrypto ? fiatAmount : cryptoAmount) ?? 0
         let amountStr = isEnteringInCrypto ? CurrencyHelper.instance.formatFiatAmount(amount) : CurrencyHelper.instance.formatCryptoAmount(amount)
         let currency = isEnteringInCrypto ? baseCurrencyCode : coinCode
 

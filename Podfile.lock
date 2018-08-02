@@ -3,7 +3,7 @@ PODS:
   - BigInt (3.1.0):
     - SipHash (~> 1.2)
   - Cuckoo (0.11.3)
-  - GrouviActionSheet (1.1.2):
+  - GrouviActionSheet (1.1.3):
     - GrouviExtensions
     - SnapKit (~> 4.0.0)
   - GrouviExtensions (1.1.0):
@@ -57,7 +57,7 @@ SPEC CHECKSUMS:
   Alamofire: c7287b6e5d7da964a70935e5db17046b7fde6568
   BigInt: 76b5dfdfa3e2e478d4ffdf161aeede5502e2742f
   Cuckoo: 97522dd7ac6f18adba6022bdc74aa69e82ca691a
-  GrouviActionSheet: e064c05e04ae21bd52e61bcbd64599a4a7856cc7
+  GrouviActionSheet: e86e8f0ef3f9d9eb73aec2cb1cfbcaf50764f979
   GrouviExtensions: 7ee1420878179d1938fc0e7bec4367bac0201ff1
   ObjectMapper: b612bf8c8e99c4dc0bb6013a51f7c27966ed5da9
   Realm: c286caf4dbf346ce24aad49ca76c7ce622d4a082

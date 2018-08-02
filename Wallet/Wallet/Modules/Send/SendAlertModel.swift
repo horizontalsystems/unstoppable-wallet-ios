@@ -20,9 +20,7 @@ class SendAlertModel: BaseAlertModel {
         sendConfigItem?.showSeparator = false
 
         super.init()
-        DispatchQueue.main.async {
-            self.delegate.onViewDidLoad()
-        }
+
         ignoreKeyboard = false
 
         let titleItem = SendTitleItem(coinCode: coin.code, tag: 0, required: true, onQRScan: { [weak self] in
@@ -54,6 +52,14 @@ class SendAlertModel: BaseAlertModel {
             self?.onSend()
         })
         addItemView(sendButtonItem)
+    }
+
+    override func viewDidLoad() {
+        delegate.onViewDidLoad()
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        delegate.onViewDidAppear()
     }
 
     func onSend() {
@@ -95,6 +101,10 @@ extension SendAlertModel: ISendView {
 
     func showSuccess() {
         print("showSuccess")
+    }
+
+    func showKeyboard() {
+        sendAmountItem.showKeyboardOnLoad?()
     }
 
 }
