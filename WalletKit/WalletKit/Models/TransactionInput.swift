@@ -7,6 +7,7 @@ public class TransactionInput: Object {
     @objc public dynamic var signatureScript = Data()
     @objc public dynamic var sequence: Int = 0
     @objc public dynamic var previousOutput: TransactionOutput? = nil
+    @objc public dynamic var publicKey: Data?
 
     let transactions = LinkingObjects(fromType: Transaction.self, property: "inputs")
     var transaction: Transaction {
