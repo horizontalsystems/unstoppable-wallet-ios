@@ -5,7 +5,7 @@ import RealmSwift
 
 class HeaderHandlerTests: XCTestCase {
 
-    private var mockRealmFactory: MockRealmFactory!
+    private var mockStorage: MockIStorage!
     private var mockBlockFactory: MockBlockFactory!
     private var mockValidator: MockBlockValidator!
     private var mockSaver: MockBlockSaver!
@@ -19,25 +19,19 @@ class HeaderHandlerTests: XCTestCase {
     override func setUp() {
         super.setUp()
 
-        mockRealmFactory = MockRealmFactory()
+        mockStorage = MockIStorage()
         mockBlockFactory = MockBlockFactory()
         mockValidator = MockBlockValidator()
         mockSaver = MockBlockSaver()
-        headerHandler = HeaderHandler(realmFactory: mockRealmFactory, blockFactory: mockBlockFactory, validator: mockValidator, saver: mockSaver)
-
-        realm = try! Realm(configuration: Realm.Configuration(inMemoryIdentifier: "TestRealm"))
-        try! realm.write { realm.deleteAll() }
+        headerHandler = HeaderHandler(storage: mockStorage, blockFactory: mockBlockFactory, validator: mockValidator, saver: mockSaver)
 
         let preCheckpointBlock = BlockFactory.shared.block(withHeader: TestHelper.preCheckpointBlockHeader, height: TestHelper.preCheckpointBlockHeight)
-        try! realm.write {
-            realm.add(preCheckpointBlock)
-        }
 
         initialHeader = TestHelper.checkpointBlockHeader
         initialBlock = BlockFactory.shared.block(withHeader: initialHeader, previousBlock: preCheckpointBlock)
 
-        stub(mockRealmFactory) { mock in
-            when(mock.realm.get).thenReturn(realm)
+        stub(mockStorage) { mock in
+            when(mock.getLastBlockInChain()).thenReturn(initialBlock)
         }
         stub(mockSaver) { mock in
             when(mock.create(blocks: any())).thenDoNothing()
@@ -45,7 +39,7 @@ class HeaderHandlerTests: XCTestCase {
     }
 
     override func tearDown() {
-        mockRealmFactory = nil
+        mockStorage = nil
         mockBlockFactory = nil
         mockValidator = nil
         mockSaver = nil
@@ -59,8 +53,6 @@ class HeaderHandlerTests: XCTestCase {
     }
 
     func testSync_EmptyItems() {
-        try! realm.write { realm.add(initialBlock) }
-
         var caught = false
 
         do {
@@ -77,6 +69,10 @@ class HeaderHandlerTests: XCTestCase {
     }
 
     func testSync_NoInitialBlock() {
+        stub(mockStorage) { mock in
+            when(mock.getLastBlockInChain()).thenReturn(nil)
+        }
+
         var caught = false
 
         do {
@@ -94,8 +90,6 @@ class HeaderHandlerTests: XCTestCase {
     }
 
     func testValidBlocks() {
-        try! realm.write { realm.add(initialBlock) }
-
         let blocks = [BlockFactory.shared.block(
                 withHeader: BlockHeader(version: 536870912, previousBlockHeaderReversedHex: "0000000000000000001f1bd6d48e0fa41d054f54440a5ff3fee200bbdb37e0e5", merkleRootReversedHex: "df838278ff83d53e91423d5f7cefe64ef163004e18408de2374bd1b898241c78", timestamp: 1531798474, bits: 389315112, nonce: 2195910910),
                 previousBlock: initialBlock
@@ -113,8 +107,6 @@ class HeaderHandlerTests: XCTestCase {
     }
 
     func testInvalidBlocks() {
-        try! realm.write { realm.add(initialBlock) }
-
         let blocks = [BlockFactory.shared.block(
                 withHeader: BlockHeader(version: 536870912, previousBlockHeaderReversedHex: "0000000000000000001f1bd6d48e0fa41d054f54440a5ff3fee200bbdb37e0e5", merkleRootReversedHex: "df838278ff83d53e91423d5f7cefe64ef163004e18408de2374bd1b898241c78", timestamp: 1531798474, bits: 389315112, nonce: 2195910910),
                 previousBlock: initialBlock
@@ -132,8 +124,6 @@ class HeaderHandlerTests: XCTestCase {
     }
 
     func testPartialValidBlocks() {
-        try! realm.write { realm.add(initialBlock) }
-
         let block1 = BlockFactory.shared.block(
                 withHeader: BlockHeader(version: 536870912, previousBlockHeaderReversedHex: "0000000000000000001f1bd6d48e0fa41d054f54440a5ff3fee200bbdb37e0e5", merkleRootReversedHex: "df838278ff83d53e91423d5f7cefe64ef163004e18408de2374bd1b898241c78", timestamp: 1531798474, bits: 389315112, nonce: 2195910910),
                 previousBlock: initialBlock

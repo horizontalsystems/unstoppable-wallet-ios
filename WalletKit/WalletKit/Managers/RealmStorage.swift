@@ -13,15 +13,19 @@ class RealmStorage: IStorage {
     }
 
     func getFirstBlockInChain() -> Block? {
-        return factory.realm.objects(Block.self).filter("previousBlock != nil").sorted(byKeyPath: "height").first
+        return blocksInChain.first
+    }
+
+    func getLastBlockInChain() -> Block? {
+        return blocksInChain.first
     }
 
     func getLastBlockInChain(afterBlock: Block) -> Block? {
-        return factory.realm.objects(Block.self).filter("previousBlock != nil AND height > %@", afterBlock.height).sorted(byKeyPath: "height").last
+        return blocksInChain.filter("height > %@", afterBlock.height).last
     }
 
     func getBlockInChain(withHeight height: Int) -> Block? {
-        return factory.realm.objects(Block.self).filter("previousBlock != nil AND height = %@", height).first
+        return blocksInChain.filter("height = %@", height).first
     }
 
     func getBalances() -> Observable<DatabaseChangeSet<Balance>> {
@@ -37,6 +41,10 @@ class RealmStorage: IStorage {
     func getTransactionRecords() -> Observable<DatabaseChangeSet<TransactionRecord>> {
         return Observable.arrayWithChangeset(from: factory.realm.objects(TransactionRecord.self).sorted(byKeyPath: "blockHeight", ascending: false))
                 .map { DatabaseChangeSet(array: $0, changeSet: $1.map { CollectionChangeSet(withRealmChangeset: $0) }) }
+    }
+
+    private var blocksInChain: Results<Block> {
+        return factory.realm.objects(Block.self).filter("previousBlock != nil").sorted(byKeyPath: "height")
     }
 
 }
