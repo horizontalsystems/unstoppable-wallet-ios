@@ -17,7 +17,8 @@ class SendAmountItemView: BaseActionItemView {
 
         addSubview(addressInputField)
         addressInputField.snp.makeConstraints { maker in
-            maker.leading.top.equalToSuperview().offset(SendTheme.sideMargin)
+            maker.top.equalToSuperview().offset(SendTheme.sideMargin)
+            maker.leading.equalToSuperview().offset(SendTheme.sideMargin)
             maker.trailing.equalToSuperview().offset(-SendTheme.sideMargin)
             maker.height.equalTo(SendTheme.addressHeight)
         }
@@ -33,7 +34,7 @@ class SendAmountItemView: BaseActionItemView {
         moreButton.titleLabel.text = "more".localized
         moreButton.titleLabel.snp.remakeConstraints { maker in
             maker.trailing.equalToSuperview().offset(-SendTheme.sideMargin)
-            maker.centerY.equalToSuperview()
+            maker.top.equalToSuperview().offset(SendTheme.backButtonTopMargin)
         }
         addSubview(moreButton)
         moreButton.snp.makeConstraints { maker in
