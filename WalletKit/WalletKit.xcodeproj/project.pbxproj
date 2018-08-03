@@ -63,8 +63,10 @@
 		2FA5D2F5F05FE2A19A575F13 /* MerkleBlockHandlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D6A8656995FB458623D0 /* MerkleBlockHandlerTests.swift */; };
 		2FA5D3174628208CCB42FEB2 /* TransactionValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D5D429E287EC0D2EF5D2 /* TransactionValidator.swift */; };
 		2FA5D3CB6D79639AB784B364 /* MerkleBlockHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DF032E7ED8214D76696C /* MerkleBlockHandler.swift */; };
+		2FA5D4D8D1CAE7DA2256D6D0 /* TransactionLinker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D2BECCF383A4771ED469 /* TransactionLinker.swift */; };
 		2FA5D667BF6D76E09E385ECC /* TransactionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D996FAADF87022778B48 /* TransactionHandler.swift */; };
 		2FA5D7AD2E17CE15E46D177D /* TransactionSaverTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DD46B7D11A833893250A /* TransactionSaverTests.swift */; };
+		2FA5D7BE3EE43AE416535480 /* TransactionLinkerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DFBBD777A72AD651B6EE /* TransactionLinkerTests.swift */; };
 		2FA5D8755D9A88357CD2CDCB /* TransactionHandlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D21A2ABC16232BC8C195 /* TransactionHandlerTests.swift */; };
 		2FA5DB2B3A64A307F4F422EC /* TransactionSaver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DFD06201F8EAB887E383 /* TransactionSaver.swift */; };
 		58AAA03CE2E6D76179F0743E /* DifficultyEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA83E846945B4903A0CAF /* DifficultyEncoder.swift */; };
@@ -172,6 +174,7 @@
 		11B35FEEAF84E9FD41070786 /* BlockSaver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockSaver.swift; sourceTree = "<group>"; };
 		11B35FF2F94006C73B7773BC /* GetHeadersMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetHeadersMessage.swift; sourceTree = "<group>"; };
 		2FA5D21A2ABC16232BC8C195 /* TransactionHandlerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionHandlerTests.swift; sourceTree = "<group>"; };
+		2FA5D2BECCF383A4771ED469 /* TransactionLinker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionLinker.swift; sourceTree = "<group>"; };
 		2FA5D52E9214E99DF779A25A /* MerkleBlockValidatorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MerkleBlockValidatorTests.swift; sourceTree = "<group>"; };
 		2FA5D5D429E287EC0D2EF5D2 /* TransactionValidator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionValidator.swift; sourceTree = "<group>"; };
 		2FA5D6A8656995FB458623D0 /* MerkleBlockHandlerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MerkleBlockHandlerTests.swift; sourceTree = "<group>"; };
@@ -179,6 +182,7 @@
 		2FA5DD46B7D11A833893250A /* TransactionSaverTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionSaverTests.swift; sourceTree = "<group>"; };
 		2FA5DE717AEBDC8438D99390 /* MerkleBlockValidator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MerkleBlockValidator.swift; sourceTree = "<group>"; };
 		2FA5DF032E7ED8214D76696C /* MerkleBlockHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MerkleBlockHandler.swift; sourceTree = "<group>"; };
+		2FA5DFBBD777A72AD651B6EE /* TransactionLinkerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionLinkerTests.swift; sourceTree = "<group>"; };
 		2FA5DFD06201F8EAB887E383 /* TransactionSaver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionSaver.swift; sourceTree = "<group>"; };
 		58AAA1040012570F76E48D7C /* TestNetBlockValidatorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestNetBlockValidatorTests.swift; sourceTree = "<group>"; };
 		58AAA22A8FC4E2374CE4D10A /* TestNetBlockValidator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestNetBlockValidator.swift; sourceTree = "<group>"; };
@@ -286,6 +290,7 @@
 				2FA5D996FAADF87022778B48 /* TransactionHandler.swift */,
 				2FA5DFD06201F8EAB887E383 /* TransactionSaver.swift */,
 				2FA5D5D429E287EC0D2EF5D2 /* TransactionValidator.swift */,
+				2FA5D2BECCF383A4771ED469 /* TransactionLinker.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -393,6 +398,7 @@
 				2FA5D21A2ABC16232BC8C195 /* TransactionHandlerTests.swift */,
 				11B3557E78DBA78498A2511A /* BlockFactoryTests.swift */,
 				2FA5DD46B7D11A833893250A /* TransactionSaverTests.swift */,
+				2FA5DFBBD777A72AD651B6EE /* TransactionLinkerTests.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -679,6 +685,7 @@
 				"$(SRCROOT)/WalletKit/Managers/BlockFactory.swift",
 				"$(SRCROOT)/WalletKit/Managers/TransactionValidator.swift",
 				"$(SRCROOT)/WalletKit/Managers/TransactionSaver.swift",
+				"$(SRCROOT)/WalletKit/Managers/TransactionLinker.swift",
 			);
 			name = Cuckoo;
 			outputPaths = (
@@ -709,6 +716,7 @@
 				2FA5D8755D9A88357CD2CDCB /* TransactionHandlerTests.swift in Sources */,
 				11B352211E6C7036DEE86D22 /* BlockFactoryTests.swift in Sources */,
 				2FA5D7AD2E17CE15E46D177D /* TransactionSaverTests.swift in Sources */,
+				2FA5D7BE3EE43AE416535480 /* TransactionLinkerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -794,6 +802,7 @@
 				2FA5D667BF6D76E09E385ECC /* TransactionHandler.swift in Sources */,
 				2FA5DB2B3A64A307F4F422EC /* TransactionSaver.swift in Sources */,
 				2FA5D3174628208CCB42FEB2 /* TransactionValidator.swift in Sources */,
+				2FA5D4D8D1CAE7DA2256D6D0 /* TransactionLinker.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
