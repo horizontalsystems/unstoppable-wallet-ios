@@ -63,7 +63,10 @@
 		2FA5D2F5F05FE2A19A575F13 /* MerkleBlockHandlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D6A8656995FB458623D0 /* MerkleBlockHandlerTests.swift */; };
 		2FA5D3174628208CCB42FEB2 /* TransactionValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D5D429E287EC0D2EF5D2 /* TransactionValidator.swift */; };
 		2FA5D3CB6D79639AB784B364 /* MerkleBlockHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DF032E7ED8214D76696C /* MerkleBlockHandler.swift */; };
+		2FA5D4D8D1CAE7DA2256D6D0 /* TransactionLinker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D2BECCF383A4771ED469 /* TransactionLinker.swift */; };
 		2FA5D667BF6D76E09E385ECC /* TransactionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D996FAADF87022778B48 /* TransactionHandler.swift */; };
+		2FA5D7AD2E17CE15E46D177D /* TransactionSaverTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DD46B7D11A833893250A /* TransactionSaverTests.swift */; };
+		2FA5D7BE3EE43AE416535480 /* TransactionLinkerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DFBBD777A72AD651B6EE /* TransactionLinkerTests.swift */; };
 		2FA5D8755D9A88357CD2CDCB /* TransactionHandlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D21A2ABC16232BC8C195 /* TransactionHandlerTests.swift */; };
 		2FA5DB2B3A64A307F4F422EC /* TransactionSaver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DFD06201F8EAB887E383 /* TransactionSaver.swift */; };
 		58AAA03CE2E6D76179F0743E /* DifficultyEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA83E846945B4903A0CAF /* DifficultyEncoder.swift */; };
@@ -77,14 +80,11 @@
 		D31711FF20F7193000AEF61B /* PingMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31711EB20F7192F00AEF61B /* PingMessage.swift */; };
 		D317120020F7193000AEF61B /* AddressMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31711EC20F7192F00AEF61B /* AddressMessage.swift */; };
 		D317120120F7193000AEF61B /* NetworkAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31711ED20F7192F00AEF61B /* NetworkAddress.swift */; };
-		D317120220F7193000AEF61B /* TransactionMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31711EE20F7192F00AEF61B /* TransactionMessage.swift */; };
 		D317120320F7193000AEF61B /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31711EF20F7192F00AEF61B /* Message.swift */; };
-		D317120420F7193000AEF61B /* TransactionOutputItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31711F020F7192F00AEF61B /* TransactionOutputItem.swift */; };
 		D317120520F7193000AEF61B /* VersionMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31711F120F7192F00AEF61B /* VersionMessage.swift */; };
 		D317120620F7193000AEF61B /* GetBlocksMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31711F220F7193000AEF61B /* GetBlocksMessage.swift */; };
 		D317120720F7193000AEF61B /* RejectMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31711F320F7193000AEF61B /* RejectMessage.swift */; };
 		D317120820F7193000AEF61B /* InventoryItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31711F420F7193000AEF61B /* InventoryItem.swift */; };
-		D317120920F7193000AEF61B /* TransactionInputItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31711F520F7193000AEF61B /* TransactionInputItem.swift */; };
 		D317120A20F7193000AEF61B /* GetDataMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31711F620F7193000AEF61B /* GetDataMessage.swift */; };
 		D317120B20F7193000AEF61B /* InventoryMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31711F720F7193000AEF61B /* InventoryMessage.swift */; };
 		D317120C20F7193000AEF61B /* BlockMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31711F820F7193000AEF61B /* BlockMessage.swift */; };
@@ -92,7 +92,6 @@
 		D317120F20F7193000AEF61B /* MerkleBlockMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31711FB20F7193000AEF61B /* MerkleBlockMessage.swift */; };
 		D317121020F7193000AEF61B /* VerackMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31711FC20F7193000AEF61B /* VerackMessage.swift */; };
 		D317121120F7193000AEF61B /* PongMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31711FD20F7193000AEF61B /* PongMessage.swift */; };
-		D317121220F7193000AEF61B /* TransactionOutPointItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31711FE20F7193000AEF61B /* TransactionOutPointItem.swift */; };
 		D317121820F719A900AEF61B /* MurmurHash.swift in Sources */ = {isa = PBXBuildFile; fileRef = D317121720F719A900AEF61B /* MurmurHash.swift */; };
 		D33FD6B520F382DC00EC10DB /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D33FD6B320F3782600EC10DB /* libcrypto.a */; };
 		D33FD6BC20F385D700EC10DB /* HDPublicKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = D33FD6B820F385D700EC10DB /* HDPublicKey.swift */; };
@@ -175,12 +174,15 @@
 		11B35FEEAF84E9FD41070786 /* BlockSaver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockSaver.swift; sourceTree = "<group>"; };
 		11B35FF2F94006C73B7773BC /* GetHeadersMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetHeadersMessage.swift; sourceTree = "<group>"; };
 		2FA5D21A2ABC16232BC8C195 /* TransactionHandlerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionHandlerTests.swift; sourceTree = "<group>"; };
+		2FA5D2BECCF383A4771ED469 /* TransactionLinker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionLinker.swift; sourceTree = "<group>"; };
 		2FA5D52E9214E99DF779A25A /* MerkleBlockValidatorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MerkleBlockValidatorTests.swift; sourceTree = "<group>"; };
 		2FA5D5D429E287EC0D2EF5D2 /* TransactionValidator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionValidator.swift; sourceTree = "<group>"; };
 		2FA5D6A8656995FB458623D0 /* MerkleBlockHandlerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MerkleBlockHandlerTests.swift; sourceTree = "<group>"; };
 		2FA5D996FAADF87022778B48 /* TransactionHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionHandler.swift; sourceTree = "<group>"; };
+		2FA5DD46B7D11A833893250A /* TransactionSaverTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionSaverTests.swift; sourceTree = "<group>"; };
 		2FA5DE717AEBDC8438D99390 /* MerkleBlockValidator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MerkleBlockValidator.swift; sourceTree = "<group>"; };
 		2FA5DF032E7ED8214D76696C /* MerkleBlockHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MerkleBlockHandler.swift; sourceTree = "<group>"; };
+		2FA5DFBBD777A72AD651B6EE /* TransactionLinkerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionLinkerTests.swift; sourceTree = "<group>"; };
 		2FA5DFD06201F8EAB887E383 /* TransactionSaver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionSaver.swift; sourceTree = "<group>"; };
 		58AAA1040012570F76E48D7C /* TestNetBlockValidatorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestNetBlockValidatorTests.swift; sourceTree = "<group>"; };
 		58AAA22A8FC4E2374CE4D10A /* TestNetBlockValidator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestNetBlockValidator.swift; sourceTree = "<group>"; };
@@ -197,14 +199,11 @@
 		D31711EB20F7192F00AEF61B /* PingMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PingMessage.swift; sourceTree = "<group>"; };
 		D31711EC20F7192F00AEF61B /* AddressMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressMessage.swift; sourceTree = "<group>"; };
 		D31711ED20F7192F00AEF61B /* NetworkAddress.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkAddress.swift; sourceTree = "<group>"; };
-		D31711EE20F7192F00AEF61B /* TransactionMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionMessage.swift; sourceTree = "<group>"; };
 		D31711EF20F7192F00AEF61B /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
-		D31711F020F7192F00AEF61B /* TransactionOutputItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionOutputItem.swift; sourceTree = "<group>"; };
 		D31711F120F7192F00AEF61B /* VersionMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VersionMessage.swift; sourceTree = "<group>"; };
 		D31711F220F7193000AEF61B /* GetBlocksMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetBlocksMessage.swift; sourceTree = "<group>"; };
 		D31711F320F7193000AEF61B /* RejectMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RejectMessage.swift; sourceTree = "<group>"; };
 		D31711F420F7193000AEF61B /* InventoryItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InventoryItem.swift; sourceTree = "<group>"; };
-		D31711F520F7193000AEF61B /* TransactionInputItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionInputItem.swift; sourceTree = "<group>"; };
 		D31711F620F7193000AEF61B /* GetDataMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetDataMessage.swift; sourceTree = "<group>"; };
 		D31711F720F7193000AEF61B /* InventoryMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InventoryMessage.swift; sourceTree = "<group>"; };
 		D31711F820F7193000AEF61B /* BlockMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockMessage.swift; sourceTree = "<group>"; };
@@ -212,7 +211,6 @@
 		D31711FB20F7193000AEF61B /* MerkleBlockMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MerkleBlockMessage.swift; sourceTree = "<group>"; };
 		D31711FC20F7193000AEF61B /* VerackMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VerackMessage.swift; sourceTree = "<group>"; };
 		D31711FD20F7193000AEF61B /* PongMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PongMessage.swift; sourceTree = "<group>"; };
-		D31711FE20F7193000AEF61B /* TransactionOutPointItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionOutPointItem.swift; sourceTree = "<group>"; };
 		D317121720F719A900AEF61B /* MurmurHash.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MurmurHash.swift; sourceTree = "<group>"; };
 		D33FD6B320F3782600EC10DB /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcrypto.a; path = Libraries/openssl/lib/libcrypto.a; sourceTree = "<group>"; };
 		D33FD6B820F385D700EC10DB /* HDPublicKey.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HDPublicKey.swift; sourceTree = "<group>"; };
@@ -292,6 +290,7 @@
 				2FA5D996FAADF87022778B48 /* TransactionHandler.swift */,
 				2FA5DFD06201F8EAB887E383 /* TransactionSaver.swift */,
 				2FA5D5D429E287EC0D2EF5D2 /* TransactionValidator.swift */,
+				2FA5D2BECCF383A4771ED469 /* TransactionLinker.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -359,10 +358,6 @@
 				D31711EB20F7192F00AEF61B /* PingMessage.swift */,
 				D31711FD20F7193000AEF61B /* PongMessage.swift */,
 				D31711F320F7193000AEF61B /* RejectMessage.swift */,
-				D31711EE20F7192F00AEF61B /* TransactionMessage.swift */,
-				D31711F520F7193000AEF61B /* TransactionInputItem.swift */,
-				D31711FE20F7193000AEF61B /* TransactionOutPointItem.swift */,
-				D31711F020F7192F00AEF61B /* TransactionOutputItem.swift */,
 				D31711FC20F7193000AEF61B /* VerackMessage.swift */,
 				D31711F120F7192F00AEF61B /* VersionMessage.swift */,
 				11B35FF2F94006C73B7773BC /* GetHeadersMessage.swift */,
@@ -402,6 +397,8 @@
 				58AAA1040012570F76E48D7C /* TestNetBlockValidatorTests.swift */,
 				2FA5D21A2ABC16232BC8C195 /* TransactionHandlerTests.swift */,
 				11B3557E78DBA78498A2511A /* BlockFactoryTests.swift */,
+				2FA5DD46B7D11A833893250A /* TransactionSaverTests.swift */,
+				2FA5DFBBD777A72AD651B6EE /* TransactionLinkerTests.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -688,6 +685,7 @@
 				"$(SRCROOT)/WalletKit/Managers/BlockFactory.swift",
 				"$(SRCROOT)/WalletKit/Managers/TransactionValidator.swift",
 				"$(SRCROOT)/WalletKit/Managers/TransactionSaver.swift",
+				"$(SRCROOT)/WalletKit/Managers/TransactionLinker.swift",
 			);
 			name = Cuckoo;
 			outputPaths = (
@@ -717,6 +715,8 @@
 				58AAAD7FA11B8C8973A0A363 /* TestNetBlockValidatorTests.swift in Sources */,
 				2FA5D8755D9A88357CD2CDCB /* TransactionHandlerTests.swift in Sources */,
 				11B352211E6C7036DEE86D22 /* BlockFactoryTests.swift in Sources */,
+				2FA5D7AD2E17CE15E46D177D /* TransactionSaverTests.swift in Sources */,
+				2FA5D7BE3EE43AE416535480 /* TransactionLinkerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -729,7 +729,6 @@
 				D317120120F7193000AEF61B /* NetworkAddress.swift in Sources */,
 				D317120B20F7193000AEF61B /* InventoryMessage.swift in Sources */,
 				D31711FF20F7193000AEF61B /* PingMessage.swift in Sources */,
-				D317120220F7193000AEF61B /* TransactionMessage.swift in Sources */,
 				D317120A20F7193000AEF61B /* GetDataMessage.swift in Sources */,
 				D33FD6BC20F385D700EC10DB /* HDPublicKey.swift in Sources */,
 				D317121120F7193000AEF61B /* PongMessage.swift in Sources */,
@@ -740,7 +739,6 @@
 				D33FD6BF20F385D700EC10DB /* HDKeychain.swift in Sources */,
 				D33FD6C920F3876800EC10DB /* Serialization.swift in Sources */,
 				D317120520F7193000AEF61B /* VersionMessage.swift in Sources */,
-				D317120920F7193000AEF61B /* TransactionInputItem.swift in Sources */,
 				11B3511B6F41679F062F356C /* Crypto.swift in Sources */,
 				D33FD6D120F3885400EC10DB /* Helpers.swift in Sources */,
 				D317121820F719A900AEF61B /* MurmurHash.swift in Sources */,
@@ -749,7 +747,6 @@
 				D33FD6D420F3890700EC10DB /* Mnemonic.swift in Sources */,
 				11B35CB88A796C85CD65F9DE /* Protocols.swift in Sources */,
 				11B35AFA91B42B7FA1F6A961 /* UserDefaultsStorage.swift in Sources */,
-				D317120420F7193000AEF61B /* TransactionOutputItem.swift in Sources */,
 				D317120C20F7193000AEF61B /* BlockMessage.swift in Sources */,
 				11B353EA4081799EA9387B66 /* WalletManager.swift in Sources */,
 				11B352145E5F28730588A837 /* ApiManager.swift in Sources */,
@@ -757,7 +754,6 @@
 				11B356FF240295215EFC3470 /* UnspentOutputsWrapper.swift in Sources */,
 				D317120820F7193000AEF61B /* InventoryItem.swift in Sources */,
 				11B356D19B4382A26BA37767 /* UnspentOutput.swift in Sources */,
-				D317121220F7193000AEF61B /* TransactionOutPointItem.swift in Sources */,
 				11B35E2E773A8D18B17FD685 /* TransactionsWrapper.swift in Sources */,
 				D317120020F7193000AEF61B /* AddressMessage.swift in Sources */,
 				11B35EC1506F05A4D36F50E0 /* BlockchainTransaction.swift in Sources */,
@@ -806,6 +802,7 @@
 				2FA5D667BF6D76E09E385ECC /* TransactionHandler.swift in Sources */,
 				2FA5DB2B3A64A307F4F422EC /* TransactionSaver.swift in Sources */,
 				2FA5D3174628208CCB42FEB2 /* TransactionValidator.swift in Sources */,
+				2FA5D4D8D1CAE7DA2256D6D0 /* TransactionLinker.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

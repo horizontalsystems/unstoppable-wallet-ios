@@ -67,11 +67,11 @@ extension PeerGroup: PeerDelegate {
         }
     }
 
-    public func peer(_ peer: Peer, didReceiveTransaction message: TransactionMessage) {
+    public func peer(_ peer: Peer, didReceiveTransactionMessage message: Transaction) {
 //        print("TRANSACTION: \(Crypto.sha256sha256(message.serialized()).reversedHex)")
 
         do {
-            try TransactionHandler.shared.handle(message: message)
+            try TransactionHandler.shared.handle(transaction: message)
         } catch {
             print("TransactionHandler error: \(error)")
         }

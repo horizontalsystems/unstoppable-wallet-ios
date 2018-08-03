@@ -9,10 +9,12 @@ class TransactionSaver {
         self.realmFactory = realmFactory
     }
 
-    func update(transaction: Transaction?, withContentsOf message: TransactionMessage) throws {
-//        let realm = realmFactory.realm
+    func save(transaction: Transaction) throws {
+        let realm = realmFactory.realm
 
-
+        try realm.write {
+            realm.add(transaction, update: true)
+        }
     }
 
 }
