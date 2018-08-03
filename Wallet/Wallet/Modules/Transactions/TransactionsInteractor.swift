@@ -7,14 +7,14 @@ class TransactionsInteractor {
     weak var delegate: ITransactionsInteractorDelegate?
 
     private let disposeBag = DisposeBag()
-    private let databaseManager: IDatabaseManager
+    private let storage: IStorage
     private let coinManager: CoinManager
 
     private var latestBlockHeights = [String: Int]()
     private var transactionRecords = [TransactionRecord]()
 
-    init(databaseManager: IDatabaseManager, coinManager: CoinManager) {
-        self.databaseManager = databaseManager
+    init(storage: IStorage, coinManager: CoinManager) {
+        self.storage = storage
         self.coinManager = coinManager
 
         latestBlockHeights["BTC"] = 1500000
@@ -25,7 +25,7 @@ class TransactionsInteractor {
 extension TransactionsInteractor: ITransactionsInteractor {
 
     func retrieveTransactionRecords() {
-        databaseManager.getTransactionRecords()
+        storage.getTransactionRecords()
                 .subscribe(onNext: { [weak self] databaseChangeSet in
                     self?.transactionRecords = databaseChangeSet.array
                     self?.refresh(changeSet: databaseChangeSet.changeSet)

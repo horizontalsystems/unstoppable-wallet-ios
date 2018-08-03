@@ -7,11 +7,20 @@ protocol ILocalStorage: class {
     func clearWords()
 }
 
-public protocol IDatabaseManager {
-    //    func getBitcoinUnspentOutputs() -> Observable<DatabaseChangeSet<BitcoinUnspentOutput>>
-    //    func getBitcoinCashUnspentOutputs() -> Observable<DatabaseChangeSet<BitcoinCashUnspentOutput>>
+public protocol IStorage {
+    func getFirstBlockInChain() -> Block?
+    func getLastBlockInChain(afterBlock: Block) -> Block?
+    func getBlockInChain(withHeight height: Int) -> Block?
     func getBalances() -> Observable<DatabaseChangeSet<Balance>>
     func getExchangeRates() -> Observable<DatabaseChangeSet<ExchangeRate>>
     func getTransactionRecords() -> Observable<DatabaseChangeSet<TransactionRecord>>
-//    func getBlockchainInfos() -> Observable<DatabaseChangeSet<BlockchainInfo>>
+}
+
+public class WalletKitProvider {
+    public static let shared = WalletKitProvider()
+
+    public var storage: IStorage {
+        return RealmStorage.shared
+    }
+
 }

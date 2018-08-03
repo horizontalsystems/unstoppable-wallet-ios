@@ -7,14 +7,14 @@ class WalletInteractor {
     weak var delegate: IWalletInteractorDelegate?
 
     private let disposeBag = DisposeBag()
-    private let databaseManager: IDatabaseManager
+    private let storage: IStorage
     private let syncManager: SyncManager
 
     private var totalValues = [String: Double]()
     private var exchangeRates = [String: Double]()
 
-    init(databaseManager: IDatabaseManager, syncManager: SyncManager) {
-        self.databaseManager = databaseManager
+    init(storage: IStorage, syncManager: SyncManager) {
+        self.storage = storage
         self.syncManager = syncManager
     }
 
@@ -37,7 +37,7 @@ extension WalletInteractor: IWalletInteractor {
 //                })
 //                .disposed(by: disposeBag)
 
-        databaseManager.getBalances()
+        storage.getBalances()
                 .subscribe(onNext: { [weak self] changeset in
                     changeset.array.forEach { balance in
                         self?.totalValues[balance.coinCode] = balance.amount
@@ -46,7 +46,7 @@ extension WalletInteractor: IWalletInteractor {
                 })
                 .disposed(by: disposeBag)
 
-        databaseManager.getExchangeRates()
+        storage.getExchangeRates()
                 .subscribe(onNext: { [weak self] changeset in
                     for rate in changeset.array {
                         self?.exchangeRates[rate.code] = rate.value
