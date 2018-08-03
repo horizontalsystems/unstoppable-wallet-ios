@@ -8,7 +8,11 @@ class WalletRouter {
 extension WalletRouter: IWalletRouter {
 
     func onReceive(for walletBalance: WalletBalanceItem) {
-        print("open receive alert")
+        DepositRouter.module(coins: [walletBalance.coinValue.coin]).show(fromController: viewController)
+    }
+
+    func onSend(for walletBalance: WalletBalanceItem) {
+        SendRouter.module(coin: Bitcoin()).show(fromController: viewController)
     }
 
 }

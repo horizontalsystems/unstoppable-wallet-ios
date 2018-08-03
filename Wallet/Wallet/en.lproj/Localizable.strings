@@ -37,6 +37,16 @@
 "wallet.send" = "Send";
 "wallet.deposit" = "Deposit";
 
+"send.title" = "Send ";
+"send.address_placeholder" = "Address";
+"send.payment_reference_placeholder" = "Payment Reference";
+"send.insufficient_funds" = "Not available amount";
+"paste" = "Paste";
+"amount" = "Amount";
+"more" = "More";
+"send" = "Send";
+"back" = "Back";
+
 "transactions.title" = "Transactions";
 "transactions.tab_bar_item" = "Transactions";
 "all" = "all";

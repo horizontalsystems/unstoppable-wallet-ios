@@ -11,6 +11,7 @@ protocol IWalletViewDelegate {
     func viewDidLoad()
     func refresh()
     func onReceive(for index: Int)
+    func onPay(for index: Int)
 }
 
 protocol IWalletInteractor {
@@ -24,4 +25,5 @@ protocol IWalletInteractorDelegate: class {
 
 protocol IWalletRouter {
     func onReceive(for walletBalance: WalletBalanceItem)
+    func onSend(for walletBalance: WalletBalanceItem)
 }

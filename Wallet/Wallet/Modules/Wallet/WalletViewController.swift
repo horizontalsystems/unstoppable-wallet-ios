@@ -79,13 +79,17 @@ extension WalletViewController: UITableViewDelegate, UITableViewDataSource {
             cell.bind(balance: wallets[indexPath.row], selected: tableView.indexPathForSelectedRow == indexPath, onReceive: { [weak self] in
                 self?.onReceive(for: indexPath)
             }, onPay: { [weak self] in
-                print("onPay \(self!.wallets[indexPath.row])")
+                self?.onPay(for: indexPath)
             })
         }
     }
 
     func onReceive(for indexPath: IndexPath) {
         delegate.onReceive(for: indexPath.row)
+    }
+
+    func onPay(for indexPath: IndexPath) {
+        delegate.onPay(for: indexPath.row)
     }
 
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {

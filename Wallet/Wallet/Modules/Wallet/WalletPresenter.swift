@@ -64,8 +64,16 @@ extension WalletPresenter: IWalletViewDelegate {
         if index < walletBalances.count {
             router.onReceive(for: walletBalances[index])
         } else {
-            DepositRouter.module(coins: []).show()
+            router.onReceive(for: WalletBalanceItem(coinValue: CoinValue(coin: Bitcoin(), value: 10), exchangeRate: 2000, currency: DollarCurrency()))
             //test stab
+        }
+    }
+
+    func onPay(for index: Int) {
+        if index < walletBalances.count {
+            router.onSend(for: walletBalances[index])
+        } else {
+            router.onSend(for: WalletBalanceItem(coinValue: CoinValue(coin: Bitcoin(), value: 10), exchangeRate: 12, currency: DollarCurrency()))
         }
     }
 
