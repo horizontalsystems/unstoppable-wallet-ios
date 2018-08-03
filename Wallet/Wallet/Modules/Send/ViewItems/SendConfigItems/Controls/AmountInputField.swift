@@ -88,13 +88,16 @@ class AmountInputField: UIView, UITextFieldDelegate {
     }
 
     public func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        if let text = textField.text, !text.isEmpty {
-            let characterSet = CharacterSet(charactersIn: ",.")
-            let textContains = text.rangeOfCharacter(from: characterSet) != nil
-            let replacementStringContains = string.rangeOfCharacter(from: characterSet) != nil
-            return !textContains || !replacementStringContains
+        let pattern = "^[0-9]*[,.]?[0-9]*$"
+        guard string.range(of: pattern, options: .regularExpression) != nil else {
+            return false
         }
-        return true
+
+        let characterSet = CharacterSet(charactersIn: ",.")
+        let textContains = textField.text?.rangeOfCharacter(from: characterSet) != nil
+        let replacementStringContains = string.rangeOfCharacter(from: characterSet) != nil
+
+        return !textContains || !replacementStringContains
     }
 
 }
