@@ -18,7 +18,9 @@ class BlockSaverTests: XCTestCase {
         saver = BlockSaver(realmFactory: mockRealmFactory)
 
         realm = try! Realm(configuration: Realm.Configuration(inMemoryIdentifier: "TestRealm"))
-        try! realm.write { realm.deleteAll() }
+        try! realm.write {
+            realm.deleteAll()
+        }
 
         initialBlock = BlockFactory.shared.block(withHeader: TestHelper.checkpointBlockHeader, height: 1)
 
@@ -66,8 +68,6 @@ class BlockSaverTests: XCTestCase {
             "f0db27cd89551bd197bf551bf697d6eab8fea1fae982fe4b0055fdd58b1f7ee0".reversedData!,
             "86fef17ab1b91ffd8e9e9b14823539e4a22116a078cda1de6e31ddbcbd070993".reversedData!
         ]
-        let message = MerkleBlockMessage(blockHeader: blockHeader, totalTransactions: 1, numberOfHashes: 2, hashes: hashes, numberOfFlags: 3, flags: [1, 0, 0])
-
         let block = BlockFactory.shared.block(withHeader: blockHeader, previousBlock: initialBlock)
 
         try! saver.create(blocks: [block])
@@ -77,7 +77,7 @@ class BlockSaverTests: XCTestCase {
             return
         }
 
-        try! saver.update(block: savedBlock, withTransactionHashes: message.hashes)
+        try! saver.update(block: savedBlock, withTransactionHashes: hashes)
         let transactions = realm.objects(Transaction.self)
 
         XCTAssertEqual(savedBlock.transactions.count, transactions.count)
@@ -86,6 +86,38 @@ class BlockSaverTests: XCTestCase {
         }
 
         XCTAssertTrue(savedBlock.synced)
+    }
+
+    func testUpdateExistingTransactionsWithBlock() {
+        let rawTransaction = "0100000001865c106cd7a90c80e5447f6e2891aaf5a0d11fb29e1a9258dce26da7ef04c028000000004847304402205c54aa165861bf5347683fb078a99188726ee2577e3554d0f77ad7c60a4b072902206f77f42f216e4c64585a60ec76a944fc83278524e5a0dfda31b58f94035d27be01ffffffff01806de7290100000017a914121e63ee09fc7e20b59d144dcce6e2700f6f1a9c8700000000"
+        let transaction = Transaction.deserialize(Data(hex: rawTransaction)!)
+
+        let blockHeader = BlockHeader(version: 536870912, previousBlockHeaderReversedHex: "000000000000837bcdb53e7a106cf0e74bab6ae8bc96481243d31bea3e6b8c92", merkleRootReversedHex: "8beab73ba2318e4cbdb1c65624496bc3214d6ba93204e049fb46293a41880b9a", timestamp: 1506023937, bits: 453021074, nonce: 2001025151)
+        let hashes = [
+            Data(Data(hex: transaction.reversedHashHex)!.reversed())
+        ]
+
+        let block = BlockFactory.shared.block(withHeader: blockHeader, previousBlock: initialBlock)
+
+        try! saver.create(blocks: [block])
+        try! realm.write {
+            realm.add(transaction, update: true)
+        }
+
+        guard let savedBlock = realm.objects(Block.self).last else {
+            XCTFail("Block not saved!")
+            return
+        }
+
+        var savedTransaction = realm.objects(Transaction.self).filter("reversedHashHex = %@", hashes[0].reversedHex).first!
+        XCTAssertEqual(savedTransaction.block, nil)
+
+        try! saver.update(block: savedBlock, withTransactionHashes: hashes)
+
+        savedTransaction = realm.objects(Transaction.self).filter("reversedHashHex = %@", hashes[0].reversedHex).first!
+        XCTAssertEqual(savedTransaction.block, savedBlock)
+        XCTAssertEqual(savedTransaction.version, transaction.version)
+        XCTAssertEqual(savedBlock.synced, true)
     }
 
 }

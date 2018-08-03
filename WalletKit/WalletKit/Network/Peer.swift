@@ -183,7 +183,7 @@ class Peer : NSObject, StreamDelegate {
                 case "merkleblock":
                     handle(merkleBlockMessage: MerkleBlockMessage.deserialize(message.payload))
                 case "tx":
-                    handle(transactionMessage: TransactionMessage.deserialize(message.payload))
+                    handle(transaction: Transaction.deserialize(message.payload))
                 case "ping":
                     handle(pingMessage: PingMessage.deserialize(message.payload))
                 case "reject":
@@ -214,7 +214,7 @@ class Peer : NSObject, StreamDelegate {
         sendFilterLoadMessage(filters: filters)
     }
 
-//    func sendTransaction(transaction: TransactionMessage) {
+//    func sendTransaction(transaction: Transaction) {
 //        sendTransactionInventory(transaction: transaction)
 //    }
 
@@ -297,7 +297,7 @@ class Peer : NSObject, StreamDelegate {
         send(messageWithCommand: "getdata", payload: message.serialized())
     }
 
-    func sendTransactionInventory(transaction: TransactionMessage) {
+    func sendTransactionInventory(transaction: Transaction) {
         let txId = Crypto.sha256sha256(transaction.serialized())
         let inventoryMessage = InventoryMessage(count: 1, inventoryItems: [InventoryItem(type: InventoryItem.ObjectType.transactionMessage.rawValue, hash: txId)])
 
@@ -385,9 +385,9 @@ class Peer : NSObject, StreamDelegate {
         delegate?.peer(self, didReceiveMerkleBlockMessage: merkleBlockMessage)
     }
 
-    private func handle(transactionMessage: TransactionMessage) {
-        log("--> TX: \(Crypto.sha256sha256(transactionMessage.serialized()).reversedHex)")
-        delegate?.peer(self, didReceiveTransactionMessage: transactionMessage)
+    private func handle(transaction: Transaction) {
+        log("--> TX: \(Crypto.sha256sha256(transaction.serialized()).reversedHex)")
+        delegate?.peer(self, didReceiveTransactionMessage: transaction)
     }
 
     private func handle(pingMessage: PingMessage) {
@@ -419,7 +419,7 @@ protocol PeerDelegate : class {
     func peer(_ peer: Peer, didReceiveHeadersMessage message: HeadersMessage)
     func peer(_ peer: Peer, didReceiveBlockMessage message: BlockMessage)
     func peer(_ peer: Peer, didReceiveMerkleBlockMessage message: MerkleBlockMessage)
-    func peer(_ peer: Peer, didReceiveTransactionMessage message: TransactionMessage)
+    func peer(_ peer: Peer, didReceiveTransactionMessage message: Transaction)
     func peer(_ peer: Peer, didReceiveRejectMessage message: RejectMessage)
 }
 
@@ -433,6 +433,6 @@ extension PeerDelegate {
     func peer(_ peer: Peer, didReceiveHeadersMessage message: HeadersMessage) {}
     func peer(_ peer: Peer, didReceiveBlockMessage message: BlockMessage) {}
     func peer(_ peer: Peer, didReceiveMerkleBlockMessage message: MerkleBlockMessage) {}
-    func peer(_ peer: Peer, didReceiveTransactionMessage message: TransactionMessage) {}
+    func peer(_ peer: Peer, didReceiveTransactionMessage message: Transaction) {}
     func peer(_ peer: Peer, didReceiveRejectMessage message: RejectMessage) {}
 }
