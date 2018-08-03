@@ -20,12 +20,12 @@ class SendInteractor {
 
     weak var delegate: ISendInteractorDelegate?
 
+    private let storage: IStorage
     var coin: Coin
-    var databaseManager: DatabaseManager
 
-    init(coin: Coin, databaseManager: DatabaseManager) {
+    init(storage: IStorage, coin: Coin) {
+        self.storage = storage
         self.coin = coin
-        self.databaseManager = databaseManager
     }
 
 }

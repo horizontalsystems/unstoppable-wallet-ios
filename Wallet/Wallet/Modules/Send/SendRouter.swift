@@ -18,7 +18,7 @@ extension SendRouter {
 
     static func module(coin: Coin) -> ActionSheetController {
         let router = SendRouter()
-        let interactor = SendInteractor(coin: coin, databaseManager: DatabaseManager())
+        let interactor = SendInteractor(storage: WalletKitProvider.shared.storage, coin: coin)
         let presenter = SendPresenter(interactor: interactor, router: router, coinCode: coin.code)
         interactor.delegate = presenter
 

@@ -38,8 +38,6 @@ class TransactionSaverTests: XCTestCase {
     }
 
     func testCreate() {
-        let reversedHashHex = Crypto.sha256sha256(Data(hex: rawTransaction)!).reversedHex
-
         try! saver.save(transaction: transaction)
         let realmTransaction = realm.objects(Transaction.self).last!
 

@@ -15,7 +15,7 @@ public class TransactionOutput: Object {
         var data = Data()
 
         data += value
-        var scriptLength = VarInt(lockingScript.count)
+        let scriptLength = VarInt(lockingScript.count)
         data += scriptLength.serialized()
         data += lockingScript
 
