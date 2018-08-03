@@ -11,6 +11,8 @@ public protocol IStorage {
     func getNonSyncedBlockHeaderHashes() -> [Data]
     func getBlock(byHeaderHash headerHash: Data) -> Block?
 
+    func getTransaction(byReversedHashHex reversedHashHex: String) -> Transaction?
+
     func getBalances() -> Observable<DatabaseChangeSet<Balance>>
     func getExchangeRates() -> Observable<DatabaseChangeSet<ExchangeRate>>
     func getTransactionRecords() -> Observable<DatabaseChangeSet<TransactionRecord>>

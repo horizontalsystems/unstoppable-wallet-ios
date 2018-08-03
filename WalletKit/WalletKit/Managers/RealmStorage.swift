@@ -50,6 +50,10 @@ class RealmStorage: IStorage {
         return factory.realm.objects(Block.self).filter("headerHash = %@", headerHash).first
     }
 
+    func getTransaction(byReversedHashHex reversedHashHex: String) -> Transaction? {
+        return factory.realm.objects(Transaction.self).filter("reversedHashHex = %@", reversedHashHex).last
+    }
+
     func getBalances() -> Observable<DatabaseChangeSet<Balance>> {
         return Observable.arrayWithChangeset(from: factory.realm.objects(Balance.self))
                 .map { DatabaseChangeSet(array: $0, changeSet: $1.map { CollectionChangeSet(withRealmChangeset: $0) }) }
