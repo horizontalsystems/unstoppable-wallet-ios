@@ -9,7 +9,6 @@ class HeaderSyncerTests: XCTestCase {
     private var mockPeerGroup: MockPeerGroup!
     private var headerSyncer: HeaderSyncer!
 
-    private var realm: Realm!
     private var preCheckpointBlock: Block!
     private var checkpointBlock: Block!
 
@@ -38,7 +37,6 @@ class HeaderSyncerTests: XCTestCase {
         mockPeerGroup = nil
         headerSyncer = nil
 
-        realm = nil
         preCheckpointBlock = nil
         checkpointBlock = nil
 

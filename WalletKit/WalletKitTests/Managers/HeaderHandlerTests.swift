@@ -11,8 +11,6 @@ class HeaderHandlerTests: XCTestCase {
     private var mockSaver: MockBlockSaver!
     private var headerHandler: HeaderHandler!
 
-    private var realm: Realm!
-
     private var initialBlock: Block!
     private var initialHeader: BlockHeader!
 
@@ -45,7 +43,6 @@ class HeaderHandlerTests: XCTestCase {
         mockSaver = nil
         headerHandler = nil
 
-        realm = nil
         initialBlock = nil
         initialHeader = nil
 

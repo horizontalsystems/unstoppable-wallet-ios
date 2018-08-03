@@ -6,10 +6,23 @@ import RxRealm
 class RealmStorage: IStorage {
     static let shared = RealmStorage()
 
-    let factory: RealmFactory
+    private let factory: RealmFactory
+
+    let nonSyncedBlocksInsertSubject = PublishSubject<Void>()
+    private var nonSyncedBlocksNotificationToken: NotificationToken?
 
     init(factory: RealmFactory = .shared) {
         self.factory = factory
+
+        nonSyncedBlocksNotificationToken = factory.realm.objects(Block.self).filter("synced = %@", false).observe { [weak self] changes in
+            if case let .update(_, _, insertions, _) = changes, !insertions.isEmpty {
+                self?.nonSyncedBlocksInsertSubject.onNext(())
+            }
+        }
+    }
+
+    deinit {
+        nonSyncedBlocksNotificationToken?.invalidate()
     }
 
     func getFirstBlockInChain() -> Block? {
@@ -26,6 +39,11 @@ class RealmStorage: IStorage {
 
     func getBlockInChain(withHeight height: Int) -> Block? {
         return blocksInChain.filter("height = %@", height).first
+    }
+
+    func getNonSyncedBlockHeaderHashes() -> [Data] {
+        let blocks = factory.realm.objects(Block.self).filter("synced = %@", false).sorted(byKeyPath: "height")
+        return blocks.map { $0.headerHash }
     }
 
     func getBalances() -> Observable<DatabaseChangeSet<Balance>> {
