@@ -16,6 +16,7 @@
 		11B352145E5F28730588A837 /* ApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35C0AB587D20F2ECC40F6 /* ApiManager.swift */; };
 		11B352211E6C7036DEE86D22 /* BlockFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3557E78DBA78498A2511A /* BlockFactoryTests.swift */; };
 		11B3524A98464B1AC0068F5A /* DatabaseChangeSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35D1536E0568337F54F0E /* DatabaseChangeSet.swift */; };
+		11B352AFFDE53C187ECC1055 /* IStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35DA7D78381B693A789AA /* IStorage.swift */; };
 		11B353C1D6EDDA8E4D9DB02A /* BlockSyncer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35F01DB59367C7D83E8DC /* BlockSyncer.swift */; };
 		11B353EA4081799EA9387B66 /* WalletManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35B41C52992BFEA752B5D /* WalletManager.swift */; };
 		11B35464997EBBD3B20BDEBB /* TransactionInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35352F3DA4C26A552C62B /* TransactionInput.swift */; };
@@ -171,6 +172,7 @@
 		11B35D1536E0568337F54F0E /* DatabaseChangeSet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatabaseChangeSet.swift; sourceTree = "<group>"; };
 		11B35D345AE93F57E757DF39 /* UnspentOutputsWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnspentOutputsWrapper.swift; sourceTree = "<group>"; };
 		11B35D44C0F5847D5B6EDEBC /* MainNet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainNet.swift; sourceTree = "<group>"; };
+		11B35DA7D78381B693A789AA /* IStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IStorage.swift; sourceTree = "<group>"; };
 		11B35DB7DC88D8B31A2C3E6F /* UnspentOutput.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnspentOutput.swift; sourceTree = "<group>"; };
 		11B35E6985C45CC50877084D /* TransactionRecord.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionRecord.swift; sourceTree = "<group>"; };
 		11B35E7E6BB3227429A41B13 /* Address.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Address.swift; sourceTree = "<group>"; };
@@ -439,6 +441,7 @@
 				11B35EDCF37AAE69A74FB0F5 /* WalletKitPrivate.h */,
 				11B35A319F28EC3D42839D74 /* Protocols.swift */,
 				11B350F93CE46013514830A3 /* BloomFilter.swift */,
+				11B35DA7D78381B693A789AA /* IStorage.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -734,8 +737,8 @@
 				"$(SRCROOT)/WalletKit/Managers/BlockFactory.swift",
 				"$(SRCROOT)/WalletKit/Managers/TransactionSaver.swift",
 				"$(SRCROOT)/WalletKit/Managers/TransactionLinker.swift",
-				"$(SRCROOT)/WalletKit/Core/Protocols.swift",
 				"$(SRCROOT)/WalletKit/Managers/TransactionExtractor.swift",
+				"$(SRCROOT)/WalletKit/Core/IStorage.swift",
 			);
 			name = Cuckoo;
 			outputPaths = (
@@ -856,6 +859,7 @@
 				2FA5D667BF6D76E09E385ECC /* TransactionHandler.swift in Sources */,
 				2FA5DB2B3A64A307F4F422EC /* TransactionSaver.swift in Sources */,
 				2FA5D4D8D1CAE7DA2256D6D0 /* TransactionLinker.swift in Sources */,
+				11B352AFFDE53C187ECC1055 /* IStorage.swift in Sources */,
 				58AAACFE584BB44BBDBC4E47 /* TransactionExtractor.swift in Sources */,
 				58AAA5ED712C82238153C5B2 /* OpCode.swift in Sources */,
 				58AAA06E8F99EE897B0806CA /* P2PKHExtractor.swift in Sources */,

@@ -8,22 +8,20 @@ class MerkleBlockHandler {
         case blockNotFound
     }
 
-    let realmFactory: RealmFactory
+    let storage: IStorage
     let validator: MerkleBlockValidator
     let saver: BlockSaver
 
-    init(realmFactory: RealmFactory = .shared, validator: MerkleBlockValidator = MerkleBlockValidator(), saver: BlockSaver = .shared) {
-        self.realmFactory = realmFactory
+    init(storage: IStorage = RealmStorage.shared, validator: MerkleBlockValidator = MerkleBlockValidator(), saver: BlockSaver = .shared) {
+        self.storage = storage
         self.validator = validator
         self.saver = saver
     }
 
     func handle(message: MerkleBlockMessage) throws {
-        let realm = realmFactory.realm
-
         let headerHash = Crypto.sha256sha256(message.blockHeader.serialized())
 
-        guard let block = realm.objects(Block.self).filter("reversedHeaderHashHex = %@", headerHash.reversedHex).last else {
+        guard let block = storage.getBlock(byHeaderHash: headerHash) else {
             throw HandleError.blockNotFound
         }
 

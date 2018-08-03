@@ -46,6 +46,10 @@ class RealmStorage: IStorage {
         return blocks.map { $0.headerHash }
     }
 
+    func getBlock(byHeaderHash headerHash: Data) -> Block? {
+        return factory.realm.objects(Block.self).filter("headerHash = %@", headerHash).first
+    }
+
     func getBalances() -> Observable<DatabaseChangeSet<Balance>> {
         return Observable.arrayWithChangeset(from: factory.realm.objects(Balance.self))
                 .map { DatabaseChangeSet(array: $0, changeSet: $1.map { CollectionChangeSet(withRealmChangeset: $0) }) }
