@@ -299,7 +299,7 @@ class Peer : NSObject, StreamDelegate {
 
     func sendTransactionInventory(transaction: Transaction) {
         let txId = Crypto.sha256sha256(transaction.serialized())
-        let inventoryMessage = InventoryMessage(count: 1, inventoryItems: [InventoryItem(type: InventoryItem.ObjectType.transactionMessage.rawValue, hash: txId)])
+        let inventoryMessage = InventoryMessage(count: 1, inventoryItems: [InventoryItem(type: InventoryItem.ObjectType.Transaction.rawValue, hash: txId)])
 
         log("<-- INV: \(txId.reversedHex)")
         send(messageWithCommand: "inv", payload: inventoryMessage.serialized())
@@ -344,7 +344,7 @@ class Peer : NSObject, StreamDelegate {
             switch item.objectType {
             case .error:
                 break
-            case .transactionMessage:
+            case .Transaction:
                 // Send transaction
 //                if let transaction = context.transactions[item.hash] {
 //                    let payload = transaction.serialized()
@@ -386,8 +386,8 @@ class Peer : NSObject, StreamDelegate {
     }
 
     private func handle(transaction: Transaction) {
-        log("--> TX: \(Crypto.sha256sha256(transaction.serialized()).reversedHex)")
-        delegate?.peer(self, didReceiveTransactionMessage: transaction)
+        log("--> TX: \(transaction.serialized().hex)")
+        delegate?.peer(self, didReceiveTransaction: transaction)
     }
 
     private func handle(pingMessage: PingMessage) {
@@ -419,7 +419,7 @@ protocol PeerDelegate : class {
     func peer(_ peer: Peer, didReceiveHeadersMessage message: HeadersMessage)
     func peer(_ peer: Peer, didReceiveBlockMessage message: BlockMessage)
     func peer(_ peer: Peer, didReceiveMerkleBlockMessage message: MerkleBlockMessage)
-    func peer(_ peer: Peer, didReceiveTransactionMessage message: Transaction)
+    func peer(_ peer: Peer, didReceiveTransaction message: Transaction)
     func peer(_ peer: Peer, didReceiveRejectMessage message: RejectMessage)
 }
 
@@ -433,6 +433,6 @@ extension PeerDelegate {
     func peer(_ peer: Peer, didReceiveHeadersMessage message: HeadersMessage) {}
     func peer(_ peer: Peer, didReceiveBlockMessage message: BlockMessage) {}
     func peer(_ peer: Peer, didReceiveMerkleBlockMessage message: MerkleBlockMessage) {}
-    func peer(_ peer: Peer, didReceiveTransactionMessage message: Transaction) {}
+    func peer(_ peer: Peer, didReceiveTransaction message: Transaction) {}
     func peer(_ peer: Peer, didReceiveRejectMessage message: RejectMessage) {}
 }

@@ -32,7 +32,7 @@ public struct InventoryItem {
         case 0:
             return .error
         case 1:
-            return .transactionMessage
+            return .Transaction
         case 2:
             return .blockMessage
         case 3:
@@ -48,7 +48,7 @@ public struct InventoryItem {
         /// Any data of with this number may be ignored
         case error = 0
         /// Hash is related to a transaction
-        case transactionMessage = 1
+        case Transaction = 1
         /// Hash is related to a data block
         case blockMessage = 2
         /// Hash of a block header; identical to MSG_BLOCK. Only to be used in getdata message.

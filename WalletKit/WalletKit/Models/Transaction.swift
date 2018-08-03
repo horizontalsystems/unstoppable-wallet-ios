@@ -7,6 +7,8 @@ public class Transaction: Object {
     @objc public dynamic var lockTime: Int = 0
     @objc public dynamic var block: Block?
 
+    @objc public dynamic var isMine: Bool = false
+
     let inputs = List<TransactionInput>()
     let outputs = List<TransactionOutput>()
 

@@ -5,7 +5,7 @@ import RealmSwift
 
 class TransactionHandlerTests: XCTestCase {
     private var mockRealmFactory: MockRealmFactory!
-    private var mockValidator: MockTransactionValidator!
+    private var mockExtractor: MockTransactionExtractor!
     private var mockSaver: MockTransactionSaver!
     private var mockLinker: MockTransactionLinker!
     private var transactionHandler: TransactionHandler!
@@ -18,10 +18,10 @@ class TransactionHandlerTests: XCTestCase {
         super.setUp()
 
         mockRealmFactory = MockRealmFactory()
-        mockValidator = MockTransactionValidator()
+        mockExtractor = MockTransactionExtractor()
         mockSaver = MockTransactionSaver()
         mockLinker = MockTransactionLinker(realmFactory: mockRealmFactory)
-        transactionHandler = TransactionHandler(realmFactory: mockRealmFactory, validator: mockValidator, saver: mockSaver, linker: mockLinker)
+        transactionHandler = TransactionHandler(realmFactory: mockRealmFactory, extractor: mockExtractor, saver: mockSaver, linker: mockLinker)
 
         realm = try! Realm(configuration: Realm.Configuration(inMemoryIdentifier: "TestRealm"))
         try! realm.write { realm.deleteAll() }
@@ -40,7 +40,7 @@ class TransactionHandlerTests: XCTestCase {
         txOutput.value = 4998000000
         txOutput.lockingScript = Data(hex: "a914121e63ee09fc7e20b59d144dcce6e2700f6f1a9c87")!
 
-        transaction = Transaction()
+        transaction = TransactionFactory.shared.transaction(withReversedHashHex: oldTransaction.reversedHashHex)
         transaction.version = 1
         transaction.lockTime = 0
         transaction.inputs.append(txInput)
@@ -59,7 +59,7 @@ class TransactionHandlerTests: XCTestCase {
 
     override func tearDown() {
         mockRealmFactory = nil
-        mockValidator = nil
+        mockExtractor = nil
         mockSaver = nil
         transactionHandler = nil
 
@@ -70,8 +70,8 @@ class TransactionHandlerTests: XCTestCase {
     }
 
     func testValidTransaction() {
-        stub(mockValidator) { mock in
-            when(mock.validate(message: equal(to: transaction))).thenDoNothing()
+        stub(mockExtractor) { mock in
+            when(mock.extract(message: equal(to: transaction))).thenDoNothing()
         }
 
         try! transactionHandler.handle(transaction: transaction)
@@ -85,8 +85,8 @@ class TransactionHandlerTests: XCTestCase {
             realm.add(oldTransaction, update: true)
         }
 
-        stub(mockValidator) { mock in
-            when(mock.validate(message: equal(to: transaction))).thenDoNothing()
+        stub(mockExtractor) { mock in
+            when(mock.extract(message: equal(to: transaction))).thenDoNothing()
         }
 
         try! transactionHandler.handle(transaction: transaction)
@@ -96,8 +96,8 @@ class TransactionHandlerTests: XCTestCase {
     }
 
     func testWithInvalidTransaction() {
-        stub(mockValidator) { mock in
-            when(mock.validate(message: equal(to: transaction))).thenThrow(TransactionValidator.ValidationError.doesNotBelongToCurrentWallet)
+        stub(mockExtractor) { mock in
+            when(mock.extract(message: equal(to: transaction))).thenThrow(TransactionExtractor.ExtractionError.invalid)
         }
 
         try? transactionHandler.handle(transaction: transaction)
