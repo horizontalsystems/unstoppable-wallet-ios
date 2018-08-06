@@ -70,4 +70,11 @@ class TestHelper {
         return transaction
     }
 
+    static func address(pubKeyHash: Data = Data(hex: "1ec865abcb88cec71c484d4dadec3d7dc0271a7b")!) -> Address {
+        let address = Address()
+        address.publicKeyHash = pubKeyHash
+
+        return address
+    }
+
 }

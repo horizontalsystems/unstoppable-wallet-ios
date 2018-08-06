@@ -18,13 +18,16 @@ class TransactionHandlerTests: XCTestCase {
         super.setUp()
 
         mockRealmFactory = MockRealmFactory()
+        realm = try! Realm(configuration: Realm.Configuration(inMemoryIdentifier: "TestRealm"))
+        try! realm.write { realm.deleteAll() }
+        stub(mockRealmFactory) { mock in
+            when(mock.realm.get).thenReturn(realm)
+        }
+
         mockExtractor = MockTransactionExtractor()
         mockSaver = MockTransactionSaver()
         mockLinker = MockTransactionLinker(realmFactory: mockRealmFactory)
         transactionHandler = TransactionHandler(realmFactory: mockRealmFactory, extractor: mockExtractor, saver: mockSaver, linker: mockLinker)
-
-        realm = try! Realm(configuration: Realm.Configuration(inMemoryIdentifier: "TestRealm"))
-        try! realm.write { realm.deleteAll() }
 
         oldTransaction = Transaction()
         oldTransaction.reversedHashHex = Data(hex: "3e7f350bf5c2169833ad02e8ada93a5d47862fe708cdd6c9fb4c15af59e50f70")!.reversedHex
@@ -46,14 +49,11 @@ class TransactionHandlerTests: XCTestCase {
         transaction.inputs.append(txInput)
         transaction.outputs.append(txOutput)
 
-        stub(mockRealmFactory) { mock in
-            when(mock.realm.get).thenReturn(realm)
-        }
         stub(mockSaver) { mock in
             when(mock.save(transaction: any())).thenDoNothing()
         }
         stub(mockLinker) { mock in
-            when(mock.linkOutpoints(transaction: any())).thenDoNothing()
+            when(mock.handle(transaction: any())).thenDoNothing()
         }
     }
 
@@ -76,7 +76,7 @@ class TransactionHandlerTests: XCTestCase {
 
         try! transactionHandler.handle(transaction: transaction)
         verify(mockSaver).save(transaction: equal(to: transaction))
-        verify(mockLinker).linkOutpoints(transaction: equal(to: transaction))
+        verify(mockLinker).handle(transaction: equal(to: transaction))
         XCTAssertEqual(transaction.block, nil)
     }
 
@@ -91,7 +91,7 @@ class TransactionHandlerTests: XCTestCase {
 
         try! transactionHandler.handle(transaction: transaction)
         verify(mockSaver).save(transaction: equal(to: transaction))
-        verify(mockLinker).linkOutpoints(transaction: equal(to: transaction))
+        verify(mockLinker).handle(transaction: equal(to: transaction))
         XCTAssertEqual(transaction.block, oldTransaction.block)
     }
 

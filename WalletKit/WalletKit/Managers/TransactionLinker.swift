@@ -1,32 +1,46 @@
 import Foundation
+import RealmSwift
 
-class TransactionLinker {
+class TransactionLinker{
     static let shared = TransactionLinker()
 
     let realmFactory: RealmFactory
+    let addresses: Results<Address>
 
     init(realmFactory: RealmFactory = .shared) {
         self.realmFactory = realmFactory
+        addresses = realmFactory.realm.objects(Address.self)
     }
 
-    func linkOutpoints(transaction: Transaction) throws {
+    func handle(transaction: Transaction) throws {
         let realm = realmFactory.realm
 
-        for input in transaction.inputs {
-            if let previousTransaction = realm.objects(Transaction.self).filter("reversedHashHex = %@", input.previousOutputTxReversedHex.hex).last,
-               previousTransaction.outputs.count > input.previousOutputIndex {
-                try realm.write {
+        try realm.write {
+            for input in transaction.inputs {
+                if let previousTransaction = realm.objects(Transaction.self).filter("reversedHashHex = %@", input.previousOutputTxReversedHex.hex).last,
+                   previousTransaction.outputs.count > input.previousOutputIndex {
                     input.previousOutput = previousTransaction.outputs[input.previousOutputIndex]
+
+                    if input.previousOutput!.isMine {
+                        transaction.isMine = true
+                    }
+                }
+            }
+
+            for output in transaction.outputs {
+                let isMine = addresses.contains(where: { $0.publicKeyHash == output.keyHash })
+
+                if isMine {
+                    transaction.isMine = true
+                    output.isMine = true
                 }
 
-            }
-        }
-
-        for output in transaction.outputs {
-            if let input = realm.objects(TransactionInput.self)
-                    .filter("previousOutputTxReversedHex = %@ AND previousOutputIndex = %@", Data(hex: transaction.reversedHashHex)!, output.index).last {
-                try realm.write {
+                if let input = realm.objects(TransactionInput.self)
+                        .filter("previousOutputTxReversedHex = %@ AND previousOutputIndex = %@", Data(hex: transaction.reversedHashHex)!, output.index).last {
                     input.previousOutput = output
+                    if isMine {
+                        input.transaction.isMine = true
+                    }
                 }
             }
         }

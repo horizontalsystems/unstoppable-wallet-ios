@@ -10,13 +10,14 @@ class PFromSHExtractor: ScriptExtractor {
     var type: ScriptType { return .p2pkh }
 
     func extract(from data: Data) throws -> Data {
-        guard data.count == P2PKHExtractor.scriptLength else {
-            throw ScriptExtractorError.wrongScriptLength
-        }
-        guard data.prefix(startSequence.count) == startSequence, data.suffix(from: data.count - finishSequence.count) == finishSequence else {
-            throw ScriptExtractorError.wrongSequence
-        }
-        return data.subdata(in: Range(uncheckedBounds: (lower: startSequence.count, upper: data.count - finishSequence.count)))
+//        guard data.count == P2PKHExtractor.scriptLength else {
+//            throw ScriptExtractorError.wrongScriptLength
+//        }
+//        guard data.prefix(startSequence.count) == startSequence, data.suffix(from: data.count - finishSequence.count) == finishSequence else {
+//            throw ScriptExtractorError.wrongSequence
+//        }
+//        return data.subdata(in: Range(uncheckedBounds: (lower: startSequence.count, upper: data.count - finishSequence.count)))
+        return Data()
     }
 
 }

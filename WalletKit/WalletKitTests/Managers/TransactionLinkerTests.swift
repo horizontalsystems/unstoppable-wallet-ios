@@ -10,22 +10,25 @@ class TransactionLinkerTests: XCTestCase {
 
     private var realm: Realm!
     private var transaction: Transaction!
-    private var rawTransaction: String!
+    private var addresses: [Address]!
+    private var pubKeyHash = Data(hex: "1ec865abcb88cec71c484d4dadec3d7dc0271a7b")!
 
     override func setUp() {
         super.setUp()
 
         mockRealmFactory = MockRealmFactory()
-        linker = TransactionLinker(realmFactory: mockRealmFactory)
-
         realm = try! Realm(configuration: Realm.Configuration(inMemoryIdentifier: "TestRealm"))
         try! realm.write { realm.deleteAll() }
-
-        rawTransaction = "0100000001865c106cd7a90c80e5447f6e2891aaf5a0d11fb29e1a9258dce26da7ef04c028000000004847304402205c54aa165861bf5347683fb078a99188726ee2577e3554d0f77ad7c60a4b072902206f77f42f216e4c64585a60ec76a944fc83278524e5a0dfda31b58f94035d27be01ffffffff01806de7290100000017a914121e63ee09fc7e20b59d144dcce6e2700f6f1a9c8700000000"
-        transaction = Transaction.deserialize(Data(hex: rawTransaction)!)
-
         stub(mockRealmFactory) { mock in
             when(mock.realm.get).thenReturn(realm)
+        }
+
+        linker = TransactionLinker(realmFactory: mockRealmFactory)
+        transaction = TestHelper.p2pkhTransaction
+
+        try! realm.write {
+            realm.add(TestHelper.address(pubKeyHash: pubKeyHash), update: true)
+            realm.add(transaction)
         }
     }
 
@@ -37,7 +40,7 @@ class TransactionLinkerTests: XCTestCase {
         super.tearDown()
     }
 
-    func testLinkInputs() {
+    func testLinkOutputs() {
         let input = TransactionInput()
         input.previousOutputTxReversedHex = Data(hex: transaction.reversedHashHex)!
         input.previousOutputIndex = transaction.outputs.first!.index
@@ -53,11 +56,11 @@ class TransactionLinkerTests: XCTestCase {
         }
 
         XCTAssertEqual(savedNextTransaction.inputs.first!.previousOutput, nil)
-        try! linker.linkOutpoints(transaction: savedNextTransaction)
+        try! linker.handle(transaction: savedNextTransaction)
         assertOutputEqual(out1: savedNextTransaction.inputs.first!.previousOutput!, out2: transaction.outputs.first!)
     }
 
-    func testLinkOutputs() {
+    func testLinkInputs() {
         let output = TransactionOutput()
         output.index = transaction.inputs[0].previousOutputIndex
         output.value = 100000
@@ -72,8 +75,62 @@ class TransactionLinkerTests: XCTestCase {
         }
 
         XCTAssertEqual(transaction.inputs.first!.previousOutput, nil)
-        try! linker.linkOutpoints(transaction: savedPreviousTransaction)
+        try! linker.handle(transaction: savedPreviousTransaction)
         assertOutputEqual(out1: transaction.inputs.first!.previousOutput!, out2: savedPreviousTransaction.outputs.first!)
+    }
+
+    func testSetTransactionAndOutputIsMine() {
+        try! realm.write {
+            transaction.outputs[0].scriptType = ScriptType.p2pkh
+            transaction.outputs[0].keyHash = pubKeyHash
+        }
+
+        XCTAssertEqual(transaction.isMine, false)
+        XCTAssertEqual(transaction.outputs[0].isMine, false)
+        try! linker.handle(transaction: transaction)
+        XCTAssertEqual(transaction.isMine, true)
+        XCTAssertEqual(transaction.outputs[0].isMine, true)
+    }
+
+    func testSetNextTransactionIsMine() {
+        let input = TransactionInput()
+        input.previousOutputTxReversedHex = Data(hex: transaction.reversedHashHex)!
+        input.previousOutputIndex = transaction.outputs.first!.index
+        input.sequence = 100
+
+        let savedNextTransaction = Transaction()
+        savedNextTransaction.reversedHashHex = "0000000000000000000111111111111122222222222222333333333333333000"
+        savedNextTransaction.inputs.append(input)
+
+        try! realm.write {
+            realm.add(savedNextTransaction, update: true)
+            transaction.outputs[0].scriptType = ScriptType.p2pkh
+            transaction.outputs[0].keyHash = pubKeyHash
+        }
+
+        XCTAssertEqual(savedNextTransaction.isMine, false)
+        try! linker.handle(transaction: transaction)
+        XCTAssertEqual(savedNextTransaction.isMine, true)
+    }
+
+    func testSetPreviousTransactionIsMine() {
+        let output = TransactionOutput()
+        output.index = transaction.inputs[0].previousOutputIndex
+        output.value = 100000
+        output.isMine = true
+
+        let savedPreviousTransaction = Transaction()
+        savedPreviousTransaction.reversedHashHex = transaction.inputs[0].previousOutputTxReversedHex.hex
+        savedPreviousTransaction.outputs.append(output)
+
+        try! realm.write {
+            realm.add(transaction, update: true)
+            realm.add(savedPreviousTransaction, update: true)
+        }
+
+        XCTAssertEqual(transaction.isMine, false)
+        try! linker.handle(transaction: transaction)
+        XCTAssertEqual(transaction.isMine, true)
     }
 
     private func assertOutputEqual(out1: TransactionOutput, out2: TransactionOutput) {
