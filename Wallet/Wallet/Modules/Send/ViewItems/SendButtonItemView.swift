@@ -18,9 +18,9 @@ class SendButtonItemView: BaseButtonItemView {
             maker.height.equalTo(SendTheme.sendButtonHeight)
         }
 
-        item?.updateButtonTopConstraint = { [weak self] top in
+        item?.updateButtonBottomConstraint = { [weak self] bottom in
             self?.button.snp.updateConstraints { maker in
-                maker.top.equalTo(top)
+                maker.bottom.equalTo(bottom)
             }
         }
     }

@@ -6,7 +6,7 @@ class SendButtonItem: BaseButtonItem {
     override var textStyle: RespondButton.Style { return ButtonTheme.textColorOnWhiteBackgroundDictionary }
     override var title: String { return "send".localized }
 
-    var updateButtonTopConstraint: ((CGFloat) -> ())?
+    var updateButtonBottomConstraint: ((CGFloat) -> ())?
 
     init(tag: Int? = nil, hidden: Bool = false, required: Bool = false, onTap: @escaping (() -> ())) {
         super.init(cellType: SendButtonItemView.self, tag: tag, hidden: hidden, required: required)
@@ -21,7 +21,7 @@ class SendButtonItem: BaseButtonItem {
         } else {
             height = SendTheme.sendButtonItemHeightShrink
         }
-        updateButtonTopConstraint?(SendTheme.sendButtonTopMarginShrink)
+        updateButtonBottomConstraint?(-SendTheme.sendButtonBottomMarginShrink)
         return true
     }
 }

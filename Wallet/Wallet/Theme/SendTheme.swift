@@ -12,7 +12,7 @@ class SendTheme {
     static let sendButtonSideMargin: CGFloat = 16
     static let inputTintColor = UIColor.cryptoYellow
     static let sendButtonBottomMargin: CGFloat = 16
-    static let sendButtonTopMarginShrink: CGFloat = 9
+    static let sendButtonBottomMarginShrink: CGFloat = 10
     static let referenceInputTopMargin: CGFloat = 22
     static let inputTextColor = UIColor.cryptoDark
     static let inputFont = UIFont.cryptoBody2
