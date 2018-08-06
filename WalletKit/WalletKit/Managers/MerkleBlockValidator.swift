@@ -19,6 +19,7 @@ class MerkleBlockValidator {
     var txIds: [Data] = []
 
     func validate(message: MerkleBlockMessage) throws {
+        txIds = []
         let merkleRoot = try getMerkleRootAndExtractTxids(message: message)
 
         guard merkleRoot == message.blockHeader.merkleRoot else {

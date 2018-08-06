@@ -65,6 +65,19 @@ class MerkleBlockValidatorTests: XCTestCase {
         XCTAssertEqual(validator.txIds[0], hashes[3])
     }
 
+    func testTxIdsClearedFirst() {
+        do {
+            try validator.validate(message: getSampleMessage())
+            try validator.validate(message: getSampleMessage())
+        } catch {
+            print(error)
+            XCTFail("Should be valid")
+        }
+
+        XCTAssertEqual(validator.txIds.count, 1)
+        XCTAssertEqual(validator.txIds[0], hashes[3])
+    }
+
     func testWrongMerkleRoot() {
         blockHeader = BlockHeader()
         blockHeader.merkleRoot = Data(hex: "0000000000000000000000000000000000000000000000000000000000000001")!
