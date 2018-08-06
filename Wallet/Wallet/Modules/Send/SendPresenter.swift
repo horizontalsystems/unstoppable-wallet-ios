@@ -116,7 +116,7 @@ extension SendPresenter: ISendViewDelegate {
         let amountStr = isEnteringInCrypto ? CurrencyHelper.instance.formatFiatAmount(amount) : CurrencyHelper.instance.formatCryptoAmount(amount)
         let currency = isEnteringInCrypto ? baseCurrencyCode : coinCode
 
-        view?.setAmountHint(hint: "\(amountStr) \(currency)", error: error)
+        view?.setAmountHint(hint: "\(amountStr) \(currency)", color: amount > 0 ? SendTheme.inputTextColor : SendTheme.inactiveInputTextColor, error: error)
     }
 
     private func refreshAmountHint() {

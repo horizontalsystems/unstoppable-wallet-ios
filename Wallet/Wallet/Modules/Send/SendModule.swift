@@ -5,7 +5,7 @@ protocol ISendView: class {
     func setAddress(_ address: String?)
     func setCurrency(code: String)
     func setAmount(amount: String?)
-    func setAmountHint(hint: String, error: SendError?)
+    func setAmountHint(hint: String, color: UIColor, error: SendError?)
     func closeView()
     func showError(error: String)
     func showSuccess()

@@ -41,6 +41,7 @@ class SendReferenceItemView: BaseActionItemView {
 
         feeSlider.minimumValue = 0
         feeSlider.maximumValue = 100
+        feeSlider.tintColor = SendTheme.sliderTintColor
         addSubview(feeSlider)
         feeSlider.snp.makeConstraints { maker in
             maker.leading.equalToSuperview().offset(SendTheme.sideMargin)

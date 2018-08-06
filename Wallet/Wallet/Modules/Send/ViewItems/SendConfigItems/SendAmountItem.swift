@@ -16,6 +16,7 @@ class SendAmountItem: BaseActionItem {
     var currencyCode: String?
     var amount: String?
     var hint: String?
+    var hintColor: UIColor?
 
     var error: SendError?
 

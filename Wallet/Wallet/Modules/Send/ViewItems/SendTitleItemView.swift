@@ -18,7 +18,7 @@ class SendTitleItemView: BaseActionItemView {
         addSubview(titleLabel)
         titleLabel.snp.makeConstraints { maker in
             maker.centerX.equalToSuperview()
-            maker.bottom.equalToSuperview()
+            maker.bottom.equalToSuperview().offset(-SendTheme.titleBottomMargin)
         }
 
         let qrImageView = TintImageView(image: UIImage(named: "Scan QR Icon"), tintColor: .black, selectedTintColor: .gray)

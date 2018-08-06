@@ -88,8 +88,9 @@ extension SendAlertModel: ISendView {
         sendConfigItem?.updateItems?(false)
     }
 
-    func setAmountHint(hint: String, error: SendError?) {
+    func setAmountHint(hint: String, color: UIColor, error: SendError?) {
         sendAmountItem.hint = hint
+        sendAmountItem.hintColor = color
         sendAmountItem.error = error
         sendConfigItem?.updateItems?(false)
     }

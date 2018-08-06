@@ -79,6 +79,7 @@ class SendAmountItemView: BaseActionItemView {
             self?.item?.amount = $0
             self?.item?.onAmountEntered?($0)
         }
+        amountInputField.exchangeValueLabel.textColor = item?.hintColor
         amountInputField.exchangeValueLabel.text = item?.hint
 
         errorLabel.text = item?.error?.localizedDescription ?? nil
