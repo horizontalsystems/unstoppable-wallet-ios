@@ -2,30 +2,33 @@ import Foundation
 
 enum ScriptExtractorError: Error { case wrongScriptLength, wrongSequence }
 
-protocol ScriptExtractor {
+protocol ScriptExtractor: class {
     var type: ScriptType { get }
     func extract(from data: Data) throws -> Data
 }
 
 class TransactionExtractor {
-    static let defaultExtractors: [ScriptExtractor] = [P2PKHExtractor(), P2PKExtractor(), P2SHExtractor()]
+    static let defaultInputExtractors: [ScriptExtractor] = [PFromSHExtractor()]
+    static let defaultOutputExtractors: [ScriptExtractor] = [P2PKHExtractor(), P2PKExtractor(), P2SHExtractor()]
     static let shared = TransactionExtractor()
 
     enum ExtractionError: Error {
         case invalid
     }
 
-    let scriptExtractors: [ScriptExtractor]
+    let scriptInputExtractors: [ScriptExtractor]
+    let scriptOutputExtractors: [ScriptExtractor]
 
-    init(scriptExtractors: [ScriptExtractor] = TransactionExtractor.defaultExtractors) {
-        self.scriptExtractors = scriptExtractors
+    init(scriptInputExtractors: [ScriptExtractor] = TransactionExtractor.defaultInputExtractors, scriptOutputExtractors: [ScriptExtractor] = TransactionExtractor.defaultOutputExtractors) {
+        self.scriptInputExtractors = scriptInputExtractors
+        self.scriptOutputExtractors = scriptOutputExtractors
     }
 
     func extract(message: Transaction) throws {
         var valid: Bool = false
         message.outputs.forEach { output in
             var payload: Data?
-            for extractor in scriptExtractors {
+            for extractor in scriptOutputExtractors {
                 do {
                     payload = try extractor.extract(from: output.lockingScript)
                 } catch {
@@ -44,17 +47,29 @@ class TransactionExtractor {
                 }
             }
         }
+
+        message.inputs.forEach { input in
+            var payload: Data?
+            for extractor in scriptInputExtractors {
+                do {
+                    payload = try extractor.extract(from: input.signatureScript)
+                } catch {
+//                    print("\(error)")
+                }
+                if let payload = payload {
+                    valid = true
+                    switch extractor.type {
+                        case .p2sh: input.publicKey = payload
+                        default: break
+                    }
+                    break
+                }
+            }
+        }
+
         if !valid {
             throw ExtractionError.invalid
         }
-//        try message.inputs.forEach { input in
-//            do {
-//                let payload = try transactionEncoder.extractPayloads(from: input.signatureScript)
-//                data.append(contentsOf: payload)
-//            } catch {
-//                throw error
-//            }
-//        }
     }
 
 }
