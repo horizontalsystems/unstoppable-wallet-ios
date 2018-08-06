@@ -1,4 +1,5 @@
 import Foundation
+import RealmSwift
 
 class HeaderSyncer {
     static let shared = HeaderSyncer()
@@ -9,25 +10,28 @@ class HeaderSyncer {
 
     private let hashCheckpointThreshold = 100
 
-    let storage: IStorage
+    let realmFactory: RealmFactory
     let peerGroup: PeerGroup
 
-    init(storage: IStorage = RealmStorage.shared, peerGroup: PeerGroup = .shared) {
-        self.storage = storage
+    init(realmFactory: RealmFactory = .shared, peerGroup: PeerGroup = .shared) {
+        self.realmFactory = realmFactory
         self.peerGroup = peerGroup
     }
 
     func sync() throws {
-        guard let checkpointBlock = storage.getFirstBlockInChain() else {
+        let realm = realmFactory.realm
+
+        guard let checkpointBlock = realm.objects(Block.self).filter("previousBlock != nil").sorted(byKeyPath: "height").first else {
             throw SyncError.noCheckpointBlock
         }
 
         var hashes = [Data]()
 
-        if let lastBlockInDatabase = storage.getLastBlockInChain(afterBlock: checkpointBlock) {
+        if let lastBlockInDatabase = realm.objects(Block.self).filter("previousBlock != nil AND height > %@", checkpointBlock.height).sorted(byKeyPath: "height").last {
             hashes.append(lastBlockInDatabase.headerHash)
 
-            if lastBlockInDatabase.height - checkpointBlock.height >= hashCheckpointThreshold, let previousBlock = storage.getBlockInChain(withHeight: lastBlockInDatabase.height - hashCheckpointThreshold + 1) {
+            if lastBlockInDatabase.height - checkpointBlock.height >= hashCheckpointThreshold,
+               let previousBlock = realm.objects(Block.self).filter("previousBlock != nil AND height = %@", lastBlockInDatabase.height - hashCheckpointThreshold + 1).first {
                 hashes.append(previousBlock.headerHash)
             }
         }

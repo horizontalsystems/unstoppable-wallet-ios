@@ -4,23 +4,27 @@ import RealmSwift
 @testable import WalletKit
 
 class TransactionHandlerTests: XCTestCase {
-    private var mockStorage: MockIStorage!
+    private var mockRealmFactory: MockRealmFactory!
     private var mockExtractor: MockTransactionExtractor!
     private var mockSaver: MockTransactionSaver!
     private var mockLinker: MockTransactionLinker!
     private var transactionHandler: TransactionHandler!
 
+    private var realm: Realm!
     private var oldTransaction: Transaction!
     private var transaction: Transaction!
 
     override func setUp() {
         super.setUp()
 
-        mockStorage = MockIStorage()
+        mockRealmFactory = MockRealmFactory()
         mockExtractor = MockTransactionExtractor()
         mockSaver = MockTransactionSaver()
-        mockLinker = MockTransactionLinker()
-        transactionHandler = TransactionHandler(storage: mockStorage, extractor: mockExtractor, saver: mockSaver, linker: mockLinker)
+        mockLinker = MockTransactionLinker(realmFactory: mockRealmFactory)
+        transactionHandler = TransactionHandler(realmFactory: mockRealmFactory, extractor: mockExtractor, saver: mockSaver, linker: mockLinker)
+
+        realm = try! Realm(configuration: Realm.Configuration(inMemoryIdentifier: "TestRealm"))
+        try! realm.write { realm.deleteAll() }
 
         oldTransaction = Transaction()
         oldTransaction.reversedHashHex = Data(hex: "3e7f350bf5c2169833ad02e8ada93a5d47862fe708cdd6c9fb4c15af59e50f70")!.reversedHex
@@ -42,8 +46,8 @@ class TransactionHandlerTests: XCTestCase {
         transaction.inputs.append(txInput)
         transaction.outputs.append(txOutput)
 
-        stub(mockStorage) { mock in
-            when(mock.getTransaction(byReversedHashHex: any())).thenReturn(nil)
+        stub(mockRealmFactory) { mock in
+            when(mock.realm.get).thenReturn(realm)
         }
         stub(mockSaver) { mock in
             when(mock.save(transaction: any())).thenDoNothing()
@@ -54,11 +58,12 @@ class TransactionHandlerTests: XCTestCase {
     }
 
     override func tearDown() {
-        mockStorage = nil
+        mockRealmFactory = nil
         mockExtractor = nil
         mockSaver = nil
         transactionHandler = nil
 
+        realm = nil
         oldTransaction = nil
 
         super.tearDown()
@@ -76,8 +81,8 @@ class TransactionHandlerTests: XCTestCase {
     }
 
     func testWithExistingTransaction() {
-        stub(mockStorage) { mock in
-            when(mock.getTransaction(byReversedHashHex: oldTransaction.reversedHashHex)).thenReturn(oldTransaction)
+        try? realm.write {
+            realm.add(oldTransaction, update: true)
         }
 
         stub(mockExtractor) { mock in

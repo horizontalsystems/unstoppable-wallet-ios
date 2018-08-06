@@ -5,27 +5,32 @@ import RealmSwift
 
 class HeaderSyncerTests: XCTestCase {
 
-    private var mockStorage: MockIStorage!
+    private var mockRealmFactory: MockRealmFactory!
     private var mockPeerGroup: MockPeerGroup!
     private var headerSyncer: HeaderSyncer!
 
-    private var preCheckpointBlock: Block!
+    private var realm: Realm!
     private var checkpointBlock: Block!
 
     override func setUp() {
         super.setUp()
 
-        mockStorage = MockIStorage()
+        mockRealmFactory = MockRealmFactory()
         mockPeerGroup = MockPeerGroup()
-        headerSyncer = HeaderSyncer(storage: mockStorage, peerGroup: mockPeerGroup)
+        headerSyncer = HeaderSyncer(realmFactory: mockRealmFactory, peerGroup: mockPeerGroup)
 
-        preCheckpointBlock = BlockFactory.shared.block(withHeader: TestHelper.preCheckpointBlockHeader, height: TestHelper.preCheckpointBlockHeight)
+        realm = try! Realm(configuration: Realm.Configuration(inMemoryIdentifier: "TestRealm"))
+        try! realm.write { realm.deleteAll() }
+
+        let preCheckpointBlock = BlockFactory.shared.block(withHeader: TestHelper.preCheckpointBlockHeader, height: TestHelper.preCheckpointBlockHeight)
+        try! realm.write {
+            realm.add(preCheckpointBlock)
+        }
+
         checkpointBlock = BlockFactory.shared.block(withHeader: TestHelper.checkpointBlockHeader, previousBlock: preCheckpointBlock)
 
-        stub(mockStorage) { mock in
-            when(mock.getFirstBlockInChain()).thenReturn(checkpointBlock)
-            when(mock.getLastBlockInChain(afterBlock: equal(to: checkpointBlock))).thenReturn(nil)
-            when(mock.getBlockInChain(withHeight: checkpointBlock.height + 1)).thenReturn(nil)
+        stub(mockRealmFactory) { mock in
+            when(mock.realm.get).thenReturn(realm)
         }
         stub(mockPeerGroup) { mock in
             when(mock.requestHeaders(headerHashes: any())).thenDoNothing()
@@ -33,21 +38,17 @@ class HeaderSyncerTests: XCTestCase {
     }
 
     override func tearDown() {
-        mockStorage = nil
-        mockPeerGroup = nil
         headerSyncer = nil
+        mockPeerGroup = nil
+        mockRealmFactory = nil
 
-        preCheckpointBlock = nil
+        realm = nil
         checkpointBlock = nil
 
         super.tearDown()
     }
 
     func testSync_NoCheckpointBlock() {
-        stub(mockStorage) { mock in
-            when(mock.getFirstBlockInChain()).thenReturn(nil)
-        }
-
         var caught = false
 
         do {
@@ -64,46 +65,61 @@ class HeaderSyncerTests: XCTestCase {
     }
 
     func testSync_OnlyCheckpointBlock() {
+        try! realm.write {
+            realm.add(checkpointBlock)
+        }
+
         try! headerSyncer.sync()
         verify(mockPeerGroup).requestHeaders(headerHashes: equal(to: [checkpointBlock.headerHash]))
     }
 
     func testSync_99LastBlocks() {
-        let firstHeaderHash = "0000000000012d1d8525ce2db0abdb3617203ccd8485ecad81e37e5a228f7036".reversedData!
-        let lastHeaderHash = "000000000005c9a9d1e992f46bf0c0400a45feeb39d634e0a3cdde08c3b9f512".reversedData!
-
-        let firstBlock = Block()
-        firstBlock.headerHash = firstHeaderHash
-        let lastBlock = Block()
-        lastBlock.headerHash = lastHeaderHash
-        lastBlock.height = checkpointBlock.height + 99
-
-        stub(mockStorage) { mock in
-            when(mock.getLastBlockInChain(afterBlock: equal(to: checkpointBlock))).thenReturn(lastBlock)
-            when(mock.getBlockInChain(withHeight: lastBlock.height - 99 + 1)).thenReturn(firstBlock)
+        try! realm.write {
+            realm.add(checkpointBlock)
         }
 
+        let lastReversedHex = "000000000005c9a9d1e992f46bf0c0400a45feeb39d634e0a3cdde08c3b9f512"
+
+        var previousBlock = checkpointBlock
+        for i in 1...98 {
+            previousBlock = createBlock(reversedHex: "\(2016 + i)", previousBlock: previousBlock!)
+        }
+        _ = createBlock(reversedHex: lastReversedHex, previousBlock: previousBlock!)
+
         try! headerSyncer.sync()
-        verify(mockPeerGroup).requestHeaders(headerHashes: equal(to: [lastHeaderHash, checkpointBlock.headerHash]))
+        verify(mockPeerGroup).requestHeaders(headerHashes: equal(to: [lastReversedHex.reversedData!, checkpointBlock.headerHash]))
     }
 
     func testSync_100LastBlocks() {
-        let firstHeaderHash = "0000000000012d1d8525ce2db0abdb3617203ccd8485ecad81e37e5a228f7036".reversedData!
-        let lastHeaderHash = "000000000005c9a9d1e992f46bf0c0400a45feeb39d634e0a3cdde08c3b9f512".reversedData!
-
-        let firstBlock = Block()
-        firstBlock.headerHash = firstHeaderHash
-        let lastBlock = Block()
-        lastBlock.headerHash = lastHeaderHash
-        lastBlock.height = checkpointBlock.height + 100
-
-        stub(mockStorage) { mock in
-            when(mock.getLastBlockInChain(afterBlock: equal(to: checkpointBlock))).thenReturn(lastBlock)
-            when(mock.getBlockInChain(withHeight: lastBlock.height - 100 + 1)).thenReturn(firstBlock)
+        try! realm.write {
+            realm.add(checkpointBlock)
         }
 
+        let firstReversedHex = "0000000000012d1d8525ce2db0abdb3617203ccd8485ecad81e37e5a228f7036"
+        let lastReversedHex = "000000000005c9a9d1e992f46bf0c0400a45feeb39d634e0a3cdde08c3b9f512"
+
+        var previousBlock = createBlock(reversedHex: firstReversedHex, previousBlock: checkpointBlock)
+        for i in 2...99 {
+            previousBlock = createBlock(reversedHex: "\(2016 + i)", previousBlock: previousBlock)
+        }
+        _ = createBlock(reversedHex: lastReversedHex, previousBlock: previousBlock)
+
         try! headerSyncer.sync()
-        verify(mockPeerGroup).requestHeaders(headerHashes: equal(to: [lastHeaderHash, firstHeaderHash]))
+        verify(mockPeerGroup).requestHeaders(headerHashes: equal(to: [lastReversedHex.reversedData!, firstReversedHex.reversedData!]))
+    }
+
+    private func createBlock(reversedHex: String, previousBlock: Block) -> Block {
+        let block = Block()
+        block.reversedHeaderHashHex = reversedHex
+        block.headerHash = reversedHex.reversedData!
+        block.previousBlock = previousBlock
+        block.height = previousBlock.height + 1
+
+        try! realm.write {
+            realm.add(block)
+        }
+
+        return block
     }
 
 }

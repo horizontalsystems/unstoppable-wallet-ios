@@ -9,13 +9,13 @@ class HeaderHandler {
         case noInitialBlock
     }
 
-    let storage: IStorage
+    let realmFactory: RealmFactory
     let blockFactory: BlockFactory
     let validator: BlockValidator
     let saver: BlockSaver
 
-    init(storage: IStorage = RealmStorage.shared, blockFactory: BlockFactory = .shared, validator: BlockValidator = TestNetBlockValidator(), saver: BlockSaver = .shared) {
-        self.storage = storage
+    init(realmFactory: RealmFactory = .shared, blockFactory: BlockFactory = .shared, validator: BlockValidator = TestNetBlockValidator(), saver: BlockSaver = .shared) {
+        self.realmFactory = realmFactory
         self.blockFactory = blockFactory
         self.validator = validator
         self.saver = saver
@@ -26,7 +26,9 @@ class HeaderHandler {
             throw HandleError.emptyHeaders
         }
 
-        guard let initialBlock = storage.getLastBlockInChain() else {
+        let realm = realmFactory.realm
+
+        guard let initialBlock = realm.objects(Block.self).filter("previousBlock != nil").sorted(byKeyPath: "height").last else {
             throw HandleError.noInitialBlock
         }
 

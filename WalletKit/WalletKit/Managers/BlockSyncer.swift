@@ -6,11 +6,13 @@ class BlockSyncer {
     static let shared = BlockSyncer()
     let disposeBag = DisposeBag()
 
-    let storage: IStorage
+    let realmFactory: RealmFactory
     let peerGroup: PeerGroup
 
-    init(storage: IStorage = RealmStorage.shared, peerGroup: PeerGroup = .shared, scheduler: ImmediateSchedulerType = ConcurrentDispatchQueueScheduler(qos: .background)) {
-        self.storage = storage
+    private var notificationToken: NotificationToken?
+
+    init(realmFactory: RealmFactory = .shared, peerGroup: PeerGroup = .shared, scheduler: ImmediateSchedulerType = ConcurrentDispatchQueueScheduler(qos: .background), queue: DispatchQueue = .global(qos: .background)) {
+        self.realmFactory = realmFactory
         self.peerGroup = peerGroup
 
         peerGroup.statusSubject
@@ -21,19 +23,28 @@ class BlockSyncer {
                     }
                 }).disposed(by: disposeBag)
 
-        storage.nonSyncedBlocksInsertSubject
-                .observeOn(scheduler)
-                .subscribe(onNext: { [weak self] _ in
+        notificationToken = realmFactory.realm.objects(Block.self).filter("synced = %@", false).observe { changes in
+            queue.async { [weak self] in
+                if case let .update(_, _, insertions, _) = changes, !insertions.isEmpty {
                     self?.sync()
-                }).disposed(by: disposeBag)
+                }
+            }
+        }
     }
 
     private func sync() {
-        let hashes = storage.getNonSyncedBlockHeaderHashes()
+        let realm = realmFactory.realm
+
+        let nonSyncedBlocks = realm.objects(Block.self).filter("synced = %@", false).sorted(byKeyPath: "height")
+        let hashes = nonSyncedBlocks.map { $0.headerHash }
 
         if !hashes.isEmpty {
             peerGroup.requestBlocks(headerHashes: Array(hashes))
         }
+    }
+
+    deinit {
+        notificationToken?.invalidate()
     }
 
 }
