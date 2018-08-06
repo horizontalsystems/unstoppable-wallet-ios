@@ -60,6 +60,7 @@ class BackupConfirmationController: UIViewController {
         if let firstWord = firstIndexedInputField?.textField.text, let secondWord = secondIndexedInputField?.textField.text {
             let model = BakcupConfirmationAlertModel()
             let actionSheetController = ActionSheetController(withModel: model, actionStyle: .sheet(showDismiss: false))
+            actionSheetController.backgroundColor = AppTheme.actionSheetBackgroundColor
             actionSheetController.onDismiss = { [weak self] success in
                 if success {
                     self?.validate(firstWord: firstWord, secondWord: secondWord)

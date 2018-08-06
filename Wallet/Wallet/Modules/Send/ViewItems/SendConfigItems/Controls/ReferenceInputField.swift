@@ -7,6 +7,7 @@ class ReferenceInputField: UIView {
 
     public init() {
         super.init(frame: .zero)
+        backgroundColor = AppTheme.inputBackgroundColor
         borderWidth = SendTheme.inputBorderWidth
         borderColor = SendTheme.inputBorderColor
         cornerRadius = SendTheme.inputCornerRadius

@@ -26,6 +26,7 @@ extension SendRouter {
         presenter.view = sendAlertModel
         
         let viewController = ActionSheetController(withModel: sendAlertModel, actionStyle: .sheet(showDismiss: false))
+        viewController.backgroundColor = .cryptoBarsColor
         router.viewController = viewController
 
         return viewController
