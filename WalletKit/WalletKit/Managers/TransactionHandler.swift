@@ -27,7 +27,7 @@ class TransactionHandler  {
         transaction.block = existingTransaction?.block
 
         try saver.save(transaction: transaction)
-        try linker.linkOutpoints(transaction: transaction)
+        try linker.handle(transaction: transaction)
     }
 
 }
