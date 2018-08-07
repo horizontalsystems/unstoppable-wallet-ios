@@ -1,6 +1,8 @@
 import Foundation
 
 class MerkleBlockValidator {
+    static let shared = MerkleBlockValidator()
+
     enum ValidationError: Error {
         case wrongMerkleRoot
         case noTransactions
@@ -16,15 +18,15 @@ class MerkleBlockValidator {
     static let MAX_BLOCK_SIZE: UInt32 = 1000000
     static let bitMask: [UInt8] = [0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40, 0x80]
 
-    var txIds: [Data] = []
-
-    func validate(message: MerkleBlockMessage) throws {
-        txIds = []
-        let merkleRoot = try getMerkleRootAndExtractTxids(message: message)
+    func validateAndGetTxHashes(message: MerkleBlockMessage) throws -> [Data] {
+        var matchedTxIds = [Data]()
+        let merkleRoot = try getMerkleRootAndExtractTxids(message: message, matchedTxIds: &matchedTxIds)
 
         guard merkleRoot == message.blockHeader.merkleRoot else {
             throw ValidationError.wrongMerkleRoot
         }
+
+        return matchedTxIds
     }
 
 
@@ -35,7 +37,7 @@ class MerkleBlockValidator {
      * The returned root should be checked against the
      * merkle root contained in the block header for security.
      */
-    func getMerkleRootAndExtractTxids(message: MerkleBlockMessage) throws -> Data {
+    private func getMerkleRootAndExtractTxids(message: MerkleBlockMessage, matchedTxIds: inout [Data]) throws -> Data {
         // An empty set will not work
         guard message.totalTransactions > 0 else {
             throw ValidationError.noTransactions
@@ -63,7 +65,7 @@ class MerkleBlockValidator {
 
         // traverse the partial tree
         let used = ValuesUsed()
-        let merkleRoot = try recursiveExtractHashes(height: height, pos: 0, used: used, message: message)
+        let merkleRoot = try recursiveExtractHashes(matchedTxIds: &matchedTxIds, height: height, pos: 0, used: used, message: message)
 
         // verify that all bits were consumed (except for the padding caused by serializing it as a byte sequence)
         guard (used.bitsUsed + 7) / 8 == message.flags.count &&
@@ -78,7 +80,7 @@ class MerkleBlockValidator {
 
     // recursive function that traverses tree nodes, consuming the bits and hashes produced by TraverseAndBuild.
     // it returns the hash of the respective node.
-    private func recursiveExtractHashes(height: UInt32, pos: UInt32, used: ValuesUsed, message: MerkleBlockMessage) throws -> Data {
+    private func recursiveExtractHashes(matchedTxIds: inout [Data], height: UInt32, pos: UInt32, used: ValuesUsed, message: MerkleBlockMessage) throws -> Data {
         guard used.bitsUsed < message.flags.count * 8 else {
             // overflowed the bits array - failure
             throw ValidationError.notEnoughBits
@@ -97,17 +99,17 @@ class MerkleBlockValidator {
             let hash = message.hashes[used.hashesUsed]
             used.hashesUsed += 1
             if height == 0 && parentOfMatch {          // in case of height 0, we have a matched txid
-                txIds.append(hash)
+                matchedTxIds.append(hash)
             }
 
             return hash
         } else {
             // otherwise, descend into the subtrees to extract matched txids and hashes
-            let left = try recursiveExtractHashes(height: height - 1, pos: pos * 2, used: used, message: message)
+            let left = try recursiveExtractHashes(matchedTxIds: &matchedTxIds, height: height - 1, pos: pos * 2, used: used, message: message)
             var right = Data()
 
             if pos * 2 + 1 < getTreeWidth(transactionCount: message.totalTransactions, height: height - 1) {
-                right = try recursiveExtractHashes(height: height - 1, pos: pos * 2 + 1, used: used, message: message)
+                right = try recursiveExtractHashes(matchedTxIds: &matchedTxIds, height: height - 1, pos: pos * 2 + 1, used: used, message: message)
                 guard left != right else {
                     throw ValidationError.duplicatedLeftOrRightBranches
                 }

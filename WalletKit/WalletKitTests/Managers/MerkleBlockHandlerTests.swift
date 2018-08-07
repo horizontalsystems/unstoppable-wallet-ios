@@ -39,7 +39,7 @@ class MerkleBlockHandlerTests: XCTestCase {
             when(mock.update(block: any(), withTransactionHashes: any())).thenDoNothing()
         }
         stub(mockValidator) { mock in
-            when(mock.txIds).get.thenReturn(sampleMerkleBlockMessage.hashes)
+            when(mock.validateAndGetTxHashes(message: any())).thenReturn(sampleMerkleBlockMessage.hashes)
         }
     }
 
@@ -61,7 +61,7 @@ class MerkleBlockHandlerTests: XCTestCase {
         try! realm.write { realm.add(block) }
 
         stub(mockValidator) { mock in
-            when(mock.validate(message: equal(to: sampleMerkleBlockMessage))).thenDoNothing()
+            when(mock.validateAndGetTxHashes(message: equal(to: sampleMerkleBlockMessage))).thenReturn([Data]())
         }
 
         try! merkleBlockHandler.handle(message: sampleMerkleBlockMessage)
@@ -72,7 +72,7 @@ class MerkleBlockHandlerTests: XCTestCase {
         try! realm.write { realm.add(block) }
 
         stub(mockValidator) { mock in
-            when(mock.validate(message: equal(to: sampleMerkleBlockMessage))).thenThrow(MerkleBlockValidator.ValidationError.wrongMerkleRoot)
+            when(mock.validateAndGetTxHashes(message: equal(to: sampleMerkleBlockMessage))).thenThrow(MerkleBlockValidator.ValidationError.wrongMerkleRoot)
         }
 
         try? merkleBlockHandler.handle(message: sampleMerkleBlockMessage)
@@ -99,8 +99,7 @@ class MerkleBlockHandlerTests: XCTestCase {
         try! realm.write { realm.add(block) }
 
         stub(mockValidator) { mock in
-            when(mock.validate(message: equal(to: sampleMerkleBlockMessage))).thenDoNothing()
-            when(mock.txIds).get.thenReturn([])
+            when(mock.validateAndGetTxHashes(message: equal(to: sampleMerkleBlockMessage))).thenReturn([Data]())
         }
 
         try! merkleBlockHandler.handle(message: sampleMerkleBlockMessage)
