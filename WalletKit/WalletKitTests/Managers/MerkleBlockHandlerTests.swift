@@ -61,7 +61,7 @@ class MerkleBlockHandlerTests: XCTestCase {
         try! realm.write { realm.add(block) }
 
         stub(mockValidator) { mock in
-            when(mock.validateAndGetTxHashes(message: equal(to: sampleMerkleBlockMessage))).thenReturn([Data]())
+            when(mock.validateAndGetTxHashes(message: equal(to: sampleMerkleBlockMessage))).thenReturn(sampleMerkleBlockMessage.hashes)
         }
 
         try! merkleBlockHandler.handle(message: sampleMerkleBlockMessage)
