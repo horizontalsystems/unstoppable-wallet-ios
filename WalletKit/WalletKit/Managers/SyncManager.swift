@@ -28,22 +28,22 @@ public class SyncManager {
     init() {
         let preCheckPointHeader = BlockHeader(
                 version: 536870912,
-                previousBlockHeaderReversedHex: "000000000000004b68d8b5453cf38c485b1b42d564b6a1d8487ec5ce662622ea",
-                merkleRootReversedHex: "fde234b11907f3f6d45633ab11a1ba0db59f8aabecf5879d1ef301ef091f4f44",
-                timestamp: 1532135309,
-                bits: 425766046,
-                nonce: 3687858789
+                previousBlockHeaderReversedHex: "000000000000021cfa27b31eaff92aa63987dfe8b42a9f3776bc9ccac4f88d5f",
+                merkleRootReversedHex: "dd78fe7a00b80a6a7e47ea3dce28d8ac2a2e89bd08905b6acc0319420d70da6b",
+                timestamp: 1533498013,
+                bits: 436461112,
+                nonce: 2271208224
         )
-        let preCheckpointBlock = BlockFactory.shared.block(withHeader: preCheckPointHeader, height: 1354751)
+        let preCheckpointBlock = BlockFactory.shared.block(withHeader: preCheckPointHeader, height: 1380959)
         preCheckpointBlock.synced = true
 
         let checkPointHeader = BlockHeader(
                 version: 536870912,
-                previousBlockHeaderReversedHex: "0000000000000051bff2f64c9078fb346d6a2a209ba5c3ffa0048c6b7027e47f",
-                merkleRootReversedHex: "992c07e1a7b9a53ae3b8764333324396570fce24c49b8de7ed87fb1346df62a7",
-                timestamp: 1532137995,
-                bits: 424253525,
-                nonce: 1665657862
+                previousBlockHeaderReversedHex: "000000000000032d74ad8eb0a0be6b39b8e095bd9ca8537da93aae15087aafaf",
+                merkleRootReversedHex: "dec6a6b395b29be37f4b074ed443c3625fac3ae835b1f1080155f01843a64268",
+                timestamp: 1533498326,
+                bits: 436270990,
+                nonce: 205753354
         )
         let checkpointBlock = BlockFactory.shared.block(withHeader: checkPointHeader, previousBlock: preCheckpointBlock)
         checkpointBlock.synced = true
@@ -66,6 +66,8 @@ public class SyncManager {
             realm.add(checkpointBlock, update: true)
             realm.add(addresses, update: true)
         }
+
+        WalletKitProvider.shared.add(transactionListener: self)
     }
 
     public func showRealmInfo() {
@@ -82,12 +84,12 @@ public class SyncManager {
         }
 
         print("ADDRESS COUNT: \(addressCount)")
-//        if let address = realm.objects(Address.self).first {
-//            print("First Address: \(address.index) --- \(address.external) --- \(address.base58)")
-//        }
-//        if let address = realm.objects(Address.self).last {
-//            print("Last Address: \(address.index) --- \(address.external) --- \(address.base58)")
-//        }
+        if let address = realm.objects(Address.self).first {
+            print("First Address: \(address.index) --- \(address.external) --- \(address.base58)")
+        }
+        if let address = realm.objects(Address.self).last {
+            print("Last Address: \(address.index) --- \(address.external) --- \(address.base58)")
+        }
     }
 
     public func connectToPeer() {
@@ -195,6 +197,48 @@ public class SyncManager {
             observer.onCompleted()
 
             return Disposables.create()
+        }
+    }
+
+}
+
+extension SyncManager: TransactionListener {
+    public func inserted(transactions: [Transaction]) {
+        handle(transactions: transactions)
+    }
+
+    public func modified(transactions: [Transaction]) {
+        handle(transactions: transactions)
+    }
+
+    private func handle(transactions: [Transaction]) {
+        let records = transactions.map { tx -> TransactionRecord in
+            var totalInput: Int = 0
+            var totalOutput: Int = 0
+
+            for output in tx.inputs.flatMap({ $0.previousOutput }).filter({ $0.isMine }) {
+                totalInput += output.value
+            }
+
+            for output in tx.outputs.filter({ $0.isMine }) {
+                totalOutput += output.value
+            }
+
+            let record = TransactionRecord()
+            record.transactionHash = tx.reversedHashHex
+            record.coinCode = "BTC"
+            record.amount = Int(totalOutput - totalInput)
+            record.blockHeight = tx.block?.height ?? 0
+            record.timestamp = tx.block?.header.timestamp ?? 0
+            record.incoming = record.amount > 0
+            return record
+        }
+
+        let realm = try! Realm()
+        try? realm.write {
+            for record in records {
+                realm.add(record, update: true)
+            }
         }
     }
 

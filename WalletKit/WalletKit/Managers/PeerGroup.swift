@@ -47,6 +47,7 @@ extension PeerGroup: PeerDelegate {
         let filters = Array(addresses.map { $0.publicKeyHash })
 
         peer.load(filters: filters)
+        peer.sendMemoryPoolMessage()
 
         statusSubject.onNext(.connected)
 
@@ -91,6 +92,28 @@ extension PeerGroup: PeerDelegate {
             } catch {
                 print("HeaderHandler error: \(error)")
             }
+        }
+    }
+
+    func peer(_ peer: Peer, didReceiveInventoryMessage message: InventoryMessage) {
+        var txInventoryItems = [InventoryItem]()
+        var hasBlock = false
+
+        for item in message.inventoryItems {
+            if item.objectType == .transaction {
+                txInventoryItems.append(item)
+            } else if item.objectType == .blockMessage {
+                hasBlock = true
+            }
+        }
+
+        if !txInventoryItems.isEmpty {
+            let getDataMessage = InventoryMessage(count: VarInt(txInventoryItems.count), inventoryItems: txInventoryItems)
+            peer.sendGetDataMessage(message: getDataMessage)
+        }
+
+        if hasBlock {
+            try? HeaderSyncer.shared.sync()
         }
     }
 

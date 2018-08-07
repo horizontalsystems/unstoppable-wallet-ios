@@ -13,14 +13,7 @@ class TransactionsViewController: UIViewController {
 
     private let cellName = String(describing: TransactionCell.self)
 
-    private var items = [TransactionRecordViewItem]() {
-        didSet {
-            items.append(contentsOf: [
-                TransactionRecordViewItem(transactionHash: "qwe", amount: CoinValue(coin: Bitcoin(), value: 0.004), fee: CoinValue(coin: Bitcoin(), value: 0.00001), from: "TUDJHFNSO", to: "SVDCSJN", incoming: true, blockHeight: 4, date: Date(timeIntervalSinceNow: -3600), status: .success, confirmations: 3),
-                TransactionRecordViewItem(transactionHash: "qasd", amount: CoinValue(coin: Bitcoin(), value: 0.003), fee: CoinValue(coin: Bitcoin(), value: 0.00001), from: "TUDJHFNSO", to: "SVDCSJN", incoming: false, blockHeight: 4, date: Date(timeIntervalSinceNow: -2200), status: .success, confirmations: 3)
-            ])
-        }
-    }
+    private var items = [TransactionRecordViewItem]()
     private let tableView = UITableView(frame: .zero, style: .plain)
 
     private let filterHeaderView = TransactionCurrenciesHeaderView()

@@ -21,7 +21,7 @@ extension WalletRouter {
 
     static func module() -> UIViewController {
         let router = WalletRouter()
-        let interactor = WalletInteractor(storage: WalletKitProvider.shared.storage, syncManager: SyncManager.shared)
+        let interactor = WalletInteractor(storage: RealmStorage.shared, syncManager: SyncManager.shared)
         let presenter = WalletPresenter(interactor: interactor, router: router)
         let viewController = WalletViewController(viewDelegate: presenter)
 

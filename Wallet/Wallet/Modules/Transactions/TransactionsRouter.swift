@@ -12,7 +12,7 @@ extension TransactionsRouter {
 
     static func module() -> UIViewController {
         let router = TransactionsRouter()
-        let interactor = TransactionsInteractor(storage: WalletKitProvider.shared.storage, coinManager: Factory.instance.coinManager)
+        let interactor = TransactionsInteractor(storage: RealmStorage.shared, coinManager: Factory.instance.coinManager)
         let presenter = TransactionsPresenter(interactor: interactor, router: router)
         let viewController = TransactionsViewController(delegate: presenter)
 

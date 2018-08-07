@@ -269,7 +269,7 @@ class Peer : NSObject, StreamDelegate {
         send(messageWithCommand: "filterload", payload: filterLoadMessage.serialized())
     }
 
-    private func sendMemoryPoolMessage() {
+    func sendMemoryPoolMessage() {
         log("<-- MEMPOOL")
         send(messageWithCommand: "mempool", payload: Data())
     }
@@ -299,7 +299,7 @@ class Peer : NSObject, StreamDelegate {
 
     func sendTransactionInventory(transaction: Transaction) {
         let txId = Crypto.sha256sha256(transaction.serialized())
-        let inventoryMessage = InventoryMessage(count: 1, inventoryItems: [InventoryItem(type: InventoryItem.ObjectType.Transaction.rawValue, hash: txId)])
+        let inventoryMessage = InventoryMessage(count: 1, inventoryItems: [InventoryItem(type: InventoryItem.ObjectType.transaction.rawValue, hash: txId)])
 
         log("<-- INV: \(txId.reversedHex)")
         send(messageWithCommand: "inv", payload: inventoryMessage.serialized())
@@ -344,7 +344,7 @@ class Peer : NSObject, StreamDelegate {
             switch item.objectType {
             case .error:
                 break
-            case .Transaction:
+            case .transaction:
                 // Send transaction
 //                if let transaction = context.transactions[item.hash] {
 //                    let payload = transaction.serialized()
@@ -386,7 +386,7 @@ class Peer : NSObject, StreamDelegate {
     }
 
     private func handle(transaction: Transaction) {
-        log("--> TX: \(transaction.serialized().hex)")
+        log("--> TX: \(Crypto.sha256sha256(transaction.serialized()).reversedHex)")
         delegate?.peer(self, didReceiveTransaction: transaction)
     }
 

@@ -3,8 +3,8 @@ import RxSwift
 import RealmSwift
 import RxRealm
 
-class RealmStorage: IStorage {
-    static let shared = RealmStorage()
+public class RealmStorage: IStorage {
+    public static let shared = RealmStorage()
 
     private let factory: RealmFactory
 
@@ -12,17 +12,17 @@ class RealmStorage: IStorage {
         self.factory = factory
     }
 
-    func getBalances() -> Observable<DatabaseChangeSet<Balance>> {
+    public func getBalances() -> Observable<DatabaseChangeSet<Balance>> {
         return Observable.arrayWithChangeset(from: factory.realm.objects(Balance.self))
                 .map { DatabaseChangeSet(array: $0, changeSet: $1.map { CollectionChangeSet(withRealmChangeset: $0) }) }
     }
 
-    func getExchangeRates() -> Observable<DatabaseChangeSet<ExchangeRate>> {
+    public func getExchangeRates() -> Observable<DatabaseChangeSet<ExchangeRate>> {
         return Observable.arrayWithChangeset(from: factory.realm.objects(ExchangeRate.self))
                 .map { DatabaseChangeSet(array: $0, changeSet: $1.map { CollectionChangeSet(withRealmChangeset: $0) }) }
     }
 
-    func getTransactionRecords() -> Observable<DatabaseChangeSet<TransactionRecord>> {
+    public func getTransactionRecords() -> Observable<DatabaseChangeSet<TransactionRecord>> {
         return Observable.arrayWithChangeset(from: factory.realm.objects(TransactionRecord.self).sorted(byKeyPath: "blockHeight", ascending: false))
                 .map { DatabaseChangeSet(array: $0, changeSet: $1.map { CollectionChangeSet(withRealmChangeset: $0) }) }
     }

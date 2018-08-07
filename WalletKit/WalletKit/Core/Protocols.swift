@@ -5,12 +5,3 @@ protocol ILocalStorage: class {
     func save(words: [String])
     func clearWords()
 }
-
-public class WalletKitProvider {
-    public static let shared = WalletKitProvider()
-
-    public var storage: IStorage {
-        return RealmStorage.shared
-    }
-
-}
