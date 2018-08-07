@@ -44,11 +44,11 @@ class SettingsViewController: UIViewController {
     }
 
     @IBAction func showRealmInfo() {
-        SyncManager.shared.showRealmInfo()
+        WalletKitManager.shared.showRealmInfo()
     }
 
     @IBAction func connectToPeer() {
-        SyncManager.shared.connectToPeer()
+        WalletKitManager.shared.connectToPeer()
     }
 
 }

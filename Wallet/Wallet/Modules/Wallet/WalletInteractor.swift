@@ -8,14 +8,12 @@ class WalletInteractor {
 
     private let disposeBag = DisposeBag()
     private let storage: IStorage
-    private let syncManager: SyncManager
 
     private var totalValues = [String: Double]()
     private var exchangeRates = [String: Double]()
 
-    init(storage: IStorage, syncManager: SyncManager) {
+    init(storage: IStorage) {
         self.storage = storage
-        self.syncManager = syncManager
     }
 
 }
@@ -55,10 +53,10 @@ extension WalletInteractor: IWalletInteractor {
                 })
                 .disposed(by: disposeBag)
 
-        syncManager.syncSubject
-                .subscribeAsync(disposeBag: disposeBag, onNext: { [weak self] status in
-                    self?.delegate?.didUpdate(syncStatus: status)
-                })
+//        syncManager.syncSubject
+//                .subscribeAsync(disposeBag: disposeBag, onNext: { [weak self] status in
+//                    self?.delegate?.didUpdate(syncStatus: status)
+//                })
     }
 
     private func refresh() {

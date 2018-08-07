@@ -20,7 +20,6 @@ protocol IWalletInteractor {
 
 protocol IWalletInteractorDelegate: class {
     func didFetch(walletBalances: [WalletBalanceItem])
-    func didUpdate(syncStatus: SyncManager.SyncStatus)
 }
 
 protocol IWalletRouter {

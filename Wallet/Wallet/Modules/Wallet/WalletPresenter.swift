@@ -37,10 +37,6 @@ extension WalletPresenter: IWalletInteractorDelegate {
         view?.show(walletBalances: viewItems)
     }
 
-    func didUpdate(syncStatus: WalletKit.SyncManager.SyncStatus) {
-        view?.show(syncStatus: String(describing: syncStatus))
-    }
-
     private func viewItem(forBalance balance: WalletBalanceItem) -> WalletBalanceViewItem {
         return WalletBalanceViewItem(
                 coinValue: balance.coinValue,
