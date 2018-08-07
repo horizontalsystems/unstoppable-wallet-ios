@@ -104,7 +104,7 @@ class MerkleBlockValidatorTests: XCTestCase {
 
         var caught = false
         do {
-            try validator.validateAndGetTxHashes(message: getSampleMessage())
+            _ = try validator.validateAndGetTxHashes(message: getSampleMessage())
         } catch let error as MerkleBlockValidator.ValidationError {
             caught = true
             XCTAssertEqual(error, MerkleBlockValidator.ValidationError.noTransactions)
@@ -122,7 +122,7 @@ class MerkleBlockValidatorTests: XCTestCase {
 
         var caught = false
         do {
-            try validator.validateAndGetTxHashes(message: getSampleMessage())
+            _ = try validator.validateAndGetTxHashes(message: getSampleMessage())
         } catch let error as MerkleBlockValidator.ValidationError {
             caught = true
             XCTAssertEqual(error, MerkleBlockValidator.ValidationError.tooManyTransactions)
@@ -140,7 +140,7 @@ class MerkleBlockValidatorTests: XCTestCase {
 
         var caught = false
         do {
-            try validator.validateAndGetTxHashes(message: getSampleMessage())
+            _ = try validator.validateAndGetTxHashes(message: getSampleMessage())
         } catch let error as MerkleBlockValidator.ValidationError {
             caught = true
             XCTAssertEqual(error, MerkleBlockValidator.ValidationError.moreHashesThanTransactions)
@@ -158,7 +158,7 @@ class MerkleBlockValidatorTests: XCTestCase {
 
         var caught = false
         do {
-            try validator.validateAndGetTxHashes(message: getSampleMessage())
+            _ = try validator.validateAndGetTxHashes(message: getSampleMessage())
         } catch let error as MerkleBlockValidator.ValidationError {
             caught = true
             XCTAssertEqual(error, MerkleBlockValidator.ValidationError.matchedBitsFewerThanHashes)
@@ -176,7 +176,7 @@ class MerkleBlockValidatorTests: XCTestCase {
 
         var caught = false
         do {
-            try validator.validateAndGetTxHashes(message: getSampleMessage())
+            _ = try validator.validateAndGetTxHashes(message: getSampleMessage())
         } catch let error as MerkleBlockValidator.ValidationError {
             caught = true
             XCTAssertEqual(error, MerkleBlockValidator.ValidationError.unnecessaryBits)
@@ -194,7 +194,7 @@ class MerkleBlockValidatorTests: XCTestCase {
 
         var caught = false
         do {
-            try validator.validateAndGetTxHashes(message: getSampleMessage())
+            _ = try validator.validateAndGetTxHashes(message: getSampleMessage())
         } catch let error as MerkleBlockValidator.ValidationError {
             caught = true
             XCTAssertEqual(error, MerkleBlockValidator.ValidationError.notEnoughBits)
@@ -212,7 +212,7 @@ class MerkleBlockValidatorTests: XCTestCase {
 
         var caught = false
         do {
-            try validator.validateAndGetTxHashes(message: getSampleMessage())
+            _ = try validator.validateAndGetTxHashes(message: getSampleMessage())
         } catch let error as MerkleBlockValidator.ValidationError {
             caught = true
             XCTAssertEqual(error, MerkleBlockValidator.ValidationError.notEnoughHashes)
@@ -230,7 +230,7 @@ class MerkleBlockValidatorTests: XCTestCase {
 
         var caught = false
         do {
-            try validator.validateAndGetTxHashes(message: getSampleMessage())
+            _ = try validator.validateAndGetTxHashes(message: getSampleMessage())
         } catch let error as MerkleBlockValidator.ValidationError {
             caught = true
             XCTAssertEqual(error, MerkleBlockValidator.ValidationError.duplicatedLeftOrRightBranches)

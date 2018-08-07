@@ -34,7 +34,7 @@ class P2PKExtractorTests: XCTestCase {
         let data = Data(hex: "21a914cbc20a7664f2f6945e5355aa427045bc15e7c6c77288ac")!
 
         do {
-            let test = try extractor.extract(from: data)
+            _ = try extractor.extract(from: data)
             XCTFail("No Exception Thrown")
         } catch let error as ScriptExtractorError {
             XCTAssertEqual(error, ScriptExtractorError.wrongScriptLength)
@@ -47,7 +47,7 @@ class P2PKExtractorTests: XCTestCase {
         let data = Data(hex: "f1030e7061b9fb18571cf2441b2a7ee2419933ddaa423bc178672cd11e87911616d1ac")!
 
         do {
-            let test = try extractor.extract(from: data)
+            _ = try extractor.extract(from: data)
             XCTFail("No Exception Thrown")
         } catch let error as ScriptExtractorError {
             XCTAssertEqual(error, ScriptExtractorError.wrongSequence)
@@ -60,7 +60,7 @@ class P2PKExtractorTests: XCTestCase {
         let data = Data(hex: "21030e7061b9fb18571cf2441b2a7ee2419933ddaa423bc178672cd11e87911616d1ee")!
 
         do {
-            let test = try extractor.extract(from: data)
+            _ = try extractor.extract(from: data)
             XCTFail("No Exception Thrown")
         } catch let error as ScriptExtractorError {
             XCTAssertEqual(error, ScriptExtractorError.wrongSequence)
