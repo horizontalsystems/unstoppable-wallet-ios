@@ -9,8 +9,8 @@ public class Transaction: Object {
 
     @objc public dynamic var isMine: Bool = false
 
-    let inputs = List<TransactionInput>()
-    let outputs = List<TransactionOutput>()
+    public let inputs = List<TransactionInput>()
+    public let outputs = List<TransactionOutput>()
 
     override public class func primaryKey() -> String? {
         return "reversedHashHex"
