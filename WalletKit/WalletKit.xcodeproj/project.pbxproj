@@ -752,6 +752,7 @@
 				"$(SRCROOT)/WalletKit/Managers/Extractors/P2SHExtractor.swift",
 				"$(SRCROOT)/WalletKit/Managers/Extractors/PFromSHExtractor.swift",
 				"$(SRCROOT)/WalletKit/Core/IStorage.swift",
+				"$(SRCROOT)/WalletKit/Managers/HeaderSyncer.swift",
 			);
 			name = Cuckoo;
 			outputPaths = (

@@ -18,6 +18,8 @@ public class TransactionOutput: Object {
         return self.transactions.first!
     }
 
+    let inputs = LinkingObjects(fromType: TransactionInput.self, property: "previousOutput")
+
     func serialized() -> Data {
         var data = Data()
 
