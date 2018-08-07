@@ -51,7 +51,9 @@ extension SendPresenter: ISendInteractorDelegate {
 extension SendPresenter: ISendViewDelegate {
 
     func onScanClick() {
-        router.startScan()
+        router.startScan { [weak self] code in
+            self?.view?.setAddress(code)
+        }
     }
 
     func onPasteClick() {

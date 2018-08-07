@@ -40,5 +40,5 @@ protocol ISendInteractorDelegate: class {
 }
 
 protocol ISendRouter {
-    func startScan()
+    func startScan(result: (@escaping (String) -> ()))
 }
