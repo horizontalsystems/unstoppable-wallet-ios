@@ -19,7 +19,7 @@ def kit_pods
   pod "RxRealm"
 end
 
-target :Wallet do
+target :Bank do
   project 'Wallet/Wallet'
 
   kit_pods

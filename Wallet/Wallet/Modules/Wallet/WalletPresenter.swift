@@ -20,6 +20,7 @@ class WalletPresenter {
 extension WalletPresenter: IWalletInteractorDelegate {
 
     func didFetch(walletBalances: [WalletBalanceItem]) {
+        print("didFetch")
         self.walletBalances = walletBalances
 
         var totalBalance: Double = 0
@@ -32,6 +33,9 @@ extension WalletPresenter: IWalletInteractorDelegate {
 
         if let currency = walletBalances.first?.currency {
             view?.show(totalBalance: CurrencyValue(currency: currency, value: totalBalance))
+        } else {
+            //stab
+            view?.show(totalBalance: CurrencyValue(currency: DollarCurrency(), value: 4000000.34))
         }
 
         view?.show(walletBalances: viewItems)

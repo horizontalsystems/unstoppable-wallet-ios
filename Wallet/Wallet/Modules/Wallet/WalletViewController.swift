@@ -11,7 +11,23 @@ class WalletViewController: UIViewController {
             wallets.append(contentsOf: [
                 //test stab
                 WalletBalanceViewItem(coinValue: CoinValue(coin: Bitcoin(), value: 0.004), exchangeValue: CurrencyValue(currency: DollarCurrency(), value: 5000), currencyValue: CurrencyValue(currency: DollarCurrency(), value: 20)),
-                WalletBalanceViewItem(coinValue: CoinValue(coin: BitcoinCash(), value: 0.2), exchangeValue: CurrencyValue(currency: DollarCurrency(), value: 600), currencyValue: CurrencyValue(currency: DollarCurrency(), value: 120))
+                WalletBalanceViewItem(coinValue: CoinValue(coin: BitcoinCash(), value: 0.2), exchangeValue: CurrencyValue(currency: DollarCurrency(), value: 600), currencyValue: CurrencyValue(currency: DollarCurrency(), value: 120)),
+                WalletBalanceViewItem(coinValue: CoinValue(coin: Ethereum(), value: 15.3), exchangeValue: CurrencyValue(currency: DollarCurrency(), value: 200), currencyValue: CurrencyValue(currency: DollarCurrency(), value: 520)),
+                WalletBalanceViewItem(coinValue: CoinValue(coin: Bitcoin(), value: 0.004), exchangeValue: CurrencyValue(currency: DollarCurrency(), value: 5000), currencyValue: CurrencyValue(currency: DollarCurrency(), value: 20)),
+                WalletBalanceViewItem(coinValue: CoinValue(coin: BitcoinCash(), value: 0.2), exchangeValue: CurrencyValue(currency: DollarCurrency(), value: 600), currencyValue: CurrencyValue(currency: DollarCurrency(), value: 120)),
+                WalletBalanceViewItem(coinValue: CoinValue(coin: Ethereum(), value: 15.3), exchangeValue: CurrencyValue(currency: DollarCurrency(), value: 200), currencyValue: CurrencyValue(currency: DollarCurrency(), value: 520)),
+                WalletBalanceViewItem(coinValue: CoinValue(coin: Bitcoin(), value: 0.004), exchangeValue: CurrencyValue(currency: DollarCurrency(), value: 5000), currencyValue: CurrencyValue(currency: DollarCurrency(), value: 20)),
+                WalletBalanceViewItem(coinValue: CoinValue(coin: BitcoinCash(), value: 0.2), exchangeValue: CurrencyValue(currency: DollarCurrency(), value: 600), currencyValue: CurrencyValue(currency: DollarCurrency(), value: 120)),
+                WalletBalanceViewItem(coinValue: CoinValue(coin: Ethereum(), value: 15.3), exchangeValue: CurrencyValue(currency: DollarCurrency(), value: 200), currencyValue: CurrencyValue(currency: DollarCurrency(), value: 520)),
+                WalletBalanceViewItem(coinValue: CoinValue(coin: Bitcoin(), value: 0.004), exchangeValue: CurrencyValue(currency: DollarCurrency(), value: 5000), currencyValue: CurrencyValue(currency: DollarCurrency(), value: 20)),
+                WalletBalanceViewItem(coinValue: CoinValue(coin: BitcoinCash(), value: 0.2), exchangeValue: CurrencyValue(currency: DollarCurrency(), value: 600), currencyValue: CurrencyValue(currency: DollarCurrency(), value: 120)),
+                WalletBalanceViewItem(coinValue: CoinValue(coin: Ethereum(), value: 15.3), exchangeValue: CurrencyValue(currency: DollarCurrency(), value: 200), currencyValue: CurrencyValue(currency: DollarCurrency(), value: 520)),
+                WalletBalanceViewItem(coinValue: CoinValue(coin: Bitcoin(), value: 0.004), exchangeValue: CurrencyValue(currency: DollarCurrency(), value: 5000), currencyValue: CurrencyValue(currency: DollarCurrency(), value: 20)),
+                WalletBalanceViewItem(coinValue: CoinValue(coin: BitcoinCash(), value: 0.2), exchangeValue: CurrencyValue(currency: DollarCurrency(), value: 600), currencyValue: CurrencyValue(currency: DollarCurrency(), value: 120)),
+                WalletBalanceViewItem(coinValue: CoinValue(coin: Ethereum(), value: 15.3), exchangeValue: CurrencyValue(currency: DollarCurrency(), value: 200), currencyValue: CurrencyValue(currency: DollarCurrency(), value: 520)),
+                WalletBalanceViewItem(coinValue: CoinValue(coin: Bitcoin(), value: 0.004), exchangeValue: CurrencyValue(currency: DollarCurrency(), value: 5000), currencyValue: CurrencyValue(currency: DollarCurrency(), value: 20)),
+                WalletBalanceViewItem(coinValue: CoinValue(coin: BitcoinCash(), value: 0.2), exchangeValue: CurrencyValue(currency: DollarCurrency(), value: 600), currencyValue: CurrencyValue(currency: DollarCurrency(), value: 120)),
+                WalletBalanceViewItem(coinValue: CoinValue(coin: Ethereum(), value: 15.3), exchangeValue: CurrencyValue(currency: DollarCurrency(), value: 200), currencyValue: CurrencyValue(currency: DollarCurrency(), value: 520))
             ])
         }
     }
