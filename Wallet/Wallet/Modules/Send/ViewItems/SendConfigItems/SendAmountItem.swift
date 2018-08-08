@@ -3,7 +3,7 @@ import GrouviActionSheet
 
 class SendAmountItem: BaseActionItem {
 
-    var onMore: (() -> ())?
+//    var onMore: (() -> ())?
     var onPaste: (() -> ())?
 
     var onCurrencyChange: (() -> ())?
@@ -22,10 +22,12 @@ class SendAmountItem: BaseActionItem {
 
     var addressValid = true
 
-    init(tag: Int? = nil, hidden: Bool = false, required: Bool = false, onMore: (() -> ())? = nil) {
-        self.onMore = onMore
+    var reload: (() -> ())?
 
-        super.init(cellType: SendTitleItemView.self, tag: tag, hidden: hidden, required: required)
+    init(tag: Int? = nil, hidden: Bool = false, required: Bool = false, onMore: (() -> ())? = nil) {
+//        self.onMore = onMore
+
+        super.init(cellType: SendAmountItemView.self, tag: tag, hidden: hidden, required: required)
 
         showSeparator = false
         height = SendTheme.twinHeight

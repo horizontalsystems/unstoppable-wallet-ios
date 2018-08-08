@@ -7,17 +7,17 @@ class SendAlertModel: BaseAlertModel {
 
     let coin: Coin
 
-    var sendConfigItem: BaseTwinItem?
+//    var sendConfigItem: BaseTwinItem?
     let sendAmountItem: SendAmountItem
 
     init(viewDelegate: ISendViewDelegate, coin: Coin) {
         self.delegate = viewDelegate
         self.coin = coin
 
-        sendAmountItem = SendAmountItem()
-        let sendReferenceItem = SendReferenceItem()
-        sendConfigItem = BaseTwinItem(cellType: SendConfigTwinItemView.self, first: sendAmountItem, second: sendReferenceItem, height: SendTheme.twinHeight, tag: 1, required: true)
-        sendConfigItem?.showSeparator = false
+//        let sendReferenceItem = SendReferenceItem()
+//        sendConfigItem = BaseTwinItem(cellType: SendConfigTwinItemView.self, first: sendAmountItem, second: sendReferenceItem, height: SendTheme.twinHeight, tag: 1, required: true)
+//        sendConfigItem?.showSeparator = false
+        sendAmountItem = SendAmountItem(tag: 1, required: true)
 
         super.init()
 
@@ -29,10 +29,10 @@ class SendAlertModel: BaseAlertModel {
         addItemView(titleItem)
 
 
-        sendAmountItem.onMore = { [weak self] in
-            self?.sendConfigItem?.showFirstItem = false
-            self?.reload?()
-        }
+//        sendAmountItem.onMore = { [weak self] in
+//            self?.sendConfigItem?.showFirstItem = false
+//            self?.reload?()
+//        }
         sendAmountItem.onPaste = { [weak self] in
             self?.delegate.onPasteClick()
         }
@@ -45,11 +45,12 @@ class SendAlertModel: BaseAlertModel {
         sendAmountItem.onAddressEntered = { [weak self] in
             self?.delegate.onAddressEntered(address: $0)
         }
-        sendReferenceItem.onBack = { [weak self] in
-            self?.sendConfigItem?.showFirstItem = true
-            self?.reload?()
-        }
-        addItemView(sendConfigItem!)
+//        sendReferenceItem.onBack = { [weak self] in
+//            self?.sendConfigItem?.showFirstItem = true
+//            self?.reload?()
+//        }
+//        addItemView(sendConfigItem!)
+        addItemView(sendAmountItem)
 
         let sendButtonItem = SendButtonItem(tag: 2, required: true, onTap: { [weak self] in
             self?.onSend()
@@ -75,24 +76,28 @@ extension SendAlertModel: ISendView {
 
     func setAddress(_ address: String?) {
         sendAmountItem.address = address
-        sendConfigItem?.updateItems?(false)
+        sendAmountItem.reload?()
+//        sendConfigItem?.updateItems?(false)
     }
 
     func setCurrency(code: String) {
         sendAmountItem.currencyCode = code
-        sendConfigItem?.updateItems?(false)
+        sendAmountItem.reload?()
+//        sendConfigItem?.updateItems?(false)
     }
 
     func setAmount(amount: String?) {
         sendAmountItem.amount = amount
-        sendConfigItem?.updateItems?(false)
+        sendAmountItem.reload?()
+//        sendConfigItem?.updateItems?(false)
     }
 
     func setAmountHint(hint: String, color: UIColor, error: SendError?) {
         sendAmountItem.hint = hint
         sendAmountItem.hintColor = color
         sendAmountItem.error = error
-        sendConfigItem?.updateItems?(false)
+        sendAmountItem.reload?()
+//        sendConfigItem?.updateItems?(false)
     }
 
     func closeView() {
@@ -113,7 +118,8 @@ extension SendAlertModel: ISendView {
 
     func showAddressWarning(_ valid: Bool) {
         sendAmountItem.addressValid = valid
-        sendConfigItem?.updateItems?(false)
+        sendAmountItem.reload?()
+//        sendConfigItem?.updateItems?(false)
     }
 
 }
