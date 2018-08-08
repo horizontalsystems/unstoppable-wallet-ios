@@ -30,7 +30,7 @@ class SettingsViewController: UIViewController {
     }
 
     @objc func logout() {
-        WalletManager.shared.removeWallet()
+        WordsManager.shared.removeWords()
 
         guard let window = UIApplication.shared.keyWindow else {
             return
@@ -48,7 +48,11 @@ class SettingsViewController: UIViewController {
     }
 
     @IBAction func connectToPeer() {
-        WalletKitManager.shared.connectToPeer()
+        do {
+            try WalletKitManager.shared.start()
+        } catch {
+            print("Could not start: \(error)")
+        }
     }
 
 }

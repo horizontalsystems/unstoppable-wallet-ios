@@ -5,10 +5,10 @@ class BackupInteractor {
 
     weak var delegate: IBackupInteractorDelegate?
 
-    private let walletManager: WalletManager
+    private let walletManager: WordsManager
     private var indexesProvider: IRandomProvider
 
-    init(walletManager: WalletManager, indexesProvider: IRandomProvider) {
+    init(walletManager: WordsManager, indexesProvider: IRandomProvider) {
         self.walletManager = walletManager
         self.indexesProvider = indexesProvider
     }
@@ -18,7 +18,9 @@ class BackupInteractor {
 extension BackupInteractor: IBackupInteractor {
 
     func fetchWords() {
-        delegate?.didFetch(words: walletManager.words)
+        if let words = walletManager.words {
+            delegate?.didFetch(words: words)
+        }
     }
 
     func fetchConfirmationIndexes() {
@@ -26,7 +28,10 @@ extension BackupInteractor: IBackupInteractor {
     }
 
     func validate(confirmationWords: [Int: String]) {
-        let words = walletManager.words
+        guard let words = walletManager.words else {
+            delegate?.didValidateFailure()
+            return
+        }
 
         for (index, word) in confirmationWords {
             if words[index - 1] != word.trimmingCharacters(in: .whitespaces) {

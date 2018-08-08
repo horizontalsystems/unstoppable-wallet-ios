@@ -32,7 +32,7 @@ extension BackupRouter {
 
     static func module(dismissMode: BackupPresenter.DismissMode) -> UIViewController {
         let router = BackupRouter()
-        let interactor = BackupInteractor(walletManager: WalletManager.shared, indexesProvider: Factory.instance.randomProvider)
+        let interactor = BackupInteractor(walletManager: WordsManager.shared, indexesProvider: Factory.instance.randomProvider)
         let presenter = BackupPresenter(interactor: interactor, router: router, dismissMode: dismissMode)
         let navigationController = BackupNavigationController(viewDelegate: presenter)
 

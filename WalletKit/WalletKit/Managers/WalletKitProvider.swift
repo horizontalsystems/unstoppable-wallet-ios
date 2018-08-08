@@ -60,14 +60,14 @@ public class WalletKitProvider {
         let checkpointBlock = BlockFactory.shared.block(withHeader: checkPointHeader, previousBlock: preCheckpointBlock)
         checkpointBlock.synced = true
 
-        let walletManager = WalletManager.shared
+        let wallet = WalletKitManager.shared.hdWallet
         var addresses = [Address]()
 
         for i in 0..<10 {
-            if let address = try? walletManager.wallet.receiveAddress(index: i) {
+            if let address = try? wallet!.receiveAddress(index: i) {
                 addresses.append(address)
             }
-            if let address = try? walletManager.wallet.changeAddress(index: i) {
+            if let address = try? wallet!.changeAddress(index: i) {
                 addresses.append(address)
             }
         }

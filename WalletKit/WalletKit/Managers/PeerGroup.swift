@@ -9,14 +9,11 @@ class PeerGroup {
         case connected, disconnected
     }
 
-    let walletManager: WalletManager
-
     var statusSubject: PublishSubject<Status> = PublishSubject()
 
     private let peer = Peer(network: TestNet())
 
-    init(walletManager: WalletManager = .shared) {
-        self.walletManager = walletManager
+    init() {
         peer.delegate = self
     }
 

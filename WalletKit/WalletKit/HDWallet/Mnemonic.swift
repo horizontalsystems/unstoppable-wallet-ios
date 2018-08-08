@@ -29,6 +29,11 @@ public struct Mnemonic {
         case italian
     }
 
+    public enum ValidationError: Error {
+        case invalidWordsCount
+        case invalidWords
+    }
+
     public static func generate(strength: Strength = .default, language: Language = .english) throws -> [String] {
         let byteCount = strength.rawValue / 8
         var bytes = Data(count: byteCount)
@@ -62,6 +67,22 @@ public struct Mnemonic {
         let salt = ("mnemonic" + passphrase).decomposedStringWithCompatibilityMapping.data(using: .utf8)!
         let seed = _Key.deriveKey(mnemonic, salt: salt, iterations: 2048, keyLength: 64)
         return seed
+    }
+
+    public static func validate(words: [String]) throws {
+        let set = Set(words)
+
+        guard set.count == 12 else {
+            throw ValidationError.invalidWordsCount
+        }
+
+        let wordsList = WordList.english.map(String.init)
+
+        for word in set {
+            if word == "" || !wordsList.contains(word) {
+                throw ValidationError.invalidWords
+            }
+        }
     }
 
     private static func wordList(for language: Language) -> [String.SubSequence] {
