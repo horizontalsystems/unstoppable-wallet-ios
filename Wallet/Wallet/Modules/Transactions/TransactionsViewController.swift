@@ -101,8 +101,8 @@ extension TransactionsViewController: UITableViewDelegate, UITableViewDataSource
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if let cell = cell as? TransactionCell {
             cell.bind(item: items[indexPath.row], onInfo: { [weak self] in
-                if let item = self?.items[indexPath.row] {
-                    print("on info of item: \(item)")
+                if let item = self?.items[indexPath.row] as? TransactionRecordViewItem {
+                    self?.delegate.onTransactionItemClick(transaction: item, coinCode: item.amount.coin.code, txHash: item.transactionHash)
                 }
             })
         }

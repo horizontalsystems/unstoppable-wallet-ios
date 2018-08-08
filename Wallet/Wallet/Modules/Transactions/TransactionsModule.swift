@@ -7,6 +7,7 @@ protocol ITransactionsView: class {
 
 protocol ITransactionsViewDelegate {
     func viewDidLoad()
+    func onTransactionItemClick(transaction: TransactionRecordViewItem, coinCode: String, txHash: String) //transaction is stab. need to fetch from db
 }
 
 protocol ITransactionsInteractor {
@@ -18,4 +19,5 @@ protocol ITransactionsInteractorDelegate: class {
 }
 
 protocol ITransactionsRouter {
+    func showTransactionInfo(transaction: TransactionRecordViewItem, coinCode: String, txHash: String)
 }

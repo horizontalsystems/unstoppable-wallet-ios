@@ -6,6 +6,11 @@ class TransactionsRouter {
 }
 
 extension TransactionsRouter: ITransactionsRouter {
+
+    func showTransactionInfo(transaction: TransactionRecordViewItem, coinCode: String, txHash: String) {
+        TransactionInfoRouter.module(transaction: transaction, coinCode: coinCode, txHash: txHash).show(fromController: viewController)
+    }
+
 }
 
 extension TransactionsRouter {
