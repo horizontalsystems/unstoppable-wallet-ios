@@ -1,15 +1,10 @@
 import Foundation
 
 class P2PKExtractor: ScriptExtractor {
-    static let minimalScriptLength = 3
-    static let keyLength: UInt8 = 0x14
-
-    let finishSequence = Data(bytes: [OpCode.checkSig])
-
     var type: ScriptType { return .p2pk }
 
     func extract(from data: Data) throws -> Data {
-        guard data.count >= P2PKExtractor.minimalScriptLength else {
+        guard data.count >= type.keyLength else {
             throw ScriptExtractorError.wrongScriptLength
         }
         let opCode = data[0]
@@ -44,13 +39,13 @@ class P2PKExtractor: ScriptExtractor {
             throw ScriptExtractorError.wrongSequence
         }
 
-        guard data.count == bytesOffset + keyLength + finishSequence.count else {
+        guard data.count == bytesOffset + keyLength + OpCode.p2pkFinish.count else {
             throw ScriptExtractorError.wrongScriptLength
         }
-        guard data.suffix(from: data.count - finishSequence.count) == finishSequence else {
+        guard data.suffix(from: data.count - OpCode.p2pkFinish.count) == OpCode.p2pkFinish else {
             throw ScriptExtractorError.wrongSequence
         }
-        return data.subdata(in: Range(uncheckedBounds: (lower: bytesOffset, upper: data.count - finishSequence.count)))
+        return data.subdata(in: Range(uncheckedBounds: (lower: bytesOffset, upper: data.count - OpCode.p2pkFinish.count)))
     }
 
 }
