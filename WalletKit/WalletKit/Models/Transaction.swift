@@ -29,6 +29,19 @@ public class Transaction: Object {
         return data
     }
 
+    func serializedForSignature(inputIndex: Int) throws -> Data {
+        var data = Data()
+
+        data += UInt32(version)
+        data += VarInt(inputs.count).serialized()
+        data += try inputs.enumerated().flatMap { index, input in try input.serializedForSignature(forCurrentInputSignature: inputIndex == index) }
+        data += VarInt(outputs.count).serialized()
+        data += outputs.flatMap { $0.serialized() }
+        data += UInt32(lockTime)
+
+        return data
+    }
+
     static func deserialize(_ data: Data) -> Transaction {
         let byteStream = ByteStream(data)
         return deserialize(byteStream)

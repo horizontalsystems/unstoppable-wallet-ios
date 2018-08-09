@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class HDWallet {
+class HDWallet {
     let network: NetworkProtocol
 
 //    public var transactions: [Transaction] {

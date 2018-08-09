@@ -32,6 +32,29 @@ public class TransactionInput: Object {
         return data
     }
 
+    func serializedForSignature(forCurrentInputSignature: Bool) throws -> Data {
+        var data = Data()
+
+        guard let output = previousOutput else {
+            throw SerializationError.noPreviousOutput
+        }
+
+        data += output.transaction.reversedHashHex.reversedData!
+        data += UInt32(output.index)
+
+        if forCurrentInputSignature {
+            let scriptLength = VarInt(output.lockingScript.count)
+            data += scriptLength.serialized()
+            data += output.lockingScript
+        } else {
+            data += VarInt(0).serialized()
+        }
+
+        data += UInt32(sequence)
+
+        return data
+    }
+
     static func deserialize(_ byteStream: ByteStream) -> TransactionInput {
         let transactionInput = TransactionInput()
 
@@ -46,4 +69,8 @@ public class TransactionInput: Object {
         return transactionInput
     }
 
+}
+
+enum SerializationError: Error {
+    case noPreviousOutput
 }

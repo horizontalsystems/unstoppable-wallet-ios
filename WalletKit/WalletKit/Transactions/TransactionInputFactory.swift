@@ -5,6 +5,8 @@ class TransactionInputFactory {
 
     func transactionInput(withPreviousOutput output: TransactionOutput, script: Data, sequence: Int) -> TransactionInput {
         let transactionInput = TransactionInput()
+        transactionInput.previousOutputTxReversedHex = Data(hex: output.transaction.reversedHashHex)!
+        transactionInput.previousOutputIndex = output.index
         transactionInput.previousOutput = output
         transactionInput.signatureScript = script
         transactionInput.sequence = sequence

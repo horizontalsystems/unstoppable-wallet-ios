@@ -42,10 +42,10 @@ public class WalletKitProvider {
         var addresses = [Address]()
 
         for i in 0..<10 {
-            if let address = try? wallet!.receiveAddress(index: i) {
+            if let address = try? wallet.receiveAddress(index: i) {
                 addresses.append(address)
             }
-            if let address = try? wallet!.changeAddress(index: i) {
+            if let address = try? wallet.changeAddress(index: i) {
                 addresses.append(address)
             }
         }
