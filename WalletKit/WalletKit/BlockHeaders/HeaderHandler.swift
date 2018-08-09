@@ -6,19 +6,20 @@ class HeaderHandler {
 
     enum HandleError: Error {
         case emptyHeaders
-        case noInitialBlock
     }
 
     let realmFactory: RealmFactory
     let blockFactory: BlockFactory
     let validator: BlockValidator
     let saver: BlockSaver
+    let network: NetworkProtocol
 
-    init(realmFactory: RealmFactory = .shared, blockFactory: BlockFactory = .shared, validator: BlockValidator = TestNetBlockValidator(), saver: BlockSaver = .shared) {
+    init(realmFactory: RealmFactory = .shared, blockFactory: BlockFactory = .shared, validator: BlockValidator = TestNetBlockValidator(), saver: BlockSaver = .shared, configuration: ConfigurationManager = .shared) {
         self.realmFactory = realmFactory
         self.blockFactory = blockFactory
         self.validator = validator
         self.saver = saver
+        self.network = configuration.network
     }
 
     func handle(headers: [BlockHeader]) throws {
@@ -28,9 +29,8 @@ class HeaderHandler {
 
         let realm = realmFactory.realm
 
-        guard let initialBlock = realm.objects(Block.self).filter("previousBlock != nil").sorted(byKeyPath: "height").last else {
-            throw HandleError.noInitialBlock
-        }
+        let blockInChain = realm.objects(Block.self).filter("previousBlock != nil").sorted(byKeyPath: "height")
+        let initialBlock = blockInChain.last ?? network.checkpointBlock
 
         let newBlocks = blockFactory.blocks(fromHeaders: headers, initialBlock: initialBlock)
         var validBlocks = [Block]()

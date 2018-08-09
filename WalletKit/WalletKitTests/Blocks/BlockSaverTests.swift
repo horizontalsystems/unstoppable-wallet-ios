@@ -22,7 +22,7 @@ class BlockSaverTests: XCTestCase {
             realm.deleteAll()
         }
 
-        initialBlock = BlockFactory.shared.block(withHeader: TestHelper.checkpointBlockHeader, height: 1)
+        initialBlock = BlockFactory.shared.block(withHeader: TestData.checkpointBlockHeader, height: 1)
 
         try! realm.write {
             realm.add(initialBlock)

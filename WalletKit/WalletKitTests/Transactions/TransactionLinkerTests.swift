@@ -24,10 +24,10 @@ class TransactionLinkerTests: XCTestCase {
         }
 
         linker = TransactionLinker(realmFactory: mockRealmFactory)
-        transaction = TestHelper.p2pkhTransaction
+        transaction = TestData.p2pkhTransaction
 
         try! realm.write {
-            realm.add(TestHelper.address(pubKeyHash: pubKeyHash), update: true)
+            realm.add(TestData.address(pubKeyHash: pubKeyHash), update: true)
             realm.add(transaction)
         }
     }

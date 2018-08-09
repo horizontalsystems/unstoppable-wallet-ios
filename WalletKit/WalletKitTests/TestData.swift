@@ -1,7 +1,7 @@
 import Foundation
 @testable import WalletKit
 
-class TestHelper {
+class TestData {
 
     static var checkpointBlock: Block {
         return BlockFactory.shared.block(

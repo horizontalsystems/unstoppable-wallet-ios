@@ -4,10 +4,6 @@ import RealmSwift
 class HeaderSyncer {
     static let shared = HeaderSyncer()
 
-    enum SyncError: Error {
-        case noCheckpointBlock
-    }
-
     let realmFactory: RealmFactory
     let peerGroup: PeerGroup
     let network: NetworkProtocol

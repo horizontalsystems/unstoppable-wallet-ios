@@ -19,13 +19,13 @@ class HeaderSyncerTests: XCTestCase {
 
         mockRealmFactory = MockRealmFactory()
         mockPeerGroup = MockPeerGroup()
-        mockNetwork = MockNetworkProtocol()
         mockConfiguration = MockConfigurationManager()
+        mockNetwork = MockNetworkProtocol()
 
         realm = try! Realm(configuration: Realm.Configuration(inMemoryIdentifier: "TestRealm"))
         try! realm.write { realm.deleteAll() }
 
-        checkpointBlock = TestHelper.checkpointBlock
+        checkpointBlock = TestData.checkpointBlock
 
         stub(mockRealmFactory) { mock in
             when(mock.realm.get).thenReturn(realm)
@@ -64,7 +64,7 @@ class HeaderSyncerTests: XCTestCase {
 
     func testSync_NoBlocksInChain() {
         try! realm.write {
-            realm.add(TestHelper.oldBlock)
+            realm.add(TestData.oldBlock)
         }
 
         try! headerSyncer.sync()
@@ -72,7 +72,7 @@ class HeaderSyncerTests: XCTestCase {
     }
 
     func testSync_SingleBlockInChain() {
-        let firstBlock = TestHelper.firstBlock
+        let firstBlock = TestData.firstBlock
 
         try! realm.write {
             realm.add(firstBlock)
@@ -83,7 +83,7 @@ class HeaderSyncerTests: XCTestCase {
     }
 
     func testSync_SeveralBlocksInChain() {
-        let thirdBlock = TestHelper.thirdBlock
+        let thirdBlock = TestData.thirdBlock
 
         try! realm.write {
             realm.add(thirdBlock)
@@ -94,7 +94,7 @@ class HeaderSyncerTests: XCTestCase {
     }
 
     func testSync_MoreThanThreshold() {
-        let forthBlock = TestHelper.forthBlock
+        let forthBlock = TestData.forthBlock
         let firstBlock = forthBlock.previousBlock!.previousBlock!.previousBlock!
 
         try! realm.write {
