@@ -46,7 +46,7 @@ class UnspentOutputSelectorTests: XCTestCase {
 
     func testNotEnoughError() {
         do {
-            let selectedOutputs = try unspentOutputSelector.select(value: 35, outputs: outputs)
+            _ = try unspentOutputSelector.select(value: 35, outputs: outputs)
             XCTFail("Wrong value summary!")
         } catch let error as UnspentOutputSelector.SelectorError {
             XCTAssertEqual(error, UnspentOutputSelector.SelectorError.notEnough)
@@ -57,7 +57,7 @@ class UnspentOutputSelectorTests: XCTestCase {
 
     func testEmptyOutputsError() {
         do {
-            let selectedOutputs = try unspentOutputSelector.select(value: 35, outputs: [])
+            _ = try unspentOutputSelector.select(value: 35, outputs: [])
             XCTFail("Wrong value summary!")
         } catch let error as UnspentOutputSelector.SelectorError {
             XCTAssertEqual(error, UnspentOutputSelector.SelectorError.emptyOutputs)

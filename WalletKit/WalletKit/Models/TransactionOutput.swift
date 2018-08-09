@@ -6,11 +6,21 @@ import RealmSwift
 
     var size: Int {
         switch self {
-        case .p2pk: return 35
-        case .p2pkh: return 25
-        default: return 0
+            case .p2pk: return 35
+            case .p2pkh: return 25
+            default: return 0
         }
     }
+
+    var keyLength: UInt8 {
+        switch self {
+            case .p2pk: return 0x03
+            case .p2pkh: return 0x14
+            case .p2sh: return 0x14
+            default: return 0
+        }
+    }
+
 }
 
 public class TransactionOutput: Object {
