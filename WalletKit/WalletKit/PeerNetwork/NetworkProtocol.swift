@@ -11,6 +11,6 @@ protocol NetworkProtocol: class {
     var magic: UInt32 { get }
     var port: UInt32 { get }
     var dnsSeeds: [String] { get }
-    var genesisCheckpoint: Checkpoint { get }
-    var lastCheckpoint: Checkpoint { get }
+    var genesisBlock: Block { get }
+    var checkpointBlock: Block { get }
 }

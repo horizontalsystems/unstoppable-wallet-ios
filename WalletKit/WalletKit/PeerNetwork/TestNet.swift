@@ -19,6 +19,26 @@ class TestNet: NetworkProtocol {
         "bitcoin-testnet.bloqseeds.net",         // Bloq
     ]
 
-    let genesisCheckpoint = Checkpoint(height: 0, reversedHex: "000000000933ea01ad0ee984209779baaec3ced90fa3f408719526f8d77f4943", timestamp: 1376543922, target: 0x1d00ffff)!
-    let lastCheckpoint = Checkpoint(height: 1108800, reversedHex: "00000000000288d9a219419d0607fb67cc324d4b6d2945ca81eaa5e739fab81e", timestamp: 1296688602, target: 0x1b09ecf0)!
+    let genesisBlock = BlockFactory.shared.block(
+            withHeader: BlockHeader(
+                    version: 1,
+                    previousBlockHeaderReversedHex: "0000000000000000000000000000000000000000000000000000000000000000",
+                    merkleRootReversedHex: "4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b",
+                    timestamp: 1296688602,
+                    bits: 486604799,
+                    nonce: 414098458
+            ),
+            height: 0)
+
+    let checkpointBlock = BlockFactory.shared.block(
+            withHeader: BlockHeader(
+                    version: 536870912,
+                    previousBlockHeaderReversedHex: "000000000000032d74ad8eb0a0be6b39b8e095bd9ca8537da93aae15087aafaf",
+                    merkleRootReversedHex: "dec6a6b395b29be37f4b074ed443c3625fac3ae835b1f1080155f01843a64268",
+                    timestamp: 1533498326,
+                    bits: 436270990,
+                    nonce: 205753354
+            ),
+            height: 1380960)
+
 }

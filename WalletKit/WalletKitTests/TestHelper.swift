@@ -3,6 +3,84 @@ import Foundation
 
 class TestHelper {
 
+    static var checkpointBlock: Block {
+        return BlockFactory.shared.block(
+                withHeader: BlockHeader(
+                        version: 1,
+                        previousBlockHeaderReversedHex: "00000000864b744c5025331036aa4a16e9ed1cbb362908c625272150fa059b29",
+                        merkleRootReversedHex: "70d6379650ac87eaa4ac1de27c21217b81a034a53abf156c422a538150bd80f4",
+                        timestamp: 1337966314,
+                        bits: 486604799,
+                        nonce: 2391008772
+                ),
+                height: 2016)
+    }
+
+    static var firstBlock: Block {
+        return BlockFactory.shared.block(
+                withHeader: BlockHeader(
+                        version: 1,
+                        previousBlockHeaderReversedHex: "0000000089d757fd95d79f7fcc2bc25ca7fc16492dca9aa610730ea05d9d3de9",
+                        merkleRootReversedHex: "55de0864e0b96f0dff597b1c138de187dd8c40e859b01b4671f7a92ca1b7a9b9",
+                        timestamp: 1337966314,
+                        bits: 486604799,
+                        nonce: 1716024842
+                ),
+                previousBlock: checkpointBlock)
+    }
+
+    static var secondBlock: Block {
+        return BlockFactory.shared.block(
+                withHeader: BlockHeader(
+                        version: 1,
+                        previousBlockHeaderReversedHex: "00000000d4f0ed4d9c3428dd98dabb3ed345c461cf68e8ab61cb048d294a4e4e",
+                        merkleRootReversedHex: "9a342c0615d0e5a3256f5b9a7818abecc1c8722ab3a8db8df5595c8635cc11e1",
+                        timestamp: 1337966314,
+                        bits: 486604799,
+                        nonce: 627458064
+                ),
+                previousBlock: firstBlock)
+    }
+
+    static var thirdBlock: Block {
+        return BlockFactory.shared.block(
+                withHeader: BlockHeader(
+                        version: 1,
+                        previousBlockHeaderReversedHex: "0000000045fd19b3c01cf7abeb88a1c5b4fea1ba2c26bdbc26a2038106e5d835",
+                        merkleRootReversedHex: "4848ea1ec4f1838bc0a6a243b9350d76bfeda63532b6a1cc6bae0df27aba11b3",
+                        timestamp: 1337966314,
+                        bits: 486604799,
+                        nonce: 3977416709
+                ),
+                previousBlock: secondBlock)
+    }
+
+    static var forthBlock: Block {
+        return BlockFactory.shared.block(
+                withHeader: BlockHeader(
+                        version: 1,
+                        previousBlockHeaderReversedHex: "00000000215fbd455a4905e35fab995456c8d6442bee8aa9b29b7c353f9a8d80",
+                        merkleRootReversedHex: "d45043107540b486cf2079a1d510bfe18053aac2446c5043a2b8eff01668426d",
+                        timestamp: 1337966314,
+                        bits: 486604799,
+                        nonce: 1930065423
+                ),
+                previousBlock: thirdBlock)
+    }
+
+    static var oldBlock: Block {
+        return BlockFactory.shared.block(
+                withHeader: BlockHeader(
+                        version: 1,
+                        previousBlockHeaderReversedHex: "0000000036f7b90238ac6b6026be5e121ac3055f19fffd69f28310a76aa4a5bc",
+                        merkleRootReversedHex: "3bf8c518a7a1187287516da67cb96733697b1d83eb937e68ae39bd4c08e563b7",
+                        timestamp: 1337966144,
+                        bits: 486604799,
+                        nonce: 1029134858
+                ),
+                height: 1000)
+    }
+
     static var preCheckpointBlockHeader: BlockHeader {
         return BlockHeader(
                 version: 536870912,

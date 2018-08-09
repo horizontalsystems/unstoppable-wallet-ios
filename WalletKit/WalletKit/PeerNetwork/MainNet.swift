@@ -23,6 +23,26 @@ class MainNet: NetworkProtocol {
         "seed.ob1.io",                  // OpenBazaar
     ]
 
-    let genesisCheckpoint = Checkpoint(height: 0, reversedHex: "000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f", timestamp: 1231006505, target: 0x1d00ffff)!
-    let lastCheckpoint = Checkpoint(height: 463680, reversedHex: "000000000000000000431a2f4619afe62357cd16589b638bb638f2992058d88e", timestamp: 1493259601, target: 0x18021b3e)!
+    let genesisBlock = BlockFactory.shared.block(
+            withHeader: BlockHeader(
+                    version: 1,
+                    previousBlockHeaderReversedHex: "0000000000000000000000000000000000000000000000000000000000000000",
+                    merkleRootReversedHex: "4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b",
+                    timestamp: 1231006505,
+                    bits: 486604799,
+                    nonce: 2083236893
+            ),
+            height: 0)
+
+    let checkpointBlock = BlockFactory.shared.block(
+            withHeader: BlockHeader(
+                    version: 536870912,
+                    previousBlockHeaderReversedHex: "0000000000000000002eca92f4e44dcf144115851689ace0ff4ce271792f16fe",
+                    merkleRootReversedHex: "e1c8d65b4669eca626e8179164d7854a80ef9c81a25a2b16e4ad56763a106baa",
+                    timestamp: 1532852371,
+                    bits: 388976507,
+                    nonce: 3273320796
+            ),
+            height: 534240)
+
 }
