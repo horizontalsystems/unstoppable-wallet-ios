@@ -6,7 +6,7 @@ class SendTheme {
     static let scanQRWidth: CGFloat = 40
     static let qrSideSize: CGFloat = 24
     static let sendTitleFont = UIFont.cryptoHeadline
-    static let twinHeight: CGFloat = 200
+    static let twinHeight: CGFloat = 180
     static let inputBorderWidth: CGFloat = 1
     static let cornerRadius: CGFloat = 8
     static let inputBorderColor = UIColor.cryptoLightGray
@@ -18,7 +18,7 @@ class SendTheme {
     static let inputTextColor = UIColor.cryptoDark
     static let inactiveInputTextColor = UIColor.cryptoGray
     static let inputFont = UIFont.cryptoBody2
-    static let sendButtonItemHeight: CGFloat = 97
+    static let sendButtonItemHeight: CGFloat = 90
     static let sendButtonItemHeightShrink: CGFloat = 75
     static let timeLabelFont = UIFont.cryptoHeadline
     static let timeLabelColor = UIColor.black

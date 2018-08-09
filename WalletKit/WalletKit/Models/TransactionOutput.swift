@@ -1,7 +1,17 @@
 import Foundation
 import RealmSwift
 
-@objc public enum ScriptType: Int { case unknown = 0, p2pkh, p2pk, p2sh }
+@objc public enum ScriptType: Int {
+    case unknown = 0, p2pkh, p2pk, p2sh
+
+    var size: Int {
+        switch self {
+        case .p2pk: return 35
+        case .p2pkh: return 25
+        default: return 0
+        }
+    }
+}
 
 public class TransactionOutput: Object {
 

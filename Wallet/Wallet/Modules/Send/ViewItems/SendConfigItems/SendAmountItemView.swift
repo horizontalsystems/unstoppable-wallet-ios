@@ -7,7 +7,7 @@ class SendAmountItemView: BaseActionItemView {
 
     var addressInputField = AddressInputField()
     var amountInputField = AmountInputField()
-    var moreButton = RespondButton()
+//    var moreButton = RespondButton()
     var errorLabel = UILabel()
 
     override var item: SendAmountItem? { return _item as? SendAmountItem }
@@ -30,17 +30,17 @@ class SendAmountItemView: BaseActionItemView {
             maker.height.equalTo(SendTheme.amountHeight)
         }
 
-        moreButton.textColors = [RespondButton.State.active: SendTheme.moreButtonTextColor, RespondButton.State.selected: SendTheme.moreButtonTextSelectedColor]
-        moreButton.titleLabel.text = "more".localized
-        moreButton.titleLabel.snp.remakeConstraints { maker in
-            maker.trailing.equalToSuperview().offset(-SendTheme.sideMargin)
-            maker.top.equalToSuperview().offset(SendTheme.backButtonTopMargin)
-        }
-        addSubview(moreButton)
-        moreButton.snp.makeConstraints { maker in
-            maker.leading.trailing.bottom.equalToSuperview()
-            maker.top.equalTo(amountInputField.snp.bottom)
-        }
+//        moreButton.textColors = [RespondButton.State.active: SendTheme.moreButtonTextColor, RespondButton.State.selected: SendTheme.moreButtonTextSelectedColor]
+//        moreButton.titleLabel.text = "moreg".localized
+//        moreButton.titleLabel.snp.remakeConstraints { maker in
+//            maker.trailing.equalToSuperview().offset(-SendTheme.sideMargin)
+//            maker.top.equalToSuperview().offset(SendTheme.backButtonTopMargin)
+//        }
+//        addSubview(moreButton)
+//        moreButton.snp.makeConstraints { maker in
+//            maker.leading.trailing.bottom.equalToSuperview()
+//            maker.top.equalTo(amountInputField.snp.bottom)
+//        }
 
         errorLabel.textColor = SendTheme.errorColor
         errorLabel.font = SendTheme.errorFont
@@ -50,6 +50,9 @@ class SendAmountItemView: BaseActionItemView {
             maker.top.equalTo(amountInputField.snp.bottom).offset(SendTheme.smallestMargin)
         }
 
+        item?.reload = { [weak self] in
+            self?.bind()
+        }
         bind()
     }
 
@@ -60,10 +63,12 @@ class SendAmountItemView: BaseActionItemView {
 
     func bind() {
         item?.showKeyboardOnLoad = { [weak self] in
-            self?.addressInputField.addressInputField.becomeFirstResponder()
+            DispatchQueue.main.async {
+                self?.addressInputField.addressInputField.becomeFirstResponder()
+            }
         }
 
-        moreButton.onTap = item?.onMore
+//        moreButton.onTap = item?.onMore
 
         addressInputField.pasteButton.onTap = item?.onPaste
         addressInputField.onAddressChange = { [weak self] in

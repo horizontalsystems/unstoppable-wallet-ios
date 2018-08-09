@@ -77,6 +77,8 @@
 		11B35F982C45FEE664160AD4 /* HeaderHandlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B355ED5A1298D065D6A633 /* HeaderHandlerTests.swift */; };
 		11B35FC6819CD5A9B94A85BF /* MainNet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35D44C0F5847D5B6EDEBC /* MainNet.swift */; };
 		11B35FF6B8D6417447158826 /* BlockSyncerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B352782DC699D1FAAD6168 /* BlockSyncerTests.swift */; };
+		58AAA1702C9422A8EBA464D7 /* UnspentOutputSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA983B426801C46003567 /* UnspentOutputSelector.swift */; };
+		58AAA22DB30DB6FF8373C6D6 /* UnspentOutputSelectorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA33E4E02571B077022F7 /* UnspentOutputSelectorTests.swift */; };
 		6480F0E2B4AA1D481624F935 /* Pods_WalletKitTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 95D20030A63CC8101E6A72E8 /* Pods_WalletKitTests.framework */; };
 		D31711EA20F7192400AEF61B /* Peer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31711E920F7192300AEF61B /* Peer.swift */; };
 		D31711FF20F7193000AEF61B /* PingMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31711EB20F7192F00AEF61B /* PingMessage.swift */; };
@@ -194,6 +196,8 @@
 		11B35F6DD74F45320C5521FC /* TransactionHandlerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionHandlerTests.swift; sourceTree = "<group>"; };
 		11B35F9042249BFFC7A751AA /* BlockValidatorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockValidatorTests.swift; sourceTree = "<group>"; };
 		11B35FF2F94006C73B7773BC /* GetHeadersMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetHeadersMessage.swift; sourceTree = "<group>"; };
+		58AAA33E4E02571B077022F7 /* UnspentOutputSelectorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnspentOutputSelectorTests.swift; sourceTree = "<group>"; };
+		58AAA983B426801C46003567 /* UnspentOutputSelector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnspentOutputSelector.swift; sourceTree = "<group>"; };
 		62EEC3758B9F3CFB076FF881 /* Pods_WalletKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WalletKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6B851FED93B7529C1E1B34B6 /* Pods-WalletKitTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WalletKitTests.debug.xcconfig"; path = "../Pods/Target Support Files/Pods-WalletKitTests/Pods-WalletKitTests.debug.xcconfig"; sourceTree = "<group>"; };
 		7AC7B1938125A8B9E14B8BE0 /* Pods-WalletKitTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WalletKitTests.release.xcconfig"; path = "../Pods/Target Support Files/Pods-WalletKitTests/Pods-WalletKitTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -355,6 +359,7 @@
 		11B3582B0517A9873E63381B /* Transactions */ = {
 			isa = PBXGroup;
 			children = (
+				58AAAB58B5883EDAE754E34F /* Builder */,
 				11B3505456C3C7F73F2722AB /* Extractors */,
 				11B35F6DD74F45320C5521FC /* TransactionHandlerTests.swift */,
 				11B357AFD2F27913B7451ACA /* TransactionExtractorTests.swift */,
@@ -416,6 +421,7 @@
 		11B35BC0CDFD3512DD636A78 /* Transactions */ = {
 			isa = PBXGroup;
 			children = (
+				58AAA98E5C50F2723D500F9F /* Builder */,
 				11B35ABE009449CF02027197 /* Extractors */,
 				11B35B10B1D5D1B7C72686A1 /* TransactionFactory.swift */,
 				11B356EF3A4749163293CCA3 /* TransactionHandler.swift */,
@@ -484,6 +490,22 @@
 				7AC7B1938125A8B9E14B8BE0 /* Pods-WalletKitTests.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		58AAA98E5C50F2723D500F9F /* Builder */ = {
+			isa = PBXGroup;
+			children = (
+				58AAA983B426801C46003567 /* UnspentOutputSelector.swift */,
+			);
+			path = Builder;
+			sourceTree = "<group>";
+		};
+		58AAAB58B5883EDAE754E34F /* Builder */ = {
+			isa = PBXGroup;
+			children = (
+				58AAA33E4E02571B077022F7 /* UnspentOutputSelectorTests.swift */,
+			);
+			path = Builder;
 			sourceTree = "<group>";
 		};
 		D33FD6B220F3782600EC10DB /* Frameworks */ = {
@@ -789,6 +811,7 @@
 				11B352D61054A1CD7AD03A43 /* P2SHExtractorTests.swift in Sources */,
 				11B3551EA82115C81077080C /* P2PKExtractorTests.swift in Sources */,
 				11B35471C1382D665EBC9B77 /* PFromSHExtractorTests.swift in Sources */,
+				58AAA22DB30DB6FF8373C6D6 /* UnspentOutputSelectorTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -872,6 +895,7 @@
 				11B35037E0E47C5D6575A0E0 /* SyncManager.swift in Sources */,
 				11B3543B9CDA61125C2B7D78 /* ApiManager.swift in Sources */,
 				11B357EE50A55009995DD664 /* WalletKitManager.swift in Sources */,
+				58AAA1702C9422A8EBA464D7 /* UnspentOutputSelector.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
