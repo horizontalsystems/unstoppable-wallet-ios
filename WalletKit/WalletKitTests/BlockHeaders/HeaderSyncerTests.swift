@@ -7,6 +7,8 @@ class HeaderSyncerTests: XCTestCase {
 
     private var mockRealmFactory: MockRealmFactory!
     private var mockPeerGroup: MockPeerGroup!
+    private var mockConfiguration: MockConfigurationManager!
+    private var mockNetwork: MockNetworkProtocol!
     private var headerSyncer: HeaderSyncer!
 
     private var realm: Realm!
@@ -17,17 +19,13 @@ class HeaderSyncerTests: XCTestCase {
 
         mockRealmFactory = MockRealmFactory()
         mockPeerGroup = MockPeerGroup()
-        headerSyncer = HeaderSyncer(realmFactory: mockRealmFactory, peerGroup: mockPeerGroup)
+        mockNetwork = MockNetworkProtocol()
+        mockConfiguration = MockConfigurationManager()
 
         realm = try! Realm(configuration: Realm.Configuration(inMemoryIdentifier: "TestRealm"))
         try! realm.write { realm.deleteAll() }
 
-        let preCheckpointBlock = BlockFactory.shared.block(withHeader: TestHelper.preCheckpointBlockHeader, height: TestHelper.preCheckpointBlockHeight)
-        try! realm.write {
-            realm.add(preCheckpointBlock)
-        }
-
-        checkpointBlock = BlockFactory.shared.block(withHeader: TestHelper.checkpointBlockHeader, previousBlock: preCheckpointBlock)
+        checkpointBlock = TestHelper.checkpointBlock
 
         stub(mockRealmFactory) { mock in
             when(mock.realm.get).thenReturn(realm)
@@ -35,12 +33,23 @@ class HeaderSyncerTests: XCTestCase {
         stub(mockPeerGroup) { mock in
             when(mock.requestHeaders(headerHashes: any())).thenDoNothing()
         }
+        stub(mockConfiguration) { mock in
+            when(mock.hashCheckpointThreshold.get).thenReturn(3)
+            when(mock.network.get).thenReturn(mockNetwork)
+        }
+        stub(mockNetwork) { mock in
+            when(mock.checkpointBlock.get).thenReturn(checkpointBlock)
+        }
+
+        headerSyncer = HeaderSyncer(realmFactory: mockRealmFactory, peerGroup: mockPeerGroup, configuration: mockConfiguration)
     }
 
     override func tearDown() {
-        headerSyncer = nil
-        mockPeerGroup = nil
         mockRealmFactory = nil
+        mockPeerGroup = nil
+        mockNetwork = nil
+        mockConfiguration = nil
+        headerSyncer = nil
 
         realm = nil
         checkpointBlock = nil
@@ -48,78 +57,52 @@ class HeaderSyncerTests: XCTestCase {
         super.tearDown()
     }
 
-    func testSync_NoCheckpointBlock() {
-        var caught = false
-
-        do {
-            try headerSyncer.sync()
-        } catch let error as HeaderSyncer.SyncError {
-            caught = true
-            XCTAssertEqual(error, HeaderSyncer.SyncError.noCheckpointBlock)
-        } catch {
-            XCTFail("Unknown exception thrown")
-        }
-
-        verifyNoMoreInteractions(mockPeerGroup)
-        XCTAssertTrue(caught, "noCheckpointBlock exception not thrown")
+    func testSync_NoBlocksInRealm() {
+        try! headerSyncer.sync()
+        verify(mockPeerGroup).requestHeaders(headerHashes: equal(to: [checkpointBlock.headerHash]))
     }
 
-    func testSync_OnlyCheckpointBlock() {
+    func testSync_NoBlocksInChain() {
         try! realm.write {
-            realm.add(checkpointBlock)
+            realm.add(TestHelper.oldBlock)
         }
 
         try! headerSyncer.sync()
         verify(mockPeerGroup).requestHeaders(headerHashes: equal(to: [checkpointBlock.headerHash]))
     }
 
-    func testSync_99LastBlocks() {
+    func testSync_SingleBlockInChain() {
+        let firstBlock = TestHelper.firstBlock
+
         try! realm.write {
-            realm.add(checkpointBlock)
+            realm.add(firstBlock)
         }
-
-        let lastReversedHex = "000000000005c9a9d1e992f46bf0c0400a45feeb39d634e0a3cdde08c3b9f512"
-
-        var previousBlock = checkpointBlock
-        for i in 1...98 {
-            previousBlock = createBlock(reversedHex: "\(2016 + i)", previousBlock: previousBlock!)
-        }
-        _ = createBlock(reversedHex: lastReversedHex, previousBlock: previousBlock!)
 
         try! headerSyncer.sync()
-        verify(mockPeerGroup).requestHeaders(headerHashes: equal(to: [lastReversedHex.reversedData!, checkpointBlock.headerHash]))
+        verify(mockPeerGroup).requestHeaders(headerHashes: equal(to: [firstBlock.headerHash, checkpointBlock.headerHash]))
     }
 
-    func testSync_100LastBlocks() {
+    func testSync_SeveralBlocksInChain() {
+        let thirdBlock = TestHelper.thirdBlock
+
         try! realm.write {
-            realm.add(checkpointBlock)
+            realm.add(thirdBlock)
         }
-
-        let firstReversedHex = "0000000000012d1d8525ce2db0abdb3617203ccd8485ecad81e37e5a228f7036"
-        let lastReversedHex = "000000000005c9a9d1e992f46bf0c0400a45feeb39d634e0a3cdde08c3b9f512"
-
-        var previousBlock = createBlock(reversedHex: firstReversedHex, previousBlock: checkpointBlock)
-        for i in 2...99 {
-            previousBlock = createBlock(reversedHex: "\(2016 + i)", previousBlock: previousBlock)
-        }
-        _ = createBlock(reversedHex: lastReversedHex, previousBlock: previousBlock)
 
         try! headerSyncer.sync()
-        verify(mockPeerGroup).requestHeaders(headerHashes: equal(to: [lastReversedHex.reversedData!, firstReversedHex.reversedData!]))
+        verify(mockPeerGroup).requestHeaders(headerHashes: equal(to: [thirdBlock.headerHash, checkpointBlock.headerHash]))
     }
 
-    private func createBlock(reversedHex: String, previousBlock: Block) -> Block {
-        let block = Block()
-        block.reversedHeaderHashHex = reversedHex
-        block.headerHash = reversedHex.reversedData!
-        block.previousBlock = previousBlock
-        block.height = previousBlock.height + 1
+    func testSync_MoreThanThreshold() {
+        let forthBlock = TestHelper.forthBlock
+        let firstBlock = forthBlock.previousBlock!.previousBlock!.previousBlock!
 
         try! realm.write {
-            realm.add(block)
+            realm.add(forthBlock)
         }
 
-        return block
+        try! headerSyncer.sync()
+        verify(mockPeerGroup).requestHeaders(headerHashes: equal(to: [forthBlock.headerHash, firstBlock.headerHash]))
     }
 
 }
