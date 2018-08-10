@@ -1,16 +1,17 @@
 import Foundation
 
 class TransactionBuilder {
-    static let shared = TransactionBuilder()
     static let outputSize = 32
 
     let unspentOutputsManager: UnspentOutputsManager
     let inputSigner: InputSigner
+    let scriptBuilder: ScriptBuilder
     let txFactory: TransactionFactory
 
-    init(unspentOutputsManager: UnspentOutputsManager = .shared, inputSigner: InputSigner = .shared, txFactory: TransactionFactory = .shared) {
+    init(unspentOutputsManager: UnspentOutputsManager, inputSigner: InputSigner, scriptBuilder: ScriptBuilder, txFactory: TransactionFactory) {
         self.unspentOutputsManager = unspentOutputsManager
         self.inputSigner = inputSigner
+        self.scriptBuilder = scriptBuilder
         self.txFactory = txFactory
     }
 
@@ -40,7 +41,8 @@ class TransactionBuilder {
 
         // Sign inputs
         for i in 0..<transaction.inputs.count {
-            transaction.inputs[i].signatureScript = try inputSigner.signature(input: transaction.inputs[i], transaction: transaction, index: i)
+            let sigScriptData = try inputSigner.sigScriptData(input: transaction.inputs[i], transaction: transaction, index: i)
+            transaction.inputs[i].signatureScript = scriptBuilder.unlockingScript(params: sigScriptData)
         }
 
         return transaction
@@ -64,7 +66,8 @@ class TransactionBuilder {
     }
 
     private func addOutputToTransaction(transaction: Transaction, forAddress address: Address, withValue value: Int, scriptType type: ScriptType) throws {
-        let output = try txFactory.transactionOutput(withValue: value, withIndex: transaction.outputs.count, forAddress: address, type: type)
+        let script = try scriptBuilder.lockingScript(type: type, params: [address.publicKeyHash])
+        let output = try txFactory.transactionOutput(withValue: value, withLockingScript: script, withIndex: transaction.outputs.count, type: type, keyHash: address.publicKeyHash)
         transaction.outputs.append(output)
     }
 

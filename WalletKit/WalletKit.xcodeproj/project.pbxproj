@@ -23,8 +23,6 @@
 		11B352D3CFB8A10D6640E93D /* BlockValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B359EA1AA39E70C270812B /* BlockValidator.swift */; };
 		11B352D61054A1CD7AD03A43 /* P2SHExtractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3569A9FFF012BEE407446 /* P2SHExtractorTests.swift */; };
 		11B3530A091F134194187BFD /* BlockFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B352E55922839F93D5455D /* BlockFactoryTests.swift */; };
-		11B35323910ECEA616F6432F /* TransactionOutputFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B354A493E8B8396D37013D /* TransactionOutputFactory.swift */; };
-		11B353B925855EC82CE0CFF1 /* ConfigurationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35B1F6106D91EEFEF62DC /* ConfigurationManager.swift */; };
 		11B3543B9CDA61125C2B7D78 /* ApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3597DE3169FD250A982D5 /* ApiManager.swift */; };
 		11B35464997EBBD3B20BDEBB /* TransactionInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35352F3DA4C26A552C62B /* TransactionInput.swift */; };
 		11B35471C1382D665EBC9B77 /* PFromSHExtractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35C4D04E14399067D5E8C /* PFromSHExtractorTests.swift */; };
@@ -84,8 +82,8 @@
 		2FA5D67384D58067F71CD6B2 /* InputSigner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DF9995FA7DD7556893F7 /* InputSigner.swift */; };
 		2FA5DC1C403D74796F4131EC /* InputSignerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DA9D7F78A26107F7209C /* InputSignerTests.swift */; };
 		2FA5DCA14A91CAB48F61F2A0 /* TransactionBuilderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DDAE64200E386070668C /* TransactionBuilderTests.swift */; };
+		2FA5DF66AD595EAC2723B0B3 /* UnspentOutputsManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DAE996A847B90E5D033A /* UnspentOutputsManagerTests.swift */; };
 		58AAA1702C9422A8EBA464D7 /* UnspentOutputsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA983B426801C46003567 /* UnspentOutputsManager.swift */; };
-		58AAA22DB30DB6FF8373C6D6 /* UnspentOutputsManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA33E4E02571B077022F7 /* UnspentOutputsManagerTests.swift */; };
 		58AAA3492A592C937473454F /* ScriptBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAF2482982ED7215EEBF9 /* ScriptBuilder.swift */; };
 		58AAA649DF284C668B495AB2 /* ScriptBuilderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA422686CE355CACA11DF /* ScriptBuilderTests.swift */; };
 		6480F0E2B4AA1D481624F935 /* Pods_WalletKitTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 95D20030A63CC8101E6A72E8 /* Pods_WalletKitTests.framework */; };
@@ -208,6 +206,7 @@
 		11B35FF2F94006C73B7773BC /* GetHeadersMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetHeadersMessage.swift; sourceTree = "<group>"; };
 		2FA5D11405173CD80A6B9904 /* TransactionBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionBuilder.swift; sourceTree = "<group>"; };
 		2FA5DA9D7F78A26107F7209C /* InputSignerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputSignerTests.swift; sourceTree = "<group>"; };
+		2FA5DAE996A847B90E5D033A /* UnspentOutputsManagerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnspentOutputsManagerTests.swift; sourceTree = "<group>"; };
 		2FA5DDAE64200E386070668C /* TransactionBuilderTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionBuilderTests.swift; sourceTree = "<group>"; };
 		2FA5DF9995FA7DD7556893F7 /* InputSigner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputSigner.swift; sourceTree = "<group>"; };
 		58AAA33E4E02571B077022F7 /* UnspentOutputsManagerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnspentOutputsManagerTests.swift; sourceTree = "<group>"; };
@@ -330,6 +329,7 @@
 			isa = PBXGroup;
 			children = (
 				11B35F08AC418535392F86BB /* SyncerTests.swift */,
+				2FA5DAE996A847B90E5D033A /* UnspentOutputsManagerTests.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -537,12 +537,12 @@
 			path = Builder;
 			sourceTree = "<group>";
 		};
-		58AAAF33A7F3B3BEA2CB658D /* Managers */ = {
+		D0CF87C9211D9E36003C950F /* Recovered References */ = {
 			isa = PBXGroup;
 			children = (
 				58AAA33E4E02571B077022F7 /* UnspentOutputsManagerTests.swift */,
 			);
-			path = Managers;
+			name = "Recovered References";
 			sourceTree = "<group>";
 		};
 		D33FD6B220F3782600EC10DB /* Frameworks */ = {
@@ -577,6 +577,7 @@
 				D3FD450620F354EF00F472B9 /* Products */,
 				D33FD6B220F3782600EC10DB /* Frameworks */,
 				30CA605E62E9DCCE7548ED22 /* Pods */,
+				D0CF87C9211D9E36003C950F /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -821,6 +822,7 @@
 				"$(SRCROOT)/WalletKit/Transactions/Builder/InputSigner.swift",
 				"$(SRCROOT)/WalletKit/Transactions/TransactionFactory.swift",
 				"$(SRCROOT)/WalletKit/Managers/UnspentOutputsManager.swift",
+				"$(SRCROOT)/WalletKit/Transactions/Builder/ScriptBuilder.swift",
 			);
 			name = Cuckoo;
 			outputPaths = (
@@ -858,10 +860,10 @@
 				11B3551EA82115C81077080C /* P2PKExtractorTests.swift in Sources */,
 				11B35471C1382D665EBC9B77 /* PFromSHExtractorTests.swift in Sources */,
 				11B3507A923B8968774A2078 /* SyncerTests.swift in Sources */,
-				58AAA22DB30DB6FF8373C6D6 /* UnspentOutputsManagerTests.swift in Sources */,
 				2FA5DCA14A91CAB48F61F2A0 /* TransactionBuilderTests.swift in Sources */,
 				58AAA649DF284C668B495AB2 /* ScriptBuilderTests.swift in Sources */,
 				2FA5DC1C403D74796F4131EC /* InputSignerTests.swift in Sources */,
+				2FA5DF66AD595EAC2723B0B3 /* UnspentOutputsManagerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

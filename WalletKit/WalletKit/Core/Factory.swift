@@ -23,15 +23,14 @@ class Factory {
     let merkleBlockHandler: MerkleBlockHandler
 
     let transactionFactory: TransactionFactory
-    let transactionInputFactory: TransactionInputFactory
-    let transactionOutputFactory: TransactionOutputFactory
     let transactionExtractor: TransactionExtractor
     let transactionSaver: TransactionSaver
     let transactionLinker: TransactionLinker
     let transactionHandler: TransactionHandler
 
+    let inputSigner: InputSigner
     let scriptBuilder: ScriptBuilder
-    let unspentOutputSelector: UnspentOutputSelector
+    let unspentOutputsManager: UnspentOutputsManager
 
     init() {
         configuration = Configuration()
@@ -53,16 +52,15 @@ class Factory {
         merkleBlockValidator = MerkleBlockValidator()
         merkleBlockHandler = MerkleBlockHandler(realmFactory: realmFactory, validator: merkleBlockValidator, saver: blockSaver)
 
-        transactionFactory = TransactionFactory()
-        transactionInputFactory = TransactionInputFactory()
-        transactionOutputFactory = TransactionOutputFactory()
         transactionExtractor = TransactionExtractor()
         transactionSaver = TransactionSaver(realmFactory: realmFactory)
         transactionLinker = TransactionLinker(realmFactory: realmFactory)
         transactionHandler = TransactionHandler(realmFactory: realmFactory, extractor: transactionExtractor, saver: transactionSaver, linker: transactionLinker)
 
+        inputSigner = InputSigner(realmFactory: realmFactory, walletKitManager: WalletKitManager.shared)
         scriptBuilder = ScriptBuilder()
-        unspentOutputSelector = UnspentOutputSelector()
+        transactionFactory = TransactionFactory()
+        unspentOutputsManager = UnspentOutputsManager(realmFactory: realmFactory)
 
         peerGroup.delegate = syncer
 

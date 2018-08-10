@@ -9,6 +9,7 @@ class TransactionBuilderTests: XCTestCase{
     private var mockRealmFactory: MockRealmFactory!
     private var mockUnspentOutputsManager: MockUnspentOutputsManager!
     private var mockInputSigner: MockInputSigner!
+    private var mockScriptBuilder:  MockScriptBuilder!
     private var mockTxFactory: MockTransactionFactory!
 
     private var transactionBuilder: TransactionBuilder!
@@ -37,11 +38,12 @@ class TransactionBuilderTests: XCTestCase{
             when(mock.realm.get).thenReturn(realm)
         }
 
-        mockUnspentOutputsManager = MockUnspentOutputsManager()
-        mockInputSigner = MockInputSigner()
+        mockUnspentOutputsManager = MockUnspentOutputsManager(realmFactory: mockRealmFactory)
+        mockInputSigner = MockInputSigner(realmFactory: mockRealmFactory)
+        mockScriptBuilder = MockScriptBuilder()
         mockTxFactory = MockTransactionFactory()
 
-        transactionBuilder = TransactionBuilder(unspentOutputsManager: mockUnspentOutputsManager, inputSigner: mockInputSigner, txFactory: mockTxFactory)
+        transactionBuilder = TransactionBuilder(unspentOutputsManager: mockUnspentOutputsManager, inputSigner: mockInputSigner, scriptBuilder: mockScriptBuilder, txFactory: mockTxFactory)
 
         changeAddress = TestData.address()
         toAddress = TestData.address(pubKeyHash: Data(hex: "64d8fbe748c577bb5da29718dae0402b0b5dd523")!)
@@ -57,17 +59,17 @@ class TransactionBuilderTests: XCTestCase{
         feeRate = 6
         fee = 1158
 
-        transaction = TransactionFactory.shared.transaction(version: 1, inputs: [], outputs: [])
-        input = TransactionFactory.shared.transactionInput(withPreviousOutput: unspentOutputs[0], script: Data(), sequence: 0)
-        toOutput = try? TransactionFactory.shared.transactionOutput(withValue: value - fee, withIndex: 0, forAddress: toAddress, type: .p2pkh)
-        changeOutput = try? TransactionFactory.shared.transactionOutput(withValue: totalInputValue - value, withIndex: 0, forAddress: changeAddress, type: .p2pkh)
+        transaction = TransactionFactory().transaction(version: 1, inputs: [], outputs: [])
+        input = TransactionFactory().transactionInput(withPreviousOutput: unspentOutputs[0], script: Data(), sequence: 0)
+        toOutput = try? TransactionFactory().transactionOutput(withValue: value - fee, withLockingScript: Data(), withIndex: 0, type: .p2pkh, keyHash: toAddress.publicKeyHash)
+        changeOutput = try? TransactionFactory().transactionOutput(withValue: totalInputValue - value, withLockingScript: Data(), withIndex: 1, type: .p2pkh, keyHash: changeAddress.publicKeyHash)
 
         stub(mockUnspentOutputsManager) { mock in
             when(mock.select(value: any(), outputs: any())).thenReturn(unspentOutputs)
         }
 
         stub(mockInputSigner) { mock in
-            when(mock.signature(input: any(), transaction: any(), index: any())).thenReturn(Data())
+            when(mock.sigScriptData(input: any(), transaction: any(), index: any())).thenReturn([Data()])
         }
 
         stub(mockTxFactory) { mock in
@@ -79,8 +81,8 @@ class TransactionBuilderTests: XCTestCase{
         }
 
         stub(mockTxFactory) { mock in
-            when(mock.transactionOutput(withValue: any(), withIndex: any(), forAddress: equal(to: toAddress), type: equal(to: ScriptType.p2pkh))).thenReturn(toOutput)
-            when(mock.transactionOutput(withValue: any(), withIndex: any(), forAddress: equal(to: changeAddress), type: equal(to: ScriptType.p2pkh))).thenReturn(changeOutput)
+            when(mock.transactionOutput(withValue: any(), withLockingScript: any(), withIndex: any(), type: equal(to: ScriptType.p2pkh), keyHash: equal(to: toAddress.publicKeyHash))).thenReturn(toOutput)
+            when(mock.transactionOutput(withValue: any(), withLockingScript: any(), withIndex: any(), type: equal(to: ScriptType.p2pkh), keyHash: equal(to: changeAddress.publicKeyHash))).thenReturn(changeOutput)
         }
     }
 
@@ -156,7 +158,7 @@ class TransactionBuilderTests: XCTestCase{
         let signature = Data(hex: "1214124faf823f23fd2342e234234a23423c23423b4132")!
 
         stub(mockInputSigner) { mock in
-            when(mock.signature(input: any(), transaction: any(), index: any())).thenReturn(signature)
+            when(mock.sigScriptData(input: any(), transaction: any(), index: any())).thenReturn([signature])
         }
 
         var resultTx = Transaction()

@@ -1,8 +1,6 @@
 import Foundation
 
 class UnspentOutputsManager {
-    static let shared = UnspentOutputsManager()
-
     enum SelectorError: Error {
         case emptyOutputs
         case notEnough
@@ -10,7 +8,7 @@ class UnspentOutputsManager {
 
     let realmFactory: RealmFactory!
 
-    init(realmFactory: RealmFactory = .shared) {
+    init(realmFactory: RealmFactory) {
         self.realmFactory = realmFactory
     }
 

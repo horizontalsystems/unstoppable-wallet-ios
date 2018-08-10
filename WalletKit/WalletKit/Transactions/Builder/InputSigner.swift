@@ -9,20 +9,15 @@ class InputSigner {
         case noPrivateKey
     }
 
-
-    static let shared = InputSigner()
-
     let walletKitManager: WalletKitManager
     let realmFactory: RealmFactory
-    let scriptBuilder: ScriptBuilder
 
-    init(realmFactory: RealmFactory = .shared, walletKitManager: WalletKitManager = .shared, scriptBuilder: ScriptBuilder = .shared) {
+    init(realmFactory: RealmFactory, walletKitManager: WalletKitManager = .shared) {
         self.realmFactory = realmFactory
         self.walletKitManager = walletKitManager
-        self.scriptBuilder = scriptBuilder
     }
 
-    func signature(input: TransactionInput, transaction: Transaction, index: Int) throws -> Data {
+    func sigScriptData(input: TransactionInput, transaction: Transaction, index: Int) throws -> [Data] {
         let realm = realmFactory.realm
 
         guard let prevOutput = input.previousOutput else {
@@ -46,6 +41,8 @@ class InputSigner {
         }
 
         let signature = try Crypto.sign(data: transaction.serializedForSignature(inputIndex: index), privateKey: privateKey.raw)
-        return scriptBuilder.unlockingScript(params: [signature, publicKey])
+
+        return [signature, publicKey]
     }
+
 }
