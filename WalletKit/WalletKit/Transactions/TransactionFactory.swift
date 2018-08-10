@@ -1,7 +1,6 @@
 import Foundation
 
 class TransactionFactory {
-    static let shared = TransactionFactory()
     let scriptBuilder: ScriptBuilder
 
     init(scriptBuilder: ScriptBuilder = .shared) {

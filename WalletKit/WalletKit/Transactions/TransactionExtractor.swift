@@ -10,7 +10,6 @@ protocol ScriptExtractor: class {
 class TransactionExtractor {
     static let defaultInputExtractors: [ScriptExtractor] = [PFromSHExtractor()]
     static let defaultOutputExtractors: [ScriptExtractor] = [P2PKHExtractor(), P2PKExtractor(), P2SHExtractor()]
-    static let shared = TransactionExtractor()
 
     enum ExtractionError: Error {
         case invalid

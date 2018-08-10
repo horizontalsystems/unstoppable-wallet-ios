@@ -23,7 +23,7 @@ class MainNet: NetworkProtocol {
         "seed.ob1.io",                  // OpenBazaar
     ]
 
-    let genesisBlock = BlockFactory.shared.block(
+    let genesisBlock = BlockFactory().block(
             withHeader: BlockHeader(
                     version: 1,
                     previousBlockHeaderReversedHex: "0000000000000000000000000000000000000000000000000000000000000000",
@@ -34,7 +34,7 @@ class MainNet: NetworkProtocol {
             ),
             height: 0)
 
-    let checkpointBlock = BlockFactory.shared.block(
+    let checkpointBlock = BlockFactory().block(
             withHeader: BlockHeader(
                     version: 536870912,
                     previousBlockHeaderReversedHex: "0000000000000000002eca92f4e44dcf144115851689ace0ff4ce271792f16fe",

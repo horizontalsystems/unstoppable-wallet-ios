@@ -1,18 +1,16 @@
 import Foundation
 
-class TransactionHandler  {
+class TransactionHandler {
     enum HandleError: Error {
         case transactionNotFound
     }
-
-    static let shared = TransactionHandler()
 
     let realmFactory: RealmFactory
     let extractor: TransactionExtractor
     let saver: TransactionSaver
     let linker: TransactionLinker
 
-    init(realmFactory: RealmFactory = .shared, extractor: TransactionExtractor = .shared, saver: TransactionSaver = .shared, linker: TransactionLinker = .shared) {
+    init(realmFactory: RealmFactory, extractor: TransactionExtractor, saver: TransactionSaver, linker: TransactionLinker) {
         self.realmFactory = realmFactory
         self.extractor = extractor
         self.saver = saver
@@ -27,7 +25,7 @@ class TransactionHandler  {
         transaction.block = existingTransaction?.block
 
         try saver.save(transaction: transaction)
-        try linker.handle(transaction: transaction)
+//        try linker.handle(transaction: transaction)
     }
 
 }

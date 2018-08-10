@@ -4,7 +4,7 @@ import Foundation
 class TestData {
 
     static var checkpointBlock: Block {
-        return BlockFactory.shared.block(
+        return BlockFactory().block(
                 withHeader: BlockHeader(
                         version: 1,
                         previousBlockHeaderReversedHex: "00000000864b744c5025331036aa4a16e9ed1cbb362908c625272150fa059b29",
@@ -17,7 +17,7 @@ class TestData {
     }
 
     static var firstBlock: Block {
-        return BlockFactory.shared.block(
+        return BlockFactory().block(
                 withHeader: BlockHeader(
                         version: 1,
                         previousBlockHeaderReversedHex: "0000000089d757fd95d79f7fcc2bc25ca7fc16492dca9aa610730ea05d9d3de9",
@@ -30,7 +30,7 @@ class TestData {
     }
 
     static var secondBlock: Block {
-        return BlockFactory.shared.block(
+        return BlockFactory().block(
                 withHeader: BlockHeader(
                         version: 1,
                         previousBlockHeaderReversedHex: "00000000d4f0ed4d9c3428dd98dabb3ed345c461cf68e8ab61cb048d294a4e4e",
@@ -43,7 +43,7 @@ class TestData {
     }
 
     static var thirdBlock: Block {
-        return BlockFactory.shared.block(
+        return BlockFactory().block(
                 withHeader: BlockHeader(
                         version: 1,
                         previousBlockHeaderReversedHex: "0000000045fd19b3c01cf7abeb88a1c5b4fea1ba2c26bdbc26a2038106e5d835",
@@ -56,7 +56,7 @@ class TestData {
     }
 
     static var forthBlock: Block {
-        return BlockFactory.shared.block(
+        return BlockFactory().block(
                 withHeader: BlockHeader(
                         version: 1,
                         previousBlockHeaderReversedHex: "00000000215fbd455a4905e35fab995456c8d6442bee8aa9b29b7c353f9a8d80",
@@ -69,7 +69,7 @@ class TestData {
     }
 
     static var oldBlock: Block {
-        return BlockFactory.shared.block(
+        return BlockFactory().block(
                 withHeader: BlockHeader(
                         version: 1,
                         previousBlockHeaderReversedHex: "0000000036f7b90238ac6b6026be5e121ac3055f19fffd69f28310a76aa4a5bc",
@@ -106,43 +106,43 @@ class TestData {
     }
 
     static var p2pkhTransaction: Transaction {
-        let transaction = TransactionFactory.shared.transaction(version: 1, inputs: [
-            TransactionFactory.shared.transactionInput(
+        let transaction = TransactionFactory().transaction(version: 1, inputs: [
+            TransactionFactory().transactionInput(
                     withPreviousOutputTxReversedHex: Data(Data(hex: "a6d1ce683f38a84cfd88a9d48b0ba2d7a8def00f8517e3da02c86fce6c7863d7")!.reversed()), withPreviousOutputIndex: 0,
                     script: Data(hex: "4730440220302e597d74aebcb0bf7f372be156252017af190bd586466104b079fba4b7efa7022037ebbf84e096ef3d966123a93a83586012353c1d2c11c967d21acf1c94c45df001210347235e12207d21b6093d9fd93a0df4d589a0d44252b98b2e934a8da5ab1d1654")!,
                     sequence: 4294967295
             )
         ], outputs: [
-            TransactionFactory.shared.transactionOutput(withValue: 10792000, withLockingScript: Data(hex: "76a9141ec865abcb88cec71c484d4dadec3d7dc0271a7b88ac")!, withIndex: 0),
-            TransactionFactory.shared.transactionOutput(withValue: 0, withLockingScript: Data(hex: "6a4c500000b919000189658af37cd16dbd16e4186ea13c5d8e1f40c5b5a0958326067dd923b8fc8f0767f62eb9a7fd57df4f3e775a96ca5b5eabf5057dff98997a3bbd011366703f5e45075f397f7f3c8465da")!, withIndex: 1),
+            TransactionFactory().transactionOutput(withValue: 10792000, withLockingScript: Data(hex: "76a9141ec865abcb88cec71c484d4dadec3d7dc0271a7b88ac")!, withIndex: 0),
+            TransactionFactory().transactionOutput(withValue: 0, withLockingScript: Data(hex: "6a4c500000b919000189658af37cd16dbd16e4186ea13c5d8e1f40c5b5a0958326067dd923b8fc8f0767f62eb9a7fd57df4f3e775a96ca5b5eabf5057dff98997a3bbd011366703f5e45075f397f7f3c8465da")!, withIndex: 1),
         ], lockTime: 0)
 
         return transaction
     }
 
     static var p2pkTransaction: Transaction {
-        let transaction = TransactionFactory.shared.transaction(version: 1, inputs: [
-            TransactionFactory.shared.transactionInput(
+        let transaction = TransactionFactory().transaction(version: 1, inputs: [
+            TransactionFactory().transactionInput(
                     withPreviousOutputTxReversedHex: Data(Data(hex: "a6d1ce683f38a84cfd88a9d48b0ba2d7a8def00f8517e3da02c86fce6c7863d7")!.reversed()), withPreviousOutputIndex: 0,
                     script: Data(hex: "4730440220302e597d74aebcb0bf7f372be156252017af190bd586466104b079fba4b7efa7022037ebbf84e096ef3d966123a93a83586012353c1d2c11c967d21acf1c94c45df001210347235e12207d21b6093d9fd93a0df4d589a0d44252b98b2e934a8da5ab1d1654")!,
                     sequence: 4294967295
             )
         ], outputs: [
-            TransactionFactory.shared.transactionOutput(withValue: 10, withLockingScript: Data(hex: "21037d56797fbe9aa506fc263751abf23bb46c9770181a6059096808923f0a64cb15ac")!, withIndex: 1),
+            TransactionFactory().transactionOutput(withValue: 10, withLockingScript: Data(hex: "21037d56797fbe9aa506fc263751abf23bb46c9770181a6059096808923f0a64cb15ac")!, withIndex: 1),
         ], lockTime: 0)
 
         return transaction
     }
 
     static var p2shTransaction: Transaction {
-        let transaction = TransactionFactory.shared.transaction(version: 1, inputs: [
-            TransactionFactory.shared.transactionInput(
+        let transaction = TransactionFactory().transaction(version: 1, inputs: [
+            TransactionFactory().transactionInput(
                     withPreviousOutputTxReversedHex: Data(Data(hex: "a6d1ce683f38a84cfd88a9d48b0ba2d7a8def00f8517e3da02c86fce6c7863d7")!.reversed()), withPreviousOutputIndex: 0,
                     script: Data(hex: "4730440220302e597d74aebcb0bf7f372be156252017af190bd586466104b079fba4b7efa7022037ebbf84e096ef3d966123a93a83586012353c1d2c11c967d21acf1c94c45df001210347235e12207d21b6093d9fd93a0df4d589a0d44252b98b2e934a8da5ab1d1654")!,
                     sequence: 4294967295
             )
         ], outputs: [
-            TransactionFactory.shared.transactionOutput(withValue: 10, withLockingScript: Data(hex: "a914bd82ef4973ebfcbc8f7cb1d540ef0503a791970b87")!, withIndex: 1),
+            TransactionFactory().transactionOutput(withValue: 10, withLockingScript: Data(hex: "a914bd82ef4973ebfcbc8f7cb1d540ef0503a791970b87")!, withIndex: 1),
         ], lockTime: 0)
 
         return transaction
