@@ -3,7 +3,7 @@ import GrouviActionSheet
 
 class TransactionInfoAlertModel: BaseAlertModel {
 
-    init(transaction: TransactionRecordViewItem) {
+    init(transaction: TransactionRecordViewItem, onCopyFromAddress: (() -> ())? = nil) {
         let titleItem = TransactionTitleItem(transaction: transaction, tag: 0, required: true)
 
         super.init()
@@ -13,11 +13,8 @@ class TransactionInfoAlertModel: BaseAlertModel {
         let statusItem = TransactionStatusItem(transaction: transaction, tag: 1, required: true)
         addItemView(statusItem)
 
-        let fromHashItem = TransactionFromHashItem(transaction: transaction, tag: 2, required: true) { _ in
-            UIPasteboard.general.setValue(transaction.from, forPasteboardType: "public.plain-text")
-            let alert = UIAlertController(title: nil, message: "copied", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "OK", style: .default))
-            alert.show()
+        let fromHashItem = TransactionFromHashItem(transaction: transaction, tag: 2, required: true) { [weak self] _ in
+            onCopyFromAddress?()
         }
 
         addItemView(fromHashItem)
