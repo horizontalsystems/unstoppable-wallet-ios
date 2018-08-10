@@ -22,7 +22,7 @@ class BlockSaverTests: XCTestCase {
             realm.deleteAll()
         }
 
-        initialBlock = BlockFactory.shared.block(withHeader: TestHelper.checkpointBlockHeader, height: 1)
+        initialBlock = Block(withHeader: TestData.checkpointBlockHeader, height: 1)
 
         try! realm.write {
             realm.add(initialBlock)
@@ -44,11 +44,11 @@ class BlockSaverTests: XCTestCase {
     }
 
     func testSave() {
-        let block1 = BlockFactory.shared.block(
+        let block1 = Block(
                 withHeader: BlockHeader(version: 536870912, previousBlockHeaderReversedHex: "000000000000837bcdb53e7a106cf0e74bab6ae8bc96481243d31bea3e6b8c92", merkleRootReversedHex: "8beab73ba2318e4cbdb1c65624496bc3214d6ba93204e049fb46293a41880b9a", timestamp: 1506023937, bits: 453021074, nonce: 2001025151),
                 previousBlock: initialBlock
         )
-        let block2 = BlockFactory.shared.block(
+        let block2 = Block(
                 withHeader: BlockHeader(version: 536870912, previousBlockHeaderReversedHex: "00000000000025c23a19cc91ad8d3e33c2630ce1df594e1ae0bf0eabe30a9176", merkleRootReversedHex: "63241c065cf8240ac64772e064a9436c21dc4c75843e7e5df6ecf41d5ef6a1b4", timestamp: 1506024043, bits: 453021074, nonce: 1373615473),
                 previousBlock: block1
         )
@@ -68,7 +68,7 @@ class BlockSaverTests: XCTestCase {
             "f0db27cd89551bd197bf551bf697d6eab8fea1fae982fe4b0055fdd58b1f7ee0".reversedData!,
             "86fef17ab1b91ffd8e9e9b14823539e4a22116a078cda1de6e31ddbcbd070993".reversedData!
         ]
-        let block = BlockFactory.shared.block(withHeader: blockHeader, previousBlock: initialBlock)
+        let block = Block(withHeader: blockHeader, previousBlock: initialBlock)
 
         try! saver.create(blocks: [block])
 
@@ -97,7 +97,7 @@ class BlockSaverTests: XCTestCase {
             Data(Data(hex: transaction.reversedHashHex)!.reversed())
         ]
 
-        let block = BlockFactory.shared.block(withHeader: blockHeader, previousBlock: initialBlock)
+        let block = Block(withHeader: blockHeader, previousBlock: initialBlock)
 
         try! saver.create(blocks: [block])
         try! realm.write {

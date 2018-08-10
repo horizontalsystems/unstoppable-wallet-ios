@@ -16,12 +16,37 @@ public class Transaction: Object {
         return "reversedHashHex"
     }
 
+    convenience init(version: Int, inputs: [TransactionInput], outputs: [TransactionOutput], lockTime: Int = 0) {
+        self.init()
+
+        self.version = version
+
+        inputs.forEach { self.inputs.append($0) }
+        outputs.forEach { self.outputs.append($0) }
+
+        self.lockTime = lockTime
+        reversedHashHex = Crypto.sha256sha256(self.serialized()).reversedHex
+    }
+
     func serialized() -> Data {
         var data = Data()
 
         data += UInt32(version)
         data += VarInt(inputs.count).serialized()
         data += inputs.flatMap { $0.serialized() }
+        data += VarInt(outputs.count).serialized()
+        data += outputs.flatMap { $0.serialized() }
+        data += UInt32(lockTime)
+
+        return data
+    }
+
+    func serializedForSignature(inputIndex: Int) throws -> Data {
+        var data = Data()
+
+        data += UInt32(version)
+        data += VarInt(inputs.count).serialized()
+        data += try inputs.enumerated().flatMap { index, input in try input.serializedForSignature(forCurrentInputSignature: inputIndex == index) }
         data += VarInt(outputs.count).serialized()
         data += outputs.flatMap { $0.serialized() }
         data += UInt32(lockTime)

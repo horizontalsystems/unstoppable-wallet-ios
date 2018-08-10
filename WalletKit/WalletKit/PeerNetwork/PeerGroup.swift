@@ -3,13 +3,13 @@ import RealmSwift
 import RxSwift
 
 class PeerGroup {
-    static let shared = PeerGroup()
 
     enum Status {
         case connected, disconnected
     }
 
     var statusSubject: PublishSubject<Status> = PublishSubject()
+    weak var delegate: PeerGroupDelegate?
 
     private let peer = Peer(network: TestNet())
 
@@ -39,7 +39,7 @@ class PeerGroup {
 extension PeerGroup: PeerDelegate {
 
     public func peerDidConnect(_ peer: Peer) {
-        let realm = RealmFactory.shared.realm
+        let realm = Singletons.shared.realmFactory.realm
         let addresses = realm.objects(Address.self)
         let filters = Array(addresses.map { $0.publicKeyHash }) + Array(addresses.map { $0.publicKey! })
 
@@ -48,31 +48,17 @@ extension PeerGroup: PeerDelegate {
 
         statusSubject.onNext(.connected)
 
-        do {
-            try HeaderSyncer.shared.sync()
-        } catch {
-            print("HeaderSyncer error: \(error)")
-        }
+        delegate?.peerGroupDidConnect()
     }
 
     public func peer(_ peer: Peer, didReceiveMerkleBlockMessage message: MerkleBlockMessage) {
 //        print("MERKLE BLOCK: \(Crypto.sha256sha256(message.blockHeader.serialized()).reversedHex)")
-
-        do {
-            try MerkleBlockHandler.shared.handle(message: message)
-        } catch {
-            print("MerkleBlockHandler error: \(error)")
-        }
+        delegate?.peerGroupDidReceive(merkleBlockMessage: message)
     }
 
-    public func peer(_ peer: Peer, didReceiveTransaction message: Transaction) {
+    public func peer(_ peer: Peer, didReceiveTransaction transaction: Transaction) {
 //        print("TRANSACTION: \(Crypto.sha256sha256(message.serialized()).reversedHex)")
-
-        do {
-            try TransactionHandler.shared.handle(transaction: message)
-        } catch {
-            print("TransactionHandler error: \(error)")
-        }
+        delegate?.peerGroupDidReceive(transaction: transaction)
     }
 
     public func peer(_ peer: Peer, didReceiveHeadersMessage message: HeadersMessage) {
@@ -83,24 +69,18 @@ extension PeerGroup: PeerDelegate {
 //            print("Last Header: \(Data(Crypto.sha256sha256($0.serialized()).reversed()).hex)")
 //        }
 
-        if !message.blockHeaders.isEmpty {
-            do {
-                try HeaderHandler.shared.handle(headers: message.blockHeaders)
-            } catch {
-                print("HeaderHandler error: \(error)")
-            }
-        }
+        delegate?.peerGroupDidReceive(headersMessage: message)
     }
 
     func peer(_ peer: Peer, didReceiveInventoryMessage message: InventoryMessage) {
         var txInventoryItems = [InventoryItem]()
-        var hasBlock = false
+//        var hasBlock = false
 
         for item in message.inventoryItems {
             if item.objectType == .transaction {
                 txInventoryItems.append(item)
             } else if item.objectType == .blockMessage {
-                hasBlock = true
+//                hasBlock = true
             }
         }
 
@@ -109,9 +89,9 @@ extension PeerGroup: PeerDelegate {
             peer.sendGetDataMessage(message: getDataMessage)
         }
 
-        if hasBlock {
-            try? HeaderSyncer.shared.sync()
-        }
+//        if hasBlock {
+//            try? HeaderSyncer.shared.sync()
+//        }
     }
 
 }

@@ -6,11 +6,21 @@ import RealmSwift
 
     var size: Int {
         switch self {
-        case .p2pk: return 35
-        case .p2pkh: return 25
-        default: return 0
+            case .p2pk: return 35
+            case .p2pkh: return 25
+            default: return 0
         }
     }
+
+    var keyLength: UInt8 {
+        switch self {
+            case .p2pk: return 0x03
+            case .p2pkh: return 0x14
+            case .p2sh: return 0x14
+            default: return 0
+        }
+    }
+
 }
 
 public class TransactionOutput: Object {
@@ -29,6 +39,21 @@ public class TransactionOutput: Object {
     }
 
     let inputs = LinkingObjects(fromType: TransactionInput.self, property: "previousOutput")
+
+    convenience init(withValue value: Int, withLockingScript script: Data, withIndex index: Int) {
+        self.init()
+
+        self.value = value
+        self.lockingScript = script
+        self.index = index
+    }
+
+    convenience init(withValue value: Int, withLockingScript script: Data, withIndex index: Int, type: ScriptType, keyHash: Data) {
+        self.init(withValue: value, withLockingScript: script, withIndex: index)
+
+        self.scriptType = type
+        self.keyHash = keyHash
+    }
 
     func serialized() -> Data {
         var data = Data()

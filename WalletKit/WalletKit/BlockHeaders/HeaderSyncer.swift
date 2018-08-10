@@ -2,45 +2,38 @@ import Foundation
 import RealmSwift
 
 class HeaderSyncer {
-    static let shared = HeaderSyncer()
-
-    enum SyncError: Error {
-        case noCheckpointBlock
-    }
-
-    private let hashCheckpointThreshold = 100
-
     let realmFactory: RealmFactory
     let peerGroup: PeerGroup
+    let network: NetworkProtocol
+    let hashCheckpointThreshold: Int
 
-    init(realmFactory: RealmFactory = .shared, peerGroup: PeerGroup = .shared) {
+    init(realmFactory: RealmFactory, peerGroup: PeerGroup, configuration: Configuration) {
         self.realmFactory = realmFactory
         self.peerGroup = peerGroup
+        self.network = configuration.network
+        self.hashCheckpointThreshold = configuration.hashCheckpointThreshold
     }
 
     func sync() throws {
         let realm = realmFactory.realm
 
-        guard let checkpointBlock = realm.objects(Block.self).filter("previousBlock != nil").sorted(byKeyPath: "height").first else {
-            throw SyncError.noCheckpointBlock
-        }
+        let blocksInChain = realm.objects(Block.self).filter("previousBlock != nil").sorted(byKeyPath: "height")
 
-        var hashes = [Data]()
+        var blocks = [Block]()
 
-        if let lastBlockInDatabase = realm.objects(Block.self).filter("previousBlock != nil AND height > %@", checkpointBlock.height).sorted(byKeyPath: "height").last {
-            hashes.append(lastBlockInDatabase.headerHash)
+        if let lastBlockInDatabase = blocksInChain.last {
+            blocks.append(lastBlockInDatabase)
 
-            if lastBlockInDatabase.height - checkpointBlock.height >= hashCheckpointThreshold,
-               let previousBlock = realm.objects(Block.self).filter("previousBlock != nil AND height = %@", lastBlockInDatabase.height - hashCheckpointThreshold + 1).first {
-                hashes.append(previousBlock.headerHash)
+            if let thresholdBlock = blocksInChain.filter("height = %@", lastBlockInDatabase.height - hashCheckpointThreshold).first {
+                blocks.append(thresholdBlock)
+            } else if let firstBlock = blocksInChain.filter("height <= %@", lastBlockInDatabase.height).first, let checkpointBlock = firstBlock.previousBlock {
+                blocks.append(checkpointBlock)
             }
+        } else {
+            blocks.append(network.checkpointBlock)
         }
 
-        if hashes.count < 2 {
-            hashes.append(checkpointBlock.headerHash)
-        }
-
-        peerGroup.requestHeaders(headerHashes: hashes)
+        peerGroup.requestHeaders(headerHashes: blocks.map { $0.headerHash })
     }
 
 }

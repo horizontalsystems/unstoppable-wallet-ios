@@ -47,9 +47,9 @@ class TransactionExtractorTests: XCTestCase {
             when(mock.extract(from: any())).thenThrow(ScriptExtractorError.wrongScriptLength)
         }
 
-        p2pkhTransaction = TestHelper.p2pkhTransaction
-        p2pkTransaction = TestHelper.p2pkTransaction
-        p2shTransaction = TestHelper.p2shTransaction
+        p2pkhTransaction = TestData.p2pkhTransaction
+        p2pkTransaction = TestData.p2pkTransaction
+        p2shTransaction = TestData.p2shTransaction
     }
 
     override func tearDown() {

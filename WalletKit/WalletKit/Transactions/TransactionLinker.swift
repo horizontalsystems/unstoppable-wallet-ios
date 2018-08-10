@@ -1,13 +1,11 @@
 import Foundation
 import RealmSwift
 
-class TransactionLinker{
-    static let shared = TransactionLinker()
-
+class TransactionLinker {
     let realmFactory: RealmFactory
     let addresses: Results<Address>
 
-    init(realmFactory: RealmFactory = .shared) {
+    init(realmFactory: RealmFactory) {
         self.realmFactory = realmFactory
         addresses = realmFactory.realm.objects(Address.self)
     }

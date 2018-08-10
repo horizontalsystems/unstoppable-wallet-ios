@@ -2,23 +2,22 @@ import Foundation
 import RealmSwift
 
 class HeaderHandler {
-    static let shared = HeaderHandler()
-
     enum HandleError: Error {
         case emptyHeaders
-        case noInitialBlock
     }
 
     let realmFactory: RealmFactory
-    let blockFactory: BlockFactory
+    let factory: Factory
     let validator: BlockValidator
     let saver: BlockSaver
+    let network: NetworkProtocol
 
-    init(realmFactory: RealmFactory = .shared, blockFactory: BlockFactory = .shared, validator: BlockValidator = TestNetBlockValidator(), saver: BlockSaver = .shared) {
+    init(realmFactory: RealmFactory, factory: Factory, validator: BlockValidator, saver: BlockSaver, configuration: Configuration) {
         self.realmFactory = realmFactory
-        self.blockFactory = blockFactory
+        self.factory = factory
         self.validator = validator
         self.saver = saver
+        self.network = configuration.network
     }
 
     func handle(headers: [BlockHeader]) throws {
@@ -28,11 +27,20 @@ class HeaderHandler {
 
         let realm = realmFactory.realm
 
-        guard let initialBlock = realm.objects(Block.self).filter("previousBlock != nil").sorted(byKeyPath: "height").last else {
-            throw HandleError.noInitialBlock
+        let blockInChain = realm.objects(Block.self).filter("previousBlock != nil").sorted(byKeyPath: "height")
+        let initialBlock = blockInChain.last ?? network.checkpointBlock
+
+
+        var newBlocks = [Block]()
+        var previousBlock = initialBlock
+
+        for header in headers {
+            let block = factory.block(withHeader: header, previousBlock: previousBlock)
+            newBlocks.append(block)
+
+            previousBlock = block
         }
 
-        let newBlocks = blockFactory.blocks(fromHeaders: headers, initialBlock: initialBlock)
         var validBlocks = [Block]()
 
         var validationError: Error?

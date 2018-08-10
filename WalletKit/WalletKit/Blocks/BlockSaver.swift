@@ -1,11 +1,9 @@
 import Foundation
 
 class BlockSaver {
-    static let shared = BlockSaver()
-
     let realmFactory: RealmFactory
 
-    init(realmFactory: RealmFactory = .shared) {
+    init(realmFactory: RealmFactory) {
         self.realmFactory = realmFactory
     }
 

@@ -13,7 +13,7 @@ class BlockValidator {
 
     let calculator: DifficultyCalculator
 
-    init(calculator: DifficultyCalculator = .shared) {
+    init(calculator: DifficultyCalculator) {
         self.calculator = calculator
     }
 

@@ -8,7 +8,10 @@ public class WalletKitManager {
         case walletNotConfigured
     }
 
-    var hdWallet: HDWallet!
+    private var _hdWallet: HDWallet?
+    var hdWallet: HDWallet {
+        return _hdWallet!
+    }
     var realmConfiguration: Realm.Configuration!
 
     init() {
@@ -29,7 +32,7 @@ public class WalletKitManager {
     }
 
     public func showRealmInfo() {
-        let realm = RealmFactory.shared.realm
+        let realm = Singletons.shared.realmFactory.realm
         let blockCount = realm.objects(Block.self).count
         let addressCount = realm.objects(Address.self).count
 
@@ -51,17 +54,16 @@ public class WalletKitManager {
     }
 
     public func start() throws {
-        if hdWallet == nil || realmConfiguration == nil {
+        if _hdWallet == nil || realmConfiguration == nil {
             throw WalletKitError.walletNotConfigured
         }
 
         WalletKitProvider.shared.preFillInitialTestData()
-        _ = BlockSyncer.shared
-        PeerGroup.shared.connect()
+        Singletons.shared.peerGroup.connect()
     }
 
     public func configure(withWords words: [String], realmConfiguration: Realm.Configuration) {
-        hdWallet = HDWallet(seed: Mnemonic.seed(mnemonic: words), network: TestNet())
+        _hdWallet = HDWallet(seed: Mnemonic.seed(mnemonic: words), network: TestNet())
         self.realmConfiguration = realmConfiguration
     }
 

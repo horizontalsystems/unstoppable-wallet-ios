@@ -1,7 +1,6 @@
 import Foundation
 
 class MerkleBlockValidator {
-    static let shared = MerkleBlockValidator()
 
     enum ValidationError: Error {
         case wrongMerkleRoot

@@ -6,35 +6,30 @@ import RealmSwift
 class HeaderHandlerTests: XCTestCase {
 
     private var mockRealmFactory: MockRealmFactory!
-    private var mockBlockFactory: MockBlockFactory!
+    private var mockFactory: MockFactory!
     private var mockValidator: MockBlockValidator!
     private var mockSaver: MockBlockSaver!
+    private var mockConfiguration: MockConfiguration!
+    private var mockNetwork: MockNetworkProtocol!
     private var headerHandler: HeaderHandler!
 
     private var realm: Realm!
-
-    private var initialBlock: Block!
-    private var initialHeader: BlockHeader!
+    private var checkpointBlock: Block!
 
     override func setUp() {
         super.setUp()
 
         mockRealmFactory = MockRealmFactory()
-        mockBlockFactory = MockBlockFactory()
-        mockValidator = MockBlockValidator()
-        mockSaver = MockBlockSaver()
-        headerHandler = HeaderHandler(realmFactory: mockRealmFactory, blockFactory: mockBlockFactory, validator: mockValidator, saver: mockSaver)
+        mockFactory = MockFactory()
+        mockValidator = MockBlockValidator(calculator: DifficultyCalculatorStub(difficultyEncoder: DifficultyEncoderStub()))
+        mockSaver = MockBlockSaver(realmFactory: RealmFactoryStub())
+        mockConfiguration = MockConfiguration()
+        mockNetwork = MockNetworkProtocol()
 
         realm = try! Realm(configuration: Realm.Configuration(inMemoryIdentifier: "TestRealm"))
         try! realm.write { realm.deleteAll() }
 
-        let preCheckpointBlock = BlockFactory.shared.block(withHeader: TestHelper.preCheckpointBlockHeader, height: TestHelper.preCheckpointBlockHeight)
-        try! realm.write {
-            realm.add(preCheckpointBlock)
-        }
-
-        initialHeader = TestHelper.checkpointBlockHeader
-        initialBlock = BlockFactory.shared.block(withHeader: initialHeader, previousBlock: preCheckpointBlock)
+        checkpointBlock = TestData.checkpointBlock
 
         stub(mockRealmFactory) { mock in
             when(mock.realm.get).thenReturn(realm)
@@ -42,25 +37,32 @@ class HeaderHandlerTests: XCTestCase {
         stub(mockSaver) { mock in
             when(mock.create(blocks: any())).thenDoNothing()
         }
+        stub(mockConfiguration) { mock in
+            when(mock.network.get).thenReturn(mockNetwork)
+        }
+        stub(mockNetwork) { mock in
+            when(mock.checkpointBlock.get).thenReturn(checkpointBlock)
+        }
+
+        headerHandler = HeaderHandler(realmFactory: mockRealmFactory, factory: mockFactory, validator: mockValidator, saver: mockSaver, configuration: mockConfiguration)
     }
 
     override func tearDown() {
         mockRealmFactory = nil
-        mockBlockFactory = nil
+        mockFactory = nil
         mockValidator = nil
         mockSaver = nil
+        mockConfiguration = nil
+        mockNetwork = nil
         headerHandler = nil
 
         realm = nil
-        initialBlock = nil
-        initialHeader = nil
+        checkpointBlock = nil
 
         super.tearDown()
     }
 
-    func testSync_EmptyItems() {
-        try! realm.write { realm.add(initialBlock) }
-
+    func testSync_EmptyHeaders() {
         var caught = false
 
         do {
@@ -76,88 +78,106 @@ class HeaderHandlerTests: XCTestCase {
         XCTAssertTrue(caught, "emptyHeaders exception not thrown")
     }
 
-    func testSync_NoInitialBlock() {
+    func testSync_NoBlocksInRealm() {
+        let firstBlock = TestData.firstBlock
+
+        stub(mockFactory) { mock in
+            when(mock.block(withHeader: equal(to: firstBlock.header), previousBlock: equal(to: checkpointBlock))).thenReturn(firstBlock)
+        }
+        stub(mockValidator) { mock in
+            when(mock.validate(block: equal(to: firstBlock))).thenDoNothing()
+        }
+
+        try! headerHandler.handle(headers: [firstBlock.header])
+        verify(mockSaver).create(blocks: equal(to: [firstBlock]))
+    }
+
+    func testValidBlocks() {
+        let thirdBlock = TestData.thirdBlock
+        let secondBlock = thirdBlock.previousBlock!
+        let firstBlock = secondBlock.previousBlock!
+
+        try! realm.write {
+            realm.add(firstBlock)
+        }
+
+        stub(mockFactory) { mock in
+            when(mock.block(withHeader: equal(to: secondBlock.header), previousBlock: equal(to: firstBlock))).thenReturn(secondBlock)
+            when(mock.block(withHeader: equal(to: thirdBlock.header), previousBlock: equal(to: secondBlock))).thenReturn(thirdBlock)
+        }
+        stub(mockValidator) { mock in
+            when(mock.validate(block: equal(to: secondBlock))).thenDoNothing()
+            when(mock.validate(block: equal(to: thirdBlock))).thenDoNothing()
+        }
+
+        try! headerHandler.handle(headers: [secondBlock.header, thirdBlock.header])
+        verify(mockSaver).create(blocks: equal(to: [secondBlock, thirdBlock]))
+    }
+
+    func testInvalidBlocks() {
+        let thirdBlock = TestData.thirdBlock
+        let secondBlock = thirdBlock.previousBlock!
+        let firstBlock = secondBlock.previousBlock!
+
+        try! realm.write {
+            realm.add(firstBlock)
+        }
+
+        stub(mockFactory) { mock in
+            when(mock.block(withHeader: equal(to: secondBlock.header), previousBlock: equal(to: firstBlock))).thenReturn(secondBlock)
+            when(mock.block(withHeader: equal(to: thirdBlock.header), previousBlock: equal(to: secondBlock))).thenReturn(thirdBlock)
+        }
+        stub(mockValidator) { mock in
+            when(mock.validate(block: equal(to: secondBlock))).thenThrow(BlockValidator.ValidatorError.notEqualBits)
+            when(mock.validate(block: equal(to: thirdBlock))).thenDoNothing()
+        }
+
         var caught = false
 
         do {
-            let header = BlockHeader()
-            try headerHandler.handle(headers: [header])
-        } catch let error as HeaderHandler.HandleError {
+            try headerHandler.handle(headers: [secondBlock.header, thirdBlock.header])
+        } catch let error as BlockValidator.ValidatorError {
             caught = true
-            XCTAssertEqual(error, HeaderHandler.HandleError.noInitialBlock)
+            XCTAssertEqual(error, BlockValidator.ValidatorError.notEqualBits)
         } catch {
             XCTFail("Unknown exception thrown")
         }
 
         verifyNoMoreInteractions(mockSaver)
-        XCTAssertTrue(caught, "noInitialBlock exception not thrown")
-    }
-
-    func testValidBlocks() {
-        try! realm.write { realm.add(initialBlock) }
-
-        let blocks = [BlockFactory.shared.block(
-                withHeader: BlockHeader(version: 536870912, previousBlockHeaderReversedHex: "0000000000000000001f1bd6d48e0fa41d054f54440a5ff3fee200bbdb37e0e5", merkleRootReversedHex: "df838278ff83d53e91423d5f7cefe64ef163004e18408de2374bd1b898241c78", timestamp: 1531798474, bits: 389315112, nonce: 2195910910),
-                previousBlock: initialBlock
-        )]
-
-        stub(mockBlockFactory) { mock in
-            when(mock.blocks(fromHeaders: equal(to: blocks.map { $0.header }), initialBlock: equal(to: initialBlock))).thenReturn(blocks)
-        }
-        stub(mockValidator) { mock in
-            when(mock.validate(block: equal(to: blocks[0]))).thenDoNothing()
-        }
-
-        try! headerHandler.handle(headers: blocks.map { $0.header })
-        verify(mockSaver).create(blocks: equal(to: blocks))
-    }
-
-    func testInvalidBlocks() {
-        try! realm.write { realm.add(initialBlock) }
-
-        let blocks = [BlockFactory.shared.block(
-                withHeader: BlockHeader(version: 536870912, previousBlockHeaderReversedHex: "0000000000000000001f1bd6d48e0fa41d054f54440a5ff3fee200bbdb37e0e5", merkleRootReversedHex: "df838278ff83d53e91423d5f7cefe64ef163004e18408de2374bd1b898241c78", timestamp: 1531798474, bits: 389315112, nonce: 2195910910),
-                previousBlock: initialBlock
-        )]
-
-        stub(mockBlockFactory) { mock in
-            when(mock.blocks(fromHeaders: equal(to: blocks.map { $0.header }), initialBlock: equal(to: initialBlock))).thenReturn(blocks)
-        }
-        stub(mockValidator) { mock in
-            when(mock.validate(block: equal(to: blocks[0]))).thenThrow(BlockValidator.ValidatorError.notEqualBits)
-        }
-
-        try? headerHandler.handle(headers: blocks.map { $0.header })
-        verifyNoMoreInteractions(mockSaver)
+        XCTAssertTrue(caught, "validation exception not thrown")
     }
 
     func testPartialValidBlocks() {
-        try! realm.write { realm.add(initialBlock) }
+        let thirdBlock = TestData.thirdBlock
+        let secondBlock = thirdBlock.previousBlock!
+        let firstBlock = secondBlock.previousBlock!
 
-        let block1 = BlockFactory.shared.block(
-                withHeader: BlockHeader(version: 536870912, previousBlockHeaderReversedHex: "0000000000000000001f1bd6d48e0fa41d054f54440a5ff3fee200bbdb37e0e5", merkleRootReversedHex: "df838278ff83d53e91423d5f7cefe64ef163004e18408de2374bd1b898241c78", timestamp: 1531798474, bits: 389315112, nonce: 2195910910),
-                previousBlock: initialBlock
-        )
-        let block2 = BlockFactory.shared.block(
-                withHeader: BlockHeader(version: 536870912, previousBlockHeaderReversedHex: "00000000000000000009dce52e227d46a6bdf38a8c1f2e88c6044893289c2bf0", merkleRootReversedHex: "43ee07fdd8892234d1d3ef85e83354ff79836ebafa1f8d94dec2858fdca16e40", timestamp: 1531799449, bits: 389437975, nonce: 2023890938),
-                previousBlock: block1
-        )
-        let block3 = BlockFactory.shared.block(
-                withHeader: BlockHeader(version: 536870912, previousBlockHeaderReversedHex: "0000000000000000003053b2dad316ce2fc65e8ac63d59d0752d980e43934ad0", merkleRootReversedHex: "cbf9b7821ecfb4d5a9cbd9e2bb01729aeecfa6cef3ded7df1e325b6aa3559dae", timestamp: 1531800228, bits: 389437975, nonce: 3500855249),
-                previousBlock: block2
-        )
+        try! realm.write {
+            realm.add(firstBlock)
+        }
 
-        stub(mockBlockFactory) { mock in
-            when(mock.blocks(fromHeaders: equal(to: [block1.header, block2.header, block3.header]), initialBlock: equal(to: initialBlock))).thenReturn([block1, block2, block3])
+        stub(mockFactory) { mock in
+            when(mock.block(withHeader: equal(to: secondBlock.header), previousBlock: equal(to: firstBlock))).thenReturn(secondBlock)
+            when(mock.block(withHeader: equal(to: thirdBlock.header), previousBlock: equal(to: secondBlock))).thenReturn(thirdBlock)
         }
         stub(mockValidator) { mock in
-            when(mock.validate(block: equal(to: block1))).thenDoNothing()
-            when(mock.validate(block: equal(to: block2))).thenDoNothing()
-            when(mock.validate(block: equal(to: block3))).thenThrow(BlockValidator.ValidatorError.notEqualBits)
+            when(mock.validate(block: equal(to: secondBlock))).thenDoNothing()
+            when(mock.validate(block: equal(to: thirdBlock))).thenThrow(BlockValidator.ValidatorError.notEqualBits)
         }
 
-        try? headerHandler.handle(headers: [block1.header, block2.header, block3.header])
-        verify(mockSaver).create(blocks: equal(to: [block1, block2]))
+        var caught = false
+
+        do {
+            try headerHandler.handle(headers: [secondBlock.header, thirdBlock.header])
+        } catch let error as BlockValidator.ValidatorError {
+            caught = true
+            XCTAssertEqual(error, BlockValidator.ValidatorError.notEqualBits)
+        } catch {
+            XCTFail("Unknown exception thrown")
+        }
+
+        verify(mockSaver).create(blocks: equal(to: [secondBlock]))
+        XCTAssertTrue(caught, "validation exception not thrown")
     }
 
 }

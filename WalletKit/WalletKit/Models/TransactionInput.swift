@@ -14,6 +14,25 @@ public class TransactionInput: Object {
         return self.transactions.first!
     }
 
+    convenience init(withPreviousOutput output: TransactionOutput, script: Data, sequence: Int) {
+        self.init()
+
+        previousOutputTxReversedHex = Data(hex: output.transaction.reversedHashHex)!
+        previousOutputIndex = output.index
+        previousOutput = output
+        signatureScript = script
+        self.sequence = sequence
+    }
+
+    convenience init(withPreviousOutputTxReversedHex previousOutputTxReversedHex: Data, withPreviousOutputIndex previousOutputIndex: Int, script: Data, sequence: Int) {
+        self.init()
+
+        self.previousOutputTxReversedHex = previousOutputTxReversedHex
+        self.previousOutputIndex = previousOutputIndex
+        signatureScript = script
+        self.sequence = sequence
+    }
+
     func serialized() -> Data {
         var data = Data()
         if let output = previousOutput {
@@ -27,6 +46,29 @@ public class TransactionInput: Object {
         let scriptLength = VarInt(signatureScript.count)
         data += scriptLength.serialized()
         data += signatureScript
+        data += UInt32(sequence)
+
+        return data
+    }
+
+    func serializedForSignature(forCurrentInputSignature: Bool) throws -> Data {
+        var data = Data()
+
+        guard let output = previousOutput else {
+            throw SerializationError.noPreviousOutput
+        }
+
+        data += output.transaction.reversedHashHex.reversedData!
+        data += UInt32(output.index)
+
+        if forCurrentInputSignature {
+            let scriptLength = VarInt(output.lockingScript.count)
+            data += scriptLength.serialized()
+            data += output.lockingScript
+        } else {
+            data += VarInt(0).serialized()
+        }
+
         data += UInt32(sequence)
 
         return data
@@ -46,4 +88,8 @@ public class TransactionInput: Object {
         return transactionInput
     }
 
+}
+
+enum SerializationError: Error {
+    case noPreviousOutput
 }
