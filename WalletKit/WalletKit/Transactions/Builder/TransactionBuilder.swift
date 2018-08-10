@@ -1,28 +1,17 @@
 import Foundation
 
 class TransactionBuilder {
-    enum BuildError: Error {
-        case insufficientFunds
-    }
-
     static let shared = TransactionBuilder()
-    static let outputSize = 120
+    static let outputSize = 32
 
     let unspentOutputsManager: UnspentOutputsManager
-    let realmFactory: RealmFactory
     let inputSigner: InputSigner
     let txFactory: TransactionFactory
-    let txOutputFactory: TransactionOutputFactory
-    let txInputFactory: TransactionInputFactory
 
-    init(realmFactory: RealmFactory = .shared, unspentOutputSelector: UnspentOutputsManager = .shared, inputSigner: InputSigner = .shared,
-         txFactory: TransactionFactory = .shared, txInputFactory: TransactionInputFactory = .shared, txOutputFactory: TransactionOutputFactory = .shared) {
-        self.realmFactory = realmFactory
-        self.unspentOutputsManager = unspentOutputSelector
+    init(unspentOutputsManager: UnspentOutputsManager = .shared, inputSigner: InputSigner = .shared, txFactory: TransactionFactory = .shared) {
+        self.unspentOutputsManager = unspentOutputsManager
         self.inputSigner = inputSigner
         self.txFactory = txFactory
-        self.txInputFactory = txInputFactory
-        self.txOutputFactory = txOutputFactory
     }
 
     func buildTransaction(value: Int, feeRate: Int, type: ScriptType = .p2pkh, changeAddress: Address, toAddress: Address) throws -> Transaction {
@@ -43,9 +32,6 @@ class TransactionBuilder {
         let fee = calculateFee(transaction: transaction, feeRate: feeRate)
         let toValue = value - fee
         let totalInputValue = unspentOutputs.reduce(0, {$0 + $1.value})
-        guard toValue <= totalInputValue else {
-            throw BuildError.insufficientFunds
-        }
 
         transaction.outputs[0].value = toValue
         if totalInputValue > value + feePerOutput(feeRate: feeRate) {
@@ -73,12 +59,12 @@ class TransactionBuilder {
     }
 
     private func addInputToTransaction(transaction: Transaction, fromUnspentOutput output: TransactionOutput) {
-        let input = txInputFactory.transactionInput(withPreviousOutput: output, script: Data(), sequence: 0)
+        let input = txFactory.transactionInput(withPreviousOutput: output, script: Data(), sequence: 0)
         transaction.inputs.append(input)
     }
 
     private func addOutputToTransaction(transaction: Transaction, forAddress address: Address, withValue value: Int, scriptType type: ScriptType) throws {
-        let output = try txOutputFactory.transactionOutput(withValue: value, withIndex: transaction.outputs.count, forAddress: address, type: type)
+        let output = try txFactory.transactionOutput(withValue: value, withIndex: transaction.outputs.count, forAddress: address, type: type)
         transaction.outputs.append(output)
     }
 

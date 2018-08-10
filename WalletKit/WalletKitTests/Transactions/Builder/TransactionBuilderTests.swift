@@ -10,8 +10,6 @@ class TransactionBuilderTests: XCTestCase{
     private var mockUnspentOutputsManager: MockUnspentOutputsManager!
     private var mockInputSigner: MockInputSigner!
     private var mockTxFactory: MockTransactionFactory!
-    private var mockTxInputFactory: MockTransactionInputFactory!
-    private var mockTxOutputFactory: MockTransactionOutputFactory!
 
     private var transactionBuilder: TransactionBuilder!
 
@@ -42,13 +40,8 @@ class TransactionBuilderTests: XCTestCase{
         mockUnspentOutputsManager = MockUnspentOutputsManager()
         mockInputSigner = MockInputSigner()
         mockTxFactory = MockTransactionFactory()
-        mockTxInputFactory = MockTransactionInputFactory()
-        mockTxOutputFactory = MockTransactionOutputFactory()
 
-        transactionBuilder = TransactionBuilder(
-                realmFactory: mockRealmFactory, unspentOutputSelector: mockUnspentOutputsManager, inputSigner: mockInputSigner,
-                txFactory: mockTxFactory, txInputFactory: mockTxInputFactory, txOutputFactory: mockTxOutputFactory
-        )
+        transactionBuilder = TransactionBuilder(unspentOutputsManager: mockUnspentOutputsManager, inputSigner: mockInputSigner, txFactory: mockTxFactory)
 
         changeAddress = TestData.address()
         toAddress = TestData.address(pubKeyHash: Data(hex: "64d8fbe748c577bb5da29718dae0402b0b5dd523")!)
@@ -65,9 +58,9 @@ class TransactionBuilderTests: XCTestCase{
         fee = 1158
 
         transaction = TransactionFactory.shared.transaction(version: 1, inputs: [], outputs: [])
-        input = TransactionInputFactory.shared.transactionInput(withPreviousOutput: unspentOutputs[0], script: Data(), sequence: 0)
-        toOutput = try? TransactionOutputFactory.shared.transactionOutput(withValue: value - fee, withIndex: 0, forAddress: toAddress, type: .p2pkh)
-        changeOutput = try? TransactionOutputFactory.shared.transactionOutput(withValue: totalInputValue - value, withIndex: 0, forAddress: changeAddress, type: .p2pkh)
+        input = TransactionFactory.shared.transactionInput(withPreviousOutput: unspentOutputs[0], script: Data(), sequence: 0)
+        toOutput = try? TransactionFactory.shared.transactionOutput(withValue: value - fee, withIndex: 0, forAddress: toAddress, type: .p2pkh)
+        changeOutput = try? TransactionFactory.shared.transactionOutput(withValue: totalInputValue - value, withIndex: 0, forAddress: changeAddress, type: .p2pkh)
 
         stub(mockUnspentOutputsManager) { mock in
             when(mock.select(value: any(), outputs: any())).thenReturn(unspentOutputs)
@@ -81,11 +74,11 @@ class TransactionBuilderTests: XCTestCase{
             when(mock.transaction(version: any(), inputs: any(), outputs: any(), lockTime: any())).thenReturn(transaction)
         }
 
-        stub(mockTxInputFactory) { mock in
+        stub(mockTxFactory) { mock in
             when(mock.transactionInput(withPreviousOutput: any(), script: any(), sequence: any())).thenReturn(input)
         }
 
-        stub(mockTxOutputFactory) { mock in
+        stub(mockTxFactory) { mock in
             when(mock.transactionOutput(withValue: any(), withIndex: any(), forAddress: equal(to: toAddress), type: equal(to: ScriptType.p2pkh))).thenReturn(toOutput)
             when(mock.transactionOutput(withValue: any(), withIndex: any(), forAddress: equal(to: changeAddress), type: equal(to: ScriptType.p2pkh))).thenReturn(changeOutput)
         }
@@ -98,8 +91,6 @@ class TransactionBuilderTests: XCTestCase{
         mockUnspentOutputsManager = nil
         mockInputSigner = nil
         mockTxFactory = nil
-        mockTxInputFactory = nil
-        mockTxOutputFactory = nil
         transactionBuilder = nil
         changeAddress = nil
         toAddress = nil
@@ -122,13 +113,13 @@ class TransactionBuilderTests: XCTestCase{
         XCTAssertEqual(resultTx.inputs[0].previousOutput!, unspentOutputs[0])
         XCTAssertEqual(resultTx.outputs.count, 2)
         XCTAssertEqual(resultTx.outputs[0].keyHash, toAddress.publicKeyHash)
-        XCTAssertEqual(resultTx.outputs[0].value, 10780842)  // value - fee
+        XCTAssertEqual(resultTx.outputs[0].value, value - fee)  // value - fee
         XCTAssertEqual(resultTx.outputs[1].keyHash, changeAddress.publicKeyHash)
         XCTAssertEqual(resultTx.outputs[1].value, unspentOutputs[0].value - value)
     }
 
     func testWithoutChangeOutput() {
-        value = value + 10000
+        value = totalInputValue
 
         var resultTx = Transaction()
         do {
@@ -144,5 +135,38 @@ class TransactionBuilderTests: XCTestCase{
         XCTAssertEqual(resultTx.outputs[0].value, value - fee)
     }
 
+    func testChangeNotAddedForDust() {
+        value = totalInputValue - TransactionBuilder.outputSize * feeRate
+
+        var resultTx = Transaction()
+        do {
+            resultTx = try transactionBuilder.buildTransaction(value: value, feeRate: feeRate, changeAddress: changeAddress, toAddress: toAddress)
+        } catch let error {
+            XCTFail(error.localizedDescription)
+        }
+
+        XCTAssertEqual(resultTx.inputs.count, 1)
+        XCTAssertEqual(resultTx.inputs[0].previousOutput!, unspentOutputs[0])
+        XCTAssertEqual(resultTx.outputs.count, 1)
+        XCTAssertEqual(resultTx.outputs[0].keyHash, toAddress.publicKeyHash)
+        XCTAssertEqual(resultTx.outputs[0].value, value - fee)
+    }
+
+    func testInputsSigned() {
+        let signature = Data(hex: "1214124faf823f23fd2342e234234a23423c23423b4132")!
+
+        stub(mockInputSigner) { mock in
+            when(mock.signature(input: any(), transaction: any(), index: any())).thenReturn(signature)
+        }
+
+        var resultTx = Transaction()
+        do {
+            resultTx = try transactionBuilder.buildTransaction(value: value, feeRate: feeRate, changeAddress: changeAddress, toAddress: toAddress)
+        } catch let error {
+            XCTFail(error.localizedDescription)
+        }
+
+        XCTAssertEqual(resultTx.inputs[0].signatureScript, signature)
+    }
 
 }

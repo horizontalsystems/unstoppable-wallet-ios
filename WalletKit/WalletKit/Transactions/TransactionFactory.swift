@@ -2,6 +2,11 @@ import Foundation
 
 class TransactionFactory {
     static let shared = TransactionFactory()
+    let scriptBuilder: ScriptBuilder
+
+    init(scriptBuilder: ScriptBuilder = .shared) {
+        self.scriptBuilder = scriptBuilder
+    }
 
     func transaction(version: Int, inputs: [TransactionInput], outputs: [TransactionOutput], lockTime: Int = 0) -> Transaction {
         let transaction = Transaction()
@@ -21,6 +26,49 @@ class TransactionFactory {
         transaction.reversedHashHex = hash
 
         return transaction
+    }
+
+    func transactionInput(withPreviousOutput output: TransactionOutput, script: Data, sequence: Int) -> TransactionInput {
+        let transactionInput = TransactionInput()
+        transactionInput.previousOutputTxReversedHex = Data(hex: output.transaction.reversedHashHex)!
+        transactionInput.previousOutputIndex = output.index
+        transactionInput.previousOutput = output
+        transactionInput.signatureScript = script
+        transactionInput.sequence = sequence
+
+        return transactionInput
+    }
+
+    func transactionInput(withPreviousOutputTxReversedHex previousOutputTxReversedHex: Data, withPreviousOutputIndex previousOutputIndex: Int, script: Data, sequence: Int) -> TransactionInput {
+        let transactionInput = TransactionInput()
+        transactionInput.previousOutputTxReversedHex = previousOutputTxReversedHex
+        transactionInput.previousOutputIndex = previousOutputIndex
+        transactionInput.signatureScript = script
+        transactionInput.sequence = sequence
+
+        return transactionInput
+    }
+
+    func transactionOutput(withValue value: Int, withLockingScript script: Data, withIndex index: Int) -> TransactionOutput {
+        let transactionOutput = TransactionOutput()
+        transactionOutput.value = value
+        transactionOutput.lockingScript = script
+        transactionOutput.index = index
+
+        return transactionOutput
+    }
+
+    func transactionOutput(withValue value: Int, withIndex index: Int, forAddress address: Address, type: ScriptType) throws -> TransactionOutput {
+        let script = try scriptBuilder.lockingScript(type: type, params: [address.publicKeyHash])
+
+        let transactionOutput = TransactionOutput()
+        transactionOutput.value = value
+        transactionOutput.lockingScript = script
+        transactionOutput.index = index
+        transactionOutput.scriptType = type
+        transactionOutput.keyHash = address.publicKeyHash
+
+        return transactionOutput
     }
 
 }
