@@ -14,6 +14,25 @@ public class TransactionInput: Object {
         return self.transactions.first!
     }
 
+    convenience init(withPreviousOutput output: TransactionOutput, script: Data, sequence: Int) {
+        self.init()
+
+        previousOutputTxReversedHex = Data(hex: output.transaction.reversedHashHex)!
+        previousOutputIndex = output.index
+        previousOutput = output
+        signatureScript = script
+        self.sequence = sequence
+    }
+
+    convenience init(withPreviousOutputTxReversedHex previousOutputTxReversedHex: Data, withPreviousOutputIndex previousOutputIndex: Int, script: Data, sequence: Int) {
+        self.init()
+
+        self.previousOutputTxReversedHex = previousOutputTxReversedHex
+        self.previousOutputIndex = previousOutputIndex
+        signatureScript = script
+        self.sequence = sequence
+    }
+
     func serialized() -> Data {
         var data = Data()
         if let output = previousOutput {

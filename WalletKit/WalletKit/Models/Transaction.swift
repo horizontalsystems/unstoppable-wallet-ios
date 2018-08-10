@@ -16,6 +16,18 @@ public class Transaction: Object {
         return "reversedHashHex"
     }
 
+    convenience init(version: Int, inputs: [TransactionInput], outputs: [TransactionOutput], lockTime: Int = 0) {
+        self.init()
+
+        self.version = version
+
+        inputs.forEach { self.inputs.append($0) }
+        outputs.forEach { self.outputs.append($0) }
+
+        self.lockTime = lockTime
+        reversedHashHex = Crypto.sha256sha256(self.serialized()).reversedHex
+    }
+
     func serialized() -> Data {
         var data = Data()
 

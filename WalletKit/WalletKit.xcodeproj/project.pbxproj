@@ -49,7 +49,6 @@
 		11B358A4D0D687298E84A6C8 /* RealmFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35DE14DB8DA22E71A1E35 /* RealmFactory.swift */; };
 		11B358B90F025DAA99D015CC /* P2PKHExtractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B350E70F0721BE279DC91A /* P2PKHExtractor.swift */; };
 		11B358D67E8A468F10CC4493 /* TransactionSaver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35D3F4B1A3B73B5CD004A /* TransactionSaver.swift */; };
-		11B3590D672828B1B40434EC /* TransactionFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35B10B1D5D1B7C72686A1 /* TransactionFactory.swift */; };
 		11B359142169EC6D44E21F59 /* ByteStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35AEA9C74CB8AFFFE9D8E /* ByteStream.swift */; };
 		11B35935E1D1B614A254BFD5 /* PFromSHExtractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35668E26F88DC1FFAE6F1 /* PFromSHExtractor.swift */; };
 		11B3598874F8268BE87173B3 /* TransactionOutput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3559B75AD75C20287ECC7 /* TransactionOutput.swift */; };
@@ -179,7 +178,6 @@
 		11B35AD5583FA34AE5BA27FF /* MerkleBlockHandlerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MerkleBlockHandlerTests.swift; sourceTree = "<group>"; };
 		11B35AEA9C74CB8AFFFE9D8E /* ByteStream.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ByteStream.swift; sourceTree = "<group>"; };
 		11B35B089F5CA8D468EDA813 /* P2PKHExtractorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = P2PKHExtractorTests.swift; sourceTree = "<group>"; };
-		11B35B10B1D5D1B7C72686A1 /* TransactionFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionFactory.swift; sourceTree = "<group>"; };
 		11B35C3A9EC92678307977F7 /* WalletKitPrivate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WalletKitPrivate.m; sourceTree = "<group>"; };
 		11B35C3F194E79CE12B94EAE /* TransactionSaverTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionSaverTests.swift; sourceTree = "<group>"; };
 		11B35C42651693CE86B75FE2 /* BlockSyncer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockSyncer.swift; sourceTree = "<group>"; };
@@ -457,7 +455,6 @@
 			children = (
 				58AAA98E5C50F2723D500F9F /* Builder */,
 				11B35ABE009449CF02027197 /* Extractors */,
-				11B35B10B1D5D1B7C72686A1 /* TransactionFactory.swift */,
 				11B356EF3A4749163293CCA3 /* TransactionHandler.swift */,
 				11B3556BD9C3E52C992D1E92 /* TransactionExtractor.swift */,
 				11B3526235310556644773A2 /* TransactionLinker.swift */,
@@ -927,7 +924,6 @@
 				11B355D39CB0D30F69C89F8B /* BlockHeader.swift in Sources */,
 				11B35D3891BAB7EF67AC3B7E /* WalletKitProvider.swift in Sources */,
 				11B35EE64EEEE37EB90C5D14 /* PeerGroup.swift in Sources */,
-				11B3590D672828B1B40434EC /* TransactionFactory.swift in Sources */,
 				11B3554339A5E16A9CE950E7 /* TransactionHandler.swift in Sources */,
 				11B35AF8400A6622AED5BFAF /* MerkleBlockHandler.swift in Sources */,
 				11B355C5EB65D21F38D2CFCB /* HeaderHandler.swift in Sources */,

@@ -40,6 +40,21 @@ public class TransactionOutput: Object {
 
     let inputs = LinkingObjects(fromType: TransactionInput.self, property: "previousOutput")
 
+    convenience init(withValue value: Int, withLockingScript script: Data, withIndex index: Int) {
+        self.init()
+
+        self.value = value
+        self.lockingScript = script
+        self.index = index
+    }
+
+    convenience init(withValue value: Int, withLockingScript script: Data, withIndex index: Int, type: ScriptType, keyHash: Data) {
+        self.init(withValue: value, withLockingScript: script, withIndex: index)
+
+        self.scriptType = type
+        self.keyHash = keyHash
+    }
+
     func serialized() -> Data {
         var data = Data()
 

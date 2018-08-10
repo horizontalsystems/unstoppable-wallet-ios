@@ -10,7 +10,7 @@ class TransactionBuilderTests: XCTestCase{
     private var mockUnspentOutputsManager: MockUnspentOutputsManager!
     private var mockInputSigner: MockInputSigner!
     private var mockScriptBuilder:  MockScriptBuilder!
-    private var mockTxFactory: MockTransactionFactory!
+    private var mockFactory: MockFactory!
 
     private var transactionBuilder: TransactionBuilder!
 
@@ -41,9 +41,9 @@ class TransactionBuilderTests: XCTestCase{
         mockUnspentOutputsManager = MockUnspentOutputsManager(realmFactory: mockRealmFactory)
         mockInputSigner = MockInputSigner(realmFactory: mockRealmFactory)
         mockScriptBuilder = MockScriptBuilder()
-        mockTxFactory = MockTransactionFactory()
+        mockFactory = MockFactory()
 
-        transactionBuilder = TransactionBuilder(unspentOutputsManager: mockUnspentOutputsManager, inputSigner: mockInputSigner, scriptBuilder: mockScriptBuilder, txFactory: mockTxFactory)
+        transactionBuilder = TransactionBuilder(unspentOutputsManager: mockUnspentOutputsManager, inputSigner: mockInputSigner, scriptBuilder: mockScriptBuilder, factory: mockFactory)
 
         changeAddress = TestData.address()
         toAddress = TestData.address(pubKeyHash: Data(hex: "64d8fbe748c577bb5da29718dae0402b0b5dd523")!)
@@ -59,10 +59,10 @@ class TransactionBuilderTests: XCTestCase{
         feeRate = 6
         fee = 1158
 
-        transaction = TransactionFactory().transaction(version: 1, inputs: [], outputs: [])
-        input = TransactionFactory().transactionInput(withPreviousOutput: unspentOutputs[0], script: Data(), sequence: 0)
-        toOutput = try? TransactionFactory().transactionOutput(withValue: value - fee, withLockingScript: Data(), withIndex: 0, type: .p2pkh, keyHash: toAddress.publicKeyHash)
-        changeOutput = try? TransactionFactory().transactionOutput(withValue: totalInputValue - value, withLockingScript: Data(), withIndex: 1, type: .p2pkh, keyHash: changeAddress.publicKeyHash)
+        transaction = Transaction(version: 1, inputs: [], outputs: [])
+        input = TransactionInput(withPreviousOutput: unspentOutputs[0], script: Data(), sequence: 0)
+        toOutput = try? TransactionOutput(withValue: value - fee, withLockingScript: Data(), withIndex: 0, type: .p2pkh, keyHash: toAddress.publicKeyHash)
+        changeOutput = try? TransactionOutput(withValue: totalInputValue - value, withLockingScript: Data(), withIndex: 1, type: .p2pkh, keyHash: changeAddress.publicKeyHash)
 
         stub(mockUnspentOutputsManager) { mock in
             when(mock.select(value: any(), outputs: any())).thenReturn(unspentOutputs)
@@ -72,15 +72,15 @@ class TransactionBuilderTests: XCTestCase{
             when(mock.sigScriptData(input: any(), transaction: any(), index: any())).thenReturn([Data()])
         }
 
-        stub(mockTxFactory) { mock in
+        stub(mockFactory) { mock in
             when(mock.transaction(version: any(), inputs: any(), outputs: any(), lockTime: any())).thenReturn(transaction)
         }
 
-        stub(mockTxFactory) { mock in
+        stub(mockFactory) { mock in
             when(mock.transactionInput(withPreviousOutput: any(), script: any(), sequence: any())).thenReturn(input)
         }
 
-        stub(mockTxFactory) { mock in
+        stub(mockFactory) { mock in
             when(mock.transactionOutput(withValue: any(), withLockingScript: any(), withIndex: any(), type: equal(to: ScriptType.p2pkh), keyHash: equal(to: toAddress.publicKeyHash))).thenReturn(toOutput)
             when(mock.transactionOutput(withValue: any(), withLockingScript: any(), withIndex: any(), type: equal(to: ScriptType.p2pkh), keyHash: equal(to: changeAddress.publicKeyHash))).thenReturn(changeOutput)
         }
@@ -92,7 +92,7 @@ class TransactionBuilderTests: XCTestCase{
         unspentOutputs = nil
         mockUnspentOutputsManager = nil
         mockInputSigner = nil
-        mockTxFactory = nil
+        mockFactory = nil
         transactionBuilder = nil
         changeAddress = nil
         toAddress = nil

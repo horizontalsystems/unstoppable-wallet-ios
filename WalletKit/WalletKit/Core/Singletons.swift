@@ -7,11 +7,11 @@ class Singletons {
     let realmFactory: RealmFactory
     let peerGroup: PeerGroup
     let syncer: Syncer
+    let factory: Factory
 
     let difficultyEncoder: DifficultyEncoder
     let difficultyCalculator: DifficultyCalculator
 
-    let factory: Factory
     let blockValidator: BlockValidator
     let blockSaver: BlockSaver
 
@@ -22,7 +22,6 @@ class Singletons {
     let merkleBlockValidator: MerkleBlockValidator
     let merkleBlockHandler: MerkleBlockHandler
 
-    let transactionFactory: TransactionFactory
     let transactionExtractor: TransactionExtractor
     let transactionSaver: TransactionSaver
     let transactionLinker: TransactionLinker
@@ -37,11 +36,11 @@ class Singletons {
         realmFactory = RealmFactory()
         peerGroup = PeerGroup()
         syncer = Syncer()
+        factory = Factory()
 
         difficultyEncoder = DifficultyEncoder()
         difficultyCalculator = DifficultyCalculator(difficultyEncoder: difficultyEncoder)
 
-        factory = Factory()
         blockValidator = TestNetBlockValidator(calculator: difficultyCalculator)
         blockSaver = BlockSaver(realmFactory: realmFactory)
 
@@ -59,7 +58,6 @@ class Singletons {
 
         inputSigner = InputSigner(realmFactory: realmFactory, walletKitManager: WalletKitManager.shared)
         scriptBuilder = ScriptBuilder()
-        transactionFactory = TransactionFactory()
         unspentOutputsManager = UnspentOutputsManager(realmFactory: realmFactory)
 
         peerGroup.delegate = syncer

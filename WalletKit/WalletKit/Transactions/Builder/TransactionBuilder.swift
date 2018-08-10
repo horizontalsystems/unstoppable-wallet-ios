@@ -6,20 +6,20 @@ class TransactionBuilder {
     let unspentOutputsManager: UnspentOutputsManager
     let inputSigner: InputSigner
     let scriptBuilder: ScriptBuilder
-    let txFactory: TransactionFactory
+    let factory: Factory
 
-    init(unspentOutputsManager: UnspentOutputsManager, inputSigner: InputSigner, scriptBuilder: ScriptBuilder, txFactory: TransactionFactory) {
+    init(unspentOutputsManager: UnspentOutputsManager, inputSigner: InputSigner, scriptBuilder: ScriptBuilder, factory: Factory) {
         self.unspentOutputsManager = unspentOutputsManager
         self.inputSigner = inputSigner
         self.scriptBuilder = scriptBuilder
-        self.txFactory = txFactory
+        self.factory = factory
     }
 
     func buildTransaction(value: Int, feeRate: Int, type: ScriptType = .p2pkh, changeAddress: Address, toAddress: Address) throws -> Transaction {
         let unspentOutputs = try unspentOutputsManager.select(value: value)
 
         // Build transaction
-        let transaction = txFactory.transaction(version: 1, inputs: [], outputs: [])
+        let transaction = factory.transaction(version: 1, inputs: [], outputs: [], lockTime: 0)
 
         // Add inputs without unlocking scripts
         for output in unspentOutputs {
@@ -61,13 +61,13 @@ class TransactionBuilder {
     }
 
     private func addInputToTransaction(transaction: Transaction, fromUnspentOutput output: TransactionOutput) {
-        let input = txFactory.transactionInput(withPreviousOutput: output, script: Data(), sequence: 0)
+        let input = factory.transactionInput(withPreviousOutput: output, script: Data(), sequence: 0)
         transaction.inputs.append(input)
     }
 
     private func addOutputToTransaction(transaction: Transaction, forAddress address: Address, withValue value: Int, scriptType type: ScriptType) throws {
         let script = try scriptBuilder.lockingScript(type: type, params: [address.publicKeyHash])
-        let output = try txFactory.transactionOutput(withValue: value, withLockingScript: script, withIndex: transaction.outputs.count, type: type, keyHash: address.publicKeyHash)
+        let output = try factory.transactionOutput(withValue: value, withLockingScript: script, withIndex: transaction.outputs.count, type: type, keyHash: address.publicKeyHash)
         transaction.outputs.append(output)
     }
 

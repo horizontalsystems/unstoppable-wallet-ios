@@ -23,11 +23,11 @@ class UnspentOutputsManagerTests: XCTestCase {
         }
 
         unspentOutputSelector = UnspentOutputsManager(realmFactory: mockRealmFactory)
-        outputs = [TransactionFactory().transactionOutput(withValue: 1, withLockingScript: Data(), withIndex: 0),
-                   TransactionFactory().transactionOutput(withValue: 2, withLockingScript: Data(), withIndex: 0),
-                   TransactionFactory().transactionOutput(withValue: 4, withLockingScript: Data(), withIndex: 0),
-                   TransactionFactory().transactionOutput(withValue: 8, withLockingScript: Data(), withIndex: 0),
-                   TransactionFactory().transactionOutput(withValue: 16, withLockingScript: Data(), withIndex: 0)
+        outputs = [TransactionOutput(withValue: 1, withLockingScript: Data(), withIndex: 0),
+                   TransactionOutput(withValue: 2, withLockingScript: Data(), withIndex: 0),
+                   TransactionOutput(withValue: 4, withLockingScript: Data(), withIndex: 0),
+                   TransactionOutput(withValue: 8, withLockingScript: Data(), withIndex: 0),
+                   TransactionOutput(withValue: 16, withLockingScript: Data(), withIndex: 0)
         ]
     }
 

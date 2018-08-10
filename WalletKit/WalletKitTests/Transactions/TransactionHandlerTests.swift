@@ -43,7 +43,8 @@ class TransactionHandlerTests: XCTestCase {
         txOutput.value = 4998000000
         txOutput.lockingScript = Data(hex: "a914121e63ee09fc7e20b59d144dcce6e2700f6f1a9c87")!
 
-        transaction = TransactionFactory().transaction(withReversedHashHex: oldTransaction.reversedHashHex)
+        transaction = Transaction()
+        transaction.reversedHashHex = oldTransaction.reversedHashHex
         transaction.version = 1
         transaction.lockTime = 0
         transaction.inputs.append(txInput)
