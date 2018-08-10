@@ -7,7 +7,7 @@ import BigInt
 class BlockValidatorTests: XCTestCase {
 
     private var validator: BlockValidator!
-    private var mockCalculator: MockDifficultyCalculator!
+    private var calculator: MockDifficultyCalculator!
 
     private var firstCheckPointBlock: Block!
     private var firstBlock: Block!
@@ -15,8 +15,8 @@ class BlockValidatorTests: XCTestCase {
     override func setUp() {
         super.setUp()
 
-        mockCalculator = MockDifficultyCalculator(difficultyEncoder: DifficultyEncoderStub())
-        validator = BlockValidator(calculator: mockCalculator)
+        calculator = MockDifficultyCalculator(difficultyEncoder: DifficultyEncoderStub())
+        validator = BlockValidator(calculator: calculator)
 
         firstCheckPointBlock = Block(
                 withHeader: BlockHeader(version: 536870912, previousBlockHeaderReversedHex: "00000000000000000020c68bfc8de14bc9dd2d6cf45161a67e0c6455cf28cfd8", merkleRootReversedHex: "a3f40c28cc6b90b2b1bfaef0e1c394b01dd97786b6a7da5e35f26bc4a7b1e451", timestamp: 1530545661, bits: 389315112, nonce: 630776633),
@@ -27,14 +27,14 @@ class BlockValidatorTests: XCTestCase {
                 height: 532223
         )
 
-        stub(mockCalculator) { mock in
+        stub(calculator) { mock in
             when(mock.difficultyAfter(block: equal(to: firstBlock), lastCheckPointBlock: equal(to: firstCheckPointBlock))).thenReturn(0)
         }
-
     }
 
     override func tearDown() {
         validator = nil
+        calculator = nil
 
         firstCheckPointBlock = nil
         firstBlock = nil
@@ -76,7 +76,7 @@ class BlockValidatorTests: XCTestCase {
                 previousBlock: firstBlock
         )
 
-        stub(mockCalculator) { mock in
+        stub(calculator) { mock in
             when(mock.difficultyAfter(block: any(), lastCheckPointBlock: any())).thenReturn(389437975)
         }
 

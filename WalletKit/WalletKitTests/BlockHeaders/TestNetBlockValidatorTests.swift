@@ -7,13 +7,18 @@ import BigInt
 class TestNetBlockValidatorTests: XCTestCase {
 
     private var validator: BlockValidator!
+    private var calculator: MockDifficultyCalculator!
+    private var encoder: MockDifficultyEncoder!
+
     private var firstCheckPointBlock: Block!
     private var previousSmallTimeSpanBlock: Block!
 
     override func setUp() {
         super.setUp()
 
-        validator = TestNetBlockValidator(calculator: DifficultyCalculatorStub(difficultyEncoder: DifficultyEncoderStub()))
+        encoder = MockDifficultyEncoder()
+        calculator = MockDifficultyCalculator(difficultyEncoder: encoder)
+        validator = TestNetBlockValidator(calculator: calculator)
 
         firstCheckPointBlock = Block(
                 withHeader: BlockHeader(version: 536870912, previousBlockHeaderReversedHex: "00000000000000c9a91d8277c58eab3bfda59d3068142dd54216129e5597ccbd", merkleRootReversedHex: "076c5847dbde99ed49cd75d7dbe63c3d3bb9399b135d1639d6169b8a5510913b", timestamp: 1531214479, bits: 425766046, nonce: 1076882637),
@@ -23,6 +28,16 @@ class TestNetBlockValidatorTests: XCTestCase {
                 withHeader: BlockHeader(version: 536870912, previousBlockHeaderReversedHex: "0000000000000023551663777c17f6f7b4c567ef9421f6b5a949dbaf47a696da", merkleRootReversedHex: "f28b33a2a294ca879f65245cd5fe60d55db27abadb146993bc83f8d574b19027", timestamp: 1532135281, bits: 425766046, nonce: 1555164689),
                 height: 1354749
         )
+        stub(encoder) { mock in
+            when(mock.decodeCompact(bits: 0x1d00ffff)).thenReturn(BigInt("26959535291011309493156476344723991336010898738574164086137773096960"))
+            when(mock.decodeCompact(bits: 425766046)).thenReturn(BigInt("606834327719050330118914244323546736122333127781628149497856"))
+            when(mock.decodeCompact(bits: 424253525)).thenReturn(BigInt("461963597221174387498100156582770936327570695542611640320000"))
+        }
+
+        stub(calculator) { mock in
+            when(mock.maxTargetDifficulty.get).thenReturn(BigInt("26959535291011309493156476344723991336010898738574164086137773096960"))
+            when(mock.difficultyAfter(block: any(), lastCheckPointBlock: any())).thenReturn(0)
+        }
     }
 
     override func tearDown() {
@@ -118,6 +133,9 @@ class TestNetBlockValidatorTests: XCTestCase {
     }
 
     func testValidCheckPointItem() {
+        stub(calculator) { mock in
+            when(mock.difficultyAfter(block: any(), lastCheckPointBlock: any())).thenReturn(425766046)
+        }
         let checkPointBlock = Block(
                 withHeader: BlockHeader(version: 536870912, previousBlockHeaderReversedHex: "00000000000002ac6d5c058c9932f350aeef84f6e334f4e01b40be4db537f8c2", merkleRootReversedHex: "9e172a04fc387db6f273ee96b4ef50732bb4b06e494483d182c5722afd8770b3", timestamp: 1530756778, bits: 436273151, nonce: 4053884125),
                 height: 1350720
