@@ -39,7 +39,7 @@ class PeerGroup {
 extension PeerGroup: PeerDelegate {
 
     public func peerDidConnect(_ peer: Peer) {
-        let realm = Factory.shared.realmFactory.realm
+        let realm = Singletons.shared.realmFactory.realm
         let addresses = realm.objects(Address.self)
         let filters = Array(addresses.map { $0.publicKeyHash }) + Array(addresses.map { $0.publicKey! })
 

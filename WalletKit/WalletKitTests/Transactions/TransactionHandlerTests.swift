@@ -31,7 +31,7 @@ class TransactionHandlerTests: XCTestCase {
 
         oldTransaction = Transaction()
         oldTransaction.reversedHashHex = Data(hex: "3e7f350bf5c2169833ad02e8ada93a5d47862fe708cdd6c9fb4c15af59e50f70")!.reversedHex
-        oldTransaction.block = BlockFactory().block(withHeader: TestData.checkpointBlockHeader, height: 1)
+        oldTransaction.block = Block(withHeader: TestData.checkpointBlockHeader, height: 1)
 
         let txInput = TransactionInput()
         txInput.previousOutputTxReversedHex = Data(hex: "28c004efa76de2dc58921a9eb21fd1a0f5aa91286e7f44e5800ca9d76c105c86")!

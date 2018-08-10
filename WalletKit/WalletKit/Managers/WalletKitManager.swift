@@ -32,7 +32,7 @@ public class WalletKitManager {
     }
 
     public func showRealmInfo() {
-        let realm = Factory.shared.realmFactory.realm
+        let realm = Singletons.shared.realmFactory.realm
         let blockCount = realm.objects(Block.self).count
         let addressCount = realm.objects(Address.self).count
 
@@ -59,7 +59,7 @@ public class WalletKitManager {
         }
 
         WalletKitProvider.shared.preFillInitialTestData()
-        Factory.shared.peerGroup.connect()
+        Singletons.shared.peerGroup.connect()
     }
 
     public func configure(withWords words: [String], realmConfiguration: Realm.Configuration) {

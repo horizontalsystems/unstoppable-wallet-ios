@@ -4,7 +4,7 @@ import Foundation
 class TestData {
 
     static var checkpointBlock: Block {
-        return BlockFactory().block(
+        return Block(
                 withHeader: BlockHeader(
                         version: 1,
                         previousBlockHeaderReversedHex: "00000000864b744c5025331036aa4a16e9ed1cbb362908c625272150fa059b29",
@@ -17,7 +17,7 @@ class TestData {
     }
 
     static var firstBlock: Block {
-        return BlockFactory().block(
+        return Block(
                 withHeader: BlockHeader(
                         version: 1,
                         previousBlockHeaderReversedHex: "0000000089d757fd95d79f7fcc2bc25ca7fc16492dca9aa610730ea05d9d3de9",
@@ -30,7 +30,7 @@ class TestData {
     }
 
     static var secondBlock: Block {
-        return BlockFactory().block(
+        return Block(
                 withHeader: BlockHeader(
                         version: 1,
                         previousBlockHeaderReversedHex: "00000000d4f0ed4d9c3428dd98dabb3ed345c461cf68e8ab61cb048d294a4e4e",
@@ -43,7 +43,7 @@ class TestData {
     }
 
     static var thirdBlock: Block {
-        return BlockFactory().block(
+        return Block(
                 withHeader: BlockHeader(
                         version: 1,
                         previousBlockHeaderReversedHex: "0000000045fd19b3c01cf7abeb88a1c5b4fea1ba2c26bdbc26a2038106e5d835",
@@ -56,7 +56,7 @@ class TestData {
     }
 
     static var forthBlock: Block {
-        return BlockFactory().block(
+        return Block(
                 withHeader: BlockHeader(
                         version: 1,
                         previousBlockHeaderReversedHex: "00000000215fbd455a4905e35fab995456c8d6442bee8aa9b29b7c353f9a8d80",
@@ -69,7 +69,7 @@ class TestData {
     }
 
     static var oldBlock: Block {
-        return BlockFactory().block(
+        return Block(
                 withHeader: BlockHeader(
                         version: 1,
                         previousBlockHeaderReversedHex: "0000000036f7b90238ac6b6026be5e121ac3055f19fffd69f28310a76aa4a5bc",

@@ -10,7 +10,7 @@ public class WalletKitProvider {
 
     private var transactionsNotificationToken: NotificationToken?
 
-    init(realmFactory: RealmFactory = Factory.shared.realmFactory) {
+    init(realmFactory: RealmFactory = Singletons.shared.realmFactory) {
         self.realmFactory = realmFactory
 
         let realm = realmFactory.realm

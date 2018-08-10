@@ -7,14 +7,14 @@ class HeaderHandler {
     }
 
     let realmFactory: RealmFactory
-    let blockFactory: BlockFactory
+    let factory: Factory
     let validator: BlockValidator
     let saver: BlockSaver
     let network: NetworkProtocol
 
-    init(realmFactory: RealmFactory, blockFactory: BlockFactory, validator: BlockValidator, saver: BlockSaver, configuration: Configuration) {
+    init(realmFactory: RealmFactory, factory: Factory, validator: BlockValidator, saver: BlockSaver, configuration: Configuration) {
         self.realmFactory = realmFactory
-        self.blockFactory = blockFactory
+        self.factory = factory
         self.validator = validator
         self.saver = saver
         self.network = configuration.network
@@ -35,7 +35,7 @@ class HeaderHandler {
         var previousBlock = initialBlock
 
         for header in headers {
-            let block = blockFactory.block(withHeader: header, previousBlock: previousBlock)
+            let block = factory.block(withHeader: header, previousBlock: previousBlock)
             newBlocks.append(block)
 
             previousBlock = block

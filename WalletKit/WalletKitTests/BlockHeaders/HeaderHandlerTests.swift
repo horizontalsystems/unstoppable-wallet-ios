@@ -6,7 +6,7 @@ import RealmSwift
 class HeaderHandlerTests: XCTestCase {
 
     private var mockRealmFactory: MockRealmFactory!
-    private var mockBlockFactory: MockBlockFactory!
+    private var mockFactory: MockFactory!
     private var mockValidator: MockBlockValidator!
     private var mockSaver: MockBlockSaver!
     private var mockConfiguration: MockConfiguration!
@@ -20,7 +20,7 @@ class HeaderHandlerTests: XCTestCase {
         super.setUp()
 
         mockRealmFactory = MockRealmFactory()
-        mockBlockFactory = MockBlockFactory()
+        mockFactory = MockFactory()
         mockValidator = MockBlockValidator(calculator: DifficultyCalculatorStub(difficultyEncoder: DifficultyEncoderStub()))
         mockSaver = MockBlockSaver(realmFactory: RealmFactoryStub())
         mockConfiguration = MockConfiguration()
@@ -44,12 +44,12 @@ class HeaderHandlerTests: XCTestCase {
             when(mock.checkpointBlock.get).thenReturn(checkpointBlock)
         }
 
-        headerHandler = HeaderHandler(realmFactory: mockRealmFactory, blockFactory: mockBlockFactory, validator: mockValidator, saver: mockSaver, configuration: mockConfiguration)
+        headerHandler = HeaderHandler(realmFactory: mockRealmFactory, factory: mockFactory, validator: mockValidator, saver: mockSaver, configuration: mockConfiguration)
     }
 
     override func tearDown() {
         mockRealmFactory = nil
-        mockBlockFactory = nil
+        mockFactory = nil
         mockValidator = nil
         mockSaver = nil
         mockConfiguration = nil
@@ -81,7 +81,7 @@ class HeaderHandlerTests: XCTestCase {
     func testSync_NoBlocksInRealm() {
         let firstBlock = TestData.firstBlock
 
-        stub(mockBlockFactory) { mock in
+        stub(mockFactory) { mock in
             when(mock.block(withHeader: equal(to: firstBlock.header), previousBlock: equal(to: checkpointBlock))).thenReturn(firstBlock)
         }
         stub(mockValidator) { mock in
@@ -101,7 +101,7 @@ class HeaderHandlerTests: XCTestCase {
             realm.add(firstBlock)
         }
 
-        stub(mockBlockFactory) { mock in
+        stub(mockFactory) { mock in
             when(mock.block(withHeader: equal(to: secondBlock.header), previousBlock: equal(to: firstBlock))).thenReturn(secondBlock)
             when(mock.block(withHeader: equal(to: thirdBlock.header), previousBlock: equal(to: secondBlock))).thenReturn(thirdBlock)
         }
@@ -123,7 +123,7 @@ class HeaderHandlerTests: XCTestCase {
             realm.add(firstBlock)
         }
 
-        stub(mockBlockFactory) { mock in
+        stub(mockFactory) { mock in
             when(mock.block(withHeader: equal(to: secondBlock.header), previousBlock: equal(to: firstBlock))).thenReturn(secondBlock)
             when(mock.block(withHeader: equal(to: thirdBlock.header), previousBlock: equal(to: secondBlock))).thenReturn(thirdBlock)
         }
@@ -156,7 +156,7 @@ class HeaderHandlerTests: XCTestCase {
             realm.add(firstBlock)
         }
 
-        stub(mockBlockFactory) { mock in
+        stub(mockFactory) { mock in
             when(mock.block(withHeader: equal(to: secondBlock.header), previousBlock: equal(to: firstBlock))).thenReturn(secondBlock)
             when(mock.block(withHeader: equal(to: thirdBlock.header), previousBlock: equal(to: secondBlock))).thenReturn(thirdBlock)
         }
