@@ -22,7 +22,6 @@
 		11B352951D5B8B5EF40C31BD /* P2PKExtractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35102A1246D20E8354340 /* P2PKExtractor.swift */; };
 		11B352D3CFB8A10D6640E93D /* BlockValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B359EA1AA39E70C270812B /* BlockValidator.swift */; };
 		11B352D61054A1CD7AD03A43 /* P2SHExtractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3569A9FFF012BEE407446 /* P2SHExtractorTests.swift */; };
-		11B3530A091F134194187BFD /* BlockFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B352E55922839F93D5455D /* BlockFactoryTests.swift */; };
 		11B3543B9CDA61125C2B7D78 /* ApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3597DE3169FD250A982D5 /* ApiManager.swift */; };
 		11B35464997EBBD3B20BDEBB /* TransactionInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35352F3DA4C26A552C62B /* TransactionInput.swift */; };
 		11B35471C1382D665EBC9B77 /* PFromSHExtractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35C4D04E14399067D5E8C /* PFromSHExtractorTests.swift */; };
@@ -73,6 +72,7 @@
 		11B35D3891BAB7EF67AC3B7E /* WalletKitProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3581276269B77C8E9173D /* WalletKitProvider.swift */; };
 		11B35DD55E37F22AE1797501 /* Transaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35C67DB63EF992C380513 /* Transaction.swift */; };
 		11B35EE64EEEE37EB90C5D14 /* PeerGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B359E44D75610DF2841327 /* PeerGroup.swift */; };
+		11B35F79192D8E7F80BEEC1C /* BlockTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3527FFC458AEFC035AC35 /* BlockTests.swift */; };
 		11B35F8A1F85697DC88C7777 /* WalletKitPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 11B35EDCF37AAE69A74FB0F5 /* WalletKitPrivate.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		11B35F93D7F1778A0A0BDC81 /* HeaderSyncerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35D5481EB03B08C1E8C30 /* HeaderSyncerTests.swift */; };
 		11B35F982C45FEE664160AD4 /* HeaderHandlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B355ED5A1298D065D6A633 /* HeaderHandlerTests.swift */; };
@@ -143,7 +143,7 @@
 		11B351B12C441F6AFA1D550D /* BlockSaverTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockSaverTests.swift; sourceTree = "<group>"; };
 		11B3526235310556644773A2 /* TransactionLinker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionLinker.swift; sourceTree = "<group>"; };
 		11B352782DC699D1FAAD6168 /* BlockSyncerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockSyncerTests.swift; sourceTree = "<group>"; };
-		11B352E55922839F93D5455D /* BlockFactoryTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockFactoryTests.swift; sourceTree = "<group>"; };
+		11B3527FFC458AEFC035AC35 /* BlockTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockTests.swift; sourceTree = "<group>"; };
 		11B35352F3DA4C26A552C62B /* TransactionInput.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionInput.swift; sourceTree = "<group>"; };
 		11B35388E6D74307FFEA548B /* Configuration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
 		11B353B145524AAE2A1B76A6 /* HeadersMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeadersMessage.swift; sourceTree = "<group>"; };
@@ -419,6 +419,14 @@
 			path = Messages;
 			sourceTree = "<group>";
 		};
+		11B358FC5E5FE51671115A95 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				11B3527FFC458AEFC035AC35 /* BlockTests.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		11B35ABE009449CF02027197 /* Extractors */ = {
 			isa = PBXGroup;
 			children = (
@@ -486,7 +494,6 @@
 		11B35F875BE86EBC5D97DECC /* Blocks */ = {
 			isa = PBXGroup;
 			children = (
-				11B352E55922839F93D5455D /* BlockFactoryTests.swift */,
 				11B351B12C441F6AFA1D550D /* BlockSaverTests.swift */,
 				11B352782DC699D1FAAD6168 /* BlockSyncerTests.swift */,
 				11B35AD5583FA34AE5BA27FF /* MerkleBlockHandlerTests.swift */,
@@ -561,6 +568,7 @@
 				11B35F875BE86EBC5D97DECC /* Blocks */,
 				11B3507A75FAF11E3C461160 /* BlockHeaders */,
 				11B352462C0F682238607E64 /* Managers */,
+				11B358FC5E5FE51671115A95 /* Models */,
 				11B3582B0517A9873E63381B /* Transactions */,
 				D380FD6720FCC22800276993 /* GeneratedMocks.swift */,
 				11B358F56F6298016B1A8AFD /* TestData.swift */,
@@ -851,7 +859,6 @@
 				11B3556FE407F45944A769A2 /* DifficultyCalculatorTests.swift in Sources */,
 				11B35CDFF90E2447AB536BDB /* MerkleBlockValidatorTests.swift in Sources */,
 				11B356B9BCF2C8253C871F44 /* TransactionHandlerTests.swift in Sources */,
-				11B3530A091F134194187BFD /* BlockFactoryTests.swift in Sources */,
 				11B35D21CC4F7BE641851E83 /* TransactionExtractorTests.swift in Sources */,
 				11B35CEAD9ADE1922CD7912A /* TransactionLinkerTests.swift in Sources */,
 				11B357E73256EFE543201474 /* TransactionSaverTests.swift in Sources */,
@@ -864,6 +871,7 @@
 				58AAA649DF284C668B495AB2 /* ScriptBuilderTests.swift in Sources */,
 				2FA5DC1C403D74796F4131EC /* InputSignerTests.swift in Sources */,
 				2FA5DF66AD595EAC2723B0B3 /* UnspentOutputsManagerTests.swift in Sources */,
+				11B35F79192D8E7F80BEEC1C /* BlockTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

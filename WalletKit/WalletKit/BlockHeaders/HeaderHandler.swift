@@ -30,7 +30,17 @@ class HeaderHandler {
         let blockInChain = realm.objects(Block.self).filter("previousBlock != nil").sorted(byKeyPath: "height")
         let initialBlock = blockInChain.last ?? network.checkpointBlock
 
-        let newBlocks = blockFactory.blocks(fromHeaders: headers, initialBlock: initialBlock)
+
+        var newBlocks = [Block]()
+        var previousBlock = initialBlock
+
+        for header in headers {
+            let block = blockFactory.block(withHeader: header, previousBlock: previousBlock)
+            newBlocks.append(block)
+
+            previousBlock = block
+        }
+
         var validBlocks = [Block]()
 
         var validationError: Error?

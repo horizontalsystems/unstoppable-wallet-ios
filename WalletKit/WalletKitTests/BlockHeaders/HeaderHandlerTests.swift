@@ -82,7 +82,7 @@ class HeaderHandlerTests: XCTestCase {
         let firstBlock = TestData.firstBlock
 
         stub(mockBlockFactory) { mock in
-            when(mock.blocks(fromHeaders: equal(to: [firstBlock.header]), initialBlock: equal(to: checkpointBlock))).thenReturn([firstBlock])
+            when(mock.block(withHeader: equal(to: firstBlock.header), previousBlock: equal(to: checkpointBlock))).thenReturn(firstBlock)
         }
         stub(mockValidator) { mock in
             when(mock.validate(block: equal(to: firstBlock))).thenDoNothing()
@@ -102,7 +102,8 @@ class HeaderHandlerTests: XCTestCase {
         }
 
         stub(mockBlockFactory) { mock in
-            when(mock.blocks(fromHeaders: equal(to: [secondBlock.header, thirdBlock.header]), initialBlock: equal(to: firstBlock))).thenReturn([secondBlock, thirdBlock])
+            when(mock.block(withHeader: equal(to: secondBlock.header), previousBlock: equal(to: firstBlock))).thenReturn(secondBlock)
+            when(mock.block(withHeader: equal(to: thirdBlock.header), previousBlock: equal(to: secondBlock))).thenReturn(thirdBlock)
         }
         stub(mockValidator) { mock in
             when(mock.validate(block: equal(to: secondBlock))).thenDoNothing()
@@ -123,7 +124,8 @@ class HeaderHandlerTests: XCTestCase {
         }
 
         stub(mockBlockFactory) { mock in
-            when(mock.blocks(fromHeaders: equal(to: [secondBlock.header, thirdBlock.header]), initialBlock: equal(to: firstBlock))).thenReturn([secondBlock, thirdBlock])
+            when(mock.block(withHeader: equal(to: secondBlock.header), previousBlock: equal(to: firstBlock))).thenReturn(secondBlock)
+            when(mock.block(withHeader: equal(to: thirdBlock.header), previousBlock: equal(to: secondBlock))).thenReturn(thirdBlock)
         }
         stub(mockValidator) { mock in
             when(mock.validate(block: equal(to: secondBlock))).thenThrow(BlockValidator.ValidatorError.notEqualBits)
@@ -155,7 +157,8 @@ class HeaderHandlerTests: XCTestCase {
         }
 
         stub(mockBlockFactory) { mock in
-            when(mock.blocks(fromHeaders: equal(to: [secondBlock.header, thirdBlock.header]), initialBlock: equal(to: firstBlock))).thenReturn([secondBlock, thirdBlock])
+            when(mock.block(withHeader: equal(to: secondBlock.header), previousBlock: equal(to: firstBlock))).thenReturn(secondBlock)
+            when(mock.block(withHeader: equal(to: thirdBlock.header), previousBlock: equal(to: secondBlock))).thenReturn(thirdBlock)
         }
         stub(mockValidator) { mock in
             when(mock.validate(block: equal(to: secondBlock))).thenDoNothing()

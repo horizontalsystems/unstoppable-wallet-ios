@@ -16,4 +16,25 @@ public class Block: Object {
         return "reversedHeaderHashHex"
     }
 
+    convenience init(withHeader header: BlockHeader, previousBlock: Block) {
+        self.init(withHeader: header)
+
+        height = previousBlock.height + 1
+        self.previousBlock = previousBlock
+    }
+
+    convenience init(withHeader header: BlockHeader, height: Int) {
+        self.init(withHeader: header)
+
+        self.height = height
+    }
+
+    private convenience init(withHeader header: BlockHeader) {
+        self.init()
+
+        self.header = header
+        headerHash = Crypto.sha256sha256(header.serialized())
+        reversedHeaderHashHex = headerHash.reversedHex
+    }
+
 }
