@@ -7,6 +7,7 @@ import BigInt
 class BlockValidatorTests: XCTestCase {
 
     private var validator: BlockValidator!
+    private var mockCalculator: MockDifficultyCalculator!
 
     private var firstCheckPointBlock: Block!
     private var firstBlock: Block!
@@ -14,7 +15,8 @@ class BlockValidatorTests: XCTestCase {
     override func setUp() {
         super.setUp()
 
-        validator = BlockValidator(calculator: DifficultyCalculatorStub(difficultyEncoder: DifficultyEncoderStub()))
+        mockCalculator = MockDifficultyCalculator(difficultyEncoder: DifficultyEncoderStub())
+        validator = BlockValidator(calculator: mockCalculator)
 
         firstCheckPointBlock = Block(
                 withHeader: BlockHeader(version: 536870912, previousBlockHeaderReversedHex: "00000000000000000020c68bfc8de14bc9dd2d6cf45161a67e0c6455cf28cfd8", merkleRootReversedHex: "a3f40c28cc6b90b2b1bfaef0e1c394b01dd97786b6a7da5e35f26bc4a7b1e451", timestamp: 1530545661, bits: 389315112, nonce: 630776633),
@@ -24,6 +26,11 @@ class BlockValidatorTests: XCTestCase {
                 withHeader: BlockHeader(version: 536870912, previousBlockHeaderReversedHex: "0000000000000000001f1bd6d48e0fa41d054f54440a5ff3fee200bbdb37e0e5", merkleRootReversedHex: "df838278ff83d53e91423d5f7cefe64ef163004e18408de2374bd1b898241c78", timestamp: 1531798474, bits: 389315112, nonce: 2195910910),
                 height: 532223
         )
+
+        stub(mockCalculator) { mock in
+            when(mock.difficultyAfter(block: equal(to: firstBlock), lastCheckPointBlock: equal(to: firstCheckPointBlock))).thenReturn(0)
+        }
+
     }
 
     override func tearDown() {
@@ -68,6 +75,11 @@ class BlockValidatorTests: XCTestCase {
                 withHeader: BlockHeader(version: 536870912, previousBlockHeaderReversedHex: "00000000000000000009dce52e227d46a6bdf38a8c1f2e88c6044893289c2bf0", merkleRootReversedHex: "43ee07fdd8892234d1d3ef85e83354ff79836ebafa1f8d94dec2858fdca16e40", timestamp: 1531799449, bits: 389437975, nonce: 2023890938),
                 previousBlock: firstBlock
         )
+
+        stub(mockCalculator) { mock in
+            when(mock.difficultyAfter(block: any(), lastCheckPointBlock: any())).thenReturn(389437975)
+        }
+
         makeChain(block: firstBlock, lastBlock: firstCheckPointBlock, interval: 2014)
 
         var caught = false
