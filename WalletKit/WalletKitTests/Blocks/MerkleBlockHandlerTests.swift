@@ -19,7 +19,7 @@ class MerkleBlockHandlerTests: XCTestCase {
 
         mockRealmFactory = MockRealmFactory()
         mockValidator = MockMerkleBlockValidator()
-        mockSaver = MockBlockSaver()
+        mockSaver = MockBlockSaver(realmFactory: RealmFactoryStub())
         merkleBlockHandler = MerkleBlockHandler(realmFactory: mockRealmFactory, validator: mockValidator, saver: mockSaver)
 
         realm = try! Realm(configuration: Realm.Configuration(inMemoryIdentifier: "TestRealm"))

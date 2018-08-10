@@ -19,7 +19,7 @@ class TestNet: NetworkProtocol {
         "bitcoin-testnet.bloqseeds.net",         // Bloq
     ]
 
-    let genesisBlock = BlockFactory.shared.block(
+    let genesisBlock = BlockFactory().block(
             withHeader: BlockHeader(
                     version: 1,
                     previousBlockHeaderReversedHex: "0000000000000000000000000000000000000000000000000000000000000000",
@@ -30,7 +30,7 @@ class TestNet: NetworkProtocol {
             ),
             height: 0)
 
-    let checkpointBlock = BlockFactory.shared.block(
+    let checkpointBlock = BlockFactory().block(
             withHeader: BlockHeader(
                     version: 536870912,
                     previousBlockHeaderReversedHex: "000000000000032d74ad8eb0a0be6b39b8e095bd9ca8537da93aae15087aafaf",

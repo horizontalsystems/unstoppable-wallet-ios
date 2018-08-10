@@ -1,7 +1,6 @@
 import Foundation
 
 class TransactionFactory {
-    static let shared = TransactionFactory()
 
     func transaction(version: Int, inputs: [TransactionInput], outputs: [TransactionOutput], lockTime: Int = 0) -> Transaction {
         let transaction = Transaction()

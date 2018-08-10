@@ -2,14 +2,12 @@ import Foundation
 import RealmSwift
 
 class HeaderSyncer {
-    static let shared = HeaderSyncer()
-
     let realmFactory: RealmFactory
     let peerGroup: PeerGroup
     let network: NetworkProtocol
     let hashCheckpointThreshold: Int
 
-    init(realmFactory: RealmFactory = .shared, peerGroup: PeerGroup = .shared, configuration: ConfigurationManager = .shared) {
+    init(realmFactory: RealmFactory, peerGroup: PeerGroup, configuration: Configuration) {
         self.realmFactory = realmFactory
         self.peerGroup = peerGroup
         self.network = configuration.network

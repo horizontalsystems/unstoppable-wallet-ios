@@ -1,11 +1,9 @@
 import Foundation
 
 class TransactionSaver {
-    static let shared = TransactionSaver()
-
     let realmFactory: RealmFactory
 
-    init(realmFactory: RealmFactory = .shared) {
+    init(realmFactory: RealmFactory) {
         self.realmFactory = realmFactory
     }
 

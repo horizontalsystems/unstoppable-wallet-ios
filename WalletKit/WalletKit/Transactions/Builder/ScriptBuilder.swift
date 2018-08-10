@@ -1,7 +1,6 @@
 import Foundation
 
 class ScriptBuilder {
-    static let shared = ScriptBuilder()
 
     enum BuildError: Error { case wrongDataCount, unknownType }
 

@@ -7,7 +7,7 @@ class HeaderSyncerTests: XCTestCase {
 
     private var mockRealmFactory: MockRealmFactory!
     private var mockPeerGroup: MockPeerGroup!
-    private var mockConfiguration: MockConfigurationManager!
+    private var mockConfiguration: MockConfiguration!
     private var mockNetwork: MockNetworkProtocol!
     private var headerSyncer: HeaderSyncer!
 
@@ -19,7 +19,7 @@ class HeaderSyncerTests: XCTestCase {
 
         mockRealmFactory = MockRealmFactory()
         mockPeerGroup = MockPeerGroup()
-        mockConfiguration = MockConfigurationManager()
+        mockConfiguration = MockConfiguration()
         mockNetwork = MockNetworkProtocol()
 
         realm = try! Realm(configuration: Realm.Configuration(inMemoryIdentifier: "TestRealm"))
@@ -48,7 +48,6 @@ class HeaderSyncerTests: XCTestCase {
         mockRealmFactory = nil
         mockPeerGroup = nil
         mockNetwork = nil
-        mockConfiguration = nil
         headerSyncer = nil
 
         realm = nil

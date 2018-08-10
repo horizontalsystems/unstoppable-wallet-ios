@@ -419,7 +419,7 @@ protocol PeerDelegate : class {
     func peer(_ peer: Peer, didReceiveHeadersMessage message: HeadersMessage)
     func peer(_ peer: Peer, didReceiveBlockMessage message: BlockMessage)
     func peer(_ peer: Peer, didReceiveMerkleBlockMessage message: MerkleBlockMessage)
-    func peer(_ peer: Peer, didReceiveTransaction message: Transaction)
+    func peer(_ peer: Peer, didReceiveTransaction transaction: Transaction)
     func peer(_ peer: Peer, didReceiveRejectMessage message: RejectMessage)
 }
 
@@ -433,6 +433,6 @@ extension PeerDelegate {
     func peer(_ peer: Peer, didReceiveHeadersMessage message: HeadersMessage) {}
     func peer(_ peer: Peer, didReceiveBlockMessage message: BlockMessage) {}
     func peer(_ peer: Peer, didReceiveMerkleBlockMessage message: MerkleBlockMessage) {}
-    func peer(_ peer: Peer, didReceiveTransaction message: Transaction) {}
+    func peer(_ peer: Peer, didReceiveTransaction transaction: Transaction) {}
     func peer(_ peer: Peer, didReceiveRejectMessage message: RejectMessage) {}
 }

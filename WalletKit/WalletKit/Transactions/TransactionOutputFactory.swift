@@ -1,7 +1,6 @@
 import Foundation
 
 class TransactionOutputFactory {
-    static let shared = TransactionOutputFactory()
 
     func transactionOutput(withValue value: Int, withLockingScript script: Data, withIndex index: Int) -> TransactionOutput {
         let transactionOutput = TransactionOutput()

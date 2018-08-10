@@ -1,7 +1,6 @@
 import Foundation
 
 class UnspentOutputSelector {
-    static let shared = UnspentOutputSelector()
 
     enum SelectorError: Error {
         case emptyOutputs

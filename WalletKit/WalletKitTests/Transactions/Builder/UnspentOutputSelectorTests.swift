@@ -11,11 +11,11 @@ class UnspentOutputSelectorTests: XCTestCase {
         super.setUp()
 
         unspentOutputSelector = UnspentOutputSelector()
-        outputs = [TransactionOutputFactory.shared.transactionOutput(withValue: 1, withLockingScript: Data(), withIndex: 0),
-                   TransactionOutputFactory.shared.transactionOutput(withValue: 2, withLockingScript: Data(), withIndex: 0),
-                   TransactionOutputFactory.shared.transactionOutput(withValue: 4, withLockingScript: Data(), withIndex: 0),
-                   TransactionOutputFactory.shared.transactionOutput(withValue: 8, withLockingScript: Data(), withIndex: 0),
-                   TransactionOutputFactory.shared.transactionOutput(withValue: 16, withLockingScript: Data(), withIndex: 0)
+        outputs = [TransactionOutputFactory().transactionOutput(withValue: 1, withLockingScript: Data(), withIndex: 0),
+                   TransactionOutputFactory().transactionOutput(withValue: 2, withLockingScript: Data(), withIndex: 0),
+                   TransactionOutputFactory().transactionOutput(withValue: 4, withLockingScript: Data(), withIndex: 0),
+                   TransactionOutputFactory().transactionOutput(withValue: 8, withLockingScript: Data(), withIndex: 0),
+                   TransactionOutputFactory().transactionOutput(withValue: 16, withLockingScript: Data(), withIndex: 0)
         ]
     }
 

@@ -2,8 +2,6 @@ import Foundation
 import RealmSwift
 
 class MerkleBlockHandler {
-    static let shared = MerkleBlockHandler()
-
     enum HandleError: Error {
         case blockNotFound
     }
@@ -12,7 +10,7 @@ class MerkleBlockHandler {
     let validator: MerkleBlockValidator
     let saver: BlockSaver
 
-    init(realmFactory: RealmFactory = .shared, validator: MerkleBlockValidator = .shared, saver: BlockSaver = .shared) {
+    init(realmFactory: RealmFactory, validator: MerkleBlockValidator, saver: BlockSaver) {
         self.realmFactory = realmFactory
         self.validator = validator
         self.saver = saver

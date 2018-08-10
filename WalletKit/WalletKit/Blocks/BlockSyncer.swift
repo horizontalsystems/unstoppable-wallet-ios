@@ -3,7 +3,6 @@ import RealmSwift
 import RxSwift
 
 class BlockSyncer {
-    static let shared = BlockSyncer()
     let disposeBag = DisposeBag()
 
     let realmFactory: RealmFactory
@@ -11,7 +10,7 @@ class BlockSyncer {
 
     private var notificationToken: NotificationToken?
 
-    init(realmFactory: RealmFactory = .shared, peerGroup: PeerGroup = .shared, scheduler: ImmediateSchedulerType = ConcurrentDispatchQueueScheduler(qos: .background), queue: DispatchQueue = .global(qos: .background)) {
+    init(realmFactory: RealmFactory, peerGroup: PeerGroup, scheduler: ImmediateSchedulerType = ConcurrentDispatchQueueScheduler(qos: .background), queue: DispatchQueue = .global(qos: .background)) {
         self.realmFactory = realmFactory
         self.peerGroup = peerGroup
 

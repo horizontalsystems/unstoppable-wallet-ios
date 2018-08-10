@@ -2,8 +2,6 @@ import Foundation
 import RealmSwift
 
 class HeaderHandler {
-    static let shared = HeaderHandler()
-
     enum HandleError: Error {
         case emptyHeaders
     }
@@ -14,7 +12,7 @@ class HeaderHandler {
     let saver: BlockSaver
     let network: NetworkProtocol
 
-    init(realmFactory: RealmFactory = .shared, blockFactory: BlockFactory = .shared, validator: BlockValidator = TestNetBlockValidator(), saver: BlockSaver = .shared, configuration: ConfigurationManager = .shared) {
+    init(realmFactory: RealmFactory, blockFactory: BlockFactory, validator: BlockValidator, saver: BlockSaver, configuration: Configuration) {
         self.realmFactory = realmFactory
         self.blockFactory = blockFactory
         self.validator = validator

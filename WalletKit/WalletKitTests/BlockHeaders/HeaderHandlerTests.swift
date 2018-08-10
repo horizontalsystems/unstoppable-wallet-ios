@@ -9,7 +9,7 @@ class HeaderHandlerTests: XCTestCase {
     private var mockBlockFactory: MockBlockFactory!
     private var mockValidator: MockBlockValidator!
     private var mockSaver: MockBlockSaver!
-    private var mockConfiguration: MockConfigurationManager!
+    private var mockConfiguration: MockConfiguration!
     private var mockNetwork: MockNetworkProtocol!
     private var headerHandler: HeaderHandler!
 
@@ -21,9 +21,9 @@ class HeaderHandlerTests: XCTestCase {
 
         mockRealmFactory = MockRealmFactory()
         mockBlockFactory = MockBlockFactory()
-        mockValidator = MockBlockValidator()
-        mockSaver = MockBlockSaver()
-        mockConfiguration = MockConfigurationManager()
+        mockValidator = MockBlockValidator(calculator: DifficultyCalculatorStub(difficultyEncoder: DifficultyEncoderStub()))
+        mockSaver = MockBlockSaver(realmFactory: RealmFactoryStub())
+        mockConfiguration = MockConfiguration()
         mockNetwork = MockNetworkProtocol()
 
         realm = try! Realm(configuration: Realm.Configuration(inMemoryIdentifier: "TestRealm"))

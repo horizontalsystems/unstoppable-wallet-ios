@@ -1,7 +1,6 @@
 import Foundation
 
 class BlockFactory {
-    static let shared = BlockFactory()
 
     func block(withHeader header: BlockHeader, previousBlock: Block) -> Block {
         let block = self.block(withHeader: header)

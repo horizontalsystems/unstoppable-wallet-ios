@@ -2,7 +2,6 @@ import Foundation
 import BigInt
 
 class DifficultyEncoder {
-    static let shared = DifficultyEncoder()
 
     /**
      * <p>The "compact" format is a representation of a whole number N using an unsigned 32 bit number similar to a

@@ -2,8 +2,6 @@ import Foundation
 import BigInt
 
 class DifficultyCalculator {
-    static let shared = DifficultyCalculator()
-
     private let maxTargetBits: Int = 0x1d00ffff                   // Maximum difficulty.
     var maxTargetDifficulty: BigInt { return difficultyEncoder.decodeCompact(bits: maxTargetBits) }
 
@@ -13,7 +11,7 @@ class DifficultyCalculator {
 
     let difficultyEncoder: DifficultyEncoder
 
-    init(difficultyEncoder: DifficultyEncoder = .shared) {
+    init(difficultyEncoder: DifficultyEncoder) {
         self.difficultyEncoder = difficultyEncoder
         heightInterval = targetTimeSpan / targetSpacing
     }

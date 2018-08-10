@@ -1,7 +1,6 @@
 import Foundation
 
-class ConfigurationManager {
-    static let shared = ConfigurationManager()
+class Configuration {
 
     var network: NetworkProtocol = TestNet()
     var hashCheckpointThreshold: Int = 100
