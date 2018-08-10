@@ -8,17 +8,17 @@ class TransactionBuilder {
     static let shared = TransactionBuilder()
     static let outputSize = 120
 
-    let unspentOutputSelector: UnspentOutputSelector
+    let unspentOutputsManager: UnspentOutputsManager
     let realmFactory: RealmFactory
     let inputSigner: InputSigner
     let txFactory: TransactionFactory
     let txOutputFactory: TransactionOutputFactory
     let txInputFactory: TransactionInputFactory
 
-    init(realmFactory: RealmFactory = .shared, unspentOutputSelector: UnspentOutputSelector = .shared, inputSigner: InputSigner = .shared,
+    init(realmFactory: RealmFactory = .shared, unspentOutputSelector: UnspentOutputsManager = .shared, inputSigner: InputSigner = .shared,
          txFactory: TransactionFactory = .shared, txInputFactory: TransactionInputFactory = .shared, txOutputFactory: TransactionOutputFactory = .shared) {
         self.realmFactory = realmFactory
-        self.unspentOutputSelector = unspentOutputSelector
+        self.unspentOutputsManager = unspentOutputSelector
         self.inputSigner = inputSigner
         self.txFactory = txFactory
         self.txInputFactory = txInputFactory
@@ -26,7 +26,7 @@ class TransactionBuilder {
     }
 
     func buildTransaction(value: Int, feeRate: Int, type: ScriptType = .p2pkh, changeAddress: Address, toAddress: Address) throws -> Transaction {
-        let unspentOutputs = try unspentOutputSelector.select(value: value, outputs: allUnspentOutputs())
+        let unspentOutputs = try unspentOutputsManager.select(value: value)
 
         // Build transaction
         let transaction = txFactory.transaction(version: 1, inputs: [], outputs: [])

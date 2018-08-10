@@ -1,16 +1,30 @@
 import XCTest
 import Cuckoo
+import RealmSwift
 @testable import WalletKit
 
-class UnspentOutputSelectorTests: XCTestCase {
+class UnspentOutputsManagerTests: XCTestCase {
 
-    private var unspentOutputSelector: UnspentOutputSelector!
+    private var unspentOutputSelector: UnspentOutputsManager!
     private var outputs: [TransactionOutput]!
+
+    private var mockRealmFactory: MockRealmFactory!
+
+    private var realm: Realm!
 
     override func setUp() {
         super.setUp()
 
-        unspentOutputSelector = UnspentOutputSelector()
+        mockRealmFactory = MockRealmFactory()
+
+        realm = try! Realm(configuration: Realm.Configuration(inMemoryIdentifier: "TestRealm"))
+        try! realm.write { realm.deleteAll() }
+
+        stub(mockRealmFactory) { mock in
+            when(mock.realm.get).thenReturn(realm)
+        }
+
+        unspentOutputSelector = UnspentOutputsManager()
         outputs = [TransactionOutputFactory.shared.transactionOutput(withValue: 1, withLockingScript: Data(), withIndex: 0),
                    TransactionOutputFactory.shared.transactionOutput(withValue: 2, withLockingScript: Data(), withIndex: 0),
                    TransactionOutputFactory.shared.transactionOutput(withValue: 4, withLockingScript: Data(), withIndex: 0),
@@ -20,6 +34,9 @@ class UnspentOutputSelectorTests: XCTestCase {
     }
 
     override func tearDown() {
+        mockRealmFactory = nil
+        realm = nil
+
         unspentOutputSelector = nil
         outputs = nil
 
@@ -48,8 +65,8 @@ class UnspentOutputSelectorTests: XCTestCase {
         do {
             _ = try unspentOutputSelector.select(value: 35, outputs: outputs)
             XCTFail("Wrong value summary!")
-        } catch let error as UnspentOutputSelector.SelectorError {
-            XCTAssertEqual(error, UnspentOutputSelector.SelectorError.notEnough)
+        } catch let error as UnspentOutputsManager.SelectorError {
+            XCTAssertEqual(error, UnspentOutputsManager.SelectorError.notEnough)
         } catch {
             XCTFail("Unexpected \(error) error!")
         }
@@ -59,11 +76,15 @@ class UnspentOutputSelectorTests: XCTestCase {
         do {
             _ = try unspentOutputSelector.select(value: 35, outputs: [])
             XCTFail("Wrong value summary!")
-        } catch let error as UnspentOutputSelector.SelectorError {
-            XCTAssertEqual(error, UnspentOutputSelector.SelectorError.emptyOutputs)
+        } catch let error as UnspentOutputsManager.SelectorError {
+            XCTAssertEqual(error, UnspentOutputsManager.SelectorError.emptyOutputs)
         } catch {
             XCTFail("Unexpected \(error) error!")
         }
+    }
+
+    func testValidOutputs() {
+        XCTAssertTrue(true)
     }
 
 }

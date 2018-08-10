@@ -7,7 +7,7 @@ class TransactionBuilderTests: XCTestCase{
 
     private var realm: Realm!
     private var mockRealmFactory: MockRealmFactory!
-    private var mockUnspentOutputSelector: MockUnspentOutputSelector!
+    private var mockUnspentOutputsManager: MockUnspentOutputsManager!
     private var mockInputSigner: MockInputSigner!
     private var mockTxFactory: MockTransactionFactory!
     private var mockTxInputFactory: MockTransactionInputFactory!
@@ -39,14 +39,14 @@ class TransactionBuilderTests: XCTestCase{
             when(mock.realm.get).thenReturn(realm)
         }
 
-        mockUnspentOutputSelector = MockUnspentOutputSelector()
+        mockUnspentOutputsManager = MockUnspentOutputsManager()
         mockInputSigner = MockInputSigner()
         mockTxFactory = MockTransactionFactory()
         mockTxInputFactory = MockTransactionInputFactory()
         mockTxOutputFactory = MockTransactionOutputFactory()
 
         transactionBuilder = TransactionBuilder(
-                realmFactory: mockRealmFactory, unspentOutputSelector: mockUnspentOutputSelector, inputSigner: mockInputSigner,
+                realmFactory: mockRealmFactory, unspentOutputSelector: mockUnspentOutputsManager, inputSigner: mockInputSigner,
                 txFactory: mockTxFactory, txInputFactory: mockTxInputFactory, txOutputFactory: mockTxOutputFactory
         )
 
@@ -69,7 +69,7 @@ class TransactionBuilderTests: XCTestCase{
         toOutput = try? TransactionOutputFactory.shared.transactionOutput(withValue: value - fee, withIndex: 0, forAddress: toAddress, type: .p2pkh)
         changeOutput = try? TransactionOutputFactory.shared.transactionOutput(withValue: totalInputValue - value, withIndex: 0, forAddress: changeAddress, type: .p2pkh)
 
-        stub(mockUnspentOutputSelector) { mock in
+        stub(mockUnspentOutputsManager) { mock in
             when(mock.select(value: any(), outputs: any())).thenReturn(unspentOutputs)
         }
 
@@ -95,7 +95,7 @@ class TransactionBuilderTests: XCTestCase{
         mockRealmFactory = nil
         realm = nil
         unspentOutputs = nil
-        mockUnspentOutputSelector = nil
+        mockUnspentOutputsManager = nil
         mockInputSigner = nil
         mockTxFactory = nil
         mockTxInputFactory = nil
