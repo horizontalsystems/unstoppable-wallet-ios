@@ -49,6 +49,30 @@ extension Syncer: PeerGroupDelegate {
     }
 
     func peerGroupDidReceive(getDataMessage message: GetDataMessage) {
+//        for item in getDataMessage.inventoryItems {
+//            switch item.objectType {
+//            case .error:
+//                break
+//            case .transaction:
+//                // Send transaction
+////                if let transaction = context.transactions[item.hash] {
+////                    let payload = transaction.serialized()
+////                    let checksum = Data(Crypto.sha256sha256(payload).prefix(4))
+////
+////                    let message = Message(magic: network.magic, command: "tx", length: UInt32(payload.count), checksum: checksum, payload: payload)
+////                    sendMessage(message)
+////                }
+//                break
+//            case .blockMessage:
+//                break
+//            case .filteredBlockMessage:
+//                break
+//            case .compactBlockMessage:
+//                break
+//            case .unknown:
+//                break
+//            }
+//        }
     }
 
     func peerGroupDidReceive(inventoryMessage message: InventoryMessage) {

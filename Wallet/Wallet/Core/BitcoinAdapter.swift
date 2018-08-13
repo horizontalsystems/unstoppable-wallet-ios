@@ -72,4 +72,8 @@ extension BitcoinAdapter: IAdapter {
         try walletKit.start()
     }
 
+    func send(to address: String, amount: Int) {
+
+    }
+
 }

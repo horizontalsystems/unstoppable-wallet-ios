@@ -2,7 +2,7 @@ import Foundation
 import RealmSwift
 
 @objc enum ScriptType: Int {
-    case unknown = 0, p2pkh, p2pk, p2sh
+    case unknown, p2pkh, p2pk, p2sh
 
     var size: Int {
         switch self {

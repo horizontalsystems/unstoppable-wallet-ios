@@ -28,10 +28,11 @@ public class WalletKit {
     let transactionSaver: TransactionSaver
     let transactionLinker: TransactionLinker
     let transactionHandler: TransactionHandler
+    let transactionSender: TransactionSender
 
     let inputSigner: InputSigner
     let scriptBuilder: ScriptBuilder
-    let unspentOutputsManager: UnspentOutputSelector
+    let unspentOutputSelector: UnspentOutputSelector
 
     public init(withWords words: [String], realmConfiguration: Realm.Configuration) {
         configuration = Configuration()
@@ -60,10 +61,11 @@ public class WalletKit {
         transactionSaver = TransactionSaver(realmFactory: realmFactory)
         transactionLinker = TransactionLinker(realmFactory: realmFactory)
         transactionHandler = TransactionHandler(realmFactory: realmFactory, extractor: transactionExtractor, saver: transactionSaver, linker: transactionLinker)
+        transactionSender = TransactionSender(realmFactory: realmFactory, peerGroup: peerGroup)
 
         inputSigner = InputSigner(realmFactory: realmFactory, hdWallet: hdWallet)
         scriptBuilder = ScriptBuilder()
-        unspentOutputsManager = UnspentOutputSelector()
+        unspentOutputSelector = UnspentOutputSelector()
 
         peerGroup.delegate = syncer
 

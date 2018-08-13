@@ -297,11 +297,8 @@ class Peer : NSObject, StreamDelegate {
         send(messageWithCommand: "getdata", payload: message.serialized())
     }
 
-    func sendTransactionInventory(transaction: Transaction) {
-        let txId = Crypto.sha256sha256(transaction.serialized())
-        let inventoryMessage = InventoryMessage(count: 1, inventoryItems: [InventoryItem(type: InventoryItem.ObjectType.transaction.rawValue, hash: txId)])
-
-        log("<-- INV: \(txId.reversedHex)")
+    func send(inventoryMessage: InventoryMessage) {
+        log("<-- INV: \(inventoryMessage.inventoryItems.first?.hash.reversedHex)")
         send(messageWithCommand: "inv", payload: inventoryMessage.serialized())
     }
 
@@ -339,31 +336,6 @@ class Peer : NSObject, StreamDelegate {
     private func handle(getDataMessage: GetDataMessage) {
         log("--> GETDATA: \(getDataMessage.count) item(s)")
         delegate?.peer(self, didReceiveGetDataMessage: getDataMessage)
-
-        for item in getDataMessage.inventoryItems {
-            switch item.objectType {
-            case .error:
-                break
-            case .transaction:
-                // Send transaction
-//                if let transaction = context.transactions[item.hash] {
-//                    let payload = transaction.serialized()
-//                    let checksum = Data(Crypto.sha256sha256(payload).prefix(4))
-//
-//                    let message = Message(magic: network.magic, command: "tx", length: UInt32(payload.count), checksum: checksum, payload: payload)
-//                    sendMessage(message)
-//                }
-                break
-            case .blockMessage:
-                break
-            case .filteredBlockMessage:
-                break
-            case .compactBlockMessage:
-                break
-            case .unknown:
-                break
-            }
-        }
     }
 
     private func handle(blockMessage: BlockMessage) {

@@ -38,6 +38,14 @@ class PeerGroup {
         peer.sendGetDataMessage(message: inventoryMessage)
     }
 
+    func relay(transaction: Transaction) {
+        let inventoryMessage = InventoryMessage(count: VarInt(1), inventoryItems: [
+            InventoryItem(type: InventoryItem.ObjectType.transaction.rawValue, hash: Crypto.sha256sha256(transaction.serialized()))
+        ])
+
+        peer.send(inventoryMessage: inventoryMessage)
+    }
+
 }
 
 extension PeerGroup: PeerDelegate {
@@ -96,6 +104,10 @@ extension PeerGroup: PeerDelegate {
 //        if hasBlock {
 //            try? HeaderSyncer.shared.sync()
 //        }
+    }
+
+    func peer(_ peer: Peer, didReceiveGetDataMessage message: GetDataMessage) {
+        delegate?.peerGroupDidReceive(getDataMessage: message)
     }
 
 }
