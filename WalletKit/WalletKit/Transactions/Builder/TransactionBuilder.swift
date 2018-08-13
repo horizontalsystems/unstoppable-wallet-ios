@@ -3,20 +3,22 @@ import Foundation
 class TransactionBuilder {
     static let outputSize = 32
 
-    let unspentOutputsManager: UnspentOutputManager
+    let unspentOutputSelector: UnspentOutputSelector
+    let unspentOutputProvider: UnspentOutputProvider
     let inputSigner: InputSigner
     let scriptBuilder: ScriptBuilder
     let factory: Factory
 
-    init(unspentOutputsManager: UnspentOutputManager, inputSigner: InputSigner, scriptBuilder: ScriptBuilder, factory: Factory) {
-        self.unspentOutputsManager = unspentOutputsManager
+    init(unspentOutputSelector: UnspentOutputSelector, unspentOutputProvider: UnspentOutputProvider, inputSigner: InputSigner, scriptBuilder: ScriptBuilder, factory: Factory) {
+        self.unspentOutputSelector = unspentOutputSelector
+        self.unspentOutputProvider = unspentOutputProvider
         self.inputSigner = inputSigner
         self.scriptBuilder = scriptBuilder
         self.factory = factory
     }
 
     func buildTransaction(value: Int, feeRate: Int, type: ScriptType = .p2pkh, changeAddress: Address, toAddress: Address) throws -> Transaction {
-        let unspentOutputs = try unspentOutputsManager.select(value: value)
+        let unspentOutputs = try unspentOutputSelector.select(value: value, outputs: unspentOutputProvider.allUnspentOutputs())
 
         // Build transaction
         let transaction = factory.transaction(version: 1, inputs: [], outputs: [], lockTime: 0)

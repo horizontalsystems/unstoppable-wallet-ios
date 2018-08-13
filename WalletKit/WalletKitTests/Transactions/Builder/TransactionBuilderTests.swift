@@ -7,7 +7,8 @@ class TransactionBuilderTests: XCTestCase{
 
     private var realm: Realm!
     private var mockRealmFactory: MockRealmFactory!
-    private var mockUnspentOutputManager: MockUnspentOutputManager!
+    private var mockUnspentOutputSelector: MockUnspentOutputSelector!
+    private var mockUnspentOutputProvider: MockUnspentOutputProvider!
     private var mockInputSigner: MockInputSigner!
     private var mockScriptBuilder:  MockScriptBuilder!
     private var mockFactory: MockFactory!
@@ -38,12 +39,13 @@ class TransactionBuilderTests: XCTestCase{
             when(mock.realm.get).thenReturn(realm)
         }
 
-        mockUnspentOutputManager = MockUnspentOutputManager(realmFactory: mockRealmFactory)
+        mockUnspentOutputSelector = MockUnspentOutputSelector()
+        mockUnspentOutputProvider = MockUnspentOutputProvider(realmFactory: mockRealmFactory)
         mockInputSigner = MockInputSigner(realmFactory: mockRealmFactory, hdWallet: HDWalletStub(seed: Data(), network: TestNet()))
         mockScriptBuilder = MockScriptBuilder()
         mockFactory = MockFactory()
 
-        transactionBuilder = TransactionBuilder(unspentOutputsManager: mockUnspentOutputManager, inputSigner: mockInputSigner, scriptBuilder: mockScriptBuilder, factory: mockFactory)
+        transactionBuilder = TransactionBuilder(unspentOutputSelector: mockUnspentOutputSelector, unspentOutputProvider: mockUnspentOutputProvider, inputSigner: mockInputSigner, scriptBuilder: mockScriptBuilder, factory: mockFactory)
 
         changeAddress = TestData.address()
         toAddress = TestData.address(pubKeyHash: Data(hex: "64d8fbe748c577bb5da29718dae0402b0b5dd523")!)
@@ -64,8 +66,12 @@ class TransactionBuilderTests: XCTestCase{
         toOutput = TransactionOutput(withValue: value - fee, withLockingScript: Data(), withIndex: 0, type: .p2pkh, keyHash: toAddress.publicKeyHash)
         changeOutput = TransactionOutput(withValue: totalInputValue - value, withLockingScript: Data(), withIndex: 1, type: .p2pkh, keyHash: changeAddress.publicKeyHash)
 
-        stub(mockUnspentOutputManager) { mock in
+        stub(mockUnspentOutputSelector) { mock in
             when(mock.select(value: any(), outputs: any())).thenReturn(unspentOutputs)
+        }
+
+        stub(mockUnspentOutputProvider) { mock in
+            when(mock.allUnspentOutputs()).thenReturn(unspentOutputs)
         }
 
         stub(mockInputSigner) { mock in
@@ -95,7 +101,8 @@ class TransactionBuilderTests: XCTestCase{
         mockRealmFactory = nil
         realm = nil
         unspentOutputs = nil
-        mockUnspentOutputManager = nil
+        mockUnspentOutputSelector = nil
+        mockUnspentOutputProvider = nil
         mockInputSigner = nil
         mockFactory = nil
         transactionBuilder = nil
