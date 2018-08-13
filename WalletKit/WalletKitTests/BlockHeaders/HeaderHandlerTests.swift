@@ -19,10 +19,10 @@ class HeaderHandlerTests: XCTestCase {
     override func setUp() {
         super.setUp()
 
-        mockRealmFactory = MockRealmFactory()
+        mockRealmFactory = MockRealmFactory(configuration: Realm.Configuration())
         mockFactory = MockFactory()
         mockValidator = MockBlockValidator(calculator: DifficultyCalculatorStub(difficultyEncoder: DifficultyEncoderStub()))
-        mockSaver = MockBlockSaver(realmFactory: RealmFactoryStub())
+        mockSaver = MockBlockSaver(realmFactory: mockRealmFactory)
         mockConfiguration = MockConfiguration()
         mockNetwork = MockNetworkProtocol()
 

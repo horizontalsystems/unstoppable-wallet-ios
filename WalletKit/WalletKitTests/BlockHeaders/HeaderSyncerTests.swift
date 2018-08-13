@@ -17,8 +17,8 @@ class HeaderSyncerTests: XCTestCase {
     override func setUp() {
         super.setUp()
 
-        mockRealmFactory = MockRealmFactory()
-        mockPeerGroup = MockPeerGroup()
+        mockRealmFactory = MockRealmFactory(configuration: Realm.Configuration())
+        mockPeerGroup = MockPeerGroup(realmFactory: mockRealmFactory)
         mockConfiguration = MockConfiguration()
         mockNetwork = MockNetworkProtocol()
 

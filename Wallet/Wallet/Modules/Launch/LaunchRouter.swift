@@ -10,9 +10,9 @@ class LaunchRouter {
             let documentsUrl = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
             let configuration = Realm.Configuration(fileURL: documentsUrl?.appendingPathComponent(realmFileName))
 
-            WalletKitManager.shared.configure(withWords: words, realmConfiguration: configuration)
+            let walletKit = WalletKit(withWords: words, realmConfiguration: configuration)
 
-            _ = WalletSyncer.shared
+            WalletSyncer.shared.walletKit = walletKit
 
             return MainRouter.module()
         } else {

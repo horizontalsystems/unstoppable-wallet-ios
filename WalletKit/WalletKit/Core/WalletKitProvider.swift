@@ -2,23 +2,18 @@ import Foundation
 import RealmSwift
 
 public class WalletKitProvider {
-    public static let shared = WalletKitProvider()
-
     private let realmFactory: RealmFactory
 
-    private var transactionListeners = [TransactionListener]()
-
-    private var transactionsNotificationToken: NotificationToken?
-
-    init(realmFactory: RealmFactory = Singletons.shared.realmFactory) {
+    init(realmFactory: RealmFactory) {
         self.realmFactory = realmFactory
 
-        let realm = realmFactory.realm
-
-        transactionsNotificationToken = realm.objects(Transaction.self).filter("isMine = %@", true).observe { [weak self] changes in
+        transactionsNotificationToken = realmFactory.realm.objects(Transaction.self).filter("isMine = %@", true).observe { [weak self] changes in
             self?.onTransactionsChanged(changes: changes)
         }
     }
+
+    private var transactionListeners = [TransactionListener]()
+    private var transactionsNotificationToken: NotificationToken?
 
     public func add(transactionListener: TransactionListener) {
         transactionListeners.append(transactionListener)
@@ -35,25 +30,6 @@ public class WalletKitProvider {
 
     deinit {
         transactionsNotificationToken?.invalidate()
-    }
-
-    func preFillInitialTestData() {
-        let wallet = WalletKitManager.shared.hdWallet
-        var addresses = [Address]()
-
-        for i in 0..<10 {
-            if let address = try? wallet.receiveAddress(index: i) {
-                addresses.append(address)
-            }
-            if let address = try? wallet.changeAddress(index: i) {
-                addresses.append(address)
-            }
-        }
-
-        let realm = realmFactory.realm
-        try? realm.write {
-            realm.add(addresses, update: true)
-        }
     }
 
 }
