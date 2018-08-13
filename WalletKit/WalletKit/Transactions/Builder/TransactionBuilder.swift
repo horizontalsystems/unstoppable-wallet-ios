@@ -41,7 +41,7 @@ class TransactionBuilder {
 
         // Sign inputs
         for i in 0..<transaction.inputs.count {
-            let sigScriptData = try inputSigner.sigScriptData(input: transaction.inputs[i], transaction: transaction, index: i)
+            let sigScriptData = try inputSigner.sigScriptData(transaction: transaction, index: i)
             transaction.inputs[i].signatureScript = scriptBuilder.unlockingScript(params: sigScriptData)
         }
 

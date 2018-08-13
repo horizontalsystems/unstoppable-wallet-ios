@@ -5,7 +5,7 @@ class InputSigner {
         case noPreviousOutput
         case noPreviousOutputAddress
         case noPublicKeyHashInOutput
-        case noPublicKeyInOutput
+        case noPublicKeyInAddress
         case noPrivateKey
     }
 
@@ -17,7 +17,8 @@ class InputSigner {
         self.hdWallet = hdWallet
     }
 
-    func sigScriptData(input: TransactionInput, transaction: Transaction, index: Int) throws -> [Data] {
+    func sigScriptData(transaction: Transaction, index: Int) throws -> [Data] {
+        let input = transaction.inputs[index]
         let realm = realmFactory.realm
 
         guard let prevOutput = input.previousOutput else {
@@ -33,14 +34,16 @@ class InputSigner {
         }
 
         guard let publicKey = address.publicKey else {
-            throw SignError.noPublicKeyInOutput
+            throw SignError.noPublicKeyInAddress
         }
 
         guard let privateKey = try? hdWallet.privateKey(index: address.index, chain: address.external ? .external : .internal) else {
             throw SignError.noPrivateKey
         }
 
-        let signature = try Crypto.sign(data: transaction.serializedForSignature(inputIndex: index), privateKey: privateKey.raw)
+        let serializedTransaction = try transaction.serializedForSignature(inputIndex: index) + UInt32(1)
+        let signatureHash = Crypto.sha256sha256(serializedTransaction)
+        let signature = try Crypto.sign(data: signatureHash, privateKey: privateKey.raw) + Data(bytes: [0x01])
 
         return [signature, publicKey]
     }

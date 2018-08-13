@@ -57,7 +57,7 @@ class TransactionBuilderTests: XCTestCase{
         totalInputValue = unspentOutputs[0].value
         value = 10782000
         feeRate = 6
-        fee = 1158
+        fee = 1008
 
         transaction = Transaction(version: 1, inputs: [], outputs: [])
         input = TransactionInput(withPreviousOutput: unspentOutputs[0], script: Data(), sequence: 0)
@@ -69,7 +69,12 @@ class TransactionBuilderTests: XCTestCase{
         }
 
         stub(mockInputSigner) { mock in
-            when(mock.sigScriptData(input: any(), transaction: any(), index: any())).thenReturn([Data()])
+            when(mock.sigScriptData(transaction: any(), index: any())).thenReturn([Data()])
+        }
+
+        stub(mockScriptBuilder) { mock in
+            when(mock.lockingScript(type: any(), params: any())).thenReturn(Data())
+            when(mock.unlockingScript(params: any())).thenReturn(Data())
         }
 
         stub(mockFactory) { mock in
@@ -155,10 +160,15 @@ class TransactionBuilderTests: XCTestCase{
     }
 
     func testInputsSigned() {
-        let signature = Data(hex: "1214124faf823f23fd2342e234234a23423c23423b4132")!
+        let sigData = [Data(hex: "000001")!, Data(hex: "000002")!]
+        let sigScript = Data(hex: "000001000002")!
 
         stub(mockInputSigner) { mock in
-            when(mock.sigScriptData(input: any(), transaction: any(), index: any())).thenReturn([signature])
+            when(mock.sigScriptData(transaction: any(), index: any())).thenReturn(sigData)
+        }
+
+        stub(mockScriptBuilder) { mock in
+            when(mock.unlockingScript(params: any())).thenReturn(sigScript)
         }
 
         var resultTx = Transaction()
@@ -168,7 +178,7 @@ class TransactionBuilderTests: XCTestCase{
             XCTFail(error.localizedDescription)
         }
 
-        XCTAssertEqual(resultTx.inputs[0].signatureScript, signature)
+        XCTAssertEqual(resultTx.inputs[0].signatureScript, sigScript)
     }
 
 }

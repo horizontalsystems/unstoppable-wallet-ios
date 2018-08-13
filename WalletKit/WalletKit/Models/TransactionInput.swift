@@ -58,7 +58,10 @@ public class TransactionInput: Object {
             throw SerializationError.noPreviousOutput
         }
 
-        data += output.transaction.reversedHashHex.reversedData!
+        guard let previousTransactionData = output.transaction.reversedHashHex.reversedData else {
+            throw SerializationError.noPreviousTransaction
+        }
+        data += previousTransactionData
         data += UInt32(output.index)
 
         if forCurrentInputSignature {
@@ -92,4 +95,5 @@ public class TransactionInput: Object {
 
 enum SerializationError: Error {
     case noPreviousOutput
+    case noPreviousTransaction
 }
