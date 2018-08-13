@@ -29,7 +29,7 @@ public class TransactionOutput: Object {
     @objc dynamic var lockingScript = Data()
     @objc dynamic var index: Int = 0
 
-    @objc dynamic var address: Address?
+    @objc public dynamic var address: Address?
     @objc dynamic var scriptType: ScriptType = .unknown
     @objc dynamic var keyHash: Data?
 
