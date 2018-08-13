@@ -13,7 +13,7 @@ class TransactionInfoAlertModel: BaseAlertModel {
         let statusItem = TransactionStatusItem(transaction: transaction, tag: 1, required: true)
         addItemView(statusItem)
 
-        let fromHashItem = TransactionFromHashItem(transaction: transaction, tag: 2, required: true) { [weak self] _ in
+        let fromHashItem = TransactionFromHashItem(transaction: transaction, tag: 2, required: true) { _ in
             onCopyFromAddress?()
         }
 
