@@ -102,7 +102,9 @@ extension TransactionsViewController: UITableViewDelegate, UITableViewDataSource
         if let cell = cell as? TransactionCell {
             cell.bind(item: items[indexPath.row], onInfo: { [weak self] in
                 if let item = self?.items[indexPath.row] {
-                    print("on info of item: \(item)")
+                    //stab transaction, only code and hash must be used
+                    print("on click transaction: \(item)")
+                    self?.delegate.onTransactionItemClick(transaction: item, coinCode: item.amount.coin.code, txHash: item.transactionHash)
                 }
             })
         }

@@ -3,9 +3,15 @@ import WalletKit
 
 class TransactionsRouter {
     weak var viewController: UIViewController?
+    var view: Any?
 }
 
 extension TransactionsRouter: ITransactionsRouter {
+
+    func showTransactionInfo(transaction: TransactionRecordViewItem, coinCode: String, txHash: String) {
+        view = TransactionInfoRouter.module(controller: viewController, transaction: transaction, coinCode: coinCode, txHash: txHash)
+    }
+
 }
 
 extension TransactionsRouter {
