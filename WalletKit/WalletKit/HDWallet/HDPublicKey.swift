@@ -9,13 +9,13 @@
 import Foundation
 import WalletKit.Private
 
-public class HDPublicKey {
+class HDPublicKey {
     let network: NetworkProtocol
-    public let depth: UInt8
-    public let fingerprint: UInt32
-    public let childIndex: UInt32
+    let depth: UInt8
+    let fingerprint: UInt32
+    let childIndex: UInt32
 
-    public let raw: Data
+    let raw: Data
     let chainCode: Data
 
     init(privateKey: HDPrivateKey, network: NetworkProtocol) {
@@ -45,7 +45,7 @@ public class HDPublicKey {
         self.childIndex = childIndex
     }
 
-    public func extended() -> String {
+    func extended() -> String {
         var data = Data()
         data += network.xPubKey.bigEndian
         data += depth.littleEndian
@@ -56,13 +56,13 @@ public class HDPublicKey {
         let checksum = Crypto.sha256sha256(data).prefix(4)
         return Base58.encode(data + checksum)
     }
-    
-    public func toAddress() -> String {
+
+    func toAddress() -> String {
         let hash = Data([network.pubKeyHash]) + Crypto.sha256ripemd160(raw)
         return publicKeyHashToAddress(hash)
     }
 
-    public func derived(at index: UInt32) throws -> HDPublicKey {
+    func derived(at index: UInt32) throws -> HDPublicKey {
         // As we use explicit parameter "hardened", do not allow higher bit set.
         if ((0x80000000 & index) != 0) {
             fatalError("invalid child index")

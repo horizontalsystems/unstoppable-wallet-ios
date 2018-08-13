@@ -1,7 +1,7 @@
 import Foundation
 import RealmSwift
 
-@objc public enum ScriptType: Int {
+@objc enum ScriptType: Int {
     case unknown = 0, p2pkh, p2pk, p2sh
 
     var size: Int {
@@ -26,12 +26,12 @@ import RealmSwift
 public class TransactionOutput: Object {
 
     @objc public dynamic var value: Int = 0
-    @objc public dynamic var lockingScript = Data()
-    @objc public dynamic var index: Int = 0
+    @objc dynamic var lockingScript = Data()
+    @objc dynamic var index: Int = 0
 
     @objc public dynamic var isMine: Bool = false
-    @objc public dynamic var scriptType: ScriptType = .unknown
-    @objc public dynamic var keyHash: Data?
+    @objc dynamic var scriptType: ScriptType = .unknown
+    @objc dynamic var keyHash: Data?
 
     let transactions = LinkingObjects(fromType: Transaction.self, property: "outputs")
     var transaction: Transaction {

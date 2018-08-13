@@ -10,12 +10,12 @@ import Foundation
 
 /// When a network address is needed somewhere,
 /// this structure is used. Network addresses are not prefixed with a timestamp in the version message.
-public struct NetworkAddress {
-    public let services: UInt64
-    public let address: String
-    public let port: UInt16
+struct NetworkAddress {
+    let services: UInt64
+    let address: String
+    let port: UInt16
 
-    public func serialized() -> Data {
+    func serialized() -> Data {
         var data = Data()
         data += services.littleEndian
         data += pton(address)
@@ -41,7 +41,7 @@ public struct NetworkAddress {
 }
 
 extension NetworkAddress : CustomStringConvertible {
-    public var description: String {
+    var description: String {
         return "[\(address)]:\(port.bigEndian) \(ServiceFlags(rawValue: services))"
     }
 }

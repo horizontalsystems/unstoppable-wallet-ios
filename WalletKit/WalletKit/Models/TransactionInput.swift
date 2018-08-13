@@ -2,12 +2,12 @@ import Foundation
 import RealmSwift
 
 public class TransactionInput: Object {
-    @objc public dynamic var previousOutputTxReversedHex = Data()
-    @objc public dynamic var previousOutputIndex: Int = 0
-    @objc public dynamic var signatureScript = Data()
-    @objc public dynamic var sequence: Int = 0
+    @objc dynamic var previousOutputTxReversedHex = Data()
+    @objc dynamic var previousOutputIndex: Int = 0
+    @objc dynamic var signatureScript = Data()
+    @objc dynamic var sequence: Int = 0
     @objc public dynamic var previousOutput: TransactionOutput? = nil
-    @objc public dynamic var publicKey: Data?
+    @objc dynamic var publicKey: Data?
 
     let transactions = LinkingObjects(fromType: Transaction.self, property: "inputs")
     var transaction: Transaction {

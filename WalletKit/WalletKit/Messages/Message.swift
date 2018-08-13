@@ -8,21 +8,21 @@
 
 import Foundation
 
-public struct Message {
+struct Message {
     /// Magic value indicating message origin network, and used to seek to next message when stream state is unknown
-    public let magic: UInt32
+    let magic: UInt32
     /// ASCII string identifying the packet content, NULL padded (non-NULL padding results in packet rejected)
-    public let command: String
+    let command: String
     /// Length of payload in number of bytes
-    public let length: UInt32
+    let length: UInt32
     /// First 4 bytes of sha256(sha256(payload))
-    public let checksum: Data
+    let checksum: Data
     /// The actual data
-    public let payload: Data
+    let payload: Data
 
-    public static let minimumLength = 24
+    static let minimumLength = 24
 
-    public func serialized() -> Data {
+    func serialized() -> Data {
         var data = Data()
         data += magic.bigEndian
         var bytes = [UInt8](command.data(using: .ascii)!)
@@ -34,7 +34,7 @@ public struct Message {
         return data
     }
 
-    public static func deserialize(_ data: Data) -> Message? {
+    static func deserialize(_ data: Data) -> Message? {
         let byteStream = ByteStream(data)
 
         let magic = byteStream.read(UInt32.self)

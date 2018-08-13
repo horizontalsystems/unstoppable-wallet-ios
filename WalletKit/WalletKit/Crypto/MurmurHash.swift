@@ -8,12 +8,12 @@
 
 import Foundation
 
-public struct MurmurHash {
+struct MurmurHash {
     private static func rotateLeft(_ x: UInt32, _ r: UInt32) -> UInt32 {
         return (x << r) | (x >> (32 - r))
     }
 
-    public static func hashValue(_ bytes: Data, _ seed: UInt32) -> UInt32 {
+    static func hashValue(_ bytes: Data, _ seed: UInt32) -> UInt32 {
         let c1: UInt32 = 0xcc9e2d51
         let c2: UInt32 = 0x1b873593
         

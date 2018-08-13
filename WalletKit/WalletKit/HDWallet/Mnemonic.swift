@@ -29,7 +29,7 @@ public struct Mnemonic {
         case italian
     }
 
-    public enum ValidationError: Error {
+    enum ValidationError: Error {
         case invalidWordsCount
         case invalidWords
     }
@@ -62,7 +62,7 @@ public struct Mnemonic {
         return mnemonic
     }
 
-    public static func seed(mnemonic m: [String], passphrase: String = "") -> Data {
+    static func seed(mnemonic m: [String], passphrase: String = "") -> Data {
         let mnemonic = m.joined(separator: " ").decomposedStringWithCompatibilityMapping.data(using: .utf8)!
         let salt = ("mnemonic" + passphrase).decomposedStringWithCompatibilityMapping.data(using: .utf8)!
         let seed = _Key.deriveKey(mnemonic, salt: salt, iterations: 2048, keyLength: 64)
@@ -107,6 +107,6 @@ public struct Mnemonic {
     }
 }
 
-public enum MnemonicError : Error {
+enum MnemonicError : Error {
     case randomBytesError
 }

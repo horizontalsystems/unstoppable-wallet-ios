@@ -8,10 +8,10 @@
 
 import Foundation
 
-public struct BloomFilter {
-    public let nHashFuncs: UInt32
-    public let nTweak: UInt32
-    public let size: UInt32
+struct BloomFilter {
+    let nHashFuncs: UInt32
+    let nTweak: UInt32
+    let size: UInt32
 
     private var filter: [UInt8]
     var data: Data {
@@ -21,14 +21,14 @@ public struct BloomFilter {
     let MAX_FILTER_SIZE: UInt32 = 36000
     let MAX_HASH_FUNCS: UInt32 = 50
 
-    public init(elements: Int, falsePositiveRate: Double, randomNonce nTweak: UInt32) {
+    init(elements: Int, falsePositiveRate: Double, randomNonce nTweak: UInt32) {
         self.size = max(1, min(UInt32(-1.0 / pow(log(2), 2) * Double(elements) * log(falsePositiveRate)), MAX_FILTER_SIZE * 8) / 8)
         filter = [UInt8](repeating: 0, count: Int(size))
         self.nHashFuncs = max(1, min(UInt32(Double(size * UInt32(8)) / Double(elements) * log(2)), MAX_HASH_FUNCS))
         self.nTweak = nTweak
     }
 
-    public mutating func insert(_ data: Data) {
+    mutating func insert(_ data: Data) {
         for i in 0..<nHashFuncs {
             let seed = i &* 0xFBA4C795 &+ nTweak
             let nIndex = Int(MurmurHash.hashValue(data, seed) % (size * 8))
@@ -39,7 +39,7 @@ public struct BloomFilter {
 
 extension BloomFilter : CustomDebugStringConvertible {
 
-    public var debugDescription: String {
+    var debugDescription: String {
         return filter.compactMap { bits(fromByte: $0).map { $0.description }.joined() }.joined()
     }
 

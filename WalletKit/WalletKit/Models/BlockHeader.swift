@@ -2,12 +2,12 @@ import Foundation
 import RealmSwift
 
 public class BlockHeader: Object {
-    @objc public dynamic var version: Int = 0
-    @objc public dynamic var previousBlockHeaderHash = Data()
-    @objc public dynamic var merkleRoot = Data()
+    @objc dynamic var version: Int = 0
+    @objc dynamic var previousBlockHeaderHash = Data()
+    @objc dynamic var merkleRoot = Data()
     @objc public dynamic var timestamp: Int = 0
-    @objc public dynamic var bits: Int = 0
-    @objc public dynamic var nonce: Int = 0
+    @objc dynamic var bits: Int = 0
+    @objc dynamic var nonce: Int = 0
 
     convenience init(version: Int, previousBlockHeaderReversedHex: String, merkleRootReversedHex: String, timestamp: Int, bits: Int, nonce: Int) {
         self.init()

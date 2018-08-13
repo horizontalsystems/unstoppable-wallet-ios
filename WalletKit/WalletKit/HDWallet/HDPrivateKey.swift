@@ -9,11 +9,11 @@
 import Foundation
 import WalletKit.Private
 
-public class HDPrivateKey {
+class HDPrivateKey {
     let network: NetworkProtocol
-    public let depth: UInt8
-    public let fingerprint: UInt32
-    public let childIndex: UInt32
+    let depth: UInt8
+    let fingerprint: UInt32
+    let childIndex: UInt32
 
     let raw: Data
     let chainCode: Data
@@ -43,11 +43,11 @@ public class HDPrivateKey {
         self.childIndex = childIndex
     }
 
-    public func publicKey() -> HDPublicKey {
+    func publicKey() -> HDPublicKey {
         return HDPublicKey(privateKey: self, chainCode: chainCode, network: network, depth: depth, fingerprint: fingerprint, childIndex: childIndex)
     }
 
-    public func extended() -> String {
+    func extended() -> String {
         var data = Data()
         data += network.xPrivKey.bigEndian
         data += depth.littleEndian
@@ -60,7 +60,7 @@ public class HDPrivateKey {
         return Base58.encode(data + checksum)
     }
 
-    public func derived(at index: UInt32, hardened: Bool = false) throws -> HDPrivateKey {
+    func derived(at index: UInt32, hardened: Bool = false) throws -> HDPrivateKey {
         // As we use explicit parameter "hardened", do not allow higher bit set.
         if (0x80000000 & index) != 0 {
             fatalError("invalid child index")
@@ -73,6 +73,6 @@ public class HDPrivateKey {
     }
 }
 
-public enum DerivationError : Error {
+enum DerivationError : Error {
     case derivateionFailed
 }

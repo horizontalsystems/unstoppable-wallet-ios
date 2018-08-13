@@ -8,13 +8,13 @@
 
 import Foundation
 
-public struct InventoryItem {
+struct InventoryItem {
     /// Identifies the object type linked to this inventory
-    public let type: Int32
+    let type: Int32
     /// Hash of the object
-    public let hash: Data
+    let hash: Data
 
-    public func serialized() -> Data {
+    func serialized() -> Data {
         var data = Data()
         data += type
         data += hash
@@ -27,7 +27,7 @@ public struct InventoryItem {
         return InventoryItem(type: type, hash: hash)
     }
 
-    public var objectType: ObjectType {
+    var objectType: ObjectType {
         switch type {
         case 0:
             return .error
@@ -44,7 +44,7 @@ public struct InventoryItem {
         }
     }
 
-    public enum ObjectType : Int32 {
+    enum ObjectType : Int32 {
         /// Any data of with this number may be ignored
         case error = 0
         /// Hash is related to a transaction

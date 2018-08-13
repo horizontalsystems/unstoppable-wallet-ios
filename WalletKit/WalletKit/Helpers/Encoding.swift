@@ -10,12 +10,12 @@ import Foundation
 
 // The Base58 encoding used is home made, and has some differences. Especially,
 // leading zeroes are kept as single zeroes when conversion happens.
-public struct Base58 {
+struct Base58 {
     private static let base58Alphabet = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz"
 
     private init() {}
 
-    public static func encode(_ bytes: Data) -> String {
+    static func encode(_ bytes: Data) -> String {
         var bytes = bytes
         var zerosCount = 0
         var length = 0
@@ -67,7 +67,7 @@ public struct Base58 {
         return str
     }
 
-    public static func decode(_ base58: String) -> Data {
+    static func decode(_ base58: String) -> Data {
         // remove leading and trailing whitespaces
         let string = base58.trimmingCharacters(in: .whitespaces)
 

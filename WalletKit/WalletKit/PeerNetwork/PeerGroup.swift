@@ -42,7 +42,7 @@ class PeerGroup {
 
 extension PeerGroup: PeerDelegate {
 
-    public func peerDidConnect(_ peer: Peer) {
+    func peerDidConnect(_ peer: Peer) {
         let realm = realmFactory.realm
         let addresses = realm.objects(Address.self)
         let filters = Array(addresses.map { $0.publicKeyHash }) + Array(addresses.map { $0.publicKey! })
@@ -55,17 +55,17 @@ extension PeerGroup: PeerDelegate {
         delegate?.peerGroupDidConnect()
     }
 
-    public func peer(_ peer: Peer, didReceiveMerkleBlockMessage message: MerkleBlockMessage) {
+    func peer(_ peer: Peer, didReceiveMerkleBlockMessage message: MerkleBlockMessage) {
 //        print("MERKLE BLOCK: \(Crypto.sha256sha256(message.blockHeader.serialized()).reversedHex)")
         delegate?.peerGroupDidReceive(merkleBlockMessage: message)
     }
 
-    public func peer(_ peer: Peer, didReceiveTransaction transaction: Transaction) {
+    func peer(_ peer: Peer, didReceiveTransaction transaction: Transaction) {
 //        print("TRANSACTION: \(Crypto.sha256sha256(message.serialized()).reversedHex)")
         delegate?.peerGroupDidReceive(transaction: transaction)
     }
 
-    public func peer(_ peer: Peer, didReceiveHeadersMessage message: HeadersMessage) {
+    func peer(_ peer: Peer, didReceiveHeadersMessage message: HeadersMessage) {
 //        message.blockHeaders.first.map {
 //            print("First Header: \(Data(Crypto.sha256sha256($0.serialized()).reversed()).hex)")
 //        }

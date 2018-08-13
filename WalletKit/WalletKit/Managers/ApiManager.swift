@@ -22,7 +22,7 @@ class RequestRouter: URLRequestConvertible {
         self.parameters = parameters
     }
 
-    public func asURLRequest() throws -> URLRequest {
+    func asURLRequest() throws -> URLRequest {
         return try encoding.encode(request, with: parameters)
     }
 

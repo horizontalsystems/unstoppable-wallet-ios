@@ -3,11 +3,11 @@ import RealmSwift
 
 public class Transaction: Object {
     @objc public dynamic var reversedHashHex: String = ""
-    @objc public dynamic var version: Int = 0
-    @objc public dynamic var lockTime: Int = 0
+    @objc dynamic var version: Int = 0
+    @objc dynamic var lockTime: Int = 0
     @objc public dynamic var block: Block?
 
-    @objc public dynamic var isMine: Bool = false
+    @objc dynamic var isMine: Bool = false
 
     public let inputs = List<TransactionInput>()
     public let outputs = List<TransactionOutput>()

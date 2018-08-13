@@ -8,7 +8,7 @@
 
 import Foundation
 
-public final class HDKeychain {
+final class HDKeychain {
     let privateKey: HDPrivateKey
 
     init(privateKey: HDPrivateKey) {

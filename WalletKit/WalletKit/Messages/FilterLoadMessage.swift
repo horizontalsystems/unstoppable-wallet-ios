@@ -8,17 +8,17 @@
 
 import Foundation
 
-public struct FilterLoadMessage {
+struct FilterLoadMessage {
     /// The filter itself is simply a bit field of arbitrary byte-aligned size. The maximum size is 36,000 bytes.
-    public let filter: Data
+    let filter: Data
     /// The number of hash functions to use in this filter. The maximum value allowed in this field is 50.
-    public let nHashFuncs: UInt32
+    let nHashFuncs: UInt32
     /// A random value to add to the seed value in the hash function used by the bloom filter.
-    public let nTweak: UInt32
+    let nTweak: UInt32
     /// A set of flags that control how matched items are added to the filter.
-    public let nFlags: UInt8
+    let nFlags: UInt8
 
-    public func serialized() -> Data {
+    func serialized() -> Data {
         var data = Data()
         data += VarInt(filter.count).serialized()
         data += filter
