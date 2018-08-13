@@ -82,10 +82,14 @@
 		11B35FF4E83C69E67F04C283 /* BlockchainInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35956C79B567DC679DD3A /* BlockchainInfo.swift */; };
 		1A5640845DFE26B0881C97B9 /* SendPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5647EE51941D84607A9493 /* SendPresenter.swift */; };
 		1A5640B712A4253399F52A3B /* WalletTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564243436E5185205D0359 /* WalletTheme.swift */; };
+		1A5640E91AA1D79E1735F5FC /* TransactionStatusItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5646C9024F054AE8115A30 /* TransactionStatusItem.swift */; };
+		1A5641061673702B10D858BF /* TransactionInfoTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5645F926B14580B1644164 /* TransactionInfoTheme.swift */; };
 		1A56411CFC8D9190B15323A4 /* BackupConfirmationTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564E77730537D108E31276 /* BackupConfirmationTheme.swift */; };
 		1A564191A16F15B25768FF30 /* SendTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564077BF075C35B6FF3BCB /* SendTheme.swift */; };
 		1A5641BD2DA1FB1803D3B044 /* DepositInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5648DA32EA5FC27E4CEF64 /* DepositInteractor.swift */; };
 		1A5641E8642AA6004640F15C /* SendButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56425E1873BC8574539D2B /* SendButtonItem.swift */; };
+		1A56422B4DA1DE0ACD09C4BC /* TransactionInfoModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5643996D67B74F800DFFE4 /* TransactionInfoModule.swift */; };
+		1A564274EEC6A31D6B287B09 /* TransactionFromHashItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564C4C8EFE1B1BBE03C9E6 /* TransactionFromHashItem.swift */; };
 		1A56427D41F16B2D9C7B5F88 /* SendModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5641C2FAD616C358A319A0 /* SendModule.swift */; };
 		1A5642A7500FDC8E971D6C62 /* CoinValueHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5640B6691F4FD048C82A49 /* CoinValueHelper.swift */; };
 		1A5642B4408B226121677590 /* SendInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564260BF2C73B9F2450FB8 /* SendInteractor.swift */; };
@@ -94,17 +98,22 @@
 		1A56438249B462DB9B522C7A /* CurrencyHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564679937963085A8530F4 /* CurrencyHelper.swift */; };
 		1A56439242405A16711956B3 /* PagingDotsItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5640FFFD5B065D745208F1 /* PagingDotsItem.swift */; };
 		1A56439A65488C8FAAEE7EAC /* DepositAlertModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564C2A96B49F01C1EC645D /* DepositAlertModel.swift */; };
+		1A5643AC9DBE003D1CC0C76C /* UIAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564ED9673CF0765C7948DE /* UIAlertController.swift */; };
 		1A5643EBCA934158AD7B4C4B /* DepositPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5645371B2FC499500DCA93 /* DepositPresenter.swift */; };
 		1A56443A54A6035FC2B7F485 /* SendButtonItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564CFA352D219E2D05D09F /* SendButtonItemView.swift */; };
 		1A56444F92E79514DB155658 /* DepositRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564EDCEACE83D95F6AE528 /* DepositRouter.swift */; };
+		1A564462CB4BF369442CE381 /* TransactionCloseItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564181733CBC44EECFBBF3 /* TransactionCloseItem.swift */; };
 		1A564497DCA3CD398FFF0045 /* DepositShareButtonItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564DA173BE95B4681E5395 /* DepositShareButtonItemView.swift */; };
 		1A5645103DC28216716EB7A6 /* ScanQRController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5647D980D08E2E4359861B /* ScanQRController.swift */; };
 		1A56454940992DC1F332E76A /* BaseButtonItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56425C82362C065E3379D4 /* BaseButtonItemView.swift */; };
+		1A56458ABE9CDDEB7F0643AA /* TransactionInfoRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5647FDE8383651F19C35C6 /* TransactionInfoRouter.swift */; };
 		1A5645B1FEF9B1AB7E491B83 /* CopyItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5644E3A131453D33B73B57 /* CopyItemView.swift */; };
 		1A56460F1BB48D4E82C6E257 /* RestoreWordCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5648D3CF09FF5EBE8321EC /* RestoreWordCell.swift */; };
 		1A56464325366A495BD81C88 /* TransactionCurrenciesHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564FE8D247C36C2478C6B5 /* TransactionCurrenciesHeaderView.swift */; };
 		1A56465CE6EFDADE3365DF98 /* AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5649DB879A57761C09842E /* AppTheme.swift */; };
 		1A5646CA592E84121AF87B07 /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5640B9841EBA6BE028681D /* Date.swift */; };
+		1A564724AB95855BFE8AE9E5 /* TransactionInfoAlertModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5643010944D435B8BA2FD8 /* TransactionInfoAlertModel.swift */; };
+		1A5647489DF968F20446631F /* TransactionInfoBaseValueItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5645282A89F1EE4A04D5DD /* TransactionInfoBaseValueItemView.swift */; };
 		1A56475AA0F34C5E55265BB4 /* SendConfigTwinItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564E284C8BF8A8EA201C07 /* SendConfigTwinItemView.swift */; };
 		1A56478710E69DB8ACD477D7 /* SendTitleItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564AF060F532C77FB991C7 /* SendTitleItem.swift */; };
 		1A5647C57BCDBB26FE4424F3 /* DateHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56428F6FACADBA8B7BFEFB /* DateHelper.swift */; };
@@ -115,6 +124,8 @@
 		1A564822346BD715C453E612 /* SendRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56474B516F0AFBAAFB3AE2 /* SendRouter.swift */; };
 		1A56483A6675677AA621FF79 /* PagingDotsItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56453E2F6ED44D46D84C49 /* PagingDotsItemView.swift */; };
 		1A564891B0D0EABB5502C123 /* DepositAddressCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5647F6F29405E571D70592 /* DepositAddressCollectionCell.swift */; };
+		1A56489F5EEDEE6D7BB9BA7A /* TransactionInfoBaseHashValueItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564298191D07782DFF5B99 /* TransactionInfoBaseHashValueItemView.swift */; };
+		1A5648BE3DCA7B22706AA27D /* TransactionAmountItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564718FE2139B7EBCCB3DE /* TransactionAmountItem.swift */; };
 		1A5648CBCC6B6EA30367091E /* BaseButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564FC2E7778A0E71E4A376 /* BaseButtonItem.swift */; };
 		1A5648F83FC5E3954E406849 /* DepositShareButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564F3B10EF814E1D330CAD /* DepositShareButtonItem.swift */; };
 		1A5649A9DD5067C9691BE588 /* BackupCheckboxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56465034C4DE6C44469C59 /* BackupCheckboxView.swift */; };
@@ -123,25 +134,34 @@
 		1A564A46D655BA99B1C0DAF7 /* DescriptionCollectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564E60ED94EDDE153519AA /* DescriptionCollectionHeader.swift */; };
 		1A564A5C63D6216801268B21 /* BackupButtonItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5646F9D997035F0E73DFDA /* BackupButtonItemView.swift */; };
 		1A564A7ECE35A5A7A314D455 /* TransactionsTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5645ED6604E61C418C257E /* TransactionsTheme.swift */; };
+		1A564A87C70D95E5B17DB9D2 /* TransactionCloseItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564B27FBA16D9EA22F0944 /* TransactionCloseItemView.swift */; };
 		1A564AB936D91E4E5FBBAA4C /* WalletHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56463AFF1D05E33BA25C8A /* WalletHeaderView.swift */; };
 		1A564AFE8103BA974943D4E7 /* InputFieldTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564939814A9D9F47D41EEB /* InputFieldTheme.swift */; };
 		1A564B05F32651BB2C7B6E6C /* BackupCheckboxItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564C5EE52629FA431F8F54 /* BackupCheckboxItem.swift */; };
+		1A564B096FFE228DF453A66D /* TransactionInfoPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564091A9C12F224A18B740 /* TransactionInfoPresenter.swift */; };
 		1A564B38A4E20059FBF9045C /* BakcupConfirmationAlertModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5640379D365FF3302A4910 /* BakcupConfirmationAlertModel.swift */; };
 		1A564B45B690D918F72DFFC0 /* SendReferenceItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564C907C70681148A3CA13 /* SendReferenceItem.swift */; };
+		1A564B955AE4E27AD7B232CC /* TransactionTitleItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564C27C6CDAE6E692C4A14 /* TransactionTitleItem.swift */; };
 		1A564BD5E7709C07FD063961 /* TransactionsFilterTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5647CE5852E959DA7EB89A /* TransactionsFilterTheme.swift */; };
 		1A564BE5BF0E283B1758F2F0 /* WalletHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1A5646B68188CD13969CE766 /* WalletHeaderView.xib */; };
 		1A564C1405D8C21185B0D4C1 /* TransactionsCurrencyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5649C888E12C1A0B70EFA8 /* TransactionsCurrencyCell.swift */; };
 		1A564C2A73573F7FEC20CF06 /* SendAmountItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5649D68A7DEDAB0D16FFA4 /* SendAmountItem.swift */; };
 		1A564C3EBB7FB859CF1BB24D /* UIFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564EC30D391F8893C1D514 /* UIFont.swift */; };
+		1A564C4890A7DCA6387FACC9 /* TransactionInfoBaseHashValueItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564A8B8E07B97BA9910FDA /* TransactionInfoBaseHashValueItem.swift */; };
 		1A564C84E08DE681615528E3 /* SendTitleItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5649BED7237B075AE7F8B8 /* SendTitleItemView.swift */; };
+		1A564CCF937248927611B8B0 /* TransactionInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5643102015EFBECFBA6693 /* TransactionInfoView.swift */; };
+		1A564CD9828F0A269B25C800 /* TransactionIDHashItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564D6EFBD1A8C9678288E6 /* TransactionIDHashItem.swift */; };
 		1A564CDEE86EFCB66EB45FD6 /* DepositCollectionItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564B0A9AB0EAAB5574FDD0 /* DepositCollectionItemView.swift */; };
 		1A564D6811B5AE4EB150D7A0 /* RespondButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564D3D7426182B6F2DFCA8 /* RespondButton.swift */; };
 		1A564D6E1FB65C20AAD6C54B /* DepositTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56481E8D97841B12893D00 /* DepositTheme.swift */; };
 		1A564D792EC5F9FA02762704 /* SendAlertModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5644CAA65F6AF171D2D5AF /* SendAlertModel.swift */; };
+		1A564D9038D65D88CF97329C /* TransactionTitleItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56469DF9D0C335228E88EE /* TransactionTitleItemView.swift */; };
 		1A564D986624D318C55367CC /* CopyItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564742F7B77B61373A8CD4 /* CopyItem.swift */; };
 		1A564DF5BBC7093B5D8226FF /* SendReferenceItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5645A8A703F88386D073F6 /* SendReferenceItemView.swift */; };
+		1A564E0A6E37A68995364D81 /* TransactionInfoInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5647DBF15322999B5A1D04 /* TransactionInfoInteractor.swift */; };
 		1A564E1F7F6358FD629294B8 /* SendAmountItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56471E7D5EFBC64715051A /* SendAmountItemView.swift */; };
 		1A564E291AD4D31A893B9B52 /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564CBC6EC3E2111514EC4D /* UIView.swift */; };
+		1A564E3E29F0182A0230BC5D /* TransactionInfoBasaeValueItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564F2613ECE2DE4A6F9F79 /* TransactionInfoBasaeValueItem.swift */; };
 		1A564F39A93F00B10861859F /* AmountInputField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564D254A8C867D16CA9166 /* AmountInputField.swift */; };
 		1A564FB62EBBA50489895BEF /* WalletCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564B746C8A6451D81B27D4 /* WalletCell.swift */; };
 		2059579FD357E44B85A0B9A9 /* Pods_WalletTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7715861774FD1545F0D9C05E /* Pods_WalletTests.framework */; };
@@ -281,36 +301,49 @@
 		1A5640379D365FF3302A4910 /* BakcupConfirmationAlertModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BakcupConfirmationAlertModel.swift; sourceTree = "<group>"; };
 		1A56404503ED39F2827DC314 /* AddressInputField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressInputField.swift; sourceTree = "<group>"; };
 		1A564077BF075C35B6FF3BCB /* SendTheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendTheme.swift; sourceTree = "<group>"; };
+		1A564091A9C12F224A18B740 /* TransactionInfoPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionInfoPresenter.swift; sourceTree = "<group>"; };
 		1A5640B6691F4FD048C82A49 /* CoinValueHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoinValueHelper.swift; sourceTree = "<group>"; };
 		1A5640B9841EBA6BE028681D /* Date.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
 		1A5640FFFD5B065D745208F1 /* PagingDotsItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PagingDotsItem.swift; sourceTree = "<group>"; };
 		1A564116BA2AF8FD13D5D2AD /* BackupButtonItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackupButtonItem.swift; sourceTree = "<group>"; };
+		1A564181733CBC44EECFBBF3 /* TransactionCloseItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionCloseItem.swift; sourceTree = "<group>"; };
 		1A5641C2FAD616C358A319A0 /* SendModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendModule.swift; sourceTree = "<group>"; };
 		1A564243436E5185205D0359 /* WalletTheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletTheme.swift; sourceTree = "<group>"; };
 		1A56425C82362C065E3379D4 /* BaseButtonItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseButtonItemView.swift; sourceTree = "<group>"; };
 		1A56425E1873BC8574539D2B /* SendButtonItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendButtonItem.swift; sourceTree = "<group>"; };
 		1A564260BF2C73B9F2450FB8 /* SendInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendInteractor.swift; sourceTree = "<group>"; };
 		1A56428F6FACADBA8B7BFEFB /* DateHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateHelper.swift; sourceTree = "<group>"; };
+		1A564298191D07782DFF5B99 /* TransactionInfoBaseHashValueItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionInfoBaseHashValueItemView.swift; sourceTree = "<group>"; };
+		1A5643010944D435B8BA2FD8 /* TransactionInfoAlertModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionInfoAlertModel.swift; sourceTree = "<group>"; };
+		1A5643102015EFBECFBA6693 /* TransactionInfoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionInfoView.swift; sourceTree = "<group>"; };
+		1A5643996D67B74F800DFFE4 /* TransactionInfoModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionInfoModule.swift; sourceTree = "<group>"; };
 		1A5643AAE35C8D8C5DA5924C /* TransactionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionCell.swift; sourceTree = "<group>"; };
 		1A5644CAA65F6AF171D2D5AF /* SendAlertModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendAlertModel.swift; sourceTree = "<group>"; };
 		1A5644E3A131453D33B73B57 /* CopyItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CopyItemView.swift; sourceTree = "<group>"; };
+		1A5645282A89F1EE4A04D5DD /* TransactionInfoBaseValueItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionInfoBaseValueItemView.swift; sourceTree = "<group>"; };
 		1A5645371B2FC499500DCA93 /* DepositPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DepositPresenter.swift; sourceTree = "<group>"; };
 		1A56453E2F6ED44D46D84C49 /* PagingDotsItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PagingDotsItemView.swift; sourceTree = "<group>"; };
 		1A5645A8A703F88386D073F6 /* SendReferenceItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendReferenceItemView.swift; sourceTree = "<group>"; };
 		1A5645BE7DACEC78A2FAEFB5 /* DepositCollectionItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DepositCollectionItem.swift; sourceTree = "<group>"; };
 		1A5645ED6604E61C418C257E /* TransactionsTheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionsTheme.swift; sourceTree = "<group>"; };
+		1A5645F926B14580B1644164 /* TransactionInfoTheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionInfoTheme.swift; sourceTree = "<group>"; };
 		1A56463AFF1D05E33BA25C8A /* WalletHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletHeaderView.swift; sourceTree = "<group>"; };
 		1A56465034C4DE6C44469C59 /* BackupCheckboxView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackupCheckboxView.swift; sourceTree = "<group>"; };
 		1A564679937963085A8530F4 /* CurrencyHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrencyHelper.swift; sourceTree = "<group>"; };
+		1A56469DF9D0C335228E88EE /* TransactionTitleItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionTitleItemView.swift; sourceTree = "<group>"; };
 		1A5646B68188CD13969CE766 /* WalletHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WalletHeaderView.xib; sourceTree = "<group>"; };
+		1A5646C9024F054AE8115A30 /* TransactionStatusItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionStatusItem.swift; sourceTree = "<group>"; };
 		1A5646F9D997035F0E73DFDA /* BackupButtonItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackupButtonItemView.swift; sourceTree = "<group>"; };
+		1A564718FE2139B7EBCCB3DE /* TransactionAmountItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionAmountItem.swift; sourceTree = "<group>"; };
 		1A56471E7D5EFBC64715051A /* SendAmountItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendAmountItemView.swift; sourceTree = "<group>"; };
 		1A564742F7B77B61373A8CD4 /* CopyItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CopyItem.swift; sourceTree = "<group>"; };
 		1A56474B516F0AFBAAFB3AE2 /* SendRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendRouter.swift; sourceTree = "<group>"; };
 		1A5647CE5852E959DA7EB89A /* TransactionsFilterTheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionsFilterTheme.swift; sourceTree = "<group>"; };
 		1A5647D980D08E2E4359861B /* ScanQRController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScanQRController.swift; sourceTree = "<group>"; };
+		1A5647DBF15322999B5A1D04 /* TransactionInfoInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionInfoInteractor.swift; sourceTree = "<group>"; };
 		1A5647EE51941D84607A9493 /* SendPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendPresenter.swift; sourceTree = "<group>"; };
 		1A5647F6F29405E571D70592 /* DepositAddressCollectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DepositAddressCollectionCell.swift; sourceTree = "<group>"; };
+		1A5647FDE8383651F19C35C6 /* TransactionInfoRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionInfoRouter.swift; sourceTree = "<group>"; };
 		1A56481E8D97841B12893D00 /* DepositTheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DepositTheme.swift; sourceTree = "<group>"; };
 		1A5648D3CF09FF5EBE8321EC /* RestoreWordCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestoreWordCell.swift; sourceTree = "<group>"; };
 		1A5648DA32EA5FC27E4CEF64 /* DepositInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DepositInteractor.swift; sourceTree = "<group>"; };
@@ -320,17 +353,22 @@
 		1A5649D68A7DEDAB0D16FFA4 /* SendAmountItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendAmountItem.swift; sourceTree = "<group>"; };
 		1A5649DB879A57761C09842E /* AppTheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppTheme.swift; sourceTree = "<group>"; };
 		1A564A161BB3291073344A21 /* ReferenceInputField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReferenceInputField.swift; sourceTree = "<group>"; };
+		1A564A8B8E07B97BA9910FDA /* TransactionInfoBaseHashValueItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionInfoBaseHashValueItem.swift; sourceTree = "<group>"; };
 		1A564AF060F532C77FB991C7 /* SendTitleItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendTitleItem.swift; sourceTree = "<group>"; };
 		1A564B0A9AB0EAAB5574FDD0 /* DepositCollectionItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DepositCollectionItemView.swift; sourceTree = "<group>"; };
+		1A564B27FBA16D9EA22F0944 /* TransactionCloseItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionCloseItemView.swift; sourceTree = "<group>"; };
 		1A564B746C8A6451D81B27D4 /* WalletCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletCell.swift; sourceTree = "<group>"; };
 		1A564B7491C37F836433E06F /* KeyboardObservingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardObservingViewController.swift; sourceTree = "<group>"; };
+		1A564C27C6CDAE6E692C4A14 /* TransactionTitleItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionTitleItem.swift; sourceTree = "<group>"; };
 		1A564C2A96B49F01C1EC645D /* DepositAlertModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DepositAlertModel.swift; sourceTree = "<group>"; };
+		1A564C4C8EFE1B1BBE03C9E6 /* TransactionFromHashItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionFromHashItem.swift; sourceTree = "<group>"; };
 		1A564C5EE52629FA431F8F54 /* BackupCheckboxItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackupCheckboxItem.swift; sourceTree = "<group>"; };
 		1A564C907C70681148A3CA13 /* SendReferenceItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendReferenceItem.swift; sourceTree = "<group>"; };
 		1A564CBC6EC3E2111514EC4D /* UIView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
 		1A564CFA352D219E2D05D09F /* SendButtonItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendButtonItemView.swift; sourceTree = "<group>"; };
 		1A564D254A8C867D16CA9166 /* AmountInputField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AmountInputField.swift; sourceTree = "<group>"; };
 		1A564D3D7426182B6F2DFCA8 /* RespondButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RespondButton.swift; sourceTree = "<group>"; };
+		1A564D6EFBD1A8C9678288E6 /* TransactionIDHashItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionIDHashItem.swift; sourceTree = "<group>"; };
 		1A564D7FA287326CBE96353A /* ButtonTheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonTheme.swift; sourceTree = "<group>"; };
 		1A564DA173BE95B4681E5395 /* DepositShareButtonItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DepositShareButtonItemView.swift; sourceTree = "<group>"; };
 		1A564E1FBBCCA45BCDA557F4 /* DepositModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DepositModule.swift; sourceTree = "<group>"; };
@@ -338,7 +376,9 @@
 		1A564E60ED94EDDE153519AA /* DescriptionCollectionHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DescriptionCollectionHeader.swift; sourceTree = "<group>"; };
 		1A564E77730537D108E31276 /* BackupConfirmationTheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackupConfirmationTheme.swift; sourceTree = "<group>"; };
 		1A564EC30D391F8893C1D514 /* UIFont.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIFont.swift; sourceTree = "<group>"; };
+		1A564ED9673CF0765C7948DE /* UIAlertController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIAlertController.swift; sourceTree = "<group>"; };
 		1A564EDCEACE83D95F6AE528 /* DepositRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DepositRouter.swift; sourceTree = "<group>"; };
+		1A564F2613ECE2DE4A6F9F79 /* TransactionInfoBasaeValueItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionInfoBasaeValueItem.swift; sourceTree = "<group>"; };
 		1A564F3B10EF814E1D330CAD /* DepositShareButtonItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DepositShareButtonItem.swift; sourceTree = "<group>"; };
 		1A564FC2E7778A0E71E4A376 /* BaseButtonItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseButtonItem.swift; sourceTree = "<group>"; };
 		1A564FE8D247C36C2478C6B5 /* TransactionCurrenciesHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionCurrenciesHeaderView.swift; sourceTree = "<group>"; };
@@ -464,6 +504,7 @@
 				1A564CBC6EC3E2111514EC4D /* UIView.swift */,
 				1A564EC30D391F8893C1D514 /* UIFont.swift */,
 				1A5640B9841EBA6BE028681D /* Date.swift */,
+				1A564ED9673CF0765C7948DE /* UIAlertController.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -555,6 +596,7 @@
 				11B358D87B2EDEB8BE8F133B /* Settings */,
 				1A564B7337E79315F1CC3B49 /* Deposit */,
 				1A5646EDEC415756075A968B /* Send */,
+				1A564B6D22A2CD659257C4DF /* TransactionInfo */,
 			);
 			path = Modules;
 			sourceTree = "<group>";
@@ -753,6 +795,7 @@
 				1A564D7FA287326CBE96353A /* ButtonTheme.swift */,
 				1A56481E8D97841B12893D00 /* DepositTheme.swift */,
 				1A564077BF075C35B6FF3BCB /* SendTheme.swift */,
+				1A5645F926B14580B1644164 /* TransactionInfoTheme.swift */,
 			);
 			path = Theme;
 			sourceTree = "<group>";
@@ -866,6 +909,20 @@
 			path = Controls;
 			sourceTree = "<group>";
 		};
+		1A564B6D22A2CD659257C4DF /* TransactionInfo */ = {
+			isa = PBXGroup;
+			children = (
+				1A5647FDE8383651F19C35C6 /* TransactionInfoRouter.swift */,
+				1A5643996D67B74F800DFFE4 /* TransactionInfoModule.swift */,
+				1A5647DBF15322999B5A1D04 /* TransactionInfoInteractor.swift */,
+				1A564091A9C12F224A18B740 /* TransactionInfoPresenter.swift */,
+				1A5643102015EFBECFBA6693 /* TransactionInfoView.swift */,
+				1A5643010944D435B8BA2FD8 /* TransactionInfoAlertModel.swift */,
+				1A564E504EC232DB60836114 /* ViewItems */,
+			);
+			path = TransactionInfo;
+			sourceTree = "<group>";
+		};
 		1A564B7337E79315F1CC3B49 /* Deposit */ = {
 			isa = PBXGroup;
 			children = (
@@ -877,6 +934,25 @@
 				1A564384C132B1AF74258D4A /* ViewItems */,
 			);
 			path = Deposit;
+			sourceTree = "<group>";
+		};
+		1A564E504EC232DB60836114 /* ViewItems */ = {
+			isa = PBXGroup;
+			children = (
+				1A564C27C6CDAE6E692C4A14 /* TransactionTitleItem.swift */,
+				1A56469DF9D0C335228E88EE /* TransactionTitleItemView.swift */,
+				1A564F2613ECE2DE4A6F9F79 /* TransactionInfoBasaeValueItem.swift */,
+				1A5645282A89F1EE4A04D5DD /* TransactionInfoBaseValueItemView.swift */,
+				1A5646C9024F054AE8115A30 /* TransactionStatusItem.swift */,
+				1A564718FE2139B7EBCCB3DE /* TransactionAmountItem.swift */,
+				1A564A8B8E07B97BA9910FDA /* TransactionInfoBaseHashValueItem.swift */,
+				1A564298191D07782DFF5B99 /* TransactionInfoBaseHashValueItemView.swift */,
+				1A564C4C8EFE1B1BBE03C9E6 /* TransactionFromHashItem.swift */,
+				1A564D6EFBD1A8C9678288E6 /* TransactionIDHashItem.swift */,
+				1A564181733CBC44EECFBBF3 /* TransactionCloseItem.swift */,
+				1A564B27FBA16D9EA22F0944 /* TransactionCloseItemView.swift */,
+			);
+			path = ViewItems;
 			sourceTree = "<group>";
 		};
 		47DC31E766A18B34D1590594 /* Pods */ = {
@@ -1326,6 +1402,26 @@
 				11B35E77D6A81B866EE46140 /* ILocalStorage.swift in Sources */,
 				11B35DCBB1358532C177333E /* WordsManager.swift in Sources */,
 				11B35BDEF15FE9C566AB6C37 /* UserDefaultsStorage.swift in Sources */,
+				1A56458ABE9CDDEB7F0643AA /* TransactionInfoRouter.swift in Sources */,
+				1A564724AB95855BFE8AE9E5 /* TransactionInfoAlertModel.swift in Sources */,
+				1A564B955AE4E27AD7B232CC /* TransactionTitleItem.swift in Sources */,
+				1A564D9038D65D88CF97329C /* TransactionTitleItemView.swift in Sources */,
+				1A5641061673702B10D858BF /* TransactionInfoTheme.swift in Sources */,
+				1A564E3E29F0182A0230BC5D /* TransactionInfoBasaeValueItem.swift in Sources */,
+				1A5647489DF968F20446631F /* TransactionInfoBaseValueItemView.swift in Sources */,
+				1A5640E91AA1D79E1735F5FC /* TransactionStatusItem.swift in Sources */,
+				1A5648BE3DCA7B22706AA27D /* TransactionAmountItem.swift in Sources */,
+				1A56489F5EEDEE6D7BB9BA7A /* TransactionInfoBaseHashValueItemView.swift in Sources */,
+				1A564C4890A7DCA6387FACC9 /* TransactionInfoBaseHashValueItem.swift in Sources */,
+				1A564274EEC6A31D6B287B09 /* TransactionFromHashItem.swift in Sources */,
+				1A564CD9828F0A269B25C800 /* TransactionIDHashItem.swift in Sources */,
+				1A564462CB4BF369442CE381 /* TransactionCloseItem.swift in Sources */,
+				1A564A87C70D95E5B17DB9D2 /* TransactionCloseItemView.swift in Sources */,
+				1A5643AC9DBE003D1CC0C76C /* UIAlertController.swift in Sources */,
+				1A56422B4DA1DE0ACD09C4BC /* TransactionInfoModule.swift in Sources */,
+				1A564E0A6E37A68995364D81 /* TransactionInfoInteractor.swift in Sources */,
+				1A564B096FFE228DF453A66D /* TransactionInfoPresenter.swift in Sources */,
+				1A564CCF937248927611B8B0 /* TransactionInfoView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

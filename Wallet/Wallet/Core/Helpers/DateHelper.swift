@@ -61,4 +61,9 @@ public class DateHelper {
         return formatter.string(from: correctDate)
     }
 
+    public func formatTransactionInfoTime(from date: Date) -> String {
+        let formatter = getFormatter(forFormat: "MMM d, yyyy, \(DateHelper.correctedSystemHourFormat):mm")
+        return formatter.string(from: date)
+    }
+
 }
