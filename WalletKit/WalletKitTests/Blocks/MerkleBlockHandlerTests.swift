@@ -17,9 +17,9 @@ class MerkleBlockHandlerTests: XCTestCase {
     override func setUp() {
         super.setUp()
 
-        mockRealmFactory = MockRealmFactory()
+        mockRealmFactory = MockRealmFactory(configuration: Realm.Configuration())
         mockValidator = MockMerkleBlockValidator()
-        mockSaver = MockBlockSaver(realmFactory: RealmFactoryStub())
+        mockSaver = MockBlockSaver(realmFactory: mockRealmFactory)
         merkleBlockHandler = MerkleBlockHandler(realmFactory: mockRealmFactory, validator: mockValidator, saver: mockSaver)
 
         realm = try! Realm(configuration: Realm.Configuration(inMemoryIdentifier: "TestRealm"))

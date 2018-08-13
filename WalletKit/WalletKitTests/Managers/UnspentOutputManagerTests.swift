@@ -3,9 +3,9 @@ import Cuckoo
 import RealmSwift
 @testable import WalletKit
 
-class UnspentOutputsManagerTests: XCTestCase {
+class UnspentOutputManagerTests: XCTestCase {
 
-    private var unspentOutputSelector: UnspentOutputsManager!
+    private var unspentOutputManager: UnspentOutputManager!
     private var outputs: [TransactionOutput]!
     private var mockRealmFactory: MockRealmFactory!
     private var realm: Realm!
@@ -13,7 +13,7 @@ class UnspentOutputsManagerTests: XCTestCase {
     override func setUp() {
         super.setUp()
 
-        mockRealmFactory = MockRealmFactory()
+        mockRealmFactory = MockRealmFactory(configuration: Realm.Configuration())
 
         realm = try! Realm(configuration: Realm.Configuration(inMemoryIdentifier: "TestRealm"))
         try! realm.write { realm.deleteAll() }
@@ -22,7 +22,7 @@ class UnspentOutputsManagerTests: XCTestCase {
             when(mock.realm.get).thenReturn(realm)
         }
 
-        unspentOutputSelector = UnspentOutputsManager(realmFactory: mockRealmFactory)
+        unspentOutputManager = UnspentOutputManager(realmFactory: mockRealmFactory)
         outputs = [TransactionOutput(withValue: 1, withLockingScript: Data(), withIndex: 0),
                    TransactionOutput(withValue: 2, withLockingScript: Data(), withIndex: 0),
                    TransactionOutput(withValue: 4, withLockingScript: Data(), withIndex: 0),
@@ -35,7 +35,7 @@ class UnspentOutputsManagerTests: XCTestCase {
         mockRealmFactory = nil
         realm = nil
 
-        unspentOutputSelector = nil
+        unspentOutputManager = nil
         outputs = nil
 
         super.tearDown()
@@ -43,7 +43,7 @@ class UnspentOutputsManagerTests: XCTestCase {
 
     func testExactlyValue() {
         do {
-            let selectedOutputs = try unspentOutputSelector.select(value: 4, outputs: outputs)
+            let selectedOutputs = try unspentOutputManager.select(value: 4, outputs: outputs)
             XCTAssertEqual(selectedOutputs, [outputs[2]])
         } catch {
             XCTFail("Unexpected error!")
@@ -52,7 +52,7 @@ class UnspentOutputsManagerTests: XCTestCase {
 
     func testSummaryValue() {
         do {
-            let selectedOutputs = try unspentOutputSelector.select(value: 11, outputs: outputs)
+            let selectedOutputs = try unspentOutputManager.select(value: 11, outputs: outputs)
             XCTAssertEqual(selectedOutputs, [outputs[0], outputs[1], outputs[2], outputs[3]])
         } catch {
             XCTFail("Unexpected error!")
@@ -61,10 +61,10 @@ class UnspentOutputsManagerTests: XCTestCase {
 
     func testNotEnoughError() {
         do {
-            _ = try unspentOutputSelector.select(value: 35, outputs: outputs)
+            _ = try unspentOutputManager.select(value: 35, outputs: outputs)
             XCTFail("Wrong value summary!")
-        } catch let error as UnspentOutputsManager.SelectorError {
-            XCTAssertEqual(error, UnspentOutputsManager.SelectorError.notEnough)
+        } catch let error as UnspentOutputManager.SelectorError {
+            XCTAssertEqual(error, UnspentOutputManager.SelectorError.notEnough)
         } catch {
             XCTFail("Unexpected \(error) error!")
         }
@@ -72,17 +72,21 @@ class UnspentOutputsManagerTests: XCTestCase {
 
     func testEmptyOutputsError() {
         do {
-            _ = try unspentOutputSelector.select(value: 35, outputs: [])
+            _ = try unspentOutputManager.select(value: 35, outputs: [])
             XCTFail("Wrong value summary!")
-        } catch let error as UnspentOutputsManager.SelectorError {
-            XCTAssertEqual(error, UnspentOutputsManager.SelectorError.emptyOutputs)
+        } catch let error as UnspentOutputManager.SelectorError {
+            XCTAssertEqual(error, UnspentOutputManager.SelectorError.emptyOutputs)
         } catch {
             XCTFail("Unexpected \(error) error!")
         }
     }
 
-    func testValidOutputs() {
-        XCTAssertTrue(true)
+    func testZeroBalance() {
+        XCTAssertEqual(unspentOutputManager.balance(), 0)
+    }
+
+    func testValidBalance() {
+        XCTAssertEqual(unspentOutputManager.balance(outputs: outputs), 31)
     }
 
 }

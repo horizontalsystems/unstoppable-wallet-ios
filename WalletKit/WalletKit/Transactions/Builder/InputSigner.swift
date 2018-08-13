@@ -9,12 +9,12 @@ class InputSigner {
         case noPrivateKey
     }
 
-    let walletKitManager: WalletKitManager
+    let hdWallet: HDWallet
     let realmFactory: RealmFactory
 
-    init(realmFactory: RealmFactory, walletKitManager: WalletKitManager = .shared) {
+    init(realmFactory: RealmFactory, hdWallet: HDWallet) {
         self.realmFactory = realmFactory
-        self.walletKitManager = walletKitManager
+        self.hdWallet = hdWallet
     }
 
     func sigScriptData(input: TransactionInput, transaction: Transaction, index: Int) throws -> [Data] {
@@ -36,7 +36,7 @@ class InputSigner {
             throw SignError.noPublicKeyInOutput
         }
 
-        guard let privateKey = try? walletKitManager.hdWallet.privateKey(index: address.index, chain: address.external ? .external : .internal) else {
+        guard let privateKey = try? hdWallet.privateKey(index: address.index, chain: address.external ? .external : .internal) else {
             throw SignError.noPrivateKey
         }
 

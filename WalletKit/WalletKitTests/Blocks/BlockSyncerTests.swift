@@ -16,8 +16,8 @@ class BlockSyncerTests: XCTestCase {
     override func setUp() {
         super.setUp()
 
-        mockRealmFactory = MockRealmFactory()
-        mockPeerGroup = MockPeerGroup()
+        mockRealmFactory = MockRealmFactory(configuration: Realm.Configuration())
+        mockPeerGroup = MockPeerGroup(realmFactory: mockRealmFactory)
 
         realm = try! Realm(configuration: Realm.Configuration(inMemoryIdentifier: "TestRealm"))
         try! realm.write { realm.deleteAll() }

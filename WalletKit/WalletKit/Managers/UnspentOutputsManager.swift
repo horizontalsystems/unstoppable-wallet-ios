@@ -1,6 +1,6 @@
 import Foundation
 
-class UnspentOutputsManager {
+class UnspentOutputManager {
     enum SelectorError: Error {
         case emptyOutputs
         case notEnough
@@ -40,13 +40,19 @@ class UnspentOutputsManager {
         return selected
     }
 
+    func balance(outputs: [TransactionOutput]? = nil) -> Int {
+        let outputs = outputs ?? allUnspentOutputs()
+
+        return outputs.reduce(0) { $0 + $1.value }
+    }
+
     private func allUnspentOutputs() -> [TransactionOutput] {
         let realm = realmFactory.realm
         let allUnspentOutputs = realm.objects(TransactionOutput.self)
                 .filter("isMine = %@", true)
                 .filter("scriptType = %@ OR scriptType = %@", ScriptType.p2pkh.rawValue, ScriptType.p2pk.rawValue)
                 .filter("inputs.@count = %@", 0)
-                .filter("transaction != nil")
+                .filter("transactions.@count > %@", 0)
 
         return Array(allUnspentOutputs)
     }

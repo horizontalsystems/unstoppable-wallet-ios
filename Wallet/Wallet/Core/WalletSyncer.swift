@@ -5,9 +5,15 @@ import RealmSwift
 class WalletSyncer {
     static let shared = WalletSyncer()
 
-    init() {
-        WalletKitProvider.shared.add(transactionListener: self)
+    var walletKit: WalletKit? {
+        didSet {
+            walletKit?.walletKitProvider.add(transactionListener: self)
+        }
     }
+
+    init() {
+    }
+
 }
 
 extension WalletSyncer: TransactionListener {

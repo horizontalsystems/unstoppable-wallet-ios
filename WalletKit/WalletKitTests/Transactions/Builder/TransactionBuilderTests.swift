@@ -7,7 +7,7 @@ class TransactionBuilderTests: XCTestCase{
 
     private var realm: Realm!
     private var mockRealmFactory: MockRealmFactory!
-    private var mockUnspentOutputsManager: MockUnspentOutputsManager!
+    private var mockUnspentOutputManager: MockUnspentOutputManager!
     private var mockInputSigner: MockInputSigner!
     private var mockScriptBuilder:  MockScriptBuilder!
     private var mockFactory: MockFactory!
@@ -29,7 +29,7 @@ class TransactionBuilderTests: XCTestCase{
     override func setUp() {
         super.setUp()
 
-        mockRealmFactory = MockRealmFactory()
+        mockRealmFactory = MockRealmFactory(configuration: Realm.Configuration())
         realm = try! Realm(configuration: Realm.Configuration(inMemoryIdentifier: "TestRealm"))
         try! realm.write {
             realm.deleteAll()
@@ -38,12 +38,12 @@ class TransactionBuilderTests: XCTestCase{
             when(mock.realm.get).thenReturn(realm)
         }
 
-        mockUnspentOutputsManager = MockUnspentOutputsManager(realmFactory: mockRealmFactory)
-        mockInputSigner = MockInputSigner(realmFactory: mockRealmFactory)
+        mockUnspentOutputManager = MockUnspentOutputManager(realmFactory: mockRealmFactory)
+        mockInputSigner = MockInputSigner(realmFactory: mockRealmFactory, hdWallet: HDWalletStub(seed: Data(), network: TestNet()))
         mockScriptBuilder = MockScriptBuilder()
         mockFactory = MockFactory()
 
-        transactionBuilder = TransactionBuilder(unspentOutputsManager: mockUnspentOutputsManager, inputSigner: mockInputSigner, scriptBuilder: mockScriptBuilder, factory: mockFactory)
+        transactionBuilder = TransactionBuilder(unspentOutputsManager: mockUnspentOutputManager, inputSigner: mockInputSigner, scriptBuilder: mockScriptBuilder, factory: mockFactory)
 
         changeAddress = TestData.address()
         toAddress = TestData.address(pubKeyHash: Data(hex: "64d8fbe748c577bb5da29718dae0402b0b5dd523")!)
@@ -61,10 +61,10 @@ class TransactionBuilderTests: XCTestCase{
 
         transaction = Transaction(version: 1, inputs: [], outputs: [])
         input = TransactionInput(withPreviousOutput: unspentOutputs[0], script: Data(), sequence: 0)
-        toOutput = try? TransactionOutput(withValue: value - fee, withLockingScript: Data(), withIndex: 0, type: .p2pkh, keyHash: toAddress.publicKeyHash)
-        changeOutput = try? TransactionOutput(withValue: totalInputValue - value, withLockingScript: Data(), withIndex: 1, type: .p2pkh, keyHash: changeAddress.publicKeyHash)
+        toOutput = TransactionOutput(withValue: value - fee, withLockingScript: Data(), withIndex: 0, type: .p2pkh, keyHash: toAddress.publicKeyHash)
+        changeOutput = TransactionOutput(withValue: totalInputValue - value, withLockingScript: Data(), withIndex: 1, type: .p2pkh, keyHash: changeAddress.publicKeyHash)
 
-        stub(mockUnspentOutputsManager) { mock in
+        stub(mockUnspentOutputManager) { mock in
             when(mock.select(value: any(), outputs: any())).thenReturn(unspentOutputs)
         }
 
@@ -90,7 +90,7 @@ class TransactionBuilderTests: XCTestCase{
         mockRealmFactory = nil
         realm = nil
         unspentOutputs = nil
-        mockUnspentOutputsManager = nil
+        mockUnspentOutputManager = nil
         mockInputSigner = nil
         mockFactory = nil
         transactionBuilder = nil

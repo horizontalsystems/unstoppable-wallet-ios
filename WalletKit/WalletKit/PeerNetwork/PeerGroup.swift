@@ -11,9 +11,13 @@ class PeerGroup {
     var statusSubject: PublishSubject<Status> = PublishSubject()
     weak var delegate: PeerGroupDelegate?
 
+    private let realmFactory: RealmFactory
+
     private let peer = Peer(network: TestNet())
 
-    init() {
+    init(realmFactory: RealmFactory) {
+        self.realmFactory = realmFactory
+
         peer.delegate = self
     }
 
@@ -39,7 +43,7 @@ class PeerGroup {
 extension PeerGroup: PeerDelegate {
 
     public func peerDidConnect(_ peer: Peer) {
-        let realm = Singletons.shared.realmFactory.realm
+        let realm = realmFactory.realm
         let addresses = realm.objects(Address.self)
         let filters = Array(addresses.map { $0.publicKeyHash }) + Array(addresses.map { $0.publicKey! })
 

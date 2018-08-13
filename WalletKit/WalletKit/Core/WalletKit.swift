@@ -1,10 +1,14 @@
 import Foundation
+import RealmSwift
 
-class Singletons {
-    static let shared = Singletons()
-
+public class WalletKit {
     let configuration: Configuration
     let realmFactory: RealmFactory
+
+    let hdWallet: HDWallet
+
+    public let walletKitProvider: WalletKitProvider
+
     let peerGroup: PeerGroup
     let syncer: Syncer
     let factory: Factory
@@ -29,12 +33,17 @@ class Singletons {
 
     let inputSigner: InputSigner
     let scriptBuilder: ScriptBuilder
-    let unspentOutputsManager: UnspentOutputsManager
+    let unspentOutputsManager: UnspentOutputManager
 
-    init() {
+    public init(withWords words: [String], realmConfiguration: Realm.Configuration) {
         configuration = Configuration()
-        realmFactory = RealmFactory()
-        peerGroup = PeerGroup()
+        realmFactory = RealmFactory(configuration: realmConfiguration)
+
+        hdWallet = HDWallet(seed: Mnemonic.seed(mnemonic: words), network: configuration.network)
+
+        walletKitProvider = WalletKitProvider(realmFactory: realmFactory)
+
+        peerGroup = PeerGroup(realmFactory: realmFactory)
         syncer = Syncer()
         factory = Factory()
 
@@ -56,9 +65,9 @@ class Singletons {
         transactionLinker = TransactionLinker(realmFactory: realmFactory)
         transactionHandler = TransactionHandler(realmFactory: realmFactory, extractor: transactionExtractor, saver: transactionSaver, linker: transactionLinker)
 
-        inputSigner = InputSigner(realmFactory: realmFactory, walletKitManager: WalletKitManager.shared)
+        inputSigner = InputSigner(realmFactory: realmFactory, hdWallet: hdWallet)
         scriptBuilder = ScriptBuilder()
-        unspentOutputsManager = UnspentOutputsManager(realmFactory: realmFactory)
+        unspentOutputsManager = UnspentOutputManager(realmFactory: realmFactory)
 
         peerGroup.delegate = syncer
 
@@ -66,6 +75,54 @@ class Singletons {
         syncer.headerHandler = headerHandler
         syncer.merkleBlockHandler = merkleBlockHandler
         syncer.transactionHandler = transactionHandler
+
+        preFillInitialTestData()
+    }
+
+    public func showRealmInfo() {
+        let realm = realmFactory.realm
+
+        let blockCount = realm.objects(Block.self).count
+        let addressCount = realm.objects(Address.self).count
+
+        print("BLOCK COUNT: \(blockCount)")
+        if let block = realm.objects(Block.self).first {
+            print("First Block: \(block.height) --- \(block.reversedHeaderHashHex)")
+        }
+        if let block = realm.objects(Block.self).last {
+            print("Last Block: \(block.height) --- \(block.reversedHeaderHashHex)")
+        }
+
+        print("ADDRESS COUNT: \(addressCount)")
+        if let address = realm.objects(Address.self).first {
+            print("First Address: \(address.index) --- \(address.external) --- \(address.base58)")
+        }
+        if let address = realm.objects(Address.self).last {
+            print("Last Address: \(address.index) --- \(address.external) --- \(address.base58)")
+        }
+    }
+
+    public func start() throws {
+        peerGroup.connect()
+    }
+
+    private func preFillInitialTestData() {
+        let realm = realmFactory.realm
+
+        var addresses = [Address]()
+
+        for i in 0..<10 {
+            if let address = try? hdWallet.receiveAddress(index: i) {
+                addresses.append(address)
+            }
+            if let address = try? hdWallet.changeAddress(index: i) {
+                addresses.append(address)
+            }
+        }
+
+        try? realm.write {
+            realm.add(addresses, update: true)
+        }
     }
 
 }

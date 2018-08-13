@@ -15,7 +15,7 @@ class TransactionSaverTests: XCTestCase {
     override func setUp() {
         super.setUp()
 
-        mockRealmFactory = MockRealmFactory()
+        mockRealmFactory = MockRealmFactory(configuration: Realm.Configuration())
         saver = TransactionSaver(realmFactory: mockRealmFactory)
 
         realm = try! Realm(configuration: Realm.Configuration(inMemoryIdentifier: "TestRealm"))
