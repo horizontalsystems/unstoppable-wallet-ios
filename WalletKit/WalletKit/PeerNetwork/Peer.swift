@@ -214,10 +214,6 @@ class Peer : NSObject, StreamDelegate {
         sendFilterLoadMessage(filters: filters)
     }
 
-//    func sendTransaction(transaction: Transaction) {
-//        sendTransactionInventory(transaction: transaction)
-//    }
-
     private func send(messageWithCommand command: String, payload: Data) {
         let checksum = Data(Crypto.sha256sha256(payload).prefix(4))
         let message = Message(magic: network.magic, command: command, length: UInt32(payload.count), checksum: checksum, payload: payload)
@@ -298,8 +294,13 @@ class Peer : NSObject, StreamDelegate {
     }
 
     func send(inventoryMessage: InventoryMessage) {
-        log("<-- INV: \(inventoryMessage.inventoryItems.first?.hash.reversedHex)")
+        log("<-- INV: \(inventoryMessage.inventoryItems.first?.hash.reversedHex ?? "UNKNOWN")")
         send(messageWithCommand: "inv", payload: inventoryMessage.serialized())
+    }
+
+    func sendTransaction(transaction: Transaction) {
+        log("<-- TX: \(transaction.reversedHashHex)")
+        send(messageWithCommand: "tx", payload: transaction.serialized())
     }
 
     private func handle(versionMessage: VersionMessage) {

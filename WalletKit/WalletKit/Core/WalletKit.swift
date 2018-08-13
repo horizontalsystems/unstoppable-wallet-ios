@@ -41,7 +41,7 @@ public class WalletKit {
         hdWallet = HDWallet(seed: Mnemonic.seed(mnemonic: words), network: configuration.network)
 
         peerGroup = PeerGroup(realmFactory: realmFactory)
-        syncer = Syncer()
+        syncer = Syncer(realmFactory: realmFactory)
         factory = Factory()
 
         difficultyEncoder = DifficultyEncoder()

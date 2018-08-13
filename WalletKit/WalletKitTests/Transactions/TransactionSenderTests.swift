@@ -4,7 +4,7 @@ import RealmSwift
 import RxSwift
 @testable import WalletKit
 
-class BlockSyncerTests: XCTestCase {
+class TransactionSenderTests: XCTestCase {
 
     private var mockRealmFactory: MockRealmFactory!
     private var mockPeerGroup: MockPeerGroup!

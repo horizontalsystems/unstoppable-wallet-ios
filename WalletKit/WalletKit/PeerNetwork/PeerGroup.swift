@@ -64,50 +64,23 @@ extension PeerGroup: PeerDelegate {
     }
 
     func peer(_ peer: Peer, didReceiveMerkleBlockMessage message: MerkleBlockMessage) {
-//        print("MERKLE BLOCK: \(Crypto.sha256sha256(message.blockHeader.serialized()).reversedHex)")
-        delegate?.peerGroupDidReceive(merkleBlockMessage: message)
+        delegate?.peerGroupDidReceive(merkleBlockMessage: message, peer: peer)
     }
 
     func peer(_ peer: Peer, didReceiveTransaction transaction: Transaction) {
-//        print("TRANSACTION: \(Crypto.sha256sha256(message.serialized()).reversedHex)")
-        delegate?.peerGroupDidReceive(transaction: transaction)
+        delegate?.peerGroupDidReceive(transaction: transaction, peer: peer)
     }
 
     func peer(_ peer: Peer, didReceiveHeadersMessage message: HeadersMessage) {
-//        message.blockHeaders.first.map {
-//            print("First Header: \(Data(Crypto.sha256sha256($0.serialized()).reversed()).hex)")
-//        }
-//        message.blockHeaders.last.map {
-//            print("Last Header: \(Data(Crypto.sha256sha256($0.serialized()).reversed()).hex)")
-//        }
-
-        delegate?.peerGroupDidReceive(headersMessage: message)
+        delegate?.peerGroupDidReceive(headersMessage: message, peer: peer)
     }
 
     func peer(_ peer: Peer, didReceiveInventoryMessage message: InventoryMessage) {
-        var txInventoryItems = [InventoryItem]()
-//        var hasBlock = false
-
-        for item in message.inventoryItems {
-            if item.objectType == .transaction {
-                txInventoryItems.append(item)
-            } else if item.objectType == .blockMessage {
-//                hasBlock = true
-            }
-        }
-
-        if !txInventoryItems.isEmpty {
-            let getDataMessage = InventoryMessage(count: VarInt(txInventoryItems.count), inventoryItems: txInventoryItems)
-            peer.sendGetDataMessage(message: getDataMessage)
-        }
-
-//        if hasBlock {
-//            try? HeaderSyncer.shared.sync()
-//        }
+        delegate?.peerGroupDidReceive(inventoryMessage: message, peer: peer)
     }
 
     func peer(_ peer: Peer, didReceiveGetDataMessage message: GetDataMessage) {
-        delegate?.peerGroupDidReceive(getDataMessage: message)
+        delegate?.peerGroupDidReceive(getDataMessage: message, peer: peer)
     }
 
 }
