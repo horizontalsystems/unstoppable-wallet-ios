@@ -3,12 +3,12 @@ import Foundation
 class TransactionBuilder {
     static let outputSize = 32
 
-    let unspentOutputsManager: UnspentOutputsManager
+    let unspentOutputsManager: UnspentOutputManager
     let inputSigner: InputSigner
     let scriptBuilder: ScriptBuilder
     let factory: Factory
 
-    init(unspentOutputsManager: UnspentOutputsManager, inputSigner: InputSigner, scriptBuilder: ScriptBuilder, factory: Factory) {
+    init(unspentOutputsManager: UnspentOutputManager, inputSigner: InputSigner, scriptBuilder: ScriptBuilder, factory: Factory) {
         self.unspentOutputsManager = unspentOutputsManager
         self.inputSigner = inputSigner
         self.scriptBuilder = scriptBuilder

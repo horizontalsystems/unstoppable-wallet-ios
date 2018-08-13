@@ -33,7 +33,7 @@ public class WalletKit {
 
     let inputSigner: InputSigner
     let scriptBuilder: ScriptBuilder
-    let unspentOutputsManager: UnspentOutputsManager
+    let unspentOutputsManager: UnspentOutputManager
 
     public init(withWords words: [String], realmConfiguration: Realm.Configuration) {
         configuration = Configuration()
@@ -67,7 +67,7 @@ public class WalletKit {
 
         inputSigner = InputSigner(realmFactory: realmFactory, hdWallet: hdWallet)
         scriptBuilder = ScriptBuilder()
-        unspentOutputsManager = UnspentOutputsManager(realmFactory: realmFactory)
+        unspentOutputsManager = UnspentOutputManager(realmFactory: realmFactory)
 
         peerGroup.delegate = syncer
 
