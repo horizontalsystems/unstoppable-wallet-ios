@@ -1,125 +1,176 @@
-//import XCTest
-//import Cuckoo
-//import RealmSwift
-//@testable import WalletKit
-//
-//class InputSignerTests: XCTestCase {
-//
-//    private var mockRealmFactory: MockRealmFactory!
-//    private var realm: Realm!
-//    private var mockUnspentOutputSelector: MockUnspentOutputSelector!
-//    private var mockWalletKitManager: MockWalletKitManager!
-//    private var mockHDWallet: MockHDWallet!
-//    private var transactionOutputs: [TransactionOutput]!
-//    private var transactionBuilder: TransactionBuilder!
-//    private var value: Int!
-//    private var feeRate: Int!
-//    private var fee: Int!
-//    private var changeAddress: Address!
-//    private var toAddress: Address!
-//
-//    override func setUp() {
-//        super.setUp()
-//
-//        mockRealmFactory = MockRealmFactory()
-//        realm = try! Realm(configuration: Realm.Configuration(inMemoryIdentifier: "TestRealm"))
-//        try! realm.write { realm.deleteAll() }
-//        stub(mockRealmFactory) { mock in
-//            when(mock.realm.get).thenReturn(realm)
-//        }
-//
-//        let transaction = TestData.p2pkhTransaction
-//
-//        // Create private key/address provider for tests
-//        let privateKey = HDPrivateKey(privateKey: Data(hex: "6a787b30bd81c8fa5ed09175b5fb08e179cf429ba91ca649dd3317436b7b698e")!, chainCode: Data(), network: TestNet())
-//        let publicKeyHash = Data(hex: "7d27dc1a53aaca1195062592e8cdfffa7a79b078")!
-//        let ownAddress = Address()
-//        ownAddress.publicKey = Data(hex: "03096fa38bfdc7f9baca6562974538ab9894801b69755a7510041bf24c1863848b")!
-//        ownAddress.publicKeyHash = publicKeyHash
-//        transaction.outputs[0].keyHash = publicKeyHash
-//
-//        try! realm.write {
-//            realm.add(ownAddress, update: true)
-//            realm.add(transaction, update: true)
-//        }
-//
-//        transactionOutputs = [transaction.outputs[0]]
-//        value = 10782000
-//        feeRate = 6
-//        fee = 1158
-//
-//        mockUnspentOutputSelector = MockUnspentOutputSelector()
-//        mockHDWallet = MockHDWallet(seed: "sample seed".data(using: .utf8)!, network: TestNet())
-//        mockWalletKitManager = MockWalletKitManager()
-//
-//        stub(mockUnspentOutputSelector) { mock in
-//            when(mock.select(value: any(), outputs: any())).thenReturn(transactionOutputs)
-//        }
-//
-//        stub(mockHDWallet) { mock in
-//            when(mock.privateKey(index: any(), chain: any())).thenReturn(privateKey)
-//        }
-//
-//        stub(mockWalletKitManager) { mock in
-//            when(mock.hdWallet.get).thenReturn(mockHDWallet)
-//        }
-//
-//        transactionBuilder = TransactionBuilder(
-//                realmFactory: mockRealmFactory, unspentOutputSelector: mockUnspentOutputSelector, walletKitManager: mockWalletKitManager
-//        )
-//        changeAddress = TestData.address()
-//        toAddress = TestData.address(pubKeyHash: Data(hex: "64d8fbe748c577bb5da29718dae0402b0b5dd523")!)
-//    }
-//
-//    override func tearDown() {
-//        mockRealmFactory = nil
-//        realm = nil
-//        transactionOutputs = nil
-//        mockUnspentOutputSelector = nil
-//        transactionBuilder = nil
-//        changeAddress = nil
-//        toAddress = nil
-//        mockWalletKitManager = nil
-//        mockHDWallet = nil
-//        value = nil
-//        feeRate = nil
-//        fee = nil
-//
-//        super.tearDown()
-//    }
-//
-//    func testBuildTransaction() {
-//        var transaction = Transaction()
-//        do {
-//            transaction = try transactionBuilder.buildTransaction(value: value, feeRate: feeRate, changeAddress: changeAddress, toAddress: toAddress)
-//        } catch let error {
-//            XCTFail(error.localizedDescription)
-//        }
-//
-//        XCTAssertEqual(transaction.inputs.count, 1)
-//        XCTAssertEqual(transaction.inputs[0].previousOutput!, transactionOutputs[0])
-//        XCTAssertEqual(transaction.outputs.count, 1)
-//        XCTAssertEqual(transaction.outputs[0].keyHash, toAddress.publicKeyHash)
-//        XCTAssertEqual(transaction.outputs[0].value, 10780842)  // value - fee
-//        XCTAssertEqual(transaction.outputs[1].keyHash, changeAddress.publicKeyHash)
-//        XCTAssertEqual(transaction.outputs[1].value, transactionOutputs[0].value - value)
-//    }
-//
-//    func testWithoutChangeOutput() {
-//        value = value + 10000
-//
-//        var transaction = Transaction()
-//        do {
-//            transaction = try transactionBuilder.buildTransaction(value: value, feeRate: feeRate, changeAddress: changeAddress, toAddress: toAddress)
-//        } catch let error {
-//            XCTFail(error.localizedDescription)
-//        }
-//
-//        XCTAssertEqual(transaction.inputs.count, 1)
-//        XCTAssertEqual(transaction.inputs[0].previousOutput!, transactionOutputs[0])
-//        XCTAssertEqual(transaction.outputs.count, 1)
-//        XCTAssertEqual(transaction.outputs[0].keyHash, toAddress.publicKeyHash)
-//        XCTAssertEqual(transaction.outputs[0].value, value - fee)
-//    }
-//
-//}
+import XCTest
+import Cuckoo
+import RealmSwift
+@testable import WalletKit
+
+class InputSignerTests: XCTestCase {
+
+    private var mockRealmFactory: MockRealmFactory!
+    private var realm: Realm!
+    private var mockHDWallet: MockHDWallet!
+    private var inputSigner: InputSigner!
+
+    private var transaction: Transaction!
+    private var ownAddress: Address!
+
+    override func setUp() {
+        super.setUp()
+
+        mockRealmFactory = MockRealmFactory(configuration: Realm.Configuration())
+        realm = try! Realm(configuration: Realm.Configuration(inMemoryIdentifier: "TestRealm"))
+        try! realm.write { realm.deleteAll() }
+        stub(mockRealmFactory) { mock in
+            when(mock.realm.get).thenReturn(realm)
+        }
+
+        // Create private key/address provider for tests
+        let privateKey = HDPrivateKey(privateKey: Data(hex: "4ee8efccaa04495d5d3ab0f847952fcff43ffc0459bd87981b6be485b92f8d64")!, chainCode: Data(), network: TestNet())
+        let publicKeyHash = Data(hex: "e4de5d630c5cacd7af96418a8f35c411c8ff3c06")!
+        ownAddress = Address()
+        ownAddress.publicKey = Data(hex: "037d56797fbe9aa506fc263751abf23bb46c9770181a6059096808923f0a64cb15")!
+        ownAddress.publicKeyHash = publicKeyHash
+
+        let previousTransaction = Transaction()
+        previousTransaction.reversedHashHex = "f296d7192200cd926369d1a8a88c0339c140149602651c2cc2ed5116368eb79c"
+        let previousOutput = TransactionOutput(withValue: 4999900000, withLockingScript: Data(hex: "76a914e4de5d630c5cacd7af96418a8f35c411c8ff3c0688ac")!, withIndex: 0, type: .p2pkh, keyHash: publicKeyHash)
+        previousTransaction.outputs.append(previousOutput)
+
+        try! realm.write {
+            realm.add(previousTransaction, update: true)
+        }
+
+        transaction = Transaction()
+        transaction.version = 1
+        let payInput = TransactionInput(withPreviousOutput: previousOutput, script: Data(), sequence: 4294967295)
+        let payOutput = TransactionOutput(withValue: 4999800000, withLockingScript: Data(hex: "76a914e4de5d630c5cacd7af96418a8f35c411c8ff3c0688ac")!, withIndex: 0)
+        transaction.inputs.append(payInput)
+        transaction.outputs.append(payOutput)
+
+        try! realm.write {
+            realm.add(ownAddress, update: true)
+        }
+
+        mockHDWallet = MockHDWallet(seed: "sample seed".data(using: .utf8)!, network: TestNet())
+
+        stub(mockHDWallet) { mock in
+            when(mock.privateKey(index: any(), chain: any())).thenReturn(privateKey)
+        }
+
+        inputSigner = InputSigner(realmFactory: mockRealmFactory, hdWallet: mockHDWallet)
+    }
+
+    override func tearDown() {
+        mockRealmFactory = nil
+        realm = nil
+        mockHDWallet = nil
+        inputSigner = nil
+        transaction = nil
+
+        super.tearDown()
+    }
+
+    func testCorrectSignature() {
+        var resultSignature = [Data()]
+        let signature = Data(hex: "304402201d914e9d229e4b8cbb7c8dee96f4fdd835cabae7e016e0859c5dc95977b697d50220681395971eecd5df3eb36b8f97f0c8b1a6e98dc7d5662f921e0b2fb0694db0f201")!
+
+        do {
+            resultSignature = try inputSigner.sigScriptData(transaction: transaction, index: 0)
+        } catch let error as InputSigner.SignError {
+            print(error)
+        } catch {
+            print(error)
+            XCTFail("Unexpected error")
+        }
+
+        XCTAssertEqual(resultSignature[0], signature)
+    }
+
+    func testNoPreviousOutput() {
+        transaction.inputs[0].previousOutput = nil
+
+        var caught = false
+        do {
+            let _ = try inputSigner.sigScriptData(transaction: transaction, index: 0)
+        } catch let error as InputSigner.SignError {
+            caught = true
+            XCTAssertEqual(error, InputSigner.SignError.noPreviousOutput)
+        } catch {
+            XCTFail("Unexpected error")
+        }
+
+        XCTAssertEqual(caught, true)
+    }
+
+    func testNoPublicKeyHashInOutput() {
+        try! realm.write {
+            transaction.inputs[0].previousOutput!.keyHash = nil
+        }
+
+        var caught = false
+        do {
+            let _ = try inputSigner.sigScriptData(transaction: transaction, index: 0)
+        } catch let error as InputSigner.SignError {
+            caught = true
+            XCTAssertEqual(error, InputSigner.SignError.noPublicKeyHashInOutput)
+        } catch {
+            XCTFail("Unexpected error")
+        }
+
+        XCTAssertEqual(caught, true)
+    }
+
+    func testNoPreviousOutputAddress() {
+        try! realm.write {
+            realm.delete(ownAddress)
+        }
+
+        var caught = false
+        do {
+            let _ = try inputSigner.sigScriptData(transaction: transaction, index: 0)
+        } catch let error as InputSigner.SignError {
+            caught = true
+            XCTAssertEqual(error, InputSigner.SignError.noPreviousOutputAddress)
+        } catch {
+            XCTFail("Unexpected error")
+        }
+
+        XCTAssertEqual(caught, true)
+    }
+
+    func testNoPublicKeyInAddress() {
+        try! realm.write {
+            ownAddress.publicKey = nil
+        }
+
+        var caught = false
+        do {
+            let _ = try inputSigner.sigScriptData(transaction: transaction, index: 0)
+        } catch let error as InputSigner.SignError {
+            caught = true
+            XCTAssertEqual(error, InputSigner.SignError.noPublicKeyInAddress)
+        } catch {
+            XCTFail("Unexpected error")
+        }
+
+        XCTAssertEqual(caught, true)
+    }
+
+    func testNoPrivateKey() {
+        stub(mockHDWallet) { mock in
+            when(mock.privateKey(index: any(), chain: any())).thenThrow(InputSigner.SignError.noPublicKeyInAddress)
+        }
+
+        var caught = false
+        do {
+            let _ = try inputSigner.sigScriptData(transaction: transaction, index: 0)
+        } catch let error as InputSigner.SignError {
+            caught = true
+            XCTAssertEqual(error, InputSigner.SignError.noPrivateKey)
+        } catch {
+            XCTFail("Unexpected error")
+        }
+
+        XCTAssertEqual(caught, true)
+    }
+
+}

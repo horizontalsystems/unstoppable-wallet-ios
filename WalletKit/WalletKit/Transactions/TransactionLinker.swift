@@ -3,15 +3,14 @@ import RealmSwift
 
 class TransactionLinker {
     let realmFactory: RealmFactory
-    let addresses: Results<Address>
 
     init(realmFactory: RealmFactory) {
         self.realmFactory = realmFactory
-        addresses = realmFactory.realm.objects(Address.self)
     }
 
     func handle(transaction: Transaction) throws {
         let realm = realmFactory.realm
+        let addresses = realm.objects(Address.self)
 
         try realm.write {
             for input in transaction.inputs {
