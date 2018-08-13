@@ -11,8 +11,7 @@ class LaunchRouter {
             let configuration = Realm.Configuration(fileURL: documentsUrl?.appendingPathComponent(realmFileName))
 
             let walletKit = WalletKit(withWords: words, realmConfiguration: configuration)
-
-            WalletSyncer.shared.walletKit = walletKit
+            AdapterManager.shared.add(adapter: BitcoinAdapter(walletKit: walletKit))
 
             return MainRouter.module()
         } else {

@@ -44,12 +44,12 @@ class SettingsViewController: UIViewController {
     }
 
     @IBAction func showRealmInfo() {
-        WalletSyncer.shared.walletKit?.showRealmInfo()
+        AdapterManager.shared.adapters.first?.showInfo()
     }
 
     @IBAction func connectToPeer() {
         do {
-            try WalletSyncer.shared.walletKit?.start()
+            try AdapterManager.shared.adapters.first?.start()
         } catch {
             print("Could not start: \(error)")
         }

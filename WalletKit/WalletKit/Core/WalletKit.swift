@@ -7,8 +7,6 @@ public class WalletKit {
 
     let hdWallet: HDWallet
 
-    public let walletKitProvider: WalletKitProvider
-
     let peerGroup: PeerGroup
     let syncer: Syncer
     let factory: Factory
@@ -40,8 +38,6 @@ public class WalletKit {
         realmFactory = RealmFactory(configuration: realmConfiguration)
 
         hdWallet = HDWallet(seed: Mnemonic.seed(mnemonic: words), network: configuration.network)
-
-        walletKitProvider = WalletKitProvider(realmFactory: realmFactory)
 
         peerGroup = PeerGroup(realmFactory: realmFactory)
         syncer = Syncer()
@@ -104,6 +100,10 @@ public class WalletKit {
 
     public func start() throws {
         peerGroup.connect()
+    }
+
+    public var transactionsRealmResults: Results<Transaction> {
+        return realmFactory.realm.objects(Transaction.self).filter("isMine = %@", true)
     }
 
     private func preFillInitialTestData() {
