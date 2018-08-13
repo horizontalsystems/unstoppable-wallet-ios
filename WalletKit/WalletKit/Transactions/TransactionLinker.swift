@@ -18,24 +18,24 @@ class TransactionLinker {
                    previousTransaction.outputs.count > input.previousOutputIndex {
                     input.previousOutput = previousTransaction.outputs[input.previousOutputIndex]
 
-                    if input.previousOutput!.isMine {
+                    if input.previousOutput!.address != nil {
                         transaction.isMine = true
                     }
                 }
             }
 
             for output in transaction.outputs {
-                let isMine = addresses.contains(where: { $0.publicKeyHash == output.keyHash })
+                let address = addresses.filter({ $0.publicKeyHash == output.keyHash }).first
 
-                if isMine {
+                if address != nil {
                     transaction.isMine = true
-                    output.isMine = true
+                    output.address = address
                 }
 
                 if let input = realm.objects(TransactionInput.self)
                         .filter("previousOutputTxReversedHex = %@ AND previousOutputIndex = %@", Data(hex: transaction.reversedHashHex)!, output.index).last {
                     input.previousOutput = output
-                    if isMine {
+                    if address != nil {
                         input.transaction.isMine = true
                     }
                 }

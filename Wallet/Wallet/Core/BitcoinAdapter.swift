@@ -36,11 +36,11 @@ class BitcoinAdapter {
             var totalInput: Int = 0
             var totalOutput: Int = 0
 
-            for output in tx.inputs.flatMap({ $0.previousOutput }).filter({ $0.isMine }) {
+            for output in tx.inputs.flatMap({ $0.previousOutput }).filter({ $0.address != nil }) {
                 totalInput += output.value
             }
 
-            for output in tx.outputs.filter({ $0.isMine }) {
+            for output in tx.outputs.filter({ $0.address != nil }) {
                 totalOutput += output.value
             }
 

@@ -49,7 +49,7 @@ class UnspentOutputManager {
     private func allUnspentOutputs() -> [TransactionOutput] {
         let realm = realmFactory.realm
         let allUnspentOutputs = realm.objects(TransactionOutput.self)
-                .filter("isMine = %@", true)
+                .filter("address != nil")
                 .filter("scriptType = %@ OR scriptType = %@", ScriptType.p2pkh.rawValue, ScriptType.p2pk.rawValue)
                 .filter("inputs.@count = %@", 0)
                 .filter("transactions.@count > %@", 0)
