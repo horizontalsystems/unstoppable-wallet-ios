@@ -24,6 +24,7 @@ public class WalletKit {
     let merkleBlockValidator: MerkleBlockValidator
     let merkleBlockHandler: MerkleBlockHandler
 
+    let addressConverter: AddressConverter
     let transactionExtractor: TransactionExtractor
     let transactionSaver: TransactionSaver
     let transactionLinker: TransactionLinker
@@ -57,6 +58,7 @@ public class WalletKit {
         merkleBlockValidator = MerkleBlockValidator()
         merkleBlockHandler = MerkleBlockHandler(realmFactory: realmFactory, validator: merkleBlockValidator, saver: blockSaver)
 
+        addressConverter = AddressConverter(network: configuration.network)
         transactionExtractor = TransactionExtractor()
         transactionSaver = TransactionSaver(realmFactory: realmFactory)
         transactionLinker = TransactionLinker(realmFactory: realmFactory)
