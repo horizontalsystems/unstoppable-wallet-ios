@@ -32,7 +32,7 @@ class TransactionsViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        view.backgroundColor = .black
         title = "transactions.title".localized
 
         tableView.backgroundColor = .clear
@@ -100,14 +100,14 @@ extension TransactionsViewController: UITableViewDelegate, UITableViewDataSource
 
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if let cell = cell as? TransactionCell {
-            cell.bind(item: items[indexPath.row], onInfo: { [weak self] in
-                if let item = self?.items[indexPath.row] {
-                    //stab transaction, only code and hash must be used
-                    print("on click transaction: \(item)")
-                    self?.delegate.onTransactionItemClick(transaction: item, coinCode: item.amount.coin.code, txHash: item.transactionHash)
-                }
-            })
+            cell.bind(item: items[indexPath.row])
         }
+    }
+
+    public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let item = items[indexPath.row]
+        //stab transaction, only code and hash must be used
+        delegate.onTransactionItemClick(transaction: item, coinCode: item.amount.coin.code, txHash: item.transactionHash)
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

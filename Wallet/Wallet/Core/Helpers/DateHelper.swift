@@ -46,17 +46,14 @@ public class DateHelper {
     private func dateTimeFormatter(interval: DateInterval, forDate date: Date, shortWeek: Bool = false) -> DateFormatter {
         switch interval {
         case .future, .today: return timeOnly()
-        case .yesterday, .inWeek: return getFormatter(forFormat: shortWeek ? "EEE" : "EEEE")
-        case .inYear, .more: return dateOnly(forDate: date)
+        case .yesterday, .inWeek, .inYear: return getFormatter(forFormat: "d MMMM")
+        case .more: return getFormatter(forFormat: "MM/dd/yy")
         }
     }
 
     public func formatTransactionTime(from date: Date, useYesterday: Bool = false) -> String {
         let correctDate = min(date, Date())
         let interval = date.interval(forDate: correctDate)
-        if useYesterday, interval == .yesterday {
-            return "transactions.yesterday".localized
-        }
         let formatter = dateTimeFormatter(interval: interval, forDate: correctDate, shortWeek: true)
         return formatter.string(from: correctDate)
     }

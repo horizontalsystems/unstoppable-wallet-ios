@@ -57,6 +57,8 @@
 "transactions.yesterday" = "Yesterday";
 "transactions.success" = "success";
 "transactions.pending" = "pending...";
+"transactions.from" = "from";
+"transactions.to" = "to";
 
 "tx_info.bottom_sheet.title_received" = "Received";
 "tx_info.bottom_sheet.title_sent" = "Sent";
