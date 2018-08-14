@@ -24,20 +24,24 @@ class TransactionSender {
 
         notificationToken = realmFactory.realm.objects(Transaction.self).filter("status = %@", TransactionStatus.new.rawValue).observe { changes in
             queue.async { [weak self] in
-                if case let .update(_, _, insertions, _) = changes, !insertions.isEmpty {
-                    self?.resend()
+                if case let .update(transactions, _, insertions, _) = changes, !insertions.isEmpty {
+                    if !insertions.isEmpty {
+                        self?.resend(transactions: transactions)
+                    }
                 }
             }
         }
     }
 
-    private func resend() {
+    private func resend(transactions: Results<Transaction>? = nil) {
         let realm = realmFactory.realm
 
-        let nonSentTransactions = realm.objects(Transaction.self).filter("status = %@", TransactionStatus.new.rawValue)
+        let nonSentTransactions = transactions ?? realm.objects(Transaction.self).filter("status = %@", TransactionStatus.new.rawValue)
 
         if !nonSentTransactions.isEmpty {
-            // send again
+            nonSentTransactions.forEach {
+                peerGroup.relay(transaction: $0)
+            }
         }
     }
 
