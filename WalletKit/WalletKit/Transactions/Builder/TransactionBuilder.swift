@@ -63,13 +63,14 @@ class TransactionBuilder {
     }
 
     private func addInputToTransaction(transaction: Transaction, fromUnspentOutput output: TransactionOutput) {
-        let input = factory.transactionInput(withPreviousOutput: output, script: Data(), sequence: 0)
+        let input = factory.transactionInput(withPreviousOutputTxReversedHex: output.transaction.reversedHashHex, previousOutputIndex: output.index, script: Data(), sequence: 0)
+        input.previousOutput = output
         transaction.inputs.append(input)
     }
 
     private func addOutputToTransaction(transaction: Transaction, forAddress address: Address, withValue value: Int, scriptType type: ScriptType) throws {
         let script = try scriptBuilder.lockingScript(type: type, params: [address.publicKeyHash])
-        let output = try factory.transactionOutput(withValue: value, withLockingScript: script, withIndex: transaction.outputs.count, type: type, keyHash: address.publicKeyHash)
+        let output = try factory.transactionOutput(withValue: value, index: transaction.outputs.count, lockingScript: script, type: type, keyHash: address.publicKeyHash)
         transaction.outputs.append(output)
     }
 

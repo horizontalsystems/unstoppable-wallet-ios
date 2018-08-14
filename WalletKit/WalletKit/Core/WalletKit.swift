@@ -63,7 +63,7 @@ public class WalletKit {
         transactionHandler = TransactionHandler(realmFactory: realmFactory, extractor: transactionExtractor, saver: transactionSaver, linker: transactionLinker)
         transactionSender = TransactionSender(realmFactory: realmFactory, peerGroup: peerGroup)
 
-        inputSigner = InputSigner(realmFactory: realmFactory, hdWallet: hdWallet)
+        inputSigner = InputSigner(hdWallet: hdWallet)
         scriptBuilder = ScriptBuilder()
         unspentOutputSelector = UnspentOutputSelector()
 

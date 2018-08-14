@@ -43,7 +43,7 @@ class TransactionLinkerTests: XCTestCase {
 
     func testLinkOutputs() {
         let input = TransactionInput()
-        input.previousOutputTxReversedHex = Data(hex: transaction.reversedHashHex)!
+        input.previousOutputTxReversedHex = transaction.reversedHashHex
         input.previousOutputIndex = transaction.outputs.first!.index
         input.sequence = 100
 
@@ -67,7 +67,7 @@ class TransactionLinkerTests: XCTestCase {
         output.value = 100000
 
         let savedPreviousTransaction = Transaction()
-        savedPreviousTransaction.reversedHashHex = transaction.inputs[0].previousOutputTxReversedHex.hex
+        savedPreviousTransaction.reversedHashHex = transaction.inputs[0].previousOutputTxReversedHex
         savedPreviousTransaction.outputs.append(output)
 
         try! realm.write {
@@ -95,7 +95,7 @@ class TransactionLinkerTests: XCTestCase {
 
     func testSetNextTransactionIsMine() {
         let input = TransactionInput()
-        input.previousOutputTxReversedHex = Data(hex: transaction.reversedHashHex)!
+        input.previousOutputTxReversedHex = transaction.reversedHashHex
         input.previousOutputIndex = transaction.outputs.first!.index
         input.sequence = 100
 
@@ -121,7 +121,7 @@ class TransactionLinkerTests: XCTestCase {
         output.address = address
 
         let savedPreviousTransaction = Transaction()
-        savedPreviousTransaction.reversedHashHex = transaction.inputs[0].previousOutputTxReversedHex.hex
+        savedPreviousTransaction.reversedHashHex = transaction.inputs[0].previousOutputTxReversedHex
         savedPreviousTransaction.outputs.append(output)
 
         try! realm.write {

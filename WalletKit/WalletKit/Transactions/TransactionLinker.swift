@@ -14,7 +14,7 @@ class TransactionLinker {
 
         try realm.write {
             for input in transaction.inputs {
-                if let previousTransaction = realm.objects(Transaction.self).filter("reversedHashHex = %@", input.previousOutputTxReversedHex.hex).last,
+                if let previousTransaction = realm.objects(Transaction.self).filter("reversedHashHex = %@", input.previousOutputTxReversedHex).last,
                    previousTransaction.outputs.count > input.previousOutputIndex {
                     input.previousOutput = previousTransaction.outputs[input.previousOutputIndex]
 
@@ -33,7 +33,7 @@ class TransactionLinker {
                 }
 
                 if let input = realm.objects(TransactionInput.self)
-                        .filter("previousOutputTxReversedHex = %@ AND previousOutputIndex = %@", Data(hex: transaction.reversedHashHex)!, output.index).last {
+                        .filter("previousOutputTxReversedHex = %@ AND previousOutputIndex = %@", transaction.reversedHashHex, output.index).last {
                     input.previousOutput = output
                     if address != nil {
                         input.transaction.isMine = true

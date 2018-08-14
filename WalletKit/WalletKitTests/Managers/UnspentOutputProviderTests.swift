@@ -26,11 +26,11 @@ class UnspentOutputProviderTests: XCTestCase {
         }
 
         unspentOutputProvider = UnspentOutputProvider(realmFactory: mockRealmFactory)
-        outputs = [TransactionOutput(withValue: 1, withLockingScript: Data(), withIndex: 0, type: .p2pkh, keyHash: Data(hex: "000010000")!),
-                   TransactionOutput(withValue: 2, withLockingScript: Data(), withIndex: 0, type: .p2pkh, keyHash: Data(hex: "000010001")!),
-                   TransactionOutput(withValue: 4, withLockingScript: Data(), withIndex: 0, type: .p2pkh, keyHash: Data(hex: "000010002")!),
-                   TransactionOutput(withValue: 8, withLockingScript: Data(), withIndex: 0, type: .p2pkh, keyHash: Data(hex: "000010003")!),
-                   TransactionOutput(withValue: 16, withLockingScript: Data(), withIndex: 0, type: .p2sh, keyHash: Data(hex: "000010004")!)
+        outputs = [TransactionOutput(withValue: 1, index: 0, lockingScript: Data(), type: .p2pkh, keyHash: Data(hex: "000010000")!),
+                   TransactionOutput(withValue: 2, index: 0, lockingScript: Data(), type: .p2pkh, keyHash: Data(hex: "000010001")!),
+                   TransactionOutput(withValue: 4, index: 0, lockingScript: Data(), type: .p2pkh, keyHash: Data(hex: "000010002")!),
+                   TransactionOutput(withValue: 8, index: 0, lockingScript: Data(), type: .p2pkh, keyHash: Data(hex: "000010003")!),
+                   TransactionOutput(withValue: 16, index: 0, lockingScript: Data(), type: .p2sh, keyHash: Data(hex: "000010004")!)
         ]
     }
 
@@ -52,9 +52,7 @@ class UnspentOutputProviderTests: XCTestCase {
         try? realm.write {
             realm.add(transaction, update: true)
         }
-        let inputs = [TransactionInput(withPreviousOutput: outputs[0], script: Data(), sequence: 2),
-                      TransactionInput(withPreviousOutput: outputs[1], script: Data(), sequence: 2)]
-        let inputTransaction = Transaction(version: 0, inputs: inputs, outputs: [])
+        let inputTransaction = Transaction(version: 0, inputs: inputsWithPreviousOutputs(range: 0..<1), outputs: [])
         try? realm.write {
             realm.add(inputTransaction, update: true)
         }
@@ -68,9 +66,7 @@ class UnspentOutputProviderTests: XCTestCase {
         try? realm.write {
             realm.add(transaction, update: true)
         }
-        let inputs = [TransactionInput(withPreviousOutput: outputs[3], script: Data(), sequence: 2),
-                      TransactionInput(withPreviousOutput: outputs[4], script: Data(), sequence: 2)]
-        let inputTransaction = Transaction(version: 0, inputs: inputs, outputs: [])
+        let inputTransaction = Transaction(version: 0, inputs: inputsWithPreviousOutputs(range: 3..<4), outputs: [])
         try? realm.write {
             realm.add(inputTransaction, update: true)
         }
@@ -87,9 +83,7 @@ class UnspentOutputProviderTests: XCTestCase {
         try? realm.write {
             realm.add(transaction, update: true)
         }
-        let inputs = [TransactionInput(withPreviousOutput: outputs[0], script: Data(), sequence: 2),
-                      TransactionInput(withPreviousOutput: outputs[1], script: Data(), sequence: 2)]
-        let inputTransaction = Transaction(version: 0, inputs: inputs, outputs: [])
+        let inputTransaction = Transaction(version: 0, inputs: inputsWithPreviousOutputs(range: 0..<1), outputs: [])
         try? realm.write {
             realm.add(inputTransaction, update: true)
         }
@@ -105,12 +99,7 @@ class UnspentOutputProviderTests: XCTestCase {
         try? realm.write {
             realm.add(transaction, update: true)
         }
-        let inputs = [TransactionInput(withPreviousOutput: outputs[0], script: Data(), sequence: 2),
-                      TransactionInput(withPreviousOutput: outputs[1], script: Data(), sequence: 2),
-                      TransactionInput(withPreviousOutput: outputs[2], script: Data(), sequence: 2),
-                      TransactionInput(withPreviousOutput: outputs[3], script: Data(), sequence: 2),
-        ]
-        let inputTransaction = Transaction(version: 0, inputs: inputs, outputs: [])
+        let inputTransaction = Transaction(version: 0, inputs: inputsWithPreviousOutputs(range: 0..<4), outputs: [])
         try? realm.write {
             realm.add(inputTransaction, update: true)
         }
@@ -118,4 +107,13 @@ class UnspentOutputProviderTests: XCTestCase {
         XCTAssertEqual(unspentOutputs.count, 0)
     }
 
+    private func inputsWithPreviousOutputs(range: Range<Int>) -> [TransactionInput] {
+        let transaction = outputs[0].transaction
+        var inputs = [TransactionInput]()
+        for i in range.lowerBound..<range.upperBound {
+            let input = TestData.transactionInput(previousTransaction: transaction, previousOutput: outputs[i], script: Data(), sequence: 2)
+            inputs.append(input)
+        }
+        return inputs
+    }
 }
