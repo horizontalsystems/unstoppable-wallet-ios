@@ -17,10 +17,13 @@ class TransactionExtractor {
 
     let scriptInputExtractors: [ScriptExtractor]
     let scriptOutputExtractors: [ScriptExtractor]
+    let addressConverter: AddressConverter
 
-    init(scriptInputExtractors: [ScriptExtractor] = TransactionExtractor.defaultInputExtractors, scriptOutputExtractors: [ScriptExtractor] = TransactionExtractor.defaultOutputExtractors) {
+    init(scriptInputExtractors: [ScriptExtractor] = TransactionExtractor.defaultInputExtractors, scriptOutputExtractors: [ScriptExtractor] = TransactionExtractor.defaultOutputExtractors,
+         addressConverter: AddressConverter) {
         self.scriptInputExtractors = scriptInputExtractors
         self.scriptOutputExtractors = scriptOutputExtractors
+        self.addressConverter = addressConverter
     }
 
     func extract(message: Transaction) throws {
@@ -44,6 +47,10 @@ class TransactionExtractor {
                     }
                     break
                 }
+            }
+
+            if let keyHash = output.keyHash, let address = try? addressConverter.convert(keyHash: keyHash, type: output.scriptType) {
+                output.address = address
             }
         }
 

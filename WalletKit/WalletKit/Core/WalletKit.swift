@@ -59,7 +59,7 @@ public class WalletKit {
         merkleBlockHandler = MerkleBlockHandler(realmFactory: realmFactory, validator: merkleBlockValidator, saver: blockSaver)
 
         addressConverter = AddressConverter(network: configuration.network)
-        transactionExtractor = TransactionExtractor()
+        transactionExtractor = TransactionExtractor(addressConverter: addressConverter)
         transactionSaver = TransactionSaver(realmFactory: realmFactory)
         transactionLinker = TransactionLinker(realmFactory: realmFactory)
         transactionHandler = TransactionHandler(realmFactory: realmFactory, extractor: transactionExtractor, saver: transactionSaver, linker: transactionLinker)

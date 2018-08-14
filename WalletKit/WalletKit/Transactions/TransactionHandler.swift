@@ -19,11 +19,6 @@ class TransactionHandler {
 
     func handle(transaction: Transaction) throws {
         try extractor.extract(message: transaction)
-        print("-------------")
-        print(transaction.outputs.first?.scriptType.rawValue)
-        print(transaction.outputs.first?.keyHash?.hex)
-        print(transaction.reversedHashHex)
-
         let realm = realmFactory.realm
         let existingTransaction = realm.objects(Transaction.self).filter("reversedHashHex = %@", transaction.reversedHashHex).last
         transaction.block = existingTransaction?.block

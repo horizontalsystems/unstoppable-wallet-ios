@@ -31,7 +31,7 @@ class AddressConverterTests: XCTestCase{
         let address = "msGCb97sW9s9Mt7gN5m7TGmwLqhqGaFqYz"
         let keyHash = "80d733d7a4c02aba01da9370afc954c73a32dba5"
         do {
-            let convertedAddress = try addressConverter.convert(publicKeyHash: Data(hex: keyHash)!, type: .p2pkh)
+            let convertedAddress = try addressConverter.convert(keyHash: Data(hex: keyHash)!, type: .p2pkh)
             XCTAssertEqual(convertedAddress, address)
         } catch {
             XCTFail("Error Handled!")
@@ -53,7 +53,7 @@ class AddressConverterTests: XCTestCase{
         let address = "2NCRTejQCRReGuV4XpttwsMAxQTNRaYzrr1"
         let keyHash = "D259F4688599C8422F477166A0C89344AD9EE72F"
         do {
-            let convertedAddress = try addressConverter.convert(publicKeyHash: Data(hex: keyHash)!, type: .p2sh)
+            let convertedAddress = try addressConverter.convert(keyHash: Data(hex: keyHash)!, type: .p2sh)
             XCTAssertEqual(convertedAddress, address)
         } catch {
             XCTFail("Error Handled!")
@@ -105,7 +105,7 @@ class AddressConverterTests: XCTestCase{
         let keyHash = "80d733d7a4c02aba01da9370afc954c73a32dba5"
 
         do {
-            let _ = try addressConverter.convert(publicKeyHash: Data(hex: keyHash)!, type: .unknown)
+            let _ = try addressConverter.convert(keyHash: Data(hex: keyHash)!, type: .unknown)
             XCTFail("No error thrown!")
         } catch let error as ConversionError {
             XCTAssertEqual(error, ConversionError.unknownAddressType)

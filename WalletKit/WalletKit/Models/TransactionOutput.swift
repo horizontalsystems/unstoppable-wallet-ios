@@ -32,6 +32,7 @@ public class TransactionOutput: Object {
     @objc public dynamic var publicKey: PublicKey?
     @objc dynamic var scriptType: ScriptType = .unknown
     @objc dynamic var keyHash: Data?
+    @objc dynamic var address: String?
 
     let transactions = LinkingObjects(fromType: Transaction.self, property: "outputs")
     var transaction: Transaction {

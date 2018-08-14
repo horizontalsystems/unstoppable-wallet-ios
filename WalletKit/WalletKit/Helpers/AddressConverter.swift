@@ -7,14 +7,14 @@ class AddressConverter {
         self.network = network
     }
 
-    func convert(publicKeyHash: Data, type: ScriptType) throws -> String {
+    func convert(keyHash: Data, type: ScriptType) throws -> String {
         let version: UInt8
         switch type {
             case .p2pkh, .p2pk: version = network.pubKeyHash
             case .p2sh: version = network.scriptHash
             default: throw ConversionError.unknownAddressType
         }
-        var withVersion = (Data([version])) + publicKeyHash
+        var withVersion = (Data([version])) + keyHash
         let doubleSHA256 = Crypto.sha256sha256(withVersion)
         let checksum = doubleSHA256.prefix(4)
         withVersion += checksum
