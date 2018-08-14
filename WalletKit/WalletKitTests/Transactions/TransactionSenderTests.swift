@@ -82,7 +82,7 @@ class TransactionSenderTests: XCTestCase {
         let transaction = TestData.p2pkhTransaction
         transaction.status = .new
         let transaction2 = TestData.p2pkTransaction
-        transaction2.status = .new
+        transaction2.status = .relayed
         try? realm.write {
             realm.add(transaction, update: true)
             realm.add(transaction2, update: true)
@@ -90,7 +90,7 @@ class TransactionSenderTests: XCTestCase {
 
         waitForExpectations(timeout: 2)
         verify(mockPeerGroup, times(1)).relay(transaction: equal(to: transaction))
-        verify(mockPeerGroup, times(1)).relay(transaction: equal(to: transaction2))
+        verify(mockPeerGroup, never()).relay(transaction: equal(to: transaction2))
 
         token.invalidate()
     }
