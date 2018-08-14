@@ -26,7 +26,7 @@ class Peer : NSObject, StreamDelegate {
 //    var sentMemPool = false
 
     convenience init(network: NetworkProtocol = TestNet()) {
-        self.init(host: network.dnsSeeds[1], port: Int(network.port), network: network)
+        self.init(host: network.dnsSeeds[2], port: Int(network.port), network: network)
     }
 
     convenience init(host: String, network: NetworkProtocol = TestNet()) {

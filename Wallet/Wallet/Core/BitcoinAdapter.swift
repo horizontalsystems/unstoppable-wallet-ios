@@ -3,13 +3,18 @@ import WalletKit
 import RealmSwift
 
 class BitcoinAdapter {
+    private let realmFileName = "WalletKit.realm"
+
     private let walletKit: WalletKit
     private var transactionsNotificationToken: NotificationToken?
 
     weak var listener: IAdapterListener?
 
-    init(walletKit: WalletKit) {
-        self.walletKit = walletKit
+    init(words: [String]) {
+        let documentsUrl = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
+        let configuration = Realm.Configuration(fileURL: documentsUrl?.appendingPathComponent(realmFileName))
+
+        walletKit = WalletKit(withWords: words, realmConfiguration: configuration)
 
         transactionsNotificationToken = walletKit.transactionsRealmResults.observe { [weak self] changes in
             self?.onTransactionsChanged(changes: changes)
