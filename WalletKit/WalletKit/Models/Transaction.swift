@@ -1,6 +1,8 @@
 import Foundation
 import RealmSwift
 
+@objc enum TransactionStatus: Int { case new, relayed, invalid }
+
 public class Transaction: Object {
     @objc public dynamic var reversedHashHex: String = ""
     @objc dynamic var version: Int = 0
@@ -8,6 +10,7 @@ public class Transaction: Object {
     @objc public dynamic var block: Block?
 
     @objc dynamic var isMine: Bool = false
+    @objc dynamic var status: TransactionStatus = .relayed
 
     public let inputs = List<TransactionInput>()
     public let outputs = List<TransactionOutput>()

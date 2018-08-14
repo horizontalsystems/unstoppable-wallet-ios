@@ -1,5 +1,4 @@
-import Foundation
-import WalletKit
+import UIKit
 
 protocol ISendView: class {
     func setAddress(_ address: String?)

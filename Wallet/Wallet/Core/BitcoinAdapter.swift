@@ -3,13 +3,18 @@ import WalletKit
 import RealmSwift
 
 class BitcoinAdapter {
+    private let realmFileName = "WalletKit.realm"
+
     private let walletKit: WalletKit
     private var transactionsNotificationToken: NotificationToken?
 
     weak var listener: IAdapterListener?
 
-    init(walletKit: WalletKit) {
-        self.walletKit = walletKit
+    init(words: [String]) {
+        let documentsUrl = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
+        let configuration = Realm.Configuration(fileURL: documentsUrl?.appendingPathComponent(realmFileName))
+
+        walletKit = WalletKit(withWords: words, realmConfiguration: configuration)
 
         transactionsNotificationToken = walletKit.transactionsRealmResults.observe { [weak self] changes in
             self?.onTransactionsChanged(changes: changes)
@@ -36,11 +41,11 @@ class BitcoinAdapter {
             var totalInput: Int = 0
             var totalOutput: Int = 0
 
-            for output in tx.inputs.flatMap({ $0.previousOutput }).filter({ $0.isMine }) {
+            for output in tx.inputs.flatMap({ $0.previousOutput }).filter({ $0.publicKey != nil }) {
                 totalInput += output.value
             }
 
-            for output in tx.outputs.filter({ $0.isMine }) {
+            for output in tx.outputs.filter({ $0.publicKey != nil }) {
                 totalOutput += output.value
             }
 
@@ -70,6 +75,10 @@ extension BitcoinAdapter: IAdapter {
 
     func start() throws {
         try walletKit.start()
+    }
+
+    func send(to address: String, amount: Int) {
+
     }
 
 }

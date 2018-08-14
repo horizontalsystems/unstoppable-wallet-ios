@@ -10,7 +10,7 @@ class SyncerTests: XCTestCase {
     override func setUp() {
         super.setUp()
 
-        manager = Syncer()
+//        manager = Syncer()
     }
 
     override func tearDown() {

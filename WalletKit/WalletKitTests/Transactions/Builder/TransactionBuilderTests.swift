@@ -7,7 +7,8 @@ class TransactionBuilderTests: XCTestCase{
 
     private var realm: Realm!
     private var mockRealmFactory: MockRealmFactory!
-    private var mockUnspentOutputManager: MockUnspentOutputManager!
+    private var mockUnspentOutputSelector: MockUnspentOutputSelector!
+    private var mockUnspentOutputProvider: MockUnspentOutputProvider!
     private var mockInputSigner: MockInputSigner!
     private var mockScriptBuilder:  MockScriptBuilder!
     private var mockFactory: MockFactory!
@@ -23,8 +24,8 @@ class TransactionBuilderTests: XCTestCase{
     private var value: Int!
     private var feeRate: Int!
     private var fee: Int!
-    private var changeAddress: Address!
-    private var toAddress: Address!
+    private var changePubKey: PublicKey!
+    private var toPubKey: PublicKey!
 
     override func setUp() {
         super.setUp()
@@ -38,15 +39,16 @@ class TransactionBuilderTests: XCTestCase{
             when(mock.realm.get).thenReturn(realm)
         }
 
-        mockUnspentOutputManager = MockUnspentOutputManager(realmFactory: mockRealmFactory)
-        mockInputSigner = MockInputSigner(realmFactory: mockRealmFactory, hdWallet: HDWalletStub(seed: Data(), network: TestNet()))
+        mockUnspentOutputSelector = MockUnspentOutputSelector()
+        mockUnspentOutputProvider = MockUnspentOutputProvider(realmFactory: mockRealmFactory)
+        mockInputSigner = MockInputSigner(hdWallet: HDWalletStub(seed: Data(), network: TestNet()))
         mockScriptBuilder = MockScriptBuilder()
         mockFactory = MockFactory()
 
-        transactionBuilder = TransactionBuilder(unspentOutputsManager: mockUnspentOutputManager, inputSigner: mockInputSigner, scriptBuilder: mockScriptBuilder, factory: mockFactory)
+        transactionBuilder = TransactionBuilder(unspentOutputSelector: mockUnspentOutputSelector, unspentOutputProvider: mockUnspentOutputProvider, inputSigner: mockInputSigner, scriptBuilder: mockScriptBuilder, factory: mockFactory)
 
-        changeAddress = TestData.address()
-        toAddress = TestData.address(pubKeyHash: Data(hex: "64d8fbe748c577bb5da29718dae0402b0b5dd523")!)
+        changePubKey = TestData.pubKey()
+        toPubKey = TestData.pubKey(pubKeyHash: Data(hex: "64d8fbe748c577bb5da29718dae0402b0b5dd523")!)
 
         let previousTransaction = TestData.p2pkhTransaction
         try! realm.write {
@@ -60,12 +62,16 @@ class TransactionBuilderTests: XCTestCase{
         fee = 1008
 
         transaction = Transaction(version: 1, inputs: [], outputs: [])
-        input = TransactionInput(withPreviousOutput: unspentOutputs[0], script: Data(), sequence: 0)
-        toOutput = TransactionOutput(withValue: value - fee, withLockingScript: Data(), withIndex: 0, type: .p2pkh, keyHash: toAddress.publicKeyHash)
-        changeOutput = TransactionOutput(withValue: totalInputValue - value, withLockingScript: Data(), withIndex: 1, type: .p2pkh, keyHash: changeAddress.publicKeyHash)
+        input = TransactionInput(withPreviousOutputTxReversedHex: previousTransaction.reversedHashHex, previousOutputIndex: unspentOutputs[0].index, script: Data(), sequence: 0)
+        toOutput = TransactionOutput(withValue: value - fee, index: 0, lockingScript: Data(), type: .p2pkh, keyHash: toPubKey.keyHash)
+        changeOutput = TransactionOutput(withValue: totalInputValue - value, index: 1, lockingScript: Data(), type: .p2pkh, keyHash: changePubKey.keyHash)
 
-        stub(mockUnspentOutputManager) { mock in
+        stub(mockUnspentOutputSelector) { mock in
             when(mock.select(value: any(), outputs: any())).thenReturn(unspentOutputs)
+        }
+
+        stub(mockUnspentOutputProvider) { mock in
+            when(mock.allUnspentOutputs()).thenReturn(unspentOutputs)
         }
 
         stub(mockInputSigner) { mock in
@@ -82,12 +88,12 @@ class TransactionBuilderTests: XCTestCase{
         }
 
         stub(mockFactory) { mock in
-            when(mock.transactionInput(withPreviousOutput: any(), script: any(), sequence: any())).thenReturn(input)
+            when(mock.transactionInput(withPreviousOutputTxReversedHex: any(), previousOutputIndex: any(), script: any(), sequence: any())).thenReturn(input)
         }
 
         stub(mockFactory) { mock in
-            when(mock.transactionOutput(withValue: any(), withLockingScript: any(), withIndex: any(), type: equal(to: ScriptType.p2pkh), keyHash: equal(to: toAddress.publicKeyHash))).thenReturn(toOutput)
-            when(mock.transactionOutput(withValue: any(), withLockingScript: any(), withIndex: any(), type: equal(to: ScriptType.p2pkh), keyHash: equal(to: changeAddress.publicKeyHash))).thenReturn(changeOutput)
+            when(mock.transactionOutput(withValue: any(), index: any(), lockingScript: any(), type: equal(to: ScriptType.p2pkh), keyHash: equal(to: toPubKey.keyHash))).thenReturn(toOutput)
+            when(mock.transactionOutput(withValue: any(), index: any(), lockingScript: any(), type: equal(to: ScriptType.p2pkh), keyHash: equal(to: changePubKey.keyHash))).thenReturn(changeOutput)
         }
     }
 
@@ -95,12 +101,13 @@ class TransactionBuilderTests: XCTestCase{
         mockRealmFactory = nil
         realm = nil
         unspentOutputs = nil
-        mockUnspentOutputManager = nil
+        mockUnspentOutputSelector = nil
+        mockUnspentOutputProvider = nil
         mockInputSigner = nil
         mockFactory = nil
         transactionBuilder = nil
-        changeAddress = nil
-        toAddress = nil
+        changePubKey = nil
+        toPubKey = nil
         value = nil
         feeRate = nil
         fee = nil
@@ -111,7 +118,7 @@ class TransactionBuilderTests: XCTestCase{
     func testBuildTransaction() {
         var resultTx = Transaction()
         do {
-            resultTx = try transactionBuilder.buildTransaction(value: value, feeRate: feeRate, changeAddress: changeAddress, toAddress: toAddress)
+            resultTx = try transactionBuilder.buildTransaction(value: value, feeRate: feeRate, changePubKey: changePubKey, toPubKey: toPubKey)
         } catch let error {
             XCTFail(error.localizedDescription)
         }
@@ -119,9 +126,9 @@ class TransactionBuilderTests: XCTestCase{
         XCTAssertEqual(resultTx.inputs.count, 1)
         XCTAssertEqual(resultTx.inputs[0].previousOutput!, unspentOutputs[0])
         XCTAssertEqual(resultTx.outputs.count, 2)
-        XCTAssertEqual(resultTx.outputs[0].keyHash, toAddress.publicKeyHash)
+        XCTAssertEqual(resultTx.outputs[0].keyHash, toPubKey.keyHash)
         XCTAssertEqual(resultTx.outputs[0].value, value - fee)  // value - fee
-        XCTAssertEqual(resultTx.outputs[1].keyHash, changeAddress.publicKeyHash)
+        XCTAssertEqual(resultTx.outputs[1].keyHash, changePubKey.keyHash)
         XCTAssertEqual(resultTx.outputs[1].value, unspentOutputs[0].value - value)
     }
 
@@ -130,7 +137,7 @@ class TransactionBuilderTests: XCTestCase{
 
         var resultTx = Transaction()
         do {
-            resultTx = try transactionBuilder.buildTransaction(value: value, feeRate: feeRate, changeAddress: changeAddress, toAddress: toAddress)
+            resultTx = try transactionBuilder.buildTransaction(value: value, feeRate: feeRate, changePubKey: changePubKey, toPubKey: toPubKey)
         } catch let error {
             XCTFail(error.localizedDescription)
         }
@@ -138,7 +145,7 @@ class TransactionBuilderTests: XCTestCase{
         XCTAssertEqual(resultTx.inputs.count, 1)
         XCTAssertEqual(resultTx.inputs[0].previousOutput!, unspentOutputs[0])
         XCTAssertEqual(resultTx.outputs.count, 1)
-        XCTAssertEqual(resultTx.outputs[0].keyHash, toAddress.publicKeyHash)
+        XCTAssertEqual(resultTx.outputs[0].keyHash, toPubKey.keyHash)
         XCTAssertEqual(resultTx.outputs[0].value, value - fee)
     }
 
@@ -147,7 +154,7 @@ class TransactionBuilderTests: XCTestCase{
 
         var resultTx = Transaction()
         do {
-            resultTx = try transactionBuilder.buildTransaction(value: value, feeRate: feeRate, changeAddress: changeAddress, toAddress: toAddress)
+            resultTx = try transactionBuilder.buildTransaction(value: value, feeRate: feeRate, changePubKey: changePubKey, toPubKey: toPubKey)
         } catch let error {
             XCTFail(error.localizedDescription)
         }
@@ -155,7 +162,7 @@ class TransactionBuilderTests: XCTestCase{
         XCTAssertEqual(resultTx.inputs.count, 1)
         XCTAssertEqual(resultTx.inputs[0].previousOutput!, unspentOutputs[0])
         XCTAssertEqual(resultTx.outputs.count, 1)
-        XCTAssertEqual(resultTx.outputs[0].keyHash, toAddress.publicKeyHash)
+        XCTAssertEqual(resultTx.outputs[0].keyHash, toPubKey.keyHash)
         XCTAssertEqual(resultTx.outputs[0].value, value - fee)
     }
 
@@ -173,7 +180,7 @@ class TransactionBuilderTests: XCTestCase{
 
         var resultTx = Transaction()
         do {
-            resultTx = try transactionBuilder.buildTransaction(value: value, feeRate: feeRate, changeAddress: changeAddress, toAddress: toAddress)
+            resultTx = try transactionBuilder.buildTransaction(value: value, feeRate: feeRate, changePubKey: changePubKey, toPubKey: toPubKey)
         } catch let error {
             XCTFail(error.localizedDescription)
         }

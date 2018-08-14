@@ -108,13 +108,13 @@ class TestData {
     static var p2pkhTransaction: Transaction {
         let transaction = Transaction(version: 1, inputs: [
             TransactionInput(
-                    withPreviousOutputTxReversedHex: Data(Data(hex: "a6d1ce683f38a84cfd88a9d48b0ba2d7a8def00f8517e3da02c86fce6c7863d7")!.reversed()), withPreviousOutputIndex: 0,
+                    withPreviousOutputTxReversedHex: Data(hex: "a6d1ce683f38a84cfd88a9d48b0ba2d7a8def00f8517e3da02c86fce6c7863d7")!.reversedHex, previousOutputIndex: 0,
                     script: Data(hex: "4730440220302e597d74aebcb0bf7f372be156252017af190bd586466104b079fba4b7efa7022037ebbf84e096ef3d966123a93a83586012353c1d2c11c967d21acf1c94c45df001210347235e12207d21b6093d9fd93a0df4d589a0d44252b98b2e934a8da5ab1d1654")!,
                     sequence: 4294967295
             )
         ], outputs: [
-            TransactionOutput(withValue: 10792000, withLockingScript: Data(hex: "76a9141ec865abcb88cec71c484d4dadec3d7dc0271a7b88ac")!, withIndex: 0),
-            TransactionOutput(withValue: 0, withLockingScript: Data(hex: "6a4c500000b919000189658af37cd16dbd16e4186ea13c5d8e1f40c5b5a0958326067dd923b8fc8f0767f62eb9a7fd57df4f3e775a96ca5b5eabf5057dff98997a3bbd011366703f5e45075f397f7f3c8465da")!, withIndex: 1),
+            TransactionOutput(withValue: 10792000, index: 0 , lockingScript: Data(hex: "76a9141ec865abcb88cec71c484d4dadec3d7dc0271a7b88ac")!, type: .unknown, keyHash: Data()),
+            TransactionOutput(withValue: 0, index: 0, lockingScript: Data(hex: "6a4c500000b919000189658af37cd16dbd16e4186ea13c5d8e1f40c5b5a0958326067dd923b8fc8f0767f62eb9a7fd57df4f3e775a96ca5b5eabf5057dff98997a3bbd011366703f5e45075f397f7f3c8465da")!, type: .unknown, keyHash: Data()),
         ], lockTime: 0)
 
         return transaction
@@ -123,12 +123,12 @@ class TestData {
     static var p2pkTransaction: Transaction {
         let transaction = Transaction(version: 1, inputs: [
             TransactionInput(
-                    withPreviousOutputTxReversedHex: Data(Data(hex: "a6d1ce683f38a84cfd88a9d48b0ba2d7a8def00f8517e3da02c86fce6c7863d7")!.reversed()), withPreviousOutputIndex: 0,
+                    withPreviousOutputTxReversedHex: Data(hex: "a6d1ce683f38a84cfd88a9d48b0ba2d7a8def00f8517e3da02c86fce6c7863d7")!.reversedHex, previousOutputIndex: 0,
                     script: Data(hex: "4730440220302e597d74aebcb0bf7f372be156252017af190bd586466104b079fba4b7efa7022037ebbf84e096ef3d966123a93a83586012353c1d2c11c967d21acf1c94c45df001210347235e12207d21b6093d9fd93a0df4d589a0d44252b98b2e934a8da5ab1d1654")!,
                     sequence: 4294967295
             )
         ], outputs: [
-            TransactionOutput(withValue: 10, withLockingScript: Data(hex: "21037d56797fbe9aa506fc263751abf23bb46c9770181a6059096808923f0a64cb15ac")!, withIndex: 1),
+            TransactionOutput(withValue: 10, index: 1, lockingScript: Data(hex: "21037d56797fbe9aa506fc263751abf23bb46c9770181a6059096808923f0a64cb15ac")!, type: .unknown, keyHash: Data()),
         ], lockTime: 0)
 
         return transaction
@@ -137,22 +137,27 @@ class TestData {
     static var p2shTransaction: Transaction {
         let transaction = Transaction(version: 1, inputs: [
             TransactionInput(
-                    withPreviousOutputTxReversedHex: Data(Data(hex: "a6d1ce683f38a84cfd88a9d48b0ba2d7a8def00f8517e3da02c86fce6c7863d7")!.reversed()), withPreviousOutputIndex: 0,
+                    withPreviousOutputTxReversedHex: Data(hex: "a6d1ce683f38a84cfd88a9d48b0ba2d7a8def00f8517e3da02c86fce6c7863d7")!.reversedHex, previousOutputIndex: 0,
                     script: Data(hex: "4730440220302e597d74aebcb0bf7f372be156252017af190bd586466104b079fba4b7efa7022037ebbf84e096ef3d966123a93a83586012353c1d2c11c967d21acf1c94c45df001210347235e12207d21b6093d9fd93a0df4d589a0d44252b98b2e934a8da5ab1d1654")!,
                     sequence: 4294967295
             )
         ], outputs: [
-            TransactionOutput(withValue: 10, withLockingScript: Data(hex: "a914bd82ef4973ebfcbc8f7cb1d540ef0503a791970b87")!, withIndex: 1),
+            TransactionOutput(withValue: 10, index: 1, lockingScript: Data(hex: "a914bd82ef4973ebfcbc8f7cb1d540ef0503a791970b87")!, type: .unknown, keyHash: Data()),
         ], lockTime: 0)
 
         return transaction
     }
 
-    static func address(pubKeyHash: Data = Data(hex: "1ec865abcb88cec71c484d4dadec3d7dc0271a7b")!) -> Address {
-        let address = Address()
-        address.publicKeyHash = pubKeyHash
+    static func pubKey(pubKeyHash: Data = Data(hex: "1ec865abcb88cec71c484d4dadec3d7dc0271a7b")!) -> PublicKey {
+        let pubKey = PublicKey()
+        pubKey.keyHash = pubKeyHash
 
-        return address
+        return pubKey
     }
 
+    static func transactionInput(previousTransaction: Transaction, previousOutput: TransactionOutput, script: Data, sequence: Int) -> TransactionInput {
+        let input = TransactionInput(withPreviousOutputTxReversedHex: previousTransaction.reversedHashHex, previousOutputIndex: previousOutput.index, script: script, sequence: sequence)
+        input.previousOutput = previousOutput
+        return input
+    }
 }

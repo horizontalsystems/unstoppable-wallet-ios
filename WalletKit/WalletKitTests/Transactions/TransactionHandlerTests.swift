@@ -34,7 +34,7 @@ class TransactionHandlerTests: XCTestCase {
         oldTransaction.block = Block(withHeader: TestData.checkpointBlockHeader, height: 1)
 
         let txInput = TransactionInput()
-        txInput.previousOutputTxReversedHex = Data(hex: "28c004efa76de2dc58921a9eb21fd1a0f5aa91286e7f44e5800ca9d76c105c86")!
+        txInput.previousOutputTxReversedHex = "28c004efa76de2dc58921a9eb21fd1a0f5aa91286e7f44e5800ca9d76c105c86"
         txInput.previousOutputIndex = 0
         txInput.signatureScript = Data(hex: "47304402205c54aa165861bf5347683fb078a99188726ee2577e3554d0f77ad7c60a4b072902206f77f42f216e4c64585a60ec76a944fc83278524e5a0dfda31b58f94035d27be01")!
         txInput.sequence = 4294967295

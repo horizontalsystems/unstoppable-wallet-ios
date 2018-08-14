@@ -10,32 +10,32 @@ class TransactionLinker {
 
     func handle(transaction: Transaction) throws {
         let realm = realmFactory.realm
-        let addresses = realm.objects(Address.self)
+        let pubKeys = realm.objects(PublicKey.self)
 
         try realm.write {
             for input in transaction.inputs {
-                if let previousTransaction = realm.objects(Transaction.self).filter("reversedHashHex = %@", input.previousOutputTxReversedHex.hex).last,
+                if let previousTransaction = realm.objects(Transaction.self).filter("reversedHashHex = %@", input.previousOutputTxReversedHex).last,
                    previousTransaction.outputs.count > input.previousOutputIndex {
                     input.previousOutput = previousTransaction.outputs[input.previousOutputIndex]
 
-                    if input.previousOutput!.isMine {
+                    if input.previousOutput!.publicKey != nil {
                         transaction.isMine = true
                     }
                 }
             }
 
             for output in transaction.outputs {
-                let isMine = addresses.contains(where: { $0.publicKeyHash == output.keyHash })
+                let pubKey = pubKeys.filter({ $0.keyHash == output.keyHash }).first
 
-                if isMine {
+                if pubKey != nil {
                     transaction.isMine = true
-                    output.isMine = true
+                    output.publicKey = pubKey
                 }
 
                 if let input = realm.objects(TransactionInput.self)
-                        .filter("previousOutputTxReversedHex = %@ AND previousOutputIndex = %@", Data(hex: transaction.reversedHashHex)!, output.index).last {
+                        .filter("previousOutputTxReversedHex = %@ AND previousOutputIndex = %@", transaction.reversedHashHex, output.index).last {
                     input.previousOutput = output
-                    if isMine {
+                    if pubKey != nil {
                         input.transaction.isMine = true
                     }
                 }

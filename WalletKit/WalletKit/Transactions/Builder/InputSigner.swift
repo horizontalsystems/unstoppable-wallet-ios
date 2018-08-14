@@ -4,40 +4,32 @@ class InputSigner {
     enum SignError: Error {
         case noPreviousOutput
         case noPreviousOutputAddress
-        case noPublicKeyHashInOutput
         case noPublicKeyInAddress
         case noPrivateKey
     }
 
     let hdWallet: HDWallet
-    let realmFactory: RealmFactory
 
-    init(realmFactory: RealmFactory, hdWallet: HDWallet) {
-        self.realmFactory = realmFactory
+    init(hdWallet: HDWallet) {
         self.hdWallet = hdWallet
     }
 
     func sigScriptData(transaction: Transaction, index: Int) throws -> [Data] {
         let input = transaction.inputs[index]
-        let realm = realmFactory.realm
 
         guard let prevOutput = input.previousOutput else {
             throw SignError.noPreviousOutput
         }
 
-        guard let keyHash = prevOutput.keyHash else {
-            throw SignError.noPublicKeyHashInOutput
-        }
-
-        guard let address = realm.objects(Address.self).filter("publicKeyHash = %@", keyHash).last else {
+        guard let pubKey = prevOutput.publicKey else {
             throw SignError.noPreviousOutputAddress
         }
 
-        guard let publicKey = address.publicKey else {
+        guard let publicKey = pubKey.raw else {
             throw SignError.noPublicKeyInAddress
         }
 
-        guard let privateKey = try? hdWallet.privateKey(index: address.index, chain: address.external ? .external : .internal) else {
+        guard let privateKey = try? hdWallet.privateKey(index: pubKey.index, chain: pubKey.external ? .external : .internal) else {
             throw SignError.noPrivateKey
         }
 

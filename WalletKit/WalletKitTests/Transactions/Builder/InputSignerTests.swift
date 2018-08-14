@@ -11,7 +11,7 @@ class InputSignerTests: XCTestCase {
     private var inputSigner: InputSigner!
 
     private var transaction: Transaction!
-    private var ownAddress: Address!
+    private var ownPubKey: PublicKey!
 
     override func setUp() {
         super.setUp()
@@ -26,13 +26,14 @@ class InputSignerTests: XCTestCase {
         // Create private key/address provider for tests
         let privateKey = HDPrivateKey(privateKey: Data(hex: "4ee8efccaa04495d5d3ab0f847952fcff43ffc0459bd87981b6be485b92f8d64")!, chainCode: Data(), network: TestNet())
         let publicKeyHash = Data(hex: "e4de5d630c5cacd7af96418a8f35c411c8ff3c06")!
-        ownAddress = Address()
-        ownAddress.publicKey = Data(hex: "037d56797fbe9aa506fc263751abf23bb46c9770181a6059096808923f0a64cb15")!
-        ownAddress.publicKeyHash = publicKeyHash
+        ownPubKey = PublicKey()
+        ownPubKey.raw = Data(hex: "037d56797fbe9aa506fc263751abf23bb46c9770181a6059096808923f0a64cb15")!
+        ownPubKey.keyHash = publicKeyHash
 
         let previousTransaction = Transaction()
         previousTransaction.reversedHashHex = "f296d7192200cd926369d1a8a88c0339c140149602651c2cc2ed5116368eb79c"
-        let previousOutput = TransactionOutput(withValue: 4999900000, withLockingScript: Data(hex: "76a914e4de5d630c5cacd7af96418a8f35c411c8ff3c0688ac")!, withIndex: 0, type: .p2pkh, keyHash: publicKeyHash)
+        let previousOutput = TransactionOutput(withValue: 4999900000, index: 0, lockingScript: Data(hex: "76a914e4de5d630c5cacd7af96418a8f35c411c8ff3c0688ac")!, type: .p2pkh, keyHash: publicKeyHash)
+        previousOutput.publicKey = ownPubKey
         previousTransaction.outputs.append(previousOutput)
 
         try! realm.write {
@@ -41,14 +42,10 @@ class InputSignerTests: XCTestCase {
 
         transaction = Transaction()
         transaction.version = 1
-        let payInput = TransactionInput(withPreviousOutput: previousOutput, script: Data(), sequence: 4294967295)
-        let payOutput = TransactionOutput(withValue: 4999800000, withLockingScript: Data(hex: "76a914e4de5d630c5cacd7af96418a8f35c411c8ff3c0688ac")!, withIndex: 0)
+        let payInput = TestData.transactionInput(previousTransaction: previousTransaction, previousOutput: previousOutput, script: Data(), sequence: 4294967295)
+        let payOutput = TransactionOutput(withValue: 4999800000, index: 0, lockingScript: Data(hex: "76a914e4de5d630c5cacd7af96418a8f35c411c8ff3c0688ac")!, type: .unknown, keyHash: Data())
         transaction.inputs.append(payInput)
         transaction.outputs.append(payOutput)
-
-        try! realm.write {
-            realm.add(ownAddress, update: true)
-        }
 
         mockHDWallet = MockHDWallet(seed: "sample seed".data(using: .utf8)!, network: TestNet())
 
@@ -56,7 +53,7 @@ class InputSignerTests: XCTestCase {
             when(mock.privateKey(index: any(), chain: any())).thenReturn(privateKey)
         }
 
-        inputSigner = InputSigner(realmFactory: mockRealmFactory, hdWallet: mockHDWallet)
+        inputSigner = InputSigner(hdWallet: mockHDWallet)
     }
 
     override func tearDown() {
@@ -101,27 +98,9 @@ class InputSignerTests: XCTestCase {
         XCTAssertEqual(caught, true)
     }
 
-    func testNoPublicKeyHashInOutput() {
-        try! realm.write {
-            transaction.inputs[0].previousOutput!.keyHash = nil
-        }
-
-        var caught = false
-        do {
-            let _ = try inputSigner.sigScriptData(transaction: transaction, index: 0)
-        } catch let error as InputSigner.SignError {
-            caught = true
-            XCTAssertEqual(error, InputSigner.SignError.noPublicKeyHashInOutput)
-        } catch {
-            XCTFail("Unexpected error")
-        }
-
-        XCTAssertEqual(caught, true)
-    }
-
     func testNoPreviousOutputAddress() {
         try! realm.write {
-            realm.delete(ownAddress)
+            realm.delete(ownPubKey)
         }
 
         var caught = false
@@ -139,7 +118,7 @@ class InputSignerTests: XCTestCase {
 
     func testNoPublicKeyInAddress() {
         try! realm.write {
-            ownAddress.publicKey = nil
+            ownPubKey.raw = nil
         }
 
         var caught = false

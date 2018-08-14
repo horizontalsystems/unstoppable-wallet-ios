@@ -28,10 +28,11 @@ public class WalletKit {
     let transactionSaver: TransactionSaver
     let transactionLinker: TransactionLinker
     let transactionHandler: TransactionHandler
+    let transactionSender: TransactionSender
 
     let inputSigner: InputSigner
     let scriptBuilder: ScriptBuilder
-    let unspentOutputsManager: UnspentOutputManager
+    let unspentOutputSelector: UnspentOutputSelector
 
     public init(withWords words: [String], realmConfiguration: Realm.Configuration) {
         configuration = Configuration()
@@ -40,7 +41,7 @@ public class WalletKit {
         hdWallet = HDWallet(seed: Mnemonic.seed(mnemonic: words), network: configuration.network)
 
         peerGroup = PeerGroup(realmFactory: realmFactory)
-        syncer = Syncer()
+        syncer = Syncer(realmFactory: realmFactory)
         factory = Factory()
 
         difficultyEncoder = DifficultyEncoder()
@@ -60,10 +61,11 @@ public class WalletKit {
         transactionSaver = TransactionSaver(realmFactory: realmFactory)
         transactionLinker = TransactionLinker(realmFactory: realmFactory)
         transactionHandler = TransactionHandler(realmFactory: realmFactory, extractor: transactionExtractor, saver: transactionSaver, linker: transactionLinker)
+        transactionSender = TransactionSender(realmFactory: realmFactory, peerGroup: peerGroup)
 
-        inputSigner = InputSigner(realmFactory: realmFactory, hdWallet: hdWallet)
+        inputSigner = InputSigner(hdWallet: hdWallet)
         scriptBuilder = ScriptBuilder()
-        unspentOutputsManager = UnspentOutputManager(realmFactory: realmFactory)
+        unspentOutputSelector = UnspentOutputSelector()
 
         peerGroup.delegate = syncer
 
@@ -79,7 +81,7 @@ public class WalletKit {
         let realm = realmFactory.realm
 
         let blockCount = realm.objects(Block.self).count
-        let addressCount = realm.objects(Address.self).count
+        let pubKeysCount = realm.objects(PublicKey.self).count
 
         print("BLOCK COUNT: \(blockCount)")
         if let block = realm.objects(Block.self).first {
@@ -89,12 +91,12 @@ public class WalletKit {
             print("Last Block: \(block.height) --- \(block.reversedHeaderHashHex)")
         }
 
-        print("ADDRESS COUNT: \(addressCount)")
-        if let address = realm.objects(Address.self).first {
-            print("First Address: \(address.index) --- \(address.external) --- \(address.base58)")
+        print("PUBLIC KEYS COUNT: \(pubKeysCount)")
+        if let pubKey = realm.objects(PublicKey.self).first {
+            print("First PublicKey: \(pubKey.index) --- \(pubKey.external) --- \(pubKey.address)")
         }
-        if let address = realm.objects(Address.self).last {
-            print("Last Address: \(address.index) --- \(address.external) --- \(address.base58)")
+        if let pubKey = realm.objects(PublicKey.self).last {
+            print("Last PublicKey: \(pubKey.index) --- \(pubKey.external) --- \(pubKey.address)")
         }
     }
 
@@ -109,19 +111,19 @@ public class WalletKit {
     private func preFillInitialTestData() {
         let realm = realmFactory.realm
 
-        var addresses = [Address]()
+        var pubKeys = [PublicKey]()
 
         for i in 0..<10 {
-            if let address = try? hdWallet.receiveAddress(index: i) {
-                addresses.append(address)
+            if let pubKey = try? hdWallet.receivePublicKey(index: i) {
+                pubKeys.append(pubKey)
             }
-            if let address = try? hdWallet.changeAddress(index: i) {
-                addresses.append(address)
+            if let pubKey = try? hdWallet.changePublicKey(index: i) {
+                pubKeys.append(pubKey)
             }
         }
 
         try? realm.write {
-            realm.add(addresses, update: true)
+            realm.add(pubKeys, update: true)
         }
     }
 

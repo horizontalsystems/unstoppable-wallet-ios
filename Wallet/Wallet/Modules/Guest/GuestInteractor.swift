@@ -1,5 +1,4 @@
 import Foundation
-import WalletKit
 
 class GuestInteractor {
     weak var delegate: IGuestInteractorDelegate?
