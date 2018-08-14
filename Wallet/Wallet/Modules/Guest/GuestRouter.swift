@@ -1,5 +1,4 @@
 import UIKit
-import WalletKit
 
 class GuestRouter {
     weak var viewController: UIViewController?

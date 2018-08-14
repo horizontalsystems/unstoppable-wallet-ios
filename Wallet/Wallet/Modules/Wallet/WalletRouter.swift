@@ -1,5 +1,4 @@
 import UIKit
-import WalletKit
 
 class WalletRouter {
     weak var viewController: UIViewController?

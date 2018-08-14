@@ -1,5 +1,4 @@
 import Foundation
-import WalletKit
 
 protocol ITransactionsView: class {
     func show(items: [TransactionRecordViewItem], changeSet: CollectionChangeSet?)

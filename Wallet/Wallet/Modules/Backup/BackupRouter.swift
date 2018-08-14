@@ -1,5 +1,4 @@
 import UIKit
-import WalletKit
 
 class BackupRouter {
     weak var navigationController: UINavigationController?

@@ -1,6 +1,5 @@
 import Foundation
 import RxSwift
-import WalletKit
 
 class TransactionsInteractor {
 
