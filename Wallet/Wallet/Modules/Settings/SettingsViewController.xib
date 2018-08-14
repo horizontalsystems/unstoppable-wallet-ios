@@ -10,7 +10,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SettingsViewController" customModule="Wallet" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SettingsViewController" customModule="Bank" customModuleProvider="target">
             <connections>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -38,15 +38,39 @@
                         <action selector="connectToPeer" destination="-1" eventType="touchUpInside" id="4aD-tr-Kbw"/>
                     </connections>
                 </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AYS-wa-xKe">
+                    <rect key="frame" x="0.0" y="138" width="375" height="30"/>
+                    <state key="normal" title="Backup">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </state>
+                    <connections>
+                        <action selector="backup" destination="-1" eventType="touchUpInside" id="CSy-TV-hqX"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="L6M-1i-OxN">
+                    <rect key="frame" x="0.0" y="188" width="375" height="30"/>
+                    <state key="normal" title="Refresh">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </state>
+                    <connections>
+                        <action selector="refresh" destination="-1" eventType="touchUpInside" id="Hwc-VQ-gaQ"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" name="Dark"/>
             <constraints>
+                <constraint firstItem="L6M-1i-OxN" firstAttribute="top" secondItem="AYS-wa-xKe" secondAttribute="bottom" constant="20" id="80C-6J-dDK"/>
                 <constraint firstItem="sqi-l8-KBE" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="20" id="G1a-q6-1IM"/>
                 <constraint firstItem="ZTg-u6-GDk" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="JUh-eD-zna"/>
                 <constraint firstItem="ZTg-u6-GDk" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="TCh-A8-nNL"/>
+                <constraint firstItem="L6M-1i-OxN" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="Vla-z0-lfh"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="sqi-l8-KBE" secondAttribute="trailing" id="WdD-mY-Lvp"/>
                 <constraint firstItem="ZTg-u6-GDk" firstAttribute="top" secondItem="sqi-l8-KBE" secondAttribute="bottom" constant="20" id="dMr-PJ-OiO"/>
                 <constraint firstItem="sqi-l8-KBE" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="enf-r5-grs"/>
+                <constraint firstItem="AYS-wa-xKe" firstAttribute="top" secondItem="ZTg-u6-GDk" secondAttribute="bottom" constant="18" id="jvr-6b-0h8"/>
+                <constraint firstItem="L6M-1i-OxN" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="mwp-Y3-VeW"/>
+                <constraint firstItem="AYS-wa-xKe" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="nlg-BO-Vcp"/>
+                <constraint firstItem="AYS-wa-xKe" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="tl5-nE-XHr"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
         </view>

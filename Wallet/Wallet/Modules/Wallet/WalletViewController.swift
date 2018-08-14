@@ -52,9 +52,6 @@ class WalletViewController: UIViewController {
 
         title = "wallet.title".localized
 
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Backup", style: .plain, target: self, action: #selector(openBackup))
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Refresh", style: .plain, target: self, action: #selector(refresh))
-
         delegate.viewDidLoad()
 
         tableView?.estimatedRowHeight = 0
@@ -64,14 +61,6 @@ class WalletViewController: UIViewController {
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
-    }
-
-    @objc func openBackup() {
-        present(BackupRouter.module(dismissMode: .dismissSelf), animated: true)
-    }
-
-    @objc func refresh() {
-        delegate.refresh()
     }
 
 }

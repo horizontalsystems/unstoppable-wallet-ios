@@ -54,4 +54,12 @@ class SettingsViewController: UIViewController {
         }
     }
 
+    @IBAction func backup() {
+        present(BackupRouter.module(dismissMode: .dismissSelf), animated: true)
+    }
+
+    @IBAction func refresh() {
+        print("call delegate.refresh() in wallet controller")
+    }
+
 }
