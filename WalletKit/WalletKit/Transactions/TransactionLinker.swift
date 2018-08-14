@@ -10,7 +10,7 @@ class TransactionLinker {
 
     func handle(transaction: Transaction) throws {
         let realm = realmFactory.realm
-        let addresses = realm.objects(Address.self)
+        let pubKeys = realm.objects(PublicKey.self)
 
         try realm.write {
             for input in transaction.inputs {
@@ -18,24 +18,24 @@ class TransactionLinker {
                    previousTransaction.outputs.count > input.previousOutputIndex {
                     input.previousOutput = previousTransaction.outputs[input.previousOutputIndex]
 
-                    if input.previousOutput!.address != nil {
+                    if input.previousOutput!.publicKey != nil {
                         transaction.isMine = true
                     }
                 }
             }
 
             for output in transaction.outputs {
-                let address = addresses.filter({ $0.publicKeyHash == output.keyHash }).first
+                let pubKey = pubKeys.filter({ $0.keyHash == output.keyHash }).first
 
-                if address != nil {
+                if pubKey != nil {
                     transaction.isMine = true
-                    output.address = address
+                    output.publicKey = pubKey
                 }
 
                 if let input = realm.objects(TransactionInput.self)
                         .filter("previousOutputTxReversedHex = %@ AND previousOutputIndex = %@", transaction.reversedHashHex, output.index).last {
                     input.previousOutput = output
-                    if address != nil {
+                    if pubKey != nil {
                         input.transaction.isMine = true
                     }
                 }

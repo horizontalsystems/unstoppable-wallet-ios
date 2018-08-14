@@ -10,7 +10,7 @@ class UnspentOutputProviderTests: XCTestCase {
 
     private var outputs: [TransactionOutput]!
     private var unspentOutputProvider: UnspentOutputProvider!
-    private var address: Address!
+    private var pubKey: PublicKey!
 
     override func setUp() {
         super.setUp()
@@ -20,7 +20,7 @@ class UnspentOutputProviderTests: XCTestCase {
         realm = try! Realm(configuration: Realm.Configuration(inMemoryIdentifier: "TestRealm"))
         try! realm.write { realm.deleteAll() }
 
-        address = TestData.address()
+        pubKey = TestData.pubKey()
         stub(mockRealmFactory) { mock in
             when(mock.realm.get).thenReturn(realm)
         }
@@ -40,13 +40,13 @@ class UnspentOutputProviderTests: XCTestCase {
 
         unspentOutputProvider = nil
         outputs = nil
-        address = nil
+        pubKey = nil
 
         super.tearDown()
     }
 
     func testValidOutputs() {
-        outputs.forEach { $0.address = address }
+        outputs.forEach { $0.publicKey = pubKey }
 
         let transaction = Transaction(version: 0, inputs: [], outputs: outputs)
         try? realm.write {
@@ -76,7 +76,7 @@ class UnspentOutputProviderTests: XCTestCase {
 
     func testEmptyValidScriptOutputs() {
         outputs.forEach {
-            $0.address = address
+            $0.publicKey = pubKey
             $0.scriptType = .p2sh
         }
         let transaction = Transaction(version: 0, inputs: [], outputs: outputs)
@@ -93,7 +93,7 @@ class UnspentOutputProviderTests: XCTestCase {
 
     func testEmptyValidInputOutputs() {
         outputs.forEach {
-            $0.address = address
+            $0.publicKey = pubKey
         }
         let transaction = Transaction(version: 0, inputs: [], outputs: outputs)
         try? realm.write {

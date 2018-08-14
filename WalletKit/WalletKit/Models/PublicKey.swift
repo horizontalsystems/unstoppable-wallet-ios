@@ -1,7 +1,7 @@
 import Foundation
 import RealmSwift
 
-public class Address: Object {
+public class PublicKey: Object {
 
     enum InitError: Error {
         case invalid
@@ -10,21 +10,21 @@ public class Address: Object {
 
     @objc dynamic var index = 0
     @objc dynamic var external = true
-    @objc dynamic var publicKey: Data?
-    @objc dynamic var publicKeyHash = Data()
-    @objc public dynamic var base58 = ""
+    @objc dynamic var raw: Data?
+    @objc dynamic var keyHash = Data()
+    @objc public dynamic var address = ""
 
     convenience init(withIndex index: Int, external: Bool, hdPublicKey key: HDPublicKey) {
         self.init()
         self.index = index
         self.external = external
-        self.publicKey = key.raw
-        self.publicKeyHash = Crypto.sha256ripemd160(key.raw)
-        self.base58 = key.toAddress()
+        self.raw = key.raw
+        self.keyHash = Crypto.sha256ripemd160(key.raw)
+        self.address = key.toAddress()
     }
 
     override public class func primaryKey() -> String? {
-        return "base58"
+        return "address"
     }
 
 }

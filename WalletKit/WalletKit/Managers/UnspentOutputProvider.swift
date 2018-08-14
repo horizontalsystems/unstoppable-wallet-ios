@@ -11,7 +11,7 @@ class UnspentOutputProvider {
     func allUnspentOutputs() -> [TransactionOutput] {
         let realm = realmFactory.realm
         let allUnspentOutputs = realm.objects(TransactionOutput.self)
-                .filter("address != nil")
+                .filter("publicKey != nil")
                 .filter("scriptType = %@ OR scriptType = %@", ScriptType.p2pkh.rawValue, ScriptType.p2pk.rawValue)
                 .filter("inputs.@count = %@", 0)
 

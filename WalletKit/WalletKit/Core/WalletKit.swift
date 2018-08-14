@@ -81,7 +81,7 @@ public class WalletKit {
         let realm = realmFactory.realm
 
         let blockCount = realm.objects(Block.self).count
-        let addressCount = realm.objects(Address.self).count
+        let pubKeysCount = realm.objects(PublicKey.self).count
 
         print("BLOCK COUNT: \(blockCount)")
         if let block = realm.objects(Block.self).first {
@@ -91,12 +91,12 @@ public class WalletKit {
             print("Last Block: \(block.height) --- \(block.reversedHeaderHashHex)")
         }
 
-        print("ADDRESS COUNT: \(addressCount)")
-        if let address = realm.objects(Address.self).first {
-            print("First Address: \(address.index) --- \(address.external) --- \(address.base58)")
+        print("PUBLIC KEYS COUNT: \(pubKeysCount)")
+        if let pubKey = realm.objects(PublicKey.self).first {
+            print("First PublicKey: \(pubKey.index) --- \(pubKey.external) --- \(pubKey.address)")
         }
-        if let address = realm.objects(Address.self).last {
-            print("Last Address: \(address.index) --- \(address.external) --- \(address.base58)")
+        if let pubKey = realm.objects(PublicKey.self).last {
+            print("Last PublicKey: \(pubKey.index) --- \(pubKey.external) --- \(pubKey.address)")
         }
     }
 
@@ -111,19 +111,19 @@ public class WalletKit {
     private func preFillInitialTestData() {
         let realm = realmFactory.realm
 
-        var addresses = [Address]()
+        var pubKeys = [PublicKey]()
 
         for i in 0..<10 {
-            if let address = try? hdWallet.receiveAddress(index: i) {
-                addresses.append(address)
+            if let pubKey = try? hdWallet.receivePublicKey(index: i) {
+                pubKeys.append(pubKey)
             }
-            if let address = try? hdWallet.changeAddress(index: i) {
-                addresses.append(address)
+            if let pubKey = try? hdWallet.changePublicKey(index: i) {
+                pubKeys.append(pubKey)
             }
         }
 
         try? realm.write {
-            realm.add(addresses, update: true)
+            realm.add(pubKeys, update: true)
         }
     }
 

@@ -52,8 +52,8 @@ extension PeerGroup: PeerDelegate {
 
     func peerDidConnect(_ peer: Peer) {
         let realm = realmFactory.realm
-        let addresses = realm.objects(Address.self)
-        let filters = Array(addresses.map { $0.publicKeyHash }) + Array(addresses.map { $0.publicKey! })
+        let pubKeys = realm.objects(PublicKey.self)
+        let filters = Array(pubKeys.map { $0.keyHash }) + Array(pubKeys.map { $0.raw! })
 
         peer.load(filters: filters)
         peer.sendMemoryPoolMessage()

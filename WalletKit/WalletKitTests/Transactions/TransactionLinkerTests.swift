@@ -10,7 +10,7 @@ class TransactionLinkerTests: XCTestCase {
 
     private var realm: Realm!
     private var transaction: Transaction!
-    private var address: Address!
+    private var pubKey: PublicKey!
     private var pubKeyHash = Data(hex: "1ec865abcb88cec71c484d4dadec3d7dc0271a7b")!
 
     override func setUp() {
@@ -25,10 +25,10 @@ class TransactionLinkerTests: XCTestCase {
 
         linker = TransactionLinker(realmFactory: mockRealmFactory)
         transaction = TestData.p2pkhTransaction
-        address = TestData.address(pubKeyHash: pubKeyHash)
+        pubKey = TestData.pubKey(pubKeyHash: pubKeyHash)
 
         try! realm.write {
-            realm.add(address, update: true)
+            realm.add(pubKey, update: true)
             realm.add(transaction)
         }
     }
@@ -87,10 +87,10 @@ class TransactionLinkerTests: XCTestCase {
         }
 
         XCTAssertEqual(transaction.isMine, false)
-        XCTAssertEqual(transaction.outputs[0].address, nil)
+        XCTAssertEqual(transaction.outputs[0].publicKey, nil)
         try! linker.handle(transaction: transaction)
         XCTAssertEqual(transaction.isMine, true)
-        XCTAssertEqual(transaction.outputs[0].address, address)
+        XCTAssertEqual(transaction.outputs[0].publicKey, pubKey)
     }
 
     func testSetNextTransactionIsMine() {
@@ -118,7 +118,7 @@ class TransactionLinkerTests: XCTestCase {
         let output = TransactionOutput()
         output.index = transaction.inputs[0].previousOutputIndex
         output.value = 100000
-        output.address = address
+        output.publicKey = pubKey
 
         let savedPreviousTransaction = Transaction()
         savedPreviousTransaction.reversedHashHex = transaction.inputs[0].previousOutputTxReversedHex

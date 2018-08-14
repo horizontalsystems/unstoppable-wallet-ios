@@ -11,7 +11,7 @@ class InputSignerTests: XCTestCase {
     private var inputSigner: InputSigner!
 
     private var transaction: Transaction!
-    private var ownAddress: Address!
+    private var ownPubKey: PublicKey!
 
     override func setUp() {
         super.setUp()
@@ -26,14 +26,14 @@ class InputSignerTests: XCTestCase {
         // Create private key/address provider for tests
         let privateKey = HDPrivateKey(privateKey: Data(hex: "4ee8efccaa04495d5d3ab0f847952fcff43ffc0459bd87981b6be485b92f8d64")!, chainCode: Data(), network: TestNet())
         let publicKeyHash = Data(hex: "e4de5d630c5cacd7af96418a8f35c411c8ff3c06")!
-        ownAddress = Address()
-        ownAddress.publicKey = Data(hex: "037d56797fbe9aa506fc263751abf23bb46c9770181a6059096808923f0a64cb15")!
-        ownAddress.publicKeyHash = publicKeyHash
+        ownPubKey = PublicKey()
+        ownPubKey.raw = Data(hex: "037d56797fbe9aa506fc263751abf23bb46c9770181a6059096808923f0a64cb15")!
+        ownPubKey.keyHash = publicKeyHash
 
         let previousTransaction = Transaction()
         previousTransaction.reversedHashHex = "f296d7192200cd926369d1a8a88c0339c140149602651c2cc2ed5116368eb79c"
         let previousOutput = TransactionOutput(withValue: 4999900000, index: 0, lockingScript: Data(hex: "76a914e4de5d630c5cacd7af96418a8f35c411c8ff3c0688ac")!, type: .p2pkh, keyHash: publicKeyHash)
-        previousOutput.address = ownAddress
+        previousOutput.publicKey = ownPubKey
         previousTransaction.outputs.append(previousOutput)
 
         try! realm.write {
@@ -100,7 +100,7 @@ class InputSignerTests: XCTestCase {
 
     func testNoPreviousOutputAddress() {
         try! realm.write {
-            realm.delete(ownAddress)
+            realm.delete(ownPubKey)
         }
 
         var caught = false
@@ -118,7 +118,7 @@ class InputSignerTests: XCTestCase {
 
     func testNoPublicKeyInAddress() {
         try! realm.write {
-            ownAddress.publicKey = nil
+            ownPubKey.raw = nil
         }
 
         var caught = false

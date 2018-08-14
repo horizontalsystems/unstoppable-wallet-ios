@@ -21,15 +21,15 @@ class InputSigner {
             throw SignError.noPreviousOutput
         }
 
-        guard let address = prevOutput.address else {
+        guard let pubKey = prevOutput.publicKey else {
             throw SignError.noPreviousOutputAddress
         }
 
-        guard let publicKey = address.publicKey else {
+        guard let publicKey = pubKey.raw else {
             throw SignError.noPublicKeyInAddress
         }
 
-        guard let privateKey = try? hdWallet.privateKey(index: address.index, chain: address.external ? .external : .internal) else {
+        guard let privateKey = try? hdWallet.privateKey(index: pubKey.index, chain: pubKey.external ? .external : .internal) else {
             throw SignError.noPrivateKey
         }
 

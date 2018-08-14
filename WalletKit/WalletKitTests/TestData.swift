@@ -148,11 +148,11 @@ class TestData {
         return transaction
     }
 
-    static func address(pubKeyHash: Data = Data(hex: "1ec865abcb88cec71c484d4dadec3d7dc0271a7b")!) -> Address {
-        let address = Address()
-        address.publicKeyHash = pubKeyHash
+    static func pubKey(pubKeyHash: Data = Data(hex: "1ec865abcb88cec71c484d4dadec3d7dc0271a7b")!) -> PublicKey {
+        let pubKey = PublicKey()
+        pubKey.keyHash = pubKeyHash
 
-        return address
+        return pubKey
     }
 
     static func transactionInput(previousTransaction: Transaction, previousOutput: TransactionOutput, script: Data, sequence: Int) -> TransactionInput {
