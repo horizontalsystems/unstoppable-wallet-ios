@@ -81,4 +81,8 @@ extension BitcoinAdapter: IAdapter {
 
     }
 
+    func validate(address: String) -> Bool {
+        return true
+    }
+
 }

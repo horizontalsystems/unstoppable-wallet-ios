@@ -85,6 +85,7 @@
 		58AAA13EB1FBA5831D60FE3E /* TransactionSender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAD56FBE3DC74548046F5 /* TransactionSender.swift */; };
 		58AAA1702C9422A8EBA464D7 /* UnspentOutputSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA983B426801C46003567 /* UnspentOutputSelector.swift */; };
 		58AAA3492A592C937473454F /* ScriptBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAF2482982ED7215EEBF9 /* ScriptBuilder.swift */; };
+		58AAA36E48DB45B72112973B /* TransactionCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAC66042A881E2F74AFD6 /* TransactionCreator.swift */; };
 		58AAA398676B02669E4E5E3F /* TransactionSenderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAE590E2089C768A7A870 /* TransactionSenderTests.swift */; };
 		58AAA649DF284C668B495AB2 /* ScriptBuilderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA422686CE355CACA11DF /* ScriptBuilderTests.swift */; };
 		58AAA8CCA46340450D2912C5 /* UnspentOutputProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA481A82D05C914AB0CCA /* UnspentOutputProvider.swift */; };
@@ -215,6 +216,7 @@
 		58AAA422686CE355CACA11DF /* ScriptBuilderTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScriptBuilderTests.swift; sourceTree = "<group>"; };
 		58AAA481A82D05C914AB0CCA /* UnspentOutputProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnspentOutputProvider.swift; sourceTree = "<group>"; };
 		58AAA983B426801C46003567 /* UnspentOutputSelector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnspentOutputSelector.swift; sourceTree = "<group>"; };
+		58AAAC66042A881E2F74AFD6 /* TransactionCreator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionCreator.swift; sourceTree = "<group>"; };
 		58AAAD56FBE3DC74548046F5 /* TransactionSender.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionSender.swift; sourceTree = "<group>"; };
 		58AAAE590E2089C768A7A870 /* TransactionSenderTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionSenderTests.swift; sourceTree = "<group>"; };
 		58AAAECE6429C4CBD7FD2394 /* UnspentOutputProviderTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnspentOutputProviderTests.swift; sourceTree = "<group>"; };
@@ -470,6 +472,7 @@
 				11B3526235310556644773A2 /* TransactionLinker.swift */,
 				11B35D3F4B1A3B73B5CD004A /* TransactionSaver.swift */,
 				58AAAD56FBE3DC74548046F5 /* TransactionSender.swift */,
+				58AAAC66042A881E2F74AFD6 /* TransactionCreator.swift */,
 			);
 			path = Transactions;
 			sourceTree = "<group>";
@@ -849,6 +852,7 @@
 				"$(SRCROOT)/WalletKit/Managers/UnspentOutputSelector.swift",
 				"$(SRCROOT)/WalletKit/Transactions/Builder/ScriptBuilder.swift",
 				"$(SRCROOT)/WalletKit/Managers/UnspentOutputProvider.swift",
+				"$(SRCROOT)/WalletKit/Helpers/AddressConverter.swift",
 			);
 			name = Cuckoo;
 			outputPaths = (
@@ -980,6 +984,7 @@
 				58AAA8CCA46340450D2912C5 /* UnspentOutputProvider.swift in Sources */,
 				58AAA13EB1FBA5831D60FE3E /* TransactionSender.swift in Sources */,
 				2FA5D60486BE522A9A7B80F8 /* AddressConverter.swift in Sources */,
+				58AAA36E48DB45B72112973B /* TransactionCreator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

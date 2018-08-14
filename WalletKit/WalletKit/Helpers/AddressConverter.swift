@@ -1,6 +1,6 @@
 import Foundation
 
-class AddressConverter{
+class AddressConverter {
     let network: NetworkProtocol
 
     init(network: NetworkProtocol) {
@@ -36,7 +36,7 @@ class AddressConverter{
     }
 }
 
-enum ConversionError: Error{
+enum ConversionError: Error {
     case invalidChecksum
     case invalidAddressLength
     case unknownAddressType

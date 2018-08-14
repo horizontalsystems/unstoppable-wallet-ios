@@ -78,45 +78,39 @@ class AddressConverterTests: XCTestCase{
     func testAddressTooLong() {
         let address = "2NCRTejQC"
 
-        var caught = false
         do {
             let _ = try addressConverter.convert(address: address)
+            XCTFail("No error thrown!")
         } catch let error as ConversionError {
-            caught = true
             XCTAssertEqual(error, ConversionError.invalidAddressLength)
         } catch {
             XCTFail("Invalid Error thrown!")
         }
-        XCTAssertEqual(caught, true)
     }
 
     func testInvalidChecksum() {
         let address = "msGCb97sW9s9Mt7gN5m7TGmwLqhqGaFqYzz"
 
-        var caught = false
         do {
             let _ = try addressConverter.convert(address: address)
+            XCTFail("No error thrown!")
         } catch let error as ConversionError {
-            caught = true
             XCTAssertEqual(error, ConversionError.invalidChecksum)
         } catch {
             XCTFail("Invalid Error thrown!")
         }
-        XCTAssertEqual(caught, true)
     }
 
     func testUnknownAddressType() {
         let keyHash = "80d733d7a4c02aba01da9370afc954c73a32dba5"
 
-        var caught = false
         do {
             let _ = try addressConverter.convert(publicKeyHash: Data(hex: keyHash)!, type: .unknown)
+            XCTFail("No error thrown!")
         } catch let error as ConversionError {
-            caught = true
             XCTAssertEqual(error, ConversionError.unknownAddressType)
         } catch {
             XCTFail("Invalid Error thrown!")
         }
-        XCTAssertEqual(caught, true)
     }
 }

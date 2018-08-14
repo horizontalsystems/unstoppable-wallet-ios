@@ -5,6 +5,7 @@ protocol IAdapter {
     func showInfo()
     func start() throws
     func send(to address: String, amount: Int)
+    func validate(address: String) -> Bool
 }
 
 protocol IAdapterListener: class {
