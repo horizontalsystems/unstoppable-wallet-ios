@@ -1,5 +1,4 @@
 import Foundation
-import WalletKit
 
 class RestoreInteractor {
     weak var delegate: IRestoreInteractorDelegate?

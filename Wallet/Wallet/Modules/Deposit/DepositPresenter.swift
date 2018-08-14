@@ -1,6 +1,4 @@
 import Foundation
-import WalletKit
-import RealmSwift
 
 class DepositPresenter {
 
