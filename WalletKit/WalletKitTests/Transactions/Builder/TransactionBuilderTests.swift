@@ -41,7 +41,7 @@ class TransactionBuilderTests: XCTestCase{
 
         mockUnspentOutputSelector = MockUnspentOutputSelector()
         mockUnspentOutputProvider = MockUnspentOutputProvider(realmFactory: mockRealmFactory)
-        mockInputSigner = MockInputSigner(realmFactory: mockRealmFactory, hdWallet: HDWalletStub(seed: Data(), network: TestNet()))
+        mockInputSigner = MockInputSigner(hdWallet: HDWalletStub(seed: Data(), network: TestNet()))
         mockScriptBuilder = MockScriptBuilder()
         mockFactory = MockFactory()
 
@@ -62,9 +62,9 @@ class TransactionBuilderTests: XCTestCase{
         fee = 1008
 
         transaction = Transaction(version: 1, inputs: [], outputs: [])
-        input = TransactionInput(withPreviousOutput: unspentOutputs[0], script: Data(), sequence: 0)
-        toOutput = TransactionOutput(withValue: value - fee, withLockingScript: Data(), withIndex: 0, type: .p2pkh, keyHash: toAddress.publicKeyHash)
-        changeOutput = TransactionOutput(withValue: totalInputValue - value, withLockingScript: Data(), withIndex: 1, type: .p2pkh, keyHash: changeAddress.publicKeyHash)
+        input = TransactionInput(withPreviousOutputTxReversedHex: previousTransaction.reversedHashHex, previousOutputIndex: unspentOutputs[0].index, script: Data(), sequence: 0)
+        toOutput = TransactionOutput(withValue: value - fee, index: 0, lockingScript: Data(), type: .p2pkh, keyHash: toAddress.publicKeyHash)
+        changeOutput = TransactionOutput(withValue: totalInputValue - value, index: 1, lockingScript: Data(), type: .p2pkh, keyHash: changeAddress.publicKeyHash)
 
         stub(mockUnspentOutputSelector) { mock in
             when(mock.select(value: any(), outputs: any())).thenReturn(unspentOutputs)
@@ -88,12 +88,12 @@ class TransactionBuilderTests: XCTestCase{
         }
 
         stub(mockFactory) { mock in
-            when(mock.transactionInput(withPreviousOutput: any(), script: any(), sequence: any())).thenReturn(input)
+            when(mock.transactionInput(withPreviousOutputTxReversedHex: any(), previousOutputIndex: any(), script: any(), sequence: any())).thenReturn(input)
         }
 
         stub(mockFactory) { mock in
-            when(mock.transactionOutput(withValue: any(), withLockingScript: any(), withIndex: any(), type: equal(to: ScriptType.p2pkh), keyHash: equal(to: toAddress.publicKeyHash))).thenReturn(toOutput)
-            when(mock.transactionOutput(withValue: any(), withLockingScript: any(), withIndex: any(), type: equal(to: ScriptType.p2pkh), keyHash: equal(to: changeAddress.publicKeyHash))).thenReturn(changeOutput)
+            when(mock.transactionOutput(withValue: any(), index: any(), lockingScript: any(), type: equal(to: ScriptType.p2pkh), keyHash: equal(to: toAddress.publicKeyHash))).thenReturn(toOutput)
+            when(mock.transactionOutput(withValue: any(), index: any(), lockingScript: any(), type: equal(to: ScriptType.p2pkh), keyHash: equal(to: changeAddress.publicKeyHash))).thenReturn(changeOutput)
         }
     }
 

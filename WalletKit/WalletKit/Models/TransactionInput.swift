@@ -2,7 +2,7 @@ import Foundation
 import RealmSwift
 
 public class TransactionInput: Object {
-    @objc dynamic var previousOutputTxReversedHex = Data()
+    @objc dynamic var previousOutputTxReversedHex = ""
     @objc dynamic var previousOutputIndex: Int = 0
     @objc dynamic var signatureScript = Data()
     @objc dynamic var sequence: Int = 0
@@ -14,17 +14,7 @@ public class TransactionInput: Object {
         return self.transactions.first!
     }
 
-    convenience init(withPreviousOutput output: TransactionOutput, script: Data, sequence: Int) {
-        self.init()
-
-        previousOutputTxReversedHex = Data(hex: output.transaction.reversedHashHex)!
-        previousOutputIndex = output.index
-        previousOutput = output
-        signatureScript = script
-        self.sequence = sequence
-    }
-
-    convenience init(withPreviousOutputTxReversedHex previousOutputTxReversedHex: Data, withPreviousOutputIndex previousOutputIndex: Int, script: Data, sequence: Int) {
+    convenience init(withPreviousOutputTxReversedHex previousOutputTxReversedHex: String, previousOutputIndex: Int, script: Data, sequence: Int) {
         self.init()
 
         self.previousOutputTxReversedHex = previousOutputTxReversedHex
@@ -39,7 +29,7 @@ public class TransactionInput: Object {
             data += output.transaction.reversedHashHex.reversedData!
             data += UInt32(output.index)
         } else {
-            data += previousOutputTxReversedHex.reversed()
+            data += previousOutputTxReversedHex.reversedData!
             data += UInt32(previousOutputIndex)
         }
 
@@ -80,7 +70,7 @@ public class TransactionInput: Object {
     static func deserialize(_ byteStream: ByteStream) -> TransactionInput {
         let transactionInput = TransactionInput()
 
-        transactionInput.previousOutputTxReversedHex = Data(byteStream.read(Data.self, count: 32).reversed())
+        transactionInput.previousOutputTxReversedHex = Data(byteStream.read(Data.self, count: 32).reversed()).hex
         transactionInput.previousOutputIndex = Int(byteStream.read(UInt32.self))
 
         let scriptLength: VarInt = byteStream.read(VarInt.self)

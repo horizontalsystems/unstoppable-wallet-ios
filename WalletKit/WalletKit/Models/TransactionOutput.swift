@@ -40,17 +40,12 @@ public class TransactionOutput: Object {
 
     let inputs = LinkingObjects(fromType: TransactionInput.self, property: "previousOutput")
 
-    convenience init(withValue value: Int, withLockingScript script: Data, withIndex index: Int) {
+    convenience init(withValue value: Int, index: Int, lockingScript script: Data, type: ScriptType, keyHash: Data) {
         self.init()
 
         self.value = value
         self.lockingScript = script
         self.index = index
-    }
-
-    convenience init(withValue value: Int, withLockingScript script: Data, withIndex index: Int, type: ScriptType, keyHash: Data) {
-        self.init(withValue: value, withLockingScript: script, withIndex: index)
-
         self.scriptType = type
         self.keyHash = keyHash
     }
