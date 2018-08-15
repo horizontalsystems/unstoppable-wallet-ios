@@ -23,7 +23,6 @@ class TransactionCreator {
         let transaction = try transactionBuilder.buildTransaction(value: value, feeRate: feeRate, changePubKey: changeAddress, toAddress: address)
         try realm.write {
             realm.add(transaction, update: true)
-            print("added transaction to realm")
         }
     }
 
