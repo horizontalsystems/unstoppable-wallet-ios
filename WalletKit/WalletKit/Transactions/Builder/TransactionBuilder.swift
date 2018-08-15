@@ -55,6 +55,7 @@ class TransactionBuilder {
         }
 
         transaction.status = .new
+        transaction.reversedHashHex = Crypto.sha256sha256(transaction.serialized()).reversedHex
         return transaction
     }
 

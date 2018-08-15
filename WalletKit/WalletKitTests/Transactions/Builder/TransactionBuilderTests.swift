@@ -130,6 +130,7 @@ class TransactionBuilderTests: XCTestCase{
             XCTFail(error.localizedDescription)
         }
 
+        XCTAssertNotEqual(resultTx.reversedHashHex, "")
         XCTAssertEqual(resultTx.status, .new)
         XCTAssertEqual(resultTx.inputs.count, 1)
         XCTAssertEqual(resultTx.inputs[0].previousOutput!, unspentOutputs[0])

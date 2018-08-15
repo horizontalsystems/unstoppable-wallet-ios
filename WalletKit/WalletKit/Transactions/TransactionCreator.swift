@@ -3,7 +3,7 @@ import Foundation
 class TransactionCreator {
     enum CreationError: Error { case noChangeAddress }
 
-    let feeRate: Int = 6
+    let feeRate: Int = 600
 
     let realmFactory: RealmFactory
     let transactionBuilder: TransactionBuilder

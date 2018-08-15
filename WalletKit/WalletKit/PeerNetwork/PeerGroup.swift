@@ -85,6 +85,25 @@ extension PeerGroup: PeerDelegate {
     }
 
     func peer(_ peer: Peer, didReceiveGetDataMessage message: GetDataMessage) {
+        for item in message.inventoryItems {
+            switch item.objectType {
+                case .error:
+                    break
+                case .transaction:
+                    if let transaction = realmFactory.realm.objects(Transaction.self).filter("reversedHashHex = %@", item.hash.reversedHex).first {
+                        peer.sendTransaction(transaction: transaction)
+                    }
+                    break
+                case .blockMessage:
+                    break
+                case .filteredBlockMessage:
+                    break
+                case .compactBlockMessage:
+                    break
+                case .unknown:
+                    break
+            }
+        }
     }
 
     func peer(_ peer: Peer, didReceiveRejectMessage message: RejectMessage) {
