@@ -30,7 +30,6 @@ class PeerGroup {
     }
 
     func requestBlocks(headerHashes: [Data]) {
-//        print("Request Blocks: \(headerHashes.map { $0.reversedHex }.joined(separator: ", "))")
         let inventoryMessage = InventoryMessage(count: VarInt(headerHashes.count), inventoryItems: headerHashes.map { hash in
             InventoryItem(type: InventoryItem.ObjectType.filteredBlockMessage.rawValue, hash: hash)
         })
@@ -63,24 +62,31 @@ extension PeerGroup: PeerDelegate {
         delegate?.peerGroupDidConnect()
     }
 
-    func peer(_ peer: Peer, didReceiveMerkleBlockMessage message: MerkleBlockMessage) {
-        delegate?.peerGroupDidReceive(merkleBlockMessage: message, peer: peer)
+    func peerDidDisconnect(_ peer: Peer) {
     }
 
-    func peer(_ peer: Peer, didReceiveTransaction transaction: Transaction) {
-        delegate?.peerGroupDidReceive(transaction: transaction, peer: peer)
+    func peer(_ peer: Peer, didReceiveAddressMessage message: AddressMessage) {
     }
 
     func peer(_ peer: Peer, didReceiveHeadersMessage message: HeadersMessage) {
-        delegate?.peerGroupDidReceive(headersMessage: message, peer: peer)
+        delegate?.peerGroupDidReceive(headers: message.blockHeaders)
+    }
+
+    func peer(_ peer: Peer, didReceiveMerkleBlockMessage message: MerkleBlockMessage) {
+        delegate?.peerGroupDidReceive(merkleBlock: message)
+    }
+
+    func peer(_ peer: Peer, didReceiveTransaction transaction: Transaction) {
+        delegate?.peerGroupDidReceive(transaction: transaction)
     }
 
     func peer(_ peer: Peer, didReceiveInventoryMessage message: InventoryMessage) {
-        delegate?.peerGroupDidReceive(inventoryMessage: message, peer: peer)
     }
 
     func peer(_ peer: Peer, didReceiveGetDataMessage message: GetDataMessage) {
-        delegate?.peerGroupDidReceive(getDataMessage: message, peer: peer)
+    }
+
+    func peer(_ peer: Peer, didReceiveRejectMessage message: RejectMessage) {
     }
 
 }

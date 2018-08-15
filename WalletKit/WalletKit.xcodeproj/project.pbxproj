@@ -42,6 +42,7 @@
 		11B3577DC09E75C39C5F7D2A /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3510658CE89D9DB6772E5 /* String.swift */; };
 		11B35785C5E654AB52A81E8A /* BloomFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B350F93CE46013514830A3 /* BloomFilter.swift */; };
 		11B357E73256EFE543201474 /* TransactionSaverTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35C3F194E79CE12B94EAE /* TransactionSaverTests.swift */; };
+		11B357FBDA015B9B9DBDA229 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B354D856797A77A814998A /* Logger.swift */; };
 		11B358014EADE399017A1ED3 /* BlockValidatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35F9042249BFFC7A751AA /* BlockValidatorTests.swift */; };
 		11B3584D53DC8BABAF4858C4 /* MerkleBlockHandlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35AD5583FA34AE5BA27FF /* MerkleBlockHandlerTests.swift */; };
 		11B3586A2BEDE44241CE666F /* PeerGroupDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B356B61A4A93F86D3637A9 /* PeerGroupDelegate.swift */; };
@@ -154,6 +155,7 @@
 		11B353B145524AAE2A1B76A6 /* HeadersMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeadersMessage.swift; sourceTree = "<group>"; };
 		11B35421A3D3ECB76C71619D /* MerkleBlockHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MerkleBlockHandler.swift; sourceTree = "<group>"; };
 		11B3549DFD32AC3E74C3AE66 /* MerkleBlockValidatorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MerkleBlockValidatorTests.swift; sourceTree = "<group>"; };
+		11B354D856797A77A814998A /* Logger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		11B354DDB46C9DE37375424D /* OpCode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpCode.swift; sourceTree = "<group>"; };
 		11B354EF0F404DF96E765CA1 /* DifficultyEncoder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DifficultyEncoder.swift; sourceTree = "<group>"; };
 		11B3554FBB1C030DF70F35B8 /* BlockSaver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockSaver.swift; sourceTree = "<group>"; };
@@ -327,6 +329,7 @@
 			children = (
 				11B35388E6D74307FFEA548B /* Configuration.swift */,
 				11B3529A1731702724B0342D /* Factory.swift */,
+				11B354D856797A77A814998A /* Logger.swift */,
 				11B35DE14DB8DA22E71A1E35 /* RealmFactory.swift */,
 				11B35CDB306DF2676A56216B /* WalletKit.swift */,
 			);
@@ -852,6 +855,11 @@
 				"$(SRCROOT)/WalletKit/Managers/UnspentOutputSelector.swift",
 				"$(SRCROOT)/WalletKit/Transactions/Builder/ScriptBuilder.swift",
 				"$(SRCROOT)/WalletKit/Managers/UnspentOutputProvider.swift",
+				"$(SRCROOT)/WalletKit/Core/Logger.swift",
+				"$(SRCROOT)/WalletKit/BlockHeaders/HeaderHandler.swift",
+				"$(SRCROOT)/WalletKit/Blocks/MerkleBlockHandler.swift",
+				"$(SRCROOT)/WalletKit/Transactions/TransactionHandler.swift",
+				"$(SRCROOT)/WalletKit/PeerNetwork/Peer.swift",
 				"$(SRCROOT)/WalletKit/Helpers/AddressConverter.swift",
 			);
 			name = Cuckoo;
@@ -983,6 +991,7 @@
 				11B35F02260D5A21CF0EA3B8 /* Factory.swift in Sources */,
 				58AAA8CCA46340450D2912C5 /* UnspentOutputProvider.swift in Sources */,
 				58AAA13EB1FBA5831D60FE3E /* TransactionSender.swift in Sources */,
+				11B357FBDA015B9B9DBDA229 /* Logger.swift in Sources */,
 				2FA5D60486BE522A9A7B80F8 /* AddressConverter.swift in Sources */,
 				58AAA36E48DB45B72112973B /* TransactionCreator.swift in Sources */,
 			);

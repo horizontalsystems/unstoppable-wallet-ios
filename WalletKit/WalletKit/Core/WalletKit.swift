@@ -4,6 +4,7 @@ import RealmSwift
 public class WalletKit {
     let configuration: Configuration
     let realmFactory: RealmFactory
+    let logger: Logger
 
     let hdWallet: HDWallet
 
@@ -38,11 +39,12 @@ public class WalletKit {
     public init(withWords words: [String], realmConfiguration: Realm.Configuration) {
         configuration = Configuration()
         realmFactory = RealmFactory(configuration: realmConfiguration)
+        logger = Logger()
 
         hdWallet = HDWallet(seed: Mnemonic.seed(mnemonic: words), network: configuration.network)
 
         peerGroup = PeerGroup(realmFactory: realmFactory)
-        syncer = Syncer(realmFactory: realmFactory)
+        syncer = Syncer(logger: logger, realmFactory: realmFactory)
         factory = Factory()
 
         difficultyEncoder = DifficultyEncoder()
