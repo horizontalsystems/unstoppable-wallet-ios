@@ -198,16 +198,13 @@ class Peer : NSObject, StreamDelegate {
     }
 
     private func send(messageWithCommand command: String, payload: Data) {
-//        print("fucking send(messageWithCommand from PEER")
         let checksum = Data(Crypto.sha256sha256(payload).prefix(4))
         let message = Message(magic: network.magic, command: command, length: UInt32(payload.count), checksum: checksum, payload: payload)
 
         let data = message.serialized()
-//        print(data.hex)
         _ = data.withUnsafeBytes {
             outputStream?.write($0, maxLength: data.count)
         }
-//        print("successs!!!")
     }
 
     private func sendVersionMessage() {
