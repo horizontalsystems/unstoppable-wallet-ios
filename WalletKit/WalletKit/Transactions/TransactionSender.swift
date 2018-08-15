@@ -40,6 +40,7 @@ class TransactionSender {
 
     private func send(transactions: Results<Transaction>) {
         transactions.forEach {
+            print("transactionSender send")
             peerGroup.relay(transaction: $0)
         }
     }

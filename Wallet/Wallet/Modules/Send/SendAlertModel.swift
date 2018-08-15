@@ -105,7 +105,7 @@ extension SendAlertModel: ISendView {
     }
 
     func showError(error: String) {
-        print("showError")
+        print("\(error) showError")
     }
 
     func showSuccess() {

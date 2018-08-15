@@ -38,6 +38,7 @@ class PeerGroup {
     }
 
     func relay(transaction: Transaction) {
+        print("fucking make inventoryMessage")
         let inventoryMessage = InventoryMessage(count: VarInt(1), inventoryItems: [
             InventoryItem(type: InventoryItem.ObjectType.transaction.rawValue, hash: Crypto.sha256sha256(transaction.serialized()))
         ])

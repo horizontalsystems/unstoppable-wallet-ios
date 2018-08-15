@@ -90,6 +90,7 @@
 		58AAA398676B02669E4E5E3F /* TransactionSenderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAE590E2089C768A7A870 /* TransactionSenderTests.swift */; };
 		58AAA649DF284C668B495AB2 /* ScriptBuilderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA422686CE355CACA11DF /* ScriptBuilderTests.swift */; };
 		58AAA8CCA46340450D2912C5 /* UnspentOutputProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA481A82D05C914AB0CCA /* UnspentOutputProvider.swift */; };
+		58AAA9479AB8BF53D2852502 /* TransactionCreatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA21C2FD6764CD385663E /* TransactionCreatorTests.swift */; };
 		58AAAAC9184F9395A71E318B /* UnspentOutputProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAECE6429C4CBD7FD2394 /* UnspentOutputProviderTests.swift */; };
 		6480F0E2B4AA1D481624F935 /* Pods_WalletKitTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 95D20030A63CC8101E6A72E8 /* Pods_WalletKitTests.framework */; };
 		D31711EA20F7192400AEF61B /* Peer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31711E920F7192300AEF61B /* Peer.swift */; };
@@ -214,6 +215,7 @@
 		2FA5DAE996A847B90E5D033A /* UnspentOutputSelectorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnspentOutputSelectorTests.swift; sourceTree = "<group>"; };
 		2FA5DDAE64200E386070668C /* TransactionBuilderTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionBuilderTests.swift; sourceTree = "<group>"; };
 		2FA5DF9995FA7DD7556893F7 /* InputSigner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputSigner.swift; sourceTree = "<group>"; };
+		58AAA21C2FD6764CD385663E /* TransactionCreatorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionCreatorTests.swift; sourceTree = "<group>"; };
 		58AAA33E4E02571B077022F7 /* UnspentOutputsManagerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnspentOutputsManagerTests.swift; sourceTree = "<group>"; };
 		58AAA422686CE355CACA11DF /* ScriptBuilderTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScriptBuilderTests.swift; sourceTree = "<group>"; };
 		58AAA481A82D05C914AB0CCA /* UnspentOutputProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnspentOutputProvider.swift; sourceTree = "<group>"; };
@@ -404,6 +406,7 @@
 				11B35DB7140D86176157F8CA /* TransactionLinkerTests.swift */,
 				11B35C3F194E79CE12B94EAE /* TransactionSaverTests.swift */,
 				58AAAE590E2089C768A7A870 /* TransactionSenderTests.swift */,
+				58AAA21C2FD6764CD385663E /* TransactionCreatorTests.swift */,
 			);
 			path = Transactions;
 			sourceTree = "<group>";
@@ -861,6 +864,7 @@
 				"$(SRCROOT)/WalletKit/Transactions/TransactionHandler.swift",
 				"$(SRCROOT)/WalletKit/PeerNetwork/Peer.swift",
 				"$(SRCROOT)/WalletKit/Helpers/AddressConverter.swift",
+				"$(SRCROOT)/WalletKit/Transactions/Builder/TransactionBuilder.swift",
 			);
 			name = Cuckoo;
 			outputPaths = (
@@ -905,6 +909,7 @@
 				58AAAAC9184F9395A71E318B /* UnspentOutputProviderTests.swift in Sources */,
 				58AAA398676B02669E4E5E3F /* TransactionSenderTests.swift in Sources */,
 				2FA5DC27C4032E13E157A0D7 /* AddressConverterTests.swift in Sources */,
+				58AAA9479AB8BF53D2852502 /* TransactionCreatorTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

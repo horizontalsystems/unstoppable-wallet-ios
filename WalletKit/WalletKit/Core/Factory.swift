@@ -18,8 +18,8 @@ class Factory {
         return TransactionInput(withPreviousOutputTxReversedHex: previousOutputTxReversedHex, previousOutputIndex: previousOutputIndex, script: script, sequence: sequence)
     }
 
-    func transactionOutput(withValue value: Int, index: Int, lockingScript script: Data = Data(), type: ScriptType = .unknown, keyHash: Data = Data()) throws -> TransactionOutput {
-        return TransactionOutput(withValue: value, index: index, lockingScript: script, type: type, keyHash: keyHash)
+    func transactionOutput(withValue value: Int, index: Int, lockingScript script: Data = Data(), type: ScriptType = .unknown, address: String? = nil, keyHash: Data? = nil, publicKey: PublicKey? = nil) throws -> TransactionOutput {
+        return TransactionOutput(withValue: value, index: index, lockingScript: script, type: type, address: address, keyHash: keyHash, publicKey: publicKey)
     }
 
 }

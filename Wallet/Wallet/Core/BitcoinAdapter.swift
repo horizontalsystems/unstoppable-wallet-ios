@@ -77,8 +77,8 @@ extension BitcoinAdapter: IAdapter {
         try walletKit.start()
     }
 
-    func send(to address: String, amount: Int) {
-
+    func send(to address: String, value: Int) throws {
+        try walletKit.send(to: address, value: value)
     }
 
     func validate(address: String) -> Bool {

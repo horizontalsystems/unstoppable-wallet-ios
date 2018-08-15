@@ -31,10 +31,13 @@ public class WalletKit {
     let transactionLinker: TransactionLinker
     let transactionHandler: TransactionHandler
     let transactionSender: TransactionSender
+    let transactionCreator: TransactionCreator
+    let transactionBuilder: TransactionBuilder
 
     let inputSigner: InputSigner
     let scriptBuilder: ScriptBuilder
     let unspentOutputSelector: UnspentOutputSelector
+    let unspentOutputProvider: UnspentOutputProvider
 
     public init(withWords words: [String], realmConfiguration: Realm.Configuration) {
         configuration = Configuration()
@@ -60,16 +63,20 @@ public class WalletKit {
         merkleBlockValidator = MerkleBlockValidator()
         merkleBlockHandler = MerkleBlockHandler(realmFactory: realmFactory, validator: merkleBlockValidator, saver: blockSaver)
 
+        inputSigner = InputSigner(hdWallet: hdWallet)
+        scriptBuilder = ScriptBuilder()
+
+        unspentOutputSelector = UnspentOutputSelector()
+        unspentOutputProvider = UnspentOutputProvider(realmFactory: realmFactory)
+
         addressConverter = AddressConverter(network: configuration.network)
         transactionExtractor = TransactionExtractor(addressConverter: addressConverter)
         transactionSaver = TransactionSaver(realmFactory: realmFactory)
         transactionLinker = TransactionLinker(realmFactory: realmFactory)
         transactionHandler = TransactionHandler(realmFactory: realmFactory, extractor: transactionExtractor, saver: transactionSaver, linker: transactionLinker)
         transactionSender = TransactionSender(realmFactory: realmFactory, peerGroup: peerGroup)
-
-        inputSigner = InputSigner(hdWallet: hdWallet)
-        scriptBuilder = ScriptBuilder()
-        unspentOutputSelector = UnspentOutputSelector()
+        transactionBuilder = TransactionBuilder(unspentOutputSelector: unspentOutputSelector, unspentOutputProvider: unspentOutputProvider, addressConverter: addressConverter, inputSigner: inputSigner, scriptBuilder: scriptBuilder, factory: factory)
+        transactionCreator = TransactionCreator(realmFactory: realmFactory, transactionBuilder: transactionBuilder)
 
         peerGroup.delegate = syncer
 
@@ -110,6 +117,10 @@ public class WalletKit {
 
     public var transactionsRealmResults: Results<Transaction> {
         return realmFactory.realm.objects(Transaction.self).filter("isMine = %@", true)
+    }
+
+    public func send(to address: String, value: Int) throws {
+        try transactionCreator.create(to: address, value: value)
     }
 
     private func preFillInitialTestData() {

@@ -148,9 +148,10 @@ class TestData {
         return transaction
     }
 
-    static func pubKey(pubKeyHash: Data = Data(hex: "1ec865abcb88cec71c484d4dadec3d7dc0271a7b")!) -> PublicKey {
+    static func pubKey(pubKeyHash: Data = Data(hex: "1ec865abcb88cec71c484d4dadec3d7dc0271a7b")!, address: String = "Rsfz3aRmCwTe2J8pSWSYRNYmweJ") -> PublicKey {
         let pubKey = PublicKey()
         pubKey.keyHash = pubKeyHash
+        pubKey.address = address
 
         return pubKey
     }
