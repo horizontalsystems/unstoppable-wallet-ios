@@ -23,7 +23,7 @@ class TransactionSender {
                 }).disposed(by: disposeBag)
 
         notificationToken = realmFactory.realm.objects(Transaction.self).filter("status = %@", TransactionStatus.new.rawValue).observe { changes in
-            queue.async { [weak self] in
+            DispatchQueue.main.async { [weak self] in
                 if case let .update(transactions, _, insertions, _) = changes, !insertions.isEmpty {
                     self?.send(transactions: transactions)
                 }
@@ -40,7 +40,6 @@ class TransactionSender {
 
     private func send(transactions: Results<Transaction>) {
         transactions.forEach {
-            print("transactionSender send")
             peerGroup.relay(transaction: $0)
         }
     }

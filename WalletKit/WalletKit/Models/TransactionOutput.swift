@@ -35,8 +35,8 @@ public class TransactionOutput: Object {
     @objc dynamic var address: String?
 
     let transactions = LinkingObjects(fromType: Transaction.self, property: "outputs")
-    var transaction: Transaction {
-        return self.transactions.first!
+    var transaction: Transaction? {
+        return self.transactions.first
     }
 
     let inputs = LinkingObjects(fromType: TransactionInput.self, property: "previousOutput")

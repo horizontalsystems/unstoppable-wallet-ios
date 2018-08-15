@@ -36,7 +36,9 @@ class TransactionLinker {
                         .filter("previousOutputTxReversedHex = %@ AND previousOutputIndex = %@", transaction.reversedHashHex, output.index).last {
                     input.previousOutput = output
                     if pubKey != nil {
-                        input.transaction.isMine = true
+                        if let nextTransaction = input.transaction {
+                            nextTransaction.isMine = true
+                        }
                     }
                 }
             }

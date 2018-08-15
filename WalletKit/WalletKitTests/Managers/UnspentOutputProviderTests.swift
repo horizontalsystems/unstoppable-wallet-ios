@@ -108,7 +108,7 @@ class UnspentOutputProviderTests: XCTestCase {
     }
 
     private func inputsWithPreviousOutputs(range: Range<Int>) -> [TransactionInput] {
-        let transaction = outputs[0].transaction
+        let transaction = outputs[0].transaction!
         var inputs = [TransactionInput]()
         for i in range.lowerBound..<range.upperBound {
             let input = TestData.transactionInput(previousTransaction: transaction, previousOutput: outputs[i], script: Data(), sequence: 2)

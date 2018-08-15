@@ -10,8 +10,8 @@ public class TransactionInput: Object {
     @objc dynamic var publicKey: Data?
 
     let transactions = LinkingObjects(fromType: Transaction.self, property: "inputs")
-    var transaction: Transaction {
-        return self.transactions.first!
+    var transaction: Transaction? {
+        return self.transactions.first
     }
 
     convenience init(withPreviousOutputTxReversedHex previousOutputTxReversedHex: String, previousOutputIndex: Int, script: Data, sequence: Int) {
@@ -25,13 +25,8 @@ public class TransactionInput: Object {
 
     func serialized() -> Data {
         var data = Data()
-        if let output = previousOutput {
-            data += output.transaction.reversedHashHex.reversedData!
-            data += UInt32(output.index)
-        } else {
-            data += previousOutputTxReversedHex.reversedData!
-            data += UInt32(previousOutputIndex)
-        }
+        data += previousOutputTxReversedHex.reversedData ?? Data()
+        data += UInt32(previousOutputIndex)
 
         let scriptLength = VarInt(signatureScript.count)
         data += scriptLength.serialized()
@@ -48,7 +43,7 @@ public class TransactionInput: Object {
             throw SerializationError.noPreviousOutput
         }
 
-        guard let previousTransactionData = output.transaction.reversedHashHex.reversedData else {
+        guard let previousTransactionData = output.transaction?.reversedHashHex.reversedData else {
             throw SerializationError.noPreviousTransaction
         }
         data += previousTransactionData

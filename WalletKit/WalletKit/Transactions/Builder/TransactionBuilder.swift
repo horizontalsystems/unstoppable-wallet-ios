@@ -1,6 +1,10 @@
 import Foundation
 
 class TransactionBuilder {
+    enum BuildError: Error {
+        case noPreviousTransaction
+    }
+
     static let outputSize = 32
 
     let unspentOutputSelector: UnspentOutputSelector
@@ -28,7 +32,7 @@ class TransactionBuilder {
 
         // Add inputs without unlocking scripts
         for output in unspentOutputs {
-            addInputToTransaction(transaction: transaction, fromUnspentOutput: output)
+            try addInputToTransaction(transaction: transaction, fromUnspentOutput: output)
         }
 
         // Add :to output
@@ -51,6 +55,7 @@ class TransactionBuilder {
         }
 
         transaction.status = .new
+        transaction.reversedHashHex = Crypto.sha256sha256(transaction.serialized()).reversedHex
         return transaction
     }
 
@@ -66,8 +71,12 @@ class TransactionBuilder {
         return size * feeRate
     }
 
-    private func addInputToTransaction(transaction: Transaction, fromUnspentOutput output: TransactionOutput) {
-        let input = factory.transactionInput(withPreviousOutputTxReversedHex: output.transaction.reversedHashHex, previousOutputIndex: output.index, script: Data(), sequence: 0)
+    private func addInputToTransaction(transaction: Transaction, fromUnspentOutput output: TransactionOutput) throws {
+        guard let previousTransaction = output.transaction else {
+            throw BuildError.noPreviousTransaction
+        }
+
+        let input = factory.transactionInput(withPreviousOutputTxReversedHex: previousTransaction.reversedHashHex, previousOutputIndex: output.index, script: Data(), sequence: 0)
         input.previousOutput = output
         transaction.inputs.append(input)
     }
