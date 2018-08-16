@@ -4,7 +4,6 @@ import SnapKit
 class SettingsInfoFooter: UITableViewHeaderFooterView {
 
     override init(reuseIdentifier: String?) {
-        print("init")
         super.init(reuseIdentifier: reuseIdentifier)
         backgroundView = UIView()
         backgroundView?.backgroundColor = .clear
