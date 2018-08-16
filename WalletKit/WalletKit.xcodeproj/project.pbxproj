@@ -70,6 +70,7 @@
 		11B35DD55E37F22AE1797501 /* Transaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35C67DB63EF992C380513 /* Transaction.swift */; };
 		11B35EE64EEEE37EB90C5D14 /* PeerGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B359E44D75610DF2841327 /* PeerGroup.swift */; };
 		11B35F02260D5A21CF0EA3B8 /* Factory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3529A1731702724B0342D /* Factory.swift */; };
+		11B35F1644F5CACF63C9E384 /* BackgroundWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35656A28ECF614DB74090 /* BackgroundWorker.swift */; };
 		11B35F79192D8E7F80BEEC1C /* BlockTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3527FFC458AEFC035AC35 /* BlockTests.swift */; };
 		11B35F8A1F85697DC88C7777 /* WalletKitPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 11B35EDCF37AAE69A74FB0F5 /* WalletKitPrivate.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		11B35F93D7F1778A0A0BDC81 /* HeaderSyncerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35D5481EB03B08C1E8C30 /* HeaderSyncerTests.swift */; };
@@ -165,6 +166,7 @@
 		11B355C0072CA13ADBAC1351 /* VarInt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VarInt.swift; sourceTree = "<group>"; };
 		11B355ED5A1298D065D6A633 /* HeaderHandlerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeaderHandlerTests.swift; sourceTree = "<group>"; };
 		11B356093307CEB26201988D /* DifficultyCalculator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DifficultyCalculator.swift; sourceTree = "<group>"; };
+		11B35656A28ECF614DB74090 /* BackgroundWorker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackgroundWorker.swift; sourceTree = "<group>"; };
 		11B35668E26F88DC1FFAE6F1 /* PFromSHExtractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PFromSHExtractor.swift; sourceTree = "<group>"; };
 		11B35677D69EC754EC7C82DF /* TestNetBlockValidator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestNetBlockValidator.swift; sourceTree = "<group>"; };
 		11B3569A9FFF012BEE407446 /* P2SHExtractorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = P2SHExtractorTests.swift; sourceTree = "<group>"; };
@@ -329,6 +331,7 @@
 		11B35156C3ADDCCD4A60CCD4 /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				11B35656A28ECF614DB74090 /* BackgroundWorker.swift */,
 				11B35388E6D74307FFEA548B /* Configuration.swift */,
 				11B3529A1731702724B0342D /* Factory.swift */,
 				11B354D856797A77A814998A /* Logger.swift */,
@@ -999,6 +1002,7 @@
 				11B357FBDA015B9B9DBDA229 /* Logger.swift in Sources */,
 				2FA5D60486BE522A9A7B80F8 /* AddressConverter.swift in Sources */,
 				58AAA36E48DB45B72112973B /* TransactionCreator.swift in Sources */,
+				11B35F1644F5CACF63C9E384 /* BackgroundWorker.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

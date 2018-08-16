@@ -2,7 +2,7 @@ import Foundation
 import RealmSwift
 import RxSwift
 
-class BlockSyncer {
+class BlockSyncer: BackgroundWorker {
     let disposeBag = DisposeBag()
 
     let realmFactory: RealmFactory
@@ -10,9 +10,11 @@ class BlockSyncer {
 
     private var notificationToken: NotificationToken?
 
-    init(realmFactory: RealmFactory, peerGroup: PeerGroup, scheduler: ImmediateSchedulerType = ConcurrentDispatchQueueScheduler(qos: .background), queue: DispatchQueue = .global(qos: .background)) {
+    init(realmFactory: RealmFactory, peerGroup: PeerGroup, sync: Bool = false, scheduler: ImmediateSchedulerType = ConcurrentDispatchQueueScheduler(qos: .background)) {
         self.realmFactory = realmFactory
         self.peerGroup = peerGroup
+
+        super.init(sync: sync)
 
         peerGroup.statusSubject
                 .observeOn(scheduler)
@@ -22,13 +24,14 @@ class BlockSyncer {
                     }
                 }).disposed(by: disposeBag)
 
-        notificationToken = realmFactory.realm.objects(Block.self).filter("synced = %@", false).observe { changes in
-            queue.async { [weak self] in
+        start { [weak self] in
+            self?.notificationToken = self?.realmFactory.realm.objects(Block.self).filter("synced = %@", false).observe { changes in
                 if case let .update(_, _, insertions, _) = changes, !insertions.isEmpty {
                     self?.sync()
                 }
             }
         }
+
     }
 
     private func sync() {
