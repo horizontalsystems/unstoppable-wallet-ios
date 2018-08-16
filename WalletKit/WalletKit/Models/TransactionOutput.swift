@@ -32,22 +32,25 @@ public class TransactionOutput: Object {
     @objc public dynamic var publicKey: PublicKey?
     @objc dynamic var scriptType: ScriptType = .unknown
     @objc dynamic var keyHash: Data?
+    @objc dynamic var address: String?
 
     let transactions = LinkingObjects(fromType: Transaction.self, property: "outputs")
-    var transaction: Transaction {
-        return self.transactions.first!
+    var transaction: Transaction? {
+        return self.transactions.first
     }
 
     let inputs = LinkingObjects(fromType: TransactionInput.self, property: "previousOutput")
 
-    convenience init(withValue value: Int, index: Int, lockingScript script: Data, type: ScriptType, keyHash: Data) {
+    convenience init(withValue value: Int, index: Int, lockingScript script: Data, type: ScriptType, address: String? = nil, keyHash: Data?, publicKey: PublicKey? = nil) {
         self.init()
 
         self.value = value
         self.lockingScript = script
         self.index = index
         self.scriptType = type
+        self.address = address
         self.keyHash = keyHash
+        self.publicKey = publicKey
     }
 
     func serialized() -> Data {

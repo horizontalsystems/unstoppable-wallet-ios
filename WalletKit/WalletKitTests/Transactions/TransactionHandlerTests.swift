@@ -24,7 +24,7 @@ class TransactionHandlerTests: XCTestCase {
             when(mock.realm.get).thenReturn(realm)
         }
 
-        mockExtractor = MockTransactionExtractor()
+        mockExtractor = MockTransactionExtractor(addressConverter: AddressConverter(network: TestNet()))
         mockSaver = MockTransactionSaver(realmFactory: mockRealmFactory)
         mockLinker = MockTransactionLinker(realmFactory: mockRealmFactory)
         transactionHandler = TransactionHandler(realmFactory: mockRealmFactory, extractor: mockExtractor, saver: mockSaver, linker: mockLinker)

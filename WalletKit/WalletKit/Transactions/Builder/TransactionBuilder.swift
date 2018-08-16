@@ -1,35 +1,42 @@
 import Foundation
 
 class TransactionBuilder {
+    enum BuildError: Error {
+        case noPreviousTransaction
+    }
+
     static let outputSize = 32
 
     let unspentOutputSelector: UnspentOutputSelector
     let unspentOutputProvider: UnspentOutputProvider
+    let addressConverter: AddressConverter
     let inputSigner: InputSigner
     let scriptBuilder: ScriptBuilder
     let factory: Factory
 
-    init(unspentOutputSelector: UnspentOutputSelector, unspentOutputProvider: UnspentOutputProvider, inputSigner: InputSigner, scriptBuilder: ScriptBuilder, factory: Factory) {
+    init(unspentOutputSelector: UnspentOutputSelector, unspentOutputProvider: UnspentOutputProvider, addressConverter: AddressConverter, inputSigner: InputSigner, scriptBuilder: ScriptBuilder, factory: Factory) {
         self.unspentOutputSelector = unspentOutputSelector
         self.unspentOutputProvider = unspentOutputProvider
+        self.addressConverter = addressConverter
         self.inputSigner = inputSigner
         self.scriptBuilder = scriptBuilder
         self.factory = factory
     }
 
-    func buildTransaction(value: Int, feeRate: Int, type: ScriptType = .p2pkh, changePubKey: PublicKey, toPubKey: PublicKey) throws -> Transaction {
+    func buildTransaction(value: Int, feeRate: Int, type: ScriptType = .p2pkh, changePubKey: PublicKey, toAddress: String) throws -> Transaction {
         let unspentOutputs = try unspentOutputSelector.select(value: value, outputs: unspentOutputProvider.allUnspentOutputs())
 
+        let toKeyHash = try addressConverter.convert(address: toAddress)
         // Build transaction
         let transaction = factory.transaction(version: 1, inputs: [], outputs: [], lockTime: 0)
 
         // Add inputs without unlocking scripts
         for output in unspentOutputs {
-            addInputToTransaction(transaction: transaction, fromUnspentOutput: output)
+            try addInputToTransaction(transaction: transaction, fromUnspentOutput: output)
         }
 
         // Add :to output
-        try addOutputToTransaction(transaction: transaction, forPubKey: toPubKey, withValue: 0, scriptType: type)
+        try addOutputToTransaction(transaction: transaction, address: toAddress, keyHash: toKeyHash, value: 0, scriptType: type)
 
         // Calculate fee and add :change output if needed
         let fee = calculateFee(transaction: transaction, feeRate: feeRate)
@@ -38,7 +45,7 @@ class TransactionBuilder {
 
         transaction.outputs[0].value = toValue
         if totalInputValue > value + feePerOutput(feeRate: feeRate) {
-            try addOutputToTransaction(transaction: transaction, forPubKey: changePubKey, withValue: totalInputValue - value, scriptType: type)
+            try addOutputToTransaction(transaction: transaction, address: changePubKey.address, pubKey: changePubKey, keyHash: changePubKey.keyHash, value: totalInputValue - value, scriptType: type)
         }
 
         // Sign inputs
@@ -47,6 +54,8 @@ class TransactionBuilder {
             transaction.inputs[i].signatureScript = scriptBuilder.unlockingScript(params: sigScriptData)
         }
 
+        transaction.status = .new
+        transaction.reversedHashHex = Crypto.sha256sha256(transaction.serialized()).reversedHex
         return transaction
     }
 
@@ -62,15 +71,19 @@ class TransactionBuilder {
         return size * feeRate
     }
 
-    private func addInputToTransaction(transaction: Transaction, fromUnspentOutput output: TransactionOutput) {
-        let input = factory.transactionInput(withPreviousOutputTxReversedHex: output.transaction.reversedHashHex, previousOutputIndex: output.index, script: Data(), sequence: 0)
+    private func addInputToTransaction(transaction: Transaction, fromUnspentOutput output: TransactionOutput) throws {
+        guard let previousTransaction = output.transaction else {
+            throw BuildError.noPreviousTransaction
+        }
+
+        let input = factory.transactionInput(withPreviousOutputTxReversedHex: previousTransaction.reversedHashHex, previousOutputIndex: output.index, script: Data(), sequence: 0)
         input.previousOutput = output
         transaction.inputs.append(input)
     }
 
-    private func addOutputToTransaction(transaction: Transaction, forPubKey pubKey: PublicKey, withValue value: Int, scriptType type: ScriptType) throws {
-        let script = try scriptBuilder.lockingScript(type: type, params: [pubKey.keyHash])
-        let output = try factory.transactionOutput(withValue: value, index: transaction.outputs.count, lockingScript: script, type: type, keyHash: pubKey.keyHash)
+    private func addOutputToTransaction(transaction: Transaction, address: String, pubKey: PublicKey? = nil, keyHash: Data, value: Int, scriptType: ScriptType) throws {
+        let script = try scriptBuilder.lockingScript(type: scriptType, params: [keyHash])
+        let output = try factory.transactionOutput(withValue: value, index: transaction.outputs.count, lockingScript: script, type: scriptType, address: address, keyHash: keyHash, publicKey: pubKey)
         transaction.outputs.append(output)
     }
 

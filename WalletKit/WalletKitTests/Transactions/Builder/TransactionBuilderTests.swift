@@ -9,6 +9,7 @@ class TransactionBuilderTests: XCTestCase{
     private var mockRealmFactory: MockRealmFactory!
     private var mockUnspentOutputSelector: MockUnspentOutputSelector!
     private var mockUnspentOutputProvider: MockUnspentOutputProvider!
+    private var mockAddressConverter: MockAddressConverter!
     private var mockInputSigner: MockInputSigner!
     private var mockScriptBuilder:  MockScriptBuilder!
     private var mockFactory: MockFactory!
@@ -25,7 +26,7 @@ class TransactionBuilderTests: XCTestCase{
     private var feeRate: Int!
     private var fee: Int!
     private var changePubKey: PublicKey!
-    private var toPubKey: PublicKey!
+    private var toAddress: String!
 
     override func setUp() {
         super.setUp()
@@ -41,14 +42,15 @@ class TransactionBuilderTests: XCTestCase{
 
         mockUnspentOutputSelector = MockUnspentOutputSelector()
         mockUnspentOutputProvider = MockUnspentOutputProvider(realmFactory: mockRealmFactory)
+        mockAddressConverter = MockAddressConverter(network: TestNet())
         mockInputSigner = MockInputSigner(hdWallet: HDWalletStub(seed: Data(), network: TestNet()))
         mockScriptBuilder = MockScriptBuilder()
         mockFactory = MockFactory()
 
-        transactionBuilder = TransactionBuilder(unspentOutputSelector: mockUnspentOutputSelector, unspentOutputProvider: mockUnspentOutputProvider, inputSigner: mockInputSigner, scriptBuilder: mockScriptBuilder, factory: mockFactory)
+        transactionBuilder = TransactionBuilder(unspentOutputSelector: mockUnspentOutputSelector, unspentOutputProvider: mockUnspentOutputProvider, addressConverter: mockAddressConverter, inputSigner: mockInputSigner, scriptBuilder: mockScriptBuilder, factory: mockFactory)
 
         changePubKey = TestData.pubKey()
-        toPubKey = TestData.pubKey(pubKeyHash: Data(hex: "64d8fbe748c577bb5da29718dae0402b0b5dd523")!)
+        toAddress = "2QVLmkcuXLpmuRz9C8BiccAMujm4"
 
         let previousTransaction = TestData.p2pkhTransaction
         try! realm.write {
@@ -63,7 +65,7 @@ class TransactionBuilderTests: XCTestCase{
 
         transaction = Transaction(version: 1, inputs: [], outputs: [])
         input = TransactionInput(withPreviousOutputTxReversedHex: previousTransaction.reversedHashHex, previousOutputIndex: unspentOutputs[0].index, script: Data(), sequence: 0)
-        toOutput = TransactionOutput(withValue: value - fee, index: 0, lockingScript: Data(), type: .p2pkh, keyHash: toPubKey.keyHash)
+        toOutput = TransactionOutput(withValue: value - fee, index: 0, lockingScript: Data(), type: .p2pkh, address: toAddress, keyHash: nil)
         changeOutput = TransactionOutput(withValue: totalInputValue - value, index: 1, lockingScript: Data(), type: .p2pkh, keyHash: changePubKey.keyHash)
 
         stub(mockUnspentOutputSelector) { mock in
@@ -76,6 +78,10 @@ class TransactionBuilderTests: XCTestCase{
 
         stub(mockInputSigner) { mock in
             when(mock.sigScriptData(transaction: any(), index: any())).thenReturn([Data()])
+        }
+
+        stub(mockAddressConverter) { mock in
+            when(mock.convert(address: any())).thenReturn(Data())
         }
 
         stub(mockScriptBuilder) { mock in
@@ -92,8 +98,8 @@ class TransactionBuilderTests: XCTestCase{
         }
 
         stub(mockFactory) { mock in
-            when(mock.transactionOutput(withValue: any(), index: any(), lockingScript: any(), type: equal(to: ScriptType.p2pkh), keyHash: equal(to: toPubKey.keyHash))).thenReturn(toOutput)
-            when(mock.transactionOutput(withValue: any(), index: any(), lockingScript: any(), type: equal(to: ScriptType.p2pkh), keyHash: equal(to: changePubKey.keyHash))).thenReturn(changeOutput)
+            when(mock.transactionOutput(withValue: any(), index: any(), lockingScript: any(), type: equal(to: ScriptType.p2pkh), address: equal(to: toAddress), keyHash: any(), publicKey: any())).thenReturn(toOutput)
+            when(mock.transactionOutput(withValue: any(), index: any(), lockingScript: any(), type: equal(to: ScriptType.p2pkh), address: equal(to: changePubKey.address), keyHash: any(), publicKey: any())).thenReturn(changeOutput)
         }
     }
 
@@ -103,11 +109,12 @@ class TransactionBuilderTests: XCTestCase{
         unspentOutputs = nil
         mockUnspentOutputSelector = nil
         mockUnspentOutputProvider = nil
+        mockAddressConverter = nil
         mockInputSigner = nil
         mockFactory = nil
         transactionBuilder = nil
         changePubKey = nil
-        toPubKey = nil
+        toAddress = nil
         value = nil
         feeRate = nil
         fee = nil
@@ -118,15 +125,17 @@ class TransactionBuilderTests: XCTestCase{
     func testBuildTransaction() {
         var resultTx = Transaction()
         do {
-            resultTx = try transactionBuilder.buildTransaction(value: value, feeRate: feeRate, changePubKey: changePubKey, toPubKey: toPubKey)
+            resultTx = try transactionBuilder.buildTransaction(value: value, feeRate: feeRate, changePubKey: changePubKey, toAddress: toAddress)
         } catch let error {
             XCTFail(error.localizedDescription)
         }
 
+        XCTAssertNotEqual(resultTx.reversedHashHex, "")
+        XCTAssertEqual(resultTx.status, .new)
         XCTAssertEqual(resultTx.inputs.count, 1)
         XCTAssertEqual(resultTx.inputs[0].previousOutput!, unspentOutputs[0])
         XCTAssertEqual(resultTx.outputs.count, 2)
-        XCTAssertEqual(resultTx.outputs[0].keyHash, toPubKey.keyHash)
+        XCTAssertEqual(resultTx.outputs[0].address, toAddress)
         XCTAssertEqual(resultTx.outputs[0].value, value - fee)  // value - fee
         XCTAssertEqual(resultTx.outputs[1].keyHash, changePubKey.keyHash)
         XCTAssertEqual(resultTx.outputs[1].value, unspentOutputs[0].value - value)
@@ -137,7 +146,7 @@ class TransactionBuilderTests: XCTestCase{
 
         var resultTx = Transaction()
         do {
-            resultTx = try transactionBuilder.buildTransaction(value: value, feeRate: feeRate, changePubKey: changePubKey, toPubKey: toPubKey)
+            resultTx = try transactionBuilder.buildTransaction(value: value, feeRate: feeRate, changePubKey: changePubKey, toAddress: toAddress)
         } catch let error {
             XCTFail(error.localizedDescription)
         }
@@ -145,7 +154,7 @@ class TransactionBuilderTests: XCTestCase{
         XCTAssertEqual(resultTx.inputs.count, 1)
         XCTAssertEqual(resultTx.inputs[0].previousOutput!, unspentOutputs[0])
         XCTAssertEqual(resultTx.outputs.count, 1)
-        XCTAssertEqual(resultTx.outputs[0].keyHash, toPubKey.keyHash)
+        XCTAssertEqual(resultTx.outputs[0].address, toAddress)
         XCTAssertEqual(resultTx.outputs[0].value, value - fee)
     }
 
@@ -154,7 +163,7 @@ class TransactionBuilderTests: XCTestCase{
 
         var resultTx = Transaction()
         do {
-            resultTx = try transactionBuilder.buildTransaction(value: value, feeRate: feeRate, changePubKey: changePubKey, toPubKey: toPubKey)
+            resultTx = try transactionBuilder.buildTransaction(value: value, feeRate: feeRate, changePubKey: changePubKey, toAddress: toAddress)
         } catch let error {
             XCTFail(error.localizedDescription)
         }
@@ -162,7 +171,7 @@ class TransactionBuilderTests: XCTestCase{
         XCTAssertEqual(resultTx.inputs.count, 1)
         XCTAssertEqual(resultTx.inputs[0].previousOutput!, unspentOutputs[0])
         XCTAssertEqual(resultTx.outputs.count, 1)
-        XCTAssertEqual(resultTx.outputs[0].keyHash, toPubKey.keyHash)
+        XCTAssertEqual(resultTx.outputs[0].address, toAddress)
         XCTAssertEqual(resultTx.outputs[0].value, value - fee)
     }
 
@@ -180,7 +189,7 @@ class TransactionBuilderTests: XCTestCase{
 
         var resultTx = Transaction()
         do {
-            resultTx = try transactionBuilder.buildTransaction(value: value, feeRate: feeRate, changePubKey: changePubKey, toPubKey: toPubKey)
+            resultTx = try transactionBuilder.buildTransaction(value: value, feeRate: feeRate, changePubKey: changePubKey, toAddress: toAddress)
         } catch let error {
             XCTFail(error.localizedDescription)
         }

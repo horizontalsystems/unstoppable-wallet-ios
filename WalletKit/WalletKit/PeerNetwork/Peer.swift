@@ -18,12 +18,10 @@ class Peer : NSObject, StreamDelegate {
     private var inputStream: InputStream?
     private var outputStream: OutputStream?
 
-    private var packets = Data()
+    private var packets: Data = Data()
 
-    private var sentVersion = false
-    private var sentVerack = false
-//    var sentFilterLoad = false
-//    var sentMemPool = false
+    private var sentVersion: Bool = false
+    private var sentVerack: Bool = false
 
     convenience init(network: NetworkProtocol = TestNet()) {
         self.init(host: network.dnsSeeds[2], port: Int(network.port), network: network)
@@ -195,21 +193,6 @@ class Peer : NSObject, StreamDelegate {
         }
     }
 
-//    public func startSync(filters: [Data] = [], latestBlockHash: Data) {
-////        self.latestBlockHash = latestBlockHash
-////        context.isSyncing = true
-//
-//        if !self.context.sentFilterLoad {
-//            sendFilterLoadMessage(filters: filters)
-//            self.context.sentFilterLoad = true
-////            if !self.context.sentMemPool {
-////                self.sendMemoryPoolMessage()
-////                self.context.sentMemPool = true
-////            }
-//        }
-////        self.sendGetBlocksMessage()
-//    }
-
     func load(filters: [Data]) {
         sendFilterLoadMessage(filters: filters)
     }
@@ -270,17 +253,6 @@ class Peer : NSObject, StreamDelegate {
         send(messageWithCommand: "mempool", payload: Data())
     }
 
-//    private func sendGetBlocksMessage() {
-//        let blockLocatorHash = latestBlockHash
-//        let getBlocks = GetBlocksMessage(version: UInt32(protocolVersion), hashCount: 1, blockLocatorHashes: blockLocatorHash, hashStop: Data(count: 32))
-//
-//        let payload = getBlocks.serialized()
-//        let checksum = Data(Crypto.sha256sha256(payload).prefix(4))
-//
-//        let message = Message(magic: network.magic, command: "getblocks", length: UInt32(payload.count), checksum: checksum, payload: payload)
-//        sendMessage(message)
-//    }
-
     func sendGetHeadersMessage(headerHashes: [Data]) {
         let getHeadersMessage = GetBlocksMessage(version: UInt32(protocolVersion), hashCount: VarInt(headerHashes.count), blockLocatorHashes: headerHashes, hashStop: Data(count: 32))
 
@@ -305,8 +277,6 @@ class Peer : NSObject, StreamDelegate {
 
     private func handle(versionMessage: VersionMessage) {
         log("--> VERSION: \(versionMessage.version) --- \(versionMessage.userAgent?.value ?? "") --- \(ServiceFlags(rawValue: versionMessage.services))")
-
-        delegate?.peer(self, didReceiveVersionMessage: versionMessage)
 
         if !sentVerack {
             sendVerackMessage()
@@ -341,16 +311,6 @@ class Peer : NSObject, StreamDelegate {
 
     private func handle(blockMessage: BlockMessage) {
         log("--> BLOCK: \(Crypto.sha256sha256(blockMessage.blockHeaderItem.serialized()).reversedHex)")
-
-//        let block = BlockMessage.deserialize(payload)
-//        let blockHash = Data(Crypto.sha256sha256(payload.prefix(80)).reversed())
-//        delegate?.peer(self, didReceiveBlockMessage: block, hash: blockHash)
-//
-//        context.inventoryItems[blockHash] = nil
-//        if context.inventoryItems.isEmpty {
-//            latestBlockHash = blockHash
-//            sendGetBlocksMessage()
-//        }
     }
 
     private func handle(merkleBlockMessage: MerkleBlockMessage) {
@@ -385,27 +345,11 @@ class Peer : NSObject, StreamDelegate {
 protocol PeerDelegate : class {
     func peerDidConnect(_ peer: Peer)
     func peerDidDisconnect(_ peer: Peer)
-    func peer(_ peer: Peer, didReceiveVersionMessage message: VersionMessage)
     func peer(_ peer: Peer, didReceiveAddressMessage message: AddressMessage)
-    func peer(_ peer: Peer, didReceiveGetDataMessage message: GetDataMessage)
-    func peer(_ peer: Peer, didReceiveInventoryMessage message: InventoryMessage)
     func peer(_ peer: Peer, didReceiveHeadersMessage message: HeadersMessage)
-    func peer(_ peer: Peer, didReceiveBlockMessage message: BlockMessage)
     func peer(_ peer: Peer, didReceiveMerkleBlockMessage message: MerkleBlockMessage)
     func peer(_ peer: Peer, didReceiveTransaction transaction: Transaction)
+    func peer(_ peer: Peer, didReceiveInventoryMessage message: InventoryMessage)
+    func peer(_ peer: Peer, didReceiveGetDataMessage message: GetDataMessage)
     func peer(_ peer: Peer, didReceiveRejectMessage message: RejectMessage)
-}
-
-extension PeerDelegate {
-    func peerDidConnect(_ peer: Peer) {}
-    func peerDidDisconnect(_ peer: Peer) {}
-    func peer(_ peer: Peer, didReceiveVersionMessage message: VersionMessage) {}
-    func peer(_ peer: Peer, didReceiveAddressMessage message: AddressMessage) {}
-    func peer(_ peer: Peer, didReceiveGetDataMessage message: GetDataMessage) {}
-    func peer(_ peer: Peer, didReceiveInventoryMessage message: InventoryMessage) {}
-    func peer(_ peer: Peer, didReceiveHeadersMessage message: HeadersMessage) {}
-    func peer(_ peer: Peer, didReceiveBlockMessage message: BlockMessage) {}
-    func peer(_ peer: Peer, didReceiveMerkleBlockMessage message: MerkleBlockMessage) {}
-    func peer(_ peer: Peer, didReceiveTransaction transaction: Transaction) {}
-    func peer(_ peer: Peer, didReceiveRejectMessage message: RejectMessage) {}
 }

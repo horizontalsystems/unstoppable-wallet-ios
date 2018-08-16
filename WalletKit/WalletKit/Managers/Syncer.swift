@@ -15,6 +15,7 @@ class Syncer {
     weak var merkleBlockHandler: MerkleBlockHandler?
     weak var transactionHandler: TransactionHandler?
 
+    private let logger: Logger
     private let realmFactory: RealmFactory
 
     let syncSubject = BehaviorSubject<SyncStatus>(value: .synced)
@@ -25,7 +26,8 @@ class Syncer {
         }
     }
 
-    init(realmFactory: RealmFactory) {
+    init(logger: Logger, realmFactory: RealmFactory) {
+        self.logger = logger
         self.realmFactory = realmFactory
     }
 
@@ -41,79 +43,34 @@ extension Syncer: PeerGroupDelegate {
         do {
             try headerSyncer?.sync()
         } catch {
-            print("Header Syncer Error: \(error)")
+            logger.log(tag: "Header Syncer Error", message: "\(error)")
         }
     }
 
     func peerGroupDidDisconnect() {
     }
 
-    func peerGroupDidReceive(getDataMessage message: GetDataMessage, peer: Peer) {
-        for item in message.inventoryItems {
-            switch item.objectType {
-            case .error:
-                break
-            case .transaction:
-                if let transaction = realmFactory.realm.objects(Transaction.self).filter("reversedHashHex = %@", item.hash.reversedHex).first {
-                    peer.sendTransaction(transaction: transaction)
-                }
-                break
-            case .blockMessage:
-                break
-            case .filteredBlockMessage:
-                break
-            case .compactBlockMessage:
-                break
-            case .unknown:
-                break
-            }
-        }
-    }
-
-    func peerGroupDidReceive(inventoryMessage message: InventoryMessage, peer: Peer) {
-        var txInventoryItems = [InventoryItem]()
-//        var hasBlock = false
-
-        for item in message.inventoryItems {
-            if item.objectType == .transaction {
-                txInventoryItems.append(item)
-            } else if item.objectType == .blockMessage {
-//                hasBlock = true
-            }
-        }
-
-        if !txInventoryItems.isEmpty {
-            let getDataMessage = InventoryMessage(count: VarInt(txInventoryItems.count), inventoryItems: txInventoryItems)
-            peer.sendGetDataMessage(message: getDataMessage)
-        }
-
-//        if hasBlock {
-//            syncHeaders()
-//        }
-    }
-
-    func peerGroupDidReceive(headersMessage message: HeadersMessage, peer: Peer) {
+    func peerGroupDidReceive(headers: [BlockHeader]) {
         do {
-            try headerHandler?.handle(headers: message.blockHeaders)
+            try headerHandler?.handle(headers: headers)
         } catch {
-            print("Header Handler Error: \(error)")
+            logger.log(tag: "Header Handler Error", message: "\(error)")
         }
     }
 
-    func peerGroupDidReceive(merkleBlockMessage message: MerkleBlockMessage, peer: Peer) {
-        do {
-            try merkleBlockHandler?.handle(message: message)
-        } catch {
-            print("Merkle Block Handler Error: \(error)")
-        }
+    func peerGroupDidReceive(blockHeaderHash: Data, withTransactions transactions: [Transaction]) {
+        print("BLOCK: \(blockHeaderHash.reversedHex) --- \(transactions.count)")
     }
 
-    func peerGroupDidReceive(transaction: Transaction, peer: Peer) {
-        do {
-            try transactionHandler?.handle(transaction: transaction)
-        } catch {
-            print("Transaction Handler Error: \(error)")
-        }
+    func peerGroupDidReceive(transactions: [Transaction]) {
+    }
+
+    func shouldRequest(inventoryItem: InventoryItem) -> Bool {
+        fatalError("shouldRequest(inventoryItem:) has not been implemented")
+    }
+
+    func transaction(forHash hash: Data) -> Transaction? {
+        fatalError("transaction(hash:) has not been implemented")
     }
 
 }

@@ -42,7 +42,7 @@ extension SendPresenter: ISendInteractorDelegate {
     }
 
     private func getError(_ error: Error) -> String {
-        return (error as? SendError)?.localizedDescription ?? "some error"
+        return (error as? SendError)?.localizedDescription ?? error.localizedDescription
     }
 
 }

@@ -8,6 +8,8 @@ public class PublicKey: Object {
         case wrongNetwork
     }
 
+    let outputs = LinkingObjects(fromType: TransactionOutput.self, property: "publicKey")
+
     @objc dynamic var index = 0
     @objc dynamic var external = true
     @objc dynamic var raw: Data?
