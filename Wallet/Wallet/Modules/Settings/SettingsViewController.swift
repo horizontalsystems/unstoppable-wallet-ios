@@ -1,15 +1,28 @@
 import UIKit
+import GrouviExtensions
+import SectionsTableViewKit
+import SnapKit
 
-class SettingsViewController: UIViewController {
+class SettingsViewController: UIViewController, SectionsDataSource {
 
     let viewDelegate: SettingsViewDelegate
+
+    let tableView = SectionsTableView(style: .grouped)
 
     init(viewDelegate: SettingsViewDelegate) {
         self.viewDelegate = viewDelegate
 
-        super.init(nibName: String(describing: SettingsViewController.self), bundle: nil)
+        super.init(nibName: nil, bundle: nil)
 
         tabBarItem = UITabBarItem(title: "settings.tab_bar_item".localized, image: UIImage(named: "settings.tab_bar_item"), tag: 0)
+
+        tableView.registerCell(forClass: SettingsCell.self)
+        tableView.registerCell(forClass: SettingsRightImageCell.self)
+        tableView.registerCell(forClass: SettingsRightLabelCell.self)
+        tableView.registerCell(forClass: SettingsToggleCell.self)
+        tableView.registerHeaderFooter(forClass: SettingsInfoFooter.self)
+        tableView.sectionDataSource = self
+        tableView.separatorColor = SettingsTheme.cellBackground
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -18,14 +31,115 @@ class SettingsViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        tableView.backgroundColor = .clear
+        view.addSubview(tableView)
+        tableView.snp.makeConstraints { maker in
+            maker.edges.equalToSuperview()
+        }
 
         title = "settings.title".localized
 
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Logout", style: .plain, target: self, action: #selector(logout))
+        view.backgroundColor = SettingsTheme.controllerBackground
+
+        tableView.reload()
     }
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
+    }
+
+    func buildSections() -> [SectionProtocol] {
+        print("buildSections")
+        var sections = [SectionProtocol]()
+
+        var appSettingsRows = [RowProtocol]()
+        appSettingsRows.append(Row<SettingsRightImageCell>(id: "security_center", hash: "security_center", height: SettingsTheme.cellHeight, bind: { cell, _ in
+            cell.selectionStyle = .default
+            cell.bind(titleIcon: UIImage(named: "Security Icon"), title: "settings.cell.security_center".localized, rightImage: UIImage(named: "Attention Icon"), showDisclosure: true)
+        }, action: { _ in
+            print("tap security center")
+        }))
+        appSettingsRows.append(Row<SettingsRightLabelCell>(id: "base_currency", hash: "base_currency", height: SettingsTheme.cellHeight, bind: { cell, _ in
+            //stab USD
+            cell.selectionStyle = .default
+            cell.bind(titleIcon: UIImage(named: "Currency Icon"), title: "settings.cell.base_currency".localized, rightText: "USD", showDisclosure: true)
+        }, action: { _ in
+            print("tap base currency")
+        }))
+        appSettingsRows.append(Row<SettingsCell>(id: "import_wallet", hash: "import_wallet", height: SettingsTheme.cellHeight, bind: { cell, _ in
+            cell.selectionStyle = .default
+            cell.bind(titleIcon: UIImage(named: "Import Wallet Icon"), title: "settings.cell.import_wallet".localized, showDisclosure: true)
+        }, action: { _ in
+            print("tap import wallet")
+        }))
+        sections.append(Section(id: "app_settings", headerState: .marginColor(height: SettingsTheme.topHeaderHeight, color: .clear), rows: appSettingsRows))
+
+        var appearanceRows = [RowProtocol]()
+        appearanceRows.append(Row<SettingsCell>(id: "language", hash: "language", height: SettingsTheme.cellHeight, bind: { cell, _ in
+            cell.selectionStyle = .default
+            cell.bind(titleIcon: UIImage(named: "Language Icon"), title: "settings.cell.language".localized, showDisclosure: true)
+        }, action: { _ in
+            print("tap language")
+        }))
+        appearanceRows.append(Row<SettingsToggleCell>(id: "light_mode", hash: "light_mode", height: SettingsTheme.cellHeight, bind: { cell, _ in
+            cell.selectionStyle = .none
+            cell.bind(titleIcon: UIImage(named: "Light Mode Icon"), title: "settings.cell.light_mode".localized, isOn: false, showDisclosure: false, onToggle: {
+                print("on toggle light mode")
+            })
+        }))
+        sections.append(Section(id: "app_settings", headerState: .marginColor(height: SettingsTheme.headerHeight, color: .clear), rows: appearanceRows))
+
+        var otherRows = [RowProtocol]()
+        otherRows.append(Row<SettingsToggleCell>(id: "push_notifications", hash: "push_notifications", height: SettingsTheme.cellHeight, bind: { cell, _ in
+            cell.selectionStyle = .none
+            cell.bind(titleIcon: UIImage(named: "Notification Icon"), title: "settings.cell.push_notifications".localized, isOn: false, showDisclosure: false, onToggle: {
+                print("on toggle notifications")
+            })
+        }))
+        otherRows.append(Row<SettingsRightLabelCell>(id: "app_version", hash: "app_version", height: SettingsTheme.cellHeight, bind: { cell, _ in
+            //stab version
+            cell.selectionStyle = .none
+            cell.bind(titleIcon: UIImage(named: "About Icon"), title: "settings.cell.app_version".localized, rightText: "0.0.1", showDisclosure: false)
+        }))
+
+        let infoFooter: ViewState<SettingsInfoFooter> = .cellType(hash: "info_view", binder: { view in
+            print("bind")
+        }, dynamicHeight: { _ in SettingsTheme.infoFooterHeight })
+        sections.append(Section(id: "app_settings", headerState: .marginColor(height: SettingsTheme.headerHeight, color: .clear), footerState: infoFooter, rows: otherRows))
+
+        var debugRows = [RowProtocol]()
+        debugRows.append(Row<SettingsCell>(id: "debug_realm_info", hash: "debug_realm_info", height: SettingsTheme.cellHeight, bind: { cell, _ in
+            cell.selectionStyle = .default
+            cell.bind(titleIcon: UIImage(named: "Bug Icon"), title: "Show Realm Info", showDisclosure: false)
+        }, action: { [weak self] _ in
+            self?.showRealmInfo()
+            self?.tableView.deselectRow(at: self!.tableView.indexPathForSelectedRow!, animated: true)
+        }))
+        debugRows.append(Row<SettingsCell>(id: "debug_connect_to_peer", hash: "debug_connect_to_peer", height: SettingsTheme.cellHeight, bind: { cell, _ in
+            cell.selectionStyle = .default
+            cell.bind(titleIcon: UIImage(named: "Bug Icon"), title: "Connect to Peer", showDisclosure: false)
+        }, action: { [weak self] _ in
+            self?.connectToPeer()
+            self?.tableView.deselectRow(at: self!.tableView.indexPathForSelectedRow!, animated: true)
+        }))
+        debugRows.append(Row<SettingsCell>(id: "debug_backup", hash: "debug_backup", height: SettingsTheme.cellHeight, bind: { cell, _ in
+            cell.selectionStyle = .default
+            cell.bind(titleIcon: UIImage(named: "Bug Icon"), title: "Backup", showDisclosure: false)
+        }, action: { [weak self] _ in
+            self?.backup()
+            self?.tableView.deselectRow(at: self!.tableView.indexPathForSelectedRow!, animated: true)
+        }))
+        debugRows.append(Row<SettingsCell>(id: "debug_refresh", hash: "debug_refresh", height: SettingsTheme.cellHeight, bind: { cell, _ in
+            cell.selectionStyle = .default
+            cell.bind(titleIcon: UIImage(named: "Bug Icon"), title: "Refresh", showDisclosure: false)
+        }, action: { [weak self] _ in
+            self?.refresh()
+            self?.tableView.deselectRow(at: self!.tableView.indexPathForSelectedRow!, animated: true)
+        }))
+        sections.append(Section(id: "debug_section", headerState: .marginColor(height: 50, color: .clear), footerState: .marginColor(height: 20, color: .clear), rows: debugRows))
+
+        return sections
     }
 
     @objc func logout() {

@@ -73,3 +73,12 @@
 
 "settings.title" = "Settings";
 "settings.tab_bar_item" = "Settings";
+"settings.cell.security_center" = "Security Center";
+"settings.cell.base_currency" = "Base currency";
+"settings.cell.import_wallet" = "Import Wallet";
+"settings.cell.language" = "Language";
+"settings.cell.light_mode" = "Light Mode";
+"settings.cell.push_notifications" = "Push Notifications";
+"settings.cell.app_version" = "App Version";
+"settings.info.title" = "A decentralized app By";
+"settings.info.link" = "horizontalsystems.io";

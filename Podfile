@@ -7,6 +7,7 @@ workspace 'Wallet'
 
 project 'Wallet/Wallet'
 project 'WalletKit/WalletKit'
+project 'SectionsTableViewKit/SectionsTableViewKit'
 
 def kit_pods
   pod 'Alamofire'
@@ -46,4 +47,17 @@ target :WalletTests do
   project 'Wallet/Wallet'
 
   pod "Cuckoo"
+end
+
+target :SectionsTableViewKit do
+	project 'SectionsTableViewKit/SectionsTableViewKit'
+	pod 'GrouviExtensions'
+
+	pod 'RxSwift'
+	pod 'SnapKit'
+end
+
+target :SectionsTableViewKitTests do
+	project 'SectionsTableViewKit/SectionsTableViewKit'
+	pod "Cuckoo"
 end

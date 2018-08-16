@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" id="iN0-l3-epB" customClass="SectionLabelView" customModule="GrouviKit" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="491" height="50"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" translatesAutoresizingMaskIntoConstraints="NO" id="M9S-aL-H3G" userLabel="Content View">
+                    <rect key="frame" x="20" y="0.0" width="451" height="50"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uVd-CU-aEt">
+                            <rect key="frame" x="0.0" y="8" width="451" height="16"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="uVd-CU-aEt" secondAttribute="trailing" id="65F-QB-5VH"/>
+                        <constraint firstItem="uVd-CU-aEt" firstAttribute="leading" secondItem="M9S-aL-H3G" secondAttribute="leading" id="Dgi-MN-GB7"/>
+                        <constraint firstItem="uVd-CU-aEt" firstAttribute="top" secondItem="M9S-aL-H3G" secondAttribute="top" constant="8" id="jM4-yu-jFd"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <constraints>
+                <constraint firstItem="M9S-aL-H3G" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leadingMargin" id="DUR-wK-vTm"/>
+                <constraint firstAttribute="bottom" secondItem="M9S-aL-H3G" secondAttribute="bottom" id="W2d-5P-lDJ"/>
+                <constraint firstAttribute="trailingMargin" secondItem="M9S-aL-H3G" secondAttribute="trailing" id="iJy-U7-XEy"/>
+                <constraint firstItem="M9S-aL-H3G" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="oXs-aM-9db"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="label" destination="uVd-CU-aEt" id="v4j-rs-e2D"/>
+                <outlet property="topConstraint" destination="jM4-yu-jFd" id="NkG-PH-SsE"/>
+            </connections>
+            <point key="canvasLocation" x="105.5" y="-86"/>
+        </view>
+    </objects>
+</document>
