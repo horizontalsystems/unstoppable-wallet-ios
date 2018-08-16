@@ -8,7 +8,7 @@ class TransactionAmountItem: BaseActionItem {
     var date: String
 
     init(transaction: TransactionRecordViewItem, tag: Int? = nil, hidden: Bool = false, required: Bool = false) {
-        amount = "\(transaction.incoming ? "+" : "-") \(CoinValueHelper.formattedAmount(for: transaction.amount))"
+        amount = "\(transaction.incoming ? "+" : "-") \(abs(transaction.amount.value))"
         amountColor = transaction.incoming ? TransactionInfoTheme.incomingAmountColor : TransactionInfoTheme.outgoingAmountColor
         date = transaction.status == .success ? DateHelper.instance.formatTransactionInfoTime(from: transaction.date) : "tx_info.bottom_sheet.processing".localized
 
