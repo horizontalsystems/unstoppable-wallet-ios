@@ -7,9 +7,11 @@ class TransactionHandler {
     }
 
     let realmFactory: RealmFactory
+    let worker: TransactionWorker
 
-    init(realmFactory: RealmFactory) {
+    init(realmFactory: RealmFactory, worker: TransactionWorker) {
         self.realmFactory = realmFactory
+        self.worker = worker
     }
 
     func handle(blockHeaderHash: Data, transactions: [Transaction]) throws {
@@ -22,6 +24,11 @@ class TransactionHandler {
         try realm.write {
             block.synced = true
             realm.add(transactions, update: true)
+        }
+
+        print("HANDLE: \(transactions.count) --- \(Thread.current)")
+        if !transactions.isEmpty {
+            worker.handle(transactionHexes: transactions.map { $0.reversedHashHex })
         }
     }
 
