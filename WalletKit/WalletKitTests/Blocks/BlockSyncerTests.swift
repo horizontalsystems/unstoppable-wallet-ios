@@ -32,7 +32,7 @@ class BlockSyncerTests: XCTestCase {
             when(mock.statusSubject.get).thenReturn(peerStatusSubject)
         }
 
-        blockSyncer = BlockSyncer(realmFactory: mockRealmFactory, peerGroup: mockPeerGroup, scheduler: MainScheduler.instance, queue: .main)
+        blockSyncer = BlockSyncer(realmFactory: mockRealmFactory, peerGroup: mockPeerGroup, sync: true, scheduler: MainScheduler.instance)
     }
 
     override func tearDown() {

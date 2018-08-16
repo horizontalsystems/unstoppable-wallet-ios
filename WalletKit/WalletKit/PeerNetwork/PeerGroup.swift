@@ -22,7 +22,7 @@ class PeerGroup {
     private let peer = Peer(network: TestNet())
 
     private let validator = MerkleBlockValidator()
-    private var pendingBlocks = [PendingBlock]()
+    private var pendingBlocks: [PendingBlock] = []
 
     init(realmFactory: RealmFactory) {
         self.realmFactory = realmFactory
