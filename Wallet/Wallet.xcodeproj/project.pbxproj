@@ -117,6 +117,7 @@
 		1A56464325366A495BD81C88 /* TransactionCurrenciesHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564FE8D247C36C2478C6B5 /* TransactionCurrenciesHeaderView.swift */; };
 		1A56465CE6EFDADE3365DF98 /* AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5649DB879A57761C09842E /* AppTheme.swift */; };
 		1A5646AA17569B8BC45FB540 /* SettingsRightLabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56442A8069DDC61508D9D2 /* SettingsRightLabelCell.swift */; };
+		1A5646BB44C0AB4BD6E5542D /* UITableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5641C7C137BB451E12AC28 /* UITableView.swift */; };
 		1A5646CA592E84121AF87B07 /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5640B9841EBA6BE028681D /* Date.swift */; };
 		1A564724AB95855BFE8AE9E5 /* TransactionInfoAlertModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5643010944D435B8BA2FD8 /* TransactionInfoAlertModel.swift */; };
 		1A5647489DF968F20446631F /* TransactionInfoBaseValueItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5645282A89F1EE4A04D5DD /* TransactionInfoBaseValueItemView.swift */; };
@@ -320,6 +321,7 @@
 		1A564116BA2AF8FD13D5D2AD /* BackupButtonItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackupButtonItem.swift; sourceTree = "<group>"; };
 		1A564181733CBC44EECFBBF3 /* TransactionCloseItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionCloseItem.swift; sourceTree = "<group>"; };
 		1A5641C2FAD616C358A319A0 /* SendModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendModule.swift; sourceTree = "<group>"; };
+		1A5641C7C137BB451E12AC28 /* UITableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UITableView.swift; sourceTree = "<group>"; };
 		1A564243436E5185205D0359 /* WalletTheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletTheme.swift; sourceTree = "<group>"; };
 		1A56425C82362C065E3379D4 /* BaseButtonItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseButtonItemView.swift; sourceTree = "<group>"; };
 		1A56425E1873BC8574539D2B /* SendButtonItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendButtonItem.swift; sourceTree = "<group>"; };
@@ -524,6 +526,7 @@
 				1A564EC30D391F8893C1D514 /* UIFont.swift */,
 				1A5640B9841EBA6BE028681D /* Date.swift */,
 				1A564ED9673CF0765C7948DE /* UIAlertController.swift */,
+				1A5641C7C137BB451E12AC28 /* UITableView.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1464,6 +1467,7 @@
 				1A5646AA17569B8BC45FB540 /* SettingsRightLabelCell.swift in Sources */,
 				1A564114A1543CCBBA4017D9 /* SettingsToggleCell.swift in Sources */,
 				1A5643ED0CEC61475E5A12A8 /* SettingsInfoFooter.swift in Sources */,
+				1A5646BB44C0AB4BD6E5542D /* UITableView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

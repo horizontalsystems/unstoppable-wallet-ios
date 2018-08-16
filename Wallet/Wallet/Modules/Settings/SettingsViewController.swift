@@ -45,6 +45,10 @@ class SettingsViewController: UIViewController, SectionsDataSource {
         tableView.reload()
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        tableView.deselectCell(withCoordinator: transitionCoordinator, animated: animated)
+    }
+
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
