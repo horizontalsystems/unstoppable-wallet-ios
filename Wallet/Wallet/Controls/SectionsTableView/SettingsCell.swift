@@ -10,7 +10,7 @@ class SettingsCell: UITableViewCell {
 
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        backgroundColor = SettingsTheme.cellBackground
+        backgroundColor = .clear
         contentView.backgroundColor = SettingsTheme.cellBackground
         separatorInset.left = 0
 
