@@ -8,7 +8,6 @@ class HeaderHandlerTests: XCTestCase {
     private var mockRealmFactory: MockRealmFactory!
     private var mockFactory: MockFactory!
     private var mockValidator: MockBlockValidator!
-    private var mockSaver: MockBlockSaver!
     private var mockConfiguration: MockConfiguration!
     private var mockNetwork: MockNetworkProtocol!
     private var headerHandler: HeaderHandler!
@@ -22,7 +21,6 @@ class HeaderHandlerTests: XCTestCase {
         mockRealmFactory = MockRealmFactory(configuration: Realm.Configuration())
         mockFactory = MockFactory()
         mockValidator = MockBlockValidator(calculator: DifficultyCalculatorStub(difficultyEncoder: DifficultyEncoderStub()))
-        mockSaver = MockBlockSaver(realmFactory: mockRealmFactory)
         mockConfiguration = MockConfiguration()
         mockNetwork = MockNetworkProtocol()
 
@@ -34,9 +32,6 @@ class HeaderHandlerTests: XCTestCase {
         stub(mockRealmFactory) { mock in
             when(mock.realm.get).thenReturn(realm)
         }
-        stub(mockSaver) { mock in
-            when(mock.create(blocks: any())).thenDoNothing()
-        }
         stub(mockConfiguration) { mock in
             when(mock.network.get).thenReturn(mockNetwork)
         }
@@ -44,14 +39,13 @@ class HeaderHandlerTests: XCTestCase {
             when(mock.checkpointBlock.get).thenReturn(checkpointBlock)
         }
 
-        headerHandler = HeaderHandler(realmFactory: mockRealmFactory, factory: mockFactory, validator: mockValidator, saver: mockSaver, configuration: mockConfiguration)
+        headerHandler = HeaderHandler(realmFactory: mockRealmFactory, factory: mockFactory, validator: mockValidator, configuration: mockConfiguration)
     }
 
     override func tearDown() {
         mockRealmFactory = nil
         mockFactory = nil
         mockValidator = nil
-        mockSaver = nil
         mockConfiguration = nil
         mockNetwork = nil
         headerHandler = nil
@@ -74,7 +68,6 @@ class HeaderHandlerTests: XCTestCase {
             XCTFail("Unknown exception thrown")
         }
 
-        verifyNoMoreInteractions(mockSaver)
         XCTAssertTrue(caught, "emptyHeaders exception not thrown")
     }
 
@@ -89,7 +82,6 @@ class HeaderHandlerTests: XCTestCase {
         }
 
         try! headerHandler.handle(headers: [firstBlock.header])
-        verify(mockSaver).create(blocks: equal(to: [firstBlock]))
     }
 
     func testValidBlocks() {
@@ -111,7 +103,8 @@ class HeaderHandlerTests: XCTestCase {
         }
 
         try! headerHandler.handle(headers: [secondBlock.header, thirdBlock.header])
-        verify(mockSaver).create(blocks: equal(to: [secondBlock, thirdBlock]))
+        XCTAssertNotEqual(realm.objects(Block.self).filter("reversedHeaderHashHex = %@", secondBlock.reversedHeaderHashHex), nil)
+        XCTAssertNotEqual(realm.objects(Block.self).filter("reversedHeaderHashHex = %@", thirdBlock.reversedHeaderHashHex), nil)
     }
 
     func testInvalidBlocks() {
@@ -143,7 +136,6 @@ class HeaderHandlerTests: XCTestCase {
             XCTFail("Unknown exception thrown")
         }
 
-        verifyNoMoreInteractions(mockSaver)
         XCTAssertTrue(caught, "validation exception not thrown")
     }
 
@@ -176,7 +168,6 @@ class HeaderHandlerTests: XCTestCase {
             XCTFail("Unknown exception thrown")
         }
 
-        verify(mockSaver).create(blocks: equal(to: [secondBlock]))
         XCTAssertTrue(caught, "validation exception not thrown")
     }
 

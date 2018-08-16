@@ -9,14 +9,12 @@ class HeaderHandler {
     let realmFactory: RealmFactory
     let factory: Factory
     let validator: BlockValidator
-    let saver: BlockSaver
     let network: NetworkProtocol
 
-    init(realmFactory: RealmFactory, factory: Factory, validator: BlockValidator, saver: BlockSaver, configuration: Configuration) {
+    init(realmFactory: RealmFactory, factory: Factory, validator: BlockValidator, configuration: Configuration) {
         self.realmFactory = realmFactory
         self.factory = factory
         self.validator = validator
-        self.saver = saver
         self.network = configuration.network
     }
 
@@ -55,7 +53,9 @@ class HeaderHandler {
         }
 
         if !validBlocks.isEmpty {
-            try saver.create(blocks: validBlocks)
+            try realm.write {
+                realm.add(validBlocks, update: true)
+            }
         }
 
         if let validationError = validationError {

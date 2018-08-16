@@ -11,6 +11,7 @@ class TransactionLinkerTests: XCTestCase {
     private var realm: Realm!
     private var transaction: Transaction!
     private var pubKey: PublicKey!
+    private var pubKeys: Results<PublicKey>!
     private var pubKeyHash = Data(hex: "1ec865abcb88cec71c484d4dadec3d7dc0271a7b")!
 
     override func setUp() {
@@ -23,7 +24,7 @@ class TransactionLinkerTests: XCTestCase {
             when(mock.realm.get).thenReturn(realm)
         }
 
-        linker = TransactionLinker(realmFactory: mockRealmFactory)
+        linker = TransactionLinker()
         transaction = TestData.p2pkhTransaction
         pubKey = TestData.pubKey(pubKeyHash: pubKeyHash)
 
@@ -31,6 +32,8 @@ class TransactionLinkerTests: XCTestCase {
             realm.add(pubKey, update: true)
             realm.add(transaction)
         }
+
+        pubKeys = realm.objects(PublicKey.self)
     }
 
     override func tearDown() {
@@ -57,7 +60,9 @@ class TransactionLinkerTests: XCTestCase {
         }
 
         XCTAssertEqual(savedNextTransaction.inputs.first!.previousOutput, nil)
-        try! linker.handle(transaction: savedNextTransaction)
+        try? realm.write {
+            linker.handle(transaction: savedNextTransaction, realm: realm, pubKeys: pubKeys)
+        }
         assertOutputEqual(out1: savedNextTransaction.inputs.first!.previousOutput!, out2: transaction.outputs.first!)
     }
 
@@ -76,7 +81,9 @@ class TransactionLinkerTests: XCTestCase {
         }
 
         XCTAssertEqual(transaction.inputs.first!.previousOutput, nil)
-        try! linker.handle(transaction: savedPreviousTransaction)
+        try? realm.write {
+            linker.handle(transaction: savedPreviousTransaction, realm: realm, pubKeys: pubKeys)
+        }
         assertOutputEqual(out1: transaction.inputs.first!.previousOutput!, out2: savedPreviousTransaction.outputs.first!)
     }
 
@@ -88,7 +95,9 @@ class TransactionLinkerTests: XCTestCase {
 
         XCTAssertEqual(transaction.isMine, false)
         XCTAssertEqual(transaction.outputs[0].publicKey, nil)
-        try! linker.handle(transaction: transaction)
+        try? realm.write {
+            linker.handle(transaction: transaction, realm: realm, pubKeys: pubKeys)
+        }
         XCTAssertEqual(transaction.isMine, true)
         XCTAssertEqual(transaction.outputs[0].publicKey, pubKey)
     }
@@ -110,7 +119,9 @@ class TransactionLinkerTests: XCTestCase {
         }
 
         XCTAssertEqual(savedNextTransaction.isMine, false)
-        try! linker.handle(transaction: transaction)
+        try? realm.write {
+            linker.handle(transaction: transaction, realm: realm, pubKeys: pubKeys)
+        }
         XCTAssertEqual(savedNextTransaction.isMine, true)
     }
 
@@ -130,7 +141,9 @@ class TransactionLinkerTests: XCTestCase {
         }
 
         XCTAssertEqual(transaction.isMine, false)
-        try! linker.handle(transaction: transaction)
+        try? realm.write {
+            linker.handle(transaction: transaction, realm: realm, pubKeys: pubKeys)
+        }
         XCTAssertEqual(transaction.isMine, true)
     }
 

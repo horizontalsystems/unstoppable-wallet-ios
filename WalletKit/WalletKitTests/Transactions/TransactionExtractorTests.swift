@@ -81,7 +81,7 @@ class TransactionExtractorTests: XCTestCase {
         }
 
         do {
-            try extractor.extract(message: p2pkhTransaction)
+            try extractor.extract(transaction: p2pkhTransaction)
 
             if let testHash = p2pkhTransaction.outputs[0].keyHash {
                 XCTAssertEqual(testHash, keyHash)
@@ -103,7 +103,7 @@ class TransactionExtractorTests: XCTestCase {
         }
 
         do {
-            try extractor.extract(message: p2pkTransaction)
+            try extractor.extract(transaction: p2pkTransaction)
 
             if let testHash = p2pkTransaction.outputs[0].keyHash {
                 XCTAssertEqual(testHash, keyHash)
@@ -124,7 +124,7 @@ class TransactionExtractorTests: XCTestCase {
         }
 
         do {
-            try extractor.extract(message: p2shTransaction)
+            try extractor.extract(transaction: p2shTransaction)
 
             if let testHash = p2shTransaction.outputs[0].keyHash {
                 XCTAssertEqual(testHash, keyHash)
@@ -149,7 +149,7 @@ class TransactionExtractorTests: XCTestCase {
         }
 
         do {
-            try extractor.extract(message: p2pkhTransaction)
+            try extractor.extract(transaction: p2pkhTransaction)
 
             if let assignedAddress = p2pkhTransaction.outputs[0].address {
                 XCTAssertEqual(assignedAddress, address)

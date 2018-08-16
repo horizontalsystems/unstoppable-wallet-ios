@@ -2,9 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:SectionsTableViewKit/SectionsTableViewKit.xcodeproj">
-   </FileRef>
-   <FileRef
       location = "group:WalletKit/WalletKit.xcodeproj">
    </FileRef>
    <FileRef
@@ -12,5 +9,8 @@
    </FileRef>
    <FileRef
       location = "group:Pods/Pods.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:SectionsTableViewKit/SectionsTableViewKit.xcodeproj">
    </FileRef>
 </Workspace>

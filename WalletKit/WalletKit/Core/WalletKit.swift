@@ -16,18 +16,17 @@ public class WalletKit {
     let difficultyCalculator: DifficultyCalculator
 
     let blockValidator: BlockValidator
-    let blockSaver: BlockSaver
 
     let headerSyncer: HeaderSyncer
     let headerHandler: HeaderHandler
 
     let blockSyncer: BlockSyncer
     let merkleBlockValidator: MerkleBlockValidator
-    let merkleBlockHandler: MerkleBlockHandler
 
     let addressConverter: AddressConverter
+    let transactionProcessor: TransactionProcessor
+    let transactionWorker: TransactionWorker
     let transactionExtractor: TransactionExtractor
-    let transactionSaver: TransactionSaver
     let transactionLinker: TransactionLinker
     let transactionHandler: TransactionHandler
     let transactionSender: TransactionSender
@@ -54,14 +53,12 @@ public class WalletKit {
         difficultyCalculator = DifficultyCalculator(difficultyEncoder: difficultyEncoder)
 
         blockValidator = TestNetBlockValidator(calculator: difficultyCalculator)
-        blockSaver = BlockSaver(realmFactory: realmFactory)
 
         headerSyncer = HeaderSyncer(realmFactory: realmFactory, peerGroup: peerGroup, configuration: configuration)
-        headerHandler = HeaderHandler(realmFactory: realmFactory, factory: factory, validator: blockValidator, saver: blockSaver, configuration: configuration)
+        headerHandler = HeaderHandler(realmFactory: realmFactory, factory: factory, validator: blockValidator, configuration: configuration)
 
         blockSyncer = BlockSyncer(realmFactory: realmFactory, peerGroup: peerGroup)
         merkleBlockValidator = MerkleBlockValidator()
-        merkleBlockHandler = MerkleBlockHandler(realmFactory: realmFactory, validator: merkleBlockValidator, saver: blockSaver)
 
         inputSigner = InputSigner(hdWallet: hdWallet)
         scriptBuilder = ScriptBuilder()
@@ -71,9 +68,10 @@ public class WalletKit {
 
         addressConverter = AddressConverter(network: configuration.network)
         transactionExtractor = TransactionExtractor(addressConverter: addressConverter)
-        transactionSaver = TransactionSaver(realmFactory: realmFactory)
-        transactionLinker = TransactionLinker(realmFactory: realmFactory)
-        transactionHandler = TransactionHandler(realmFactory: realmFactory, extractor: transactionExtractor, saver: transactionSaver, linker: transactionLinker)
+        transactionLinker = TransactionLinker()
+        transactionProcessor = TransactionProcessor(extractor: transactionExtractor, linker: transactionLinker, logger: logger)
+        transactionWorker = TransactionWorker(realmFactory: realmFactory, processor: transactionProcessor)
+        transactionHandler = TransactionHandler(realmFactory: realmFactory)
         transactionSender = TransactionSender(realmFactory: realmFactory, peerGroup: peerGroup)
         transactionBuilder = TransactionBuilder(unspentOutputSelector: unspentOutputSelector, unspentOutputProvider: unspentOutputProvider, addressConverter: addressConverter, inputSigner: inputSigner, scriptBuilder: scriptBuilder, factory: factory)
         transactionCreator = TransactionCreator(realmFactory: realmFactory, transactionBuilder: transactionBuilder)
@@ -82,7 +80,6 @@ public class WalletKit {
 
         syncer.headerSyncer = headerSyncer
         syncer.headerHandler = headerHandler
-        syncer.merkleBlockHandler = merkleBlockHandler
         syncer.transactionHandler = transactionHandler
 
         preFillInitialTestData()

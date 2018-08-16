@@ -6,7 +6,7 @@ protocol PeerGroupDelegate : class {
 
     func peerGroupDidReceive(headers: [BlockHeader])
     func peerGroupDidReceive(blockHeaderHash: Data, withTransactions transactions: [Transaction])
-    func peerGroupDidReceive(transactions: [Transaction])
+    func peerGroupDidReceive(transaction: Transaction)
 
     func shouldRequest(inventoryItem: InventoryItem) -> Bool
     func transaction(forHash hash: Data) -> Transaction?

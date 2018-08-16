@@ -26,9 +26,9 @@ class TransactionExtractor {
         self.addressConverter = addressConverter
     }
 
-    func extract(message: Transaction) throws {
+    func extract(transaction: Transaction) throws {
         var valid: Bool = false
-        message.outputs.forEach { output in
+        transaction.outputs.forEach { output in
             var payload: Data?
             for extractor in scriptOutputExtractors {
                 do {
@@ -54,7 +54,7 @@ class TransactionExtractor {
             }
         }
 
-        message.inputs.forEach { input in
+        transaction.inputs.forEach { input in
             var payload: Data?
             for extractor in scriptInputExtractors {
                 do {

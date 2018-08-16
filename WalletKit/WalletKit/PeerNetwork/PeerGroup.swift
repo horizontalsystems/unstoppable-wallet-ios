@@ -110,7 +110,7 @@ extension PeerGroup: PeerDelegate {
             }
 
         } else {
-            delegate?.peerGroupDidReceive(transactions: [transaction])
+            delegate?.peerGroupDidReceive(transaction: transaction)
         }
     }
 

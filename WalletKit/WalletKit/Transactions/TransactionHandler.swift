@@ -3,28 +3,33 @@ import Foundation
 class TransactionHandler {
     enum HandleError: Error {
         case transactionNotFound
+        case blockNotFound
     }
 
     let realmFactory: RealmFactory
-    let extractor: TransactionExtractor
-    let saver: TransactionSaver
-    let linker: TransactionLinker
 
-    init(realmFactory: RealmFactory, extractor: TransactionExtractor, saver: TransactionSaver, linker: TransactionLinker) {
+    init(realmFactory: RealmFactory) {
         self.realmFactory = realmFactory
-        self.extractor = extractor
-        self.saver = saver
-        self.linker = linker
+    }
+
+    func handle(blockHeaderHash: Data, transactions: [Transaction]) throws {
+        let realm = realmFactory.realm
+
+        guard let block = realm.objects(Block.self).filter("reversedHeaderHashHex = %@", blockHeaderHash.reversedHex).last else {
+            throw HandleError.blockNotFound
+        }
+
+        try realm.write {
+            block.synced = true
+            realm.add(transactions, update: true)
+        }
     }
 
     func handle(transaction: Transaction) throws {
-        try extractor.extract(message: transaction)
         let realm = realmFactory.realm
-        let existingTransaction = realm.objects(Transaction.self).filter("reversedHashHex = %@", transaction.reversedHashHex).last
-        transaction.block = existingTransaction?.block
 
-        try saver.save(transaction: transaction)
-        try linker.handle(transaction: transaction)
+        try realm.write {
+            realm.add(transaction, update: true)
+        }
     }
-
 }

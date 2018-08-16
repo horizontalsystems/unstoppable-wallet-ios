@@ -9,6 +9,7 @@ public class Transaction: Object {
     @objc dynamic var lockTime: Int = 0
     @objc public dynamic var block: Block?
 
+    @objc dynamic var processed: Bool = false
     @objc dynamic var isMine: Bool = false
     @objc dynamic var status: TransactionStatus = .relayed
 

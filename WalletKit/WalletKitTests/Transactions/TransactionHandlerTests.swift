@@ -4,34 +4,22 @@ import RealmSwift
 @testable import WalletKit
 
 class TransactionHandlerTests: XCTestCase {
+
     private var mockRealmFactory: MockRealmFactory!
-    private var mockExtractor: MockTransactionExtractor!
-    private var mockSaver: MockTransactionSaver!
-    private var mockLinker: MockTransactionLinker!
     private var transactionHandler: TransactionHandler!
 
     private var realm: Realm!
-    private var oldTransaction: Transaction!
     private var transaction: Transaction!
+    private var rawTransaction: String!
 
     override func setUp() {
         super.setUp()
 
         mockRealmFactory = MockRealmFactory(configuration: Realm.Configuration())
+        transactionHandler = TransactionHandler(realmFactory: mockRealmFactory)
+
         realm = try! Realm(configuration: Realm.Configuration(inMemoryIdentifier: "TestRealm"))
         try! realm.write { realm.deleteAll() }
-        stub(mockRealmFactory) { mock in
-            when(mock.realm.get).thenReturn(realm)
-        }
-
-        mockExtractor = MockTransactionExtractor(addressConverter: AddressConverter(network: TestNet()))
-        mockSaver = MockTransactionSaver(realmFactory: mockRealmFactory)
-        mockLinker = MockTransactionLinker(realmFactory: mockRealmFactory)
-        transactionHandler = TransactionHandler(realmFactory: mockRealmFactory, extractor: mockExtractor, saver: mockSaver, linker: mockLinker)
-
-        oldTransaction = Transaction()
-        oldTransaction.reversedHashHex = Data(hex: "3e7f350bf5c2169833ad02e8ada93a5d47862fe708cdd6c9fb4c15af59e50f70")!.reversedHex
-        oldTransaction.block = Block(withHeader: TestData.checkpointBlockHeader, height: 1)
 
         let txInput = TransactionInput()
         txInput.previousOutputTxReversedHex = "28c004efa76de2dc58921a9eb21fd1a0f5aa91286e7f44e5800ca9d76c105c86"
@@ -44,66 +32,71 @@ class TransactionHandlerTests: XCTestCase {
         txOutput.lockingScript = Data(hex: "a914121e63ee09fc7e20b59d144dcce6e2700f6f1a9c87")!
 
         transaction = Transaction()
-        transaction.reversedHashHex = oldTransaction.reversedHashHex
+        transaction.reversedHashHex = Data(hex: "3e7f350bf5c2169833ad02e8ada93a5d47862fe708cdd6c9fb4c15af59e50f70")!.reversedHex
         transaction.version = 1
         transaction.lockTime = 0
         transaction.inputs.append(txInput)
         transaction.outputs.append(txOutput)
 
-        stub(mockSaver) { mock in
-            when(mock.save(transaction: any())).thenDoNothing()
-        }
-        stub(mockLinker) { mock in
-            when(mock.handle(transaction: any())).thenDoNothing()
+        stub(mockRealmFactory) { mock in
+            when(mock.realm.get).thenReturn(realm)
         }
     }
 
     override func tearDown() {
         mockRealmFactory = nil
-        mockExtractor = nil
-        mockSaver = nil
         transactionHandler = nil
-
         realm = nil
-        oldTransaction = nil
 
         super.tearDown()
     }
 
-    func testValidTransaction() {
-        stub(mockExtractor) { mock in
-            when(mock.extract(message: equal(to: transaction))).thenDoNothing()
+    func testMerkleBlockTransactions() {
+        let block = TestData.checkpointBlock
+        try! realm.write {
+            realm.add(block, update: true)
         }
 
-        try! transactionHandler.handle(transaction: transaction)
-        verify(mockSaver).save(transaction: equal(to: transaction))
-        verify(mockLinker).handle(transaction: equal(to: transaction))
-        XCTAssertEqual(transaction.block, nil)
+        try! transactionHandler.handle(blockHeaderHash: block.headerHash, transactions: [transaction])
+        let realmBlock = realm.objects(Block.self).last!
+        let realmTransaction = realm.objects(Transaction.self).last!
+
+        assertTransactionEqual(tx1: transaction, tx2: realmTransaction)
+        XCTAssertEqual(realmBlock.headerHash, block.headerHash)
+        XCTAssertEqual(realmBlock.synced, true)
     }
 
-    func testWithExistingTransaction() {
-        try? realm.write {
-            realm.add(oldTransaction, update: true)
-        }
-
-        stub(mockExtractor) { mock in
-            when(mock.extract(message: equal(to: transaction))).thenDoNothing()
-        }
-
+    func testHandleOneTransaction() {
         try! transactionHandler.handle(transaction: transaction)
-        verify(mockSaver).save(transaction: equal(to: transaction))
-        verify(mockLinker).handle(transaction: equal(to: transaction))
-        XCTAssertEqual(transaction.block, oldTransaction.block)
+        let realmTransaction = realm.objects(Transaction.self).last!
+
+        assertTransactionEqual(tx1: transaction, tx2: realmTransaction)
     }
 
-    func testWithInvalidTransaction() {
-        stub(mockExtractor) { mock in
-            when(mock.extract(message: equal(to: transaction))).thenThrow(TransactionExtractor.ExtractionError.invalid)
+    private func assertTransactionEqual(tx1: Transaction, tx2: Transaction) {
+        XCTAssertEqual(tx1, tx2)
+        XCTAssertEqual(tx1.reversedHashHex, tx2.reversedHashHex)
+        XCTAssertEqual(tx1.version, tx2.version)
+        XCTAssertEqual(tx1.lockTime, tx2.lockTime)
+        XCTAssertEqual(tx1.inputs.count, tx2.inputs.count)
+        XCTAssertEqual(tx1.outputs.count, tx2.outputs.count)
+
+        for i in 0..<tx1.inputs.count {
+            XCTAssertEqual(tx1.inputs[i].previousOutputTxReversedHex, tx2.inputs[i].previousOutputTxReversedHex)
+            XCTAssertEqual(tx1.inputs[i].previousOutputIndex, tx2.inputs[i].previousOutputIndex)
+            XCTAssertEqual(tx1.inputs[i].signatureScript, tx2.inputs[i].signatureScript)
+            XCTAssertEqual(tx1.inputs[i].sequence, tx2.inputs[i].sequence)
         }
 
-        try? transactionHandler.handle(transaction: transaction)
-        verifyNoMoreInteractions(mockSaver)
-        verifyNoMoreInteractions(mockLinker)
+        for i in 0..<tx2.outputs.count {
+            assertOutputEqual(out1: tx1.outputs[i], out2: tx2.outputs[i])
+        }
+    }
+
+    private func assertOutputEqual(out1: TransactionOutput, out2: TransactionOutput) {
+        XCTAssertEqual(out1.value, out2.value)
+        XCTAssertEqual(out1.lockingScript, out2.lockingScript)
+        XCTAssertEqual(out1.index, out2.index)
     }
 
 }
