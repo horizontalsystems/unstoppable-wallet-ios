@@ -6,8 +6,8 @@ import SnapKit
 class TransactionTitleItemView: BaseActionItemView {
 
     var titleLabel = UILabel()
-    var amountLabel = UILabel()
-    var dateLabel = UILabel()
+    var coinIconImageView: TintImageView = TintImageView(image: nil, tintColor: TransactionInfoTheme.coinIconTintColor, selectedTintColor: TransactionInfoTheme.coinIconTintColor)
+    var infoButton = RespondView()
 
     override var item: TransactionTitleItem? { return _item as? TransactionTitleItem }
 
@@ -23,31 +23,32 @@ class TransactionTitleItemView: BaseActionItemView {
             maker.top.equalToSuperview().offset(TransactionInfoTheme.regularMargin)
         }
 
-        amountLabel.font = TransactionInfoTheme.amountFont
-        addSubview(amountLabel)
-        amountLabel.snp.makeConstraints { maker in
-            maker.centerX.equalToSuperview()
-            maker.top.equalTo(self.titleLabel.snp.bottom).offset(TransactionInfoTheme.smallMargin)
+        addSubview(coinIconImageView)
+        coinIconImageView.snp.makeConstraints { maker in
+            maker.leading.equalToSuperview().offset(TransactionInfoTheme.regularMargin)
+            maker.centerY.equalToSuperview()
         }
 
-        dateLabel.font = TransactionInfoTheme.dateFont
-        dateLabel.textColor = TransactionInfoTheme.dateColor
-        addSubview(dateLabel)
-        dateLabel.snp.makeConstraints { maker in
-            maker.centerX.equalToSuperview()
-            maker.top.equalTo(self.amountLabel.snp.bottom).offset(TransactionInfoTheme.smallMargin)
+        let infoIconImageView: TintImageView = TintImageView(image: UIImage(named: "Transaction Full Info Icon"), tintColor: TransactionInfoTheme.transactionInfoTint, selectedTintColor: TransactionInfoTheme.transactionInfoSelectedTint)
+        infoButton.delegate = infoIconImageView
+        addSubview(infoButton)
+        infoButton.snp.makeConstraints { maker in
+            maker.top.trailing.bottom.equalToSuperview()
+            maker.width.equalTo(TransactionInfoTheme.infoButtonWidth)
         }
-
+        infoButton.handleTouch = item?.onInfo
+        infoButton.addSubview(infoIconImageView)
+        infoIconImageView.snp.makeConstraints { maker in
+            maker.leading.equalToSuperview()
+            maker.top.equalToSuperview().offset(TransactionInfoTheme.regularMargin)
+        }
     }
 
     override func updateView() {
         super.updateView()
         titleLabel.text = item?.title
 
-        amountLabel.text = item?.amount
-        amountLabel.textColor = item?.amountColor
-
-        dateLabel.text = item?.date
+        coinIconImageView.image = item?.coinIcon
     }
 
 }

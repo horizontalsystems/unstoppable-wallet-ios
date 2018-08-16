@@ -1,14 +1,20 @@
 import Foundation
 import GrouviActionSheet
 
-class TransactionAmountItem: TransactionInfoBaseValueItem {
+class TransactionAmountItem: BaseActionItem {
+
+    var amount: String
+    var amountColor: UIColor
+    var date: String
 
     init(transaction: TransactionRecordViewItem, tag: Int? = nil, hidden: Bool = false, required: Bool = false) {
-        super.init(tag: tag, hidden: hidden, required: required)
+        amount = "\(transaction.incoming ? "+" : "-") \(CoinValueHelper.formattedAmount(for: transaction.amount))"
+        amountColor = transaction.incoming ? TransactionInfoTheme.incomingAmountColor : TransactionInfoTheme.outgoingAmountColor
+        date = transaction.status == .success ? DateHelper.instance.formatTransactionInfoTime(from: transaction.date) : "tx_info.bottom_sheet.processing".localized
 
-        title = "tx_info.bottom_sheet.value_when_received".localized
-        //stab
-        value = CurrencyHelper.instance.formattedValue(for: CurrencyValue(currency: DollarCurrency(), value: 342))
+        super.init(cellType: TransactionAmountItemView.self, tag: tag, hidden: hidden, required: required)
+
+        height = TransactionInfoTheme.amountHeight
     }
 
 }
