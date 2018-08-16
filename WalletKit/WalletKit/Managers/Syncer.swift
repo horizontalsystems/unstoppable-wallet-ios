@@ -58,20 +58,11 @@ extension Syncer: PeerGroupDelegate {
         }
     }
 
-    func peerGroupDidReceive(merkleBlock: MerkleBlockMessage) {
-        do {
-            try merkleBlockHandler?.handle(message: merkleBlock)
-        } catch {
-            logger.log(tag: "Merkle Block Handler Error", message: "\(error)")
-        }
+    func peerGroupDidReceive(blockHeaderHash: Data, withTransactions transactions: [Transaction]) {
+        print("BLOCK: \(blockHeaderHash.reversedHex) --- \(transactions.count)")
     }
 
-    func peerGroupDidReceive(transaction: Transaction) {
-        do {
-            try transactionHandler?.handle(transaction: transaction)
-        } catch {
-            logger.log(tag: "Transaction Handler Error", message: "\(error)")
-        }
+    func peerGroupDidReceive(transactions: [Transaction]) {
     }
 
     func shouldRequest(inventoryItem: InventoryItem) -> Bool {
