@@ -23,7 +23,7 @@ class WalletTheme {
     static let headerHeight: CGFloat = 44
     static let buttonsAnimationDuration = 0.2
 
-    static let roundedBackgroundColor = UIColor.cryptoSteel50
+    static let roundedBackgroundColor = UIColor.cryptoSteel20
     static let roundedBackgroundCornerRadius: CGFloat = 15
     static let cellButtonFont = UIFont.cryptoHeadline
 

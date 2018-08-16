@@ -1,7 +1,7 @@
 import UIKit
 
 class TransactionsTheme {
-    static let infoIconTintColor = UIColor.cryptoSteel50
+    static let infoIconTintColor = UIColor.cryptoSteel20
     static let infoIconHighlightedTintColor = UIColor.cryptoWhite50
     static let dateLabelFont = UIFont.cryptoCaption1
     static let dateLabelTextColor = UIColor.cryptoGray
@@ -14,7 +14,7 @@ class TransactionsTheme {
     static let topMargin: CGFloat = 11
     static let cellMediumMargin: CGFloat = 12
     static let cellSmallMargin: CGFloat = 8
-    static let separatorColor = UIColor.cryptoSteel50
+    static let separatorColor = UIColor.cryptoSteel20
     static let fiatAmountLabelFont = UIFont.cryptoCaption1
     static let fiatAmountLabelColor = UIColor.cryptoGray
     static let statusImageViewSize = CGSize(width: 13, height: 12)

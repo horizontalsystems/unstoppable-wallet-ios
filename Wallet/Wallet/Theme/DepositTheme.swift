@@ -15,7 +15,7 @@ class DepositTheme {
     static let copyTextSelectedColor = UIColor.cryptoGreenPressed
 
     static let pagingHeight: CGFloat = 44
-    static let pageIndicatorTintColor = UIColor.cryptoSteel50
+    static let pageIndicatorTintColor = UIColor.cryptoSteel20
     static let pagingDotsTopMargin: CGFloat = 12
     static let pagingDotsHeight: CGFloat = 7
     static let pageIndicatorSelectedTintColor = UIColor.cryptoGreen

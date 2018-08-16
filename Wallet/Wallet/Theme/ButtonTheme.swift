@@ -3,7 +3,7 @@ import UIKit
 class ButtonTheme {
     private static let greenActiveBackground = UIColor.cryptoGreen
     private static let greenSelectedBackground = UIColor.cryptoGreenPressed
-    private static let disabledOnWhiteBackground = UIColor.cryptoSteel50
+    private static let disabledOnWhiteBackground = UIColor.cryptoSteel20
     private static let disabledOnDarkBackground = UIColor.lightGray
     private static let textColor = UIColor.black
     private static let textColorDisabledOnWhiteBackground = UIColor.gray

@@ -16,7 +16,7 @@ class RestoreWordCell: UICollectionViewCell {
 
         inputField.borderWidth = 1
         inputField.cornerRadius = 8
-        inputField.borderColor = .cryptoSteel50
+        inputField.borderColor = .cryptoSteel20
         inputField.clearButtonIsHidden = true
 
         contentView.addSubview(inputField)

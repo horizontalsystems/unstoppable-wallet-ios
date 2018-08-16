@@ -5,7 +5,7 @@ class SettingsTheme {
     static let cellBigMargin: CGFloat = 16
     static let disclosureSize = CGSize(width: 8, height: 13)
     static let controllerBackground = UIColor.cryptoDark
-    static let cellBackground = UIColor.cryptoSteel50
+    static let cellBackground = UIColor.cryptoSteel20
     static let cellHeight: CGFloat = 44
     static let textColor = UIColor.white
     static let infoTitleTopMargin: CGFloat = 42

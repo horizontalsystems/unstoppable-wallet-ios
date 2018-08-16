@@ -19,7 +19,7 @@ class TransactionInfoTheme {
     static let dateColor = UIColor.cryptoGray
     static let statusImageSize = CGSize(width: 13, height: 12)
     static let hashBackground = UIColor.cryptoPaleGray
-    static let hashWrapperBorderColor = UIColor.cryptoSteel50
+    static let hashWrapperBorderColor = UIColor.cryptoSteel20
     static let hashColor = UIColor.cryptoDark
     static let amountHeight: CGFloat = 69
     static let hashBackgroundHeight: CGFloat = 28

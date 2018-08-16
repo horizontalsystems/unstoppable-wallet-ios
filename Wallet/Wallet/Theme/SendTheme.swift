@@ -29,7 +29,7 @@ class SendTheme {
     static let referenceInputHeight: CGFloat = 44
     static let timeLabelTopMargin: CGFloat = 24
     static let buttonFont = UIFont.cryptoBody2
-    static let buttonBorderColor = UIColor.cryptoSteel50
+    static let buttonBorderColor = UIColor.cryptoSteel20
     static let feeLabelColor = UIColor.cryptoGray
     static let feeLabelFont = UIFont.cryptoHeadline
     static let buttonTextDictionary: RespondButton.Style = [.active: UIColor.cryptoDark, .selected: UIColor.cryptoDark, .disabled: UIColor.cryptoSilver]
