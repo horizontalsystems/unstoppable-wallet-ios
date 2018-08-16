@@ -1,31 +1,30 @@
 import Foundation
 import RealmSwift
 
-class TransactionWorker: BackgroundWorker {
+class TransactionWorker {
     let realmFactory: RealmFactory
     let processor: TransactionProcessor
+    let queue: DispatchQueue
 
-    private var notificationToken: NotificationToken?
-
-    init(realmFactory: RealmFactory, processor: TransactionProcessor, sync: Bool = false) {
+    init(realmFactory: RealmFactory, processor: TransactionProcessor, queue: DispatchQueue = DispatchQueue(label: "TransactionWorker", qos: .background)) {
         self.realmFactory = realmFactory
         self.processor = processor
+        self.queue = queue
 
-        super.init(sync: sync)
-
-        start { [weak self] in
-            if let realm = self?.realmFactory.realm {
-                self?.notificationToken = realm.objects(Transaction.self).filter("processed = %@", false).observe { changes in
-                    if case let .update(transactions, _, insertions, _) = changes, !insertions.isEmpty {
-                        self?.processor.process(realm: realm, transactions: transactions)
-                    }
-                }
-            }
+        let hexes = realmFactory.realm.objects(Transaction.self).filter("processed = %@", false).map { $0.reversedHashHex }
+        if !hexes.isEmpty {
+            handle(transactionHexes: Array(hexes))
         }
     }
 
-    deinit {
-        notificationToken?.invalidate()
+    func handle(transactionHexes: [String]) {
+        queue.async {
+            do {
+                try self.processor.process(hexes: transactionHexes)
+            } catch {
+                print("TX PROCESS ERROR: \(error)")
+            }
+        }
     }
 
 }
