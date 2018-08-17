@@ -23,17 +23,14 @@ class TransactionLinker {
 
     private func linkOutputs(transaction: Transaction, realm: Realm) {
         for output in transaction.outputs {
-            let pubKey = output.keyHash.map { realm.objects(PublicKey.self).filter("keyHash = %@", $0).first }
-
-            if let pubKey = pubKey {
+            if let keyHash = output.keyHash, !keyHash.isEmpty, let pubKey = realm.objects(PublicKey.self).filter("keyHash = %@", keyHash).first {
                 transaction.isMine = true
                 output.publicKey = pubKey
             }
-
             if let input = realm.objects(TransactionInput.self)
                     .filter("previousOutputTxReversedHex = %@ AND previousOutputIndex = %@", transaction.reversedHashHex, output.index).last {
                 input.previousOutput = output
-                if pubKey != nil {
+                if output.publicKey != nil {
                     if let nextTransaction = input.transaction {
                         nextTransaction.isMine = true
                     }
