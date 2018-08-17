@@ -167,7 +167,7 @@ class SyncerTests: XCTestCase {
 
     func testShouldRequest_BlockExists() {
         let block = TestData.firstBlock
-        let inventoryItem = InventoryItem(type: InventoryItem.ObjectType.filteredBlockMessage.rawValue, hash: block.reversedHeaderHashHex.reversedData!)
+        let inventoryItem = InventoryItem(type: InventoryItem.ObjectType.blockMessage.rawValue, hash: block.reversedHeaderHashHex.reversedData!)
 
         try! realm.write {
             realm.add(block)
@@ -178,14 +178,14 @@ class SyncerTests: XCTestCase {
 
     func testShouldRequest_BlockDoesntExists() {
         let block = TestData.firstBlock
-        let inventoryItem = InventoryItem(type: InventoryItem.ObjectType.filteredBlockMessage.rawValue, hash: block.reversedHeaderHashHex.reversedData!)
+        let inventoryItem = InventoryItem(type: InventoryItem.ObjectType.blockMessage.rawValue, hash: block.reversedHeaderHashHex.reversedData!)
 
         XCTAssertEqual(syncer.shouldRequest(inventoryItem: inventoryItem), true)
     }
 
     func testShouldRequest_UnhandledItems() {
         let items = [
-            InventoryItem(type: InventoryItem.ObjectType.blockMessage.rawValue, hash: Data()),
+            InventoryItem(type: InventoryItem.ObjectType.filteredBlockMessage.rawValue, hash: Data()),
             InventoryItem(type: InventoryItem.ObjectType.compactBlockMessage.rawValue, hash: Data()),
             InventoryItem(type: InventoryItem.ObjectType.unknown.rawValue, hash: Data()),
             InventoryItem(type: InventoryItem.ObjectType.error.rawValue, hash: Data())
