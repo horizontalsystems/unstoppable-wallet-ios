@@ -76,11 +76,11 @@ extension Syncer: PeerGroupDelegate {
     }
 
     func shouldRequest(inventoryItem: InventoryItem) -> Bool {
-        fatalError("shouldRequest(inventoryItem:) has not been implemented")
+        return true
     }
 
     func transaction(forHash hash: Data) -> Transaction? {
-        fatalError("transaction(hash:) has not been implemented")
+        return nil
     }
 
 }

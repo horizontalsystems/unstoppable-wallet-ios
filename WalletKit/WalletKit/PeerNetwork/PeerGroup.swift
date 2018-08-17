@@ -115,27 +115,24 @@ extension PeerGroup: PeerDelegate {
     }
 
     func peer(_ peer: Peer, didReceiveInventoryMessage message: InventoryMessage) {
-        peer.sendGetDataMessage(message: message)
+        var items = [InventoryItem]()
+
+        for item in message.inventoryItems {
+            if let delegate = delegate, delegate.shouldRequest(inventoryItem: item) {
+                items.append(item)
+            }
+        }
+
+        if !items.isEmpty {
+            let getDataMessage = InventoryMessage(count: VarInt(items.count), inventoryItems: items)
+            peer.sendGetDataMessage(message: getDataMessage)
+        }
     }
 
     func peer(_ peer: Peer, didReceiveGetDataMessage message: GetDataMessage) {
         for item in message.inventoryItems {
-            switch item.objectType {
-                case .error:
-                    break
-                case .transaction:
-                    if let transaction = realmFactory.realm.objects(Transaction.self).filter("reversedHashHex = %@", item.hash.reversedHex).first {
-                        peer.sendTransaction(transaction: transaction)
-                    }
-                    break
-                case .blockMessage:
-                    break
-                case .filteredBlockMessage:
-                    break
-                case .compactBlockMessage:
-                    break
-                case .unknown:
-                    break
+            if item.objectType == .transaction, let transaction = delegate?.transaction(forHash: item.hash) {
+                peer.sendTransaction(transaction: transaction)
             }
         }
     }
