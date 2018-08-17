@@ -836,7 +836,7 @@
 				"$(SRCROOT)/WalletKit/Managers/UnspentOutputProvider.swift",
 				"$(SRCROOT)/WalletKit/Core/Logger.swift",
 				"$(SRCROOT)/WalletKit/BlockHeaders/HeaderHandler.swift",
-				"$(SRCROOT)/WalletKit/Blocks/MerkleBlockHandler.swift",
+				"$(SRCROOT)/WalletKit/Blocks/BlockSyncer.swift",
 				"$(SRCROOT)/WalletKit/Transactions/TransactionHandler.swift",
 				"$(SRCROOT)/WalletKit/PeerNetwork/Peer.swift",
 				"$(SRCROOT)/WalletKit/Helpers/AddressConverter.swift",

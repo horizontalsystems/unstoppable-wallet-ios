@@ -17,11 +17,11 @@ public class WalletKit {
 
     let blockValidator: BlockValidator
 
-    let headerSyncer: HeaderSyncer
-    let headerHandler: HeaderHandler
-
     let blockSyncer: BlockSyncer
     let merkleBlockValidator: MerkleBlockValidator
+
+    let headerSyncer: HeaderSyncer
+    let headerHandler: HeaderHandler
 
     let addressConverter: AddressConverter
     let transactionProcessor: TransactionProcessor
@@ -53,11 +53,11 @@ public class WalletKit {
 
         blockValidator = TestNetBlockValidator(calculator: difficultyCalculator)
 
-        headerSyncer = HeaderSyncer(realmFactory: realmFactory, peerGroup: peerGroup, configuration: configuration)
-        headerHandler = HeaderHandler(realmFactory: realmFactory, factory: factory, validator: blockValidator, configuration: configuration)
-
         blockSyncer = BlockSyncer(realmFactory: realmFactory, peerGroup: peerGroup)
         merkleBlockValidator = MerkleBlockValidator()
+
+        headerSyncer = HeaderSyncer(realmFactory: realmFactory, peerGroup: peerGroup, configuration: configuration)
+        headerHandler = HeaderHandler(realmFactory: realmFactory, factory: factory, validator: blockValidator, blockSyncer: blockSyncer, configuration: configuration)
 
         inputSigner = InputSigner(hdWallet: hdWallet)
         scriptBuilder = ScriptBuilder()

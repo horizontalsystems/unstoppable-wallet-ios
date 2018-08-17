@@ -2,51 +2,32 @@ import Foundation
 import RealmSwift
 import RxSwift
 
-class BlockSyncer: BackgroundWorker {
-    let disposeBag = DisposeBag()
-
+class BlockSyncer {
     let realmFactory: RealmFactory
     let peerGroup: PeerGroup
+    private let queue: DispatchQueue
 
-    private var notificationToken: NotificationToken?
-
-    init(realmFactory: RealmFactory, peerGroup: PeerGroup, sync: Bool = false, scheduler: ImmediateSchedulerType = ConcurrentDispatchQueueScheduler(qos: .background)) {
+    init(realmFactory: RealmFactory, peerGroup: PeerGroup, queue: DispatchQueue = DispatchQueue(label: "BlockSyncer", qos: .background)) {
         self.realmFactory = realmFactory
         self.peerGroup = peerGroup
-
-        super.init(sync: sync)
-
-        peerGroup.statusSubject
-                .observeOn(scheduler)
-                .subscribe(onNext: { [weak self] status in
-                    if status == .connected {
-                        self?.sync()
-                    }
-                }).disposed(by: disposeBag)
-
-        start { [weak self] in
-            self?.notificationToken = self?.realmFactory.realm.objects(Block.self).filter("synced = %@", false).observe { changes in
-                if case let .update(_, _, insertions, _) = changes, !insertions.isEmpty {
-                    self?.sync()
-                }
-            }
-        }
-
+        self.queue = queue
     }
 
-    private func sync() {
+    func enqueueRun() {
+        queue.async {
+            self.run()
+        }
+    }
+
+    private func run() {
         let realm = realmFactory.realm
 
-        let nonSyncedBlocks = realm.objects(Block.self).filter("synced = %@", false).sorted(byKeyPath: "height")
+        let nonSyncedBlocks = realm.objects(Block.self).filter("synced = %@", false)
         let hashes = nonSyncedBlocks.map { $0.headerHash }
 
         if !hashes.isEmpty {
             peerGroup.requestBlocks(headerHashes: Array(hashes))
         }
-    }
-
-    deinit {
-        notificationToken?.invalidate()
     }
 
 }

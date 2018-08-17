@@ -9,12 +9,14 @@ class HeaderHandler {
     let realmFactory: RealmFactory
     let factory: Factory
     let validator: BlockValidator
+    let blockSyncer: BlockSyncer
     let network: NetworkProtocol
 
-    init(realmFactory: RealmFactory, factory: Factory, validator: BlockValidator, configuration: Configuration) {
+    init(realmFactory: RealmFactory, factory: Factory, validator: BlockValidator, blockSyncer: BlockSyncer, configuration: Configuration) {
         self.realmFactory = realmFactory
         self.factory = factory
         self.validator = validator
+        self.blockSyncer = blockSyncer
         self.network = configuration.network
     }
 
@@ -56,6 +58,8 @@ class HeaderHandler {
             try realm.write {
                 realm.add(validBlocks, update: true)
             }
+
+            blockSyncer.enqueueRun()
         }
 
         if let validationError = validationError {
