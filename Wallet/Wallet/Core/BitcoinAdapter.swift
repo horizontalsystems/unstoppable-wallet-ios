@@ -58,6 +58,7 @@ class BitcoinAdapter {
             record.fee = 0
             record.incoming = record.amount > 0
             record.blockHeight = tx.block?.height ?? 0
+            record.confirmed = tx.block != nil
             record.timestamp = tx.block?.header.timestamp ?? 0
             return record
         }

@@ -11,6 +11,7 @@ class TransactionRecord: Object {
     @objc dynamic var incoming: Bool = true
     @objc dynamic var blockHeight: Int = 0
     @objc dynamic var timestamp: Int = 0
+    @objc dynamic var confirmed: Bool = false
 
     override class func primaryKey() -> String? {
         return "transactionHash"

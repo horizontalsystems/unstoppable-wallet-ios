@@ -19,7 +19,7 @@ class RealmStorage: IStorage {
     }
 
     func getTransactionRecords() -> Observable<DatabaseChangeSet<TransactionRecord>> {
-        return Observable.arrayWithChangeset(from: realm.objects(TransactionRecord.self).sorted(byKeyPath: "blockHeight", ascending: false))
+        return Observable.arrayWithChangeset(from: realm.objects(TransactionRecord.self).sorted(by: [SortDescriptor(keyPath: "confirmed", ascending: true), SortDescriptor(keyPath: "blockHeight", ascending: false)]))
                 .map { DatabaseChangeSet(array: $0, changeSet: $1.map { CollectionChangeSet(withRealmChangeset: $0) }) }
     }
 
