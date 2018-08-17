@@ -147,4 +147,70 @@ class SyncerTests: XCTestCase {
         verify(mockLogger).log(tag: "Transaction Handler Error", message: "\(error)")
     }
 
+    func testShouldRequest_TransactionExists() {
+        let transaction = TestData.p2pkhTransaction
+        let inventoryItem = InventoryItem(type: InventoryItem.ObjectType.transaction.rawValue, hash: transaction.reversedHashHex.reversedData!)
+
+        try! realm.write {
+            realm.add(transaction)
+        }
+
+        XCTAssertEqual(syncer.shouldRequest(inventoryItem: inventoryItem), false)
+    }
+
+    func testShouldRequest_TransactionDoesntExists() {
+        let transaction = TestData.p2pkhTransaction
+        let inventoryItem = InventoryItem(type: InventoryItem.ObjectType.transaction.rawValue, hash: transaction.reversedHashHex.reversedData!)
+
+        XCTAssertEqual(syncer.shouldRequest(inventoryItem: inventoryItem), true)
+    }
+
+    func testShouldRequest_BlockExists() {
+        let block = TestData.firstBlock
+        let inventoryItem = InventoryItem(type: InventoryItem.ObjectType.filteredBlockMessage.rawValue, hash: block.reversedHeaderHashHex.reversedData!)
+
+        try! realm.write {
+            realm.add(block)
+        }
+
+        XCTAssertEqual(syncer.shouldRequest(inventoryItem: inventoryItem), false)
+    }
+
+    func testShouldRequest_BlockDoesntExists() {
+        let block = TestData.firstBlock
+        let inventoryItem = InventoryItem(type: InventoryItem.ObjectType.filteredBlockMessage.rawValue, hash: block.reversedHeaderHashHex.reversedData!)
+
+        XCTAssertEqual(syncer.shouldRequest(inventoryItem: inventoryItem), true)
+    }
+
+    func testShouldRequest_UnhandledItems() {
+        let items = [
+            InventoryItem(type: InventoryItem.ObjectType.blockMessage.rawValue, hash: Data()),
+            InventoryItem(type: InventoryItem.ObjectType.compactBlockMessage.rawValue, hash: Data()),
+            InventoryItem(type: InventoryItem.ObjectType.unknown.rawValue, hash: Data()),
+            InventoryItem(type: InventoryItem.ObjectType.error.rawValue, hash: Data())
+        ]
+
+        for item in items {
+            XCTAssertEqual(syncer.shouldRequest(inventoryItem: item), false)
+        }
+    }
+
+    func testTransaction() {
+        let transaction = TestData.p2pkhTransaction
+
+        try! realm.write {
+            realm.add(transaction)
+        }
+
+        let tx = syncer.transaction(forHash: transaction.reversedHashHex.reversedData!)
+        XCTAssertEqual(tx?.reversedHashHex, transaction.reversedHashHex)
+    }
+
+    func testTransaction_NoTransaction() {
+        let transaction = TestData.p2pkhTransaction
+        let tx = syncer.transaction(forHash: transaction.reversedHashHex.reversedData!)
+        XCTAssertEqual(tx, nil)
+    }
+
 }

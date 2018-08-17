@@ -76,11 +76,20 @@ extension Syncer: PeerGroupDelegate {
     }
 
     func shouldRequest(inventoryItem: InventoryItem) -> Bool {
-        return true
+        let realm = realmFactory.realm
+
+        switch inventoryItem.objectType {
+            case .transaction:
+                return realm.objects(Transaction.self).filter("reversedHashHex = %@", inventoryItem.hash.reversedHex).isEmpty
+            case .filteredBlockMessage:
+                return realm.objects(Block.self).filter("reversedHeaderHashHex = %@ AND synced = %@", inventoryItem.hash.reversedHex, false).isEmpty
+            case .blockMessage, .compactBlockMessage, .unknown, .error:
+                return false
+        }
     }
 
     func transaction(forHash hash: Data) -> Transaction? {
-        return nil
+        return realmFactory.realm.objects(Transaction.self).filter("reversedHashHex = %@", hash.reversedHex).first
     }
 
 }
