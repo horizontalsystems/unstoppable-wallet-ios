@@ -7,14 +7,14 @@ class TransactionHandler {
     }
 
     let realmFactory: RealmFactory
-    let worker: TransactionWorker
+    let processor: TransactionProcessor
 
-    init(realmFactory: RealmFactory, worker: TransactionWorker) {
+    init(realmFactory: RealmFactory, processor: TransactionProcessor) {
         self.realmFactory = realmFactory
-        self.worker = worker
+        self.processor = processor
     }
 
-    func handle(blockHeaderHash: Data, transactions: [Transaction]) throws {
+    func handle(blockTransactions transactions: [Transaction], blockHeaderHash: Data) throws {
         let realm = realmFactory.realm
 
         guard let block = realm.objects(Block.self).filter("reversedHeaderHashHex = %@", blockHeaderHash.reversedHex).last else {
@@ -28,15 +28,22 @@ class TransactionHandler {
 
         print("HANDLE: \(transactions.count) --- \(Thread.current)")
         if !transactions.isEmpty {
-            worker.handle(transactionHexes: transactions.map { $0.reversedHashHex })
+            processor.enqueueRun()
         }
     }
 
-    func handle(transaction: Transaction) throws {
+    func handle(memPoolTransactions transactions: [Transaction]) throws {
+        guard !transactions.isEmpty else {
+            return
+        }
+
         let realm = realmFactory.realm
 
         try realm.write {
-            realm.add(transaction, update: true)
+            realm.add(transactions, update: true)
         }
+
+        processor.enqueueRun()
     }
+
 }

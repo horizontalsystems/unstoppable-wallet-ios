@@ -3,30 +3,41 @@ import RealmSwift
 import RxSwift
 
 class TransactionProcessor {
-    let realmFactory: RealmFactory
-    let extractor: TransactionExtractor
-    let linker: TransactionLinker
-    let logger: Logger
+    private let realmFactory: RealmFactory
+    private let extractor: TransactionExtractor
+    private let linker: TransactionLinker
+    private let logger: Logger
+    private let queue: DispatchQueue
 
-    init(realmFactory: RealmFactory, extractor: TransactionExtractor, linker: TransactionLinker, logger: Logger) {
+    init(realmFactory: RealmFactory, extractor: TransactionExtractor, linker: TransactionLinker, logger: Logger, queue: DispatchQueue = DispatchQueue(label: "TransactionWorker", qos: .background)) {
         self.realmFactory = realmFactory
         self.extractor = extractor
         self.linker = linker
         self.logger = logger
+        self.queue = queue
     }
 
-    func process(hexes: [String]) throws {
-        print("PROCESS: \(hexes.count) --- \(Thread.current)")
+    func enqueueRun() {
+        queue.async {
+            do {
+                try self.run()
+            } catch {
+                self.logger.log(tag: "Transaction Processor Error", message: "\(error)")
+            }
+        }
+    }
+
+    private func run() throws {
+        print("PROCESSOR RUN: \(Thread.current)")
 
         let realm = realmFactory.realm
-        let pubKeys = realm.objects(PublicKey.self)
 
-        let transactions = realm.objects(Transaction.self).filter("reversedHashHex IN %@", hexes)
+        let unprocessedTransactions = realm.objects(Transaction.self).filter("processed = %@", false)
 
-        for transaction in transactions {
+        for transaction in unprocessedTransactions {
             try realm.write {
                 try extractor.extract(transaction: transaction)
-                linker.handle(transaction: transaction, realm: realm, pubKeys: pubKeys)
+                linker.handle(transaction: transaction, realm: realm)
                 transaction.processed = true
             }
         }

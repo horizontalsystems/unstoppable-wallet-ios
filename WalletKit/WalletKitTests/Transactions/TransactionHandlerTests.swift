@@ -6,71 +6,85 @@ import RealmSwift
 class TransactionHandlerTests: XCTestCase {
 
     private var mockRealmFactory: MockRealmFactory!
+    private var mockProcessor: MockTransactionProcessor!
     private var transactionHandler: TransactionHandler!
 
     private var realm: Realm!
-    private var transaction: Transaction!
-    private var rawTransaction: String!
 
     override func setUp() {
         super.setUp()
 
         mockRealmFactory = MockRealmFactory(configuration: Realm.Configuration())
-        transactionHandler = TransactionHandler(realmFactory: mockRealmFactory)
+        mockProcessor = MockTransactionProcessor(realmFactory: mockRealmFactory, extractor: TransactionExtractorStub(addressConverter: AddressConverterStub(network: TestNet())), linker: TransactionLinkerStub(), logger: LoggerStub())
 
         realm = try! Realm(configuration: Realm.Configuration(inMemoryIdentifier: "TestRealm"))
         try! realm.write { realm.deleteAll() }
 
-        let txInput = TransactionInput()
-        txInput.previousOutputTxReversedHex = "28c004efa76de2dc58921a9eb21fd1a0f5aa91286e7f44e5800ca9d76c105c86"
-        txInput.previousOutputIndex = 0
-        txInput.signatureScript = Data(hex: "47304402205c54aa165861bf5347683fb078a99188726ee2577e3554d0f77ad7c60a4b072902206f77f42f216e4c64585a60ec76a944fc83278524e5a0dfda31b58f94035d27be01")!
-        txInput.sequence = 4294967295
-
-        let txOutput = TransactionOutput()
-        txOutput.value = 4998000000
-        txOutput.lockingScript = Data(hex: "a914121e63ee09fc7e20b59d144dcce6e2700f6f1a9c87")!
-
-        transaction = Transaction()
-        transaction.reversedHashHex = Data(hex: "3e7f350bf5c2169833ad02e8ada93a5d47862fe708cdd6c9fb4c15af59e50f70")!.reversedHex
-        transaction.version = 1
-        transaction.lockTime = 0
-        transaction.inputs.append(txInput)
-        transaction.outputs.append(txOutput)
-
         stub(mockRealmFactory) { mock in
             when(mock.realm.get).thenReturn(realm)
         }
+        stub(mockProcessor) { mock in
+            when(mock.enqueueRun()).thenDoNothing()
+        }
+
+        transactionHandler = TransactionHandler(realmFactory: mockRealmFactory, processor: mockProcessor)
     }
 
     override func tearDown() {
         mockRealmFactory = nil
+        mockProcessor = nil
         transactionHandler = nil
         realm = nil
 
         super.tearDown()
     }
 
-    func testMerkleBlockTransactions() {
+    func testHandleBlockTransactions() {
+        let transaction = TestData.p2pkhTransaction
         let block = TestData.checkpointBlock
+
         try! realm.write {
             realm.add(block, update: true)
         }
 
-        try! transactionHandler.handle(blockHeaderHash: block.headerHash, transactions: [transaction])
+        try! transactionHandler.handle(blockTransactions: [transaction], blockHeaderHash: block.headerHash)
+
         let realmBlock = realm.objects(Block.self).last!
         let realmTransaction = realm.objects(Transaction.self).last!
 
         assertTransactionEqual(tx1: transaction, tx2: realmTransaction)
         XCTAssertEqual(realmBlock.headerHash, block.headerHash)
         XCTAssertEqual(realmBlock.synced, true)
+
+        verify(mockProcessor).enqueueRun()
     }
 
-    func testHandleOneTransaction() {
-        try! transactionHandler.handle(transaction: transaction)
-        let realmTransaction = realm.objects(Transaction.self).last!
+    func testHandleBlockTransactions_EmptyTransactions() {
+        let block = TestData.checkpointBlock
 
+        try! realm.write {
+            realm.add(block, update: true)
+        }
+
+        try! transactionHandler.handle(blockTransactions: [], blockHeaderHash: block.headerHash)
+
+        verify(mockProcessor, never()).enqueueRun()
+    }
+
+    func testHandleMemPoolTransactions() {
+        let transaction = TestData.p2pkhTransaction
+
+        try! transactionHandler.handle(memPoolTransactions: [transaction])
+
+        let realmTransaction = realm.objects(Transaction.self).last!
         assertTransactionEqual(tx1: transaction, tx2: realmTransaction)
+
+        verify(mockProcessor).enqueueRun()
+    }
+
+    func testHandleMemPoolTransactions_EmptyTransactions() {
+        try! transactionHandler.handle(memPoolTransactions: [])
+        verify(mockProcessor, never()).enqueueRun()
     }
 
     private func assertTransactionEqual(tx1: Transaction, tx2: Transaction) {

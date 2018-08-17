@@ -2,9 +2,10 @@ import Foundation
 import RealmSwift
 
 class TransactionLinker {
-    func handle(transaction: Transaction, realm: Realm, pubKeys: Results<PublicKey>) {
+
+    func handle(transaction: Transaction, realm: Realm) {
         linkInputs(transaction: transaction, realm: realm)
-        linkOutputs(transaction: transaction, realm: realm, pubKeys: pubKeys)
+        linkOutputs(transaction: transaction, realm: realm)
     }
 
     private func linkInputs(transaction: Transaction, realm: Realm) {
@@ -20,11 +21,11 @@ class TransactionLinker {
         }
     }
 
-    private func linkOutputs(transaction: Transaction, realm: Realm, pubKeys: Results<PublicKey>) {
+    private func linkOutputs(transaction: Transaction, realm: Realm) {
         for output in transaction.outputs {
-            let pubKey = pubKeys.filter({ $0.keyHash == output.keyHash }).first
+            let pubKey = output.keyHash.map { realm.objects(PublicKey.self).filter("keyHash = %@", $0).first }
 
-            if pubKey != nil {
+            if let pubKey = pubKey {
                 transaction.isMine = true
                 output.publicKey = pubKey
             }

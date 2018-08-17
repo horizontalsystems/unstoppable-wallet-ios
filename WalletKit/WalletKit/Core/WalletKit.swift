@@ -25,7 +25,6 @@ public class WalletKit {
 
     let addressConverter: AddressConverter
     let transactionProcessor: TransactionProcessor
-    let transactionWorker: TransactionWorker
     let transactionExtractor: TransactionExtractor
     let transactionLinker: TransactionLinker
     let transactionHandler: TransactionHandler
@@ -70,8 +69,7 @@ public class WalletKit {
         transactionExtractor = TransactionExtractor(addressConverter: addressConverter)
         transactionLinker = TransactionLinker()
         transactionProcessor = TransactionProcessor(realmFactory: realmFactory, extractor: transactionExtractor, linker: transactionLinker, logger: logger)
-        transactionWorker = TransactionWorker(realmFactory: realmFactory, processor: transactionProcessor)
-        transactionHandler = TransactionHandler(realmFactory: realmFactory, worker: transactionWorker)
+        transactionHandler = TransactionHandler(realmFactory: realmFactory, processor: transactionProcessor)
         transactionSender = TransactionSender(realmFactory: realmFactory, peerGroup: peerGroup)
         transactionBuilder = TransactionBuilder(unspentOutputSelector: unspentOutputSelector, unspentOutputProvider: unspentOutputProvider, addressConverter: addressConverter, inputSigner: inputSigner, scriptBuilder: scriptBuilder, factory: factory)
         transactionCreator = TransactionCreator(realmFactory: realmFactory, transactionBuilder: transactionBuilder)

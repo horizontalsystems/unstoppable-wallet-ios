@@ -27,7 +27,7 @@ class SyncerTests: XCTestCase {
         mockLogger = MockLogger()
         mockHeaderSyncer = MockHeaderSyncer(realmFactory: mockRealmFactory, peerGroup: PeerGroupStub(realmFactory: mockRealmFactory), configuration: ConfigurationStub())
         mockHeaderHandler = MockHeaderHandler(realmFactory: mockRealmFactory, factory: FactoryStub(), validator: BlockValidatorStub(calculator: DifficultyCalculatorStub(difficultyEncoder: DifficultyEncoderStub())), configuration: ConfigurationStub())
-        mockTransactionHandler = MockTransactionHandler(realmFactory: mockRealmFactory)
+        mockTransactionHandler = MockTransactionHandler(realmFactory: mockRealmFactory, processor: TransactionProcessorStub(realmFactory: mockRealmFactory, extractor: TransactionExtractorStub(addressConverter: AddressConverterStub(network: TestNet())), linker: TransactionLinkerStub(), logger: LoggerStub()))
 
         realm = try! Realm(configuration: Realm.Configuration(inMemoryIdentifier: "TestRealm"))
         try! realm.write { realm.deleteAll() }
@@ -45,8 +45,8 @@ class SyncerTests: XCTestCase {
             when(mock.handle(headers: any())).thenDoNothing()
         }
         stub(mockTransactionHandler) { mock in
-            when(mock.handle(blockHeaderHash: any(), transactions: any())).thenDoNothing()
-            when(mock.handle(transaction: any())).thenDoNothing()
+            when(mock.handle(blockTransactions: any(), blockHeaderHash: any())).thenDoNothing()
+            when(mock.handle(memPoolTransactions: any())).thenDoNothing()
         }
 
         syncer = Syncer(logger: mockLogger, realmFactory: mockRealmFactory)
@@ -111,13 +111,13 @@ class SyncerTests: XCTestCase {
         let transaction = TestData.p2pkhTransaction
 
         syncer.peerGroupDidReceive(blockHeaderHash: blockHeaderHash, withTransactions: [transaction])
-        verify(mockTransactionHandler).handle(blockHeaderHash: equal(to: blockHeaderHash), transactions: equal(to: [transaction]))
+        verify(mockTransactionHandler).handle(blockTransactions: equal(to: [transaction]), blockHeaderHash: equal(to: blockHeaderHash))
     }
 
     func testRunTransactions_Error() {
         let error = TestError()
         stub(mockTransactionHandler) { mock in
-            when(mock.handle(blockHeaderHash: any(), transactions: any())).thenThrow(error)
+            when(mock.handle(blockTransactions: any(), blockHeaderHash: any())).thenThrow(error)
         }
 
         let blockHeaderHash = TestData.checkpointBlock.reversedHeaderHashHex.reversedData!
@@ -131,14 +131,14 @@ class SyncerTests: XCTestCase {
         let transaction = TestData.p2pkhTransaction
         syncer.peerGroupDidReceive(transaction: transaction)
 
-        verify(mockTransactionHandler).handle(transaction: equal(to: transaction))
+        verify(mockTransactionHandler).handle(memPoolTransactions: equal(to: [transaction]))
     }
 
     func testRunTransactionHandler_Error() {
         let error = TestError()
 
         stub(mockTransactionHandler) { mock in
-            when(mock.handle(transaction: any())).thenThrow(error)
+            when(mock.handle(memPoolTransactions: any())).thenThrow(error)
         }
 
         let transaction = TestData.p2pkhTransaction

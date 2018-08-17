@@ -60,7 +60,7 @@ extension Syncer: PeerGroupDelegate {
     func peerGroupDidReceive(blockHeaderHash: Data, withTransactions transactions: [Transaction]) {
         print("BLOCK: \(blockHeaderHash.reversedHex) --- \(transactions.count)")
         do {
-            try transactionHandler?.handle(blockHeaderHash: blockHeaderHash, transactions: transactions)
+            try transactionHandler?.handle(blockTransactions: transactions, blockHeaderHash: blockHeaderHash)
         } catch {
             logger.log(tag: "Transaction Handler Error", message: "\(error)")
         }
@@ -69,7 +69,7 @@ extension Syncer: PeerGroupDelegate {
     func peerGroupDidReceive(transaction: Transaction) {
         print("TX: \(transaction.reversedHashHex)")
         do {
-            try transactionHandler?.handle(transaction: transaction)
+            try transactionHandler?.handle(memPoolTransactions: [transaction])
         } catch {
             logger.log(tag: "Transaction Handler Error", message: "\(error)")
         }

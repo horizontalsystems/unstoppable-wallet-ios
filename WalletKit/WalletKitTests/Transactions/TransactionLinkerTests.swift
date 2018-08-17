@@ -61,7 +61,7 @@ class TransactionLinkerTests: XCTestCase {
 
         XCTAssertEqual(savedNextTransaction.inputs.first!.previousOutput, nil)
         try? realm.write {
-            linker.handle(transaction: savedNextTransaction, realm: realm, pubKeys: pubKeys)
+            linker.handle(transaction: savedNextTransaction, realm: realm)
         }
         assertOutputEqual(out1: savedNextTransaction.inputs.first!.previousOutput!, out2: transaction.outputs.first!)
     }
@@ -82,7 +82,7 @@ class TransactionLinkerTests: XCTestCase {
 
         XCTAssertEqual(transaction.inputs.first!.previousOutput, nil)
         try? realm.write {
-            linker.handle(transaction: savedPreviousTransaction, realm: realm, pubKeys: pubKeys)
+            linker.handle(transaction: savedPreviousTransaction, realm: realm)
         }
         assertOutputEqual(out1: transaction.inputs.first!.previousOutput!, out2: savedPreviousTransaction.outputs.first!)
     }
@@ -96,7 +96,7 @@ class TransactionLinkerTests: XCTestCase {
         XCTAssertEqual(transaction.isMine, false)
         XCTAssertEqual(transaction.outputs[0].publicKey, nil)
         try? realm.write {
-            linker.handle(transaction: transaction, realm: realm, pubKeys: pubKeys)
+            linker.handle(transaction: transaction, realm: realm)
         }
         XCTAssertEqual(transaction.isMine, true)
         XCTAssertEqual(transaction.outputs[0].publicKey, pubKey)
@@ -120,7 +120,7 @@ class TransactionLinkerTests: XCTestCase {
 
         XCTAssertEqual(savedNextTransaction.isMine, false)
         try? realm.write {
-            linker.handle(transaction: transaction, realm: realm, pubKeys: pubKeys)
+            linker.handle(transaction: transaction, realm: realm)
         }
         XCTAssertEqual(savedNextTransaction.isMine, true)
     }
@@ -142,7 +142,7 @@ class TransactionLinkerTests: XCTestCase {
 
         XCTAssertEqual(transaction.isMine, false)
         try? realm.write {
-            linker.handle(transaction: transaction, realm: realm, pubKeys: pubKeys)
+            linker.handle(transaction: transaction, realm: realm)
         }
         XCTAssertEqual(transaction.isMine, true)
     }
