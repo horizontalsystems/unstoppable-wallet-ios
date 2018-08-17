@@ -81,9 +81,9 @@ extension Syncer: PeerGroupDelegate {
         switch inventoryItem.objectType {
             case .transaction:
                 return realm.objects(Transaction.self).filter("reversedHashHex = %@", inventoryItem.hash.reversedHex).isEmpty
-            case .filteredBlockMessage:
-                return realm.objects(Block.self).filter("reversedHeaderHashHex = %@ AND synced = %@", inventoryItem.hash.reversedHex, false).isEmpty
-            case .blockMessage, .compactBlockMessage, .unknown, .error:
+            case .blockMessage:
+                return realm.objects(Block.self).filter("reversedHeaderHashHex = %@", inventoryItem.hash.reversedHex).isEmpty
+            case .filteredBlockMessage, .compactBlockMessage, .unknown, .error:
                 return false
         }
     }
