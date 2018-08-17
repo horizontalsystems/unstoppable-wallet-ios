@@ -21,6 +21,10 @@ class TransactionHandler {
             throw HandleError.blockNotFound
         }
 
+        for transaction in transactions {
+            transaction.block = block
+        }
+
         try realm.write {
             block.synced = true
             realm.add(transactions, update: true)

@@ -55,6 +55,7 @@ class TransactionHandlerTests: XCTestCase {
         assertTransactionEqual(tx1: transaction, tx2: realmTransaction)
         XCTAssertEqual(realmBlock.headerHash, block.headerHash)
         XCTAssertEqual(realmBlock.synced, true)
+        XCTAssertEqual(realmTransaction.block, realmBlock)
 
         verify(mockProcessor).enqueueRun()
     }
@@ -78,6 +79,7 @@ class TransactionHandlerTests: XCTestCase {
 
         let realmTransaction = realm.objects(Transaction.self).last!
         assertTransactionEqual(tx1: transaction, tx2: realmTransaction)
+        XCTAssertEqual(realmTransaction.block, nil)
 
         verify(mockProcessor).enqueueRun()
     }
