@@ -174,7 +174,7 @@
 		1A564E0A6E37A68995364D81 /* TransactionInfoInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5647DBF15322999B5A1D04 /* TransactionInfoInteractor.swift */; };
 		1A564E1F7F6358FD629294B8 /* SendAmountItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56471E7D5EFBC64715051A /* SendAmountItemView.swift */; };
 		1A564E291AD4D31A893B9B52 /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564CBC6EC3E2111514EC4D /* UIView.swift */; };
-		1A564E3E29F0182A0230BC5D /* TransactionInfoBasaeValueItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564F2613ECE2DE4A6F9F79 /* TransactionInfoBasaeValueItem.swift */; };
+		1A564E3E29F0182A0230BC5D /* TransactionInfoBaseValueItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564F2613ECE2DE4A6F9F79 /* TransactionInfoBaseValueItem.swift */; };
 		1A564F39A93F00B10861859F /* AmountInputField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564D254A8C867D16CA9166 /* AmountInputField.swift */; };
 		1A564F4AA83DC47DC9840A69 /* SettingsTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564F747A4D0B78E5DF6F1B /* SettingsTheme.swift */; };
 		1A564FB62EBBA50489895BEF /* WalletCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564B746C8A6451D81B27D4 /* WalletCell.swift */; };
@@ -406,7 +406,7 @@
 		1A564EC30D391F8893C1D514 /* UIFont.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIFont.swift; sourceTree = "<group>"; };
 		1A564ED9673CF0765C7948DE /* UIAlertController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIAlertController.swift; sourceTree = "<group>"; };
 		1A564EDCEACE83D95F6AE528 /* DepositRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DepositRouter.swift; sourceTree = "<group>"; };
-		1A564F2613ECE2DE4A6F9F79 /* TransactionInfoBasaeValueItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionInfoBasaeValueItem.swift; sourceTree = "<group>"; };
+		1A564F2613ECE2DE4A6F9F79 /* TransactionInfoBaseValueItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionInfoBaseValueItem.swift; sourceTree = "<group>"; };
 		1A564F3B10EF814E1D330CAD /* DepositShareButtonItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DepositShareButtonItem.swift; sourceTree = "<group>"; };
 		1A564F5FA00D064D9F3F0AF7 /* SettingsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsCell.swift; sourceTree = "<group>"; };
 		1A564F747A4D0B78E5DF6F1B /* SettingsTheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsTheme.swift; sourceTree = "<group>"; };
@@ -1001,7 +1001,7 @@
 				1A56469DF9D0C335228E88EE /* TransactionTitleItemView.swift */,
 				1A56464DB0EEF75F63C91760 /* TransactionAmountItem.swift */,
 				1A5642EFA8A991436AED3B44 /* TransactionAmountItemView.swift */,
-				1A564F2613ECE2DE4A6F9F79 /* TransactionInfoBasaeValueItem.swift */,
+				1A564F2613ECE2DE4A6F9F79 /* TransactionInfoBaseValueItem.swift */,
 				1A5645282A89F1EE4A04D5DD /* TransactionInfoBaseValueItemView.swift */,
 				1A5646C9024F054AE8115A30 /* TransactionStatusItem.swift */,
 				1A564718FE2139B7EBCCB3DE /* TransactionFiatAmountItem.swift */,
@@ -1475,7 +1475,7 @@
 				1A564B955AE4E27AD7B232CC /* TransactionTitleItem.swift in Sources */,
 				1A564D9038D65D88CF97329C /* TransactionTitleItemView.swift in Sources */,
 				1A5641061673702B10D858BF /* TransactionInfoTheme.swift in Sources */,
-				1A564E3E29F0182A0230BC5D /* TransactionInfoBasaeValueItem.swift in Sources */,
+				1A564E3E29F0182A0230BC5D /* TransactionInfoBaseValueItem.swift in Sources */,
 				1A5647489DF968F20446631F /* TransactionInfoBaseValueItemView.swift in Sources */,
 				1A5640E91AA1D79E1735F5FC /* TransactionStatusItem.swift in Sources */,
 				1A5648BE3DCA7B22706AA27D /* TransactionFiatAmountItem.swift in Sources */,
