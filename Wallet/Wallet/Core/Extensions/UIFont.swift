@@ -7,6 +7,7 @@ extension UIFont {
     static let cryptoHeadline = UIFont.systemFont(ofSize: 17, weight: .semibold)
     static let cryptoBody2 = UIFont.systemFont(ofSize: 17, weight: .regular)
     static let cryptoCaptionItalic = UIFont.systemFont(ofSize: 15, weight: .regular).with(traits: .traitItalic)
+    static let cryptoCaption = UIFont.systemFont(ofSize: 15, weight: .regular)
     static let cryptoCaption1 = UIFont.systemFont(ofSize: 14, weight: .regular)
     static let cryptoCaption2 = UIFont.systemFont(ofSize: 13, weight: .regular)
     static let cryptoCaption3 = UIFont.systemFont(ofSize: 12, weight: .regular)

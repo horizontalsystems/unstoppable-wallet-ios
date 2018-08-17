@@ -7,6 +7,7 @@ class SettingsCell: UITableViewCell {
     var disclosureImageView = UIImageView(image: UIImage(named: "Disclosure Indicator"))
 
     var selectView = UIView()
+    let separator = UIView()
 
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -41,7 +42,6 @@ class SettingsCell: UITableViewCell {
             maker.size.equalTo(SettingsTheme.disclosureSize)
         }
 
-        let separator = UIView()
         separator.backgroundColor = SettingsTheme.cellBackground
         contentView.addSubview(separator)
         separator.snp.makeConstraints { maker in
@@ -55,13 +55,18 @@ class SettingsCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func bind(titleIcon: UIImage?, title: String, showDisclosure: Bool = false) {
+    func bind(titleIcon: UIImage?, title: String, showDisclosure: Bool = false, last: Bool = false) {
         iconImageView.image = titleIcon
         titleLabel.text = title
         disclosureImageView.isHidden = !showDisclosure
         disclosureImageView.snp.updateConstraints { maker in
             maker.width.equalTo(showDisclosure ? SettingsTheme.disclosureSize.width : 0)
             maker.trailing.equalToSuperview().offset(showDisclosure ? -self.layoutMargins.right : 0)
+        }
+
+        separator.snp.updateConstraints { maker in
+            let float = SettingsTheme.separatorInset + self.layoutMargins.left
+            maker.leading.equalToSuperview().offset(last ? 0 : float)
         }
     }
 

@@ -5,7 +5,6 @@ class TransactionsTheme {
     static let infoIconHighlightedTintColor = UIColor.cryptoWhite50
     static let dateLabelFont = UIFont.cryptoCaption1
     static let dateLabelTextColor = UIColor.cryptoGray
-    static let statusLabelFont = UIFont.cryptoCaptionItalic
     static let statusLabelTextColor = UIColor.gray
     static let amountLabelFont = UIFont.cryptoHeadline
     static let incomingTextColor = UIColor.cryptoGreen

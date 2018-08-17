@@ -22,13 +22,13 @@ class SettingsToggleCell: SettingsCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func bind(titleIcon: UIImage?, title: String, isOn: Bool, showDisclosure: Bool, onToggle: (() -> ())? = nil) {
-        super.bind(titleIcon: titleIcon, title: title, showDisclosure: showDisclosure)
+    func bind(titleIcon: UIImage?, title: String, isOn: Bool, showDisclosure: Bool, last: Bool = false, onToggle: (() -> ())? = nil) {
+        super.bind(titleIcon: titleIcon, title: title, showDisclosure: showDisclosure, last: last)
         self.onToggle = onToggle
         toggleView.isOn = isOn
     }
 
-    override func bind(titleIcon: UIImage?, title: String, showDisclosure: Bool) {
+    override func bind(titleIcon: UIImage?, title: String, showDisclosure: Bool, last: Bool = false) {
         fatalError("use bind with toggle")
     }
 

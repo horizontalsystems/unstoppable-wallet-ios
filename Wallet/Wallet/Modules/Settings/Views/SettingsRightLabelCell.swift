@@ -19,12 +19,12 @@ class SettingsRightLabelCell: SettingsCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func bind(titleIcon: UIImage?, title: String, rightText: String?, showDisclosure: Bool) {
-        super.bind(titleIcon: titleIcon, title: title, showDisclosure: showDisclosure)
+    func bind(titleIcon: UIImage?, title: String, rightText: String?, showDisclosure: Bool, last: Bool = false) {
+        super.bind(titleIcon: titleIcon, title: title, showDisclosure: showDisclosure, last: last)
         rightLabel.text = rightText
     }
 
-    override func bind(titleIcon: UIImage?, title: String, showDisclosure: Bool) {
+    override func bind(titleIcon: UIImage?, title: String, showDisclosure: Bool, last: Bool = false) {
         fatalError("use bind with right text")
     }
 

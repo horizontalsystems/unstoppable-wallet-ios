@@ -72,7 +72,7 @@ class SettingsViewController: UIViewController, SectionsDataSource {
         }))
         appSettingsRows.append(Row<SettingsCell>(id: "import_wallet", hash: "import_wallet", height: SettingsTheme.cellHeight, bind: { cell, _ in
             cell.selectionStyle = .default
-            cell.bind(titleIcon: UIImage(named: "Import Wallet Icon"), title: "settings.cell.import_wallet".localized, showDisclosure: true)
+            cell.bind(titleIcon: UIImage(named: "Import Wallet Icon"), title: "settings.cell.import_wallet".localized, showDisclosure: true, last: true)
         }, action: { _ in
             print("tap import wallet")
         }))
@@ -87,7 +87,7 @@ class SettingsViewController: UIViewController, SectionsDataSource {
         }))
         appearanceRows.append(Row<SettingsToggleCell>(id: "light_mode", hash: "light_mode", height: SettingsTheme.cellHeight, bind: { cell, _ in
             cell.selectionStyle = .none
-            cell.bind(titleIcon: UIImage(named: "Light Mode Icon"), title: "settings.cell.light_mode".localized, isOn: false, showDisclosure: false, onToggle: {
+            cell.bind(titleIcon: UIImage(named: "Light Mode Icon"), title: "settings.cell.light_mode".localized, isOn: false, showDisclosure: false, last: true, onToggle: {
                 print("on toggle light mode")
             })
         }))
@@ -103,7 +103,7 @@ class SettingsViewController: UIViewController, SectionsDataSource {
         otherRows.append(Row<SettingsRightLabelCell>(id: "app_version", hash: "app_version", height: SettingsTheme.cellHeight, bind: { cell, _ in
             //stab version
             cell.selectionStyle = .none
-            cell.bind(titleIcon: UIImage(named: "About Icon"), title: "settings.cell.app_version".localized, rightText: "0.0.1", showDisclosure: false)
+            cell.bind(titleIcon: UIImage(named: "About Icon"), title: "settings.cell.app_version".localized, rightText: "0.0.1", showDisclosure: false, last: true)
         }))
 
         let infoFooter: ViewState<SettingsInfoFooter> = .cellType(hash: "info_view", binder: { view in
@@ -137,7 +137,7 @@ class SettingsViewController: UIViewController, SectionsDataSource {
         }))
         debugRows.append(Row<SettingsCell>(id: "debug_refresh", hash: "debug_refresh", height: SettingsTheme.cellHeight, bind: { cell, _ in
             cell.selectionStyle = .default
-            cell.bind(titleIcon: UIImage(named: "Bug Icon"), title: "Refresh", showDisclosure: false)
+            cell.bind(titleIcon: UIImage(named: "Bug Icon"), title: "Refresh", showDisclosure: false, last: true)
         }, action: { [weak self] _ in
             self?.refresh()
             self?.tableView.deselectRow(at: self!.tableView.indexPathForSelectedRow!, animated: true)
