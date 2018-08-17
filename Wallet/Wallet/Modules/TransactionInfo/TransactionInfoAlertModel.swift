@@ -3,9 +3,9 @@ import GrouviActionSheet
 
 class TransactionInfoAlertModel: BaseAlertModel {
 
-    init(transaction: TransactionRecordViewItem, onCopyFromAddress: (() -> ())? = nil) {
+    init(transaction: TransactionRecordViewItem, onCopyFromAddress: (() -> ())? = nil, onFullInfo: (() -> ())? = nil) {
         let titleItem = TransactionTitleItem(transaction: transaction, tag: 0, required: true, onInfo: {
-            print("on full info")
+            onFullInfo?()
         })
 
         super.init()

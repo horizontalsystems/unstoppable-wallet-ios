@@ -19,7 +19,6 @@ class WalletPresenter {
 extension WalletPresenter: IWalletInteractorDelegate {
 
     func didFetch(walletBalances: [WalletBalanceItem]) {
-        print("didFetch")
         self.walletBalances = walletBalances
 
         var totalBalance: Double = 0

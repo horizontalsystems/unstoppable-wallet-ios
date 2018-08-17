@@ -10,4 +10,5 @@ public class AppTheme {
 
     static let actionSheetBackgroundColor = UIColor.cryptoBarsColor
     static let inputBackgroundColor = UIColor.white
+    static let controllerBackground = UIColor.cryptoDark
 }

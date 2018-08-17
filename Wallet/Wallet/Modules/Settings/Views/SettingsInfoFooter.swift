@@ -3,6 +3,8 @@ import SnapKit
 
 class SettingsInfoFooter: UITableViewHeaderFooterView {
 
+    let linkButton = RespondButton()
+
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
         backgroundView = UIView()
@@ -26,9 +28,6 @@ class SettingsInfoFooter: UITableViewHeaderFooterView {
         }
         imageView.image = UIImage(named: "Logo Image")
 
-        let linkButton = RespondButton(onTap: {
-            print("tap link")
-        })
         linkButton.titleLabel.snp.remakeConstraints { maker in
             maker.edges.equalToSuperview()
         }

@@ -1,4 +1,4 @@
-import Foundation
+import UIKit
 
 protocol ITransactionInfoView: class {
     func showTransactionItem(transactionRecordViewItem: TransactionRecordViewItem)
@@ -10,6 +10,8 @@ protocol ITransactionInfoViewDelegate: class {
     func viewDidLoad()
     func onLessMoreClick()
     func onCopyFromAddress()
+    func onShowFullInfo()
+    func onCreate(controller: UIViewController)
     func destroy()
 }
 
@@ -22,4 +24,7 @@ protocol ITransactionInfoInteractorDelegate: class {
     func didGetTransactionInfo(txRecordViewItem: TransactionRecordViewItem)
 }
 
-protocol ITransactionInfoRouter {}
+protocol ITransactionInfoRouter {
+    func showFullInfo(transaction: TransactionRecordViewItem)
+    func onCreate(controller: UIViewController)
+}

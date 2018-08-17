@@ -60,7 +60,6 @@ extension WalletInteractor: IWalletInteractor {
     }
 
     private func refresh() {
-        print("refresh")
         let items: [WalletBalanceItem] = totalValues.compactMap { totalValueMap in
             let (coinCode, totalValue) = totalValueMap
 

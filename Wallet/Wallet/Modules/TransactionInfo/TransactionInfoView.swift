@@ -17,12 +17,15 @@ extension TransactionInfoView: ITransactionInfoView {
     func showTransactionItem(transactionRecordViewItem: TransactionRecordViewItem) {
         let transactionInfoAlertModel = TransactionInfoAlertModel(transaction: transactionRecordViewItem, onCopyFromAddress: { [weak self] in
             self?.delegate.onCopyFromAddress()
+        }, onFullInfo: { [weak self] in
+            self?.delegate.onShowFullInfo()
         })
         let viewController = ActionSheetController(withModel: transactionInfoAlertModel, actionStyle: .sheet(showDismiss: false))
         viewController.onDismiss = { [weak self] _ in
             self?.delegate.destroy()
         }
         viewController.show(fromController: controller)
+        delegate.onCreate(controller: viewController)
     }
 
     func expand() {

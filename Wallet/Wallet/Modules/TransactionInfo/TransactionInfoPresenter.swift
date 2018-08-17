@@ -1,4 +1,4 @@
-import Foundation
+import UIKit
 
 class TransactionInfoPresenter {
     var interactor: ITransactionInfoInteractor
@@ -7,6 +7,8 @@ class TransactionInfoPresenter {
 
     var coinCode: String
     var transactionHash: String
+
+    var transaction: TransactionRecordViewItem?
 
     init(interactor: ITransactionInfoInteractor, router: ITransactionInfoRouter, coinCode: String, transactionHash: String) {
         self.interactor = interactor
@@ -30,6 +32,16 @@ extension TransactionInfoPresenter: ITransactionInfoViewDelegate {
         interactor.onCopyFromAddress()
     }
 
+    func onShowFullInfo() {
+        if let transaction = transaction {
+            router.showFullInfo(transaction: transaction)
+        }
+    }
+
+    func onCreate(controller: UIViewController) {
+        router.onCreate(controller: controller)
+    }
+
     func destroy() {
         view = nil
     }
@@ -38,6 +50,7 @@ extension TransactionInfoPresenter: ITransactionInfoViewDelegate {
 extension TransactionInfoPresenter: ITransactionInfoInteractorDelegate {
 
     func didGetTransactionInfo(txRecordViewItem: TransactionRecordViewItem) {
+        transaction = txRecordViewItem
         view?.showTransactionItem(transactionRecordViewItem: txRecordViewItem)
     }
 

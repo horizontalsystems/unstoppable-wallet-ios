@@ -40,7 +40,7 @@ class SettingsViewController: UIViewController, SectionsDataSource {
         title = "settings.title".localized
 
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Logout", style: .plain, target: self, action: #selector(logout))
-        view.backgroundColor = SettingsTheme.controllerBackground
+        view.backgroundColor = AppTheme.controllerBackground
 
         tableView.reload()
     }
@@ -54,7 +54,6 @@ class SettingsViewController: UIViewController, SectionsDataSource {
     }
 
     func buildSections() -> [SectionProtocol] {
-        print("buildSections")
         var sections = [SectionProtocol]()
 
         var appSettingsRows = [RowProtocol]()
@@ -108,7 +107,9 @@ class SettingsViewController: UIViewController, SectionsDataSource {
         }))
 
         let infoFooter: ViewState<SettingsInfoFooter> = .cellType(hash: "info_view", binder: { view in
-            print("bind")
+            view.linkButton.onTap = {
+                UIApplication.shared.open(URL(string: "http://github.com/horizontalsystems/")!)
+            }
         }, dynamicHeight: { _ in SettingsTheme.infoFooterHeight })
         sections.append(Section(id: "app_settings", headerState: .marginColor(height: SettingsTheme.headerHeight, color: .clear), footerState: infoFooter, rows: otherRows))
 

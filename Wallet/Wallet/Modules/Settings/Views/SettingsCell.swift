@@ -6,7 +6,7 @@ class SettingsCell: UITableViewCell {
     var titleLabel = UILabel()
     var disclosureImageView = UIImageView(image: UIImage(named: "Disclosure Indicator"))
 
-    var selectWrapperView = UIView()
+    var selectView = UIView()
 
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -14,12 +14,12 @@ class SettingsCell: UITableViewCell {
         contentView.backgroundColor = SettingsTheme.cellBackground
         separatorInset.left = 0
 
-        selectWrapperView.backgroundColor = SettingsTheme.cellBackground
-        contentView.addSubview(selectWrapperView)
-        selectWrapperView.snp.makeConstraints { maker in
+        selectView.backgroundColor = SettingsTheme.cellBackground
+        contentView.addSubview(selectView)
+        selectView.snp.makeConstraints { maker in
             maker.edges.equalToSuperview()
         }
-        selectWrapperView.alpha = 0
+        selectView.alpha = 0
 
         contentView.addSubview(iconImageView)
         iconImageView.snp.makeConstraints { maker in
@@ -69,10 +69,10 @@ class SettingsCell: UITableViewCell {
         guard selectionStyle != .none else { return }
         if animated {
             UIView.animate(withDuration: AppTheme.defaultAnimationDuration) {
-                self.selectWrapperView.alpha = highlighted ? 1 : 0
+                self.selectView.alpha = highlighted ? 1 : 0
             }
         } else {
-            selectWrapperView.alpha = highlighted ? 1 : 0
+            selectView.alpha = highlighted ? 1 : 0
         }
     }
 
@@ -80,10 +80,10 @@ class SettingsCell: UITableViewCell {
         guard selectionStyle != .none else { return }
         if animated {
             UIView.animate(withDuration: AppTheme.defaultAnimationDuration) {
-                self.selectWrapperView.alpha = selected ? 1 : 0
+                self.selectView.alpha = selected ? 1 : 0
             }
         } else {
-            selectWrapperView.alpha = selected ? 1 : 0
+            selectView.alpha = selected ? 1 : 0
         }
     }
 

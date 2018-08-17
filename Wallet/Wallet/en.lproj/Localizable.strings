@@ -70,6 +70,22 @@
 "tx_info.bottom_sheet.from_hash" = "From:";
 "tx_info.bottom_sheet.id_hash" = "ID:";
 
+"full_transaction_info.navigation_bar.title" = "Details";
+"full_transaction_info.navigation_bar.share" = "Share";
+"full_transaction_info.cell.size" = "Size:";
+"full_transaction_info.cell.fee_rate" = "Fee Rate:";
+"full_transaction_info.cell.received_time" = "Received Time:";
+"full_transaction_info.cell.mined_time" = "Mined Time:";
+"full_transaction_info.cell.included_in_block" = "Included in Block:";
+"full_transaction_info.cell.included_in_block.confirmed" = "Confirmed";
+"full_transaction_info.cell.included_in_block.unconfirmed" = "Unconfirmed";
+"full_transaction_info.cell.lock_time" = "Lock Time:";
+"full_transaction_info.cell.from" = "From:";
+"full_transaction_info.cell.to" = "To:";
+"full_transaction_info.cell.fee" = "Fee:";
+"full_transaction_info.cell.received" = "Received:";
+"full_transaction_info.cell.sent" = "Sent:";
+
 "settings.title" = "Settings";
 "settings.tab_bar_item" = "Settings";
 "settings.cell.security_center" = "Security Center";
