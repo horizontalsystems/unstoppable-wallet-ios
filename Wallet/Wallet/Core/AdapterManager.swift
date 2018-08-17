@@ -16,6 +16,9 @@ class AdapterManager {
 
 extension AdapterManager: IAdapterListener {
 
+    func updateBalance() {
+    }
+
     func handle(transactionRecords: [TransactionRecord]) {
         let realm = try! Realm()
         try? realm.write {

@@ -132,6 +132,7 @@ class TransactionBuilderTests: XCTestCase{
 
         XCTAssertNotEqual(resultTx.reversedHashHex, "")
         XCTAssertEqual(resultTx.status, .new)
+        XCTAssertEqual(resultTx.isMine, true)
         XCTAssertEqual(resultTx.inputs.count, 1)
         XCTAssertEqual(resultTx.inputs[0].previousOutput!, unspentOutputs[0])
         XCTAssertEqual(resultTx.outputs.count, 2)

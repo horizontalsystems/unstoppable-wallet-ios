@@ -35,23 +35,30 @@ extension WalletInteractor: IWalletInteractor {
 //                })
 //                .disposed(by: disposeBag)
 
-        storage.getBalances()
-                .subscribe(onNext: { [weak self] changeset in
-                    changeset.array.forEach { balance in
-                        self?.totalValues[balance.coinCode] = balance.amount
-                    }
-                    self?.refresh()
-                })
-                .disposed(by: disposeBag)
+        for adapter in AdapterManager.shared.adapters {
+            totalValues[adapter.coin.code] = Double(adapter.balance) / 100000000
+            exchangeRates[adapter.coin.code] = 7000
+        }
 
-        storage.getExchangeRates()
-                .subscribe(onNext: { [weak self] changeset in
-                    for rate in changeset.array {
-                        self?.exchangeRates[rate.code] = rate.value
-                    }
-                    self?.refresh()
-                })
-                .disposed(by: disposeBag)
+        refresh()
+
+//        storage.getBalances()
+//                .subscribe(onNext: { [weak self] changeset in
+//                    changeset.array.forEach { balance in
+//                        self?.totalValues[balance.coinCode] = balance.amount
+//                    }
+//                    self?.refresh()
+//                })
+//                .disposed(by: disposeBag)
+
+//        storage.getExchangeRates()
+//                .subscribe(onNext: { [weak self] changeset in
+//                    for rate in changeset.array {
+//                        self?.exchangeRates[rate.code] = rate.value
+//                    }
+//                    self?.refresh()
+//                })
+//                .disposed(by: disposeBag)
 
 //        syncManager.syncSubject
 //                .subscribeAsync(disposeBag: disposeBag, onNext: { [weak self] status in
@@ -73,9 +80,6 @@ extension WalletInteractor: IWalletInteractor {
 
         if !items.isEmpty {
             delegate?.didFetch(walletBalances: items)
-        } else {
-            //stab
-            delegate?.didFetch(walletBalances: [])
         }
     }
 

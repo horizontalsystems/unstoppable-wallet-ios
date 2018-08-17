@@ -114,6 +114,13 @@ public class WalletKit {
         return realmFactory.realm.objects(Transaction.self).filter("isMine = %@", true)
     }
 
+    public var unspentOutputsRealmResults: Results<TransactionOutput> {
+        return realmFactory.realm.objects(TransactionOutput.self)
+                .filter("publicKey != nil")
+                .filter("scriptType = %@ OR scriptType = %@", ScriptType.p2pkh.rawValue, ScriptType.p2pk.rawValue)
+                .filter("inputs.@count = %@", 0)
+    }
+
     public func send(to address: String, value: Int) throws {
         try transactionCreator.create(to: address, value: value)
     }
