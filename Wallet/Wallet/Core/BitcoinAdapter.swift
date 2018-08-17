@@ -6,9 +6,21 @@ class BitcoinAdapter {
     private let realmFileName = "WalletKit.realm"
 
     private let walletKit: WalletKit
+    private var unspentOutputsNotificationToken: NotificationToken?
     private var transactionsNotificationToken: NotificationToken?
 
     weak var listener: IAdapterListener?
+
+    let coin: Coin = Bitcoin()
+    var balance: Int {
+        var balance = 0
+
+        for output in walletKit.unspentOutputsRealmResults {
+            balance += output.value
+        }
+
+        return balance
+    }
 
     init(words: [String]) {
         let documentsUrl = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
@@ -16,12 +28,17 @@ class BitcoinAdapter {
 
         walletKit = WalletKit(withWords: words, realmConfiguration: configuration)
 
+        unspentOutputsNotificationToken = walletKit.unspentOutputsRealmResults.observe { [weak self] changes in
+            self?.listener?.updateBalance()
+        }
+
         transactionsNotificationToken = walletKit.transactionsRealmResults.observe { [weak self] changes in
             self?.onTransactionsChanged(changes: changes)
         }
     }
 
     deinit {
+        unspentOutputsNotificationToken?.invalidate()
         transactionsNotificationToken?.invalidate()
     }
 
