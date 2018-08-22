@@ -22,7 +22,7 @@ class HeaderHandlerTests: XCTestCase {
         mockRealmFactory = MockRealmFactory(configuration: Realm.Configuration())
         mockFactory = MockFactory()
         mockValidator = MockBlockValidator(calculator: DifficultyCalculatorStub(difficultyEncoder: DifficultyEncoderStub()))
-        mockBlockSyncer = MockBlockSyncer(realmFactory: mockRealmFactory, peerGroup: PeerGroupStub(realmFactory: mockRealmFactory))
+        mockBlockSyncer = MockBlockSyncer(realmFactory: mockRealmFactory, peerGroup: PeerGroupStub(realmFactory: mockRealmFactory, configuration: Configuration(testNet: true)))
         mockConfiguration = MockConfiguration()
         mockNetwork = MockNetworkProtocol()
 

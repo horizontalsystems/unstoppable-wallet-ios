@@ -24,6 +24,7 @@ public class WalletKit {
     let headerHandler: HeaderHandler
 
     let addressConverter: AddressConverter
+    let scriptConverter: ScriptConverter
     let transactionProcessor: TransactionProcessor
     let transactionExtractor: TransactionExtractor
     let transactionLinker: TransactionLinker
@@ -66,7 +67,8 @@ public class WalletKit {
         unspentOutputProvider = UnspentOutputProvider(realmFactory: realmFactory)
 
         addressConverter = AddressConverter(network: configuration.network)
-        transactionExtractor = TransactionExtractor(addressConverter: addressConverter)
+        scriptConverter = ScriptConverter()
+        transactionExtractor = TransactionExtractor(scriptConverter: scriptConverter, addressConverter: addressConverter)
         transactionLinker = TransactionLinker()
         transactionProcessor = TransactionProcessor(realmFactory: realmFactory, extractor: transactionExtractor, linker: transactionLinker, logger: logger)
         transactionHandler = TransactionHandler(realmFactory: realmFactory, processor: transactionProcessor)

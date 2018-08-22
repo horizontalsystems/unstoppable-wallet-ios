@@ -18,7 +18,7 @@ class HeaderSyncerTests: XCTestCase {
         super.setUp()
 
         mockRealmFactory = MockRealmFactory(configuration: Realm.Configuration())
-        mockPeerGroup = MockPeerGroup(realmFactory: mockRealmFactory)
+        mockPeerGroup = MockPeerGroup(realmFactory: mockRealmFactory, configuration: Configuration(testNet: true))
         mockConfiguration = MockConfiguration()
         mockNetwork = MockNetworkProtocol()
 

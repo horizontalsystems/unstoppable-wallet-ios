@@ -17,7 +17,7 @@ class TransactionSenderTests: XCTestCase {
         super.setUp()
 
         mockRealmFactory = MockRealmFactory(configuration: Realm.Configuration())
-        mockPeerGroup = MockPeerGroup(realmFactory: mockRealmFactory)
+        mockPeerGroup = MockPeerGroup(realmFactory: mockRealmFactory, configuration: Configuration(testNet: true))
 
         realm = try! Realm(configuration: Realm.Configuration(inMemoryIdentifier: "TestRealm"))
         try! realm.write { realm.deleteAll() }

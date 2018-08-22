@@ -20,10 +20,11 @@ class P2PKHExtractorTests: XCTestCase {
 
     func testValidExtract() {
         let data = Data(hex: "76a914cbc20a7664f2f69e5355aa427045bc15e7c6c77288ac")!
+        let chunks = [Chunk(scriptData: data, index: 0), Chunk(scriptData: data, index: 1), Chunk(scriptData: data, index: 2, payloadRange: 3..<23), Chunk(scriptData: data, index: 23), Chunk(scriptData: data, index: 24)]
         let pubKey = Data(hex: "cbc20a7664f2f69e5355aa427045bc15e7c6c772")!
 
         do {
-            let test = try extractor.extract(from: data)
+            let test = try extractor.extract(from: Script(with: data, chunks: chunks))
             XCTAssertEqual(test, pubKey)
         } catch let error {
             XCTFail("\(error) Exception Thrown")
@@ -32,12 +33,13 @@ class P2PKHExtractorTests: XCTestCase {
 
     func testInvalidLength() {
         let data = Data(hex: "76a914cbc20a7664f2f6945e5355aa427045bc15e7c6c77288ac")!
+        let chunks = [Chunk(scriptData: data, index: 0), Chunk(scriptData: data, index: 1), Chunk(scriptData: data, index: 2, payloadRange: 3..<23), Chunk(scriptData: data, index: 23), Chunk(scriptData: data, index: 24), Chunk(scriptData: data, index: 25)]
 
         do {
-            _ = try extractor.extract(from: data)
+            _ = try extractor.extract(from: Script(with: data, chunks: chunks))
             XCTFail("No Exception Thrown")
-        } catch let error as ScriptExtractorError {
-            XCTAssertEqual(error, ScriptExtractorError.wrongScriptLength)
+        } catch let error as ScriptError {
+            XCTAssertEqual(error, ScriptError.wrongScriptLength)
         } catch {
             XCTFail("Unknown exception thrown")
         }
@@ -45,12 +47,13 @@ class P2PKHExtractorTests: XCTestCase {
 
     func testInvalidStartSequence() {
         let data = Data(hex: "77a914cbc20a7664f2f6945e5355aa4270bc15e7c6c77288ac")!
+        let chunks = [Chunk(scriptData: data, index: 0), Chunk(scriptData: data, index: 1), Chunk(scriptData: data, index: 2, payloadRange: 3..<23), Chunk(scriptData: data, index: 23), Chunk(scriptData: data, index: 24)]
 
         do {
-            _ = try extractor.extract(from: data)
+            _ = try extractor.extract(from: Script(with: data, chunks: chunks))
             XCTFail("No Exception Thrown")
-        } catch let error as ScriptExtractorError {
-            XCTAssertEqual(error, ScriptExtractorError.wrongSequence)
+        } catch let error as ScriptError {
+            XCTAssertEqual(error, ScriptError.wrongSequence)
         } catch {
             XCTFail("Unknown exception thrown")
         }
@@ -58,12 +61,13 @@ class P2PKHExtractorTests: XCTestCase {
 
     func testInvalidFinishSequence() {
         let data = Data(hex: "76a914cbc20a7664f2f6945e5355aa4270bc15e7c6c77288a3")!
+        let chunks = [Chunk(scriptData: data, index: 0), Chunk(scriptData: data, index: 1), Chunk(scriptData: data, index: 2, payloadRange: 3..<23), Chunk(scriptData: data, index: 23), Chunk(scriptData: data, index: 24)]
 
         do {
-            _ = try extractor.extract(from: data)
+            _ = try extractor.extract(from: Script(with: data, chunks: chunks))
             XCTFail("No Exception Thrown")
-        } catch let error as ScriptExtractorError {
-            XCTAssertEqual(error, ScriptExtractorError.wrongSequence)
+        } catch let error as ScriptError {
+            XCTAssertEqual(error, ScriptError.wrongSequence)
         } catch {
             XCTFail("Unknown exception thrown")
         }

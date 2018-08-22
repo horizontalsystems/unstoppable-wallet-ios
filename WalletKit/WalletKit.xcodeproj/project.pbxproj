@@ -85,13 +85,19 @@
 		3C5E94E5E0B9797326D0784C /* Pods_WalletKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E17E11DAB1BF27E1CA22EB08 /* Pods_WalletKit.framework */; };
 		58AAA13EB1FBA5831D60FE3E /* TransactionSender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAD56FBE3DC74548046F5 /* TransactionSender.swift */; };
 		58AAA1702C9422A8EBA464D7 /* UnspentOutputSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA983B426801C46003567 /* UnspentOutputSelector.swift */; };
+		58AAA19EA96193409D8AA8EC /* ScriptConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAC8BAD29CC18864884DB /* ScriptConverter.swift */; };
+		58AAA1E87B62806CD5891D43 /* Chunk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA3BE8FA350BD415CD5B3 /* Chunk.swift */; };
 		58AAA3492A592C937473454F /* ScriptBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAF2482982ED7215EEBF9 /* ScriptBuilder.swift */; };
 		58AAA36E48DB45B72112973B /* TransactionCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAC66042A881E2F74AFD6 /* TransactionCreator.swift */; };
 		58AAA398676B02669E4E5E3F /* TransactionSenderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAE590E2089C768A7A870 /* TransactionSenderTests.swift */; };
 		58AAA649DF284C668B495AB2 /* ScriptBuilderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA422686CE355CACA11DF /* ScriptBuilderTests.swift */; };
+		58AAA68C0D710ED3FCDE76DE /* ScriptTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA6BB66ECE0543BE377E3 /* ScriptTests.swift */; };
 		58AAA8CCA46340450D2912C5 /* UnspentOutputProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA481A82D05C914AB0CCA /* UnspentOutputProvider.swift */; };
 		58AAA9479AB8BF53D2852502 /* TransactionCreatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA21C2FD6764CD385663E /* TransactionCreatorTests.swift */; };
 		58AAAAC9184F9395A71E318B /* UnspentOutputProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAECE6429C4CBD7FD2394 /* UnspentOutputProviderTests.swift */; };
+		58AAAD86E3A2A31C2D2A705B /* Script.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA11CDED1A6F7663DEA37 /* Script.swift */; };
+		58AAAE1B7C0F5659F2EC9229 /* ChunkTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAE1DA82FC3585855DED3 /* ChunkTests.swift */; };
+		58AAAE352FC2FE33B4FB8F53 /* ScriptConverterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAABDF62BBC64C9A3363A6 /* ScriptConverterTests.swift */; };
 		D31711EA20F7192400AEF61B /* Peer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31711E920F7192300AEF61B /* Peer.swift */; };
 		D31711FF20F7193000AEF61B /* PingMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31711EB20F7192F00AEF61B /* PingMessage.swift */; };
 		D317120020F7193000AEF61B /* AddressMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31711EC20F7192F00AEF61B /* AddressMessage.swift */; };
@@ -211,13 +217,19 @@
 		2FA5DF1470723462D2CF707B /* TransactionProcessor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionProcessor.swift; sourceTree = "<group>"; };
 		2FA5DF9995FA7DD7556893F7 /* InputSigner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputSigner.swift; sourceTree = "<group>"; };
 		4253D028AA619104820A2FC3 /* Pods-WalletKitTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WalletKitTests.release.xcconfig"; path = "../Pods/Target Support Files/Pods-WalletKitTests/Pods-WalletKitTests.release.xcconfig"; sourceTree = "<group>"; };
+		58AAA11CDED1A6F7663DEA37 /* Script.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Script.swift; sourceTree = "<group>"; };
 		58AAA21C2FD6764CD385663E /* TransactionCreatorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionCreatorTests.swift; sourceTree = "<group>"; };
 		58AAA33E4E02571B077022F7 /* UnspentOutputsManagerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnspentOutputsManagerTests.swift; sourceTree = "<group>"; };
+		58AAA3BE8FA350BD415CD5B3 /* Chunk.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Chunk.swift; sourceTree = "<group>"; };
 		58AAA422686CE355CACA11DF /* ScriptBuilderTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScriptBuilderTests.swift; sourceTree = "<group>"; };
 		58AAA481A82D05C914AB0CCA /* UnspentOutputProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnspentOutputProvider.swift; sourceTree = "<group>"; };
+		58AAA6BB66ECE0543BE377E3 /* ScriptTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScriptTests.swift; sourceTree = "<group>"; };
 		58AAA983B426801C46003567 /* UnspentOutputSelector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnspentOutputSelector.swift; sourceTree = "<group>"; };
+		58AAABDF62BBC64C9A3363A6 /* ScriptConverterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScriptConverterTests.swift; sourceTree = "<group>"; };
 		58AAAC66042A881E2F74AFD6 /* TransactionCreator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionCreator.swift; sourceTree = "<group>"; };
+		58AAAC8BAD29CC18864884DB /* ScriptConverter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScriptConverter.swift; sourceTree = "<group>"; };
 		58AAAD56FBE3DC74548046F5 /* TransactionSender.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionSender.swift; sourceTree = "<group>"; };
+		58AAAE1DA82FC3585855DED3 /* ChunkTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChunkTests.swift; sourceTree = "<group>"; };
 		58AAAE590E2089C768A7A870 /* TransactionSenderTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionSenderTests.swift; sourceTree = "<group>"; };
 		58AAAECE6429C4CBD7FD2394 /* UnspentOutputProviderTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnspentOutputProviderTests.swift; sourceTree = "<group>"; };
 		58AAAF2482982ED7215EEBF9 /* ScriptBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScriptBuilder.swift; sourceTree = "<group>"; };
@@ -534,6 +546,16 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		58AAA11F421202A1ADFF0CE2 /* Scripts */ = {
+			isa = PBXGroup;
+			children = (
+				58AAA11CDED1A6F7663DEA37 /* Script.swift */,
+				58AAAC8BAD29CC18864884DB /* ScriptConverter.swift */,
+				58AAA3BE8FA350BD415CD5B3 /* Chunk.swift */,
+			);
+			path = Scripts;
+			sourceTree = "<group>";
+		};
 		58AAA98E5C50F2723D500F9F /* Builder */ = {
 			isa = PBXGroup;
 			children = (
@@ -552,6 +574,16 @@
 				2FA5DA9D7F78A26107F7209C /* InputSignerTests.swift */,
 			);
 			path = Builder;
+			sourceTree = "<group>";
+		};
+		58AAAE8C826DAC0CB77E8521 /* Scripts */ = {
+			isa = PBXGroup;
+			children = (
+				58AAABDF62BBC64C9A3363A6 /* ScriptConverterTests.swift */,
+				58AAAE1DA82FC3585855DED3 /* ChunkTests.swift */,
+				58AAA6BB66ECE0543BE377E3 /* ScriptTests.swift */,
+			);
+			path = Scripts;
 			sourceTree = "<group>";
 		};
 		D01B6FAA21230AE80085010F /* Helpers */ = {
@@ -593,6 +625,7 @@
 				11B358F56F6298016B1A8AFD /* TestData.swift */,
 				D380FD5F20FCC04400276993 /* Info.plist */,
 				11B3590614D2772B1436542A /* Extensions.swift */,
+				58AAAE8C826DAC0CB77E8521 /* Scripts */,
 			);
 			path = WalletKitTests;
 			sourceTree = "<group>";
@@ -636,6 +669,7 @@
 				D3FD451620F364DF00F472B9 /* WalletKit.modulemap */,
 				D3FD450820F354EF00F472B9 /* WalletKit.h */,
 				D3FD450920F354EF00F472B9 /* Info.plist */,
+				58AAA11F421202A1ADFF0CE2 /* Scripts */,
 			);
 			path = WalletKit;
 			sourceTree = "<group>";
@@ -842,6 +876,8 @@
 				"$(SRCROOT)/WalletKit/Helpers/AddressConverter.swift",
 				"$(SRCROOT)/WalletKit/Transactions/Builder/TransactionBuilder.swift",
 				"$(SRCROOT)/WalletKit/Transactions/TransactionProcessor.swift",
+				"$(SRCROOT)/WalletKit/Scripts/Script.swift",
+				"$(SRCROOT)/WalletKit/Scripts/ScriptConverter.swift",
 			);
 			name = Cuckoo;
 			outputPaths = (
@@ -904,6 +940,9 @@
 				2FA5DEB1D802341D26456814 /* TransactionProcessorTests.swift in Sources */,
 				2FA5DC3D8DAD2FF85FB26C91 /* TransactionHandlerTests.swift in Sources */,
 				11B35BB1C166ED5CECF292C5 /* Extensions.swift in Sources */,
+				58AAAE352FC2FE33B4FB8F53 /* ScriptConverterTests.swift in Sources */,
+				58AAAE1B7C0F5659F2EC9229 /* ChunkTests.swift in Sources */,
+				58AAA68C0D710ED3FCDE76DE /* ScriptTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -992,6 +1031,9 @@
 				58AAA36E48DB45B72112973B /* TransactionCreator.swift in Sources */,
 				2FA5DC980A0E135863848CB0 /* TransactionProcessor.swift in Sources */,
 				11B35F1644F5CACF63C9E384 /* BackgroundWorker.swift in Sources */,
+				58AAAD86E3A2A31C2D2A705B /* Script.swift in Sources */,
+				58AAA19EA96193409D8AA8EC /* ScriptConverter.swift in Sources */,
+				58AAA1E87B62806CD5891D43 /* Chunk.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

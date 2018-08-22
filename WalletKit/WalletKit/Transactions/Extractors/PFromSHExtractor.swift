@@ -1,15 +1,18 @@
 import Foundation
 
 class PFromSHExtractor: ScriptExtractor {
-    static let scriptLength = 25
-    static let keyLength: UInt8 = 0x14
+    var type: ScriptType { return .p2sh }
 
-    let startSequence = Data(bytes: [OpCode.dup, OpCode.hash160, keyLength])
-    let finishSequence = Data(bytes: [OpCode.equalVerify, OpCode.checkSig])
-
-    var type: ScriptType { return .p2pkh }
-
-    func extract(from data: Data) throws -> Data {
+    func extract(from script: Script) throws -> Data {
+//        var it = 0
+//        var lastData = Data()
+//        while it < data.count {
+//            let command = data[it]
+//            switch command {
+//                case 0x00, 0x4f, 0x51...0x60: it += 1
+//                case 0x01...0x4b: break
+//            }
+//        }
 //        guard data.count == P2PKHExtractor.scriptLength else {
 //            throw ScriptExtractorError.wrongScriptLength
 //        }
