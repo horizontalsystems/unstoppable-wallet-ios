@@ -4,7 +4,7 @@ enum ScriptError: Error { case wrongScriptLength, wrongSequence }
 
 protocol ScriptExtractor: class {
     var type: ScriptType { get }
-    func extract(from script: Script) throws -> Data
+    func extract(from script: Script, converter: ScriptConverter) throws -> Data
 }
 
 class TransactionExtractor {
@@ -35,7 +35,7 @@ class TransactionExtractor {
             for extractor in scriptOutputExtractors {
                 do {
                     let script = try scriptConverter.decode(data: output.lockingScript)
-                    payload = try extractor.extract(from: script)
+                    payload = try extractor.extract(from: script, converter: scriptConverter)
                 } catch {
 //                    print("\(error)")
                 }
@@ -62,14 +62,14 @@ class TransactionExtractor {
             for extractor in scriptInputExtractors {
                 do {
                     let script = try scriptConverter.decode(data: input.signatureScript)
-                    payload = try extractor.extract(from: script)
+                    payload = try extractor.extract(from: script, converter: scriptConverter)
                 } catch {
 //                    print("\(error)")
                 }
                 if let payload = payload {
                     valid = true
                     switch extractor.type {
-                        case .p2sh: input.publicKey = payload
+                        case .p2sh: input.publicKey = Crypto.sha256ripemd160(payload)
                         default: break
                     }
                     break

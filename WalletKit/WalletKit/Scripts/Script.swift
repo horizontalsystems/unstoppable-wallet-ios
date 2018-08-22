@@ -2,7 +2,7 @@ import Foundation
 
 class Script {
     let scriptData: Data
-    let chunks: [Chunk]
+    private (set) var chunks: [Chunk]
 
     var length: Int { return scriptData.count }
 

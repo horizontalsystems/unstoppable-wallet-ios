@@ -3,24 +3,28 @@ import Foundation
 class PFromSHExtractor: ScriptExtractor {
     var type: ScriptType { return .p2sh }
 
-    func extract(from script: Script) throws -> Data {
-//        var it = 0
-//        var lastData = Data()
-//        while it < data.count {
-//            let command = data[it]
-//            switch command {
-//                case 0x00, 0x4f, 0x51...0x60: it += 1
-//                case 0x01...0x4b: break
-//            }
-//        }
-//        guard data.count == P2PKHExtractor.scriptLength else {
-//            throw ScriptExtractorError.wrongScriptLength
-//        }
-//        guard data.prefix(startSequence.count) == startSequence, data.suffix(from: data.count - finishSequence.count) == finishSequence else {
-//            throw ScriptExtractorError.wrongSequence
-//        }
-//        return data.subdata(in: Range(uncheckedBounds: (lower: startSequence.count, upper: data.count - finishSequence.count)))
-        return Data()
+    func extract(from script: Script, converter: ScriptConverter) throws -> Data {
+        guard let chunkData = script.chunks.last?.data else {
+            throw ScriptError.wrongScriptLength
+        }
+        let redeemScript = try converter.decode(data: chunkData)
+        var verifyChunkCode: UInt8 = 0
+        guard let opCode = redeemScript.chunks.last?.opCode else {
+            throw ScriptError.wrongSequence
+        }
+        verifyChunkCode = opCode
+        if verifyChunkCode == OpCode.endIf { // check pre-last chunk
+            if redeemScript.chunks.count > 1, let opCode = redeemScript.chunks.suffix(2).first?.opCode {
+                verifyChunkCode = opCode
+            } else {
+                throw ScriptError.wrongSequence
+            }
+        }
+        guard OpCode.pFromShCodes.contains(verifyChunkCode) else {
+            throw ScriptError.wrongSequence
+        }
+
+        return chunkData
     }
 
 }

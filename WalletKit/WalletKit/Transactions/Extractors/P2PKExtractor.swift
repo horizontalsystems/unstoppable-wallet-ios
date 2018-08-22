@@ -3,7 +3,7 @@ import Foundation
 class P2PKExtractor: ScriptExtractor {
     var type: ScriptType { return .p2pk }
 
-    func extract(from script: Script) throws -> Data {
+    func extract(from script: Script, converter: ScriptConverter) throws -> Data {
         guard script.length >= type.keyLength else {
             throw ScriptError.wrongScriptLength
         }

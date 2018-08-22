@@ -878,6 +878,7 @@
 				"$(SRCROOT)/WalletKit/Transactions/TransactionProcessor.swift",
 				"$(SRCROOT)/WalletKit/Scripts/Script.swift",
 				"$(SRCROOT)/WalletKit/Scripts/ScriptConverter.swift",
+				"$(SRCROOT)/WalletKit/Scripts/Chunk.swift",
 			);
 			name = Cuckoo;
 			outputPaths = (

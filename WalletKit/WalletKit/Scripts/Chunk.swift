@@ -1,13 +1,13 @@
 import Foundation
 
-struct Chunk: Equatable {
+class Chunk: Equatable {
     let scriptData: Data
     let index: Int
     let payloadRange: Range<Int>?
 
     var opCode: UInt8 { return scriptData[index] }
     var data: Data? {
-        guard let payloadRange = payloadRange, scriptData.count > payloadRange.upperBound else {
+        guard let payloadRange = payloadRange, scriptData.count >= payloadRange.upperBound else {
             return nil
         }
         return scriptData.subdata(in: payloadRange)

@@ -9,6 +9,8 @@ class OpCode {
     static let p2shStart = Data(bytes: [OpCode.hash160])
     static let p2shFinish = Data(bytes: [OpCode.equal])
 
+    static let pFromShCodes = [checkSig, checkSigVerify, checkMultiSig, checkMultiSigVerify]
+
     static let pushData1: UInt8 = 0x4c
     static let pushData2: UInt8 = 0x4d
     static let pushData4: UInt8 = 0x4e
@@ -17,6 +19,11 @@ class OpCode {
     static let equal: UInt8 = 0x87
     static let equalVerify: UInt8 = 0x88
     static let checkSig: UInt8 = 0xAC
+    static let checkSigVerify: UInt8 = 0xAD
+    static let checkMultiSig: UInt8 = 0xAE
+    static let checkMultiSigVerify: UInt8 = 0xAF
+    static let endIf: UInt8 = 0x68
+
 
     static func push(_ data: Data) -> Data {
         let length = data.count
