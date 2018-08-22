@@ -43,6 +43,7 @@
 		11B357D903B62DAD830E4685 /* Coin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35C853FA48BC013809863 /* Coin.swift */; };
 		11B3581B212DB1B428F85501 /* ExchangeRate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35BBAAAE1A3981B902E89 /* ExchangeRate.swift */; };
 		11B3586C585791EA7ADD161E /* LocalizationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35F871B19631695FB5EF5 /* LocalizationHelper.swift */; };
+		11B35872B976A989FF1ADA8D /* BitcoinTestNet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35915F7579F89A6B6380E /* BitcoinTestNet.swift */; };
 		11B358869596E9C602ECCF1E /* CollectionChangeSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3574847ABDFE5F1A6D4D9 /* CollectionChangeSet.swift */; };
 		11B358A760BD438603221A95 /* BackupInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35D009B0B81FD2595D72B /* BackupInteractorTests.swift */; };
 		11B358C53045F204FA0D12FB /* TransactionRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B356738853E2305B5CC34B /* TransactionRecord.swift */; };
@@ -283,6 +284,7 @@
 		11B358586003E20B167B1442 /* RestoreModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestoreModule.swift; sourceTree = "<group>"; };
 		11B3589DC1945CAFBEEB1EED /* CurrencyValue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrencyValue.swift; sourceTree = "<group>"; };
 		11B358E99DF63240BDC45AC5 /* SettingsPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsPresenter.swift; sourceTree = "<group>"; };
+		11B35915F7579F89A6B6380E /* BitcoinTestNet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BitcoinTestNet.swift; sourceTree = "<group>"; };
 		11B35956C79B567DC679DD3A /* BlockchainInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockchainInfo.swift; sourceTree = "<group>"; };
 		11B359979E36D373B265A745 /* RealmStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmStorage.swift; sourceTree = "<group>"; };
 		11B359E7A75E6B92D1305F40 /* MainPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainPresenter.swift; sourceTree = "<group>"; };
@@ -651,6 +653,7 @@
 			children = (
 				11B35D64A5D075139531EB44 /* Bitcoin.swift */,
 				11B3520AFDC9167F79AA5C0E /* BitcoinUnspentOutput.swift */,
+				11B35915F7579F89A6B6380E /* BitcoinTestNet.swift */,
 			);
 			path = Bitcoin;
 			sourceTree = "<group>";
@@ -1500,6 +1503,7 @@
 				1A5649A92BA5A92EB2791B7F /* SettingsInfoFooter.swift in Sources */,
 				1A5647968B12B0FB16F149B2 /* FullTransactionInfoTheme.swift in Sources */,
 				1A564947E6731A05DF6C19F4 /* FullTransactionInfoTextCell.swift in Sources */,
+				11B35872B976A989FF1ADA8D /* BitcoinTestNet.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

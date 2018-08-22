@@ -19,13 +19,14 @@ class PeerGroup {
 
     private let realmFactory: RealmFactory
 
-    private let peer = Peer(network: TestNet())
+    private let peer: Peer
 
     private let validator = MerkleBlockValidator()
     private var pendingBlocks: [PendingBlock] = []
 
-    init(realmFactory: RealmFactory) {
+    init(realmFactory: RealmFactory, configuration: Configuration) {
         self.realmFactory = realmFactory
+        self.peer = Peer(network: configuration.network)
 
         peer.delegate = self
     }

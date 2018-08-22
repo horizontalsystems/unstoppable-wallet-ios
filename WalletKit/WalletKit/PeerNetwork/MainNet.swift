@@ -37,12 +37,12 @@ class MainNet: NetworkProtocol {
     let checkpointBlock = Block(
             withHeader: BlockHeader(
                     version: 536870912,
-                    previousBlockHeaderReversedHex: "0000000000000000002eca92f4e44dcf144115851689ace0ff4ce271792f16fe",
-                    merkleRootReversedHex: "e1c8d65b4669eca626e8179164d7854a80ef9c81a25a2b16e4ad56763a106baa",
-                    timestamp: 1532852371,
-                    bits: 388976507,
-                    nonce: 3273320796
+                    previousBlockHeaderReversedHex: "00000000000000000000943de85f4495f053ff55f27d135edc61c27990c2eec5",
+                    merkleRootReversedHex: "167bf70981d49388d07881b1a448ff9b79cf2a32716e45c535345823d8cdd541",
+                    timestamp: 1533980459,
+                    bits: 388763047,
+                    nonce: 1545867530
             ),
-            height: 534240)
+            height: 536256)
 
 }

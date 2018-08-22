@@ -13,6 +13,7 @@ class Syncer {
     weak var headerSyncer: HeaderSyncer?
     weak var headerHandler: HeaderHandler?
     weak var transactionHandler: TransactionHandler?
+    weak var blockSyncer: BlockSyncer?
 
     private let logger: Logger
     private let realmFactory: RealmFactory
@@ -44,6 +45,8 @@ extension Syncer: PeerGroupDelegate {
         } catch {
             logger.log(tag: "Header Syncer Error", message: "\(error)")
         }
+
+        blockSyncer?.enqueueRun()
     }
 
     func peerGroupDidDisconnect() {

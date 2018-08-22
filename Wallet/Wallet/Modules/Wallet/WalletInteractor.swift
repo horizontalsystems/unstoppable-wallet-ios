@@ -9,7 +9,6 @@ class WalletInteractor {
     private let disposeBag = DisposeBag()
     private let storage: IStorage
 
-    private var totalValues = [String: Double]()
     private var exchangeRates = [String: Double]()
 
     init(storage: IStorage) {
@@ -36,7 +35,6 @@ extension WalletInteractor: IWalletInteractor {
 //                .disposed(by: disposeBag)
 
         for adapter in AdapterManager.shared.adapters {
-            totalValues[adapter.coin.code] = Double(adapter.balance) / 100000000
             exchangeRates[adapter.coin.code] = 7000
         }
 
@@ -67,13 +65,11 @@ extension WalletInteractor: IWalletInteractor {
     }
 
     private func refresh() {
-        let items: [WalletBalanceItem] = totalValues.compactMap { totalValueMap in
-            let (coinCode, totalValue) = totalValueMap
+        let items: [WalletBalanceItem] = AdapterManager.shared.adapters.compactMap { adapter in
+            let value = Double(adapter.balance) / 100000000
 
-            let coin = Factory.instance.coinManager.getCoin(byCode: coinCode)
-
-            if let coin = coin, let rate = self.exchangeRates[coin.code] {
-                return WalletBalanceItem(coinValue: CoinValue(coin: coin, value: totalValue), exchangeRate: rate, currency: DollarCurrency())
+            if let rate = self.exchangeRates[adapter.coin.code] {
+                return WalletBalanceItem(coinValue: CoinValue(coin: adapter.coin, value: value), exchangeRate: rate, currency: DollarCurrency())
             }
             return nil
         }

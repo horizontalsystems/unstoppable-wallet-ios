@@ -12,13 +12,7 @@ class TransactionsViewController: UIViewController {
 
     private let cellName = String(describing: TransactionCell.self)
 
-    private var items = [TransactionRecordViewItem]() {
-        didSet {
-            let items2 = [TransactionRecordViewItem(transactionHash: "3A4SF6K6N2DA7SD8KJ4FN3A4SR7OJAS3V45K3J4BS7A7VK34J3B", amount: CoinValue(coin: Bitcoin(), value: 3.2), fee: CoinValue(coin: Bitcoin(), value: 0.00000402), from: "23SA3D4LJ24FH245B2L6A46D4S23F6H34B6KLJBF", to: "FBJLK6B43H6F32S4D64A6L2B542HF42JL4D3AS32", incoming: true, blockHeight: 124, date: Date(timeIntervalSinceNow: -40000), status: .success, confirmations: 3),
-                          TransactionRecordViewItem(transactionHash: "3A4SF6K6N2DA7SD8KJ4FN3A4SR7OJAS3V45K3J4BS7A7VK34J3B", amount: CoinValue(coin: Bitcoin(), value: 3.2), fee: CoinValue(coin: Bitcoin(), value: 0.00020002), from: "23SA3D4LJ24FH245B2L6A46D4S23F6H34B6KLJBF", to: "FBJLK6B43H6F32S4D64A6L2B542HF42JL4D3AS32", incoming: false, blockHeight: 124, date: Date(timeIntervalSinceNow: -40000), status: .success, confirmations: 3)]
-            items.append(contentsOf: items2)
-        }
-    }
+    private var items = [TransactionRecordViewItem]()
     private let tableView = UITableView(frame: .zero, style: .plain)
 
     private let filterHeaderView = TransactionCurrenciesHeaderView()

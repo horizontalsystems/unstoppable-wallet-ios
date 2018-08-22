@@ -24,7 +24,7 @@ class Peer : NSObject, StreamDelegate {
     private var sentVerack: Bool = false
 
     convenience init(network: NetworkProtocol = TestNet()) {
-        self.init(host: network.dnsSeeds[2], port: Int(network.port), network: network)
+        self.init(host: network.dnsSeeds[0], port: Int(network.port), network: network)
     }
 
     convenience init(host: String, network: NetworkProtocol = TestNet()) {

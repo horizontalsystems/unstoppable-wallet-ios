@@ -3,15 +3,14 @@ import WalletKit
 import RealmSwift
 
 class BitcoinAdapter {
-    private let realmFileName = "WalletKit.realm"
-
     private let walletKit: WalletKit
     private var unspentOutputsNotificationToken: NotificationToken?
     private var transactionsNotificationToken: NotificationToken?
 
     weak var listener: IAdapterListener?
 
-    let coin: Coin = Bitcoin()
+    let coin: Coin
+
     var balance: Int {
         var balance = 0
 
@@ -22,11 +21,15 @@ class BitcoinAdapter {
         return balance
     }
 
-    init(words: [String]) {
+    init(words: [String], testNet: Bool = false) {
+        coin = testNet ? BitcoinTestNet() : Bitcoin()
+
+        let realmFileName = testNet ? "BitcoinTestNet.realm" : "Bitcoin.realm"
+
         let documentsUrl = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
         let configuration = Realm.Configuration(fileURL: documentsUrl?.appendingPathComponent(realmFileName))
 
-        walletKit = WalletKit(withWords: words, realmConfiguration: configuration)
+        walletKit = WalletKit(withWords: words, realmConfiguration: configuration, testNet: testNet)
 
         unspentOutputsNotificationToken = walletKit.unspentOutputsRealmResults.observe { [weak self] changes in
             self?.listener?.updateBalance()
@@ -68,7 +71,7 @@ class BitcoinAdapter {
 
             let record = TransactionRecord()
             record.transactionHash = tx.reversedHashHex
-            record.coinCode = Bitcoin().code
+            record.coinCode = coin.code
             record.from = ""
             record.to = ""
             record.amount = Int(totalOutput - totalInput)

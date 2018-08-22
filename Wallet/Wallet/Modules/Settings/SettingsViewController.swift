@@ -162,14 +162,19 @@ class SettingsViewController: UIViewController, SectionsDataSource {
     }
 
     @IBAction func showRealmInfo() {
-        AdapterManager.shared.adapters.first?.showInfo()
+        for adapter in AdapterManager.shared.adapters {
+            print("\nINFO FOR \(adapter.coin.name):")
+            adapter.showInfo()
+        }
     }
 
     @IBAction func connectToPeer() {
-        do {
-            try AdapterManager.shared.adapters.first?.start()
-        } catch {
-            print("Could not start: \(error)")
+        for adapter in AdapterManager.shared.adapters {
+            do {
+                try adapter.start()
+            } catch {
+                print("Could not start \(adapter.coin.name): \(error)")
+            }
         }
     }
 

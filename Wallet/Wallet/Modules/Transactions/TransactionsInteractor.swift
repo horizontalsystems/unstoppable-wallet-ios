@@ -17,6 +17,7 @@ class TransactionsInteractor {
         self.coinManager = coinManager
 
         latestBlockHeights["BTC"] = 1500000
+        latestBlockHeights["BTC-T"] = 1500000
     }
 
 }

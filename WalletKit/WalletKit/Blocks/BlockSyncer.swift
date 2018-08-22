@@ -26,7 +26,7 @@ class BlockSyncer {
         let hashes = nonSyncedBlocks.map { $0.headerHash }
 
         if !hashes.isEmpty {
-            peerGroup.requestBlocks(headerHashes: Array(hashes))
+            peerGroup.requestBlocks(headerHashes: Array(Array(hashes).prefix(2000)))
         }
     }
 

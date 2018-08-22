@@ -37,21 +37,21 @@ public class WalletKit {
     let unspentOutputSelector: UnspentOutputSelector
     let unspentOutputProvider: UnspentOutputProvider
 
-    public init(withWords words: [String], realmConfiguration: Realm.Configuration) {
-        configuration = Configuration()
+    public init(withWords words: [String], realmConfiguration: Realm.Configuration, testNet: Bool = false) {
+        configuration = Configuration(testNet: testNet)
         realmFactory = RealmFactory(configuration: realmConfiguration)
         logger = Logger()
 
         hdWallet = HDWallet(seed: Mnemonic.seed(mnemonic: words), network: configuration.network)
 
-        peerGroup = PeerGroup(realmFactory: realmFactory)
+        peerGroup = PeerGroup(realmFactory: realmFactory, configuration: configuration)
         syncer = Syncer(logger: logger, realmFactory: realmFactory)
         factory = Factory()
 
         difficultyEncoder = DifficultyEncoder()
         difficultyCalculator = DifficultyCalculator(difficultyEncoder: difficultyEncoder)
 
-        blockValidator = TestNetBlockValidator(calculator: difficultyCalculator)
+        blockValidator = testNet ? TestNetBlockValidator(calculator: difficultyCalculator) : BlockValidator(calculator: difficultyCalculator)
 
         blockSyncer = BlockSyncer(realmFactory: realmFactory, peerGroup: peerGroup)
         merkleBlockValidator = MerkleBlockValidator()
@@ -79,6 +79,7 @@ public class WalletKit {
         syncer.headerSyncer = headerSyncer
         syncer.headerHandler = headerHandler
         syncer.transactionHandler = transactionHandler
+        syncer.blockSyncer = blockSyncer
 
         preFillInitialTestData()
     }
@@ -87,9 +88,10 @@ public class WalletKit {
         let realm = realmFactory.realm
 
         let blockCount = realm.objects(Block.self).count
+        let syncedBlockCount = realm.objects(Block.self).filter("synced = %@", true).count
         let pubKeysCount = realm.objects(PublicKey.self).count
 
-        print("BLOCK COUNT: \(blockCount)")
+        print("BLOCK COUNT: \(blockCount) --- \(syncedBlockCount) synced")
         if let block = realm.objects(Block.self).first {
             print("First Block: \(block.height) --- \(block.reversedHeaderHashHex)")
         }

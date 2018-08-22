@@ -12,9 +12,9 @@ class TestNet: NetworkProtocol {
     let port: UInt32 = 18333
 
     let dnsSeeds = [
+        "testnet-seed.bitcoin.petertodd.org",    // Peter Todd
         "testnet-seed.bitcoin.jonasschnelli.ch", // Jonas Schnelli
         "testnet-seed.bluematt.me",              // Matt Corallo
-        "testnet-seed.bitcoin.petertodd.org",    // Peter Todd
         "testnet-seed.bitcoin.schildbach.de",    // Andreas Schildbach
         "bitcoin-testnet.bloqseeds.net",         // Bloq
     ]
