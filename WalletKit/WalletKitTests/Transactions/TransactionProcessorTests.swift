@@ -16,7 +16,7 @@ class TransactionProcessorTests: XCTestCase {
         super.setUp()
 
         mockRealmFactory = MockRealmFactory(configuration: Realm.Configuration())
-        mockExtractor = MockTransactionExtractor(addressConverter: AddressConverter(network: TestNet()))
+        mockExtractor = MockTransactionExtractor(scriptConverter: ScriptConverter(), addressConverter: AddressConverter(network: TestNet()))
         mockLinker = MockTransactionLinker()
         mockLogger = MockLogger()
 

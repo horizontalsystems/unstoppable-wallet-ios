@@ -1,10 +1,10 @@
 import Foundation
 
-enum ScriptExtractorError: Error { case wrongScriptLength, wrongSequence }
+enum ScriptError: Error { case wrongScriptLength, wrongSequence }
 
 protocol ScriptExtractor: class {
     var type: ScriptType { get }
-    func extract(from data: Data) throws -> Data
+    func extract(from script: Script) throws -> Data
 }
 
 class TransactionExtractor {
@@ -17,12 +17,14 @@ class TransactionExtractor {
 
     let scriptInputExtractors: [ScriptExtractor]
     let scriptOutputExtractors: [ScriptExtractor]
+    let scriptConverter: ScriptConverter
     let addressConverter: AddressConverter
 
     init(scriptInputExtractors: [ScriptExtractor] = TransactionExtractor.defaultInputExtractors, scriptOutputExtractors: [ScriptExtractor] = TransactionExtractor.defaultOutputExtractors,
-         addressConverter: AddressConverter) {
+         scriptConverter: ScriptConverter, addressConverter: AddressConverter) {
         self.scriptInputExtractors = scriptInputExtractors
         self.scriptOutputExtractors = scriptOutputExtractors
+        self.scriptConverter = scriptConverter
         self.addressConverter = addressConverter
     }
 
@@ -32,7 +34,8 @@ class TransactionExtractor {
             var payload: Data?
             for extractor in scriptOutputExtractors {
                 do {
-                    payload = try extractor.extract(from: output.lockingScript)
+                    let script = try scriptConverter.decode(data: output.lockingScript)
+                    payload = try extractor.extract(from: script)
                 } catch {
 //                    print("\(error)")
                 }
@@ -58,7 +61,8 @@ class TransactionExtractor {
             var payload: Data?
             for extractor in scriptInputExtractors {
                 do {
-                    payload = try extractor.extract(from: input.signatureScript)
+                    let script = try scriptConverter.decode(data: input.signatureScript)
+                    payload = try extractor.extract(from: script)
                 } catch {
 //                    print("\(error)")
                 }
