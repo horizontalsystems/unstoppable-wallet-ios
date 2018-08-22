@@ -4,6 +4,7 @@ protocol IWalletView: class {
     func show(totalBalance: CurrencyValue)
     func show(walletBalances: [WalletBalanceViewItem])
     func show(syncStatus: String)
+    func didRefresh()
 }
 
 protocol IWalletViewDelegate {
