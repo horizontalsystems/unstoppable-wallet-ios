@@ -44,6 +44,7 @@ class TransactionInfoBaseValueItemView: BaseActionItemView {
         titleLabel.text = item?.title
         statusLabel.text = item?.value
         statusImageView.image = item?.valueImage
+        statusLabel.textColor = item?.valueColor ?? TransactionInfoTheme.usualColor
     }
 
 }

@@ -61,14 +61,16 @@
 "transactions.from" = "from";
 "transactions.to" = "to";
 
+"tx_info.bottom_sheet.title" = "Transaction";
+"tx_info.bottom_sheet.id:" = "ID:";
 "tx_info.bottom_sheet.title_received" = "Received";
 "tx_info.bottom_sheet.title_sent" = "Sent";
-"tx_info.bottom_sheet.processing" = "Processing";
-"tx_info.bottom_sheet.received" = "Received";
-"tx_info.bottom_sheet.sent" = "Sent";
+"tx_info.bottom_sheet.pending" = "PENDING";
+"tx_info.bottom_sheet.complete" = "COMPLETED";
 "tx_info.bottom_sheet.status" = "Status:";
 "tx_info.bottom_sheet.value_when_received" = "Value when received:";
 "tx_info.bottom_sheet.from_hash" = "From:";
+"tx_info.bottom_sheet.to_hash" = "To:";
 "tx_info.bottom_sheet.id_hash" = "ID:";
 
 "full_transaction_info.navigation_bar.title" = "Details";

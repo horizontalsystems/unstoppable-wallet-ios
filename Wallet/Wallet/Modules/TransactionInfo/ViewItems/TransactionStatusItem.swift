@@ -7,8 +7,9 @@ class TransactionStatusItem: TransactionInfoBaseValueItem {
         super.init(tag: tag, hidden: hidden, required: required)
 
         title = "tx_info.bottom_sheet.status".localized
-        value = transaction.status == .success ? (transaction.incoming ? "tx_info.bottom_sheet.received".localized : "tx_info.bottom_sheet.sent".localized) : "tx_info.bottom_sheet.processing".localized
+        value = transaction.status == .success ? "tx_info.bottom_sheet.complete".localized : "tx_info.bottom_sheet.pending".localized
         valueImage = transaction.status == .success ? UIImage(named: "Transaction Success Icon") : UIImage(named: "Transaction Processing Icon")
+        valueColor = transaction.status == .success ? TransactionInfoTheme.statusCompleteValueColor : TransactionInfoTheme.statusPendingValueColor
     }
 
 }
