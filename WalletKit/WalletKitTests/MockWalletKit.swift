@@ -46,6 +46,8 @@ class MockWalletKit {
     let mockUnspentOutputSelector: MockUnspentOutputSelector
     let mockUnspentOutputProvider: MockUnspentOutputProvider
 
+    let mockRealm: Realm
+
     public init() {
         mockNetwork = MockNetworkProtocol()
 
@@ -55,7 +57,7 @@ class MockWalletKit {
             when(mock.port.get).thenReturn(0)
         }
 
-        mockRealmFactory = MockRealmFactory(configuration: Realm.Configuration(inMemoryIdentifier: "TestRealm"))
+        mockRealmFactory = MockRealmFactory(configuration: Realm.Configuration())
         mockLogger = MockLogger()
 
         mockHdWallet = MockHDWallet(seed: Data(), network: mockNetwork)
@@ -102,6 +104,13 @@ class MockWalletKit {
 //        mockSyncer.headerHandler = mockHeaderHandler
 //        mockSyncer.transactionHandler = mockTransactionHandler
 //        mockSyncer.blockSyncer = mockBlockSyncer
+
+        mockRealm = try! Realm(configuration: Realm.Configuration(inMemoryIdentifier: "TestRealm"))
+        try! mockRealm.write { mockRealm.deleteAll() }
+
+        stub(mockRealmFactory) { mock in
+            when(mock.realm.get).thenReturn(mockRealm)
+        }
     }
 
 }

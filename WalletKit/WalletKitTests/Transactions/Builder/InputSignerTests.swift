@@ -5,7 +5,6 @@ import RealmSwift
 
 class InputSignerTests: XCTestCase {
 
-    private var mockRealmFactory: MockRealmFactory!
     private var realm: Realm!
     private var mockHDWallet: MockHDWallet!
     private var inputSigner: InputSigner!
@@ -16,12 +15,9 @@ class InputSignerTests: XCTestCase {
     override func setUp() {
         super.setUp()
 
-        mockRealmFactory = MockRealmFactory(configuration: Realm.Configuration())
-        realm = try! Realm(configuration: Realm.Configuration(inMemoryIdentifier: "TestRealm"))
-        try! realm.write { realm.deleteAll() }
-        stub(mockRealmFactory) { mock in
-            when(mock.realm.get).thenReturn(realm)
-        }
+        let mockWalletKit = MockWalletKit()
+
+        realm = mockWalletKit.mockRealm
 
         // Create private key/address provider for tests
         let privateKey = HDPrivateKey(privateKey: Data(hex: "4ee8efccaa04495d5d3ab0f847952fcff43ffc0459bd87981b6be485b92f8d64")!, chainCode: Data(), network: TestNet())
@@ -47,7 +43,7 @@ class InputSignerTests: XCTestCase {
         transaction.inputs.append(payInput)
         transaction.outputs.append(payOutput)
 
-        mockHDWallet = MockHDWallet(seed: "sample seed".data(using: .utf8)!, network: TestNet())
+        mockHDWallet = mockWalletKit.mockHdWallet
 
         stub(mockHDWallet) { mock in
             when(mock.privateKey(index: any(), chain: any())).thenReturn(privateKey)
@@ -57,7 +53,6 @@ class InputSignerTests: XCTestCase {
     }
 
     override func tearDown() {
-        mockRealmFactory = nil
         realm = nil
         mockHDWallet = nil
         inputSigner = nil

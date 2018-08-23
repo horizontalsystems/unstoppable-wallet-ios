@@ -14,7 +14,9 @@ class DifficultyCalculatorTests: XCTestCase {
     override func setUp() {
         super.setUp()
 
-        mockDifficultyEncoder = MockDifficultyEncoder()
+        let mockWalletKit = MockWalletKit()
+
+        mockDifficultyEncoder = mockWalletKit.mockDifficultyEncoder
         calculator = DifficultyCalculator(difficultyEncoder: mockDifficultyEncoder)
 
         firstCheckPointBlock = Block(

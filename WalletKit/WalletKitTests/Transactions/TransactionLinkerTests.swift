@@ -5,7 +5,6 @@ import RealmSwift
 
 class TransactionLinkerTests: XCTestCase {
 
-    private var mockRealmFactory: MockRealmFactory!
     private var linker: TransactionLinker!
 
     private var realm: Realm!
@@ -17,12 +16,9 @@ class TransactionLinkerTests: XCTestCase {
     override func setUp() {
         super.setUp()
 
-        mockRealmFactory = MockRealmFactory(configuration: Realm.Configuration())
-        realm = try! Realm(configuration: Realm.Configuration(inMemoryIdentifier: "TestRealm"))
-        try! realm.write { realm.deleteAll() }
-        stub(mockRealmFactory) { mock in
-            when(mock.realm.get).thenReturn(realm)
-        }
+        let mockWalletKit = MockWalletKit()
+
+        realm = mockWalletKit.mockRealm
 
         linker = TransactionLinker()
         transaction = TestData.p2pkhTransaction
@@ -37,7 +33,6 @@ class TransactionLinkerTests: XCTestCase {
     }
 
     override func tearDown() {
-        mockRealmFactory = nil
         linker = nil
         realm = nil
 

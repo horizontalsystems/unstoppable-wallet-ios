@@ -10,7 +10,9 @@ class P2PKExtractorTests: XCTestCase {
     override func setUp() {
         super.setUp()
 
-        scriptConverter = MockScriptConverter()
+        let mockWalletKit = MockWalletKit()
+
+        scriptConverter = mockWalletKit.mockScriptConverter
         extractor = P2PKExtractor()
     }
 

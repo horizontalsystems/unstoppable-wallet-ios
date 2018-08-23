@@ -5,9 +5,7 @@ import RealmSwift
 
 class HeaderSyncerTests: XCTestCase {
 
-    private var mockRealmFactory: MockRealmFactory!
     private var mockPeerGroup: MockPeerGroup!
-    private var mockNetwork: MockNetworkProtocol!
     private var headerSyncer: HeaderSyncer!
 
     private var realm: Realm!
@@ -16,32 +14,27 @@ class HeaderSyncerTests: XCTestCase {
     override func setUp() {
         super.setUp()
 
-        mockRealmFactory = MockRealmFactory(configuration: Realm.Configuration())
-        mockPeerGroup = MockPeerGroup(realmFactory: mockRealmFactory, network: TestNet())
-        mockNetwork = MockNetworkProtocol()
+        let mockWalletKit = MockWalletKit()
 
-        realm = try! Realm(configuration: Realm.Configuration(inMemoryIdentifier: "TestRealm"))
-        try! realm.write { realm.deleteAll() }
+        mockPeerGroup = mockWalletKit.mockPeerGroup
+        realm = mockWalletKit.mockRealm
 
         checkpointBlock = TestData.checkpointBlock
 
-        stub(mockRealmFactory) { mock in
-            when(mock.realm.get).thenReturn(realm)
-        }
         stub(mockPeerGroup) { mock in
             when(mock.requestHeaders(headerHashes: any())).thenDoNothing()
         }
+
+        let mockNetwork = mockWalletKit.mockNetwork
         stub(mockNetwork) { mock in
             when(mock.checkpointBlock.get).thenReturn(checkpointBlock)
         }
 
-        headerSyncer = HeaderSyncer(realmFactory: mockRealmFactory, peerGroup: mockPeerGroup, network: mockNetwork, hashCheckpointThreshold: 3)
+        headerSyncer = HeaderSyncer(realmFactory: mockWalletKit.mockRealmFactory, peerGroup: mockPeerGroup, network: mockNetwork, hashCheckpointThreshold: 3)
     }
 
     override func tearDown() {
-        mockRealmFactory = nil
         mockPeerGroup = nil
-        mockNetwork = nil
         headerSyncer = nil
 
         realm = nil

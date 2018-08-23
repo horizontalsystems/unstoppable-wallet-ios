@@ -5,8 +5,6 @@ import RealmSwift
 
 class TransactionHandlerTests: XCTestCase {
 
-    private var mockWalletKit: MockWalletKit!
-    private var mockRealmFactory: MockRealmFactory!
     private var mockProcessor: MockTransactionProcessor!
     private var mockHeaderHandler: MockHeaderHandler!
     private var mockFactory: MockFactory!
@@ -17,18 +15,13 @@ class TransactionHandlerTests: XCTestCase {
     override func setUp() {
         super.setUp()
 
-        mockWalletKit = MockWalletKit()
-        mockRealmFactory = MockRealmFactory(configuration: Realm.Configuration())
-        mockProcessor = MockTransactionProcessor(realmFactory: mockRealmFactory, extractor: mockWalletKit.mockTransactionExtractor, linker: mockWalletKit.mockTransactionLinker, logger: mockWalletKit.mockLogger)
-        mockFactory = MockFactory()
-        mockHeaderHandler = MockHeaderHandler(realmFactory: mockRealmFactory, factory: mockWalletKit.mockFactory, validator: mockWalletKit.mockBlockValidator, blockSyncer: mockWalletKit.mockBlockSyncer, network: mockWalletKit.mockNetwork)
+        let mockWalletKit = MockWalletKit()
 
-        realm = try! Realm(configuration: Realm.Configuration(inMemoryIdentifier: "TestRealm"))
-        try! realm.write { realm.deleteAll() }
+        mockProcessor = mockWalletKit.mockTransactionProcessor
+        mockFactory = mockWalletKit.mockFactory
+        mockHeaderHandler = mockWalletKit.mockHeaderHandler
+        realm = mockWalletKit.mockRealm
 
-        stub(mockRealmFactory) { mock in
-            when(mock.realm.get).thenReturn(realm)
-        }
         stub(mockProcessor) { mock in
             when(mock.enqueueRun()).thenDoNothing()
         }
@@ -36,12 +29,10 @@ class TransactionHandlerTests: XCTestCase {
             when(mock.block(withHeader: any(), height: any())).thenReturn(Block())
         }
 
-        transactionHandler = TransactionHandler(realmFactory: mockRealmFactory, processor: mockProcessor, headerHandler: mockHeaderHandler, factory: mockFactory)
+        transactionHandler = TransactionHandler(realmFactory: mockWalletKit.mockRealmFactory, processor: mockProcessor, headerHandler: mockHeaderHandler, factory: mockFactory)
     }
 
     override func tearDown() {
-        mockWalletKit = nil
-        mockRealmFactory = nil
         mockProcessor = nil
         mockHeaderHandler = nil
         mockFactory = nil

@@ -24,19 +24,15 @@ class SyncerTests: XCTestCase {
 
         DefaultValueRegistry.register(value: TestNet(), forType: NetworkProtocol.self)
 
-        mockRealmFactory = MockRealmFactory(configuration: Realm.Configuration())
-        mockLogger = MockLogger()
-        mockHeaderSyncer = MockHeaderSyncer(realmFactory: mockRealmFactory, peerGroup: PeerGroupStub(realmFactory: mockRealmFactory, network: TestNet()), network: TestNet())
-        mockHeaderHandler = MockHeaderHandler(realmFactory: mockRealmFactory, factory: FactoryStub(), validator: BlockValidatorStub(calculator: DifficultyCalculatorStub(difficultyEncoder: DifficultyEncoderStub())), blockSyncer: BlockSyncerStub(realmFactory: mockRealmFactory, peerGroup: PeerGroupStub(realmFactory: mockRealmFactory, network: TestNet())), network: TestNet())
-        mockFactory = MockFactory()
-        mockTransactionHandler = MockTransactionHandler(realmFactory: mockRealmFactory, processor: TransactionProcessorStub(realmFactory: mockRealmFactory, extractor: TransactionExtractorStub(scriptConverter: ScriptConverter(), addressConverter: AddressConverterStub(network: TestNet())), linker: TransactionLinkerStub(), logger: LoggerStub()), headerHandler: mockHeaderHandler, factory: mockFactory)
+        let mockWalletKit = MockWalletKit()
 
-        realm = try! Realm(configuration: Realm.Configuration(inMemoryIdentifier: "TestRealm"))
-        try! realm.write { realm.deleteAll() }
+        mockLogger = mockWalletKit.mockLogger
+        mockHeaderSyncer = mockWalletKit.mockHeaderSyncer
+        mockHeaderHandler = mockWalletKit.mockHeaderHandler
+        mockFactory = mockWalletKit.mockFactory
+        mockTransactionHandler = mockWalletKit.mockTransactionHandler
+        realm = mockWalletKit.mockRealm
 
-        stub(mockRealmFactory) { mock in
-            when(mock.realm.get).thenReturn(realm)
-        }
         stub(mockLogger) { mock in
             when(mock.log(tag: any(), message: any())).thenDoNothing()
         }
@@ -51,14 +47,13 @@ class SyncerTests: XCTestCase {
             when(mock.handle(memPoolTransactions: any())).thenDoNothing()
         }
 
-        syncer = Syncer(logger: mockLogger, realmFactory: mockRealmFactory)
+        syncer = Syncer(logger: mockLogger, realmFactory: mockWalletKit.mockRealmFactory)
         syncer.headerSyncer = mockHeaderSyncer
         syncer.headerHandler = mockHeaderHandler
         syncer.transactionHandler = mockTransactionHandler
     }
 
     override func tearDown() {
-        mockRealmFactory = nil
         mockLogger = nil
         mockHeaderSyncer = nil
         mockHeaderHandler = nil

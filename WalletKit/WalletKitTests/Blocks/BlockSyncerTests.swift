@@ -6,7 +6,6 @@ import RxSwift
 
 class BlockSyncerTests: XCTestCase {
 
-    private var mockRealmFactory: MockRealmFactory!
     private var mockPeerGroup: MockPeerGroup!
     private var blockSyncer: BlockSyncer!
 
@@ -17,25 +16,18 @@ class BlockSyncerTests: XCTestCase {
 
         let mockWalletKit = MockWalletKit()
 
-        mockRealmFactory = mockWalletKit.mockRealmFactory
         mockPeerGroup = mockWalletKit.mockPeerGroup
+        realm = mockWalletKit.mockRealm
 
-        realm = try! Realm(configuration: Realm.Configuration(inMemoryIdentifier: "TestRealm"))
-        try! realm.write { realm.deleteAll() }
-
-        stub(mockRealmFactory) { mock in
-            when(mock.realm.get).thenReturn(realm)
-        }
         stub(mockPeerGroup) { mock in
             when(mock.requestBlocks(headerHashes: any())).thenDoNothing()
         }
 
-        blockSyncer = BlockSyncer(realmFactory: mockRealmFactory, peerGroup: mockPeerGroup, queue: DispatchQueue.main)
+        blockSyncer = BlockSyncer(realmFactory: mockWalletKit.mockRealmFactory, peerGroup: mockPeerGroup, queue: DispatchQueue.main)
     }
 
     override func tearDown() {
         mockPeerGroup = nil
-        mockRealmFactory = nil
         blockSyncer = nil
 
         realm = nil

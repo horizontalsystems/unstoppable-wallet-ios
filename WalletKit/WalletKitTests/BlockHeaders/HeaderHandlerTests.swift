@@ -5,12 +5,9 @@ import RealmSwift
 
 class HeaderHandlerTests: XCTestCase {
 
-    private var mockWalletKit: MockWalletKit!
-    private var mockRealmFactory: MockRealmFactory!
     private var mockFactory: MockFactory!
     private var mockValidator: MockBlockValidator!
     private var mockBlockSyncer: MockBlockSyncer!
-    private var mockNetwork: MockNetworkProtocol!
     private var headerHandler: HeaderHandler!
 
     private var realm: Realm!
@@ -19,38 +16,31 @@ class HeaderHandlerTests: XCTestCase {
     override func setUp() {
         super.setUp()
 
-        mockWalletKit = MockWalletKit()
-        mockRealmFactory = MockRealmFactory(configuration: Realm.Configuration())
-        mockFactory = MockFactory()
-        mockValidator = MockBlockValidator(calculator: mockWalletKit.mockDifficultyCalculator)
-        mockBlockSyncer = MockBlockSyncer(realmFactory: mockRealmFactory, peerGroup: mockWalletKit.mockPeerGroup)
-        mockNetwork = MockNetworkProtocol()
+        let mockWalletKit = MockWalletKit()
 
-        realm = try! Realm(configuration: Realm.Configuration(inMemoryIdentifier: "TestRealm"))
-        try! realm.write { realm.deleteAll() }
+        mockFactory = mockWalletKit.mockFactory
+        mockValidator = mockWalletKit.mockBlockValidator
+        mockBlockSyncer = mockWalletKit.mockBlockSyncer
+        realm = mockWalletKit.mockRealm
 
         checkpointBlock = TestData.checkpointBlock
 
-        stub(mockRealmFactory) { mock in
-            when(mock.realm.get).thenReturn(realm)
-        }
         stub(mockBlockSyncer) { mock in
             when(mock.enqueueRun()).thenDoNothing()
         }
+
+        let mockNetwork = mockWalletKit.mockNetwork
         stub(mockNetwork) { mock in
             when(mock.checkpointBlock.get).thenReturn(checkpointBlock)
         }
 
-        headerHandler = HeaderHandler(realmFactory: mockRealmFactory, factory: mockFactory, validator: mockValidator, blockSyncer: mockBlockSyncer, network: mockNetwork)
+        headerHandler = HeaderHandler(realmFactory: mockWalletKit.mockRealmFactory, factory: mockFactory, validator: mockValidator, blockSyncer: mockBlockSyncer, network: mockNetwork)
     }
 
     override func tearDown() {
-        mockWalletKit = nil
-        mockRealmFactory = nil
         mockFactory = nil
         mockValidator = nil
         mockBlockSyncer = nil
-        mockNetwork = nil
         headerHandler = nil
 
         realm = nil

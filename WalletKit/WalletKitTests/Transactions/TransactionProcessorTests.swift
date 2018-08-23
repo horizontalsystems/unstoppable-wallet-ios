@@ -4,7 +4,6 @@ import RealmSwift
 @testable import WalletKit
 
 class TransactionProcessorTests: XCTestCase {
-    private var mockRealmFactory: MockRealmFactory!
     private var mockExtractor: MockTransactionExtractor!
     private var mockLinker: MockTransactionLinker!
     private var mockLogger: MockLogger!
@@ -15,19 +14,14 @@ class TransactionProcessorTests: XCTestCase {
     override func setUp() {
         super.setUp()
 
-        mockRealmFactory = MockRealmFactory(configuration: Realm.Configuration())
-        mockExtractor = MockTransactionExtractor(scriptConverter: ScriptConverter(), addressConverter: AddressConverter(network: TestNet()))
-        mockLinker = MockTransactionLinker()
-        mockLogger = MockLogger()
+        let mockWalletKit = MockWalletKit()
 
-        realm = try! Realm(configuration: Realm.Configuration(inMemoryIdentifier: "TestRealm"))
-        try! realm.write {
-            realm.deleteAll()
-        }
+        mockExtractor = mockWalletKit.mockTransactionExtractor
+        mockLinker = mockWalletKit.mockTransactionLinker
+        mockLogger = mockWalletKit.mockLogger
 
-        stub(mockRealmFactory) { mock in
-            when(mock.realm.get).thenReturn(realm)
-        }
+        realm = mockWalletKit.mockRealm
+
         stub(mockLinker) { mock in
             when(mock.handle(transaction: any(), realm: any())).thenDoNothing()
         }
@@ -38,11 +32,10 @@ class TransactionProcessorTests: XCTestCase {
             when(mock.log(tag: any(), message: any())).thenDoNothing()
         }
 
-        transactionProcessor = TransactionProcessor(realmFactory: mockRealmFactory, extractor: mockExtractor, linker: mockLinker, logger: mockLogger, queue: DispatchQueue.main)
+        transactionProcessor = TransactionProcessor(realmFactory: mockWalletKit.mockRealmFactory, extractor: mockExtractor, linker: mockLinker, logger: mockLogger, queue: DispatchQueue.main)
     }
 
     override func tearDown() {
-        mockRealmFactory = nil
         mockExtractor = nil
         mockLogger = nil
         mockLinker = nil

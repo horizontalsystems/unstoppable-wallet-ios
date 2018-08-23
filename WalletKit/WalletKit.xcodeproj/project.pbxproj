@@ -563,9 +563,9 @@
 		58AAA11F421202A1ADFF0CE2 /* Scripts */ = {
 			isa = PBXGroup;
 			children = (
+				58AAA3BE8FA350BD415CD5B3 /* Chunk.swift */,
 				58AAA11CDED1A6F7663DEA37 /* Script.swift */,
 				58AAAC8BAD29CC18864884DB /* ScriptConverter.swift */,
-				58AAA3BE8FA350BD415CD5B3 /* Chunk.swift */,
 			);
 			path = Scripts;
 			sourceTree = "<group>";
@@ -593,9 +593,9 @@
 		58AAAE8C826DAC0CB77E8521 /* Scripts */ = {
 			isa = PBXGroup;
 			children = (
-				58AAABDF62BBC64C9A3363A6 /* ScriptConverterTests.swift */,
 				58AAAE1DA82FC3585855DED3 /* ChunkTests.swift */,
 				58AAA6BB66ECE0543BE377E3 /* ScriptTests.swift */,
+				58AAABDF62BBC64C9A3363A6 /* ScriptConverterTests.swift */,
 			);
 			path = Scripts;
 			sourceTree = "<group>";
@@ -634,13 +634,13 @@
 				D01B6FAA21230AE80085010F /* Helpers */,
 				11B352462C0F682238607E64 /* Managers */,
 				11B358FC5E5FE51671115A95 /* Models */,
+				58AAAE8C826DAC0CB77E8521 /* Scripts */,
 				11B3582B0517A9873E63381B /* Transactions */,
 				D380FD6720FCC22800276993 /* GeneratedMocks.swift */,
+				11B3590614D2772B1436542A /* Extensions.swift */,
+				11B3522857E30443A6A29F6F /* MockWalletKit.swift */,
 				11B358F56F6298016B1A8AFD /* TestData.swift */,
 				D380FD5F20FCC04400276993 /* Info.plist */,
-				11B3590614D2772B1436542A /* Extensions.swift */,
-				58AAAE8C826DAC0CB77E8521 /* Scripts */,
-				11B3522857E30443A6A29F6F /* MockWalletKit.swift */,
 			);
 			path = WalletKitTests;
 			sourceTree = "<group>";
@@ -680,11 +680,11 @@
 				11B358F2406C382875DA91A2 /* Messages */,
 				11B35B5B2F111C31B1D972EB /* Models */,
 				11B357B9FF089EC58748DA4C /* PeerNetwork */,
+				58AAA11F421202A1ADFF0CE2 /* Scripts */,
 				11B35BC0CDFD3512DD636A78 /* Transactions */,
 				D3FD451620F364DF00F472B9 /* WalletKit.modulemap */,
 				D3FD450820F354EF00F472B9 /* WalletKit.h */,
 				D3FD450920F354EF00F472B9 /* Info.plist */,
-				58AAA11F421202A1ADFF0CE2 /* Scripts */,
 			);
 			path = WalletKit;
 			sourceTree = "<group>";
