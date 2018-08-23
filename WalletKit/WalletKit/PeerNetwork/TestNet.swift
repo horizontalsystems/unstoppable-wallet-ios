@@ -2,7 +2,6 @@ import Foundation
 
 class TestNet: NetworkProtocol {
     let name = "testnet"
-    let alias = "regtest"
     let pubKeyHash: UInt8 = 0x6f
     let privateKey: UInt8 = 0xef
     let scriptHash: UInt8 = 0xc4
@@ -10,6 +9,7 @@ class TestNet: NetworkProtocol {
     let xPrivKey: UInt32 = 0x04358394
     let magic: UInt32 = 0x0b110907
     let port: UInt32 = 18333
+    let coinType: UInt32 = 1
 
     let dnsSeeds = [
         "testnet-seed.bitcoin.petertodd.org",    // Peter Todd

@@ -5,12 +5,9 @@ import RealmSwift
 
 class HeaderHandlerTests: XCTestCase {
 
-    private var mockRealmFactory: MockRealmFactory!
     private var mockFactory: MockFactory!
     private var mockValidator: MockBlockValidator!
     private var mockBlockSyncer: MockBlockSyncer!
-    private var mockConfiguration: MockConfiguration!
-    private var mockNetwork: MockNetworkProtocol!
     private var headerHandler: HeaderHandler!
 
     private var realm: Realm!
@@ -19,41 +16,31 @@ class HeaderHandlerTests: XCTestCase {
     override func setUp() {
         super.setUp()
 
-        mockRealmFactory = MockRealmFactory(configuration: Realm.Configuration())
-        mockFactory = MockFactory()
-        mockValidator = MockBlockValidator(calculator: DifficultyCalculatorStub(difficultyEncoder: DifficultyEncoderStub()))
-        mockBlockSyncer = MockBlockSyncer(realmFactory: mockRealmFactory, peerGroup: PeerGroupStub(realmFactory: mockRealmFactory, configuration: Configuration(testNet: true)))
-        mockConfiguration = MockConfiguration()
-        mockNetwork = MockNetworkProtocol()
+        let mockWalletKit = MockWalletKit()
 
-        realm = try! Realm(configuration: Realm.Configuration(inMemoryIdentifier: "TestRealm"))
-        try! realm.write { realm.deleteAll() }
+        mockFactory = mockWalletKit.mockFactory
+        mockValidator = mockWalletKit.mockBlockValidator
+        mockBlockSyncer = mockWalletKit.mockBlockSyncer
+        realm = mockWalletKit.mockRealm
 
         checkpointBlock = TestData.checkpointBlock
 
-        stub(mockRealmFactory) { mock in
-            when(mock.realm.get).thenReturn(realm)
-        }
         stub(mockBlockSyncer) { mock in
             when(mock.enqueueRun()).thenDoNothing()
         }
-        stub(mockConfiguration) { mock in
-            when(mock.network.get).thenReturn(mockNetwork)
-        }
+
+        let mockNetwork = mockWalletKit.mockNetwork
         stub(mockNetwork) { mock in
             when(mock.checkpointBlock.get).thenReturn(checkpointBlock)
         }
 
-        headerHandler = HeaderHandler(realmFactory: mockRealmFactory, factory: mockFactory, validator: mockValidator, blockSyncer: mockBlockSyncer, configuration: mockConfiguration)
+        headerHandler = HeaderHandler(realmFactory: mockWalletKit.mockRealmFactory, factory: mockFactory, validator: mockValidator, blockSyncer: mockBlockSyncer, network: mockNetwork)
     }
 
     override func tearDown() {
-        mockRealmFactory = nil
         mockFactory = nil
         mockValidator = nil
         mockBlockSyncer = nil
-        mockConfiguration = nil
-        mockNetwork = nil
         headerHandler = nil
 
         realm = nil
@@ -185,6 +172,31 @@ class HeaderHandlerTests: XCTestCase {
 
         XCTAssertTrue(caught, "validation exception not thrown")
         verify(mockBlockSyncer).enqueueRun()
+    }
+
+    func testGetValidBlocks() {
+        let thirdBlock = TestData.thirdBlock
+        let secondBlock = thirdBlock.previousBlock!
+        let firstBlock = secondBlock.previousBlock!
+
+        try! realm.write {
+            realm.add(firstBlock)
+        }
+
+        stub(mockFactory) { mock in
+            when(mock.block(withHeader: equal(to: secondBlock.header), previousBlock: equal(to: firstBlock))).thenReturn(secondBlock)
+            when(mock.block(withHeader: equal(to: thirdBlock.header), previousBlock: equal(to: secondBlock))).thenReturn(thirdBlock)
+        }
+        stub(mockValidator) { mock in
+            when(mock.validate(block: equal(to: secondBlock))).thenDoNothing()
+            when(mock.validate(block: equal(to: thirdBlock))).thenDoNothing()
+        }
+
+        let validBlocks = headerHandler.getValidBlocks(headers: [secondBlock.header, thirdBlock.header], realm: realm)
+
+        XCTAssertEqual(validBlocks.blocks[0].headerHash, secondBlock.headerHash)
+        XCTAssertEqual(validBlocks.blocks[1].headerHash, thirdBlock.headerHash)
+        XCTAssertNil(validBlocks.error)
     }
 
 }

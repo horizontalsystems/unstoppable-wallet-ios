@@ -29,6 +29,14 @@ public class Block: Object {
         self.height = height
     }
 
+    convenience init(withHeaderHash headerHash: Data, height: Int) {
+        self.init()
+
+        self.headerHash = headerHash
+        self.reversedHeaderHashHex = headerHash.reversedHex
+        self.height = height
+    }
+
     private convenience init(withHeader header: BlockHeader) {
         self.init()
 

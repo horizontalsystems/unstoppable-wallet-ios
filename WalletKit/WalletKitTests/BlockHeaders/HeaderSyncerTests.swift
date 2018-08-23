@@ -5,10 +5,7 @@ import RealmSwift
 
 class HeaderSyncerTests: XCTestCase {
 
-    private var mockRealmFactory: MockRealmFactory!
     private var mockPeerGroup: MockPeerGroup!
-    private var mockConfiguration: MockConfiguration!
-    private var mockNetwork: MockNetworkProtocol!
     private var headerSyncer: HeaderSyncer!
 
     private var realm: Realm!
@@ -17,37 +14,27 @@ class HeaderSyncerTests: XCTestCase {
     override func setUp() {
         super.setUp()
 
-        mockRealmFactory = MockRealmFactory(configuration: Realm.Configuration())
-        mockPeerGroup = MockPeerGroup(realmFactory: mockRealmFactory, configuration: Configuration(testNet: true))
-        mockConfiguration = MockConfiguration()
-        mockNetwork = MockNetworkProtocol()
+        let mockWalletKit = MockWalletKit()
 
-        realm = try! Realm(configuration: Realm.Configuration(inMemoryIdentifier: "TestRealm"))
-        try! realm.write { realm.deleteAll() }
+        mockPeerGroup = mockWalletKit.mockPeerGroup
+        realm = mockWalletKit.mockRealm
 
         checkpointBlock = TestData.checkpointBlock
 
-        stub(mockRealmFactory) { mock in
-            when(mock.realm.get).thenReturn(realm)
-        }
         stub(mockPeerGroup) { mock in
             when(mock.requestHeaders(headerHashes: any())).thenDoNothing()
         }
-        stub(mockConfiguration) { mock in
-            when(mock.hashCheckpointThreshold.get).thenReturn(3)
-            when(mock.network.get).thenReturn(mockNetwork)
-        }
+
+        let mockNetwork = mockWalletKit.mockNetwork
         stub(mockNetwork) { mock in
             when(mock.checkpointBlock.get).thenReturn(checkpointBlock)
         }
 
-        headerSyncer = HeaderSyncer(realmFactory: mockRealmFactory, peerGroup: mockPeerGroup, configuration: mockConfiguration)
+        headerSyncer = HeaderSyncer(realmFactory: mockWalletKit.mockRealmFactory, peerGroup: mockPeerGroup, network: mockNetwork, hashCheckpointThreshold: 3)
     }
 
     override func tearDown() {
-        mockRealmFactory = nil
         mockPeerGroup = nil
-        mockNetwork = nil
         headerSyncer = nil
 
         realm = nil

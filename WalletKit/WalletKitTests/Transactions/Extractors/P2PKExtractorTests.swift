@@ -10,7 +10,9 @@ class P2PKExtractorTests: XCTestCase {
     override func setUp() {
         super.setUp()
 
-        scriptConverter = MockScriptConverter()
+        let mockWalletKit = MockWalletKit()
+
+        scriptConverter = mockWalletKit.mockScriptConverter
         extractor = P2PKExtractor()
     }
 
@@ -29,6 +31,7 @@ class P2PKExtractorTests: XCTestCase {
         let script = MockScript(with: data, chunks: chunks)
         stub(script) { mock in
             when(mock.length.get).thenReturn(33)
+            when(mock.chunks.get).thenReturn(chunks)
             when(mock.validate(opCodes: any())).thenDoNothing()
         }
 
@@ -67,6 +70,7 @@ class P2PKExtractorTests: XCTestCase {
         let script = MockScript(with: data, chunks: chunks)
         stub(script) { mock in
             when(mock.length.get).thenReturn(33)
+            when(mock.chunks.get).thenReturn(chunks)
         }
 
         do {
@@ -86,6 +90,7 @@ class P2PKExtractorTests: XCTestCase {
         let script = MockScript(with: data, chunks: chunks)
         stub(script) { mock in
             when(mock.length.get).thenReturn(33)
+            when(mock.chunks.get).thenReturn(chunks)
         }
 
         do {

@@ -10,6 +10,10 @@ class Factory {
         return Block(withHeader: header, height: height)
     }
 
+    func block(withHeaderHash headerHash: Data, height: Int) -> Block {
+        return Block(withHeaderHash: headerHash, height: height)
+    }
+
     func transaction(version: Int, inputs: [TransactionInput], outputs: [TransactionOutput], lockTime: Int) -> Transaction {
         return Transaction(version: version, inputs: inputs, outputs: outputs, lockTime: lockTime)
     }

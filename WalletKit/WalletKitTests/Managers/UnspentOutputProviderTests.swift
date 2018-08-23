@@ -5,7 +5,6 @@ import RealmSwift
 
 class UnspentOutputProviderTests: XCTestCase {
 
-    private var mockRealmFactory: MockRealmFactory!
     private var realm: Realm!
 
     private var outputs: [TransactionOutput]!
@@ -15,17 +14,13 @@ class UnspentOutputProviderTests: XCTestCase {
     override func setUp() {
         super.setUp()
 
-        mockRealmFactory = MockRealmFactory(configuration: Realm.Configuration())
+        let mockWalletKit = MockWalletKit()
 
-        realm = try! Realm(configuration: Realm.Configuration(inMemoryIdentifier: "TestRealm"))
-        try! realm.write { realm.deleteAll() }
+        realm = mockWalletKit.mockRealm
 
         pubKey = TestData.pubKey()
-        stub(mockRealmFactory) { mock in
-            when(mock.realm.get).thenReturn(realm)
-        }
 
-        unspentOutputProvider = UnspentOutputProvider(realmFactory: mockRealmFactory)
+        unspentOutputProvider = UnspentOutputProvider(realmFactory: mockWalletKit.mockRealmFactory)
         outputs = [TransactionOutput(withValue: 1, index: 0, lockingScript: Data(), type: .p2pkh, keyHash: Data(hex: "000010000")!),
                    TransactionOutput(withValue: 2, index: 0, lockingScript: Data(), type: .p2pkh, keyHash: Data(hex: "000010001")!),
                    TransactionOutput(withValue: 4, index: 0, lockingScript: Data(), type: .p2pkh, keyHash: Data(hex: "000010002")!),
@@ -35,7 +30,6 @@ class UnspentOutputProviderTests: XCTestCase {
     }
 
     override func tearDown() {
-        mockRealmFactory = nil
         realm = nil
 
         unspentOutputProvider = nil
@@ -116,4 +110,5 @@ class UnspentOutputProviderTests: XCTestCase {
         }
         return inputs
     }
+
 }

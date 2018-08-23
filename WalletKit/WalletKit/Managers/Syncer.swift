@@ -60,10 +60,10 @@ extension Syncer: PeerGroupDelegate {
         }
     }
 
-    func peerGroupDidReceive(blockHeaderHash: Data, withTransactions transactions: [Transaction]) {
-        print("BLOCK: \(blockHeaderHash.reversedHex) --- \(transactions.count)")
+    func peerGroupDidReceive(blockHeader: BlockHeader, withTransactions transactions: [Transaction]) {
+        print("BLOCK: \(Crypto.sha256sha256(blockHeader.serialized()).reversedHex) --- \(transactions.count)")
         do {
-            try transactionHandler?.handle(blockTransactions: transactions, blockHeaderHash: blockHeaderHash)
+            try transactionHandler?.handle(blockTransactions: transactions, blockHeader: blockHeader)
         } catch {
             logger.log(tag: "Transaction Handler Error", message: "\(error)")
         }
@@ -88,6 +88,15 @@ extension Syncer: PeerGroupDelegate {
                 return realm.objects(Block.self).filter("reversedHeaderHashHex = %@", inventoryItem.hash.reversedHex).isEmpty
             case .filteredBlockMessage, .compactBlockMessage, .unknown, .error:
                 return false
+        }
+    }
+
+    func inventoryItem(inventoryItem: InventoryItem) -> InventoryItem {
+        switch inventoryItem.objectType {
+            case .blockMessage:
+                return InventoryItem(type: InventoryItem.ObjectType.filteredBlockMessage.rawValue, hash: inventoryItem.hash)
+            default:
+                return inventoryItem
         }
     }
 

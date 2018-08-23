@@ -5,7 +5,7 @@ import RxSwift
 class PeerGroup {
 
     struct PendingBlock {
-        let headerHash: Data
+        let header: BlockHeader
         var pendingTransactionHashes: [Data]
         var transactions: [Transaction]
     }
@@ -24,9 +24,9 @@ class PeerGroup {
     private let validator = MerkleBlockValidator()
     private var pendingBlocks: [PendingBlock] = []
 
-    init(realmFactory: RealmFactory, configuration: Configuration) {
+    init(realmFactory: RealmFactory, network: NetworkProtocol) {
         self.realmFactory = realmFactory
-        self.peer = Peer(network: configuration.network)
+        self.peer = Peer(network: network)
 
         peer.delegate = self
     }
@@ -84,13 +84,12 @@ extension PeerGroup: PeerDelegate {
 
     func peer(_ peer: Peer, didReceiveMerkleBlockMessage message: MerkleBlockMessage) {
         do {
-            let headerHash = Crypto.sha256sha256(message.blockHeader.serialized())
             let hashes = try validator.validateAndGetTxHashes(message: message)
 
             if hashes.isEmpty {
-                delegate?.peerGroupDidReceive(blockHeaderHash: headerHash, withTransactions: [])
+                delegate?.peerGroupDidReceive(blockHeader: message.blockHeader, withTransactions: [])
             } else {
-                pendingBlocks.append(PendingBlock(headerHash: headerHash, pendingTransactionHashes: hashes, transactions: []))
+                pendingBlocks.append(PendingBlock(header: message.blockHeader, pendingTransactionHashes: hashes, transactions: []))
                 print("TX COUNT: \(hashes.count)")
             }
         } catch {
@@ -107,7 +106,7 @@ extension PeerGroup: PeerDelegate {
 
             if pendingBlocks[index].transactions.count == pendingBlocks[index].pendingTransactionHashes.count {
                 let block = pendingBlocks.remove(at: index)
-                delegate?.peerGroupDidReceive(blockHeaderHash: block.headerHash, withTransactions: block.transactions)
+                delegate?.peerGroupDidReceive(blockHeader: block.header, withTransactions: block.transactions)
             }
 
         } else {
@@ -120,7 +119,7 @@ extension PeerGroup: PeerDelegate {
 
         for item in message.inventoryItems {
             if let delegate = delegate, delegate.shouldRequest(inventoryItem: item) {
-                items.append(item)
+                items.append(delegate.inventoryItem(inventoryItem: item))
             }
         }
 

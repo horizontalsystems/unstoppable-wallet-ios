@@ -18,6 +18,7 @@ class TransactionsInteractor {
 
         latestBlockHeights["BTC"] = 1500000
         latestBlockHeights["BTC-T"] = 1500000
+        latestBlockHeights["BTC-R"] = 1500000
     }
 
 }

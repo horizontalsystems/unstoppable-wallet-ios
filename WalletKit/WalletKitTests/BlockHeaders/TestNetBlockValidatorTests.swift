@@ -16,8 +16,10 @@ class TestNetBlockValidatorTests: XCTestCase {
     override func setUp() {
         super.setUp()
 
-        encoder = MockDifficultyEncoder()
-        calculator = MockDifficultyCalculator(difficultyEncoder: encoder)
+        let mockWalletKit = MockWalletKit()
+
+        encoder = mockWalletKit.mockDifficultyEncoder
+        calculator = mockWalletKit.mockDifficultyCalculator
         validator = TestNetBlockValidator(calculator: calculator)
 
         firstCheckPointBlock = Block(

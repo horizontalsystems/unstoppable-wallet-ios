@@ -15,7 +15,9 @@ class BlockValidatorTests: XCTestCase {
     override func setUp() {
         super.setUp()
 
-        calculator = MockDifficultyCalculator(difficultyEncoder: DifficultyEncoderStub())
+        let mockWalletKit = MockWalletKit()
+
+        calculator = mockWalletKit.mockDifficultyCalculator
         validator = BlockValidator(calculator: calculator)
 
         firstCheckPointBlock = Block(

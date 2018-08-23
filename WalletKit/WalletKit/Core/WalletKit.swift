@@ -1,16 +1,31 @@
 import Foundation
 import RealmSwift
+import RxSwift
 
 public class WalletKit {
-    let configuration: Configuration
+
+    public enum NetworkType {
+        case mainNet
+        case testNet
+        case regTest
+    }
+
+    let disposeBag = DisposeBag()
+
+    let network: NetworkProtocol
     let realmFactory: RealmFactory
     let logger: Logger
 
     let hdWallet: HDWallet
 
+    let stateManager: StateManager
+    let apiManager: ApiManager
+
     let peerGroup: PeerGroup
     let syncer: Syncer
     let factory: Factory
+
+    let initialSyncer: InitialSyncer
 
     let difficultyEncoder: DifficultyEncoder
     let difficultyCalculator: DifficultyCalculator
@@ -38,27 +53,37 @@ public class WalletKit {
     let unspentOutputSelector: UnspentOutputSelector
     let unspentOutputProvider: UnspentOutputProvider
 
-    public init(withWords words: [String], realmConfiguration: Realm.Configuration, testNet: Bool = false) {
-        configuration = Configuration(testNet: testNet)
+    public init(withWords words: [String], realmConfiguration: Realm.Configuration, networkType: NetworkType = .mainNet) {
+        switch networkType {
+        case .mainNet: self.network = MainNet()
+        case .testNet: self.network = TestNet()
+        case .regTest: self.network = RegTest()
+        }
+
         realmFactory = RealmFactory(configuration: realmConfiguration)
         logger = Logger()
 
-        hdWallet = HDWallet(seed: Mnemonic.seed(mnemonic: words), network: configuration.network)
+        hdWallet = HDWallet(seed: Mnemonic.seed(mnemonic: words), network: network)
 
-        peerGroup = PeerGroup(realmFactory: realmFactory, configuration: configuration)
+        stateManager = StateManager(realmFactory: realmFactory)
+        apiManager = ApiManager(apiUrl: "http://blocknode.grouvi.org/api/v1/blockchain/btc")
+
+        peerGroup = PeerGroup(realmFactory: realmFactory, network: network)
         syncer = Syncer(logger: logger, realmFactory: realmFactory)
         factory = Factory()
+
+        initialSyncer = InitialSyncer(realmFactory: realmFactory, hdWallet: hdWallet, stateManager: stateManager, apiManager: apiManager, peerGroup: peerGroup)
 
         difficultyEncoder = DifficultyEncoder()
         difficultyCalculator = DifficultyCalculator(difficultyEncoder: difficultyEncoder)
 
-        blockValidator = testNet ? TestNetBlockValidator(calculator: difficultyCalculator) : BlockValidator(calculator: difficultyCalculator)
+        blockValidator = networkType == .mainNet ? BlockValidator(calculator: difficultyCalculator) : TestNetBlockValidator(calculator: difficultyCalculator)
 
         blockSyncer = BlockSyncer(realmFactory: realmFactory, peerGroup: peerGroup)
         merkleBlockValidator = MerkleBlockValidator()
 
-        headerSyncer = HeaderSyncer(realmFactory: realmFactory, peerGroup: peerGroup, configuration: configuration)
-        headerHandler = HeaderHandler(realmFactory: realmFactory, factory: factory, validator: blockValidator, blockSyncer: blockSyncer, configuration: configuration)
+        headerSyncer = HeaderSyncer(realmFactory: realmFactory, peerGroup: peerGroup, network: network)
+        headerHandler = HeaderHandler(realmFactory: realmFactory, factory: factory, validator: blockValidator, blockSyncer: blockSyncer, network: network)
 
         inputSigner = InputSigner(hdWallet: hdWallet)
         scriptBuilder = ScriptBuilder()
@@ -66,12 +91,12 @@ public class WalletKit {
         unspentOutputSelector = UnspentOutputSelector()
         unspentOutputProvider = UnspentOutputProvider(realmFactory: realmFactory)
 
-        addressConverter = AddressConverter(network: configuration.network)
+        addressConverter = AddressConverter(network: network)
         scriptConverter = ScriptConverter()
         transactionExtractor = TransactionExtractor(scriptConverter: scriptConverter, addressConverter: addressConverter)
         transactionLinker = TransactionLinker()
         transactionProcessor = TransactionProcessor(realmFactory: realmFactory, extractor: transactionExtractor, linker: transactionLinker, logger: logger)
-        transactionHandler = TransactionHandler(realmFactory: realmFactory, processor: transactionProcessor)
+        transactionHandler = TransactionHandler(realmFactory: realmFactory, processor: transactionProcessor, headerHandler: headerHandler, factory: factory)
         transactionSender = TransactionSender(realmFactory: realmFactory, peerGroup: peerGroup)
         transactionBuilder = TransactionBuilder(unspentOutputSelector: unspentOutputSelector, unspentOutputProvider: unspentOutputProvider, addressConverter: addressConverter, inputSigner: inputSigner, scriptBuilder: scriptBuilder, factory: factory)
         transactionCreator = TransactionCreator(realmFactory: realmFactory, transactionBuilder: transactionBuilder)
@@ -82,8 +107,6 @@ public class WalletKit {
         syncer.headerHandler = headerHandler
         syncer.transactionHandler = transactionHandler
         syncer.blockSyncer = blockSyncer
-
-        preFillInitialTestData()
     }
 
     public func showRealmInfo() {
@@ -102,16 +125,13 @@ public class WalletKit {
         }
 
         print("PUBLIC KEYS COUNT: \(pubKeysCount)")
-        if let pubKey = realm.objects(PublicKey.self).first {
-            print("First PublicKey: \(pubKey.index) --- \(pubKey.external) --- \(pubKey.address)")
-        }
-        if let pubKey = realm.objects(PublicKey.self).last {
-            print("Last PublicKey: \(pubKey.index) --- \(pubKey.external) --- \(pubKey.address)")
+        for pubKey in realm.objects(PublicKey.self) {
+            print("\(pubKey.index) --- \(pubKey.external) --- \(pubKey.address)")
         }
     }
 
     public func start() throws {
-        peerGroup.connect()
+        try initialSyncer.sync()
     }
 
     public var transactionsRealmResults: Results<Transaction> {
@@ -127,25 +147,6 @@ public class WalletKit {
 
     public func send(to address: String, value: Int) throws {
         try transactionCreator.create(to: address, value: value)
-    }
-
-    private func preFillInitialTestData() {
-        let realm = realmFactory.realm
-
-        var pubKeys = [PublicKey]()
-
-        for i in 0..<10 {
-            if let pubKey = try? hdWallet.receivePublicKey(index: i) {
-                pubKeys.append(pubKey)
-            }
-            if let pubKey = try? hdWallet.changePublicKey(index: i) {
-                pubKeys.append(pubKey)
-            }
-        }
-
-        try? realm.write {
-            realm.add(pubKeys, update: true)
-        }
     }
 
 }

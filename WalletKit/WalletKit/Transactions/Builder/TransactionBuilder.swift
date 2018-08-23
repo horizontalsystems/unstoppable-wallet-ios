@@ -3,6 +3,7 @@ import Foundation
 class TransactionBuilder {
     enum BuildError: Error {
         case noPreviousTransaction
+        case feeMoreThanValue
     }
 
     static let outputSize = 32
@@ -40,6 +41,9 @@ class TransactionBuilder {
 
         // Calculate fee and add :change output if needed
         let fee = calculateFee(transaction: transaction, feeRate: feeRate)
+        guard fee < value else {
+            throw BuildError.feeMoreThanValue
+        }
         let toValue = value - fee
         let totalInputValue = unspentOutputs.reduce(0, {$0 + $1.value})
 

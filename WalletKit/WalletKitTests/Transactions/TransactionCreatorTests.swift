@@ -6,7 +6,6 @@ import RealmSwift
 class TransactionCreatorTests: XCTestCase {
 
     private var realm: Realm!
-    private var mockRealmFactory: MockRealmFactory!
     private var mockTransactionBuilder: MockTransactionBuilder!
 
     private var transactionCreator: TransactionCreator!
@@ -14,26 +13,24 @@ class TransactionCreatorTests: XCTestCase {
     override func setUp() {
         super.setUp()
 
-        mockRealmFactory = MockRealmFactory(configuration: Realm.Configuration())
-        realm = try! Realm(configuration: Realm.Configuration(inMemoryIdentifier: "TestRealm"))
+        let mockWalletKit = MockWalletKit()
+
+        realm = mockWalletKit.mockRealm
+
         try! realm.write {
-            realm.deleteAll()
             realm.add(TestData.pubKey())
         }
-        stub(mockRealmFactory) { mock in
-            when(mock.realm.get).thenReturn(realm)
-        }
 
-        mockTransactionBuilder = MockTransactionBuilder(unspentOutputSelector: UnspentOutputSelectorStub(), unspentOutputProvider: UnspentOutputProviderStub(realmFactory: mockRealmFactory), addressConverter: AddressConverterStub(network: TestNet()), inputSigner: InputSignerStub(hdWallet: HDWallet(seed: Data(), network: TestNet())), scriptBuilder: ScriptBuilderStub(), factory: FactoryStub())
+        mockTransactionBuilder = mockWalletKit.mockTransactionBuilder
+
         stub(mockTransactionBuilder) { mock in
             when(mock.buildTransaction(value: any(), feeRate: any(), type: any(), changePubKey: any(), toAddress: any())).thenReturn(TestData.p2pkhTransaction)
         }
 
-        transactionCreator = TransactionCreator(realmFactory: mockRealmFactory, transactionBuilder: mockTransactionBuilder)
+        transactionCreator = TransactionCreator(realmFactory: mockWalletKit.mockRealmFactory, transactionBuilder: mockTransactionBuilder)
     }
 
     override func tearDown() {
-        mockRealmFactory = nil
         realm = nil
         mockTransactionBuilder = nil
         transactionCreator = nil

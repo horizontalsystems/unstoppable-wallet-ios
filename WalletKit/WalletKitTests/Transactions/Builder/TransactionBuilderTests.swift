@@ -3,10 +3,9 @@ import Cuckoo
 import RealmSwift
 @testable import WalletKit
 
-class TransactionBuilderTests: XCTestCase{
+class TransactionBuilderTests: XCTestCase {
 
     private var realm: Realm!
-    private var mockRealmFactory: MockRealmFactory!
     private var mockUnspentOutputSelector: MockUnspentOutputSelector!
     private var mockUnspentOutputProvider: MockUnspentOutputProvider!
     private var mockAddressConverter: MockAddressConverter!
@@ -31,21 +30,16 @@ class TransactionBuilderTests: XCTestCase{
     override func setUp() {
         super.setUp()
 
-        mockRealmFactory = MockRealmFactory(configuration: Realm.Configuration())
-        realm = try! Realm(configuration: Realm.Configuration(inMemoryIdentifier: "TestRealm"))
-        try! realm.write {
-            realm.deleteAll()
-        }
-        stub(mockRealmFactory) { mock in
-            when(mock.realm.get).thenReturn(realm)
-        }
+        let mockWalletKit = MockWalletKit()
 
-        mockUnspentOutputSelector = MockUnspentOutputSelector()
-        mockUnspentOutputProvider = MockUnspentOutputProvider(realmFactory: mockRealmFactory)
-        mockAddressConverter = MockAddressConverter(network: TestNet())
-        mockInputSigner = MockInputSigner(hdWallet: HDWalletStub(seed: Data(), network: TestNet()))
-        mockScriptBuilder = MockScriptBuilder()
-        mockFactory = MockFactory()
+        realm = mockWalletKit.mockRealm
+
+        mockUnspentOutputSelector = mockWalletKit.mockUnspentOutputSelector
+        mockUnspentOutputProvider = mockWalletKit.mockUnspentOutputProvider
+        mockAddressConverter = mockWalletKit.mockAddressConverter
+        mockInputSigner = mockWalletKit.mockInputSigner
+        mockScriptBuilder = mockWalletKit.mockScriptBuilder
+        mockFactory = mockWalletKit.mockFactory
 
         transactionBuilder = TransactionBuilder(unspentOutputSelector: mockUnspentOutputSelector, unspentOutputProvider: mockUnspentOutputProvider, addressConverter: mockAddressConverter, inputSigner: mockInputSigner, scriptBuilder: mockScriptBuilder, factory: mockFactory)
 
@@ -104,7 +98,6 @@ class TransactionBuilderTests: XCTestCase{
     }
 
     override func tearDown() {
-        mockRealmFactory = nil
         realm = nil
         unspentOutputs = nil
         mockUnspentOutputSelector = nil

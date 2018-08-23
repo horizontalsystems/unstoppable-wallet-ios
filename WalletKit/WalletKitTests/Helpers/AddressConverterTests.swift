@@ -3,16 +3,20 @@ import Cuckoo
 import RealmSwift
 @testable import WalletKit
 
-class AddressConverterTests: XCTestCase{
+class AddressConverterTests: XCTestCase {
     private var addressConverter: AddressConverter!
 
     override func setUp() {
         super.setUp()
-        addressConverter = AddressConverter(network: TestNet())
+
+        let mockWalletKit = MockWalletKit()
+
+        addressConverter = AddressConverter(network: mockWalletKit.mockNetwork)
     }
 
     override func tearDown() {
         addressConverter = nil
+
         super.tearDown()
     }
 
@@ -113,4 +117,5 @@ class AddressConverterTests: XCTestCase{
             XCTFail("Invalid Error thrown!")
         }
     }
+
 }

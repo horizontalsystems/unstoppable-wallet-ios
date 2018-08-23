@@ -16,29 +16,24 @@ class TransactionSenderTests: XCTestCase {
     override func setUp() {
         super.setUp()
 
-        mockRealmFactory = MockRealmFactory(configuration: Realm.Configuration())
-        mockPeerGroup = MockPeerGroup(realmFactory: mockRealmFactory, configuration: Configuration(testNet: true))
+        let mockWalletKit = MockWalletKit()
 
-        realm = try! Realm(configuration: Realm.Configuration(inMemoryIdentifier: "TestRealm"))
-        try! realm.write { realm.deleteAll() }
+        mockPeerGroup = mockWalletKit.mockPeerGroup
+        realm = mockWalletKit.mockRealm
 
         peerStatusSubject = PublishSubject()
 
-        stub(mockRealmFactory) { mock in
-            when(mock.realm.get).thenReturn(realm)
-        }
         stub(mockPeerGroup) { mock in
             when(mock.relay(transaction: any())).thenDoNothing()
             when(mock.statusSubject.get).thenReturn(peerStatusSubject)
         }
 
-        transactionSender = TransactionSender(realmFactory: mockRealmFactory, peerGroup: mockPeerGroup, scheduler: MainScheduler.instance, queue: .main)
+        transactionSender = TransactionSender(realmFactory: mockWalletKit.mockRealmFactory, peerGroup: mockPeerGroup, scheduler: MainScheduler.instance, queue: .main)
     }
 
     override func tearDown() {
-        transactionSender = nil
         mockPeerGroup = nil
-        mockRealmFactory = nil
+        transactionSender = nil
 
         realm = nil
         peerStatusSubject = nil

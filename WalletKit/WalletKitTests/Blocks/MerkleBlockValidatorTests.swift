@@ -12,7 +12,6 @@ class MerkleBlockValidatorTests: XCTestCase {
     private var numberOfFlags: VarInt!
     private var flags: [UInt8]!
 
-
     override func setUp() {
         super.setUp()
 
