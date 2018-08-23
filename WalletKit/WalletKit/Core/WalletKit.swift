@@ -96,7 +96,7 @@ public class WalletKit {
         transactionExtractor = TransactionExtractor(scriptConverter: scriptConverter, addressConverter: addressConverter)
         transactionLinker = TransactionLinker()
         transactionProcessor = TransactionProcessor(realmFactory: realmFactory, extractor: transactionExtractor, linker: transactionLinker, logger: logger)
-        transactionHandler = TransactionHandler(realmFactory: realmFactory, processor: transactionProcessor)
+        transactionHandler = TransactionHandler(realmFactory: realmFactory, processor: transactionProcessor, headerHandler: headerHandler, factory: factory)
         transactionSender = TransactionSender(realmFactory: realmFactory, peerGroup: peerGroup)
         transactionBuilder = TransactionBuilder(unspentOutputSelector: unspentOutputSelector, unspentOutputProvider: unspentOutputProvider, addressConverter: addressConverter, inputSigner: inputSigner, scriptBuilder: scriptBuilder, factory: factory)
         transactionCreator = TransactionCreator(realmFactory: realmFactory, transactionBuilder: transactionBuilder)

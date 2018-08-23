@@ -5,6 +5,7 @@ import RealmSwift
 
 class HeaderHandlerTests: XCTestCase {
 
+    private var mockWalletKit: MockWalletKit!
     private var mockRealmFactory: MockRealmFactory!
     private var mockFactory: MockFactory!
     private var mockValidator: MockBlockValidator!
@@ -18,10 +19,11 @@ class HeaderHandlerTests: XCTestCase {
     override func setUp() {
         super.setUp()
 
+        mockWalletKit = MockWalletKit()
         mockRealmFactory = MockRealmFactory(configuration: Realm.Configuration())
         mockFactory = MockFactory()
-        mockValidator = MockBlockValidator(calculator: DifficultyCalculatorStub(difficultyEncoder: DifficultyEncoderStub()))
-        mockBlockSyncer = MockBlockSyncer(realmFactory: mockRealmFactory, peerGroup: PeerGroupStub(realmFactory: mockRealmFactory, network: TestNet()))
+        mockValidator = MockBlockValidator(calculator: mockWalletKit.mockDifficultyCalculator)
+        mockBlockSyncer = MockBlockSyncer(realmFactory: mockRealmFactory, peerGroup: mockWalletKit.mockPeerGroup)
         mockNetwork = MockNetworkProtocol()
 
         realm = try! Realm(configuration: Realm.Configuration(inMemoryIdentifier: "TestRealm"))
@@ -43,6 +45,7 @@ class HeaderHandlerTests: XCTestCase {
     }
 
     override func tearDown() {
+        mockWalletKit = nil
         mockRealmFactory = nil
         mockFactory = nil
         mockValidator = nil
@@ -179,6 +182,31 @@ class HeaderHandlerTests: XCTestCase {
 
         XCTAssertTrue(caught, "validation exception not thrown")
         verify(mockBlockSyncer).enqueueRun()
+    }
+
+    func testGetValidBlocks() {
+        let thirdBlock = TestData.thirdBlock
+        let secondBlock = thirdBlock.previousBlock!
+        let firstBlock = secondBlock.previousBlock!
+
+        try! realm.write {
+            realm.add(firstBlock)
+        }
+
+        stub(mockFactory) { mock in
+            when(mock.block(withHeader: equal(to: secondBlock.header), previousBlock: equal(to: firstBlock))).thenReturn(secondBlock)
+            when(mock.block(withHeader: equal(to: thirdBlock.header), previousBlock: equal(to: secondBlock))).thenReturn(thirdBlock)
+        }
+        stub(mockValidator) { mock in
+            when(mock.validate(block: equal(to: secondBlock))).thenDoNothing()
+            when(mock.validate(block: equal(to: thirdBlock))).thenDoNothing()
+        }
+
+        let validBlocks = headerHandler.getValidBlocks(headers: [secondBlock.header, thirdBlock.header], realm: realm)
+
+        XCTAssertEqual(validBlocks.blocks[0].headerHash, secondBlock.headerHash)
+        XCTAssertEqual(validBlocks.blocks[1].headerHash, thirdBlock.headerHash)
+        XCTAssertNil(validBlocks.error)
     }
 
 }

@@ -14,6 +14,7 @@ class SyncerTests: XCTestCase {
     private var mockHeaderSyncer: MockHeaderSyncer!
     private var mockHeaderHandler: MockHeaderHandler!
     private var mockTransactionHandler: MockTransactionHandler!
+    private var mockFactory: MockFactory!
     private var syncer: Syncer!
 
     private var realm: Realm!
@@ -27,7 +28,8 @@ class SyncerTests: XCTestCase {
         mockLogger = MockLogger()
         mockHeaderSyncer = MockHeaderSyncer(realmFactory: mockRealmFactory, peerGroup: PeerGroupStub(realmFactory: mockRealmFactory, network: TestNet()), network: TestNet())
         mockHeaderHandler = MockHeaderHandler(realmFactory: mockRealmFactory, factory: FactoryStub(), validator: BlockValidatorStub(calculator: DifficultyCalculatorStub(difficultyEncoder: DifficultyEncoderStub())), blockSyncer: BlockSyncerStub(realmFactory: mockRealmFactory, peerGroup: PeerGroupStub(realmFactory: mockRealmFactory, network: TestNet())), network: TestNet())
-        mockTransactionHandler = MockTransactionHandler(realmFactory: mockRealmFactory, processor: TransactionProcessorStub(realmFactory: mockRealmFactory, extractor: TransactionExtractorStub(scriptConverter: ScriptConverter(), addressConverter: AddressConverterStub(network: TestNet())), linker: TransactionLinkerStub(), logger: LoggerStub()))
+        mockFactory = MockFactory()
+        mockTransactionHandler = MockTransactionHandler(realmFactory: mockRealmFactory, processor: TransactionProcessorStub(realmFactory: mockRealmFactory, extractor: TransactionExtractorStub(scriptConverter: ScriptConverter(), addressConverter: AddressConverterStub(network: TestNet())), linker: TransactionLinkerStub(), logger: LoggerStub()), headerHandler: mockHeaderHandler, factory: mockFactory)
 
         realm = try! Realm(configuration: Realm.Configuration(inMemoryIdentifier: "TestRealm"))
         try! realm.write { realm.deleteAll() }
@@ -45,7 +47,7 @@ class SyncerTests: XCTestCase {
             when(mock.handle(headers: any())).thenDoNothing()
         }
         stub(mockTransactionHandler) { mock in
-            when(mock.handle(blockTransactions: any(), blockHeaderHash: any())).thenDoNothing()
+            when(mock.handle(blockTransactions: any(), blockHeader: any())).thenDoNothing()
             when(mock.handle(memPoolTransactions: any())).thenDoNothing()
         }
 
@@ -61,6 +63,7 @@ class SyncerTests: XCTestCase {
         mockHeaderSyncer = nil
         mockHeaderHandler = nil
         mockTransactionHandler = nil
+        mockFactory = nil
         syncer = nil
 
         realm = nil
@@ -107,23 +110,23 @@ class SyncerTests: XCTestCase {
     }
 
     func testRunTransactions() {
-        let blockHeaderHash = TestData.checkpointBlock.reversedHeaderHashHex.reversedData!
+        let blockHeader = TestData.checkpointBlock.header!
         let transaction = TestData.p2pkhTransaction
 
-        syncer.peerGroupDidReceive(blockHeaderHash: blockHeaderHash, withTransactions: [transaction])
-        verify(mockTransactionHandler).handle(blockTransactions: equal(to: [transaction]), blockHeaderHash: equal(to: blockHeaderHash))
+        syncer.peerGroupDidReceive(blockHeader: blockHeader, withTransactions: [transaction])
+        verify(mockTransactionHandler).handle(blockTransactions: equal(to: [transaction]), blockHeader: equal(to: blockHeader))
     }
 
     func testRunTransactions_Error() {
         let error = TestError()
         stub(mockTransactionHandler) { mock in
-            when(mock.handle(blockTransactions: any(), blockHeaderHash: any())).thenThrow(error)
+            when(mock.handle(blockTransactions: any(), blockHeader: any())).thenThrow(error)
         }
 
-        let blockHeaderHash = TestData.checkpointBlock.reversedHeaderHashHex.reversedData!
+        let blockHeader = TestData.checkpointBlock.header!
         let transaction = TestData.p2pkhTransaction
 
-        syncer.peerGroupDidReceive(blockHeaderHash: blockHeaderHash, withTransactions: [transaction])
+        syncer.peerGroupDidReceive(blockHeader: blockHeader, withTransactions: [transaction])
         verify(mockLogger).log(tag: "Transaction Handler Error", message: "\(error)")
     }
 

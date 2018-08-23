@@ -57,10 +57,8 @@ class ScriptConverterTests: XCTestCase {
         let chunks = [Chunk(scriptData: data, index: 0), Chunk(scriptData: data, index: 1, payloadRange: 2..<4), Chunk(scriptData: data, index: 4)]
 
         do {
-            let result = try converter.encode(script: Script(with: data, chunks: chunks))
+            let result = converter.encode(script: Script(with: data, chunks: chunks))
             XCTAssertEqual(result, Data(hex: "7602fffca9")!)
-        } catch {
-            XCTFail("Unexpected error!")
         }
     }
 

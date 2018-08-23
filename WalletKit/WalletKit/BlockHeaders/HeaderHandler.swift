@@ -21,15 +21,30 @@ class HeaderHandler {
     }
 
     func handle(headers: [BlockHeader]) throws {
+        let realm = realmFactory.realm
+
         guard !headers.isEmpty else {
             throw HandleError.emptyHeaders
         }
 
-        let realm = realmFactory.realm
+        let validBlocks = getValidBlocks(headers: headers, realm: realm)
 
+        if !validBlocks.blocks.isEmpty {
+            try realm.write {
+                realm.add(validBlocks.blocks, update: true)
+            }
+
+            blockSyncer.enqueueRun()
+        }
+
+        if let validationError = validBlocks.error {
+            throw validationError
+        }
+    }
+
+    func getValidBlocks(headers: [BlockHeader], realm: Realm) -> (blocks: [Block], error: Error?) {
         let blockInChain = realm.objects(Block.self).filter("previousBlock != nil").sorted(byKeyPath: "height")
         let initialBlock = blockInChain.last ?? network.checkpointBlock
-
 
         var newBlocks = [Block]()
         var previousBlock = initialBlock
@@ -54,17 +69,7 @@ class HeaderHandler {
             validationError = error
         }
 
-        if !validBlocks.isEmpty {
-            try realm.write {
-                realm.add(validBlocks, update: true)
-            }
-
-            blockSyncer.enqueueRun()
-        }
-
-        if let validationError = validationError {
-            throw validationError
-        }
+        return (validBlocks, validationError)
     }
 
 }
