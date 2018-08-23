@@ -21,7 +21,7 @@ class InitialSyncerTests: XCTestCase {
         mockHDWallet = MockHDWallet(seed: Data(), network: TestNet())
         mockStateManager = MockStateManager(realmFactory: mockRealmFactory)
         mockApiManager = MockApiManager(apiUrl: "")
-        mockPeerGroup = MockPeerGroup(realmFactory: mockRealmFactory, configuration: Configuration(testNet: true))
+        mockPeerGroup = MockPeerGroup(realmFactory: mockRealmFactory, network: TestNet())
 
         realm = try! Realm(configuration: Realm.Configuration(inMemoryIdentifier: "TestRealm"))
         try! realm.write { realm.deleteAll() }

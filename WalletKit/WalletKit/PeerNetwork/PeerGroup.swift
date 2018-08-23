@@ -24,9 +24,9 @@ class PeerGroup {
     private let validator = MerkleBlockValidator()
     private var pendingBlocks: [PendingBlock] = []
 
-    init(realmFactory: RealmFactory, configuration: Configuration) {
+    init(realmFactory: RealmFactory, network: NetworkProtocol) {
         self.realmFactory = realmFactory
-        self.peer = Peer(network: configuration.network)
+        self.peer = Peer(network: network)
 
         peer.delegate = self
     }

@@ -9,7 +9,6 @@ class HeaderHandlerTests: XCTestCase {
     private var mockFactory: MockFactory!
     private var mockValidator: MockBlockValidator!
     private var mockBlockSyncer: MockBlockSyncer!
-    private var mockConfiguration: MockConfiguration!
     private var mockNetwork: MockNetworkProtocol!
     private var headerHandler: HeaderHandler!
 
@@ -22,8 +21,7 @@ class HeaderHandlerTests: XCTestCase {
         mockRealmFactory = MockRealmFactory(configuration: Realm.Configuration())
         mockFactory = MockFactory()
         mockValidator = MockBlockValidator(calculator: DifficultyCalculatorStub(difficultyEncoder: DifficultyEncoderStub()))
-        mockBlockSyncer = MockBlockSyncer(realmFactory: mockRealmFactory, peerGroup: PeerGroupStub(realmFactory: mockRealmFactory, configuration: Configuration(testNet: true)))
-        mockConfiguration = MockConfiguration()
+        mockBlockSyncer = MockBlockSyncer(realmFactory: mockRealmFactory, peerGroup: PeerGroupStub(realmFactory: mockRealmFactory, network: TestNet()))
         mockNetwork = MockNetworkProtocol()
 
         realm = try! Realm(configuration: Realm.Configuration(inMemoryIdentifier: "TestRealm"))
@@ -37,14 +35,11 @@ class HeaderHandlerTests: XCTestCase {
         stub(mockBlockSyncer) { mock in
             when(mock.enqueueRun()).thenDoNothing()
         }
-        stub(mockConfiguration) { mock in
-            when(mock.network.get).thenReturn(mockNetwork)
-        }
         stub(mockNetwork) { mock in
             when(mock.checkpointBlock.get).thenReturn(checkpointBlock)
         }
 
-        headerHandler = HeaderHandler(realmFactory: mockRealmFactory, factory: mockFactory, validator: mockValidator, blockSyncer: mockBlockSyncer, configuration: mockConfiguration)
+        headerHandler = HeaderHandler(realmFactory: mockRealmFactory, factory: mockFactory, validator: mockValidator, blockSyncer: mockBlockSyncer, network: mockNetwork)
     }
 
     override func tearDown() {
@@ -52,7 +47,6 @@ class HeaderHandlerTests: XCTestCase {
         mockFactory = nil
         mockValidator = nil
         mockBlockSyncer = nil
-        mockConfiguration = nil
         mockNetwork = nil
         headerHandler = nil
 

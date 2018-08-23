@@ -25,8 +25,8 @@ class SyncerTests: XCTestCase {
 
         mockRealmFactory = MockRealmFactory(configuration: Realm.Configuration())
         mockLogger = MockLogger()
-        mockHeaderSyncer = MockHeaderSyncer(realmFactory: mockRealmFactory, peerGroup: PeerGroupStub(realmFactory: mockRealmFactory, configuration: Configuration(testNet: true)), configuration: ConfigurationStub())
-        mockHeaderHandler = MockHeaderHandler(realmFactory: mockRealmFactory, factory: FactoryStub(), validator: BlockValidatorStub(calculator: DifficultyCalculatorStub(difficultyEncoder: DifficultyEncoderStub())), blockSyncer: BlockSyncerStub(realmFactory: mockRealmFactory, peerGroup: PeerGroupStub(realmFactory: mockRealmFactory, configuration: Configuration(testNet: true))), configuration: ConfigurationStub())
+        mockHeaderSyncer = MockHeaderSyncer(realmFactory: mockRealmFactory, peerGroup: PeerGroupStub(realmFactory: mockRealmFactory, network: TestNet()), network: TestNet())
+        mockHeaderHandler = MockHeaderHandler(realmFactory: mockRealmFactory, factory: FactoryStub(), validator: BlockValidatorStub(calculator: DifficultyCalculatorStub(difficultyEncoder: DifficultyEncoderStub())), blockSyncer: BlockSyncerStub(realmFactory: mockRealmFactory, peerGroup: PeerGroupStub(realmFactory: mockRealmFactory, network: TestNet())), network: TestNet())
         mockTransactionHandler = MockTransactionHandler(realmFactory: mockRealmFactory, processor: TransactionProcessorStub(realmFactory: mockRealmFactory, extractor: TransactionExtractorStub(scriptConverter: ScriptConverter(), addressConverter: AddressConverterStub(network: TestNet())), linker: TransactionLinkerStub(), logger: LoggerStub()))
 
         realm = try! Realm(configuration: Realm.Configuration(inMemoryIdentifier: "TestRealm"))

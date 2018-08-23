@@ -12,12 +12,12 @@ class HeaderHandler {
     let blockSyncer: BlockSyncer
     let network: NetworkProtocol
 
-    init(realmFactory: RealmFactory, factory: Factory, validator: BlockValidator, blockSyncer: BlockSyncer, configuration: Configuration) {
+    init(realmFactory: RealmFactory, factory: Factory, validator: BlockValidator, blockSyncer: BlockSyncer, network: NetworkProtocol) {
         self.realmFactory = realmFactory
         self.factory = factory
         self.validator = validator
         self.blockSyncer = blockSyncer
-        self.network = configuration.network
+        self.network = network
     }
 
     func handle(headers: [BlockHeader]) throws {

@@ -21,8 +21,8 @@ class BitcoinAdapter {
         return balance
     }
 
-    init(words: [String], network: WalletKit.Network = .mainNet) {
-        switch network {
+    init(words: [String], networkType: WalletKit.NetworkType = .mainNet) {
+        switch networkType {
         case .mainNet: coin = Bitcoin()
         case .testNet: coin = BitcoinTestNet()
         case .regTest: coin = BitcoinRegTest()
@@ -33,7 +33,7 @@ class BitcoinAdapter {
         let documentsUrl = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
         let configuration = Realm.Configuration(fileURL: documentsUrl?.appendingPathComponent(realmFileName))
 
-        walletKit = WalletKit(withWords: words, realmConfiguration: configuration, network: network)
+        walletKit = WalletKit(withWords: words, realmConfiguration: configuration, networkType: networkType)
 
         unspentOutputsNotificationToken = walletKit.unspentOutputsRealmResults.observe { [weak self] changes in
             self?.listener?.updateBalance()

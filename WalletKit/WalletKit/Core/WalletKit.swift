@@ -4,7 +4,7 @@ import RxSwift
 
 public class WalletKit {
 
-    public enum Network {
+    public enum NetworkType {
         case mainNet
         case testNet
         case regTest
@@ -12,7 +12,7 @@ public class WalletKit {
 
     let disposeBag = DisposeBag()
 
-    let configuration: Configuration
+    let network: NetworkProtocol
     let realmFactory: RealmFactory
     let logger: Logger
 
@@ -53,17 +53,22 @@ public class WalletKit {
     let unspentOutputSelector: UnspentOutputSelector
     let unspentOutputProvider: UnspentOutputProvider
 
-    public init(withWords words: [String], realmConfiguration: Realm.Configuration, network: Network = .mainNet) {
-        configuration = Configuration(network: network)
+    public init(withWords words: [String], realmConfiguration: Realm.Configuration, networkType: NetworkType = .mainNet) {
+        switch networkType {
+        case .mainNet: self.network = MainNet()
+        case .testNet: self.network = TestNet()
+        case .regTest: self.network = RegTest()
+        }
+
         realmFactory = RealmFactory(configuration: realmConfiguration)
         logger = Logger()
 
-        hdWallet = HDWallet(seed: Mnemonic.seed(mnemonic: words), network: configuration.network)
+        hdWallet = HDWallet(seed: Mnemonic.seed(mnemonic: words), network: network)
 
         stateManager = StateManager(realmFactory: realmFactory)
         apiManager = ApiManager(apiUrl: "http://blocknode.grouvi.org/api/v1/blockchain/btc")
 
-        peerGroup = PeerGroup(realmFactory: realmFactory, configuration: configuration)
+        peerGroup = PeerGroup(realmFactory: realmFactory, network: network)
         syncer = Syncer(logger: logger, realmFactory: realmFactory)
         factory = Factory()
 
@@ -72,13 +77,13 @@ public class WalletKit {
         difficultyEncoder = DifficultyEncoder()
         difficultyCalculator = DifficultyCalculator(difficultyEncoder: difficultyEncoder)
 
-        blockValidator = network == .mainNet ? BlockValidator(calculator: difficultyCalculator) : TestNetBlockValidator(calculator: difficultyCalculator)
+        blockValidator = networkType == .mainNet ? BlockValidator(calculator: difficultyCalculator) : TestNetBlockValidator(calculator: difficultyCalculator)
 
         blockSyncer = BlockSyncer(realmFactory: realmFactory, peerGroup: peerGroup)
         merkleBlockValidator = MerkleBlockValidator()
 
-        headerSyncer = HeaderSyncer(realmFactory: realmFactory, peerGroup: peerGroup, configuration: configuration)
-        headerHandler = HeaderHandler(realmFactory: realmFactory, factory: factory, validator: blockValidator, blockSyncer: blockSyncer, configuration: configuration)
+        headerSyncer = HeaderSyncer(realmFactory: realmFactory, peerGroup: peerGroup, network: network)
+        headerHandler = HeaderHandler(realmFactory: realmFactory, factory: factory, validator: blockValidator, blockSyncer: blockSyncer, network: network)
 
         inputSigner = InputSigner(hdWallet: hdWallet)
         scriptBuilder = ScriptBuilder()
@@ -86,7 +91,7 @@ public class WalletKit {
         unspentOutputSelector = UnspentOutputSelector()
         unspentOutputProvider = UnspentOutputProvider(realmFactory: realmFactory)
 
-        addressConverter = AddressConverter(network: configuration.network)
+        addressConverter = AddressConverter(network: network)
         scriptConverter = ScriptConverter()
         transactionExtractor = TransactionExtractor(scriptConverter: scriptConverter, addressConverter: addressConverter)
         transactionLinker = TransactionLinker()

@@ -7,11 +7,11 @@ class HeaderSyncer {
     let network: NetworkProtocol
     let hashCheckpointThreshold: Int
 
-    init(realmFactory: RealmFactory, peerGroup: PeerGroup, configuration: Configuration) {
+    init(realmFactory: RealmFactory, peerGroup: PeerGroup, network: NetworkProtocol, hashCheckpointThreshold: Int = 100) {
         self.realmFactory = realmFactory
         self.peerGroup = peerGroup
-        self.network = configuration.network
-        self.hashCheckpointThreshold = configuration.hashCheckpointThreshold
+        self.network = network
+        self.hashCheckpointThreshold = hashCheckpointThreshold
     }
 
     func sync() throws {

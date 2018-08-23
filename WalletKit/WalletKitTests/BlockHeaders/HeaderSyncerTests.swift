@@ -7,7 +7,6 @@ class HeaderSyncerTests: XCTestCase {
 
     private var mockRealmFactory: MockRealmFactory!
     private var mockPeerGroup: MockPeerGroup!
-    private var mockConfiguration: MockConfiguration!
     private var mockNetwork: MockNetworkProtocol!
     private var headerSyncer: HeaderSyncer!
 
@@ -18,8 +17,7 @@ class HeaderSyncerTests: XCTestCase {
         super.setUp()
 
         mockRealmFactory = MockRealmFactory(configuration: Realm.Configuration())
-        mockPeerGroup = MockPeerGroup(realmFactory: mockRealmFactory, configuration: Configuration(testNet: true))
-        mockConfiguration = MockConfiguration()
+        mockPeerGroup = MockPeerGroup(realmFactory: mockRealmFactory, network: TestNet())
         mockNetwork = MockNetworkProtocol()
 
         realm = try! Realm(configuration: Realm.Configuration(inMemoryIdentifier: "TestRealm"))
@@ -33,15 +31,11 @@ class HeaderSyncerTests: XCTestCase {
         stub(mockPeerGroup) { mock in
             when(mock.requestHeaders(headerHashes: any())).thenDoNothing()
         }
-        stub(mockConfiguration) { mock in
-            when(mock.hashCheckpointThreshold.get).thenReturn(3)
-            when(mock.network.get).thenReturn(mockNetwork)
-        }
         stub(mockNetwork) { mock in
             when(mock.checkpointBlock.get).thenReturn(checkpointBlock)
         }
 
-        headerSyncer = HeaderSyncer(realmFactory: mockRealmFactory, peerGroup: mockPeerGroup, configuration: mockConfiguration)
+        headerSyncer = HeaderSyncer(realmFactory: mockRealmFactory, peerGroup: mockPeerGroup, network: mockNetwork, hashCheckpointThreshold: 3)
     }
 
     override func tearDown() {
