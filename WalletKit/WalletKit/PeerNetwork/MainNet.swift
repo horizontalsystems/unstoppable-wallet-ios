@@ -1,8 +1,7 @@
 import Foundation
 
 class MainNet: NetworkProtocol {
-    let name = "livenet"
-    let alias = "mainnet"
+    let name = "mainnet"
     let pubKeyHash: UInt8 = 0x00
     let privateKey: UInt8 = 0x80
     let scriptHash: UInt8 = 0x05

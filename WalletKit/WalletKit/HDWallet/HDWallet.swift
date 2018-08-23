@@ -74,6 +74,10 @@ class HDWallet {
 //        return Address(try publicKey())
 //    }
 
+    func publicKey(index: Int, external: Bool) throws -> PublicKey {
+        return PublicKey(withIndex: index, external: external, hdPublicKey: try publicKey(index: index, chain: external ? .external : .internal))
+    }
+
     func receivePublicKey(index: Int) throws -> PublicKey {
         return PublicKey(withIndex: index, external: true, hdPublicKey: try publicKey(index: index, chain: .external))
     }

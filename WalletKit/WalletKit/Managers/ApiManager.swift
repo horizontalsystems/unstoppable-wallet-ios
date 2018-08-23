@@ -101,7 +101,7 @@ class ApiManager {
                 }
     }
 
-    func observable<T: ImmutableMappable>(forRequest request: URLRequestConvertible) -> Observable<[T]> {
+    private func observable<T: ImmutableMappable>(forRequest request: URLRequestConvertible) -> Observable<[T]> {
         return observable(forRequest: request, mapper: { json in
             if let jsonArray = json as? [[String: Any]] {
                 return jsonArray.compactMap { try? T(JSONObject: $0) }
@@ -110,7 +110,7 @@ class ApiManager {
         })
     }
 
-    func observable<T: ImmutableMappable>(forRequest request: URLRequestConvertible) -> Observable<T> {
+    private func observable<T: ImmutableMappable>(forRequest request: URLRequestConvertible) -> Observable<T> {
         return observable(forRequest: request, mapper: { json in
             if let jsonObject = json as? [String: Any], let object = try? T(JSONObject: jsonObject) {
                 return object
@@ -123,27 +123,39 @@ class ApiManager {
 
 extension ApiManager {
 
-//    func getUnspentOutputs(addresses: [String]) -> Observable<[UnspentOutput]> {
-//        let wrapperObservable: Observable<UnspentOutputsWrapper> = observable(forRequest: request(withMethod: .get, path: "/unspent", parameters: ["active": addresses.joined(separator: "|")]))
-//        return wrapperObservable.map { $0.unspentOutputs }
-//    }
-//
-//    func getTransactions(addresses: [String]) -> Observable<[BlockchainTransaction]> {
-//        let wrapperObservable: Observable<TransactionsWrapper> = observable(forRequest: request(withMethod: .get, path: "/multiaddr", parameters: ["active": addresses.joined(separator: "|")]))
-//        return wrapperObservable.map { $0.transactions }
-//    }
-//
-//    func getExchangeRates() -> Observable<[String: Double]> {
-//        return observable(forRequest: request(withMethod: .get, path: "/ticker"), mapper: { json in
-//            if let hash = json as? [String: [String: Any]] {
-//                var rates = [String: Double]()
-//                for (currencyCode, data) in hash {
-//                    rates[currencyCode] = (data["last"] as! Double)
-//                }
-//                return rates
-//            }
-//            return [:]
-//        })
-//    }
+    func getBlockHashes(addresses: [String]) -> Observable<[BlockResponse]> {
+        let result: Observable<[AddressResponse]> = observable(forRequest: request(withMethod: .get, path: "/address", parameters: ["ads": addresses]))
+        return result.map { addresses in
+            var result = [BlockResponse]()
+
+            for address in addresses {
+                result.append(contentsOf: address.blocks)
+            }
+
+            return result
+        }
+    }
+
+}
+
+struct AddressResponse: ImmutableMappable {
+    let value: String
+    let blocks: [BlockResponse]
+
+    init(map: Map) throws {
+        value = try map.value("value")
+        blocks = try map.value("blocks")
+    }
+
+}
+
+struct BlockResponse: ImmutableMappable {
+    let hash: String
+    let height: Int
+
+    init(map: Map) throws {
+        hash = try map.value("hash")
+        height = try map.value("height")
+    }
 
 }

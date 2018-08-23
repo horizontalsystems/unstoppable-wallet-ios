@@ -2,7 +2,6 @@ import Foundation
 
 class TestNet: NetworkProtocol {
     let name = "testnet"
-    let alias = "regtest"
     let pubKeyHash: UInt8 = 0x6f
     let privateKey: UInt8 = 0xef
     let scriptHash: UInt8 = 0xc4

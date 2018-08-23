@@ -256,7 +256,7 @@ class Peer : NSObject, StreamDelegate {
     func sendGetHeadersMessage(headerHashes: [Data]) {
         let getHeadersMessage = GetBlocksMessage(version: UInt32(protocolVersion), hashCount: VarInt(headerHashes.count), blockLocatorHashes: headerHashes, hashStop: Data(count: 32))
 
-        log("<-- GETHEADERS: \(headerHashes.count) header hashes")
+        log("<-- GETHEADERS: \(headerHashes.map { $0.reversedHex })")
         send(messageWithCommand: "getheaders", payload: getHeadersMessage.serialized())
     }
 

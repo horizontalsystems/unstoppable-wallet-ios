@@ -2,7 +2,6 @@ import Foundation
 
 protocol NetworkProtocol: class {
     var name: String { get }
-    var alias: String { get }
     var pubKeyHash: UInt8 { get }
     var privateKey: UInt8 { get }
     var scriptHash: UInt8 { get }

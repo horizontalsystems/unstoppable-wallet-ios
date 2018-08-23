@@ -1,16 +1,31 @@
 import Foundation
 import RealmSwift
+import RxSwift
 
 public class WalletKit {
+
+    public enum Network {
+        case mainNet
+        case testNet
+        case regTest
+    }
+
+    let disposeBag = DisposeBag()
+
     let configuration: Configuration
     let realmFactory: RealmFactory
     let logger: Logger
 
     let hdWallet: HDWallet
 
+    let stateManager: StateManager
+    let apiManager: ApiManager
+
     let peerGroup: PeerGroup
     let syncer: Syncer
     let factory: Factory
+
+    let initialSyncer: InitialSyncer
 
     let difficultyEncoder: DifficultyEncoder
     let difficultyCalculator: DifficultyCalculator
@@ -38,21 +53,26 @@ public class WalletKit {
     let unspentOutputSelector: UnspentOutputSelector
     let unspentOutputProvider: UnspentOutputProvider
 
-    public init(withWords words: [String], realmConfiguration: Realm.Configuration, testNet: Bool = false) {
-        configuration = Configuration(testNet: testNet)
+    public init(withWords words: [String], realmConfiguration: Realm.Configuration, network: Network = .mainNet) {
+        configuration = Configuration(network: network)
         realmFactory = RealmFactory(configuration: realmConfiguration)
         logger = Logger()
 
         hdWallet = HDWallet(seed: Mnemonic.seed(mnemonic: words), network: configuration.network)
 
+        stateManager = StateManager(realmFactory: realmFactory)
+        apiManager = ApiManager(apiUrl: "http://blocknode.grouvi.org/api/v1/blockchain/btc")
+
         peerGroup = PeerGroup(realmFactory: realmFactory, configuration: configuration)
         syncer = Syncer(logger: logger, realmFactory: realmFactory)
         factory = Factory()
 
+        initialSyncer = InitialSyncer(realmFactory: realmFactory, hdWallet: hdWallet, stateManager: stateManager, apiManager: apiManager, peerGroup: peerGroup)
+
         difficultyEncoder = DifficultyEncoder()
         difficultyCalculator = DifficultyCalculator(difficultyEncoder: difficultyEncoder)
 
-        blockValidator = testNet ? TestNetBlockValidator(calculator: difficultyCalculator) : BlockValidator(calculator: difficultyCalculator)
+        blockValidator = network == .mainNet ? BlockValidator(calculator: difficultyCalculator) : TestNetBlockValidator(calculator: difficultyCalculator)
 
         blockSyncer = BlockSyncer(realmFactory: realmFactory, peerGroup: peerGroup)
         merkleBlockValidator = MerkleBlockValidator()
@@ -82,8 +102,6 @@ public class WalletKit {
         syncer.headerHandler = headerHandler
         syncer.transactionHandler = transactionHandler
         syncer.blockSyncer = blockSyncer
-
-        preFillInitialTestData()
     }
 
     public func showRealmInfo() {
@@ -102,16 +120,13 @@ public class WalletKit {
         }
 
         print("PUBLIC KEYS COUNT: \(pubKeysCount)")
-        if let pubKey = realm.objects(PublicKey.self).first {
-            print("First PublicKey: \(pubKey.index) --- \(pubKey.external) --- \(pubKey.address)")
-        }
-        if let pubKey = realm.objects(PublicKey.self).last {
-            print("Last PublicKey: \(pubKey.index) --- \(pubKey.external) --- \(pubKey.address)")
+        for pubKey in realm.objects(PublicKey.self) {
+            print("\(pubKey.index) --- \(pubKey.external) --- \(pubKey.address)")
         }
     }
 
     public func start() throws {
-        peerGroup.connect()
+        try initialSyncer.sync()
     }
 
     public var transactionsRealmResults: Results<Transaction> {
@@ -127,25 +142,6 @@ public class WalletKit {
 
     public func send(to address: String, value: Int) throws {
         try transactionCreator.create(to: address, value: value)
-    }
-
-    private func preFillInitialTestData() {
-        let realm = realmFactory.realm
-
-        var pubKeys = [PublicKey]()
-
-        for i in 0..<10 {
-            if let pubKey = try? hdWallet.receivePublicKey(index: i) {
-                pubKeys.append(pubKey)
-            }
-            if let pubKey = try? hdWallet.changePublicKey(index: i) {
-                pubKeys.append(pubKey)
-            }
-        }
-
-        try? realm.write {
-            realm.add(pubKeys, update: true)
-        }
     }
 
 }
