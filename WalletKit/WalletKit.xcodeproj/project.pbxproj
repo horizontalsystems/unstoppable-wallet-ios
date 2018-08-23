@@ -27,6 +27,7 @@
 		11B3551EA82115C81077080C /* P2PKExtractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35996E6FEE15BB533D965 /* P2PKExtractorTests.swift */; };
 		11B3554339A5E16A9CE950E7 /* TransactionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B356EF3A4749163293CCA3 /* TransactionHandler.swift */; };
 		11B3556FE407F45944A769A2 /* DifficultyCalculatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35053479E4B3B3C2B2031 /* DifficultyCalculatorTests.swift */; };
+		11B3559B46457EEACB8507C7 /* MockWalletKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3522857E30443A6A29F6F /* MockWalletKit.swift */; };
 		11B355C5EB65D21F38D2CFCB /* HeaderHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B350F2CF9C3EBC2F72CAEF /* HeaderHandler.swift */; };
 		11B355D39CB0D30F69C89F8B /* BlockHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B359BE3932E0E1F2AA9E76 /* BlockHeader.swift */; };
 		11B3561A75D7D7A6DE799675 /* OpCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B354DDB46C9DE37375424D /* OpCode.swift */; };
@@ -153,6 +154,7 @@
 		11B350F93CE46013514830A3 /* BloomFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BloomFilter.swift; sourceTree = "<group>"; };
 		11B35102A1246D20E8354340 /* P2PKExtractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = P2PKExtractor.swift; sourceTree = "<group>"; };
 		11B3510658CE89D9DB6772E5 /* String.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
+		11B3522857E30443A6A29F6F /* MockWalletKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockWalletKit.swift; sourceTree = "<group>"; };
 		11B3526235310556644773A2 /* TransactionLinker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionLinker.swift; sourceTree = "<group>"; };
 		11B352782DC699D1FAAD6168 /* BlockSyncerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockSyncerTests.swift; sourceTree = "<group>"; };
 		11B3527FFC458AEFC035AC35 /* BlockTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockTests.swift; sourceTree = "<group>"; };
@@ -638,6 +640,7 @@
 				D380FD5F20FCC04400276993 /* Info.plist */,
 				11B3590614D2772B1436542A /* Extensions.swift */,
 				58AAAE8C826DAC0CB77E8521 /* Scripts */,
+				11B3522857E30443A6A29F6F /* MockWalletKit.swift */,
 			);
 			path = WalletKitTests;
 			sourceTree = "<group>";
@@ -893,6 +896,10 @@
 				"$(SRCROOT)/WalletKit/Managers/StateManager.swift",
 				"$(SRCROOT)/WalletKit/Managers/ApiManager.swift",
 				"$(SRCROOT)/WalletKit/Scripts/Chunk.swift",
+				"$(SRCROOT)/WalletKit/Managers/Syncer.swift",
+				"$(SRCROOT)/WalletKit/Managers/InitialSyncer.swift",
+				"$(SRCROOT)/WalletKit/Transactions/TransactionSender.swift",
+				"$(SRCROOT)/WalletKit/Transactions/TransactionCreator.swift",
 			);
 			name = Cuckoo;
 			outputPaths = (
@@ -959,6 +966,7 @@
 				58AAAE1B7C0F5659F2EC9229 /* ChunkTests.swift in Sources */,
 				58AAA68C0D710ED3FCDE76DE /* ScriptTests.swift in Sources */,
 				11B3566FF1557B650F44D89E /* InitialSyncerTests.swift in Sources */,
+				11B3559B46457EEACB8507C7 /* MockWalletKit.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

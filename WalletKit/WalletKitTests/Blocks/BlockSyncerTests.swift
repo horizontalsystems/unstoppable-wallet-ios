@@ -15,8 +15,10 @@ class BlockSyncerTests: XCTestCase {
     override func setUp() {
         super.setUp()
 
-        mockRealmFactory = MockRealmFactory(configuration: Realm.Configuration())
-        mockPeerGroup = MockPeerGroup(realmFactory: mockRealmFactory, network: TestNet())
+        let mockWalletKit = MockWalletKit()
+
+        mockRealmFactory = mockWalletKit.mockRealmFactory
+        mockPeerGroup = mockWalletKit.mockPeerGroup
 
         realm = try! Realm(configuration: Realm.Configuration(inMemoryIdentifier: "TestRealm"))
         try! realm.write { realm.deleteAll() }
@@ -32,9 +34,9 @@ class BlockSyncerTests: XCTestCase {
     }
 
     override func tearDown() {
-        blockSyncer = nil
         mockPeerGroup = nil
         mockRealmFactory = nil
+        blockSyncer = nil
 
         realm = nil
 

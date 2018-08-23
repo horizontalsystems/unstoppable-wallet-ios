@@ -9,6 +9,7 @@ class RegTest: NetworkProtocol {
     let xPrivKey: UInt32 = 0x04358394
     let magic: UInt32 = 0xfabfb5da
     let port: UInt32 = 18444
+    let coinType: UInt32 = 1
 
     let dnsSeeds = [
         "blocknode.grouvi.org",

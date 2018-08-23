@@ -14,21 +14,21 @@ class TransactionSender {
         self.realmFactory = realmFactory
         self.peerGroup = peerGroup
 
-        peerGroup.statusSubject
-                .observeOn(scheduler)
-                .subscribe(onNext: { [weak self] status in
-                    if status == .connected {
-                        self?.resend()
-                    }
-                }).disposed(by: disposeBag)
-
-        notificationToken = realmFactory.realm.objects(Transaction.self).filter("status = %@", TransactionStatus.new.rawValue).observe { changes in
-            DispatchQueue.main.async { [weak self] in
-                if case let .update(transactions, _, insertions, _) = changes, !insertions.isEmpty {
-                    self?.send(transactions: transactions)
-                }
-            }
-        }
+//        peerGroup.statusSubject
+//                .observeOn(scheduler)
+//                .subscribe(onNext: { [weak self] status in
+//                    if status == .connected {
+//                        self?.resend()
+//                    }
+//                }).disposed(by: disposeBag)
+//
+//        notificationToken = realmFactory.realm.objects(Transaction.self).filter("status = %@", TransactionStatus.new.rawValue).observe { changes in
+//            DispatchQueue.main.async { [weak self] in
+//                if case let .update(transactions, _, insertions, _) = changes, !insertions.isEmpty {
+//                    self?.send(transactions: transactions)
+//                }
+//            }
+//        }
     }
 
     private func resend() {

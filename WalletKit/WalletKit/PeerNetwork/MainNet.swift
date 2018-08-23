@@ -9,6 +9,7 @@ class MainNet: NetworkProtocol {
     let xPrivKey: UInt32 = 0x0488ade4
     let magic: UInt32 = 0xf9beb4d9
     let port: UInt32 = 8333
+    let coinType: UInt32 = 0
 
     let dnsSeeds = [
         "seed.bitcoin.sipa.be",         // Pieter Wuille

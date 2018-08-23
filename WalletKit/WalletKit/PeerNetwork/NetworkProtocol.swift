@@ -12,4 +12,5 @@ protocol NetworkProtocol: class {
     var dnsSeeds: [String] { get }
     var genesisBlock: Block { get }
     var checkpointBlock: Block { get }
+    var coinType: UInt32 { get }
 }
