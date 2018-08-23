@@ -29,6 +29,7 @@ class P2SHExtractorTests: XCTestCase {
         let script = MockScript(with: data, chunks: chunks)
         stub(script) { mock in
             when(mock.length.get).thenReturn(23)
+            when(mock.chunks.get).thenReturn(chunks)
             when(mock.validate(opCodes: any())).thenDoNothing()
         }
 
