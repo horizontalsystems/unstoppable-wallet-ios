@@ -27,6 +27,7 @@ target :Bank do
 
   pod 'GrouviExtensions'
   pod 'GrouviActionSheet'
+  pod 'GrouviHUD'#, :path => '../GrouviHUD'
 
   pod 'RxCocoa'
   pod "SnapKit"

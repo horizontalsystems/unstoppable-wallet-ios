@@ -9,6 +9,9 @@ PODS:
   - GrouviExtensions (1.1.1):
     - RxSwift (~> 4.2.0)
     - SnapKit (~> 4.0.0)
+  - GrouviHUD (1.0.1):
+    - RxSwift
+    - SnapKit (~> 4.0.0)
   - ObjectMapper (3.3.0)
   - Realm (3.7.6):
     - Realm/Headers (= 3.7.6)
@@ -30,6 +33,7 @@ DEPENDENCIES:
   - Cuckoo
   - GrouviActionSheet
   - GrouviExtensions
+  - GrouviHUD
   - ObjectMapper
   - RealmSwift
   - RxCocoa
@@ -44,6 +48,7 @@ SPEC REPOS:
     - Cuckoo
     - GrouviActionSheet
     - GrouviExtensions
+    - GrouviHUD
     - ObjectMapper
     - Realm
     - RealmSwift
@@ -59,6 +64,7 @@ SPEC CHECKSUMS:
   Cuckoo: 97522dd7ac6f18adba6022bdc74aa69e82ca691a
   GrouviActionSheet: b34f3f29231a48d360005a9946da7c660b54bfec
   GrouviExtensions: e5a582e62cb8de559250630778b2d79b0b9ec5ea
+  GrouviHUD: 9903fb8ae417e810762af6e1399e16cc7f268c03
   ObjectMapper: b612bf8c8e99c4dc0bb6013a51f7c27966ed5da9
   Realm: 9eaecad54712d6246d08ba34c10f354e4715d7d3
   RealmSwift: 1fe08b4ebaeeaacf17f9ba0343f7b25c9fc31fa6
@@ -68,6 +74,6 @@ SPEC CHECKSUMS:
   SipHash: fad90a4683e420c52ef28063063dbbce248ea6d4
   SnapKit: a42d492c16e80209130a3379f73596c3454b7694
 
-PODFILE CHECKSUM: 32fa1821168239d7c0f1fda1f6ea21d5c85e4470
+PODFILE CHECKSUM: c6e8d45af0e4c1ccf7d51a76e00e7a36672d9081
 
 COCOAPODS: 1.5.3

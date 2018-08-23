@@ -37,9 +37,7 @@ extension TransactionInfoInteractor: ITransactionInfoInteractor {
 
     func onCopyFromAddress() {
         UIPasteboard.general.setValue(transaction.from, forPasteboardType: "public.plain-text")
-        let alert = UIAlertController(title: nil, message: "copied", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default))
-        alert.show()
+        HudHelper.instance.showSuccess(title: "full_transaction_info.copied".localized)
     }
 
 }

@@ -5,6 +5,7 @@
 "alert.copy" = "Copy";
 "alert.share" = "Share";
 "alert.close" = "Close";
+"alert.success" = "Success";
 
 "guest.title" = "App Name";
 "guest.subtitle" = "Bitcoin, Satoshi Nakamoto";
@@ -85,6 +86,7 @@
 "full_transaction_info.cell.fee" = "Fee:";
 "full_transaction_info.cell.received" = "Received:";
 "full_transaction_info.cell.sent" = "Sent:";
+"full_transaction_info.copied" = "Copied";
 
 "settings.title" = "Settings";
 "settings.tab_bar_item" = "Settings";
