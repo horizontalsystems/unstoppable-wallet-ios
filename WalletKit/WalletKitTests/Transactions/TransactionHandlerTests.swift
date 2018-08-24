@@ -101,8 +101,7 @@ class TransactionHandlerTests: XCTestCase {
     func testHandleBlockHeader_ExistingBlock() {
         let transaction = TestData.p2pkhTransaction
         let block = TestData.checkpointBlock
-        let savedBlock = Block()
-        savedBlock.reversedHeaderHashHex = block.reversedHeaderHashHex
+        let savedBlock = Factory().block(withHeaderHash: block.headerHash, height: 0)
 
         try! realm.write {
             realm.add(savedBlock, update: true)

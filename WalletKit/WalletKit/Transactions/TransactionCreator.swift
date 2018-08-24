@@ -1,7 +1,10 @@
 import Foundation
 
 class TransactionCreator {
-    enum CreationError: Error { case noChangeAddress }
+    enum CreationError: Error {
+        case noChangeAddress
+        case transactionAlreadyExists
+    }
 
     let feeRate: Int = 600
 
@@ -21,8 +24,13 @@ class TransactionCreator {
         }
 
         let transaction = try transactionBuilder.buildTransaction(value: value, feeRate: feeRate, changePubKey: changeAddress, toAddress: address)
+
+        if realm.objects(Transaction.self).filter("reversedHashHex = %@", transaction.reversedHashHex).first != nil {
+            throw CreationError.transactionAlreadyExists
+        }
+
         try realm.write {
-            realm.add(transaction, update: true)
+            realm.add(transaction)
         }
     }
 

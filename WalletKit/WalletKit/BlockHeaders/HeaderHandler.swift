@@ -31,7 +31,15 @@ class HeaderHandler {
 
         if !validBlocks.blocks.isEmpty {
             try realm.write {
-                realm.add(validBlocks.blocks, update: true)
+                for block in validBlocks.blocks {
+                    if let existingBlock = realm.objects(Block.self).filter("reversedHeaderHashHex = %@", block.reversedHeaderHashHex).first {
+                        if existingBlock.header == nil {
+                            existingBlock.header = block.header
+                        }
+                    } else {
+                        realm.add(block)
+                    }
+                }
             }
 
             blockSyncer.enqueueRun()

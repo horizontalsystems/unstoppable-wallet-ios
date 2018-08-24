@@ -19,38 +19,63 @@ class TransactionHandler {
 
     func handle(blockTransactions transactions: [Transaction], blockHeader: BlockHeader) throws {
         let realm = realmFactory.realm
-        let reversedHashHex = Crypto.sha256sha256(blockHeader.serialized()).reversedHex
-        var _block = realm.objects(Block.self).filter("reversedHeaderHashHex = %@", reversedHashHex).last
 
-        if _block == nil {
+        let reversedHashHex = Crypto.sha256sha256(blockHeader.serialized()).reversedHex
+
+        var hasNewTransactions = false
+
+        if let existingBlock = realm.objects(Block.self).filter("reversedHeaderHashHex = %@", reversedHashHex).last {
+            if existingBlock.synced {
+                return
+            }
+
+            try realm.write {
+                if existingBlock.header == nil {
+                    existingBlock.header = blockHeader
+                }
+
+                for transaction in transactions {
+                    if let existingTransaction = realm.objects(Transaction.self).filter("reversedHashHex = %@", transaction.reversedHashHex).first {
+                        existingTransaction.block = existingBlock
+                    } else {
+                        realm.add(transaction)
+                        transaction.block = existingBlock
+                        hasNewTransactions = true
+                    }
+                }
+
+                existingBlock.synced = true
+            }
+        } else {
             let validBlocks = headerHandler.getValidBlocks(headers: [blockHeader], realm: realm)
 
             if let validationError = validBlocks.error {
                 throw validationError
             }
 
-            _block = validBlocks.blocks.first
-        } else {
-            if _block?.previousBlock == nil {
-                _block = factory.block(withHeader: blockHeader, height: 0)
+            if let block = validBlocks.blocks.first {
+                block.synced = true
+
+                try realm.write {
+                    realm.add(block)
+
+                    for transaction in transactions {
+                        if let existingTransaction = realm.objects(Transaction.self).filter("reversedHashHex = %@", transaction.reversedHashHex).first {
+                            existingTransaction.block = block
+                        } else {
+                            realm.add(transaction)
+                            transaction.block = block
+                            hasNewTransactions = true
+                        }
+                    }
+                }
+            } else {
+                throw HandleError.invalidBlockHeader
             }
         }
 
-        guard let block = _block else {
-            throw HandleError.invalidBlockHeader
-        }
-
-        for transaction in transactions {
-            transaction.block = block
-        }
-
-        try realm.write {
-            block.synced = true
-            realm.add(transactions, update: true)
-        }
-
         print("HANDLE: \(transactions.count) --- \(Thread.current)")
-        if !transactions.isEmpty {
+        if hasNewTransactions {
             processor.enqueueRun()
         }
     }
@@ -62,11 +87,20 @@ class TransactionHandler {
 
         let realm = realmFactory.realm
 
+        var hasNewTransactions = false
+
         try realm.write {
-            realm.add(transactions, update: true)
+            for transaction in transactions {
+                if realm.objects(Transaction.self).filter("reversedHashHex = %@", transaction.reversedHashHex).first == nil {
+                    realm.add(transaction)
+                    hasNewTransactions = true
+                }
+            }
         }
 
-        processor.enqueueRun()
+        if hasNewTransactions {
+            processor.enqueueRun()
+        }
     }
 
 }
