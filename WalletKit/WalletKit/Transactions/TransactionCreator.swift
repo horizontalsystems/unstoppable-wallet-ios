@@ -8,12 +8,14 @@ class TransactionCreator {
 
     let feeRate: Int = 600
 
-    let realmFactory: RealmFactory
-    let transactionBuilder: TransactionBuilder
+    private let realmFactory: RealmFactory
+    private let transactionBuilder: TransactionBuilder
+    private let transactionSender: TransactionSender
 
-    init(realmFactory: RealmFactory, transactionBuilder: TransactionBuilder) {
+    init(realmFactory: RealmFactory, transactionBuilder: TransactionBuilder, transactionSender: TransactionSender) {
         self.realmFactory = realmFactory
         self.transactionBuilder = transactionBuilder
+        self.transactionSender = transactionSender
     }
 
     func create(to address: String, value: Int) throws {
@@ -32,6 +34,8 @@ class TransactionCreator {
         try realm.write {
             realm.add(transaction)
         }
+
+        transactionSender.enqueueRun()
     }
 
 }
