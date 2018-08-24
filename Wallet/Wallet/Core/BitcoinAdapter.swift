@@ -64,26 +64,45 @@ class BitcoinAdapter {
         let records = transactions.map { tx -> TransactionRecord in
             var totalInput: Int = 0
             var totalOutput: Int = 0
+            var fromAddresses = [String]()
+            var toAddresses = [String]()
 
-            for output in tx.inputs.flatMap({ $0.previousOutput }).filter({ $0.publicKey != nil }) {
-                totalInput += output.value
+            for input in tx.inputs {
+                if let previousOutput = input.previousOutput, previousOutput.publicKey != nil {
+                    totalInput += previousOutput.value
+                }
+
+                if input.previousOutput?.publicKey == nil {
+                    if let address = input.address {
+                        fromAddresses.append(address)
+                    } else {
+                        fromAddresses.append("stub from address")
+                    }
+                }
             }
 
-            for output in tx.outputs.filter({ $0.publicKey != nil }) {
-                totalOutput += output.value
+            for output in tx.outputs {
+                if output.publicKey != nil {
+                    totalOutput += output.value
+                } else if let address = output.address {
+                    toAddresses.append(address)
+                }
             }
 
             let record = TransactionRecord()
             record.transactionHash = tx.reversedHashHex
             record.coinCode = coin.code
-            record.from = ""
-            record.to = ""
+            record.from = fromAddresses.first ?? "no from address"
+            record.to = toAddresses.first ?? "no to address"
             record.amount = Int(totalOutput - totalInput)
             record.fee = 0
             record.incoming = record.amount > 0
             record.blockHeight = tx.block?.height ?? 0
             record.confirmed = tx.block != nil
             record.timestamp = tx.block?.header?.timestamp ?? 0
+
+            print(record)
+
             return record
         }
 

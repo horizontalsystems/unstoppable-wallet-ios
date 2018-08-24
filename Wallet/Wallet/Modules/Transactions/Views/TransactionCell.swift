@@ -72,7 +72,7 @@ class TransactionCell: UITableViewCell {
 
         //stab
         let fiatAmount = CurrencyHelper.instance.formattedValue(for: CurrencyValue(currency: DollarCurrency(), value: abs(item.amount.value) * 6000)) ?? ""
-        let fromAddress = item.from + "SA2DS3F9F4R7GE0G23SD9F7SD92SE38F4G7"
+        let fromAddress = item.from
         let endIndex = fromAddress.index(fromAddress.startIndex, offsetBy: 5)
         let firstChars = fromAddress[fromAddress.startIndex ..< endIndex]
         let fiatFromText = "\(fiatAmount) \(item.incoming ? "transactions.from".localized : "transactions.to".localized) \(firstChars)..."

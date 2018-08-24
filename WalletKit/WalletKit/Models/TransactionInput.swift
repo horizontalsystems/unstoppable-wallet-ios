@@ -8,7 +8,7 @@ public class TransactionInput: Object {
     @objc dynamic var sequence: Int = 0
     @objc public dynamic var previousOutput: TransactionOutput? = nil
     @objc dynamic var keyHash: Data?
-    @objc dynamic var address: String?
+    @objc public dynamic var address: String?
 
     let transactions = LinkingObjects(fromType: Transaction.self, property: "inputs")
     var transaction: Transaction? {
