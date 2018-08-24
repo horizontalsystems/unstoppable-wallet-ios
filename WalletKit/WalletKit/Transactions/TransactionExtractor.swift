@@ -57,7 +57,7 @@ class TransactionExtractor {
             }
         }
 
-        try transaction.inputs.forEach { input in
+        transaction.inputs.forEach { input in
             var payload: Data?
             for extractor in scriptInputExtractors {
                 do {
@@ -72,7 +72,7 @@ class TransactionExtractor {
                         case .p2sh, .p2pkh:
                             let ripemd160 = Crypto.sha256ripemd160(payload)
                             input.keyHash = ripemd160
-                            input.address = try addressConverter.convert(keyHash: ripemd160, type: extractor.type)
+                            input.address = try? addressConverter.convert(keyHash: ripemd160, type: extractor.type)
                         default: break
                     }
                     break
