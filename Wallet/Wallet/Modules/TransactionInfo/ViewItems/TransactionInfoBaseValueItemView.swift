@@ -7,13 +7,15 @@ class TransactionInfoBaseValueItemView: BaseActionItemView {
 
     var titleLabel = UILabel()
     var statusLabel = UILabel()
-    var statusImageView = UIImageView()
+    var statusImageView = TintImageView(image: nil, selectedImage: nil)
 
     override var item: TransactionInfoBaseValueItem? { return _item as? TransactionInfoBaseValueItem
     }
 
     override func initView() {
         super.initView()
+        backgroundColor = TransactionInfoTheme.titleBackground
+
         titleLabel.font = TransactionInfoTheme.usualFont
         titleLabel.textColor = TransactionInfoTheme.usualColor
         addSubview(titleLabel)
@@ -43,8 +45,9 @@ class TransactionInfoBaseValueItemView: BaseActionItemView {
         super.updateView()
         titleLabel.text = item?.title
         statusLabel.text = item?.value
-        statusImageView.image = item?.valueImage
         statusLabel.textColor = item?.valueColor ?? TransactionInfoTheme.usualColor
+        statusImageView.image = item?.valueImage
+        statusImageView.tintColor = item?.valueImageTintColor
     }
 
 }

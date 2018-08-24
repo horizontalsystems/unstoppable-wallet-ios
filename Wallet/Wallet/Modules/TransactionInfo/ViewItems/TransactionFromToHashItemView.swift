@@ -14,6 +14,8 @@ class TransactionFromToHashItemView: BaseActionItemView {
 
     override func initView() {
         super.initView()
+        backgroundColor = TransactionInfoTheme.titleBackground
+
         titleLabel.font = TransactionInfoTheme.usualFont
         titleLabel.textColor = TransactionInfoTheme.usualColor
         titleLabel.setContentHuggingPriority(.defaultLow, for: .horizontal)
@@ -24,8 +26,9 @@ class TransactionFromToHashItemView: BaseActionItemView {
             maker.leading.equalToSuperview().offset(TransactionInfoTheme.regularMargin)
         }
 
-        let wrapperView = UIView()
-        wrapperView.backgroundColor = TransactionInfoTheme.hashBackground
+        let wrapperView = RespondButton()
+        wrapperView.onTap = item?.onHashTap
+        wrapperView.backgrounds = [RespondButton.State.active: TransactionInfoTheme.hashBackground, RespondButton.State.selected: TransactionInfoTheme.hashBackgroundSelected]
         wrapperView.borderColor = TransactionInfoTheme.hashWrapperBorderColor
         wrapperView.borderWidth = 1 / UIScreen.main.scale
         wrapperView.cornerRadius = TransactionInfoTheme.hashCornerRadius

@@ -22,8 +22,6 @@ class FullTransactionInfoController: UIViewController, SectionsDataSource {
         super.viewDidLoad()
         view.backgroundColor = AppTheme.controllerBackground
 
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "full_transaction_info.navigation_bar.share".localized, style: .plain, target: self, action: #selector(share))
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "alert.close".localized, style: .plain, target: self, action: #selector(close))
         title = "full_transaction_info.navigation_bar.title".localized
 
         view.addSubview(tableView)
@@ -34,6 +32,48 @@ class FullTransactionInfoController: UIViewController, SectionsDataSource {
         tableView.sectionDataSource = self
         tableView.snp.makeConstraints { maker in
             maker.edges.equalToSuperview()
+        }
+
+        let blurEffect = UIBlurEffect(style: AppTheme.blurStyle)
+        let bottomBar = UIVisualEffectView(effect: blurEffect)
+        view.addSubview(bottomBar)
+        bottomBar.snp.makeConstraints { maker in
+            maker.leading.bottom.trailing.equalToSuperview()
+            maker.height.equalTo(FullTransactionInfoTheme.bottomBarHeight + (UIApplication.shared.keyWindow?.safeAreaInsets.bottom ?? 0))
+        }
+
+        let shareIcon: TintImageView = TintImageView(image: UIImage(named: "Share Full Transaction Icon"), tintColor: FullTransactionInfoTheme.bottomBarTintColor, selectedTintColor: FullTransactionInfoTheme.bottomHighlightBarTintColor)
+        let shareButton = RespondView()
+        shareButton.handleTouch = { [weak self] in
+            self?.share()
+        }
+        shareButton.delegate = shareIcon
+        shareButton.addSubview(shareIcon)
+        shareIcon.snp.makeConstraints { maker in
+            maker.leading.equalToSuperview().offset(self.tableView.layoutMargins.left * 2)
+            maker.top.equalToSuperview().offset(FullTransactionInfoTheme.mediumMargin)
+            maker.trailing.equalToSuperview()
+        }
+        bottomBar.contentView.addSubview(shareButton)
+        shareButton.snp.makeConstraints { maker in
+            maker.leading.top.bottom.equalToSuperview()
+        }
+
+        let closeIcon: TintImageView = TintImageView(image: UIImage(named: "Close Full Transaction Icon"), tintColor: FullTransactionInfoTheme.bottomBarTintColor, selectedTintColor: FullTransactionInfoTheme.bottomHighlightBarTintColor)
+        let closeButton = RespondView()
+        closeButton.handleTouch = { [weak self] in
+            self?.close()
+        }
+        closeButton.delegate = closeIcon
+        closeButton.addSubview(closeIcon)
+        closeIcon.snp.makeConstraints { maker in
+            maker.trailing.equalToSuperview().offset(-self.tableView.layoutMargins.left * 2)
+            maker.top.equalToSuperview().offset(FullTransactionInfoTheme.mediumMargin)
+            maker.leading.equalToSuperview()
+        }
+        bottomBar.contentView.addSubview(closeButton)
+        closeButton.snp.makeConstraints { maker in
+            maker.trailing.top.bottom.equalToSuperview()
         }
 
         tableView.reload()
@@ -86,14 +126,14 @@ class FullTransactionInfoController: UIViewController, SectionsDataSource {
             cell.bind(title: statusString, description: amountString)
         }))
 
-        return [Section(id: "info", rows: rows)]
+        return [Section(id: "info", footerState: .margin(height: FullTransactionInfoTheme.bottomBarHeight), rows: rows)]
     }
 
-    @objc func share() {
+    func share() {
         print("on share")
     }
 
-    @objc func close() {
+    func close() {
         dismiss(animated: true)
     }
 

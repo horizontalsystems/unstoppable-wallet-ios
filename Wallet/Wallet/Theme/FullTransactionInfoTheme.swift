@@ -8,4 +8,8 @@ class FullTransactionInfoTheme {
     static let cellHeight: CGFloat = 44
     static let cellBackground = UIColor.cryptoSteel20
     static let separatorColor = UIColor.cryptoDark
+    static let bottomBarHeight: CGFloat = 44
+    static let bottomBarTintColor = UIColor.cryptoYellow
+    static let bottomHighlightBarTintColor = UIColor.cryptoYellowPressed
+    static let mediumMargin: CGFloat = 8
 }

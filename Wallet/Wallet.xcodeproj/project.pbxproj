@@ -137,7 +137,6 @@
 		1A5648650AD15148736AD280 /* HudHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564C84553E007AB243B835 /* HudHelper.swift */; };
 		1A564891B0D0EABB5502C123 /* DepositAddressCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5647F6F29405E571D70592 /* DepositAddressCollectionCell.swift */; };
 		1A56489F5EEDEE6D7BB9BA7A /* TransactionInfoBaseHashValueItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564298191D07782DFF5B99 /* TransactionInfoBaseHashValueItemView.swift */; };
-		1A5648BE3DCA7B22706AA27D /* TransactionFiatAmountItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564718FE2139B7EBCCB3DE /* TransactionFiatAmountItem.swift */; };
 		1A5648CBCC6B6EA30367091E /* BaseButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564FC2E7778A0E71E4A376 /* BaseButtonItem.swift */; };
 		1A5648F83FC5E3954E406849 /* DepositShareButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564F3B10EF814E1D330CAD /* DepositShareButtonItem.swift */; };
 		1A564939A8DCE6124D2141D3 /* SettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564F5FA00D064D9F3F0AF7 /* SettingsCell.swift */; };
@@ -364,7 +363,6 @@
 		1A5646B68188CD13969CE766 /* WalletHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WalletHeaderView.xib; sourceTree = "<group>"; };
 		1A5646C9024F054AE8115A30 /* TransactionStatusItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionStatusItem.swift; sourceTree = "<group>"; };
 		1A5646F9D997035F0E73DFDA /* BackupButtonItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackupButtonItemView.swift; sourceTree = "<group>"; };
-		1A564718FE2139B7EBCCB3DE /* TransactionFiatAmountItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionFiatAmountItem.swift; sourceTree = "<group>"; };
 		1A56471E7D5EFBC64715051A /* SendAmountItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendAmountItemView.swift; sourceTree = "<group>"; };
 		1A564742F7B77B61373A8CD4 /* CopyItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CopyItem.swift; sourceTree = "<group>"; };
 		1A56474B516F0AFBAAFB3AE2 /* SendRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendRouter.swift; sourceTree = "<group>"; };
@@ -1015,7 +1013,6 @@
 				1A564F2613ECE2DE4A6F9F79 /* TransactionInfoBaseValueItem.swift */,
 				1A5645282A89F1EE4A04D5DD /* TransactionInfoBaseValueItemView.swift */,
 				1A5646C9024F054AE8115A30 /* TransactionStatusItem.swift */,
-				1A564718FE2139B7EBCCB3DE /* TransactionFiatAmountItem.swift */,
 				1A564A8B8E07B97BA9910FDA /* TransactionInfoBaseHashValueItem.swift */,
 				1A564298191D07782DFF5B99 /* TransactionInfoBaseHashValueItemView.swift */,
 				1A564C4C8EFE1B1BBE03C9E6 /* TransactionFromToHashItem.swift */,
@@ -1491,7 +1488,6 @@
 				1A564E3E29F0182A0230BC5D /* TransactionInfoBaseValueItem.swift in Sources */,
 				1A5647489DF968F20446631F /* TransactionInfoBaseValueItemView.swift in Sources */,
 				1A5640E91AA1D79E1735F5FC /* TransactionStatusItem.swift in Sources */,
-				1A5648BE3DCA7B22706AA27D /* TransactionFiatAmountItem.swift in Sources */,
 				1A56489F5EEDEE6D7BB9BA7A /* TransactionInfoBaseHashValueItemView.swift in Sources */,
 				1A564C4890A7DCA6387FACC9 /* TransactionInfoBaseHashValueItem.swift in Sources */,
 				1A564274EEC6A31D6B287B09 /* TransactionFromToHashItem.swift in Sources */,

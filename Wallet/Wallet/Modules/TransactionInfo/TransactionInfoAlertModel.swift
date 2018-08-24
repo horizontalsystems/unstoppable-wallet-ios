@@ -15,9 +15,9 @@ class TransactionInfoAlertModel: BaseAlertModel {
         let amountItem = TransactionAmountItem(transaction: transaction, tag: 1, required: true)
         addItemView(amountItem)
 
-        let fromHashItem = TransactionFromToHashItem(transaction: transaction, tag: 3, required: true) { _ in
+        let fromHashItem = TransactionFromToHashItem(transaction: transaction, tag: 3, required: true, onHashTap: {
             onCopyFromAddress?()
-        }
+        })
         addItemView(fromHashItem)
 
         let statusItem = TransactionStatusItem(transaction: transaction, tag: 2, required: true)

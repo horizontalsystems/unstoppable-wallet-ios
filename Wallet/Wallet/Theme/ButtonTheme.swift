@@ -10,7 +10,7 @@ class ButtonTheme {
     private static let textColorDisabledOnDarkBackground = UIColor.cryptoSilver
     private static let yellowActiveBackground = UIColor.cryptoYellow
     private static let yellowSelectedBackground = UIColor.cryptoYellowPressed
-    private static let grayActiveBackground = UIColor.cryptoPaleGray
+    private static let grayActiveBackground = UIColor.cryptoLightBackground
     private static let graySelectedBackground = UIColor.cryptoLightGray
 
     static let greenBackgroundOnWhiteBackgroundDictionary: RespondButton.Style = [.active: ButtonTheme.greenActiveBackground, .selected: ButtonTheme.greenSelectedBackground, .disabled: ButtonTheme.disabledOnDarkBackground]
