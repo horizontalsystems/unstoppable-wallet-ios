@@ -122,6 +122,7 @@
 		1A5646BB44C0AB4BD6E5542D /* UITableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5641C7C137BB451E12AC28 /* UITableView.swift */; };
 		1A5646CA592E84121AF87B07 /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5640B9841EBA6BE028681D /* Date.swift */; };
 		1A564724AB95855BFE8AE9E5 /* TransactionInfoAlertModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5643010944D435B8BA2FD8 /* TransactionInfoAlertModel.swift */; };
+		1A564746D8428666A8CE186E /* AppHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564AF87E1F5C039E955E7B /* AppHelper.swift */; };
 		1A5647489DF968F20446631F /* TransactionInfoBaseValueItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5645282A89F1EE4A04D5DD /* TransactionInfoBaseValueItemView.swift */; };
 		1A56475AA0F34C5E55265BB4 /* SendConfigTwinItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564E284C8BF8A8EA201C07 /* SendConfigTwinItemView.swift */; };
 		1A56478710E69DB8ACD477D7 /* SendTitleItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564AF060F532C77FB991C7 /* SendTitleItem.swift */; };
@@ -387,6 +388,7 @@
 		1A564A8B8E07B97BA9910FDA /* TransactionInfoBaseHashValueItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionInfoBaseHashValueItem.swift; sourceTree = "<group>"; };
 		1A564A961EE2857B5283A996 /* FullTransactionInfoController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FullTransactionInfoController.swift; sourceTree = "<group>"; };
 		1A564AF060F532C77FB991C7 /* SendTitleItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendTitleItem.swift; sourceTree = "<group>"; };
+		1A564AF87E1F5C039E955E7B /* AppHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppHelper.swift; sourceTree = "<group>"; };
 		1A564B0A9AB0EAAB5574FDD0 /* DepositCollectionItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DepositCollectionItemView.swift; sourceTree = "<group>"; };
 		1A564B27FBA16D9EA22F0944 /* TransactionCloseItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionCloseItemView.swift; sourceTree = "<group>"; };
 		1A564B3A1B7A6F432F72A811 /* SettingsToggleCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsToggleCell.swift; sourceTree = "<group>"; };
@@ -703,6 +705,7 @@
 				11B35F871B19631695FB5EF5 /* LocalizationHelper.swift */,
 				1A56428F6FACADBA8B7BFEFB /* DateHelper.swift */,
 				1A564C84553E007AB243B835 /* HudHelper.swift */,
+				1A564AF87E1F5C039E955E7B /* AppHelper.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -1518,6 +1521,7 @@
 				11B351835C305A42C336D157 /* BitcoinRegTest.swift in Sources */,
 				1A5648650AD15148736AD280 /* HudHelper.swift in Sources */,
 				1A56498EE4AF6DADD0A5939A /* TransactionFromToHashItemView.swift in Sources */,
+				1A564746D8428666A8CE186E /* AppHelper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

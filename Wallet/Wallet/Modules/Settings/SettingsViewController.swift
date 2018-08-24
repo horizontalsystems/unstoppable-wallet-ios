@@ -39,7 +39,6 @@ class SettingsViewController: UIViewController, SectionsDataSource {
 
         title = "settings.title".localized
 
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Logout", style: .plain, target: self, action: #selector(logout))
         view.backgroundColor = AppTheme.controllerBackground
 
         tableView.reload()
@@ -91,29 +90,27 @@ class SettingsViewController: UIViewController, SectionsDataSource {
                 print("on toggle light mode")
             })
         }))
-        sections.append(Section(id: "app_settings", headerState: .marginColor(height: SettingsTheme.headerHeight, color: .clear), rows: appearanceRows))
-
-        var otherRows = [RowProtocol]()
-        otherRows.append(Row<SettingsToggleCell>(id: "push_notifications", hash: "push_notifications", height: SettingsTheme.cellHeight, bind: { cell, _ in
+        appearanceRows.append(Row<SettingsToggleCell>(id: "push_notifications", hash: "push_notifications", height: SettingsTheme.cellHeight, bind: { cell, _ in
             cell.selectionStyle = .none
             cell.bind(titleIcon: UIImage(named: "Notification Icon"), title: "settings.cell.push_notifications".localized, isOn: false, showDisclosure: false, onToggle: {
                 print("on toggle notifications")
             })
         }))
-        otherRows.append(Row<SettingsRightLabelCell>(id: "app_version", hash: "app_version", height: SettingsTheme.cellHeight, bind: { cell, _ in
-            //stab version
-            cell.selectionStyle = .none
-            cell.bind(titleIcon: UIImage(named: "About Icon"), title: "settings.cell.app_version".localized, rightText: "0.0.1", showDisclosure: false, last: true)
-        }))
-
         let infoFooter: ViewState<SettingsInfoFooter> = .cellType(hash: "info_view", binder: { view in
-            view.linkButton.onTap = {
+            view.logoButton.handleTouch = {
                 UIApplication.shared.open(URL(string: "http://github.com/horizontalsystems/")!)
             }
         }, dynamicHeight: { _ in SettingsTheme.infoFooterHeight })
-        sections.append(Section(id: "app_settings", headerState: .marginColor(height: SettingsTheme.headerHeight, color: .clear), footerState: infoFooter, rows: otherRows))
+        sections.append(Section(id: "appearance_settings", headerState: .marginColor(height: SettingsTheme.headerHeight, color: .clear), footerState: infoFooter, rows: appearanceRows))
 
         var debugRows = [RowProtocol]()
+        debugRows.append(Row<SettingsCell>(id: "debug_logout", hash: "debug_logout", height: SettingsTheme.cellHeight, bind: { cell, _ in
+            cell.selectionStyle = .default
+            cell.bind(titleIcon: UIImage(named: "Bug Icon"), title: "Logout", showDisclosure: false)
+        }, action: { [weak self] _ in
+            self?.logout()
+            self?.tableView.deselectRow(at: self!.tableView.indexPathForSelectedRow!, animated: true)
+        }))
         debugRows.append(Row<SettingsCell>(id: "debug_realm_info", hash: "debug_realm_info", height: SettingsTheme.cellHeight, bind: { cell, _ in
             cell.selectionStyle = .default
             cell.bind(titleIcon: UIImage(named: "Bug Icon"), title: "Show Realm Info", showDisclosure: false)
@@ -135,19 +132,12 @@ class SettingsViewController: UIViewController, SectionsDataSource {
             self?.backup()
             self?.tableView.deselectRow(at: self!.tableView.indexPathForSelectedRow!, animated: true)
         }))
-        debugRows.append(Row<SettingsCell>(id: "debug_refresh", hash: "debug_refresh", height: SettingsTheme.cellHeight, bind: { cell, _ in
-            cell.selectionStyle = .default
-            cell.bind(titleIcon: UIImage(named: "Bug Icon"), title: "Refresh", showDisclosure: false, last: true)
-        }, action: { [weak self] _ in
-            self?.refresh()
-            self?.tableView.deselectRow(at: self!.tableView.indexPathForSelectedRow!, animated: true)
-        }))
         sections.append(Section(id: "debug_section", headerState: .marginColor(height: 50, color: .clear), footerState: .marginColor(height: 20, color: .clear), rows: debugRows))
 
         return sections
     }
 
-    @objc func logout() {
+    func logout() {
         WordsManager.shared.removeWords()
 
         guard let window = UIApplication.shared.keyWindow else {
@@ -180,10 +170,6 @@ class SettingsViewController: UIViewController, SectionsDataSource {
 
     @IBAction func backup() {
         present(BackupRouter.module(dismissMode: .dismissSelf), animated: true)
-    }
-
-    @IBAction func refresh() {
-        print("call delegate.refresh() in wallet controller")
     }
 
 }

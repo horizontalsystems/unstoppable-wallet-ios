@@ -99,5 +99,6 @@
 "settings.cell.light_mode" = "Light Mode";
 "settings.cell.push_notifications" = "Push Notifications";
 "settings.cell.app_version" = "App Version";
-"settings.info.title" = "A decentralized app By";
+"settings.info.title" = "BANK WALLET";
+"settings.info.subtitle" = "A decentralized app By";
 "settings.info.link" = "horizontalsystems.io";

@@ -1,44 +1,46 @@
 import UIKit
+import GrouviExtensions
 import SnapKit
 
 class SettingsInfoFooter: UITableViewHeaderFooterView {
 
-    let linkButton = RespondButton()
+    let logoButton = RespondView()
 
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
         backgroundView = UIView()
         backgroundView?.backgroundColor = .clear
 
+        let versionLabel = UILabel()
+        contentView.addSubview(versionLabel)
+        versionLabel.snp.makeConstraints { maker in
+            maker.top.equalToSuperview().offset(SettingsTheme.versionLabelTopMargin)
+            maker.centerX.equalToSuperview()
+        }
+        versionLabel.textColor = SettingsTheme.versionColor
+        versionLabel.font = SettingsTheme.versionFont
+        versionLabel.text = "settings.info.title".localized + " " + AppHelper.instance.appVersion
+
         let titleLabel = UILabel()
         contentView.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { maker in
-            maker.top.equalToSuperview().offset(SettingsTheme.infoTitleTopMargin)
+            maker.top.equalTo(versionLabel.snp.bottom).offset(SettingsTheme.infoTitleTopMargin)
             maker.centerX.equalToSuperview()
         }
         titleLabel.textColor = SettingsTheme.infoTitleColor
         titleLabel.font = SettingsTheme.infoTitleFont
-        titleLabel.text = "settings.info.title".localized
+        titleLabel.text = "settings.info.subtitle".localized
 
-        let imageView = UIImageView()
-        contentView.addSubview(imageView)
+        let imageView: TintImageView = TintImageView(image: UIImage(named: "Logo Image"), tintColor: SettingsTheme.logoTintColor, selectedTintColor: SettingsTheme.logoSelectedTintColor)
+        logoButton.addSubview(imageView)
         imageView.snp.makeConstraints { maker in
-            maker.top.equalTo(titleLabel.snp.bottom).offset(SettingsTheme.infoImageTopMargin)
-            maker.centerX.equalToSuperview()
-        }
-        imageView.image = UIImage(named: "Logo Image")
-
-        linkButton.titleLabel.snp.remakeConstraints { maker in
             maker.edges.equalToSuperview()
         }
-        linkButton.backgrounds = [RespondButton.State.active: .clear, RespondButton.State.selected: .clear, RespondButton.State.disabled: .clear]
-        linkButton.textColors =  [RespondButton.State.active: SettingsTheme.infoLinkColor, RespondButton.State.selected: SettingsTheme.infoSelectedLinkColor, RespondButton.State.disabled: SettingsTheme.infoLinkColor]
-        let linkString: NSAttributedString = NSAttributedString(string: "settings.info.link".localized, attributes: [.underlineStyle: NSUnderlineStyle.styleSingle.rawValue, .font: SettingsTheme.infoLinkFont])
-        linkButton.titleLabel.attributedText = linkString
-        contentView.addSubview(linkButton)
-        linkButton.snp.makeConstraints { maker in
-            maker.top.equalTo(imageView.snp.bottom)
-            maker.height.equalTo(SettingsTheme.infoLinkButtonHeight)
+        logoButton.delegate = imageView
+
+        contentView.addSubview(logoButton)
+        logoButton.snp.makeConstraints { maker in
+            maker.top.equalTo(titleLabel.snp.bottom).offset(SettingsTheme.infoImageTopMargin)
             maker.centerX.equalToSuperview()
         }
     }

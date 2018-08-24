@@ -10,6 +10,7 @@ class SettingsToggleCell: SettingsCell {
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
+        toggleView.tintColor = SettingsTheme.switchTintColor
         toggleView.addTarget(self, action: #selector(_onToggle), for: .touchUpInside)
         contentView.addSubview(toggleView)
         toggleView.snp.makeConstraints { maker in
