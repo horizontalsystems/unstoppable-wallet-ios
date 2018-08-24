@@ -12,7 +12,7 @@ class RegTest: NetworkProtocol {
     let coinType: UInt32 = 1
 
     let dnsSeeds = [
-        "blocknode.grouvi.org",
+        "192.168.4.21",
     ]
 
     let genesisBlock = Block(

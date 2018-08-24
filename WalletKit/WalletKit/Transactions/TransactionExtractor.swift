@@ -8,7 +8,7 @@ protocol ScriptExtractor: class {
 }
 
 class TransactionExtractor {
-    static let defaultInputExtractors: [ScriptExtractor] = [PFromSHExtractor()]
+    static let defaultInputExtractors: [ScriptExtractor] = [PFromSHExtractor(), PFromPKHExtractor()]
     static let defaultOutputExtractors: [ScriptExtractor] = [P2PKHExtractor(), P2PKExtractor(), P2SHExtractor()]
 
     enum ExtractionError: Error {
@@ -57,7 +57,7 @@ class TransactionExtractor {
             }
         }
 
-        transaction.inputs.forEach { input in
+        try transaction.inputs.forEach { input in
             var payload: Data?
             for extractor in scriptInputExtractors {
                 do {
@@ -69,7 +69,10 @@ class TransactionExtractor {
                 if let payload = payload {
                     valid = true
                     switch extractor.type {
-                        case .p2sh: input.publicKey = Crypto.sha256ripemd160(payload)
+                        case .p2sh, .p2pkh:
+                            let ripemd160 = Crypto.sha256ripemd160(payload)
+                            input.keyHash = ripemd160
+                            input.address = try addressConverter.convert(keyHash: ripemd160, type: extractor.type)
                         default: break
                     }
                     break
