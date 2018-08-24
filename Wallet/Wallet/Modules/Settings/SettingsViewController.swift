@@ -86,13 +86,13 @@ class SettingsViewController: UIViewController, SectionsDataSource {
         }))
         appearanceRows.append(Row<SettingsToggleCell>(id: "light_mode", hash: "light_mode", height: SettingsTheme.cellHeight, bind: { cell, _ in
             cell.selectionStyle = .none
-            cell.bind(titleIcon: UIImage(named: "Light Mode Icon"), title: "settings.cell.light_mode".localized, isOn: false, showDisclosure: false, last: true, onToggle: {
+            cell.bind(titleIcon: UIImage(named: "Light Mode Icon"), title: "settings.cell.light_mode".localized, isOn: false, showDisclosure: false, last: false, onToggle: {
                 print("on toggle light mode")
             })
         }))
         appearanceRows.append(Row<SettingsToggleCell>(id: "push_notifications", hash: "push_notifications", height: SettingsTheme.cellHeight, bind: { cell, _ in
             cell.selectionStyle = .none
-            cell.bind(titleIcon: UIImage(named: "Notification Icon"), title: "settings.cell.push_notifications".localized, isOn: false, showDisclosure: false, onToggle: {
+            cell.bind(titleIcon: UIImage(named: "Notification Icon"), title: "settings.cell.push_notifications".localized, isOn: false, showDisclosure: false, last: true, onToggle: {
                 print("on toggle notifications")
             })
         }))

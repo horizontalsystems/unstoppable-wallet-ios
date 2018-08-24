@@ -23,6 +23,13 @@ extension TransactionsPresenter: ITransactionsViewDelegate {
         router.showTransactionInfo(transaction: transaction, coinCode: coinCode, txHash: txHash)
     }
 
+    func refresh() {
+        print("on refresh")
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
+            self.view?.didRefresh()
+        })
+    }
+
 }
 
 extension TransactionsPresenter: ITransactionsInteractorDelegate {

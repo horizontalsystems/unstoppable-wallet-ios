@@ -6,7 +6,7 @@ enum CurrencyFilter: String {
 
     static let allValues: [CurrencyFilter] = [.all, .bitcoin, .bitcoinCahche, .etherium]
 }
-class TransactionsViewController: UIViewController {
+class TransactionsViewController: UITableViewController {
 
     let delegate: ITransactionsViewDelegate
 
@@ -20,14 +20,13 @@ class TransactionsViewController: UIViewController {
             ])
         }
     }
-    private let tableView = UITableView(frame: .zero, style: .plain)
 
     private let filterHeaderView = TransactionCurrenciesHeaderView()
 
     init(delegate: ITransactionsViewDelegate) {
         self.delegate = delegate
 
-        super.init(nibName: String(describing: TransactionsViewController.self), bundle: nil)
+        super.init(nibName: nil, bundle: nil)
 
         tabBarItem = UITabBarItem(title: "transactions.tab_bar_item".localized, image: UIImage(named: "transactions.tab_bar_item"), tag: 0)
     }
@@ -38,13 +37,9 @@ class TransactionsViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .black
         title = "transactions.title".localized
 
-        tableView.backgroundColor = .clear
-
-        tableView.delegate = self
-        tableView.dataSource = self
+        tableView.backgroundColor = AppTheme.controllerBackground
         tableView.tableFooterView = UIView(frame: .zero)
 
         tableView.registerCell(forClass: TransactionCell.self)
@@ -52,16 +47,18 @@ class TransactionsViewController: UIViewController {
         tableView.estimatedRowHeight = 0
         tableView.delaysContentTouches = false
 
-        view.addSubview(tableView)
-        tableView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-        }
+        refreshControl = UIRefreshControl()
+        refreshControl?.addTarget(self, action: #selector(onRefresh), for: .valueChanged)
 
         delegate.viewDidLoad()
     }
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
+    }
+
+    @objc func onRefresh() {
+        delegate.refresh()
     }
 
 }
@@ -92,39 +89,43 @@ extension TransactionsViewController: ITransactionsView {
         }
     }
 
+    func didRefresh() {
+        refreshControl?.endRefreshing()
+    }
+
 }
 
-extension TransactionsViewController: UITableViewDelegate, UITableViewDataSource {
+extension TransactionsViewController {
 
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return items.count
     }
 
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         return tableView.dequeueReusableCell(withIdentifier: cellName, for: indexPath)
     }
 
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if let cell = cell as? TransactionCell {
             cell.bind(item: items[indexPath.row])
         }
     }
 
-    public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    override public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let item = items[indexPath.row]
         //stab transaction, only code and hash must be used
         delegate.onTransactionItemClick(transaction: item, coinCode: item.amount.coin.code, txHash: item.transactionHash)
     }
 
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return TransactionsTheme.cellHeight
     }
 
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return TransactionsFilterTheme.filterHeaderHeight
     }
 
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         return filterHeaderView
     }
 
