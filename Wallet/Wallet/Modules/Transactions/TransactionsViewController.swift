@@ -12,14 +12,7 @@ class TransactionsViewController: UITableViewController {
 
     private let cellName = String(describing: TransactionCell.self)
 
-    private var items = [TransactionRecordViewItem]() {
-        didSet {
-            items.append(contentsOf: [
-                TransactionRecordViewItem(transactionHash: "D14AF6S546LK8678JHB4A3SD345KL7FB90AS0D4K5F345L2JA34SDFK", amount: CoinValue(coin: BitcoinRegTest(), value: 2.3), fee: CoinValue(coin: BitcoinRegTest(), value: 0.000003), from: "D14AF6S546LK8678JHB4A3SD345KL7FB90AS0D4K5F345L2JA34SDFK", to: "D14AF6S546LK8678JHB4A3SD345KL7FB90AS0D4K5F345L2JA34SDFK", incoming: true, blockHeight: 124, date: Date(timeIntervalSinceNow: -132000), status: .success, confirmations: 7),
-                TransactionRecordViewItem(transactionHash: "KFDS43AJ2L543F5K4D0SA09BF7LK543DS3A4BHJ8768KL645S6FA41D", amount: CoinValue(coin: BitcoinRegTest(), value: 2.3), fee: CoinValue(coin: BitcoinRegTest(), value: 0.000003), from: "KFDS43AJ2L543F5K4D0SA09BF7LK543DS3A4BHJ8768KL645S6FA41D", to: "KFDS43AJ2L543F5K4D0SA09BF7LK543DS3A4BHJ8768KL645S6FA41D", incoming: false, blockHeight: 124, date: Date(timeIntervalSinceNow: -132000), status: .pending, confirmations: 2)
-            ])
-        }
-    }
+    private var items = [TransactionRecordViewItem]()
 
     private let filterHeaderView = TransactionCurrenciesHeaderView()
 
