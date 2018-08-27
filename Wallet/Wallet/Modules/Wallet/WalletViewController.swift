@@ -8,6 +8,8 @@ class WalletViewController: UITableViewController {
 
     var headerView = UINib(nibName: String(describing: WalletHeaderView.self), bundle: Bundle(for: WalletHeaderView.self)).instantiate(withOwner: nil, options: nil)[0] as? WalletHeaderView
 
+    var spinnerStub = true
+
     init(viewDelegate: IWalletViewDelegate) {
         self.delegate = viewDelegate
 
@@ -36,6 +38,11 @@ class WalletViewController: UITableViewController {
         refreshControl?.addTarget(self, action: #selector(onRefresh), for: .valueChanged)
 
         delegate.viewDidLoad()
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+            self.spinnerStub = false
+            self.tableView.reloadData()
+        }
     }
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -64,7 +71,7 @@ extension WalletViewController {
 
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if let cell = cell as? WalletCell {
-            cell.bind(balance: wallets[indexPath.row], selected: tableView.indexPathForSelectedRow == indexPath, onReceive: { [weak self] in
+            cell.bind(balance: wallets[indexPath.row], showSpinner: spinnerStub, selected: tableView.indexPathForSelectedRow == indexPath, onReceive: { [weak self] in
                 self?.onReceive(for: indexPath)
             }, onPay: { [weak self] in
                 self?.onPay(for: indexPath)

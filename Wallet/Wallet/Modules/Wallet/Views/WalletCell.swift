@@ -1,4 +1,5 @@
 import UIKit
+import GrouviHUD
 
 class WalletCell: UITableViewCell {
 
@@ -6,7 +7,8 @@ class WalletCell: UITableViewCell {
 
     var nameLabel = UILabel()
     var valueLabel = UILabel()
-    var coinLabel = UILabel()
+    var coinAmountLabel = UILabel()
+    var spinnerView = HUDProgressView(strokeLineWidth: WalletTheme.spinnerLineWidth, radius: WalletTheme.spinnerSideSize / 2 - WalletTheme.spinnerLineWidth / 2, strokeColor: UIColor.cryptoGray)
 
     var receiveButton = RespondButton()
     var payButton = RespondButton()
@@ -45,20 +47,27 @@ class WalletCell: UITableViewCell {
         }
         valueLabel.font = WalletTheme.cellSubtitleFont
 
-        roundedBackground.addSubview(coinLabel)
-        coinLabel.snp.makeConstraints { maker in
+        roundedBackground.addSubview(coinAmountLabel)
+        coinAmountLabel.snp.makeConstraints { maker in
             maker.leading.equalTo(self.valueLabel.snp.trailing).offset(WalletTheme.cellSmallMargin)
             maker.centerY.equalTo(self.valueLabel)
             maker.trailing.equalToSuperview().offset(-WalletTheme.cellBigMargin)
         }
-        coinLabel.font = WalletTheme.cellTitleFont
-        coinLabel.textColor = WalletTheme.cellTitleColor
-        coinLabel.textAlignment = .right
+        coinAmountLabel.font = WalletTheme.cellTitleFont
+        coinAmountLabel.textColor = WalletTheme.cellTitleColor
+        coinAmountLabel.textAlignment = .right
+
+        roundedBackground.addSubview(spinnerView)
+        spinnerView.snp.makeConstraints { maker in
+            maker.top.equalToSuperview().offset(WalletTheme.cellSmallMargin)
+            maker.trailing.equalToSuperview().offset(-WalletTheme.cellBigMargin)
+            maker.size.equalTo(WalletTheme.spinnerSideSize)
+        }
 
         roundedBackground.addSubview(receiveButton)
         receiveButton.snp.makeConstraints { maker in
             maker.leading.equalToSuperview().offset(WalletTheme.cellSmallMargin)
-            maker.top.equalTo(self.coinLabel.snp.bottom).offset(WalletTheme.buttonsTopMargin)
+            maker.top.equalTo(self.coinAmountLabel.snp.bottom).offset(WalletTheme.buttonsTopMargin)
             maker.height.equalTo(WalletTheme.buttonsHeight)
         }
         receiveButton.onTap = { [weak self] in self?.receive() }
@@ -69,7 +78,7 @@ class WalletCell: UITableViewCell {
         roundedBackground.addSubview(payButton)
         payButton.snp.makeConstraints { maker in
             maker.leading.equalTo(receiveButton.snp.trailing).offset(WalletTheme.cellSmallMargin)
-            maker.top.equalTo(self.coinLabel.snp.bottom).offset(WalletTheme.buttonsTopMargin)
+            maker.top.equalTo(self.coinAmountLabel.snp.bottom).offset(WalletTheme.buttonsTopMargin)
             maker.trailing.equalToSuperview().offset(-WalletTheme.cellSmallMargin)
             maker.height.equalTo(WalletTheme.buttonsHeight)
             maker.width.equalTo(receiveButton)
@@ -84,9 +93,15 @@ class WalletCell: UITableViewCell {
         fatalError("not implemented")
     }
 
-    func bind(balance: WalletBalanceViewItem, selected: Bool, animated: Bool = false, onReceive: @escaping (() -> ()), onPay: @escaping (() -> ())) {
+    func bind(balance: WalletBalanceViewItem, showSpinner: Bool, selected: Bool, animated: Bool = false, onReceive: @escaping (() -> ()), onPay: @escaping (() -> ())) {
         self.onPay = onPay
         self.onReceive = onReceive
+        spinnerView.isHidden = !showSpinner
+        if showSpinner {
+            spinnerView.startAnimating()
+        } else {
+            spinnerView.stopAnimating()
+        }
 
         bindView(balance: balance, selected: selected, animated: animated)
     }
@@ -98,7 +113,7 @@ class WalletCell: UITableViewCell {
         nameLabel.text = "\(balance.coinValue.coin.name) (\(balance.coinValue.coin.code))"
         valueLabel.text = CurrencyHelper.instance.formattedValue(for: balance.currencyValue)
         valueLabel.textColor = balance.currencyValue.value > 0 ? WalletTheme.nonZeroBalanceTextColor : WalletTheme.zeroBalanceTextColor
-        coinLabel.text = CoinValueHelper.formattedAmount(for: balance.coinValue)
+        coinAmountLabel.text = CoinValueHelper.formattedAmount(for: balance.coinValue)
     }
 
     func receive() {

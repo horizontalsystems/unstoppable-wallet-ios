@@ -7,6 +7,7 @@ class WalletTheme {
     static let cellBigMargin: CGFloat = 12
     static let cellSmallMargin: CGFloat = 8
     static let cellButtonHorizontalMargin: CGFloat = 8
+    static let spinnerLineWidth: CGFloat = 2
     static let cellTitleFont = UIFont.cryptoHeadline
     static let cellTitleColor = UIColor.white
     static let cellSubtitleFont = UIFont.cryptoCaption1
@@ -29,4 +30,5 @@ class WalletTheme {
 
     static let nonZeroBalanceTextColor = UIColor.cryptoYellow
     static let zeroBalanceTextColor = UIColor.cryptoWhite50
+    static let spinnerSideSize: CGFloat = 16
 }

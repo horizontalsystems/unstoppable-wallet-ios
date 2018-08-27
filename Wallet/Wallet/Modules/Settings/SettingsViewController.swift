@@ -62,13 +62,6 @@ class SettingsViewController: UIViewController, SectionsDataSource {
         }, action: { _ in
             print("tap security center")
         }))
-        appSettingsRows.append(Row<SettingsRightLabelCell>(id: "base_currency", hash: "base_currency", height: SettingsTheme.cellHeight, bind: { cell, _ in
-            //stab USD
-            cell.selectionStyle = .default
-            cell.bind(titleIcon: UIImage(named: "Currency Icon"), title: "settings.cell.base_currency".localized, rightText: "USD", showDisclosure: true)
-        }, action: { _ in
-            print("tap base currency")
-        }))
         appSettingsRows.append(Row<SettingsCell>(id: "import_wallet", hash: "import_wallet", height: SettingsTheme.cellHeight, bind: { cell, _ in
             cell.selectionStyle = .default
             cell.bind(titleIcon: UIImage(named: "Import Wallet Icon"), title: "settings.cell.import_wallet".localized, showDisclosure: true, last: true)
@@ -78,6 +71,13 @@ class SettingsViewController: UIViewController, SectionsDataSource {
         sections.append(Section(id: "app_settings", headerState: .marginColor(height: SettingsTheme.topHeaderHeight, color: .clear), rows: appSettingsRows))
 
         var appearanceRows = [RowProtocol]()
+        appearanceRows.append(Row<SettingsRightLabelCell>(id: "base_currency", hash: "base_currency", height: SettingsTheme.cellHeight, bind: { cell, _ in
+            //stab USD
+            cell.selectionStyle = .default
+            cell.bind(titleIcon: UIImage(named: "Currency Icon"), title: "settings.cell.base_currency".localized, rightText: "USD", showDisclosure: true)
+        }, action: { _ in
+            print("tap base currency")
+        }))
         appearanceRows.append(Row<SettingsCell>(id: "language", hash: "language", height: SettingsTheme.cellHeight, bind: { cell, _ in
             cell.selectionStyle = .default
             cell.bind(titleIcon: UIImage(named: "Language Icon"), title: "settings.cell.language".localized, showDisclosure: true)
