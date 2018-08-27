@@ -9,7 +9,7 @@
 import Foundation
 import WalletKit.Private
 
-class HDPrivateKey {
+class HDPrivateKey{
     let network: NetworkProtocol
     let depth: UInt8
     let fingerprint: UInt32
@@ -18,13 +18,19 @@ class HDPrivateKey {
     let raw: Data
     let chainCode: Data
 
-    init(privateKey: Data, chainCode: Data, network: NetworkProtocol) {
-        self.raw = privateKey
+    init(privateKey: Data, chainCode: Data, network: NetworkProtocol, depth: UInt8, fingerprint: UInt32, childIndex: UInt32) {
+        let zeros = privateKey.count < 32 ? [UInt8](repeating: 0, count: 32 - privateKey.count) : []
+
+        self.raw = Data(bytes: zeros) + privateKey
         self.chainCode = chainCode
         self.network = network
-        self.depth = 0
-        self.fingerprint = 0
-        self.childIndex = 0
+        self.depth = depth
+        self.fingerprint = fingerprint
+        self.childIndex = childIndex
+    }
+
+    convenience init(privateKey: Data, chainCode: Data, network: NetworkProtocol) {
+        self.init(privateKey: privateKey, chainCode: chainCode, network: network, depth: 0, fingerprint: 0, childIndex: 0)
     }
 
     convenience init(seed: Data, network: NetworkProtocol) {
@@ -32,15 +38,6 @@ class HDPrivateKey {
         let privateKey = hmac[0..<32]
         let chainCode = hmac[32..<64]
         self.init(privateKey: privateKey, chainCode: chainCode, network: network)
-    }
-
-    init(privateKey: Data, chainCode: Data, network: NetworkProtocol, depth: UInt8, fingerprint: UInt32, childIndex: UInt32) {
-        self.raw = privateKey
-        self.chainCode = chainCode
-        self.network = network
-        self.depth = depth
-        self.fingerprint = fingerprint
-        self.childIndex = childIndex
     }
 
     func publicKey() -> HDPublicKey {
