@@ -1,6 +1,7 @@
 import Foundation
 import WalletKit
 import RealmSwift
+import RxSwift
 
 class BitcoinAdapter {
     private let walletKit: WalletKit
@@ -9,26 +10,27 @@ class BitcoinAdapter {
 
     weak var listener: IAdapterListener?
 
+    let wordsHash: String
     let coin: Coin
+    let balanceSubject = PublishSubject<Double>()
+    let progressSubject = BehaviorSubject<Double>(value: 0.5)
 
-    var balance: Int {
-        var balance = 0
-
-        for output in walletKit.unspentOutputsRealmResults {
-            balance += output.value
+    var balance: Double = 0 {
+        didSet {
+            balanceSubject.onNext(balance)
         }
-
-        return balance
     }
 
     init(words: [String], networkType: WalletKit.NetworkType = .mainNet) {
+        wordsHash = words.joined()
+
         switch networkType {
         case .mainNet: coin = Bitcoin()
-        case .testNet: coin = BitcoinTestNet()
-        case .regTest: coin = BitcoinRegTest()
+        case .testNet: coin = Bitcoin(networkSuffix: "T")
+        case .regTest: coin = Bitcoin(networkSuffix: "R")
         }
 
-        let realmFileName = "\(coin.name).realm"
+        let realmFileName = "\(wordsHash)-\(coin.code).realm"
 
         let documentsUrl = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
         let configuration = Realm.Configuration(fileURL: documentsUrl?.appendingPathComponent(realmFileName))
@@ -36,7 +38,7 @@ class BitcoinAdapter {
         walletKit = WalletKit(withWords: words, realmConfiguration: configuration, networkType: networkType)
 
         unspentOutputsNotificationToken = walletKit.unspentOutputsRealmResults.observe { [weak self] changes in
-            self?.listener?.updateBalance()
+            self?.updateBalance()
         }
 
         transactionsNotificationToken = walletKit.transactionsRealmResults.observe { [weak self] changes in
@@ -47,6 +49,16 @@ class BitcoinAdapter {
     deinit {
         unspentOutputsNotificationToken?.invalidate()
         transactionsNotificationToken?.invalidate()
+    }
+
+    private func updateBalance() {
+        var satoshiBalance = 0
+
+        for output in walletKit.unspentOutputsRealmResults {
+            satoshiBalance += output.value
+        }
+
+        balance = Double(satoshiBalance) / 100000000
     }
 
     private func onTransactionsChanged(changes: RealmCollectionChange<Results<Transaction>>) {
@@ -112,6 +124,10 @@ class BitcoinAdapter {
 }
 
 extension BitcoinAdapter: IAdapter {
+
+    var id: String {
+        return "\(wordsHash)-\(coin.code)"
+    }
 
     func showInfo() {
         walletKit.showRealmInfo()

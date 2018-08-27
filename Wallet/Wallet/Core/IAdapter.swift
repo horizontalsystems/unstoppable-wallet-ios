@@ -1,10 +1,17 @@
 import Foundation
+import RxSwift
 
 protocol IAdapter {
     var listener: IAdapterListener? { get set }
 
+    var id: String { get }
+
     var coin: Coin { get }
-    var balance: Int { get }
+
+    var balance: Double { get }
+    var balanceSubject: PublishSubject<Double> { get }
+
+    var progressSubject: BehaviorSubject<Double> { get }
 
     func showInfo()
     func start() throws
@@ -14,6 +21,5 @@ protocol IAdapter {
 }
 
 protocol IAdapterListener: class {
-    func updateBalance()
     func handle(transactionRecords: [TransactionRecord])
 }

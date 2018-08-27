@@ -1,10 +1,13 @@
 import Foundation
 import RealmSwift
+import RxSwift
 
 class AdapterManager {
     static let shared = AdapterManager()
 
     var adapters = [IAdapter]()
+
+    var subject = PublishSubject<Void>()
 
     func add(adapter: IAdapter) {
         var adapter = adapter
@@ -15,9 +18,6 @@ class AdapterManager {
 }
 
 extension AdapterManager: IAdapterListener {
-
-    func updateBalance() {
-    }
 
     func handle(transactionRecords: [TransactionRecord]) {
         let realm = try! Realm()

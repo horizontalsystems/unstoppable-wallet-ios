@@ -1,4 +1,5 @@
 import Foundation
+import RxSwift
 
 protocol IWalletView: class {
     func show(totalBalance: CurrencyValue)
@@ -19,7 +20,9 @@ protocol IWalletInteractor {
 }
 
 protocol IWalletInteractorDelegate: class {
-    func didFetch(walletBalances: [WalletBalanceItem])
+    func didInitialFetch(coinValues: [String: CoinValue], rates: [String: Double], progressSubjects: [String: BehaviorSubject<Double>], currency: Currency)
+    func didUpdate(coinValue: CoinValue, adapterId: String)
+    func didUpdate(rates: [String: Double])
 }
 
 protocol IWalletRouter {

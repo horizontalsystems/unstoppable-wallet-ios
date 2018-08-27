@@ -111,8 +111,8 @@ class WalletCell: UITableViewCell {
         payButton.set(hidden: !selected, animated: animated, duration: WalletTheme.buttonsAnimationDuration)
 
         nameLabel.text = "\(balance.coinValue.coin.name) (\(balance.coinValue.coin.code))"
-        valueLabel.text = CurrencyHelper.instance.formattedValue(for: balance.currencyValue)
-        valueLabel.textColor = balance.currencyValue.value > 0 ? WalletTheme.nonZeroBalanceTextColor : WalletTheme.zeroBalanceTextColor
+        valueLabel.text = balance.currencyValue.map { CurrencyHelper.instance.formattedValue(for: $0) } ?? "n/a"
+        valueLabel.textColor = (balance.currencyValue?.value ?? 0) > 0 ? WalletTheme.nonZeroBalanceTextColor : WalletTheme.zeroBalanceTextColor
         coinAmountLabel.text = CoinValueHelper.formattedAmount(for: balance.coinValue)
     }
 

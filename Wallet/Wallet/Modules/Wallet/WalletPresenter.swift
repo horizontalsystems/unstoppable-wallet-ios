@@ -1,11 +1,16 @@
 import Foundation
-import RealmSwift
+import RxSwift
 
 class WalletPresenter {
 
     let interactor: IWalletInteractor
     let router: IWalletRouter
     weak var view: IWalletView?
+
+    var coinValues = [String: CoinValue]()
+    var rates = [String: Double]()
+    var progressSubjects = [String: BehaviorSubject<Double>]()
+    var currency: Currency = DollarCurrency()
 
     var walletBalances = [WalletBalanceItem]()
 
@@ -18,30 +23,49 @@ class WalletPresenter {
 
 extension WalletPresenter: IWalletInteractorDelegate {
 
-    func didFetch(walletBalances: [WalletBalanceItem]) {
-        self.walletBalances = walletBalances
+    func didInitialFetch(coinValues: [String: CoinValue], rates: [String: Double], progressSubjects: [String: BehaviorSubject<Double>], currency: Currency) {
+        self.coinValues = coinValues
+        self.rates = rates
+        self.progressSubjects = progressSubjects
+        self.currency = currency
 
-        var totalBalance: Double = 0
-        var viewItems = [WalletBalanceViewItem]()
-
-        for balance in walletBalances {
-            totalBalance += balance.coinValue.value * balance.exchangeRate
-            viewItems.append(viewItem(forBalance: balance))
-        }
-
-        if let currency = walletBalances.first?.currency {
-            view?.show(totalBalance: CurrencyValue(currency: currency, value: totalBalance))
-        }
-
-        view?.show(walletBalances: viewItems)
+        updateView()
     }
 
-    private func viewItem(forBalance balance: WalletBalanceItem) -> WalletBalanceViewItem {
-        return WalletBalanceViewItem(
-                coinValue: balance.coinValue,
-                exchangeValue: CurrencyValue(currency: balance.currency, value: balance.exchangeRate),
-                currencyValue: CurrencyValue(currency: balance.currency, value: balance.coinValue.value * balance.exchangeRate)
-        )
+    func didUpdate(coinValue: CoinValue, adapterId: String) {
+        coinValues[adapterId] = coinValue
+
+        updateView()
+    }
+
+    func didUpdate(rates: [String: Double]) {
+        self.rates = rates
+
+        updateView()
+    }
+
+    private func updateView() {
+        var totalBalance: Double = 0
+
+        var viewItems = [WalletBalanceViewItem]()
+
+        for (adapterId, coinValue) in coinValues {
+            let rate = rates[coinValue.coin.code]
+
+            viewItems.append(WalletBalanceViewItem(
+                    coinValue: coinValue,
+                    exchangeValue: rate.map { CurrencyValue(currency: currency, value: $0) },
+                    currencyValue: rate.map { CurrencyValue(currency: currency, value: coinValue.value * $0) },
+                    progressSubject: progressSubjects[adapterId]
+            ))
+
+            if let rate = rate {
+                totalBalance += coinValue.value * rate
+            }
+        }
+
+        view?.show(totalBalance: CurrencyValue(currency: currency, value: totalBalance))
+        view?.show(walletBalances: viewItems)
     }
 
 }
