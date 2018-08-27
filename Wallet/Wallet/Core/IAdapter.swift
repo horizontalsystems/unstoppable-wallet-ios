@@ -9,6 +9,7 @@ protocol IAdapter {
     func showInfo()
     func start() throws
     func send(to address: String, value: Int) throws
+    func fee(for value: Int, senderPay: Bool) throws -> Int
     func validate(address: String) -> Bool
 }
 

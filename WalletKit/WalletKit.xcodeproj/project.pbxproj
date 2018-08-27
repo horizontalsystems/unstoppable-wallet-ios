@@ -98,6 +98,8 @@
 		58AAA398676B02669E4E5E3F /* TransactionSenderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAE590E2089C768A7A870 /* TransactionSenderTests.swift */; };
 		58AAA649DF284C668B495AB2 /* ScriptBuilderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA422686CE355CACA11DF /* ScriptBuilderTests.swift */; };
 		58AAA68C0D710ED3FCDE76DE /* ScriptTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA6BB66ECE0543BE377E3 /* ScriptTests.swift */; };
+		58AAA6A3D98BB1CF6360F639 /* TransactionSizeCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAA7C33E2529A70D0E529 /* TransactionSizeCalculator.swift */; };
+		58AAA6D586BB4E3E39C15E36 /* TransactionSizeCalculatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAED5E10009C0720D949E /* TransactionSizeCalculatorTests.swift */; };
 		58AAA8CCA46340450D2912C5 /* UnspentOutputProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA481A82D05C914AB0CCA /* UnspentOutputProvider.swift */; };
 		58AAA9479AB8BF53D2852502 /* TransactionCreatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA21C2FD6764CD385663E /* TransactionCreatorTests.swift */; };
 		58AAAAC9184F9395A71E318B /* UnspentOutputProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAECE6429C4CBD7FD2394 /* UnspentOutputProviderTests.swift */; };
@@ -239,6 +241,7 @@
 		58AAA6BB66ECE0543BE377E3 /* ScriptTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScriptTests.swift; sourceTree = "<group>"; };
 		58AAA74DF0D1F82EF49824E3 /* PFromPKHExtractorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PFromPKHExtractorTests.swift; sourceTree = "<group>"; };
 		58AAA983B426801C46003567 /* UnspentOutputSelector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnspentOutputSelector.swift; sourceTree = "<group>"; };
+		58AAAA7C33E2529A70D0E529 /* TransactionSizeCalculator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionSizeCalculator.swift; sourceTree = "<group>"; };
 		58AAABDF62BBC64C9A3363A6 /* ScriptConverterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScriptConverterTests.swift; sourceTree = "<group>"; };
 		58AAAC66042A881E2F74AFD6 /* TransactionCreator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionCreator.swift; sourceTree = "<group>"; };
 		58AAAC8BAD29CC18864884DB /* ScriptConverter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScriptConverter.swift; sourceTree = "<group>"; };
@@ -246,6 +249,7 @@
 		58AAAE1DA82FC3585855DED3 /* ChunkTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChunkTests.swift; sourceTree = "<group>"; };
 		58AAAE590E2089C768A7A870 /* TransactionSenderTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionSenderTests.swift; sourceTree = "<group>"; };
 		58AAAECE6429C4CBD7FD2394 /* UnspentOutputProviderTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnspentOutputProviderTests.swift; sourceTree = "<group>"; };
+		58AAAED5E10009C0720D949E /* TransactionSizeCalculatorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionSizeCalculatorTests.swift; sourceTree = "<group>"; };
 		58AAAF2482982ED7215EEBF9 /* ScriptBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScriptBuilder.swift; sourceTree = "<group>"; };
 		77CA10CAE5CC764A5F3F3722 /* Pods-WalletKitTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WalletKitTests.debug.xcconfig"; path = "../Pods/Target Support Files/Pods-WalletKitTests/Pods-WalletKitTests.debug.xcconfig"; sourceTree = "<group>"; };
 		7C3BD4AC3F618612975056BC /* Pods-WalletKit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WalletKit.release.xcconfig"; path = "../Pods/Target Support Files/Pods-WalletKit/Pods-WalletKit.release.xcconfig"; sourceTree = "<group>"; };
@@ -430,6 +434,7 @@
 				58AAA21C2FD6764CD385663E /* TransactionCreatorTests.swift */,
 				2FA5D0B8032597D7392B0637 /* TransactionProcessorTests.swift */,
 				2FA5D316DD8A722A5300002B /* TransactionHandlerTests.swift */,
+				58AAAED5E10009C0720D949E /* TransactionSizeCalculatorTests.swift */,
 			);
 			path = Transactions;
 			sourceTree = "<group>";
@@ -504,6 +509,7 @@
 				58AAAD56FBE3DC74548046F5 /* TransactionSender.swift */,
 				58AAAC66042A881E2F74AFD6 /* TransactionCreator.swift */,
 				2FA5DF1470723462D2CF707B /* TransactionProcessor.swift */,
+				58AAAA7C33E2529A70D0E529 /* TransactionSizeCalculator.swift */,
 			);
 			path = Transactions;
 			sourceTree = "<group>";
@@ -906,6 +912,7 @@
 				"$(SRCROOT)/WalletKit/Managers/InitialSyncer.swift",
 				"$(SRCROOT)/WalletKit/Transactions/TransactionSender.swift",
 				"$(SRCROOT)/WalletKit/Transactions/TransactionCreator.swift",
+				"$(SRCROOT)/WalletKit/Transactions/TransactionSizeCalculator.swift",
 			);
 			name = Cuckoo;
 			outputPaths = (
@@ -974,6 +981,7 @@
 				11B3566FF1557B650F44D89E /* InitialSyncerTests.swift in Sources */,
 				11B3559B46457EEACB8507C7 /* MockWalletKit.swift in Sources */,
 				58AAAF3EFFA88855ACE404FC /* PFromPKHExtractorTests.swift in Sources */,
+				58AAA6D586BB4E3E39C15E36 /* TransactionSizeCalculatorTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1069,6 +1077,7 @@
 				11B35DCEE58FE94B5E111622 /* InitialSyncer.swift in Sources */,
 				11B35EEF6EA44EF0378B60A3 /* RegTest.swift in Sources */,
 				58AAA15CFA130C0752775CF1 /* PFromPKHExtractor.swift in Sources */,
+				58AAA6A3D98BB1CF6360F639 /* TransactionSizeCalculator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

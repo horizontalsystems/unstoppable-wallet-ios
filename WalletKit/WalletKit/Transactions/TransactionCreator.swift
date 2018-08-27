@@ -25,7 +25,7 @@ class TransactionCreator {
             throw CreationError.noChangeAddress
         }
 
-        let transaction = try transactionBuilder.buildTransaction(value: value, feeRate: feeRate, changePubKey: changeAddress, toAddress: address)
+        let transaction = try transactionBuilder.buildTransaction(value: value, feeRate: feeRate, senderPay: false, changePubKey: changeAddress, toAddress: address)
 
         if realm.objects(Transaction.self).filter("reversedHashHex = %@", transaction.reversedHashHex).first != nil {
             throw CreationError.transactionAlreadyExists

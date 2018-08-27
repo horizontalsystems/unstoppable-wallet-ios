@@ -125,6 +125,10 @@ extension BitcoinAdapter: IAdapter {
         try walletKit.send(to: address, value: value)
     }
 
+    func fee(for value: Int, senderPay: Bool) throws -> Int {
+        return try walletKit.fee(for: value, senderPay: senderPay)
+    }
+
     func validate(address: String) -> Bool {
         return true
     }

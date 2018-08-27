@@ -50,6 +50,7 @@ public class WalletKit {
 
     let inputSigner: InputSigner
     let scriptBuilder: ScriptBuilder
+    let transactionSizeCalculator: TransactionSizeCalculator
     let unspentOutputSelector: UnspentOutputSelector
     let unspentOutputProvider: UnspentOutputProvider
 
@@ -88,7 +89,8 @@ public class WalletKit {
         inputSigner = InputSigner(hdWallet: hdWallet)
         scriptBuilder = ScriptBuilder()
 
-        unspentOutputSelector = UnspentOutputSelector()
+        transactionSizeCalculator = TransactionSizeCalculator()
+        unspentOutputSelector = UnspentOutputSelector(calculator: transactionSizeCalculator)
         unspentOutputProvider = UnspentOutputProvider(realmFactory: realmFactory)
 
         addressConverter = AddressConverter(network: network)
@@ -98,7 +100,7 @@ public class WalletKit {
         transactionProcessor = TransactionProcessor(realmFactory: realmFactory, extractor: transactionExtractor, linker: transactionLinker, logger: logger)
         transactionHandler = TransactionHandler(realmFactory: realmFactory, processor: transactionProcessor, headerHandler: headerHandler, factory: factory)
         transactionSender = TransactionSender(realmFactory: realmFactory, peerGroup: peerGroup)
-        transactionBuilder = TransactionBuilder(unspentOutputSelector: unspentOutputSelector, unspentOutputProvider: unspentOutputProvider, addressConverter: addressConverter, inputSigner: inputSigner, scriptBuilder: scriptBuilder, factory: factory)
+        transactionBuilder = TransactionBuilder(unspentOutputSelector: unspentOutputSelector, unspentOutputProvider: unspentOutputProvider, transactionSizeCalculator: transactionSizeCalculator, addressConverter: addressConverter, inputSigner: inputSigner, scriptBuilder: scriptBuilder, factory: factory)
         transactionCreator = TransactionCreator(realmFactory: realmFactory, transactionBuilder: transactionBuilder, transactionSender: transactionSender)
 
         peerGroup.delegate = syncer
@@ -147,6 +149,10 @@ public class WalletKit {
 
     public func send(to address: String, value: Int) throws {
         try transactionCreator.create(to: address, value: value)
+    }
+
+    public func fee(for value: Int, senderPay: Bool) throws -> Int {
+        return try transactionBuilder.fee(for: value, feeRate: transactionCreator.feeRate, senderPay: true, type: .p2pkh)
     }
 
 }

@@ -8,13 +8,14 @@ import RealmSwift
         switch self {
             case .p2pk: return 35
             case .p2pkh: return 25
+            case .p2sh: return 23
             default: return 0
         }
     }
 
     var keyLength: UInt8 {
         switch self {
-            case .p2pk: return 0x03
+            case .p2pk: return 0x21
             case .p2pkh: return 0x14
             case .p2sh: return 0x14
             default: return 0
