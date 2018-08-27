@@ -19,15 +19,9 @@ class HDPrivateKey{
     let chainCode: Data
 
     init(privateKey: Data, chainCode: Data, network: NetworkProtocol, depth: UInt8, fingerprint: UInt32, childIndex: UInt32) {
-        var normalizedPrivateKey = privateKey
+        let zeros = privateKey.count < 32 ? [UInt8](repeating: 0, count: 32 - privateKey.count) : []
 
-        if normalizedPrivateKey.count < 32 {
-            for _ in 0..<(32 - normalizedPrivateKey.count) {
-                normalizedPrivateKey = Data(bytes: [UInt8(0)]) + normalizedPrivateKey
-            }
-        }
-
-        self.raw = normalizedPrivateKey
+        self.raw = Data(bytes: zeros) + privateKey
         self.chainCode = chainCode
         self.network = network
         self.depth = depth
