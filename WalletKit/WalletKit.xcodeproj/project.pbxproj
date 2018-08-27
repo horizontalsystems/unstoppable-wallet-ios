@@ -77,6 +77,7 @@
 		11B35FC6819CD5A9B94A85BF /* MainNet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35D44C0F5847D5B6EDEBC /* MainNet.swift */; };
 		11B35FF6B8D6417447158826 /* BlockSyncerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B352782DC699D1FAAD6168 /* BlockSyncerTests.swift */; };
 		257C06202EDD99F293FC00DE /* Pods_WalletKitTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83AE8083E82784076DF4BF33 /* Pods_WalletKitTests.framework */; };
+		2FA5D1F7E6DABFC12A0AD064 /* HDPrivateKeyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DADEB0FD09138FD308A1 /* HDPrivateKeyTests.swift */; };
 		2FA5D39FBC802B5EF03AD53A /* TransactionBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D11405173CD80A6B9904 /* TransactionBuilder.swift */; };
 		2FA5D60486BE522A9A7B80F8 /* AddressConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D1DAFDFD31F055B6ED11 /* AddressConverter.swift */; };
 		2FA5D67384D58067F71CD6B2 /* InputSigner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DF9995FA7DD7556893F7 /* InputSigner.swift */; };
@@ -226,6 +227,7 @@
 		2FA5D23A8EC7BB3569F51ABD /* AddressConverterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressConverterTests.swift; sourceTree = "<group>"; };
 		2FA5D316DD8A722A5300002B /* TransactionHandlerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionHandlerTests.swift; sourceTree = "<group>"; };
 		2FA5DA9D7F78A26107F7209C /* InputSignerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputSignerTests.swift; sourceTree = "<group>"; };
+		2FA5DADEB0FD09138FD308A1 /* HDPrivateKeyTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HDPrivateKeyTests.swift; sourceTree = "<group>"; };
 		2FA5DAE996A847B90E5D033A /* UnspentOutputSelectorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnspentOutputSelectorTests.swift; sourceTree = "<group>"; };
 		2FA5DDAE64200E386070668C /* TransactionBuilderTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionBuilderTests.swift; sourceTree = "<group>"; };
 		2FA5DF1470723462D2CF707B /* TransactionProcessor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionProcessor.swift; sourceTree = "<group>"; };
@@ -628,6 +630,14 @@
 			name = "Recovered References";
 			sourceTree = "<group>";
 		};
+		D0FCA7092133D250008169E1 /* HDWallet */ = {
+			isa = PBXGroup;
+			children = (
+				2FA5DADEB0FD09138FD308A1 /* HDPrivateKeyTests.swift */,
+			);
+			path = HDWallet;
+			sourceTree = "<group>";
+		};
 		D33FD6B220F3782600EC10DB /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -643,6 +653,7 @@
 			children = (
 				11B35F875BE86EBC5D97DECC /* Blocks */,
 				11B3507A75FAF11E3C461160 /* BlockHeaders */,
+				D0FCA7092133D250008169E1 /* HDWallet */,
 				D01B6FAA21230AE80085010F /* Helpers */,
 				11B352462C0F682238607E64 /* Managers */,
 				11B358FC5E5FE51671115A95 /* Models */,
@@ -982,6 +993,7 @@
 				11B3559B46457EEACB8507C7 /* MockWalletKit.swift in Sources */,
 				58AAAF3EFFA88855ACE404FC /* PFromPKHExtractorTests.swift in Sources */,
 				58AAA6D586BB4E3E39C15E36 /* TransactionSizeCalculatorTests.swift in Sources */,
+				2FA5D1F7E6DABFC12A0AD064 /* HDPrivateKeyTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
