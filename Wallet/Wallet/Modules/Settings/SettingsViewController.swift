@@ -86,22 +86,25 @@ class SettingsViewController: UIViewController, SectionsDataSource {
         }))
         appearanceRows.append(Row<SettingsToggleCell>(id: "light_mode", hash: "light_mode", height: SettingsTheme.cellHeight, bind: { cell, _ in
             cell.selectionStyle = .none
-            cell.bind(titleIcon: UIImage(named: "Light Mode Icon"), title: "settings.cell.light_mode".localized, isOn: false, showDisclosure: false, last: false, onToggle: {
+            cell.bind(titleIcon: UIImage(named: "Light Mode Icon"), title: "settings.cell.light_mode".localized, isOn: false, showDisclosure: false, last: true, onToggle: {
                 print("on toggle light mode")
             })
         }))
-        appearanceRows.append(Row<SettingsToggleCell>(id: "push_notifications", hash: "push_notifications", height: SettingsTheme.cellHeight, bind: { cell, _ in
-            cell.selectionStyle = .none
-            cell.bind(titleIcon: UIImage(named: "Notification Icon"), title: "settings.cell.push_notifications".localized, isOn: false, showDisclosure: false, last: true, onToggle: {
-                print("on toggle notifications")
-            })
+        sections.append(Section(id: "appearance_settings", headerState: .marginColor(height: SettingsTheme.headerHeight, color: .clear), rows: appearanceRows))
+
+        var aboutRows = [RowProtocol]()
+        aboutRows.append(Row<SettingsCell>(id: "about", hash: "about", height: SettingsTheme.cellHeight, bind: { cell, _ in
+            cell.selectionStyle = .default
+            cell.bind(titleIcon: UIImage(named: "About Icon"), title: "settings.cell.about".localized, showDisclosure: true, last: true)
+        }, action: { _ in
+            print("tap about")
         }))
         let infoFooter: ViewState<SettingsInfoFooter> = .cellType(hash: "info_view", binder: { view in
             view.logoButton.handleTouch = {
                 UIApplication.shared.open(URL(string: "http://github.com/horizontalsystems/")!)
             }
         }, dynamicHeight: { _ in SettingsTheme.infoFooterHeight })
-        sections.append(Section(id: "appearance_settings", headerState: .marginColor(height: SettingsTheme.headerHeight, color: .clear), footerState: infoFooter, rows: appearanceRows))
+        sections.append(Section(id: "appearance_settings", headerState: .marginColor(height: SettingsTheme.headerHeight, color: .clear), footerState: infoFooter, rows: aboutRows))
 
         var debugRows = [RowProtocol]()
         debugRows.append(Row<SettingsCell>(id: "debug_logout", hash: "debug_logout", height: SettingsTheme.cellHeight, bind: { cell, _ in

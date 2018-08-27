@@ -96,6 +96,7 @@
 "settings.cell.base_currency" = "Base currency";
 "settings.cell.import_wallet" = "Import Wallet";
 "settings.cell.language" = "Language";
+"settings.cell.about" = "About";
 "settings.cell.light_mode" = "Light Mode";
 "settings.cell.push_notifications" = "Push Notifications";
 "settings.cell.app_version" = "App Version";
