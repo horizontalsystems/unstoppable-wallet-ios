@@ -8,7 +8,7 @@ class SettingsTheme {
     static let cellHeight: CGFloat = 44
     static let textColor = UIColor.white
     static let switchTintColor = UIColor.cryptoGray
-    static let infoTitleTopMargin: CGFloat = 24
+    static let infoTitleTopMargin: CGFloat = 4
     static let rightTextColor = UIColor.cryptoGray
     static let infoTitleColor = UIColor.cryptoGray
     static let infoTitleFont = UIFont.cryptoCaption3
@@ -16,12 +16,14 @@ class SettingsTheme {
     static let separatorInset: CGFloat = SettingsTheme.cellIconSize.width + SettingsTheme.cellBigMargin
     static let versionFont = UIFont.cryptoCaption3
     static let versionColor = UIColor.cryptoGray
-    static let topHeaderHeight: CGFloat = 16
+    static let topHeaderHeight: CGFloat = 32
+    static let infoFooterSeparatorColor = UIColor.cryptoGray
     static let headerHeight: CGFloat = 32
-    static let infoImageTopMargin: CGFloat = 19
+    static let infoImageTopMargin: CGFloat = 32
     static let infoLinkButtonHeight: CGFloat = 47
     static let infoLinkColor = UIColor.cryptoGray
     static let infoFooterHeight: CGFloat = 194
+    static let separatorMargin: CGFloat = 4
     static let infoLinkFont = UIFont.cryptoCaption
     static let logoTintColor = UIColor.cryptoGray
     static let logoSelectedTintColor = UIColor.cryptoSilver

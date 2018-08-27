@@ -7,6 +7,7 @@ class TransactionCreatorTests: XCTestCase {
 
     private var realm: Realm!
     private var mockTransactionBuilder: MockTransactionBuilder!
+    private var mockTransactionSender: MockTransactionSender!
 
     private var transactionCreator: TransactionCreator!
 
@@ -22,17 +23,22 @@ class TransactionCreatorTests: XCTestCase {
         }
 
         mockTransactionBuilder = mockWalletKit.mockTransactionBuilder
+        mockTransactionSender = mockWalletKit.mockTransactionSender
 
         stub(mockTransactionBuilder) { mock in
             when(mock.buildTransaction(value: any(), feeRate: any(), type: any(), changePubKey: any(), toAddress: any())).thenReturn(TestData.p2pkhTransaction)
         }
+        stub(mockTransactionSender) { mock in
+            when(mock.enqueueRun()).thenDoNothing()
+        }
 
-        transactionCreator = TransactionCreator(realmFactory: mockWalletKit.mockRealmFactory, transactionBuilder: mockTransactionBuilder)
+        transactionCreator = TransactionCreator(realmFactory: mockWalletKit.mockRealmFactory, transactionBuilder: mockTransactionBuilder, transactionSender: mockTransactionSender)
     }
 
     override func tearDown() {
         realm = nil
         mockTransactionBuilder = nil
+        mockTransactionSender = nil
         transactionCreator = nil
 
         super.tearDown()
@@ -45,6 +51,8 @@ class TransactionCreatorTests: XCTestCase {
             XCTFail("No transaction record!")
             return
         }
+
+        verify(mockTransactionSender).enqueueRun()
     }
 
     func testNoChangeAddress() {
@@ -59,6 +67,8 @@ class TransactionCreatorTests: XCTestCase {
         } catch {
             XCTFail("Unexpected exception!")
         }
+
+        verify(mockTransactionSender, never()).enqueueRun()
     }
 
 }

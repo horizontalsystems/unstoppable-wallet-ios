@@ -13,6 +13,7 @@ class Syncer {
     weak var headerSyncer: HeaderSyncer?
     weak var headerHandler: HeaderHandler?
     weak var transactionHandler: TransactionHandler?
+    weak var transactionSender: TransactionSender?
     weak var blockSyncer: BlockSyncer?
 
     private let logger: Logger
@@ -46,7 +47,9 @@ extension Syncer: PeerGroupDelegate {
             logger.log(tag: "Header Syncer Error", message: "\(error)")
         }
 
+        // TODO: following callbacks need to be covered with tests
         blockSyncer?.enqueueRun()
+        transactionSender?.enqueueRun()
     }
 
     func peerGroupDidDisconnect() {

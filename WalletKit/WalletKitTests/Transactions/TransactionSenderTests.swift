@@ -8,10 +8,9 @@ class TransactionSenderTests: XCTestCase {
 
     private var mockRealmFactory: MockRealmFactory!
     private var mockPeerGroup: MockPeerGroup!
-    private var transactionSender: TransactionSender!
+    private var sender: TransactionSender!
 
     private var realm: Realm!
-    private var peerStatusSubject: PublishSubject<PeerGroup.Status>!
 
     override func setUp() {
         super.setUp()
@@ -21,83 +20,60 @@ class TransactionSenderTests: XCTestCase {
         mockPeerGroup = mockWalletKit.mockPeerGroup
         realm = mockWalletKit.mockRealm
 
-        peerStatusSubject = PublishSubject()
-
         stub(mockPeerGroup) { mock in
             when(mock.relay(transaction: any())).thenDoNothing()
-            when(mock.statusSubject.get).thenReturn(peerStatusSubject)
         }
 
-        transactionSender = TransactionSender(realmFactory: mockWalletKit.mockRealmFactory, peerGroup: mockPeerGroup, scheduler: MainScheduler.instance, queue: .main)
+        sender = TransactionSender(realmFactory: mockWalletKit.mockRealmFactory, peerGroup: mockPeerGroup, queue: .main)
     }
 
     override func tearDown() {
         mockPeerGroup = nil
-        transactionSender = nil
+        sender = nil
 
         realm = nil
-        peerStatusSubject = nil
 
         super.tearDown()
     }
 
-    func testSyncConnectedAvoidResend() {
-        peerStatusSubject.onNext(.connected)
+    func testNoNewTransactions() {
+        sender.enqueueRun()
+        waitForMainQueue()
+
         verify(mockPeerGroup, never()).relay(transaction: any())
     }
 
-    func testSyncAddedNotNewTransactionAvoidResend() {
-        let e = expectation(description: "Realm Observer")
-
-        let token = realm.objects(Transaction.self).filter("status = %@", TransactionStatus.relayed.rawValue).observe { changes in
-            if case let .update(_, _, insertions, _) = changes, !insertions.isEmpty {
-                e.fulfill()
-            }
-        }
-        let transaction = TestData.p2pkhTransaction
-        transaction.status = .relayed
-        try? realm.write {
-            realm.add(transaction, update: true)
-        }
-
-        waitForExpectations(timeout: 2)
-        verify(mockPeerGroup, never()).relay(transaction: any())
-
-        token.invalidate()
-    }
-
-    func testSyncAddedNewTransactionResend() {
-        let e = expectation(description: "Realm Observer")
-
-        let token = realm.objects(Transaction.self).filter("status = %@", TransactionStatus.new.rawValue).observe { changes in
-            if case let .update(_, _, insertions, _) = changes, !insertions.isEmpty {
-                e.fulfill()
-            }
-        }
+    func testNewTransactions() {
         let transaction = TestData.p2pkhTransaction
         transaction.status = .new
-        let transaction2 = TestData.p2pkTransaction
-        transaction2.status = .relayed
-        try? realm.write {
-            realm.add(transaction, update: true)
-            realm.add(transaction2, update: true)
+
+        try! realm.write {
+            realm.add(transaction)
         }
 
-        waitForExpectations(timeout: 2)
-        verify(mockPeerGroup, times(1)).relay(transaction: equal(to: transaction))
-        verify(mockPeerGroup, never()).relay(transaction: equal(to: transaction2))
+        sender.enqueueRun()
+        waitForMainQueue()
 
-        token.invalidate()
+        verify(mockPeerGroup).relay(transaction: equal(to: transaction))
     }
 
-    func testConnectedTransactionResend() {
-        let transaction = TestData.p2pkhTransaction
-        transaction.status = .new
-        try? realm.write {
-            realm.add(transaction, update: true)
+    func testNewAndRelayedTransactions() {
+        let newTransaction = TestData.p2pkhTransaction
+        newTransaction.status = .new
+
+        let relayedTransaction = TestData.p2pkTransaction
+        relayedTransaction.status = .relayed
+
+        try! realm.write {
+            realm.add(newTransaction)
+            realm.add(relayedTransaction)
         }
-        peerStatusSubject.onNext(.connected)
-        verify(mockPeerGroup, times(1)).relay(transaction: any())
+
+        sender.enqueueRun()
+        waitForMainQueue()
+
+        verify(mockPeerGroup).relay(transaction: equal(to: newTransaction))
+        verify(mockPeerGroup, never()).relay(transaction: equal(to: relayedTransaction))
     }
 
 }

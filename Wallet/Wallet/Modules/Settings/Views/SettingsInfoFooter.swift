@@ -21,10 +21,19 @@ class SettingsInfoFooter: UITableViewHeaderFooterView {
         versionLabel.font = SettingsTheme.versionFont
         versionLabel.text = "settings.info.title".localized + " " + AppHelper.instance.appVersion
 
+        let separatorView = UIView()
+        separatorView.backgroundColor = SettingsTheme.infoFooterSeparatorColor
+        contentView.addSubview(separatorView)
+        separatorView.snp.makeConstraints { maker in
+            maker.leading.trailing.equalTo(versionLabel)
+            maker.top.equalTo(versionLabel.snp.bottom).offset(SettingsTheme.separatorMargin)
+            maker.height.equalTo(1 / UIScreen.main.scale)
+        }
+
         let titleLabel = UILabel()
         contentView.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { maker in
-            maker.top.equalTo(versionLabel.snp.bottom).offset(SettingsTheme.infoTitleTopMargin)
+            maker.top.equalTo(separatorView.snp.bottom).offset(SettingsTheme.infoTitleTopMargin)
             maker.centerX.equalToSuperview()
         }
         titleLabel.textColor = SettingsTheme.infoTitleColor

@@ -209,7 +209,6 @@
 		D3B62A8B20CA40DC005A9F80 /* MainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D3B62A8920CA40DC005A9F80 /* MainViewController.xib */; };
 		D3B62A8E20CA436F005A9F80 /* WalletViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3B62A8C20CA436F005A9F80 /* WalletViewController.swift */; };
 		D3B62A9220CA467E005A9F80 /* TransactionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3B62A9020CA467E005A9F80 /* TransactionsViewController.swift */; };
-		D3B62A9320CA467E005A9F80 /* TransactionsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D3B62A9120CA467E005A9F80 /* TransactionsViewController.xib */; };
 		D3B62A9620CA46EB005A9F80 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3B62A9420CA46EB005A9F80 /* SettingsViewController.swift */; };
 		D3B62A9A20CA73A0005A9F80 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = D3B62A9C20CA73A0005A9F80 /* Localizable.strings */; };
 		D3B62A9E20CA88BF005A9F80 /* Theme.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D3B62A9D20CA88BF005A9F80 /* Theme.xcassets */; };
@@ -453,7 +452,6 @@
 		D3B62A8920CA40DC005A9F80 /* MainViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainViewController.xib; sourceTree = "<group>"; };
 		D3B62A8C20CA436F005A9F80 /* WalletViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletViewController.swift; sourceTree = "<group>"; };
 		D3B62A9020CA467E005A9F80 /* TransactionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionsViewController.swift; sourceTree = "<group>"; };
-		D3B62A9120CA467E005A9F80 /* TransactionsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TransactionsViewController.xib; sourceTree = "<group>"; };
 		D3B62A9420CA46EB005A9F80 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		D3B62A9B20CA73A0005A9F80 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		D3B62A9D20CA88BF005A9F80 /* Theme.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Theme.xcassets; sourceTree = "<group>"; };
@@ -673,7 +671,6 @@
 				11B35BEF7ABBE155593B4DBE /* TransactionsInteractor.swift */,
 				11B3569AE7CDF7E217CAB4EE /* TransactionsPresenter.swift */,
 				D3B62A9020CA467E005A9F80 /* TransactionsViewController.swift */,
-				D3B62A9120CA467E005A9F80 /* TransactionsViewController.xib */,
 				11B35A13B7F3DD8B5E253676 /* TransactionRecordViewItem.swift */,
 				1A56463D46E59369F3C2AC13 /* Views */,
 			);
@@ -1196,7 +1193,6 @@
 				D348A77720C7D34100803B9E /* BackupConfirmationController.xib in Resources */,
 				D3373DCF20C6B21C0082BC4A /* RestoreViewController.xib in Resources */,
 				D3B62A9E20CA88BF005A9F80 /* Theme.xcassets in Resources */,
-				D3B62A9320CA467E005A9F80 /* TransactionsViewController.xib in Resources */,
 				D3B62A8B20CA40DC005A9F80 /* MainViewController.xib in Resources */,
 				5095837921074C9B00B720AE /* BaseTwinItemView.xib in Resources */,
 				D348A77320C7C58900803B9E /* BackupIntroController.xib in Resources */,
