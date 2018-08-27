@@ -5,7 +5,7 @@ class PFromPKHExtractor: ScriptExtractor {
 
     func extract(from script: Script, converter: ScriptConverter) throws -> Data {
         guard script.chunks.count == 2, let sigData = script.chunks[0].data, let keyData = script.chunks[1].data else {
-            throw ScriptError.wrongSequence
+            throw ScriptError.wrongScriptLength
         }
         guard abs(sigData.count - 73) < 3, (keyData.count == 33 || keyData.count == 65) else {
             throw ScriptError.wrongSequence

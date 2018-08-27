@@ -11,6 +11,10 @@ class AddressConverterTests: XCTestCase {
 
         let mockWalletKit = MockWalletKit()
 
+        stub(mockWalletKit.mockNetwork) { mock in
+            when(mock.pubKeyHash.get).thenReturn(0x6f)
+            when(mock.scriptHash.get).thenReturn(0xc4)
+        }
         addressConverter = AddressConverter(network: mockWalletKit.mockNetwork)
     }
 
