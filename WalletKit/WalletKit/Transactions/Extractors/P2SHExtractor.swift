@@ -1,12 +1,10 @@
 import Foundation
 
 class P2SHExtractor: ScriptExtractor {
-    static let scriptLength = 23
-
     var type: ScriptType { return .p2sh }
 
     func extract(from script: Script, converter: ScriptConverter) throws -> Data {
-        guard script.length == P2SHExtractor.scriptLength else {
+        guard script.length == type.size else {
             throw ScriptError.wrongScriptLength
         }
         let validCodes = OpCode.p2shStart + Data(bytes: [0x14]) + OpCode.p2shFinish

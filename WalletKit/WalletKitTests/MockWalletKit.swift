@@ -43,6 +43,7 @@ class MockWalletKit {
 
     let mockInputSigner: MockInputSigner
     let mockScriptBuilder: MockScriptBuilder
+    let mockTransactionSizeCalculator: MockTransactionSizeCalculator
     let mockUnspentOutputSelector: MockUnspentOutputSelector
     let mockUnspentOutputProvider: MockUnspentOutputProvider
 
@@ -85,7 +86,8 @@ class MockWalletKit {
         mockInputSigner = MockInputSigner(hdWallet: mockHdWallet)
         mockScriptBuilder = MockScriptBuilder()
 
-        mockUnspentOutputSelector = MockUnspentOutputSelector()
+        mockTransactionSizeCalculator = MockTransactionSizeCalculator()
+        mockUnspentOutputSelector = MockUnspentOutputSelector(calculator: mockTransactionSizeCalculator)
         mockUnspentOutputProvider = MockUnspentOutputProvider(realmFactory: mockRealmFactory)
 
         mockAddressConverter = MockAddressConverter(network: mockNetwork)
@@ -95,7 +97,7 @@ class MockWalletKit {
         mockTransactionProcessor = MockTransactionProcessor(realmFactory: mockRealmFactory, extractor: mockTransactionExtractor, linker: mockTransactionLinker, logger: mockLogger)
         mockTransactionHandler = MockTransactionHandler(realmFactory: mockRealmFactory, processor: mockTransactionProcessor, headerHandler: mockHeaderHandler, factory: mockFactory)
         mockTransactionSender = MockTransactionSender(realmFactory: mockRealmFactory, peerGroup: mockPeerGroup)
-        mockTransactionBuilder = MockTransactionBuilder(unspentOutputSelector: mockUnspentOutputSelector, unspentOutputProvider: mockUnspentOutputProvider, addressConverter: mockAddressConverter, inputSigner: mockInputSigner, scriptBuilder: mockScriptBuilder, factory: mockFactory)
+        mockTransactionBuilder = MockTransactionBuilder(unspentOutputSelector: mockUnspentOutputSelector, unspentOutputProvider: mockUnspentOutputProvider, transactionSizeCalculator: mockTransactionSizeCalculator, addressConverter: mockAddressConverter, inputSigner: mockInputSigner, scriptBuilder: mockScriptBuilder, factory: mockFactory)
         mockTransactionCreator = MockTransactionCreator(realmFactory: mockRealmFactory, transactionBuilder: mockTransactionBuilder, transactionSender: mockTransactionSender)
 
 //        mockPeerGroup.delegate = mockSyncer
