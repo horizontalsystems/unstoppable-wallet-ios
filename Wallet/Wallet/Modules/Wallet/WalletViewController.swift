@@ -79,6 +79,12 @@ extension WalletViewController {
         }
     }
 
+    public override func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if let cell = cell as? WalletCell {
+            cell.unbind()
+        }
+    }
+
     func onReceive(for indexPath: IndexPath) {
         delegate.onReceive(for: indexPath.row)
     }

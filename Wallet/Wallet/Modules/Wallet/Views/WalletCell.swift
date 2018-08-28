@@ -1,7 +1,9 @@
 import UIKit
 import GrouviHUD
+import RxSwift
 
 class WalletCell: UITableViewCell {
+    var progressDisposable: Disposable?
 
     var roundedBackground = UIView()
 
@@ -9,6 +11,7 @@ class WalletCell: UITableViewCell {
     var valueLabel = UILabel()
     var coinAmountLabel = UILabel()
     var spinnerView = HUDProgressView(strokeLineWidth: WalletTheme.spinnerLineWidth, radius: WalletTheme.spinnerSideSize / 2 - WalletTheme.spinnerLineWidth / 2, strokeColor: UIColor.cryptoGray)
+    var progressLabel = UILabel()
 
     var receiveButton = RespondButton()
     var payButton = RespondButton()
@@ -63,6 +66,12 @@ class WalletCell: UITableViewCell {
             maker.trailing.equalToSuperview().offset(-WalletTheme.cellBigMargin)
             maker.size.equalTo(WalletTheme.spinnerSideSize)
         }
+        roundedBackground.addSubview(progressLabel)
+        progressLabel.snp.makeConstraints { maker in
+            maker.center.equalTo(spinnerView)
+        }
+        progressLabel.font = .cryptoCaption3
+        progressLabel.textColor = .cryptoGray
 
         roundedBackground.addSubview(receiveButton)
         receiveButton.snp.makeConstraints { maker in
@@ -103,6 +112,10 @@ class WalletCell: UITableViewCell {
             spinnerView.stopAnimating()
         }
 
+        progressDisposable = balance.progressSubject?.subscribe(onNext: { [weak self] progress in
+            self?.progressLabel.isHidden = progress == 1
+            self?.progressLabel.text = "\(Int(progress * 100))%"
+        })
         bindView(balance: balance, selected: selected, animated: animated)
     }
 
@@ -114,6 +127,11 @@ class WalletCell: UITableViewCell {
         valueLabel.text = balance.currencyValue.map { CurrencyHelper.instance.formattedValue(for: $0) } ?? "n/a"
         valueLabel.textColor = (balance.currencyValue?.value ?? 0) > 0 ? WalletTheme.nonZeroBalanceTextColor : WalletTheme.zeroBalanceTextColor
         coinAmountLabel.text = CoinValueHelper.formattedAmount(for: balance.coinValue)
+    }
+
+    func unbind() {
+        progressDisposable?.dispose()
+        progressDisposable = nil
     }
 
     func receive() {
