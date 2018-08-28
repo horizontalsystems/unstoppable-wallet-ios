@@ -110,6 +110,7 @@ public class WalletKit {
         syncer.headerSyncer = headerSyncer
         syncer.headerHandler = headerHandler
         syncer.transactionHandler = transactionHandler
+        syncer.transactionSender = transactionSender
         syncer.blockSyncer = blockSyncer
     }
 
