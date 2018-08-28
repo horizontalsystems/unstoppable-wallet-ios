@@ -9,9 +9,11 @@ class TransactionsInteractor {
     private var secondaryDisposeBag = DisposeBag()
 
     private let adapterManager: AdapterManager
+    private let exchangeRateManager: ExchangeRateManager
 
-    init(adapterManager: AdapterManager) {
+    init(adapterManager: AdapterManager, exchangeRateManager: ExchangeRateManager) {
         self.adapterManager = adapterManager
+        self.exchangeRateManager = exchangeRateManager
     }
 
 }
@@ -46,6 +48,7 @@ extension TransactionsInteractor: ITransactionsInteractor {
     }
 
     func retrieveTransactionItems(adapterId: String?) {
+        let rates = exchangeRateManager.exchangeRates
         var items = [TransactionRecordViewItem]()
 
         let filteredAdapters = adapterManager.adapters.filter { adapterId == nil || $0.id == adapterId }
@@ -55,10 +58,12 @@ extension TransactionsInteractor: ITransactionsInteractor {
 
             for record in adapter.transactionRecords {
                 let confirmations = record.blockHeight.map { latestBlockHeight - $0 + 1 } ?? 0
+                let convertedValue = rates[adapter.coin.code].map { $0 * record.amount }
 
                 let item = TransactionRecordViewItem(
                         transactionHash: record.transactionHash,
                         amount: CoinValue(coin: adapter.coin, value: record.amount),
+                        currencyAmount: convertedValue.map { CurrencyValue(currency: DollarCurrency(), value: $0) },
                         fee: CoinValue(coin: adapter.coin, value: record.fee),
                         from: record.from.first,
                         to: record.to.first,

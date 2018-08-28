@@ -70,15 +70,14 @@ class TransactionCell: UITableViewCell {
     func bind(item: TransactionRecordViewItem) {
         amountLabel.textColor = item.incoming ? TransactionsTheme.incomingTextColor : TransactionsTheme.outgoingTextColor
 
-        let fiatAmount = CurrencyHelper.instance.formattedValue(for: CurrencyValue(currency: DollarCurrency(), value: abs(item.amount.value) * 0)) ?? ""
+        let fiatAmount = item.currencyAmount.map { CurrencyHelper.instance.formattedValue(for: $0) }
 
 //        let fromAddress = item.from
 //        let endIndex = fromAddress.index(fromAddress.startIndex, offsetBy: 5)
 //        let firstChars = fromAddress[fromAddress.startIndex ..< endIndex]
 //        let fiatFromText = "\(fiatAmount) \(item.incoming ? "transactions.from".localized : "transactions.to".localized) \(firstChars)..."
 
-        let fiatFromText = "\(fiatAmount)"
-        fiatAmountFromLabel.text = fiatFromText
+        fiatAmountFromLabel.text = fiatAmount ?? "n/a"
 
         dateLabel.text = item.date.map { DateHelper.instance.formatTransactionTime(from: $0) }
         amountLabel.text = (item.incoming ? "+ " : "- ") + CoinValueHelper.formattedAmount(for: item.amount)
