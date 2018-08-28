@@ -3,8 +3,9 @@ import SnapKit
 
 class TransactionCurrenciesHeaderView: UIVisualEffectView, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
 
-    var filters = CurrencyFilter.allValues
+    var filters = [TransactionFilterItem]()
     var collectionView: UICollectionView
+    var onSelectAdapterId: ((String?) -> ())?
 
     init() {
         let layout = UICollectionViewFlowLayout()
@@ -25,8 +26,6 @@ class TransactionCurrenciesHeaderView: UIVisualEffectView, UICollectionViewDeleg
         collectionView.snp.makeConstraints { maker in
             maker.edges.equalToSuperview()
         }
-
-        collectionView.selectItem(at: IndexPath(item: 0, section: 0), animated: false, scrollPosition: .left)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -43,7 +42,7 @@ class TransactionCurrenciesHeaderView: UIVisualEffectView, UICollectionViewDeleg
 
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         if let cell = cell as? TransactionsCurrencyCell {
-            cell.bind(currencyFilter: filters[indexPath.item], selected: collectionView.indexPathsForSelectedItems?.contains(indexPath) ?? false)
+            cell.bind(transactionFilter: filters[indexPath.item], selected: collectionView.indexPathsForSelectedItems?.contains(indexPath) ?? false)
         }
     }
 
@@ -53,6 +52,18 @@ class TransactionCurrenciesHeaderView: UIVisualEffectView, UICollectionViewDeleg
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return TransactionsFilterTheme.spacing
+    }
+
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        onSelectAdapterId?(filters[indexPath.item].adapterId)
+    }
+
+    func reload(filters: [TransactionFilterItem]) {
+        self.filters = filters
+        collectionView.reloadData()
+        if filters.count > 0 {
+            collectionView.selectItem(at: IndexPath(item: 0, section: 0), animated: false, scrollPosition: .left)
+        }
     }
 
 }

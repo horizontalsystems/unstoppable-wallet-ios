@@ -30,12 +30,20 @@ extension TransactionsPresenter: ITransactionsViewDelegate {
         })
     }
 
+    func onFilterSelect(adapterId: String?) {
+        interactor.retrieveTransactionItems(adapterId: adapterId)
+    }
+
 }
 
 extension TransactionsPresenter: ITransactionsInteractorDelegate {
 
     func didRetrieve(filters: [TransactionFilter]) {
-        view?.show(filters: filters)
+        var filterItems: [TransactionFilterItem] = filters.map {
+            return TransactionFilterItem(adapterId: $0.adapterId, name: "transactions.filter_\($0.coinName)".localized.uppercased())
+        }
+        filterItems.insert(TransactionFilterItem(adapterId: nil, name: "transactions.filter_all".localized.uppercased()), at: 0)
+        view?.show(filters: filterItems)
         interactor.retrieveTransactionItems(adapterId: nil)
     }
 

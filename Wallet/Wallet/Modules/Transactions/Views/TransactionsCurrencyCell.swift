@@ -39,8 +39,8 @@ class TransactionsCurrencyCell: UICollectionViewCell {
         }
     }
 
-    func bind(currencyFilter: CurrencyFilter, selected: Bool) {
-        nameLabel.text = currencyFilter.rawValue.localized.uppercased()
+    func bind(transactionFilter: TransactionFilterItem, selected: Bool) {
+        nameLabel.text = transactionFilter.name
 
         bind(selected: selected)
     }
@@ -50,8 +50,8 @@ class TransactionsCurrencyCell: UICollectionViewCell {
         roundedView.backgroundColor = selected ? TransactionsFilterTheme.selectedBackgroundColor : TransactionsFilterTheme.deselectedBackgroundColor
     }
 
-    static func size(for currencyFilter: CurrencyFilter) -> CGSize {
-        let size = currencyFilter.rawValue.localized.uppercased().size(containerWidth: .greatestFiniteMagnitude, font: TransactionsFilterTheme.nameFont)
+    static func size(for filter: TransactionFilterItem) -> CGSize {
+        let size = filter.name.size(containerWidth: .greatestFiniteMagnitude, font: TransactionsFilterTheme.nameFont)
         let calculatedWidth = size.width + 2 * TransactionsFilterTheme.nameHorizontalMargin
         return CGSize(width: max(calculatedWidth, TransactionsFilterTheme.nameMinWidth), height: TransactionsFilterTheme.filterHeaderHeight)
     }

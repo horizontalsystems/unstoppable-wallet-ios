@@ -1,11 +1,11 @@
 import UIKit
 import SnapKit
 
-enum CurrencyFilter: String {
-    case all = "all", bitcoin = "bitcoin", bitcoinCahche = "bitcoin_cache", etherium = "etherium"
-
-    static let allValues: [CurrencyFilter] = [.all, .bitcoin, .bitcoinCahche, .etherium]
+struct TransactionFilterItem {
+    let adapterId: String?
+    let name: String
 }
+
 class TransactionsViewController: UITableViewController {
 
     let delegate: ITransactionsViewDelegate
@@ -31,6 +31,10 @@ class TransactionsViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "transactions.title".localized
+
+        filterHeaderView.onSelectAdapterId = { adapterId in
+            self.delegate.onFilterSelect(adapterId: adapterId)
+        }
 
         tableView.backgroundColor = AppTheme.controllerBackground
         tableView.tableFooterView = UIView(frame: .zero)
@@ -58,8 +62,8 @@ class TransactionsViewController: UITableViewController {
 
 extension TransactionsViewController: ITransactionsView {
 
-    func show(filters: [TransactionFilter]) {
-        // TODO: show filters
+    func show(filters: [TransactionFilterItem]) {
+        filterHeaderView.reload(filters: filters)
     }
 
     func show(items: [TransactionRecordViewItem]) {

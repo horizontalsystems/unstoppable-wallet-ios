@@ -1,7 +1,7 @@
 import Foundation
 
 protocol ITransactionsView: class {
-    func show(filters: [TransactionFilter])
+    func show(filters: [TransactionFilterItem])
     func show(items: [TransactionRecordViewItem])
     func didRefresh()
 }
@@ -10,6 +10,7 @@ protocol ITransactionsViewDelegate {
     func viewDidLoad()
     func onTransactionItemClick(transaction: TransactionRecordViewItem, coinCode: String, txHash: String)
     func refresh()
+    func onFilterSelect(adapterId: String?)
 }
 
 protocol ITransactionsInteractor {

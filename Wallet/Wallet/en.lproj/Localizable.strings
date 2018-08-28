@@ -51,15 +51,16 @@
 
 "transactions.title" = "Transactions";
 "transactions.tab_bar_item" = "Transactions";
-"all" = "all";
-"bitcoin" = "bitcoin";
-"bitcoin_cache" = "bitcoin cash";
-"etherium" = "etherium";
 "transactions.yesterday" = "Yesterday";
 "transactions.success" = "success";
 "transactions.pending" = "pending...";
 "transactions.from" = "from";
 "transactions.to" = "to";
+"transactions.filter_all" = "All";
+"transactions.filter_Bitcoin-R" = "Bitcoin-R";
+"transactions.filter_Bitcoin-T" = "Bitcoin-T";
+"transactions.filter_Bitcoin" = "Bitcoin";
+
 
 "tx_info.bottom_sheet.title" = "Transaction";
 "tx_info.bottom_sheet.id:" = "ID:";
