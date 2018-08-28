@@ -136,6 +136,14 @@ public class WalletKit {
         try initialSyncer.sync()
     }
 
+    public func clear() throws {
+        let realm = realmFactory.realm
+
+        try realm.write {
+            realm.deleteAll()
+        }
+    }
+
     public var transactionsRealmResults: Results<Transaction> {
         return realmFactory.realm.objects(Transaction.self).filter("isMine = %@", true).sorted(byKeyPath: "block.height", ascending: false)
     }

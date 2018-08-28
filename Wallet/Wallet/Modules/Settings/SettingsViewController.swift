@@ -141,6 +141,7 @@ class SettingsViewController: UIViewController, SectionsDataSource {
 
     func logout() {
         WordsManager.shared.removeWords()
+        AdapterManager.shared.clear()
 
         guard let window = UIApplication.shared.keyWindow else {
             return
@@ -161,13 +162,7 @@ class SettingsViewController: UIViewController, SectionsDataSource {
     }
 
     @IBAction func connectToPeer() {
-        for adapter in AdapterManager.shared.adapters {
-            do {
-                try adapter.start()
-            } catch {
-                print("Could not start \(adapter.coin.name): \(error)")
-            }
-        }
+        AdapterManager.shared.start()
     }
 
     @IBAction func backup() {

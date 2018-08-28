@@ -141,6 +141,10 @@ extension BitcoinAdapter: IAdapter {
         try walletKit.start()
     }
 
+    func clear() throws {
+        try walletKit.clear()
+    }
+
     func send(to address: String, value: Int) throws {
         try walletKit.send(to: address, value: value)
     }
