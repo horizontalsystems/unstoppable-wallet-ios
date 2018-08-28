@@ -6,70 +6,55 @@ class TransactionsInteractor {
     weak var delegate: ITransactionsInteractorDelegate?
 
     private let disposeBag = DisposeBag()
-    private let storage: IStorage
-    private let coinManager: CoinManager
+
+    private let adapterManager: AdapterManager
 
     private var latestBlockHeights = [String: Int]()
     private var transactionRecords = [TransactionRecord]()
 
-    init(storage: IStorage, coinManager: CoinManager) {
-        self.storage = storage
-        self.coinManager = coinManager
-
-        latestBlockHeights["BTC"] = 1500000
-        latestBlockHeights["BTC-T"] = 1500000
-        latestBlockHeights["BTC-R"] = 1500000
+    init(adapterManager: AdapterManager) {
+        self.adapterManager = adapterManager
     }
 
 }
 
 extension TransactionsInteractor: ITransactionsInteractor {
 
-    func retrieveTransactionRecords() {
-        storage.getTransactionRecords()
-                .subscribe(onNext: { [weak self] databaseChangeSet in
-                    self?.transactionRecords = databaseChangeSet.array
-                    self?.refresh(changeSet: databaseChangeSet.changeSet)
-                })
-                .disposed(by: disposeBag)
-
-//        databaseManager.getBlockchainInfos()
-//                .subscribe(onNext: { [weak self] databaseChangeSet in
-//                    for blockchainInfo in databaseChangeSet.array {
-//                        self?.latestBlockHeights[blockchainInfo.coinCode] = blockchainInfo.latestBlockHeight
-//                    }
-//                    self?.refresh()
-//                })
-//                .disposed(by: disposeBag)
-    }
-
-    private func refresh(changeSet: CollectionChangeSet? = nil) {
-        let items = transactionRecords.compactMap { transaction -> TransactionRecordViewItem? in
-            guard let latestBlocHeight = self.latestBlockHeights[transaction.coinCode] else {
-                return nil
-            }
-
-            guard let coin = self.coinManager.getCoin(byCode: transaction.coinCode) else {
-                return nil
-            }
-
-            let confirmations = transaction.blockHeight == 0 ? 0 : max(0, latestBlocHeight - transaction.blockHeight + 1)
-
-            return TransactionRecordViewItem(
-                    transactionHash: transaction.transactionHash,
-                    amount: CoinValue(coin: coin, value: Double(transaction.amount) / 100000000),
-                    fee: CoinValue(coin: coin, value: Double(transaction.fee) / 100000000),
-                    from: transaction.from,
-                    to: transaction.to,
-                    incoming: transaction.incoming,
-                    blockHeight: transaction.blockHeight,
-                    date: Date(timeIntervalSince1970: Double(transaction.timestamp)),
-                    status: confirmations > 0 ? .success : .pending,
-                    confirmations: confirmations
-            )
+    func retrieveFilters() {
+        let filters = adapterManager.adapters.map { adapter in
+            TransactionFilter(adapterId: adapter.id, coinName: adapter.coin.name)
         }
 
-        delegate?.didRetrieve(items: items, changeSet: changeSet)
+        delegate?.didRetrieve(filters: filters)
+    }
+
+    func retrieveTransactionItems(adapterId: String?) {
+        var items = [TransactionRecordViewItem]()
+
+        for adapter in adapterManager.adapters {
+            let latestBlockHeight = adapter.latestBlockHeight
+
+            for record in adapter.transactionRecords {
+                let confirmations = record.blockHeight.map { latestBlockHeight - $0 + 1 } ?? 0
+
+                let item = TransactionRecordViewItem(
+                        transactionHash: record.transactionHash,
+                        amount: CoinValue(coin: adapter.coin, value: record.amount),
+                        fee: CoinValue(coin: adapter.coin, value: record.fee),
+                        from: record.from.first,
+                        to: record.to.first,
+                        incoming: record.amount > 0,
+                        blockHeight: record.blockHeight,
+                        date: record.timestamp.map { Date(timeIntervalSince1970: Double($0)) },
+                        status: confirmations > 0 ? .success : .pending,
+                        confirmations: confirmations
+                )
+
+                items.append(item)
+            }
+        }
+
+        delegate?.didRetrieve(items: items)
     }
 
 }

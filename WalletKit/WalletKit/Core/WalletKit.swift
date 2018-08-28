@@ -137,7 +137,11 @@ public class WalletKit {
     }
 
     public var transactionsRealmResults: Results<Transaction> {
-        return realmFactory.realm.objects(Transaction.self).filter("isMine = %@", true)
+        return realmFactory.realm.objects(Transaction.self).filter("isMine = %@", true).sorted(byKeyPath: "block.height", ascending: false)
+    }
+
+    public var latestBlockHeight: Int {
+        return realmFactory.realm.objects(Block.self).sorted(byKeyPath: "height").last?.height ?? 0
     }
 
     public var unspentOutputsRealmResults: Results<TransactionOutput> {

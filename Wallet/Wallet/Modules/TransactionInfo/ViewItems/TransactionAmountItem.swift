@@ -9,7 +9,7 @@ class TransactionAmountItem: BaseActionItem {
     var fiatAmount: String
 
     init(transaction: TransactionRecordViewItem, tag: Int? = nil, hidden: Bool = false, required: Bool = false) {
-        date = DateHelper.instance.formatTransactionInfoTime(from: transaction.date)
+        date = transaction.date.map { DateHelper.instance.formatTransactionInfoTime(from: $0) } ?? ""
         amount = "\(transaction.incoming ? "+" : "-") \(CoinValueHelper.formattedAmount(for: transaction.amount))"
         amountColor = transaction.incoming ? TransactionInfoTheme.incomingAmountColor : TransactionInfoTheme.outgoingAmountColor
 //        let currencyValue = CurrencyValue(currency: DollarCurrency(), value: abs(transaction.amount.value) * 6000)

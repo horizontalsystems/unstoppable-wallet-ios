@@ -6,11 +6,6 @@ class DepositRouter {
 }
 
 extension DepositRouter: IDepositRouter {
-
-    func onReceive(for walletBalance: WalletBalanceItem) {
-        print("open receive alert")
-    }
-
 }
 
 extension DepositRouter {

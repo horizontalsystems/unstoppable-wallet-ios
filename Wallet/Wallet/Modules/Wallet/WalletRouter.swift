@@ -6,11 +6,11 @@ class WalletRouter {
 
 extension WalletRouter: IWalletRouter {
 
-    func onReceive(for walletBalance: WalletBalanceItem) {
-        DepositRouter.module(coins: [walletBalance.coinValue.coin]).show(fromController: viewController)
+    func onReceive(forAdapterId adapterId: String) {
+        DepositRouter.module(coins: []).show(fromController: viewController)
     }
 
-    func onSend(for walletBalance: WalletBalanceItem) {
+    func onSend(forAdapterId adapterId: String) {
         SendRouter.module(coin: Bitcoin()).show(fromController: viewController)
     }
 

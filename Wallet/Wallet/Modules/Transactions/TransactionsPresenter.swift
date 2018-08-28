@@ -16,7 +16,7 @@ class TransactionsPresenter {
 extension TransactionsPresenter: ITransactionsViewDelegate {
 
     func viewDidLoad() {
-        interactor.retrieveTransactionRecords()
+        interactor.retrieveFilters()
     }
 
     func onTransactionItemClick(transaction: TransactionRecordViewItem, coinCode: String, txHash: String) {
@@ -34,8 +34,13 @@ extension TransactionsPresenter: ITransactionsViewDelegate {
 
 extension TransactionsPresenter: ITransactionsInteractorDelegate {
 
-    func didRetrieve(items: [TransactionRecordViewItem], changeSet: CollectionChangeSet?) {
-        view?.show(items: items, changeSet: changeSet)
+    func didRetrieve(filters: [TransactionFilter]) {
+        view?.show(filters: filters)
+        interactor.retrieveTransactionItems(adapterId: nil)
+    }
+
+    func didRetrieve(items: [TransactionRecordViewItem]) {
+        view?.show(items: items)
     }
 
 }

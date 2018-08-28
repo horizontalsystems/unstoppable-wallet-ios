@@ -58,28 +58,13 @@ class TransactionsViewController: UITableViewController {
 
 extension TransactionsViewController: ITransactionsView {
 
-    func show(items: [TransactionRecordViewItem], changeSet: CollectionChangeSet?) {
-        self.items = items
+    func show(filters: [TransactionFilter]) {
+        // TODO: show filters
+    }
 
-//        if let changeSet = changeSet {
-//            tableView.beginUpdates()
-//
-//            if !changeSet.inserted.isEmpty {
-//                tableView.insertRows(at: changeSet.inserted.map { IndexPath(row: $0, section: 0) }, with: .automatic)
-//            }
-//
-//            if !changeSet.deleted.isEmpty {
-//                tableView.deleteRows(at: changeSet.deleted.map { IndexPath(row: $0, section: 0) }, with: .automatic)
-//            }
-//
-//            if !changeSet.updated.isEmpty {
-//                tableView.reloadRows(at: changeSet.updated.map { IndexPath(row: $0, section: 0) }, with: .automatic)
-//            }
-//
-//            tableView.endUpdates()
-//        } else {
-            tableView.reloadData()
-//        }
+    func show(items: [TransactionRecordViewItem]) {
+        self.items = items
+        tableView.reloadData()
     }
 
     func didRefresh() {

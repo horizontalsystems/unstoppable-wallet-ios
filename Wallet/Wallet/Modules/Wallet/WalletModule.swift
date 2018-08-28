@@ -11,8 +11,8 @@ protocol IWalletView: class {
 protocol IWalletViewDelegate {
     func viewDidLoad()
     func refresh()
-    func onReceive(for index: Int)
-    func onPay(for index: Int)
+    func onReceive(for adapterId: String)
+    func onPay(for adapterId: String)
 }
 
 protocol IWalletInteractor {
@@ -26,6 +26,6 @@ protocol IWalletInteractorDelegate: class {
 }
 
 protocol IWalletRouter {
-    func onReceive(for walletBalance: WalletBalanceItem)
-    func onSend(for walletBalance: WalletBalanceItem)
+    func onReceive(forAdapterId adapterId: String)
+    func onSend(forAdapterId adapterId: String)
 }

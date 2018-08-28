@@ -19,11 +19,9 @@ class SendInteractor {
 
     weak var delegate: ISendInteractorDelegate?
 
-    private let storage: IStorage
     var coin: Coin
 
-    init(storage: IStorage, coin: Coin) {
-        self.storage = storage
+    init(coin: Coin) {
         self.coin = coin
     }
 
@@ -51,10 +49,10 @@ extension SendInteractor: ISendInteractor {
         delegate?.didFetchExchangeRate(exchangeRate: rate.value)
     }
 
-    private func didFetchExchangeRates (_ changeset: DatabaseChangeSet<ExchangeRate>) {
-        if let exchangeRate = (changeset.array.filter { $0.code == coin.code }).first {
-            delegate?.didFetchExchangeRate(exchangeRate: exchangeRate.value)
-        }
+    private func didFetchExchangeRates () {
+//        if let exchangeRate = (changeset.array.filter { $0.code == coin.code }).first {
+//            delegate?.didFetchExchangeRate(exchangeRate: exchangeRate.value)
+//        }
     }
 
     func send(coinCode: String, address: String, amount: Double) {

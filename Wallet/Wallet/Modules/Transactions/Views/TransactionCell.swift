@@ -71,13 +71,16 @@ class TransactionCell: UITableViewCell {
         amountLabel.textColor = item.incoming ? TransactionsTheme.incomingTextColor : TransactionsTheme.outgoingTextColor
 
         let fiatAmount = CurrencyHelper.instance.formattedValue(for: CurrencyValue(currency: DollarCurrency(), value: abs(item.amount.value) * 0)) ?? ""
-        let fromAddress = item.from
-        let endIndex = fromAddress.index(fromAddress.startIndex, offsetBy: 5)
-        let firstChars = fromAddress[fromAddress.startIndex ..< endIndex]
-        let fiatFromText = "\(fiatAmount) \(item.incoming ? "transactions.from".localized : "transactions.to".localized) \(firstChars)..."
+
+//        let fromAddress = item.from
+//        let endIndex = fromAddress.index(fromAddress.startIndex, offsetBy: 5)
+//        let firstChars = fromAddress[fromAddress.startIndex ..< endIndex]
+//        let fiatFromText = "\(fiatAmount) \(item.incoming ? "transactions.from".localized : "transactions.to".localized) \(firstChars)..."
+
+        let fiatFromText = "\(fiatAmount)"
         fiatAmountFromLabel.text = fiatFromText
 
-        dateLabel.text = DateHelper.instance.formatTransactionTime(from: item.date)
+        dateLabel.text = item.date.map { DateHelper.instance.formatTransactionTime(from: $0) }
         amountLabel.text = (item.incoming ? "+ " : "- ") + CoinValueHelper.formattedAmount(for: item.amount)
 
         statusImageView.image = item.status == .pending ? UIImage(named: "Transaction Processing Icon") : UIImage(named: "Transaction Success Icon")

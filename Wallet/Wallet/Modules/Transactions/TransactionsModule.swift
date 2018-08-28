@@ -1,7 +1,8 @@
 import Foundation
 
 protocol ITransactionsView: class {
-    func show(items: [TransactionRecordViewItem], changeSet: CollectionChangeSet?)
+    func show(filters: [TransactionFilter])
+    func show(items: [TransactionRecordViewItem])
     func didRefresh()
 }
 
@@ -12,11 +13,13 @@ protocol ITransactionsViewDelegate {
 }
 
 protocol ITransactionsInteractor {
-    func retrieveTransactionRecords()
+    func retrieveFilters()
+    func retrieveTransactionItems(adapterId: String?)
 }
 
 protocol ITransactionsInteractorDelegate: class {
-    func didRetrieve(items: [TransactionRecordViewItem], changeSet: CollectionChangeSet?)
+    func didRetrieve(filters: [TransactionFilter])
+    func didRetrieve(items: [TransactionRecordViewItem])
 }
 
 protocol ITransactionsRouter {

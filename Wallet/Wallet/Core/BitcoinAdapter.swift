@@ -8,8 +8,6 @@ class BitcoinAdapter {
     private var unspentOutputsNotificationToken: NotificationToken?
     private var transactionsNotificationToken: NotificationToken?
 
-    weak var listener: IAdapterListener?
-
     let wordsHash: String
     let coin: Coin
     let balanceSubject = PublishSubject<Double>()
@@ -61,64 +59,65 @@ class BitcoinAdapter {
         balance = Double(satoshiBalance) / 100000000
     }
 
-    private func onTransactionsChanged(changes: RealmCollectionChange<Results<Transaction>>) {
-        if case let .update(transactions, _, insertions, modifications) = changes {
-            if !insertions.isEmpty {
-                handle(transactions: insertions.map { transactions[$0] })
+    private func transactionRecord(fromTransaction transaction: Transaction) -> TransactionRecord {
+        var totalInput: Int = 0
+        var totalOutput: Int = 0
+        var totalMineInput: Int = 0
+        var totalMineOutput: Int = 0
+        var fromAddresses = [String]()
+        var toAddresses = [String]()
+
+        for input in transaction.inputs {
+            if let previousOutput = input.previousOutput {
+                totalInput += previousOutput.value
+
+                if previousOutput.publicKey != nil {
+                    totalMineInput += previousOutput.value
+                }
             }
-            if !modifications.isEmpty {
-                handle(transactions: modifications.map { transactions[$0] })
+
+            if input.previousOutput?.publicKey == nil {
+                if let address = input.address {
+                    fromAddresses.append(address)
+                } else {
+                    fromAddresses.append("stub from address")
+                }
             }
         }
+
+        for output in transaction.outputs {
+            totalOutput += output.value
+
+            if output.publicKey != nil {
+                totalMineOutput += output.value
+            } else if let address = output.address {
+                toAddresses.append(address)
+            }
+        }
+
+        let amount = totalMineOutput - totalMineInput
+        let fee = totalInput - totalOutput
+
+        return TransactionRecord(
+                transactionHash: transaction.reversedHashHex,
+                from: fromAddresses,
+                to: toAddresses,
+                amount: Double(amount) / 100000000,
+                fee: Double(fee) / 100000000,
+                blockHeight: transaction.block?.height,
+                timestamp: transaction.block?.header?.timestamp
+        )
     }
 
-    private func handle(transactions: [Transaction]) {
-        let records = transactions.map { tx -> TransactionRecord in
-            var totalInput: Int = 0
-            var totalOutput: Int = 0
-            var fromAddresses = [String]()
-            var toAddresses = [String]()
-
-            for input in tx.inputs {
-                if let previousOutput = input.previousOutput, previousOutput.publicKey != nil {
-                    totalInput += previousOutput.value
-                }
-
-                if input.previousOutput?.publicKey == nil {
-                    if let address = input.address {
-                        fromAddresses.append(address)
-                    } else {
-                        fromAddresses.append("stub from address")
-                    }
-                }
-            }
-
-            for output in tx.outputs {
-                if output.publicKey != nil {
-                    totalOutput += output.value
-                } else if let address = output.address {
-                    toAddresses.append(address)
-                }
-            }
-
-            let record = TransactionRecord()
-            record.transactionHash = tx.reversedHashHex
-            record.coinCode = coin.code
-            record.from = fromAddresses.first ?? "no from address"
-            record.to = toAddresses.first ?? "no to address"
-            record.amount = Int(totalOutput - totalInput)
-            record.fee = 0
-            record.incoming = record.amount > 0
-            record.blockHeight = tx.block?.height ?? 0
-            record.confirmed = tx.block != nil
-            record.timestamp = tx.block?.header?.timestamp ?? 0
-
-            print(record)
-
-            return record
-        }
-
-        listener?.handle(transactionRecords: records)
+    private func onTransactionsChanged(changes: RealmCollectionChange<Results<Transaction>>) {
+//        if case let .update(transactions, _, insertions, modifications) = changes {
+//            if !insertions.isEmpty {
+//                handle(transactions: insertions.map { transactions[$0] })
+//            }
+//            if !modifications.isEmpty {
+//                handle(transactions: modifications.map { transactions[$0] })
+//            }
+//        }
     }
 
 }
@@ -127,6 +126,20 @@ extension BitcoinAdapter: IAdapter {
 
     var id: String {
         return "\(wordsHash)-\(coin.code)"
+    }
+
+    var latestBlockHeight: Int {
+        return walletKit.latestBlockHeight
+    }
+
+    var transactionRecords: [TransactionRecord] {
+        var records = [TransactionRecord]()
+
+        for transaction in walletKit.transactionsRealmResults {
+            records.append(transactionRecord(fromTransaction: transaction))
+        }
+
+        return records
     }
 
     func showInfo() {

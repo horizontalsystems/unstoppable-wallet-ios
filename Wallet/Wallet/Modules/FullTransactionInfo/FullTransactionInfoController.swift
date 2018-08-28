@@ -89,7 +89,7 @@ class FullTransactionInfoController: UIViewController, SectionsDataSource {
         rows.append(Row<FullTransactionInfoTextCell>(id: "fee_rate", hash: "fee_rate", height: FullTransactionInfoTheme.cellHeight, bind: { cell, _ in
             cell.bind(title: "full_transaction_info.cell.fee_rate".localized, description: "n/a")
         }))
-        let timeString = DateHelper.instance.formatTransactionInfoTime(from: transaction.date)
+        let timeString = transaction.date.map { DateHelper.instance.formatTransactionInfoTime(from: $0) } ?? ""
         rows.append(Row<FullTransactionInfoTextCell>(id: "received_time", hash: "received_time", height: FullTransactionInfoTheme.cellHeight, bind: { cell, _ in
             cell.bind(title: "full_transaction_info.cell.received_time".localized, description: timeString)
         }))
@@ -97,8 +97,8 @@ class FullTransactionInfoController: UIViewController, SectionsDataSource {
             cell.bind(title: "full_transaction_info.cell.mined_time".localized, description: "N/A")
         }))
         rows.append(Row<FullTransactionInfoTextCell>(id: "included_in_block", hash: "included_in_block", height: FullTransactionInfoTheme.cellHeight, bind: { cell, _ in
-            let confirmedString = transaction.confirmations > 0 ? "full_transaction_info.cell.included_in_block.confirmed".localized : "full_transaction_info.cell.included_in_block.unconfirmed".localized
-            cell.bind(title: "full_transaction_info.cell.included_in_block".localized, description: confirmedString)
+            let confirmedString = (transaction.confirmations ?? 0) > 0 ? "full_transaction_info.cell.included_in_block.confirmed".localized : "full_transaction_info.cell.included_in_block.unconfirmed".localized
+            cell.bind(title: "full_transaction_info.cell.included_in_block".localized, description: "\(transaction.blockHeight ?? -1) -- \(transaction.confirmations ?? -1)")
         }))
         rows.append(Row<FullTransactionInfoTextCell>(id: "lock_time", hash: "lock_time", height: FullTransactionInfoTheme.cellHeight, bind: { cell, _ in
             cell.bind(title: "full_transaction_info.cell.lock_time".localized, description: "n/a")

@@ -86,11 +86,11 @@ extension WalletViewController {
     }
 
     func onReceive(for indexPath: IndexPath) {
-        delegate.onReceive(for: indexPath.row)
+        delegate.onReceive(for: wallets[indexPath.row].adapterId)
     }
 
     func onPay(for indexPath: IndexPath) {
-        delegate.onPay(for: indexPath.row)
+        delegate.onPay(for: wallets[indexPath.row].adapterId)
     }
 
     override func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {

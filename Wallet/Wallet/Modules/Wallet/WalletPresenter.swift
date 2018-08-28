@@ -12,8 +12,6 @@ class WalletPresenter {
     var progressSubjects = [String: BehaviorSubject<Double>]()
     var currency: Currency = DollarCurrency()
 
-    var walletBalances = [WalletBalanceItem]()
-
     init(interactor: IWalletInteractor, router: IWalletRouter) {
         self.interactor = interactor
         self.router = router
@@ -53,6 +51,7 @@ extension WalletPresenter: IWalletInteractorDelegate {
             let rate = rates[coinValue.coin.code]
 
             viewItems.append(WalletBalanceViewItem(
+                    adapterId: adapterId,
                     coinValue: coinValue,
                     exchangeValue: rate.map { CurrencyValue(currency: currency, value: $0) },
                     currencyValue: rate.map { CurrencyValue(currency: currency, value: coinValue.value * $0) },
@@ -83,16 +82,12 @@ extension WalletPresenter: IWalletViewDelegate {
         })
     }
 
-    func onReceive(for index: Int) {
-        if index < walletBalances.count {
-            router.onReceive(for: walletBalances[index])
-        }
+    func onReceive(for adapterId: String) {
+        router.onReceive(forAdapterId: adapterId)
     }
 
-    func onPay(for index: Int) {
-        if index < walletBalances.count {
-            router.onSend(for: walletBalances[index])
-        }
+    func onPay(for adapterId: String) {
+        router.onSend(forAdapterId: adapterId)
     }
 
 }

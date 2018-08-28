@@ -20,7 +20,7 @@ extension SendRouter {
 
     static func module(coin: Coin) -> ActionSheetController {
         let router = SendRouter()
-        let interactor = SendInteractor(storage: RealmStorage.shared, coin: coin)
+        let interactor = SendInteractor(coin: coin)
         let presenter = SendPresenter(interactor: interactor, router: router, coinCode: coin.code)
         interactor.delegate = presenter
 
