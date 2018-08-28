@@ -12,6 +12,8 @@ class BitcoinAdapter {
     let coin: Coin
     let balanceSubject = PublishSubject<Double>()
     let progressSubject = BehaviorSubject<Double>(value: 0.5)
+    let latestBlockHeightSubject = PublishSubject<Void>()
+    let transactionRecordsSubject = PublishSubject<Void>()
 
     var balance: Double = 0 {
         didSet {
@@ -35,12 +37,12 @@ class BitcoinAdapter {
 
         walletKit = WalletKit(withWords: words, realmConfiguration: configuration, networkType: networkType)
 
-        unspentOutputsNotificationToken = walletKit.unspentOutputsRealmResults.observe { [weak self] changes in
+        unspentOutputsNotificationToken = walletKit.unspentOutputsRealmResults.observe { [weak self] _ in
             self?.updateBalance()
         }
 
-        transactionsNotificationToken = walletKit.transactionsRealmResults.observe { [weak self] changes in
-            self?.onTransactionsChanged(changes: changes)
+        transactionsNotificationToken = walletKit.transactionsRealmResults.observe { [weak self] _ in
+            self?.transactionRecordsSubject.onNext(())
         }
     }
 
@@ -107,17 +109,6 @@ class BitcoinAdapter {
                 blockHeight: transaction.block?.height,
                 timestamp: transaction.block?.header?.timestamp
         )
-    }
-
-    private func onTransactionsChanged(changes: RealmCollectionChange<Results<Transaction>>) {
-//        if case let .update(transactions, _, insertions, modifications) = changes {
-//            if !insertions.isEmpty {
-//                handle(transactions: insertions.map { transactions[$0] })
-//            }
-//            if !modifications.isEmpty {
-//                handle(transactions: modifications.map { transactions[$0] })
-//            }
-//        }
     }
 
 }

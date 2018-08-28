@@ -12,7 +12,10 @@ protocol IAdapter {
     var progressSubject: BehaviorSubject<Double> { get }
 
     var latestBlockHeight: Int { get }
+    var latestBlockHeightSubject: PublishSubject<Void> { get }
+
     var transactionRecords: [TransactionRecord] { get }
+    var transactionRecordsSubject: PublishSubject<Void> { get }
 
     func showInfo()
     func start() throws

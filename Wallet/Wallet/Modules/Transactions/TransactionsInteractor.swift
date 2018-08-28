@@ -6,11 +6,9 @@ class TransactionsInteractor {
     weak var delegate: ITransactionsInteractorDelegate?
 
     private let disposeBag = DisposeBag()
+    private var secondaryDisposeBag = DisposeBag()
 
     private let adapterManager: AdapterManager
-
-    private var latestBlockHeights = [String: Int]()
-    private var transactionRecords = [TransactionRecord]()
 
     init(adapterManager: AdapterManager) {
         self.adapterManager = adapterManager
@@ -21,11 +19,30 @@ class TransactionsInteractor {
 extension TransactionsInteractor: ITransactionsInteractor {
 
     func retrieveFilters() {
+        adapterManager.subject
+                .subscribe(onNext: { [weak self] in
+                    self?.secondaryDisposeBag = DisposeBag()
+                    self?.initialFetchAndSubscribe()
+                })
+                .disposed(by: disposeBag)
+
+        initialFetchAndSubscribe()
+    }
+
+    private func initialFetchAndSubscribe() {
         let filters = adapterManager.adapters.map { adapter in
             TransactionFilter(adapterId: adapter.id, coinName: adapter.coin.name)
         }
 
         delegate?.didRetrieve(filters: filters)
+
+        for adapter in adapterManager.adapters {
+            adapter.transactionRecordsSubject
+                    .subscribe(onNext: { [weak self] in
+                        self?.retrieveTransactionItems(adapterId: nil)
+                    })
+                    .disposed(by: secondaryDisposeBag)
+        }
     }
 
     func retrieveTransactionItems(adapterId: String?) {
