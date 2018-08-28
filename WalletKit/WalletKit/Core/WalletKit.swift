@@ -58,7 +58,8 @@ public class WalletKit {
     public init(withWords words: [String], realmConfiguration: Realm.Configuration, networkType: NetworkType = .mainNet) {
         switch networkType {
         case .mainNet: self.network = MainNet()
-        case .testNet: self.network = TestNet()
+//        case .testNet: self.network = TestNet()
+        case .testNet: self.network = RegTest()
         case .regTest: self.network = RegTest()
         }
 

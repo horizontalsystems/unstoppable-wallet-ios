@@ -13,7 +13,7 @@ class AdapterManager {
 //        adapters.append(BitcoinAdapter(words: words))
 //        adapters.append(BitcoinAdapter(words: words, networkType: .testNet))
         adapters.append(BitcoinAdapter(words: words, networkType: .regTest))
-//        adapters.append(BitcoinAdapter(words: ["black", "correct", "snap", "west", "clever", "knock", "honey", "head", "divide", "admit", "file", "swarm"], networkType: .regTest))
+        adapters.append(BitcoinAdapter(words: ["black", "correct", "snap", "west", "clever", "knock", "honey", "head", "divide", "admit", "file", "swarm"], networkType: .testNet))
 
         start()
     }

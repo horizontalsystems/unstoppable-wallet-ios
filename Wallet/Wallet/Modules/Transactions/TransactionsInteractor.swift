@@ -48,7 +48,9 @@ extension TransactionsInteractor: ITransactionsInteractor {
     func retrieveTransactionItems(adapterId: String?) {
         var items = [TransactionRecordViewItem]()
 
-        for adapter in adapterManager.adapters {
+        let filteredAdapters = adapterManager.adapters.filter { adapterId == nil || $0.id == adapterId }
+
+        for adapter in filteredAdapters {
             let latestBlockHeight = adapter.latestBlockHeight
 
             for record in adapter.transactionRecords {
