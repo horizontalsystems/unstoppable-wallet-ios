@@ -18,7 +18,7 @@ class TransactionSenderTests: XCTestCase {
         let mockWalletKit = MockWalletKit()
 
         mockPeerGroup = mockWalletKit.mockPeerGroup
-        realm = mockWalletKit.mockRealm
+        realm = mockWalletKit.realm
 
         stub(mockPeerGroup) { mock in
             when(mock.relay(transaction: any())).thenDoNothing()

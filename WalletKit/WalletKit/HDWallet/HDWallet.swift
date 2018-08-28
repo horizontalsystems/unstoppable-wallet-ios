@@ -9,10 +9,12 @@ class HDWallet {
     private let purpose: UInt32
     private let coinType: UInt32
     var account: UInt32
+    var gapLimit: Int
 
-    init(seed: Data, network: NetworkProtocol) {
+    init(seed: Data, network: NetworkProtocol, gapLimit: Int = 20) {
         self.seed = seed
         self.network = network
+        self.gapLimit = gapLimit
 
         keychain = HDKeychain(seed: seed, network: network)
         purpose = 44

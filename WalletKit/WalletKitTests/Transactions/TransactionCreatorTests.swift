@@ -16,7 +16,7 @@ class TransactionCreatorTests: XCTestCase {
 
         let mockWalletKit = MockWalletKit()
 
-        realm = mockWalletKit.mockRealm
+        realm = mockWalletKit.realm
 
         try! realm.write {
             realm.add(TestData.pubKey())

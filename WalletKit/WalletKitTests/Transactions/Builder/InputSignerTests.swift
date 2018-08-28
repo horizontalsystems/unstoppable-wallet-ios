@@ -17,7 +17,7 @@ class InputSignerTests: XCTestCase {
 
         let mockWalletKit = MockWalletKit()
 
-        realm = mockWalletKit.mockRealm
+        realm = mockWalletKit.realm
 
         // Create private key/address provider for tests
         let privateKey = HDPrivateKey(privateKey: Data(hex: "4ee8efccaa04495d5d3ab0f847952fcff43ffc0459bd87981b6be485b92f8d64")!, chainCode: Data(), network: TestNet())

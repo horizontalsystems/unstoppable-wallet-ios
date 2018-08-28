@@ -21,7 +21,7 @@ class HeaderHandlerTests: XCTestCase {
         mockFactory = mockWalletKit.mockFactory
         mockValidator = mockWalletKit.mockBlockValidator
         mockBlockSyncer = mockWalletKit.mockBlockSyncer
-        realm = mockWalletKit.mockRealm
+        realm = mockWalletKit.realm
 
         checkpointBlock = TestData.checkpointBlock
 

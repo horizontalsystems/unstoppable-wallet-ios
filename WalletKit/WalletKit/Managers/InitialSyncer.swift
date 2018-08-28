@@ -11,15 +11,12 @@ class InitialSyncer {
     private let apiManager: ApiManager
     private let peerGroup: PeerGroup
 
-    private let gapLimit: Int
-
-    init(realmFactory: RealmFactory, hdWallet: HDWallet, stateManager: StateManager, apiManager: ApiManager, peerGroup: PeerGroup, gapLimit: Int = 20) {
+    init(realmFactory: RealmFactory, hdWallet: HDWallet, stateManager: StateManager, apiManager: ApiManager, peerGroup: PeerGroup) {
         self.realmFactory = realmFactory
         self.hdWallet = hdWallet
         self.stateManager = stateManager
         self.apiManager = apiManager
         self.peerGroup = peerGroup
-        self.gapLimit = gapLimit
     }
 
     func sync() throws {
@@ -63,7 +60,7 @@ class InitialSyncer {
 
         var newKeys = [PublicKey]()
 
-        for index in count..<(count + gapLimit) {
+        for index in count..<(count + hdWallet.gapLimit) {
             let key = try hdWallet.publicKey(index: index, external: external)
             newKeys.append(key)
         }

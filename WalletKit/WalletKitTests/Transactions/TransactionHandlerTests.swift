@@ -20,7 +20,7 @@ class TransactionHandlerTests: XCTestCase {
         mockProcessor = mockWalletKit.mockTransactionProcessor
         mockFactory = mockWalletKit.mockFactory
         mockHeaderHandler = mockWalletKit.mockHeaderHandler
-        realm = mockWalletKit.mockRealm
+        realm = mockWalletKit.realm
 
         stub(mockProcessor) { mock in
             when(mock.enqueueRun()).thenDoNothing()

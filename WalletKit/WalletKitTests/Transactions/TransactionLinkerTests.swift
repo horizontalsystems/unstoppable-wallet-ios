@@ -18,7 +18,7 @@ class TransactionLinkerTests: XCTestCase {
 
         let mockWalletKit = MockWalletKit()
 
-        realm = mockWalletKit.mockRealm
+        realm = mockWalletKit.realm
 
         linker = TransactionLinker()
         transaction = TestData.p2pkhTransaction
