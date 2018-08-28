@@ -7,7 +7,7 @@ protocol ITransactionsView: class {
 
 protocol ITransactionsViewDelegate {
     func viewDidLoad()
-    func onTransactionItemClick(transaction: TransactionRecordViewItem, coinCode: String, txHash: String) //transaction is stab. need to fetch from db
+    func onTransactionItemClick(transaction: TransactionRecordViewItem, coinCode: String, txHash: String)
     func refresh()
 }
 

@@ -81,41 +81,36 @@ class FullTransactionInfoController: UIViewController, SectionsDataSource {
 
     func buildSections() -> [SectionProtocol] {
         var rows = [RowProtocol]()
+        let transaction = self.transaction
 
         rows.append(Row<FullTransactionInfoTextCell>(id: "size", hash: "size", height: FullTransactionInfoTheme.cellHeight, bind: { cell, _ in
-            //stab
-            cell.bind(title: "full_transaction_info.cell.size".localized, description: "254 bytes")
+            cell.bind(title: "full_transaction_info.cell.size".localized, description: "n/a")
         }))
         rows.append(Row<FullTransactionInfoTextCell>(id: "fee_rate", hash: "fee_rate", height: FullTransactionInfoTheme.cellHeight, bind: { cell, _ in
-            //stab
-            cell.bind(title: "full_transaction_info.cell.fee_rate".localized, description: "0.000000000004 BTC per kB")
+            cell.bind(title: "full_transaction_info.cell.fee_rate".localized, description: "n/a")
         }))
         let timeString = DateHelper.instance.formatTransactionInfoTime(from: transaction.date)
         rows.append(Row<FullTransactionInfoTextCell>(id: "received_time", hash: "received_time", height: FullTransactionInfoTheme.cellHeight, bind: { cell, _ in
-            //stab received date instead of date?
             cell.bind(title: "full_transaction_info.cell.received_time".localized, description: timeString)
         }))
         rows.append(Row<FullTransactionInfoTextCell>(id: "mined_time", hash: "mined_time", height: FullTransactionInfoTheme.cellHeight, bind: { cell, _ in
             cell.bind(title: "full_transaction_info.cell.mined_time".localized, description: "N/A")
         }))
-        rows.append(Row<FullTransactionInfoTextCell>(id: "included_in_block", hash: "included_in_block", height: FullTransactionInfoTheme.cellHeight, bind: { [weak self] cell, _ in
-            let confirmedString = (self?.transaction.confirmations ?? 0) > 0 ? "full_transaction_info.cell.included_in_block.confirmed".localized : "full_transaction_info.cell.included_in_block.unconfirmed".localized
+        rows.append(Row<FullTransactionInfoTextCell>(id: "included_in_block", hash: "included_in_block", height: FullTransactionInfoTheme.cellHeight, bind: { cell, _ in
+            let confirmedString = transaction.confirmations > 0 ? "full_transaction_info.cell.included_in_block.confirmed".localized : "full_transaction_info.cell.included_in_block.unconfirmed".localized
             cell.bind(title: "full_transaction_info.cell.included_in_block".localized, description: confirmedString)
         }))
         rows.append(Row<FullTransactionInfoTextCell>(id: "lock_time", hash: "lock_time", height: FullTransactionInfoTheme.cellHeight, bind: { cell, _ in
-            //stab
-            cell.bind(title: "full_transaction_info.cell.lock_time".localized, description: "#420858")
+            cell.bind(title: "full_transaction_info.cell.lock_time".localized, description: "n/a")
         }))
         rows.append(Row<FullTransactionInfoTextCell>(id: "from", hash: "from", height: FullTransactionInfoTheme.cellHeight, bind: { cell, _ in
-            //stab
-            cell.bind(title: "full_transaction_info.cell.from".localized, description: "54NJ3D4S46KB6543JK3F8DS6J5K43FB4D32JS524LK4F3J4K3")
+            cell.bind(title: "full_transaction_info.cell.from".localized, description: "\(transaction.from)")
         }))
-        for (index, address) in  ["3K4J3F4KL425SJ23D4BF34K5J6SD8F3KJ3456BK64S4D3JN45", "KJ3456BK64S4D3JN453K4J3F4KL425SJ23D4BF34K5J6SD8F3"].enumerated() {
+//        for (index, address) in  ["3K4J3F4KL425SJ23D4BF34K5J6SD8F3KJ3456BK64S4D3JN45", "KJ3456BK64S4D3JN453K4J3F4KL425SJ23D4BF34K5J6SD8F3"].enumerated() {
             rows.append(Row<FullTransactionInfoTextCell>(id: "to\(index)", hash: "to\(index)", height: FullTransactionInfoTheme.cellHeight, bind: { cell, _ in
-                //stab
-                cell.bind(title: "full_transaction_info.cell.to".localized, description: address)
+                cell.bind(title: "full_transaction_info.cell.to".localized, description: transaction.to)
             }))
-        }
+//        }
         let feeAmount = CoinValueHelper.formattedAmount(for: transaction.fee)
         rows.append(Row<FullTransactionInfoTextCell>(id: "fee", hash: "fee", height: FullTransactionInfoTheme.cellHeight, bind: { cell, _ in
             cell.bind(title: "full_transaction_info.cell.fee".localized, description: feeAmount)

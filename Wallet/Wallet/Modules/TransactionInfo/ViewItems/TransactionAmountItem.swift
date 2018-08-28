@@ -12,9 +12,9 @@ class TransactionAmountItem: BaseActionItem {
         date = DateHelper.instance.formatTransactionInfoTime(from: transaction.date)
         amount = "\(transaction.incoming ? "+" : "-") \(CoinValueHelper.formattedAmount(for: transaction.amount))"
         amountColor = transaction.incoming ? TransactionInfoTheme.incomingAmountColor : TransactionInfoTheme.outgoingAmountColor
-        //stab
-        let currencyValue = CurrencyValue(currency: DollarCurrency(), value: abs(transaction.amount.value) * 6000)
-        fiatAmount = "~ \(CurrencyHelper.instance.formattedValue(for: currencyValue) ?? "0")"
+//        let currencyValue = CurrencyValue(currency: DollarCurrency(), value: abs(transaction.amount.value) * 6000)
+//        fiatAmount = "~ \(CurrencyHelper.instance.formattedValue(for: currencyValue) ?? "0")"
+        fiatAmount = "~ n/a"
 
         super.init(cellType: TransactionAmountItemView.self, tag: tag, hidden: hidden, required: required)
 

@@ -58,7 +58,6 @@ extension SendInteractor: ISendInteractor {
     }
 
     func send(coinCode: String, address: String, amount: Double) {
-        print("stab send >5BTC == success")
         do {
             try AdapterManager.shared.adapters.first?.send(to: address, value: Int(amount * 100000000))
             delegate?.didSend()

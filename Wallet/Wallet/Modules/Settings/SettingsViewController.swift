@@ -72,9 +72,8 @@ class SettingsViewController: UIViewController, SectionsDataSource {
 
         var appearanceRows = [RowProtocol]()
         appearanceRows.append(Row<SettingsRightLabelCell>(id: "base_currency", hash: "base_currency", height: SettingsTheme.cellHeight, bind: { cell, _ in
-            //stab USD
             cell.selectionStyle = .default
-            cell.bind(titleIcon: UIImage(named: "Currency Icon"), title: "settings.cell.base_currency".localized, rightText: "USD", showDisclosure: true)
+            cell.bind(titleIcon: UIImage(named: "Currency Icon"), title: "settings.cell.base_currency".localized, rightText: "n/a", showDisclosure: true)
         }, action: { _ in
             print("tap base currency")
         }))

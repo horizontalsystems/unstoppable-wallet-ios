@@ -10,7 +10,7 @@ class TransactionInfoInteractor {
     private let storage: IStorage
     private let coinManager: CoinManager
 
-    private let transaction: TransactionRecordViewItem//stab
+    private let transaction: TransactionRecordViewItem
 
     init(transaction: TransactionRecordViewItem, storage: IStorage, coinManager: CoinManager) {
         self.transaction = transaction
@@ -31,8 +31,6 @@ extension TransactionInfoInteractor: ITransactionInfoInteractor {
                 self?.delegate?.didGetTransactionInfo(txRecordViewItem: transaction)
             }
         })
-        //stab
-//        delegate?.didGetTransactionInfo(txRecordViewItem: <#T##TransactionRecordViewItem##Bank.TransactionRecordViewItem#>)
     }
 
     func onCopyFromAddress() {

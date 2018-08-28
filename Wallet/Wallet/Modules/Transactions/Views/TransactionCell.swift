@@ -70,8 +70,7 @@ class TransactionCell: UITableViewCell {
     func bind(item: TransactionRecordViewItem) {
         amountLabel.textColor = item.incoming ? TransactionsTheme.incomingTextColor : TransactionsTheme.outgoingTextColor
 
-        //stab
-        let fiatAmount = CurrencyHelper.instance.formattedValue(for: CurrencyValue(currency: DollarCurrency(), value: abs(item.amount.value) * 6000)) ?? ""
+        let fiatAmount = CurrencyHelper.instance.formattedValue(for: CurrencyValue(currency: DollarCurrency(), value: abs(item.amount.value) * 0)) ?? ""
         let fromAddress = item.from
         let endIndex = fromAddress.index(fromAddress.startIndex, offsetBy: 5)
         let firstChars = fromAddress[fromAddress.startIndex ..< endIndex]
