@@ -8,6 +8,7 @@ class TransactionCreatorTests: XCTestCase {
     private var realm: Realm!
     private var mockTransactionBuilder: MockTransactionBuilder!
     private var mockTransactionSender: MockTransactionSender!
+    private var mockAddressManager: MockAddressManager!
 
     private var transactionCreator: TransactionCreator!
 
@@ -18,12 +19,9 @@ class TransactionCreatorTests: XCTestCase {
 
         realm = mockWalletKit.realm
 
-        try! realm.write {
-            realm.add(TestData.pubKey())
-        }
-
         mockTransactionBuilder = mockWalletKit.mockTransactionBuilder
         mockTransactionSender = mockWalletKit.mockTransactionSender
+        mockAddressManager = mockWalletKit.mockAddressManager
 
         stub(mockTransactionBuilder) { mock in
             when(mock.buildTransaction(value: any(), feeRate: any(), senderPay: any(), type: any(), changePubKey: any(), toAddress: any())).thenReturn(TestData.p2pkhTransaction)
@@ -31,14 +29,18 @@ class TransactionCreatorTests: XCTestCase {
         stub(mockTransactionSender) { mock in
             when(mock.enqueueRun()).thenDoNothing()
         }
+        stub(mockAddressManager) { mock in
+            when(mock.changePublicKey()).thenReturn(TestData.pubKey())
+        }
 
-        transactionCreator = TransactionCreator(realmFactory: mockWalletKit.mockRealmFactory, transactionBuilder: mockTransactionBuilder, transactionSender: mockTransactionSender)
+        transactionCreator = TransactionCreator(realmFactory: mockWalletKit.mockRealmFactory, transactionBuilder: mockTransactionBuilder, transactionSender: mockTransactionSender, addressManager: mockAddressManager)
     }
 
     override func tearDown() {
         realm = nil
         mockTransactionBuilder = nil
         mockTransactionSender = nil
+        mockAddressManager = nil
         transactionCreator = nil
 
         super.tearDown()
@@ -56,9 +58,10 @@ class TransactionCreatorTests: XCTestCase {
     }
 
     func testNoChangeAddress() {
-        try! realm.write {
-            realm.deleteAll()
+        stub(mockAddressManager) { mock in
+            when(mock.changePublicKey()).thenThrow(TransactionBuilder.BuildError.feeMoreThanValue)
         }
+
         do {
             try transactionCreator.create(to: "Address", value: 1)
             XCTFail("No exception!")

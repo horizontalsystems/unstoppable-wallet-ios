@@ -50,7 +50,8 @@ class AddressManagerTests: XCTestCase {
             txOutput.publicKey = publicKeys[0]
         }
 
-        XCTAssertEqual(try? manager.changeAddress(), publicKeys[3].address)
+        let changePublicKey = try! manager.changePublicKey()
+        XCTAssertEqual(changePublicKey.address, publicKeys[3].address)
     }
 
     func testChangeAddress_NoUnusedPublicKey() {
@@ -70,7 +71,8 @@ class AddressManagerTests: XCTestCase {
             when(mock.changePublicKey(index: any())).thenReturn(publicKey1)
         }
 
-        XCTAssertEqual(try? manager.changeAddress(), publicKey1.address)
+        let changePublicKey = try! manager.changePublicKey()
+        XCTAssertEqual(changePublicKey.address, publicKey1.address)
         verify(mockHDWallet).changePublicKey(index: equal(to: 1))
     }
 
@@ -82,7 +84,8 @@ class AddressManagerTests: XCTestCase {
             when(mock.changePublicKey(index: any())).thenReturn(publicKey)
         }
 
-        XCTAssertEqual(try? manager.changeAddress(), publicKey.address)
+        let changePublicKey = try! manager.changePublicKey()
+        XCTAssertEqual(changePublicKey.address, publicKey.address)
         verify(mockHDWallet).changePublicKey(index: equal(to: 0))
     }
 
@@ -94,7 +97,8 @@ class AddressManagerTests: XCTestCase {
             when(mock.changePublicKey(index: any())).thenReturn(publicKey)
         }
 
-        XCTAssertEqual(try? manager.changeAddress(), publicKey.address)
+        let changePublicKey = try! manager.changePublicKey()
+        XCTAssertEqual(changePublicKey.address, publicKey.address)
         let saved = mockWalletKit.realm.objects(PublicKey.self).filter("address = %@", publicKey.address).last
         XCTAssertNotEqual(saved, nil)
     }

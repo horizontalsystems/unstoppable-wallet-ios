@@ -12,8 +12,8 @@ class AddressManager {
         self.hdWallet = hdWallet
     }
 
-    func changeAddress() throws -> String {
-        return try getPublicKey(chain: .internal).address
+    func changePublicKey() throws -> PublicKey {
+        return try getPublicKey(chain: .internal)
     }
 
     func receiveAddress() throws -> String {
