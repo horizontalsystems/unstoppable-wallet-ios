@@ -26,4 +26,8 @@ class Factory {
         return TransactionOutput(withValue: value, index: index, lockingScript: script, type: type, address: address, keyHash: keyHash, publicKey: publicKey)
     }
 
+    func publicKey(withIndex index: Int, external: Bool, hdPublicKey: HDPublicKey) -> PublicKey {
+        return PublicKey(withIndex: index, external: external, hdPublicKey: hdPublicKey)
+    }
+
 }

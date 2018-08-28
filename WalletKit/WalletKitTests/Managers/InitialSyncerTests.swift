@@ -18,7 +18,7 @@ class InitialSyncerTests: XCTestCase {
         super.setUp()
 
         mockRealmFactory = MockRealmFactory(configuration: Realm.Configuration())
-        mockHDWallet = MockHDWallet(seed: Data(), network: TestNet())
+        mockHDWallet = MockHDWallet(seed: Data(), network: TestNet(), gapLimit: 2)
         mockStateManager = MockStateManager(realmFactory: mockRealmFactory)
         mockApiManager = MockApiManager(apiUrl: "")
         mockPeerGroup = MockPeerGroup(realmFactory: mockRealmFactory, network: TestNet())
@@ -36,7 +36,7 @@ class InitialSyncerTests: XCTestCase {
             when(mock.connect()).thenDoNothing()
         }
 
-        syncer = InitialSyncer(realmFactory: mockRealmFactory, hdWallet: mockHDWallet, stateManager: mockStateManager, apiManager: mockApiManager, peerGroup: mockPeerGroup, gapLimit: 2)
+        syncer = InitialSyncer(realmFactory: mockRealmFactory, hdWallet: mockHDWallet, stateManager: mockStateManager, apiManager: mockApiManager, peerGroup: mockPeerGroup)
     }
 
     override func tearDown() {

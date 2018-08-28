@@ -33,7 +33,7 @@ class TransactionBuilderTests: XCTestCase {
 
         let mockWalletKit = MockWalletKit()
 
-        realm = mockWalletKit.mockRealm
+        realm = mockWalletKit.realm
 
         mockUnspentOutputSelector = mockWalletKit.mockUnspentOutputSelector
         mockUnspentOutputProvider = mockWalletKit.mockUnspentOutputProvider

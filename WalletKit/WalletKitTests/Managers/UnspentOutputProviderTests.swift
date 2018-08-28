@@ -16,7 +16,7 @@ class UnspentOutputProviderTests: XCTestCase {
 
         let mockWalletKit = MockWalletKit()
 
-        realm = mockWalletKit.mockRealm
+        realm = mockWalletKit.realm
 
         pubKey = TestData.pubKey()
 

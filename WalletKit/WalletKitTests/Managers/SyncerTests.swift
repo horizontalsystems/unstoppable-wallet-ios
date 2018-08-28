@@ -31,7 +31,7 @@ class SyncerTests: XCTestCase {
         mockHeaderHandler = mockWalletKit.mockHeaderHandler
         mockFactory = mockWalletKit.mockFactory
         mockTransactionHandler = mockWalletKit.mockTransactionHandler
-        realm = mockWalletKit.mockRealm
+        realm = mockWalletKit.realm
 
         stub(mockLogger) { mock in
             when(mock.log(tag: any(), message: any())).thenDoNothing()

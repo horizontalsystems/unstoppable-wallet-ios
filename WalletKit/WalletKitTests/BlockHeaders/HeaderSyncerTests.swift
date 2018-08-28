@@ -17,7 +17,7 @@ class HeaderSyncerTests: XCTestCase {
         let mockWalletKit = MockWalletKit()
 
         mockPeerGroup = mockWalletKit.mockPeerGroup
-        realm = mockWalletKit.mockRealm
+        realm = mockWalletKit.realm
 
         checkpointBlock = TestData.checkpointBlock
 
