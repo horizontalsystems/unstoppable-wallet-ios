@@ -96,4 +96,13 @@ class TransactionProcessorTests: XCTestCase {
         verify(mockLogger).log(tag: "Transaction Processor Error", message: "\(error)")
     }
 
+    func testNoActionWhenNoTransaction() {
+        transactionProcessor.enqueueRun()
+
+        waitForMainQueue()
+        verifyNoMoreInteractions(mockExtractor)
+        verifyNoMoreInteractions(mockLinker)
+        verifyNoMoreInteractions(mockAddressManager)
+    }
+
 }

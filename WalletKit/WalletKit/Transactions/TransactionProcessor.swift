@@ -36,15 +36,17 @@ class TransactionProcessor {
 
         let unprocessedTransactions = realm.objects(Transaction.self).filter("processed = %@", false)
 
-        try realm.write {
-            for transaction in unprocessedTransactions {
-                try extractor.extract(transaction: transaction)
-                linker.handle(transaction: transaction, realm: realm)
-                transaction.processed = true
+        if !unprocessedTransactions.isEmpty {
+            try realm.write {
+                for transaction in unprocessedTransactions {
+                    try extractor.extract(transaction: transaction)
+                    linker.handle(transaction: transaction, realm: realm)
+                    transaction.processed = true
+                }
             }
-        }
 
-        try addressManager.generateKeys()
+            try addressManager.generateKeys()
+        }
     }
 
 }
