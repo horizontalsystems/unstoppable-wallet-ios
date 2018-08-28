@@ -10,11 +10,13 @@ extension DepositRouter: IDepositRouter {
 
 extension DepositRouter {
 
-    static func module(coins: [Coin]) -> ActionSheetController {
+    static func module(adapterId: String?) -> ActionSheetController {
+        let adapters = AdapterManager.shared.adapters.filter { adapterId == nil || adapterId == $0.id }
+
         let router = DepositRouter()
-        let interactor = DepositInteractor(coins: coins)
+        let interactor = DepositInteractor(adapters: adapters)
         let presenter = DepositPresenter(interactor: interactor, router: router)
-        let depositAlertModel = DepositAlertModel(viewDelegate: presenter)
+        let depositAlertModel = DepositAlertModel(viewDelegate: presenter, adapters: adapters)
 
         let viewController = ActionSheetController(withModel: depositAlertModel, actionStyle: .sheet(showDismiss: false))
         viewController.backgroundColor = .cryptoBarsColor

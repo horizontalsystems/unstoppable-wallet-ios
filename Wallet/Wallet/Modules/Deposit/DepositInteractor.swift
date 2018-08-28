@@ -4,10 +4,10 @@ class DepositInteractor {
 
     weak var delegate: IDepositInteractorDelegate?
 
-    var coins: [Coin]
+    private let adapters: [IAdapter]
 
-    init(coins: [Coin]) {
-        self.coins = coins
+    init(adapters: [IAdapter]) {
+        self.adapters = adapters
     }
 
 }

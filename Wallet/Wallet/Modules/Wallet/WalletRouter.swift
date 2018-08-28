@@ -7,7 +7,7 @@ class WalletRouter {
 extension WalletRouter: IWalletRouter {
 
     func onReceive(forAdapterId adapterId: String) {
-        DepositRouter.module(coins: []).show(fromController: viewController)
+        DepositRouter.module(adapterId: adapterId).show(fromController: viewController)
     }
 
     func onSend(forAdapterId adapterId: String) {

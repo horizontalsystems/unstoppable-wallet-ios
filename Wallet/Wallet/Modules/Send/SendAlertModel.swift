@@ -110,6 +110,7 @@ extension SendAlertModel: ISendView {
 
     func showSuccess() {
         print("showSuccess")
+        dismiss?(true)
     }
 
     func showKeyboard() {

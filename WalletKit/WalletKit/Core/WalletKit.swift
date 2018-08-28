@@ -169,4 +169,8 @@ public class WalletKit {
         return try transactionBuilder.fee(for: value, feeRate: transactionCreator.feeRate, senderPay: true, type: .p2pkh)
     }
 
+    public var receiveAddress: String {
+        return (try? addressManager.receiveAddress()) ?? ""
+    }
+
 }

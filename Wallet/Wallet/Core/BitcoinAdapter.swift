@@ -157,4 +157,8 @@ extension BitcoinAdapter: IAdapter {
         return true
     }
 
+    var receiveAddress: String {
+        return walletKit.receiveAddress
+    }
+
 }
