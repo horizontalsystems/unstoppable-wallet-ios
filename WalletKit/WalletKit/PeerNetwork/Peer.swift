@@ -197,6 +197,10 @@ class Peer : NSObject, StreamDelegate {
         sendFilterLoadMessage(filters: filters)
     }
 
+    func addFilter(filter: Data) {
+        sendFilterAddMessage(filter: filter)
+    }
+
     private func send(messageWithCommand command: String, payload: Data) {
         let checksum = Data(Crypto.sha256sha256(payload).prefix(4))
         let message = Message(magic: network.magic, command: command, length: UInt32(payload.count), checksum: checksum, payload: payload)
@@ -246,6 +250,13 @@ class Peer : NSObject, StreamDelegate {
 
         log("<-- FILTERLOAD: \(filters.count) item(s)")
         send(messageWithCommand: "filterload", payload: filterLoadMessage.serialized())
+    }
+
+    private func sendFilterAddMessage(filter: Data) {
+        let filterAddMessage = FilterAddMessage(elementBytes: VarInt(filter.count), element: filter)
+
+        log("<-- FILTERADD: \(filter.hex)")
+        send(messageWithCommand: "filteradd", payload: filterAddMessage.serialized())
     }
 
     func sendMemoryPoolMessage() {

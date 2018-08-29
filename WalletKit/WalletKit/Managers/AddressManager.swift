@@ -6,10 +6,12 @@ class AddressManager {
 
     private let realmFactory: RealmFactory
     private let hdWallet: HDWallet
+    private let peerGroup: PeerGroup
 
-    init(realmFactory: RealmFactory, hdWallet: HDWallet) {
+    init(realmFactory: RealmFactory, hdWallet: HDWallet, peerGroup: PeerGroup) {
         self.realmFactory = realmFactory
         self.hdWallet = hdWallet
+        self.peerGroup = peerGroup
     }
 
     func changePublicKey() throws -> PublicKey {
@@ -28,6 +30,14 @@ class AddressManager {
         try realm.write {
             realm.add(externalKeys)
             realm.add(internalKeys)
+        }
+
+        for pubKey in externalKeys {
+            peerGroup.addPublicKeyFilter(pubKey: pubKey)
+        }
+
+        for pubKey in internalKeys {
+            peerGroup.addPublicKeyFilter(pubKey: pubKey)
         }
     }
 
@@ -63,6 +73,8 @@ class AddressManager {
         try realm.write {
             realm.add(newPublicKey)
         }
+
+        peerGroup.addPublicKeyFilter(pubKey: newPublicKey)
 
         return newPublicKey
     }
