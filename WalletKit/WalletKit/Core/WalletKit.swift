@@ -77,8 +77,8 @@ public class WalletKit {
         factory = Factory()
 
         initialSyncer = InitialSyncer(realmFactory: realmFactory, hdWallet: hdWallet, stateManager: stateManager, apiManager: apiManager, peerGroup: peerGroup)
+        addressManager = AddressManager(realmFactory: realmFactory, hdWallet: hdWallet, peerGroup: peerGroup)
         progressSyncer = ProgressSyncer(realmFactory: realmFactory)
-        addressManager = AddressManager(realmFactory: realmFactory, hdWallet: hdWallet)
 
         difficultyEncoder = DifficultyEncoder()
         difficultyCalculator = DifficultyCalculator(difficultyEncoder: difficultyEncoder)
@@ -106,7 +106,7 @@ public class WalletKit {
         transactionHandler = TransactionHandler(realmFactory: realmFactory, processor: transactionProcessor, progressSyncer: progressSyncer, headerHandler: headerHandler, factory: factory)
         transactionSender = TransactionSender(realmFactory: realmFactory, peerGroup: peerGroup)
         transactionBuilder = TransactionBuilder(unspentOutputSelector: unspentOutputSelector, unspentOutputProvider: unspentOutputProvider, transactionSizeCalculator: transactionSizeCalculator, addressConverter: addressConverter, inputSigner: inputSigner, scriptBuilder: scriptBuilder, factory: factory)
-        transactionCreator = TransactionCreator(realmFactory: realmFactory, transactionBuilder: transactionBuilder, transactionSender: transactionSender, addressManager: addressManager)
+        transactionCreator = TransactionCreator(realmFactory: realmFactory, transactionBuilder: transactionBuilder, transactionProcessor: transactionProcessor, transactionSender: transactionSender, addressManager: addressManager)
 
         peerGroup.delegate = syncer
 

@@ -7,6 +7,7 @@ class TransactionCreatorTests: XCTestCase {
 
     private var realm: Realm!
     private var mockTransactionBuilder: MockTransactionBuilder!
+    private var mockTransactionProcessor: MockTransactionProcessor!
     private var mockTransactionSender: MockTransactionSender!
     private var mockAddressManager: MockAddressManager!
 
@@ -20,11 +21,15 @@ class TransactionCreatorTests: XCTestCase {
         realm = mockWalletKit.realm
 
         mockTransactionBuilder = mockWalletKit.mockTransactionBuilder
+        mockTransactionProcessor = mockWalletKit.mockTransactionProcessor
         mockTransactionSender = mockWalletKit.mockTransactionSender
         mockAddressManager = mockWalletKit.mockAddressManager
 
         stub(mockTransactionBuilder) { mock in
             when(mock.buildTransaction(value: any(), feeRate: any(), senderPay: any(), type: any(), changePubKey: any(), toAddress: any())).thenReturn(TestData.p2pkhTransaction)
+        }
+        stub(mockTransactionProcessor) { mock in
+            when(mock.enqueueRun()).thenDoNothing()
         }
         stub(mockTransactionSender) { mock in
             when(mock.enqueueRun()).thenDoNothing()
@@ -33,12 +38,13 @@ class TransactionCreatorTests: XCTestCase {
             when(mock.changePublicKey()).thenReturn(TestData.pubKey())
         }
 
-        transactionCreator = TransactionCreator(realmFactory: mockWalletKit.mockRealmFactory, transactionBuilder: mockTransactionBuilder, transactionSender: mockTransactionSender, addressManager: mockAddressManager)
+        transactionCreator = TransactionCreator(realmFactory: mockWalletKit.mockRealmFactory, transactionBuilder: mockTransactionBuilder, transactionProcessor: mockTransactionProcessor, transactionSender: mockTransactionSender, addressManager: mockAddressManager)
     }
 
     override func tearDown() {
         realm = nil
         mockTransactionBuilder = nil
+        mockTransactionProcessor = nil
         mockTransactionSender = nil
         mockAddressManager = nil
         transactionCreator = nil
@@ -55,6 +61,7 @@ class TransactionCreatorTests: XCTestCase {
         }
 
         verify(mockTransactionSender).enqueueRun()
+        verify(mockTransactionProcessor).enqueueRun()
     }
 
     func testNoChangeAddress() {
@@ -72,6 +79,7 @@ class TransactionCreatorTests: XCTestCase {
         }
 
         verify(mockTransactionSender, never()).enqueueRun()
+        verify(mockTransactionProcessor, never()).enqueueRun()
     }
 
 }

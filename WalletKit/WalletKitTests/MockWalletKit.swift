@@ -74,7 +74,7 @@ class MockWalletKit {
 
         mockInitialSyncer = MockInitialSyncer(realmFactory: mockRealmFactory, hdWallet: mockHdWallet, stateManager: mockStateManager, apiManager: mockApiManager, peerGroup: mockPeerGroup)
         mockProgressSyncer = MockProgressSyncer(realmFactory: mockRealmFactory)
-        mockAddressManager = MockAddressManager(realmFactory: mockRealmFactory, hdWallet: mockHdWallet)
+        mockAddressManager = MockAddressManager(realmFactory: mockRealmFactory, hdWallet: mockHdWallet, peerGroup: mockPeerGroup)
 
         mockDifficultyEncoder = MockDifficultyEncoder()
         mockDifficultyCalculator = MockDifficultyCalculator(difficultyEncoder: mockDifficultyEncoder)
@@ -102,7 +102,7 @@ class MockWalletKit {
         mockTransactionHandler = MockTransactionHandler(realmFactory: mockRealmFactory, processor: mockTransactionProcessor, progressSyncer: mockProgressSyncer, headerHandler: mockHeaderHandler, factory: mockFactory)
         mockTransactionSender = MockTransactionSender(realmFactory: mockRealmFactory, peerGroup: mockPeerGroup)
         mockTransactionBuilder = MockTransactionBuilder(unspentOutputSelector: mockUnspentOutputSelector, unspentOutputProvider: mockUnspentOutputProvider, transactionSizeCalculator: mockTransactionSizeCalculator, addressConverter: mockAddressConverter, inputSigner: mockInputSigner, scriptBuilder: mockScriptBuilder, factory: mockFactory)
-        mockTransactionCreator = MockTransactionCreator(realmFactory: mockRealmFactory, transactionBuilder: mockTransactionBuilder, transactionSender: mockTransactionSender, addressManager: mockAddressManager)
+        mockTransactionCreator = MockTransactionCreator(realmFactory: mockRealmFactory, transactionBuilder: mockTransactionBuilder, transactionProcessor: mockTransactionProcessor, transactionSender: mockTransactionSender, addressManager: mockAddressManager)
 
 //        mockPeerGroup.delegate = mockSyncer
 //

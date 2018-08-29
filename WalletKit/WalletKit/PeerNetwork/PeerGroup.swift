@@ -55,6 +55,11 @@ class PeerGroup {
         peer.send(inventoryMessage: inventoryMessage)
     }
 
+    func addPublicKeyFilter(pubKey: PublicKey) {
+        peer.addFilter(filter: pubKey.keyHash)
+        peer.addFilter(filter: pubKey.raw!)
+    }
+
 }
 
 extension PeerGroup: PeerDelegate {
