@@ -85,7 +85,53 @@ class TransactionHandlerTests: XCTestCase {
         verify(mockProgressSyncer).enqueueRun()
     }
 
-    func testHandleBlockHeader() {
+    func testHandleBlockTransactions_ExistingTransaction() {
+        let transaction = TestData.p2pkhTransaction
+        transaction.status = .new
+        let block = TestData.firstBlock
+
+        try! realm.write {
+            realm.add(transaction, update: true)
+        }
+        stub(mockHeaderHandler) { mock in
+            when(mock.getValidBlocks(headers: any(), realm: any())).thenReturn((blocks: [block], error: nil))
+        }
+
+        try! transactionHandler.handle(blockTransactions: [transaction], blockHeader: block.header)
+
+        let realmBlock = realm.objects(Block.self).filter("reversedHeaderHashHex = %@", block.reversedHeaderHashHex).last!
+        let realmTransaction = realm.objects(Transaction.self).last!
+
+        XCTAssertEqual(realmBlock.reversedHeaderHashHex, block.reversedHeaderHashHex)
+        XCTAssertEqual(realmTransaction.block?.reversedHeaderHashHex, block.reversedHeaderHashHex)
+        XCTAssertEqual(realmTransaction.reversedHashHex, transaction.reversedHashHex)
+        XCTAssertEqual(realmTransaction.status, TransactionStatus.relayed)
+
+        verify(mockProcessor, never()).enqueueRun()
+    }
+
+    func testHandleBlockTransactions_ExistingBlockAndTransaction() {
+        let transaction = TestData.p2pkhTransaction
+        transaction.status = .new
+        let block = TestData.firstBlock
+
+        try! realm.write {
+            realm.add(block, update: true)
+            realm.add(transaction, update: true)
+        }
+
+        try! transactionHandler.handle(blockTransactions: [transaction], blockHeader: block.header)
+
+        let realmTransaction = realm.objects(Transaction.self).last!
+
+        XCTAssertEqual(realmTransaction.block?.reversedHeaderHashHex, block.reversedHeaderHashHex)
+        XCTAssertEqual(realmTransaction.reversedHashHex, transaction.reversedHashHex)
+        XCTAssertEqual(realmTransaction.status, TransactionStatus.relayed)
+
+        verify(mockProcessor, never()).enqueueRun()
+    }
+
+    func testHandleBlockTransactions_NewBlockHeader() {
         let transaction = TestData.p2pkhTransaction
         let block = TestData.firstBlock
 
@@ -107,7 +153,7 @@ class TransactionHandlerTests: XCTestCase {
         verify(mockProgressSyncer).enqueueRun()
     }
 
-    func testHandleBlockHeader_ExistingBlock() {
+    func testHandleBlockTransactions_ExistingBlockHeader() {
         let transaction = TestData.p2pkhTransaction
         let block = TestData.checkpointBlock
         let savedBlock = Factory().block(withHeaderHash: block.headerHash, height: 0)
@@ -134,7 +180,7 @@ class TransactionHandlerTests: XCTestCase {
         verify(mockProgressSyncer).enqueueRun()
     }
 
-    func testHandleInvalidBlockHeader() {
+    func testHandleBlockTransactions_InvalidBlockHeader() {
         let transaction = TestData.p2pkhTransaction
         let block = TestData.firstBlock
 
@@ -155,7 +201,7 @@ class TransactionHandlerTests: XCTestCase {
         verify(mockProgressSyncer, never()).enqueueRun()
     }
 
-    func testHandleInvalidBlockHeader_EmptyBlocks() {
+    func testHandleBlockTransactions_EmptyBlocks() {
         let transaction = TestData.p2pkhTransaction
         let block = TestData.firstBlock
 
@@ -190,6 +236,24 @@ class TransactionHandlerTests: XCTestCase {
 
     func testHandleMemPoolTransactions_EmptyTransactions() {
         try! transactionHandler.handle(memPoolTransactions: [])
+        verify(mockProcessor, never()).enqueueRun()
+    }
+
+    func testHandleMemPoolTransactions_ExistingTransaction() {
+        let transaction = TestData.p2pkhTransaction
+        transaction.status = .new
+
+        try! realm.write {
+            realm.add(transaction, update: true)
+        }
+
+        try! transactionHandler.handle(memPoolTransactions: [transaction])
+
+        let realmTransaction = realm.objects(Transaction.self).last!
+
+        assertTransactionEqual(tx1: transaction, tx2: realmTransaction)
+        XCTAssertEqual(realmTransaction.status, TransactionStatus.relayed)
+
         verify(mockProcessor, never()).enqueueRun()
     }
 

@@ -40,6 +40,7 @@ class TransactionHandler {
                 for transaction in transactions {
                     if let existingTransaction = realm.objects(Transaction.self).filter("reversedHashHex = %@", transaction.reversedHashHex).first {
                         existingTransaction.block = existingBlock
+                        existingTransaction.status = .relayed
                     } else {
                         realm.add(transaction)
                         transaction.block = existingBlock
@@ -66,6 +67,7 @@ class TransactionHandler {
                     for transaction in transactions {
                         if let existingTransaction = realm.objects(Transaction.self).filter("reversedHashHex = %@", transaction.reversedHashHex).first {
                             existingTransaction.block = block
+                            existingTransaction.status = .relayed
                         } else {
                             realm.add(transaction)
                             transaction.block = block
@@ -101,7 +103,9 @@ class TransactionHandler {
 
         try realm.write {
             for transaction in transactions {
-                if realm.objects(Transaction.self).filter("reversedHashHex = %@", transaction.reversedHashHex).first == nil {
+                if let existingTransaction = realm.objects(Transaction.self).filter("reversedHashHex = %@", transaction.reversedHashHex).first {
+                    existingTransaction.status = .relayed
+                } else {
                     realm.add(transaction)
                     hasNewTransactions = true
                 }
