@@ -179,8 +179,6 @@
 		1A564FB62EBBA50489895BEF /* WalletCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564B746C8A6451D81B27D4 /* WalletCell.swift */; };
 		2059579FD357E44B85A0B9A9 /* Pods_WalletTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7715861774FD1545F0D9C05E /* Pods_WalletTests.framework */; };
 		22964AB583D54BD1D1CEE814 /* Pods_Bank.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DF813906E1FD7EA157BD634 /* Pods_Bank.framework */; };
-		504FE6A62122E56F007E2F3D /* SectionsTableViewKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 504FE6A42122E569007E2F3D /* SectionsTableViewKit.framework */; };
-		504FE6A72122E56F007E2F3D /* SectionsTableViewKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 504FE6A42122E569007E2F3D /* SectionsTableViewKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		509583762107309E00B720AE /* BaseTwinItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 509583742107309E00B720AE /* BaseTwinItem.swift */; };
 		509583772107309E00B720AE /* BaseTwinItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 509583752107309E00B720AE /* BaseTwinItemView.swift */; };
 		5095837921074C9B00B720AE /* BaseTwinItemView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5095837821074C9A00B720AE /* BaseTwinItemView.xib */; };
@@ -229,7 +227,6 @@
 			dstSubfolderSpec = 10;
 			files = (
 				D3FD451E20F375E200F472B9 /* WalletKit.framework in Embed Frameworks */,
-				504FE6A72122E56F007E2F3D /* SectionsTableViewKit.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -456,7 +453,6 @@
 				D3FD451A20F375B300F472B9 /* WalletKit.framework in Frameworks */,
 				D3373D9520BEC7B30082BC4A /* AVFoundation.framework in Frameworks */,
 				22964AB583D54BD1D1CEE814 /* Pods_Bank.framework in Frameworks */,
-				504FE6A62122E56F007E2F3D /* SectionsTableViewKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1235,6 +1231,7 @@
 				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
 				"${BUILT_PRODUCTS_DIR}/RxRealm/RxRealm.framework",
 				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/SectionsTableViewKit/SectionsTableViewKit.framework",
 				"${BUILT_PRODUCTS_DIR}/SipHash/SipHash.framework",
 				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
 			);
@@ -1251,6 +1248,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxRealm.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SectionsTableViewKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SipHash.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
 			);

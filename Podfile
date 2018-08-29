@@ -28,6 +28,7 @@ target :Bank do
   pod 'GrouviExtensions'
   pod 'GrouviActionSheet'
   pod 'GrouviHUD'#, :path => '../GrouviHUD'
+  pod 'SectionsTableViewKit'#, :path => '../SectionsTableViewKit'
 
   pod 'RxCocoa'
   pod "SnapKit"
@@ -48,17 +49,4 @@ target :WalletTests do
   project 'Wallet/Wallet'
 
   pod "Cuckoo"
-end
-
-target :SectionsTableViewKit do
-	project 'SectionsTableViewKit/SectionsTableViewKit'
-	pod 'GrouviExtensions'
-
-	pod 'RxSwift'
-	pod 'SnapKit'
-end
-
-target :SectionsTableViewKitTests do
-	project 'SectionsTableViewKit/SectionsTableViewKit'
-	pod "Cuckoo"
 end

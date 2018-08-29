@@ -24,6 +24,9 @@ PODS:
     - RealmSwift (~> 3.0)
     - RxSwift (~> 4.0)
   - RxSwift (4.2.0)
+  - SectionsTableViewKit (1.0.0):
+    - GrouviExtensions
+    - SnapKit (~> 4.0.0)
   - SipHash (1.2.2)
   - SnapKit (4.0.0)
 
@@ -39,6 +42,7 @@ DEPENDENCIES:
   - RxCocoa
   - RxRealm
   - RxSwift
+  - SectionsTableViewKit
   - SnapKit
 
 SPEC REPOS:
@@ -55,6 +59,7 @@ SPEC REPOS:
     - RxCocoa
     - RxRealm
     - RxSwift
+    - SectionsTableViewKit
     - SipHash
     - SnapKit
 
@@ -71,9 +76,10 @@ SPEC CHECKSUMS:
   RxCocoa: 0b54909c902e1e581212a03e690bbd94032d8baa
   RxRealm: a6c6c0a07cb61f34209969ca6657734edfdfff30
   RxSwift: 99e10317ddfcc7fbe01356aafd118fde4a0be104
+  SectionsTableViewKit: 0aaeae49acb88b9cff005d0e2dc1ba488039590d
   SipHash: fad90a4683e420c52ef28063063dbbce248ea6d4
   SnapKit: a42d492c16e80209130a3379f73596c3454b7694
 
-PODFILE CHECKSUM: c6e8d45af0e4c1ccf7d51a76e00e7a36672d9081
+PODFILE CHECKSUM: 396a2129f53a919b937bbc5f06d3e2b325b6486d
 
 COCOAPODS: 1.5.3
