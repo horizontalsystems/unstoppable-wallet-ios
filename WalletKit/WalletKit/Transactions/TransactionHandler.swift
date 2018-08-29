@@ -7,12 +7,14 @@ class TransactionHandler {
 
     let realmFactory: RealmFactory
     let processor: TransactionProcessor
+    let progressSyncer: ProgressSyncer
     let headerHandler: HeaderHandler
     let factory: Factory
 
-    init(realmFactory: RealmFactory, processor: TransactionProcessor, headerHandler: HeaderHandler, factory: Factory) {
+    init(realmFactory: RealmFactory, processor: TransactionProcessor, progressSyncer: ProgressSyncer, headerHandler: HeaderHandler, factory: Factory) {
         self.realmFactory = realmFactory
         self.processor = processor
+        self.progressSyncer = progressSyncer
         self.headerHandler = headerHandler
         self.factory = factory
     }
@@ -23,6 +25,7 @@ class TransactionHandler {
         let reversedHashHex = Crypto.sha256sha256(blockHeader.serialized()).reversedHex
 
         var hasNewTransactions = false
+        var hasNewSyncedBlocks = false
 
         if let existingBlock = realm.objects(Block.self).filter("reversedHeaderHashHex = %@", reversedHashHex).last {
             if existingBlock.synced {
@@ -45,6 +48,7 @@ class TransactionHandler {
                 }
 
                 existingBlock.synced = true
+                hasNewSyncedBlocks = true
             }
         } else {
             let validBlocks = headerHandler.getValidBlocks(headers: [blockHeader], realm: realm)
@@ -68,6 +72,8 @@ class TransactionHandler {
                             hasNewTransactions = true
                         }
                     }
+
+                    hasNewSyncedBlocks = true
                 }
             } else {
                 throw HandleError.invalidBlockHeader
@@ -77,6 +83,10 @@ class TransactionHandler {
         print("HANDLE: \(transactions.count) --- \(Thread.current)")
         if hasNewTransactions {
             processor.enqueueRun()
+        }
+
+        if hasNewSyncedBlocks {
+            progressSyncer.enqueueRun()
         }
     }
 

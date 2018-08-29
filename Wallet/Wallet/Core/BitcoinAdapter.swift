@@ -11,7 +11,6 @@ class BitcoinAdapter {
     let wordsHash: String
     let coin: Coin
     let balanceSubject = PublishSubject<Double>()
-    let progressSubject = BehaviorSubject<Double>(value: 0.5)
     let latestBlockHeightSubject = PublishSubject<Void>()
     let transactionRecordsSubject = PublishSubject<Void>()
 
@@ -159,6 +158,10 @@ extension BitcoinAdapter: IAdapter {
 
     var receiveAddress: String {
         return walletKit.receiveAddress
+    }
+
+    var progressSubject: BehaviorSubject<Double> {
+        return walletKit.progressSubject
     }
 
 }

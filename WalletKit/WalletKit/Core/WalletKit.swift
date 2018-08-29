@@ -27,6 +27,7 @@ public class WalletKit {
     let factory: Factory
 
     let initialSyncer: InitialSyncer
+    let progressSyncer: ProgressSyncer
 
     let difficultyEncoder: DifficultyEncoder
     let difficultyCalculator: DifficultyCalculator
@@ -76,6 +77,7 @@ public class WalletKit {
         factory = Factory()
 
         initialSyncer = InitialSyncer(realmFactory: realmFactory, hdWallet: hdWallet, stateManager: stateManager, apiManager: apiManager, peerGroup: peerGroup)
+        progressSyncer = ProgressSyncer(realmFactory: realmFactory)
         addressManager = AddressManager(realmFactory: realmFactory, hdWallet: hdWallet)
 
         difficultyEncoder = DifficultyEncoder()
@@ -101,7 +103,7 @@ public class WalletKit {
         transactionExtractor = TransactionExtractor(scriptConverter: scriptConverter, addressConverter: addressConverter)
         transactionLinker = TransactionLinker()
         transactionProcessor = TransactionProcessor(realmFactory: realmFactory, extractor: transactionExtractor, linker: transactionLinker, addressManager: addressManager, logger: logger)
-        transactionHandler = TransactionHandler(realmFactory: realmFactory, processor: transactionProcessor, headerHandler: headerHandler, factory: factory)
+        transactionHandler = TransactionHandler(realmFactory: realmFactory, processor: transactionProcessor, progressSyncer: progressSyncer, headerHandler: headerHandler, factory: factory)
         transactionSender = TransactionSender(realmFactory: realmFactory, peerGroup: peerGroup)
         transactionBuilder = TransactionBuilder(unspentOutputSelector: unspentOutputSelector, unspentOutputProvider: unspentOutputProvider, transactionSizeCalculator: transactionSizeCalculator, addressConverter: addressConverter, inputSigner: inputSigner, scriptBuilder: scriptBuilder, factory: factory)
         transactionCreator = TransactionCreator(realmFactory: realmFactory, transactionBuilder: transactionBuilder, transactionSender: transactionSender, addressManager: addressManager)
@@ -113,6 +115,8 @@ public class WalletKit {
         syncer.transactionHandler = transactionHandler
         syncer.transactionSender = transactionSender
         syncer.blockSyncer = blockSyncer
+
+        progressSyncer.enqueueRun()
     }
 
     public func showRealmInfo() {
@@ -173,6 +177,10 @@ public class WalletKit {
 
     public var receiveAddress: String {
         return (try? addressManager.receiveAddress()) ?? ""
+    }
+
+    public var progressSubject: BehaviorSubject<Double> {
+        return progressSyncer.subject
     }
 
 }
