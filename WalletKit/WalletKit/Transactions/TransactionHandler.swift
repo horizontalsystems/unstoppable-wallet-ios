@@ -82,7 +82,6 @@ class TransactionHandler {
             }
         }
 
-        print("HANDLE: \(transactions.count) --- \(Thread.current)")
         if hasNewTransactions {
             processor.enqueueRun()
         }

@@ -30,8 +30,6 @@ class TransactionProcessor {
     }
 
     private func run() throws {
-        print("PROCESSOR RUN: \(Thread.current)")
-
         let realm = realmFactory.realm
 
         let unprocessedTransactions = realm.objects(Transaction.self).filter("processed = %@", false)

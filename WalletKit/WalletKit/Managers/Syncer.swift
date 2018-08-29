@@ -56,6 +56,10 @@ extension Syncer: PeerGroupDelegate {
     }
 
     func peerGroupDidReceive(headers: [BlockHeader]) {
+        if headers.isEmpty {
+            return
+        }
+
         do {
             try headerHandler?.handle(headers: headers)
         } catch {
@@ -64,7 +68,6 @@ extension Syncer: PeerGroupDelegate {
     }
 
     func peerGroupDidReceive(blockHeader: BlockHeader, withTransactions transactions: [Transaction]) {
-        print("BLOCK: \(Crypto.sha256sha256(blockHeader.serialized()).reversedHex) --- \(transactions.count)")
         do {
             try transactionHandler?.handle(blockTransactions: transactions, blockHeader: blockHeader)
         } catch {
@@ -73,7 +76,6 @@ extension Syncer: PeerGroupDelegate {
     }
 
     func peerGroupDidReceive(transaction: Transaction) {
-        print("TX: \(transaction.reversedHashHex)")
         do {
             try transactionHandler?.handle(memPoolTransactions: [transaction])
         } catch {
