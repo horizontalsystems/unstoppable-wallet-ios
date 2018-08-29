@@ -7,6 +7,7 @@ class TransactionHandlerTests: XCTestCase {
 
     private var mockProcessor: MockTransactionProcessor!
     private var mockHeaderHandler: MockHeaderHandler!
+    private var mockProgressSyncer: MockProgressSyncer!
     private var mockFactory: MockFactory!
     private var transactionHandler: TransactionHandler!
 
@@ -20,6 +21,7 @@ class TransactionHandlerTests: XCTestCase {
         mockProcessor = mockWalletKit.mockTransactionProcessor
         mockFactory = mockWalletKit.mockFactory
         mockHeaderHandler = mockWalletKit.mockHeaderHandler
+        mockProgressSyncer = mockWalletKit.mockProgressSyncer
         realm = mockWalletKit.realm
 
         stub(mockProcessor) { mock in
@@ -28,13 +30,17 @@ class TransactionHandlerTests: XCTestCase {
         stub(mockFactory) { mock in
             when(mock.block(withHeader: any(), height: any())).thenReturn(Block())
         }
+        stub(mockProgressSyncer) { mock in
+            when(mock.enqueueRun()).thenDoNothing()
+        }
 
-        transactionHandler = TransactionHandler(realmFactory: mockWalletKit.mockRealmFactory, processor: mockProcessor, headerHandler: mockHeaderHandler, factory: mockFactory)
+        transactionHandler = TransactionHandler(realmFactory: mockWalletKit.mockRealmFactory, processor: mockProcessor, progressSyncer: mockProgressSyncer, headerHandler: mockHeaderHandler, factory: mockFactory)
     }
 
     override func tearDown() {
         mockProcessor = nil
         mockHeaderHandler = nil
+        mockProgressSyncer = nil
         mockFactory = nil
         transactionHandler = nil
         realm = nil
@@ -63,6 +69,7 @@ class TransactionHandlerTests: XCTestCase {
         XCTAssertEqual(realmTransaction.block?.reversedHeaderHashHex, block.reversedHeaderHashHex)
 
         verify(mockProcessor).enqueueRun()
+        verify(mockProgressSyncer).enqueueRun()
     }
 
     func testHandleBlockTransactions_EmptyTransactions() {
@@ -75,6 +82,7 @@ class TransactionHandlerTests: XCTestCase {
         try! transactionHandler.handle(blockTransactions: [], blockHeader: block.header)
 
         verify(mockProcessor, never()).enqueueRun()
+        verify(mockProgressSyncer).enqueueRun()
     }
 
     func testHandleBlockHeader() {
@@ -96,6 +104,7 @@ class TransactionHandlerTests: XCTestCase {
         XCTAssertEqual(realmTransaction.block, realmBlock)
 
         verify(mockProcessor).enqueueRun()
+        verify(mockProgressSyncer).enqueueRun()
     }
 
     func testHandleBlockHeader_ExistingBlock() {
@@ -122,6 +131,7 @@ class TransactionHandlerTests: XCTestCase {
         XCTAssertEqual(realmTransaction.block, realmBlock)
 
         verify(mockProcessor).enqueueRun()
+        verify(mockProgressSyncer).enqueueRun()
     }
 
     func testHandleInvalidBlockHeader() {
@@ -140,7 +150,9 @@ class TransactionHandlerTests: XCTestCase {
         } catch {
             XCTFail("Unexpected exception!")
         }
+
         verify(mockProcessor, never()).enqueueRun()
+        verify(mockProgressSyncer, never()).enqueueRun()
     }
 
     func testHandleInvalidBlockHeader_EmptyBlocks() {
@@ -159,7 +171,9 @@ class TransactionHandlerTests: XCTestCase {
         } catch {
             XCTFail("Unexpected exception!")
         }
+
         verify(mockProcessor, never()).enqueueRun()
+        verify(mockProgressSyncer, never()).enqueueRun()
     }
 
     func testHandleMemPoolTransactions() {

@@ -105,17 +105,20 @@ class WalletCell: UITableViewCell {
     func bind(balance: WalletBalanceViewItem, showSpinner: Bool, selected: Bool, animated: Bool = false, onReceive: @escaping (() -> ()), onPay: @escaping (() -> ())) {
         self.onPay = onPay
         self.onReceive = onReceive
-        spinnerView.isHidden = !showSpinner
+//        spinnerView.isHidden = !showSpinner
+        spinnerView.isHidden = true
         if showSpinner {
             spinnerView.startAnimating()
         } else {
             spinnerView.stopAnimating()
         }
 
-        progressDisposable = balance.progressSubject?.subscribe(onNext: { [weak self] progress in
-            self?.progressLabel.isHidden = progress == 1
-            self?.progressLabel.text = "\(Int(progress * 100))%"
-        })
+        progressDisposable = balance.progressSubject?
+                .observeOn(MainScheduler.instance)
+                .subscribe(onNext: { [weak self] progress in
+                    self?.progressLabel.isHidden = progress == 1
+                    self?.progressLabel.text = "\(Int(progress * 100))%"
+                })
         bindView(balance: balance, selected: selected, animated: animated)
     }
 
