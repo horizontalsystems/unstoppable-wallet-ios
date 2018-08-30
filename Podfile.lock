@@ -24,8 +24,18 @@ PODS:
     - RealmSwift (~> 3.0)
     - RxSwift (~> 4.0)
   - RxSwift (4.2.0)
+  - SectionsTableViewKit (1.0.0):
+    - GrouviExtensions
+    - SnapKit (~> 4.0.0)
   - SipHash (1.2.2)
   - SnapKit (4.0.0)
+  - WalletKit (0.1.0):
+    - Alamofire
+    - BigInt
+    - ObjectMapper
+    - RealmSwift
+    - RxRealm
+    - RxSwift
 
 DEPENDENCIES:
   - Alamofire
@@ -39,7 +49,9 @@ DEPENDENCIES:
   - RxCocoa
   - RxRealm
   - RxSwift
+  - SectionsTableViewKit
   - SnapKit
+  - WalletKit (from `https://github.com/horizontalsystems/WalletKit-iOS.git`, branch `dev`)
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
@@ -55,8 +67,19 @@ SPEC REPOS:
     - RxCocoa
     - RxRealm
     - RxSwift
+    - SectionsTableViewKit
     - SipHash
     - SnapKit
+
+EXTERNAL SOURCES:
+  WalletKit:
+    :branch: dev
+    :git: https://github.com/horizontalsystems/WalletKit-iOS.git
+
+CHECKOUT OPTIONS:
+  WalletKit:
+    :commit: ae6931c5bc80c06d082829a2c54bed6339dbb458
+    :git: https://github.com/horizontalsystems/WalletKit-iOS.git
 
 SPEC CHECKSUMS:
   Alamofire: c7287b6e5d7da964a70935e5db17046b7fde6568
@@ -71,9 +94,11 @@ SPEC CHECKSUMS:
   RxCocoa: 0b54909c902e1e581212a03e690bbd94032d8baa
   RxRealm: a6c6c0a07cb61f34209969ca6657734edfdfff30
   RxSwift: 99e10317ddfcc7fbe01356aafd118fde4a0be104
+  SectionsTableViewKit: 0aaeae49acb88b9cff005d0e2dc1ba488039590d
   SipHash: fad90a4683e420c52ef28063063dbbce248ea6d4
   SnapKit: a42d492c16e80209130a3379f73596c3454b7694
+  WalletKit: b0fabf235c1bcf44c15715b6cd36a2b1edf4a4ab
 
-PODFILE CHECKSUM: c6e8d45af0e4c1ccf7d51a76e00e7a36672d9081
+PODFILE CHECKSUM: dcc23b79072e0db6a5067f0fdce33a128b53d569
 
 COCOAPODS: 1.5.3

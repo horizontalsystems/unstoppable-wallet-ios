@@ -18,7 +18,7 @@ extension TransactionsRouter {
 
     static func module() -> UIViewController {
         let router = TransactionsRouter()
-        let interactor = TransactionsInteractor(adapterManager: AdapterManager.shared)
+        let interactor = TransactionsInteractor(adapterManager: AdapterManager.shared, exchangeRateManager: ExchangeRateManager.shared)
         let presenter = TransactionsPresenter(interactor: interactor, router: router)
         let viewController = TransactionsViewController(delegate: presenter)
 

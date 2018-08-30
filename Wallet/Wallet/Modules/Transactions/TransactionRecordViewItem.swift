@@ -8,6 +8,7 @@ struct TransactionRecordViewItem {
 
     let transactionHash: String
     let amount: CoinValue
+    let currencyAmount: CurrencyValue?
     let fee: CoinValue
     let from: String?
     let to: String?
