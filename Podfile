@@ -3,13 +3,11 @@ use_frameworks!
 
 inhibit_all_warnings!
 
-workspace 'Wallet'
-
 project 'Wallet/Wallet'
-project 'WalletKit/WalletKit'
-project 'SectionsTableViewKit/SectionsTableViewKit'
 
-def kit_pods
+target :Bank do
+  pod 'WalletKit', git: 'https://github.com/horizontalsystems/WalletKit-iOS.git', branch: 'dev'
+
   pod 'Alamofire'
   pod 'ObjectMapper'
 
@@ -18,35 +16,16 @@ def kit_pods
   pod 'BigInt'
   pod 'RealmSwift'
   pod "RxRealm"
-end
-
-target :Bank do
-  project 'Wallet/Wallet'
-
-  kit_pods
 
   pod 'GrouviExtensions'
   pod 'GrouviActionSheet'
-  pod 'GrouviHUD'#, :path => '../GrouviHUD'
-  pod 'SectionsTableViewKit'#, :path => '../SectionsTableViewKit'
+  pod 'GrouviHUD' #, :path => '../GrouviHUD'
+  pod 'SectionsTableViewKit' #, :path => '../SectionsTableViewKit'
 
   pod 'RxCocoa'
   pod "SnapKit"
 end
 
-target :WalletKit do
-  project 'WalletKit/WalletKit'
-  kit_pods
-end
-
-target :WalletKitTests do
-  project 'WalletKit/WalletKit'
-
-  pod "Cuckoo"
-end
-
 target :WalletTests do
-  project 'Wallet/Wallet'
-
   pod "Cuckoo"
 end

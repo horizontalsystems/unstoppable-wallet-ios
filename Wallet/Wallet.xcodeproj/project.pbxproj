@@ -205,8 +205,6 @@
 		D3B62A9620CA46EB005A9F80 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3B62A9420CA46EB005A9F80 /* SettingsViewController.swift */; };
 		D3B62A9A20CA73A0005A9F80 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = D3B62A9C20CA73A0005A9F80 /* Localizable.strings */; };
 		D3B62A9E20CA88BF005A9F80 /* Theme.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D3B62A9D20CA88BF005A9F80 /* Theme.xcassets */; };
-		D3FD451A20F375B300F472B9 /* WalletKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3FD451220F35A1900F472B9 /* WalletKit.framework */; };
-		D3FD451E20F375E200F472B9 /* WalletKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D3FD451220F35A1900F472B9 /* WalletKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -226,7 +224,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				D3FD451E20F375E200F472B9 /* WalletKit.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -442,7 +439,6 @@
 		D3B62A9420CA46EB005A9F80 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		D3B62A9B20CA73A0005A9F80 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		D3B62A9D20CA88BF005A9F80 /* Theme.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Theme.xcassets; sourceTree = "<group>"; };
-		D3FD451220F35A1900F472B9 /* WalletKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = WalletKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -450,7 +446,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D3FD451A20F375B300F472B9 /* WalletKit.framework in Frameworks */,
 				D3373D9520BEC7B30082BC4A /* AVFoundation.framework in Frameworks */,
 				22964AB583D54BD1D1CEE814 /* Pods_Bank.framework in Frameworks */,
 			);
@@ -1035,7 +1030,6 @@
 		D3285F3920BD158E00644076 = {
 			isa = PBXGroup;
 			children = (
-				D3FD451220F35A1900F472B9 /* WalletKit.framework */,
 				D3285F4420BD158E00644076 /* Wallet */,
 				D3373DC020C658660082BC4A /* WalletTests */,
 				D3285F4320BD158E00644076 /* Products */,
@@ -1234,6 +1228,7 @@
 				"${BUILT_PRODUCTS_DIR}/SectionsTableViewKit/SectionsTableViewKit.framework",
 				"${BUILT_PRODUCTS_DIR}/SipHash/SipHash.framework",
 				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
+				"${BUILT_PRODUCTS_DIR}/WalletKit/WalletKit.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
@@ -1251,6 +1246,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SectionsTableViewKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SipHash.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/WalletKit.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
