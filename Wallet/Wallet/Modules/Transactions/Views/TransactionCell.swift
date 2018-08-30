@@ -3,6 +3,7 @@ import GrouviExtensions
 import SnapKit
 
 class TransactionCell: UITableViewCell {
+    var highlightBackground = UIView()
 
     var dateLabel = UILabel()
     var timeLabel = UILabel()
@@ -14,9 +15,15 @@ class TransactionCell: UITableViewCell {
 
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        selectionStyle = .none
         backgroundColor = .clear
         contentView.backgroundColor = .clear
+
+        highlightBackground.backgroundColor = TransactionsTheme.cellHighlightBackgroundColor
+        highlightBackground.alpha = 0
+        contentView.addSubview(highlightBackground)
+        highlightBackground.snp.makeConstraints { maker in
+            maker.edges.equalToSuperview()
+        }
 
         dateLabel.font = TransactionsTheme.dateLabelFont
         dateLabel.textColor = TransactionsTheme.dateLabelTextColor
@@ -88,6 +95,28 @@ class TransactionCell: UITableViewCell {
         }
 
         statusImageView.image = item.status == .pending ? UIImage(named: "Transaction Processing Icon") : nil
+    }
+
+    override func setHighlighted(_ highlighted: Bool, animated: Bool) {
+        guard selectionStyle != .none else { return }
+        if animated {
+            UIView.animate(withDuration: AppTheme.defaultAnimationDuration) {
+                self.highlightBackground.alpha = highlighted ? 1 : 0
+            }
+        } else {
+            highlightBackground.alpha = highlighted ? 1 : 0
+        }
+    }
+
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        guard selectionStyle != .none else { return }
+        if animated {
+            UIView.animate(withDuration: AppTheme.defaultAnimationDuration) {
+                self.highlightBackground.alpha = selected ? 1 : 0
+            }
+        } else {
+            highlightBackground.alpha = selected ? 1 : 0
+        }
     }
 
 }
