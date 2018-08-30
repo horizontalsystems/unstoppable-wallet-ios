@@ -36,12 +36,12 @@ class DepositAddressCollectionCell: UICollectionViewCell {
         fatalError("not implemented")
     }
 
-    func bind(wallet: String) {
-        titleLabel.text = "some wallet"
+    func bind(address: AddressItem) {
+        titleLabel.text = address.title
         qrCodeImageView.backgroundColor = .lightGray
-        addressLabel.text = wallet
+        addressLabel.text = address.address
 
-        qrCodeImageView.image = createQRFromString(wallet, size: CGSize(width: 150, height: 150))
+        qrCodeImageView.image = createQRFromString(address.address, size: CGSize(width: 150, height: 150))
     }
 
     func createQRFromString(_ str: String, size: CGSize) -> UIImage {

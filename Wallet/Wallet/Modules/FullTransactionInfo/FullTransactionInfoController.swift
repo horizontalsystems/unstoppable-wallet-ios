@@ -97,15 +97,22 @@ class FullTransactionInfoController: UIViewController, SectionsDataSource {
             cell.bind(title: "full_transaction_info.cell.mined_time".localized, description: "N/A")
         }))
         rows.append(Row<FullTransactionInfoTextCell>(id: "included_in_block", hash: "included_in_block", height: FullTransactionInfoTheme.cellHeight, bind: { cell, _ in
-            let confirmedString = (transaction.confirmations ?? 0) > 0 ? "full_transaction_info.cell.included_in_block.confirmed".localized : "full_transaction_info.cell.included_in_block.unconfirmed".localized
-            cell.bind(title: "full_transaction_info.cell.included_in_block".localized, description: "\(transaction.blockHeight ?? -1) -- \(transaction.confirmations ?? -1)")
+            let confirmedString = (transaction.confirmations ?? 0) > 0 ? "#\(transaction.blockHeight ?? -1)" : "full_transaction_info.cell.included_in_block.unconfirmed".localized
+            cell.bind(title: "full_transaction_info.cell.included_in_block".localized, description: confirmedString)
         }))
+        if let confirmations = transaction.confirmations {
+            rows.append(Row<FullTransactionInfoTextCell>(id: "confirmations", hash: "confirmations", height: FullTransactionInfoTheme.cellHeight, bind: { cell, _ in
+                cell.bind(title: "full_transaction_info.cell.confirmations".localized, description: "\(confirmations)")
+            }))
+        }
         rows.append(Row<FullTransactionInfoTextCell>(id: "lock_time", hash: "lock_time", height: FullTransactionInfoTheme.cellHeight, bind: { cell, _ in
             cell.bind(title: "full_transaction_info.cell.lock_time".localized, description: "n/a")
         }))
-        rows.append(Row<FullTransactionInfoTextCell>(id: "from", hash: "from", height: FullTransactionInfoTheme.cellHeight, bind: { cell, _ in
-            cell.bind(title: "full_transaction_info.cell.from".localized, description: "\(transaction.from)")
-        }))
+        if let from = transaction.from {
+            rows.append(Row<FullTransactionInfoTextCell>(id: "from", hash: "from", height: FullTransactionInfoTheme.cellHeight, bind: { cell, _ in
+                cell.bind(title: "full_transaction_info.cell.from".localized, description: from)
+            }))
+        }
 //        for (index, address) in  ["3K4J3F4KL425SJ23D4BF34K5J6SD8F3KJ3456BK64S4D3JN45", "KJ3456BK64S4D3JN453K4J3F4KL425SJ23D4BF34K5J6SD8F3"].enumerated() {
             rows.append(Row<FullTransactionInfoTextCell>(id: "to\(index)", hash: "to\(index)", height: FullTransactionInfoTheme.cellHeight, bind: { cell, _ in
                 cell.bind(title: "full_transaction_info.cell.to".localized, description: transaction.to)

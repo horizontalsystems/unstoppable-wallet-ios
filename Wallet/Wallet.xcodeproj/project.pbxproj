@@ -79,6 +79,7 @@
 		11B35F8641C2F7F7FB23B181 /* GuestInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3566ED622AE7606EF76B9 /* GuestInteractor.swift */; };
 		11B35FE41FA9977CC36989D3 /* MainInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35B88A2D6C85E1600F3AF /* MainInteractor.swift */; };
 		11B35FF4E83C69E67F04C283 /* BlockchainInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35956C79B567DC679DD3A /* BlockchainInfo.swift */; };
+		1A564024E4BFE0259C6BED7A /* AddressItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5648AB2D8BF212D891310D /* AddressItem.swift */; };
 		1A5640845DFE26B0881C97B9 /* SendPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5647EE51941D84607A9493 /* SendPresenter.swift */; };
 		1A5640B712A4253399F52A3B /* WalletTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564243436E5185205D0359 /* WalletTheme.swift */; };
 		1A5640E91AA1D79E1735F5FC /* TransactionStatusItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5646C9024F054AE8115A30 /* TransactionStatusItem.swift */; };
@@ -90,6 +91,7 @@
 		1A56422B4DA1DE0ACD09C4BC /* TransactionInfoModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5643996D67B74F800DFFE4 /* TransactionInfoModule.swift */; };
 		1A564274EEC6A31D6B287B09 /* TransactionFromToHashItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564C4C8EFE1B1BBE03C9E6 /* TransactionFromToHashItem.swift */; };
 		1A56427D41F16B2D9C7B5F88 /* SendModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5641C2FAD616C358A319A0 /* SendModule.swift */; };
+		1A564280979AB1B92D74B490 /* DepositViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564D52FE56371052378418 /* DepositViewModel.swift */; };
 		1A5642A7500FDC8E971D6C62 /* CoinValueHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5640B6691F4FD048C82A49 /* CoinValueHelper.swift */; };
 		1A5642B4408B226121677590 /* SendInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564260BF2C73B9F2450FB8 /* SendInteractor.swift */; };
 		1A5642CC980FB2C41231BC8C /* ButtonTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564D7FA287326CBE96353A /* ButtonTheme.swift */; };
@@ -363,6 +365,7 @@
 		1A5647FDE8383651F19C35C6 /* TransactionInfoRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionInfoRouter.swift; sourceTree = "<group>"; };
 		1A56481E8D97841B12893D00 /* DepositTheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DepositTheme.swift; sourceTree = "<group>"; };
 		1A56487BA5FFC1BC45D6F25C /* SettingsInfoFooter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsInfoFooter.swift; sourceTree = "<group>"; };
+		1A5648AB2D8BF212D891310D /* AddressItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressItem.swift; sourceTree = "<group>"; };
 		1A5648D3CF09FF5EBE8321EC /* RestoreWordCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestoreWordCell.swift; sourceTree = "<group>"; };
 		1A5648DA32EA5FC27E4CEF64 /* DepositInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DepositInteractor.swift; sourceTree = "<group>"; };
 		1A564939814A9D9F47D41EEB /* InputFieldTheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputFieldTheme.swift; sourceTree = "<group>"; };
@@ -391,6 +394,7 @@
 		1A564CFA352D219E2D05D09F /* SendButtonItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendButtonItemView.swift; sourceTree = "<group>"; };
 		1A564D254A8C867D16CA9166 /* AmountInputField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AmountInputField.swift; sourceTree = "<group>"; };
 		1A564D3D7426182B6F2DFCA8 /* RespondButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RespondButton.swift; sourceTree = "<group>"; };
+		1A564D52FE56371052378418 /* DepositViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DepositViewModel.swift; sourceTree = "<group>"; };
 		1A564D6EFBD1A8C9678288E6 /* TransactionIDHashItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionIDHashItem.swift; sourceTree = "<group>"; };
 		1A564D7FA287326CBE96353A /* ButtonTheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonTheme.swift; sourceTree = "<group>"; };
 		1A564DA173BE95B4681E5395 /* DepositShareButtonItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DepositShareButtonItemView.swift; sourceTree = "<group>"; };
@@ -834,6 +838,7 @@
 				1A5645BE7DACEC78A2FAEFB5 /* DepositCollectionItem.swift */,
 				1A564B0A9AB0EAAB5574FDD0 /* DepositCollectionItemView.swift */,
 				1A5647F6F29405E571D70592 /* DepositAddressCollectionCell.swift */,
+				1A5648AB2D8BF212D891310D /* AddressItem.swift */,
 			);
 			path = CollectionView;
 			sourceTree = "<group>";
@@ -967,6 +972,7 @@
 				1A564E1FBBCCA45BCDA557F4 /* DepositModule.swift */,
 				1A5648DA32EA5FC27E4CEF64 /* DepositInteractor.swift */,
 				1A5645371B2FC499500DCA93 /* DepositPresenter.swift */,
+				1A564D52FE56371052378418 /* DepositViewModel.swift */,
 				1A564C2A96B49F01C1EC645D /* DepositAlertModel.swift */,
 				1A564384C132B1AF74258D4A /* ViewItems */,
 			);
@@ -1494,6 +1500,8 @@
 				1A564746D8428666A8CE186E /* AppHelper.swift in Sources */,
 				11B35A8D6B2FECBE076DAE44 /* ExchangeRateManager.swift in Sources */,
 				11B35A51C5DEE8C30F72FEAC /* TransactionFilter.swift in Sources */,
+				1A564024E4BFE0259C6BED7A /* AddressItem.swift in Sources */,
+				1A564280979AB1B92D74B490 /* DepositViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

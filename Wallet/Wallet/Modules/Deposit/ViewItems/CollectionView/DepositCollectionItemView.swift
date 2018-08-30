@@ -19,7 +19,7 @@ class DepositCollectionItemView: BaseActionItemView {
         walletsCollectionView?.dataSource = self
         walletsCollectionView?.registerCell(forClass: DepositAddressCollectionCell.self)
         walletsCollectionView?.isPagingEnabled = true
-        walletsCollectionView?.alwaysBounceHorizontal = (item?.wallets.count ?? 1) > 1
+        walletsCollectionView?.alwaysBounceHorizontal = (item?.addresses.count ?? 1) > 1
         walletsCollectionView?.showsHorizontalScrollIndicator = false
         addSubview(walletsCollectionView!)
         walletsCollectionView?.snp.makeConstraints { maker in
@@ -38,7 +38,7 @@ class DepositCollectionItemView: BaseActionItemView {
 extension DepositCollectionItemView: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return item?.wallets.count ?? 0
+        return item?.addresses.count ?? 0
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -46,8 +46,8 @@ extension DepositCollectionItemView: UICollectionViewDataSource, UICollectionVie
     }
 
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        if let cell = cell as? DepositAddressCollectionCell, let wallet = item?.wallets[indexPath.item] {
-            cell.bind(wallet: wallet)
+        if let cell = cell as? DepositAddressCollectionCell, let address = item?.addresses[indexPath.item] {
+            cell.bind(address: address)
         }
     }
 

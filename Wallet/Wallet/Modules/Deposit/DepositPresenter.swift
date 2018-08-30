@@ -1,4 +1,4 @@
-import Foundation
+import UIKit
 
 class DepositPresenter {
 
@@ -15,19 +15,36 @@ class DepositPresenter {
 
 extension DepositPresenter: IDepositInteractorDelegate {
 
+    func didGetAddressItems(items: [AddressItem]) {
+        router.showView(with: items)
+    }
+
+    func showCopied() {
+        HudHelper.instance.showSuccess(title: "alert.copied".localized)
+    }
+
+    func share(address: String) {
+        router.share(address: address)
+    }
+
 }
 
 extension DepositPresenter: IDepositViewDelegate {
 
     func viewDidLoad() {
+        interactor.getAddressItems()
     }
 
     func refresh() {
 
     }
 
-    func share() {
+    func onCopy(index: Int) {
+        interactor.onCopy(index: index)
+    }
 
+    func onShare(index: Int) {
+        interactor.onShare(index: index)
     }
 
 }
