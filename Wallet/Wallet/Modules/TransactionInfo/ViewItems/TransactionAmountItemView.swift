@@ -5,7 +5,6 @@ import SnapKit
 
 class TransactionAmountItemView: BaseActionItemView {
 
-    var dateLabel = UILabel()
     var amountLabel = UILabel()
     var fiatAmountLabel = UILabel()
 
@@ -15,19 +14,11 @@ class TransactionAmountItemView: BaseActionItemView {
         super.initView()
         backgroundColor = TransactionInfoTheme.titleBackground
 
-        dateLabel.font = TransactionInfoTheme.dateFont
-        dateLabel.textColor = TransactionInfoTheme.dateColor
-        addSubview(dateLabel)
-        dateLabel.snp.makeConstraints { maker in
-            maker.centerX.equalToSuperview()
-            maker.top.equalToSuperview().offset(TransactionInfoTheme.regularMargin)
-        }
-
         amountLabel.font = TransactionInfoTheme.amountFont
         addSubview(amountLabel)
         amountLabel.snp.makeConstraints { maker in
             maker.centerX.equalToSuperview()
-            maker.top.equalTo(self.dateLabel.snp.bottom).offset(TransactionInfoTheme.smallMargin)
+            maker.top.equalToSuperview().offset(TransactionInfoTheme.amountTopMargin)
         }
 
         fiatAmountLabel.font = TransactionInfoTheme.fiatAmountFont
@@ -35,14 +26,12 @@ class TransactionAmountItemView: BaseActionItemView {
         addSubview(fiatAmountLabel)
         fiatAmountLabel.snp.makeConstraints { maker in
             maker.centerX.equalToSuperview()
-            maker.top.equalTo(self.amountLabel.snp.bottom).offset(TransactionInfoTheme.smallMargin)
+            maker.top.equalTo(self.amountLabel.snp.bottom).offset(TransactionInfoTheme.middleMargin)
         }
     }
 
     override func updateView() {
         super.updateView()
-        dateLabel.text = item?.date
-
         amountLabel.text = item?.amount
         amountLabel.textColor = item?.amountColor
 

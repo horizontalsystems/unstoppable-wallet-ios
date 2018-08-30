@@ -5,6 +5,7 @@ import SnapKit
 
 class TransactionTitleItemView: BaseActionItemView {
 
+    var dateLabel = UILabel()
     var idLabel = UILabel()
 
     override var item: TransactionTitleItem? { return _item as? TransactionTitleItem }
@@ -20,7 +21,14 @@ class TransactionTitleItemView: BaseActionItemView {
         addSubview(titleLabel)
         titleLabel.snp.makeConstraints { maker in
             maker.leading.equalToSuperview().offset(TransactionInfoTheme.regularMargin)
-            maker.top.equalToSuperview().offset(TransactionInfoTheme.regularMargin)
+            maker.top.equalToSuperview().offset(TransactionInfoTheme.middleMargin)
+        }
+        dateLabel.font = TransactionInfoTheme.dateFont
+        dateLabel.textColor = TransactionInfoTheme.dateColor
+        addSubview(dateLabel)
+        dateLabel.snp.makeConstraints { maker in
+            maker.leading.equalToSuperview().offset(TransactionInfoTheme.regularMargin)
+            maker.top.equalTo(titleLabel.snp.bottom)
         }
 
         let infoButton = RespondButton()
@@ -46,7 +54,7 @@ class TransactionTitleItemView: BaseActionItemView {
         }
         idTitleLabel.font = TransactionInfoTheme.idTitleFont
         idTitleLabel.textColor = TransactionInfoTheme.idTitleColor
-        idTitleLabel.text = "tx_info.bottom_sheet.id:".localized
+        idTitleLabel.text = "#"
 
         infoButton.addSubview(idLabel)
         idLabel.snp.makeConstraints { maker in
@@ -61,6 +69,8 @@ class TransactionTitleItemView: BaseActionItemView {
 
     override func updateView() {
         super.updateView()
+        let date = item?.date.map { DateHelper.instance.formatTransactionInfoTime(from: $0) } ?? "n/a"
+        dateLabel.text = date
         idLabel.text = item?.transactionId
     }
 

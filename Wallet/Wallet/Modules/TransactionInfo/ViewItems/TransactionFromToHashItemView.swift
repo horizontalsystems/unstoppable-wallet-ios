@@ -54,6 +54,7 @@ class TransactionFromToHashItemView: BaseActionItemView {
             maker.top.bottom.equalToSuperview()
             maker.leading.equalTo(self.avatarImageView.snp.trailing).offset(TransactionInfoTheme.middleMargin)
             maker.trailing.equalToSuperview().offset(-TransactionInfoTheme.middleMargin)
+            maker.width.equalTo(TransactionInfoTheme.fromToHashWidth)
         }
     }
 

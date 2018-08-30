@@ -14,6 +14,7 @@ class TransactionInfoTheme {
     static let closeButtonTextColorSelected = UIColor.cryptoSilver
     static let itemHeight: CGFloat = 45
     static let closeHeight: CGFloat = 52
+    static let amountTopMargin: CGFloat = 20
     static let titleBackground = UIColor.cryptoBarsColor
     static let statusCompleteValueColor = UIColor.cryptoDark
     static let statusPendingValueColor = UIColor.cryptoGray
@@ -28,7 +29,7 @@ class TransactionInfoTheme {
     static let hashColor = UIColor.cryptoDark
     static let idInfoButtonBorderColor = UIColor.cryptoSteel20
     static let fiatAmountFont = UIFont.cryptoCaption1
-    static let amountHeight: CGFloat = 105
+    static let amountHeight: CGFloat = 99
     static let fiatAmountColor = UIColor.cryptoGray
     static let hashBackgroundHeight: CGFloat = 28
     static let hashCornerRadius: CGFloat = 4
@@ -49,4 +50,5 @@ class TransactionInfoTheme {
     static let idTitleFont = UIFont.cryptoCaption1
     static let idTitleColor = UIColor.cryptoGray
     static let idColor = UIColor.cryptoDark
+    static let fromToHashWidth: CGFloat = 108
 }

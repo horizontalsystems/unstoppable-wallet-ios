@@ -1,10 +1,17 @@
 import Foundation
 import GrouviActionSheet
 
-class TransactionStatusItem: TransactionInfoBaseValueItem {
+class TransactionStatusItem: BaseActionItem {
+
+    var title: String?
+    var value: String?
+    var valueColor: UIColor?
+    var valueImage: UIImage?
+    var valueImageTintColor: UIColor?
+
 
     init(transaction: TransactionRecordViewItem, tag: Int? = nil, hidden: Bool = false, required: Bool = false) {
-        super.init(tag: tag, hidden: hidden, required: required)
+        super.init(cellType: TransactionStatusItemView.self, tag: tag, hidden: hidden, required: required)
 
         title = "tx_info.bottom_sheet.status".localized
         value = transaction.status == .success ? "tx_info.bottom_sheet.complete".localized : "tx_info.bottom_sheet.pending".localized
