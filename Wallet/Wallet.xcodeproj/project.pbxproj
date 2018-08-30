@@ -219,19 +219,6 @@
 		};
 /* End PBXContainerItemProxy section */
 
-/* Begin PBXCopyFilesBuildPhase section */
-		D3FD451C20F375B400F472B9 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
-
 /* Begin PBXFileReference section */
 		0D8A12931D87BE8EE9BE445A /* Pods-WalletTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WalletTests.release.xcconfig"; path = "../Pods/Target Support Files/Pods-WalletTests/Pods-WalletTests.release.xcconfig"; sourceTree = "<group>"; };
 		11B350896FD41EC360BF7C25 /* GuestPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GuestPresenter.swift; sourceTree = "<group>"; };
@@ -1093,7 +1080,6 @@
 				D3285F3E20BD158E00644076 /* Sources */,
 				D3285F3F20BD158E00644076 /* Frameworks */,
 				D3285F4020BD158E00644076 /* Resources */,
-				D3FD451C20F375B400F472B9 /* Embed Frameworks */,
 				8633F88AC37502DDC996493C /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
