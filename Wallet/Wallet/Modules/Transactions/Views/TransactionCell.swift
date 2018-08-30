@@ -4,11 +4,13 @@ import SnapKit
 
 class TransactionCell: UITableViewCell {
 
-    var avatarImageView = UIImageView(image: UIImage(named: "Avatar Placeholder"))
-    var amountLabel = UILabel()
-    var fiatAmountFromLabel = UILabel()
     var dateLabel = UILabel()
+    var timeLabel = UILabel()
+
     var statusImageView = UIImageView()
+
+    var amountLabel = UILabel()
+    var fiatAmountLabel = UILabel()
 
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -16,41 +18,46 @@ class TransactionCell: UITableViewCell {
         backgroundColor = .clear
         contentView.backgroundColor = .clear
 
-        amountLabel.font = TransactionsTheme.amountLabelFont
-        fiatAmountFromLabel.font = TransactionsTheme.fiatAmountLabelFont
-        fiatAmountFromLabel.textColor = TransactionsTheme.fiatAmountLabelColor
         dateLabel.font = TransactionsTheme.dateLabelFont
         dateLabel.textColor = TransactionsTheme.dateLabelTextColor
-
-        contentView.addSubview(avatarImageView)
-        avatarImageView.snp.makeConstraints { maker in
-            maker.centerY.equalToSuperview()
+        contentView.addSubview(dateLabel)
+        dateLabel.snp.makeConstraints { maker in
             maker.leading.equalToSuperview().offset(self.layoutMargins.left * 2)
-            maker.size.equalTo(TransactionsTheme.avatarSize)
+            maker.top.equalToSuperview().offset(TransactionsTheme.cellMediumMargin)
         }
+        timeLabel.font = TransactionsTheme.timeLabelFont
+        timeLabel.textColor = TransactionsTheme.timeLabelTextColor
+        contentView.addSubview(timeLabel)
+        timeLabel.snp.makeConstraints { maker in
+            maker.leading.equalToSuperview().offset(self.layoutMargins.left * 2)
+            maker.top.equalTo(self.dateLabel.snp.bottom).offset(TransactionsTheme.cellSmallMargin)
+        }
+
+        contentView.addSubview(statusImageView)
+        statusImageView.snp.makeConstraints { maker in
+            maker.size.equalTo(TransactionsTheme.statusImageViewSize)
+            maker.leading.equalTo(self.timeLabel.snp.trailing).offset(TransactionsTheme.cellMilliMargin)
+            maker.centerY.equalTo(self.timeLabel)
+        }
+
+
+        amountLabel.font = TransactionsTheme.amountLabelFont
         contentView.addSubview(amountLabel)
         amountLabel.setContentHuggingPriority(.defaultLow, for: .horizontal)
         amountLabel.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
         amountLabel.snp.makeConstraints { maker in
-            maker.top.equalToSuperview().offset(TransactionsTheme.topMargin)
-            maker.leading.equalTo(self.avatarImageView.snp.trailing).offset(TransactionsTheme.cellMediumMargin)
-        }
-        contentView.addSubview(fiatAmountFromLabel)
-        fiatAmountFromLabel.snp.makeConstraints { maker in
-            maker.leading.equalTo(self.avatarImageView.snp.trailing).offset(TransactionsTheme.cellMediumMargin)
-            maker.top.equalTo(self.amountLabel.snp.bottom).offset(TransactionsTheme.cellSmallMargin)
-        }
-        contentView.addSubview(dateLabel)
-        dateLabel.snp.makeConstraints { maker in
-            maker.leading.equalTo(self.amountLabel.snp.trailing).offset(-TransactionsTheme.cellMediumMargin)
+            maker.leading.equalTo(self.dateLabel.snp.trailing).offset(TransactionsTheme.cellMediumMargin)
             maker.top.equalToSuperview().offset(TransactionsTheme.cellMediumMargin)
             maker.trailing.equalToSuperview().offset(-self.layoutMargins.left * 2)
         }
-        contentView.addSubview(statusImageView)
-        statusImageView.snp.makeConstraints { maker in
-            maker.size.equalTo(TransactionsTheme.statusImageViewSize)
-            maker.top.equalTo(self.dateLabel.snp.bottom).offset(TransactionsTheme.statusTopMargin)
-            maker.leading.equalTo(self.fiatAmountFromLabel.snp.trailing).offset(TransactionsTheme.cellMediumMargin)
+
+        fiatAmountLabel.font = TransactionsTheme.fiatAmountLabelFont
+        fiatAmountLabel.textColor = TransactionsTheme.fiatAmountLabelColor
+        fiatAmountLabel.textAlignment = .right
+        contentView.addSubview(fiatAmountLabel)
+        fiatAmountLabel.snp.makeConstraints { maker in
+            maker.leading.equalTo(self.timeLabel.snp.trailing).offset(TransactionsTheme.cellMediumMargin)
+            maker.top.equalTo(self.amountLabel.snp.bottom).offset(TransactionsTheme.cellMicroMargin)
             maker.trailing.equalToSuperview().offset(-self.layoutMargins.left * 2)
         }
 
@@ -68,21 +75,19 @@ class TransactionCell: UITableViewCell {
     }
 
     func bind(item: TransactionRecordViewItem) {
+        dateLabel.text = (item.date.map { DateHelper.instance.formatTransactionDate(from: $0) })?.uppercased()
+        timeLabel.text = item.date.map { DateHelper.instance.formatTransactionTime(from: $0) }
+
         amountLabel.textColor = item.incoming ? TransactionsTheme.incomingTextColor : TransactionsTheme.outgoingTextColor
-
-        let fiatAmount = item.currencyAmount.map { CurrencyHelper.instance.formattedValue(for: $0) }
-
-//        let fromAddress = item.from
-//        let endIndex = fromAddress.index(fromAddress.startIndex, offsetBy: 5)
-//        let firstChars = fromAddress[fromAddress.startIndex ..< endIndex]
-//        let fiatFromText = "\(fiatAmount) \(item.incoming ? "transactions.from".localized : "transactions.to".localized) \(firstChars)..."
-
-        fiatAmountFromLabel.text = fiatAmount ?? "n/a"
-
-        dateLabel.text = item.date.map { DateHelper.instance.formatTransactionTime(from: $0) }
         amountLabel.text = (item.incoming ? "+ " : "- ") + CoinValueHelper.formattedAmount(for: item.amount)
 
-        statusImageView.image = item.status == .pending ? UIImage(named: "Transaction Processing Icon") : UIImage(named: "Transaction Success Icon")
+        if let fiatAmount = (item.currencyAmount.map { CurrencyHelper.instance.formattedApproximateValue(for: $0) }) {
+            fiatAmountLabel.text = "~ " + fiatAmount!
+        } else {
+            fiatAmountLabel.text = "n/a"
+        }
+
+        statusImageView.image = item.status == .pending ? UIImage(named: "Transaction Processing Icon") : nil
     }
 
 }

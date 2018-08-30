@@ -3,21 +3,24 @@ import UIKit
 class TransactionsTheme {
     static let infoIconTintColor = UIColor.cryptoSteel20
     static let infoIconHighlightedTintColor = UIColor.cryptoWhite50
-    static let dateLabelFont = UIFont.cryptoCaption1
-    static let dateLabelTextColor = UIColor.cryptoGray
+    static let dateLabelFont = UIFont.cryptoBody2
+    static let dateLabelTextColor = UIColor.cryptoSilver
     static let statusLabelTextColor = UIColor.gray
-    static let amountLabelFont = UIFont.cryptoHeadline
+    static let amountLabelFont = UIFont.cryptoTitle4
     static let incomingTextColor = UIColor.cryptoGreen
     static let outgoingTextColor = UIColor.cryptoYellow
     static let cellHeight: CGFloat = 72
-    static let topMargin: CGFloat = 11
     static let cellMediumMargin: CGFloat = 12
     static let cellSmallMargin: CGFloat = 8
+    static let cellMicroMargin: CGFloat = 3
+    static let cellMilliMargin: CGFloat = 4
     static let separatorColor = UIColor.cryptoSteel20
     static let fiatAmountLabelFont = UIFont.cryptoCaption1
     static let fiatAmountLabelColor = UIColor.cryptoGray
     static let statusImageViewSize = CGSize(width: 13, height: 12)
     static let statusTopMargin: CGFloat = 13
     static let avatarSize = CGSize(width: 40, height: 40)
+    static let timeLabelFont = UIFont.cryptoCaption1
+    static let timeLabelTextColor = UIColor.cryptoGray
 }
                         

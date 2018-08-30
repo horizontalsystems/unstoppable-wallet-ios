@@ -9,7 +9,17 @@ class CurrencyHelper {
         let formatter = _formatter
         formatter.locale = currencyValue.currency.locale
         formatter.numberStyle = .currency
+        formatter.minimumFractionDigits = 0
         return formatter.string(from: currencyValue.value as NSNumber)
+    }
+
+    func formattedApproximateValue(for currencyValue: CurrencyValue) -> String? {
+        let formatter = _formatter
+        formatter.locale = currencyValue.currency.locale
+        formatter.numberStyle = .currency
+        formatter.minimumFractionDigits = 0
+        let value = Int(abs(currencyValue.value))
+        return formatter.string(from: value as NSNumber)
     }
 
     private lazy var droidCoinFormatter: NumberFormatter = {

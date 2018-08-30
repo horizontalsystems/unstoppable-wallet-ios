@@ -51,11 +51,15 @@ public class DateHelper {
         }
     }
 
+    func formatTransactionDate(from date: Date) -> String {
+        let correctDate = min(date, Date())
+        let interval = date.interval(forDate: correctDate)
+        let format = interval == .more ? "yyyy MMM d" : "MMM d"
+        return getFormatter(forFormat: format).string(from: date)
+    }
+
     public func formatTransactionTime(from date: Date, useYesterday: Bool = false) -> String {
-//        let correctDate = min(date, Date())
-//        let interval = date.interval(forDate: correctDate)
-//        let formatter = dateTimeFormatter(interval: interval, forDate: correctDate, shortWeek: true)
-        return getFormatter(forFormat: "MMM d \(DateHelper.correctedSystemHourFormat):mm").string(from: date)
+        return getFormatter(forFormat: "\(DateHelper.correctedSystemHourFormat):mm").string(from: date)
     }
 
     public func formatTransactionInfoTime(from date: Date) -> String {
