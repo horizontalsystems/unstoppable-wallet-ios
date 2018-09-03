@@ -5,27 +5,26 @@ class SendAlertModel: BaseAlertModel {
 
     let delegate: ISendViewDelegate
 
-    let coin: Coin
-
+    let titleItem: SendTitleItem
 //    var sendConfigItem: BaseTwinItem?
     let sendAmountItem: SendAmountItem
 
-    init(viewDelegate: ISendViewDelegate, coin: Coin) {
+    init(viewDelegate: ISendViewDelegate) {
         self.delegate = viewDelegate
-        self.coin = coin
 
 //        let sendReferenceItem = SendReferenceItem()
 //        sendConfigItem = BaseTwinItem(cellType: SendConfigTwinItemView.self, first: sendAmountItem, second: sendReferenceItem, height: SendTheme.twinHeight, tag: 1, required: true)
 //        sendConfigItem?.showSeparator = false
         sendAmountItem = SendAmountItem(tag: 1, required: true)
+        titleItem = SendTitleItem(tag: 0, required: true)
 
         super.init()
 
         ignoreKeyboard = false
 
-        let titleItem = SendTitleItem(coinCode: coin.code, tag: 0, required: true, onQRScan: { [weak self] in
+        titleItem.onQRScan = { [weak self] in
             self?.delegate.onScanClick()
-        })
+        }
         addItemView(titleItem)
 
 
@@ -73,6 +72,11 @@ class SendAlertModel: BaseAlertModel {
 }
 
 extension SendAlertModel: ISendView {
+
+    func setTitle(_ title: String?) {
+        titleItem.title = title
+        updateItems()
+    }
 
     func setAddress(_ address: String?) {
         sendAmountItem.address = address

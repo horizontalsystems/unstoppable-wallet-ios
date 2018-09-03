@@ -23,6 +23,7 @@ class SendTitleItemView: BaseActionItemView {
 
         let qrImageView = TintImageView(image: UIImage(named: "Scan QR Icon"), tintColor: .black, selectedTintColor: .gray)
         scanQRButton.delegate = qrImageView
+        scanQRButton.handleTouch = item?.onQRScan
         addSubview(scanQRButton)
         scanQRButton.snp.makeConstraints { maker in
             maker.top.trailing.bottom.equalToSuperview()
@@ -37,9 +38,8 @@ class SendTitleItemView: BaseActionItemView {
 
     override func updateView() {
         super.updateView()
-        scanQRButton.handleTouch = item?.onQRScan
         if let item = item {
-            titleLabel.text = "\("send.title".localized)\(item.coinCode)"
+            titleLabel.text = item.title
         }
     }
 

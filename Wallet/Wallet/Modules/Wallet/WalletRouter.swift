@@ -11,7 +11,9 @@ extension WalletRouter: IWalletRouter {
     }
 
     func onSend(forAdapterId adapterId: String) {
-        SendRouter.module(coin: Bitcoin()).show(fromController: viewController)
+        if let adapter = AdapterManager.shared.adapters.first(where: { adapterId == $0.id }) {
+            SendRouter.module(adapter: adapter).show(fromController: viewController)
+        }
     }
 
 }

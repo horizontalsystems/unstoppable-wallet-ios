@@ -19,15 +19,19 @@ class SendInteractor {
 
     weak var delegate: ISendInteractorDelegate?
 
-    var coin: Coin
+    var adapter: IAdapter
 
-    init(coin: Coin) {
-        self.coin = coin
+    init(adapter: IAdapter) {
+        self.adapter = adapter
     }
 
 }
 
 extension SendInteractor: ISendInteractor {
+
+    func getCoinCode() -> String {
+        return adapter.coin.code
+    }
 
     func getBaseCurrency() -> String {
         print("getBaseCurrency")
@@ -44,7 +48,7 @@ extension SendInteractor: ISendInteractor {
 //            self?.didFetchExchangeRates($0)
 //        })
         let rate = ExchangeRate()
-        rate.code = coin.code
+        rate.code = adapter.coin.code
         rate.value = 5000
         delegate?.didFetchExchangeRate(exchangeRate: rate.value)
     }
@@ -55,9 +59,9 @@ extension SendInteractor: ISendInteractor {
 //        }
     }
 
-    func send(coinCode: String, address: String, amount: Double) {
+    func send(address: String, amount: Double) {
         do {
-            try AdapterManager.shared.adapters.first?.send(to: address, value: Int(amount * 100000000))
+            try adapter.send(to: address, value: Int(amount * 100000000))
             delegate?.didSend()
         } catch {
             delegate?.didFailToSend(error: error)

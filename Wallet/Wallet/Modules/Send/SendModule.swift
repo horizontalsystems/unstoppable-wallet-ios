@@ -1,6 +1,7 @@
 import UIKit
 
 protocol ISendView: class {
+    func setTitle(_ title: String?)
     func setAddress(_ address: String?)
     func setCurrency(code: String)
     func setAmount(amount: String?)
@@ -25,10 +26,11 @@ protocol ISendViewDelegate {
 }
 
 protocol ISendInteractor {
+    func getCoinCode() -> String
     func getBaseCurrency() -> String
     func getCopiedText() -> String?
     func fetchExchangeRate()
-    func send(coinCode: String, address: String, amount: Double)
+    func send(address: String, amount: Double)
     func isValid(address: String?) -> Bool
 }
 

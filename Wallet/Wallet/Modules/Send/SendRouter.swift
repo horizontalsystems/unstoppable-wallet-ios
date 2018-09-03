@@ -18,13 +18,13 @@ extension SendRouter: ISendRouter {
 
 extension SendRouter {
 
-    static func module(coin: Coin) -> ActionSheetController {
+    static func module(adapter: IAdapter) -> ActionSheetController {
         let router = SendRouter()
-        let interactor = SendInteractor(coin: coin)
-        let presenter = SendPresenter(interactor: interactor, router: router, coinCode: coin.code)
+        let interactor = SendInteractor(adapter: adapter)
+        let presenter = SendPresenter(interactor: interactor, router: router)
         interactor.delegate = presenter
 
-        let sendAlertModel = SendAlertModel(viewDelegate: presenter, coin: coin)
+        let sendAlertModel = SendAlertModel(viewDelegate: presenter)
         router.view = sendAlertModel
         presenter.view = sendAlertModel
         

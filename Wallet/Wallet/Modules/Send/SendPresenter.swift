@@ -17,10 +17,11 @@ class SendPresenter {
 
     var coinCode: String
 
-    init(interactor: ISendInteractor, router: ISendRouter, coinCode: String) {
-        self.coinCode = coinCode
+    init(interactor: ISendInteractor, router: ISendRouter) {
         self.interactor = interactor
         self.router = router
+
+        coinCode = interactor.getCoinCode()
         baseCurrencyCode = interactor.getBaseCurrency()
     }
 
@@ -71,6 +72,7 @@ extension SendPresenter: ISendViewDelegate {
         updateAmounts()
 
         interactor.fetchExchangeRate()
+        view?.setTitle("\("send.title".localized)\(interactor.getCoinCode())")
     }
 
     func onViewDidAppear() {
@@ -92,7 +94,7 @@ extension SendPresenter: ISendViewDelegate {
 
     func onSendClick(address: String?) {
         if let cryptoAmount = cryptoAmount, let address = address {
-            interactor.send(coinCode: coinCode, address: address, amount: cryptoAmount)
+            interactor.send(address: address, amount: cryptoAmount)
         }
     }
 
