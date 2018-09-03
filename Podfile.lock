@@ -78,7 +78,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   WalletKit:
-    :commit: ae6931c5bc80c06d082829a2c54bed6339dbb458
+    :commit: 6206e167cf97272a5f9d3b7f87495cd369e89321
     :git: https://github.com/horizontalsystems/WalletKit-iOS.git
 
 SPEC CHECKSUMS:
@@ -97,7 +97,7 @@ SPEC CHECKSUMS:
   SectionsTableViewKit: 0aaeae49acb88b9cff005d0e2dc1ba488039590d
   SipHash: fad90a4683e420c52ef28063063dbbce248ea6d4
   SnapKit: a42d492c16e80209130a3379f73596c3454b7694
-  WalletKit: b0fabf235c1bcf44c15715b6cd36a2b1edf4a4ab
+  WalletKit: 9db03061940fb3419560b9c16310fbc2e386243d
 
 PODFILE CHECKSUM: dcc23b79072e0db6a5067f0fdce33a128b53d569
 
