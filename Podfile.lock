@@ -78,7 +78,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   WalletKit:
-    :commit: ae6931c5bc80c06d082829a2c54bed6339dbb458
+    :commit: f998acb86bd813d323dc4d5e59523f4a0270a024
     :git: https://github.com/horizontalsystems/WalletKit-iOS.git
 
 SPEC CHECKSUMS:
