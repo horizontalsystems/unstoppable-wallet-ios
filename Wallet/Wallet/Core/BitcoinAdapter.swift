@@ -20,13 +20,15 @@ class BitcoinAdapter {
         }
     }
 
-    init(words: [String], networkType: WalletKit.NetworkType = .mainNet) {
+    init(words: [String], networkType: WalletKit.NetworkType) {
         wordsHash = words.joined()
 
         switch networkType {
-        case .mainNet: coin = Bitcoin()
-        case .testNet: coin = Bitcoin(networkSuffix: "T")
-        case .regTest: coin = Bitcoin(networkSuffix: "R")
+        case .bitcoinMainNet: coin = Bitcoin()
+        case .bitcoinTestNet: coin = Bitcoin(prefix: "t")
+        case .bitcoinRegTest: coin = Bitcoin(prefix: "r")
+        case .bitcoinCashMainNet: coin = BitcoinCash()
+        case .bitcoinCashTestNet: coin = BitcoinCash(prefix: "t")
         }
 
         let realmFileName = "\(wordsHash)-\(coin.code).realm"

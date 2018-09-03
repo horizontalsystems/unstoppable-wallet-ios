@@ -10,10 +10,8 @@ class AdapterManager {
     var subject = PublishSubject<Void>()
 
     func initAdapters(words: [String]) {
-//        adapters.append(BitcoinAdapter(words: words))
-//        adapters.append(BitcoinAdapter(words: words, networkType: .testNet))
-        adapters.append(BitcoinAdapter(words: words, networkType: .regTest))
-        adapters.append(BitcoinAdapter(words: ["black", "correct", "snap", "west", "clever", "knock", "honey", "head", "divide", "admit", "file", "swarm"], networkType: .testNet))
+        adapters.append(BitcoinAdapter(words: words, networkType: .bitcoinRegTest))
+        adapters.append(BitcoinAdapter(words: words, networkType: .bitcoinCashTestNet))
 
         start()
     }

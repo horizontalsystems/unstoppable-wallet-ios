@@ -13,10 +13,6 @@ class Factory {
         return RandomProvider()
     })}
 
-    var coinManager: CoinManager { return getInstance(creator: {
-        return CoinManager()
-    })}
-
     private func getInstance<T>(name: String? = nil, creator: () -> T) -> T {
         let className = name ?? String(describing: T.self)
 

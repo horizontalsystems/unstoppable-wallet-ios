@@ -24,7 +24,7 @@ extension TransactionInfoRouter {
 
     static func module(controller: UIViewController?, transaction: TransactionRecordViewItem, coinCode: String, txHash: String) {
         let router = TransactionInfoRouter()
-        let interactor = TransactionInfoInteractor(transaction: transaction, coinManager: CoinManager())
+        let interactor = TransactionInfoInteractor(transaction: transaction)
         let presenter = TransactionInfoPresenter(interactor: interactor, router: router, coinCode: coinCode, transactionHash: txHash)
         interactor.delegate = presenter
 

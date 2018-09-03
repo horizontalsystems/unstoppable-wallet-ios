@@ -7,11 +7,11 @@ class ExchangeRateManager {
     let subject = PublishSubject<[String: Double]>()
 
     var exchangeRates: [String: Double] {
-        return ["BTC-R": 1000]
+        return ["rBTC": 1000]
     }
 
     func updateRates() {
-        subject.onNext(["BTC-R": 3000])
+        subject.onNext(["rBTC": 3000])
     }
 
 }

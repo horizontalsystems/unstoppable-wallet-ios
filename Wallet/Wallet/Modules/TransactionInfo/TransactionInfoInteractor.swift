@@ -7,13 +7,10 @@ class TransactionInfoInteractor {
 
     weak var delegate: ITransactionInfoInteractorDelegate?
 
-    private let coinManager: CoinManager
-
     private let transaction: TransactionRecordViewItem
 
-    init(transaction: TransactionRecordViewItem, coinManager: CoinManager) {
+    init(transaction: TransactionRecordViewItem) {
         self.transaction = transaction
-        self.coinManager = coinManager
     }
 
 }

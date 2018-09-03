@@ -2,24 +2,18 @@ import Foundation
 
 class Bitcoin: Coin {
 
-    private let networkSuffix: String?
+    private let prefix: String
 
-    init(networkSuffix: String? = nil) {
-        self.networkSuffix = networkSuffix
+    init(prefix: String = "") {
+        self.prefix = prefix
     }
 
     override var name: String {
-        if let suffix = networkSuffix {
-            return "Bitcoin-\(suffix)"
-        }
-        return "Bitcoin"
+        return "\(prefix)Bitcoin"
     }
 
     override var code: String {
-        if let suffix = networkSuffix {
-            return "BTC-\(suffix)"
-        }
-        return "BTC"
+        return "\(prefix)BTC"
     }
 
 }
