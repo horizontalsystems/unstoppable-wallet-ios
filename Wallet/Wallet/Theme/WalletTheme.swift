@@ -12,7 +12,7 @@ class WalletTheme {
     static let cellTitleFont = UIFont.cryptoHeadline
     static let cellTitleColor = UIColor.white
     static let cellSubtitleFont = UIFont.cryptoCaption1
-    static let buttonsTopMargin: CGFloat = 16
+    static let buttonsTopMargin: CGFloat = 10
     static let receiveButtonBackground = UIColor.cryptoGreen
     static let buttonsTextColor = UIColor.black
     static let selectedButtonsTextColor = UIColor.gray
