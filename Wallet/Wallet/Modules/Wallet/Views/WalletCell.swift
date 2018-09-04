@@ -1,4 +1,5 @@
 import UIKit
+import GrouviExtensions
 import GrouviHUD
 import RxSwift
 
@@ -7,6 +8,7 @@ class WalletCell: UITableViewCell {
 
     var roundedBackground = UIView()
 
+    var coinIconImageView = TintImageView(image: nil, tintColor: WalletTheme.coinIconTintColor, selectedTintColor: WalletTheme.coinIconTintColor)
     var nameLabel = UILabel()
     var valueLabel = UILabel()
     var coinAmountLabel = UILabel()
@@ -35,10 +37,17 @@ class WalletCell: UITableViewCell {
         roundedBackground.clipsToBounds = true
         roundedBackground.layer.cornerRadius = WalletTheme.roundedBackgroundCornerRadius
 
-        roundedBackground.addSubview(nameLabel)
-        nameLabel.snp.makeConstraints { maker in
+        roundedBackground.addSubview(coinIconImageView)
+        coinIconImageView.snp.makeConstraints { maker in
             maker.leading.equalToSuperview().offset(WalletTheme.cellBigMargin)
             maker.top.equalToSuperview().offset(WalletTheme.cellSmallMargin)
+            maker.size.equalTo(WalletTheme.coinIconSide)
+        }
+
+        roundedBackground.addSubview(nameLabel)
+        nameLabel.snp.makeConstraints { maker in
+            maker.leading.equalTo(self.coinIconImageView.snp.trailing).offset(WalletTheme.cellSmallMargin)
+            maker.top.equalToSuperview().offset(WalletTheme.nameTopMargin)
         }
         nameLabel.font = WalletTheme.cellTitleFont
         nameLabel.textColor = WalletTheme.cellTitleColor
@@ -46,7 +55,7 @@ class WalletCell: UITableViewCell {
         roundedBackground.addSubview(valueLabel)
         valueLabel.snp.makeConstraints { maker in
             maker.leading.equalToSuperview().offset(WalletTheme.cellBigMargin)
-            maker.top.equalTo(self.nameLabel.snp.bottom).offset(WalletTheme.cellSmallMargin)
+            maker.top.equalTo(self.nameLabel.snp.bottom).offset(WalletTheme.valueTopMargin)
         }
         valueLabel.font = WalletTheme.cellSubtitleFont
 
@@ -123,13 +132,15 @@ class WalletCell: UITableViewCell {
     }
 
     func bindView(balance: WalletBalanceViewItem, selected: Bool, animated: Bool = false) {
+        coinIconImageView.image = UIImage(named: "\(balance.coinValue.coin.code) Icon")
+
         receiveButton.set(hidden: !selected, animated: animated, duration: WalletTheme.buttonsAnimationDuration)
         payButton.set(hidden: !selected, animated: animated, duration: WalletTheme.buttonsAnimationDuration)
 
         nameLabel.text = "\(balance.coinValue.coin.name) (\(balance.coinValue.coin.code))"
         valueLabel.text = balance.currencyValue.map { CurrencyHelper.instance.formattedValue(for: $0) } ?? "n/a"
         valueLabel.textColor = (balance.currencyValue?.value ?? 0) > 0 ? WalletTheme.nonZeroBalanceTextColor : WalletTheme.zeroBalanceTextColor
-        coinAmountLabel.text = CoinValueHelper.formattedAmount(for: balance.coinValue)
+        coinAmountLabel.text = "\(balance.coinValue.value)"
     }
 
     func unbind() {
