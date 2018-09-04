@@ -100,7 +100,7 @@ class SettingsViewController: UIViewController, SectionsDataSource {
         }))
         let infoFooter: ViewState<SettingsInfoFooter> = .cellType(hash: "info_view", binder: { view in
             view.logoButton.handleTouch = {
-                UIApplication.shared.open(URL(string: "http://github.com/horizontalsystems/")!)
+                UIApplication.shared.open(URL(string: "http://horizontalsystems.io/")!)
             }
         }, dynamicHeight: { _ in SettingsTheme.infoFooterHeight })
         sections.append(Section(id: "appearance_settings", headerState: .marginColor(height: SettingsTheme.headerHeight, color: .clear), footerState: infoFooter, rows: aboutRows))

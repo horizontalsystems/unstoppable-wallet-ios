@@ -19,7 +19,8 @@ target :Bank do
 
   pod 'GrouviExtensions'
   pod 'GrouviActionSheet'
-  pod 'GrouviHUD' #, :path => '../GrouviHUD'
+  pod 'GrouviHUD', git: 'https://github.com/horizontalsystems/GrouviHUD.git', branch: 'master'
+  # pod 'GrouviHUD', :path => '../GrouviHUD'
   pod 'SectionsTableViewKit' #, :path => '../SectionsTableViewKit'
 
   pod 'RxCocoa'

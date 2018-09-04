@@ -12,8 +12,9 @@ class WalletCell: UITableViewCell {
     var nameLabel = UILabel()
     var valueLabel = UILabel()
     var coinAmountLabel = UILabel()
-    var spinnerView = HUDProgressView(strokeLineWidth: WalletTheme.spinnerLineWidth, radius: WalletTheme.spinnerSideSize / 2 - WalletTheme.spinnerLineWidth / 2, strokeColor: UIColor.cryptoGray)
-    var progressLabel = UILabel()
+
+    var spinnerView = HUDProgressView(progress: 0.01, strokeLineWidth: WalletTheme.spinnerLineWidth, radius: WalletTheme.spinnerSideSize / 2 - WalletTheme.spinnerLineWidth / 2, strokeColor: UIColor.cryptoGray)
+    var smoothChanger: SmoothValueChanger?
 
     var receiveButton = RespondButton()
     var payButton = RespondButton()
@@ -69,18 +70,21 @@ class WalletCell: UITableViewCell {
         coinAmountLabel.textColor = WalletTheme.cellTitleColor
         coinAmountLabel.textAlignment = .right
 
+        smoothChanger = SmoothValueChanger(initialValue: 0, fullChangeTime: 0.5, onChangeValue: { [weak self] progress in
+            self?.spinnerView.set(progress: progress)
+        }, onFinishChanging: { [weak self] progress in
+            if progress >= 1 {
+                self?.spinnerView.isHidden = true
+            }
+        })
+        spinnerView.isHidden = true
+        spinnerView.set(valueChanger: smoothChanger)
         roundedBackground.addSubview(spinnerView)
         spinnerView.snp.makeConstraints { maker in
             maker.top.equalToSuperview().offset(WalletTheme.cellSmallMargin)
             maker.trailing.equalToSuperview().offset(-WalletTheme.cellBigMargin)
             maker.size.equalTo(WalletTheme.spinnerSideSize)
         }
-        roundedBackground.addSubview(progressLabel)
-        progressLabel.snp.makeConstraints { maker in
-            maker.center.equalTo(spinnerView)
-        }
-        progressLabel.font = .cryptoCaption3
-        progressLabel.textColor = .cryptoGray
 
         roundedBackground.addSubview(receiveButton)
         receiveButton.snp.makeConstraints { maker in
@@ -111,22 +115,19 @@ class WalletCell: UITableViewCell {
         fatalError("not implemented")
     }
 
-    func bind(balance: WalletBalanceViewItem, showSpinner: Bool, selected: Bool, animated: Bool = false, onReceive: @escaping (() -> ()), onPay: @escaping (() -> ())) {
+    func bind(balance: WalletBalanceViewItem, selected: Bool, animated: Bool = false, onReceive: @escaping (() -> ()), onPay: @escaping (() -> ())) {
         self.onPay = onPay
         self.onReceive = onReceive
-//        spinnerView.isHidden = !showSpinner
-        spinnerView.isHidden = true
-        if showSpinner {
-            spinnerView.startAnimating()
-        } else {
-            spinnerView.stopAnimating()
-        }
 
+        let spinnerView = self.spinnerView
         progressDisposable = balance.progressSubject?
                 .observeOn(MainScheduler.instance)
                 .subscribe(onNext: { [weak self] progress in
-                    self?.progressLabel.isHidden = progress == 1
-                    self?.progressLabel.text = "\(Int(progress * 100))%"
+                    if progress < 1, spinnerView.isHidden {
+                        spinnerView.startAnimating()
+                        spinnerView.isHidden = false
+                    }
+                    self?.smoothChanger?.set(value: Float(progress))
                 })
         bindView(balance: balance, selected: selected, animated: animated)
     }
