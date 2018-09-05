@@ -80,8 +80,8 @@ class SettingsViewController: UIViewController, SectionsDataSource {
         appearanceRows.append(Row<SettingsCell>(id: "language", hash: "language", height: SettingsTheme.cellHeight, bind: { cell, _ in
             cell.selectionStyle = .default
             cell.bind(titleIcon: UIImage(named: "Language Icon"), title: "settings.cell.language".localized, showDisclosure: true)
-        }, action: { _ in
-            print("tap language")
+        }, action: { [weak self] _ in
+            self?.navigationController?.pushViewController(SettingsLanguageController(), animated: true)
         }))
         appearanceRows.append(Row<SettingsToggleCell>(id: "light_mode", hash: "light_mode", height: SettingsTheme.cellHeight, bind: { cell, _ in
             cell.selectionStyle = .none
