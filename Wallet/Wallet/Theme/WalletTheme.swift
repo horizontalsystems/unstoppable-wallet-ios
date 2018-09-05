@@ -33,6 +33,7 @@ class WalletTheme {
     static let zeroBalanceTextColor = UIColor.cryptoWhite50
     static let spinnerSideSize: CGFloat = 16
     static let coinIconSide: CGFloat = 24
-    static let nameTopMargin: CGFloat = 12
+    static let nameTopMargin: CGFloat = 10
     static let valueTopMargin: CGFloat = 13
+    static let coinLabelVerticalOffset: CGFloat = 1
 }

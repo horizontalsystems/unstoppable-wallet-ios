@@ -63,7 +63,7 @@ class WalletCell: UITableViewCell {
         roundedBackground.addSubview(coinAmountLabel)
         coinAmountLabel.snp.makeConstraints { maker in
             maker.leading.equalTo(self.valueLabel.snp.trailing).offset(WalletTheme.cellSmallMargin)
-            maker.centerY.equalTo(self.valueLabel)
+            maker.bottom.equalTo(self.valueLabel).offset(WalletTheme.coinLabelVerticalOffset)
             maker.trailing.equalToSuperview().offset(-WalletTheme.cellBigMargin)
         }
         coinAmountLabel.font = WalletTheme.cellTitleFont
