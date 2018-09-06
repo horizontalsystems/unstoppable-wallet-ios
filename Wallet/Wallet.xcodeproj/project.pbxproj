@@ -1723,8 +1723,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = io.horizontalsystems.bank.dev;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "6eea8163-fda3-48de-8a7b-d97aa6f44afc";
-				PROVISIONING_PROFILE_SPECIFIER = "Bank Dev AdHoc";
+				PROVISIONING_PROFILE = "69275edb-e1aa-4be9-a049-c740a2c46174";
+				PROVISIONING_PROFILE_SPECIFIER = "io.horizontalsystems.bank.dev AdHoc";
 				SWIFT_OBJC_BRIDGING_HEADER = "Wallet/Wallet-Bridging-Header.h";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 1;
