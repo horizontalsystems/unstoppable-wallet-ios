@@ -10,7 +10,7 @@ class WalletTheme {
     static let coinIconTintColor = UIColor.cryptoGray
     static let spinnerLineWidth: CGFloat = 2
     static let cellTitleFont = UIFont.cryptoHeadline
-    static let cellTitleColor = UIColor.white
+    static var cellTitleColor: UIColor { return .cryptoThemedWhite }
     static let cellSubtitleFont = UIFont.cryptoCaption1
     static let buttonsTopMargin: CGFloat = 10
     static let receiveButtonBackground = UIColor.cryptoGreen
@@ -25,7 +25,8 @@ class WalletTheme {
     static let headerHeight: CGFloat = 44
     static let buttonsAnimationDuration = 0.2
 
-    static let roundedBackgroundColor = UIColor.cryptoSteel20
+    static var roundedBackgroundColor: UIColor { return .cryptoThemedSteel20 }
+    static var headerSeparatorBackground: UIColor { return .cryptoSteel20 }
     static let roundedBackgroundCornerRadius: CGFloat = 15
     static let cellButtonFont = UIFont.cryptoHeadline
 

@@ -11,11 +11,11 @@ class SettingsCell: UITableViewCell {
 
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        backgroundColor = .clear
-        contentView.backgroundColor = SettingsTheme.cellBackground
+        backgroundColor = SettingsTheme.cellBackground
+        contentView.backgroundColor = .clear
         separatorInset.left = 0
 
-        selectView.backgroundColor = SettingsTheme.cellBackground
+        selectView.backgroundColor = SettingsTheme.cellSelectBackground
         contentView.addSubview(selectView)
         selectView.snp.makeConstraints { maker in
             maker.edges.equalToSuperview()
@@ -42,7 +42,7 @@ class SettingsCell: UITableViewCell {
             maker.size.equalTo(SettingsTheme.disclosureSize)
         }
 
-        separator.backgroundColor = SettingsTheme.cellBackground
+        separator.backgroundColor = SettingsTheme.cellSelectBackground
         contentView.addSubview(separator)
         separator.snp.makeConstraints { maker in
             maker.leading.equalToSuperview().offset(SettingsTheme.separatorInset + self.layoutMargins.left * 2)

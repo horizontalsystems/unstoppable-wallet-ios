@@ -10,7 +10,7 @@ class SettingsLanguageController: UIViewController, SectionsDataSource {
         super.init(nibName: nil, bundle: nil)
         tableView.registerCell(forClass: LanguageCell.self)
         tableView.sectionDataSource = self
-        tableView.separatorColor = SettingsTheme.cellBackground
+        tableView.separatorColor = SettingsTheme.cellSelectBackground
 
         hidesBottomBarWhenPushed = true
     }

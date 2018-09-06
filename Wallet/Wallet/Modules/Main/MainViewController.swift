@@ -19,7 +19,7 @@ class MainViewController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        tabBar.barStyle = .black
+        tabBar.barStyle = AppTheme.tabBarStyle
         tabBar.tintColor = .cryptoYellow
         tabBar.unselectedItemTintColor = .cryptoGray
     }

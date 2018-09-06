@@ -31,24 +31,24 @@ extension MainRouter {
 
     private static var walletNavigation: UIViewController {
         let navigation = UINavigationController(rootViewController: WalletRouter.module())
-        navigation.navigationBar.barStyle = .blackTranslucent
-        navigation.navigationBar.tintColor = .cryptoYellow
+        navigation.navigationBar.barStyle = AppTheme.navigationBarStyle
+        navigation.navigationBar.tintColor = AppTheme.navigationBarTintColor
         navigation.navigationBar.prefersLargeTitles = true
         return navigation
     }
 
     private static var transactionsNavigation: UIViewController {
         let navigation = UINavigationController(rootViewController: TransactionsRouter.module())
-        navigation.navigationBar.barStyle = .blackTranslucent
-        navigation.navigationBar.tintColor = .cryptoYellow
+        navigation.navigationBar.barStyle = AppTheme.navigationBarStyle
+        navigation.navigationBar.tintColor = AppTheme.navigationBarTintColor
         navigation.navigationBar.prefersLargeTitles = true
         return navigation
     }
 
     private static var settingsNavigation: UIViewController {
         let navigation = UINavigationController(rootViewController: SettingsRouter.module())
-        navigation.navigationBar.barStyle = .blackTranslucent
-        navigation.navigationBar.tintColor = .cryptoYellow
+        navigation.navigationBar.barStyle = AppTheme.navigationBarStyle
+        navigation.navigationBar.tintColor = AppTheme.navigationBarTintColor
         navigation.navigationBar.prefersLargeTitles = true
         return navigation
     }

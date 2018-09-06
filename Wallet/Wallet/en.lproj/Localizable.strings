@@ -38,7 +38,7 @@
 "wallet.title" = "Balance";
 "wallet.tab_bar_item" = "Balance";
 "wallet.send" = "Send";
-"wallet.deposit" = "Deposit";
+"wallet.deposit" = "Receive";
 
 "send.title" = "Send ";
 "send.address_placeholder" = "Address";

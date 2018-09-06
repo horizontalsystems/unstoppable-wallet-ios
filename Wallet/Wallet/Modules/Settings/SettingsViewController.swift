@@ -85,8 +85,14 @@ class SettingsViewController: UIViewController, SectionsDataSource {
         }))
         appearanceRows.append(Row<SettingsToggleCell>(id: "light_mode", hash: "light_mode", height: SettingsTheme.cellHeight, bind: { cell, _ in
             cell.selectionStyle = .none
-            cell.bind(titleIcon: UIImage(named: "Light Mode Icon"), title: "settings.cell.light_mode".localized, isOn: false, showDisclosure: false, last: true, onToggle: {
-                print("on toggle light mode")
+            cell.bind(titleIcon: UIImage(named: "Light Mode Icon"), title: "settings.cell.light_mode".localized, isOn: UserDefaultsStorage.shared.lightMode, showDisclosure: false, last: true, onToggle: { isOn in
+                UserDefaultsStorage.shared.lightMode = isOn
+
+                if let window = UIApplication.shared.keyWindow {
+                    UIView.transition(with: window, duration: 0.3, options: .transitionCrossDissolve, animations: {
+                        window.rootViewController = LaunchRouter.module()
+                    })
+                }
             })
         }))
         sections.append(Section(id: "appearance_settings", headerState: .marginColor(height: SettingsTheme.headerHeight, color: .clear), rows: appearanceRows))

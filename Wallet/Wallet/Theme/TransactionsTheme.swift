@@ -4,12 +4,13 @@ class TransactionsTheme {
     static let infoIconTintColor = UIColor.cryptoSteel20
     static let infoIconHighlightedTintColor = UIColor.cryptoWhite50
     static let dateLabelFont = UIFont.cryptoBody2
-    static let dateLabelTextColor = UIColor.cryptoSilver
+    static var dateLabelTextColor: UIColor { return .cryptoThemedSilver }
     static let statusLabelTextColor = UIColor.gray
     static let amountLabelFont = UIFont.cryptoTitle4
     static let incomingTextColor = UIColor.cryptoGreen
     static let outgoingTextColor = UIColor.cryptoYellow
     static let cellHeight: CGFloat = 72
+    static var cellBackground: UIColor { return .cryptoThemedClearBackground }
     static let cellMediumMargin: CGFloat = 12
     static let cellSmallMargin: CGFloat = 8
     static let cellHighlightBackgroundColor = UIColor.cryptoSteel20
@@ -22,6 +23,7 @@ class TransactionsTheme {
     static let statusTopMargin: CGFloat = 13
     static let avatarSize = CGSize(width: 40, height: 40)
     static let timeLabelFont = UIFont.cryptoCaption1
+    static var headerSeparatorBackground: UIColor { return .cryptoSteel20 }
     static let timeLabelTextColor = UIColor.cryptoGray
 }
                         

@@ -7,6 +7,8 @@ class TransactionCurrenciesHeaderView: UIVisualEffectView, UICollectionViewDeleg
     var collectionView: UICollectionView
     var onSelectAdapterId: ((String?) -> ())?
 
+    let separatorView = UIView()
+
     init() {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
@@ -25,6 +27,14 @@ class TransactionCurrenciesHeaderView: UIVisualEffectView, UICollectionViewDeleg
         contentView.addSubview(collectionView)
         collectionView.snp.makeConstraints { maker in
             maker.edges.equalToSuperview()
+        }
+
+        contentView.addSubview(separatorView)
+        separatorView.backgroundColor = TransactionsTheme.headerSeparatorBackground
+        separatorView.snp.makeConstraints { maker in
+            maker.leading.trailing.bottom.equalToSuperview()
+//            maker.height.equalTo(1 / UIScreen.main.scale)
+            maker.height.equalTo(1)
         }
     }
 
