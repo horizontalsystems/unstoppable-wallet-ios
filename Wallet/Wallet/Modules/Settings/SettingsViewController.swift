@@ -59,8 +59,8 @@ class SettingsViewController: UIViewController, SectionsDataSource {
         appSettingsRows.append(Row<SettingsRightImageCell>(id: "security_center", hash: "security_center", height: SettingsTheme.cellHeight, bind: { cell, _ in
             cell.selectionStyle = .default
             cell.bind(titleIcon: UIImage(named: "Security Icon"), title: "settings.cell.security_center".localized, rightImage: UIImage(named: "Attention Icon"), showDisclosure: true)
-        }, action: { _ in
-            print("tap security center")
+        }, action: { [weak self] _ in
+            self?.navigationController?.pushViewController(SecurityCenterController(), animated: true)
         }))
         appSettingsRows.append(Row<SettingsCell>(id: "import_wallet", hash: "import_wallet", height: SettingsTheme.cellHeight, bind: { cell, _ in
             cell.selectionStyle = .default
@@ -133,13 +133,6 @@ class SettingsViewController: UIViewController, SectionsDataSource {
             self?.connectToPeer()
             self?.tableView.deselectRow(at: self!.tableView.indexPathForSelectedRow!, animated: true)
         }))
-        debugRows.append(Row<SettingsCell>(id: "debug_backup", hash: "debug_backup", height: SettingsTheme.cellHeight, bind: { cell, _ in
-            cell.selectionStyle = .default
-            cell.bind(titleIcon: UIImage(named: "Bug Icon"), title: "Backup", showDisclosure: false)
-        }, action: { [weak self] _ in
-            self?.backup()
-            self?.tableView.deselectRow(at: self!.tableView.indexPathForSelectedRow!, animated: true)
-        }))
         sections.append(Section(id: "debug_section", headerState: .marginColor(height: 50, color: .clear), footerState: .marginColor(height: 20, color: .clear), rows: debugRows))
 
         return sections
@@ -169,10 +162,6 @@ class SettingsViewController: UIViewController, SectionsDataSource {
 
     @IBAction func connectToPeer() {
         AdapterManager.shared.start()
-    }
-
-    @IBAction func backup() {
-        present(BackupRouter.module(dismissMode: .dismissSelf), animated: true)
     }
 
 }

@@ -20,9 +20,10 @@ class SettingsTheme {
     static var languageTitleColor: UIColor { return .cryptoThemedWhite }
     static let versionLabelTopMargin: CGFloat = 32
     static let separatorInset: CGFloat = SettingsTheme.cellIconSize.width + SettingsTheme.cellBigMargin
+    static let securityCellHeight: CGFloat = 44
     static let versionFont = UIFont.cryptoCaption3
     static let versionColor = UIColor.cryptoGray
-    static let languageHeaderHeight: CGFloat = 16
+    static let subSettingsHeaderHeight: CGFloat = 16
     static let languageSubtitleFont = UIFont.cryptoCaption
     static let topHeaderHeight: CGFloat = 32
     static let languageSubtitleColor = UIColor.cryptoGray

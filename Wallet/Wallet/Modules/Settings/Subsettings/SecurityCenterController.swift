@@ -1,14 +1,12 @@
 import UIKit
 import SectionsTableViewKit
 
-class SettingsLanguageController: UIViewController, SectionsDataSource {
-    var availableLanguages = Bundle.main.localizations
-
+class SecurityCenterController: UIViewController, SectionsDataSource {
     let tableView = SectionsTableView(style: .grouped)
 
     init() {
         super.init(nibName: nil, bundle: nil)
-        tableView.registerCell(forClass: LanguageCell.self)
+        tableView.registerCell(forClass: SecurityCell.self)
         tableView.sectionDataSource = self
         tableView.separatorColor = SettingsTheme.cellSelectBackground
 
@@ -27,7 +25,7 @@ class SettingsLanguageController: UIViewController, SectionsDataSource {
             maker.edges.equalToSuperview()
         }
 
-        title = "settings_language.title".localized
+        title = "settings_security.title".localized
 
         view.backgroundColor = AppTheme.controllerBackground
 
@@ -37,13 +35,19 @@ class SettingsLanguageController: UIViewController, SectionsDataSource {
     func buildSections() -> [SectionProtocol] {
         var sections = [SectionProtocol]()
 
-        sections.append(Section(id: "languages", headerState: .margin(height: SettingsTheme.subSettingsHeaderHeight), footerState: .margin(height: SettingsTheme.subSettingsHeaderHeight), rows: availableLanguages.map { language in
-            Row<LanguageCell>(id: language, height: SettingsTheme.languageCellHeight, bind: { cell, _ in
-                cell.bind(title: LocalizationHelper.displayName(forLanguage: language), subtitle: LocalizationHelper.displayName(forLanguage: language, locale: NSLocale(localeIdentifier: language)), selected: LocalizationHelper.instance.language == language)
-            }, action: { [weak self] _ in
-                self?.applyLanguage(language: language)
-            })
+        var rows = [RowProtocol]()
+        rows.append(Row<SecurityCell>(id: "pin_touch_id", height: SettingsTheme.securityCellHeight, bind: { cell, _ in
+            cell.bind(title: "settings_security.pin_touch_id".localized, checked: true)
+        }, action: { _ in
+            print("on pin")
         }))
+        rows.append(Row<SecurityCell>(id: "paper_key", height: SettingsTheme.securityCellHeight, bind: { cell, _ in
+            cell.bind(title: "settings_security.paper_key".localized, checked: false)
+        }, action: { [weak self] _ in
+            self?.tableView.deselectRow(at: self!.tableView.indexPathForSelectedRow!, animated: true)
+            self?.present(BackupRouter.module(dismissMode: .dismissSelf), animated: true)
+        }))
+        sections.append(Section(id: "security", headerState: .margin(height: SettingsTheme.subSettingsHeaderHeight), footerState: .margin(height: SettingsTheme.subSettingsHeaderHeight), rows: rows))
 
         return sections
     }
