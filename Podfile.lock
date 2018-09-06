@@ -83,7 +83,7 @@ CHECKOUT OPTIONS:
     :commit: 45f888e657b82af751a42e5824ee5bc9f06d9488
     :git: https://github.com/horizontalsystems/GrouviHUD.git
   WalletKit:
-    :commit: 6206e167cf97272a5f9d3b7f87495cd369e89321
+    :commit: ccc26150234e17d1a521ba4185443f10d45c8bc2
     :git: https://github.com/horizontalsystems/WalletKit-iOS.git
 
 SPEC CHECKSUMS:
@@ -104,6 +104,6 @@ SPEC CHECKSUMS:
   SnapKit: a42d492c16e80209130a3379f73596c3454b7694
   WalletKit: 9db03061940fb3419560b9c16310fbc2e386243d
 
-PODFILE CHECKSUM: 9a25ed63844ed83b113e75c5a859af5f4d68d791
+PODFILE CHECKSUM: 5cb24d4e367c5660c602fef28fd9a5b99266e362
 
 COCOAPODS: 1.5.3

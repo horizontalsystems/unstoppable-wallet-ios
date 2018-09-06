@@ -3,7 +3,7 @@ lane :adhoc do |options|
   cocoapods
 
   cert(username: ENV['ITUNES_CONNECT_USERNAME'], team_id: options[:dp_team_id])
-  sigh(app_identifier: "bitcoin.wallet.dev", force: true, adhoc: true, username: ENV['ITUNES_CONNECT_USERNAME'], team_id: options[:dp_team_id])
+  sigh(app_identifier: "io.horizontalsystems.bank.dev", force: true, adhoc: true, username: ENV['ITUNES_CONNECT_USERNAME'], team_id: options[:dp_team_id])
   gym(scheme: "Wallet", export_method: "ad-hoc", clean: true, export_options: { compileBitcode: false })
 
   upload_to_hockey
