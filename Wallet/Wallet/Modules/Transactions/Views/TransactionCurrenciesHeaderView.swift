@@ -33,8 +33,7 @@ class TransactionCurrenciesHeaderView: UIVisualEffectView, UICollectionViewDeleg
         separatorView.backgroundColor = TransactionsTheme.headerSeparatorBackground
         separatorView.snp.makeConstraints { maker in
             maker.leading.trailing.bottom.equalToSuperview()
-//            maker.height.equalTo(1 / UIScreen.main.scale)
-            maker.height.equalTo(1)
+            maker.height.equalTo(1 / UIScreen.main.scale)
         }
     }
 
