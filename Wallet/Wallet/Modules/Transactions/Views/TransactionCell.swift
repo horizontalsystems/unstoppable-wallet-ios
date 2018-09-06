@@ -16,7 +16,7 @@ class TransactionCell: UITableViewCell {
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         backgroundColor = .clear
-        contentView.backgroundColor = .clear
+        contentView.backgroundColor = TransactionsTheme.cellBackground
 
         highlightBackground.backgroundColor = TransactionsTheme.cellHighlightBackgroundColor
         highlightBackground.alpha = 0

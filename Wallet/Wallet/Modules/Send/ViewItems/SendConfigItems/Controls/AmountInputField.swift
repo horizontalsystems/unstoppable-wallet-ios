@@ -21,6 +21,7 @@ class AmountInputField: UIView, UITextFieldDelegate {
         cornerRadius = SendTheme.inputCornerRadius
 
         addSubview(amountInputField)
+        amountInputField.keyboardAppearance = AppTheme.keyboardAppearance
         amountInputField.delegate = self
         amountInputField.keyboardType = .decimalPad
         amountInputField.tintColor = SendTheme.inputTintColor

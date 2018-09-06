@@ -5,6 +5,7 @@ class UserDefaultsStorage: ILocalStorage {
 
     private let keyWords = "mnemonic_words"
     private let keyCurrentLanguage = "current_language"
+    private let keyLightMode = "light_mode"
 
     var savedWords: [String]? {
         if let wordsString = UserDefaults.standard.value(forKey: keyWords) as? String {
@@ -16,6 +17,11 @@ class UserDefaultsStorage: ILocalStorage {
     public var currentLanguage: String? {
         get { return getString(keyCurrentLanguage) }
         set { setString(keyCurrentLanguage, value: newValue) }
+    }
+
+    public var lightMode: Bool {
+        get { return getBool(keyLightMode) ?? false }
+        set { setBool(keyLightMode, value: newValue) }
     }
 
     func save(words: [String]) {
@@ -38,6 +44,15 @@ class UserDefaultsStorage: ILocalStorage {
         } else  {
             UserDefaults.standard.removeObject(forKey: name)
         }
+        UserDefaults.standard.synchronize()
+    }
+
+    private func getBool(_ name: String) -> Bool? {
+        return UserDefaults.standard.value(forKey: name) as? Bool
+    }
+
+    private func setBool(_ name: String, value: Bool) {
+        UserDefaults.standard.set(value, forKey: name)
         UserDefaults.standard.synchronize()
     }
 

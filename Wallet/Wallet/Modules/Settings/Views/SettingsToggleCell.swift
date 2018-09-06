@@ -5,7 +5,7 @@ import RxCocoa
 
 class SettingsToggleCell: SettingsCell {
     var toggleView = UISwitch()
-    var onToggle: (() -> ())?
+    var onToggle: ((Bool) -> ())?
 
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -23,7 +23,7 @@ class SettingsToggleCell: SettingsCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func bind(titleIcon: UIImage?, title: String, isOn: Bool, showDisclosure: Bool, last: Bool = false, onToggle: (() -> ())? = nil) {
+    func bind(titleIcon: UIImage?, title: String, isOn: Bool, showDisclosure: Bool, last: Bool = false, onToggle: ((Bool) -> ())? = nil) {
         super.bind(titleIcon: titleIcon, title: title, showDisclosure: showDisclosure, last: last)
         self.onToggle = onToggle
         toggleView.isOn = isOn
@@ -34,7 +34,7 @@ class SettingsToggleCell: SettingsCell {
     }
 
     @objc func _onToggle() {
-        onToggle?()
+        onToggle?(toggleView.isOn)
     }
 
 }
