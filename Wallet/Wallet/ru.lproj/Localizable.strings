@@ -66,7 +66,7 @@
 "tx_info.bottom_sheet.title" = "Transaction";
 "tx_info.bottom_sheet.title_received" = "Received";
 "tx_info.bottom_sheet.title_sent" = "Sent";
-"tx_info.bottom_sheet.pending" = "PENDING";
+"tx_info.bottom_sheet.processing" = "PROCESSING";
 "tx_info.bottom_sheet.complete" = "COMPLETED";
 "tx_info.bottom_sheet.status" = "Status:";
 "tx_info.bottom_sheet.value_when_received" = "Value when received:";
@@ -82,11 +82,9 @@
 "full_transaction_info.cell.mined_time" = "Mined Time:";
 "full_transaction_info.cell.included_in_block" = "Included in Block:";
 "full_transaction_info.cell.confirmations" = "Confirmations";
-"full_transaction_info.cell.included_in_block.unconfirmed" = "Unconfirmed";
 "full_transaction_info.cell.lock_time" = "Lock Time:";
 "full_transaction_info.cell.from" = "From:";
 "full_transaction_info.cell.to" = "To:";
-"full_transaction_info.cell.fee" = "Fee:";
 "full_transaction_info.cell.received" = "Received:";
 "full_transaction_info.cell.sent" = "Sent:";
 
