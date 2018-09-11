@@ -94,7 +94,14 @@ class TransactionCell: UITableViewCell {
             fiatAmountLabel.text = "n/a"
         }
 
-        statusImageView.image = item.status == .pending ? UIImage(named: "Transaction Processing Icon") : nil
+        switch item.status {
+        case .processing:
+            statusImageView.image = UIImage(named: "Transaction Processing Icon")
+        case let .verifying(progress):
+            statusImageView.image = UIImage(named: "Transaction Processing Icon")
+        case .completed:
+            statusImageView.image = nil
+        }
     }
 
     override func setHighlighted(_ highlighted: Bool, animated: Bool) {

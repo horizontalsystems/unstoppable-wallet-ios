@@ -96,13 +96,9 @@ class FullTransactionInfoController: UIViewController, SectionsDataSource {
         rows.append(Row<FullTransactionInfoTextCell>(id: "mined_time", hash: "mined_time", height: FullTransactionInfoTheme.cellHeight, bind: { cell, _ in
             cell.bind(title: "full_transaction_info.cell.mined_time".localized, description: "N/A")
         }))
-        rows.append(Row<FullTransactionInfoTextCell>(id: "included_in_block", hash: "included_in_block", height: FullTransactionInfoTheme.cellHeight, bind: { cell, _ in
-            let confirmedString = (transaction.confirmations ?? 0) > 0 ? "#\(transaction.blockHeight ?? -1)" : "full_transaction_info.cell.included_in_block.unconfirmed".localized
-            cell.bind(title: "full_transaction_info.cell.included_in_block".localized, description: confirmedString)
-        }))
-        if let confirmations = transaction.confirmations {
+        if case let .verifying(progress) = transaction.status {
             rows.append(Row<FullTransactionInfoTextCell>(id: "confirmations", hash: "confirmations", height: FullTransactionInfoTheme.cellHeight, bind: { cell, _ in
-                cell.bind(title: "full_transaction_info.cell.confirmations".localized, description: "\(confirmations)")
+                cell.bind(title: "full_transaction_info.cell.confirmations".localized, description: "\(Int(progress * 100))%")
             }))
         }
         rows.append(Row<FullTransactionInfoTextCell>(id: "lock_time", hash: "lock_time", height: FullTransactionInfoTheme.cellHeight, bind: { cell, _ in
@@ -118,10 +114,6 @@ class FullTransactionInfoController: UIViewController, SectionsDataSource {
                 cell.bind(title: "full_transaction_info.cell.to".localized, description: transaction.to)
             }))
 //        }
-        let feeAmount = CoinValueHelper.formattedAmount(for: transaction.fee)
-        rows.append(Row<FullTransactionInfoTextCell>(id: "fee", hash: "fee", height: FullTransactionInfoTheme.cellHeight, bind: { cell, _ in
-            cell.bind(title: "full_transaction_info.cell.fee".localized, description: feeAmount)
-        }))
         let statusString = transaction.incoming ? "full_transaction_info.cell.received".localized : "full_transaction_info.cell.sent".localized
         let amountString = CoinValueHelper.formattedAmount(for: transaction.amount)
         rows.append(Row<FullTransactionInfoTextCell>(id: "sent_received", hash: "sent_received", height: FullTransactionInfoTheme.cellHeight, bind: { cell, _ in

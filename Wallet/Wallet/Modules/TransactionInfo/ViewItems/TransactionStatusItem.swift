@@ -14,10 +14,21 @@ class TransactionStatusItem: BaseActionItem {
         super.init(cellType: TransactionStatusItemView.self, tag: tag, hidden: hidden, required: required)
 
         title = "tx_info.bottom_sheet.status".localized
-        value = transaction.status == .success ? "tx_info.bottom_sheet.complete".localized : "tx_info.bottom_sheet.pending".localized
-        valueColor = transaction.status == .success ? TransactionInfoTheme.statusCompleteValueColor : TransactionInfoTheme.statusPendingValueColor
-        valueImage = transaction.status == .success ? UIImage(named: "Transaction Success Icon") : UIImage(named: "Transaction Processing Icon")
-        valueImageTintColor = transaction.status == .success ? TransactionInfoTheme.successIconTintColor : TransactionInfoTheme.processingIconTintColor
+
+        valueColor = TransactionInfoTheme.statusPendingValueColor
+        valueImageTintColor = TransactionInfoTheme.processingIconTintColor
+        valueImage = UIImage(named: "Transaction Processing Icon")
+        switch transaction.status {
+        case .processing:
+            value = "tx_info.bottom_sheet.processing".localized
+        case let .verifying(progress):
+            value = "verifying \(Int(progress * 100))%"
+        case .completed:
+            value = "tx_info.bottom_sheet.complete".localized
+            valueColor = TransactionInfoTheme.statusCompleteValueColor
+            valueImage = UIImage(named: "Transaction Success Icon")
+            valueImageTintColor = TransactionInfoTheme.successIconTintColor
+        }
     }
 
 }

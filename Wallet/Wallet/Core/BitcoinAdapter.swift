@@ -7,6 +7,7 @@ class BitcoinAdapter {
     private let walletKit: WalletKit
     private var unspentOutputsNotificationToken: NotificationToken?
     private var transactionsNotificationToken: NotificationToken?
+    private let transactionCompletionThreshold = 6
 
     let wordsHash: String
     let coin: Coin
@@ -63,51 +64,54 @@ class BitcoinAdapter {
     }
 
     private func transactionRecord(fromTransaction transaction: Transaction) -> TransactionRecord {
-        var totalInput: Int = 0
-        var totalOutput: Int = 0
         var totalMineInput: Int = 0
         var totalMineOutput: Int = 0
-        var fromAddresses = [String]()
-        var toAddresses = [String]()
+        var fromAddresses = [TransactionAddress]()
+        var toAddresses = [TransactionAddress]()
 
         for input in transaction.inputs {
             if let previousOutput = input.previousOutput {
-                totalInput += previousOutput.value
-
                 if previousOutput.publicKey != nil {
                     totalMineInput += previousOutput.value
                 }
             }
-
-            if input.previousOutput?.publicKey == nil {
-                if let address = input.address {
-                    fromAddresses.append(address)
-                } else {
-                    fromAddresses.append("stub from address")
-                }
+            let mine = input.previousOutput?.publicKey != nil
+            if let address = input.address {
+                fromAddresses.append(TransactionAddress(address: address, mine: mine))
             }
         }
 
         for output in transaction.outputs {
-            totalOutput += output.value
-
+            var mine = false
             if output.publicKey != nil {
                 totalMineOutput += output.value
-            } else if let address = output.address {
-                toAddresses.append(address)
+                mine = true
+            }
+            if let address = output.address {
+                toAddresses.append(TransactionAddress(address: address, mine: mine))
             }
         }
 
         let amount = totalMineOutput - totalMineInput
-        let fee = totalInput - totalOutput
+        let status: TransactionStatus
+
+        if let block = transaction.block {
+            let confirmations = walletKit.latestBlockHeight - block.height + 1
+            if confirmations >= transactionCompletionThreshold {
+                status = .completed
+            } else {
+                status = .verifying(progress: Double(confirmations) / Double(transactionCompletionThreshold))
+            }
+        } else {
+            status = .processing
+        }
 
         return TransactionRecord(
                 transactionHash: transaction.reversedHashHex,
                 from: fromAddresses,
                 to: toAddresses,
                 amount: Double(amount) / 100000000,
-                fee: Double(fee) / 100000000,
-                blockHeight: transaction.block?.height,
+                status: status,
                 timestamp: transaction.block?.header?.timestamp
         )
     }
