@@ -1,8 +1,12 @@
+![Header](https://github.com/horizontalsystems/bank-wallet-ios-app/blob/dev/Wallet/top-logo.jpg)
 # Bank Wallet (iOS version)
+
 
 A secure and fully decentralized crypto wallet app with a support for all cryptocurrencies in top 100 list.  
 
 This wallet is a crypto bank. Become your own bank!
+
+![Header](https://github.com/horizontalsystems/bank-wallet-ios-app/blob/dev/Wallet/BankWalletAll-X-Mockup.jpg)
 
 **Wallet Features Overview**
 
