@@ -6,7 +6,7 @@ A secure and fully decentralized crypto wallet app with a support for all crypto
 
 This wallet is a crypto bank. Become your own bank!
 
-![Header](https://github.com/horizontalsystems/bank-wallet-ios-app/blob/dev/Wallet/BankWalletAll-X-Mockup.jpg)
+![Header](https://github.com/horizontalsystems/bank-wallet-ios-app/blob/dev/Wallet/BankWalletAllTabs-X-Mockup.jpg)
 
 **Wallet Features Overview**
 
