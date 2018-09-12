@@ -11,8 +11,8 @@ protocol IAdapter {
 
     var progressSubject: BehaviorSubject<Double> { get }
 
-    var latestBlockHeight: Int { get }
-    var latestBlockHeightSubject: PublishSubject<Void> { get }
+    var lastBlockHeight: Int { get }
+    var lastBlockHeightSubject: PublishSubject<Int> { get }
 
     var transactionRecords: [TransactionRecord] { get }
     var transactionRecordsSubject: PublishSubject<Void> { get }
