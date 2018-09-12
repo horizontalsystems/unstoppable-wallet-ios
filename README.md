@@ -1,6 +1,6 @@
 ![Header](/Images/top-logo.jpg)
 
-# Bank Wallet (iOS version)
+# Bank Wallet (iOS)
 
 Become your own bank!
 
