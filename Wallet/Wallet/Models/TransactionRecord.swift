@@ -1,14 +1,10 @@
 import Foundation
+import WalletKit
 
 enum TransactionStatus {
     case processing
     case verifying(progress: Double)
     case completed
-}
-
-struct TransactionAddress {
-    let address: String
-    let mine: Bool
 }
 
 struct TransactionRecord {
