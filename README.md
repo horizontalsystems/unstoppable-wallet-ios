@@ -54,4 +54,4 @@ Upcoming features:
 
 ## License
 
-The BANK wallet is open source and available under the terms of the GNU GPLv3.
+The BANK wallet is open source and available under the terms of the MIT Lincense.
