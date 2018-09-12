@@ -42,7 +42,7 @@ DEPENDENCIES:
   - BigInt
   - Cuckoo
   - GrouviActionSheet
-  - GrouviExtensions
+  - GrouviExtensions (from `https://github.com/horizontalsystems/GrouviExtensions.git`, branch `master`)
   - GrouviHUD (from `https://github.com/horizontalsystems/GrouviHUD.git`, branch `master`)
   - ObjectMapper
   - RealmSwift
@@ -59,7 +59,6 @@ SPEC REPOS:
     - BigInt
     - Cuckoo
     - GrouviActionSheet
-    - GrouviExtensions
     - ObjectMapper
     - Realm
     - RealmSwift
@@ -71,6 +70,9 @@ SPEC REPOS:
     - SnapKit
 
 EXTERNAL SOURCES:
+  GrouviExtensions:
+    :branch: master
+    :git: https://github.com/horizontalsystems/GrouviExtensions.git
   GrouviHUD:
     :branch: master
     :git: https://github.com/horizontalsystems/GrouviHUD.git
@@ -79,6 +81,9 @@ EXTERNAL SOURCES:
     :git: https://github.com/horizontalsystems/WalletKit-iOS.git
 
 CHECKOUT OPTIONS:
+  GrouviExtensions:
+    :commit: ff5b0b9afb40b3192e080b9c2d1ad87ed8928f2b
+    :git: https://github.com/horizontalsystems/GrouviExtensions.git
   GrouviHUD:
     :commit: 45f888e657b82af751a42e5824ee5bc9f06d9488
     :git: https://github.com/horizontalsystems/GrouviHUD.git
@@ -104,6 +109,6 @@ SPEC CHECKSUMS:
   SnapKit: a42d492c16e80209130a3379f73596c3454b7694
   WalletKit: 9db03061940fb3419560b9c16310fbc2e386243d
 
-PODFILE CHECKSUM: 5cb24d4e367c5660c602fef28fd9a5b99266e362
+PODFILE CHECKSUM: 470f00934bf885dda30343fb94f4655b68c26fbb
 
 COCOAPODS: 1.5.3

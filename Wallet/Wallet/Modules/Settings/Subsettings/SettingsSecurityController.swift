@@ -1,7 +1,7 @@
 import UIKit
 import SectionsTableViewKit
 
-class SecurityCenterController: UIViewController, SectionsDataSource {
+class SettingsSecurityController: UIViewController, SectionsDataSource {
     let tableView = SectionsTableView(style: .grouped)
 
     init() {
@@ -32,14 +32,18 @@ class SecurityCenterController: UIViewController, SectionsDataSource {
         tableView.reload()
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        tableView.deselectCell(withCoordinator: transitionCoordinator, animated: animated)
+    }
+
     func buildSections() -> [SectionProtocol] {
         var sections = [SectionProtocol]()
 
         var rows = [RowProtocol]()
         rows.append(Row<SecurityCell>(id: "pin_touch_id", height: SettingsTheme.securityCellHeight, bind: { cell, _ in
             cell.bind(title: "settings_security.pin_touch_id".localized, checked: true)
-        }, action: { _ in
-            print("on pin")
+        }, action: { [weak self] _ in
+            self?.navigationController?.pushViewController(PinRouter.setPinModule(), animated: true)
         }))
         rows.append(Row<SecurityCell>(id: "paper_key", height: SettingsTheme.securityCellHeight, bind: { cell, _ in
             cell.bind(title: "settings_security.paper_key".localized, checked: false)

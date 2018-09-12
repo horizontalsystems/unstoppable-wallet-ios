@@ -60,7 +60,7 @@ class SettingsViewController: UIViewController, SectionsDataSource {
             cell.selectionStyle = .default
             cell.bind(titleIcon: UIImage(named: "Security Icon"), title: "settings.cell.security_center".localized, rightImage: UIImage(named: "Attention Icon"), showDisclosure: true)
         }, action: { [weak self] _ in
-            self?.navigationController?.pushViewController(SecurityCenterController(), animated: true)
+            self?.navigationController?.pushViewController(SettingsSecurityController(), animated: true)
         }))
         appSettingsRows.append(Row<SettingsCell>(id: "import_wallet", hash: "import_wallet", height: SettingsTheme.cellHeight, bind: { cell, _ in
             cell.selectionStyle = .default
