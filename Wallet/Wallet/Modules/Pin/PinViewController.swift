@@ -97,7 +97,12 @@ extension PinViewController: UITextFieldDelegate {
         let rangeLength = range.length
 
         let newLength = oldLength - rangeLength + replacementLength;
-        return newLength <= pinLength
+
+        let shouldChange = newLength <= pinLength
+        if !shouldChange {
+            onWrongPin()
+        }
+        return shouldChange
     }
 
 }
@@ -132,6 +137,10 @@ extension PinViewController: IPinView {
             maker.leading.equalToSuperview().offset(PinTheme.infoMargin)
             maker.trailing.equalToSuperview().offset(-PinTheme.infoMargin)
         }
+    }
+
+    func onWrongPin() {
+        dotsHolder.shakeView()
     }
 
 }

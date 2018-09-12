@@ -3,6 +3,8 @@ import RxSwift
 import WalletKit
 
 class ConfirmPinInteractor: PinInteractor {
+    var confirmDelegate: IConfirmPinInteractorDelegate? { return delegate as? IConfirmPinInteractorDelegate }
+
     var pinToConfirm: String
 
     init(pin: String) {
@@ -17,7 +19,7 @@ class ConfirmPinInteractor: PinInteractor {
 
         if pin == pinToConfirm {
             save(pin: pin)
-            delegate?.onConfirm()
+            confirmDelegate?.onConfirm()
         } else {
             delegate?.onWrongPin()
         }

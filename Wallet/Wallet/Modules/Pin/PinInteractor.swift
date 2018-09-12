@@ -3,7 +3,7 @@ import RxSwift
 import WalletKit
 
 class PinInteractor {
-    weak var delegate: ISetPinInteractorDelegate?
+    weak var delegate: IPinInteractorDelegate?
 
     let pinLength = 4
 
@@ -14,7 +14,7 @@ class PinInteractor {
 
 }
 
-extension PinInteractor: ISetPinInteractor {
+extension PinInteractor: IPinInteractor {
 
     @objc func viewDidLoad() {
         delegate?.bind(pinLength: pinLength)
@@ -22,6 +22,7 @@ extension PinInteractor: ISetPinInteractor {
 
     @objc func onPinChange(pin: String?) {
         guard let pin = pin, pin.count <= pinLength else {
+            delegate?.onWrongPin()
             return
         }
         self.pin = pin

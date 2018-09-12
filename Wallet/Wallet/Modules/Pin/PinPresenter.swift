@@ -3,18 +3,18 @@ import RxSwift
 
 class PinPresenter {
 
-    let interactor: ISetPinInteractor
+    let interactor: IPinInteractor
     let router: IPinRouter
     weak var view: IPinView?
 
-    init(interactor: ISetPinInteractor, router: IPinRouter) {
+    init(interactor: IPinInteractor, router: IPinRouter) {
         self.interactor = interactor
         self.router = router
     }
 
 }
 
-extension PinPresenter: ISetPinInteractorDelegate {
+extension PinPresenter: IPinInteractorDelegate {
 
     func highlightPinDot(index: Int) {
         view?.highlightPinDot(at: index)
@@ -24,16 +24,8 @@ extension PinPresenter: ISetPinInteractorDelegate {
         fatalError("must be overridden")
     }
 
-    @objc func onSet(pin: String) {
-        fatalError("must be overridden")
-    }
-
-    @objc func onConfirm() {
-        fatalError("must be overridden")
-    }
-
-    @objc func onWrongPin() {
-        fatalError("must be overridden")
+    func onWrongPin() {
+        view?.onWrongPin()
     }
 
 }
