@@ -32,6 +32,10 @@ class SettingsSecurityController: UIViewController, SectionsDataSource {
         tableView.reload()
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        tableView.deselectCell(withCoordinator: transitionCoordinator, animated: animated)
+    }
+
     func buildSections() -> [SectionProtocol] {
         var sections = [SectionProtocol]()
 

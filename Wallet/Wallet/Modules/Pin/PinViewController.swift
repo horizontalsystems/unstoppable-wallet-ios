@@ -9,10 +9,12 @@ class PinViewController: KeyboardObservingViewController {
     let wrapperView = UIView()
 
     let infoLabel = UILabel()
+
     var dotsHolder = UIStackView()
     var dotsViews = [TintImageView]()
 
     var textField = UITextField()
+    var pinLength = 0
 
     var dotView: TintImageView {
         return TintImageView(image: UIImage(named: "Pin Dot"), selectedImage: UIImage(named: "Pin Dot Filled"))
@@ -39,10 +41,12 @@ class PinViewController: KeyboardObservingViewController {
             maker.leading.trailing.bottom.equalToSuperview()
         }
 
-        for _ in 0..<4 {
-            dotsViews.append(dotView)
-        }
-        dotsHolder = UIStackView(arrangedSubviews: dotsViews)
+        infoLabel.textColor = PinTheme.infoColor
+        infoLabel.lineBreakMode = .byWordWrapping
+        infoLabel.numberOfLines = 0
+        infoLabel.textAlignment = .center
+        wrapperView.addSubview(infoLabel)
+
         dotsHolder.backgroundColor = .yellow
         dotsHolder.axis = .horizontal
         dotsHolder.distribution = .equalSpacing
@@ -53,9 +57,8 @@ class PinViewController: KeyboardObservingViewController {
             maker.centerX.equalToSuperview()
             maker.centerY.equalToSuperview()
         }
-        dotsHolder.layoutSubviews()
-        delegate.viewDidLoad()
 
+        textField.delegate = self
         textField.keyboardType = .numberPad
         textField.keyboardAppearance = AppTheme.keyboardAppearance
         wrapperView.addSubview(textField)
@@ -64,12 +67,18 @@ class PinViewController: KeyboardObservingViewController {
             maker.top.equalTo(self.view.snp.bottom)
             maker.size.equalTo(CGSize(width: 0, height: 0))
         }
-        textField.becomeFirstResponder()
         textField.addTarget(self, action: #selector(onPinChange), for: .editingChanged)
+
+        delegate.viewDidLoad()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        textField.becomeFirstResponder()
     }
 
     @objc func onPinChange() {
-        print("pin: \(textField.text)")
+        delegate.onPinChange(pin: textField.text)
     }
 
     override func updateUI(keyboardHeight: CGFloat, duration: TimeInterval, options: UIViewAnimationOptions, completion: (() -> ())?) {
@@ -77,8 +86,52 @@ class PinViewController: KeyboardObservingViewController {
             maker.bottom.equalToSuperview().offset(-keyboardHeight)
         }
     }
+
+}
+
+extension PinViewController: UITextFieldDelegate {
+
+    public func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        let oldLength = textField.text?.count ?? 0
+        let replacementLength = string.count
+        let rangeLength = range.length
+
+        let newLength = oldLength - rangeLength + replacementLength;
+        return newLength <= pinLength
+    }
+
 }
 
 extension PinViewController: IPinView {
+
+    func highlightPinDot(at index: Int) {
+        for (dotViewIndex, dotView) in dotsViews.enumerated() {
+            dotView.isHighlighted = dotViewIndex <= index
+        }
+    }
+
+    func bind(pinLength: Int, title: String, infoText: String, infoFont: UIFont, infoAttachToTop: Bool) {
+        self.pinLength = pinLength
+        for _ in 0..<pinLength {
+            let dotView = self.dotView
+            dotsViews.append(dotView)
+            dotsHolder.addArrangedSubview(dotView)
+        }
+
+        self.title = title
+        infoLabel.text = infoText
+        infoLabel.font = infoFont
+        infoLabel.snp.remakeConstraints { maker in
+            if infoAttachToTop {
+                maker.top.equalToSuperview().offset(PinTheme.infoTopMargin)
+            } else {
+                maker.bottom.equalTo(self.dotsHolder.snp.top).offset(-PinTheme.infoBottomMargin)
+            }
+
+            maker.centerX.equalToSuperview()
+            maker.leading.equalToSuperview().offset(PinTheme.infoMargin)
+            maker.trailing.equalToSuperview().offset(-PinTheme.infoMargin)
+        }
+    }
 
 }

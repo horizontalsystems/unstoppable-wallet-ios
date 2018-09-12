@@ -16,11 +16,36 @@ class PinPresenter {
 
 extension PinPresenter: ISetPinInteractorDelegate {
 
+    func highlightPinDot(index: Int) {
+        view?.highlightPinDot(at: index)
+    }
+
+    @objc func bind(pinLength: Int) {
+        fatalError("must be overridden")
+    }
+
+    @objc func onSet(pin: String) {
+        fatalError("must be overridden")
+    }
+
+    @objc func onConfirm() {
+        fatalError("must be overridden")
+    }
+
+    @objc func onWrongPin() {
+        fatalError("must be overridden")
+    }
+
 }
 
 extension PinPresenter: IPinViewDelegate {
 
-    func viewDidLoad() {
+    @objc func viewDidLoad() {
+        interactor.viewDidLoad()
+    }
+
+    @objc func onPinChange(pin: String?) {
+        interactor.onPinChange(pin: pin)
     }
 
 }

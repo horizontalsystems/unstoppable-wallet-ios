@@ -16,4 +16,16 @@ class HudHelper {
         })
     }
 
+    public func showError(title: String? = nil) {
+        var customConfig = HUDConfig()
+        customConfig.style = .center
+        HUD.instance.config = customConfig
+
+        HUDStatusFactory.instance.config.dismissTimeInterval = 1
+        let content = HUDStatusFactory.instance.view(type: .error, title: title)
+        HUD.instance.showHUD(content, onTapHUD: { hud in
+            hud.hide()
+        })
+    }
+
 }
