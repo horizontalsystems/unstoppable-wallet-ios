@@ -1,10 +1,10 @@
-"alert.ok" = "OK";
+"alert.ok" = "Хорошо";
 "alert.cancel" = "Cancel";
 "navigation_bar.cancel" = "Cancel";
 "done" = "Done";
 "alert.copy" = "Copy";
 "alert.share" = "Share";
-"alert.close" = "Close";
+"alert.close" = "Закрыть";
 "alert.success" = "Success";
 "alert.copied" = "Copied";
 
@@ -58,8 +58,8 @@
 "transactions.from" = "from";
 "transactions.to" = "to";
 "transactions.filter_all" = "All";
-"transactions.filter_Bitcoin-R" = "Bitcoin-R";
-"transactions.filter_Bitcoin-T" = "Bitcoin-T";
+"transactions.filter_rBitcoin" = "Bitcoin-R";
+"transactions.filter_tBitcoin Cash" = "Bitcoin-T Cash";
 "transactions.filter_Bitcoin" = "Bitcoin";
 
 
