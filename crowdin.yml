@@ -1,0 +1,3 @@
+files:
+  - source: Wallet/Wallet/en.lproj/Localizable.strings
+    translation: Wallet/Wallet/Languages/%two_letters_code%/translation.strings
