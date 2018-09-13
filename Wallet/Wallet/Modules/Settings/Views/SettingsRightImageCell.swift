@@ -1,8 +1,9 @@
 import UIKit
+import GrouviExtensions
 import SnapKit
 
 class SettingsRightImageCell: SettingsCell {
-    var rightImageView = UIImageView()
+    var rightImageView = TintImageView()
 
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -18,8 +19,9 @@ class SettingsRightImageCell: SettingsCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func bind(titleIcon: UIImage?, title: String, rightImage: UIImage?, showDisclosure: Bool, last: Bool = false) {
+    func bind(titleIcon: UIImage?, title: String, rightImage: UIImage?, rightImageTintColor: UIColor?, showDisclosure: Bool, last: Bool = false) {
         super.bind(titleIcon: titleIcon, title: title, showDisclosure: showDisclosure, last: last)
+        rightImageView.tintColor = rightImageTintColor
         rightImageView.image = rightImage
     }
 

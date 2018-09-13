@@ -108,7 +108,6 @@
 		1A56444F92E79514DB155658 /* DepositRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564EDCEACE83D95F6AE528 /* DepositRouter.swift */; };
 		1A564462CB4BF369442CE381 /* TransactionCloseItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564181733CBC44EECFBBF3 /* TransactionCloseItem.swift */; };
 		1A564497DCA3CD398FFF0045 /* DepositShareButtonItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564DA173BE95B4681E5395 /* DepositShareButtonItemView.swift */; };
-		1A56450BDD557C411CB9B2A8 /* SecurityCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5642AA4BB44A41C217EA68 /* SecurityCell.swift */; };
 		1A5645103DC28216716EB7A6 /* ScanQRController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5647D980D08E2E4359861B /* ScanQRController.swift */; };
 		1A56454940992DC1F332E76A /* BaseButtonItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56425C82362C065E3379D4 /* BaseButtonItemView.swift */; };
 		1A564572219E4D3CACBEE9E0 /* PinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564E13AB992FFB6DA9F396 /* PinViewController.swift */; };
@@ -330,7 +329,6 @@
 		1A56428DB7E042907CD4252D /* FullTransactionInfoTheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FullTransactionInfoTheme.swift; sourceTree = "<group>"; };
 		1A56428F6FACADBA8B7BFEFB /* DateHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateHelper.swift; sourceTree = "<group>"; };
 		1A564298191D07782DFF5B99 /* TransactionInfoBaseHashValueItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionInfoBaseHashValueItemView.swift; sourceTree = "<group>"; };
-		1A5642AA4BB44A41C217EA68 /* SecurityCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecurityCell.swift; sourceTree = "<group>"; };
 		1A5642EFA8A991436AED3B44 /* TransactionAmountItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionAmountItemView.swift; sourceTree = "<group>"; };
 		1A5643010944D435B8BA2FD8 /* TransactionInfoAlertModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionInfoAlertModel.swift; sourceTree = "<group>"; };
 		1A5643102015EFBECFBA6693 /* TransactionInfoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionInfoView.swift; sourceTree = "<group>"; };
@@ -965,7 +963,6 @@
 			isa = PBXGroup;
 			children = (
 				1A564C5B6F596DCC306B1719 /* LanguageCell.swift */,
-				1A5642AA4BB44A41C217EA68 /* SecurityCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1572,7 +1569,6 @@
 				1A564F544CBB0EFE12904B54 /* SettingsLanguageController.swift in Sources */,
 				1A5640B7AB089A7A5302C682 /* LanguageCell.swift in Sources */,
 				1A564E3BF813CBA201AA329E /* SettingsSecurityController.swift in Sources */,
-				1A56450BDD557C411CB9B2A8 /* SecurityCell.swift in Sources */,
 				1A564572219E4D3CACBEE9E0 /* PinViewController.swift in Sources */,
 				1A564E241238715F99423941 /* PinModule.swift in Sources */,
 				1A5647D4B906FDE321B69723 /* PinRouter.swift in Sources */,

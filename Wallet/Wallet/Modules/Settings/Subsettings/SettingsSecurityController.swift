@@ -6,7 +6,8 @@ class SettingsSecurityController: UIViewController, SectionsDataSource {
 
     init() {
         super.init(nibName: nil, bundle: nil)
-        tableView.registerCell(forClass: SecurityCell.self)
+        tableView.registerCell(forClass: SettingsCell.self)
+        tableView.registerCell(forClass: SettingsRightImageCell.self)
         tableView.sectionDataSource = self
         tableView.separatorColor = SettingsTheme.cellSelectBackground
 
@@ -40,13 +41,13 @@ class SettingsSecurityController: UIViewController, SectionsDataSource {
         var sections = [SectionProtocol]()
 
         var rows = [RowProtocol]()
-        rows.append(Row<SecurityCell>(id: "pin_touch_id", height: SettingsTheme.securityCellHeight, bind: { cell, _ in
-            cell.bind(title: "settings_security.pin_touch_id".localized, checked: true)
+        rows.append(Row<SettingsRightImageCell>(id: "pin_touch_id", height: SettingsTheme.securityCellHeight, bind: { cell, _ in
+            cell.bind(titleIcon: nil, title: "settings_security.pin_touch_id".localized, rightImage: UIImage(named: "Transaction Success Icon"), rightImageTintColor: SettingsTheme.successIconTint, showDisclosure: true)
         }, action: { [weak self] _ in
             self?.navigationController?.pushViewController(PinRouter.setPinModule(), animated: true)
         }))
-        rows.append(Row<SecurityCell>(id: "paper_key", height: SettingsTheme.securityCellHeight, bind: { cell, _ in
-            cell.bind(title: "settings_security.paper_key".localized, checked: false)
+        rows.append(Row<SettingsCell>(id: "paper_key", height: SettingsTheme.securityCellHeight, bind: { cell, _ in
+            cell.bind(titleIcon: nil, title: "settings_security.paper_key".localized, showDisclosure: true)
         }, action: { [weak self] _ in
             self?.tableView.deselectRow(at: self!.tableView.indexPathForSelectedRow!, animated: true)
             self?.present(BackupRouter.module(dismissMode: .dismissSelf), animated: true)

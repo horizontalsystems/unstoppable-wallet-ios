@@ -58,7 +58,7 @@ class SettingsViewController: UIViewController, SectionsDataSource {
         var appSettingsRows = [RowProtocol]()
         appSettingsRows.append(Row<SettingsRightImageCell>(id: "security_center", hash: "security_center", height: SettingsTheme.cellHeight, bind: { cell, _ in
             cell.selectionStyle = .default
-            cell.bind(titleIcon: UIImage(named: "Security Icon"), title: "settings.cell.security_center".localized, rightImage: UIImage(named: "Attention Icon"), showDisclosure: true)
+            cell.bind(titleIcon: UIImage(named: "Security Icon"), title: "settings.cell.security_center".localized, rightImage: UIImage(named: "Attention Icon"), rightImageTintColor: SettingsTheme.attentionIconTint, showDisclosure: true)
         }, action: { [weak self] _ in
             self?.navigationController?.pushViewController(SettingsSecurityController(), animated: true)
         }))

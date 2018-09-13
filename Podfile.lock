@@ -82,7 +82,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   GrouviExtensions:
-    :commit: ff5b0b9afb40b3192e080b9c2d1ad87ed8928f2b
+    :commit: 5ce17c1c66b6b32718e7fc80947e58410e4341e6
     :git: https://github.com/horizontalsystems/GrouviExtensions.git
   GrouviHUD:
     :commit: 45f888e657b82af751a42e5824ee5bc9f06d9488

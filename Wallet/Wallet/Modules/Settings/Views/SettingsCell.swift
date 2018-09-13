@@ -56,6 +56,15 @@ class SettingsCell: UITableViewCell {
     }
 
     func bind(titleIcon: UIImage?, title: String, showDisclosure: Bool = false, last: Bool = false) {
+        iconImageView.snp.updateConstraints { maker in
+            let sideSize = titleIcon != nil ? SettingsTheme.cellIconSize : 0
+            maker.size.equalTo(sideSize)
+        }
+        titleLabel.snp.updateConstraints { maker in
+            let margin = titleIcon != nil ? SettingsTheme.cellBigMargin : 0
+            maker.leading.equalTo(self.iconImageView.snp.trailing).offset(margin)
+        }
+
         iconImageView.image = titleIcon
         titleLabel.text = title
         disclosureImageView.isHidden = !showDisclosure

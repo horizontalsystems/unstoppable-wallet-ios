@@ -5,7 +5,7 @@ import WalletKit
 class PinInteractor {
     weak var delegate: IPinInteractorDelegate?
 
-    let pinLength = 4
+    let pinLength = 6
 
     var pin: String?
 
