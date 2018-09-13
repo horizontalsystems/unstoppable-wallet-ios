@@ -437,6 +437,7 @@
 		50A83FBE213FCB4B008A5F4B /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		50A83FBF213FEB0C008A5F4B /* LightTheme.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = LightTheme.xcassets; sourceTree = "<group>"; };
 		50B7C38220D918DE0070E1E8 /* IndexedInputField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndexedInputField.swift; sourceTree = "<group>"; };
+		50E2A266214A67B400C51413 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
 		53847C5012570C5604A3EA1D /* Pods-Bank.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bank.debug.xcconfig"; path = "../Pods/Target Support Files/Pods-Bank/Pods-Bank.debug.xcconfig"; sourceTree = "<group>"; };
 		7715861774FD1545F0D9C05E /* Pods_WalletTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WalletTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D3285F4220BD158E00644076 /* Bank.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Bank.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1224,6 +1225,7 @@
 				en,
 				Base,
 				ru,
+				de,
 			);
 			mainGroup = D3285F3920BD158E00644076;
 			productRefGroup = D3285F4320BD158E00644076 /* Products */;
@@ -1620,6 +1622,7 @@
 			children = (
 				D3B62A9B20CA73A0005A9F80 /* en */,
 				50A83FBE213FCB4B008A5F4B /* ru */,
+				50E2A266214A67B400C51413 /* de */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
