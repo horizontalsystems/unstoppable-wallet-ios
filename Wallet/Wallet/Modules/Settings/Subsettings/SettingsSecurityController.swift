@@ -8,6 +8,7 @@ class SettingsSecurityController: UIViewController, SectionsDataSource {
         super.init(nibName: nil, bundle: nil)
         tableView.registerCell(forClass: SettingsCell.self)
         tableView.registerCell(forClass: SettingsRightImageCell.self)
+        tableView.registerCell(forClass: SettingsToggleCell.self)
         tableView.sectionDataSource = self
         tableView.separatorColor = SettingsTheme.cellSelectBackground
 
@@ -40,19 +41,27 @@ class SettingsSecurityController: UIViewController, SectionsDataSource {
     func buildSections() -> [SectionProtocol] {
         var sections = [SectionProtocol]()
 
-        var rows = [RowProtocol]()
-        rows.append(Row<SettingsRightImageCell>(id: "pin_touch_id", height: SettingsTheme.securityCellHeight, bind: { cell, _ in
-            cell.bind(titleIcon: nil, title: "settings_security.pin_touch_id".localized, rightImage: UIImage(named: "Transaction Success Icon"), rightImageTintColor: SettingsTheme.successIconTint, showDisclosure: true)
+        var pinTouchFaceRows = [RowProtocol]()
+        pinTouchFaceRows.append(Row<SettingsToggleCell>(id: "touch_face_id", height: SettingsTheme.securityCellHeight, bind: { cell, _ in
+            cell.bind(titleIcon: nil, title: "settings_pin_touch_face.touch_id".localized, isOn: false, showDisclosure: false, onToggle: { isOn in
+                print("on: \(isOn)")
+            })
+        }))
+        pinTouchFaceRows.append(Row<SettingsCell>(id: "set_pin", height: SettingsTheme.securityCellHeight, bind: { cell, _ in
+            cell.bind(titleIcon: nil, title: "settings_pin_touch_face.set_pin".localized, showDisclosure: true, last: true)
         }, action: { [weak self] _ in
             self?.navigationController?.pushViewController(PinRouter.setPinModule(), animated: true)
         }))
-        rows.append(Row<SettingsCell>(id: "paper_key", height: SettingsTheme.securityCellHeight, bind: { cell, _ in
+        sections.append(Section(id: "security", headerState: .margin(height: SettingsTheme.subSettingsHeaderHeight), footerState: .margin(height: SettingsTheme.subSettingsHeaderHeight), rows: pinTouchFaceRows))
+
+        var backupRows = [RowProtocol]()
+        backupRows.append(Row<SettingsCell>(id: "paper_key", height: SettingsTheme.securityCellHeight, bind: { cell, _ in
             cell.bind(titleIcon: nil, title: "settings_security.paper_key".localized, showDisclosure: true)
         }, action: { [weak self] _ in
             self?.tableView.deselectRow(at: self!.tableView.indexPathForSelectedRow!, animated: true)
             self?.present(BackupRouter.module(dismissMode: .dismissSelf), animated: true)
         }))
-        sections.append(Section(id: "security", headerState: .margin(height: SettingsTheme.subSettingsHeaderHeight), footerState: .margin(height: SettingsTheme.subSettingsHeaderHeight), rows: rows))
+        sections.append(Section(id: "security", headerState: .margin(height: SettingsTheme.subSettingsHeaderHeight), footerState: .margin(height: SettingsTheme.headerHeight), rows: backupRows))
 
         return sections
     }

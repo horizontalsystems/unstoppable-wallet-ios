@@ -105,8 +105,10 @@
 "settings_language.title" = "Language";
 
 "settings_security.title" = "Центр Безопасности";
-"settings_security.pin_touch_id" = "Пин / Touch ID";
 "settings_security.paper_key" = "Бумажный ключ";
+"settings_pin_touch_face.title" = "Pin / Touch ID";
+"settings_pin_touch_face.set_pin" = "Set PIN";
+"settings_pin_touch_face.touch_id" = "Touch ID";
 
 "set_pin_controller.title" = "Set PIN";
 "set_pin_controller.info" = "Your pin will be used to unlock your wallet and send money";
