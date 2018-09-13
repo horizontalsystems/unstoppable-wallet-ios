@@ -6,14 +6,14 @@
 "alert.share" = "Поделиться";
 "alert.close" = "Закрыть";
 "alert.success" = "Success";
-"alert.copied" = "Copied";
+"alert.copied" = "Скопировано";
 
-"guest.title" = "App Name";
+"guest.title" = "Имя приложения";
 "guest.subtitle" = "Bitcoin, Satoshi Nakamoto";
-"guest.create_wallet" = "Create Wallet";
-"guest.restore_wallet" = "Restore Wallet";
+"guest.create_wallet" = "Создать кошелек";
+"guest.restore_wallet" = "Восстановить кошелек";
 
-"restore.title" = "Restore Wallet";
+"restore.title" = "Восстановить кошелек";
 "restore.description" = "Enter the following words from your paper key:";
 "restore.restore" = "Restore";
 "restore.validation_failed" = "The words you entered are invalid";
