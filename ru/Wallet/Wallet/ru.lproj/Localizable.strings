@@ -35,10 +35,10 @@
 "backup.confirmation.delete_app_warn" = "I understand that if this app is moved to another device or is deleted, my wallet can be only recovered with the backup phrase that I have written down and saved in a secure place";
 "backup.confirmation.confirm" = "Confirm";
 
-"wallet.title" = "Баланс";
-"wallet.tab_bar_item" = "Баланс";
-"wallet.send" = "Отправить";
-"wallet.deposit" = "Получить";
+"wallet.title" = "Balance";
+"wallet.tab_bar_item" = "Balance";
+"wallet.send" = "Send";
+"wallet.deposit" = "Receive";
 
 "send.title" = "Send ";
 "send.address_placeholder" = "Address";
@@ -104,9 +104,9 @@
 
 "settings_language.title" = "Language";
 
-"settings_security.title" = "Центр Безопасности";
-"settings_security.pin_touch_id" = "Пин / Touch ID";
-"settings_security.paper_key" = "Бумажный ключ";
+"settings_security.title" = "Security Center";
+"settings_security.pin_touch_id" = "Pin / Touch ID";
+"settings_security.paper_key" = "Paper Key";
 
 "set_pin_controller.title" = "Set PIN";
 "set_pin_controller.info" = "Your pin will be used to unlock your wallet and send money";
