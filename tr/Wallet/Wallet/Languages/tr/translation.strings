@@ -1,0 +1,115 @@
+"alert.ok" = "OK";
+"alert.cancel" = "Cancel";
+"navigation_bar.cancel" = "Cancel";
+"done" = "Done";
+"alert.copy" = "Copy";
+"alert.share" = "Share";
+"alert.close" = "Close";
+"alert.success" = "Success";
+"alert.copied" = "Copied";
+
+"guest.title" = "App Name";
+"guest.subtitle" = "Bitcoin, Satoshi Nakamoto";
+"guest.create_wallet" = "Create Wallet";
+"guest.restore_wallet" = "Restore Wallet";
+
+"restore.title" = "Restore Wallet";
+"restore.description" = "Enter the following words from your paper key:";
+"restore.restore" = "Restore";
+"restore.validation_failed" = "The words you entered are invalid";
+
+"backup.intro.title" = "Backup";
+"backup.intro.subtitle" = "Your paper key is the only way to restore your Satoshi if you lost, stolen, broken, or upgraded.\n\nWe will show you a list of words to write down on a piece of paper and keep safe.";
+"backup.intro.later" = "Later";
+"backup.intro.backup_now" = "Backup Now";
+
+"backup.words.title" = "Paper Keys";
+"backup.words.back" = "Back";
+"backup.words.proceed" = "Proceed";
+
+"backup.confirmation.title" = "Type the words";
+"backup.confirmation.description" = "Enter the following words from your paper key";
+"backup.confirmation.failure_alert.text" = "Entered words do not match";
+"backup.confirmation.understand" = "I understand that ";
+"backup.confirmation.local_token_bold" = "my wallet and tokens are held securely on this device only and not any servers";
+"backup.confirmation.delete_app_warn" = "I understand that if this app is moved to another device or is deleted, my wallet can be only recovered with the backup phrase that I have written down and saved in a secure place";
+"backup.confirmation.confirm" = "Confirm";
+
+"wallet.title" = "Balance";
+"wallet.tab_bar_item" = "Balance";
+"wallet.send" = "Send";
+"wallet.deposit" = "Receive";
+
+"send.title" = "Send ";
+"send.address_placeholder" = "Address";
+"send.payment_reference_placeholder" = "Payment Reference";
+"send.insufficient_funds" = "Not available amount";
+"paste" = "Paste";
+"amount" = "Amount";
+"more" = "More";
+"send" = "Send";
+"back" = "Back";
+
+"transactions.title" = "Transactions";
+"transactions.tab_bar_item" = "Transactions";
+"transactions.yesterday" = "Yesterday";
+"transactions.success" = "success";
+"transactions.pending" = "pending...";
+"transactions.from" = "from";
+"transactions.to" = "to";
+"transactions.filter_all" = "All";
+"transactions.filter_rBitcoin" = "Bitcoin-R";
+"transactions.filter_tBitcoin Cash" = "Bitcoin-T Cash";
+"transactions.filter_Bitcoin" = "Bitcoin";
+
+
+"tx_info.bottom_sheet.title" = "Transaction";
+"tx_info.bottom_sheet.title_received" = "Received";
+"tx_info.bottom_sheet.title_sent" = "Sent";
+"tx_info.bottom_sheet.processing" = "PROCESSING";
+"tx_info.bottom_sheet.complete" = "COMPLETED";
+"tx_info.bottom_sheet.status" = "Status:";
+"tx_info.bottom_sheet.value_when_received" = "Value when received:";
+"tx_info.bottom_sheet.from_hash" = "From:";
+"tx_info.bottom_sheet.to_hash" = "To:";
+"tx_info.bottom_sheet.id_hash" = "ID:";
+
+"full_transaction_info.navigation_bar.title" = "Details";
+"full_transaction_info.navigation_bar.share" = "Share";
+"full_transaction_info.cell.size" = "Size:";
+"full_transaction_info.cell.fee_rate" = "Fee Rate:";
+"full_transaction_info.cell.received_time" = "Received Time:";
+"full_transaction_info.cell.mined_time" = "Mined Time:";
+"full_transaction_info.cell.included_in_block" = "Included in Block:";
+"full_transaction_info.cell.confirmations" = "Confirmations";
+"full_transaction_info.cell.lock_time" = "Lock Time:";
+"full_transaction_info.cell.from" = "From:";
+"full_transaction_info.cell.to" = "To:";
+"full_transaction_info.cell.received" = "Received:";
+"full_transaction_info.cell.sent" = "Sent:";
+
+"settings.title" = "Settings";
+"settings.tab_bar_item" = "Settings";
+"settings.cell.security_center" = "Security Center";
+"settings.cell.base_currency" = "Base currency";
+"settings.cell.import_wallet" = "Import Wallet";
+"settings.cell.language" = "Language";
+"settings.cell.about" = "About";
+"settings.cell.light_mode" = "Light Mode";
+"settings.cell.push_notifications" = "Push Notifications";
+"settings.cell.app_version" = "App Version";
+"settings.info.title" = "BANK WALLET";
+"settings.info.subtitle" = "decentralized app";
+"settings.info.link" = "horizontalsystems.io";
+
+"settings_language.title" = "Language";
+
+"settings_security.title" = "Security Center";
+"settings_security.pin_touch_id" = "Pin / Touch ID";
+"settings_security.paper_key" = "Paper Key";
+
+"set_pin_controller.title" = "Set PIN";
+"set_pin_controller.info" = "Your pin will be used to unlock your wallet and send money";
+"confirm_pin_controller.title" = "Enter Again";
+"confirm_pin_controller.info" = "Confirm PIN";
+"confirm_pin_controller.wrong_pin" = "Wrong PIN";
