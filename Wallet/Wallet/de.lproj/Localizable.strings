@@ -24,7 +24,7 @@
 "backup.intro.backup_now" = "Backup Now";
 
 "backup.words.title" = "Paper Keys";
-"backup.words.back" = "Back";
+"backup.words.back" = "Zurück";
 "backup.words.proceed" = "Proceed";
 
 "backup.confirmation.title" = "Type the words";
@@ -33,29 +33,29 @@
 "backup.confirmation.understand" = "I understand that ";
 "backup.confirmation.local_token_bold" = "my wallet and tokens are held securely on this device only and not any servers";
 "backup.confirmation.delete_app_warn" = "I understand that if this app is moved to another device or is deleted, my wallet can be only recovered with the backup phrase that I have written down and saved in a secure place";
-"backup.confirmation.confirm" = "Confirm";
+"backup.confirmation.confirm" = "Bestätigen";
 
 "wallet.title" = "Balance";
 "wallet.tab_bar_item" = "Balance";
-"wallet.send" = "Send";
+"wallet.send" = "Senden";
 "wallet.deposit" = "Receive";
 
-"send.title" = "Send ";
-"send.address_placeholder" = "Address";
-"send.payment_reference_placeholder" = "Payment Reference";
+"send.title" = "Senden ";
+"send.address_placeholder" = "Adresse";
+"send.payment_reference_placeholder" = "Zahlungsreferenz";
 "send.insufficient_funds" = "Not available amount";
 "paste" = "Paste";
 "amount" = "Amount";
-"more" = "More";
-"send" = "Send";
-"back" = "Back";
+"more" = "Mehr";
+"send" = "Senden";
+"back" = "Zurück";
 
-"transactions.title" = "Transactions";
-"transactions.tab_bar_item" = "Transactions";
-"transactions.yesterday" = "Yesterday";
-"transactions.success" = "success";
-"transactions.pending" = "pending...";
-"transactions.from" = "from";
+"transactions.title" = "Transaktionen";
+"transactions.tab_bar_item" = "Transaktionen";
+"transactions.yesterday" = "Gestern";
+"transactions.success" = "erfolgreich";
+"transactions.pending" = "ausstehend...";
+"transactions.from" = "von";
 "transactions.to" = "to";
 "transactions.filter_all" = "All";
 "transactions.filter_rBitcoin" = "Bitcoin-R";
@@ -92,24 +92,24 @@
 "settings.tab_bar_item" = "Settings";
 "settings.cell.security_center" = "Security Center";
 "settings.cell.base_currency" = "Base currency";
-"settings.cell.import_wallet" = "Import Wallet";
-"settings.cell.language" = "Language";
-"settings.cell.about" = "About";
+"settings.cell.import_wallet" = "Wallet importieren";
+"settings.cell.language" = "Sprache";
+"settings.cell.about" = "Über";
 "settings.cell.light_mode" = "Light Mode";
 "settings.cell.push_notifications" = "Push Notifications";
-"settings.cell.app_version" = "App Version";
+"settings.cell.app_version" = "App-Version";
 "settings.info.title" = "BANK WALLET";
-"settings.info.subtitle" = "decentralized app";
+"settings.info.subtitle" = "dezentrale app";
 "settings.info.link" = "horizontalsystems.io";
 
-"settings_language.title" = "Language";
+"settings_language.title" = "Sprache";
 
-"settings_security.title" = "Security Center";
+"settings_security.title" = "Sicherheits-Center";
 "settings_security.pin_touch_id" = "Pin / Touch ID";
-"settings_security.paper_key" = "Paper Key";
+"settings_security.paper_key" = "Papier-Schlüssel";
 
 "set_pin_controller.title" = "Set PIN";
 "set_pin_controller.info" = "Your pin will be used to unlock your wallet and send money";
 "confirm_pin_controller.title" = "Enter Again";
-"confirm_pin_controller.info" = "Confirm PIN";
-"confirm_pin_controller.wrong_pin" = "Wrong PIN";
+"confirm_pin_controller.info" = "PIN bestätigen";
+"confirm_pin_controller.wrong_pin" = "Falscher PIN";
