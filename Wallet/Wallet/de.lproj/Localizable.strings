@@ -23,7 +23,7 @@
 "backup.intro.later" = "Später";
 "backup.intro.backup_now" = "Backup Now";
 
-"backup.words.title" = "Paper Keys";
+"backup.words.title" = "Papier-Schlüssel";
 "backup.words.back" = "Zurück";
 "backup.words.proceed" = "Proceed";
 
@@ -44,8 +44,8 @@
 "send.address_placeholder" = "Adresse";
 "send.payment_reference_placeholder" = "Zahlungsreferenz";
 "send.insufficient_funds" = "Not available amount";
-"paste" = "Paste";
-"amount" = "Amount";
+"paste" = "Einsetzen";
+"amount" = "Summe";
 "more" = "Mehr";
 "send" = "Senden";
 "back" = "Zurück";
@@ -57,17 +57,17 @@
 "transactions.pending" = "ausstehend...";
 "transactions.from" = "von";
 "transactions.to" = "an";
-"transactions.filter_all" = "All";
+"transactions.filter_all" = "Alle";
 "transactions.filter_rBitcoin" = "Bitcoin-R";
 "transactions.filter_tBitcoin Cash" = "Bitcoin-T Cash";
 "transactions.filter_Bitcoin" = "Bitcoin";
 
 
-"tx_info.bottom_sheet.title" = "Transaction";
+"tx_info.bottom_sheet.title" = "Transaktion";
 "tx_info.bottom_sheet.title_received" = "Received";
 "tx_info.bottom_sheet.title_sent" = "Gesendet";
-"tx_info.bottom_sheet.processing" = "PROCESSING";
-"tx_info.bottom_sheet.complete" = "COMPLETED";
+"tx_info.bottom_sheet.processing" = "VERARBEITUNG";
+"tx_info.bottom_sheet.complete" = "ABGESCHLOSSEN";
 "tx_info.bottom_sheet.status" = "Status:";
 "tx_info.bottom_sheet.value_when_received" = "Value when received:";
 "tx_info.bottom_sheet.from_hash" = "Von:";
@@ -75,27 +75,27 @@
 "tx_info.bottom_sheet.id_hash" = "ID:";
 
 "full_transaction_info.navigation_bar.title" = "Details";
-"full_transaction_info.navigation_bar.share" = "Share";
+"full_transaction_info.navigation_bar.share" = "Teilen";
 "full_transaction_info.cell.size" = "Größe:";
-"full_transaction_info.cell.fee_rate" = "Fee Rate:";
+"full_transaction_info.cell.fee_rate" = "Gebührenrate:";
 "full_transaction_info.cell.received_time" = "Received Time:";
 "full_transaction_info.cell.mined_time" = "Mined Time:";
 "full_transaction_info.cell.included_in_block" = "Included in Block:";
-"full_transaction_info.cell.confirmations" = "Confirmations";
+"full_transaction_info.cell.confirmations" = "Bestätigungen";
 "full_transaction_info.cell.lock_time" = "Lock Time:";
-"full_transaction_info.cell.from" = "From:";
-"full_transaction_info.cell.to" = "To:";
+"full_transaction_info.cell.from" = "Von:";
+"full_transaction_info.cell.to" = "An:";
 "full_transaction_info.cell.received" = "Received:";
-"full_transaction_info.cell.sent" = "Sent:";
+"full_transaction_info.cell.sent" = "Gesendet:";
 
-"settings.title" = "Settings";
-"settings.tab_bar_item" = "Settings";
-"settings.cell.security_center" = "Security Center";
+"settings.title" = "Einstellungen";
+"settings.tab_bar_item" = "Einstellungen";
+"settings.cell.security_center" = "Sicherheits-Center";
 "settings.cell.base_currency" = "Base currency";
 "settings.cell.import_wallet" = "Wallet importieren";
 "settings.cell.language" = "Sprache";
 "settings.cell.about" = "Über";
-"settings.cell.light_mode" = "Light Mode";
+"settings.cell.light_mode" = "Licht Modus";
 "settings.cell.push_notifications" = "Benachrichtigungen";
 "settings.cell.app_version" = "App-Version";
 "settings.info.title" = "BANK WALLET";
