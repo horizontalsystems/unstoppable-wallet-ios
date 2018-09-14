@@ -1,8 +1,8 @@
 "alert.ok" = "Хорошо";
-"alert.cancel" = "Cancel";
-"navigation_bar.cancel" = "Cancel";
+"alert.cancel" = "Отменить";
+"navigation_bar.cancel" = "Отменить";
 "done" = "Готово";
-"alert.copy" = "Copy";
+"alert.copy" = "Скопировать";
 "alert.share" = "Поделиться";
 "alert.close" = "Закрыть";
 "alert.success" = "Success";
@@ -15,7 +15,7 @@
 
 "restore.title" = "Восстановить кошелек";
 "restore.description" = "Введите следующие слова из вашего ключа:";
-"restore.restore" = "Restore";
+"restore.restore" = "Восстановить";
 "restore.validation_failed" = "Введенные слова неверны";
 
 "backup.intro.title" = "Сделать резервную копию";
