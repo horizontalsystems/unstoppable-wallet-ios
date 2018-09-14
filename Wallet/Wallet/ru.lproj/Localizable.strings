@@ -18,10 +18,10 @@
 "restore.restore" = "Восстановить";
 "restore.validation_failed" = "Введенные слова неверны";
 
-"backup.intro.title" = "Сделать резервную копию";
+"backup.intro.title" = "Записать ключ";
 "backup.intro.subtitle" = "Ваш ключ является единственным способом для восстановления ваших Биткоинов.\n\nМы покажем вам список слов, чтобы вы записали их на бумаге и хранили в безопасном месте.";
 "backup.intro.later" = "Не сейчас";
-"backup.intro.backup_now" = "Сделать резервную копию";
+"backup.intro.backup_now" = "Показать";
 
 "backup.words.title" = "Ключ";
 "backup.words.back" = "Назад";
@@ -95,7 +95,7 @@
 "settings.cell.import_wallet" = "Импортировать кошелёк";
 "settings.cell.language" = "Язык";
 "settings.cell.about" = "О программе";
-"settings.cell.light_mode" = "Легкий режим";
+"settings.cell.light_mode" = "Цветовая тема";
 "settings.cell.push_notifications" = "Уведомления";
 "settings.cell.app_version" = "Версия приложения";
 "settings.info.title" = "BANK WALLET";
