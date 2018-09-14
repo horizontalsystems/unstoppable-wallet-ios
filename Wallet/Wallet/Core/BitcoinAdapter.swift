@@ -108,7 +108,7 @@ extension BitcoinAdapter: IAdapter {
 
 extension BitcoinAdapter: BitcoinKitDelegate {
 
-    public func transactionsUpdated(walletKit: WalletKit, inserted: [TransactionInfo], updated: [TransactionInfo], deleted: [TransactionInfo]) {
+    public func transactionsUpdated(walletKit: WalletKit, inserted: [TransactionInfo], updated: [TransactionInfo], deleted: [Int]) {
         transactionRecordsSubject.onNext(())
     }
 
