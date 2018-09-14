@@ -27,12 +27,12 @@
 "backup.words.back" = "Назад";
 "backup.words.proceed" = "Продолжить";
 
-"backup.confirmation.title" = "Введите слово";
+"backup.confirmation.title" = "Введите словa";
 "backup.confirmation.description" = "Введите следующие слова из вашего ключа";
 "backup.confirmation.failure_alert.text" = "Введенные слова не совпадают";
-"backup.confirmation.understand" = "Я понимаю ";
+"backup.confirmation.understand" = "Я понимаю, ";
 "backup.confirmation.local_token_bold" = "что мой кошелек и токены хранятся только на этом устройстве";
-"backup.confirmation.delete_app_warn" = "Я понимаю, что если это приложение устанавливается на другое устройство или удаляется, мой бумажник можно только восстановить фразой резервного копирования, который я храню в безопасном месте";
+"backup.confirmation.delete_app_warn" = "Я понимаю, что если это приложение удаляется или устанавливается на другое устройство, мой бумажник можно восстановить только ключом, который я храню в безопасном месте";
 "backup.confirmation.confirm" = "Подтвердить";
 
 "wallet.title" = "Баланс";
