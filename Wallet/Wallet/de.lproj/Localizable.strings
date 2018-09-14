@@ -14,31 +14,31 @@
 "guest.restore_wallet" = "Wallet wiederherstellen";
 
 "restore.title" = "Wallet wiederherstellen";
-"restore.description" = "Enter the following words from your paper key:";
+"restore.description" = "Geben Sie die folgenden Wörter aus Ihrem Papier-Schlüssel:";
 "restore.restore" = "Wiederherstellen";
-"restore.validation_failed" = "The words you entered are invalid";
+"restore.validation_failed" = "Der eingegebene Wörter ist ungültig";
 
 "backup.intro.title" = "Sicherung";
-"backup.intro.subtitle" = "Your paper key is the only way to restore your Satoshi if you lost, stolen, broken, or upgraded.\n\nWe will show you a list of words to write down on a piece of paper and keep safe.";
+"backup.intro.subtitle" = "Ihr Papier-Schlüssel ist der einzige Weg, Ihre Satoshi wiederherzustellen, wenn Sie verloren, gestohlen, kaputt oder aktualisiert.\n\nwir zeigen Ihnen eine Liste von Wörtern auf einem Blatt Papier notieren und aufbewahren.";
 "backup.intro.later" = "Später";
 "backup.intro.backup_now" = "Jetzt sichern";
 
 "backup.words.title" = "Papier-Schlüssel";
 "backup.words.back" = "Zurück";
-"backup.words.proceed" = "Proceed";
+"backup.words.proceed" = "Fortfahren";
 
 "backup.confirmation.title" = "Wort eingeben";
-"backup.confirmation.description" = "Enter the following words from your paper key";
-"backup.confirmation.failure_alert.text" = "Entered words do not match";
+"backup.confirmation.description" = "Geben Sie die folgenden Wörter aus Ihrem Papier-Schlüssel";
+"backup.confirmation.failure_alert.text" = "Die eingegebenen Passwörter stimmen nicht überein";
 "backup.confirmation.understand" = "Das verstehe ich ";
-"backup.confirmation.local_token_bold" = "my wallet and tokens are held securely on this device only and not any servers";
-"backup.confirmation.delete_app_warn" = "I understand that if this app is moved to another device or is deleted, my wallet can be only recovered with the backup phrase that I have written down and saved in a secure place";
+"backup.confirmation.local_token_bold" = "mein Wallet und Token werden auf diesem Gerät nur und keine Server sicher gehalten";
+"backup.confirmation.delete_app_warn" = "Ich verstehe, dass wenn diese app auf ein anderes Gerät verschoben wird oder gelöscht, mein Wallet nur mit dem backup-Satz wiederhergestellt werden können, die ich aufgeschrieben und an einem sicheren Ort gespeichert";
 "backup.confirmation.confirm" = "Bestätigen";
 
 "wallet.title" = "Balance";
 "wallet.tab_bar_item" = "Balance";
 "wallet.send" = "Senden";
-"wallet.deposit" = "Erhalten";
+"wallet.deposit" = "Empfangen";
 
 "send.title" = "Senden ";
 "send.address_placeholder" = "Adresse";
@@ -64,12 +64,12 @@
 
 
 "tx_info.bottom_sheet.title" = "Transaktion";
-"tx_info.bottom_sheet.title_received" = "Empfangen";
+"tx_info.bottom_sheet.title_received" = "Erhalten";
 "tx_info.bottom_sheet.title_sent" = "Gesendet";
 "tx_info.bottom_sheet.processing" = "VERARBEITUNG";
 "tx_info.bottom_sheet.complete" = "ABGESCHLOSSEN";
 "tx_info.bottom_sheet.status" = "Status:";
-"tx_info.bottom_sheet.value_when_received" = "Value when received:";
+"tx_info.bottom_sheet.value_when_received" = "Wert beim Empfang:";
 "tx_info.bottom_sheet.from_hash" = "Von:";
 "tx_info.bottom_sheet.to_hash" = "An:";
 "tx_info.bottom_sheet.id_hash" = "ID:";
@@ -78,14 +78,14 @@
 "full_transaction_info.navigation_bar.share" = "Teilen";
 "full_transaction_info.cell.size" = "Größe:";
 "full_transaction_info.cell.fee_rate" = "Gebührenrate:";
-"full_transaction_info.cell.received_time" = "Received Time:";
-"full_transaction_info.cell.mined_time" = "Mined Time:";
-"full_transaction_info.cell.included_in_block" = "Included in Block:";
+"full_transaction_info.cell.received_time" = "Empfangene Uhrzeit:";
+"full_transaction_info.cell.mined_time" = "Verminte Zeit:";
+"full_transaction_info.cell.included_in_block" = "Im Block enthalten:";
 "full_transaction_info.cell.confirmations" = "Bestätigungen";
 "full_transaction_info.cell.lock_time" = "Sperrzeit:";
 "full_transaction_info.cell.from" = "Von:";
 "full_transaction_info.cell.to" = "An:";
-"full_transaction_info.cell.received" = "Received:";
+"full_transaction_info.cell.received" = "Empfangen:";
 "full_transaction_info.cell.sent" = "Gesendet:";
 
 "settings.title" = "Einstellungen";
@@ -105,11 +105,11 @@
 "settings_language.title" = "Sprache";
 
 "settings_security.title" = "Sicherheits-Center";
-"settings_security.pin_touch_id" = "Pin / Touch ID";
+"settings_security.pin_touch_id" = "PIN / Touch ID";
 "settings_security.paper_key" = "Papier-Schlüssel";
 
 "set_pin_controller.title" = "PIN festlegen";
-"set_pin_controller.info" = "Your pin will be used to unlock your wallet and send money";
-"confirm_pin_controller.title" = "Enter Again";
+"set_pin_controller.info" = "Ihre Pin wird verwendet werden, um Ihren Wallet zu entsperren und Geld schicken";
+"confirm_pin_controller.title" = "Erneut eingeben";
 "confirm_pin_controller.info" = "PIN bestätigen";
 "confirm_pin_controller.wrong_pin" = "Falscher PIN";

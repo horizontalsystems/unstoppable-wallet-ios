@@ -5,7 +5,7 @@
 "alert.copy" = "Скопировать";
 "alert.share" = "Поделиться";
 "alert.close" = "Закрыть";
-"alert.success" = "Success";
+"alert.success" = "Успешно";
 "alert.copied" = "Скопировано";
 
 "guest.title" = "Имя приложения";
@@ -42,7 +42,7 @@
 
 "send.title" = "Отправить ";
 "send.address_placeholder" = "Адрес";
-"send.payment_reference_placeholder" = "Payment Reference";
+"send.payment_reference_placeholder" = "Ссылка на платеж";
 "send.insufficient_funds" = "Недостаточно средств на балансе";
 "paste" = "Вставить";
 "amount" = "Сумма";
@@ -53,7 +53,7 @@
 "transactions.title" = "Транзакции";
 "transactions.tab_bar_item" = "Транзакции";
 "transactions.yesterday" = "Вчера";
-"transactions.success" = "success";
+"transactions.success" = "успешно";
 "transactions.pending" = "ожидание...";
 "transactions.from" = "от";
 "transactions.to" = "кому";
@@ -94,7 +94,7 @@
 "settings.cell.base_currency" = "Базовая валюта";
 "settings.cell.import_wallet" = "Импортировать кошелёк";
 "settings.cell.language" = "Язык";
-"settings.cell.about" = "About";
+"settings.cell.about" = "О программе";
 "settings.cell.light_mode" = "Легкий режим";
 "settings.cell.push_notifications" = "Уведомления";
 "settings.cell.app_version" = "Версия приложения";
