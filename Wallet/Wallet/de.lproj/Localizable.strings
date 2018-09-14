@@ -18,7 +18,7 @@
 "restore.restore" = "Wiederherstellen";
 "restore.validation_failed" = "The words you entered are invalid";
 
-"backup.intro.title" = "Backup";
+"backup.intro.title" = "Datensicherung";
 "backup.intro.subtitle" = "Your paper key is the only way to restore your Satoshi if you lost, stolen, broken, or upgraded.\n\nWe will show you a list of words to write down on a piece of paper and keep safe.";
 "backup.intro.later" = "Später";
 "backup.intro.backup_now" = "Backup Now";
@@ -30,7 +30,7 @@
 "backup.confirmation.title" = "Type the words";
 "backup.confirmation.description" = "Enter the following words from your paper key";
 "backup.confirmation.failure_alert.text" = "Entered words do not match";
-"backup.confirmation.understand" = "I understand that ";
+"backup.confirmation.understand" = "Das verstehe ich ";
 "backup.confirmation.local_token_bold" = "my wallet and tokens are held securely on this device only and not any servers";
 "backup.confirmation.delete_app_warn" = "I understand that if this app is moved to another device or is deleted, my wallet can be only recovered with the backup phrase that I have written down and saved in a secure place";
 "backup.confirmation.confirm" = "Bestätigen";
@@ -38,14 +38,14 @@
 "wallet.title" = "Balance";
 "wallet.tab_bar_item" = "Balance";
 "wallet.send" = "Senden";
-"wallet.deposit" = "Receive";
+"wallet.deposit" = "Erhalten";
 
 "send.title" = "Senden ";
 "send.address_placeholder" = "Adresse";
 "send.payment_reference_placeholder" = "Zahlungsreferenz";
-"send.insufficient_funds" = "Not available amount";
+"send.insufficient_funds" = "Nicht verfügbare Betrag";
 "paste" = "Einsetzen";
-"amount" = "Summe";
+"amount" = "Betrag";
 "more" = "Mehr";
 "send" = "Senden";
 "back" = "Zurück";
@@ -74,7 +74,7 @@
 "tx_info.bottom_sheet.to_hash" = "An:";
 "tx_info.bottom_sheet.id_hash" = "ID:";
 
-"full_transaction_info.navigation_bar.title" = "Details";
+"full_transaction_info.navigation_bar.title" = "Info";
 "full_transaction_info.navigation_bar.share" = "Teilen";
 "full_transaction_info.cell.size" = "Größe:";
 "full_transaction_info.cell.fee_rate" = "Gebührenrate:";
