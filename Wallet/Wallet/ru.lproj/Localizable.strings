@@ -3,62 +3,62 @@
 "navigation_bar.cancel" = "Cancel";
 "done" = "Готово";
 "alert.copy" = "Copy";
-"alert.share" = "Share";
+"alert.share" = "Поделиться";
 "alert.close" = "Закрыть";
 "alert.success" = "Success";
-"alert.copied" = "Copied";
+"alert.copied" = "Скопировано";
 
-"guest.title" = "App Name";
+"guest.title" = "Имя приложения";
 "guest.subtitle" = "Bitcoin, Satoshi Nakamoto";
-"guest.create_wallet" = "Create Wallet";
-"guest.restore_wallet" = "Restore Wallet";
+"guest.create_wallet" = "Создать кошелек";
+"guest.restore_wallet" = "Восстановить кошелек";
 
-"restore.title" = "Restore Wallet";
-"restore.description" = "Enter the following words from your paper key:";
+"restore.title" = "Восстановить кошелек";
+"restore.description" = "Введите следующие слова из вашего ключа:";
 "restore.restore" = "Restore";
-"restore.validation_failed" = "The words you entered are invalid";
+"restore.validation_failed" = "Введенные слова неверны";
 
-"backup.intro.title" = "Backup";
-"backup.intro.subtitle" = "Your paper key is the only way to restore your Satoshi if you lost, stolen, broken, or upgraded.\n\nWe will show you a list of words to write down on a piece of paper and keep safe.";
-"backup.intro.later" = "Later";
-"backup.intro.backup_now" = "Backup Now";
+"backup.intro.title" = "Сделать резервную копию";
+"backup.intro.subtitle" = "Ваш ключ является единственным способом для восстановления ваших Биткоинов.\n\nМы покажем вам список слов, чтобы вы записали их на бумаге и хранили в безопасном месте.";
+"backup.intro.later" = "Не сейчас";
+"backup.intro.backup_now" = "Сделать резервную копию";
 
-"backup.words.title" = "Paper Keys";
-"backup.words.back" = "Back";
-"backup.words.proceed" = "Proceed";
+"backup.words.title" = "Ключ";
+"backup.words.back" = "Назад";
+"backup.words.proceed" = "Продолжить";
 
-"backup.confirmation.title" = "Type the words";
-"backup.confirmation.description" = "Enter the following words from your paper key";
-"backup.confirmation.failure_alert.text" = "Entered words do not match";
-"backup.confirmation.understand" = "I understand that ";
-"backup.confirmation.local_token_bold" = "my wallet and tokens are held securely on this device only and not any servers";
-"backup.confirmation.delete_app_warn" = "I understand that if this app is moved to another device or is deleted, my wallet can be only recovered with the backup phrase that I have written down and saved in a secure place";
-"backup.confirmation.confirm" = "Confirm";
+"backup.confirmation.title" = "Введите слово";
+"backup.confirmation.description" = "Введите следующие слова из вашего ключа";
+"backup.confirmation.failure_alert.text" = "Введенные слова не совпадают";
+"backup.confirmation.understand" = "Я понимаю ";
+"backup.confirmation.local_token_bold" = "что мой кошелек и токены хранятся только на этом устройстве";
+"backup.confirmation.delete_app_warn" = "Я понимаю, что если это приложение устанавливается на другое устройство или удаляется, мой бумажник можно только восстановить фразой резервного копирования, который я храню в безопасном месте";
+"backup.confirmation.confirm" = "Подтвердить";
 
 "wallet.title" = "Баланс";
 "wallet.tab_bar_item" = "Баланс";
 "wallet.send" = "Отправить";
 "wallet.deposit" = "Получить";
 
-"send.title" = "Send ";
-"send.address_placeholder" = "Address";
+"send.title" = "Отправить ";
+"send.address_placeholder" = "Адрес";
 "send.payment_reference_placeholder" = "Payment Reference";
-"send.insufficient_funds" = "Not available amount";
-"paste" = "Paste";
-"amount" = "Amount";
-"more" = "More";
-"send" = "Send";
-"back" = "Back";
+"send.insufficient_funds" = "Недостаточно средств на балансе";
+"paste" = "Вставить";
+"amount" = "Сумма";
+"more" = "Ещё";
+"send" = "Отправить";
+"back" = "Назад";
 
-"transactions.title" = "Transactions";
-"transactions.tab_bar_item" = "Transactions";
-"transactions.yesterday" = "Yesterday";
+"transactions.title" = "Транзакции";
+"transactions.tab_bar_item" = "Транзакции";
+"transactions.yesterday" = "Вчера";
 "transactions.success" = "success";
 "transactions.pending" = "pending...";
-"transactions.from" = "from";
-"transactions.to" = "to";
-"transactions.filter_all" = "All";
-"transactions.filter_rBitcoin" = "Bitcoin-R";
+"transactions.from" = "от";
+"transactions.to" = "кому";
+"transactions.filter_all" = "Все";
+"transactions.filter_rBitcoin" = "Биткоин-R";
 "transactions.filter_tBitcoin Cash" = "Bitcoin-T Cash";
 "transactions.filter_Bitcoin" = "Bitcoin";
 
