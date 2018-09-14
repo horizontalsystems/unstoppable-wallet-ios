@@ -18,16 +18,16 @@
 "restore.restore" = "Wiederherstellen";
 "restore.validation_failed" = "The words you entered are invalid";
 
-"backup.intro.title" = "Datensicherung";
+"backup.intro.title" = "Sicherung";
 "backup.intro.subtitle" = "Your paper key is the only way to restore your Satoshi if you lost, stolen, broken, or upgraded.\n\nWe will show you a list of words to write down on a piece of paper and keep safe.";
 "backup.intro.later" = "Später";
-"backup.intro.backup_now" = "Backup Now";
+"backup.intro.backup_now" = "Jetzt sichern";
 
 "backup.words.title" = "Papier-Schlüssel";
 "backup.words.back" = "Zurück";
 "backup.words.proceed" = "Proceed";
 
-"backup.confirmation.title" = "Type the words";
+"backup.confirmation.title" = "Wort eingeben";
 "backup.confirmation.description" = "Enter the following words from your paper key";
 "backup.confirmation.failure_alert.text" = "Entered words do not match";
 "backup.confirmation.understand" = "Das verstehe ich ";
@@ -64,7 +64,7 @@
 
 
 "tx_info.bottom_sheet.title" = "Transaktion";
-"tx_info.bottom_sheet.title_received" = "Received";
+"tx_info.bottom_sheet.title_received" = "Empfangen";
 "tx_info.bottom_sheet.title_sent" = "Gesendet";
 "tx_info.bottom_sheet.processing" = "VERARBEITUNG";
 "tx_info.bottom_sheet.complete" = "ABGESCHLOSSEN";
@@ -82,7 +82,7 @@
 "full_transaction_info.cell.mined_time" = "Mined Time:";
 "full_transaction_info.cell.included_in_block" = "Included in Block:";
 "full_transaction_info.cell.confirmations" = "Bestätigungen";
-"full_transaction_info.cell.lock_time" = "Lock Time:";
+"full_transaction_info.cell.lock_time" = "Sperrzeit:";
 "full_transaction_info.cell.from" = "Von:";
 "full_transaction_info.cell.to" = "An:";
 "full_transaction_info.cell.received" = "Received:";
@@ -91,7 +91,7 @@
 "settings.title" = "Einstellungen";
 "settings.tab_bar_item" = "Einstellungen";
 "settings.cell.security_center" = "Sicherheits-Center";
-"settings.cell.base_currency" = "Base currency";
+"settings.cell.base_currency" = "Basiswährung";
 "settings.cell.import_wallet" = "Wallet importieren";
 "settings.cell.language" = "Sprache";
 "settings.cell.about" = "Über";
@@ -108,7 +108,7 @@
 "settings_security.pin_touch_id" = "Pin / Touch ID";
 "settings_security.paper_key" = "Papier-Schlüssel";
 
-"set_pin_controller.title" = "Set PIN";
+"set_pin_controller.title" = "PIN festlegen";
 "set_pin_controller.info" = "Your pin will be used to unlock your wallet and send money";
 "confirm_pin_controller.title" = "Enter Again";
 "confirm_pin_controller.info" = "PIN bestätigen";
