@@ -42,7 +42,7 @@
 
 "send.title" = "Отправить ";
 "send.address_placeholder" = "Адрес";
-"send.payment_reference_placeholder" = "Payment Reference";
+"send.payment_reference_placeholder" = "Ссылка на платеж";
 "send.insufficient_funds" = "Недостаточно средств на балансе";
 "paste" = "Вставить";
 "amount" = "Сумма";
@@ -94,7 +94,7 @@
 "settings.cell.base_currency" = "Базовая валюта";
 "settings.cell.import_wallet" = "Импортировать кошелёк";
 "settings.cell.language" = "Язык";
-"settings.cell.about" = "About";
+"settings.cell.about" = "О программе";
 "settings.cell.light_mode" = "Легкий режим";
 "settings.cell.push_notifications" = "Уведомления";
 "settings.cell.app_version" = "Версия приложения";
