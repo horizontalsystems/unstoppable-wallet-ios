@@ -10,6 +10,7 @@ class SettingsTheme {
     static let cellHeight: CGFloat = 44
     static var textColor: UIColor { return .cryptoThemedWhite }
     static let switchTintColor = UIColor.cryptoGray
+    static let separatorColor = UIColor.clear
     static let infoTitleTopMargin: CGFloat = 4
     static let rightTextColor = UIColor.cryptoGray
     static let cellSelectBackground = UIColor.cryptoSteel20

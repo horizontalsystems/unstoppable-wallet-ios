@@ -74,7 +74,7 @@ class SettingsCell: UITableViewCell {
         }
 
         separator.snp.updateConstraints { maker in
-            let float = SettingsTheme.separatorInset + self.layoutMargins.left
+            let float = (titleIcon != nil ? SettingsTheme.separatorInset : 0) + self.layoutMargins.left
             maker.leading.equalToSuperview().offset(last ? 0 : float)
         }
     }

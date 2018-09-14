@@ -12,6 +12,7 @@ PODS:
   - GrouviHUD (1.0.2):
     - RxSwift
     - SnapKit (~> 4.0.0)
+  - KeychainAccess (3.1.1)
   - ObjectMapper (3.3.0)
   - Realm (3.7.6):
     - Realm/Headers (= 3.7.6)
@@ -44,6 +45,7 @@ DEPENDENCIES:
   - GrouviActionSheet
   - GrouviExtensions (from `https://github.com/horizontalsystems/GrouviExtensions.git`, branch `master`)
   - GrouviHUD (from `https://github.com/horizontalsystems/GrouviHUD.git`, branch `master`)
+  - KeychainAccess
   - ObjectMapper
   - RealmSwift
   - RxCocoa
@@ -59,6 +61,7 @@ SPEC REPOS:
     - BigInt
     - Cuckoo
     - GrouviActionSheet
+    - KeychainAccess
     - ObjectMapper
     - Realm
     - RealmSwift
@@ -98,6 +101,7 @@ SPEC CHECKSUMS:
   GrouviActionSheet: b34f3f29231a48d360005a9946da7c660b54bfec
   GrouviExtensions: e5a582e62cb8de559250630778b2d79b0b9ec5ea
   GrouviHUD: 230e32e2f5b20c58bb9c15e126aaf9403c11f170
+  KeychainAccess: 7bd430028059754a3debab3cfc0bd1fc7fb85df3
   ObjectMapper: b612bf8c8e99c4dc0bb6013a51f7c27966ed5da9
   Realm: 9eaecad54712d6246d08ba34c10f354e4715d7d3
   RealmSwift: 1fe08b4ebaeeaacf17f9ba0343f7b25c9fc31fa6
@@ -109,6 +113,6 @@ SPEC CHECKSUMS:
   SnapKit: a42d492c16e80209130a3379f73596c3454b7694
   WalletKit: 9db03061940fb3419560b9c16310fbc2e386243d
 
-PODFILE CHECKSUM: 470f00934bf885dda30343fb94f4655b68c26fbb
+PODFILE CHECKSUM: b7b07ec604ca0aa0f059daf24144d0898c2afce9
 
 COCOAPODS: 1.5.3

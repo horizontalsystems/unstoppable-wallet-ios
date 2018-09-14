@@ -9,6 +9,7 @@ class SettingsToggleCell: SettingsCell {
 
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        selectionStyle = .none
 
         toggleView.tintColor = SettingsTheme.switchTintColor
         toggleView.addTarget(self, action: #selector(_onToggle), for: .touchUpInside)

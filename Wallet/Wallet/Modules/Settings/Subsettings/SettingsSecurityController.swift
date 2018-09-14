@@ -10,7 +10,7 @@ class SettingsSecurityController: UIViewController, SectionsDataSource {
         tableView.registerCell(forClass: SettingsRightImageCell.self)
         tableView.registerCell(forClass: SettingsToggleCell.self)
         tableView.sectionDataSource = self
-        tableView.separatorColor = SettingsTheme.cellSelectBackground
+        tableView.separatorColor = SettingsTheme.separatorColor
 
         hidesBottomBarWhenPushed = true
     }
@@ -47,8 +47,9 @@ class SettingsSecurityController: UIViewController, SectionsDataSource {
                 print("on: \(isOn)")
             })
         }))
+        let setChangePinTitle = UnlockHelper.shared.isPinned ? "settings_pin_touch_face.change_pin".localized : "settings_pin_touch_face.set_pin".localized
         pinTouchFaceRows.append(Row<SettingsCell>(id: "set_pin", height: SettingsTheme.securityCellHeight, bind: { cell, _ in
-            cell.bind(titleIcon: nil, title: "settings_pin_touch_face.set_pin".localized, showDisclosure: true, last: true)
+            cell.bind(titleIcon: nil, title: setChangePinTitle, showDisclosure: true, last: true)
         }, action: { [weak self] _ in
             self?.navigationController?.pushViewController(PinRouter.setPinModule(), animated: true)
         }))

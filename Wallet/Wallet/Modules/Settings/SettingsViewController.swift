@@ -22,7 +22,7 @@ class SettingsViewController: UIViewController, SectionsDataSource {
         tableView.registerCell(forClass: SettingsToggleCell.self)
         tableView.registerHeaderFooter(forClass: SettingsInfoFooter.self)
         tableView.sectionDataSource = self
-        tableView.separatorColor = SettingsTheme.cellBackground
+        tableView.separatorColor = SettingsTheme.separatorColor
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -56,9 +56,10 @@ class SettingsViewController: UIViewController, SectionsDataSource {
         var sections = [SectionProtocol]()
 
         var appSettingsRows = [RowProtocol]()
+        let securityAttentionImage = UnlockHelper.shared.isPinned ? nil : UIImage(named: "Attention Icon")
         appSettingsRows.append(Row<SettingsRightImageCell>(id: "security_center", hash: "security_center", height: SettingsTheme.cellHeight, bind: { cell, _ in
             cell.selectionStyle = .default
-            cell.bind(titleIcon: UIImage(named: "Security Icon"), title: "settings.cell.security_center".localized, rightImage: UIImage(named: "Attention Icon"), rightImageTintColor: SettingsTheme.attentionIconTint, showDisclosure: true)
+            cell.bind(titleIcon: UIImage(named: "Security Icon"), title: "settings.cell.security_center".localized, rightImage: securityAttentionImage, rightImageTintColor: SettingsTheme.attentionIconTint, showDisclosure: true)
         }, action: { [weak self] _ in
             self?.navigationController?.pushViewController(SettingsSecurityController(), animated: true)
         }))
@@ -84,7 +85,6 @@ class SettingsViewController: UIViewController, SectionsDataSource {
             self?.navigationController?.pushViewController(SettingsLanguageController(), animated: true)
         }))
         appearanceRows.append(Row<SettingsToggleCell>(id: "light_mode", hash: "light_mode", height: SettingsTheme.cellHeight, bind: { cell, _ in
-            cell.selectionStyle = .none
             cell.bind(titleIcon: UIImage(named: "Light Mode Icon"), title: "settings.cell.light_mode".localized, isOn: UserDefaultsStorage.shared.lightMode, showDisclosure: false, last: true, onToggle: { isOn in
                 UserDefaultsStorage.shared.lightMode = isOn
 
