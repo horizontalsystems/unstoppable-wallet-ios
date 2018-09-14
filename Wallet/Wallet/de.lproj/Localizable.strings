@@ -1,26 +1,26 @@
 "alert.ok" = "Ok";
 "alert.cancel" = "Abbrechnen";
-"navigation_bar.cancel" = "Cancel";
-"done" = "Done";
-"alert.copy" = "Copy";
-"alert.share" = "Share";
-"alert.close" = "Close";
-"alert.success" = "Success";
-"alert.copied" = "Copied";
+"navigation_bar.cancel" = "Abbrechen";
+"done" = "Fertig";
+"alert.copy" = "Kopieren";
+"alert.share" = "Teilen";
+"alert.close" = "Schließen";
+"alert.success" = "Erfolgreich";
+"alert.copied" = "Kopiert";
 
 "guest.title" = "App Name";
 "guest.subtitle" = "Bitcoin, Satoshi Nakamoto";
-"guest.create_wallet" = "Create Wallet";
-"guest.restore_wallet" = "Restore Wallet";
+"guest.create_wallet" = "Wallet erstellen";
+"guest.restore_wallet" = "Wallet wiederherstellen";
 
-"restore.title" = "Restore Wallet";
+"restore.title" = "Wallet wiederherstellen";
 "restore.description" = "Enter the following words from your paper key:";
-"restore.restore" = "Restore";
+"restore.restore" = "Wiederherstellen";
 "restore.validation_failed" = "The words you entered are invalid";
 
 "backup.intro.title" = "Backup";
 "backup.intro.subtitle" = "Your paper key is the only way to restore your Satoshi if you lost, stolen, broken, or upgraded.\n\nWe will show you a list of words to write down on a piece of paper and keep safe.";
-"backup.intro.later" = "Later";
+"backup.intro.later" = "Später";
 "backup.intro.backup_now" = "Backup Now";
 
 "backup.words.title" = "Paper Keys";
