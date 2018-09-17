@@ -121,6 +121,7 @@
 		1A56460F1BB48D4E82C6E257 /* RestoreWordCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5648D3CF09FF5EBE8321EC /* RestoreWordCell.swift */; };
 		1A56464325366A495BD81C88 /* TransactionCurrenciesHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564FE8D247C36C2478C6B5 /* TransactionCurrenciesHeaderView.swift */; };
 		1A56465CE6EFDADE3365DF98 /* AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5649DB879A57761C09842E /* AppTheme.swift */; };
+		1A56466597043CA59CF29FAC /* UnlockEditPinModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564B0B00D14612A925283D /* UnlockEditPinModule.swift */; };
 		1A56469A98EBAEC2B6B088AB /* PinInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564700B501F3E1B43A9BBD /* PinInteractor.swift */; };
 		1A5646BB44C0AB4BD6E5542D /* UITableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5641C7C137BB451E12AC28 /* UITableView.swift */; };
 		1A5646CA592E84121AF87B07 /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5640B9841EBA6BE028681D /* Date.swift */; };
@@ -173,6 +174,7 @@
 		1A564C3EBB7FB859CF1BB24D /* UIFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564EC30D391F8893C1D514 /* UIFont.swift */; };
 		1A564C4890A7DCA6387FACC9 /* TransactionInfoBaseHashValueItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564A8B8E07B97BA9910FDA /* TransactionInfoBaseHashValueItem.swift */; };
 		1A564C84E08DE681615528E3 /* SendTitleItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5649BED7237B075AE7F8B8 /* SendTitleItemView.swift */; };
+		1A564CA56DC103DCAF38BB12 /* UnlockEditPinInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5649A76AB10649FF6BE465 /* UnlockEditPinInteractor.swift */; };
 		1A564CCF937248927611B8B0 /* TransactionInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5643102015EFBECFBA6693 /* TransactionInfoView.swift */; };
 		1A564CD9828F0A269B25C800 /* TransactionIDHashItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564D6EFBD1A8C9678288E6 /* TransactionIDHashItem.swift */; };
 		1A564CDEE86EFCB66EB45FD6 /* DepositCollectionItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564B0A9AB0EAAB5574FDD0 /* DepositCollectionItemView.swift */; };
@@ -198,6 +200,7 @@
 		1A564F39A93F00B10861859F /* AmountInputField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564D254A8C867D16CA9166 /* AmountInputField.swift */; };
 		1A564F4AA83DC47DC9840A69 /* SettingsTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564F747A4D0B78E5DF6F1B /* SettingsTheme.swift */; };
 		1A564F544CBB0EFE12904B54 /* SettingsLanguageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564492E508AE32CC501CBD /* SettingsLanguageController.swift */; };
+		1A564F6F82762BEA80A94A82 /* UnlockEditPinPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564181F7F431F54142FF31 /* UnlockEditPinPresenter.swift */; };
 		1A564F89DD6AE0B74D176E56 /* UnlockPinInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564FEC8A444B83F49B6743 /* UnlockPinInteractor.swift */; };
 		1A564FB62EBBA50489895BEF /* WalletCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564B746C8A6451D81B27D4 /* WalletCell.swift */; };
 		1A564FDF56292EFCF8308CAA /* KeychainHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5649D4C4446C06ABB99138 /* KeychainHelper.swift */; };
@@ -326,6 +329,7 @@
 		1A564116BA2AF8FD13D5D2AD /* BackupButtonItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackupButtonItem.swift; sourceTree = "<group>"; };
 		1A564139E32A4DAAD482B2F8 /* PinModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinModule.swift; sourceTree = "<group>"; };
 		1A564181733CBC44EECFBBF3 /* TransactionCloseItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionCloseItem.swift; sourceTree = "<group>"; };
+		1A564181F7F431F54142FF31 /* UnlockEditPinPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnlockEditPinPresenter.swift; sourceTree = "<group>"; };
 		1A5641C2FAD616C358A319A0 /* SendModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendModule.swift; sourceTree = "<group>"; };
 		1A5641C7C137BB451E12AC28 /* UITableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UITableView.swift; sourceTree = "<group>"; };
 		1A56423BA5FD5CD51DBB665D /* SetPinModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetPinModule.swift; sourceTree = "<group>"; };
@@ -383,6 +387,7 @@
 		1A564939814A9D9F47D41EEB /* InputFieldTheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputFieldTheme.swift; sourceTree = "<group>"; };
 		1A56493C35ECDE46F280ED04 /* NewPinInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewPinInteractor.swift; sourceTree = "<group>"; };
 		1A56499AAEEED9EA3CE9E0A7 /* SettingsRightImageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsRightImageCell.swift; sourceTree = "<group>"; };
+		1A5649A76AB10649FF6BE465 /* UnlockEditPinInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnlockEditPinInteractor.swift; sourceTree = "<group>"; };
 		1A5649BED7237B075AE7F8B8 /* SendTitleItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendTitleItemView.swift; sourceTree = "<group>"; };
 		1A5649C888E12C1A0B70EFA8 /* TransactionsCurrencyCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionsCurrencyCell.swift; sourceTree = "<group>"; };
 		1A5649D4C4446C06ABB99138 /* KeychainHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainHelper.swift; sourceTree = "<group>"; };
@@ -395,6 +400,7 @@
 		1A564AF060F532C77FB991C7 /* SendTitleItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendTitleItem.swift; sourceTree = "<group>"; };
 		1A564AF87E1F5C039E955E7B /* AppHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppHelper.swift; sourceTree = "<group>"; };
 		1A564B0A9AB0EAAB5574FDD0 /* DepositCollectionItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DepositCollectionItemView.swift; sourceTree = "<group>"; };
+		1A564B0B00D14612A925283D /* UnlockEditPinModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnlockEditPinModule.swift; sourceTree = "<group>"; };
 		1A564B27FBA16D9EA22F0944 /* TransactionCloseItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionCloseItemView.swift; sourceTree = "<group>"; };
 		1A564B3A1B7A6F432F72A811 /* SettingsToggleCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsToggleCell.swift; sourceTree = "<group>"; };
 		1A564B685810C6E81FE51CB6 /* PinPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinPresenter.swift; sourceTree = "<group>"; };
@@ -1058,6 +1064,9 @@
 		1A564DE3A63AF4476FBB4153 /* SubPinModules */ = {
 			isa = PBXGroup;
 			children = (
+				1A564B0B00D14612A925283D /* UnlockEditPinModule.swift */,
+				1A5649A76AB10649FF6BE465 /* UnlockEditPinInteractor.swift */,
+				1A564181F7F431F54142FF31 /* UnlockEditPinPresenter.swift */,
 				1A56423BA5FD5CD51DBB665D /* SetPinModule.swift */,
 				1A56470C59E15A01032E7D4B /* SetPinInteractor.swift */,
 				1A564E27DFB45E4468386281 /* SetPinPresenter.swift */,
@@ -1616,6 +1625,9 @@
 				1A564ED84257825846658CA0 /* UnlockPinModule.swift in Sources */,
 				1A5643F98C4B9E65912056D2 /* UnlockPinPresenter.swift in Sources */,
 				1A564F89DD6AE0B74D176E56 /* UnlockPinInteractor.swift in Sources */,
+				1A564F6F82762BEA80A94A82 /* UnlockEditPinPresenter.swift in Sources */,
+				1A564CA56DC103DCAF38BB12 /* UnlockEditPinInteractor.swift in Sources */,
+				1A56466597043CA59CF29FAC /* UnlockEditPinModule.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

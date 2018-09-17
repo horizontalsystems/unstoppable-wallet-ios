@@ -22,7 +22,7 @@ class ConfirmPinInteractor: PinInteractor {
         if pin == pinToConfirm {
             save(pin: pin)
         } else {
-            delegate?.onWrongPin()
+            delegate?.onWrongPin(clean: true)
         }
     }
 

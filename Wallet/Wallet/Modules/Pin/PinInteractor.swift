@@ -21,8 +21,12 @@ extension PinInteractor: IPinInteractor {
     }
 
     @objc func onPinChange(pin: String?) {
-        guard let pin = pin, pin.count <= pinLength else {
-            delegate?.onWrongPin()
+        guard let pin = pin else {
+            delegate?.highlightPinDot(index: -1)
+            return
+        }
+        guard pin.count <= pinLength else {
+            delegate?.onWrongPin(clean: false)
             return
         }
         self.pin = pin

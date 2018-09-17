@@ -62,7 +62,7 @@ class SettingsSecurityController: UIViewController, SectionsDataSource {
             cell.bind(titleIcon: nil, title: setOrChangePinTitle, showDisclosure: true, last: true)
         }, action: { [weak self] _ in
             if UnlockHelper.shared.isPinned {
-                self?.navigationController?.pushViewController(PinRouter.editPinModule(), animated: true)
+                self?.navigationController?.pushViewController(PinRouter.unlockEditPinModule(), animated: true)
             } else {
                 self?.navigationController?.pushViewController(PinRouter.setPinModule(), animated: true)
             }
