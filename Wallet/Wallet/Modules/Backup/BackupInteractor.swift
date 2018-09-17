@@ -39,7 +39,7 @@ extension BackupInteractor: IBackupInteractor {
                 return
             }
         }
-
+        walletManager.isBackedUp = true
         delegate?.didValidateSuccess()
     }
 

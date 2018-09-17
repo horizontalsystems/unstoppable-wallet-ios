@@ -2,12 +2,16 @@ import UIKit
 import GrouviExtensions
 import SectionsTableViewKit
 import SnapKit
+import RxSwift
 
 class SettingsViewController: UIViewController, SectionsDataSource {
+    let disposeBag = DisposeBag()
 
     let viewDelegate: SettingsViewDelegate
 
     let tableView = SectionsTableView(style: .grouped)
+
+    var backedUp = false
 
     init(viewDelegate: SettingsViewDelegate) {
         self.viewDelegate = viewDelegate
@@ -42,6 +46,12 @@ class SettingsViewController: UIViewController, SectionsDataSource {
         view.backgroundColor = AppTheme.controllerBackground
 
         tableView.reload()
+
+        WordsManager.shared.backedUpSubject.subscribeAsync(disposeBag: disposeBag, onNext: { [weak self] backedUp in
+            self?.backedUp = backedUp
+            self?.tableView.reload()
+            self?.navigationController?.tabBarItem.badgeValue = backedUp ? nil : "1"
+        })
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -56,8 +66,8 @@ class SettingsViewController: UIViewController, SectionsDataSource {
         var sections = [SectionProtocol]()
 
         var appSettingsRows = [RowProtocol]()
-        let securityAttentionImage = UnlockHelper.shared.isPinned ? nil : UIImage(named: "Attention Icon")
-        appSettingsRows.append(Row<SettingsRightImageCell>(id: "security_center", hash: "security_center", height: SettingsTheme.cellHeight, bind: { cell, _ in
+        let securityAttentionImage = backedUp ? nil : UIImage(named: "Attention Icon")
+        appSettingsRows.append(Row<SettingsRightImageCell>(id: "security_center", hash: "security_center.\(backedUp)", height: SettingsTheme.cellHeight, bind: { cell, _ in
             cell.selectionStyle = .default
             cell.bind(titleIcon: UIImage(named: "Security Icon"), title: "settings.cell.security_center".localized, rightImage: securityAttentionImage, rightImageTintColor: SettingsTheme.attentionIconTint, showDisclosure: true)
         }, action: { [weak self] _ in
@@ -102,6 +112,7 @@ class SettingsViewController: UIViewController, SectionsDataSource {
             cell.selectionStyle = .default
             cell.bind(titleIcon: UIImage(named: "About Icon"), title: "settings.cell.about".localized, showDisclosure: true, last: true)
         }, action: { _ in
+            WordsManager.shared.isBackedUp = false
             print("tap about")
         }))
         let infoFooter: ViewState<SettingsInfoFooter> = .cellType(hash: "info_view", binder: { view in

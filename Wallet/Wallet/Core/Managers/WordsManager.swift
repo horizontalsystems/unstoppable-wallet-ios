@@ -1,10 +1,24 @@
 import Foundation
 import WalletKit
+import RxSwift
 
 class WordsManager {
     static let shared = WordsManager()
+    let backedUpKey = "backed_up_key"
 
     let localStorage: ILocalStorage
+
+    let backedUpSubject: BehaviorSubject<Bool>
+    var isBackedUp: Bool {
+        get {
+            let v: Bool = KeychainHelper.shared[backedUpKey] ?? false
+            return v
+        }
+        set {
+            backedUpSubject.onNext(newValue)
+            KeychainHelper.shared[backedUpKey] = newValue
+        }
+    }
 
     var words: [String]?
 
@@ -14,6 +28,8 @@ class WordsManager {
 
     init(localStorage: ILocalStorage = UserDefaultsStorage.shared) {
         self.localStorage = localStorage
+        backedUpSubject = BehaviorSubject(value: false)
+        backedUpSubject.onNext(isBackedUp)
 
         words = localStorage.savedWords
     }

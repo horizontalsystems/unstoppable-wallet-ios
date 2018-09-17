@@ -1,8 +1,12 @@
 import UIKit
+import GrouviExtensions
 import SectionsTableViewKit
+import RxSwift
 
 class SettingsSecurityController: UIViewController, SectionsDataSource {
+    let disposeBag = DisposeBag()
     let tableView = SectionsTableView(style: .grouped)
+    var backedUp = false
 
     init() {
         super.init(nibName: nil, bundle: nil)
@@ -32,6 +36,12 @@ class SettingsSecurityController: UIViewController, SectionsDataSource {
         view.backgroundColor = AppTheme.controllerBackground
 
         tableView.reload()
+
+        WordsManager.shared.backedUpSubject.subscribeAsync(disposeBag: disposeBag, onNext: { [weak self] backedUp in
+            self?.backedUp = backedUp
+            self?.tableView.reload()
+            self?.navigationController?.tabBarItem.badgeValue = backedUp ? nil : "1"
+        })
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -56,8 +66,9 @@ class SettingsSecurityController: UIViewController, SectionsDataSource {
         sections.append(Section(id: "security", headerState: .margin(height: SettingsTheme.subSettingsHeaderHeight), footerState: .margin(height: SettingsTheme.subSettingsHeaderHeight), rows: pinTouchFaceRows))
 
         var backupRows = [RowProtocol]()
-        backupRows.append(Row<SettingsCell>(id: "paper_key", height: SettingsTheme.securityCellHeight, bind: { cell, _ in
-            cell.bind(titleIcon: nil, title: "settings_security.paper_key".localized, showDisclosure: true)
+        let securityAttentionImage = backedUp ? nil : UIImage(named: "Attention Icon")
+        backupRows.append(Row<SettingsRightImageCell>(id: "paper_key", height: SettingsTheme.securityCellHeight, bind: { cell, _ in
+            cell.bind(titleIcon: nil, title: "settings_security.paper_key".localized, rightImage: securityAttentionImage, rightImageTintColor: SettingsTheme.attentionIconTint, showDisclosure: true)
         }, action: { [weak self] _ in
             self?.tableView.deselectRow(at: self!.tableView.indexPathForSelectedRow!, animated: true)
             self?.present(BackupRouter.module(dismissMode: .dismissSelf), animated: true)
