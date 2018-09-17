@@ -10,10 +10,10 @@
 
 "guest.title" = "Имя Приложения";
 "guest.subtitle" = "Bitcoin, Satoshi Nakamoto";
-"guest.create_wallet" = "Wallet Erstellen";
+"guest.create_wallet" = "Создать Кошелек";
 "guest.restore_wallet" = "Восстановить Кошелек";
 
-"restore.title" = "Wallet Wiederherstellen";
+"restore.title" = "Восстановить Кошелек";
 "restore.description" = "Введите следующие слова из вашего ключа:";
 "restore.restore" = "Восстановить";
 "restore.validation_failed" = "Введенные слова неверны";
@@ -21,7 +21,7 @@
 "backup.intro.title" = "Записать ключ";
 "backup.intro.subtitle" = "Ваш ключ является единственным способом для восстановления ваших Биткоинов.\n\nМы покажем вам список слов, чтобы вы записали их на бумаге и хранили в безопасном месте.";
 "backup.intro.later" = "Не сейчас";
-"backup.intro.backup_now" = "Jetzt Sichern";
+"backup.intro.backup_now" = "Показать";
 
 "backup.words.title" = "Ключ";
 "backup.words.back" = "Назад";
@@ -97,7 +97,7 @@
 "settings.cell.about" = "О программе";
 "settings.cell.light_mode" = "Цветовая тема";
 "settings.cell.push_notifications" = "Уведомления";
-"settings.cell.app_version" = "Версия приложения";
+"settings.cell.app_version" = "Версия Приложения";
 "settings.info.title" = "BANK WALLET";
 "settings.info.subtitle" = "децентрализованное приложение";
 "settings.info.link" = "horizontalsystems.io";
