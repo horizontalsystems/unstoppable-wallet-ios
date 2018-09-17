@@ -15,6 +15,7 @@ protocol IPinViewDelegate {
 protocol IPinRouter {
     func onSet(pin: String)
     func onConfirm()
+    func onUnlock()
 }
 
 protocol IPinInteractor {

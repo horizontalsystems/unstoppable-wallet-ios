@@ -10,4 +10,7 @@ class UnlockPinPresenter: PinPresenter {
 }
 
 extension UnlockPinPresenter: IUnlockPinInteractorDelegate {
+    func onUnlock() {
+        router.onUnlock()
+    }
 }

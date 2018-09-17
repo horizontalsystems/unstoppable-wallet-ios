@@ -2,8 +2,8 @@ import Foundation
 import RxSwift
 import WalletKit
 
-class EditPinInteractor: PinInteractor {
-    var setDelegate: IEditPinInteractorDelegate? { return delegate as? IEditPinInteractorDelegate }
+class NewPinInteractor: PinInteractor {
+    var setDelegate: INewPinInteractorDelegate? { return delegate as? INewPinInteractorDelegate }
 
     override func onPinChange(pin: String?) {
         super.onPinChange(pin: pin)

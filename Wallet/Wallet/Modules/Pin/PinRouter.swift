@@ -14,6 +14,10 @@ extension PinRouter: IPinRouter {
         viewController?.navigationController?.popToRootViewController(animated: true)
     }
 
+    func onUnlock() {
+        viewController?.dismiss(animated: true)
+    }
+
 }
 
 extension PinRouter {
@@ -46,8 +50,21 @@ extension PinRouter {
 
     static func editPinModule() -> UIViewController {
         let router = PinRouter()
-        let interactor = EditPinInteractor()
-        let presenter = EditPinPresenter(interactor: interactor, router: router)
+        let interactor = NewPinInteractor()
+        let presenter = NewPinPresenter(interactor: interactor, router: router)
+        let viewController = PinViewController(viewDelegate: presenter)
+
+        interactor.delegate = presenter
+        presenter.view = viewController
+        router.viewController = viewController
+
+        return viewController
+    }
+
+    static func unlockPinModule(title: String?, description: String, pin: String, onUnlock: (() -> ())? = nil) -> UIViewController {
+        let router = PinRouter()
+        let interactor = UnlockPinInteractor(unlockHelper: UnlockHelper.shared)
+        let presenter = UnlockPinPresenter(interactor: interactor, router: router)
         let viewController = PinViewController(viewDelegate: presenter)
 
         interactor.delegate = presenter
