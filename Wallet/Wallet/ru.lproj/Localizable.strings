@@ -8,12 +8,12 @@
 "alert.success" = "Успешно";
 "alert.copied" = "Скопировано";
 
-"guest.title" = "Имя приложения";
+"guest.title" = "Имя Приложения";
 "guest.subtitle" = "Bitcoin, Satoshi Nakamoto";
-"guest.create_wallet" = "Создать кошелек";
-"guest.restore_wallet" = "Восстановить кошелек";
+"guest.create_wallet" = "Wallet Erstellen";
+"guest.restore_wallet" = "Восстановить Кошелек";
 
-"restore.title" = "Восстановить кошелек";
+"restore.title" = "Wallet Wiederherstellen";
 "restore.description" = "Введите следующие слова из вашего ключа:";
 "restore.restore" = "Восстановить";
 "restore.validation_failed" = "Введенные слова неверны";
@@ -21,7 +21,7 @@
 "backup.intro.title" = "Записать ключ";
 "backup.intro.subtitle" = "Ваш ключ является единственным способом для восстановления ваших Биткоинов.\n\nМы покажем вам список слов, чтобы вы записали их на бумаге и хранили в безопасном месте.";
 "backup.intro.later" = "Не сейчас";
-"backup.intro.backup_now" = "Показать";
+"backup.intro.backup_now" = "Jetzt Sichern";
 
 "backup.words.title" = "Ключ";
 "backup.words.back" = "Назад";
