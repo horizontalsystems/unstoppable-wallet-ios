@@ -1,4 +1,4 @@
-"alert.ok" = "Ok";
+"alert.ok" = "OK";
 "alert.cancel" = "Abbrechnen";
 "navigation_bar.cancel" = "Abbrechen";
 "done" = "Fertig";
@@ -10,10 +10,10 @@
 
 "guest.title" = "App Name";
 "guest.subtitle" = "Bitcoin, Satoshi Nakamoto";
-"guest.create_wallet" = "Wallet erstellen";
-"guest.restore_wallet" = "Wallet wiederherstellen";
+"guest.create_wallet" = "Wallet Erstellen";
+"guest.restore_wallet" = "Wallet Wiederherstellen";
 
-"restore.title" = "Wallet wiederherstellen";
+"restore.title" = "Wallet Wiederherstellen";
 "restore.description" = "Geben Sie die folgenden Wörter aus Ihrem Papier-Schlüssel:";
 "restore.restore" = "Wiederherstellen";
 "restore.validation_failed" = "Der eingegebene Wörter ist ungültig";
@@ -21,7 +21,7 @@
 "backup.intro.title" = "Sicherung";
 "backup.intro.subtitle" = "Ihr Papier-Schlüssel ist der einzige Weg, Ihre Satoshi wiederherzustellen, wenn Sie verloren, gestohlen, kaputt oder aktualisiert.\n\nwir zeigen Ihnen eine Liste von Wörtern auf einem Blatt Papier notieren und aufbewahren.";
 "backup.intro.later" = "Später";
-"backup.intro.backup_now" = "Jetzt sichern";
+"backup.intro.backup_now" = "Jetzt Sichern";
 
 "backup.words.title" = "Papier-Schlüssel";
 "backup.words.back" = "Zurück";
@@ -92,7 +92,7 @@
 "settings.tab_bar_item" = "Einstellungen";
 "settings.cell.security_center" = "Sicherheits-Center";
 "settings.cell.base_currency" = "Basiswährung";
-"settings.cell.import_wallet" = "Wallet importieren";
+"settings.cell.import_wallet" = "Wallet Importieren";
 "settings.cell.language" = "Sprache";
 "settings.cell.about" = "Über";
 "settings.cell.light_mode" = "Licht Modus";
@@ -114,7 +114,7 @@
 
 "set_pin_controller.title" = "PIN festlegen";
 "set_pin_controller.info" = "Ihre Pin wird verwendet werden, um Ihren Wallet zu entsperren und Geld schicken";
-"confirm_pin_controller.title" = "Erneut eingeben";
+"confirm_pin_controller.title" = "Erneut Eingeben";
 "confirm_pin_controller.info" = "PIN bestätigen";
 "confirm_pin_controller.wrong_pin" = "Falscher PIN";
 

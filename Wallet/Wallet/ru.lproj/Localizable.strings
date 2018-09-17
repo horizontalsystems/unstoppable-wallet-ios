@@ -8,31 +8,31 @@
 "alert.success" = "Успешно";
 "alert.copied" = "Скопировано";
 
-"guest.title" = "Имя приложения";
+"guest.title" = "Имя Приложения";
 "guest.subtitle" = "Bitcoin, Satoshi Nakamoto";
-"guest.create_wallet" = "Создать кошелек";
-"guest.restore_wallet" = "Восстановить кошелек";
+"guest.create_wallet" = "Создать Кошелек";
+"guest.restore_wallet" = "Восстановить Кошелек";
 
-"restore.title" = "Восстановить кошелек";
+"restore.title" = "Восстановить Кошелек";
 "restore.description" = "Введите следующие слова из вашего ключа:";
 "restore.restore" = "Восстановить";
 "restore.validation_failed" = "Введенные слова неверны";
 
-"backup.intro.title" = "Сделать резервную копию";
+"backup.intro.title" = "Записать ключ";
 "backup.intro.subtitle" = "Ваш ключ является единственным способом для восстановления ваших Биткоинов.\n\nМы покажем вам список слов, чтобы вы записали их на бумаге и хранили в безопасном месте.";
 "backup.intro.later" = "Не сейчас";
-"backup.intro.backup_now" = "Сделать резервную копию";
+"backup.intro.backup_now" = "Показать";
 
 "backup.words.title" = "Ключ";
 "backup.words.back" = "Назад";
 "backup.words.proceed" = "Продолжить";
 
-"backup.confirmation.title" = "Введите слово";
+"backup.confirmation.title" = "Введите словa";
 "backup.confirmation.description" = "Введите следующие слова из вашего ключа";
 "backup.confirmation.failure_alert.text" = "Введенные слова не совпадают";
-"backup.confirmation.understand" = "Я понимаю ";
+"backup.confirmation.understand" = "Я понимаю, ";
 "backup.confirmation.local_token_bold" = "что мой кошелек и токены хранятся только на этом устройстве";
-"backup.confirmation.delete_app_warn" = "Я понимаю, что если это приложение устанавливается на другое устройство или удаляется, мой бумажник можно только восстановить фразой резервного копирования, который я храню в безопасном месте";
+"backup.confirmation.delete_app_warn" = "Я понимаю, что если это приложение удаляется или устанавливается на другое устройство, мой бумажник можно восстановить только ключом, который я храню в безопасном месте";
 "backup.confirmation.confirm" = "Подтвердить";
 
 "wallet.title" = "Баланс";
@@ -95,9 +95,9 @@
 "settings.cell.import_wallet" = "Импортировать кошелёк";
 "settings.cell.language" = "Язык";
 "settings.cell.about" = "О программе";
-"settings.cell.light_mode" = "Легкий режим";
+"settings.cell.light_mode" = "Цветовая тема";
 "settings.cell.push_notifications" = "Уведомления";
-"settings.cell.app_version" = "Версия приложения";
+"settings.cell.app_version" = "Версия Приложения";
 "settings.info.title" = "BANK WALLET";
 "settings.info.subtitle" = "децентрализованное приложение";
 "settings.info.link" = "horizontalsystems.io";
