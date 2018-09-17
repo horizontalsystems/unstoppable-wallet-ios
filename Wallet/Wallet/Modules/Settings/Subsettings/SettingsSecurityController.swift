@@ -57,11 +57,15 @@ class SettingsSecurityController: UIViewController, SectionsDataSource {
                 print("on: \(isOn)")
             })
         }))
-        let setChangePinTitle = UnlockHelper.shared.isPinned ? "settings_pin_touch_face.change_pin".localized : "settings_pin_touch_face.set_pin".localized
-        pinTouchFaceRows.append(Row<SettingsCell>(id: "set_pin", height: SettingsTheme.securityCellHeight, bind: { cell, _ in
-            cell.bind(titleIcon: nil, title: setChangePinTitle, showDisclosure: true, last: true)
+        let setOrChangePinTitle = UnlockHelper.shared.isPinned ? "settings_pin_touch_face.change_pin".localized : "settings_pin_touch_face.set_pin".localized
+        pinTouchFaceRows.append(Row<SettingsCell>(id: "set_pin", hash: "pinned_\(UnlockHelper.shared.isPinned)", height: SettingsTheme.securityCellHeight, bind: { cell, _ in
+            cell.bind(titleIcon: nil, title: setOrChangePinTitle, showDisclosure: true, last: true)
         }, action: { [weak self] _ in
-            self?.navigationController?.pushViewController(PinRouter.setPinModule(), animated: true)
+            if UnlockHelper.shared.isPinned {
+                self?.navigationController?.pushViewController(PinRouter.editPinModule(), animated: true)
+            } else {
+                self?.navigationController?.pushViewController(PinRouter.setPinModule(), animated: true)
+            }
         }))
         sections.append(Section(id: "security", headerState: .margin(height: SettingsTheme.subSettingsHeaderHeight), footerState: .margin(height: SettingsTheme.subSettingsHeaderHeight), rows: pinTouchFaceRows))
 

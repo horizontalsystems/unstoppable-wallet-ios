@@ -44,4 +44,17 @@ extension PinRouter {
         return viewController
     }
 
+    static func editPinModule() -> UIViewController {
+        let router = PinRouter()
+        let interactor = EditPinInteractor()
+        let presenter = EditPinPresenter(interactor: interactor, router: router)
+        let viewController = PinViewController(viewDelegate: presenter)
+
+        interactor.delegate = presenter
+        presenter.view = viewController
+        router.viewController = viewController
+
+        return viewController
+    }
+
 }
