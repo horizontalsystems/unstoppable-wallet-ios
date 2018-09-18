@@ -11,12 +11,12 @@ class WordsManager {
     let backedUpSubject: BehaviorSubject<Bool>
     var isBackedUp: Bool {
         get {
-            let v: Bool = KeychainHelper.shared[backedUpKey] ?? false
+            let v: Bool = KeychainHelper.shared.getBool(backedUpKey) ?? false
             return v
         }
         set {
             backedUpSubject.onNext(newValue)
-            KeychainHelper.shared[backedUpKey] = newValue
+            try? KeychainHelper.shared.set(newValue, key: backedUpKey)
         }
     }
 

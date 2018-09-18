@@ -5,22 +5,15 @@ class UnlockHelper {
     let pinKey = "pin_keychain_key"
 
     var isPinned: Bool {
-        let pin: String? = KeychainHelper.shared[pinKey]
-        return pin != nil
+        return KeychainHelper.shared.getString(pinKey) != nil
     }
 
-    func store(pin: String) throws {
-        KeychainHelper.shared[pinKey] = pin
-        if let error = KeychainHelper.shared.lastError {
-            throw error
-        }
+    func store(pin: String?) throws {
+        try KeychainHelper.shared.set(pin, key: pinKey)
     }
 
     func validate(_ pin: String) -> Bool {
-        guard let storedPin: String = KeychainHelper.shared[pinKey], storedPin == pin else {
-            return false
-        }
-        return true
+        return KeychainHelper.shared.getString(pinKey) == pin
     }
 
 }

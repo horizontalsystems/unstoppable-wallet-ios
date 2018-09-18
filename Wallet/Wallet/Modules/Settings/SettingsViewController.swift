@@ -112,7 +112,6 @@ class SettingsViewController: UIViewController, SectionsDataSource {
             cell.selectionStyle = .default
             cell.bind(titleIcon: UIImage(named: "About Icon"), title: "settings.cell.about".localized, showDisclosure: true, last: true)
         }, action: { _ in
-            WordsManager.shared.isBackedUp = false
             print("tap about")
         }))
         let infoFooter: ViewState<SettingsInfoFooter> = .cellType(hash: "info_view", binder: { view in
@@ -142,6 +141,14 @@ class SettingsViewController: UIViewController, SectionsDataSource {
             cell.bind(titleIcon: UIImage(named: "Bug Icon"), title: "Connect to Peer", showDisclosure: false)
         }, action: { [weak self] _ in
             self?.connectToPeer()
+            self?.tableView.deselectRow(at: self!.tableView.indexPathForSelectedRow!, animated: true)
+        }))
+        debugRows.append(Row<SettingsCell>(id: "debug_drop_keychain", hash: "debug_drop_keychain", height: SettingsTheme.cellHeight, bind: { cell, _ in
+            cell.selectionStyle = .default
+            cell.bind(titleIcon: UIImage(named: "Bug Icon"), title: "Drop Keychain", showDisclosure: false)
+        }, action: { [weak self] _ in
+            WordsManager.shared.isBackedUp = false
+            try? UnlockHelper.shared.store(pin: nil)
             self?.tableView.deselectRow(at: self!.tableView.indexPathForSelectedRow!, animated: true)
         }))
         sections.append(Section(id: "debug_section", headerState: .marginColor(height: 50, color: .clear), footerState: .marginColor(height: 20, color: .clear), rows: debugRows))

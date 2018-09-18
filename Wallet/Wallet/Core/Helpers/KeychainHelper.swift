@@ -1,68 +1,36 @@
 import Foundation
 import KeychainAccess
 
-protocol Keychainable {
-    associatedtype T
-    func code() -> String
-    static func decode(_ value: String?) -> T?
-}
-
 class KeychainHelper {
     static let shared = KeychainHelper()
 
     let keychain = Keychain(service: "io.horizontalsystems.bank.dev")
 
-    private var _lastError: Error?
-    var lastError: Error? {
-        get {
-            let tempError = _lastError
-            _lastError = nil
-            return tempError
+    func getBool(_ key: String) -> Bool? {
+        guard let string = keychain[key] else {
+            return false
         }
+        return Bool(string)
     }
 
-    subscript<T: Keychainable>(key: String) -> T? {
-        get {
-            return T.decode(keychain[key]) as? T
+    func getString(_ key: String) -> String? {
+        return keychain[key]
+    }
+
+    func set(_ value: Bool?, key: String) throws {
+        guard let value = value else {
+            try keychain.remove(key)
+            return
         }
-        set {
-            _lastError = nil
-            do {
-                if let value = newValue?.code() {
-                    try keychain.set(value, key: key)
-                } else {
-                    try keychain.remove(key)
-                }
-            } catch {
-                _lastError = error
-            }
+        try keychain.set(value.description, key: key)
+    }
+
+    func set(_ value: String?, key: String) throws {
+        guard let value = value else {
+            try keychain.remove(key)
+            return
         }
-    }
-
-}
-
-extension Bool: Keychainable {
-    typealias T = Bool
-
-    func code() -> String {
-        return self ? "true" : "false"
-    }
-
-    static func decode(_ value: String?) -> T? {
-        return value == "true"
-    }
-
-}
-
-extension String: Keychainable {
-    typealias T = String
-
-    func code() -> String {
-        return self
-    }
-
-    static func decode(_ value: String?) -> T? {
-        return value
+        try keychain.set(value, key: key)
     }
 
 }
