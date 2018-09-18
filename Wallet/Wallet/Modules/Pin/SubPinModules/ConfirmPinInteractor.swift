@@ -6,6 +6,8 @@ class ConfirmPinInteractor: PinInteractor {
     var confirmDelegate: IConfirmPinInteractorDelegate? { return delegate as? IConfirmPinInteractorDelegate }
 
     var pinToConfirm: String
+    var saveAttempts = 0
+    let maxSaveAttempts = 2
 
     init(pin: String) {
         pinToConfirm = pin
@@ -19,14 +21,23 @@ class ConfirmPinInteractor: PinInteractor {
 
         if pin == pinToConfirm {
             save(pin: pin)
-            confirmDelegate?.onConfirm()
         } else {
-            delegate?.onWrongPin()
+            delegate?.onWrongPin(clean: true)
         }
     }
 
     func save(pin: String) {
-        print("save pin")
+        saveAttempts += 1
+        do {
+            try UnlockHelper.shared.store(pin: pin)
+            confirmDelegate?.onConfirm()
+        } catch {
+            if saveAttempts < maxSaveAttempts {
+                save(pin: pin)
+            } else {
+                HudHelper.instance.showError(title: "unlock.cant_save_pin".localized)
+            }
+        }
     }
 
 }

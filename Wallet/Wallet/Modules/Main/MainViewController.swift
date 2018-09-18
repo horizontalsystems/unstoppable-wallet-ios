@@ -10,6 +10,10 @@ class MainViewController: UITabBarController {
         super.init(nibName: String(describing: MainViewController.self), bundle: nil)
 
         self.viewControllers = viewControllers
+        self.viewControllers?.forEach {
+            ($0 as? UINavigationController)?.view.layoutIfNeeded()
+            _ = ($0 as? UINavigationController)?.viewControllers.first?.view
+        }
     }
 
     required init?(coder aDecoder: NSCoder) {

@@ -100,7 +100,7 @@ extension PinViewController: UITextFieldDelegate {
 
         let shouldChange = newLength <= pinLength
         if !shouldChange {
-            onWrongPin()
+            onWrongPin(clean: false)
         }
         return shouldChange
     }
@@ -115,7 +115,7 @@ extension PinViewController: IPinView {
         }
     }
 
-    func bind(pinLength: Int, title: String, infoText: String, infoFont: UIFont, infoAttachToTop: Bool) {
+    func bind(pinLength: Int, title: String?, infoText: String, infoFont: UIFont, infoAttachToTop: Bool) {
         self.pinLength = pinLength
         for _ in 0..<pinLength {
             let dotView = self.dotView
@@ -139,8 +139,12 @@ extension PinViewController: IPinView {
         }
     }
 
-    func onWrongPin() {
+    func onWrongPin(clean: Bool) {
         dotsHolder.shakeView()
+        if clean {
+            textField.text = nil
+            delegate.onPinChange(pin: nil)
+        }
     }
 
 }

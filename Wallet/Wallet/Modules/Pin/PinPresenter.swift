@@ -24,8 +24,8 @@ extension PinPresenter: IPinInteractorDelegate {
         fatalError("must be overridden")
     }
 
-    func onWrongPin() {
-        view?.onWrongPin()
+    func onWrongPin(clean: Bool = false) {
+        view?.onWrongPin(clean: clean)
     }
 
 }

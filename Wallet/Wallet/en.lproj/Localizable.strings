@@ -91,7 +91,7 @@
 "settings.title" = "Settings";
 "settings.tab_bar_item" = "Settings";
 "settings.cell.security_center" = "Security Center";
-"settings.cell.base_currency" = "Base currency";
+"settings.cell.base_currency" = "Base Currency";
 "settings.cell.import_wallet" = "Import Wallet";
 "settings.cell.language" = "Language";
 "settings.cell.about" = "About";
@@ -105,11 +105,20 @@
 "settings_language.title" = "Language";
 
 "settings_security.title" = "Security Center";
-"settings_security.pin_touch_id" = "Pin / Touch ID";
 "settings_security.paper_key" = "Paper Key";
+"settings_pin_touch_face.title" = "Pin / Touch ID";
+"settings_pin_touch_face.set_pin" = "Set PIN";
+"settings_pin_touch_face.change_pin" = "Edit PIN";
+"settings_pin_touch_face.touch_id" = "Touch ID";
 
-"set_pin_controller.title" = "Set PIN";
+"set_pin_controller.title" = "Enter PIN";
 "set_pin_controller.info" = "Your pin will be used to unlock your wallet and send money";
 "confirm_pin_controller.title" = "Enter Again";
 "confirm_pin_controller.info" = "Confirm PIN";
-"confirm_pin_controller.wrong_pin" = "Wrong PIN";
+"edit_pin_controller.title" = "Enter New PIN";
+"edit_pin_controller.info" = "Your pin will be used to unlock your wallet and send money";
+"unlock_pin_controller.info" = "Type your pin to unlock";
+"unlock_edit_pin.title" = "Edit PIN";
+"unlock_edit_pin.info" = "Enter current PIN";
+
+"unlock.cant_save_pin" = "Ouch! We cant save your pin, please contact us asap!";

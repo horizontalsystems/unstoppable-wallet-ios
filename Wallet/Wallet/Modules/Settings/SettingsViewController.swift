@@ -2,12 +2,16 @@ import UIKit
 import GrouviExtensions
 import SectionsTableViewKit
 import SnapKit
+import RxSwift
 
 class SettingsViewController: UIViewController, SectionsDataSource {
+    let disposeBag = DisposeBag()
 
     let viewDelegate: SettingsViewDelegate
 
     let tableView = SectionsTableView(style: .grouped)
+
+    var backedUp = false
 
     init(viewDelegate: SettingsViewDelegate) {
         self.viewDelegate = viewDelegate
@@ -22,7 +26,7 @@ class SettingsViewController: UIViewController, SectionsDataSource {
         tableView.registerCell(forClass: SettingsToggleCell.self)
         tableView.registerHeaderFooter(forClass: SettingsInfoFooter.self)
         tableView.sectionDataSource = self
-        tableView.separatorColor = SettingsTheme.cellBackground
+        tableView.separatorColor = SettingsTheme.separatorColor
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -42,6 +46,12 @@ class SettingsViewController: UIViewController, SectionsDataSource {
         view.backgroundColor = AppTheme.controllerBackground
 
         tableView.reload()
+
+        WordsManager.shared.backedUpSubject.subscribeAsync(disposeBag: disposeBag, onNext: { [weak self] backedUp in
+            self?.backedUp = backedUp
+            self?.tableView.reload()
+            self?.navigationController?.tabBarItem.badgeValue = backedUp ? nil : "1"
+        })
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -56,9 +66,10 @@ class SettingsViewController: UIViewController, SectionsDataSource {
         var sections = [SectionProtocol]()
 
         var appSettingsRows = [RowProtocol]()
-        appSettingsRows.append(Row<SettingsRightImageCell>(id: "security_center", hash: "security_center", height: SettingsTheme.cellHeight, bind: { cell, _ in
+        let securityAttentionImage = backedUp ? nil : UIImage(named: "Attention Icon")
+        appSettingsRows.append(Row<SettingsRightImageCell>(id: "security_center", hash: "security_center.\(backedUp)", height: SettingsTheme.cellHeight, bind: { cell, _ in
             cell.selectionStyle = .default
-            cell.bind(titleIcon: UIImage(named: "Security Icon"), title: "settings.cell.security_center".localized, rightImage: UIImage(named: "Attention Icon"), showDisclosure: true)
+            cell.bind(titleIcon: UIImage(named: "Security Icon"), title: "settings.cell.security_center".localized, rightImage: securityAttentionImage, rightImageTintColor: SettingsTheme.attentionIconTint, showDisclosure: true)
         }, action: { [weak self] _ in
             self?.navigationController?.pushViewController(SettingsSecurityController(), animated: true)
         }))
@@ -84,7 +95,6 @@ class SettingsViewController: UIViewController, SectionsDataSource {
             self?.navigationController?.pushViewController(SettingsLanguageController(), animated: true)
         }))
         appearanceRows.append(Row<SettingsToggleCell>(id: "light_mode", hash: "light_mode", height: SettingsTheme.cellHeight, bind: { cell, _ in
-            cell.selectionStyle = .none
             cell.bind(titleIcon: UIImage(named: "Light Mode Icon"), title: "settings.cell.light_mode".localized, isOn: UserDefaultsStorage.shared.lightMode, showDisclosure: false, last: true, onToggle: { isOn in
                 UserDefaultsStorage.shared.lightMode = isOn
 
@@ -131,6 +141,14 @@ class SettingsViewController: UIViewController, SectionsDataSource {
             cell.bind(titleIcon: UIImage(named: "Bug Icon"), title: "Connect to Peer", showDisclosure: false)
         }, action: { [weak self] _ in
             self?.connectToPeer()
+            self?.tableView.deselectRow(at: self!.tableView.indexPathForSelectedRow!, animated: true)
+        }))
+        debugRows.append(Row<SettingsCell>(id: "debug_drop_keychain", hash: "debug_drop_keychain", height: SettingsTheme.cellHeight, bind: { cell, _ in
+            cell.selectionStyle = .default
+            cell.bind(titleIcon: UIImage(named: "Bug Icon"), title: "Drop Keychain", showDisclosure: false)
+        }, action: { [weak self] _ in
+            WordsManager.shared.isBackedUp = false
+            try? UnlockHelper.shared.store(pin: nil)
             self?.tableView.deselectRow(at: self!.tableView.indexPathForSelectedRow!, animated: true)
         }))
         sections.append(Section(id: "debug_section", headerState: .marginColor(height: 50, color: .clear), footerState: .marginColor(height: 20, color: .clear), rows: debugRows))
