@@ -64,17 +64,17 @@
 
 
 "tx_info.bottom_sheet.title" = "Транзакция";
-"tx_info.bottom_sheet.title_received" = "Получили";
+"tx_info.bottom_sheet.title_received" = "Получено";
 "tx_info.bottom_sheet.title_sent" = "Отправлено";
 "tx_info.bottom_sheet.processing" = "ОБРАБАТЫВАЕТСЯ";
 "tx_info.bottom_sheet.complete" = "ЗАВЕРШЕНО";
 "tx_info.bottom_sheet.status" = "Статус:";
-"tx_info.bottom_sheet.value_when_received" = "Стоимость при получении:";
+"tx_info.bottom_sheet.value_when_received" = "Значение при получении:";
 "tx_info.bottom_sheet.from_hash" = "От:";
 "tx_info.bottom_sheet.to_hash" = "Кому:";
 "tx_info.bottom_sheet.id_hash" = "ID:";
 
-"full_transaction_info.navigation_bar.title" = "Подробнее";
+"full_transaction_info.navigation_bar.title" = "Подробности";
 "full_transaction_info.navigation_bar.share" = "Поделиться";
 "full_transaction_info.cell.size" = "Размер:";
 "full_transaction_info.cell.fee_rate" = "Комиссия:";
