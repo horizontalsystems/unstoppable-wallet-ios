@@ -1,6 +1,6 @@
 "alert.ok" = "Хорошо";
-"alert.cancel" = "Отменить";
-"navigation_bar.cancel" = "Отменить";
+"alert.cancel" = "Отмена";
+"navigation_bar.cancel" = "Отмена";
 "done" = "Готово";
 "alert.copy" = "Скопировать";
 "alert.share" = "Поделиться";
