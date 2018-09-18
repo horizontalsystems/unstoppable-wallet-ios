@@ -104,11 +104,11 @@
 
 "settings_language.title" = "Язык";
 
-"settings_security.title" = "Центр Безопасности";
+"settings_security.title" = "Безопасность";
 "settings_security.pin_touch_id" = "Пин / Touch ID";
 "settings_security.paper_key" = "Бумажный ключ";
 
-"set_pin_controller.title" = "Установить ПИН-код";
+"set_pin_controller.title" = "Задать ПИН-код";
 "set_pin_controller.info" = "Ваш ПИН-код будет использоваться для разблокировки вашего кошелька и отправки денег";
 "confirm_pin_controller.title" = "Введите еще раз";
 "confirm_pin_controller.info" = "Подтвердите ПИН-код";
