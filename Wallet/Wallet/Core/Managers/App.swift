@@ -1,5 +1,6 @@
 import UIKit
 import RxSwift
+import GrouviHUD
 
 class App {
     static let shared = App()
@@ -10,7 +11,7 @@ class App {
     var becomeActiveSubject = PublishSubject<()>()
 
     var isLocked = false
-    let blurView = UIVisualEffectView(effect: UIBlurEffect(style: .light))
+    let blurView = CustomIntensityVisualEffectView(effect: UIBlurEffect(style: .light), intensity: 0.4)
     let lockTimeout: Double = 3
     var unlockWindow: UIWindow?
     var unlockController: UIViewController?
@@ -25,7 +26,7 @@ class App {
     }
 
     func onResignActive() {
-        if !isLocked {
+        if WordsManager.shared.words != nil, !isLocked {
             let window = UIApplication.shared.keyWindow
             let frame = window?.frame ?? UIScreen.main.bounds
             blurView.alpha = 1

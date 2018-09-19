@@ -54,7 +54,7 @@ class SettingsLanguageController: UIViewController, SectionsDataSource {
 
         if let window = UIApplication.shared.keyWindow {
             UIView.transition(with: window, duration: 0.3, options: .transitionCrossDissolve, animations: {
-                window.rootViewController = LaunchRouter.module()
+                window.rootViewController = LaunchRouter.module(lock: false)
             })
         }
     }

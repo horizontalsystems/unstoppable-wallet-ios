@@ -82,14 +82,4 @@ class SettingsSecurityController: UIViewController, SectionsDataSource {
         return sections
     }
 
-    func applyLanguage(language: String) {
-        UserDefaultsStorage.shared.currentLanguage = language
-        LocalizationHelper.instance.update(language: language)
-
-        if let window = UIApplication.shared.keyWindow {
-            UIView.transition(with: window, duration: 0.3, options: .transitionCrossDissolve, animations: {
-                window.rootViewController = LaunchRouter.module()
-            })
-        }
-    }
 }
