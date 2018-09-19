@@ -2,6 +2,12 @@ import UIKit
 
 class PinRouter {
     weak var viewController: UIViewController?
+
+    var afterUnlock: (() -> ())?
+    init(onUnlock: (() -> ())? = nil) {
+        afterUnlock = onUnlock
+    }
+
 }
 
 extension PinRouter: IPinRouter {
@@ -16,6 +22,7 @@ extension PinRouter: IPinRouter {
 
     func onUnlock() {
         viewController?.dismiss(animated: true)
+        afterUnlock?()
     }
 
     func onUnlockEdit() {
@@ -78,8 +85,8 @@ extension PinRouter {
         return viewController
     }
 
-    static func unlockPinModule(title: String?, description: String, pin: String, onUnlock: (() -> ())? = nil) -> UIViewController {
-        let router = PinRouter()
+    static func unlockPinModule(onUnlock: (() -> ())? = nil) -> UIViewController {
+        let router = PinRouter(onUnlock: onUnlock)
         let interactor = UnlockPinInteractor(unlockHelper: UnlockHelper.shared)
         let presenter = UnlockPinPresenter(interactor: interactor, router: router)
         let viewController = PinViewController(viewDelegate: presenter)

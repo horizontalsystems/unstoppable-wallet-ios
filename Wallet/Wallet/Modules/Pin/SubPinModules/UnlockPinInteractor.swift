@@ -13,9 +13,14 @@ class UnlockPinInteractor: PinInteractor {
 
     override func onPinChange(pin: String?) {
         super.onPinChange(pin: pin)
+        guard let pin = pin, pin.count == pinLength else {
+            return
+        }
 
-        if let pin = pin, pin.count == pinLength, unlockHelper.validate(pin) {
+        if unlockHelper.validate(pin) {
             unlockDelegate?.onUnlock()
+        } else {
+            unlockDelegate?.onWrongPin(clean: true)
         }
     }
 

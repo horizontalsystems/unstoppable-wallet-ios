@@ -13,5 +13,5 @@ public class AppTheme {
     static var controllerBackground: UIColor { return .cryptoThemedDark }
     static var tabBarStyle: UIBarStyle { return UserDefaultsStorage.shared.lightMode ? .default : .black }
     static var navigationBarStyle: UIBarStyle { return UserDefaultsStorage.shared.lightMode ? .default : .blackTranslucent}
-    static var navigationBarTintColor: UIColor { return UserDefaultsStorage.shared.lightMode ? .black : .cryptoYellow }
+    static var navigationBarTintColor = UIColor.cryptoYellow
 }

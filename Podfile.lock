@@ -91,7 +91,7 @@ CHECKOUT OPTIONS:
     :commit: 45f888e657b82af751a42e5824ee5bc9f06d9488
     :git: https://github.com/horizontalsystems/GrouviHUD.git
   WalletKit:
-    :commit: 7ba8689e57434d445ced2ccfd08d2516d8c15e37
+    :commit: 86146b48ee253e384e7f3a17487dd16c085e1a8e
     :git: https://github.com/horizontalsystems/WalletKit-iOS.git
 
 SPEC CHECKSUMS:

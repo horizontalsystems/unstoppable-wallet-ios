@@ -56,4 +56,16 @@ class UserDefaultsStorage: ILocalStorage {
         UserDefaults.standard.synchronize()
     }
 
+    public func set(_ value: Double?, for key: String) {
+        if let value = value {
+            UserDefaults.standard.set(value, forKey: key)
+        } else {
+            UserDefaults.standard.removeObject(forKey: key)
+        }
+    }
+
+    public func double(for key: String) -> Double? {
+        return UserDefaults.standard.double(forKey: key)
+    }
+
 }
