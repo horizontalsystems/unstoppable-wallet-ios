@@ -91,7 +91,7 @@
 "settings.title" = "Настройки";
 "settings.tab_bar_item" = "Настройки";
 "settings.cell.security_center" = "Центр Безопасности";
-"settings.cell.base_currency" = "Базовая валюта";
+"settings.cell.base_currency" = "Базовая Валюта";
 "settings.cell.import_wallet" = "Импортировать Кошелёк";
 "settings.cell.language" = "Язык";
 "settings.cell.about" = "О программе";
