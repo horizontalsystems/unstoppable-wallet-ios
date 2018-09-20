@@ -18,7 +18,8 @@ target :Bank do
   pod "RxRealm"
 
   pod 'GrouviExtensions', git: 'https://github.com/horizontalsystems/GrouviExtensions.git', branch: 'master'
-  pod 'GrouviActionSheet'
+  pod 'GrouviActionSheet', git: 'https://github.com/horizontalsystems/GrouviActoinSheet.git', branch: 'master'
+  # pod 'GrouviActionSheet', :path => '../GrouviActionSheet'
   pod 'GrouviHUD', git: 'https://github.com/horizontalsystems/GrouviHUD.git', branch: 'master'
   # pod 'GrouviHUD', :path => '../GrouviHUD'
   pod 'SectionsTableViewKit' #, :path => '../SectionsTableViewKit'

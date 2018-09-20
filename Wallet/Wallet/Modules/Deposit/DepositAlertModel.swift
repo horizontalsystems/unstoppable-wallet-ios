@@ -5,6 +5,7 @@ class DepositAlertModel: BaseAlertModel {
 
     init(addresses: [AddressItem], onCopy: ((Int) -> ())? = nil, onShare: ((Int) -> ())? = nil) {
         super.init()
+        hideInBackground = false
 
         var currentPage = 0
         var pagingItem: PagingDotsItem?

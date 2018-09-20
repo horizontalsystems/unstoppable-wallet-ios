@@ -9,6 +9,7 @@ class TransactionInfoAlertModel: BaseAlertModel {
         })
 
         super.init()
+        hideInBackground = false
 
         addItemView(titleItem)
 
