@@ -19,8 +19,8 @@ class SendAlertModel: BaseAlertModel {
         titleItem = SendTitleItem(tag: 0, required: true)
 
         super.init()
-
-        ignoreKeyboard = false
+        hideInBackground = false
+        observeKeyboard = .onlyShow
 
         titleItem.onQRScan = { [weak self] in
             self?.delegate.onScanClick()

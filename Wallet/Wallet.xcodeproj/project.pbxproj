@@ -87,6 +87,7 @@
 		1A5641061673702B10D858BF /* TransactionInfoTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5645F926B14580B1644164 /* TransactionInfoTheme.swift */; };
 		1A56411CFC8D9190B15323A4 /* BackupConfirmationTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564E77730537D108E31276 /* BackupConfirmationTheme.swift */; };
 		1A564191A16F15B25768FF30 /* SendTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564077BF075C35B6FF3BCB /* SendTheme.swift */; };
+		1A5641A7F8D589D7B93383F6 /* BlurView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564CAA0D91361F1C1E6897 /* BlurView.swift */; };
 		1A5641BD2DA1FB1803D3B044 /* DepositInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5648DA32EA5FC27E4CEF64 /* DepositInteractor.swift */; };
 		1A5641D239AAC88D2C411C3B /* SetPinModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56423BA5FD5CD51DBB665D /* SetPinModule.swift */; };
 		1A5641E8642AA6004640F15C /* SendButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56425E1873BC8574539D2B /* SendButtonItem.swift */; };
@@ -106,7 +107,7 @@
 		1A5643AD05BA2D6E44DC6FCE /* FullTransactionInfoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564A961EE2857B5283A996 /* FullTransactionInfoController.swift */; };
 		1A5643EBCA934158AD7B4C4B /* DepositPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5645371B2FC499500DCA93 /* DepositPresenter.swift */; };
 		1A5643F98C4B9E65912056D2 /* UnlockPinPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5643D206E3555A4D6A5D57 /* UnlockPinPresenter.swift */; };
-		1A5644359FCA67F99CE339CD /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5648F910A01D14653C8B21 /* App.swift */; };
+		1A5644359FCA67F99CE339CD /* LockManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5648F910A01D14653C8B21 /* LockManager.swift */; };
 		1A56443A54A6035FC2B7F485 /* SendButtonItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564CFA352D219E2D05D09F /* SendButtonItemView.swift */; };
 		1A56444F92E79514DB155658 /* DepositRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564EDCEACE83D95F6AE528 /* DepositRouter.swift */; };
 		1A564462CB4BF369442CE381 /* TransactionCloseItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564181733CBC44EECFBBF3 /* TransactionCloseItem.swift */; };
@@ -385,7 +386,7 @@
 		1A5648AB2D8BF212D891310D /* AddressItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressItem.swift; sourceTree = "<group>"; };
 		1A5648D3CF09FF5EBE8321EC /* RestoreWordCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestoreWordCell.swift; sourceTree = "<group>"; };
 		1A5648DA32EA5FC27E4CEF64 /* DepositInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DepositInteractor.swift; sourceTree = "<group>"; };
-		1A5648F910A01D14653C8B21 /* App.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
+		1A5648F910A01D14653C8B21 /* LockManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LockManager.swift; sourceTree = "<group>"; };
 		1A564939814A9D9F47D41EEB /* InputFieldTheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputFieldTheme.swift; sourceTree = "<group>"; };
 		1A56493C35ECDE46F280ED04 /* NewPinInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewPinInteractor.swift; sourceTree = "<group>"; };
 		1A56499AAEEED9EA3CE9E0A7 /* SettingsRightImageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsRightImageCell.swift; sourceTree = "<group>"; };
@@ -420,6 +421,7 @@
 		1A564C907C70681148A3CA13 /* SendReferenceItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendReferenceItem.swift; sourceTree = "<group>"; };
 		1A564C9CC36DE18695BB60C0 /* UnlockPinModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnlockPinModule.swift; sourceTree = "<group>"; };
 		1A564CA0211ECF32786F4AB2 /* UnlockHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnlockHelper.swift; sourceTree = "<group>"; };
+		1A564CAA0D91361F1C1E6897 /* BlurView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlurView.swift; sourceTree = "<group>"; };
 		1A564CBC6EC3E2111514EC4D /* UIView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
 		1A564CFA352D219E2D05D09F /* SendButtonItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendButtonItemView.swift; sourceTree = "<group>"; };
 		1A564D254A8C867D16CA9166 /* AmountInputField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AmountInputField.swift; sourceTree = "<group>"; };
@@ -641,7 +643,7 @@
 			isa = PBXGroup;
 			children = (
 				11B35ADD30196056A9C6407C /* WordsManager.swift */,
-				1A5648F910A01D14653C8B21 /* App.swift */,
+				1A5648F910A01D14653C8B21 /* LockManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -963,6 +965,7 @@
 				1A5640D37BF29E2713DF2725 /* ActionSheet */,
 				50B7C38220D918DE0070E1E8 /* IndexedInputField.swift */,
 				1A564D3D7426182B6F2DFCA8 /* RespondButton.swift */,
+				1A564CAA0D91361F1C1E6897 /* BlurView.swift */,
 			);
 			path = Controls;
 			sourceTree = "<group>";
@@ -1631,7 +1634,8 @@
 				1A564F6F82762BEA80A94A82 /* UnlockEditPinPresenter.swift in Sources */,
 				1A564CA56DC103DCAF38BB12 /* UnlockEditPinInteractor.swift in Sources */,
 				1A56466597043CA59CF29FAC /* UnlockEditPinModule.swift in Sources */,
-				1A5644359FCA67F99CE339CD /* App.swift in Sources */,
+				1A5644359FCA67F99CE339CD /* LockManager.swift in Sources */,
+				1A5641A7F8D589D7B93383F6 /* BlurView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

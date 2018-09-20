@@ -31,7 +31,6 @@ class PinViewController: KeyboardObservingViewController {
     }
 
     override func viewDidLoad() {
-        super.viewDidLoad()
         view.backgroundColor = AppTheme.controllerBackground
 
         wrapperView.backgroundColor = AppTheme.controllerBackground
@@ -68,6 +67,8 @@ class PinViewController: KeyboardObservingViewController {
             maker.size.equalTo(CGSize(width: 0, height: 0))
         }
         textField.addTarget(self, action: #selector(onPinChange), for: .editingChanged)
+
+        super.viewDidLoad()
 
         delegate.viewDidLoad()
     }

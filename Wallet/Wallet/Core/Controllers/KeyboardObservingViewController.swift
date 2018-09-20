@@ -1,6 +1,6 @@
-import Foundation
 import UIKit
 import GrouviExtensions
+import GrouviHUD
 import RxSwift
 import RxCocoa
 
@@ -25,6 +25,8 @@ class KeyboardObservingViewController: UIViewController {
     }
 
     private func subscribeKeyboard() {
+        updateUI(keyboardHeight: HUDKeyboardHelper.shared.visibleKeyboardHeight)
+
         keyboardFrameDisposable = NotificationCenter.default.rx.notification(NSNotification.Name.UIKeyboardWillChangeFrame).subscribeDisposableAsync(disposeBag, onNext: { [unowned self] notification in
             self.onKeyboardFrameChange(notification)
         })

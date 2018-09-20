@@ -1,11 +1,18 @@
 import UIKit
 
+public protocol UnlockDelegate: class {
+    func onUnlock()
+}
+
 class PinRouter {
     weak var viewController: UIViewController?
 
-    var afterUnlock: (() -> ())?
-    init(onUnlock: (() -> ())? = nil) {
-        afterUnlock = onUnlock
+    var unlockWindow: UIWindow?
+    var unlockController: UIViewController?
+    weak var unlockDelegate: UnlockDelegate?
+
+    init(unlockDelegate: UnlockDelegate? = nil) {
+        self.unlockDelegate = unlockDelegate
     }
 
 }
@@ -21,8 +28,13 @@ extension PinRouter: IPinRouter {
     }
 
     func onUnlock() {
-        viewController?.dismiss(animated: true)
-        afterUnlock?()
+        UIView.animate(withDuration: 0.3, animations: {
+            self.unlockController?.view.frame.origin.y = UIScreen.main.bounds.height
+        }, completion: { _ in
+            self.unlockController = nil
+            self.unlockWindow = nil
+            self.unlockDelegate?.onUnlock()
+        })
     }
 
     func onUnlockEdit() {
@@ -85,8 +97,8 @@ extension PinRouter {
         return viewController
     }
 
-    static func unlockPinModule(onUnlock: (() -> ())? = nil) -> UIViewController {
-        let router = PinRouter(onUnlock: onUnlock)
+    static func unlockPinModule(unlockDelegate: UnlockDelegate?) {
+        let router = PinRouter(unlockDelegate: unlockDelegate)
         let interactor = UnlockPinInteractor(unlockHelper: UnlockHelper.shared)
         let presenter = UnlockPinPresenter(interactor: interactor, router: router)
         let viewController = PinViewController(viewDelegate: presenter)
@@ -95,7 +107,11 @@ extension PinRouter {
         presenter.view = viewController
         router.viewController = viewController
 
-        return viewController
+        router.unlockController = viewController
+        router.unlockWindow = UIWindow(frame: UIScreen.main.bounds)
+        viewController.view.frame = UIScreen.main.bounds
+        router.unlockWindow?.rootViewController = viewController
+        router.unlockWindow?.makeKeyAndVisible()
     }
 
 }

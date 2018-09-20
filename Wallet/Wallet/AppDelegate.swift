@@ -17,7 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
-        App.shared.resignActiveSubject.onNext(())
+        LockManager.shared.resignActiveSubject.onNext(())
     }
 
     func applicationDidEnterBackground(_ application: UIApplication) {
@@ -30,7 +30,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationDidBecomeActive(_ application: UIApplication) {
-        App.shared.becomeActiveSubject.onNext(())
+        LockManager.shared.becomeActiveSubject.onNext(())
     }
 
     func applicationWillTerminate(_ application: UIApplication) {
