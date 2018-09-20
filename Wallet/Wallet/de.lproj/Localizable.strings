@@ -91,7 +91,7 @@
 "settings.title" = "Einstellungen";
 "settings.tab_bar_item" = "Einstellungen";
 "settings.cell.security_center" = "Sicherheits-Center";
-"settings.cell.base_currency" = "Base Currency";
+"settings.cell.base_currency" = "Basiswährung";
 "settings.cell.import_wallet" = "Wallet Importieren";
 "settings.cell.language" = "Sprache";
 "settings.cell.about" = "Über";
@@ -116,7 +116,7 @@
 "confirm_pin_controller.title" = "Erneut Eingeben";
 "confirm_pin_controller.info" = "PIN bestätigen";
 "edit_pin_controller.title" = "Neuen PIN eingeben";
-"edit_pin_controller.info" = "Your pin will be used to unlock your wallet and send money";
+"edit_pin_controller.info" = "Ihr PIN wird verwendet, um Ihre Geldbörse zu entsperren und Geld zu senden";
 "unlock_pin_controller.info" = "PIN zum Entsperren eingeben";
 "unlock_edit_pin.title" = "PIN bearbeiten";
 "unlock_edit_pin.info" = "Aktuelle PIN eingeben";
