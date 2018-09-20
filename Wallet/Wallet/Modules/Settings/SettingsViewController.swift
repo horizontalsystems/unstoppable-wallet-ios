@@ -88,9 +88,9 @@ class SettingsViewController: UIViewController, SectionsDataSource {
         }, action: { _ in
             print("tap base currency")
         }))
-        appearanceRows.append(Row<SettingsCell>(id: "language", hash: "language", height: SettingsTheme.cellHeight, bind: { cell, _ in
+        appearanceRows.append(Row<SettingsRightLabelCell>(id: "language", hash: "language", height: SettingsTheme.cellHeight, bind: { cell, _ in
             cell.selectionStyle = .default
-            cell.bind(titleIcon: UIImage(named: "Language Icon"), title: "settings.cell.language".localized, showDisclosure: true)
+            cell.bind(titleIcon: UIImage(named: "Language Icon"), title: "settings.cell.language".localized, rightText: LocalizationHelper.displayName(forLanguage: LocalizationHelper.instance.language, locale: NSLocale(localeIdentifier: LocalizationHelper.instance.language)), showDisclosure: true)
         }, action: { [weak self] _ in
             self?.navigationController?.pushViewController(SettingsLanguageController(), animated: true)
         }))
@@ -159,6 +159,7 @@ class SettingsViewController: UIViewController, SectionsDataSource {
     func logout() {
         WordsManager.shared.removeWords()
         AdapterManager.shared.clear()
+        try? UnlockHelper.shared.store(pin: nil)
 
         guard let window = UIApplication.shared.keyWindow else {
             return
