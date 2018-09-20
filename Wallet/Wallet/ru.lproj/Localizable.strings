@@ -1,6 +1,6 @@
 "alert.ok" = "Хорошо";
-"alert.cancel" = "Отменить";
-"navigation_bar.cancel" = "Отменить";
+"alert.cancel" = "Отмена";
+"navigation_bar.cancel" = "Отмена";
 "done" = "Готово";
 "alert.copy" = "Скопировать";
 "alert.share" = "Поделиться";
@@ -105,17 +105,20 @@
 "settings_language.title" = "Язык";
 
 "settings_security.title" = "Безопасность";
-"settings_security.pin_touch_id" = "Пин / Touch ID";
 "settings_security.paper_key" = "Бумажный ключ";
-"settings_pin_touch_face.title" = "Pin / Touch ID";
-"settings_pin_touch_face.set_pin" = "Set PIN";
-"settings_pin_touch_face.change_pin" = "Change PIN";
+"settings_pin_touch_face.title" = "ПИН-код / Touch ID";
+"settings_pin_touch_face.set_pin" = "Установить ПИН-код";
+"settings_pin_touch_face.change_pin" = "Изменить ПИН-код";
 "settings_pin_touch_face.touch_id" = "Touch ID";
 
-"set_pin_controller.title" = "Задать ПИН-код";
+"set_pin_controller.title" = "Введите PIN-код";
 "set_pin_controller.info" = "Ваш ПИН-код будет использоваться для разблокировки вашего кошелька и отправки денег";
 "confirm_pin_controller.title" = "Введите еще раз";
 "confirm_pin_controller.info" = "Подтвердите ПИН-код";
-"confirm_pin_controller.wrong_pin" = "Неверный ПИН-код";
+"edit_pin_controller.title" = "Введите новый PIN-код";
+"edit_pin_controller.info" = "Ваш ПИН-код будет использоваться для разблокировки вашего кошелька и отправки денег";
+"unlock_pin_controller.info" = "Введите ваш ПИН-код для разблокировки";
+"unlock_edit_pin.title" = "Изменить ПИН-код";
+"unlock_edit_pin.info" = "Введите текущий ПИН-код";
 
-"unlock.cant_save_pin" = "Ouch! We cant save your pin, please contact us asap!";
+"unlock.cant_save_pin" = "Ой! Мы не можем сохранить ваш ПИН-код. Пожалуйста, свяжитесь с нами как можно скорее!";
