@@ -1,16 +1,19 @@
 import UIKit
 
 public protocol UnlockDelegate: class {
-    func onUnlock()
+    func onUnlock(_ view: PinDismissInterface?)
 }
 
 public protocol SetDelegate: class {
-    func onSet()
+    func onSet(_ view: PinDismissInterface?)
+}
+
+public protocol PinDismissInterface: class {
+    func dismiss()
 }
 
 class PinRouter {
-    weak var viewController: PinViewController?
-    var coverWindow: UIWindow?
+    weak var viewController: (UIViewController & PinDismissInterface)?
 
     weak var unlockDelegate: UnlockDelegate?
     weak var setDelegate: SetDelegate?
@@ -29,21 +32,11 @@ extension PinRouter: IPinRouter {
     }
 
     func onConfirm() {
-        UIView.animate(withDuration: PinTheme.dismissAnimationDuration, animations: {
-            self.viewController?.navigation?.window?.frame.origin.y = UIScreen.main.bounds.height
-        }, completion: { _ in
-            self.viewController?.navigation?.window = nil
-            self.setDelegate?.onSet()
-        })
+        setDelegate?.onSet(viewController)
     }
 
     func onUnlock() {
-        UIView.animate(withDuration: PinTheme.dismissAnimationDuration, animations: {
-            self.coverWindow?.frame.origin.y = UIScreen.main.bounds.height
-        }, completion: { _ in
-            self.coverWindow = nil
-            self.unlockDelegate?.onUnlock()
-        })
+        unlockDelegate?.onUnlock(viewController)
     }
 
     func onUnlockEdit() {
@@ -67,12 +60,7 @@ extension PinRouter {
         if let controller = controller {
             controller.navigationController?.pushViewController(viewController, animated: true)
         } else {
-            let navigationController = WalletNavigationController(rootViewController: viewController)
-            let window = UIWindow(frame: UIScreen.main.bounds)
-            window.rootViewController = navigationController
-            window.makeKeyAndVisible()
-
-            navigationController.window = window
+            WalletNavigationController.show(rootViewController: viewController, customWindow: true)
         }
     }
 
@@ -125,11 +113,8 @@ extension PinRouter {
         presenter.view = viewController
         router.viewController = viewController
 
-        let window = UIWindow(frame: UIScreen.main.bounds)
-        router.coverWindow = window
-        viewController.view.frame = UIScreen.main.bounds
-        router.coverWindow?.rootViewController = viewController
-        router.coverWindow?.makeKeyAndVisible()
+        let navigationController = WalletNavigationController.show(rootViewController: viewController, customWindow: true)
+        navigationController.navigationBar.set(hidden: true)
     }
 
 }

@@ -150,3 +150,9 @@ extension PinViewController: IPinView {
     }
 
 }
+
+extension PinViewController: PinDismissInterface {
+    public func dismiss() {
+        navigationController?.dismiss(animated: true)
+    }
+}

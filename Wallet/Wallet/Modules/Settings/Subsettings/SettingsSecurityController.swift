@@ -85,7 +85,7 @@ class SettingsSecurityController: UIViewController, SectionsDataSource {
 }
 
 extension SettingsSecurityController: SetDelegate {
-    public func onSet() {
+    public func onSet(_ view: PinDismissInterface?) {
         HudHelper.instance.showSuccess()
         navigationController?.popToViewController(self, animated: true)
     }

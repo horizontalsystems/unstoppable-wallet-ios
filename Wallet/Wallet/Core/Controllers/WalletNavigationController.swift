@@ -1,17 +1,31 @@
 import UIKit
 
 class WalletNavigationController: UINavigationController {
-    var window: UIWindow?
+    private var window: UIWindow?
+
+    @discardableResult static func show(rootViewController: UIViewController, customWindow: Bool = false) -> WalletNavigationController {
+        let navigationController = WalletNavigationController(rootViewController: rootViewController)
+        if customWindow {
+            navigationController.window = UIWindow(frame: UIScreen.main.bounds)
+            navigationController.window?.rootViewController = navigationController
+            navigationController.window?.makeKeyAndVisible()
+        }
+        return navigationController
+    }
 
     override init(rootViewController: UIViewController) {
         super.init(rootViewController: rootViewController)
-        navigationBar.barStyle = AppTheme.navigationBarStyle
-        navigationBar.tintColor = AppTheme.navigationBarTintColor
-        navigationBar.prefersLargeTitles = true
+
+        commonInit()
     }
 
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+
+        commonInit()
+    }
+
+    private func commonInit() {
         navigationBar.barStyle = AppTheme.navigationBarStyle
         navigationBar.tintColor = AppTheme.navigationBarTintColor
         navigationBar.prefersLargeTitles = true
@@ -21,4 +35,18 @@ class WalletNavigationController: UINavigationController {
         fatalError("init(coder:) has not been implemented")
     }
 
+    override func dismiss(animated flag: Bool, completion: (() -> Void)?) {
+        guard let window = window else {
+            super.dismiss(animated: flag, completion: completion)
+            return
+        }
+        UIView.animate(withDuration: PinTheme.dismissAnimationDuration, animations: {
+            window.frame.origin.y = UIScreen.main.bounds.height
+        }, completion: { _ in
+            self.window = nil
+            completion?()
+
+            super.dismiss(animated: false)
+        })
+    }
 }

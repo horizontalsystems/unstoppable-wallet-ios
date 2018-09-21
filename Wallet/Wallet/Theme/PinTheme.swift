@@ -1,7 +1,7 @@
 import UIKit
 
 class PinTheme {
-    static var dotsMargin: CGFloat = 23
+    static var dotsMargin: CGFloat = 12
     static let infoFontRegular = UIFont.cryptoCaption1
     static let infoFontNoNavigation = UIFont.cryptoBody2
     static let infoColor = UIColor.cryptoGray

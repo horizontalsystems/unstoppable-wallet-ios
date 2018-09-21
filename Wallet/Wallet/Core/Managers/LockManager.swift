@@ -55,13 +55,15 @@ class LockManager {
 }
 
 extension LockManager: UnlockDelegate {
-    public func onUnlock() {
+    public func onUnlock(_ view: PinDismissInterface?) {
         isLocked = false
+        view?.dismiss()
     }
 }
 
 extension LockManager: SetDelegate {
-    public func onSet() {
+    public func onSet(_ view: PinDismissInterface?) {
         isLocked = false
+        view?.dismiss()
     }
 }
