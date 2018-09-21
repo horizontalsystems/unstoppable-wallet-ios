@@ -111,7 +111,7 @@
 "settings_pin_touch_face.change_pin" = "PIN bearbeiten";
 "settings_pin_touch_face.touch_id" = "Touch ID";
 
-"set_pin_controller.title" = "PIN eingeben";
+"set_pin_controller.title" = "Set PIN";
 "set_pin_controller.info" = "Ihre Pin wird verwendet werden, um Ihren Wallet zu entsperren und Geld schicken";
 "confirm_pin_controller.title" = "Erneut Eingeben";
 "confirm_pin_controller.info" = "PIN bestätigen";
