@@ -111,7 +111,7 @@
 "settings_pin_touch_face.change_pin" = "Изменить ПИН-код";
 "settings_pin_touch_face.touch_id" = "Touch ID";
 
-"set_pin_controller.title" = "Введите PIN-код";
+"set_pin_controller.title" = "Set PIN";
 "set_pin_controller.info" = "Ваш ПИН-код будет использоваться для разблокировки вашего кошелька и отправки денег";
 "confirm_pin_controller.title" = "Введите еще раз";
 "confirm_pin_controller.info" = "Подтвердите ПИН-код";
