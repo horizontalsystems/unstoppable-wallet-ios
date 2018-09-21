@@ -8,4 +8,6 @@ class PinTheme {
     static let infoMargin: CGFloat = 43
     static let infoTopMargin: CGFloat = 16
     static let infoBottomMargin: CGFloat = 33
+
+    static let dismissAnimationDuration: Double = 0.3
 }

@@ -12,7 +12,6 @@ class ConfirmPinPresenter: PinPresenter {
 extension ConfirmPinPresenter: IConfirmPinInteractorDelegate {
 
     func onConfirm() {
-        HudHelper.instance.showSuccess()
         router.onConfirm()
     }
 
