@@ -3,6 +3,7 @@ import GrouviExtensions
 import SnapKit
 
 class PinViewController: KeyboardObservingViewController {
+    var navigation: WalletNavigationController? { return navigationController as? WalletNavigationController }
 
     let delegate: IPinViewDelegate
 

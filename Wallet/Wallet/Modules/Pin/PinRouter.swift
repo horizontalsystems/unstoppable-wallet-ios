@@ -9,9 +9,8 @@ public protocol SetDelegate: class {
 }
 
 class PinRouter {
-    weak var viewController: UIViewController?
-
-    weak var coverWindow: UIWindow?
+    weak var viewController: PinViewController?
+    var coverWindow: UIWindow?
 
     weak var unlockDelegate: UnlockDelegate?
     weak var setDelegate: SetDelegate?
@@ -26,14 +25,14 @@ class PinRouter {
 extension PinRouter: IPinRouter {
 
     func onSet(pin: String) {
-        viewController?.navigationController?.pushViewController(PinRouter.confirmPinModule(setDelegate: setDelegate, pin: pin, coverWindow: coverWindow), animated: true)
+        viewController?.navigationController?.pushViewController(PinRouter.confirmPinModule(setDelegate: setDelegate, pin: pin), animated: true)
     }
 
     func onConfirm() {
         UIView.animate(withDuration: PinTheme.dismissAnimationDuration, animations: {
-            self.coverWindow?.frame.origin.y = UIScreen.main.bounds.height
+            self.viewController?.navigation?.window?.frame.origin.y = UIScreen.main.bounds.height
         }, completion: { _ in
-            self.coverWindow = nil
+            self.viewController?.navigation?.window = nil
             self.setDelegate?.onSet()
         })
     }
@@ -55,8 +54,7 @@ extension PinRouter: IPinRouter {
 
 extension PinRouter {
 
-    @discardableResult
-    static func setPinModule(setDelegate: SetDelegate?, from controller: UIViewController? = nil) -> UIWindow? {
+    static func setPinModule(setDelegate: SetDelegate?, from controller: UIViewController? = nil) {
         let router = PinRouter(setDelegate: setDelegate)
         let interactor = SetPinInteractor()
         let presenter = SetPinPresenter(interactor: interactor, router: router)
@@ -68,22 +66,17 @@ extension PinRouter {
 
         if let controller = controller {
             controller.navigationController?.pushViewController(viewController, animated: true)
-            return nil
         } else {
-            let navigationController = UINavigationController(rootViewController: viewController)
-            navigationController.navigationBar.barStyle = AppTheme.navigationBarStyle
-            navigationController.navigationBar.tintColor = AppTheme.navigationBarTintColor
-            navigationController.navigationBar.prefersLargeTitles = true
+            let navigationController = WalletNavigationController(rootViewController: viewController)
             let window = UIWindow(frame: UIScreen.main.bounds)
-            router.coverWindow = window
-            viewController.view.frame = UIScreen.main.bounds
-            router.coverWindow?.rootViewController = navigationController
-            router.coverWindow?.makeKeyAndVisible()
-            return window
+            window.rootViewController = navigationController
+            window.makeKeyAndVisible()
+
+            navigationController.window = window
         }
     }
 
-    static func confirmPinModule(setDelegate: SetDelegate?, pin: String, coverWindow: UIWindow? = nil) -> UIViewController {
+    static func confirmPinModule(setDelegate: SetDelegate?, pin: String) -> UIViewController {
         let router = PinRouter(setDelegate: setDelegate)
         let interactor = ConfirmPinInteractor(pin: pin)
         let presenter = ConfirmPinPresenter(interactor: interactor, router: router)
@@ -92,7 +85,6 @@ extension PinRouter {
         interactor.delegate = presenter
         presenter.view = viewController
         router.viewController = viewController
-        router.coverWindow = coverWindow
 
         return viewController
     }
@@ -123,7 +115,7 @@ extension PinRouter {
         return viewController
     }
 
-    static func unlockPinModule(unlockDelegate: UnlockDelegate?) -> UIWindow {
+    static func unlockPinModule(unlockDelegate: UnlockDelegate?) {
         let router = PinRouter(unlockDelegate: unlockDelegate)
         let interactor = UnlockPinInteractor(unlockHelper: UnlockHelper.shared)
         let presenter = UnlockPinPresenter(interactor: interactor, router: router)
@@ -138,7 +130,6 @@ extension PinRouter {
         viewController.view.frame = UIScreen.main.bounds
         router.coverWindow?.rootViewController = viewController
         router.coverWindow?.makeKeyAndVisible()
-        return window
     }
 
 }

@@ -1,6 +1,5 @@
-import UIKit
+import Foundation
 import RxSwift
-import GrouviHUD
 
 class LockManager {
     static let shared = LockManager()
@@ -34,8 +33,6 @@ class LockManager {
         lock()
     }
 
-    var coverWindow: UIWindow?
-
     func lock() {
         let exitTimestamp = UserDefaults.standard.double(forKey: lastExitDateKey)
         let now = Date().timeIntervalSince1970
@@ -45,13 +42,13 @@ class LockManager {
         blurView.hide(slow: needToLock)
         if needToLock {
             isLocked = true
-            coverWindow = PinRouter.unlockPinModule(unlockDelegate: self)
+            PinRouter.unlockPinModule(unlockDelegate: self)
         }
 
         let needToSet = WordsManager.shared.words != nil && !UnlockHelper.shared.isPinned && !isLocked
         if needToSet {
             isLocked = true
-            coverWindow = PinRouter.setPinModule(setDelegate: self)
+            PinRouter.setPinModule(setDelegate: self)
         }
     }
 
@@ -60,13 +57,11 @@ class LockManager {
 extension LockManager: UnlockDelegate {
     public func onUnlock() {
         isLocked = false
-        coverWindow = nil
     }
 }
 
 extension LockManager: SetDelegate {
     public func onSet() {
         isLocked = false
-        coverWindow = nil
     }
 }
