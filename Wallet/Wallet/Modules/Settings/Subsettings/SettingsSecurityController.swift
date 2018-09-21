@@ -62,9 +62,9 @@ class SettingsSecurityController: UIViewController, SectionsDataSource {
             cell.bind(titleIcon: nil, title: setOrChangePinTitle, showDisclosure: true, last: true)
         }, action: { [weak self] _ in
             if UnlockHelper.shared.isPinned {
-                self?.navigationController?.pushViewController(PinRouter.unlockEditPinModule(), animated: true)
+                self?.navigationController?.pushViewController(PinRouter.unlockEditPinModule(setDelegate: self), animated: true)
             } else {
-                self?.navigationController?.pushViewController(PinRouter.setPinModule(), animated: true)
+                PinRouter.setPinModule(setDelegate: self, from: self)
             }
         }))
         sections.append(Section(id: "security", headerState: .margin(height: SettingsTheme.subSettingsHeaderHeight), footerState: .margin(height: SettingsTheme.subSettingsHeaderHeight), rows: pinTouchFaceRows))
@@ -82,4 +82,11 @@ class SettingsSecurityController: UIViewController, SectionsDataSource {
         return sections
     }
 
+}
+
+extension SettingsSecurityController: SetDelegate {
+    public func onSet(_ view: PinDismissInterface?) {
+        HudHelper.instance.showSuccess()
+        navigationController?.popToViewController(self, animated: true)
+    }
 }

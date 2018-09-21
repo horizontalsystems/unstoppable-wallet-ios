@@ -143,13 +143,12 @@ class SettingsViewController: UIViewController, SectionsDataSource {
             self?.connectToPeer()
             self?.tableView.deselectRow(at: self!.tableView.indexPathForSelectedRow!, animated: true)
         }))
-        debugRows.append(Row<SettingsCell>(id: "debug_drop_keychain", hash: "debug_drop_keychain", height: SettingsTheme.cellHeight, bind: { cell, _ in
+        debugRows.append(Row<SettingsCell>(id: "debug_drop_keychain", hash: "debug_drop_keychain", height: SettingsTheme.cellHeight, autoDeselect: true, bind: { cell, _ in
             cell.selectionStyle = .default
             cell.bind(titleIcon: UIImage(named: "Bug Icon"), title: "Drop Keychain", showDisclosure: false)
-        }, action: { [weak self] _ in
+        }, action: { _ in
             WordsManager.shared.isBackedUp = false
             try? UnlockHelper.shared.store(pin: nil)
-            self?.tableView.deselectRow(at: self!.tableView.indexPathForSelectedRow!, animated: true)
         }))
         sections.append(Section(id: "debug_section", headerState: .marginColor(height: 50, color: .clear), footerState: .marginColor(height: 20, color: .clear), rows: debugRows))
 

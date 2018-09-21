@@ -3,6 +3,7 @@ import GrouviExtensions
 import SnapKit
 
 class PinViewController: KeyboardObservingViewController {
+    var navigation: WalletNavigationController? { return navigationController as? WalletNavigationController }
 
     let delegate: IPinViewDelegate
 
@@ -148,4 +149,10 @@ extension PinViewController: IPinView {
         }
     }
 
+}
+
+extension PinViewController: PinDismissInterface {
+    public func dismiss() {
+        navigationController?.dismiss(animated: true)
+    }
 }

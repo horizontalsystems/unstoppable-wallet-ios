@@ -14,7 +14,7 @@ extension RestoreRouter: IRestoreRouter {
             return
         }
 
-        let controller = MainRouter.module()
+        let controller = LaunchRouter.module()
 
         UIView.transition(with: window, duration: 0.5, options: .transitionCrossDissolve, animations: {
             window.rootViewController = controller

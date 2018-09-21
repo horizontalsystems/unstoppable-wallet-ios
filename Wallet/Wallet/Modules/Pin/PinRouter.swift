@@ -1,18 +1,26 @@
 import UIKit
 
 public protocol UnlockDelegate: class {
-    func onUnlock()
+    func onUnlock(_ view: PinDismissInterface?)
+}
+
+public protocol SetDelegate: class {
+    func onSet(_ view: PinDismissInterface?)
+}
+
+public protocol PinDismissInterface: class {
+    func dismiss()
 }
 
 class PinRouter {
-    weak var viewController: UIViewController?
+    weak var viewController: (UIViewController & PinDismissInterface)?
 
-    var unlockWindow: UIWindow?
-    var unlockController: UIViewController?
     weak var unlockDelegate: UnlockDelegate?
+    weak var setDelegate: SetDelegate?
 
-    init(unlockDelegate: UnlockDelegate? = nil) {
+    init(unlockDelegate: UnlockDelegate? = nil, setDelegate: SetDelegate? = nil) {
         self.unlockDelegate = unlockDelegate
+        self.setDelegate = setDelegate
     }
 
 }
@@ -20,33 +28,27 @@ class PinRouter {
 extension PinRouter: IPinRouter {
 
     func onSet(pin: String) {
-        viewController?.navigationController?.pushViewController(PinRouter.confirmPinModule(pin: pin), animated: true)
+        viewController?.navigationController?.pushViewController(PinRouter.confirmPinModule(setDelegate: setDelegate, pin: pin), animated: true)
     }
 
     func onConfirm() {
-        viewController?.navigationController?.popToRootViewController(animated: true)
+        setDelegate?.onSet(viewController)
     }
 
     func onUnlock() {
-        UIView.animate(withDuration: 0.3, animations: {
-            self.unlockController?.view.frame.origin.y = UIScreen.main.bounds.height
-        }, completion: { _ in
-            self.unlockController = nil
-            self.unlockWindow = nil
-            self.unlockDelegate?.onUnlock()
-        })
+        unlockDelegate?.onUnlock(viewController)
     }
 
     func onUnlockEdit() {
-        viewController?.navigationController?.pushViewController(PinRouter.editPinModule(), animated: true)
+        viewController?.navigationController?.pushViewController(PinRouter.editPinModule(setDelegate: setDelegate), animated: true)
     }
 
 }
 
 extension PinRouter {
 
-    static func setPinModule() -> UIViewController {
-        let router = PinRouter()
+    static func setPinModule(setDelegate: SetDelegate?, from controller: UIViewController? = nil) {
+        let router = PinRouter(setDelegate: setDelegate)
         let interactor = SetPinInteractor()
         let presenter = SetPinPresenter(interactor: interactor, router: router)
         let viewController = PinViewController(viewDelegate: presenter)
@@ -55,11 +57,15 @@ extension PinRouter {
         presenter.view = viewController
         router.viewController = viewController
 
-        return viewController
+        if let controller = controller {
+            controller.navigationController?.pushViewController(viewController, animated: true)
+        } else {
+            WalletNavigationController.show(rootViewController: viewController, customWindow: true)
+        }
     }
 
-    static func confirmPinModule(pin: String) -> UIViewController {
-        let router = PinRouter()
+    static func confirmPinModule(setDelegate: SetDelegate?, pin: String) -> UIViewController {
+        let router = PinRouter(setDelegate: setDelegate)
         let interactor = ConfirmPinInteractor(pin: pin)
         let presenter = ConfirmPinPresenter(interactor: interactor, router: router)
         let viewController = PinViewController(viewDelegate: presenter)
@@ -71,8 +77,8 @@ extension PinRouter {
         return viewController
     }
 
-    static func editPinModule() -> UIViewController {
-        let router = PinRouter()
+    static func editPinModule(setDelegate: SetDelegate?) -> UIViewController {
+        let router = PinRouter(setDelegate: setDelegate)
         let interactor = NewPinInteractor()
         let presenter = NewPinPresenter(interactor: interactor, router: router)
         let viewController = PinViewController(viewDelegate: presenter)
@@ -84,8 +90,8 @@ extension PinRouter {
         return viewController
     }
 
-    static func unlockEditPinModule() -> UIViewController {
-        let router = PinRouter()
+    static func unlockEditPinModule(setDelegate: SetDelegate?) -> UIViewController {
+        let router = PinRouter(setDelegate: setDelegate)
         let interactor = UnlockEditPinInteractor(unlockHelper: UnlockHelper.shared)
         let presenter = UnlockEditPinPresenter(interactor: interactor, router: router)
         let viewController = PinViewController(viewDelegate: presenter)
@@ -107,11 +113,8 @@ extension PinRouter {
         presenter.view = viewController
         router.viewController = viewController
 
-        router.unlockController = viewController
-        router.unlockWindow = UIWindow(frame: UIScreen.main.bounds)
-        viewController.view.frame = UIScreen.main.bounds
-        router.unlockWindow?.rootViewController = viewController
-        router.unlockWindow?.makeKeyAndVisible()
+        let navigationController = WalletNavigationController.show(rootViewController: viewController, customWindow: true)
+        navigationController.navigationBar.set(hidden: true)
     }
 
 }

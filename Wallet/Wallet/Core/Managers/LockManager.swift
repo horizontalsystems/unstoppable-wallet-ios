@@ -1,6 +1,5 @@
-import UIKit
+import Foundation
 import RxSwift
-import GrouviHUD
 
 class LockManager {
     static let shared = LockManager()
@@ -45,12 +44,26 @@ class LockManager {
             isLocked = true
             PinRouter.unlockPinModule(unlockDelegate: self)
         }
+
+        let needToSet = WordsManager.shared.words != nil && !UnlockHelper.shared.isPinned && !isLocked
+        if needToSet {
+            isLocked = true
+            PinRouter.setPinModule(setDelegate: self)
+        }
     }
 
 }
 
 extension LockManager: UnlockDelegate {
-    public func onUnlock() {
+    public func onUnlock(_ view: PinDismissInterface?) {
         isLocked = false
+        view?.dismiss()
+    }
+}
+
+extension LockManager: SetDelegate {
+    public func onSet(_ view: PinDismissInterface?) {
+        isLocked = false
+        view?.dismiss()
     }
 }
