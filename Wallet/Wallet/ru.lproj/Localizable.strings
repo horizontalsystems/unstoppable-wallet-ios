@@ -106,10 +106,10 @@
 
 "settings_security.title" = "Безопасность";
 "settings_security.paper_key" = "Бумажный ключ";
-"settings_pin_touch_face.title" = "ПИН-код / Touch ID";
-"settings_pin_touch_face.set_pin" = "Установить ПИН-код";
-"settings_pin_touch_face.change_pin" = "Изменить ПИН-код";
-"settings_pin_touch_face.touch_id" = "Touch ID";
+"settings_pin_biometrics.title" = "ПИН-код / Touch ID";
+"settings_security.set_pin" = "Установить ПИН-код";
+"settings_security.change_pin" = "Изменить ПИН-код";
+"settings_security.touch_id" = "Touch ID";
 
 "set_pin_controller.title" = "Введите PIN-код";
 "set_pin_controller.info" = "Ваш ПИН-код будет использоваться для разблокировки вашего кошелька и отправки денег";
