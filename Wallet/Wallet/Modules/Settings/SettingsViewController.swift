@@ -122,26 +122,23 @@ class SettingsViewController: UIViewController, SectionsDataSource {
         sections.append(Section(id: "appearance_settings", headerState: .marginColor(height: SettingsTheme.headerHeight, color: .clear), footerState: infoFooter, rows: aboutRows))
 
         var debugRows = [RowProtocol]()
-        debugRows.append(Row<SettingsCell>(id: "debug_logout", hash: "debug_logout", height: SettingsTheme.cellHeight, bind: { cell, _ in
+        debugRows.append(Row<SettingsCell>(id: "debug_logout", hash: "debug_logout", height: SettingsTheme.cellHeight, autoDeselect: true, bind: { cell, _ in
             cell.selectionStyle = .default
             cell.bind(titleIcon: UIImage(named: "Bug Icon"), title: "Logout", showDisclosure: false)
         }, action: { [weak self] _ in
             self?.logout()
-            self?.tableView.deselectRow(at: self!.tableView.indexPathForSelectedRow!, animated: true)
         }))
-        debugRows.append(Row<SettingsCell>(id: "debug_realm_info", hash: "debug_realm_info", height: SettingsTheme.cellHeight, bind: { cell, _ in
+        debugRows.append(Row<SettingsCell>(id: "debug_realm_info", hash: "debug_realm_info", height: SettingsTheme.cellHeight, autoDeselect: true, bind: { cell, _ in
             cell.selectionStyle = .default
             cell.bind(titleIcon: UIImage(named: "Bug Icon"), title: "Show Realm Info", showDisclosure: false)
         }, action: { [weak self] _ in
             self?.showRealmInfo()
-            self?.tableView.deselectRow(at: self!.tableView.indexPathForSelectedRow!, animated: true)
         }))
-        debugRows.append(Row<SettingsCell>(id: "debug_connect_to_peer", hash: "debug_connect_to_peer", height: SettingsTheme.cellHeight, bind: { cell, _ in
+        debugRows.append(Row<SettingsCell>(id: "debug_connect_to_peer", hash: "debug_connect_to_peer", height: SettingsTheme.cellHeight, autoDeselect: true, bind: { cell, _ in
             cell.selectionStyle = .default
             cell.bind(titleIcon: UIImage(named: "Bug Icon"), title: "Connect to Peer", showDisclosure: false)
         }, action: { [weak self] _ in
             self?.connectToPeer()
-            self?.tableView.deselectRow(at: self!.tableView.indexPathForSelectedRow!, animated: true)
         }))
         debugRows.append(Row<SettingsCell>(id: "debug_drop_keychain", hash: "debug_drop_keychain", height: SettingsTheme.cellHeight, autoDeselect: true, bind: { cell, _ in
             cell.selectionStyle = .default
@@ -156,6 +153,7 @@ class SettingsViewController: UIViewController, SectionsDataSource {
     }
 
     func logout() {
+        WordsManager.shared.isBackedUp = false
         WordsManager.shared.removeWords()
         AdapterManager.shared.clear()
         try? UnlockHelper.shared.store(pin: nil)
