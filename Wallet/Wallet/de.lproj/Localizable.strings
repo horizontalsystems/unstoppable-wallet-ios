@@ -115,10 +115,10 @@
 "set_pin_controller.info" = "Ihre Pin wird verwendet werden, um Ihren Wallet zu entsperren und Geld schicken";
 "confirm_pin_controller.title" = "Erneut Eingeben";
 "confirm_pin_controller.info" = "PIN bestätigen";
-"edit_pin_controller.title" = "Neuen PIN eingeben";
+"edit_pin_controller.title" = "New PIN";
 "edit_pin_controller.info" = "Ihr PIN wird verwendet, um Ihre Geldbörse zu entsperren und Geld zu senden";
-"unlock_pin_controller.info" = "PIN zum Entsperren eingeben";
-"unlock_edit_pin.title" = "PIN bearbeiten";
+"unlock_pin_controller.info" = "Enter PIN";
+"unlock_edit_pin.title" = "Current PIN";
 "unlock_edit_pin.info" = "Aktuelle PIN eingeben";
 
 "unlock.cant_save_pin" = "Autsch! Wir können den PIN nicht speichern, kontaktieren Sie uns bitte so schnell wie möglich!";
