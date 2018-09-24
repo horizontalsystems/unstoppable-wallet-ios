@@ -40,7 +40,7 @@ extension BackupPresenter: IBackupInteractorDelegate {
     }
 
     func didValidateSuccess() {
-        dismiss()
+        view?.onValidateSuccess()
     }
 
     func didValidateFailure() {
@@ -73,6 +73,10 @@ extension BackupPresenter: IBackupViewDelegate {
 
     func validateDidClick(confirmationWords: [Int: String]) {
         interactor.validate(confirmationWords: confirmationWords)
+    }
+
+    func finish() {
+        dismiss()
     }
 
 }

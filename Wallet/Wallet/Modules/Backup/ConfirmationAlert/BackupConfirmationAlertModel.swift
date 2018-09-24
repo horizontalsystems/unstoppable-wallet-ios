@@ -1,7 +1,7 @@
 import UIKit
 import GrouviActionSheet
 
-class BakcupConfirmationAlertModel: BaseAlertModel {
+class BackupConfirmationAlertModel: BaseAlertModel {
 
     var confirmItems = [BackupCheckboxItem]()
 
