@@ -106,19 +106,19 @@
 
 "settings_security.title" = "Безопасность";
 "settings_security.paper_key" = "Бумажный ключ";
-"settings_pin_biometrics.title" = "Pin / Touch ID";
-"settings_security.set_pin" = "Set PIN";
-"settings_security.change_pin" = "Edit PIN";
+"settings_pin_biometrics.title" = "PIN / Touch ID";
+"settings_security.set_pin" = "Установить PIN";
+"settings_security.change_pin" = "Изменить PIN";
 "settings_security.touch_id" = "Touch ID";
 
-"set_pin_controller.title" = "Set PIN";
+"set_pin_controller.title" = "Установить PIN";
 "set_pin_controller.info" = "Ваш ПИН-код будет использоваться для разблокировки вашего кошелька и отправки денег";
 "confirm_pin_controller.title" = "Введите еще раз";
 "confirm_pin_controller.info" = "Подтвердите ПИН-код";
-"edit_pin_controller.title" = "New PIN";
+"edit_pin_controller.title" = "Новый PIN";
 "edit_pin_controller.info" = "Ваш ПИН-код будет использоваться для разблокировки вашего кошелька и отправки денег";
-"unlock_pin_controller.info" = "Enter PIN";
-"unlock_edit_pin.title" = "Current PIN";
+"unlock_pin_controller.info" = "Введите PIN";
+"unlock_edit_pin.title" = "Текущий PIN";
 "unlock_edit_pin.info" = "Введите текущий ПИН-код";
 
 "unlock.cant_save_pin" = "Ой! Мы не можем сохранить ваш ПИН-код. Пожалуйста, свяжитесь с нами как можно скорее!";
