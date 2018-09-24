@@ -117,7 +117,7 @@ extension PinViewController: IPinView {
         }
     }
 
-    func bind(pinLength: Int, title: String?, infoText: String, infoFont: UIFont, infoAttachToTop: Bool) {
+    func bind(pinLength: Int, title: String?, infoText: String?, infoFont: UIFont, infoAttachToTop: Bool) {
         self.pinLength = pinLength
         for _ in 0..<pinLength {
             let dotView = self.dotView

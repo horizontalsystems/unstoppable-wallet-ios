@@ -4,7 +4,7 @@ import RxSwift
 class UnlockEditPinPresenter: PinPresenter {
 
     override func bind(pinLength: Int) {
-        view?.bind(pinLength: pinLength, title: "unlock_edit_pin.title".localized, infoText: "unlock_edit_pin.info".localized, infoFont: PinTheme.infoFontRegular, infoAttachToTop: true)
+        view?.bind(pinLength: pinLength, title: "unlock_edit_pin.title".localized, infoText: nil, infoFont: PinTheme.infoFontRegular, infoAttachToTop: true)
     }
 
 }

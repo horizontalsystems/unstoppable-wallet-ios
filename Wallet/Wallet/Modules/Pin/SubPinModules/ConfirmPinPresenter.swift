@@ -2,9 +2,17 @@ import Foundation
 import RxSwift
 
 class ConfirmPinPresenter: PinPresenter {
+    var title: String?
+    var info: String?
+
+    init(interactor: IPinInteractor, router: IPinRouter, title: String?, info: String?) {
+        super.init(interactor: interactor, router: router)
+        self.title = title
+        self.info = info
+    }
 
     override func bind(pinLength: Int) {
-        view?.bind(pinLength: pinLength, title: "confirm_pin_controller.title".localized, infoText: "confirm_pin_controller.info".localized, infoFont: PinTheme.infoFontRegular, infoAttachToTop: true)
+        view?.bind(pinLength: pinLength, title: title, infoText: info, infoFont: PinTheme.infoFontRegular, infoAttachToTop: true)
     }
 
 }

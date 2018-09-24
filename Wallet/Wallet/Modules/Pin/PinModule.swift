@@ -3,7 +3,7 @@ import RxSwift
 
 protocol IPinView: class {
     func highlightPinDot(at index: Int)
-    func bind(pinLength: Int, title: String?, infoText: String, infoFont: UIFont, infoAttachToTop: Bool)
+    func bind(pinLength: Int, title: String?, infoText: String?, infoFont: UIFont, infoAttachToTop: Bool)
     func onWrongPin(clean: Bool)
 }
 
@@ -14,6 +14,7 @@ protocol IPinViewDelegate {
 
 protocol IPinRouter {
     func onSet(pin: String)
+    func onSetNew(pin: String)
     func onConfirm()
     func onUnlock()
     func onUnlockEdit()

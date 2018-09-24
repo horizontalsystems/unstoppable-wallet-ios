@@ -28,7 +28,11 @@ class PinRouter {
 extension PinRouter: IPinRouter {
 
     func onSet(pin: String) {
-        viewController?.navigationController?.pushViewController(PinRouter.confirmPinModule(setDelegate: setDelegate, pin: pin), animated: true)
+        viewController?.navigationController?.pushViewController(PinRouter.confirmPinModule(setDelegate: setDelegate, pin: pin, title: "confirm_pin_controller.title".localized, info: "confirm_pin_controller.info".localized), animated: true)
+    }
+
+    func onSetNew(pin: String) {
+        viewController?.navigationController?.pushViewController(PinRouter.confirmPinModule(setDelegate: setDelegate, pin: pin, title: "confirm_pin_controller.title".localized, info: nil), animated: true)
     }
 
     func onConfirm() {
@@ -64,10 +68,10 @@ extension PinRouter {
         }
     }
 
-    static func confirmPinModule(setDelegate: SetDelegate?, pin: String) -> UIViewController {
+    static func confirmPinModule(setDelegate: SetDelegate?, pin: String, title: String?, info: String?) -> UIViewController {
         let router = PinRouter(setDelegate: setDelegate)
         let interactor = ConfirmPinInteractor(pin: pin)
-        let presenter = ConfirmPinPresenter(interactor: interactor, router: router)
+        let presenter = ConfirmPinPresenter(interactor: interactor, router: router, title: title, info: info)
         let viewController = PinViewController(viewDelegate: presenter)
 
         interactor.delegate = presenter
