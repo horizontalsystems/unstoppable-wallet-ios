@@ -153,6 +153,7 @@ class SettingsViewController: UIViewController, SectionsDataSource {
     }
 
     func logout() {
+        BiometricHelper.shared.isOn = false
         WordsManager.shared.isBackedUp = false
         WordsManager.shared.removeWords()
         AdapterManager.shared.clear()

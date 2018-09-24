@@ -20,7 +20,7 @@ extension PinInteractor: IPinInteractor {
         delegate?.bind(pinLength: pinLength)
     }
 
-    @objc func onPinChange(pin: String?) {
+    @objc func onEnter(pin: String?) {
         guard let pin = pin else {
             delegate?.highlightPinDot(index: -1)
             return

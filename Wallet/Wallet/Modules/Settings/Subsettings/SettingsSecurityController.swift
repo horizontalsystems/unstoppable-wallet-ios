@@ -52,11 +52,15 @@ class SettingsSecurityController: UIViewController, SectionsDataSource {
         var sections = [SectionProtocol]()
 
         var pinTouchFaceRows = [RowProtocol]()
-        pinTouchFaceRows.append(Row<SettingsToggleCell>(id: "biometrics_id", height: SettingsTheme.securityCellHeight, bind: { cell, _ in
-            cell.bind(titleIcon: nil, title: "settings_security.touch_id".localized, isOn: false, showDisclosure: false, onToggle: { isOn in
-                print("on: \(isOn)")
-            })
-        }))
+
+        if let biometricTitle = BiometricHelper.shared.biometricTitle {
+            pinTouchFaceRows.append(Row<SettingsToggleCell>(id: "biometrics_id", height: SettingsTheme.securityCellHeight, bind: { cell, _ in
+                cell.bind(titleIcon: nil, title: biometricTitle, isOn: BiometricHelper.shared.isOn, showDisclosure: false, onToggle: { isOn in
+                    BiometricHelper.shared.isOn = isOn
+                })
+            }))
+        }
+
         let setOrChangePinTitle = UnlockHelper.shared.isPinned ? "settings_security.change_pin".localized : "settings_security.set_pin".localized
         pinTouchFaceRows.append(Row<SettingsCell>(id: "set_pin", hash: "pinned_\(UnlockHelper.shared.isPinned)", height: SettingsTheme.securityCellHeight, bind: { cell, _ in
             cell.bind(titleIcon: nil, title: setOrChangePinTitle, showDisclosure: true, last: true)

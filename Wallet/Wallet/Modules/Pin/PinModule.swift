@@ -9,7 +9,7 @@ protocol IPinView: class {
 
 protocol IPinViewDelegate {
     func viewDidLoad()
-    func onPinChange(pin: String?)
+    func onEnter(pin: String?)
 }
 
 protocol IPinRouter {
@@ -22,7 +22,7 @@ protocol IPinRouter {
 
 protocol IPinInteractor {
     func viewDidLoad()
-    func onPinChange(pin: String?)
+    func onEnter(pin: String?)
 }
 
 protocol IPinInteractorDelegate: class {

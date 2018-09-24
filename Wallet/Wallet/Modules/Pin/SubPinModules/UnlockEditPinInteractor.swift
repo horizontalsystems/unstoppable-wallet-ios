@@ -11,8 +11,8 @@ class UnlockEditPinInteractor: PinInteractor {
         self.unlockHelper = unlockHelper
     }
 
-    override func onPinChange(pin: String?) {
-        super.onPinChange(pin: pin)
+    override func onEnter(pin: String?) {
+        super.onEnter(pin: pin)
 
         if let pin = pin, pin.count == pinLength {
             if unlockHelper.validate(pin) {

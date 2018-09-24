@@ -80,7 +80,7 @@ class PinViewController: KeyboardObservingViewController {
     }
 
     @objc func onPinChange() {
-        delegate.onPinChange(pin: textField.text)
+        delegate.onEnter(pin: textField.text)
     }
 
     override func updateUI(keyboardHeight: CGFloat, duration: TimeInterval, options: UIViewAnimationOptions, completion: (() -> ())?) {
@@ -145,7 +145,7 @@ extension PinViewController: IPinView {
         dotsHolder.shakeView()
         if clean {
             textField.text = nil
-            delegate.onPinChange(pin: nil)
+            delegate.onEnter(pin: nil)
         }
     }
 

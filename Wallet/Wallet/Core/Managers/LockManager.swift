@@ -34,7 +34,7 @@ class LockManager {
     }
 
     func lock() {
-        let exitTimestamp = UserDefaults.standard.double(forKey: lastExitDateKey)
+        let exitTimestamp = UserDefaultsStorage.shared.double(for: lastExitDateKey)
         let now = Date().timeIntervalSince1970
         let timeToLockExpired = now - exitTimestamp > lockTimeout
 

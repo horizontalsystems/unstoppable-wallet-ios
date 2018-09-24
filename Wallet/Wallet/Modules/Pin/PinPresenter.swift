@@ -36,8 +36,8 @@ extension PinPresenter: IPinViewDelegate {
         interactor.viewDidLoad()
     }
 
-    @objc func onPinChange(pin: String?) {
-        interactor.onPinChange(pin: pin)
+    @objc func onEnter(pin: String?) {
+        interactor.onEnter(pin: pin)
     }
 
 }

@@ -110,6 +110,7 @@
 "settings_security.set_pin" = "Set PIN";
 "settings_security.change_pin" = "Edit PIN";
 "settings_security.touch_id" = "Touch ID";
+"settings_security.face_id" = "Face ID";
 
 "set_pin_controller.title" = "Set PIN";
 "set_pin_controller.info" = "Your pin will be used to unlock your wallet and send money";

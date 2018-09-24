@@ -13,8 +13,8 @@ class ConfirmPinInteractor: PinInteractor {
         pinToConfirm = pin
     }
 
-    override func onPinChange(pin: String?) {
-        super.onPinChange(pin: pin)
+    override func onEnter(pin: String?) {
+        super.onEnter(pin: pin)
         guard let pin = pin, pin.count == pinLength else {
             return
         }

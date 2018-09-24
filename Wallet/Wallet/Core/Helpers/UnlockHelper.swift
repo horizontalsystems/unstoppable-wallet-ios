@@ -2,7 +2,7 @@ import Foundation
 
 class UnlockHelper {
     static let shared = UnlockHelper()
-    let pinKey = "pin_keychain_key"
+    private let pinKey = "pin_keychain_key"
 
     var isPinned: Bool {
         return KeychainHelper.shared.getString(pinKey) != nil

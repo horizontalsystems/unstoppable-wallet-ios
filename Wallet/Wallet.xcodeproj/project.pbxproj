@@ -205,6 +205,7 @@
 		1A564F544CBB0EFE12904B54 /* SettingsLanguageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564492E508AE32CC501CBD /* SettingsLanguageController.swift */; };
 		1A564F6F82762BEA80A94A82 /* UnlockEditPinPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564181F7F431F54142FF31 /* UnlockEditPinPresenter.swift */; };
 		1A564F89DD6AE0B74D176E56 /* UnlockPinInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564FEC8A444B83F49B6743 /* UnlockPinInteractor.swift */; };
+		1A564F8F4878978C647A33C5 /* BiometricHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564D47F2E851B747C0C3D6 /* BiometricHelper.swift */; };
 		1A564FB62EBBA50489895BEF /* WalletCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564B746C8A6451D81B27D4 /* WalletCell.swift */; };
 		1A564FDF56292EFCF8308CAA /* KeychainHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5649D4C4446C06ABB99138 /* KeychainHelper.swift */; };
 		2059579FD357E44B85A0B9A9 /* Pods_WalletTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7715861774FD1545F0D9C05E /* Pods_WalletTests.framework */; };
@@ -215,6 +216,7 @@
 		5095837921074C9B00B720AE /* BaseTwinItemView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5095837821074C9A00B720AE /* BaseTwinItemView.xib */; };
 		509E3D2420E398610095452C /* RestoreTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 509E3D2320E398610095452C /* RestoreTheme.swift */; };
 		50A83FC0213FEB0C008A5F4B /* LightTheme.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 50A83FBF213FEB0C008A5F4B /* LightTheme.xcassets */; };
+		50AB06AE2158E2EE00A01E4A /* LocalAuthentication.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50AB06AD2158E2EE00A01E4A /* LocalAuthentication.framework */; };
 		50B7C38420D918DE0070E1E8 /* IndexedInputField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B7C38220D918DE0070E1E8 /* IndexedInputField.swift */; };
 		D3285F4620BD158E00644076 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3285F4520BD158E00644076 /* AppDelegate.swift */; };
 		D3285F4D20BD158F00644076 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D3285F4C20BD158F00644076 /* Assets.xcassets */; };
@@ -429,6 +431,7 @@
 		1A564D254A8C867D16CA9166 /* AmountInputField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AmountInputField.swift; sourceTree = "<group>"; };
 		1A564D3D7426182B6F2DFCA8 /* RespondButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RespondButton.swift; sourceTree = "<group>"; };
 		1A564D4584479E58DCF9E0B5 /* ConfirmPinModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfirmPinModule.swift; sourceTree = "<group>"; };
+		1A564D47F2E851B747C0C3D6 /* BiometricHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BiometricHelper.swift; sourceTree = "<group>"; };
 		1A564D52FE56371052378418 /* DepositViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DepositViewModel.swift; sourceTree = "<group>"; };
 		1A564D6EFBD1A8C9678288E6 /* TransactionIDHashItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionIDHashItem.swift; sourceTree = "<group>"; };
 		1A564D7FA287326CBE96353A /* ButtonTheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonTheme.swift; sourceTree = "<group>"; };
@@ -462,6 +465,7 @@
 		509E3D2320E398610095452C /* RestoreTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestoreTheme.swift; sourceTree = "<group>"; };
 		50A83FBE213FCB4B008A5F4B /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		50A83FBF213FEB0C008A5F4B /* LightTheme.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = LightTheme.xcassets; sourceTree = "<group>"; };
+		50AB06AD2158E2EE00A01E4A /* LocalAuthentication.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LocalAuthentication.framework; path = System/Library/Frameworks/LocalAuthentication.framework; sourceTree = SDKROOT; };
 		50B7C38220D918DE0070E1E8 /* IndexedInputField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndexedInputField.swift; sourceTree = "<group>"; };
 		50E2A266214A67B400C51413 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
 		53847C5012570C5604A3EA1D /* Pods-Bank.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bank.debug.xcconfig"; path = "../Pods/Target Support Files/Pods-Bank/Pods-Bank.debug.xcconfig"; sourceTree = "<group>"; };
@@ -499,6 +503,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				50AB06AE2158E2EE00A01E4A /* LocalAuthentication.framework in Frameworks */,
 				D3373D9520BEC7B30082BC4A /* AVFoundation.framework in Frameworks */,
 				22964AB583D54BD1D1CEE814 /* Pods_Bank.framework in Frameworks */,
 			);
@@ -733,6 +738,7 @@
 				1A564AF87E1F5C039E955E7B /* AppHelper.swift */,
 				1A5649D4C4446C06ABB99138 /* KeychainHelper.swift */,
 				1A564CA0211ECF32786F4AB2 /* UnlockHelper.swift */,
+				1A564D47F2E851B747C0C3D6 /* BiometricHelper.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -1136,6 +1142,7 @@
 		95AD93BB0A2D5F5C4A435252 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				50AB06AD2158E2EE00A01E4A /* LocalAuthentication.framework */,
 				504FE6A42122E569007E2F3D /* SectionsTableViewKit.framework */,
 				D3373D9420BEC7B30082BC4A /* AVFoundation.framework */,
 				4DF813906E1FD7EA157BD634 /* Pods_Bank.framework */,
@@ -1640,6 +1647,7 @@
 				1A5644359FCA67F99CE339CD /* LockManager.swift in Sources */,
 				1A5641A7F8D589D7B93383F6 /* BlurView.swift in Sources */,
 				1A564B680AE5D94738EF59B1 /* WalletNavigationController.swift in Sources */,
+				1A564F8F4878978C647A33C5 /* BiometricHelper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
