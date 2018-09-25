@@ -64,7 +64,6 @@ extension LockManager: UnlockDelegate {
 
 extension LockManager: SetDelegate {
     public func onSet(_ view: PinDismissInterface?) {
-        UserDefaultsStorage.shared.set(Date().timeIntervalSince1970, for: lastExitDateKey)
         isLocked = false
         view?.dismiss()
     }
