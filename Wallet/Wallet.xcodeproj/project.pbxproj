@@ -217,6 +217,7 @@
 		509E3D2420E398610095452C /* RestoreTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 509E3D2320E398610095452C /* RestoreTheme.swift */; };
 		50A83FC0213FEB0C008A5F4B /* LightTheme.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 50A83FBF213FEB0C008A5F4B /* LightTheme.xcassets */; };
 		50AB06AE2158E2EE00A01E4A /* LocalAuthentication.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50AB06AD2158E2EE00A01E4A /* LocalAuthentication.framework */; };
+		50AB06B7215A269200A01E4A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 50AB06B5215A269200A01E4A /* InfoPlist.strings */; };
 		50B7C38420D918DE0070E1E8 /* IndexedInputField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B7C38220D918DE0070E1E8 /* IndexedInputField.swift */; };
 		D3285F4620BD158E00644076 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3285F4520BD158E00644076 /* AppDelegate.swift */; };
 		D3285F4D20BD158F00644076 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D3285F4C20BD158F00644076 /* Assets.xcassets */; };
@@ -466,6 +467,9 @@
 		50A83FBE213FCB4B008A5F4B /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		50A83FBF213FEB0C008A5F4B /* LightTheme.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = LightTheme.xcassets; sourceTree = "<group>"; };
 		50AB06AD2158E2EE00A01E4A /* LocalAuthentication.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LocalAuthentication.framework; path = System/Library/Frameworks/LocalAuthentication.framework; sourceTree = SDKROOT; };
+		50AB06B6215A269200A01E4A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		50AB06B8215A269700A01E4A /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		50AB06B9215A269900A01E4A /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		50B7C38220D918DE0070E1E8 /* IndexedInputField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndexedInputField.swift; sourceTree = "<group>"; };
 		50E2A266214A67B400C51413 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
 		53847C5012570C5604A3EA1D /* Pods-Bank.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bank.debug.xcconfig"; path = "../Pods/Target Support Files/Pods-Bank/Pods-Bank.debug.xcconfig"; sourceTree = "<group>"; };
@@ -1183,6 +1187,7 @@
 				D3285F4520BD158E00644076 /* AppDelegate.swift */,
 				D3373DB120C52F640082BC4A /* LaunchScreen.xib */,
 				D3285F5120BD158F00644076 /* Info.plist */,
+				50AB06B5215A269200A01E4A /* InfoPlist.strings */,
 				D3B62A9C20CA73A0005A9F80 /* Localizable.strings */,
 				D3373DAA20BFB0260082BC4A /* Wallet-Bridging-Header.h */,
 			);
@@ -1290,6 +1295,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D3373DB220C52F640082BC4A /* LaunchScreen.xib in Resources */,
+				50AB06B7215A269200A01E4A /* InfoPlist.strings in Resources */,
 				D348A77720C7D34100803B9E /* BackupConfirmationController.xib in Resources */,
 				D3373DCF20C6B21C0082BC4A /* RestoreViewController.xib in Resources */,
 				D3B62A9E20CA88BF005A9F80 /* DarkTheme.xcassets in Resources */,
@@ -1679,6 +1685,16 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		50AB06B5215A269200A01E4A /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				50AB06B6215A269200A01E4A /* en */,
+				50AB06B8215A269700A01E4A /* ru */,
+				50AB06B9215A269900A01E4A /* de */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
 		D3B62A9C20CA73A0005A9F80 /* Localizable.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
