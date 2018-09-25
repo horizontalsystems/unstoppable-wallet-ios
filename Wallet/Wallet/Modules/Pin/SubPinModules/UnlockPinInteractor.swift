@@ -6,9 +6,22 @@ class UnlockPinInteractor: PinInteractor {
     var unlockDelegate: IUnlockPinInteractorDelegate? { return delegate as? IUnlockPinInteractorDelegate }
 
     let unlockHelper: UnlockHelper
+    let biometricHelper: BiometricHelper
 
-    init(unlockHelper: UnlockHelper) {
+    init(unlockHelper: UnlockHelper, biometricHelper: BiometricHelper) {
         self.unlockHelper = unlockHelper
+        self.biometricHelper = biometricHelper
+    }
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        if biometricHelper.isOn {
+            biometricHelper.validate() { [weak self] success in
+                if success {
+                    self?.unlockDelegate?.onUnlock()
+                }
+            }
+        }
     }
 
     override func onEnter(pin: String?) {

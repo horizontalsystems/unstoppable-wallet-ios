@@ -109,7 +109,7 @@ extension PinRouter {
 
     static func unlockPinModule(unlockDelegate: UnlockDelegate?) {
         let router = PinRouter(unlockDelegate: unlockDelegate)
-        let interactor = UnlockPinInteractor(unlockHelper: UnlockHelper.shared)
+        let interactor = UnlockPinInteractor(unlockHelper: UnlockHelper.shared, biometricHelper: BiometricHelper.shared)
         let presenter = UnlockPinPresenter(interactor: interactor, router: router)
         let viewController = PinViewController(viewDelegate: presenter)
 

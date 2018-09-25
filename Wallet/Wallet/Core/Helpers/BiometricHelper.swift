@@ -15,8 +15,8 @@ class BiometricHelper {
     }
 
     var biometricTitle: String? {
-        let localAuthenticationContext = LAContext()
         var authError: NSError?
+        let localAuthenticationContext = LAContext()
         if localAuthenticationContext.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &authError) {
             switch localAuthenticationContext.biometryType {
             case .none: return nil
@@ -26,4 +26,14 @@ class BiometricHelper {
         }
         return nil
     }
+
+    func validate(onComplete: ((Bool) -> ())? = nil) {
+        let localAuthenticationContext = LAContext()
+        localAuthenticationContext.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: "unlock wallet") { success, error in
+            DispatchQueue.main.async {
+                onComplete?(success)
+            }
+        }
+    }
+
 }
