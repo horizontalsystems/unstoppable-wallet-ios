@@ -110,6 +110,7 @@
 "settings_security.set_pin" = "PIN festlegen";
 "settings_security.change_pin" = "PIN bearbeiten";
 "settings_security.touch_id" = "Touch ID";
+"settings_security.face_id" = "Face ID";
 
 "set_pin_controller.title" = "PIN festlegen";
 "set_pin_controller.info" = "Ihre Pin wird verwendet werden, um Ihren Wallet zu entsperren und Geld schicken";
