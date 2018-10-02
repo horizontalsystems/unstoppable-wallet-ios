@@ -114,7 +114,7 @@
 
 "set_pin_controller.title" = "Set PIN";
 "set_pin_controller.info" = "Your pin will be used to unlock your wallet and send money";
-"set_pin_controller.wrong_confirmation" = "Wrong confirmation";
+"set_pin_controller.wrong_confirmation" = "Pin did not match. Try again";
 "confirm_pin_controller.title" = "Enter Again";
 "confirm_pin_controller.info" = "Confirm PIN";
 "edit_pin_controller.title" = "Edit PIN";

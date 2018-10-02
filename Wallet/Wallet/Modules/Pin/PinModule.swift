@@ -9,6 +9,7 @@ protocol IPinView: class {
     func showPinWrong(page index: Int)
     func showKeyboard(for index: Int)
     func showCancel()
+    func showSuccess()
 }
 
 protocol IPinViewDelegate {

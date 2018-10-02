@@ -46,4 +46,9 @@ class WalletNavigationController: UINavigationController {
             super.dismiss(animated: false)
         })
     }
+
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return AppTheme.statusBarStyle
+    }
+
 }

@@ -4,7 +4,9 @@ class LaunchRouter {
 
     static func module(lock: Bool = true) -> UIViewController {
         if let words = WordsManager.shared.words {
-            LockManager.shared.lock()
+            if lock {
+                LockManager.shared.lock()
+            }
             AdapterManager.shared.initAdapters(words: words)
             return MainRouter.module()
         } else {

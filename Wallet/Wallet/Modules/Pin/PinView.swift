@@ -29,7 +29,7 @@ class PinView: UIView {
         }
 
         errorLabel.font = PinTheme.infoFontRegular
-        errorLabel.textColor = PinTheme.infoColor
+        errorLabel.textColor = PinTheme.errorColor
         errorLabel.lineBreakMode = .byWordWrapping
         errorLabel.numberOfLines = 0
         errorLabel.textAlignment = .center

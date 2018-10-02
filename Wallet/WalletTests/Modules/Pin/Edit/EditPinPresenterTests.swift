@@ -27,6 +27,7 @@ class EditPinPresenterTests: XCTestCase {
             when(mock.show(error: any())).thenDoNothing()
             when(mock.showPinWrong(page: any())).thenDoNothing()
             when(mock.showCancel()).thenDoNothing()
+            when(mock.showSuccess()).thenDoNothing()
         }
         stub(mockInteractor) { mock in
             when(mock.save(pin: any())).thenDoNothing()
@@ -113,6 +114,7 @@ class EditPinPresenterTests: XCTestCase {
     func testDismissAfterSavePin() {
         presenter.didSavePin()
 
+        verify(mockView).showSuccess()
         verify(mockRouter).dismiss()
     }
 

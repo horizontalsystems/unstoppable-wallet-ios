@@ -85,6 +85,7 @@ extension EditPinPresenter: IPinViewDelegate {
 extension EditPinPresenter: IPinInteractorDelegate {
 
     func didSavePin() {
+        view?.showSuccess()
         router.dismiss()
     }
 
