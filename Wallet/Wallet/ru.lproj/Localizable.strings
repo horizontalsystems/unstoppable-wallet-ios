@@ -114,12 +114,16 @@
 
 "set_pin_controller.title" = "Установить PIN";
 "set_pin_controller.info" = "Ваш ПИН-код будет использоваться для разблокировки вашего кошелька и отправки денег";
+"set_pin_controller.wrong_confirmation" = "Pin did not match. Try again";
 "confirm_pin_controller.title" = "Введите еще раз";
 "confirm_pin_controller.info" = "Подтвердите ПИН-код";
-"edit_pin_controller.title" = "Новый PIN";
+"edit_pin_controller.title" = "Edit PIN";
 "edit_pin_controller.info" = "Ваш ПИН-код будет использоваться для разблокировки вашего кошелька и отправки денег";
+"edit_pin.unlock_info" = "Enter current PIN";
+"edit_pin.new_pin_info" = "Enter new PIN";
+"edit_pin.confirm_info" = "Enter again for confirm";
 "unlock_pin_controller.info" = "Введите PIN";
-"unlock_edit_pin.title" = "Текущий PIN";
-"unlock_edit_pin.info" = "Введите текущий ПИН-код";
+
+"biometric_usage_reason" = "Unlock wallet";
 
 "unlock.cant_save_pin" = "Ой! Мы не можем сохранить ваш ПИН-код. Пожалуйста, свяжитесь с нами как можно скорее!";
