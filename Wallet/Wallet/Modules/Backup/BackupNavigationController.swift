@@ -45,4 +45,10 @@ extension BackupNavigationController: IBackupView {
         }
     }
 
+    func onValidateSuccess() {
+        if let confirmationController = topViewController as? BackupConfirmationController {
+            confirmationController.showConfirmAlert()
+        }
+    }
+
 }

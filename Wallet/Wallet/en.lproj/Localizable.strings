@@ -106,19 +106,24 @@
 
 "settings_security.title" = "Security Center";
 "settings_security.paper_key" = "Paper Key";
-"settings_pin_touch_face.title" = "Pin / Touch ID";
-"settings_pin_touch_face.set_pin" = "Set PIN";
-"settings_pin_touch_face.change_pin" = "Edit PIN";
-"settings_pin_touch_face.touch_id" = "Touch ID";
+"settings_pin_biometrics.title" = "Pin / Touch ID";
+"settings_security.set_pin" = "Set PIN";
+"settings_security.change_pin" = "Edit PIN";
+"settings_security.touch_id" = "Touch ID";
+"settings_security.face_id" = "Face ID";
 
-"set_pin_controller.title" = "Enter PIN";
+"set_pin_controller.title" = "Set PIN";
 "set_pin_controller.info" = "Your pin will be used to unlock your wallet and send money";
+"set_pin_controller.wrong_confirmation" = "Pin did not match. Try again";
 "confirm_pin_controller.title" = "Enter Again";
 "confirm_pin_controller.info" = "Confirm PIN";
-"edit_pin_controller.title" = "Enter New PIN";
+"edit_pin_controller.title" = "Edit PIN";
 "edit_pin_controller.info" = "Your pin will be used to unlock your wallet and send money";
-"unlock_pin_controller.info" = "Type your pin to unlock";
-"unlock_edit_pin.title" = "Edit PIN";
-"unlock_edit_pin.info" = "Enter current PIN";
+"edit_pin.unlock_info" = "Enter current PIN";
+"edit_pin.new_pin_info" = "Enter new PIN";
+"edit_pin.confirm_info" = "Enter again for confirm";
+"unlock_pin_controller.info" = "Enter PIN";
+
+"biometric_usage_reason" = "Unlock wallet";
 
 "unlock.cant_save_pin" = "Ouch! We cant save your pin, please contact us asap!";

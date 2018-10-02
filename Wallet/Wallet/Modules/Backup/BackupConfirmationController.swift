@@ -28,7 +28,7 @@ class BackupConfirmationController: UIViewController {
         title = "backup.confirmation.title".localized
         descriptionLabel?.text = "backup.confirmation.description".localized
 
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "done".localized, style: .plain, target: self, action: #selector(confirmDidTap))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "done".localized, style: .plain, target: self, action: #selector(doneDidTap))
 
         firstIndexedInputField?.textField.returnKeyType = .next
         firstIndexedInputField?.onReturn = { [weak self] in
@@ -36,7 +36,7 @@ class BackupConfirmationController: UIViewController {
         }
         secondIndexedInputField?.textField.returnKeyType = .done
         secondIndexedInputField?.onReturn = { [weak self] in
-            self?.confirmDidTap()
+            self?.doneDidTap()
         }
 
         firstIndexedInputField?.indexLabel.text = "\(indexes[0])."
@@ -56,29 +56,27 @@ class BackupConfirmationController: UIViewController {
         return .lightContent
     }
 
-    @objc func confirmDidTap() {
-        if let firstWord = firstIndexedInputField?.textField.text, let secondWord = secondIndexedInputField?.textField.text {
-            let model = BakcupConfirmationAlertModel()
-            let actionSheetController = ActionSheetController(withModel: model, actionStyle: .sheet(showDismiss: false))
-            actionSheetController.backgroundColor = AppTheme.actionSheetBackgroundColor
-            actionSheetController.onDismiss = { [weak self] success in
-                if success {
-                    self?.validate(firstWord: firstWord, secondWord: secondWord)
-                }
-            }
-            actionSheetController.contentBackgroundColor = .white
-            actionSheetController.show()
+    @objc func doneDidTap() {
+        if let firstWord = firstIndexedInputField?.textField.text?.lowercased(), let secondWord = secondIndexedInputField?.textField.text?.lowercased(), !firstWord.isEmpty, !secondWord.isEmpty {
+            delegate.validateDidClick(confirmationWords: [indexes[0]: firstWord, indexes[1]: secondWord])
         }
     }
 
-    func validate(firstWord: String, secondWord: String) {
-        delegate.validateDidClick(confirmationWords: [indexes[0]: firstWord, indexes[1]: secondWord])
+    func showConfirmAlert() {
+        let model = BackupConfirmationAlertModel()
+        let actionSheetController = ActionSheetController(withModel: model, actionStyle: .sheet(showDismiss: false))
+        actionSheetController.backgroundColor = AppTheme.actionSheetBackgroundColor
+        actionSheetController.onDismiss = { [weak self] success in
+            if success {
+                self?.delegate.finish()
+            }
+        }
+        actionSheetController.contentBackgroundColor = .white
+        actionSheetController.show(fromController: self)
     }
 
     func showValidationFailure() {
-        let alert = UIAlertController(title: nil, message: "backup.confirmation.failure_alert.text".localized, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "alert.ok".localized, style: .default))
-        present(alert, animated: true)
+        HudHelper.instance.showError(title: "backup.confirmation.failure_alert.text".localized)
     }
 
 }

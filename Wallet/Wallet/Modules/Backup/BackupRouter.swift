@@ -18,7 +18,7 @@ extension BackupRouter: IBackupRouter {
             return
         }
 
-        let viewController = MainRouter.module()
+        let viewController = LaunchRouter.module()
 
         UIView.transition(with: window, duration: 0.5, options: .transitionCrossDissolve, animations: {
             window.rootViewController = viewController

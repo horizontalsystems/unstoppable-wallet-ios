@@ -1,31 +1,32 @@
 import Foundation
-import RxSwift
 
 protocol IPinView: class {
-    func highlightPinDot(at index: Int)
-    func bind(pinLength: Int, title: String?, infoText: String, infoFont: UIFont, infoAttachToTop: Bool)
-    func onWrongPin(clean: Bool)
+    func set(title: String)
+    func addPage(withDescription description: String, showKeyboard: Bool)
+    func show(page index: Int)
+    func show(error: String, forPage index: Int)
+    func show(error: String)
+    func showPinWrong(page index: Int)
+    func showKeyboard(for index: Int)
+    func showCancel()
+    func showSuccess()
 }
 
 protocol IPinViewDelegate {
     func viewDidLoad()
-    func onPinChange(pin: String?)
-}
-
-protocol IPinRouter {
-    func onSet(pin: String)
-    func onConfirm()
-    func onUnlock()
-    func onUnlockEdit()
+    func onEnter(pin: String, forPage index: Int)
+    func onCancel()
 }
 
 protocol IPinInteractor {
-    func viewDidLoad()
-    func onPinChange(pin: String?)
+    func set(pin: String?)
+    func validate(pin: String) -> Bool
+    func save(pin: String)
+
+    func unlock(with pin: String) -> Bool
 }
 
 protocol IPinInteractorDelegate: class {
-    func bind(pinLength: Int)
-    func highlightPinDot(index: Int)
-    func onWrongPin(clean: Bool)
+    func didSavePin()
+    func didFailToSavePin()
 }

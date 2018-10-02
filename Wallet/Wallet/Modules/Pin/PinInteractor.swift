@@ -1,36 +1,38 @@
 import Foundation
-import RxSwift
-import WalletKit
 
 class PinInteractor {
     weak var delegate: IPinInteractorDelegate?
 
-    let pinLength = 6
+    private let pinManager: PinManager
+    private var storedPin: String?
 
-    var pin: String?
-
-    init() {
+    init(pinManager: PinManager) {
+        self.pinManager = pinManager
     }
 
 }
 
 extension PinInteractor: IPinInteractor {
 
-    @objc func viewDidLoad() {
-        delegate?.bind(pinLength: pinLength)
+    func set(pin: String?) {
+        storedPin = pin
     }
 
-    @objc func onPinChange(pin: String?) {
-        guard let pin = pin else {
-            delegate?.highlightPinDot(index: -1)
-            return
+    func validate(pin: String) -> Bool {
+        return storedPin == pin
+    }
+
+    func save(pin: String) {
+        do {
+            try pinManager.store(pin: pin)
+            delegate?.didSavePin()
+        } catch {
+            delegate?.didFailToSavePin()
         }
-        guard pin.count <= pinLength else {
-            delegate?.onWrongPin(clean: false)
-            return
-        }
-        self.pin = pin
-        delegate?.highlightPinDot(index: pin.count - 1)
+    }
+
+    func unlock(with pin: String) -> Bool {
+        return pinManager.validate(pin: pin)
     }
 
 }

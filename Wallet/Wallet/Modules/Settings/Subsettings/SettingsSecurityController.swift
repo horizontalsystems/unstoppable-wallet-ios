@@ -52,19 +52,30 @@ class SettingsSecurityController: UIViewController, SectionsDataSource {
         var sections = [SectionProtocol]()
 
         var pinTouchFaceRows = [RowProtocol]()
-        pinTouchFaceRows.append(Row<SettingsToggleCell>(id: "touch_face_id", height: SettingsTheme.securityCellHeight, bind: { cell, _ in
-            cell.bind(titleIcon: nil, title: "settings_pin_touch_face.touch_id".localized, isOn: false, showDisclosure: false, onToggle: { isOn in
-                print("on: \(isOn)")
-            })
-        }))
-        let setOrChangePinTitle = UnlockHelper.shared.isPinned ? "settings_pin_touch_face.change_pin".localized : "settings_pin_touch_face.set_pin".localized
-        pinTouchFaceRows.append(Row<SettingsCell>(id: "set_pin", hash: "pinned_\(UnlockHelper.shared.isPinned)", height: SettingsTheme.securityCellHeight, bind: { cell, _ in
+
+        if let biometricType = AppHelper.shared.biometricType {
+            let createCell: ((String) -> ()) = { title in
+                pinTouchFaceRows.append(Row<SettingsToggleCell>(id: "biometrics_id", height: SettingsTheme.securityCellHeight, bind: { cell, _ in
+                    cell.bind(titleIcon: nil, title: title.localized, isOn: AppHelper.shared.isBiometricUnlockOn, showDisclosure: false, onToggle: { isOn in
+                        AppHelper.shared.isBiometricUnlockOn = isOn
+                    })
+                }))
+            }
+            switch biometricType {
+            case .touchID: createCell("settings_security.touch_id")
+            case .faceID: createCell("settings_security.face_id")
+            default: ()
+            }
+        }
+
+        let setOrChangePinTitle = PinManager.shared.isPinned ? "settings_security.change_pin".localized : "settings_security.set_pin".localized
+        pinTouchFaceRows.append(Row<SettingsCell>(id: "set_pin", hash: "pinned_\(PinManager.shared.isPinned)", height: SettingsTheme.securityCellHeight, bind: { cell, _ in
             cell.bind(titleIcon: nil, title: setOrChangePinTitle, showDisclosure: true, last: true)
         }, action: { [weak self] _ in
-            if UnlockHelper.shared.isPinned {
-                self?.navigationController?.pushViewController(PinRouter.unlockEditPinModule(), animated: true)
+            if PinManager.shared.isPinned {
+                EditPinRouter.module(from: self)
             } else {
-                self?.navigationController?.pushViewController(PinRouter.setPinModule(), animated: true)
+                SetPinRouter.module(from: self)
             }
         }))
         sections.append(Section(id: "security", headerState: .margin(height: SettingsTheme.subSettingsHeaderHeight), footerState: .margin(height: SettingsTheme.subSettingsHeaderHeight), rows: pinTouchFaceRows))

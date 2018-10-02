@@ -35,8 +35,8 @@ class BitcoinAdapter {
     private func transactionRecord(fromTransaction transaction: TransactionInfo) -> TransactionRecord {
         let status: TransactionStatus
 
-        if let blockHeight = transaction.blockHeight {
-            let confirmations = walletKit.lastBlockHeight - blockHeight + 1
+        if let blockHeight = transaction.blockHeight, let lastBlockInfo = walletKit.lastBlockInfo {
+            let confirmations = lastBlockInfo.height - blockHeight + 1
             if confirmations >= transactionCompletionThreshold {
                 status = .completed
             } else {
@@ -69,7 +69,7 @@ extension BitcoinAdapter: IAdapter {
     }
 
     var lastBlockHeight: Int {
-        return walletKit.lastBlockHeight
+        return walletKit.lastBlockInfo?.height ?? 0
     }
 
     var transactionRecords: [TransactionRecord] {
@@ -116,8 +116,8 @@ extension BitcoinAdapter: BitcoinKitDelegate {
         balanceSubject.onNext(Double(balance) / 100_000_000)
     }
 
-    public func lastBlockHeightUpdated(walletKit: WalletKit, lastBlockHeight: Int) {
-        lastBlockHeightSubject.onNext(lastBlockHeight)
+    public func lastBlockInfoUpdated(walletKit: WalletKit, lastBlockInfo: BlockInfo) {
+        lastBlockHeightSubject.onNext(lastBlockInfo.height)
     }
 
     public func progressUpdated(walletKit: WalletKit, progress: Double) {

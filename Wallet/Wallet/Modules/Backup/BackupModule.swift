@@ -6,6 +6,7 @@ protocol IBackupView: class {
     func hideWords()
     func hideConfirmation()
     func showConfirmationError()
+    func onValidateSuccess()
 }
 
 protocol IBackupViewDelegate {
@@ -15,6 +16,7 @@ protocol IBackupViewDelegate {
     func showConfirmationDidClick()
     func hideConfirmationDidClick()
     func validateDidClick(confirmationWords: [Int: String])
+    func finish()
 }
 
 protocol IBackupInteractor {

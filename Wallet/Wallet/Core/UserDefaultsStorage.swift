@@ -20,8 +20,8 @@ class UserDefaultsStorage: ILocalStorage {
     }
 
     public var lightMode: Bool {
-        get { return getBool(keyLightMode) ?? false }
-        set { setBool(keyLightMode, value: newValue) }
+        get { return bool(for: keyLightMode) ?? false }
+        set { set(newValue, for: keyLightMode) }
     }
 
     func save(words: [String]) {
@@ -47,12 +47,12 @@ class UserDefaultsStorage: ILocalStorage {
         UserDefaults.standard.synchronize()
     }
 
-    private func getBool(_ name: String) -> Bool? {
-        return UserDefaults.standard.value(forKey: name) as? Bool
+    func bool(for key: String) -> Bool? {
+        return UserDefaults.standard.value(forKey: key) as? Bool
     }
 
-    private func setBool(_ name: String, value: Bool) {
-        UserDefaults.standard.set(value, forKey: name)
+    func set(_ value: Bool, for key: String) {
+        UserDefaults.standard.set(value, forKey: key)
         UserDefaults.standard.synchronize()
     }
 
@@ -64,7 +64,7 @@ class UserDefaultsStorage: ILocalStorage {
         }
     }
 
-    public func double(for key: String) -> Double? {
+    public func double(for key: String) -> Double {
         return UserDefaults.standard.double(forKey: key)
     }
 
