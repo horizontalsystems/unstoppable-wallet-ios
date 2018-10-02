@@ -14,4 +14,5 @@ public class AppTheme {
     static var tabBarStyle: UIBarStyle { return UserDefaultsStorage.shared.lightMode ? .default : .black }
     static var navigationBarStyle: UIBarStyle { return UserDefaultsStorage.shared.lightMode ? .default : .blackTranslucent}
     static var navigationBarTintColor = UIColor.cryptoYellow
+    static var statusBarStyle: UIStatusBarStyle { return UserDefaultsStorage.shared.lightMode ? .default : .lightContent}
 }

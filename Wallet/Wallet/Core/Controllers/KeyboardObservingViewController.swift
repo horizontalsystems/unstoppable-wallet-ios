@@ -27,11 +27,10 @@ class KeyboardObservingViewController: UIViewController {
     private func subscribeKeyboard() {
         updateUI(keyboardHeight: HUDKeyboardHelper.shared.visibleKeyboardHeight)
 
-        keyboardFrameDisposable = NotificationCenter.default.rx.notification(NSNotification.Name.UIKeyboardWillChangeFrame).subscribeDisposableAsync(disposeBag, onNext: { [unowned self] notification in
-            self.onKeyboardFrameChange(notification)
+        keyboardFrameDisposable = NotificationCenter.default.rx.notification(NSNotification.Name.UIKeyboardWillChangeFrame).subscribeDisposableAsync(disposeBag, onNext: { [weak self] notification in
+            self?.onKeyboardFrameChange(notification)
         })
     }
-
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)

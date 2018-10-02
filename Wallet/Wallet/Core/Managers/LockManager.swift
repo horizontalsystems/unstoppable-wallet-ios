@@ -38,33 +38,24 @@ class LockManager {
         let now = Date().timeIntervalSince1970
         let timeToLockExpired = now - exitTimestamp > lockTimeout
 
-        let needToLock = timeToLockExpired && WordsManager.shared.words != nil && UnlockHelper.shared.isPinned && !isLocked
+        let needToLock = timeToLockExpired && WordsManager.shared.words != nil && PinManager.shared.isPinned && !isLocked
         blurView.hide(slow: needToLock)
         if needToLock {
             isLocked = true
-            PinRouter.unlockPinModule(unlockDelegate: self)
+            let mySelf = self
+            UnlockPinRouter.module { [weak self] in
+                UserDefaultsStorage.shared.set(Date().timeIntervalSince1970, for: mySelf.lastExitDateKey)
+                self?.isLocked = false
+            }
         }
 
-        let needToSet = WordsManager.shared.words != nil && !UnlockHelper.shared.isPinned && !isLocked
+        let needToSet = WordsManager.shared.words != nil && !PinManager.shared.isPinned && !isLocked
         if needToSet {
             isLocked = true
-            PinRouter.setPinModule(setDelegate: self)
+            SetPinRouter.module { [weak self] in
+                self?.isLocked = false
+            }
         }
     }
 
-}
-
-extension LockManager: UnlockDelegate {
-    public func onUnlock(_ view: PinDismissInterface?) {
-        UserDefaultsStorage.shared.set(Date().timeIntervalSince1970, for: lastExitDateKey)
-        isLocked = false
-        view?.dismiss()
-    }
-}
-
-extension LockManager: SetDelegate {
-    public func onSet(_ view: PinDismissInterface?) {
-        isLocked = false
-        view?.dismiss()
-    }
 }

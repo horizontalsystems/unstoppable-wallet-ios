@@ -114,12 +114,16 @@
 
 "set_pin_controller.title" = "Set PIN";
 "set_pin_controller.info" = "Your pin will be used to unlock your wallet and send money";
+"set_pin_controller.wrong_confirmation" = "Pin did not match. Try again";
 "confirm_pin_controller.title" = "Enter Again";
 "confirm_pin_controller.info" = "Confirm PIN";
-"edit_pin_controller.title" = "New PIN";
+"edit_pin_controller.title" = "Edit PIN";
 "edit_pin_controller.info" = "Your pin will be used to unlock your wallet and send money";
+"edit_pin.unlock_info" = "Enter current PIN";
+"edit_pin.new_pin_info" = "Enter new PIN";
+"edit_pin.confirm_info" = "Enter again for confirm";
 "unlock_pin_controller.info" = "Enter PIN";
-"unlock_edit_pin.title" = "Current PIN";
-"unlock_edit_pin.info" = "Enter current PIN";
+
+"biometric_usage_reason" = "Unlock wallet";
 
 "unlock.cant_save_pin" = "Ouch! We cant save your pin, please contact us asap!";

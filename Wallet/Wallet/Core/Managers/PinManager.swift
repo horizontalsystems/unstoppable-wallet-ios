@@ -1,7 +1,7 @@
 import Foundation
 
-class UnlockHelper {
-    static let shared = UnlockHelper()
+class PinManager {
+    static let shared = PinManager()
     private let pinKey = "pin_keychain_key"
 
     var isPinned: Bool {
@@ -12,7 +12,7 @@ class UnlockHelper {
         try KeychainHelper.shared.set(pin, key: pinKey)
     }
 
-    func validate(_ pin: String) -> Bool {
+    func validate(pin: String) -> Bool {
         return KeychainHelper.shared.getString(pinKey) == pin
     }
 

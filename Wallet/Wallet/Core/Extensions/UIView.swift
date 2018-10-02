@@ -51,7 +51,10 @@ extension UIView {
         }
     }
 
-    public func shakeView() {
+    public func shakeView(_ block: (() -> Void)? = nil) {
+        CATransaction.begin()
+        CATransaction.setCompletionBlock(block)
+
         let animation = CAKeyframeAnimation(keyPath: "transform")
         let fromAnimation = NSValue(caTransform3D: CATransform3DMakeTranslation(-5, 0, 0))
         let toAnimation = NSValue(caTransform3D: CATransform3DMakeTranslation(5, 0, 0))
@@ -61,6 +64,8 @@ extension UIView {
         animation.repeatCount = 2
         animation.duration = 0.07
         layer.add(animation, forKey: "shakeAnimation")
+
+        CATransaction.commit()
     }
 
 }
