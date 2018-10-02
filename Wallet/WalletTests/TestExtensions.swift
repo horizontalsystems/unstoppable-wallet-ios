@@ -1,5 +1,5 @@
 import Foundation
-@testable import Wallet
+@testable import Bank
 
 extension Coin: Equatable {
     public static func ==(lhs: Coin, rhs: Coin) -> Bool {
@@ -26,13 +26,5 @@ extension CurrencyValue: Equatable {
     public static func ==(lhs: CurrencyValue, rhs: CurrencyValue) -> Bool {
         return lhs.currency == rhs.currency &&
                 lhs.value == rhs.value
-    }
-}
-
-extension WalletBalanceViewModel: Equatable {
-    public static func ==(lhs: WalletBalanceViewModel, rhs: WalletBalanceViewModel) -> Bool {
-        return lhs.coinValue == rhs.coinValue &&
-                lhs.convertedValue == rhs.convertedValue &&
-                lhs.rate == rhs.rate
     }
 }

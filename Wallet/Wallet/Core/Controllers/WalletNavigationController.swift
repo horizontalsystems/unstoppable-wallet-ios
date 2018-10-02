@@ -15,24 +15,21 @@ class WalletNavigationController: UINavigationController {
 
     override init(rootViewController: UIViewController) {
         super.init(rootViewController: rootViewController)
-
-        commonInit()
     }
 
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-
-        commonInit()
-    }
-
-    private func commonInit() {
-        navigationBar.barStyle = AppTheme.navigationBarStyle
-        navigationBar.tintColor = AppTheme.navigationBarTintColor
-        navigationBar.prefersLargeTitles = true
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationBar.barStyle = AppTheme.navigationBarStyle
+        navigationBar.tintColor = AppTheme.navigationBarTintColor
+        navigationBar.prefersLargeTitles = true
     }
 
     override func dismiss(animated flag: Bool, completion: (() -> Void)?) {

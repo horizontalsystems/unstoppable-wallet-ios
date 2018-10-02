@@ -8,7 +8,7 @@ class LaunchRouter {
             AdapterManager.shared.initAdapters(words: words)
             return MainRouter.module()
         } else {
-            try? UnlockHelper.shared.store(pin: nil)
+            try? PinManager.shared.store(pin: nil)
             return GuestRouter.module()
         }
     }

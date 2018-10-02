@@ -145,7 +145,7 @@ class SettingsViewController: UIViewController, SectionsDataSource {
             cell.bind(titleIcon: UIImage(named: "Bug Icon"), title: "Drop Keychain", showDisclosure: false)
         }, action: { _ in
             WordsManager.shared.isBackedUp = false
-            try? UnlockHelper.shared.store(pin: nil)
+            try? PinManager.shared.store(pin: nil)
         }))
         sections.append(Section(id: "debug_section", headerState: .marginColor(height: 50, color: .clear), footerState: .marginColor(height: 20, color: .clear), rows: debugRows))
 
@@ -153,11 +153,11 @@ class SettingsViewController: UIViewController, SectionsDataSource {
     }
 
     func logout() {
-        BiometricHelper.shared.isOn = false
+        AppHelper.shared.isBiometricUnlockOn = false
         WordsManager.shared.isBackedUp = false
         WordsManager.shared.removeWords()
         AdapterManager.shared.clear()
-        try? UnlockHelper.shared.store(pin: nil)
+        try? PinManager.shared.store(pin: nil)
 
         guard let window = UIApplication.shared.keyWindow else {
             return

@@ -1,29 +1,17 @@
 import UIKit
-import GrouviExtensions
 import SnapKit
 
 class PinViewController: KeyboardObservingViewController {
-    var navigation: WalletNavigationController? { return navigationController as? WalletNavigationController }
-
     let delegate: IPinViewDelegate
 
-    let wrapperView = UIView()
+    var holderView = UIScrollView()
 
-    let infoLabel = UILabel()
+    var pages = [PinPage]()
+    var pinViews = [PinView]()
+    var didAppear = false
 
-    var dotsHolder = UIStackView()
-    var dotsViews = [TintImageView]()
-
-    var textField = UITextField()
-    var pinLength = 0
-
-    var dotView: TintImageView {
-        return TintImageView(image: UIImage(named: "Pin Dot"), selectedImage: UIImage(named: "Pin Dot Filled"))
-    }
-
-    init(viewDelegate: IPinViewDelegate) {
-        self.delegate = viewDelegate
-
+    init(delegate: IPinViewDelegate) {
+        self.delegate = delegate
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -34,125 +22,127 @@ class PinViewController: KeyboardObservingViewController {
     override func viewDidLoad() {
         view.backgroundColor = AppTheme.controllerBackground
 
-        wrapperView.backgroundColor = AppTheme.controllerBackground
-        view.addSubview(wrapperView)
-        wrapperView.snp.makeConstraints { maker in
+        let dumbView = UIView()
+        view.addSubview(dumbView)
+
+        view.addSubview(holderView)
+        holderView.isScrollEnabled = false
+        holderView.snp.makeConstraints { maker in
             maker.top.equalTo(self.view.safeAreaLayoutGuide.snp.top)
             maker.leading.trailing.bottom.equalToSuperview()
         }
-
-        infoLabel.textColor = PinTheme.infoColor
-        infoLabel.lineBreakMode = .byWordWrapping
-        infoLabel.numberOfLines = 0
-        infoLabel.textAlignment = .center
-        wrapperView.addSubview(infoLabel)
-
-        dotsHolder.backgroundColor = .yellow
-        dotsHolder.axis = .horizontal
-        dotsHolder.distribution = .equalSpacing
-        dotsHolder.alignment = .center
-        dotsHolder.spacing = PinTheme.dotsMargin
-        wrapperView.addSubview(dotsHolder)
-        dotsHolder.snp.makeConstraints { maker in
-            maker.centerX.equalToSuperview()
-            maker.centerY.equalToSuperview()
-        }
-
-        textField.delegate = self
-        textField.keyboardType = .numberPad
-        textField.keyboardAppearance = AppTheme.keyboardAppearance
-        wrapperView.addSubview(textField)
-        textField.snp.makeConstraints { maker in
-            maker.leading.equalToSuperview()
-            maker.top.equalTo(self.view.snp.bottom)
-            maker.size.equalTo(CGSize(width: 0, height: 0))
-        }
-        textField.addTarget(self, action: #selector(onPinChange), for: .editingChanged)
+        holderView.backgroundColor = .clear
 
         super.viewDidLoad()
-
         delegate.viewDidLoad()
     }
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        textField.becomeFirstResponder()
-    }
-
-    @objc func onPinChange() {
-        delegate.onEnter(pin: textField.text)
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        didAppear = true
     }
 
     override func updateUI(keyboardHeight: CGFloat, duration: TimeInterval, options: UIViewAnimationOptions, completion: (() -> ())?) {
-        wrapperView.snp.updateConstraints { maker in
+        holderView.snp.updateConstraints { maker in
             maker.bottom.equalToSuperview().offset(-keyboardHeight)
+        }
+        if duration > 0, didAppear {
+            UIView.animate(withDuration: duration, delay: 0, options: options, animations: { [weak self] in
+                self?.view.window?.layoutIfNeeded()
+            })
         }
     }
 
-}
+    @objc func onCancelTap() {
+        delegate.onCancel()
+    }
 
-extension PinViewController: UITextFieldDelegate {
-
-    public func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        let oldLength = textField.text?.count ?? 0
-        let replacementLength = string.count
-        let rangeLength = range.length
-
-        let newLength = oldLength - rangeLength + replacementLength;
-
-        let shouldChange = newLength <= pinLength
-        if !shouldChange {
-            onWrongPin(clean: false)
+    func reload(at index: Int) {
+        pinViews[index].bind(page: pages[index]) { [weak self] pin in
+            self?.delegate.onEnter(pin: pin, forPage: index)
         }
-        return shouldChange
     }
 
 }
 
 extension PinViewController: IPinView {
 
-    func highlightPinDot(at index: Int) {
-        for (dotViewIndex, dotView) in dotsViews.enumerated() {
-            dotView.isHighlighted = dotViewIndex <= index
-        }
+    func set(title: String) {
+        self.title = title.localized
     }
 
-    func bind(pinLength: Int, title: String?, infoText: String?, infoFont: UIFont, infoAttachToTop: Bool) {
-        self.pinLength = pinLength
-        for _ in 0..<pinLength {
-            let dotView = self.dotView
-            dotsViews.append(dotView)
-            dotsHolder.addArrangedSubview(dotView)
-        }
+    func addPage(withDescription description: String, showKeyboard: Bool) {
+        let page = PinPage(description: description, showKeyboard: showKeyboard)
+        pages.append(page)
 
-        self.title = title
-        infoLabel.text = infoText
-        infoLabel.font = infoFont
-        infoLabel.snp.remakeConstraints { maker in
-            if infoAttachToTop {
-                maker.top.equalToSuperview().offset(PinTheme.infoTopMargin)
-            } else {
-                maker.bottom.equalTo(self.dotsHolder.snp.top).offset(-PinTheme.infoBottomMargin)
+        let pinView = PinView()
+        pinViews.append(pinView)
+
+        reload(at: pinViews.count - 1)
+
+        holderView.addSubview(pinView)
+        var previousView: UIView?
+        for view in holderView.subviews {
+            view.snp.remakeConstraints { maker in
+                maker.width.height.equalToSuperview()
+                maker.top.bottom.equalTo(self.holderView)
+
+                if view == holderView.subviews.first {
+                    maker.leading.equalToSuperview()
+                } else if view == holderView.subviews.last {
+                    maker.trailing.equalToSuperview()
+                }
+                if let previousView = previousView {
+                    maker.leading.equalTo(previousView.snp.trailing)
+                }
             }
+            previousView = view
+        }
+        view.layoutIfNeeded()
+    }
 
-            maker.centerX.equalToSuperview()
-            maker.leading.equalToSuperview().offset(PinTheme.infoMargin)
-            maker.trailing.equalToSuperview().offset(-PinTheme.infoMargin)
+    func show(page index: Int) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            self.holderView.setContentOffset(CGPoint(x: index * Int(UIScreen.main.bounds.width), y: 0), animated: true)
+            self.reload(at: index)
         }
     }
 
-    func onWrongPin(clean: Bool) {
-        dotsHolder.shakeView()
-        if clean {
-            textField.text = nil
-            delegate.onEnter(pin: nil)
-        }
+    func show(error: String, forPage index: Int) {
+        pages[index].error = error.localized
+        reload(at: index)
+    }
+
+    func show(error: String) {
+        HudHelper.instance.showError(title: error.localized)
+    }
+
+    func showPinWrong(page index: Int) {
+        pinViews[index].shakeAndClear()
+    }
+
+    func showKeyboard(for index: Int) {
+        pinViews[index].becomeFirstResponder()
+    }
+
+    func showCancel() {
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "alert.cancel".localized, style: .plain, target: self, action: #selector(onCancelTap))
     }
 
 }
 
-extension PinViewController: PinDismissInterface {
-    public func dismiss() {
-        navigationController?.dismiss(animated: true)
+struct PinPage {
+    var description: String?
+    var error: String?
+    var showKeyboard: Bool = false
+
+    init(description: String) {
+        self.description = description
     }
+
+    init(description: String, showKeyboard: Bool) {
+        self.description = description
+        self.showKeyboard = showKeyboard
+    }
+
 }
