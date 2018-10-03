@@ -18,21 +18,20 @@
 "restore.restore" = "Wiederherstellen";
 "restore.validation_failed" = "Der eingegebene Wörter ist ungültig";
 
-"backup.intro.title" = "Sicherung";
-"backup.intro.subtitle" = "Ihr Papier-Schlüssel ist der einzige Weg, Ihre Satoshi wiederherzustellen, wenn Sie verloren, gestohlen, kaputt oder aktualisiert.\n\nWir zeigen Ihnen eine Liste von Wörtern auf einem Blatt Papier notieren und aufbewahren.";
+"backup.intro.title" = "Secret Key";
+"backup.intro.subtitle" = "Your secret key is the only way to restore your wallet and funds if your phone is ever lost, stolen, broken, or upgraded.\n\n It consists of 12 words. Write them on a piece of paper and do not ever show it to anyone.";
 "backup.intro.later" = "Später";
-"backup.intro.backup_now" = "Jetzt Sichern";
+"backup.intro.backup_now" = "Show Key";
 
-"backup.words.title" = "Papier-Schlüssel";
+"backup.words.title" = "Secret Key";
 "backup.words.back" = "Zurück";
-"backup.words.proceed" = "Fortfahren";
+"backup.words.proceed" = "Next";
 
-"backup.confirmation.title" = "Wort eingeben";
-"backup.confirmation.description" = "Geben Sie die folgenden Wörter aus Ihrem Papier-Schlüssel";
+"backup.confirmation.title" = "Check ...";
+"backup.confirmation.description" = "Enter words from your secret key";
 "backup.confirmation.failure_alert.text" = "Die eingegebenen Passwörter stimmen nicht überein";
-"backup.confirmation.understand" = "Ich verstehe, ";
-"backup.confirmation.local_token_bold" = "mein Wallet und Token auf diesem Gerät nur und keine Server sicher gehalten werden";
-"backup.confirmation.delete_app_warn" = "Ich verstehe, dass wenn diese app auf ein anderes Gerät verschoben wird oder gelöscht, mein Wallet nur mit dem backup-Satz wiederhergestellt werden können, die ich aufgeschrieben und an einem sicheren Ort gespeichert";
+"backup.confirmation.understand" = "I understand that my wallet and tokens are held securely on this device only and not any servers.";
+"backup.confirmation.delete_app_warn" = "I understand that if this app is deleted or stops working for any reason, my wallet can only be recovered using the secret key that I have written down and saved in a secure place";
 "backup.confirmation.confirm" = "Bestätigen";
 
 "wallet.title" = "Balance";
