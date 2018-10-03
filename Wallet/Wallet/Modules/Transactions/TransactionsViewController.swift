@@ -108,7 +108,7 @@ extension TransactionsViewController {
     }
 
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        return filterHeaderView
+        return items.count > 0 ? filterHeaderView : nil
     }
 
 }

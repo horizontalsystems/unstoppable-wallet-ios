@@ -29,14 +29,16 @@ class TransactionCell: UITableViewCell {
         dateLabel.textColor = TransactionsTheme.dateLabelTextColor
         contentView.addSubview(dateLabel)
         dateLabel.snp.makeConstraints { maker in
-            maker.leading.equalToSuperview().offset(self.layoutMargins.left * 2)
+            maker.leading.equalTo(contentView.snp.leadingMargin).offset(TransactionsTheme.leftAdditionalMargin)
             maker.top.equalToSuperview().offset(TransactionsTheme.cellMediumMargin)
         }
         timeLabel.font = TransactionsTheme.timeLabelFont
         timeLabel.textColor = TransactionsTheme.timeLabelTextColor
+        timeLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+        timeLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         contentView.addSubview(timeLabel)
         timeLabel.snp.makeConstraints { maker in
-            maker.leading.equalToSuperview().offset(self.layoutMargins.left * 2)
+            maker.leading.equalTo(contentView.snp.leadingMargin).offset(TransactionsTheme.leftAdditionalMargin)
             maker.top.equalTo(self.dateLabel.snp.bottom).offset(TransactionsTheme.cellSmallMargin)
         }
 
@@ -100,7 +102,7 @@ class TransactionCell: UITableViewCell {
         case let .verifying(progress):
             statusImageView.image = UIImage(named: "Transaction Processing Icon")
         case .completed:
-            statusImageView.image = nil
+            statusImageView.image = UIImage(named: "Transaction Success Icon")
         }
     }
 
