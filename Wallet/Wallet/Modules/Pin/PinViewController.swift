@@ -129,7 +129,7 @@ extension PinViewController: IPinView {
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "alert.cancel".localized, style: .plain, target: self, action: #selector(onCancelTap))
     }
 
-1    func showSuccess() {
+    func showSuccess() {
         HudHelper.instance.showSuccess()
     }
 
