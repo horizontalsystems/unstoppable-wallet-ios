@@ -104,7 +104,7 @@
 "settings_language.title" = "Sprache";
 
 "settings_security.title" = "Sicherheits-Center";
-"settings_security.paper_key" = "Papier-Schlüssel";
+"settings_security.paper_key" = "Secret Key";
 "settings_pin_biometrics.title" = "PIN / Touch ID";
 "settings_security.set_pin" = "PIN festlegen";
 "settings_security.change_pin" = "PIN bearbeiten";
