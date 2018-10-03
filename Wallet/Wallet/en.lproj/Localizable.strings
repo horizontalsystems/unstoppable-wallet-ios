@@ -18,21 +18,20 @@
 "restore.restore" = "Restore";
 "restore.validation_failed" = "The words you entered are invalid";
 
-"backup.intro.title" = "Backup";
-"backup.intro.subtitle" = "Your paper key is the only way to restore your Satoshi if you lost, stolen, broken, or upgraded.\n\nWe will show you a list of words to write down on a piece of paper and keep safe.";
+"backup.intro.title" = "Secret Key";
+"backup.intro.subtitle" = "Your secret key is the only way to restore your wallet and funds if your phone is ever lost, stolen, broken, or upgraded.\n\n It consists of 12 words. Write them on a piece of paper and do not ever show it to anyone.";
 "backup.intro.later" = "Later";
-"backup.intro.backup_now" = "Backup Now";
+"backup.intro.backup_now" = "Show Key";
 
-"backup.words.title" = "Paper Keys";
+"backup.words.title" = "Secret Key";
 "backup.words.back" = "Back";
-"backup.words.proceed" = "Proceed";
+"backup.words.proceed" = "Next";
 
-"backup.confirmation.title" = "Type the words";
-"backup.confirmation.description" = "Enter the following words from your paper key";
+"backup.confirmation.title" = "Check ...";
+"backup.confirmation.description" = "Enter words from your secret key";
 "backup.confirmation.failure_alert.text" = "Entered words do not match";
-"backup.confirmation.understand" = "I understand that ";
-"backup.confirmation.local_token_bold" = "my wallet and tokens are held securely on this device only and not any servers";
-"backup.confirmation.delete_app_warn" = "I understand that if this app is moved to another device or is deleted, my wallet can be only recovered with the backup phrase that I have written down and saved in a secure place";
+"backup.confirmation.understand" = "I understand that my wallet and tokens are held securely on this device only and not any servers.";
+"backup.confirmation.delete_app_warn" = "I understand that if this app is deleted or stops working for any reason, my wallet can only be recovered using the secret key that I have written down and saved in a secure place";
 "backup.confirmation.confirm" = "Confirm";
 
 "wallet.title" = "Balance";
