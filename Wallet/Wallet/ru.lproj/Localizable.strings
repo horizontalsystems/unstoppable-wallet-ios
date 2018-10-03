@@ -124,6 +124,6 @@
 "edit_pin.confirm_info" = "Enter again for confirm";
 "unlock_pin_controller.info" = "Введите PIN";
 
-"biometric_usage_reason" = "Unlock wallet";
+"biometric_usage_reason" = "Разблокировать";
 
 "unlock.cant_save_pin" = "Ой! Мы не можем сохранить ваш ПИН-код. Пожалуйста, свяжитесь с нами как можно скорее!";
