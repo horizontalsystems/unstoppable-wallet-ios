@@ -31,7 +31,6 @@
 "backup.confirmation.description" = "Введите следующие слова из вашего ключа";
 "backup.confirmation.failure_alert.text" = "Введенные слова не совпадают";
 "backup.confirmation.understand" = "Я понимаю, ";
-"backup.confirmation.local_token_bold" = "что мой кошелек и токены хранятся только на этом устройстве";
 "backup.confirmation.delete_app_warn" = "Я понимаю, что если это приложение удаляется или устанавливается на другое устройство, мой кошелек можно восстановить только ключом, который я храню в безопасном месте";
 "backup.confirmation.confirm" = "Подтвердить";
 
@@ -124,6 +123,6 @@
 "edit_pin.confirm_info" = "Enter again for confirm";
 "unlock_pin_controller.info" = "Введите PIN";
 
-"biometric_usage_reason" = "Unlock wallet";
+"biometric_usage_reason" = "Разблокировать";
 
 "unlock.cant_save_pin" = "Ой! Мы не можем сохранить ваш ПИН-код. Пожалуйста, свяжитесь с нами как можно скорее!";
