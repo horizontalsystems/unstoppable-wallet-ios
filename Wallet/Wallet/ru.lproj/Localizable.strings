@@ -104,7 +104,7 @@
 "settings_language.title" = "Язык";
 
 "settings_security.title" = "Безопасность";
-"settings_security.paper_key" = "Бумажный ключ";
+"settings_security.paper_key" = "Secret Key";
 "settings_pin_biometrics.title" = "PIN / Touch ID";
 "settings_security.set_pin" = "Установить PIN";
 "settings_security.change_pin" = "Изменить PIN";
