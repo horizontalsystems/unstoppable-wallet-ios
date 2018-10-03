@@ -24,7 +24,7 @@ class SettingsCell: UITableViewCell {
 
         contentView.addSubview(iconImageView)
         iconImageView.snp.makeConstraints { maker in
-            maker.leading.equalToSuperview().offset(self.layoutMargins.left * 2)
+            maker.leading.equalTo(contentView.snp.leadingMargin)
             maker.size.equalTo(SettingsTheme.cellIconSize)
             maker.centerY.equalToSuperview()
         }
@@ -37,7 +37,7 @@ class SettingsCell: UITableViewCell {
 
         contentView.addSubview(disclosureImageView)
         disclosureImageView.snp.makeConstraints { maker in
-            maker.trailing.equalToSuperview().offset(-self.layoutMargins.right * 2)
+            maker.trailing.equalTo(contentView.snp.trailingMargin)
             maker.centerY.equalToSuperview()
             maker.size.equalTo(SettingsTheme.disclosureSize)
         }
@@ -45,7 +45,7 @@ class SettingsCell: UITableViewCell {
         separator.backgroundColor = SettingsTheme.cellSelectBackground
         contentView.addSubview(separator)
         separator.snp.makeConstraints { maker in
-            maker.leading.equalToSuperview().offset(SettingsTheme.separatorInset + self.layoutMargins.left * 2)
+            maker.leading.equalTo(contentView.snp.leadingMargin).offset(SettingsTheme.separatorInset)
             maker.bottom.trailing.equalToSuperview()
             maker.height.equalTo(1 / UIScreen.main.scale)
         }
@@ -68,14 +68,19 @@ class SettingsCell: UITableViewCell {
         iconImageView.image = titleIcon
         titleLabel.text = title
         disclosureImageView.isHidden = !showDisclosure
-        disclosureImageView.snp.updateConstraints { maker in
-            maker.width.equalTo(showDisclosure ? SettingsTheme.disclosureSize.width : 0)
-            maker.trailing.equalToSuperview().offset(showDisclosure ? -self.layoutMargins.right : 0)
+        disclosureImageView.snp.remakeConstraints { maker in
+            if showDisclosure {
+                maker.trailing.equalTo(contentView.snp.trailingMargin)
+            } else {
+                maker.trailing.equalToSuperview()
+            }
+            maker.centerY.equalToSuperview()
+            maker.size.equalTo(SettingsTheme.disclosureSize)
         }
 
         separator.snp.updateConstraints { maker in
-            let float = (titleIcon != nil ? SettingsTheme.separatorInset : 0) + self.layoutMargins.left
-            maker.leading.equalToSuperview().offset(last ? 0 : float)
+            let float = (titleIcon != nil ? SettingsTheme.separatorInset : 0)
+            maker.leading.equalTo(contentView.snp.leadingMargin).offset(float)
         }
     }
 

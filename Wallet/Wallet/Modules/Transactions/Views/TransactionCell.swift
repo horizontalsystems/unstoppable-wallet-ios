@@ -57,7 +57,7 @@ class TransactionCell: UITableViewCell {
         amountLabel.snp.makeConstraints { maker in
             maker.leading.equalTo(self.dateLabel.snp.trailing).offset(TransactionsTheme.cellMediumMargin)
             maker.top.equalToSuperview().offset(TransactionsTheme.cellMediumMargin)
-            maker.trailing.equalToSuperview().offset(-self.layoutMargins.left * 2)
+            maker.trailing.equalTo(contentView.snp.trailingMargin)
         }
 
         fiatAmountLabel.font = TransactionsTheme.fiatAmountLabelFont
@@ -67,7 +67,7 @@ class TransactionCell: UITableViewCell {
         fiatAmountLabel.snp.makeConstraints { maker in
             maker.leading.equalTo(self.timeLabel.snp.trailing).offset(TransactionsTheme.cellMediumMargin)
             maker.top.equalTo(self.amountLabel.snp.bottom).offset(TransactionsTheme.cellMicroMargin)
-            maker.trailing.equalToSuperview().offset(-self.layoutMargins.left * 2)
+            maker.trailing.equalTo(contentView.snp.trailingMargin)
         }
 
         let separatorView = UIView()

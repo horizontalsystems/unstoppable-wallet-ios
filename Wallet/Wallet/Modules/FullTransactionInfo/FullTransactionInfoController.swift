@@ -49,12 +49,12 @@ class FullTransactionInfoController: UIViewController, SectionsDataSource {
         }
         shareButton.delegate = shareIcon
         shareButton.addSubview(shareIcon)
+        bottomBar.contentView.addSubview(shareButton)
         shareIcon.snp.makeConstraints { maker in
-            maker.leading.equalToSuperview().offset(self.tableView.layoutMargins.left * 2)
+            maker.leading.equalTo(bottomBar.contentView.snp.leadingMargin)
             maker.top.equalToSuperview().offset(FullTransactionInfoTheme.mediumMargin)
             maker.trailing.equalToSuperview()
         }
-        bottomBar.contentView.addSubview(shareButton)
         shareButton.snp.makeConstraints { maker in
             maker.leading.top.bottom.equalToSuperview()
         }
@@ -66,12 +66,12 @@ class FullTransactionInfoController: UIViewController, SectionsDataSource {
         }
         closeButton.delegate = closeIcon
         closeButton.addSubview(closeIcon)
+        bottomBar.contentView.addSubview(closeButton)
         closeIcon.snp.makeConstraints { maker in
-            maker.trailing.equalToSuperview().offset(-self.tableView.layoutMargins.left * 2)
+            maker.trailing.equalTo(bottomBar.contentView.snp.trailingMargin)
             maker.top.equalToSuperview().offset(FullTransactionInfoTheme.mediumMargin)
             maker.leading.equalToSuperview()
         }
-        bottomBar.contentView.addSubview(closeButton)
         closeButton.snp.makeConstraints { maker in
             maker.trailing.top.bottom.equalToSuperview()
         }

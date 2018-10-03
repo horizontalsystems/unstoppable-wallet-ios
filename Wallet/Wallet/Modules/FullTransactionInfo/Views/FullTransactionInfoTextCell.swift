@@ -17,7 +17,7 @@ class FullTransactionInfoTextCell: UITableViewCell {
         titleLabel.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
         titleLabel.setContentHuggingPriority(.defaultLow, for: .horizontal)
         titleLabel.snp.makeConstraints { maker in
-            maker.leading.equalToSuperview().offset(self.layoutMargins.left * 2)
+            maker.leading.equalTo(contentView.snp.leadingMargin)
             maker.centerY.equalToSuperview()
         }
 
@@ -28,7 +28,7 @@ class FullTransactionInfoTextCell: UITableViewCell {
         descriptionLabel.textColor = FullTransactionInfoTheme.descriptionColor
         descriptionLabel.snp.makeConstraints { maker in
             maker.leading.equalTo(self.titleLabel.snp.trailing).offset(FullTransactionInfoTheme.margin)
-            maker.trailing.equalToSuperview().offset(-self.layoutMargins.left * 2)
+            maker.trailing.equalTo(contentView.snp.trailingMargin)
             maker.centerY.equalToSuperview()
         }
     }
