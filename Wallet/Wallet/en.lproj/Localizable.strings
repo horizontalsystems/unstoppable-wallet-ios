@@ -8,15 +8,15 @@
 "alert.success" = "Success";
 "alert.copied" = "Copied";
 
-"guest.title" = "App Name";
-"guest.subtitle" = "Bitcoin, Satoshi Nakamoto";
-"guest.create_wallet" = "Create Wallet";
+"guest.title" = "Bank Wallet";
+"guest.subtitle" = "Be Your own Bank!";
+"guest.create_wallet" = "New Wallet";
 "guest.restore_wallet" = "Restore Wallet";
 
 "restore.title" = "Restore Wallet";
-"restore.description" = "Enter the following words from your paper key:";
+"restore.description" = "Enter the Secret Key (sometimes called Paper Key).for the wallet. ";
 "restore.restore" = "Restore";
-"restore.validation_failed" = "The words you entered are invalid";
+"restore.validation_failed" = "The Secret Key you entered doesn't exist. Please check the words and try again.";
 
 "backup.intro.title" = "Secret Key";
 "backup.intro.subtitle" = "Your secret key is the only way to restore your wallet and funds if your phone is ever lost, stolen, broken, or upgraded.\n\n It consists of 12 words. Write them on a piece of paper and do not ever show it to anyone.";
@@ -29,7 +29,7 @@
 
 "backup.confirmation.title" = "Check ...";
 "backup.confirmation.description" = "Enter words from your secret key";
-"backup.confirmation.failure_alert.text" = "Entered words do not match";
+"backup.confirmation.failure_alert.text" = "Words do not match";
 "backup.confirmation.understand" = "I understand that my wallet and tokens are held securely on this device only and not any servers.";
 "backup.confirmation.delete_app_warn" = "I understand that if this app is deleted or stops working for any reason, my wallet can only be recovered using the secret key that I have written down and saved in a secure place";
 "backup.confirmation.confirm" = "Confirm";
