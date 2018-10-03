@@ -18,21 +18,20 @@
 "restore.restore" = "Восстановить";
 "restore.validation_failed" = "Введенные слова неверны";
 
-"backup.intro.title" = "Записать ключ";
-"backup.intro.subtitle" = "Ваш ключ является единственным способом для восстановления ваших Биткоинов.\n\nМы покажем вам список слов, чтобы вы записали их на бумаге и хранили в безопасном месте.";
+"backup.intro.title" = "Secret Key";
+"backup.intro.subtitle" = "Your secret key is the only way to restore your wallet and funds if your phone is ever lost, stolen, broken, or upgraded.\n\n It consists of 12 words. Write them on a piece of paper and do not ever show it to anyone.";
 "backup.intro.later" = "Позже";
-"backup.intro.backup_now" = "Показать";
+"backup.intro.backup_now" = "Show Key";
 
-"backup.words.title" = "Ключ";
+"backup.words.title" = "Secret Key";
 "backup.words.back" = "Назад";
-"backup.words.proceed" = "Продолжить";
+"backup.words.proceed" = "Next";
 
-"backup.confirmation.title" = "Введите словa";
-"backup.confirmation.description" = "Введите следующие слова из вашего ключа";
+"backup.confirmation.title" = "Check ...";
+"backup.confirmation.description" = "Enter words from your secret key";
 "backup.confirmation.failure_alert.text" = "Введенные слова не совпадают";
-"backup.confirmation.understand" = "Я понимаю, ";
-"backup.confirmation.local_token_bold" = "что мой кошелек и токены хранятся только на этом устройстве";
-"backup.confirmation.delete_app_warn" = "Я понимаю, что если это приложение удаляется или устанавливается на другое устройство, мой кошелек можно восстановить только ключом, который я храню в безопасном месте";
+"backup.confirmation.understand" = "I understand that my wallet and tokens are held securely on this device only and not any servers.";
+"backup.confirmation.delete_app_warn" = "I understand that if this app is deleted or stops working for any reason, my wallet can only be recovered using the secret key that I have written down and saved in a secure place";
 "backup.confirmation.confirm" = "Подтвердить";
 
 "wallet.title" = "Баланс";
