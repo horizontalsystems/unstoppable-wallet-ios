@@ -14,12 +14,9 @@ class BackupConfirmationAlertModel: BaseAlertModel {
 
         var confirmTexts = [NSAttributedString]()
 
-        let confirmPartOne = "backup.confirmation.understand".localized
-        let confirmPartTwo = "backup.confirmation.local_token_bold".localized
-        let confirm = "\(confirmPartOne)\(confirmPartTwo)"
+        let confirm = "backup.confirmation.understand".localized
         let confirmAttributed = NSMutableAttributedString(string: confirm, attributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 17)])
-        confirmAttributed.addAttribute(NSAttributedStringKey.font, value: BackupConfirmationTheme.regularFont, range: NSMakeRange(0, confirmPartOne.count))
-        confirmAttributed.addAttribute(NSAttributedStringKey.font, value: BackupConfirmationTheme.boldFont, range: NSMakeRange(confirmPartOne.count, confirmPartTwo.count))
+        confirmAttributed.addAttribute(NSAttributedStringKey.font, value: BackupConfirmationTheme.regularFont, range: NSMakeRange(0, confirm.count))
         confirmTexts.append(confirmAttributed)
         confirmTexts.append(NSAttributedString(string: "backup.confirmation.delete_app_warn".localized, attributes: [NSAttributedStringKey.font: BackupConfirmationTheme.regularFont]))
 
