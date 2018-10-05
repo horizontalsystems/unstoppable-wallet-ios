@@ -1,5 +1,14 @@
 import Foundation
 
+class UnlockPresenterConfiguration {
+    var cancellable: Bool
+
+    init(cancellable: Bool) {
+        self.cancellable = cancellable
+    }
+
+}
+
 protocol IUnlockPinRouter {
     func dismiss()
 }

@@ -10,4 +10,6 @@ class PinTheme {
     static let infoBottomMargin: CGFloat = 33
 
     static let dismissAnimationDuration: Double = 0.3
+    static let cancelColor = UIColor.cryptoYellow
+    static let cancelSelectedColor = UIColor.cryptoYellowPressed
 }

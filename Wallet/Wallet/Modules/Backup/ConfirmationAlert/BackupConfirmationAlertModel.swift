@@ -2,6 +2,7 @@ import UIKit
 import GrouviActionSheet
 
 class BackupConfirmationAlertModel: BaseAlertModel {
+    private static let iUnderstandKey = "i_understand_key"
 
     var confirmItems = [BackupCheckboxItem]()
 
@@ -38,6 +39,24 @@ class BackupConfirmationAlertModel: BaseAlertModel {
         }
 
         addItemView(buttonItem)
+    }
+
+    static func show(from controller: UIViewController?, onDismiss: ((Bool) -> ())? = nil) {
+        if UserDefaultsStorage.shared.bool(for: BackupConfirmationAlertModel.iUnderstandKey) ?? false {
+            onDismiss?(true)
+        } else {
+            let model = BackupConfirmationAlertModel()
+            let actionSheetController = ActionSheetController(withModel: model, actionStyle: .sheet(showDismiss: false))
+            actionSheetController.backgroundColor = AppTheme.actionSheetBackgroundColor
+            actionSheetController.onDismiss = { success in
+                onDismiss?(success)
+                if success {
+                    UserDefaultsStorage.shared.set(true, for: BackupConfirmationAlertModel.iUnderstandKey)
+                }
+            }
+            actionSheetController.contentBackgroundColor = .white
+            actionSheetController.show(fromController: controller)
+        }
     }
 
 }

@@ -63,6 +63,10 @@ class PinViewController: KeyboardObservingViewController {
         }
     }
 
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return AppTheme.statusBarStyle
+    }
+
 }
 
 extension PinViewController: IPinView {
@@ -126,7 +130,21 @@ extension PinViewController: IPinView {
     }
 
     func showCancel() {
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "alert.cancel".localized, style: .plain, target: self, action: #selector(onCancelTap))
+        if navigationController?.isNavigationBarHidden ?? true {
+            let cancelButton = RespondButton { [weak self] in
+                self?.onCancelTap()
+            }
+            cancelButton.backgrounds = [RespondButton.State.active: UIColor.clear, RespondButton.State.selected: UIColor.clear]
+            cancelButton.textColors = [RespondButton.State.active: PinTheme.cancelColor, RespondButton.State.selected: PinTheme.cancelSelectedColor]
+            cancelButton.titleLabel.text = "alert.cancel".localized
+            view.addSubview(cancelButton)
+            cancelButton.snp.makeConstraints { maker in
+                maker.centerX.equalToSuperview()
+                maker.bottom.equalTo(self.holderView.snp.bottom).offset(-100)
+            }
+        } else {
+            navigationItem.rightBarButtonItem = UIBarButtonItem(title: "alert.cancel".localized, style: .plain, target: self, action: #selector(onCancelTap))
+        }
     }
 
     func showSuccess() {

@@ -52,11 +52,11 @@ extension BackupPresenter: IBackupInteractorDelegate {
 extension BackupPresenter: IBackupViewDelegate {
 
     func cancelDidClick() {
-        dismiss()
+        view?.showWarning()
     }
 
     func showWordsDidClick() {
-        interactor.fetchWords()
+        view?.showUnlock()
     }
 
     func hideWordsDidClick() {
@@ -75,8 +75,12 @@ extension BackupPresenter: IBackupViewDelegate {
         interactor.validate(confirmationWords: confirmationWords)
     }
 
-    func finish() {
+    func onConfirm() {
         dismiss()
+    }
+
+    func onUnlock() {
+        interactor.fetchWords()
     }
 
 }

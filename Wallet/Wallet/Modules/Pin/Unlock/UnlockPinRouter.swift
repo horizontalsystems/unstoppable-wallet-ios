@@ -18,12 +18,12 @@ extension UnlockPinRouter: IUnlockPinRouter {
 
 extension UnlockPinRouter {
 
-    static func module(completion: (() -> ())? = nil) {
+    static func module(cancelable: Bool = false, completion: (() -> ())? = nil) {
         let biometricManager = BiometricManager()
 
         let router = UnlockPinRouter()
         let interactor = UnlockPinInteractor(pinManager: PinManager.shared, biometricManager: biometricManager, appHelper: AppHelper.shared)
-        let presenter = UnlockPinPresenter(interactor: interactor, router: router)
+        let presenter = UnlockPinPresenter(interactor: interactor, router: router, configuration: .init(cancellable: cancelable))
         let controller = PinViewController(delegate: presenter)
 
         router.completion = completion

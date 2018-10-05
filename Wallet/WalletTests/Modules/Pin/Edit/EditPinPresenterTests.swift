@@ -10,6 +10,10 @@ class EditPinPresenterTests: XCTestCase {
 
     private var presenter: EditPinPresenter!
 
+    private let unlockPage = 0
+    private let enterPage = 1
+    private let confirmPage = 2
+
     override func setUp() {
         super.setUp()
 
@@ -72,9 +76,9 @@ class EditPinPresenterTests: XCTestCase {
             when(mock.unlock(with: equal(to: pin))).thenReturn(true)
         }
 
-        presenter.onEnter(pin: pin, forPage: EditPinPresenter.Page.unlock.rawValue)
+        presenter.onEnter(pin: pin, forPage: unlockPage)
 
-        verify(mockView).show(page: EditPinPresenter.Page.enter.rawValue)
+        verify(mockView).show(page: enterPage)
     }
 
     func testFailUnlock() {
@@ -84,18 +88,18 @@ class EditPinPresenterTests: XCTestCase {
             when(mock.unlock(with: equal(to: pin))).thenReturn(false)
         }
 
-        presenter.onEnter(pin: pin, forPage: EditPinPresenter.Page.unlock.rawValue)
+        presenter.onEnter(pin: pin, forPage: unlockPage)
 
-        verify(mockView, never()).show(page: EditPinPresenter.Page.enter.rawValue)
-        verify(mockView).showPinWrong(page: EditPinPresenter.Page.unlock.rawValue)
+        verify(mockView, never()).show(page: enterPage)
+        verify(mockView).showPinWrong(page: unlockPage)
     }
 
     func testShowConfirm() {
         let pin = "0000"
 
-        presenter.onEnter(pin: pin, forPage: EditPinPresenter.Page.enter.rawValue)
+        presenter.onEnter(pin: pin, forPage: enterPage)
 
-        verify(mockView).show(page: EditPinPresenter.Page.confirm.rawValue)
+        verify(mockView).show(page: confirmPage)
         verify(mockInteractor).set(pin: equal(to: pin))
         verify(mockInteractor, never()).save(pin: equal(to: pin))
     }
@@ -106,7 +110,7 @@ class EditPinPresenterTests: XCTestCase {
             when(mock.validate(pin: equal(to: pin))).thenReturn(true)
         }
 
-        presenter.onEnter(pin: pin, forPage: EditPinPresenter.Page.confirm.rawValue)
+        presenter.onEnter(pin: pin, forPage: confirmPage)
 
         verify(mockInteractor).save(pin: equal(to: pin))
     }
@@ -124,10 +128,10 @@ class EditPinPresenterTests: XCTestCase {
             when(mock.validate(pin: equal(to: pin))).thenReturn(false)
         }
 
-        presenter.onEnter(pin: pin, forPage: EditPinPresenter.Page.confirm.rawValue)
+        presenter.onEnter(pin: pin, forPage: confirmPage)
 
-        verify(mockView).show(page: EditPinPresenter.Page.enter.rawValue)
-        verify(mockView).show(error: "set_pin_controller.wrong_confirmation", forPage: EditPinPresenter.Page.enter.rawValue)
+        verify(mockView).show(page: enterPage)
+        verify(mockView).show(error: "set_pin_controller.wrong_confirmation", forPage: enterPage)
         verify(mockInteractor, never()).save(pin: any())
         verify(mockInteractor).set(pin: equal(to: nil))
     }
@@ -136,7 +140,7 @@ class EditPinPresenterTests: XCTestCase {
         presenter.didFailToSavePin()
 
         verify(mockView).show(error: "unlock.cant_save_pin")
-        verify(mockView).show(page: EditPinPresenter.Page.enter.rawValue)
+        verify(mockView).show(page: enterPage)
         verify(mockInteractor).set(pin: equal(to: nil))
     }
 
@@ -145,4 +149,5 @@ class EditPinPresenterTests: XCTestCase {
 
         verify(mockRouter).dismiss()
     }
+
 }

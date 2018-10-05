@@ -8,9 +8,12 @@ class UnlockPinPresenter {
     private let interactor: IUnlockPinInteractor
     private let router: IUnlockPinRouter
 
-    init(interactor: IUnlockPinInteractor, router: IUnlockPinRouter) {
+    private let configuration: UnlockPresenterConfiguration
+
+    init(interactor: IUnlockPinInteractor, router: IUnlockPinRouter, configuration: UnlockPresenterConfiguration = .init(cancellable: false)) {
         self.interactor = interactor
         self.router = router
+        self.configuration = configuration
     }
 
 }
@@ -20,6 +23,10 @@ extension UnlockPinPresenter: IPinViewDelegate {
     func viewDidLoad() {
         view?.addPage(withDescription: "unlock_pin_controller.info", showKeyboard: false)
         interactor.biometricUnlock()
+
+        if configuration.cancellable {
+            view?.showCancel()
+        }
     }
 
     func onEnter(pin: String, forPage index: Int) {
@@ -31,6 +38,7 @@ extension UnlockPinPresenter: IPinViewDelegate {
     }
 
     func onCancel() {
+        router.dismiss()
     }
 
 }

@@ -23,16 +23,28 @@ extension RestorePresenter: IRestoreInteractorDelegate {
         view?.showInvalidWordsError()
     }
 
+    func didValidate() {
+        view?.showConfirmAlert()
+    }
+
+    func didFailToValidate(withError error: Error) {
+        view?.showInvalidWordsError()
+    }
+
 }
 
 extension RestorePresenter: IRestoreViewDelegate {
 
     func restoreDidClick(withWords words: [String]) {
-        interactor.restore(withWords: words)
+        interactor.validate(words: words)
     }
 
     func cancelDidClick() {
         router.close()
+    }
+
+    func didConfirm(words: [String]) {
+        interactor.restore(withWords: words)
     }
 
 }

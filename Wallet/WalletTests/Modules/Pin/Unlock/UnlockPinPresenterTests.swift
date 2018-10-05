@@ -7,8 +7,11 @@ class UnlockPinPresenterTests: XCTestCase {
     private var mockView: MockIPinView!
     private var mockInteractor: MockIUnlockPinInteractor!
     private var mockRouter: MockIUnlockPinRouter!
+    private var mockConfiguration: MockUnlockPresenterConfiguration!
 
     private var presenter: UnlockPinPresenter!
+
+    private let unlockPage = 0
 
     override func setUp() {
         super.setUp()
@@ -16,7 +19,8 @@ class UnlockPinPresenterTests: XCTestCase {
         mockView = MockIPinView()
         mockInteractor = MockIUnlockPinInteractor()
         mockRouter = MockIUnlockPinRouter()
-        presenter = UnlockPinPresenter(interactor: mockInteractor, router: mockRouter)
+        mockConfiguration = MockUnlockPresenterConfiguration(cancellable: false)
+        presenter = UnlockPinPresenter(interactor: mockInteractor, router: mockRouter, configuration: mockConfiguration)
         presenter.view = mockView
 
         stub(mockView) { mock in
@@ -24,12 +28,16 @@ class UnlockPinPresenterTests: XCTestCase {
             when(mock.addPage(withDescription: any(), showKeyboard: any())).thenDoNothing()
             when(mock.showPinWrong(page: any())).thenDoNothing()
             when(mock.showKeyboard(for: any())).thenDoNothing()
+            when(mock.showCancel()).thenDoNothing()
         }
         stub(mockRouter) { mock in
             when(mock.dismiss()).thenDoNothing()
         }
         stub(mockInteractor) { mock in
             when(mock.biometricUnlock()).thenDoNothing()
+        }
+        stub(mockConfiguration) { mock in
+            when(mock.cancellable.get).thenReturn(false)
         }
     }
 
@@ -44,7 +52,23 @@ class UnlockPinPresenterTests: XCTestCase {
 
     func testDontShowCancel() {
         presenter.viewDidLoad()
-        verify(mockView, never()).set(title: equal(to: "edit_pin_controller.title"))
+        verify(mockView, never()).showCancel()
+    }
+
+    func testShowCancel() {
+        stub(mockConfiguration) { mock in
+            when(mock.cancellable.get).thenReturn(true)
+        }
+
+        presenter.viewDidLoad()
+
+        verify(mockView).showCancel()
+    }
+
+    func testCloseOnCancel() {
+        presenter.onCancel()
+
+        verify(mockRouter).dismiss()
     }
 
     func testAddPages() {
@@ -58,7 +82,7 @@ class UnlockPinPresenterTests: XCTestCase {
             when(mock.unlock(with: equal(to: pin))).thenReturn(true)
         }
 
-        presenter.onEnter(pin: pin, forPage: UnlockPinPresenter.Page.unlock.rawValue)
+        presenter.onEnter(pin: pin, forPage: unlockPage)
 
         verify(mockRouter).dismiss()
     }
@@ -69,10 +93,10 @@ class UnlockPinPresenterTests: XCTestCase {
             when(mock.unlock(with: equal(to: pin))).thenReturn(false)
         }
 
-        presenter.onEnter(pin: pin, forPage: UnlockPinPresenter.Page.unlock.rawValue)
+        presenter.onEnter(pin: pin, forPage: unlockPage)
 
         verify(mockRouter, never()).dismiss()
-        verify(mockView).showPinWrong(page: EditPinPresenter.Page.unlock.rawValue)
+        verify(mockView).showPinWrong(page: unlockPage)
     }
 
     func testBiometricUnlockOnLoad() {
@@ -87,7 +111,7 @@ class UnlockPinPresenterTests: XCTestCase {
 
     func testShowKeyboardOnFailedBiometricUnlock() {
         presenter.didFailBiometricUnlock()
-        verify(mockView).showKeyboard(for: UnlockPinPresenter.Page.unlock.rawValue)
+        verify(mockView).showKeyboard(for: unlockPage)
     }
 
     func testNeverDismiss() {

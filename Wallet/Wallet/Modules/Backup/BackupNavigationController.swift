@@ -1,4 +1,5 @@
 import UIKit
+import GrouviActionSheet
 
 class BackupNavigationController: UINavigationController {
 
@@ -49,6 +50,26 @@ extension BackupNavigationController: IBackupView {
         if let confirmationController = topViewController as? BackupConfirmationController {
             confirmationController.showConfirmAlert()
         }
+    }
+
+    func showWarning() {
+        BackupConfirmationAlertModel.show(from: self) { [weak self] success in
+            if success {
+                self?.viewDelegate.onConfirm()
+            }
+        }
+    }
+
+    func showUnlock() {
+        let canLock = WordsManager.shared.words != nil && PinManager.shared.isPinned
+        if canLock {
+            UnlockPinRouter.module(cancelable: true) { [weak self] in
+                self?.viewDelegate.onUnlock()
+            }
+        } else {
+            viewDelegate.onUnlock()
+        }
+
     }
 
 }

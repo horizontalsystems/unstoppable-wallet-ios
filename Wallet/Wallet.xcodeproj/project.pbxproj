@@ -193,6 +193,7 @@
 		1A564E3E29F0182A0230BC5D /* TransactionInfoBaseValueItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564F2613ECE2DE4A6F9F79 /* TransactionInfoBaseValueItem.swift */; };
 		1A564E60E4500D62863F4353 /* PinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564948450C4AADB2679AC0 /* PinViewController.swift */; };
 		1A564E61E0EBDDA6006279F2 /* PinInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564AA8BF74E16E91DC46D5 /* PinInteractorTests.swift */; };
+		1A564E98E286D37F88D34F28 /* ManagePinPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564A3E6B23CF04ECEB40DC /* ManagePinPresenter.swift */; };
 		1A564EA01F3260DE1FB535EC /* EditPinModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564D0BE1310BFCC7D8D774 /* EditPinModule.swift */; };
 		1A564F39A93F00B10861859F /* AmountInputField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564D254A8C867D16CA9166 /* AmountInputField.swift */; };
 		1A564F4AA83DC47DC9840A69 /* SettingsTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564F747A4D0B78E5DF6F1B /* SettingsTheme.swift */; };
@@ -392,6 +393,7 @@
 		1A5649D68A7DEDAB0D16FFA4 /* SendAmountItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendAmountItem.swift; sourceTree = "<group>"; };
 		1A5649DB879A57761C09842E /* AppTheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppTheme.swift; sourceTree = "<group>"; };
 		1A564A161BB3291073344A21 /* ReferenceInputField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReferenceInputField.swift; sourceTree = "<group>"; };
+		1A564A3E6B23CF04ECEB40DC /* ManagePinPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManagePinPresenter.swift; sourceTree = "<group>"; };
 		1A564A8B8E07B97BA9910FDA /* TransactionInfoBaseHashValueItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionInfoBaseHashValueItem.swift; sourceTree = "<group>"; };
 		1A564A961EE2857B5283A996 /* FullTransactionInfoController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FullTransactionInfoController.swift; sourceTree = "<group>"; };
 		1A564AA8BF74E16E91DC46D5 /* PinInteractorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinInteractorTests.swift; sourceTree = "<group>"; };
@@ -865,6 +867,7 @@
 				1A564948450C4AADB2679AC0 /* PinViewController.swift */,
 				1A564E32F66415F9A0586626 /* PinView.swift */,
 				1A564326AB442FFB65E1CA29 /* PinDotsView.swift */,
+				1A564A3E6B23CF04ECEB40DC /* ManagePinPresenter.swift */,
 			);
 			path = Pin;
 			sourceTree = "<group>";
@@ -1643,6 +1646,7 @@
 				1A5648FE30868C38CBFEB362 /* UnlockPinModule.swift in Sources */,
 				1A56499530070968BF68AA2D /* BiometricManager.swift in Sources */,
 				1A56400E8DE9EF93F85C7F08 /* UnlockPinInteractor.swift in Sources */,
+				1A564E98E286D37F88D34F28 /* ManagePinPresenter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

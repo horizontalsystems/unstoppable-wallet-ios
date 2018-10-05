@@ -12,6 +12,15 @@ class RestoreInteractor {
 
 extension RestoreInteractor: IRestoreInteractor {
 
+    func validate(words: [String]) {
+        do {
+            try walletManager.validate(words: words)
+            delegate?.didValidate()
+        } catch {
+            delegate?.didFailToValidate(withError: error)
+        }
+    }
+
     func restore(withWords words: [String]) {
         do {
             try walletManager.restore(withWords: words)

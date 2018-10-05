@@ -63,16 +63,11 @@ class BackupConfirmationController: UIViewController {
     }
 
     func showConfirmAlert() {
-        let model = BackupConfirmationAlertModel()
-        let actionSheetController = ActionSheetController(withModel: model, actionStyle: .sheet(showDismiss: false))
-        actionSheetController.backgroundColor = AppTheme.actionSheetBackgroundColor
-        actionSheetController.onDismiss = { [weak self] success in
+        BackupConfirmationAlertModel.show(from: self) { [weak self] success in
             if success {
-                self?.delegate.finish()
+                self?.delegate.onConfirm()
             }
         }
-        actionSheetController.contentBackgroundColor = .white
-        actionSheetController.show(fromController: self)
     }
 
     func showValidationFailure() {

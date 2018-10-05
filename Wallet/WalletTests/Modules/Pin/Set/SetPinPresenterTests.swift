@@ -10,6 +10,9 @@ class SetPinPresenterTests: XCTestCase {
 
     private var presenter: SetPinPresenter!
 
+    private let enterPage = 0
+    private let confirmPage = 1
+
     override func setUp() {
         super.setUp()
 
@@ -63,9 +66,9 @@ class SetPinPresenterTests: XCTestCase {
     func testShowConfirm() {
         let pin = "0000"
 
-        presenter.onEnter(pin: pin, forPage: SetPinPresenter.Page.enter.rawValue)
+        presenter.onEnter(pin: pin, forPage: enterPage)
 
-        verify(mockView).show(page: SetPinPresenter.Page.confirm.rawValue)
+        verify(mockView).show(page: confirmPage)
         verify(mockInteractor).set(pin: equal(to: pin))
         verify(mockInteractor, never()).save(pin: equal(to: pin))
     }
@@ -76,7 +79,7 @@ class SetPinPresenterTests: XCTestCase {
             when(mock.validate(pin: equal(to: pin))).thenReturn(true)
         }
 
-        presenter.onEnter(pin: pin, forPage: SetPinPresenter.Page.confirm.rawValue)
+        presenter.onEnter(pin: pin, forPage: confirmPage)
 
         verify(mockInteractor).save(pin: equal(to: pin))
     }
@@ -93,10 +96,10 @@ class SetPinPresenterTests: XCTestCase {
             when(mock.validate(pin: equal(to: pin))).thenReturn(false)
         }
 
-        presenter.onEnter(pin: pin, forPage: SetPinPresenter.Page.confirm.rawValue)
+        presenter.onEnter(pin: pin, forPage: confirmPage)
 
-        verify(mockView).show(page: SetPinPresenter.Page.enter.rawValue)
-        verify(mockView).show(error: "set_pin_controller.wrong_confirmation", forPage: SetPinPresenter.Page.enter.rawValue)
+        verify(mockView).show(page: enterPage)
+        verify(mockView).show(error: "set_pin_controller.wrong_confirmation", forPage: enterPage)
         verify(mockInteractor, never()).save(pin: any())
         verify(mockInteractor).set(pin: equal(to: nil))
     }
@@ -105,7 +108,7 @@ class SetPinPresenterTests: XCTestCase {
         presenter.didFailToSavePin()
 
         verify(mockView).show(error: "unlock.cant_save_pin")
-        verify(mockView).show(page: SetPinPresenter.Page.enter.rawValue)
+        verify(mockView).show(page: enterPage)
         verify(mockInteractor).set(pin: equal(to: nil))
     }
 

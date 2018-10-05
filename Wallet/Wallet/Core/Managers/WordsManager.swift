@@ -20,6 +20,10 @@ class WordsManager {
         }
     }
 
+    func validate(words: [String]) throws {
+        try Mnemonic.validate(words: words)
+    }
+
     var words: [String]?
 
     var hasWords: Bool {
