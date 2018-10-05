@@ -14,32 +14,8 @@ class ScanQRController: UIViewController, AVCaptureMetadataOutputObjectsDelegate
         view.backgroundColor = UIColor.black
         captureSession = AVCaptureSession()
 
-        let videoCaptureDevice = AVCaptureDevice.default(for: AVMediaType.video)
-        let videoInput: AVCaptureDeviceInput
-
-        do {
-            videoInput = try AVCaptureDeviceInput(device: videoCaptureDevice!)
-        } catch {
-            return
-        }
-
-        if (captureSession.canAddInput(videoInput)) {
-            captureSession.addInput(videoInput)
-        } else {
-            failed();
-            return;
-        }
-
-        let metadataOutput = AVCaptureMetadataOutput()
-
-        if (captureSession.canAddOutput(metadataOutput)) {
-            captureSession.addOutput(metadataOutput)
-
-            metadataOutput.setMetadataObjectsDelegate(self, queue: DispatchQueue.main)
-            metadataOutput.metadataObjectTypes = [AVMetadataObject.ObjectType.ean8, AVMetadataObject.ObjectType.ean13, AVMetadataObject.ObjectType.pdf417, AVMetadataObject.ObjectType.qr]
-        } else {
-            failed()
-            return
+        PermissionsHelper.shared.performWithCameraPermission(fromController: self) { [weak self] in
+            self?.initialSetup()
         }
 
         previewLayer = AVCaptureVideoPreviewLayer(session: captureSession);
@@ -70,6 +46,30 @@ class ScanQRController: UIViewController, AVCaptureMetadataOutputObjectsDelegate
         }
     }
 
+    func initialSetup() {
+        do {
+            let videoCaptureDevice = AVCaptureDevice.default(for: AVMediaType.video)
+            let videoInput: AVCaptureDeviceInput
+
+            videoInput = try AVCaptureDeviceInput(device: videoCaptureDevice!)
+            if (captureSession.canAddInput(videoInput)) {
+                captureSession.addInput(videoInput)
+            } else {
+                failed();
+            }
+
+            let metadataOutput = AVCaptureMetadataOutput()
+            if (captureSession.canAddOutput(metadataOutput)) {
+                captureSession.addOutput(metadataOutput)
+
+                metadataOutput.setMetadataObjectsDelegate(self, queue: DispatchQueue.main)
+                metadataOutput.metadataObjectTypes = [AVMetadataObject.ObjectType.ean8, AVMetadataObject.ObjectType.ean13, AVMetadataObject.ObjectType.pdf417, AVMetadataObject.ObjectType.qr]
+            } else {
+                failed()
+            }
+        } catch {
+        }
+    }
 
     @objc func close() {
         dismiss(animated: true)
@@ -122,4 +122,5 @@ class ScanQRController: UIViewController, AVCaptureMetadataOutputObjectsDelegate
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return .portrait
     }
+
 }

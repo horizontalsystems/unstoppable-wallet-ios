@@ -8,6 +8,12 @@
 "alert.success" = "Success";
 "alert.copied" = "Copied";
 
+"access.camera.message" = "Bank needs access to your camera to scan QR code.
+
+Go to Settings - > Bank and allow access to Camera.";
+"access.settings" = "Settings";
+"access.cancel" = "Cancel";
+
 "guest.title" = "Bank Wallet";
 "guest.subtitle" = "Be Your own Bank!";
 "guest.create_wallet" = "New Wallet";
