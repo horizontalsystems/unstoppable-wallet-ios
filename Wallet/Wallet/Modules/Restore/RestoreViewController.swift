@@ -126,9 +126,15 @@ extension RestoreViewController: UICollectionViewDelegateFlowLayout, UICollectio
 extension RestoreViewController: IRestoreView {
 
     func showInvalidWordsError() {
-        let alert = UIAlertController(title: nil, message: "restore.validation_failed".localized, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "alert.ok".localized, style: .default))
-        present(alert, animated: true)
+        HudHelper.instance.showError(title: "restore.validation_failed".localized)
+    }
+
+    func showConfirmAlert() {
+        BackupConfirmationAlertModel.show(from: self) { [weak self] success in
+            if success {
+                self?.delegate.didConfirm(words: self?.words ?? [])
+            }
+        }
     }
 
 }
