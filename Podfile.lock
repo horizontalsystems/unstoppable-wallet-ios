@@ -12,14 +12,17 @@ PODS:
   - GrouviHUD (1.0.2):
     - RxSwift
     - SnapKit (~> 4.0.0)
-  - KeychainAccess (3.1.1)
+  - HSCryptoKit (1.0.0)
+  - HSHDWalletKit (1.0.0):
+    - HSCryptoKit
+  - KeychainAccess (3.1.2)
   - ObjectMapper (3.3.0)
-  - Realm (3.7.6):
-    - Realm/Headers (= 3.7.6)
-  - Realm/Headers (3.7.6)
-  - RealmSwift (3.7.6):
-    - Realm (= 3.7.6)
-  - RxCocoa (4.2.0):
+  - Realm (3.11.0):
+    - Realm/Headers (= 3.11.0)
+  - Realm/Headers (3.11.0)
+  - RealmSwift (3.11.0):
+    - Realm (= 3.11.0)
+  - RxCocoa (4.3.1):
     - RxSwift (~> 4.0)
   - RxRealm (0.7.5):
     - RealmSwift (~> 3.0)
@@ -29,10 +32,12 @@ PODS:
     - GrouviExtensions
     - SnapKit (~> 4.0.0)
   - SipHash (1.2.2)
-  - SnapKit (4.0.0)
+  - SnapKit (4.0.1)
   - WalletKit (0.1.0):
     - Alamofire
     - BigInt
+    - HSCryptoKit
+    - HSHDWalletKit
     - ObjectMapper
     - RealmSwift
     - RxRealm
@@ -53,13 +58,15 @@ DEPENDENCIES:
   - RxSwift
   - SectionsTableViewKit
   - SnapKit
-  - WalletKit (from `https://github.com/horizontalsystems/WalletKit-iOS.git`, branch `dev`)
+  - WalletKit (from `https://github.com/horizontalsystems/wallet-kit-ios.git`, branch `dev`)
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - Alamofire
     - BigInt
     - Cuckoo
+    - HSCryptoKit
+    - HSHDWalletKit
     - KeychainAccess
     - ObjectMapper
     - Realm
@@ -83,7 +90,7 @@ EXTERNAL SOURCES:
     :git: https://github.com/horizontalsystems/GrouviHUD.git
   WalletKit:
     :branch: dev
-    :git: https://github.com/horizontalsystems/WalletKit-iOS.git
+    :git: https://github.com/horizontalsystems/wallet-kit-ios.git
 
 CHECKOUT OPTIONS:
   GrouviActionSheet:
@@ -96,8 +103,8 @@ CHECKOUT OPTIONS:
     :commit: 852780b5548f639b3e63cce2a353c3a4d4cf6348
     :git: https://github.com/horizontalsystems/GrouviHUD.git
   WalletKit:
-    :commit: db8ed2d2a0cbfba0591d2ccf6d60643293e65472
-    :git: https://github.com/horizontalsystems/WalletKit-iOS.git
+    :commit: 26c8be3976676f4465a476be201a8c8131bf467c
+    :git: https://github.com/horizontalsystems/wallet-kit-ios.git
 
 SPEC CHECKSUMS:
   Alamofire: c7287b6e5d7da964a70935e5db17046b7fde6568
@@ -106,18 +113,20 @@ SPEC CHECKSUMS:
   GrouviActionSheet: b34f3f29231a48d360005a9946da7c660b54bfec
   GrouviExtensions: e5a582e62cb8de559250630778b2d79b0b9ec5ea
   GrouviHUD: 230e32e2f5b20c58bb9c15e126aaf9403c11f170
-  KeychainAccess: 7bd430028059754a3debab3cfc0bd1fc7fb85df3
+  HSCryptoKit: 03c84aca081a6bcc999021d0acbf0cf7cf785d34
+  HSHDWalletKit: ff8ca1e074835447a7c1a13e56917fa72cc2fcd0
+  KeychainAccess: b3816fddcf28aa29d94b10ec305cd52be14c472b
   ObjectMapper: b612bf8c8e99c4dc0bb6013a51f7c27966ed5da9
-  Realm: 9eaecad54712d6246d08ba34c10f354e4715d7d3
-  RealmSwift: 1fe08b4ebaeeaacf17f9ba0343f7b25c9fc31fa6
-  RxCocoa: 0b54909c902e1e581212a03e690bbd94032d8baa
+  Realm: 92f09a102692b96a9a10e9617f214f15c5ab85fc
+  RealmSwift: 5f0481cd658bb751c509314b964a35eaa264d2cf
+  RxCocoa: 78763c7b07d02455598d9fc3c1ad091a28b73635
   RxRealm: a6c6c0a07cb61f34209969ca6657734edfdfff30
   RxSwift: 99e10317ddfcc7fbe01356aafd118fde4a0be104
   SectionsTableViewKit: 0aaeae49acb88b9cff005d0e2dc1ba488039590d
   SipHash: fad90a4683e420c52ef28063063dbbce248ea6d4
-  SnapKit: a42d492c16e80209130a3379f73596c3454b7694
-  WalletKit: 9db03061940fb3419560b9c16310fbc2e386243d
+  SnapKit: 0de968a9fec17499afa29683b05d0c775b6d1c29
+  WalletKit: cb466028f210e1f6a5aa3e4f19367fadc30293e2
 
-PODFILE CHECKSUM: 5b1b28f22e1cf61306ac7d9a87ba61aace79aa97
+PODFILE CHECKSUM: cd1893a1af9f05586a8983ed80e2962c05ddaef8
 
 COCOAPODS: 1.5.3

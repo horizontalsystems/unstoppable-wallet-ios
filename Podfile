@@ -6,7 +6,7 @@ inhibit_all_warnings!
 project 'Wallet/Wallet'
 
 target :Bank do
-  pod 'WalletKit', git: 'https://github.com/horizontalsystems/WalletKit-iOS.git', branch: 'dev'
+  pod 'WalletKit', git: 'https://github.com/horizontalsystems/wallet-kit-ios.git', branch: 'dev'
 
   pod 'Alamofire'
   pod 'ObjectMapper'
