@@ -25,5 +25,4 @@ class App {
         }
     }
 
-    private let a = 5
 }
