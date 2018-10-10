@@ -4,7 +4,6 @@ import RxSwift
 class LockManager {
     static let shared = LockManager()
     let disposeBag = DisposeBag()
-    let lastExitDateKey = "last_exit_date_key"
 
     var resignActiveSubject = PublishSubject<()>()
     var becomeActiveSubject = PublishSubject<()>()
@@ -23,10 +22,10 @@ class LockManager {
     }
 
     func onResignActive() {
-        if WordsManager.shared.words != nil, !isLocked {
+        if App.shared.wordsManager.words != nil, !isLocked {
             blurView.show()
         }
-        UserDefaultsStorage.shared.set(Date().timeIntervalSince1970, for: lastExitDateKey)
+        App.shared.localStorage.lastExitDate = Date().timeIntervalSince1970
     }
 
     func onBecomeActive() {
@@ -34,22 +33,21 @@ class LockManager {
     }
 
     func lock() {
-        let exitTimestamp = UserDefaultsStorage.shared.double(for: lastExitDateKey)
+        let exitTimestamp = App.shared.localStorage.lastExitDate
         let now = Date().timeIntervalSince1970
         let timeToLockExpired = now - exitTimestamp > lockTimeout
 
-        let needToLock = timeToLockExpired && WordsManager.shared.words != nil && PinManager.shared.isPinned && !isLocked
+        let needToLock = timeToLockExpired && App.shared.wordsManager.words != nil && PinManager.shared.isPinned && !isLocked
         blurView.hide(slow: needToLock)
         if needToLock {
             isLocked = true
-            let mySelf = self
             UnlockPinRouter.module { [weak self] in
-                UserDefaultsStorage.shared.set(Date().timeIntervalSince1970, for: mySelf.lastExitDateKey)
+                App.shared.localStorage.lastExitDate = Date().timeIntervalSince1970
                 self?.isLocked = false
             }
         }
 
-        let needToSet = WordsManager.shared.words != nil && !PinManager.shared.isPinned && !isLocked
+        let needToSet = App.shared.wordsManager.words != nil && !PinManager.shared.isPinned && !isLocked
         if needToSet {
             isLocked = true
             SetPinRouter.module { [weak self] in

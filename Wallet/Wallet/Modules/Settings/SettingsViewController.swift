@@ -47,7 +47,7 @@ class SettingsViewController: UIViewController, SectionsDataSource {
 
         tableView.reload()
 
-        WordsManager.shared.backedUpSubject.subscribeAsync(disposeBag: disposeBag, onNext: { [weak self] backedUp in
+        App.shared.wordsManager.backedUpSubject.subscribeAsync(disposeBag: disposeBag, onNext: { [weak self] backedUp in
             self?.backedUp = backedUp
             self?.tableView.reload()
             self?.navigationController?.tabBarItem.badgeValue = backedUp ? nil : "1"
@@ -95,13 +95,11 @@ class SettingsViewController: UIViewController, SectionsDataSource {
             self?.navigationController?.pushViewController(SettingsLanguageController(), animated: true)
         }))
         appearanceRows.append(Row<SettingsToggleCell>(id: "light_mode", hash: "light_mode", height: SettingsTheme.cellHeight, bind: { cell, _ in
-            cell.bind(titleIcon: UIImage(named: "Light Mode Icon"), title: "settings.cell.light_mode".localized, isOn: UserDefaultsStorage.shared.lightMode, showDisclosure: false, last: true, onToggle: { isOn in
-                UserDefaultsStorage.shared.lightMode = isOn
+            cell.bind(titleIcon: UIImage(named: "Light Mode Icon"), title: "settings.cell.light_mode".localized, isOn: App.shared.localStorage.lightMode, showDisclosure: false, last: true, onToggle: { isOn in
+                App.shared.localStorage.lightMode = isOn
 
                 if let window = UIApplication.shared.keyWindow {
-                    UIView.transition(with: window, duration: 0.3, options: .transitionCrossDissolve, animations: {
-                        window.rootViewController = LaunchRouter.module(lock: false)
-                    })
+                    LaunchRouter.presenter(window: window, replace: true).launch(shouldLock: false)
                 }
             })
         }))
@@ -144,7 +142,7 @@ class SettingsViewController: UIViewController, SectionsDataSource {
             cell.selectionStyle = .default
             cell.bind(titleIcon: UIImage(named: "Bug Icon"), title: "Drop Keychain", showDisclosure: false)
         }, action: { _ in
-            WordsManager.shared.isBackedUp = false
+            App.shared.wordsManager.isBackedUp = false
             try? PinManager.shared.store(pin: nil)
         }))
         sections.append(Section(id: "debug_section", headerState: .marginColor(height: 50, color: .clear), footerState: .marginColor(height: 20, color: .clear), rows: debugRows))
@@ -153,10 +151,10 @@ class SettingsViewController: UIViewController, SectionsDataSource {
     }
 
     func logout() {
-        AppHelper.shared.isBiometricUnlockOn = false
-        WordsManager.shared.isBackedUp = false
-        WordsManager.shared.removeWords()
-        AdapterManager.shared.clear()
+        App.shared.localStorage.isBiometricOn = false
+        App.shared.wordsManager.isBackedUp = false
+        App.shared.wordsManager.removeWords()
+        App.shared.adapterManager.clear()
         try? PinManager.shared.store(pin: nil)
 
         guard let window = UIApplication.shared.keyWindow else {
@@ -171,14 +169,14 @@ class SettingsViewController: UIViewController, SectionsDataSource {
     }
 
     @IBAction func showRealmInfo() {
-        for adapter in AdapterManager.shared.adapters {
+        for adapter in App.shared.adapterManager.adapters {
             print("\nINFO FOR \(adapter.coin.name):")
             adapter.showInfo()
         }
     }
 
     @IBAction func connectToPeer() {
-        AdapterManager.shared.start()
+        App.shared.adapterManager.start()
     }
 
 }

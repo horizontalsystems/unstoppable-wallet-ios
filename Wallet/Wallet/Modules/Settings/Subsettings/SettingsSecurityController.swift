@@ -37,7 +37,7 @@ class SettingsSecurityController: UIViewController, SectionsDataSource {
 
         tableView.reload()
 
-        WordsManager.shared.backedUpSubject.subscribeAsync(disposeBag: disposeBag, onNext: { [weak self] backedUp in
+        App.shared.wordsManager.backedUpSubject.subscribeAsync(disposeBag: disposeBag, onNext: { [weak self] backedUp in
             self?.backedUp = backedUp
             self?.tableView.reload()
             self?.navigationController?.tabBarItem.badgeValue = backedUp ? nil : "1"
@@ -56,8 +56,8 @@ class SettingsSecurityController: UIViewController, SectionsDataSource {
         if let biometricType = AppHelper.shared.biometricType {
             let createCell: ((String) -> ()) = { title in
                 pinTouchFaceRows.append(Row<SettingsToggleCell>(id: "biometrics_id", height: SettingsTheme.securityCellHeight, bind: { cell, _ in
-                    cell.bind(titleIcon: nil, title: title.localized, isOn: AppHelper.shared.isBiometricUnlockOn, showDisclosure: false, onToggle: { isOn in
-                        AppHelper.shared.isBiometricUnlockOn = isOn
+                    cell.bind(titleIcon: nil, title: title.localized, isOn: App.shared.localStorage.isBiometricOn, showDisclosure: false, onToggle: { isOn in
+                        App.shared.localStorage.isBiometricOn = isOn
                     })
                 }))
             }

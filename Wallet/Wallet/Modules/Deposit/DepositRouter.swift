@@ -45,7 +45,7 @@ extension DepositRouter: IDepositRouter {
 extension DepositRouter {
 
     static func module(presentingViewController: UIViewController?, adapterId: String?) {
-        let adapters = AdapterManager.shared.adapters.filter { adapterId == nil || adapterId == $0.id }
+        let adapters = App.shared.adapterManager.adapters.filter { adapterId == nil || adapterId == $0.id }
 
         let router = DepositRouter()
         router.presentingViewController = presentingViewController

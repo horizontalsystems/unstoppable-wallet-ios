@@ -3,17 +3,13 @@ import RealmSwift
 import RxSwift
 
 class AdapterManager {
-    static let shared = AdapterManager()
-
     var adapters = [IAdapter]()
 
     var subject = PublishSubject<Void>()
 
-    func initAdapters(words: [String]) {
+    init(words: [String]) {
         adapters.append(BitcoinAdapter(words: words, networkType: .bitcoinRegTest))
         adapters.append(BitcoinAdapter(words: words, networkType: .bitcoinCashTestNet))
-
-        start()
     }
 
     func start() {

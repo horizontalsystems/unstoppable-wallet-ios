@@ -1,11 +1,12 @@
 import Foundation
 
 class UserDefaultsStorage: ILocalStorage {
-    static let shared = UserDefaultsStorage()
-
     private let keyWords = "mnemonic_words"
     private let keyCurrentLanguage = "current_language"
     private let keyLightMode = "light_mode"
+    private let iUnderstandKey = "i_understand_key"
+    private let biometricOnKey = "biometric_on_key"
+    private let lastExitDateKey = "last_exit_date_key"
 
     var savedWords: [String]? {
         if let wordsString = UserDefaults.standard.value(forKey: keyWords) as? String {
@@ -19,9 +20,24 @@ class UserDefaultsStorage: ILocalStorage {
         set { setString(keyCurrentLanguage, value: newValue) }
     }
 
-    public var lightMode: Bool {
+    var lastExitDate: Double {
+        get { return double(for: lastExitDateKey) }
+        set { set(newValue, for: lastExitDateKey) }
+    }
+
+    var lightMode: Bool {
         get { return bool(for: keyLightMode) ?? false }
         set { set(newValue, for: keyLightMode) }
+    }
+
+    var iUnderstand: Bool {
+        get { return bool(for: iUnderstandKey) ?? false }
+        set { set(newValue, for: iUnderstandKey) }
+    }
+
+    var isBiometricOn: Bool {
+        get { return bool(for: biometricOnKey) ?? false }
+        set { set(newValue, for: biometricOnKey) }
     }
 
     func save(words: [String]) {

@@ -24,7 +24,7 @@ extension RestoreInteractor: IRestoreInteractor {
     func restore(withWords words: [String]) {
         do {
             try walletManager.restore(withWords: words)
-            AdapterManager.shared.initAdapters(words: words)
+            App.shared.initLoggedInState()
             delegate?.didRestore()
         } catch {
             delegate?.didFailToRestore(withError: error)

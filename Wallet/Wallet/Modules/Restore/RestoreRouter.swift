@@ -14,11 +14,7 @@ extension RestoreRouter: IRestoreRouter {
             return
         }
 
-        let controller = LaunchRouter.module()
-
-        UIView.transition(with: window, duration: 0.5, options: .transitionCrossDissolve, animations: {
-            window.rootViewController = controller
-        })
+        LaunchRouter.presenter(window: window, replace: true).launch(shouldLock: true)
     }
 
     func close() {
@@ -31,7 +27,7 @@ extension RestoreRouter {
 
     static func module() -> UIViewController {
         let router = RestoreRouter()
-        let interactor = RestoreInteractor(walletManager: WordsManager.shared)
+        let interactor = RestoreInteractor(walletManager: App.shared.wordsManager)
         let presenter = RestorePresenter(interactor: interactor, router: router)
         let viewController = RestoreViewController(delegate: presenter)
 

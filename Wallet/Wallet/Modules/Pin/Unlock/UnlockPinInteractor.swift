@@ -5,12 +5,12 @@ class UnlockPinInteractor {
 
     private let pinManager: PinManager
     private let biometricManager: BiometricManager
-    private let appHelper: AppHelper
+    private let app: App
 
-    init(pinManager: PinManager, biometricManager: BiometricManager, appHelper: AppHelper) {
+    init(pinManager: PinManager, biometricManager: BiometricManager, appHelper: App) {
         self.pinManager = pinManager
         self.biometricManager = biometricManager
-        self.appHelper = appHelper
+        self.app = appHelper
     }
 
 }
@@ -22,7 +22,7 @@ extension UnlockPinInteractor: IUnlockPinInteractor {
     }
 
     func biometricUnlock() {
-        if appHelper.isBiometricUnlockOn {
+        if app.localStorage.isBiometricOn {
             biometricManager.validate(reason: "biometric_usage_reason")
         } else {
             delegate?.didFailBiometricUnlock()

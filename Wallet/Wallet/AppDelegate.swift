@@ -6,12 +6,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        LocalizationHelper.instance.update(language: UserDefaultsStorage.shared.currentLanguage ?? LocalizationHelper.defaultLanguage)
-
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.makeKeyAndVisible()
         window?.backgroundColor = AppTheme.controllerBackground
-        window?.rootViewController = LaunchRouter.module()
+
+        LaunchRouter.presenter(window: window).launch(shouldLock: true)
 
         return true
     }

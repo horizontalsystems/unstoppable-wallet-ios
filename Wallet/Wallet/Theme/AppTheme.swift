@@ -1,9 +1,9 @@
 import UIKit
 
 public class AppTheme {
-    static var blurStyle: UIBlurEffectStyle { return UserDefaultsStorage.shared.lightMode ? .prominent : .dark }
+    static var blurStyle: UIBlurEffectStyle { return App.shared.localStorage.lightMode ? .prominent : .dark }
 
-    public static var keyboardAppearance: UIKeyboardAppearance { return UserDefaultsStorage.shared.lightMode ? .default : .dark }
+    public static var keyboardAppearance: UIKeyboardAppearance { return App.shared.localStorage.lightMode ? .default : .dark }
     public static let textFieldTintColor: UIColor = .white
 
     public static let defaultAnimationDuration = 0.3
@@ -11,8 +11,8 @@ public class AppTheme {
     static let actionSheetBackgroundColor = UIColor.cryptoBarsColor
     static let inputBackgroundColor = UIColor.white
     static var controllerBackground: UIColor { return .cryptoThemedDark }
-    static var tabBarStyle: UIBarStyle { return UserDefaultsStorage.shared.lightMode ? .default : .black }
-    static var navigationBarStyle: UIBarStyle { return UserDefaultsStorage.shared.lightMode ? .default : .blackTranslucent}
+    static var tabBarStyle: UIBarStyle { return App.shared.localStorage.lightMode ? .default : .black }
+    static var navigationBarStyle: UIBarStyle { return App.shared.localStorage.lightMode ? .default : .blackTranslucent}
     static var navigationBarTintColor = UIColor.cryptoYellow
-    static var statusBarStyle: UIStatusBarStyle { return UserDefaultsStorage.shared.lightMode ? .default : .lightContent}
+    static var statusBarStyle: UIStatusBarStyle { return App.shared.localStorage.lightMode ? .default : .lightContent}
 }

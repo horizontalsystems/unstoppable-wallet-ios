@@ -4,7 +4,6 @@ import WalletKit
 import RxSwift
 
 class WordsManager {
-    static let shared = WordsManager()
     let backedUpKey = "backed_up_key"
 
     let localStorage: ILocalStorage
@@ -27,16 +26,16 @@ class WordsManager {
 
     var words: [String]?
 
-    var hasWords: Bool {
-        return words != nil
-    }
-
-    init(localStorage: ILocalStorage = UserDefaultsStorage.shared) {
+    init(localStorage: ILocalStorage) {
         self.localStorage = localStorage
         backedUpSubject = BehaviorSubject(value: false)
         backedUpSubject.onNext(isBackedUp)
 
         words = localStorage.savedWords
+    }
+
+    var isLoggedIn: Bool {
+        return words != nil
     }
 
     func createWords() throws {

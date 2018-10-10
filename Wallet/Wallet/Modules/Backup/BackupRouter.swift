@@ -18,11 +18,7 @@ extension BackupRouter: IBackupRouter {
             return
         }
 
-        let viewController = LaunchRouter.module()
-
-        UIView.transition(with: window, duration: 0.5, options: .transitionCrossDissolve, animations: {
-            window.rootViewController = viewController
-        })
+        LaunchRouter.presenter(window: window, replace: true).launch(shouldLock: true)
     }
 
 }
@@ -31,7 +27,7 @@ extension BackupRouter {
 
     static func module(dismissMode: BackupPresenter.DismissMode) -> UIViewController {
         let router = BackupRouter()
-        let interactor = BackupInteractor(walletManager: WordsManager.shared, indexesProvider: Factory.instance.randomProvider)
+        let interactor = BackupInteractor(walletManager: App.shared.wordsManager, indexesProvider: Factory.instance.randomProvider)
         let presenter = BackupPresenter(interactor: interactor, router: router, dismissMode: dismissMode)
         let navigationController = BackupNavigationController(viewDelegate: presenter)
 

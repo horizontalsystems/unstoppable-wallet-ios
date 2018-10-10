@@ -2,11 +2,11 @@ import UIKit
 
 extension UIColor {
 
-    static var cryptoThemedDark: UIColor { return (UserDefaultsStorage.shared.lightMode ? UIColor(named: "LightThemeDark") : UIColor(named: "Dark")) ?? .black }
-    static var cryptoThemedSteel20: UIColor { return (UserDefaultsStorage.shared.lightMode ? .white : UIColor(named: "Steel20")) ?? .black }
-    static var cryptoThemedWhite: UIColor { return UserDefaultsStorage.shared.lightMode ? .black : white }
-    static var cryptoThemedClearBackground: UIColor { return UserDefaultsStorage.shared.lightMode ? .white : .clear }
-    static var cryptoThemedSilver: UIColor { return UserDefaultsStorage.shared.lightMode ? .black : .cryptoSilver }
+    static var cryptoThemedDark: UIColor { return (App.shared.localStorage.lightMode ? UIColor(named: "LightThemeDark") : UIColor(named: "Dark")) ?? .black }
+    static var cryptoThemedSteel20: UIColor { return (App.shared.localStorage.lightMode ? .white : UIColor(named: "Steel20")) ?? .black }
+    static var cryptoThemedWhite: UIColor { return App.shared.localStorage.lightMode ? .black : white }
+    static var cryptoThemedClearBackground: UIColor { return App.shared.localStorage.lightMode ? .white : .clear }
+    static var cryptoThemedSilver: UIColor { return App.shared.localStorage.lightMode ? .black : .cryptoSilver }
 
     static var cryptoBarsColor: UIColor = UIColor(named: "BarsColor") ?? .black
     static var cryptoDark: UIColor = UIColor(named: "Dark") ?? .black

@@ -11,7 +11,7 @@ extension WalletRouter: IWalletRouter {
     }
 
     func onSend(forAdapterId adapterId: String) {
-        if let adapter = AdapterManager.shared.adapters.first(where: { adapterId == $0.id }) {
+        if let adapter = App.shared.adapterManager.adapters.first(where: { adapterId == $0.id }) {
             SendRouter.module(adapter: adapter).show(fromController: viewController)
         }
     }
@@ -22,7 +22,7 @@ extension WalletRouter {
 
     static func module() -> UIViewController {
         let router = WalletRouter()
-        let interactor = WalletInteractor(adapterManager: AdapterManager.shared, exchangeRateManager: ExchangeRateManager.shared)
+        let interactor = WalletInteractor(adapterManager: App.shared.adapterManager, exchangeRateManager: ExchangeRateManager.shared)
         let presenter = WalletPresenter(interactor: interactor, router: router)
         let viewController = WalletViewController(viewDelegate: presenter)
 
