@@ -535,13 +535,13 @@
 		11B351A958188BFC3A37003F /* Wallet */ = {
 			isa = PBXGroup;
 			children = (
+				1A564422F8945526DC6866E0 /* Views */,
 				11B35DC5A4019EA28C92B1E7 /* WalletModule.swift */,
 				11B35DDABED90E97417092F5 /* WalletRouter.swift */,
 				11B3511175F5F85BE5677E1A /* WalletInteractor.swift */,
 				11B356A624E0982E0D90F9BB /* WalletPresenter.swift */,
 				D3B62A8C20CA436F005A9F80 /* WalletViewController.swift */,
 				11B35458E7255EFB7BD0FB67 /* WalletBalanceViewItem.swift */,
-				1A564422F8945526DC6866E0 /* Views */,
 			);
 			path = Wallet;
 			sourceTree = "<group>";
@@ -549,13 +549,13 @@
 		11B351DB654E3B13593BF465 /* Restore */ = {
 			isa = PBXGroup;
 			children = (
+				1A5640A450479CFD91C0413A /* Views */,
 				11B358586003E20B167B1442 /* RestoreModule.swift */,
 				11B35142DB758C8B2397D115 /* RestoreRouter.swift */,
 				11B354E15658C8BF7D5268D9 /* RestoreInteractor.swift */,
 				11B35BAEE22C144B33661819 /* RestorePresenter.swift */,
 				D3373DCC20C6B21C0082BC4A /* RestoreViewController.swift */,
 				D3373DCD20C6B21C0082BC4A /* RestoreViewController.xib */,
-				1A5640A450479CFD91C0413A /* Views */,
 			);
 			path = Restore;
 			sourceTree = "<group>";
@@ -578,6 +578,7 @@
 		11B3522E3A62CE13EB0C958B /* Backup */ = {
 			isa = PBXGroup;
 			children = (
+				1A5648FC80AD00DDEB422759 /* ConfirmationAlert */,
 				11B356CEB7192CE21DD1BC8B /* BackupModule.swift */,
 				11B35D66E95B16C32E3796E8 /* BackupRouter.swift */,
 				11B353A3B460BF1B24349F9F /* BackupInteractor.swift */,
@@ -589,7 +590,6 @@
 				D3373DB820C564450082BC4A /* BackupWordsController.xib */,
 				D348A77420C7D34100803B9E /* BackupConfirmationController.swift */,
 				D348A77520C7D34100803B9E /* BackupConfirmationController.xib */,
-				1A5648FC80AD00DDEB422759 /* ConfirmationAlert */,
 			);
 			path = Backup;
 			sourceTree = "<group>";
@@ -643,12 +643,12 @@
 		11B35480153660045A6CF9AC /* Managers */ = {
 			isa = PBXGroup;
 			children = (
-				11B35ADD30196056A9C6407C /* WordsManager.swift */,
+				1A5646D49060C3EFF06D0479 /* App.swift */,
 				1A5648F910A01D14653C8B21 /* LockManager.swift */,
+				1A564A6CCF1B907F25255D2E /* LockRouter.swift */,
+				11B35ADD30196056A9C6407C /* WordsManager.swift */,
 				1A5645B289EFBDB3EAB27E3A /* PinManager.swift */,
 				1A564901BE8CB514936E47AF /* BiometricManager.swift */,
-				1A5646D49060C3EFF06D0479 /* App.swift */,
-				1A564A6CCF1B907F25255D2E /* LockRouter.swift */,
 				1A564BB88BF3ED779F8C21DC /* BlurManager.swift */,
 				1A564EB3D65CB43EC68998AF /* AdapterManager.swift */,
 				1A564CF82858F8E7F80E1835 /* ExchangeRateManager.swift */,
@@ -701,13 +701,13 @@
 		11B3564BD80DA937DE5060DD /* Transactions */ = {
 			isa = PBXGroup;
 			children = (
+				1A56463D46E59369F3C2AC13 /* Views */,
 				11B35687F7521B1F22786638 /* TransactionsModule.swift */,
 				11B3520E9F70FFB8CC2D25A3 /* TransactionsRouter.swift */,
 				11B35BEF7ABBE155593B4DBE /* TransactionsInteractor.swift */,
 				11B3569AE7CDF7E217CAB4EE /* TransactionsPresenter.swift */,
 				D3B62A9020CA467E005A9F80 /* TransactionsViewController.swift */,
 				11B35A13B7F3DD8B5E253676 /* TransactionRecordViewItem.swift */,
-				1A56463D46E59369F3C2AC13 /* Views */,
 				11B35AB67BCA4C1624459FB6 /* TransactionFilter.swift */,
 			);
 			path = Transactions;
@@ -746,12 +746,12 @@
 		11B358D87B2EDEB8BE8F133B /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				1A564C7B1B95AFD8229EC89E /* Subsettings */,
+				1A564CDA3F20A49140C993C1 /* Views */,
 				11B35FE128D9CEE89C9F0F6B /* SettingsModule.swift */,
 				11B35579A4D79791ACF1BC91 /* SettingsRouter.swift */,
 				11B358E99DF63240BDC45AC5 /* SettingsPresenter.swift */,
 				D3B62A9420CA46EB005A9F80 /* SettingsViewController.swift */,
-				1A564CDA3F20A49140C993C1 /* Views */,
-				1A564C7B1B95AFD8229EC89E /* Subsettings */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -1011,8 +1011,8 @@
 		1A564B0EE9610C12018EEF64 /* FullTransactionInfo */ = {
 			isa = PBXGroup;
 			children = (
-				1A564A961EE2857B5283A996 /* FullTransactionInfoController.swift */,
 				1A564E6974FB8DFDB840ACF7 /* Views */,
+				1A564A961EE2857B5283A996 /* FullTransactionInfoController.swift */,
 			);
 			path = FullTransactionInfo;
 			sourceTree = "<group>";
@@ -1041,13 +1041,13 @@
 		1A564B6D22A2CD659257C4DF /* TransactionInfo */ = {
 			isa = PBXGroup;
 			children = (
+				1A564E504EC232DB60836114 /* ViewItems */,
 				1A5647FDE8383651F19C35C6 /* TransactionInfoRouter.swift */,
 				1A5643996D67B74F800DFFE4 /* TransactionInfoModule.swift */,
 				1A5647DBF15322999B5A1D04 /* TransactionInfoInteractor.swift */,
 				1A564091A9C12F224A18B740 /* TransactionInfoPresenter.swift */,
 				1A5643102015EFBECFBA6693 /* TransactionInfoView.swift */,
 				1A5643010944D435B8BA2FD8 /* TransactionInfoAlertModel.swift */,
-				1A564E504EC232DB60836114 /* ViewItems */,
 			);
 			path = TransactionInfo;
 			sourceTree = "<group>";
@@ -1055,13 +1055,13 @@
 		1A564B7337E79315F1CC3B49 /* Deposit */ = {
 			isa = PBXGroup;
 			children = (
+				1A564384C132B1AF74258D4A /* ViewItems */,
 				1A564EDCEACE83D95F6AE528 /* DepositRouter.swift */,
 				1A564E1FBBCCA45BCDA557F4 /* DepositModule.swift */,
 				1A5648DA32EA5FC27E4CEF64 /* DepositInteractor.swift */,
 				1A5645371B2FC499500DCA93 /* DepositPresenter.swift */,
 				1A564D52FE56371052378418 /* DepositViewModel.swift */,
 				1A564C2A96B49F01C1EC645D /* DepositAlertModel.swift */,
-				1A564384C132B1AF74258D4A /* ViewItems */,
 			);
 			path = Deposit;
 			sourceTree = "<group>";
@@ -1079,9 +1079,9 @@
 		1A564C7B1B95AFD8229EC89E /* Subsettings */ = {
 			isa = PBXGroup;
 			children = (
+				1A564A6836CC6C191CF6A063 /* Views */,
 				1A5644B028A72DB70FDAD383 /* SettingsSecurityController.swift */,
 				1A564492E508AE32CC501CBD /* SettingsLanguageController.swift */,
-				1A564A6836CC6C191CF6A063 /* Views */,
 			);
 			path = Subsettings;
 			sourceTree = "<group>";
