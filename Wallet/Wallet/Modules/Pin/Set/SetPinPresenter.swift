@@ -25,7 +25,7 @@ class SetPinPresenter: ManagePinPresenter {
     }
 
     override func didSavePin() {
-        router.dismiss()
+        router.navigateToMain()
     }
 
 }

@@ -60,16 +60,4 @@ extension BackupNavigationController: IBackupView {
         }
     }
 
-    func showUnlock() {
-        let canLock = App.shared.wordsManager.isLoggedIn && PinManager.shared.isPinned
-        if canLock {
-            UnlockPinRouter.module(cancelable: true) { [weak self] in
-                self?.viewDelegate.onUnlock()
-            }
-        } else {
-            viewDelegate.onUnlock()
-        }
-
-    }
-
 }

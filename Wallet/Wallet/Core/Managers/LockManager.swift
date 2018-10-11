@@ -2,58 +2,61 @@ import Foundation
 import RxSwift
 
 class LockManager {
-    static let shared = LockManager()
-    let disposeBag = DisposeBag()
+    private let localStorage: ILocalStorage
+    private let wordsManager: WordsManager
+    private let pinManager: PinManager
+    private let lockRouter: LockRouter
 
-    var resignActiveSubject = PublishSubject<()>()
-    var becomeActiveSubject = PublishSubject<()>()
-
+    private let lockTimeout: Double = 3
     var isLocked = false
-    let blurView = BlurView()
-    let lockTimeout: Double = 3
 
-    init() {
-        resignActiveSubject.subscribeAsync(disposeBag: disposeBag, onNext: { [weak self] in
-            self?.onResignActive()
-        })
-        becomeActiveSubject.subscribeAsync(disposeBag: disposeBag, onNext: { [weak self] in
-            self?.onBecomeActive()
-        })
+    init(localStorage: ILocalStorage, wordsManager: WordsManager, pinManager: PinManager, lockRouter: LockRouter) {
+        self.localStorage = localStorage
+        self.wordsManager = wordsManager
+        self.pinManager = pinManager
+        self.lockRouter = lockRouter
     }
 
-    func onResignActive() {
-        if App.shared.wordsManager.words != nil, !isLocked {
-            blurView.show()
+    func didEnterBackground() {
+        guard wordsManager.isLoggedIn else {
+            return
         }
-        App.shared.localStorage.lastExitDate = Date().timeIntervalSince1970
+        guard !isLocked else {
+            return
+        }
+
+        localStorage.lastExitDate = Date().timeIntervalSince1970
     }
 
-    func onBecomeActive() {
+    func willEnterForeground() {
+        guard wordsManager.isLoggedIn else {
+            return
+        }
+        guard !isLocked else {
+            return
+        }
+
+        let exitTimestamp = localStorage.lastExitDate
+        let now = Date().timeIntervalSince1970
+
+        guard now - exitTimestamp > lockTimeout else {
+            return
+        }
+
         lock()
     }
 
     func lock() {
-        let exitTimestamp = App.shared.localStorage.lastExitDate
-        let now = Date().timeIntervalSince1970
-        let timeToLockExpired = now - exitTimestamp > lockTimeout
+        isLocked = true
+        lockRouter.showUnlock(delegate: self)
+    }
 
-        let needToLock = timeToLockExpired && App.shared.wordsManager.words != nil && PinManager.shared.isPinned && !isLocked
-        blurView.hide(slow: needToLock)
-        if needToLock {
-            isLocked = true
-            UnlockPinRouter.module { [weak self] in
-                App.shared.localStorage.lastExitDate = Date().timeIntervalSince1970
-                self?.isLocked = false
-            }
-        }
+}
 
-        let needToSet = App.shared.wordsManager.words != nil && !PinManager.shared.isPinned && !isLocked
-        if needToSet {
-            isLocked = true
-            SetPinRouter.module { [weak self] in
-                self?.isLocked = false
-            }
-        }
+extension LockManager: UnlockDelegate {
+
+    func onUnlock() {
+        isLocked = false
     }
 
 }

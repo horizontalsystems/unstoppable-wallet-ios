@@ -24,6 +24,6 @@ protocol IRestoreInteractorDelegate: class {
 }
 
 protocol IRestoreRouter {
-    func navigateToMain()
+    func navigateToSetPin()
     func close()
 }

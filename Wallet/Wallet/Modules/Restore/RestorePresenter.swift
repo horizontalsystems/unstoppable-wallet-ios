@@ -16,7 +16,7 @@ class RestorePresenter {
 extension RestorePresenter: IRestoreInteractorDelegate {
 
     func didRestore() {
-        router.navigateToMain()
+        router.navigateToSetPin()
     }
 
     func didFailToRestore(withError error: Error) {

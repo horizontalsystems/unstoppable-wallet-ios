@@ -7,14 +7,8 @@ class RestoreRouter {
 
 extension RestoreRouter: IRestoreRouter {
 
-    func navigateToMain() {
-        viewController?.view.endEditing(true)
-
-        guard let window = UIApplication.shared.keyWindow else {
-            return
-        }
-
-        LaunchRouter.presenter(window: window, replace: true).launch(shouldLock: true)
+    func navigateToSetPin() {
+        viewController?.present(SetPinRouter.module(), animated: true)
     }
 
     func close() {

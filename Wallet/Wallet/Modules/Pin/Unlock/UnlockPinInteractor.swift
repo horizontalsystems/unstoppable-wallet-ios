@@ -2,15 +2,16 @@ import Foundation
 
 class UnlockPinInteractor {
     weak var delegate: IUnlockPinInteractorDelegate?
+    weak var unlockDelegate: UnlockDelegate?
 
     private let pinManager: PinManager
     private let biometricManager: BiometricManager
-    private let app: App
+    private let localStorage: ILocalStorage
 
-    init(pinManager: PinManager, biometricManager: BiometricManager, appHelper: App) {
+    init(pinManager: PinManager, biometricManager: BiometricManager, localStorage: ILocalStorage) {
         self.pinManager = pinManager
         self.biometricManager = biometricManager
-        self.app = appHelper
+        self.localStorage = localStorage
     }
 
 }
@@ -18,11 +19,17 @@ class UnlockPinInteractor {
 extension UnlockPinInteractor: IUnlockPinInteractor {
 
     func unlock(with pin: String) -> Bool {
-        return pinManager.validate(pin: pin)
+        guard pinManager.validate(pin: pin) else {
+            return false
+        }
+
+        unlockDelegate?.onUnlock()
+
+        return true
     }
 
     func biometricUnlock() {
-        if app.localStorage.isBiometricOn {
+        if localStorage.isBiometricOn {
             biometricManager.validate(reason: "biometric_usage_reason")
         } else {
             delegate?.didFailBiometricUnlock()
@@ -34,6 +41,7 @@ extension UnlockPinInteractor: IUnlockPinInteractor {
 extension UnlockPinInteractor: BiometricManagerDelegate {
 
     func didValidate() {
+        unlockDelegate?.onUnlock()
         delegate?.didBiometricUnlock()
     }
 

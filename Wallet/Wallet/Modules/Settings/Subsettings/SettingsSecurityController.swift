@@ -74,8 +74,6 @@ class SettingsSecurityController: UIViewController, SectionsDataSource {
         }, action: { [weak self] _ in
             if PinManager.shared.isPinned {
                 EditPinRouter.module(from: self)
-            } else {
-                SetPinRouter.module(from: self)
             }
         }))
         sections.append(Section(id: "security", headerState: .margin(height: SettingsTheme.subSettingsHeaderHeight), footerState: .margin(height: SettingsTheme.subSettingsHeaderHeight), rows: pinTouchFaceRows))

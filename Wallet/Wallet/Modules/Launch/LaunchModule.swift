@@ -1,19 +1,21 @@
 import Foundation
 
 protocol ILaunchInteractor {
-    func showLaunchModule(shouldLock: Bool)
+    func showLaunchModule()
 }
 
 protocol ILaunchInteractorDelegate: class {
     func showMainModule()
     func showGuestModule()
+    func showSetPinModule()
 }
 
 protocol ILaunchRouter {
     func showMainModule()
     func showGuestModule()
+    func showSetPinModule()
 }
 
 protocol ILaunchPresenter {
-    func launch(shouldLock: Bool)
+    func launch()
 }

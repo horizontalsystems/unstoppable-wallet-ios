@@ -1,40 +1,44 @@
 import UIKit
 
-class SetPinRouter {
-    weak var viewController: UIViewController?
+protocol SetPinDelegate: class {
+    func onSetPin()
+}
 
-    var completion: (() -> ())?
+class SetPinRouter {
+    weak var navigationController: UINavigationController?
 }
 
 extension SetPinRouter: ISetPinRouter {
 
-    func dismiss() {
-        viewController?.dismiss(animated: true) {
-            self.completion?()
+    func navigateToMain() {
+        navigationController?.topViewController?.view.endEditing(true)
+
+        guard let window = UIApplication.shared.keyWindow else {
+            return
         }
+
+        UIView.transition(with: window, duration: 0.5, options: .transitionCrossDissolve, animations: {
+            window.rootViewController = MainRouter.module()
+        })
     }
 
 }
 
 extension SetPinRouter {
 
-    static func module(from presentingController: UIViewController? = nil, completion: (() -> ())? = nil) {
-
+    static func module() -> UIViewController {
         let router = SetPinRouter()
         let interactor = PinInteractor(pinManager: PinManager.shared)
         let presenter = SetPinPresenter(interactor: interactor, router: router)
         let controller = PinViewController(delegate: presenter)
 
-        router.completion = completion
+        let navigationController = WalletNavigationController(rootViewController: controller)
+
         interactor.delegate = presenter
         presenter.view = controller
+        router.navigationController = navigationController
 
-        if let presentingController = presentingController {
-            router.viewController = controller
-            presentingController.navigationController?.present(WalletNavigationController(rootViewController: controller), animated: true)
-        } else {
-            router.viewController = WalletNavigationController.show(rootViewController: controller, customWindow: true)
-        }
+        return navigationController
     }
 
 }

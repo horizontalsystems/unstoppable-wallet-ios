@@ -2,23 +2,21 @@ import UIKit
 
 class BackupRouter {
     weak var navigationController: UINavigationController?
+    weak var unlockDelegate: UnlockDelegate?
 }
 
 extension BackupRouter: IBackupRouter {
-
 
     func close() {
         navigationController?.dismiss(animated: true)
     }
 
-    func navigateToMain() {
-        navigationController?.topViewController?.view.endEditing(true)
+    func navigateToSetPin() {
+        navigationController?.present(SetPinRouter.module(), animated: true)
+    }
 
-        guard let window = UIApplication.shared.keyWindow else {
-            return
-        }
-
-        LaunchRouter.presenter(window: window, replace: true).launch(shouldLock: true)
+    func showUnlock() {
+        UnlockPinRouter.module(unlockDelegate: unlockDelegate, cancelable: true)
     }
 
 }
@@ -34,6 +32,7 @@ extension BackupRouter {
         interactor.delegate = presenter
         presenter.view = navigationController
         router.navigationController = navigationController
+        router.unlockDelegate = interactor
 
         return navigationController
     }

@@ -99,7 +99,9 @@ class SettingsViewController: UIViewController, SectionsDataSource {
                 App.shared.localStorage.lightMode = isOn
 
                 if let window = UIApplication.shared.keyWindow {
-                    LaunchRouter.presenter(window: window, replace: true).launch(shouldLock: false)
+                    UIView.transition(with: window, duration: 0.5, options: .transitionCrossDissolve, animations: {
+                        window.rootViewController = MainRouter.module()
+                    })
                 }
             })
         }))

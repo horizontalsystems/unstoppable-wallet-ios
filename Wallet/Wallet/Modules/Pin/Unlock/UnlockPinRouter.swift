@@ -1,34 +1,34 @@
 import UIKit
 
+protocol UnlockDelegate: class {
+    func onUnlock()
+}
+
 class UnlockPinRouter {
     weak var viewController: UIViewController?
-
-    var completion: (() -> ())?
 }
 
 extension UnlockPinRouter: IUnlockPinRouter {
 
     func dismiss() {
-        viewController?.dismiss(animated: true) {
-            self.completion?()
-        }
+        viewController?.dismiss(animated: true)
     }
 
 }
 
 extension UnlockPinRouter {
 
-    static func module(cancelable: Bool = false, completion: (() -> ())? = nil) {
+    static func module(unlockDelegate: UnlockDelegate?, cancelable: Bool = false) {
         let biometricManager = BiometricManager()
 
         let router = UnlockPinRouter()
-        let interactor = UnlockPinInteractor(pinManager: PinManager.shared, biometricManager: biometricManager, appHelper: App.shared)
+        let interactor = UnlockPinInteractor(pinManager: PinManager.shared, biometricManager: biometricManager, localStorage: App.shared.localStorage)
         let presenter = UnlockPinPresenter(interactor: interactor, router: router, configuration: .init(cancellable: cancelable))
         let controller = PinViewController(delegate: presenter)
 
-        router.completion = completion
         biometricManager.delegate = interactor
         interactor.delegate = presenter
+        interactor.unlockDelegate = unlockDelegate
         presenter.view = controller
 
         let navigationController = WalletNavigationController.show(rootViewController: controller, customWindow: true)

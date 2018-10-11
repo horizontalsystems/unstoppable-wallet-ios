@@ -13,8 +13,8 @@ class LaunchPresenter {
 
 extension LaunchPresenter: ILaunchPresenter {
 
-    func launch(shouldLock: Bool) {
-        interactor.showLaunchModule(shouldLock: shouldLock)
+    func launch() {
+        interactor.showLaunchModule()
     }
 
 }
@@ -27,6 +27,10 @@ extension LaunchPresenter: ILaunchInteractorDelegate {
 
     func showGuestModule() {
         router.showGuestModule()
+    }
+
+    func showSetPinModule() {
+        router.showSetPinModule()
     }
 
 }

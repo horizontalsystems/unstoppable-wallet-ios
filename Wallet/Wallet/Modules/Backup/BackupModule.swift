@@ -8,7 +8,6 @@ protocol IBackupView: class {
     func showConfirmationError()
     func onValidateSuccess()
     func showWarning()
-    func showUnlock()
 }
 
 protocol IBackupViewDelegate {
@@ -19,13 +18,12 @@ protocol IBackupViewDelegate {
     func hideConfirmationDidClick()
     func validateDidClick(confirmationWords: [Int: String])
     func onConfirm()
-    func onUnlock()
 }
 
 protocol IBackupInteractor {
-    func fetchWords()
     func fetchConfirmationIndexes()
     func validate(confirmationWords: [Int: String])
+    func lockIfRequired()
 }
 
 protocol IBackupInteractorDelegate: class {
@@ -33,9 +31,11 @@ protocol IBackupInteractorDelegate: class {
     func didFetch(confirmationIndexes indexes: [Int])
     func didValidateSuccess()
     func didValidateFailure()
+    func showUnlock()
 }
 
 protocol IBackupRouter {
-    func navigateToMain()
+    func navigateToSetPin()
     func close()
+    func showUnlock()
 }

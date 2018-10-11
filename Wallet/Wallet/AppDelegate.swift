@@ -10,26 +10,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.makeKeyAndVisible()
         window?.backgroundColor = AppTheme.controllerBackground
 
-        LaunchRouter.presenter(window: window).launch(shouldLock: true)
+        LaunchRouter.presenter(window: window).launch()
 
         return true
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
-        LockManager.shared.resignActiveSubject.onNext(())
-    }
-
-    func applicationDidEnterBackground(_ application: UIApplication) {
-        // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
-        // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
-    }
-
-    func applicationWillEnterForeground(_ application: UIApplication) {
-        // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
+        App.shared.blurManager.willResignActive()
     }
 
     func applicationDidBecomeActive(_ application: UIApplication) {
-        LockManager.shared.becomeActiveSubject.onNext(())
+        App.shared.blurManager.didBecomeActive()
+    }
+
+    func applicationDidEnterBackground(_ application: UIApplication) {
+        App.shared.lockManager.didEnterBackground()
+    }
+
+    func applicationWillEnterForeground(_ application: UIApplication) {
+        App.shared.lockManager.willEnterForeground()
     }
 
     func applicationWillTerminate(_ application: UIApplication) {

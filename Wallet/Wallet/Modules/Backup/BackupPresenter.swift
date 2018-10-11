@@ -2,7 +2,7 @@ import Foundation
 
 class BackupPresenter {
     enum DismissMode {
-        case toMain
+        case toSetPin
         case dismissSelf
     }
 
@@ -20,8 +20,8 @@ class BackupPresenter {
 
     private func dismiss() {
         switch dismissMode {
-        case .toMain:
-            router.navigateToMain()
+        case .toSetPin:
+            router.navigateToSetPin()
         case .dismissSelf:
             router.close()
         }
@@ -47,6 +47,10 @@ extension BackupPresenter: IBackupInteractorDelegate {
         view?.showConfirmationError()
     }
 
+    func showUnlock() {
+        router.showUnlock()
+    }
+
 }
 
 extension BackupPresenter: IBackupViewDelegate {
@@ -56,7 +60,7 @@ extension BackupPresenter: IBackupViewDelegate {
     }
 
     func showWordsDidClick() {
-        view?.showUnlock()
+        interactor.lockIfRequired()
     }
 
     func hideWordsDidClick() {
@@ -77,10 +81,6 @@ extension BackupPresenter: IBackupViewDelegate {
 
     func onConfirm() {
         dismiss()
-    }
-
-    func onUnlock() {
-        interactor.fetchWords()
     }
 
 }
