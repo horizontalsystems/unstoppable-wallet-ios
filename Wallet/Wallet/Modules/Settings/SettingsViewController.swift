@@ -145,7 +145,7 @@ class SettingsViewController: UIViewController, SectionsDataSource {
             cell.bind(titleIcon: UIImage(named: "Bug Icon"), title: "Drop Keychain", showDisclosure: false)
         }, action: { _ in
             App.shared.wordsManager.isBackedUp = false
-            try? PinManager.shared.store(pin: nil)
+            try? App.shared.pinManager.store(pin: nil)
         }))
         sections.append(Section(id: "debug_section", headerState: .marginColor(height: 50, color: .clear), footerState: .marginColor(height: 20, color: .clear), rows: debugRows))
 
@@ -157,7 +157,7 @@ class SettingsViewController: UIViewController, SectionsDataSource {
         App.shared.wordsManager.isBackedUp = false
         App.shared.wordsManager.removeWords()
         App.shared.adapterManager.clear()
-        try? PinManager.shared.store(pin: nil)
+        try? App.shared.pinManager.store(pin: nil)
 
         guard let window = UIApplication.shared.keyWindow else {
             return

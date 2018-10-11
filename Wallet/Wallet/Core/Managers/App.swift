@@ -6,6 +6,7 @@ class App {
     let localStorage: ILocalStorage
     let wordsManager: WordsManager
 
+    let pinManager: PinManager
     let lockRouter: LockRouter
     let lockManager: LockManager
     let blurManager: BlurManager
@@ -16,8 +17,9 @@ class App {
         localStorage = UserDefaultsStorage()
         wordsManager = WordsManager(localStorage: localStorage)
 
+        pinManager = PinManager()
         lockRouter = LockRouter()
-        lockManager = LockManager(localStorage: localStorage, wordsManager: wordsManager, pinManager: PinManager.shared, lockRouter: lockRouter)
+        lockManager = LockManager(localStorage: localStorage, wordsManager: wordsManager, pinManager: pinManager, lockRouter: lockRouter)
         blurManager = BlurManager(lockManager: lockManager)
 
         LocalizationHelper.instance.update(language: localStorage.currentLanguage ?? LocalizationHelper.defaultLanguage)

@@ -1,7 +1,6 @@
 import Foundation
 
 class PinManager {
-    static let shared = PinManager()
     private let pinKey = "pin_keychain_key"
 
     var isPinned: Bool {

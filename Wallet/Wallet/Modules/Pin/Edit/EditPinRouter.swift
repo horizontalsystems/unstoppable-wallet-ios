@@ -16,7 +16,7 @@ extension EditPinRouter {
 
     static func module(from presentingController: UIViewController?) {
         let router = EditPinRouter()
-        let interactor = PinInteractor(pinManager: PinManager.shared)
+        let interactor = PinInteractor(pinManager: App.shared.pinManager)
         let presenter = EditPinPresenter(interactor: interactor, router: router)
         let controller = PinViewController(delegate: presenter)
 
@@ -24,7 +24,7 @@ extension EditPinRouter {
         presenter.view = controller
         router.viewController = controller
 
-        presentingController?.present(WalletNavigationController(rootViewController: controller), animated: true) 
+        presentingController?.present(WalletNavigationController(rootViewController: controller), animated: true)
     }
 
 }

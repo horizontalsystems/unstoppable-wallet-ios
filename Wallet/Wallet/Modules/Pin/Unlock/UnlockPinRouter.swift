@@ -22,7 +22,7 @@ extension UnlockPinRouter {
         let biometricManager = BiometricManager()
 
         let router = UnlockPinRouter()
-        let interactor = UnlockPinInteractor(pinManager: PinManager.shared, biometricManager: biometricManager, localStorage: App.shared.localStorage)
+        let interactor = UnlockPinInteractor(pinManager: App.shared.pinManager, biometricManager: biometricManager, localStorage: App.shared.localStorage)
         let presenter = UnlockPinPresenter(interactor: interactor, router: router, configuration: .init(cancellable: cancelable))
         let controller = PinViewController(delegate: presenter)
 

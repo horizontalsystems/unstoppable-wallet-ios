@@ -5,16 +5,18 @@ class BackupInteractor {
 
     weak var delegate: IBackupInteractorDelegate?
 
-    private let walletManager: WordsManager
+    private let wordsManager: WordsManager
+    private let pinManager: PinManager
     private var indexesProvider: IRandomProvider
 
-    init(walletManager: WordsManager, indexesProvider: IRandomProvider) {
-        self.walletManager = walletManager
+    init(wordsManager: WordsManager, pinManager: PinManager, indexesProvider: IRandomProvider) {
+        self.wordsManager = wordsManager
+        self.pinManager = pinManager
         self.indexesProvider = indexesProvider
     }
 
     private func fetchWords() {
-        if let words = walletManager.words {
+        if let words = wordsManager.words {
             delegate?.didFetch(words: words)
         }
     }
@@ -28,7 +30,7 @@ extension BackupInteractor: IBackupInteractor {
     }
 
     func validate(confirmationWords: [Int: String]) {
-        guard let words = walletManager.words else {
+        guard let words = wordsManager.words else {
             delegate?.didValidateFailure()
             return
         }
@@ -39,12 +41,12 @@ extension BackupInteractor: IBackupInteractor {
                 return
             }
         }
-        walletManager.isBackedUp = true
+        wordsManager.isBackedUp = true
         delegate?.didValidateSuccess()
     }
 
     func lockIfRequired() {
-        if PinManager.shared.isPinned {
+        if pinManager.isPinned {
             delegate?.showUnlock()
         } else {
             fetchWords()

@@ -28,7 +28,7 @@ extension SetPinRouter {
 
     static func module() -> UIViewController {
         let router = SetPinRouter()
-        let interactor = PinInteractor(pinManager: PinManager.shared)
+        let interactor = PinInteractor(pinManager: App.shared.pinManager)
         let presenter = SetPinPresenter(interactor: interactor, router: router)
         let controller = PinViewController(delegate: presenter)
 
