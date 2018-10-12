@@ -17,7 +17,7 @@ Go to Settings - > Bank and allow access to Camera.";
 "guest.title" = "Bank Wallet";
 "guest.subtitle" = "Be Your own Bank!";
 "guest.create_wallet" = "New Wallet";
-"guest.restore_wallet" = "Restore Wallet";
+"guest.restore_wallet" = "Import Wallet";
 
 "restore.title" = "Restore Wallet";
 "restore.description" = "Enter the Secret Key (sometimes called Paper Key).for the wallet. ";
