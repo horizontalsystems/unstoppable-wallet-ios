@@ -1,4 +1,3 @@
-import Foundation
 import RxSwift
 
 class MainSettingsInteractor {
@@ -8,12 +7,12 @@ class MainSettingsInteractor {
 
     private let localStorage: ILocalStorage
     private let wordsManager: WordsManager
-    private let localizationManager: ILocalizationManager
+    private let languageManager: ILanguageManager
 
-    init(localStorage: ILocalStorage, wordsManager: WordsManager, localizationManager: ILocalizationManager) {
+    init(localStorage: ILocalStorage, wordsManager: WordsManager, languageManager: ILanguageManager) {
         self.localStorage = localStorage
         self.wordsManager = wordsManager
-        self.localizationManager = localizationManager
+        self.languageManager = languageManager
 
         wordsManager.backedUpSubject
                 .subscribe(onNext: { [weak self] isBackedUp in
@@ -37,7 +36,7 @@ extension MainSettingsInteractor: IMainSettingsInteractor {
     }
 
     var currentLanguage: String {
-        return localizationManager.currentLanguage
+        return languageManager.displayNameForCurrentLanguage
     }
 
     var baseCurrency: String {

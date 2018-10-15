@@ -2,7 +2,7 @@ import UIKit
 import SectionsTableViewKit
 
 class SettingsLanguageController: UIViewController, SectionsDataSource {
-    var availableLanguages = Bundle.main.localizations
+    var availableLanguages = App.shared.localizationManager.availableLanguages
 
     let tableView = SectionsTableView(style: .grouped)
 
@@ -39,7 +39,7 @@ class SettingsLanguageController: UIViewController, SectionsDataSource {
 
         sections.append(Section(id: "languages", headerState: .margin(height: SettingsTheme.subSettingsHeaderHeight), footerState: .margin(height: SettingsTheme.subSettingsHeaderHeight), rows: availableLanguages.map { language in
             Row<LanguageCell>(id: language, height: SettingsTheme.languageCellHeight, bind: { cell, _ in
-                cell.bind(title: LocalizationManager.displayName(forLanguage: language), subtitle: LocalizationManager.displayName(forLanguage: language, locale: NSLocale(localeIdentifier: language)), selected: LocalizationManager.instance.language == language)
+                cell.bind(title: App.shared.localizationManager.displayName(forLanguage: language, inLanguage: App.shared.languageManager.currentLanguage), subtitle: App.shared.localizationManager.displayName(forLanguage: language, inLanguage: language), selected: App.shared.languageManager.currentLanguage == language)
             }, action: { [weak self] _ in
                 self?.applyLanguage(language: language)
             })
@@ -49,8 +49,8 @@ class SettingsLanguageController: UIViewController, SectionsDataSource {
     }
 
     func applyLanguage(language: String) {
-        App.shared.localStorage.currentLanguage = language
-        LocalizationManager.instance.update(language: language)
+        var languageManager = App.shared.languageManager
+        languageManager.currentLanguage = language
 
         if let window = UIApplication.shared.keyWindow {
             UIView.transition(with: window, duration: 0.5, options: .transitionCrossDissolve, animations: {

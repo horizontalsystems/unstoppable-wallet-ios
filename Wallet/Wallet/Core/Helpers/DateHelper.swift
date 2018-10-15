@@ -15,7 +15,7 @@ public class DateHelper {
         return "hh"
     }()
     static var correctedSystemHourFormat: String {
-        return DateHelper.twelveHoursAllowed.contains(LocalizationManager.instance.language) ? DateHelper.systemHourFormat : "HH"
+        return DateHelper.twelveHoursAllowed.contains(App.shared.languageManager.currentLanguage) ? DateHelper.systemHourFormat : "HH"
     }
 
     private func getFormatter(forFormat format: String) -> DateFormatter {
@@ -24,7 +24,7 @@ public class DateHelper {
         }
 
         let formatter = DateFormatter()
-        formatter.locale = LocalizationManager.instance.locale
+        formatter.locale = App.shared.localizationManager.locale ?? Locale.current
         formatter.setLocalizedDateFormatFromTemplate(format)
 
         DateHelper.formatters[format] = formatter

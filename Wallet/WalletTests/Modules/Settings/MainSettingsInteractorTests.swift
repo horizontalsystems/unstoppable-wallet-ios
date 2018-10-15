@@ -7,11 +7,11 @@ class MainSettingsInteractorTests: XCTestCase {
     private var mockDelegate: MockIMainSettingsInteractorDelegate!
     private var mockLocalStorage: MockILocalStorage!
     private var mockWordsManager: MockWordsManager!
-    private var mockLocalizationManager: MockILocalizationManager!
+    private var mockLanguageManager: MockILanguageManager!
 
     private var interactor: MainSettingsInteractor!
 
-    let currentLanguage = "Chitaurian"
+    let currentLanguageDisplayName = "Chitaurian"
     let backedUpSubject = PublishSubject<Bool>()
 
     override func setUp() {
@@ -22,7 +22,7 @@ class MainSettingsInteractorTests: XCTestCase {
         mockDelegate = MockIMainSettingsInteractorDelegate()
         mockLocalStorage = mockApp.mockLocalStorage
         mockWordsManager = mockApp.mockWordsManager
-        mockLocalizationManager = MockILocalizationManager()
+        mockLanguageManager = mockApp.mockLanguageManager
 
         stub(mockDelegate) { mock in
             when(mock.didUpdateLightMode()).thenDoNothing()
@@ -36,18 +36,18 @@ class MainSettingsInteractorTests: XCTestCase {
             when(mock.isBackedUp.get).thenReturn(true)
             when(mock.backedUpSubject.get).thenReturn(backedUpSubject)
         }
-        stub(mockLocalizationManager) { mock in
-            when(mock.currentLanguage.get).thenReturn(currentLanguage)
+        stub(mockLanguageManager) { mock in
+            when(mock.displayNameForCurrentLanguage.get).thenReturn(currentLanguageDisplayName)
         }
 
-        interactor = MainSettingsInteractor(localStorage: mockLocalStorage, wordsManager: mockWordsManager, localizationManager: mockLocalizationManager)
+        interactor = MainSettingsInteractor(localStorage: mockLocalStorage, wordsManager: mockWordsManager, languageManager: mockLanguageManager)
         interactor.delegate = mockDelegate
     }
 
     override func tearDown() {
         mockDelegate = nil
         mockLocalStorage = nil
-        mockLocalizationManager = nil
+        mockLanguageManager = nil
 
         interactor = nil
 
@@ -77,7 +77,7 @@ class MainSettingsInteractorTests: XCTestCase {
     }
 
     func testCurrentLanguage() {
-        XCTAssertEqual(interactor.currentLanguage, currentLanguage)
+        XCTAssertEqual(interactor.currentLanguage, currentLanguageDisplayName)
     }
 
     func testLightModeOn() {

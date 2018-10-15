@@ -3,6 +3,8 @@ import Foundation
 class App {
     static let shared = App()
 
+    private let fallbackLanguage = "en"
+
     let secureStorage: ISecureStorage
     let localStorage: ILocalStorage
     let wordsManager: WordsManager
@@ -11,6 +13,9 @@ class App {
     let lockRouter: LockRouter
     let lockManager: LockManager
     let blurManager: BlurManager
+
+    let localizationManager: LocalizationManager
+    let languageManager: ILanguageManager
 
     var adapterManager: AdapterManager!
 
@@ -24,7 +29,8 @@ class App {
         lockManager = LockManager(localStorage: localStorage, wordsManager: wordsManager, pinManager: pinManager, lockRouter: lockRouter)
         blurManager = BlurManager(lockManager: lockManager)
 
-        LocalizationManager.instance.update(language: localStorage.currentLanguage ?? LocalizationManager.defaultLanguage)
+        localizationManager = LocalizationManager()
+        languageManager = LanguageManager(localizationManager: localizationManager, localStorage: localStorage, fallbackLanguage: fallbackLanguage)
 
         initLoggedInState()
     }
