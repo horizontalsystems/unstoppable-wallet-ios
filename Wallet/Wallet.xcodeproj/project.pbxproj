@@ -1426,7 +1426,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Bank/Pods-Bank-frameworks.sh",
+				"${SRCROOT}/../Pods/Target Support Files/Pods-Bank/Pods-Bank-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/BigInt/BigInt.framework",
 				"${BUILT_PRODUCTS_DIR}/GrouviActionSheet/GrouviActionSheet.framework",
@@ -1469,7 +1469,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Bank/Pods-Bank-frameworks.sh\"\n";
+			shellScript = "\"${SRCROOT}/../Pods/Target Support Files/Pods-Bank/Pods-Bank-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		91AAE65ABC3D13242A7F373A /* [CP] Check Pods Manifest.lock */ = {
@@ -1496,7 +1496,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-WalletTests/Pods-WalletTests-frameworks.sh",
+				"${SRCROOT}/../Pods/Target Support Files/Pods-WalletTests/Pods-WalletTests-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/Cuckoo/Cuckoo.framework",
 			);
@@ -1507,7 +1507,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-WalletTests/Pods-WalletTests-frameworks.sh\"\n";
+			shellScript = "\"${SRCROOT}/../Pods/Target Support Files/Pods-WalletTests/Pods-WalletTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		D3373DC920C67A250082BC4A /* Cuckoo */ = {
