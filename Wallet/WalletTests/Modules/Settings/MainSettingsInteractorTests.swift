@@ -22,7 +22,7 @@ class MainSettingsInteractorTests: XCTestCase {
         mockDelegate = MockIMainSettingsInteractorDelegate()
         mockLocalStorage = mockApp.mockLocalStorage
         mockWordsManager = mockApp.mockWordsManager
-        mockLanguageManager = mockApp.mockLanguageManager
+        mockLanguageManager = MockILanguageManager()
 
         stub(mockDelegate) { mock in
             when(mock.didUpdateLightMode()).thenDoNothing()

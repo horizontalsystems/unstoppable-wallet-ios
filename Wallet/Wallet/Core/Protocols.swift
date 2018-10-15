@@ -1,8 +1,26 @@
-import Foundation
 import RxSwift
 
 protocol IRandomProvider {
     func getRandomIndexes(count: Int) -> [Int]
+}
+
+protocol ILocalStorage: class {
+    var savedWords: [String]? { get }
+    var isBackedUp: Bool { get set }
+    var lightMode: Bool { get set }
+    var iUnderstand: Bool { get set }
+    var isBiometricOn: Bool { get set }
+    var currentLanguage: String? { get set }
+    var lastExitDate: Double { get set }
+    func save(words: [String])
+    func clearWords()
+}
+
+protocol ISecureStorage: class {
+    var words: [String]? { get }
+    func set(words: [String]?) throws
+    var pin: String? { get }
+    func set(pin: String?) throws
 }
 
 protocol ILanguageManager {
@@ -20,4 +38,32 @@ protocol ILocalizationManager {
 
     func localize(string: String, language: String) -> String?
     func format(localizedString: String, arguments: [CVarArg]) -> String
+}
+
+protocol IAdapter {
+    var id: String { get }
+
+    var coin: Coin { get }
+
+    var balance: Double { get }
+    var balanceSubject: PublishSubject<Double> { get }
+
+    var progressSubject: BehaviorSubject<Double> { get }
+
+    var lastBlockHeight: Int { get }
+    var lastBlockHeightSubject: PublishSubject<Int> { get }
+
+    var transactionRecords: [TransactionRecord] { get }
+    var transactionRecordsSubject: PublishSubject<Void> { get }
+
+    func showInfo()
+
+    func start() throws
+    func clear() throws
+
+    func send(to address: String, value: Int) throws
+    func fee(for value: Int, senderPay: Bool) throws -> Int
+    func validate(address: String) -> Bool
+
+    var receiveAddress: String { get }
 }
