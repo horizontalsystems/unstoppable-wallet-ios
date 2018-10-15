@@ -40,6 +40,13 @@ protocol ILocalizationManager {
     func format(localizedString: String, arguments: [CVarArg]) -> String
 }
 
+protocol IAdapterManager {
+    var adapters: [IAdapter] { get }
+    var subject: PublishSubject<Void> { get }
+    func start()
+    func clear()
+}
+
 protocol IAdapter {
     var id: String { get }
 
@@ -66,4 +73,52 @@ protocol IAdapter {
     func validate(address: String) -> Bool
 
     var receiveAddress: String { get }
+}
+
+protocol IWordsManager {
+    var words: [String]? { get }
+    var isBackedUp: Bool { get set }
+    var isLoggedIn: Bool { get }
+    var backedUpSubject: PublishSubject<Bool> { get }
+    func createWords() throws
+    func validate(words: [String]) throws
+    func restore(withWords words: [String]) throws
+    func removeWords()
+}
+
+protocol ILockManager {
+    var isLocked: Bool { get }
+    func lock()
+    func didEnterBackground()
+    func willEnterForeground()
+}
+
+protocol IBlurManager {
+    func willResignActive()
+    func didBecomeActive()
+}
+
+protocol IPinManager {
+    var isPinned: Bool { get }
+    func store(pin: String?) throws
+    func validate(pin: String) -> Bool
+}
+
+protocol ILockRouter {
+    func showUnlock(delegate: IUnlockDelegate?)
+}
+
+protocol IBiometricManager {
+    func validate(reason: String)
+}
+
+protocol BiometricManagerDelegate: class {
+    func didValidate()
+    func didFailToValidate()
+}
+
+protocol IExchangeRateManager {
+    var subject: PublishSubject<[String: Double]> { get }
+    var exchangeRates: [String: Double] { get }
+    func updateRates()
 }

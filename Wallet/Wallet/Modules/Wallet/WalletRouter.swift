@@ -22,7 +22,7 @@ extension WalletRouter {
 
     static func module() -> UIViewController {
         let router = WalletRouter()
-        let interactor = WalletInteractor(adapterManager: App.shared.adapterManager, exchangeRateManager: ExchangeRateManager.shared)
+        let interactor = WalletInteractor(adapterManager: App.shared.adapterManager, exchangeRateManager: App.shared.exchangeRateManager)
         let presenter = WalletPresenter(interactor: interactor, router: router)
         let viewController = WalletViewController(viewDelegate: presenter)
 

@@ -6,7 +6,7 @@ import Cuckoo
 class MainSettingsInteractorTests: XCTestCase {
     private var mockDelegate: MockIMainSettingsInteractorDelegate!
     private var mockLocalStorage: MockILocalStorage!
-    private var mockWordsManager: MockWordsManager!
+    private var mockWordsManager: MockIWordsManager!
     private var mockLanguageManager: MockILanguageManager!
 
     private var interactor: MainSettingsInteractor!
@@ -17,11 +17,9 @@ class MainSettingsInteractorTests: XCTestCase {
     override func setUp() {
         super.setUp()
 
-        let mockApp = MockApp()
-
         mockDelegate = MockIMainSettingsInteractorDelegate()
-        mockLocalStorage = mockApp.mockLocalStorage
-        mockWordsManager = mockApp.mockWordsManager
+        mockLocalStorage = MockILocalStorage()
+        mockWordsManager = MockIWordsManager()
         mockLanguageManager = MockILanguageManager()
 
         stub(mockDelegate) { mock in

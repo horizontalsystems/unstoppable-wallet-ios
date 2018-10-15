@@ -1,12 +1,10 @@
-import Foundation
-
 class PinInteractor {
     weak var delegate: IPinInteractorDelegate?
 
-    private let pinManager: PinManager
+    private let pinManager: IPinManager
     private var storedPin: String?
 
-    init(pinManager: PinManager) {
+    init(pinManager: IPinManager) {
         self.pinManager = pinManager
     }
 

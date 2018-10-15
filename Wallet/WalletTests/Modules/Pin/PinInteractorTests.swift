@@ -6,16 +6,14 @@ class PinInteractorTests: XCTestCase {
     enum StubError: Error { case some }
 
     private var mockDelegate: MockIPinInteractorDelegate!
-    private var mockPinManager: MockPinManager!
+    private var mockPinManager: MockIPinManager!
     private var interactor: PinInteractor!
 
     override func setUp() {
         super.setUp()
 
-        let mockApp = MockApp()
-
         mockDelegate = MockIPinInteractorDelegate()
-        mockPinManager = mockApp.mockPinManager
+        mockPinManager = MockIPinManager()
 
         stub(mockDelegate) { mock in
             when(mock.didSavePin()).thenDoNothing()

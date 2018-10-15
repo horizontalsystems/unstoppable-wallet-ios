@@ -113,7 +113,6 @@
 		1A56454940992DC1F332E76A /* BaseButtonItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56425C82362C065E3379D4 /* BaseButtonItemView.swift */; };
 		1A56457504BE4C7269493002 /* TransactionAmountItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56464DB0EEF75F63C91760 /* TransactionAmountItem.swift */; };
 		1A56458ABE9CDDEB7F0643AA /* TransactionInfoRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5647FDE8383651F19C35C6 /* TransactionInfoRouter.swift */; };
-		1A56458FA6FC43786E438E9C /* MockApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564F8F62FB12624E33A7BB /* MockApp.swift */; };
 		1A5645B1FEF9B1AB7E491B83 /* CopyItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5644E3A131453D33B73B57 /* CopyItemView.swift */; };
 		1A5645DC23C3FA0CF7A0FA9E /* SettingsRightLabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56464E8EDBFB0B67DB593F /* SettingsRightLabelCell.swift */; };
 		1A56460F1BB48D4E82C6E257 /* RestoreWordCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5648D3CF09FF5EBE8321EC /* RestoreWordCell.swift */; };
@@ -457,7 +456,6 @@
 		1A564F5FA00D064D9F3F0AF7 /* SettingsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsCell.swift; sourceTree = "<group>"; };
 		1A564F627224BDD3E99C582B /* LaunchPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LaunchPresenter.swift; sourceTree = "<group>"; };
 		1A564F747A4D0B78E5DF6F1B /* SettingsTheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsTheme.swift; sourceTree = "<group>"; };
-		1A564F8F62FB12624E33A7BB /* MockApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockApp.swift; sourceTree = "<group>"; };
 		1A564FA5E8DDE76BF1257727 /* UnlockPinPresenterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnlockPinPresenterTests.swift; sourceTree = "<group>"; };
 		1A564FC2E7778A0E71E4A376 /* BaseButtonItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseButtonItem.swift; sourceTree = "<group>"; };
 		1A564FE8D247C36C2478C6B5 /* TransactionCurrenciesHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionCurrenciesHeaderView.swift; sourceTree = "<group>"; };
@@ -1280,7 +1278,6 @@
 				D3373DC320C658660082BC4A /* Info.plist */,
 				11B35A1D12389D09984007C1 /* Modules */,
 				11B351C72700B40AB457AFA8 /* TestExtensions.swift */,
-				1A564F8F62FB12624E33A7BB /* MockApp.swift */,
 				11B35FCA2349D95A84142C52 /* Core */,
 			);
 			path = WalletTests;
@@ -1517,18 +1514,10 @@
 			);
 			inputPaths = (
 				"$(SRCROOT)/Wallet/Modules/Pin/Set/SetPinModule.swift",
-				"$(SRCROOT)/Wallet/Core/Managers/PinManager.swift",
 				"$(SRCROOT)/Wallet/Modules/Pin/PinModule.swift",
 				"$(SRCROOT)/Wallet/Modules/Pin/Edit/EditPinModule.swift",
 				"$(SRCROOT)/Wallet/Modules/Pin/Unlock/UnlockPinModule.swift",
-				"$(SRCROOT)/Wallet/Core/Managers/BiometricManager.swift",
-				"$(SRCROOT)/Wallet/Core/Helpers/AppHelper.swift",
 				"$(SRCROOT)/Wallet/Modules/Settings/MainSettings/MainSettingsModule.swift",
-				"$(SRCROOT)/Wallet/Core/Managers/WordsManager.swift",
-				"$(SRCROOT)/Wallet/Core/Managers/LockManager.swift",
-				"$(SRCROOT)/Wallet/Core/Managers/BlurManager.swift",
-				"$(SRCROOT)/Wallet/Core/Managers/LockRouter.swift",
-				"$(SRCROOT)/Wallet/Core/Managers/AdapterManager.swift",
 				"$(SRCROOT)/Wallet/Core/Protocols.swift",
 			);
 			name = Cuckoo;
@@ -1768,7 +1757,6 @@
 				1A5642019E9D4A25C650F453 /* UnlockPinInteractorTests.swift in Sources */,
 				1A5649E7FFCE75916AC45319 /* MainSettingsPresenterTests.swift in Sources */,
 				1A5641EA17A58CCDE3914CF0 /* MainSettingsInteractorTests.swift in Sources */,
-				1A56458FA6FC43786E438E9C /* MockApp.swift in Sources */,
 				11B3507CAA4C9F760712EB73 /* LanguageManagerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

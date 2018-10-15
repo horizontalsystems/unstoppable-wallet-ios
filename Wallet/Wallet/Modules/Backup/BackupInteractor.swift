@@ -1,15 +1,14 @@
-import Foundation
 import WalletKit
 
 class BackupInteractor {
 
     weak var delegate: IBackupInteractorDelegate?
 
-    private let wordsManager: WordsManager
-    private let pinManager: PinManager
+    private var wordsManager: IWordsManager
+    private let pinManager: IPinManager
     private var indexesProvider: IRandomProvider
 
-    init(wordsManager: WordsManager, pinManager: PinManager, indexesProvider: IRandomProvider) {
+    init(wordsManager: IWordsManager, pinManager: IPinManager, indexesProvider: IRandomProvider) {
         self.wordsManager = wordsManager
         self.pinManager = pinManager
         self.indexesProvider = indexesProvider
@@ -55,7 +54,7 @@ extension BackupInteractor: IBackupInteractor {
 
 }
 
-extension BackupInteractor: UnlockDelegate {
+extension BackupInteractor: IUnlockDelegate {
 
     func onUnlock() {
         fetchWords()

@@ -1,12 +1,10 @@
-import Foundation
-
 class RestoreInteractor {
     weak var delegate: IRestoreInteractorDelegate?
 
-    private let walletManager: WordsManager
+    private let wordsManager: IWordsManager
 
-    init(walletManager: WordsManager) {
-        self.walletManager = walletManager
+    init(walletManager: IWordsManager) {
+        self.wordsManager = walletManager
     }
 }
 
@@ -14,7 +12,7 @@ extension RestoreInteractor: IRestoreInteractor {
 
     func validate(words: [String]) {
         do {
-            try walletManager.validate(words: words)
+            try wordsManager.validate(words: words)
             delegate?.didValidate()
         } catch {
             delegate?.didFailToValidate(withError: error)
@@ -23,7 +21,7 @@ extension RestoreInteractor: IRestoreInteractor {
 
     func restore(withWords words: [String]) {
         do {
-            try walletManager.restore(withWords: words)
+            try wordsManager.restore(withWords: words)
             App.shared.initLoggedInState()
             delegate?.didRestore()
         } catch {

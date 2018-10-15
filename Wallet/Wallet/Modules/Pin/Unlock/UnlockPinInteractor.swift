@@ -1,14 +1,12 @@
-import Foundation
-
 class UnlockPinInteractor {
     weak var delegate: IUnlockPinInteractorDelegate?
-    weak var unlockDelegate: UnlockDelegate?
+    weak var unlockDelegate: IUnlockDelegate?
 
-    private let pinManager: PinManager
-    private let biometricManager: BiometricManager
+    private let pinManager: IPinManager
+    private let biometricManager: IBiometricManager
     private let localStorage: ILocalStorage
 
-    init(pinManager: PinManager, biometricManager: BiometricManager, localStorage: ILocalStorage) {
+    init(pinManager: IPinManager, biometricManager: IBiometricManager, localStorage: ILocalStorage) {
         self.pinManager = pinManager
         self.biometricManager = biometricManager
         self.localStorage = localStorage

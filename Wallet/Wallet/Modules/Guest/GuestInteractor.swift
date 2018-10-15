@@ -1,12 +1,10 @@
-import Foundation
-
 class GuestInteractor {
     weak var delegate: IGuestInteractorDelegate?
 
-    private let walletManager: WordsManager
+    private let wordsManager: IWordsManager
 
-    init(walletManager: WordsManager) {
-        self.walletManager = walletManager
+    init(walletManager: IWordsManager) {
+        self.wordsManager = walletManager
     }
 }
 
@@ -14,7 +12,7 @@ extension GuestInteractor: IGuestInteractor {
 
     func createWallet() {
         do {
-            try walletManager.createWords()
+            try wordsManager.createWords()
             App.shared.initLoggedInState()
             delegate?.didCreateWallet()
         } catch {

@@ -1,4 +1,3 @@
-import Foundation
 import RxSwift
 
 class TransactionsInteractor {
@@ -8,10 +7,10 @@ class TransactionsInteractor {
     private let disposeBag = DisposeBag()
     private var secondaryDisposeBag = DisposeBag()
 
-    private let adapterManager: AdapterManager
-    private let exchangeRateManager: ExchangeRateManager
+    private let adapterManager: IAdapterManager
+    private let exchangeRateManager: IExchangeRateManager
 
-    init(adapterManager: AdapterManager, exchangeRateManager: ExchangeRateManager) {
+    init(adapterManager: IAdapterManager, exchangeRateManager: IExchangeRateManager) {
         self.adapterManager = adapterManager
         self.exchangeRateManager = exchangeRateManager
     }

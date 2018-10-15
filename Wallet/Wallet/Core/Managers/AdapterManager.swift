@@ -1,9 +1,8 @@
-import Foundation
 import RealmSwift
 import RxSwift
 
 class AdapterManager {
-    var adapters: [IAdapter] = []
+    private(set) var adapters: [IAdapter] = []
 
     var subject: PublishSubject<Void> = PublishSubject()
 
@@ -11,6 +10,10 @@ class AdapterManager {
         adapters.append(BitcoinAdapter(words: words, networkType: .bitcoinRegTest))
         adapters.append(BitcoinAdapter(words: words, networkType: .bitcoinCashTestNet))
     }
+
+}
+
+extension AdapterManager: IAdapterManager {
 
     func start() {
         for adapter in adapters {

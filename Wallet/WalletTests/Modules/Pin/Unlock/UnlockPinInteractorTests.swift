@@ -4,20 +4,18 @@ import Cuckoo
 
 class UnlockPinInteractorTests: XCTestCase {
     private var mockDelegate: MockIUnlockPinInteractorDelegate!
-    private var mockPinManager: MockPinManager!
-    private var mockBiometricManager: MockBiometricManager!
+    private var mockPinManager: MockIPinManager!
+    private var mockBiometricManager: MockIBiometricManager!
     private var mockLocalStorage: MockILocalStorage!
     private var interactor: UnlockPinInteractor!
 
     override func setUp() {
         super.setUp()
 
-        let mockApp = MockApp()
-
         mockDelegate = MockIUnlockPinInteractorDelegate()
-        mockPinManager = mockApp.mockPinManager
-        mockBiometricManager = MockBiometricManager()
-        mockLocalStorage = mockApp.mockLocalStorage
+        mockPinManager = MockIPinManager()
+        mockBiometricManager = MockIBiometricManager()
+        mockLocalStorage = MockILocalStorage()
 
         stub(mockDelegate) { mock in
             when(mock.didBiometricUnlock()).thenDoNothing()

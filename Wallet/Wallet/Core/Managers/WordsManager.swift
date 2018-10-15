@@ -1,14 +1,13 @@
-import Foundation
 import HSHDWalletKit
 import WalletKit
 import RxSwift
 
 class WordsManager {
-    let secureStorage: ISecureStorage
-    let localStorage: ILocalStorage
+    private let secureStorage: ISecureStorage
+    private let localStorage: ILocalStorage
 
     var backedUpSubject: PublishSubject<Bool> = PublishSubject()
-    var words: [String]?
+    private(set) var words: [String]?
 
     init(secureStorage: ISecureStorage, localStorage: ILocalStorage) {
         self.secureStorage = secureStorage
@@ -16,6 +15,10 @@ class WordsManager {
 
         words = secureStorage.words
     }
+
+}
+
+extension WordsManager: IWordsManager {
 
     var isBackedUp: Bool {
         get {

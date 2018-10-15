@@ -1,8 +1,8 @@
 import Foundation
 
-class LockRouter {
+class LockRouter: ILockRouter {
 
-    func showUnlock(delegate: UnlockDelegate?) {
+    func showUnlock(delegate: IUnlockDelegate?) {
         UnlockPinRouter.module(unlockDelegate: delegate)
     }
 

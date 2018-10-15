@@ -2,22 +2,12 @@ import UIKit
 import GrouviHUD
 
 class BlurManager {
-    let blurView = CustomIntensityVisualEffectView(effect: UIBlurEffect(style: .light), intensity: 0.4)
+    private let blurView = CustomIntensityVisualEffectView(effect: UIBlurEffect(style: .light), intensity: 0.4)
 
-    let lockManager: LockManager
+    private let lockManager: ILockManager
 
-    init(lockManager: LockManager) {
+    init(lockManager: ILockManager) {
         self.lockManager = lockManager
-    }
-
-    func willResignActive() {
-        if !lockManager.isLocked {
-            show()
-        }
-    }
-
-    func didBecomeActive() {
-        hide()
     }
 
     private func show() {
@@ -34,6 +24,20 @@ class BlurManager {
         }, completion: { _ in
             self.blurView.removeFromSuperview()
         })
+    }
+
+}
+
+extension BlurManager: IBlurManager {
+
+    func willResignActive() {
+        if !lockManager.isLocked {
+            show()
+        }
+    }
+
+    func didBecomeActive() {
+        hide()
     }
 
 }

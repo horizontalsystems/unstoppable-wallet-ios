@@ -1,5 +1,3 @@
-import Foundation
-
 class App {
     static let shared = App()
 
@@ -7,17 +5,18 @@ class App {
 
     let secureStorage: ISecureStorage
     let localStorage: ILocalStorage
-    let wordsManager: WordsManager
+    let wordsManager: IWordsManager
 
-    let pinManager: PinManager
-    let lockRouter: LockRouter
-    let lockManager: LockManager
-    let blurManager: BlurManager
+    let pinManager: IPinManager
+    let lockRouter: ILockRouter
+    let lockManager: ILockManager
+    let blurManager: IBlurManager
 
     let localizationManager: LocalizationManager
     let languageManager: ILanguageManager
 
-    var adapterManager: AdapterManager!
+    var adapterManager: IAdapterManager!
+    var exchangeRateManager: IExchangeRateManager!
 
     init() {
         secureStorage = KeychainStorage()
@@ -26,7 +25,7 @@ class App {
 
         pinManager = PinManager(secureStorage: secureStorage)
         lockRouter = LockRouter()
-        lockManager = LockManager(localStorage: localStorage, wordsManager: wordsManager, pinManager: pinManager, lockRouter: lockRouter)
+        lockManager = LockManager(localStorage: localStorage, wordsManager: wordsManager, lockRouter: lockRouter)
         blurManager = BlurManager(lockManager: lockManager)
 
         localizationManager = LocalizationManager()
@@ -38,6 +37,7 @@ class App {
     func initLoggedInState() {
         if let words = wordsManager.words {
             adapterManager = AdapterManager(words: words)
+            exchangeRateManager = ExchangeRateManager()
 
             adapterManager.start()
         }

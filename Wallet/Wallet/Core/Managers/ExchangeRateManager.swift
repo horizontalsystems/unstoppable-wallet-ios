@@ -1,10 +1,10 @@
-import Foundation
 import RxSwift
 
 class ExchangeRateManager {
-    static let shared = ExchangeRateManager()
-
     let subject = PublishSubject<[String: Double]>()
+}
+
+extension ExchangeRateManager: IExchangeRateManager {
 
     var exchangeRates: [String: Double] {
         return ["rBTC": 1000]

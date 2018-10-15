@@ -1,6 +1,6 @@
 import UIKit
 
-protocol UnlockDelegate: class {
+protocol IUnlockDelegate: class {
     func onUnlock()
 }
 
@@ -18,7 +18,7 @@ extension UnlockPinRouter: IUnlockPinRouter {
 
 extension UnlockPinRouter {
 
-    static func module(unlockDelegate: UnlockDelegate?, cancelable: Bool = false) {
+    static func module(unlockDelegate: IUnlockDelegate?, cancelable: Bool = false) {
         let biometricManager = BiometricManager()
 
         let router = UnlockPinRouter()

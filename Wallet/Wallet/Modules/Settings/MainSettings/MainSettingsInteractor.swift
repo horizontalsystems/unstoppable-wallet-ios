@@ -6,10 +6,10 @@ class MainSettingsInteractor {
     weak var delegate: IMainSettingsInteractorDelegate?
 
     private let localStorage: ILocalStorage
-    private let wordsManager: WordsManager
+    private let wordsManager: IWordsManager
     private let languageManager: ILanguageManager
 
-    init(localStorage: ILocalStorage, wordsManager: WordsManager, languageManager: ILanguageManager) {
+    init(localStorage: ILocalStorage, wordsManager: IWordsManager, languageManager: ILanguageManager) {
         self.localStorage = localStorage
         self.wordsManager = wordsManager
         self.languageManager = languageManager

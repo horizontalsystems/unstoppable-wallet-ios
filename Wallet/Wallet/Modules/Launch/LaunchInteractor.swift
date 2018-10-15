@@ -1,13 +1,11 @@
-import Foundation
-
 class LaunchInteractor {
-    private let wordsManager: WordsManager
-    private let lockManager: LockManager
-    private let pinManager: PinManager
+    private let wordsManager: IWordsManager
+    private let lockManager: ILockManager
+    private let pinManager: IPinManager
 
     weak var delegate: ILaunchInteractorDelegate?
 
-    init(wordsManager: WordsManager, lockManager: LockManager, pinManager: PinManager) {
+    init(wordsManager: IWordsManager, lockManager: ILockManager, pinManager: IPinManager) {
         self.wordsManager = wordsManager
         self.lockManager = lockManager
         self.pinManager = pinManager

@@ -1,21 +1,22 @@
-import Foundation
 import RxSwift
 
 class LockManager {
     private let localStorage: ILocalStorage
-    private let wordsManager: WordsManager
-    private let pinManager: PinManager
-    private let lockRouter: LockRouter
+    private let wordsManager: IWordsManager
+    private let lockRouter: ILockRouter
 
     private let lockTimeout: Double = 3
-    var isLocked: Bool = false
+    private(set) var isLocked: Bool = false
 
-    init(localStorage: ILocalStorage, wordsManager: WordsManager, pinManager: PinManager, lockRouter: LockRouter) {
+    init(localStorage: ILocalStorage, wordsManager: IWordsManager, lockRouter: ILockRouter) {
         self.localStorage = localStorage
         self.wordsManager = wordsManager
-        self.pinManager = pinManager
         self.lockRouter = lockRouter
     }
+
+}
+
+extension LockManager: ILockManager {
 
     func didEnterBackground() {
         guard wordsManager.isLoggedIn else {
@@ -53,7 +54,7 @@ class LockManager {
 
 }
 
-extension LockManager: UnlockDelegate {
+extension LockManager: IUnlockDelegate {
 
     func onUnlock() {
         isLocked = false

@@ -1,11 +1,13 @@
-import Foundation
-
 class PinManager {
     private let secureStorage: ISecureStorage
 
     init(secureStorage: ISecureStorage) {
         self.secureStorage = secureStorage
     }
+
+}
+
+extension PinManager: IPinManager {
 
     var isPinned: Bool {
         return secureStorage.pin != nil

@@ -2,7 +2,7 @@ import UIKit
 
 class BackupRouter {
     weak var navigationController: UINavigationController?
-    weak var unlockDelegate: UnlockDelegate?
+    weak var unlockDelegate: IUnlockDelegate?
 }
 
 extension BackupRouter: IBackupRouter {
