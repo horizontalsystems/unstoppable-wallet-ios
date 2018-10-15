@@ -31,5 +31,6 @@ target :Bank do
 end
 
 target :WalletTests do
+  pod 'RxSwift'
   pod "Cuckoo"
 end

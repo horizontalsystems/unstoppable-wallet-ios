@@ -37,11 +37,11 @@ class SettingsSecurityController: UIViewController, SectionsDataSource {
 
         tableView.reload()
 
-        App.shared.wordsManager.backedUpSubject.subscribeAsync(disposeBag: disposeBag, onNext: { [weak self] backedUp in
-            self?.backedUp = backedUp
-            self?.tableView.reload()
-            self?.navigationController?.tabBarItem.badgeValue = backedUp ? nil : "1"
-        })
+//        App.shared.wordsManager.backedUpSubject.subscribeAsync(disposeBag: disposeBag, onNext: { [weak self] backedUp in
+//            self?.backedUp = backedUp
+//            self?.tableView.reload()
+//            self?.navigationController?.tabBarItem.badgeValue = backedUp ? nil : "1"
+//        })
     }
 
     override func viewWillAppear(_ animated: Bool) {

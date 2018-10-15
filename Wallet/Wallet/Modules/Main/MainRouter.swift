@@ -46,7 +46,7 @@ extension MainRouter {
     }
 
     private static var settingsNavigation: UIViewController {
-        let navigation = UINavigationController(rootViewController: SettingsRouter.module())
+        let navigation = UINavigationController(rootViewController: MainSettingsRouter.module())
         navigation.navigationBar.barStyle = AppTheme.navigationBarStyle
         navigation.navigationBar.tintColor = AppTheme.navigationBarTintColor
         navigation.navigationBar.prefersLargeTitles = true

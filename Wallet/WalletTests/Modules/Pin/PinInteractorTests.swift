@@ -12,10 +12,10 @@ class PinInteractorTests: XCTestCase {
     override func setUp() {
         super.setUp()
 
+        let mockApp = MockApp()
+
         mockDelegate = MockIPinInteractorDelegate()
-        mockPinManager = MockPinManager()
-        interactor = PinInteractor(pinManager: mockPinManager)
-        interactor.delegate = mockDelegate
+        mockPinManager = mockApp.mockPinManager
 
         stub(mockDelegate) { mock in
             when(mock.didSavePin()).thenDoNothing()
@@ -24,6 +24,9 @@ class PinInteractorTests: XCTestCase {
         stub(mockPinManager) { mock in
             when(mock.store(pin: any())).thenDoNothing()
         }
+
+        interactor = PinInteractor(pinManager: mockPinManager)
+        interactor.delegate = mockDelegate
     }
 
     override func tearDown() {

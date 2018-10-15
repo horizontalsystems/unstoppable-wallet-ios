@@ -3,9 +3,9 @@ import RealmSwift
 import RxSwift
 
 class AdapterManager {
-    var adapters = [IAdapter]()
+    var adapters: [IAdapter] = []
 
-    var subject = PublishSubject<Void>()
+    var subject: PublishSubject<Void> = PublishSubject()
 
     init(words: [String]) {
         adapters.append(BitcoinAdapter(words: words, networkType: .bitcoinRegTest))

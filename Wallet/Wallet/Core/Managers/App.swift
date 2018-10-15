@@ -3,6 +3,7 @@ import Foundation
 class App {
     static let shared = App()
 
+    let secureStorage: ISecureStorage
     let localStorage: ILocalStorage
     let wordsManager: WordsManager
 
@@ -14,15 +15,16 @@ class App {
     var adapterManager: AdapterManager!
 
     init() {
+        secureStorage = KeychainStorage()
         localStorage = UserDefaultsStorage()
-        wordsManager = WordsManager(localStorage: localStorage)
+        wordsManager = WordsManager(secureStorage: secureStorage, localStorage: localStorage)
 
-        pinManager = PinManager()
+        pinManager = PinManager(secureStorage: secureStorage)
         lockRouter = LockRouter()
         lockManager = LockManager(localStorage: localStorage, wordsManager: wordsManager, pinManager: pinManager, lockRouter: lockRouter)
         blurManager = BlurManager(lockManager: lockManager)
 
-        LocalizationHelper.instance.update(language: localStorage.currentLanguage ?? LocalizationHelper.defaultLanguage)
+        LocalizationManager.instance.update(language: localStorage.currentLanguage ?? LocalizationManager.defaultLanguage)
 
         initLoggedInState()
     }

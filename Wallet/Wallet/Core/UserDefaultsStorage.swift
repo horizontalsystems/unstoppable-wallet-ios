@@ -2,6 +2,7 @@ import Foundation
 
 class UserDefaultsStorage: ILocalStorage {
     private let keyWords = "mnemonic_words"
+    private let keyIsBackedUp = "is_backed_up"
     private let keyCurrentLanguage = "current_language"
     private let keyLightMode = "light_mode"
     private let iUnderstandKey = "i_understand_key"
@@ -15,7 +16,12 @@ class UserDefaultsStorage: ILocalStorage {
         return nil
     }
 
-    public var currentLanguage: String? {
+    var isBackedUp: Bool {
+        get { return bool(for: keyIsBackedUp) ?? false }
+        set { set(newValue, for: keyIsBackedUp) }
+    }
+
+    var currentLanguage: String? {
         get { return getString(keyCurrentLanguage) }
         set { setString(keyCurrentLanguage, value: newValue) }
     }
@@ -50,11 +56,11 @@ class UserDefaultsStorage: ILocalStorage {
         UserDefaults.standard.synchronize()
     }
 
-    public func getString(_ name: String) -> String? {
+    private func getString(_ name: String) -> String? {
         return UserDefaults.standard.value(forKey: name) as? String
     }
 
-    public func setString(_ name: String, value: String?) {
+    private func setString(_ name: String, value: String?) {
         if let value = value {
             UserDefaults.standard.set(value, forKey: name)
         } else  {
@@ -63,16 +69,16 @@ class UserDefaultsStorage: ILocalStorage {
         UserDefaults.standard.synchronize()
     }
 
-    func bool(for key: String) -> Bool? {
+    private func bool(for key: String) -> Bool? {
         return UserDefaults.standard.value(forKey: key) as? Bool
     }
 
-    func set(_ value: Bool, for key: String) {
+    private func set(_ value: Bool, for key: String) {
         UserDefaults.standard.set(value, forKey: key)
         UserDefaults.standard.synchronize()
     }
 
-    public func set(_ value: Double?, for key: String) {
+    private func set(_ value: Double?, for key: String) {
         if let value = value {
             UserDefaults.standard.set(value, forKey: key)
         } else {
@@ -80,7 +86,7 @@ class UserDefaultsStorage: ILocalStorage {
         }
     }
 
-    public func double(for key: String) -> Double {
+    private func double(for key: String) -> Double {
         return UserDefaults.standard.double(forKey: key)
     }
 

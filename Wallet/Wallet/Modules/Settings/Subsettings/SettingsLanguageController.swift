@@ -39,7 +39,7 @@ class SettingsLanguageController: UIViewController, SectionsDataSource {
 
         sections.append(Section(id: "languages", headerState: .margin(height: SettingsTheme.subSettingsHeaderHeight), footerState: .margin(height: SettingsTheme.subSettingsHeaderHeight), rows: availableLanguages.map { language in
             Row<LanguageCell>(id: language, height: SettingsTheme.languageCellHeight, bind: { cell, _ in
-                cell.bind(title: LocalizationHelper.displayName(forLanguage: language), subtitle: LocalizationHelper.displayName(forLanguage: language, locale: NSLocale(localeIdentifier: language)), selected: LocalizationHelper.instance.language == language)
+                cell.bind(title: LocalizationManager.displayName(forLanguage: language), subtitle: LocalizationManager.displayName(forLanguage: language, locale: NSLocale(localeIdentifier: language)), selected: LocalizationManager.instance.language == language)
             }, action: { [weak self] _ in
                 self?.applyLanguage(language: language)
             })
@@ -50,7 +50,7 @@ class SettingsLanguageController: UIViewController, SectionsDataSource {
 
     func applyLanguage(language: String) {
         App.shared.localStorage.currentLanguage = language
-        LocalizationHelper.instance.update(language: language)
+        LocalizationManager.instance.update(language: language)
 
         if let window = UIApplication.shared.keyWindow {
             UIView.transition(with: window, duration: 0.5, options: .transitionCrossDissolve, animations: {

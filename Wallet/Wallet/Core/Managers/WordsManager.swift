@@ -4,34 +4,27 @@ import WalletKit
 import RxSwift
 
 class WordsManager {
-    let backedUpKey = "backed_up_key"
-
+    let secureStorage: ISecureStorage
     let localStorage: ILocalStorage
 
-    let backedUpSubject: BehaviorSubject<Bool>
-    var isBackedUp: Bool {
-        get {
-            let v: Bool = KeychainHelper.shared.getBool(backedUpKey) ?? false
-            return v
-        }
-        set {
-            backedUpSubject.onNext(newValue)
-            try? KeychainHelper.shared.set(newValue, key: backedUpKey)
-        }
-    }
-
-    func validate(words: [String]) throws {
-        try Mnemonic.validate(words: words)
-    }
-
+    var backedUpSubject: PublishSubject<Bool> = PublishSubject()
     var words: [String]?
 
-    init(localStorage: ILocalStorage) {
+    init(secureStorage: ISecureStorage, localStorage: ILocalStorage) {
+        self.secureStorage = secureStorage
         self.localStorage = localStorage
-        backedUpSubject = BehaviorSubject(value: false)
-        backedUpSubject.onNext(isBackedUp)
 
-        words = localStorage.savedWords
+        words = secureStorage.words
+    }
+
+    var isBackedUp: Bool {
+        get {
+            return localStorage.isBackedUp
+        }
+        set {
+            localStorage.isBackedUp = newValue
+            backedUpSubject.onNext(newValue)
+        }
     }
 
     var isLoggedIn: Bool {
@@ -40,19 +33,23 @@ class WordsManager {
 
     func createWords() throws {
         let generatedWords = try Mnemonic.generate()
-        localStorage.save(words: generatedWords)
+        try secureStorage.set(words: generatedWords)
         words = generatedWords
+    }
+
+    func validate(words: [String]) throws {
+        try Mnemonic.validate(words: words)
     }
 
     func restore(withWords words: [String]) throws {
         try Mnemonic.validate(words: words)
-        localStorage.save(words: words)
+        try secureStorage.set(words: words)
         self.words = words
     }
 
     func removeWords() {
         words = nil
-        localStorage.clearWords()
+        try? secureStorage.set(words: nil)
     }
 
 }

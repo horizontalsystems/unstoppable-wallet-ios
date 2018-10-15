@@ -8,7 +8,7 @@ class LockManager {
     private let lockRouter: LockRouter
 
     private let lockTimeout: Double = 3
-    var isLocked = false
+    var isLocked: Bool = false
 
     init(localStorage: ILocalStorage, wordsManager: WordsManager, pinManager: PinManager, lockRouter: LockRouter) {
         self.localStorage = localStorage

@@ -114,10 +114,4 @@ class UnlockPinPresenterTests: XCTestCase {
         verify(mockView).showKeyboard(for: unlockPage)
     }
 
-    func testNeverDismiss() {
-        presenter.onCancel()
-
-        verify(mockRouter, never()).dismiss()
-    }
-
 }

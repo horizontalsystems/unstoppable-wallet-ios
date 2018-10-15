@@ -1,18 +1,22 @@
 import Foundation
 
 class PinManager {
-    private let pinKey = "pin_keychain_key"
+    private let secureStorage: ISecureStorage
+
+    init(secureStorage: ISecureStorage) {
+        self.secureStorage = secureStorage
+    }
 
     var isPinned: Bool {
-        return KeychainHelper.shared.getString(pinKey) != nil
+        return secureStorage.pin != nil
     }
 
     func store(pin: String?) throws {
-        try KeychainHelper.shared.set(pin, key: pinKey)
+        try secureStorage.set(pin: pin)
     }
 
     func validate(pin: String) -> Bool {
-        return KeychainHelper.shared.getString(pinKey) == pin
+        return secureStorage.pin == pin
     }
 
 }
