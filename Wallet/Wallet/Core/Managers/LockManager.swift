@@ -1,4 +1,4 @@
-import RxSwift
+import Foundation
 
 class LockManager {
     private let localStorage: ILocalStorage

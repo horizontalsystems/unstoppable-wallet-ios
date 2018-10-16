@@ -17,7 +17,7 @@ extension MainSettingsRouter: IMainSettingsRouter {
     }
 
     func showLanguageSettings() {
-        viewController?.navigationController?.pushViewController(SettingsLanguageController(), animated: true)
+        viewController?.navigationController?.pushViewController(LanguageSettingsRouter.module(), animated: true)
     }
 
     func showAbout() {
