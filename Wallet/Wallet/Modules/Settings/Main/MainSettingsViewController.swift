@@ -12,6 +12,7 @@ class MainSettingsViewController: UIViewController, SectionsDataSource {
     var baseCurrency = "n/a"
     var language = ""
     var lightMode = true
+    var appVersion = ""
 
     var didLoad = false
 
@@ -107,10 +108,8 @@ class MainSettingsViewController: UIViewController, SectionsDataSource {
         }, action: { [weak self] _ in
             self?.delegate.didTapAbout()
         }))
-        let infoFooter: ViewState<SettingsInfoFooter> = .cellType(hash: "info_view", binder: { view in
-            view.logoButton.handleTouch = { [weak self] in
-                self?.delegate.didTapAppLink()
-            }
+        let infoFooter: ViewState<SettingsInfoFooter> = .cellType(hash: "info_view", binder: { [weak self] view in
+            self?.bindFooter(view: view)
         }, dynamicHeight: { _ in SettingsTheme.infoFooterHeight })
         sections.append(Section(id: "appearance_settings", headerState: .marginColor(height: SettingsTheme.headerHeight, color: .clear), footerState: infoFooter, rows: aboutRows))
 
@@ -143,6 +142,12 @@ class MainSettingsViewController: UIViewController, SectionsDataSource {
         sections.append(Section(id: "debug_section", headerState: .marginColor(height: 50, color: .clear), footerState: .marginColor(height: 20, color: .clear), rows: debugRows))
 
         return sections
+    }
+
+    func bindFooter(view: SettingsInfoFooter) {
+        view.bind(appVersion: appVersion) { [weak self] in
+            self?.delegate.didTapAppLink()
+        }
     }
 
     func logout() {
@@ -205,6 +210,10 @@ extension MainSettingsViewController: IMainSettingsView {
 
     func set(lightMode: Bool) {
         self.lightMode = lightMode
+    }
+
+    func set(appVersion: String) {
+        self.appVersion = appVersion
     }
 
     func setTabItemBadge(count: Int) {

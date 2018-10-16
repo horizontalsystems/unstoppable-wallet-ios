@@ -4,6 +4,7 @@ import SnapKit
 
 class SettingsInfoFooter: UITableViewHeaderFooterView {
 
+    let versionLabel = UILabel()
     let logoButton = RespondView()
 
     override init(reuseIdentifier: String?) {
@@ -11,7 +12,6 @@ class SettingsInfoFooter: UITableViewHeaderFooterView {
         backgroundView = UIView()
         backgroundView?.backgroundColor = .clear
 
-        let versionLabel = UILabel()
         contentView.addSubview(versionLabel)
         versionLabel.snp.makeConstraints { maker in
             maker.top.equalToSuperview().offset(SettingsTheme.versionLabelTopMargin)
@@ -19,7 +19,6 @@ class SettingsInfoFooter: UITableViewHeaderFooterView {
         }
         versionLabel.textColor = SettingsTheme.versionColor
         versionLabel.font = SettingsTheme.versionFont
-//        versionLabel.text = "settings.info.title".localized + " " + SystemInfoManager.shared.appVersion
         versionLabel.text = "settings.info.title".localized
 
         let separatorView = UIView()
@@ -57,6 +56,11 @@ class SettingsInfoFooter: UITableViewHeaderFooterView {
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    func bind(appVersion: String, handleTouch: (() -> ())? = nil) {
+        versionLabel.text = "settings.info.title".localized + " " + appVersion
+        logoButton.handleTouch = handleTouch
     }
 
 }

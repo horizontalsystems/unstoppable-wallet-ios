@@ -8,11 +8,13 @@ class MainSettingsInteractorTests: XCTestCase {
     private var mockLocalStorage: MockILocalStorage!
     private var mockWordsManager: MockIWordsManager!
     private var mockLanguageManager: MockILanguageManager!
+    private var mockSystemInfoManager: MockISystemInfoManager!
 
     private var interactor: MainSettingsInteractor!
 
     let currentLanguageDisplayName = "Chitaurian"
     let backedUpSubject = PublishSubject<Bool>()
+    let appVersion = "1"
 
     override func setUp() {
         super.setUp()
@@ -21,6 +23,7 @@ class MainSettingsInteractorTests: XCTestCase {
         mockLocalStorage = MockILocalStorage()
         mockWordsManager = MockIWordsManager()
         mockLanguageManager = MockILanguageManager()
+        mockSystemInfoManager = MockISystemInfoManager()
 
         stub(mockDelegate) { mock in
             when(mock.didUpdateLightMode()).thenDoNothing()
@@ -37,8 +40,11 @@ class MainSettingsInteractorTests: XCTestCase {
         stub(mockLanguageManager) { mock in
             when(mock.displayNameForCurrentLanguage.get).thenReturn(currentLanguageDisplayName)
         }
+        stub(mockSystemInfoManager) { mock in
+            when(mock.appVersion.get).thenReturn(appVersion)
+        }
 
-        interactor = MainSettingsInteractor(localStorage: mockLocalStorage, wordsManager: mockWordsManager, languageManager: mockLanguageManager)
+        interactor = MainSettingsInteractor(localStorage: mockLocalStorage, wordsManager: mockWordsManager, languageManager: mockLanguageManager, systemInfoManager: mockSystemInfoManager)
         interactor.delegate = mockDelegate
     }
 
@@ -46,6 +52,7 @@ class MainSettingsInteractorTests: XCTestCase {
         mockDelegate = nil
         mockLocalStorage = nil
         mockLanguageManager = nil
+        mockSystemInfoManager = nil
 
         interactor = nil
 
@@ -100,6 +107,10 @@ class MainSettingsInteractorTests: XCTestCase {
         interactor.set(lightMode: false)
         verify(mockLocalStorage).lightMode.set(false)
         verify(mockDelegate).didUpdateLightMode()
+    }
+
+    func testAppVersion() {
+        XCTAssertEqual(interactor.appVersion, appVersion)
     }
 
 }

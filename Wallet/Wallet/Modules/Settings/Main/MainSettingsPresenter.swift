@@ -22,6 +22,7 @@ extension MainSettingsPresenter: IMainSettingsViewDelegate {
         view?.set(baseCurrency: interactor.baseCurrency)
         view?.set(language: interactor.currentLanguage)
         view?.set(lightMode: interactor.lightMode)
+        view?.set(appVersion: interactor.appVersion)
 
         view?.setTabItemBadge(count: interactor.isBackedUp ? 0 : 1)
     }

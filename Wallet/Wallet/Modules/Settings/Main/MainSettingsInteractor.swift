@@ -8,11 +8,13 @@ class MainSettingsInteractor {
     private let localStorage: ILocalStorage
     private let wordsManager: IWordsManager
     private let languageManager: ILanguageManager
+    private let systemInfoManager: ISystemInfoManager
 
-    init(localStorage: ILocalStorage, wordsManager: IWordsManager, languageManager: ILanguageManager) {
+    init(localStorage: ILocalStorage, wordsManager: IWordsManager, languageManager: ILanguageManager, systemInfoManager: ISystemInfoManager) {
         self.localStorage = localStorage
         self.wordsManager = wordsManager
         self.languageManager = languageManager
+        self.systemInfoManager = systemInfoManager
 
         wordsManager.backedUpSubject
                 .subscribe(onNext: { [weak self] isBackedUp in
@@ -45,6 +47,10 @@ extension MainSettingsInteractor: IMainSettingsInteractor {
 
     var lightMode: Bool {
         return localStorage.lightMode
+    }
+
+    var appVersion: String {
+        return systemInfoManager.appVersion
     }
 
     func set(lightMode: Bool) {

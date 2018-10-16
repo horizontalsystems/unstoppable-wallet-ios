@@ -11,6 +11,7 @@ class MainSettingsPresenterTests: XCTestCase {
 
     private let defaultLanguage = "English"
     private let baseCurrency = "USD"
+    private let appVersion = "1"
 
     override func setUp() {
         super.setUp()
@@ -25,6 +26,7 @@ class MainSettingsPresenterTests: XCTestCase {
             when(mock.set(language: any())).thenDoNothing()
             when(mock.set(baseCurrency: any())).thenDoNothing()
             when(mock.set(lightMode: any())).thenDoNothing()
+            when(mock.set(appVersion: any())).thenDoNothing()
             when(mock.setTabItemBadge(count: any())).thenDoNothing()
         }
         stub(mockRouter) { mock in
@@ -41,6 +43,7 @@ class MainSettingsPresenterTests: XCTestCase {
             when(mock.currentLanguage.get).thenReturn(defaultLanguage)
             when(mock.baseCurrency.get).thenReturn(baseCurrency)
             when(mock.lightMode.get).thenReturn(true)
+            when(mock.appVersion.get).thenReturn(appVersion)
             when(mock.set(lightMode: any())).thenDoNothing()
         }
 
@@ -108,6 +111,11 @@ class MainSettingsPresenterTests: XCTestCase {
         presenter.viewDidLoad()
 
         verify(mockView).set(lightMode: false)
+    }
+
+    func testShowAppVersionOnLoad() {
+        presenter.viewDidLoad()
+        verify(mockView).set(appVersion: appVersion)
     }
 
     func testDidBackup() {

@@ -6,6 +6,7 @@ protocol IMainSettingsView: class {
     func set(baseCurrency: String)
     func set(language: String)
     func set(lightMode: Bool)
+    func set(appVersion: String)
     func setTabItemBadge(count: Int)
 }
 
@@ -25,6 +26,7 @@ protocol IMainSettingsInteractor {
     var currentLanguage: String { get }
     var baseCurrency: String { get }
     var lightMode: Bool { get }
+    var appVersion: String { get }
     func set(lightMode: Bool)
 }
 
