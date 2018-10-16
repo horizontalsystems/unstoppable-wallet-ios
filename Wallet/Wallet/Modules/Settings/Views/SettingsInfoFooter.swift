@@ -19,7 +19,8 @@ class SettingsInfoFooter: UITableViewHeaderFooterView {
         }
         versionLabel.textColor = SettingsTheme.versionColor
         versionLabel.font = SettingsTheme.versionFont
-        versionLabel.text = "settings.info.title".localized + " " + AppHelper.shared.appVersion
+//        versionLabel.text = "settings.info.title".localized + " " + SystemInfoManager.shared.appVersion
+        versionLabel.text = "settings.info.title".localized
 
         let separatorView = UIView()
         separatorView.backgroundColor = SettingsTheme.infoFooterSeparatorColor

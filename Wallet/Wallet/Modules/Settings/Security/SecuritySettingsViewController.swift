@@ -8,6 +8,7 @@ class SecuritySettingsViewController: UIViewController, SectionsDataSource {
 
     var backedUp = false
     var biometricUnlockOn = false
+    var biometryType: BiometryType = .none
 
     var didLoad = false
 
@@ -41,9 +42,9 @@ class SecuritySettingsViewController: UIViewController, SectionsDataSource {
 
         view.backgroundColor = AppTheme.controllerBackground
 
-        tableView.reload()
-
         delegate.viewDidLoad()
+
+        tableView.reload()
 
         didLoad = true
     }
@@ -57,19 +58,18 @@ class SecuritySettingsViewController: UIViewController, SectionsDataSource {
 
         var pinTouchFaceRows = [RowProtocol]()
 
-        if let biometricType = AppHelper.shared.biometricType {
-            let createCell: ((String) -> ()) = { title in
-                pinTouchFaceRows.append(Row<SettingsToggleCell>(id: "biometrics_id", height: SettingsTheme.securityCellHeight, bind: { [weak self] cell, _ in
-                    cell.bind(titleIcon: nil, title: title.localized, isOn: App.shared.localStorage.isBiometricOn, showDisclosure: false, onToggle: { isOn in
-                        self?.delegate.didSwitch(biometricUnlockOn: isOn)
-                    })
-                }))
-            }
-            switch biometricType {
-            case .touchID: createCell("settings_security.touch_id")
-            case .faceID: createCell("settings_security.face_id")
-            default: ()
-            }
+        let createCell: ((String) -> ()) = { title in
+            pinTouchFaceRows.append(Row<SettingsToggleCell>(id: "biometrics_id", height: SettingsTheme.securityCellHeight, bind: { [weak self] cell, _ in
+                cell.bind(titleIcon: nil, title: title.localized, isOn: App.shared.localStorage.isBiometricOn, showDisclosure: false, onToggle: { isOn in
+                    self?.delegate.didSwitch(biometricUnlockOn: isOn)
+                })
+            }))
+        }
+
+        switch biometryType {
+        case .touchId: createCell("settings_security.touch_id")
+        case .faceId: createCell("settings_security.face_id")
+        default: ()
         }
 
         let setOrChangePinTitle = App.shared.pinManager.isPinned ? "settings_security.change_pin".localized : "settings_security.set_pin".localized
@@ -107,6 +107,11 @@ extension SecuritySettingsViewController: ISecuritySettingsView {
 
     func set(biometricUnlockOn: Bool) {
         self.biometricUnlockOn = biometricUnlockOn
+        reloadIfNeeded()
+    }
+
+    func set(biometryType: BiometryType) {
+        self.biometryType = biometryType
         reloadIfNeeded()
     }
 

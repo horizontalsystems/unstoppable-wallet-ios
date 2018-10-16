@@ -1,6 +1,6 @@
 import RxSwift
 
-protocol IRandomProvider {
+protocol IRandomManager {
     func getRandomIndexes(count: Int) -> [Int]
 }
 
@@ -121,4 +121,9 @@ protocol IExchangeRateManager {
     var subject: PublishSubject<[String: Double]> { get }
     var exchangeRates: [String: Double] { get }
     func updateRates()
+}
+
+protocol ISystemInfoManager {
+    var appVersion: String { get }
+    var biometryType: BiometryType { get }
 }

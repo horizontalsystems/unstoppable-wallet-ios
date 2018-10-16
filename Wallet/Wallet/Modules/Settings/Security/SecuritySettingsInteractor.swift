@@ -7,10 +7,12 @@ class SecuritySettingsInteractor {
 
     private let localStorage: ILocalStorage
     private let wordsManager: IWordsManager
+    private let systemInfoManager: ISystemInfoManager
 
-    init(localStorage: ILocalStorage, wordsManager: IWordsManager) {
+    init(localStorage: ILocalStorage, wordsManager: IWordsManager, systemInfoManager: ISystemInfoManager) {
         self.localStorage = localStorage
         self.wordsManager = wordsManager
+        self.systemInfoManager = systemInfoManager
 
         wordsManager.backedUpSubject
                 .subscribe(onNext: { [weak self] isBackedUp in
@@ -31,6 +33,10 @@ extension SecuritySettingsInteractor: ISecuritySettingsInteractor {
 
     var isBiometricUnlockOn: Bool {
         return localStorage.isBiometricOn
+    }
+
+    var biometryType: BiometryType {
+        return systemInfoManager.biometryType
     }
 
     var isBackedUp: Bool {

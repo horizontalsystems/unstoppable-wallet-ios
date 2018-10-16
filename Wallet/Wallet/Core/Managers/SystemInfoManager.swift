@@ -1,20 +1,25 @@
 import Foundation
 import LocalAuthentication
 
-class AppHelper {
-    static let shared = AppHelper()
+class SystemInfoManager: ISystemInfoManager {
 
-    public lazy var appVersion: String = {
+    var appVersion: String {
         return Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as! String
-    }()
+    }
 
-    var biometricType: LABiometryType? {
+    var biometryType: BiometryType {
         var authError: NSError?
         let localAuthenticationContext = LAContext()
+
         if localAuthenticationContext.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &authError) {
-            return localAuthenticationContext.biometryType
+            switch localAuthenticationContext.biometryType {
+            case .faceID: return .faceId
+            case .touchID: return .touchId
+            case .none: return .none
+            }
         }
-        return nil
+
+        return .none
     }
 
 }

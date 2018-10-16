@@ -6,12 +6,12 @@ class BackupInteractor {
 
     private var wordsManager: IWordsManager
     private let pinManager: IPinManager
-    private var indexesProvider: IRandomProvider
+    private var randomManager: IRandomManager
 
-    init(wordsManager: IWordsManager, pinManager: IPinManager, indexesProvider: IRandomProvider) {
+    init(wordsManager: IWordsManager, pinManager: IPinManager, randomManager: IRandomManager) {
         self.wordsManager = wordsManager
         self.pinManager = pinManager
-        self.indexesProvider = indexesProvider
+        self.randomManager = randomManager
     }
 
     private func fetchWords() {
@@ -25,7 +25,7 @@ class BackupInteractor {
 extension BackupInteractor: IBackupInteractor {
 
     func fetchConfirmationIndexes() {
-        delegate?.didFetch(confirmationIndexes: indexesProvider.getRandomIndexes(count: 2))
+        delegate?.didFetch(confirmationIndexes: randomManager.getRandomIndexes(count: 2))
     }
 
     func validate(confirmationWords: [Int: String]) {

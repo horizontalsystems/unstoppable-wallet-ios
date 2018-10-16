@@ -15,6 +15,9 @@ class App {
     let localizationManager: LocalizationManager
     let languageManager: ILanguageManager
 
+    let randomManager: IRandomManager
+    let systemInfoManager: ISystemInfoManager
+
     var adapterManager: IAdapterManager!
     var exchangeRateManager: IExchangeRateManager!
 
@@ -30,6 +33,9 @@ class App {
 
         localizationManager = LocalizationManager()
         languageManager = LanguageManager(localizationManager: localizationManager, localStorage: localStorage, fallbackLanguage: fallbackLanguage)
+
+        randomManager = RandomManager()
+        systemInfoManager = SystemInfoManager()
 
         initLoggedInState()
     }

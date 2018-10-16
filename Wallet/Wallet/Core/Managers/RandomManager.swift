@@ -1,7 +1,7 @@
 import Foundation
 import Darwin
 
-class RandomProvider: IRandomProvider {
+class RandomManager: IRandomManager {
 
     func getRandomIndexes(count: Int) -> [Int] {
         var indexes = [Int]()

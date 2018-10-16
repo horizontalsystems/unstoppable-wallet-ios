@@ -25,7 +25,7 @@ extension BackupRouter {
 
     static func module(dismissMode: BackupPresenter.DismissMode) -> UIViewController {
         let router = BackupRouter()
-        let interactor = BackupInteractor(wordsManager: App.shared.wordsManager, pinManager: App.shared.pinManager, indexesProvider: Factory.instance.randomProvider)
+        let interactor = BackupInteractor(wordsManager: App.shared.wordsManager, pinManager: App.shared.pinManager, randomManager: App.shared.randomManager)
         let presenter = BackupPresenter(interactor: interactor, router: router, dismissMode: dismissMode)
         let navigationController = BackupNavigationController(viewDelegate: presenter)
 

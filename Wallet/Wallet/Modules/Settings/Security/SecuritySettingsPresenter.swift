@@ -17,6 +17,7 @@ extension SecuritySettingsPresenter: ISecuritySettingsViewDelegate {
         view?.set(title: "settings_security.title")
 
         view?.set(biometricUnlockOn: interactor.isBiometricUnlockOn)
+        view?.set(biometryType: interactor.biometryType)
         view?.set(backedUp: interactor.isBackedUp)
     }
 

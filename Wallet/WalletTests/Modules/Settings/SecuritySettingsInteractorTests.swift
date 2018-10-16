@@ -7,6 +7,7 @@ class SecuritySettingsInteractorTests: XCTestCase {
     private var mockDelegate: MockISecuritySettingsInteractorDelegate!
     private var mockWordsManager: MockIWordsManager!
     private var mockLocalStorage: MockILocalStorage!
+    private var mockSystemInfoManager: MockISystemInfoManager!
 
     private var interactor: SecuritySettingsInteractor!
 
@@ -18,6 +19,7 @@ class SecuritySettingsInteractorTests: XCTestCase {
         mockDelegate = MockISecuritySettingsInteractorDelegate()
         mockWordsManager = MockIWordsManager()
         mockLocalStorage = MockILocalStorage()
+        mockSystemInfoManager = MockISystemInfoManager()
 
         stub(mockDelegate) { mock in
             when(mock.didBackup()).thenDoNothing()
@@ -30,8 +32,11 @@ class SecuritySettingsInteractorTests: XCTestCase {
             when(mock.isBiometricOn.get).thenReturn(true)
             when(mock.isBiometricOn.set(any())).thenDoNothing()
         }
+        stub(mockSystemInfoManager) { mock in
+            when(mock.biometryType.get).thenReturn(.faceId)
+        }
 
-        interactor = SecuritySettingsInteractor(localStorage: mockLocalStorage, wordsManager: mockWordsManager)
+        interactor = SecuritySettingsInteractor(localStorage: mockLocalStorage, wordsManager: mockWordsManager, systemInfoManager: mockSystemInfoManager)
         interactor.delegate = mockDelegate
     }
 
@@ -39,6 +44,7 @@ class SecuritySettingsInteractorTests: XCTestCase {
         mockDelegate = nil
         mockWordsManager = nil
         mockLocalStorage = nil
+        mockSystemInfoManager = nil
 
         interactor = nil
 
@@ -55,6 +61,10 @@ class SecuritySettingsInteractorTests: XCTestCase {
         }
 
         XCTAssertFalse(interactor.isBiometricUnlockOn)
+    }
+
+    func testIsBiometryType() {
+        XCTAssertEqual(interactor.biometryType, .faceId)
     }
 
     func testIsBackedUp() {
