@@ -3,13 +3,21 @@ import GrouviExtensions
 import SectionsTableViewKit
 import RxSwift
 
-class SettingsSecurityController: UIViewController, SectionsDataSource {
-    let disposeBag = DisposeBag()
+class SecuritySettingsViewController: UIViewController, SectionsDataSource {
     let tableView = SectionsTableView(style: .grouped)
-    var backedUp = false
 
-    init() {
+    var backedUp = false
+    var biometricUnlockOn = false
+
+    var didLoad = false
+
+    var delegate: ISecuritySettingsViewDelegate
+
+    init(delegate: ISecuritySettingsViewDelegate) {
+        self.delegate = delegate
+
         super.init(nibName: nil, bundle: nil)
+
         tableView.registerCell(forClass: SettingsCell.self)
         tableView.registerCell(forClass: SettingsRightImageCell.self)
         tableView.registerCell(forClass: SettingsToggleCell.self)
@@ -31,17 +39,13 @@ class SettingsSecurityController: UIViewController, SectionsDataSource {
             maker.edges.equalToSuperview()
         }
 
-        title = "settings_security.title".localized
-
         view.backgroundColor = AppTheme.controllerBackground
 
         tableView.reload()
 
-//        App.shared.wordsManager.backedUpSubject.subscribeAsync(disposeBag: disposeBag, onNext: { [weak self] backedUp in
-//            self?.backedUp = backedUp
-//            self?.tableView.reload()
-//            self?.navigationController?.tabBarItem.badgeValue = backedUp ? nil : "1"
-//        })
+        delegate.viewDidLoad()
+
+        didLoad = true
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -55,9 +59,9 @@ class SettingsSecurityController: UIViewController, SectionsDataSource {
 
         if let biometricType = AppHelper.shared.biometricType {
             let createCell: ((String) -> ()) = { title in
-                pinTouchFaceRows.append(Row<SettingsToggleCell>(id: "biometrics_id", height: SettingsTheme.securityCellHeight, bind: { cell, _ in
+                pinTouchFaceRows.append(Row<SettingsToggleCell>(id: "biometrics_id", height: SettingsTheme.securityCellHeight, bind: { [weak self] cell, _ in
                     cell.bind(titleIcon: nil, title: title.localized, isOn: App.shared.localStorage.isBiometricOn, showDisclosure: false, onToggle: { isOn in
-                        App.shared.localStorage.isBiometricOn = isOn
+                        self?.delegate.didSwitch(biometricUnlockOn: isOn)
                     })
                 }))
             }
@@ -72,23 +76,43 @@ class SettingsSecurityController: UIViewController, SectionsDataSource {
         pinTouchFaceRows.append(Row<SettingsCell>(id: "set_pin", hash: "pinned_\(App.shared.pinManager.isPinned)", height: SettingsTheme.securityCellHeight, bind: { cell, _ in
             cell.bind(titleIcon: nil, title: setOrChangePinTitle, showDisclosure: true, last: true)
         }, action: { [weak self] _ in
-            if App.shared.pinManager.isPinned {
-                EditPinRouter.module(from: self)
-            }
+            self?.delegate.didTapEditPin()
         }))
         sections.append(Section(id: "security", headerState: .margin(height: SettingsTheme.subSettingsHeaderHeight), footerState: .margin(height: SettingsTheme.subSettingsHeaderHeight), rows: pinTouchFaceRows))
 
         var backupRows = [RowProtocol]()
         let securityAttentionImage = backedUp ? nil : UIImage(named: "Attention Icon")
-        backupRows.append(Row<SettingsRightImageCell>(id: "paper_key", height: SettingsTheme.securityCellHeight, bind: { cell, _ in
+        backupRows.append(Row<SettingsRightImageCell>(id: "paper_key", height: SettingsTheme.securityCellHeight, autoDeselect: true, bind: { cell, _ in
             cell.bind(titleIcon: nil, title: "settings_security.paper_key".localized, rightImage: securityAttentionImage, rightImageTintColor: SettingsTheme.attentionIconTint, showDisclosure: true)
         }, action: { [weak self] _ in
-            self?.tableView.deselectRow(at: self!.tableView.indexPathForSelectedRow!, animated: true)
-            self?.present(BackupRouter.module(dismissMode: .dismissSelf), animated: true)
+            self?.delegate.didTapSecretKey()
         }))
         sections.append(Section(id: "security", headerState: .margin(height: SettingsTheme.subSettingsHeaderHeight), footerState: .margin(height: SettingsTheme.headerHeight), rows: backupRows))
 
         return sections
+    }
+
+    func reloadIfNeeded() {
+        if didLoad {
+            tableView.reload()
+        }
+    }
+}
+
+extension SecuritySettingsViewController: ISecuritySettingsView {
+
+    func set(title: String) {
+        self.title = title.localized
+    }
+
+    func set(biometricUnlockOn: Bool) {
+        self.biometricUnlockOn = biometricUnlockOn
+        reloadIfNeeded()
+    }
+
+    func set(backedUp: Bool) {
+        self.backedUp = backedUp
+        reloadIfNeeded()
     }
 
 }

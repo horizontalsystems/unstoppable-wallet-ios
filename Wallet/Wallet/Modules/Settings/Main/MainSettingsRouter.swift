@@ -7,7 +7,7 @@ class MainSettingsRouter {
 extension MainSettingsRouter: IMainSettingsRouter {
 
     func showSecuritySettings() {
-        viewController?.navigationController?.pushViewController(SettingsSecurityController(), animated: true)
+        viewController?.navigationController?.pushViewController(SecuritySettingsRouter.module(), animated: true)
     }
 
     func showImportWallet() {
