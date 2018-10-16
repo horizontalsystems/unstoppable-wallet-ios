@@ -44,6 +44,7 @@ protocol IAdapterManager {
     var adapters: [IAdapter] { get }
     var subject: PublishSubject<Void> { get }
     func start()
+    func refresh()
     func clear()
 }
 
@@ -65,12 +66,14 @@ protocol IAdapter {
 
     func showInfo()
 
-    func start() throws
-    func clear() throws
+    func start()
+    func refresh()
+    func clear()
 
-    func send(to address: String, value: Int) throws
-    func fee(for value: Int, senderPay: Bool) throws -> Int
-    func validate(address: String) -> Bool
+    func send(to address: String, value: Double, completion: ((Error?) -> ())?)
+
+    func fee(for value: Double, senderPay: Bool) throws -> Double
+    func validate(address: String) throws
 
     var receiveAddress: String { get }
 }

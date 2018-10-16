@@ -7,6 +7,11 @@ enum TransactionStatus {
     case completed
 }
 
+public struct TransactionAddress {
+    public let address: String
+    public let mine: Bool
+}
+
 struct TransactionRecord {
     let transactionHash: String
     let from: [TransactionAddress]

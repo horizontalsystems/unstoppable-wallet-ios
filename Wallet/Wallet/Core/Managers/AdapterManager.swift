@@ -9,6 +9,7 @@ class AdapterManager {
     init(words: [String]) {
         adapters.append(BitcoinAdapter(words: words, networkType: .bitcoinRegTest))
         adapters.append(BitcoinAdapter(words: words, networkType: .bitcoinCashTestNet))
+        adapters.append(EthereumAdapter(words: words, network: .kovan))
     }
 
 }
@@ -17,17 +18,19 @@ extension AdapterManager: IAdapterManager {
 
     func start() {
         for adapter in adapters {
-            do {
-                try adapter.start()
-            } catch {
-                print("Could not start \(adapter.coin.name): \(error)")
-            }
+            adapter.start()
+        }
+    }
+
+    func refresh() {
+        for adapter in adapters {
+            adapter.refresh()
         }
     }
 
     func clear() {
         for adapter in adapters {
-            try? adapter.clear()
+            adapter.clear()
         }
 
         adapters = []

@@ -20,6 +20,10 @@ class WalletInteractor {
 
 extension WalletInteractor: IWalletInteractor {
 
+    func refresh() {
+        adapterManager.refresh()
+    }
+
     func notifyWalletBalances() {
         adapterManager.subject
                 .subscribe(onNext: { [weak self] in

@@ -6,6 +6,7 @@ import RxSwift
 class BitcoinAdapter {
     private let walletKit: WalletKit
     private let transactionCompletionThreshold = 6
+    private let coinRate: Double = pow(10, 8)
 
     let wordsHash: String
     let coin: Coin
@@ -48,9 +49,9 @@ class BitcoinAdapter {
 
         return TransactionRecord(
                 transactionHash: transaction.transactionHash,
-                from: transaction.from,
-                to: transaction.to,
-                amount: Double(transaction.amount) / 100_000_000,
+                from: transaction.from.map { TransactionAddress(address: $0.address, mine: $0.mine) },
+                to: transaction.to.map { TransactionAddress(address: $0.address, mine: $0.mine) },
+                amount: Double(transaction.amount) / coinRate,
                 status: status,
                 timestamp: transaction.timestamp
         )
@@ -65,7 +66,7 @@ extension BitcoinAdapter: IAdapter {
     }
 
     var balance: Double {
-        return Double(walletKit.balance) / 100_000_000
+        return Double(walletKit.balance) / coinRate
     }
 
     var lastBlockHeight: Int {
@@ -80,24 +81,36 @@ extension BitcoinAdapter: IAdapter {
         walletKit.showRealmInfo()
     }
 
-    func start() throws {
-        try walletKit.start()
+    func start() {
+        try? walletKit.start()
     }
 
-    func clear() throws {
-        try walletKit.clear()
+    func refresh() {
+        // stub!
     }
 
-    func send(to address: String, value: Int) throws {
-        try walletKit.send(to: address, value: value)
+    func clear() {
+        try? walletKit.clear()
     }
 
-    func fee(for value: Int, senderPay: Bool) throws -> Int {
-        return try walletKit.fee(for: value, senderPay: senderPay)
+    func send(to address: String, value: Double, completion: ((Error?) -> ())?) {
+        do {
+            let amount = Int(value * coinRate)
+            try walletKit.send(to: address, value: amount)
+            completion?(nil)
+        } catch {
+            completion?(error)
+        }
     }
 
-    func validate(address: String) -> Bool {
-        return true
+    func fee(for value: Double, senderPay: Bool) throws -> Double {
+        let amount = Int(value * coinRate)
+        let fee = try walletKit.fee(for: amount, senderPay: senderPay)
+        return Double(fee) / coinRate
+    }
+
+    func validate(address: String) throws {
+        try walletKit.validate(address: address)
     }
 
     var receiveAddress: String {
@@ -113,7 +126,7 @@ extension BitcoinAdapter: BitcoinKitDelegate {
     }
 
     public func balanceUpdated(walletKit: WalletKit, balance: Int) {
-        balanceSubject.onNext(Double(balance) / 100_000_000)
+        balanceSubject.onNext(Double(balance) / coinRate)
     }
 
     public func lastBlockInfoUpdated(walletKit: WalletKit, lastBlockInfo: BlockInfo) {

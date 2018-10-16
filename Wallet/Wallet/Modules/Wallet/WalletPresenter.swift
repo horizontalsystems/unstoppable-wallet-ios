@@ -77,6 +77,7 @@ extension WalletPresenter: IWalletViewDelegate {
 
     func refresh() {
         print("on refresh")
+        interactor.refresh()
         DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
             self.view?.didRefresh()
         })

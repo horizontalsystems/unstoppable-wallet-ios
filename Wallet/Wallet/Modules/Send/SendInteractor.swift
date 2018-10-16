@@ -60,23 +60,25 @@ extension SendInteractor: ISendInteractor {
     }
 
     func send(address: String, amount: Double) {
-        do {
-            try adapter.send(to: address, value: Int(amount * 100000000))
-            delegate?.didSend()
-        } catch {
-            delegate?.didFailToSend(error: error)
+        adapter.send(to: address, value: amount) { [weak self] error in
+            if let error = error {
+                self?.delegate?.didFailToSend(error: error)
+            } else {
+                self?.delegate?.didSend()
+            }
         }
     }
 
     func isValid(address: String?) -> Bool {
-//        guard let address = address, !address.isEmpty else {
-//            return false
-//        }
-//        let pattern = "^(bc1|[13])[a-km-zA-HJ-NP-Z1-9]{25,34}$"
-//        let r = address.startIndex..<address.endIndex
-//        let r2 = address.range(of: pattern, options: .regularExpression)
-//        return r == r2
-        return true
+        guard let address = address, !address.isEmpty else {
+            return false
+        }
+        do {
+            try adapter.validate(address: address)
+            return true
+        } catch {
+            return false
+        }
     }
 
 }

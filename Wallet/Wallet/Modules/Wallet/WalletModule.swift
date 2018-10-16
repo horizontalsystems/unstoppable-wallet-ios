@@ -16,6 +16,7 @@ protocol IWalletViewDelegate {
 }
 
 protocol IWalletInteractor {
+    func refresh()
     func notifyWalletBalances()
 }
 
