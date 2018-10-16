@@ -4,12 +4,11 @@ import RealmSwift
 import RxSwift
 
 class EthereumAdapter {
-    private let walletKit: EthereumKit
+    private let ethereumKit: EthereumKit
     private let transactionCompletionThreshold = 12
     private let coinRate: Double = pow(10, 18)
 
     let wordsHash: String
-    let wordsHash2: String
     let coin: Coin
     let balanceSubject = PublishSubject<Double>()
     let progressSubject: BehaviorSubject<Double>
@@ -18,7 +17,6 @@ class EthereumAdapter {
 
     init(words: [String], network: Network) {
         wordsHash = words.joined()
-        wordsHash2 = words.joined(separator: " ")
 
         switch network {
         case .mainnet: coin = Ethereum()
@@ -29,8 +27,8 @@ class EthereumAdapter {
 
         progressSubject = BehaviorSubject(value: 1)
 
-        walletKit = EthereumKit(withWords: words, network: network, debugPrints: true)
-        walletKit.delegate = self
+        ethereumKit = EthereumKit(withWords: words, network: network, debugPrints: true)
+        ethereumKit.delegate = self
     }
 
     private func transactionRecord(fromTransaction transaction: EthereumTransaction) -> TransactionRecord {
@@ -45,7 +43,7 @@ class EthereumAdapter {
         }
         let amountEther = convertToValue(amount: transaction.value) ?? 0
 
-        let mineAddress = walletKit.receiveAddress.lowercased()
+        let mineAddress = ethereumKit.receiveAddress.lowercased()
         let from = TransactionAddress(address: transaction.from, mine: transaction.from.lowercased() == mineAddress)
         let to = TransactionAddress(address: transaction.to, mine: transaction.to.lowercased() == mineAddress)
         return TransactionRecord(
@@ -74,7 +72,7 @@ extension EthereumAdapter: IAdapter {
     }
 
     var balance: Double {
-        return Double(walletKit.balance) / coinRate
+        return Double(ethereumKit.balance) / coinRate
     }
 
     var lastBlockHeight: Int {
@@ -82,40 +80,39 @@ extension EthereumAdapter: IAdapter {
     }
 
     var transactionRecords: [TransactionRecord] {
-        return walletKit.transactions.map { transactionRecord(fromTransaction: $0) }
+        return ethereumKit.transactions.map { transactionRecord(fromTransaction: $0) }
     }
 
     func showInfo() {
-        print(wordsHash2)
-        walletKit.showRealmInfo()
+        ethereumKit.showRealmInfo()
     }
 
     func start() {
-        walletKit.start()
+        ethereumKit.start()
     }
 
     func refresh() {
-        walletKit.refresh()
+        ethereumKit.refresh()
     }
 
     func clear() {
-        try? walletKit.clear()
+        try? ethereumKit.clear()
     }
 
     func send(to address: String, value: Double, completion: ((Error?) -> ())?) {
-        walletKit.send(to: address, value: Decimal(value), completion: completion)
+        ethereumKit.send(to: address, value: Decimal(value), completion: completion)
     }
 
     func fee(for value: Double, senderPay: Bool) throws -> Double {
-        return Double(walletKit.fee) / coinRate
+        return Double(ethereumKit.fee) / coinRate
     }
 
     func validate(address: String) throws {
-        try walletKit.validate(address: address)
+        try ethereumKit.validate(address: address)
     }
 
     var receiveAddress: String {
-        return walletKit.receiveAddress
+        return ethereumKit.receiveAddress
     }
 
 }

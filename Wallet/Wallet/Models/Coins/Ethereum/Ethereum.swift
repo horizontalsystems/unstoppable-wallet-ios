@@ -1,5 +1,4 @@
 import Foundation
-import HSEthereumKit
 
 class Ethereum: Coin {
 
