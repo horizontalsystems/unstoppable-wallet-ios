@@ -1,5 +1,3 @@
-import Foundation
-
 protocol ISecuritySettingsView: class {
     func set(title: String)
     func set(biometricUnlockOn: Bool)

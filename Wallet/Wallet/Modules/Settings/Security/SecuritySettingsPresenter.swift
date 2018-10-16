@@ -1,5 +1,3 @@
-import Foundation
-
 class SecuritySettingsPresenter {
     private let router: ISecuritySettingsRouter
     private let interactor: ISecuritySettingsInteractor

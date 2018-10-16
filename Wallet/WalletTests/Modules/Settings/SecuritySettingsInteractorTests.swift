@@ -37,6 +37,8 @@ class SecuritySettingsInteractorTests: XCTestCase {
 
     override func tearDown() {
         mockDelegate = nil
+        mockWordsManager = nil
+        mockLocalStorage = nil
 
         interactor = nil
 
