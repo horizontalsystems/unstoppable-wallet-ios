@@ -20,7 +20,7 @@ extension GuestRouter {
 
     static func module() -> UIViewController {
         let router = GuestRouter()
-        let interactor = GuestInteractor(walletManager: App.shared.wordsManager)
+        let interactor = GuestInteractor(wordsManager: App.shared.wordsManager, adapterManager: App.shared.adapterManager)
         let presenter = GuestPresenter(interactor: interactor, router: router)
         let viewController = GuestViewController(delegate: presenter)
 

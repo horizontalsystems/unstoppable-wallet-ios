@@ -1,6 +1,5 @@
 class UnlockPinInteractor {
     weak var delegate: IUnlockPinInteractorDelegate?
-    weak var unlockDelegate: IUnlockDelegate?
 
     private let pinManager: IPinManager
     private let biometricManager: IBiometricManager
@@ -21,8 +20,6 @@ extension UnlockPinInteractor: IUnlockPinInteractor {
             return false
         }
 
-        unlockDelegate?.onUnlock()
-
         return true
     }
 
@@ -39,7 +36,6 @@ extension UnlockPinInteractor: IUnlockPinInteractor {
 extension UnlockPinInteractor: BiometricManagerDelegate {
 
     func didValidate() {
-        unlockDelegate?.onUnlock()
         delegate?.didBiometricUnlock()
     }
 

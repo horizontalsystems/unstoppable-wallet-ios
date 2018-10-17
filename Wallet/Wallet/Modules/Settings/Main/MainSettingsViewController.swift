@@ -176,7 +176,7 @@ class MainSettingsViewController: UIViewController, SectionsDataSource {
     }
 
     @IBAction func connectToPeer() {
-        App.shared.adapterManager.start()
+//        App.shared.adapterManager.start()
     }
 
     private func reloadIfNeeded() {

@@ -1,9 +1,16 @@
-import Foundation
+import UIKit
 
 class LockRouter: ILockRouter {
+    weak var viewController: UIViewController?
 
     func showUnlock(delegate: IUnlockDelegate?) {
-        UnlockPinRouter.module(unlockDelegate: delegate)
+        var controller = viewController
+
+        while let presentedController = controller?.presentedViewController {
+            controller = presentedController
+        }
+
+        controller?.present(UnlockPinRouter.module(unlockDelegate: delegate), animated: false)
     }
 
 }

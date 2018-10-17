@@ -31,7 +31,7 @@ class UnlockPinPresenterTests: XCTestCase {
             when(mock.showCancel()).thenDoNothing()
         }
         stub(mockRouter) { mock in
-            when(mock.dismiss()).thenDoNothing()
+            when(mock.dismiss(didUnlock: any())).thenDoNothing()
         }
         stub(mockInteractor) { mock in
             when(mock.biometricUnlock()).thenDoNothing()
@@ -68,7 +68,7 @@ class UnlockPinPresenterTests: XCTestCase {
     func testCloseOnCancel() {
         presenter.onCancel()
 
-        verify(mockRouter).dismiss()
+        verify(mockRouter).dismiss(didUnlock: false)
     }
 
     func testAddPages() {
@@ -84,7 +84,7 @@ class UnlockPinPresenterTests: XCTestCase {
 
         presenter.onEnter(pin: pin, forPage: unlockPage)
 
-        verify(mockRouter).dismiss()
+        verify(mockRouter).dismiss(didUnlock: true)
     }
 
     func testDismissAfterFailUnlock() {
@@ -95,7 +95,7 @@ class UnlockPinPresenterTests: XCTestCase {
 
         presenter.onEnter(pin: pin, forPage: unlockPage)
 
-        verify(mockRouter, never()).dismiss()
+        verify(mockRouter, never()).dismiss(didUnlock: any())
         verify(mockView).showPinWrong(page: unlockPage)
     }
 
@@ -106,7 +106,7 @@ class UnlockPinPresenterTests: XCTestCase {
 
     func testDismissOnSuccessBiometricUnlock() {
         presenter.didBiometricUnlock()
-        verify(mockRouter).dismiss()
+        verify(mockRouter).dismiss(didUnlock: true)
     }
 
     func testShowKeyboardOnFailedBiometricUnlock() {

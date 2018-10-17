@@ -21,7 +21,7 @@ extension RestoreRouter {
 
     static func module() -> UIViewController {
         let router = RestoreRouter()
-        let interactor = RestoreInteractor(walletManager: App.shared.wordsManager)
+        let interactor = RestoreInteractor(wordsManager: App.shared.wordsManager, adapterManager: App.shared.adapterManager)
         let presenter = RestorePresenter(interactor: interactor, router: router)
         let viewController = RestoreViewController(delegate: presenter)
 

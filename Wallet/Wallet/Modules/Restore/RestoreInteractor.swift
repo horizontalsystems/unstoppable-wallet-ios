@@ -2,9 +2,11 @@ class RestoreInteractor {
     weak var delegate: IRestoreInteractorDelegate?
 
     private let wordsManager: IWordsManager
+    private let adapterManager: IAdapterManager
 
-    init(walletManager: IWordsManager) {
-        self.wordsManager = walletManager
+    init(wordsManager: IWordsManager, adapterManager: IAdapterManager) {
+        self.wordsManager = wordsManager
+        self.adapterManager = adapterManager
     }
 }
 
@@ -22,7 +24,7 @@ extension RestoreInteractor: IRestoreInteractor {
     func restore(withWords words: [String]) {
         do {
             try wordsManager.restore(withWords: words)
-            App.shared.initLoggedInState()
+            adapterManager.start()
             delegate?.didRestore()
         } catch {
             delegate?.didFailToRestore(withError: error)

@@ -9,13 +9,6 @@ class UserDefaultsStorage: ILocalStorage {
     private let biometricOnKey = "biometric_on_key"
     private let lastExitDateKey = "last_exit_date_key"
 
-    var savedWords: [String]? {
-        if let wordsString = UserDefaults.standard.value(forKey: keyWords) as? String {
-            return wordsString.split(separator: " ").map(String.init)
-        }
-        return nil
-    }
-
     var isBackedUp: Bool {
         get { return bool(for: keyIsBackedUp) ?? false }
         set { set(newValue, for: keyIsBackedUp) }
@@ -44,16 +37,6 @@ class UserDefaultsStorage: ILocalStorage {
     var isBiometricOn: Bool {
         get { return bool(for: biometricOnKey) ?? false }
         set { set(newValue, for: biometricOnKey) }
-    }
-
-    func save(words: [String]) {
-        UserDefaults.standard.set(words.joined(separator: " "), forKey: keyWords)
-        UserDefaults.standard.synchronize()
-    }
-
-    func clearWords() {
-        UserDefaults.standard.removeObject(forKey: keyWords)
-        UserDefaults.standard.synchronize()
     }
 
     private func getString(_ name: String) -> String? {

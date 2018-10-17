@@ -31,14 +31,14 @@ extension UnlockPinPresenter: IPinViewDelegate {
 
     func onEnter(pin: String, forPage index: Int) {
         if interactor.unlock(with: pin) {
-            router.dismiss()
+            router.dismiss(didUnlock: true)
         } else {
             view?.showPinWrong(page: Page.unlock.rawValue)
         }
     }
 
     func onCancel() {
-        router.dismiss()
+        router.dismiss(didUnlock: false)
     }
 
 }
@@ -46,7 +46,7 @@ extension UnlockPinPresenter: IPinViewDelegate {
 extension UnlockPinPresenter: IUnlockPinInteractorDelegate {
 
     func didBiometricUnlock() {
-        router.dismiss()
+        router.dismiss(didUnlock: true)
     }
 
     func didFailBiometricUnlock() {

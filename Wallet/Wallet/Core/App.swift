@@ -8,7 +8,7 @@ class App {
     let wordsManager: IWordsManager
 
     let pinManager: IPinManager
-    let lockRouter: ILockRouter
+    let lockRouter: LockRouter
     let lockManager: ILockManager
     let blurManager: IBlurManager
 
@@ -18,8 +18,8 @@ class App {
     let randomManager: IRandomManager
     let systemInfoManager: ISystemInfoManager
 
-    var adapterManager: IAdapterManager!
-    var exchangeRateManager: IExchangeRateManager!
+    let adapterManager: IAdapterManager
+    let exchangeRateManager: IExchangeRateManager
 
     init() {
         secureStorage = KeychainStorage()
@@ -37,16 +37,8 @@ class App {
         randomManager = RandomManager()
         systemInfoManager = SystemInfoManager()
 
-        initLoggedInState()
-    }
-
-    func initLoggedInState() {
-        if let words = wordsManager.words {
-            adapterManager = AdapterManager(words: words)
-            exchangeRateManager = ExchangeRateManager()
-
-            adapterManager.start()
-        }
+        adapterManager = AdapterManager(wordsManager: wordsManager)
+        exchangeRateManager = ExchangeRateManager()
     }
 
 }

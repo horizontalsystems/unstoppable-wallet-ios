@@ -37,6 +37,20 @@ class PinViewController: KeyboardObservingViewController {
         delegate.viewDidLoad()
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        let index = Int(holderView.contentOffset.x / UIScreen.main.bounds.width)
+
+        if pinViews.count > index {
+            let pinView = pinViews[index]
+
+            if pinView.showKeyboard {
+                pinView.becomeFirstResponder()
+            }
+        }
+    }
+
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         didAppear = true
@@ -127,6 +141,7 @@ extension PinViewController: IPinView {
 
     func showKeyboard(for index: Int) {
         pinViews[index].becomeFirstResponder()
+        pinViews[index].showKeyboard = true
     }
 
     func showCancel() {

@@ -7,6 +7,8 @@ class PinView: UIView {
     private var descriptionLabel = UILabel()
     private var errorLabel = UILabel()
 
+    var showKeyboard = false
+
     override init(frame: CGRect) {
         super.init(frame: frame)
 

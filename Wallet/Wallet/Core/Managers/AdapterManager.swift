@@ -6,10 +6,10 @@ class AdapterManager {
 
     var subject: PublishSubject<Void> = PublishSubject()
 
-    init(words: [String]) {
-        adapters.append(BitcoinAdapter(words: words, networkType: .bitcoinRegTest))
-        adapters.append(BitcoinAdapter(words: words, networkType: .bitcoinCashTestNet))
-        adapters.append(EthereumAdapter(words: words, network: .kovan))
+    private let wordsManager: IWordsManager
+
+    init(wordsManager: IWordsManager) {
+        self.wordsManager = wordsManager
     }
 
 }
@@ -17,8 +17,14 @@ class AdapterManager {
 extension AdapterManager: IAdapterManager {
 
     func start() {
-        for adapter in adapters {
-            adapter.start()
+        if let words = wordsManager.words {
+            adapters.append(BitcoinAdapter(words: words, networkType: .bitcoinRegTest))
+            adapters.append(BitcoinAdapter(words: words, networkType: .bitcoinCashTestNet))
+            adapters.append(EthereumAdapter(words: words, network: .kovan))
+
+            for adapter in adapters {
+                adapter.start()
+            }
         }
     }
 

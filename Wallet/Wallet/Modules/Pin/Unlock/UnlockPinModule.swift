@@ -10,7 +10,7 @@ class UnlockPresenterConfiguration {
 }
 
 protocol IUnlockPinRouter {
-    func dismiss()
+    func dismiss(didUnlock: Bool)
 }
 
 protocol IUnlockPinInteractor {

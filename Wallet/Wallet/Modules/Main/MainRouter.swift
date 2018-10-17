@@ -26,6 +26,8 @@ extension MainRouter {
         presenter.view = viewController
         router.viewController = viewController
 
+        App.shared.lockRouter.viewController = viewController
+
         return viewController
     }
 
