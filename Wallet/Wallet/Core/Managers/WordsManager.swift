@@ -1,5 +1,4 @@
 import HSHDWalletKit
-import WalletKit
 import RxSwift
 
 class WordsManager {

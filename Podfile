@@ -6,9 +6,9 @@ inhibit_all_warnings!
 project 'Wallet/Wallet'
 
 target :Bank do
-  pod 'WalletKit', git: 'https://github.com/horizontalsystems/wallet-kit-ios.git', branch: 'dev'
-  pod 'HSEthereumKit', git: 'https://github.com/horizontalsystems/ethereum-kit-ios.git', branch: 'master'
-  pod 'CryptoEthereumSwift', git: 'https://github.com/horizontalsystems/CryptoEthereumSwift.git', branch: 'master'
+  pod 'HSBitcoinKit', git: 'https://github.com/horizontalsystems/bitcoin-kit-ios.git'
+  pod 'HSEthereumKit', git: 'https://github.com/horizontalsystems/ethereum-kit-ios.git'
+  pod 'CryptoEthereumSwift', git: 'https://github.com/horizontalsystems/CryptoEthereumSwift.git'
 
   pod 'Alamofire'
   pod 'ObjectMapper'

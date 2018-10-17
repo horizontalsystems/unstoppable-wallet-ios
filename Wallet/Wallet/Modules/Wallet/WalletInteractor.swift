@@ -1,5 +1,4 @@
 import RxSwift
-import WalletKit
 
 class WalletInteractor {
 

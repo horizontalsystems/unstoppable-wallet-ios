@@ -1,5 +1,4 @@
 import UIKit
-import WalletKit
 
 class RestoreRouter {
     weak var viewController: UIViewController?

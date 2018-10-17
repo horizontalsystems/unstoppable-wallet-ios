@@ -1,5 +1,4 @@
 import Foundation
-import WalletKit
 
 enum TransactionStatus {
     case processing

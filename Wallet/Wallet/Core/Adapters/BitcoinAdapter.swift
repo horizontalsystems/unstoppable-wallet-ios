@@ -1,10 +1,10 @@
 import Foundation
-import WalletKit
+import HSBitcoinKit
 import RealmSwift
 import RxSwift
 
 class BitcoinAdapter {
-    private let walletKit: WalletKit
+    private let bitcoinKit: BitcoinKit
     private let transactionCompletionThreshold = 6
     private let coinRate: Double = pow(10, 8)
 
@@ -15,7 +15,7 @@ class BitcoinAdapter {
     let transactionRecordsSubject = PublishSubject<Void>()
     let progressSubject: BehaviorSubject<Double>
 
-    init(words: [String], networkType: WalletKit.NetworkType) {
+    init(words: [String], networkType: BitcoinKit.NetworkType) {
         wordsHash = words.joined()
 
         switch networkType {
@@ -26,17 +26,17 @@ class BitcoinAdapter {
         case .bitcoinCashTestNet: coin = BitcoinCash(prefix: "t")
         }
 
-        walletKit = WalletKit(withWords: words, networkType: networkType)
+        bitcoinKit = BitcoinKit(withWords: words, networkType: networkType)
 
-        progressSubject = BehaviorSubject(value: walletKit.progress)
+        progressSubject = BehaviorSubject(value: bitcoinKit.progress)
 
-        walletKit.delegate = self
+        bitcoinKit.delegate = self
     }
 
     private func transactionRecord(fromTransaction transaction: TransactionInfo) -> TransactionRecord {
         let status: TransactionStatus
 
-        if let blockHeight = transaction.blockHeight, let lastBlockInfo = walletKit.lastBlockInfo {
+        if let blockHeight = transaction.blockHeight, let lastBlockInfo = bitcoinKit.lastBlockInfo {
             let confirmations = lastBlockInfo.height - blockHeight + 1
             if confirmations >= transactionCompletionThreshold {
                 status = .completed
@@ -66,23 +66,23 @@ extension BitcoinAdapter: IAdapter {
     }
 
     var balance: Double {
-        return Double(walletKit.balance) / coinRate
+        return Double(bitcoinKit.balance) / coinRate
     }
 
     var lastBlockHeight: Int {
-        return walletKit.lastBlockInfo?.height ?? 0
+        return bitcoinKit.lastBlockInfo?.height ?? 0
     }
 
     var transactionRecords: [TransactionRecord] {
-        return walletKit.transactions.map { transactionRecord(fromTransaction: $0) }
+        return bitcoinKit.transactions.map { transactionRecord(fromTransaction: $0) }
     }
 
     func showInfo() {
-        walletKit.showRealmInfo()
+        bitcoinKit.showRealmInfo()
     }
 
     func start() {
-        try? walletKit.start()
+        try? bitcoinKit.start()
     }
 
     func refresh() {
@@ -90,13 +90,13 @@ extension BitcoinAdapter: IAdapter {
     }
 
     func clear() {
-        try? walletKit.clear()
+        try? bitcoinKit.clear()
     }
 
     func send(to address: String, value: Double, completion: ((Error?) -> ())?) {
         do {
             let amount = Int(value * coinRate)
-            try walletKit.send(to: address, value: amount)
+            try bitcoinKit.send(to: address, value: amount)
             completion?(nil)
         } catch {
             completion?(error)
@@ -105,35 +105,35 @@ extension BitcoinAdapter: IAdapter {
 
     func fee(for value: Double, senderPay: Bool) throws -> Double {
         let amount = Int(value * coinRate)
-        let fee = try walletKit.fee(for: amount, senderPay: senderPay)
+        let fee = try bitcoinKit.fee(for: amount, senderPay: senderPay)
         return Double(fee) / coinRate
     }
 
     func validate(address: String) throws {
-        try walletKit.validate(address: address)
+        try bitcoinKit.validate(address: address)
     }
 
     var receiveAddress: String {
-        return walletKit.receiveAddress
+        return bitcoinKit.receiveAddress
     }
 
 }
 
 extension BitcoinAdapter: BitcoinKitDelegate {
 
-    public func transactionsUpdated(walletKit: WalletKit, inserted: [TransactionInfo], updated: [TransactionInfo], deleted: [Int]) {
+    public func transactionsUpdated(bitcoinKit: BitcoinKit, inserted: [TransactionInfo], updated: [TransactionInfo], deleted: [Int]) {
         transactionRecordsSubject.onNext(())
     }
 
-    public func balanceUpdated(walletKit: WalletKit, balance: Int) {
+    public func balanceUpdated(bitcoinKit: BitcoinKit, balance: Int) {
         balanceSubject.onNext(Double(balance) / coinRate)
     }
 
-    public func lastBlockInfoUpdated(walletKit: WalletKit, lastBlockInfo: BlockInfo) {
+    public func lastBlockInfoUpdated(bitcoinKit: BitcoinKit, lastBlockInfo: BlockInfo) {
         lastBlockHeightSubject.onNext(lastBlockInfo.height)
     }
 
-    public func progressUpdated(walletKit: WalletKit, progress: Double) {
+    public func progressUpdated(bitcoinKit: BitcoinKit, progress: Double) {
         progressSubject.onNext(progress)
     }
 

@@ -1,5 +1,3 @@
-import WalletKit
-
 class BackupInteractor {
 
     weak var delegate: IBackupInteractorDelegate?

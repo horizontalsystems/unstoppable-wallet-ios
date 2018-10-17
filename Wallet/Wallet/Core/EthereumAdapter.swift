@@ -100,7 +100,7 @@ extension EthereumAdapter: IAdapter {
     }
 
     func send(to address: String, value: Double, completion: ((Error?) -> ())?) {
-        ethereumKit.send(to: address, value: Decimal(value), completion: completion)
+        ethereumKit.send(to: address, value: value, completion: completion)
     }
 
     func fee(for value: Double, senderPay: Bool) throws -> Double {
@@ -119,11 +119,11 @@ extension EthereumAdapter: IAdapter {
 
 extension EthereumAdapter: EthereumKitDelegate {
 
-    public func transactionsUpdated(walletKit: EthereumKit, inserted: [EthereumTransaction], updated: [EthereumTransaction], deleted: [Int]) {
+    public func transactionsUpdated(ethereumKit: EthereumKit, inserted: [EthereumTransaction], updated: [EthereumTransaction], deleted: [Int]) {
         transactionRecordsSubject.onNext(())
     }
 
-    public func balanceUpdated(walletKit: EthereumKit, balance: BInt) {
+    public func balanceUpdated(ethereumKit: EthereumKit, balance: BInt) {
         balanceSubject.onNext(Double(balance) / coinRate)
     }
 
