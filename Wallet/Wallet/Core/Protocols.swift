@@ -102,7 +102,7 @@ protocol IBlurManager {
 }
 
 protocol IPinManager {
-    var isPinned: Bool { get }
+    var isPinSet: Bool { get }
     func store(pin: String?) throws
     func validate(pin: String) -> Bool
 }

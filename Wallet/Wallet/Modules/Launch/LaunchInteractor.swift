@@ -20,7 +20,7 @@ extension LaunchInteractor: ILaunchInteractor {
     func showLaunchModule() {
         if !wordsManager.isLoggedIn {
             delegate?.showGuestModule()
-        } else if pinManager.isPinned {
+        } else if pinManager.isPinSet {
             adapterManager.start()
             delegate?.showMainModule()
             lockManager.lock()
