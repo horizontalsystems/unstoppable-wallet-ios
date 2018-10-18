@@ -8,6 +8,7 @@ class UserDefaultsStorage: ILocalStorage {
     private let iUnderstandKey = "i_understand_key"
     private let biometricOnKey = "biometric_on_key"
     private let lastExitDateKey = "last_exit_date_key"
+    private let didLaunchOnceKey = "did_launch_once_key"
 
     var isBackedUp: Bool {
         get { return bool(for: keyIsBackedUp) ?? false }
@@ -24,6 +25,14 @@ class UserDefaultsStorage: ILocalStorage {
         set { set(newValue, for: lastExitDateKey) }
     }
 
+    var didLaunchOnce: Bool {
+        if bool(for: didLaunchOnceKey) ?? false {
+            return true
+        }
+        set(true, for: didLaunchOnceKey)
+        return false
+    }
+
     var lightMode: Bool {
         get { return bool(for: keyLightMode) ?? false }
         set { set(newValue, for: keyLightMode) }
@@ -37,6 +46,13 @@ class UserDefaultsStorage: ILocalStorage {
     var isBiometricOn: Bool {
         get { return bool(for: biometricOnKey) ?? false }
         set { set(newValue, for: biometricOnKey) }
+    }
+
+    func clear() {
+        isBackedUp = false
+        lightMode = false
+        iUnderstand = false
+        isBiometricOn = false
     }
 
     private func getString(_ name: String) -> String? {

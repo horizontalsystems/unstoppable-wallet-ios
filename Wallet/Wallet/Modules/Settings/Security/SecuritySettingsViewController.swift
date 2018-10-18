@@ -72,8 +72,8 @@ class SecuritySettingsViewController: UIViewController, SectionsDataSource {
         default: ()
         }
 
-        let setOrChangePinTitle = App.shared.pinManager.isPinned ? "settings_security.change_pin".localized : "settings_security.set_pin".localized
-        pinTouchFaceRows.append(Row<SettingsCell>(id: "set_pin", hash: "pinned_\(App.shared.pinManager.isPinned)", height: SettingsTheme.securityCellHeight, bind: { cell, _ in
+        let setOrChangePinTitle = App.shared.pinManager.isPinSet ? "settings_security.change_pin".localized : "settings_security.set_pin".localized
+        pinTouchFaceRows.append(Row<SettingsCell>(id: "set_pin", hash: "pinned_\(App.shared.pinManager.isPinSet)", height: SettingsTheme.securityCellHeight, bind: { cell, _ in
             cell.bind(titleIcon: nil, title: setOrChangePinTitle, showDisclosure: true, last: true)
         }, action: { [weak self] _ in
             self?.delegate.didTapEditPin()

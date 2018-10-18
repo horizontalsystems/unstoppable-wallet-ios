@@ -9,7 +9,7 @@ class PinManager {
 
 extension PinManager: IPinManager {
 
-    var isPinned: Bool {
+    var isPinSet: Bool {
         return secureStorage.pin != nil
     }
 

@@ -2,10 +2,17 @@ import Foundation
 import KeychainAccess
 
 class KeychainStorage {
-    let keychain = Keychain(service: "io.horizontalsystems.bank.dev")
+    let keychain: Keychain
 
     private let pinKey = "pin_keychain_key"
     private let wordsKey = "words_keychain_key"
+
+    init(localStorage: ILocalStorage) {
+        keychain = Keychain(service: "io.horizontalsystems.bank.dev")
+        if !localStorage.didLaunchOnce {
+            clear()
+        }
+    }
 
     func getBool(forKey key: String) -> Bool? {
         guard let string = keychain[key] else {
@@ -69,6 +76,11 @@ extension KeychainStorage: ISecureStorage {
 
     func set(pin: String?) throws {
         try set(value: pin, forKey: pinKey)
+    }
+
+    func clear() {
+        try? set(words: nil)
+        try? set(pin: nil)
     }
 
 }

@@ -19,11 +19,8 @@ extension LaunchInteractor: ILaunchInteractor {
 
     func showLaunchModule() {
         if !wordsManager.isLoggedIn {
-            // todo: another implementation is required, because it does not work when we logout / login without killing the app
-            try? pinManager.store(pin: nil)
-
             delegate?.showGuestModule()
-        } else if pinManager.isPinned {
+        } else if pinManager.isPinSet {
             adapterManager.start()
             delegate?.showMainModule()
             lockManager.lock()

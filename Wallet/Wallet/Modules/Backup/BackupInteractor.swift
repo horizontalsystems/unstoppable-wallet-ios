@@ -43,7 +43,7 @@ extension BackupInteractor: IBackupInteractor {
     }
 
     func lockIfRequired() {
-        if pinManager.isPinned {
+        if pinManager.isPinSet {
             delegate?.showUnlock()
         } else {
             fetchWords()
