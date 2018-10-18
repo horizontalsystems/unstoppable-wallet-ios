@@ -22,8 +22,8 @@ class App {
     let exchangeRateManager: IExchangeRateManager
 
     init() {
-        secureStorage = KeychainStorage()
         localStorage = UserDefaultsStorage()
+        secureStorage = KeychainStorage(localStorage: localStorage)
         wordsManager = WordsManager(secureStorage: secureStorage, localStorage: localStorage)
 
         pinManager = PinManager(secureStorage: secureStorage)

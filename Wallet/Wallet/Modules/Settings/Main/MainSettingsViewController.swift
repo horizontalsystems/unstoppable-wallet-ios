@@ -151,8 +151,7 @@ class MainSettingsViewController: UIViewController, SectionsDataSource {
     }
 
     func logout() {
-        App.shared.localStorage.isBiometricOn = false
-        App.shared.localStorage.isBackedUp = false
+        App.shared.localStorage.clear()
         App.shared.wordsManager.removeWords()
         App.shared.adapterManager.clear()
         try? App.shared.pinManager.store(pin: nil)

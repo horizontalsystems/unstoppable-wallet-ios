@@ -11,6 +11,8 @@ protocol ILocalStorage: class {
     var isBiometricOn: Bool { get set }
     var currentLanguage: String? { get set }
     var lastExitDate: Double { get set }
+    var didLaunchOnce: Bool { get }
+    func clear()
 }
 
 protocol ISecureStorage: class {
@@ -18,6 +20,7 @@ protocol ISecureStorage: class {
     func set(words: [String]?) throws
     var pin: String? { get }
     func set(pin: String?) throws
+    func clear()
 }
 
 protocol ILanguageManager {
