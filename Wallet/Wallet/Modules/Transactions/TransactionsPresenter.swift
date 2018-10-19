@@ -19,8 +19,8 @@ extension TransactionsPresenter: ITransactionsViewDelegate {
         interactor.retrieveFilters()
     }
 
-    func onTransactionItemClick(transaction: TransactionRecordViewItem, coinCode: String, txHash: String) {
-        router.showTransactionInfo(transaction: transaction, coinCode: coinCode, txHash: txHash)
+    func onTransactionItemClick(transaction: TransactionRecordViewItem, coin: Coin, txHash: String) {
+        router.showTransactionInfo(transaction: transaction, coin: coin, txHash: txHash)
     }
 
     func refresh() {
@@ -30,21 +30,21 @@ extension TransactionsPresenter: ITransactionsViewDelegate {
         })
     }
 
-    func onFilterSelect(adapterId: String?) {
-        interactor.retrieveTransactionItems(adapterId: adapterId)
+    func onFilterSelect(coin: Coin?) {
+        interactor.retrieveTransactionItems(coin: coin)
     }
 
 }
 
 extension TransactionsPresenter: ITransactionsInteractorDelegate {
 
-    func didRetrieve(filters: [TransactionFilter]) {
+    func didRetrieve(filters: [Coin]) {
         var filterItems: [TransactionFilterItem] = filters.map {
-            return TransactionFilterItem(adapterId: $0.adapterId, name: "transactions.filter_\($0.coinName)".localized.uppercased())
+            return TransactionFilterItem(coin: $0, name: $0.localized.uppercased())
         }
-        filterItems.insert(TransactionFilterItem(adapterId: nil, name: "transactions.filter_all".localized.uppercased()), at: 0)
+        filterItems.insert(TransactionFilterItem(coin: nil, name: "transactions.filter_all".localized.uppercased()), at: 0)
         view?.show(filters: filterItems)
-        interactor.retrieveTransactionItems(adapterId: nil)
+        interactor.retrieveTransactionItems(coin: nil)
     }
 
     func didRetrieve(items: [TransactionRecordViewItem]) {

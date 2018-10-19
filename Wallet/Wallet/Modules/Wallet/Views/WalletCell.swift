@@ -133,12 +133,12 @@ class WalletCell: UITableViewCell {
     }
 
     func bindView(balance: WalletBalanceViewItem, selected: Bool, animated: Bool = false) {
-        coinIconImageView.image = UIImage(named: "\(balance.coinValue.coin.code) Icon")
+        coinIconImageView.image = UIImage(named: "\(balance.coinValue.coin) Icon")
 
         receiveButton.set(hidden: !selected, animated: animated, duration: WalletTheme.buttonsAnimationDuration)
         payButton.set(hidden: !selected, animated: animated, duration: WalletTheme.buttonsAnimationDuration)
 
-        nameLabel.text = "\(balance.coinValue.coin.name) (\(balance.coinValue.coin.code))"
+        nameLabel.text = "\(balance.coinValue.coin) (\(balance.coinValue.coin))"
         valueLabel.text = balance.currencyValue.map { CurrencyHelper.instance.formattedValue(for: $0) } ?? "n/a"
         valueLabel.textColor = (balance.currencyValue?.value ?? 0) > 0 ? WalletTheme.nonZeroBalanceTextColor : WalletTheme.zeroBalanceTextColor
         coinAmountLabel.text = "\(balance.coinValue.value)"

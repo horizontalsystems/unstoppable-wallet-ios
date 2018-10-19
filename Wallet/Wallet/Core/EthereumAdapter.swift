@@ -9,7 +9,6 @@ class EthereumAdapter {
     private let coinRate: Double = pow(10, 18)
 
     let wordsHash: String
-    let coin: Coin
     let balanceSubject = PublishSubject<Double>()
     let progressSubject: BehaviorSubject<Double>
     let lastBlockHeightSubject = PublishSubject<Int>()
@@ -17,16 +16,7 @@ class EthereumAdapter {
 
     init(words: [String], network: Network) {
         wordsHash = words.joined()
-
-        switch network {
-        case .mainnet: coin = Ethereum()
-        case .kovan: coin = Ethereum(prefix: "k")
-        case .ropsten: coin = Ethereum(prefix: "r")
-        case .private: coin = Ethereum(prefix: "pr")
-        }
-
         progressSubject = BehaviorSubject(value: 1)
-
         ethereumKit = EthereumKit(withWords: words, network: network, debugPrints: true)
         ethereumKit.delegate = self
     }
@@ -66,10 +56,6 @@ class EthereumAdapter {
 }
 
 extension EthereumAdapter: IAdapter {
-
-    var id: String {
-        return "\(wordsHash)-\(coin.code)"
-    }
 
     var balance: Double {
         return Double(ethereumKit.balance) / coinRate

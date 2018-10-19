@@ -16,7 +16,7 @@ protocol ITransactionInfoViewDelegate: class {
 }
 
 protocol ITransactionInfoInteractor {
-    func getTransactionInfo(coinCode: String, txHash: String)
+    func getTransactionInfo(coin: Coin, txHash: String)
     func onCopyFromAddress()
 }
 

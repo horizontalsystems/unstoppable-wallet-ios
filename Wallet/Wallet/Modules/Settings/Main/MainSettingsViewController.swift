@@ -153,7 +153,7 @@ class MainSettingsViewController: UIViewController, SectionsDataSource {
     func logout() {
         App.shared.localStorage.clear()
         App.shared.wordsManager.removeWords()
-        App.shared.adapterManager.clear()
+        App.shared.walletManager.clearWallets()
         try? App.shared.pinManager.store(pin: nil)
 
         guard let window = UIApplication.shared.keyWindow else {
@@ -168,9 +168,9 @@ class MainSettingsViewController: UIViewController, SectionsDataSource {
     }
 
     @IBAction func showRealmInfo() {
-        for adapter in App.shared.adapterManager.adapters {
-            print("\nINFO FOR \(adapter.coin.name):")
-            adapter.showInfo()
+        for wallet in App.shared.walletManager.wallets {
+            print("\nINFO FOR \(wallet.coin):")
+            wallet.adapter.showInfo()
         }
     }
 

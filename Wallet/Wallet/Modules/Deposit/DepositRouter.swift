@@ -44,12 +44,12 @@ extension DepositRouter: IDepositRouter {
 
 extension DepositRouter {
 
-    static func module(presentingViewController: UIViewController?, adapterId: String?) {
-        let adapters = App.shared.adapterManager.adapters.filter { adapterId == nil || adapterId == $0.id }
+    static func module(presentingViewController: UIViewController?, coin: Coin?) {
+        let wallets = App.shared.walletManager.wallets.filter { coin == nil || coin == $0.coin }
 
         let router = DepositRouter()
         router.presentingViewController = presentingViewController
-        let interactor = DepositInteractor(adapters: adapters)
+        let interactor = DepositInteractor(wallets: wallets)
         let presenter = DepositPresenter(interactor: interactor, router: router)
         interactor.delegate = presenter
 

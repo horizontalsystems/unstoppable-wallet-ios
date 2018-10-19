@@ -15,13 +15,13 @@ class SendPresenter {
     private var fiatAmount: Double?
     private var cryptoAmount: Double?
 
-    var coinCode: String
+    var coin: Coin
 
     init(interactor: ISendInteractor, router: ISendRouter) {
         self.interactor = interactor
         self.router = router
 
-        coinCode = interactor.getCoinCode()
+        coin = interactor.getCoin()
         baseCurrencyCode = interactor.getBaseCurrency()
     }
 
@@ -72,7 +72,7 @@ extension SendPresenter: ISendViewDelegate {
         updateAmounts()
 
         interactor.fetchExchangeRate()
-        view?.setTitle("\("send.title".localized)\(interactor.getCoinCode())")
+        view?.setTitle("\("send.title".localized)\(interactor.getCoin())")
     }
 
     func onViewDidAppear() {
@@ -106,7 +106,7 @@ extension SendPresenter: ISendViewDelegate {
     private func updateAmountView() {
         let amount = (isEnteringInCrypto ? cryptoAmount : fiatAmount) ?? 0
         let amountStr = isEnteringInCrypto ? CurrencyHelper.instance.formatCryptoAmount(amount) : CurrencyHelper.instance.formatFiatAmount(amount)
-        let currency = isEnteringInCrypto ? coinCode : baseCurrencyCode
+        let currency = isEnteringInCrypto ? coin : baseCurrencyCode
 
         view?.setCurrency(code: currency)
         view?.setAmount(amount: amount > 0.0 ? amountStr : nil)
@@ -115,7 +115,7 @@ extension SendPresenter: ISendViewDelegate {
     private func updateAmountHintView(error: SendError?) {
         let amount = (isEnteringInCrypto ? fiatAmount : cryptoAmount) ?? 0
         let amountStr = isEnteringInCrypto ? CurrencyHelper.instance.formatFiatAmount(amount) : CurrencyHelper.instance.formatCryptoAmount(amount)
-        let currency = isEnteringInCrypto ? baseCurrencyCode : coinCode
+        let currency = isEnteringInCrypto ? baseCurrencyCode : coin
 
         view?.setAmountHint(hint: "\(amountStr) \(currency)", color: amount > 0 ? SendTheme.inputTextColor : SendTheme.inactiveInputTextColor, error: error)
     }

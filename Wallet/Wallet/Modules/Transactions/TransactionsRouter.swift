@@ -7,8 +7,8 @@ class TransactionsRouter {
 
 extension TransactionsRouter: ITransactionsRouter {
 
-    func showTransactionInfo(transaction: TransactionRecordViewItem, coinCode: String, txHash: String) {
-        view = TransactionInfoRouter.module(controller: viewController, transaction: transaction, coinCode: coinCode, txHash: txHash)
+    func showTransactionInfo(transaction: TransactionRecordViewItem, coin: Coin, txHash: String) {
+        view = TransactionInfoRouter.module(controller: viewController, transaction: transaction, coin: coin, txHash: txHash)
     }
 
 }
@@ -17,7 +17,7 @@ extension TransactionsRouter {
 
     static func module() -> UIViewController {
         let router = TransactionsRouter()
-        let interactor = TransactionsInteractor(adapterManager: App.shared.adapterManager, exchangeRateManager: App.shared.exchangeRateManager)
+        let interactor = TransactionsInteractor(walletManager: App.shared.walletManager, exchangeRateManager: App.shared.exchangeRateManager)
         let presenter = TransactionsPresenter(interactor: interactor, router: router)
         let viewController = TransactionsViewController(delegate: presenter)
 

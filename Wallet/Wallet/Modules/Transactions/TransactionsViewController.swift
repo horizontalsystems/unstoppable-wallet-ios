@@ -2,7 +2,7 @@ import UIKit
 import SnapKit
 
 struct TransactionFilterItem {
-    let adapterId: String?
+    let coin: Coin?
     let name: String
 }
 
@@ -32,8 +32,8 @@ class TransactionsViewController: UITableViewController {
         super.viewDidLoad()
         title = "transactions.title".localized
 
-        filterHeaderView.onSelectAdapterId = { adapterId in
-            self.delegate.onFilterSelect(adapterId: adapterId)
+        filterHeaderView.onSelectCoin = { coin in
+            self.delegate.onFilterSelect(coin: coin)
         }
 
         tableView.backgroundColor = AppTheme.controllerBackground
@@ -96,7 +96,7 @@ extension TransactionsViewController {
     override public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         let item = items[indexPath.row]
-        delegate.onTransactionItemClick(transaction: item, coinCode: item.amount.coin.code, txHash: item.transactionHash)
+        delegate.onTransactionItemClick(transaction: item, coin: item.amount.coin, txHash: item.transactionHash)
     }
 
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

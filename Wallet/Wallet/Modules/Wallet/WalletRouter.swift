@@ -6,13 +6,13 @@ class WalletRouter {
 
 extension WalletRouter: IWalletRouter {
 
-    func onReceive(forAdapterId adapterId: String) {
-        DepositRouter.module(presentingViewController: viewController, adapterId: adapterId)
+    func onReceive(for coin: Coin) {
+        DepositRouter.module(presentingViewController: viewController, coin: coin)
     }
 
-    func onSend(forAdapterId adapterId: String) {
-        if let adapter = App.shared.adapterManager.adapters.first(where: { adapterId == $0.id }) {
-            SendRouter.module(adapter: adapter).show(fromController: viewController)
+    func onSend(for coin: Coin) {
+        if let wallet = App.shared.walletManager.wallets.first(where: { coin == $0.coin }) {
+            SendRouter.module(wallet: wallet).show(fromController: viewController)
         }
     }
 
@@ -22,7 +22,7 @@ extension WalletRouter {
 
     static func module() -> UIViewController {
         let router = WalletRouter()
-        let interactor = WalletInteractor(adapterManager: App.shared.adapterManager, exchangeRateManager: App.shared.exchangeRateManager)
+        let interactor = WalletInteractor(walletManager: App.shared.walletManager, exchangeRateManager: App.shared.exchangeRateManager)
         let presenter = WalletPresenter(interactor: interactor, router: router)
         let viewController = WalletViewController(viewDelegate: presenter)
 

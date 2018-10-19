@@ -9,7 +9,6 @@ class BitcoinAdapter {
     private let coinRate: Double = pow(10, 8)
 
     let wordsHash: String
-    let coin: Coin
     let balanceSubject = PublishSubject<Double>()
     let lastBlockHeightSubject = PublishSubject<Int>()
     let transactionRecordsSubject = PublishSubject<Void>()
@@ -17,19 +16,8 @@ class BitcoinAdapter {
 
     init(words: [String], networkType: BitcoinKit.NetworkType) {
         wordsHash = words.joined()
-
-        switch networkType {
-        case .bitcoinMainNet: coin = Bitcoin()
-        case .bitcoinTestNet: coin = Bitcoin(prefix: "t")
-        case .bitcoinRegTest: coin = Bitcoin(prefix: "r")
-        case .bitcoinCashMainNet: coin = BitcoinCash()
-        case .bitcoinCashTestNet: coin = BitcoinCash(prefix: "t")
-        }
-
         bitcoinKit = BitcoinKit(withWords: words, networkType: networkType)
-
         progressSubject = BehaviorSubject(value: bitcoinKit.progress)
-
         bitcoinKit.delegate = self
     }
 
@@ -60,10 +48,6 @@ class BitcoinAdapter {
 }
 
 extension BitcoinAdapter: IAdapter {
-
-    var id: String {
-        return "\(wordsHash)-\(coin.code)"
-    }
 
     var balance: Double {
         return Double(bitcoinKit.balance) / coinRate

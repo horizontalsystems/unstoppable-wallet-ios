@@ -37,7 +37,7 @@ class DepositAddressCollectionCell: UICollectionViewCell {
     }
 
     func bind(address: AddressItem) {
-        titleLabel.text = address.title
+        titleLabel.text = address.coin
         qrCodeImageView.backgroundColor = .lightGray
         addressLabel.text = address.address
 

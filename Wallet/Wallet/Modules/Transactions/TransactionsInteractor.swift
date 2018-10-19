@@ -7,11 +7,11 @@ class TransactionsInteractor {
     private let disposeBag = DisposeBag()
     private var secondaryDisposeBag = DisposeBag()
 
-    private let adapterManager: IAdapterManager
+    private let walletManager: IWalletManager
     private let exchangeRateManager: IExchangeRateManager
 
-    init(adapterManager: IAdapterManager, exchangeRateManager: IExchangeRateManager) {
-        self.adapterManager = adapterManager
+    init(walletManager: IWalletManager, exchangeRateManager: IExchangeRateManager) {
+        self.walletManager = walletManager
         self.exchangeRateManager = exchangeRateManager
     }
 
@@ -20,45 +20,43 @@ class TransactionsInteractor {
 extension TransactionsInteractor: ITransactionsInteractor {
 
     func retrieveFilters() {
-        adapterManager.subject
-                .subscribe(onNext: { [weak self] in
-                    self?.secondaryDisposeBag = DisposeBag()
-                    self?.initialFetchAndSubscribe()
-                })
-                .disposed(by: disposeBag)
+//        walletManager.subject
+//                .subscribe(onNext: { [weak self] in
+//                    self?.secondaryDisposeBag = DisposeBag()
+//                    self?.initialFetchAndSubscribe()
+//                })
+//                .disposed(by: disposeBag)
 
         initialFetchAndSubscribe()
     }
 
     private func initialFetchAndSubscribe() {
-        let filters = adapterManager.adapters.map { adapter in
-            TransactionFilter(adapterId: adapter.id, coinName: adapter.coin.name)
-        }
+        let filters = walletManager.wallets.map { $0.coin }
 
         delegate?.didRetrieve(filters: filters)
 
-        for adapter in adapterManager.adapters {
-            adapter.transactionRecordsSubject
+        for wallet in walletManager.wallets {
+            wallet.adapter.transactionRecordsSubject
                     .subscribe(onNext: { [weak self] in
-                        self?.retrieveTransactionItems(adapterId: nil)
+                        self?.retrieveTransactionItems(coin: nil)
                     })
                     .disposed(by: secondaryDisposeBag)
         }
     }
 
-    func retrieveTransactionItems(adapterId: String?) {
+    func retrieveTransactionItems(coin: Coin?) {
         let rates = exchangeRateManager.exchangeRates
         var items = [TransactionRecordViewItem]()
 
-        let filteredAdapters = adapterManager.adapters.filter { adapterId == nil || $0.id == adapterId }
+        let filteredWallets = walletManager.wallets.filter { coin == nil || $0.coin == coin }
 
-        for adapter in filteredAdapters {
-            for record in adapter.transactionRecords {
-                let convertedValue = rates[adapter.coin.code].map { $0 * record.amount }
+        for wallet in filteredWallets {
+            for record in wallet.adapter.transactionRecords {
+                let convertedValue = rates[wallet.coin].map { $0 * record.amount }
 
                 let item = TransactionRecordViewItem(
                         transactionHash: record.transactionHash,
-                        amount: CoinValue(coin: adapter.coin, value: record.amount),
+                        amount: CoinValue(coin: wallet.coin, value: record.amount),
                         currencyAmount: convertedValue.map { CurrencyValue(currency: DollarCurrency(), value: $0) },
                         from: record.from.first(where: { !$0.mine })?.address,
                         to: record.to.first(where: { !$0.mine })?.address,

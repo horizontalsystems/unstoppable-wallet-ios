@@ -18,7 +18,10 @@ class App {
     let randomManager: IRandomManager
     let systemInfoManager: ISystemInfoManager
 
-    let adapterManager: IAdapterManager
+    let coinManager: ICoinManager
+    let adapterFactory: IAdapterFactory
+    let walletManager: IWalletManager
+
     let exchangeRateManager: IExchangeRateManager
 
     init() {
@@ -37,7 +40,10 @@ class App {
         randomManager = RandomManager()
         systemInfoManager = SystemInfoManager()
 
-        adapterManager = AdapterManager(wordsManager: wordsManager)
+        coinManager = CoinManager()
+        adapterFactory = AdapterFactory()
+        walletManager = WalletManager(wordsManager: wordsManager, coinManager: coinManager, adapterFactory: adapterFactory)
+
         exchangeRateManager = ExchangeRateManager()
     }
 

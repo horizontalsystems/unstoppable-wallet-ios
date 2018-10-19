@@ -7,11 +7,11 @@ class WalletInteractor {
     private let disposeBag = DisposeBag()
     private var secondaryDisposeBag = DisposeBag()
 
-    private let adapterManager: IAdapterManager
+    private let walletManager: IWalletManager
     private let exchangeRateManager: IExchangeRateManager
 
-    init(adapterManager: IAdapterManager, exchangeRateManager: IExchangeRateManager) {
-        self.adapterManager = adapterManager
+    init(walletManager: IWalletManager, exchangeRateManager: IExchangeRateManager) {
+        self.walletManager = walletManager
         self.exchangeRateManager = exchangeRateManager
     }
 
@@ -20,16 +20,16 @@ class WalletInteractor {
 extension WalletInteractor: IWalletInteractor {
 
     func refresh() {
-        adapterManager.refresh()
+        walletManager.refreshWallets()
     }
 
     func notifyWalletBalances() {
-        adapterManager.subject
-                .subscribe(onNext: { [weak self] in
-                    self?.secondaryDisposeBag = DisposeBag()
-                    self?.initialFetchAndSubscribe()
-                })
-                .disposed(by: disposeBag)
+//        walletManager.subject
+//                .subscribe(onNext: { [weak self] in
+//                    self?.secondaryDisposeBag = DisposeBag()
+//                    self?.initialFetchAndSubscribe()
+//                })
+//                .disposed(by: disposeBag)
 
         initialFetchAndSubscribe()
     }
@@ -38,19 +38,19 @@ extension WalletInteractor: IWalletInteractor {
         var coinValues = [String: CoinValue]()
         var progressSubjects = [String: BehaviorSubject<Double>]()
 
-        for adapter in adapterManager.adapters {
-            coinValues[adapter.id] = CoinValue(coin: adapter.coin, value: adapter.balance)
-            progressSubjects[adapter.id] = adapter.progressSubject
+        for wallet in walletManager.wallets {
+            coinValues[wallet.coin] = CoinValue(coin: wallet.coin, value: wallet.adapter.balance)
+            progressSubjects[wallet.coin] = wallet.adapter.progressSubject
         }
 
         let rates = exchangeRateManager.exchangeRates
 
         delegate?.didInitialFetch(coinValues: coinValues, rates: rates, progressSubjects: progressSubjects, currency: DollarCurrency())
 
-        for adapter in adapterManager.adapters {
-            adapter.balanceSubject
+        for wallet in walletManager.wallets {
+            wallet.adapter.balanceSubject
                     .subscribe(onNext: { [weak self] value in
-                        self?.delegate?.didUpdate(coinValue: CoinValue(coin: adapter.coin, value: value), adapterId: adapter.id)
+                        self?.delegate?.didUpdate(coinValue: CoinValue(coin: wallet.coin, value: value))
                     })
                     .disposed(by: secondaryDisposeBag)
         }

@@ -16,7 +16,7 @@ class TransactionInfoInteractor {
 }
 extension TransactionInfoInteractor: ITransactionInfoInteractor {
 
-    func getTransactionInfo(coinCode: String, txHash: String) {
+    func getTransactionInfo(coin: Coin, txHash: String) {
         Observable<TransactionRecordViewItem?>.create { [weak self] observer in
             observer.onNext(self?.transaction)
             observer.onCompleted()

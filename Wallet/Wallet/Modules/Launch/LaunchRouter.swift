@@ -5,7 +5,7 @@ class LaunchRouter {
 
     static func presenter(window: UIWindow?) -> ILaunchPresenter {
         let router = LaunchRouter()
-        let interactor = LaunchInteractor(wordsManager: App.shared.wordsManager, lockManager: App.shared.lockManager, pinManager: App.shared.pinManager, adapterManager: App.shared.adapterManager)
+        let interactor = LaunchInteractor(wordsManager: App.shared.wordsManager, lockManager: App.shared.lockManager, pinManager: App.shared.pinManager)
         let presenter = LaunchPresenter(interactor: interactor, router: router)
 
         interactor.delegate = presenter

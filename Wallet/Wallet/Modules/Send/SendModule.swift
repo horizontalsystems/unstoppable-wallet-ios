@@ -26,7 +26,7 @@ protocol ISendViewDelegate {
 }
 
 protocol ISendInteractor {
-    func getCoinCode() -> String
+    func getCoin() -> Coin
     func getBaseCurrency() -> String
     func getCopiedText() -> String?
     func fetchExchangeRate()

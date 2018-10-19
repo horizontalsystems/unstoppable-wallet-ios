@@ -2,11 +2,11 @@ class GuestInteractor {
     weak var delegate: IGuestInteractorDelegate?
 
     private let wordsManager: IWordsManager
-    private let adapterManager: IAdapterManager
+    private let walletManager: IWalletManager
 
-    init(wordsManager: IWordsManager, adapterManager: IAdapterManager) {
+    init(wordsManager: IWordsManager, walletManager: IWalletManager) {
         self.wordsManager = wordsManager
-        self.adapterManager = adapterManager
+        self.walletManager = walletManager
     }
 }
 
@@ -15,7 +15,7 @@ extension GuestInteractor: IGuestInteractor {
     func createWallet() {
         do {
             try wordsManager.createWords()
-            adapterManager.start()
+            walletManager.initWallets()
             delegate?.didCreateWallet()
         } catch {
             delegate?.didFailToCreateWallet(withError: error)

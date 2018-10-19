@@ -11,8 +11,8 @@ protocol IWalletView: class {
 protocol IWalletViewDelegate {
     func viewDidLoad()
     func refresh()
-    func onReceive(for adapterId: String)
-    func onPay(for adapterId: String)
+    func onReceive(for coin: Coin)
+    func onPay(for coin: Coin)
 }
 
 protocol IWalletInteractor {
@@ -21,12 +21,12 @@ protocol IWalletInteractor {
 }
 
 protocol IWalletInteractorDelegate: class {
-    func didInitialFetch(coinValues: [String: CoinValue], rates: [String: Double], progressSubjects: [String: BehaviorSubject<Double>], currency: Currency)
-    func didUpdate(coinValue: CoinValue, adapterId: String)
-    func didUpdate(rates: [String: Double])
+    func didInitialFetch(coinValues: [Coin: CoinValue], rates: [Coin: Double], progressSubjects: [Coin: BehaviorSubject<Double>], currency: Currency)
+    func didUpdate(coinValue: CoinValue)
+    func didUpdate(rates: [Coin: Double])
 }
 
 protocol IWalletRouter {
-    func onReceive(forAdapterId adapterId: String)
-    func onSend(forAdapterId adapterId: String)
+    func onReceive(for coin: Coin)
+    func onSend(for coin: Coin)
 }

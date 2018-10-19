@@ -7,11 +7,11 @@ class ExchangeRateManager {
 extension ExchangeRateManager: IExchangeRateManager {
 
     var exchangeRates: [String: Double] {
-        return ["rBTC": 1000, "kETH" : 220]
+        return ["BTCr": 1000, "ETHt" : 220]
     }
 
     func updateRates() {
-        subject.onNext(["rBTC": 3000, "kETH" : 220])
+        subject.onNext(["BTCr": 3000, "ETHt" : 220])
     }
 
 }

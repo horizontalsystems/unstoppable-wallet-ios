@@ -7,9 +7,9 @@ class WalletPresenter {
     let router: IWalletRouter
     weak var view: IWalletView?
 
-    var coinValues = [String: CoinValue]()
-    var rates = [String: Double]()
-    var progressSubjects = [String: BehaviorSubject<Double>]()
+    var coinValues = [Coin: CoinValue]()
+    var rates = [Coin: Double]()
+    var progressSubjects = [Coin: BehaviorSubject<Double>]()
     var currency: Currency = DollarCurrency()
 
     init(interactor: IWalletInteractor, router: IWalletRouter) {
@@ -21,7 +21,7 @@ class WalletPresenter {
 
 extension WalletPresenter: IWalletInteractorDelegate {
 
-    func didInitialFetch(coinValues: [String: CoinValue], rates: [String: Double], progressSubjects: [String: BehaviorSubject<Double>], currency: Currency) {
+    func didInitialFetch(coinValues: [Coin: CoinValue], rates: [Coin: Double], progressSubjects: [Coin: BehaviorSubject<Double>], currency: Currency) {
         self.coinValues = coinValues
         self.rates = rates
         self.progressSubjects = progressSubjects
@@ -30,13 +30,13 @@ extension WalletPresenter: IWalletInteractorDelegate {
         updateView()
     }
 
-    func didUpdate(coinValue: CoinValue, adapterId: String) {
-        coinValues[adapterId] = coinValue
+    func didUpdate(coinValue: CoinValue) {
+        coinValues[coinValue.coin] = coinValue
 
         updateView()
     }
 
-    func didUpdate(rates: [String: Double]) {
+    func didUpdate(rates: [Coin: Double]) {
         self.rates = rates
 
         updateView()
@@ -47,15 +47,14 @@ extension WalletPresenter: IWalletInteractorDelegate {
 
         var viewItems = [WalletBalanceViewItem]()
 
-        for (adapterId, coinValue) in coinValues {
-            let rate = rates[coinValue.coin.code]
+        for (coin, coinValue) in coinValues {
+            let rate = rates[coinValue.coin]
 
             viewItems.append(WalletBalanceViewItem(
-                    adapterId: adapterId,
                     coinValue: coinValue,
                     exchangeValue: rate.map { CurrencyValue(currency: currency, value: $0) },
                     currencyValue: rate.map { CurrencyValue(currency: currency, value: coinValue.value * $0) },
-                    progressSubject: progressSubjects[adapterId]
+                    progressSubject: progressSubjects[coin]
             ))
 
             if let rate = rate {
@@ -82,12 +81,12 @@ extension WalletPresenter: IWalletViewDelegate {
         })
     }
 
-    func onReceive(for adapterId: String) {
-        router.onReceive(forAdapterId: adapterId)
+    func onReceive(for coin: Coin) {
+        router.onReceive(for: coin)
     }
 
-    func onPay(for adapterId: String) {
-        router.onSend(forAdapterId: adapterId)
+    func onPay(for coin: Coin) {
+        router.onSend(for: coin)
     }
 
 }

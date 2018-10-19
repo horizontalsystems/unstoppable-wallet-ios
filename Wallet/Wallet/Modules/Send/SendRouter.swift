@@ -18,9 +18,9 @@ extension SendRouter: ISendRouter {
 
 extension SendRouter {
 
-    static func module(adapter: IAdapter) -> ActionSheetController {
+    static func module(wallet: Wallet) -> ActionSheetController {
         let router = SendRouter()
-        let interactor = SendInteractor(adapter: adapter)
+        let interactor = SendInteractor(wallet: wallet)
         let presenter = SendPresenter(interactor: interactor, router: router)
         interactor.delegate = presenter
 

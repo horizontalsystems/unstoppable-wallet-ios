@@ -1,5 +1,7 @@
 import RxSwift
 
+typealias Coin = String
+
 protocol IRandomManager {
     func getRandomIndexes(count: Int) -> [Int]
 }
@@ -40,19 +42,27 @@ protocol ILocalizationManager {
     func format(localizedString: String, arguments: [CVarArg]) -> String
 }
 
-protocol IAdapterManager {
-    var adapters: [IAdapter] { get }
-    var subject: PublishSubject<Void> { get }
-    func start()
-    func refresh()
-    func clear()
+protocol IWalletManager {
+    var wallets: [Wallet] { get }
+    func initWallets()
+    func refreshWallets()
+    func clearWallets()
+}
+
+protocol IAdapterFactory {
+    func adapter(forCoin coin: Coin, words: [String]) -> IAdapter?
+}
+
+protocol ICoinManager {
+    var enabledCoins: [Coin] { get }
+}
+
+protocol ICoinManagerDelegate {
+    func didEnable(coin: Coin)
+    func didDisable(coin: Coin)
 }
 
 protocol IAdapter {
-    var id: String { get }
-
-    var coin: Coin { get }
-
     var balance: Double { get }
     var balanceSubject: PublishSubject<Double> { get }
 
