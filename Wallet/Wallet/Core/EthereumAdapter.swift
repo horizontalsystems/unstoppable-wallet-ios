@@ -14,10 +14,10 @@ class EthereumAdapter {
     let lastBlockHeightSubject = PublishSubject<Int>()
     let transactionRecordsSubject = PublishSubject<Void>()
 
-    init(words: [String], network: Network) {
+    init(words: [String], coin: EthereumKit.Coin) {
         wordsHash = words.joined()
         progressSubject = BehaviorSubject(value: 1)
-        ethereumKit = EthereumKit(withWords: words, network: network, debugPrints: true)
+        ethereumKit = EthereumKit(withWords: words, coin: coin, debugPrints: true)
         ethereumKit.delegate = self
     }
 
@@ -69,8 +69,8 @@ extension EthereumAdapter: IAdapter {
         return ethereumKit.transactions.map { transactionRecord(fromTransaction: $0) }
     }
 
-    func showInfo() {
-        ethereumKit.showRealmInfo()
+    var debugInfo: String {
+        return ethereumKit.debugInfo
     }
 
     func start() {

@@ -74,7 +74,7 @@ protocol IAdapter: class {
     var transactionRecords: [TransactionRecord] { get }
     var transactionRecordsSubject: PublishSubject<Void> { get }
 
-    func showInfo()
+    var debugInfo: String { get }
 
     func start()
     func refresh()

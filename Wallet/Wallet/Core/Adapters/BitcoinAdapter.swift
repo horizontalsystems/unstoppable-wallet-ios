@@ -14,9 +14,9 @@ class BitcoinAdapter {
     let transactionRecordsSubject = PublishSubject<Void>()
     let progressSubject: BehaviorSubject<Double>
 
-    init(words: [String], networkType: BitcoinKit.NetworkType) {
+    init(words: [String], coin: BitcoinKit.Coin) {
         wordsHash = words.joined()
-        bitcoinKit = BitcoinKit(withWords: words, networkType: networkType)
+        bitcoinKit = BitcoinKit(withWords: words, coin: coin)
         progressSubject = BehaviorSubject(value: bitcoinKit.progress)
         bitcoinKit.delegate = self
     }
@@ -61,8 +61,8 @@ extension BitcoinAdapter: IAdapter {
         return bitcoinKit.transactions.map { transactionRecord(fromTransaction: $0) }
     }
 
-    func showInfo() {
-        bitcoinKit.showRealmInfo()
+    var debugInfo: String {
+        return bitcoinKit.debugInfo
     }
 
     func start() {

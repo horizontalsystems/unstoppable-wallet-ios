@@ -99,7 +99,7 @@ class TransactionCell: UITableViewCell {
         switch item.status {
         case .processing:
             statusImageView.image = UIImage(named: "Transaction Processing Icon")
-        case let .verifying(progress):
+        case .verifying:
             statusImageView.image = UIImage(named: "Transaction Processing Icon")
         case .completed:
             statusImageView.image = UIImage(named: "Transaction Success Icon")
