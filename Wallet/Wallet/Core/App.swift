@@ -45,6 +45,8 @@ class App {
         walletManager = WalletManager(wordsManager: wordsManager, coinManager: coinManager, adapterFactory: adapterFactory)
 
         exchangeRateManager = ExchangeRateManager()
+
+        walletManager.initWallets()
     }
 
 }

@@ -62,7 +62,7 @@ protocol ICoinManagerDelegate {
     func didDisable(coin: Coin)
 }
 
-protocol IAdapter {
+protocol IAdapter: class {
     var balance: Double { get }
     var balanceSubject: PublishSubject<Double> { get }
 

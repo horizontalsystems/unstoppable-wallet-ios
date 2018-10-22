@@ -49,6 +49,7 @@
 		11B35A16172FC11FDCD26715 /* UserDefaultsStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B352044BCE494491257933 /* UserDefaultsStorage.swift */; };
 		11B35A37BC622612A85EF250 /* BaseButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3523AECA209106F192586 /* BaseButtonItem.swift */; };
 		11B35A9409FD0D29BCFF7CC6 /* MainRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35D163D12BE823AF54E97 /* MainRouter.swift */; };
+		11B35ACEE980EFD02BF9DF99 /* WalletManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B357E4A859AC4A201F6ABB /* WalletManagerTests.swift */; };
 		11B35ADC6467645C9545C89E /* BaseTwinItemView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 11B35B5CE0ED32CD93DFBB56 /* BaseTwinItemView.xib */; };
 		11B35ADC65D620B9F7C2608E /* CoinValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35B466B8FF6754E47DACD /* CoinValue.swift */; };
 		11B35B01618459D658E9A53F /* HudHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35C181EB4CA85BD80228C /* HudHelper.swift */; };
@@ -300,6 +301,7 @@
 		11B3570598EDE26F96BC5F41 /* RespondButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RespondButton.swift; sourceTree = "<group>"; };
 		11B3576492DE68F2507BB711 /* AdapterFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdapterFactory.swift; sourceTree = "<group>"; };
 		11B357BA1A6AC79F07B54FB5 /* SystemInfoManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SystemInfoManager.swift; sourceTree = "<group>"; };
+		11B357E4A859AC4A201F6ABB /* WalletManagerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletManagerTests.swift; sourceTree = "<group>"; };
 		11B357F5E2BDAAAE4E5446E3 /* WalletManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletManager.swift; sourceTree = "<group>"; };
 		11B358414185C1B924E91A32 /* UIView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
 		11B3584E1C6B6FA22B89D82C /* KeychainStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainStorage.swift; sourceTree = "<group>"; };
@@ -651,11 +653,11 @@
 				11B35E1EBCA59D0D1DD9ABCD /* Adapters */,
 				11B35480153660045A6CF9AC /* Managers */,
 				11B3573D2F4B70997D4BBAD3 /* Storage */,
+				11B35703146B7401E5D5170E /* Factories */,
 				1A5646D49060C3EFF06D0479 /* App.swift */,
 				11B35A5DE20DD6DD486FAFC0 /* Protocols.swift */,
 				11B35C182B944A7CD13EA163 /* BiometryType.swift */,
 				58AAAB39F871A4094BE92BCD /* EthereumAdapter.swift */,
-				11B35703146B7401E5D5170E /* Factories */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -812,6 +814,7 @@
 			isa = PBXGroup;
 			children = (
 				11B356347098BE98619962B4 /* LanguageManagerTests.swift */,
+				11B357E4A859AC4A201F6ABB /* WalletManagerTests.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -1257,12 +1260,12 @@
 		D3285F4420BD158E00644076 /* Wallet */ = {
 			isa = PBXGroup;
 			children = (
-				D3285F4C20BD158F00644076 /* Assets.xcassets */,
-				1A5643D714CA2AC21A38668E /* Theme */,
-				11B354AB3C3435F2D5F39EE6 /* Modules */,
-				11B356605394189E9B5EBEE0 /* Models */,
 				11B3546BA60E06900F58BA94 /* Core */,
+				11B356605394189E9B5EBEE0 /* Models */,
+				11B354AB3C3435F2D5F39EE6 /* Modules */,
 				11B3537337963E192F823FF5 /* UserInterface */,
+				1A5643D714CA2AC21A38668E /* Theme */,
+				D3285F4C20BD158F00644076 /* Assets.xcassets */,
 				D3285F4520BD158E00644076 /* AppDelegate.swift */,
 				D3373DB120C52F640082BC4A /* LaunchScreen.xib */,
 				D3285F5120BD158F00644076 /* Info.plist */,
@@ -1774,6 +1777,7 @@
 				1A564AAE494C986DF8883E0B /* SecuritySettingsPresenterTests.swift in Sources */,
 				1A56462F0253A6C28ED4D610 /* LanguageSettingsInteractorTests.swift in Sources */,
 				1A5648CC60D79AAC561BBCB0 /* LanguageSettingsPresenterTests.swift in Sources */,
+				11B35ACEE980EFD02BF9DF99 /* WalletManagerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

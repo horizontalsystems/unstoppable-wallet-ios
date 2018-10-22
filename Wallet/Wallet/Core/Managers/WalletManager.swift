@@ -9,8 +9,6 @@ class WalletManager {
         self.wordsManager = wordsManager
         self.coinManager = coinManager
         self.adapterFactory = adapterFactory
-
-        initWallets()
     }
 
 }
