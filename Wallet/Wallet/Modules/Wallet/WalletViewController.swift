@@ -2,11 +2,11 @@ import UIKit
 
 class WalletViewController: UITableViewController {
 
-    let delegate: IWalletViewDelegate
+    private let delegate: IWalletViewDelegate
 
-    var wallets = [WalletBalanceViewItem]()
+    private var wallets = [WalletViewItem]()
 
-    var headerView = UINib(nibName: String(describing: WalletHeaderView.self), bundle: Bundle(for: WalletHeaderView.self)).instantiate(withOwner: nil, options: nil)[0] as? WalletHeaderView
+    private var headerView = UINib(nibName: String(describing: WalletHeaderView.self), bundle: Bundle(for: WalletHeaderView.self)).instantiate(withOwner: nil, options: nil)[0] as? WalletHeaderView
 
     init(viewDelegate: IWalletViewDelegate) {
         self.delegate = viewDelegate
@@ -21,10 +21,7 @@ class WalletViewController: UITableViewController {
     }
 
     override func viewDidLoad() {
-        wallets = []
         super.viewDidLoad()
-
-        title = "wallet.title".localized
 
         tableView.backgroundColor = AppTheme.controllerBackground
         tableView.separatorColor = .clear
@@ -123,12 +120,16 @@ extension WalletViewController {
 
 extension WalletViewController: IWalletView {
 
+    func set(title: String) {
+        self.title = title.localized
+    }
+
     func show(totalBalance: CurrencyValue) {
         headerView?.bind(amount: CurrencyHelper.instance.formattedValue(for: totalBalance))
     }
 
-    func show(walletBalances: [WalletBalanceViewItem]) {
-        wallets = walletBalances.reversed()
+    func show(wallets: [WalletViewItem]) {
+        self.wallets = wallets
         tableView?.reloadData()
     }
 

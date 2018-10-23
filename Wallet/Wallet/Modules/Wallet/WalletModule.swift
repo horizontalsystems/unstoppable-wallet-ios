@@ -2,8 +2,9 @@ import Foundation
 import RxSwift
 
 protocol IWalletView: class {
+    func set(title: String)
     func show(totalBalance: CurrencyValue)
-    func show(walletBalances: [WalletBalanceViewItem])
+    func show(wallets: [WalletViewItem])
     func show(syncStatus: String)
     func didRefresh()
 }
@@ -16,17 +17,22 @@ protocol IWalletViewDelegate {
 }
 
 protocol IWalletInteractor {
+    var coinValues: [CoinValue] { get }
+    var rates: [Coin: CurrencyValue] { get }
+    var progressSubjects: [Coin: BehaviorSubject<Double>] { get }
+
     func refresh()
-    func notifyWalletBalances()
 }
 
 protocol IWalletInteractorDelegate: class {
-    func didInitialFetch(coinValues: [Coin: CoinValue], rates: [Coin: Double], progressSubjects: [Coin: BehaviorSubject<Double>], currency: Currency)
     func didUpdate(coinValue: CoinValue)
-    func didUpdate(rates: [Coin: Double])
+    func didUpdate(rates: [Coin: CurrencyValue])
+
+    func didUpdateCoinValues()
+    func didRefresh()
 }
 
 protocol IWalletRouter {
-    func onReceive(for coin: Coin)
-    func onSend(for coin: Coin)
+    func openReceive(for coin: Coin)
+    func openSend(for coin: Coin)
 }

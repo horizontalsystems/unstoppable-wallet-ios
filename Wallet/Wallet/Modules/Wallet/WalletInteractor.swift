@@ -1,65 +1,63 @@
 import RxSwift
 
 class WalletInteractor {
-
     weak var delegate: IWalletInteractorDelegate?
 
     private let disposeBag = DisposeBag()
-    private var secondaryDisposeBag = DisposeBag()
 
     private let walletManager: IWalletManager
     private let exchangeRateManager: IExchangeRateManager
 
-    init(walletManager: IWalletManager, exchangeRateManager: IExchangeRateManager) {
+    private let refreshTimeout: Double
+
+    init(walletManager: IWalletManager, exchangeRateManager: IExchangeRateManager, refreshTimeout: Double = 2) {
         self.walletManager = walletManager
         self.exchangeRateManager = exchangeRateManager
-    }
-
-}
-
-extension WalletInteractor: IWalletInteractor {
-
-    func refresh() {
-        walletManager.refreshWallets()
-    }
-
-    func notifyWalletBalances() {
-//        walletManager.subject
-//                .subscribe(onNext: { [weak self] in
-//                    self?.secondaryDisposeBag = DisposeBag()
-//                    self?.initialFetchAndSubscribe()
-//                })
-//                .disposed(by: disposeBag)
-
-        initialFetchAndSubscribe()
-    }
-
-    private func initialFetchAndSubscribe() {
-        var coinValues = [String: CoinValue]()
-        var progressSubjects = [String: BehaviorSubject<Double>]()
-
-        for wallet in walletManager.wallets {
-            coinValues[wallet.coin] = CoinValue(coin: wallet.coin, value: wallet.adapter.balance)
-            progressSubjects[wallet.coin] = wallet.adapter.progressSubject
-        }
-
-        let rates = exchangeRateManager.exchangeRates
-
-        delegate?.didInitialFetch(coinValues: coinValues, rates: rates, progressSubjects: progressSubjects, currency: DollarCurrency())
+        self.refreshTimeout = refreshTimeout
 
         for wallet in walletManager.wallets {
             wallet.adapter.balanceSubject
                     .subscribe(onNext: { [weak self] value in
                         self?.delegate?.didUpdate(coinValue: CoinValue(coin: wallet.coin, value: value))
                     })
-                    .disposed(by: secondaryDisposeBag)
+                    .disposed(by: disposeBag)
         }
 
         exchangeRateManager.subject
                 .subscribe(onNext: { [weak self] rates in
                     self?.delegate?.didUpdate(rates: rates)
                 })
-                .disposed(by: secondaryDisposeBag)
+                .disposed(by: disposeBag)
+    }
+
+}
+
+extension WalletInteractor: IWalletInteractor {
+
+    var coinValues: [CoinValue] {
+        return walletManager.wallets.map { wallet in
+            CoinValue(coin: wallet.coin, value: wallet.adapter.balance)
+        }
+    }
+
+    var rates: [Coin: CurrencyValue] {
+        return exchangeRateManager.exchangeRates
+    }
+
+    var progressSubjects: [Coin: BehaviorSubject<Double>] {
+        return walletManager.wallets.reduce([Coin: BehaviorSubject<Double>]()) { result, wallet in
+            var result = result
+            result[wallet.coin] = wallet.adapter.progressSubject
+            return result
+        }
+    }
+
+    func refresh() {
+        walletManager.refreshWallets()
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + refreshTimeout) {
+            self.delegate?.didRefresh()
+        }
     }
 
 }

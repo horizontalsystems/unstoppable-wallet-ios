@@ -52,7 +52,7 @@ extension TransactionsInteractor: ITransactionsInteractor {
 
         for wallet in filteredWallets {
             for record in wallet.adapter.transactionRecords {
-                let convertedValue = rates[wallet.coin].map { $0 * record.amount }
+                let convertedValue = rates[wallet.coin].map { $0.value * record.amount }
 
                 let item = TransactionRecordViewItem(
                         transactionHash: record.transactionHash,

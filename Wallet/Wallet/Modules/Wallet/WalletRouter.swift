@@ -6,11 +6,11 @@ class WalletRouter {
 
 extension WalletRouter: IWalletRouter {
 
-    func onReceive(for coin: Coin) {
+    func openReceive(for coin: Coin) {
         DepositRouter.module(presentingViewController: viewController, coin: coin)
     }
 
-    func onSend(for coin: Coin) {
+    func openSend(for coin: Coin) {
         if let wallet = App.shared.walletManager.wallets.first(where: { coin == $0.coin }) {
             SendRouter.module(wallet: wallet).show(fromController: viewController)
         }

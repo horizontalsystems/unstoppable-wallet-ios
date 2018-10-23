@@ -1,69 +1,79 @@
-import Foundation
 import RxSwift
 
 class WalletPresenter {
+    private let interactor: IWalletInteractor
+    private let router: IWalletRouter
 
-    let interactor: IWalletInteractor
-    let router: IWalletRouter
     weak var view: IWalletView?
 
-    var coinValues = [Coin: CoinValue]()
-    var rates = [Coin: Double]()
-    var progressSubjects = [Coin: BehaviorSubject<Double>]()
-    var currency: Currency = DollarCurrency()
+    private var coinValues: [CoinValue]
+    private var rates: [Coin: CurrencyValue]
+    private var progressSubjects: [Coin: BehaviorSubject<Double>]
 
     init(interactor: IWalletInteractor, router: IWalletRouter) {
         self.interactor = interactor
         self.router = router
+
+        coinValues = interactor.coinValues
+        rates = interactor.rates
+        progressSubjects = interactor.progressSubjects
+    }
+
+    private func updateView() {
+        var totalBalance: Double = 0
+
+        var viewItems = [WalletViewItem]()
+        var currency: Currency?
+
+        for coinValue in coinValues {
+            let rate = rates[coinValue.coin]
+
+            viewItems.append(WalletViewItem(
+                    coinValue: coinValue,
+                    exchangeValue: rate,
+                    currencyValue: rate.map { CurrencyValue(currency: $0.currency, value: coinValue.value * $0.value) },
+                    progressSubject: progressSubjects[coinValue.coin]
+            ))
+
+            if let rate = rate {
+                totalBalance += coinValue.value * rate.value
+                currency = rate.currency
+            }
+        }
+
+        if let currency = currency {
+            view?.show(totalBalance: CurrencyValue(currency: currency, value: totalBalance))
+        }
+
+        view?.show(wallets: viewItems)
     }
 
 }
 
 extension WalletPresenter: IWalletInteractorDelegate {
 
-    func didInitialFetch(coinValues: [Coin: CoinValue], rates: [Coin: Double], progressSubjects: [Coin: BehaviorSubject<Double>], currency: Currency) {
-        self.coinValues = coinValues
-        self.rates = rates
-        self.progressSubjects = progressSubjects
-        self.currency = currency
-
-        updateView()
-    }
-
     func didUpdate(coinValue: CoinValue) {
-        coinValues[coinValue.coin] = coinValue
-
-        updateView()
+        if let index = coinValues.firstIndex(where: { $0.coin == coinValue.coin }) {
+            coinValues[index] = coinValue
+            updateView()
+        }
     }
 
-    func didUpdate(rates: [Coin: Double]) {
+    func didUpdate(rates: [Coin: CurrencyValue]) {
         self.rates = rates
 
         updateView()
     }
 
-    private func updateView() {
-        var totalBalance: Double = 0
+    func didUpdateCoinValues() {
+        coinValues = interactor.coinValues
+        progressSubjects = interactor.progressSubjects
 
-        var viewItems = [WalletBalanceViewItem]()
+        updateView()
+    }
 
-        for (coin, coinValue) in coinValues {
-            let rate = rates[coinValue.coin]
-
-            viewItems.append(WalletBalanceViewItem(
-                    coinValue: coinValue,
-                    exchangeValue: rate.map { CurrencyValue(currency: currency, value: $0) },
-                    currencyValue: rate.map { CurrencyValue(currency: currency, value: coinValue.value * $0) },
-                    progressSubject: progressSubjects[coin]
-            ))
-
-            if let rate = rate {
-                totalBalance += coinValue.value * rate
-            }
-        }
-
-        view?.show(totalBalance: CurrencyValue(currency: currency, value: totalBalance))
-        view?.show(walletBalances: viewItems)
+    func didRefresh() {
+        view?.didRefresh()
     }
 
 }
@@ -71,22 +81,21 @@ extension WalletPresenter: IWalletInteractorDelegate {
 extension WalletPresenter: IWalletViewDelegate {
 
     func viewDidLoad() {
-        interactor.notifyWalletBalances()
+        view?.set(title: "wallet.title")
+
+        updateView()
     }
 
     func refresh() {
         interactor.refresh()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
-            self.view?.didRefresh()
-        })
     }
 
     func onReceive(for coin: Coin) {
-        router.onReceive(for: coin)
+        router.openReceive(for: coin)
     }
 
     func onPay(for coin: Coin) {
-        router.onSend(for: coin)
+        router.openSend(for: coin)
     }
 
 }

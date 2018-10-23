@@ -131,8 +131,8 @@ protocol BiometricManagerDelegate: class {
 }
 
 protocol IExchangeRateManager {
-    var subject: PublishSubject<[String: Double]> { get }
-    var exchangeRates: [String: Double] { get }
+    var subject: PublishSubject<[Coin: CurrencyValue]> { get }
+    var exchangeRates: [Coin: CurrencyValue] { get }
     func updateRates()
 }
 

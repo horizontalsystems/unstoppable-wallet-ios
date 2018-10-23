@@ -109,6 +109,7 @@ class WalletManagerTests: XCTestCase {
 
         verify(mockBitcoinAdapter).clear()
         verify(mockEthereumAdapter).clear()
+        XCTAssertEqual(manager.wallets.count, 0)
     }
 
 }

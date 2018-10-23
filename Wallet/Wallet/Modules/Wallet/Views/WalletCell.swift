@@ -115,7 +115,7 @@ class WalletCell: UITableViewCell {
         fatalError("not implemented")
     }
 
-    func bind(balance: WalletBalanceViewItem, selected: Bool, animated: Bool = false, onReceive: @escaping (() -> ()), onPay: @escaping (() -> ())) {
+    func bind(balance: WalletViewItem, selected: Bool, animated: Bool = false, onReceive: @escaping (() -> ()), onPay: @escaping (() -> ())) {
         self.onPay = onPay
         self.onReceive = onReceive
 
@@ -132,7 +132,7 @@ class WalletCell: UITableViewCell {
         bindView(balance: balance, selected: selected, animated: animated)
     }
 
-    func bindView(balance: WalletBalanceViewItem, selected: Bool, animated: Bool = false) {
+    func bindView(balance: WalletViewItem, selected: Bool, animated: Bool = false) {
         coinIconImageView.image = UIImage(named: "\(balance.coinValue.coin) Icon")
 
         receiveButton.set(hidden: !selected, animated: animated, duration: WalletTheme.buttonsAnimationDuration)

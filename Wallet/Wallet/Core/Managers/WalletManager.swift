@@ -36,6 +36,7 @@ extension WalletManager: IWalletManager {
         for wallet in wallets {
             wallet.adapter.clear()
         }
+        wallets = []
     }
 
 }
