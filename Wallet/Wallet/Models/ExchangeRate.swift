@@ -1,4 +1,3 @@
-import Foundation
 import RealmSwift
 
 class ExchangeRate: Object {

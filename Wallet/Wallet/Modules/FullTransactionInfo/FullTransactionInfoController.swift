@@ -96,11 +96,11 @@ class FullTransactionInfoController: UIViewController, SectionsDataSource {
         rows.append(Row<FullTransactionInfoTextCell>(id: "mined_time", hash: "mined_time", height: FullTransactionInfoTheme.cellHeight, bind: { cell, _ in
             cell.bind(title: "full_transaction_info.cell.mined_time".localized, description: "N/A")
         }))
-        if case let .verifying(progress) = transaction.status {
-            rows.append(Row<FullTransactionInfoTextCell>(id: "confirmations", hash: "confirmations", height: FullTransactionInfoTheme.cellHeight, bind: { cell, _ in
-                cell.bind(title: "full_transaction_info.cell.confirmations".localized, description: "\(Int(progress * 100))%")
-            }))
-        }
+//        if transaction.status == .verifying {
+//            rows.append(Row<FullTransactionInfoTextCell>(id: "confirmations", hash: "confirmations", height: FullTransactionInfoTheme.cellHeight, bind: { cell, _ in
+//                cell.bind(title: "full_transaction_info.cell.confirmations".localized, description: "\(Int(progress * 100))%")
+//            }))
+//        }
         rows.append(Row<FullTransactionInfoTextCell>(id: "lock_time", hash: "lock_time", height: FullTransactionInfoTheme.cellHeight, bind: { cell, _ in
             cell.bind(title: "full_transaction_info.cell.lock_time".localized, description: "n/a")
         }))

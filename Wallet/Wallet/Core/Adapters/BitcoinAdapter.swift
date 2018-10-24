@@ -11,38 +11,49 @@ class BitcoinAdapter {
     let wordsHash: String
     let balanceSubject = PublishSubject<Double>()
     let lastBlockHeightSubject = PublishSubject<Int>()
-    let transactionRecordsSubject = PublishSubject<Void>()
+    let transactionRecordsSubject = PublishSubject<[TransactionRecord]>()
     let progressSubject: BehaviorSubject<Double>
 
     init(words: [String], coin: BitcoinKit.Coin) {
         wordsHash = words.joined()
         bitcoinKit = BitcoinKit(withWords: words, coin: coin)
-        progressSubject = BehaviorSubject(value: bitcoinKit.progress)
+        progressSubject = BehaviorSubject(value: 0)
         bitcoinKit.delegate = self
     }
 
     private func transactionRecord(fromTransaction transaction: TransactionInfo) -> TransactionRecord {
-        let status: TransactionStatus
+        let record = TransactionRecord()
+
+        record.transactionHash = transaction.transactionHash
+        record.amount = Double(transaction.amount) / coinRate
+        record.timestamp = transaction.timestamp ?? 0
 
         if let blockHeight = transaction.blockHeight, let lastBlockInfo = bitcoinKit.lastBlockInfo {
             let confirmations = lastBlockInfo.height - blockHeight + 1
             if confirmations >= transactionCompletionThreshold {
-                status = .completed
+                record.status = .completed
             } else {
-                status = .verifying(progress: Double(confirmations) / Double(transactionCompletionThreshold))
+                record.status = .verifying
+                record.verifyProgress = Double(confirmations) / Double(transactionCompletionThreshold)
             }
         } else {
-            status = .processing
+            record.status = .processing
         }
 
-        return TransactionRecord(
-                transactionHash: transaction.transactionHash,
-                from: transaction.from.map { TransactionAddress(address: $0.address, mine: $0.mine) },
-                to: transaction.to.map { TransactionAddress(address: $0.address, mine: $0.mine) },
-                amount: Double(transaction.amount) / coinRate,
-                status: status,
-                timestamp: transaction.timestamp
-        )
+        transaction.from.forEach {
+            let address = TransactionAddress()
+            address.address = $0.address
+            address.mine = $0.mine
+            record.from.append(address)
+        }
+        transaction.to.forEach {
+            let address = TransactionAddress()
+            address.address = $0.address
+            address.mine = $0.mine
+            record.to.append(address)
+        }
+
+        return record
     }
 
 }
@@ -55,10 +66,6 @@ extension BitcoinAdapter: IAdapter {
 
     var lastBlockHeight: Int {
         return bitcoinKit.lastBlockInfo?.height ?? 0
-    }
-
-    var transactionRecords: [TransactionRecord] {
-        return bitcoinKit.transactions.map { transactionRecord(fromTransaction: $0) }
     }
 
     var debugInfo: String {
@@ -106,7 +113,16 @@ extension BitcoinAdapter: IAdapter {
 extension BitcoinAdapter: BitcoinKitDelegate {
 
     public func transactionsUpdated(bitcoinKit: BitcoinKit, inserted: [TransactionInfo], updated: [TransactionInfo], deleted: [Int]) {
-        transactionRecordsSubject.onNext(())
+        var records = [TransactionRecord]()
+
+        for info in inserted {
+            records.append(transactionRecord(fromTransaction: info))
+        }
+        for info in updated {
+            records.append(transactionRecord(fromTransaction: info))
+        }
+
+        transactionRecordsSubject.onNext(records)
     }
 
     public func balanceUpdated(bitcoinKit: BitcoinKit, balance: Int) {

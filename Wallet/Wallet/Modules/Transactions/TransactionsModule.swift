@@ -1,9 +1,9 @@
-import Foundation
+import RealmSwift
 
 protocol ITransactionsView: class {
     func show(filters: [TransactionFilterItem])
-    func show(items: [TransactionRecordViewItem])
     func didRefresh()
+    func reload()
 }
 
 protocol ITransactionsViewDelegate {
@@ -11,16 +11,18 @@ protocol ITransactionsViewDelegate {
     func onTransactionItemClick(transaction: TransactionRecordViewItem, coin: Coin, txHash: String)
     func refresh()
     func onFilterSelect(coin: Coin?)
+
+    var itemsCount: Int { get }
+    func item(forIndex index: Int) -> TransactionRecordViewItem
 }
 
 protocol ITransactionsInteractor {
     func retrieveFilters()
-    func retrieveTransactionItems(coin: Coin?)
+    func realmResults(forCoin coin: Coin?) -> Results<TransactionRecord>
 }
 
 protocol ITransactionsInteractorDelegate: class {
     func didRetrieve(filters: [Coin])
-    func didRetrieve(items: [TransactionRecordViewItem])
 }
 
 protocol ITransactionsRouter {

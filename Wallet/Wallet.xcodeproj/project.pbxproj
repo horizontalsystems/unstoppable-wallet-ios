@@ -13,6 +13,7 @@
 		11B3508D4D574217447418D5 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B351FFC025462BB9F01184 /* UIColor.swift */; };
 		11B350B7FE5660DE0BD3DA64 /* Satoshi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3522E7181FB5F0A647944 /* Satoshi.swift */; };
 		11B3518E536A06DD6C10774D /* LanguageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35C4FFB99D10A8F343E9C /* LanguageManager.swift */; };
+		11B351A15B4F92C0C0386FA2 /* TransactionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35F414DD593D0E64A1254 /* TransactionManager.swift */; };
 		11B352273C07130833C63184 /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B358414185C1B924E91A32 /* UIView.swift */; };
 		11B3524D24D3AE736839690A /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35F4AF52970B217AD4DC6 /* String.swift */; };
 		11B352A9672E1D863140FAB9 /* TransactionRecordViewItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35A13B7F3DD8B5E253676 /* TransactionRecordViewItem.swift */; };
@@ -56,6 +57,7 @@
 		11B35B13C3F8532568AE83E5 /* WalletModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35DC5A4019EA28C92B1E7 /* WalletModule.swift */; };
 		11B35B32857AF891709857BD /* RandomManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35A65D7F2EADB3618DA64 /* RandomManager.swift */; };
 		11B35B69063AB2169EE50580 /* MainPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B359E7A75E6B92D1305F40 /* MainPresenter.swift */; };
+		11B35B9482AB0524FE9F4DAA /* RealmFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B359656C7DCCBCE1CDEF4C /* RealmFactory.swift */; };
 		11B35B99F2CB665E76E66A91 /* TransactionsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3520E9F70FFB8CC2D25A3 /* TransactionsRouter.swift */; };
 		11B35BA21EAB383C3DE6FA5A /* WalletRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35DDABED90E97417092F5 /* WalletRouter.swift */; };
 		11B35BCBBF60CA8A041E97B0 /* BackupRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35D66E95B16C32E3796E8 /* BackupRouter.swift */; };
@@ -309,6 +311,7 @@
 		11B3584E1C6B6FA22B89D82C /* KeychainStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainStorage.swift; sourceTree = "<group>"; };
 		11B358586003E20B167B1442 /* RestoreModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestoreModule.swift; sourceTree = "<group>"; };
 		11B3589DC1945CAFBEEB1EED /* CurrencyValue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrencyValue.swift; sourceTree = "<group>"; };
+		11B359656C7DCCBCE1CDEF4C /* RealmFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmFactory.swift; sourceTree = "<group>"; };
 		11B359E7A75E6B92D1305F40 /* MainPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainPresenter.swift; sourceTree = "<group>"; };
 		11B35A13B7F3DD8B5E253676 /* TransactionRecordViewItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionRecordViewItem.swift; sourceTree = "<group>"; };
 		11B35A473B035F88BA0C09C1 /* UIFont.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIFont.swift; sourceTree = "<group>"; };
@@ -335,6 +338,7 @@
 		11B35DA61939E86DD4A59378 /* DollarCurrency.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DollarCurrency.swift; sourceTree = "<group>"; };
 		11B35DC5A4019EA28C92B1E7 /* WalletModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletModule.swift; sourceTree = "<group>"; };
 		11B35DDABED90E97417092F5 /* WalletRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletRouter.swift; sourceTree = "<group>"; };
+		11B35F414DD593D0E64A1254 /* TransactionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionManager.swift; sourceTree = "<group>"; };
 		11B35F4AF52970B217AD4DC6 /* String.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		1A5640379D365FF3302A4910 /* BackupConfirmationAlertModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackupConfirmationAlertModel.swift; sourceTree = "<group>"; };
 		1A56404503ED39F2827DC314 /* AddressInputField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressInputField.swift; sourceTree = "<group>"; };
@@ -682,6 +686,7 @@
 				11B35A65D7F2EADB3618DA64 /* RandomManager.swift */,
 				11B35570FD93AFB406434D20 /* CoinManager.swift */,
 				11B357F5E2BDAAAE4E5446E3 /* WalletManager.swift */,
+				11B35F414DD593D0E64A1254 /* TransactionManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -772,6 +777,7 @@
 			children = (
 				11B352044BCE494491257933 /* UserDefaultsStorage.swift */,
 				11B3584E1C6B6FA22B89D82C /* KeychainStorage.swift */,
+				11B359656C7DCCBCE1CDEF4C /* RealmFactory.swift */,
 			);
 			path = Storage;
 			sourceTree = "<group>";
@@ -1771,6 +1777,8 @@
 				11B359733B304A1FB21E88AC /* AdapterFactory.swift in Sources */,
 				11B35F318E009D7BCCCE1E1B /* WalletManager.swift in Sources */,
 				11B35E1896281BA7F451F6EC /* Wallet.swift in Sources */,
+				11B351A15B4F92C0C0386FA2 /* TransactionManager.swift in Sources */,
+				11B35B9482AB0524FE9F4DAA /* RealmFactory.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

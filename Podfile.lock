@@ -4,7 +4,7 @@ PODS:
     - SipHash (~> 1.2)
   - CryptoEthereumSwift (2.0.0):
     - CryptoSwift
-  - CryptoSwift (0.12.0)
+  - CryptoSwift (0.13.0)
   - Cuckoo (0.12.0)
   - GrouviActionSheet (1.1.5):
     - GrouviExtensions
@@ -120,7 +120,7 @@ CHECKOUT OPTIONS:
     :commit: 852780b5548f639b3e63cce2a353c3a4d4cf6348
     :git: https://github.com/horizontalsystems/GrouviHUD.git
   HSBitcoinKit:
-    :commit: 326b04e0bed693d9524f8e70441a479e374a9d71
+    :commit: 358990fb34e0413b5edbdc5a770098b5a3712ae7
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   HSEthereumKit:
     :commit: 173b742e3d64642349dd10f080a286b73417cb81
@@ -130,7 +130,7 @@ SPEC CHECKSUMS:
   Alamofire: c7287b6e5d7da964a70935e5db17046b7fde6568
   BigInt: 76b5dfdfa3e2e478d4ffdf161aeede5502e2742f
   CryptoEthereumSwift: c4e717a7f28ee58196ecae37947551fdb6360ff5
-  CryptoSwift: 1c07ca50843dd48bc54e6ea53d7a4dba3b645716
+  CryptoSwift: 16e78bebf567bad1c87b2d58f6547f25b74c31aa
   Cuckoo: d30b6c149e52ffbcfe6b4a9543e4627d08947274
   GrouviActionSheet: b34f3f29231a48d360005a9946da7c660b54bfec
   GrouviExtensions: e5a582e62cb8de559250630778b2d79b0b9ec5ea

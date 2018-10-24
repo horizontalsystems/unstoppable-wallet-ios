@@ -1,7 +1,12 @@
+import Foundation
+import RealmSwift
+
 class App {
     static let shared = App()
 
     private let fallbackLanguage = "en"
+
+    let realmFactory: IRealmFactory
 
     let secureStorage: ISecureStorage
     let localStorage: ILocalStorage
@@ -18,13 +23,22 @@ class App {
     let randomManager: IRandomManager
     let systemInfoManager: ISystemInfoManager
 
-    let coinManager: ICoinManager
     let adapterFactory: IAdapterFactory
     let walletManager: IWalletManager
+
+    let coinManager: ICoinManager
+    let transactionManager: ITransactionManager
 
     let exchangeRateManager: IExchangeRateManager
 
     init() {
+        let realmFileName = "bank.realm"
+
+        let documentsUrl = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
+        let realmConfiguration = Realm.Configuration(fileURL: documentsUrl?.appendingPathComponent(realmFileName))
+
+        realmFactory = RealmFactory(configuration: realmConfiguration)
+
         localStorage = UserDefaultsStorage()
         secureStorage = KeychainStorage(localStorage: localStorage)
         wordsManager = WordsManager(secureStorage: secureStorage, localStorage: localStorage)
@@ -40,13 +54,13 @@ class App {
         randomManager = RandomManager()
         systemInfoManager = SystemInfoManager()
 
-        coinManager = CoinManager()
         adapterFactory = AdapterFactory()
-        walletManager = WalletManager(wordsManager: wordsManager, coinManager: coinManager, adapterFactory: adapterFactory)
+        walletManager = WalletManager(adapterFactory: adapterFactory)
+
+        coinManager = CoinManager(wordsManager: wordsManager, walletManager: walletManager)
+        transactionManager = TransactionManager(walletManager: walletManager, realmFactory: realmFactory)
 
         exchangeRateManager = ExchangeRateManager()
-
-        walletManager.initWallets()
     }
 
 }

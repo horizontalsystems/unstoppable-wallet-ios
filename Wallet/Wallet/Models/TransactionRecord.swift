@@ -1,21 +1,29 @@
-import Foundation
+import RealmSwift
 
-enum TransactionStatus {
+@objc enum TransactionStatus: Int {
     case processing
-    case verifying(progress: Double)
+    case verifying
     case completed
 }
 
-public struct TransactionAddress {
-    public let address: String
-    public let mine: Bool
+class TransactionRecord: Object {
+    @objc dynamic var transactionHash: String = ""
+    @objc dynamic var coin: String = ""
+    @objc dynamic var amount: Double = 0
+    @objc dynamic var status: TransactionStatus = .processing
+    @objc dynamic var verifyProgress: Double = 0
+    @objc dynamic var timestamp: Int = 0
+    @objc dynamic var rate: Double = 0
+
+    let from = List<TransactionAddress>()
+    let to = List<TransactionAddress>()
+
+    override class func primaryKey() -> String? {
+        return "transactionHash"
+    }
 }
 
-struct TransactionRecord {
-    let transactionHash: String
-    let from: [TransactionAddress]
-    let to: [TransactionAddress]
-    let amount: Double
-    let status: TransactionStatus
-    let timestamp: Int?
+class TransactionAddress: Object {
+    @objc dynamic var address: String = ""
+    @objc dynamic var mine: Bool = false
 }

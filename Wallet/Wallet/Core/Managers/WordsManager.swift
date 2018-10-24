@@ -5,7 +5,9 @@ class WordsManager {
     private let secureStorage: ISecureStorage
     private let localStorage: ILocalStorage
 
-    var backedUpSubject: PublishSubject<Bool> = PublishSubject()
+    let loggedInSubject: PublishSubject<Bool> = PublishSubject()
+    let backedUpSubject: PublishSubject<Bool> = PublishSubject()
+
     private(set) var words: [String]?
 
     init(secureStorage: ISecureStorage, localStorage: ILocalStorage) {
@@ -37,6 +39,8 @@ extension WordsManager: IWordsManager {
         let generatedWords = try Mnemonic.generate()
         try secureStorage.set(words: generatedWords)
         words = generatedWords
+
+        loggedInSubject.onNext(true)
     }
 
     func validate(words: [String]) throws {
@@ -47,11 +51,15 @@ extension WordsManager: IWordsManager {
         try Mnemonic.validate(words: words)
         try secureStorage.set(words: words)
         self.words = words
+
+        loggedInSubject.onNext(true)
     }
 
     func removeWords() {
         words = nil
         try? secureStorage.set(words: nil)
+
+        loggedInSubject.onNext(false)
     }
 
 }

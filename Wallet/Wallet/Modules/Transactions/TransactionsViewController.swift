@@ -12,8 +12,6 @@ class TransactionsViewController: UITableViewController {
 
     private let cellName = String(describing: TransactionCell.self)
 
-    private var items = [TransactionRecordViewItem]()
-
     private let filterHeaderView = TransactionCurrenciesHeaderView()
 
     init(delegate: ITransactionsViewDelegate) {
@@ -66,13 +64,12 @@ extension TransactionsViewController: ITransactionsView {
         filterHeaderView.reload(filters: filters)
     }
 
-    func show(items: [TransactionRecordViewItem]) {
-        self.items = items
-        tableView.reloadData()
-    }
-
     func didRefresh() {
         refreshControl?.endRefreshing()
+    }
+
+    func reload() {
+        tableView.reloadData()
     }
 
 }
@@ -80,7 +77,7 @@ extension TransactionsViewController: ITransactionsView {
 extension TransactionsViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return items.count
+        return delegate.itemsCount
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -89,13 +86,13 @@ extension TransactionsViewController {
 
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if let cell = cell as? TransactionCell {
-            cell.bind(item: items[indexPath.row])
+            cell.bind(item: delegate.item(forIndex: indexPath.row))
         }
     }
 
     override public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        let item = items[indexPath.row]
+        let item = delegate.item(forIndex: indexPath.row)
         delegate.onTransactionItemClick(transaction: item, coin: item.amount.coin, txHash: item.transactionHash)
     }
 
@@ -108,7 +105,7 @@ extension TransactionsViewController {
     }
 
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        return items.count > 0 ? filterHeaderView : nil
+        return delegate.itemsCount > 0 ? filterHeaderView : nil
     }
 
 }

@@ -1,9 +1,14 @@
 import RxSwift
+import RealmSwift
 
 typealias Coin = String
 
 protocol IRandomManager {
     func getRandomIndexes(count: Int) -> [Int]
+}
+
+protocol IRealmFactory {
+    var realm: Realm { get }
 }
 
 protocol ILocalStorage: class {
@@ -44,7 +49,9 @@ protocol ILocalizationManager {
 
 protocol IWalletManager {
     var wallets: [Wallet] { get }
-    func initWallets()
+    var walletsSubject: PublishSubject<[Wallet]> { get }
+
+    func initWallets(words: [String], coins: [Coin])
     func refreshWallets()
     func clearWallets()
 }
@@ -54,12 +61,9 @@ protocol IAdapterFactory {
 }
 
 protocol ICoinManager {
-    var enabledCoins: [Coin] { get }
 }
 
-protocol ICoinManagerDelegate {
-    func didEnable(coin: Coin)
-    func didDisable(coin: Coin)
+protocol ITransactionManager {
 }
 
 protocol IAdapter: class {
@@ -71,8 +75,7 @@ protocol IAdapter: class {
     var lastBlockHeight: Int { get }
     var lastBlockHeightSubject: PublishSubject<Int> { get }
 
-    var transactionRecords: [TransactionRecord] { get }
-    var transactionRecordsSubject: PublishSubject<Void> { get }
+    var transactionRecordsSubject: PublishSubject<[TransactionRecord]> { get }
 
     var debugInfo: String { get }
 
@@ -92,6 +95,7 @@ protocol IWordsManager {
     var words: [String]? { get }
     var isBackedUp: Bool { get set }
     var isLoggedIn: Bool { get }
+    var loggedInSubject: PublishSubject<Bool> { get }
     var backedUpSubject: PublishSubject<Bool> { get }
     func createWords() throws
     func validate(words: [String]) throws

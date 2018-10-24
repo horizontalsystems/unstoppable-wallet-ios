@@ -12,7 +12,7 @@ class EthereumAdapter {
     let balanceSubject = PublishSubject<Double>()
     let progressSubject: BehaviorSubject<Double>
     let lastBlockHeightSubject = PublishSubject<Int>()
-    let transactionRecordsSubject = PublishSubject<Void>()
+    let transactionRecordsSubject = PublishSubject<[TransactionRecord]>()
 
     init(words: [String], coin: EthereumKit.Coin) {
         wordsHash = words.joined()
@@ -22,28 +22,36 @@ class EthereumAdapter {
     }
 
     private func transactionRecord(fromTransaction transaction: EthereumTransaction) -> TransactionRecord {
-        let status: TransactionStatus
+        let amountEther = convertToValue(amount: transaction.value) ?? 0
+        let mineAddress = ethereumKit.receiveAddress.lowercased()
+
+        let from = TransactionAddress()
+        from.address = transaction.from
+        from.mine = transaction.from.lowercased() == mineAddress
+
+        let to = TransactionAddress()
+        to.address = transaction.to
+        to.mine = transaction.to.lowercased() == mineAddress
+
+        let record = TransactionRecord()
+
+        record.transactionHash = transaction.txHash
+        record.amount = amountEther * (from.mine ? -1 : 1)
+        record.timestamp = transaction.timestamp
 
         if transaction.confirmations == 0 {
-            status = .processing
+            record.status = .processing
         } else if transaction.confirmations >= transactionCompletionThreshold {
-            status = .completed
+            record.status = .completed
         } else {
-            status = .verifying(progress: Double(transaction.confirmations) / Double(transactionCompletionThreshold))
+            record.status = .verifying
+            record.verifyProgress = Double(transaction.confirmations) / Double(transactionCompletionThreshold)
         }
-        let amountEther = convertToValue(amount: transaction.value) ?? 0
 
-        let mineAddress = ethereumKit.receiveAddress.lowercased()
-        let from = TransactionAddress(address: transaction.from, mine: transaction.from.lowercased() == mineAddress)
-        let to = TransactionAddress(address: transaction.to, mine: transaction.to.lowercased() == mineAddress)
-        return TransactionRecord(
-                transactionHash: transaction.txHash,
-                from: [from],
-                to: [to],
-                amount: amountEther * (from.mine ? -1 : 1),
-                status: status,
-                timestamp: transaction.timestamp
-        )
+        record.from.append(from)
+        record.to.append(to)
+
+        return record
     }
 
     private func convertToValue(amount: String) -> Double? {
@@ -63,10 +71,6 @@ extension EthereumAdapter: IAdapter {
 
     var lastBlockHeight: Int {
         return 0
-    }
-
-    var transactionRecords: [TransactionRecord] {
-        return ethereumKit.transactions.map { transactionRecord(fromTransaction: $0) }
     }
 
     var debugInfo: String {
@@ -106,7 +110,16 @@ extension EthereumAdapter: IAdapter {
 extension EthereumAdapter: EthereumKitDelegate {
 
     public func transactionsUpdated(ethereumKit: EthereumKit, inserted: [EthereumTransaction], updated: [EthereumTransaction], deleted: [Int]) {
-        transactionRecordsSubject.onNext(())
+        var records = [TransactionRecord]()
+
+        for info in inserted {
+            records.append(transactionRecord(fromTransaction: info))
+        }
+        for info in updated {
+            records.append(transactionRecord(fromTransaction: info))
+        }
+
+        transactionRecordsSubject.onNext(records)
     }
 
     public func balanceUpdated(ethereumKit: EthereumKit, balance: BInt) {
