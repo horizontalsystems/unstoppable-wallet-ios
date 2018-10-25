@@ -8,7 +8,6 @@ project 'Wallet/Wallet'
 target :Bank do
   pod 'HSBitcoinKit', git: 'https://github.com/horizontalsystems/bitcoin-kit-ios.git'
   pod 'HSEthereumKit', git: 'https://github.com/horizontalsystems/ethereum-kit-ios.git'
-  pod 'CryptoEthereumSwift', git: 'https://github.com/horizontalsystems/CryptoEthereumSwift.git'
 
   pod 'Alamofire'
   pod 'ObjectMapper'
