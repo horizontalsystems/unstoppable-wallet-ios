@@ -5,16 +5,11 @@ class TransactionInfoPresenter {
     let router: ITransactionInfoRouter
     var view: ITransactionInfoView?
 
-    var coin: Coin
-    var transactionHash: String
-
     var transaction: TransactionRecordViewItem?
 
-    init(interactor: ITransactionInfoInteractor, router: ITransactionInfoRouter, coin: Coin, transactionHash: String) {
+    init(interactor: ITransactionInfoInteractor, router: ITransactionInfoRouter) {
         self.interactor = interactor
         self.router = router
-        self.coin = coin
-        self.transactionHash = transactionHash
     }
 
 }
@@ -22,7 +17,7 @@ class TransactionInfoPresenter {
 extension TransactionInfoPresenter: ITransactionInfoViewDelegate {
 
     func viewDidLoad() {
-        interactor.getTransactionInfo(coin: coin, txHash: transactionHash)
+        interactor.getTransactionInfo()
     }
 
     func onLessMoreClick() {

@@ -33,6 +33,7 @@ target :Bank do
 end
 
 target :WalletTests do
+  pod 'RealmSwift'
   pod 'RxSwift'
   pod "Cuckoo"
 end

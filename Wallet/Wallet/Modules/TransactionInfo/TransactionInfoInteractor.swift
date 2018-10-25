@@ -16,16 +16,8 @@ class TransactionInfoInteractor {
 }
 extension TransactionInfoInteractor: ITransactionInfoInteractor {
 
-    func getTransactionInfo(coin: Coin, txHash: String) {
-        Observable<TransactionRecordViewItem?>.create { [weak self] observer in
-            observer.onNext(self?.transaction)
-            observer.onCompleted()
-            return Disposables.create()
-        }.subscribeAsync(disposeBag: disposeBag, onNext: { [weak self] transaction in
-            if let transaction = transaction {
-                self?.delegate?.didGetTransactionInfo(txRecordViewItem: transaction)
-            }
-        })
+    func getTransactionInfo() {
+        delegate?.didGetTransactionInfo(txRecordViewItem: transaction)
     }
 
     func onCopyFromAddress() {

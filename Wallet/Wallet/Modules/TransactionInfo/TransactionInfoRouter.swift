@@ -22,10 +22,10 @@ extension TransactionInfoRouter: ITransactionInfoRouter {
 
 extension TransactionInfoRouter {
 
-    static func module(controller: UIViewController?, transaction: TransactionRecordViewItem, coin: Coin, txHash: String) {
+    static func module(controller: UIViewController?, transaction: TransactionRecordViewItem) {
         let router = TransactionInfoRouter()
         let interactor = TransactionInfoInteractor(transaction: transaction)
-        let presenter = TransactionInfoPresenter(interactor: interactor, router: router, coin: coin, transactionHash: txHash)
+        let presenter = TransactionInfoPresenter(interactor: interactor, router: router)
         interactor.delegate = presenter
 
         let view = TransactionInfoView(controller: controller, delegate: presenter)

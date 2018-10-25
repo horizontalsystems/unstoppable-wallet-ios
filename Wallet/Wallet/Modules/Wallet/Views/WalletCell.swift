@@ -115,12 +115,12 @@ class WalletCell: UITableViewCell {
         fatalError("not implemented")
     }
 
-    func bind(balance: WalletViewItem, selected: Bool, animated: Bool = false, onReceive: @escaping (() -> ()), onPay: @escaping (() -> ())) {
+    func bind(wallet: WalletViewItem, selected: Bool, animated: Bool = false, onReceive: @escaping (() -> ()), onPay: @escaping (() -> ())) {
         self.onPay = onPay
         self.onReceive = onReceive
 
         let spinnerView = self.spinnerView
-        progressDisposable = balance.progressSubject?
+        progressDisposable = wallet.progressSubject?
                 .observeOn(MainScheduler.instance)
                 .subscribe(onNext: { [weak self] progress in
                     if progress < 1, spinnerView.isHidden {
@@ -129,7 +129,7 @@ class WalletCell: UITableViewCell {
                     }
                     self?.smoothChanger?.set(value: Float(progress))
                 })
-        bindView(balance: balance, selected: selected, animated: animated)
+        bindView(balance: wallet, selected: selected, animated: animated)
     }
 
     func bindView(balance: WalletViewItem, selected: Bool, animated: Bool = false) {
@@ -155,6 +155,10 @@ class WalletCell: UITableViewCell {
 
     func pay() {
         onPay?()
+    }
+
+    deinit {
+
     }
 
 }

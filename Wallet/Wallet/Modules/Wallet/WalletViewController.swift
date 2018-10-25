@@ -61,7 +61,7 @@ extension WalletViewController {
 
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if let cell = cell as? WalletCell {
-            cell.bind(balance: wallets[indexPath.row], selected: tableView.indexPathForSelectedRow == indexPath, onReceive: { [weak self] in
+            cell.bind(wallet: wallets[indexPath.row], selected: tableView.indexPathForSelectedRow == indexPath, onReceive: { [weak self] in
                 self?.onReceive(for: indexPath)
             }, onPay: { [weak self] in
                 self?.onPay(for: indexPath)
