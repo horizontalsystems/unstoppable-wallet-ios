@@ -28,7 +28,6 @@ class TransactionsViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "transactions.title".localized
 
         filterHeaderView.onSelectCoin = { coin in
             self.delegate.onFilterSelect(coin: coin)
@@ -59,6 +58,10 @@ class TransactionsViewController: UITableViewController {
 }
 
 extension TransactionsViewController: ITransactionsView {
+
+    func set(title: String) {
+        self.title = title.localized
+    }
 
     func show(filters: [TransactionFilterItem]) {
         filterHeaderView.reload(filters: filters)
@@ -93,7 +96,7 @@ extension TransactionsViewController {
     override public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         let item = delegate.item(forIndex: indexPath.row)
-        delegate.onTransactionItemClick(transaction: item, coin: item.amount.coin, txHash: item.transactionHash)
+        delegate.onTransactionItemClick(transaction: item)
     }
 
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

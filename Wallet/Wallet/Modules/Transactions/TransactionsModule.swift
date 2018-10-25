@@ -1,6 +1,7 @@
 import RealmSwift
 
 protocol ITransactionsView: class {
+    func set(title: String)
     func show(filters: [TransactionFilterItem])
     func didRefresh()
     func reload()
@@ -8,7 +9,7 @@ protocol ITransactionsView: class {
 
 protocol ITransactionsViewDelegate {
     func viewDidLoad()
-    func onTransactionItemClick(transaction: TransactionRecordViewItem, coin: Coin, txHash: String)
+    func onTransactionItemClick(transaction: TransactionRecordViewItem)
     func refresh()
     func onFilterSelect(coin: Coin?)
 
@@ -26,5 +27,5 @@ protocol ITransactionsInteractorDelegate: class {
 }
 
 protocol ITransactionsRouter {
-    func showTransactionInfo(transaction: TransactionRecordViewItem, coin: Coin, txHash: String)
+    func openTransactionInfo(transaction: TransactionRecordViewItem)
 }

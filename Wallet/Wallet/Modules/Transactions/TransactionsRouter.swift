@@ -7,8 +7,8 @@ class TransactionsRouter {
 
 extension TransactionsRouter: ITransactionsRouter {
 
-    func showTransactionInfo(transaction: TransactionRecordViewItem, coin: Coin, txHash: String) {
-        view = TransactionInfoRouter.module(controller: viewController, transaction: transaction, coin: coin, txHash: txHash)
+    func openTransactionInfo(transaction: TransactionRecordViewItem) {
+        view = TransactionInfoRouter.module(controller: viewController, transaction: transaction)
     }
 
 }

@@ -33,8 +33,8 @@ extension TransactionsPresenter: ITransactionsViewDelegate {
         interactor.retrieveFilters()
     }
 
-    func onTransactionItemClick(transaction: TransactionRecordViewItem, coin: Coin, txHash: String) {
-        router.showTransactionInfo(transaction: transaction, coin: coin, txHash: txHash)
+    func onTransactionItemClick(transaction: TransactionRecordViewItem) {
+        router.openTransactionInfo(transaction: transaction)
     }
 
     func refresh() {

@@ -799,6 +799,7 @@
 				1A564387C2E130D390213811 /* Settings */,
 				1A564B2390BF0C3D6886E8E7 /* Pin */,
 				1A564AFD44EE99E8E072D775 /* Wallet */,
+				1A56487C85FAE2EF37D2DB59 /* Transactions */,
 			);
 			path = Modules;
 			sourceTree = "<group>";
@@ -1065,6 +1066,13 @@
 				1A56425E1873BC8574539D2B /* SendButtonItem.swift */,
 			);
 			path = ViewItems;
+			sourceTree = "<group>";
+		};
+		1A56487C85FAE2EF37D2DB59 /* Transactions */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Transactions;
 			sourceTree = "<group>";
 		};
 		1A5648FC80AD00DDEB422759 /* ConfirmationAlert */ = {
@@ -1533,6 +1541,7 @@
 				"$(SRCROOT)/Wallet/Modules/Settings/Security/SecuritySettingsModule.swift",
 				"$(SRCROOT)/Wallet/Modules/Settings/Language/LanguageSettingsModule.swift",
 				"$(SRCROOT)/Wallet/Modules/Wallet/WalletModule.swift",
+				"$(SRCROOT)/Wallet/Modules/Transactions/TransactionsModule.swift",
 			);
 			name = Cuckoo;
 			outputPaths = (
@@ -1548,11 +1557,15 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/../Pods/Target Support Files/Pods-WalletTests/Pods-WalletTests-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
+				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/Cuckoo/Cuckoo.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Cuckoo.framework",
 			);
