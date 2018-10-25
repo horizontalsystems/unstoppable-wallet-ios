@@ -3,9 +3,9 @@ use_frameworks!
 
 inhibit_all_warnings!
 
-project 'Wallet/Wallet'
+project 'BankWallet/BankWallet'
 
-target :Bank do
+target :BankWallet do
   pod 'HSBitcoinKit', git: 'https://github.com/horizontalsystems/bitcoin-kit-ios.git'
   pod 'HSEthereumKit', git: 'https://github.com/horizontalsystems/ethereum-kit-ios.git'
 
@@ -31,7 +31,7 @@ target :Bank do
   pod "SnapKit"
 end
 
-target :WalletTests do
+target :BankWalletTests do
   pod 'RealmSwift'
   pod 'RxSwift'
   pod "Cuckoo"
