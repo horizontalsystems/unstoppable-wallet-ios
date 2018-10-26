@@ -14,6 +14,7 @@
 		11B350B7FE5660DE0BD3DA64 /* Satoshi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3522E7181FB5F0A647944 /* Satoshi.swift */; };
 		11B3518E536A06DD6C10774D /* LanguageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35C4FFB99D10A8F343E9C /* LanguageManager.swift */; };
 		11B351A15B4F92C0C0386FA2 /* TransactionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35F414DD593D0E64A1254 /* TransactionManager.swift */; };
+		11B351CE68F66A79DB88003C /* BankWalletDevTestNet.release.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 11B35F6496BD90189C79EF29 /* BankWalletDevTestNet.release.xcconfig */; };
 		11B352273C07130833C63184 /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B358414185C1B924E91A32 /* UIView.swift */; };
 		11B3524D24D3AE736839690A /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35F4AF52970B217AD4DC6 /* String.swift */; };
 		11B352A9672E1D863140FAB9 /* TransactionRecordViewItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35A13B7F3DD8B5E253676 /* TransactionRecordViewItem.swift */; };
@@ -37,6 +38,7 @@
 		11B356949FB74ACE63ABB6E0 /* GuestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B353D57AB36A9CF4DEE090 /* GuestViewController.swift */; };
 		11B3570AB4D8313C86CD4E47 /* DollarCurrency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35DA61939E86DD4A59378 /* DollarCurrency.swift */; };
 		11B3578A6B587E760D12B28E /* PermissionsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B354B43B5120F594318FDA /* PermissionsHelper.swift */; };
+		11B357941B40FBEB2B7BF945 /* BankWallet.release.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 11B35DAF99E739B09932628A /* BankWallet.release.xcconfig */; };
 		11B357941D6FFB7AEF9CB45F /* TestExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B351C72700B40AB457AFA8 /* TestExtensions.swift */; };
 		11B3581B212DB1B428F85501 /* ExchangeRate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35BBAAAE1A3981B902E89 /* ExchangeRate.swift */; };
 		11B35895DA5403AE180E8A6B /* SystemInfoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B357BA1A6AC79F07B54FB5 /* SystemInfoManager.swift */; };
@@ -247,6 +249,8 @@
 		D348A77320C7C58900803B9E /* BackupIntroController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D348A77120C7C58900803B9E /* BackupIntroController.xib */; };
 		D348A77620C7D34100803B9E /* BackupConfirmationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D348A77420C7D34100803B9E /* BackupConfirmationController.swift */; };
 		D348A77720C7D34100803B9E /* BackupConfirmationController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D348A77520C7D34100803B9E /* BackupConfirmationController.xib */; };
+		D37B53FC2182D45300A02469 /* BankWalletDevTestNet.debug.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = D37B53F92182D45300A02469 /* BankWalletDevTestNet.debug.xcconfig */; };
+		D37B53FD2182D45300A02469 /* BankWalletDev.release.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = D37B53FA2182D45300A02469 /* BankWalletDev.release.xcconfig */; };
 		D3B62A8A20CA40DC005A9F80 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3B62A8820CA40DC005A9F80 /* MainViewController.swift */; };
 		D3B62A8B20CA40DC005A9F80 /* MainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D3B62A8920CA40DC005A9F80 /* MainViewController.xib */; };
 		D3B62A8E20CA436F005A9F80 /* WalletViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3B62A8C20CA436F005A9F80 /* WalletViewController.swift */; };
@@ -335,10 +339,12 @@
 		11B35D66E95B16C32E3796E8 /* BackupRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackupRouter.swift; sourceTree = "<group>"; };
 		11B35D81B1CB74C0337214DC /* Wallet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Wallet.swift; sourceTree = "<group>"; };
 		11B35DA61939E86DD4A59378 /* DollarCurrency.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DollarCurrency.swift; sourceTree = "<group>"; };
+		11B35DAF99E739B09932628A /* BankWallet.release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = BankWallet.release.xcconfig; sourceTree = "<group>"; };
 		11B35DC5A4019EA28C92B1E7 /* WalletModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletModule.swift; sourceTree = "<group>"; };
 		11B35DDABED90E97417092F5 /* WalletRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletRouter.swift; sourceTree = "<group>"; };
 		11B35F414DD593D0E64A1254 /* TransactionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionManager.swift; sourceTree = "<group>"; };
 		11B35F4AF52970B217AD4DC6 /* String.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
+		11B35F6496BD90189C79EF29 /* BankWalletDevTestNet.release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = BankWalletDevTestNet.release.xcconfig; sourceTree = "<group>"; };
 		1A5640379D365FF3302A4910 /* BackupConfirmationAlertModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackupConfirmationAlertModel.swift; sourceTree = "<group>"; };
 		1A56404503ED39F2827DC314 /* AddressInputField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressInputField.swift; sourceTree = "<group>"; };
 		1A5640528EFD15137E218EA3 /* MainSettingsPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainSettingsPresenter.swift; sourceTree = "<group>"; };
@@ -500,7 +506,7 @@
 		A0EAB7FED215E6D7AA1E4F6C /* Pods-BankWalletTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BankWalletTests.release.xcconfig"; path = "../Pods/Target Support Files/Pods-BankWalletTests/Pods-BankWalletTests.release.xcconfig"; sourceTree = "<group>"; };
 		BEF42D45DB5FE9B1C59B2033 /* Pods_BankWallet.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BankWallet.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C150AD4E1C385C169467F3E4 /* Pods-BankWalletTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BankWalletTests.debug.xcconfig"; path = "../Pods/Target Support Files/Pods-BankWalletTests/Pods-BankWalletTests.debug.xcconfig"; sourceTree = "<group>"; };
-		D3285F4220BD158E00644076 /* BankWallet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BankWallet.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D3285F4220BD158E00644076 /* Bank Dev TestNet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Bank Dev TestNet.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D3285F4520BD158E00644076 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D3285F4C20BD158F00644076 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D3285F5120BD158F00644076 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -518,6 +524,8 @@
 		D348A77120C7C58900803B9E /* BackupIntroController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BackupIntroController.xib; sourceTree = "<group>"; };
 		D348A77420C7D34100803B9E /* BackupConfirmationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupConfirmationController.swift; sourceTree = "<group>"; };
 		D348A77520C7D34100803B9E /* BackupConfirmationController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BackupConfirmationController.xib; sourceTree = "<group>"; };
+		D37B53F92182D45300A02469 /* BankWalletDevTestNet.debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = BankWalletDevTestNet.debug.xcconfig; sourceTree = "<group>"; };
+		D37B53FA2182D45300A02469 /* BankWalletDev.release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = BankWalletDev.release.xcconfig; sourceTree = "<group>"; };
 		D3B62A8820CA40DC005A9F80 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		D3B62A8920CA40DC005A9F80 /* MainViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainViewController.xib; sourceTree = "<group>"; };
 		D3B62A8C20CA436F005A9F80 /* WalletViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletViewController.swift; sourceTree = "<group>"; };
@@ -721,6 +729,17 @@
 				D3B62A8920CA40DC005A9F80 /* MainViewController.xib */,
 			);
 			path = Main;
+			sourceTree = "<group>";
+		};
+		11B355982344F00971110903 /* Config */ = {
+			isa = PBXGroup;
+			children = (
+				D37B53F92182D45300A02469 /* BankWalletDevTestNet.debug.xcconfig */,
+				D37B53FA2182D45300A02469 /* BankWalletDev.release.xcconfig */,
+				11B35DAF99E739B09932628A /* BankWallet.release.xcconfig */,
+				11B35F6496BD90189C79EF29 /* BankWalletDevTestNet.release.xcconfig */,
+			);
+			path = Config;
 			sourceTree = "<group>";
 		};
 		11B3564BD80DA937DE5060DD /* Transactions */ = {
@@ -1277,7 +1296,7 @@
 		D3285F4320BD158E00644076 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				D3285F4220BD158E00644076 /* BankWallet.app */,
+				D3285F4220BD158E00644076 /* Bank Dev TestNet.app */,
 				D3373DBF20C658660082BC4A /* BankWalletTests.xctest */,
 			);
 			name = Products;
@@ -1286,6 +1305,7 @@
 		D3285F4420BD158E00644076 /* BankWallet */ = {
 			isa = PBXGroup;
 			children = (
+				11B355982344F00971110903 /* Config */,
 				11B3546BA60E06900F58BA94 /* Core */,
 				11B356605394189E9B5EBEE0 /* Models */,
 				11B354AB3C3435F2D5F39EE6 /* Modules */,
@@ -1333,7 +1353,7 @@
 			);
 			name = BankWallet;
 			productName = Wallet;
-			productReference = D3285F4220BD158E00644076 /* BankWallet.app */;
+			productReference = D3285F4220BD158E00644076 /* Bank Dev TestNet.app */;
 			productType = "com.apple.product-type.application";
 		};
 		D3373DBE20C658660082BC4A /* BankWalletTests */ = {
@@ -1404,9 +1424,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				D3373DB220C52F640082BC4A /* LaunchScreen.xib in Resources */,
+				D37B53FC2182D45300A02469 /* BankWalletDevTestNet.debug.xcconfig in Resources */,
 				50AB06B7215A269200A01E4A /* InfoPlist.strings in Resources */,
 				D348A77720C7D34100803B9E /* BackupConfirmationController.xib in Resources */,
 				D3373DCF20C6B21C0082BC4A /* RestoreViewController.xib in Resources */,
+				D37B53FD2182D45300A02469 /* BankWalletDev.release.xcconfig in Resources */,
 				D3B62A9E20CA88BF005A9F80 /* DarkTheme.xcassets in Resources */,
 				D3B62A8B20CA40DC005A9F80 /* MainViewController.xib in Resources */,
 				D348A77320C7C58900803B9E /* BackupIntroController.xib in Resources */,
@@ -1417,6 +1439,8 @@
 				D3373DBA20C564450082BC4A /* BackupWordsController.xib in Resources */,
 				1A564BE5BF0E283B1758F2F0 /* WalletHeaderView.xib in Resources */,
 				11B35ADC6467645C9545C89E /* BaseTwinItemView.xib in Resources */,
+				11B357941B40FBEB2B7BF945 /* BankWallet.release.xcconfig in Resources */,
+				11B351CE68F66A79DB88003C /* BankWalletDevTestNet.release.xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1969,14 +1993,13 @@
 		};
 		D3285F5520BD158F00644076 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 96668206F9ABB47C7A706ABD /* Pods-BankWallet.debug.xcconfig */;
+			baseConfigurationReference = D37B53F92182D45300A02469 /* BankWalletDevTestNet.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 72234W6E3D;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/BankWallet",
@@ -1987,10 +2010,6 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "io.horizontalsystems.bank-wallet.dev";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "9bfc132d-2f75-4d9d-acb4-97d47df4ec86";
-				PROVISIONING_PROFILE_SPECIFIER = "BankWallet Dev Debug";
 				SWIFT_OBJC_BRIDGING_HEADER = "BankWallet/BankWallet-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
@@ -2001,14 +2020,13 @@
 		};
 		D3285F5620BD158F00644076 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 48562628DC27D2E5A7EF9BEF /* Pods-BankWallet.release.xcconfig */;
+			baseConfigurationReference = 11B35F6496BD90189C79EF29 /* BankWalletDevTestNet.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 72234W6E3D;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/BankWallet",
@@ -2019,10 +2037,6 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "io.horizontalsystems.bank-wallet.dev";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "69275edb-e1aa-4be9-a049-c740a2c46174";
-				PROVISIONING_PROFILE_SPECIFIER = "BankWallet Dev Debug";
 				SWIFT_OBJC_BRIDGING_HEADER = "BankWallet/BankWallet-Bridging-Header.h";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 1;

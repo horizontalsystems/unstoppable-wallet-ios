@@ -1,0 +1,6 @@
+#include "../Pods/Target Support Files/Pods-BankWallet/Pods-BankWallet.release.xcconfig"
+
+PRODUCT_NAME = Bank Dev TestNet
+PRODUCT_BUNDLE_IDENTIFIER = io.horizontalsystems.bank-wallet.dev.testnet
+PROVISIONING_PROFILE_SPECIFIER = io.horizontalsystems.bank-wallet.dev.testnet AdHoc
+DEVELOPMENT_TEAM = 72234W6E3D

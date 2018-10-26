@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "D3285F4120BD158E00644076"
-               BuildableName = "BankWallet.app"
+               BuildableName = "Bank Dev TestNet.app"
                BlueprintName = "BankWallet"
                ReferencedContainer = "container:BankWallet.xcodeproj">
             </BuildableReference>
@@ -43,7 +43,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "D3285F4120BD158E00644076"
-            BuildableName = "BankWallet.app"
+            BuildableName = "Bank Dev TestNet.app"
             BlueprintName = "BankWallet"
             ReferencedContainer = "container:BankWallet.xcodeproj">
          </BuildableReference>
@@ -66,7 +66,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "D3285F4120BD158E00644076"
-            BuildableName = "BankWallet.app"
+            BuildableName = "Bank Dev TestNet.app"
             BlueprintName = "BankWallet"
             ReferencedContainer = "container:BankWallet.xcodeproj">
          </BuildableReference>
@@ -91,7 +91,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "D3285F4120BD158E00644076"
-            BuildableName = "BankWallet.app"
+            BuildableName = "Bank Dev TestNet.app"
             BlueprintName = "BankWallet"
             ReferencedContainer = "container:BankWallet.xcodeproj">
          </BuildableReference>
