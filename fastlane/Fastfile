@@ -1,10 +1,21 @@
-lane :adhoc do |options|
+lane :dev_t do |options|
   prepare_environment
   cocoapods
 
   cert(username: ENV['ITUNES_CONNECT_USERNAME'], team_id: options[:dp_team_id])
   sigh(app_identifier: "io.horizontalsystems.bank-wallet.dev.testnet", force: true, adhoc: true, username: ENV['ITUNES_CONNECT_USERNAME'], team_id: options[:dp_team_id])
   gym(scheme: "Bank Dev T", export_method: "ad-hoc", silent: true, clean: true, export_options: { compileBitcode: false })
+
+  upload_to_hockey(options[:hockey_api_token])
+end
+
+lane :dev do |options|
+  prepare_environment
+  cocoapods
+
+  cert(username: ENV['ITUNES_CONNECT_USERNAME'], team_id: options[:dp_team_id])
+  sigh(app_identifier: "io.horizontalsystems.bank-wallet.dev", force: true, adhoc: true, username: ENV['ITUNES_CONNECT_USERNAME'], team_id: options[:dp_team_id])
+  gym(scheme: "Bank Dev", export_method: "ad-hoc", silent: true, clean: true, export_options: { compileBitcode: false })
 
   upload_to_hockey(options[:hockey_api_token])
 end
