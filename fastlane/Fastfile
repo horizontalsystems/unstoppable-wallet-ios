@@ -24,7 +24,7 @@ end
 
 def upload_to_hockey(api_token)
   hockey(
-    api_token: api_token
+    api_token: api_token,
     notes: last_git_commit[:message]
   )
 end
