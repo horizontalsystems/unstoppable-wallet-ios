@@ -1,6 +1,6 @@
 import Foundation
 import XCTest
-@testable import BankWallet
+@testable import Bank_Dev_T
 
 extension XCTestCase {
     func waitForMainQueue() {

@@ -1,6 +1,6 @@
 import XCTest
 import Cuckoo
-@testable import BankWallet
+@testable import Bank_Dev_T
 
 class WalletManagerTests: XCTestCase {
     private var mockAdapterFactory: MockIAdapterFactory!

@@ -1,7 +1,7 @@
 import XCTest
 import RxSwift
 import Cuckoo
-@testable import BankWallet
+@testable import Bank_Dev_T
 
 class SecuritySettingsInteractorTests: XCTestCase {
     private var mockDelegate: MockISecuritySettingsInteractorDelegate!
