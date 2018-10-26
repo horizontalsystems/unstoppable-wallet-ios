@@ -48,5 +48,7 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>Enabled Coins</key>
+	<string>$(EnabledCoins)</string>
 </dict>
 </plist>

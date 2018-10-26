@@ -26,6 +26,7 @@ class App {
     let adapterFactory: IAdapterFactory
     let walletManager: IWalletManager
 
+    let appConfigProvider: IAppConfigProvider
     let coinManager: ICoinManager
     let transactionManager: ITransactionManager
 
@@ -57,7 +58,8 @@ class App {
         adapterFactory = AdapterFactory()
         walletManager = WalletManager(adapterFactory: adapterFactory)
 
-        coinManager = CoinManager(wordsManager: wordsManager, walletManager: walletManager)
+        appConfigProvider = AppConfigProvider()
+        coinManager = CoinManager(wordsManager: wordsManager, walletManager: walletManager, appConfigProvider: appConfigProvider)
         transactionManager = TransactionManager(walletManager: walletManager, realmFactory: realmFactory)
 
         exchangeRateManager = ExchangeRateManager()

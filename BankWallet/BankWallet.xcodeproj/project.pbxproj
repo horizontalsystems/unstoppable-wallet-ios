@@ -34,6 +34,7 @@
 		11B355D7142B6A76B6A3502E /* WalletInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3511175F5F85BE5677E1A /* WalletInteractor.swift */; };
 		11B355D74C9D67C254B90297 /* IndexedInputField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35C8856A137E92441AF19 /* IndexedInputField.swift */; };
 		11B356790A19174A2B516983 /* BaseTwinItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3513A0023455D438BAC4C /* BaseTwinItemView.swift */; };
+		11B35687D13433591FF7F037 /* AppConfigProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B358A2ED820E5741F0701A /* AppConfigProvider.swift */; };
 		11B356949FB74ACE63ABB6E0 /* GuestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B353D57AB36A9CF4DEE090 /* GuestViewController.swift */; };
 		11B3570AB4D8313C86CD4E47 /* DollarCurrency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35DA61939E86DD4A59378 /* DollarCurrency.swift */; };
 		11B3578A6B587E760D12B28E /* PermissionsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B354B43B5120F594318FDA /* PermissionsHelper.swift */; };
@@ -55,6 +56,7 @@
 		11B35ADC65D620B9F7C2608E /* CoinValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35B466B8FF6754E47DACD /* CoinValue.swift */; };
 		11B35B01618459D658E9A53F /* HudHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35C181EB4CA85BD80228C /* HudHelper.swift */; };
 		11B35B13C3F8532568AE83E5 /* WalletModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35DC5A4019EA28C92B1E7 /* WalletModule.swift */; };
+		11B35B1E11D4EDE6C15BE862 /* AppConfigProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B358A2ED820E5741F0701A /* AppConfigProvider.swift */; };
 		11B35B32857AF891709857BD /* RandomManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35A65D7F2EADB3618DA64 /* RandomManager.swift */; };
 		11B35B69063AB2169EE50580 /* MainPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B359E7A75E6B92D1305F40 /* MainPresenter.swift */; };
 		11B35B9482AB0524FE9F4DAA /* RealmFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B359656C7DCCBCE1CDEF4C /* RealmFactory.swift */; };
@@ -76,6 +78,7 @@
 		11B35E1896281BA7F451F6EC /* Wallet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35D81B1CB74C0337214DC /* Wallet.swift */; };
 		11B35E601055B8D8B8EE2039 /* UITableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B351D55B31D37B7194DE55 /* UITableView.swift */; };
 		11B35E9C0E8F38C063A48367 /* BackupPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B355771A1D96DB96FBC975 /* BackupPresenter.swift */; };
+		11B35EC72662D83DF2D55438 /* AppConfigProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B358A2ED820E5741F0701A /* AppConfigProvider.swift */; };
 		11B35F318E009D7BCCCE1E1B /* WalletManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B357F5E2BDAAAE4E5446E3 /* WalletManager.swift */; };
 		11B35F56DE01B03CCFB49E32 /* BackupInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B353A3B460BF1B24349F9F /* BackupInteractor.swift */; };
 		11B35F8641C2F7F7FB23B181 /* GuestInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3566ED622AE7606EF76B9 /* GuestInteractor.swift */; };
@@ -769,6 +772,7 @@
 		11B3584E1C6B6FA22B89D82C /* KeychainStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainStorage.swift; sourceTree = "<group>"; };
 		11B358586003E20B167B1442 /* RestoreModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestoreModule.swift; sourceTree = "<group>"; };
 		11B3589DC1945CAFBEEB1EED /* CurrencyValue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrencyValue.swift; sourceTree = "<group>"; };
+		11B358A2ED820E5741F0701A /* AppConfigProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppConfigProvider.swift; sourceTree = "<group>"; };
 		11B359656C7DCCBCE1CDEF4C /* RealmFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmFactory.swift; sourceTree = "<group>"; };
 		11B359E7A75E6B92D1305F40 /* MainPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainPresenter.swift; sourceTree = "<group>"; };
 		11B35A13B7F3DD8B5E253676 /* TransactionRecordViewItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionRecordViewItem.swift; sourceTree = "<group>"; };
@@ -1175,6 +1179,7 @@
 				11B35570FD93AFB406434D20 /* CoinManager.swift */,
 				11B357F5E2BDAAAE4E5446E3 /* WalletManager.swift */,
 				11B35F414DD593D0E64A1254 /* TransactionManager.swift */,
+				11B358A2ED820E5741F0701A /* AppConfigProvider.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -2520,6 +2525,7 @@
 				11B35E1896281BA7F451F6EC /* Wallet.swift in Sources */,
 				11B351A15B4F92C0C0386FA2 /* TransactionManager.swift in Sources */,
 				11B35B9482AB0524FE9F4DAA /* RealmFactory.swift in Sources */,
+				11B35687D13433591FF7F037 /* AppConfigProvider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2762,6 +2768,7 @@
 				D38405B4218317DF007D50AD /* Wallet.swift in Sources */,
 				D38405B5218317DF007D50AD /* TransactionManager.swift in Sources */,
 				D38405B6218317DF007D50AD /* RealmFactory.swift in Sources */,
+				11B35B1E11D4EDE6C15BE862 /* AppConfigProvider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2980,6 +2987,7 @@
 				D38406A321831B3D007D50AD /* Wallet.swift in Sources */,
 				D38406A421831B3D007D50AD /* TransactionManager.swift in Sources */,
 				D38406A521831B3D007D50AD /* RealmFactory.swift in Sources */,
+				11B35EC72662D83DF2D55438 /* AppConfigProvider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3161,6 +3169,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 794E3C9AC4E5B6E2048A9715 /* Pods-Bank Dev T.debug.xcconfig */;
 			buildSettings = {
+				EnabledCoins = "BTCt, BCHt, ETHt";
 				PRODUCT_BUNDLE_IDENTIFIER = "io.horizontalsystems.bank-wallet.dev.testnet";
 				PRODUCT_NAME = "Bank Dev T";
 				PROVISIONING_PROFILE_SPECIFIER = "io.horizontalsystems.bank-wallet.dev.testnet Dev";
@@ -3171,6 +3180,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = C5FE3D55502584E0DD3309B6 /* Pods-Bank Dev T.release.xcconfig */;
 			buildSettings = {
+				EnabledCoins = "BTCt, BCHt, ETHt";
 				PRODUCT_BUNDLE_IDENTIFIER = "io.horizontalsystems.bank-wallet.dev.testnet";
 				PRODUCT_NAME = "Bank Dev T";
 				PROVISIONING_PROFILE_SPECIFIER = "io.horizontalsystems.bank-wallet.dev.testnet AdHoc";
@@ -3227,6 +3237,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 2A3E68F78C6CD2002636C03F /* Pods-Bank Dev.debug.xcconfig */;
 			buildSettings = {
+				EnabledCoins = "BTC, BCH, ETH";
 				PRODUCT_BUNDLE_IDENTIFIER = "io.horizontalsystems.bank-wallet.dev";
 				PRODUCT_NAME = "Bank Dev";
 				PROVISIONING_PROFILE_SPECIFIER = "io.horizontalsystems.bank-wallet.dev Dev";
@@ -3237,6 +3248,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5D06EF4E8D5FBD5723873DAE /* Pods-Bank Dev.release.xcconfig */;
 			buildSettings = {
+				EnabledCoins = "BTC, BCH, ETH";
 				PRODUCT_BUNDLE_IDENTIFIER = "io.horizontalsystems.bank-wallet.dev";
 				PRODUCT_NAME = "Bank Dev";
 				PROVISIONING_PROFILE_SPECIFIER = "io.horizontalsystems.bank-wallet.dev AdHoc";
@@ -3247,6 +3259,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = A694EDB9B5B506FC56387F27 /* Pods-Bank.debug.xcconfig */;
 			buildSettings = {
+				EnabledCoins = "BTC, BCH, ETH";
 				PRODUCT_BUNDLE_IDENTIFIER = "io.horizontalsystems.bank-wallet";
 				PRODUCT_NAME = Bank;
 				PROVISIONING_PROFILE_SPECIFIER = "io.horizontalsystems.bank-wallet Dev";
@@ -3257,6 +3270,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 2D3726E7299D55FF114404DB /* Pods-Bank.release.xcconfig */;
 			buildSettings = {
+				EnabledCoins = "BTC, BCH, ETH";
 				PRODUCT_BUNDLE_IDENTIFIER = "io.horizontalsystems.bank-wallet";
 				PRODUCT_NAME = Bank;
 				PROVISIONING_PROFILE_SPECIFIER = "io.horizontalsystems.bank-wallet AppStore";

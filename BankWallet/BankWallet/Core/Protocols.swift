@@ -144,3 +144,7 @@ protocol ISystemInfoManager {
     var appVersion: String { get }
     var biometryType: BiometryType { get }
 }
+
+protocol IAppConfigProvider {
+    var enabledCoins: [Coin] { get }
+}
