@@ -4,7 +4,7 @@ lane :adhoc do |options|
 
   cert(username: ENV['ITUNES_CONNECT_USERNAME'], team_id: options[:dp_team_id])
   sigh(app_identifier: "io.horizontalsystems.bank-wallet.dev.testnet", force: true, adhoc: true, username: ENV['ITUNES_CONNECT_USERNAME'], team_id: options[:dp_team_id])
-  gym(scheme: "BankWallet", xcconfig: "BankWallet/BankWallet/Config/BankWalletDevTestNet.release.xcconfig", export_method: "ad-hoc", silent: true, clean: true, export_options: { compileBitcode: false })
+  gym(scheme: "Bank Dev T", export_method: "ad-hoc", silent: true, clean: true, export_options: { compileBitcode: false })
 
   upload_to_hockey
 end
