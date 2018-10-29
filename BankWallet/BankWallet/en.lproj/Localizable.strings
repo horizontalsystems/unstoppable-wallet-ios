@@ -1,3 +1,10 @@
+"coin.BTC" = "Bitcoin";
+"coin.BCH" = "Bitcoin Cash";
+"coin.ETH" = "Ethereum";
+"coin.BTCt" = "Bitcoin TestNet";
+"coin.BCHt" = "Bitcoin Cash TestNet";
+"coin.ETHt" = "Ethereum TestNet";
+
 "alert.ok" = "OK";
 "alert.cancel" = "Cancel";
 "navigation_bar.cancel" = "Cancel";
