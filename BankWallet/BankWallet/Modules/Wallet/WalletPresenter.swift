@@ -6,45 +6,39 @@ class WalletPresenter {
 
     weak var view: IWalletView?
 
-    private var coinValues: [CoinValue]
-    private var rates: [Coin: CurrencyValue]
-    private var progressSubjects: [Coin: BehaviorSubject<Double>]
-
     init(interactor: IWalletInteractor, router: IWalletRouter) {
         self.interactor = interactor
         self.router = router
-
-        coinValues = interactor.coinValues
-        rates = interactor.rates
-        progressSubjects = interactor.progressSubjects
     }
 
     private func updateView() {
         var totalBalance: Double = 0
 
         var viewItems = [WalletViewItem]()
-        var currency: Currency?
+        let currency = interactor.baseCurrency
 
-        for coinValue in coinValues {
-            let rate = rates[coinValue.coin]
+        for coinValue in interactor.coinValues {
+            let rate = interactor.rate(forCoin: coinValue.coin)
+
+            var rateExpired = false
+
+            if let rate = rate {
+                let diff = Date().timeIntervalSince1970 - rate.timestamp
+                rateExpired = diff > 60 * 10
+
+                totalBalance += coinValue.value * rate.value
+            }
 
             viewItems.append(WalletViewItem(
                     coinValue: coinValue,
-                    exchangeValue: rate,
-                    currencyValue: rate.map { CurrencyValue(currency: $0.currency, value: coinValue.value * $0.value) },
-                    progressSubject: progressSubjects[coinValue.coin]
+                    exchangeValue: rate.map { CurrencyValue(currency: currency, value: $0.value) },
+                    currencyValue: rate.map { CurrencyValue(currency: currency, value: coinValue.value * $0.value) },
+                    progressSubject: interactor.progressSubject(forCoin: coinValue.coin),
+                    rateExpired: rateExpired
             ))
-
-            if let rate = rate {
-                totalBalance += coinValue.value * rate.value
-                currency = rate.currency
-            }
         }
 
-        if let currency = currency {
-            view?.show(totalBalance: CurrencyValue(currency: currency, value: totalBalance))
-        }
-
+        view?.show(totalBalance: CurrencyValue(currency: currency, value: totalBalance))
         view?.show(wallets: viewItems)
     }
 
@@ -52,23 +46,7 @@ class WalletPresenter {
 
 extension WalletPresenter: IWalletInteractorDelegate {
 
-    func didUpdate(coinValue: CoinValue) {
-        if let index = coinValues.firstIndex(where: { $0.coin == coinValue.coin }) {
-            coinValues[index] = coinValue
-            updateView()
-        }
-    }
-
-    func didUpdate(rates: [Coin: CurrencyValue]) {
-        self.rates = rates
-
-        updateView()
-    }
-
-    func didUpdateCoinValues() {
-        coinValues = interactor.coinValues
-        progressSubjects = interactor.progressSubjects
-
+    func didUpdate() {
         updateView()
     }
 

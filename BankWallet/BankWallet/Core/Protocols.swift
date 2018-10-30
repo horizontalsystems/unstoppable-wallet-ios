@@ -134,9 +134,9 @@ protocol BiometricManagerDelegate: class {
     func didFailToValidate()
 }
 
-protocol IExchangeRateManager {
-    var subject: PublishSubject<[Coin: CurrencyValue]> { get }
-    var exchangeRates: [Coin: CurrencyValue] { get }
+protocol IRateManager {
+    var subject: PublishSubject<Void> { get }
+    func rate(forCoin coin: Coin, currencyCode: String) -> Rate?
     func updateRates()
 }
 
@@ -147,4 +147,33 @@ protocol ISystemInfoManager {
 
 protocol IAppConfigProvider {
     var enabledCoins: [Coin] { get }
+}
+
+protocol IRateNetworkManager {
+    func getLatestRate(coin: String, currencyCode: String) -> Observable<Double>
+    func getRate(coin: String, fiat: String, year: Int, month: Int, day: Int, hour: Int, minute: Int) -> Observable<Double>
+}
+
+protocol IRateStorage {
+    func rate(forCoin coin: Coin, currencyCode: String) -> Rate?
+    func save(value: Double, coin: Coin, currencyCode: String)
+    func clear()
+}
+
+protocol ICurrencyManager {
+    var subject: PublishSubject<Currency> { get }
+    var baseCurrency: Currency { get }
+}
+
+protocol IReachabilityManager {
+    var subject: PublishSubject<Bool> { get }
+}
+
+protocol ITimer {
+    var delegate: ITimerDelegate? { get set }
+    func start()
+}
+
+protocol ITimerDelegate: class {
+    func onFire()
 }

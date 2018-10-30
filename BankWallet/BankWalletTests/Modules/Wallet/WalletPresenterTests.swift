@@ -18,8 +18,10 @@ class WalletPresenterTests: XCTestCase {
     private var etherValue: CoinValue!
     private var cashValue: CoinValue!
 
-    private let bitcoinRate = CurrencyValue(currency: DollarCurrency(), value: 5000)
-    private let etherRate = CurrencyValue(currency: DollarCurrency(), value: 300)
+    private let currency = Currency(code: "USD", localeId: "")
+
+    private var bitcoinRate: CurrencyValue!
+    private var etherRate: CurrencyValue!
 
     private let bitcoinSubject = BehaviorSubject<Double>(value: 1)
     private let cashSubject = BehaviorSubject<Double>(value: 0.5)
@@ -34,6 +36,9 @@ class WalletPresenterTests: XCTestCase {
         bitcoinValue = CoinValue(coin: bitcoin, value: 2)
         etherValue = CoinValue(coin: ether, value: 3)
         cashValue = CoinValue(coin: cash, value: 10)
+
+        bitcoinRate = CurrencyValue(currency: currency, value: 5000)
+        etherRate = CurrencyValue(currency: currency, value: 300)
 
         expectedBitcoinItem = WalletViewItem(
                 coinValue: bitcoinValue,
@@ -116,7 +121,7 @@ class WalletPresenterTests: XCTestCase {
     }
 
     func testTotalBalance_DidUpdateRates() {
-        let newBitcoinRate = CurrencyValue(currency: DollarCurrency(), value: 1000)
+        let newBitcoinRate = CurrencyValue(currency: currency, value: 1000)
         let newTotalValue =
                 bitcoinValue.value * newBitcoinRate.value +
                 etherValue.value * etherRate.value
@@ -149,7 +154,7 @@ class WalletPresenterTests: XCTestCase {
     }
 
     func testWalletViewItems_DidUpdateRates() {
-        let newEtherRate = CurrencyValue(currency: DollarCurrency(), value: 400)
+        let newEtherRate = CurrencyValue(currency: currency, value: 400)
         let newExpectedEtherItem = WalletViewItem(
                 coinValue: etherValue,
                 exchangeValue: newEtherRate,

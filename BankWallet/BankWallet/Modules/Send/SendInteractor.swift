@@ -47,8 +47,8 @@ extension SendInteractor: ISendInteractor {
 //        databaseManager.getExchangeRates().subscribeAsync(disposeBag: disposeBag, onNext: { [weak self] in
 //            self?.didFetchExchangeRates($0)
 //        })
-        let rate = ExchangeRate()
-        rate.code = wallet.coin
+        let rate = Rate()
+        rate.coin = wallet.coin
         rate.value = 5000
         delegate?.didFetchExchangeRate(exchangeRate: rate.value)
     }

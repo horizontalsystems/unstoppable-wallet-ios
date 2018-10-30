@@ -30,7 +30,15 @@ class App {
     let coinManager: ICoinManager
     let transactionManager: ITransactionManager
 
-    let exchangeRateManager: IExchangeRateManager
+    let realmStorage: RealmStorage
+    let networkManager: NetworkManager
+
+    let currencyManager: ICurrencyManager
+    let rateManager: IRateManager
+
+    let reachabilityManager: IReachabilityManager
+
+    let rateSyncer: RateSyncer
 
     init() {
         let realmFileName = "bank.realm"
@@ -62,7 +70,15 @@ class App {
         coinManager = CoinManager(wordsManager: wordsManager, walletManager: walletManager, appConfigProvider: appConfigProvider)
         transactionManager = TransactionManager(walletManager: walletManager, realmFactory: realmFactory)
 
-        exchangeRateManager = ExchangeRateManager()
+        realmStorage = RealmStorage(realmFactory: realmFactory)
+        networkManager = NetworkManager()
+
+        currencyManager = CurrencyManager()
+        rateManager = RateManager(storage: realmStorage, currencyManager: currencyManager, networkManager: networkManager, walletManager: walletManager)
+
+        reachabilityManager = ReachabilityManager()
+
+        rateSyncer = RateSyncer(rateManager: rateManager, reachabilityManager: reachabilityManager, walletManager: walletManager, timer: Timer(interval: 5 * 60))
     }
 
 }

@@ -17,18 +17,16 @@ protocol IWalletViewDelegate {
 }
 
 protocol IWalletInteractor {
+    var baseCurrency: Currency { get }
     var coinValues: [CoinValue] { get }
-    var rates: [Coin: CurrencyValue] { get }
-    var progressSubjects: [Coin: BehaviorSubject<Double>] { get }
+    func rate(forCoin coin: Coin) -> Rate?
+    func progressSubject(forCoin coin: Coin) -> BehaviorSubject<Double>?
 
     func refresh()
 }
 
 protocol IWalletInteractorDelegate: class {
-    func didUpdate(coinValue: CoinValue)
-    func didUpdate(rates: [Coin: CurrencyValue])
-
-    func didUpdateCoinValues()
+    func didUpdate()
     func didRefresh()
 }
 

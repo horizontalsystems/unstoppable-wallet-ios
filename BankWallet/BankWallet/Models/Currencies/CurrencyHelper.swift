@@ -7,7 +7,7 @@ class CurrencyHelper {
 
     func formattedValue(for currencyValue: CurrencyValue) -> String? {
         let formatter = _formatter
-        formatter.locale = currencyValue.currency.locale
+        formatter.locale = Locale(identifier: currencyValue.currency.localeId)
         formatter.numberStyle = .currency
         formatter.minimumFractionDigits = 0
         return formatter.string(from: currencyValue.value as NSNumber)
@@ -15,7 +15,7 @@ class CurrencyHelper {
 
     func formattedApproximateValue(for currencyValue: CurrencyValue) -> String? {
         let formatter = _formatter
-        formatter.locale = currencyValue.currency.locale
+        formatter.locale = Locale(identifier: currencyValue.currency.localeId)
         formatter.numberStyle = .currency
         formatter.minimumFractionDigits = 0
         let value = Int(abs(currencyValue.value))

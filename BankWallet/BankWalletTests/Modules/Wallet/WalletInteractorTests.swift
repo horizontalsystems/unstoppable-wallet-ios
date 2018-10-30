@@ -28,6 +28,8 @@ class WalletInteractorTests: XCTestCase {
 
     private let mockRatesSubject = PublishSubject<[Coin: CurrencyValue]>()
 
+    private let currency = Currency(code: "USD", localeId: "")
+
     override func setUp() {
         super.setUp()
 
@@ -65,7 +67,7 @@ class WalletInteractorTests: XCTestCase {
             when(mock.balanceSubject.get).thenReturn(cashBalanceSubject)
         }
 
-        interactor = WalletInteractor(walletManager: mockWalletManager, exchangeRateManager: mockExchangeRateManager, refreshTimeout: 0)
+        interactor = WalletInteractor(walletManager: mockWalletManager, rateManager: mockExchangeRateManager, refreshTimeout: 0)
         interactor.delegate = mockDelegate
     }
 
@@ -113,8 +115,8 @@ class WalletInteractorTests: XCTestCase {
 
     func testRates() {
         let expectedRates = [
-            bitcoin: CurrencyValue(currency: DollarCurrency(), value: 5000),
-            ether: CurrencyValue(currency: DollarCurrency(), value: 300)
+            bitcoin: CurrencyValue(currency: currency, value: 5000),
+            ether: CurrencyValue(currency: currency, value: 300)
         ]
 
         stub(mockExchangeRateManager) { mock in
@@ -166,8 +168,8 @@ class WalletInteractorTests: XCTestCase {
     }
 
     func testRatesUpdate() {
-        let bitcoinRate = CurrencyValue(currency: DollarCurrency(), value: 6000)
-        let etherRate = CurrencyValue(currency: DollarCurrency(), value: 400)
+        let bitcoinRate = CurrencyValue(currency: currency, value: 6000)
+        let etherRate = CurrencyValue(currency: currency, value: 400)
         let rates = [bitcoin: bitcoinRate, ether: etherRate]
         mockRatesSubject.onNext(rates)
 

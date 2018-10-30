@@ -18,7 +18,7 @@ extension CoinValue: Equatable {
 
 extension Currency: Equatable {
     public static func ==(lhs: Currency, rhs: Currency) -> Bool {
-        return lhs.code == rhs.code && lhs.symbol == rhs.symbol
+        return lhs.code == rhs.code
     }
 }
 

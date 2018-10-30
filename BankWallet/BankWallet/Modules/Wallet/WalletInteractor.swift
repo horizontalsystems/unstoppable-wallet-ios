@@ -6,26 +6,35 @@ class WalletInteractor {
     private let disposeBag = DisposeBag()
 
     private let walletManager: IWalletManager
-    private let exchangeRateManager: IExchangeRateManager
+    private let rateManager: IRateManager
+    private let currencyManager: ICurrencyManager
 
     private let refreshTimeout: Double
 
-    init(walletManager: IWalletManager, exchangeRateManager: IExchangeRateManager, refreshTimeout: Double = 2) {
+    init(walletManager: IWalletManager, rateManager: IRateManager, currencyManager: ICurrencyManager, refreshTimeout: Double = 2) {
         self.walletManager = walletManager
-        self.exchangeRateManager = exchangeRateManager
+        self.rateManager = rateManager
+        self.currencyManager = currencyManager
+
         self.refreshTimeout = refreshTimeout
 
         for wallet in walletManager.wallets {
             wallet.adapter.balanceSubject
-                    .subscribe(onNext: { [weak self] value in
-                        self?.delegate?.didUpdate(coinValue: CoinValue(coin: wallet.coin, value: value))
+                    .subscribe(onNext: { [weak self] _ in
+                        self?.delegate?.didUpdate()
                     })
                     .disposed(by: disposeBag)
         }
 
-        exchangeRateManager.subject
-                .subscribe(onNext: { [weak self] rates in
-                    self?.delegate?.didUpdate(rates: rates)
+        rateManager.subject
+                .subscribe(onNext: { [weak self] in
+                    self?.delegate?.didUpdate()
+                })
+                .disposed(by: disposeBag)
+
+        currencyManager.subject
+                .subscribe(onNext: { [weak self] _ in
+                    self?.delegate?.didUpdate()
                 })
                 .disposed(by: disposeBag)
     }
@@ -34,22 +43,26 @@ class WalletInteractor {
 
 extension WalletInteractor: IWalletInteractor {
 
+    var baseCurrency: Currency {
+        return currencyManager.baseCurrency
+    }
+
     var coinValues: [CoinValue] {
         return walletManager.wallets.map { wallet in
             CoinValue(coin: wallet.coin, value: wallet.adapter.balance)
         }
     }
 
-    var rates: [Coin: CurrencyValue] {
-        return exchangeRateManager.exchangeRates
+    func rate(forCoin coin: Coin) -> Rate? {
+        return rateManager.rate(forCoin: coin, currencyCode: currencyManager.baseCurrency.code)
     }
 
-    var progressSubjects: [Coin: BehaviorSubject<Double>] {
-        return walletManager.wallets.reduce([Coin: BehaviorSubject<Double>]()) { result, wallet in
-            var result = result
-            result[wallet.coin] = wallet.adapter.progressSubject
-            return result
+    func progressSubject(forCoin coin: Coin) -> BehaviorSubject<Double>? {
+        guard let wallet = walletManager.wallets.first(where: { $0.coin == coin }) else {
+            return nil
         }
+
+        return wallet.adapter.progressSubject
     }
 
     func refresh() {

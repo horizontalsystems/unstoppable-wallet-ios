@@ -4,12 +4,12 @@ class TransactionsInteractor {
     weak var delegate: ITransactionsInteractorDelegate?
 
     private let walletManager: IWalletManager
-    private let exchangeRateManager: IExchangeRateManager
+    private let exchangeRateManager: IRateManager
     private let dataSource: ITransactionRecordDataSource
 
     private let refreshTimeout: Double
 
-    init(walletManager: IWalletManager, exchangeRateManager: IExchangeRateManager, dataSource: ITransactionRecordDataSource, refreshTimeout: Double = 2) {
+    init(walletManager: IWalletManager, exchangeRateManager: IRateManager, dataSource: ITransactionRecordDataSource, refreshTimeout: Double = 2) {
         self.walletManager = walletManager
         self.exchangeRateManager = exchangeRateManager
         self.dataSource = dataSource
