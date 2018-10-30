@@ -15,6 +15,10 @@
 "alert.success" = "Erfolgreich";
 "alert.copied" = "Kopiert";
 
+"access.camera.message" = "Bank needs access to your camera to scan QR code.\n\nGo to Settings - > Bank and allow access to Camera.";
+"access.settings" = "Settings";
+"access.cancel" = "Cancel";
+
 "guest.title" = "App Name";
 "guest.subtitle" = "Bitcoin, Satoshi Nakamoto";
 "guest.create_wallet" = "Wallet Erstellen";
