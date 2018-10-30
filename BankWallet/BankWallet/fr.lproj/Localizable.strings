@@ -107,9 +107,9 @@
 "settings.cell.about" = "Sur";
 "settings.cell.light_mode" = "Mode lumineux";
 "settings.cell.push_notifications" = "Notifications Push";
-"settings.cell.app_version" = "App Version";
+"settings.cell.app_version" = "Version de l'application";
 "settings.info.title" = "BANK WALLET";
-"settings.info.subtitle" = "decentralized app";
+"settings.info.subtitle" = "l'application décentralisée";
 "settings.info.link" = "horizontalsystems.io";
 
 "settings_language.title" = "Langue";
