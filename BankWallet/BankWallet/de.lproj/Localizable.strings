@@ -2,7 +2,7 @@
 "coin.BCH" = "Bitcoin Cash";
 "coin.ETH" = "Ethereum";
 "coin.BTCt" = "Bitcoin TestNet";
-"coin.BCHt" = "Bitcoin Cash TestNet";
+"coin.BCHt" = "Bitcoin TestNet";
 "coin.ETHt" = "Ethereum TestNet";
 
 "alert.ok" = "OK";
@@ -16,8 +16,8 @@
 "alert.copied" = "Kopiert";
 
 "access.camera.message" = "Bank needs access to your camera to scan QR code.\n\nGo to Settings - > Bank and allow access to Camera.";
-"access.settings" = "Settings";
-"access.cancel" = "Cancel";
+"access.settings" = "Einstellungen";
+"access.cancel" = "Abbrechen";
 
 "guest.title" = "App Name";
 "guest.subtitle" = "Bitcoin, Satoshi Nakamoto";
@@ -45,8 +45,8 @@
 "backup.confirmation.delete_app_warn" = "Ich verstehe, dass wenn diese app auf ein anderes Gerät verschoben wird oder gelöscht, mein Wallet nur mit dem backup-Satz wiederhergestellt werden können, die ich aufgeschrieben und an einem sicheren Ort gespeichert";
 "backup.confirmation.confirm" = "Bestätigen";
 
-"wallet.title" = "Balance";
-"wallet.tab_bar_item" = "Balance";
+"wallet.title" = "Guthaben";
+"wallet.tab_bar_item" = "Guthaben";
 "wallet.send" = "Senden";
 "wallet.deposit" = "Empfangen";
 
@@ -124,16 +124,16 @@
 
 "set_pin_controller.title" = "PIN festlegen";
 "set_pin_controller.info" = "Ihre Pin wird verwendet werden, um Ihren Wallet zu entsperren und Geld schicken";
-"set_pin_controller.wrong_confirmation" = "Pin did not match. Try again";
+"set_pin_controller.wrong_confirmation" = "PIN stimmt nicht überein. ";
 "confirm_pin_controller.title" = "Erneut Eingeben";
 "confirm_pin_controller.info" = "PIN bestätigen";
-"edit_pin_controller.title" = "Edit PIN";
+"edit_pin_controller.title" = "PIN bearbeiten";
 "edit_pin_controller.info" = "Ihr PIN wird verwendet, um Ihre Geldbörse zu entsperren und Geld zu senden";
-"edit_pin.unlock_info" = "Enter current PIN";
-"edit_pin.new_pin_info" = "Enter new PIN";
-"edit_pin.confirm_info" = "Enter again for confirm";
+"edit_pin.unlock_info" = "Gib derzeitige PIN ein";
+"edit_pin.new_pin_info" = "Gib neue PIN ein";
+"edit_pin.confirm_info" = "Zum Bestätigen nochmal eingeben";
 "unlock_pin_controller.info" = "PIN eingeben";
 
-"biometric_usage_reason" = "Unlock wallet";
+"biometric_usage_reason" = "Geldbörse entsperren";
 
 "unlock.cant_save_pin" = "Autsch! Wir können den PIN nicht speichern, kontaktieren Sie uns bitte so schnell wie möglich!";
