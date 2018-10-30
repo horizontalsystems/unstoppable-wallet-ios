@@ -15,9 +15,9 @@
 "alert.success" = "Успешно";
 "alert.copied" = "Скопировано";
 
-"access.camera.message" = "Bank needs access to your camera to scan QR code.\n\nGo to Settings - > Bank and allow access to Camera.";
-"access.settings" = "Settings";
-"access.cancel" = "Cancel";
+"access.camera.message" = "Необходим доступ к вашей камере для QR-код.\n\nПерейдите \"Настройки\", чтобы разрешить доступ к камере.";
+"access.settings" = "Настройки";
+"access.cancel" = "Отменить";
 
 "guest.title" = "Имя Приложения";
 "guest.subtitle" = "Bitcoin, Satoshi Nakamoto";
@@ -124,14 +124,14 @@
 
 "set_pin_controller.title" = "Установить PIN";
 "set_pin_controller.info" = "Ваш ПИН-код будет использоваться для разблокировки вашего кошелька и отправки денег";
-"set_pin_controller.wrong_confirmation" = "Pin did not match. Try again";
+"set_pin_controller.wrong_confirmation" = "PIN-код не совпадает. ";
 "confirm_pin_controller.title" = "Введите еще раз";
 "confirm_pin_controller.info" = "Подтвердите ПИН-код";
-"edit_pin_controller.title" = "Edit PIN";
+"edit_pin_controller.title" = "Обновить PIN-код";
 "edit_pin_controller.info" = "Ваш ПИН-код будет использоваться для разблокировки вашего кошелька и отправки денег";
-"edit_pin.unlock_info" = "Enter current PIN";
-"edit_pin.new_pin_info" = "Enter new PIN";
-"edit_pin.confirm_info" = "Enter again for confirm";
+"edit_pin.unlock_info" = "Введите текущий PIN-код";
+"edit_pin.new_pin_info" = "Введите новый PIN-код";
+"edit_pin.confirm_info" = "Введите еще раз для подтверждения";
 "unlock_pin_controller.info" = "Введите PIN";
 
 "biometric_usage_reason" = "Разблокировать";
