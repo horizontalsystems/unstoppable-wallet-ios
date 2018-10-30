@@ -15,7 +15,7 @@
 "alert.success" = "Успешно";
 "alert.copied" = "Скопировано";
 
-"access.camera.message" = "Bank needs access to your camera to scan QR code.\n\nGo to Settings - > Bank and allow access to Camera.";
+"access.camera.message" = "Необходим доступ к вашей камере для QR-код.\n\nПерейдите \"Настройки\", чтобы разрешить доступ к камере.";
 "access.settings" = "Настройки";
 "access.cancel" = "Отменить";
 
