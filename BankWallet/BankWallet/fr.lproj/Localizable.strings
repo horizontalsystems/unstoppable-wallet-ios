@@ -1,0 +1,141 @@
+"coin.BTC" = "Bitcoin";
+"coin.BCH" = "Bitcoin Cash";
+"coin.ETH" = "Ethereum";
+"coin.BTCt" = "Bitcoin TestNet";
+"coin.BCHt" = "Bitcoin Cash TestNet";
+"coin.ETHt" = "Ethereum TestNet";
+
+"alert.ok" = "OK";
+"alert.cancel" = "Cancel";
+"navigation_bar.cancel" = "Cancel";
+"done" = "Done";
+"alert.copy" = "Copy";
+"alert.share" = "Share";
+"alert.close" = "Close";
+"alert.success" = "Success";
+"alert.copied" = "Copied";
+
+"access.camera.message" = "Bank needs access to your camera to scan QR code.
+
+Go to Settings - > Bank and allow access to Camera.";
+"access.settings" = "Settings";
+"access.cancel" = "Cancel";
+
+"guest.title" = "Bank Wallet";
+"guest.subtitle" = "Be Your own Bank!";
+"guest.create_wallet" = "New Wallet";
+"guest.restore_wallet" = "Import Wallet";
+
+"restore.title" = "Restore Wallet";
+"restore.description" = "Enter the Secret Key (sometimes called Paper Key).for the wallet. ";
+"restore.restore" = "Restore";
+"restore.validation_failed" = "The Secret Key you entered doesn't exist. Please check the words and try again.";
+
+"backup.intro.title" = "Secret Key";
+"backup.intro.subtitle" = "Your secret key is the only way to restore your wallet and funds if your phone is ever lost, stolen, broken, or upgraded.\n\n It consists of 12 words. Write them on a piece of paper and do not ever show it to anyone.";
+"backup.intro.later" = "Later";
+"backup.intro.backup_now" = "Show Key";
+
+"backup.words.title" = "Secret Key";
+"backup.words.back" = "Back";
+"backup.words.proceed" = "Next";
+
+"backup.confirmation.title" = "Check ...";
+"backup.confirmation.description" = "Enter words from your secret key";
+"backup.confirmation.failure_alert.text" = "Words do not match";
+"backup.confirmation.understand" = "I understand that my wallet and tokens are held securely on this device only and not any servers.";
+"backup.confirmation.delete_app_warn" = "I understand that if this app is deleted or stops working for any reason, my wallet can only be recovered using the secret key that I have written down and saved in a secure place";
+"backup.confirmation.confirm" = "Confirm";
+
+"wallet.title" = "Balance";
+"wallet.tab_bar_item" = "Balance";
+"wallet.send" = "Send";
+"wallet.deposit" = "Receive";
+
+"send.title" = "Send ";
+"send.address_placeholder" = "Address";
+"send.payment_reference_placeholder" = "Payment Reference";
+"send.insufficient_funds" = "Not available amount";
+"paste" = "Paste";
+"amount" = "Amount";
+"more" = "More";
+"send" = "Send";
+"back" = "Back";
+
+"transactions.title" = "Transactions";
+"transactions.tab_bar_item" = "Transactions";
+"transactions.yesterday" = "Yesterday";
+"transactions.success" = "success";
+"transactions.pending" = "pending...";
+"transactions.from" = "from";
+"transactions.to" = "to";
+"transactions.filter_all" = "All";
+"transactions.filter_rBitcoin" = "Bitcoin-R";
+"transactions.filter_tBitcoin Cash" = "Bitcoin-T Cash";
+"transactions.filter_Bitcoin" = "Bitcoin";
+
+
+"tx_info.bottom_sheet.title" = "Transaction";
+"tx_info.bottom_sheet.title_received" = "Received";
+"tx_info.bottom_sheet.title_sent" = "Sent";
+"tx_info.bottom_sheet.processing" = "PROCESSING";
+"tx_info.bottom_sheet.complete" = "COMPLETED";
+"tx_info.bottom_sheet.status" = "Status:";
+"tx_info.bottom_sheet.value_when_received" = "Value when received:";
+"tx_info.bottom_sheet.from_hash" = "From:";
+"tx_info.bottom_sheet.to_hash" = "To:";
+"tx_info.bottom_sheet.id_hash" = "ID:";
+
+"full_transaction_info.navigation_bar.title" = "Details";
+"full_transaction_info.navigation_bar.share" = "Share";
+"full_transaction_info.cell.size" = "Size:";
+"full_transaction_info.cell.fee_rate" = "Fee Rate:";
+"full_transaction_info.cell.received_time" = "Received Time:";
+"full_transaction_info.cell.mined_time" = "Mined Time:";
+"full_transaction_info.cell.included_in_block" = "Included in Block:";
+"full_transaction_info.cell.confirmations" = "Confirmations";
+"full_transaction_info.cell.lock_time" = "Lock Time:";
+"full_transaction_info.cell.from" = "From:";
+"full_transaction_info.cell.to" = "To:";
+"full_transaction_info.cell.received" = "Received:";
+"full_transaction_info.cell.sent" = "Sent:";
+
+"settings.title" = "Settings";
+"settings.tab_bar_item" = "Settings";
+"settings.cell.security_center" = "Security Center";
+"settings.cell.base_currency" = "Base Currency";
+"settings.cell.import_wallet" = "Import Wallet";
+"settings.cell.language" = "Language";
+"settings.cell.about" = "About";
+"settings.cell.light_mode" = "Light Mode";
+"settings.cell.push_notifications" = "Push Notifications";
+"settings.cell.app_version" = "App Version";
+"settings.info.title" = "BANK WALLET";
+"settings.info.subtitle" = "decentralized app";
+"settings.info.link" = "horizontalsystems.io";
+
+"settings_language.title" = "Language";
+
+"settings_security.title" = "Security Center";
+"settings_security.paper_key" = "Secret Key";
+"settings_pin_biometrics.title" = "Pin / Touch ID";
+"settings_security.set_pin" = "Set PIN";
+"settings_security.change_pin" = "Edit PIN";
+"settings_security.touch_id" = "Touch ID";
+"settings_security.face_id" = "Face ID";
+
+"set_pin_controller.title" = "Set PIN";
+"set_pin_controller.info" = "Your pin will be used to unlock your wallet and send money";
+"set_pin_controller.wrong_confirmation" = "Pin did not match. Try again";
+"confirm_pin_controller.title" = "Enter Again";
+"confirm_pin_controller.info" = "Confirm PIN";
+"edit_pin_controller.title" = "Edit PIN";
+"edit_pin_controller.info" = "Your pin will be used to unlock your wallet and send money";
+"edit_pin.unlock_info" = "Enter current PIN";
+"edit_pin.new_pin_info" = "Enter new PIN";
+"edit_pin.confirm_info" = "Enter again for confirm";
+"unlock_pin_controller.info" = "Enter PIN";
+
+"biometric_usage_reason" = "Unlock wallet";
+
+"unlock.cant_save_pin" = "Ouch! We cant save your pin, please contact us asap!";
