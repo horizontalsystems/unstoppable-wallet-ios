@@ -1,6 +1,6 @@
 import XCTest
 import Cuckoo
-@testable import BankWallet
+@testable import Bank_Dev_T
 
 class LanguageManagerTests: XCTestCase {
     private var mockLocalizationManager: MockILocalizationManager!

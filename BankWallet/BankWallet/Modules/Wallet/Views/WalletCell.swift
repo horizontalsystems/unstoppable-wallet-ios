@@ -138,7 +138,7 @@ class WalletCell: UITableViewCell {
         receiveButton.set(hidden: !selected, animated: animated, duration: WalletTheme.buttonsAnimationDuration)
         payButton.set(hidden: !selected, animated: animated, duration: WalletTheme.buttonsAnimationDuration)
 
-        nameLabel.text = "\(balance.coinValue.coin) (\(balance.coinValue.coin))"
+        nameLabel.text = "coin.\(balance.coinValue.coin)".localized + " (\(balance.coinValue.coin))"
         valueLabel.text = balance.currencyValue.map { CurrencyHelper.instance.formattedValue(for: $0) } ?? "n/a"
         valueLabel.textColor = (balance.currencyValue?.value ?? 0) > 0 ? WalletTheme.nonZeroBalanceTextColor : WalletTheme.zeroBalanceTextColor
         coinAmountLabel.text = "\(balance.coinValue.value)"

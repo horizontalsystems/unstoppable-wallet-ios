@@ -1,6 +1,6 @@
 import XCTest
 import Cuckoo
-@testable import BankWallet
+@testable import Bank_Dev_T
 
 class UnlockPinInteractorTests: XCTestCase {
     private var mockDelegate: MockIUnlockPinInteractorDelegate!

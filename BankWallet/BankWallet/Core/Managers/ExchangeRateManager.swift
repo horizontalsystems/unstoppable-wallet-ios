@@ -8,16 +8,17 @@ extension ExchangeRateManager: IExchangeRateManager {
 
     var exchangeRates: [Coin: CurrencyValue] {
         return [
-            "BTCr": CurrencyValue(currency: DollarCurrency(), value: 1000),
+            "BTC": CurrencyValue(currency: DollarCurrency(), value: 6500),
+            "BTCt": CurrencyValue(currency: DollarCurrency(), value: 6500),
+            "BTCr": CurrencyValue(currency: DollarCurrency(), value: 6500),
+            "BCH": CurrencyValue(currency: DollarCurrency(), value: 450),
+            "BCHt": CurrencyValue(currency: DollarCurrency(), value: 450),
+            "ETH": CurrencyValue(currency: DollarCurrency(), value: 220),
             "ETHt": CurrencyValue(currency: DollarCurrency(), value: 220)
         ]
     }
 
     func updateRates() {
-        subject.onNext([
-            "BTCr": CurrencyValue(currency: DollarCurrency(), value: 3000),
-            "ETHt": CurrencyValue(currency: DollarCurrency(), value: 300)
-        ])
     }
 
 }

@@ -5,10 +5,12 @@ class CoinManager {
 
     private let wordsManager: IWordsManager
     private let walletManager: IWalletManager
+    private let appConfigProvider: IAppConfigProvider
 
-    init(wordsManager: IWordsManager, walletManager: IWalletManager) {
+    init(wordsManager: IWordsManager, walletManager: IWalletManager, appConfigProvider: IAppConfigProvider) {
         self.wordsManager = wordsManager
         self.walletManager = walletManager
+        self.appConfigProvider = appConfigProvider
 
         syncWallets()
 
@@ -19,17 +21,13 @@ class CoinManager {
                 .disposed(by: disposeBag)
     }
 
-    private var enabledCoins: [Coin] {
-        return ["BTCr", "ETHt"]
-    }
-
     private func syncWallets() {
         guard let words = wordsManager.words else {
             walletManager.clearWallets()
             return
         }
 
-        walletManager.initWallets(words: words, coins: enabledCoins)
+        walletManager.initWallets(words: words, coins: appConfigProvider.enabledCoins)
     }
 }
 

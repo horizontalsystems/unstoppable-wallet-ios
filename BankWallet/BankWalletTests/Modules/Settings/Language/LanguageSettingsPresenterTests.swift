@@ -1,6 +1,6 @@
 import XCTest
 import Cuckoo
-@testable import BankWallet
+@testable import Bank_Dev_T
 
 class LanguageSettingsPresenterTests: XCTestCase {
     private var mockRouter: MockILanguageSettingsRouter!

@@ -5,7 +5,7 @@ class LockManager {
     private let wordsManager: IWordsManager
     private let lockRouter: ILockRouter
 
-    private let lockTimeout: Double = 3
+    private let lockTimeout: Double = 60
     private(set) var isLocked: Bool = false
 
     init(localStorage: ILocalStorage, wordsManager: IWordsManager, lockRouter: ILockRouter) {

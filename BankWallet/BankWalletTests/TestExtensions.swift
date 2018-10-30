@@ -1,6 +1,6 @@
 import Foundation
 import XCTest
-@testable import BankWallet
+@testable import Bank_Dev_T
 
 extension XCTestCase {
     func waitForMainQueue() {
@@ -31,5 +31,11 @@ extension CurrencyValue: Equatable {
 extension WalletViewItem: Equatable {
     public static func ==(lhs: WalletViewItem, rhs: WalletViewItem) -> Bool {
         return lhs.coinValue == rhs.coinValue && lhs.exchangeValue == rhs.exchangeValue
+    }
+}
+
+extension TransactionFilterItem: Equatable {
+    public static func ==(lhs: TransactionFilterItem, rhs: TransactionFilterItem) -> Bool {
+        return lhs.coin == rhs.coin && lhs.name == rhs.name
     }
 }

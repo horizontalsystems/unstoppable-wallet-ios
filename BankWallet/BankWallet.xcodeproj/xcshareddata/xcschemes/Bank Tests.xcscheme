@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
    LastUpgradeVersion = "0940"
-   version = "1.3">
+   version = "1.7">
    <BuildAction
       parallelizeBuildables = "YES"
       buildImplicitDependencies = "YES">
@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "D3285F4120BD158E00644076"
-               BuildableName = "BankWallet.app"
-               BlueprintName = "BankWallet"
+               BlueprintIdentifier = "D3373DBE20C658660082BC4A"
+               BuildableName = "Bank Tests.xctest"
+               BlueprintName = "Bank Tests"
                ReferencedContainer = "container:BankWallet.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -33,8 +33,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "D3373DBE20C658660082BC4A"
-               BuildableName = "BankWalletTests.xctest"
-               BlueprintName = "BankWalletTests"
+               BuildableName = "Bank Tests.xctest"
+               BlueprintName = "Bank Tests"
                ReferencedContainer = "container:BankWallet.xcodeproj">
             </BuildableReference>
          </TestableReference>
@@ -42,9 +42,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "D3285F4120BD158E00644076"
-            BuildableName = "BankWallet.app"
-            BlueprintName = "BankWallet"
+            BlueprintIdentifier = "D3373DBE20C658660082BC4A"
+            BuildableName = "Bank Tests.xctest"
+            BlueprintName = "Bank Tests"
             ReferencedContainer = "container:BankWallet.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -61,25 +61,21 @@
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
       allowLocationSimulation = "YES">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
+      <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "D3285F4120BD158E00644076"
-            BuildableName = "BankWallet.app"
-            BlueprintName = "BankWallet"
+            BlueprintIdentifier = "D3373DBE20C658660082BC4A"
+            BuildableName = "Bank Tests.xctest"
+            BlueprintName = "Bank Tests"
             ReferencedContainer = "container:BankWallet.xcodeproj">
          </BuildableReference>
-      </BuildableProductRunnable>
-      <EnvironmentVariables>
-         <EnvironmentVariable
-            key = "OS_ACTIVITY_MODE"
-            value = "disable"
-            isEnabled = "YES">
-         </EnvironmentVariable>
-      </EnvironmentVariables>
+      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
+      <LocationScenarioReference
+         identifier = "com.apple.dt.IDEFoundation.CurrentLocationScenarioIdentifier"
+         referenceType = "1">
+      </LocationScenarioReference>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
@@ -90,9 +86,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "D3285F4120BD158E00644076"
-            BuildableName = "BankWallet.app"
-            BlueprintName = "BankWallet"
+            BlueprintIdentifier = "D3373DBE20C658660082BC4A"
+            BuildableName = "Bank Tests.xctest"
+            BlueprintName = "Bank Tests"
             ReferencedContainer = "container:BankWallet.xcodeproj">
          </BuildableReference>
       </MacroExpansion>

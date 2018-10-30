@@ -16,11 +16,14 @@ extension TransactionsRouter: ITransactionsRouter {
 extension TransactionsRouter {
 
     static func module() -> UIViewController {
+        let dataSource = TransactionRecordDataSource(realmFactory: App.shared.realmFactory)
+
         let router = TransactionsRouter()
-        let interactor = TransactionsInteractor(walletManager: App.shared.walletManager, exchangeRateManager: App.shared.exchangeRateManager, realmFactory: App.shared.realmFactory)
+        let interactor = TransactionsInteractor(walletManager: App.shared.walletManager, exchangeRateManager: App.shared.exchangeRateManager, dataSource: dataSource)
         let presenter = TransactionsPresenter(interactor: interactor, router: router)
         let viewController = TransactionsViewController(delegate: presenter)
 
+        dataSource.delegate = interactor
         interactor.delegate = presenter
         presenter.view = viewController
         router.viewController = viewController

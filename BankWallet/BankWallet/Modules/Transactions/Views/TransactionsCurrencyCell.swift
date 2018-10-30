@@ -5,7 +5,7 @@ class TransactionsCurrencyCell: UICollectionViewCell {
 
     var roundedView = UIView()
     var nameLabel = UILabel()
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         roundedView.layer.cornerRadius = TransactionsFilterTheme.cornerRadius
@@ -40,7 +40,7 @@ class TransactionsCurrencyCell: UICollectionViewCell {
     }
 
     func bind(transactionFilter: TransactionFilterItem, selected: Bool) {
-        nameLabel.text = transactionFilter.name
+        nameLabel.text = transactionFilter.name.localized.uppercased()
 
         bind(selected: selected)
     }
