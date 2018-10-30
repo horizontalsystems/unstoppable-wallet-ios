@@ -19,13 +19,31 @@ protocol ITransactionsViewDelegate {
 
 protocol ITransactionsInteractor {
     func retrieveFilters()
-    func realmResults(forCoin coin: Coin?) -> Results<TransactionRecord>
+    func refresh()
+    func set(coin: Coin?)
+
+    var recordsCount: Int { get }
+    func record(forIndex index: Int) -> TransactionRecord
 }
 
 protocol ITransactionsInteractorDelegate: class {
     func didRetrieve(filters: [Coin])
+    func didUpdateDataSource()
+    func didRefresh()
 }
 
 protocol ITransactionsRouter {
     func openTransactionInfo(transaction: TransactionRecordViewItem)
+}
+
+protocol ITransactionRecordDataSource {
+    var delegate: ITransactionRecordDataSourceDelegate? { get set }
+
+    var count: Int { get }
+    func record(forIndex index: Int) -> TransactionRecord
+    func set(coin: Coin?)
+}
+
+protocol ITransactionRecordDataSourceDelegate: class {
+    func onUpdateResults()
 }

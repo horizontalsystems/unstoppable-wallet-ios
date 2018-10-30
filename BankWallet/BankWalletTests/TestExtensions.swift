@@ -33,3 +33,9 @@ extension WalletViewItem: Equatable {
         return lhs.coinValue == rhs.coinValue && lhs.exchangeValue == rhs.exchangeValue
     }
 }
+
+extension TransactionFilterItem: Equatable {
+    public static func ==(lhs: TransactionFilterItem, rhs: TransactionFilterItem) -> Bool {
+        return lhs.coin == rhs.coin && lhs.name == rhs.name
+    }
+}

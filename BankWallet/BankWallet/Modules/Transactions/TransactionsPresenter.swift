@@ -1,4 +1,4 @@
-import RealmSwift
+import Foundation
 
 class TransactionsPresenter {
 
@@ -6,23 +6,9 @@ class TransactionsPresenter {
     private let interactor: ITransactionsInteractor
     private let router: ITransactionsRouter
 
-    private var results: Results<TransactionRecord>
-
-    private var resultsToken: NotificationToken?
-
     init(interactor: ITransactionsInteractor, router: ITransactionsRouter) {
         self.interactor = interactor
         self.router = router
-
-        results = interactor.realmResults(forCoin: nil)
-
-        resultsToken = results.observe { [weak self] _ in
-            self?.view?.reload()
-        }
-    }
-
-    deinit {
-        resultsToken?.invalidate()
     }
 
 }
@@ -30,6 +16,7 @@ class TransactionsPresenter {
 extension TransactionsPresenter: ITransactionsViewDelegate {
 
     func viewDidLoad() {
+        view?.set(title: "transactions.title")
         interactor.retrieveFilters()
     }
 
@@ -38,28 +25,19 @@ extension TransactionsPresenter: ITransactionsViewDelegate {
     }
 
     func refresh() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
-            self.view?.didRefresh()
-        })
+        interactor.refresh()
     }
 
     func onFilterSelect(coin: Coin?) {
-        resultsToken?.invalidate()
-        results = interactor.realmResults(forCoin: coin)
-
-        resultsToken = results.observe { [weak self] _ in
-            self?.view?.reload()
-        }
-
-        view?.reload()
+        interactor.set(coin: coin)
     }
 
     var itemsCount: Int {
-        return results.count
+        return interactor.recordsCount
     }
 
     func item(forIndex index: Int) -> TransactionRecordViewItem {
-        let record = results[index]
+        let record = interactor.record(forIndex: index)
 
         let convertedValue = record.rate == 0 ? nil : record.rate * record.amount
 
@@ -80,12 +58,20 @@ extension TransactionsPresenter: ITransactionsViewDelegate {
 
 extension TransactionsPresenter: ITransactionsInteractorDelegate {
 
+    func didUpdateDataSource() {
+        view?.reload()
+    }
+
     func didRetrieve(filters: [Coin]) {
         var filterItems: [TransactionFilterItem] = filters.map {
-            return TransactionFilterItem(coin: $0, name: $0.localized.uppercased())
+            return TransactionFilterItem(coin: $0, name: $0)
         }
-        filterItems.insert(TransactionFilterItem(coin: nil, name: "transactions.filter_all".localized.uppercased()), at: 0)
+        filterItems.insert(TransactionFilterItem(coin: nil, name: "transactions.filter_all"), at: 0)
         view?.show(filters: filterItems)
+    }
+
+    func didRefresh() {
+        view?.didRefresh()
     }
 
 }

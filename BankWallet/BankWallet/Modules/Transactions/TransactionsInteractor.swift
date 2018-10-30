@@ -1,38 +1,55 @@
-import RxSwift
-import RealmSwift
+import Foundation
 
 class TransactionsInteractor {
-    private let disposeBag = DisposeBag()
-
     weak var delegate: ITransactionsInteractorDelegate?
 
     private let walletManager: IWalletManager
     private let exchangeRateManager: IExchangeRateManager
-    private let realmFactory: IRealmFactory
+    private let dataSource: ITransactionRecordDataSource
 
-    init(walletManager: IWalletManager, exchangeRateManager: IExchangeRateManager, realmFactory: IRealmFactory) {
+    private let refreshTimeout: Double
+
+    init(walletManager: IWalletManager, exchangeRateManager: IExchangeRateManager, dataSource: ITransactionRecordDataSource, refreshTimeout: Double = 2) {
         self.walletManager = walletManager
         self.exchangeRateManager = exchangeRateManager
-        self.realmFactory = realmFactory
+        self.dataSource = dataSource
+
+        self.refreshTimeout = refreshTimeout
     }
 
 }
 
 extension TransactionsInteractor: ITransactionsInteractor {
 
-    func realmResults(forCoin coin: Coin?) -> Results<TransactionRecord> {
-        var results = realmFactory.realm.objects(TransactionRecord.self).sorted(byKeyPath: "timestamp", ascending: false)
+    func set(coin: Coin?) {
+        dataSource.set(coin: coin)
+    }
 
-        if let coin = coin {
-            results = results.filter("coin = %@", coin)
-        }
+    var recordsCount: Int {
+        return dataSource.count
+    }
 
-        return results
+    func record(forIndex index: Int) -> TransactionRecord {
+        return dataSource.record(forIndex: index)
     }
 
     func retrieveFilters() {
         let coins = walletManager.wallets.map { $0.coin }
         delegate?.didRetrieve(filters: coins)
+    }
+
+    func refresh() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + refreshTimeout, execute: {
+            self.delegate?.didRefresh()
+        })
+    }
+
+}
+
+extension TransactionsInteractor: ITransactionRecordDataSourceDelegate {
+
+    func onUpdateResults() {
+        delegate?.didUpdateDataSource()
     }
 
 }
