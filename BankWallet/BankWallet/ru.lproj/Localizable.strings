@@ -1,3 +1,10 @@
+"coin.BTC" = "Биткоин";
+"coin.BCH" = "Биткоин Кэш";
+"coin.ETH" = "Эфир";
+"coin.BTCt" = "Биткоин Тест";
+"coin.BCHt" = "Биткоин Кэш Тест";
+"coin.ETHt" = "Эфир Тест";
+
 "alert.ok" = "Хорошо";
 "alert.cancel" = "Отмена";
 "navigation_bar.cancel" = "Отмена";
@@ -7,6 +14,10 @@
 "alert.close" = "Закрыть";
 "alert.success" = "Успешно";
 "alert.copied" = "Скопировано";
+
+"access.camera.message" = "Bank needs access to your camera to scan QR code.\n\nGo to Settings - > Bank and allow access to Camera.";
+"access.settings" = "Settings";
+"access.cancel" = "Cancel";
 
 "guest.title" = "Имя Приложения";
 "guest.subtitle" = "Bitcoin, Satoshi Nakamoto";
