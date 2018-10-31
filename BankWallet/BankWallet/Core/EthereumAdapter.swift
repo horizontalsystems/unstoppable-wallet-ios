@@ -40,7 +40,7 @@ class EthereumAdapter {
 
         record.transactionHash = transaction.txHash
         record.amount = amountEther * (from.mine ? -1 : 1)
-        record.timestamp = transaction.timestamp
+        record.timestamp = Double(transaction.timestamp)
 
         if transaction.confirmations == 0 {
             record.status = .processing

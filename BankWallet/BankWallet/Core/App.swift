@@ -28,13 +28,14 @@ class App {
 
     let appConfigProvider: IAppConfigProvider
     let coinManager: ICoinManager
-    let transactionManager: ITransactionManager
 
     let realmStorage: RealmStorage
     let networkManager: NetworkManager
 
     let currencyManager: ICurrencyManager
     let rateManager: IRateManager
+
+    let transactionManager: ITransactionManager
 
     let reachabilityManager: IReachabilityManager
 
@@ -68,13 +69,14 @@ class App {
 
         appConfigProvider = AppConfigProvider()
         coinManager = CoinManager(wordsManager: wordsManager, walletManager: walletManager, appConfigProvider: appConfigProvider)
-        transactionManager = TransactionManager(walletManager: walletManager, realmFactory: realmFactory)
 
         realmStorage = RealmStorage(realmFactory: realmFactory)
-        networkManager = NetworkManager()
+        networkManager = NetworkManager(apiUrl: "https://ipfs.grouvi.im/ipns/QmSxpioQuDSjTH6XiT5q35V7xpJqxmDheEcTRRWyMkMim7/io-hs/data/xrates")
 
         currencyManager = CurrencyManager()
-        rateManager = RateManager(storage: realmStorage, currencyManager: currencyManager, networkManager: networkManager, walletManager: walletManager)
+        rateManager = RateManager(rateStorage: realmStorage, transactionRecordStorage: realmStorage, currencyManager: currencyManager, networkManager: networkManager, walletManager: walletManager)
+
+        transactionManager = TransactionManager(walletManager: walletManager, realmFactory: realmFactory, rateManager: rateManager)
 
         reachabilityManager = ReachabilityManager()
 

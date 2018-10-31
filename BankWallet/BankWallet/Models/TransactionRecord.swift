@@ -12,7 +12,7 @@ class TransactionRecord: Object {
     @objc dynamic var amount: Double = 0
     @objc dynamic var status: TransactionStatus = .processing
     @objc dynamic var verifyProgress: Double = 0
-    @objc dynamic var timestamp: Int = 0
+    @objc dynamic var timestamp: Double = 0
     @objc dynamic var rate: Double = 0
 
     let from = List<TransactionAddress>()

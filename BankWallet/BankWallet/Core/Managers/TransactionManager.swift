@@ -6,10 +6,12 @@ class TransactionManager {
 
     private let walletManager: IWalletManager
     private let realmFactory: IRealmFactory
+    private let rateManager: IRateManager
 
-    init(walletManager: IWalletManager, realmFactory: IRealmFactory) {
+    init(walletManager: IWalletManager, realmFactory: IRealmFactory, rateManager: IRateManager) {
         self.walletManager = walletManager
         self.realmFactory = realmFactory
+        self.rateManager = rateManager
 
         resubscribeToAdapters()
 
@@ -35,7 +37,6 @@ class TransactionManager {
     private func handle(records: [TransactionRecord], forCoin coin: Coin) {
         records.forEach { record in
             record.coin = record.amount > 1 ? "ETHt" : coin
-            record.rate = 5000
         }
 
         let realm = realmFactory.realm
@@ -43,6 +44,8 @@ class TransactionManager {
         try? realm.write {
             realm.add(records, update: true)
         }
+
+        rateManager.fillTransactionRates()
     }
 
 }

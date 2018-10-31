@@ -145,6 +145,7 @@ protocol IRateManager {
     var subject: PublishSubject<Void> { get }
     func rate(forCoin coin: Coin, currencyCode: String) -> Rate?
     func updateRates()
+    func fillTransactionRates()
 }
 
 protocol ISystemInfoManager {
@@ -158,13 +159,19 @@ protocol IAppConfigProvider {
 
 protocol IRateNetworkManager {
     func getLatestRate(coin: String, currencyCode: String) -> Observable<Double>
-    func getRate(coin: String, fiat: String, year: Int, month: Int, day: Int, hour: Int, minute: Int) -> Observable<Double>
+    func getRate(coin: String, currencyCode: String, year: Int, month: Int, day: Int, hour: Int, minute: Int) -> Observable<Double>
 }
 
 protocol IRateStorage {
     func rate(forCoin coin: Coin, currencyCode: String) -> Rate?
     func save(value: Double, coin: Coin, currencyCode: String)
     func clear()
+}
+
+protocol ITransactionRecordStorage {
+    var nonFilledRecords: [TransactionRecord] { get }
+    func set(rate: Double, transactionHash: String)
+    func clearRates()
 }
 
 protocol ICurrencyManager {

@@ -42,3 +42,31 @@ extension RealmStorage: IRateStorage {
     }
 
 }
+
+extension RealmStorage: ITransactionRecordStorage {
+
+    var nonFilledRecords: [TransactionRecord] {
+        return Array(realmFactory.realm.objects(TransactionRecord.self).filter("rate = %@", 0))
+    }
+
+    func set(rate: Double, transactionHash: String) {
+        let realm = realmFactory.realm
+
+        if let record = realm.objects(TransactionRecord.self).filter("transactionHash = %@", transactionHash).first {
+            try? realm.write {
+                record.rate = rate
+            }
+        }
+    }
+
+    func clearRates() {
+        let realm = realmFactory.realm
+
+        try? realm.write {
+            for record in realm.objects(TransactionRecord.self) {
+                record.rate = 0
+            }
+        }
+    }
+
+}

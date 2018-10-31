@@ -36,7 +36,7 @@ class BitcoinAdapter {
 
         record.transactionHash = transaction.transactionHash
         record.amount = Double(transaction.amount) / coinRate
-        record.timestamp = transaction.timestamp ?? 0
+        record.timestamp = transaction.timestamp.map { Double($0) } ?? 0
 
         if let blockHeight = transaction.blockHeight, let lastBlockInfo = bitcoinKit.lastBlockInfo {
             let confirmations = lastBlockInfo.height - blockHeight + 1
