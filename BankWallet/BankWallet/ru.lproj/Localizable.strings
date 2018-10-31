@@ -50,7 +50,7 @@
 "wallet.send" = "Отправить";
 "wallet.deposit" = "Получить";
 "wallet.loading_rate" = "скорость загрузки...";
-"wallet.rate_per_coin" = "%@ per %@";
+"wallet.rate_per_coin" = "%@ за %@";
 "wallet.syncing_percent" = "Синхронизация %@";
 "wallet.total_balance.syncing" = "Синхронизация...";
 
