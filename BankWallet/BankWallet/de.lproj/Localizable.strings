@@ -25,16 +25,16 @@
 "guest.restore_wallet" = "Wallet Wiederherstellen";
 
 "restore.title" = "Wallet Wiederherstellen";
-"restore.description" = "Geben Sie die folgenden Wörter aus Ihrem Papier-Schlüssel:";
+"restore.description" = "Offlineschlüssel eingeben";
 "restore.restore" = "Wiederherstellen";
 "restore.validation_failed" = "Der eingegebene Wörter ist ungültig";
 
-"backup.intro.title" = "Sicherung";
-"backup.intro.subtitle" = "Ihr Papier-Schlüssel ist der einzige Weg, Ihre Satoshi wiederherzustellen, wenn Sie verloren, gestohlen, kaputt oder aktualisiert.\n\nWir zeigen Ihnen eine Liste von Wörtern auf einem Blatt Papier notieren und aufbewahren.";
+"backup.intro.title" = "Offlineschlüssel";
+"backup.intro.subtitle" = "Dein Offlineschlüssel ist die einzige Möglichkeit, dein Geldbörse wiederherzustellen, falls du dein Smartphone verlierst, austauscht, es gestohlen wird oder kaputtgeht. \n\n Hierfür zeigen wir die eine Liste von Wörtern an, damit du sie dir auf ein Stück Papier notieren kannst, das es sicher aufzubewahren  gilt.";
 "backup.intro.later" = "Später";
-"backup.intro.backup_now" = "Jetzt Sichern";
+"backup.intro.backup_now" = "Schlüssel zu zeigen";
 
-"backup.words.title" = "Papier-Schlüssel";
+"backup.words.title" = "Offlineschlüssel";
 "backup.words.back" = "Zurück";
 "backup.words.proceed" = "Fortfahren";
 
