@@ -38,11 +38,11 @@
 "backup.words.back" = "Zurück";
 "backup.words.proceed" = "Fortfahren";
 
-"backup.confirmation.title" = "Wort eingeben";
-"backup.confirmation.description" = "Geben Sie die folgenden Wörter aus Ihrem Papier-Schlüssel";
-"backup.confirmation.failure_alert.text" = "Die eingegebenen Passwörter stimmen nicht überein";
-"backup.confirmation.understand" = "Ich verstehe, ";
-"backup.confirmation.delete_app_warn" = "Ich verstehe, dass wenn diese app auf ein anderes Gerät verschoben wird oder gelöscht, mein Wallet nur mit dem backup-Satz wiederhergestellt werden können, die ich aufgeschrieben und an einem sicheren Ort gespeichert";
+"backup.confirmation.title" = "Prüfen …";
+"backup.confirmation.description" = "Gib bitte die folgenden Wörter deines Offlineschlüssels ein";
+"backup.confirmation.failure_alert.text" = "Die Wörter stimmen nicht überein";
+"backup.confirmation.understand" = "Ich verstehe, dass meine Geldbörse und Token auf diesem Gerät nur ist.";
+"backup.confirmation.delete_app_warn" = "Ich verstehe, dass wenn diese app auf ein anderes Gerät verschoben wird oder gelöscht, meine Geldbörse nur mit dem backup-Satz wiederhergestellt werden können, die ich aufgeschrieben und an einem sicheren Ort gespeichert";
 "backup.confirmation.confirm" = "Bestätigen";
 
 "wallet.title" = "Guthaben";
