@@ -49,4 +49,12 @@ class TransactionManager {
 
 extension TransactionManager: ITransactionManager {
 
+    func clear() {
+        let realm = realmFactory.realm
+
+        try? realm.write {
+            realm.delete(realm.objects(TransactionRecord.self))
+        }
+    }
+
 }

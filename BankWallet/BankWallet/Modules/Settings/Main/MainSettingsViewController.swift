@@ -154,6 +154,7 @@ class MainSettingsViewController: UIViewController, SectionsDataSource {
         App.shared.localStorage.clear()
         App.shared.wordsManager.removeWords()
         App.shared.walletManager.clearWallets()
+        App.shared.transactionManager.clear()
         try? App.shared.pinManager.store(pin: nil)
 
         guard let window = UIApplication.shared.keyWindow else {

@@ -26,6 +26,7 @@ class WalletInteractor {
                     .disposed(by: disposeBag)
 
             wallet.adapter.stateSubject
+                    .observeOn(MainScheduler.instance)
                     .subscribe(onNext: { [weak self] _ in
                         self?.delegate?.didUpdate()
                     })

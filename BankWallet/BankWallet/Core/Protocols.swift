@@ -64,6 +64,7 @@ protocol ICoinManager {
 }
 
 protocol ITransactionManager {
+    func clear()
 }
 
 enum AdapterState {
