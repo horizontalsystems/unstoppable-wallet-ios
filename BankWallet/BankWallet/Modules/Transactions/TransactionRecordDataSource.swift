@@ -12,6 +12,7 @@ class TransactionRecordDataSource {
         self.realmFactory = realmFactory
 
         results = TransactionRecordDataSource.results(realmFactory: realmFactory, coin: nil)
+        subscribe()
     }
 
     private func subscribe() {
