@@ -49,6 +49,10 @@
 "wallet.tab_bar_item" = "Bakiye";
 "wallet.send" = "Gönder";
 "wallet.deposit" = "Al";
+"wallet.loading_rate" = "loading rate...";
+"wallet.rate_per_coin" = "%@ per %@";
+"wallet.syncing_percent" = "Syncing %@";
+"wallet.total_balance.syncing" = "Syncing...";
 
 "send.title" = "Gönder ";
 "send.address_placeholder" = "Adres";
