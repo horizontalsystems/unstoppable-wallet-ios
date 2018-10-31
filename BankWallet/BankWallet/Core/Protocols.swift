@@ -66,11 +66,17 @@ protocol ICoinManager {
 protocol ITransactionManager {
 }
 
+enum AdapterState {
+    case synced
+    case syncing(progressSubject: BehaviorSubject<Double>)
+}
+
 protocol IAdapter: class {
     var balance: Double { get }
     var balanceSubject: PublishSubject<Double> { get }
 
-    var progressSubject: BehaviorSubject<Double> { get }
+    var state: AdapterState { get }
+    var stateSubject: PublishSubject<AdapterState> { get }
 
     var lastBlockHeight: Int { get }
     var lastBlockHeightSubject: PublishSubject<Int> { get }

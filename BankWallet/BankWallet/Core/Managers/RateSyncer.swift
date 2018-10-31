@@ -17,6 +17,8 @@ class RateSyncer {
 
         self.timer.delegate = self
 
+        rateManager.updateRates()
+
         walletManager.walletsSubject
                 .subscribe(onNext: { _ in
                     rateManager.updateRates()

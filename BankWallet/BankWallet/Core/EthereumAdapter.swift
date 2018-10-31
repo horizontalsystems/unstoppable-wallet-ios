@@ -11,8 +11,11 @@ class EthereumAdapter {
     let wordsHash: String
     let balanceSubject = PublishSubject<Double>()
     let progressSubject: BehaviorSubject<Double>
+    let stateSubject = PublishSubject<AdapterState>()
     let lastBlockHeightSubject = PublishSubject<Int>()
     let transactionRecordsSubject = PublishSubject<[TransactionRecord]>()
+
+    let state: AdapterState = .synced
 
     init(words: [String], coin: EthereumKit.Coin) {
         wordsHash = words.joined()

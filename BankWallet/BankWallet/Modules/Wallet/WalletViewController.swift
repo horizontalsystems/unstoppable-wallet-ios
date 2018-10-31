@@ -61,7 +61,7 @@ extension WalletViewController {
 
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if let cell = cell as? WalletCell {
-            cell.bind(wallet: wallets[indexPath.row], selected: tableView.indexPathForSelectedRow == indexPath, onReceive: { [weak self] in
+            cell.bind(item: wallets[indexPath.row], selected: tableView.indexPathForSelectedRow == indexPath, onReceive: { [weak self] in
                 self?.onReceive(for: indexPath)
             }, onPay: { [weak self] in
                 self?.onPay(for: indexPath)
@@ -102,7 +102,7 @@ extension WalletViewController {
 
     func bind(at indexPath: IndexPath, animated: Bool = false) {
         if let cell = tableView?.cellForRow(at: indexPath) as? WalletCell {
-            cell.bindView(balance: wallets[indexPath.row], selected: tableView?.indexPathForSelectedRow == indexPath, animated: true)
+            cell.bindView(item: wallets[indexPath.row], selected: tableView?.indexPathForSelectedRow == indexPath, animated: true)
             tableView?.beginUpdates()
             tableView?.endUpdates()
         }
@@ -124,8 +124,8 @@ extension WalletViewController: IWalletView {
         self.title = title.localized
     }
 
-    func show(totalBalance: CurrencyValue) {
-        headerView?.bind(amount: CurrencyHelper.instance.formattedValue(for: totalBalance))
+    func show(totalBalance: CurrencyValue?) {
+        headerView?.bind(amount: totalBalance.flatMap { CurrencyHelper.instance.formattedValue(for: $0) })
     }
 
     func show(wallets: [WalletViewItem]) {

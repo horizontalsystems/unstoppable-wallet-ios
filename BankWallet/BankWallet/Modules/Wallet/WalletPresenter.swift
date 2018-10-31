@@ -17,8 +17,11 @@ class WalletPresenter {
         var viewItems = [WalletViewItem]()
         let currency = interactor.baseCurrency
 
-        for coinValue in interactor.coinValues {
-            let rate = interactor.rate(forCoin: coinValue.coin)
+        var allSynced = true
+
+        for wallet in interactor.wallets {
+            let balance = wallet.adapter.balance
+            let rate = interactor.rate(forCoin: wallet.coin)
 
             var rateExpired = false
 
@@ -26,19 +29,23 @@ class WalletPresenter {
                 let diff = Date().timeIntervalSince1970 - rate.timestamp
                 rateExpired = diff > 60 * 10
 
-                totalBalance += coinValue.value * rate.value
+                totalBalance += balance * rate.value
             }
 
             viewItems.append(WalletViewItem(
-                    coinValue: coinValue,
+                    coinValue: CoinValue(coin: wallet.coin, value: balance),
                     exchangeValue: rate.map { CurrencyValue(currency: currency, value: $0.value) },
-                    currencyValue: rate.map { CurrencyValue(currency: currency, value: coinValue.value * $0.value) },
-                    progressSubject: interactor.progressSubject(forCoin: coinValue.coin),
+                    currencyValue: rate.map { CurrencyValue(currency: currency, value: balance * $0.value) },
+                    state: wallet.adapter.state,
                     rateExpired: rateExpired
             ))
+
+            if case .syncing = wallet.adapter.state, rate != nil {
+                allSynced = false
+            }
         }
 
-        view?.show(totalBalance: CurrencyValue(currency: currency, value: totalBalance))
+        view?.show(totalBalance: allSynced ? CurrencyValue(currency: currency, value: totalBalance) : nil)
         view?.show(wallets: viewItems)
     }
 

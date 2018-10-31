@@ -3,6 +3,7 @@ import UIKit
 class WalletTheme {
     static let amountFont = UIFont.cryptoTitle3
     static let amountColor = UIColor.cryptoYellow
+    static let amountColorSyncing = UIColor.cryptoGray
 
     static let cellBigMargin: CGFloat = 12
     static let cellSmallMargin: CGFloat = 8
@@ -30,8 +31,11 @@ class WalletTheme {
     static let roundedBackgroundCornerRadius: CGFloat = 15
     static let cellButtonFont = UIFont.cryptoHeadline
 
+    static let rateColor = UIColor.cryptoGray
+    static let rateSpinnerSize: CGFloat = 18
+    static let rateSpinnerLeftMargin: CGFloat = 2
     static let nonZeroBalanceTextColor = UIColor.cryptoYellow
-    static let zeroBalanceTextColor = UIColor.cryptoWhite50
+    static let zeroBalanceTextColor = UIColor.cryptoGray
     static let spinnerSideSize: CGFloat = 16
     static let coinIconSide: CGFloat = 24
     static let nameTopMargin: CGFloat = 10

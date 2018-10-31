@@ -51,6 +51,10 @@ Go to Settings - > Bank and allow access to Camera.";
 "wallet.tab_bar_item" = "Balance";
 "wallet.send" = "Send";
 "wallet.deposit" = "Receive";
+"wallet.loading_rate" = "loading rate...";
+"wallet.rate_per_coin" = "%@ per %@";
+"wallet.syncing_percent" = "Syncing %@";
+"wallet.total_balance.syncing" = "Syncing...";
 
 "send.title" = "Send ";
 "send.address_placeholder" = "Address";

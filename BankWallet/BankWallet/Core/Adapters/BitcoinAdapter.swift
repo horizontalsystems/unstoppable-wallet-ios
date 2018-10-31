@@ -12,12 +12,22 @@ class BitcoinAdapter {
     let balanceSubject = PublishSubject<Double>()
     let lastBlockHeightSubject = PublishSubject<Int>()
     let transactionRecordsSubject = PublishSubject<[TransactionRecord]>()
+    let stateSubject = PublishSubject<AdapterState>()
     let progressSubject: BehaviorSubject<Double>
+
+    var state: AdapterState {
+        didSet {
+            stateSubject.onNext(state)
+        }
+    }
 
     init(words: [String], coin: BitcoinKit.Coin) {
         wordsHash = words.joined()
         bitcoinKit = BitcoinKit(withWords: words, coin: coin)
         progressSubject = BehaviorSubject(value: 0)
+
+        state = .syncing(progressSubject: progressSubject)
+
         bitcoinKit.delegate = self
     }
 
@@ -112,7 +122,7 @@ extension BitcoinAdapter: IAdapter {
 
 extension BitcoinAdapter: BitcoinKitDelegate {
 
-    public func transactionsUpdated(bitcoinKit: BitcoinKit, inserted: [TransactionInfo], updated: [TransactionInfo], deleted: [Int]) {
+    func transactionsUpdated(bitcoinKit: BitcoinKit, inserted: [TransactionInfo], updated: [TransactionInfo], deleted: [Int]) {
         var records = [TransactionRecord]()
 
         for info in inserted {
@@ -125,15 +135,26 @@ extension BitcoinAdapter: BitcoinKitDelegate {
         transactionRecordsSubject.onNext(records)
     }
 
-    public func balanceUpdated(bitcoinKit: BitcoinKit, balance: Int) {
+    func balanceUpdated(bitcoinKit: BitcoinKit, balance: Int) {
         balanceSubject.onNext(Double(balance) / coinRate)
     }
 
-    public func lastBlockInfoUpdated(bitcoinKit: BitcoinKit, lastBlockInfo: BlockInfo) {
+    func lastBlockInfoUpdated(bitcoinKit: BitcoinKit, lastBlockInfo: BlockInfo) {
         lastBlockHeightSubject.onNext(lastBlockInfo.height)
     }
 
-    public func progressUpdated(bitcoinKit: BitcoinKit, progress: Double) {
+    func progressUpdated(bitcoinKit: BitcoinKit, progress: Double) {
+        switch state {
+        case .synced:
+            if progress < 1 {
+                state = .syncing(progressSubject: progressSubject)
+            }
+        case .syncing:
+            if progress == 1 {
+                state = .synced
+            }
+        }
+
         progressSubject.onNext(progress)
     }
 

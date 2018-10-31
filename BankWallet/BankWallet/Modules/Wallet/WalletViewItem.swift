@@ -4,6 +4,6 @@ struct WalletViewItem {
     let coinValue: CoinValue
     let exchangeValue: CurrencyValue?
     let currencyValue: CurrencyValue?
-    let progressSubject: BehaviorSubject<Double>?
+    let state: AdapterState
     let rateExpired: Bool
 }

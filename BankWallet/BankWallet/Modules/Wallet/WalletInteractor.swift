@@ -24,6 +24,12 @@ class WalletInteractor {
                         self?.delegate?.didUpdate()
                     })
                     .disposed(by: disposeBag)
+
+            wallet.adapter.stateSubject
+                    .subscribe(onNext: { [weak self] _ in
+                        self?.delegate?.didUpdate()
+                    })
+                    .disposed(by: disposeBag)
         }
 
         rateManager.subject
@@ -47,22 +53,12 @@ extension WalletInteractor: IWalletInteractor {
         return currencyManager.baseCurrency
     }
 
-    var coinValues: [CoinValue] {
-        return walletManager.wallets.map { wallet in
-            CoinValue(coin: wallet.coin, value: wallet.adapter.balance)
-        }
+    var wallets: [Wallet] {
+        return walletManager.wallets
     }
 
     func rate(forCoin coin: Coin) -> Rate? {
         return rateManager.rate(forCoin: coin, currencyCode: currencyManager.baseCurrency.code)
-    }
-
-    func progressSubject(forCoin coin: Coin) -> BehaviorSubject<Double>? {
-        guard let wallet = walletManager.wallets.first(where: { $0.coin == coin }) else {
-            return nil
-        }
-
-        return wallet.adapter.progressSubject
     }
 
     func refresh() {

@@ -3,7 +3,7 @@ import RxSwift
 
 protocol IWalletView: class {
     func set(title: String)
-    func show(totalBalance: CurrencyValue)
+    func show(totalBalance: CurrencyValue?)
     func show(wallets: [WalletViewItem])
     func show(syncStatus: String)
     func didRefresh()
@@ -18,9 +18,8 @@ protocol IWalletViewDelegate {
 
 protocol IWalletInteractor {
     var baseCurrency: Currency { get }
-    var coinValues: [CoinValue] { get }
+    var wallets: [Wallet] { get }
     func rate(forCoin coin: Coin) -> Rate?
-    func progressSubject(forCoin coin: Coin) -> BehaviorSubject<Double>?
 
     func refresh()
 }

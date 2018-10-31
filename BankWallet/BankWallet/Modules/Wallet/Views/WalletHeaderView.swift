@@ -28,7 +28,6 @@ class WalletHeaderView: UIView {
         preservesSuperviewLayoutMargins = true
 
         addSubview(amountLabel)
-        amountLabel.textColor = WalletTheme.amountColor
         amountLabel.font = WalletTheme.amountFont
         amountLabel.preservesSuperviewLayoutMargins = true
 
@@ -46,7 +45,13 @@ class WalletHeaderView: UIView {
     }
 
     func bind(amount: String?) {
-        amountLabel.text = amount
+        if let amount = amount {
+            amountLabel.text = amount
+            amountLabel.textColor = WalletTheme.amountColor
+        } else {
+            amountLabel.text = "wallet.total_balance.syncing".localized
+            amountLabel.textColor = WalletTheme.amountColorSyncing
+        }
     }
 
 }
