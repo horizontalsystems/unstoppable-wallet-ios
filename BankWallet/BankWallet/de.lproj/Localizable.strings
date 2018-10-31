@@ -51,8 +51,8 @@
 "wallet.deposit" = "Empfangen";
 "wallet.loading_rate" = "loading rate...";
 "wallet.rate_per_coin" = "%@ pro %@";
-"wallet.syncing_percent" = "Syncing %@";
-"wallet.total_balance.syncing" = "Syncing...";
+"wallet.syncing_percent" = "Synchronisieren %@";
+"wallet.total_balance.syncing" = "Synchronisieren...";
 
 "send.title" = "Senden ";
 "send.address_placeholder" = "Adresse";
