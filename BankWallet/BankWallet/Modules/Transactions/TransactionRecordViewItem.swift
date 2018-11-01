@@ -1,7 +1,6 @@
 import Foundation
 
 struct TransactionRecordViewItem {
-
     let transactionHash: String
     let amount: CoinValue
     let currencyAmount: CurrencyValue?
@@ -10,6 +9,4 @@ struct TransactionRecordViewItem {
     let incoming: Bool
     let date: Date?
     let status: TransactionStatus
-    let verifyProgress: Double
-
 }

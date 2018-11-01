@@ -21,8 +21,8 @@ class TransactionStatusItem: BaseActionItem {
         switch transaction.status {
         case .processing:
             value = "tx_info.bottom_sheet.processing".localized
-        case .verifying:
-            value = "verifying \(Int(transaction.verifyProgress * 100))%"
+        case .verifying(let progress):
+            value = "verifying \(Int(progress * 100))%"
         case .completed:
             value = "tx_info.bottom_sheet.complete".localized
             valueColor = TransactionInfoTheme.statusCompleteValueColor

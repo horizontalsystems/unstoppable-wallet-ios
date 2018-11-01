@@ -1,5 +1,11 @@
 import RealmSwift
 
+enum TransactionStatus {
+    case processing
+    case verifying(progress: Double)
+    case completed
+}
+
 protocol ITransactionsView: class {
     func set(title: String)
     func show(filters: [TransactionFilterItem])
@@ -24,6 +30,7 @@ protocol ITransactionsInteractor {
 
     var recordsCount: Int { get }
     func record(forIndex index: Int) -> TransactionRecord
+    func adapter(forCoin coin: Coin) -> IAdapter?
 }
 
 protocol ITransactionsInteractorDelegate: class {

@@ -39,17 +39,9 @@ class EthereumAdapter {
         let record = TransactionRecord()
 
         record.transactionHash = transaction.txHash
+        record.blockHeight = transaction.blockNumber
         record.amount = amountEther * (from.mine ? -1 : 1)
-        record.timestamp = Double(transaction.timestamp)
-
-        if transaction.confirmations == 0 {
-            record.status = .processing
-        } else if transaction.confirmations >= transactionCompletionThreshold {
-            record.status = .completed
-        } else {
-            record.status = .verifying
-            record.verifyProgress = Double(transaction.confirmations) / Double(transactionCompletionThreshold)
-        }
+        record.timestamp = transaction.timestamp
 
         record.from.append(from)
         record.to.append(to)
@@ -72,8 +64,12 @@ extension EthereumAdapter: IAdapter {
         return Double(ethereumKit.balance) / coinRate
     }
 
-    var lastBlockHeight: Int {
-        return 0
+    var confirmationsThreshold: Int {
+        return 12
+    }
+
+    var lastBlockHeight: Int? {
+        return nil
     }
 
     var debugInfo: String {

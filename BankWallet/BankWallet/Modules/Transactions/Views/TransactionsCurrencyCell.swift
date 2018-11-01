@@ -51,7 +51,7 @@ class TransactionsCurrencyCell: UICollectionViewCell {
     }
 
     static func size(for filter: TransactionFilterItem) -> CGSize {
-        let size = filter.name.size(containerWidth: .greatestFiniteMagnitude, font: TransactionsFilterTheme.nameFont)
+        let size = filter.name.localized.uppercased().size(containerWidth: .greatestFiniteMagnitude, font: TransactionsFilterTheme.nameFont)
         let calculatedWidth = size.width + 2 * TransactionsFilterTheme.nameHorizontalMargin
         return CGSize(width: max(calculatedWidth, TransactionsFilterTheme.nameMinWidth), height: TransactionsFilterTheme.filterHeaderHeight)
     }

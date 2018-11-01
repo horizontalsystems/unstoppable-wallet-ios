@@ -1,6 +1,9 @@
+import RxSwift
 import Foundation
 
 class TransactionsInteractor {
+    private let disposeBag = DisposeBag()
+
     weak var delegate: ITransactionsInteractorDelegate?
 
     private let walletManager: IWalletManager
@@ -15,6 +18,14 @@ class TransactionsInteractor {
         self.dataSource = dataSource
 
         self.refreshTimeout = refreshTimeout
+
+        Observable.merge(walletManager.wallets.map { $0.adapter.lastBlockHeightSubject })
+                .throttle(3, latest: true, scheduler: ConcurrentDispatchQueueScheduler(qos: .background))
+                .observeOn(MainScheduler.instance)
+                .subscribe(onNext: { [weak self] _ in
+                    self?.delegate?.didUpdateDataSource()
+                })
+                .disposed(by: disposeBag)
     }
 
 }
@@ -31,6 +42,10 @@ extension TransactionsInteractor: ITransactionsInteractor {
 
     func record(forIndex index: Int) -> TransactionRecord {
         return dataSource.record(forIndex: index)
+    }
+
+    func adapter(forCoin coin: Coin) -> IAdapter? {
+        return walletManager.wallets.first(where: { $0.coin == coin })?.adapter
     }
 
     func retrieveFilters() {

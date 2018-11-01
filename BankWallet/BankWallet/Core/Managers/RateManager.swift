@@ -67,7 +67,7 @@ extension RateManager: IRateManager {
             }
 
             let hash = record.transactionHash
-            let date = Date(timeIntervalSince1970: record.timestamp)
+            let date = Date(timeIntervalSince1970: Double(record.timestamp))
 
             let year = calendar.component(.year, from: date)
             let month = calendar.component(.month, from: date)

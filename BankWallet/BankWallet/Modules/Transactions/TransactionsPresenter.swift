@@ -41,6 +41,19 @@ extension TransactionsPresenter: ITransactionsViewDelegate {
 
         let convertedValue = record.rate == 0 ? nil : record.rate * record.amount
 
+        var status: TransactionStatus = .processing
+
+        if record.blockHeight != 0, let adapter = interactor.adapter(forCoin: record.coin), let lastBlockHeight = adapter.lastBlockHeight {
+            let confirmations = lastBlockHeight - record.blockHeight + 1
+            let threshold = adapter.confirmationsThreshold
+
+            if confirmations >= threshold {
+                status = .completed
+            } else {
+                status = .verifying(progress: Double(confirmations) / Double(threshold))
+            }
+        }
+
         return TransactionRecordViewItem(
                 transactionHash: record.transactionHash,
                 amount: CoinValue(coin: record.coin, value: record.amount),
@@ -49,8 +62,7 @@ extension TransactionsPresenter: ITransactionsViewDelegate {
                 to: record.to.first(where: { !$0.mine })?.address,
                 incoming: record.amount > 0,
                 date: record.timestamp == 0 ? nil : Date(timeIntervalSince1970: Double(record.timestamp)),
-                status: record.status,
-                verifyProgress: record.verifyProgress
+                status: status
         )
     }
 
@@ -64,7 +76,7 @@ extension TransactionsPresenter: ITransactionsInteractorDelegate {
 
     func didRetrieve(filters: [Coin]) {
         var filterItems: [TransactionFilterItem] = filters.map {
-            return TransactionFilterItem(coin: $0, name: $0)
+            return TransactionFilterItem(coin: $0, name: "coin.\($0)")
         }
         filterItems.insert(TransactionFilterItem(coin: nil, name: "transactions.filter_all"), at: 0)
         view?.show(filters: filterItems)

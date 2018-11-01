@@ -36,7 +36,7 @@ class TransactionManager {
 
     private func handle(records: [TransactionRecord], forCoin coin: Coin) {
         records.forEach { record in
-            record.coin = record.amount > 1 ? "ETHt" : coin
+            record.coin = coin
         }
 
         let realm = realmFactory.realm

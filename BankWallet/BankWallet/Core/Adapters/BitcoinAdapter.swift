@@ -35,20 +35,9 @@ class BitcoinAdapter {
         let record = TransactionRecord()
 
         record.transactionHash = transaction.transactionHash
+        record.blockHeight = transaction.blockHeight ?? 0
         record.amount = Double(transaction.amount) / coinRate
-        record.timestamp = transaction.timestamp.map { Double($0) } ?? 0
-
-        if let blockHeight = transaction.blockHeight, let lastBlockInfo = bitcoinKit.lastBlockInfo {
-            let confirmations = lastBlockInfo.height - blockHeight + 1
-            if confirmations >= transactionCompletionThreshold {
-                record.status = .completed
-            } else {
-                record.status = .verifying
-                record.verifyProgress = Double(confirmations) / Double(transactionCompletionThreshold)
-            }
-        } else {
-            record.status = .processing
-        }
+        record.timestamp = transaction.timestamp ?? Int(Date().timeIntervalSince1970)
 
         transaction.from.forEach {
             let address = TransactionAddress()
@@ -74,8 +63,12 @@ extension BitcoinAdapter: IAdapter {
         return Double(bitcoinKit.balance) / coinRate
     }
 
-    var lastBlockHeight: Int {
-        return bitcoinKit.lastBlockInfo?.height ?? 0
+    var confirmationsThreshold: Int {
+        return 6
+    }
+
+    var lastBlockHeight: Int? {
+        return bitcoinKit.lastBlockInfo?.height
     }
 
     var debugInfo: String {

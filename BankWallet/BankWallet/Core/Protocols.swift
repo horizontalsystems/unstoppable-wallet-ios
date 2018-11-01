@@ -79,7 +79,8 @@ protocol IAdapter: class {
     var state: AdapterState { get }
     var stateSubject: PublishSubject<AdapterState> { get }
 
-    var lastBlockHeight: Int { get }
+    var confirmationsThreshold: Int { get }
+    var lastBlockHeight: Int? { get }
     var lastBlockHeightSubject: PublishSubject<Int> { get }
 
     var transactionRecordsSubject: PublishSubject<[TransactionRecord]> { get }
