@@ -49,7 +49,7 @@
 "wallet.tab_bar_item" = "Guthaben";
 "wallet.send" = "Senden";
 "wallet.deposit" = "Empfangen";
-"wallet.loading_rate" = "loading rate...";
+"wallet.loading_rate" = "Ladegeschwindigkeit...";
 "wallet.rate_per_coin" = "%@ pro %@";
 "wallet.syncing_percent" = "Synchronisieren %@";
 "wallet.total_balance.syncing" = "Synchronisieren...";
