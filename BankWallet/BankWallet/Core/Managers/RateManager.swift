@@ -59,7 +59,6 @@ extension RateManager: IRateManager {
 
     func fillTransactionRates() {
         let currencyCode = currencyManager.baseCurrency.code
-        let calendar = Calendar.current
 
         for record in transactionRecordStorage.nonFilledRecords {
             guard record.timestamp != 0 else {
@@ -69,13 +68,7 @@ extension RateManager: IRateManager {
             let hash = record.transactionHash
             let date = Date(timeIntervalSince1970: Double(record.timestamp))
 
-            let year = calendar.component(.year, from: date)
-            let month = calendar.component(.month, from: date)
-            let day = calendar.component(.day, from: date)
-            let hour = calendar.component(.hour, from: date)
-            let minute = calendar.component(.minute, from: date)
-
-            networkManager.getRate(coin: record.coin, currencyCode: currencyCode, year: year, month: month, day: day, hour: hour, minute: minute)
+            networkManager.getRate(coin: record.coin, currencyCode: currencyCode, date: date)
                     .subscribeOn(scheduler)
                     .observeOn(MainScheduler.instance)
                     .subscribe(onNext: { [weak self] value in

@@ -30,8 +30,12 @@ class RequestRouter: URLRequestConvertible {
 class NetworkManager {
     private let apiUrl: String
 
+    private let ipfsDateFormatter = DateFormatter()
+
     required init(apiUrl: String) {
         self.apiUrl = apiUrl
+
+        ipfsDateFormatter.dateFormat = "yyyy/MM/dd/HH/mm"
     }
 
     private func request(withMethod method: HTTPMethod, path: String, parameters: [String: Any]? = nil) -> URLRequestConvertible {
@@ -40,6 +44,8 @@ class NetworkManager {
         request.httpMethod = method.rawValue
 
         request.setValue("application/json", forHTTPHeaderField: "Accept")
+
+        print("API OUT: \(method.rawValue) \(path) \(parameters.map { String(describing: $0) } ?? "")")
 
         return RequestRouter(request: request, encoding: method == .get ? URLEncoding.default : JSONEncoding.default, parameters: parameters)
     }
@@ -58,7 +64,20 @@ class NetworkManager {
             }
         }
 
-        return observable
+        return observable.do(onNext: { dataResponse in
+            switch dataResponse.result {
+            case .success(let result):
+                print("API IN: SUCCESS: \(dataResponse.request?.url?.path ?? ""): response = \(result)")
+                ()
+            case .failure:
+                let data = dataResponse.data.flatMap {
+                    try? JSONSerialization.jsonObject(with: $0, options: .allowFragments)
+                }
+
+                print("API IN: ERROR: \(dataResponse.request?.url?.path ?? ""): status = \(dataResponse.response?.statusCode ?? 0), response: \(data.map { "\($0)" } ?? "nil")")
+                ()
+            }
+        })
     }
 
     private func observable<T>(forRequest request: URLRequestConvertible, mapper: @escaping (Any) -> T?) -> Observable<T> {
@@ -122,13 +141,15 @@ extension NetworkManager: IRateNetworkManager {
         return observable(forRequest: request(withMethod: .get, path: "\(coin)/\(currencyCode)/index.json"))
     }
 
-    func getRate(coin: String, currencyCode: String, year: Int, month: Int, day: Int, hour: Int, minute: Int) -> Observable<Double> {
+    func getRate(coin: String, currencyCode: String, date: Date) -> Observable<Double> {
         var coin = coin
         if coin.last == "t" || coin.last == "r" {
             coin.removeLast()
         }
 
-        return observable(forRequest: request(withMethod: .get, path: "\(coin)/\(currencyCode)/\(year)/\(month)/\(day)/\(hour)/\(minute)/index.json"))
+        let datePath = ipfsDateFormatter.string(from: date)
+
+        return observable(forRequest: request(withMethod: .get, path: "\(coin)/\(currencyCode)/\(datePath)/index.json"))
     }
 
 }

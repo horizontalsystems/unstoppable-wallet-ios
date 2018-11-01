@@ -160,7 +160,7 @@ protocol IAppConfigProvider {
 
 protocol IRateNetworkManager {
     func getLatestRate(coin: String, currencyCode: String) -> Observable<Double>
-    func getRate(coin: String, currencyCode: String, year: Int, month: Int, day: Int, hour: Int, minute: Int) -> Observable<Double>
+    func getRate(coin: String, currencyCode: String, date: Date) -> Observable<Double>
 }
 
 protocol IRateStorage {
