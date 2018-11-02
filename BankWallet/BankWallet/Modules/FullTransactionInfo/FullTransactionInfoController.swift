@@ -114,11 +114,11 @@ class FullTransactionInfoController: UIViewController, SectionsDataSource {
                 cell.bind(title: "full_transaction_info.cell.to".localized, description: transaction.to)
             }))
 //        }
-        let statusString = transaction.incoming ? "full_transaction_info.cell.received".localized : "full_transaction_info.cell.sent".localized
-        let amountString = CoinValueHelper.formattedAmount(for: transaction.amount)
-        rows.append(Row<FullTransactionInfoTextCell>(id: "sent_received", hash: "sent_received", height: FullTransactionInfoTheme.cellHeight, bind: { cell, _ in
-            cell.bind(title: statusString, description: amountString)
-        }))
+//        let statusString = transaction.incoming ? "full_transaction_info.cell.received".localized : "full_transaction_info.cell.sent".localized
+//        let amountString = CoinValueHelper.formattedAmount(for: transaction.amount)
+//        rows.append(Row<FullTransactionInfoTextCell>(id: "sent_received", hash: "sent_received", height: FullTransactionInfoTheme.cellHeight, bind: { cell, _ in
+//            cell.bind(title: statusString, description: amountString)
+//        }))
 
         return [Section(id: "info", footerState: .margin(height: FullTransactionInfoTheme.bottomBarHeight), rows: rows)]
     }

@@ -88,10 +88,10 @@ class TransactionCell: UITableViewCell {
         timeLabel.text = item.date.map { DateHelper.instance.formatTransactionTime(from: $0) }
 
         amountLabel.textColor = item.incoming ? TransactionsTheme.incomingTextColor : TransactionsTheme.outgoingTextColor
-        amountLabel.text = (item.incoming ? "+ " : "- ") + CoinValueHelper.formattedAmount(for: item.amount)
+        amountLabel.text = ValueFormatter.instance.format(coinValue: item.coinValue, explicitSign: true)
 
-        if let fiatAmount = (item.currencyAmount.map { CurrencyHelper.instance.formattedApproximateValue(for: $0) }) {
-            fiatAmountLabel.text = "~ " + fiatAmount!
+        if let value = item.currencyAmount, let formattedValue = ValueFormatter.instance.format(currencyValue: value, approximate: true) {
+            fiatAmountLabel.text = formattedValue
         } else {
             fiatAmountLabel.text = "n/a"
         }

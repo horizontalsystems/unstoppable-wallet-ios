@@ -125,7 +125,7 @@ extension WalletViewController: IWalletView {
     }
 
     func show(totalBalance: CurrencyValue?) {
-        headerView?.bind(amount: totalBalance.flatMap { CurrencyHelper.instance.formattedValue(for: $0) })
+        headerView?.bind(amount: totalBalance.flatMap { ValueFormatter.instance.format(currencyValue: $0) })
     }
 
     func show(wallets: [WalletViewItem]) {

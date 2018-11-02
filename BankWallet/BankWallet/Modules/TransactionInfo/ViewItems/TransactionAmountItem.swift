@@ -3,17 +3,17 @@ import GrouviActionSheet
 
 class TransactionAmountItem: BaseActionItem {
 
-    var amount: String
+    var amount: String?
     var amountColor: UIColor
     var fiatAmount: String
 
     init(transaction: TransactionRecordViewItem, tag: Int? = nil, hidden: Bool = false, required: Bool = false) {
-        amount = "\(transaction.incoming ? "+" : "-") \(CoinValueHelper.formattedAmount(for: transaction.amount))"
+        amount = ValueFormatter.instance.format(coinValue: transaction.coinValue, explicitSign: true)
         amountColor = transaction.incoming ? TransactionInfoTheme.incomingAmountColor : TransactionInfoTheme.outgoingAmountColor
 //        let currencyValue = CurrencyValue(currency: DollarCurrency(), value: abs(transaction.amount.value) * 6000)
 //        fiatAmount = "~ \(CurrencyHelper.instance.formattedValue(for: currencyValue) ?? "0")"
-        if let fiatAmount = (transaction.currencyAmount.map { CurrencyHelper.instance.formattedApproximateValue(for: $0) }) {
-            self.fiatAmount = "~ " + fiatAmount!
+        if let value = transaction.currencyAmount, let formattedValue = ValueFormatter.instance.format(currencyValue: value, approximate: true) {
+            self.fiatAmount = formattedValue
         } else {
             self.fiatAmount = "n/a"
         }

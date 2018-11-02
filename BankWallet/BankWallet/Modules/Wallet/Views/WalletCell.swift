@@ -170,7 +170,7 @@ class WalletCell: UITableViewCell {
 
         nameLabel.text = "coin.\(item.coinValue.coin)".localized
 
-        if let value = item.exchangeValue, let formattedValue = CurrencyHelper.instance.formattedValue(for: value) {
+        if let value = item.exchangeValue, let formattedValue = ValueFormatter.instance.format(currencyValue: value) {
             rateLabel.text = "wallet.rate_per_coin".localized(formattedValue, item.coinValue.coin)
         } else {
             rateLabel.text = "wallet.loading_rate".localized
@@ -183,14 +183,14 @@ class WalletCell: UITableViewCell {
         }
 
         if synced, let value = item.currencyValue {
-            currencyValueLabel.text = CurrencyHelper.instance.formattedValue(for: value)
+            currencyValueLabel.text = ValueFormatter.instance.format(currencyValue: value)
             currencyValueLabel.textColor = value.value > 0 ? WalletTheme.nonZeroBalanceTextColor : WalletTheme.zeroBalanceTextColor
         } else {
             currencyValueLabel.text = nil
         }
 
         coinValueLabel.isHidden = !synced
-        coinValueLabel.text = "\(item.coinValue.value) \(item.coinValue.coin)"
+        coinValueLabel.text = ValueFormatter.instance.format(coinValue: item.coinValue)
 
         syncLabel.isHidden = synced
 
