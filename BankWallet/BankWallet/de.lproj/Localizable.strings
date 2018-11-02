@@ -19,8 +19,8 @@
 "access.settings" = "Einstellungen";
 "access.cancel" = "Abbrechen";
 
-"guest.title" = "App Name";
-"guest.subtitle" = "Bitcoin, Satoshi Nakamoto";
+"guest.title" = "Bank Wallet";
+"guest.subtitle" = "Sei Deine eigene Bank!";
 "guest.create_wallet" = "Wallet Erstellen";
 "guest.restore_wallet" = "Wallet Wiederherstellen";
 
@@ -127,12 +127,12 @@
 "settings_security.face_id" = "Face ID";
 
 "set_pin_controller.title" = "PIN festlegen";
-"set_pin_controller.info" = "Ihre Pin wird verwendet werden, um Ihren Wallet zu entsperren und Geld schicken";
+"set_pin_controller.info" = "Deine PIN wird verwendet, um dein Geldbörse zu entsperren und Geld zu versenden";
 "set_pin_controller.wrong_confirmation" = "PIN stimmt nicht überein. ";
 "confirm_pin_controller.title" = "Erneut Eingeben";
 "confirm_pin_controller.info" = "PIN bestätigen";
 "edit_pin_controller.title" = "PIN bearbeiten";
-"edit_pin_controller.info" = "Ihr PIN wird verwendet, um Ihre Geldbörse zu entsperren und Geld zu senden";
+"edit_pin_controller.info" = "Deine PIN wird verwendet, um dein Geldbörse zu entsperren und Geld zu versenden";
 "edit_pin.unlock_info" = "Gib derzeitige PIN ein";
 "edit_pin.new_pin_info" = "Gib neue PIN ein";
 "edit_pin.confirm_info" = "Zum Bestätigen nochmal eingeben";
