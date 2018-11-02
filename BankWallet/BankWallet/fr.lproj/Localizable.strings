@@ -15,7 +15,7 @@
 "alert.success" = "Effectué";
 "alert.copied" = "Copié";
 
-"access.camera.message" = "Bank needs access to your camera to scan QR code.\n\nGo to Settings - > Bank and allow access to Camera.";
+"access.camera.message" = "La Banque a besoin d’accéder à votre camerà pour scanner le code QR.\n\nAllez dans Paramètres - > Banque et permettez d’accéder à la caméra.";
 "access.settings" = "Paramètres";
 "access.cancel" = "Annuler";
 
@@ -49,6 +49,10 @@
 "wallet.tab_bar_item" = "Balance";
 "wallet.send" = "Envoyer";
 "wallet.deposit" = "Recevoir";
+"wallet.loading_rate" = "loading rate...";
+"wallet.rate_per_coin" = "%@ par %@";
+"wallet.syncing_percent" = "Syncing %@";
+"wallet.total_balance.syncing" = "Syncing...";
 
 "send.title" = "Envoyer ";
 "send.address_placeholder" = "Adresse";
