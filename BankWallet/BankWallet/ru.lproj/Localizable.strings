@@ -49,7 +49,7 @@
 "wallet.tab_bar_item" = "Баланс";
 "wallet.send" = "Отправить";
 "wallet.deposit" = "Получить";
-"wallet.loading_rate" = "скорость загрузки...";
+"wallet.loading_rate" = "загрузка курса...";
 "wallet.rate_per_coin" = "%@ за %@";
 "wallet.syncing_percent" = "Синхронизация %@";
 "wallet.total_balance.syncing" = "Синхронизация...";
