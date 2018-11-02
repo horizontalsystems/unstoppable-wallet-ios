@@ -19,7 +19,7 @@ extension TransactionsRouter {
         let dataSource = TransactionRecordDataSource(realmFactory: App.shared.realmFactory)
 
         let router = TransactionsRouter()
-        let interactor = TransactionsInteractor(walletManager: App.shared.walletManager, exchangeRateManager: App.shared.rateManager, dataSource: dataSource)
+        let interactor = TransactionsInteractor(walletManager: App.shared.walletManager, exchangeRateManager: App.shared.rateManager, currencyManager: App.shared.currencyManager, dataSource: dataSource)
         let presenter = TransactionsPresenter(interactor: interactor, router: router)
         let viewController = TransactionsViewController(delegate: presenter)
 

@@ -12,6 +12,7 @@ class LanguageManager {
         self.fallbackLanguage = fallbackLanguage
 
         language = localStorage.currentLanguage ?? localizationManager.preferredLanguage ?? fallbackLanguage
+        localizationManager.setLocale(forLanguage: language)
     }
 
 }
@@ -25,6 +26,7 @@ extension LanguageManager: ILanguageManager {
         set {
             language = newValue
             localStorage.currentLanguage = newValue
+            localizationManager.setLocale(forLanguage: language)
         }
     }
 

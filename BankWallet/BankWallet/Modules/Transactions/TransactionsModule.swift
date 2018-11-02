@@ -28,6 +28,7 @@ protocol ITransactionsInteractor {
     func refresh()
     func set(coin: Coin?)
 
+    var baseCurrency: Currency { get }
     var recordsCount: Int { get }
     func record(forIndex index: Int) -> TransactionRecord
     func adapter(forCoin coin: Coin) -> IAdapter?

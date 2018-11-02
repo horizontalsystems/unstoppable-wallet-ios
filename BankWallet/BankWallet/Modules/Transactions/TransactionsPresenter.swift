@@ -57,7 +57,7 @@ extension TransactionsPresenter: ITransactionsViewDelegate {
         return TransactionRecordViewItem(
                 transactionHash: record.transactionHash,
                 coinValue: CoinValue(coin: record.coin, value: record.amount),
-                currencyAmount: convertedValue.map { CurrencyValue(currency: Currency(code: "USD", localeId: "en_US"), value: $0) },
+                currencyAmount: convertedValue.map { CurrencyValue(currency: interactor.baseCurrency, value: $0) },
                 from: record.from.first(where: { !$0.mine })?.address,
                 to: record.to.first(where: { !$0.mine })?.address,
                 incoming: record.amount > 0,

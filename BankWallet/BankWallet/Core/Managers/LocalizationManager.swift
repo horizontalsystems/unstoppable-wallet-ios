@@ -4,20 +4,6 @@ class LocalizationManager {
 
     var locale: Locale?
 
-    init() {
-    }
-
-    func localize(string: String, language: String) -> String? {
-        if let path = Bundle.main.path(forResource: language, ofType: "lproj"), let bundle = Bundle(path: path) {
-            return bundle.localizedString(forKey: string, value: nil, table: nil)
-        }
-        return nil
-    }
-
-    func format(localizedString: String, arguments: [CVarArg]) -> String {
-        return String(format: localizedString, locale: locale, arguments: arguments)
-    }
-
 }
 
 extension LocalizationManager: ILocalizationManager {
@@ -36,6 +22,22 @@ extension LocalizationManager: ILocalizationManager {
     func displayName(forLanguage language: String, inLanguage: String) -> String {
         let locale = NSLocale(localeIdentifier: inLanguage)
         return locale.displayName(forKey: NSLocale.Key.identifier, value: language)?.capitalized ?? ""
+    }
+
+    func setLocale(forLanguage language: String) {
+        locale = Locale(identifier: language)
+        DateHelper.formatters = [:]
+    }
+
+    func localize(string: String, language: String) -> String? {
+        if let path = Bundle.main.path(forResource: language, ofType: "lproj"), let bundle = Bundle(path: path) {
+            return bundle.localizedString(forKey: string, value: nil, table: nil)
+        }
+        return nil
+    }
+
+    func format(localizedString: String, arguments: [CVarArg]) -> String {
+        return String(format: localizedString, locale: locale, arguments: arguments)
     }
 
 }

@@ -43,6 +43,7 @@ protocol ILocalizationManager {
     var availableLanguages: [String] { get }
     func displayName(forLanguage language: String, inLanguage: String) -> String
 
+    func setLocale(forLanguage language: String)
     func localize(string: String, language: String) -> String?
     func format(localizedString: String, arguments: [CVarArg]) -> String
 }
