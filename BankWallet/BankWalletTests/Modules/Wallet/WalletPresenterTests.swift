@@ -12,52 +12,66 @@ class WalletPresenterTests: XCTestCase {
 
     private let bitcoin = "BTC"
     private let ether = "ETH"
-    private let cash = "BCH"
 
     private var bitcoinValue: CoinValue!
     private var etherValue: CoinValue!
-    private var cashValue: CoinValue!
 
     private let currency = Currency(code: "USD", localeId: "")
 
-    private var bitcoinRate: CurrencyValue!
-    private var etherRate: CurrencyValue!
+    private var bitcoinRate: Rate!
+    private var etherRate: Rate!
 
-    private let bitcoinSubject = BehaviorSubject<Double>(value: 1)
-    private let cashSubject = BehaviorSubject<Double>(value: 0.5)
+    private var bitcoinAdapterState: AdapterState!
+    private var etherAdapterState: AdapterState!
 
     private var expectedBitcoinItem: WalletViewItem!
     private var expectedEtherItem: WalletViewItem!
-    private var expectedCashItem: WalletViewItem!
+
+    private var mockBitcoinAdapter: MockIAdapter!
+    private var mockEtherAdapter: MockIAdapter!
+
+    private var bitcoinWallet: Wallet!
+    private var etherWallet: Wallet!
 
     override func setUp() {
         super.setUp()
 
         bitcoinValue = CoinValue(coin: bitcoin, value: 2)
         etherValue = CoinValue(coin: ether, value: 3)
-        cashValue = CoinValue(coin: cash, value: 10)
 
-        bitcoinRate = CurrencyValue(currency: currency, value: 5000)
-        etherRate = CurrencyValue(currency: currency, value: 300)
+        bitcoinRate = Rate()
+        bitcoinRate.coin = bitcoin
+        bitcoinRate.currencyCode = currency.code
+        bitcoinRate.value = 5000
+        bitcoinRate.timestamp = 50000
+        etherRate = Rate()
+        etherRate.coin = ether
+        etherRate.currencyCode = currency.code
+        etherRate.value = 300
+        etherRate.timestamp = 860000
+
+        bitcoinAdapterState = AdapterState.synced
+        etherAdapterState = AdapterState.synced
 
         expectedBitcoinItem = WalletViewItem(
                 coinValue: bitcoinValue,
-                exchangeValue: bitcoinRate,
-                currencyValue: CurrencyValue(currency: bitcoinRate.currency, value: bitcoinRate.value * bitcoinValue.value),
-                progressSubject: bitcoinSubject
+                exchangeValue: CurrencyValue(currency: currency, value: bitcoinRate.value),
+                currencyValue: CurrencyValue(currency: currency, value: bitcoinRate.value * bitcoinValue.value),
+                state: bitcoinAdapterState,
+                rateExpired: true
         )
         expectedEtherItem = WalletViewItem(
                 coinValue: etherValue,
-                exchangeValue: etherRate,
-                currencyValue: CurrencyValue(currency: etherRate.currency, value: etherRate.value * etherValue.value),
-                progressSubject: nil
+                exchangeValue: CurrencyValue(currency: currency, value: etherRate.value),
+                currencyValue: CurrencyValue(currency: currency, value: etherRate.value * etherValue.value),
+                state: etherAdapterState,
+                rateExpired: true
         )
-        expectedCashItem = WalletViewItem(
-                coinValue: cashValue,
-                exchangeValue: nil,
-                currencyValue: nil,
-                progressSubject: cashSubject
-        )
+        mockBitcoinAdapter = MockIAdapter()
+        mockEtherAdapter = MockIAdapter()
+
+        bitcoinWallet = Wallet(coin: bitcoin, adapter: mockBitcoinAdapter)
+        etherWallet = Wallet(coin: ether, adapter: mockEtherAdapter)
 
         mockRouter = MockIWalletRouter()
         mockInteractor = MockIWalletInteractor()
@@ -74,12 +88,22 @@ class WalletPresenterTests: XCTestCase {
             when(mock.openSend(for: any())).thenDoNothing()
         }
         stub(mockInteractor) { mock in
-            when(mock.coinValues.get).thenReturn([bitcoinValue, etherValue, cashValue])
-            when(mock.rates.get).thenReturn([bitcoin: bitcoinRate, ether: etherRate])
-            when(mock.progressSubjects.get).thenReturn([bitcoin: bitcoinSubject, cash: cashSubject])
+            when(mock.baseCurrency.get).thenReturn(currency)
+            when(mock.wallets.get).thenReturn([bitcoinWallet, etherWallet])
+            when(mock.rate(forCoin: equal(to: bitcoin))).thenReturn(bitcoinRate)
+            when(mock.rate(forCoin: equal(to: ether))).thenReturn(etherRate)
+
             when(mock.refresh()).thenDoNothing()
         }
 
+        stub(mockBitcoinAdapter) { mock in
+            when(mock.balance.get).thenReturn(bitcoinValue.value)
+            when(mock.state.get).thenReturn(bitcoinAdapterState)
+        }
+        stub(mockEtherAdapter) { mock in
+            when(mock.balance.get).thenReturn(etherValue.value)
+            when(mock.state.get).thenReturn(etherAdapterState)
+        }
         presenter = WalletPresenter(interactor: mockInteractor, router: mockRouter)
         presenter.view = mockView
     }
@@ -100,116 +124,166 @@ class WalletPresenterTests: XCTestCase {
     }
 
     func testTotalBalance_Initial() {
-        let totalValue =
-                bitcoinValue.value * bitcoinRate.value +
-                etherValue.value * etherRate.value
+        var totalValue: Double = bitcoinValue.value * bitcoinRate.value
+        totalValue += etherValue.value * etherRate.value
 
         presenter.viewDidLoad()
 
-        verify(mockView).show(totalBalance: equal(to: CurrencyValue(currency: bitcoinRate.currency, value: totalValue)))
+        verify(mockView).show(totalBalance: equal(to: CurrencyValue(currency: currency, value: totalValue)))
     }
 
-    func testTotalBalance_DidUpdateCoinValue() {
-        let newBitcoinValue = CoinValue(coin: bitcoin, value: 3)
-        let newTotalValue =
-                newBitcoinValue.value * bitcoinRate.value +
-                etherValue.value * etherRate.value
+    func testTotalBalance_NewCoinValue() {
+        let newBitcoinValue = 3.0
+        var newTotalValue: Double = newBitcoinValue * bitcoinRate.value
+        newTotalValue += etherValue.value * etherRate.value
 
-        presenter.didUpdate(coinValue: newBitcoinValue)
 
-        verify(mockView).show(totalBalance: equal(to: CurrencyValue(currency: bitcoinRate.currency, value: newTotalValue)))
+        stub(mockBitcoinAdapter) { mock in
+            when(mock.balance.get).thenReturn(newBitcoinValue)
+        }
+
+        presenter.didUpdate()
+
+        verify(mockView).show(totalBalance: equal(to: CurrencyValue(currency: currency, value: newTotalValue)))
     }
 
     func testTotalBalance_DidUpdateRates() {
-        let newBitcoinRate = CurrencyValue(currency: currency, value: 1000)
-        let newTotalValue =
-                bitcoinValue.value * newBitcoinRate.value +
-                etherValue.value * etherRate.value
+        let newBitcoinRate = Rate()
+        newBitcoinRate.coin = bitcoin
+        newBitcoinRate.currencyCode = currency.code
+        newBitcoinRate.value = 1000
+        newBitcoinRate.timestamp = 860000
+        var newTotalValue = bitcoinValue.value * newBitcoinRate.value
+        newTotalValue += etherValue.value * etherRate.value
 
-        presenter.didUpdate(rates: [
-            bitcoin: newBitcoinRate,
-            ether: etherRate
-        ])
+        stub(mockInteractor) { mock in
+            when(mock.rate(forCoin: equal(to: bitcoin))).thenReturn(newBitcoinRate)
+        }
 
-        verify(mockView).show(totalBalance: equal(to: CurrencyValue(currency: newBitcoinRate.currency, value: newTotalValue)))
+        presenter.didUpdate()
+
+        verify(mockView).show(totalBalance: equal(to: CurrencyValue(currency: currency, value: newTotalValue)))
+    }
+
+    func testNoTotalBalance_SyncingStatus() {
+        let bitcoinSubject = BehaviorSubject<Double>(value: 1)
+        let newBitcoinAdapterState = AdapterState.syncing(progressSubject: bitcoinSubject)
+        stub(mockBitcoinAdapter) { mock in
+            when(mock.state.get).thenReturn(newBitcoinAdapterState)
+        }
+
+        presenter.didUpdate()
+
+        verify(mockView).show(totalBalance: equal(to: nil))
+    }
+
+    func testNoTotalBalance_OnNoRate() {
+        stub(mockInteractor) { mock in
+            when(mock.rate(forCoin: equal(to: bitcoin))).thenReturn(nil)
+        }
+
+        presenter.didUpdate()
+
+        verify(mockView).show(totalBalance: equal(to: nil))
     }
 
     func testWalletViewItems_Initial() {
         presenter.viewDidLoad()
-        verifyMockViewShows(items: [expectedBitcoinItem, expectedEtherItem, expectedCashItem])
+        verifyMockViewShows(items: [expectedBitcoinItem, expectedEtherItem])
     }
 
     func testWalletViewItems_DidUpdateCoinValue() {
         let newBitcoinValue = CoinValue(coin: bitcoin, value: 3)
         let newExpectedBitcoinItem = WalletViewItem(
                 coinValue: newBitcoinValue,
-                exchangeValue: bitcoinRate,
-                currencyValue: CurrencyValue(currency: bitcoinRate.currency, value: bitcoinRate.value * newBitcoinValue.value),
-                progressSubject: bitcoinSubject
+                exchangeValue: CurrencyValue(currency: currency, value: bitcoinRate.value),
+                currencyValue: CurrencyValue(currency: currency, value: bitcoinRate.value * newBitcoinValue.value),
+                state: bitcoinAdapterState,
+                rateExpired: true
         )
 
-        presenter.didUpdate(coinValue: newBitcoinValue)
+        stub(mockBitcoinAdapter) { mock in
+            when(mock.balance.get).thenReturn(newBitcoinValue.value)
+        }
+        presenter.didUpdate()
 
-        verifyMockViewShows(items: [newExpectedBitcoinItem, expectedEtherItem, expectedCashItem])
+        verifyMockViewShows(items: [newExpectedBitcoinItem, expectedEtherItem])
     }
 
     func testWalletViewItems_DidUpdateRates() {
-        let newEtherRate = CurrencyValue(currency: currency, value: 400)
+        let newEtherRate = Rate()
+        etherRate.coin = ether
+        etherRate.currencyCode = currency.code
+        etherRate.value = 300
+        etherRate.timestamp = 860000
         let newExpectedEtherItem = WalletViewItem(
                 coinValue: etherValue,
-                exchangeValue: newEtherRate,
-                currencyValue: CurrencyValue(currency: bitcoinRate.currency, value: newEtherRate.value * etherValue.value),
-                progressSubject: nil
+                exchangeValue: CurrencyValue(currency: currency, value: newEtherRate.value),
+                currencyValue: CurrencyValue(currency: currency, value: newEtherRate.value * etherValue.value),
+                state: etherAdapterState,
+                rateExpired: true
         )
 
-        presenter.didUpdate(rates: [
-            bitcoin: bitcoinRate,
-            ether: newEtherRate
-        ])
+        stub(mockInteractor) { mock in
+            when(mock.rate(forCoin: equal(to: ether))).thenReturn(newEtherRate)
+        }
+        presenter.didUpdate()
 
-        verifyMockViewShows(items: [expectedBitcoinItem, newExpectedEtherItem, expectedCashItem])
+        verifyMockViewShows(items: [expectedBitcoinItem, newExpectedEtherItem])
     }
 
     func testWalletViewItems_DidUpdateWallets_Order() {
         stub(mockInteractor) { mock in
-            when(mock.coinValues.get).thenReturn([etherValue, bitcoinValue, cashValue])
+            when(mock.wallets.get).thenReturn([etherWallet, bitcoinWallet])
         }
 
-        presenter.didUpdateCoinValues()
+        presenter.didUpdate()
 
-        verifyMockViewShows(items: [expectedEtherItem, expectedBitcoinItem, expectedCashItem])
+        verifyMockViewShows(items: [expectedEtherItem, expectedBitcoinItem])
     }
 
     func testWalletViewItems_DidUpdateWallets_Remove() {
         stub(mockInteractor) { mock in
-            when(mock.coinValues.get).thenReturn([bitcoinValue, cashValue])
+            when(mock.wallets.get).thenReturn([bitcoinWallet])
         }
 
-        presenter.didUpdateCoinValues()
+        presenter.didUpdate()
 
-        verifyMockViewShows(items: [expectedBitcoinItem, expectedCashItem])
+        verifyMockViewShows(items: [expectedBitcoinItem])
     }
 
     func testWalletViewItems_DidUpdateWallets_Add() {
         let thor = "THOR"
         let thorValue = CoinValue(coin: thor, value: 35)
-        let thorSubject = BehaviorSubject<Double>(value: 0.35)
+        let thorRate = Rate()
+        thorRate.coin = thor
+        thorRate.currencyCode = currency.code
+        thorRate.value = 666
+        thorRate.timestamp = 777777
+        let thorAdapterState = AdapterState.synced
+        let thorAdapter = MockIAdapter()
+        let thorWallet = Wallet(coin: thor, adapter: thorAdapter)
 
         let expectedThorItem = WalletViewItem(
                 coinValue: thorValue,
-                exchangeValue: nil,
-                currencyValue: nil,
-                progressSubject: thorSubject
+                exchangeValue: CurrencyValue(currency: currency, value: thorRate.value),
+                currencyValue: CurrencyValue(currency: currency, value: thorRate.value * thorValue.value),
+                state: thorAdapterState,
+                rateExpired: true
         )
 
+        stub(thorAdapter) { mock in
+            when(mock.balance.get).thenReturn(thorValue.value)
+            when(mock.state.get).thenReturn(thorAdapterState)
+        }
         stub(mockInteractor) { mock in
-            when(mock.coinValues.get).thenReturn([bitcoinValue, etherValue, thorValue, cashValue])
-            when(mock.progressSubjects.get).thenReturn([bitcoin: bitcoinSubject, thor: thorSubject, cash: cashSubject])
+            when(mock.wallets.get).thenReturn([bitcoinWallet, etherWallet, thorWallet])
+            when(mock.rate(forCoin: equal(to: thor))).thenReturn(thorRate)
         }
 
-        presenter.didUpdateCoinValues()
+        presenter.didUpdate()
 
-        verifyMockViewShows(items: [expectedBitcoinItem, expectedEtherItem, expectedThorItem, expectedCashItem])
+        verifyMockViewShows(items: [expectedBitcoinItem, expectedEtherItem, expectedThorItem])
     }
 
     func testRefreshFromView() {
@@ -243,7 +317,14 @@ class WalletPresenterTests: XCTestCase {
                 XCTAssertEqual(item1.coinValue, item2.coinValue)
                 XCTAssertEqual(item1.exchangeValue, item2.exchangeValue)
                 XCTAssertEqual(item1.currencyValue, item2.currencyValue)
-                XCTAssertTrue(item1.progressSubject === item2.progressSubject)
+                if case .synced = item1.state, case .synced = item2.state {
+                    XCTAssertTrue(true)
+                } else if case let .syncing(progressSubject1) = item1.state, case let .syncing(progressSubject2) = item2.state {
+                    XCTAssertTrue(progressSubject1 === progressSubject2)
+                } else {
+                    XCTAssertTrue(false)
+                }
+                XCTAssertEqual(item1.rateExpired, item2.rateExpired)
             }
         }
     }

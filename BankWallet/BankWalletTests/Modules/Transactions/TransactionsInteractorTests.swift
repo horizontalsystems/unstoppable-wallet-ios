@@ -7,7 +7,8 @@ class TransactionsInteractorTests: XCTestCase {
     private var mockDataSource: MockITransactionRecordDataSource!
     private var mockDelegate: MockITransactionsInteractorDelegate!
     private var mockWalletManager: MockIWalletManager!
-    private var mockExchangeRateManager: MockIExchangeRateManager!
+    private var mockRateManager: MockIRateManager!
+    private var mockCurrencyManager: MockICurrencyManager!
 
     private var interactor: TransactionsInteractor!
 
@@ -15,27 +16,43 @@ class TransactionsInteractorTests: XCTestCase {
     private let ether = "ETH"
     private let cash = "BCH"
 
+    private let currency = Currency(code: "USD", localeId: "")
+
+    private let bitcoinLastBlockHeightSubject = PublishSubject<Int>()
+
     override func setUp() {
         super.setUp()
+
 
         mockDataSource = MockITransactionRecordDataSource()
         mockDelegate = MockITransactionsInteractorDelegate()
         mockWalletManager = MockIWalletManager()
-        mockExchangeRateManager = MockIExchangeRateManager()
+        mockRateManager = MockIRateManager()
+        mockCurrencyManager = MockICurrencyManager()
 
         stub(mockDelegate) { mock in
             when(mock.didUpdateDataSource()).thenDoNothing()
             when(mock.didRetrieve(filters: any())).thenDoNothing()
             when(mock.didRefresh()).thenDoNothing()
         }
-        stub(mockExchangeRateManager) { mock in
+        stub(mockRateManager) { mock in
+        }
+        var mockBitcoinAdapter = MockIAdapter()
+        stub(mockBitcoinAdapter) { mock in
+            when(mock.lastBlockHeightSubject.get).thenReturn(bitcoinLastBlockHeightSubject)
+        }
+        stub(mockWalletManager) { mock in
+            when(mock.wallets.get).thenReturn([Wallet(coin: bitcoin, adapter: mockBitcoinAdapter)])
         }
         stub(mockDataSource) { mock in
             when(mock.set(coin: equal(to: bitcoin))).thenDoNothing()
             when(mock.count.get).thenReturn(0)
         }
+        stub(mockCurrencyManager) { mock in
+            when(mock.baseCurrency.get).thenReturn(currency)
+        }
 
-        interactor = TransactionsInteractor(walletManager: mockWalletManager, exchangeRateManager: mockExchangeRateManager, dataSource: mockDataSource, refreshTimeout: 0)
+        interactor = TransactionsInteractor(walletManager: mockWalletManager, exchangeRateManager: mockRateManager, currencyManager: mockCurrencyManager, dataSource: mockDataSource, refreshTimeout: 0)
         interactor.delegate = mockDelegate
     }
 
@@ -43,11 +60,16 @@ class TransactionsInteractorTests: XCTestCase {
         mockDataSource = nil
         mockDelegate = nil
         mockWalletManager = nil
-        mockExchangeRateManager = nil
+        mockRateManager = nil
 
         interactor = nil
 
         super.tearDown()
+    }
+
+    func testLastBlockHeightUpdate() {
+        bitcoinLastBlockHeightSubject.onNext(2)
+        verify(mockDelegate).didUpdateDataSource()
     }
 
     func testOnUpdateResults() {
@@ -58,6 +80,10 @@ class TransactionsInteractorTests: XCTestCase {
     func testSetCoin() {
         interactor.set(coin: bitcoin)
         verify(mockDataSource).set(coin: equal(to: bitcoin))
+    }
+
+    func testBaseCurrency() {
+        XCTAssertEqual(interactor.baseCurrency, currency)
     }
 
     func testCount() {

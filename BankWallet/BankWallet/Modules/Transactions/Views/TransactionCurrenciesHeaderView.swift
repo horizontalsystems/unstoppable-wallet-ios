@@ -21,6 +21,7 @@ class TransactionCurrenciesHeaderView: UIVisualEffectView, UICollectionViewDeleg
         collectionView.contentInset = UIEdgeInsets(top: 0, left: layoutMargins.left * 2, bottom: 0, right: layoutMargins.right * 2)
         collectionView.allowsMultipleSelection = false
         collectionView.backgroundColor = .clear
+        collectionView.showsHorizontalScrollIndicator = false
 
         collectionView.registerCell(forClass: TransactionsCurrencyCell.self)
 

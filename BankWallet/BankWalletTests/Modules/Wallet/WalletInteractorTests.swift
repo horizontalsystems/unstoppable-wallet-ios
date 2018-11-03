@@ -6,7 +6,8 @@ import Cuckoo
 class WalletInteractorTests: XCTestCase {
     private var mockDelegate: MockIWalletInteractorDelegate!
     private var mockWalletManager: MockIWalletManager!
-    private var mockExchangeRateManager: MockIExchangeRateManager!
+    private var mockRateManager: MockIRateManager!
+    private var mockCurrencyManager: MockICurrencyManager!
 
     private var interactor: WalletInteractor!
 
@@ -26,7 +27,14 @@ class WalletInteractorTests: XCTestCase {
     private let etherBalanceSubject = PublishSubject<Double>()
     private let cashBalanceSubject = PublishSubject<Double>()
 
-    private let mockRatesSubject = PublishSubject<[Coin: CurrencyValue]>()
+    private let bitcoinStateSubject = PublishSubject<AdapterState>()
+    private let etherStateSubject = PublishSubject<AdapterState>()
+    private let cashStateSubject = PublishSubject<AdapterState>()
+
+    private let ratesSubject = PublishSubject<Void>()
+    private let currencySubject = PublishSubject<Currency>()
+
+    private var expectedWallets: [Wallet] = []
 
     private let currency = Currency(code: "USD", localeId: "")
 
@@ -43,38 +51,48 @@ class WalletInteractorTests: XCTestCase {
 
         mockDelegate = MockIWalletInteractorDelegate()
         mockWalletManager = MockIWalletManager()
-        mockExchangeRateManager = MockIExchangeRateManager()
+        mockRateManager = MockIRateManager()
+        mockCurrencyManager = MockICurrencyManager()
+
+        expectedWallets = [bitcoinWallet, etherWallet, cashWallet]
 
         stub(mockDelegate) { mock in
-            when(mock.didUpdate(coinValue: any())).thenDoNothing()
-            when(mock.didUpdate(rates: any())).thenDoNothing()
+            when(mock.didUpdate()).thenDoNothing()
             when(mock.didRefresh()).thenDoNothing()
         }
         stub(mockWalletManager) { mock in
-            when(mock.wallets.get).thenReturn([bitcoinWallet, etherWallet, cashWallet])
+            when(mock.wallets.get).thenReturn(expectedWallets)
             when(mock.refreshWallets()).thenDoNothing()
         }
-        stub(mockExchangeRateManager) { mock in
-            when(mock.subject.get).thenReturn(mockRatesSubject)
+        stub(mockRateManager) { mock in
+            when(mock.subject.get).thenReturn(ratesSubject)
+        }
+        stub(mockCurrencyManager) { mock in
+            when(mock.subject.get).thenReturn(currencySubject)
+            when(mock.baseCurrency.get).thenReturn(currency)
         }
         stub(mockBitcoinAdapter) { mock in
             when(mock.balanceSubject.get).thenReturn(bitcoinBalanceSubject)
+            when(mock.stateSubject.get).thenReturn(bitcoinStateSubject)
         }
         stub(mockEtherAdapter) { mock in
             when(mock.balanceSubject.get).thenReturn(etherBalanceSubject)
+            when(mock.stateSubject.get).thenReturn(etherStateSubject)
         }
         stub(mockCashAdapter) { mock in
             when(mock.balanceSubject.get).thenReturn(cashBalanceSubject)
+            when(mock.stateSubject.get).thenReturn(cashStateSubject)
         }
 
-        interactor = WalletInteractor(walletManager: mockWalletManager, rateManager: mockExchangeRateManager, refreshTimeout: 0)
+        interactor = WalletInteractor(walletManager: mockWalletManager, rateManager: mockRateManager, currencyManager: mockCurrencyManager, refreshTimeout: 0)
         interactor.delegate = mockDelegate
     }
 
     override func tearDown() {
         mockDelegate = nil
         mockWalletManager = nil
-        mockExchangeRateManager = nil
+        mockRateManager = nil
+        mockCurrencyManager = nil
 
         mockBitcoinAdapter = nil
         mockEtherAdapter = nil
@@ -89,69 +107,42 @@ class WalletInteractorTests: XCTestCase {
         super.tearDown()
     }
 
-    func testCoinValues() {
-        let bitcoinBalance: Double = 1
-        let etherBalance: Double = 2
-        let cashBalance: Double = 3
-
-        let expectedCoinValues = [
-            CoinValue(coin: bitcoin, value: bitcoinBalance),
-            CoinValue(coin: ether, value: etherBalance),
-            CoinValue(coin: cash, value: cashBalance)
-        ]
-
-        stub(mockBitcoinAdapter) { mock in
-            when(mock.balance.get).thenReturn(bitcoinBalance)
-        }
-        stub(mockEtherAdapter) { mock in
-            when(mock.balance.get).thenReturn(etherBalance)
-        }
-        stub(mockCashAdapter) { mock in
-            when(mock.balance.get).thenReturn(cashBalance)
-        }
-
-        XCTAssertEqual(interactor.coinValues, expectedCoinValues)
+    func testBaseCurrency() {
+        XCTAssertEqual(interactor.baseCurrency, currency)
     }
 
-    func testRates() {
-        let expectedRates = [
-            bitcoin: CurrencyValue(currency: currency, value: 5000),
-            ether: CurrencyValue(currency: currency, value: 300)
-        ]
-
-        stub(mockExchangeRateManager) { mock in
-            when(mock.exchangeRates.get).thenReturn(expectedRates)
-        }
-
-        XCTAssertEqual(interactor.rates, expectedRates)
+    func testWallets() {
+        XCTAssertTrue(interactor.wallets[0] === expectedWallets[0])
+        XCTAssertTrue(interactor.wallets[1] === expectedWallets[1])
+        XCTAssertTrue(interactor.wallets[2] === expectedWallets[2])
     }
 
-    func testProgressSubjects() {
-        let bitcoinSubject = BehaviorSubject<Double>(value: 1)
-        let etherSubject = BehaviorSubject<Double>(value: 0.5)
-        let cashSubject = BehaviorSubject<Double>(value: 0.3)
+    func testBitcoinRate() {
+        let bitcoinRate = Rate()
+        bitcoinRate.coin = bitcoin
+        bitcoinRate.currencyCode = currency.code
+        bitcoinRate.value = 5000
+        bitcoinRate.timestamp = 134000000
 
-        let expectedSubjects = [
-            bitcoin: bitcoinSubject,
-            ether: etherSubject,
-            cash: cashSubject
-        ]
-
-        stub(mockBitcoinAdapter) { mock in
-            when(mock.progressSubject.get).thenReturn(bitcoinSubject)
-        }
-        stub(mockEtherAdapter) { mock in
-            when(mock.progressSubject.get).thenReturn(etherSubject)
-        }
-        stub(mockCashAdapter) { mock in
-            when(mock.progressSubject.get).thenReturn(cashSubject)
+        stub(mockRateManager) { mock in
+            when(mock.rate(forCoin: bitcoin, currencyCode: currency.code)).thenReturn(bitcoinRate)
         }
 
-        let subjects = interactor.progressSubjects
+        XCTAssertEqual(interactor.rate(forCoin: bitcoin), bitcoinRate)
+    }
 
-        XCTAssert(subjects[bitcoin] === expectedSubjects[bitcoin])
-        XCTAssert(subjects[ether] === expectedSubjects[ether])
-        XCTAssert(subjects[cash] === expectedSubjects[cash])
+    func testEtherRate() {
+        let etherRate = Rate()
+        etherRate.coin = ether
+        etherRate.currencyCode = currency.code
+        etherRate.value = 300
+        etherRate.timestamp = 2000000
+
+        stub(mockRateManager) { mock in
+            when(mock.rate(forCoin: ether, currencyCode: currency.code)).thenReturn(etherRate)
+        }
+
+        XCTAssertEqual(interactor.rate(forCoin: ether), etherRate)
     }
 
     func testRefresh() {
@@ -164,16 +155,24 @@ class WalletInteractorTests: XCTestCase {
 
         bitcoinBalanceSubject.onNext(newBitcoinValue)
 
-        verify(mockDelegate).didUpdate(coinValue: equal(to: CoinValue(coin: bitcoin, value: newBitcoinValue)))
+        verify(mockDelegate).didUpdate()
+    }
+
+    func testStateUpdate() {
+        bitcoinStateSubject.onNext(AdapterState.synced)
+        verify(mockDelegate).didUpdate()
     }
 
     func testRatesUpdate() {
-        let bitcoinRate = CurrencyValue(currency: currency, value: 6000)
-        let etherRate = CurrencyValue(currency: currency, value: 400)
-        let rates = [bitcoin: bitcoinRate, ether: etherRate]
-        mockRatesSubject.onNext(rates)
+        ratesSubject.onNext(())
+        verify(mockDelegate).didUpdate()
+    }
 
-        verify(mockDelegate).didUpdate(rates: equal(to: rates))
+    func testCurrencyUpdate() {
+        let newCurrency = Currency(code: "XDR", localeId: "")
+        currencySubject.onNext(newCurrency)
+
+        verify(mockDelegate).didUpdate()
     }
 
     func testDidRefresh() {

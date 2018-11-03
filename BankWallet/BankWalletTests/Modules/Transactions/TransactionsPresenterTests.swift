@@ -10,17 +10,19 @@ class TransactionsPresenterTests: XCTestCase {
 
     private var presenter: TransactionsPresenter!
 
+    private let threshold = 6
+
     private let bitcoin = "BTC"
     private let ether = "ETH"
-    private let cash = "BCH"
+
+    private let bitcoinLastBlockHeight = 10
+    private let etherLastBlockHeight = 12
 
     private var bitcoinValue: CoinValue!
     private var etherValue: CoinValue!
-    private var cashValue: CoinValue!
 
     private var bitcoinAmount: Double = 2
     private var etherAmount: Double = -3
-    private var cashAmount: Double = 10
 
     private var bitcoinRate: Double = 6000
     private var etherRate: Double = 200
@@ -28,29 +30,32 @@ class TransactionsPresenterTests: XCTestCase {
 
     private var bitcoinRecord: TransactionRecord!
     private var etherRecord: TransactionRecord!
-    private var cashRecord: TransactionRecord!
+
+    private let bitcoinStatus = TransactionStatus.completed
+    private let etherStatus = TransactionStatus.completed
 
     private var expectedBitcoinTransactionItem: TransactionRecordViewItem!
     private var expectedEtherTransactionItem: TransactionRecordViewItem!
-    private var expectedCashTransactionItem: TransactionRecordViewItem!
+
+    private var mockBitcoinAdapter: MockIAdapter!
+    private var mockEtherAdapter: MockIAdapter!
+
+    private let currency = Currency(code: "USD", localeId: "")
 
     override func setUp() {
         super.setUp()
 
         bitcoinValue = CoinValue(coin: bitcoin, value: bitcoinAmount)
         etherValue = CoinValue(coin: ether, value: etherAmount)
-        cashValue = CoinValue(coin: cash, value: cashAmount)
 
         let bitcoinTransactionTimeStamp = 15_000_000
         let etherTransactionTimeStamp = 35_000_000
-        let cashTransactionTimeStamp = 55_000_000
 
         bitcoinRecord = TransactionRecord()
         bitcoinRecord.transactionHash = "bitcoin_transaction_hash"
+        bitcoinRecord.blockHeight = 1
         bitcoinRecord.coin = bitcoin
         bitcoinRecord.amount = bitcoinAmount
-        bitcoinRecord.status = .processing
-        bitcoinRecord.verifyProgress = 0.2
         bitcoinRecord.timestamp = bitcoinTransactionTimeStamp
         bitcoinRecord.rate = bitcoinRate
         let from = TransactionAddress()
@@ -64,10 +69,9 @@ class TransactionsPresenterTests: XCTestCase {
 
         etherRecord = TransactionRecord()
         etherRecord.transactionHash = "ether_transaction_hash"
+        etherRecord.blockHeight = 1
         etherRecord.coin = ether
         etherRecord.amount = etherAmount
-        etherRecord.status = .verifying
-        etherRecord.verifyProgress = 0.2
         etherRecord.timestamp = etherTransactionTimeStamp
         etherRecord.rate = etherRate
         let from1 = TransactionAddress()
@@ -79,56 +83,39 @@ class TransactionsPresenterTests: XCTestCase {
         etherRecord.from.append(from1)
         etherRecord.to.append(to1)
 
-        cashRecord = TransactionRecord()
-        cashRecord.transactionHash = "cash_transaction_hash"
-        cashRecord.coin = cash
-        cashRecord.amount = cashAmount
-        cashRecord.status = .completed
-        cashRecord.verifyProgress = 0.2
-        cashRecord.timestamp = cashTransactionTimeStamp
-        cashRecord.rate = cashRate
-        let from2 = TransactionAddress()
-        from2.address = "cash_from_address"
-        from2.mine = false
-        let to2 = TransactionAddress()
-        to2.address = "cash_to_address"
-        to2.mine = true
-        cashRecord.from.append(from2)
-        cashRecord.to.append(to2)
-
         expectedBitcoinTransactionItem = TransactionRecordViewItem(
                 transactionHash: bitcoinRecord.transactionHash,
-                amount: CoinValue(coin: bitcoinRecord.coin, value: bitcoinAmount),
-                currencyAmount: CurrencyValue(currency: DollarCurrency(), value: bitcoinAmount * bitcoinRate),
+                coinValue: CoinValue(coin: bitcoinRecord.coin, value: bitcoinAmount),
+                currencyAmount: CurrencyValue(currency: currency, value: bitcoinAmount * bitcoinRate),
                 from: from.address,
                 to: nil,
                 incoming: true,
                 date: Date(timeIntervalSince1970: Double(bitcoinTransactionTimeStamp)),
-                status: bitcoinRecord.status,
-                verifyProgress: bitcoinRecord.verifyProgress
+                status: bitcoinStatus
         )
         expectedEtherTransactionItem = TransactionRecordViewItem(
                 transactionHash: etherRecord.transactionHash,
-                amount: CoinValue(coin: etherRecord.coin, value: etherAmount),
-                currencyAmount: CurrencyValue(currency: DollarCurrency(), value: etherAmount * etherRate),
+                coinValue: CoinValue(coin: etherRecord.coin, value: etherAmount),
+                currencyAmount: CurrencyValue(currency: currency, value: etherAmount * etherRate),
                 from: nil,
                 to: to1.address,
                 incoming: false,
                 date: Date(timeIntervalSince1970: Double(etherTransactionTimeStamp)),
-                status: etherRecord.status,
-                verifyProgress: etherRecord.verifyProgress
+                status: etherStatus
         )
-        expectedCashTransactionItem = TransactionRecordViewItem(
-                transactionHash: cashRecord.transactionHash,
-                amount: CoinValue(coin: cashRecord.coin, value: cashRecord.amount),
-                currencyAmount: CurrencyValue(currency: DollarCurrency(), value: cashAmount * cashRate),
-                from: from2.address,
-                to: nil,
-                incoming: true,
-                date: Date(timeIntervalSince1970: Double(cashTransactionTimeStamp)),
-                status: cashRecord.status,
-                verifyProgress: cashRecord.verifyProgress
-        )
+
+        mockBitcoinAdapter = MockIAdapter()
+        mockEtherAdapter = MockIAdapter()
+        stub(mockBitcoinAdapter) { mock in
+            when(mock.balance.get).thenReturn(bitcoinValue.value)
+            when(mock.lastBlockHeight.get).thenReturn(bitcoinLastBlockHeight)
+            when(mock.confirmationsThreshold.get).thenReturn(6)
+        }
+        stub(mockEtherAdapter) { mock in
+            when(mock.balance.get).thenReturn(etherValue.value)
+            when(mock.lastBlockHeight.get).thenReturn(etherLastBlockHeight)
+            when(mock.confirmationsThreshold.get).thenReturn(6)
+        }
 
         mockRouter = MockITransactionsRouter()
         mockInteractor = MockITransactionsInteractor()
@@ -146,10 +133,13 @@ class TransactionsPresenterTests: XCTestCase {
             when(mock.retrieveFilters()).thenDoNothing()
             when(mock.refresh()).thenDoNothing()
             when(mock.set(coin: equal(to: bitcoin))).thenDoNothing()
+            when(mock.baseCurrency.get).thenReturn(currency)
             when(mock.recordsCount.get).thenReturn(3)
             when(mock.record(forIndex: 0)).thenReturn(bitcoinRecord)
             when(mock.record(forIndex: 1)).thenReturn(etherRecord)
-            when(mock.record(forIndex: 2)).thenReturn(cashRecord)
+
+            when(mock.adapter(forCoin: bitcoin)).thenReturn(mockBitcoinAdapter)
+            when(mock.adapter(forCoin: ether)).thenReturn(mockEtherAdapter)
         }
 
         presenter = TransactionsPresenter(interactor: mockInteractor, router: mockRouter)
@@ -179,7 +169,6 @@ class TransactionsPresenterTests: XCTestCase {
     func testInitialItems() {
         compare(transactionItem1: expectedBitcoinTransactionItem, transactionItem2: presenter.item(forIndex: 0))
         compare(transactionItem1: expectedEtherTransactionItem, transactionItem2: presenter.item(forIndex: 1))
-        compare(transactionItem1: expectedCashTransactionItem, transactionItem2: presenter.item(forIndex: 2))
     }
 
     func testRefresh() {
@@ -224,12 +213,11 @@ class TransactionsPresenterTests: XCTestCase {
 
     func testDidRetrieveFilters() {
         let expectedAllFilter = TransactionFilterItem(coin: nil, name: "transactions.filter_all")
-        let expectedBitcoinFilter = TransactionFilterItem(coin: bitcoin, name: bitcoin)
-        let expectedEtherFilter = TransactionFilterItem(coin: ether, name: ether)
-        let expectedCashFilter = TransactionFilterItem(coin: cash, name: cash)
-        let expectedFilters = [expectedAllFilter, expectedBitcoinFilter, expectedEtherFilter, expectedCashFilter]
+        let expectedBitcoinFilter = TransactionFilterItem(coin: bitcoin, name: "coin.\(bitcoin)")
+        let expectedEtherFilter = TransactionFilterItem(coin: ether, name: "coin.\(ether)")
+        let expectedFilters = [expectedAllFilter, expectedBitcoinFilter, expectedEtherFilter]
 
-        presenter.didRetrieve(filters: [bitcoin, ether, cash])
+        presenter.didRetrieve(filters: [bitcoin, ether])
         verify(mockView).show(filters: equal(to: expectedFilters))
     }
 
@@ -240,14 +228,21 @@ class TransactionsPresenterTests: XCTestCase {
 
     func compare(transactionItem1: TransactionRecordViewItem, transactionItem2: TransactionRecordViewItem) {
         XCTAssertEqual(transactionItem1.transactionHash, transactionItem2.transactionHash)
-        XCTAssertEqual(transactionItem1.amount, transactionItem2.amount)
+        XCTAssertEqual(transactionItem1.coinValue, transactionItem2.coinValue)
         XCTAssertEqual(transactionItem1.currencyAmount, transactionItem2.currencyAmount)
         XCTAssertEqual(transactionItem1.from, transactionItem2.from)
         XCTAssertEqual(transactionItem1.to, transactionItem2.to)
         XCTAssertEqual(transactionItem1.incoming, transactionItem2.incoming)
         XCTAssertEqual(transactionItem1.date?.timeIntervalSince1970, transactionItem2.date?.timeIntervalSince1970)
-        XCTAssertEqual(transactionItem1.status, transactionItem2.status)
-        XCTAssertEqual(transactionItem1.verifyProgress, transactionItem2.verifyProgress)
+        if case .processing = transactionItem1.status, case .processing = transactionItem2.status {
+            XCTAssertTrue(true)
+        } else if case let .verifying(progress1) = transactionItem1.status, case let .verifying(progress2) = transactionItem2.status {
+            XCTAssertTrue(progress1 == progress2)
+        } else if case .completed = transactionItem1.status, case .completed = transactionItem2.status {
+            XCTAssertTrue(true)
+        } else {
+            XCTFail()
+        }
     }
 
 }

@@ -40,9 +40,10 @@ class WalletPresenter {
                     rateExpired: rateExpired
             ))
 
-            if case .syncing = wallet.adapter.state, rate != nil {
+            if case .syncing = wallet.adapter.state {
                 allSynced = false
             }
+            allSynced = allSynced && rate != nil
         }
 
         view?.show(totalBalance: allSynced ? CurrencyValue(currency: currency, value: totalBalance) : nil)
