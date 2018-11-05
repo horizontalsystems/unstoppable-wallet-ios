@@ -116,7 +116,7 @@
 "settings.info.subtitle" = "l'application décentralisée";
 "settings.info.link" = "horizontalsystems.io";
 
-"settings_base_currency.title" = "Base Currency";
+"settings_base_currency.title" = "Devise de Base";
 
 "settings_language.title" = "Langue";
 
