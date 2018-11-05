@@ -16,7 +16,7 @@ class TransactionsInteractorTests: XCTestCase {
     private let ether = "ETH"
     private let cash = "BCH"
 
-    private let currency = Currency(code: "USD", localeId: "")
+    private let currency = Currency(code: "USD", symbol: "")
 
     private let bitcoinLastBlockHeightSubject = PublishSubject<Int>()
 

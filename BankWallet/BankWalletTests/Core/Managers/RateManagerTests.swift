@@ -3,7 +3,7 @@ import RxSwift
 import Cuckoo
 @testable import Bank_Dev_T
 
-class ExchangeRateManagerTests: XCTestCase {
+class RateManagerTests: XCTestCase {
     private var mockRateStorage: MockIRateStorage!
     private var mockTransactionStorage: MockITransactionRecordStorage!
     private var mockCurrencyManager: MockICurrencyManager!
@@ -11,6 +11,8 @@ class ExchangeRateManagerTests: XCTestCase {
     private var mockWalletManager: MockIWalletManager!
 
     private var manager: RateManager!
+
+    private let currencySubject = PublishSubject<Currency>()
 
     let bitcoin = "BTC"
     let ether = "ETH"
@@ -29,7 +31,7 @@ class ExchangeRateManagerTests: XCTestCase {
 
     override func setUp() {
         super.setUp()
-        baseCurrency = Currency(code: baseCurrencyCode, localeId: "")
+        baseCurrency = Currency(code: baseCurrencyCode, symbol: "")
 
         bitcoinRate = Rate()
         bitcoinRate.coin = bitcoin
@@ -60,6 +62,7 @@ class ExchangeRateManagerTests: XCTestCase {
             when(mock.clear()).thenDoNothing()
         }
         stub(mockCurrencyManager) { mock in
+            when(mock.subject.get).thenReturn(currencySubject)
             when(mock.baseCurrency.get).thenReturn(baseCurrency)
         }
         stub(mockWalletManager) { mock in

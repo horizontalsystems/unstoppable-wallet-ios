@@ -21,6 +21,9 @@ class LanguageManagerTests: XCTestCase {
             when(mock.currentLanguage.get).thenReturn(currentLanguage)
             when(mock.currentLanguage.set(any())).thenDoNothing()
         }
+        stub(mockLocalizationManager) { mock in
+            when(mock.setLocale(forLanguage: any())).thenDoNothing()
+        }
 
         manager = LanguageManager(localizationManager: mockLocalizationManager, localStorage: mockLocalStorage, fallbackLanguage: fallbackLanguage)
     }

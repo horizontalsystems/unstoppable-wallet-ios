@@ -29,6 +29,7 @@ class SettingsTheme {
     static let topHeaderHeight: CGFloat = 32
     static let languageSubtitleColor = UIColor.cryptoGray
     static let languageCellHeight: CGFloat = 60
+    static let currencyCellHeight: CGFloat = 60
     static let infoFooterSeparatorColor = UIColor.cryptoGray
     static let successIconTint = UIColor.cryptoYellow
     static let headerHeight: CGFloat = 32

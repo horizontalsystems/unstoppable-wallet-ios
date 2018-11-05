@@ -39,7 +39,8 @@ class ValueFormatter {
 
     func format(currencyValue: CurrencyValue, approximate: Bool = false) -> String? {
         let formatter = currencyFormatter
-        formatter.locale = Locale(identifier: currencyValue.currency.localeId)
+        formatter.currencyCode = currencyValue.currency.code
+        formatter.currencySymbol = currencyValue.currency.symbol
         formatter.maximumFractionDigits = approximate ? 0 : 2
 
         var value = currencyValue.value

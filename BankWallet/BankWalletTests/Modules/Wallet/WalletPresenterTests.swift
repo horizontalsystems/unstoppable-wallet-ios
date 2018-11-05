@@ -16,7 +16,7 @@ class WalletPresenterTests: XCTestCase {
     private var bitcoinValue: CoinValue!
     private var etherValue: CoinValue!
 
-    private let currency = Currency(code: "USD", localeId: "")
+    private let currency = Currency(code: "USD", symbol: "$")
 
     private var bitcoinRate: Rate!
     private var etherRate: Rate!

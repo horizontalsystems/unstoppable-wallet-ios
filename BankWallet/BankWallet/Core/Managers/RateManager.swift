@@ -22,6 +22,14 @@ class RateManager {
         self.walletManager = walletManager
 
         self.scheduler = scheduler
+
+        currencyManager.subject
+                .subscribe(onNext: { [weak self] _ in
+                    self?.updateRates()
+                    self?.transactionRecordStorage.clearRates()
+                    self?.fillTransactionRates()
+                })
+                .disposed(by: disposeBag)
     }
 
     private func update(value: Double, coin: Coin, currencyCode: String) {

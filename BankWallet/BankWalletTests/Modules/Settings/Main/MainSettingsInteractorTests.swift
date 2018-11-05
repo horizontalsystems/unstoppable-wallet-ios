@@ -9,9 +9,13 @@ class MainSettingsInteractorTests: XCTestCase {
     private var mockWordsManager: MockIWordsManager!
     private var mockLanguageManager: MockILanguageManager!
     private var mockSystemInfoManager: MockISystemInfoManager!
+    private var mockCurrencyManager: MockICurrencyManager!
 
     private var interactor: MainSettingsInteractor!
 
+    private let currencySubject = PublishSubject<Currency>()
+
+    let baseCurrency = Currency(code: "USD", symbol: "$")
     let currentLanguageDisplayName = "Chitaurian"
     let backedUpSubject = PublishSubject<Bool>()
     let appVersion = "1"
@@ -24,9 +28,11 @@ class MainSettingsInteractorTests: XCTestCase {
         mockWordsManager = MockIWordsManager()
         mockLanguageManager = MockILanguageManager()
         mockSystemInfoManager = MockISystemInfoManager()
+        mockCurrencyManager = MockICurrencyManager()
 
         stub(mockDelegate) { mock in
             when(mock.didUpdateLightMode()).thenDoNothing()
+            when(mock.didUpdate(baseCurrency: any())).thenDoNothing()
             when(mock.didBackup()).thenDoNothing()
         }
         stub(mockLocalStorage) { mock in
@@ -37,6 +43,10 @@ class MainSettingsInteractorTests: XCTestCase {
             when(mock.isBackedUp.get).thenReturn(true)
             when(mock.backedUpSubject.get).thenReturn(backedUpSubject)
         }
+        stub(mockCurrencyManager) { mock in
+            when(mock.subject.get).thenReturn(currencySubject)
+            when(mock.baseCurrency.get).thenReturn(baseCurrency)
+        }
         stub(mockLanguageManager) { mock in
             when(mock.displayNameForCurrentLanguage.get).thenReturn(currentLanguageDisplayName)
         }
@@ -44,7 +54,7 @@ class MainSettingsInteractorTests: XCTestCase {
             when(mock.appVersion.get).thenReturn(appVersion)
         }
 
-        interactor = MainSettingsInteractor(localStorage: mockLocalStorage, wordsManager: mockWordsManager, languageManager: mockLanguageManager, systemInfoManager: mockSystemInfoManager)
+        interactor = MainSettingsInteractor(localStorage: mockLocalStorage, wordsManager: mockWordsManager, languageManager: mockLanguageManager, systemInfoManager: mockSystemInfoManager, currencyManager: mockCurrencyManager)
         interactor.delegate = mockDelegate
     }
 
@@ -81,6 +91,10 @@ class MainSettingsInteractorTests: XCTestCase {
         verify(mockDelegate, never()).didBackup()
     }
 
+    func testBaseCurrency() {
+        XCTAssertEqual(interactor.baseCurrency, baseCurrency.code)
+    }
+
     func testCurrentLanguage() {
         XCTAssertEqual(interactor.currentLanguage, currentLanguageDisplayName)
     }
@@ -111,6 +125,14 @@ class MainSettingsInteractorTests: XCTestCase {
 
     func testAppVersion() {
         XCTAssertEqual(interactor.appVersion, appVersion)
+    }
+
+    func testUpdateBaseCurrency() {
+        let newCode = "RUB"
+
+        currencySubject.onNext(Currency(code: newCode, symbol: ""))
+
+        verify(mockDelegate).didUpdate(baseCurrency: equal(to: newCode))
     }
 
 }

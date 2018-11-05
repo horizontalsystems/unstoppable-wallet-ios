@@ -118,6 +118,8 @@ Go to Settings - > Bank and allow access to Camera.";
 "settings.info.subtitle" = "decentralized app";
 "settings.info.link" = "horizontalsystems.io";
 
+"settings_base_currency.title" = "Base Currency";
+
 "settings_language.title" = "Language";
 
 "settings_security.title" = "Security Center";

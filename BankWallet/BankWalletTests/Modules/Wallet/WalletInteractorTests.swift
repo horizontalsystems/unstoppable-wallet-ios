@@ -36,7 +36,7 @@ class WalletInteractorTests: XCTestCase {
 
     private var expectedWallets: [Wallet] = []
 
-    private let currency = Currency(code: "USD", localeId: "")
+    private let currency = Currency(code: "USD", symbol: "$")
 
     override func setUp() {
         super.setUp()
@@ -169,7 +169,7 @@ class WalletInteractorTests: XCTestCase {
     }
 
     func testCurrencyUpdate() {
-        let newCurrency = Currency(code: "XDR", localeId: "")
+        let newCurrency = Currency(code: "XDR", symbol: "")
         currencySubject.onNext(newCurrency)
 
         verify(mockDelegate).didUpdate()

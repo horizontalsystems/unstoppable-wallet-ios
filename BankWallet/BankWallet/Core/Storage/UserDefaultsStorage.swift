@@ -4,6 +4,7 @@ class UserDefaultsStorage: ILocalStorage {
     private let keyWords = "mnemonic_words"
     private let keyIsBackedUp = "is_backed_up"
     private let keyCurrentLanguage = "current_language"
+    private let keyBaseCurrencyCode = "base_currency_code"
     private let keyLightMode = "light_mode"
     private let iUnderstandKey = "i_understand_key"
     private let biometricOnKey = "biometric_on_key"
@@ -31,6 +32,11 @@ class UserDefaultsStorage: ILocalStorage {
         }
         set(true, for: didLaunchOnceKey)
         return false
+    }
+
+    var baseCurrencyCode: String? {
+        get { return getString(keyBaseCurrencyCode) }
+        set { setString(keyBaseCurrencyCode, value: newValue) }
     }
 
     var lightMode: Bool {

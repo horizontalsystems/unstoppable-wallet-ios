@@ -40,7 +40,7 @@ class TransactionsPresenterTests: XCTestCase {
     private var mockBitcoinAdapter: MockIAdapter!
     private var mockEtherAdapter: MockIAdapter!
 
-    private let currency = Currency(code: "USD", localeId: "")
+    private let currency = Currency(code: "USD", symbol: "")
 
     override func setUp() {
         super.setUp()

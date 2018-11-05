@@ -13,6 +13,7 @@ protocol IRealmFactory {
 
 protocol ILocalStorage: class {
     var isBackedUp: Bool { get set }
+    var baseCurrencyCode: String? { get set }
     var lightMode: Bool { get set }
     var iUnderstand: Bool { get set }
     var isBiometricOn: Bool { get set }
@@ -64,7 +65,7 @@ protocol IAdapterFactory {
 protocol ICoinManager {
 }
 
-protocol ITransactionManager {
+protocol ITransactionManager: class {
     func clear()
 }
 
@@ -157,6 +158,7 @@ protocol ISystemInfoManager {
 
 protocol IAppConfigProvider {
     var enabledCoins: [Coin] { get }
+    var currencies: [Currency] { get }
 }
 
 protocol IRateNetworkManager {
@@ -178,7 +180,10 @@ protocol ITransactionRecordStorage {
 
 protocol ICurrencyManager {
     var subject: PublishSubject<Currency> { get }
+    var currencies: [Currency] { get }
     var baseCurrency: Currency { get }
+
+    func setBaseCurrency(code: String)
 }
 
 protocol IReachabilityManager {

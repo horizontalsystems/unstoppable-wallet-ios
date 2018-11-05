@@ -73,7 +73,7 @@ class App {
         realmStorage = RealmStorage(realmFactory: realmFactory)
         networkManager = NetworkManager(apiUrl: "https://ipfs.grouvi.im/ipns/QmSxpioQuDSjTH6XiT5q35V7xpJqxmDheEcTRRWyMkMim7/io-hs/data/xrates")
 
-        currencyManager = CurrencyManager()
+        currencyManager = CurrencyManager(localStorage: localStorage, appConfigProvider: appConfigProvider)
         rateManager = RateManager(rateStorage: realmStorage, transactionRecordStorage: realmStorage, currencyManager: currencyManager, networkManager: networkManager, walletManager: walletManager)
 
         transactionManager = TransactionManager(walletManager: walletManager, realmFactory: realmFactory, rateManager: rateManager)

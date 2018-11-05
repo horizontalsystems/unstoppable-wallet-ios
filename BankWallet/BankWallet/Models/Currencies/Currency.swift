@@ -1,4 +1,4 @@
 struct Currency {
     let code: String
-    let localeId: String
+    let symbol: String
 }

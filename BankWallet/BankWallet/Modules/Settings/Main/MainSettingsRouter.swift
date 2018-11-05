@@ -14,6 +14,7 @@ extension MainSettingsRouter: IMainSettingsRouter {
     }
 
     func showBaseCurrencySettings() {
+        viewController?.navigationController?.pushViewController(BaseCurrencySettingsRouter.module(), animated: true)
     }
 
     func showLanguageSettings() {
@@ -43,7 +44,7 @@ extension MainSettingsRouter {
 
     static func module() -> UIViewController {
         let router = MainSettingsRouter()
-        let interactor = MainSettingsInteractor(localStorage: App.shared.localStorage, wordsManager: App.shared.wordsManager, languageManager: App.shared.languageManager, systemInfoManager: App.shared.systemInfoManager)
+        let interactor = MainSettingsInteractor(localStorage: App.shared.localStorage, wordsManager: App.shared.wordsManager, languageManager: App.shared.languageManager, systemInfoManager: App.shared.systemInfoManager, currencyManager: App.shared.currencyManager)
         let presenter = MainSettingsPresenter(router: router, interactor: interactor)
         let view = MainSettingsViewController(delegate: presenter)
 

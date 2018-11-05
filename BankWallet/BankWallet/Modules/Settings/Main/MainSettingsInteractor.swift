@@ -9,16 +9,24 @@ class MainSettingsInteractor {
     private let wordsManager: IWordsManager
     private let languageManager: ILanguageManager
     private let systemInfoManager: ISystemInfoManager
+    private let currencyManager: ICurrencyManager
 
-    init(localStorage: ILocalStorage, wordsManager: IWordsManager, languageManager: ILanguageManager, systemInfoManager: ISystemInfoManager) {
+    init(localStorage: ILocalStorage, wordsManager: IWordsManager, languageManager: ILanguageManager, systemInfoManager: ISystemInfoManager, currencyManager: ICurrencyManager) {
         self.localStorage = localStorage
         self.wordsManager = wordsManager
         self.languageManager = languageManager
         self.systemInfoManager = systemInfoManager
+        self.currencyManager = currencyManager
 
         wordsManager.backedUpSubject
                 .subscribe(onNext: { [weak self] isBackedUp in
                     self?.onUpdate(isBackedUp: isBackedUp)
+                })
+                .disposed(by: disposeBag)
+
+        currencyManager.subject
+                .subscribe(onNext: { [weak self] currency in
+                    self?.delegate?.didUpdate(baseCurrency: currency.code)
                 })
                 .disposed(by: disposeBag)
     }
@@ -42,7 +50,7 @@ extension MainSettingsInteractor: IMainSettingsInteractor {
     }
 
     var baseCurrency: String {
-        return ""
+        return currencyManager.baseCurrency.code
     }
 
     var lightMode: Bool {
