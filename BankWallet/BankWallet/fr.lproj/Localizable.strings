@@ -49,10 +49,10 @@
 "wallet.tab_bar_item" = "Balance";
 "wallet.send" = "Envoyer";
 "wallet.deposit" = "Recevoir";
-"wallet.loading_rate" = "loading rate...";
+"wallet.loading_rate" = "chargement en cours...";
 "wallet.rate_per_coin" = "%@ par %@";
-"wallet.syncing_percent" = "Syncing %@";
-"wallet.total_balance.syncing" = "Syncing...";
+"wallet.syncing_percent" = "Synchronisation %@";
+"wallet.total_balance.syncing" = "Synchronisation...";
 
 "send.title" = "Envoyer ";
 "send.address_placeholder" = "Adresse";
