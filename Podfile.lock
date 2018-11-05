@@ -38,9 +38,9 @@ PODS:
   - Realm/Headers (3.11.1)
   - RealmSwift (3.11.1):
     - Realm (= 3.11.1)
-  - RxCocoa (4.3.1):
+  - RxCocoa (4.4.0):
     - RxSwift (~> 4.0)
-  - RxRealm (0.7.5):
+  - RxRealm (0.7.6):
     - RealmSwift (~> 3.0)
     - RxSwift (~> 4.0)
   - RxSwift (4.2.0)
@@ -113,10 +113,10 @@ CHECKOUT OPTIONS:
     :commit: 852780b5548f639b3e63cce2a353c3a4d4cf6348
     :git: https://github.com/horizontalsystems/GrouviHUD.git
   HSBitcoinKit:
-    :commit: b8fcd0c650b1cd06c888f9af59a8de90731e0ab9
+    :commit: b24600f7c008139b0c3c8c10f696f40a963d2e86
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   HSEthereumKit:
-    :commit: b30ca002baab8c49589e218b86c5f181e5c56a6d
+    :commit: 975d9844b136b7c3ed823022a8e6927686445ebe
     :git: https://github.com/horizontalsystems/ethereum-kit-ios.git
 
 SPEC CHECKSUMS:
@@ -135,8 +135,8 @@ SPEC CHECKSUMS:
   ObjectMapper: b612bf8c8e99c4dc0bb6013a51f7c27966ed5da9
   Realm: 037c5919b9ceb59d6beed5d3b031096856b119b3
   RealmSwift: c9580133e73ef40ed340401af2dbc9a5790dfea7
-  RxCocoa: 78763c7b07d02455598d9fc3c1ad091a28b73635
-  RxRealm: a6c6c0a07cb61f34209969ca6657734edfdfff30
+  RxCocoa: df63ebf7b9a70d6b4eeea407ed5dd4efc8979749
+  RxRealm: 5379eddd74f8d617ca7681d1f8d144af25b432b0
   RxSwift: 99e10317ddfcc7fbe01356aafd118fde4a0be104
   SectionsTableViewKit: 0aaeae49acb88b9cff005d0e2dc1ba488039590d
   SipHash: fad90a4683e420c52ef28063063dbbce248ea6d4
