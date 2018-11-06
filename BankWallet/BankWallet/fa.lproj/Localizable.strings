@@ -59,34 +59,34 @@
 "send.payment_reference_placeholder" = "مرجع پرداخت";
 "send.insufficient_funds" = "Not available amount";
 "paste" = "Paste";
-"amount" = "Amount";
-"more" = "More";
-"send" = "Send";
-"back" = "Back";
+"amount" = "مقدار";
+"more" = "بیشتر";
+"send" = "ارسال";
+"back" = "برگشت";
 
-"transactions.title" = "Transactions";
-"transactions.tab_bar_item" = "Transactions";
-"transactions.yesterday" = "Yesterday";
+"transactions.title" = "معاملات";
+"transactions.tab_bar_item" = "معاملات";
+"transactions.yesterday" = "ديروز";
 "transactions.success" = "success";
 "transactions.pending" = "pending...";
 "transactions.from" = "from";
 "transactions.to" = "to";
-"transactions.filter_all" = "All";
+"transactions.filter_all" = "همه";
 "transactions.filter_rBitcoin" = "Bitcoin-R";
 "transactions.filter_tBitcoin Cash" = "Bitcoin-T Cash";
 "transactions.filter_Bitcoin" = "Bitcoin";
 
 
-"tx_info.bottom_sheet.title" = "Transaction";
-"tx_info.bottom_sheet.title_received" = "Received";
-"tx_info.bottom_sheet.title_sent" = "Sent";
+"tx_info.bottom_sheet.title" = "معاملات";
+"tx_info.bottom_sheet.title_received" = "دريافت شد";
+"tx_info.bottom_sheet.title_sent" = "ارسال شد";
 "tx_info.bottom_sheet.processing" = "PROCESSING";
 "tx_info.bottom_sheet.complete" = "COMPLETED";
-"tx_info.bottom_sheet.status" = "Status:";
+"tx_info.bottom_sheet.status" = "وضيعت:";
 "tx_info.bottom_sheet.value_when_received" = "Value when received:";
-"tx_info.bottom_sheet.from_hash" = "From:";
-"tx_info.bottom_sheet.to_hash" = "To:";
-"tx_info.bottom_sheet.id_hash" = "ID:";
+"tx_info.bottom_sheet.from_hash" = "از:";
+"tx_info.bottom_sheet.to_hash" = "به:";
+"tx_info.bottom_sheet.id_hash" = "شناس نامه:";
 
 "full_transaction_info.navigation_bar.title" = "Details";
 "full_transaction_info.navigation_bar.share" = "به اشتراك گذاشتن";
@@ -116,14 +116,14 @@
 "settings.info.subtitle" = "decentralized app";
 "settings.info.link" = "horizontalsystems.io";
 
-"settings_base_currency.title" = "Base Currency";
+"settings_base_currency.title" = "ارز مرجع";
 
-"settings_language.title" = "Language";
+"settings_language.title" = "زبان";
 
-"settings_security.title" = "Security Center";
-"settings_security.paper_key" = "Secret Key";
+"settings_security.title" = "مركز امنيتي";
+"settings_security.paper_key" = "رقم مخفی";
 "settings_pin_biometrics.title" = "Pin / Touch ID";
-"settings_security.set_pin" = "Set PIN";
+"settings_security.set_pin" = "تعيين پين";
 "settings_security.change_pin" = "Edit PIN";
 "settings_security.touch_id" = "Touch ID";
 "settings_security.face_id" = "Face ID";
@@ -138,7 +138,7 @@
 "edit_pin.unlock_info" = "Enter current PIN";
 "edit_pin.new_pin_info" = "Enter new PIN";
 "edit_pin.confirm_info" = "Enter again for confirm";
-"unlock_pin_controller.info" = "Enter PIN";
+"unlock_pin_controller.info" = "پين را داخل كنيد";
 
 "biometric_usage_reason" = "Unlock wallet";
 
