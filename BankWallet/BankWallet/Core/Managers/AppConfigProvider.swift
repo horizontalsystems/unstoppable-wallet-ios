@@ -2,6 +2,8 @@ import Foundation
 
 class AppConfigProvider: IAppConfigProvider {
 
+    let ratesApiUrl = "https://ipfs.grouvi.im/ipns/QmSxpioQuDSjTH6XiT5q35V7xpJqxmDheEcTRRWyMkMim7/io-hs/data/xrates"
+
     var enabledCoins: [Coin] {
         if let coins = Bundle.main.object(forInfoDictionaryKey: "Enabled Coins") as? String {
             return coins.components(separatedBy: ",").map {

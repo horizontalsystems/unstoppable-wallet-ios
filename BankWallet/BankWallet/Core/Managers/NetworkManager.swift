@@ -32,8 +32,8 @@ class NetworkManager {
 
     private let ipfsDateFormatter = DateFormatter()
 
-    required init(apiUrl: String) {
-        self.apiUrl = apiUrl
+    required init(appConfigProvider: IAppConfigProvider) {
+        self.apiUrl = appConfigProvider.ratesApiUrl
 
         ipfsDateFormatter.dateFormat = "yyyy/MM/dd/HH/mm"
     }

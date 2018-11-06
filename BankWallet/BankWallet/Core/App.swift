@@ -72,9 +72,9 @@ class App {
         coinManager = CoinManager(wordsManager: wordsManager, walletManager: walletManager, appConfigProvider: appConfigProvider)
 
         realmStorage = RealmStorage(realmFactory: realmFactory)
-        networkManager = NetworkManager(apiUrl: "https://ipfs.grouvi.im/ipns/QmSxpioQuDSjTH6XiT5q35V7xpJqxmDheEcTRRWyMkMim7/io-hs/data/xrates")
+        networkManager = NetworkManager(appConfigProvider: appConfigProvider)
 
-        reachabilityManager = ReachabilityManager()
+        reachabilityManager = ReachabilityManager(appConfigProvider: appConfigProvider)
 
         currencyManager = CurrencyManager(localStorage: localStorage, appConfigProvider: appConfigProvider)
 

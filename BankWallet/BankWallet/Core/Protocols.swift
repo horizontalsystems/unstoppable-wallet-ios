@@ -164,6 +164,7 @@ protocol ISystemInfoManager {
 }
 
 protocol IAppConfigProvider {
+    var ratesApiUrl: String { get }
     var enabledCoins: [Coin] { get }
     var currencies: [Currency] { get }
 }
