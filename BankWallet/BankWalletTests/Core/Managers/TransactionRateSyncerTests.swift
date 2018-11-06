@@ -63,13 +63,8 @@ class TransactionRateSyncerTests: XCTestCase {
     func testSync() {
         syncer.sync(currencyCode: currencyCode)
 
-        waitForMainQueue()
         verify(mockStorage).set(rate: equal(to: bitcoinValue), transactionHash: equal(to: bitcoinHash))
-
-        waitForMainQueue()
         verify(mockStorage).set(rate: equal(to: etherValue), transactionHash: equal(to: etherHash))
-
-        waitForMainQueue()
         verify(mockStorage, never()).set(rate: any(), transactionHash: equal(to: cashHash))
     }
 

@@ -9,7 +9,7 @@ class RateManagerTests: XCTestCase {
     private var mockWalletManager: MockIWalletManager!
     private var mockCurrencyManager: MockICurrencyManager!
     private var mockReachabilityManager: MockIReachabilityManager!
-    private var mockTimer: MockITimer!
+    private var mockTimer: MockIPeriodicTimer!
 
     private var manager: RateManager!
 
@@ -48,7 +48,7 @@ class RateManagerTests: XCTestCase {
         mockWalletManager = MockIWalletManager()
         mockCurrencyManager = MockICurrencyManager()
         mockReachabilityManager = MockIReachabilityManager()
-        mockTimer = MockITimer()
+        mockTimer = MockIPeriodicTimer()
 
         stub(mockStorage) { mock in
             when(mock.rate(forCoin: equal(to: bitcoin), currencyCode: equal(to: baseCurrencyCode))).thenReturn(bitcoinRate)

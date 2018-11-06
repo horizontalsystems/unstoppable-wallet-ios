@@ -7,11 +7,13 @@ class RateSyncer {
     weak var delegate: IRateSyncerDelegate?
 
     private let networkManager: IRateNetworkManager
-    private let scheduler: ImmediateSchedulerType
+    private let timer: IPeriodicTimer
+    private let async: Bool
 
-    init(networkManager: IRateNetworkManager, scheduler: ImmediateSchedulerType = ConcurrentDispatchQueueScheduler(qos: .background)) {
+    init(networkManager: IRateNetworkManager, timer: IPeriodicTimer, async: Bool = true) {
         self.networkManager = networkManager
-        self.scheduler = scheduler
+        self.timer = timer
+        self.async = async
     }
 
 }
@@ -20,14 +22,20 @@ extension RateSyncer: IRateSyncer {
 
     func sync(coins: [String], currencyCode: String) {
         for coin in coins {
-            networkManager.getLatestRate(coin: coin, currencyCode: currencyCode)
-                    .subscribeOn(scheduler)
-                    .observeOn(MainScheduler.instance)
+            var observable = networkManager.getLatestRate(coin: coin, currencyCode: currencyCode)
+
+            if async {
+                observable = observable.subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background)).observeOn(MainScheduler.instance)
+            }
+
+            observable
                     .subscribe(onNext: { [weak self] value in
                         self?.delegate?.didSync(coin: coin, currencyCode: currencyCode, value: value)
                     })
                     .disposed(by: disposeBag)
         }
+
+        timer.schedule()
     }
 
 }

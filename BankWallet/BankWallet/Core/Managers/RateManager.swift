@@ -11,9 +11,9 @@ class RateManager {
     private let walletManager: IWalletManager
     private let currencyManager: ICurrencyManager
     private let reachabilityManager: IReachabilityManager
-    private var timer: ITimer
+    private var timer: IPeriodicTimer
 
-    init(storage: IRateStorage, syncer: IRateSyncer, walletManager: IWalletManager, currencyManager: ICurrencyManager, reachabilityManager: IReachabilityManager, timer: ITimer) {
+    init(storage: IRateStorage, syncer: IRateSyncer, walletManager: IWalletManager, currencyManager: ICurrencyManager, reachabilityManager: IReachabilityManager, timer: IPeriodicTimer) {
         self.storage = storage
         self.syncer = syncer
         self.walletManager = walletManager
@@ -61,7 +61,7 @@ extension RateManager: IRateManager {
 
 }
 
-extension RateManager: ITimerDelegate {
+extension RateManager: IPeriodicTimerDelegate {
 
     func onFire() {
         updateRates()

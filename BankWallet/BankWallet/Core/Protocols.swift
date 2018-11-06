@@ -201,12 +201,12 @@ protocol IReachabilityManager {
     var subject: PublishSubject<Bool> { get }
 }
 
-protocol ITimer {
-    var delegate: ITimerDelegate? { get set }
-    func start()
+protocol IPeriodicTimer {
+    var delegate: IPeriodicTimerDelegate? { get set }
+    func schedule()
 }
 
-protocol ITimerDelegate: class {
+protocol IPeriodicTimerDelegate: class {
     func onFire()
 }
 

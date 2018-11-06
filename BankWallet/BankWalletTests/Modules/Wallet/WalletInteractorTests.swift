@@ -177,9 +177,7 @@ class WalletInteractorTests: XCTestCase {
 
     func testDidRefresh() {
         interactor.refresh()
-
         waitForMainQueue()
-
         verify(mockDelegate).didRefresh()
     }
 

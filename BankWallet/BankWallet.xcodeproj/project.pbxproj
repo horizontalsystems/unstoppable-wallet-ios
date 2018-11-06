@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		11B350021803A9BE10492F30 /* GuestRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35ADA6828A0EF11976938 /* GuestRouter.swift */; };
-		11B3501C8BBD0D43D5CDD337 /* Timer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35FA1C1FF965AA2EB6666 /* Timer.swift */; };
+		11B3501C8BBD0D43D5CDD337 /* PeriodicTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35FA1C1FF965AA2EB6666 /* PeriodicTimer.swift */; };
 		11B3504D748B4AB83CC42B39 /* WalletNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B353F1BD63011E1D536631 /* WalletNavigationController.swift */; };
 		11B3505130AE50140070F82F /* CurrencyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35B0378C5EA6E02CB2E37 /* CurrencyCell.swift */; };
 		11B3507CAA4C9F760712EB73 /* LanguageManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B356347098BE98619962B4 /* LanguageManagerTests.swift */; };
@@ -113,7 +113,7 @@
 		11B35D1E39102FA5DAA9F974 /* LaunchRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35C7DCF9B7894F7600623 /* LaunchRouter.swift */; };
 		11B35D9074EB55CC9CACE405 /* CurrencyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3598F5529D0939EE53A19 /* CurrencyManager.swift */; };
 		11B35DA379AE43A774D84246 /* BackupModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B356CEB7192CE21DD1BC8B /* BackupModule.swift */; };
-		11B35DC7196107932FE4F0DE /* Timer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35FA1C1FF965AA2EB6666 /* Timer.swift */; };
+		11B35DC7196107932FE4F0DE /* PeriodicTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35FA1C1FF965AA2EB6666 /* PeriodicTimer.swift */; };
 		11B35DCBB1358532C177333E /* WordsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35ADD30196056A9C6407C /* WordsManager.swift */; };
 		11B35DD6FFE1E112E9FCC63E /* GuestModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35BC220F1D90BF6BF3AAF /* GuestModule.swift */; };
 		11B35E1896281BA7F451F6EC /* Wallet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35D81B1CB74C0337214DC /* Wallet.swift */; };
@@ -128,7 +128,7 @@
 		11B35F318E009D7BCCCE1E1B /* WalletManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B357F5E2BDAAAE4E5446E3 /* WalletManager.swift */; };
 		11B35F56DE01B03CCFB49E32 /* BackupInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B353A3B460BF1B24349F9F /* BackupInteractor.swift */; };
 		11B35F8641C2F7F7FB23B181 /* GuestInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3566ED622AE7606EF76B9 /* GuestInteractor.swift */; };
-		11B35FACF36A8A986D01D1FC /* Timer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35FA1C1FF965AA2EB6666 /* Timer.swift */; };
+		11B35FACF36A8A986D01D1FC /* PeriodicTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35FA1C1FF965AA2EB6666 /* PeriodicTimer.swift */; };
 		11B35FE41FA9977CC36989D3 /* MainInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35B88A2D6C85E1600F3AF /* MainInteractor.swift */; };
 		12E5BDFF84F4C66D76E5CE98 /* Pods_Bank_Dev.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F09FC866644ED00119AC8DB3 /* Pods_Bank_Dev.framework */; };
 		1A56400E8DE9EF93F85C7F08 /* UnlockPinInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5647E28DF774B3CE01D2C4 /* UnlockPinInteractor.swift */; };
@@ -870,7 +870,7 @@
 		11B35F3E6B957ECFF5D1CE2E /* BaseCurrencySettingsRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseCurrencySettingsRouter.swift; sourceTree = "<group>"; };
 		11B35F414DD593D0E64A1254 /* TransactionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionManager.swift; sourceTree = "<group>"; };
 		11B35F4AF52970B217AD4DC6 /* String.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
-		11B35FA1C1FF965AA2EB6666 /* Timer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Timer.swift; sourceTree = "<group>"; };
+		11B35FA1C1FF965AA2EB6666 /* PeriodicTimer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PeriodicTimer.swift; sourceTree = "<group>"; };
 		1A56401A0F6DB2F88A01ED73 /* TransactionsPresenterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionsPresenterTests.swift; sourceTree = "<group>"; };
 		1A5640379D365FF3302A4910 /* BackupConfirmationAlertModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackupConfirmationAlertModel.swift; sourceTree = "<group>"; };
 		1A56404503ED39F2827DC314 /* AddressInputField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressInputField.swift; sourceTree = "<group>"; };
@@ -1259,7 +1259,7 @@
 				11B3598F5529D0939EE53A19 /* CurrencyManager.swift */,
 				11B3535DD03F9264351E13A9 /* NetworkManager.swift */,
 				11B350C8341DFAF14D974ACC /* RateSyncer.swift */,
-				11B35FA1C1FF965AA2EB6666 /* Timer.swift */,
+				11B35FA1C1FF965AA2EB6666 /* PeriodicTimer.swift */,
 				11B35788190D05AF5DBB9072 /* ReachabilityManager.swift */,
 				11B356FC36735ABABB140C33 /* TransactionRateSyncer.swift */,
 			);
@@ -2647,7 +2647,7 @@
 				11B354D394895E1FAFB2F116 /* NetworkManager.swift in Sources */,
 				1A5645402EEF16D58349A8D2 /* TransactionRecordDataSource.swift in Sources */,
 				11B35AEA2BFBE165F797DCD2 /* RateSyncer.swift in Sources */,
-				11B35DC7196107932FE4F0DE /* Timer.swift in Sources */,
+				11B35DC7196107932FE4F0DE /* PeriodicTimer.swift in Sources */,
 				11B35ECFA9C3E5FA6DE0646D /* ReachabilityManager.swift in Sources */,
 				11B35526BED48D17B07C3C46 /* ValueFormatter.swift in Sources */,
 				11B356CA54463B4740A9E3AA /* BaseCurrencySettingsInteractor.swift in Sources */,
@@ -2912,7 +2912,7 @@
 				11B353C550551A71D5AD3AAF /* NetworkManager.swift in Sources */,
 				1A564A306E13E30771D2E823 /* TransactionRecordDataSource.swift in Sources */,
 				11B35303EF169A14070D4AF9 /* RateSyncer.swift in Sources */,
-				11B35FACF36A8A986D01D1FC /* Timer.swift in Sources */,
+				11B35FACF36A8A986D01D1FC /* PeriodicTimer.swift in Sources */,
 				11B35E63A1AA24A27A21C0C9 /* ReachabilityManager.swift in Sources */,
 				11B354AD94C483A7D5E3DD1F /* ValueFormatter.swift in Sources */,
 				11B356ACDE9648AB1D98B466 /* BaseCurrencySettingsInteractor.swift in Sources */,
@@ -3145,7 +3145,7 @@
 				11B357FF0E2440D91193C476 /* NetworkManager.swift in Sources */,
 				1A5641D57A7D6928C9D0984D /* TransactionRecordDataSource.swift in Sources */,
 				11B352783ABAB4B503FE6DC7 /* RateSyncer.swift in Sources */,
-				11B3501C8BBD0D43D5CDD337 /* Timer.swift in Sources */,
+				11B3501C8BBD0D43D5CDD337 /* PeriodicTimer.swift in Sources */,
 				11B359E31258E14C2D0B3FC1 /* ReachabilityManager.swift in Sources */,
 				11B3541F6B5316F3B373D1EA /* ValueFormatter.swift in Sources */,
 				11B3584F38352B045CCBE958 /* BaseCurrencySettingsInteractor.swift in Sources */,

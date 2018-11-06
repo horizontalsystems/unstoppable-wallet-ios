@@ -36,6 +36,7 @@ class App {
 
     let currencyManager: ICurrencyManager
 
+    let rateTimer: IPeriodicTimer
     var rateSyncer: IRateSyncer
     let rateManager: RateManager
 
@@ -78,13 +79,13 @@ class App {
 
         currencyManager = CurrencyManager(localStorage: localStorage, appConfigProvider: appConfigProvider)
 
-        rateSyncer = RateSyncer(networkManager: networkManager)
-        rateManager = RateManager(storage: realmStorage, syncer: rateSyncer, walletManager: walletManager, currencyManager: currencyManager, reachabilityManager: reachabilityManager, timer: Timer(interval: 5 * 60))
+        rateTimer = PeriodicTimer(interval: 3 * 60)
+        rateSyncer = RateSyncer(networkManager: networkManager, timer: rateTimer)
+        rateManager = RateManager(storage: realmStorage, syncer: rateSyncer, walletManager: walletManager, currencyManager: currencyManager, reachabilityManager: reachabilityManager, timer: rateTimer)
         rateSyncer.delegate = rateManager
 
         transactionRateSyncer = TransactionRateSyncer(storage: realmStorage, networkManager: networkManager)
         transactionManager = TransactionManager(storage: realmStorage, rateSyncer: transactionRateSyncer, walletManager: walletManager, currencyManager: currencyManager)
-
     }
 
 }

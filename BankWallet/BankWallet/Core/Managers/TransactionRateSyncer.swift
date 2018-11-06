@@ -6,12 +6,12 @@ class TransactionRateSyncer {
     private let storage: ITransactionRecordStorage
     private let networkManager: IRateNetworkManager
 
-    private let scheduler: ImmediateSchedulerType
+    private let async: Bool
 
-    init(storage: ITransactionRecordStorage, networkManager: IRateNetworkManager, scheduler: ImmediateSchedulerType = ConcurrentDispatchQueueScheduler(qos: .background)) {
+    init(storage: ITransactionRecordStorage, networkManager: IRateNetworkManager, async: Bool = true) {
         self.storage = storage
         self.networkManager = networkManager
-        self.scheduler = scheduler
+        self.async = async
     }
 
 }
@@ -27,9 +27,13 @@ extension TransactionRateSyncer: ITransactionRateSyncer {
             let hash = record.transactionHash
             let date = Date(timeIntervalSince1970: Double(record.timestamp))
 
-            networkManager.getRate(coin: record.coin, currencyCode: currencyCode, date: date)
-                    .subscribeOn(scheduler)
-                    .observeOn(MainScheduler.instance)
+            var observable = networkManager.getRate(coin: record.coin, currencyCode: currencyCode, date: date)
+
+            if async {
+                observable = observable.subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background)).observeOn(MainScheduler.instance)
+            }
+
+            observable
                     .subscribe(onNext: { [weak self] value in
                         self?.storage.set(rate: value, transactionHash: hash)
                     })
