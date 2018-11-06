@@ -6,6 +6,8 @@ class App {
 
     private let fallbackLanguage = "en"
 
+    let pasteboardManager: IPasteboardManager
+
     let realmFactory: IRealmFactory
 
     let secureStorage: ISecureStorage
@@ -44,6 +46,8 @@ class App {
     let transactionManager: ITransactionManager
 
     init() {
+        pasteboardManager = PasteboardManager()
+
         let realmFileName = "bank.realm"
 
         let documentsUrl = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first

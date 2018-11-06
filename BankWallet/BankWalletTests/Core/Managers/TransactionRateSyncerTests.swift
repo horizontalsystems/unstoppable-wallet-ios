@@ -48,7 +48,7 @@ class TransactionRateSyncerTests: XCTestCase {
             when(mock.getRate(coin: equal(to: ether), currencyCode: equal(to: currencyCode), date: equal(to: Date(timeIntervalSince1970: Double(etherTimestamp))))).thenReturn(Observable.just(etherValue))
         }
 
-        syncer = TransactionRateSyncer(storage: mockStorage, networkManager: mockNetworkManager, scheduler: MainScheduler.instance)
+        syncer = TransactionRateSyncer(storage: mockStorage, networkManager: mockNetworkManager, async: false)
     }
 
     override func tearDown() {

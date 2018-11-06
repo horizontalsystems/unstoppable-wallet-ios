@@ -214,3 +214,7 @@ protocol ITransactionRateSyncer {
     func sync(currencyCode: String)
     func cancelCurrentSync()
 }
+
+protocol IPasteboardManager {
+    func set(value: String)
+}

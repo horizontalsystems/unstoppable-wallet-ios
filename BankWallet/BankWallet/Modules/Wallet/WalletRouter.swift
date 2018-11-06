@@ -7,7 +7,7 @@ class WalletRouter {
 extension WalletRouter: IWalletRouter {
 
     func openReceive(for coin: Coin) {
-        DepositRouter.module(presentingViewController: viewController, coin: coin)
+        DepositRouter.module(coin: coin).show(fromController: viewController)
     }
 
     func openSend(for coin: Coin) {

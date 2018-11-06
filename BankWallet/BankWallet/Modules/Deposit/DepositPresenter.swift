@@ -1,9 +1,9 @@
 import UIKit
 
 class DepositPresenter {
+    private let interactor: IDepositInteractor
+    private let router: IDepositRouter
 
-    let interactor: IDepositInteractor
-    let router: IDepositRouter
     weak var view: IDepositView?
 
     init(interactor: IDepositInteractor, router: IDepositRouter) {
@@ -14,37 +14,19 @@ class DepositPresenter {
 }
 
 extension DepositPresenter: IDepositInteractorDelegate {
-
-    func didGetAddressItems(items: [AddressItem]) {
-        router.showView(with: items)
-    }
-
-    func showCopied() {
-        HudHelper.instance.showSuccess(title: "alert.copied".localized)
-    }
-
-    func share(address: String) {
-        router.share(address: address)
-    }
-
 }
 
 extension DepositPresenter: IDepositViewDelegate {
 
-    func viewDidLoad() {
-        interactor.getAddressItems()
+    func addressItems(forCoin coin: Coin?) -> [AddressItem] {
+        return interactor.wallets(forCoin: coin).map {
+            AddressItem(address: $0.adapter.receiveAddress, coin: $0.coin)
+        }
     }
 
-    func refresh() {
-
-    }
-
-    func onCopy(index: Int) {
-        interactor.onCopy(index: index)
-    }
-
-    func onShare(index: Int) {
-        interactor.onShare(index: index)
+    func onCopy(addressItem: AddressItem) {
+        interactor.copy(address: addressItem.address)
+        view?.showCopied()
     }
 
 }

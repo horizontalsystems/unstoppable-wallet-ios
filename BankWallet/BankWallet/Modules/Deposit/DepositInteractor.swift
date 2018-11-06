@@ -3,31 +3,23 @@ import UIKit
 class DepositInteractor {
     weak var delegate: IDepositInteractorDelegate?
 
-    private let wallets: [Wallet]
+    private let walletManager: IWalletManager
+    private let pasteboardManager: IPasteboardManager
 
-    init(wallets: [Wallet]) {
-        self.wallets = wallets
+    init(walletManager: IWalletManager, pasteboardManager: IPasteboardManager) {
+        self.walletManager = walletManager
+        self.pasteboardManager = pasteboardManager
     }
 }
 
 extension DepositInteractor: IDepositInteractor {
 
-    func getAddressItems() {
-        let items = wallets.map {
-            AddressItem(address: $0.adapter.receiveAddress, coin: $0.coin)
-        }
-        delegate?.didGetAddressItems(items: items)
+    func wallets(forCoin coin: Coin?) -> [Wallet] {
+        return walletManager.wallets.filter { coin == nil || coin == $0.coin }
     }
 
-    func onCopy(index: Int) {
-        let address = wallets[index].adapter.receiveAddress
-        UIPasteboard.general.setValue(address, forPasteboardType: "public.plain-text")
-        delegate?.showCopied()
-    }
-
-    func onShare(index: Int) {
-        let address = wallets[index].adapter.receiveAddress
-        delegate?.share(address: address)
+    func copy(address: String) {
+        pasteboardManager.set(value: address)
     }
 
 }

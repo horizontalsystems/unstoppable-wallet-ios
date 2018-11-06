@@ -25,10 +25,13 @@ class DepositAddressCollectionCell: UICollectionViewCell {
 
         addressLabel.font = DepositTheme.addressFont
         addressLabel.textColor = DepositTheme.addressColor
+        addressLabel.lineBreakMode = .byTruncatingMiddle
+        addressLabel.textAlignment = .center
         contentView.addSubview(addressLabel)
         addressLabel.snp.makeConstraints { maker in
             maker.top.equalTo(self.qrCodeImageView.snp.bottom).offset(DepositTheme.qrCodeVerticalMargin)
-            maker.centerX.equalToSuperview()
+            maker.left.equalToSuperview().offset(DepositTheme.addressSideMargin)
+            maker.right.equalToSuperview().offset(-DepositTheme.addressSideMargin)
         }
     }
 
