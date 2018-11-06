@@ -37,7 +37,7 @@ class TransactionsInteractorTests: XCTestCase {
         }
         stub(mockRateManager) { mock in
         }
-        var mockBitcoinAdapter = MockIAdapter()
+        let mockBitcoinAdapter = MockIAdapter()
         stub(mockBitcoinAdapter) { mock in
             when(mock.lastBlockHeightSubject.get).thenReturn(bitcoinLastBlockHeightSubject)
         }

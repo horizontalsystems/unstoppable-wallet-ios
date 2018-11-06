@@ -32,14 +32,15 @@ class App {
     let realmStorage: RealmStorage
     let networkManager: NetworkManager
 
-    let currencyManager: ICurrencyManager
-    let rateManager: IRateManager
-
-    let transactionManager: ITransactionManager
-
     let reachabilityManager: IReachabilityManager
 
-    let rateSyncer: RateSyncer
+    let currencyManager: ICurrencyManager
+
+    var rateSyncer: IRateSyncer
+    let rateManager: RateManager
+
+    let transactionRateSyncer: ITransactionRateSyncer
+    let transactionManager: ITransactionManager
 
     init() {
         let realmFileName = "bank.realm"
@@ -73,14 +74,17 @@ class App {
         realmStorage = RealmStorage(realmFactory: realmFactory)
         networkManager = NetworkManager(apiUrl: "https://ipfs.grouvi.im/ipns/QmSxpioQuDSjTH6XiT5q35V7xpJqxmDheEcTRRWyMkMim7/io-hs/data/xrates")
 
-        currencyManager = CurrencyManager(localStorage: localStorage, appConfigProvider: appConfigProvider)
-        rateManager = RateManager(rateStorage: realmStorage, transactionRecordStorage: realmStorage, currencyManager: currencyManager, networkManager: networkManager, walletManager: walletManager)
-
-        transactionManager = TransactionManager(walletManager: walletManager, realmFactory: realmFactory, rateManager: rateManager)
-
         reachabilityManager = ReachabilityManager()
 
-        rateSyncer = RateSyncer(rateManager: rateManager, reachabilityManager: reachabilityManager, walletManager: walletManager, timer: Timer(interval: 5 * 60))
+        currencyManager = CurrencyManager(localStorage: localStorage, appConfigProvider: appConfigProvider)
+
+        rateSyncer = RateSyncer(networkManager: networkManager)
+        rateManager = RateManager(storage: realmStorage, syncer: rateSyncer, walletManager: walletManager, currencyManager: currencyManager, reachabilityManager: reachabilityManager, timer: Timer(interval: 5 * 60))
+        rateSyncer.delegate = rateManager
+
+        transactionRateSyncer = TransactionRateSyncer(storage: realmStorage, networkManager: networkManager)
+        transactionManager = TransactionManager(storage: realmStorage, rateSyncer: transactionRateSyncer, walletManager: walletManager, currencyManager: currencyManager)
+
     }
 
 }

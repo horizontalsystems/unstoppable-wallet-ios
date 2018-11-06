@@ -147,8 +147,15 @@ protocol BiometricManagerDelegate: class {
 protocol IRateManager {
     var subject: PublishSubject<Void> { get }
     func rate(forCoin coin: Coin, currencyCode: String) -> Rate?
-    func updateRates()
-    func fillTransactionRates()
+}
+
+protocol IRateSyncer {
+    var delegate: IRateSyncerDelegate? { get set }
+    func sync(coins: [String], currencyCode: String)
+}
+
+protocol IRateSyncerDelegate: class {
+    func didSync(coin: String, currencyCode: String, value: Double)
 }
 
 protocol ISystemInfoManager {
@@ -176,6 +183,9 @@ protocol ITransactionRecordStorage {
     var nonFilledRecords: [TransactionRecord] { get }
     func set(rate: Double, transactionHash: String)
     func clearRates()
+
+    func update(records: [TransactionRecord])
+    func clearRecords()
 }
 
 protocol ICurrencyManager {
@@ -197,4 +207,9 @@ protocol ITimer {
 
 protocol ITimerDelegate: class {
     func onFire()
+}
+
+protocol ITransactionRateSyncer {
+    func sync(currencyCode: String)
+    func cancelCurrentSync()
 }

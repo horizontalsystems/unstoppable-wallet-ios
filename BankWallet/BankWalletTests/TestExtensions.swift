@@ -39,3 +39,24 @@ extension TransactionFilterItem: Equatable {
         return lhs.coin == rhs.coin && lhs.name == rhs.name
     }
 }
+
+extension TransactionRecord {
+    convenience init(transactionHash: String, coin: String, timestamp: Int) {
+        self.init()
+
+        self.transactionHash = transactionHash
+        self.coin = coin
+        self.timestamp = timestamp
+    }
+}
+
+extension Rate {
+    convenience init(coin: String, currencyCode: String, value: Double, timestamp: Double) {
+        self.init()
+
+        self.coin = coin
+        self.currencyCode = currencyCode
+        self.value = value
+        self.timestamp = timestamp
+    }
+}

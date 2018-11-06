@@ -4,20 +4,28 @@ class TransactionManager {
     private let disposeBag = DisposeBag()
     private var adaptersDisposeBag = DisposeBag()
 
+    private let storage: ITransactionRecordStorage
+    private let rateSyncer: ITransactionRateSyncer
     private let walletManager: IWalletManager
-    private let realmFactory: IRealmFactory
-    private let rateManager: IRateManager
+    private let currencyManager: ICurrencyManager
 
-    init(walletManager: IWalletManager, realmFactory: IRealmFactory, rateManager: IRateManager) {
+    init(storage: ITransactionRecordStorage, rateSyncer: ITransactionRateSyncer, walletManager: IWalletManager, currencyManager: ICurrencyManager) {
+        self.storage = storage
+        self.rateSyncer = rateSyncer
         self.walletManager = walletManager
-        self.realmFactory = realmFactory
-        self.rateManager = rateManager
+        self.currencyManager = currencyManager
 
         resubscribeToAdapters()
 
         walletManager.walletsSubject
                 .subscribe(onNext: { [weak self] _ in
                     self?.resubscribeToAdapters()
+                })
+                .disposed(by: disposeBag)
+
+        currencyManager.subject
+                .subscribe(onNext: { [weak self] _ in
+                    self?.handleCurrencyChange()
                 })
                 .disposed(by: disposeBag)
     }
@@ -39,13 +47,13 @@ class TransactionManager {
             record.coin = coin
         }
 
-        let realm = realmFactory.realm
+        storage.update(records: records)
+        rateSyncer.sync(currencyCode: currencyManager.baseCurrency.code)
+    }
 
-        try? realm.write {
-            realm.add(records, update: true)
-        }
-
-        rateManager.fillTransactionRates()
+    private func handleCurrencyChange() {
+        storage.clearRates()
+        rateSyncer.sync(currencyCode: currencyManager.baseCurrency.code)
     }
 
 }
@@ -53,11 +61,7 @@ class TransactionManager {
 extension TransactionManager: ITransactionManager {
 
     func clear() {
-        let realm = realmFactory.realm
-
-        try? realm.write {
-            realm.delete(realm.objects(TransactionRecord.self))
-        }
+        storage.clearRecords()
     }
 
 }

@@ -68,7 +68,7 @@ class CurrencyManagerTests: XCTestCase {
     func testSetBaseCurrency() {
         let e = expectation(description: "Subject On Next")
 
-        manager.subject.subscribe(onNext: { currency in
+        _ = manager.subject.subscribe(onNext: { currency in
             XCTAssertEqual(currency, self.rubleCurrency)
             e.fulfill()
         })

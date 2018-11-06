@@ -69,4 +69,20 @@ extension RealmStorage: ITransactionRecordStorage {
         }
     }
 
+    func update(records: [TransactionRecord]) {
+        let realm = realmFactory.realm
+
+        try? realm.write {
+            realm.add(records, update: true)
+        }
+    }
+
+    func clearRecords() {
+        let realm = realmFactory.realm
+
+        try? realm.write {
+            realm.delete(realm.objects(TransactionRecord.self))
+        }
+    }
+
 }

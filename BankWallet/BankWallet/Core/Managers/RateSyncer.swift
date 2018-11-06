@@ -4,42 +4,30 @@ import RxSwift
 class RateSyncer {
     private let disposeBag = DisposeBag()
 
-    private let rateManager: IRateManager
-    private let reachabilityManager: IReachabilityManager
-    private let walletManager: IWalletManager
-    private var timer: ITimer
+    weak var delegate: IRateSyncerDelegate?
 
-    init(rateManager: IRateManager, reachabilityManager: IReachabilityManager, walletManager: IWalletManager, timer: ITimer) {
-        self.rateManager = rateManager
-        self.reachabilityManager = reachabilityManager
-        self.walletManager = walletManager
-        self.timer = timer
+    private let networkManager: IRateNetworkManager
+    private let scheduler: ImmediateSchedulerType
 
-        self.timer.delegate = self
-
-        rateManager.updateRates()
-
-        walletManager.walletsSubject
-                .subscribe(onNext: { _ in
-                    rateManager.updateRates()
-                })
-                .disposed(by: disposeBag)
-
-        reachabilityManager.subject
-                .subscribe(onNext: { connected in
-                    if connected {
-                        rateManager.updateRates()
-                    }
-                })
-                .disposed(by: disposeBag)
+    init(networkManager: IRateNetworkManager, scheduler: ImmediateSchedulerType = ConcurrentDispatchQueueScheduler(qos: .background)) {
+        self.networkManager = networkManager
+        self.scheduler = scheduler
     }
 
 }
 
-extension RateSyncer: ITimerDelegate {
+extension RateSyncer: IRateSyncer {
 
-    func onFire() {
-        rateManager.updateRates()
+    func sync(coins: [String], currencyCode: String) {
+        for coin in coins {
+            networkManager.getLatestRate(coin: coin, currencyCode: currencyCode)
+                    .subscribeOn(scheduler)
+                    .observeOn(MainScheduler.instance)
+                    .subscribe(onNext: { [weak self] value in
+                        self?.delegate?.didSync(coin: coin, currencyCode: currencyCode, value: value)
+                    })
+                    .disposed(by: disposeBag)
+        }
     }
 
 }

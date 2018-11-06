@@ -6,39 +6,49 @@ class RateManager {
 
     let subject = PublishSubject<Void>()
 
-    private let rateStorage: IRateStorage
-    private let transactionRecordStorage: ITransactionRecordStorage
-    private let currencyManager: ICurrencyManager
-    private let networkManager: IRateNetworkManager
+    private let storage: IRateStorage
+    private let syncer: IRateSyncer
     private let walletManager: IWalletManager
+    private let currencyManager: ICurrencyManager
+    private let reachabilityManager: IReachabilityManager
+    private var timer: ITimer
 
-    private let scheduler: ImmediateSchedulerType
-
-    init(rateStorage: IRateStorage, transactionRecordStorage: ITransactionRecordStorage, currencyManager: ICurrencyManager, networkManager: IRateNetworkManager, walletManager: IWalletManager, scheduler: ImmediateSchedulerType = ConcurrentDispatchQueueScheduler(qos: .background)) {
-        self.rateStorage = rateStorage
-        self.transactionRecordStorage = transactionRecordStorage
-        self.currencyManager = currencyManager
-        self.networkManager = networkManager
+    init(storage: IRateStorage, syncer: IRateSyncer, walletManager: IWalletManager, currencyManager: ICurrencyManager, reachabilityManager: IReachabilityManager, timer: ITimer) {
+        self.storage = storage
+        self.syncer = syncer
         self.walletManager = walletManager
+        self.currencyManager = currencyManager
+        self.reachabilityManager = reachabilityManager
+        self.timer = timer
 
-        self.scheduler = scheduler
+        self.timer.delegate = self
+
+        walletManager.walletsSubject
+                .subscribe(onNext: { [weak self] _ in
+                    self?.updateRates()
+                })
+                .disposed(by: disposeBag)
 
         currencyManager.subject
                 .subscribe(onNext: { [weak self] _ in
                     self?.updateRates()
-                    self?.transactionRecordStorage.clearRates()
-                    self?.fillTransactionRates()
+                })
+                .disposed(by: disposeBag)
+
+        reachabilityManager.subject
+                .subscribe(onNext: { [weak self] connected in
+                    if connected {
+                        self?.updateRates()
+                    }
                 })
                 .disposed(by: disposeBag)
     }
 
-    private func update(value: Double, coin: Coin, currencyCode: String) {
-        rateStorage.save(value: value, coin: coin, currencyCode: currencyCode)
-        subject.onNext(())
-    }
+    private func updateRates() {
+        let coins = walletManager.wallets.map { $0.coin }
+        let currencyCode = currencyManager.baseCurrency.code
 
-    private func update(value: Double, transactionHash: String) {
-        transactionRecordStorage.set(rate: value, transactionHash: transactionHash)
+        syncer.sync(coins: coins, currencyCode: currencyCode)
     }
 
 }
@@ -46,44 +56,24 @@ class RateManager {
 extension RateManager: IRateManager {
 
     func rate(forCoin coin: Coin, currencyCode: String) -> Rate? {
-        return rateStorage.rate(forCoin: coin, currencyCode: currencyCode)
+        return storage.rate(forCoin: coin, currencyCode: currencyCode)
     }
 
-    func updateRates() {
-        let currencyCode = currencyManager.baseCurrency.code
+}
 
-        for wallet in walletManager.wallets {
-            let coin = wallet.coin
+extension RateManager: ITimerDelegate {
 
-            networkManager.getLatestRate(coin: coin, currencyCode: currencyCode)
-                    .subscribeOn(scheduler)
-                    .observeOn(MainScheduler.instance)
-                    .subscribe(onNext: { [weak self] value in
-                        self?.update(value: value, coin: coin, currencyCode: currencyCode)
-                    })
-                    .disposed(by: disposeBag)
-        }
+    func onFire() {
+        updateRates()
     }
 
-    func fillTransactionRates() {
-        let currencyCode = currencyManager.baseCurrency.code
+}
 
-        for record in transactionRecordStorage.nonFilledRecords {
-            guard record.timestamp != 0 else {
-                continue
-            }
+extension RateManager: IRateSyncerDelegate {
 
-            let hash = record.transactionHash
-            let date = Date(timeIntervalSince1970: Double(record.timestamp))
-
-            networkManager.getRate(coin: record.coin, currencyCode: currencyCode, date: date)
-                    .subscribeOn(scheduler)
-                    .observeOn(MainScheduler.instance)
-                    .subscribe(onNext: { [weak self] value in
-                        self?.update(value: value, transactionHash: hash)
-                    })
-                    .disposed(by: disposeBag)
-        }
+    func didSync(coin: String, currencyCode: String, value: Double) {
+        storage.save(value: value, coin: coin, currencyCode: currencyCode)
+        subject.onNext(())
     }
 
 }
