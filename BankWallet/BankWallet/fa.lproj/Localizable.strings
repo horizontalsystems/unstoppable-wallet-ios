@@ -54,11 +54,11 @@
 "wallet.syncing_percent" = "Syncing %@";
 "wallet.total_balance.syncing" = "Syncing...";
 
-"send.title" = "Send ";
+"send.title" = "ارسال ";
 "send.address_placeholder" = "آدرس";
 "send.payment_reference_placeholder" = "مرجع پرداخت";
 "send.insufficient_funds" = "Not available amount";
-"paste" = "Paste";
+"paste" = "جاگذازي";
 "amount" = "مقدار";
 "more" = "بیشتر";
 "send" = "ارسال";
@@ -67,10 +67,10 @@
 "transactions.title" = "معاملات";
 "transactions.tab_bar_item" = "معاملات";
 "transactions.yesterday" = "ديروز";
-"transactions.success" = "success";
-"transactions.pending" = "pending...";
-"transactions.from" = "from";
-"transactions.to" = "to";
+"transactions.success" = "موفقيت";
+"transactions.pending" = "در حالت انتظار...";
+"transactions.from" = "از";
+"transactions.to" = "به";
 "transactions.filter_all" = "همه";
 "transactions.filter_rBitcoin" = "Bitcoin-R";
 "transactions.filter_tBitcoin Cash" = "Bitcoin-T Cash";
@@ -90,17 +90,17 @@
 
 "full_transaction_info.navigation_bar.title" = "Details";
 "full_transaction_info.navigation_bar.share" = "به اشتراك گذاشتن";
-"full_transaction_info.cell.size" = "Size:";
-"full_transaction_info.cell.fee_rate" = "Fee Rate:";
-"full_transaction_info.cell.received_time" = "Received Time:";
-"full_transaction_info.cell.mined_time" = "Mined Time:";
+"full_transaction_info.cell.size" = "اندازه:";
+"full_transaction_info.cell.fee_rate" = "نرخ هزينه:";
+"full_transaction_info.cell.received_time" = "زمان دريافت:";
+"full_transaction_info.cell.mined_time" = "زمان استخراج:";
 "full_transaction_info.cell.included_in_block" = "Included in Block:";
 "full_transaction_info.cell.confirmations" = "تاييدات";
-"full_transaction_info.cell.lock_time" = "Lock Time:";
+"full_transaction_info.cell.lock_time" = "زمان قفل شده:";
 "full_transaction_info.cell.from" = "از:";
 "full_transaction_info.cell.to" = "به:";
-"full_transaction_info.cell.received" = "Received:";
-"full_transaction_info.cell.sent" = "Sent:";
+"full_transaction_info.cell.received" = "دريافت شد:";
+"full_transaction_info.cell.sent" = "ارسال شد:";
 
 "settings.title" = "تنظيمات";
 "settings.tab_bar_item" = "تنظيمات";
