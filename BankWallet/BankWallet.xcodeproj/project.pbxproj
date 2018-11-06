@@ -19,6 +19,7 @@
 		11B351409751CBF5D7C55E05 /* BaseCurrencySettingsModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35C104035EBC5B0B13592 /* BaseCurrencySettingsModule.swift */; };
 		11B3518E536A06DD6C10774D /* LanguageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35C4FFB99D10A8F343E9C /* LanguageManager.swift */; };
 		11B351A15B4F92C0C0386FA2 /* TransactionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35F414DD593D0E64A1254 /* TransactionManager.swift */; };
+		11B351C81028727569851233 /* EthereumAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B352D314A298B6B832F309 /* EthereumAdapter.swift */; };
 		11B352273C07130833C63184 /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B358414185C1B924E91A32 /* UIView.swift */; };
 		11B35236766B5CEA73043FE5 /* CurrencyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35B0378C5EA6E02CB2E37 /* CurrencyCell.swift */; };
 		11B3524D24D3AE736839690A /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35F4AF52970B217AD4DC6 /* String.swift */; };
@@ -97,6 +98,7 @@
 		11B35BA21EAB383C3DE6FA5A /* WalletRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35DDABED90E97417092F5 /* WalletRouter.swift */; };
 		11B35BAC335C6EED3C46E60E /* TransactionRateSyncerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35924A855AA25B6DC370E /* TransactionRateSyncerTests.swift */; };
 		11B35BCBBF60CA8A041E97B0 /* BackupRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35D66E95B16C32E3796E8 /* BackupRouter.swift */; };
+		11B35BCC6C00E857CE562F16 /* EthereumAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B352D314A298B6B832F309 /* EthereumAdapter.swift */; };
 		11B35BCEC18400181DF64491 /* RestoreRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35142DB758C8B2397D115 /* RestoreRouter.swift */; };
 		11B35BDC437435B4EE7D9CED /* BaseCurrencySettingsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35F3E6B957ECFF5D1CE2E /* BaseCurrencySettingsRouter.swift */; };
 		11B35BE6009ABF3DF47A80BA /* RealmStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B354A7AB2C1276AAAAE9E6 /* RealmStorage.swift */; };
@@ -117,6 +119,7 @@
 		11B35DCBB1358532C177333E /* WordsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35ADD30196056A9C6407C /* WordsManager.swift */; };
 		11B35DD6FFE1E112E9FCC63E /* GuestModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35BC220F1D90BF6BF3AAF /* GuestModule.swift */; };
 		11B35E1896281BA7F451F6EC /* Wallet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35D81B1CB74C0337214DC /* Wallet.swift */; };
+		11B35E4D93574CAF730B47D9 /* EthereumAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B352D314A298B6B832F309 /* EthereumAdapter.swift */; };
 		11B35E601055B8D8B8EE2039 /* UITableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B351D55B31D37B7194DE55 /* UITableView.swift */; };
 		11B35E63A1AA24A27A21C0C9 /* ReachabilityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35788190D05AF5DBB9072 /* ReachabilityManager.swift */; };
 		11B35E6719A2D149E062BE6C /* TransactionRateSyncer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B356FC36735ABABB140C33 /* TransactionRateSyncer.swift */; };
@@ -289,7 +292,6 @@
 		50AB06B7215A269200A01E4A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 50AB06B5215A269200A01E4A /* InfoPlist.strings */; };
 		50EDB79F215B493000BFE8A5 /* GeneratedMocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50EDB79E215B493000BFE8A5 /* GeneratedMocks.swift */; };
 		53A0D132BFF11A91827A1726 /* Pods_Bank_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DFC522994213E93DA140BAD /* Pods_Bank_Tests.framework */; };
-		58AAA0C26DB1CF0B424E02DD /* EthereumAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAB39F871A4094BE92BCD /* EthereumAdapter.swift */; };
 		8E107AB8F89A74AF7AB0E861 /* Pods_Bank.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 64CC44E629B0D5D9F5B218CC /* Pods_Bank.framework */; };
 		D3285F4620BD158E00644076 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3285F4520BD158E00644076 /* AppDelegate.swift */; };
 		D3373D9520BEC7B30082BC4A /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3373D9420BEC7B30082BC4A /* AVFoundation.framework */; };
@@ -500,7 +502,6 @@
 		D38405A7218317DF007D50AD /* PermissionsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B354B43B5120F594318FDA /* PermissionsHelper.swift */; };
 		D38405A8218317DF007D50AD /* RandomManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35A65D7F2EADB3618DA64 /* RandomManager.swift */; };
 		D38405A9218317DF007D50AD /* BiometryType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35C182B944A7CD13EA163 /* BiometryType.swift */; };
-		D38405AA218317DF007D50AD /* EthereumAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAB39F871A4094BE92BCD /* EthereumAdapter.swift */; };
 		D38405AB218317DF007D50AD /* LanguageSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5644D3B094D4148F99F8A5 /* LanguageSettingsViewController.swift */; };
 		D38405AC218317DF007D50AD /* LanguageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564D042732179269BCB57C /* LanguageCell.swift */; };
 		D38405AD218317DF007D50AD /* LanguageSettingsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564238192BEA3F5470E204 /* LanguageSettingsPresenter.swift */; };
@@ -725,7 +726,6 @@
 		D384069621831B3D007D50AD /* PermissionsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B354B43B5120F594318FDA /* PermissionsHelper.swift */; };
 		D384069721831B3D007D50AD /* RandomManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35A65D7F2EADB3618DA64 /* RandomManager.swift */; };
 		D384069821831B3D007D50AD /* BiometryType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35C182B944A7CD13EA163 /* BiometryType.swift */; };
-		D384069921831B3D007D50AD /* EthereumAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAB39F871A4094BE92BCD /* EthereumAdapter.swift */; };
 		D384069A21831B3D007D50AD /* LanguageSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5644D3B094D4148F99F8A5 /* LanguageSettingsViewController.swift */; };
 		D384069B21831B3D007D50AD /* LanguageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564D042732179269BCB57C /* LanguageCell.swift */; };
 		D384069C21831B3D007D50AD /* LanguageSettingsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564238192BEA3F5470E204 /* LanguageSettingsPresenter.swift */; };
@@ -793,6 +793,7 @@
 		11B3522E7181FB5F0A647944 /* Satoshi.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Satoshi.swift; sourceTree = "<group>"; };
 		11B3523AECA209106F192586 /* BaseButtonItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseButtonItem.swift; sourceTree = "<group>"; };
 		11B352D114BED753EEBA8B8D /* BitcoinAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BitcoinAdapter.swift; sourceTree = "<group>"; };
+		11B352D314A298B6B832F309 /* EthereumAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EthereumAdapter.swift; sourceTree = "<group>"; };
 		11B3535DD03F9264351E13A9 /* NetworkManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		11B3535FC407BA20765EBCF4 /* KeyboardObservingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardObservingViewController.swift; sourceTree = "<group>"; };
 		11B353A3B460BF1B24349F9F /* BackupInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackupInteractor.swift; sourceTree = "<group>"; };
@@ -1035,7 +1036,6 @@
 		50EED190218822E200E200AD /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		50EED191218822FA00E200AD /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		50EED192218822FA00E200AD /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/Localizable.strings; sourceTree = "<group>"; };
-		58AAAB39F871A4094BE92BCD /* EthereumAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EthereumAdapter.swift; sourceTree = "<group>"; };
 		5D06EF4E8D5FBD5723873DAE /* Pods-Bank Dev.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bank Dev.release.xcconfig"; path = "../Pods/Target Support Files/Pods-Bank Dev/Pods-Bank Dev.release.xcconfig"; sourceTree = "<group>"; };
 		64CC44E629B0D5D9F5B218CC /* Pods_Bank.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Bank.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		794E3C9AC4E5B6E2048A9715 /* Pods-Bank Dev T.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bank Dev T.debug.xcconfig"; path = "../Pods/Target Support Files/Pods-Bank Dev T/Pods-Bank Dev T.debug.xcconfig"; sourceTree = "<group>"; };
@@ -1233,7 +1233,6 @@
 				1A5646D49060C3EFF06D0479 /* App.swift */,
 				11B35A5DE20DD6DD486FAFC0 /* Protocols.swift */,
 				11B35C182B944A7CD13EA163 /* BiometryType.swift */,
-				58AAAB39F871A4094BE92BCD /* EthereumAdapter.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -1418,6 +1417,7 @@
 			isa = PBXGroup;
 			children = (
 				11B352D114BED753EEBA8B8D /* BitcoinAdapter.swift */,
+				11B352D314A298B6B832F309 /* EthereumAdapter.swift */,
 			);
 			path = Adapters;
 			sourceTree = "<group>";
@@ -2628,7 +2628,6 @@
 				11B3578A6B587E760D12B28E /* PermissionsHelper.swift in Sources */,
 				11B35B32857AF891709857BD /* RandomManager.swift in Sources */,
 				11B3595470C1BCEB5B77EBB4 /* BiometryType.swift in Sources */,
-				58AAA0C26DB1CF0B424E02DD /* EthereumAdapter.swift in Sources */,
 				1A5643F99C8789B0DC9E5415 /* LanguageSettingsViewController.swift in Sources */,
 				1A564BFC5450100793FC3F6C /* LanguageCell.swift in Sources */,
 				1A564130F517CD26BF9E8A57 /* LanguageSettingsPresenter.swift in Sources */,
@@ -2657,6 +2656,7 @@
 				11B35CB4B41774128BB7034A /* BaseCurrencySettingsModule.swift in Sources */,
 				11B35AE6B9C546D84419F647 /* CurrencyCell.swift in Sources */,
 				11B35098303FE8D6F42FCF81 /* TransactionRateSyncer.swift in Sources */,
+				11B35E4D93574CAF730B47D9 /* EthereumAdapter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2893,7 +2893,6 @@
 				D38405A7218317DF007D50AD /* PermissionsHelper.swift in Sources */,
 				D38405A8218317DF007D50AD /* RandomManager.swift in Sources */,
 				D38405A9218317DF007D50AD /* BiometryType.swift in Sources */,
-				D38405AA218317DF007D50AD /* EthereumAdapter.swift in Sources */,
 				D38405AB218317DF007D50AD /* LanguageSettingsViewController.swift in Sources */,
 				D38405AC218317DF007D50AD /* LanguageCell.swift in Sources */,
 				D38405AD218317DF007D50AD /* LanguageSettingsPresenter.swift in Sources */,
@@ -2922,6 +2921,7 @@
 				11B3507E93F1F8FBE21A9245 /* BaseCurrencySettingsModule.swift in Sources */,
 				11B35236766B5CEA73043FE5 /* CurrencyCell.swift in Sources */,
 				11B35E6719A2D149E062BE6C /* TransactionRateSyncer.swift in Sources */,
+				11B35BCC6C00E857CE562F16 /* EthereumAdapter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3126,7 +3126,6 @@
 				D384069621831B3D007D50AD /* PermissionsHelper.swift in Sources */,
 				D384069721831B3D007D50AD /* RandomManager.swift in Sources */,
 				D384069821831B3D007D50AD /* BiometryType.swift in Sources */,
-				D384069921831B3D007D50AD /* EthereumAdapter.swift in Sources */,
 				D384069A21831B3D007D50AD /* LanguageSettingsViewController.swift in Sources */,
 				D384069B21831B3D007D50AD /* LanguageCell.swift in Sources */,
 				D384069C21831B3D007D50AD /* LanguageSettingsPresenter.swift in Sources */,
@@ -3155,6 +3154,7 @@
 				11B351409751CBF5D7C55E05 /* BaseCurrencySettingsModule.swift in Sources */,
 				11B3505130AE50140070F82F /* CurrencyCell.swift in Sources */,
 				11B35ABDAEA48DEB4B94DCC2 /* TransactionRateSyncer.swift in Sources */,
+				11B351C81028727569851233 /* EthereumAdapter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
