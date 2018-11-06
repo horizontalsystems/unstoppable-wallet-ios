@@ -5,58 +5,58 @@
 "coin.BCHt" = "Bitcoin Cash TestNet";
 "coin.ETHt" = "Ethereum TestNet";
 
-"alert.ok" = "OK";
-"alert.cancel" = "Cancel";
-"navigation_bar.cancel" = "Cancel";
+"alert.ok" = "تأیید";
+"alert.cancel" = "انصراف";
+"navigation_bar.cancel" = "انصراف";
 "done" = "Done";
-"alert.copy" = "Copy";
-"alert.share" = "Share";
-"alert.close" = "Close";
-"alert.success" = "Success";
-"alert.copied" = "Copied";
+"alert.copy" = "رونوشت";
+"alert.share" = "به اشتراك گذاشتن";
+"alert.close" = "ببند";
+"alert.success" = "موفقيت";
+"alert.copied" = "کپی انجام شد";
 
 "access.camera.message" = "Bank needs access to your camera to scan QR code.\n\nGo to Settings - > Bank and allow access to Camera.";
-"access.settings" = "Settings";
-"access.cancel" = "Cancel";
+"access.settings" = "تنظيمات";
+"access.cancel" = "انصراف";
 
-"guest.title" = "Bank Wallet";
+"guest.title" = "کیف پول بانک";
 "guest.subtitle" = "Be Your own Bank!";
-"guest.create_wallet" = "New Wallet";
-"guest.restore_wallet" = "Import Wallet";
+"guest.create_wallet" = "کیف پول جدید";
+"guest.restore_wallet" = "وارد کردن کیف پول";
 
 "restore.title" = "Restore Wallet";
 "restore.description" = "Enter the Secret Key (sometimes called Paper Key).for the wallet. ";
 "restore.restore" = "Restore";
 "restore.validation_failed" = "The Secret Key you entered doesn't exist. Please check the words and try again.";
 
-"backup.intro.title" = "Secret Key";
+"backup.intro.title" = "رقم مخفی";
 "backup.intro.subtitle" = "Your secret key is the only way to restore your wallet and funds if your phone is ever lost, stolen, broken, or upgraded.\n\n It consists of 12 words. Write them on a piece of paper and do not ever show it to anyone.";
-"backup.intro.later" = "Later";
+"backup.intro.later" = "بعداً";
 "backup.intro.backup_now" = "Show Key";
 
-"backup.words.title" = "Secret Key";
-"backup.words.back" = "Back";
-"backup.words.proceed" = "Next";
+"backup.words.title" = "رقم مخفی";
+"backup.words.back" = "برگشت";
+"backup.words.proceed" = "بعدي";
 
 "backup.confirmation.title" = "Check ...";
 "backup.confirmation.description" = "Enter words from your secret key";
-"backup.confirmation.failure_alert.text" = "Words do not match";
-"backup.confirmation.understand" = "I understand that my wallet and tokens are held securely on this device only and not any servers.";
+"backup.confirmation.failure_alert.text" = "ارقام با هم شباهت ندارند";
+"backup.confirmation.understand" = "من فهميدم كي پول كيف من و توكن هاي من همه شان حفظ و امانط است در اين دستگاه و نخير در ديگر سيرفير ها.";
 "backup.confirmation.delete_app_warn" = "I understand that if this app is deleted or stops working for any reason, my wallet can only be recovered using the secret key that I have written down and saved in a secure place";
-"backup.confirmation.confirm" = "Confirm";
+"backup.confirmation.confirm" = "تاييد";
 
-"wallet.title" = "Balance";
-"wallet.tab_bar_item" = "Balance";
-"wallet.send" = "Send";
-"wallet.deposit" = "Receive";
+"wallet.title" = "بالانس";
+"wallet.tab_bar_item" = "بالانس";
+"wallet.send" = "ارسال";
+"wallet.deposit" = "دريافت";
 "wallet.loading_rate" = "loading rate...";
 "wallet.rate_per_coin" = "%@ per %@";
 "wallet.syncing_percent" = "Syncing %@";
 "wallet.total_balance.syncing" = "Syncing...";
 
 "send.title" = "Send ";
-"send.address_placeholder" = "Address";
-"send.payment_reference_placeholder" = "Payment Reference";
+"send.address_placeholder" = "آدرس";
+"send.payment_reference_placeholder" = "مرجع پرداخت";
 "send.insufficient_funds" = "Not available amount";
 "paste" = "Paste";
 "amount" = "Amount";
@@ -89,28 +89,28 @@
 "tx_info.bottom_sheet.id_hash" = "ID:";
 
 "full_transaction_info.navigation_bar.title" = "Details";
-"full_transaction_info.navigation_bar.share" = "Share";
+"full_transaction_info.navigation_bar.share" = "به اشتراك گذاشتن";
 "full_transaction_info.cell.size" = "Size:";
 "full_transaction_info.cell.fee_rate" = "Fee Rate:";
 "full_transaction_info.cell.received_time" = "Received Time:";
 "full_transaction_info.cell.mined_time" = "Mined Time:";
 "full_transaction_info.cell.included_in_block" = "Included in Block:";
-"full_transaction_info.cell.confirmations" = "Confirmations";
+"full_transaction_info.cell.confirmations" = "تاييدات";
 "full_transaction_info.cell.lock_time" = "Lock Time:";
-"full_transaction_info.cell.from" = "From:";
-"full_transaction_info.cell.to" = "To:";
+"full_transaction_info.cell.from" = "از:";
+"full_transaction_info.cell.to" = "به:";
 "full_transaction_info.cell.received" = "Received:";
 "full_transaction_info.cell.sent" = "Sent:";
 
-"settings.title" = "Settings";
-"settings.tab_bar_item" = "Settings";
-"settings.cell.security_center" = "Security Center";
-"settings.cell.base_currency" = "Base Currency";
-"settings.cell.import_wallet" = "Import Wallet";
-"settings.cell.language" = "Language";
-"settings.cell.about" = "About";
-"settings.cell.light_mode" = "Light Mode";
-"settings.cell.push_notifications" = "Push Notifications";
+"settings.title" = "تنظيمات";
+"settings.tab_bar_item" = "تنظيمات";
+"settings.cell.security_center" = "مركز امنيتي";
+"settings.cell.base_currency" = "ارز مرجع";
+"settings.cell.import_wallet" = "وارد کردن کیف پول";
+"settings.cell.language" = "زبان";
+"settings.cell.about" = "در باره ما";
+"settings.cell.light_mode" = "حالت چراغ";
+"settings.cell.push_notifications" = "انتشار ياد آوري";
 "settings.cell.app_version" = "App Version";
 "settings.info.title" = "BANK WALLET";
 "settings.info.subtitle" = "decentralized app";
