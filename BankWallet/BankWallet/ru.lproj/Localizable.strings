@@ -29,10 +29,10 @@
 "restore.restore" = "Восстановить";
 "restore.validation_failed" = "Введённый Секретный Ключ не существует.";
 
-"backup.intro.title" = "Секретный ключ";
-"backup.intro.subtitle" = "Секретный ключ - единственный способ для восстановления вашего кошелька в случае потери, кражи, поломки или замены вашего телефона.\n\nМы покажем вам список слов, которые необходимо записать на листе бумаги и хранить в надежном месте.";
+"backup.intro.title" = "Backup";
+"backup.intro.subtitle" = "Your secret key is the only way to restore your wallet and funds if your phone is ever lost, stolen, broken, or upgraded.\n\nIt consists of 12 words. Write them on a piece of paper and do not ever show it to anyone.";
 "backup.intro.later" = "Позже";
-"backup.intro.backup_now" = "Показать ключ";
+"backup.intro.backup_now" = "Backup";
 
 "backup.words.title" = "Секретный ключ";
 "backup.words.back" = "Назад";
