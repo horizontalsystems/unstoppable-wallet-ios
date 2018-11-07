@@ -20,9 +20,9 @@
 "access.cancel" = "انصراف";
 
 "guest.title" = "کیف پول بانک";
-"guest.subtitle" = "Be Your own Bank!";
-"guest.create_wallet" = "کیف پول جدید";
-"guest.restore_wallet" = "وارد کردن کیف پول";
+"guest.subtitle" = "Decentralized App";
+"guest.create_wallet" = "Create New Wallet";
+"guest.restore_wallet" = "Restore Wallet";
 
 "restore.title" = "Restore Wallet";
 "restore.description" = "Enter the Secret Key (sometimes called Paper Key).for the wallet. ";
