@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
-        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="BackupIntroController" customModule="Wallet" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="BackupIntroController" customModule="Bank" customModuleProvider="target">
             <connections>
                 <outlet property="backupButton" destination="Jee-WA-CMB" id="LCU-Nd-s5S"/>
                 <outlet property="laterButton" destination="pIX-BW-CyK" id="c9s-KL-nDl"/>
@@ -24,16 +24,7 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zlk-Zr-c6R">
-                    <rect key="frame" x="44" y="36" width="287" height="142.5"/>
-                    <string key="text">Your paper key is the only way to restore your Crypton if you lost, stolen, broken, or upgraded.
-
-We will show you a list of words to write down on a piece of paper and keep safe.</string>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <color key="textColor" name="Silver"/>
-                    <nil key="highlightedColor"/>
-                </label>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jee-WA-CMB" customClass="Button" customModule="Wallet" customModuleProvider="target">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jee-WA-CMB" customClass="Button" customModule="Bank" customModuleProvider="target">
                     <rect key="frame" x="146.5" y="573" width="184.5" height="50"/>
                     <color key="backgroundColor" name="Yellow"/>
                     <constraints>
@@ -52,7 +43,7 @@ We will show you a list of words to write down on a piece of paper and keep safe
                         <action selector="backupDidTap" destination="-1" eventType="touchUpInside" id="LbF-wX-A3J"/>
                     </connections>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pIX-BW-CyK" customClass="Button" customModule="Wallet" customModuleProvider="target">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pIX-BW-CyK" customClass="Button" customModule="Bank" customModuleProvider="target">
                     <rect key="frame" x="44" y="573" width="92.5" height="50"/>
                     <color key="backgroundColor" name="Gray"/>
                     <constraints>
@@ -71,13 +62,31 @@ We will show you a list of words to write down on a piece of paper and keep safe
                         <action selector="cancelDidTap" destination="-1" eventType="touchUpInside" id="JL8-1Z-QTz"/>
                     </connections>
                 </button>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Backup Image" translatesAutoresizingMaskIntoConstraints="NO" id="vsg-Vh-tIV">
+                    <rect key="frame" x="44" y="52" width="100" height="110"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="100" id="Z6y-l3-t6s"/>
+                        <constraint firstAttribute="height" constant="110" id="tiI-aB-DuR"/>
+                    </constraints>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zlk-Zr-c6R">
+                    <rect key="frame" x="44" y="186" width="287" height="142.5"/>
+                    <string key="text">Your paper key is the only way to restore your Crypton if you lost, stolen, broken, or upgraded.
+
+We will show you a list of words to write down on a piece of paper and keep safe.</string>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" name="Gray"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <color key="backgroundColor" name="Dark"/>
             <constraints>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="Jee-WA-CMB" secondAttribute="trailing" constant="44" id="KdV-xO-efV"/>
                 <constraint firstItem="pIX-BW-CyK" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="44" id="Ksd-r8-PKT"/>
+                <constraint firstItem="Zlk-Zr-c6R" firstAttribute="top" secondItem="vsg-Vh-tIV" secondAttribute="bottom" constant="24" id="MZm-xx-JPE"/>
+                <constraint firstItem="vsg-Vh-tIV" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="44" id="cQT-g3-OI3"/>
+                <constraint firstItem="vsg-Vh-tIV" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="32" id="cZ0-oR-NkB"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="Jee-WA-CMB" secondAttribute="bottom" constant="44" id="crm-dZ-gfM"/>
-                <constraint firstItem="Zlk-Zr-c6R" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="16" id="diM-C6-MMA"/>
                 <constraint firstItem="Jee-WA-CMB" firstAttribute="width" secondItem="pIX-BW-CyK" secondAttribute="width" multiplier="2:1" id="mQX-y2-cCN"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="Zlk-Zr-c6R" secondAttribute="trailing" constant="44" id="n1l-55-a8g"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="pIX-BW-CyK" secondAttribute="bottom" constant="44" id="vXY-9d-ePd"/>
@@ -88,17 +97,15 @@ We will show you a list of words to write down on a piece of paper and keep safe
         </view>
     </objects>
     <resources>
+        <image name="Backup Image" width="100" height="110"/>
         <namedColor name="Dark">
-            <color red="0.15686274509803921" green="0.16862745098039217" blue="0.20784313725490197" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.12156862745098039" green="0.12941176470588237" blue="0.16078431372549021" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="Gray">
             <color red="0.54117647058823526" green="0.54117647058823526" blue="0.5607843137254902" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
-        <namedColor name="Silver">
-            <color red="0.78431372549019607" green="0.7803921568627451" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
         <namedColor name="Yellow">
-            <color red="0.96862745098039216" green="0.71764705882352942" blue="0.19215686274509805" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="1" green="0.61960784313725492" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
     </resources>
 </document>
