@@ -29,7 +29,7 @@
 "restore.restore" = "Restore";
 "restore.validation_failed" = "The Secret Key you entered doesn't exist. Please check the words and try again.";
 
-"backup.intro.title" = "Backup";
+"backup.intro.title" = "پيشتيباني";
 "backup.intro.subtitle" = "Your secret key is the only way to restore your wallet and funds if your phone is ever lost, stolen, broken, or upgraded.\n\nIt consists of 12 words. Write them on a piece of paper and do not ever show it to anyone.";
 "backup.intro.later" = "بعداً";
 "backup.intro.backup_now" = "Backup";
@@ -120,8 +120,8 @@
 "settings_language.title" = "زبان";
 
 "settings_security.title" = "مركز امنيتي";
-"settings_security.backup_wallet" = "Backup Wallet";
-"settings_security.import_wallet" = "Import Wallet";
+"settings_security.backup_wallet" = "پيشتيبان گيري كيف پول";
+"settings_security.import_wallet" = "وارد کردن کیف پول";
 "settings_security.unlink_from_this_device" = "Unlink From This Device";
 "settings_pin_biometrics.title" = "Pin / Touch ID";
 "settings_security.set_pin" = "تعيين پين";
