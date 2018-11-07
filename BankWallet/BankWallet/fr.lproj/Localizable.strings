@@ -20,9 +20,9 @@
 "access.cancel" = "Annuler";
 
 "guest.title" = "Bank Wallet";
-"guest.subtitle" = "Soyez votre propre banque !";
-"guest.create_wallet" = "Nouveau porte-monnaie";
-"guest.restore_wallet" = "Importer le porte-monnaie";
+"guest.subtitle" = "Decentralized App";
+"guest.create_wallet" = "Create New Wallet";
+"guest.restore_wallet" = "Restore Wallet";
 
 "restore.title" = "Restaurer le porte-monnaie";
 "restore.description" = "Entrez la clé secrète (parfois appelée clé de papier) .pour le porte-monnaie. ";
