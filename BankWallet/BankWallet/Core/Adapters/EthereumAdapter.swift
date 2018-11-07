@@ -20,7 +20,7 @@ class EthereumAdapter {
     init(words: [String], coin: EthereumKit.Coin) {
         wordsHash = words.joined()
         progressSubject = BehaviorSubject(value: 1)
-        ethereumKit = EthereumKit(withWords: words, coin: coin, debugPrints: true)
+        ethereumKit = EthereumKit(withWords: words, coin: coin, debugPrints: false)
         ethereumKit.delegate = self
     }
 
@@ -69,7 +69,7 @@ extension EthereumAdapter: IAdapter {
     }
 
     var lastBlockHeight: Int? {
-        return nil
+        return ethereumKit.lastBlockHeight
     }
 
     var debugInfo: String {
