@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="GuestViewController" customModule="Wallet" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="GuestViewController" customModule="Bank" customModuleProvider="target">
             <connections>
                 <outlet property="createButton" destination="Wxk-hg-MwX" id="VpX-L8-N1H"/>
                 <outlet property="restoreButton" destination="fo4-vG-xAd" id="kD0-bi-ece"/>
@@ -62,46 +63,55 @@
                         <action selector="restoreWalletDidTap" destination="-1" eventType="touchUpInside" id="Hzd-aK-spu"/>
                     </connections>
                 </button>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Welcome to Crypton" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iEi-nu-UKi">
-                    <rect key="frame" x="44" y="60" width="287" height="119.5"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bank Wallet" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iEi-nu-UKi">
+                    <rect key="frame" x="46.5" y="60" width="282.5" height="60"/>
                     <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="50"/>
-                    <color key="textColor" name="Yellow"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="The best of the best crypto wallet ever and ever and ever" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a9W-OB-fKT">
-                    <rect key="frame" x="44" y="203.5" width="287" height="41"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Decentralized App" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a9W-OB-fKT">
+                    <rect key="frame" x="44" y="354" width="287" height="20.5"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <color key="textColor" name="Silver"/>
+                    <color key="textColor" name="Gray"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Blockchain Image" translatesAutoresizingMaskIntoConstraints="NO" id="7gO-RC-UQA">
+                    <rect key="frame" x="122" y="180" width="131" height="150"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="150" id="2ff-Hs-VQb"/>
+                        <constraint firstAttribute="width" constant="131" id="j7P-mH-gbO"/>
+                    </constraints>
+                </imageView>
             </subviews>
             <color key="backgroundColor" name="Dark"/>
             <constraints>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="fo4-vG-xAd" secondAttribute="bottom" constant="40" id="51y-sK-7TU"/>
+                <constraint firstItem="a9W-OB-fKT" firstAttribute="top" secondItem="7gO-RC-UQA" secondAttribute="bottom" constant="24" id="KOP-xc-SAF"/>
+                <constraint firstItem="7gO-RC-UQA" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="PPl-pb-RO5"/>
+                <constraint firstItem="iEi-nu-UKi" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="R4V-kX-acY"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="Wxk-hg-MwX" secondAttribute="trailing" constant="44" id="T0A-tC-8Ny"/>
                 <constraint firstItem="fo4-vG-xAd" firstAttribute="top" secondItem="Wxk-hg-MwX" secondAttribute="bottom" constant="20" id="UKa-N7-oHD"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="iEi-nu-UKi" secondAttribute="trailing" constant="44" id="ZBd-wS-O46"/>
                 <constraint firstItem="Wxk-hg-MwX" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="44" id="e6J-n4-Mgg"/>
+                <constraint firstItem="7gO-RC-UQA" firstAttribute="top" secondItem="iEi-nu-UKi" secondAttribute="bottom" constant="60" id="esY-xM-NaH"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="a9W-OB-fKT" secondAttribute="trailing" constant="44" id="fTO-GC-pVD"/>
                 <constraint firstItem="iEi-nu-UKi" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="40" id="fnE-aY-6XO"/>
-                <constraint firstItem="a9W-OB-fKT" firstAttribute="top" secondItem="iEi-nu-UKi" secondAttribute="bottom" constant="24" id="foY-ZP-bdP"/>
                 <constraint firstItem="fo4-vG-xAd" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="44" id="gal-sL-Fc0"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="fo4-vG-xAd" secondAttribute="trailing" constant="44" id="hSU-9C-QZI"/>
                 <constraint firstItem="a9W-OB-fKT" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="44" id="nI7-lB-eQ9"/>
-                <constraint firstItem="iEi-nu-UKi" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="44" id="rte-IX-xOd"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
         </view>
     </objects>
     <resources>
+        <image name="Blockchain Image" width="131" height="150"/>
         <namedColor name="Dark">
-            <color red="0.15686274509803921" green="0.16862745098039217" blue="0.20784313725490197" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.12156862745098039" green="0.12941176470588237" blue="0.16078431372549021" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
-        <namedColor name="Silver">
-            <color red="0.78431372549019607" green="0.7803921568627451" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        <namedColor name="Gray">
+            <color red="0.54117647058823526" green="0.54117647058823526" blue="0.5607843137254902" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="Yellow">
-            <color red="0.96862745098039216" green="0.71764705882352942" blue="0.19215686274509805" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="1" green="0.61960784313725492" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
     </resources>
 </document>
