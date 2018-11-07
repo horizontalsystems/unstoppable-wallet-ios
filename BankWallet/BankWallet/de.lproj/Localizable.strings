@@ -20,9 +20,9 @@
 "access.cancel" = "Abbrechen";
 
 "guest.title" = "Bank Wallet";
-"guest.subtitle" = "Sei Deine eigene Bank!";
-"guest.create_wallet" = "Geldbörse erstellen";
-"guest.restore_wallet" = "Geldbörse Importieren";
+"guest.subtitle" = "Decentralized App";
+"guest.create_wallet" = "Create New Wallet";
+"guest.restore_wallet" = "Restore Wallet";
 
 "restore.title" = "Geldbörse Wiederherstellen";
 "restore.description" = "Offlineschlüssel eingeben";
