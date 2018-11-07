@@ -106,7 +106,6 @@
 "settings.tab_bar_item" = "Paramètres";
 "settings.cell.security_center" = "Centre de Sécurité";
 "settings.cell.base_currency" = "Devise de Base";
-"settings.cell.import_wallet" = "Importer le porte-monnaie";
 "settings.cell.language" = "Langue";
 "settings.cell.about" = "Sur";
 "settings.cell.light_mode" = "Mode lumineux";
@@ -121,7 +120,9 @@
 "settings_language.title" = "Langue";
 
 "settings_security.title" = "Centre de Sécurité";
-"settings_security.paper_key" = "Le mot secret";
+"settings_security.backup_wallet" = "Backup Wallet";
+"settings_security.import_wallet" = "Import Wallet";
+"settings_security.unlink_from_this_device" = "Unlink From This Device";
 "settings_pin_biometrics.title" = "PIN/Touch ID";
 "settings_security.set_pin" = "Définir le PIN";
 "settings_security.change_pin" = "Modifier le PIN";
