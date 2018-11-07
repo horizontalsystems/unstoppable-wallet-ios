@@ -106,7 +106,6 @@
 "settings.tab_bar_item" = "تنظيمات";
 "settings.cell.security_center" = "مركز امنيتي";
 "settings.cell.base_currency" = "ارز مرجع";
-"settings.cell.import_wallet" = "وارد کردن کیف پول";
 "settings.cell.language" = "زبان";
 "settings.cell.about" = "در باره ما";
 "settings.cell.light_mode" = "حالت چراغ";
@@ -121,7 +120,9 @@
 "settings_language.title" = "زبان";
 
 "settings_security.title" = "مركز امنيتي";
-"settings_security.paper_key" = "رقم مخفی";
+"settings_security.backup_wallet" = "Backup Wallet";
+"settings_security.import_wallet" = "Import Wallet";
+"settings_security.unlink_from_this_device" = "Unlink From This Device";
 "settings_pin_biometrics.title" = "Pin / Touch ID";
 "settings_security.set_pin" = "تعيين پين";
 "settings_security.change_pin" = "Edit PIN";
