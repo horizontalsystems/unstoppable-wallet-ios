@@ -106,7 +106,6 @@
 "settings.tab_bar_item" = "Ayarlar";
 "settings.cell.security_center" = "Güvenlik Merkezi";
 "settings.cell.base_currency" = "Para birimi";
-"settings.cell.import_wallet" = "Eski Cüzdana Giriş";
 "settings.cell.language" = "Dil";
 "settings.cell.about" = "Hakkında";
 "settings.cell.light_mode" = "Aydınlık mod";
@@ -121,7 +120,9 @@
 "settings_language.title" = "Dil";
 
 "settings_security.title" = "Güvenlik Merkezi";
-"settings_security.paper_key" = "Gizli Anahtar";
+"settings_security.backup_wallet" = "Backup Wallet";
+"settings_security.import_wallet" = "Import Wallet";
+"settings_security.unlink_from_this_device" = "Unlink From This Device";
 "settings_pin_biometrics.title" = "Pin / Touch ID";
 "settings_security.set_pin" = "PIN oluştur";
 "settings_security.change_pin" = "PIN'i değiştir";
