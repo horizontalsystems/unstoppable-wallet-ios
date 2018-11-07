@@ -20,9 +20,9 @@
 "access.cancel" = "İptal";
 
 "guest.title" = "Bank Wallet";
-"guest.subtitle" = "Be Your own Bank!";
-"guest.create_wallet" = "Yeni Cüzdan";
-"guest.restore_wallet" = "Cüzdanı içe aktar";
+"guest.subtitle" = "Decentralized App";
+"guest.create_wallet" = "Create New Wallet";
+"guest.restore_wallet" = "Restore Wallet";
 
 "restore.title" = "Restore Wallet";
 "restore.description" = "Enter the Secret Key (sometimes called Paper Key).for the wallet. ";
