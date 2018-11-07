@@ -20,9 +20,9 @@
 "access.cancel" = "Отменить";
 
 "guest.title" = "Bank Wallet";
-"guest.subtitle" = "Будь Банком для Себя!";
-"guest.create_wallet" = "Создать Кошелек";
-"guest.restore_wallet" = "Импортировать Кошелёк";
+"guest.subtitle" = "Decentralized App";
+"guest.create_wallet" = "Create New Wallet";
+"guest.restore_wallet" = "Restore Wallet";
 
 "restore.title" = "Восстановить Кошелек";
 "restore.description" = "Введите секретный ключ";
