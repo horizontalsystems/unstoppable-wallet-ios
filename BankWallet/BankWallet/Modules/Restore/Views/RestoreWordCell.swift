@@ -14,10 +14,11 @@ class RestoreWordCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-        inputField.borderWidth = 1
+        inputField.borderWidth = 0.5
         inputField.cornerRadius = 8
         inputField.borderColor = .cryptoSteel20
         inputField.clearButtonIsHidden = true
+        inputField.backgroundColor = .cryptoSteel20
 
         contentView.addSubview(inputField)
         inputField.snp.makeConstraints { maker in

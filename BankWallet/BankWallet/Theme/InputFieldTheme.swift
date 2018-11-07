@@ -7,7 +7,7 @@ class InputFieldTheme {
     static let clearTextIconRightMargin = 14
     static let indexMargin = 4
     static let indexWidth = 30
-    static let indexColor = UIColor.cryptoSilver
+    static let indexColor = UIColor.gray
     static let textColor = UIColor.white
     static let inputFieldRightMargin = 48
 }
