@@ -29,8 +29,16 @@ extension SecuritySettingsPresenter: ISecuritySettingsViewDelegate {
         router.showEditPin()
     }
 
-    func didTapSecretKey() {
+    func didTapBackupWallet() {
         router.showSecretKey()
+    }
+
+    func didTapImportWallet() {
+
+    }
+
+    func didTapUnlink() {
+
     }
 
 }

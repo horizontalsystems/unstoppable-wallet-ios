@@ -108,7 +108,6 @@ Go to Settings - > Bank and allow access to Camera.";
 "settings.tab_bar_item" = "Settings";
 "settings.cell.security_center" = "Security Center";
 "settings.cell.base_currency" = "Base Currency";
-"settings.cell.import_wallet" = "Import Wallet";
 "settings.cell.language" = "Language";
 "settings.cell.about" = "About";
 "settings.cell.light_mode" = "Light Mode";
@@ -123,7 +122,9 @@ Go to Settings - > Bank and allow access to Camera.";
 "settings_language.title" = "Language";
 
 "settings_security.title" = "Security Center";
-"settings_security.paper_key" = "Secret Key";
+"settings_security.backup_wallet" = "Backup Wallet";
+"settings_security.import_wallet" = "Import Wallet";
+"settings_security.unlink_from_this_device" = "Unlink From This Device";
 "settings_pin_biometrics.title" = "Pin / Touch ID";
 "settings_security.set_pin" = "Set PIN";
 "settings_security.change_pin" = "Edit PIN";

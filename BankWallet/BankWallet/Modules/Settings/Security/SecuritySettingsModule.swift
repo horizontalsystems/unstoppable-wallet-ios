@@ -9,7 +9,9 @@ protocol ISecuritySettingsViewDelegate {
     func viewDidLoad()
     func didSwitch(biometricUnlockOn: Bool)
     func didTapEditPin()
-    func didTapSecretKey()
+    func didTapBackupWallet()
+    func didTapImportWallet()
+    func didTapUnlink()
 }
 
 protocol ISecuritySettingsInteractor {

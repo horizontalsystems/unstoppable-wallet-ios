@@ -109,7 +109,7 @@ class SecuritySettingsPresenterTests: XCTestCase {
     }
 
     func testDidTapSecretKey() {
-        presenter.didTapSecretKey()
+        presenter.didTapBackupWallet()
 
         verify(mockRouter).showSecretKey()
     }

@@ -31,7 +31,6 @@ class MainSettingsPresenterTests: XCTestCase {
         }
         stub(mockRouter) { mock in
             when(mock.showSecuritySettings()).thenDoNothing()
-            when(mock.showImportWallet()).thenDoNothing()
             when(mock.showBaseCurrencySettings()).thenDoNothing()
             when(mock.showLanguageSettings()).thenDoNothing()
             when(mock.showAbout()).thenDoNothing()
@@ -140,11 +139,6 @@ class MainSettingsPresenterTests: XCTestCase {
     func testDidTapSecurity() {
         presenter.didTapSecurity()
         verify(mockRouter).showSecuritySettings()
-    }
-
-    func testDidTapImportWallet() {
-        presenter.didTapImportWallet()
-        verify(mockRouter).showImportWallet()
     }
 
     func testDidTapBaseCurrency() {

@@ -78,16 +78,31 @@ class SecuritySettingsViewController: UIViewController, SectionsDataSource {
         }, action: { [weak self] _ in
             self?.delegate.didTapEditPin()
         }))
-        sections.append(Section(id: "security", headerState: .margin(height: SettingsTheme.subSettingsHeaderHeight), footerState: .margin(height: SettingsTheme.subSettingsHeaderHeight), rows: pinTouchFaceRows))
+        sections.append(Section(id: "face_id", headerState: .margin(height: SettingsTheme.subSettingsHeaderHeight), footerState: .margin(height: SettingsTheme.subSettingsHeaderHeight), rows: pinTouchFaceRows))
 
         var backupRows = [RowProtocol]()
         let securityAttentionImage = backedUp ? nil : UIImage(named: "Attention Icon")
-        backupRows.append(Row<SettingsRightImageCell>(id: "paper_key", height: SettingsTheme.securityCellHeight, autoDeselect: true, bind: { cell, _ in
-            cell.bind(titleIcon: nil, title: "settings_security.paper_key".localized, rightImage: securityAttentionImage, rightImageTintColor: SettingsTheme.attentionIconTint, showDisclosure: true)
+        backupRows.append(Row<SettingsRightImageCell>(id: "backup_wallet", height: SettingsTheme.securityCellHeight, autoDeselect: true, bind: { cell, _ in
+            cell.bind(titleIcon: nil, title: "settings_security.backup_wallet".localized, rightImage: securityAttentionImage, rightImageTintColor: SettingsTheme.attentionIconTint, showDisclosure: true)
         }, action: { [weak self] _ in
-            self?.delegate.didTapSecretKey()
+            self?.delegate.didTapBackupWallet()
         }))
-        sections.append(Section(id: "security", headerState: .margin(height: SettingsTheme.subSettingsHeaderHeight), footerState: .margin(height: SettingsTheme.headerHeight), rows: backupRows))
+        backupRows.append(Row<SettingsCell>(id: "import_wallet", hash: "import_wallet", height: SettingsTheme.cellHeight, bind: { cell, _ in
+            cell.selectionStyle = .default
+            cell.bind(titleIcon: nil, title: "settings_security.import_wallet".localized, showDisclosure: true, last: true)
+        }, action: { [weak self] _ in
+            self?.delegate.didTapImportWallet()
+        }))
+        sections.append(Section(id: "backup", headerState: .margin(height: SettingsTheme.subSettingsHeaderHeight), footerState: .margin(height: SettingsTheme.subSettingsHeaderHeight), rows: backupRows))
+
+        var unlinkRows = [RowProtocol]()
+        unlinkRows.append(Row<SettingsCell>(id: "unlink", hash: "unlink", height: SettingsTheme.cellHeight, bind: { cell, _ in
+            cell.selectionStyle = .default
+            cell.bind(titleIcon: nil, title: "settings_security.unlink_from_this_device".localized, showDisclosure: true, last: true)
+        }, action: { [weak self] _ in
+            self?.delegate.didTapUnlink()
+        }))
+        sections.append(Section(id: "unlink", headerState: .margin(height: SettingsTheme.subSettingsHeaderHeight), footerState: .margin(height: SettingsTheme.headerHeight), rows: unlinkRows))
 
         return sections
     }
