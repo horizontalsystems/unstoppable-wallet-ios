@@ -20,19 +20,19 @@
 "access.cancel" = "Abbrechen";
 
 "guest.title" = "Bank Wallet";
-"guest.subtitle" = "Decentralized App";
-"guest.create_wallet" = "Create New Wallet";
-"guest.restore_wallet" = "Restore Wallet";
+"guest.subtitle" = "Dezentralisierte App";
+"guest.create_wallet" = "Neue Geldbörse erstellen";
+"guest.restore_wallet" = "Geldbörse Wiederherstellen";
 
 "restore.title" = "Geldbörse Wiederherstellen";
 "restore.description" = "Offlineschlüssel eingeben";
 "restore.restore" = "Wiederherstellen";
 "restore.validation_failed" = "Der eingegebene Wörter ist ungültig";
 
-"backup.intro.title" = "Backup";
-"backup.intro.subtitle" = "Your secret key is the only way to restore your wallet and funds if your phone is ever lost, stolen, broken, or upgraded.\n\nIt consists of 12 words. Write them on a piece of paper and do not ever show it to anyone.";
+"backup.intro.title" = "Sicherung";
+"backup.intro.subtitle" = "Dein Offlineschlüssel ist die einzige Möglichkeit, deine Geldbörse wiederherzustellen, falls du dein Smartphone verlierst, austauscht, es gestohlen wird oder kaputtgeht. \n\nHierfür zeigen wir die eine Liste von Wörtern an, damit du sie dir auf ein Stück Papier notieren kannst, das es sicher aufzubewahren  gilt.";
 "backup.intro.later" = "Später";
-"backup.intro.backup_now" = "Backup";
+"backup.intro.backup_now" = "Sicherung";
 
 "backup.words.title" = "Offlineschlüssel";
 "backup.words.back" = "Zurück";
@@ -120,9 +120,9 @@
 "settings_language.title" = "Sprache";
 
 "settings_security.title" = "Sicherheits-Center";
-"settings_security.backup_wallet" = "Backup Wallet";
-"settings_security.import_wallet" = "Import Wallet";
-"settings_security.unlink_from_this_device" = "Unlink From This Device";
+"settings_security.backup_wallet" = "Geldbörse sichern";
+"settings_security.import_wallet" = "Geldbörse Importieren";
+"settings_security.unlink_from_this_device" = "Verknüpfung mit diesem Gerät aufheben";
 "settings_pin_biometrics.title" = "PIN / Touch ID";
 "settings_security.set_pin" = "PIN festlegen";
 "settings_security.change_pin" = "PIN bearbeiten";
