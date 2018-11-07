@@ -20,19 +20,19 @@
 "access.cancel" = "Annuler";
 
 "guest.title" = "Bank Wallet";
-"guest.subtitle" = "Decentralized App";
+"guest.subtitle" = "L'appLication décentraLisée";
 "guest.create_wallet" = "Create New Wallet";
-"guest.restore_wallet" = "Restore Wallet";
+"guest.restore_wallet" = "Restaurer le porte-monnaie";
 
 "restore.title" = "Restaurer le porte-monnaie";
 "restore.description" = "Entrez la clé secrète (parfois appelée clé de papier) .pour le porte-monnaie. ";
 "restore.restore" = "Restaurer";
 "restore.validation_failed" = "La clé secrète que vous avez entré n’existe pas. S’il vous plaît vérifiez les mots et réessayez.";
 
-"backup.intro.title" = "Backup";
-"backup.intro.subtitle" = "Your secret key is the only way to restore your wallet and funds if your phone is ever lost, stolen, broken, or upgraded.\n\nIt consists of 12 words. Write them on a piece of paper and do not ever show it to anyone.";
+"backup.intro.title" = "Sauvegarde";
+"backup.intro.subtitle" = "Votre clé secrete est le seul moyen de restaurer votre porte-monnaie et vos fonds si votre téléphone est perdu, volé, cassé ou mis à jour. \nElle contient 12 mots. Ecrivez-les sur un morceau de papier et ne les montrez jamais à personne.";
 "backup.intro.later" = "Plus tard";
-"backup.intro.backup_now" = "Backup";
+"backup.intro.backup_now" = "Sauvegarde";
 
 "backup.words.title" = "Le mot secret";
 "backup.words.back" = "Retour";
@@ -120,9 +120,9 @@
 "settings_language.title" = "Langue";
 
 "settings_security.title" = "Centre de Sécurité";
-"settings_security.backup_wallet" = "Backup Wallet";
-"settings_security.import_wallet" = "Import Wallet";
-"settings_security.unlink_from_this_device" = "Unlink From This Device";
+"settings_security.backup_wallet" = "Porte-monnaie de Sauvegarde";
+"settings_security.import_wallet" = "Importer le porte-monnaie";
+"settings_security.unlink_from_this_device" = "Supprimer de cet appareil";
 "settings_pin_biometrics.title" = "PIN/Touch ID";
 "settings_security.set_pin" = "Définir le PIN";
 "settings_security.change_pin" = "Modifier le PIN";
