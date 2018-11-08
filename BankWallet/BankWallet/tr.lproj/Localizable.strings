@@ -8,14 +8,14 @@
 "alert.ok" = "Tamam";
 "alert.cancel" = "İptal";
 "navigation_bar.cancel" = "İptal";
-"done" = "Done";
+"done" = "Bitti";
 "alert.copy" = "Kopyala";
 "alert.share" = "Paylaş";
 "alert.close" = "Kapat";
 "alert.success" = "Başarılı";
 "alert.copied" = "Kopyalandı";
 
-"access.camera.message" = "Bank needs access to your camera to scan QR code.\n\nGo to Settings - > Bank and allow access to Camera.";
+"access.camera.message" = "Bank, QR Kodu okuyabilmek için Kameranıza ihtiyaç duyuyor.\n\nAyarlar - > Bank'a gidip kamera erişimine izin verin.";
 "access.settings" = "Ayarlar";
 "access.cancel" = "İptal";
 
