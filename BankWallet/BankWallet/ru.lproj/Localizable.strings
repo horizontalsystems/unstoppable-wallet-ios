@@ -120,11 +120,11 @@
 "settings_language.title" = "Язык";
 
 "settings_about_title" = "О нас";
-"settings_about_terms_privacy_subtitle" = "Terms & Privacy:";
-"settings_about_terms_privacy_text" = "Your funds are stored in the BANK wallet app. Not on any external servers.\n\nBANK Wallet doesn\\'t store or collect any private info.\n\nBANK Wallet doesn\\'t depend on any server or person to function.\n\nBANK Wallet works everywhere as long as there is an internet.\n\nIt is impossible for a third party to block the wallet from working or to block the user.\n\nThe entire code powering the BANK Wallet is free and open to public.\n\nThere may be bugs in the code. Make sure you always backup a Secret Key for your wallet!";
+"settings_about_terms_privacy_subtitle" = "Условия & Политика конфиденциальности:";
+"settings_about_terms_privacy_text" = "Ваши средства хранятся в приложении Bank Wallet. Не на внешних серверах.\n\nBANK Wallet не хранит или собирает любую частную информацию.\n\nBANK Wallet не зависит от любой сервер или лицо функции.\n\nBANK Wallet работает везде, пока есть Интернет.\n\nТретье лицо не может заблокировать кошелёк от работы или заблокировать пользователя.\n\nКод BANK Wallet является бесплатным и открытым для общественности.\n\nМогут быть ошибки в коде. Убедитесь, что вы делали резервную копию секретного ключа для вашего кошелька!";
 
 "settings_about_dependencies_subtitle" = "Зависимости:";
-"settings_about_dependencies_text" = "There are some third-party services used by the BANK Wallet for non-critical data for the wallet.\n\n1. IPFS Decentralized Storage\n\n  • stores current exchange rates,\n\n  • stores coin information,\n\n  • stores \"recommended\" transaction fees\n\n  • stores a list of supported base currencies\n\n  • stores public blockchain data\n\n2. CryptoCompare.com - used to obtain current market exchange rates.\n\n3. Etherscan.io - used to retrieve a list of past transactions for a given Ethereum address.\n\n4. Infura.io - a public gateway to Ethereum Blockchain.";
+"settings_about_dependencies_text" = "Есть некоторые сторонние услуги, используемые BANK Wallet  для некритических данных для бумажника.\n1. IPFS децентрализованного хранения\n        \n•  сохраняет текущие обменные курсы,\n•  хранит крипто информацию,\n•  хранит «рекомендованные» операционные издержки\n•  хранит список поддерживаемых базовых валют\n•  хранит общественного blockchain Дада\n2. CryptoCompare.com - используется для получения текущих рыночных обменных курсов.\n3. Etherscan.io - используется для получения списка последних транзакций для заданного адреса Ethereum.\n4. Infura.io - общественный шлюз Ethereum Blockchain.";
 
 
 
