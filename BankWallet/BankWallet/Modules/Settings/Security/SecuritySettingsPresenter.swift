@@ -33,10 +33,6 @@ extension SecuritySettingsPresenter: ISecuritySettingsViewDelegate {
         router.showSecretKey()
     }
 
-    func didTapImportWallet() {
-
-    }
-
     func didTapUnlink() {
 
     }

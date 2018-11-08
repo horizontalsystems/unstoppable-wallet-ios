@@ -10,7 +10,6 @@ protocol ISecuritySettingsViewDelegate {
     func didSwitch(biometricUnlockOn: Bool)
     func didTapEditPin()
     func didTapBackupWallet()
-    func didTapImportWallet()
     func didTapUnlink()
 }
 

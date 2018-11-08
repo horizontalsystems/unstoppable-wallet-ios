@@ -1,12 +1,15 @@
 import UIKit
 
 class DepositTheme {
-    static let collectionHeight: CGFloat = 252
-    static let titleTopMargin: CGFloat = 16
-    static let titleFont = UIFont.cryptoHeadline
-    static let titleColor = UIColor.gray
+    static let collectionHeight: CGFloat = 260
+
+    static let iconMargin: CGFloat = 16
+
+    static let titleFont = UIFont.systemFont(ofSize: 17, weight: .bold)
+    static let titleColor = UIColor.black
     static let qrCodeSideSize: CGFloat = 150
-    static let qrCodeVerticalMargin: CGFloat = 24
+    static let qrCodeTopMargin: CGFloat = 12
+    static let qrCodeBottomMargin: CGFloat = 24
     static let addressFont = UIFont.cryptoCaption1
     static let addressColor = UIColor.black
     static let addressSideMargin: CGFloat = 30

@@ -87,22 +87,13 @@ class SecuritySettingsViewController: UIViewController, SectionsDataSource {
         }, action: { [weak self] _ in
             self?.delegate.didTapBackupWallet()
         }))
-        backupRows.append(Row<SettingsCell>(id: "import_wallet", hash: "import_wallet", height: SettingsTheme.cellHeight, bind: { cell, _ in
-            cell.selectionStyle = .default
-            cell.bind(titleIcon: nil, title: "settings_security.import_wallet".localized, showDisclosure: true, last: true)
-        }, action: { [weak self] _ in
-            self?.delegate.didTapImportWallet()
-        }))
-        sections.append(Section(id: "backup", headerState: .margin(height: SettingsTheme.subSettingsHeaderHeight), footerState: .margin(height: SettingsTheme.subSettingsHeaderHeight), rows: backupRows))
-
-        var unlinkRows = [RowProtocol]()
-        unlinkRows.append(Row<SettingsCell>(id: "unlink", hash: "unlink", height: SettingsTheme.cellHeight, bind: { cell, _ in
+        backupRows.append(Row<SettingsCell>(id: "unlink", hash: "unlink", height: SettingsTheme.cellHeight, bind: { cell, _ in
             cell.selectionStyle = .default
             cell.bind(titleIcon: nil, title: "settings_security.unlink_from_this_device".localized, showDisclosure: true, last: true)
         }, action: { [weak self] _ in
             self?.delegate.didTapUnlink()
         }))
-        sections.append(Section(id: "unlink", headerState: .margin(height: SettingsTheme.subSettingsHeaderHeight), footerState: .margin(height: SettingsTheme.headerHeight), rows: unlinkRows))
+        sections.append(Section(id: "backup", headerState: .margin(height: SettingsTheme.subSettingsHeaderHeight), footerState: .margin(height: SettingsTheme.subSettingsHeaderHeight), rows: backupRows))
 
         return sections
     }

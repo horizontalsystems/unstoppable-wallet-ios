@@ -2,24 +2,41 @@ import UIKit
 import SnapKit
 
 class DepositAddressCollectionCell: UICollectionViewCell {
+    var iconImageView = UIImageView()
     var titleLabel = UILabel()
+    var separatorView = UIView()
     var qrCodeImageView = UIImageView()
     var addressLabel = UILabel()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
+
+        contentView.addSubview(iconImageView)
+        iconImageView.snp.makeConstraints { maker in
+            maker.leading.equalToSuperview().offset(DepositTheme.iconMargin)
+            maker.top.equalToSuperview().offset(DepositTheme.iconMargin)
+        }
+
         titleLabel.font = DepositTheme.titleFont
         titleLabel.textColor = DepositTheme.titleColor
         contentView.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { maker in
-            maker.centerX.equalToSuperview()
-            maker.top.equalToSuperview().offset(DepositTheme.titleTopMargin)
+            maker.leading.equalTo(self.iconImageView.snp.trailing).offset(DepositTheme.iconMargin)
+            maker.centerY.equalTo(self.iconImageView.snp.centerY)
+        }
+
+        separatorView.backgroundColor = .cryptoLightGray
+        contentView.addSubview(separatorView)
+        separatorView.snp.makeConstraints { maker in
+            maker.top.equalTo(self.iconImageView.snp.bottom).offset(DepositTheme.iconMargin)
+            maker.left.right.equalToSuperview()
+            maker.height.equalTo(0.5)
         }
 
         contentView.addSubview(qrCodeImageView)
         qrCodeImageView.snp.makeConstraints { maker in
             maker.centerX.equalToSuperview()
-            maker.top.equalTo(titleLabel.snp.bottom).offset(DepositTheme.qrCodeVerticalMargin)
+            maker.top.equalTo(self.separatorView.snp.bottom).offset(DepositTheme.qrCodeTopMargin)
             maker.size.equalTo(CGSize(width: DepositTheme.qrCodeSideSize, height: DepositTheme.qrCodeSideSize))
         }
 
@@ -29,7 +46,7 @@ class DepositAddressCollectionCell: UICollectionViewCell {
         addressLabel.textAlignment = .center
         contentView.addSubview(addressLabel)
         addressLabel.snp.makeConstraints { maker in
-            maker.top.equalTo(self.qrCodeImageView.snp.bottom).offset(DepositTheme.qrCodeVerticalMargin)
+            maker.top.equalTo(self.qrCodeImageView.snp.bottom).offset(DepositTheme.qrCodeBottomMargin)
             maker.left.equalToSuperview().offset(DepositTheme.addressSideMargin)
             maker.right.equalToSuperview().offset(-DepositTheme.addressSideMargin)
         }
@@ -40,7 +57,8 @@ class DepositAddressCollectionCell: UICollectionViewCell {
     }
 
     func bind(address: AddressItem) {
-        titleLabel.text = address.coin
+        iconImageView.image = UIImage(named: "\(address.coin) Icon")
+        titleLabel.text = "deposit_receive_coin".localized(address.coin)
         qrCodeImageView.backgroundColor = .lightGray
         addressLabel.text = address.address
 
