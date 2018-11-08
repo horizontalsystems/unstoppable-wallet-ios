@@ -19,6 +19,7 @@ extension MainSettingsRouter: IMainSettingsRouter {
     }
 
     func showAbout() {
+        viewController?.navigationController?.pushViewController(AboutSettingsRouter.module(), animated: true)
     }
 
     func openAppLink() {
