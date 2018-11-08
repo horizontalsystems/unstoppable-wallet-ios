@@ -120,7 +120,7 @@
 "settings_language.title" = "Dil";
 
 "settings_about_title" = "Hakkında";
-"settings_about_terms_privacy_subtitle" = "Terms & Privacy:";
+"settings_about_terms_privacy_subtitle" = "Şartlar & Gizlilik Politikası:";
 "settings_about_terms_privacy_text" = "Your funds are stored in the BANK wallet app. Not on any external servers.\n\nBANK Wallet doesn\\'t store or collect any private info.\n\nBANK Wallet doesn\\'t depend on any server or person to function.\n\nBANK Wallet works everywhere as long as there is an internet.\n\nIt is impossible for a third party to block the wallet from working or to block the user.\n\nThe entire code powering the BANK Wallet is free and open to public.\n\nThere may be bugs in the code. Make sure you always backup a Secret Key for your wallet!";
 
 "settings_about_dependencies_subtitle" = "Dependencies:";
