@@ -107,7 +107,7 @@
 "settings.cell.security_center" = "Sicherheits-Center";
 "settings.cell.base_currency" = "Basiswährung";
 "settings.cell.language" = "Sprache";
-"settings.cell.about" = "Über";
+"settings.cell.about" = "Info";
 "settings.cell.light_mode" = "Licht Modus";
 "settings.cell.push_notifications" = "Benachrichtigungen";
 "settings.cell.app_version" = "App-Version";
