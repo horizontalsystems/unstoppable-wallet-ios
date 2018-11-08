@@ -153,3 +153,5 @@
 "biometric_usage_reason" = "Unlock wallet";
 
 "unlock.cant_save_pin" = "Ouch! We cant save your pin, please contact us asap!";
+
+"deposit_receive_coin" = "Receive %@";
