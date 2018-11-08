@@ -22,12 +22,12 @@
 "guest.title" = "Bank Wallet";
 "guest.subtitle" = "Decentralized App";
 "guest.create_wallet" = "Yeni Cüzdan Oluştur";
-"guest.restore_wallet" = "Cüzdanı Kurtar";
+"guest.restore_wallet" = "Cüzdanı Geri Yükle";
 
-"restore.title" = "Cüzdanı Kurtar";
-"restore.description" = "Enter the Secret Key (sometimes called Paper Key).for the wallet. ";
-"restore.restore" = "Restore";
-"restore.validation_failed" = "The Secret Key you entered doesn't exist. Please check the words and try again.";
+"restore.title" = "Cüzdanı Geri Yükle";
+"restore.description" = "Cüzdan için gizli anahtarı (kağıt anahtarı) girin. ";
+"restore.restore" = "Geri Yükle";
+"restore.validation_failed" = "Girdiğiniz gizli anahtar uyuşmuyor. Kelimeleri kontrol edip tekrar deneyin.";
 
 "backup.intro.title" = "Yedekle";
 "backup.intro.subtitle" = "Gizli Anahtar, telefonunuzun kaybolması, çalınması, bozulması veya programın tekrar kurulması durumunda cüzdana erişebilmenin tek yoludur.\n12 kelimeden oluşur. Gizli Anahtarı not alıp güvenli bir yerde tutun ve kimseye göstermeyin.";
@@ -38,26 +38,26 @@
 "backup.words.back" = "Geri";
 "backup.words.proceed" = "İleri";
 
-"backup.confirmation.title" = "Check ...";
+"backup.confirmation.title" = "Kontrol etme ...";
 "backup.confirmation.description" = "Gizli Anahtarınızda ki kelimeleri girin";
 "backup.confirmation.failure_alert.text" = "Kelimeler eşleşmiyor";
 "backup.confirmation.understand" = "Cüzdanımın güvenle, sadece bu cihazda bulunduğunu ve herhangi bir sunucuda olmadığını biliyorum.";
-"backup.confirmation.delete_app_warn" = "I understand that if this app is deleted or stops working for any reason, my wallet can only be recovered using the secret key that I have written down and saved in a secure place";
+"backup.confirmation.delete_app_warn" = "Bu uygulama silinirse veya herhengi bir sebepten dolayı çalışmayı bırakırsa, cüzdanımı kurtarmanın tek yolunun yenice yazıp güvenli bir yerde koruduğum gizli anahtar olduğunu biliyorum";
 "backup.confirmation.confirm" = "Onayla";
 
 "wallet.title" = "Bakiye";
 "wallet.tab_bar_item" = "Bakiye";
 "wallet.send" = "Gönder";
 "wallet.deposit" = "Al";
-"wallet.loading_rate" = "loading rate...";
-"wallet.rate_per_coin" = "%@ per %@";
-"wallet.syncing_percent" = "Syncing %@";
-"wallet.total_balance.syncing" = "Syncing...";
+"wallet.loading_rate" = "yükleme hızı...";
+"wallet.rate_per_coin" = "%@ için %@";
+"wallet.syncing_percent" = "%@ eşitleniyor";
+"wallet.total_balance.syncing" = "Eşitleniyor...";
 
 "send.title" = "Gönder ";
 "send.address_placeholder" = "Adres";
 "send.payment_reference_placeholder" = "Ödeme Referansı";
-"send.insufficient_funds" = "Not available amount";
+"send.insufficient_funds" = "Mevcut olmayan miktar";
 "paste" = "Yapıştır";
 "amount" = "Tutar";
 "more" = "Daha fazlası";
@@ -80,8 +80,8 @@
 "tx_info.bottom_sheet.title" = "Hesap işlemi";
 "tx_info.bottom_sheet.title_received" = "Alındı";
 "tx_info.bottom_sheet.title_sent" = "Gönderildi";
-"tx_info.bottom_sheet.processing" = "PROCESSING";
-"tx_info.bottom_sheet.complete" = "COMPLETED";
+"tx_info.bottom_sheet.processing" = "İŞLENİYOR";
+"tx_info.bottom_sheet.complete" = "TAMAMLANDI";
 "tx_info.bottom_sheet.status" = "Durum:";
 "tx_info.bottom_sheet.value_when_received" = "Value when received:";
 "tx_info.bottom_sheet.from_hash" = "Gönderen:";
