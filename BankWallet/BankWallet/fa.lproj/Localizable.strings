@@ -153,3 +153,5 @@
 "biometric_usage_reason" = "باز كردن كيف پول";
 
 "unlock.cant_save_pin" = "Ouch!ما نميتانيم پين شما را ذخيره كنيم,لطفاً با ما به تماس شويد asap!";
+
+"deposit_receive_coin" = "Receive %@";
