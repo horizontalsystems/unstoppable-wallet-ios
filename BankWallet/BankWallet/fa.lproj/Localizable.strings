@@ -8,56 +8,56 @@
 "alert.ok" = "تأیید";
 "alert.cancel" = "انصراف";
 "navigation_bar.cancel" = "انصراف";
-"done" = "Done";
+"done" = "انجام شد";
 "alert.copy" = "رونوشت";
 "alert.share" = "به اشتراك گذاشتن";
 "alert.close" = "ببند";
 "alert.success" = "موفقيت";
 "alert.copied" = "کپی انجام شد";
 
-"access.camera.message" = "Bank needs access to your camera to scan QR code.\n\nGo to Settings - > Bank and allow access to Camera.";
+"access.camera.message" = "بانك ضرورت دسترسي به دوربين دارد بخاطر اسكن كردن QR كد.\nبرويد به تنظيمات -> اجازه دهيد تا بانك دسترسي به دوربين داشته باشد.";
 "access.settings" = "تنظيمات";
 "access.cancel" = "انصراف";
 
 "guest.title" = "کیف پول بانک";
-"guest.subtitle" = "Decentralized App";
-"guest.create_wallet" = "Create New Wallet";
-"guest.restore_wallet" = "Restore Wallet";
+"guest.subtitle" = "Decentralized app";
+"guest.create_wallet" = "ايجاد كيف پول جديد";
+"guest.restore_wallet" = "بازگرداندن كيف پول";
 
-"restore.title" = "Restore Wallet";
-"restore.description" = "Enter the Secret Key (sometimes called Paper Key).for the wallet. ";
-"restore.restore" = "Restore";
-"restore.validation_failed" = "The Secret Key you entered doesn't exist. Please check the words and try again.";
+"restore.title" = "بازگرداندن كيف پول";
+"restore.description" = "كد مخفي را وارد كنيد(بعضي اوقات برايش ميگوين كد ورقي).بخاطر كيف پول. ";
+"restore.restore" = "بازگرداني";
+"restore.validation_failed" = "كد مخفي كي شما وارد كرديد موجود نيست.لطفاً دوباره چك كرده كد را واريد كنيد.";
 
 "backup.intro.title" = "پيشتيباني";
 "backup.intro.subtitle" = "رمز مخيفي شما ميتواند كيف پول شما را دوباره پروگرام كند اگر تيليفون شما گم شود،خراب شود يا دزدي  شود پس هميشه رمز مخفي خود را پيش خود داشته باشد و فراموش نكيد.\n رمز مخفي ١٢ رقم ميخواهد.";
 "backup.intro.later" = "بعداً";
-"backup.intro.backup_now" = "Backup";
+"backup.intro.backup_now" = "پيشتيباني";
 
 "backup.words.title" = "رقم مخفی";
 "backup.words.back" = "برگشت";
 "backup.words.proceed" = "بعدي";
 
-"backup.confirmation.title" = "Check ...";
+"backup.confirmation.title" = "برسي...";
 "backup.confirmation.description" = "حرف هاي رمز تات را وارد كنيد";
 "backup.confirmation.failure_alert.text" = "ارقام با هم شباهت ندارند";
 "backup.confirmation.understand" = "من فهميدم كي پول كيف من و توكن هاي من همه شان حفظ و امانط است در اين دستگاه و نخير در ديگر سيرفير ها.";
-"backup.confirmation.delete_app_warn" = "I understand that if this app is deleted or stops working for any reason, my wallet can only be recovered using the secret key that I have written down and saved in a secure place";
+"backup.confirmation.delete_app_warn" = "من فهميدم كي اگر اين اپليكيشن خذف يا انتقال كند به دستگاه ديگر,تنها من با رمز مخفي كي نوشتم كي ميتوانم دوباره دسترسي پيدا كنم";
 "backup.confirmation.confirm" = "تاييد";
 
 "wallet.title" = "بالانس";
 "wallet.tab_bar_item" = "بالانس";
 "wallet.send" = "ارسال";
 "wallet.deposit" = "دريافت";
-"wallet.loading_rate" = "loading rate...";
-"wallet.rate_per_coin" = "%@ per %@";
-"wallet.syncing_percent" = "Syncing %@";
-"wallet.total_balance.syncing" = "Syncing...";
+"wallet.loading_rate" = "بارگيري نرخ...";
+"wallet.rate_per_coin" = "%@در هر%@";
+"wallet.syncing_percent" = "همگامسازي%@";
+"wallet.total_balance.syncing" = "در حال همگامسازي...";
 
 "send.title" = "ارسال ";
 "send.address_placeholder" = "آدرس";
 "send.payment_reference_placeholder" = "مرجع پرداخت";
-"send.insufficient_funds" = "Not available amount";
+"send.insufficient_funds" = "مقدار موجود نيست";
 "paste" = "جاگذازي";
 "amount" = "مقدار";
 "more" = "بیشتر";
@@ -80,15 +80,15 @@
 "tx_info.bottom_sheet.title" = "معاملات";
 "tx_info.bottom_sheet.title_received" = "دريافت شد";
 "tx_info.bottom_sheet.title_sent" = "ارسال شد";
-"tx_info.bottom_sheet.processing" = "PROCESSING";
-"tx_info.bottom_sheet.complete" = "COMPLETED";
+"tx_info.bottom_sheet.processing" = "در حال اجرا";
+"tx_info.bottom_sheet.complete" = "تكميل شد";
 "tx_info.bottom_sheet.status" = "وضيعت:";
-"tx_info.bottom_sheet.value_when_received" = "Value when received:";
+"tx_info.bottom_sheet.value_when_received" = "ارزش وقتي دريافت شد:";
 "tx_info.bottom_sheet.from_hash" = "از:";
 "tx_info.bottom_sheet.to_hash" = "به:";
 "tx_info.bottom_sheet.id_hash" = "شناس نامه:";
 
-"full_transaction_info.navigation_bar.title" = "Details";
+"full_transaction_info.navigation_bar.title" = "جزئیات";
 "full_transaction_info.navigation_bar.share" = "به اشتراك گذاشتن";
 "full_transaction_info.cell.size" = "اندازه:";
 "full_transaction_info.cell.fee_rate" = "نرخ هزينه:";
@@ -110,17 +110,17 @@
 "settings.cell.about" = "در باره ما";
 "settings.cell.light_mode" = "حالت چراغ";
 "settings.cell.push_notifications" = "انتشار ياد آوري";
-"settings.cell.app_version" = "App Version";
+"settings.cell.app_version" = "نسخه نرم افزاز";
 "settings.info.title" = "BANK WALLET";
-"settings.info.subtitle" = "decentralized app";
+"settings.info.subtitle" = "برنامه غیر متمرکز";
 "settings.info.link" = "horizontalsystems.io";
 
 "settings_base_currency.title" = "ارز مرجع";
 
 "settings_language.title" = "زبان";
 
-"settings_about_title" = "About";
-"settings_about_terms_privacy_subtitle" = "Terms & Privacy:";
+"settings_about_title" = "در باره ما";
+"settings_about_terms_privacy_subtitle" = "شرايط & حريم خصوصي:";
 "settings_about_terms_privacy_text" = "Your funds are stored in the BANK wallet app. Not on any external servers.\n\nBANK Wallet doesn\\'t store or collect any private info.\n\nBANK Wallet doesn\\'t depend on any server or person to function.\n\nBANK Wallet works everywhere as long as there is an internet.\n\nIt is impossible for a third party to block the wallet from working or to block the user.\n\nThe entire code powering the BANK Wallet is free and open to public.\n\nThere may be bugs in the code. Make sure you always backup a Secret Key for your wallet!";
 
 "settings_about_dependencies_subtitle" = "Dependencies:";
