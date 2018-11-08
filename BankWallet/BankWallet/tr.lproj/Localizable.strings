@@ -112,7 +112,7 @@
 "settings.cell.push_notifications" = "Anlık Bildirimler";
 "settings.cell.app_version" = "App Version";
 "settings.info.title" = "BANK WALLET";
-"settings.info.subtitle" = "decentralized app";
+"settings.info.subtitle" = "decentralized App";
 "settings.info.link" = "horizontalsystems.io";
 
 "settings_base_currency.title" = "Para birimi";
