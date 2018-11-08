@@ -170,7 +170,7 @@ class WalletCell: UITableViewCell {
 
         nameLabel.text = "coin.\(item.coinValue.coin)".localized
 
-        if let value = item.exchangeValue, let formattedValue = ValueFormatter.instance.format(currencyValue: value) {
+        if let value = item.exchangeValue, let formattedValue = ValueFormatter.instance.format(currencyValue: value, shortFraction: true) {
             rateLabel.text = "wallet.rate_per_coin".localized(formattedValue, item.coinValue.coin)
         } else {
             rateLabel.text = "wallet.loading_rate".localized
