@@ -21,7 +21,7 @@
 
 "guest.title" = "Bank Wallet";
 "guest.subtitle" = "L'appLication décentraLisée";
-"guest.create_wallet" = "Create New Wallet";
+"guest.create_wallet" = "Сréer un nouveau porte-monnaie";
 "guest.restore_wallet" = "Restaurer le porte-monnaie";
 
 "restore.title" = "Restaurer le porte-monnaie";
