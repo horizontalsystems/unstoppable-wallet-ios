@@ -124,7 +124,7 @@
 "settings_about_terms_privacy_text" = "Hesaplarınız BANK Wallet uygulamasında bulunuyor. Herhangi bir sunucuda değil.\n\nBANK Wallet herhangi bir kişisel bilgi toplamaz.\n\nBANK Wallet, öalışmak için herhangi bir sunucuya veya şahsa ihtiyaç duymaz.\n\nBANK Wallet, internet bağlantısı olduğu müddetçe heryerde çalışabilir.\n\n3. şahsın, herhangi bir cüzdanı veya kişiyi sistemden atması veya engellemesi imkansızdır.\n\nBANK Wallet uygulaması açık kaynak kodludur ve herkez tarafından görülebilir.\n\nUygulamada gözden kaçmış hatalar bulunabilir. Cüzdanınızı Gizli Anahtar ile yedekleyiniz!";
 
 "settings_about_dependencies_subtitle" = "Gereksinimler:";
-"settings_about_dependencies_text" = "There are some third-party services used by the BANK Wallet for non-critical data for the wallet.\n\n1. IPFS Decentralized Storage\n\n  • stores current exchange rates,\n\n  • stores coin information,\n\n  • stores \"recommended\" transaction fees\n\n  • stores a list of supported base currencies\n\n  • stores public blockchain data\n\n2. CryptoCompare.com - used to obtain current market exchange rates.\n\n3. Etherscan.io - used to retrieve a list of past transactions for a given Ethereum address.\n\n4. Infura.io - a public gateway to Ethereum Blockchain.";
+"settings_about_dependencies_text" = "Banka Cüzdanı uygulaması ihtiyaç duyduğu bazı kritik olmayan bilgileri 3. şahıs kaynaklardan almaktadır.\n\n1. IPFS Bağımsız Depo\n  • güncel döviz kurlarını depolar,\n  • döviz bilgilerini depolar,\n  • \"tavsiye edilen\" hesap işlemi ücretini depolar,\n  • desteklenen dövizlerin listesini depolar,\n  • halka açık Blockchain bilgisini depolar\n\n2. CryptoCompare.com - dövizlerin market değerlerini güncellemek için.\n\n3. Etherscan.io - istenilen bir Ethereum adresinin geçmiş ödemelerinin listesi için.\n\n4. Infura.io - Ethereum Blockchain için halka açık geçiş.";
 
 
 
@@ -132,7 +132,7 @@
 "settings_security.backup_wallet" = "Cüzdanı yedekle";
 "settings_security.import_wallet" = "Cüzdanı içe aktar";
 "settings_security.unlink_from_this_device" = "Bu cihazla bağlantıyı kes";
-"settings_pin_biometrics.title" = "Pin / Touch ID";
+"settings_pin_biometrics.title" = "PIN veya Touch ID";
 "settings_security.set_pin" = "PIN oluştur";
 "settings_security.change_pin" = "PIN'i değiştir";
 "settings_security.touch_id" = "Touch ID";
@@ -142,16 +142,16 @@
 "set_pin_controller.info" = "PİN, program'ı açmak ve para göndermek için kullanılacak";
 "set_pin_controller.wrong_confirmation" = "PİN uyuşmuyor. Tekrar deneyin";
 "confirm_pin_controller.title" = "Tekrar girin";
-"confirm_pin_controller.info" = "Confirm PIN";
+"confirm_pin_controller.info" = "PIN'i onaylayın";
 "edit_pin_controller.title" = "PİN'i değiştir";
 "edit_pin_controller.info" = "PİN, program'ı açmak ve para göndermek için kullanılacak";
 "edit_pin.unlock_info" = "Şu an kullandığınız PİN'i girin";
 "edit_pin.new_pin_info" = "Yeni PİN gerin";
-"edit_pin.confirm_info" = "Enter again for confirm";
+"edit_pin.confirm_info" = "Onaylamak için tekrar girin";
 "unlock_pin_controller.info" = "PIN'i girin";
 
-"biometric_usage_reason" = "Unlock wallet";
+"biometric_usage_reason" = "Cüzdan kilidini aç";
 
-"unlock.cant_save_pin" = "Ouch! We cant save your pin, please contact us asap!";
+"unlock.cant_save_pin" = "Eyvah! PIN kodu çalışmadı, ACİLEN bize ulaşın!";
 
-"deposit_receive_coin" = "Receive %@";
+"deposit_receive_coin" = "%@ al";
