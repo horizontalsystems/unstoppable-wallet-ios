@@ -57,7 +57,7 @@
 "send.title" = "Gönder ";
 "send.address_placeholder" = "Adres";
 "send.payment_reference_placeholder" = "Ödeme Referansı";
-"send.insufficient_funds" = "Mevcut olmayan miktar";
+"send.insufficient_funds" = "Yetersiz miktar";
 "paste" = "Yapıştır";
 "amount" = "Tutar";
 "more" = "Daha fazlası";
@@ -68,7 +68,7 @@
 "transactions.tab_bar_item" = "Hesap işlemleri";
 "transactions.yesterday" = "Dün";
 "transactions.success" = "başarılı";
-"transactions.pending" = "devam ediyor...";
+"transactions.pending" = "bekliyor...";
 "transactions.from" = "gönderen";
 "transactions.to" = "alan";
 "transactions.filter_all" = "Hepsi";
