@@ -119,6 +119,15 @@
 
 "settings_language.title" = "Язык";
 
+"settings_about_title" = "About";
+"settings_about_terms_privacy_subtitle" = "Terms & Privacy:";
+"settings_about_terms_privacy_text" = "Your funds are stored in the BANK wallet app. Not on any external servers.\n\nBANK Wallet doesn\\'t store or collect any private info.\n\nBANK Wallet doesn\\'t depend on any server or person to function.\n\nBANK Wallet works everywhere as long as there is an internet.\n\nIt is impossible for a third party to block the wallet from working or to block the user.\n\nThe entire code powering the BANK Wallet is free and open to public.\n\nThere may be bugs in the code. Make sure you always backup a Secret Key for your wallet!";
+
+"settings_about_dependencies_subtitle" = "Dependencies:";
+"settings_about_dependencies_text" = "There are some third-party services used by the BANK Wallet for non-critical data for the wallet.\n\n1. IPFS Decentralized Storage\n\n  • stores current exchange rates,\n\n  • stores coin information,\n\n  • stores \"recommended\" transaction fees\n\n  • stores a list of supported base currencies\n\n  • stores public blockchain data\n\n2. CryptoCompare.com - used to obtain current market exchange rates.\n\n3. Etherscan.io - used to retrieve a list of past transactions for a given Ethereum address.\n\n4. Infura.io - a public gateway to Ethereum Blockchain.";
+
+
+
 "settings_security.title" = "Безопасность";
 "settings_security.backup_wallet" = "Записать Кошелёк";
 "settings_security.import_wallet" = "Импортировать Кошелёк";
