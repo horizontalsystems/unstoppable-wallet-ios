@@ -21,10 +21,10 @@
 
 "guest.title" = "Bank Wallet";
 "guest.subtitle" = "Decentralized App";
-"guest.create_wallet" = "Create New Wallet";
-"guest.restore_wallet" = "Restore Wallet";
+"guest.create_wallet" = "Yeni Cüzdan Oluştur";
+"guest.restore_wallet" = "Cüzdanı Kurtar";
 
-"restore.title" = "Restore Wallet";
+"restore.title" = "Cüzdanı Kurtar";
 "restore.description" = "Enter the Secret Key (sometimes called Paper Key).for the wallet. ";
 "restore.restore" = "Restore";
 "restore.validation_failed" = "The Secret Key you entered doesn't exist. Please check the words and try again.";
