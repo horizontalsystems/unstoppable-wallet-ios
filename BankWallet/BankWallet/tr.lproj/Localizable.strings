@@ -88,7 +88,7 @@
 "tx_info.bottom_sheet.to_hash" = "Alan:";
 "tx_info.bottom_sheet.id_hash" = "Kimlik:";
 
-"full_transaction_info.navigation_bar.title" = "Details";
+"full_transaction_info.navigation_bar.title" = "Ayrıntılar";
 "full_transaction_info.navigation_bar.share" = "Paylaş";
 "full_transaction_info.cell.size" = "Boyut:";
 "full_transaction_info.cell.fee_rate" = "Ücret oranı:";
