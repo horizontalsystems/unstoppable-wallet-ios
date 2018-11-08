@@ -42,7 +42,7 @@
 "backup.confirmation.description" = "حرف هاي رمز تات را وارد كنيد";
 "backup.confirmation.failure_alert.text" = "ارقام با هم شباهت ندارند";
 "backup.confirmation.understand" = "من فهميدم كي پول كيف من و توكن هاي من همه شان حفظ و امانط است در اين دستگاه و نخير در ديگر سيرفير ها.";
-"backup.confirmation.delete_app_warn" = "من فهميدم كي اگر اين اپليكيشن خذف يا انتقال كند به دستگاه ديگر,تنها من با رمز مخفي كي نوشتم كي ميتوانم دوباره دسترسي پيدا كنم";
+"backup.confirmation.delete_app_warn" = "I understand that if this app is deleted or stops working for any reason, my wallet can only be recovered using the secret key that I have written down and saved in a secure place";
 "backup.confirmation.confirm" = "تاييد";
 
 "wallet.title" = "بالانس";
