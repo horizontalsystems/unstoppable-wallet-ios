@@ -153,3 +153,5 @@
 "biometric_usage_reason" = "Geldbörse entsperren";
 
 "unlock.cant_save_pin" = "Autsch! Wir können den PIN nicht speichern, kontaktieren Sie uns bitte so schnell wie möglich!";
+
+"deposit_receive_coin" = "Receive %@";
