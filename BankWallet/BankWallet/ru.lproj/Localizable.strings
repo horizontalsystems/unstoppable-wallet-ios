@@ -20,7 +20,7 @@
 "access.cancel" = "Отменить";
 
 "guest.title" = "Bank Wallet";
-"guest.subtitle" = "Децентрализованное Приложение";
+"guest.subtitle" = "Decentralized app";
 "guest.create_wallet" = "Создать Новый Кошелёк";
 "guest.restore_wallet" = "Восстановить Кошелек";
 
@@ -112,7 +112,7 @@
 "settings.cell.push_notifications" = "Уведомления";
 "settings.cell.app_version" = "Версия Приложения";
 "settings.info.title" = "BANK WALLET";
-"settings.info.subtitle" = "децентрализованное приложение";
+"settings.info.subtitle" = "decentralized app";
 "settings.info.link" = "horizontalsystems.io";
 
 "settings_base_currency.title" = "Базовая Валюта";
