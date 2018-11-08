@@ -153,3 +153,5 @@
 "biometric_usage_reason" = "Déverrouiller le porte-monnaie";
 
 "unlock.cant_save_pin" = "Oops! Nous ne pouvons pas enregistrer votre Pin, veuillez nous contacter au plus vite!";
+
+"deposit_receive_coin" = "Receive %@";
