@@ -28,7 +28,7 @@ class SettingsCell: UITableViewCell {
             maker.size.equalTo(SettingsTheme.cellIconSize)
             maker.centerY.equalToSuperview()
         }
-        titleLabel.textColor = SettingsTheme.textColor
+
         contentView.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { maker in
             maker.leading.equalTo(self.iconImageView.snp.trailing).offset(SettingsTheme.cellBigMargin)
@@ -55,7 +55,7 @@ class SettingsCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func bind(titleIcon: UIImage?, title: String, showDisclosure: Bool = false, last: Bool = false) {
+    func bind(titleIcon: UIImage?, title: String, titleColor: UIColor = SettingsTheme.textColor, showDisclosure: Bool = false, last: Bool = false) {
         iconImageView.snp.updateConstraints { maker in
             let sideSize = titleIcon != nil ? SettingsTheme.cellIconSize : 0
             maker.size.equalTo(sideSize)
@@ -66,7 +66,10 @@ class SettingsCell: UITableViewCell {
         }
 
         iconImageView.image = titleIcon
+
         titleLabel.text = title
+        titleLabel.textColor = titleColor
+
         disclosureImageView.isHidden = !showDisclosure
         disclosureImageView.snp.remakeConstraints { maker in
             if showDisclosure {
@@ -78,9 +81,14 @@ class SettingsCell: UITableViewCell {
             maker.size.equalTo(SettingsTheme.disclosureSize)
         }
 
-        separator.snp.updateConstraints { maker in
-            let float = (titleIcon != nil ? SettingsTheme.separatorInset : 0)
-            maker.leading.equalTo(contentView.snp.leadingMargin).offset(float)
+        if last {
+            separator.isHidden = true
+        } else {
+            separator.isHidden = false
+            separator.snp.updateConstraints { maker in
+                let float = (titleIcon != nil ? SettingsTheme.separatorInset : 0)
+                maker.leading.equalTo(contentView.snp.leadingMargin).offset(float)
+            }
         }
     }
 

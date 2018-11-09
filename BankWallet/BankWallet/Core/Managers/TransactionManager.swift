@@ -8,12 +8,14 @@ class TransactionManager {
     private let rateSyncer: ITransactionRateSyncer
     private let walletManager: IWalletManager
     private let currencyManager: ICurrencyManager
+    private let wordsManager: IWordsManager
 
-    init(storage: ITransactionRecordStorage, rateSyncer: ITransactionRateSyncer, walletManager: IWalletManager, currencyManager: ICurrencyManager) {
+    init(storage: ITransactionRecordStorage, rateSyncer: ITransactionRateSyncer, walletManager: IWalletManager, currencyManager: ICurrencyManager, wordsManager: IWordsManager) {
         self.storage = storage
         self.rateSyncer = rateSyncer
         self.walletManager = walletManager
         self.currencyManager = currencyManager
+        self.wordsManager = wordsManager
 
         resubscribeToAdapters()
 
@@ -26,6 +28,14 @@ class TransactionManager {
         currencyManager.subject
                 .subscribe(onNext: { [weak self] _ in
                     self?.handleCurrencyChange()
+                })
+                .disposed(by: disposeBag)
+
+        wordsManager.loggedInSubject
+                .subscribe(onNext: { [weak self] loggedIn in
+                    if !loggedIn {
+                        self?.clear()
+                    }
                 })
                 .disposed(by: disposeBag)
     }
@@ -56,12 +66,11 @@ class TransactionManager {
         rateSyncer.sync(currencyCode: currencyManager.baseCurrency.code)
     }
 
-}
-
-extension TransactionManager: ITransactionManager {
-
-    func clear() {
+    private func clear() {
         storage.clearRecords()
     }
 
+}
+
+extension TransactionManager: ITransactionManager {
 }

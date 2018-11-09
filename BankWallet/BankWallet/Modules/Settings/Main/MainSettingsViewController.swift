@@ -75,7 +75,7 @@ class MainSettingsViewController: UIViewController, SectionsDataSource {
         }))
         appSettingsRows.append(Row<SettingsRightLabelCell>(id: "base_currency", hash: "base_currency", height: SettingsTheme.cellHeight, bind: { [weak self] cell, _ in
             cell.selectionStyle = .default
-            cell.bind(titleIcon: UIImage(named: "Currency Icon"), title: "settings.cell.base_currency".localized, rightText: self?.baseCurrency, showDisclosure: true)
+            cell.bind(titleIcon: UIImage(named: "Currency Icon"), title: "settings.cell.base_currency".localized, rightText: self?.baseCurrency, showDisclosure: true, last: true)
         }, action: { [weak self] _ in
             self?.delegate.didTapBaseCurrency()
         }))
@@ -108,31 +108,19 @@ class MainSettingsViewController: UIViewController, SectionsDataSource {
         sections.append(Section(id: "appearance_settings", headerState: .marginColor(height: SettingsTheme.headerHeight, color: .clear), footerState: infoFooter, rows: aboutRows))
 
         var debugRows = [RowProtocol]()
-        debugRows.append(Row<SettingsCell>(id: "debug_logout", hash: "debug_logout", height: SettingsTheme.cellHeight, autoDeselect: true, bind: { cell, _ in
-            cell.selectionStyle = .default
-            cell.bind(titleIcon: UIImage(named: "Bug Icon"), title: "Logout", showDisclosure: false)
-        }, action: { [weak self] _ in
-            self?.logout()
-        }))
         debugRows.append(Row<SettingsCell>(id: "debug_realm_info", hash: "debug_realm_info", height: SettingsTheme.cellHeight, autoDeselect: true, bind: { cell, _ in
             cell.selectionStyle = .default
             cell.bind(titleIcon: UIImage(named: "Bug Icon"), title: "Show Realm Info", showDisclosure: false)
         }, action: { [weak self] _ in
             self?.showRealmInfo()
         }))
-        debugRows.append(Row<SettingsCell>(id: "debug_connect_to_peer", hash: "debug_connect_to_peer", height: SettingsTheme.cellHeight, autoDeselect: true, bind: { cell, _ in
-            cell.selectionStyle = .default
-            cell.bind(titleIcon: UIImage(named: "Bug Icon"), title: "Connect to Peer", showDisclosure: false)
-        }, action: { [weak self] _ in
-            self?.connectToPeer()
-        }))
-        debugRows.append(Row<SettingsCell>(id: "debug_drop_keychain", hash: "debug_drop_keychain", height: SettingsTheme.cellHeight, autoDeselect: true, bind: { cell, _ in
-            cell.selectionStyle = .default
-            cell.bind(titleIcon: UIImage(named: "Bug Icon"), title: "Drop Keychain", showDisclosure: false)
-        }, action: { _ in
-            App.shared.localStorage.isBackedUp = false
-            try? App.shared.pinManager.store(pin: nil)
-        }))
+//        debugRows.append(Row<SettingsCell>(id: "debug_drop_keychain", hash: "debug_drop_keychain", height: SettingsTheme.cellHeight, autoDeselect: true, bind: { cell, _ in
+//            cell.selectionStyle = .default
+//            cell.bind(titleIcon: UIImage(named: "Bug Icon"), title: "Drop Keychain", showDisclosure: false)
+//        }, action: { _ in
+//            App.shared.localStorage.isBackedUp = false
+//            try? App.shared.pinManager.store(pin: nil)
+//        }))
         sections.append(Section(id: "debug_section", headerState: .marginColor(height: 50, color: .clear), footerState: .marginColor(height: 20, color: .clear), rows: debugRows))
 
         return sections
@@ -144,32 +132,10 @@ class MainSettingsViewController: UIViewController, SectionsDataSource {
         }
     }
 
-    func logout() {
-        App.shared.localStorage.clear()
-        App.shared.wordsManager.removeWords()
-        App.shared.walletManager.clearWallets()
-        App.shared.transactionManager.clear()
-        try? App.shared.pinManager.store(pin: nil)
-
-        guard let window = UIApplication.shared.keyWindow else {
-            return
-        }
-
-        let viewController = GuestRouter.module()
-
-        UIView.transition(with: window, duration: 0.5, options: .transitionCrossDissolve, animations: {
-            window.rootViewController = viewController
-        })
-    }
-
-    @IBAction func showRealmInfo() {
+    private func showRealmInfo() {
         for wallet in App.shared.walletManager.wallets {
             print("\nINFO FOR \(wallet.coin):\n\(wallet.adapter.debugInfo)")
         }
-    }
-
-    @IBAction func connectToPeer() {
-//        App.shared.adapterManager.start()
     }
 
     private func reloadIfNeeded() {

@@ -59,7 +59,7 @@ class App {
         secureStorage = KeychainStorage(localStorage: localStorage)
         wordsManager = WordsManager(secureStorage: secureStorage, localStorage: localStorage)
 
-        pinManager = PinManager(secureStorage: secureStorage)
+        pinManager = PinManager(secureStorage: secureStorage, wordsManager: wordsManager)
         lockRouter = LockRouter()
         lockManager = LockManager(localStorage: localStorage, wordsManager: wordsManager, lockRouter: lockRouter)
         blurManager = BlurManager(lockManager: lockManager)
@@ -89,7 +89,7 @@ class App {
         rateSyncer.delegate = rateManager
 
         transactionRateSyncer = TransactionRateSyncer(storage: realmStorage, networkManager: networkManager)
-        transactionManager = TransactionManager(storage: realmStorage, rateSyncer: transactionRateSyncer, walletManager: walletManager, currencyManager: currencyManager)
+        transactionManager = TransactionManager(storage: realmStorage, rateSyncer: transactionRateSyncer, walletManager: walletManager, currencyManager: currencyManager, wordsManager: wordsManager)
     }
 
 }

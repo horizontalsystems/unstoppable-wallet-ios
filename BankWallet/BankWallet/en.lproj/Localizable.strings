@@ -155,6 +155,7 @@ Go to Settings - > Bank and allow access to Camera.";
 "settings_security.change_pin" = "Edit PIN";
 "settings_security.touch_id" = "Touch ID";
 "settings_security.face_id" = "Face ID";
+"security_settings_unlink_alert_button" = "Unlink";
 "settings_security_import_wallet_confirmation_1" = "This action will remove the currently installed wallet from this device.";
 "settings_security_import_wallet_confirmation_2" = "Make sure you have its Secret Key or you will not be able to access the funds on it in the future.";
 

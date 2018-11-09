@@ -10,11 +10,14 @@ class ButtonTheme {
     private static let textColorDisabledOnDarkBackground = UIColor.cryptoSilver
     private static let yellowActiveBackground = UIColor.cryptoYellow
     private static let yellowSelectedBackground = UIColor.cryptoYellowPressed
+    private static let redActiveBackground = UIColor.cryptoRed
+    private static let redSelectedBackground = UIColor.cryptoRedPressed
     private static let grayActiveBackground = UIColor.cryptoLightBackground
     private static let graySelectedBackground = UIColor.cryptoLightGray
 
     static let greenBackgroundOnWhiteBackgroundDictionary: RespondButton.Style = [.active: ButtonTheme.greenActiveBackground, .selected: ButtonTheme.greenSelectedBackground, .disabled: ButtonTheme.disabledOnDarkBackground]
     static let yellowBackgroundOnWhiteBackgroundDictionary: RespondButton.Style = [.active: ButtonTheme.yellowActiveBackground, .selected: ButtonTheme.yellowSelectedBackground, .disabled: ButtonTheme.disabledOnDarkBackground]
+    static let redBackgroundOnWhiteBackgroundDictionary: RespondButton.Style = [.active: ButtonTheme.redActiveBackground, .selected: ButtonTheme.redSelectedBackground, .disabled: ButtonTheme.disabledOnDarkBackground]
 
     static let grayBackgroundDictionary: RespondButton.Style = [.active: ButtonTheme.grayActiveBackground, .selected: ButtonTheme.graySelectedBackground, .disabled: ButtonTheme.disabledOnWhiteBackground]
 
@@ -23,6 +26,7 @@ class ButtonTheme {
 
     static let textColorOnWhiteBackgroundDictionary: RespondButton.Style = [.active: ButtonTheme.textColor, .selected: ButtonTheme.textColor, .disabled: ButtonTheme.textColorDisabledOnWhiteBackground]
     static let textColorOnDarkBackgroundDictionary: RespondButton.Style = [.active: ButtonTheme.textColor, .selected: ButtonTheme.textColor, .disabled: ButtonTheme.textColorDisabledOnDarkBackground]
+    static let whiteTextColorOnDarkBackgroundDictionary: RespondButton.Style = [.active: .white, .selected: .white, .disabled: ButtonTheme.textColorDisabledOnWhiteBackground]
 
     static let font = UIFont.cryptoHeadline
     static let margin: CGFloat = 16

@@ -47,4 +47,9 @@ extension SecuritySettingsInteractor: ISecuritySettingsInteractor {
         localStorage.isBiometricOn = biometricUnlockOn
     }
 
+    func unlink() {
+        wordsManager.logout()
+        delegate?.didUnlink()
+    }
+
 }

@@ -9,6 +9,7 @@ class SettingsTheme {
     static let languageCheckmarkTintColor = UIColor.cryptoYellow
     static let cellHeight: CGFloat = 44
     static var textColor: UIColor { return .cryptoThemedWhite }
+    static var destructiveTextColor: UIColor = .cryptoRed
     static let switchTintColor = UIColor.cryptoGray
     static let separatorColor = UIColor.clear
     static let infoTitleTopMargin: CGFloat = 4

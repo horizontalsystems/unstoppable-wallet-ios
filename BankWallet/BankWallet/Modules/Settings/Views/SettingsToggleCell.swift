@@ -30,10 +30,6 @@ class SettingsToggleCell: SettingsCell {
         toggleView.isOn = isOn
     }
 
-    override func bind(titleIcon: UIImage?, title: String, showDisclosure: Bool, last: Bool = false) {
-        fatalError("use bind with toggle")
-    }
-
     @objc func _onToggle() {
         onToggle?(toggleView.isOn)
     }

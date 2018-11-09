@@ -55,9 +55,11 @@ extension WordsManager: IWordsManager {
         loggedInSubject.onNext(true)
     }
 
-    func removeWords() {
+    func logout() {
         words = nil
+
         try? secureStorage.set(words: nil)
+        localStorage.clear()
 
         loggedInSubject.onNext(false)
     }

@@ -2,7 +2,7 @@ import UIKit
 import GrouviActionSheet
 
 class BackupConfirmationAlertModel: BaseAlertModel {
-    var confirmItems = [BackupCheckboxItem]()
+    var confirmItems = [ConfirmationCheckboxItem]()
 
     override open var cancelButtonTitle: String {
         return "alert.cancel".localized
@@ -15,23 +15,23 @@ class BackupConfirmationAlertModel: BaseAlertModel {
 
         let confirm = "backup.confirmation.understand".localized
         let confirmAttributed = NSMutableAttributedString(string: confirm, attributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 17)])
-        confirmAttributed.addAttribute(NSAttributedStringKey.font, value: BackupConfirmationTheme.regularFont, range: NSMakeRange(0, confirm.count))
+        confirmAttributed.addAttribute(NSAttributedStringKey.font, value: ConfirmationTheme.regularFont, range: NSMakeRange(0, confirm.count))
         confirmTexts.append(confirmAttributed)
-        confirmTexts.append(NSAttributedString(string: "backup.confirmation.delete_app_warn".localized, attributes: [NSAttributedStringKey.font: BackupConfirmationTheme.regularFont]))
+        confirmTexts.append(NSAttributedString(string: "backup.confirmation.delete_app_warn".localized, attributes: [NSAttributedStringKey.font: ConfirmationTheme.regularFont]))
 
-        let buttonItem = BackupButtonItem(tag: confirmItems.count, required: true, onTap: {
+        let buttonItem = ConfirmationButtonItem(tag: confirmItems.count, required: true, onTap: {
             self.dismiss?(true)
         })
         confirmTexts.enumerated().forEach { (index, string) in
-            let item = BackupCheckboxItem(descriptionText: string, tag: index, required: true) { [weak self] view in
-                if let view = view as? BackupCheckboxView, let item = view.item {
+            let item = ConfirmationCheckboxItem(descriptionText: string, tag: index, required: true) { [weak self] view in
+                if let view = view as? ConfirmationCheckboxView, let item = view.item {
                     item.checked = !item.checked
                     buttonItem.isActive = (self?.confirmItems.filter { $0.checked == false })?.isEmpty ?? false
                     self?.reload?()
                 }
             }
             item.showSeparator = false
-            item.height =  BackupCheckboxItem.height(for: string)
+            item.height =  ConfirmationCheckboxItem.height(for: string)
             addItemView(item)
             confirmItems.append(item)
         }

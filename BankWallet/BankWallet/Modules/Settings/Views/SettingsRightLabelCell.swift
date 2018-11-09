@@ -24,8 +24,4 @@ class SettingsRightLabelCell: SettingsCell {
         rightLabel.text = rightText
     }
 
-    override func bind(titleIcon: UIImage?, title: String, showDisclosure: Bool, last: Bool = false) {
-        fatalError("use bind with right text")
-    }
-
 }

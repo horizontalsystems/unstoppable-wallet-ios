@@ -1,7 +1,6 @@
 import Foundation
 
 class UserDefaultsStorage: ILocalStorage {
-    private let keyWords = "mnemonic_words"
     private let keyIsBackedUp = "is_backed_up"
     private let keyCurrentLanguage = "current_language"
     private let keyBaseCurrencyCode = "base_currency_code"

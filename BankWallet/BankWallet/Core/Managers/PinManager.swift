@@ -1,8 +1,26 @@
-class PinManager {
-    private let secureStorage: ISecureStorage
+import RxSwift
 
-    init(secureStorage: ISecureStorage) {
+class PinManager {
+    private let disposeBag = DisposeBag()
+
+    private let secureStorage: ISecureStorage
+    private let wordsManager: IWordsManager
+
+    init(secureStorage: ISecureStorage, wordsManager: IWordsManager) {
         self.secureStorage = secureStorage
+        self.wordsManager = wordsManager
+
+        wordsManager.loggedInSubject
+                .subscribe(onNext: { [weak self] loggedIn in
+                    if !loggedIn {
+                        self?.clearPin()
+                    }
+                })
+                .disposed(by: disposeBag)
+    }
+
+    private func clearPin() {
+        try? secureStorage.set(pin: nil)
     }
 
 }

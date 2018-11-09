@@ -1,6 +1,6 @@
 import UIKit
 
-class BackupConfirmationTheme {
+class ConfirmationTheme {
     static let bigMargin: CGFloat = 24
     static let smallMargin: CGFloat = 16
     static let checkboxSize: CGFloat = 24

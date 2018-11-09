@@ -66,7 +66,6 @@ protocol ICoinManager {
 }
 
 protocol ITransactionManager: class {
-    func clear()
 }
 
 enum AdapterState {
@@ -110,7 +109,7 @@ protocol IWordsManager {
     func createWords() throws
     func validate(words: [String]) throws
     func restore(withWords words: [String]) throws
-    func removeWords()
+    func logout()
 }
 
 protocol ILockManager {

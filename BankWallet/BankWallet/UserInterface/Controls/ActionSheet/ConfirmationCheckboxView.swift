@@ -3,26 +3,26 @@ import GrouviExtensions
 import GrouviActionSheet
 import SnapKit
 
-class BackupCheckboxView: BaseActionItemView {
+class ConfirmationCheckboxView: BaseActionItemView {
 
     var checkBox = UIImageView()
     var descriptionLabel = UILabel()
 
-    override var item: BackupCheckboxItem? { return _item as? BackupCheckboxItem }
+    override var item: ConfirmationCheckboxItem? { return _item as? ConfirmationCheckboxItem }
 
     override func initView() {
         super.initView()
         updateCheckBox()
         addSubview(checkBox)
         checkBox.snp.makeConstraints { maker in
-            maker.leading.top.equalToSuperview().offset(BackupConfirmationTheme.bigMargin)
-            maker.width.height.equalTo(BackupConfirmationTheme.checkboxSize)
+            maker.leading.top.equalToSuperview().offset(ConfirmationTheme.bigMargin)
+            maker.width.height.equalTo(ConfirmationTheme.checkboxSize)
         }
         addSubview(descriptionLabel)
         descriptionLabel.snp.makeConstraints { maker in
-            maker.leading.equalTo(self.checkBox.snp.trailing).offset(BackupConfirmationTheme.smallMargin)
-            maker.top.equalToSuperview().offset(BackupConfirmationTheme.bigMargin)
-            maker.trailing.equalToSuperview().offset(-BackupConfirmationTheme.bigMargin)
+            maker.leading.equalTo(self.checkBox.snp.trailing).offset(ConfirmationTheme.smallMargin)
+            maker.top.equalToSuperview().offset(ConfirmationTheme.bigMargin)
+            maker.trailing.equalToSuperview().offset(-ConfirmationTheme.bigMargin)
         }
         descriptionLabel.numberOfLines = 0
         descriptionLabel.attributedText = item?.descriptionText

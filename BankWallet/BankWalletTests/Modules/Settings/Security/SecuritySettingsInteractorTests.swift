@@ -23,10 +23,12 @@ class SecuritySettingsInteractorTests: XCTestCase {
 
         stub(mockDelegate) { mock in
             when(mock.didBackup()).thenDoNothing()
+            when(mock.didUnlink()).thenDoNothing()
         }
         stub(mockWordsManager) { mock in
             when(mock.isBackedUp.get).thenReturn(true)
             when(mock.backedUpSubject.get).thenReturn(backedUpSubject)
+            when(mock.logout()).thenDoNothing()
         }
         stub(mockLocalStorage) { mock in
             when(mock.isBiometricOn.get).thenReturn(true)
@@ -97,6 +99,13 @@ class SecuritySettingsInteractorTests: XCTestCase {
     func testSetBiometricUnlockOff() {
         interactor.set(biometricUnlockOn: false)
         verify(mockLocalStorage).isBiometricOn.set(false)
+    }
+
+    func testUnlink() {
+        interactor.unlink()
+
+        verify(mockWordsManager).logout()
+        verify(mockDelegate).didUnlink()
     }
 
 }

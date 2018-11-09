@@ -3,7 +3,7 @@ import GrouviActionSheet
 import SnapKit
 
 class BaseButtonItemView: BaseActionItemView {
-    override var item: BaseButtonItem? { return _item as? BackupButtonItem }
+    override var item: BaseButtonItem? { return _item as? BaseButtonItem }
     var button = RespondButton()
 
     override func initView() {

@@ -83,17 +83,19 @@ class SecuritySettingsViewController: UIViewController, SectionsDataSource {
         var backupRows = [RowProtocol]()
         let securityAttentionImage = backedUp ? nil : UIImage(named: "Attention Icon")
         backupRows.append(Row<SettingsRightImageCell>(id: "backup_wallet", height: SettingsTheme.securityCellHeight, autoDeselect: true, bind: { cell, _ in
-            cell.bind(titleIcon: nil, title: "settings_security.backup_wallet".localized, rightImage: securityAttentionImage, rightImageTintColor: SettingsTheme.attentionIconTint, showDisclosure: true)
+            cell.bind(titleIcon: nil, title: "settings_security.backup_wallet".localized, rightImage: securityAttentionImage, rightImageTintColor: SettingsTheme.attentionIconTint, showDisclosure: true, last: true)
         }, action: { [weak self] _ in
             self?.delegate.didTapBackupWallet()
         }))
-        backupRows.append(Row<SettingsCell>(id: "unlink", hash: "unlink", height: SettingsTheme.cellHeight, bind: { cell, _ in
-            cell.selectionStyle = .default
-            cell.bind(titleIcon: nil, title: "settings_security.unlink_from_this_device".localized, showDisclosure: true, last: true)
+        sections.append(Section(id: "backup", headerState: .margin(height: SettingsTheme.subSettingsHeaderHeight), footerState: .margin(height: SettingsTheme.subSettingsHeaderHeight), rows: backupRows))
+
+        var unlinkRows = [RowProtocol]()
+        unlinkRows.append(Row<SettingsCell>(id: "unlink", hash: "unlink", height: SettingsTheme.cellHeight, autoDeselect: true, bind: { cell, _ in
+            cell.bind(titleIcon: nil, title: "settings_security.unlink_from_this_device".localized, titleColor: SettingsTheme.destructiveTextColor, showDisclosure: true, last: true)
         }, action: { [weak self] _ in
             self?.delegate.didTapUnlink()
         }))
-        sections.append(Section(id: "backup", headerState: .margin(height: SettingsTheme.subSettingsHeaderHeight), footerState: .margin(height: SettingsTheme.subSettingsHeaderHeight), rows: backupRows))
+        sections.append(Section(id: "unlink", headerState: .margin(height: SettingsTheme.subSettingsHeaderHeight), footerState: .margin(height: SettingsTheme.subSettingsHeaderHeight), rows: unlinkRows))
 
         return sections
     }
@@ -124,6 +126,14 @@ extension SecuritySettingsViewController: ISecuritySettingsView {
     func set(backedUp: Bool) {
         self.backedUp = backedUp
         reloadIfNeeded()
+    }
+
+    func showUnlinkConfirmation() {
+        UnlinkConfirmationAlertModel.show(from: self) { [weak self] success in
+            if success {
+                self?.delegate.didConfirmUnlink()
+            }
+        }
     }
 
 }
