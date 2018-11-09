@@ -119,11 +119,7 @@
 
 "settings_about_title" = "Info";
 "settings_about_terms_privacy_subtitle" = "ANB & Datenschutz:";
-"settings_about_terms_privacy_text" = "Ihre Mittel sind in der BANK Wallet-app gespeichert. Nicht auf irgendwelche externen Servern.\n\nBANK Brieftasche nicht speichern oder keine privaten Informationen zu sammeln.\n\nBANK Brieftasche nicht auf jedem Server oder die Person, die Funktion abhängen.\n\nBANK Wallet funktioniert überall, solange das Internet.\n\nIt ist unmöglich, dass ein Dritter die Geldbörse von der Arbeit zu blockieren oder der Benutzer sperren.\n\nThe gesamten Code Einschalten der BANK Wallet ist kostenlos und offen für die Öffentlichkeit.\n\nThere möglicherweise Fehler im Code. Stellen Sie sicher Sie sichern Sie immer einen geheimen Schlüssel für Ihren Geldbeutel!";
-
-"settings_about_dependencies_subtitle" = "Abhängigkeiten:";
-"settings_about_dependencies_text" = "Es gibt einige Drittanbieter-Dienste von der BANK Wallet für unwichtige Daten für die Brieftasche verwendet.\n\n1. IPFS dezentrale Lagerung\n        \n• speichert aktuelle Wechselkurse,\n\n• shops Münze Informationen,\n\n• filialen \"Empfohlene\" Transaktionsgebühren\n\n• die eine Liste der speichert unterstützten Basiswährungen\n\n• speichert öffentlichen Blockchain Dada\n\n2. CryptoCompare.com - verwendet, um aktuelle Markt-Wechselkurs zu erhalten.\n\n3. Etherscan.io - verwendet, um eine Liste der letzten Transaktionen für eine gegebene Adresse des Astraleums abzurufen.\n\n4. Infura.io - ein öffentliches Tor zur Ethereum Blockchain.";
-
+"settings_about_terms_privacy_text" = "Your funds are securely stored on your device. Not on any external servers.\n\nThe app does not depend on any server or person to function.\n\nSome generic app data like exchange rates are stored on decentralized storage (IPFS).\n\nThe app works everywhere as long as there is an internet connection.\n\nIt is impossible for a third party to block this app from working.\n\nThe entire code powering this app is free and open to the public.\n\nThere may be bugs in the code. And while we tried to provide the most secure wallet we still can not guarantee the security of your funds. No one can.\n\nMake sure you backup a Secret Key for your wallet! Never show your secret key to anyone.\n\nDo not jailbreak your phone or install apps from unknown (untrusted) sources.\n\nDo not give your device to untrusted parties.\n\nYou are solely responsible for keeping your Secret Key and your device secure.";
 
 
 "settings_security.title" = "Sicherheits-Center";
