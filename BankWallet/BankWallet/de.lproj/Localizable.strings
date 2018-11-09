@@ -14,7 +14,7 @@
 "alert.close" = "Schließen";
 "alert.success" = "Erfolgreich";
 "alert.copied" = "Kopiert";
-"alert_confirm" = "Confirm";
+"alert_confirm" = "Bestätigen";
 
 "access.camera.message" = "Wir brauchen Zugriff auf deine Kamera um QR-code scannen.\nRufe die Einstellungen auf, um den Zugriff auf die Kamera zu erlauben";
 "access.settings" = "Einstellungen";
