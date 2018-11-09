@@ -14,7 +14,7 @@
 "alert.close" = "Закрыть";
 "alert.success" = "Успешно";
 "alert.copied" = "Скопировано";
-"alert_confirm" = "Confirm";
+"alert_confirm" = "Подтвердить";
 
 "access.camera.message" = "Необходим доступ к вашей камере для QR-код.\n\nПерейдите \"Настройки\", чтобы разрешить доступ к камере.";
 "access.settings" = "Настройки";
@@ -73,7 +73,7 @@
 "transactions.from" = "от";
 "transactions.to" = "кому";
 "transactions.filter_all" = "Все";
-"transactions_empty_text" = "You don't have any pending or past transactions yet";
+"transactions_empty_text" = "У Вас ещё нет ожидаемых или прошлых транзакций ";
 
 "tx_info.bottom_sheet.title" = "Транзакция";
 "tx_info.bottom_sheet.title_received" = "Получено";
@@ -135,16 +135,16 @@
 "settings_security.change_pin" = "Изменить PIN";
 "settings_security.touch_id" = "Touch ID";
 "settings_security.face_id" = "Face ID";
-"security_settings_unlink_alert_button" = "Unlink";
-"settings_security_import_wallet_confirmation_1" = "This action will remove the currently installed wallet from this device.";
-"settings_security_import_wallet_confirmation_2" = "Make sure you have its Secret Key or you will not be able to access the funds on it in the future.";
+"security_settings_unlink_alert_button" = "Отсоединить";
+"settings_security_import_wallet_confirmation_1" = "Это действие удалит ваш кошелёк с этого устройства.";
+"settings_security_import_wallet_confirmation_2" = "Убедитесь, что у вас есть свой секретный ключ, иначе вы сможете получить доступ к денежным средствам.";
 
 
 "set_pin_controller.title" = "Установить PIN";
 "set_pin_controller.info" = "Ваш PIN-код будет использоваться для разблокировки вашего кошелька и отправки денег";
 "set_pin_controller.wrong_confirmation" = "PIN-код не совпадает. ";
 "confirm_pin_controller.title" = "Введите еще раз";
-"confirm_pin_controller.info" = "Подтвердите PIN-код";
+"confirm_pin_controller.info" = "Подтвердить PIN-код";
 "edit_pin_controller.title" = "Обновить PIN-код";
 "edit_pin_controller.info" = "Ваш PIN-код будет использоваться для разблокировки вашего кошелька и отправки денег";
 "edit_pin.unlock_info" = "Введите текущий PIN-код";
