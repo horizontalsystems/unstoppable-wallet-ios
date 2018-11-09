@@ -73,10 +73,7 @@
 "transactions.from" = "از";
 "transactions.to" = "به";
 "transactions.filter_all" = "همه";
-"transactions.filter_rBitcoin" = "Bitcoin-R";
-"transactions.filter_tBitcoin Cash" = "Bitcoin-T Cash";
-"transactions.filter_Bitcoin" = "Bitcoin";
-
+"transactions_empty_text" = "You don't have any pending or past transactions yet";
 
 "tx_info.bottom_sheet.title" = "معاملات";
 "tx_info.bottom_sheet.title_received" = "دريافت شد";
