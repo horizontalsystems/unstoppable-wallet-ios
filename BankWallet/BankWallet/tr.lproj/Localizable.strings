@@ -119,11 +119,7 @@
 
 "settings_about_title" = "Hakkında";
 "settings_about_terms_privacy_subtitle" = "Şartlar & Gizlilik Politikası:";
-"settings_about_terms_privacy_text" = "Hesaplarınız BANK Wallet uygulamasında bulunuyor. Herhangi bir sunucuda değil.\n\nBANK Wallet herhangi bir kişisel bilgi toplamaz.\n\nBANK Wallet, öalışmak için herhangi bir sunucuya veya şahsa ihtiyaç duymaz.\n\nBANK Wallet, internet bağlantısı olduğu müddetçe heryerde çalışabilir.\n\n3. şahsın, herhangi bir cüzdanı veya kişiyi sistemden atması veya engellemesi imkansızdır.\n\nBANK Wallet uygulaması açık kaynak kodludur ve herkez tarafından görülebilir.\n\nUygulamada gözden kaçmış hatalar bulunabilir. Cüzdanınızı Gizli Anahtar ile yedekleyiniz!";
-
-"settings_about_dependencies_subtitle" = "Gereksinimler:";
-"settings_about_dependencies_text" = "Banka Cüzdanı uygulaması ihtiyaç duyduğu bazı kritik olmayan bilgileri 3. şahıs kaynaklardan almaktadır.\n\n1. IPFS Bağımsız Depo\n  • güncel döviz kurlarını depolar,\n  • döviz bilgilerini depolar,\n  • \"tavsiye edilen\" hesap işlemi ücretini depolar,\n  • desteklenen dövizlerin listesini depolar,\n  • halka açık Blockchain bilgisini depolar\n\n2. CryptoCompare.com - dövizlerin market değerlerini güncellemek için.\n\n3. Etherscan.io - istenilen bir Ethereum adresinin geçmiş ödemelerinin listesi için.\n\n4. Infura.io - Ethereum Blockchain için halka açık geçiş.";
-
+"settings_about_terms_privacy_text" = "Your funds are securely stored on your device. Not on any external servers.\n\nThe app does not depend on any server or person to function.\n\nSome generic app data like exchange rates are stored on decentralized storage (IPFS).\n\nThe app works everywhere as long as there is an internet connection.\n\nIt is impossible for a third party to block this app from working.\n\nThe entire code powering this app is free and open to the public.\n\nThere may be bugs in the code. And while we tried to provide the most secure wallet we still can not guarantee the security of your funds. No one can.\n\nMake sure you backup a Secret Key for your wallet! Never show your secret key to anyone.\n\nDo not jailbreak your phone or install apps from unknown (untrusted) sources.\n\nDo not give your device to untrusted parties.\n\nYou are solely responsible for keeping your Secret Key and your device secure.";
 
 
 "settings_security.title" = "Güvenlik Merkezi";
