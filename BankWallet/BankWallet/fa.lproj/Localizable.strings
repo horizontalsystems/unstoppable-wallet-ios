@@ -119,11 +119,7 @@
 
 "settings_about_title" = "در باره ما";
 "settings_about_terms_privacy_subtitle" = "شرايط & حريم خصوصي:";
-"settings_about_terms_privacy_text" = "سرمایه خود را در کیف پول بانک برنامه ذخیره می شود. نه در هر سرور خارجی.\n\n\nBANK كيف پول بانك هيچ نوع معلومات شخصي نميخواهد\n\n\nBANK کیف پول بانك به هيچ شخص يا سرفر و يا كدام حزب بستگي ندارد\n\n\nBANK کیف پول کار می کند همه جا كي انترنت باشد.\n\n\nIt غیر ممکن است برای شخص سوم تا كي كيف پول يا فرد را از كار مسدود كند\n\n\nThe\\ قدرت دادن بر كيف پول به روي عموم باز است\n\n\nThere ممکن است اشکالات در صورت بگيرد. پس مطمعاً باشيد كي هميشه يك رمز مخفي براي كيف پول خود داريد!";
-
-"settings_about_dependencies_subtitle" = "وابستگی ها:";
-"settings_about_dependencies_text" = "برخی از خدمات شخص ثالث مورد استفاده توسط کیف پول بانک برای داده های غیر بحرانی برای کیف پول وجود دارد.\n\n1. •\n\n  IPFS غیر متمرکز ذخیره سازی نرخ ارز فروشگاه\n\n  • فروشگاه اطلاعات سكه،\n\n  • فروشگاه کارمزدی \"توصیه شده\"\n\n  • فهرست پشتیبانی از ارزهای پایه\n\n  • فروشگاه blockchain عمومی داده\n\n2  CryptoCompare.com - به دست آوردن نرخ ارز بازار استفاده می شود.\n\n3. Etherscan.io - مورد استفاده برای بازیابی لیست معاملات گذشته برای آدرس داده شده Ethereum.\n\n4. Infura.io - دروازه عمومی به Ethereum Blockchain.";
-
+"settings_about_terms_privacy_text" = "Your funds are securely stored on your device. Not on any external servers.\n\nThe app does not depend on any server or person to function.\n\nSome generic app data like exchange rates are stored on decentralized storage (IPFS).\n\nThe app works everywhere as long as there is an internet connection.\n\nIt is impossible for a third party to block this app from working.\n\nThe entire code powering this app is free and open to the public.\n\nThere may be bugs in the code. And while we tried to provide the most secure wallet we still can not guarantee the security of your funds. No one can.\n\nMake sure you backup a Secret Key for your wallet! Never show your secret key to anyone.\n\nDo not jailbreak your phone or install apps from unknown (untrusted) sources.\n\nDo not give your device to untrusted parties.\n\nYou are solely responsible for keeping your Secret Key and your device secure.";
 
 
 "settings_security.title" = "مركز امنيتي";
