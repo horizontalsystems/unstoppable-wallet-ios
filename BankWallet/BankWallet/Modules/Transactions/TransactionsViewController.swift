@@ -12,6 +12,7 @@ class TransactionsViewController: UITableViewController {
 
     private let cellName = String(describing: TransactionCell.self)
 
+    private let emptyLabel = UILabel()
     private let filterHeaderView = TransactionCurrenciesHeaderView()
 
     init(delegate: ITransactionsViewDelegate) {
@@ -40,6 +41,21 @@ class TransactionsViewController: UITableViewController {
         tableView.separatorInset = UIEdgeInsets(top: 0, left: .greatestFiniteMagnitude, bottom: 0, right: 0)
         tableView.estimatedRowHeight = 0
         tableView.delaysContentTouches = false
+
+        let emptyView = UIView()
+        emptyView.backgroundColor = .clear
+        tableView.backgroundView = emptyView
+
+        emptyLabel.text = "transactions_empty_text".localized
+        emptyLabel.numberOfLines = 0
+        emptyLabel.font = .systemFont(ofSize: 14)
+        emptyLabel.textColor = .cryptoGray
+        emptyLabel.textAlignment = .center
+        emptyView.addSubview(emptyLabel)
+        emptyLabel.snp.makeConstraints { maker in
+            maker.center.equalToSuperview()
+            maker.leadingMargin.trailingMargin.equalToSuperview().offset(50)
+        }
 
         refreshControl = UIRefreshControl()
         refreshControl?.addTarget(self, action: #selector(onRefresh), for: .valueChanged)
@@ -80,7 +96,11 @@ extension TransactionsViewController: ITransactionsView {
 extension TransactionsViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return delegate.itemsCount
+        let count = delegate.itemsCount
+
+        emptyLabel.isHidden = count > 0
+
+        return count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -108,7 +128,7 @@ extension TransactionsViewController {
     }
 
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        return delegate.itemsCount > 0 ? filterHeaderView : nil
+        return filterHeaderView
     }
 
 }

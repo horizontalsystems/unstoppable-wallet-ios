@@ -75,10 +75,7 @@ Go to Settings - > Bank and allow access to Camera.";
 "transactions.from" = "from";
 "transactions.to" = "to";
 "transactions.filter_all" = "All";
-"transactions.filter_rBitcoin" = "Bitcoin-R";
-"transactions.filter_tBitcoin Cash" = "Bitcoin-T Cash";
-"transactions.filter_Bitcoin" = "Bitcoin";
-
+"transactions_empty_text" = "You don't have any pending or past transactions yet";
 
 "tx_info.bottom_sheet.title" = "Transaction";
 "tx_info.bottom_sheet.title_received" = "Received";
