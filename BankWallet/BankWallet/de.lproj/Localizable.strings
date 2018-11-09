@@ -154,4 +154,4 @@
 
 "unlock.cant_save_pin" = "Autsch! Wir können den PIN nicht speichern, kontaktieren Sie uns bitte so schnell wie möglich!";
 
-"deposit_receive_coin" = "Receive %@";
+"deposit_receive_coin" = "Erhalten %@";
