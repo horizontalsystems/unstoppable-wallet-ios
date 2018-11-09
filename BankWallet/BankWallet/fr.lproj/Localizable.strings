@@ -14,7 +14,7 @@
 "alert.close" = "Fermer";
 "alert.success" = "Effectué";
 "alert.copied" = "Copié";
-"alert_confirm" = "Confirm";
+"alert_confirm" = "Confirmer";
 
 "access.camera.message" = "La Banque a besoin d’accéder à votre camerà pour scanner le code QR.\n\nAllez dans Paramètres - > Banque et permettez d’accéder à la caméra.";
 "access.settings" = "Paramètres";
@@ -136,8 +136,8 @@
 "settings_security.touch_id" = "Touch ID";
 "settings_security.face_id" = "Face ID";
 "security_settings_unlink_alert_button" = "Unlink";
-"settings_security_import_wallet_confirmation_1" = "This action will remove the currently installed wallet from this device.";
-"settings_security_import_wallet_confirmation_2" = "Make sure you have its Secret Key or you will not be able to access the funds on it in the future.";
+"settings_security_import_wallet_confirmation_1" = "Cette action supprimera le porte-monnaie actuellement installé sur cet appareil.";
+"settings_security_import_wallet_confirmation_2" = "Assurez-vous de disposer de la clé secrète, sinon vous ne pourrez plus accéder aux fonds.";
 
 
 "set_pin_controller.title" = "Définir le PIN";
