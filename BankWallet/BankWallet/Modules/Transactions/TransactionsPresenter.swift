@@ -5,10 +5,12 @@ class TransactionsPresenter {
     weak var view: ITransactionsView?
     private let interactor: ITransactionsInteractor
     private let router: ITransactionsRouter
+    private let factory: ITransactionViewItemFactory
 
-    init(interactor: ITransactionsInteractor, router: ITransactionsRouter) {
+    init(interactor: ITransactionsInteractor, router: ITransactionsRouter, factory: ITransactionViewItemFactory) {
         self.interactor = interactor
         self.router = router
+        self.factory = factory
     }
 
 }
@@ -21,7 +23,7 @@ extension TransactionsPresenter: ITransactionsViewDelegate {
     }
 
     func onTransactionItemClick(transaction: TransactionViewItem) {
-        router.openTransactionInfo(transaction: transaction)
+        router.openTransactionInfo(transactionHash: transaction.transactionHash)
     }
 
     func refresh() {
@@ -38,32 +40,7 @@ extension TransactionsPresenter: ITransactionsViewDelegate {
 
     func item(forIndex index: Int) -> TransactionViewItem {
         let record = interactor.record(forIndex: index)
-
-        let convertedValue = record.rate == 0 ? nil : record.rate * record.amount
-
-        var status: TransactionStatus = .pending
-
-        if record.blockHeight != 0, let adapter = interactor.adapter(forCoin: record.coin), let lastBlockHeight = adapter.lastBlockHeight {
-            let confirmations = lastBlockHeight - record.blockHeight + 1
-            let threshold = adapter.confirmationsThreshold
-
-            if confirmations >= threshold {
-                status = .completed
-            } else {
-                status = .processing(progress: Double(confirmations) / Double(threshold))
-            }
-        }
-
-        return TransactionViewItem(
-                transactionHash: record.transactionHash,
-                coinValue: CoinValue(coin: record.coin, value: record.amount),
-                currencyValue: convertedValue.map { CurrencyValue(currency: interactor.baseCurrency, value: $0) },
-                from: record.from.first(where: { !$0.mine })?.address,
-                to: record.to.first(where: { !$0.mine })?.address,
-                incoming: record.amount > 0,
-                date: record.timestamp == 0 ? nil : Date(timeIntervalSince1970: Double(record.timestamp)),
-                status: status
-        )
+        return factory.item(fromRecord: record)
     }
 
 }

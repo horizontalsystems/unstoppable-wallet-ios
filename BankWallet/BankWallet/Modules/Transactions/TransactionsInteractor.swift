@@ -8,15 +8,13 @@ class TransactionsInteractor {
 
     private let walletManager: IWalletManager
     private let exchangeRateManager: IRateManager
-    private let currencyManager: ICurrencyManager
     private let dataSource: ITransactionRecordDataSource
 
     private let refreshTimeout: Double
 
-    init(walletManager: IWalletManager, exchangeRateManager: IRateManager, currencyManager: ICurrencyManager, dataSource: ITransactionRecordDataSource, refreshTimeout: Double = 2) {
+    init(walletManager: IWalletManager, exchangeRateManager: IRateManager, dataSource: ITransactionRecordDataSource, refreshTimeout: Double = 2) {
         self.walletManager = walletManager
         self.exchangeRateManager = exchangeRateManager
-        self.currencyManager = currencyManager
         self.dataSource = dataSource
 
         self.refreshTimeout = refreshTimeout
@@ -38,20 +36,12 @@ extension TransactionsInteractor: ITransactionsInteractor {
         dataSource.set(coin: coin)
     }
 
-    var baseCurrency: Currency {
-        return currencyManager.baseCurrency
-    }
-
     var recordsCount: Int {
         return dataSource.count
     }
 
     func record(forIndex index: Int) -> TransactionRecord {
         return dataSource.record(forIndex: index)
-    }
-
-    func adapter(forCoin coin: Coin) -> IAdapter? {
-        return walletManager.wallets.first(where: { $0.coin == coin })?.adapter
     }
 
     func retrieveFilters() {

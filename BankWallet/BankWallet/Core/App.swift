@@ -45,6 +45,8 @@ class App {
     let transactionRateSyncer: ITransactionRateSyncer
     let transactionManager: ITransactionManager
 
+    let transactionViewItemFactory: ITransactionViewItemFactory
+
     init() {
         pasteboardManager = PasteboardManager()
 
@@ -90,6 +92,8 @@ class App {
 
         transactionRateSyncer = TransactionRateSyncer(storage: realmStorage, networkManager: networkManager)
         transactionManager = TransactionManager(storage: realmStorage, rateSyncer: transactionRateSyncer, walletManager: walletManager, currencyManager: currencyManager, wordsManager: wordsManager)
+
+        transactionViewItemFactory = TransactionViewItemFactory(walletManager: walletManager, currencyManager: currencyManager)
     }
 
 }
