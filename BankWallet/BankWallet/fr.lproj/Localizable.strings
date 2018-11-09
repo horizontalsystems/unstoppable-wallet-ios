@@ -14,6 +14,7 @@
 "alert.close" = "Fermer";
 "alert.success" = "Effectué";
 "alert.copied" = "Copié";
+"alert_confirm" = "Confirm";
 
 "access.camera.message" = "La Banque a besoin d’accéder à votre camerà pour scanner le code QR.\n\nAllez dans Paramètres - > Banque et permettez d’accéder à la caméra.";
 "access.settings" = "Paramètres";
@@ -43,7 +44,7 @@
 "backup.confirmation.failure_alert.text" = "Les mots ne correspondent pas";
 "backup.confirmation.understand" = "Je comprends que mon porte-monnaie et mes tokens sont en toute sécurité sur cet appareil uniquement et pas sur les autres appareils.";
 "backup.confirmation.delete_app_warn" = "Je comprends que si cette appli est déplacée vers un autre appareil ou supprimée, mon porte-monnaie ne peut être récupéré qu'avec la clé secrète que je viens d'écrire et de sauvegarder dans un endroit sécurisé";
-"backup.confirmation.confirm" = "Confirmer";
+
 
 "wallet.title" = "Balance";
 "wallet.tab_bar_item" = "Balance";
@@ -137,6 +138,9 @@
 "settings_security.change_pin" = "Modifier le PIN";
 "settings_security.touch_id" = "Touch ID";
 "settings_security.face_id" = "Face ID";
+"settings_security_import_wallet_confirmation_1" = "This action will remove the currently installed wallet from this device.";
+"settings_security_import_wallet_confirmation_2" = "Make sure you have its Secret Key or you will not be able to access the funds on it in the future.";
+
 
 "set_pin_controller.title" = "Définir le PIN";
 "set_pin_controller.info" = "Votre Pin sera utilisé pour déverrouiller votre porte-monnaie et envoyer de l’argent";
