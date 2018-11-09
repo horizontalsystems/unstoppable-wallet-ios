@@ -119,11 +119,7 @@
 
 "settings_about_title" = "О нас";
 "settings_about_terms_privacy_subtitle" = "Условия & Политика конфиденциальности:";
-"settings_about_terms_privacy_text" = "Ваши средства хранятся в приложении Bank Wallet. Не на внешних серверах.\n\nBANK Wallet не хранит или собирает любую частную информацию.\n\nBANK Wallet не зависит от любой сервер или лицо функции.\n\nBANK Wallet работает везде, пока есть Интернет.\n\nТретье лицо не может заблокировать кошелёк от работы или заблокировать пользователя.\n\nКод BANK Wallet является бесплатным и открытым для общественности.\n\nМогут быть ошибки в коде. Убедитесь, что вы делали резервную копию секретного ключа для вашего кошелька!";
-
-"settings_about_dependencies_subtitle" = "Зависимости:";
-"settings_about_dependencies_text" = "Есть некоторые сторонние услуги, используемые BANK Wallet  для некритических данных для бумажника.\n1. IPFS децентрализованного хранения\n        \n•  сохраняет текущие обменные курсы,\n•  хранит крипто информацию,\n•  хранит «рекомендованные» операционные издержки\n•  хранит список поддерживаемых базовых валют\n•  хранит общественного blockchain Дада\n2. CryptoCompare.com - используется для получения текущих рыночных обменных курсов.\n3. Etherscan.io - используется для получения списка последних транзакций для заданного адреса Ethereum.\n4. Infura.io - общественный шлюз Ethereum Blockchain.";
-
+"settings_about_terms_privacy_text" = "Your funds are securely stored on your device. Not on any external servers.\n\nThe app does not depend on any server or person to function.\n\nSome generic app data like exchange rates are stored on decentralized storage (IPFS).\n\nThe app works everywhere as long as there is an internet connection.\n\nIt is impossible for a third party to block this app from working.\n\nThe entire code powering this app is free and open to the public.\n\nThere may be bugs in the code. And while we tried to provide the most secure wallet we still can not guarantee the security of your funds. No one can.\n\nMake sure you backup a Secret Key for your wallet! Never show your secret key to anyone.\n\nDo not jailbreak your phone or install apps from unknown (untrusted) sources.\n\nDo not give your device to untrusted parties.\n\nYou are solely responsible for keeping your Secret Key and your device secure.";
 
 
 "settings_security.title" = "Безопасность";
