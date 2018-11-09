@@ -73,10 +73,7 @@
 "transactions.from" = "von";
 "transactions.to" = "an";
 "transactions.filter_all" = "Alle";
-"transactions.filter_rBitcoin" = "Bitcoin-R";
-"transactions.filter_tBitcoin Cash" = "Bitcoin-T Cash";
-"transactions.filter_Bitcoin" = "Bitcoin";
-
+"transactions_empty_text" = "You don't have any pending or past transactions yet";
 
 "tx_info.bottom_sheet.title" = "Transaktion";
 "tx_info.bottom_sheet.title_received" = "Erhalten";
