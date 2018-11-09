@@ -14,6 +14,7 @@
 "alert.close" = "ببند";
 "alert.success" = "موفقيت";
 "alert.copied" = "کپی انجام شد";
+"alert_confirm" = "Confirm";
 
 "access.camera.message" = "بانك ضرورت دسترسي به دوربين دارد بخاطر اسكن كردن QR كد.\nبرويد به تنظيمات -> اجازه دهيد تا بانك دسترسي به دوربين داشته باشد.";
 "access.settings" = "تنظيمات";
@@ -43,7 +44,7 @@
 "backup.confirmation.failure_alert.text" = "ارقام با هم شباهت ندارند";
 "backup.confirmation.understand" = "من فهميدم كي پول كيف من و توكن هاي من همه شان حفظ و امانط است در اين دستگاه و نخير در ديگر سيرفير ها.";
 "backup.confirmation.delete_app_warn" = "من فهميدم كي اگر اين اپليكيشن خذف يا انتقال كند به دستگاه ديگر,تنها من با رمز مخفي كي نوشتم كي ميتوانم دوباره دسترسي پيدا كنم";
-"backup.confirmation.confirm" = "تاييد";
+
 
 "wallet.title" = "بالانس";
 "wallet.tab_bar_item" = "بالانس";
@@ -137,6 +138,9 @@
 "settings_security.change_pin" = "ويرايش پين";
 "settings_security.touch_id" = "شناس نامه اثر انگشت";
 "settings_security.face_id" = "شناسنامه صروت";
+"settings_security_import_wallet_confirmation_1" = "This action will remove the currently installed wallet from this device.";
+"settings_security_import_wallet_confirmation_2" = "Make sure you have its Secret Key or you will not be able to access the funds on it in the future.";
+
 
 "set_pin_controller.title" = "تعيين پين";
 "set_pin_controller.info" = "پين شما براي باز نمودن اپليكشين و ارسال پول استعمال خواهد شد";
