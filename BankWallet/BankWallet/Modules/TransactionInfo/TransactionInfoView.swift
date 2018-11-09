@@ -14,7 +14,7 @@ class TransactionInfoView {
 
 extension TransactionInfoView: ITransactionInfoView {
 
-    func showTransactionItem(transactionRecordViewItem: TransactionRecordViewItem) {
+    func showTransactionItem(transactionRecordViewItem: TransactionViewItem) {
         let transactionInfoAlertModel = TransactionInfoAlertModel(transaction: transactionRecordViewItem, onCopyFromAddress: { [weak self] in
             self?.delegate.onCopyFromAddress()
         }, onFullInfo: { [weak self] in

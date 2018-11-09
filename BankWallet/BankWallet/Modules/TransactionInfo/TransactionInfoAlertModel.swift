@@ -3,7 +3,7 @@ import GrouviActionSheet
 
 class TransactionInfoAlertModel: BaseAlertModel {
 
-    init(transaction: TransactionRecordViewItem, onCopyFromAddress: (() -> ())? = nil, onFullInfo: (() -> ())? = nil) {
+    init(transaction: TransactionViewItem, onCopyFromAddress: (() -> ())? = nil, onFullInfo: (() -> ())? = nil) {
         let titleItem = TransactionTitleItem(transaction: transaction, tag: 0, required: true, onIdTap: {
             onFullInfo?()
         })

@@ -7,7 +7,7 @@ class TransactionsRouter {
 
 extension TransactionsRouter: ITransactionsRouter {
 
-    func openTransactionInfo(transaction: TransactionRecordViewItem) {
+    func openTransactionInfo(transaction: TransactionViewItem) {
         view = TransactionInfoRouter.module(controller: viewController, transaction: transaction)
     }
 

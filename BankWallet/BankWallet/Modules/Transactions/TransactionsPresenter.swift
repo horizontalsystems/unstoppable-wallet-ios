@@ -20,7 +20,7 @@ extension TransactionsPresenter: ITransactionsViewDelegate {
         interactor.retrieveFilters()
     }
 
-    func onTransactionItemClick(transaction: TransactionRecordViewItem) {
+    func onTransactionItemClick(transaction: TransactionViewItem) {
         router.openTransactionInfo(transaction: transaction)
     }
 
@@ -36,12 +36,12 @@ extension TransactionsPresenter: ITransactionsViewDelegate {
         return interactor.recordsCount
     }
 
-    func item(forIndex index: Int) -> TransactionRecordViewItem {
+    func item(forIndex index: Int) -> TransactionViewItem {
         let record = interactor.record(forIndex: index)
 
         let convertedValue = record.rate == 0 ? nil : record.rate * record.amount
 
-        var status: TransactionStatus = .processing
+        var status: TransactionStatus = .pending
 
         if record.blockHeight != 0, let adapter = interactor.adapter(forCoin: record.coin), let lastBlockHeight = adapter.lastBlockHeight {
             let confirmations = lastBlockHeight - record.blockHeight + 1
@@ -50,14 +50,14 @@ extension TransactionsPresenter: ITransactionsViewDelegate {
             if confirmations >= threshold {
                 status = .completed
             } else {
-                status = .verifying(progress: Double(confirmations) / Double(threshold))
+                status = .processing(progress: Double(confirmations) / Double(threshold))
             }
         }
 
-        return TransactionRecordViewItem(
+        return TransactionViewItem(
                 transactionHash: record.transactionHash,
                 coinValue: CoinValue(coin: record.coin, value: record.amount),
-                currencyAmount: convertedValue.map { CurrencyValue(currency: interactor.baseCurrency, value: $0) },
+                currencyValue: convertedValue.map { CurrencyValue(currency: interactor.baseCurrency, value: $0) },
                 from: record.from.first(where: { !$0.mine })?.address,
                 to: record.to.first(where: { !$0.mine })?.address,
                 incoming: record.amount > 0,

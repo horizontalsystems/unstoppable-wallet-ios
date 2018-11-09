@@ -34,8 +34,8 @@ class TransactionsPresenterTests: XCTestCase {
     private let bitcoinStatus = TransactionStatus.completed
     private let etherStatus = TransactionStatus.completed
 
-    private var expectedBitcoinTransactionItem: TransactionRecordViewItem!
-    private var expectedEtherTransactionItem: TransactionRecordViewItem!
+    private var expectedBitcoinTransactionItem: TransactionViewItem!
+    private var expectedEtherTransactionItem: TransactionViewItem!
 
     private var mockBitcoinAdapter: MockIAdapter!
     private var mockEtherAdapter: MockIAdapter!
@@ -83,20 +83,20 @@ class TransactionsPresenterTests: XCTestCase {
         etherRecord.from.append(from1)
         etherRecord.to.append(to1)
 
-        expectedBitcoinTransactionItem = TransactionRecordViewItem(
+        expectedBitcoinTransactionItem = TransactionViewItem(
                 transactionHash: bitcoinRecord.transactionHash,
                 coinValue: CoinValue(coin: bitcoinRecord.coin, value: bitcoinAmount),
-                currencyAmount: CurrencyValue(currency: currency, value: bitcoinAmount * bitcoinRate),
+                currencyValue: CurrencyValue(currency: currency, value: bitcoinAmount * bitcoinRate),
                 from: from.address,
                 to: nil,
                 incoming: true,
                 date: Date(timeIntervalSince1970: Double(bitcoinTransactionTimeStamp)),
                 status: bitcoinStatus
         )
-        expectedEtherTransactionItem = TransactionRecordViewItem(
+        expectedEtherTransactionItem = TransactionViewItem(
                 transactionHash: etherRecord.transactionHash,
                 coinValue: CoinValue(coin: etherRecord.coin, value: etherAmount),
-                currencyAmount: CurrencyValue(currency: currency, value: etherAmount * etherRate),
+                currencyValue: CurrencyValue(currency: currency, value: etherAmount * etherRate),
                 from: nil,
                 to: to1.address,
                 incoming: false,
@@ -202,7 +202,7 @@ class TransactionsPresenterTests: XCTestCase {
     func testOpenTransactionInfo() {
         presenter.onTransactionItemClick(transaction: expectedBitcoinTransactionItem)
 
-        let argumentCaptor = ArgumentCaptor<TransactionRecordViewItem>()
+        let argumentCaptor = ArgumentCaptor<TransactionViewItem>()
         verify(mockRouter).openTransactionInfo(transaction: argumentCaptor.capture())
 
         if let capturedTransaction = argumentCaptor.value {
@@ -226,17 +226,17 @@ class TransactionsPresenterTests: XCTestCase {
         verify(mockView).reload()
     }
 
-    func compare(transactionItem1: TransactionRecordViewItem, transactionItem2: TransactionRecordViewItem) {
+    func compare(transactionItem1: TransactionViewItem, transactionItem2: TransactionViewItem) {
         XCTAssertEqual(transactionItem1.transactionHash, transactionItem2.transactionHash)
         XCTAssertEqual(transactionItem1.coinValue, transactionItem2.coinValue)
-        XCTAssertEqual(transactionItem1.currencyAmount, transactionItem2.currencyAmount)
+        XCTAssertEqual(transactionItem1.currencyValue, transactionItem2.currencyValue)
         XCTAssertEqual(transactionItem1.from, transactionItem2.from)
         XCTAssertEqual(transactionItem1.to, transactionItem2.to)
         XCTAssertEqual(transactionItem1.incoming, transactionItem2.incoming)
         XCTAssertEqual(transactionItem1.date?.timeIntervalSince1970, transactionItem2.date?.timeIntervalSince1970)
-        if case .processing = transactionItem1.status, case .processing = transactionItem2.status {
+        if case .pending = transactionItem1.status, case .pending = transactionItem2.status {
             XCTAssertTrue(true)
-        } else if case let .verifying(progress1) = transactionItem1.status, case let .verifying(progress2) = transactionItem2.status {
+        } else if case let .processing(progress1) = transactionItem1.status, case let .processing(progress2) = transactionItem2.status {
             XCTAssertTrue(progress1 == progress2)
         } else if case .completed = transactionItem1.status, case .completed = transactionItem2.status {
             XCTAssertTrue(true)

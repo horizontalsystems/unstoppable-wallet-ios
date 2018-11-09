@@ -9,7 +9,7 @@ class TransactionTitleItem: BaseActionItem {
     let onIdTap: (() -> ())?
 
 
-    init(transaction: TransactionRecordViewItem, tag: Int? = nil, hidden: Bool = false, required: Bool = false, onIdTap: (() -> ())? = nil) {
+    init(transaction: TransactionViewItem, tag: Int? = nil, hidden: Bool = false, required: Bool = false, onIdTap: (() -> ())? = nil) {
         date = transaction.date
         transactionId = transaction.transactionHash
         self.onIdTap = onIdTap

@@ -83,23 +83,23 @@ class TransactionCell: UITableViewCell {
         fatalError("not implemented")
     }
 
-    func bind(item: TransactionRecordViewItem) {
+    func bind(item: TransactionViewItem) {
         dateLabel.text = (item.date.map { DateHelper.instance.formatTransactionDate(from: $0) })?.uppercased()
         timeLabel.text = item.date.map { DateHelper.instance.formatTransactionTime(from: $0) }
 
         amountLabel.textColor = item.incoming ? TransactionsTheme.incomingTextColor : TransactionsTheme.outgoingTextColor
         amountLabel.text = ValueFormatter.instance.format(coinValue: item.coinValue, explicitSign: true)
 
-        if let value = item.currencyAmount, let formattedValue = ValueFormatter.instance.format(currencyValue: value, approximate: true) {
+        if let value = item.currencyValue, let formattedValue = ValueFormatter.instance.format(currencyValue: value, approximate: true) {
             fiatAmountLabel.text = formattedValue
         } else {
             fiatAmountLabel.text = "n/a"
         }
 
         switch item.status {
-        case .processing:
+        case .pending:
             statusImageView.image = UIImage(named: "Transaction Processing Icon")
-        case .verifying:
+        case .processing:
             statusImageView.image = UIImage(named: "Transaction Processing Icon")
         case .completed:
             statusImageView.image = UIImage(named: "Transaction Success Icon")

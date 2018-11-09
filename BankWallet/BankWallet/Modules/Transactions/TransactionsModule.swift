@@ -1,9 +1,22 @@
 import RealmSwift
 
 enum TransactionStatus {
-    case processing
-    case verifying(progress: Double)
+    case pending
+    case processing(progress: Double)
     case completed
+}
+
+extension TransactionStatus: Equatable {
+
+    public static func ==(lhs: TransactionStatus, rhs: TransactionStatus) -> Bool {
+        switch (lhs, rhs) {
+        case (.pending, .pending): return true
+        case (let .processing(lhsProgress), let .processing(rhsProgress)): return lhsProgress == rhsProgress
+        case (.completed, .completed): return true
+        default: return false
+        }
+    }
+
 }
 
 protocol ITransactionsView: class {
@@ -15,12 +28,12 @@ protocol ITransactionsView: class {
 
 protocol ITransactionsViewDelegate {
     func viewDidLoad()
-    func onTransactionItemClick(transaction: TransactionRecordViewItem)
+    func onTransactionItemClick(transaction: TransactionViewItem)
     func refresh()
     func onFilterSelect(coin: Coin?)
 
     var itemsCount: Int { get }
-    func item(forIndex index: Int) -> TransactionRecordViewItem
+    func item(forIndex index: Int) -> TransactionViewItem
 }
 
 protocol ITransactionsInteractor {
@@ -41,7 +54,7 @@ protocol ITransactionsInteractorDelegate: class {
 }
 
 protocol ITransactionsRouter {
-    func openTransactionInfo(transaction: TransactionRecordViewItem)
+    func openTransactionInfo(transaction: TransactionViewItem)
 }
 
 protocol ITransactionRecordDataSource {

@@ -1,9 +1,9 @@
 import Foundation
 
-struct TransactionRecordViewItem {
+struct TransactionViewItem {
     let transactionHash: String
     let coinValue: CoinValue
-    let currencyAmount: CurrencyValue?
+    let currencyValue: CurrencyValue?
     let from: String?
     let to: String?
     let incoming: Bool

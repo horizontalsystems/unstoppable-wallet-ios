@@ -4,11 +4,11 @@ import GrouviExtensions
 import SnapKit
 
 class FullTransactionInfoController: UIViewController, SectionsDataSource {
-    var transaction: TransactionRecordViewItem
+    var transaction: TransactionViewItem
 
     var tableView = SectionsTableView(style: .grouped)
 
-    init(transaction: TransactionRecordViewItem) {
+    init(transaction: TransactionViewItem) {
         self.transaction = transaction
 
         super.init(nibName: nil, bundle: nil)

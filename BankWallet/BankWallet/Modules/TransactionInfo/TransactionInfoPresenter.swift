@@ -5,7 +5,7 @@ class TransactionInfoPresenter {
     let router: ITransactionInfoRouter
     var view: ITransactionInfoView?
 
-    var transaction: TransactionRecordViewItem?
+    var transaction: TransactionViewItem?
 
     init(interactor: ITransactionInfoInteractor, router: ITransactionInfoRouter) {
         self.interactor = interactor
@@ -44,7 +44,7 @@ extension TransactionInfoPresenter: ITransactionInfoViewDelegate {
 
 extension TransactionInfoPresenter: ITransactionInfoInteractorDelegate {
 
-    func didGetTransactionInfo(txRecordViewItem: TransactionRecordViewItem) {
+    func didGetTransactionInfo(txRecordViewItem: TransactionViewItem) {
         transaction = txRecordViewItem
         view?.showTransactionItem(transactionRecordViewItem: txRecordViewItem)
     }

@@ -60,3 +60,12 @@ extension Rate {
         self.timestamp = timestamp
     }
 }
+
+extension TransactionAddress {
+    convenience init(address: String, mine: Bool) {
+        self.init()
+
+        self.address = address
+        self.mine = mine
+    }
+}

@@ -7,7 +7,7 @@ class TransactionInfoRouter {
 
 extension TransactionInfoRouter: ITransactionInfoRouter {
 
-    func showFullInfo(transaction: TransactionRecordViewItem) {
+    func showFullInfo(transaction: TransactionViewItem) {
         let infoController = FullTransactionInfoController(transaction: transaction)
         let navigation = UINavigationController(rootViewController: infoController)
         navigation.navigationBar.barStyle = .blackTranslucent
@@ -22,7 +22,7 @@ extension TransactionInfoRouter: ITransactionInfoRouter {
 
 extension TransactionInfoRouter {
 
-    static func module(controller: UIViewController?, transaction: TransactionRecordViewItem) {
+    static func module(controller: UIViewController?, transaction: TransactionViewItem) {
         let router = TransactionInfoRouter()
         let interactor = TransactionInfoInteractor(transaction: transaction)
         let presenter = TransactionInfoPresenter(interactor: interactor, router: router)

@@ -217,3 +217,7 @@ protocol ITransactionRateSyncer {
 protocol IPasteboardManager {
     func set(value: String)
 }
+
+protocol ITransactionViewItemFactory {
+    func item(fromRecord record: TransactionRecord) -> TransactionViewItem
+}

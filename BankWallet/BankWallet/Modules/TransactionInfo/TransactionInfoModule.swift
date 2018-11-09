@@ -1,7 +1,7 @@
 import UIKit
 
 protocol ITransactionInfoView: class {
-    func showTransactionItem(transactionRecordViewItem: TransactionRecordViewItem)
+    func showTransactionItem(transactionRecordViewItem: TransactionViewItem)
     func expand()
     func lessen()
 }
@@ -21,10 +21,10 @@ protocol ITransactionInfoInteractor {
 }
 
 protocol ITransactionInfoInteractorDelegate: class {
-    func didGetTransactionInfo(txRecordViewItem: TransactionRecordViewItem)
+    func didGetTransactionInfo(txRecordViewItem: TransactionViewItem)
 }
 
 protocol ITransactionInfoRouter {
-    func showFullInfo(transaction: TransactionRecordViewItem)
+    func showFullInfo(transaction: TransactionViewItem)
     func onCreate(controller: UIViewController)
 }
