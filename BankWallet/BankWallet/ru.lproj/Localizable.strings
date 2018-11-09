@@ -14,6 +14,7 @@
 "alert.close" = "Закрыть";
 "alert.success" = "Успешно";
 "alert.copied" = "Скопировано";
+"alert_confirm" = "Confirm";
 
 "access.camera.message" = "Необходим доступ к вашей камере для QR-код.\n\nПерейдите \"Настройки\", чтобы разрешить доступ к камере.";
 "access.settings" = "Настройки";
@@ -43,7 +44,7 @@
 "backup.confirmation.failure_alert.text" = "Слова не совпадают";
 "backup.confirmation.understand" = "Я понимаю, что мой кошелек и токены хранятся только на этом устройстве.";
 "backup.confirmation.delete_app_warn" = "Я понимаю, что если это приложение удаляется или устанавливается на другое устройство, мой кошелек можно восстановить только с помощью секретного ключа";
-"backup.confirmation.confirm" = "Подтвердить";
+
 
 "wallet.title" = "Баланс";
 "wallet.tab_bar_item" = "Баланс";
@@ -137,6 +138,9 @@
 "settings_security.change_pin" = "Изменить PIN";
 "settings_security.touch_id" = "Touch ID";
 "settings_security.face_id" = "Face ID";
+"settings_security_import_wallet_confirmation_1" = "This action will remove the currently installed wallet from this device.";
+"settings_security_import_wallet_confirmation_2" = "Make sure you have its Secret Key or you will not be able to access the funds on it in the future.";
+
 
 "set_pin_controller.title" = "Установить PIN";
 "set_pin_controller.info" = "Ваш PIN-код будет использоваться для разблокировки вашего кошелька и отправки денег";
