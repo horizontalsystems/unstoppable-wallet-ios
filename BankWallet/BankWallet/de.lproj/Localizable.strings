@@ -14,6 +14,7 @@
 "alert.close" = "Schließen";
 "alert.success" = "Erfolgreich";
 "alert.copied" = "Kopiert";
+"alert_confirm" = "Confirm";
 
 "access.camera.message" = "Wir brauchen Zugriff auf deine Kamera um QR-code scannen.\nRufe die Einstellungen auf, um den Zugriff auf die Kamera zu erlauben";
 "access.settings" = "Einstellungen";
@@ -43,7 +44,7 @@
 "backup.confirmation.failure_alert.text" = "Die Wörter stimmen nicht überein";
 "backup.confirmation.understand" = "Ich verstehe, dass meine Geldbörse und Token auf diesem Gerät nur ist.";
 "backup.confirmation.delete_app_warn" = "Ich verstehe, dass wenn diese app auf ein anderes Gerät verschoben wird oder gelöscht, meine Geldbörse nur mit dem backup-Satz wiederhergestellt werden können, die ich aufgeschrieben und an einem sicheren Ort gespeichert";
-"backup.confirmation.confirm" = "Bestätigen";
+
 
 "wallet.title" = "Guthaben";
 "wallet.tab_bar_item" = "Guthaben";
@@ -137,6 +138,9 @@
 "settings_security.change_pin" = "PIN bearbeiten";
 "settings_security.touch_id" = "Touch ID";
 "settings_security.face_id" = "Face ID";
+"settings_security_import_wallet_confirmation_1" = "This action will remove the currently installed wallet from this device.";
+"settings_security_import_wallet_confirmation_2" = "Make sure you have its Secret Key or you will not be able to access the funds on it in the future.";
+
 
 "set_pin_controller.title" = "PIN festlegen";
 "set_pin_controller.info" = "Deine PIN wird verwendet, um deine Geldbörse zu entsperren und Geld zu versenden";
