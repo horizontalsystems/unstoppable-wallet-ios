@@ -12,6 +12,7 @@ class TransactionTitleItemView: BaseActionItemView {
 
     override func initView() {
         super.initView()
+
         backgroundColor = TransactionInfoTheme.titleBackground
 
         let titleLabel = UILabel()
@@ -38,9 +39,9 @@ class TransactionTitleItemView: BaseActionItemView {
         infoButton.cornerRadius = TransactionInfoTheme.fullInfoButtonCornerRadius
         infoButton.snp.makeConstraints { maker in
             maker.trailing.equalToSuperview().offset(-TransactionInfoTheme.regularMargin)
+            maker.leading.equalTo(self.dateLabel.snp.trailing).offset(TransactionInfoTheme.largeMargin)
             maker.centerY.equalToSuperview()
             maker.height.equalTo(TransactionInfoTheme.infoButtonHeight)
-            maker.width.equalTo(TransactionInfoTheme.infoButtonWidth)
         }
         infoButton.onTap = item?.onIdTap
         infoButton.titleLabel.removeFromSuperview()

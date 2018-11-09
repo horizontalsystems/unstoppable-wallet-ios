@@ -180,6 +180,7 @@ protocol IRateStorage {
 }
 
 protocol ITransactionRecordStorage {
+    func record(forHash hash: String) -> TransactionRecord?
     var nonFilledRecords: [TransactionRecord] { get }
     func set(rate: Double, transactionHash: String)
     func clearRates()

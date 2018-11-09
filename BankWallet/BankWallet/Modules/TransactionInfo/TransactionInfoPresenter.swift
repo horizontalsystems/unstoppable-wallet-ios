@@ -1,52 +1,32 @@
-import UIKit
-
 class TransactionInfoPresenter {
-    var interactor: ITransactionInfoInteractor
-    let router: ITransactionInfoRouter
-    var view: ITransactionInfoView?
+    weak var view: ITransactionInfoView?
 
-    var transaction: TransactionViewItem?
+    private let interactor: ITransactionInfoInteractor
+    private let router: ITransactionInfoRouter
+    private let factory: ITransactionViewItemFactory
 
-    init(interactor: ITransactionInfoInteractor, router: ITransactionInfoRouter) {
+    init(interactor: ITransactionInfoInteractor, router: ITransactionInfoRouter, factory: ITransactionViewItemFactory) {
         self.interactor = interactor
         self.router = router
+        self.factory = factory
     }
 
 }
 
 extension TransactionInfoPresenter: ITransactionInfoViewDelegate {
 
-    func viewDidLoad() {
-        interactor.getTransactionInfo()
-    }
-
-    func onLessMoreClick() {
-    }
-
-    func onCopyFromAddress() {
-        interactor.onCopyFromAddress()
-    }
-
-    func onShowFullInfo() {
-        if let transaction = transaction {
-            router.showFullInfo(transaction: transaction)
+    func transactionViewItem(forTransactionHash hash: String) -> TransactionViewItem? {
+        return interactor.transactionRecord(forTransactionHash: hash).map { record in
+            factory.item(fromRecord: record)
         }
     }
 
-    func onCreate(controller: UIViewController) {
-        router.onCreate(controller: controller)
+    func onCopy(value: String) {
+        interactor.onCopy(value: value)
+        view?.showCopied()
     }
 
-    func destroy() {
-        view = nil
-    }
 }
 
 extension TransactionInfoPresenter: ITransactionInfoInteractorDelegate {
-
-    func didGetTransactionInfo(txRecordViewItem: TransactionViewItem) {
-        transaction = txRecordViewItem
-        view?.showTransactionItem(transactionRecordViewItem: txRecordViewItem)
-    }
-
 }

@@ -1,30 +1,19 @@
-import UIKit
-
 protocol ITransactionInfoView: class {
-    func showTransactionItem(transactionRecordViewItem: TransactionViewItem)
-    func expand()
-    func lessen()
+    func showCopied()
 }
 
 protocol ITransactionInfoViewDelegate: class {
-    func viewDidLoad()
-    func onLessMoreClick()
-    func onCopyFromAddress()
-    func onShowFullInfo()
-    func onCreate(controller: UIViewController)
-    func destroy()
+    func transactionViewItem(forTransactionHash hash: String) -> TransactionViewItem?
+    func onCopy(value: String)
 }
 
 protocol ITransactionInfoInteractor {
-    func getTransactionInfo()
-    func onCopyFromAddress()
+    func transactionRecord(forTransactionHash hash: String) -> TransactionRecord?
+    func onCopy(value: String)
 }
 
 protocol ITransactionInfoInteractorDelegate: class {
-    func didGetTransactionInfo(txRecordViewItem: TransactionViewItem)
 }
 
 protocol ITransactionInfoRouter {
-    func showFullInfo(transaction: TransactionViewItem)
-    func onCreate(controller: UIViewController)
 }

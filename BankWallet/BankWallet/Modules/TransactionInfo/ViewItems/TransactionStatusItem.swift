@@ -10,7 +10,7 @@ class TransactionStatusItem: BaseActionItem {
     var valueImageTintColor: UIColor?
 
 
-    init(transaction: TransactionViewItem, tag: Int? = nil, hidden: Bool = false, required: Bool = false) {
+    init(item: TransactionViewItem, tag: Int? = nil, hidden: Bool = false, required: Bool = false) {
         super.init(cellType: TransactionStatusItemView.self, tag: tag, hidden: hidden, required: required)
 
         title = "tx_info.bottom_sheet.status".localized
@@ -18,7 +18,7 @@ class TransactionStatusItem: BaseActionItem {
         valueColor = TransactionInfoTheme.statusPendingValueColor
         valueImageTintColor = TransactionInfoTheme.processingIconTintColor
         valueImage = UIImage(named: "Transaction Processing Icon")
-        switch transaction.status {
+        switch item.status {
         case .pending:
             value = "tx_info.bottom_sheet.processing".localized
         case .processing(let progress):

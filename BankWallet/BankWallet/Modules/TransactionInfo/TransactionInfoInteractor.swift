@@ -1,28 +1,23 @@
-import Foundation
-import GrouviExtensions
-import RxSwift
-
 class TransactionInfoInteractor {
-    let disposeBag = DisposeBag()
-
     weak var delegate: ITransactionInfoInteractorDelegate?
 
-    private let transaction: TransactionViewItem
+    private let storage: ITransactionRecordStorage
+    private let pasteboardManager: IPasteboardManager
 
-    init(transaction: TransactionViewItem) {
-        self.transaction = transaction
+    init(storage: ITransactionRecordStorage, pasteboardManager: IPasteboardManager) {
+        self.storage = storage
+        self.pasteboardManager = pasteboardManager
     }
 
 }
 extension TransactionInfoInteractor: ITransactionInfoInteractor {
 
-    func getTransactionInfo() {
-        delegate?.didGetTransactionInfo(txRecordViewItem: transaction)
+    func transactionRecord(forTransactionHash hash: String) -> TransactionRecord? {
+        return storage.record(forHash: hash)
     }
 
-    func onCopyFromAddress() {
-        UIPasteboard.general.setValue(transaction.from ?? "", forPasteboardType: "public.plain-text")
-        HudHelper.instance.showSuccess(title: "alert.copied".localized)
+    func onCopy(value: String) {
+        pasteboardManager.set(value: value)
     }
 
 }

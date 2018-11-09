@@ -45,6 +45,10 @@ extension RealmStorage: IRateStorage {
 
 extension RealmStorage: ITransactionRecordStorage {
 
+    func record(forHash hash: String) -> TransactionRecord? {
+        return realmFactory.realm.objects(TransactionRecord.self).filter("transactionHash = %@", hash).first
+    }
+
     var nonFilledRecords: [TransactionRecord] {
         return Array(realmFactory.realm.objects(TransactionRecord.self).filter("rate = %@", 0))
     }

@@ -9,9 +9,9 @@ class TransactionTitleItem: BaseActionItem {
     let onIdTap: (() -> ())?
 
 
-    init(transaction: TransactionViewItem, tag: Int? = nil, hidden: Bool = false, required: Bool = false, onIdTap: (() -> ())? = nil) {
-        date = transaction.date
-        transactionId = transaction.transactionHash
+    init(item: TransactionViewItem, tag: Int? = nil, hidden: Bool = false, required: Bool = false, onIdTap: (() -> ())? = nil) {
+        date = item.date
+        transactionId = item.transactionHash
         self.onIdTap = onIdTap
 
         super.init(cellType: TransactionTitleItemView.self, tag: tag, hidden: hidden, required: required)

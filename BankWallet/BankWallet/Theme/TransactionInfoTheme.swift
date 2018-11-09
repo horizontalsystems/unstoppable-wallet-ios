@@ -35,6 +35,7 @@ class TransactionInfoTheme {
     static let hashCornerRadius: CGFloat = 4
 
     static let fullInfoButtonCornerRadius: CGFloat = 4
+    static let largeMargin: CGFloat = 32
     static let regularMargin: CGFloat = 16
     static let middleMargin: CGFloat = 8
     static let transactionInfoTint = UIColor.cryptoDark
@@ -46,9 +47,7 @@ class TransactionInfoTheme {
     static let usualFont = UIFont.cryptoCaption1
     static let fullInfoButtonActiveBackground = UIColor.cryptoLightBackground
     static let fullInfoButtonSelectedBackground = UIColor.cryptoLightGray
-    static let infoButtonWidth: CGFloat = 112
     static let idTitleFont = UIFont.cryptoCaption1
     static let idTitleColor = UIColor.cryptoGray
     static let idColor = UIColor.cryptoDark
-    static let fromToHashWidth: CGFloat = 108
 }

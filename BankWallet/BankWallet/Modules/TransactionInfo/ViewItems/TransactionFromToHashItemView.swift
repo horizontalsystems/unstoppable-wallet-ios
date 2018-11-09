@@ -34,7 +34,7 @@ class TransactionFromToHashItemView: BaseActionItemView {
         wrapperView.cornerRadius = TransactionInfoTheme.hashCornerRadius
         addSubview(wrapperView)
         wrapperView.snp.makeConstraints { maker in
-            maker.leading.equalTo(self.titleLabel.snp.trailing).offset(TransactionInfoTheme.middleMargin)
+            maker.leading.equalTo(self.titleLabel.snp.trailing).offset(TransactionInfoTheme.largeMargin)
             maker.centerY.equalToSuperview()
             maker.trailing.equalToSuperview().offset(-TransactionInfoTheme.middleMargin)
             maker.height.equalTo(TransactionInfoTheme.hashBackgroundHeight)
@@ -54,7 +54,6 @@ class TransactionFromToHashItemView: BaseActionItemView {
             maker.top.bottom.equalToSuperview()
             maker.leading.equalTo(self.avatarImageView.snp.trailing).offset(TransactionInfoTheme.middleMargin)
             maker.trailing.equalToSuperview().offset(-TransactionInfoTheme.middleMargin)
-            maker.width.equalTo(TransactionInfoTheme.fromToHashWidth)
         }
     }
 

@@ -2,36 +2,25 @@ import UIKit
 import GrouviActionSheet
 
 class TransactionInfoRouter {
-    var controller: UIViewController?
 }
 
 extension TransactionInfoRouter: ITransactionInfoRouter {
-
-    func showFullInfo(transaction: TransactionViewItem) {
-        let infoController = FullTransactionInfoController(transaction: transaction)
-        let navigation = UINavigationController(rootViewController: infoController)
-        navigation.navigationBar.barStyle = .blackTranslucent
-        navigation.navigationBar.tintColor = .cryptoYellow
-        controller?.present(navigation, animated: true)
-    }
-
-    func onCreate(controller: UIViewController) {
-        self.controller = controller
-    }
 }
 
 extension TransactionInfoRouter {
 
-    static func module(controller: UIViewController?, transaction: TransactionViewItem) {
+    static func module(transactionHash: String) -> ActionSheetController {
         let router = TransactionInfoRouter()
-        let interactor = TransactionInfoInteractor(transaction: transaction)
-        let presenter = TransactionInfoPresenter(interactor: interactor, router: router)
+        let interactor = TransactionInfoInteractor(storage: App.shared.realmStorage, pasteboardManager: App.shared.pasteboardManager)
+        let presenter = TransactionInfoPresenter(interactor: interactor, router: router, factory: App.shared.transactionViewItemFactory)
+        let alertModel = TransactionInfoAlertModel(delegate: presenter, transactionHash: transactionHash)
+
         interactor.delegate = presenter
+        presenter.view = alertModel
 
-        let view = TransactionInfoView(controller: controller, delegate: presenter)
-        presenter.view = view
-
-        presenter.viewDidLoad()
+        let viewController = ActionSheetController(withModel: alertModel, actionStyle: .sheet(showDismiss: false))
+        viewController.backgroundColor = .cryptoBarsColor
+        return viewController
     }
 
 }

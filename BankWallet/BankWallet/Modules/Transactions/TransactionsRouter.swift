@@ -2,13 +2,12 @@ import UIKit
 
 class TransactionsRouter {
     weak var viewController: UIViewController?
-    var view: Any?
 }
 
 extension TransactionsRouter: ITransactionsRouter {
 
     func openTransactionInfo(transactionHash: String) {
-//        view = TransactionInfoRouter.module(controller: viewController, transaction: transaction)
+        viewController?.present(TransactionInfoRouter.module(transactionHash: transactionHash), animated: true)
     }
 
 }

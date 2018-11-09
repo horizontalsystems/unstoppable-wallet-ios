@@ -7,12 +7,11 @@ class TransactionAmountItem: BaseActionItem {
     var amountColor: UIColor
     var fiatAmount: String
 
-    init(transaction: TransactionViewItem, tag: Int? = nil, hidden: Bool = false, required: Bool = false) {
-        amount = ValueFormatter.instance.format(coinValue: transaction.coinValue, explicitSign: true)
-        amountColor = transaction.incoming ? TransactionInfoTheme.incomingAmountColor : TransactionInfoTheme.outgoingAmountColor
-//        let currencyValue = CurrencyValue(currency: DollarCurrency(), value: abs(transaction.amount.value) * 6000)
-//        fiatAmount = "~ \(CurrencyHelper.instance.formattedValue(for: currencyValue) ?? "0")"
-        if let value = transaction.currencyValue, let formattedValue = ValueFormatter.instance.format(currencyValue: value, approximate: true) {
+    init(item: TransactionViewItem, tag: Int? = nil, hidden: Bool = false, required: Bool = false) {
+        amount = ValueFormatter.instance.format(coinValue: item.coinValue, explicitSign: true)
+        amountColor = item.incoming ? TransactionInfoTheme.incomingAmountColor : TransactionInfoTheme.outgoingAmountColor
+
+        if let value = item.currencyValue, let formattedValue = ValueFormatter.instance.format(currencyValue: value, approximate: true) {
             self.fiatAmount = formattedValue
         } else {
             self.fiatAmount = "n/a"
