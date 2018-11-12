@@ -78,9 +78,9 @@
 "tx_info.bottom_sheet.title" = "Hesap işlemi";
 "tx_info.bottom_sheet.title_received" = "Alındı";
 "tx_info.bottom_sheet.title_sent" = "Gönderildi";
-"tx_info.bottom_sheet.pending" = "Pending";
-"tx_info.bottom_sheet.processing" = "Processing %@";
-"tx_info.bottom_sheet.completed" = "Completed";
+"tx_info.bottom_sheet.pending" = "Devam ediyor";
+"tx_info.bottom_sheet.processing" = "%@ işleniyor";
+"tx_info.bottom_sheet.completed" = "Tamamlandı";
 "tx_info.bottom_sheet.status" = "Durum:";
 "tx_info.bottom_sheet.value_when_received" = "Value when received:";
 "tx_info.bottom_sheet.from_hash" = "Gönderen:";
