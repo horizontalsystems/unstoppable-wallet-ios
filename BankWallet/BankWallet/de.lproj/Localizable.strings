@@ -78,8 +78,9 @@
 "tx_info.bottom_sheet.title" = "Transaktion";
 "tx_info.bottom_sheet.title_received" = "Erhalten";
 "tx_info.bottom_sheet.title_sent" = "Gesendet";
-"tx_info.bottom_sheet.processing" = "VERARBEITUNG";
-"tx_info.bottom_sheet.complete" = "ABGESCHLOSSEN";
+"tx_info.bottom_sheet.pending" = "Pending";
+"tx_info.bottom_sheet.processing" = "Processing %@";
+"tx_info.bottom_sheet.completed" = "Completed";
 "tx_info.bottom_sheet.status" = "Status:";
 "tx_info.bottom_sheet.value_when_received" = "Wert beim Empfang:";
 "tx_info.bottom_sheet.from_hash" = "Von:";
