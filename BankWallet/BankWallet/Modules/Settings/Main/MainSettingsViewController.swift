@@ -107,6 +107,7 @@ class MainSettingsViewController: UIViewController, SectionsDataSource {
         }, dynamicHeight: { _ in SettingsTheme.infoFooterHeight })
         sections.append(Section(id: "appearance_settings", headerState: .marginColor(height: SettingsTheme.headerHeight, color: .clear), footerState: infoFooter, rows: aboutRows))
 
+#if DEBUG
         var debugRows = [RowProtocol]()
         debugRows.append(Row<SettingsCell>(id: "debug_realm_info", hash: "debug_realm_info", height: SettingsTheme.cellHeight, autoDeselect: true, bind: { cell, _ in
             cell.selectionStyle = .default
@@ -122,6 +123,7 @@ class MainSettingsViewController: UIViewController, SectionsDataSource {
 //            try? App.shared.pinManager.store(pin: nil)
 //        }))
         sections.append(Section(id: "debug_section", headerState: .marginColor(height: 50, color: .clear), footerState: .marginColor(height: 20, color: .clear), rows: debugRows))
+#endif
 
         return sections
     }
