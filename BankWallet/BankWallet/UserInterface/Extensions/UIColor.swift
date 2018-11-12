@@ -13,6 +13,7 @@ extension UIColor {
     static var cryptoGray: UIColor = UIColor(named: "Gray") ?? .black
     static var cryptoGreen: UIColor = UIColor(named: "Green") ?? .black
     static var cryptoGreenPressed: UIColor = UIColor(named: "GreenPressed") ?? .black
+    static var cryptoGreenProgress: UIColor = UIColor(named: "GreenProgress") ?? .black
     static var cryptoLightBackground: UIColor = UIColor(named: "Light Background") ?? .black
     static var cryptoLightGray: UIColor = UIColor(named: "LightGray") ?? .black
     static var cryptoRed: UIColor = UIColor(named: "Red") ?? .black

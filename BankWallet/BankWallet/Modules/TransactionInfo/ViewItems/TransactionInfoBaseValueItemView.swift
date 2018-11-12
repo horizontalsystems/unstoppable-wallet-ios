@@ -36,7 +36,8 @@ class TransactionInfoBaseValueItemView: BaseActionItemView {
         statusImageView.snp.makeConstraints { maker in
             maker.centerY.equalToSuperview()
             maker.trailing.equalTo(self.statusLabel.snp.leading).offset(-TransactionInfoTheme.middleMargin)
-            maker.size.equalTo(TransactionInfoTheme.statusImageSize)
+            maker.width.equalTo(TransactionInfoTheme.statusImageWidth)
+            maker.height.equalTo(TransactionInfoTheme.statusImageHeight)
         }
 
     }

@@ -16,13 +16,13 @@ class TransactionInfoTheme {
     static let closeHeight: CGFloat = 52
     static let amountTopMargin: CGFloat = 20
     static let titleBackground = UIColor.cryptoBarsColor
-    static let statusCompleteValueColor = UIColor.cryptoDark
-    static let statusPendingValueColor = UIColor.cryptoGray
+    static let statusValueColor = UIColor.cryptoDark
     static let dateFont = UIFont.cryptoCaption1
     static let successIconTintColor = UIColor.cryptoGreen
     static let processingIconTintColor = UIColor.cryptoGray
     static let dateColor = UIColor.cryptoGray
-    static let statusImageSize = CGSize(width: 13, height: 12)
+    static let statusImageWidth: CGFloat = 13
+    static let statusImageHeight: CGFloat = 12
     static let hashBackground = UIColor.cryptoLightBackground
     static let hashBackgroundSelected = UIColor.cryptoLightGray
     static let hashWrapperBorderColor = UIColor.cryptoSteel20

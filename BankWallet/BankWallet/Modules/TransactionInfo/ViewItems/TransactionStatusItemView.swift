@@ -7,6 +7,7 @@ class TransactionStatusItemView: BaseActionItemView {
 
     var titleLabel = UILabel()
     var statusLabel = UILabel()
+    var progressView = UIView()
     var statusImageView = TintImageView(image: nil, selectedImage: nil)
 
     override var item: TransactionStatusItem? { return _item as? TransactionStatusItem }
@@ -36,6 +37,13 @@ class TransactionStatusItemView: BaseActionItemView {
             maker.height.equalTo(TransactionInfoTheme.hashBackgroundHeight)
         }
 
+        progressView.backgroundColor = .cryptoGreenProgress
+        wrapperView.addSubview(progressView)
+        progressView.snp.makeConstraints { maker in
+            maker.top.bottom.leading.equalToSuperview()
+            maker.width.equalTo(0)
+        }
+
         statusLabel.font = TransactionInfoTheme.usualFont
         statusLabel.textColor = TransactionInfoTheme.usualColor
         wrapperView.addSubview(statusLabel)
@@ -48,19 +56,32 @@ class TransactionStatusItemView: BaseActionItemView {
         statusImageView.snp.makeConstraints { maker in
             maker.centerY.equalToSuperview()
             maker.leading.equalToSuperview().offset(TransactionInfoTheme.middleMargin)
-            maker.trailing.equalTo(self.statusLabel.snp.leading).offset(-TransactionInfoTheme.smallMargin)
-            maker.size.equalTo(TransactionInfoTheme.statusImageSize)
+            maker.trailing.equalTo(self.statusLabel.snp.leading).offset(0)
+            maker.width.equalTo(0)
+            maker.height.equalTo(TransactionInfoTheme.statusImageHeight)
         }
-
     }
 
     override func updateView() {
         super.updateView()
+
         titleLabel.text = item?.title
-        statusLabel.text = item?.value
-        statusLabel.textColor = item?.valueColor ?? TransactionInfoTheme.usualColor
+        statusLabel.text = item?.value?.uppercased()
+        statusLabel.textColor = TransactionInfoTheme.statusValueColor
         statusImageView.image = item?.valueImage
         statusImageView.tintColor = item?.valueImageTintColor
+
+        let hasImage = item?.valueImage != nil
+        statusImageView.snp.updateConstraints { maker in
+            maker.trailing.equalTo(self.statusLabel.snp.leading).offset(hasImage ? -TransactionInfoTheme.smallMargin : 0)
+            maker.width.equalTo(hasImage ? TransactionInfoTheme.statusImageWidth : 0)
+        }
+
+        let progress = item?.progress ?? 0
+        progressView.snp.remakeConstraints { maker in
+            maker.top.bottom.leading.equalToSuperview()
+            maker.width.equalToSuperview().multipliedBy(progress)
+        }
     }
 
 }

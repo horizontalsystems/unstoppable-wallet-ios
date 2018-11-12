@@ -36,7 +36,7 @@ class TransactionFromToHashItemView: BaseActionItemView {
         wrapperView.snp.makeConstraints { maker in
             maker.leading.equalTo(self.titleLabel.snp.trailing).offset(TransactionInfoTheme.largeMargin)
             maker.centerY.equalToSuperview()
-            maker.trailing.equalToSuperview().offset(-TransactionInfoTheme.middleMargin)
+            maker.trailing.equalToSuperview().offset(-TransactionInfoTheme.regularMargin)
             maker.height.equalTo(TransactionInfoTheme.hashBackgroundHeight)
         }
 
