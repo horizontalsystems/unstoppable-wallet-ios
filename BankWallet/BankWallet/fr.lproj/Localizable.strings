@@ -78,8 +78,9 @@
 "tx_info.bottom_sheet.title" = "Transaction";
 "tx_info.bottom_sheet.title_received" = "Reçue";
 "tx_info.bottom_sheet.title_sent" = "Envoyée";
-"tx_info.bottom_sheet.processing" = "TRAITEMENT";
-"tx_info.bottom_sheet.complete" = "TERMINÉ";
+"tx_info.bottom_sheet.pending" = "Pending";
+"tx_info.bottom_sheet.processing" = "Processing %@";
+"tx_info.bottom_sheet.completed" = "Completed";
 "tx_info.bottom_sheet.status" = "État :";
 "tx_info.bottom_sheet.value_when_received" = "Valeur lorsqu’il a reçu :";
 "tx_info.bottom_sheet.from_hash" = "De:";
