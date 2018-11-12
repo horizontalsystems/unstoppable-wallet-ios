@@ -78,8 +78,9 @@
 "tx_info.bottom_sheet.title" = "معاملات";
 "tx_info.bottom_sheet.title_received" = "دريافت شد";
 "tx_info.bottom_sheet.title_sent" = "ارسال شد";
-"tx_info.bottom_sheet.processing" = "در حال اجرا";
-"tx_info.bottom_sheet.complete" = "تكميل شد";
+"tx_info.bottom_sheet.pending" = "Pending";
+"tx_info.bottom_sheet.processing" = "Processing %@";
+"tx_info.bottom_sheet.completed" = "Completed";
 "tx_info.bottom_sheet.status" = "وضيعت:";
 "tx_info.bottom_sheet.value_when_received" = "ارزش وقتي دريافت شد:";
 "tx_info.bottom_sheet.from_hash" = "از:";
