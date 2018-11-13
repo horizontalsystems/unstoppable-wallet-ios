@@ -132,7 +132,7 @@
 "settings_security.change_pin" = "ويرايش پين";
 "settings_security.touch_id" = "شناس نامه اثر انگشت";
 "settings_security.face_id" = "شناسنامه صروت";
-"security_settings_unlink_alert_button" = "Unlink";
+"security_settings_unlink_alert_button" = "جدا کردن";
 "settings_security_import_wallet_confirmation_1" = "اين اكشن از اين دستگاه و پول كيف ثبت شده خاظر حذف ميشود.";
 "settings_security_import_wallet_confirmation_2" = "مطمعاً باشيد كي رمز مخفي را با خود داريد و گرنه شما در آينده توانايي دسترسي به منابع مالي نداريد.";
 
