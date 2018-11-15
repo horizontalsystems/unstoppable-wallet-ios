@@ -73,7 +73,7 @@
 "transactions.from" = "gönderen";
 "transactions.to" = "alan";
 "transactions.filter_all" = "Hepsi";
-"transactions_empty_text" = "You don't have any pending or past transactions yet";
+"transactions_empty_text" = "Henüz herhangi bir bekleyen veya geçmiş işlem yok";
 
 "tx_info.bottom_sheet.title" = "Hesap işlemi";
 "tx_info.bottom_sheet.title_received" = "Alındı";
@@ -82,7 +82,7 @@
 "tx_info.bottom_sheet.processing" = "%@ işleniyor";
 "tx_info.bottom_sheet.completed" = "Tamamlandı";
 "tx_info.bottom_sheet.status" = "Durum:";
-"tx_info.bottom_sheet.value_when_received" = "Value when received:";
+"tx_info.bottom_sheet.value_when_received" = "Alınacak değer:";
 "tx_info.bottom_sheet.from_hash" = "Gönderen:";
 "tx_info.bottom_sheet.to_hash" = "Alan:";
 "tx_info.bottom_sheet.id_hash" = "Kimlik:";
