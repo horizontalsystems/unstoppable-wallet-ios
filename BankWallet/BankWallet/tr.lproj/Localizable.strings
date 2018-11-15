@@ -132,7 +132,7 @@
 "settings_security.change_pin" = "PIN'i değiştir";
 "settings_security.touch_id" = "Touch ID";
 "settings_security.face_id" = "Face ID";
-"security_settings_unlink_alert_button" = "Unlink";
+"security_settings_unlink_alert_button" = "Ayır";
 "settings_security_import_wallet_confirmation_1" = "Bu işlemle, cüzdan cihazdan kaldırılacak.";
 "settings_security_import_wallet_confirmation_2" = "Gizli Anahtarı yedeklediğinizden emin olun. Onsuz, cüzdana gelecekte ulaşamayacaksınız.";
 
