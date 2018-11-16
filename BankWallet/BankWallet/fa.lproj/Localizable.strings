@@ -55,10 +55,11 @@
 "wallet.syncing_percent" = "همگامسازي%@";
 "wallet.total_balance.syncing" = "در حال همگامسازي...";
 
-"send.title" = "ارسال ";
+"send.title" = "Send %@";
 "send.address_placeholder" = "آدرس";
 "send.payment_reference_placeholder" = "مرجع پرداخت";
 "send.insufficient_funds" = "مقدار موجود نيست";
+"send.amount_error.balance" = "Balance %@";
 "paste" = "جاگذازي";
 "amount" = "مقدار";
 "more" = "بیشتر";
