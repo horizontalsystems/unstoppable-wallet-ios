@@ -55,10 +55,11 @@
 "wallet.syncing_percent" = "Синхронизация %@";
 "wallet.total_balance.syncing" = "Синхронизация...";
 
-"send.title" = "Отправить ";
+"send.title" = "Send %@";
 "send.address_placeholder" = "Адрес";
 "send.payment_reference_placeholder" = "Ссылка на платеж";
 "send.insufficient_funds" = "Недостаточно средств на балансе";
+"send.amount_error.balance" = "Balance %@";
 "paste" = "Вставить";
 "amount" = "Сумма";
 "more" = "Ещё";
