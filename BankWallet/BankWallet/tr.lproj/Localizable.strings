@@ -55,10 +55,11 @@
 "wallet.syncing_percent" = "%@ eşitleniyor";
 "wallet.total_balance.syncing" = "Eşitleniyor...";
 
-"send.title" = "Gönder ";
+"send.title" = "Send %@";
 "send.address_placeholder" = "Adres";
 "send.payment_reference_placeholder" = "Ödeme Referansı";
 "send.insufficient_funds" = "Yetersiz miktar";
+"send.amount_error.balance" = "Balance %@";
 "paste" = "Yapıştır";
 "amount" = "Tutar";
 "more" = "Daha fazlası";
