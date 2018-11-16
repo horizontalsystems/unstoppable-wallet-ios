@@ -1,16 +1,12 @@
-import Foundation
 import GrouviActionSheet
 
 class SendTitleItem: BaseActionItem {
 
-    var onQRScan: (() -> ())?
-    var title: String?
+    var bindCoin: ((Coin) -> ())?
 
-    init(tag: Int? = nil, hidden: Bool = false, required: Bool = false, onQRScan: (() -> ())? = nil) {
-        self.onQRScan = onQRScan
-        super.init(cellType: SendTitleItemView.self, tag: tag, hidden: hidden, required: required)
+    init(tag: Int) {
+        super.init(cellType: SendTitleItemView.self, tag: tag, required: true)
 
-        showSeparator = false
         height = SendTheme.titleHeight
     }
 

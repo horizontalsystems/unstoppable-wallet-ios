@@ -1,27 +1,15 @@
-import Foundation
-import GrouviExtensions
-import RxSwift
-
-enum SendError: Error {
-    case unknownError
-    case insufficientFunds
-
-    var localizedDescription: String {
-        switch self {
-        case .unknownError: return "unknown_error".localized
-        case .insufficientFunds: return "send.insufficient_funds".localized
-        }
-    }
-}
-
 class SendInteractor {
-    let disposeBag = DisposeBag()
-
     weak var delegate: ISendInteractorDelegate?
 
-    var wallet: Wallet
+    private let currencyManager: ICurrencyManager
+    private let rateManager: IRateManager
+    private let pasteboardManager: IPasteboardManager
+    private let wallet: Wallet
 
-    init(wallet: Wallet) {
+    init(currencyManager: ICurrencyManager, rateManager: IRateManager, pasteboardManager: IPasteboardManager, wallet: Wallet) {
+        self.currencyManager = currencyManager
+        self.rateManager = rateManager
+        self.pasteboardManager = pasteboardManager
         self.wallet = wallet
     }
 
@@ -29,55 +17,91 @@ class SendInteractor {
 
 extension SendInteractor: ISendInteractor {
 
-    func getCoin() -> Coin {
+    var coin: Coin {
         return wallet.coin
     }
 
-    func getBaseCurrency() -> String {
-        print("getBaseCurrency")
-        return "USD"
+    var addressFromPasteboard: String? {
+        return pasteboardManager.value
     }
 
-    func getCopiedText() -> String? {
-        return UIPasteboard.general.string
+    func convertedAmount(forInputType inputType: SendInputType, amount: Double) -> Double? {
+        guard let rate = rateManager.rate(forCoin: wallet.coin, currencyCode: currencyManager.baseCurrency.code) else {
+            return nil
+        }
+
+        switch inputType {
+        case .coin: return amount * rate.value
+        case .currency: return amount / rate.value
+        }
     }
 
-    func fetchExchangeRate() {
-        print("fetchExchangeRate")
-//        databaseManager.getExchangeRates().subscribeAsync(disposeBag: disposeBag, onNext: { [weak self] in
-//            self?.didFetchExchangeRates($0)
-//        })
-        let rate = Rate()
-        rate.coin = wallet.coin
-        rate.value = 5000
-        delegate?.didFetchExchangeRate(exchangeRate: rate.value)
+    func state(forUserInput input: SendUserInput) -> SendState {
+        let coin = wallet.coin
+        let adapter = wallet.adapter
+        let baseCurrency = currencyManager.baseCurrency
+        let rateValue = rateManager.rate(forCoin: coin, currencyCode: baseCurrency.code)?.value
+
+        let state = SendState(inputType: input.inputType)
+
+        switch input.inputType {
+        case .coin:
+            state.coinValue = CoinValue(coin: coin, value: input.amount)
+            state.currencyValue = rateValue.map { CurrencyValue(currency: baseCurrency, value: input.amount * $0) }
+
+            let balance = adapter.balance
+            if balance < input.amount {
+                state.amountError = AmountError.insufficientAmount(amountInfo: .coinValue(coinValue: CoinValue(coin: coin, value: balance)))
+            }
+        case .currency:
+            state.coinValue = rateValue.map { CoinValue(coin: coin, value: input.amount / $0) }
+            state.currencyValue = CurrencyValue(currency: baseCurrency, value: input.amount)
+
+            if let rateValue = rateValue {
+                let currencyBalance = adapter.balance * rateValue
+                if currencyBalance < input.amount {
+                    state.amountError = AmountError.insufficientAmount(amountInfo: .currencyValue(currencyValue: CurrencyValue(currency: baseCurrency, value: currencyBalance)))
+                }
+            }
+        }
+
+        state.address = input.address
+
+        if let address = input.address {
+            do {
+                try adapter.validate(address: address)
+            } catch {
+                state.addressError = .invalidAddress
+            }
+        }
+
+        if let coinValue = state.coinValue, let fee = try? adapter.fee(for: coinValue.value, address: input.address, senderPay: true) {
+            state.feeCoinValue = CoinValue(coin: coin, value: fee)
+        }
+
+        if let rateValue = rateValue, let feeCoinValue = state.feeCoinValue {
+            state.feeCurrencyValue = CurrencyValue(currency: baseCurrency, value: rateValue * feeCoinValue.value)
+        }
+
+        return state
     }
 
-    private func didFetchExchangeRates () {
-//        if let exchangeRate = (changeset.array.filter { $0.code == coin }).first {
-//            delegate?.didFetchExchangeRate(exchangeRate: exchangeRate.value)
-//        }
-    }
+    func send(userInput: SendUserInput) {
+        guard let rateValue = rateManager.rate(forCoin: wallet.coin, currencyCode: currencyManager.baseCurrency.code)?.value else {
+            return
+        }
+        guard let address = userInput.address else {
+            return
+        }
 
-    func send(address: String, amount: Double) {
+        let amount = userInput.inputType == .coin ? userInput.amount : userInput.amount / rateValue
+
         wallet.adapter.send(to: address, value: amount) { [weak self] error in
             if let error = error {
                 self?.delegate?.didFailToSend(error: error)
             } else {
                 self?.delegate?.didSend()
             }
-        }
-    }
-
-    func isValid(address: String?) -> Bool {
-        guard let address = address, !address.isEmpty else {
-            return false
-        }
-        do {
-            try wallet.adapter.validate(address: address)
-            return true
-        } catch {
-            return false
         }
     }
 

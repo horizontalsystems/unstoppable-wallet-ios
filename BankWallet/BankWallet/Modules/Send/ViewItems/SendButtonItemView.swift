@@ -9,20 +9,20 @@ class SendButtonItemView: BaseButtonItemView {
     override func initView() {
         super.initView()
 
-        button.cornerRadius = SendTheme.cornerRadius
+        button.cornerRadius = SendTheme.sendButtonCornerRadius
 
         button.snp.makeConstraints { maker in
-            maker.leading.equalToSuperview().offset(SendTheme.sendButtonSideMargin)
-            maker.bottom.equalToSuperview().offset(-SendTheme.sendButtonBottomMargin)
-            maker.trailing.equalToSuperview().offset(-SendTheme.sendButtonSideMargin)
+            maker.leading.equalToSuperview().offset(SendTheme.margin)
+            maker.bottom.equalToSuperview().offset(-SendTheme.margin)
+            maker.trailing.equalToSuperview().offset(-SendTheme.margin)
             maker.height.equalTo(SendTheme.sendButtonHeight)
         }
 
-        item?.updateButtonBottomConstraint = { [weak self] bottom in
-            self?.button.snp.updateConstraints { maker in
-                maker.bottom.equalTo(bottom)
-            }
-        }
+//        item?.updateButtonBottomConstraint = { [weak self] bottom in
+//            self?.button.snp.updateConstraints { maker in
+//                maker.bottom.equalTo(bottom)
+//            }
+//        }
     }
 
 }

@@ -97,9 +97,9 @@ extension BitcoinAdapter: IAdapter {
         }
     }
 
-    func fee(for value: Double, senderPay: Bool) throws -> Double {
+    func fee(for value: Double, address: String?, senderPay: Bool) throws -> Double {
         let amount = Int(value * coinRate)
-        let fee = try bitcoinKit.fee(for: amount, senderPay: senderPay)
+        let fee = try bitcoinKit.fee(for: amount, toAddress: address, senderPay: senderPay)
         return Double(fee) / coinRate
     }
 

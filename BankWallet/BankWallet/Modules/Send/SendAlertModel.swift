@@ -2,129 +2,179 @@ import UIKit
 import GrouviActionSheet
 
 class SendAlertModel: BaseAlertModel {
+    private let delegate: ISendViewDelegate
 
-    let delegate: ISendViewDelegate
+    private let titleItem: SendTitleItem
+    private let amountItem: SendAmountItem
+    private let addressItem: SendAddressItem
+    private let feeItem: SendFeeItem
+    private let sendButtonItem: SendButtonItem
 
-    let titleItem: SendTitleItem
-//    var sendConfigItem: BaseTwinItem?
-    let sendAmountItem: SendAmountItem
+    var onScanClicked: (() -> ())?
 
-    init(viewDelegate: ISendViewDelegate) {
-        self.delegate = viewDelegate
+    init(delegate: ISendViewDelegate) {
+        self.delegate = delegate
 
-//        let sendReferenceItem = SendReferenceItem()
-//        sendConfigItem = BaseTwinItem(cellType: SendConfigTwinItemView.self, first: sendAmountItem, second: sendReferenceItem, height: SendTheme.twinHeight, tag: 1, required: true)
-//        sendConfigItem?.showSeparator = false
-        sendAmountItem = SendAmountItem(tag: 1, required: true)
-        titleItem = SendTitleItem(tag: 0, required: true)
+        titleItem = SendTitleItem(tag: 0)
+        amountItem = SendAmountItem(tag: 1)
+        addressItem = SendAddressItem(tag: 2)
+        feeItem = SendFeeItem(tag: 3)
+        sendButtonItem = SendButtonItem(tag: 4)
 
         super.init()
+
         hideInBackground = false
         observeKeyboard = .onlyShow
 
-        titleItem.onQRScan = { [weak self] in
-            self?.delegate.onScanClick()
-        }
         addItemView(titleItem)
 
+        amountItem.onAmountChanged = { [weak self] in
+            self?.delegate.onAmountChanged(amount: $0)
+        }
+        amountItem.onSwitchClicked = { [weak self] in
+            self?.delegate.onSwitchClicked()
+        }
+        addItemView(amountItem)
 
-//        sendAmountItem.onMore = { [weak self] in
-//            self?.sendConfigItem?.showFirstItem = false
-//            self?.reload?()
-//        }
-        sendAmountItem.onPaste = { [weak self] in
-            self?.delegate.onPasteClick()
+        addressItem.onPasteClicked = { [weak self] in
+            self?.delegate.onPasteClicked()
         }
-        sendAmountItem.onCurrencyChange = { [weak self] in
-            self?.delegate.onCurrencyButtonClick()
+        addressItem.onScanClicked = { [weak self] in
+            self?.onScanClicked?()
         }
-        sendAmountItem.onAmountEntered = { [weak self] in
-            self?.delegate.onAmountEntered(amount: $0)
+        addressItem.onDeleteClicked = { [weak self] in
+            self?.delegate.onDeleteClicked()
         }
-        sendAmountItem.onAddressEntered = { [weak self] in
-            self?.delegate.onAddressEntered(address: $0)
-        }
-//        sendReferenceItem.onBack = { [weak self] in
-//            self?.sendConfigItem?.showFirstItem = true
-//            self?.reload?()
-//        }
-//        addItemView(sendConfigItem!)
-        addItemView(sendAmountItem)
+        addItemView(addressItem)
 
-        let sendButtonItem = SendButtonItem(tag: 2, required: true, onTap: { [weak self] in
-            self?.onSend()
-        })
+        addItemView(feeItem)
+
+        sendButtonItem.onClicked = { [weak self] in
+            self?.delegate.onSendClicked()
+        }
         addItemView(sendButtonItem)
     }
 
     override func viewDidLoad() {
-        delegate.onViewDidLoad()
     }
 
     override func viewWillAppear(_ animated: Bool) {
-        delegate.onViewDidAppear()
+        delegate.onViewDidLoad()
+        amountItem.showKeyboard?()
     }
 
-    func onSend() {
-        delegate.onSendClick(address: sendAmountItem.address)
+    func onScan(address: String) {
+        addressItem.bindAddress?(address, nil)
     }
 
 }
 
 extension SendAlertModel: ISendView {
 
-    func setTitle(_ title: String?) {
-        titleItem.title = title
-        updateItems()
+    func set(coin: Coin) {
+        titleItem.bindCoin?(coin)
     }
 
-    func setAddress(_ address: String?) {
-        sendAmountItem.address = address
-        sendAmountItem.reload?()
-//        sendConfigItem?.updateItems?(false)
+    func set(amountInfo: AmountInfo?) {
+        guard let amountInfo = amountInfo else {
+            amountItem.bindAmountType?(nil)
+            amountItem.bindAmount?(nil)
+            return
+        }
+
+        switch amountInfo {
+        case .coinValue(let coinValue):
+            amountItem.bindAmountType?(coinValue.coin)
+            amountItem.bindAmount?(coinValue.value)
+        case .currencyValue(let currencyValue):
+            amountItem.bindAmountType?(currencyValue.currency.symbol)
+            amountItem.bindAmount?(currencyValue.value)
+        }
     }
 
-    func setCurrency(code: String) {
-        sendAmountItem.currencyCode = code
-        sendAmountItem.reload?()
-//        sendConfigItem?.updateItems?(false)
+    func set(switchButtonEnabled: Bool) {
+        amountItem.bindSwitchEnabled?(switchButtonEnabled)
     }
 
-    func setAmount(amount: String?) {
-        sendAmountItem.amount = amount
-        sendAmountItem.reload?()
-//        sendConfigItem?.updateItems?(false)
+    func set(hintInfo: HintInfo?) {
+        amountItem.bindHint?(nil)
+        amountItem.bindError?(nil)
+
+        if let hintInfo = hintInfo {
+            switch hintInfo {
+            case .amount(let amountInfo):
+                switch amountInfo {
+                case .coinValue(let coinValue):
+                    amountItem.bindHint?(ValueFormatter.instance.format(coinValue: coinValue))
+                case .currencyValue(let currencyValue):
+                    amountItem.bindHint?(ValueFormatter.instance.format(currencyValue: currencyValue))
+                }
+            case .error(let error):
+                switch error {
+                case .insufficientAmount(let amountInfo):
+                    switch amountInfo {
+                    case .coinValue(let coinValue):
+                        amountItem.bindError?("send.amount_error.balance".localized(ValueFormatter.instance.format(coinValue: coinValue) ?? ""))
+                    case .currencyValue(let currencyValue):
+                        amountItem.bindError?("send.amount_error.balance".localized(ValueFormatter.instance.format(currencyValue: currencyValue) ?? ""))
+                    }
+                }
+            }
+        }
     }
 
-    func setAmountHint(hint: String, color: UIColor, error: SendError?) {
-        sendAmountItem.hint = hint
-        sendAmountItem.hintColor = color
-        sendAmountItem.error = error
-        sendAmountItem.reload?()
-//        sendConfigItem?.updateItems?(false)
+    func set(addressInfo: AddressInfo?) {
+        if let addressInfo = addressInfo {
+            switch addressInfo {
+            case .address(let address):
+                addressItem.bindAddress?(address, nil)
+            case .invalidAddress(let address, _):
+                addressItem.bindAddress?(address, "Invalid address")
+            }
+        } else {
+            addressItem.bindAddress?(nil, nil)
+        }
     }
 
-    func closeView() {
-        print("closeView")
+    func set(primaryFeeInfo: AmountInfo?) {
+        guard let primaryFeeInfo = primaryFeeInfo else {
+            feeItem.bindFee?(nil)
+            return
+        }
+
+        switch primaryFeeInfo {
+        case .coinValue(let coinValue):
+            feeItem.bindFee?(ValueFormatter.instance.format(coinValue: coinValue))
+        case .currencyValue(let currencyValue):
+            feeItem.bindFee?(ValueFormatter.instance.format(currencyValue: currencyValue))
+        }
     }
 
-    func showError(error: String) {
-        print("\(error) showError")
+    func set(secondaryFeeInfo: AmountInfo?) {
+        if let secondaryFeeInfo = secondaryFeeInfo {
+            switch secondaryFeeInfo {
+            case .coinValue(let coinValue):
+                feeItem.bindConvertedFee?(ValueFormatter.instance.format(coinValue: coinValue))
+            case .currencyValue(let currencyValue):
+                feeItem.bindConvertedFee?(ValueFormatter.instance.format(currencyValue: currencyValue))
+            }
+        } else {
+            feeItem.bindConvertedFee?(nil)
+        }
     }
 
-    func showSuccess() {
-        print("showSuccess")
+    func set(sendButtonEnabled: Bool) {
+        sendButtonItem.isActive = sendButtonEnabled
+        reload?()
+    }
+
+    func show(error: Error) {
+        HudHelper.instance.showError(title: error.localizedDescription)
+    }
+
+    func dismissWithSuccess() {
         dismiss?(true)
-    }
-
-    func showKeyboard() {
-        sendAmountItem.showKeyboardOnLoad?()
-    }
-
-    func showAddressWarning(_ valid: Bool) {
-        sendAmountItem.addressValid = valid
-        sendAmountItem.reload?()
-//        sendConfigItem?.updateItems?(false)
+        HudHelper.instance.showSuccess()
     }
 
 }

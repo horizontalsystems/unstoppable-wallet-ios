@@ -1,135 +1,105 @@
-import Foundation
-import RealmSwift
-
 class SendPresenter {
-
-    var interactor: ISendInteractor
-    let router: ISendRouter
     weak var view: ISendView?
 
-    var baseCurrencyCode: String
-    private var isEnteringInCrypto = false
-    var exchangeRate: Double = 0
-    private var enteredAmount: Double?
+    private let interactor: ISendInteractor
+    private let router: ISendRouter
+    private let factory: ISendStateViewItemFactory
+    private let userInput: SendUserInput
 
-    private var fiatAmount: Double?
-    private var cryptoAmount: Double?
-
-    var coin: Coin
-
-    init(interactor: ISendInteractor, router: ISendRouter) {
+    init(interactor: ISendInteractor, router: ISendRouter, factory: ISendStateViewItemFactory, userInput: SendUserInput) {
         self.interactor = interactor
         self.router = router
-
-        coin = interactor.getCoin()
-        baseCurrencyCode = interactor.getBaseCurrency()
+        self.factory = factory
+        self.userInput = userInput
     }
 
 }
 
 extension SendPresenter: ISendInteractorDelegate {
 
-    func didFetchExchangeRate(exchangeRate: Double) {
-        self.exchangeRate = exchangeRate
-        refreshAmountHint()
+    func didSend() {
+        view?.dismissWithSuccess()
     }
 
     func didFailToSend(error: Error) {
-        view?.showError(error: getError(error))
-    }
-
-    func didSend() {
-        view?.showSuccess()
-    }
-
-    private func getError(_ error: Error) -> String {
-        return (error as? SendError)?.localizedDescription ?? error.localizedDescription
+        view?.show(error: error)
     }
 
 }
 
 extension SendPresenter: ISendViewDelegate {
 
-    func onScanClick() {
-        router.startScan { [weak self] code in
-            self?.view?.setAddress(code)
-        }
-    }
-
-    func onPasteClick() {
-        let copiedText = interactor.getCopiedText()
-        view?.setAddress(copiedText)
-    }
-
-    func onCurrencyButtonClick() {
-        isEnteringInCrypto = !isEnteringInCrypto
-
-        refreshAmountHint()
-        updateAmounts()
-    }
-
     func onViewDidLoad() {
-        updateAmounts()
+        let state = interactor.state(forUserInput: userInput)
+        let viewItem = factory.viewItem(forState: state)
 
-        interactor.fetchExchangeRate()
-        view?.setTitle("\("send.title".localized)\(interactor.getCoin())")
+        view?.set(coin: interactor.coin)
+        view?.set(amountInfo: viewItem.amountInfo)
+        view?.set(switchButtonEnabled: viewItem.switchButtonEnabled)
+        view?.set(hintInfo: viewItem.hintInfo)
+        view?.set(addressInfo: viewItem.addressInfo)
+        view?.set(primaryFeeInfo: viewItem.primaryFeeInfo)
+        view?.set(secondaryFeeInfo: viewItem.secondaryFeeInfo)
+        view?.set(sendButtonEnabled: viewItem.sendButtonEnabled)
     }
 
-    func onViewDidAppear() {
-        view?.showKeyboard()
+    func onAmountChanged(amount: Double) {
+        userInput.amount = amount
+
+        let state = interactor.state(forUserInput: userInput)
+        let viewItem = factory.viewItem(forState: state)
+
+        view?.set(hintInfo: viewItem.hintInfo)
+        view?.set(primaryFeeInfo: viewItem.primaryFeeInfo)
+        view?.set(secondaryFeeInfo: viewItem.secondaryFeeInfo)
+        view?.set(sendButtonEnabled: viewItem.sendButtonEnabled)
     }
 
-    func onAmountEntered(amount: String?) {
-        enteredAmount = Double(amount?.replacingOccurrences(of: ",", with: ".") ?? "0")
-        refreshAmountHint()
+    func onSwitchClicked() {
+        guard let convertedAmount = interactor.convertedAmount(forInputType: userInput.inputType, amount: userInput.amount) else {
+            return
+        }
+
+        userInput.amount = convertedAmount
+        userInput.inputType = userInput.inputType == .currency ? .coin : .currency
+
+        let state = interactor.state(forUserInput: userInput)
+        let viewItem = factory.viewItem(forState: state)
+
+        view?.set(amountInfo: viewItem.amountInfo)
+        view?.set(hintInfo: viewItem.hintInfo)
+        view?.set(primaryFeeInfo: viewItem.primaryFeeInfo)
+        view?.set(secondaryFeeInfo: viewItem.secondaryFeeInfo)
     }
 
-    func onAddressEntered(address: String?) {
-        view?.showAddressWarning(interactor.isValid(address: address) || (address ?? "").isEmpty)
-    }
-
-    func onCancelClick() {
-        print("onCancelClick")
-    }
-
-    func onSendClick(address: String?) {
-        if let cryptoAmount = cryptoAmount, let address = address {
-            interactor.send(address: address, amount: cryptoAmount)
+    func onPasteClicked() {
+        if let address = interactor.addressFromPasteboard {
+            onChange(address: address)
         }
     }
 
-    private func updateAmounts() {
-        updateAmountView()
-//        updateAmountHintView(error: nil)
+    func onScan(address: String) {
+        onChange(address: address)
     }
 
-    private func updateAmountView() {
-        let amount = (isEnteringInCrypto ? cryptoAmount : fiatAmount) ?? 0
-        let amountStr = isEnteringInCrypto ? CurrencyHelper.instance.formatCryptoAmount(amount) : CurrencyHelper.instance.formatFiatAmount(amount)
-        let currency = isEnteringInCrypto ? coin : baseCurrencyCode
-
-        view?.setCurrency(code: currency)
-        view?.setAmount(amount: amount > 0.0 ? amountStr : nil)
+    func onDeleteClicked() {
+        onChange(address: nil)
     }
 
-    private func updateAmountHintView(error: SendError?) {
-        let amount = (isEnteringInCrypto ? fiatAmount : cryptoAmount) ?? 0
-        let amountStr = isEnteringInCrypto ? CurrencyHelper.instance.formatFiatAmount(amount) : CurrencyHelper.instance.formatCryptoAmount(amount)
-        let currency = isEnteringInCrypto ? baseCurrencyCode : coin
-
-        view?.setAmountHint(hint: "\(amountStr) \(currency)", color: amount > 0 ? SendTheme.inputTextColor : SendTheme.inactiveInputTextColor, error: error)
+    func onSendClicked() {
+        interactor.send(userInput: userInput)
     }
 
-    private func refreshAmountHint() {
-        if isEnteringInCrypto {
-            cryptoAmount = enteredAmount
-            fiatAmount = (enteredAmount ?? 0) * exchangeRate
-        } else {
-            fiatAmount = enteredAmount
-            cryptoAmount = (enteredAmount ?? 0) / exchangeRate
-        }
+    private func onChange(address: String?) {
+        userInput.address = address
 
-        updateAmountHintView(error: (cryptoAmount ?? 0 > Double(33)) ? SendError.insufficientFunds : nil)
+        let state = interactor.state(forUserInput: userInput)
+        let viewItem = factory.viewItem(forState: state)
+
+        view?.set(addressInfo: viewItem.addressInfo)
+        view?.set(primaryFeeInfo: viewItem.primaryFeeInfo)
+        view?.set(secondaryFeeInfo: viewItem.secondaryFeeInfo)
+        view?.set(sendButtonEnabled: viewItem.sendButtonEnabled)
     }
 
 }

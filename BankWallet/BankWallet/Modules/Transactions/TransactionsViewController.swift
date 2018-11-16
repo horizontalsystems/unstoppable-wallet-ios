@@ -53,8 +53,9 @@ class TransactionsViewController: UITableViewController {
         emptyLabel.textAlignment = .center
         emptyView.addSubview(emptyLabel)
         emptyLabel.snp.makeConstraints { maker in
-            maker.center.equalToSuperview()
-            maker.leadingMargin.trailingMargin.equalToSuperview().offset(50)
+            maker.centerY.equalToSuperview()
+            maker.leading.equalToSuperview().offset(50)
+            maker.trailing.equalToSuperview().offset(-50)
         }
 
         refreshControl = UIRefreshControl()

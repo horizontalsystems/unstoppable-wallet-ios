@@ -94,7 +94,7 @@ protocol IAdapter: class {
 
     func send(to address: String, value: Double, completion: ((Error?) -> ())?)
 
-    func fee(for value: Double, senderPay: Bool) throws -> Double
+    func fee(for value: Double, address: String?, senderPay: Bool) throws -> Double
     func validate(address: String) throws
 
     var receiveAddress: String { get }
@@ -216,6 +216,7 @@ protocol ITransactionRateSyncer {
 }
 
 protocol IPasteboardManager {
+    var value: String? { get }
     func set(value: String)
 }
 

@@ -3,7 +3,6 @@ import GrouviActionSheet
 
 class SendRouter {
     weak var viewController: UIViewController?
-    weak var view: ISendView?
 }
 
 extension SendRouter: ISendRouter {
@@ -18,19 +17,33 @@ extension SendRouter: ISendRouter {
 
 extension SendRouter {
 
-    static func module(wallet: Wallet) -> ActionSheetController {
-        let router = SendRouter()
-        let interactor = SendInteractor(wallet: wallet)
-        let presenter = SendPresenter(interactor: interactor, router: router)
-        interactor.delegate = presenter
+    static func module(coin: Coin) -> ActionSheetController? {
+        guard let wallet = App.shared.walletManager.wallets.first(where: { $0.coin == coin }) else {
+            return nil
+        }
 
-        let sendAlertModel = SendAlertModel(viewDelegate: presenter)
-        router.view = sendAlertModel
-        presenter.view = sendAlertModel
-        
-        let viewController = ActionSheetController(withModel: sendAlertModel, actionStyle: .sheet(showDismiss: false))
+        let factory = SendStateViewItemFactory()
+        let userInput = SendUserInput()
+
+        let router = SendRouter()
+        let interactor = SendInteractor(currencyManager: App.shared.currencyManager, rateManager: App.shared.rateManager, pasteboardManager: App.shared.pasteboardManager, wallet: wallet)
+        let presenter = SendPresenter(interactor: interactor, router: router, factory: factory, userInput: userInput)
+        let view = SendAlertModel(delegate: presenter)
+
+        interactor.delegate = presenter
+        presenter.view = view
+
+        let viewController = ActionSheetController(withModel: view, actionStyle: .sheet(showDismiss: false))
         viewController.backgroundColor = .cryptoBarsColor
         router.viewController = viewController
+
+        view.onScanClicked = {
+            let scanController = ScanQRController()
+            scanController.onCodeParse = { address in
+                view.onScan(address: address)
+            }
+            viewController.present(scanController, animated: true)
+        }
 
         return viewController
     }

@@ -11,8 +11,8 @@ extension WalletRouter: IWalletRouter {
     }
 
     func openSend(for coin: Coin) {
-        if let wallet = App.shared.walletManager.wallets.first(where: { coin == $0.coin }) {
-            SendRouter.module(wallet: wallet).show(fromController: viewController)
+        if let module = SendRouter.module(coin: coin) {
+            module.show(fromController: viewController)
         }
     }
 

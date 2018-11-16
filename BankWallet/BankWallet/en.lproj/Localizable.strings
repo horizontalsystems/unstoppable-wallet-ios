@@ -57,10 +57,11 @@ Go to Settings - > Bank and allow access to Camera.";
 "wallet.syncing_percent" = "Syncing %@";
 "wallet.total_balance.syncing" = "Syncing...";
 
-"send.title" = "Send ";
+"send.title" = "Send %@";
 "send.address_placeholder" = "Address";
 "send.payment_reference_placeholder" = "Payment Reference";
 "send.insufficient_funds" = "Not available amount";
+"send.amount_error.balance" = "Balance %@";
 "paste" = "Paste";
 "amount" = "Amount";
 "more" = "More";

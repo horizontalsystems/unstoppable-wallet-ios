@@ -69,3 +69,41 @@ extension TransactionAddress {
         self.mine = mine
     }
 }
+
+extension AmountInfo: Equatable {
+    public static func ==(lhs: AmountInfo, rhs: AmountInfo) -> Bool {
+        switch (lhs, rhs) {
+        case (let .coinValue(lhsCoinValue), let .coinValue(rhsCoinValue)): return lhsCoinValue == rhsCoinValue
+        case (let .currencyValue(lhsCurrencyValue), let .currencyValue(rhsCurrencyValue)): return lhsCurrencyValue == rhsCurrencyValue
+        default: return false
+        }
+    }
+}
+
+extension AmountError: Equatable {
+    public static func ==(lhs: AmountError, rhs: AmountError) -> Bool {
+        switch (lhs, rhs) {
+        case (let .insufficientAmount(lhsAmountInfo), let .insufficientAmount(rhsAmountInfo)): return lhsAmountInfo == rhsAmountInfo
+        }
+    }
+}
+
+extension HintInfo: Equatable {
+    public static func ==(lhs: HintInfo, rhs: HintInfo) -> Bool {
+        switch (lhs, rhs) {
+        case (let .amount(lhsAmountInfo), let .amount(rhsAmountInfo)): return lhsAmountInfo == rhsAmountInfo
+        case (let .error(lhsError), let .error(rhsError)): return lhsError == rhsError
+        default: return false
+        }
+    }
+}
+
+extension AddressInfo: Equatable {
+    public static func ==(lhs: AddressInfo, rhs: AddressInfo) -> Bool {
+        switch (lhs, rhs) {
+        case (let .address(lhsAddress), let .address(rhsAddress)): return lhsAddress == rhsAddress
+        case (let .invalidAddress(lhsAddress, lhsError), let .invalidAddress(rhsAddress, rhsError)): return lhsAddress == rhsAddress && lhsError == rhsError
+        default: return false
+        }
+    }
+}

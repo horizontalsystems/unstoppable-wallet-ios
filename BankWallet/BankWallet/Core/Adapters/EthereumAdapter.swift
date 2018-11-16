@@ -92,7 +92,7 @@ extension EthereumAdapter: IAdapter {
         ethereumKit.send(to: address, value: value, completion: completion)
     }
 
-    func fee(for value: Double, senderPay: Bool) throws -> Double {
+    func fee(for value: Double, address: String?, senderPay: Bool) throws -> Double {
         return Double(ethereumKit.fee) / coinRate
     }
 
