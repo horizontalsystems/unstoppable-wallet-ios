@@ -55,10 +55,11 @@
 "wallet.syncing_percent" = "Synchronisieren %@";
 "wallet.total_balance.syncing" = "Synchronisieren...";
 
-"send.title" = "Senden ";
+"send.title" = "Send %@";
 "send.address_placeholder" = "Adresse";
 "send.payment_reference_placeholder" = "Zahlungsreferenz";
 "send.insufficient_funds" = "Nicht verfügbare Betrag";
+"send.amount_error.balance" = "Balance %@";
 "paste" = "Einsetzen";
 "amount" = "Betrag";
 "more" = "Mehr";
