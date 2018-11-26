@@ -1,12 +1,12 @@
 import RxSwift
 
-class WalletPresenter {
-    private let interactor: IWalletInteractor
-    private let router: IWalletRouter
+class BalancePresenter {
+    private let interactor: IBalanceInteractor
+    private let router: IBalanceRouter
 
-    weak var view: IWalletView?
+    weak var view: IBalanceView?
 
-    init(interactor: IWalletInteractor, router: IWalletRouter) {
+    init(interactor: IBalanceInteractor, router: IBalanceRouter) {
         self.interactor = interactor
         self.router = router
     }
@@ -14,7 +14,7 @@ class WalletPresenter {
     private func updateView() {
         var totalBalance: Double = 0
 
-        var viewItems = [WalletViewItem]()
+        var viewItems = [BalanceViewItem]()
         let currency = interactor.baseCurrency
 
         var allSynced = true
@@ -32,7 +32,7 @@ class WalletPresenter {
                 totalBalance += balance * rate.value
             }
 
-            viewItems.append(WalletViewItem(
+            viewItems.append(BalanceViewItem(
                     coinValue: CoinValue(coin: wallet.coin, value: balance),
                     exchangeValue: rate.map { CurrencyValue(currency: currency, value: $0.value) },
                     currencyValue: rate.map { CurrencyValue(currency: currency, value: balance * $0.value) },
@@ -47,12 +47,12 @@ class WalletPresenter {
         }
 
         view?.show(totalBalance: allSynced ? CurrencyValue(currency: currency, value: totalBalance) : nil)
-        view?.show(wallets: viewItems)
+        view?.show(items: viewItems)
     }
 
 }
 
-extension WalletPresenter: IWalletInteractorDelegate {
+extension BalancePresenter: IBalanceInteractorDelegate {
 
     func didUpdate() {
         updateView()
@@ -64,7 +64,7 @@ extension WalletPresenter: IWalletInteractorDelegate {
 
 }
 
-extension WalletPresenter: IWalletViewDelegate {
+extension BalancePresenter: IBalanceViewDelegate {
 
     func viewDidLoad() {
         view?.set(title: "wallet.title")

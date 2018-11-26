@@ -1,10 +1,10 @@
 import UIKit
 
-class WalletRouter {
+class BalanceRouter {
     weak var viewController: UIViewController?
 }
 
-extension WalletRouter: IWalletRouter {
+extension BalanceRouter: IBalanceRouter {
 
     func openReceive(for coin: Coin) {
         DepositRouter.module(coin: coin).show(fromController: viewController)
@@ -18,13 +18,13 @@ extension WalletRouter: IWalletRouter {
 
 }
 
-extension WalletRouter {
+extension BalanceRouter {
 
     static func module() -> UIViewController {
-        let router = WalletRouter()
-        let interactor = WalletInteractor(walletManager: App.shared.walletManager, rateManager: App.shared.rateManager, currencyManager: App.shared.currencyManager)
-        let presenter = WalletPresenter(interactor: interactor, router: router)
-        let viewController = WalletViewController(viewDelegate: presenter)
+        let router = BalanceRouter()
+        let interactor = BalanceInteractor(walletManager: App.shared.walletManager, rateManager: App.shared.rateManager, currencyManager: App.shared.currencyManager)
+        let presenter = BalancePresenter(interactor: interactor, router: router)
+        let viewController = BalanceViewController(viewDelegate: presenter)
 
         interactor.delegate = presenter
         presenter.view = viewController

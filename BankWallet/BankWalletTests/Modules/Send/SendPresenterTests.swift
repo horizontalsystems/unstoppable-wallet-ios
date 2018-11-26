@@ -11,6 +11,7 @@ class SendPresenterTests: XCTestCase {
 
     private var viewItem: SendStateViewItem!
 
+    private let coin = "BTC"
     private let state = SendState(inputType: .coin)
 
     private let inputType: SendInputType = .coin
@@ -40,6 +41,7 @@ class SendPresenterTests: XCTestCase {
         mockUserInput = MockSendUserInput()
 
         stub(mockView) { mock in
+            when(mock.set(coin: any())).thenDoNothing()
             when(mock.set(amountInfo: any())).thenDoNothing()
             when(mock.set(switchButtonEnabled: any())).thenDoNothing()
             when(mock.set(hintInfo: any())).thenDoNothing()
@@ -49,14 +51,10 @@ class SendPresenterTests: XCTestCase {
             when(mock.set(sendButtonEnabled: any())).thenDoNothing()
         }
         stub(mockInteractor) { mock in
+            when(mock.coin.get).thenReturn(coin)
             when(mock.state(forUserInput: sameInstance(as: mockUserInput))).thenReturn(state)
             when(mock.convertedAmount(forInputType: equal(to: inputType), amount: equal(to: amount))).thenReturn(convertedAmount)
-//            when(mock.copy(address: any())).thenDoNothing()
         }
-//        stub(mockState) { mock in
-//            when(mock.coin.get).thenReturn(coin)
-//            when(mock.inputType.get).thenReturn(SendInputType.coin)
-//        }
         stub(mockFactory) { mock in
             when(mock.viewItem(forState: equal(to: state))).thenReturn(viewItem)
         }
@@ -89,6 +87,7 @@ class SendPresenterTests: XCTestCase {
     func testOnViewDidLoad() {
         presenter.onViewDidLoad()
 
+        verify(mockView).set(coin: equal(to: coin))
         verify(mockView).set(amountInfo: equal(to: viewItem.amountInfo))
         verify(mockView).set(switchButtonEnabled: viewItem.switchButtonEnabled)
         verify(mockView).set(hintInfo: equal(to: viewItem.hintInfo))

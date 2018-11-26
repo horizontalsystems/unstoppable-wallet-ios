@@ -28,8 +28,8 @@ extension CurrencyValue: Equatable {
     }
 }
 
-extension WalletViewItem: Equatable {
-    public static func ==(lhs: WalletViewItem, rhs: WalletViewItem) -> Bool {
+extension BalanceViewItem: Equatable {
+    public static func ==(lhs: BalanceViewItem, rhs: BalanceViewItem) -> Bool {
         return lhs.coinValue == rhs.coinValue && lhs.exchangeValue == rhs.exchangeValue
     }
 }

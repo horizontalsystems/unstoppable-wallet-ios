@@ -1,22 +1,19 @@
-import Foundation
-import RxSwift
-
-protocol IWalletView: class {
+protocol IBalanceView: class {
     func set(title: String)
     func show(totalBalance: CurrencyValue?)
-    func show(wallets: [WalletViewItem])
+    func show(items: [BalanceViewItem])
     func show(syncStatus: String)
     func didRefresh()
 }
 
-protocol IWalletViewDelegate {
+protocol IBalanceViewDelegate {
     func viewDidLoad()
     func refresh()
     func onReceive(for coin: Coin)
     func onPay(for coin: Coin)
 }
 
-protocol IWalletInteractor {
+protocol IBalanceInteractor {
     var baseCurrency: Currency { get }
     var wallets: [Wallet] { get }
     func rate(forCoin coin: Coin) -> Rate?
@@ -24,12 +21,12 @@ protocol IWalletInteractor {
     func refresh()
 }
 
-protocol IWalletInteractorDelegate: class {
+protocol IBalanceInteractorDelegate: class {
     func didUpdate()
     func didRefresh()
 }
 
-protocol IWalletRouter {
+protocol IBalanceRouter {
     func openReceive(for coin: Coin)
     func openSend(for coin: Coin)
 }
