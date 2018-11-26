@@ -13,16 +13,16 @@ class AboutCell: UITableViewCell {
         super.awakeFromNib()
 
         titleLabel?.text = "guest.title".localized
-        titleLabel?.textColor = .cryptoThemedWhite
+        titleLabel?.textColor = .crypto_White_Black
         subtitleLabel?.text = "guest.subtitle".localized
 
         termsHeaderLabel?.text = "settings_about_terms_privacy_subtitle".localized
         termsLabel?.text = "settings_about_terms_privacy_text".localized
-        termsLabel?.textColor = .cryptoThemedSilver
+        termsLabel?.textColor = .crypto_Silver_Black
 
         dependenciesHeaderLabel?.text = "settings_about_dependencies_subtitle".localized
         dependenciesLabel?.text = "settings_about_dependencies_text".localized
-        dependenciesLabel?.textColor = .cryptoThemedSilver
+        dependenciesLabel?.textColor = .crypto_Silver_Black
     }
 
 }

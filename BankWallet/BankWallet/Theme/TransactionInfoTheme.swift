@@ -5,7 +5,7 @@ class TransactionInfoTheme {
     static let incomingAmountColor = UIColor.cryptoGreen
     static let outgoingAmountColor = UIColor.cryptoYellow
     static let titleHeight: CGFloat = 54
-    static let closeButtonBackground = UIColor.cryptoBarsColor
+    static let closeButtonBackground = UIColor.cryptoBars
     static let coinIconTintColor = UIColor.cryptoGray
     static let titleColor = UIColor.black
     static let titleFont = UIFont.cryptoHeadline
@@ -15,7 +15,7 @@ class TransactionInfoTheme {
     static let itemHeight: CGFloat = 45
     static let closeHeight: CGFloat = 52
     static let amountTopMargin: CGFloat = 20
-    static let titleBackground = UIColor.cryptoBarsColor
+    static let titleBackground = UIColor.cryptoBars
     static let statusValueColor = UIColor.cryptoDark
     static let dateFont = UIFont.cryptoCaption1
     static let successIconTintColor = UIColor.cryptoGreen

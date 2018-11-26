@@ -34,7 +34,7 @@ extension SendRouter {
         presenter.view = view
 
         let viewController = ActionSheetController(withModel: view, actionStyle: .sheet(showDismiss: false))
-        viewController.backgroundColor = .cryptoBarsColor
+        viewController.backgroundColor = .cryptoBars
         router.viewController = viewController
 
         view.onScanClicked = {

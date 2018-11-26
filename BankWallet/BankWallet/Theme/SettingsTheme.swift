@@ -5,21 +5,21 @@ class SettingsTheme {
     static let cellBigMargin: CGFloat = 16
     static let cellMiddleMargin: CGFloat = 8
     static let disclosureSize = CGSize(width: 8, height: 13)
-    static var cellBackground: UIColor { return .cryptoThemedSteel20 }
+    static var cellBackground: UIColor { return .crypto_Steel20_White }
     static let languageCheckmarkTintColor = UIColor.cryptoYellow
     static let cellHeight: CGFloat = 44
-    static var textColor: UIColor { return .cryptoThemedWhite }
+    static var textColor: UIColor { return .crypto_White_Black }
     static var destructiveTextColor: UIColor = .cryptoRed
     static let switchTintColor = UIColor.cryptoGray
     static let separatorColor = UIColor.clear
     static let infoTitleTopMargin: CGFloat = 4
     static let rightTextColor = UIColor.cryptoGray
     static let cellSelectBackground = UIColor.cryptoSteel20
-    static var languageCellBackground: UIColor { return .cryptoThemedSteel20 }
+    static var languageCellBackground: UIColor { return .crypto_Steel20_White }
     static let infoTitleColor = UIColor.cryptoGray
     static let infoTitleFont = UIFont.cryptoCaption3
     static let languageTitleFont = UIFont.cryptoBody2
-    static var languageTitleColor: UIColor { return .cryptoThemedWhite }
+    static var languageTitleColor: UIColor { return .crypto_White_Black }
     static let versionLabelTopMargin: CGFloat = 32
     static let separatorInset: CGFloat = SettingsTheme.cellIconSize + SettingsTheme.cellBigMargin
     static let securityCellHeight: CGFloat = 44

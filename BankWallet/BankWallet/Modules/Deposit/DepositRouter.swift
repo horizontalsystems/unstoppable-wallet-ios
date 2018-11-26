@@ -19,7 +19,7 @@ extension DepositRouter {
         presenter.view = depositAlertModel
 
         let viewController = ActionSheetController(withModel: depositAlertModel, actionStyle: .sheet(showDismiss: false))
-        viewController.backgroundColor = .cryptoBarsColor
+        viewController.backgroundColor = .cryptoBars
         return viewController
     }
 

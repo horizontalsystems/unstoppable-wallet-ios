@@ -37,7 +37,7 @@ class TransactionStatusItemView: BaseActionItemView {
             maker.height.equalTo(TransactionInfoTheme.hashBackgroundHeight)
         }
 
-        progressView.backgroundColor = .cryptoGreenProgress
+        progressView.backgroundColor = .cryptoGreen20
         wrapperView.addSubview(progressView)
         progressView.snp.makeConstraints { maker in
             maker.top.bottom.leading.equalToSuperview()
