@@ -50,6 +50,12 @@ extension TransactionRecord {
     }
 }
 
+extension LatestRate: Equatable {
+    public static func ==(lhs: LatestRate, rhs: LatestRate) -> Bool {
+        return lhs.value == rhs.value && lhs.timestamp == rhs.timestamp
+    }
+}
+
 extension Rate {
     convenience init(coin: String, currencyCode: String, value: Double, timestamp: Double) {
         self.init()

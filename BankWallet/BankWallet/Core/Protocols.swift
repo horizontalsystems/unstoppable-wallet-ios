@@ -154,7 +154,7 @@ protocol IRateSyncer {
 }
 
 protocol IRateSyncerDelegate: class {
-    func didSync(coin: String, currencyCode: String, value: Double)
+    func didSync(coin: String, currencyCode: String, latestRate: LatestRate)
 }
 
 protocol ISystemInfoManager {
@@ -169,13 +169,13 @@ protocol IAppConfigProvider {
 }
 
 protocol IRateNetworkManager {
-    func getLatestRate(coin: String, currencyCode: String) -> Observable<Double>
+    func getLatestRate(coin: String, currencyCode: String) -> Observable<LatestRate>
     func getRate(coin: String, currencyCode: String, date: Date) -> Observable<Double>
 }
 
 protocol IRateStorage {
     func rate(forCoin coin: Coin, currencyCode: String) -> Rate?
-    func save(value: Double, coin: Coin, currencyCode: String)
+    func save(latestRate: LatestRate, coin: Coin, currencyCode: String)
     func clear()
 }
 

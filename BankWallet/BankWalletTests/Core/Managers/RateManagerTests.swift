@@ -53,7 +53,7 @@ class RateManagerTests: XCTestCase {
         stub(mockStorage) { mock in
             when(mock.rate(forCoin: equal(to: bitcoin), currencyCode: equal(to: baseCurrencyCode))).thenReturn(bitcoinRate)
             when(mock.rate(forCoin: equal(to: ether), currencyCode: equal(to: baseCurrencyCode))).thenReturn(etherRate)
-            when(mock.save(value: any(), coin: any(), currencyCode: any())).thenDoNothing()
+            when(mock.save(latestRate: any(), coin: any(), currencyCode: any())).thenDoNothing()
         }
         stub(mockSyncer) { mock in
             when(mock.sync(coins: any(), currencyCode: any())).thenDoNothing()
@@ -120,16 +120,16 @@ class RateManagerTests: XCTestCase {
     }
 
     func testDidSyncRate() {
-        let value: Double = 3250
+        let latestRate = LatestRate(value: 3250, timestamp: Date())
 
         let subjectExpectation = expectation(description: "Subject")
         _ = manager.subject.subscribe(onNext: {
             subjectExpectation.fulfill()
         })
 
-        manager.didSync(coin: bitcoin, currencyCode: baseCurrencyCode, value: value)
+        manager.didSync(coin: bitcoin, currencyCode: baseCurrencyCode, latestRate: latestRate)
 
-        verify(mockStorage).save(value: equal(to: value), coin: equal(to: bitcoin), currencyCode: equal(to: baseCurrencyCode))
+        verify(mockStorage).save(latestRate: equal(to: latestRate), coin: equal(to: bitcoin), currencyCode: equal(to: baseCurrencyCode))
         waitForExpectations(timeout: 2)
     }
 

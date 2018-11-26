@@ -132,7 +132,7 @@ class NetworkManager {
 
 extension NetworkManager: IRateNetworkManager {
 
-    func getLatestRate(coin: String, currencyCode: String) -> Observable<Double> {
+    func getLatestRate(coin: String, currencyCode: String) -> Observable<LatestRate> {
         var coin = coin
         if coin.last == "t" || coin.last == "r" {
             coin.removeLast()

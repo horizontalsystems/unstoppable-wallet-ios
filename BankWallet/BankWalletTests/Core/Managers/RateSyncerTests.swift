@@ -15,8 +15,8 @@ class RateSyncerTests: XCTestCase {
 
     private let currencyCode = "USD"
 
-    private let bitcoinValue: Double = 5000
-    private let etherValue: Double = 300
+    private let bitcoinCurrentRate = LatestRate(value: 5000, timestamp: Date())
+    private let etherCurrentRate = LatestRate(value: 300, timestamp: Date())
 
     override func setUp() {
         super.setUp()
@@ -26,11 +26,11 @@ class RateSyncerTests: XCTestCase {
         mockTimer = MockIPeriodicTimer()
 
         stub(mockNetworkManager) { mock in
-            when(mock.getLatestRate(coin: equal(to: bitcoin), currencyCode: equal(to: currencyCode))).thenReturn(Observable.just(bitcoinValue))
-            when(mock.getLatestRate(coin: equal(to: ether), currencyCode: equal(to: currencyCode))).thenReturn(Observable.just(etherValue))
+            when(mock.getLatestRate(coin: equal(to: bitcoin), currencyCode: equal(to: currencyCode))).thenReturn(Observable.just(bitcoinCurrentRate))
+            when(mock.getLatestRate(coin: equal(to: ether), currencyCode: equal(to: currencyCode))).thenReturn(Observable.just(etherCurrentRate))
         }
         stub(mockDelegate) { mock in
-            when(mock.didSync(coin: any(), currencyCode: any(), value: any())).thenDoNothing()
+            when(mock.didSync(coin: any(), currencyCode: any(), latestRate: any())).thenDoNothing()
         }
         stub(mockTimer) { mock in
             when(mock.schedule()).thenDoNothing()
@@ -53,8 +53,8 @@ class RateSyncerTests: XCTestCase {
     func testSync() {
         syncer.sync(coins: [bitcoin, ether], currencyCode: currencyCode)
 
-        verify(mockDelegate).didSync(coin: equal(to: bitcoin), currencyCode: equal(to: currencyCode), value: equal(to: bitcoinValue))
-        verify(mockDelegate).didSync(coin: equal(to: ether), currencyCode: equal(to: currencyCode), value: equal(to: etherValue))
+        verify(mockDelegate).didSync(coin: equal(to: bitcoin), currencyCode: equal(to: currencyCode), latestRate: equal(to: bitcoinCurrentRate))
+        verify(mockDelegate).didSync(coin: equal(to: ether), currencyCode: equal(to: currencyCode), latestRate: equal(to: etherCurrentRate))
     }
 
     func testInvalidateTimerOnSync() {

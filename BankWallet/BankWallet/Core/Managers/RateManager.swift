@@ -71,8 +71,8 @@ extension RateManager: IPeriodicTimerDelegate {
 
 extension RateManager: IRateSyncerDelegate {
 
-    func didSync(coin: String, currencyCode: String, value: Double) {
-        storage.save(value: value, coin: coin, currencyCode: currencyCode)
+    func didSync(coin: String, currencyCode: String, latestRate: LatestRate) {
+        storage.save(latestRate: latestRate, coin: coin, currencyCode: currencyCode)
         subject.onNext(())
     }
 

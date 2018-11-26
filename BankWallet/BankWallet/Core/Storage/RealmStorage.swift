@@ -14,19 +14,19 @@ extension RealmStorage: IRateStorage {
         return realmFactory.realm.objects(Rate.self).filter("coin = %@ AND currencyCode = %@", coin, currencyCode).first
     }
 
-    func save(value: Double, coin: Coin, currencyCode: String) {
+    func save(latestRate: LatestRate, coin: Coin, currencyCode: String) {
         let realm = realmFactory.realm
 
         try? realm.write {
             if let rate = realm.objects(Rate.self).filter("coin = %@ AND currencyCode = %@", coin, currencyCode).first {
-                rate.value = value
-                rate.timestamp = Date().timeIntervalSince1970
+                rate.value = latestRate.value
+                rate.timestamp = latestRate.timestamp
             } else {
                 let rate = Rate()
                 rate.coin = coin
                 rate.currencyCode = currencyCode
-                rate.value = value
-                rate.timestamp = Date().timeIntervalSince1970
+                rate.value = latestRate.value
+                rate.timestamp = latestRate.timestamp
 
                 realm.add(rate)
             }

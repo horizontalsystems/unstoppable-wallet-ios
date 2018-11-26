@@ -2,7 +2,7 @@ import Foundation
 
 class AppConfigProvider: IAppConfigProvider {
 
-    let ratesApiUrl = "https://ipfs.horizontalsystems.xyz/ipns/QmSxpioQuDSjTH6XiT5q35V7xpJqxmDheEcTRRWyMkMim7/io-hs/data/xrates"
+    let ratesApiUrl = "https://ipfs.horizontalsystems.xyz/ipns/Qmd4Gv2YVPqs6dmSy1XEq7pQRSgLihqYKL2JjK7DMUFPVz/io-hs/data/xrates"
 
     var enabledCoins: [Coin] {
         if let coins = Bundle.main.object(forInfoDictionaryKey: "Enabled Coins") as? String {

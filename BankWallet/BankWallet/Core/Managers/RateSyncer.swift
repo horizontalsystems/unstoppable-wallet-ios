@@ -29,8 +29,8 @@ extension RateSyncer: IRateSyncer {
             }
 
             observable
-                    .subscribe(onNext: { [weak self] value in
-                        self?.delegate?.didSync(coin: coin, currencyCode: currencyCode, value: value)
+                    .subscribe(onNext: { [weak self] latestRate in
+                        self?.delegate?.didSync(coin: coin, currencyCode: currencyCode, latestRate: latestRate)
                     })
                     .disposed(by: disposeBag)
         }
