@@ -120,7 +120,7 @@ class RateManagerTests: XCTestCase {
     }
 
     func testDidSyncRate() {
-        let latestRate = LatestRate(value: 3250, timestamp: Date())
+        let latestRate = LatestRate(value: 3250, timestamp: Date().timeIntervalSince1970)
 
         let subjectExpectation = expectation(description: "Subject")
         _ = manager.subject.subscribe(onNext: {

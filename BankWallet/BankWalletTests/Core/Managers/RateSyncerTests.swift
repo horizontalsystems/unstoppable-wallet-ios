@@ -15,8 +15,8 @@ class RateSyncerTests: XCTestCase {
 
     private let currencyCode = "USD"
 
-    private let bitcoinCurrentRate = LatestRate(value: 5000, timestamp: Date())
-    private let etherCurrentRate = LatestRate(value: 300, timestamp: Date())
+    private let bitcoinCurrentRate = LatestRate(value: 5000, timestamp: Date().timeIntervalSince1970)
+    private let etherCurrentRate = LatestRate(value: 300, timestamp: Date().timeIntervalSince1970)
 
     override func setUp() {
         super.setUp()
