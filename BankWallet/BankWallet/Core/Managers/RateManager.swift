@@ -10,7 +10,6 @@ class RateManager {
     private let syncer: IRateSyncer
     private let walletManager: IWalletManager
     private let currencyManager: ICurrencyManager
-    private let reachabilityManager: IReachabilityManager
     private var timer: IPeriodicTimer
 
     init(storage: IRateStorage, syncer: IRateSyncer, walletManager: IWalletManager, currencyManager: ICurrencyManager, reachabilityManager: IReachabilityManager, timer: IPeriodicTimer) {
@@ -18,7 +17,6 @@ class RateManager {
         self.syncer = syncer
         self.walletManager = walletManager
         self.currencyManager = currencyManager
-        self.reachabilityManager = reachabilityManager
         self.timer = timer
 
         self.timer.delegate = self

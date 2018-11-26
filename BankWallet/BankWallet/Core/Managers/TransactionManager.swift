@@ -10,7 +10,7 @@ class TransactionManager {
     private let currencyManager: ICurrencyManager
     private let wordsManager: IWordsManager
 
-    init(storage: ITransactionRecordStorage, rateSyncer: ITransactionRateSyncer, walletManager: IWalletManager, currencyManager: ICurrencyManager, wordsManager: IWordsManager) {
+    init(storage: ITransactionRecordStorage, rateSyncer: ITransactionRateSyncer, walletManager: IWalletManager, currencyManager: ICurrencyManager, wordsManager: IWordsManager, reachabilityManager: IReachabilityManager) {
         self.storage = storage
         self.rateSyncer = rateSyncer
         self.walletManager = walletManager
@@ -38,6 +38,14 @@ class TransactionManager {
                     }
                 })
                 .disposed(by: disposeBag)
+
+        reachabilityManager.subject
+                .subscribe(onNext: { [weak self] connected in
+                    if connected {
+                        self?.syncRates()
+                    }
+                })
+                .disposed(by: disposeBag)
     }
 
     private func resubscribeToAdapters() {
@@ -58,11 +66,15 @@ class TransactionManager {
         }
 
         storage.update(records: records)
-        rateSyncer.sync(currencyCode: currencyManager.baseCurrency.code)
+        syncRates()
     }
 
     private func handleCurrencyChange() {
         storage.clearRates()
+        syncRates()
+    }
+
+    private func syncRates() {
         rateSyncer.sync(currencyCode: currencyManager.baseCurrency.code)
     }
 

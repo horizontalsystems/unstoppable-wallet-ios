@@ -91,7 +91,7 @@ class App {
         rateSyncer.delegate = rateManager
 
         transactionRateSyncer = TransactionRateSyncer(storage: realmStorage, networkManager: networkManager)
-        transactionManager = TransactionManager(storage: realmStorage, rateSyncer: transactionRateSyncer, walletManager: walletManager, currencyManager: currencyManager, wordsManager: wordsManager)
+        transactionManager = TransactionManager(storage: realmStorage, rateSyncer: transactionRateSyncer, walletManager: walletManager, currencyManager: currencyManager, wordsManager: wordsManager, reachabilityManager: reachabilityManager)
 
         transactionViewItemFactory = TransactionViewItemFactory(walletManager: walletManager, currencyManager: currencyManager)
     }
