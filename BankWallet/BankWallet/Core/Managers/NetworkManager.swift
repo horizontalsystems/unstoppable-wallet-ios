@@ -31,11 +31,16 @@ class NetworkManager {
     private let apiUrl: String
 
     private let ipfsDateFormatter = DateFormatter()
+    private let ipfsMinuteFormatter = DateFormatter()
 
     required init(appConfigProvider: IAppConfigProvider) {
         self.apiUrl = appConfigProvider.ratesApiUrl
 
-        ipfsDateFormatter.dateFormat = "yyyy/MM/dd/HH/mm"
+        ipfsDateFormatter.timeZone = TimeZone(abbreviation: "UTC")
+        ipfsDateFormatter.dateFormat = "yyyy/MM/dd/HH"
+
+        ipfsMinuteFormatter.timeZone = TimeZone(abbreviation: "UTC")
+        ipfsMinuteFormatter.dateFormat = "mm"
     }
 
     private func request(withMethod method: HTTPMethod, path: String, parameters: [String: Any]? = nil) -> URLRequestConvertible {
@@ -148,8 +153,17 @@ extension NetworkManager: IRateNetworkManager {
         }
 
         let datePath = ipfsDateFormatter.string(from: date)
+        let minuteString = ipfsMinuteFormatter.string(from: date)
 
-        return observable(forRequest: request(withMethod: .get, path: "\(coin)/\(currencyCode)/\(datePath)/index.json"))
+        let hourObservable: Observable<[String: Double]> = observable(forRequest: request(withMethod: .get, path: "\(coin)/\(currencyCode)/\(datePath)/index.json"))
+
+        return hourObservable.flatMap { rates -> Observable<Double> in
+            if let rate = rates[minuteString] {
+                return Observable.just(rate)
+            }
+
+            return Observable.empty()
+        }
     }
 
 }
