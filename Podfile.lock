@@ -1,5 +1,5 @@
 PODS:
-  - Alamofire (4.7.3)
+  - Alamofire (4.8.0)
   - BigInt (3.1.0):
     - SipHash (~> 1.2)
   - CryptoSwift (0.13.0)
@@ -113,14 +113,14 @@ CHECKOUT OPTIONS:
     :commit: 852780b5548f639b3e63cce2a353c3a4d4cf6348
     :git: https://github.com/horizontalsystems/GrouviHUD.git
   HSBitcoinKit:
-    :commit: 72674b44c86f34d669b80a46db0835b186a8ca27
+    :commit: 53f55f19efcf22d1d16630aedee1fcb0cecd88a8
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   HSEthereumKit:
     :commit: 38fb0973df24bcffc03701e33048be2260a29a5a
     :git: https://github.com/horizontalsystems/ethereum-kit-ios.git
 
 SPEC CHECKSUMS:
-  Alamofire: c7287b6e5d7da964a70935e5db17046b7fde6568
+  Alamofire: 3ec537f71edc9804815215393ae2b1a8ea33a844
   BigInt: 76b5dfdfa3e2e478d4ffdf161aeede5502e2742f
   CryptoSwift: 16e78bebf567bad1c87b2d58f6547f25b74c31aa
   Cuckoo: d30b6c149e52ffbcfe6b4a9543e4627d08947274
