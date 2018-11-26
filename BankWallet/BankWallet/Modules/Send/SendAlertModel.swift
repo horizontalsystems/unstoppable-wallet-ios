@@ -64,7 +64,7 @@ class SendAlertModel: BaseAlertModel {
     }
 
     func onScan(address: String) {
-        addressItem.bindAddress?(address, nil)
+        delegate.onScan(address: address)
     }
 
 }
