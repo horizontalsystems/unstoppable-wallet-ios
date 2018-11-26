@@ -3,19 +3,19 @@ import GrouviExtensions
 import GrouviHUD
 import RxSwift
 
-class WalletCell: UITableViewCell {
+class BalanceCell: UITableViewCell {
     var progressDisposable: Disposable?
 
     var roundedBackground = UIView()
 
-    var coinIconImageView = TintImageView(image: nil, tintColor: WalletTheme.coinIconTintColor, selectedTintColor: WalletTheme.coinIconTintColor)
+    var coinIconImageView = TintImageView(image: nil, tintColor: BalanceTheme.coinIconTintColor, selectedTintColor: BalanceTheme.coinIconTintColor)
     var nameLabel = UILabel()
     var rateLabel = UILabel()
     var rateSpinner = UIActivityIndicatorView(activityIndicatorStyle: .white)
     var currencyValueLabel = UILabel()
     var coinValueLabel = UILabel()
 
-    var syncSpinner = HUDProgressView(strokeLineWidth: WalletTheme.spinnerLineWidth, radius: WalletTheme.spinnerSideSize / 2 - WalletTheme.spinnerLineWidth / 2, strokeColor: UIColor.cryptoGray)
+    var syncSpinner = HUDProgressView(strokeLineWidth: BalanceTheme.spinnerLineWidth, radius: BalanceTheme.spinnerSideSize / 2 - BalanceTheme.spinnerLineWidth / 2, strokeColor: UIColor.cryptoGray)
     var syncLabel = UILabel()
 
     var receiveButton = RespondButton()
@@ -33,108 +33,108 @@ class WalletCell: UITableViewCell {
 
         contentView.addSubview(roundedBackground)
         roundedBackground.snp.makeConstraints { maker in
-            maker.top.equalToSuperview().offset(WalletTheme.cellPadding)
+            maker.top.equalToSuperview().offset(BalanceTheme.cellPadding)
             maker.leadingMargin.trailingMargin.equalToSuperview().inset(self.layoutMargins)
             maker.bottom.equalToSuperview()
         }
-        roundedBackground.backgroundColor = WalletTheme.roundedBackgroundColor
+        roundedBackground.backgroundColor = BalanceTheme.roundedBackgroundColor
         roundedBackground.clipsToBounds = true
-        roundedBackground.layer.cornerRadius = WalletTheme.roundedBackgroundCornerRadius
+        roundedBackground.layer.cornerRadius = BalanceTheme.roundedBackgroundCornerRadius
 
         roundedBackground.addSubview(coinIconImageView)
         coinIconImageView.snp.makeConstraints { maker in
-            maker.leading.equalToSuperview().offset(WalletTheme.cellBigMargin)
-            maker.top.equalToSuperview().offset(WalletTheme.cellSmallMargin)
-            maker.size.equalTo(WalletTheme.coinIconSide)
+            maker.leading.equalToSuperview().offset(BalanceTheme.cellBigMargin)
+            maker.top.equalToSuperview().offset(BalanceTheme.cellSmallMargin)
+            maker.size.equalTo(BalanceTheme.coinIconSide)
         }
 
         roundedBackground.addSubview(nameLabel)
         nameLabel.snp.makeConstraints { maker in
-            maker.leading.equalTo(self.coinIconImageView.snp.trailing).offset(WalletTheme.cellSmallMargin)
-            maker.top.equalToSuperview().offset(WalletTheme.nameTopMargin)
+            maker.leading.equalTo(self.coinIconImageView.snp.trailing).offset(BalanceTheme.cellSmallMargin)
+            maker.top.equalToSuperview().offset(BalanceTheme.nameTopMargin)
         }
-        nameLabel.font = WalletTheme.cellTitleFont
-        nameLabel.textColor = WalletTheme.cellTitleColor
+        nameLabel.font = BalanceTheme.cellTitleFont
+        nameLabel.textColor = BalanceTheme.cellTitleColor
         nameLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         nameLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
 
         roundedBackground.addSubview(rateLabel)
         rateLabel.snp.makeConstraints { maker in
-            maker.leading.equalToSuperview().offset(WalletTheme.cellBigMargin)
-            maker.top.equalTo(self.nameLabel.snp.bottom).offset(WalletTheme.valueTopMargin)
+            maker.leading.equalToSuperview().offset(BalanceTheme.cellBigMargin)
+            maker.top.equalTo(self.nameLabel.snp.bottom).offset(BalanceTheme.valueTopMargin)
         }
-        rateLabel.font = WalletTheme.cellSubtitleFont
-        rateLabel.textColor = WalletTheme.rateColor
+        rateLabel.font = BalanceTheme.cellSubtitleFont
+        rateLabel.textColor = BalanceTheme.rateColor
         rateLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         rateLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
 
         roundedBackground.addSubview(rateSpinner)
         rateSpinner.snp.makeConstraints { maker in
-            maker.leading.equalTo(self.rateLabel.snp.trailing).offset(WalletTheme.rateSpinnerLeftMargin)
+            maker.leading.equalTo(self.rateLabel.snp.trailing).offset(BalanceTheme.rateSpinnerLeftMargin)
             maker.centerY.equalTo(self.rateLabel.snp.centerY)
-            maker.size.equalTo(WalletTheme.rateSpinnerSize)
+            maker.size.equalTo(BalanceTheme.rateSpinnerSize)
         }
         rateSpinner.transform = CGAffineTransform(scaleX: 0.65, y: 0.65)
-        rateSpinner.color = WalletTheme.rateColor
+        rateSpinner.color = BalanceTheme.rateColor
 
         roundedBackground.addSubview(currencyValueLabel)
         currencyValueLabel.snp.makeConstraints { maker in
-            maker.leading.equalTo(self.nameLabel.snp.trailing).offset(WalletTheme.cellSmallMargin)
-            maker.trailing.equalToSuperview().offset(-WalletTheme.cellBigMargin)
+            maker.leading.equalTo(self.nameLabel.snp.trailing).offset(BalanceTheme.cellSmallMargin)
+            maker.trailing.equalToSuperview().offset(-BalanceTheme.cellBigMargin)
             maker.centerY.equalTo(self.nameLabel.snp.centerY)
         }
-        currencyValueLabel.font = WalletTheme.cellSubtitleFont
+        currencyValueLabel.font = BalanceTheme.cellSubtitleFont
         currencyValueLabel.textAlignment = .right
 
         roundedBackground.addSubview(coinValueLabel)
         coinValueLabel.snp.makeConstraints { maker in
-            maker.leading.equalTo(self.rateSpinner.snp.trailing).offset(WalletTheme.cellSmallMargin)
-            maker.bottom.equalTo(self.rateLabel).offset(WalletTheme.coinLabelVerticalOffset)
-            maker.trailing.equalToSuperview().offset(-WalletTheme.cellBigMargin)
+            maker.leading.equalTo(self.rateSpinner.snp.trailing).offset(BalanceTheme.cellSmallMargin)
+            maker.bottom.equalTo(self.rateLabel).offset(BalanceTheme.coinLabelVerticalOffset)
+            maker.trailing.equalToSuperview().offset(-BalanceTheme.cellBigMargin)
         }
-        coinValueLabel.font = WalletTheme.cellTitleFont
-        coinValueLabel.textColor = WalletTheme.cellTitleColor
+        coinValueLabel.font = BalanceTheme.cellTitleFont
+        coinValueLabel.textColor = BalanceTheme.cellTitleColor
         coinValueLabel.textAlignment = .right
 
         roundedBackground.addSubview(syncLabel)
         syncLabel.snp.makeConstraints { maker in
-            maker.leading.equalTo(self.rateSpinner.snp.trailing).offset(WalletTheme.cellSmallMargin)
+            maker.leading.equalTo(self.rateSpinner.snp.trailing).offset(BalanceTheme.cellSmallMargin)
             maker.centerY.equalTo(self.rateLabel.snp.centerY)
-            maker.trailing.equalToSuperview().offset(-WalletTheme.cellBigMargin)
+            maker.trailing.equalToSuperview().offset(-BalanceTheme.cellBigMargin)
         }
         syncLabel.font = .cryptoCaption3
-        syncLabel.textColor = WalletTheme.rateColor
+        syncLabel.textColor = BalanceTheme.rateColor
         syncLabel.textAlignment = .right
 
         roundedBackground.addSubview(syncSpinner)
         syncSpinner.snp.makeConstraints { maker in
-            maker.trailing.equalToSuperview().offset(-WalletTheme.cellBigMargin)
+            maker.trailing.equalToSuperview().offset(-BalanceTheme.cellBigMargin)
             maker.centerY.equalTo(self.nameLabel.snp.centerY)
-            maker.size.equalTo(WalletTheme.spinnerSideSize)
+            maker.size.equalTo(BalanceTheme.spinnerSideSize)
         }
 
         roundedBackground.addSubview(receiveButton)
         receiveButton.snp.makeConstraints { maker in
-            maker.leading.equalToSuperview().offset(WalletTheme.cellSmallMargin)
-            maker.top.equalTo(self.coinValueLabel.snp.bottom).offset(WalletTheme.buttonsTopMargin)
-            maker.height.equalTo(WalletTheme.buttonsHeight)
+            maker.leading.equalToSuperview().offset(BalanceTheme.cellSmallMargin)
+            maker.top.equalTo(self.coinValueLabel.snp.bottom).offset(BalanceTheme.buttonsTopMargin)
+            maker.height.equalTo(BalanceTheme.buttonsHeight)
         }
         receiveButton.onTap = { [weak self] in self?.receive() }
         receiveButton.backgrounds = ButtonTheme.greenBackgroundOnDarkBackgroundDictionary
-        receiveButton.cornerRadius = WalletTheme.buttonCornerRadius
+        receiveButton.cornerRadius = BalanceTheme.buttonCornerRadius
         receiveButton.titleLabel.text = "wallet.deposit".localized
 
         roundedBackground.addSubview(payButton)
         payButton.snp.makeConstraints { maker in
-            maker.leading.equalTo(receiveButton.snp.trailing).offset(WalletTheme.cellSmallMargin)
-            maker.top.equalTo(self.coinValueLabel.snp.bottom).offset(WalletTheme.buttonsTopMargin)
-            maker.trailing.equalToSuperview().offset(-WalletTheme.cellSmallMargin)
-            maker.height.equalTo(WalletTheme.buttonsHeight)
+            maker.leading.equalTo(receiveButton.snp.trailing).offset(BalanceTheme.cellSmallMargin)
+            maker.top.equalTo(self.coinValueLabel.snp.bottom).offset(BalanceTheme.buttonsTopMargin)
+            maker.trailing.equalToSuperview().offset(-BalanceTheme.cellSmallMargin)
+            maker.height.equalTo(BalanceTheme.buttonsHeight)
             maker.width.equalTo(receiveButton)
         }
         payButton.onTap = { [weak self] in self?.pay() }
         payButton.backgrounds = ButtonTheme.yellowBackgroundOnDarkBackgroundDictionary
-        payButton.cornerRadius = WalletTheme.buttonCornerRadius
+        payButton.cornerRadius = BalanceTheme.buttonCornerRadius
         payButton.titleLabel.text = "wallet.send".localized
     }
 
@@ -142,7 +142,7 @@ class WalletCell: UITableViewCell {
         fatalError("not implemented")
     }
 
-    func bind(item: WalletViewItem, selected: Bool, animated: Bool = false, onReceive: @escaping (() -> ()), onPay: @escaping (() -> ())) {
+    func bind(item: BalanceViewItem, selected: Bool, animated: Bool = false, onReceive: @escaping (() -> ()), onPay: @escaping (() -> ())) {
         self.onPay = onPay
         self.onReceive = onReceive
 
@@ -157,7 +157,7 @@ class WalletCell: UITableViewCell {
         }
     }
 
-    func bindView(item: WalletViewItem, selected: Bool, animated: Bool = false) {
+    func bindView(item: BalanceViewItem, selected: Bool, animated: Bool = false) {
         var synced = false
         if case .synced = item.state {
             synced = true
@@ -165,8 +165,8 @@ class WalletCell: UITableViewCell {
 
         coinIconImageView.image = UIImage(named: "\(item.coinValue.coin) Icon")
 
-        receiveButton.set(hidden: !selected, animated: animated, duration: WalletTheme.buttonsAnimationDuration)
-        payButton.set(hidden: !selected, animated: animated, duration: WalletTheme.buttonsAnimationDuration)
+        receiveButton.set(hidden: !selected, animated: animated, duration: BalanceTheme.buttonsAnimationDuration)
+        payButton.set(hidden: !selected, animated: animated, duration: BalanceTheme.buttonsAnimationDuration)
 
         nameLabel.text = "coin.\(item.coinValue.coin)".localized
 
@@ -184,7 +184,7 @@ class WalletCell: UITableViewCell {
 
         if synced, let value = item.currencyValue {
             currencyValueLabel.text = ValueFormatter.instance.format(currencyValue: value)
-            currencyValueLabel.textColor = value.value > 0 ? WalletTheme.nonZeroBalanceTextColor : WalletTheme.zeroBalanceTextColor
+            currencyValueLabel.textColor = value.value > 0 ? BalanceTheme.nonZeroBalanceTextColor : BalanceTheme.zeroBalanceTextColor
         } else {
             currencyValueLabel.text = nil
         }

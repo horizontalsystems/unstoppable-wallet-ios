@@ -15,7 +15,7 @@ extension MainRouter {
         let presenter = MainPresenter(interactor: interactor, router: router)
 
         let viewControllers = [
-            walletNavigation,
+            balanceNavigation,
             transactionsNavigation,
             settingsNavigation
         ]
@@ -31,8 +31,8 @@ extension MainRouter {
         return viewController
     }
 
-    private static var walletNavigation: UIViewController {
-        let navigation = UINavigationController(rootViewController: WalletRouter.module())
+    private static var balanceNavigation: UIViewController {
+        let navigation = UINavigationController(rootViewController: BalanceRouter.module())
         navigation.navigationBar.barStyle = AppTheme.navigationBarStyle
         navigation.navigationBar.tintColor = AppTheme.navigationBarTintColor
         navigation.navigationBar.prefersLargeTitles = true

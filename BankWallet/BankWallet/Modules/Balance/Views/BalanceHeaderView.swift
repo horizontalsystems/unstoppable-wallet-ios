@@ -1,7 +1,7 @@
 import UIKit
 import SnapKit
 
-class WalletHeaderView: UIView {
+class BalanceHeaderView: UIView {
 
     let amountLabel = UILabel()
     let separatorView = UIView()
@@ -28,16 +28,16 @@ class WalletHeaderView: UIView {
         preservesSuperviewLayoutMargins = true
 
         addSubview(amountLabel)
-        amountLabel.font = WalletTheme.amountFont
+        amountLabel.font = BalanceTheme.amountFont
         amountLabel.preservesSuperviewLayoutMargins = true
 
         amountLabel.snp.makeConstraints { maker in
             maker.leadingMargin.equalToSuperview().inset(self.layoutMargins)
-            maker.top.equalToSuperview().offset(WalletTheme.cellSmallMargin)
+            maker.top.equalToSuperview().offset(BalanceTheme.cellSmallMargin)
         }
 
         addSubview(separatorView)
-        separatorView.backgroundColor = WalletTheme.headerSeparatorBackground
+        separatorView.backgroundColor = BalanceTheme.headerSeparatorBackground
         separatorView.snp.makeConstraints { maker in
             maker.leading.trailing.bottom.equalToSuperview()
             maker.height.equalTo(1 / UIScreen.main.scale)
@@ -47,10 +47,10 @@ class WalletHeaderView: UIView {
     func bind(amount: String?) {
         if let amount = amount {
             amountLabel.text = amount
-            amountLabel.textColor = WalletTheme.amountColor
+            amountLabel.textColor = BalanceTheme.amountColor
         } else {
             amountLabel.text = "wallet.total_balance.syncing".localized
-            amountLabel.textColor = WalletTheme.amountColorSyncing
+            amountLabel.textColor = BalanceTheme.amountColorSyncing
         }
     }
 

@@ -1,6 +1,6 @@
 import UIKit
 
-class WalletTheme {
+class BalanceTheme {
     static let amountFont = UIFont.cryptoTitle3
     static let amountColor = UIColor.cryptoYellow
     static let amountColorSyncing = UIColor.cryptoGray

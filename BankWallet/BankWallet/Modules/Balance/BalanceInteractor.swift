@@ -1,7 +1,7 @@
 import RxSwift
 
-class WalletInteractor {
-    weak var delegate: IWalletInteractorDelegate?
+class BalanceInteractor {
+    weak var delegate: IBalanceInteractorDelegate?
 
     private let disposeBag = DisposeBag()
 
@@ -48,7 +48,7 @@ class WalletInteractor {
 
 }
 
-extension WalletInteractor: IWalletInteractor {
+extension BalanceInteractor: IBalanceInteractor {
 
     var baseCurrency: Currency {
         return currencyManager.baseCurrency

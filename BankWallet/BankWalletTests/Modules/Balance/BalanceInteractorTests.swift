@@ -3,13 +3,13 @@ import RxSwift
 import Cuckoo
 @testable import Bank_Dev_T
 
-class WalletInteractorTests: XCTestCase {
-    private var mockDelegate: MockIWalletInteractorDelegate!
+class BalanceInteractorTests: XCTestCase {
+    private var mockDelegate: MockIBalanceInteractorDelegate!
     private var mockWalletManager: MockIWalletManager!
     private var mockRateManager: MockIRateManager!
     private var mockCurrencyManager: MockICurrencyManager!
 
-    private var interactor: WalletInteractor!
+    private var interactor: BalanceInteractor!
 
     private let bitcoin = "BTC"
     private let ether = "ETH"
@@ -49,7 +49,7 @@ class WalletInteractorTests: XCTestCase {
         etherWallet = Wallet(coin: ether, adapter: mockEtherAdapter)
         cashWallet = Wallet(coin: cash, adapter: mockCashAdapter)
 
-        mockDelegate = MockIWalletInteractorDelegate()
+        mockDelegate = MockIBalanceInteractorDelegate()
         mockWalletManager = MockIWalletManager()
         mockRateManager = MockIRateManager()
         mockCurrencyManager = MockICurrencyManager()
@@ -84,7 +84,7 @@ class WalletInteractorTests: XCTestCase {
             when(mock.stateSubject.get).thenReturn(cashStateSubject)
         }
 
-        interactor = WalletInteractor(walletManager: mockWalletManager, rateManager: mockRateManager, currencyManager: mockCurrencyManager, refreshTimeout: 0)
+        interactor = BalanceInteractor(walletManager: mockWalletManager, rateManager: mockRateManager, currencyManager: mockCurrencyManager, refreshTimeout: 0)
         interactor.delegate = mockDelegate
     }
 

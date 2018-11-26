@@ -1,14 +1,14 @@
 import UIKit
 
-class WalletViewController: UITableViewController {
+class BalanceViewController: UITableViewController {
 
-    private let delegate: IWalletViewDelegate
+    private let delegate: IBalanceViewDelegate
 
-    private var wallets = [WalletViewItem]()
+    private var items = [BalanceViewItem]()
 
-    private var headerView = UINib(nibName: String(describing: WalletHeaderView.self), bundle: Bundle(for: WalletHeaderView.self)).instantiate(withOwner: nil, options: nil)[0] as? WalletHeaderView
+    private var headerView = UINib(nibName: String(describing: BalanceHeaderView.self), bundle: Bundle(for: BalanceHeaderView.self)).instantiate(withOwner: nil, options: nil)[0] as? BalanceHeaderView
 
-    init(viewDelegate: IWalletViewDelegate) {
+    init(viewDelegate: IBalanceViewDelegate) {
         self.delegate = viewDelegate
 
         super.init(nibName: nil, bundle: nil)
@@ -27,7 +27,7 @@ class WalletViewController: UITableViewController {
         tableView.separatorColor = .clear
         tableView?.estimatedRowHeight = 0
         tableView?.delaysContentTouches = false
-        tableView?.registerCell(forClass: WalletCell.self)
+        tableView?.registerCell(forClass: BalanceCell.self)
 
         refreshControl = UIRefreshControl()
         refreshControl?.addTarget(self, action: #selector(onRefresh), for: .valueChanged)
@@ -45,23 +45,23 @@ class WalletViewController: UITableViewController {
 
 }
 
-extension WalletViewController {
+extension BalanceViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return wallets.count
+        return items.count
     }
 
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return tableView.indexPathForSelectedRow == indexPath ? WalletTheme.expandedCellHeight + WalletTheme.cellPadding : WalletTheme.cellHeight + WalletTheme.cellPadding
+        return tableView.indexPathForSelectedRow == indexPath ? BalanceTheme.expandedCellHeight + BalanceTheme.cellPadding : BalanceTheme.cellHeight + BalanceTheme.cellPadding
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return tableView.dequeueReusableCell(withIdentifier: String(describing: WalletCell.self)) ?? UITableViewCell()
+        return tableView.dequeueReusableCell(withIdentifier: String(describing: BalanceCell.self)) ?? UITableViewCell()
     }
 
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if let cell = cell as? WalletCell {
-            cell.bind(item: wallets[indexPath.row], selected: tableView.indexPathForSelectedRow == indexPath, onReceive: { [weak self] in
+        if let cell = cell as? BalanceCell {
+            cell.bind(item: items[indexPath.row], selected: tableView.indexPathForSelectedRow == indexPath, onReceive: { [weak self] in
                 self?.onReceive(for: indexPath)
             }, onPay: { [weak self] in
                 self?.onPay(for: indexPath)
@@ -70,17 +70,17 @@ extension WalletViewController {
     }
 
     public override func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if let cell = cell as? WalletCell {
+        if let cell = cell as? BalanceCell {
             cell.unbind()
         }
     }
 
     func onReceive(for indexPath: IndexPath) {
-        delegate.onReceive(for: wallets[indexPath.row].coinValue.coin)
+        delegate.onReceive(for: items[indexPath.row].coinValue.coin)
     }
 
     func onPay(for indexPath: IndexPath) {
-        delegate.onPay(for: wallets[indexPath.row].coinValue.coin)
+        delegate.onPay(for: items[indexPath.row].coinValue.coin)
     }
 
     override func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
@@ -101,15 +101,15 @@ extension WalletViewController {
     }
 
     func bind(at indexPath: IndexPath, animated: Bool = false) {
-        if let cell = tableView?.cellForRow(at: indexPath) as? WalletCell {
-            cell.bindView(item: wallets[indexPath.row], selected: tableView?.indexPathForSelectedRow == indexPath, animated: true)
+        if let cell = tableView?.cellForRow(at: indexPath) as? BalanceCell {
+            cell.bindView(item: items[indexPath.row], selected: tableView?.indexPathForSelectedRow == indexPath, animated: true)
             tableView?.beginUpdates()
             tableView?.endUpdates()
         }
     }
 
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return WalletTheme.headerHeight
+        return BalanceTheme.headerHeight
     }
 
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -118,7 +118,7 @@ extension WalletViewController {
 
 }
 
-extension WalletViewController: IWalletView {
+extension BalanceViewController: IBalanceView {
 
     func set(title: String) {
         self.title = title.localized
@@ -128,8 +128,8 @@ extension WalletViewController: IWalletView {
         headerView?.bind(amount: totalBalance.flatMap { ValueFormatter.instance.format(currencyValue: $0) })
     }
 
-    func show(wallets: [WalletViewItem]) {
-        self.wallets = wallets
+    func show(items: [BalanceViewItem]) {
+        self.items = items
         tableView?.reloadData()
     }
 

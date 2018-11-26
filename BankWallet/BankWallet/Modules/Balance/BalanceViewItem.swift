@@ -1,6 +1,4 @@
-import RxSwift
-
-struct WalletViewItem {
+struct BalanceViewItem {
     let coinValue: CoinValue
     let exchangeValue: CurrencyValue?
     let currencyValue: CurrencyValue?
