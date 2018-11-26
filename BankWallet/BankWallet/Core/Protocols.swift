@@ -163,6 +163,7 @@ protocol ISystemInfoManager {
 }
 
 protocol IAppConfigProvider {
+    var reachabilityHost: String { get }
     var ratesApiUrl: String { get }
     var enabledCoins: [Coin] { get }
     var currencies: [Currency] { get }

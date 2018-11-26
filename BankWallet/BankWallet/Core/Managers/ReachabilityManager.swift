@@ -7,7 +7,7 @@ class ReachabilityManager {
     let manager: NetworkReachabilityManager?
 
     init(appConfigProvider: IAppConfigProvider) {
-        manager = NetworkReachabilityManager(host: appConfigProvider.ratesApiUrl)
+        manager = NetworkReachabilityManager(host: appConfigProvider.reachabilityHost)
 
         manager?.listener = { [weak self] status in
             switch status {

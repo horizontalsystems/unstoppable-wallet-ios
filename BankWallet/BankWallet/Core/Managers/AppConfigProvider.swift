@@ -2,6 +2,7 @@ import Foundation
 
 class AppConfigProvider: IAppConfigProvider {
 
+    let reachabilityHost = "ipfs.horizontalsystems.xyz"
     let ratesApiUrl = "https://ipfs.horizontalsystems.xyz/ipns/Qmd4Gv2YVPqs6dmSy1XEq7pQRSgLihqYKL2JjK7DMUFPVz/io-hs/data/xrates"
 
     var enabledCoins: [Coin] {
