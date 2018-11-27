@@ -9,4 +9,9 @@ struct LatestRate: ImmutableMappable {
         timestamp = try map.value("date")
     }
 
+    init(value: Double, timestamp: Double) {
+        self.value = value
+        self.timestamp = timestamp
+    }
+
 }
