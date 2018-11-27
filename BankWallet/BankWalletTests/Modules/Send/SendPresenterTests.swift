@@ -9,7 +9,8 @@ class SendPresenterTests: XCTestCase {
     private var mockFactory: MockISendStateViewItemFactory!
     private var mockUserInput: MockSendUserInput!
 
-    private var viewItem: SendStateViewItem!
+    private var viewItem = SendStateViewItem()
+    private var confirmationViewItem: SendConfirmationViewItem!
 
     private let coin = "BTC"
     private let state = SendState(inputType: .coin)
@@ -24,14 +25,19 @@ class SendPresenterTests: XCTestCase {
     override func setUp() {
         super.setUp()
 
-        viewItem = SendStateViewItem(
-                amountInfo: amountInfo,
-                switchButtonEnabled: true,
-                hintInfo: .error(error: .insufficientAmount(amountInfo: amountInfo)),
-                addressInfo: .address(address: "address"),
-                primaryFeeInfo: amountInfo,
-                secondaryFeeInfo: amountInfo,
-                sendButtonEnabled: false
+        viewItem.amountInfo = amountInfo
+        viewItem.switchButtonEnabled = true
+        viewItem.hintInfo = .error(error: .insufficientAmount(amountInfo: amountInfo))
+        viewItem.addressInfo = .address(address: "address")
+        viewItem.primaryFeeInfo = amountInfo
+        viewItem.secondaryFeeInfo = amountInfo
+        viewItem.sendButtonEnabled = false
+
+        confirmationViewItem = SendConfirmationViewItem(
+                coinValue: CoinValue(coin: "BTC", value: 10.2),
+                address: "address",
+                feeInfo: amountInfo,
+                totalInfo: amountInfo
         )
 
         mockRouter = MockISendRouter()
@@ -49,14 +55,18 @@ class SendPresenterTests: XCTestCase {
             when(mock.set(primaryFeeInfo: any())).thenDoNothing()
             when(mock.set(secondaryFeeInfo: any())).thenDoNothing()
             when(mock.set(sendButtonEnabled: any())).thenDoNothing()
+            when(mock.showConfirmation(viewItem: any())).thenDoNothing()
+            when(mock.dismissWithSuccess()).thenDoNothing()
         }
         stub(mockInteractor) { mock in
             when(mock.coin.get).thenReturn(coin)
             when(mock.state(forUserInput: sameInstance(as: mockUserInput))).thenReturn(state)
             when(mock.convertedAmount(forInputType: equal(to: inputType), amount: equal(to: amount))).thenReturn(convertedAmount)
+            when(mock.send(userInput: any())).thenDoNothing()
         }
         stub(mockFactory) { mock in
             when(mock.viewItem(forState: equal(to: state))).thenReturn(viewItem)
+            when(mock.confirmationViewItem(forState: equal(to: state))).thenReturn(confirmationViewItem)
         }
         stub(mockUserInput) { mock in
             when(mock.inputType.get).thenReturn(inputType)
@@ -77,7 +87,7 @@ class SendPresenterTests: XCTestCase {
         mockFactory = nil
         mockUserInput = nil
 
-        viewItem = nil
+        confirmationViewItem = nil
 
         presenter = nil
 
@@ -203,6 +213,29 @@ class SendPresenterTests: XCTestCase {
         verify(mockView).set(primaryFeeInfo: equal(to: viewItem.primaryFeeInfo))
         verify(mockView).set(secondaryFeeInfo: equal(to: viewItem.secondaryFeeInfo))
         verify(mockView).set(sendButtonEnabled: viewItem.sendButtonEnabled)
+    }
+
+    func testOnSendClicked() {
+        presenter.onSendClicked()
+
+        verify(mockView).showConfirmation(viewItem: equal(to: confirmationViewItem))
+    }
+
+    func testOnSendClicked_NoViewItem() {
+        stub(mockFactory) { mock in
+            when(mock.confirmationViewItem(forState: equal(to: state))).thenReturn(nil)
+        }
+
+        presenter.onSendClicked()
+
+        verify(mockView, never()).showConfirmation(viewItem: any())
+    }
+
+    func testOnConfirmClicked() {
+        presenter.onConfirmClicked()
+
+        verify(mockInteractor).send(userInput: equal(to: mockUserInput))
+        verify(mockView).dismissWithSuccess()
     }
 
 }

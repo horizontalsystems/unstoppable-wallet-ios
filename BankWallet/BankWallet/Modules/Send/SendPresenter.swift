@@ -13,6 +13,18 @@ class SendPresenter {
         self.userInput = userInput
     }
 
+    private func onChange(address: String?) {
+        userInput.address = address
+
+        let state = interactor.state(forUserInput: userInput)
+        let viewItem = factory.viewItem(forState: state)
+
+        view?.set(addressInfo: viewItem.addressInfo)
+        view?.set(primaryFeeInfo: viewItem.primaryFeeInfo)
+        view?.set(secondaryFeeInfo: viewItem.secondaryFeeInfo)
+        view?.set(sendButtonEnabled: viewItem.sendButtonEnabled)
+    }
+
 }
 
 extension SendPresenter: ISendInteractorDelegate {
@@ -87,19 +99,18 @@ extension SendPresenter: ISendViewDelegate {
     }
 
     func onSendClicked() {
-        interactor.send(userInput: userInput)
+        let state = interactor.state(forUserInput: userInput)
+
+        guard let viewItem = factory.confirmationViewItem(forState: state) else {
+            return
+        }
+
+        view?.showConfirmation(viewItem: viewItem)
     }
 
-    private func onChange(address: String?) {
-        userInput.address = address
-
-        let state = interactor.state(forUserInput: userInput)
-        let viewItem = factory.viewItem(forState: state)
-
-        view?.set(addressInfo: viewItem.addressInfo)
-        view?.set(primaryFeeInfo: viewItem.primaryFeeInfo)
-        view?.set(secondaryFeeInfo: viewItem.secondaryFeeInfo)
-        view?.set(sendButtonEnabled: viewItem.sendButtonEnabled)
+    func onConfirmClicked() {
+        interactor.send(userInput: userInput)
+        view?.dismissWithSuccess()
     }
 
 }

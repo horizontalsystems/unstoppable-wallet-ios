@@ -12,6 +12,7 @@ protocol ISendView: class {
 
     func set(sendButtonEnabled: Bool)
 
+    func showConfirmation(viewItem: SendConfirmationViewItem)
     func show(error: Error)
     func dismissWithSuccess()
 }
@@ -27,6 +28,7 @@ protocol ISendViewDelegate {
     func onDeleteClicked()
 
     func onSendClicked()
+    func onConfirmClicked()
 }
 
 protocol ISendInteractor {
@@ -48,6 +50,7 @@ protocol ISendRouter {
 
 protocol ISendStateViewItemFactory {
     func viewItem(forState state: SendState) -> SendStateViewItem
+    func confirmationViewItem(forState state: SendState) -> SendConfirmationViewItem?
 }
 
 enum SendInputType {
@@ -99,7 +102,7 @@ class SendState {
     }
 }
 
-struct SendStateViewItem {
+class SendStateViewItem {
     var amountInfo: AmountInfo?
     var switchButtonEnabled: Bool = false
     var hintInfo: HintInfo?
@@ -107,4 +110,19 @@ struct SendStateViewItem {
     var primaryFeeInfo: AmountInfo?
     var secondaryFeeInfo: AmountInfo?
     var sendButtonEnabled: Bool = false
+}
+
+class SendConfirmationViewItem {
+    let coinValue: CoinValue
+    var currencyValue: CurrencyValue?
+    let address: String
+    let feeInfo: AmountInfo
+    let totalInfo: AmountInfo
+
+    init(coinValue: CoinValue, address: String, feeInfo: AmountInfo, totalInfo: AmountInfo) {
+        self.coinValue = coinValue
+        self.address = address
+        self.feeInfo = feeInfo
+        self.totalInfo = totalInfo
+    }
 }
