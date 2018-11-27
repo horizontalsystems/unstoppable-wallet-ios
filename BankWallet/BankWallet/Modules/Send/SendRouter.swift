@@ -6,13 +6,6 @@ class SendRouter {
 }
 
 extension SendRouter: ISendRouter {
-
-    func startScan(result: @escaping ((String) -> ())) {
-        let scanController = ScanQRController()
-        scanController.onCodeParse = result
-        viewController?.present(scanController, animated: true)
-    }
-
 }
 
 extension SendRouter {
@@ -43,6 +36,21 @@ extension SendRouter {
                 view.onScan(address: address)
             }
             viewController.present(scanController, animated: true)
+        }
+
+        view.onShowConfirmation = { viewItem in
+            let model = SendConfirmationAlertModel(viewItem: viewItem)
+
+            let confirmationController = ActionSheetController(withModel: model, actionStyle: .alert)
+            confirmationController.backgroundColor = .cryptoBars
+
+            confirmationController.onDismiss = { success in
+                if success {
+                    view.onConfirm()
+                }
+            }
+
+            viewController.present(confirmationController, animated: true)
         }
 
         return viewController

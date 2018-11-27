@@ -1,7 +1,7 @@
 class SendStateViewItemFactory: ISendStateViewItemFactory {
 
     func viewItem(forState state: SendState) -> SendStateViewItem {
-        var viewItem = SendStateViewItem()
+        let viewItem = SendStateViewItem()
 
         switch state.inputType {
         case .coin:
@@ -37,6 +37,47 @@ class SendStateViewItemFactory: ISendStateViewItemFactory {
 
         let zeroAmount = state.coinValue.map { $0.value == 0 } ?? true
         viewItem.sendButtonEnabled = !zeroAmount && state.address != nil && state.amountError == nil && state.addressError == nil
+
+        return viewItem
+    }
+
+    func confirmationViewItem(forState state: SendState) -> SendConfirmationViewItem? {
+        guard let coinValue = state.coinValue else {
+            return nil
+        }
+        guard let address = state.address else {
+            return nil
+        }
+
+        var stateFeeInfo: AmountInfo?
+        var stateTotalInfo: AmountInfo?
+
+        if let feeCurrencyValue = state.feeCurrencyValue {
+            stateFeeInfo = .currencyValue(currencyValue: feeCurrencyValue)
+
+            if let currencyValue = state.currencyValue {
+                stateTotalInfo = .currencyValue(currencyValue: CurrencyValue(currency: currencyValue.currency, value: currencyValue.value + feeCurrencyValue.value))
+            }
+        } else if let feeCoinValue = state.feeCoinValue {
+            stateFeeInfo = .coinValue(coinValue: feeCoinValue)
+            stateTotalInfo = .coinValue(coinValue: CoinValue(coin: coinValue.coin, value: coinValue.value + feeCoinValue.value))
+        }
+
+        guard let feeInfo = stateFeeInfo else {
+            return nil
+        }
+        guard let totalInfo = stateTotalInfo else {
+            return nil
+        }
+
+        let viewItem = SendConfirmationViewItem(
+                coinValue: coinValue,
+                address: address,
+                feeInfo: feeInfo,
+                totalInfo: totalInfo
+        )
+
+        viewItem.currencyValue = state.currencyValue
 
         return viewItem
     }

@@ -32,11 +32,34 @@ class SendTheme {
     static let addressHintColor: UIColor = .cryptoSilver
     static let addressErrorTopMargin: CGFloat = 4
 
-    static let feeHeight: CGFloat = 52
+    static let feeHeight: CGFloat = 40
     static let feeFont: UIFont = .systemFont(ofSize: 14)
     static let feeColor: UIColor = .cryptoGray
 
-    static let sendHeight: CGFloat = 66
+    static let sendHeight: CGFloat = 78
     static let sendButtonHeight: CGFloat = 50
     static let sendButtonCornerRadius: CGFloat = 8
+
+    static let confirmationAmountHeight: CGFloat = 85
+    static let confirmationAmountFont: UIFont = .cryptoTitle3
+    static let confirmationAmountColor: UIColor = .cryptoYellow
+    static let confirmationAmountTopMargin: CGFloat = 20
+    static let confirmationFiatAmountFont: UIFont = .cryptoCaption1
+    static let confirmationFiatAmountColor: UIColor = .cryptoGray
+    static let confirmationFiatAmountTopMargin: CGFloat = 4
+
+    static let confirmationAddressHeight: CGFloat = 44
+
+    static let hashBackground: UIColor = .cryptoLightBackground
+    static let hashBackgroundSelected: UIColor = .cryptoLightGray
+    static let hashWrapperBorderColor: UIColor = .cryptoSteel20
+    static let hashBackgroundHeight: CGFloat = 28
+    static let hashCornerRadius: CGFloat = 4
+    static let hashColor: UIColor = .cryptoDark
+
+    static let confirmationValueHeight: CGFloat = 27
+    static let valueFont: UIFont = .cryptoCaption1
+    static let valueColor: UIColor = .cryptoGray
+
+
 }
