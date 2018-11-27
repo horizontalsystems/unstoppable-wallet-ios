@@ -23,7 +23,7 @@ class BitcoinAdapter {
 
     init(words: [String], coin: BitcoinKit.Coin) {
         wordsHash = words.joined()
-        bitcoinKit = BitcoinKit(withWords: words, coin: coin)
+        bitcoinKit = BitcoinKit(withWords: words, coin: coin, minLogLevel: .error)
         progressSubject = BehaviorSubject(value: 0)
 
         state = .syncing(progressSubject: progressSubject)
