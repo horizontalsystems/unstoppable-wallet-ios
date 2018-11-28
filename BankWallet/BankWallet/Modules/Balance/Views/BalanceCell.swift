@@ -11,7 +11,6 @@ class BalanceCell: UITableViewCell {
     var coinIconImageView = TintImageView(image: nil, tintColor: BalanceTheme.coinIconTintColor, selectedTintColor: BalanceTheme.coinIconTintColor)
     var nameLabel = UILabel()
     var rateLabel = UILabel()
-    var rateSpinner = UIActivityIndicatorView(activityIndicatorStyle: .white)
     var currencyValueLabel = UILabel()
     var coinValueLabel = UILabel()
 
@@ -64,18 +63,8 @@ class BalanceCell: UITableViewCell {
             maker.top.equalTo(self.nameLabel.snp.bottom).offset(BalanceTheme.valueTopMargin)
         }
         rateLabel.font = BalanceTheme.cellSubtitleFont
-        rateLabel.textColor = BalanceTheme.rateColor
         rateLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         rateLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
-
-        roundedBackground.addSubview(rateSpinner)
-        rateSpinner.snp.makeConstraints { maker in
-            maker.leading.equalTo(self.rateLabel.snp.trailing).offset(BalanceTheme.rateSpinnerLeftMargin)
-            maker.centerY.equalTo(self.rateLabel.snp.centerY)
-            maker.size.equalTo(BalanceTheme.rateSpinnerSize)
-        }
-        rateSpinner.transform = CGAffineTransform(scaleX: 0.65, y: 0.65)
-        rateSpinner.color = BalanceTheme.rateColor
 
         roundedBackground.addSubview(currencyValueLabel)
         currencyValueLabel.snp.makeConstraints { maker in
@@ -88,7 +77,7 @@ class BalanceCell: UITableViewCell {
 
         roundedBackground.addSubview(coinValueLabel)
         coinValueLabel.snp.makeConstraints { maker in
-            maker.leading.equalTo(self.rateSpinner.snp.trailing).offset(BalanceTheme.cellSmallMargin)
+            maker.leading.equalTo(self.rateLabel.snp.trailing).offset(BalanceTheme.cellSmallMargin)
             maker.bottom.equalTo(self.rateLabel).offset(BalanceTheme.coinLabelVerticalOffset)
             maker.trailing.equalToSuperview().offset(-BalanceTheme.cellBigMargin)
         }
@@ -98,7 +87,7 @@ class BalanceCell: UITableViewCell {
 
         roundedBackground.addSubview(syncLabel)
         syncLabel.snp.makeConstraints { maker in
-            maker.leading.equalTo(self.rateSpinner.snp.trailing).offset(BalanceTheme.cellSmallMargin)
+            maker.leading.equalTo(self.rateLabel.snp.trailing).offset(BalanceTheme.cellSmallMargin)
             maker.centerY.equalTo(self.rateLabel.snp.centerY)
             maker.trailing.equalToSuperview().offset(-BalanceTheme.cellBigMargin)
         }
@@ -167,30 +156,36 @@ class BalanceCell: UITableViewCell {
 
         receiveButton.set(hidden: !selected, animated: animated, duration: BalanceTheme.buttonsAnimationDuration)
         payButton.set(hidden: !selected, animated: animated, duration: BalanceTheme.buttonsAnimationDuration)
+        if case .syncing(_) = item.state {
+            payButton.state = .disabled
+        } else {
+            payButton.state = .active
+        }
 
         nameLabel.text = "coin.\(item.coinValue.coin)".localized
 
         if let value = item.exchangeValue, let formattedValue = ValueFormatter.instance.format(currencyValue: value, shortFraction: true) {
             rateLabel.text = "balance.rate_per_coin".localized(formattedValue, item.coinValue.coin)
         } else {
-            rateLabel.text = "balance.loading_rate".localized
+            rateLabel.text = " " // space required for constraints
         }
 
-        if item.rateExpired {
-            rateSpinner.startAnimating()
-        } else {
-            rateSpinner.stopAnimating()
-        }
+        rateLabel.textColor = item.rateExpired ? BalanceTheme.rateExpiredColor : BalanceTheme.rateColor
 
-        if synced, let value = item.currencyValue {
+        if synced, let value = item.currencyValue, value.value != 0 {
             currencyValueLabel.text = ValueFormatter.instance.format(currencyValue: value)
-            currencyValueLabel.textColor = value.value > 0 ? BalanceTheme.nonZeroBalanceTextColor : BalanceTheme.zeroBalanceTextColor
+            let nonZeroBalanceTextColor = item.rateExpired ? BalanceTheme.nonZeroBalanceExpiredTextColor : BalanceTheme.nonZeroBalanceTextColor
+            currencyValueLabel.textColor = value.value > 0 ? nonZeroBalanceTextColor : BalanceTheme.zeroBalanceTextColor
         } else {
             currencyValueLabel.text = nil
         }
 
         coinValueLabel.isHidden = !synced
-        coinValueLabel.text = ValueFormatter.instance.format(coinValue: item.coinValue)
+        if item.coinValue.value != 0 {
+            coinValueLabel.text = ValueFormatter.instance.format(coinValue: item.coinValue)
+        } else {
+            coinValueLabel.text = nil
+        }
 
         syncLabel.isHidden = synced
 

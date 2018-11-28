@@ -23,7 +23,7 @@ class BalancePresenter {
             let balance = wallet.adapter.balance
             let rate = interactor.rate(forCoin: wallet.coin)
 
-            var rateExpired = false
+            var rateExpired = true
 
             if let rate = rate {
                 let diff = Date().timeIntervalSince1970 - rate.timestamp
@@ -43,10 +43,10 @@ class BalancePresenter {
             if case .syncing = wallet.adapter.state {
                 allSynced = false
             }
-            allSynced = allSynced && rate != nil
+            allSynced = allSynced && !rateExpired
         }
 
-        view?.show(totalBalance: allSynced ? CurrencyValue(currency: currency, value: totalBalance) : nil)
+        view?.show(totalBalance: CurrencyValue(currency: currency, value: totalBalance), upToDate: allSynced)
         view?.show(items: viewItems)
     }
 

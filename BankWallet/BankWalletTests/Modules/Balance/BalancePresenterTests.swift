@@ -48,7 +48,7 @@ class BalancePresenterTests: XCTestCase {
         etherRate.coin = ether
         etherRate.currencyCode = currency.code
         etherRate.value = 300
-        etherRate.timestamp = 860000
+        etherRate.timestamp = Date().timeIntervalSince1970
 
         bitcoinAdapterState = AdapterState.synced
         etherAdapterState = AdapterState.synced
@@ -65,7 +65,7 @@ class BalancePresenterTests: XCTestCase {
                 exchangeValue: CurrencyValue(currency: currency, value: etherRate.value),
                 currencyValue: CurrencyValue(currency: currency, value: etherRate.value * etherValue.value),
                 state: etherAdapterState,
-                rateExpired: true
+                rateExpired: false
         )
         mockBitcoinAdapter = MockIAdapter()
         mockEtherAdapter = MockIAdapter()
@@ -79,7 +79,7 @@ class BalancePresenterTests: XCTestCase {
 
         stub(mockView) { mock in
             when(mock.set(title: any())).thenDoNothing()
-            when(mock.show(totalBalance: any())).thenDoNothing()
+            when(mock.show(totalBalance: any(), upToDate: any())).thenDoNothing()
             when(mock.show(items: any())).thenDoNothing()
             when(mock.didRefresh()).thenDoNothing()
         }
@@ -129,7 +129,7 @@ class BalancePresenterTests: XCTestCase {
 
         presenter.viewDidLoad()
 
-        verify(mockView).show(totalBalance: equal(to: CurrencyValue(currency: currency, value: totalValue)))
+        verify(mockView).show(totalBalance: equal(to: CurrencyValue(currency: currency, value: totalValue)), upToDate: equal(to: false))
     }
 
     func testTotalBalance_NewCoinValue() {
@@ -144,7 +144,7 @@ class BalancePresenterTests: XCTestCase {
 
         presenter.didUpdate()
 
-        verify(mockView).show(totalBalance: equal(to: CurrencyValue(currency: currency, value: newTotalValue)))
+        verify(mockView).show(totalBalance: equal(to: CurrencyValue(currency: currency, value: newTotalValue)), upToDate: equal(to: false))
     }
 
     func testTotalBalance_DidUpdateRates() {
@@ -152,7 +152,7 @@ class BalancePresenterTests: XCTestCase {
         newBitcoinRate.coin = bitcoin
         newBitcoinRate.currencyCode = currency.code
         newBitcoinRate.value = 1000
-        newBitcoinRate.timestamp = 860000
+        newBitcoinRate.timestamp = Date().timeIntervalSince1970
         var newTotalValue = bitcoinValue.value * newBitcoinRate.value
         newTotalValue += etherValue.value * etherRate.value
 
@@ -162,29 +162,7 @@ class BalancePresenterTests: XCTestCase {
 
         presenter.didUpdate()
 
-        verify(mockView).show(totalBalance: equal(to: CurrencyValue(currency: currency, value: newTotalValue)))
-    }
-
-    func testNoTotalBalance_SyncingStatus() {
-        let bitcoinSubject = BehaviorSubject<Double>(value: 1)
-        let newBitcoinAdapterState = AdapterState.syncing(progressSubject: bitcoinSubject)
-        stub(mockBitcoinAdapter) { mock in
-            when(mock.state.get).thenReturn(newBitcoinAdapterState)
-        }
-
-        presenter.didUpdate()
-
-        verify(mockView).show(totalBalance: equal(to: nil))
-    }
-
-    func testNoTotalBalance_OnNoRate() {
-        stub(mockInteractor) { mock in
-            when(mock.rate(forCoin: equal(to: bitcoin))).thenReturn(nil)
-        }
-
-        presenter.didUpdate()
-
-        verify(mockView).show(totalBalance: equal(to: nil))
+        verify(mockView).show(totalBalance: equal(to: CurrencyValue(currency: currency, value: newTotalValue)), upToDate: equal(to: true))
     }
 
     func testWalletViewItems_Initial() {
