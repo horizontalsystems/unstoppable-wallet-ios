@@ -54,28 +54,28 @@
 // Balance
 
 "balance.title" = "Баланс";
-"balance.tab_bar_item" = "Balance";
-"balance.send" = "Send";
-"balance.deposit" = "Receive";
+"balance.tab_bar_item" = "Баланс";
+"balance.send" = "Отправить";
+"balance.deposit" = "Получить";
 "balance.loading_rate" = "loading rate...";
-"balance.rate_per_coin" = "%@ per %@";
-"balance.syncing_percent" = "Syncing %@";
+"balance.rate_per_coin" = "%@ за %@";
+"balance.syncing_percent" = "Синхронизация %@";
 "balance.total_balance.syncing" = "Syncing...";
 
 // Deposit
 
 "deposit.receive_coin" = "Receive %@";
-"deposit.alert_copy" = "Copy";
+"deposit.alert_copy" = "Скопировать";
 
 // Send
 
 "send.title" = "Отправить %@";
 "send.address_placeholder" = "Адрес";
-"send.amount_error_balance" = "Balance %@";
-"send.send_button" = "Send";
-"send.paste_button" = "Paste";
-"send.amount_placeholder" = "Amount";
-"send.fee" = "Fee";
+"send.amount_error_balance" = "Баланс %@";
+"send.send_button" = "Отправить";
+"send.paste_button" = "Вставить";
+"send.amount_placeholder" = "Сумма";
+"send.fee" = "Комиссия";
 "send.total" = "Total";
 
 // Transactions
