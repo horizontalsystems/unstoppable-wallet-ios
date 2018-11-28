@@ -7,7 +7,6 @@ class Rate: Object {
     @objc dynamic var timestamp: Double = 0
 
     var expired: Bool {
-        return true
         let diff = Date().timeIntervalSince1970 - timestamp
         return diff > 60 * 10
     }
