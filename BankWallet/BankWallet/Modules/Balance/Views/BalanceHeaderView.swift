@@ -44,14 +44,9 @@ class BalanceHeaderView: UIView {
         }
     }
 
-    func bind(amount: String?) {
-        if let amount = amount {
-            amountLabel.text = amount
-            amountLabel.textColor = BalanceTheme.amountColor
-        } else {
-            amountLabel.text = "wallet.total_balance.syncing".localized
-            amountLabel.textColor = BalanceTheme.amountColorSyncing
-        }
+    func bind(amount: String?, upToDate: Bool) {
+        amountLabel.text = amount
+        amountLabel.textColor = upToDate ? BalanceTheme.amountColor : BalanceTheme.amountColorSyncing
     }
 
 }

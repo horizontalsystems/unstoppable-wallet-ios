@@ -124,8 +124,8 @@ extension BalanceViewController: IBalanceView {
         self.title = title.localized
     }
 
-    func show(totalBalance: CurrencyValue?) {
-        headerView?.bind(amount: totalBalance.flatMap { ValueFormatter.instance.format(currencyValue: $0) })
+    func show(totalBalance: CurrencyValue, upToDate: Bool) {
+        headerView?.bind(amount: ValueFormatter.instance.format(currencyValue: totalBalance), upToDate: upToDate)
     }
 
     func show(items: [BalanceViewItem]) {

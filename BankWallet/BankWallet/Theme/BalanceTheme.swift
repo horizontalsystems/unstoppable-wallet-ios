@@ -3,7 +3,7 @@ import UIKit
 class BalanceTheme {
     static let amountFont = UIFont.cryptoTitle3
     static let amountColor = UIColor.cryptoYellow
-    static let amountColorSyncing = UIColor.cryptoGray
+    static let amountColorSyncing = UIColor.cryptoYellow40
 
     static let cellBigMargin: CGFloat = 12
     static let cellSmallMargin: CGFloat = 8
@@ -32,9 +32,11 @@ class BalanceTheme {
     static let cellButtonFont = UIFont.cryptoHeadline
 
     static let rateColor = UIColor.cryptoGray
+    static let rateExpiredColor = UIColor.cryptoGray50
     static let rateSpinnerSize: CGFloat = 18
     static let rateSpinnerLeftMargin: CGFloat = 2
     static let nonZeroBalanceTextColor = UIColor.cryptoYellow
+    static let nonZeroBalanceExpiredTextColor = UIColor.cryptoYellow40
     static let zeroBalanceTextColor = UIColor.cryptoGray
     static let spinnerSideSize: CGFloat = 16
     static let coinIconSide: CGFloat = 24
