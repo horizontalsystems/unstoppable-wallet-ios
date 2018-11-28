@@ -34,8 +34,7 @@ class BalancePresenter {
 
             viewItems.append(BalanceViewItem(
                     coinValue: CoinValue(coin: wallet.coin, value: balance),
-//                    exchangeValue: rate.map { CurrencyValue(currency: currency, value: $0.value) },
-                    exchangeValue: nil,
+                    exchangeValue: rate.map { CurrencyValue(currency: currency, value: $0.value) },
                     currencyValue: rate.map { CurrencyValue(currency: currency, value: balance * $0.value) },
                     state: wallet.adapter.state,
                     rateExpired: rateExpired

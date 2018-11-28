@@ -156,6 +156,11 @@ class BalanceCell: UITableViewCell {
 
         receiveButton.set(hidden: !selected, animated: animated, duration: BalanceTheme.buttonsAnimationDuration)
         payButton.set(hidden: !selected, animated: animated, duration: BalanceTheme.buttonsAnimationDuration)
+        if case .syncing(_) = item.state {
+            payButton.state = .disabled
+        } else {
+            payButton.state = .active
+        }
 
         nameLabel.text = "coin.\(item.coinValue.coin)".localized
 
