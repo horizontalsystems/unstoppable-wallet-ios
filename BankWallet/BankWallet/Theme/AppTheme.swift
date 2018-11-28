@@ -1,4 +1,5 @@
 import UIKit
+import GrouviActionSheet
 
 public class AppTheme {
     static var blurStyle: UIBlurEffectStyle { return App.shared.localStorage.lightMode ? .prominent : .dark }
@@ -14,4 +15,7 @@ public class AppTheme {
     static var navigationBarStyle: UIBarStyle { return App.shared.localStorage.lightMode ? .default : .blackTranslucent}
     static var navigationBarTintColor = UIColor.cryptoYellow
     static var statusBarStyle: UIStatusBarStyle { return App.shared.localStorage.lightMode ? .default : .lightContent}
+
+    static let actionSheetConfig = ActionSheetThemeConfig(actionStyle: .sheet(showDismiss: false), cornerRadius: 16)
+    static let actionAlertConfig = ActionSheetThemeConfig(actionStyle: .alert, cornerRadius: 16)
 }

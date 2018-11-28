@@ -45,7 +45,7 @@ extension UnlinkConfirmationAlertModel {
 
     static func show(from controller: UIViewController?, onDismiss: ((Bool) -> ())? = nil) {
         let model = UnlinkConfirmationAlertModel()
-        let actionSheetController = ActionSheetController(withModel: model, actionStyle: .sheet(showDismiss: false))
+        let actionSheetController = ActionSheetController(withModel: model, actionSheetThemeConfig: AppTheme.actionSheetConfig)
         actionSheetController.backgroundColor = AppTheme.actionSheetBackgroundColor
         actionSheetController.onDismiss = { success in
             onDismiss?(success)

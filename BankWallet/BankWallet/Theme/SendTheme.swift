@@ -1,4 +1,5 @@
 import UIKit
+import GrouviActionSheet
 
 class SendTheme {
     static let margin: CGFloat = 16
@@ -61,5 +62,5 @@ class SendTheme {
     static let valueFont: UIFont = .cryptoCaption1
     static let valueColor: UIColor = .cryptoGray
 
-
+    static let confirmationSheetConfig = ActionSheetThemeConfig(actionStyle: .alert, sideMargin: 30, cornerRadius: 16)
 }

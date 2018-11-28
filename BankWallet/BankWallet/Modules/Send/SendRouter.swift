@@ -26,7 +26,7 @@ extension SendRouter {
         interactor.delegate = presenter
         presenter.view = view
 
-        let viewController = ActionSheetController(withModel: view, actionStyle: .sheet(showDismiss: false))
+        let viewController = ActionSheetController(withModel: view, actionSheetThemeConfig: AppTheme.actionSheetConfig)
         viewController.backgroundColor = .cryptoBars
         router.viewController = viewController
 
@@ -41,7 +41,8 @@ extension SendRouter {
         view.onShowConfirmation = { viewItem in
             let model = SendConfirmationAlertModel(viewItem: viewItem)
 
-            let confirmationController = ActionSheetController(withModel: model, actionStyle: .alert)
+
+            let confirmationController = ActionSheetController(withModel: model, actionSheetThemeConfig: SendTheme.confirmationSheetConfig)
             confirmationController.backgroundColor = .cryptoBars
 
             confirmationController.onDismiss = { success in

@@ -44,7 +44,7 @@ class BackupConfirmationAlertModel: BaseAlertModel {
             onDismiss?(true)
         } else {
             let model = BackupConfirmationAlertModel()
-            let actionSheetController = ActionSheetController(withModel: model, actionStyle: .sheet(showDismiss: false))
+            let actionSheetController = ActionSheetController(withModel: model, actionSheetThemeConfig: AppTheme.actionSheetConfig)
             actionSheetController.backgroundColor = AppTheme.actionSheetBackgroundColor
             actionSheetController.onDismiss = { success in
                 onDismiss?(success)
