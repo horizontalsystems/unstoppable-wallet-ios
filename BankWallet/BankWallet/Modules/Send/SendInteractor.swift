@@ -1,16 +1,24 @@
 class SendInteractor {
+    enum SendError: Error {
+        case noAddress
+        case noAmount
+    }
+
     weak var delegate: ISendInteractorDelegate?
 
     private let currencyManager: ICurrencyManager
-    private let rateManager: IRateManager
     private let pasteboardManager: IPasteboardManager
     private let wallet: Wallet
+    private var rate: Rate?
 
     init(currencyManager: ICurrencyManager, rateManager: IRateManager, pasteboardManager: IPasteboardManager, wallet: Wallet) {
         self.currencyManager = currencyManager
-        self.rateManager = rateManager
         self.pasteboardManager = pasteboardManager
         self.wallet = wallet
+
+        if let rate = rateManager.rate(forCoin: wallet.coin, currencyCode: currencyManager.baseCurrency.code), !rate.expired {
+            self.rate = rate
+        }
     }
 
 }
@@ -26,7 +34,7 @@ extension SendInteractor: ISendInteractor {
     }
 
     func convertedAmount(forInputType inputType: SendInputType, amount: Double) -> Double? {
-        guard let rate = rateManager.rate(forCoin: wallet.coin, currencyCode: currencyManager.baseCurrency.code) else {
+        guard let rate = rate else {
             return nil
         }
 
@@ -40,7 +48,7 @@ extension SendInteractor: ISendInteractor {
         let coin = wallet.coin
         let adapter = wallet.adapter
         let baseCurrency = currencyManager.baseCurrency
-        let rateValue = rateManager.rate(forCoin: coin, currencyCode: baseCurrency.code)?.value
+        let rateValue = rate?.value
 
         let state = SendState(inputType: input.inputType)
 
@@ -87,14 +95,23 @@ extension SendInteractor: ISendInteractor {
     }
 
     func send(userInput: SendUserInput) {
-        guard let rateValue = rateManager.rate(forCoin: wallet.coin, currencyCode: currencyManager.baseCurrency.code)?.value else {
-            return
-        }
         guard let address = userInput.address else {
+            delegate?.didFailToSend(error: SendError.noAddress)
             return
         }
 
-        let amount = userInput.inputType == .coin ? userInput.amount : userInput.amount / rateValue
+        var computedAmount: Double?
+
+        if userInput.inputType == .coin {
+            computedAmount = userInput.amount
+        } else if let rateValue = rate?.value {
+            computedAmount = userInput.amount / rateValue
+        }
+
+        guard let amount = computedAmount else {
+            delegate?.didFailToSend(error: SendError.noAmount)
+            return
+        }
 
         wallet.adapter.send(to: address, value: amount) { [weak self] error in
             if let error = error {

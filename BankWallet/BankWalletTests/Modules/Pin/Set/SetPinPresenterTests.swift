@@ -60,7 +60,7 @@ class SetPinPresenterTests: XCTestCase {
     func testAddPages() {
         presenter.viewDidLoad()
         verify(mockView).addPage(withDescription: "set_pin.info", showKeyboard: true)
-        verify(mockView).addPage(withDescription: "set_pin.confirm", showKeyboard: true)
+        verify(mockView).addPage(withDescription: "set_pin.confirm.info", showKeyboard: true)
     }
 
     func testShowConfirm() {
