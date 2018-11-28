@@ -76,7 +76,7 @@
 "send.paste_button" = "Вставить";
 "send.amount_placeholder" = "Сумма";
 "send.fee" = "Комиссия";
-"send.total" = "Total";
+"send.total" = "Итого";
 
 // Transactions
 
@@ -86,14 +86,14 @@
 "transactions.from" = "от";
 "transactions.to" = "кому";
 "transactions.filter_all" = "Все";
-"transactions.empty_text" = "You don't have any pending or past transactions yet";
+"transactions.empty_text" = "У Вас ещё нет ожидаемых или прошлых транзакций ";
 
 // Transaction Info
 
 "tx_info.title" = "Транзакция";
 "tx_info.title_received" = "Получено";
 "tx_info.title_sent" = "Отправлено";
-"tx_info.pending" = "Pending";
+"tx_info.pending" = "Ожидание";
 "tx_info.processing" = "Обработка %@";
 "tx_info.completed" = "Завершено";
 "tx_info.status" = "Статус:";
@@ -156,7 +156,7 @@
 "settings_security.face_id" = "Face ID";
 "security_settings.unlink_alert_button" = "Unlink";
 "settings_security.import_wallet_confirmation_1" = "Это действие удалит ваш кошелёк с этого устройства.";
-"settings_security.import_wallet_confirmation_2" = "Make sure you have its Secret Key or you will not be able to access the funds on it in the future.";
+"settings_security.import_wallet_confirmation_2" = "Убедитесь, что у вас есть свой секретный ключ, иначе вы не сможете получить доступ к денежным средствам.";
 
 // Set PIN
 
