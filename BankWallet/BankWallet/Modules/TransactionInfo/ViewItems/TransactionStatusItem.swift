@@ -12,15 +12,15 @@ class TransactionStatusItem: BaseActionItem {
     init(item: TransactionViewItem, tag: Int? = nil, hidden: Bool = false, required: Bool = false) {
         super.init(cellType: TransactionStatusItemView.self, tag: tag, hidden: hidden, required: required)
 
-        title = "tx_info.bottom_sheet.status".localized
+        title = "tx_info.status".localized
 
         switch item.status {
         case .pending:
-            value = "tx_info.bottom_sheet.pending".localized
+            value = "tx_info.pending".localized
             valueImage = UIImage(named: "Transaction Processing Icon")
             valueImageTintColor = TransactionInfoTheme.processingIconTintColor
         case .processing(let progress):
-            value = "tx_info.bottom_sheet.processing".localized("\(Int(progress * 100))%")
+            value = "tx_info.processing".localized("\(Int(progress * 100))%")
             self.progress = progress
         case .completed:
             value = "tx_info.bottom_sheet.completed".localized

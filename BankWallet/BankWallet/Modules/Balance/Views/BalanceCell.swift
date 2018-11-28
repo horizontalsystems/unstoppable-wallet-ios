@@ -111,7 +111,7 @@ class BalanceCell: UITableViewCell {
         receiveButton.onTap = { [weak self] in self?.receive() }
         receiveButton.backgrounds = ButtonTheme.greenBackgroundOnDarkBackgroundDictionary
         receiveButton.cornerRadius = BalanceTheme.buttonCornerRadius
-        receiveButton.titleLabel.text = "wallet.deposit".localized
+        receiveButton.titleLabel.text = "balance.deposit".localized
 
         roundedBackground.addSubview(payButton)
         payButton.snp.makeConstraints { maker in
@@ -124,7 +124,7 @@ class BalanceCell: UITableViewCell {
         payButton.onTap = { [weak self] in self?.pay() }
         payButton.backgrounds = ButtonTheme.yellowBackgroundOnDarkBackgroundDictionary
         payButton.cornerRadius = BalanceTheme.buttonCornerRadius
-        payButton.titleLabel.text = "wallet.send".localized
+        payButton.titleLabel.text = "balance.send".localized
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -160,7 +160,7 @@ class BalanceCell: UITableViewCell {
         nameLabel.text = "coin.\(item.coinValue.coin)".localized
 
         if let value = item.exchangeValue, let formattedValue = ValueFormatter.instance.format(currencyValue: value, shortFraction: true) {
-            rateLabel.text = "wallet.rate_per_coin".localized(formattedValue, item.coinValue.coin)
+            rateLabel.text = "balance.rate_per_coin".localized(formattedValue, item.coinValue.coin)
         } else {
             rateLabel.text = " " // space required for constraints
         }
@@ -193,7 +193,7 @@ class BalanceCell: UITableViewCell {
     }
 
     private func bind(progress: Double) {
-        syncLabel.text = "wallet.syncing_percent".localized("\(Int(progress * 100))%")
+        syncLabel.text = "balance.syncing_percent".localized("\(Int(progress * 100))%")
     }
 
     func unbind() {

@@ -15,7 +15,7 @@ class AboutSettingsViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        title = "settings_about_title".localized
+        title = "settings_about.title".localized
 
         tableView.register(UINib(nibName: String(describing: AboutCell.self), bundle: nil), forCellReuseIdentifier: String(describing: AboutCell.self))
 

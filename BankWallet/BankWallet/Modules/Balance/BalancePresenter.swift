@@ -68,7 +68,7 @@ extension BalancePresenter: IBalanceInteractorDelegate {
 extension BalancePresenter: IBalanceViewDelegate {
 
     func viewDidLoad() {
-        view?.set(title: "wallet.title")
+        view?.set(title: "balance.title")
 
         updateView()
     }

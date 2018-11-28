@@ -69,13 +69,13 @@ class MainSettingsViewController: UIViewController, SectionsDataSource {
         let securityAttentionImage = backedUp ? nil : UIImage(named: "Attention Icon")
         appSettingsRows.append(Row<SettingsRightImageCell>(id: "security_center", hash: "security_center.\(backedUp)", height: SettingsTheme.cellHeight, bind: { cell, _ in
             cell.selectionStyle = .default
-            cell.bind(titleIcon: UIImage(named: "Security Icon"), title: "settings.cell.security_center".localized, rightImage: securityAttentionImage, rightImageTintColor: SettingsTheme.attentionIconTint, showDisclosure: true)
+            cell.bind(titleIcon: UIImage(named: "Security Icon"), title: "settings.security_center".localized, rightImage: securityAttentionImage, rightImageTintColor: SettingsTheme.attentionIconTint, showDisclosure: true)
         }, action: { [weak self] _ in
             self?.delegate.didTapSecurity()
         }))
         appSettingsRows.append(Row<SettingsRightLabelCell>(id: "base_currency", hash: "base_currency", height: SettingsTheme.cellHeight, bind: { [weak self] cell, _ in
             cell.selectionStyle = .default
-            cell.bind(titleIcon: UIImage(named: "Currency Icon"), title: "settings.cell.base_currency".localized, rightText: self?.baseCurrency, showDisclosure: true, last: true)
+            cell.bind(titleIcon: UIImage(named: "Currency Icon"), title: "settings.base_currency".localized, rightText: self?.baseCurrency, showDisclosure: true, last: true)
         }, action: { [weak self] _ in
             self?.delegate.didTapBaseCurrency()
         }))
@@ -84,12 +84,12 @@ class MainSettingsViewController: UIViewController, SectionsDataSource {
         var appearanceRows = [RowProtocol]()
         appearanceRows.append(Row<SettingsRightLabelCell>(id: "language", hash: "language", height: SettingsTheme.cellHeight, bind: { [weak self] cell, _ in
             cell.selectionStyle = .default
-            cell.bind(titleIcon: UIImage(named: "Language Icon"), title: "settings.cell.language".localized, rightText: self?.language, showDisclosure: true)
+            cell.bind(titleIcon: UIImage(named: "Language Icon"), title: "settings_language.title".localized, rightText: self?.language, showDisclosure: true)
         }, action: { [weak self] _ in
             self?.delegate.didTapLanguage()
         }))
         appearanceRows.append(Row<SettingsToggleCell>(id: "light_mode", hash: "light_mode", height: SettingsTheme.cellHeight, bind: { [weak self] cell, _ in
-            cell.bind(titleIcon: UIImage(named: "Light Mode Icon"), title: "settings.cell.light_mode".localized, isOn: self?.lightMode ?? false, showDisclosure: false, last: true, onToggle: { isOn in
+            cell.bind(titleIcon: UIImage(named: "Light Mode Icon"), title: "settings.light_mode".localized, isOn: self?.lightMode ?? false, showDisclosure: false, last: true, onToggle: { isOn in
                 self?.delegate.didSwitch(lightMode: isOn)
             })
         }))
@@ -98,7 +98,7 @@ class MainSettingsViewController: UIViewController, SectionsDataSource {
         var aboutRows = [RowProtocol]()
         aboutRows.append(Row<SettingsCell>(id: "about", hash: "about", height: SettingsTheme.cellHeight, bind: { cell, _ in
             cell.selectionStyle = .default
-            cell.bind(titleIcon: UIImage(named: "About Icon"), title: "settings.cell.about".localized, showDisclosure: true, last: true)
+            cell.bind(titleIcon: UIImage(named: "About Icon"), title: "settings_about.title".localized, showDisclosure: true, last: true)
         }, action: { [weak self] _ in
             self?.delegate.didTapAbout()
         }))

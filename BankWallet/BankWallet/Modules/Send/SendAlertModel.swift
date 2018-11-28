@@ -11,6 +11,7 @@ class SendAlertModel: BaseAlertModel {
     private let sendButtonItem: SendButtonItem
 
     var onScanClicked: (() -> ())?
+    var onShowConfirmation: ((SendConfirmationViewItem) -> ())?
 
     init(delegate: ISendViewDelegate) {
         self.delegate = delegate
@@ -19,7 +20,7 @@ class SendAlertModel: BaseAlertModel {
         amountItem = SendAmountItem(tag: 1)
         addressItem = SendAddressItem(tag: 2)
         feeItem = SendFeeItem(tag: 3)
-        sendButtonItem = SendButtonItem(tag: 4)
+        sendButtonItem = SendButtonItem(buttonTitle: "send.send_button".localized, tag: 4)
 
         super.init()
 
@@ -65,6 +66,10 @@ class SendAlertModel: BaseAlertModel {
 
     func onScan(address: String) {
         delegate.onScan(address: address)
+    }
+
+    func onConfirm() {
+        delegate.onConfirmClicked()
     }
 
 }
@@ -166,6 +171,10 @@ extension SendAlertModel: ISendView {
     func set(sendButtonEnabled: Bool) {
         sendButtonItem.isActive = sendButtonEnabled
         reload?()
+    }
+
+    func showConfirmation(viewItem: SendConfirmationViewItem) {
+        onShowConfirmation?(viewItem)
     }
 
     func show(error: Error) {

@@ -120,7 +120,7 @@ class BalancePresenterTests: XCTestCase {
 
     func testShowTitle() {
         presenter.viewDidLoad()
-        verify(mockView).set(title: "wallet.title")
+        verify(mockView).set(title: "balance.title")
     }
 
     func testTotalBalance_Initial() {

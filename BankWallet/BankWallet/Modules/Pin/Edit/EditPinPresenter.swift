@@ -10,7 +10,7 @@ class EditPinPresenter: ManagePinPresenter {
     }
 
     override func viewDidLoad() {
-        view?.set(title: "edit_pin_controller.title")
+        view?.set(title: "edit_pin.title")
 
         for page in pages {
             switch page {

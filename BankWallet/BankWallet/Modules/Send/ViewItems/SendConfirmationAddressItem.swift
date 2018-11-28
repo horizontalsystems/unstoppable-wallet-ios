@@ -1,0 +1,17 @@
+import GrouviActionSheet
+
+class SendConfirmationAddressItem: BaseActionItem {
+
+    let address: String
+    var onHashTap: (() -> ())?
+
+    init(address: String, tag: Int) {
+        self.address = address
+
+        super.init(cellType: SendConfirmationAddressItemView.self, tag: tag, required: true)
+
+        showSeparator = false
+        height = SendTheme.confirmationAddressHeight
+    }
+
+}

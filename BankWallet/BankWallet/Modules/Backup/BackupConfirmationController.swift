@@ -28,7 +28,7 @@ class BackupConfirmationController: UIViewController {
         title = "backup.confirmation.title".localized
         descriptionLabel?.text = "backup.confirmation.description".localized
 
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "done".localized, style: .plain, target: self, action: #selector(doneDidTap))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "backup.confirmation.done_button".localized, style: .plain, target: self, action: #selector(doneDidTap))
 
         firstIndexedInputField?.textField.returnKeyType = .next
         firstIndexedInputField?.onReturn = { [weak self] in

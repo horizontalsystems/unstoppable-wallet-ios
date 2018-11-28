@@ -10,12 +10,12 @@ class SetPinPresenter: ManagePinPresenter {
     }
 
     override func viewDidLoad() {
-        view?.set(title: "set_pin_controller.title")
+        view?.set(title: "set_pin.title")
 
         for page in pages {
             switch page {
-            case .enter: view?.addPage(withDescription: "set_pin_controller.info", showKeyboard: true)
-            case .confirm: view?.addPage(withDescription: "confirm_pin_controller.info", showKeyboard: true)
+            case .enter: view?.addPage(withDescription: "set_pin.info", showKeyboard: true)
+            case .confirm: view?.addPage(withDescription: "set_pin.confirm.info", showKeyboard: true)
             default: ()
             }
         }

@@ -53,7 +53,7 @@ class EditPinPresenterTests: XCTestCase {
 
     func testShowTitle() {
         presenter.viewDidLoad()
-        verify(mockView).set(title: equal(to: "edit_pin_controller.title"))
+        verify(mockView).set(title: equal(to: "edit_pin.title"))
     }
 
     func testShowCancel() {
@@ -131,7 +131,7 @@ class EditPinPresenterTests: XCTestCase {
         presenter.onEnter(pin: pin, forPage: confirmPage)
 
         verify(mockView).show(page: enterPage)
-        verify(mockView).show(error: "set_pin_controller.wrong_confirmation", forPage: enterPage)
+        verify(mockView).show(error: "set_pin.wrong_confirmation", forPage: enterPage)
         verify(mockInteractor, never()).save(pin: any())
         verify(mockInteractor).set(pin: equal(to: nil))
     }
@@ -139,7 +139,7 @@ class EditPinPresenterTests: XCTestCase {
     func testFailToSavePin() {
         presenter.didFailToSavePin()
 
-        verify(mockView).show(error: "unlock.cant_save_pin")
+        verify(mockView).show(error: "unlock_pin.cant_save_pin")
         verify(mockView).show(page: enterPage)
         verify(mockInteractor).set(pin: equal(to: nil))
     }

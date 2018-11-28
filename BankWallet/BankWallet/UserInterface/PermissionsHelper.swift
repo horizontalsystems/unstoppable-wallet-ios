@@ -13,7 +13,7 @@ class PermissionsHelper {
                     if granted {
                         action()
                     } else {
-                        self?.showPermissionAlert(fromController: fromController, message: "access.camera.message".localized)
+                        self?.showPermissionAlert(fromController: fromController, message: "access_camera.message".localized)
                     }
                 }
             })
@@ -23,14 +23,14 @@ class PermissionsHelper {
     private func showPermissionAlert(fromController: UIViewController, title: String? = nil, message: String) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
 
-        let settingsAction = UIAlertAction(title: "access.settings".localized, style: .default, handler: { _ in
+        let settingsAction = UIAlertAction(title: "access_camera.settings".localized, style: .default, handler: { _ in
             if let url = URL(string: UIApplicationOpenSettingsURLString) {
                 UIApplication.shared.open(url)
             }
         })
 
         alertController.addAction(settingsAction)
-        alertController.addAction(UIAlertAction(title: "access.cancel".localized, style: .cancel))
+        alertController.addAction(UIAlertAction(title: "access_camera.cancel".localized, style: .cancel))
         alertController.preferredAction = settingsAction
 
         alertController.show(fromController: fromController)
