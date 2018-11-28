@@ -46,7 +46,7 @@ class SendAmountItemView: BaseActionItemView {
         inputField.delegate = self
         inputField.font = SendTheme.amountFont
         inputField.textColor = SendTheme.amountColor
-        inputField.placeholder = "amount".localized
+        inputField.placeholder = "send.amount_placeholder".localized
         inputField.keyboardAppearance = AppTheme.keyboardAppearance
         inputField.keyboardType = .decimalPad
         inputField.tintColor = SendTheme.amountInputTintColor

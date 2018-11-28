@@ -16,7 +16,7 @@ class TransactionTitleItemView: BaseActionItemView {
         backgroundColor = TransactionInfoTheme.titleBackground
 
         let titleLabel = UILabel()
-        titleLabel.text = "tx_info.bottom_sheet.title".localized
+        titleLabel.text = "tx_info.title".localized
         titleLabel.font = TransactionInfoTheme.titleFont
         titleLabel.textColor = TransactionInfoTheme.titleColor
         addSubview(titleLabel)

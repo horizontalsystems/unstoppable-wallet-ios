@@ -49,7 +49,7 @@ class ManagePinPresenter {
             interactor.save(pin: pin)
         } else {
             showEnterPage()
-            show(error: "set_pin_controller.wrong_confirmation", forPage: .enter)
+            show(error: "set_pin.wrong_confirmation", forPage: .enter)
         }
     }
 
@@ -83,7 +83,7 @@ extension ManagePinPresenter: IPinInteractorDelegate {
 
     func didFailToSavePin() {
         showEnterPage()
-        view?.show(error: "unlock.cant_save_pin")
+        view?.show(error: "unlock_pin.cant_save_pin")
     }
 
 }

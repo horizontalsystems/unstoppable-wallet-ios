@@ -20,7 +20,7 @@ class SendAlertModel: BaseAlertModel {
         amountItem = SendAmountItem(tag: 1)
         addressItem = SendAddressItem(tag: 2)
         feeItem = SendFeeItem(tag: 3)
-        sendButtonItem = SendButtonItem(buttonTitle: "send".localized, tag: 4)
+        sendButtonItem = SendButtonItem(buttonTitle: "send.send_button".localized, tag: 4)
 
         super.init()
 

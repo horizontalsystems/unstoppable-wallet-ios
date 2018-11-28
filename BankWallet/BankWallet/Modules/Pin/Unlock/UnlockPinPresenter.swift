@@ -21,7 +21,7 @@ class UnlockPinPresenter {
 extension UnlockPinPresenter: IPinViewDelegate {
 
     func viewDidLoad() {
-        view?.addPage(withDescription: "unlock_pin_controller.info", showKeyboard: false)
+        view?.addPage(withDescription: "unlock_pin.info", showKeyboard: false)
         interactor.biometricUnlock()
 
         if configuration.cancellable {

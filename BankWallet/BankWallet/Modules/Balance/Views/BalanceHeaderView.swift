@@ -49,7 +49,7 @@ class BalanceHeaderView: UIView {
             amountLabel.text = amount
             amountLabel.textColor = BalanceTheme.amountColor
         } else {
-            amountLabel.text = "wallet.total_balance.syncing".localized
+            amountLabel.text = "balance.total_balance.syncing".localized
             amountLabel.textColor = BalanceTheme.amountColorSyncing
         }
     }

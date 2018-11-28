@@ -49,18 +49,18 @@ class SetPinPresenterTests: XCTestCase {
 
     func testShowTitle() {
         presenter.viewDidLoad()
-        verify(mockView).set(title: equal(to: "set_pin_controller.title"))
+        verify(mockView).set(title: equal(to: "set_pin.title"))
     }
 
     func testDontShowCancel() {
         presenter.viewDidLoad()
-        verify(mockView, never()).set(title: equal(to: "edit_pin_controller.title"))
+        verify(mockView, never()).set(title: equal(to: "edit_pin.title"))
     }
 
     func testAddPages() {
         presenter.viewDidLoad()
-        verify(mockView).addPage(withDescription: "set_pin_controller.info", showKeyboard: true)
-        verify(mockView).addPage(withDescription: "confirm_pin_controller.info", showKeyboard: true)
+        verify(mockView).addPage(withDescription: "set_pin.info", showKeyboard: true)
+        verify(mockView).addPage(withDescription: "set_pin.confirm", showKeyboard: true)
     }
 
     func testShowConfirm() {
@@ -99,7 +99,7 @@ class SetPinPresenterTests: XCTestCase {
         presenter.onEnter(pin: pin, forPage: confirmPage)
 
         verify(mockView).show(page: enterPage)
-        verify(mockView).show(error: "set_pin_controller.wrong_confirmation", forPage: enterPage)
+        verify(mockView).show(error: "set_pin.wrong_confirmation", forPage: enterPage)
         verify(mockInteractor, never()).save(pin: any())
         verify(mockInteractor).set(pin: equal(to: nil))
     }
@@ -107,7 +107,7 @@ class SetPinPresenterTests: XCTestCase {
     func testFailToSavePin() {
         presenter.didFailToSavePin()
 
-        verify(mockView).show(error: "unlock.cant_save_pin")
+        verify(mockView).show(error: "unlock_pin.cant_save_pin")
         verify(mockView).show(page: enterPage)
         verify(mockInteractor).set(pin: equal(to: nil))
     }

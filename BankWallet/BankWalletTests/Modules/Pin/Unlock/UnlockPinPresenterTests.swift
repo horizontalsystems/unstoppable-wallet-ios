@@ -73,7 +73,7 @@ class UnlockPinPresenterTests: XCTestCase {
 
     func testAddPages() {
         presenter.viewDidLoad()
-        verify(mockView).addPage(withDescription: "unlock_pin_controller.info", showKeyboard: false)
+        verify(mockView).addPage(withDescription: "unlock_pin.info", showKeyboard: false)
     }
 
     func testDismissAfterSuccessUnlock() {

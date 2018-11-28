@@ -13,8 +13,8 @@ class UnlinkConfirmationAlertModel: BaseAlertModel {
 
         var confirmTexts = [NSAttributedString]()
 
-        confirmTexts.append(NSAttributedString(string: "settings_security_import_wallet_confirmation_1".localized, attributes: [NSAttributedStringKey.font: ConfirmationTheme.regularFont]))
-        confirmTexts.append(NSAttributedString(string: "settings_security_import_wallet_confirmation_2".localized, attributes: [NSAttributedStringKey.font: ConfirmationTheme.regularFont]))
+        confirmTexts.append(NSAttributedString(string: "settings_security.import_wallet_confirmation_1".localized, attributes: [NSAttributedStringKey.font: ConfirmationTheme.regularFont]))
+        confirmTexts.append(NSAttributedString(string: "settings_security.import_wallet_confirmation_2".localized, attributes: [NSAttributedStringKey.font: ConfirmationTheme.regularFont]))
 
         let buttonItem = UnlinkButtonItem(tag: confirmItems.count, required: true, onTap: {
             self.dismiss?(true)
