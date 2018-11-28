@@ -5,4 +5,10 @@ class Rate: Object {
     @objc dynamic var currencyCode: String = ""
     @objc dynamic var value: Double = 0
     @objc dynamic var timestamp: Double = 0
+
+    var expired: Bool {
+        return true
+        let diff = Date().timeIntervalSince1970 - timestamp
+        return diff > 60 * 10
+    }
 }

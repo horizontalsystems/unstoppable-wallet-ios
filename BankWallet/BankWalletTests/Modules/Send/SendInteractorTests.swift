@@ -9,6 +9,7 @@ class SendInteractorTests: XCTestCase {
     private var mockCurrencyManager: MockICurrencyManager!
     private var mockRateManager: MockIRateManager!
     private var mockPasteboardManager: MockIPasteboardManager!
+    private var mockRate: MockRate!
 
     private let coin = "BTC"
     private let rateValue = 6543.21
@@ -31,14 +32,17 @@ class SendInteractorTests: XCTestCase {
         mockCurrencyManager = MockICurrencyManager()
         mockRateManager = MockIRateManager()
         mockPasteboardManager = MockIPasteboardManager()
+        mockRate = MockRate()
 
         stub(mockCurrencyManager) { mock in
             when(mock.baseCurrency.get).thenReturn(baseCurrency)
         }
         stub(mockRateManager) { mock in
-            let rate = Rate()
-            rate.value = rateValue
-            when(mock.rate(forCoin: coin, currencyCode: baseCurrency.code)).thenReturn(rate)
+            when(mock.rate(forCoin: coin, currencyCode: baseCurrency.code)).thenReturn(mockRate)
+        }
+        stub(mockRate) { mock in
+            when(mock.value.get).thenReturn(rateValue)
+            when(mock.expired.get).thenReturn(false)
         }
         stub(mockAdapter) { mock in
             when(mock.balance.get).thenReturn(balance)
@@ -46,8 +50,7 @@ class SendInteractorTests: XCTestCase {
             when(mock.fee(for: any(), address: any(), senderPay: any())).thenReturn(0)
         }
 
-        interactor = SendInteractor(currencyManager: mockCurrencyManager, rateManager: mockRateManager, pasteboardManager: mockPasteboardManager, wallet: wallet)
-        interactor.delegate = mockDelegate
+        initInteractor()
     }
 
     override func tearDown() {
@@ -55,6 +58,7 @@ class SendInteractorTests: XCTestCase {
         mockCurrencyManager = nil
         mockRateManager = nil
         mockPasteboardManager = nil
+        mockRate = nil
 
         mockAdapter = nil
         wallet = nil
@@ -62,6 +66,11 @@ class SendInteractorTests: XCTestCase {
         interactor = nil
 
         super.tearDown()
+    }
+
+    private func initInteractor() {
+        interactor = SendInteractor(currencyManager: mockCurrencyManager, rateManager: mockRateManager, pasteboardManager: mockPasteboardManager, wallet: wallet)
+        interactor.delegate = mockDelegate
     }
 
     func testAddressFromPasteboard() {
@@ -92,6 +101,8 @@ class SendInteractorTests: XCTestCase {
         stub(mockRateManager) { mock in
             when(mock.rate(forCoin: coin, currencyCode: baseCurrency.code)).thenReturn(nil)
         }
+
+        initInteractor()
 
         XCTAssertEqual(interactor.convertedAmount(forInputType: .coin, amount: 123.45), nil)
     }
@@ -139,6 +150,22 @@ class SendInteractorTests: XCTestCase {
             when(mock.rate(forCoin: coin, currencyCode: baseCurrency.code)).thenReturn(nil)
         }
 
+        initInteractor()
+
+        input.inputType = .currency
+
+        let state = interactor.state(forUserInput: input)
+
+        XCTAssertNil(state.coinValue)
+    }
+
+    func testState_CoinValue_CurrencyType_ExpiredRate() {
+        stub(mockRate) { mock in
+            when(mock.expired.get).thenReturn(true)
+        }
+
+        initInteractor()
+
         input.inputType = .currency
 
         let state = interactor.state(forUserInput: input)
@@ -172,6 +199,8 @@ class SendInteractorTests: XCTestCase {
         stub(mockRateManager) { mock in
             when(mock.rate(forCoin: coin, currencyCode: baseCurrency.code)).thenReturn(nil)
         }
+
+        initInteractor()
 
         input.inputType = .coin
 
