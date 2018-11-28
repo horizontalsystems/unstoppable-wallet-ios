@@ -16,8 +16,8 @@ class AboutCell: UITableViewCell {
         titleLabel?.textColor = .crypto_White_Black
         subtitleLabel?.text = "guest.subtitle".localized
 
-        termsHeaderLabel?.text = "settings_about_terms_privacy_subtitle".localized
-        termsLabel?.text = "settings_about_terms_privacy_text".localized
+        termsHeaderLabel?.text = "settings_about.terms_privacy_subtitle".localized
+        termsLabel?.text = "settings_about.terms_privacy_text".localized
         termsLabel?.textColor = .crypto_Silver_Black
 
         dependenciesHeaderLabel?.text = "settings_about_dependencies_subtitle".localized

@@ -22,13 +22,13 @@ class TransactionInfoAlertModel: BaseAlertModel {
             addItemView(amountItem)
 
             if let from = item.from {
-                addItemView(TransactionFromToHashItem(title: "tx_info.bottom_sheet.from_hash".localized, value: from, tag: 2, required: true, onHashTap: {
+                addItemView(TransactionFromToHashItem(title: "tx_info.from_hash".localized, value: from, tag: 2, required: true, onHashTap: {
                     delegate.onCopy(value: from)
                 }))
             }
 
             if let to = item.to {
-                addItemView(TransactionFromToHashItem(title: "tx_info.bottom_sheet.to_hash".localized, value: to, tag: 3, required: true, onHashTap: {
+                addItemView(TransactionFromToHashItem(title: "tx_info.to_hash".localized, value: to, tag: 3, required: true, onHashTap: {
                     delegate.onCopy(value: to)
                 }))
             }

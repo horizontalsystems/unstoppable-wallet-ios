@@ -31,7 +31,7 @@ class SendFeeItemView: BaseActionItemView {
         }
 
         item?.bindFee = { [weak self] in
-            self?.feeLabel.text = $0.map { "Fee: \($0)" }
+            self?.feeLabel.text = $0.map { "send.fee".localized + ": \($0)" }
         }
         item?.bindConvertedFee = { [weak self] in
             self?.convertedFeeLabel.text = $0

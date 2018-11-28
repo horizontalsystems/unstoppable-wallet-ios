@@ -58,7 +58,7 @@ class DepositAddressCollectionCell: UICollectionViewCell {
 
     func bind(address: AddressItem) {
         iconImageView.image = UIImage(named: "\(address.coin) Icon")
-        titleLabel.text = "deposit_receive_coin".localized(address.coin)
+        titleLabel.text = "deposit.receive_coin".localized(address.coin)
         qrCodeImageView.backgroundColor = .lightGray
         addressLabel.text = address.address
 

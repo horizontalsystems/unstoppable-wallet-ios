@@ -13,7 +13,7 @@ class BalanceViewController: UITableViewController {
 
         super.init(nibName: nil, bundle: nil)
 
-        tabBarItem = UITabBarItem(title: "wallet.tab_bar_item".localized, image: UIImage(named: "balance.tab_bar_item"), tag: 0)
+        tabBarItem = UITabBarItem(title: "balance.tab_bar_item".localized, image: UIImage(named: "balance.tab_bar_item"), tag: 0)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -134,7 +134,7 @@ extension BalanceViewController: IBalanceView {
     }
 
     func show(syncStatus: String) {
-        title = "wallet.title".localized + " (\(syncStatus))"
+        title = "balance.title".localized + " (\(syncStatus))"
     }
 
     func didRefresh() {

@@ -37,7 +37,7 @@ class SendAddressItemView: BaseActionItemView {
         pasteButton.borderColor = SendTheme.buttonBorderColor
         pasteButton.cornerRadius = SendTheme.buttonCornerRadius
         pasteButton.backgrounds = ButtonTheme.grayBackgroundDictionary
-        pasteButton.titleLabel.text = "paste".localized
+        pasteButton.titleLabel.text = "send.paste_button".localized
         pasteButton.titleLabel.font = SendTheme.buttonFont
         pasteButton.titleLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         pasteButton.snp.makeConstraints { maker in

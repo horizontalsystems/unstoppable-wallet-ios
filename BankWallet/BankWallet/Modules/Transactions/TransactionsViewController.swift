@@ -46,7 +46,7 @@ class TransactionsViewController: UITableViewController {
         emptyView.backgroundColor = .clear
         tableView.backgroundView = emptyView
 
-        emptyLabel.text = "transactions_empty_text".localized
+        emptyLabel.text = "transactions.empty_text".localized
         emptyLabel.numberOfLines = 0
         emptyLabel.font = .systemFont(ofSize: 14)
         emptyLabel.textColor = .cryptoGray

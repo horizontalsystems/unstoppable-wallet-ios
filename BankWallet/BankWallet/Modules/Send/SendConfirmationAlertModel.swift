@@ -17,9 +17,9 @@ class SendConfirmationAlertModel: BaseAlertModel {
         titleItem = SendTitleItem(tag: 0)
         amountItem = SendConfirmationAmounItem(viewItem: viewItem, tag: 1)
         addressItem = SendConfirmationAddressItem(address: viewItem.address, tag: 2)
-        feeItem = SendConfirmationValueItem(title: "fee".localized, amountInfo: viewItem.feeInfo, tag: 3)
-        totalItem = SendConfirmationValueItem(title: "total".localized, amountInfo: viewItem.totalInfo, tag: 4)
-        sendButtonItem = SendButtonItem(buttonTitle: "confirm".localized, tag: 5)
+        feeItem = SendConfirmationValueItem(title: "send.fee".localized, amountInfo: viewItem.feeInfo, tag: 3)
+        totalItem = SendConfirmationValueItem(title: "send.total".localized, amountInfo: viewItem.totalInfo, tag: 4)
+        sendButtonItem = SendButtonItem(buttonTitle: "alert.confirm".localized, tag: 5)
 
         super.init()
 

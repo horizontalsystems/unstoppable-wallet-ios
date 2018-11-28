@@ -19,7 +19,7 @@ class SettingsInfoFooter: UITableViewHeaderFooterView {
         }
         versionLabel.textColor = SettingsTheme.versionColor
         versionLabel.font = SettingsTheme.versionFont
-        versionLabel.text = "settings.info.title".localized
+        versionLabel.text = "settings.info_title".localized
 
         let separatorView = UIView()
         separatorView.backgroundColor = SettingsTheme.infoFooterSeparatorColor
@@ -38,7 +38,7 @@ class SettingsInfoFooter: UITableViewHeaderFooterView {
         }
         titleLabel.textColor = SettingsTheme.infoTitleColor
         titleLabel.font = SettingsTheme.infoTitleFont
-        titleLabel.text = "settings.info.subtitle".localized
+        titleLabel.text = "settings.info_subtitle".localized
 
         let imageView: TintImageView = TintImageView(image: UIImage(named: "Logo Image"), tintColor: SettingsTheme.logoTintColor, selectedTintColor: SettingsTheme.logoSelectedTintColor)
         logoButton.addSubview(imageView)
@@ -59,7 +59,7 @@ class SettingsInfoFooter: UITableViewHeaderFooterView {
     }
 
     func bind(appVersion: String, handleTouch: (() -> ())? = nil) {
-        versionLabel.text = "settings.info.title".localized + " " + appVersion
+        versionLabel.text = "settings.info_title".localized + " " + appVersion
         logoButton.handleTouch = handleTouch
     }
 
