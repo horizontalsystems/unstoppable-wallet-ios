@@ -7,6 +7,7 @@ class BalanceViewController: UITableViewController {
     private var items = [BalanceViewItem]()
 
     private var headerView = UINib(nibName: String(describing: BalanceHeaderView.self), bundle: Bundle(for: BalanceHeaderView.self)).instantiate(withOwner: nil, options: nil)[0] as? BalanceHeaderView
+    private var indexPathForSelectedRow: IndexPath?
 
     init(viewDelegate: IBalanceViewDelegate) {
         self.delegate = viewDelegate
@@ -52,7 +53,7 @@ extension BalanceViewController {
     }
 
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return tableView.indexPathForSelectedRow == indexPath ? BalanceTheme.expandedCellHeight + BalanceTheme.cellPadding : BalanceTheme.cellHeight + BalanceTheme.cellPadding
+        return indexPathForSelectedRow == indexPath ? BalanceTheme.expandedCellHeight + BalanceTheme.cellPadding : BalanceTheme.cellHeight + BalanceTheme.cellPadding
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -61,7 +62,7 @@ extension BalanceViewController {
 
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if let cell = cell as? BalanceCell {
-            cell.bind(item: items[indexPath.row], selected: tableView.indexPathForSelectedRow == indexPath, onReceive: { [weak self] in
+            cell.bind(item: items[indexPath.row], selected: indexPathForSelectedRow == indexPath, onReceive: { [weak self] in
                 self?.onReceive(for: indexPath)
             }, onPay: { [weak self] in
                 self?.onPay(for: indexPath)
@@ -88,11 +89,15 @@ extension BalanceViewController {
     }
 
     override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
-        if tableView.indexPathForSelectedRow == indexPath {
-            tableView.deselectRow(at: indexPath, animated: true)
-            bind(at: indexPath)
-            return nil
+        if let indexPathForSelectedRow = indexPathForSelectedRow {
+            self.indexPathForSelectedRow = nil
+            tableView.deselectRow(at: indexPathForSelectedRow, animated: true)
+            bind(at: indexPathForSelectedRow)
+            if indexPathForSelectedRow == indexPath {
+                return nil
+            }
         }
+        indexPathForSelectedRow = indexPath
         return indexPath
     }
 
@@ -102,7 +107,7 @@ extension BalanceViewController {
 
     func bind(at indexPath: IndexPath, animated: Bool = false) {
         if let cell = tableView?.cellForRow(at: indexPath) as? BalanceCell {
-            cell.bindView(item: items[indexPath.row], selected: tableView?.indexPathForSelectedRow == indexPath, animated: true)
+            cell.bindView(item: items[indexPath.row], selected: indexPathForSelectedRow == indexPath, animated: true)
             tableView?.beginUpdates()
             tableView?.endUpdates()
         }
