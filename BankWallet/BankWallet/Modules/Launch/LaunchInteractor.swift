@@ -20,7 +20,7 @@ extension LaunchInteractor: ILaunchInteractor {
             delegate?.showGuestModule()
         } else if pinManager.isPinSet {
             delegate?.showMainModule()
-//            lockManager.lock()
+            lockManager.lock()
         } else {
             delegate?.showSetPinModule()
         }
