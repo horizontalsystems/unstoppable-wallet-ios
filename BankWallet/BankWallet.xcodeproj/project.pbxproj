@@ -2534,7 +2534,8 @@
 				"$(SRCROOT)/${PROJECT_NAME}/Modules/Settings/BaseCurrency/BaseCurrencySettingsModule.swift",
 				"$(SRCROOT)/${PROJECT_NAME}/Modules/Deposit/DepositModule.swift",
 				"$(SRCROOT)/${PROJECT_NAME}/Modules/Send/SendModule.swift",
-			);
+                "$(SRCROOT)/${PROJECT_NAME}/Models/Rate.swift",
+        	);
 			name = Cuckoo;
 			outputPaths = (
 			);

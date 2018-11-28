@@ -110,7 +110,6 @@ extension SendPresenter: ISendViewDelegate {
 
     func onConfirmClicked() {
         interactor.send(userInput: userInput)
-        view?.dismissWithSuccess()
     }
 
 }

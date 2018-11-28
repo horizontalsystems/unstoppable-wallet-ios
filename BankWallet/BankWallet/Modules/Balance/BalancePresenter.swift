@@ -26,9 +26,7 @@ class BalancePresenter {
             var rateExpired = true
 
             if let rate = rate {
-                let diff = Date().timeIntervalSince1970 - rate.timestamp
-                rateExpired = diff > 60 * 10
-
+                rateExpired = rate.expired
                 totalBalance += balance * rate.value
             }
 

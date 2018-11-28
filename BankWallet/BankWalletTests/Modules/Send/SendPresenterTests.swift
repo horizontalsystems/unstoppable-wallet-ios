@@ -235,7 +235,6 @@ class SendPresenterTests: XCTestCase {
         presenter.onConfirmClicked()
 
         verify(mockInteractor).send(userInput: equal(to: mockUserInput))
-        verify(mockView).dismissWithSuccess()
     }
 
 }
