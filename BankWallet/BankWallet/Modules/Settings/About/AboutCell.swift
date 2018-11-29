@@ -6,8 +6,6 @@ class AboutCell: UITableViewCell {
     @IBOutlet weak var subtitleLabel: UILabel?
     @IBOutlet weak var termsHeaderLabel: UILabel?
     @IBOutlet weak var termsLabel: UILabel?
-    @IBOutlet weak var dependenciesHeaderLabel: UILabel?
-    @IBOutlet weak var dependenciesLabel: UILabel?
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -19,10 +17,6 @@ class AboutCell: UITableViewCell {
         termsHeaderLabel?.text = "settings_about.terms_privacy_subtitle".localized
         termsLabel?.text = "settings_about.terms_privacy_text".localized
         termsLabel?.textColor = .crypto_Silver_Black
-
-        dependenciesHeaderLabel?.text = "settings_about_dependencies_subtitle".localized
-        dependenciesLabel?.text = "settings_about_dependencies_text".localized
-        dependenciesLabel?.textColor = .crypto_Silver_Black
     }
 
 }
