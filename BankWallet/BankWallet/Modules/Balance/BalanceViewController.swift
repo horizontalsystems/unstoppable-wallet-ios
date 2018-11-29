@@ -138,10 +138,6 @@ extension BalanceViewController: IBalanceView {
         tableView?.reloadData()
     }
 
-    func show(syncStatus: String) {
-        title = "balance.title".localized + " (\(syncStatus))"
-    }
-
     func didRefresh() {
         refreshControl?.endRefreshing()
     }
