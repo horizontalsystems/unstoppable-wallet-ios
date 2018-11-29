@@ -1,9 +1,9 @@
 "coin.BTC" = "Bitcoin";
 "coin.BCH" = "Bitcoin Cash";
 "coin.ETH" = "Ethereum";
-"coin.BTCt" = "Bitcoin T";
-"coin.BCHt" = "Bitcoin Cash T";
-"coin.ETHt" = "Ethereum T";
+"coin.BTCt" = "Биткоин Т";
+"coin.BCHt" = "Bitcoin Cash Т";
+"coin.ETHt" = "Ethereum Т";
 
 "alert.ok" = "Хорошо";
 "alert.cancel" = "Отмена";
@@ -30,7 +30,7 @@
 "restore.title" = "Восстановить Кошелек";
 "restore.description" = "Введите секретный ключ  ";
 "restore.restore" = "Восстановить";
-"restore.cancel" = "Cancel";
+"restore.cancel" = "Отменить";
 "restore.validation_failed" = "Неверный секретный ключ";
 
 // Backup
@@ -62,14 +62,14 @@
 
 // Deposit
 
-"deposit.receive_coin" = "Receive %@";
+"deposit.receive_coin" = "Получить %@";
 "deposit.alert_copy" = "Скопировать";
 
 // Send
 
 "send.title" = "Отправить %@";
 "send.address_placeholder" = "Адрес";
-"send.amount_error.balance" = "Balance %@";
+"send.amount_error.balance" = "Баланс %@";
 "send.send_button" = "Отправить";
 "send.paste_button" = "Вставить";
 "send.amount_placeholder" = "Сумма";
@@ -129,7 +129,7 @@
 "settings_security.change_pin" = "Изменить PIN";
 "settings_security.touch_id" = "Touch ID";
 "settings_security.face_id" = "Face ID";
-"security_settings.unlink_alert_button" = "Unlink";
+"security_settings.unlink_alert_button" = "Отсоединить";
 "settings_security.import_wallet_confirmation_1" = "Это действие удалит ваш кошелёк с этого устройства.";
 "settings_security.import_wallet_confirmation_2" = "Убедитесь, что у вас есть свой секретный ключ, иначе вы не сможете получить доступ к денежным средствам.";
 
@@ -150,4 +150,4 @@
 // Unlock PIN
 
 "unlock_pin.info" = "Введите PIN-код";
-"unlock_pin.cant_save_pin" = "Ouch! We cant save your pin, please contact us asap!";
+"unlock_pin.cant_save_pin" = "Ой! Мы не можем сохранить ваш ПИН-код. Пожалуйста, свяжитесь с нами как можно скорее!";
