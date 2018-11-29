@@ -1,8 +1,9 @@
 import UIKit
+import GrouviExtensions
 import SnapKit
 
 class SettingsCell: UITableViewCell {
-    var iconImageView = UIImageView()
+    var iconImageView = TintImageView()
     var titleLabel = UILabel()
     var disclosureImageView = UIImageView(image: UIImage(named: "Disclosure Indicator"))
 
@@ -22,6 +23,7 @@ class SettingsCell: UITableViewCell {
         }
         selectView.alpha = 0
 
+        iconImageView.tintColor = SettingsTheme.iconTintColor
         contentView.addSubview(iconImageView)
         iconImageView.snp.makeConstraints { maker in
             maker.leading.equalTo(contentView.snp.leadingMargin)

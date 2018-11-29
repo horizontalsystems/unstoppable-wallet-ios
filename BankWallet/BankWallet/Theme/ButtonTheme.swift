@@ -4,10 +4,10 @@ class ButtonTheme {
     private static let greenActiveBackground = UIColor.cryptoGreen
     private static let greenSelectedBackground = UIColor.cryptoGreenPressed
     private static let disabledOnWhiteBackground = UIColor.cryptoSteel20
-    private static let disabledOnDarkBackground = UIColor.lightGray
+    private static let disabledOnDarkBackground = UIColor.cryptoSteel20
     private static let textColor = UIColor.black
-    private static let textColorDisabledOnWhiteBackground = UIColor.gray
-    private static let textColorDisabledOnDarkBackground = UIColor.cryptoSilver
+    private static let textColorDisabledOnWhiteBackground = UIColor.cryptoGray50
+    private static let textColorDisabledOnDarkBackground = UIColor.cryptoGray50
     private static let yellowActiveBackground = UIColor.cryptoYellow
     private static let yellowSelectedBackground = UIColor.cryptoYellowPressed
     private static let redActiveBackground = UIColor.cryptoRed
