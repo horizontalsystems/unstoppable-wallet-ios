@@ -10,13 +10,14 @@ class SettingsTheme {
     static let cellHeight: CGFloat = 44
     static var textColor: UIColor { return .crypto_White_Black }
     static var destructiveTextColor: UIColor = .cryptoRed
-    static let switchTintColor = UIColor.cryptoGray
+    static let switchTintColor = UIColor.cryptoSteel20
     static let separatorColor = UIColor.clear
     static let infoTitleTopMargin: CGFloat = 4
     static let rightTextColor = UIColor.cryptoGray
     static let cellSelectBackground = UIColor.cryptoSteel20
     static var languageCellBackground: UIColor { return .crypto_Steel20_White }
     static let infoTitleColor = UIColor.cryptoGray
+    static let iconTintColor = UIColor.cryptoYellow
     static let infoTitleFont = UIFont.cryptoCaption3
     static let languageTitleFont = UIFont.cryptoBody2
     static var languageTitleColor: UIColor { return .crypto_White_Black }

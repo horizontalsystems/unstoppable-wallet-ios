@@ -123,6 +123,7 @@ class BalanceCell: UITableViewCell {
         }
         payButton.onTap = { [weak self] in self?.pay() }
         payButton.backgrounds = ButtonTheme.yellowBackgroundOnDarkBackgroundDictionary
+        payButton.textColors = ButtonTheme.textColorOnWhiteBackgroundDictionary
         payButton.cornerRadius = BalanceTheme.buttonCornerRadius
         payButton.titleLabel.text = "balance.send".localized
     }
