@@ -79,6 +79,7 @@ class TransactionManager {
     }
 
     private func clear() {
+        adaptersDisposeBag = DisposeBag()
         storage.clearRecords()
     }
 
