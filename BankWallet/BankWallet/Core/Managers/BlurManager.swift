@@ -31,7 +31,7 @@ class BlurManager {
 extension BlurManager: IBlurManager {
 
     func willResignActive() {
-        if !lockManager.isLocked {
+        if !lockManager.isLocked && !lockManager.denyLocking {
             show()
         }
     }

@@ -22,7 +22,7 @@ extension GuestRouter {
         let router = GuestRouter()
         let interactor = GuestInteractor(wordsManager: App.shared.wordsManager)
         let presenter = GuestPresenter(interactor: interactor, router: router)
-        let viewController = GuestViewController(delegate: presenter)
+        let viewController = GuestViewController(delegate: presenter, lockManager: App.shared.lockManager)
 
         interactor.delegate = presenter
         router.viewController = viewController

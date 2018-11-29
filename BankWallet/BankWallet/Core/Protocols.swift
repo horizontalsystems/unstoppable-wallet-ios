@@ -114,6 +114,8 @@ protocol IWordsManager {
 
 protocol ILockManager {
     var isLocked: Bool { get }
+    var denyLocking: Bool { get }
+    func setLocking(deny: Bool)
     func lock()
     func didEnterBackground()
     func willEnterForeground()

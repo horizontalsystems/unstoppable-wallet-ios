@@ -8,6 +8,9 @@ class LockManager {
     private let lockTimeout: Double = 60
     private(set) var isLocked: Bool = false
 
+    private var _denyLocking: Bool = false
+    var denyLocking: Bool { return _denyLocking }
+
     init(localStorage: ILocalStorage, wordsManager: IWordsManager, lockRouter: ILockRouter) {
         self.localStorage = localStorage
         self.wordsManager = wordsManager
@@ -17,6 +20,10 @@ class LockManager {
 }
 
 extension LockManager: ILockManager {
+
+    func setLocking(deny: Bool) {
+        _denyLocking = deny
+    }
 
     func didEnterBackground() {
         guard wordsManager.isLoggedIn else {
