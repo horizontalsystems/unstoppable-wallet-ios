@@ -4,7 +4,7 @@ PODS:
     - SipHash (~> 1.2)
   - CryptoSwift (0.13.0)
   - Cuckoo (0.12.0)
-  - GrouviActionSheet (1.1.5):
+  - GrouviActionSheet (1.2.5):
     - GrouviExtensions
     - SnapKit (~> 4.0.0)
   - GrouviExtensions (1.1.1):
@@ -104,7 +104,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   GrouviActionSheet:
-    :commit: f9c9ba2c6bfe004f3756844214aec4a040df74b2
+    :commit: a9e80a86bac8ac8089982405cbba32626ccd3ad8
     :git: https://github.com/horizontalsystems/GrouviActoinSheet.git
   GrouviExtensions:
     :commit: 5ce17c1c66b6b32718e7fc80947e58410e4341e6
@@ -124,7 +124,7 @@ SPEC CHECKSUMS:
   BigInt: 76b5dfdfa3e2e478d4ffdf161aeede5502e2742f
   CryptoSwift: 16e78bebf567bad1c87b2d58f6547f25b74c31aa
   Cuckoo: d30b6c149e52ffbcfe6b4a9543e4627d08947274
-  GrouviActionSheet: b34f3f29231a48d360005a9946da7c660b54bfec
+  GrouviActionSheet: a966bf187addebab0d00aa9e66083e9112a60af7
   GrouviExtensions: e5a582e62cb8de559250630778b2d79b0b9ec5ea
   GrouviHUD: 230e32e2f5b20c58bb9c15e126aaf9403c11f170
   HSBitcoinKit: 44947c742094e50375df6de6432350507f7cc574
