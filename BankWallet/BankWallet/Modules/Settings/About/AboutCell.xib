@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -52,20 +52,8 @@
                         <color key="textColor" name="Yellow"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Dependencies Header" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rwm-cj-jGW">
-                        <rect key="frame" x="24" y="253.5" width="287" height="20.5"/>
-                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
-                        <color key="textColor" name="Yellow"/>
-                        <nil key="highlightedColor"/>
-                    </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Terms" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cfj-OH-aZC">
-                        <rect key="frame" x="24" y="211" width="287" height="20.5"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                        <nil key="textColor"/>
-                        <nil key="highlightedColor"/>
-                    </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Dependencies " textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FiN-kC-qKE">
-                        <rect key="frame" x="24" y="290" width="287" height="349"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Terms" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cfj-OH-aZC">
+                        <rect key="frame" x="24" y="211" width="287" height="428"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
@@ -73,7 +61,6 @@
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 <constraints>
-                    <constraint firstItem="rwm-cj-jGW" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="8" id="2I7-Xs-zbX"/>
                     <constraint firstItem="qJw-9r-KB9" firstAttribute="leading" secondItem="xlE-BZ-TZ6" secondAttribute="trailing" constant="16" id="31f-nM-e2B"/>
                     <constraint firstAttribute="trailingMargin" secondItem="Vo5-GX-Xx4" secondAttribute="trailing" constant="8" id="3H6-cz-ExU"/>
                     <constraint firstItem="qJw-9r-KB9" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="24" id="4Ke-G8-Ddo"/>
@@ -81,18 +68,13 @@
                     <constraint firstAttribute="trailingMargin" secondItem="QJ0-z8-Ppn" secondAttribute="trailing" constant="8" id="6pN-ar-hFK"/>
                     <constraint firstItem="Cfj-OH-aZC" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="8" id="9Bo-5B-2DV"/>
                     <constraint firstAttribute="trailingMargin" secondItem="qJw-9r-KB9" secondAttribute="trailing" constant="8" id="GIo-0c-4h0"/>
-                    <constraint firstItem="rwm-cj-jGW" firstAttribute="top" secondItem="Cfj-OH-aZC" secondAttribute="bottom" constant="22" id="IcU-ol-SCQ"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="FiN-kC-qKE" secondAttribute="trailing" constant="8" id="Jrq-L9-f9r"/>
-                    <constraint firstItem="FiN-kC-qKE" firstAttribute="top" secondItem="rwm-cj-jGW" secondAttribute="bottom" constant="16" id="M1R-fz-viT"/>
                     <constraint firstItem="Cfj-OH-aZC" firstAttribute="top" secondItem="CyR-1O-CP1" secondAttribute="bottom" constant="16" id="Szf-bT-EWs"/>
                     <constraint firstItem="QJ0-z8-Ppn" firstAttribute="top" secondItem="qJw-9r-KB9" secondAttribute="bottom" constant="10" id="W7N-yX-G9q"/>
                     <constraint firstItem="Vo5-GX-Xx4" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="8" id="WeH-mT-bIt"/>
                     <constraint firstAttribute="trailingMargin" secondItem="Cfj-OH-aZC" secondAttribute="trailing" constant="8" id="YEh-Kv-ww8"/>
-                    <constraint firstAttribute="bottomMargin" secondItem="FiN-kC-qKE" secondAttribute="bottom" constant="24" id="YI9-wt-z1Z"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="rwm-cj-jGW" secondAttribute="trailing" constant="8" id="ehg-Ca-UEN"/>
                     <constraint firstItem="QJ0-z8-Ppn" firstAttribute="leading" secondItem="xlE-BZ-TZ6" secondAttribute="trailing" constant="16" id="eo2-Mt-cFx"/>
-                    <constraint firstItem="FiN-kC-qKE" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="8" id="hDg-hq-bTS"/>
                     <constraint firstAttribute="trailingMargin" secondItem="CyR-1O-CP1" secondAttribute="trailing" constant="8" id="kI9-n7-BUk"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="Cfj-OH-aZC" secondAttribute="bottom" constant="24" id="kLW-kS-MpV"/>
                     <constraint firstItem="CyR-1O-CP1" firstAttribute="top" secondItem="Vo5-GX-Xx4" secondAttribute="bottom" constant="22" id="lta-8x-ixM"/>
                     <constraint firstItem="xlE-BZ-TZ6" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="24" id="ndz-Xl-Lgs"/>
                     <constraint firstItem="CyR-1O-CP1" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="8" id="uQM-QU-lES"/>
@@ -102,8 +84,6 @@
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
-                <outlet property="dependenciesHeaderLabel" destination="rwm-cj-jGW" id="O37-d2-qQl"/>
-                <outlet property="dependenciesLabel" destination="FiN-kC-qKE" id="Nfx-7e-jda"/>
                 <outlet property="subtitleLabel" destination="QJ0-z8-Ppn" id="hp9-LM-5jJ"/>
                 <outlet property="termsHeaderLabel" destination="CyR-1O-CP1" id="ira-14-yVr"/>
                 <outlet property="termsLabel" destination="Cfj-OH-aZC" id="YSm-bR-8MI"/>
