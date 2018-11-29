@@ -3,16 +3,14 @@ import UIKit
 class GuestViewController: UIViewController {
 
     let delegate: IGuestViewDelegate
-    let lockManager: ILockManager
 
     @IBOutlet weak var titleLabel: UILabel?
     @IBOutlet weak var subtitleLabel: UILabel?
     @IBOutlet weak var createButton: UIButton?
     @IBOutlet weak var restoreButton: UIButton?
 
-    init(delegate: IGuestViewDelegate, lockManager: ILockManager) {
+    init(delegate: IGuestViewDelegate) {
         self.delegate = delegate
-        self.lockManager = lockManager
 
         super.init(nibName: String(describing: GuestViewController.self), bundle: nil)
     }
@@ -33,13 +31,13 @@ class GuestViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-        lockManager.setLocking(deny: true)
+        delegate.willAppear()
     }
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
 
-        lockManager.setLocking(deny: false)
+        delegate.willDisappear()
     }
 
     override var preferredStatusBarStyle: UIStatusBarStyle {

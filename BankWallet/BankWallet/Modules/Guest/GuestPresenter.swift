@@ -14,6 +14,14 @@ class GuestPresenter {
 
 extension GuestPresenter: IGuestInteractorDelegate {
 
+    func willAppear() {
+        interactor.willAppear()
+    }
+
+    func willDisappear() {
+        interactor.willDisAppear()
+    }
+
     func didCreateWallet() {
         router.navigateToBackupRoutingToMain()
     }

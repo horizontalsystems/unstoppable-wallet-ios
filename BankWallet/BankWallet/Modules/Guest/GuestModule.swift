@@ -1,11 +1,15 @@
 import Foundation
 
 protocol IGuestViewDelegate {
+    func willAppear()
+    func willDisappear()
     func createWalletDidClick()
     func restoreWalletDidClick()
 }
 
 protocol IGuestInteractor {
+    func willAppear()
+    func willDisAppear()
     func createWallet()
 }
 
