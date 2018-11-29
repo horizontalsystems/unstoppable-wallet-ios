@@ -2,7 +2,6 @@ protocol IBalanceView: class {
     func set(title: String)
     func show(totalBalance: CurrencyValue, upToDate: Bool)
     func show(items: [BalanceViewItem])
-    func show(syncStatus: String)
     func didRefresh()
 }
 
