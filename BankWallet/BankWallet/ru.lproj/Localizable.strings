@@ -1,9 +1,9 @@
 "coin.BTC" = "Bitcoin";
 "coin.BCH" = "Bitcoin Cash";
 "coin.ETH" = "Ethereum";
-"coin.BTCt" = "Bitcoin TestNet";
-"coin.BCHt" = "Bitcoin Cash TestNet";
-"coin.ETHt" = "Ethereum TestNet";
+"coin.BTCt" = "Bitcoin T";
+"coin.BCHt" = "Bitcoin Cash T";
+"coin.ETHt" = "Ethereum T";
 
 "alert.ok" = "Хорошо";
 "alert.cancel" = "Отмена";
@@ -30,7 +30,7 @@
 "restore.title" = "Восстановить Кошелек";
 "restore.description" = "Введите секретный ключ  ";
 "restore.restore" = "Восстановить";
-"restore.navigation_bar_cancel" = "Отмена";
+"restore.cancel" = "Cancel";
 "restore.validation_failed" = "Неверный секретный ключ";
 
 // Backup
@@ -57,10 +57,8 @@
 "balance.tab_bar_item" = "Баланс";
 "balance.send" = "Отправить";
 "balance.deposit" = "Получить";
-"balance.loading_rate" = "загрузка курса...";
 "balance.rate_per_coin" = "%@ за %@";
 "balance.syncing_percent" = "Синхронизация %@";
-"balance.total_balance.syncing" = "Синхронизация...";
 
 // Deposit
 
@@ -71,7 +69,7 @@
 
 "send.title" = "Отправить %@";
 "send.address_placeholder" = "Адрес";
-"send.amount_error_balance" = "Баланс %@";
+"send.amount_error.balance" = "Balance %@";
 "send.send_button" = "Отправить";
 "send.paste_button" = "Вставить";
 "send.amount_placeholder" = "Сумма";
@@ -82,41 +80,19 @@
 
 "transactions.title" = "Транзакции";
 "transactions.tab_bar_item" = "Транзакции";
-"transactions.pending" = "ожидание...";
-"transactions.from" = "от";
-"transactions.to" = "кому";
 "transactions.filter_all" = "Все";
 "transactions.empty_text" = "У Вас ещё нет ожидаемых или прошлых транзакций ";
 
 // Transaction Info
 
 "tx_info.title" = "Транзакция";
-"tx_info.title_received" = "Получено";
-"tx_info.title_sent" = "Отправлено";
 "tx_info.pending" = "Ожидание";
 "tx_info.processing" = "Обработка %@";
 "tx_info.completed" = "Завершено";
 "tx_info.status" = "Статус:";
 "tx_info.from_hash" = "От:";
 "tx_info.to_hash" = "Кому:";
-"tx_info.id_hash" = "ID:";
 "tx_info.alert_close" = "Закрыть";
-
-// Full Transaction
-
-"full_transaction_info.navigation_bar.title" = "Подробности";
-"full_transaction_info.navigation_bar.share" = "Поделиться";
-"full_transaction_info.cell.size" = "Размер:";
-"full_transaction_info.cell.fee_rate" = "Комиссия:";
-"full_transaction_info.cell.received_time" = "Время Получения:";
-"full_transaction_info.cell.mined_time" = "Время Записи:";
-"full_transaction_info.cell.included_in_block" = "Записан в Блок:";
-"full_transaction_info.cell.confirmations" = "Подтверждения";
-"full_transaction_info.cell.lock_time" = "Время Блокировки:";
-"full_transaction_info.cell.from" = "От:";
-"full_transaction_info.cell.to" = "Кому:";
-"full_transaction_info.cell.received" = "Получено:";
-"full_transaction_info.cell.sent" = "Отправлено:";
 
 // Settings
 
@@ -139,7 +115,6 @@
 "settings_language.title" = "Язык";
 
 // Settings -> About
-
 
 "settings_about.title" = "О программе";
 "settings_about.terms_privacy_subtitle" = "Условия & Политика конфиденциальности:";
