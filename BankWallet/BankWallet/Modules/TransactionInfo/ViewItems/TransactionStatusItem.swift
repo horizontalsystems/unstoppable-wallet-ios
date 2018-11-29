@@ -23,7 +23,7 @@ class TransactionStatusItem: BaseActionItem {
             value = "tx_info.processing".localized("\(Int(progress * 100))%")
             self.progress = progress
         case .completed:
-            value = "tx_info.bottom_sheet.completed".localized
+            value = "tx_info.completed".localized
             valueImage = UIImage(named: "Transaction Success Icon")
             valueImageTintColor = TransactionInfoTheme.successIconTintColor
         }

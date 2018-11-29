@@ -84,7 +84,7 @@ class MainSettingsViewController: UIViewController, SectionsDataSource {
         var appearanceRows = [RowProtocol]()
         appearanceRows.append(Row<SettingsRightLabelCell>(id: "language", hash: "language", height: SettingsTheme.cellHeight, bind: { [weak self] cell, _ in
             cell.selectionStyle = .default
-            cell.bind(titleIcon: UIImage(named: "Language Icon"), title: "settings_language.title".localized, rightText: self?.language, showDisclosure: true)
+            cell.bind(titleIcon: UIImage(named: "Language Icon"), title: "settings.language".localized, rightText: self?.language, showDisclosure: true)
         }, action: { [weak self] _ in
             self?.delegate.didTapLanguage()
         }))
@@ -98,7 +98,7 @@ class MainSettingsViewController: UIViewController, SectionsDataSource {
         var aboutRows = [RowProtocol]()
         aboutRows.append(Row<SettingsCell>(id: "about", hash: "about", height: SettingsTheme.cellHeight, bind: { cell, _ in
             cell.selectionStyle = .default
-            cell.bind(titleIcon: UIImage(named: "About Icon"), title: "settings_about.title".localized, showDisclosure: true, last: true)
+            cell.bind(titleIcon: UIImage(named: "About Icon"), title: "settings.about".localized, showDisclosure: true, last: true)
         }, action: { [weak self] _ in
             self?.delegate.didTapAbout()
         }))
