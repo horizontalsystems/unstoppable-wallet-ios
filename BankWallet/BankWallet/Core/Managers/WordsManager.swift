@@ -52,6 +52,7 @@ extension WordsManager: IWordsManager {
         try secureStorage.set(words: words)
         self.words = words
 
+        isBackedUp = true
         loggedInSubject.onNext(true)
     }
 
