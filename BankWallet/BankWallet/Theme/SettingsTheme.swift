@@ -3,6 +3,7 @@ import UIKit
 class SettingsTheme {
     static let cellIconSize: CGFloat = 29
     static let cellBigMargin: CGFloat = 16
+    static let toggleRightMargin: CGFloat = 1.6//switch has outer stroke
     static let cellMiddleMargin: CGFloat = 8
     static let disclosureSize = CGSize(width: 8, height: 13)
     static var cellBackground: UIColor { return .crypto_Steel20_White }
@@ -26,7 +27,7 @@ class SettingsTheme {
     static let securityCellHeight: CGFloat = 44
     static let versionFont = UIFont.cryptoCaption3
     static let versionColor = UIColor.cryptoGray
-    static let subSettingsHeaderHeight: CGFloat = 16
+    static let subSettingsHeaderHeight: CGFloat = 32
     static let languageSubtitleFont = UIFont.cryptoCaption
     static let topHeaderHeight: CGFloat = 32
     static let languageSubtitleColor = UIColor.cryptoGray
