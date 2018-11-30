@@ -113,10 +113,10 @@ CHECKOUT OPTIONS:
     :commit: 852780b5548f639b3e63cce2a353c3a4d4cf6348
     :git: https://github.com/horizontalsystems/GrouviHUD.git
   HSBitcoinKit:
-    :commit: 55d766d7757571fd9f49710bdd8097d2ff418b8a
+    :commit: bcd29caf0667af49a494e8e430dab608f3dec3a2
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   HSEthereumKit:
-    :commit: 85fae266081dee9f9731295c6b1c2ff93d67685f
+    :commit: fc6d5a517b505b4025244d3d23f3f01c1131cf8d
     :git: https://github.com/horizontalsystems/ethereum-kit-ios.git
 
 SPEC CHECKSUMS:

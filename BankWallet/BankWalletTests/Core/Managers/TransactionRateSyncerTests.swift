@@ -19,8 +19,8 @@ class TransactionRateSyncerTests: XCTestCase {
     private let etherHash = "Ether Hash"
     private let cashHash = "Cash Hash"
 
-    private let bitcoinTimestamp = 1000
-    private let etherTimestamp = 2000
+    private let bitcoinTimestamp: Double = 1000
+    private let etherTimestamp: Double = 2000
 
     private let bitcoinValue: Double = 5000
     private let etherValue: Double = 300

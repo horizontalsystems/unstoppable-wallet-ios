@@ -41,7 +41,7 @@ extension TransactionFilterItem: Equatable {
 }
 
 extension TransactionRecord {
-    convenience init(transactionHash: String, coin: String, timestamp: Int) {
+    convenience init(transactionHash: String, coin: String, timestamp: Double) {
         self.init()
 
         self.transactionHash = transactionHash

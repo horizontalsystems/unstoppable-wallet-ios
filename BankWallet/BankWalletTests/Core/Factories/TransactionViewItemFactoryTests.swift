@@ -6,13 +6,16 @@ import RealmSwift
 class TransactionViewItemFactoryTests: XCTestCase {
     private var mockWalletManager: MockIWalletManager!
     private var mockCurrencyManager: MockICurrencyManager!
+    private var mockRateManager: MockIRateManager!
     private var mockAdapter: MockIAdapter!
+    private var mockRate: MockRate!
 
     private var factory: TransactionViewItemFactory!
 
     private let amount = 12.34
     private let coin = "BTC"
     private let currency = Currency(code: "USD", symbol: "$")
+    private let rateValue = 1234.56
     private let lastBlockHeight = 1000
     private let confirmationsThreshold = 6
 
@@ -28,7 +31,9 @@ class TransactionViewItemFactoryTests: XCTestCase {
 
         mockWalletManager = MockIWalletManager()
         mockCurrencyManager = MockICurrencyManager()
+        mockRateManager = MockIRateManager()
         mockAdapter = MockIAdapter()
+        mockRate = MockRate()
 
         stub(mockWalletManager) { mock in
             when(mock.wallets.get).thenReturn([Wallet(coin: coin, adapter: mockAdapter)])
@@ -36,18 +41,27 @@ class TransactionViewItemFactoryTests: XCTestCase {
         stub(mockCurrencyManager) { mock in
             when(mock.baseCurrency.get).thenReturn(currency)
         }
+        stub(mockRate) { mock in
+            when(mock.value.get).thenReturn(rateValue)
+            when(mock.expired.get).thenReturn(false)
+        }
+        stub(mockRateManager) { mock in
+            when(mock.rate(forCoin: coin, currencyCode: currency.code)).thenReturn(mockRate)
+        }
         stub(mockAdapter) { mock in
             when(mock.lastBlockHeight.get).thenReturn(lastBlockHeight)
             when(mock.confirmationsThreshold.get).thenReturn(confirmationsThreshold)
         }
 
-        factory = TransactionViewItemFactory(walletManager: mockWalletManager, currencyManager: mockCurrencyManager)
+        factory = TransactionViewItemFactory(walletManager: mockWalletManager, currencyManager: mockCurrencyManager, rateManager: mockRateManager)
     }
 
     override func tearDown() {
         mockWalletManager = nil
         mockCurrencyManager = nil
+        mockRateManager = nil
         mockAdapter = nil
+        mockRate = nil
 
         factory = nil
 
@@ -75,8 +89,34 @@ class TransactionViewItemFactoryTests: XCTestCase {
         XCTAssertEqual(item.coinValue, CoinValue(coin: coin, value: amount))
     }
 
-    func testCurrencyValue_NoRate() {
+    func testCurrencyValue_NoRate_OldTransaction() {
         let record = TransactionRecord()
+        record.timestamp = Date().timeIntervalSince1970 - 60 * 65 // more than 1 hour earlier
+
+        let item = factory.item(fromRecord: record)
+
+        XCTAssertEqual(item.currencyValue, nil)
+    }
+
+    func testCurrencyValue_NoRate_RecentTransaction() {
+        let record = TransactionRecord()
+        record.coin = coin
+        record.amount = amount
+        record.timestamp = Date().timeIntervalSince1970 - 60 * 55 // less than 1 hour earlier
+
+        let item = factory.item(fromRecord: record)
+
+        XCTAssertEqual(item.currencyValue, CurrencyValue(currency: currency, value: amount * rateValue))
+    }
+
+    func testCurrencyValue_NoRate_RecentTransaction_ExpiredRate() {
+        stub(mockRate) { mock in
+            when(mock.expired.get).thenReturn(true)
+        }
+
+        let record = TransactionRecord()
+        record.coin = coin
+        record.timestamp = Date().timeIntervalSince1970 - 60 * 55 // less than 1 hour earlier
 
         let item = factory.item(fromRecord: record)
 
@@ -128,7 +168,8 @@ class TransactionViewItemFactoryTests: XCTestCase {
         let date = Date(timeIntervalSince1970: Double(Int(Date().timeIntervalSince1970)))
 
         let record = TransactionRecord()
-        record.timestamp = Int(date.timeIntervalSince1970)
+        record.coin = coin
+        record.timestamp = date.timeIntervalSince1970
 
         let item = factory.item(fromRecord: record)
 
