@@ -50,12 +50,7 @@ class App {
     init() {
         pasteboardManager = PasteboardManager()
 
-        let realmFileName = "bank.realm"
-
-        let documentsUrl = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
-        let realmConfiguration = Realm.Configuration(fileURL: documentsUrl?.appendingPathComponent(realmFileName))
-
-        realmFactory = RealmFactory(configuration: realmConfiguration)
+        realmFactory = RealmFactory()
 
         localStorage = UserDefaultsStorage()
         secureStorage = KeychainStorage(localStorage: localStorage)
@@ -93,7 +88,7 @@ class App {
         transactionRateSyncer = TransactionRateSyncer(storage: realmStorage, networkManager: networkManager)
         transactionManager = TransactionManager(storage: realmStorage, rateSyncer: transactionRateSyncer, walletManager: walletManager, currencyManager: currencyManager, wordsManager: wordsManager, reachabilityManager: reachabilityManager)
 
-        transactionViewItemFactory = TransactionViewItemFactory(walletManager: walletManager, currencyManager: currencyManager)
+        transactionViewItemFactory = TransactionViewItemFactory(walletManager: walletManager, currencyManager: currencyManager, rateManager: rateManager)
     }
 
 }

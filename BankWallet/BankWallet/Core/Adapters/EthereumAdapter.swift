@@ -41,7 +41,7 @@ class EthereumAdapter {
         record.transactionHash = transaction.txHash
         record.blockHeight = transaction.blockNumber
         record.amount = amountEther * (from.mine ? -1 : 1)
-        record.timestamp = transaction.timestamp
+        record.timestamp = Double(transaction.timestamp)
 
         record.from.append(from)
         record.to.append(to)

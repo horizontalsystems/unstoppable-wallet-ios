@@ -5,7 +5,7 @@ class TransactionRecord: Object {
     @objc dynamic var blockHeight: Int = 0
     @objc dynamic var coin: String = ""
     @objc dynamic var amount: Double = 0
-    @objc dynamic var timestamp: Int = 0
+    @objc dynamic var timestamp: Double = 0
     @objc dynamic var rate: Double = 0
 
     let from = List<TransactionAddress>()
