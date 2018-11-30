@@ -74,13 +74,13 @@ class SettingsCell: UITableViewCell {
 
         disclosureImageView.isHidden = !showDisclosure
         disclosureImageView.snp.remakeConstraints { maker in
+            maker.trailing.equalTo(contentView.snp.trailingMargin)
             if showDisclosure {
-                maker.trailing.equalTo(contentView.snp.trailingMargin)
+                maker.size.equalTo(SettingsTheme.disclosureSize)
             } else {
-                maker.trailing.equalToSuperview()
+                maker.size.equalTo(0)
             }
             maker.centerY.equalToSuperview()
-            maker.size.equalTo(SettingsTheme.disclosureSize)
         }
 
         if last {

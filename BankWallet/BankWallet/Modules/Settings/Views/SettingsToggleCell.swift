@@ -15,7 +15,7 @@ class SettingsToggleCell: SettingsCell {
         toggleView.addTarget(self, action: #selector(_onToggle), for: .touchUpInside)
         contentView.addSubview(toggleView)
         toggleView.snp.makeConstraints { maker in
-            maker.trailing.equalTo(self.disclosureImageView.snp.leading).offset(-SettingsTheme.cellBigMargin)
+            maker.trailing.equalTo(self.disclosureImageView.snp.leading).offset(-SettingsTheme.toggleRightMargin)
             maker.centerY.equalToSuperview()
         }
     }

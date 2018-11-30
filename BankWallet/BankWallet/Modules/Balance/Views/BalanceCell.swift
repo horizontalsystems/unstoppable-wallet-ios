@@ -182,11 +182,7 @@ class BalanceCell: UITableViewCell {
         }
 
         coinValueLabel.isHidden = !synced
-        if item.coinValue.value != 0 {
-            coinValueLabel.text = ValueFormatter.instance.format(coinValue: item.coinValue)
-        } else {
-            coinValueLabel.text = nil
-        }
+        coinValueLabel.text = ValueFormatter.instance.format(coinValue: item.coinValue)
 
         syncLabel.isHidden = synced
 
@@ -199,7 +195,7 @@ class BalanceCell: UITableViewCell {
     }
 
     private func bind(progress: Double) {
-        syncLabel.text = "balance.syncing_percent".localized("\(Int(progress * 100))%")
+        syncLabel.text = "\(Int(progress * 100))%"
     }
 
     func unbind() {
