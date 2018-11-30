@@ -37,7 +37,7 @@ class BitcoinAdapter {
         record.transactionHash = transaction.transactionHash
         record.blockHeight = transaction.blockHeight ?? 0
         record.amount = Double(transaction.amount) / coinRate
-        record.timestamp = transaction.timestamp ?? Int(Date().timeIntervalSince1970)
+        record.timestamp = transaction.timestamp.map { Double($0) } ?? Date().timeIntervalSince1970
 
         transaction.from.forEach {
             let address = TransactionAddress()

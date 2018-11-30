@@ -1,12 +1,16 @@
 import Foundation
 
 class TransactionViewItemFactory {
+    private let latestRateFallbackThreshold: Double = 60 // in minutes
+
     private let walletManager: IWalletManager
     private let currencyManager: ICurrencyManager
+    private let rateManager: IRateManager
 
-    init(walletManager: IWalletManager, currencyManager: ICurrencyManager) {
+    init(walletManager: IWalletManager, currencyManager: ICurrencyManager, rateManager: IRateManager) {
         self.walletManager = walletManager
         self.currencyManager = currencyManager
+        self.rateManager = rateManager
     }
 }
 
@@ -15,7 +19,17 @@ extension TransactionViewItemFactory: ITransactionViewItemFactory {
     func item(fromRecord record: TransactionRecord) -> TransactionViewItem {
         let adapter = walletManager.wallets.first(where: { $0.coin == record.coin })?.adapter
 
-        let convertedValue = record.rate == 0 ? nil : record.rate * record.amount
+        var rateValue: Double?
+
+        if record.rate == 0 {
+            if record.timestamp > Date().timeIntervalSince1970 - 60 * latestRateFallbackThreshold, let rate = rateManager.rate(forCoin: record.coin, currencyCode: currencyManager.baseCurrency.code), !rate.expired {
+                rateValue = rate.value
+            }
+        } else {
+            rateValue = record.rate
+        }
+
+        let convertedValue = rateValue.map { $0 * record.amount }
 
         var status: TransactionStatus = .pending
 
