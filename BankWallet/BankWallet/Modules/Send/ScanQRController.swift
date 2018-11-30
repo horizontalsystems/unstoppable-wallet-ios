@@ -124,14 +124,25 @@ extension ScanQRController: AVCaptureMetadataOutputObjectsDelegate {
     func metadataOutput(_ output: AVCaptureMetadataOutput, didOutput metadataObjects: [AVMetadataObject], from connection: AVCaptureConnection) {
         captureSession.stopRunning()
 
-        if let metadataObject = metadataObjects.first {
-            let readableObject = metadataObject as! AVMetadataMachineReadableCodeObject
+        if let metadataObject = metadataObjects.first,
+           let readableObject = metadataObject as? AVMetadataMachineReadableCodeObject,
+           let stringValue = readableObject.stringValue {
 
             AudioServicesPlaySystemSound(SystemSoundID(kSystemSoundID_Vibrate))
-            found(code: readableObject.stringValue!)
+
+            found(code: removeUnusedParts(parsedString: stringValue))
         }
 
         dismiss(animated: true)
+    }
+
+    private func removeUnusedParts(parsedString: String) -> String {
+        let parsedArray = parsedString.components(separatedBy: CharacterSet(charactersIn: ":?"))
+        guard parsedArray.count > 1 else {
+            return parsedString
+        }
+        // blockchain.info qr format - {type}:{address}?{amount=value}, get only address
+        return parsedArray[1]
     }
 
 }
