@@ -78,7 +78,7 @@ class SecuritySettingsViewController: UIViewController, SectionsDataSource {
         }, action: { [weak self] _ in
             self?.delegate.didTapEditPin()
         }))
-        sections.append(Section(id: "face_id", headerState: .margin(height: SettingsTheme.subSettingsHeaderHeight), footerState: .margin(height: SettingsTheme.subSettingsHeaderHeight), rows: pinTouchFaceRows))
+        sections.append(Section(id: "face_id", headerState: .margin(height: SettingsTheme.subSettingsHeaderHeight), rows: pinTouchFaceRows))
 
         var backupRows = [RowProtocol]()
         let securityAttentionImage = backedUp ? nil : UIImage(named: "Attention Icon")
@@ -87,7 +87,7 @@ class SecuritySettingsViewController: UIViewController, SectionsDataSource {
         }, action: { [weak self] _ in
             self?.delegate.didTapBackupWallet()
         }))
-        sections.append(Section(id: "backup", headerState: .margin(height: SettingsTheme.subSettingsHeaderHeight), footerState: .margin(height: SettingsTheme.subSettingsHeaderHeight), rows: backupRows))
+        sections.append(Section(id: "backup", headerState: .margin(height: SettingsTheme.headerHeight), rows: backupRows))
 
         var unlinkRows = [RowProtocol]()
         unlinkRows.append(Row<SettingsCell>(id: "unlink", hash: "unlink", height: SettingsTheme.cellHeight, autoDeselect: true, bind: { cell, _ in
@@ -95,7 +95,7 @@ class SecuritySettingsViewController: UIViewController, SectionsDataSource {
         }, action: { [weak self] _ in
             self?.delegate.didTapUnlink()
         }))
-        sections.append(Section(id: "unlink", headerState: .margin(height: SettingsTheme.subSettingsHeaderHeight), footerState: .margin(height: SettingsTheme.subSettingsHeaderHeight), rows: unlinkRows))
+        sections.append(Section(id: "unlink", headerState: .margin(height: SettingsTheme.headerHeight), rows: unlinkRows))
 
         return sections
     }
