@@ -25,6 +25,8 @@ class BackupConfirmationController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        view.backgroundColor = AppTheme.controllerBackground
+
         title = "backup.confirmation.title".localized
         descriptionLabel?.text = "backup.confirmation.description".localized
 

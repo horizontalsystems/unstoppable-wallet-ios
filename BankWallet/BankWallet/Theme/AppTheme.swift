@@ -1,11 +1,11 @@
 import UIKit
 import GrouviActionSheet
 
-public class AppTheme {
+class AppTheme {
     static var blurStyle: UIBlurEffectStyle { return App.shared.localStorage.lightMode ? .prominent : .dark }
 
-    public static var keyboardAppearance: UIKeyboardAppearance { return App.shared.localStorage.lightMode ? .default : .dark }
-    public static let textFieldTintColor: UIColor = .white
+    static var keyboardAppearance: UIKeyboardAppearance { return App.shared.localStorage.lightMode ? .default : .dark }
+    static var textFieldTintColor: UIColor { return .crypto_White_Black }
 
     public static let defaultAnimationDuration = 0.3
 
