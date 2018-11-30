@@ -21,6 +21,8 @@ class BackupIntroController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        view.backgroundColor = AppTheme.controllerBackground
+
         title = "backup.intro.title".localized
 
         subtitleLabel?.text = "backup.intro.subtitle".localized

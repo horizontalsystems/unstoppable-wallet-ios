@@ -10,8 +10,8 @@ class BackupNavigationController: UINavigationController {
 
         super.init(nibName: nil, bundle: nil)
 
-        navigationBar.barStyle = .blackTranslucent
-        navigationBar.tintColor = .cryptoYellow
+        navigationBar.barStyle = AppTheme.navigationBarStyle
+        navigationBar.tintColor = AppTheme.navigationBarTintColor
         navigationBar.prefersLargeTitles = true
         viewControllers = [BackupIntroController(delegate: viewDelegate)]
     }
