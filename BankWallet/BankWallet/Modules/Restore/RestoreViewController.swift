@@ -115,7 +115,7 @@ extension RestoreViewController: UICollectionViewDelegateFlowLayout, UICollectio
     }
 
     func onTextChange(word: String?, at indexPath: IndexPath) {
-        words[indexPath.item] = word ?? ""
+        words[indexPath.item] = word?.trimmingCharacters(in: .whitespaces) ?? ""
     }
 
 }
