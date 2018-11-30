@@ -29,7 +29,7 @@ extension UIView {
         }
     }
 
-    public func set(hidden: Bool, animated: Bool = false, duration: TimeInterval = AppTheme.defaultAnimationDuration, completion: ((Bool) -> ())? = nil) {
+    func set(hidden: Bool, animated: Bool = false, duration: TimeInterval = AppTheme.defaultAnimationDuration, completion: ((Bool) -> ())? = nil) {
         if isHidden == hidden {
             return
         }
@@ -51,7 +51,7 @@ extension UIView {
         }
     }
 
-    public func shakeView(_ block: (() -> Void)? = nil) {
+    func shakeView(_ block: (() -> Void)? = nil) {
         CATransaction.begin()
         CATransaction.setCompletionBlock(block)
 

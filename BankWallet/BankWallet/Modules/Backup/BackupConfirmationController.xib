@@ -27,12 +27,11 @@
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enter the following words from your paper key" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7xW-yq-vhA">
                     <rect key="frame" x="44" y="156" width="287" height="33.5"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                    <color key="textColor" name="Silver"/>
+                    <color key="textColor" name="Gray"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jMY-db-XFi" customClass="IndexedInputField" customModule="Bank" customModuleProvider="target">
                     <rect key="frame" x="16" y="36" width="343" height="44"/>
-                    <color key="backgroundColor" name="Steel20"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="44" id="xKV-aq-XLC"/>
                     </constraints>
@@ -46,14 +45,10 @@
                         <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
                             <color key="value" name="Steel20"/>
                         </userDefinedRuntimeAttribute>
-                        <userDefinedRuntimeAttribute type="color" keyPath="contentBackgroundColor">
-                            <color key="value" name="Dark"/>
-                        </userDefinedRuntimeAttribute>
                     </userDefinedRuntimeAttributes>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eiD-Fw-U1k" customClass="IndexedInputField" customModule="Bank" customModuleProvider="target">
                     <rect key="frame" x="16" y="96" width="343" height="44"/>
-                    <color key="backgroundColor" name="Steel20"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="44" id="5F6-hg-o0h"/>
                     </constraints>
@@ -68,13 +63,9 @@
                         <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
                             <color key="value" name="Steel20"/>
                         </userDefinedRuntimeAttribute>
-                        <userDefinedRuntimeAttribute type="color" keyPath="contentBackgroundColor">
-                            <color key="value" name="Dark"/>
-                        </userDefinedRuntimeAttribute>
                     </userDefinedRuntimeAttributes>
                 </view>
             </subviews>
-            <color key="backgroundColor" name="Dark"/>
             <constraints>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="jMY-db-XFi" secondAttribute="trailing" constant="16" id="4Lz-6M-MnD"/>
                 <constraint firstItem="eiD-Fw-U1k" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="8w3-4e-09P"/>
@@ -93,11 +84,8 @@
         </view>
     </objects>
     <resources>
-        <namedColor name="Dark">
-            <color red="0.12156862745098039" green="0.12941176470588237" blue="0.16078431372549021" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
-        <namedColor name="Silver">
-            <color red="0.78431372549019607" green="0.7803921568627451" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        <namedColor name="Gray">
+            <color red="0.54117647058823526" green="0.54117647058823526" blue="0.5607843137254902" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="Steel20">
             <color red="0.45098039215686275" green="0.47450980392156861" blue="0.5490196078431373" alpha="0.20000000298023224" colorSpace="custom" customColorSpace="sRGB"/>

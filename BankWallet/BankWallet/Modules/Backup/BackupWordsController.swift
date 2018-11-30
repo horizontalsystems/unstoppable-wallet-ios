@@ -24,6 +24,8 @@ class BackupWordsController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        view.backgroundColor = AppTheme.controllerBackground
+
         title = "backup.words.title".localized
 
         backButton?.setTitle("backup.words.back".localized, for: .normal)
@@ -33,6 +35,7 @@ class BackupWordsController: UIViewController {
         let attributedText = wordsLabel?.attributedText as? NSMutableAttributedString
         attributedText?.mutableString.setString(joinedWords)
         attributedText?.addAttribute(NSAttributedStringKey.font, value: UIFont.cryptoTitle3, range: NSMakeRange(0, joinedWords.count))
+        attributedText?.addAttribute(NSAttributedStringKey.foregroundColor, value: UIColor.crypto_White_Black, range: NSMakeRange(0, joinedWords.count))
         wordsLabel?.attributedText = attributedText
 
     }

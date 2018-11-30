@@ -25,15 +25,15 @@ class IndexedInputField: UIView, UITextFieldDelegate {
         }
     }
 
-    @IBInspectable var contentBackgroundColor: UIColor? {
-        get {
-            return backgroundColor
-        }
-        set {
-            backgroundColor = newValue
-        }
-    }
-
+//    @IBInspectable var contentBackgroundColor: UIColor? {
+//        get {
+//            return backgroundColor
+//        }
+//        set {
+//            backgroundColor = newValue
+//        }
+//    }
+//
 //    @IBInspectable var cornerRadius: CGFloat {
 //        get {
 //            return layer.cornerRadius
@@ -87,6 +87,8 @@ class IndexedInputField: UIView, UITextFieldDelegate {
     }
 
     func commonInit() {
+        backgroundColor = .crypto_Steel20_White
+
         clearTextButton.addTarget(self, action: #selector(onClearText), for: .touchUpInside)
 
         clearWrapperView.isHidden = true

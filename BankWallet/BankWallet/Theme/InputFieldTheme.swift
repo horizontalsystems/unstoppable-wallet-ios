@@ -8,6 +8,6 @@ class InputFieldTheme {
     static let indexMargin = 4
     static let indexWidth = 30
     static let indexColor = UIColor.gray
-    static let textColor = UIColor.white
+    static var textColor: UIColor { return .crypto_White_Black }
     static let inputFieldRightMargin = 48
 }
