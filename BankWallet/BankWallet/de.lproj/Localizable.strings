@@ -31,7 +31,7 @@
 "restore.description" = "Offlineschlüssel eingeben  ";
 "restore.restore" = "Wiederherstellen";
 "restore.cancel" = "Abbrechen";
-"restore.validation_failed" = "Incorrect Secret Key";
+"restore.validation_failed" = "Falscher Offlineschlüssel";
 
 // Backup
 
