@@ -26,14 +26,12 @@ class TransactionCell: UITableViewCell {
         }
 
         dateLabel.font = TransactionsTheme.dateLabelFont
-        dateLabel.textColor = TransactionsTheme.dateLabelTextColor
         contentView.addSubview(dateLabel)
         dateLabel.snp.makeConstraints { maker in
             maker.leading.equalTo(contentView.snp.leadingMargin).offset(TransactionsTheme.leftAdditionalMargin)
             maker.top.equalToSuperview().offset(TransactionsTheme.cellMediumMargin)
         }
         timeLabel.font = TransactionsTheme.timeLabelFont
-        timeLabel.textColor = TransactionsTheme.timeLabelTextColor
         timeLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
         timeLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         contentView.addSubview(timeLabel)
@@ -61,7 +59,6 @@ class TransactionCell: UITableViewCell {
         }
 
         fiatAmountLabel.font = TransactionsTheme.fiatAmountLabelFont
-        fiatAmountLabel.textColor = TransactionsTheme.fiatAmountLabelColor
         fiatAmountLabel.textAlignment = .right
         contentView.addSubview(fiatAmountLabel)
         fiatAmountLabel.snp.makeConstraints { maker in
@@ -84,10 +81,16 @@ class TransactionCell: UITableViewCell {
     }
 
     func bind(item: TransactionViewItem) {
+        dateLabel.textColor = item.status == .completed ? TransactionsTheme.dateLabelTextColor : TransactionsTheme.dateLabelTextColor50
+        timeLabel.textColor = item.status == .completed ? TransactionsTheme.timeLabelTextColor : TransactionsTheme.timeLabelTextColor50
+        let incomingTextColor = item.status == .completed ? TransactionsTheme.incomingTextColor : TransactionsTheme.incomingTextColor50
+        let outgoingTextColor = item.status == .completed ? TransactionsTheme.outgoingTextColor : TransactionsTheme.outgoingTextColor50
+        amountLabel.textColor = item.incoming ? incomingTextColor : outgoingTextColor
+        fiatAmountLabel.textColor = item.status == .completed ? TransactionsTheme.fiatAmountLabelColor : TransactionsTheme.fiatAmountLabelColor50
+
         dateLabel.text = (item.date.map { DateHelper.instance.formatTransactionDate(from: $0) })?.uppercased()
         timeLabel.text = item.date.map { DateHelper.instance.formatTransactionTime(from: $0) }
 
-        amountLabel.textColor = item.incoming ? TransactionsTheme.incomingTextColor : TransactionsTheme.outgoingTextColor
         amountLabel.text = ValueFormatter.instance.format(coinValue: item.coinValue, explicitSign: true)
 
         if let value = item.currencyValue, let formattedValue = ValueFormatter.instance.format(currencyValue: value, approximate: true) {
@@ -99,10 +102,13 @@ class TransactionCell: UITableViewCell {
         switch item.status {
         case .pending:
             statusImageView.image = UIImage(named: "Transaction Processing Icon")
+            statusImageView.alpha = TransactionsTheme.pendingStatusIconTransparency
         case .processing:
             statusImageView.image = UIImage(named: "Transaction Processing Icon")
+            statusImageView.alpha = TransactionsTheme.pendingStatusIconTransparency
         case .completed:
             statusImageView.image = UIImage(named: "Transaction Success Icon")
+            statusImageView.alpha = TransactionsTheme.completeStatusIconTransparency
         }
     }
 
