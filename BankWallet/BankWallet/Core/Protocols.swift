@@ -96,6 +96,7 @@ protocol IAdapter: class {
 
     func fee(for value: Double, address: String?, senderPay: Bool) throws -> Double
     func validate(address: String) throws
+    func parse(paymentAddress: String) -> PaymentRequestAddress
 
     var receiveAddress: String { get }
 }
