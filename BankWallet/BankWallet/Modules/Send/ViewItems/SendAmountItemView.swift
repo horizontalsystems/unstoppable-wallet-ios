@@ -93,7 +93,7 @@ class SendAmountItemView: BaseActionItemView {
         inputField.rx.controlEvent(.editingChanged)
                 .subscribe(onNext: { [weak self] _ in
                     var amount: Double = 0
-                    if let text = self?.inputField.text, let parsedAmount = Double(text) {
+                    if let text = self?.inputField.text, let parsedAmount = Double(text.replacingOccurrences(of: ",", with: ".")) {
                         amount = parsedAmount
                     }
                     self?.item?.onAmountChanged?(amount)
