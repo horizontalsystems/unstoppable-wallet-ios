@@ -29,7 +29,7 @@
 
 "restore.title" = "بازگرداندن كيف پول";
 "restore.description" = "Enter Secret Key  ";
-"restore.restore" = "بازگرداني";
+"restore.next" = "بازگرداني";
 "restore.cancel" = "Cancel";
 "restore.validation_failed" = "Incorrect Secret Key";
 

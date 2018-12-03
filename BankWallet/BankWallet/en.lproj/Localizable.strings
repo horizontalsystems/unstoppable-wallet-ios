@@ -29,9 +29,9 @@ Go to Settings - > Bank and allow access to Camera.";
 
 // Restore
 
-"restore.title" = "Restore Wallet";
+"restore.title" = "Restore";
 "restore.description" = "Enter Secret Key  ";
-"restore.restore" = "Restore";
+"restore.next" = "Next";
 "restore.cancel" = "Cancel";
 "restore.validation_failed" = "Incorrect Secret Key";
 

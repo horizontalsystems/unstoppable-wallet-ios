@@ -29,7 +29,7 @@
 
 "restore.title" = "Geldbörse Wiederherstellen";
 "restore.description" = "Enter Secret Key  ";
-"restore.restore" = "Wiederherstellen";
+"restore.next" = "Wiederherstellen";
 "restore.cancel" = "Cancel";
 "restore.validation_failed" = "Incorrect Secret Key";
 
