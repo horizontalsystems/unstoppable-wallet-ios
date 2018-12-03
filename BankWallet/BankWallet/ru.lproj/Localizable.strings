@@ -28,19 +28,19 @@
 // Restore
 
 "restore.title" = "Восстановить Кошелек";
-"restore.description" = "Введите секретный ключ  ";
+"restore.description" = "Введите Секретный Ключ  ";
 "restore.restore" = "Восстановить";
 "restore.cancel" = "Отменить";
-"restore.validation_failed" = "Неверный секретный ключ";
+"restore.validation_failed" = "Неверный Секретный Ключ";
 
 // Backup
 
-"backup.intro.title" = "Записать ключ";
+"backup.intro.title" = "Записать Ключ";
 "backup.intro.subtitle" = "Ваш секретный ключ является единственным способом для восстановления вашего кошелька.\n\nМы покажем вам список слов, чтобы вы записали их на бумаге и хранили в безопасном месте.";
 "backup.intro.later" = "Позже";
 "backup.intro.backup_now" = "Записать ключ";
 
-"backup.words.title" = "Секретный ключ";
+"backup.words.title" = "Секретный Ключ";
 "backup.words.back" = "Назад";
 "backup.words.proceed" = "Продолжить";
 
