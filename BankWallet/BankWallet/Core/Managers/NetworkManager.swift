@@ -30,14 +30,18 @@ class RequestRouter: URLRequestConvertible {
 class NetworkManager {
     private let apiUrl: String
 
-    private let ipfsDateFormatter = DateFormatter()
+    private let ipfsDayFormatter = DateFormatter()
+    private let ipfsHourFormatter = DateFormatter()
     private let ipfsMinuteFormatter = DateFormatter()
 
     required init(appConfigProvider: IAppConfigProvider) {
         self.apiUrl = appConfigProvider.ratesApiUrl
 
-        ipfsDateFormatter.timeZone = TimeZone(abbreviation: "UTC")
-        ipfsDateFormatter.dateFormat = "yyyy/MM/dd/HH"
+        ipfsHourFormatter.timeZone = TimeZone(abbreviation: "UTC")
+        ipfsHourFormatter.dateFormat = "yyyy/MM/dd/HH"
+
+        ipfsDayFormatter.timeZone = TimeZone(abbreviation: "UTC")
+        ipfsDayFormatter.dateFormat = "yyyy/MM/dd"
 
         ipfsMinuteFormatter.timeZone = TimeZone(abbreviation: "UTC")
         ipfsMinuteFormatter.dateFormat = "mm"
@@ -153,18 +157,24 @@ extension NetworkManager: IRateNetworkManager {
             coin.removeLast()
         }
 
-        let datePath = ipfsDateFormatter.string(from: date)
+        let dayPath = ipfsDayFormatter.string(from: date)
+        let hourPath = ipfsHourFormatter.string(from: date)
         let minuteString = ipfsMinuteFormatter.string(from: date)
 
-        let hourObservable: Observable<[String: Double]> = observable(forRequest: request(withMethod: .get, path: "\(coin)/\(currencyCode)/\(datePath)/index.json"))
+        let hourObservable: Observable<[String: Double]> = observable(forRequest: request(withMethod: .get, path: "\(coin)/\(currencyCode)/\(hourPath)/index.json"))
+        let dayObservable: Observable<Double> = observable(forRequest: request(withMethod: .get, path: "\(coin)/\(currencyCode)/\(dayPath)/index.json"))
 
-        return hourObservable.flatMap { rates -> Observable<Double> in
-            if let rate = rates[minuteString] {
-                return Observable.just(rate)
-            }
+        return hourObservable
+                .flatMap { rates -> Observable<Double> in
+                    if let rate = rates[minuteString] {
+                        return Observable.just(rate)
+                    }
 
-            return Observable.empty()
-        }
+                    return Observable.error(NetworkError.mappingError)
+                }
+                .catchError { _ in
+                    return dayObservable
+                }
     }
 
 }
