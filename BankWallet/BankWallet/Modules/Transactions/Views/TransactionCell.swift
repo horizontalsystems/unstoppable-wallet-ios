@@ -93,7 +93,7 @@ class TransactionCell: UITableViewCell {
 
         amountLabel.text = ValueFormatter.instance.format(coinValue: item.coinValue, explicitSign: true)
 
-        if let value = item.currencyValue, let formattedValue = ValueFormatter.instance.format(currencyValue: value, approximate: true) {
+        if let value = item.currencyValue, let formattedValue = ValueFormatter.instance.format(currencyValue: value, approximate: true, shortFractionLimit: 10) {
             fiatAmountLabel.text = formattedValue
         } else {
             fiatAmountLabel.text = "n/a"

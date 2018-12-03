@@ -165,7 +165,7 @@ class BalanceCell: UITableViewCell {
 
         nameLabel.text = "coin.\(item.coinValue.coin)".localized
 
-        if let value = item.exchangeValue, let formattedValue = ValueFormatter.instance.format(currencyValue: value, shortFraction: true) {
+        if let value = item.exchangeValue, let formattedValue = ValueFormatter.instance.format(currencyValue: value, shortFractionLimit: 100) {
             rateLabel.text = "balance.rate_per_coin".localized(formattedValue, item.coinValue.coin)
         } else {
             rateLabel.text = " " // space required for constraints
