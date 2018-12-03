@@ -6,7 +6,7 @@
 "coin.ETHt" = "Ethereum Т";
 
 "alert.ok" = "Хорошо";
-"alert.cancel" = "Отмена";
+"alert.cancel" = "Отменить";
 "alert.copied" = "Скопировано";
 "alert.confirm" = "Подтвердить";
 
