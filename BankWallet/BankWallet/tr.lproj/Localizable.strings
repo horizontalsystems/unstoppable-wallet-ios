@@ -73,7 +73,7 @@
 "send.send_button" = "Gönder";
 "send.paste_button" = "Yapıştır";
 "send.amount_placeholder" = "Tutar";
-"send.fee" = "Fee";
+"send.fee" = "Masraf";
 "send.total" = "Total";
 
 // Transactions
@@ -81,30 +81,30 @@
 "transactions.title" = "Hesap işlemleri";
 "transactions.tab_bar_item" = "Hesap işlemleri";
 "transactions.filter_all" = "Hepsi";
-"transactions.empty_text" = "You don't have any pending or past transactions yet";
+"transactions.empty_text" = "Henüz herhangi bir bekleyen veya geçmiş işlem yok";
 
 // Transaction Info
 
-"tx_info.title" = "Transaction";
-"tx_info.pending" = "Pending";
-"tx_info.processing" = "Processing %@";
-"tx_info.completed" = "Completed";
-"tx_info.status" = "Status:";
-"tx_info.from_hash" = "From:";
-"tx_info.to_hash" = "To:";
-"tx_info.alert_close" = "Close";
+"tx_info.title" = "Hesap işlemi";
+"tx_info.pending" = "Devam ediyor";
+"tx_info.processing" = "%@ işleniyor";
+"tx_info.completed" = "Tamamlandı";
+"tx_info.status" = "Durum:";
+"tx_info.from_hash" = "Gönderen:";
+"tx_info.to_hash" = "Alan:";
+"tx_info.alert_close" = "Kapat";
 
 // Settings
 
 "settings.title" = "Ayarlar";
 "settings.tab_bar_item" = "Ayarlar";
-"settings.security_center" = "Security Center";
-"settings.base_currency" = "Base Currency";
-"settings.language" = "Language";
-"settings.about" = "About";
-"settings.light_mode" = "Light Mode";
+"settings.security_center" = "Güvenlik Merkezi";
+"settings.base_currency" = "Para birimi";
+"settings.language" = "Dil";
+"settings.about" = "Hakkında";
+"settings.light_mode" = "Aydınlık mod";
 "settings.info_title" = "BANK WALLET";
-"settings.info_subtitle" = "decentralized app";
+"settings.info_subtitle" = "decentralized App";
 
 // Settings -> Base Currency
 
@@ -116,8 +116,8 @@
 
 // Settings -> About
 
-"settings_about.title" = "About";
-"settings_about.terms_privacy_subtitle" = "Terms & Privacy:";
+"settings_about.title" = "Hakkında";
+"settings_about.terms_privacy_subtitle" = "Şartlar & Gizlilik Politikası:";
 "settings_about.terms_privacy_text" = "Your funds are securely stored on your device. Not on any external servers.\n\nThe app does not depend on any server or person to function.\n\nSome generic app data like exchange rates are stored on decentralized storage (IPFS).\n\nThe app works everywhere as long as there is an internet connection.\n\nIt is impossible for a third party to block this app from working.\n\nThe entire code powering this app is free and open to the public.\n\nThere may be bugs in the code. And while we tried to provide the most secure wallet we still can not guarantee the security of your funds. No one can.\n\nMake sure you backup a Secret Key for your wallet! Never show your secret key to anyone.\n\nDo not jailbreak your phone or install apps from unknown (untrusted) sources.\n\nDo not give your device to untrusted parties.\n\nYou are solely responsible for keeping your Secret Key and your device secure.";
 
 // Settings -> Security
@@ -129,25 +129,25 @@
 "settings_security.change_pin" = "PIN'i değiştir";
 "settings_security.touch_id" = "Touch ID";
 "settings_security.face_id" = "Face ID";
-"security_settings.unlink_alert_button" = "Unlink";
-"settings_security.import_wallet_confirmation_1" = "This action will remove the currently installed wallet from this device.";
-"settings_security.import_wallet_confirmation_2" = "Make sure you have its Secret Key or you will not be able to access the funds on it in the future.";
+"security_settings.unlink_alert_button" = "Ayır";
+"settings_security.import_wallet_confirmation_1" = "Bu işlemle, cüzdan cihazdan kaldırılacak.";
+"settings_security.import_wallet_confirmation_2" = "Gizli Anahtarı yedeklediğinizden emin olun. Onsuz, cüzdana gelecekte ulaşamayacaksınız.";
 
 // Set PIN
 
-"set_pin.title" = "Set PIN";
-"set_pin.info" = "Your pin will be used to unlock your wallet and send money";
-"set_pin.confirm.info" = "Confirm PIN";
-"set_pin.wrong_confirmation" = "Pin did not match. Try again";
+"set_pin.title" = "PIN oluştur";
+"set_pin.info" = "PİN, program'ı açmak ve para göndermek için kullanılacak";
+"set_pin.confirm.info" = "PIN'i onaylayın";
+"set_pin.wrong_confirmation" = "PİN uyuşmuyor. Tekrar deneyin.";
 
 // Edit PIN
 
-"edit_pin.title" = "Edit PIN";
+"edit_pin.title" = "PİN'i değiştir";
 "edit_pin.unlock_info" = "Şu an kullandığınız PİN'i girin";
 "edit_pin.new_pin_info" = "Yeni PİN gerin";
 "edit_pin.confirm_info" = "Onaylamak için tekrar girin";
 
 // Unlock PIN
 
-"unlock_pin.info" = "Enter PIN";
-"unlock_pin.cant_save_pin" = "Ouch! We cant save your pin, please contact us asap!";
+"unlock_pin.info" = "PIN'i girin";
+"unlock_pin.cant_save_pin" = "Eyvah! PIN kodu çalışmadı, ACİLEN bize ulaşın!";
