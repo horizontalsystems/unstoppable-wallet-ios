@@ -23,6 +23,8 @@ class ValueFormatter {
     func format(coinValue: CoinValue, explicitSign: Bool = false) -> String? {
         let value = explicitSign ? abs(coinValue.value) : coinValue.value
 
+        coinFormatter.minimumFractionDigits = value > 0 ? 2 : 0
+
         guard let formattedValue = coinFormatter.string(from: value as NSNumber) else {
             return nil
         }
