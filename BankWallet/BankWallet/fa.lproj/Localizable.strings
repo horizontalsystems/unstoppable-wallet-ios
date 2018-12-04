@@ -27,9 +27,9 @@
 
 // Restore
 
-"restore.title" = "بازگرداندن كيف پول";
+"restore.title" = "Restore";
 "restore.description" = "Enter Secret Key  ";
-"restore.restore" = "بازگرداني";
+"restore.next" = "Next";
 "restore.cancel" = "Cancel";
 "restore.validation_failed" = "Incorrect Secret Key";
 
