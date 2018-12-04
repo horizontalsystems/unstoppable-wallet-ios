@@ -142,8 +142,8 @@ Go to Settings - > Bank and allow access to Camera.";
 \nThere may be bugs in the code. And while we tried to provide the most secure wallet we still can not guarantee the security of your funds. No one can.
 \nMake sure you backup a Secret Key for your wallet! Never show your secret key to anyone.
 \nDo not jailbreak your phone or install apps from unknown (untrusted) sources.
-\nDo not give your device to untrusted parties.You are solely responsible for keeping your Secret Key and your device secure.
-\nYou are solely responsible for keeping your Secret Key and your device secure";
+\nDo not give your device to untrusted parties.
+\nYou are solely responsible for keeping your Secret Key and your device secure.";
 
 // Settings -> Security
 
