@@ -27,9 +27,9 @@
 
 // Restore
 
-"restore.title" = "Geldbörse Wiederherstellen";
+"restore.title" = "Restore";
 "restore.description" = "Offlineschlüssel eingeben  ";
-"restore.restore" = "Wiederherstellen";
+"restore.next" = "Next";
 "restore.cancel" = "Abbrechen";
 "restore.validation_failed" = "Falscher Offlineschlüssel";
 
