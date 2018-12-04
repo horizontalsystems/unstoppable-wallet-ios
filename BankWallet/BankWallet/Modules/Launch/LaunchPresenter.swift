@@ -33,4 +33,8 @@ extension LaunchPresenter: ILaunchInteractorDelegate {
         router.showSetPinModule()
     }
 
+    func showBackupModule() {
+        router.showBackupModule()
+    }
+
 }

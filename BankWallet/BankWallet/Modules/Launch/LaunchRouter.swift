@@ -33,4 +33,8 @@ extension LaunchRouter: ILaunchRouter {
         show(viewController: SetPinRouter.module())
     }
 
+    func showBackupModule() {
+        show(viewController: BackupRouter.module(dismissMode: .toSetPin))
+    }
+
 }
