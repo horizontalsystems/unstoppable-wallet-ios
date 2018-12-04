@@ -20,6 +20,13 @@ class ValueFormatter {
         return formatter
     }()
 
+    private let amountFormatter: NumberFormatter = {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.roundingMode = .ceiling
+        return formatter
+    }()
+
     func format(coinValue: CoinValue, explicitSign: Bool = false) -> String? {
         let value = explicitSign ? abs(coinValue.value) : coinValue.value
 
@@ -60,6 +67,11 @@ class ValueFormatter {
         }
 
         return result
+    }
+
+    func format(amount: Double, isCoin: Bool) -> String? {
+        amountFormatter.maximumFractionDigits = isCoin ? 8 : 2
+        return amountFormatter.string(from: amount as NSNumber)
     }
 
 }

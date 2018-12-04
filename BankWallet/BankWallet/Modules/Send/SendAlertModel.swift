@@ -83,17 +83,17 @@ extension SendAlertModel: ISendView {
     func set(amountInfo: AmountInfo?) {
         guard let amountInfo = amountInfo else {
             amountItem.bindAmountType?(nil)
-            amountItem.bindAmount?(nil)
+            amountItem.bindAmount?(nil, false)
             return
         }
 
         switch amountInfo {
         case .coinValue(let coinValue):
             amountItem.bindAmountType?(coinValue.coin)
-            amountItem.bindAmount?(coinValue.value)
+            amountItem.bindAmount?(coinValue.value, true)
         case .currencyValue(let currencyValue):
             amountItem.bindAmountType?(currencyValue.currency.symbol)
-            amountItem.bindAmount?(currencyValue.value)
+            amountItem.bindAmount?(currencyValue.value, false)
         }
     }
 

@@ -16,10 +16,13 @@ class SendAmountItemView: BaseActionItemView {
     private let switchButton = RespondButton()
     private let switchButtonIcon = UIImageView()
 
+    let amountFormatter = NumberFormatter()
+
     override var item: SendAmountItem? { return _item as? SendAmountItem }
 
     override func initView() {
         super.initView()
+        amountFormatter.numberStyle = .decimal
 
         addSubview(amountTypeLabel)
         addSubview(lineView)
@@ -93,7 +96,7 @@ class SendAmountItemView: BaseActionItemView {
         inputField.rx.controlEvent(.editingChanged)
                 .subscribe(onNext: { [weak self] _ in
                     var amount: Double = 0
-                    if let text = self?.inputField.text, let parsedAmount = Double(text.replacingOccurrences(of: ",", with: ".")) {
+                    if let text = self?.inputField.text, let parsedAmount = self?.amountFormatter.number(from: text) as? Double {
                         amount = parsedAmount
                     }
                     self?.item?.onAmountChanged?(amount)
@@ -110,8 +113,8 @@ class SendAmountItemView: BaseActionItemView {
         item?.bindAmountType = { [weak self] in
             self?.amountTypeLabel.text = $0
         }
-        item?.bindAmount = { [weak self] in
-            self?.inputField.text = $0.flatMap { $0 == 0 ? nil : String($0) }
+        item?.bindAmount = { [weak self] (amount, isCoin) in
+            self?.inputField.text = amount.flatMap { $0 == 0 ? nil : ValueFormatter.instance.format(amount: $0, isCoin: isCoin)}
         }
         item?.bindHint = { [weak self] in
             self?.hintLabel.text = $0
@@ -130,16 +133,13 @@ class SendAmountItemView: BaseActionItemView {
 extension SendAmountItemView: UITextFieldDelegate {
 
     public func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        let pattern = "^[0-9]*[,.]?[0-9]*$"
-        guard string.range(of: pattern, options: .regularExpression) != nil else {
-            return false
+        let updatedString = (textField.text as NSString?)?.replacingCharacters(in: range, with: string)
+
+        if let updatedString = updatedString {
+            return updatedString.isEmpty || amountFormatter.number(from: "0\(updatedString)") as? Double != nil
         }
 
-        let characterSet = CharacterSet(charactersIn: ",.")
-        let textContains = textField.text?.rangeOfCharacter(from: characterSet) != nil
-        let replacementStringContains = string.rangeOfCharacter(from: characterSet) != nil
-
-        return !textContains || !replacementStringContains
+        return false
     }
 
 }
