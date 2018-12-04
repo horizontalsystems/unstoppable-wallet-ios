@@ -29,7 +29,7 @@
 
 "restore.title" = "Restaurer le porte-monnaie";
 "restore.description" = "Enter Secret Key  ";
-"restore.restore" = "Restaurer";
+"restore.next" = "Restaurer";
 "restore.cancel" = "Cancel";
 "restore.validation_failed" = "Incorrect Secret Key";
 

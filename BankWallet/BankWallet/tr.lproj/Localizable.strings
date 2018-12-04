@@ -29,7 +29,7 @@
 
 "restore.title" = "Cüzdanı Geri Yükle";
 "restore.description" = "Enter Secret Key  ";
-"restore.restore" = "Geri Yükle";
+"restore.next" = "Geri Yükle";
 "restore.cancel" = "Cancel";
 "restore.validation_failed" = "Incorrect Secret Key";
 

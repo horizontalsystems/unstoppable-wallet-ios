@@ -32,7 +32,7 @@ class RestoreViewController: KeyboardObservingViewController {
         title = "restore.title".localized
 
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "restore.cancel".localized, style: .plain, target: self, action: #selector(cancelDidTap))
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "restore.restore".localized, style: .plain, target: self, action: #selector(restoreDidTap))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "restore.next".localized, style: .plain, target: self, action: #selector(restoreDidTap))
 
         wordsCollectionView?.registerCell(forClass: RestoreWordCell.self)
         wordsCollectionView?.registerView(forClass: DescriptionCollectionHeader.self, flowSupplementaryKind: .header)

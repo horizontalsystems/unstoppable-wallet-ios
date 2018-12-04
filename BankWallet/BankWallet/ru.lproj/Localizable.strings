@@ -29,7 +29,7 @@
 
 "restore.title" = "Восстановить Кошелек";
 "restore.description" = "Введите секретный ключ  ";
-"restore.restore" = "Восстановить";
+"restore.next" = "Восстановить";
 "restore.cancel" = "Отменить";
 "restore.validation_failed" = "Неверный секретный ключ";
 
