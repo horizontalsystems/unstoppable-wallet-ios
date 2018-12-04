@@ -46,13 +46,18 @@ class ValueFormatter {
         return result
     }
 
-    func format(currencyValue: CurrencyValue, approximate: Bool = false, shortFraction: Bool = false) -> String? {
+    func format(currencyValue: CurrencyValue, approximate: Bool = false, shortFractionLimit: Double? = nil) -> String? {
         var value = currencyValue.value
 
         let formatter = currencyFormatter
         formatter.currencyCode = currencyValue.currency.code
         formatter.currencySymbol = currencyValue.currency.symbol
-        formatter.maximumFractionDigits = approximate || (shortFraction && value > 100) ? 0 : 2
+
+        if let limit = shortFractionLimit {
+            formatter.maximumFractionDigits = abs(value) > limit ? 0 : 2
+        } else {
+            formatter.maximumFractionDigits = 2
+        }
 
         if approximate {
             value = abs(value)
