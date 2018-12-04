@@ -31,7 +31,7 @@ Go to Settings - > Bank and allow access to Camera.";
 
 "restore.title" = "Restore";
 "restore.description" = "Enter Secret Key  ";
-"restore.next" = "Next";
+"restore.done" = "Done";
 "restore.cancel" = "Cancel";
 "restore.validation_failed" = "Incorrect Secret Key";
 
@@ -102,6 +102,7 @@ Go to Settings - > Bank and allow access to Camera.";
 "settings.tab_bar_item" = "Settings";
 "settings.security_center" = "Security Center";
 "settings.base_currency" = "Base Currency";
+"settings.manage_wallet" = "Manage Wallet";
 "settings.language" = "Language";
 "settings.about" = "About";
 "settings.light_mode" = "Light Mode";
@@ -116,6 +117,18 @@ Go to Settings - > Bank and allow access to Camera.";
 
 "settings_language.title" = "Language";
 
+// Settings -> Manage Wallet
+
+"settings_manage_wallet.title" = "Manage Coins";
+"settings_manage_wallet.add_coins" = "Add coins";
+"settings_manage_wallet.add_button" = "Add";
+"settings_manage_wallet.hide_button" = "Hide";
+"settings_manage_wallet.remove_button" = "Remove";
+"settings_manage_wallet.show_button" = "Show";
+"settings_manage_wallet.search_placeholder" = "Search";
+
+
+
 // Settings -> About
 
 "settings_about.title" = "About";
@@ -129,8 +142,8 @@ Go to Settings - > Bank and allow access to Camera.";
 \nThere may be bugs in the code. And while we tried to provide the most secure wallet we still can not guarantee the security of your funds. No one can.
 \nMake sure you backup a Secret Key for your wallet! Never show your secret key to anyone.
 \nDo not jailbreak your phone or install apps from unknown (untrusted) sources.
-\nDo not give your device to untrusted parties.
-\nYou are solely responsible for keeping your Secret Key and your device secure.";
+\nDo not give your device to untrusted parties.You are solely responsible for keeping your Secret Key and your device secure.
+\nYou are solely responsible for keeping your Secret Key and your device secure";
 
 // Settings -> Security
 
