@@ -8,12 +8,14 @@ protocol ILaunchInteractorDelegate: class {
     func showMainModule()
     func showGuestModule()
     func showSetPinModule()
+    func showBackupModule()
 }
 
 protocol ILaunchRouter {
     func showMainModule()
     func showGuestModule()
     func showSetPinModule()
+    func showBackupModule()
 }
 
 protocol ILaunchPresenter {

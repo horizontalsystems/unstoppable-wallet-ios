@@ -18,11 +18,13 @@ extension LaunchInteractor: ILaunchInteractor {
     func showLaunchModule() {
         if !wordsManager.isLoggedIn {
             delegate?.showGuestModule()
-        } else if pinManager.isPinSet {
+        } else if !App.shared.localStorage.iUnderstand {
+            delegate?.showBackupModule()
+        } else if !pinManager.isPinSet {
+            delegate?.showSetPinModule()
+        } else {
             delegate?.showMainModule()
             lockManager.lock()
-        } else {
-            delegate?.showSetPinModule()
         }
     }
 
