@@ -113,8 +113,8 @@ class SendAmountItemView: BaseActionItemView {
         item?.bindAmountType = { [weak self] in
             self?.amountTypeLabel.text = $0
         }
-        item?.bindAmount = { [weak self] (amount, isCoin) in
-            self?.inputField.text = amount.flatMap { $0 == 0 ? nil : ValueFormatter.instance.format(amount: $0, isCoin: isCoin)}
+        item?.bindAmount = { [weak self] in
+            self?.inputField.text = $0.flatMap { $0 == 0 ? nil : ValueFormatter.instance.format(amount: $0)}
         }
         item?.bindHint = { [weak self] in
             self?.hintLabel.text = $0

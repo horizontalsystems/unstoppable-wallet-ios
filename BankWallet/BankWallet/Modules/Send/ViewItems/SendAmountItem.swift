@@ -5,7 +5,7 @@ class SendAmountItem: BaseActionItem {
     var onAmountChanged: ((Double) -> ())?
 
     var bindAmountType: ((String?) -> ())?
-    var bindAmount: ((Double?, Bool) -> ())?
+    var bindAmount: ((Double?) -> ())?
     var bindHint: ((String?) -> ())?
     var bindError: ((String?) -> ())?
     var bindSwitchEnabled: ((Bool) -> ())?
