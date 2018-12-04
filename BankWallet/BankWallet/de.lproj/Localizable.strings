@@ -27,9 +27,9 @@
 
 // Restore
 
-"restore.title" = "Restore";
+"restore.title" = "Wiederherstellen";
 "restore.description" = "Offlineschlüssel eingeben  ";
-"restore.next" = "Next";
+"restore.next" = "Weiter";
 "restore.cancel" = "Abbrechen";
 "restore.validation_failed" = "Falscher Offlineschlüssel";
 
