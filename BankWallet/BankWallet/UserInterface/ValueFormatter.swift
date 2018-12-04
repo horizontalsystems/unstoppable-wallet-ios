@@ -3,11 +3,13 @@ import Foundation
 class ValueFormatter {
     static let instance = ValueFormatter()
 
+    static private let fractionDigits = 8
+
     private let coinFormatter: NumberFormatter = {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
         formatter.minimumFractionDigits = 2
-        formatter.maximumFractionDigits = 8
+        formatter.maximumFractionDigits = ValueFormatter.fractionDigits
         formatter.roundingMode = .ceiling
         return formatter
     }()
@@ -16,6 +18,13 @@ class ValueFormatter {
         let formatter = NumberFormatter()
         formatter.numberStyle = .currency
         formatter.minimumFractionDigits = 2
+        formatter.roundingMode = .ceiling
+        return formatter
+    }()
+
+    private let amountFormatter: NumberFormatter = {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
         formatter.roundingMode = .ceiling
         return formatter
     }()
@@ -65,6 +74,11 @@ class ValueFormatter {
         }
 
         return result
+    }
+
+    func format(amount: Double) -> String? {
+        amountFormatter.maximumFractionDigits = ValueFormatter.fractionDigits
+        return amountFormatter.string(from: amount as NSNumber)
     }
 
 }
