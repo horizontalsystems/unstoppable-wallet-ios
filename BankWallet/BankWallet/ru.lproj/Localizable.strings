@@ -27,9 +27,9 @@
 
 // Restore
 
-"restore.title" = "Восстановить Кошелек";
+"restore.title" = "Restore";
 "restore.description" = "Введите Секретный Ключ  ";
-"restore.restore" = "Восстановить";
+"restore.next" = "Next";
 "restore.cancel" = "Отменить";
 "restore.validation_failed" = "Неверный Секретный Ключ";
 
