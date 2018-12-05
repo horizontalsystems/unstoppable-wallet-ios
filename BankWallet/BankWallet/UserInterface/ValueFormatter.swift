@@ -90,9 +90,9 @@ class ValueFormatter {
 
     func formattedInput(string: String?) -> String? {
         let stringNumber = "0\(string ?? "")"
-        let number = ValueFormatter.instance.parseFormatter.number(from: stringNumber) as? Double
+        let number = parseFormatter.number(from: stringNumber) as? Double
         if let number = number {
-            return ValueFormatter.instance.format(amount: number)
+            return format(amount: number)
         }
         return nil
     }
