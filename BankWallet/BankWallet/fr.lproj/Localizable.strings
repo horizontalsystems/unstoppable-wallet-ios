@@ -29,7 +29,7 @@
 
 "restore.title" = "Restore";
 "restore.description" = "Enter Secret Key  ";
-"restore.done" = "Done";
+"restore.done" = "Fait";
 "restore.cancel" = "Annuler";
 "restore.validation_failed" = "Incorrect Secret Key";
 
