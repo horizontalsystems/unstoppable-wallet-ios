@@ -22,13 +22,13 @@
 
 "guest.title" = "Bank Wallet";
 "guest.subtitle" = "Dezentralisierte App";
-"guest.create_wallet" = "Wallet Erstellen";
+"guest.create_wallet" = "Geldbörse Erstellen";
 "guest.restore_wallet" = "Geldbörse Wiederherstellen";
 
 // Restore
 
 "restore.title" = "Wiederherstellen";
-"restore.description" = "Offlineschlüssel eingeben  ";
+"restore.description" = " Offlineschlüssel eingeben";
 "restore.done" = "Fertig";
 "restore.cancel" = "Abbrechen";
 "restore.validation_failed" = "Falscher Offlineschlüssel";
@@ -42,7 +42,7 @@
 
 "backup.words.title" = "Offlineschlüssel";
 "backup.words.back" = "Zurück";
-"backup.words.proceed" = "Fortfahren";
+"backup.words.proceed" = "Weiter";
 
 "backup.confirmation.title" = "Prüfen …";
 "backup.confirmation.description" = "Gib bitte die folgenden Wörter deines Offlineschlüssels ein";
@@ -56,9 +56,9 @@
 "balance.title" = "Guthaben";
 "balance.tab_bar_item" = "Guthaben";
 "balance.send" = "Senden";
-"balance.deposit" = "Empfangen";
+"balance.deposit" = "Erhalten";
 "balance.rate_per_coin" = "%@ pro %@";
-"balance.syncing_percent" = "Synchronisieren %@";
+"balance.syncing_percent" = "Synchronisiert %@";
 
 // Deposit
 
@@ -81,7 +81,7 @@
 "transactions.title" = "Transaktionen";
 "transactions.tab_bar_item" = "Transaktionen";
 "transactions.filter_all" = "Alle";
-"transactions.empty_text" = "Sie haben nicht die anstehenden oder vergangenen Transaktionen noch.";
+"transactions.empty_text" = "Du hast nicht die anstehenden oder vergangenen Transaktionen noch.";
 
 // Transaction Info
 
@@ -100,7 +100,7 @@
 "settings.tab_bar_item" = "Einstellungen";
 "settings.security_center" = "Sicherheits-Center";
 "settings.base_currency" = "Basiswährung";
-"settings.manage_wallet" = "Wallets organisieren";
+"settings.manage_wallet" = "Geldbörse organisieren";
 "settings.language" = "Sprache";
 "settings.about" = "Info";
 "settings.light_mode" = "Licht Modus";
@@ -118,7 +118,7 @@
 // Settings -> Manage Wallet
 
 "settings_manage_wallet.title" = "Coins verwalten";
-"settings_manage_wallet.add_coins" = "Coins Hinzufuügen";
+"settings_manage_wallet.add_coins" = "Coins Hinzufügen";
 "settings_manage_wallet.add_button" = "Hinzufügen";
 "settings_manage_wallet.hide_button" = "Verbergen";
 "settings_manage_wallet.remove_button" = "Entfernen";
