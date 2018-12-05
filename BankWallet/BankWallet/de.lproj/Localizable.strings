@@ -71,7 +71,7 @@
 "send.address_placeholder" = "Adresse";
 "send.amount_error.balance" = "Guthaben %@";
 "send.send_button" = "Senden";
-"send.paste_button" = "Einsetzen";
+"send.paste_button" = "Einfügen";
 "send.amount_placeholder" = "Betrag";
 "send.fee" = "Gebühr";
 "send.total" = "Gesamt";
