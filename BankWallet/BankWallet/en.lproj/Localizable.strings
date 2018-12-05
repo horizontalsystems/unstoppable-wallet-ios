@@ -127,8 +127,6 @@ Go to Settings - > Bank and allow access to Camera.";
 "settings_manage_wallet.show_button" = "Show";
 "settings_manage_wallet.search_placeholder" = "Search";
 
-
-
 // Settings -> About
 
 "settings_about.title" = "About";
