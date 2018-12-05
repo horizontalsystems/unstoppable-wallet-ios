@@ -168,6 +168,7 @@ class SendPresenterTests: XCTestCase {
 
         stub(mockInteractor) { mock in
             when(mock.addressFromPasteboard.get).thenReturn(address)
+            when(mock.parse(paymentAddress: equal(to: address))).thenReturn(PaymentRequestAddress(address: address))
         }
 
         presenter.onPasteClicked()
@@ -193,6 +194,10 @@ class SendPresenterTests: XCTestCase {
 
     func testOnScanAddress() {
         let address = "address"
+
+        stub(mockInteractor) { mock in
+            when(mock.parse(paymentAddress: equal(to: address))).thenReturn(PaymentRequestAddress(address: address))
+        }
 
         presenter.onScan(address: address)
 

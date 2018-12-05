@@ -20,6 +20,7 @@ class SendPresenter {
         let viewItem = factory.viewItem(forState: state)
 
         view?.set(addressInfo: viewItem.addressInfo)
+        view?.set(amountInfo: viewItem.amountInfo)
         view?.set(primaryFeeInfo: viewItem.primaryFeeInfo)
         view?.set(secondaryFeeInfo: viewItem.secondaryFeeInfo)
         view?.set(sendButtonEnabled: viewItem.sendButtonEnabled)
@@ -84,14 +85,22 @@ extension SendPresenter: ISendViewDelegate {
         view?.set(secondaryFeeInfo: viewItem.secondaryFeeInfo)
     }
 
+    private func onAddressEnter(address: String) {
+        let paymentAddress = interactor.parse(paymentAddress: address)
+        if let amount = paymentAddress.amount {
+            userInput.amount = amount
+        }
+        onChange(address: paymentAddress.address)
+    }
+
     func onPasteClicked() {
         if let address = interactor.addressFromPasteboard {
-            onChange(address: address)
+            onAddressEnter(address: address)
         }
     }
 
     func onScan(address: String) {
-        onChange(address: address)
+        onAddressEnter(address: address)
     }
 
     func onDeleteClicked() {

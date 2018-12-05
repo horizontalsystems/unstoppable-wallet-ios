@@ -358,6 +358,9 @@
 		50AB06AE2158E2EE00A01E4A /* LocalAuthentication.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50AB06AD2158E2EE00A01E4A /* LocalAuthentication.framework */; };
 		50AB06B7215A269200A01E4A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 50AB06B5215A269200A01E4A /* InfoPlist.strings */; };
 		50EDB79F215B493000BFE8A5 /* GeneratedMocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50EDB79E215B493000BFE8A5 /* GeneratedMocks.swift */; };
+		58AAA1AB2FD9FBA7801F830D /* PaymentRequestAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA7A94D25C20240FD75C6 /* PaymentRequestAddress.swift */; };
+		58AAA4E1C32E0B48A4CFECCD /* PaymentRequestAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA7A94D25C20240FD75C6 /* PaymentRequestAddress.swift */; };
+		58AAA8D40B3399937CFEB0F2 /* PaymentRequestAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA7A94D25C20240FD75C6 /* PaymentRequestAddress.swift */; };
 		D3285F4620BD158E00644076 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3285F4520BD158E00644076 /* AppDelegate.swift */; };
 		D3373D9520BEC7B30082BC4A /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3373D9420BEC7B30082BC4A /* AVFoundation.framework */; };
 		D3373DB220C52F640082BC4A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = D3373DB120C52F640082BC4A /* LaunchScreen.xib */; };
@@ -1084,6 +1087,7 @@
 		50EED191218822FA00E200AD /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		50EED192218822FA00E200AD /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		57643D7C83C0E8939C422D13 /* Pods_Bank_Dev_T.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Bank_Dev_T.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		58AAA7A94D25C20240FD75C6 /* PaymentRequestAddress.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentRequestAddress.swift; sourceTree = "<group>"; };
 		754FC632F3964D9EF1172D85 /* Pods_Bank.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Bank.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7B87DD80F1B5F49E1A17D48A /* Pods-Bank.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bank.release.xcconfig"; path = "../Pods/Target Support Files/Pods-Bank/Pods-Bank.release.xcconfig"; sourceTree = "<group>"; };
 		A79CC9D3E472AD6CDB9E17EC /* Pods-Bank.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bank.debug.xcconfig"; path = "../Pods/Target Support Files/Pods-Bank/Pods-Bank.debug.xcconfig"; sourceTree = "<group>"; };
@@ -1381,6 +1385,7 @@
 				11B35BBAAAE1A3981B902E89 /* Rate.swift */,
 				11B35D81B1CB74C0337214DC /* Wallet.swift */,
 				1A5640AA47846498D56A36E6 /* LatestRate.swift */,
+				58AAA7A94D25C20240FD75C6 /* PaymentRequestAddress.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -2772,6 +2777,7 @@
 				11B35DB8BF076EECADC5274E /* SendConfirmationAddressItemView.swift in Sources */,
 				11B359418FEEF9A492482C73 /* SendConfirmationValueItemView.swift in Sources */,
 				11B3555A2881ED69B7F4D9C9 /* SendConfirmationValueItem.swift in Sources */,
+				58AAA1AB2FD9FBA7801F830D /* PaymentRequestAddress.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3052,6 +3058,7 @@
 				11B356D8E38D7060C1945A98 /* SendConfirmationAddressItemView.swift in Sources */,
 				11B35BEA91C75D1203F99BBC /* SendConfirmationValueItemView.swift in Sources */,
 				11B3501B8ACAD89124C0C6B6 /* SendConfirmationValueItem.swift in Sources */,
+				58AAA8D40B3399937CFEB0F2 /* PaymentRequestAddress.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3294,6 +3301,7 @@
 				11B35C9618C04EE49DD0D1B3 /* SendConfirmationAddressItemView.swift in Sources */,
 				11B35A7670A40CA38C30A12E /* SendConfirmationValueItemView.swift in Sources */,
 				11B35530C3166434FDD263FF /* SendConfirmationValueItem.swift in Sources */,
+				58AAA4E1C32E0B48A4CFECCD /* PaymentRequestAddress.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
