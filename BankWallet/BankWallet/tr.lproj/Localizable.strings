@@ -29,7 +29,7 @@
 
 "restore.title" = "Geri Yükle";
 "restore.description" = "Gizli Anahtarı girin  ";
-"restore.next" = "İleri";
+"restore.done" = "Done";
 "restore.cancel" = "İptal";
 "restore.validation_failed" = "Hatalı Gizli anahtar";
 
@@ -100,6 +100,7 @@
 "settings.tab_bar_item" = "Ayarlar";
 "settings.security_center" = "Güvenlik Merkezi";
 "settings.base_currency" = "Para birimi";
+"settings.manage_wallet" = "Manage Wallet";
 "settings.language" = "Dil";
 "settings.about" = "Hakkında";
 "settings.light_mode" = "Aydınlık mod";
@@ -113,6 +114,16 @@
 // Settings -> Language
 
 "settings_language.title" = "Dil";
+
+// Settings -> Manage Wallet
+
+"settings_manage_wallet.title" = "Manage Coins";
+"settings_manage_wallet.add_coins" = "Add coins";
+"settings_manage_wallet.add_button" = "Add";
+"settings_manage_wallet.hide_button" = "Hide";
+"settings_manage_wallet.remove_button" = "Remove";
+"settings_manage_wallet.show_button" = "Show";
+"settings_manage_wallet.search_placeholder" = "Search";
 
 // Settings -> About
 
