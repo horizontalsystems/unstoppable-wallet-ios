@@ -57,12 +57,12 @@
 "balance.tab_bar_item" = "مانده حساب";
 "balance.send" = "ارسال";
 "balance.deposit" = "دريافت";
-"balance.rate_per_coin" = "%@ per %@";
-"balance.syncing_percent" = "Syncing %@";
+"balance.rate_per_coin" = "%@ به ازا %@";
+"balance.syncing_percent" = "همگام سازی %@";
 
 // Deposit
 
-"deposit.receive_coin" = "Receive %@";
+"deposit.receive_coin" = "دریافت %@";
 "deposit.alert_copy" = "رونوشت";
 
 // Send
