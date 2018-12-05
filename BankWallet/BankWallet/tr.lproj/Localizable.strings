@@ -28,10 +28,10 @@
 // Restore
 
 "restore.title" = "Geri Yükle";
-"restore.description" = "Enter Secret Key  ";
+"restore.description" = "Gizli Anahtarı girin  ";
 "restore.next" = "İleri";
 "restore.cancel" = "İptal";
-"restore.validation_failed" = "Incorrect Secret Key";
+"restore.validation_failed" = "Hatalı Gizli anahtar";
 
 // Backup
 
@@ -74,7 +74,7 @@
 "send.paste_button" = "Yapıştır";
 "send.amount_placeholder" = "Tutar";
 "send.fee" = "Masraf";
-"send.total" = "Total";
+"send.total" = "Toplam";
 
 // Transactions
 
@@ -118,7 +118,7 @@
 
 "settings_about.title" = "Hakkında";
 "settings_about.terms_privacy_subtitle" = "Şartlar & Gizlilik Politikası:";
-"settings_about.terms_privacy_text" = "Your funds are securely stored on your device. Not on any external servers.\n\nThe app does not depend on any server or person to function.\n\nSome generic app data like exchange rates are stored on decentralized storage (IPFS).\n\nThe app works everywhere as long as there is an internet connection.\n\nIt is impossible for a third party to block this app from working.\n\nThe entire code powering this app is free and open to the public.\n\nThere may be bugs in the code. And while we tried to provide the most secure wallet we still can not guarantee the security of your funds. No one can.\n\nMake sure you backup a Secret Key for your wallet! Never show your secret key to anyone.\n\nDo not jailbreak your phone or install apps from unknown (untrusted) sources.\n\nDo not give your device to untrusted parties.\n\nYou are solely responsible for keeping your Secret Key and your device secure.";
+"settings_about.terms_privacy_text" = "Hesabınız güvenli bir şekilde cihazınızda tutlur. Herhangi bir harici sunucu da değil.\n\nUygulama, çalışmak için herhangi bir sunucuya veya şahsa bağımlı değildir.\n\nBazı genel bilgiler (kur oranı vb.) merkezsiz bilgi deposunda tutulur. (IPFS)\n\nUygulama internet olan heryerde çalışır.\n\n3. şahsın uygulamayı engellemesi imkansızdır.\n\nBu uygulamanın kaynak kodu açıktır.\n\nKodda bazı hatalar olabilir. Biz en güvenli cüzdanı oluşturmaya çalışsakta mülkünüzün tam güvenliğini garanti edemeyiz. Kimse tam garanti veremez.\n\nGizli Anahtarınızı yedekleyin ve kimseye göstermeyin!\n\nCihazınıza güvenilmeyen ve bilmediğiniz yerlerden uygulama yüklemeyin. Sistemin yönetici hesabını etkinleştirmeyin (jailbreaking olarakta bilinir).\n\nCihazınızı tanımadığınız ve güvenmediğiniz kimselere vermeyin.\n\nGizli Anahtarınızın ve cihazınızın güvenliğinden sadece SİZ sorumlusunuz.";
 
 // Settings -> Security
 
