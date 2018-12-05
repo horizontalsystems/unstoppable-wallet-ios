@@ -34,6 +34,7 @@ protocol ISendViewDelegate {
 protocol ISendInteractor {
     var coin: Coin { get }
     var addressFromPasteboard: String? { get }
+    func parse(paymentAddress: String) -> PaymentRequestAddress
     func convertedAmount(forInputType inputType: SendInputType, amount: Double) -> Double?
     func state(forUserInput input: SendUserInput) -> SendState
 

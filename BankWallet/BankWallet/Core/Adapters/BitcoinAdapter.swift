@@ -107,6 +107,11 @@ extension BitcoinAdapter: IAdapter {
         try bitcoinKit.validate(address: address)
     }
 
+    func parse(paymentAddress: String) -> PaymentRequestAddress {
+        let paymentData = bitcoinKit.parse(paymentAddress: paymentAddress)
+        return PaymentRequestAddress(address: paymentData.address, amount: paymentData.amount)
+    }
+
     var receiveAddress: String {
         return bitcoinKit.receiveAddress
     }
