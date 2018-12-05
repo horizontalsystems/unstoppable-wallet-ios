@@ -54,11 +54,11 @@ DEPENDENCIES:
   - Alamofire
   - BigInt
   - Cuckoo
-  - GrouviActionSheet (from `https://github.com/horizontalsystems/GrouviActoinSheet.git`, branch `master`)
-  - GrouviExtensions (from `https://github.com/horizontalsystems/GrouviExtensions.git`, branch `master`)
-  - GrouviHUD (from `https://github.com/horizontalsystems/GrouviHUD.git`, branch `master`)
-  - HSBitcoinKit (from `https://github.com/horizontalsystems/bitcoin-kit-ios.git`)
-  - HSEthereumKit (from `https://github.com/horizontalsystems/ethereum-kit-ios.git`)
+  - GrouviActionSheet
+  - GrouviExtensions
+  - GrouviHUD
+  - HSBitcoinKit
+  - HSEthereumKit
   - KeychainAccess
   - ObjectMapper
   - RealmSwift
@@ -74,7 +74,12 @@ SPEC REPOS:
     - BigInt
     - CryptoSwift
     - Cuckoo
+    - GrouviActionSheet
+    - GrouviExtensions
+    - GrouviHUD
+    - HSBitcoinKit
     - HSCryptoKit
+    - HSEthereumKit
     - HSHDWalletKit
     - KeychainAccess
     - ObjectMapper
@@ -87,38 +92,6 @@ SPEC REPOS:
     - SipHash
     - SnapKit
 
-EXTERNAL SOURCES:
-  GrouviActionSheet:
-    :branch: master
-    :git: https://github.com/horizontalsystems/GrouviActoinSheet.git
-  GrouviExtensions:
-    :branch: master
-    :git: https://github.com/horizontalsystems/GrouviExtensions.git
-  GrouviHUD:
-    :branch: master
-    :git: https://github.com/horizontalsystems/GrouviHUD.git
-  HSBitcoinKit:
-    :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
-  HSEthereumKit:
-    :git: https://github.com/horizontalsystems/ethereum-kit-ios.git
-
-CHECKOUT OPTIONS:
-  GrouviActionSheet:
-    :commit: a9e80a86bac8ac8089982405cbba32626ccd3ad8
-    :git: https://github.com/horizontalsystems/GrouviActoinSheet.git
-  GrouviExtensions:
-    :commit: 5ce17c1c66b6b32718e7fc80947e58410e4341e6
-    :git: https://github.com/horizontalsystems/GrouviExtensions.git
-  GrouviHUD:
-    :commit: 852780b5548f639b3e63cce2a353c3a4d4cf6348
-    :git: https://github.com/horizontalsystems/GrouviHUD.git
-  HSBitcoinKit:
-    :commit: 7e3931d85c86a90207113749df4dca57fb436465
-    :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
-  HSEthereumKit:
-    :commit: fc6d5a517b505b4025244d3d23f3f01c1131cf8d
-    :git: https://github.com/horizontalsystems/ethereum-kit-ios.git
-
 SPEC CHECKSUMS:
   Alamofire: 3ec537f71edc9804815215393ae2b1a8ea33a844
   BigInt: 76b5dfdfa3e2e478d4ffdf161aeede5502e2742f
@@ -127,9 +100,9 @@ SPEC CHECKSUMS:
   GrouviActionSheet: a966bf187addebab0d00aa9e66083e9112a60af7
   GrouviExtensions: e5a582e62cb8de559250630778b2d79b0b9ec5ea
   GrouviHUD: 230e32e2f5b20c58bb9c15e126aaf9403c11f170
-  HSBitcoinKit: 44947c742094e50375df6de6432350507f7cc574
+  HSBitcoinKit: dd30e281265eb965e334442d93ae6797bcc9ad73
   HSCryptoKit: b5b7080a6571df88e25e68ec7dcc1c02a56f02ee
-  HSEthereumKit: 1c3fa258c6fe3f53a3076fcbd63ef37ca8627db5
+  HSEthereumKit: b78e576d1d1a1b420c626c4a646fe9ae8fd250eb
   HSHDWalletKit: ff8ca1e074835447a7c1a13e56917fa72cc2fcd0
   KeychainAccess: b3816fddcf28aa29d94b10ec305cd52be14c472b
   ObjectMapper: 5311bd50ca732930959e7ca1a2de43ab823a5ced
@@ -142,6 +115,6 @@ SPEC CHECKSUMS:
   SipHash: fad90a4683e420c52ef28063063dbbce248ea6d4
   SnapKit: 0de968a9fec17499afa29683b05d0c775b6d1c29
 
-PODFILE CHECKSUM: 999a8b19131999deb8278aed0194674764cb485b
+PODFILE CHECKSUM: f55a77d8146771a6659dd35f2ba9e6a8f1d88ab1
 
 COCOAPODS: 1.5.3
