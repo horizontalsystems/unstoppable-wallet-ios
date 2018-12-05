@@ -129,7 +129,7 @@
 
 "settings_about.title" = "À propos de";
 "settings_about.terms_privacy_subtitle" = "Terms & Confidentialité:";
-"settings_about.terms_privacy_text" = "Your funds are securely stored on your device. Not on any external servers.\n\nThe app does not depend on any server or person to function.\n\nSome generic app data like exchange rates are stored on decentralized storage (IPFS).\n\nThe app works everywhere as long as there is an internet connection.\n\nIt is impossible for a third party to block this app from working.\n\nThe entire code powering this app is free and open to the public.\n\nThere may be bugs in the code. And while we tried to provide the most secure wallet we still can not guarantee the security of your funds. No one can.\n\nMake sure you backup a Secret Key for your wallet! Never show your secret key to anyone.\n\nDo not jailbreak your phone or install apps from unknown (untrusted) sources.\n\nDo not give your device to untrusted parties.\n\nYou are solely responsible for keeping your Secret Key and your device secure.";
+"settings_about.terms_privacy_text" = "Vos fonds stockés en sécurité sur votre appareil uniquement. Pas sur aucun serveur externe.\n\nL'application ne dépend d'aucun serveur ni d'aucune personne pour fonctionner.\n\nCertaines données d'application génériques, telles que les taux de change, sont stockées sur un stockage décentralisé (IPFS).\n\nL'application fonctionne partout, tant qu'il y a une connexion Internet.\n\nIl est impossible pour un tiers d'empêcher cette application de fonctionner.\n\nLe code alimentant cette application est gratuit et ouvert au public.\n\nIl est possible d'avoir des bugs dans le code. Et bien que nous ayons essayé de fournir le porte-monnaie le plus sécurisé, nous ne pouvons pas toujours garantir la sécurité de vos fonds. Personne ne peut.\n\nAssurez-vous de sauvegarder une clé secrète pour votre porte-monnaie! Ne montrez jamais votre clé secrète à personne.\n\nDo not jailbreak your phone or install apps from unknown (untrusted) sources.\n\nNe donnez pas votre appareil aux personnes non fiables.\n\nVous êtes seul responsable de la sécurité de votre clé secrète et de votre appareil.";
 
 // Settings -> Security
 
@@ -140,7 +140,7 @@
 "settings_security.change_pin" = "Modifier le PIN";
 "settings_security.touch_id" = "Touch ID";
 "settings_security.face_id" = "Face ID";
-"security_settings.unlink_alert_button" = "Unlink";
+"security_settings.unlink_alert_button" = "Délier";
 "settings_security.import_wallet_confirmation_1" = "Cette action supprimera le porte-monnaie actuellement installé sur cet appareil.";
 "settings_security.import_wallet_confirmation_2" = "Assurez-vous de disposer de la clé secrète, sinon vous ne pourrez plus accéder aux fonds.";
 
