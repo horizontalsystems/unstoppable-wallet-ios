@@ -100,7 +100,7 @@
 "settings.tab_bar_item" = "Einstellungen";
 "settings.security_center" = "Sicherheits-Center";
 "settings.base_currency" = "Basiswährung";
-"settings.manage_wallet" = "Manage Wallet";
+"settings.manage_wallet" = "Wallets organisieren";
 "settings.language" = "Sprache";
 "settings.about" = "Info";
 "settings.light_mode" = "Licht Modus";
@@ -117,9 +117,9 @@
 
 // Settings -> Manage Wallet
 
-"settings_manage_wallet.title" = "Manage Coins";
+"settings_manage_wallet.title" = "Coins verwalten";
 "settings_manage_wallet.add_coins" = "Coins Hinzufuügen";
-"settings_manage_wallet.add_button" = "Add";
+"settings_manage_wallet.add_button" = "Hinzufügen";
 "settings_manage_wallet.hide_button" = "Verbergen";
 "settings_manage_wallet.remove_button" = "Entfernen";
 "settings_manage_wallet.show_button" = "Anzeigen";
