@@ -27,11 +27,11 @@
 
 // Restore
 
-"restore.title" = "Restore";
-"restore.description" = "Enter Secret Key  ";
+"restore.title" = "Restaurer";
+"restore.description" = "Entrez la clé secrete  ";
 "restore.done" = "Fait";
 "restore.cancel" = "Annuler";
-"restore.validation_failed" = "Incorrect Secret Key";
+"restore.validation_failed" = "Clé secrète incorrecte";
 
 // Backup
 
@@ -81,7 +81,7 @@
 "transactions.title" = "Transactions";
 "transactions.tab_bar_item" = "Transactions";
 "transactions.filter_all" = "Tous";
-"transactions.empty_text" = "You don't have any pending or past transactions yet";
+"transactions.empty_text" = "Vous n'avez encore aucune transaction en cours ou passée";
 
 // Transaction Info
 
@@ -100,7 +100,7 @@
 "settings.tab_bar_item" = "Paramètres";
 "settings.security_center" = "Centre de Sécurité";
 "settings.base_currency" = "Devise de Base";
-"settings.manage_wallet" = "Manage Wallet";
+"settings.manage_wallet" = "Gérer le port-monnaie";
 "settings.language" = "Langue";
 "settings.about" = "À propos de";
 "settings.light_mode" = "Mode lumineux";
@@ -117,13 +117,13 @@
 
 // Settings -> Manage Wallet
 
-"settings_manage_wallet.title" = "Manage Coins";
-"settings_manage_wallet.add_coins" = "Add coins";
-"settings_manage_wallet.add_button" = "Add";
-"settings_manage_wallet.hide_button" = "Hide";
-"settings_manage_wallet.remove_button" = "Remove";
-"settings_manage_wallet.show_button" = "Show";
-"settings_manage_wallet.search_placeholder" = "Search";
+"settings_manage_wallet.title" = "Gérer les coins";
+"settings_manage_wallet.add_coins" = "Ajouter des coins";
+"settings_manage_wallet.add_button" = "Ajouter";
+"settings_manage_wallet.hide_button" = "Cacher";
+"settings_manage_wallet.remove_button" = "Supprimer";
+"settings_manage_wallet.show_button" = "Afficher";
+"settings_manage_wallet.search_placeholder" = "Chercher";
 
 // Settings -> About
 
