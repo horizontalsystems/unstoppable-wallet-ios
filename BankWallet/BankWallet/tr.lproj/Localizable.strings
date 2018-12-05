@@ -29,7 +29,7 @@
 
 "restore.title" = "Geri Yükle";
 "restore.description" = "Gizli Anahtarı girin  ";
-"restore.done" = "Done";
+"restore.done" = "Bitti";
 "restore.cancel" = "İptal";
 "restore.validation_failed" = "Hatalı Gizli anahtar";
 
