@@ -24,8 +24,16 @@ class ValueFormatter {
 
     private let amountFormatter: NumberFormatter = {
         let formatter = NumberFormatter()
+        formatter.maximumFractionDigits = ValueFormatter.fractionDigits
         formatter.numberStyle = .decimal
         formatter.roundingMode = .ceiling
+        formatter.groupingSeparator = ""
+        return formatter
+    }()
+
+    let parseFormatter: NumberFormatter = {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
         return formatter
     }()
 
@@ -77,8 +85,16 @@ class ValueFormatter {
     }
 
     func format(amount: Double) -> String? {
-        amountFormatter.maximumFractionDigits = ValueFormatter.fractionDigits
         return amountFormatter.string(from: amount as NSNumber)
+    }
+
+    func formattedInput(string: String?) -> String? {
+        let stringNumber = "0\(string ?? "")"
+        let number = parseFormatter.number(from: stringNumber) as? Double
+        if let number = number {
+            return format(amount: number)
+        }
+        return nil
     }
 
 }
