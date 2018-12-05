@@ -29,7 +29,7 @@
 
 "restore.title" = "Wiederherstellen";
 "restore.description" = "Offlineschlüssel eingeben  ";
-"restore.next" = "Weiter";
+"restore.done" = "Done";
 "restore.cancel" = "Abbrechen";
 "restore.validation_failed" = "Falscher Offlineschlüssel";
 
@@ -100,6 +100,7 @@
 "settings.tab_bar_item" = "Einstellungen";
 "settings.security_center" = "Sicherheits-Center";
 "settings.base_currency" = "Basiswährung";
+"settings.manage_wallet" = "Manage Wallet";
 "settings.language" = "Sprache";
 "settings.about" = "Info";
 "settings.light_mode" = "Licht Modus";
@@ -113,6 +114,16 @@
 // Settings -> Language
 
 "settings_language.title" = "Sprache";
+
+// Settings -> Manage Wallet
+
+"settings_manage_wallet.title" = "Manage Coins";
+"settings_manage_wallet.add_coins" = "Add coins";
+"settings_manage_wallet.add_button" = "Add";
+"settings_manage_wallet.hide_button" = "Hide";
+"settings_manage_wallet.remove_button" = "Remove";
+"settings_manage_wallet.show_button" = "Show";
+"settings_manage_wallet.search_placeholder" = "Search";
 
 // Settings -> About
 
