@@ -32,7 +32,7 @@ Due to the fact that the BANK Wallet keeps user's funds on the device itself the
 
 In case of a device loss or replacement the user may easily restore the wallet using a secret 12-word recovery phrase. Infact, with the help of these secret phrase the user may restore the wallet and access funds on any deterministic wallet (aka HD wallet) not just the BANK wallet app.
 
-**NOTE:** DO NOT recommend install BANK wallet on jailbroken devices due to substantial security risks. A jailbroken iOS or Android operating system can not guarantee the securely of your private keys. This means that some malicious app running on jailbroken device can potentially access the private keys for your funds and steal them.
+**NOTE:** DO NOT install the BANK wallet on a jailbroken device due to substantial security risks. A jailbroken iOS or Android operating system can not guarantee the securely of your private keys. This means that some malicious app running on jailbroken device can potentially access the private keys for your funds and steal them.
 
 Source code: https://github.com/horizontalsystems/bank-wallet-ios-app
 
