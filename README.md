@@ -22,9 +22,7 @@ Because the wallet doesn't rely on any central servers it will continue working 
 
 Moreover, other app functionality follows same approach as well. There are no centrally managed servers that can fail and as a result stop app from functioning. The BANK wallet is truly decentralized and independent!
 
-It should be noted that a large majority of the crypto wallet apps out there don't really give users full control of their funds. Usually the funds are stored on a remote server operated and controlled by the wallet provider. This essentially means that a person have to REALLY trust a third party with the funds because users have limited control over the funds. 
-
-Due to the unregulated nature of the cryptocurrencies there are no mechanisms in place to guarantee that a wallet provider doesn't cheat.
+It should be noted that a large majority of the crypto wallet apps out there don't really give users full control of their funds. Usually the funds are stored on a remote server operated and controlled by the wallet provider. This essentially means that a person have to REALLY trust a third party with the funds because users have limited control over the funds. Due to the unregulated nature of the cryptocurrencies there are no mechanisms in place to guarantee that a wallet provider doesn't cheat.
 
 ## Secure & Open Source
 
