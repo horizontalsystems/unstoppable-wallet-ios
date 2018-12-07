@@ -80,7 +80,7 @@ extension BitcoinAdapter: IAdapter {
     }
 
     func refresh() {
-        // stub!
+        try? bitcoinKit.start()
     }
 
     func clear() {
@@ -105,6 +105,11 @@ extension BitcoinAdapter: IAdapter {
 
     func validate(address: String) throws {
         try bitcoinKit.validate(address: address)
+    }
+
+    func parse(paymentAddress: String) -> PaymentRequestAddress {
+        let paymentData = bitcoinKit.parse(paymentAddress: paymentAddress)
+        return PaymentRequestAddress(address: paymentData.address, amount: paymentData.amount)
     }
 
     var receiveAddress: String {
@@ -136,19 +141,21 @@ extension BitcoinAdapter: BitcoinKitDelegate {
         lastBlockHeightSubject.onNext(lastBlockInfo.height)
     }
 
-    func progressUpdated(bitcoinKit: BitcoinKit, progress: Double) {
+    public func kitStateUpdated(state: BitcoinKit.KitState) {
         switch state {
         case .synced:
-            if progress < 1 {
-                state = .syncing(progressSubject: progressSubject)
-            }
-        case .syncing:
-            if progress == 1 {
-                state = .synced
+            self.state = .synced
+        case .notSynced:
+            self.state = .notSynced
+        case .syncing(let progress):
+            progressSubject.onNext(progress)
+
+            if case .syncing = self.state {
+                // do nothing
+            } else {
+                self.state = .syncing(progressSubject: progressSubject)
             }
         }
-
-        progressSubject.onNext(progress)
     }
 
 }

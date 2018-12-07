@@ -5,11 +5,20 @@ import SnapKit
 import RxSwift
 import RxCocoa
 
+class AmountTextField: UITextField {
+
+    override func paste(_ sender: Any?) {
+        text = ValueFormatter.instance.formattedInput(string: UIPasteboard.general.string)
+        sendActions(for: .editingChanged)
+    }
+
+}
+
 class SendAmountItemView: BaseActionItemView {
     private let disposeBag = DisposeBag()
 
     private let amountTypeLabel = UILabel()
-    private let inputField = UITextField()
+    private let inputField = AmountTextField()
     private let lineView = UIView()
     private let hintLabel = UILabel()
     private let errorLabel = UILabel()
@@ -93,7 +102,7 @@ class SendAmountItemView: BaseActionItemView {
         inputField.rx.controlEvent(.editingChanged)
                 .subscribe(onNext: { [weak self] _ in
                     var amount: Double = 0
-                    if let text = self?.inputField.text, let parsedAmount = Double(text) {
+                    if let updatedString = ValueFormatter.instance.formattedInput(string: self?.inputField.text), let parsedAmount = ValueFormatter.instance.parseFormatter.number(from: updatedString) as? Double {
                         amount = parsedAmount
                     }
                     self?.item?.onAmountChanged?(amount)
@@ -111,7 +120,7 @@ class SendAmountItemView: BaseActionItemView {
             self?.amountTypeLabel.text = $0
         }
         item?.bindAmount = { [weak self] in
-            self?.inputField.text = $0.flatMap { $0 == 0 ? nil : String($0) }
+            self?.inputField.text = $0.flatMap { $0 == 0 ? nil : ValueFormatter.instance.format(amount: $0)}
         }
         item?.bindHint = { [weak self] in
             self?.hintLabel.text = $0
@@ -130,16 +139,13 @@ class SendAmountItemView: BaseActionItemView {
 extension SendAmountItemView: UITextFieldDelegate {
 
     public func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        let pattern = "^[0-9]*[,.]?[0-9]*$"
-        guard string.range(of: pattern, options: .regularExpression) != nil else {
-            return false
+        let updatedString = (textField.text as NSString?)?.replacingCharacters(in: range, with: string)
+
+        if let updatedString = ValueFormatter.instance.formattedInput(string: updatedString) {
+            return updatedString.isEmpty || ValueFormatter.instance.parseFormatter.number(from: updatedString) as? Double != nil
         }
 
-        let characterSet = CharacterSet(charactersIn: ",.")
-        let textContains = textField.text?.rangeOfCharacter(from: characterSet) != nil
-        let replacementStringContains = string.rangeOfCharacter(from: characterSet) != nil
-
-        return !textContains || !replacementStringContains
+        return false
     }
 
 }

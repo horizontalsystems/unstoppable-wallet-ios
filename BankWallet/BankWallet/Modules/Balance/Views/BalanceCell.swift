@@ -17,6 +17,8 @@ class BalanceCell: UITableViewCell {
     var syncSpinner = HUDProgressView(strokeLineWidth: BalanceTheme.spinnerLineWidth, radius: BalanceTheme.spinnerSideSize / 2 - BalanceTheme.spinnerLineWidth / 2, strokeColor: UIColor.cryptoGray)
     var syncLabel = UILabel()
 
+    var failedImageView = UIImageView()
+
     var receiveButton = RespondButton()
     var payButton = RespondButton()
 
@@ -102,6 +104,14 @@ class BalanceCell: UITableViewCell {
             maker.size.equalTo(BalanceTheme.spinnerSideSize)
         }
 
+        failedImageView.image = UIImage(named: "Attention Icon")
+        roundedBackground.addSubview(failedImageView)
+        failedImageView.snp.makeConstraints { maker in
+            maker.trailing.equalToSuperview().offset(-BalanceTheme.cellBigMargin)
+            maker.centerY.equalTo(self.nameLabel.snp.centerY)
+            maker.size.equalTo(BalanceTheme.spinnerSideSize)
+        }
+
         roundedBackground.addSubview(receiveButton)
         receiveButton.snp.makeConstraints { maker in
             maker.leading.equalToSuperview().offset(BalanceTheme.cellSmallMargin)
@@ -148,24 +158,20 @@ class BalanceCell: UITableViewCell {
     }
 
     func bindView(item: BalanceViewItem, selected: Bool, animated: Bool = false) {
-        var synced = false
-        if case .synced = item.state {
-            synced = true
-        }
-
         coinIconImageView.image = UIImage(named: "\(item.coinValue.coin) Icon")
 
         receiveButton.set(hidden: !selected, animated: animated, duration: BalanceTheme.buttonsAnimationDuration)
         payButton.set(hidden: !selected, animated: animated, duration: BalanceTheme.buttonsAnimationDuration)
-        if case .syncing(_) = item.state {
-            payButton.state = .disabled
-        } else {
+
+        if case .synced = item.state {
             payButton.state = .active
+        } else {
+            payButton.state = .disabled
         }
 
         nameLabel.text = "coin.\(item.coinValue.coin)".localized
 
-        if let value = item.exchangeValue, let formattedValue = ValueFormatter.instance.format(currencyValue: value, shortFraction: true) {
+        if let value = item.exchangeValue, let formattedValue = ValueFormatter.instance.format(currencyValue: value, shortFractionLimit: 100) {
             rateLabel.text = "balance.rate_per_coin".localized(formattedValue, item.coinValue.coin)
         } else {
             rateLabel.text = " " // space required for constraints
@@ -173,7 +179,7 @@ class BalanceCell: UITableViewCell {
 
         rateLabel.textColor = item.rateExpired ? BalanceTheme.rateExpiredColor : BalanceTheme.rateColor
 
-        if synced, let value = item.currencyValue, value.value != 0 {
+        if case .synced = item.state, let value = item.currencyValue, value.value != 0 {
             currencyValueLabel.text = ValueFormatter.instance.format(currencyValue: value)
             let nonZeroBalanceTextColor = item.rateExpired ? BalanceTheme.nonZeroBalanceExpiredTextColor : BalanceTheme.nonZeroBalanceTextColor
             currencyValueLabel.textColor = value.value > 0 ? nonZeroBalanceTextColor : BalanceTheme.zeroBalanceTextColor
@@ -181,16 +187,26 @@ class BalanceCell: UITableViewCell {
             currencyValueLabel.text = nil
         }
 
-        coinValueLabel.isHidden = !synced
+        if case .synced = item.state {
+            coinValueLabel.isHidden = false
+        } else {
+            coinValueLabel.isHidden = true
+        }
         coinValueLabel.text = ValueFormatter.instance.format(coinValue: item.coinValue)
 
-        syncLabel.isHidden = synced
-
-        if synced {
-            syncSpinner.isHidden = true
-        } else {
+        if case .syncing = item.state {
+            syncLabel.isHidden = false
             syncSpinner.isHidden = false
             syncSpinner.startAnimating()
+        } else {
+            syncLabel.isHidden = true
+            syncSpinner.isHidden = true
+        }
+
+        if case .notSynced = item.state {
+            failedImageView.isHidden = false
+        } else {
+            failedImageView.isHidden = true
         }
     }
 

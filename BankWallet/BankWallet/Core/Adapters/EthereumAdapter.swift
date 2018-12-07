@@ -100,6 +100,10 @@ extension EthereumAdapter: IAdapter {
         try ethereumKit.validate(address: address)
     }
 
+    func parse(paymentAddress: String) -> PaymentRequestAddress {
+        return PaymentRequestAddress(address: paymentAddress)
+    }
+
     var receiveAddress: String {
         return ethereumKit.receiveAddress
     }

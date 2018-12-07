@@ -71,6 +71,7 @@ protocol ITransactionManager: class {
 enum AdapterState {
     case synced
     case syncing(progressSubject: BehaviorSubject<Double>)
+    case notSynced
 }
 
 protocol IAdapter: class {
@@ -96,6 +97,7 @@ protocol IAdapter: class {
 
     func fee(for value: Double, address: String?, senderPay: Bool) throws -> Double
     func validate(address: String) throws
+    func parse(paymentAddress: String) -> PaymentRequestAddress
 
     var receiveAddress: String { get }
 }

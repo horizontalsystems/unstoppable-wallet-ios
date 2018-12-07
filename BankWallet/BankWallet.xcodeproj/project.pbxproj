@@ -355,10 +355,12 @@
 		4BBB009736B540C47E50CE37 /* Pods_Bank.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 754FC632F3964D9EF1172D85 /* Pods_Bank.framework */; };
 		503320AB214679EB00F64AAA /* PinTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 503320AA214679EB00F64AAA /* PinTheme.swift */; };
 		509E3D2420E398610095452C /* RestoreTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 509E3D2320E398610095452C /* RestoreTheme.swift */; };
-		50A83FC0213FEB0C008A5F4B /* LightTheme.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 50A83FBF213FEB0C008A5F4B /* LightTheme.xcassets */; };
 		50AB06AE2158E2EE00A01E4A /* LocalAuthentication.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50AB06AD2158E2EE00A01E4A /* LocalAuthentication.framework */; };
 		50AB06B7215A269200A01E4A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 50AB06B5215A269200A01E4A /* InfoPlist.strings */; };
 		50EDB79F215B493000BFE8A5 /* GeneratedMocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50EDB79E215B493000BFE8A5 /* GeneratedMocks.swift */; };
+		58AAA1AB2FD9FBA7801F830D /* PaymentRequestAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA7A94D25C20240FD75C6 /* PaymentRequestAddress.swift */; };
+		58AAA4E1C32E0B48A4CFECCD /* PaymentRequestAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA7A94D25C20240FD75C6 /* PaymentRequestAddress.swift */; };
+		58AAA8D40B3399937CFEB0F2 /* PaymentRequestAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA7A94D25C20240FD75C6 /* PaymentRequestAddress.swift */; };
 		D3285F4620BD158E00644076 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3285F4520BD158E00644076 /* AppDelegate.swift */; };
 		D3373D9520BEC7B30082BC4A /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3373D9420BEC7B30082BC4A /* AVFoundation.framework */; };
 		D3373DB220C52F640082BC4A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = D3373DB120C52F640082BC4A /* LaunchScreen.xib */; };
@@ -573,7 +575,6 @@
 		D38405C1218317DF007D50AD /* MainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D3B62A8920CA40DC005A9F80 /* MainViewController.xib */; };
 		D38405C2218317DF007D50AD /* BackupIntroController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D348A77120C7C58900803B9E /* BackupIntroController.xib */; };
 		D38405C3218317DF007D50AD /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = D3B62A9C20CA73A0005A9F80 /* Localizable.strings */; };
-		D38405C4218317DF007D50AD /* LightTheme.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 50A83FBF213FEB0C008A5F4B /* LightTheme.xcassets */; };
 		D38405C6218317DF007D50AD /* GuestViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 11B35119CB772BB43AE8B1D5 /* GuestViewController.xib */; };
 		D38405C7218317DF007D50AD /* BackupWordsController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D3373DB820C564450082BC4A /* BackupWordsController.xib */; };
 		D38405C8218317DF007D50AD /* BalanceHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1A5646B68188CD13969CE766 /* BalanceHeaderView.xib */; };
@@ -777,7 +778,6 @@
 		D38406B121831B3D007D50AD /* MainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D3B62A8920CA40DC005A9F80 /* MainViewController.xib */; };
 		D38406B221831B3D007D50AD /* BackupIntroController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D348A77120C7C58900803B9E /* BackupIntroController.xib */; };
 		D38406B321831B3D007D50AD /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = D3B62A9C20CA73A0005A9F80 /* Localizable.strings */; };
-		D38406B421831B3D007D50AD /* LightTheme.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 50A83FBF213FEB0C008A5F4B /* LightTheme.xcassets */; };
 		D38406B521831B3D007D50AD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D3285F4C20BD158F00644076 /* Assets.xcassets */; };
 		D38406B621831B3D007D50AD /* GuestViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 11B35119CB772BB43AE8B1D5 /* GuestViewController.xib */; };
 		D38406B721831B3D007D50AD /* BackupWordsController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D3373DB820C564450082BC4A /* BackupWordsController.xib */; };
@@ -1076,7 +1076,6 @@
 		503320AA214679EB00F64AAA /* PinTheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinTheme.swift; sourceTree = "<group>"; };
 		509E3D2320E398610095452C /* RestoreTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestoreTheme.swift; sourceTree = "<group>"; };
 		50A83FBE213FCB4B008A5F4B /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
-		50A83FBF213FEB0C008A5F4B /* LightTheme.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = LightTheme.xcassets; sourceTree = "<group>"; };
 		50AB06AD2158E2EE00A01E4A /* LocalAuthentication.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LocalAuthentication.framework; path = System/Library/Frameworks/LocalAuthentication.framework; sourceTree = SDKROOT; };
 		50AB06B6215A269200A01E4A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		50AB06B8215A269700A01E4A /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -1088,6 +1087,7 @@
 		50EED191218822FA00E200AD /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		50EED192218822FA00E200AD /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		57643D7C83C0E8939C422D13 /* Pods_Bank_Dev_T.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Bank_Dev_T.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		58AAA7A94D25C20240FD75C6 /* PaymentRequestAddress.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentRequestAddress.swift; sourceTree = "<group>"; };
 		754FC632F3964D9EF1172D85 /* Pods_Bank.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Bank.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7B87DD80F1B5F49E1A17D48A /* Pods-Bank.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bank.release.xcconfig"; path = "../Pods/Target Support Files/Pods-Bank/Pods-Bank.release.xcconfig"; sourceTree = "<group>"; };
 		A79CC9D3E472AD6CDB9E17EC /* Pods-Bank.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bank.debug.xcconfig"; path = "../Pods/Target Support Files/Pods-Bank/Pods-Bank.debug.xcconfig"; sourceTree = "<group>"; };
@@ -1385,6 +1385,7 @@
 				11B35BBAAAE1A3981B902E89 /* Rate.swift */,
 				11B35D81B1CB74C0337214DC /* Wallet.swift */,
 				1A5640AA47846498D56A36E6 /* LatestRate.swift */,
+				58AAA7A94D25C20240FD75C6 /* PaymentRequestAddress.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1615,7 +1616,6 @@
 			isa = PBXGroup;
 			children = (
 				D3B62A9D20CA88BF005A9F80 /* DarkTheme.xcassets */,
-				50A83FBF213FEB0C008A5F4B /* LightTheme.xcassets */,
 				1A5649DB879A57761C09842E /* AppTheme.swift */,
 				509E3D2320E398610095452C /* RestoreTheme.swift */,
 				1A564939814A9D9F47D41EEB /* InputFieldTheme.swift */,
@@ -2150,7 +2150,6 @@
 				D348A77320C7C58900803B9E /* BackupIntroController.xib in Resources */,
 				D3A6D6BE219430BA00D11AFE /* AboutCell.xib in Resources */,
 				D3B62A9A20CA73A0005A9F80 /* Localizable.strings in Resources */,
-				50A83FC0213FEB0C008A5F4B /* LightTheme.xcassets in Resources */,
 				11B35319892846CB42A23599 /* GuestViewController.xib in Resources */,
 				D3373DBA20C564450082BC4A /* BackupWordsController.xib in Resources */,
 				1A564BE5BF0E283B1758F2F0 /* BalanceHeaderView.xib in Resources */,
@@ -2179,7 +2178,6 @@
 				D38405C2218317DF007D50AD /* BackupIntroController.xib in Resources */,
 				D38405C3218317DF007D50AD /* Localizable.strings in Resources */,
 				D3A6D6BF219430BA00D11AFE /* AboutCell.xib in Resources */,
-				D38405C4218317DF007D50AD /* LightTheme.xcassets in Resources */,
 				D38405C6218317DF007D50AD /* GuestViewController.xib in Resources */,
 				D38405C7218317DF007D50AD /* BackupWordsController.xib in Resources */,
 				D38405C8218317DF007D50AD /* BalanceHeaderView.xib in Resources */,
@@ -2202,7 +2200,6 @@
 				D38406B221831B3D007D50AD /* BackupIntroController.xib in Resources */,
 				D38406B321831B3D007D50AD /* Localizable.strings in Resources */,
 				D3A6D6C0219430BA00D11AFE /* AboutCell.xib in Resources */,
-				D38406B421831B3D007D50AD /* LightTheme.xcassets in Resources */,
 				D38406B521831B3D007D50AD /* Assets.xcassets in Resources */,
 				D38406B621831B3D007D50AD /* GuestViewController.xib in Resources */,
 				D38406B721831B3D007D50AD /* BackupWordsController.xib in Resources */,
@@ -2780,6 +2777,7 @@
 				11B35DB8BF076EECADC5274E /* SendConfirmationAddressItemView.swift in Sources */,
 				11B359418FEEF9A492482C73 /* SendConfirmationValueItemView.swift in Sources */,
 				11B3555A2881ED69B7F4D9C9 /* SendConfirmationValueItem.swift in Sources */,
+				58AAA1AB2FD9FBA7801F830D /* PaymentRequestAddress.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3060,6 +3058,7 @@
 				11B356D8E38D7060C1945A98 /* SendConfirmationAddressItemView.swift in Sources */,
 				11B35BEA91C75D1203F99BBC /* SendConfirmationValueItemView.swift in Sources */,
 				11B3501B8ACAD89124C0C6B6 /* SendConfirmationValueItem.swift in Sources */,
+				58AAA8D40B3399937CFEB0F2 /* PaymentRequestAddress.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3302,6 +3301,7 @@
 				11B35C9618C04EE49DD0D1B3 /* SendConfirmationAddressItemView.swift in Sources */,
 				11B35A7670A40CA38C30A12E /* SendConfirmationValueItemView.swift in Sources */,
 				11B35530C3166434FDD263FF /* SendConfirmationValueItem.swift in Sources */,
+				58AAA4E1C32E0B48A4CFECCD /* PaymentRequestAddress.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -33,6 +33,10 @@ extension SendInteractor: ISendInteractor {
         return pasteboardManager.value
     }
 
+    func parse(paymentAddress: String) -> PaymentRequestAddress {
+        return wallet.adapter.parse(paymentAddress: paymentAddress)
+    }
+
     func convertedAmount(forInputType inputType: SendInputType, amount: Double) -> Double? {
         guard let rate = rate else {
             return nil

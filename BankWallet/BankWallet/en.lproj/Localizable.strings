@@ -29,9 +29,9 @@ Go to Settings - > Bank and allow access to Camera.";
 
 // Restore
 
-"restore.title" = "Restore Wallet";
+"restore.title" = "Restore";
 "restore.description" = "Enter Secret Key  ";
-"restore.restore" = "Restore";
+"restore.done" = "Done";
 "restore.cancel" = "Cancel";
 "restore.validation_failed" = "Incorrect Secret Key";
 
@@ -102,6 +102,7 @@ Go to Settings - > Bank and allow access to Camera.";
 "settings.tab_bar_item" = "Settings";
 "settings.security_center" = "Security Center";
 "settings.base_currency" = "Base Currency";
+"settings.manage_wallet" = "Manage Wallet";
 "settings.language" = "Language";
 "settings.about" = "About";
 "settings.light_mode" = "Light Mode";
@@ -115,6 +116,16 @@ Go to Settings - > Bank and allow access to Camera.";
 // Settings -> Language
 
 "settings_language.title" = "Language";
+
+// Settings -> Manage Wallet
+
+"settings_manage_wallet.title" = "Manage Coins";
+"settings_manage_wallet.add_coins" = "Add coins";
+"settings_manage_wallet.add_button" = "Add";
+"settings_manage_wallet.hide_button" = "Hide";
+"settings_manage_wallet.remove_button" = "Remove";
+"settings_manage_wallet.show_button" = "Show";
+"settings_manage_wallet.search_placeholder" = "Search";
 
 // Settings -> About
 
