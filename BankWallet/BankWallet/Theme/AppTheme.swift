@@ -16,6 +16,6 @@ class AppTheme {
     static var navigationBarTintColor = UIColor.cryptoYellow
     static var statusBarStyle: UIStatusBarStyle { return App.shared.localStorage.lightMode ? .default : .lightContent}
 
-    static let actionSheetConfig = ActionSheetThemeConfig(actionStyle: .sheet(showDismiss: false), cornerRadius: 16)
+    static let actionSheetConfig = ActionSheetThemeConfig(actionStyle: .sheet(showDismiss: false), topMargin: 8, cornerRadius: 16)
     static let actionAlertConfig = ActionSheetThemeConfig(actionStyle: .alert, cornerRadius: 16)
 }

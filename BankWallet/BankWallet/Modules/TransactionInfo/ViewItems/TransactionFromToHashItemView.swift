@@ -27,6 +27,7 @@ class TransactionFromToHashItemView: BaseActionItemView {
         }
 
         let wrapperView = RespondButton()
+        wrapperView.titleLabel.removeFromSuperview()
         wrapperView.onTap = item?.onHashTap
         wrapperView.backgrounds = [RespondButton.State.active: TransactionInfoTheme.hashBackground, RespondButton.State.selected: TransactionInfoTheme.hashBackgroundSelected]
         wrapperView.borderColor = TransactionInfoTheme.hashWrapperBorderColor
