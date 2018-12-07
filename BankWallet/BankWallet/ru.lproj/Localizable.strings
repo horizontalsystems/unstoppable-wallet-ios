@@ -6,7 +6,7 @@
 "coin.ETHt" = "Ethereum Т";
 
 "alert.ok" = "Хорошо";
-"alert.cancel" = "Отмена";
+"alert.cancel" = "Отменить";
 "alert.copied" = "Скопировано";
 "alert.confirm" = "Подтвердить";
 
@@ -27,20 +27,20 @@
 
 // Restore
 
-"restore.title" = "Восстановить Кошелек";
-"restore.description" = "Введите секретный ключ  ";
-"restore.next" = "Восстановить";
+"restore.title" = "Восстановить";
+"restore.description" = "Введите Секретный Ключ  ";
+"restore.done" = "Готово";
 "restore.cancel" = "Отменить";
-"restore.validation_failed" = "Неверный секретный ключ";
+"restore.validation_failed" = "Неверный Секретный Ключ";
 
 // Backup
 
-"backup.intro.title" = "Записать ключ";
+"backup.intro.title" = "Записать Ключ";
 "backup.intro.subtitle" = "Ваш секретный ключ является единственным способом для восстановления вашего кошелька.\n\nМы покажем вам список слов, чтобы вы записали их на бумаге и хранили в безопасном месте.";
 "backup.intro.later" = "Позже";
 "backup.intro.backup_now" = "Записать ключ";
 
-"backup.words.title" = "Секретный ключ";
+"backup.words.title" = "Секретный Ключ";
 "backup.words.back" = "Назад";
 "backup.words.proceed" = "Продолжить";
 
@@ -100,6 +100,7 @@
 "settings.tab_bar_item" = "Настройки";
 "settings.security_center" = "Центр Безопасности";
 "settings.base_currency" = "Базовая Валюта";
+"settings.manage_wallet" = "Управление кошельком";
 "settings.language" = "Язык";
 "settings.about" = "О программе";
 "settings.light_mode" = "Светлый Режим";
@@ -113,6 +114,16 @@
 // Settings -> Language
 
 "settings_language.title" = "Язык";
+
+// Settings -> Manage Wallet
+
+"settings_manage_wallet.title" = "Manage Coins";
+"settings_manage_wallet.add_coins" = "Добавить валюту";
+"settings_manage_wallet.add_button" = "Добавить";
+"settings_manage_wallet.hide_button" = "Скрыть";
+"settings_manage_wallet.remove_button" = "Удалить";
+"settings_manage_wallet.show_button" = "Показать";
+"settings_manage_wallet.search_placeholder" = "Поиск";
 
 // Settings -> About
 
