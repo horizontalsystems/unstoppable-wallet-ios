@@ -71,6 +71,7 @@ protocol ITransactionManager: class {
 enum AdapterState {
     case synced
     case syncing(progressSubject: BehaviorSubject<Double>)
+    case notSynced
 }
 
 protocol IAdapter: class {

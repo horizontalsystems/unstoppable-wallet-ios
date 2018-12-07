@@ -38,9 +38,12 @@ class BalancePresenter {
                     rateExpired: rateExpired
             ))
 
-            if case .syncing = wallet.adapter.state {
+            if case .synced = wallet.adapter.state {
+                // do nothing
+            } else {
                 allSynced = false
             }
+
             allSynced = allSynced && !rateExpired
         }
 

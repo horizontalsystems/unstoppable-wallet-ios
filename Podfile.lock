@@ -13,7 +13,7 @@ PODS:
   - GrouviHUD (1.0.3):
     - RxSwift
     - SnapKit (~> 4.0.0)
-  - HSBitcoinKit (0.1.0):
+  - HSBitcoinKit (0.1.2):
     - Alamofire
     - BigInt
     - HSCryptoKit
@@ -100,7 +100,7 @@ SPEC CHECKSUMS:
   GrouviActionSheet: a966bf187addebab0d00aa9e66083e9112a60af7
   GrouviExtensions: ae9e74948ff6490184584610b1cff34ee4112a59
   GrouviHUD: 7a71f6e142724c1a5657084ee35afa9a328ec88d
-  HSBitcoinKit: dd30e281265eb965e334442d93ae6797bcc9ad73
+  HSBitcoinKit: 4215628cbe174f2d15f7be645048f7cf9082c88a
   HSCryptoKit: b5b7080a6571df88e25e68ec7dcc1c02a56f02ee
   HSEthereumKit: b78e576d1d1a1b420c626c4a646fe9ae8fd250eb
   HSHDWalletKit: ff8ca1e074835447a7c1a13e56917fa72cc2fcd0
