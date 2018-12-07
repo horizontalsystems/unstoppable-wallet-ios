@@ -62,15 +62,8 @@
                         <action selector="cancelDidTap" destination="-1" eventType="touchUpInside" id="JL8-1Z-QTz"/>
                     </connections>
                 </button>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Backup Image" translatesAutoresizingMaskIntoConstraints="NO" id="vsg-Vh-tIV">
-                    <rect key="frame" x="44" y="52" width="100" height="110"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="100" id="Z6y-l3-t6s"/>
-                        <constraint firstAttribute="height" constant="110" id="tiI-aB-DuR"/>
-                    </constraints>
-                </imageView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zlk-Zr-c6R">
-                    <rect key="frame" x="44" y="186" width="287" height="142.5"/>
+                    <rect key="frame" x="44" y="52" width="287" height="142.5"/>
                     <string key="text">Your paper key is the only way to restore your Crypton if you lost, stolen, broken, or upgraded.
 
 We will show you a list of words to write down on a piece of paper and keep safe.</string>
@@ -82,9 +75,7 @@ We will show you a list of words to write down on a piece of paper and keep safe
             <constraints>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="Jee-WA-CMB" secondAttribute="trailing" constant="44" id="KdV-xO-efV"/>
                 <constraint firstItem="pIX-BW-CyK" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="44" id="Ksd-r8-PKT"/>
-                <constraint firstItem="Zlk-Zr-c6R" firstAttribute="top" secondItem="vsg-Vh-tIV" secondAttribute="bottom" constant="24" id="MZm-xx-JPE"/>
-                <constraint firstItem="vsg-Vh-tIV" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="44" id="cQT-g3-OI3"/>
-                <constraint firstItem="vsg-Vh-tIV" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="32" id="cZ0-oR-NkB"/>
+                <constraint firstItem="Zlk-Zr-c6R" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="32" id="R9M-Mk-x3D"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="Jee-WA-CMB" secondAttribute="bottom" constant="44" id="crm-dZ-gfM"/>
                 <constraint firstItem="Jee-WA-CMB" firstAttribute="width" secondItem="pIX-BW-CyK" secondAttribute="width" multiplier="2:1" id="mQX-y2-cCN"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="Zlk-Zr-c6R" secondAttribute="trailing" constant="44" id="n1l-55-a8g"/>
@@ -96,7 +87,6 @@ We will show you a list of words to write down on a piece of paper and keep safe
         </view>
     </objects>
     <resources>
-        <image name="Backup Image" width="100" height="110"/>
         <namedColor name="Gray">
             <color red="0.54117647058823526" green="0.54117647058823526" blue="0.5607843137254902" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
