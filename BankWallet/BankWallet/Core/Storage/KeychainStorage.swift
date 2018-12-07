@@ -6,6 +6,8 @@ class KeychainStorage {
 
     private let pinKey = "pin_keychain_key"
     private let wordsKey = "words_keychain_key"
+    private let unlockAttemptsKey = "unlock_attempts_keychain_key"
+    private let lockTimestampKey = "lock_timestamp_keychain_key"
 
     init(localStorage: ILocalStorage) {
         keychain = Keychain(service: "io.horizontalsystems.bank.dev")
@@ -58,6 +60,36 @@ class KeychainStorage {
         try keychain.set(value, key: key)
     }
 
+    func getInt(forKey key: String) -> Int? {
+        guard let string = keychain[key] else {
+            return nil
+        }
+        return Int(string)
+    }
+
+    func set(value: Int?, forKey key: String) throws {
+        guard let value = value else {
+            try keychain.remove(key)
+            return
+        }
+        try keychain.set("\(value)", key: key)
+    }
+
+    func getDouble(forKey key: String) -> Double? {
+        guard let string = keychain[key] else {
+            return nil
+        }
+        return Double(string)
+    }
+
+    func set(value: Double?, forKey key: String) throws {
+        guard let value = value else {
+            try keychain.remove(key)
+            return
+        }
+        try keychain.set("\(value)", key: key)
+    }
+
 }
 
 extension KeychainStorage: ISecureStorage {
@@ -76,6 +108,25 @@ extension KeychainStorage: ISecureStorage {
 
     func set(pin: String?) throws {
         try set(value: pin, forKey: pinKey)
+    }
+
+    var unlockAttempts: Int? {
+        return getInt(forKey: unlockAttemptsKey)
+    }
+
+    func set(unlockAttempts: Int?) throws {
+        try set(value: unlockAttempts, forKey: unlockAttemptsKey)
+    }
+
+    var lockoutTimestamp: TimeInterval? {
+        guard let double = getDouble(forKey: lockTimestampKey) else {
+            return nil
+        }
+        return TimeInterval(double)
+    }
+
+    func set(lockoutTimestamp: Double?) throws {
+        try set(value: lockoutTimestamp, forKey: unlockAttemptsKey)
     }
 
     func clear() {
