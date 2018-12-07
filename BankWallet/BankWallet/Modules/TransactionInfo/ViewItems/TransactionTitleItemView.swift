@@ -24,6 +24,7 @@ class TransactionTitleItemView: BaseActionItemView {
             maker.leading.equalToSuperview().offset(TransactionInfoTheme.regularMargin)
             maker.top.equalToSuperview().offset(TransactionInfoTheme.middleMargin)
         }
+
         dateLabel.font = TransactionInfoTheme.dateFont
         dateLabel.textColor = TransactionInfoTheme.dateColor
         addSubview(dateLabel)
@@ -33,6 +34,7 @@ class TransactionTitleItemView: BaseActionItemView {
         }
 
         let infoButton = RespondButton()
+        infoButton.titleLabel.removeFromSuperview()
         addSubview(infoButton)
         infoButton.borderWidth = 1 / UIScreen.main.scale
         infoButton.borderColor = TransactionInfoTheme.idInfoButtonBorderColor
@@ -44,7 +46,6 @@ class TransactionTitleItemView: BaseActionItemView {
             maker.height.equalTo(TransactionInfoTheme.infoButtonHeight)
         }
         infoButton.onTap = item?.onIdTap
-        infoButton.titleLabel.removeFromSuperview()
         infoButton.backgrounds = [RespondButton.State.active: TransactionInfoTheme.fullInfoButtonActiveBackground, RespondButton.State.selected: TransactionInfoTheme.fullInfoButtonSelectedBackground]
 
         let idTitleLabel = UILabel()

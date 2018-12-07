@@ -291,7 +291,6 @@
 		1A56483342FF07B40E53AD20 /* SetPinModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56421310FCB8A4E19BDDB3 /* SetPinModule.swift */; };
 		1A56483A6675677AA621FF79 /* PagingDotsItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56453E2F6ED44D46D84C49 /* PagingDotsItemView.swift */; };
 		1A564891B0D0EABB5502C123 /* DepositAddressCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5647F6F29405E571D70592 /* DepositAddressCollectionCell.swift */; };
-		1A56489F5EEDEE6D7BB9BA7A /* TransactionInfoBaseHashValueItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564298191D07782DFF5B99 /* TransactionInfoBaseHashValueItemView.swift */; };
 		1A5648CC60D79AAC561BBCB0 /* LanguageSettingsPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56452493943328835585AC /* LanguageSettingsPresenterTests.swift */; };
 		1A5648F83FC5E3954E406849 /* DepositCopyButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564F3B10EF814E1D330CAD /* DepositCopyButtonItem.swift */; };
 		1A5648FE30868C38CBFEB362 /* UnlockPinModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564E017B299CF4BA6F337C /* UnlockPinModule.swift */; };
@@ -323,7 +322,6 @@
 		1A564BE5BF0E283B1758F2F0 /* BalanceHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1A5646B68188CD13969CE766 /* BalanceHeaderView.xib */; };
 		1A564BF5CEF2800EF05EAAB0 /* BalancePresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5646AB24E23765AD12C83E /* BalancePresenterTests.swift */; };
 		1A564C1405D8C21185B0D4C1 /* TransactionsCurrencyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5649C888E12C1A0B70EFA8 /* TransactionsCurrencyCell.swift */; };
-		1A564C4890A7DCA6387FACC9 /* TransactionInfoBaseHashValueItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564A8B8E07B97BA9910FDA /* TransactionInfoBaseHashValueItem.swift */; };
 		1A564C84E08DE681615528E3 /* SendTitleItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5649BED7237B075AE7F8B8 /* SendTitleItemView.swift */; };
 		1A564CC0C92C44E29FEA6642 /* SetPinPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564E534927A26ACA3B1D83 /* SetPinPresenterTests.swift */; };
 		1A564CDEE86EFCB66EB45FD6 /* DepositCollectionItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564B0A9AB0EAAB5574FDD0 /* DepositCollectionItemView.swift */; };
@@ -468,8 +466,6 @@
 		D384054E218317DF007D50AD /* TransactionInfoBaseValueItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564F2613ECE2DE4A6F9F79 /* TransactionInfoBaseValueItem.swift */; };
 		D384054F218317DF007D50AD /* TransactionInfoBaseValueItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5645282A89F1EE4A04D5DD /* TransactionInfoBaseValueItemView.swift */; };
 		D3840550218317DF007D50AD /* TransactionStatusItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5646C9024F054AE8115A30 /* TransactionStatusItem.swift */; };
-		D3840551218317DF007D50AD /* TransactionInfoBaseHashValueItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564298191D07782DFF5B99 /* TransactionInfoBaseHashValueItemView.swift */; };
-		D3840552218317DF007D50AD /* TransactionInfoBaseHashValueItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564A8B8E07B97BA9910FDA /* TransactionInfoBaseHashValueItem.swift */; };
 		D3840553218317DF007D50AD /* TransactionFromToHashItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564C4C8EFE1B1BBE03C9E6 /* TransactionFromToHashItem.swift */; };
 		D3840554218317DF007D50AD /* PinTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 503320AA214679EB00F64AAA /* PinTheme.swift */; };
 		D3840556218317DF007D50AD /* TransactionCloseItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564181733CBC44EECFBBF3 /* TransactionCloseItem.swift */; };
@@ -671,8 +667,6 @@
 		D384063D21831B3D007D50AD /* TransactionInfoBaseValueItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564F2613ECE2DE4A6F9F79 /* TransactionInfoBaseValueItem.swift */; };
 		D384063E21831B3D007D50AD /* TransactionInfoBaseValueItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5645282A89F1EE4A04D5DD /* TransactionInfoBaseValueItemView.swift */; };
 		D384063F21831B3D007D50AD /* TransactionStatusItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5646C9024F054AE8115A30 /* TransactionStatusItem.swift */; };
-		D384064021831B3D007D50AD /* TransactionInfoBaseHashValueItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564298191D07782DFF5B99 /* TransactionInfoBaseHashValueItemView.swift */; };
-		D384064121831B3D007D50AD /* TransactionInfoBaseHashValueItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564A8B8E07B97BA9910FDA /* TransactionInfoBaseHashValueItem.swift */; };
 		D384064221831B3D007D50AD /* TransactionFromToHashItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564C4C8EFE1B1BBE03C9E6 /* TransactionFromToHashItem.swift */; };
 		D384064321831B3D007D50AD /* PinTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 503320AA214679EB00F64AAA /* PinTheme.swift */; };
 		D384064521831B3D007D50AD /* TransactionCloseItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564181733CBC44EECFBBF3 /* TransactionCloseItem.swift */; };
@@ -966,7 +960,6 @@
 		1A564260BF2C73B9F2450FB8 /* SendInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendInteractor.swift; sourceTree = "<group>"; };
 		1A56426438831456EF79DC47 /* MainSettingsInteractorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainSettingsInteractorTests.swift; sourceTree = "<group>"; };
 		1A56428DB7E042907CD4252D /* FullTransactionInfoTheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FullTransactionInfoTheme.swift; sourceTree = "<group>"; };
-		1A564298191D07782DFF5B99 /* TransactionInfoBaseHashValueItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionInfoBaseHashValueItemView.swift; sourceTree = "<group>"; };
 		1A5642A5A1B21FE92139766E /* LanguageSettingsModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LanguageSettingsModule.swift; sourceTree = "<group>"; };
 		1A5642EFA8A991436AED3B44 /* TransactionAmountItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionAmountItemView.swift; sourceTree = "<group>"; };
 		1A5643010944D435B8BA2FD8 /* TransactionInfoAlertModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionInfoAlertModel.swift; sourceTree = "<group>"; };
@@ -1029,7 +1022,6 @@
 		1A5649DB879A57761C09842E /* AppTheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppTheme.swift; sourceTree = "<group>"; };
 		1A564A3E6B23CF04ECEB40DC /* ManagePinPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManagePinPresenter.swift; sourceTree = "<group>"; };
 		1A564A6CCF1B907F25255D2E /* LockRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LockRouter.swift; sourceTree = "<group>"; };
-		1A564A8B8E07B97BA9910FDA /* TransactionInfoBaseHashValueItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionInfoBaseHashValueItem.swift; sourceTree = "<group>"; };
 		1A564A961EE2857B5283A996 /* FullTransactionInfoController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FullTransactionInfoController.swift; sourceTree = "<group>"; };
 		1A564AA8BF74E16E91DC46D5 /* PinInteractorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinInteractorTests.swift; sourceTree = "<group>"; };
 		1A564AF060F532C77FB991C7 /* SendTitleItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendTitleItem.swift; sourceTree = "<group>"; };
@@ -1890,8 +1882,6 @@
 				1A5645282A89F1EE4A04D5DD /* TransactionInfoBaseValueItemView.swift */,
 				1A5646C9024F054AE8115A30 /* TransactionStatusItem.swift */,
 				1A564BD2D59794AD187F28ED /* TransactionStatusItemView.swift */,
-				1A564A8B8E07B97BA9910FDA /* TransactionInfoBaseHashValueItem.swift */,
-				1A564298191D07782DFF5B99 /* TransactionInfoBaseHashValueItemView.swift */,
 				1A564C4C8EFE1B1BBE03C9E6 /* TransactionFromToHashItem.swift */,
 				1A564E1F405D2D57FBC9E799 /* TransactionFromToHashItemView.swift */,
 				1A564181733CBC44EECFBBF3 /* TransactionCloseItem.swift */,
@@ -2636,8 +2626,6 @@
 				1A564E3E29F0182A0230BC5D /* TransactionInfoBaseValueItem.swift in Sources */,
 				1A5647489DF968F20446631F /* TransactionInfoBaseValueItemView.swift in Sources */,
 				1A5640E91AA1D79E1735F5FC /* TransactionStatusItem.swift in Sources */,
-				1A56489F5EEDEE6D7BB9BA7A /* TransactionInfoBaseHashValueItemView.swift in Sources */,
-				1A564C4890A7DCA6387FACC9 /* TransactionInfoBaseHashValueItem.swift in Sources */,
 				1A564274EEC6A31D6B287B09 /* TransactionFromToHashItem.swift in Sources */,
 				503320AB214679EB00F64AAA /* PinTheme.swift in Sources */,
 				1A564462CB4BF369442CE381 /* TransactionCloseItem.swift in Sources */,
@@ -2917,8 +2905,6 @@
 				D384054E218317DF007D50AD /* TransactionInfoBaseValueItem.swift in Sources */,
 				D384054F218317DF007D50AD /* TransactionInfoBaseValueItemView.swift in Sources */,
 				D3840550218317DF007D50AD /* TransactionStatusItem.swift in Sources */,
-				D3840551218317DF007D50AD /* TransactionInfoBaseHashValueItemView.swift in Sources */,
-				D3840552218317DF007D50AD /* TransactionInfoBaseHashValueItem.swift in Sources */,
 				D3840553218317DF007D50AD /* TransactionFromToHashItem.swift in Sources */,
 				D3840554218317DF007D50AD /* PinTheme.swift in Sources */,
 				D3840556218317DF007D50AD /* TransactionCloseItem.swift in Sources */,
@@ -3160,8 +3146,6 @@
 				D384063D21831B3D007D50AD /* TransactionInfoBaseValueItem.swift in Sources */,
 				D384063E21831B3D007D50AD /* TransactionInfoBaseValueItemView.swift in Sources */,
 				D384063F21831B3D007D50AD /* TransactionStatusItem.swift in Sources */,
-				D384064021831B3D007D50AD /* TransactionInfoBaseHashValueItemView.swift in Sources */,
-				D384064121831B3D007D50AD /* TransactionInfoBaseHashValueItem.swift in Sources */,
 				D384064221831B3D007D50AD /* TransactionFromToHashItem.swift in Sources */,
 				D384064321831B3D007D50AD /* PinTheme.swift in Sources */,
 				D384064521831B3D007D50AD /* TransactionCloseItem.swift in Sources */,
