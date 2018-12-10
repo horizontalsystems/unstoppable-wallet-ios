@@ -4,6 +4,7 @@ extension UIColor {
     static var crypto_Dark_LightBackground: UIColor { return App.shared.localStorage.lightMode ? .cryptoLightBackground : .cryptoDark }
     static var crypto_Dark_Bars: UIColor { return App.shared.localStorage.lightMode ? .cryptoBars: .cryptoDark }
     static var crypto_Steel20_White: UIColor { return App.shared.localStorage.lightMode ? .white : .cryptoSteel20 }
+    static var crypto_Steel20_Steel40: UIColor { return App.shared.localStorage.lightMode ? .cryptoSteel20 : .cryptoSteel40 }
     static var crypto_White_Black: UIColor { return App.shared.localStorage.lightMode ? .black : white }
     static var crypto_Clear_White: UIColor { return App.shared.localStorage.lightMode ? .white : .clear }
     static var crypto_Silver_Black: UIColor { return App.shared.localStorage.lightMode ? .black : .cryptoSilver }
@@ -26,6 +27,7 @@ extension UIColor {
     static var cryptoSilver: UIColor = UIColor(named: "Silver") ?? .black
     static var cryptoSilver50: UIColor = UIColor(named: "Silver50") ?? .black
     static var cryptoSteel20: UIColor = UIColor(named: "Steel20") ?? .black
+    static var cryptoSteel40: UIColor = UIColor(named: "Steel40") ?? .black
     static var cryptoWhite50: UIColor = UIColor(named: "White50") ?? .black
     static var cryptoYellow: UIColor = UIColor(named: "Yellow") ?? .black
     static var cryptoYellow50: UIColor = UIColor(named: "Yellow50") ?? .black
