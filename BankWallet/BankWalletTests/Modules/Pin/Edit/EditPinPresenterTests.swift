@@ -25,7 +25,7 @@ class EditPinPresenterTests: XCTestCase {
 
         stub(mockView) { mock in
             when(mock.set(title: any())).thenDoNothing()
-            when(mock.addPage(withDescription: any(), showKeyboard: any())).thenDoNothing()
+            when(mock.addPage(withDescription: any())).thenDoNothing()
             when(mock.show(page: any())).thenDoNothing()
             when(mock.show(error: any(), forPage: any())).thenDoNothing()
             when(mock.show(error: any())).thenDoNothing()
@@ -64,9 +64,9 @@ class EditPinPresenterTests: XCTestCase {
 
     func testAddPages() {
         presenter.viewDidLoad()
-        verify(mockView).addPage(withDescription: "edit_pin.unlock_info", showKeyboard: true)
-        verify(mockView).addPage(withDescription: "edit_pin.new_pin_info", showKeyboard: true)
-        verify(mockView).addPage(withDescription: "edit_pin.confirm_info", showKeyboard: true)
+        verify(mockView).addPage(withDescription: "edit_pin.unlock_info")
+        verify(mockView).addPage(withDescription: "edit_pin.new_pin_info")
+        verify(mockView).addPage(withDescription: "edit_pin.confirm_info")
     }
 
     func testShowEnterOnUnlock() {

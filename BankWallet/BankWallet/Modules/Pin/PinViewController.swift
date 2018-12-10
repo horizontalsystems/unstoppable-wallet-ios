@@ -1,14 +1,16 @@
 import UIKit
 import SnapKit
 
-class PinViewController: KeyboardObservingViewController {
+class PinViewController: UIViewController {
     let delegate: IPinViewDelegate
 
-    var holderView = UIScrollView()
+    private let holderView = UIScrollView()
+    private let numPad = NumPad()
 
-    var pages = [PinPage]()
-    var pinViews = [PinView]()
-    var didAppear = false
+    private var pages = [PinPage]()
+    private var pinViews = [PinView]()
+
+    private var currentPage = 0
 
     init(delegate: IPinViewDelegate) {
         self.delegate = delegate
@@ -22,49 +24,25 @@ class PinViewController: KeyboardObservingViewController {
     override func viewDidLoad() {
         view.backgroundColor = AppTheme.controllerBackground
 
-        let dumbView = UIView()
-        view.addSubview(dumbView)
-
         view.addSubview(holderView)
         holderView.isScrollEnabled = false
         holderView.snp.makeConstraints { maker in
             maker.top.equalTo(self.view.safeAreaLayoutGuide.snp.top)
-            maker.leading.trailing.bottom.equalToSuperview()
+            maker.leading.trailing.equalToSuperview()
         }
         holderView.backgroundColor = .clear
 
+        view.addSubview(numPad)
+        numPad.snp.makeConstraints { maker in
+            maker.top.equalTo(self.holderView.snp.bottom)
+            maker.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).offset(-32)
+            maker.centerX.equalToSuperview()
+        }
+
+        numPad.numPadDelegate = self
+
         super.viewDidLoad()
         delegate.viewDidLoad()
-    }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-
-        let index = Int(holderView.contentOffset.x / UIScreen.main.bounds.width)
-
-        if pinViews.count > index {
-            let pinView = pinViews[index]
-
-            if pinView.showKeyboard {
-                pinView.becomeFirstResponder()
-            }
-        }
-    }
-
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        didAppear = true
-    }
-
-    override func updateUI(keyboardHeight: CGFloat, duration: TimeInterval, options: UIViewAnimationOptions, completion: (() -> ())?) {
-        holderView.snp.updateConstraints { maker in
-            maker.bottom.equalToSuperview().offset(-keyboardHeight)
-        }
-        if duration > 0, didAppear {
-            UIView.animate(withDuration: duration, delay: 0, options: options, animations: { [weak self] in
-                self?.view.window?.layoutIfNeeded()
-            })
-        }
     }
 
     @objc func onCancelTap() {
@@ -83,14 +61,26 @@ class PinViewController: KeyboardObservingViewController {
 
 }
 
+extension PinViewController: NumPadDelegate {
+
+    func numPadDidClick(digit: String) {
+        pinViews[currentPage].pinDotsView.append(digit: digit)
+    }
+
+    func numPadDidClickBackspace() {
+        pinViews[currentPage].pinDotsView.removeLastDigit()
+    }
+
+}
+
 extension PinViewController: IPinView {
 
     func set(title: String) {
         self.title = title.localized
     }
 
-    func addPage(withDescription description: String, showKeyboard: Bool) {
-        let page = PinPage(description: description, showKeyboard: showKeyboard)
+    func addPage(withDescription description: String) {
+        let page = PinPage(description: description)
         pages.append(page)
 
         let pinView = PinView()
@@ -120,6 +110,8 @@ extension PinViewController: IPinView {
     }
 
     func show(page index: Int) {
+        currentPage = index
+
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             self.holderView.setContentOffset(CGPoint(x: index * Int(UIScreen.main.bounds.width), y: 0), animated: true)
             self.reload(at: index)
@@ -139,24 +131,9 @@ extension PinViewController: IPinView {
         pinViews[index].shakeAndClear()
     }
 
-    func showKeyboard(for index: Int) {
-        pinViews[index].becomeFirstResponder()
-        pinViews[index].showKeyboard = true
-    }
-
     func showCancel() {
         if navigationController?.isNavigationBarHidden ?? true {
-            let cancelButton = RespondButton { [weak self] in
-                self?.onCancelTap()
-            }
-            cancelButton.backgrounds = [RespondButton.State.active: UIColor.clear, RespondButton.State.selected: UIColor.clear]
-            cancelButton.textColors = [RespondButton.State.active: PinTheme.cancelColor, RespondButton.State.selected: PinTheme.cancelSelectedColor]
-            cancelButton.titleLabel.text = "alert.cancel".localized
-            view.addSubview(cancelButton)
-            cancelButton.snp.makeConstraints { maker in
-                maker.centerX.equalToSuperview()
-                maker.bottom.equalTo(self.holderView.snp.bottom).offset(-100)
-            }
+            pinViews[currentPage].showCancelButton(target: self, action: #selector(onCancelTap))
         } else {
             navigationItem.rightBarButtonItem = UIBarButtonItem(title: "alert.cancel".localized, style: .plain, target: self, action: #selector(onCancelTap))
         }
@@ -171,15 +148,9 @@ extension PinViewController: IPinView {
 struct PinPage {
     var description: String?
     var error: String?
-    var showKeyboard: Bool = false
 
     init(description: String) {
         self.description = description
-    }
-
-    init(description: String, showKeyboard: Bool) {
-        self.description = description
-        self.showKeyboard = showKeyboard
     }
 
 }
