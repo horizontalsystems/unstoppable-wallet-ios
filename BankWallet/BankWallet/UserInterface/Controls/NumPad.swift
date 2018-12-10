@@ -3,15 +3,15 @@ import SnapKit
 
 class NumPad: UICollectionView {
 
-    enum Cell {
+    private enum Cell {
         case number(number: String, letters: String?, action: () -> ())
         case image(image: UIImage?, pressedImage: UIImage?, action: (() -> ())?)
     }
 
     weak var numPadDelegate: NumPadDelegate?
-    let layout = UICollectionViewFlowLayout()
+    private let layout = UICollectionViewFlowLayout()
 
-    var cells = [Cell]()
+    private var cells = [Cell]()
 
     init() {
         super.init(frame: .zero, collectionViewLayout: layout)
@@ -31,8 +31,7 @@ class NumPad: UICollectionView {
         isScrollEnabled = false
 
         snp.makeConstraints { maker in
-            maker.width.equalTo(NumPadTheme.width)
-            maker.height.equalTo(NumPadTheme.height)
+            maker.size.equalTo(NumPadTheme.size)
         }
 
         cells = [
@@ -95,22 +94,23 @@ extension NumPad: UICollectionViewDelegate {
 
 class NumPadNumberCell: UICollectionViewCell {
 
-    let button = RespondButton()
-    let numberLabel = UILabel()
-    let lettersLabel = UILabel()
+    private let button = UIButton()
+    private let numberLabel = UILabel()
+    private let lettersLabel = UILabel()
+    private var onTap: (() -> ())?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
 
         button.borderWidth = NumPadTheme.itemBorderWidth
         button.borderColor = NumPadTheme.itemBorderColor
-        button.titleLabel.removeFromSuperview()
+        button.cornerRadius = NumPadTheme.itemCornerRadius
+        button.setBackgroundColor(color: NumPadTheme.buttonBackgroundColor, forState: .normal)
+        button.setBackgroundColor(color: NumPadTheme.buttonBackgroundColorHighlighted, forState: .highlighted)
         addSubview(button)
         button.snp.makeConstraints { maker in
             maker.edges.equalToSuperview()
         }
-        button.cornerRadius = NumPadTheme.itemCornerRadius
-        button.backgrounds = ButtonTheme.numPadBackgroundDictionary
 
         numberLabel.font = NumPadTheme.numberFont
         numberLabel.textColor = NumPadTheme.numberColor
@@ -123,6 +123,8 @@ class NumPadNumberCell: UICollectionViewCell {
             maker.centerX.equalToSuperview()
             maker.bottom.equalToSuperview().offset(-NumPadTheme.lettersBottomMargin)
         }
+
+        button.addTarget(self, action: #selector(didTapButton), for: .touchUpInside)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -132,7 +134,7 @@ class NumPadNumberCell: UICollectionViewCell {
     func bind(number: String, letters: String?, onTap: @escaping () -> ()) {
         numberLabel.text = number
         lettersLabel.text = letters
-        button.onTap = onTap
+        self.onTap = onTap
 
         lettersLabel.isHidden = letters == nil
 
@@ -147,12 +149,16 @@ class NumPadNumberCell: UICollectionViewCell {
         }
     }
 
+    @objc func didTapButton() {
+        onTap?()
+    }
+
 }
 
 class NumPadImageCell: UICollectionViewCell {
 
-    let button = UIButton()
-    var onTap: (() -> ())?
+    private let button = UIButton()
+    private var onTap: (() -> ())?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -177,18 +183,6 @@ class NumPadImageCell: UICollectionViewCell {
 
     @objc func didTapButton() {
         onTap?()
-    }
-
-}
-
-extension UIImage {
-
-    func tinted(with color: UIColor) -> UIImage? {
-        UIGraphicsBeginImageContextWithOptions(size, false, scale)
-        defer { UIGraphicsEndImageContext() }
-        color.set()
-        withRenderingMode(.alwaysTemplate).draw(in: CGRect(origin: .zero, size: size))
-        return UIGraphicsGetImageFromCurrentImageContext()
     }
 
 }

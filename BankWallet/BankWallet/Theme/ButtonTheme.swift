@@ -28,8 +28,6 @@ class ButtonTheme {
     static let textColorOnDarkBackgroundDictionary: RespondButton.Style = [.active: ButtonTheme.textColor, .selected: ButtonTheme.textColor, .disabled: ButtonTheme.textColorDisabledOnDarkBackground]
     static let whiteTextColorOnDarkBackgroundDictionary: RespondButton.Style = [.active: .white, .selected: .white, .disabled: ButtonTheme.textColorDisabledOnWhiteBackground]
 
-    static let numPadBackgroundDictionary: RespondButton.Style = [.active: .crypto_Steel20_White, .selected: .crypto_Steel20_Steel40, .disabled: .cryptoSteel20]
-
     static let font = UIFont.cryptoHeadline
     static let margin: CGFloat = 16
 }
