@@ -67,18 +67,19 @@ class LockoutManagerTests: XCTestCase {
     func testIsLockedFalse() {
         stub(mockSecureStorage) { mock in
             when(mock.unlockAttempts.get).thenReturn(5)
+            when(mock.lockoutTimestamp.get).thenReturn(1)
+        }
+        stub(mockUptimeProvider) { mock in
+            when(mock.uptime.get).thenReturn(500)
         }
         stub(mockLockoutTimeFrameFactory) { mock in
-            when(mock.lockoutTimeFrame(failedAttempts: any(), lockoutTimestamp: any(), uptime: any())).thenReturn(0)
+            when(mock.lockoutTimeFrame(failedAttempts: 5, lockoutTimestamp: 1, uptime: 500)).thenReturn(0)
         }
 
         XCTAssertFalse(manager.isLockedOut)
     }
 
     func testWriteFailTimes() {
-        stub(mockSecureStorage) { mock in
-            when(mock.set(unlockAttempts: any())).thenDoNothing()
-        }
         manager.failedTimes = 3
         verify(mockSecureStorage).set(unlockAttempts: equal(to: 3))
     }
