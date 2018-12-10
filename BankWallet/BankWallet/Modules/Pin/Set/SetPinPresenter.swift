@@ -14,8 +14,8 @@ class SetPinPresenter: ManagePinPresenter {
 
         for page in pages {
             switch page {
-            case .enter: view?.addPage(withDescription: "set_pin.info", showKeyboard: true)
-            case .confirm: view?.addPage(withDescription: "set_pin.confirm.info", showKeyboard: true)
+            case .enter: view?.addPage(withDescription: "set_pin.info")
+            case .confirm: view?.addPage(withDescription: "set_pin.confirm.info")
             default: ()
             }
         }
