@@ -36,14 +36,14 @@ class NumPad: UICollectionView {
 
         cells = [
             .number(number: "1", letters: "", action: { [weak self] in self?.numPadDelegate?.numPadDidClick(digit: "1") }),
-            .number(number: "2", letters: "A B C".localized, action: { [weak self] in self?.numPadDelegate?.numPadDidClick(digit: "2") }),
-            .number(number: "3", letters: "D E F".localized, action: { [weak self] in self?.numPadDelegate?.numPadDidClick(digit: "3") }),
-            .number(number: "4", letters: "G H I".localized, action: { [weak self] in self?.numPadDelegate?.numPadDidClick(digit: "4") }),
-            .number(number: "5", letters: "J K L".localized, action: { [weak self] in self?.numPadDelegate?.numPadDidClick(digit: "5") }),
-            .number(number: "6", letters: "M N O".localized, action: { [weak self] in self?.numPadDelegate?.numPadDidClick(digit: "6") }),
-            .number(number: "7", letters: "P Q R S".localized, action: { [weak self] in self?.numPadDelegate?.numPadDidClick(digit: "7") }),
-            .number(number: "8", letters: "T U V".localized, action: { [weak self] in self?.numPadDelegate?.numPadDidClick(digit: "8") }),
-            .number(number: "9", letters: "W X Y Z".localized, action: { [weak self] in self?.numPadDelegate?.numPadDidClick(digit: "9") }),
+            .number(number: "2", letters: "numpad_2".localized, action: { [weak self] in self?.numPadDelegate?.numPadDidClick(digit: "2") }),
+            .number(number: "3", letters: "numpad_3".localized, action: { [weak self] in self?.numPadDelegate?.numPadDidClick(digit: "3") }),
+            .number(number: "4", letters: "numpad_4".localized, action: { [weak self] in self?.numPadDelegate?.numPadDidClick(digit: "4") }),
+            .number(number: "5", letters: "numpad_5".localized, action: { [weak self] in self?.numPadDelegate?.numPadDidClick(digit: "5") }),
+            .number(number: "6", letters: "numpad_6".localized, action: { [weak self] in self?.numPadDelegate?.numPadDidClick(digit: "6") }),
+            .number(number: "7", letters: "numpad_7".localized, action: { [weak self] in self?.numPadDelegate?.numPadDidClick(digit: "7") }),
+            .number(number: "8", letters: "numpad_8".localized, action: { [weak self] in self?.numPadDelegate?.numPadDidClick(digit: "8") }),
+            .number(number: "9", letters: "numpad_9".localized, action: { [weak self] in self?.numPadDelegate?.numPadDidClick(digit: "9") }),
             .image(image: nil, pressedImage: nil, action: nil),
             .number(number: "0", letters: nil, action: { [weak self] in self?.numPadDelegate?.numPadDidClick(digit: "0") }),
             .image(image: UIImage(named: "Backspace Icon"), pressedImage: UIImage(named: "Backspace Icon Pressed"), action: { [weak self] in self?.numPadDelegate?.numPadDidClickBackspace() })
