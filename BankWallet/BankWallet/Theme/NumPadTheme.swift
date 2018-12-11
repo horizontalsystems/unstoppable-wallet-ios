@@ -6,7 +6,7 @@ class NumPadTheme {
 
     static let itemSize: CGSize = CGSize(width: 84, height: 68)
     static let itemBorderWidth: CGFloat = 1
-    static let itemBorderColor: UIColor = .cryptoSteel40
+    static var itemBorderColor: UIColor { return .crypto_Steel40_Steel20 }
     static let itemCornerRadius: CGFloat = 16
 
     static var buttonBackgroundColor: UIColor { return .crypto_Steel20_White }
