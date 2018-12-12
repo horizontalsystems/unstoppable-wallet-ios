@@ -140,7 +140,7 @@
 "settings_security.change_pin" = "PIN bearbeiten";
 "settings_security.touch_id" = "Touch ID";
 "settings_security.face_id" = "Face ID";
-"security_settings.unlink_alert_button" = "Unlink";
+"security_settings.unlink_alert_button" = "Verknüpfung trennen";
 "settings_security.import_wallet_confirmation_1" = "Diese Aktion entfernt deine Geldbörse von diesem Gerät.";
 "settings_security.import_wallet_confirmation_2" = "Stellen Sie sicher, Sie haben ihre geheimen Offlineschlüssel oder Sie werden nicht in der Lage, den Zugang zu Mitteln darauf in Zukunft.";
 
@@ -162,3 +162,14 @@
 
 "unlock_pin.info" = "Gib deine PIN ein";
 "unlock_pin.cant_save_pin" = "Autsch! Wir können den PIN nicht speichern, kontaktieren Sie uns bitte so schnell wie möglich!";
+
+//NumPad
+
+"numpad_2" = "A B C";
+"numpad_3" = "D E F";
+"numpad_4" = "G H I";
+"numpad_5" = "J K L";
+"numpad_6" = "M N O";
+"numpad_7" = "P Q R S";
+"numpad_8" = "T U V";
+"numpad_9" = "W X Y Z";
