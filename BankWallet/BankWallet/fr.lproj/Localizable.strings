@@ -162,3 +162,14 @@
 
 "unlock_pin.info" = "Entrez PIN";
 "unlock_pin.cant_save_pin" = "Oops! Nous ne pouvons pas enregistrer votre Pin, veuillez nous contacter au plus vite!";
+
+//NumPad
+
+"numpad_2" = "A B C";
+"numpad_3" = "D E F";
+"numpad_4" = "G H I";
+"numpad_5" = "J K L";
+"numpad_6" = "M N O";
+"numpad_7" = "P Q R S";
+"numpad_8" = "T U V";
+"numpad_9" = "W X Y Z";
