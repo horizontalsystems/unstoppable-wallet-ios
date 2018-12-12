@@ -29,12 +29,15 @@ class UnlockPinPresenterTests: XCTestCase {
             when(mock.showPinWrong(page: any())).thenDoNothing()
             when(mock.showKeyboard(for: any())).thenDoNothing()
             when(mock.showCancel()).thenDoNothing()
+            when(mock.showLockView(till: any())).thenDoNothing()
+            when(mock.show(attemptsLeft: any(), forPage: any())).thenDoNothing()
         }
         stub(mockRouter) { mock in
             when(mock.dismiss(didUnlock: any())).thenDoNothing()
         }
         stub(mockInteractor) { mock in
             when(mock.biometricUnlock()).thenDoNothing()
+            when(mock.updateLockoutState()).thenDoNothing()
         }
         stub(mockConfiguration) { mock in
             when(mock.cancellable.get).thenReturn(false)
@@ -112,6 +115,34 @@ class UnlockPinPresenterTests: XCTestCase {
     func testShowKeyboardOnFailedBiometricUnlock() {
         presenter.didFailBiometricUnlock()
         verify(mockView).showKeyboard(for: unlockPage)
+    }
+
+    func testUpdateLockoutState_DidLoad() {
+        presenter.viewDidLoad()
+        verify(mockInteractor).updateLockoutState()
+    }
+
+    func testUpdateLockoutState_Unlocked() {
+        let lockoutStateUnlocked = LockoutStateNew.unlocked(attemptsLeft: nil)
+        presenter.update(lockoutState: lockoutStateUnlocked)
+
+        verify(mockView).show(attemptsLeft: equal(to: nil), forPage: equal(to: unlockPage))
+        verify(mockView, never()).showLockView(till: any())
+    }
+
+    func testLockoutStateUnlocked_FewAttempts() {
+        let lockoutStateUnlocked = LockoutStateNew.unlocked(attemptsLeft: 3)
+        presenter.update(lockoutState: lockoutStateUnlocked)
+
+        verify(mockView).show(attemptsLeft: equal(to: 3), forPage: equal(to: unlockPage))
+        verify(mockView, never()).showLockView(till: any())
+    }
+
+    func testLockoutStateLocked() {
+        let unlockDate = Date().addingTimeInterval(1)
+        let lockoutStateLocked = LockoutStateNew.locked(till: unlockDate)
+        presenter.update(lockoutState: lockoutStateLocked)
+        verify(mockView).showLockView(till: equal(to: unlockDate))
     }
 
 }

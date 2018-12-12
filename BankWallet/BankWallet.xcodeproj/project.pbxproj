@@ -224,6 +224,7 @@
 		1A56404A4E6577B10D66660F /* LanguageSettingsModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5642A5A1B21FE92139766E /* LanguageSettingsModule.swift */; };
 		1A56407B3608988E913C7E1B /* MainSettingsInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56426438831456EF79DC47 /* MainSettingsInteractorTests.swift */; };
 		1A5640845DFE26B0881C97B9 /* SendPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5647EE51941D84607A9493 /* SendPresenter.swift */; };
+		1A564099643E74B6D1E45CD6 /* LockoutState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56488B2051E9529CE8742E /* LockoutState.swift */; };
 		1A5640A3F367FC1F0206BE64 /* UptimeProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56496A390BFA6AAF23E625 /* UptimeProvider.swift */; };
 		1A5640B712A4253399F52A3B /* BalanceTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564243436E5185205D0359 /* BalanceTheme.swift */; };
 		1A5640E91AA1D79E1735F5FC /* TransactionStatusItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5646C9024F054AE8115A30 /* TransactionStatusItem.swift */; };
@@ -310,16 +311,19 @@
 		1A5649A92BA5A92EB2791B7F /* SettingsInfoFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56487BA5FFC1BC45D6F25C /* SettingsInfoFooter.swift */; };
 		1A564A0F7A969658D13D8EDE /* TransactionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5643AAE35C8D8C5DA5924C /* TransactionCell.swift */; };
 		1A564A1D5A4E50A8C5A86FEE /* UnlockPinPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5641742308EC67C1292980 /* UnlockPinPresenter.swift */; };
+		1A564A27A29C3AC7EF21B57D /* OneTimeTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56468BE2370BCAA8BDA2FC /* OneTimeTimer.swift */; };
 		1A564A306E13E30771D2E823 /* TransactionRecordDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56425A421C1C9FB383DCDA /* TransactionRecordDataSource.swift */; };
 		1A564A44FF860429F91162ED /* DepositModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564E1FBBCCA45BCDA557F4 /* DepositModule.swift */; };
 		1A564A46D655BA99B1C0DAF7 /* DescriptionCollectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564E60ED94EDDE153519AA /* DescriptionCollectionHeader.swift */; };
 		1A564A4DE4455DDFEC8A5E1D /* LockoutTimeFrameFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564DAA99070A03BBC10871 /* LockoutTimeFrameFactoryTests.swift */; };
 		1A564A7ECE35A5A7A314D455 /* TransactionsTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5645ED6604E61C418C257E /* TransactionsTheme.swift */; };
+		1A564A832CFA51E737EF3AE4 /* LockoutManagerNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5645447A24FE94F0D87BFF /* LockoutManagerNew.swift */; };
 		1A564A85241B5956B277FE8B /* SettingsToggleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564B3A1B7A6F432F72A811 /* SettingsToggleCell.swift */; };
 		1A564A87C70D95E5B17DB9D2 /* TransactionCloseItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564B27FBA16D9EA22F0944 /* TransactionCloseItemView.swift */; };
 		1A564AAE494C986DF8883E0B /* SecuritySettingsPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56444A8B170E65EE00C33F /* SecuritySettingsPresenterTests.swift */; };
 		1A564AB936D91E4E5FBBAA4C /* BalanceHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56463AFF1D05E33BA25C8A /* BalanceHeaderView.swift */; };
 		1A564ABA900AA2F6300E2686 /* LockoutTimeFrameFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56497AB7BE7F1BC16BDE4C /* LockoutTimeFrameFactory.swift */; };
+		1A564AF044871B706A39C467 /* LockoutState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56488B2051E9529CE8742E /* LockoutState.swift */; };
 		1A564AFE8103BA974943D4E7 /* InputFieldTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564939814A9D9F47D41EEB /* InputFieldTheme.swift */; };
 		1A564B096FFE228DF453A66D /* TransactionInfoPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564091A9C12F224A18B740 /* TransactionInfoPresenter.swift */; };
 		1A564B49C052D4BF6C53DE7F /* BalanceInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564EA89D7182D3D3F669C3 /* BalanceInteractorTests.swift */; };
@@ -340,13 +344,17 @@
 		1A564D08FE960CC2551A2D7F /* TransactionStatusItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564BD2D59794AD187F28ED /* TransactionStatusItemView.swift */; };
 		1A564D21D1301F442EC55C2D /* LaunchModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56408C8281C80FD365E5BE /* LaunchModule.swift */; };
 		1A564D29C715EE06C30C8B2B /* LaunchInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56458C7C29504755A09E00 /* LaunchInteractor.swift */; };
+		1A564D45DD956D909C7B6C16 /* OneTimeTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56468BE2370BCAA8BDA2FC /* OneTimeTimer.swift */; };
 		1A564D6E1FB65C20AAD6C54B /* DepositTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56481E8D97841B12893D00 /* DepositTheme.swift */; };
 		1A564D792EC5F9FA02762704 /* SendAlertModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5644CAA65F6AF171D2D5AF /* SendAlertModel.swift */; };
 		1A564D837A9AB8A7EA5EB71A /* LatestRate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5640AA47846498D56A36E6 /* LatestRate.swift */; };
 		1A564D9038D65D88CF97329C /* TransactionTitleItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56469DF9D0C335228E88EE /* TransactionTitleItemView.swift */; };
+		1A564DEAF0A6DF97F029594E /* LockoutManagerNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5645447A24FE94F0D87BFF /* LockoutManagerNew.swift */; };
+		1A564DF36A4269C9FB869778 /* LockoutManagerNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5645447A24FE94F0D87BFF /* LockoutManagerNew.swift */; };
 		1A564E0A6E37A68995364D81 /* TransactionInfoInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5647DBF15322999B5A1D04 /* TransactionInfoInteractor.swift */; };
 		1A564E181F46CF98BC00CC30 /* EditPinPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564996AA2AE3468D2992E5 /* EditPinPresenterTests.swift */; };
 		1A564E268D7D4D01BD7B5078 /* MainSettingsPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56445B53883A652362E9D6 /* MainSettingsPresenterTests.swift */; };
+		1A564E2B4B30AB0F54A2FBF6 /* LockoutState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56488B2051E9529CE8742E /* LockoutState.swift */; };
 		1A564E3D1BD7610D43898DB6 /* MainSettingsModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5647AD7481B36F20D4DDF9 /* MainSettingsModule.swift */; };
 		1A564E3E29F0182A0230BC5D /* TransactionInfoBaseValueItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564F2613ECE2DE4A6F9F79 /* TransactionInfoBaseValueItem.swift */; };
 		1A564E481B2E60F065347AF0 /* LockoutTimeFrameFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56497AB7BE7F1BC16BDE4C /* LockoutTimeFrameFactory.swift */; };
@@ -357,6 +365,7 @@
 		1A564EA01F3260DE1FB535EC /* EditPinModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564D0BE1310BFCC7D8D774 /* EditPinModule.swift */; };
 		1A564EBDB15B44C38136B645 /* SecuritySettingsModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5641572B6E46E18B52A6A9 /* SecuritySettingsModule.swift */; };
 		1A564F0F3119055C658B78A7 /* LocalizationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564F49E3B187A3564C0561 /* LocalizationManager.swift */; };
+		1A564F2D363CB805A486F4A5 /* OneTimeTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56468BE2370BCAA8BDA2FC /* OneTimeTimer.swift */; };
 		1A564F4AA83DC47DC9840A69 /* SettingsTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564F747A4D0B78E5DF6F1B /* SettingsTheme.swift */; };
 		1A564FB62EBBA50489895BEF /* BalanceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564B746C8A6451D81B27D4 /* BalanceCell.swift */; };
 		1A564FBBE3324B1D8EDA3232 /* PinInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5640B8B65EAECA3A36F89E /* PinInteractor.swift */; };
@@ -988,6 +997,7 @@
 		1A5645282A89F1EE4A04D5DD /* TransactionInfoBaseValueItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionInfoBaseValueItemView.swift; sourceTree = "<group>"; };
 		1A5645371B2FC499500DCA93 /* DepositPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DepositPresenter.swift; sourceTree = "<group>"; };
 		1A56453E2F6ED44D46D84C49 /* PagingDotsItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PagingDotsItemView.swift; sourceTree = "<group>"; };
+		1A5645447A24FE94F0D87BFF /* LockoutManagerNew.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LockoutManagerNew.swift; sourceTree = "<group>"; };
 		1A56458C7C29504755A09E00 /* LaunchInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LaunchInteractor.swift; sourceTree = "<group>"; };
 		1A5645B289EFBDB3EAB27E3A /* PinManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinManager.swift; sourceTree = "<group>"; };
 		1A5645BE7DACEC78A2FAEFB5 /* DepositCollectionItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DepositCollectionItem.swift; sourceTree = "<group>"; };
@@ -998,6 +1008,7 @@
 		1A56464DB0EEF75F63C91760 /* TransactionAmountItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionAmountItem.swift; sourceTree = "<group>"; };
 		1A56464E8EDBFB0B67DB593F /* SettingsRightLabelCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsRightLabelCell.swift; sourceTree = "<group>"; };
 		1A564679937963085A8530F4 /* CurrencyHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrencyHelper.swift; sourceTree = "<group>"; };
+		1A56468BE2370BCAA8BDA2FC /* OneTimeTimer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OneTimeTimer.swift; sourceTree = "<group>"; };
 		1A56469DF9D0C335228E88EE /* TransactionTitleItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionTitleItemView.swift; sourceTree = "<group>"; };
 		1A5646AB24E23765AD12C83E /* BalancePresenterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BalancePresenterTests.swift; sourceTree = "<group>"; };
 		1A5646B68188CD13969CE766 /* BalanceHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BalanceHeaderView.xib; sourceTree = "<group>"; };
@@ -1018,6 +1029,7 @@
 		1A5648311E0EA947B1446649 /* SetPinPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetPinPresenter.swift; sourceTree = "<group>"; };
 		1A564879AD72301AAB78F8F5 /* MainSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainSettingsViewController.swift; sourceTree = "<group>"; };
 		1A56487BA5FFC1BC45D6F25C /* SettingsInfoFooter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsInfoFooter.swift; sourceTree = "<group>"; };
+		1A56488B2051E9529CE8742E /* LockoutState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LockoutState.swift; sourceTree = "<group>"; };
 		1A5648AB2D8BF212D891310D /* AddressItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressItem.swift; sourceTree = "<group>"; };
 		1A5648D3CF09FF5EBE8321EC /* RestoreWordCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestoreWordCell.swift; sourceTree = "<group>"; };
 		1A5648DA32EA5FC27E4CEF64 /* DepositInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DepositInteractor.swift; sourceTree = "<group>"; };
@@ -1333,6 +1345,8 @@
 				11B35CEBC4B32E57AA2469AA /* PasteboardManager.swift */,
 				1A564AAAC1BC0A947021BAD2 /* LockoutManager.swift */,
 				1A56496A390BFA6AAF23E625 /* UptimeProvider.swift */,
+				1A5645447A24FE94F0D87BFF /* LockoutManagerNew.swift */,
+				1A56468BE2370BCAA8BDA2FC /* OneTimeTimer.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -1396,6 +1410,7 @@
 				11B35D81B1CB74C0337214DC /* Wallet.swift */,
 				1A5640AA47846498D56A36E6 /* LatestRate.swift */,
 				58AAA7A94D25C20240FD75C6 /* PaymentRequestAddress.swift */,
+				1A56488B2051E9529CE8742E /* LockoutState.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -2790,6 +2805,9 @@
 				1A56416901D71CB4B4803D5E /* LockoutManager.swift in Sources */,
 				1A564305A508A569EE7D54F9 /* UptimeProvider.swift in Sources */,
 				1A564BB10F8A3540A194F708 /* LockoutTimeFrameFactory.swift in Sources */,
+				1A564DEAF0A6DF97F029594E /* LockoutManagerNew.swift in Sources */,
+				1A564099643E74B6D1E45CD6 /* LockoutState.swift in Sources */,
+				1A564D45DD956D909C7B6C16 /* OneTimeTimer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3074,6 +3092,9 @@
 				1A5648A313DE2D0C4911758B /* LockoutManager.swift in Sources */,
 				1A5641AB4E2EA05ED6ABCB78 /* UptimeProvider.swift in Sources */,
 				1A564ABA900AA2F6300E2686 /* LockoutTimeFrameFactory.swift in Sources */,
+				1A564A832CFA51E737EF3AE4 /* LockoutManagerNew.swift in Sources */,
+				1A564E2B4B30AB0F54A2FBF6 /* LockoutState.swift in Sources */,
+				1A564F2D363CB805A486F4A5 /* OneTimeTimer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3318,6 +3339,9 @@
 				1A56496D4604A4B980383425 /* LockoutManager.swift in Sources */,
 				1A5640A3F367FC1F0206BE64 /* UptimeProvider.swift in Sources */,
 				1A564E481B2E60F065347AF0 /* LockoutTimeFrameFactory.swift in Sources */,
+				1A564DF36A4269C9FB869778 /* LockoutManagerNew.swift in Sources */,
+				1A564AF044871B706A39C467 /* LockoutState.swift in Sources */,
+				1A564A27A29C3AC7EF21B57D /* OneTimeTimer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

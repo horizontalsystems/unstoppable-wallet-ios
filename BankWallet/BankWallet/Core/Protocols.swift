@@ -213,6 +213,11 @@ protocol IPeriodicTimer {
     func schedule()
 }
 
+protocol IOneTimeTimer {
+    var delegate: IPeriodicTimerDelegate? { get set }
+    func schedule(date: Date)
+}
+
 protocol IPeriodicTimerDelegate: class {
     func onFire()
 }
@@ -250,4 +255,9 @@ protocol IUptimeProvider {
 
 protocol ILockoutTimeFrameFactory {
     func lockoutTimeFrame(failedAttempts: Int, lockoutTimestamp: TimeInterval, uptime: TimeInterval) -> TimeInterval
+}
+
+protocol ILockoutManagerNew {
+    var currentState: LockoutStateNew { get }
+    func didFailUnlock()
 }

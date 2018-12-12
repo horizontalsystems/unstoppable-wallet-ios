@@ -166,6 +166,16 @@ extension PinViewController: IPinView {
         HudHelper.instance.showSuccess()
     }
 
+    func showLockView(till date: Date) {
+        show(error: "u r blocked till: \(date)")
+    }
+
+    func show(attemptsLeft: Int?, forPage index: Int) {
+        if let attemptsLeft = attemptsLeft {
+            show(error: "unlock_pin.wrong_pin.attempts_left".localized(attemptsLeft), forPage: index)
+        }
+    }
+
 }
 
 struct PinPage {

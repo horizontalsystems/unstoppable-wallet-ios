@@ -7,6 +7,8 @@ class UnlockPinInteractorTests: XCTestCase {
     private var mockPinManager: MockIPinManager!
     private var mockBiometricManager: MockIBiometricManager!
     private var mockLocalStorage: MockILocalStorage!
+    private var mockLockoutManager: MockILockoutManagerNew!
+    private var mockTimer: MockIOneTimeTimer!
     private var interactor: UnlockPinInteractor!
 
     override func setUp() {
@@ -16,10 +18,13 @@ class UnlockPinInteractorTests: XCTestCase {
         mockPinManager = MockIPinManager()
         mockBiometricManager = MockIBiometricManager()
         mockLocalStorage = MockILocalStorage()
+        mockLockoutManager = MockILockoutManagerNew()
+        mockTimer = MockIOneTimeTimer()
 
         stub(mockDelegate) { mock in
             when(mock.didBiometricUnlock()).thenDoNothing()
             when(mock.didFailBiometricUnlock()).thenDoNothing()
+            when(mock.update(lockoutState: any())).thenDoNothing()
         }
         stub(mockPinManager) { mock in
             when(mock.store(pin: any())).thenDoNothing()
@@ -27,8 +32,16 @@ class UnlockPinInteractorTests: XCTestCase {
         stub(mockBiometricManager) { mock in
             when(mock.validate(reason: any())).thenDoNothing()
         }
+        stub(mockLockoutManager) { mock in
+            when(mock.didFailUnlock()).thenDoNothing()
+            when(mock.currentState.get).thenReturn(LockoutStateNew.unlocked(attemptsLeft: nil))
+        }
+        stub(mockTimer) { mock in
+            when(mock.delegate.set(any())).thenDoNothing()
+            when(mock.schedule(date: any())).thenDoNothing()
+        }
 
-        interactor = UnlockPinInteractor(pinManager: mockPinManager, biometricManager: mockBiometricManager, localStorage: mockLocalStorage)
+        interactor = UnlockPinInteractor(pinManager: mockPinManager, biometricManager: mockBiometricManager, localStorage: mockLocalStorage, lockoutManager: mockLockoutManager, timer: mockTimer)
         interactor.delegate = mockDelegate
     }
 
@@ -37,6 +50,8 @@ class UnlockPinInteractorTests: XCTestCase {
         mockPinManager = nil
         mockBiometricManager = nil
         mockLocalStorage = nil
+        mockLockoutManager = nil
+        mockTimer = nil
         interactor = nil
 
         super.tearDown()
@@ -93,6 +108,83 @@ class UnlockPinInteractorTests: XCTestCase {
     func testDidFailBiometricValidate() {
         interactor.didFailToValidate()
         verify(mockDelegate).didFailBiometricUnlock()
+    }
+
+    func testUpdateFailAttempt() {
+        let pin = "0000"
+        stub(mockPinManager) { mock in
+            when(mock.validate(pin: equal(to: pin))).thenReturn(false)
+        }
+        _ = interactor.unlock(with: pin)
+
+        verify(mockLockoutManager).didFailUnlock()
+    }
+
+    func testUpdateLockoutState_FailAttempt() {
+        let pin = "0000"
+        let state = LockoutStateNew.unlocked(attemptsLeft: 4)
+        stub(mockPinManager) { mock in
+            when(mock.validate(pin: equal(to: pin))).thenReturn(false)
+        }
+        stub(mockLockoutManager) { mock in
+            when(mock.currentState.get).thenReturn(state)
+        }
+
+        _ = interactor.unlock(with: pin)
+
+        verify(mockDelegate).update(lockoutState: equal(to: state))
+    }
+
+    func testStartLockoutTimer_WrongPin() {
+        let date = Date()
+        let pin = "0000"
+        let lockedState = LockoutStateNew.locked(till: date)
+
+        stub(mockPinManager) { mock in
+            when(mock.validate(pin: equal(to: pin))).thenReturn(false)
+        }
+        stub(mockLockoutManager) { mock in
+            when(mock.currentState.get).thenReturn(lockedState)
+        }
+
+        _ = interactor.unlock(with: pin)
+
+        verify(mockTimer).schedule(date: equal(to: date))
+    }
+
+    func testUpdateState_OnFire() {
+        let unlockedState = LockoutStateNew.unlocked(attemptsLeft: 1)
+        stub(mockLockoutManager) { mock in
+            when(mock.currentState.get).thenReturn(unlockedState)
+        }
+
+        interactor.onFire()
+        verify(mockDelegate).update(lockoutState: equal(to: unlockedState))
+    }
+
+    func testStartLockoutTimer_LockedState() {
+        let date = Date()
+        let lockedState = LockoutStateNew.locked(till: date)
+
+        stub(mockLockoutManager) { mock in
+            when(mock.currentState.get).thenReturn(lockedState)
+        }
+
+        interactor.updateLockoutState()
+
+        verify(mockTimer).schedule(date: equal(to: date))
+    }
+
+    func testUpdateLockoutState() {
+        let lockedState = LockoutStateNew.locked(till: Date())
+
+        stub(mockLockoutManager) { mock in
+            when(mock.currentState.get).thenReturn(lockedState)
+        }
+
+        interactor.updateLockoutState()
+
+        verify(mockDelegate).update(lockoutState: equal(to: lockedState))
     }
 
 }
