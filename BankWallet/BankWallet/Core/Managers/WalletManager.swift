@@ -35,12 +35,6 @@ extension WalletManager: IWalletManager {
         newWallets.forEach { $0.adapter.start() }
     }
 
-    func refreshWallets() {
-        for wallet in wallets {
-            wallet.adapter.refresh()
-        }
-    }
-
     func clearWallets() {
         for wallet in wallets {
             wallet.adapter.clear()

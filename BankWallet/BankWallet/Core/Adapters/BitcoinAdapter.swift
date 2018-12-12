@@ -75,12 +75,16 @@ extension BitcoinAdapter: IAdapter {
         return bitcoinKit.debugInfo
     }
 
+    var refreshable: Bool {
+        return false
+    }
+
     func start() {
         try? bitcoinKit.start()
     }
 
     func refresh() {
-        try? bitcoinKit.start()
+        // not called
     }
 
     func clear() {

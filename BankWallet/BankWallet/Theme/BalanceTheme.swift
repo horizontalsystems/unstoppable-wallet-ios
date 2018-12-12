@@ -26,6 +26,10 @@ class BalanceTheme {
     static let headerHeight: CGFloat = 44
     static let buttonsAnimationDuration = 0.2
 
+    static let refreshButtonSize: CGFloat = 32
+    static let refreshButtonColor: UIColor = .cryptoGray
+    static let refreshButtonColorHighlighted: UIColor = .cryptoGray50
+
     static var roundedBackgroundColor: UIColor { return .crypto_Steel20_White }
     static var headerSeparatorBackground: UIColor { return .cryptoSteel20 }
     static let roundedBackgroundCornerRadius: CGFloat = 15

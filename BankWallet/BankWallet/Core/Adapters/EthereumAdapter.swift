@@ -15,12 +15,19 @@ class EthereumAdapter {
     let lastBlockHeightSubject = PublishSubject<Int>()
     let transactionRecordsSubject = PublishSubject<[TransactionRecord]>()
 
-    let state: AdapterState = .synced
+    var state: AdapterState {
+        didSet {
+            stateSubject.onNext(state)
+        }
+    }
 
     init(words: [String], coin: EthereumKit.Coin) {
         wordsHash = words.joined()
         progressSubject = BehaviorSubject(value: 1)
         ethereumKit = EthereumKit(withWords: words, coin: coin, debugPrints: false)
+
+        state = .synced
+
         ethereumKit.delegate = self
     }
 
@@ -74,6 +81,10 @@ extension EthereumAdapter: IAdapter {
 
     var debugInfo: String {
         return ethereumKit.debugInfo
+    }
+
+    var refreshable: Bool {
+        return true
     }
 
     func start() {

@@ -28,7 +28,6 @@ class TransactionsInteractorTests: XCTestCase {
         stub(mockDelegate) { mock in
             when(mock.didUpdateDataSource()).thenDoNothing()
             when(mock.didRetrieve(filters: any())).thenDoNothing()
-            when(mock.didRefresh()).thenDoNothing()
         }
         stub(mockRateManager) { mock in
         }
@@ -107,12 +106,6 @@ class TransactionsInteractorTests: XCTestCase {
 
         interactor.retrieveFilters()
         verify(mockDelegate).didRetrieve(filters: equal(to: [bitcoin, ether, cash]))
-    }
-
-    func testRefresh() {
-        interactor.refresh()
-        waitForMainQueue()
-        verify(mockDelegate).didRefresh()
     }
 
 }

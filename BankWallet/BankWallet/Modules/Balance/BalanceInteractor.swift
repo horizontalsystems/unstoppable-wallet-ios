@@ -62,12 +62,12 @@ extension BalanceInteractor: IBalanceInteractor {
         return rateManager.rate(forCoin: coin, currencyCode: currencyManager.baseCurrency.code)
     }
 
-    func refresh() {
-        walletManager.refreshWallets()
-
-        DispatchQueue.main.asyncAfter(deadline: .now() + refreshTimeout) {
-            self.delegate?.didRefresh()
+    func refresh(coin: Coin) {
+        guard let wallet = walletManager.wallets.first(where: { $0.coin == coin }) else {
+            return
         }
+
+        wallet.adapter.refresh()
     }
 
 }

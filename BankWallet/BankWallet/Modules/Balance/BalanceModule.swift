@@ -2,12 +2,11 @@ protocol IBalanceView: class {
     func set(title: String)
     func show(totalBalance: CurrencyValue, upToDate: Bool)
     func show(items: [BalanceViewItem])
-    func didRefresh()
 }
 
 protocol IBalanceViewDelegate {
     func viewDidLoad()
-    func refresh()
+    func onRefresh(for coin: Coin)
     func onReceive(for coin: Coin)
     func onPay(for coin: Coin)
 }
@@ -16,13 +15,11 @@ protocol IBalanceInteractor {
     var baseCurrency: Currency { get }
     var wallets: [Wallet] { get }
     func rate(forCoin coin: Coin) -> Rate?
-
-    func refresh()
+    func refresh(coin: Coin)
 }
 
 protocol IBalanceInteractorDelegate: class {
     func didUpdate()
-    func didRefresh()
 }
 
 protocol IBalanceRouter {
