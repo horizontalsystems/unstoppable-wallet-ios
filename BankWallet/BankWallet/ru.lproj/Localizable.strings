@@ -117,7 +117,7 @@
 
 // Settings -> Manage Wallet
 
-"settings_manage_wallet.title" = "Manage Coins";
+"settings_manage_wallet.title" = "Управление кошельком";
 "settings_manage_wallet.add_coins" = "Добавить валюту";
 "settings_manage_wallet.add_button" = "Добавить";
 "settings_manage_wallet.hide_button" = "Скрыть";
@@ -162,3 +162,14 @@
 
 "unlock_pin.info" = "Введите PIN-код";
 "unlock_pin.cant_save_pin" = "Ой! Мы не можем сохранить ваш ПИН-код. Пожалуйста, свяжитесь с нами как можно скорее!";
+
+//NumPad
+
+"numpad_2" = "A B C";
+"numpad_3" = "D E F";
+"numpad_4" = "G H I";
+"numpad_5" = "J K L";
+"numpad_6" = "M N O";
+"numpad_7" = "P Q R S";
+"numpad_8" = "T U V";
+"numpad_9" = "W X Y Z";
