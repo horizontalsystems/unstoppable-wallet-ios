@@ -165,9 +165,9 @@
 
 //NumPad
 
-"numpad_2" = "А Б В";
-"numpad_3" = "D E F";
-"numpad_4" = "G H I";
+"numpad_2" = "А Б В Г";
+"numpad_3" = "Д Е Ж З";
+"numpad_4" = "И Й К Л";
 "numpad_5" = "J K L";
 "numpad_6" = "M N O";
 "numpad_7" = "P Q R S";
