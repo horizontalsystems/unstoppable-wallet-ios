@@ -237,27 +237,6 @@ protocol ITransactionViewItemFactory {
 }
 
 protocol ILockoutManager {
-    var delegate: ILockoutManagerDelegate? { get set }
-    var isLockedOut: Bool { get }
-    var failedTimes: Int? { get set }
-    var attemptsLeft: Int { get }
-    var lockoutTimeFrame: TimeInterval { get }
-}
-
-protocol ILockoutManagerDelegate: class {
-    func lockout(timeFrame: TimeInterval)
-    func finishLockout()
-}
-
-protocol IUptimeProvider {
-    var uptime: TimeInterval { get }
-}
-
-protocol ILockoutTimeFrameFactory {
-    func lockoutTimeFrame(failedAttempts: Int, lockoutTimestamp: TimeInterval, uptime: TimeInterval) -> TimeInterval
-}
-
-protocol ILockoutManagerNew {
     var currentState: LockoutStateNew { get }
     func didFailUnlock()
     func dropFailedAttempts()
@@ -269,4 +248,12 @@ protocol ILockoutUntilDateFactory {
 
 protocol ICurrentDateProvider {
     var currentDate: Date { get }
+}
+
+protocol IUptimeProvider {
+    var uptime: TimeInterval { get }
+}
+
+protocol ILockoutTimeFrameFactory {
+    func lockoutTimeFrame(failedAttempts: Int, lockoutTimestamp: TimeInterval, uptime: TimeInterval) -> TimeInterval
 }

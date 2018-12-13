@@ -7,7 +7,7 @@ class UnlockPinInteractorTests: XCTestCase {
     private var mockPinManager: MockIPinManager!
     private var mockBiometricManager: MockIBiometricManager!
     private var mockLocalStorage: MockILocalStorage!
-    private var mockLockoutManager: MockILockoutManagerNew!
+    private var mockLockoutManager: MockILockoutManager!
     private var mockTimer: MockIOneTimeTimer!
     private var interactor: UnlockPinInteractor!
 
@@ -18,7 +18,7 @@ class UnlockPinInteractorTests: XCTestCase {
         mockPinManager = MockIPinManager()
         mockBiometricManager = MockIBiometricManager()
         mockLocalStorage = MockILocalStorage()
-        mockLockoutManager = MockILockoutManagerNew()
+        mockLockoutManager = MockILockoutManager()
         mockTimer = MockIOneTimeTimer()
 
         stub(mockDelegate) { mock in

@@ -7,7 +7,7 @@ class LockoutManagerTests: XCTestCase {
     private var mockUptimeProvider: MockIUptimeProvider!
     private var mockLockoutUntilDateFactory: MockILockoutUntilDateFactory!
 
-    private var manager: LockoutManagerNew!
+    private var manager: LockoutManager!
 
     private var defaultUptime: TimeInterval = 1
 
@@ -31,7 +31,7 @@ class LockoutManagerTests: XCTestCase {
             when(mock.lockoutUntilDate(failedAttempts: any(), lockoutTimestamp: any(), uptime: any())).thenReturn(Date())
         }
 
-        manager = LockoutManagerNew(secureStorage: mockSecureStorage, uptimeProvider: mockUptimeProvider, lockoutTimeFrameFactory: mockLockoutUntilDateFactory)
+        manager = LockoutManager(secureStorage: mockSecureStorage, uptimeProvider: mockUptimeProvider, lockoutTimeFrameFactory: mockLockoutUntilDateFactory)
     }
 
     override func tearDown() {

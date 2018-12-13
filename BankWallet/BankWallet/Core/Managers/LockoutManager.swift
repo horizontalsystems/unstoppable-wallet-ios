@@ -1,72 +1,47 @@
 import Foundation
 
 class LockoutManager: ILockoutManager {
-    weak var delegate: ILockoutManagerDelegate? = nil
 
     private var secureStorage: ISecureStorage
     private var uptimeProvider: IUptimeProvider
-    private var timer: IPeriodicTimer
-    private var lockoutTimeFrameFactory: ILockoutTimeFrameFactory
+    private var lockoutUntilDateFactory: ILockoutUntilDateFactory
 
-    var lockoutThreshold = 5
+    private let lockoutThreshold = 5
 
-    init(secureStorage: ISecureStorage, uptimeProvider: IUptimeProvider, delegate: ILockoutManagerDelegate, timer: IPeriodicTimer, lockoutTimeFrameFactory: ILockoutTimeFrameFactory) {
-        self.delegate = delegate
+    init(secureStorage: ISecureStorage, uptimeProvider: IUptimeProvider, lockoutTimeFrameFactory: ILockoutUntilDateFactory) {
         self.secureStorage = secureStorage
         self.uptimeProvider = uptimeProvider
-        self.timer = timer
-        self.timer.schedule()
-        self.lockoutTimeFrameFactory = lockoutTimeFrameFactory
-
-        self.timer.delegate = self
+        self.lockoutUntilDateFactory = lockoutTimeFrameFactory
     }
 
-    var isLockedOut: Bool {
-        return failedTimes ?? 0 >= lockoutThreshold && lockoutTimeFrame > 0
-    }
+    var currentState: LockoutStateNew {
+        let uptime = uptimeProvider.uptime
+        let unlockAttempts = secureStorage.unlockAttempts ?? 0
+        let unlockDate = lockoutUntilDateFactory.lockoutUntilDate(failedAttempts: unlockAttempts, lockoutTimestamp: secureStorage.lockoutTimestamp ?? uptime, uptime: uptime)
 
-    var failedTimes: Int? {
-        get {
-            return secureStorage.unlockAttempts
-        }
-        set {
-            try? secureStorage.set(unlockAttempts: newValue)
-            if let newValue = newValue, newValue >= lockoutThreshold {
-                delegate?.lockout(timeFrame: lockoutTimeFrame)
+        if unlockAttempts >= lockoutThreshold, Date().compare(unlockDate) == .orderedAscending {
+            return .locked(till: unlockDate)
+        } else {
+            let failedAttempts = secureStorage.unlockAttempts
+            let attemptsLeft = failedAttempts.map { failedAttempts -> Int in
+                let attemptsLeft = lockoutThreshold - failedAttempts
+                return attemptsLeft < 1 ? 1 : attemptsLeft
             }
-            try? secureStorage.set(lockoutTimestamp: newValue == nil ? nil : uptimeProvider.uptime)
+            return .unlocked(attemptsLeft: attemptsLeft)
         }
     }
 
-    var attemptsLeft: Int {
-        get {
-            let attemptsLeft = lockoutThreshold - (failedTimes ?? 0)
-            return attemptsLeft <= 0 ? 1 : attemptsLeft
-        }
-    }
+    func didFailUnlock() {
+        let newValue = (secureStorage.unlockAttempts ?? 0) + 1
+        try? secureStorage.set(unlockAttempts: newValue)
 
-    var lockoutTimeFrame: TimeInterval {
-        updateStoredUptimeIfNeeded()
-
-        guard let lockoutTimestamp = secureStorage.lockoutTimestamp, let failedTimes = failedTimes else {
-            return 0
-        }
-        return lockoutTimeFrameFactory.lockoutTimeFrame(failedAttempts: failedTimes, lockoutTimestamp: lockoutTimestamp, uptime: uptimeProvider.uptime)
-    }
-
-    func updateStoredUptimeIfNeeded() {
-        if let lockoutTimestamp = secureStorage.lockoutTimestamp, lockoutTimestamp > uptimeProvider.uptime {
+        if newValue >= lockoutThreshold {
             try? secureStorage.set(lockoutTimestamp: uptimeProvider.uptime)
         }
     }
-}
 
-extension LockoutManager: IPeriodicTimerDelegate {
-
-    func onFire() {
-        if lockoutTimeFrame == 0 {
-            delegate?.finishLockout()
-        }
+    func dropFailedAttempts() {
+        try? secureStorage.set(unlockAttempts: nil)
     }
 
 }

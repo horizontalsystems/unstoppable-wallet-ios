@@ -6,10 +6,10 @@ class UnlockPinInteractor {
     private let pinManager: IPinManager
     private let biometricManager: IBiometricManager
     private let localStorage: ILocalStorage
-    private let lockoutManager: ILockoutManagerNew
+    private let lockoutManager: ILockoutManager
     private var timer: IOneTimeTimer
 
-    init(pinManager: IPinManager, biometricManager: IBiometricManager, localStorage: ILocalStorage, lockoutManager: ILockoutManagerNew, timer: IOneTimeTimer) {
+    init(pinManager: IPinManager, biometricManager: IBiometricManager, localStorage: ILocalStorage, lockoutManager: ILockoutManager, timer: IOneTimeTimer) {
         self.pinManager = pinManager
         self.biometricManager = biometricManager
         self.localStorage = localStorage
