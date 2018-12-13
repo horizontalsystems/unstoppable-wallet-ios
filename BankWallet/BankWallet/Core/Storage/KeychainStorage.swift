@@ -126,7 +126,7 @@ extension KeychainStorage: ISecureStorage {
     }
 
     func set(lockoutTimestamp: Double?) throws {
-        try set(value: lockoutTimestamp, forKey: unlockAttemptsKey)
+        try set(value: lockoutTimestamp, forKey: lockTimestampKey)
     }
 
     func clear() {
