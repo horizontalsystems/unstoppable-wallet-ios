@@ -40,6 +40,7 @@ extension UnlockPinInteractor: IUnlockPinInteractor {
             return false
         }
 
+        lockoutManager.dropFailedAttempts()
         return true
     }
 

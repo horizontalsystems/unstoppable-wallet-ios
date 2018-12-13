@@ -35,6 +35,7 @@ class UnlockPinInteractorTests: XCTestCase {
         stub(mockLockoutManager) { mock in
             when(mock.didFailUnlock()).thenDoNothing()
             when(mock.currentState.get).thenReturn(LockoutStateNew.unlocked(attemptsLeft: nil))
+            when(mock.dropFailedAttempts()).thenDoNothing()
         }
         stub(mockTimer) { mock in
             when(mock.delegate.set(any())).thenDoNothing()
@@ -185,6 +186,17 @@ class UnlockPinInteractorTests: XCTestCase {
         interactor.updateLockoutState()
 
         verify(mockDelegate).update(lockoutState: equal(to: lockedState))
+    }
+
+    func testDropFailedAttempts() {
+        let pin = "0000"
+        stub(mockPinManager) { mock in
+            when(mock.validate(pin: equal(to: pin))).thenReturn(true)
+        }
+
+        _ = interactor.unlock(with: pin)
+
+        verify(mockLockoutManager).dropFailedAttempts()
     }
 
 }

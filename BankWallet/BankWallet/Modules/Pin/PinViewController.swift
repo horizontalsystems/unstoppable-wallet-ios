@@ -172,7 +172,7 @@ extension PinViewController: IPinView {
 
     func show(attemptsLeft: Int?, forPage index: Int) {
         if let attemptsLeft = attemptsLeft {
-            show(error: "unlock_pin.wrong_pin.attempts_left".localized(attemptsLeft), forPage: index)
+            show(error: "unlock_pin.wrong_pin.attempts_left".localized("\(attemptsLeft)"), forPage: index)
         }
     }
 

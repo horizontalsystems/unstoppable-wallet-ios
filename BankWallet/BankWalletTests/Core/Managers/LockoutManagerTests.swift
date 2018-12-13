@@ -3,186 +3,124 @@ import Cuckoo
 @testable import Bank_Dev_T
 
 class LockoutManagerTests: XCTestCase {
-    private var mockLockoutDelegate: MockILockoutManagerDelegate!
     private var mockSecureStorage: MockISecureStorage!
     private var mockUptimeProvider: MockIUptimeProvider!
-    private var mockTimer: MockIPeriodicTimer!
-    private var mockLockoutTimeFrameFactory: MockILockoutTimeFrameFactory!
+    private var mockLockoutUntilDateFactory: MockILockoutUntilDateFactory!
 
-    private var manager: LockoutManager!
+    private var manager: LockoutManagerNew!
 
     private var defaultUptime: TimeInterval = 1
 
     override func setUp() {
         super.setUp()
 
-        mockLockoutDelegate = MockILockoutManagerDelegate()
         mockSecureStorage = MockISecureStorage()
         mockUptimeProvider = MockIUptimeProvider()
-        mockTimer = MockIPeriodicTimer()
-        mockLockoutTimeFrameFactory = MockILockoutTimeFrameFactory()
+        mockLockoutUntilDateFactory = MockILockoutUntilDateFactory()
 
         stub(mockSecureStorage) { mock in
-            when(mock.lockoutTimestamp.get).thenReturn(1)
+            when(mock.unlockAttempts.get).thenReturn(nil)
+            when(mock.lockoutTimestamp.get).thenReturn(nil)
             when(mock.set(unlockAttempts: any())).thenDoNothing()
             when(mock.set(lockoutTimestamp: any())).thenDoNothing()
         }
         stub(mockUptimeProvider) { mock in
             when(mock.uptime.get).thenReturn(defaultUptime)
         }
-        stub(mockLockoutDelegate) { mock in
-            when(mock.lockout(timeFrame: any())).thenDoNothing()
-            when(mock.finishLockout()).thenDoNothing()
-        }
-        stub(mockTimer) { mock in
-            when(mock.delegate.set(any())).thenDoNothing()
-            when(mock.schedule()).thenDoNothing()
-        }
-        stub(mockLockoutTimeFrameFactory) { mock in
-            when(mock.lockoutTimeFrame(failedAttempts: any(), lockoutTimestamp: any(), uptime: any())).thenReturn(1)
+        stub(mockLockoutUntilDateFactory) { mock in
+            when(mock.lockoutUntilDate(failedAttempts: any(), lockoutTimestamp: any(), uptime: any())).thenReturn(Date())
         }
 
-        manager = LockoutManager(secureStorage: mockSecureStorage, uptimeProvider: mockUptimeProvider, delegate: mockLockoutDelegate, timer: mockTimer, lockoutTimeFrameFactory: mockLockoutTimeFrameFactory)
+        manager = LockoutManagerNew(secureStorage: mockSecureStorage, uptimeProvider: mockUptimeProvider, lockoutTimeFrameFactory: mockLockoutUntilDateFactory)
     }
 
     override func tearDown() {
-        mockLockoutDelegate = nil
         mockSecureStorage = nil
         mockUptimeProvider = nil
-        mockTimer = nil
-        mockLockoutTimeFrameFactory = nil
+        mockLockoutUntilDateFactory = nil
 
         manager = nil
 
         super.tearDown()
     }
 
-    func testIsLockedTrue() {
+    func testDidFailUnlockFirst() {
         stub(mockSecureStorage) { mock in
-            when(mock.unlockAttempts.get).thenReturn(5)
+            when(mock.unlockAttempts.get).thenReturn(nil)
         }
-        XCTAssertTrue(manager.isLockedOut)
+
+        manager.didFailUnlock()
+        verify(mockSecureStorage).set(unlockAttempts: equal(to: 1))
     }
 
-    func testIsLockedFalse() {
+    func testDidFailUnlockSecond() {
+        stub(mockSecureStorage) { mock in
+            when(mock.unlockAttempts.get).thenReturn(1)
+        }
+
+        manager.didFailUnlock()
+        verify(mockSecureStorage).set(unlockAttempts: equal(to: 2))
+    }
+
+    func testCurrentStateUnlocked() {
+        stub(mockSecureStorage) { mock in
+            when(mock.unlockAttempts.get).thenReturn(nil)
+        }
+
+        XCTAssertEqual(manager.currentState, LockoutStateNew.unlocked(attemptsLeft: nil))
+    }
+
+    func testCurrentStateUnlocked_TwoAttempts() {
+        stub(mockSecureStorage) { mock in
+            when(mock.unlockAttempts.get).thenReturn(3)
+        }
+
+        XCTAssertEqual(manager.currentState, LockoutStateNew.unlocked(attemptsLeft: 2))
+    }
+
+    func testCurrentStateUnlocked_NotLessOne() {
+        stub(mockSecureStorage) { mock in
+            when(mock.unlockAttempts.get).thenReturn(7)
+        }
+
+        XCTAssertEqual(manager.currentState, LockoutStateNew.unlocked(attemptsLeft: 1))
+    }
+
+    func testUpdateLockoutTimestamp() {
+        let uptime: TimeInterval = 1
+        stub(mockSecureStorage) { mock in
+            when(mock.unlockAttempts.get).thenReturn(4)
+        }
+        stub(mockUptimeProvider) { mock in
+            when(mock.uptime.get).thenReturn(uptime)
+        }
+
+        manager.didFailUnlock()
+
+        verify(mockSecureStorage).set(lockoutTimestamp: equal(to: uptime))
+    }
+
+    func testCurrentStateLocked() {
+        let unlockDate = Date().addingTimeInterval(5)
+        let lockedState = LockoutStateNew.locked(till: unlockDate)
+
         stub(mockSecureStorage) { mock in
             when(mock.unlockAttempts.get).thenReturn(5)
             when(mock.lockoutTimestamp.get).thenReturn(1)
         }
         stub(mockUptimeProvider) { mock in
-            when(mock.uptime.get).thenReturn(500)
+            when(mock.uptime.get).thenReturn(1)
         }
-        stub(mockLockoutTimeFrameFactory) { mock in
-            when(mock.lockoutTimeFrame(failedAttempts: 5, lockoutTimestamp: 1, uptime: 500)).thenReturn(0)
+        stub(mockLockoutUntilDateFactory) { mock in
+            when(mock.lockoutUntilDate(failedAttempts: equal(to: 5), lockoutTimestamp: equal(to: 1), uptime: equal(to: 1))).thenReturn(unlockDate)
         }
 
-        XCTAssertFalse(manager.isLockedOut)
+        XCTAssertEqual(manager.currentState, lockedState)
     }
 
-    func testWriteFailTimes() {
-        manager.failedTimes = 3
-        verify(mockSecureStorage).set(unlockAttempts: equal(to: 3))
-    }
-
-    func testGetFailTimes() {
-        stub(mockSecureStorage) { mock in
-            when(mock.unlockAttempts.get).thenReturn(2)
-        }
-        XCTAssertEqual(manager.failedTimes, 2)
-    }
-
-    func testLockoutDelegate() {
-        let unlockAttempts = 5
-
-        stub(mockSecureStorage) { mock in
-            when(mock.unlockAttempts.get).thenReturn(unlockAttempts)
-        }
-
-        manager.failedTimes = unlockAttempts
-        verify(mockLockoutDelegate).lockout(timeFrame: any())
-    }
-
-    func testUnlockDelegate() {
-        stub(mockLockoutTimeFrameFactory) { mock in
-            when(mock.lockoutTimeFrame(failedAttempts: any(), lockoutTimestamp: any(), uptime: any())).thenReturn(0)
-        }
-        stub(mockSecureStorage) { mock in
-            when(mock.unlockAttempts.get).thenReturn(5)
-        }
-
-        manager.onFire()
-        verify(mockLockoutDelegate).finishLockout()
-    }
-
-    func testResetUptime_LockoutTimeFrame_Reboot() {
-        let newUptimeAfterReboot: TimeInterval = 1
-
-        stub(mockUptimeProvider) { mock in
-            when(mock.uptime.get).thenReturn(newUptimeAfterReboot)
-        }
-        stub(mockSecureStorage) { mock in
-            when(mock.lockoutTimestamp.get).thenReturn(2)
-            when(mock.unlockAttempts.get).thenReturn(5)
-        }
-
-        _ = manager.lockoutTimeFrame
-
-        verify(mockSecureStorage).set(lockoutTimestamp: equal(to: newUptimeAfterReboot))
-    }
-
-    func testResetUptime_FireTimer_Reboot() {
-        let newUptimeAfterReboot: TimeInterval = 1
-
-        stub(mockUptimeProvider) { mock in
-            when(mock.uptime.get).thenReturn(newUptimeAfterReboot)
-        }
-        stub(mockSecureStorage) { mock in
-            when(mock.lockoutTimestamp.get).thenReturn(2)
-            when(mock.unlockAttempts.get).thenReturn(5)
-        }
-
-        manager.onFire()
-
-        verify(mockSecureStorage).set(lockoutTimestamp: equal(to: newUptimeAfterReboot))
-    }
-
-    func testSetLockoutTimestamp() {
-        stub(mockSecureStorage) { mock in
-            when(mock.unlockAttempts.get).thenReturn(5)
-        }
-
-        manager.failedTimes = 5
-        verify(mockSecureStorage).set(lockoutTimestamp: equal(to: defaultUptime))
-    }
-
-    func testDropLockoutTimestamp() {
-        stub(mockSecureStorage) { mock in
-            when(mock.unlockAttempts.get).thenReturn(5)
-        }
-
-        manager.failedTimes = nil
-        verify(mockSecureStorage).set(lockoutTimestamp: equal(to: nil))
-    }
-
-    func testInitialAttemptsLeft() {
-        stub(mockSecureStorage) { mock in
-            when(mock.unlockAttempts.get).thenReturn(nil)
-        }
-        XCTAssertEqual(manager.attemptsLeft, 5)
-    }
-
-    func test3AttemptsLeft() {
-        stub(mockSecureStorage) { mock in
-            when(mock.unlockAttempts.get).thenReturn(2)
-        }
-        XCTAssertEqual(manager.attemptsLeft, 3)
-    }
-
-    func testLastAttemptLeft() {
-        stub(mockSecureStorage) { mock in
-            when(mock.unlockAttempts.get).thenReturn(8)
-        }
-        XCTAssertEqual(manager.attemptsLeft, 1)
+    func testDropFailedAttempts() {
+        manager.dropFailedAttempts()
+        verify(mockSecureStorage).set(unlockAttempts: equal(to: nil))
     }
 
 }

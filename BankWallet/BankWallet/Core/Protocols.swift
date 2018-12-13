@@ -260,4 +260,13 @@ protocol ILockoutTimeFrameFactory {
 protocol ILockoutManagerNew {
     var currentState: LockoutStateNew { get }
     func didFailUnlock()
+    func dropFailedAttempts()
+}
+
+protocol ILockoutUntilDateFactory {
+    func lockoutUntilDate(failedAttempts: Int, lockoutTimestamp: TimeInterval, uptime: TimeInterval) -> Date
+}
+
+protocol ICurrentDateProvider {
+    var currentDate: Date { get }
 }

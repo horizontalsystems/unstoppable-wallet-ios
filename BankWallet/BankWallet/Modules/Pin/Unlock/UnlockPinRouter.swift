@@ -26,7 +26,9 @@ extension UnlockPinRouter {
 
     static func module(unlockDelegate: IUnlockDelegate?, cancelable: Bool = false) -> UIViewController {
         let biometricManager = BiometricManager()
-        let lockoutManager = LockoutManagerNew()
+        let lockoutUntilDateFactory = LockoutUntilDateFactory(currentDateProvider: CurrentDateProvider())
+        let uptimeProvider = UptimeProvider()
+        let lockoutManager = LockoutManagerNew(secureStorage: App.shared.secureStorage, uptimeProvider: uptimeProvider, lockoutTimeFrameFactory: lockoutUntilDateFactory)
         let timer = OneTimeTimer()
 
         let router = UnlockPinRouter()
