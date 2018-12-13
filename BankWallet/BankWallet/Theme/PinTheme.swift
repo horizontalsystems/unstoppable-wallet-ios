@@ -5,9 +5,8 @@ class PinTheme {
     static let infoFontRegular = UIFont.cryptoBody2
     static let infoColor = UIColor.cryptoGray
     static let errorColor = UIColor.cryptoRed
-    static let infoMargin: CGFloat = 43
-    static let infoTopMargin: CGFloat = 16
-    static let infoBottomMargin: CGFloat = 33
+    static let infoHorizontalMargin: CGFloat = 16
+    static let infoVerticalMargin: CGFloat = 16
 
     static let dismissAnimationDuration: Double = 0.3
     static let cancelColor = UIColor.cryptoYellow

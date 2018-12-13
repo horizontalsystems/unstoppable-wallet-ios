@@ -24,7 +24,7 @@ class SetPinPresenterTests: XCTestCase {
 
         stub(mockView) { mock in
             when(mock.set(title: any())).thenDoNothing()
-            when(mock.addPage(withDescription: any(), showKeyboard: any())).thenDoNothing()
+            when(mock.addPage(withDescription: any())).thenDoNothing()
             when(mock.show(page: any())).thenDoNothing()
             when(mock.show(error: any(), forPage: any())).thenDoNothing()
             when(mock.show(error: any())).thenDoNothing()
@@ -59,8 +59,8 @@ class SetPinPresenterTests: XCTestCase {
 
     func testAddPages() {
         presenter.viewDidLoad()
-        verify(mockView).addPage(withDescription: "set_pin.info", showKeyboard: true)
-        verify(mockView).addPage(withDescription: "set_pin.confirm.info", showKeyboard: true)
+        verify(mockView).addPage(withDescription: "set_pin.info")
+        verify(mockView).addPage(withDescription: "set_pin.confirm.info")
     }
 
     func testShowConfirm() {

@@ -3,11 +3,11 @@ import SnapKit
 
 class PinView: UIView {
 
-    private var pinDotsView = PinDotsView()
-    private var descriptionLabel = UILabel()
-    private var errorLabel = UILabel()
-
-    var showKeyboard = false
+    let pinDotsView = PinDotsView()
+    private let descriptionLabel = UILabel()
+    private let errorLabel = UILabel()
+    private let cancelButtonView = UIView()
+    private let cancelButton = UIButton()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -24,10 +24,10 @@ class PinView: UIView {
         descriptionLabel.textAlignment = .center
         addSubview(descriptionLabel)
         descriptionLabel.snp.makeConstraints { maker in
-            maker.bottom.equalTo(self.pinDotsView.snp.top).offset(-PinTheme.infoBottomMargin)
+            maker.bottom.equalTo(self.pinDotsView.snp.top).offset(-PinTheme.infoVerticalMargin)
             maker.centerX.equalToSuperview()
-            maker.leading.equalToSuperview().offset(PinTheme.infoMargin)
-            maker.trailing.equalToSuperview().offset(-PinTheme.infoMargin)
+            maker.leading.equalToSuperview().offset(PinTheme.infoHorizontalMargin)
+            maker.trailing.equalToSuperview().offset(-PinTheme.infoHorizontalMargin)
         }
 
         errorLabel.font = PinTheme.infoFontRegular
@@ -37,20 +37,30 @@ class PinView: UIView {
         errorLabel.textAlignment = .center
         addSubview(errorLabel)
         errorLabel.snp.makeConstraints { maker in
-            maker.top.equalTo(self.pinDotsView.snp.bottom).offset(PinTheme.infoBottomMargin)
+            maker.top.equalTo(self.pinDotsView.snp.bottom).offset(PinTheme.infoVerticalMargin)
             maker.centerX.equalToSuperview()
-            maker.leading.equalToSuperview().offset(PinTheme.infoMargin)
-            maker.trailing.equalToSuperview().offset(-PinTheme.infoMargin)
+            maker.leading.equalToSuperview().offset(PinTheme.infoHorizontalMargin)
+            maker.trailing.equalToSuperview().offset(-PinTheme.infoHorizontalMargin)
+        }
+
+        addSubview(cancelButtonView)
+        cancelButtonView.snp.makeConstraints { maker in
+            maker.top.equalTo(self.pinDotsView)
+            maker.leading.bottom.trailing.equalToSuperview()
+        }
+
+        cancelButton.setTitle("alert.cancel".localized, for: .normal)
+        cancelButton.setTitleColor(PinTheme.cancelColor, for: .normal)
+        cancelButton.setTitleColor(PinTheme.cancelSelectedColor, for: .highlighted)
+        cancelButton.isHidden = true
+        cancelButtonView.addSubview(cancelButton)
+        cancelButton.snp.makeConstraints { maker in
+            maker.center.equalToSuperview()
         }
     }
 
     required init(coder aDecoder: NSCoder) {
         fatalError("not implemented")
-    }
-
-    @discardableResult
-    override func becomeFirstResponder() -> Bool {
-        return pinDotsView.becomeFirstResponder()
     }
 
     func bind(page: PinPage, onPinChange: ((String) -> ())? = nil) {
@@ -59,15 +69,17 @@ class PinView: UIView {
 
         pinDotsView.clean()
         pinDotsView.onPinEnter = onPinChange
-        if page.showKeyboard, !pinDotsView.isFirstResponder {
-            pinDotsView.becomeFirstResponder()
-        }
     }
 
     func shakeAndClear() {
         pinDotsView.shakeView {
             self.pinDotsView.clean()
         }
+    }
+
+    func showCancelButton(target: Any?, action: Selector) {
+        cancelButton.isHidden = false
+        cancelButton.addTarget(target, action: action, for: .touchUpInside)
     }
 
 }
