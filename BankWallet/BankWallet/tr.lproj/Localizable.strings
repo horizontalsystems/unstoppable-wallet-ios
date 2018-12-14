@@ -162,7 +162,6 @@
 
 "unlock_pin.info" = "PIN'i girin";
 "unlock_pin.cant_save_pin" = "Eyvah! PIN kodu çalışmadı, ACİLEN bize ulaşın!";
-"unlock_pin.wrong_pin.attempts_left" = "Wrong PIN, attempts left: %@";
 "unlock_pin.lockout_blocked_until" = "Disabled until: %@";
 
 //NumPad
