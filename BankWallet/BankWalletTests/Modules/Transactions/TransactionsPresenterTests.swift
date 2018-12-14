@@ -38,7 +38,6 @@ class TransactionsPresenterTests: XCTestCase {
         }
         stub(mockInteractor) { mock in
             when(mock.retrieveFilters()).thenDoNothing()
-            when(mock.refresh()).thenDoNothing()
             when(mock.set(coin: equal(to: bitcoin))).thenDoNothing()
             when(mock.set(coin: equal(to: ether))).thenDoNothing()
             when(mock.recordsCount.get).thenReturn(3)
@@ -78,11 +77,6 @@ class TransactionsPresenterTests: XCTestCase {
     func testInitialItems() {
         XCTAssertTrue(presenter.item(forIndex: 0) === bitcoinViewItem)
         XCTAssertTrue(presenter.item(forIndex: 1) === etherViewItem)
-    }
-
-    func testRefresh() {
-        presenter.refresh()
-        verify(mockInteractor).refresh()
     }
 
     func testUpdateFilterCoin() {

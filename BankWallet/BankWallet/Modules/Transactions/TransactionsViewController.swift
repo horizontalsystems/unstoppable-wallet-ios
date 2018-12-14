@@ -58,18 +58,11 @@ class TransactionsViewController: UITableViewController {
             maker.trailing.equalToSuperview().offset(-50)
         }
 
-        refreshControl = UIRefreshControl()
-        refreshControl?.addTarget(self, action: #selector(onRefresh), for: .valueChanged)
-
         delegate.viewDidLoad()
     }
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
-    }
-
-    @objc func onRefresh() {
-        delegate.refresh()
     }
 
 }
@@ -82,10 +75,6 @@ extension TransactionsViewController: ITransactionsView {
 
     func show(filters: [TransactionFilterItem]) {
         filterHeaderView.reload(filters: filters)
-    }
-
-    func didRefresh() {
-        refreshControl?.endRefreshing()
     }
 
     func reload() {

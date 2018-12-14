@@ -30,18 +30,11 @@ class BalanceViewController: UITableViewController {
         tableView?.delaysContentTouches = false
         tableView?.registerCell(forClass: BalanceCell.self)
 
-        refreshControl = UIRefreshControl()
-        refreshControl?.addTarget(self, action: #selector(onRefresh), for: .valueChanged)
-
         delegate.viewDidLoad()
     }
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
-    }
-
-    @objc func onRefresh() {
-        delegate.refresh()
     }
 
 }
@@ -62,7 +55,9 @@ extension BalanceViewController {
 
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if let cell = cell as? BalanceCell {
-            cell.bind(item: items[indexPath.row], selected: indexPathForSelectedRow == indexPath, onReceive: { [weak self] in
+            cell.bind(item: items[indexPath.row], selected: indexPathForSelectedRow == indexPath, onRefresh: { [weak self] in
+                self?.onRefresh(for: indexPath)
+            }, onReceive: { [weak self] in
                 self?.onReceive(for: indexPath)
             }, onPay: { [weak self] in
                 self?.onPay(for: indexPath)
@@ -76,11 +71,15 @@ extension BalanceViewController {
         }
     }
 
-    func onReceive(for indexPath: IndexPath) {
+    private func onRefresh(for indexPath: IndexPath) {
+        delegate.onRefresh(for: items[indexPath.row].coinValue.coin)
+    }
+
+    private func onReceive(for indexPath: IndexPath) {
         delegate.onReceive(for: items[indexPath.row].coinValue.coin)
     }
 
-    func onPay(for indexPath: IndexPath) {
+    private func onPay(for indexPath: IndexPath) {
         delegate.onPay(for: items[indexPath.row].coinValue.coin)
     }
 
@@ -136,10 +135,6 @@ extension BalanceViewController: IBalanceView {
     func show(items: [BalanceViewItem]) {
         self.items = items
         tableView?.reloadData()
-    }
-
-    func didRefresh() {
-        refreshControl?.endRefreshing()
     }
 
 }

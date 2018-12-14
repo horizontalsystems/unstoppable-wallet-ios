@@ -19,9 +19,13 @@ class BalanceCell: UITableViewCell {
 
     var failedImageView = UIImageView()
 
+    var refreshImageView = TintImageView(image: UIImage(named: "Refresh Icon"), tintColor: BalanceTheme.refreshButtonColor, selectedTintColor: BalanceTheme.refreshButtonColorHighlighted)
+    var refreshButton = RespondView()
+
     var receiveButton = RespondButton()
     var payButton = RespondButton()
 
+    var onRefresh: (() -> ())?
     var onPay: (() -> ())?
     var onReceive: (() -> ())?
 
@@ -59,6 +63,22 @@ class BalanceCell: UITableViewCell {
         nameLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         nameLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
 
+        roundedBackground.addSubview(refreshButton)
+        refreshButton.snp.makeConstraints { maker in
+            maker.leading.equalTo(self.nameLabel.snp.trailing)
+            maker.centerY.equalTo(self.nameLabel.snp.centerY)
+            maker.width.equalTo(BalanceTheme.refreshButtonSize)
+            maker.height.equalTo(BalanceTheme.refreshButtonSize)
+        }
+        refreshButton.handleTouch = { [weak self] in self?.refresh() }
+        refreshButton.cornerRadius = BalanceTheme.buttonCornerRadius
+
+        refreshButton.addSubview(refreshImageView)
+        refreshImageView.snp.makeConstraints { maker in
+            maker.center.equalToSuperview()
+        }
+        refreshButton.delegate = refreshImageView
+
         roundedBackground.addSubview(rateLabel)
         rateLabel.snp.makeConstraints { maker in
             maker.leading.equalToSuperview().offset(BalanceTheme.cellBigMargin)
@@ -70,7 +90,7 @@ class BalanceCell: UITableViewCell {
 
         roundedBackground.addSubview(currencyValueLabel)
         currencyValueLabel.snp.makeConstraints { maker in
-            maker.leading.equalTo(self.nameLabel.snp.trailing).offset(BalanceTheme.cellSmallMargin)
+            maker.leading.equalTo(self.refreshButton.snp.trailing).offset(BalanceTheme.cellSmallMargin).priority(.high)
             maker.trailing.equalToSuperview().offset(-BalanceTheme.cellBigMargin)
             maker.centerY.equalTo(self.nameLabel.snp.centerY)
         }
@@ -100,6 +120,7 @@ class BalanceCell: UITableViewCell {
         roundedBackground.addSubview(syncSpinner)
         syncSpinner.snp.makeConstraints { maker in
             maker.trailing.equalToSuperview().offset(-BalanceTheme.cellBigMargin)
+            maker.leading.equalTo(self.refreshButton.snp.trailing).offset(BalanceTheme.cellSmallMargin).priority(.medium)
             maker.centerY.equalTo(self.nameLabel.snp.centerY)
             maker.size.equalTo(BalanceTheme.spinnerSideSize)
         }
@@ -142,18 +163,21 @@ class BalanceCell: UITableViewCell {
         fatalError("not implemented")
     }
 
-    func bind(item: BalanceViewItem, selected: Bool, animated: Bool = false, onReceive: @escaping (() -> ()), onPay: @escaping (() -> ())) {
+    func bind(item: BalanceViewItem, selected: Bool, animated: Bool = false, onRefresh: @escaping (() -> ()), onReceive: @escaping (() -> ()), onPay: @escaping (() -> ())) {
+        self.onRefresh = onRefresh
         self.onPay = onPay
         self.onReceive = onReceive
 
         bindView(item: item, selected: selected, animated: animated)
 
-        if case let .syncing(progressSubject) = item.state {
-            progressDisposable = progressSubject
+        if case let .syncing(progressSubject) = item.state, let subject = progressSubject {
+            progressDisposable = subject
                     .observeOn(MainScheduler.instance)
                     .subscribe(onNext: { [weak self] progress in
                         self?.bind(progress: progress)
                     })
+        } else {
+            syncLabel.text = nil
         }
     }
 
@@ -208,6 +232,10 @@ class BalanceCell: UITableViewCell {
         } else {
             failedImageView.isHidden = true
         }
+
+        refreshButton.snp.updateConstraints { maker in
+            maker.width.equalTo(item.refreshVisible ? BalanceTheme.refreshButtonSize : 0)
+        }
     }
 
     private func bind(progress: Double) {
@@ -217,6 +245,10 @@ class BalanceCell: UITableViewCell {
     func unbind() {
         progressDisposable?.dispose()
         progressDisposable = nil
+    }
+
+    func refresh() {
+        onRefresh?()
     }
 
     func receive() {

@@ -58,7 +58,6 @@ protocol IWalletManager {
     var walletsSubject: PublishSubject<[Wallet]> { get }
 
     func initWallets(words: [String], coins: [Coin])
-    func refreshWallets()
     func clearWallets()
 }
 
@@ -74,7 +73,7 @@ protocol ITransactionManager: class {
 
 enum AdapterState {
     case synced
-    case syncing(progressSubject: BehaviorSubject<Double>)
+    case syncing(progressSubject: BehaviorSubject<Double>?)
     case notSynced
 }
 
@@ -92,6 +91,8 @@ protocol IAdapter: class {
     var transactionRecordsSubject: PublishSubject<[TransactionRecord]> { get }
 
     var debugInfo: String { get }
+
+    var refreshable: Bool { get }
 
     func start()
     func refresh()
