@@ -129,7 +129,7 @@
 
 "settings_about.title" = "À propos de";
 "settings_about.terms_privacy_subtitle" = "Terms & Confidentialité:";
-"settings_about.terms_privacy_text" = "Vos fonds stockés en sécurité sur votre appareil uniquement. Pas sur aucun serveur externe.\n\nL'application ne dépend d'aucun serveur ni d'aucune personne pour fonctionner.\n\nCertaines données d'application génériques, telles que les taux de change, sont stockées sur un stockage décentralisé (IPFS).\n\nL'application fonctionne partout, tant qu'il y a une connexion Internet.\n\nIl est impossible pour un tiers d'empêcher cette application de fonctionner.\n\nLe code alimentant cette application est gratuit et ouvert au public.\n\nIl est possible d'avoir des bugs dans le code. Et bien que nous ayons essayé de fournir le porte-monnaie le plus sécurisé, nous ne pouvons pas toujours garantir la sécurité de vos fonds. Personne ne peut.\n\nAssurez-vous de sauvegarder une clé secrète pour votre porte-monnaie! Ne montrez jamais votre clé secrète à personne.\n\nDo not jailbreak your phone or install apps from unknown (untrusted) sources.\n\nNe donnez pas votre appareil aux personnes non fiables.\n\nVous êtes seul responsable de la sécurité de votre clé secrète et de votre appareil.";
+"settings_about.terms_privacy_text" = "Cette application est décentralisé. Cela ne dépend pas du personnel du service d'assistance Web.\n\nCela fonctionne partout tant qu'il y a internet. Aucune entité ne peut empêcher cette application de fonctionner ou d'empêcher quelqu'un de l'utiliser.\n\nVos fonds stockés en sécurité sur votre portable, pas sur autres.\n\nIl est de votre responsabilité de sauvegarder votre clé secrète et de la garder privée. Ne le montre jamais à personne. En cas de perte, d’oubli ou de vol, vos fonds peuvent être utilisés par la personne qui détient votre clé secrète.\n\nNe piratez pas votre portable, n'installez pas d'applications de sources inconnues (non fiables), ne confiez pas votre appareil à des personnes non fiables et maintenez le système d'exploitation à jour. La sécurité de votre portefeuille dépend de tout cela.\n\nLe code alimentant cette application a été ouvert au public depuis le début. Nous avons essayé de créer le porte-monnaie le plus sécurisé et le plus décentralisé possible, mais rien ne garantit qu’il n’y ait pas de problèmes logiciels inattendus. Cela dit, ce porte-monnaie sera probablement beaucoup plus sécurisé que n'importe quelle application de porte-monnaie pour portable.\n\nCertaines données d'applications génériques non privées, telles que les taux de change, sont stockées dans un stockage décentralisé (IPFS). ";
 
 // Settings -> Security
 
@@ -162,3 +162,15 @@
 
 "unlock_pin.info" = "Entrez PIN";
 "unlock_pin.cant_save_pin" = "Oops! Nous ne pouvons pas enregistrer votre Pin, veuillez nous contacter au plus vite!";
+"unlock_pin.lockout_blocked_until" = "Désactivé jusqu'à: %@";
+
+//NumPad
+
+"numpad_2" = "A B C";
+"numpad_3" = "D E F";
+"numpad_4" = "G H I";
+"numpad_5" = "J K L";
+"numpad_6" = "M N O";
+"numpad_7" = "P Q R S";
+"numpad_8" = "T U V";
+"numpad_9" = "W X Y Z";
