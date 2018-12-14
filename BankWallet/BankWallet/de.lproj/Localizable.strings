@@ -162,7 +162,7 @@
 
 "unlock_pin.info" = "Gib deine PIN ein";
 "unlock_pin.cant_save_pin" = "Autsch! Wir können den PIN nicht speichern, kontaktieren Sie uns bitte so schnell wie möglich!";
-"unlock_pin.lockout_blocked_until" = "Disabled until: %@";
+"unlock_pin.lockout_blocked_until" = "Deaktiviert bis: %@ ";
 
 //NumPad
 
