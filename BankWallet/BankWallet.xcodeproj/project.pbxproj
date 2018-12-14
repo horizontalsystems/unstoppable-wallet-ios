@@ -337,14 +337,12 @@
 		1A564AAA92C0EBFB1C26DB29 /* UptimeProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564F697ACF24DA968884EA /* UptimeProvider.swift */; };
 		1A564AAE494C986DF8883E0B /* SecuritySettingsPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56444A8B170E65EE00C33F /* SecuritySettingsPresenterTests.swift */; };
 		1A564AB936D91E4E5FBBAA4C /* BalanceHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56463AFF1D05E33BA25C8A /* BalanceHeaderView.swift */; };
-		1A564ABA900AA2F6300E2686 /* LockoutTimeFrameFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56497AB7BE7F1BC16BDE4C /* LockoutTimeFrameFactory.swift */; };
 		1A564AF044871B706A39C467 /* LockoutState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56488B2051E9529CE8742E /* LockoutState.swift */; };
 		1A564AFE8103BA974943D4E7 /* InputFieldTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564939814A9D9F47D41EEB /* InputFieldTheme.swift */; };
 		1A564B096FFE228DF453A66D /* TransactionInfoPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564091A9C12F224A18B740 /* TransactionInfoPresenter.swift */; };
 		1A564B49C052D4BF6C53DE7F /* BalanceInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564EA89D7182D3D3F669C3 /* BalanceInteractorTests.swift */; };
 		1A564B955AE4E27AD7B232CC /* TransactionTitleItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564C27C6CDAE6E692C4A14 /* TransactionTitleItem.swift */; };
 		1A564BAAAD199DDF96A84006 /* SecuritySettingsInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564258FC24334581197AC1 /* SecuritySettingsInteractorTests.swift */; };
-		1A564BB10F8A3540A194F708 /* LockoutTimeFrameFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56497AB7BE7F1BC16BDE4C /* LockoutTimeFrameFactory.swift */; };
 		1A564BD5E7709C07FD063961 /* TransactionsFilterTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5647CE5852E959DA7EB89A /* TransactionsFilterTheme.swift */; };
 		1A564BDABCF8EA54F5599FF7 /* LatestRate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5640AA47846498D56A36E6 /* LatestRate.swift */; };
 		1A564BE00FB2C76EAA44A2E3 /* SettingsRightImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56499AAEEED9EA3CE9E0A7 /* SettingsRightImageCell.swift */; };
@@ -374,7 +372,6 @@
 		1A564E374CD439E2C1334208 /* CurrentDateProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564FC3433E72C8A63AC5F5 /* CurrentDateProvider.swift */; };
 		1A564E3D1BD7610D43898DB6 /* MainSettingsModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5647AD7481B36F20D4DDF9 /* MainSettingsModule.swift */; };
 		1A564E3E29F0182A0230BC5D /* TransactionInfoBaseValueItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564F2613ECE2DE4A6F9F79 /* TransactionInfoBaseValueItem.swift */; };
-		1A564E481B2E60F065347AF0 /* LockoutTimeFrameFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56497AB7BE7F1BC16BDE4C /* LockoutTimeFrameFactory.swift */; };
 		1A564E608B71D5E8336BF7AA /* LanguageSettingsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564094488F092EDA007FE9 /* LanguageSettingsRouter.swift */; };
 		1A564E60E4500D62863F4353 /* PinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564948450C4AADB2679AC0 /* PinViewController.swift */; };
 		1A564E61E0EBDDA6006279F2 /* PinInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564AA8BF74E16E91DC46D5 /* PinInteractorTests.swift */; };
@@ -1061,7 +1058,6 @@
 		1A56490AEC0BDFCA98275B49 /* PinModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinModule.swift; sourceTree = "<group>"; };
 		1A564939814A9D9F47D41EEB /* InputFieldTheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputFieldTheme.swift; sourceTree = "<group>"; };
 		1A564948450C4AADB2679AC0 /* PinViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinViewController.swift; sourceTree = "<group>"; };
-		1A56497AB7BE7F1BC16BDE4C /* LockoutTimeFrameFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LockoutTimeFrameFactory.swift; sourceTree = "<group>"; };
 		1A564996AA2AE3468D2992E5 /* EditPinPresenterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditPinPresenterTests.swift; sourceTree = "<group>"; };
 		1A56499AAEEED9EA3CE9E0A7 /* SettingsRightImageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsRightImageCell.swift; sourceTree = "<group>"; };
 		1A5649BED7237B075AE7F8B8 /* SendTitleItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendTitleItemView.swift; sourceTree = "<group>"; };
@@ -1461,7 +1457,6 @@
 				11B3576492DE68F2507BB711 /* AdapterFactory.swift */,
 				11B3569AD3ABD5F26CB51506 /* TransactionViewItemFactory.swift */,
 				11B357776F706C10E8B14C4E /* TransactionViewItem.swift */,
-				1A56497AB7BE7F1BC16BDE4C /* LockoutTimeFrameFactory.swift */,
 				1A5641ABEF9064B6FCC8DF87 /* LockoutUntilDateFactory.swift */,
 				1A564F697ACF24DA968884EA /* UptimeProvider.swift */,
 				1A564FC3433E72C8A63AC5F5 /* CurrentDateProvider.swift */,
@@ -2836,7 +2831,6 @@
 				11B35669B7CAC5A76825BD9C /* NumPadTheme.swift in Sources */,
 				11B3581D452FC3D2569BBA71 /* UIButton.swift in Sources */,
 				11B354E2E53DB96607574EA1 /* UIImage.swift in Sources */,
-				1A564BB10F8A3540A194F708 /* LockoutTimeFrameFactory.swift in Sources */,
 				1A564DEAF0A6DF97F029594E /* LockoutManager.swift in Sources */,
 				1A564099643E74B6D1E45CD6 /* LockoutState.swift in Sources */,
 				1A564D45DD956D909C7B6C16 /* OneTimeTimer.swift in Sources */,
@@ -3129,7 +3123,6 @@
 				11B35EF16E8F5AEE9336AE30 /* NumPadTheme.swift in Sources */,
 				11B35D96561FFB5973987D75 /* UIButton.swift in Sources */,
 				11B35BDBD856C645045553D2 /* UIImage.swift in Sources */,
-				1A564ABA900AA2F6300E2686 /* LockoutTimeFrameFactory.swift in Sources */,
 				1A564A832CFA51E737EF3AE4 /* LockoutManager.swift in Sources */,
 				1A564E2B4B30AB0F54A2FBF6 /* LockoutState.swift in Sources */,
 				1A564F2D363CB805A486F4A5 /* OneTimeTimer.swift in Sources */,
@@ -3382,7 +3375,6 @@
 				11B35075ECB2F181418CD3A8 /* NumPadTheme.swift in Sources */,
 				11B356ACF29311C0C85E1841 /* UIButton.swift in Sources */,
 				11B35D0542ACB56A31C61143 /* UIImage.swift in Sources */,
-				1A564E481B2E60F065347AF0 /* LockoutTimeFrameFactory.swift in Sources */,
 				1A564DF36A4269C9FB869778 /* LockoutManager.swift in Sources */,
 				1A564AF044871B706A39C467 /* LockoutState.swift in Sources */,
 				1A564A27A29C3AC7EF21B57D /* OneTimeTimer.swift in Sources */,
