@@ -162,7 +162,6 @@
 
 "unlock_pin.info" = "Gib deine PIN ein";
 "unlock_pin.cant_save_pin" = "Autsch! Wir können den PIN nicht speichern, kontaktieren Sie uns bitte so schnell wie möglich!";
-"unlock_pin.wrong_pin.attempts_left" = "Wrong PIN, attempts left: %@";
 "unlock_pin.lockout_blocked_until" = "Disabled until: %@";
 
 //NumPad
