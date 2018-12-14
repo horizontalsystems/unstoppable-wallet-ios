@@ -28,6 +28,10 @@ protocol ISecureStorage: class {
     func set(words: [String]?) throws
     var pin: String? { get }
     func set(pin: String?) throws
+    var unlockAttempts: Int? { get }
+    func set(unlockAttempts: Int?) throws
+    var lockoutTimestamp: TimeInterval? { get }
+    func set(lockoutTimestamp: TimeInterval?) throws
     func clear()
 }
 
@@ -210,6 +214,11 @@ protocol IPeriodicTimer {
     func schedule()
 }
 
+protocol IOneTimeTimer {
+    var delegate: IPeriodicTimerDelegate? { get set }
+    func schedule(date: Date)
+}
+
 protocol IPeriodicTimerDelegate: class {
     func onFire()
 }
@@ -226,4 +235,26 @@ protocol IPasteboardManager {
 
 protocol ITransactionViewItemFactory {
     func item(fromRecord record: TransactionRecord) -> TransactionViewItem
+}
+
+protocol ILockoutManager {
+    var currentState: LockoutState { get }
+    func didFailUnlock()
+    func dropFailedAttempts()
+}
+
+protocol ILockoutUntilDateFactory {
+    func lockoutUntilDate(failedAttempts: Int, lockoutTimestamp: TimeInterval, uptime: TimeInterval) -> Date
+}
+
+protocol ICurrentDateProvider {
+    var currentDate: Date { get }
+}
+
+protocol IUptimeProvider {
+    var uptime: TimeInterval { get }
+}
+
+protocol ILockoutTimeFrameFactory {
+    func lockoutTimeFrame(failedAttempts: Int, lockoutTimestamp: TimeInterval, uptime: TimeInterval) -> TimeInterval
 }

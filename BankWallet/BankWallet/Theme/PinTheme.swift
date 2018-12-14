@@ -11,4 +11,7 @@ class PinTheme {
     static let dismissAnimationDuration: Double = 0.3
     static let cancelColor = UIColor.cryptoYellow
     static let cancelSelectedColor = UIColor.cryptoYellowPressed
+    static let lockoutLabelTopMargin: CGFloat = 24
+    static let lockoutLabelFont = UIFont.cryptoBody2
+    static let lockoutLabelColor = UIColor.cryptoGray
 }

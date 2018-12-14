@@ -9,6 +9,8 @@ protocol IPinView: class {
     func showPinWrong(page index: Int)
     func showCancel()
     func showSuccess()
+    func showLockView(till date: Date)
+    func show(attemptsLeft: Int?, forPage index: Int)
 }
 
 protocol IPinViewDelegate {

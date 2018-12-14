@@ -27,6 +27,8 @@ extension UnlockPinPresenter: IPinViewDelegate {
         if configuration.cancellable {
             view?.showCancel()
         }
+
+        interactor.updateLockoutState()
     }
 
     func onEnter(pin: String, forPage index: Int) {
@@ -50,6 +52,15 @@ extension UnlockPinPresenter: IUnlockPinInteractorDelegate {
     }
 
     func didFailBiometricUnlock() {
+    }
+
+    func update(lockoutState: LockoutState) {
+        switch lockoutState {
+        case .unlocked(let attemptsLeft):
+            view?.show(attemptsLeft: attemptsLeft, forPage: Page.unlock.rawValue)
+        case .locked(let dueDate):
+            view?.showLockView(till: dueDate)
+        }
     }
 
 }
