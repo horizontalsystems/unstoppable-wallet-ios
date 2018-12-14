@@ -10,6 +10,8 @@ class PinViewController: UIViewController {
     private var pages = [PinPage]()
     private var pinViews = [PinView]()
 
+    private let lockoutView = LockoutView()
+
     private var currentPage = 0
 
     init(delegate: IPinViewDelegate) {
@@ -40,6 +42,12 @@ class PinViewController: UIViewController {
         }
 
         numPad.numPadDelegate = self
+
+        view.addSubview(lockoutView)
+        lockoutView.hide()
+        lockoutView.snp.makeConstraints { maker in
+            maker.edges.equalToSuperview()
+        }
 
         super.viewDidLoad()
         delegate.viewDidLoad()
@@ -144,10 +152,11 @@ extension PinViewController: IPinView {
     }
 
     func showLockView(till date: Date) {
-        show(error: "u r blocked till: \(date)")
+        lockoutView.show(expirationDate: date)
     }
 
     func show(attemptsLeft: Int?, forPage index: Int) {
+        lockoutView.hide()
         if let attemptsLeft = attemptsLeft {
             show(error: "unlock_pin.wrong_pin.attempts_left".localized("\(attemptsLeft)"), forPage: index)
         }

@@ -67,4 +67,8 @@ public class DateHelper {
         return formatter.string(from: date)
     }
 
+    func formatLockoutExpirationDate(from date: Date) -> String {
+        return getFormatter(forFormat: "\(DateHelper.correctedSystemHourFormat):mm:ss").string(from: date)
+    }
+
 }
