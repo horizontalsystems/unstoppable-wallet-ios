@@ -58,14 +58,16 @@ class BalancePresenterTests: XCTestCase {
                 exchangeValue: CurrencyValue(currency: currency, value: bitcoinRate.value),
                 currencyValue: CurrencyValue(currency: currency, value: bitcoinRate.value * bitcoinValue.value),
                 state: bitcoinAdapterState,
-                rateExpired: true
+                rateExpired: true,
+                refreshVisible: false
         )
         expectedEtherItem = BalanceViewItem(
                 coinValue: etherValue,
                 exchangeValue: CurrencyValue(currency: currency, value: etherRate.value),
                 currencyValue: CurrencyValue(currency: currency, value: etherRate.value * etherValue.value),
                 state: etherAdapterState,
-                rateExpired: false
+                rateExpired: false,
+                refreshVisible: true
         )
         mockBitcoinAdapter = MockIAdapter()
         mockEtherAdapter = MockIAdapter()
@@ -81,7 +83,6 @@ class BalancePresenterTests: XCTestCase {
             when(mock.set(title: any())).thenDoNothing()
             when(mock.show(totalBalance: any(), upToDate: any())).thenDoNothing()
             when(mock.show(items: any())).thenDoNothing()
-            when(mock.didRefresh()).thenDoNothing()
         }
         stub(mockRouter) { mock in
             when(mock.openReceive(for: any())).thenDoNothing()
@@ -93,16 +94,18 @@ class BalancePresenterTests: XCTestCase {
             when(mock.rate(forCoin: equal(to: bitcoin))).thenReturn(bitcoinRate)
             when(mock.rate(forCoin: equal(to: ether))).thenReturn(etherRate)
 
-            when(mock.refresh()).thenDoNothing()
+            when(mock.refresh(coin: any())).thenDoNothing()
         }
 
         stub(mockBitcoinAdapter) { mock in
             when(mock.balance.get).thenReturn(bitcoinValue.value)
             when(mock.state.get).thenReturn(bitcoinAdapterState)
+            when(mock.refreshable.get).thenReturn(false)
         }
         stub(mockEtherAdapter) { mock in
             when(mock.balance.get).thenReturn(etherValue.value)
             when(mock.state.get).thenReturn(etherAdapterState)
+            when(mock.refreshable.get).thenReturn(true)
         }
         presenter = BalancePresenter(interactor: mockInteractor, router: mockRouter)
         presenter.view = mockView
@@ -177,7 +180,8 @@ class BalancePresenterTests: XCTestCase {
                 exchangeValue: CurrencyValue(currency: currency, value: bitcoinRate.value),
                 currencyValue: CurrencyValue(currency: currency, value: bitcoinRate.value * newBitcoinValue.value),
                 state: bitcoinAdapterState,
-                rateExpired: true
+                rateExpired: true,
+                refreshVisible: false
         )
 
         stub(mockBitcoinAdapter) { mock in
@@ -199,12 +203,34 @@ class BalancePresenterTests: XCTestCase {
                 exchangeValue: CurrencyValue(currency: currency, value: newEtherRate.value),
                 currencyValue: CurrencyValue(currency: currency, value: newEtherRate.value * etherValue.value),
                 state: etherAdapterState,
-                rateExpired: true
+                rateExpired: true,
+                refreshVisible: true
         )
 
         stub(mockInteractor) { mock in
             when(mock.rate(forCoin: equal(to: ether))).thenReturn(newEtherRate)
         }
+        presenter.didUpdate()
+
+        verifyMockViewShows(items: [expectedBitcoinItem, newExpectedEtherItem])
+    }
+
+    func testWalletViewItems_DidUpdateRefreshVisible() {
+        let newState = AdapterState.syncing(progressSubject: nil)
+
+        let newExpectedEtherItem = BalanceViewItem(
+                coinValue: etherValue,
+                exchangeValue: CurrencyValue(currency: currency, value: etherRate.value),
+                currencyValue: CurrencyValue(currency: currency, value: etherRate.value * etherValue.value),
+                state: newState,
+                rateExpired: false,
+                refreshVisible: false
+        )
+
+        stub(mockEtherAdapter) { mock in
+            when(mock.state.get).thenReturn(newState)
+        }
+
         presenter.didUpdate()
 
         verifyMockViewShows(items: [expectedBitcoinItem, newExpectedEtherItem])
@@ -247,16 +273,19 @@ class BalancePresenterTests: XCTestCase {
                 exchangeValue: CurrencyValue(currency: currency, value: thorRate.value),
                 currencyValue: CurrencyValue(currency: currency, value: thorRate.value * thorValue.value),
                 state: thorAdapterState,
-                rateExpired: true
+                rateExpired: true,
+                refreshVisible: false
         )
 
         stub(thorAdapter) { mock in
             when(mock.balance.get).thenReturn(thorValue.value)
             when(mock.state.get).thenReturn(thorAdapterState)
+            when(mock.refreshable.get).thenReturn(false)
         }
         stub(mockInteractor) { mock in
             when(mock.wallets.get).thenReturn([bitcoinWallet, etherWallet, thorWallet])
             when(mock.rate(forCoin: equal(to: thor))).thenReturn(thorRate)
+            when(mock.refresh(coin: any())).thenDoNothing()
         }
 
         presenter.didUpdate()
@@ -265,8 +294,8 @@ class BalancePresenterTests: XCTestCase {
     }
 
     func testRefreshFromView() {
-        presenter.refresh()
-        verify(mockInteractor).refresh()
+        presenter.onRefresh(for: ether)
+        verify(mockInteractor).refresh(coin: equal(to: ether))
     }
 
     func testOpenReceive() {
@@ -277,11 +306,6 @@ class BalancePresenterTests: XCTestCase {
     func testOpenSend() {
         presenter.onPay(for: bitcoin)
         verify(mockRouter).openSend(for: bitcoin)
-    }
-
-    func testDidRefresh() {
-        presenter.didRefresh()
-        verify(mockView).didRefresh()
     }
 
     private func verifyMockViewShows(items: [BalanceViewItem]) {

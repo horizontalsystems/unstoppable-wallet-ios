@@ -1,5 +1,4 @@
 import RxSwift
-import Foundation
 
 class TransactionsInteractor {
     private let disposeBag = DisposeBag()
@@ -47,12 +46,6 @@ extension TransactionsInteractor: ITransactionsInteractor {
     func retrieveFilters() {
         let coins = walletManager.wallets.map { $0.coin }
         delegate?.didRetrieve(filters: coins)
-    }
-
-    func refresh() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + refreshTimeout, execute: {
-            self.delegate?.didRefresh()
-        })
     }
 
 }

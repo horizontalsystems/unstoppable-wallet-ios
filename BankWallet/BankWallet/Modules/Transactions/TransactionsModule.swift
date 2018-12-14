@@ -22,14 +22,12 @@ extension TransactionStatus: Equatable {
 protocol ITransactionsView: class {
     func set(title: String)
     func show(filters: [TransactionFilterItem])
-    func didRefresh()
     func reload()
 }
 
 protocol ITransactionsViewDelegate {
     func viewDidLoad()
     func onTransactionItemClick(transaction: TransactionViewItem)
-    func refresh()
     func onFilterSelect(coin: Coin?)
 
     var itemsCount: Int { get }
@@ -38,7 +36,6 @@ protocol ITransactionsViewDelegate {
 
 protocol ITransactionsInteractor {
     func retrieveFilters()
-    func refresh()
     func set(coin: Coin?)
 
     var recordsCount: Int { get }
@@ -48,7 +45,6 @@ protocol ITransactionsInteractor {
 protocol ITransactionsInteractorDelegate: class {
     func didRetrieve(filters: [Coin])
     func didUpdateDataSource()
-    func didRefresh()
 }
 
 protocol ITransactionsRouter {

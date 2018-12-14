@@ -30,12 +30,18 @@ class BalancePresenter {
                 totalBalance += balance * rate.value
             }
 
+            var syncing = false
+            if case .syncing = wallet.adapter.state {
+                syncing = true
+            }
+
             viewItems.append(BalanceViewItem(
                     coinValue: CoinValue(coin: wallet.coin, value: balance),
                     exchangeValue: rate.map { CurrencyValue(currency: currency, value: $0.value) },
                     currencyValue: rate.map { CurrencyValue(currency: currency, value: balance * $0.value) },
                     state: wallet.adapter.state,
-                    rateExpired: rateExpired
+                    rateExpired: rateExpired,
+                    refreshVisible: wallet.adapter.refreshable && !syncing
             ))
 
             if case .synced = wallet.adapter.state {
@@ -59,10 +65,6 @@ extension BalancePresenter: IBalanceInteractorDelegate {
         updateView()
     }
 
-    func didRefresh() {
-        view?.didRefresh()
-    }
-
 }
 
 extension BalancePresenter: IBalanceViewDelegate {
@@ -73,8 +75,8 @@ extension BalancePresenter: IBalanceViewDelegate {
         updateView()
     }
 
-    func refresh() {
-        interactor.refresh()
+    func onRefresh(for coin: Coin) {
+        interactor.refresh(coin: coin)
     }
 
     func onReceive(for coin: Coin) {

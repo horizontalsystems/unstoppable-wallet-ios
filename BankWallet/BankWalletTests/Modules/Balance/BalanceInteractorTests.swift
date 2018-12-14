@@ -58,11 +58,9 @@ class BalanceInteractorTests: XCTestCase {
 
         stub(mockDelegate) { mock in
             when(mock.didUpdate()).thenDoNothing()
-            when(mock.didRefresh()).thenDoNothing()
         }
         stub(mockWalletManager) { mock in
             when(mock.wallets.get).thenReturn(expectedWallets)
-            when(mock.refreshWallets()).thenDoNothing()
         }
         stub(mockRateManager) { mock in
             when(mock.subject.get).thenReturn(ratesSubject)
@@ -78,6 +76,7 @@ class BalanceInteractorTests: XCTestCase {
         stub(mockEtherAdapter) { mock in
             when(mock.balanceSubject.get).thenReturn(etherBalanceSubject)
             when(mock.stateSubject.get).thenReturn(etherStateSubject)
+            when(mock.refresh()).thenDoNothing()
         }
         stub(mockCashAdapter) { mock in
             when(mock.balanceSubject.get).thenReturn(cashBalanceSubject)
@@ -146,8 +145,8 @@ class BalanceInteractorTests: XCTestCase {
     }
 
     func testRefresh() {
-        interactor.refresh()
-        verify(mockWalletManager).refreshWallets()
+        interactor.refresh(coin: ether)
+        verify(mockEtherAdapter).refresh()
     }
 
     func testWalletBalanceUpdate() {
@@ -173,12 +172,6 @@ class BalanceInteractorTests: XCTestCase {
         currencySubject.onNext(newCurrency)
 
         verify(mockDelegate).didUpdate()
-    }
-
-    func testDidRefresh() {
-        interactor.refresh()
-        waitForMainQueue()
-        verify(mockDelegate).didRefresh()
     }
 
 }

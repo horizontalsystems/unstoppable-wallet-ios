@@ -88,14 +88,6 @@ class WalletManagerTests: XCTestCase {
         XCTAssertEqual(manager.wallets.count, 0)
     }
 
-    func testRefreshWallets() {
-        manager.initWallets(words: words, coins: enabledCoins)
-        manager.refreshWallets()
-
-        verify(mockBitcoinAdapter).refresh()
-        verify(mockEthereumAdapter).refresh()
-    }
-
     func testClearWallets() {
         manager.initWallets(words: words, coins: enabledCoins)
         manager.clearWallets()

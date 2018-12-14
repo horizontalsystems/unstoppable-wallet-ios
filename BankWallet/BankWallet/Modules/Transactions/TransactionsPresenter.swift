@@ -26,10 +26,6 @@ extension TransactionsPresenter: ITransactionsViewDelegate {
         router.openTransactionInfo(transactionHash: transaction.transactionHash)
     }
 
-    func refresh() {
-        interactor.refresh()
-    }
-
     func onFilterSelect(coin: Coin?) {
         interactor.set(coin: coin)
     }
@@ -57,10 +53,6 @@ extension TransactionsPresenter: ITransactionsInteractorDelegate {
         }
         filterItems.insert(TransactionFilterItem(coin: nil, name: "transactions.filter_all"), at: 0)
         view?.show(filters: filterItems)
-    }
-
-    func didRefresh() {
-        view?.didRefresh()
     }
 
 }
