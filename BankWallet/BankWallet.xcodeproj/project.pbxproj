@@ -320,6 +320,7 @@
 		1A564947E6731A05DF6C19F4 /* FullTransactionInfoTextCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56424F4DB6D8384D8F2489 /* FullTransactionInfoTextCell.swift */; };
 		1A56497B4905D999F96E0461 /* SecuritySettingsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5641B7D1079995F147F7D2 /* SecuritySettingsRouter.swift */; };
 		1A56498EE4AF6DADD0A5939A /* TransactionFromToHashItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564E1F405D2D57FBC9E799 /* TransactionFromToHashItemView.swift */; };
+		1A56499243ADE79C148E76CD /* Production.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 1A564DA6B7CD7CEC516E5FD8 /* Production.xcconfig */; };
 		1A56499530070968BF68AA2D /* BiometricManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564901BE8CB514936E47AF /* BiometricManager.swift */; };
 		1A5649A1763E1ADB6572ECBC /* UptimeProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564F697ACF24DA968884EA /* UptimeProvider.swift */; };
 		1A5649A92BA5A92EB2791B7F /* SettingsInfoFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56487BA5FFC1BC45D6F25C /* SettingsInfoFooter.swift */; };
@@ -349,7 +350,10 @@
 		1A564BE5BF0E283B1758F2F0 /* BalanceHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1A5646B68188CD13969CE766 /* BalanceHeaderView.xib */; };
 		1A564BF5CEF2800EF05EAAB0 /* BalancePresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5646AB24E23765AD12C83E /* BalancePresenterTests.swift */; };
 		1A564C1405D8C21185B0D4C1 /* TransactionsCurrencyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5649C888E12C1A0B70EFA8 /* TransactionsCurrencyCell.swift */; };
+		1A564C445B1E506FCE95F835 /* Production.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 1A564DA6B7CD7CEC516E5FD8 /* Production.xcconfig */; };
+		1A564C4F34F821A8FC1FD62D /* Development.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 1A5649BA134C0075F6777FA1 /* Development.xcconfig */; };
 		1A564C84E08DE681615528E3 /* SendTitleItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5649BED7237B075AE7F8B8 /* SendTitleItemView.swift */; };
+		1A564C9254DAC42C4F2390CA /* Production.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 1A564DA6B7CD7CEC516E5FD8 /* Production.xcconfig */; };
 		1A564CC0C92C44E29FEA6642 /* SetPinPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564E534927A26ACA3B1D83 /* SetPinPresenterTests.swift */; };
 		1A564CDEE86EFCB66EB45FD6 /* DepositCollectionItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564B0A9AB0EAAB5574FDD0 /* DepositCollectionItemView.swift */; };
 		1A564CE48F0132E494B7250C /* TransactionsPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56401A0F6DB2F88A01ED73 /* TransactionsPresenterTests.swift */; };
@@ -378,6 +382,8 @@
 		1A564E98E286D37F88D34F28 /* ManagePinPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564A3E6B23CF04ECEB40DC /* ManagePinPresenter.swift */; };
 		1A564EA01F3260DE1FB535EC /* EditPinModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564D0BE1310BFCC7D8D774 /* EditPinModule.swift */; };
 		1A564EBDB15B44C38136B645 /* SecuritySettingsModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5641572B6E46E18B52A6A9 /* SecuritySettingsModule.swift */; };
+		1A564EC8B02325B384F8885F /* Development.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 1A5649BA134C0075F6777FA1 /* Development.xcconfig */; };
+		1A564EFD91FFF1BE4EBD35AD /* Development.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 1A5649BA134C0075F6777FA1 /* Development.xcconfig */; };
 		1A564F0F3119055C658B78A7 /* LocalizationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564F49E3B187A3564C0561 /* LocalizationManager.swift */; };
 		1A564F2D363CB805A486F4A5 /* OneTimeTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56468BE2370BCAA8BDA2FC /* OneTimeTimer.swift */; };
 		1A564F41635CE7EB9B441040 /* LockoutUntilDateFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5641ABEF9064B6FCC8DF87 /* LockoutUntilDateFactory.swift */; };
@@ -386,6 +392,24 @@
 		1A564FBBE3324B1D8EDA3232 /* PinInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5640B8B65EAECA3A36F89E /* PinInteractor.swift */; };
 		41A22A9B2FA01C41637B3EB9 /* Pods_Bank_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C34C463CE4115A838C13EA33 /* Pods_Bank_Tests.framework */; };
 		4BBB009736B540C47E50CE37 /* Pods_Bank.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 754FC632F3964D9EF1172D85 /* Pods_Bank.framework */; };
+		5026000021C3CA280023EEA2 /* Bank.release.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 5026FFF621C3CA280023EEA2 /* Bank.release.xcconfig */; };
+		5026000121C3CA280023EEA2 /* Bank.release.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 5026FFF621C3CA280023EEA2 /* Bank.release.xcconfig */; };
+		5026000221C3CA280023EEA2 /* Bank.release.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 5026FFF621C3CA280023EEA2 /* Bank.release.xcconfig */; };
+		5026000321C3CA280023EEA2 /* Bank Dev T.debug.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 5026FFF721C3CA280023EEA2 /* Bank Dev T.debug.xcconfig */; };
+		5026000421C3CA280023EEA2 /* Bank Dev T.debug.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 5026FFF721C3CA280023EEA2 /* Bank Dev T.debug.xcconfig */; };
+		5026000521C3CA280023EEA2 /* Bank Dev T.debug.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 5026FFF721C3CA280023EEA2 /* Bank Dev T.debug.xcconfig */; };
+		5026000621C3CA280023EEA2 /* Bank Dev.debug.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 5026FFF821C3CA280023EEA2 /* Bank Dev.debug.xcconfig */; };
+		5026000721C3CA280023EEA2 /* Bank Dev.debug.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 5026FFF821C3CA280023EEA2 /* Bank Dev.debug.xcconfig */; };
+		5026000821C3CA280023EEA2 /* Bank Dev.debug.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 5026FFF821C3CA280023EEA2 /* Bank Dev.debug.xcconfig */; };
+		5026000921C3CA280023EEA2 /* Bank.debug.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 5026FFF921C3CA280023EEA2 /* Bank.debug.xcconfig */; };
+		5026000A21C3CA280023EEA2 /* Bank.debug.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 5026FFF921C3CA280023EEA2 /* Bank.debug.xcconfig */; };
+		5026000B21C3CA280023EEA2 /* Bank.debug.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 5026FFF921C3CA280023EEA2 /* Bank.debug.xcconfig */; };
+		5026FFFA21C3CA280023EEA2 /* Bank Dev.release.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 5026FFF421C3CA280023EEA2 /* Bank Dev.release.xcconfig */; };
+		5026FFFB21C3CA280023EEA2 /* Bank Dev.release.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 5026FFF421C3CA280023EEA2 /* Bank Dev.release.xcconfig */; };
+		5026FFFC21C3CA280023EEA2 /* Bank Dev.release.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 5026FFF421C3CA280023EEA2 /* Bank Dev.release.xcconfig */; };
+		5026FFFD21C3CA280023EEA2 /* Bank Dev T.release.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 5026FFF521C3CA280023EEA2 /* Bank Dev T.release.xcconfig */; };
+		5026FFFE21C3CA280023EEA2 /* Bank Dev T.release.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 5026FFF521C3CA280023EEA2 /* Bank Dev T.release.xcconfig */; };
+		5026FFFF21C3CA280023EEA2 /* Bank Dev T.release.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 5026FFF521C3CA280023EEA2 /* Bank Dev T.release.xcconfig */; };
 		503320AB214679EB00F64AAA /* PinTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 503320AA214679EB00F64AAA /* PinTheme.swift */; };
 		509E3D2420E398610095452C /* RestoreTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 509E3D2320E398610095452C /* RestoreTheme.swift */; };
 		50AB06AE2158E2EE00A01E4A /* LocalAuthentication.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50AB06AD2158E2EE00A01E4A /* LocalAuthentication.framework */; };
@@ -1060,6 +1084,7 @@
 		1A564948450C4AADB2679AC0 /* PinViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinViewController.swift; sourceTree = "<group>"; };
 		1A564996AA2AE3468D2992E5 /* EditPinPresenterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditPinPresenterTests.swift; sourceTree = "<group>"; };
 		1A56499AAEEED9EA3CE9E0A7 /* SettingsRightImageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsRightImageCell.swift; sourceTree = "<group>"; };
+		1A5649BA134C0075F6777FA1 /* Development.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Development.xcconfig; sourceTree = "<group>"; };
 		1A5649BED7237B075AE7F8B8 /* SendTitleItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendTitleItemView.swift; sourceTree = "<group>"; };
 		1A5649C888E12C1A0B70EFA8 /* TransactionsCurrencyCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionsCurrencyCell.swift; sourceTree = "<group>"; };
 		1A5649DB879A57761C09842E /* AppTheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppTheme.swift; sourceTree = "<group>"; };
@@ -1088,6 +1113,7 @@
 		1A564D73251DBFA0CFE34D12 /* MainSettingsInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainSettingsInteractor.swift; sourceTree = "<group>"; };
 		1A564D7FA287326CBE96353A /* ButtonTheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonTheme.swift; sourceTree = "<group>"; };
 		1A564DA173BE95B4681E5395 /* DepositCopyButtonItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DepositCopyButtonItemView.swift; sourceTree = "<group>"; };
+		1A564DA6B7CD7CEC516E5FD8 /* Production.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Production.xcconfig; sourceTree = "<group>"; };
 		1A564DAA99070A03BBC10871 /* LockoutUntilDateFactoryTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LockoutUntilDateFactoryTests.swift; sourceTree = "<group>"; };
 		1A564DB37A289E1AEA981458 /* LanguageSettingsInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LanguageSettingsInteractor.swift; sourceTree = "<group>"; };
 		1A564E017B299CF4BA6F337C /* UnlockPinModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnlockPinModule.swift; sourceTree = "<group>"; };
@@ -1113,6 +1139,12 @@
 		3D955ABDB32C63409D8F97FC /* Pods-Bank Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bank Tests.debug.xcconfig"; path = "../Pods/Target Support Files/Pods-Bank Tests/Pods-Bank Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		417B3999AB813D9B5AE50F08 /* Pods-Bank Dev T.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bank Dev T.debug.xcconfig"; path = "../Pods/Target Support Files/Pods-Bank Dev T/Pods-Bank Dev T.debug.xcconfig"; sourceTree = "<group>"; };
 		49A4A4EC5EC2A6D4253FB66D /* Pods-Bank Dev.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bank Dev.release.xcconfig"; path = "../Pods/Target Support Files/Pods-Bank Dev/Pods-Bank Dev.release.xcconfig"; sourceTree = "<group>"; };
+		5026FFF421C3CA280023EEA2 /* Bank Dev.release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Bank Dev.release.xcconfig"; sourceTree = "<group>"; };
+		5026FFF521C3CA280023EEA2 /* Bank Dev T.release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Bank Dev T.release.xcconfig"; sourceTree = "<group>"; };
+		5026FFF621C3CA280023EEA2 /* Bank.release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Bank.release.xcconfig; sourceTree = "<group>"; };
+		5026FFF721C3CA280023EEA2 /* Bank Dev T.debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Bank Dev T.debug.xcconfig"; sourceTree = "<group>"; };
+		5026FFF821C3CA280023EEA2 /* Bank Dev.debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Bank Dev.debug.xcconfig"; sourceTree = "<group>"; };
+		5026FFF921C3CA280023EEA2 /* Bank.debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Bank.debug.xcconfig; sourceTree = "<group>"; };
 		503320AA214679EB00F64AAA /* PinTheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinTheme.swift; sourceTree = "<group>"; };
 		509E3D2320E398610095452C /* RestoreTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestoreTheme.swift; sourceTree = "<group>"; };
 		50A83FBE213FCB4B008A5F4B /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -1976,6 +2008,21 @@
 			path = Edit;
 			sourceTree = "<group>";
 		};
+		5026FFF321C3CA280023EEA2 /* Configuration */ = {
+			isa = PBXGroup;
+			children = (
+				5026FFF421C3CA280023EEA2 /* Bank Dev.release.xcconfig */,
+				5026FFF521C3CA280023EEA2 /* Bank Dev T.release.xcconfig */,
+				5026FFF621C3CA280023EEA2 /* Bank.release.xcconfig */,
+				5026FFF721C3CA280023EEA2 /* Bank Dev T.debug.xcconfig */,
+				5026FFF821C3CA280023EEA2 /* Bank Dev.debug.xcconfig */,
+				5026FFF921C3CA280023EEA2 /* Bank.debug.xcconfig */,
+				1A5649BA134C0075F6777FA1 /* Development.xcconfig */,
+				1A564DA6B7CD7CEC516E5FD8 /* Production.xcconfig */,
+			);
+			path = Configuration;
+			sourceTree = "<group>";
+		};
 		95AD93BB0A2D5F5C4A435252 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -2014,6 +2061,7 @@
 		D3285F4420BD158E00644076 /* BankWallet */ = {
 			isa = PBXGroup;
 			children = (
+				5026FFF321C3CA280023EEA2 /* Configuration */,
 				11B3546BA60E06900F58BA94 /* Core */,
 				11B356605394189E9B5EBEE0 /* Models */,
 				11B354AB3C3435F2D5F39EE6 /* Modules */,
@@ -2192,7 +2240,11 @@
 			files = (
 				D3373DB220C52F640082BC4A /* LaunchScreen.xib in Resources */,
 				50AB06B7215A269200A01E4A /* InfoPlist.strings in Resources */,
+				5026000921C3CA280023EEA2 /* Bank.debug.xcconfig in Resources */,
+				5026FFFA21C3CA280023EEA2 /* Bank Dev.release.xcconfig in Resources */,
+				5026000021C3CA280023EEA2 /* Bank.release.xcconfig in Resources */,
 				D348A77720C7D34100803B9E /* BackupConfirmationController.xib in Resources */,
+				5026FFFD21C3CA280023EEA2 /* Bank Dev T.release.xcconfig in Resources */,
 				D3373DCF20C6B21C0082BC4A /* RestoreViewController.xib in Resources */,
 				D38406C021832751007D50AD /* Assets.xcassets in Resources */,
 				D38406C721832862007D50AD /* AppIconDevT.xcassets in Resources */,
@@ -2202,9 +2254,13 @@
 				D3A6D6BE219430BA00D11AFE /* AboutCell.xib in Resources */,
 				D3B62A9A20CA73A0005A9F80 /* Localizable.strings in Resources */,
 				11B35319892846CB42A23599 /* GuestViewController.xib in Resources */,
+				5026000321C3CA280023EEA2 /* Bank Dev T.debug.xcconfig in Resources */,
 				D3373DBA20C564450082BC4A /* BackupWordsController.xib in Resources */,
 				1A564BE5BF0E283B1758F2F0 /* BalanceHeaderView.xib in Resources */,
+				5026000621C3CA280023EEA2 /* Bank Dev.debug.xcconfig in Resources */,
 				11B35ADC6467645C9545C89E /* BaseTwinItemView.xib in Resources */,
+				1A564EFD91FFF1BE4EBD35AD /* Development.xcconfig in Resources */,
+				1A56499243ADE79C148E76CD /* Production.xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2221,7 +2277,11 @@
 			files = (
 				D38405BC218317DF007D50AD /* LaunchScreen.xib in Resources */,
 				D38405BD218317DF007D50AD /* InfoPlist.strings in Resources */,
+				5026000A21C3CA280023EEA2 /* Bank.debug.xcconfig in Resources */,
+				5026FFFB21C3CA280023EEA2 /* Bank Dev.release.xcconfig in Resources */,
+				5026000121C3CA280023EEA2 /* Bank.release.xcconfig in Resources */,
 				D38405BE218317DF007D50AD /* BackupConfirmationController.xib in Resources */,
+				5026FFFE21C3CA280023EEA2 /* Bank Dev T.release.xcconfig in Resources */,
 				D38405BF218317DF007D50AD /* RestoreViewController.xib in Resources */,
 				D38406C221832757007D50AD /* Assets.xcassets in Resources */,
 				D38405C0218317DF007D50AD /* DarkTheme.xcassets in Resources */,
@@ -2231,9 +2291,13 @@
 				D3A6D6BF219430BA00D11AFE /* AboutCell.xib in Resources */,
 				D38405C6218317DF007D50AD /* GuestViewController.xib in Resources */,
 				D38405C7218317DF007D50AD /* BackupWordsController.xib in Resources */,
+				5026000421C3CA280023EEA2 /* Bank Dev T.debug.xcconfig in Resources */,
 				D38405C8218317DF007D50AD /* BalanceHeaderView.xib in Resources */,
 				D38406C921832968007D50AD /* AppIconDev.xcassets in Resources */,
+				5026000721C3CA280023EEA2 /* Bank Dev.debug.xcconfig in Resources */,
 				D38405C9218317DF007D50AD /* BaseTwinItemView.xib in Resources */,
+				1A564EC8B02325B384F8885F /* Development.xcconfig in Resources */,
+				1A564C445B1E506FCE95F835 /* Production.xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2243,7 +2307,11 @@
 			files = (
 				D38406AC21831B3D007D50AD /* LaunchScreen.xib in Resources */,
 				D38406AD21831B3D007D50AD /* InfoPlist.strings in Resources */,
+				5026000B21C3CA280023EEA2 /* Bank.debug.xcconfig in Resources */,
+				5026FFFC21C3CA280023EEA2 /* Bank Dev.release.xcconfig in Resources */,
+				5026000221C3CA280023EEA2 /* Bank.release.xcconfig in Resources */,
 				D38406AE21831B3D007D50AD /* BackupConfirmationController.xib in Resources */,
+				5026FFFF21C3CA280023EEA2 /* Bank Dev T.release.xcconfig in Resources */,
 				D38406AF21831B3D007D50AD /* RestoreViewController.xib in Resources */,
 				D38406B021831B3D007D50AD /* DarkTheme.xcassets in Resources */,
 				D38406C5218327E3007D50AD /* AppIcon.xcassets in Resources */,
@@ -2253,9 +2321,13 @@
 				D3A6D6C0219430BA00D11AFE /* AboutCell.xib in Resources */,
 				D38406B521831B3D007D50AD /* Assets.xcassets in Resources */,
 				D38406B621831B3D007D50AD /* GuestViewController.xib in Resources */,
+				5026000521C3CA280023EEA2 /* Bank Dev T.debug.xcconfig in Resources */,
 				D38406B721831B3D007D50AD /* BackupWordsController.xib in Resources */,
 				D38406B821831B3D007D50AD /* BalanceHeaderView.xib in Resources */,
+				5026000821C3CA280023EEA2 /* Bank Dev.debug.xcconfig in Resources */,
 				D38406B921831B3D007D50AD /* BaseTwinItemView.xib in Resources */,
+				1A564C4F34F821A8FC1FD62D /* Development.xcconfig in Resources */,
+				1A564C9254DAC42C4F2390CA /* Production.xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3565,7 +3637,7 @@
 		};
 		D3285F5520BD158F00644076 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 417B3999AB813D9B5AE50F08 /* Pods-Bank Dev T.debug.xcconfig */;
+			baseConfigurationReference = 5026FFF721C3CA280023EEA2 /* Bank Dev T.debug.xcconfig */;
 			buildSettings = {
 				EnabledCoins = "BTCt, BCHt, ETHt";
 				PRODUCT_BUNDLE_IDENTIFIER = "io.horizontalsystems.bank-wallet.dev.testnet";
@@ -3576,7 +3648,7 @@
 		};
 		D3285F5620BD158F00644076 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = EF86DBB23152BD1358F766CE /* Pods-Bank Dev T.release.xcconfig */;
+			baseConfigurationReference = 5026FFF521C3CA280023EEA2 /* Bank Dev T.release.xcconfig */;
 			buildSettings = {
 				EnabledCoins = "BTCt, BCHt, ETHt";
 				PRODUCT_BUNDLE_IDENTIFIER = "io.horizontalsystems.bank-wallet.dev.testnet";
@@ -3633,7 +3705,7 @@
 		};
 		D38405CC218317DF007D50AD /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D24DBEAA7A654C8075B634B6 /* Pods-Bank Dev.debug.xcconfig */;
+			baseConfigurationReference = 5026FFF821C3CA280023EEA2 /* Bank Dev.debug.xcconfig */;
 			buildSettings = {
 				EnabledCoins = "BTC, BCH, ETH";
 				PRODUCT_BUNDLE_IDENTIFIER = "io.horizontalsystems.bank-wallet.dev";
@@ -3644,7 +3716,7 @@
 		};
 		D38405CD218317DF007D50AD /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 49A4A4EC5EC2A6D4253FB66D /* Pods-Bank Dev.release.xcconfig */;
+			baseConfigurationReference = 5026FFF421C3CA280023EEA2 /* Bank Dev.release.xcconfig */;
 			buildSettings = {
 				EnabledCoins = "BTC, BCH, ETH";
 				PRODUCT_BUNDLE_IDENTIFIER = "io.horizontalsystems.bank-wallet.dev";
@@ -3655,7 +3727,7 @@
 		};
 		D38406BC21831B3D007D50AD /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A79CC9D3E472AD6CDB9E17EC /* Pods-Bank.debug.xcconfig */;
+			baseConfigurationReference = 5026FFF921C3CA280023EEA2 /* Bank.debug.xcconfig */;
 			buildSettings = {
 				EnabledCoins = "BTC, BCH, ETH";
 				PRODUCT_BUNDLE_IDENTIFIER = "io.horizontalsystems.bank-wallet";
@@ -3666,7 +3738,7 @@
 		};
 		D38406BD21831B3D007D50AD /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7B87DD80F1B5F49E1A17D48A /* Pods-Bank.release.xcconfig */;
+			baseConfigurationReference = 5026FFF621C3CA280023EEA2 /* Bank.release.xcconfig */;
 			buildSettings = {
 				EnabledCoins = "BTC, BCH, ETH";
 				PRODUCT_BUNDLE_IDENTIFIER = "io.horizontalsystems.bank-wallet";
