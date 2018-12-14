@@ -162,7 +162,7 @@
 
 "unlock_pin.info" = "Введите PIN-код";
 "unlock_pin.cant_save_pin" = "Ой! Мы не можем сохранить ваш ПИН-код. Пожалуйста, свяжитесь с нами как можно скорее!";
-"unlock_pin.lockout_blocked_until" = "Disabled until: %@";
+"unlock_pin.lockout_blocked_until" = "Отключено до: %@";
 
 //NumPad
 
