@@ -117,7 +117,7 @@
 
 // Settings -> Manage Wallet
 
-"settings_manage_wallet.title" = "Manage Coins";
+"settings_manage_wallet.title" = "Управление кошельком";
 "settings_manage_wallet.add_coins" = "Добавить валюту";
 "settings_manage_wallet.add_button" = "Добавить";
 "settings_manage_wallet.hide_button" = "Скрыть";
@@ -129,7 +129,7 @@
 
 "settings_about.title" = "О программе";
 "settings_about.terms_privacy_subtitle" = "Условия & Политика конфиденциальности:";
-"settings_about.terms_privacy_text" = "Your funds are securely stored on your device. Not on any external servers.\n\nThe app does not depend on any server or person to function.\n\nSome generic app data like exchange rates are stored on decentralized storage (IPFS).\n\nThe app works everywhere as long as there is an internet connection.\n\nIt is impossible for a third party to block this app from working.\n\nThe entire code powering this app is free and open to the public.\n\nThere may be bugs in the code. And while we tried to provide the most secure wallet we still can not guarantee the security of your funds. No one can.\n\nMake sure you backup a Secret Key for your wallet! Never show your secret key to anyone.\n\nDo not jailbreak your phone or install apps from unknown (untrusted) sources.\n\nDo not give your device to untrusted parties.\n\nYou are solely responsible for keeping your Secret Key and your device secure.";
+"settings_about.terms_privacy_text" = "Это приложение полностью децентрализованно. Работоспособность этого приложения не зависит от сторонних серверов или какой-либо команды тех поддержки.\n\nПриложение работает везде, пока есть интернет. Этот кошелек или его пользователи не могут быть заблокированы кем-либо.\n\nВаши средства хранятся только на вашем телефоне.\n\nВы несëте полную ответственность за безопасное хранение секретного ключа. Никогда никому не показывайте ваш секретный ключ. Если ключ будет утерян, украден или забыт то контроль над вашими средствами попадет к тому у кого окажется ваш секретный ключ.\n\nНе взламывайте ваш телефон, не устанавливайте приложения из неофициальных источников и никогда не предоставляйте ваше устройство другим лицам. Безопасность вашего кошелька напрямую зависит от этого.\n\nВесь программный код этого приложения является бесплатным и открытым для общественности. Мы старались сделать самый безопасный и в то же время децентрализованный кошелек, но нет гарантий, что в коде приложения не имеется ошибок. Тем не менее, мы верим что по уровню безопасности этот кошелек значительно превосходит почти все доступные мобильные криптокошельки на сегодня.\n\nНекоторые публичные данные используемые приложением такие, как обменные курсы валют хранятся в децентрализованном хранилище (IPFS).";
 
 // Settings -> Security
 
@@ -162,3 +162,15 @@
 
 "unlock_pin.info" = "Введите PIN-код";
 "unlock_pin.cant_save_pin" = "Ой! Мы не можем сохранить ваш ПИН-код. Пожалуйста, свяжитесь с нами как можно скорее!";
+"unlock_pin.lockout_blocked_until" = "Отключено до: %@";
+
+//NumPad
+
+"numpad_2" = "А Б В Г";
+"numpad_3" = "Д Е Ж З";
+"numpad_4" = "И Й К Л";
+"numpad_5" = "М Н О П";
+"numpad_6" = "Р С Т У";
+"numpad_7" = "Ф Х Ц Ч";
+"numpad_8" = "Ш Щ Ъ Ы";
+"numpad_9" = "Ь Э Ю Я";
