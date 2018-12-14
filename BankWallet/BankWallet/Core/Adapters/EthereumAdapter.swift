@@ -24,9 +24,13 @@ class EthereumAdapter {
     init(words: [String], coin: EthereumKit.Coin) {
         wordsHash = words.joined()
         progressSubject = BehaviorSubject(value: 1)
-        ethereumKit = EthereumKit(withWords: words, coin: coin, debugPrints: false)
 
-        state = .synced
+        let infuraKey = Bundle.main.object(forInfoDictionaryKey: "InfuraApiKey") as? String
+        let etherscanKey = Bundle.main.object(forInfoDictionaryKey: "EtherscanApiKey") as? String
+
+        ethereumKit = EthereumKit(withWords: words, coin: coin, infuraKey: infuraKey ?? "", etherscanKey: etherscanKey ?? "", debugPrints: false)
+
+        state = .syncing(progressSubject: nil)
 
         ethereumKit.delegate = self
     }
@@ -138,6 +142,17 @@ extension EthereumAdapter: EthereumKitDelegate {
 
     public func balanceUpdated(ethereumKit: EthereumKit, balance: BInt) {
         balanceSubject.onNext(Double(balance) / coinRate)
+    }
+
+    public func kitStateUpdated(state: EthereumKit.KitState) {
+        switch state {
+        case .synced:
+            self.state = .synced
+        case .notSynced:
+            self.state = .notSynced
+        case .syncing:
+            self.state = .syncing(progressSubject: nil)
+        }
     }
 
 }
