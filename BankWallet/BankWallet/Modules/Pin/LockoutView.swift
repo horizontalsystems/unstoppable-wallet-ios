@@ -18,7 +18,11 @@ class LockoutView: UIView {
         infoLabel.snp.makeConstraints { maker in
             maker.centerX.equalToSuperview()
             maker.top.equalTo(self.lockIcon.snp.bottom).offset(PinTheme.lockoutLabelTopMargin)
+            maker.leading.equalTo(self.snp.leading).offset(PinTheme.lockoutLabelSideMargin)
+            maker.trailing.equalTo(self.snp.trailing).offset(-PinTheme.lockoutLabelSideMargin)
         }
+        infoLabel.numberOfLines = 0
+        infoLabel.textAlignment = .center
         infoLabel.font = PinTheme.lockoutLabelFont
         infoLabel.textColor = PinTheme.lockoutLabelColor
     }

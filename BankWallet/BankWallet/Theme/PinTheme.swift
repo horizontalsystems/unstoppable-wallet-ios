@@ -14,4 +14,5 @@ class PinTheme {
     static let lockoutLabelTopMargin: CGFloat = 24
     static let lockoutLabelFont = UIFont.cryptoBody2
     static let lockoutLabelColor = UIColor.cryptoGray
+    static let lockoutLabelSideMargin: CGFloat = 32
 }
