@@ -67,7 +67,7 @@ class LockoutManagerTests: XCTestCase {
             when(mock.unlockAttempts.get).thenReturn(nil)
         }
 
-        XCTAssertEqual(manager.currentState, LockoutStateNew.unlocked(attemptsLeft: nil))
+        XCTAssertEqual(manager.currentState, LockoutState.unlocked(attemptsLeft: nil))
     }
 
     func testCurrentStateUnlocked_TwoAttempts() {
@@ -75,7 +75,7 @@ class LockoutManagerTests: XCTestCase {
             when(mock.unlockAttempts.get).thenReturn(3)
         }
 
-        XCTAssertEqual(manager.currentState, LockoutStateNew.unlocked(attemptsLeft: 2))
+        XCTAssertEqual(manager.currentState, LockoutState.unlocked(attemptsLeft: 2))
     }
 
     func testCurrentStateUnlocked_NotLessOne() {
@@ -83,7 +83,7 @@ class LockoutManagerTests: XCTestCase {
             when(mock.unlockAttempts.get).thenReturn(7)
         }
 
-        XCTAssertEqual(manager.currentState, LockoutStateNew.unlocked(attemptsLeft: 1))
+        XCTAssertEqual(manager.currentState, LockoutState.unlocked(attemptsLeft: 1))
     }
 
     func testUpdateLockoutTimestamp() {
@@ -102,7 +102,7 @@ class LockoutManagerTests: XCTestCase {
 
     func testCurrentStateLocked() {
         let unlockDate = Date().addingTimeInterval(5)
-        let lockedState = LockoutStateNew.locked(till: unlockDate)
+        let lockedState = LockoutState.locked(till: unlockDate)
 
         stub(mockSecureStorage) { mock in
             when(mock.unlockAttempts.get).thenReturn(5)

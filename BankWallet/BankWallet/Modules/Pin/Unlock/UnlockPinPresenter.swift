@@ -54,7 +54,7 @@ extension UnlockPinPresenter: IUnlockPinInteractorDelegate {
     func didFailBiometricUnlock() {
     }
 
-    func update(lockoutState: LockoutStateNew) {
+    func update(lockoutState: LockoutState) {
         switch lockoutState {
         case .unlocked(let attemptsLeft):
             view?.show(attemptsLeft: attemptsLeft, forPage: Page.unlock.rawValue)

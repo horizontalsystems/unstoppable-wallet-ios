@@ -118,16 +118,6 @@ extension LockoutState: Equatable {
     public static func ==(lhs: LockoutState, rhs: LockoutState) -> Bool {
         switch (lhs, rhs) {
         case (let .unlocked(lhsAttempts), let .unlocked(rhsAttempts)): return lhsAttempts == rhsAttempts
-        case (let .locked(lhsTimeFrame), let .locked(rhsTimeFrame)): return lhsTimeFrame == rhsTimeFrame
-        default: return false
-        }
-    }
-}
-
-extension LockoutStateNew: Equatable {
-    public static func ==(lhs: LockoutStateNew, rhs: LockoutStateNew) -> Bool {
-        switch (lhs, rhs) {
-        case (let .unlocked(lhsAttempts), let .unlocked(rhsAttempts)): return lhsAttempts == rhsAttempts
         case (let .locked(lhsDate), let .locked(rhsDate)): return lhsDate.compare(rhsDate) == .orderedSame
         default: return false
         }

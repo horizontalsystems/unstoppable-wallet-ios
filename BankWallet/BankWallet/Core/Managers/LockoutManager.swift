@@ -14,7 +14,7 @@ class LockoutManager: ILockoutManager {
         self.lockoutUntilDateFactory = lockoutTimeFrameFactory
     }
 
-    var currentState: LockoutStateNew {
+    var currentState: LockoutState {
         let uptime = uptimeProvider.uptime
         let unlockAttempts = secureStorage.unlockAttempts ?? 0
         let unlockDate = lockoutUntilDateFactory.lockoutUntilDate(failedAttempts: unlockAttempts, lockoutTimestamp: secureStorage.lockoutTimestamp ?? uptime, uptime: uptime)

@@ -22,5 +22,5 @@ protocol IUnlockPinInteractor {
 protocol IUnlockPinInteractorDelegate: class {
     func didBiometricUnlock()
     func didFailBiometricUnlock()
-    func update(lockoutState: LockoutStateNew)
+    func update(lockoutState: LockoutState)
 }

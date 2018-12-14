@@ -117,7 +117,7 @@ class UnlockPinPresenterTests: XCTestCase {
     }
 
     func testUpdateLockoutState_Unlocked() {
-        let lockoutStateUnlocked = LockoutStateNew.unlocked(attemptsLeft: nil)
+        let lockoutStateUnlocked = LockoutState.unlocked(attemptsLeft: nil)
         presenter.update(lockoutState: lockoutStateUnlocked)
 
         verify(mockView).show(attemptsLeft: equal(to: nil), forPage: equal(to: unlockPage))
@@ -125,7 +125,7 @@ class UnlockPinPresenterTests: XCTestCase {
     }
 
     func testLockoutStateUnlocked_FewAttempts() {
-        let lockoutStateUnlocked = LockoutStateNew.unlocked(attemptsLeft: 3)
+        let lockoutStateUnlocked = LockoutState.unlocked(attemptsLeft: 3)
         presenter.update(lockoutState: lockoutStateUnlocked)
 
         verify(mockView).show(attemptsLeft: equal(to: 3), forPage: equal(to: unlockPage))
@@ -134,7 +134,7 @@ class UnlockPinPresenterTests: XCTestCase {
 
     func testLockoutStateLocked() {
         let unlockDate = Date().addingTimeInterval(1)
-        let lockoutStateLocked = LockoutStateNew.locked(till: unlockDate)
+        let lockoutStateLocked = LockoutState.locked(till: unlockDate)
         presenter.update(lockoutState: lockoutStateLocked)
         verify(mockView).showLockView(till: equal(to: unlockDate))
     }

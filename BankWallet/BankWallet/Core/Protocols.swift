@@ -238,7 +238,7 @@ protocol ITransactionViewItemFactory {
 }
 
 protocol ILockoutManager {
-    var currentState: LockoutStateNew { get }
+    var currentState: LockoutState { get }
     func didFailUnlock()
     func dropFailedAttempts()
 }

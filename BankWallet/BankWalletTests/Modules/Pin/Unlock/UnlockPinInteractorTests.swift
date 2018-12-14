@@ -34,7 +34,7 @@ class UnlockPinInteractorTests: XCTestCase {
         }
         stub(mockLockoutManager) { mock in
             when(mock.didFailUnlock()).thenDoNothing()
-            when(mock.currentState.get).thenReturn(LockoutStateNew.unlocked(attemptsLeft: nil))
+            when(mock.currentState.get).thenReturn(LockoutState.unlocked(attemptsLeft: nil))
             when(mock.dropFailedAttempts()).thenDoNothing()
         }
         stub(mockTimer) { mock in
@@ -123,7 +123,7 @@ class UnlockPinInteractorTests: XCTestCase {
 
     func testUpdateLockoutState_FailAttempt() {
         let pin = "0000"
-        let state = LockoutStateNew.unlocked(attemptsLeft: 4)
+        let state = LockoutState.unlocked(attemptsLeft: 4)
         stub(mockPinManager) { mock in
             when(mock.validate(pin: equal(to: pin))).thenReturn(false)
         }
@@ -139,7 +139,7 @@ class UnlockPinInteractorTests: XCTestCase {
     func testStartLockoutTimer_WrongPin() {
         let date = Date()
         let pin = "0000"
-        let lockedState = LockoutStateNew.locked(till: date)
+        let lockedState = LockoutState.locked(till: date)
 
         stub(mockPinManager) { mock in
             when(mock.validate(pin: equal(to: pin))).thenReturn(false)
@@ -154,7 +154,7 @@ class UnlockPinInteractorTests: XCTestCase {
     }
 
     func testUpdateState_OnFire() {
-        let unlockedState = LockoutStateNew.unlocked(attemptsLeft: 1)
+        let unlockedState = LockoutState.unlocked(attemptsLeft: 1)
         stub(mockLockoutManager) { mock in
             when(mock.currentState.get).thenReturn(unlockedState)
         }
@@ -165,7 +165,7 @@ class UnlockPinInteractorTests: XCTestCase {
 
     func testStartLockoutTimer_LockedState() {
         let date = Date()
-        let lockedState = LockoutStateNew.locked(till: date)
+        let lockedState = LockoutState.locked(till: date)
 
         stub(mockLockoutManager) { mock in
             when(mock.currentState.get).thenReturn(lockedState)
@@ -177,7 +177,7 @@ class UnlockPinInteractorTests: XCTestCase {
     }
 
     func testUpdateLockoutState() {
-        let lockedState = LockoutStateNew.locked(till: Date())
+        let lockedState = LockoutState.locked(till: Date())
 
         stub(mockLockoutManager) { mock in
             when(mock.currentState.get).thenReturn(lockedState)
