@@ -14,7 +14,7 @@
 
 // Access Camera
 
-"access_camera.message" = "Bank needs access to your camera to scan QR code.\n\nGo to Settings - > Bank and allow access to Camera.";
+"access_camera.message" = "بانك ضرورت دسترسي به دوربين دارد بخاطر اسكن كردن QR كد.\nبرويد به تنظيمات -> اجازه دهيد تا بانك دسترسي به دوربين داشته باشد.";
 "access_camera.settings" = "تنظيمات";
 "access_camera.cancel" = "انصراف";
 
@@ -144,7 +144,7 @@
 "settings_security.face_id" = "شناسنامه صروت";
 "security_settings.unlink_alert_button" = "جدا کردن";
 "settings_security.import_wallet_confirmation_1" = "این اقدام کیف پول نصب شده فعلی را از این دستگاه را حذف می کند.";
-"settings_security.import_wallet_confirmation_2" = "Make sure you have its Secret Key or you will not be able to access the funds on it in the future.";
+"settings_security.import_wallet_confirmation_2" = "مطمعاً باشيد كي رمز مخفي را با خود داريد و گرنه شما در آينده توانايي دسترسي به منابع مالي نداريد.";
 
 // Set PIN
 
@@ -163,7 +163,7 @@
 // Unlock PIN
 
 "unlock_pin.info" = "پين را وارد كنيد";
-"unlock_pin.cant_save_pin" = "Ouch! We cant save your pin, please contact us asap!";
+"unlock_pin.cant_save_pin" = "Ouch!ما نميتانيم پين شما را ذخيره كنيم,لطفاً با ما به تماس شويد asap!";
 "unlock_pin.blocked_until" = "Disabled until: %@";
 
 //NumPad
