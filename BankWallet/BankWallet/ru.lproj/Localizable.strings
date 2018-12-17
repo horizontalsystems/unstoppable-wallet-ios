@@ -82,7 +82,7 @@
 "transactions.tab_bar_item" = "Транзакции";
 "transactions.filter_all" = "Все";
 "transactions.empty_text" = "У Вас ещё нет ожидаемых или прошлых транзакций ";
-"transactions.sending" = "Sending...";
+"transactions.sending" = "Отправка... ";
 
 
 // Transaction Info
@@ -164,7 +164,7 @@
 
 "unlock_pin.info" = "Введите PIN-код";
 "unlock_pin.cant_save_pin" = "Ой! Мы не можем сохранить ваш ПИН-код. Пожалуйста, свяжитесь с нами как можно скорее!";
-"unlock_pin.blocked_until" = "Disabled until: %@";
+"unlock_pin.blocked_until" = "Отключено до: %@";
 
 //NumPad
 
