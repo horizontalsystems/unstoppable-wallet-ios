@@ -82,6 +82,8 @@
 "transactions.tab_bar_item" = "Transaktionen";
 "transactions.filter_all" = "Alle";
 "transactions.empty_text" = "Du hast nicht die anstehenden oder vergangenen Transaktionen noch.";
+"transactions.sending" = "Sending...";
+
 
 // Transaction Info
 
@@ -162,7 +164,7 @@
 
 "unlock_pin.info" = "Gib deine PIN ein";
 "unlock_pin.cant_save_pin" = "Autsch! Wir können den PIN nicht speichern, kontaktieren Sie uns bitte so schnell wie möglich!";
-"unlock_pin.lockout_blocked_until" = "Deaktiviert bis: %@ ";
+"unlock_pin.blocked_until" = "Disabled until: %@";
 
 //NumPad
 
