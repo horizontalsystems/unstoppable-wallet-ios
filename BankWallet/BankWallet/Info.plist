@@ -18,6 +18,12 @@
 	<string>1.0</string>
 	<key>CFBundleVersion</key>
 	<string>1</string>
+	<key>Enabled Coins</key>
+	<string>$(EnabledCoins)</string>
+	<key>EtherscanApiKey</key>
+	<string>${etherscan_api_key}</string>
+	<key>InfuraApiKey</key>
+	<string>${infura_api_key}</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
@@ -48,7 +54,5 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-	<key>Enabled Coins</key>
-	<string>$(EnabledCoins)</string>
 </dict>
 </plist>

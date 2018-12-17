@@ -172,7 +172,6 @@ Go to Settings - > Bank and allow access to Camera.";
 
 "unlock_pin.info" = "Enter PIN";
 "unlock_pin.cant_save_pin" = "Ouch! We cant save your pin, please contact us asap!";
-"unlock_pin.wrong_pin.attempts_left" = "Wrong PIN, %@ attempts left";
 "unlock_pin.blocked_until" = "Disabled until: %@";
 
 //NumPad

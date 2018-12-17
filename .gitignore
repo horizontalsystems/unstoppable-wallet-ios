@@ -30,3 +30,6 @@ fastlane/README.md
 # Cuckoo
 
 GeneratedMocks.swift
+
+Development.xcconfig
+Production.xcconfig

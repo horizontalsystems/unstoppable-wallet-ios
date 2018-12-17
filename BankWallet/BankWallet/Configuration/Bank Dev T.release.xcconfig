@@ -1,0 +1,2 @@
+#include "../Pods/Target Support Files/Pods-Bank Dev T/Pods-Bank Dev T.release.xcconfig"
+#include "Development.xcconfig"
