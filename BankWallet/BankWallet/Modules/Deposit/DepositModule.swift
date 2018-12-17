@@ -5,12 +5,12 @@ protocol IDepositView: class {
 }
 
 protocol IDepositViewDelegate {
-    func addressItems(forCoin coin: Coin?) -> [AddressItem]
+    func addressItems(forCoin coinCode: CoinCode?) -> [AddressItem]
     func onCopy(addressItem: AddressItem)
 }
 
 protocol IDepositInteractor {
-    func wallets(forCoin coin: Coin?) -> [Wallet]
+    func wallets(forCoin coinCode: CoinCode?) -> [Wallet]
     func copy(address: String)
 }
 

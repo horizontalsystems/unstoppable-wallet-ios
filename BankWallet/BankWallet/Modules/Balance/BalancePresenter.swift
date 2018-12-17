@@ -21,7 +21,7 @@ class BalancePresenter {
 
         for wallet in interactor.wallets {
             let balance = wallet.adapter.balance
-            let rate = interactor.rate(forCoin: wallet.coin)
+            let rate = interactor.rate(forCoin: wallet.coinCode)
 
             var rateExpired = true
 
@@ -36,7 +36,7 @@ class BalancePresenter {
             }
 
             viewItems.append(BalanceViewItem(
-                    coinValue: CoinValue(coin: wallet.coin, value: balance),
+                    coinValue: CoinValue(coinCode: wallet.coinCode, value: balance),
                     exchangeValue: rate.map { CurrencyValue(currency: currency, value: $0.value) },
                     currencyValue: rate.map { CurrencyValue(currency: currency, value: balance * $0.value) },
                     state: wallet.adapter.state,
@@ -75,16 +75,16 @@ extension BalancePresenter: IBalanceViewDelegate {
         updateView()
     }
 
-    func onRefresh(for coin: Coin) {
-        interactor.refresh(coin: coin)
+    func onRefresh(for coinCode: CoinCode) {
+        interactor.refresh(coinCode: coinCode)
     }
 
-    func onReceive(for coin: Coin) {
-        router.openReceive(for: coin)
+    func onReceive(for coinCode: CoinCode) {
+        router.openReceive(for: coinCode)
     }
 
-    func onPay(for coin: Coin) {
-        router.openSend(for: coin)
+    func onPay(for coinCode: CoinCode) {
+        router.openSend(for: coinCode)
     }
 
 }

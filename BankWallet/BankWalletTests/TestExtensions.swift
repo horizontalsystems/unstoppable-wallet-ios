@@ -12,7 +12,7 @@ extension XCTestCase {
 
 extension CoinValue: Equatable {
     public static func ==(lhs: CoinValue, rhs: CoinValue) -> Bool {
-        return lhs.coin == rhs.coin && lhs.value == rhs.value
+        return lhs.coinCode == rhs.coinCode && lhs.value == rhs.value
     }
 }
 
@@ -36,16 +36,16 @@ extension BalanceViewItem: Equatable {
 
 extension TransactionFilterItem: Equatable {
     public static func ==(lhs: TransactionFilterItem, rhs: TransactionFilterItem) -> Bool {
-        return lhs.coin == rhs.coin && lhs.name == rhs.name
+        return lhs.coinCode == rhs.coinCode && lhs.name == rhs.name
     }
 }
 
 extension TransactionRecord {
-    convenience init(transactionHash: String, coin: String, timestamp: Double) {
+    convenience init(transactionHash: String, coinCode: String, timestamp: Double) {
         self.init()
 
         self.transactionHash = transactionHash
-        self.coin = coin
+        self.coinCode = coinCode
         self.timestamp = timestamp
     }
 }
@@ -57,10 +57,10 @@ extension LatestRate: Equatable {
 }
 
 extension Rate {
-    convenience init(coin: String, currencyCode: String, value: Double, timestamp: Double) {
+    convenience init(coinCode: String, currencyCode: String, value: Double, timestamp: Double) {
         self.init()
 
-        self.coin = coin
+        self.coinCode = coinCode
         self.currencyCode = currencyCode
         self.value = value
         self.timestamp = timestamp

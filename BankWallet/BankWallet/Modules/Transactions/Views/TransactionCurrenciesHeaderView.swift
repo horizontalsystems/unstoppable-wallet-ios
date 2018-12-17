@@ -5,7 +5,7 @@ class TransactionCurrenciesHeaderView: UIVisualEffectView, UICollectionViewDeleg
 
     var filters = [TransactionFilterItem]()
     var collectionView: UICollectionView
-    var onSelectCoin: ((Coin?) -> ())?
+    var onSelectCoin: ((CoinCode?) -> ())?
 
     let separatorView = UIView()
 
@@ -65,7 +65,7 @@ class TransactionCurrenciesHeaderView: UIVisualEffectView, UICollectionViewDeleg
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        onSelectCoin?(filters[indexPath.item].coin)
+        onSelectCoin?(filters[indexPath.item].coinCode)
     }
 
     func reload(filters: [TransactionFilterItem]) {

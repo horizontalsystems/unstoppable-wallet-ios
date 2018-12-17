@@ -72,15 +72,15 @@ extension BalanceViewController {
     }
 
     private func onRefresh(for indexPath: IndexPath) {
-        delegate.onRefresh(for: items[indexPath.row].coinValue.coin)
+        delegate.onRefresh(for: items[indexPath.row].coinValue.coinCode)
     }
 
     private func onReceive(for indexPath: IndexPath) {
-        delegate.onReceive(for: items[indexPath.row].coinValue.coin)
+        delegate.onReceive(for: items[indexPath.row].coinValue.coinCode)
     }
 
     private func onPay(for indexPath: IndexPath) {
-        delegate.onPay(for: items[indexPath.row].coinValue.coin)
+        delegate.onPay(for: items[indexPath.row].coinValue.coinCode)
     }
 
     override func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {

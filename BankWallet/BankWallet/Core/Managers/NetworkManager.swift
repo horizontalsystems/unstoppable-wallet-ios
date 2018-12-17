@@ -142,8 +142,8 @@ class NetworkManager {
 
 extension NetworkManager: IRateNetworkManager {
 
-    func getLatestRate(coin: String, currencyCode: String) -> Observable<LatestRate> {
-        var coin = coin
+    func getLatestRate(coinCode: String, currencyCode: String) -> Observable<LatestRate> {
+        var coin = coinCode
         if coin.last == "t" || coin.last == "r" {
             coin.removeLast()
         }
@@ -151,8 +151,8 @@ extension NetworkManager: IRateNetworkManager {
         return observable(forRequest: request(withMethod: .get, path: "\(coin)/\(currencyCode)/index.json"))
     }
 
-    func getRate(coin: String, currencyCode: String, date: Date) -> Observable<Double> {
-        var coin = coin
+    func getRate(coinCode: String, currencyCode: String, date: Date) -> Observable<Double> {
+        var coin = coinCode
         if coin.last == "t" || coin.last == "r" {
             coin.removeLast()
         }

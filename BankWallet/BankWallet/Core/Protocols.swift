@@ -1,7 +1,7 @@
 import RxSwift
 import RealmSwift
 
-typealias Coin = String
+typealias CoinCode = String
 
 protocol IRandomManager {
     func getRandomIndexes(count: Int) -> [Int]
@@ -57,12 +57,12 @@ protocol IWalletManager {
     var wallets: [Wallet] { get }
     var walletsSubject: PublishSubject<[Wallet]> { get }
 
-    func initWallets(words: [String], coins: [Coin])
+    func initWallets(words: [String], coins: [CoinCode])
     func clearWallets()
 }
 
 protocol IAdapterFactory {
-    func adapter(forCoin coin: Coin, words: [String]) -> IAdapter?
+    func adapter(forCoin coinCode: CoinCode, words: [String]) -> IAdapter?
 }
 
 protocol ICoinManager {
@@ -152,7 +152,7 @@ protocol BiometricManagerDelegate: class {
 
 protocol IRateManager {
     var subject: PublishSubject<Void> { get }
-    func rate(forCoin coin: Coin, currencyCode: String) -> Rate?
+    func rate(forCoin coinCode: CoinCode, currencyCode: String) -> Rate?
 }
 
 protocol IRateSyncer {
@@ -161,7 +161,7 @@ protocol IRateSyncer {
 }
 
 protocol IRateSyncerDelegate: class {
-    func didSync(coin: String, currencyCode: String, latestRate: LatestRate)
+    func didSync(coinCode: String, currencyCode: String, latestRate: LatestRate)
 }
 
 protocol ISystemInfoManager {
@@ -172,18 +172,18 @@ protocol ISystemInfoManager {
 protocol IAppConfigProvider {
     var reachabilityHost: String { get }
     var ratesApiUrl: String { get }
-    var enabledCoins: [Coin] { get }
+    var enabledCoins: [CoinCode] { get }
     var currencies: [Currency] { get }
 }
 
 protocol IRateNetworkManager {
-    func getLatestRate(coin: String, currencyCode: String) -> Observable<LatestRate>
-    func getRate(coin: String, currencyCode: String, date: Date) -> Observable<Double>
+    func getLatestRate(coinCode: String, currencyCode: String) -> Observable<LatestRate>
+    func getRate(coinCode: String, currencyCode: String, date: Date) -> Observable<Double>
 }
 
 protocol IRateStorage {
-    func rate(forCoin coin: Coin, currencyCode: String) -> Rate?
-    func save(latestRate: LatestRate, coin: Coin, currencyCode: String)
+    func rate(forCoin coinCode: CoinCode, currencyCode: String) -> Rate?
+    func save(latestRate: LatestRate, coinCode: CoinCode, currencyCode: String)
     func clear()
 }
 

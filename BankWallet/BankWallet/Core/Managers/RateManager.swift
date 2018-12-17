@@ -43,7 +43,7 @@ class RateManager {
     }
 
     private func updateRates() {
-        let coins = walletManager.wallets.map { $0.coin }
+        let coins = walletManager.wallets.map { $0.coinCode }
         let currencyCode = currencyManager.baseCurrency.code
 
         syncer.sync(coins: coins, currencyCode: currencyCode)
@@ -53,8 +53,8 @@ class RateManager {
 
 extension RateManager: IRateManager {
 
-    func rate(forCoin coin: Coin, currencyCode: String) -> Rate? {
-        return storage.rate(forCoin: coin, currencyCode: currencyCode)
+    func rate(forCoin coinCode: CoinCode, currencyCode: String) -> Rate? {
+        return storage.rate(forCoin: coinCode, currencyCode: currencyCode)
     }
 
 }
@@ -69,8 +69,8 @@ extension RateManager: IPeriodicTimerDelegate {
 
 extension RateManager: IRateSyncerDelegate {
 
-    func didSync(coin: String, currencyCode: String, latestRate: LatestRate) {
-        storage.save(latestRate: latestRate, coin: coin, currencyCode: currencyCode)
+    func didSync(coinCode: String, currencyCode: String, latestRate: LatestRate) {
+        storage.save(latestRate: latestRate, coinCode: coinCode, currencyCode: currencyCode)
         subject.onNext(())
     }
 

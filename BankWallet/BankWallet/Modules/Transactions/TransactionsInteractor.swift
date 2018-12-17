@@ -31,8 +31,8 @@ class TransactionsInteractor {
 
 extension TransactionsInteractor: ITransactionsInteractor {
 
-    func set(coin: Coin?) {
-        dataSource.set(coin: coin)
+    func set(coinCode: CoinCode?) {
+        dataSource.set(coinCode: coinCode)
     }
 
     var recordsCount: Int {
@@ -44,7 +44,7 @@ extension TransactionsInteractor: ITransactionsInteractor {
     }
 
     func retrieveFilters() {
-        let coins = walletManager.wallets.map { $0.coin }
+        let coins = walletManager.wallets.map { $0.coinCode }
         delegate?.didRetrieve(filters: coins)
     }
 

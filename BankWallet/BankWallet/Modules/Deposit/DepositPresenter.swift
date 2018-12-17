@@ -18,9 +18,9 @@ extension DepositPresenter: IDepositInteractorDelegate {
 
 extension DepositPresenter: IDepositViewDelegate {
 
-    func addressItems(forCoin coin: Coin?) -> [AddressItem] {
-        return interactor.wallets(forCoin: coin).map {
-            AddressItem(address: $0.adapter.receiveAddress, coin: $0.coin)
+    func addressItems(forCoin coinCode: CoinCode?) -> [AddressItem] {
+        return interactor.wallets(forCoin: coinCode).map {
+            AddressItem(address: $0.adapter.receiveAddress, coinCode: $0.coinCode)
         }
     }
 

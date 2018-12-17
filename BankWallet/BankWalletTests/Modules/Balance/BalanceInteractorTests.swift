@@ -45,9 +45,9 @@ class BalanceInteractorTests: XCTestCase {
         mockEtherAdapter = MockIAdapter()
         mockCashAdapter = MockIAdapter()
 
-        bitcoinWallet = Wallet(coin: bitcoin, adapter: mockBitcoinAdapter)
-        etherWallet = Wallet(coin: ether, adapter: mockEtherAdapter)
-        cashWallet = Wallet(coin: cash, adapter: mockCashAdapter)
+        bitcoinWallet = Wallet(coinCode: bitcoin, adapter: mockBitcoinAdapter)
+        etherWallet = Wallet(coinCode: ether, adapter: mockEtherAdapter)
+        cashWallet = Wallet(coinCode: cash, adapter: mockCashAdapter)
 
         mockDelegate = MockIBalanceInteractorDelegate()
         mockWalletManager = MockIWalletManager()
@@ -118,7 +118,7 @@ class BalanceInteractorTests: XCTestCase {
 
     func testBitcoinRate() {
         let bitcoinRate = Rate()
-        bitcoinRate.coin = bitcoin
+        bitcoinRate.coinCode = bitcoin
         bitcoinRate.currencyCode = currency.code
         bitcoinRate.value = 5000
         bitcoinRate.timestamp = 134000000
@@ -132,7 +132,7 @@ class BalanceInteractorTests: XCTestCase {
 
     func testEtherRate() {
         let etherRate = Rate()
-        etherRate.coin = ether
+        etherRate.coinCode = ether
         etherRate.currencyCode = currency.code
         etherRate.value = 300
         etherRate.timestamp = 2000000
@@ -145,7 +145,7 @@ class BalanceInteractorTests: XCTestCase {
     }
 
     func testRefresh() {
-        interactor.refresh(coin: ether)
+        interactor.refresh(coinCode: ether)
         verify(mockEtherAdapter).refresh()
     }
 

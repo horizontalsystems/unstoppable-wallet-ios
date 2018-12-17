@@ -36,7 +36,7 @@ class TransactionViewItemFactoryTests: XCTestCase {
         mockRate = MockRate()
 
         stub(mockWalletManager) { mock in
-            when(mock.wallets.get).thenReturn([Wallet(coin: coin, adapter: mockAdapter)])
+            when(mock.wallets.get).thenReturn([Wallet(coinCode: coin, adapter: mockAdapter)])
         }
         stub(mockCurrencyManager) { mock in
             when(mock.baseCurrency.get).thenReturn(currency)
@@ -81,12 +81,12 @@ class TransactionViewItemFactoryTests: XCTestCase {
 
     func testCoinValue() {
         let record = TransactionRecord()
-        record.coin = coin
+        record.coinCode = coin
         record.amount = amount
 
         let item = factory.item(fromRecord: record)
 
-        XCTAssertEqual(item.coinValue, CoinValue(coin: coin, value: amount))
+        XCTAssertEqual(item.coinValue, CoinValue(coinCode: coin, value: amount))
     }
 
     func testCurrencyValue_NoRate_OldTransaction() {
@@ -100,7 +100,7 @@ class TransactionViewItemFactoryTests: XCTestCase {
 
     func testCurrencyValue_NoRate_RecentTransaction() {
         let record = TransactionRecord()
-        record.coin = coin
+        record.coinCode = coin
         record.amount = amount
         record.timestamp = Date().timeIntervalSince1970 - 60 * 55 // less than 1 hour earlier
 
@@ -115,7 +115,7 @@ class TransactionViewItemFactoryTests: XCTestCase {
         }
 
         let record = TransactionRecord()
-        record.coin = coin
+        record.coinCode = coin
         record.timestamp = Date().timeIntervalSince1970 - 60 * 55 // less than 1 hour earlier
 
         let item = factory.item(fromRecord: record)
@@ -168,7 +168,7 @@ class TransactionViewItemFactoryTests: XCTestCase {
         let date = Date(timeIntervalSince1970: Double(Int(Date().timeIntervalSince1970)))
 
         let record = TransactionRecord()
-        record.coin = coin
+        record.coinCode = coin
         record.timestamp = date.timeIntervalSince1970
 
         let item = factory.item(fromRecord: record)
@@ -178,7 +178,7 @@ class TransactionViewItemFactoryTests: XCTestCase {
 
     func testStatus_NoBlockHeight() {
         let record = TransactionRecord()
-        record.coin = coin
+        record.coinCode = coin
 
         let item = factory.item(fromRecord: record)
 
@@ -191,7 +191,7 @@ class TransactionViewItemFactoryTests: XCTestCase {
         }
 
         let record = TransactionRecord()
-        record.coin = coin
+        record.coinCode = coin
         record.blockHeight = 100
 
         let item = factory.item(fromRecord: record)
@@ -205,7 +205,7 @@ class TransactionViewItemFactoryTests: XCTestCase {
         }
 
         let record = TransactionRecord()
-        record.coin = coin
+        record.coinCode = coin
         record.blockHeight = 100
 
         let item = factory.item(fromRecord: record)
@@ -222,7 +222,7 @@ class TransactionViewItemFactoryTests: XCTestCase {
         }
 
         let record = TransactionRecord()
-        record.coin = coin
+        record.coinCode = coin
         record.blockHeight = blockHeight
 
         let item = factory.item(fromRecord: record)
@@ -240,7 +240,7 @@ class TransactionViewItemFactoryTests: XCTestCase {
         }
 
         let record = TransactionRecord()
-        record.coin = coin
+        record.coinCode = coin
         record.blockHeight = blockHeight
 
         let item = factory.item(fromRecord: record)

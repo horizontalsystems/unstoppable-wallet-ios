@@ -10,20 +10,20 @@ class RealmStorage {
 
 extension RealmStorage: IRateStorage {
 
-    func rate(forCoin coin: Coin, currencyCode: String) -> Rate? {
-        return realmFactory.realm.objects(Rate.self).filter("coin = %@ AND currencyCode = %@", coin, currencyCode).first
+    func rate(forCoin coinCode: CoinCode, currencyCode: String) -> Rate? {
+        return realmFactory.realm.objects(Rate.self).filter("coinCode = %@ AND currencyCode = %@", coinCode, currencyCode).first
     }
 
-    func save(latestRate: LatestRate, coin: Coin, currencyCode: String) {
+    func save(latestRate: LatestRate, coinCode: CoinCode, currencyCode: String) {
         let realm = realmFactory.realm
 
         try? realm.write {
-            if let rate = realm.objects(Rate.self).filter("coin = %@ AND currencyCode = %@", coin, currencyCode).first {
+            if let rate = realm.objects(Rate.self).filter("coinCode = %@ AND currencyCode = %@", coinCode, currencyCode).first {
                 rate.value = latestRate.value
                 rate.timestamp = latestRate.timestamp
             } else {
                 let rate = Rate()
-                rate.coin = coin
+                rate.coinCode = coinCode
                 rate.currencyCode = currencyCode
                 rate.value = latestRate.value
                 rate.timestamp = latestRate.timestamp

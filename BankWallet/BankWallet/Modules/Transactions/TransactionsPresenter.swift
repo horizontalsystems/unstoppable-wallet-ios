@@ -26,8 +26,8 @@ extension TransactionsPresenter: ITransactionsViewDelegate {
         router.openTransactionInfo(transactionHash: transaction.transactionHash)
     }
 
-    func onFilterSelect(coin: Coin?) {
-        interactor.set(coin: coin)
+    func onFilterSelect(coinCode: CoinCode?) {
+        interactor.set(coinCode: coinCode)
     }
 
     var itemsCount: Int {
@@ -47,11 +47,11 @@ extension TransactionsPresenter: ITransactionsInteractorDelegate {
         view?.reload()
     }
 
-    func didRetrieve(filters: [Coin]) {
+    func didRetrieve(filters: [CoinCode]) {
         var filterItems: [TransactionFilterItem] = filters.map {
-            return TransactionFilterItem(coin: $0, name: "coin.\($0)")
+            return TransactionFilterItem(coinCode: $0, name: "coin.\($0)")
         }
-        filterItems.insert(TransactionFilterItem(coin: nil, name: "transactions.filter_all"), at: 0)
+        filterItems.insert(TransactionFilterItem(coinCode: nil, name: "transactions.filter_all"), at: 0)
         view?.show(filters: filterItems)
     }
 

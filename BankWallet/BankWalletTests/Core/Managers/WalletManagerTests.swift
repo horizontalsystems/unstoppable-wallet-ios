@@ -54,8 +54,8 @@ class WalletManagerTests: XCTestCase {
     func testInitWallets() {
         manager.initWallets(words: words, coins: enabledCoins)
 
-        XCTAssertEqual(manager.wallets[0].coin, enabledCoins[0])
-        XCTAssertEqual(manager.wallets[1].coin, enabledCoins[1])
+        XCTAssertEqual(manager.wallets[0].coinCode, enabledCoins[0])
+        XCTAssertEqual(manager.wallets[1].coinCode, enabledCoins[1])
         XCTAssertTrue(manager.wallets[0].adapter === mockBitcoinAdapter)
         XCTAssertTrue(manager.wallets[1].adapter === mockEthereumAdapter)
     }

@@ -1,7 +1,7 @@
 class AdapterFactory: IAdapterFactory {
 
-    func adapter(forCoin coin: Coin, words: [String]) -> IAdapter? {
-        switch coin {
+    func adapter(forCoin coinCode: CoinCode, words: [String]) -> IAdapter? {
+        switch coinCode {
         case "BTC": return BitcoinAdapter(words: words, coin: .bitcoin(network: .mainNet))
         case "BTCt": return BitcoinAdapter(words: words, coin: .bitcoin(network: .testNet))
         case "BTCr": return BitcoinAdapter(words: words, coin: .bitcoin(network: .regTest))

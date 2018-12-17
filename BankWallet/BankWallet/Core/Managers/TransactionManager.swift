@@ -54,15 +54,15 @@ class TransactionManager {
         walletManager.wallets.forEach { wallet in
             wallet.adapter.transactionRecordsSubject
                     .subscribe(onNext: { [weak self] records in
-                        self?.handle(records: records, forCoin: wallet.coin)
+                        self?.handle(records: records, forCoin: wallet.coinCode)
                     })
                     .disposed(by: adaptersDisposeBag)
         }
     }
 
-    private func handle(records: [TransactionRecord], forCoin coin: Coin) {
+    private func handle(records: [TransactionRecord], forCoin coinCode: CoinCode) {
         records.forEach { record in
-            record.coin = coin
+            record.coinCode = coinCode
         }
 
         storage.update(records: records)

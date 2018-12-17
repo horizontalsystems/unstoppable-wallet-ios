@@ -46,7 +46,7 @@ extension SendPresenter: ISendViewDelegate {
         let state = interactor.state(forUserInput: userInput)
         let viewItem = factory.viewItem(forState: state)
 
-        view?.set(coin: interactor.coin)
+        view?.set(coinCode: interactor.coinCode)
         view?.set(amountInfo: viewItem.amountInfo)
         view?.set(switchButtonEnabled: viewItem.switchButtonEnabled)
         view?.set(hintInfo: viewItem.hintInfo)

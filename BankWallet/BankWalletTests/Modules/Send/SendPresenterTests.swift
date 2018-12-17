@@ -12,13 +12,13 @@ class SendPresenterTests: XCTestCase {
     private var viewItem = SendStateViewItem()
     private var confirmationViewItem: SendConfirmationViewItem!
 
-    private let coin = "BTC"
+    private let coinCode = "BTC"
     private let state = SendState(inputType: .coin)
 
     private let inputType: SendInputType = .coin
     private let amount: Double = 123.45
     private let convertedAmount: Double = 543.21
-    private let amountInfo: AmountInfo = .coinValue(coinValue: CoinValue(coin: "BTC", value: 10.2))
+    private let amountInfo: AmountInfo = .coinValue(coinValue: CoinValue(coinCode: "BTC", value: 10.2))
 
     private var presenter: SendPresenter!
 
@@ -34,7 +34,7 @@ class SendPresenterTests: XCTestCase {
         viewItem.sendButtonEnabled = false
 
         confirmationViewItem = SendConfirmationViewItem(
-                coinValue: CoinValue(coin: "BTC", value: 10.2),
+                coinValue: CoinValue(coinCode: "BTC", value: 10.2),
                 address: "address",
                 feeInfo: amountInfo,
                 totalInfo: amountInfo
@@ -47,7 +47,7 @@ class SendPresenterTests: XCTestCase {
         mockUserInput = MockSendUserInput()
 
         stub(mockView) { mock in
-            when(mock.set(coin: any())).thenDoNothing()
+            when(mock.set(coinCode: any())).thenDoNothing()
             when(mock.set(amountInfo: any())).thenDoNothing()
             when(mock.set(switchButtonEnabled: any())).thenDoNothing()
             when(mock.set(hintInfo: any())).thenDoNothing()
@@ -59,7 +59,7 @@ class SendPresenterTests: XCTestCase {
             when(mock.dismissWithSuccess()).thenDoNothing()
         }
         stub(mockInteractor) { mock in
-            when(mock.coin.get).thenReturn(coin)
+            when(mock.coinCode.get).thenReturn(coinCode)
             when(mock.state(forUserInput: sameInstance(as: mockUserInput))).thenReturn(state)
             when(mock.convertedAmount(forInputType: equal(to: inputType), amount: equal(to: amount))).thenReturn(convertedAmount)
             when(mock.send(userInput: any())).thenDoNothing()
@@ -97,7 +97,7 @@ class SendPresenterTests: XCTestCase {
     func testOnViewDidLoad() {
         presenter.onViewDidLoad()
 
-        verify(mockView).set(coin: equal(to: coin))
+        verify(mockView).set(coinCode: equal(to: coinCode))
         verify(mockView).set(amountInfo: equal(to: viewItem.amountInfo))
         verify(mockView).set(switchButtonEnabled: viewItem.switchButtonEnabled)
         verify(mockView).set(hintInfo: equal(to: viewItem.hintInfo))

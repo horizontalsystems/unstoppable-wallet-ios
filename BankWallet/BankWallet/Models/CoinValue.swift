@@ -1,6 +1,6 @@
 struct CoinValue {
 
-    let coin: Coin
+    let coinCode: CoinCode
     let value: Double
 
 }

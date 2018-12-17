@@ -136,7 +136,7 @@ class MainSettingsViewController: UIViewController, SectionsDataSource {
 
     private func showRealmInfo() {
         for wallet in App.shared.walletManager.wallets {
-            print("\nINFO FOR \(wallet.coin):\n\(wallet.adapter.debugInfo)")
+            print("\nINFO FOR \(wallet.coinCode):\n\(wallet.adapter.debugInfo)")
         }
     }
 

@@ -36,16 +36,16 @@ class BalancePresenterTests: XCTestCase {
     override func setUp() {
         super.setUp()
 
-        bitcoinValue = CoinValue(coin: bitcoin, value: 2)
-        etherValue = CoinValue(coin: ether, value: 3)
+        bitcoinValue = CoinValue(coinCode: bitcoin, value: 2)
+        etherValue = CoinValue(coinCode: ether, value: 3)
 
         bitcoinRate = Rate()
-        bitcoinRate.coin = bitcoin
+        bitcoinRate.coinCode = bitcoin
         bitcoinRate.currencyCode = currency.code
         bitcoinRate.value = 5000
         bitcoinRate.timestamp = 50000
         etherRate = Rate()
-        etherRate.coin = ether
+        etherRate.coinCode = ether
         etherRate.currencyCode = currency.code
         etherRate.value = 300
         etherRate.timestamp = Date().timeIntervalSince1970
@@ -72,8 +72,8 @@ class BalancePresenterTests: XCTestCase {
         mockBitcoinAdapter = MockIAdapter()
         mockEtherAdapter = MockIAdapter()
 
-        bitcoinWallet = Wallet(coin: bitcoin, adapter: mockBitcoinAdapter)
-        etherWallet = Wallet(coin: ether, adapter: mockEtherAdapter)
+        bitcoinWallet = Wallet(coinCode: bitcoin, adapter: mockBitcoinAdapter)
+        etherWallet = Wallet(coinCode: ether, adapter: mockEtherAdapter)
 
         mockRouter = MockIBalanceRouter()
         mockInteractor = MockIBalanceInteractor()
@@ -94,7 +94,7 @@ class BalancePresenterTests: XCTestCase {
             when(mock.rate(forCoin: equal(to: bitcoin))).thenReturn(bitcoinRate)
             when(mock.rate(forCoin: equal(to: ether))).thenReturn(etherRate)
 
-            when(mock.refresh(coin: any())).thenDoNothing()
+            when(mock.refresh(coinCode: any())).thenDoNothing()
         }
 
         stub(mockBitcoinAdapter) { mock in
@@ -152,7 +152,7 @@ class BalancePresenterTests: XCTestCase {
 
     func testTotalBalance_DidUpdateRates() {
         let newBitcoinRate = Rate()
-        newBitcoinRate.coin = bitcoin
+        newBitcoinRate.coinCode = bitcoin
         newBitcoinRate.currencyCode = currency.code
         newBitcoinRate.value = 1000
         newBitcoinRate.timestamp = Date().timeIntervalSince1970
@@ -174,7 +174,7 @@ class BalancePresenterTests: XCTestCase {
     }
 
     func testWalletViewItems_DidUpdateCoinValue() {
-        let newBitcoinValue = CoinValue(coin: bitcoin, value: 3)
+        let newBitcoinValue = CoinValue(coinCode: bitcoin, value: 3)
         let newExpectedBitcoinItem = BalanceViewItem(
                 coinValue: newBitcoinValue,
                 exchangeValue: CurrencyValue(currency: currency, value: bitcoinRate.value),
@@ -194,7 +194,7 @@ class BalancePresenterTests: XCTestCase {
 
     func testWalletViewItems_DidUpdateRates() {
         let newEtherRate = Rate()
-        etherRate.coin = ether
+        etherRate.coinCode = ether
         etherRate.currencyCode = currency.code
         etherRate.value = 300
         etherRate.timestamp = 860000
@@ -258,15 +258,15 @@ class BalancePresenterTests: XCTestCase {
 
     func testWalletViewItems_DidUpdateWallets_Add() {
         let thor = "THOR"
-        let thorValue = CoinValue(coin: thor, value: 35)
+        let thorValue = CoinValue(coinCode: thor, value: 35)
         let thorRate = Rate()
-        thorRate.coin = thor
+        thorRate.coinCode = thor
         thorRate.currencyCode = currency.code
         thorRate.value = 666
         thorRate.timestamp = 777777
         let thorAdapterState = AdapterState.synced
         let thorAdapter = MockIAdapter()
-        let thorWallet = Wallet(coin: thor, adapter: thorAdapter)
+        let thorWallet = Wallet(coinCode: thor, adapter: thorAdapter)
 
         let expectedThorItem = BalanceViewItem(
                 coinValue: thorValue,
@@ -285,7 +285,7 @@ class BalancePresenterTests: XCTestCase {
         stub(mockInteractor) { mock in
             when(mock.wallets.get).thenReturn([bitcoinWallet, etherWallet, thorWallet])
             when(mock.rate(forCoin: equal(to: thor))).thenReturn(thorRate)
-            when(mock.refresh(coin: any())).thenDoNothing()
+            when(mock.refresh(coinCode: any())).thenDoNothing()
         }
 
         presenter.didUpdate()
@@ -295,7 +295,7 @@ class BalancePresenterTests: XCTestCase {
 
     func testRefreshFromView() {
         presenter.onRefresh(for: ether)
-        verify(mockInteractor).refresh(coin: equal(to: ether))
+        verify(mockInteractor).refresh(coinCode: equal(to: ether))
     }
 
     func testOpenReceive() {

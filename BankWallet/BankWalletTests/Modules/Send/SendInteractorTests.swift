@@ -26,7 +26,7 @@ class SendInteractorTests: XCTestCase {
         super.setUp()
 
         mockAdapter = MockIAdapter()
-        wallet = Wallet(coin: coin, adapter: mockAdapter)
+        wallet = Wallet(coinCode: coin, adapter: mockAdapter)
 
         mockDelegate = MockISendInteractorDelegate()
         mockCurrencyManager = MockICurrencyManager()
@@ -131,7 +131,7 @@ class SendInteractorTests: XCTestCase {
 
         let state = interactor.state(forUserInput: input)
 
-        XCTAssertEqual(state.coinValue, CoinValue(coin: coin, value: amount))
+        XCTAssertEqual(state.coinValue, CoinValue(coinCode: coin, value: amount))
     }
 
     func testState_CoinValue_CurrencyType() {
@@ -142,7 +142,7 @@ class SendInteractorTests: XCTestCase {
 
         let state = interactor.state(forUserInput: input)
 
-        XCTAssertEqual(state.coinValue, CoinValue(coin: coin, value: amount / rateValue))
+        XCTAssertEqual(state.coinValue, CoinValue(coinCode: coin, value: amount / rateValue))
     }
 
     func testState_CoinValue_CurrencyType_NoRate() {
@@ -224,7 +224,7 @@ class SendInteractorTests: XCTestCase {
 
         let state = interactor.state(forUserInput: input)
 
-        XCTAssertEqual(state.amountError, AmountError.insufficientAmount(amountInfo: .coinValue(coinValue: CoinValue(coin: coin, value: balance))))
+        XCTAssertEqual(state.amountError, AmountError.insufficientAmount(amountInfo: .coinValue(coinValue: CoinValue(coinCode: coin, value: balance))))
     }
 
     func testState_AmountError_CurrencyType_EnoughBalance() {
@@ -290,7 +290,7 @@ class SendInteractorTests: XCTestCase {
 
         let state = interactor.state(forUserInput: input)
 
-        XCTAssertEqual(state.feeCoinValue, CoinValue(coin: coin, value: fee))
+        XCTAssertEqual(state.feeCoinValue, CoinValue(coinCode: coin, value: fee))
     }
 
     func testState_FeeCoinValue_CurrencyType() {
@@ -309,7 +309,7 @@ class SendInteractorTests: XCTestCase {
 
         let state = interactor.state(forUserInput: input)
 
-        XCTAssertEqual(state.feeCoinValue, CoinValue(coin: coin, value: fee))
+        XCTAssertEqual(state.feeCoinValue, CoinValue(coinCode: coin, value: fee))
     }
 
     func testState_FeeCurrencyValue_CoinType() {
