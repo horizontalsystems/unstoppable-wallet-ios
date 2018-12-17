@@ -29,7 +29,7 @@ class LockoutView: UIView {
 
     func show(expirationDate: Date) {
         isHidden = false
-        infoLabel.text = "pin_lockout.blocked_until".localized(DateHelper.instance.formatLockoutExpirationDate(from: expirationDate))
+        infoLabel.text = "unlock_pin.blocked_until".localized(DateHelper.instance.formatLockoutExpirationDate(from: expirationDate))
     }
 
     func hide() {
