@@ -57,12 +57,12 @@ protocol IWalletManager {
     var wallets: [Wallet] { get }
     var walletsSubject: PublishSubject<[Wallet]> { get }
 
-    func initWallets(words: [String], coinCodes: [CoinCode])
+    func initWallets(words: [String], coins: [Coin])
     func clearWallets()
 }
 
 protocol IAdapterFactory {
-    func adapter(forCoin coinCode: CoinCode, words: [String]) -> IAdapter?
+    func adapter(forCoin coin: Coin, words: [String]) -> IAdapter?
 }
 
 protocol ICoinManager {
@@ -172,7 +172,7 @@ protocol ISystemInfoManager {
 protocol IAppConfigProvider {
     var reachabilityHost: String { get }
     var ratesApiUrl: String { get }
-    var enabledCoinCodes: [CoinCode] { get }
+    var networkType: Network { get }
     var currencies: [Currency] { get }
 }
 

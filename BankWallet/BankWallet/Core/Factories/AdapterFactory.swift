@@ -1,16 +1,27 @@
-class AdapterFactory: IAdapterFactory {
+import HSBitcoinKit
+import HSEthereumKit
 
-    func adapter(forCoin coinCode: CoinCode, words: [String]) -> IAdapter? {
-        switch coinCode {
-        case "BTC": return BitcoinAdapter(words: words, coin: .bitcoin(network: .mainNet))
-        case "BTCt": return BitcoinAdapter(words: words, coin: .bitcoin(network: .testNet))
-        case "BTCr": return BitcoinAdapter(words: words, coin: .bitcoin(network: .regTest))
-        case "BCH": return BitcoinAdapter(words: words, coin: .bitcoinCash(network: .mainNet))
-        case "BCHt": return BitcoinAdapter(words: words, coin: .bitcoinCash(network: .testNet))
-        case "ETH": return EthereumAdapter(words: words, coin: .ethereum(network: .mainNet))
-        case "ETHt": return EthereumAdapter(words: words, coin: .ethereum(network: .testNet))
-        default: return nil
+class AdapterFactory: IAdapterFactory {
+    let appConfigProvider: IAppConfigProvider
+
+    init(appConfigProvider: IAppConfigProvider) {
+        self.appConfigProvider = appConfigProvider
+    }
+
+    func adapter(forCoin coin: Coin, words: [String]) -> IAdapter? {
+        switch coin.blockChain {
+        case .bitcoin(let type):
+            let network: BitcoinKit.Network = appConfigProvider.networkType == .main ? .mainNet : .testNet
+            let coin: BitcoinKit.Coin = type == .bitcoin ? .bitcoin(network: network) : .bitcoinCash(network: network)
+            return BitcoinAdapter(words: words, coin: coin)
+        case .ethereum(let type):
+            let network: EthereumKit.NetworkType = appConfigProvider.networkType == .main ? .mainNet : .testNet
+            if case .ethereum = type {
+                let coin: EthereumKit.Coin = .ethereum(network: network)
+                return EthereumAdapter(words: words, coin: coin)
+            }
         }
+        return nil
     }
 
 }

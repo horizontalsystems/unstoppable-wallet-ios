@@ -40,8 +40,8 @@ class RateManagerTests: XCTestCase {
         bitcoinRate = Rate(coinCode: bitcoin, currencyCode: baseCurrencyCode, value: bitcoinValue, timestamp: 0)
         etherRate = Rate(coinCode: ether, currencyCode: baseCurrencyCode, value: etherValue, timestamp: 0)
 
-        bitcoinWallet = Wallet(coinCode: bitcoin, adapter: MockIAdapter())
-        etherWallet = Wallet(coinCode: ether, adapter: MockIAdapter())
+        bitcoinWallet = Wallet(coinCode: bitcoin, title: "some", adapter: MockIAdapter())
+        etherWallet = Wallet(coinCode: ether, title: "some", adapter: MockIAdapter())
 
         mockStorage = MockIRateStorage()
         mockSyncer = MockIRateSyncer()

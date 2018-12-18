@@ -13,11 +13,11 @@ class WalletManager {
 
 extension WalletManager: IWalletManager {
 
-    func initWallets(words: [String], coinCodes: [CoinCode]) {
+    func initWallets(words: [String], coins: [Coin]) {
         var newWallets = [Wallet]()
 
-        wallets = coinCodes.compactMap { coin in
-            if let wallet = self.wallets.first(where: { $0.coinCode == coin }) {
+        wallets = coins.compactMap { coin in
+            if let wallet = self.wallets.first(where: { $0.coinCode == coin.code }) {
                 return wallet
             }
 
@@ -25,7 +25,7 @@ extension WalletManager: IWalletManager {
                 return nil
             }
 
-            let wallet = Wallet(coinCode: coin, adapter: adapter)
+            let wallet = Wallet(coinCode: coin.code, title: coin.title, adapter: adapter)
             newWallets.append(wallet)
             return wallet
         }

@@ -123,3 +123,11 @@ extension LockoutState: Equatable {
         }
     }
 }
+
+extension Coin: Equatable {
+    public static func ==(lhs: Coin, rhs: Coin) -> Bool {
+        let codes = lhs.code == rhs.code
+        let titles = lhs.title == rhs.title
+        return codes && titles
+    }
+}

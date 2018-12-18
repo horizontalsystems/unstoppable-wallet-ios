@@ -36,7 +36,7 @@ class TransactionsInteractorTests: XCTestCase {
             when(mock.lastBlockHeightSubject.get).thenReturn(bitcoinLastBlockHeightSubject)
         }
         stub(mockWalletManager) { mock in
-            when(mock.wallets.get).thenReturn([Wallet(coinCode: bitcoin, adapter: mockBitcoinAdapter)])
+            when(mock.wallets.get).thenReturn([Wallet(coinCode: bitcoin, title: "some", adapter: mockBitcoinAdapter)])
         }
         stub(mockDataSource) { mock in
             when(mock.set(coinCode: equal(to: bitcoin))).thenDoNothing()
@@ -97,9 +97,9 @@ class TransactionsInteractorTests: XCTestCase {
         let mockBitcoinAdapter = MockIAdapter()
         let mockEtherAdapter = MockIAdapter()
         let mockCashAdapter = MockIAdapter()
-        let bitcoinWallet = Wallet(coinCode: bitcoin, adapter: mockBitcoinAdapter)
-        let etherWallet = Wallet(coinCode: ether, adapter: mockEtherAdapter)
-        let cashWallet = Wallet(coinCode: cash, adapter: mockCashAdapter)
+        let bitcoinWallet = Wallet(coinCode: bitcoin, title: "some", adapter: mockBitcoinAdapter)
+        let etherWallet = Wallet(coinCode: ether, title: "some", adapter: mockEtherAdapter)
+        let cashWallet = Wallet(coinCode: cash, title: "some", adapter: mockCashAdapter)
         stub(mockWalletManager) { mock in
             when(mock.wallets.get).thenReturn([bitcoinWallet, etherWallet, cashWallet])
         }

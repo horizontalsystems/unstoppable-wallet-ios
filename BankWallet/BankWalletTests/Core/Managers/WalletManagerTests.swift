@@ -9,23 +9,23 @@ class WalletManagerTests: XCTestCase {
 
     private var manager: WalletManager!
 
-    private let bitcoin = "BTC"
-    private let ether = "ETH"
+    private let bitcoin = Coin(title: "Bitcoin", code: "BTC", blockChain: .bitcoin(type: .bitcoin))
+    private let ether = Coin(title: "Ethereum", code: "ETH", blockChain: .ethereum(type: .ethereum))
 
     private let words = ["one", "two"]
-    private var enabledCoinCodes: [String]!
+    private var enabledCoins: [Coin]!
 
     override func setUp() {
         super.setUp()
-        enabledCoinCodes = [bitcoin, ether]
+        enabledCoins = [bitcoin, ether]
 
         mockAdapterFactory = MockIAdapterFactory()
         mockBitcoinAdapter = MockIAdapter()
         mockEthereumAdapter = MockIAdapter()
 
         stub(mockAdapterFactory) { mock in
-            when(mock.adapter(forCoin: bitcoin, words: equal(to: words))).thenReturn(mockBitcoinAdapter)
-            when(mock.adapter(forCoin: ether, words: equal(to: words))).thenReturn(mockEthereumAdapter)
+            when(mock.adapter(forCoin: equal(to: bitcoin), words: equal(to: words))).thenReturn(mockBitcoinAdapter)
+            when(mock.adapter(forCoin: equal(to: ether), words: equal(to: words))).thenReturn(mockEthereumAdapter)
         }
         stub(mockBitcoinAdapter) { mock in
             when(mock.start()).thenDoNothing()
@@ -52,26 +52,28 @@ class WalletManagerTests: XCTestCase {
     }
 
     func testInitWallets() {
-        manager.initWallets(words: words, coinCodes: enabledCoinCodes)
+        manager.initWallets(words: words, coins: enabledCoins)
 
-        XCTAssertEqual(manager.wallets[0].coinCode, enabledCoinCodes[0])
-        XCTAssertEqual(manager.wallets[1].coinCode, enabledCoinCodes[1])
+        XCTAssertEqual(manager.wallets[0].coinCode, enabledCoins[0].code)
+        XCTAssertEqual(manager.wallets[0].title, enabledCoins[0].title)
+        XCTAssertEqual(manager.wallets[1].coinCode, enabledCoins[1].code)
+        XCTAssertEqual(manager.wallets[1].title, enabledCoins[1].title)
         XCTAssertTrue(manager.wallets[0].adapter === mockBitcoinAdapter)
         XCTAssertTrue(manager.wallets[1].adapter === mockEthereumAdapter)
     }
 
     func testInitWallets_WithoutAdapter() {
         stub(mockAdapterFactory) { mock in
-            when(mock.adapter(forCoin: bitcoin, words: equal(to: words))).thenReturn(nil)
+            when(mock.adapter(forCoin: equal(to: bitcoin), words: equal(to: words))).thenReturn(nil)
         }
 
-        manager.initWallets(words: words, coinCodes: enabledCoinCodes)
+        manager.initWallets(words: words, coins: enabledCoins)
 
         XCTAssertEqual(manager.wallets.count, 1)
     }
 
     func testInitWallets_StartAdapters() {
-        manager.initWallets(words: words, coinCodes: enabledCoinCodes)
+        manager.initWallets(words: words, coins: enabledCoins)
 
         verify(mockBitcoinAdapter).start()
         verify(mockEthereumAdapter).start()
@@ -79,17 +81,17 @@ class WalletManagerTests: XCTestCase {
 
     func testInitWallets_WithoutWords() {
         stub(mockAdapterFactory) { mock in
-            when(mock.adapter(forCoin: bitcoin, words: equal(to: [String]()))).thenReturn(nil)
-            when(mock.adapter(forCoin: ether, words: equal(to: [String]()))).thenReturn(nil)
+            when(mock.adapter(forCoin: equal(to: bitcoin), words: equal(to: [String]()))).thenReturn(nil)
+            when(mock.adapter(forCoin: equal(to: ether), words: equal(to: [String]()))).thenReturn(nil)
         }
 
-        manager.initWallets(words: [], coinCodes: enabledCoinCodes)
+        manager.initWallets(words: [], coins: enabledCoins)
 
         XCTAssertEqual(manager.wallets.count, 0)
     }
 
     func testClearWallets() {
-        manager.initWallets(words: words, coinCodes: enabledCoinCodes)
+        manager.initWallets(words: words, coins: enabledCoins)
         manager.clearWallets()
 
         verify(mockBitcoinAdapter).clear()

@@ -19,8 +19,8 @@ class DepositInteractorTests: XCTestCase {
     override func setUp() {
         super.setUp()
 
-        bitcoinWallet = Wallet(coinCode: bitcoin, adapter: MockIAdapter())
-        etherWallet = Wallet(coinCode: ether, adapter: MockIAdapter())
+        bitcoinWallet = Wallet(coinCode: bitcoin, title: "some", adapter: MockIAdapter())
+        etherWallet = Wallet(coinCode: ether, title: "some", adapter: MockIAdapter())
 
         mockDelegate = MockIDepositInteractorDelegate()
         mockWalletManager = MockIWalletManager()
