@@ -27,7 +27,7 @@ class CoinManager {
             return
         }
 
-        walletManager.initWallets(words: words, coins: appConfigProvider.enabledCoins)
+        walletManager.initWallets(words: words, coinCodes: appConfigProvider.enabledCoinCodes)
     }
 }
 

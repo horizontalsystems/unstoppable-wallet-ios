@@ -57,7 +57,7 @@ protocol IWalletManager {
     var wallets: [Wallet] { get }
     var walletsSubject: PublishSubject<[Wallet]> { get }
 
-    func initWallets(words: [String], coins: [CoinCode])
+    func initWallets(words: [String], coinCodes: [CoinCode])
     func clearWallets()
 }
 
@@ -157,7 +157,7 @@ protocol IRateManager {
 
 protocol IRateSyncer {
     var delegate: IRateSyncerDelegate? { get set }
-    func sync(coins: [String], currencyCode: String)
+    func sync(coinCodes: [String], currencyCode: String)
 }
 
 protocol IRateSyncerDelegate: class {
@@ -172,7 +172,7 @@ protocol ISystemInfoManager {
 protocol IAppConfigProvider {
     var reachabilityHost: String { get }
     var ratesApiUrl: String { get }
-    var enabledCoins: [CoinCode] { get }
+    var enabledCoinCodes: [CoinCode] { get }
     var currencies: [Currency] { get }
 }
 

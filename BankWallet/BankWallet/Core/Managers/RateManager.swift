@@ -46,7 +46,7 @@ class RateManager {
         let coins = walletManager.wallets.map { $0.coinCode }
         let currencyCode = currencyManager.baseCurrency.code
 
-        syncer.sync(coins: coins, currencyCode: currencyCode)
+        syncer.sync(coinCodes: coins, currencyCode: currencyCode)
     }
 
 }

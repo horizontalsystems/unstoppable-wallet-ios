@@ -5,7 +5,7 @@ class AppConfigProvider: IAppConfigProvider {
     let reachabilityHost = "ipfs.horizontalsystems.xyz"
     let ratesApiUrl = "https://ipfs.horizontalsystems.xyz/ipns/Qmd4Gv2YVPqs6dmSy1XEq7pQRSgLihqYKL2JjK7DMUFPVz/io-hs/data/xrates"
 
-    var enabledCoins: [CoinCode] {
+    var enabledCoinCodes: [CoinCode] {
         if let coins = Bundle.main.object(forInfoDictionaryKey: "Enabled Coins") as? String {
             return coins.components(separatedBy: ",").map {
                 $0.trimmingCharacters(in: .whitespaces)

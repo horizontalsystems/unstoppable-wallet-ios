@@ -13,10 +13,10 @@ class WalletManager {
 
 extension WalletManager: IWalletManager {
 
-    func initWallets(words: [String], coins: [CoinCode]) {
+    func initWallets(words: [String], coinCodes: [CoinCode]) {
         var newWallets = [Wallet]()
 
-        wallets = coins.compactMap { coin in
+        wallets = coinCodes.compactMap { coin in
             if let wallet = self.wallets.first(where: { $0.coinCode == coin }) {
                 return wallet
             }

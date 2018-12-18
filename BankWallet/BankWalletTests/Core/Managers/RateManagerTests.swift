@@ -56,7 +56,7 @@ class RateManagerTests: XCTestCase {
             when(mock.save(latestRate: any(), coinCode: any(), currencyCode: any())).thenDoNothing()
         }
         stub(mockSyncer) { mock in
-            when(mock.sync(coins: any(), currencyCode: any())).thenDoNothing()
+            when(mock.sync(coinCodes: any(), currencyCode: any())).thenDoNothing()
         }
         stub(mockWalletManager) { mock in
             when(mock.walletsSubject.get).thenReturn(walletsSubject)
@@ -96,27 +96,27 @@ class RateManagerTests: XCTestCase {
 
     func testSyncRates_OnWalletsChanged() {
         walletsSubject.onNext([])
-        verify(mockSyncer).sync(coins: equal(to: [bitcoin, ether]), currencyCode: equal(to: baseCurrencyCode))
+        verify(mockSyncer).sync(coinCodes: equal(to: [bitcoin, ether]), currencyCode: equal(to: baseCurrencyCode))
     }
 
     func testSyncRates_OnBaseCurrencyChanged() {
         currencySubject.onNext(Currency(code: "", symbol: ""))
-        verify(mockSyncer).sync(coins: equal(to: [bitcoin, ether]), currencyCode: equal(to: baseCurrencyCode))
+        verify(mockSyncer).sync(coinCodes: equal(to: [bitcoin, ether]), currencyCode: equal(to: baseCurrencyCode))
     }
 
     func testSyncRates_OnReachabilityChanged_Connected() {
         reachabilitySubject.onNext(true)
-        verify(mockSyncer).sync(coins: equal(to: [bitcoin, ether]), currencyCode: equal(to: baseCurrencyCode))
+        verify(mockSyncer).sync(coinCodes: equal(to: [bitcoin, ether]), currencyCode: equal(to: baseCurrencyCode))
     }
 
     func testSyncRates_OnReachabilityChanged_Disconnected() {
         reachabilitySubject.onNext(false)
-        verify(mockSyncer, never()).sync(coins: any(), currencyCode: any())
+        verify(mockSyncer, never()).sync(coinCodes: any(), currencyCode: any())
     }
 
     func testSyncRates_OnTimerTick() {
         manager.onFire()
-        verify(mockSyncer).sync(coins: equal(to: [bitcoin, ether]), currencyCode: equal(to: baseCurrencyCode))
+        verify(mockSyncer).sync(coinCodes: equal(to: [bitcoin, ether]), currencyCode: equal(to: baseCurrencyCode))
     }
 
     func testDidSyncRate() {

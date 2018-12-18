@@ -51,14 +51,14 @@ class RateSyncerTests: XCTestCase {
     }
 
     func testSync() {
-        syncer.sync(coins: [bitcoin, ether], currencyCode: currencyCode)
+        syncer.sync(coinCodes: [bitcoin, ether], currencyCode: currencyCode)
 
         verify(mockDelegate).didSync(coinCode: equal(to: bitcoin), currencyCode: equal(to: currencyCode), latestRate: equal(to: bitcoinCurrentRate))
         verify(mockDelegate).didSync(coinCode: equal(to: ether), currencyCode: equal(to: currencyCode), latestRate: equal(to: etherCurrentRate))
     }
 
     func testInvalidateTimerOnSync() {
-        syncer.sync(coins: [bitcoin, ether], currencyCode: currencyCode)
+        syncer.sync(coinCodes: [bitcoin, ether], currencyCode: currencyCode)
         verify(mockTimer).schedule()
     }
 

@@ -20,8 +20,8 @@ class RateSyncer {
 
 extension RateSyncer: IRateSyncer {
 
-    func sync(coins: [String], currencyCode: String) {
-        for coin in coins {
+    func sync(coinCodes: [String], currencyCode: String) {
+        for coin in coinCodes {
             var observable = networkManager.getLatestRate(coinCode: coin, currencyCode: currencyCode)
 
             if async {
