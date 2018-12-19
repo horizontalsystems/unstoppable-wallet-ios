@@ -1,5 +1,5 @@
 "coin.BTC" = "Bitcoin";
-"coin.BCH" = "Bitcoin Cash";
+"coin.BCH" = "Bitcoin Cash ";
 "coin.ETH" = "Ethereum";
 "coin.BTCt" = "Bitcoin T";
 "coin.BCHt" = "Bitcoin Cash T";
