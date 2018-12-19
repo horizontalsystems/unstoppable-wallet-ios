@@ -1,0 +1,178 @@
+"coin.BTC" = "Bitcoin";
+"coin.BCH" = "Bitcoin Cash";
+"coin.ETH" = "Ethereum";
+"coin.BTCt" = "Bitcoin T";
+"coin.BCHt" = "Bitcoin Cash T";
+"coin.ETHt" = "Ethereum T";
+
+"alert.ok" = "OK";
+"alert.cancel" = "Cancelar";
+"alert.copied" = "Copied";
+"alert.confirm" = "Confirm";
+
+"biometric_usage_reason" = "Unlock wallet";
+
+// Access Camera
+
+"access_camera.message" = "Bank needs access to your camera to scan QR code.\n\nGo to Settings - > Bank and allow access to Camera.";
+"access_camera.settings" = "Settings";
+"access_camera.cancel" = "Cancel";
+
+// Guest Page
+
+"guest.title" = "Bank Wallet";
+"guest.subtitle" = "Decentralized App";
+"guest.create_wallet" = "New Wallet";
+"guest.restore_wallet" = "Restore Wallet";
+
+// Restore
+
+"restore.title" = "Restore";
+"restore.description" = "Enter Secret Key  ";
+"restore.done" = "Done";
+"restore.cancel" = "Cancel";
+"restore.validation_failed" = "Incorrect Secret Key";
+
+// Backup
+
+"backup.intro.title" = "Backup";
+"backup.intro.subtitle" = "Your secret key is the only way to restore your wallet and funds if your phone is ever lost, stolen, broken, or upgraded.\n\nIt consists of 12 words. Write them on a piece of paper and do not ever show it to anyone.";
+"backup.intro.later" = "Later";
+"backup.intro.backup_now" = "Backup";
+
+"backup.words.title" = "Secret Key";
+"backup.words.back" = "Back";
+"backup.words.proceed" = "Next";
+
+"backup.confirmation.title" = "Check ...";
+"backup.confirmation.description" = "Enter words from your secret key";
+"backup.confirmation.failure_alert.text" = "Words do not match";
+"backup.confirmation.done_button" = "Done";
+"backup.confirmation.understand" = "I understand that my wallet and tokens are held securely on this device only and not any servers.";
+"backup.confirmation.delete_app_warn" = "I understand that if this app is deleted or stops working for any reason, my wallet can only be recovered using the secret key that I have written down and saved in a secure place";
+
+// Balance
+
+"balance.title" = "Balance";
+"balance.tab_bar_item" = "Balance";
+"balance.send" = "Send";
+"balance.deposit" = "Receive";
+"balance.rate_per_coin" = "%@ per %@";
+"balance.syncing_percent" = "Syncing %@";
+
+// Deposit
+
+"deposit.receive_coin" = "Receive %@";
+"deposit.alert_copy" = "Copy";
+
+// Send
+
+"send.title" = "Send %@";
+"send.address_placeholder" = "Address";
+"send.amount_error.balance" = "Balance %@";
+"send.send_button" = "Send";
+"send.paste_button" = "Paste";
+"send.amount_placeholder" = "Amount";
+"send.fee" = "Fee";
+"send.total" = "Total";
+
+// Transactions
+
+"transactions.title" = "Transactions";
+"transactions.tab_bar_item" = "Transactions";
+"transactions.filter_all" = "All";
+"transactions.empty_text" = "You don't have any pending or past transactions yet";
+"transactions.sending" = "Sending...";
+
+
+// Transaction Info
+
+"tx_info.title" = "Transaction";
+"tx_info.pending" = "Pending";
+"tx_info.processing" = "Processing %@";
+"tx_info.completed" = "Completed";
+"tx_info.status" = "Status:";
+"tx_info.from_hash" = "From:";
+"tx_info.to_hash" = "To:";
+"tx_info.alert_close" = "Close";
+
+// Settings
+
+"settings.title" = "Settings";
+"settings.tab_bar_item" = "Settings";
+"settings.security_center" = "Security Center";
+"settings.base_currency" = "Base Currency";
+"settings.manage_wallet" = "Manage Wallet";
+"settings.language" = "Language";
+"settings.about" = "About";
+"settings.light_mode" = "Light Mode";
+"settings.info_title" = "BANK WALLET";
+"settings.info_subtitle" = "decentralized app";
+
+// Settings -> Base Currency
+
+"settings_base_currency.title" = "Base Currency";
+
+// Settings -> Language
+
+"settings_language.title" = "Language";
+
+// Settings -> Manage Wallet
+
+"settings_manage_wallet.title" = "Manage Coins";
+"settings_manage_wallet.add_coins" = "Add coins";
+"settings_manage_wallet.add_button" = "Add";
+"settings_manage_wallet.hide_button" = "Hide";
+"settings_manage_wallet.remove_button" = "Remove";
+"settings_manage_wallet.show_button" = "Show";
+"settings_manage_wallet.search_placeholder" = "Search";
+
+// Settings -> About
+
+"settings_about.title" = "About";
+"settings_about.terms_privacy_subtitle" = "Terms & Privacy:";
+"settings_about.terms_privacy_text" = "This app is peer-to-peer. It does not depend on any web server or tech support personnel to function.\n\nIt works everywhere as long as there is internet. No entity can block this app from working or to block someone from using it.\n\nYour funds are securely stored on the phone itself, not anywhere else.\n\nIt’s your responsibility to backup your Secret Key and keep it private. Never show it to anyone. If it’s lost, forgotten or stollen your funds can be used by the person who has your Secret key.\n\nDo not jailbreak your phone, do not install apps from unknown (untrusted) sources, do not give your device to untrusted people, and keep the Operating System on your phone up to date. The security of your wallet depends on this.\n\nThe entire code powering this app been open to the public scrutiny since the beginning. We tried to build the most secure and decentralized wallet we could, however there are no guarantees that there are no unintended software issues. That said, this wallet is likely to be significantly more secure than any smartphone wallet app out there.\n\nSome generic non-private app data like currency exchange rates are stored on decentralized storage (IPFS). ";
+
+// Settings -> Security
+
+"settings_security.title" = "Security Center";
+"settings_security.backup_wallet" = "Backup Wallet";
+"settings_security.unlink_from_this_device" = "Unlink From This Device";
+"settings_security.set_pin" = "Set PIN";
+"settings_security.change_pin" = "Edit PIN";
+"settings_security.touch_id" = "Touch ID";
+"settings_security.face_id" = "Face ID";
+"security_settings.unlink_alert_button" = "Unlink";
+"settings_security.import_wallet_confirmation_1" = "This action will remove the currently installed wallet from this device.";
+"settings_security.import_wallet_confirmation_2" = "Make sure you have its Secret Key or you will not be able to access the funds on it in the future.";
+
+// Set PIN
+
+"set_pin.title" = "Set PIN";
+"set_pin.info" = "Your pin will be used to unlock your wallet and send money";
+"set_pin.confirm.info" = "Confirm PIN";
+"set_pin.wrong_confirmation" = "Pin did not match. Try again";
+
+// Edit PIN
+
+"edit_pin.title" = "Edit PIN";
+"edit_pin.unlock_info" = "Enter current PIN";
+"edit_pin.new_pin_info" = "Enter new PIN";
+"edit_pin.confirm_info" = "Enter again for confirm";
+
+// Unlock PIN
+
+"unlock_pin.info" = "Enter PIN";
+"unlock_pin.cant_save_pin" = "Ouch! We cant save your pin, please contact us asap!";
+"unlock_pin.blocked_until" = "Disabled until: %@";
+
+//NumPad
+
+"numpad_2" = "A B C";
+"numpad_3" = "D E F";
+"numpad_4" = "G H I";
+"numpad_5" = "J K L";
+"numpad_6" = "M N O";
+"numpad_7" = "P Q R S";
+"numpad_8" = "T U V";
+"numpad_9" = "W X Y Z";

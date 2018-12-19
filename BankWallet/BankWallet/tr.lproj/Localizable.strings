@@ -82,6 +82,8 @@
 "transactions.tab_bar_item" = "Hesap işlemleri";
 "transactions.filter_all" = "Hepsi";
 "transactions.empty_text" = "Henüz herhangi bir bekleyen veya geçmiş işlem yok";
+"transactions.sending" = "Sending...";
+
 
 // Transaction Info
 
@@ -162,7 +164,7 @@
 
 "unlock_pin.info" = "PIN'i girin";
 "unlock_pin.cant_save_pin" = "Eyvah! PIN kodu çalışmadı, ACİLEN bize ulaşın!";
-"unlock_pin.lockout_blocked_until" = "Disabled until: %@";
+"unlock_pin.blocked_until" = "Disabled until: %@";
 
 //NumPad
 
