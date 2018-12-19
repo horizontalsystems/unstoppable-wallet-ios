@@ -9,8 +9,8 @@ class WalletManagerTests: XCTestCase {
 
     private var manager: WalletManager!
 
-    private let bitcoin = Coin(title: "Bitcoin", code: "BTC", blockChain: .bitcoin(type: .bitcoin))
-    private let ether = Coin(title: "Ethereum", code: "ETH", blockChain: .ethereum(type: .ethereum))
+    private let bitcoin = Coin(title: "Bitcoin", code: "BTC", type: .bitcoin)
+    private let ether = Coin(title: "Ethereum", code: "ETH", type: .ethereum)
 
     private let words = ["one", "two"]
     private var enabledCoins: [Coin]!
@@ -24,8 +24,8 @@ class WalletManagerTests: XCTestCase {
         mockEthereumAdapter = MockIAdapter()
 
         stub(mockAdapterFactory) { mock in
-            when(mock.adapter(forCoin: equal(to: bitcoin), words: equal(to: words))).thenReturn(mockBitcoinAdapter)
-            when(mock.adapter(forCoin: equal(to: ether), words: equal(to: words))).thenReturn(mockEthereumAdapter)
+            when(mock.adapter(forCoinType: equal(to: bitcoin.type), words: equal(to: words))).thenReturn(mockBitcoinAdapter)
+            when(mock.adapter(forCoinType: equal(to: ether.type), words: equal(to: words))).thenReturn(mockEthereumAdapter)
         }
         stub(mockBitcoinAdapter) { mock in
             when(mock.start()).thenDoNothing()
@@ -64,7 +64,7 @@ class WalletManagerTests: XCTestCase {
 
     func testInitWallets_WithoutAdapter() {
         stub(mockAdapterFactory) { mock in
-            when(mock.adapter(forCoin: equal(to: bitcoin), words: equal(to: words))).thenReturn(nil)
+            when(mock.adapter(forCoinType: equal(to: bitcoin.type), words: equal(to: words))).thenReturn(nil)
         }
 
         manager.initWallets(words: words, coins: enabledCoins)
@@ -81,8 +81,8 @@ class WalletManagerTests: XCTestCase {
 
     func testInitWallets_WithoutWords() {
         stub(mockAdapterFactory) { mock in
-            when(mock.adapter(forCoin: equal(to: bitcoin), words: equal(to: [String]()))).thenReturn(nil)
-            when(mock.adapter(forCoin: equal(to: ether), words: equal(to: [String]()))).thenReturn(nil)
+            when(mock.adapter(forCoinType: equal(to: bitcoin.type), words: equal(to: [String]()))).thenReturn(nil)
+            when(mock.adapter(forCoinType: equal(to: ether.type), words: equal(to: [String]()))).thenReturn(nil)
         }
 
         manager.initWallets(words: [], coins: enabledCoins)

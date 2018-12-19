@@ -22,11 +22,11 @@ class CoinManager {
     }
 
     private var defaultCoins: [Coin] {
-        let suffix = appConfigProvider.networkType == .main ? "" : "t"
+        let suffix = appConfigProvider.testMode ? "" : "t"
         return [
-            Coin(title: "Bitcoin", code: "BTC\(suffix)", blockChain: .bitcoin(type: .bitcoin)),
-            Coin(title: "Bitcoin Cash", code: "BCH\(suffix)", blockChain: .bitcoin(type: .bitcoinCash)),
-            Coin(title: "Ethereum", code: "ETH\(suffix)", blockChain: .ethereum(type: .ethereum))
+            Coin(title: "Bitcoin", code: "BTC\(suffix)", type: .bitcoin),
+            Coin(title: "Bitcoin Cash", code: "BCH\(suffix)", type: .bitcoinCash),
+            Coin(title: "Ethereum", code: "ETH\(suffix)", type: .ethereum)
         ]
     }
 

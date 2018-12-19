@@ -156,3 +156,12 @@ extension EthereumAdapter: EthereumKitDelegate {
     }
 
 }
+
+extension EthereumAdapter {
+
+    static func ethereumAdapter(words: [String], testMode: Bool) -> EthereumAdapter {
+        let network: EthereumKit.NetworkType = testMode ? .testNet : .mainNet
+        return EthereumAdapter(words: words, coin: .ethereum(network: network))
+    }
+
+}

@@ -36,7 +36,7 @@ class TransactionViewItemFactoryTests: XCTestCase {
         mockRate = MockRate()
 
         stub(mockWalletManager) { mock in
-            when(mock.wallets.get).thenReturn([Wallet(coinCode: coin, title: "some", adapter: mockAdapter)])
+            when(mock.wallets.get).thenReturn([Wallet(title: "some", coinCode: coin, adapter: mockAdapter)])
         }
         stub(mockCurrencyManager) { mock in
             when(mock.baseCurrency.get).thenReturn(currency)

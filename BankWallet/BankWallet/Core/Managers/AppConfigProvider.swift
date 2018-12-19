@@ -5,11 +5,8 @@ class AppConfigProvider: IAppConfigProvider {
     let reachabilityHost = "ipfs.horizontalsystems.xyz"
     let ratesApiUrl = "https://ipfs.horizontalsystems.xyz/ipns/Qmd4Gv2YVPqs6dmSy1XEq7pQRSgLihqYKL2JjK7DMUFPVz/io-hs/data/xrates"
 
-    var networkType: Network {
-        if let network = Bundle.main.object(forInfoDictionaryKey: "Network") as? String {
-            return network == "main" ? .main : .test
-        }
-        return .main
+    var testMode: Bool {
+        return Bundle.main.object(forInfoDictionaryKey: "TestMode") as? String == "true"
     }
 
     let currencies: [Currency] = [

@@ -8,20 +8,16 @@ class AdapterFactory: IAdapterFactory {
         self.appConfigProvider = appConfigProvider
     }
 
-    func adapter(forCoin coin: Coin, words: [String]) -> IAdapter? {
-        switch coin.blockChain {
-        case .bitcoin(let type):
-            let network: BitcoinKit.Network = appConfigProvider.networkType == .main ? .mainNet : .testNet
-            let coin: BitcoinKit.Coin = type == .bitcoin ? .bitcoin(network: network) : .bitcoinCash(network: network)
-            return BitcoinAdapter(words: words, coin: coin)
-        case .ethereum(let type):
-            let network: EthereumKit.NetworkType = appConfigProvider.networkType == .main ? .mainNet : .testNet
-            if case .ethereum = type {
-                let coin: EthereumKit.Coin = .ethereum(network: network)
-                return EthereumAdapter(words: words, coin: coin)
-            }
+    func adapter(forCoinType type: CoinType, words: [String]) -> IAdapter? {
+        switch type {
+        case .bitcoin:
+            return BitcoinAdapter.bitcoinAdapter(words: words, testMode: appConfigProvider.testMode)
+        case .bitcoinCash:
+            return BitcoinAdapter.bitcoinCashAdapter(words: words, testMode: appConfigProvider.testMode)
+        case .ethereum:
+            return EthereumAdapter.ethereumAdapter(words: words, testMode: appConfigProvider.testMode)
+        case .erc20(_, _): return nil
         }
-        return nil
     }
 
 }

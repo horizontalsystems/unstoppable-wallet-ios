@@ -28,8 +28,8 @@ class DepositPresenterTests: XCTestCase {
         mockBitcoinAdapter = MockIAdapter()
         mockEtherAdapter = MockIAdapter()
 
-        bitcoinWallet = Wallet(coinCode: bitcoin, title: "some", adapter: mockBitcoinAdapter)
-        etherWallet = Wallet(coinCode: ether, title: "some", adapter: mockEtherAdapter)
+        bitcoinWallet = Wallet(title: "some", coinCode: bitcoin, adapter: mockBitcoinAdapter)
+        etherWallet = Wallet(title: "some", coinCode: ether, adapter: mockEtherAdapter)
 
         mockRouter = MockIDepositRouter()
         mockInteractor = MockIDepositInteractor()

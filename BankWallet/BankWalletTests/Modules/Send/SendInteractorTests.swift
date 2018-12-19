@@ -26,7 +26,7 @@ class SendInteractorTests: XCTestCase {
         super.setUp()
 
         mockAdapter = MockIAdapter()
-        wallet = Wallet(coinCode: coin, title: "some", adapter: mockAdapter)
+        wallet = Wallet(title: "some", coinCode: coin, adapter: mockAdapter)
 
         mockDelegate = MockISendInteractorDelegate()
         mockCurrencyManager = MockICurrencyManager()

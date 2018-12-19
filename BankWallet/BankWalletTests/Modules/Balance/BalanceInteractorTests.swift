@@ -45,9 +45,9 @@ class BalanceInteractorTests: XCTestCase {
         mockEtherAdapter = MockIAdapter()
         mockCashAdapter = MockIAdapter()
 
-        bitcoinWallet = Wallet(coinCode: bitcoin, title: "some", adapter: mockBitcoinAdapter)
-        etherWallet = Wallet(coinCode: ether, title: "some", adapter: mockEtherAdapter)
-        cashWallet = Wallet(coinCode: cash, title: "some", adapter: mockCashAdapter)
+        bitcoinWallet = Wallet(title: "some", coinCode: bitcoin, adapter: mockBitcoinAdapter)
+        etherWallet = Wallet(title: "some", coinCode: ether, adapter: mockEtherAdapter)
+        cashWallet = Wallet(title: "some", coinCode: cash, adapter: mockCashAdapter)
 
         mockDelegate = MockIBalanceInteractorDelegate()
         mockWalletManager = MockIWalletManager()

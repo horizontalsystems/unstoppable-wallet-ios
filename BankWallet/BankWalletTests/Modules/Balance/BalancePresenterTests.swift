@@ -72,8 +72,8 @@ class BalancePresenterTests: XCTestCase {
         mockBitcoinAdapter = MockIAdapter()
         mockEtherAdapter = MockIAdapter()
 
-        bitcoinWallet = Wallet(coinCode: bitcoin, title: "some", adapter: mockBitcoinAdapter)
-        etherWallet = Wallet(coinCode: ether, title: "some", adapter: mockEtherAdapter)
+        bitcoinWallet = Wallet(title: "some", coinCode: bitcoin, adapter: mockBitcoinAdapter)
+        etherWallet = Wallet(title: "some", coinCode: ether, adapter: mockEtherAdapter)
 
         mockRouter = MockIBalanceRouter()
         mockInteractor = MockIBalanceInteractor()
@@ -266,7 +266,7 @@ class BalancePresenterTests: XCTestCase {
         thorRate.timestamp = 777777
         let thorAdapterState = AdapterState.synced
         let thorAdapter = MockIAdapter()
-        let thorWallet = Wallet(coinCode: thor, title: "some", adapter: thorAdapter)
+        let thorWallet = Wallet(title: "some", coinCode: thor, adapter: thorAdapter)
 
         let expectedThorItem = BalanceViewItem(
                 coinValue: thorValue,

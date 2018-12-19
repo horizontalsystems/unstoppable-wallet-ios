@@ -245,7 +245,6 @@
 		1A56410880DEEF4B91B3413A /* UptimeProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564F697ACF24DA968884EA /* UptimeProvider.swift */; };
 		1A56411CFC8D9190B15323A4 /* ConfirmationTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564E77730537D108E31276 /* ConfirmationTheme.swift */; };
 		1A564130F517CD26BF9E8A57 /* LanguageSettingsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564238192BEA3F5470E204 /* LanguageSettingsPresenter.swift */; };
-		1A56414B0BE9077920979122 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5640D66E1B7E5016E9F01D /* Network.swift */; };
 		1A564191A16F15B25768FF30 /* SendTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564077BF075C35B6FF3BCB /* SendTheme.swift */; };
 		1A5641BD2DA1FB1803D3B044 /* DepositInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5648DA32EA5FC27E4CEF64 /* DepositInteractor.swift */; };
 		1A5641C3B8E88DA8E54FEFEB /* PinDotsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564326AB442FFB65E1CA29 /* PinDotsView.swift */; };
@@ -302,7 +301,6 @@
 		1A56465CE6EFDADE3365DF98 /* AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5649DB879A57761C09842E /* AppTheme.swift */; };
 		1A564685DDF41780A93B92E9 /* BlurManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564BB88BF3ED779F8C21DC /* BlurManager.swift */; };
 		1A56468E848DE3A44DD8DF29 /* Production.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 1A5648F3AB070B0ACB98C7EE /* Production.xcconfig */; };
-		1A5646AB577C3987421EFFC2 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5640D66E1B7E5016E9F01D /* Network.swift */; };
 		1A5646C35E5492F629F1C025 /* PinModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56490AEC0BDFCA98275B49 /* PinModule.swift */; };
 		1A5646F6ED19CA9AA8F52C7F /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5646D49060C3EFF06D0479 /* App.swift */; };
 		1A5647219D7DE64CE22C2B87 /* SetPinPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5648311E0EA947B1446649 /* SetPinPresenter.swift */; };
@@ -381,7 +379,6 @@
 		1A564DEAF0A6DF97F029594E /* LockoutManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5645447A24FE94F0D87BFF /* LockoutManager.swift */; };
 		1A564DF36A4269C9FB869778 /* LockoutManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5645447A24FE94F0D87BFF /* LockoutManager.swift */; };
 		1A564DFE6A07FCDA016A8ACE /* LockoutUntilDateFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5641ABEF9064B6FCC8DF87 /* LockoutUntilDateFactory.swift */; };
-		1A564DFED4F48C7617B09D40 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5640D66E1B7E5016E9F01D /* Network.swift */; };
 		1A564E0A6E37A68995364D81 /* TransactionInfoInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5647DBF15322999B5A1D04 /* TransactionInfoInteractor.swift */; };
 		1A564E181F46CF98BC00CC30 /* EditPinPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564996AA2AE3468D2992E5 /* EditPinPresenterTests.swift */; };
 		1A564E268D7D4D01BD7B5078 /* MainSettingsPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56445B53883A652362E9D6 /* MainSettingsPresenterTests.swift */; };
@@ -1020,7 +1017,6 @@
 		1A5640AA47846498D56A36E6 /* LatestRate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LatestRate.swift; sourceTree = "<group>"; };
 		1A5640B6691F4FD048C82A49 /* CoinValueHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoinValueHelper.swift; sourceTree = "<group>"; };
 		1A5640B8B65EAECA3A36F89E /* PinInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinInteractor.swift; sourceTree = "<group>"; };
-		1A5640D66E1B7E5016E9F01D /* Network.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
 		1A5640FFFD5B065D745208F1 /* PagingDotsItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PagingDotsItem.swift; sourceTree = "<group>"; };
 		1A5641572B6E46E18B52A6A9 /* SecuritySettingsModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecuritySettingsModule.swift; sourceTree = "<group>"; };
 		1A5641679DC88BE355F0F3A0 /* Development.template.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Development.template.xcconfig; sourceTree = "<group>"; };
@@ -1480,7 +1476,6 @@
 				58AAA7A94D25C20240FD75C6 /* PaymentRequestAddress.swift */,
 				1A56488B2051E9529CE8742E /* LockoutState.swift */,
 				1A56404690D0235A5183C12D /* Coin.swift */,
-				1A5640D66E1B7E5016E9F01D /* Network.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -2937,7 +2932,6 @@
 				1A5645DFFB1EC95815289D1F /* CurrentDateProvider.swift in Sources */,
 				1A5647C0909A28BECA342148 /* LockoutView.swift in Sources */,
 				1A564375773F7977B14EF1E0 /* Coin.swift in Sources */,
-				1A56414B0BE9077920979122 /* Network.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3231,7 +3225,6 @@
 				1A56424C8E4017689EFF5D6D /* CurrentDateProvider.swift in Sources */,
 				1A5647481AAB5BF5A86F9829 /* LockoutView.swift in Sources */,
 				1A564E286A1C980C944A63A9 /* Coin.swift in Sources */,
-				1A5646AB577C3987421EFFC2 /* Network.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3485,7 +3478,6 @@
 				1A564E374CD439E2C1334208 /* CurrentDateProvider.swift in Sources */,
 				1A5645EDCB2C77F13BFEB1E2 /* LockoutView.swift in Sources */,
 				1A564A7ECB966C4711CA1A86 /* Coin.swift in Sources */,
-				1A564DFED4F48C7617B09D40 /* Network.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3671,10 +3663,10 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5026FFF721C3CA280023EEA2 /* Bank Dev T.debug.xcconfig */;
 			buildSettings = {
-				Network = test;
 				PRODUCT_BUNDLE_IDENTIFIER = "io.horizontalsystems.bank-wallet.dev.testnet";
 				PRODUCT_NAME = "Bank Dev T";
 				PROVISIONING_PROFILE_SPECIFIER = "io.horizontalsystems.bank-wallet.dev.testnet Dev";
+				TestMode = true;
 			};
 			name = Debug;
 		};
@@ -3682,10 +3674,10 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5026FFF521C3CA280023EEA2 /* Bank Dev T.release.xcconfig */;
 			buildSettings = {
-				Network = test;
 				PRODUCT_BUNDLE_IDENTIFIER = "io.horizontalsystems.bank-wallet.dev.testnet";
 				PRODUCT_NAME = "Bank Dev T";
 				PROVISIONING_PROFILE_SPECIFIER = "io.horizontalsystems.bank-wallet.dev.testnet AdHoc";
+				TestMode = true;
 			};
 			name = Release;
 		};
@@ -3739,10 +3731,10 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5026FFF821C3CA280023EEA2 /* Bank Dev.debug.xcconfig */;
 			buildSettings = {
-				Network = main;
 				PRODUCT_BUNDLE_IDENTIFIER = "io.horizontalsystems.bank-wallet.dev";
 				PRODUCT_NAME = "Bank Dev";
 				PROVISIONING_PROFILE_SPECIFIER = "io.horizontalsystems.bank-wallet.dev Dev";
+				TestMode = false;
 			};
 			name = Debug;
 		};
@@ -3750,10 +3742,10 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5026FFF421C3CA280023EEA2 /* Bank Dev.release.xcconfig */;
 			buildSettings = {
-				Network = main;
 				PRODUCT_BUNDLE_IDENTIFIER = "io.horizontalsystems.bank-wallet.dev";
 				PRODUCT_NAME = "Bank Dev";
 				PROVISIONING_PROFILE_SPECIFIER = "io.horizontalsystems.bank-wallet.dev AdHoc";
+				TestMode = false;
 			};
 			name = Release;
 		};
@@ -3761,10 +3753,10 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5026FFF921C3CA280023EEA2 /* Bank.debug.xcconfig */;
 			buildSettings = {
-				Network = main;
 				PRODUCT_BUNDLE_IDENTIFIER = "io.horizontalsystems.bank-wallet";
 				PRODUCT_NAME = Bank;
 				PROVISIONING_PROFILE_SPECIFIER = "io.horizontalsystems.bank-wallet Dev";
+				TestMode = false;
 			};
 			name = Debug;
 		};
@@ -3772,10 +3764,10 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5026FFF621C3CA280023EEA2 /* Bank.release.xcconfig */;
 			buildSettings = {
-				Network = main;
 				PRODUCT_BUNDLE_IDENTIFIER = "io.horizontalsystems.bank-wallet";
 				PRODUCT_NAME = Bank;
 				PROVISIONING_PROFILE_SPECIFIER = "io.horizontalsystems.bank-wallet AppStore";
+				TestMode = false;
 			};
 			name = Release;
 		};

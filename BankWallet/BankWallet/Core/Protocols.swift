@@ -62,7 +62,7 @@ protocol IWalletManager {
 }
 
 protocol IAdapterFactory {
-    func adapter(forCoin coin: Coin, words: [String]) -> IAdapter?
+    func adapter(forCoinType type: CoinType, words: [String]) -> IAdapter?
 }
 
 protocol ICoinManager {
@@ -172,7 +172,7 @@ protocol ISystemInfoManager {
 protocol IAppConfigProvider {
     var reachabilityHost: String { get }
     var ratesApiUrl: String { get }
-    var networkType: Network { get }
+    var testMode: Bool { get }
     var currencies: [Currency] { get }
 }
 

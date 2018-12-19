@@ -21,11 +21,11 @@ extension WalletManager: IWalletManager {
                 return wallet
             }
 
-            guard let adapter = adapterFactory.adapter(forCoin: coin, words: words) else {
+            guard let adapter = adapterFactory.adapter(forCoinType: coin.type, words: words) else {
                 return nil
             }
 
-            let wallet = Wallet(coinCode: coin.code, title: coin.title, adapter: adapter)
+            let wallet = Wallet(title: coin.title, coinCode: coin.code, adapter: adapter)
             newWallets.append(wallet)
             return wallet
         }
