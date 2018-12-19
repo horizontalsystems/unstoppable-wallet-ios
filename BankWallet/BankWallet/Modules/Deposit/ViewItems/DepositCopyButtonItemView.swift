@@ -15,7 +15,6 @@ class DepositCopyButtonItemView: BaseButtonItemView {
             maker.leading.equalToSuperview().offset(DepositTheme.copyButtonSideMargin)
             maker.top.equalToSuperview().offset(DepositTheme.copyButtonTopMargin)
             maker.trailing.equalToSuperview().offset(-DepositTheme.copyButtonSideMargin)
-            maker.height.equalTo(DepositTheme.copyButtonHeight)
         }
     }
 
