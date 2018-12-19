@@ -13,8 +13,6 @@ class TransactionTitleItemView: BaseActionItemView {
     override func initView() {
         super.initView()
 
-        backgroundColor = TransactionInfoTheme.titleBackground
-
         let titleLabel = UILabel()
         titleLabel.text = "tx_info.title".localized
         titleLabel.font = TransactionInfoTheme.titleFont
@@ -37,16 +35,16 @@ class TransactionTitleItemView: BaseActionItemView {
         infoButton.titleLabel.removeFromSuperview()
         addSubview(infoButton)
         infoButton.borderWidth = 1 / UIScreen.main.scale
-        infoButton.borderColor = TransactionInfoTheme.idInfoButtonBorderColor
-        infoButton.cornerRadius = TransactionInfoTheme.fullInfoButtonCornerRadius
+        infoButton.borderColor = TransactionInfoTheme.hashButtonBorderColor
+        infoButton.cornerRadius = TransactionInfoTheme.hashButtonCornerRadius
         infoButton.snp.makeConstraints { maker in
             maker.trailing.equalToSuperview().offset(-TransactionInfoTheme.regularMargin)
             maker.leading.equalTo(self.dateLabel.snp.trailing).offset(TransactionInfoTheme.largeMargin)
             maker.centerY.equalToSuperview()
-            maker.height.equalTo(TransactionInfoTheme.infoButtonHeight)
+            maker.height.equalTo(TransactionInfoTheme.hashButtonHeight)
         }
         infoButton.onTap = item?.onIdTap
-        infoButton.backgrounds = [RespondButton.State.active: TransactionInfoTheme.fullInfoButtonActiveBackground, RespondButton.State.selected: TransactionInfoTheme.fullInfoButtonSelectedBackground]
+        infoButton.backgrounds = [RespondButton.State.active: TransactionInfoTheme.hashButtonBackground, RespondButton.State.selected: TransactionInfoTheme.hashButtonBackgroundSelected]
 
         let idTitleLabel = UILabel()
         infoButton.addSubview(idTitleLabel)
@@ -54,8 +52,8 @@ class TransactionTitleItemView: BaseActionItemView {
             maker.leading.equalToSuperview().offset(TransactionInfoTheme.middleMargin)
             maker.centerY.equalToSuperview()
         }
-        idTitleLabel.font = TransactionInfoTheme.idTitleFont
-        idTitleLabel.textColor = TransactionInfoTheme.idTitleColor
+        idTitleLabel.font = TransactionInfoTheme.itemTitleFont
+        idTitleLabel.textColor = TransactionInfoTheme.hashButtonTextColor
         idTitleLabel.text = "#"
 
         infoButton.addSubview(idLabel)
@@ -64,8 +62,8 @@ class TransactionTitleItemView: BaseActionItemView {
             maker.trailing.equalToSuperview().offset(-TransactionInfoTheme.middleMargin)
             maker.centerY.equalToSuperview()
         }
-        idLabel.font = TransactionInfoTheme.idTitleFont
-        idLabel.textColor = TransactionInfoTheme.idColor
+        idLabel.font = TransactionInfoTheme.itemTitleFont
+        idLabel.textColor = TransactionInfoTheme.hashButtonTextColor
         idLabel.lineBreakMode = .byTruncatingMiddle
     }
 

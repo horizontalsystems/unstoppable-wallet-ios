@@ -19,7 +19,7 @@ extension TransactionInfoRouter {
         presenter.view = alertModel
 
         let viewController = ActionSheetController(withModel: alertModel, actionSheetThemeConfig: AppTheme.actionSheetConfig)
-        viewController.backgroundColor = .cryptoBars
+        viewController.backgroundColor = .crypto_Dark_Bars
         return viewController
     }
 

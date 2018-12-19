@@ -13,6 +13,7 @@ class TransactionFromToHashItem: BaseActionItem {
         self.onHashTap = onHashTap
 
         super.init(cellType: TransactionFromToHashItemView.self, tag: tag, hidden: hidden, required: required, action: action)
+
         height = TransactionInfoTheme.itemHeight
     }
 

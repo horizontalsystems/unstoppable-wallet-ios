@@ -2,52 +2,45 @@ import UIKit
 
 class TransactionInfoTheme {
 
-    static let incomingAmountColor = UIColor.cryptoGreen
-    static let outgoingAmountColor = UIColor.cryptoYellow
-    static let titleHeight: CGFloat = 54
-    static let closeButtonBackground = UIColor.cryptoBars
-    static let coinIconTintColor = UIColor.cryptoGray
-    static let titleColor = UIColor.black
-    static let titleFont = UIFont.cryptoHeadline
-    static let amountFont = UIFont.cryptoTitle3
-    static let closeButtonTextColor = UIColor.cryptoGray
-    static let closeButtonTextColorSelected = UIColor.cryptoSilver
-    static let itemHeight: CGFloat = 45
-    static let closeHeight: CGFloat = 52
-    static let amountTopMargin: CGFloat = 20
-    static let titleBackground = UIColor.cryptoBars
-    static let statusValueColor = UIColor.cryptoDark
-    static let dateFont = UIFont.cryptoCaption1
-    static let successIconTintColor = UIColor.cryptoGreen
-    static let processingIconTintColor = UIColor.cryptoGray
-    static let dateColor = UIColor.cryptoGray
-    static let statusImageWidth: CGFloat = 13
-    static let statusImageHeight: CGFloat = 12
-    static let hashBackground = UIColor.cryptoLightBackground
-    static let hashBackgroundSelected = UIColor.cryptoLightGray
-    static let hashWrapperBorderColor = UIColor.cryptoSteel20
-    static let hashColor = UIColor.cryptoDark
-    static let idInfoButtonBorderColor = UIColor.cryptoSteel20
-    static let fiatAmountFont = UIFont.cryptoCaption1
-    static let amountHeight: CGFloat = 99
-    static let fiatAmountColor = UIColor.cryptoGray
-    static let hashBackgroundHeight: CGFloat = 28
-    static let hashCornerRadius: CGFloat = 4
-
-    static let fullInfoButtonCornerRadius: CGFloat = 4
     static let largeMargin: CGFloat = 32
     static let regularMargin: CGFloat = 16
     static let middleMargin: CGFloat = 8
-    static let transactionInfoTint = UIColor.cryptoDark
-    static let infoButtonHeight: CGFloat = 28
-    static let transactionInfoSelectedTint = UIColor.cryptoGray
     static let smallMargin: CGFloat = 4
 
-    static let usualColor = UIColor.cryptoGray
-    static let usualFont = UIFont.cryptoCaption1
-    static let fullInfoButtonActiveBackground = UIColor.cryptoLightBackground
-    static let fullInfoButtonSelectedBackground = UIColor.cryptoLightGray
-    static let idTitleFont = UIFont.cryptoCaption1
-    static let idTitleColor = UIColor.cryptoGray
-    static let idColor = UIColor.cryptoDark
+    static let titleHeight: CGFloat = 54
+    static let titleFont = UIFont.cryptoHeadline
+    static var titleColor: UIColor { return .crypto_White_Black }
+    static let dateFont = UIFont.cryptoCaption1
+    static let dateColor = UIColor.cryptoGray
+
+    static var itemBackground: UIColor { return .crypto_Steel20_White }
+    static let itemTitleColor = UIColor.cryptoGray
+    static let itemTitleFont = UIFont.cryptoCaption1
+    static let hashButtonHeight: CGFloat = 28
+    static let hashButtonCornerRadius: CGFloat = 4
+    static var hashButtonBackground: UIColor { return .crypto_Steel20_LightBackground }
+    static var hashButtonBackgroundSelected: UIColor { return .crypto_Steel40_LightGray }
+    static let hashButtonBorderColor = UIColor.cryptoSteel20
+    static var hashButtonTextColor: UIColor { return .crypto_Bars_Dark }
+
+    static let amountHeight: CGFloat = 99
+    static let amountTopMargin: CGFloat = 20
+    static let amountFont = UIFont.cryptoTitle3
+    static let fiatAmountFont = UIFont.cryptoCaption1
+    static let fiatAmountColor = UIColor.cryptoGray
+    static let incomingAmountColor = UIColor.cryptoGreen
+    static let outgoingAmountColor = UIColor.cryptoYellow
+
+    static let itemHeight: CGFloat = 45
+
+    static let statusImageWidth: CGFloat = 13
+    static let statusImageHeight: CGFloat = 12
+    static let successIconTintColor = UIColor.cryptoGreen
+    static let processingIconTintColor = UIColor.cryptoGray
+
+    static let closeHeight: CGFloat = 52
+    static let closeButtonBackground = UIColor.clear
+    static let closeButtonTextColor = UIColor.cryptoGray
+    static let closeButtonTextColorSelected = UIColor.cryptoSilver
+
 }
