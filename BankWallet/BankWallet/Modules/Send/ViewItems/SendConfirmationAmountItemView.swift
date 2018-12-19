@@ -13,6 +13,8 @@ class SendConfirmationAmountItemView: BaseActionItemView {
     override func initView() {
         super.initView()
 
+        backgroundColor = SendTheme.itemBackground
+
         amountLabel.font = SendTheme.confirmationAmountFont
         amountLabel.textColor = SendTheme.confirmationAmountColor
         addSubview(amountLabel)
