@@ -10,7 +10,6 @@ class ValueFormatter {
         formatter.numberStyle = .decimal
         formatter.minimumFractionDigits = 2
         formatter.maximumFractionDigits = ValueFormatter.fractionDigits
-        formatter.roundingMode = .ceiling
         return formatter
     }()
 
@@ -18,7 +17,6 @@ class ValueFormatter {
         let formatter = NumberFormatter()
         formatter.numberStyle = .currency
         formatter.minimumFractionDigits = 2
-        formatter.roundingMode = .ceiling
         return formatter
     }()
 
@@ -26,7 +24,6 @@ class ValueFormatter {
         let formatter = NumberFormatter()
         formatter.maximumFractionDigits = ValueFormatter.fractionDigits
         formatter.numberStyle = .decimal
-        formatter.roundingMode = .ceiling
         formatter.groupingSeparator = ""
         return formatter
     }()
