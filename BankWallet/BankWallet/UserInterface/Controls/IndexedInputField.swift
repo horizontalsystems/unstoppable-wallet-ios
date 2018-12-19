@@ -119,7 +119,6 @@ class IndexedInputField: UIView, UITextFieldDelegate {
 
         textField.keyboardAppearance = AppTheme.keyboardAppearance
         textField.autocapitalizationType = .none
-        textField.autocorrectionType = .no
         textField.tintColor = AppTheme.textFieldTintColor
         
         textField.addTarget(self, action: #selector(textChange), for: .editingChanged)
