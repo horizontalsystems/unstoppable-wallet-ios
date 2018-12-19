@@ -22,7 +22,7 @@ class CoinManager {
     }
 
     private var defaultCoins: [Coin] {
-        let suffix = appConfigProvider.testMode ? "" : "t"
+        let suffix = appConfigProvider.testMode ? "t" : ""
         return [
             Coin(title: "Bitcoin", code: "BTC\(suffix)", type: .bitcoin),
             Coin(title: "Bitcoin Cash", code: "BCH\(suffix)", type: .bitcoinCash),
