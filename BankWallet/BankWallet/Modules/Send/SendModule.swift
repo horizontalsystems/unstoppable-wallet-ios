@@ -1,5 +1,5 @@
 protocol ISendView: class {
-    func set(coin: Coin)
+    func set(coinCode: CoinCode)
 
     func set(amountInfo: AmountInfo?)
     func set(switchButtonEnabled: Bool)
@@ -32,7 +32,7 @@ protocol ISendViewDelegate {
 }
 
 protocol ISendInteractor {
-    var coin: Coin { get }
+    var coinCode: CoinCode { get }
     var addressFromPasteboard: String? { get }
     func parse(paymentAddress: String) -> PaymentRequestAddress
     func convertedAmount(forInputType inputType: SendInputType, amount: Double) -> Double?

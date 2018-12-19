@@ -20,9 +20,9 @@ class RateSyncer {
 
 extension RateSyncer: IRateSyncer {
 
-    func sync(coins: [String], currencyCode: String) {
-        for coin in coins {
-            var observable = networkManager.getLatestRate(coin: coin, currencyCode: currencyCode)
+    func sync(coinCodes: [String], currencyCode: String) {
+        for coinCode in coinCodes {
+            var observable = networkManager.getLatestRate(coinCode: coinCode, currencyCode: currencyCode)
 
             if async {
                 observable = observable.subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background)).observeOn(MainScheduler.instance)
@@ -30,7 +30,7 @@ extension RateSyncer: IRateSyncer {
 
             observable
                     .subscribe(onNext: { [weak self] latestRate in
-                        self?.delegate?.didSync(coin: coin, currencyCode: currencyCode, latestRate: latestRate)
+                        self?.delegate?.didSync(coinCode: coinCode, currencyCode: currencyCode, latestRate: latestRate)
                     })
                     .disposed(by: disposeBag)
         }

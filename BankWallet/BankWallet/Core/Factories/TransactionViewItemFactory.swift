@@ -17,12 +17,12 @@ class TransactionViewItemFactory {
 extension TransactionViewItemFactory: ITransactionViewItemFactory {
 
     func item(fromRecord record: TransactionRecord) -> TransactionViewItem {
-        let adapter = walletManager.wallets.first(where: { $0.coin == record.coin })?.adapter
+        let adapter = walletManager.wallets.first(where: { $0.coinCode == record.coinCode })?.adapter
 
         var rateValue: Double?
 
         if record.rate == 0 {
-            if record.timestamp > Date().timeIntervalSince1970 - 60 * latestRateFallbackThreshold, let rate = rateManager.rate(forCoin: record.coin, currencyCode: currencyManager.baseCurrency.code), !rate.expired {
+            if record.timestamp > Date().timeIntervalSince1970 - 60 * latestRateFallbackThreshold, let rate = rateManager.rate(forCoin: record.coinCode, currencyCode: currencyManager.baseCurrency.code), !rate.expired {
                 rateValue = rate.value
             }
         } else {
@@ -48,7 +48,7 @@ extension TransactionViewItemFactory: ITransactionViewItemFactory {
 
         return TransactionViewItem(
                 transactionHash: record.transactionHash,
-                coinValue: CoinValue(coin: record.coin, value: record.amount),
+                coinValue: CoinValue(coinCode: record.coinCode, value: record.amount),
                 currencyValue: convertedValue.map { CurrencyValue(currency: currencyManager.baseCurrency, value: $0) },
                 from: record.from.first(where: { $0.mine != incoming })?.address,
                 to: record.to.first(where: { $0.mine == incoming })?.address,

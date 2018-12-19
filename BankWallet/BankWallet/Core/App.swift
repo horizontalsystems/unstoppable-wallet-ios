@@ -67,10 +67,11 @@ class App {
         randomManager = RandomManager()
         systemInfoManager = SystemInfoManager()
 
-        adapterFactory = AdapterFactory()
+        appConfigProvider = AppConfigProvider()
+
+        adapterFactory = AdapterFactory(appConfigProvider: appConfigProvider)
         walletManager = WalletManager(adapterFactory: adapterFactory)
 
-        appConfigProvider = AppConfigProvider()
         coinManager = CoinManager(wordsManager: wordsManager, walletManager: walletManager, appConfigProvider: appConfigProvider)
 
         realmStorage = RealmStorage(realmFactory: realmFactory)

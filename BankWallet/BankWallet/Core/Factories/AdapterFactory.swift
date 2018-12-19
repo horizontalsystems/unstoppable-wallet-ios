@@ -1,15 +1,22 @@
-class AdapterFactory: IAdapterFactory {
+import HSBitcoinKit
+import HSEthereumKit
 
-    func adapter(forCoin coin: Coin, words: [String]) -> IAdapter? {
-        switch coin {
-        case "BTC": return BitcoinAdapter(words: words, coin: .bitcoin(network: .mainNet))
-        case "BTCt": return BitcoinAdapter(words: words, coin: .bitcoin(network: .testNet))
-        case "BTCr": return BitcoinAdapter(words: words, coin: .bitcoin(network: .regTest))
-        case "BCH": return BitcoinAdapter(words: words, coin: .bitcoinCash(network: .mainNet))
-        case "BCHt": return BitcoinAdapter(words: words, coin: .bitcoinCash(network: .testNet))
-        case "ETH": return EthereumAdapter(words: words, coin: .ethereum(network: .mainNet))
-        case "ETHt": return EthereumAdapter(words: words, coin: .ethereum(network: .testNet))
-        default: return nil
+class AdapterFactory: IAdapterFactory {
+    let appConfigProvider: IAppConfigProvider
+
+    init(appConfigProvider: IAppConfigProvider) {
+        self.appConfigProvider = appConfigProvider
+    }
+
+    func adapter(forCoinType type: CoinType, words: [String]) -> IAdapter? {
+        switch type {
+        case .bitcoin:
+            return BitcoinAdapter.bitcoinAdapter(words: words, testMode: appConfigProvider.testMode)
+        case .bitcoinCash:
+            return BitcoinAdapter.bitcoinCashAdapter(words: words, testMode: appConfigProvider.testMode)
+        case .ethereum:
+            return EthereumAdapter.ethereumAdapter(words: words, testMode: appConfigProvider.testMode)
+        case .erc20(_, _): return nil
         }
     }
 

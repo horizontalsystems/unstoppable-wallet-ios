@@ -7,8 +7,8 @@ class SendStateViewItemFactoryTests: XCTestCase {
     private var confirmationState = SendState(inputType: .coin)
 
     private let address = "address"
-    private let coinValue = CoinValue(coin: "BTC", value: 123.45)
-    private let feeCoinValue = CoinValue(coin: "BTC", value: 1.234)
+    private let coinValue = CoinValue(coinCode: "BTC", value: 123.45)
+    private let feeCoinValue = CoinValue(coinCode: "BTC", value: 1.234)
     private let currencyValue = CurrencyValue(currency: Currency(code: "USD", symbol: "$"), value: 987.65)
     private let feeCurrencyValue = CurrencyValue(currency: Currency(code: "USD", symbol: "$"), value: 9.8765)
 
@@ -154,7 +154,7 @@ class SendStateViewItemFactoryTests: XCTestCase {
     }
 
     func testSendButtonEnabled_ZeroAmount() {
-        state.coinValue = CoinValue(coin: coinValue.coin, value: 0)
+        state.coinValue = CoinValue(coinCode: coinValue.coinCode, value: 0)
         state.address = "address"
 
         let viewItem = factory.viewItem(forState: state)
@@ -236,7 +236,7 @@ class SendStateViewItemFactoryTests: XCTestCase {
 
         let viewItem = factory.confirmationViewItem(forState: confirmationState)
 
-        XCTAssertEqual(viewItem?.totalInfo, AmountInfo.coinValue(coinValue: CoinValue(coin: coinValue.coin, value: totalValue)))
+        XCTAssertEqual(viewItem?.totalInfo, AmountInfo.coinValue(coinValue: CoinValue(coinCode: coinValue.coinCode, value: totalValue)))
     }
 
     func testConfirmation_TotalInfo_WithCurrencyValue() {

@@ -11,7 +11,7 @@ class TransactionRecordDataSource {
     init(realmFactory: IRealmFactory) {
         self.realmFactory = realmFactory
 
-        results = TransactionRecordDataSource.results(realmFactory: realmFactory, coin: nil)
+        results = TransactionRecordDataSource.results(realmFactory: realmFactory, coinCode: nil)
         subscribe()
     }
 
@@ -27,10 +27,10 @@ class TransactionRecordDataSource {
         token?.invalidate()
     }
 
-    static func results(realmFactory: IRealmFactory, coin: Coin?) -> Results<TransactionRecord> {
+    static func results(realmFactory: IRealmFactory, coinCode: CoinCode?) -> Results<TransactionRecord> {
         var results = realmFactory.realm.objects(TransactionRecord.self).sorted(byKeyPath: "timestamp", ascending: false)
 
-        if let coin = coin {
+        if let coin = coinCode {
             results = results.filter("coin = %@", coin)
         }
 
@@ -49,8 +49,8 @@ extension TransactionRecordDataSource: ITransactionRecordDataSource {
         return results[index]
     }
 
-    func set(coin: Coin?) {
-        results = TransactionRecordDataSource.results(realmFactory: realmFactory, coin: coin)
+    func set(coinCode: CoinCode?) {
+        results = TransactionRecordDataSource.results(realmFactory: realmFactory, coinCode: coinCode)
         subscribe()
     }
 

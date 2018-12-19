@@ -46,7 +46,7 @@ class ValueFormatter {
             return nil
         }
 
-        var result = "\(formattedValue) \(coinValue.coin)"
+        var result = "\(formattedValue) \(coinValue.coinCode)"
 
         if explicitSign {
             let sign = coinValue.value < 0 ? "-" : "+"

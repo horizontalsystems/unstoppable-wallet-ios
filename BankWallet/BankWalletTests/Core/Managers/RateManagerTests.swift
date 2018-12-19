@@ -37,11 +37,11 @@ class RateManagerTests: XCTestCase {
 
         baseCurrency = Currency(code: baseCurrencyCode, symbol: "")
 
-        bitcoinRate = Rate(coin: bitcoin, currencyCode: baseCurrencyCode, value: bitcoinValue, timestamp: 0)
-        etherRate = Rate(coin: ether, currencyCode: baseCurrencyCode, value: etherValue, timestamp: 0)
+        bitcoinRate = Rate(coinCode: bitcoin, currencyCode: baseCurrencyCode, value: bitcoinValue, timestamp: 0)
+        etherRate = Rate(coinCode: ether, currencyCode: baseCurrencyCode, value: etherValue, timestamp: 0)
 
-        bitcoinWallet = Wallet(coin: bitcoin, adapter: MockIAdapter())
-        etherWallet = Wallet(coin: ether, adapter: MockIAdapter())
+        bitcoinWallet = Wallet(title: "some", coinCode: bitcoin, adapter: MockIAdapter())
+        etherWallet = Wallet(title: "some", coinCode: ether, adapter: MockIAdapter())
 
         mockStorage = MockIRateStorage()
         mockSyncer = MockIRateSyncer()
@@ -53,10 +53,10 @@ class RateManagerTests: XCTestCase {
         stub(mockStorage) { mock in
             when(mock.rate(forCoin: equal(to: bitcoin), currencyCode: equal(to: baseCurrencyCode))).thenReturn(bitcoinRate)
             when(mock.rate(forCoin: equal(to: ether), currencyCode: equal(to: baseCurrencyCode))).thenReturn(etherRate)
-            when(mock.save(latestRate: any(), coin: any(), currencyCode: any())).thenDoNothing()
+            when(mock.save(latestRate: any(), coinCode: any(), currencyCode: any())).thenDoNothing()
         }
         stub(mockSyncer) { mock in
-            when(mock.sync(coins: any(), currencyCode: any())).thenDoNothing()
+            when(mock.sync(coinCodes: any(), currencyCode: any())).thenDoNothing()
         }
         stub(mockWalletManager) { mock in
             when(mock.walletsSubject.get).thenReturn(walletsSubject)
@@ -96,27 +96,27 @@ class RateManagerTests: XCTestCase {
 
     func testSyncRates_OnWalletsChanged() {
         walletsSubject.onNext([])
-        verify(mockSyncer).sync(coins: equal(to: [bitcoin, ether]), currencyCode: equal(to: baseCurrencyCode))
+        verify(mockSyncer).sync(coinCodes: equal(to: [bitcoin, ether]), currencyCode: equal(to: baseCurrencyCode))
     }
 
     func testSyncRates_OnBaseCurrencyChanged() {
         currencySubject.onNext(Currency(code: "", symbol: ""))
-        verify(mockSyncer).sync(coins: equal(to: [bitcoin, ether]), currencyCode: equal(to: baseCurrencyCode))
+        verify(mockSyncer).sync(coinCodes: equal(to: [bitcoin, ether]), currencyCode: equal(to: baseCurrencyCode))
     }
 
     func testSyncRates_OnReachabilityChanged_Connected() {
         reachabilitySubject.onNext(true)
-        verify(mockSyncer).sync(coins: equal(to: [bitcoin, ether]), currencyCode: equal(to: baseCurrencyCode))
+        verify(mockSyncer).sync(coinCodes: equal(to: [bitcoin, ether]), currencyCode: equal(to: baseCurrencyCode))
     }
 
     func testSyncRates_OnReachabilityChanged_Disconnected() {
         reachabilitySubject.onNext(false)
-        verify(mockSyncer, never()).sync(coins: any(), currencyCode: any())
+        verify(mockSyncer, never()).sync(coinCodes: any(), currencyCode: any())
     }
 
     func testSyncRates_OnTimerTick() {
         manager.onFire()
-        verify(mockSyncer).sync(coins: equal(to: [bitcoin, ether]), currencyCode: equal(to: baseCurrencyCode))
+        verify(mockSyncer).sync(coinCodes: equal(to: [bitcoin, ether]), currencyCode: equal(to: baseCurrencyCode))
     }
 
     func testDidSyncRate() {
@@ -127,9 +127,9 @@ class RateManagerTests: XCTestCase {
             subjectExpectation.fulfill()
         })
 
-        manager.didSync(coin: bitcoin, currencyCode: baseCurrencyCode, latestRate: latestRate)
+        manager.didSync(coinCode: bitcoin, currencyCode: baseCurrencyCode, latestRate: latestRate)
 
-        verify(mockStorage).save(latestRate: equal(to: latestRate), coin: equal(to: bitcoin), currencyCode: equal(to: baseCurrencyCode))
+        verify(mockStorage).save(latestRate: equal(to: latestRate), coinCode: equal(to: bitcoin), currencyCode: equal(to: baseCurrencyCode))
         waitForExpectations(timeout: 2)
     }
 

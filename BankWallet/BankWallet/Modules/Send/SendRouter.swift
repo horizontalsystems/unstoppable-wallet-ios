@@ -10,8 +10,8 @@ extension SendRouter: ISendRouter {
 
 extension SendRouter {
 
-    static func module(coin: Coin) -> ActionSheetController? {
-        guard let wallet = App.shared.walletManager.wallets.first(where: { $0.coin == coin }) else {
+    static func module(coinCode: CoinCode) -> ActionSheetController? {
+        guard let wallet = App.shared.walletManager.wallets.first(where: { $0.coinCode == coinCode }) else {
             return nil
         }
 

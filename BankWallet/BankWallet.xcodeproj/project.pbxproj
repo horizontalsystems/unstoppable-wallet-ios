@@ -270,6 +270,7 @@
 		1A564353270BFA8C19B9195B /* SetPinRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564447850F619EDD37CBC3 /* SetPinRouter.swift */; };
 		1A56435CD394F8E157937FAD /* PinView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564E32F66415F9A0586626 /* PinView.swift */; };
 		1A56435EB26CCED1DB73B057 /* MainSettingsInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564D73251DBFA0CFE34D12 /* MainSettingsInteractor.swift */; };
+		1A564375773F7977B14EF1E0 /* Coin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56404690D0235A5183C12D /* Coin.swift */; };
 		1A56438249B462DB9B522C7A /* CurrencyHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564679937963085A8530F4 /* CurrencyHelper.swift */; };
 		1A56439242405A16711956B3 /* PagingDotsItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5640FFFD5B065D745208F1 /* PagingDotsItem.swift */; };
 		1A56439A65488C8FAAEE7EAC /* DepositAlertModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564C2A96B49F01C1EC645D /* DepositAlertModel.swift */; };
@@ -339,6 +340,7 @@
 		1A564A44FF860429F91162ED /* DepositModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564E1FBBCCA45BCDA557F4 /* DepositModule.swift */; };
 		1A564A46D655BA99B1C0DAF7 /* DescriptionCollectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564E60ED94EDDE153519AA /* DescriptionCollectionHeader.swift */; };
 		1A564A4DE4455DDFEC8A5E1D /* LockoutUntilDateFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564DAA99070A03BBC10871 /* LockoutUntilDateFactoryTests.swift */; };
+		1A564A7ECB966C4711CA1A86 /* Coin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56404690D0235A5183C12D /* Coin.swift */; };
 		1A564A7ECE35A5A7A314D455 /* TransactionsTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5645ED6604E61C418C257E /* TransactionsTheme.swift */; };
 		1A564A832CFA51E737EF3AE4 /* LockoutManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5645447A24FE94F0D87BFF /* LockoutManager.swift */; };
 		1A564A85241B5956B277FE8B /* SettingsToggleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564B3A1B7A6F432F72A811 /* SettingsToggleCell.swift */; };
@@ -380,6 +382,7 @@
 		1A564E0A6E37A68995364D81 /* TransactionInfoInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5647DBF15322999B5A1D04 /* TransactionInfoInteractor.swift */; };
 		1A564E181F46CF98BC00CC30 /* EditPinPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564996AA2AE3468D2992E5 /* EditPinPresenterTests.swift */; };
 		1A564E268D7D4D01BD7B5078 /* MainSettingsPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56445B53883A652362E9D6 /* MainSettingsPresenterTests.swift */; };
+		1A564E286A1C980C944A63A9 /* Coin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56404690D0235A5183C12D /* Coin.swift */; };
 		1A564E2B4B30AB0F54A2FBF6 /* LockoutState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56488B2051E9529CE8742E /* LockoutState.swift */; };
 		1A564E374CD439E2C1334208 /* CurrentDateProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564FC3433E72C8A63AC5F5 /* CurrentDateProvider.swift */; };
 		1A564E3D1BD7610D43898DB6 /* MainSettingsModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5647AD7481B36F20D4DDF9 /* MainSettingsModule.swift */; };
@@ -1003,6 +1006,7 @@
 		11B35FA1C1FF965AA2EB6666 /* PeriodicTimer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PeriodicTimer.swift; sourceTree = "<group>"; };
 		11B35FAF942FA80752EDBFA7 /* SendInteractorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendInteractorTests.swift; sourceTree = "<group>"; };
 		1A56401A0F6DB2F88A01ED73 /* TransactionsPresenterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionsPresenterTests.swift; sourceTree = "<group>"; };
+		1A56404690D0235A5183C12D /* Coin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Coin.swift; sourceTree = "<group>"; };
 		1A5640528EFD15137E218EA3 /* MainSettingsPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainSettingsPresenter.swift; sourceTree = "<group>"; };
 		1A564077BF075C35B6FF3BCB /* SendTheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendTheme.swift; sourceTree = "<group>"; };
 		1A564082B28C17265B23D88A /* SecuritySettingsInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecuritySettingsInteractor.swift; sourceTree = "<group>"; };
@@ -1471,6 +1475,7 @@
 				1A5640AA47846498D56A36E6 /* LatestRate.swift */,
 				58AAA7A94D25C20240FD75C6 /* PaymentRequestAddress.swift */,
 				1A56488B2051E9529CE8742E /* LockoutState.swift */,
+				1A56404690D0235A5183C12D /* Coin.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -2926,6 +2931,7 @@
 				1A5649A1763E1ADB6572ECBC /* UptimeProvider.swift in Sources */,
 				1A5645DFFB1EC95815289D1F /* CurrentDateProvider.swift in Sources */,
 				1A5647C0909A28BECA342148 /* LockoutView.swift in Sources */,
+				1A564375773F7977B14EF1E0 /* Coin.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3218,6 +3224,7 @@
 				1A564AAA92C0EBFB1C26DB29 /* UptimeProvider.swift in Sources */,
 				1A56424C8E4017689EFF5D6D /* CurrentDateProvider.swift in Sources */,
 				1A5647481AAB5BF5A86F9829 /* LockoutView.swift in Sources */,
+				1A564E286A1C980C944A63A9 /* Coin.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3470,6 +3477,7 @@
 				1A56410880DEEF4B91B3413A /* UptimeProvider.swift in Sources */,
 				1A564E374CD439E2C1334208 /* CurrentDateProvider.swift in Sources */,
 				1A5645EDCB2C77F13BFEB1E2 /* LockoutView.swift in Sources */,
+				1A564A7ECB966C4711CA1A86 /* Coin.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3655,10 +3663,10 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5026FFF721C3CA280023EEA2 /* Bank Dev T.debug.xcconfig */;
 			buildSettings = {
-				EnabledCoins = "BTCt, BCHt, ETHt";
 				PRODUCT_BUNDLE_IDENTIFIER = "io.horizontalsystems.bank-wallet.dev.testnet";
 				PRODUCT_NAME = "Bank Dev T";
 				PROVISIONING_PROFILE_SPECIFIER = "io.horizontalsystems.bank-wallet.dev.testnet Dev";
+				TestMode = true;
 			};
 			name = Debug;
 		};
@@ -3666,10 +3674,10 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5026FFF521C3CA280023EEA2 /* Bank Dev T.release.xcconfig */;
 			buildSettings = {
-				EnabledCoins = "BTCt, BCHt, ETHt";
 				PRODUCT_BUNDLE_IDENTIFIER = "io.horizontalsystems.bank-wallet.dev.testnet";
 				PRODUCT_NAME = "Bank Dev T";
 				PROVISIONING_PROFILE_SPECIFIER = "io.horizontalsystems.bank-wallet.dev.testnet AdHoc";
+				TestMode = true;
 			};
 			name = Release;
 		};
@@ -3723,10 +3731,10 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5026FFF821C3CA280023EEA2 /* Bank Dev.debug.xcconfig */;
 			buildSettings = {
-				EnabledCoins = "BTC, BCH, ETH";
 				PRODUCT_BUNDLE_IDENTIFIER = "io.horizontalsystems.bank-wallet.dev";
 				PRODUCT_NAME = "Bank Dev";
 				PROVISIONING_PROFILE_SPECIFIER = "io.horizontalsystems.bank-wallet.dev Dev";
+				TestMode = false;
 			};
 			name = Debug;
 		};
@@ -3734,10 +3742,10 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5026FFF421C3CA280023EEA2 /* Bank Dev.release.xcconfig */;
 			buildSettings = {
-				EnabledCoins = "BTC, BCH, ETH";
 				PRODUCT_BUNDLE_IDENTIFIER = "io.horizontalsystems.bank-wallet.dev";
 				PRODUCT_NAME = "Bank Dev";
 				PROVISIONING_PROFILE_SPECIFIER = "io.horizontalsystems.bank-wallet.dev AdHoc";
+				TestMode = false;
 			};
 			name = Release;
 		};
@@ -3745,10 +3753,10 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5026FFF921C3CA280023EEA2 /* Bank.debug.xcconfig */;
 			buildSettings = {
-				EnabledCoins = "BTC, BCH, ETH";
 				PRODUCT_BUNDLE_IDENTIFIER = "io.horizontalsystems.bank-wallet";
 				PRODUCT_NAME = Bank;
 				PROVISIONING_PROFILE_SPECIFIER = "io.horizontalsystems.bank-wallet Dev";
+				TestMode = false;
 			};
 			name = Debug;
 		};
@@ -3756,10 +3764,10 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5026FFF621C3CA280023EEA2 /* Bank.release.xcconfig */;
 			buildSettings = {
-				EnabledCoins = "BTC, BCH, ETH";
 				PRODUCT_BUNDLE_IDENTIFIER = "io.horizontalsystems.bank-wallet";
 				PRODUCT_NAME = Bank;
 				PROVISIONING_PROFILE_SPECIFIER = "io.horizontalsystems.bank-wallet AppStore";
+				TestMode = false;
 			};
 			name = Release;
 		};

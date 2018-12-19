@@ -43,7 +43,7 @@ class SendConfirmationAlertModel: BaseAlertModel {
     }
 
     override func viewWillAppear(_ animated: Bool) {
-        titleItem.bindCoin?(viewItem.coinValue.coin)
+        titleItem.bindCoin?(viewItem.coinValue.coinCode)
     }
 
 }

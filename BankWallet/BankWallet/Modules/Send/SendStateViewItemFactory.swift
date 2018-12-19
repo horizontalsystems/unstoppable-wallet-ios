@@ -60,7 +60,7 @@ class SendStateViewItemFactory: ISendStateViewItemFactory {
             }
         } else if let feeCoinValue = state.feeCoinValue {
             stateFeeInfo = .coinValue(coinValue: feeCoinValue)
-            stateTotalInfo = .coinValue(coinValue: CoinValue(coin: coinValue.coin, value: coinValue.value + feeCoinValue.value))
+            stateTotalInfo = .coinValue(coinValue: CoinValue(coinCode: coinValue.coinCode, value: coinValue.value + feeCoinValue.value))
         }
 
         guard let feeInfo = stateFeeInfo else {

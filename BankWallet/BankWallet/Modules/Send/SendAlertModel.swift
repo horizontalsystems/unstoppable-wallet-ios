@@ -76,8 +76,8 @@ class SendAlertModel: BaseAlertModel {
 
 extension SendAlertModel: ISendView {
 
-    func set(coin: Coin) {
-        titleItem.bindCoin?(coin)
+    func set(coinCode: CoinCode) {
+        titleItem.bindCoin?(coinCode)
     }
 
     func set(amountInfo: AmountInfo?) {
@@ -89,7 +89,7 @@ extension SendAlertModel: ISendView {
 
         switch amountInfo {
         case .coinValue(let coinValue):
-            amountItem.bindAmountType?(coinValue.coin)
+            amountItem.bindAmountType?(coinValue.coinCode)
             amountItem.bindAmount?(coinValue.value)
         case .currencyValue(let currencyValue):
             amountItem.bindAmountType?(currencyValue.currency.symbol)

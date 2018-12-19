@@ -32,9 +32,9 @@ class TransactionRateSyncerTests: XCTestCase {
     override func setUp() {
         super.setUp()
 
-        bitcoinRecord = TransactionRecord(transactionHash: bitcoinHash, coin: bitcoin, timestamp: bitcoinTimestamp)
-        etherRecord = TransactionRecord(transactionHash: etherHash, coin: ether, timestamp: etherTimestamp)
-        cashRecord = TransactionRecord(transactionHash: cashHash, coin: cash, timestamp: 0)
+        bitcoinRecord = TransactionRecord(transactionHash: bitcoinHash, coinCode: bitcoin, timestamp: bitcoinTimestamp)
+        etherRecord = TransactionRecord(transactionHash: etherHash, coinCode: ether, timestamp: etherTimestamp)
+        cashRecord = TransactionRecord(transactionHash: cashHash, coinCode: cash, timestamp: 0)
 
         mockStorage = MockITransactionRecordStorage()
         mockNetworkManager = MockIRateNetworkManager()
@@ -44,8 +44,8 @@ class TransactionRateSyncerTests: XCTestCase {
             when(mock.set(rate: any(), transactionHash: any())).thenDoNothing()
         }
         stub(mockNetworkManager) { mock in
-            when(mock.getRate(coin: equal(to: bitcoin), currencyCode: equal(to: currencyCode), date: equal(to: Date(timeIntervalSince1970: Double(bitcoinTimestamp))))).thenReturn(Observable.just(bitcoinValue))
-            when(mock.getRate(coin: equal(to: ether), currencyCode: equal(to: currencyCode), date: equal(to: Date(timeIntervalSince1970: Double(etherTimestamp))))).thenReturn(Observable.just(etherValue))
+            when(mock.getRate(coinCode: equal(to: bitcoin), currencyCode: equal(to: currencyCode), date: equal(to: Date(timeIntervalSince1970: Double(bitcoinTimestamp))))).thenReturn(Observable.just(bitcoinValue))
+            when(mock.getRate(coinCode: equal(to: ether), currencyCode: equal(to: currencyCode), date: equal(to: Date(timeIntervalSince1970: Double(etherTimestamp))))).thenReturn(Observable.just(etherValue))
         }
 
         syncer = TransactionRateSyncer(storage: mockStorage, networkManager: mockNetworkManager, async: false)

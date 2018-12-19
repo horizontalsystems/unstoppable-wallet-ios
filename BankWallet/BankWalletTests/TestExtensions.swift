@@ -12,7 +12,7 @@ extension XCTestCase {
 
 extension CoinValue: Equatable {
     public static func ==(lhs: CoinValue, rhs: CoinValue) -> Bool {
-        return lhs.coin == rhs.coin && lhs.value == rhs.value
+        return lhs.coinCode == rhs.coinCode && lhs.value == rhs.value
     }
 }
 
@@ -36,16 +36,16 @@ extension BalanceViewItem: Equatable {
 
 extension TransactionFilterItem: Equatable {
     public static func ==(lhs: TransactionFilterItem, rhs: TransactionFilterItem) -> Bool {
-        return lhs.coin == rhs.coin && lhs.name == rhs.name
+        return lhs.coinCode == rhs.coinCode && lhs.name == rhs.name
     }
 }
 
 extension TransactionRecord {
-    convenience init(transactionHash: String, coin: String, timestamp: Double) {
+    convenience init(transactionHash: String, coinCode: String, timestamp: Double) {
         self.init()
 
         self.transactionHash = transactionHash
-        self.coin = coin
+        self.coinCode = coinCode
         self.timestamp = timestamp
     }
 }
@@ -57,10 +57,10 @@ extension LatestRate: Equatable {
 }
 
 extension Rate {
-    convenience init(coin: String, currencyCode: String, value: Double, timestamp: Double) {
+    convenience init(coinCode: String, currencyCode: String, value: Double, timestamp: Double) {
         self.init()
 
-        self.coin = coin
+        self.coinCode = coinCode
         self.currencyCode = currencyCode
         self.value = value
         self.timestamp = timestamp
@@ -119,6 +119,27 @@ extension LockoutState: Equatable {
         switch (lhs, rhs) {
         case (let .unlocked(lhsAttempts), let .unlocked(rhsAttempts)): return lhsAttempts == rhsAttempts
         case (let .locked(lhsDate), let .locked(rhsDate)): return lhsDate.compare(rhsDate) == .orderedSame
+        default: return false
+        }
+    }
+}
+
+extension Coin: Equatable {
+    public static func ==(lhs: Coin, rhs: Coin) -> Bool {
+        let codes = lhs.code == rhs.code
+        let titles = lhs.title == rhs.title
+        return codes && titles
+    }
+}
+
+extension CoinType: Equatable {
+    public static func ==(lhs: CoinType, rhs: CoinType) -> Bool {
+        switch (lhs, rhs) {
+        case (.bitcoin, .bitcoin): return true
+        case (.bitcoinCash, .bitcoinCash): return true
+        case (.ethereum, .ethereum): return true
+        case (.erc20(let lhsAddress, let lhsDecimal), .erc20(let rhsAddress, let rhsDecimal)):
+            return lhsAddress == rhsAddress && lhsDecimal == rhsDecimal
         default: return false
         }
     }

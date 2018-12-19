@@ -163,3 +163,17 @@ extension BitcoinAdapter: BitcoinKitDelegate {
     }
 
 }
+
+extension BitcoinAdapter {
+
+    static func bitcoinAdapter(words: [String], testMode: Bool) -> BitcoinAdapter {
+        let network: BitcoinKit.Network = testMode ? .testNet : .mainNet
+        return BitcoinAdapter(words: words, coin: .bitcoin(network: network))
+    }
+
+    static func bitcoinCashAdapter(words: [String], testMode: Bool) -> BitcoinAdapter {
+        let network: BitcoinKit.Network = testMode ? .testNet : .mainNet
+        return BitcoinAdapter(words: words, coin: .bitcoinCash(network: network))
+    }
+
+}

@@ -27,7 +27,7 @@ extension TransactionRateSyncer: ITransactionRateSyncer {
             let hash = record.transactionHash
             let date = Date(timeIntervalSince1970: Double(record.timestamp))
 
-            var observable = networkManager.getRate(coin: record.coin, currencyCode: currencyCode, date: date)
+            var observable = networkManager.getRate(coinCode: record.coinCode, currencyCode: currencyCode, date: date)
 
             if async {
                 observable = observable.subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background)).observeOn(MainScheduler.instance)

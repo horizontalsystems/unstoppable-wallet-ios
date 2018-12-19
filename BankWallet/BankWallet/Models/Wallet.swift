@@ -1,9 +1,11 @@
 class Wallet {
-    let coin: Coin
+    let title: String
+    let coinCode: CoinCode
     let adapter: IAdapter
 
-    init(coin: Coin, adapter: IAdapter) {
-        self.coin = coin
+    init(title: String, coinCode: CoinCode, adapter: IAdapter) {
+        self.title = title
+        self.coinCode = coinCode
         self.adapter = adapter
     }
 

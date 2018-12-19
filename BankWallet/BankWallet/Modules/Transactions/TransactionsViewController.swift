@@ -2,7 +2,7 @@ import UIKit
 import SnapKit
 
 struct TransactionFilterItem {
-    let coin: Coin?
+    let coinCode: CoinCode?
     let name: String
 }
 
@@ -31,7 +31,7 @@ class TransactionsViewController: UITableViewController {
         super.viewDidLoad()
 
         filterHeaderView.onSelectCoin = { coin in
-            self.delegate.onFilterSelect(coin: coin)
+            self.delegate.onFilterSelect(coinCode: coin)
         }
 
         tableView.backgroundColor = AppTheme.controllerBackground

@@ -6,12 +6,12 @@ class BalanceRouter {
 
 extension BalanceRouter: IBalanceRouter {
 
-    func openReceive(for coin: Coin) {
-        DepositRouter.module(coin: coin).show(fromController: viewController)
+    func openReceive(for coinCode: CoinCode) {
+        DepositRouter.module(coinCode: coinCode).show(fromController: viewController)
     }
 
-    func openSend(for coin: Coin) {
-        if let module = SendRouter.module(coin: coin) {
+    func openSend(for coinCode: CoinCode) {
+        if let module = SendRouter.module(coinCode: coinCode) {
             module.show(fromController: viewController)
         }
     }

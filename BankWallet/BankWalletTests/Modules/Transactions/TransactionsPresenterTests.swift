@@ -17,8 +17,8 @@ class TransactionsPresenterTests: XCTestCase {
     private var bitcoinRecord = TransactionRecord()
     private var etherRecord = TransactionRecord()
 
-    private var bitcoinViewItem = TransactionViewItem(transactionHash: "hash", coinValue: CoinValue(coin: "", value: 0), currencyValue: nil, from: nil, to: nil, incoming: true, date: nil, status: .pending)
-    private var etherViewItem = TransactionViewItem(transactionHash: "", coinValue: CoinValue(coin: "", value: 0), currencyValue: nil, from: nil, to: nil, incoming: true, date: nil, status: .pending)
+    private var bitcoinViewItem = TransactionViewItem(transactionHash: "hash", coinValue: CoinValue(coinCode: "", value: 0), currencyValue: nil, from: nil, to: nil, incoming: true, date: nil, status: .pending)
+    private var etherViewItem = TransactionViewItem(transactionHash: "", coinValue: CoinValue(coinCode: "", value: 0), currencyValue: nil, from: nil, to: nil, incoming: true, date: nil, status: .pending)
 
     override func setUp() {
         super.setUp()
@@ -38,8 +38,8 @@ class TransactionsPresenterTests: XCTestCase {
         }
         stub(mockInteractor) { mock in
             when(mock.retrieveFilters()).thenDoNothing()
-            when(mock.set(coin: equal(to: bitcoin))).thenDoNothing()
-            when(mock.set(coin: equal(to: ether))).thenDoNothing()
+            when(mock.set(coinCode: equal(to: bitcoin))).thenDoNothing()
+            when(mock.set(coinCode: equal(to: ether))).thenDoNothing()
             when(mock.recordsCount.get).thenReturn(3)
             when(mock.record(forIndex: 0)).thenReturn(bitcoinRecord)
             when(mock.record(forIndex: 1)).thenReturn(etherRecord)
@@ -80,8 +80,8 @@ class TransactionsPresenterTests: XCTestCase {
     }
 
     func testUpdateFilterCoin() {
-        presenter.onFilterSelect(coin: bitcoin)
-        verify(mockInteractor).set(coin: equal(to: bitcoin))
+        presenter.onFilterSelect(coinCode: bitcoin)
+        verify(mockInteractor).set(coinCode: equal(to: bitcoin))
     }
 
     func testItemsCount_OnFilterSelect() {
@@ -89,7 +89,7 @@ class TransactionsPresenterTests: XCTestCase {
             when(mock.recordsCount.get).thenReturn(1)
         }
 
-        presenter.onFilterSelect(coin: bitcoin)
+        presenter.onFilterSelect(coinCode: bitcoin)
         XCTAssertEqual(presenter.itemsCount, 1)
     }
 
@@ -98,7 +98,7 @@ class TransactionsPresenterTests: XCTestCase {
             when(mock.record(forIndex: 0)).thenReturn(etherRecord)
         }
 
-        presenter.onFilterSelect(coin: ether)
+        presenter.onFilterSelect(coinCode: ether)
 
         XCTAssertTrue(presenter.item(forIndex: 0) === etherViewItem)
     }
@@ -109,9 +109,9 @@ class TransactionsPresenterTests: XCTestCase {
     }
 
     func testDidRetrieveFilters() {
-        let expectedAllFilter = TransactionFilterItem(coin: nil, name: "transactions.filter_all")
-        let expectedBitcoinFilter = TransactionFilterItem(coin: bitcoin, name: "coin.\(bitcoin)")
-        let expectedEtherFilter = TransactionFilterItem(coin: ether, name: "coin.\(ether)")
+        let expectedAllFilter = TransactionFilterItem(coinCode: nil, name: "transactions.filter_all")
+        let expectedBitcoinFilter = TransactionFilterItem(coinCode: bitcoin, name: "coin.\(bitcoin)")
+        let expectedEtherFilter = TransactionFilterItem(coinCode: ether, name: "coin.\(ether)")
         let expectedFilters = [expectedAllFilter, expectedBitcoinFilter, expectedEtherFilter]
 
         presenter.didRetrieve(filters: [bitcoin, ether])

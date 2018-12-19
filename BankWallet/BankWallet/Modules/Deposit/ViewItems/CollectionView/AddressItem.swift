@@ -1,12 +1,12 @@
 struct AddressItem {
     let address: String
-    let coin: Coin
+    let coinCode: CoinCode
 }
 
 extension AddressItem: Equatable {
 
     public static func ==(lhs: AddressItem, rhs: AddressItem) -> Bool {
-        return lhs.coin == rhs.coin && lhs.address == rhs.address
+        return lhs.coinCode == rhs.coinCode && lhs.address == rhs.address
     }
 
 }

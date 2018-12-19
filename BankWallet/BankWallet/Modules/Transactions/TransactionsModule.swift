@@ -28,7 +28,7 @@ protocol ITransactionsView: class {
 protocol ITransactionsViewDelegate {
     func viewDidLoad()
     func onTransactionItemClick(transaction: TransactionViewItem)
-    func onFilterSelect(coin: Coin?)
+    func onFilterSelect(coinCode: CoinCode?)
 
     var itemsCount: Int { get }
     func item(forIndex index: Int) -> TransactionViewItem
@@ -36,14 +36,14 @@ protocol ITransactionsViewDelegate {
 
 protocol ITransactionsInteractor {
     func retrieveFilters()
-    func set(coin: Coin?)
+    func set(coinCode: CoinCode?)
 
     var recordsCount: Int { get }
     func record(forIndex index: Int) -> TransactionRecord
 }
 
 protocol ITransactionsInteractorDelegate: class {
-    func didRetrieve(filters: [Coin])
+    func didRetrieve(filters: [CoinCode])
     func didUpdateDataSource()
 }
 
@@ -56,7 +56,7 @@ protocol ITransactionRecordDataSource {
 
     var count: Int { get }
     func record(forIndex index: Int) -> TransactionRecord
-    func set(coin: Coin?)
+    func set(coinCode: CoinCode?)
 }
 
 protocol ITransactionRecordDataSourceDelegate: class {

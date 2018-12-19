@@ -16,7 +16,7 @@ class SendInteractor {
         self.pasteboardManager = pasteboardManager
         self.wallet = wallet
 
-        if let rate = rateManager.rate(forCoin: wallet.coin, currencyCode: currencyManager.baseCurrency.code), !rate.expired {
+        if let rate = rateManager.rate(forCoin: wallet.coinCode, currencyCode: currencyManager.baseCurrency.code), !rate.expired {
             self.rate = rate
         }
     }
@@ -25,8 +25,8 @@ class SendInteractor {
 
 extension SendInteractor: ISendInteractor {
 
-    var coin: Coin {
-        return wallet.coin
+    var coinCode: CoinCode {
+        return wallet.coinCode
     }
 
     var addressFromPasteboard: String? {
@@ -49,7 +49,7 @@ extension SendInteractor: ISendInteractor {
     }
 
     func state(forUserInput input: SendUserInput) -> SendState {
-        let coin = wallet.coin
+        let coin = wallet.coinCode
         let adapter = wallet.adapter
         let baseCurrency = currencyManager.baseCurrency
         let rateValue = rate?.value
@@ -58,15 +58,15 @@ extension SendInteractor: ISendInteractor {
 
         switch input.inputType {
         case .coin:
-            state.coinValue = CoinValue(coin: coin, value: input.amount)
+            state.coinValue = CoinValue(coinCode: coin, value: input.amount)
             state.currencyValue = rateValue.map { CurrencyValue(currency: baseCurrency, value: input.amount * $0) }
 
             let balance = adapter.balance
             if balance < input.amount {
-                state.amountError = AmountError.insufficientAmount(amountInfo: .coinValue(coinValue: CoinValue(coin: coin, value: balance)))
+                state.amountError = AmountError.insufficientAmount(amountInfo: .coinValue(coinValue: CoinValue(coinCode: coin, value: balance)))
             }
         case .currency:
-            state.coinValue = rateValue.map { CoinValue(coin: coin, value: input.amount / $0) }
+            state.coinValue = rateValue.map { CoinValue(coinCode: coin, value: input.amount / $0) }
             state.currencyValue = CurrencyValue(currency: baseCurrency, value: input.amount)
 
             if let rateValue = rateValue {
@@ -88,7 +88,7 @@ extension SendInteractor: ISendInteractor {
         }
 
         if let coinValue = state.coinValue, let fee = try? adapter.fee(for: coinValue.value, address: input.address, senderPay: true) {
-            state.feeCoinValue = CoinValue(coin: coin, value: fee)
+            state.feeCoinValue = CoinValue(coinCode: coin, value: fee)
         }
 
         if let rateValue = rateValue, let feeCoinValue = state.feeCoinValue {

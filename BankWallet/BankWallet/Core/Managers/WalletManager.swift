@@ -17,15 +17,15 @@ extension WalletManager: IWalletManager {
         var newWallets = [Wallet]()
 
         wallets = coins.compactMap { coin in
-            if let wallet = self.wallets.first(where: { $0.coin == coin }) {
+            if let wallet = self.wallets.first(where: { $0.coinCode == coin.code }) {
                 return wallet
             }
 
-            guard let adapter = adapterFactory.adapter(forCoin: coin, words: words) else {
+            guard let adapter = adapterFactory.adapter(forCoinType: coin.type, words: words) else {
                 return nil
             }
 
-            let wallet = Wallet(coin: coin, adapter: adapter)
+            let wallet = Wallet(title: coin.title, coinCode: coin.code, adapter: adapter)
             newWallets.append(wallet)
             return wallet
         }

@@ -5,12 +5,12 @@ class DepositAlertModel: BaseAlertModel {
 
     let delegate: IDepositViewDelegate
 
-    init(viewDelegate: IDepositViewDelegate, coin: Coin?) {
+    init(viewDelegate: IDepositViewDelegate, coinCode: CoinCode?) {
         self.delegate = viewDelegate
 
         super.init()
 
-        let items = delegate.addressItems(forCoin: coin)
+        let items = delegate.addressItems(forCoin: coinCode)
 
         hideInBackground = false
 

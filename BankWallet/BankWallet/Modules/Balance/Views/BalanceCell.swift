@@ -182,7 +182,7 @@ class BalanceCell: UITableViewCell {
     }
 
     func bindView(item: BalanceViewItem, selected: Bool, animated: Bool = false) {
-        coinIconImageView.image = UIImage(named: "\(item.coinValue.coin) Icon")
+        coinIconImageView.image = UIImage(named: "\(item.coinValue.coinCode) Icon")
 
         receiveButton.set(hidden: !selected, animated: animated, duration: BalanceTheme.buttonsAnimationDuration)
         payButton.set(hidden: !selected, animated: animated, duration: BalanceTheme.buttonsAnimationDuration)
@@ -193,10 +193,10 @@ class BalanceCell: UITableViewCell {
             payButton.state = .disabled
         }
 
-        nameLabel.text = "coin.\(item.coinValue.coin)".localized
+        nameLabel.text = "coin.\(item.coinValue.coinCode)".localized
 
         if let value = item.exchangeValue, let formattedValue = ValueFormatter.instance.format(currencyValue: value, shortFractionLimit: 100) {
-            rateLabel.text = "balance.rate_per_coin".localized(formattedValue, item.coinValue.coin)
+            rateLabel.text = "balance.rate_per_coin".localized(formattedValue, item.coinValue.coinCode)
         } else {
             rateLabel.text = " " // space required for constraints
         }
