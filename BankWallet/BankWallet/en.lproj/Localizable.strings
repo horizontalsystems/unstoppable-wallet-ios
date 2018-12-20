@@ -86,7 +86,6 @@ Go to Settings - > Bank and allow access to Camera.";
 "transactions.empty_text" = "You don't have any pending or past transactions yet";
 "transactions.sending"="Sending...";
 
-
 // Transaction Info
 
 "tx_info.title" = "Transaction";
@@ -97,6 +96,22 @@ Go to Settings - > Bank and allow access to Camera.";
 "tx_info.from_hash" = "From:";
 "tx_info.to_hash" = "To:";
 "tx_info.alert_close" = "Close";
+"tx_info.button_more" = "Full Info";
+
+// Full Info
+"full_info.title"= "Full Info";
+"full_info.id"= "ID";
+"full_info.status"= "Status";
+"full_info.time"= "Time";
+"full_info.block"= "Block";
+"full_info.confirmations"= "Confirmations";
+"full_info.total_input"= "Total Input";
+"full_info.total_output"= "Total Output";
+"full_info.fee"= "Fee";
+"full_info.subtitle_from"= "From";
+"full_info.subtitle_inputs"= "Inputs";
+"full_info.subtitle_outputs"= "Outputs";
+"full_info.subtitle_provider"= "Data Provider";
 
 // Settings
 
