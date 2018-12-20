@@ -246,7 +246,7 @@
 		1A5641061673702B10D858BF /* TransactionInfoTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5645F926B14580B1644164 /* TransactionInfoTheme.swift */; };
 		1A56410880DEEF4B91B3413A /* UptimeProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564F697ACF24DA968884EA /* UptimeProvider.swift */; };
 		1A56411CFC8D9190B15323A4 /* ConfirmationTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564E77730537D108E31276 /* ConfirmationTheme.swift */; };
-		1A564121474C094BD9770C13 /* ManageCoinsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5642992929CF74471FE0B4 /* ManageCoinsController.swift */; };
+		1A564121474C094BD9770C13 /* ManageCoinsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5642992929CF74471FE0B4 /* ManageCoinsViewController.swift */; };
 		1A564130F517CD26BF9E8A57 /* LanguageSettingsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564238192BEA3F5470E204 /* LanguageSettingsPresenter.swift */; };
 		1A564191A16F15B25768FF30 /* SendTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564077BF075C35B6FF3BCB /* SendTheme.swift */; };
 		1A5641BD2DA1FB1803D3B044 /* DepositInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5648DA32EA5FC27E4CEF64 /* DepositInteractor.swift */; };
@@ -309,7 +309,7 @@
 		1A56465CE6EFDADE3365DF98 /* AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5649DB879A57761C09842E /* AppTheme.swift */; };
 		1A564685DDF41780A93B92E9 /* BlurManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564BB88BF3ED779F8C21DC /* BlurManager.swift */; };
 		1A56468E848DE3A44DD8DF29 /* Production.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 1A5648F3AB070B0ACB98C7EE /* Production.xcconfig */; };
-		1A5646AFB583A44B13558403 /* ManageCoinsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5642992929CF74471FE0B4 /* ManageCoinsController.swift */; };
+		1A5646AFB583A44B13558403 /* ManageCoinsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5642992929CF74471FE0B4 /* ManageCoinsViewController.swift */; };
 		1A5646C35E5492F629F1C025 /* PinModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56490AEC0BDFCA98275B49 /* PinModule.swift */; };
 		1A5646F6ED19CA9AA8F52C7F /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5646D49060C3EFF06D0479 /* App.swift */; };
 		1A5647219D7DE64CE22C2B87 /* SetPinPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5648311E0EA947B1446649 /* SetPinPresenter.swift */; };
@@ -415,7 +415,7 @@
 		1A564F4AA83DC47DC9840A69 /* SettingsTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564F747A4D0B78E5DF6F1B /* SettingsTheme.swift */; };
 		1A564FB62EBBA50489895BEF /* BalanceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564B746C8A6451D81B27D4 /* BalanceCell.swift */; };
 		1A564FBBE3324B1D8EDA3232 /* PinInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5640B8B65EAECA3A36F89E /* PinInteractor.swift */; };
-		1A564FD21968E2B4C1CB4AF5 /* ManageCoinsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5642992929CF74471FE0B4 /* ManageCoinsController.swift */; };
+		1A564FD21968E2B4C1CB4AF5 /* ManageCoinsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5642992929CF74471FE0B4 /* ManageCoinsViewController.swift */; };
 		1A564FD718DF1DD5F82D7B1E /* ManageCoinsModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564FD2BE42EF4AADB0372C /* ManageCoinsModule.swift */; };
 		1A564FEE11A00F6D86B5616D /* ManageCoinsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56471ECC51CB5E5572DBD8 /* ManageCoinsRouter.swift */; };
 		41A22A9B2FA01C41637B3EB9 /* Pods_Bank_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C34C463CE4115A838C13EA33 /* Pods_Bank_Tests.framework */; };
@@ -1051,7 +1051,7 @@
 		1A564260BF2C73B9F2450FB8 /* SendInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendInteractor.swift; sourceTree = "<group>"; };
 		1A56426438831456EF79DC47 /* MainSettingsInteractorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainSettingsInteractorTests.swift; sourceTree = "<group>"; };
 		1A56428DB7E042907CD4252D /* FullTransactionInfoTheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FullTransactionInfoTheme.swift; sourceTree = "<group>"; };
-		1A5642992929CF74471FE0B4 /* ManageCoinsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManageCoinsController.swift; sourceTree = "<group>"; };
+		1A5642992929CF74471FE0B4 /* ManageCoinsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManageCoinsViewController.swift; sourceTree = "<group>"; };
 		1A5642A5A1B21FE92139766E /* LanguageSettingsModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LanguageSettingsModule.swift; sourceTree = "<group>"; };
 		1A5642EFA8A991436AED3B44 /* TransactionAmountItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionAmountItemView.swift; sourceTree = "<group>"; };
 		1A5643010944D435B8BA2FD8 /* TransactionInfoAlertModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionInfoAlertModel.swift; sourceTree = "<group>"; };
@@ -1922,7 +1922,7 @@
 				1A564FD2BE42EF4AADB0372C /* ManageCoinsModule.swift */,
 				1A56471ECC51CB5E5572DBD8 /* ManageCoinsRouter.swift */,
 				1A564B45A6BB5D38CE45C009 /* ManageCoinsPresenter.swift */,
-				1A5642992929CF74471FE0B4 /* ManageCoinsController.swift */,
+				1A5642992929CF74471FE0B4 /* ManageCoinsViewController.swift */,
 				1A564ED7C1B06B04230F3C36 /* ManageCoinsInteractor.swift */,
 				1A56448A83F040A35FCAE6A7 /* ManageCoinsPresenterState.swift */,
 			);
@@ -2979,7 +2979,7 @@
 				1A564594FC973AA332A7A9C9 /* ManageCoinsModule.swift in Sources */,
 				1A564E2AA9F3C675924EE183 /* ManageCoinsRouter.swift in Sources */,
 				1A5647C94C737A83D85C6934 /* ManageCoinsPresenter.swift in Sources */,
-				1A564FD21968E2B4C1CB4AF5 /* ManageCoinsController.swift in Sources */,
+				1A564FD21968E2B4C1CB4AF5 /* ManageCoinsViewController.swift in Sources */,
 				1A564650FE49C63EAF6455DE /* ManageCoinsInteractor.swift in Sources */,
 				1A56493EF89D20094D2D0FF3 /* ManageCoinsPresenterState.swift in Sources */,
 			);
@@ -3279,7 +3279,7 @@
 				1A564FD718DF1DD5F82D7B1E /* ManageCoinsModule.swift in Sources */,
 				1A564076F4C5BD7656156603 /* ManageCoinsRouter.swift in Sources */,
 				1A564A33F7235D6CE1D0E6DB /* ManageCoinsPresenter.swift in Sources */,
-				1A5646AFB583A44B13558403 /* ManageCoinsController.swift in Sources */,
+				1A5646AFB583A44B13558403 /* ManageCoinsViewController.swift in Sources */,
 				1A564495D5AC5AC6E20B1EB9 /* ManageCoinsInteractor.swift in Sources */,
 				1A56490B8A2941B288FA329F /* ManageCoinsPresenterState.swift in Sources */,
 			);
@@ -3536,7 +3536,7 @@
 				1A564B6E513269FED43EA6F2 /* ManageCoinsModule.swift in Sources */,
 				1A564FEE11A00F6D86B5616D /* ManageCoinsRouter.swift in Sources */,
 				1A5648E9A5AFB70CCF3B51A4 /* ManageCoinsPresenter.swift in Sources */,
-				1A564121474C094BD9770C13 /* ManageCoinsController.swift in Sources */,
+				1A564121474C094BD9770C13 /* ManageCoinsViewController.swift in Sources */,
 				1A56408C09AAD4A728FEDEF4 /* ManageCoinsInteractor.swift in Sources */,
 				1A564246FE1459BD6985604B /* ManageCoinsPresenterState.swift in Sources */,
 			);
