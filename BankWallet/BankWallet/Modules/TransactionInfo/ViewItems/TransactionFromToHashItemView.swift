@@ -7,7 +7,7 @@ class TransactionFromToHashItemView: BaseActionItemView {
 
     var titleLabel = UILabel()
     var valueLabel = UILabel()
-    var avatarImageView = UIImageView(image: UIImage(named: "Transaction Info Avatar Placeholder")?.tinted(with: .cryptoGray50))
+    var avatarImageView = UIImageView(image: UIImage(named: "Transaction Info Avatar Placeholder")?.tinted(with: TransactionInfoTheme.hashButtonIconColor))
 
     override var item: TransactionFromToHashItem? { return _item as? TransactionFromToHashItem
     }

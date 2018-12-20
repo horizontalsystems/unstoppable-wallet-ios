@@ -22,6 +22,7 @@ class TransactionInfoTheme {
     static var hashButtonBackgroundSelected: UIColor { return .crypto_Steel40_LightGray }
     static let hashButtonBorderColor = UIColor.cryptoSteel20
     static var hashButtonTextColor: UIColor { return .crypto_Bars_Dark }
+    static let hashButtonIconColor: UIColor = .cryptoGray50
 
     static let amountHeight: CGFloat = 99
     static let amountTopMargin: CGFloat = 20
