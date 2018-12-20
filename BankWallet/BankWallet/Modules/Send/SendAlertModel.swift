@@ -12,6 +12,7 @@ class SendAlertModel: BaseAlertModel {
 
     var onScanClicked: (() -> ())?
     var onShowConfirmation: ((SendConfirmationViewItem) -> ())?
+    var onCopyAddress: (() -> ())?
 
     init(delegate: ISendViewDelegate) {
         self.delegate = delegate
@@ -54,6 +55,10 @@ class SendAlertModel: BaseAlertModel {
             self?.delegate.onSendClicked()
         }
         addItemView(sendButtonItem)
+
+        onCopyAddress = { [weak self] in
+            self?.delegate.onCopyAddress()
+        }
     }
 
     override func viewDidLoad() {
@@ -175,6 +180,10 @@ extension SendAlertModel: ISendView {
 
     func showConfirmation(viewItem: SendConfirmationViewItem) {
         onShowConfirmation?(viewItem)
+    }
+
+    func showCopied() {
+        HudHelper.instance.showSuccess(title: "alert.copied".localized)
     }
 
     func show(error: Error) {

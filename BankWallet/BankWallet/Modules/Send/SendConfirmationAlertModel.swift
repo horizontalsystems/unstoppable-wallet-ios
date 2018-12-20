@@ -11,6 +11,8 @@ class SendConfirmationAlertModel: BaseAlertModel {
     private let totalItem: SendConfirmationValueItem
     private let sendButtonItem: SendButtonItem
 
+    var onCopyAddress: (() -> ())?
+
     init(viewItem: SendConfirmationViewItem) {
         self.viewItem = viewItem
 
@@ -28,8 +30,8 @@ class SendConfirmationAlertModel: BaseAlertModel {
         addItemView(titleItem)
         addItemView(amountItem)
 
-        addressItem.onHashTap = {
-            // todo
+        addressItem.onHashTap = { [weak self] in
+            self?.onCopyAddress?()
         }
         addItemView(addressItem)
 

@@ -121,4 +121,13 @@ extension SendPresenter: ISendViewDelegate {
         interactor.send(userInput: userInput)
     }
 
+    func onCopyAddress() {
+        guard let address = userInput.address else {
+            return
+        }
+
+        interactor.copy(address: address)
+        view?.showCopied()
+    }
+
 }

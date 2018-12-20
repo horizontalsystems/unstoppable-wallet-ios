@@ -55,6 +55,7 @@ class SendPresenterTests: XCTestCase {
             when(mock.set(primaryFeeInfo: any())).thenDoNothing()
             when(mock.set(secondaryFeeInfo: any())).thenDoNothing()
             when(mock.set(sendButtonEnabled: any())).thenDoNothing()
+            when(mock.showCopied()).thenDoNothing()
             when(mock.showConfirmation(viewItem: any())).thenDoNothing()
             when(mock.dismissWithSuccess()).thenDoNothing()
         }
@@ -62,6 +63,7 @@ class SendPresenterTests: XCTestCase {
             when(mock.coinCode.get).thenReturn(coinCode)
             when(mock.state(forUserInput: sameInstance(as: mockUserInput))).thenReturn(state)
             when(mock.convertedAmount(forInputType: equal(to: inputType), amount: equal(to: amount))).thenReturn(convertedAmount)
+            when(mock.copy(address: any())).thenDoNothing()
             when(mock.send(userInput: any())).thenDoNothing()
         }
         stub(mockFactory) { mock in
@@ -240,6 +242,19 @@ class SendPresenterTests: XCTestCase {
         presenter.onConfirmClicked()
 
         verify(mockInteractor).send(userInput: equal(to: mockUserInput))
+    }
+
+    func testOnCopyAddress() {
+        let address = "some_test_address"
+
+        stub(mockUserInput) { mock in
+            when(mock.address.get).thenReturn(address)
+        }
+
+        presenter.onCopyAddress()
+
+        verify(mockInteractor).copy(address: equal(to: address))
+        verify(mockView).showCopied()
     }
 
 }
