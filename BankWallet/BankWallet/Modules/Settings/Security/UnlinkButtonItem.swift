@@ -12,6 +12,7 @@ class UnlinkButtonItem: BaseButtonItem {
         self.onTap = onTap
         isActive = false
         height = ConfirmationTheme.buttonTopMargin + ConfirmationTheme.buttonHeight + ConfirmationTheme.smallMargin
+        showSeparator = false
     }
 
 }

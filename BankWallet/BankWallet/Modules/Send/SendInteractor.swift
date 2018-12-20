@@ -98,6 +98,10 @@ extension SendInteractor: ISendInteractor {
         return state
     }
 
+    func copy(address: String) {
+        pasteboardManager.set(value: address)
+    }
+
     func send(userInput: SendUserInput) {
         guard let address = userInput.address else {
             delegate?.didFailToSend(error: SendError.noAddress)

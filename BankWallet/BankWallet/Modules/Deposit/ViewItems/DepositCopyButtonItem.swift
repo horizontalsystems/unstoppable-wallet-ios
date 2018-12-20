@@ -11,6 +11,7 @@ class DepositCopyButtonItem: BaseButtonItem {
 
         self.onTap = onTap
         height = DepositTheme.copyButtonItemHeight
+        showSeparator = false
     }
 
 }

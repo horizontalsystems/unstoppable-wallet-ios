@@ -4,14 +4,15 @@ class DepositTheme {
     static let collectionHeight: CGFloat = 260
 
     static let iconMargin: CGFloat = 16
+    static let iconTintColor: UIColor = .cryptoGray
 
     static let titleFont = UIFont.systemFont(ofSize: 17, weight: .bold)
-    static let titleColor = UIColor.black
+    static var titleColor: UIColor { return .crypto_White_Black }
     static let qrCodeSideSize: CGFloat = 150
     static let qrCodeTopMargin: CGFloat = 12
     static let qrCodeBottomMargin: CGFloat = 24
     static let addressFont = UIFont.cryptoCaption1
-    static let addressColor = UIColor.black
+    static var addressColor: UIColor { return .crypto_White_Black }
     static let addressSideMargin: CGFloat = 30
 
     static let pagingHeight: CGFloat = 30
@@ -22,7 +23,6 @@ class DepositTheme {
 
     static let copyButtonTopMargin: CGFloat = 28
     static let copyButtonSideMargin: CGFloat = 16
-    static let copyButtonHeight: CGFloat = 50
     static let copyButtonItemHeight: CGFloat = 96
     static let cornerRadius: CGFloat = 8
 }

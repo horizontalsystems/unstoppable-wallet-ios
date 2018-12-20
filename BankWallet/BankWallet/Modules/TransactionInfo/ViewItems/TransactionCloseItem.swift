@@ -11,6 +11,7 @@ class TransactionCloseItem: BaseButtonItem {
 
         self.onTap = onTap
         height = TransactionInfoTheme.closeHeight
+        showSeparator = false
     }
 
 }

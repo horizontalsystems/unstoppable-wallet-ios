@@ -27,7 +27,7 @@ extension SendRouter {
         presenter.view = view
 
         let viewController = ActionSheetController(withModel: view, actionSheetThemeConfig: AppTheme.actionSheetConfig)
-        viewController.backgroundColor = .cryptoBars
+        viewController.backgroundColor = .crypto_Dark_Bars
         router.viewController = viewController
 
         view.onScanClicked = {
@@ -41,9 +41,12 @@ extension SendRouter {
         view.onShowConfirmation = { viewItem in
             let model = SendConfirmationAlertModel(viewItem: viewItem)
 
+            model.onCopyAddress = {
+                view.onCopyAddress?()
+            }
 
             let confirmationController = ActionSheetController(withModel: model, actionSheetThemeConfig: SendTheme.confirmationSheetConfig)
-            confirmationController.backgroundColor = .cryptoBars
+            confirmationController.backgroundColor = .crypto_Dark_Bars
 
             confirmationController.onDismiss = { success in
                 if success {

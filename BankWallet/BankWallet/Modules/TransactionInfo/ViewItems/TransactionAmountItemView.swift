@@ -12,7 +12,8 @@ class TransactionAmountItemView: BaseActionItemView {
 
     override func initView() {
         super.initView()
-        backgroundColor = TransactionInfoTheme.titleBackground
+
+        backgroundColor = TransactionInfoTheme.itemBackground
 
         amountLabel.font = TransactionInfoTheme.amountFont
         addSubview(amountLabel)

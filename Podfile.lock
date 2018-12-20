@@ -58,7 +58,7 @@ DEPENDENCIES:
   - GrouviActionSheet
   - GrouviExtensions
   - GrouviHUD
-  - HSBitcoinKit
+  - HSBitcoinKit (from `https://github.com/horizontalsystems/bitcoin-kit-ios/`, branch `develop`)
   - HSEthereumKit
   - KeychainAccess
   - ObjectMapper
@@ -78,7 +78,6 @@ SPEC REPOS:
     - GrouviActionSheet
     - GrouviExtensions
     - GrouviHUD
-    - HSBitcoinKit
     - HSCryptoKit
     - HSEthereumKit
     - HSHDWalletKit
@@ -92,6 +91,16 @@ SPEC REPOS:
     - SectionsTableViewKit
     - SipHash
     - SnapKit
+
+EXTERNAL SOURCES:
+  HSBitcoinKit:
+    :branch: develop
+    :git: https://github.com/horizontalsystems/bitcoin-kit-ios/
+
+CHECKOUT OPTIONS:
+  HSBitcoinKit:
+    :commit: c1e2d475a6fd34aef292ede53b89354c8b726b74
+    :git: https://github.com/horizontalsystems/bitcoin-kit-ios/
 
 SPEC CHECKSUMS:
   Alamofire: 3ec537f71edc9804815215393ae2b1a8ea33a844
@@ -116,6 +125,6 @@ SPEC CHECKSUMS:
   SipHash: fad90a4683e420c52ef28063063dbbce248ea6d4
   SnapKit: 0de968a9fec17499afa29683b05d0c775b6d1c29
 
-PODFILE CHECKSUM: f55a77d8146771a6659dd35f2ba9e6a8f1d88ab1
+PODFILE CHECKSUM: 97779c0447491a7b8c93fe82f62dce3acd585e16
 
 COCOAPODS: 1.5.3

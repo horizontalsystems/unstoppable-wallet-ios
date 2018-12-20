@@ -18,7 +18,7 @@ class SendTitleItemView: BaseActionItemView {
         }
 
         titleLabel.font = SendTheme.titleFont
-        titleLabel.textColor = UIColor.cryptoDark
+        titleLabel.textColor = SendTheme.titleColor
         addSubview(titleLabel)
         titleLabel.snp.makeConstraints { maker in
             maker.leading.equalTo(self.iconImageView.snp.trailing).offset(SendTheme.margin)
@@ -26,7 +26,7 @@ class SendTitleItemView: BaseActionItemView {
         }
 
         item?.bindCoin = { [weak self] coin in
-            self?.iconImageView.image = UIImage(named: "\(coin) Icon")
+            self?.iconImageView.image = UIImage(named: "\(coin) Icon")?.tinted(with: SendTheme.iconColor)
             self?.titleLabel.text = "send.title".localized(coin)
         }
     }

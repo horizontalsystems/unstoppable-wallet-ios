@@ -14,10 +14,11 @@ class TransactionStatusItemView: BaseActionItemView {
 
     override func initView() {
         super.initView()
-        backgroundColor = TransactionInfoTheme.titleBackground
 
-        titleLabel.font = TransactionInfoTheme.usualFont
-        titleLabel.textColor = TransactionInfoTheme.usualColor
+        backgroundColor = TransactionInfoTheme.itemBackground
+
+        titleLabel.font = TransactionInfoTheme.itemTitleFont
+        titleLabel.textColor = TransactionInfoTheme.itemTitleColor
         addSubview(titleLabel)
         titleLabel.snp.makeConstraints { maker in
             maker.centerY.equalToSuperview()
@@ -25,16 +26,16 @@ class TransactionStatusItemView: BaseActionItemView {
         }
 
         let wrapperView = UIView()
-        wrapperView.backgroundColor = TransactionInfoTheme.hashBackground
-        wrapperView.borderColor = TransactionInfoTheme.hashWrapperBorderColor
+        wrapperView.backgroundColor = TransactionInfoTheme.hashButtonBackground
+        wrapperView.borderColor = TransactionInfoTheme.hashButtonBorderColor
         wrapperView.borderWidth = 1 / UIScreen.main.scale
-        wrapperView.cornerRadius = TransactionInfoTheme.hashCornerRadius
+        wrapperView.cornerRadius = TransactionInfoTheme.hashButtonCornerRadius
         addSubview(wrapperView)
         wrapperView.snp.makeConstraints { maker in
             maker.leading.equalTo(self.titleLabel.snp.trailing).offset(TransactionInfoTheme.middleMargin)
             maker.centerY.equalToSuperview()
             maker.trailing.equalToSuperview().offset(-TransactionInfoTheme.regularMargin)
-            maker.height.equalTo(TransactionInfoTheme.hashBackgroundHeight)
+            maker.height.equalTo(TransactionInfoTheme.hashButtonHeight)
         }
 
         progressView.backgroundColor = .cryptoGreen20
@@ -44,8 +45,7 @@ class TransactionStatusItemView: BaseActionItemView {
             maker.width.equalTo(0)
         }
 
-        statusLabel.font = TransactionInfoTheme.usualFont
-        statusLabel.textColor = TransactionInfoTheme.usualColor
+        statusLabel.font = TransactionInfoTheme.itemTitleFont
         wrapperView.addSubview(statusLabel)
         statusLabel.snp.makeConstraints { maker in
             maker.centerY.equalToSuperview()
@@ -67,7 +67,7 @@ class TransactionStatusItemView: BaseActionItemView {
 
         titleLabel.text = item?.title
         statusLabel.text = item?.value?.uppercased()
-        statusLabel.textColor = TransactionInfoTheme.statusValueColor
+        statusLabel.textColor = TransactionInfoTheme.hashButtonTextColor
         statusImageView.image = item?.valueImage
         statusImageView.tintColor = item?.valueImageTintColor
 

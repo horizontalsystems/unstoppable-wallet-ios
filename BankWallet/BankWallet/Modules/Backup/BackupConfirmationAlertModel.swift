@@ -14,10 +14,10 @@ class BackupConfirmationAlertModel: BaseAlertModel {
         var confirmTexts = [NSAttributedString]()
 
         let confirm = "backup.confirmation.understand".localized
-        let confirmAttributed = NSMutableAttributedString(string: confirm, attributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 17)])
+        let confirmAttributed = NSMutableAttributedString(string: confirm, attributes: [NSAttributedStringKey.foregroundColor: ConfirmationTheme.textColor, NSAttributedStringKey.font: UIFont.systemFont(ofSize: 17)])
         confirmAttributed.addAttribute(NSAttributedStringKey.font, value: ConfirmationTheme.regularFont, range: NSMakeRange(0, confirm.count))
         confirmTexts.append(confirmAttributed)
-        confirmTexts.append(NSAttributedString(string: "backup.confirmation.delete_app_warn".localized, attributes: [NSAttributedStringKey.font: ConfirmationTheme.regularFont]))
+        confirmTexts.append(NSAttributedString(string: "backup.confirmation.delete_app_warn".localized, attributes: [NSAttributedStringKey.foregroundColor: ConfirmationTheme.textColor, NSAttributedStringKey.font: ConfirmationTheme.regularFont]))
 
         let buttonItem = ConfirmationButtonItem(tag: confirmItems.count, required: true, onTap: {
             self.dismiss?(true)

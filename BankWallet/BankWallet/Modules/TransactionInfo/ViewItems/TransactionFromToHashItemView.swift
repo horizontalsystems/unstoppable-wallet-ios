@@ -7,17 +7,18 @@ class TransactionFromToHashItemView: BaseActionItemView {
 
     var titleLabel = UILabel()
     var valueLabel = UILabel()
-    var avatarImageView = UIImageView(image: UIImage(named: "Transaction Info Avatar Placeholder"))
+    var avatarImageView = UIImageView(image: UIImage(named: "Transaction Info Avatar Placeholder")?.tinted(with: TransactionInfoTheme.hashButtonIconColor))
 
     override var item: TransactionFromToHashItem? { return _item as? TransactionFromToHashItem
     }
 
     override func initView() {
         super.initView()
-        backgroundColor = TransactionInfoTheme.titleBackground
 
-        titleLabel.font = TransactionInfoTheme.usualFont
-        titleLabel.textColor = TransactionInfoTheme.usualColor
+        backgroundColor = TransactionInfoTheme.itemBackground
+
+        titleLabel.font = TransactionInfoTheme.itemTitleFont
+        titleLabel.textColor = TransactionInfoTheme.itemTitleColor
         titleLabel.setContentHuggingPriority(.defaultLow, for: .horizontal)
         titleLabel.setContentCompressionResistancePriority(.required, for: .horizontal)
         addSubview(titleLabel)
@@ -29,16 +30,16 @@ class TransactionFromToHashItemView: BaseActionItemView {
         let wrapperView = RespondButton()
         wrapperView.titleLabel.removeFromSuperview()
         wrapperView.onTap = item?.onHashTap
-        wrapperView.backgrounds = [RespondButton.State.active: TransactionInfoTheme.hashBackground, RespondButton.State.selected: TransactionInfoTheme.hashBackgroundSelected]
-        wrapperView.borderColor = TransactionInfoTheme.hashWrapperBorderColor
+        wrapperView.backgrounds = [RespondButton.State.active: TransactionInfoTheme.hashButtonBackground, RespondButton.State.selected: TransactionInfoTheme.hashButtonBackgroundSelected]
+        wrapperView.borderColor = TransactionInfoTheme.hashButtonBorderColor
         wrapperView.borderWidth = 1 / UIScreen.main.scale
-        wrapperView.cornerRadius = TransactionInfoTheme.hashCornerRadius
+        wrapperView.cornerRadius = TransactionInfoTheme.hashButtonCornerRadius
         addSubview(wrapperView)
         wrapperView.snp.makeConstraints { maker in
             maker.leading.equalTo(self.titleLabel.snp.trailing).offset(TransactionInfoTheme.largeMargin)
             maker.centerY.equalToSuperview()
             maker.trailing.equalToSuperview().offset(-TransactionInfoTheme.regularMargin)
-            maker.height.equalTo(TransactionInfoTheme.hashBackgroundHeight)
+            maker.height.equalTo(TransactionInfoTheme.hashButtonHeight)
         }
 
         wrapperView.addSubview(avatarImageView)
@@ -47,8 +48,8 @@ class TransactionFromToHashItemView: BaseActionItemView {
             maker.centerY.equalToSuperview()
         }
 
-        valueLabel.font = TransactionInfoTheme.usualFont
-        valueLabel.textColor = TransactionInfoTheme.hashColor
+        valueLabel.font = TransactionInfoTheme.itemTitleFont
+        valueLabel.textColor = TransactionInfoTheme.hashButtonTextColor
         valueLabel.lineBreakMode = .byTruncatingMiddle
         wrapperView.addSubview(valueLabel)
         valueLabel.snp.makeConstraints { maker in

@@ -49,6 +49,9 @@ class SendInteractorTests: XCTestCase {
             when(mock.validate(address: any())).thenDoNothing()
             when(mock.fee(for: any(), address: any(), senderPay: any())).thenReturn(0)
         }
+        stub(mockPasteboardManager) { mock in
+            when(mock.set(value: any())).thenDoNothing()
+        }
 
         initInteractor()
     }
@@ -347,6 +350,14 @@ class SendInteractorTests: XCTestCase {
         let state = interactor.state(forUserInput: input)
 
         XCTAssertEqual(state.feeCurrencyValue, CurrencyValue(currency: baseCurrency, value: fee * rateValue))
+    }
+
+    func testCopyAddress() {
+        let address = "some_address"
+
+        interactor.copy(address: address)
+
+        verify(mockPasteboardManager).set(value: equal(to: address))
     }
 
 }
