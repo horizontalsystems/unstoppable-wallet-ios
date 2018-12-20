@@ -19,13 +19,14 @@ lane :dev do |options|
 end
 
 def prepare_environment
-  sh("pwd")
-
   sh("rm -rf ~/Library/Developer/Xcode/Archives/**")
   sh("rm -rf ~/Library/MobileDevice/Provisioning\\ Profiles/**")
 
   reset_git_repo(force: true)
   clear_derived_data
+
+  sh("cp ../BankWallet/BankWallet/Configuration/Development.template.xcconfig ../BankWallet/BankWallet/Configuration/Development.xcconfig")
+  sh("cp ../BankWallet/BankWallet/Configuration/Production.template.xcconfig ../BankWallet/BankWallet/Configuration/Production.xcconfig")
 
   increment_build_number(
       build_number: ENV['BUILD_NUMBER'],
