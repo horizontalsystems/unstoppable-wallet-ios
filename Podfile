@@ -6,7 +6,7 @@ inhibit_all_warnings!
 project 'BankWallet/BankWallet'
 
 def appPods
-  pod 'HSBitcoinKit'
+  pod 'HSBitcoinKit', git: 'https://github.com/horizontalsystems/bitcoin-kit-ios/', branch: 'develop'
   pod 'HSEthereumKit'
 
   pod 'Alamofire'
