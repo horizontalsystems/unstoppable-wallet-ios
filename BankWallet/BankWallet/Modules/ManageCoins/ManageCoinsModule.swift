@@ -2,6 +2,7 @@ import Foundation
 
 protocol IManageCoinsView: class {
     func showCoins(enabled: [Coin], disabled: [Coin])
+    func show(error: String)
 }
 
 protocol IManageCoinsViewDelegate {
@@ -19,6 +20,8 @@ protocol IManageCoinsInteractor {
 
 protocol IManageCoinsInteractorDelegate: class {
     func didLoadCoins(all: [Coin], enabled: [Coin])
+    func didSaveCoins()
+    func didFailToSaveCoins()
 }
 
 protocol IManageCoinsRouter {
@@ -29,7 +32,7 @@ protocol IManageCoinsPresenterState {
     var allCoins: [Coin] { get set }
     var enabledCoins: [Coin] { get set }
     var disabledCoins: [Coin] { get }
-    func add(coin: Coin)
-    func remove(coin: Coin)
+    func enable(coin: Coin)
+    func disable(coin: Coin)
     func move(coin: Coin, to index: Int)
 }

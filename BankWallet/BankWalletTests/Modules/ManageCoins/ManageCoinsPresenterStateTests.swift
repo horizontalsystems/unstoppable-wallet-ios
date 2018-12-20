@@ -41,19 +41,19 @@ class ManageCoinsPresenterStateTests: XCTestCase {
         super.tearDown()
     }
 
-    func testAdd() {
+    func testEnable() {
         state.allCoins = allCoins
         state.enabledCoins = enabledCoins
 
-        state.add(coin: bitcoinCash)
+        state.enable(coin: bitcoinCash)
         XCTAssertEqual(state.enabledCoins, [bitcoin, ethereum, bitcoinCash])
     }
 
-    func testRemove() {
+    func testDisable() {
         state.allCoins = allCoins
         state.enabledCoins = enabledCoins
 
-        state.remove(coin: bitcoin)
+        state.disable(coin: bitcoin)
         XCTAssertEqual(state.enabledCoins, [ethereum])
     }
 

@@ -45,6 +45,7 @@ class ManageCoinsPresenterTests: XCTestCase {
 
         stub(mockView) { mock in
             when(mock.showCoins(enabled: any(), disabled: any())).thenDoNothing()
+            when(mock.show(error: any())).thenDoNothing()
         }
         stub(mockRouter) { mock in
             when(mock.close()).thenDoNothing()
@@ -59,8 +60,8 @@ class ManageCoinsPresenterTests: XCTestCase {
             when(mock.enabledCoins.get).thenReturn(enabledCoins)
             when(mock.enabledCoins.set(any())).thenDoNothing()
             when(mock.disabledCoins.get).thenReturn(disabledCoins)
-            when(mock.add(coin: any())).thenDoNothing()
-            when(mock.remove(coin: any())).thenDoNothing()
+            when(mock.enable(coin: any())).thenDoNothing()
+            when(mock.disable(coin: any())).thenDoNothing()
             when(mock.move(coin: any(), to: any())).thenDoNothing()
         }
 
@@ -93,7 +94,7 @@ class ManageCoinsPresenterTests: XCTestCase {
         let coinToEnable: Coin = bitcoinCash
 
         presenter.enable(coin: coinToEnable)
-        verify(mockState).add(coin: equal(to: coinToEnable))
+        verify(mockState).enable(coin: equal(to: coinToEnable))
         verify(mockView).showCoins(enabled: equal(to: enabledCoins), disabled: equal(to: disabledCoins))
     }
 
@@ -101,7 +102,7 @@ class ManageCoinsPresenterTests: XCTestCase {
         let coinToDisable = bitcoinCash!
 
         presenter.disable(coin: coinToDisable)
-        verify(mockState).remove(coin: equal(to: coinToDisable))
+        verify(mockState).disable(coin: equal(to: coinToDisable))
         verify(mockView).showCoins(enabled: equal(to: enabledCoins), disabled: equal(to: disabledCoins))
     }
 
@@ -115,7 +116,16 @@ class ManageCoinsPresenterTests: XCTestCase {
     func testSaveEnabledCoins() {
         presenter.saveChanges()
         verify(mockInteractor).save(enabledCoins: equal(to: enabledCoins))
+    }
+
+    func testDidSaveCoins() {
+        presenter.didSaveCoins()
         verify(mockRouter).close()
+    }
+
+    func testDidFailToSaveCoins() {
+        presenter.didFailToSaveCoins()
+        verify(mockView).show(error: "manage_coins.fail_to_save")
     }
 
 }

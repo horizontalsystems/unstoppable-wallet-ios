@@ -31,4 +31,8 @@ extension ManageCoinsViewController: IManageCoinsView {
 
     }
 
+    func show(error: String) {
+
+    }
+
 }

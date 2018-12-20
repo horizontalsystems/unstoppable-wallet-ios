@@ -7,18 +7,18 @@ class ManageCoinsPresenterState: IManageCoinsPresenterState {
         return disabledCoins
     }
 
-    func add(coin: Coin) {
+    func enable(coin: Coin) {
         enabledCoins.append(coin)
     }
 
-    func remove(coin: Coin) {
+    func disable(coin: Coin) {
         if let index = enabledCoins.firstIndex(of: coin) {
             enabledCoins.remove(at: index)
         }
     }
 
     func move(coin: Coin, to index: Int) {
-        remove(coin: coin)
+        disable(coin: coin)
         enabledCoins.insert(coin, at: index)
     }
 

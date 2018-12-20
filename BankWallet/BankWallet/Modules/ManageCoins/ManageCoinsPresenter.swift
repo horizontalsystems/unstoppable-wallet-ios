@@ -17,14 +17,23 @@ class ManageCoinsPresenter {
     private func updateCoins() {
         view?.showCoins(enabled: state.enabledCoins, disabled: state.disabledCoins)
     }
+
 }
 
 extension ManageCoinsPresenter: IManageCoinsInteractorDelegate {
 
-    public func didLoadCoins(all: [Coin], enabled: [Coin]) {
+    func didLoadCoins(all: [Coin], enabled: [Coin]) {
         state.allCoins = all
         state.enabledCoins = enabled
         updateCoins()
+    }
+
+    func didSaveCoins() {
+        router.close()
+    }
+
+    func didFailToSaveCoins() {
+        view?.show(error: "manage_coins.fail_to_save")
     }
 
 }
@@ -36,12 +45,12 @@ extension ManageCoinsPresenter: IManageCoinsViewDelegate {
     }
 
     func enable(coin: Coin) {
-        state.add(coin: coin)
+        state.enable(coin: coin)
         updateCoins()
     }
 
     func disable(coin: Coin) {
-        state.remove(coin: coin)
+        state.disable(coin: coin)
         updateCoins()
     }
 
