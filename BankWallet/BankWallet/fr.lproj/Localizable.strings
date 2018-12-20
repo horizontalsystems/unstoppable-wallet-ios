@@ -164,7 +164,7 @@
 
 "unlock_pin.info" = "Entrez PIN";
 "unlock_pin.cant_save_pin" = "Oops! Nous ne pouvons pas enregistrer votre Pin, veuillez nous contacter au plus vite!";
-"unlock_pin.blocked_until" = "Disabled until: %@";
+"unlock_pin.blocked_until" = "Désactivé jusqu'à: %@";
 
 //NumPad
 
