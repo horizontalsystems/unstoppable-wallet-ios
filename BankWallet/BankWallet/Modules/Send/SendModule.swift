@@ -13,6 +13,7 @@ protocol ISendView: class {
     func set(sendButtonEnabled: Bool)
 
     func showConfirmation(viewItem: SendConfirmationViewItem)
+    func showCopied()
     func show(error: Error)
     func dismissWithSuccess()
 }
@@ -29,6 +30,8 @@ protocol ISendViewDelegate {
 
     func onSendClicked()
     func onConfirmClicked()
+
+    func onCopyAddress()
 }
 
 protocol ISendInteractor {
@@ -38,6 +41,7 @@ protocol ISendInteractor {
     func convertedAmount(forInputType inputType: SendInputType, amount: Double) -> Double?
     func state(forUserInput input: SendUserInput) -> SendState
 
+    func copy(address: String)
     func send(userInput: SendUserInput)
 }
 

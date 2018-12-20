@@ -41,6 +41,9 @@ extension SendRouter {
         view.onShowConfirmation = { viewItem in
             let model = SendConfirmationAlertModel(viewItem: viewItem)
 
+            model.onCopyAddress = {
+                view.onCopyAddress?()
+            }
 
             let confirmationController = ActionSheetController(withModel: model, actionSheetThemeConfig: SendTheme.confirmationSheetConfig)
             confirmationController.backgroundColor = .crypto_Dark_Bars
