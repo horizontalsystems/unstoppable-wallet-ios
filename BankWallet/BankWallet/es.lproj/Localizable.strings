@@ -21,7 +21,7 @@
 // Guest Page
 
 "guest.title" = "Bank Wallet";
-"guest.subtitle" = "Decentralized App";
+"guest.subtitle" = "Decentralized app";
 "guest.create_wallet" = "New Wallet";
 "guest.restore_wallet" = "Restore Wallet";
 
