@@ -25,7 +25,7 @@ class DepositAddressCollectionCell: UICollectionViewCell {
             maker.centerY.equalTo(self.iconImageView.snp.centerY)
         }
 
-        separatorView.backgroundColor = .cryptoLightGray
+        separatorView.backgroundColor = .cryptoSteel20
         contentView.addSubview(separatorView)
         separatorView.snp.makeConstraints { maker in
             maker.top.equalTo(self.iconImageView.snp.bottom).offset(DepositTheme.iconMargin)
@@ -57,7 +57,7 @@ class DepositAddressCollectionCell: UICollectionViewCell {
     }
 
     func bind(address: AddressItem) {
-        iconImageView.image = UIImage(named: "\(address.coinCode) Icon")
+        iconImageView.image = UIImage(named: "\(address.coinCode) Icon")?.tinted(with: DepositTheme.iconTintColor)
         titleLabel.text = "deposit.receive_coin".localized(address.coinCode)
         qrCodeImageView.backgroundColor = .lightGray
         addressLabel.text = address.address

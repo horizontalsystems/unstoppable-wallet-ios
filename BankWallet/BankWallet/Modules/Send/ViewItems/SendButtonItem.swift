@@ -20,6 +20,7 @@ class SendButtonItem: BaseButtonItem {
             self?.onClicked?()
         }
         height = SendTheme.sendHeight
+        showSeparator = false
     }
 
 //    override func changeHeight(for: CGFloat) -> Bool {

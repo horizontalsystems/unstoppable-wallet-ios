@@ -30,6 +30,8 @@ class SendAmountItemView: BaseActionItemView {
     override func initView() {
         super.initView()
 
+        backgroundColor = SendTheme.itemBackground
+
         addSubview(amountTypeLabel)
         addSubview(lineView)
         addSubview(inputField)
@@ -55,7 +57,7 @@ class SendAmountItemView: BaseActionItemView {
         inputField.delegate = self
         inputField.font = SendTheme.amountFont
         inputField.textColor = SendTheme.amountColor
-        inputField.placeholder = "send.amount_placeholder".localized
+        inputField.attributedPlaceholder = NSAttributedString(string: "send.amount_placeholder".localized, attributes: [NSAttributedStringKey.foregroundColor: SendTheme.amountPlaceholderColor])
         inputField.keyboardAppearance = AppTheme.keyboardAppearance
         inputField.keyboardType = .decimalPad
         inputField.tintColor = SendTheme.amountInputTintColor
@@ -69,7 +71,7 @@ class SendAmountItemView: BaseActionItemView {
         switchButton.borderWidth = 1 / UIScreen.main.scale
         switchButton.borderColor = SendTheme.buttonBorderColor
         switchButton.cornerRadius = SendTheme.buttonCornerRadius
-        switchButton.backgrounds = ButtonTheme.grayBackgroundDictionary
+        switchButton.backgrounds = SendTheme.buttonBackground
         switchButton.snp.makeConstraints { maker in
             maker.trailing.equalToSuperview().offset(-SendTheme.margin)
             maker.centerY.equalTo(lineView.snp.centerY)
@@ -78,7 +80,6 @@ class SendAmountItemView: BaseActionItemView {
         }
 
         switchButtonIcon.image = UIImage(named: "Send Switch Icon")
-        switchButtonIcon.tintColor = SendTheme.buttonIconColor
         switchButtonIcon.snp.makeConstraints { maker in
             maker.center.equalToSuperview()
         }

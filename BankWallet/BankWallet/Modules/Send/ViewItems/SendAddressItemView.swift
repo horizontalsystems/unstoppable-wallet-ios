@@ -18,6 +18,8 @@ class SendAddressItemView: BaseActionItemView {
     override func initView() {
         super.initView()
 
+        backgroundColor = SendTheme.itemBackground
+
         addSubview(addressWrapperView)
         addressWrapperView.addSubview(addressLabel)
         addressWrapperView.addSubview(errorLabel)
@@ -36,7 +38,8 @@ class SendAddressItemView: BaseActionItemView {
         pasteButton.borderWidth = 1 / UIScreen.main.scale
         pasteButton.borderColor = SendTheme.buttonBorderColor
         pasteButton.cornerRadius = SendTheme.buttonCornerRadius
-        pasteButton.backgrounds = ButtonTheme.grayBackgroundDictionary
+        pasteButton.backgrounds = SendTheme.buttonBackground
+        pasteButton.textColors = [.active: SendTheme.buttonIconColor, .selected: SendTheme.buttonIconColor]
         pasteButton.titleLabel.text = "send.paste_button".localized
         pasteButton.titleLabel.font = SendTheme.buttonFont
         pasteButton.titleLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
@@ -54,14 +57,14 @@ class SendAddressItemView: BaseActionItemView {
         scanButton.borderWidth = 1 / UIScreen.main.scale
         scanButton.borderColor = SendTheme.buttonBorderColor
         scanButton.cornerRadius = SendTheme.buttonCornerRadius
-        scanButton.backgrounds = ButtonTheme.grayBackgroundDictionary
+        scanButton.backgrounds = SendTheme.buttonBackground
         scanButton.snp.makeConstraints { maker in
             maker.trailing.equalTo(pasteButton.snp.leading).offset(-SendTheme.smallMargin)
             maker.centerY.equalTo(pasteButton.snp.centerY)
             maker.size.equalTo(SendTheme.buttonSize)
         }
 
-        scanButtonIcon.image = UIImage(named: "Send Scan Icon")
+        scanButtonIcon.image = UIImage(named: "Send Scan Icon")?.tinted(with: SendTheme.buttonIconColor)
         scanButtonIcon.snp.makeConstraints { maker in
             maker.center.equalToSuperview()
         }
@@ -69,7 +72,7 @@ class SendAddressItemView: BaseActionItemView {
         deleteButton.borderWidth = 1 / UIScreen.main.scale
         deleteButton.borderColor = SendTheme.buttonBorderColor
         deleteButton.cornerRadius = SendTheme.buttonCornerRadius
-        deleteButton.backgrounds = ButtonTheme.grayBackgroundDictionary
+        deleteButton.backgrounds = SendTheme.buttonBackground
         deleteButton.snp.makeConstraints { maker in
             maker.trailing.equalToSuperview().offset(-SendTheme.margin)
             maker.top.equalToSuperview().offset(SendTheme.margin)
@@ -77,7 +80,7 @@ class SendAddressItemView: BaseActionItemView {
             maker.size.equalTo(SendTheme.buttonSize)
         }
 
-        deleteButtonIcon.image = UIImage(named: "Send Delete Icon")
+        deleteButtonIcon.image = UIImage(named: "Send Delete Icon")?.tinted(with: SendTheme.buttonIconColor)
         deleteButtonIcon.snp.makeConstraints { maker in
             maker.center.equalToSuperview()
         }

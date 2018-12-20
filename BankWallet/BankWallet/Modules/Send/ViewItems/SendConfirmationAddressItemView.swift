@@ -12,6 +12,8 @@ class SendConfirmationAddressItemView: BaseActionItemView {
     override func initView() {
         super.initView()
 
+        backgroundColor = SendTheme.itemBackground
+
         let wrapperView = RespondButton()
         wrapperView.onTap = item?.onHashTap
         wrapperView.backgrounds = [RespondButton.State.active: SendTheme.hashBackground, RespondButton.State.selected: SendTheme.hashBackgroundSelected]
