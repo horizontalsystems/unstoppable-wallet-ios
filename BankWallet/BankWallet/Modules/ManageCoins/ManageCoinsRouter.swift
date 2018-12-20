@@ -14,7 +14,7 @@ extension ManageCoinsRouter: IManageCoinsRouter {
 
 extension ManageCoinsRouter {
 
-    static func module() -> UIViewController {
+    static func module(from presentingController: UIViewController?) {
         let router = ManageCoinsRouter()
         let interactor = ManageCoinsInteractor()
         let presenter = ManageCoinsPresenter(interactor: interactor, router: router, state: ManageCoinsPresenterState())
@@ -23,7 +23,7 @@ extension ManageCoinsRouter {
         interactor.delegate = presenter
         router.viewController = viewController
 
-        return viewController
+        presentingController?.present(WalletNavigationController(rootViewController: viewController), animated: true)
     }
 
 }

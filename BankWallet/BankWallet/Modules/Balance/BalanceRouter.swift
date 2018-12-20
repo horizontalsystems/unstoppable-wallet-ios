@@ -16,6 +16,10 @@ extension BalanceRouter: IBalanceRouter {
         }
     }
 
+    func openManageCoins() {
+        ManageCoinsRouter.module(from: viewController)
+    }
+
 }
 
 extension BalanceRouter {
