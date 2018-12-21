@@ -3649,7 +3649,7 @@
 			buildSettings = {
 				PRODUCT_BUNDLE_IDENTIFIER = "io.horizontalsystems.bank-wallet.dev.testnet";
 				PRODUCT_NAME = "Bank Dev T";
-				PROVISIONING_PROFILE_SPECIFIER = "BankWallet Dev Testnet Development";
+				PROVISIONING_PROFILE_SPECIFIER = "io.horizontalsystems.bank-wallet.dev.testnet Dev";
 				TestMode = true;
 			};
 			name = Debug;
@@ -3660,7 +3660,7 @@
 			buildSettings = {
 				PRODUCT_BUNDLE_IDENTIFIER = "io.horizontalsystems.bank-wallet.dev.testnet";
 				PRODUCT_NAME = "Bank Dev T";
-				PROVISIONING_PROFILE_SPECIFIER = "BankWallet Dev Testnet AdHoc";
+				PROVISIONING_PROFILE_SPECIFIER = "io.horizontalsystems.bank-wallet.dev.testnet AdHoc";
 				TestMode = true;
 			};
 			name = Release;
@@ -3717,7 +3717,7 @@
 			buildSettings = {
 				PRODUCT_BUNDLE_IDENTIFIER = "io.horizontalsystems.bank-wallet.dev";
 				PRODUCT_NAME = "Bank Dev";
-				PROVISIONING_PROFILE_SPECIFIER = "BankWallet Dev Development";
+				PROVISIONING_PROFILE_SPECIFIER = "io.horizontalsystems.bank-wallet.dev Dev";
 				TestMode = false;
 			};
 			name = Debug;
@@ -3728,7 +3728,7 @@
 			buildSettings = {
 				PRODUCT_BUNDLE_IDENTIFIER = "io.horizontalsystems.bank-wallet.dev";
 				PRODUCT_NAME = "Bank Dev";
-				PROVISIONING_PROFILE_SPECIFIER = "BankWallet Dev AdHoc";
+				PROVISIONING_PROFILE_SPECIFIER = "io.horizontalsystems.bank-wallet.dev AdHoc";
 				TestMode = false;
 			};
 			name = Release;
@@ -3739,7 +3739,7 @@
 			buildSettings = {
 				PRODUCT_BUNDLE_IDENTIFIER = "io.horizontalsystems.bank-wallet";
 				PRODUCT_NAME = Bank;
-				PROVISIONING_PROFILE_SPECIFIER = "BankWallet Development";
+				PROVISIONING_PROFILE_SPECIFIER = "io.horizontalsystems.bank-wallet Dev";
 				TestMode = false;
 			};
 			name = Debug;
@@ -3750,7 +3750,7 @@
 			buildSettings = {
 				PRODUCT_BUNDLE_IDENTIFIER = "io.horizontalsystems.bank-wallet";
 				PRODUCT_NAME = Bank;
-				PROVISIONING_PROFILE_SPECIFIER = "BankWallet AppStore";
+				PROVISIONING_PROFILE_SPECIFIER = "io.horizontalsystems.bank-wallet AppStore";
 				TestMode = false;
 			};
 			name = Release;
