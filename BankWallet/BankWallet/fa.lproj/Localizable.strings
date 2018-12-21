@@ -173,7 +173,7 @@
 "edit_pin.title" = "پین را ویرایش کنید";
 "edit_pin.unlock_info" = "پين حال را وارد كنيد";
 "edit_pin.new_pin_info" = "پین جدید را وارد کنید";
-"edit_pin.confirm_info" = "دوباره وارد كنيد براي تاييد";
+"edit_pin.confirm_info" = "Enter again";
 
 // Unlock PIN
 
