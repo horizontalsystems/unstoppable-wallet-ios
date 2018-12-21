@@ -3542,7 +3542,7 @@
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = 72234W6E3D;
+				DEVELOPMENT_TEAM = HC4MCAXJ66;
 				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -3615,7 +3615,7 @@
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = 72234W6E3D;
+				DEVELOPMENT_TEAM = HC4MCAXJ66;
 				ENABLE_BITCODE = NO;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -3649,7 +3649,7 @@
 			buildSettings = {
 				PRODUCT_BUNDLE_IDENTIFIER = "io.horizontalsystems.bank-wallet.dev.testnet";
 				PRODUCT_NAME = "Bank Dev T";
-				PROVISIONING_PROFILE_SPECIFIER = "io.horizontalsystems.bank-wallet.dev.testnet Dev";
+				PROVISIONING_PROFILE_SPECIFIER = "BankWallet Dev Testnet Development";
 				TestMode = true;
 			};
 			name = Debug;
@@ -3660,7 +3660,7 @@
 			buildSettings = {
 				PRODUCT_BUNDLE_IDENTIFIER = "io.horizontalsystems.bank-wallet.dev.testnet";
 				PRODUCT_NAME = "Bank Dev T";
-				PROVISIONING_PROFILE_SPECIFIER = "io.horizontalsystems.bank-wallet.dev.testnet AdHoc";
+				PROVISIONING_PROFILE_SPECIFIER = "BankWallet Dev Testnet AdHoc";
 				TestMode = true;
 			};
 			name = Release;
@@ -3717,7 +3717,7 @@
 			buildSettings = {
 				PRODUCT_BUNDLE_IDENTIFIER = "io.horizontalsystems.bank-wallet.dev";
 				PRODUCT_NAME = "Bank Dev";
-				PROVISIONING_PROFILE_SPECIFIER = "io.horizontalsystems.bank-wallet.dev Dev";
+				PROVISIONING_PROFILE_SPECIFIER = "BankWallet Dev Development";
 				TestMode = false;
 			};
 			name = Debug;
@@ -3728,7 +3728,7 @@
 			buildSettings = {
 				PRODUCT_BUNDLE_IDENTIFIER = "io.horizontalsystems.bank-wallet.dev";
 				PRODUCT_NAME = "Bank Dev";
-				PROVISIONING_PROFILE_SPECIFIER = "io.horizontalsystems.bank-wallet.dev AdHoc";
+				PROVISIONING_PROFILE_SPECIFIER = "BankWallet Dev AdHoc";
 				TestMode = false;
 			};
 			name = Release;
@@ -3739,7 +3739,7 @@
 			buildSettings = {
 				PRODUCT_BUNDLE_IDENTIFIER = "io.horizontalsystems.bank-wallet";
 				PRODUCT_NAME = Bank;
-				PROVISIONING_PROFILE_SPECIFIER = "io.horizontalsystems.bank-wallet Dev";
+				PROVISIONING_PROFILE_SPECIFIER = "BankWallet Development";
 				TestMode = false;
 			};
 			name = Debug;
@@ -3750,7 +3750,7 @@
 			buildSettings = {
 				PRODUCT_BUNDLE_IDENTIFIER = "io.horizontalsystems.bank-wallet";
 				PRODUCT_NAME = Bank;
-				PROVISIONING_PROFILE_SPECIFIER = "io.horizontalsystems.bank-wallet AppStore";
+				PROVISIONING_PROFILE_SPECIFIER = "BankWallet AppStore";
 				TestMode = false;
 			};
 			name = Release;

@@ -30,8 +30,8 @@ class TransactionRecordDataSource {
     static func results(realmFactory: IRealmFactory, coinCode: CoinCode?) -> Results<TransactionRecord> {
         var results = realmFactory.realm.objects(TransactionRecord.self).sorted(byKeyPath: "timestamp", ascending: false)
 
-        if let coin = coinCode {
-            results = results.filter("coin = %@", coin)
+        if let coinCode = coinCode {
+            results = results.filter("coinCode = %@", coinCode)
         }
 
         return results
