@@ -173,7 +173,7 @@
 "edit_pin.title" = "PİN'i değiştir";
 "edit_pin.unlock_info" = "Şu an kullandığınız PİN'i girin";
 "edit_pin.new_pin_info" = "Yeni PİN gerin";
-"edit_pin.confirm_info" = "Onaylamak için tekrar girin";
+"edit_pin.confirm_info" = "Enter again";
 
 // Unlock PIN
 
