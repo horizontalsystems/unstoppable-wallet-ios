@@ -1,32 +1,25 @@
-import Foundation
 import GrouviActionSheet
 
 class TransactionStatusItem: BaseActionItem {
+    let title: String
+    var icon: UIImage?
+    var confirmations: Int?
 
-    var title: String?
-    var value: String?
-    var valueImage: UIImage?
-    var valueImageTintColor: UIColor?
-    var progress: Double?
-
-    init(item: TransactionViewItem, tag: Int? = nil, hidden: Bool = false, required: Bool = false) {
-        super.init(cellType: TransactionStatusItemView.self, tag: tag, hidden: hidden, required: required)
-
+    init(item: TransactionViewItem, tag: Int? = nil) {
         title = "tx_info.status".localized
+
+        super.init(cellType: TransactionStatusItemView.self, tag: tag, required: true)
 
         switch item.status {
         case .pending:
-            value = "tx_info.pending".localized
-            valueImage = UIImage(named: "Transaction Processing Icon")
-            valueImageTintColor = TransactionInfoTheme.processingIconTintColor
-        case .processing(let progress):
-            value = "tx_info.processing".localized("\(Int(progress * 100))%")
-            self.progress = progress
+            icon = UIImage(named: "Transaction Info Pending Icon")
+        case .processing(let confirmations):
+            self.confirmations = confirmations
         case .completed:
-            value = "tx_info.completed".localized
-            valueImage = UIImage(named: "Transaction Success Icon")
-            valueImageTintColor = TransactionInfoTheme.successIconTintColor
+            icon = UIImage(named: "Transaction Info Completed Icon")
         }
+
+        height = TransactionInfoTheme.itemHeight
     }
 
 }

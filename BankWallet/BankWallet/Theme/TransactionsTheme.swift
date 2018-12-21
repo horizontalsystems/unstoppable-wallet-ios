@@ -7,7 +7,7 @@ class TransactionsTheme {
     static var dateLabelTextColor: UIColor { return .crypto_Silver_Black }
     static var dateLabelTextColor50: UIColor { return .crypto_Silver_Dark50 }
     static let statusLabelTextColor = UIColor.gray
-    static let amountLabelFont = UIFont.cryptoTitle4
+    static let currencyAmountLabelFont: UIFont = .systemFont(ofSize: 22, weight: .semibold)
     static let incomingTextColor = UIColor.cryptoGreen
     static let incomingTextColor50 = UIColor.cryptoGreen50
     static let outgoingTextColor = UIColor.cryptoYellow
@@ -20,11 +20,11 @@ class TransactionsTheme {
     static let cellMicroMargin: CGFloat = 3
     static let cellMilliMargin: CGFloat = 4
     static let separatorColor = UIColor.cryptoSteel20
-    static let fiatAmountLabelFont = UIFont.cryptoCaption1
+    static let amountLabelFont = UIFont.cryptoCaption1
     static let fiatAmountLabelColor = UIColor.cryptoGray
     static let fiatAmountLabelColor50 = UIColor.cryptoGray50
     static let statusImageViewSize = CGSize(width: 13, height: 12)
-    static let statusTopMargin: CGFloat = 13
+    static let pendingIconTopMargin: CGFloat = 20
     static let leftAdditionalMargin: CGFloat = 8
     static let avatarSize = CGSize(width: 40, height: 40)
     static let timeLabelFont = UIFont.cryptoCaption1
@@ -32,5 +32,9 @@ class TransactionsTheme {
     static let timeLabelTextColor = UIColor.cryptoGray
     static let timeLabelTextColor50 = UIColor.cryptoGray50
     static let pendingStatusIconTransparency: CGFloat = 0.5
-    static let completeStatusIconTransparency: CGFloat = 1
+
+    static let barsProgressHeight: CGFloat = 10
+    static let barsProgressBarWidth: CGFloat = 2
+    static let barsProgressColor: UIColor = .cryptoGray
+    static let barsProgressInactiveColor: UIColor = .cryptoSteel20
 }

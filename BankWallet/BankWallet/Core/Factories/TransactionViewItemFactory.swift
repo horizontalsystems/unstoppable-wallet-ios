@@ -40,7 +40,7 @@ extension TransactionViewItemFactory: ITransactionViewItemFactory {
             if confirmations >= threshold {
                 status = .completed
             } else {
-                status = .processing(progress: Double(confirmations) / Double(threshold))
+                status = .processing(confirmations: confirmations)
             }
         }
 

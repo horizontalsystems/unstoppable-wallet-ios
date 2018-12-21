@@ -227,8 +227,8 @@ class TransactionViewItemFactoryTests: XCTestCase {
 
         let item = factory.item(fromRecord: record)
 
-        let expectedProgress = 0.5
-        XCTAssertEqual(item.status, TransactionStatus.processing(progress: expectedProgress))
+        let expectedConfirmations = 3
+        XCTAssertEqual(item.status, TransactionStatus.processing(confirmations: expectedConfirmations))
     }
 
     func testStatus_Completed() {

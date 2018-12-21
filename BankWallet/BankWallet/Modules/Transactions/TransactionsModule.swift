@@ -2,7 +2,7 @@ import RealmSwift
 
 enum TransactionStatus {
     case pending
-    case processing(progress: Double)
+    case processing(confirmations: Int)
     case completed
 }
 
@@ -11,7 +11,7 @@ extension TransactionStatus: Equatable {
     public static func ==(lhs: TransactionStatus, rhs: TransactionStatus) -> Bool {
         switch (lhs, rhs) {
         case (.pending, .pending): return true
-        case (let .processing(lhsProgress), let .processing(rhsProgress)): return lhsProgress == rhsProgress
+        case (let .processing(lhsConfirmations), let .processing(rhsConfirmations)): return lhsConfirmations == rhsConfirmations
         case (.completed, .completed): return true
         default: return false
         }

@@ -89,12 +89,10 @@ Go to Settings - > Bank and allow access to Camera.";
 // Transaction Info
 
 "tx_info.title" = "Transaction";
-"tx_info.pending" = "Pending";
-"tx_info.processing" = "Processing %@";
-"tx_info.completed" = "Completed";
-"tx_info.status" = "Status:";
-"tx_info.from_hash" = "From:";
-"tx_info.to_hash" = "To:";
+"tx_info.time" = "Time";
+"tx_info.status" = "Status";
+"tx_info.from_hash" = "From";
+"tx_info.to_hash" = "To";
 "tx_info.alert_close" = "Close";
 "tx_info.button_more" = "Full Info";
 
