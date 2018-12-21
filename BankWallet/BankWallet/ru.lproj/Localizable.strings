@@ -173,7 +173,7 @@
 "edit_pin.title" = "Изменить PIN-код";
 "edit_pin.unlock_info" = "Введите текущий PIN-код";
 "edit_pin.new_pin_info" = "Введите новый PIN-код";
-"edit_pin.confirm_info" = "Введите еще раз для подтверждения";
+"edit_pin.confirm_info" = "Enter again";
 
 // Unlock PIN
 
