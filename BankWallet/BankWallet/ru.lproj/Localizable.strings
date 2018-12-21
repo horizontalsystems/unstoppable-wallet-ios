@@ -99,7 +99,7 @@
 // Full Info
 "full_info.title" = "Full Info";
 "full_info.id" = "ID";
-"full_info.status" = "Status";
+"full_info.status" = "Статус";
 "full_info.time" = "Time";
 "full_info.block" = "Block";
 "full_info.confirmations" = "Confirmations";
