@@ -87,12 +87,10 @@
 // Transaction Info
 
 "tx_info.title" = "Transaction";
-"tx_info.pending" = "En attente";
-"tx_info.processing" = "Traitement en cours %@";
-"tx_info.completed" = "Terminé";
-"tx_info.status" = "État :";
-"tx_info.from_hash" = "De:";
-"tx_info.to_hash" = "À:";
+"tx_info.time" = "Time";
+"tx_info.status" = "Status";
+"tx_info.from_hash" = "From";
+"tx_info.to_hash" = "To";
 "tx_info.alert_close" = "Fermer";
 "tx_info.button_more" = "Full Info";
 
