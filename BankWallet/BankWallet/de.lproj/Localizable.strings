@@ -173,7 +173,7 @@
 "edit_pin.title" = "PIN bearbeiten";
 "edit_pin.unlock_info" = "Gib derzeitige PIN ein";
 "edit_pin.new_pin_info" = "Gib neue PIN ein";
-"edit_pin.confirm_info" = "Zum Bestätigen nochmal eingeben";
+"edit_pin.confirm_info" = "Enter again";
 
 // Unlock PIN
 
