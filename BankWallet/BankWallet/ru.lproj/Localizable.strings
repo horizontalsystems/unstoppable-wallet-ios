@@ -87,12 +87,10 @@
 // Transaction Info
 
 "tx_info.title" = "Транзакция";
-"tx_info.pending" = "Ожидание";
-"tx_info.processing" = "Обработка %@";
-"tx_info.completed" = "Завершено";
-"tx_info.status" = "Статус:";
-"tx_info.from_hash" = "От:";
-"tx_info.to_hash" = "Кому:";
+"tx_info.time" = "Time";
+"tx_info.status" = "Status";
+"tx_info.from_hash" = "From";
+"tx_info.to_hash" = "To";
 "tx_info.alert_close" = "Закрыть";
 "tx_info.button_more" = "Full Info";
 
