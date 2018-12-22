@@ -57,19 +57,19 @@
 "balance.tab_bar_item" = "Saldo";
 "balance.send" = "Enviar";
 "balance.deposit" = "Recibir";
-"balance.rate_per_coin" = "%@ per %@";
-"balance.syncing_percent" = "Syncing %@";
+"balance.rate_per_coin" = "%@ PER %@";
+"balance.syncing_percent" = "Sincronizando %@";
 
 // Deposit
 
-"deposit.receive_coin" = "Receive %@";
+"deposit.receive_coin" = "Recibir %@";
 "deposit.alert_copy" = "Copiar";
 
 // Send
 
-"send.title" = "Send %@";
+"send.title" = "Enviar %@";
 "send.address_placeholder" = "Dirección";
-"send.amount_error.balance" = "Balance %@";
+"send.amount_error.balance" = "Saldo %@";
 "send.send_button" = "Enviar";
 "send.paste_button" = "Pegar";
 "send.amount_placeholder" = "Importe";
@@ -177,7 +177,7 @@
 
 "unlock_pin.info" = "Introduzca PIN";
 "unlock_pin.cant_save_pin" = "¡Ups! No podemos guardar su pin, póngase en contacto con nosotros lo antes posible";
-"unlock_pin.blocked_until" = "Disabled until: %@";
+"unlock_pin.blocked_until" = "Inhabilitado hasta: %@";
 
 //NumPad
 
