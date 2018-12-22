@@ -5,30 +5,30 @@
 "coin.BCHt" = "Bitcoin Cash T";
 "coin.ETHt" = "Ethereum T";
 
-"alert.ok" = "OK";
+"alert.ok" = "Aceptar";
 "alert.cancel" = "Cancelar";
-"alert.copied" = "Copied";
-"alert.confirm" = "Confirm";
+"alert.copied" = "Copiado";
+"alert.confirm" = "Confirmar";
 
-"biometric_usage_reason" = "Unlock wallet";
+"biometric_usage_reason" = "Desbloquear cartera";
 
 // Access Camera
 
-"access_camera.message" = "Bank needs access to your camera to scan QR code.\n\nGo to Settings - > Bank and allow access to Camera.";
-"access_camera.settings" = "Settings";
-"access_camera.cancel" = "Cancel";
+"access_camera.message" = "El banco necesita acceder a su cámara para escanear el código QR";
+"access_camera.settings" = "Configuración";
+"access_camera.cancel" = "Cancelar";
 
 // Guest Page
 
 "guest.title" = "Bank Wallet";
 "guest.subtitle" = "Decentralized app";
-"guest.create_wallet" = "New Wallet";
-"guest.restore_wallet" = "Restore Wallet";
+"guest.create_wallet" = "Nueva cartera";
+"guest.restore_wallet" = "Restaurar cartera";
 
 // Restore
 
-"restore.title" = "Restore";
-"restore.description" = "Enter Secret Key  ";
+"restore.title" = "Restaurar";
+"restore.description" = "Ingresar clave secreta  ";
 "restore.done" = "Done";
 "restore.cancel" = "Cancel";
 "restore.validation_failed" = "Incorrect Secret Key";
