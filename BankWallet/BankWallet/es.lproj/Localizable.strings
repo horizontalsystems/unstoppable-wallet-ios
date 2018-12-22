@@ -29,49 +29,49 @@
 
 "restore.title" = "Restaurar";
 "restore.description" = "Ingresar clave secreta  ";
-"restore.done" = "Done";
-"restore.cancel" = "Cancel";
-"restore.validation_failed" = "Incorrect Secret Key";
+"restore.done" = "Listo";
+"restore.cancel" = "Cancelar";
+"restore.validation_failed" = "Clave secreta incorrecta";
 
 // Backup
 
-"backup.intro.title" = "Backup";
-"backup.intro.subtitle" = "Your secret key is the only way to restore your wallet and funds if your phone is ever lost, stolen, broken, or upgraded.\n\nIt consists of 12 words. Write them on a piece of paper and do not ever show it to anyone.";
-"backup.intro.later" = "Later";
-"backup.intro.backup_now" = "Backup";
+"backup.intro.title" = "Copia de seguridad";
+"backup.intro.subtitle" = "Su clave secreta es la única manera de recuperar su cartera y otros fondos si su teléfono alguna vez se pierde, se rompe, es sustraído o se actualiza a otra versión.";
+"backup.intro.later" = "Posterior";
+"backup.intro.backup_now" = "Copia de seguridad";
 
-"backup.words.title" = "Secret Key";
-"backup.words.back" = "Back";
-"backup.words.proceed" = "Next";
+"backup.words.title" = "Clave secreta";
+"backup.words.back" = "Atrás";
+"backup.words.proceed" = "Siguiente";
 
-"backup.confirmation.title" = "Check ...";
-"backup.confirmation.description" = "Enter words from your secret key";
-"backup.confirmation.failure_alert.text" = "Words do not match";
-"backup.confirmation.done_button" = "Done";
-"backup.confirmation.understand" = "I understand that my wallet and tokens are held securely on this device only and not any servers.";
-"backup.confirmation.delete_app_warn" = "I understand that if this app is deleted or stops working for any reason, my wallet can only be recovered using the secret key that I have written down and saved in a secure place";
+"backup.confirmation.title" = "Comprobar";
+"backup.confirmation.description" = "Insertar palabras de su clave secreta";
+"backup.confirmation.failure_alert.text" = "Las contraseñas no coinciden";
+"backup.confirmation.done_button" = "Listo";
+"backup.confirmation.understand" = "Entiendo que mis datos y mi monedero se guardan de manera segura en este dispositivo y no en ningún otro servidor";
+"backup.confirmation.delete_app_warn" = "Entiendo que si esta aplicación se elimina o deja de funcionar por alguna razón, mi monedero sólo puede ser recuperado utilizando mi clave secreta, que he anotado y guardado en un lugar seguro";
 
 // Balance
 
-"balance.title" = "Balance";
-"balance.tab_bar_item" = "Balance";
-"balance.send" = "Send";
-"balance.deposit" = "Receive";
+"balance.title" = "Saldo";
+"balance.tab_bar_item" = "Saldo";
+"balance.send" = "Enviar";
+"balance.deposit" = "Recibir";
 "balance.rate_per_coin" = "%@ per %@";
 "balance.syncing_percent" = "Syncing %@";
 
 // Deposit
 
 "deposit.receive_coin" = "Receive %@";
-"deposit.alert_copy" = "Copy";
+"deposit.alert_copy" = "Copiar";
 
 // Send
 
 "send.title" = "Send %@";
-"send.address_placeholder" = "Address";
+"send.address_placeholder" = "Dirección";
 "send.amount_error.balance" = "Balance %@";
-"send.send_button" = "Send";
-"send.paste_button" = "Paste";
+"send.send_button" = "Enviar";
+"send.paste_button" = "Pegar";
 "send.amount_placeholder" = "Amount";
 "send.fee" = "Fee";
 "send.total" = "Total";
