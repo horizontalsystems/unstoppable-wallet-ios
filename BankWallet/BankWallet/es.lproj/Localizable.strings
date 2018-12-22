@@ -144,15 +144,15 @@
 
 "settings_about.title" = "Acerca de";
 "settings_about.terms_privacy_subtitle" = "Términos y privacidad:";
-"settings_about.terms_privacy_text" = "This app is peer-to-peer. It does not depend on any web server or tech support personnel to function.\n\nIt works everywhere as long as there is internet. No entity can block this app from working or to block someone from using it.\n\nYour funds are securely stored on the phone itself, not anywhere else.\n\nIt’s your responsibility to backup your Secret Key and keep it private. Never show it to anyone. If it’s lost, forgotten or stollen your funds can be used by the person who has your Secret key.\n\nDo not jailbreak your phone, do not install apps from unknown (untrusted) sources, do not give your device to untrusted people, and keep the Operating System on your phone up to date. The security of your wallet depends on this.\n\nThe entire code powering this app been open to the public scrutiny since the beginning. We tried to build the most secure and decentralized wallet we could, however there are no guarantees that there are no unintended software issues. That said, this wallet is likely to be significantly more secure than any smartphone wallet app out there.\n\nSome generic non-private app data like currency exchange rates are stored on decentralized storage (IPFS). ";
+"settings_about.terms_privacy_text" = "Esta aplicación es de servidor a servidor. No depende de ninguna web o tecnología personal de apoyo a la función.\n\nFunciona en cualquier lugar siempre que haya conexión a internet. Ninguna entidad puede bloquear el funcionamiento de esta aplicación o impedir el acceso de un usuario.\n\nSus fondos son almacenados de forma segura únicamente en el teléfono, en ningún otro lugar.\n\nEs su responsabilidad recordar su clave secreta y mantenerla en privado. Nunca la muestre a nadie. Si la pierde, la olvida o es sustraída, sus fondos pueden ser utilizados por la persona que tiene su clave secreta.\n\nNo modifique la seguridad del software de su teléfono, no instale aplicaciones de orígenes desconocidos , no entregue su dispositivo a desconocidos y mantenga actualizado el sistema operativo de tu teléfono. La seguridad de su cartera depende de ello.\n\nLa totalidad del código que soporta esta aplicación está abierta al escrutinio público desde el inicio de la aplicación. Hemos intentado construir la cartera más segura y descentralizada posible; sin embargo, hay ninguna garantía de que no se produzca algún problema de software no deseado. Dicho esto, esta carpeta es probable que sea significativamente más segura que cualquier aplicación de gestión de cartera de smartphone del mercado\n\nAlgunos datos genéricos de carácter público de esta app se guardan en centros de almacenamiento descentralizado (IPFS).\n";
 
 // Settings -> Security
 
-"settings_security.title" = "Security Center";
-"settings_security.backup_wallet" = "Backup Wallet";
-"settings_security.unlink_from_this_device" = "Unlink From This Device";
-"settings_security.set_pin" = "Set PIN";
-"settings_security.change_pin" = "Edit PIN";
+"settings_security.title" = "Centro de Seguridad";
+"settings_security.backup_wallet" = "Copia de Seguridad de Cartera";
+"settings_security.unlink_from_this_device" = "Desconectarse desde este dispositivo";
+"settings_security.set_pin" = "Establecer PIN";
+"settings_security.change_pin" = "Editar el PIN";
 "settings_security.touch_id" = "Touch ID";
 "settings_security.face_id" = "Face ID";
 "security_settings.unlink_alert_button" = "Desvincular";
