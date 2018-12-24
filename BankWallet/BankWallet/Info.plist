@@ -18,6 +18,10 @@
 	<string>1.0</string>
 	<key>CFBundleVersion</key>
 	<string>1</string>
+	<key>DefaultWords</key>
+	<string>${default_words}</string>
+	<key>DisablePinLock</key>
+	<string>${disable_pin_lock}</string>
 	<key>EtherscanApiKey</key>
 	<string>${etherscan_api_key}</string>
 	<key>InfuraApiKey</key>

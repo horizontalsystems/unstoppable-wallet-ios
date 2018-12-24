@@ -35,6 +35,10 @@ extension RestorePresenter: IRestoreInteractorDelegate {
 
 extension RestorePresenter: IRestoreViewDelegate {
 
+    func viewDidLoad() {
+        view?.set(defaultWords: interactor.defaultWords)
+    }
+
     func restoreDidClick(withWords words: [String]) {
         interactor.validate(words: words)
     }

@@ -9,6 +9,18 @@ class AppConfigProvider: IAppConfigProvider {
         return Bundle.main.object(forInfoDictionaryKey: "TestMode") as? String == "true"
     }
 
+    var defaultWords: [String] {
+        guard let wordsString = Bundle.main.object(forInfoDictionaryKey: "DefaultWords") as? String else {
+            return []
+        }
+
+        return wordsString.split(separator: " ", omittingEmptySubsequences: true).map(String.init)
+    }
+
+    var disablePinLock: Bool {
+        return Bundle.main.object(forInfoDictionaryKey: "DisablePinLock") as? String == "true"
+    }
+
     let currencies: [Currency] = [
         Currency(code: "USD", symbol: "\u{0024}"),
         Currency(code: "EUR", symbol: "\u{20AC}"),

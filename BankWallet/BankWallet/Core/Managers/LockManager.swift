@@ -3,14 +3,16 @@ import Foundation
 class LockManager {
     private let localStorage: ILocalStorage
     private let wordsManager: IWordsManager
+    private let appConfigProvider: IAppConfigProvider
     private let lockRouter: ILockRouter
 
     private let lockTimeout: Double = 60
     private(set) var isLocked: Bool = false
 
-    init(localStorage: ILocalStorage, wordsManager: IWordsManager, lockRouter: ILockRouter) {
+    init(localStorage: ILocalStorage, wordsManager: IWordsManager, appConfigProvider: IAppConfigProvider, lockRouter: ILockRouter) {
         self.localStorage = localStorage
         self.wordsManager = wordsManager
+        self.appConfigProvider = appConfigProvider
         self.lockRouter = lockRouter
     }
 
@@ -48,6 +50,10 @@ extension LockManager: ILockManager {
     }
 
     func lock() {
+        guard !appConfigProvider.disablePinLock else {
+            return
+        }
+
         isLocked = true
         lockRouter.showUnlock(delegate: self)
     }
