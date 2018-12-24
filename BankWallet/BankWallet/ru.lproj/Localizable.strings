@@ -87,7 +87,7 @@
 // Transaction Info
 
 "tx_info.title" = "Транзакция";
-"tx_info.time" = "Time";
+"tx_info.time" = "Время";
 "tx_info.status" = "Статус";
 "tx_info.from_hash" = "От";
 "tx_info.to_hash" = "Кому";
@@ -98,15 +98,15 @@
 "full_info.title" = "Full Info";
 "full_info.id" = "ID";
 "full_info.status" = "Статус";
-"full_info.time" = "Time";
+"full_info.time" = "Время";
 "full_info.block" = "Блок";
 "full_info.confirmations" = "Подтверждения";
-"full_info.total_input" = "Total Input";
-"full_info.total_output" = "Total Output";
-"full_info.fee" = "Fee";
+"full_info.total_input" = "Всего Входов";
+"full_info.total_output" = "Всего Выходов";
+"full_info.fee" = "Комиссия";
 "full_info.subtitle_from" = "От";
-"full_info.subtitle_inputs" = "Inputs";
-"full_info.subtitle_outputs" = "Outputs";
+"full_info.subtitle_inputs" = "Входы";
+"full_info.subtitle_outputs" = "Выходы";
 "full_info.subtitle_provider" = "Data Provider";
 
 // Settings
