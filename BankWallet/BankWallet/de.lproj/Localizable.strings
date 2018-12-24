@@ -87,10 +87,10 @@
 // Transaction Info
 
 "tx_info.title" = "Transaktion";
-"tx_info.time" = "Time";
+"tx_info.time" = "Zeit";
 "tx_info.status" = "Status";
-"tx_info.from_hash" = "From";
-"tx_info.to_hash" = "To";
+"tx_info.from_hash" = "Von";
+"tx_info.to_hash" = "An";
 "tx_info.alert_close" = "Schließen";
 "tx_info.button_more" = "Full Info";
 
@@ -98,14 +98,14 @@
 "full_info.title" = "Full Info";
 "full_info.id" = "ID";
 "full_info.status" = "Status";
-"full_info.time" = "Time";
+"full_info.time" = "Zeit";
 "full_info.block" = "Block";
-"full_info.confirmations" = "Confirmations";
-"full_info.total_input" = "Total Input";
-"full_info.total_output" = "Total Output";
-"full_info.fee" = "Fee";
-"full_info.subtitle_from" = "From";
-"full_info.subtitle_inputs" = "Inputs";
+"full_info.confirmations" = "Bestätigungen";
+"full_info.total_input" = "Insgesamte Eingänge";
+"full_info.total_output" = "Insgesamte Ausgänge";
+"full_info.fee" = "Gebühr";
+"full_info.subtitle_from" = "Von";
+"full_info.subtitle_inputs" = "Eingänge";
 "full_info.subtitle_outputs" = "Outputs";
 "full_info.subtitle_provider" = "Data Provider";
 
@@ -171,7 +171,7 @@
 "edit_pin.title" = "PIN bearbeiten";
 "edit_pin.unlock_info" = "Gib derzeitige PIN ein";
 "edit_pin.new_pin_info" = "Gib neue PIN ein";
-"edit_pin.confirm_info" = "Enter again";
+"edit_pin.confirm_info" = "Erneut eingeben";
 
 // Unlock PIN
 
