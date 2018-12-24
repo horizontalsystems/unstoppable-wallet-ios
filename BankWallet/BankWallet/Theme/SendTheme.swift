@@ -49,12 +49,12 @@ class SendTheme {
     static let sendButtonCornerRadius: CGFloat = 8
 
     static let confirmationAmountHeight: CGFloat = 78
-    static let confirmationAmountFont: UIFont = .cryptoTitle3
-    static let confirmationAmountColor: UIColor = .cryptoYellow
-    static let confirmationAmountTopMargin: CGFloat = 20
-    static let confirmationFiatAmountFont: UIFont = .cryptoCaption1
-    static let confirmationFiatAmountColor: UIColor = .cryptoGray
-    static let confirmationFiatAmountTopMargin: CGFloat = 4
+    static let confirmationCurrencyAmountFont: UIFont = .cryptoTitle3
+    static let confirmationCurrencyAmountColor: UIColor = .cryptoYellow
+    static let confirmationCurrencyAmountTopMargin: CGFloat = 20
+    static let confirmationAmountFont: UIFont = .cryptoCaption1
+    static let confirmationAmountColor: UIColor = .cryptoGray
+    static let confirmationAmountTopMargin: CGFloat = 4
 
     static let confirmationAddressHeight: CGFloat = 60
 
