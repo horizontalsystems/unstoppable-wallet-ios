@@ -38,7 +38,7 @@ class BalanceTheme {
     static let nonZeroBalanceExpiredTextColor = UIColor.cryptoYellow40
     static let zeroBalanceTextColor = UIColor.cryptoGray
     static let coinValueFont: UIFont = .systemFont(ofSize: 14)
-    static var coinValueColor: UIColor { return .crypto_White }
+    static var coinValueColor: UIColor { return .crypto_Bars_Dark }
 
     static let currencyValueFont: UIFont = .systemFont(ofSize: 17, weight: .semibold)
 
