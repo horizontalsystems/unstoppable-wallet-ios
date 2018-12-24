@@ -82,7 +82,7 @@
 "transactions.tab_bar_item" = "Transaktionen";
 "transactions.filter_all" = "Alle";
 "transactions.empty_text" = "Du hast nicht die anstehenden oder vergangenen Transaktionen noch.";
-"transactions.sending" = "Sending...";
+"transactions.sending" = "Wird gesendet...";
 
 // Transaction Info
 
@@ -101,12 +101,12 @@
 "full_info.time" = "Zeit";
 "full_info.block" = "Block";
 "full_info.confirmations" = "Bestätigungen";
-"full_info.total_input" = "Insgesamte Eingänge";
+"full_info.total_input" = "Insgesamt Eingang";
 "full_info.total_output" = "Insgesamte Ausgänge";
 "full_info.fee" = "Gebühr";
 "full_info.subtitle_from" = "Von";
 "full_info.subtitle_inputs" = "Eingänge";
-"full_info.subtitle_outputs" = "Outputs";
+"full_info.subtitle_outputs" = "Ausgänge";
 "full_info.subtitle_provider" = "Data Provider";
 
 // Settings
