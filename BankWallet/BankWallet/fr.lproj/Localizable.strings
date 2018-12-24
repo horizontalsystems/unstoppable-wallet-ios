@@ -63,7 +63,7 @@
 // Deposit
 
 "deposit.receive_coin" = "Recevoir %@";
-"deposit.alert_copy" = "Copy";
+"deposit.alert_copy" = "Copier";
 
 // Send
 
@@ -84,17 +84,30 @@
 "transactions.empty_text" = "Vous n'avez encore aucune transaction en cours ou passée";
 "transactions.sending" = "Sending...";
 
-
 // Transaction Info
 
 "tx_info.title" = "Transaction";
-"tx_info.pending" = "En attente";
-"tx_info.processing" = "Traitement en cours %@";
-"tx_info.completed" = "Terminé";
-"tx_info.status" = "État :";
-"tx_info.from_hash" = "De:";
-"tx_info.to_hash" = "À:";
+"tx_info.time" = "Time";
+"tx_info.status" = "Status";
+"tx_info.from_hash" = "From";
+"tx_info.to_hash" = "To";
 "tx_info.alert_close" = "Fermer";
+"tx_info.button_more" = "Full Info";
+
+// Full Info
+"full_info.title" = "Full Info";
+"full_info.id" = "ID";
+"full_info.status" = "Status";
+"full_info.time" = "Time";
+"full_info.block" = "Block";
+"full_info.confirmations" = "Confirmations";
+"full_info.total_input" = "Total Input";
+"full_info.total_output" = "Total Output";
+"full_info.fee" = "Fee";
+"full_info.subtitle_from" = "From";
+"full_info.subtitle_inputs" = "Inputs";
+"full_info.subtitle_outputs" = "Outputs";
+"full_info.subtitle_provider" = "Data Provider";
 
 // Settings
 
@@ -158,7 +171,7 @@
 "edit_pin.title" = "Modifier le PIN";
 "edit_pin.unlock_info" = "Entrez le PIN actuel";
 "edit_pin.new_pin_info" = "Entrez le nouveau PIN";
-"edit_pin.confirm_info" = "Entrez à nouveau pour confirmer";
+"edit_pin.confirm_info" = "Enter again";
 
 // Unlock PIN
 
