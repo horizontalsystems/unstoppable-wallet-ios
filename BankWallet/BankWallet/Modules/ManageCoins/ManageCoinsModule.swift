@@ -1,12 +1,16 @@
 import Foundation
 
 protocol IManageCoinsView: class {
-    func showCoins(enabled: [Coin], disabled: [Coin])
+    func updateUI()
     func show(error: String)
 }
 
 protocol IManageCoinsViewDelegate {
     func viewDidLoad()
+    var enabledCoinsCount: Int { get }
+    var disabledCoinsCount: Int { get }
+    func enabledItem(forIndex index: Int) -> Coin
+    func disabledItem(forIndex index: Int) -> Coin
     func enable(coin: Coin)
     func disable(coin: Coin)
     func move(coin: Coin, to: Int)

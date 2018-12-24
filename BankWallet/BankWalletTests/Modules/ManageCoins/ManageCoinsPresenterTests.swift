@@ -44,7 +44,7 @@ class ManageCoinsPresenterTests: XCTestCase {
         mockState = MockIManageCoinsPresenterState()
 
         stub(mockView) { mock in
-            when(mock.showCoins(enabled: any(), disabled: any())).thenDoNothing()
+            when(mock.updateUI()).thenDoNothing()
             when(mock.show(error: any())).thenDoNothing()
         }
         stub(mockRouter) { mock in
@@ -87,7 +87,7 @@ class ManageCoinsPresenterTests: XCTestCase {
 
     func testDidLoadCoins() {
         presenter.didLoadCoins(all: allCoins, enabled: enabledCoins)
-        verify(mockView).showCoins(enabled: equal(to: enabledCoins), disabled: equal(to: disabledCoins))
+        verify(mockView).updateUI()
     }
 
     func testEnableCoin() {
@@ -95,7 +95,7 @@ class ManageCoinsPresenterTests: XCTestCase {
 
         presenter.enable(coin: coinToEnable)
         verify(mockState).enable(coin: equal(to: coinToEnable))
-        verify(mockView).showCoins(enabled: equal(to: enabledCoins), disabled: equal(to: disabledCoins))
+        verify(mockView).updateUI()
     }
 
     func testDisableCoin() {
@@ -103,14 +103,14 @@ class ManageCoinsPresenterTests: XCTestCase {
 
         presenter.disable(coin: coinToDisable)
         verify(mockState).disable(coin: equal(to: coinToDisable))
-        verify(mockView).showCoins(enabled: equal(to: enabledCoins), disabled: equal(to: disabledCoins))
+        verify(mockView).updateUI()
     }
 
     func testMoveEnabledCoin() {
         let coinToMove: Coin = ethereum
         presenter.move(coin: coinToMove, to: 0)
         verify(mockState).move(coin: equal(to: coinToMove), to: 0)
-        verify(mockView).showCoins(enabled: equal(to: enabledCoins), disabled: equal(to: disabledCoins))
+        verify(mockView).updateUI()
     }
 
     func testSaveEnabledCoins() {
@@ -126,6 +126,22 @@ class ManageCoinsPresenterTests: XCTestCase {
     func testDidFailToSaveCoins() {
         presenter.didFailToSaveCoins()
         verify(mockView).show(error: "manage_coins.fail_to_save")
+    }
+
+    func testEnabledItemForIndex() {
+        XCTAssertEqual(presenter.enabledItem(forIndex: 0), bitcoin)
+    }
+
+    func testDisabledItemForIndex() {
+        XCTAssertEqual(presenter.disabledItem(forIndex: 0), bitcoinCash)
+    }
+
+    func testEnabledCoinsCount() {
+        XCTAssertEqual(presenter.enabledCoinsCount, enabledCoins.count)
+    }
+
+    func testDisabledCoinsCount() {
+        XCTAssertEqual(presenter.disabledCoinsCount, disabledCoins.count)
     }
 
 }

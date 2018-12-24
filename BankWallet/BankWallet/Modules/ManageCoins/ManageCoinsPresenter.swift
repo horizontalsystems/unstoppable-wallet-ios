@@ -15,7 +15,7 @@ class ManageCoinsPresenter {
     }
 
     private func updateCoins() {
-        view?.showCoins(enabled: state.enabledCoins, disabled: state.disabledCoins)
+        view?.updateUI()
     }
 
 }
@@ -62,6 +62,25 @@ extension ManageCoinsPresenter: IManageCoinsViewDelegate {
     func saveChanges() {
         interactor.save(enabledCoins: state.enabledCoins)
         router.close()
+    }
+
+    var enabledCoinsCount: Int {
+        get {
+            return state.enabledCoins.count
+        }
+    }
+    var disabledCoinsCount: Int {
+        get {
+            return state.disabledCoins.count
+        }
+    }
+
+    func enabledItem(forIndex index: Int) -> Coin {
+        return state.enabledCoins[index]
+    }
+
+    func disabledItem(forIndex index: Int) -> Coin {
+        return state.disabledCoins[index]
     }
 
 }
