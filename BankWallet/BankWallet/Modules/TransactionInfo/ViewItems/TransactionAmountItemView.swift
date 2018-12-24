@@ -5,8 +5,8 @@ import SnapKit
 
 class TransactionAmountItemView: BaseActionItemView {
 
+    var currencyAmountLabel = UILabel()
     var amountLabel = UILabel()
-    var fiatAmountLabel = UILabel()
 
     override var item: TransactionAmountItem? { return _item as? TransactionAmountItem }
 
@@ -15,28 +15,29 @@ class TransactionAmountItemView: BaseActionItemView {
 
         backgroundColor = TransactionInfoTheme.itemBackground
 
-        amountLabel.font = TransactionInfoTheme.amountFont
+        currencyAmountLabel.font = TransactionInfoTheme.amountFont
+        addSubview(currencyAmountLabel)
+        currencyAmountLabel.snp.makeConstraints { maker in
+            maker.centerX.equalToSuperview()
+            maker.top.equalToSuperview().offset(TransactionInfoTheme.regularMargin)
+        }
+
+        amountLabel.font = TransactionInfoTheme.fiatAmountFont
+        amountLabel.textColor = TransactionInfoTheme.fiatAmountColor
         addSubview(amountLabel)
         amountLabel.snp.makeConstraints { maker in
             maker.centerX.equalToSuperview()
-            maker.top.equalToSuperview().offset(TransactionInfoTheme.amountTopMargin)
-        }
-
-        fiatAmountLabel.font = TransactionInfoTheme.fiatAmountFont
-        fiatAmountLabel.textColor = TransactionInfoTheme.fiatAmountColor
-        addSubview(fiatAmountLabel)
-        fiatAmountLabel.snp.makeConstraints { maker in
-            maker.centerX.equalToSuperview()
-            maker.top.equalTo(self.amountLabel.snp.bottom).offset(TransactionInfoTheme.middleMargin)
+            maker.bottom.equalToSuperview().offset(-TransactionInfoTheme.regularMargin)
         }
     }
 
     override func updateView() {
         super.updateView()
-        amountLabel.text = item?.amount
-        amountLabel.textColor = item?.amountColor
 
-        fiatAmountLabel.text = item?.fiatAmount
+        currencyAmountLabel.text = item?.currencyAmount
+        currencyAmountLabel.textColor = item?.currencyAmountColor
+
+        amountLabel.text = item?.amount
     }
 
 }

@@ -34,48 +34,41 @@ class ValueFormatter {
         return formatter
     }()
 
-    func format(coinValue: CoinValue, explicitSign: Bool = false) -> String? {
-        let value = explicitSign ? abs(coinValue.value) : coinValue.value
+    func format(coinValue: CoinValue) -> String? {
+        coinFormatter.minimumFractionDigits = coinValue.value == 0 ? 2 : 0
 
-        coinFormatter.minimumFractionDigits = value > 0 ? 2 : 0
-
-        guard let formattedValue = coinFormatter.string(from: value as NSNumber) else {
+        guard let formattedValue = coinFormatter.string(from: abs(coinValue.value) as NSNumber) else {
             return nil
         }
 
         var result = "\(formattedValue) \(coinValue.coinCode)"
 
-        if explicitSign {
-            let sign = coinValue.value < 0 ? "-" : "+"
-            result = "\(sign) \(result)"
+        if coinValue.value < 0 {
+            result = "- \(result)"
         }
 
         return result
     }
 
-    func format(currencyValue: CurrencyValue, approximate: Bool = false, shortFractionLimit: Double? = nil) -> String? {
-        var value = currencyValue.value
+    func format(currencyValue: CurrencyValue, shortFractionLimit: Double? = nil) -> String? {
+        let absoluteValue = abs(currencyValue.value)
 
         let formatter = currencyFormatter
         formatter.currencyCode = currencyValue.currency.code
         formatter.currencySymbol = currencyValue.currency.symbol
 
         if let limit = shortFractionLimit {
-            formatter.maximumFractionDigits = abs(value) > limit ? 0 : 2
+            formatter.maximumFractionDigits = absoluteValue > limit ? 0 : 2
         } else {
             formatter.maximumFractionDigits = 2
         }
 
-        if approximate {
-            value = abs(value)
-        }
-
-        guard var result = formatter.string(from: value as NSNumber) else {
+        guard var result = formatter.string(from: absoluteValue as NSNumber) else {
             return nil
         }
 
-        if approximate {
-            result = "~ \(result)"
+        if currencyValue.value < 0 {
+            result = "- \(result)"
         }
 
         return result
