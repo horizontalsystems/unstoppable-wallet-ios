@@ -1,17 +1,18 @@
-import Foundation
-
 protocol IRestoreView: class {
+    func set(defaultWords: [String])
     func showInvalidWordsError()
     func showConfirmAlert()
 }
 
 protocol IRestoreViewDelegate {
+    func viewDidLoad()
     func restoreDidClick(withWords words: [String])
     func cancelDidClick()
     func didConfirm(words: [String])
 }
 
 protocol IRestoreInteractor {
+    var defaultWords: [String] { get }
     func restore(withWords words: [String])
     func validate(words: [String])
 }
