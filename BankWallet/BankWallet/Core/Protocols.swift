@@ -174,6 +174,9 @@ protocol IAppConfigProvider {
     var ratesApiUrl: String { get }
     var testMode: Bool { get }
     var currencies: [Currency] { get }
+
+    var defaultWords: [String] { get }
+    var disablePinLock: Bool { get }
 }
 
 protocol IRateNetworkManager {

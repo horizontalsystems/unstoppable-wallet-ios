@@ -56,9 +56,11 @@ class App {
         secureStorage = KeychainStorage(localStorage: localStorage)
         wordsManager = WordsManager(secureStorage: secureStorage, localStorage: localStorage)
 
+        appConfigProvider = AppConfigProvider()
+
         pinManager = PinManager(secureStorage: secureStorage, wordsManager: wordsManager)
         lockRouter = LockRouter()
-        lockManager = LockManager(localStorage: localStorage, wordsManager: wordsManager, lockRouter: lockRouter)
+        lockManager = LockManager(localStorage: localStorage, wordsManager: wordsManager, appConfigProvider: appConfigProvider, lockRouter: lockRouter)
         blurManager = BlurManager(lockManager: lockManager)
 
         localizationManager = LocalizationManager()
@@ -66,8 +68,6 @@ class App {
 
         randomManager = RandomManager()
         systemInfoManager = SystemInfoManager()
-
-        appConfigProvider = AppConfigProvider()
 
         adapterFactory = AdapterFactory(appConfigProvider: appConfigProvider)
         walletManager = WalletManager(adapterFactory: adapterFactory)
