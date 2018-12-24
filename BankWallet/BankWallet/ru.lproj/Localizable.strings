@@ -88,9 +88,9 @@
 
 "tx_info.title" = "Транзакция";
 "tx_info.time" = "Time";
-"tx_info.status" = "Status";
-"tx_info.from_hash" = "From";
-"tx_info.to_hash" = "To";
+"tx_info.status" = "Статус";
+"tx_info.from_hash" = "От";
+"tx_info.to_hash" = "Кому";
 "tx_info.alert_close" = "Закрыть";
 "tx_info.button_more" = "Full Info";
 
@@ -99,12 +99,12 @@
 "full_info.id" = "ID";
 "full_info.status" = "Статус";
 "full_info.time" = "Time";
-"full_info.block" = "Block";
-"full_info.confirmations" = "Confirmations";
+"full_info.block" = "Блок";
+"full_info.confirmations" = "Подтверждения";
 "full_info.total_input" = "Total Input";
 "full_info.total_output" = "Total Output";
 "full_info.fee" = "Fee";
-"full_info.subtitle_from" = "From";
+"full_info.subtitle_from" = "От";
 "full_info.subtitle_inputs" = "Inputs";
 "full_info.subtitle_outputs" = "Outputs";
 "full_info.subtitle_provider" = "Data Provider";
@@ -117,7 +117,7 @@
 "settings.base_currency" = "Базовая Валюта";
 "settings.manage_wallet" = "Управление кошельком";
 "settings.language" = "Язык";
-"settings.about" = "О программе";
+"settings.about" = "О приложении";
 "settings.light_mode" = "Светлый Режим";
 "settings.info_title" = "BANK WALLET";
 "settings.info_subtitle" = "decentralized app";
@@ -142,7 +142,7 @@
 
 // Settings -> About
 
-"settings_about.title" = "О программе";
+"settings_about.title" = "О приложении";
 "settings_about.terms_privacy_subtitle" = "Условия & Политика конфиденциальности:";
 "settings_about.terms_privacy_text" = "Это приложение полностью децентрализованно. Работоспособность этого приложения не зависит от сторонних серверов или какой-либо команды тех поддержки.\n\nПриложение работает везде, пока есть интернет. Этот кошелек или его пользователи не могут быть заблокированы кем-либо.\n\nВаши средства хранятся только на вашем телефоне.\n\nВы несëте полную ответственность за безопасное хранение секретного ключа. Никогда никому не показывайте ваш секретный ключ. Если ключ будет утерян, украден или забыт то контроль над вашими средствами попадет к тому у кого окажется ваш секретный ключ.\n\nНе взламывайте ваш телефон, не устанавливайте приложения из неофициальных источников и никогда не предоставляйте ваше устройство другим лицам. Безопасность вашего кошелька напрямую зависит от этого.\n\nВесь программный код этого приложения является бесплатным и открытым для общественности. Мы старались сделать самый безопасный и в то же время децентрализованный кошелек, но нет гарантий, что в коде приложения не имеется ошибок. Тем не менее, мы верим что по уровню безопасности этот кошелек значительно превосходит почти все доступные мобильные криптокошельки на сегодня.\n\nНекоторые публичные данные используемые приложением такие, как обменные курсы валют хранятся в децентрализованном хранилище (IPFS).";
 
@@ -171,7 +171,7 @@
 "edit_pin.title" = "Изменить PIN-код";
 "edit_pin.unlock_info" = "Введите текущий PIN-код";
 "edit_pin.new_pin_info" = "Введите новый PIN-код";
-"edit_pin.confirm_info" = "Enter again";
+"edit_pin.confirm_info" = "Введите еще раз";
 
 // Unlock PIN
 
