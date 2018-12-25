@@ -87,24 +87,24 @@
 // Transaction Info
 
 "tx_info.title" = "Hesap işlemi";
-"tx_info.time" = "Time";
-"tx_info.status" = "Status";
-"tx_info.from_hash" = "From";
-"tx_info.to_hash" = "To";
+"tx_info.time" = "Tarih";
+"tx_info.status" = "Durum";
+"tx_info.from_hash" = "Gönderen";
+"tx_info.to_hash" = "Alan";
 "tx_info.alert_close" = "Kapat";
 "tx_info.button_more" = "Full Info";
 
 // Full Info
 "full_info.title" = "Full Info";
-"full_info.id" = "ID";
-"full_info.status" = "Status";
-"full_info.time" = "Time";
+"full_info.id" = "Kimlik";
+"full_info.status" = "Durum";
+"full_info.time" = "Tarih";
 "full_info.block" = "Block";
-"full_info.confirmations" = "Confirmations";
+"full_info.confirmations" = "Onaylama";
 "full_info.total_input" = "Total Input";
 "full_info.total_output" = "Total Output";
-"full_info.fee" = "Fee";
-"full_info.subtitle_from" = "From";
+"full_info.fee" = "Masraf";
+"full_info.subtitle_from" = "Gönderen";
 "full_info.subtitle_inputs" = "Inputs";
 "full_info.subtitle_outputs" = "Outputs";
 "full_info.subtitle_provider" = "Data Provider";
@@ -171,7 +171,7 @@
 "edit_pin.title" = "PİN'i değiştir";
 "edit_pin.unlock_info" = "Şu an kullandığınız PİN'i girin";
 "edit_pin.new_pin_info" = "Yeni PİN gerin";
-"edit_pin.confirm_info" = "Enter again";
+"edit_pin.confirm_info" = "Tekrar girin";
 
 // Unlock PIN
 
