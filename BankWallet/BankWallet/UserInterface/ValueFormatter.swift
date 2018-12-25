@@ -78,6 +78,10 @@ class ValueFormatter {
         return amountFormatter.string(from: amount as NSNumber)
     }
 
+    var decimalSeparator: String {
+        return amountFormatter.decimalSeparator
+    }
+
     func formattedInput(string: String?) -> String? {
         let stringNumber = "0\(string ?? "")"
         let number = parseFormatter.number(from: stringNumber) as? Double

@@ -140,10 +140,22 @@ class SendAmountItemView: BaseActionItemView {
 extension SendAmountItemView: UITextFieldDelegate {
 
     public func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        let updatedString = (textField.text as NSString?)?.replacingCharacters(in: range, with: string)
+        // decimal separators set from https://en.wikipedia.org/wiki/Decimal_separator
+        let separatorSet = CharacterSet(charactersIn: ".,'·˙٫⎖")
 
-        if let updatedString = ValueFormatter.instance.formattedInput(string: updatedString) {
-            return updatedString.isEmpty || ValueFormatter.instance.parseFormatter.number(from: updatedString) as? Double != nil
+        var correctedString: String? = nil
+        if string.count == 1, string.rangeOfCharacter(from: separatorSet) != nil {
+            correctedString = ValueFormatter.instance.decimalSeparator
+        }
+
+        let updatedString = (textField.text as NSString?)?.replacingCharacters(in: range, with: correctedString ?? string)
+
+        if let formattedString = ValueFormatter.instance.formattedInput(string: updatedString) {
+            if correctedString != nil {
+                textField.text = updatedString
+                return false
+            }
+            return formattedString.isEmpty || ValueFormatter.instance.parseFormatter.number(from: formattedString) as? Double != nil
         }
 
         return false
