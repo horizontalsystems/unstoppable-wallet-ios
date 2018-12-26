@@ -1248,6 +1248,10 @@
 		D38406C821832968007D50AD /* AppIconDev.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = AppIconDev.xcassets; sourceTree = "<group>"; };
 		D3A6D6B9219430BA00D11AFE /* AboutCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutCell.swift; sourceTree = "<group>"; };
 		D3A6D6BA219430BA00D11AFE /* AboutCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AboutCell.xib; sourceTree = "<group>"; };
+		D3B476A321D0D64E008B0C3E /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		D3B476A421D0D64E008B0C3E /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
+		D3B476A521D0D659008B0C3E /* zh */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = zh; path = zh.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		D3B476A621D0D659008B0C3E /* zh */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = zh; path = zh.lproj/Localizable.strings; sourceTree = "<group>"; };
 		D3B62A8820CA40DC005A9F80 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		D3B62A8920CA40DC005A9F80 /* MainViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainViewController.xib; sourceTree = "<group>"; };
 		D3B62A8C20CA436F005A9F80 /* BalanceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceViewController.swift; sourceTree = "<group>"; };
@@ -2317,6 +2321,8 @@
 				de,
 				fr,
 				tr,
+				es,
+				zh,
 			);
 			mainGroup = D3285F3920BD158E00644076;
 			productRefGroup = D3285F4320BD158E00644076 /* Products */;
@@ -3617,6 +3623,8 @@
 				50AB06B9215A269900A01E4A /* de */,
 				50EED18F218822E200E200AD /* fr */,
 				50EED191218822FA00E200AD /* tr */,
+				D3B476A321D0D64E008B0C3E /* es */,
+				D3B476A521D0D659008B0C3E /* zh */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -3629,6 +3637,8 @@
 				50E2A266214A67B400C51413 /* de */,
 				50EED190218822E200E200AD /* fr */,
 				50EED192218822FA00E200AD /* tr */,
+				D3B476A421D0D64E008B0C3E /* es */,
+				D3B476A621D0D659008B0C3E /* zh */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";

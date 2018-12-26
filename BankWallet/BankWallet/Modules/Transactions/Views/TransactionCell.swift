@@ -28,6 +28,8 @@ class TransactionCell: UITableViewCell {
         }
 
         dateLabel.font = TransactionsTheme.dateLabelFont
+        dateLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+        dateLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         contentView.addSubview(dateLabel)
         dateLabel.snp.makeConstraints { maker in
             maker.leading.equalTo(contentView.snp.leadingMargin).offset(TransactionsTheme.leftAdditionalMargin)
@@ -43,9 +45,8 @@ class TransactionCell: UITableViewCell {
         }
 
         currencyAmountLabel.font = TransactionsTheme.currencyAmountLabelFont
+        currencyAmountLabel.textAlignment = .right
         contentView.addSubview(currencyAmountLabel)
-        currencyAmountLabel.setContentHuggingPriority(.defaultLow, for: .horizontal)
-        currencyAmountLabel.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
         currencyAmountLabel.snp.makeConstraints { maker in
             maker.leading.equalTo(self.dateLabel.snp.trailing).offset(TransactionsTheme.cellMediumMargin)
             maker.top.equalToSuperview().offset(TransactionsTheme.cellMediumMargin)
@@ -66,7 +67,7 @@ class TransactionCell: UITableViewCell {
         contentView.addSubview(pendingImageView)
         pendingImageView.snp.makeConstraints { maker in
             maker.size.equalTo(TransactionsTheme.statusImageViewSize)
-            maker.leading.equalTo(contentView.snp.leadingMargin).offset(TransactionsTheme.leftAdditionalMargin)
+            maker.leading.equalTo(self.dateLabel.snp.trailing).offset(TransactionsTheme.cellSmallMargin)
             maker.top.equalToSuperview().offset(TransactionsTheme.pendingIconTopMargin)
         }
 
@@ -123,6 +124,8 @@ class TransactionCell: UITableViewCell {
             pendingImageView.isHidden = false
             barsProgressView.isHidden = false
             completedImageView.isHidden = true
+
+            barsProgressView.filledCount = 0
         case .processing(let confirmations):
             pendingImageView.isHidden = true
             barsProgressView.isHidden = false
@@ -135,8 +138,11 @@ class TransactionCell: UITableViewCell {
             completedImageView.isHidden = false
         }
 
+        pendingImageView.snp.updateConstraints { maker in
+            maker.leading.equalTo(self.dateLabel.snp.trailing).offset(item.date == nil ? 0 : TransactionsTheme.cellSmallMargin)
+        }
         barsProgressView.snp.updateConstraints { maker in
-            maker.leading.equalTo(self.timeLabel.snp.trailing).offset(item.status == .pending ? 0 : TransactionsTheme.cellSmallMargin)
+            maker.leading.equalTo(self.timeLabel.snp.trailing).offset(item.date == nil ? 0 : TransactionsTheme.cellSmallMargin)
         }
     }
 
