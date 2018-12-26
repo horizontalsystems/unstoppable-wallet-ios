@@ -7,7 +7,10 @@ class BalanceTheme {
     static let amountColor = UIColor.cryptoYellow
     static let amountColorSyncing = UIColor.cryptoYellow40
 
+    static let editButtonSideSize: CGFloat = 32
     static let cellBigMargin: CGFloat = 12
+    static let editButtonBackground = UIColor.cryptoSteel20
+    static let editButtonSelectedBackground = UIColor.cryptoSteel40
     static let cellSmallMargin: CGFloat = 8
     static let expandedCellHeight: CGFloat = 138
     static let cellPadding: CGFloat = 8
@@ -46,4 +49,5 @@ class BalanceTheme {
     static let buttonsHeight: CGFloat = 50
     static let buttonCornerRadius: CGFloat = 12
     static let buttonsAnimationDuration = 0.2
+    static let editCellHeight: CGFloat = 64
 }

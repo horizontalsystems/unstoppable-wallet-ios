@@ -9,6 +9,7 @@ protocol IBalanceViewDelegate {
     func onRefresh(for coinCode: CoinCode)
     func onReceive(for coinCode: CoinCode)
     func onPay(for coinCode: CoinCode)
+    func onOpenManageCoins()
 }
 
 protocol IBalanceInteractor {
@@ -25,4 +26,5 @@ protocol IBalanceInteractorDelegate: class {
 protocol IBalanceRouter {
     func openReceive(for coinCode: CoinCode)
     func openSend(for coinCode: CoinCode)
+    func openManageCoins()
 }

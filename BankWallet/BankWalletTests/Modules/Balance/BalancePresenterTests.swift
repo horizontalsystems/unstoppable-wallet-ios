@@ -87,6 +87,7 @@ class BalancePresenterTests: XCTestCase {
         stub(mockRouter) { mock in
             when(mock.openReceive(for: any())).thenDoNothing()
             when(mock.openSend(for: any())).thenDoNothing()
+            when(mock.openManageCoins()).thenDoNothing()
         }
         stub(mockInteractor) { mock in
             when(mock.baseCurrency.get).thenReturn(currency)
@@ -329,6 +330,11 @@ class BalancePresenterTests: XCTestCase {
                 XCTAssertEqual(item1.rateExpired, item2.rateExpired)
             }
         }
+    }
+
+    func testOpenManageCoins() {
+        presenter.onOpenManageCoins()
+        verify(mockRouter).openManageCoins()
     }
 
 }
