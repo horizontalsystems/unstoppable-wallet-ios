@@ -3,11 +3,11 @@ import GrouviExtensions
 import SnapKit
 
 class ManageCoinsViewController: UITableViewController {
-    let numberOfSections = 2
-    let enabledSection = 0
-    let disabledSection = 1
+    private let numberOfSections = 2
+    private let enabledSection = 0
+    private let disabledSection = 1
 
-    let delegate: IManageCoinsViewDelegate
+    private let delegate: IManageCoinsViewDelegate
 
     init(delegate: IManageCoinsViewDelegate) {
         self.delegate = delegate
@@ -62,11 +62,11 @@ extension ManageCoinsViewController: IManageCoinsView {
 
 extension ManageCoinsViewController {
 
-    override public func numberOfSections(in tableView: UITableView) -> Int {
+    public override func numberOfSections(in tableView: UITableView) -> Int {
         return numberOfSections
     }
 
-    override public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    public override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == enabledSection {
             return delegate.enabledCoinsCount
         } else if section == disabledSection {
@@ -75,37 +75,37 @@ extension ManageCoinsViewController {
         return 0
     }
 
-    override public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    public override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         return tableView.dequeueReusableCell(withIdentifier: String(describing: ManageCoinCell.self), for: indexPath)
     }
 
-    override public func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+    public override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if let cell = cell as? ManageCoinCell {
             let coin = indexPath.section == enabledSection ? delegate.enabledItem(forIndex: indexPath.row) : delegate.disabledItem(forIndex: indexPath.row)
             cell.bind(coin: coin)
         }
     }
 
-    override public func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
+    public override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
         return indexPath.section == enabledSection
     }
 
-    override public func tableView(_ tableView: UITableView, targetIndexPathForMoveFromRowAt sourceIndexPath: IndexPath, toProposedIndexPath proposedDestinationIndexPath: IndexPath) -> IndexPath {
+    public override func tableView(_ tableView: UITableView, targetIndexPathForMoveFromRowAt sourceIndexPath: IndexPath, toProposedIndexPath proposedDestinationIndexPath: IndexPath) -> IndexPath {
         if proposedDestinationIndexPath.section != enabledSection {
             return IndexPath(row: tableView.numberOfRows(inSection: enabledSection) - 1, section: enabledSection)
         }
         return proposedDestinationIndexPath
     }
 
-    override public func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+    public override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         delegate.move(from: sourceIndexPath.row, to: destinationIndexPath.row)
     }
 
-    override public func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+    public override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true
     }
 
-    override public func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+    public override func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
         return indexPath.section == enabledSection ? .delete : .insert
     }
 

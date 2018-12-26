@@ -30,7 +30,7 @@ extension ManageCoinsInteractor: IManageCoinsInteractor {
     }
 
     func save(enabledCoins: [Coin]) {
-
+        delegate?.didSaveCoins()
     }
 
 }

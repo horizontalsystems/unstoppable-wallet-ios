@@ -1,7 +1,4 @@
-import Foundation
-
 class ManageCoinsPresenter {
-
     private let interactor: IManageCoinsInteractor
     private let router: IManageCoinsRouter
     private var state: IManageCoinsPresenterState
@@ -14,10 +11,6 @@ class ManageCoinsPresenter {
         self.state = state
     }
 
-    private func updateCoins() {
-        view?.updateUI()
-    }
-
 }
 
 extension ManageCoinsPresenter: IManageCoinsInteractorDelegate {
@@ -25,7 +18,7 @@ extension ManageCoinsPresenter: IManageCoinsInteractorDelegate {
     func didLoadCoins(all: [Coin], enabled: [Coin]) {
         state.allCoins = all
         state.enabledCoins = enabled
-        updateCoins()
+        view?.updateUI()
     }
 
     func didSaveCoins() {
@@ -46,22 +39,21 @@ extension ManageCoinsPresenter: IManageCoinsViewDelegate {
 
     func enable(atIndex index: Int) {
         state.enable(coin: state.disabledCoins[index])
-        updateCoins()
+        view?.updateUI()
     }
 
     func disable(atIndex index: Int) {
         state.disable(coin: state.enabledCoins[index])
-        updateCoins()
+        view?.updateUI()
     }
 
     func move(from fromIndex: Int, to toIndex: Int) {
         state.move(coin: state.enabledCoins[fromIndex], to: toIndex)
-        updateCoins()
+        view?.updateUI()
     }
 
     func saveChanges() {
         interactor.save(enabledCoins: state.enabledCoins)
-        router.close()
     }
 
     var enabledCoinsCount: Int {

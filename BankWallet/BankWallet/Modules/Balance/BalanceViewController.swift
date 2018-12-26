@@ -1,9 +1,9 @@
 import UIKit
 
 class BalanceViewController: UITableViewController {
-    let numberOfSections = 2
-    let balanceSection = 0
-    let editSection = 1
+    private let numberOfSections = 2
+    private let balanceSection = 0
+    private let editSection = 1
 
     private let delegate: IBalanceViewDelegate
 
@@ -45,7 +45,7 @@ class BalanceViewController: UITableViewController {
 
 extension BalanceViewController {
 
-    public override func numberOfSections(in tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         return numberOfSections
     }
 
@@ -69,7 +69,7 @@ extension BalanceViewController {
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == balanceSection {
-            return tableView.dequeueReusableCell(withIdentifier: String(describing: BalanceCell.self)) ?? UITableViewCell()
+            return tableView.dequeueReusableCell(withIdentifier: String(describing: BalanceCell.self), for: indexPath)
         } else if indexPath.section == editSection {
             return tableView.dequeueReusableCell(withIdentifier: String(describing: BalanceEditCell.self), for: indexPath)
         }
@@ -92,7 +92,7 @@ extension BalanceViewController {
         }
     }
 
-    public override func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+    override func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if let cell = cell as? BalanceCell {
             cell.unbind()
         }

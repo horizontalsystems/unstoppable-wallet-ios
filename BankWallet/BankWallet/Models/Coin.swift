@@ -13,9 +13,7 @@ struct Coin {
 
 extension Coin: Equatable {
     public static func ==(lhs: Coin, rhs: Coin) -> Bool {
-        let codes = lhs.code == rhs.code
-        let titles = lhs.title == rhs.title
-        return codes && titles && lhs.type == rhs.type
+        return lhs.code == rhs.code && lhs.title == rhs.title && lhs.type == rhs.type
     }
 }
 

@@ -1,6 +1,7 @@
 class ManageCoinsPresenterState: IManageCoinsPresenterState {
     var allCoins: [Coin] = []
     var enabledCoins: [Coin] = []
+
     var disabledCoins: [Coin] {
         var disabledCoins = allCoins
         disabledCoins.removeAll(where: { enabledCoins.contains($0) })

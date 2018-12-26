@@ -1,5 +1,3 @@
-import Foundation
-
 protocol IManageCoinsView: class {
     func updateUI()
     func show(error: String)
