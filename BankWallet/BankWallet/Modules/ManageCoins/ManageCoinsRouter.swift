@@ -23,7 +23,12 @@ extension ManageCoinsRouter {
         interactor.delegate = presenter
         router.viewController = viewController
 
-        presentingController?.present(WalletNavigationController(rootViewController: viewController), animated: true)
+        let navigationController = UINavigationController(rootViewController: viewController)
+        navigationController.navigationBar.barStyle = AppTheme.navigationBarStyle
+        navigationController.navigationBar.tintColor = AppTheme.navigationBarTintColor
+        presenter.view = viewController
+
+        presentingController?.present(navigationController, animated: true)
     }
 
 }

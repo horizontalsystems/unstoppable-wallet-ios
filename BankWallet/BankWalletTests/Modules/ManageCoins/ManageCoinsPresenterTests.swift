@@ -2,7 +2,6 @@ import XCTest
 import Cuckoo
 @testable import Bank_Dev_T
 
-
 class ManageCoinsPresenterTests: XCTestCase {
     private var bitcoin: Coin!
     private var bitcoinCash: Coin!
@@ -93,22 +92,22 @@ class ManageCoinsPresenterTests: XCTestCase {
     func testEnableCoin() {
         let coinToEnable: Coin = bitcoinCash
 
-        presenter.enable(coin: coinToEnable)
+        presenter.enable(atIndex: 0)
         verify(mockState).enable(coin: equal(to: coinToEnable))
         verify(mockView).updateUI()
     }
 
     func testDisableCoin() {
-        let coinToDisable = bitcoinCash!
+        let coinToDisable: Coin = ethereum
 
-        presenter.disable(coin: coinToDisable)
+        presenter.disable(atIndex: 1)
         verify(mockState).disable(coin: equal(to: coinToDisable))
         verify(mockView).updateUI()
     }
 
     func testMoveEnabledCoin() {
         let coinToMove: Coin = ethereum
-        presenter.move(coin: coinToMove, to: 0)
+        presenter.move(from: 1, to: 0)
         verify(mockState).move(coin: equal(to: coinToMove), to: 0)
         verify(mockView).updateUI()
     }
@@ -142,6 +141,11 @@ class ManageCoinsPresenterTests: XCTestCase {
 
     func testDisabledCoinsCount() {
         XCTAssertEqual(presenter.disabledCoinsCount, disabledCoins.count)
+    }
+
+    func testClose() {
+        presenter.onClose()
+        verify(mockRouter).close()
     }
 
 }

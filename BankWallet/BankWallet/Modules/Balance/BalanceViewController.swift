@@ -1,6 +1,9 @@
 import UIKit
 
 class BalanceViewController: UITableViewController {
+    let numberOfSections = 2
+    let balanceSection = 0
+    let editSection = 1
 
     private let delegate: IBalanceViewDelegate
 
@@ -29,6 +32,7 @@ class BalanceViewController: UITableViewController {
         tableView?.estimatedRowHeight = 0
         tableView?.delaysContentTouches = false
         tableView?.registerCell(forClass: BalanceCell.self)
+        tableView?.registerCell(forClass: BalanceEditCell.self)
 
         delegate.viewDidLoad()
     }
@@ -41,16 +45,35 @@ class BalanceViewController: UITableViewController {
 
 extension BalanceViewController {
 
+    public override func numberOfSections(in tableView: UITableView) -> Int {
+        return numberOfSections
+    }
+
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return items.count
+        if section == balanceSection {
+            return items.count
+        } else if section == editSection {
+            return 1
+        }
+        return 0
     }
 
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return indexPathForSelectedRow == indexPath ? BalanceTheme.expandedCellHeight + BalanceTheme.cellPadding : BalanceTheme.cellHeight + BalanceTheme.cellPadding
+        if indexPath.section == balanceSection {
+            return indexPathForSelectedRow == indexPath ? BalanceTheme.expandedCellHeight + BalanceTheme.cellPadding : BalanceTheme.cellHeight + BalanceTheme.cellPadding
+        } else if indexPath.section == editSection {
+            return BalanceTheme.editCellHeight
+        }
+        return 0
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return tableView.dequeueReusableCell(withIdentifier: String(describing: BalanceCell.self)) ?? UITableViewCell()
+        if indexPath.section == balanceSection {
+            return tableView.dequeueReusableCell(withIdentifier: String(describing: BalanceCell.self)) ?? UITableViewCell()
+        } else if indexPath.section == editSection {
+            return tableView.dequeueReusableCell(withIdentifier: String(describing: BalanceEditCell.self), for: indexPath)
+        }
+        return UITableViewCell()
     }
 
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
@@ -62,6 +85,10 @@ extension BalanceViewController {
             }, onPay: { [weak self] in
                 self?.onPay(for: indexPath)
             })
+        } else if let cell = cell as? BalanceEditCell {
+            cell.onTap = { [weak self] in
+                self?.delegate.onOpenManageCoins()
+            }
         }
     }
 
@@ -113,11 +140,17 @@ extension BalanceViewController {
     }
 
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return BalanceTheme.headerHeight
+        if section == balanceSection {
+            return BalanceTheme.headerHeight
+        }
+        return 0
     }
 
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        return headerView
+        if section == balanceSection {
+            return headerView
+        }
+        return nil
     }
 
 }

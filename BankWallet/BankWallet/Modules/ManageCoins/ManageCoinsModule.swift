@@ -11,10 +11,11 @@ protocol IManageCoinsViewDelegate {
     var disabledCoinsCount: Int { get }
     func enabledItem(forIndex index: Int) -> Coin
     func disabledItem(forIndex index: Int) -> Coin
-    func enable(coin: Coin)
-    func disable(coin: Coin)
-    func move(coin: Coin, to: Int)
+    func enable(atIndex index: Int)
+    func disable(atIndex index: Int)
+    func move(from fromIndex: Int, to toIndex: Int)
     func saveChanges()
+    func onClose()
 }
 
 protocol IManageCoinsInteractor {

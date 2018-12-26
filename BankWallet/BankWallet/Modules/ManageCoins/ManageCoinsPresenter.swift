@@ -44,18 +44,18 @@ extension ManageCoinsPresenter: IManageCoinsViewDelegate {
         interactor.loadCoins()
     }
 
-    func enable(coin: Coin) {
-        state.enable(coin: coin)
+    func enable(atIndex index: Int) {
+        state.enable(coin: state.disabledCoins[index])
         updateCoins()
     }
 
-    func disable(coin: Coin) {
-        state.disable(coin: coin)
+    func disable(atIndex index: Int) {
+        state.disable(coin: state.enabledCoins[index])
         updateCoins()
     }
 
-    func move(coin: Coin, to index: Int) {
-        state.move(coin: coin, to: index)
+    func move(from fromIndex: Int, to toIndex: Int) {
+        state.move(coin: state.enabledCoins[fromIndex], to: toIndex)
         updateCoins()
     }
 
@@ -81,6 +81,10 @@ extension ManageCoinsPresenter: IManageCoinsViewDelegate {
 
     func disabledItem(forIndex index: Int) -> Coin {
         return state.disabledCoins[index]
+    }
+
+    func onClose() {
+        router.close()
     }
 
 }
