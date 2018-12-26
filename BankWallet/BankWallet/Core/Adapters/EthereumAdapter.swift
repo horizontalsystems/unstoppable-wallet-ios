@@ -7,6 +7,7 @@ class EthereumAdapter {
     private let ethereumKit: EthereumKit
     private let transactionCompletionThreshold = 12
     private let coinRate: Double = pow(10, 18)
+    private let gWeiMultiply: Double = pow(10, 9)
 
     let wordsHash: String
     let balanceSubject = PublishSubject<Double>()
@@ -108,7 +109,8 @@ extension EthereumAdapter: IAdapter {
     }
 
     func fee(for value: Double, address: String?, senderPay: Bool) throws -> Double {
-        return Double(ethereumKit.fee) / coinRate
+        // ethereum fee comes in GWei integer value
+        return Double(ethereumKit.fee) * gWeiMultiply / coinRate
     }
 
     func validate(address: String) throws {
