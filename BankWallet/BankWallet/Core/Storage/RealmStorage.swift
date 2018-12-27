@@ -1,4 +1,5 @@
 import RealmSwift
+import RxSwift
 
 class RealmStorage {
     private let realmFactory: IRealmFactory
@@ -38,6 +39,18 @@ extension RealmStorage: IRateStorage {
 
         try? realm.write {
             realm.delete(realm.objects(Rate.self))
+        }
+    }
+
+    func rateObservable(forCoinCode coinCode: CoinCode, currencyCode: String) -> Observable<Rate> {
+        return Observable.create { observer in
+            if let rate = self.rate(forCoin: coinCode, currencyCode: currencyCode) {
+                observer.onNext(Rate(value: rate))
+            }
+
+            observer.onCompleted()
+
+            return Disposables.create()
         }
     }
 

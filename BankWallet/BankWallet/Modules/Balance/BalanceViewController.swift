@@ -7,8 +7,6 @@ class BalanceViewController: UITableViewController {
 
     private let delegate: IBalanceViewDelegate
 
-    private var items = [BalanceViewItem]()
-
     private var headerView = UINib(nibName: String(describing: BalanceHeaderView.self), bundle: Bundle(for: BalanceHeaderView.self)).instantiate(withOwner: nil, options: nil)[0] as? BalanceHeaderView
     private var indexPathForSelectedRow: IndexPath?
 
@@ -27,10 +25,13 @@ class BalanceViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        title = "balance.title".localized
+
         tableView.backgroundColor = AppTheme.controllerBackground
         tableView.separatorColor = .clear
         tableView?.estimatedRowHeight = 0
         tableView?.delaysContentTouches = false
+
         tableView?.registerCell(forClass: BalanceCell.self)
         tableView?.registerCell(forClass: BalanceEditCell.self)
 
@@ -51,7 +52,7 @@ extension BalanceViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == balanceSection {
-            return items.count
+            return delegate.itemsCount
         } else if section == editSection {
             return 1
         }
@@ -78,12 +79,12 @@ extension BalanceViewController {
 
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if let cell = cell as? BalanceCell {
-            cell.bind(item: items[indexPath.row], selected: indexPathForSelectedRow == indexPath, onRefresh: { [weak self] in
-                self?.onRefresh(for: indexPath)
+            cell.bind(item: delegate.viewItem(at: indexPath.row), selected: indexPathForSelectedRow == indexPath, onRefresh: { [weak self] in
+                self?.delegate.onRefresh(index: indexPath.row)
             }, onReceive: { [weak self] in
-                self?.onReceive(for: indexPath)
+                self?.delegate.onReceive(index: indexPath.row)
             }, onPay: { [weak self] in
-                self?.onPay(for: indexPath)
+                self?.delegate.onPay(index: indexPath.row)
             })
         } else if let cell = cell as? BalanceEditCell {
             cell.onTap = { [weak self] in
@@ -96,18 +97,6 @@ extension BalanceViewController {
         if let cell = cell as? BalanceCell {
             cell.unbind()
         }
-    }
-
-    private func onRefresh(for indexPath: IndexPath) {
-        delegate.onRefresh(for: items[indexPath.row].coinValue.coinCode)
-    }
-
-    private func onReceive(for indexPath: IndexPath) {
-        delegate.onReceive(for: items[indexPath.row].coinValue.coinCode)
-    }
-
-    private func onPay(for indexPath: IndexPath) {
-        delegate.onPay(for: items[indexPath.row].coinValue.coinCode)
     }
 
     override func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
@@ -133,7 +122,7 @@ extension BalanceViewController {
 
     func bind(at indexPath: IndexPath, animated: Bool = false) {
         if let cell = tableView?.cellForRow(at: indexPath) as? BalanceCell {
-            cell.bindView(item: items[indexPath.row], selected: indexPathForSelectedRow == indexPath, animated: true)
+            cell.bindView(item: delegate.viewItem(at: indexPath.row), selected: indexPathForSelectedRow == indexPath, animated: true)
             tableView?.beginUpdates()
             tableView?.endUpdates()
         }
@@ -157,17 +146,19 @@ extension BalanceViewController {
 
 extension BalanceViewController: IBalanceView {
 
-    func set(title: String) {
-        self.title = title.localized
+    func reload() {
+        tableView.reloadData()
+        updateHeader()
     }
 
-    func show(totalBalance: CurrencyValue, upToDate: Bool) {
-        headerView?.bind(amount: ValueFormatter.instance.format(currencyValue: totalBalance), upToDate: upToDate)
+    func updateItem(at index: Int) {
+        tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .none)
     }
 
-    func show(items: [BalanceViewItem]) {
-        self.items = items
-        tableView?.reloadData()
+    func updateHeader() {
+        let viewItem = delegate.headerViewItem()
+        let amount = viewItem.currencyValue.flatMap { ValueFormatter.instance.format(currencyValue: $0) }
+        headerView?.bind(amount: amount, upToDate: viewItem.upToDate)
     }
 
 }

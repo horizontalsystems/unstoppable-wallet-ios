@@ -9,24 +9,22 @@ class BitcoinAdapter {
     private let coinRate: Double = pow(10, 8)
 
     let wordsHash: String
-    let balanceSubject = PublishSubject<Double>()
     let lastBlockHeightSubject = PublishSubject<Int>()
     let transactionRecordsSubject = PublishSubject<[TransactionRecord]>()
-    let stateSubject = PublishSubject<AdapterState>()
-    let progressSubject: BehaviorSubject<Double>
 
-    var state: AdapterState {
-        didSet {
-            stateSubject.onNext(state)
-        }
-    }
+    private let progressSubject: BehaviorSubject<Double>
+
+    private let balanceSubject: BehaviorSubject<Double>
+    private let stateSubject: BehaviorSubject<AdapterState>
 
     init(words: [String], coin: BitcoinKit.Coin) {
         wordsHash = words.joined()
         bitcoinKit = BitcoinKit(withWords: words, coin: coin, minLogLevel: .error)
+
         progressSubject = BehaviorSubject(value: 0)
 
-        state = .syncing(progressSubject: progressSubject)
+        balanceSubject = BehaviorSubject(value: Double(bitcoinKit.balance) / coinRate)
+        stateSubject = BehaviorSubject(value: .syncing(progressSubject: progressSubject))
 
         bitcoinKit.delegate = self
     }
@@ -58,6 +56,14 @@ class BitcoinAdapter {
 }
 
 extension BitcoinAdapter: IAdapter {
+
+    var balanceObservable: Observable<Double> {
+        return balanceSubject.asObservable()
+    }
+
+    var stateObservable: Observable<AdapterState> {
+        return stateSubject.asObservable()
+    }
 
     var balance: Double {
         return Double(bitcoinKit.balance) / coinRate
@@ -146,18 +152,28 @@ extension BitcoinAdapter: BitcoinKitDelegate {
     }
 
     public func kitStateUpdated(state: BitcoinKit.KitState) {
-        switch state {
-        case .synced:
-            self.state = .synced
-        case .notSynced:
-            self.state = .notSynced
-        case .syncing(let progress):
-            progressSubject.onNext(progress)
+        if let currentState = try? stateSubject.value() {
+            switch state {
+            case .synced:
+                if case .synced = currentState {
+                    // do nothing
+                } else {
+                    stateSubject.onNext(.synced)
+                }
+            case .notSynced:
+                if case .notSynced = currentState {
+                    // do nothing
+                } else {
+                    stateSubject.onNext(.notSynced)
+                }
+            case .syncing(let progress):
+                progressSubject.onNext(progress)
 
-            if case .syncing = self.state {
-                // do nothing
-            } else {
-                self.state = .syncing(progressSubject: progressSubject)
+                if case .syncing = currentState {
+                    // do nothing
+                } else {
+                    stateSubject.onNext(.syncing(progressSubject: progressSubject))
+                }
             }
         }
     }

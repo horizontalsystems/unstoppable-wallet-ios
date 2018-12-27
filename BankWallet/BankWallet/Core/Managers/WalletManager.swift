@@ -13,6 +13,10 @@ class WalletManager {
 
 extension WalletManager: IWalletManager {
 
+    var walletsObservable: Observable<[Wallet]> {
+        return Observable.just(wallets)
+    }
+
     func initWallets(words: [String], coins: [Coin]) {
         var newWallets = [Wallet]()
 

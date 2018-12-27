@@ -57,6 +57,8 @@ protocol IWalletManager {
     var wallets: [Wallet] { get }
     var walletsSubject: PublishSubject<[Wallet]> { get }
 
+    var walletsObservable: Observable<[Wallet]> { get }
+
     func initWallets(words: [String], coins: [Coin])
     func clearWallets()
 }
@@ -78,11 +80,10 @@ enum AdapterState {
 }
 
 protocol IAdapter: class {
-    var balance: Double { get }
-    var balanceSubject: PublishSubject<Double> { get }
+    var balanceObservable: Observable<Double> { get }
+    var stateObservable: Observable<AdapterState> { get }
 
-    var state: AdapterState { get }
-    var stateSubject: PublishSubject<AdapterState> { get }
+    var balance: Double { get }
 
     var confirmationsThreshold: Int { get }
     var lastBlockHeight: Int? { get }
@@ -188,6 +189,8 @@ protocol IRateStorage {
     func rate(forCoin coinCode: CoinCode, currencyCode: String) -> Rate?
     func save(latestRate: LatestRate, coinCode: CoinCode, currencyCode: String)
     func clear()
+
+    func rateObservable(forCoinCode coinCode: CoinCode, currencyCode: String) -> Observable<Rate>
 }
 
 protocol ITransactionRecordStorage {
@@ -204,6 +207,8 @@ protocol ICurrencyManager {
     var subject: PublishSubject<Currency> { get }
     var currencies: [Currency] { get }
     var baseCurrency: Currency { get }
+
+    var baseCurrencyObservable: Observable<Currency> { get }
 
     func setBaseCurrency(code: String)
 }

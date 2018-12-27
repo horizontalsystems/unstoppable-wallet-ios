@@ -10,17 +10,13 @@ class EthereumAdapter {
     private let gWeiMultiply: Double = pow(10, 9)
 
     let wordsHash: String
-    let balanceSubject = PublishSubject<Double>()
-    let progressSubject: BehaviorSubject<Double>
-    let stateSubject = PublishSubject<AdapterState>()
     let lastBlockHeightSubject = PublishSubject<Int>()
     let transactionRecordsSubject = PublishSubject<[TransactionRecord]>()
 
-    var state: AdapterState {
-        didSet {
-            stateSubject.onNext(state)
-        }
-    }
+    private let progressSubject: BehaviorSubject<Double>
+
+    private let balanceSubject: BehaviorSubject<Double>
+    private let stateSubject: BehaviorSubject<AdapterState>
 
     init(words: [String], coin: EthereumKit.Coin) {
         wordsHash = words.joined()
@@ -31,7 +27,8 @@ class EthereumAdapter {
 
         ethereumKit = EthereumKit(withWords: words, coin: coin, infuraKey: infuraKey ?? "", etherscanKey: etherscanKey ?? "", debugPrints: false)
 
-        state = .syncing(progressSubject: nil)
+        balanceSubject = BehaviorSubject(value: Double(ethereumKit.balance) / coinRate)
+        stateSubject = BehaviorSubject(value: .syncing(progressSubject: nil))
 
         ethereumKit.delegate = self
     }
@@ -71,6 +68,14 @@ class EthereumAdapter {
 }
 
 extension EthereumAdapter: IAdapter {
+
+    var balanceObservable: Observable<Double> {
+        return balanceSubject.asObservable()
+    }
+
+    var stateObservable: Observable<AdapterState> {
+        return stateSubject.asObservable()
+    }
 
     var balance: Double {
         return Double(ethereumKit.balance) / coinRate
@@ -149,11 +154,11 @@ extension EthereumAdapter: EthereumKitDelegate {
     public func kitStateUpdated(state: EthereumKit.KitState) {
         switch state {
         case .synced:
-            self.state = .synced
+            stateSubject.onNext(.synced)
         case .notSynced:
-            self.state = .notSynced
+            stateSubject.onNext(.notSynced)
         case .syncing:
-            self.state = .syncing(progressSubject: nil)
+            stateSubject.onNext(.syncing(progressSubject: nil))
         }
     }
 

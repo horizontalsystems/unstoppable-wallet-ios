@@ -29,6 +29,10 @@ extension CurrencyManager: ICurrencyManager {
         return currencies[0]
     }
 
+    var baseCurrencyObservable: Observable<Currency> {
+        return Observable.just(baseCurrency)
+    }
+
     func setBaseCurrency(code: String) {
         localStorage.baseCurrencyCode = code
         subject.onNext(baseCurrency)
