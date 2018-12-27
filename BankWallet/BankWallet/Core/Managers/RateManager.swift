@@ -4,8 +4,6 @@ import RxSwift
 class RateManager {
     private let disposeBag = DisposeBag()
 
-    let subject = PublishSubject<Void>()
-
     private let storage: IRateStorage
     private let syncer: IRateSyncer
     private let walletManager: IWalletManager
@@ -71,7 +69,6 @@ extension RateManager: IRateSyncerDelegate {
 
     func didSync(coinCode: String, currencyCode: String, latestRate: LatestRate) {
         storage.save(latestRate: latestRate, coinCode: coinCode, currencyCode: currencyCode)
-        subject.onNext(())
     }
 
 }

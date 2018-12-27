@@ -122,15 +122,9 @@ class RateManagerTests: XCTestCase {
     func testDidSyncRate() {
         let latestRate = LatestRate(value: 3250, timestamp: Date().timeIntervalSince1970)
 
-        let subjectExpectation = expectation(description: "Subject")
-        _ = manager.subject.subscribe(onNext: {
-            subjectExpectation.fulfill()
-        })
-
         manager.didSync(coinCode: bitcoin, currencyCode: baseCurrencyCode, latestRate: latestRate)
 
         verify(mockStorage).save(latestRate: equal(to: latestRate), coinCode: equal(to: bitcoin), currencyCode: equal(to: baseCurrencyCode))
-        waitForExpectations(timeout: 2)
     }
 
 }

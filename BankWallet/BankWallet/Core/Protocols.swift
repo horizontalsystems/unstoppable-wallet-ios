@@ -152,7 +152,6 @@ protocol BiometricManagerDelegate: class {
 }
 
 protocol IRateManager {
-    var subject: PublishSubject<Void> { get }
     func rate(forCoin coinCode: CoinCode, currencyCode: String) -> Rate?
 }
 
