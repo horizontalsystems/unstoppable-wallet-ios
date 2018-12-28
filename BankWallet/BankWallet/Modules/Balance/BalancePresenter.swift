@@ -57,6 +57,7 @@ extension BalancePresenter: IBalanceInteractorDelegate {
 
     func didUpdate(currency: Currency) {
         dataSource.currency = currency
+        dataSource.clearRates()
 
         interactor.fetchRates(currencyCode: currency.code, coinCodes: dataSource.coinCodes)
 

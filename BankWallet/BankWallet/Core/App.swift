@@ -32,6 +32,7 @@ class App {
     let coinManager: ICoinManager
 
     let realmStorage: RealmStorage
+    let grdbStorage: GrdbStorage
     let networkManager: NetworkManager
 
     let reachabilityManager: IReachabilityManager
@@ -75,6 +76,7 @@ class App {
         coinManager = CoinManager(wordsManager: wordsManager, walletManager: walletManager, appConfigProvider: appConfigProvider)
 
         realmStorage = RealmStorage(realmFactory: realmFactory)
+        grdbStorage = GrdbStorage()
         networkManager = NetworkManager(appConfigProvider: appConfigProvider)
 
         reachabilityManager = ReachabilityManager(appConfigProvider: appConfigProvider)
@@ -83,7 +85,7 @@ class App {
 
         rateTimer = PeriodicTimer(interval: 3 * 60)
         rateSyncer = RateSyncer(networkManager: networkManager, timer: rateTimer)
-        rateManager = RateManager(storage: realmStorage, syncer: rateSyncer, walletManager: walletManager, currencyManager: currencyManager, reachabilityManager: reachabilityManager, timer: rateTimer)
+        rateManager = RateManager(storage: grdbStorage, syncer: rateSyncer, walletManager: walletManager, currencyManager: currencyManager, reachabilityManager: reachabilityManager, timer: rateTimer)
         rateSyncer.delegate = rateManager
 
         transactionRateSyncer = TransactionRateSyncer(storage: realmStorage, networkManager: networkManager)

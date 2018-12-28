@@ -185,11 +185,9 @@ protocol IRateNetworkManager {
 }
 
 protocol IRateStorage {
-    func rate(forCoin coinCode: CoinCode, currencyCode: String) -> Rate?
+    func rateObservable(forCoinCode coinCode: CoinCode, currencyCode: String) -> Observable<Rate>
     func save(latestRate: LatestRate, coinCode: CoinCode, currencyCode: String)
     func clear()
-
-    func rateObservable(forCoinCode coinCode: CoinCode, currencyCode: String) -> Observable<Rate>
 }
 
 protocol ITransactionRecordStorage {

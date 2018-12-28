@@ -52,7 +52,7 @@ class RateManager {
 extension RateManager: IRateManager {
 
     func rate(forCoin coinCode: CoinCode, currencyCode: String) -> Rate? {
-        return storage.rate(forCoin: coinCode, currencyCode: currencyCode)
+        return nil
     }
 
 }

@@ -9,53 +9,6 @@ class RealmStorage {
     }
 }
 
-extension RealmStorage: IRateStorage {
-
-    func rate(forCoin coinCode: CoinCode, currencyCode: String) -> Rate? {
-        return realmFactory.realm.objects(Rate.self).filter("coinCode = %@ AND currencyCode = %@", coinCode, currencyCode).first
-    }
-
-    func save(latestRate: LatestRate, coinCode: CoinCode, currencyCode: String) {
-        let realm = realmFactory.realm
-
-        try? realm.write {
-            if let rate = realm.objects(Rate.self).filter("coinCode = %@ AND currencyCode = %@", coinCode, currencyCode).first {
-                rate.value = latestRate.value
-                rate.timestamp = latestRate.timestamp
-            } else {
-                let rate = Rate()
-                rate.coinCode = coinCode
-                rate.currencyCode = currencyCode
-                rate.value = latestRate.value
-                rate.timestamp = latestRate.timestamp
-
-                realm.add(rate)
-            }
-        }
-    }
-
-    func clear() {
-        let realm = realmFactory.realm
-
-        try? realm.write {
-            realm.delete(realm.objects(Rate.self))
-        }
-    }
-
-    func rateObservable(forCoinCode coinCode: CoinCode, currencyCode: String) -> Observable<Rate> {
-        return Observable.create { observer in
-            if let rate = self.rate(forCoin: coinCode, currencyCode: currencyCode) {
-                observer.onNext(Rate(value: rate))
-            }
-
-            observer.onCompleted()
-
-            return Disposables.create()
-        }
-    }
-
-}
-
 extension RealmStorage: ITransactionRecordStorage {
 
     func record(forHash hash: String) -> TransactionRecord? {

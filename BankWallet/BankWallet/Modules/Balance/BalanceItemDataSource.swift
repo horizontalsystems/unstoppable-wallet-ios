@@ -30,4 +30,10 @@ class BalanceItemDataSource {
         items[index].rate = rate
     }
 
+    func clearRates() {
+        for i in 0..<items.count {
+            items[i].rate = nil
+        }
+    }
+
 }
