@@ -1,4 +1,4 @@
-"coin.BTC" = "Bitcoin";
+"coin.BTC" = "比特币";
 "coin.BCH" = "Bitcoin Cash";
 "coin.ETH" = "Ethereum";
 "coin.BTCt" = "Bitcoin T";
@@ -163,21 +163,21 @@
 
 "set_pin.title" = "设置PIN码";
 "set_pin.info" = "您的PIN码将用于解锁钱包及转钱。";
-"set_pin.confirm.info" = "Confirm PIN";
-"set_pin.wrong_confirmation" = "Pin did not match. Try again";
+"set_pin.confirm.info" = "确认PIN码";
+"set_pin.wrong_confirmation" = "PIN码不匹配。再试一次。";
 
 // Edit PIN
 
-"edit_pin.title" = "Edit PIN";
-"edit_pin.unlock_info" = "Enter current PIN";
-"edit_pin.new_pin_info" = "Enter new PIN";
-"edit_pin.confirm_info" = "Enter again";
+"edit_pin.title" = "编辑 PIN码";
+"edit_pin.unlock_info" = "输入当前的 PIN码";
+"edit_pin.new_pin_info" = "输入新的 PIN码";
+"edit_pin.confirm_info" = "再次输入PIN 码";
 
 // Unlock PIN
 
-"unlock_pin.info" = "Enter PIN";
-"unlock_pin.cant_save_pin" = "Ouch! We cant save your pin, please contact us asap!";
-"unlock_pin.blocked_until" = "Disabled until: %@";
+"unlock_pin.info" = "输入PIN码";
+"unlock_pin.cant_save_pin" = "哎哟！我们无法保存您的PIN码，请尽快与我们联系，谢谢。";
+"unlock_pin.blocked_until" = "禁用至: %@";
 
 //NumPad
 
