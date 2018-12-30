@@ -1,2 +1,2 @@
 "NSCameraUsageDescription" = "扫描二维码需要接入相机";
-"NSFaceIDUsageDescription" = "我们使用面容ID识别方法解锁钱包";
+"NSFaceIDUsageDescription" = "我们使用FACE ID面容识别解锁钱包";
