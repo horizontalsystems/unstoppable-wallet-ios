@@ -36,7 +36,7 @@
 // Backup
 
 "backup.intro.title" = "备份";
-"backup.intro.subtitle" = "如果您的手机被丢失、被盗、被损坏、或被更新，您的密钥是恢复钱包和资金的唯一方法。\n\n密钥由12个单词组成。都必须保管好您的密钥";
+"backup.intro.subtitle" = "如果您的手机被丢失、被盗、损坏、或更新，您的密钥是恢复钱包和资金的唯一方法。\n\n密钥由12个单词组成。都必须保管好您的密钥";
 "backup.intro.later" = "稍后";
 "backup.intro.backup_now" = "备份";
 
@@ -48,7 +48,7 @@
 "backup.confirmation.description" = "请输入你密钥中的词";
 "backup.confirmation.failure_alert.text" = "单词不匹配";
 "backup.confirmation.done_button" = "完成";
-"backup.confirmation.understand" = "I understand that my wallet and tokens are held securely on this device only and not any servers.";
+"backup.confirmation.understand" = "我的钱包和代币仅在这个设备上，而不是在任何服务器上安全地保存着。这个重点我都理解。";
 "backup.confirmation.delete_app_warn" = "I understand that if this app is deleted or stops working for any reason, my wallet can only be recovered using the secret key that I have written down and saved in a secure place";
 
 // Balance
