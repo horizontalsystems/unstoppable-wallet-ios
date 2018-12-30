@@ -53,12 +53,12 @@
 
 // Balance
 
-"balance.title" = "Balance";
-"balance.tab_bar_item" = "Balance";
-"balance.send" = "Send";
-"balance.deposit" = "Receive";
+"balance.title" = "余额";
+"balance.tab_bar_item" = "余额";
+"balance.send" = "发送​​";
+"balance.deposit" = "收到";
 "balance.rate_per_coin" = "%@ per %@";
-"balance.syncing_percent" = "Syncing %@";
+"balance.syncing_percent" = "%@ 正在同步";
 
 // Deposit
 
