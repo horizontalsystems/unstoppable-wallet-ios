@@ -4,7 +4,7 @@
 它用从接口设计领域里吸收最佳的做法来构建区块链协议的一种方法。
 
   分散独立
-这种银行钱包是完全对等及分散管理的 它不能被停止、阻塞或取下 这个钱包无须其中的机构能直接连接货币网（其中包括比特币等等） Such approach enables the BANK wallet to operate anywhere and remain censorship-resistant. Only the user is in control of the money.
+这种银行钱包是完全对等及分散管理的 它不能被停止、阻塞或取下 这个钱包无须其中的机构能直接连接货币网（其中包括比特币等等） 这种方法使银行钱包可以在任何地方运行并保持抗审查 Only the user is in control of the money.
 Most crypto wallet apps out there are centralized. The funds are stored on a remote server which is operated by the wallet provider. Due to the unregulated nature of the cryptocurrencies there are no mechanisms in place to guarantee that a wallet provider doesn't cheat or that provider's servers not get hacked.
 Being a fully decentralized app the BANK wallet implements all of its functionality in a decentralized manner. Every single feature in the app is implemented in a decentralized manner substantially increasing the security and privacy aspects of the wallet.
 There are no centrally managed servers that can fail, and as a result stop app from functioning.
