@@ -1,5 +1,5 @@
   成为你自己的银行吧！
-钱包银行是一个安全且完全分散的加密钱包应用程序，支持主要加密货币，包括比特币，比特币Cash和ERC20代币。 The number of supported currencies being gradually added with every release.
+钱包银行是一个安全且完全分散的加密钱包应用程序，支持主要加密货币，包括比特币，比特币Cash和ERC20代币。 支持货币的数量在每一个版本都会逐渐增加
 This BANK wallet provides a seamless way to get started with Bitcoin and other crypto currencies for masses. You don't need to understand the inner workings of cryptocurrencies to be able to use it.
 It has been built using best practices from the design of the interface to the implementation of blockchain protocols.
 
