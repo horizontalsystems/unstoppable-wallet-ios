@@ -151,11 +151,11 @@
 "settings_security.title" = "安全中心";
 "settings_security.backup_wallet" = "备份钱包";
 "settings_security.unlink_from_this_device" = "与此设备断开连接";
-"settings_security.set_pin" = "设置密码";
-"settings_security.change_pin" = "Edit PIN";
-"settings_security.touch_id" = "Touch ID";
-"settings_security.face_id" = "Face ID";
-"security_settings.unlink_alert_button" = "Unlink";
+"settings_security.set_pin" = "设置PIN码";
+"settings_security.change_pin" = "编辑 PIN码";
+"settings_security.touch_id" = "Touch ID指纹识别";
+"settings_security.face_id" = "Face ID 面容识别";
+"security_settings.unlink_alert_button" = "取消链接";
 "settings_security.import_wallet_confirmation_1" = "This action will remove the currently installed wallet from this device.";
 "settings_security.import_wallet_confirmation_2" = "Make sure you have its Secret Key or you will not be able to access the funds on it in the future.";
 
