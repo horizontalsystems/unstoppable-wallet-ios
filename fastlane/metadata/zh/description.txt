@@ -12,5 +12,5 @@
   安全及开放源代码
 银行钱包的整个代码是公开及开源的, 任何人都可以来分析它的所有代码。 它的工作方式与代码中所示完全相同。  它不会被欺骗！
 银行钱包使用 ios 和 android 操作系统提供的安全本机存储机制存储用户的私人密钥和加密的资金。 只有用户才能查看和使用其资金。
-在设备丢失或更换的情况下, 用户可以使用12词的密钥来轻松地恢复钱包。 Infact, with the help of these secret phrase the user may restore the wallet and access funds on any deterministic wallet (aka HD wallet) not just the BANK wallet 
-NOTE: DO NOT install the BANK wallet on a jailbroken device due to substantial security risks. A jailbroken iOS or Android operating system cannot guarantee the security of your private keys. This means that some malicious app running on jailbroken device can potentially access the private keys for your funds and steal them.
+在设备丢失或更换的情况下, 用户可以使用12词的密钥来轻松地恢复钱包。 事实上, 在这个私人密钥的帮助下, 用户不仅仅在银行钱包而且在任何确定性钱包 (即hd 钱包) 上可以恢复钱包及存取资金 
+注意: 由于存在严重的安全风险, 请勿将银行钱包安装在越狱的设备上。 越狱的 ios 或 android 操作系统无法保证您的私人密钥的安全。 This means that some malicious app running on jailbroken device can potentially access the private keys for your funds and steal them.
