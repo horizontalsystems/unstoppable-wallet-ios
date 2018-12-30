@@ -87,19 +87,19 @@
 // Transaction Info
 
 "tx_info.title" = "交易";
-"tx_info.time" = "Time";
-"tx_info.status" = "Status";
-"tx_info.from_hash" = "From";
-"tx_info.to_hash" = "To";
-"tx_info.alert_close" = "Close";
-"tx_info.button_more" = "Full Info";
+"tx_info.time" = "时间";
+"tx_info.status" = "状态";
+"tx_info.from_hash" = "发件人：";
+"tx_info.to_hash" = "收件人：";
+"tx_info.alert_close" = "关闭";
+"tx_info.button_more" = "完整信息";
 
 // Full Info
-"full_info.title" = "Full Info";
+"full_info.title" = "完整信息";
 "full_info.id" = "ID";
-"full_info.status" = "Status";
-"full_info.time" = "Time";
-"full_info.block" = "Block";
+"full_info.status" = "状态";
+"full_info.time" = "时间";
+"full_info.block" = "拉黑（for person), 阻止（for emails etc.）";
 "full_info.confirmations" = "Confirmations";
 "full_info.total_input" = "Total Input";
 "full_info.total_output" = "Total Output";
