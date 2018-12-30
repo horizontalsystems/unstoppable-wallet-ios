@@ -62,8 +62,8 @@
 
 // Deposit
 
-"deposit.receive_coin" = "Receive %@";
-"deposit.alert_copy" = "Copy";
+"deposit.receive_coin" = "收到%@";
+"deposit.alert_copy" = "复制";
 
 // Send
 
