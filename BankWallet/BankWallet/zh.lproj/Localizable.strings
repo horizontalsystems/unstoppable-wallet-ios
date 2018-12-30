@@ -100,11 +100,11 @@
 "full_info.status" = "状态";
 "full_info.time" = "时间";
 "full_info.block" = "拉黑（for person), 阻止（for emails etc.）";
-"full_info.confirmations" = "Confirmations";
-"full_info.total_input" = "Total Input";
-"full_info.total_output" = "Total Output";
-"full_info.fee" = "Fee";
-"full_info.subtitle_from" = "From";
+"full_info.confirmations" = "确认框";
+"full_info.total_input" = "输入总额";
+"full_info.total_output" = "输出总额";
+"full_info.fee" = "费用";
+"full_info.subtitle_from" = "发件人：";
 "full_info.subtitle_inputs" = "Inputs";
 "full_info.subtitle_outputs" = "Outputs";
 "full_info.subtitle_provider" = "Data Provider";
