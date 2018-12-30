@@ -10,7 +10,7 @@
 没有集中管理的会发生故障（发生故障会导致应用程序停止运行）的服务器, 
 
   安全及开放源代码
-银行钱包的整个代码都是公开和开源的, 任何人都可以选择分析它的所有代码。 It works exactly as shown in the code. It can't cheat!
+银行钱包的整个代码是公开及开源的, 任何人都可以来分析它的所有代码。 它的工作方式与代码中所示完全相同。  它不会被欺骗！
 The BANK wallet stores user's private keys and funds encrypted on a device itself using secure native storage mechanisms provided by iOS and Android operating systems. Only user can access and use his or her funds.
 In case of a device loss or replacement the user may easily restore the wallet using a secret 12-word recovery phrase. Infact, with the help of these secret phrase the user may restore the wallet and access funds on any deterministic wallet (aka HD wallet) not just the BANK wallet 
 NOTE: DO NOT install the BANK wallet on a jailbroken device due to substantial security risks. A jailbroken iOS or Android operating system cannot guarantee the security of your private keys. This means that some malicious app running on jailbroken device can potentially access the private keys for your funds and steal them.
