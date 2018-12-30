@@ -14,14 +14,14 @@
 
 // Access Camera
 
-"access_camera.message" = "电子银行需要接入照相机扫描二维码\n\n请在”设置”-“银行”中打开";
+"access_camera.message" = "银行需要接入照相机扫描二维码\n\n请在”设置”-“银行”中打开";
 "access_camera.settings" = "设置";
 "access_camera.cancel" = "取消";
 
 // Guest Page
 
 "guest.title" = "钱包";
-"guest.subtitle" = "分布式应用";
+"guest.subtitle" = "分布式应用程序";
 "guest.create_wallet" = "新的钱包";
 "guest.restore_wallet" = "恢复钱包";
 
@@ -118,21 +118,21 @@
 "settings.manage_wallet" = "管理钱包";
 "settings.language" = "语言";
 "settings.about" = "更多";
-"settings.light_mode" = "Light Mode";
-"settings.info_title" = "BANK WALLET";
-"settings.info_subtitle" = "decentralized app";
+"settings.light_mode" = "简单模式";
+"settings.info_title" = "银行钱包";
+"settings.info_subtitle" = "分布式应用程序";
 
 // Settings -> Base Currency
 
-"settings_base_currency.title" = "Base Currency";
+"settings_base_currency.title" = "基本货币";
 
 // Settings -> Language
 
-"settings_language.title" = "Language";
+"settings_language.title" = "语言";
 
 // Settings -> Manage Wallet
 
-"settings_manage_wallet.title" = "Manage Coins";
+"settings_manage_wallet.title" = "管理货币";
 "settings_manage_wallet.add_coins" = "Add coins";
 "settings_manage_wallet.add_button" = "Add";
 "settings_manage_wallet.hide_button" = "Hide";
