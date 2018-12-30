@@ -7,10 +7,10 @@
 这种银行钱包是完全对等及分散管理的 它不能被停止、阻塞或取下 这个钱包无须其中的机构能直接连接货币网（其中包括比特币等等） 这种方法使银行钱包可以在任何地方运行并保持抗审查 这有用户控制自己的钱
 那边的大部分加密货币的钱包都是集中进行的 资金存储在由钱包提供商操作的远程服务器上 由于加密货币的不受监管性质, 没有任何机制能保证钱包提供商不会欺骗或该提供商的服务器不会被黑客攻击。
 作为完全分散的应用程序，银行钱包以分散的方式实现其所有功能 应用程序中的每个功能都以分散的方式实现, 大大提高了钱包的安全性和隐私性。
-没有集中管理的服务器可能会失败, 因此停止应用的运行。
+没有集中管理的会发生故障（发生故障会导致应用程序停止运行）的服务器, 
 
-  Secure & Open Source
-The entire code of the BANK wallet is public and open-source, giving an option for anyone to analyze all of its code. It works exactly as shown in the code. It can't cheat!
+  安全及开放源代码
+银行钱包的整个代码都是公开和开源的, 任何人都可以选择分析它的所有代码。 It works exactly as shown in the code. It can't cheat!
 The BANK wallet stores user's private keys and funds encrypted on a device itself using secure native storage mechanisms provided by iOS and Android operating systems. Only user can access and use his or her funds.
 In case of a device loss or replacement the user may easily restore the wallet using a secret 12-word recovery phrase. Infact, with the help of these secret phrase the user may restore the wallet and access funds on any deterministic wallet (aka HD wallet) not just the BANK wallet 
 NOTE: DO NOT install the BANK wallet on a jailbroken device due to substantial security risks. A jailbroken iOS or Android operating system cannot guarantee the security of your private keys. This means that some malicious app running on jailbroken device can potentially access the private keys for your funds and steal them.
