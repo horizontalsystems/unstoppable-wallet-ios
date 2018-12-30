@@ -101,23 +101,23 @@
 "full_info.time" = "时间";
 "full_info.block" = "拉黑（for person), 阻止（for emails etc.）";
 "full_info.confirmations" = "确认框";
-"full_info.total_input" = "输入总额";
-"full_info.total_output" = "输出总额";
+"full_info.total_input" = "转入总额";
+"full_info.total_output" = "转出总额";
 "full_info.fee" = "费用";
 "full_info.subtitle_from" = "发件人：";
-"full_info.subtitle_inputs" = "Inputs";
-"full_info.subtitle_outputs" = "Outputs";
-"full_info.subtitle_provider" = "Data Provider";
+"full_info.subtitle_inputs" = "收入";
+"full_info.subtitle_outputs" = "转出";
+"full_info.subtitle_provider" = "数据提供者";
 
 // Settings
 
-"settings.title" = "Settings";
-"settings.tab_bar_item" = "Settings";
-"settings.security_center" = "Security Center";
-"settings.base_currency" = "Base Currency";
-"settings.manage_wallet" = "Manage Wallet";
-"settings.language" = "Language";
-"settings.about" = "About";
+"settings.title" = "设置";
+"settings.tab_bar_item" = "设置";
+"settings.security_center" = "安全中心";
+"settings.base_currency" = "基本货币";
+"settings.manage_wallet" = "管理钱包";
+"settings.language" = "语言";
+"settings.about" = "更多";
 "settings.light_mode" = "Light Mode";
 "settings.info_title" = "BANK WALLET";
 "settings.info_subtitle" = "decentralized app";
