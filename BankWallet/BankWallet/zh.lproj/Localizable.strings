@@ -14,13 +14,13 @@
 
 // Access Camera
 
-"access_camera.message" = "Bank needs access to your camera to scan QR code.\n\nGo to Settings - > Bank and allow access to Camera.";
-"access_camera.settings" = "Settings";
-"access_camera.cancel" = "Cancel";
+"access_camera.message" = "电子银行需要接入照相机扫描二维码\n\n请在”设置”-“银行”中打开";
+"access_camera.settings" = "设置";
+"access_camera.cancel" = "取消";
 
 // Guest Page
 
-"guest.title" = "Bank Wallet";
+"guest.title" = "钱包";
 "guest.subtitle" = "Decentralized App";
 "guest.create_wallet" = "New Wallet";
 "guest.restore_wallet" = "Restore Wallet";
