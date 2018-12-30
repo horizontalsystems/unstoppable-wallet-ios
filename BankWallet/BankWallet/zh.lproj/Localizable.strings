@@ -28,10 +28,10 @@
 // Restore
 
 "restore.title" = "恢复";
-"restore.description" = "Enter Secret Key  ";
-"restore.done" = "Done";
-"restore.cancel" = "Cancel";
-"restore.validation_failed" = "Incorrect Secret Key";
+"restore.description" = "输入密码  ";
+"restore.done" = "完成";
+"restore.cancel" = "取消";
+"restore.validation_failed" = "密码不正确";
 
 // Backup
 
