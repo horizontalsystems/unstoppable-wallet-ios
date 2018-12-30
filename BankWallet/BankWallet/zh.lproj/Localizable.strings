@@ -5,12 +5,12 @@
 "coin.BCHt" = "Bitcoin Cash T";
 "coin.ETHt" = "Ethereum T";
 
-"alert.ok" = "OK";
-"alert.cancel" = "Cancel";
-"alert.copied" = "Copied";
-"alert.confirm" = "Confirm";
+"alert.ok" = "确定";
+"alert.cancel" = "取消";
+"alert.copied" = "复制成功";
+"alert.confirm" = "确认";
 
-"biometric_usage_reason" = "Unlock wallet";
+"biometric_usage_reason" = "解锁钱包";
 
 // Access Camera
 
