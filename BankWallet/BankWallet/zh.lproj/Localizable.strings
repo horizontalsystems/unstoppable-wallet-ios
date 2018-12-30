@@ -149,9 +149,9 @@
 // Settings -> Security
 
 "settings_security.title" = "安全中心";
-"settings_security.backup_wallet" = "Backup Wallet";
-"settings_security.unlink_from_this_device" = "Unlink From This Device";
-"settings_security.set_pin" = "Set PIN";
+"settings_security.backup_wallet" = "备份钱包";
+"settings_security.unlink_from_this_device" = "与此设备断开连接";
+"settings_security.set_pin" = "设置密码";
 "settings_security.change_pin" = "Edit PIN";
 "settings_security.touch_id" = "Touch ID";
 "settings_security.face_id" = "Face ID";
