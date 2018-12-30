@@ -35,7 +35,7 @@
 
 // Backup
 
-"backup.intro.title" = "Backup";
+"backup.intro.title" = "备份";
 "backup.intro.subtitle" = "Your secret key is the only way to restore your wallet and funds if your phone is ever lost, stolen, broken, or upgraded.\n\nIt consists of 12 words. Write them on a piece of paper and do not ever show it to anyone.";
 "backup.intro.later" = "Later";
 "backup.intro.backup_now" = "Backup";
