@@ -55,7 +55,7 @@ DEPENDENCIES:
   - BigInt
   - Cuckoo
   - GrouviActionSheet
-  - GrouviExtensions
+  - GrouviExtensions (~> 1.2)
   - GrouviHUD
   - HSBitcoinKit (from `https://github.com/horizontalsystems/bitcoin-kit-ios/`)
   - HSEthereumKit (from `https://github.com/horizontalsystems/ethereum-kit-ios/`)
@@ -125,6 +125,6 @@ SPEC CHECKSUMS:
   SipHash: fad90a4683e420c52ef28063063dbbce248ea6d4
   SnapKit: 0de968a9fec17499afa29683b05d0c775b6d1c29
 
-PODFILE CHECKSUM: c521ca68a6f11f31bfc560a952fbdbab983831c6
+PODFILE CHECKSUM: d7a5d23e2770381fde3d1232bd5c4db585dca22e
 
 COCOAPODS: 1.5.3
