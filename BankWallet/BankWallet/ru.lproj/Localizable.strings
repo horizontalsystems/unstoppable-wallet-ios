@@ -107,7 +107,7 @@
 "full_info.subtitle_from" = "От";
 "full_info.subtitle_inputs" = "Входы";
 "full_info.subtitle_outputs" = "Выходы";
-"full_info.subtitle_provider" = "Data Provider";
+"full_info.subtitle_provider" = "Источник";
 
 // Settings
 
