@@ -1,5 +1,6 @@
   Control Your Money!
-Wallet BANK is a secure and a fully decentralized crypto wallet app that supports major cryptocurrencies, including Bitcoin, Ethereum, Bitcoin Cash and ERC 20 tokens. The number of supported currencies being gradually added with every release.
+Die BANK-Geldbörse ist eine sichere und vollständig dezentralisierte Kryptobörse, die die wichtigsten Kryptowährungen einhält, darunter Bitcoin, Ethereum, Bitcoin Cash und ERC 20-Token. Die Anzahl der unterstützten Währungen wird mit jedem Release nach und nach hinzugefügt.
+
 This BANK wallet provides a seamless way to get started with Bitcoin and other crypto currencies for masses. You don't need to understand the inner workings of cryptocurrencies to be able to use it.
 It has been built using best practices from the design of the interface to the implementation of blockchain protocols.
 
