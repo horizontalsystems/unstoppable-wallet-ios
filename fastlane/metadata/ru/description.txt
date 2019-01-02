@@ -9,7 +9,8 @@
   НЕЗАВИСИМЫЙ И ДЕЦЕНТРАЛИЗОВАННЫЙ
 Кошелек BANK полностью децентрализованный, работоспособность этого приложения не зависит от серверов. Его нельзя остановить или заблокировать.  Кошелек подключается напрямую к крипто-валютным сетям, например к биткоин сети.  Такой подход позволяет кошельку BANK работать в любом месте без ограничений  Только сам пользователь может распоряжаться средствами в кошельке.
 Большинство крипто-кошельков централизованы. Средства хранятся на удаленном сервере, которым управляет провайдер кошелька. Из-за нерегулируемой среды криптовалют нет механизмов, гарантирующих, что провайдер кошелька не обманет или что сервера не будут взломаны.
-Being a fully decentralized app the BANK wallet implements all of its functionality in a decentralized manner. Every single feature in the app is implemented in a decentralized manner substantially increasing the security and privacy aspects of the wallet.
+  Будучи полностью децентрализованным приложением, кошелек BANK осуществляет все свои функции децентрализованным образом, что значительно повышает безопасность и конфиденциальность кошелька.
+
 Отсутствуют сервера с централизованным управлением, которые могли бы выйти из строя и в результате остановить работу приложения.
 
   БЕЗОПАСНЫЙ И ОТКРЫТЫЙ ИСХОДНЫЙ КОД
@@ -20,7 +21,7 @@ Being a fully decentralized app the BANK wallet implements all of its functional
 В случае потери или замены устройства пользователь может легко восстановить кошелек, используя секретную фразу из 12 слов.  Фактически, с помощью секретной фразы пользователь может восстановить кошелек и получить доступ к средствам на любом детерминированном кошельке (он же HD-wallet), а не только в кошельке BANK.
  
 
-NOTE: DO NOT install the BANK wallet on a jailbroken device due to substantial security risks. A jailbroken iOS operating system cannot guarantee the security of your private keys. This means that some malicious app running on jailbroken device can potentially access the private keys for your funds and steal them.
+      
 
 ОТКАЗ ОТ ОТВЕТСТВЕННОСТИ
 
