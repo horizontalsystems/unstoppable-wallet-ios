@@ -57,7 +57,7 @@
 "balance.tab_bar_item" = "余额";
 "balance.send" = "发送​​";
 "balance.deposit" = "收到";
-"balance.rate_per_coin" = "%@ per %@";
+"balance.rate_per_coin" = "%@ 每 %@";
 "balance.syncing_percent" = "%@ 正在同步";
 
 // Deposit
