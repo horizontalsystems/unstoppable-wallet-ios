@@ -1,9 +1,9 @@
 "coin.BTC" = "Bitcoin";
 "coin.BCH" = "Bitcoin Cash";
-"coin.ETH" = "以太坊";
-"coin.BTCt" = "比特币T";
-"coin.BCHt" = "比特币 Cash T";
-"coin.ETHt" = "以太坊 T";
+"coin.ETH" = "Ethereum";
+"coin.BTCt" = "Bitcoin T";
+"coin.BCHt" = "Bitcoin Cash T";
+"coin.ETHt" = "Ethereum T";
 
 "alert.ok" = "确定";
 "alert.cancel" = "取消";
