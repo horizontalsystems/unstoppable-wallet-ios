@@ -1,5 +1,5 @@
-"coin.BTC" = "比特币";
-"coin.BCH" = "比特币Cash";
+"coin.BTC" = "Bitcoin";
+"coin.BCH" = "Bitcoin Cash";
 "coin.ETH" = "以太坊";
 "coin.BTCt" = "比特币T";
 "coin.BCHt" = "比特币 Cash T";
