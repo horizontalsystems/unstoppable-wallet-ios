@@ -99,14 +99,14 @@ Go to Settings - > Bank and allow access to Camera.";
 // Full Info
 "full_info.title"= "Full Info";
 "full_info.id"= "ID";
-"full_info.status"= "Status";
 "full_info.time"= "Time";
 "full_info.block"= "Block";
 "full_info.confirmations"= "Confirmations";
 "full_info.total_input"= "Total Input";
 "full_info.total_output"= "Total Output";
+"full_info.size"= "Size";
 "full_info.fee"= "Fee";
-"full_info.subtitle_from"= "From";
+"full_info.fee_per_byte"= "Fee per byte";
 "full_info.subtitle_inputs"= "Inputs";
 "full_info.subtitle_outputs"= "Outputs";
 "full_info.subtitle_provider"= "Data Provider";
