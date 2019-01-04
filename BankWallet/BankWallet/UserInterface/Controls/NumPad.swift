@@ -8,20 +8,30 @@ class NumPad: UICollectionView {
         case image(image: UIImage?, pressedImage: UIImage?, action: (() -> ())?)
     }
 
+    public struct Style: OptionSet {
+        let rawValue: Int
+
+        public static let decimal = Style(rawValue: 1 << 1)
+        public static let letters = Style(rawValue: 1 << 2)
+    }
+
     weak var numPadDelegate: NumPadDelegate?
     private let layout = UICollectionViewFlowLayout()
 
     private var cells = [Cell]()
 
-    init() {
+    private var style: Style
+
+    init(style: Style = []) {
+        self.style = style
+
         super.init(frame: .zero, collectionViewLayout: layout)
 
         dataSource = self
         delegate = self
 
-        layout.itemSize = NumPadTheme.itemSize
-        layout.minimumLineSpacing = NumPadTheme.spacing
-        layout.minimumInteritemSpacing = NumPadTheme.spacing
+        layout.minimumInteritemSpacing = NumPadTheme.itemSpacing
+        layout.minimumLineSpacing = NumPadTheme.lineSpacing
 
         register(NumPadNumberCell.self, forCellWithReuseIdentifier: String(describing: NumPadNumberCell.self))
         register(NumPadImageCell.self, forCellWithReuseIdentifier: String(describing: NumPadImageCell.self))
@@ -34,24 +44,25 @@ class NumPad: UICollectionView {
             maker.size.equalTo(NumPadTheme.size)
         }
 
-        cells = [
-            .number(number: "1", letters: "", action: { [weak self] in self?.numPadDelegate?.numPadDidClick(digit: "1") }),
-            .number(number: "2", letters: "numpad_2".localized, action: { [weak self] in self?.numPadDelegate?.numPadDidClick(digit: "2") }),
-            .number(number: "3", letters: "numpad_3".localized, action: { [weak self] in self?.numPadDelegate?.numPadDidClick(digit: "3") }),
-            .number(number: "4", letters: "numpad_4".localized, action: { [weak self] in self?.numPadDelegate?.numPadDidClick(digit: "4") }),
-            .number(number: "5", letters: "numpad_5".localized, action: { [weak self] in self?.numPadDelegate?.numPadDidClick(digit: "5") }),
-            .number(number: "6", letters: "numpad_6".localized, action: { [weak self] in self?.numPadDelegate?.numPadDidClick(digit: "6") }),
-            .number(number: "7", letters: "numpad_7".localized, action: { [weak self] in self?.numPadDelegate?.numPadDidClick(digit: "7") }),
-            .number(number: "8", letters: "numpad_8".localized, action: { [weak self] in self?.numPadDelegate?.numPadDidClick(digit: "8") }),
-            .number(number: "9", letters: "numpad_9".localized, action: { [weak self] in self?.numPadDelegate?.numPadDidClick(digit: "9") }),
-            .image(image: nil, pressedImage: nil, action: nil),
-            .number(number: "0", letters: nil, action: { [weak self] in self?.numPadDelegate?.numPadDidClick(digit: "0") }),
-            .image(image: UIImage(named: "Backspace Icon"), pressedImage: UIImage(named: "Backspace Icon Pressed"), action: { [weak self] in self?.numPadDelegate?.numPadDidClickBackspace() })
-        ]
+        cells.append(.number(number: "1", letters: style.contains(.letters) ? "" : nil, action: { [weak self] in self?.numPadDelegate?.numPadDidClick(digit: "1") }))
+        for i in 2...9 {
+            cells.append(.number(number: "\(i)", letters: letters(for: i), action: { [weak self] in self?.numPadDelegate?.numPadDidClick(digit: "\(i)") }))
+        }
+        if style.contains(.decimal) {
+            cells.append(.image(image: UIImage(named: "Decimal Dot"), pressedImage: UIImage(named: "Decimal Dot"), action: { [weak self] in self?.numPadDelegate?.numPadDidClick(digit: ".") }))
+        } else {
+            cells.append(.image(image: nil, pressedImage: nil, action: nil))
+        }
+        cells.append(.number(number: "0", letters: nil, action: { [weak self] in self?.numPadDelegate?.numPadDidClick(digit: "0") }))
+        cells.append(.image(image: UIImage(named: "Backspace Icon"), pressedImage: UIImage(named: "Backspace Icon Pressed"), action: { [weak self] in self?.numPadDelegate?.numPadDidClickBackspace() }))
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    func letters(for index: Int) -> String? {
+        return style.contains(.letters) ? "numpad_\(index)".localized : nil
     }
 
 }
@@ -69,7 +80,7 @@ extension NumPad: UICollectionViewDataSource {
         case .number: identifier = String(describing: NumPadNumberCell.self)
         case .image: identifier = String(describing: NumPadImageCell.self)
         }
-        
+
         return dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath)
     }
 
@@ -88,6 +99,14 @@ extension NumPad: UICollectionViewDelegate {
                 cell.bind(image: image, pressedImage: pressedImage, onTap: action)
             }
         }
+    }
+
+}
+
+extension NumPad: UICollectionViewDelegateFlowLayout {
+
+    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: (bounds.size.width - NumPadTheme.itemSpacing * 2) / 3, height: NumPadTheme.itemHeight)
     }
 
 }
@@ -121,7 +140,7 @@ class NumPadNumberCell: UICollectionViewCell {
         button.addSubview(lettersLabel)
         lettersLabel.snp.makeConstraints { maker in
             maker.centerX.equalToSuperview()
-            maker.bottom.equalToSuperview().offset(-NumPadTheme.lettersBottomMargin)
+            maker.top.equalTo(numberLabel.snp.bottom)
         }
 
         button.addTarget(self, action: #selector(didTapButton), for: .touchUpInside)
@@ -142,9 +161,9 @@ class NumPadNumberCell: UICollectionViewCell {
             maker.centerX.equalToSuperview()
 
             if letters == nil {
-                maker.centerY.equalToSuperview()
-            } else {
                 maker.top.equalToSuperview().offset(NumPadTheme.numberTopMargin)
+            } else {
+                maker.top.equalToSuperview().offset(NumPadTheme.letteredNumberTopMargin)
             }
         }
     }

@@ -8,8 +8,17 @@ import RxCocoa
 class AmountTextField: UITextField {
 
     override func paste(_ sender: Any?) {
-        text = ValueFormatter.instance.formattedInput(string: UIPasteboard.general.string)
+        text = formattedInput(string: UIPasteboard.general.string)
         sendActions(for: .editingChanged)
+    }
+
+    func formattedInput(string: String?) -> String? {
+        let stringNumber = string?.addFallbackZeroForDoubleParsing() ?? ""
+        let number = ValueFormatter.instance.parseFormatter.number(from: stringNumber) as? Double
+        if let number = number {
+            return "\(number)"
+        }
+        return nil
     }
 
 }
@@ -54,7 +63,7 @@ class SendAmountItemView: BaseActionItemView {
             maker.height.equalTo(SendTheme.amountLineHeight)
         }
 
-        inputField.delegate = self
+        inputField.inputView = UIView()
         inputField.font = SendTheme.amountFont
         inputField.textColor = SendTheme.amountColor
         inputField.attributedPlaceholder = NSAttributedString(string: "send.amount_placeholder".localized, attributes: [NSAttributedStringKey.foregroundColor: SendTheme.amountPlaceholderColor])
@@ -103,8 +112,8 @@ class SendAmountItemView: BaseActionItemView {
         inputField.rx.controlEvent(.editingChanged)
                 .subscribe(onNext: { [weak self] _ in
                     var amount: Double = 0
-                    if let updatedString = ValueFormatter.instance.formattedInput(string: self?.inputField.text), let parsedAmount = ValueFormatter.instance.parseFormatter.number(from: updatedString) as? Double {
-                        amount = parsedAmount
+                    if let stringAmount = self?.inputField.text, let doubleAmount = Double(stringAmount.addFallbackZeroForDoubleParsing()) {
+                        amount = doubleAmount
                     }
                     self?.item?.onAmountChanged?(amount)
                 })
@@ -121,7 +130,7 @@ class SendAmountItemView: BaseActionItemView {
             self?.amountTypeLabel.text = $0
         }
         item?.bindAmount = { [weak self] in
-            self?.inputField.text = $0.flatMap { $0 == 0 ? nil : ValueFormatter.instance.format(amount: $0)}
+            self?.inputField.text = $0.flatMap { $0 == 0 ? nil : "\($0)"}
         }
         item?.bindHint = { [weak self] in
             self?.hintLabel.text = $0
@@ -133,20 +142,38 @@ class SendAmountItemView: BaseActionItemView {
             self?.switchButton.state = enabled ? .active : .disabled
             self?.switchButtonIcon.tintColor = enabled ? SendTheme.buttonIconColor : SendTheme.buttonIconColorDisabled
         }
+
+        item?.addLetter = { [weak self] letter in
+            self?.addLetter(letter)
+        }
+        item?.removeLetter = { [weak self] in
+            self?.inputField.deleteBackward()
+        }
+    }
+
+    func addLetter(_ letter: String) {
+        if let selectedRange = inputField.selectedTextRange, let text = inputField.text {
+            let cursorPosition = inputField.offset(from: inputField.beginningOfDocument, to: selectedRange.start)
+            let index = text.index(text.startIndex, offsetBy: cursorPosition)
+
+            var text = text
+            text.insert(Character(letter), at: index)
+            if let _ = Double(text.addFallbackZeroForDoubleParsing()) {
+                inputField.insertText(letter)
+            }
+        } else {
+            inputField.insertText(letter)
+        }
     }
 
 }
 
-extension SendAmountItemView: UITextFieldDelegate {
+extension String {
 
-    public func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        let updatedString = (textField.text as NSString?)?.replacingCharacters(in: range, with: string)
-
-        if let updatedString = ValueFormatter.instance.formattedInput(string: updatedString) {
-            return updatedString.isEmpty || ValueFormatter.instance.parseFormatter.number(from: updatedString) as? Double != nil
-        }
-
-        return false
+    func addFallbackZeroForDoubleParsing() -> String {
+        var string = self
+        string.insert(Character("0"), at: string.startIndex)
+        return string
     }
 
 }

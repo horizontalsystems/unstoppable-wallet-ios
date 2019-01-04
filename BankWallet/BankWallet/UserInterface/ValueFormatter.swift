@@ -78,13 +78,4 @@ class ValueFormatter {
         return amountFormatter.string(from: amount as NSNumber)
     }
 
-    func formattedInput(string: String?) -> String? {
-        let stringNumber = "0\(string ?? "")"
-        let number = parseFormatter.number(from: stringNumber) as? Double
-        if let number = number {
-            return format(amount: number)
-        }
-        return nil
-    }
-
 }

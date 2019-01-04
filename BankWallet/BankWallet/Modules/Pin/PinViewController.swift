@@ -5,7 +5,7 @@ class PinViewController: UIViewController {
     let delegate: IPinViewDelegate
 
     private let holderView = UIScrollView()
-    private let numPad = NumPad()
+    private let numPad = NumPad(style: [.letters])
 
     private var pages = [PinPage]()
     private var pinViews = [PinView]()
@@ -37,8 +37,11 @@ class PinViewController: UIViewController {
         view.addSubview(numPad)
         numPad.snp.makeConstraints { maker in
             maker.top.equalTo(self.holderView.snp.bottom)
-            maker.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).offset(-32)
+            maker.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).offset(-PinTheme.keyboardBottomMargin)
             maker.centerX.equalToSuperview()
+            maker.leading.equalToSuperview().offset(PinTheme.keyboardSideMargin)
+            maker.trailing.equalToSuperview().offset(-PinTheme.keyboardSideMargin)
+            maker.height.equalTo(PinTheme.keyboardHeight)
         }
 
         numPad.numPadDelegate = self
