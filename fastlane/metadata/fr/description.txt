@@ -1,6 +1,7 @@
   Control Your Money!
-Wallet BANK is a secure and a fully decentralized crypto wallet app that supports major cryptocurrencies, including Bitcoin, Ethereum, Bitcoin Cash and ERC 20 tokens. The number of supported currencies being gradually added with every release.
-This BANK wallet provides a seamless way to get started with Bitcoin and other crypto currencies for masses. You don't need to understand the inner workings of cryptocurrencies to be able to use it.
+Un portefeuille BANQUE est un portefeuille crypté sécurisé et entièrement décentralisé prenant en charge des principales crypto-monnaies, notamment les jetons Bitcoin, Ethereum, Bitcoin Cash et ERC 20.  Le nombre de monnaies prises en charge est progressivement ajouté à chaque émission.
+
+Un portefeuille BANK constitue un moyen pratique de commencer à travailler avec des Bitcoins et d’autres crypto-monnaies. You don't need to understand the inner workings of cryptocurrencies to be able to use it.
 It has been built using best practices from the design of the interface to the implementation of blockchain protocols.
 
   Independent & Decentralized
