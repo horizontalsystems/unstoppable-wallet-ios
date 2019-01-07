@@ -1,5 +1,5 @@
   Paranızı Kontrol Edin!
-BANKA Cüzdanı, Bitcoin, Ethereum, Bitcoin Cash ve ERC 20 de dahil olmak üzere büyük kripto para birimlerini destekleyen iOS için güvenli ve tamamen merkezi olmayan bir şifreleme cüzdanı uygulamasıdır. 
+BANK Cüzdanı, Bitcoin, Ethereum, Bitcoin Cash ve ERC 20 de dahil olmak üzere büyük kripto para birimlerini destekleyen iOS için güvenli ve tamamen merkezi olmayan bir şifreleme cüzdanı uygulamasıdır. 
  Desteklenen para birimlerinin sayısı her sürümde gitgide artmaktadır.
 
 Bu BANK cüzdanı, büyük halk kitlelerine Bitcoin ve diğer kripto para birimlerini kullanmaya başlamak için kusursuz bir fırsat sağlar.  Kullanabilmek için kripto para birimlerinin iç işleyişini anlamanıza gerek yok.
