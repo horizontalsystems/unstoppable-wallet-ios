@@ -96,7 +96,7 @@
 
 // Full Info
 "full_info.title" = "Información completa";
-"full_info.id" = "Identificación";
+"full_info.id" = "ID";
 "full_info.status" = "Estado";
 "full_info.time" = "Hora";
 "full_info.block" = "Bloquear";
