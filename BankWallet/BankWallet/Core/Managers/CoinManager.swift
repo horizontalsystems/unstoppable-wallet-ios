@@ -22,12 +22,12 @@ class CoinManager {
     }
 
     private func syncWallets() {
-        guard let words = wordsManager.words else {
+        guard let authData = wordsManager.authData else {
             walletManager.clearWallets()
             return
         }
 
-        walletManager.initWallets(words: words, coins: appConfigProvider.enabledCoins)
+        walletManager.initWallets(authData: authData, coins: appConfigProvider.enabledCoins)
     }
 }
 

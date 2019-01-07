@@ -5,7 +5,7 @@ class KeychainStorage {
     let keychain: Keychain
 
     private let pinKey = "pin_keychain_key"
-    private let wordsKey = "words_keychain_key"
+    private let authDataKey = "auth_data_keychain_key"
     private let unlockAttemptsKey = "unlock_attempts_keychain_key"
     private let lockTimestampKey = "lock_timestamp_keychain_key"
 
@@ -43,23 +43,6 @@ class KeychainStorage {
         try keychain.set(value, key: key)
     }
 
-    func getStringArray(forKey key: String) -> [String]? {
-        if let arrayData = try? keychain.getData(key), let arrayData2 = arrayData {
-            return NSKeyedUnarchiver.unarchiveObject(with: arrayData2) as? [String]
-        } else {
-            return nil
-        }
-    }
-
-    func set(value: [String]?, forKey key: String) throws {
-        guard let array = value else {
-            try keychain.remove(key)
-            return
-        }
-        let value = NSKeyedArchiver.archivedData(withRootObject: array)
-        try keychain.set(value, key: key)
-    }
-
     func getInt(forKey key: String) -> Int? {
         guard let string = keychain[key] else {
             return nil
@@ -90,16 +73,33 @@ class KeychainStorage {
         try keychain.set("\(value)", key: key)
     }
 
+    private func get<T: NSCoding>(forKey key: String) -> T? {
+        if let keychainData = try? keychain.getData(key), let data = keychainData {
+            return NSKeyedUnarchiver.unarchiveObject(with: data) as? T
+        } else {
+            return nil
+        }
+    }
+
+    private func set<T: NSCoding>(value: T?, forKey key: String) throws {
+        if let value = value {
+            let data = NSKeyedArchiver.archivedData(withRootObject: value)
+            try keychain.set(data, key: key)
+        } else {
+            try keychain.remove(key)
+        }
+    }
+
 }
 
 extension KeychainStorage: ISecureStorage {
 
-    var words: [String]? {
-        return getStringArray(forKey: wordsKey)
+    var authData: AuthData? {
+        return get(forKey: authDataKey)
     }
 
-    func set(words: [String]?) throws {
-        try set(value: words, forKey: wordsKey)
+    func set(authData: AuthData?) throws {
+        try set(value: authData, forKey: authDataKey)
     }
 
     var pin: String? {
@@ -130,7 +130,7 @@ extension KeychainStorage: ISecureStorage {
     }
 
     func clear() {
-        try? set(words: nil)
+        try? set(authData: nil)
         try? set(pin: nil)
     }
 
