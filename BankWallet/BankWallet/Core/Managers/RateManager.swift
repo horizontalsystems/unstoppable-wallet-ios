@@ -1,50 +1,15 @@
-import Foundation
 import RxSwift
 
 class RateManager {
     private let disposeBag = DisposeBag()
+    private let scheduler = ConcurrentDispatchQueueScheduler(qos: .background)
 
     private let storage: IRateStorage
-    private let syncer: IRateSyncer
-    private let walletManager: IWalletManager
-    private let currencyManager: ICurrencyManager
-    private var timer: IPeriodicTimer
+    private let networkManager: IRateNetworkManager
 
-    init(storage: IRateStorage, syncer: IRateSyncer, walletManager: IWalletManager, currencyManager: ICurrencyManager, reachabilityManager: IReachabilityManager, timer: IPeriodicTimer) {
+    init(storage: IRateStorage, networkManager: IRateNetworkManager) {
         self.storage = storage
-        self.syncer = syncer
-        self.walletManager = walletManager
-        self.currencyManager = currencyManager
-        self.timer = timer
-
-        self.timer.delegate = self
-
-        walletManager.walletsSubject
-                .subscribe(onNext: { [weak self] _ in
-                    self?.updateRates()
-                })
-                .disposed(by: disposeBag)
-
-        currencyManager.subject
-                .subscribe(onNext: { [weak self] _ in
-                    self?.updateRates()
-                })
-                .disposed(by: disposeBag)
-
-        reachabilityManager.subject
-                .subscribe(onNext: { [weak self] connected in
-                    if connected {
-                        self?.updateRates()
-                    }
-                })
-                .disposed(by: disposeBag)
-    }
-
-    private func updateRates() {
-        let coins = walletManager.wallets.map { $0.coinCode }
-        let currencyCode = currencyManager.baseCurrency.code
-
-        syncer.sync(coinCodes: coins, currencyCode: currencyCode)
+        self.networkManager = networkManager
     }
 
 }
@@ -55,20 +20,18 @@ extension RateManager: IRateManager {
         return nil
     }
 
-}
+    func refreshRates(coinCodes: [CoinCode], currencyCode: String) {
+        for coinCode in coinCodes {
+            networkManager.getLatestRate(coinCode: coinCode, currencyCode: currencyCode)
+                    .subscribeOn(scheduler)
+                    .observeOn(scheduler)
+                    .subscribe(onNext: { [weak self] latestRate in
+                        let rate = Rate(coinCode: coinCode, currencyCode: currencyCode, value: latestRate.value, timestamp: latestRate.timestamp)
+                        self?.storage.save(rate: rate)
+                    })
+                    .disposed(by: disposeBag)
+        }
 
-extension RateManager: IPeriodicTimerDelegate {
-
-    func onFire() {
-        updateRates()
-    }
-
-}
-
-extension RateManager: IRateSyncerDelegate {
-
-    func didSync(coinCode: String, currencyCode: String, latestRate: LatestRate) {
-        storage.save(latestRate: latestRate, coinCode: coinCode, currencyCode: currencyCode)
     }
 
 }

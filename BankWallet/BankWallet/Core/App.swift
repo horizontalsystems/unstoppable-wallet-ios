@@ -1,4 +1,3 @@
-import Foundation
 import RealmSwift
 
 class App {
@@ -14,6 +13,8 @@ class App {
     let localStorage: ILocalStorage
     let wordsManager: IWordsManager
 
+    let appConfigProvider: IAppConfigProvider
+
     let pinManager: IPinManager
     let lockRouter: LockRouter
     let lockManager: ILockManager
@@ -25,11 +26,11 @@ class App {
     let randomManager: IRandomManager
     let systemInfoManager: ISystemInfoManager
 
-    let adapterFactory: IAdapterFactory
-    let walletManager: IWalletManager
-
-    let appConfigProvider: IAppConfigProvider
     let coinManager: ICoinManager
+
+    let adapterFactory: IAdapterFactory
+    let walletFactory: IWalletFactory
+    let walletManager: IWalletManager
 
     let realmStorage: RealmStorage
     let grdbStorage: GrdbStorage
@@ -39,8 +40,7 @@ class App {
 
     let currencyManager: ICurrencyManager
 
-    let rateTimer: IPeriodicTimer
-    var rateSyncer: IRateSyncer
+    var rateSyncer: RateSyncer
     let rateManager: RateManager
 
     let transactionRateSyncer: ITransactionRateSyncer
@@ -70,10 +70,11 @@ class App {
         randomManager = RandomManager()
         systemInfoManager = SystemInfoManager()
 
-        adapterFactory = AdapterFactory(appConfigProvider: appConfigProvider)
-        walletManager = WalletManager(adapterFactory: adapterFactory)
+        coinManager = CoinManager(appConfigProvider: appConfigProvider)
 
-        coinManager = CoinManager(wordsManager: wordsManager, walletManager: walletManager, appConfigProvider: appConfigProvider)
+        adapterFactory = AdapterFactory(appConfigProvider: appConfigProvider)
+        walletFactory = WalletFactory(adapterFactory: adapterFactory)
+        walletManager = WalletManager(walletFactory: walletFactory, wordsManager: wordsManager, coinManager: coinManager)
 
         realmStorage = RealmStorage(realmFactory: realmFactory)
         grdbStorage = GrdbStorage()
@@ -83,10 +84,8 @@ class App {
 
         currencyManager = CurrencyManager(localStorage: localStorage, appConfigProvider: appConfigProvider)
 
-        rateTimer = PeriodicTimer(interval: 3 * 60)
-        rateSyncer = RateSyncer(networkManager: networkManager, timer: rateTimer)
-        rateManager = RateManager(storage: grdbStorage, syncer: rateSyncer, walletManager: walletManager, currencyManager: currencyManager, reachabilityManager: reachabilityManager, timer: rateTimer)
-        rateSyncer.delegate = rateManager
+        rateManager = RateManager(storage: grdbStorage, networkManager: networkManager)
+        rateSyncer = RateSyncer(rateManager: rateManager, walletManager: walletManager, currencyManager: currencyManager, reachabilityManager: reachabilityManager)
 
         transactionRateSyncer = TransactionRateSyncer(storage: realmStorage, networkManager: networkManager)
         transactionManager = TransactionManager(storage: realmStorage, rateSyncer: transactionRateSyncer, walletManager: walletManager, currencyManager: currencyManager, wordsManager: wordsManager, reachabilityManager: reachabilityManager)

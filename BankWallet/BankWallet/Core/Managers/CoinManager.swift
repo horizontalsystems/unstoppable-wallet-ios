@@ -1,24 +1,10 @@
 import RxSwift
 
 class CoinManager {
-    private let disposeBag = DisposeBag()
-
-    private let wordsManager: IWordsManager
-    private let walletManager: IWalletManager
     private let appConfigProvider: IAppConfigProvider
 
-    init(wordsManager: IWordsManager, walletManager: IWalletManager, appConfigProvider: IAppConfigProvider) {
-        self.wordsManager = wordsManager
-        self.walletManager = walletManager
+    init(appConfigProvider: IAppConfigProvider) {
         self.appConfigProvider = appConfigProvider
-
-        syncWallets()
-
-        wordsManager.loggedInSubject
-                .subscribe(onNext: { [weak self] _ in
-                    self?.syncWallets()
-                })
-                .disposed(by: disposeBag)
     }
 
     private var defaultCoins: [Coin] {
@@ -30,17 +16,12 @@ class CoinManager {
         ]
     }
 
-    private func syncWallets() {
-        guard let authData = wordsManager.authData else {
-            walletManager.clearWallets()
-            return
-        }
-
-        walletManager.initWallets(authData: authData, coins: defaultCoins)
-    }
-
 }
 
 extension CoinManager: ICoinManager {
+
+    var coinsObservable: Observable<[Coin]> {
+        return Observable.just(defaultCoins)
+    }
 
 }

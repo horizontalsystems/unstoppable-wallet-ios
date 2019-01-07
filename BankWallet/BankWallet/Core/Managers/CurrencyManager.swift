@@ -19,8 +19,7 @@ class CurrencyManager {
 
     private func notify(currencyCode: String?) {
         let currencies = appConfigProvider.currencies
-
-        var currency = currencyCode.map { currencyCode in currencies.first(where: { $0.code == currencyCode }) } ?? currencies.first
+        let currency = currencyCode.map { currencyCode in currencies.first(where: { $0.code == currencyCode }) } ?? currencies.first
 
         if let currency = currency {
             subjectNew.onNext(currency)

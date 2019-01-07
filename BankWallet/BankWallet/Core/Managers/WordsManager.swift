@@ -25,6 +25,10 @@ extension WordsManager: IWordsManager {
         return authData?.words
     }
 
+    var authDataObservable: Observable<AuthData> {
+        return authData.map { Observable.just($0) } ?? Observable.empty()
+    }
+
     var isBackedUp: Bool {
         get {
             return localStorage.isBackedUp

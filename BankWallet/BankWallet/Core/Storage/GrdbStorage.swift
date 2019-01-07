@@ -42,9 +42,7 @@ extension GrdbStorage: IRateStorage {
                 .flatMap { $0.map(Observable.just) ?? Observable.empty() }
     }
 
-    func save(latestRate: LatestRate, coinCode: CoinCode, currencyCode: String) {
-        let rate = Rate(coinCode: coinCode, currencyCode: currencyCode, value: latestRate.value, timestamp: latestRate.timestamp)
-
+    func save(rate: Rate) {
         _ = try? dbPool.write { db in
             try rate.insert(db)
         }

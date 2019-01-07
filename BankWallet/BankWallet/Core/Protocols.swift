@@ -58,16 +58,18 @@ protocol IWalletManager {
     var walletsSubject: PublishSubject<[Wallet]> { get }
 
     var walletsObservable: Observable<[Wallet]> { get }
-
-    func initWallets(authData: AuthData, coins: [Coin])
-    func clearWallets()
 }
 
 protocol IAdapterFactory {
     func adapter(forCoinType type: CoinType, authData: AuthData) -> IAdapter?
 }
 
+protocol IWalletFactory {
+    func wallet(forCoin coin: Coin, authData: AuthData) -> Wallet?
+}
+
 protocol ICoinManager {
+    var coinsObservable: Observable<[Coin]> { get }
 }
 
 protocol ITransactionManager: class {
@@ -119,6 +121,8 @@ protocol IWordsManager {
     func validate(words: [String]) throws
     func restore(withWords words: [String]) throws
     func logout()
+
+    var authDataObservable: Observable<AuthData> { get }
 }
 
 protocol ILockManager {
@@ -154,11 +158,7 @@ protocol BiometricManagerDelegate: class {
 
 protocol IRateManager {
     func rate(forCoin coinCode: CoinCode, currencyCode: String) -> Rate?
-}
-
-protocol IRateSyncer {
-    var delegate: IRateSyncerDelegate? { get set }
-    func sync(coinCodes: [String], currencyCode: String)
+    func refreshRates(coinCodes: [CoinCode], currencyCode: String)
 }
 
 protocol IRateSyncerDelegate: class {
@@ -187,7 +187,7 @@ protocol IRateNetworkManager {
 
 protocol IRateStorage {
     func rateObservable(forCoinCode coinCode: CoinCode, currencyCode: String) -> Observable<Rate>
-    func save(latestRate: LatestRate, coinCode: CoinCode, currencyCode: String)
+    func save(rate: Rate)
     func clear()
 }
 
@@ -213,6 +213,8 @@ protocol ICurrencyManager {
 
 protocol IReachabilityManager {
     var subject: PublishSubject<Bool> { get }
+
+    var stateObservable: Observable<Bool> { get }
 }
 
 protocol IPeriodicTimer {
