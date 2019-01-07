@@ -6,8 +6,8 @@ inhibit_all_warnings!
 project 'BankWallet/BankWallet'
 
 def appPods
-  pod 'HSBitcoinKit', git: 'https://github.com/horizontalsystems/bitcoin-kit-ios/', branch: 'develop'
-  pod 'HSEthereumKit'
+  pod 'HSBitcoinKit', git: 'https://github.com/horizontalsystems/bitcoin-kit-ios/'
+  pod 'HSEthereumKit', git: 'https://github.com/horizontalsystems/ethereum-kit-ios/'
 
   pod 'Alamofire'
   pod 'ObjectMapper'
@@ -18,9 +18,9 @@ def appPods
   pod 'RealmSwift'
   pod "RxRealm"
 
-  pod 'GrouviExtensions'
-  pod 'GrouviActionSheet'
-  pod 'GrouviHUD'
+  pod 'GrouviExtensions', '~> 1.1.2'
+  pod 'GrouviActionSheet', '1.2.5'
+  pod 'GrouviHUD', '1.0.3'
   pod 'SectionsTableViewKit'
 
   pod 'KeychainAccess'

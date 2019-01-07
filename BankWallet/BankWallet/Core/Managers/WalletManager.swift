@@ -17,7 +17,7 @@ extension WalletManager: IWalletManager {
         return Observable.just(wallets)
     }
 
-    func initWallets(words: [String], coins: [Coin]) {
+    func initWallets(authData: AuthData, coins: [Coin]) {
         var newWallets = [Wallet]()
 
         wallets = coins.compactMap { coin in
@@ -25,7 +25,7 @@ extension WalletManager: IWalletManager {
                 return wallet
             }
 
-            guard let adapter = adapterFactory.adapter(forCoinType: coin.type, words: words) else {
+            guard let adapter = adapterFactory.adapter(forCoinType: coin.type, authData: authData) else {
                 return nil
             }
 

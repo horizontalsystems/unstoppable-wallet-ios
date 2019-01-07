@@ -17,9 +17,9 @@ class BitcoinAdapter {
     private let balanceSubject: BehaviorSubject<Double>
     private let stateSubject: BehaviorSubject<AdapterState>
 
-    init(words: [String], coin: BitcoinKit.Coin) {
+    init(words: [String], coin: BitcoinKit.Coin, walletId: String) {
         wordsHash = words.joined()
-        bitcoinKit = BitcoinKit(withWords: words, coin: coin, minLogLevel: .error)
+        bitcoinKit = BitcoinKit(withWords: words, coin: coin, walletId: walletId, minLogLevel: .error)
 
         progressSubject = BehaviorSubject(value: 0)
 
@@ -182,14 +182,14 @@ extension BitcoinAdapter: BitcoinKitDelegate {
 
 extension BitcoinAdapter {
 
-    static func bitcoinAdapter(words: [String], testMode: Bool) -> BitcoinAdapter {
+    static func bitcoinAdapter(authData: AuthData, testMode: Bool) -> BitcoinAdapter {
         let network: BitcoinKit.Network = testMode ? .testNet : .mainNet
-        return BitcoinAdapter(words: words, coin: .bitcoin(network: network))
+        return BitcoinAdapter(words: authData.words, coin: .bitcoin(network: network), walletId: authData.walletId)
     }
 
-    static func bitcoinCashAdapter(words: [String], testMode: Bool) -> BitcoinAdapter {
+    static func bitcoinCashAdapter(authData: AuthData, testMode: Bool) -> BitcoinAdapter {
         let network: BitcoinKit.Network = testMode ? .testNet : .mainNet
-        return BitcoinAdapter(words: words, coin: .bitcoinCash(network: network))
+        return BitcoinAdapter(words: authData.words, coin: .bitcoinCash(network: network), walletId: authData.walletId)
     }
 
 }

@@ -2,7 +2,6 @@ PODS:
   - Alamofire (4.8.0)
   - BigInt (3.1.0):
     - SipHash (~> 1.2)
-  - CryptoSwift (0.13.1)
   - Cuckoo (0.12.0)
   - GRDB.swift (3.6.1)
   - GrouviActionSheet (1.2.5):
@@ -14,25 +13,25 @@ PODS:
   - GrouviHUD (1.0.3):
     - RxSwift
     - SnapKit (~> 4.0.0)
-  - HSBitcoinKit (0.1.5):
+  - HSBitcoinKit (0.2.0):
     - Alamofire (~> 4.8.0)
     - BigInt (~> 3.1.0)
-    - HSCryptoKit (~> 1.0.1)
-    - HSHDWalletKit (~> 1.0.2)
+    - HSCryptoKit (~> 1.1.0)
+    - HSHDWalletKit (~> 1.0.3)
     - ObjectMapper (~> 3.3.0)
     - RealmSwift (~> 3.11.0)
     - RxRealm (~> 0.7.0)
     - RxSwift (~> 4.0)
-  - HSCryptoKit (1.0.1)
-  - HSEthereumKit (0.2.2):
+  - HSCryptoKit (1.1.0)
+  - HSEthereumKit (0.2.3):
     - Alamofire (~> 4.8.0)
-    - CryptoSwift (~> 0.13.1)
-    - HSCryptoKit (~> 1.0.1)
+    - HSCryptoKit (~> 1.1.0)
+    - HSHDWalletKit (~> 1.0.3)
     - RealmSwift (~> 3.11.0)
     - RxRealm (~> 0.7.0)
     - RxSwift (~> 4.0)
-  - HSHDWalletKit (1.0.2):
-    - HSCryptoKit (~> 1.0.1)
+  - HSHDWalletKit (1.0.3):
+    - HSCryptoKit (~> 1.1.0)
   - KeychainAccess (3.1.2)
   - ObjectMapper (3.3.0)
   - Realm (3.11.2):
@@ -63,11 +62,11 @@ DEPENDENCIES:
   - BigInt
   - Cuckoo
   - GRDB.swift
-  - GrouviActionSheet
-  - GrouviExtensions
-  - GrouviHUD
-  - HSBitcoinKit (from `https://github.com/horizontalsystems/bitcoin-kit-ios/`, branch `develop`)
-  - HSEthereumKit
+  - GrouviActionSheet (= 1.2.5)
+  - GrouviExtensions (~> 1.1.2)
+  - GrouviHUD (= 1.0.3)
+  - HSBitcoinKit (from `https://github.com/horizontalsystems/bitcoin-kit-ios/`)
+  - HSEthereumKit (from `https://github.com/horizontalsystems/ethereum-kit-ios/`)
   - KeychainAccess
   - ObjectMapper
   - RealmSwift
@@ -82,14 +81,12 @@ SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - Alamofire
     - BigInt
-    - CryptoSwift
     - Cuckoo
     - GRDB.swift
     - GrouviActionSheet
     - GrouviExtensions
     - GrouviHUD
     - HSCryptoKit
-    - HSEthereumKit
     - HSHDWalletKit
     - KeychainAccess
     - ObjectMapper
@@ -105,27 +102,30 @@ SPEC REPOS:
 
 EXTERNAL SOURCES:
   HSBitcoinKit:
-    :branch: develop
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios/
+  HSEthereumKit:
+    :git: https://github.com/horizontalsystems/ethereum-kit-ios/
 
 CHECKOUT OPTIONS:
   HSBitcoinKit:
-    :commit: c1e2d475a6fd34aef292ede53b89354c8b726b74
+    :commit: 9e466711917537f9033ccdfe1943aeb7693f2dde
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios/
+  HSEthereumKit:
+    :commit: de86a44f74caccfd7c7b51c83ac6c78f1e7b62ce
+    :git: https://github.com/horizontalsystems/ethereum-kit-ios/
 
 SPEC CHECKSUMS:
   Alamofire: 3ec537f71edc9804815215393ae2b1a8ea33a844
   BigInt: 76b5dfdfa3e2e478d4ffdf161aeede5502e2742f
-  CryptoSwift: ff68c35a53e03177d31aaa2c1e8b3e010aeed6cb
   Cuckoo: d30b6c149e52ffbcfe6b4a9543e4627d08947274
   GRDB.swift: 2ea998984ce0d8b869917e1452b5d87f1ec5e0dd
   GrouviActionSheet: a966bf187addebab0d00aa9e66083e9112a60af7
   GrouviExtensions: ae9e74948ff6490184584610b1cff34ee4112a59
   GrouviHUD: 7a71f6e142724c1a5657084ee35afa9a328ec88d
-  HSBitcoinKit: 97266ec34a3fbded12c794eee5b30c9e5c7f9fde
-  HSCryptoKit: b5b7080a6571df88e25e68ec7dcc1c02a56f02ee
-  HSEthereumKit: 7e0929b32c8595d694a8c2b009ceaa43857f4382
-  HSHDWalletKit: a37ff1172876560ded7d5ddedfe7e53959825658
+  HSBitcoinKit: 999eb532a456f757aa0b354f0b9e9e20adf8dc27
+  HSCryptoKit: 8679d53083d1136fc128bbf9b040976110ce1491
+  HSEthereumKit: 1638d4e6ed49c8086050e6ea837915d3cce405e3
+  HSHDWalletKit: f75cd8186f00bae4f6aa76548a0b1f24c13dff72
   KeychainAccess: b3816fddcf28aa29d94b10ec305cd52be14c472b
   ObjectMapper: b612bf8c8e99c4dc0bb6013a51f7c27966ed5da9
   Realm: 864477d028db77f7c5a0cba64a4892ad53db128a
