@@ -169,7 +169,7 @@ Go to Settings - > Bank and allow access to Camera.";
 
 // Set PIN
 
-"set_pin.title" = "Set PIN";
+"set_pin.title" = "PIN";
 "set_pin.info" = "Your pin will be used to unlock your wallet and send money";
 "set_pin.confirm.info" = "Confirm PIN";
 "set_pin.wrong_confirmation" = "Pin did not match. Try again";
@@ -177,8 +177,8 @@ Go to Settings - > Bank and allow access to Camera.";
 // Edit PIN
 
 "edit_pin.title" = "Edit PIN";
-"edit_pin.unlock_info" = "Enter current PIN";
-"edit_pin.new_pin_info" = "Enter new PIN";
+"edit_pin.unlock_info" = "Current PIN";
+"edit_pin.new_pin_info" = "New PIN";
 "edit_pin.confirm_info" = "Enter again";
 
 // Unlock PIN
