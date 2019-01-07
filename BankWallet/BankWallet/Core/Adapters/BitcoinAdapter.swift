@@ -166,14 +166,14 @@ extension BitcoinAdapter: BitcoinKitDelegate {
 
 extension BitcoinAdapter {
 
-    static func bitcoinAdapter(words: [String], testMode: Bool) -> BitcoinAdapter {
+    static func bitcoinAdapter(authData: AuthData, testMode: Bool) -> BitcoinAdapter {
         let network: BitcoinKit.Network = testMode ? .testNet : .mainNet
-        return BitcoinAdapter(words: words, coin: .bitcoin(network: network))
+        return BitcoinAdapter(words: authData.words, coin: .bitcoin(network: network), walletId: authData.walletId)
     }
 
-    static func bitcoinCashAdapter(words: [String], testMode: Bool) -> BitcoinAdapter {
+    static func bitcoinCashAdapter(authData: AuthData, testMode: Bool) -> BitcoinAdapter {
         let network: BitcoinKit.Network = testMode ? .testNet : .mainNet
-        return BitcoinAdapter(words: words, coin: .bitcoinCash(network: network))
+        return BitcoinAdapter(words: authData.words, coin: .bitcoinCash(network: network), walletId: authData.walletId)
     }
 
 }

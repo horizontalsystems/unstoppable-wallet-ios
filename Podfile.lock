@@ -54,9 +54,9 @@ DEPENDENCIES:
   - Alamofire
   - BigInt
   - Cuckoo
-  - GrouviActionSheet
+  - GrouviActionSheet (= 1.2.5)
   - GrouviExtensions (~> 1.1.2)
-  - GrouviHUD
+  - GrouviHUD (= 1.0.3)
   - HSBitcoinKit (from `https://github.com/horizontalsystems/bitcoin-kit-ios/`)
   - HSEthereumKit (from `https://github.com/horizontalsystems/ethereum-kit-ios/`)
   - KeychainAccess
@@ -97,7 +97,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   HSBitcoinKit:
-    :commit: 9d4926bca01ad1bfbef78417488968af20551ac4
+    :commit: 9e466711917537f9033ccdfe1943aeb7693f2dde
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios/
   HSEthereumKit:
     :commit: de86a44f74caccfd7c7b51c83ac6c78f1e7b62ce
@@ -125,6 +125,6 @@ SPEC CHECKSUMS:
   SipHash: fad90a4683e420c52ef28063063dbbce248ea6d4
   SnapKit: 0de968a9fec17499afa29683b05d0c775b6d1c29
 
-PODFILE CHECKSUM: 443087517113f00a6a3da311c9a75c3d17bf8376
+PODFILE CHECKSUM: 82912588b07c6b989d9e4b5475cfb699920519aa
 
 COCOAPODS: 1.5.3
