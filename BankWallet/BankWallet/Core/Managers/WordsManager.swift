@@ -8,18 +8,22 @@ class WordsManager {
     let loggedInSubject: PublishSubject<Bool> = PublishSubject()
     let backedUpSubject: PublishSubject<Bool> = PublishSubject()
 
-    private(set) var words: [String]?
+    private(set) var authData: AuthData?
 
     init(secureStorage: ISecureStorage, localStorage: ILocalStorage) {
         self.secureStorage = secureStorage
         self.localStorage = localStorage
 
-        words = secureStorage.words
+        authData = secureStorage.authData
     }
 
 }
 
 extension WordsManager: IWordsManager {
+
+    var words: [String]? {
+        return authData?.words
+    }
 
     var isBackedUp: Bool {
         get {
@@ -32,13 +36,13 @@ extension WordsManager: IWordsManager {
     }
 
     var isLoggedIn: Bool {
-        return words != nil
+        return authData != nil
     }
 
     func createWords() throws {
-        let generatedWords = try Mnemonic.generate()
-        try secureStorage.set(words: generatedWords)
-        words = generatedWords
+        let authData = AuthData(words: try Mnemonic.generate())
+        try secureStorage.set(authData: authData)
+        self.authData = authData
 
         loggedInSubject.onNext(true)
     }
@@ -49,17 +53,18 @@ extension WordsManager: IWordsManager {
 
     func restore(withWords words: [String]) throws {
         try Mnemonic.validate(words: words)
-        try secureStorage.set(words: words)
-        self.words = words
+
+        let authData = AuthData(words: words)
+        try secureStorage.set(authData: authData)
+        self.authData = authData
 
         isBackedUp = true
         loggedInSubject.onNext(true)
     }
 
     func logout() {
-        words = nil
-
-        try? secureStorage.set(words: nil)
+        try? secureStorage.set(authData: nil)
+        authData = nil
         localStorage.clear()
 
         loggedInSubject.onNext(false)

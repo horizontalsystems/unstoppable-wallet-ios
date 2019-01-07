@@ -21,9 +21,9 @@ class BitcoinAdapter {
         }
     }
 
-    init(words: [String], coin: BitcoinKit.Coin) {
+    init(words: [String], coin: BitcoinKit.Coin, walletId: String) {
         wordsHash = words.joined()
-        bitcoinKit = BitcoinKit(withWords: words, coin: coin, minLogLevel: .error)
+        bitcoinKit = BitcoinKit(withWords: words, coin: coin, walletId: walletId, minLogLevel: .error)
         progressSubject = BehaviorSubject(value: 0)
 
         state = .syncing(progressSubject: progressSubject)
