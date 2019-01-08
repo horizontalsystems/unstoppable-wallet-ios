@@ -36,7 +36,7 @@
 // Backup
 
 "backup.intro.title" = "پيشتيباني";
-"backup.intro.subtitle" = "رمز مخيفي شما ميتواند كيف پول شما را دوباره پروگرام كند اگر تيليفون شما گم شود،خراب شود يا دزدي  شود پس هميشه رمز مخفي خود را پيش خود داشته باشد و فراموش نكيد.\n رمز مخفي ١٢ رقم ميخواهد.";
+"backup.intro.subtitle" = "Your secret key is the only way to restore your wallet and funds if your phone is ever lost, stolen, broken, or upgraded.\n\nIt consists of 12 words. Store it safely offline.";
 "backup.intro.later" = "بعداً";
 "backup.intro.backup_now" = "پيشتيباني";
 
