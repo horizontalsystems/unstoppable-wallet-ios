@@ -12,7 +12,7 @@ PODS:
   - GrouviHUD (1.0.3):
     - RxSwift
     - SnapKit (~> 4.0.0)
-  - HSBitcoinKit (0.1.6):
+  - HSBitcoinKit (0.2.0):
     - Alamofire (~> 4.8.0)
     - BigInt (~> 3.1.0)
     - HSCryptoKit (~> 1.1.0)
@@ -97,7 +97,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   HSBitcoinKit:
-    :commit: 9d4926bca01ad1bfbef78417488968af20551ac4
+    :commit: 9e466711917537f9033ccdfe1943aeb7693f2dde
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios/
   HSEthereumKit:
     :commit: de86a44f74caccfd7c7b51c83ac6c78f1e7b62ce
@@ -110,7 +110,7 @@ SPEC CHECKSUMS:
   GrouviActionSheet: dd73bd76eaca3d5bb54fa51960f293d4a176e68c
   GrouviExtensions: 025fe6dbdf9df3015a5a2eddd69cd150b451d578
   GrouviHUD: 7a71f6e142724c1a5657084ee35afa9a328ec88d
-  HSBitcoinKit: ddd5f157f95369db56d88cbb98743dddbf5eb46d
+  HSBitcoinKit: 999eb532a456f757aa0b354f0b9e9e20adf8dc27
   HSCryptoKit: 8679d53083d1136fc128bbf9b040976110ce1491
   HSEthereumKit: 1638d4e6ed49c8086050e6ea837915d3cce405e3
   HSHDWalletKit: f75cd8186f00bae4f6aa76548a0b1f24c13dff72
