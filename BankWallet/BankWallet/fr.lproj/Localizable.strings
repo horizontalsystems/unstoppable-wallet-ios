@@ -36,7 +36,7 @@
 // Backup
 
 "backup.intro.title" = "Sauvegarde";
-"backup.intro.subtitle" = "Votre clé secrete est le seul moyen de restaurer votre porte-monnaie et vos fonds si votre téléphone est perdu, volé, cassé ou mis à jour. \nElle contient 12 mots. Ecrivez-les sur un morceau de papier et ne les montrez jamais à personne.";
+"backup.intro.subtitle" = "Your secret key is the only way to restore your wallet and funds if your phone is ever lost, stolen, broken, or upgraded.\n\nIt consists of 12 words. Store it safely offline.";
 "backup.intro.later" = "Plus tard";
 "backup.intro.backup_now" = "Sauvegarde";
 
