@@ -8,14 +8,14 @@ class AdapterFactory: IAdapterFactory {
         self.appConfigProvider = appConfigProvider
     }
 
-    func adapter(forCoinType type: CoinType, words: [String]) -> IAdapter? {
+    func adapter(forCoinType type: CoinType, authData: AuthData) -> IAdapter? {
         switch type {
         case .bitcoin:
-            return BitcoinAdapter.bitcoinAdapter(words: words, testMode: appConfigProvider.testMode)
+            return BitcoinAdapter.bitcoinAdapter(authData: authData, testMode: appConfigProvider.testMode)
         case .bitcoinCash:
-            return BitcoinAdapter.bitcoinCashAdapter(words: words, testMode: appConfigProvider.testMode)
+            return BitcoinAdapter.bitcoinCashAdapter(authData: authData, testMode: appConfigProvider.testMode)
         case .ethereum:
-            return EthereumAdapter.ethereumAdapter(words: words, testMode: appConfigProvider.testMode)
+            return EthereumAdapter.ethereumAdapter(words: authData.words, testMode: appConfigProvider.testMode)
         case .erc20(_, _): return nil
         }
     }

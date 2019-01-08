@@ -87,4 +87,8 @@ extension BalancePresenter: IBalanceViewDelegate {
         router.openSend(for: coinCode)
     }
 
+    func onOpenManageCoins() {
+        router.openManageCoins()
+    }
+
 }

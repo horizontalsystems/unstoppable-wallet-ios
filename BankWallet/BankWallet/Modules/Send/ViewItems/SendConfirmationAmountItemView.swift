@@ -5,8 +5,8 @@ import SnapKit
 
 class SendConfirmationAmountItemView: BaseActionItemView {
 
+    var currencyAmountLabel = UILabel()
     var amountLabel = UILabel()
-    var fiatAmountLabel = UILabel()
 
     override var item: SendConfirmationAmounItem? { return _item as? SendConfirmationAmounItem }
 
@@ -15,28 +15,28 @@ class SendConfirmationAmountItemView: BaseActionItemView {
 
         backgroundColor = SendTheme.itemBackground
 
+        currencyAmountLabel.font = SendTheme.confirmationCurrencyAmountFont
+        currencyAmountLabel.textColor = SendTheme.confirmationCurrencyAmountColor
+        addSubview(currencyAmountLabel)
+        currencyAmountLabel.snp.makeConstraints { maker in
+            maker.centerX.equalToSuperview()
+            maker.top.equalToSuperview().offset(SendTheme.confirmationCurrencyAmountTopMargin)
+        }
+
         amountLabel.font = SendTheme.confirmationAmountFont
         amountLabel.textColor = SendTheme.confirmationAmountColor
         addSubview(amountLabel)
         amountLabel.snp.makeConstraints { maker in
             maker.centerX.equalToSuperview()
-            maker.top.equalToSuperview().offset(SendTheme.confirmationAmountTopMargin)
-        }
-
-        fiatAmountLabel.font = SendTheme.confirmationFiatAmountFont
-        fiatAmountLabel.textColor = SendTheme.confirmationFiatAmountColor
-        addSubview(fiatAmountLabel)
-        fiatAmountLabel.snp.makeConstraints { maker in
-            maker.centerX.equalToSuperview()
-            maker.top.equalTo(self.amountLabel.snp.bottom).offset(SendTheme.confirmationFiatAmountTopMargin)
+            maker.top.equalTo(self.currencyAmountLabel.snp.bottom).offset(SendTheme.confirmationAmountTopMargin)
         }
     }
 
     override func updateView() {
         super.updateView()
 
+        currencyAmountLabel.text = item?.fiatAmount
         amountLabel.text = item?.amount
-        fiatAmountLabel.text = item?.fiatAmount
     }
 
 }

@@ -97,17 +97,17 @@
 // Full Info
 "full_info.title" = "Volle Info";
 "full_info.id" = "ID";
+"full_info.status" = "Status";
 "full_info.time" = "Zeit";
 "full_info.block" = "Block";
 "full_info.confirmations" = "Bestätigungen";
 "full_info.total_input" = "Insgesamt Eingang";
 "full_info.total_output" = "Insgesamte Ausgänge";
-"full_info.size" = "Size";
 "full_info.fee" = "Gebühr";
-"full_info.fee_per_byte" = "Fee per byte";
+"full_info.subtitle_from" = "Von";
 "full_info.subtitle_inputs" = "Eingänge";
 "full_info.subtitle_outputs" = "Ausgänge";
-"full_info.subtitle_provider" = "Datenanbieter";
+"full_info.subtitle_provider" = "Data Provider";
 
 // Settings
 

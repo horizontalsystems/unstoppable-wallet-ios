@@ -56,7 +56,7 @@ class BalanceCell: UITableViewCell {
         roundedBackground.addSubview(nameLabel)
         nameLabel.snp.makeConstraints { maker in
             maker.leading.equalTo(self.coinIconImageView.snp.trailing).offset(BalanceTheme.cellSmallMargin)
-            maker.top.equalToSuperview().offset(BalanceTheme.nameTopMargin)
+            maker.centerY.equalTo(self.coinIconImageView.snp.centerY)
         }
         nameLabel.font = BalanceTheme.cellTitleFont
         nameLabel.textColor = BalanceTheme.cellTitleColor
@@ -82,30 +82,30 @@ class BalanceCell: UITableViewCell {
         roundedBackground.addSubview(rateLabel)
         rateLabel.snp.makeConstraints { maker in
             maker.leading.equalToSuperview().offset(BalanceTheme.cellBigMargin)
-            maker.top.equalTo(self.nameLabel.snp.bottom).offset(BalanceTheme.valueTopMargin)
+            maker.top.equalTo(self.nameLabel.snp.bottom).offset(BalanceTheme.rateTopMargin)
         }
-        rateLabel.font = BalanceTheme.cellSubtitleFont
+        rateLabel.font = BalanceTheme.rateFont
         rateLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         rateLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
 
-        roundedBackground.addSubview(currencyValueLabel)
-        currencyValueLabel.snp.makeConstraints { maker in
+        roundedBackground.addSubview(coinValueLabel)
+        coinValueLabel.snp.makeConstraints { maker in
             maker.leading.equalTo(self.refreshButton.snp.trailing).offset(BalanceTheme.cellSmallMargin).priority(.high)
             maker.trailing.equalToSuperview().offset(-BalanceTheme.cellBigMargin)
             maker.centerY.equalTo(self.nameLabel.snp.centerY)
         }
-        currencyValueLabel.font = BalanceTheme.cellSubtitleFont
-        currencyValueLabel.textAlignment = .right
-
-        roundedBackground.addSubview(coinValueLabel)
-        coinValueLabel.snp.makeConstraints { maker in
-            maker.leading.equalTo(self.rateLabel.snp.trailing).offset(BalanceTheme.cellSmallMargin)
-            maker.bottom.equalTo(self.rateLabel).offset(BalanceTheme.coinLabelVerticalOffset)
-            maker.trailing.equalToSuperview().offset(-BalanceTheme.cellBigMargin)
-        }
-        coinValueLabel.font = BalanceTheme.cellTitleFont
-        coinValueLabel.textColor = BalanceTheme.cellTitleColor
+        coinValueLabel.font = BalanceTheme.coinValueFont
+        coinValueLabel.textColor = BalanceTheme.coinValueColor
         coinValueLabel.textAlignment = .right
+
+        roundedBackground.addSubview(currencyValueLabel)
+        currencyValueLabel.snp.makeConstraints { maker in
+            maker.leading.equalTo(self.rateLabel.snp.trailing).offset(BalanceTheme.cellSmallMargin)
+            maker.trailing.equalToSuperview().offset(-BalanceTheme.cellBigMargin)
+            maker.centerY.equalTo(self.rateLabel.snp.centerY)
+        }
+        currencyValueLabel.font = BalanceTheme.currencyValueFont
+        currencyValueLabel.textAlignment = .right
 
         roundedBackground.addSubview(syncLabel)
         syncLabel.snp.makeConstraints { maker in
@@ -136,7 +136,7 @@ class BalanceCell: UITableViewCell {
         roundedBackground.addSubview(receiveButton)
         receiveButton.snp.makeConstraints { maker in
             maker.leading.equalToSuperview().offset(BalanceTheme.cellSmallMargin)
-            maker.top.equalTo(self.coinValueLabel.snp.bottom).offset(BalanceTheme.buttonsTopMargin)
+            maker.top.equalTo(self.nameLabel.snp.bottom).offset(BalanceTheme.buttonsTopMargin)
             maker.height.equalTo(BalanceTheme.buttonsHeight)
         }
         receiveButton.onTap = { [weak self] in self?.receive() }
@@ -147,7 +147,7 @@ class BalanceCell: UITableViewCell {
         roundedBackground.addSubview(payButton)
         payButton.snp.makeConstraints { maker in
             maker.leading.equalTo(receiveButton.snp.trailing).offset(BalanceTheme.cellSmallMargin)
-            maker.top.equalTo(self.coinValueLabel.snp.bottom).offset(BalanceTheme.buttonsTopMargin)
+            maker.top.equalTo(self.nameLabel.snp.bottom).offset(BalanceTheme.buttonsTopMargin)
             maker.trailing.equalToSuperview().offset(-BalanceTheme.cellSmallMargin)
             maker.height.equalTo(BalanceTheme.buttonsHeight)
             maker.width.equalTo(receiveButton)

@@ -40,7 +40,7 @@ extension TransactionViewItemFactory: ITransactionViewItemFactory {
             if confirmations >= threshold {
                 status = .completed
             } else {
-                status = .processing(progress: Double(confirmations) / Double(threshold))
+                status = .processing(confirmations: confirmations)
             }
         }
 
@@ -53,7 +53,7 @@ extension TransactionViewItemFactory: ITransactionViewItemFactory {
                 from: record.from.first(where: { $0.mine != incoming })?.address,
                 to: record.to.first(where: { $0.mine == incoming })?.address,
                 incoming: incoming,
-                date: record.timestamp == 0 ? nil : Date(timeIntervalSince1970: Double(record.timestamp)),
+                date: status == .pending || record.timestamp == 0 ? nil : Date(timeIntervalSince1970: Double(record.timestamp)),
                 status: status
         )
     }

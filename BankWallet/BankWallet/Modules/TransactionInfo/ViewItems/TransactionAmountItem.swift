@@ -3,21 +3,18 @@ import GrouviActionSheet
 
 class TransactionAmountItem: BaseActionItem {
 
+    var currencyAmount: String?
+    var currencyAmountColor: UIColor
     var amount: String?
-    var amountColor: UIColor
-    var fiatAmount: String
 
-    init(item: TransactionViewItem, tag: Int? = nil, hidden: Bool = false, required: Bool = false) {
-        amount = ValueFormatter.instance.format(coinValue: item.coinValue, explicitSign: true)
-        amountColor = item.incoming ? TransactionInfoTheme.incomingAmountColor : TransactionInfoTheme.outgoingAmountColor
-
-        if let value = item.currencyValue, let formattedValue = ValueFormatter.instance.format(currencyValue: value, approximate: true) {
-            self.fiatAmount = formattedValue
-        } else {
-            self.fiatAmount = "n/a"
+    init(item: TransactionViewItem, tag: Int? = nil) {
+        if let value = item.currencyValue, let formattedValue = ValueFormatter.instance.format(currencyValue: value) {
+            currencyAmount = formattedValue
         }
+        currencyAmountColor = item.incoming ? TransactionInfoTheme.incomingAmountColor : TransactionInfoTheme.outgoingAmountColor
+        amount = ValueFormatter.instance.format(coinValue: item.coinValue)
 
-        super.init(cellType: TransactionAmountItemView.self, tag: tag, hidden: hidden, required: required)
+        super.init(cellType: TransactionAmountItemView.self, tag: tag, required: true)
 
         height = TransactionInfoTheme.amountHeight
     }

@@ -24,8 +24,8 @@ protocol ILocalStorage: class {
 }
 
 protocol ISecureStorage: class {
-    var words: [String]? { get }
-    func set(words: [String]?) throws
+    var authData: AuthData? { get }
+    func set(authData: AuthData?) throws
     var pin: String? { get }
     func set(pin: String?) throws
     var unlockAttempts: Int? { get }
@@ -57,12 +57,12 @@ protocol IWalletManager {
     var wallets: [Wallet] { get }
     var walletsSubject: PublishSubject<[Wallet]> { get }
 
-    func initWallets(words: [String], coins: [Coin])
+    func initWallets(authData: AuthData, coins: [Coin])
     func clearWallets()
 }
 
 protocol IAdapterFactory {
-    func adapter(forCoinType type: CoinType, words: [String]) -> IAdapter?
+    func adapter(forCoinType type: CoinType, authData: AuthData) -> IAdapter?
 }
 
 protocol ICoinManager {
@@ -109,6 +109,7 @@ protocol IAdapter: class {
 
 protocol IWordsManager {
     var words: [String]? { get }
+    var authData: AuthData? { get }
     var isBackedUp: Bool { get set }
     var isLoggedIn: Bool { get }
     var loggedInSubject: PublishSubject<Bool> { get }
@@ -174,6 +175,9 @@ protocol IAppConfigProvider {
     var ratesApiUrl: String { get }
     var testMode: Bool { get }
     var currencies: [Currency] { get }
+
+    var defaultWords: [String] { get }
+    var disablePinLock: Bool { get }
 }
 
 protocol IRateNetworkManager {

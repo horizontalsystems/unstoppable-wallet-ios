@@ -36,7 +36,7 @@ class TransactionFromToHashItemView: BaseActionItemView {
         wrapperView.cornerRadius = TransactionInfoTheme.hashButtonCornerRadius
         addSubview(wrapperView)
         wrapperView.snp.makeConstraints { maker in
-            maker.leading.equalTo(self.titleLabel.snp.trailing).offset(TransactionInfoTheme.largeMargin)
+            maker.leading.equalTo(self.titleLabel.snp.trailing).offset(TransactionInfoTheme.hashButtonMargin)
             maker.centerY.equalToSuperview()
             maker.trailing.equalToSuperview().offset(-TransactionInfoTheme.regularMargin)
             maker.height.equalTo(TransactionInfoTheme.hashButtonHeight)
@@ -48,8 +48,8 @@ class TransactionFromToHashItemView: BaseActionItemView {
             maker.centerY.equalToSuperview()
         }
 
-        valueLabel.font = TransactionInfoTheme.itemTitleFont
-        valueLabel.textColor = TransactionInfoTheme.hashButtonTextColor
+        valueLabel.font = TransactionInfoTheme.itemValueFont
+        valueLabel.textColor = TransactionInfoTheme.itemValueColor
         valueLabel.lineBreakMode = .byTruncatingMiddle
         wrapperView.addSubview(valueLabel)
         valueLabel.snp.makeConstraints { maker in

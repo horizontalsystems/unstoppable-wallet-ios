@@ -164,11 +164,31 @@ class TransactionViewItemFactoryTests: XCTestCase {
         XCTAssertEqual(item.date, nil)
     }
 
-    func testDate_WithTimestamp() {
+    func testDate_WithTimestamp_Pending() {
         let date = Date(timeIntervalSince1970: Double(Int(Date().timeIntervalSince1970)))
 
         let record = TransactionRecord()
         record.coinCode = coin
+        record.timestamp = date.timeIntervalSince1970
+
+        let item = factory.item(fromRecord: record)
+
+        XCTAssertEqual(item.date, nil)
+    }
+
+    func testDate_WithTimestamp_NotPending() {
+        let date = Date(timeIntervalSince1970: Double(Int(Date().timeIntervalSince1970)))
+
+        let blockHeight = 100
+        let lastBlockHeight = 106
+
+        stub(mockAdapter) { mock in
+            when(mock.lastBlockHeight.get).thenReturn(lastBlockHeight)
+        }
+
+        let record = TransactionRecord()
+        record.coinCode = coin
+        record.blockHeight = blockHeight
         record.timestamp = date.timeIntervalSince1970
 
         let item = factory.item(fromRecord: record)
@@ -227,8 +247,8 @@ class TransactionViewItemFactoryTests: XCTestCase {
 
         let item = factory.item(fromRecord: record)
 
-        let expectedProgress = 0.5
-        XCTAssertEqual(item.status, TransactionStatus.processing(progress: expectedProgress))
+        let expectedConfirmations = 3
+        XCTAssertEqual(item.status, TransactionStatus.processing(confirmations: expectedConfirmations))
     }
 
     func testStatus_Completed() {

@@ -31,12 +31,12 @@ class CoinManager {
     }
 
     private func syncWallets() {
-        guard let words = wordsManager.words else {
+        guard let authData = wordsManager.authData else {
             walletManager.clearWallets()
             return
         }
 
-        walletManager.initWallets(words: words, coins: defaultCoins)
+        walletManager.initWallets(authData: authData, coins: defaultCoins)
     }
 
 }

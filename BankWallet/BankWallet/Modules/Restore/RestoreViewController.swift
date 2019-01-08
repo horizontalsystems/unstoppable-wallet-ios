@@ -2,7 +2,6 @@ import UIKit
 import RxSwift
 
 class RestoreViewController: KeyboardObservingViewController {
-
     let delegate: IRestoreViewDelegate
 
     @IBOutlet weak var wordsCollectionView: UICollectionView?
@@ -36,6 +35,8 @@ class RestoreViewController: KeyboardObservingViewController {
 
         wordsCollectionView?.registerCell(forClass: RestoreWordCell.self)
         wordsCollectionView?.registerView(forClass: DescriptionCollectionHeader.self, flowSupplementaryKind: .header)
+
+        delegate.viewDidLoad()
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -121,6 +122,14 @@ extension RestoreViewController: UICollectionViewDelegateFlowLayout, UICollectio
 }
 
 extension RestoreViewController: IRestoreView {
+
+    func set(defaultWords: [String]) {
+        for (index, defaultWord) in defaultWords.enumerated() {
+            if index < words.count {
+                words[index] = defaultWord
+            }
+        }
+    }
 
     func showInvalidWordsError() {
         HudHelper.instance.showError(title: "restore.validation_failed".localized)
