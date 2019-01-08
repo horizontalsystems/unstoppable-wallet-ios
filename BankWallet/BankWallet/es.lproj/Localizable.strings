@@ -36,7 +36,7 @@
 // Backup
 
 "backup.intro.title" = "Copia de seguridad";
-"backup.intro.subtitle" = "Su clave secreta es la única manera de recuperar su cartera y otros fondos si su teléfono alguna vez se pierde, se rompe, es sustraído o se actualiza a otra versión.";
+"backup.intro.subtitle" = "Your secret key is the only way to restore your wallet and funds if your phone is ever lost, stolen, broken, or upgraded.\n\nIt consists of 12 words. Store it safely offline.";
 "backup.intro.later" = "Posterior";
 "backup.intro.backup_now" = "Copia de seguridad";
 
