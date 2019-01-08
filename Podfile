@@ -19,8 +19,8 @@ def appPods
   pod "RxRealm"
 
   pod 'GrouviExtensions', '~> 1.1.2'
-  pod 'GrouviActionSheet'
-  pod 'GrouviHUD'
+  pod 'GrouviActionSheet', '1.2.5'
+  pod 'GrouviHUD', '1.0.3'
   pod 'SectionsTableViewKit'
 
   pod 'KeychainAccess'
