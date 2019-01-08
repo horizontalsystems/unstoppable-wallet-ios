@@ -103,8 +103,12 @@ extension BitcoinAdapter: IAdapter {
 
     func fee(for value: Double, address: String?, senderPay: Bool) throws -> Double {
         let amount = Int(value * coinRate)
-        let fee = try bitcoinKit.fee(for: amount, toAddress: address, senderPay: senderPay)
-        return Double(fee) / coinRate
+        do {
+            let fee = try bitcoinKit.fee(for: amount, toAddress: address, senderPay: senderPay)
+            return Double(fee) / coinRate
+        } catch SelectorError.notEnough(let maxFee) {
+            throw FeeError.insufficientAmount(fee: Double(maxFee) / coinRate)
+        }
     }
 
     func validate(address: String) throws {

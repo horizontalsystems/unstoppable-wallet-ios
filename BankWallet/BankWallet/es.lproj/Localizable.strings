@@ -57,7 +57,7 @@
 "balance.tab_bar_item" = "Saldo";
 "balance.send" = "Enviar";
 "balance.deposit" = "Recibir";
-"balance.rate_per_coin" = "%@ PER %@";
+"balance.rate_per_coin" = "%@ por %@";
 "balance.syncing_percent" = "Sincronizando %@";
 
 // Deposit
@@ -96,15 +96,15 @@
 
 // Full Info
 "full_info.title" = "Información completa";
-"full_info.id" = "Identificación";
-"full_info.status" = "Estado";
+"full_info.id" = "ID";
 "full_info.time" = "Hora";
 "full_info.block" = "Bloquear";
 "full_info.confirmations" = "Confirmaciones";
 "full_info.total_input" = "Aportación total";
 "full_info.total_output" = "Producción total";
+"full_info.size" = "Size";
 "full_info.fee" = "Comisión";
-"full_info.subtitle_from" = "Desde ";
+"full_info.fee_per_byte" = "Fee per byte";
 "full_info.subtitle_inputs" = "Aportaciones";
 "full_info.subtitle_outputs" = "Producciones";
 "full_info.subtitle_provider" = "Proveedores de datos";
@@ -150,7 +150,7 @@
 
 "settings_security.title" = "Centro de Seguridad";
 "settings_security.backup_wallet" = "Copia de Seguridad de Cartera";
-"settings_security.unlink_from_this_device" = "Desconectarse desde este dispositivo";
+"settings_security.unlink_from_this_device" = "Desvincular de este dispositivo";
 "settings_security.set_pin" = "Establecer PIN";
 "settings_security.change_pin" = "Editar el PIN";
 "settings_security.touch_id" = "Touch ID";

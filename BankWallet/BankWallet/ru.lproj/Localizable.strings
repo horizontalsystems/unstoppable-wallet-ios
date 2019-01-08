@@ -14,7 +14,7 @@
 
 // Access Camera
 
-"access_camera.message" = "Необходим доступ к вашей камере для QR-код.\n\nПерейдите \"Настройки\", чтобы разрешить доступ к камере.";
+"access_camera.message" = "Необходим доступ к вашей камере для сканирования QR-код.\n\n";
 "access_camera.settings" = "Настройки";
 "access_camera.cancel" = "Отменить";
 
@@ -115,7 +115,7 @@
 "settings.tab_bar_item" = "Настройки";
 "settings.security_center" = "Центр Безопасности";
 "settings.base_currency" = "Базовая Валюта";
-"settings.manage_wallet" = "Управление кошельком";
+"settings.manage_wallet" = "Manage Wallet";
 "settings.language" = "Язык";
 "settings.about" = "О приложении";
 "settings.light_mode" = "Светлый Режим";
@@ -132,7 +132,7 @@
 
 // Settings -> Manage Wallet
 
-"settings_manage_wallet.title" = "Управление кошельком";
+"settings_manage_wallet.title" = "Manage Coins";
 "settings_manage_wallet.add_coins" = "Добавить валюту";
 "settings_manage_wallet.add_button" = "Добавить";
 "settings_manage_wallet.hide_button" = "Скрыть";

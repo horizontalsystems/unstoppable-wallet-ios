@@ -98,7 +98,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   HSBitcoinKit:
-    :commit: 9e466711917537f9033ccdfe1943aeb7693f2dde
+    :commit: 001bb89be6aeeec7a3979777deeb4e72dc24b0b8
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios/
   HSEthereumKit:
     :commit: de86a44f74caccfd7c7b51c83ac6c78f1e7b62ce
