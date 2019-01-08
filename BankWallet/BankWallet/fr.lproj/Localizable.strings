@@ -100,7 +100,7 @@
 "full_info.confirmations" = "Confirmation";
 "full_info.total_input" = "Total des entrées";
 "full_info.total_output" = "Total des sorties";
-"full_info.size" = "Size";
+"full_info.size" = "Taille";
 "full_info.fee" = "Frais";
 "full_info.fee_per_byte" = "Fee per byte";
 "full_info.subtitle_inputs" = "Entrées";
@@ -157,7 +157,7 @@
 
 "set_pin.title" = "Passcode";
 "set_pin.info" = "Your passcode will be used to unlock your wallet and send money";
-"set_pin.confirm.info" = "Confirm";
+"set_pin.confirm.info" = "Confirmer";
 "set_pin.wrong_confirmation" = "Le PIN ne correspond pas. Réessayez";
 
 // Edit PIN
