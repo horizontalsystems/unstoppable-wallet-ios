@@ -36,7 +36,7 @@
 // Backup
 
 "backup.intro.title" = "Yedekle";
-"backup.intro.subtitle" = "Gizli Anahtar, telefonunuzun kaybolması, çalınması, bozulması veya programın tekrar kurulması durumunda cüzdana erişebilmenin tek yoludur.\n12 kelimeden oluşur. Gizli Anahtarı not alıp güvenli bir yerde tutun ve kimseye göstermeyin.";
+"backup.intro.subtitle" = "Your secret key is the only way to restore your wallet and funds if your phone is ever lost, stolen, broken, or upgraded.\n\nIt consists of 12 words. Store it safely offline.";
 "backup.intro.later" = "Sonra";
 "backup.intro.backup_now" = "Yedekle";
 
