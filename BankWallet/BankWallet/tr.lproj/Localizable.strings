@@ -146,7 +146,7 @@
 "settings_security.backup_wallet" = "Cüzdanı yedekle";
 "settings_security.unlink_from_this_device" = "Bu cihazla bağlantıyı kes";
 "settings_security.set_pin" = "Passcode";
-"settings_security.change_pin" = "Edit PasscodeK";
+"settings_security.change_pin" = "Edit Passcode";
 "settings_security.touch_id" = "Touch ID";
 "settings_security.face_id" = "Face ID";
 "security_settings.unlink_alert_button" = "Ayır";
