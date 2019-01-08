@@ -77,6 +77,10 @@ enum AdapterState {
     case notSynced
 }
 
+enum FeeError: Error {
+    case insufficientAmount(fee: Double)
+}
+
 protocol IAdapter: class {
     var balance: Double { get }
     var balanceSubject: PublishSubject<Double> { get }

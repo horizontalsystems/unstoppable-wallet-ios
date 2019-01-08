@@ -111,7 +111,7 @@ extension EthereumAdapter: IAdapter {
     func fee(for value: Double, address: String?, senderPay: Bool) throws -> Double {
         // ethereum fee comes in GWei integer value
         let fee = Double(ethereumKit.fee) * gWeiMultiply / coinRate
-        if balance - value - fee < 0 {
+        if balance > 0, balance - value - fee < 0 {
             throw FeeError.insufficientAmount(fee: fee)
         }
         return fee
