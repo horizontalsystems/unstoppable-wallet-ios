@@ -97,14 +97,14 @@
 // Full Info
 "full_info.title" = "Full Info";
 "full_info.id" = "Kimlik";
-"full_info.status" = "Durum";
 "full_info.time" = "Tarih";
 "full_info.block" = "Block";
 "full_info.confirmations" = "Onaylama";
 "full_info.total_input" = "Total Input";
 "full_info.total_output" = "Total Output";
+"full_info.size" = "Size";
 "full_info.fee" = "Masraf";
-"full_info.subtitle_from" = "Gönderen";
+"full_info.fee_per_byte" = "Fee per byte";
 "full_info.subtitle_inputs" = "Inputs";
 "full_info.subtitle_outputs" = "Outputs";
 "full_info.subtitle_provider" = "Data Provider";
