@@ -100,7 +100,7 @@
 "full_info.confirmations" = "Подтверждения";
 "full_info.total_input" = "Всего Входов";
 "full_info.total_output" = "Всего Выходов";
-"full_info.size" = "Size";
+"full_info.size" = "Размер";
 "full_info.fee" = "Комиссия";
 "full_info.fee_per_byte" = "Fee per byte";
 "full_info.subtitle_inputs" = "Входы";
