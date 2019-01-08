@@ -75,18 +75,20 @@ extension SendInteractor: ISendInteractor {
             }
         }
 
-        var feeCoinValue: CoinValue?
+        var feeValue: Double?
         if let coinValue = state.coinValue {
             do {
-                feeCoinValue = CoinValue(coinCode: coinCode, value: try adapter.fee(for: coinValue.value, address: input.address, senderPay: true))
+                feeValue = try adapter.fee(for: coinValue.value, address: input.address, senderPay: true)
             } catch FeeError.insufficientAmount(let fee) {
-                feeCoinValue = CoinValue(coinCode: coinCode, value: fee)
+                feeValue = fee
                 state.amountError = createAmountError(forInput: input, fee: fee)
             } catch {
                 print("unhandled error: \(error)")
             }
         }
-        state.feeCoinValue = feeCoinValue
+        if let feeValue = feeValue {
+            state.feeCoinValue = CoinValue(coinCode: coinCode, value: feeValue)
+        }
 
         if let rateValue = rateValue, let feeCoinValue = state.feeCoinValue {
             state.feeCurrencyValue = CurrencyValue(currency: baseCurrency, value: rateValue * feeCoinValue.value)
