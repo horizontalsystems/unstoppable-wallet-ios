@@ -97,14 +97,14 @@
 // Full Info
 "full_info.title" = "完整信息";
 "full_info.id" = "ID";
-"full_info.status" = "状态";
 "full_info.time" = "时间";
 "full_info.block" = "拉黑（for person), 阻止（for emails etc.）";
 "full_info.confirmations" = "确认框";
 "full_info.total_input" = "转入总额";
 "full_info.total_output" = "转出总额";
+"full_info.size" = "Size";
 "full_info.fee" = "费用";
-"full_info.subtitle_from" = "发件人：";
+"full_info.fee_per_byte" = "Fee per byte";
 "full_info.subtitle_inputs" = "收入";
 "full_info.subtitle_outputs" = "转出";
 "full_info.subtitle_provider" = "数据提供者";
