@@ -1,2 +1,2 @@
-"NSCameraUsageDescription" = "We need access to camera to scan QR codes.";
-"NSFaceIDUsageDescription" = "We use Face ID to unlock wallet.";
+"NSCameraUsageDescription" = "扫描二维码需要接入相机";
+"NSFaceIDUsageDescription" = "我们使用FACE ID面容识别解锁钱包";

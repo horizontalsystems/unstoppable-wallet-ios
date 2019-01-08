@@ -87,24 +87,24 @@
 // Transaction Info
 
 "tx_info.title" = "Hesap işlemi";
-"tx_info.time" = "Time";
-"tx_info.status" = "Status";
-"tx_info.from_hash" = "From";
-"tx_info.to_hash" = "To";
+"tx_info.time" = "Tarih";
+"tx_info.status" = "Durum";
+"tx_info.from_hash" = "Gönderen";
+"tx_info.to_hash" = "Alan";
 "tx_info.alert_close" = "Kapat";
 "tx_info.button_more" = "Full Info";
 
 // Full Info
 "full_info.title" = "Full Info";
-"full_info.id" = "ID";
-"full_info.status" = "Status";
-"full_info.time" = "Time";
+"full_info.id" = "Kimlik";
+"full_info.time" = "Tarih";
 "full_info.block" = "Block";
-"full_info.confirmations" = "Confirmations";
+"full_info.confirmations" = "Onaylama";
 "full_info.total_input" = "Total Input";
 "full_info.total_output" = "Total Output";
-"full_info.fee" = "Fee";
-"full_info.subtitle_from" = "From";
+"full_info.size" = "Size";
+"full_info.fee" = "Masraf";
+"full_info.fee_per_byte" = "Fee per byte";
 "full_info.subtitle_inputs" = "Inputs";
 "full_info.subtitle_outputs" = "Outputs";
 "full_info.subtitle_provider" = "Data Provider";
@@ -144,7 +144,7 @@
 
 "settings_about.title" = "Hakkında";
 "settings_about.terms_privacy_subtitle" = "Şartlar & Gizlilik Politikası:";
-"settings_about.terms_privacy_text" = "This app is peer-to-peer. It does not depend on any web server or tech support personnel to function.\n\nIt works everywhere as long as there is internet. No entity can block this app from working or to block someone from using it.\n\nYour funds are securely stored on the phone itself, not anywhere else.\n\nIt’s your responsibility to backup your Secret Key and keep it private. Never show it to anyone. If it’s lost, forgotten or stollen your funds can be used by the person who has your Secret key.\n\nDo not jailbreak your phone, do not install apps from unknown (untrusted) sources, do not give your device to untrusted people, and keep the Operating System on your phone up to date. The security of your wallet depends on this.\n\nThe entire code powering this app been open to the public scrutiny since the beginning. We tried to build the most secure and decentralized wallet we could, however there are no guarantees that there are no unintended software issues. That said, this wallet is likely to be significantly more secure than any smartphone wallet app out there.\n\nSome generic non-private app data like currency exchange rates are stored on decentralized storage (IPFS). ";
+"settings_about.terms_privacy_text" = "Bu uygulama uçtan uca bir ağdır. Herhangi bir web sunucusuna veya teknik destek personeline bağlı değildir. \n\nİnternet olduğu sürece her yerde çalışır. Hiç kimse bu uygulamanın çalışmasını veya birisinin programı kullanmasını engelleyemez. \n\nFonlarınız kendiliğinden telefonda güvenli bir şekilde saklanır, başka bir yerde değil. \n\nGizli Anahtarınızı yedeklemek ve gizli tutmak sizin sorumluluğunuzdadır. Asla kimseye göstermeyin. Kaybolursa, unutursanız veya çalınırsa fonlarınız Gizli Anahtarınıza sahip olan kişi tarafından kullanılabilir.\n\nTelefonunuzun yazılımını kırmayın, bilinmeyen (güvenilmeyen) kaynaklardan uygulamalar yüklemeyin, cihazınızı güvenilmeyen kişilere vermeyin ve İşletim Sistemini telefonunuzda güncel tutun. Cüzdanınızın güvenliği buna bağlı. \n\nBu uygulamayı destekleyen kodun tamamı, başından beri kamu denetimine açıktı. Yapabileceğimiz en güvenilir ve merkezi olmayan cüzdanı oluşturmaya çalıştık, yine de istenmeyen yazılım sorunu olmadığının garantisi yoktur. Bununla birlikte, bu cüzdanın herhangi bir akıllı telefon cüzdan uygulamasından çok daha güvenli olacağı muhtemel. \n\nDöviz kurları gibi bazı 	jenerik resmi olmayan uygulama verileri merkezi olmayan IPFS sisteminde depolanır.";
 
 // Settings -> Security
 
@@ -171,7 +171,7 @@
 "edit_pin.title" = "PİN'i değiştir";
 "edit_pin.unlock_info" = "Şu an kullandığınız PİN'i girin";
 "edit_pin.new_pin_info" = "Yeni PİN gerin";
-"edit_pin.confirm_info" = "Enter again";
+"edit_pin.confirm_info" = "Tekrar girin";
 
 // Unlock PIN
 
