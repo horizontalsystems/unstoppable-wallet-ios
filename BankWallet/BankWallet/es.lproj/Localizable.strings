@@ -97,14 +97,14 @@
 // Full Info
 "full_info.title" = "Información completa";
 "full_info.id" = "ID";
-"full_info.status" = "Estado";
 "full_info.time" = "Hora";
 "full_info.block" = "Bloquear";
 "full_info.confirmations" = "Confirmaciones";
 "full_info.total_input" = "Aportación total";
 "full_info.total_output" = "Producción total";
+"full_info.size" = "Size";
 "full_info.fee" = "Comisión";
-"full_info.subtitle_from" = "Desde ";
+"full_info.fee_per_byte" = "Fee per byte";
 "full_info.subtitle_inputs" = "Aportaciones";
 "full_info.subtitle_outputs" = "Producciones";
 "full_info.subtitle_provider" = "Proveedores de datos";
