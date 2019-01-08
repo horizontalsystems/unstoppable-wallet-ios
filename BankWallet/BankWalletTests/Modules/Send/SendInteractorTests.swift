@@ -222,12 +222,24 @@ class SendInteractorTests: XCTestCase {
     }
 
     func testState_AmountError_CoinType_InsufficientBalance() {
+        let address = "address"
         input.inputType = .coin
         input.amount = balance + 1
+        input.address = address
+
+        let fee: Double = 0.00000123
+        let expectedAvailableBalance: Double = 123.45 - fee
+
+        stub(mockAdapter) { mock in
+            when(mock.fee(for: equal(to: input.amount), address: equal(to: address), senderPay: true)).thenThrow(FeeError.insufficientAmount(fee: fee))
+        }
 
         let state = interactor.state(forUserInput: input)
 
-        XCTAssertEqual(state.amountError, AmountError.insufficientAmount(amountInfo: .coinValue(coinValue: CoinValue(coinCode: coin, value: balance))))
+        let expectedAmountError = AmountError.insufficientAmount(
+                amountInfo: .coinValue(coinValue: CoinValue(coinCode: coin, value: expectedAvailableBalance))
+        )
+        XCTAssertEqual(state.amountError, expectedAmountError)
     }
 
     func testState_AmountError_CurrencyType_EnoughBalance() {
@@ -242,12 +254,24 @@ class SendInteractorTests: XCTestCase {
 
     func testState_AmountError_CurrencyType_InsufficientBalance() {
         let currencyBalance = balance * rateValue
+        let address = "address"
         input.inputType = .currency
         input.amount = currencyBalance + 1
+        input.address = address
+
+        let fee: Double = 0.00000123
+
+        stub(mockAdapter) { mock in
+            when(mock.fee(for: any(), address: any(), senderPay: any())).thenThrow(FeeError.insufficientAmount(fee: fee))//any, because 123.45 * 6543.21 / 6543.21 = 123.4501528301858
+        }
 
         let state = interactor.state(forUserInput: input)
 
-        XCTAssertEqual(state.amountError, AmountError.insufficientAmount(amountInfo: .currencyValue(currencyValue: CurrencyValue(currency: baseCurrency, value: currencyBalance))))
+        let expectedCurrencyAvailableBalance: Double = (123.45 - fee) * rateValue
+        let expectedAmountError = AmountError.insufficientAmount(
+                amountInfo: .currencyValue(currencyValue: CurrencyValue(currency: baseCurrency, value: expectedCurrencyAvailableBalance))
+        )
+        XCTAssertEqual(state.amountError, expectedAmountError)
     }
 
     func testState_Address() {
@@ -322,6 +346,24 @@ class SendInteractorTests: XCTestCase {
 
         stub(mockAdapter) { mock in
             when(mock.fee(for: amount, address: equal(to: address), senderPay: true)).thenReturn(fee)
+        }
+
+        input.inputType = .coin
+        input.amount = amount
+        input.address = address
+
+        let state = interactor.state(forUserInput: input)
+
+        XCTAssertEqual(state.feeCurrencyValue, CurrencyValue(currency: baseCurrency, value: fee * rateValue))
+    }
+
+    func testState_FeeCurrencyValue_CoinType_InsufficientBalance() {
+        let fee = 0.123
+        let amount = 123.45
+        let address = "address"
+
+        stub(mockAdapter) { mock in
+            when(mock.fee(for: equal(to: amount), address: equal(to: address), senderPay: true)).thenThrow(FeeError.insufficientAmount(fee: fee))
         }
 
         input.inputType = .coin

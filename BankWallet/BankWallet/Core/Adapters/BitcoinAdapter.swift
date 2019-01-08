@@ -3,6 +3,10 @@ import HSBitcoinKit
 import RealmSwift
 import RxSwift
 
+enum FeeError: Error {
+    case insufficientAmount(fee: Double)
+}
+
 class BitcoinAdapter {
     private let bitcoinKit: BitcoinKit
     private let transactionCompletionThreshold = 6
@@ -103,8 +107,16 @@ extension BitcoinAdapter: IAdapter {
 
     func fee(for value: Double, address: String?, senderPay: Bool) throws -> Double {
         let amount = Int(value * coinRate)
-        let fee = try bitcoinKit.fee(for: amount, toAddress: address, senderPay: senderPay)
-        return Double(fee) / coinRate
+        do {
+            let fee = try bitcoinKit.fee(for: amount, toAddress: address, senderPay: senderPay)
+            return Double(fee) / coinRate
+        } catch {
+            if let error = error as? SelectorError, case .notEnough(let maxFee) = error {
+                throw FeeError.insufficientAmount(fee: Double(maxFee) / coinRate)
+            } else {
+                throw error
+            }
+        }
     }
 
     func validate(address: String) throws {

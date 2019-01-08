@@ -60,21 +60,9 @@ extension SendInteractor: ISendInteractor {
         case .coin:
             state.coinValue = CoinValue(coinCode: coin, value: input.amount)
             state.currencyValue = rateValue.map { CurrencyValue(currency: baseCurrency, value: input.amount * $0) }
-
-            let balance = adapter.balance
-            if balance < input.amount {
-                state.amountError = AmountError.insufficientAmount(amountInfo: .coinValue(coinValue: CoinValue(coinCode: coin, value: balance)))
-            }
         case .currency:
             state.coinValue = rateValue.map { CoinValue(coinCode: coin, value: input.amount / $0) }
             state.currencyValue = CurrencyValue(currency: baseCurrency, value: input.amount)
-
-            if let rateValue = rateValue {
-                let currencyBalance = adapter.balance * rateValue
-                if currencyBalance < input.amount {
-                    state.amountError = AmountError.insufficientAmount(amountInfo: .currencyValue(currencyValue: CurrencyValue(currency: baseCurrency, value: currencyBalance)))
-                }
-            }
         }
 
         state.address = input.address
@@ -87,8 +75,15 @@ extension SendInteractor: ISendInteractor {
             }
         }
 
-        if let coinValue = state.coinValue, let fee = try? adapter.fee(for: coinValue.value, address: input.address, senderPay: true) {
-            state.feeCoinValue = CoinValue(coinCode: coin, value: fee)
+        do {
+            if let coinValue = state.coinValue {
+                state.feeCoinValue = CoinValue(coinCode: coinCode, value: try adapter.fee(for: coinValue.value, address: input.address, senderPay: true))
+            }
+        } catch {
+            if let error = error as? FeeError, case .insufficientAmount(let fee) = error {
+                state.feeCoinValue = CoinValue(coinCode: coinCode, value: fee)
+                state.amountError = createAmountError(forInput: input, fee: fee)
+            }
         }
 
         if let rateValue = rateValue, let feeCoinValue = state.feeCoinValue {
@@ -96,6 +91,23 @@ extension SendInteractor: ISendInteractor {
         }
 
         return state
+    }
+
+    func createAmountError(forInput input: SendUserInput, fee: Double) -> AmountError? {
+        var balanceMinusFee = wallet.adapter.balance - fee
+        if balanceMinusFee < 0 {
+            balanceMinusFee = 0
+        }
+        switch input.inputType {
+        case .coin:
+            return AmountError.insufficientAmount(amountInfo: .coinValue(coinValue: CoinValue(coinCode: coinCode, value: balanceMinusFee)))
+        case .currency:
+            let rateValue = rate?.value
+            return rateValue.map {
+                let currencyBalanceMinusFee = balanceMinusFee * $0
+                return AmountError.insufficientAmount(amountInfo: .currencyValue(currencyValue: CurrencyValue(currency: currencyManager.baseCurrency, value: currencyBalanceMinusFee)))
+            }
+        }
     }
 
     func copy(address: String) {
