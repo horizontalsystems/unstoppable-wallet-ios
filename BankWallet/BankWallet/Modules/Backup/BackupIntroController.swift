@@ -31,7 +31,7 @@ class BackupIntroController: UIViewController {
     }
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
+        return AppTheme.statusBarStyle
     }
 
     @IBAction func backupDidTap() {

@@ -26,6 +26,12 @@ extension TransactionInfoPresenter: ITransactionInfoViewDelegate {
         view?.showCopied()
     }
 
+    func openFullInfo(transactionHash: String) {
+        if let transactionRecord = interactor.transactionRecord(forTransactionHash: transactionHash) {
+            router.openFullInfo(transactionHash: transactionHash, coinCode: transactionRecord.coinCode)
+        }
+    }
+
 }
 
 extension TransactionInfoPresenter: ITransactionInfoInteractorDelegate {

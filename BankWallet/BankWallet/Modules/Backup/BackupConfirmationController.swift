@@ -55,7 +55,7 @@ class BackupConfirmationController: UIViewController {
     }
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
+        return AppTheme.statusBarStyle
     }
 
     @objc func doneDidTap() {

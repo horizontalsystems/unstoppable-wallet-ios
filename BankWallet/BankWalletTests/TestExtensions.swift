@@ -112,3 +112,15 @@ extension LockoutState: Equatable {
         }
     }
 }
+
+extension FullTransactionRecord: Equatable {
+    public static func ==(lhs: FullTransactionRecord, rhs: FullTransactionRecord) -> Bool {
+        return lhs.resource == rhs.resource
+    }
+}
+
+extension FullTransactionItem: Equatable {
+    public static func ==(lhs: FullTransactionItem, rhs: FullTransactionItem) -> Bool {
+        return lhs.value == rhs.value && lhs.title == rhs.title && lhs.clickable == rhs.clickable && lhs.showExtra == rhs.showExtra && lhs.url == rhs.url
+    }
+}

@@ -39,7 +39,7 @@ class BalanceViewController: UITableViewController {
     }
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
+        return AppTheme.statusBarStyle
     }
 
 }

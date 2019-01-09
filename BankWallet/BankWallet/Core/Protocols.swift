@@ -185,6 +185,10 @@ protocol IAppConfigProvider {
     var disablePinLock: Bool { get }
 }
 
+protocol IFullTransactionInfoProvider {
+    func retrieveTransactionInfo(transactionHash: String) -> Observable<FullTransactionRecord?>
+}
+
 protocol IRateNetworkManager {
     func getLatestRate(coinCode: String, currencyCode: String) -> Observable<LatestRate>
     func getRate(coinCode: String, currencyCode: String, date: Date) -> Observable<Double>
@@ -194,6 +198,14 @@ protocol IRateStorage {
     func rateObservable(forCoinCode coinCode: CoinCode, currencyCode: String) -> Observable<Rate>
     func save(rate: Rate)
     func clear()
+}
+
+protocol IJSONApiManager {
+    func getJSON(url: String, parameters: [String: Any]?) -> Observable<[String: Any]>
+}
+
+protocol IFullTransactionHelper {
+    func map(json: [String: Any]) -> FullTransactionRecord?
 }
 
 protocol ITransactionRecordStorage {
@@ -245,6 +257,10 @@ protocol IPasteboardManager {
 
 protocol ITransactionViewItemFactory {
     func item(fromRecord record: TransactionRecord) -> TransactionViewItem
+}
+
+protocol IFullTransactionInfoProviderFactory {
+    func provider(forCoin coin: String) -> IFullTransactionInfoProvider
 }
 
 protocol ILockoutManager {

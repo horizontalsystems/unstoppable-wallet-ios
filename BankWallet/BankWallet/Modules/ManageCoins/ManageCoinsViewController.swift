@@ -35,7 +35,7 @@ class ManageCoinsViewController: UITableViewController {
     }
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
+        return AppTheme.statusBarStyle
     }
 
     @objc func close() {

@@ -42,10 +42,10 @@ class TransactionInfoAlertModel: BaseAlertModel {
             }
         }
 
-        let closeItem = TransactionCloseItem(tag: 5, required: true, onTap: { [weak self] in
-            self?.dismiss?(true)
+        let openFullInfoItem = TransactionCloseItem(tag: 5, required: true, onTap: { [weak self] in
+            self?.delegate.openFullInfo(transactionHash: transactionHash)
         })
-        addItemView(closeItem)
+        addItemView(openFullInfoItem)
     }
 
 }

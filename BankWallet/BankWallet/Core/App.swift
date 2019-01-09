@@ -49,6 +49,7 @@ class App {
     let transactionManager: ITransactionManager
 
     let transactionViewItemFactory: ITransactionViewItemFactory
+    let fullTransactionInfoProviderFactory: IFullTransactionInfoProviderFactory
 
     init() {
         pasteboardManager = PasteboardManager()
@@ -99,6 +100,8 @@ class App {
         authManager.walletManager = walletManager
         authManager.pinManager = pinManager
         authManager.transactionsManager = transactionManager
+
+        fullTransactionInfoProviderFactory = FullTransactionInfoProviderFactory(apiManager: networkManager, appConfigProvider: appConfigProvider, localStorage: localStorage)
     }
 
 }

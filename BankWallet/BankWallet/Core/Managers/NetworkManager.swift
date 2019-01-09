@@ -178,3 +178,22 @@ extension NetworkManager: IRateNetworkManager {
     }
 
 }
+
+extension NetworkManager: IJSONApiManager {
+
+    func getJSON(url: String, parameters: [String: Any]? = nil) -> Observable<[String: Any]> {
+        let baseUrl = URL(string: url)!
+
+        var request = URLRequest(url: baseUrl)
+        request.httpMethod = HTTPMethod.get.rawValue
+        request.setValue("application/json", forHTTPHeaderField: "Accept")
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+
+        let requestRouter = RequestRouter(request: request, encoding: URLEncoding.default, parameters: parameters)
+
+        return observable(forRequest: requestRouter, mapper: { json in
+            return (json as? [String: Any]) ?? [:]
+        })
+    }
+
+}
