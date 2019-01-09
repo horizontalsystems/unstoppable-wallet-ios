@@ -102,7 +102,7 @@
 "full_info.total_output" = "Insgesamte Ausgänge";
 "full_info.size" = "Größe";
 "full_info.fee" = "Gebühr";
-"full_info.fee_per_byte" = "Fee per byte";
+"full_info.fee_per_byte" = "Gebühr pro byte";
 "full_info.subtitle_inputs" = "Eingänge";
 "full_info.subtitle_outputs" = "Ausgänge";
 "full_info.subtitle_provider" = "Datenanbieter";
@@ -158,7 +158,7 @@
 "set_pin.title" = "Code";
 "set_pin.info" = "Ihr Code wird verwendet werden, um Ihren Wallet zu entsperren und Geld schicken";
 "set_pin.confirm.info" = "Bestätigen";
-"set_pin.wrong_confirmation" = "PIN stimmt nicht überein. ";
+"set_pin.wrong_confirmation" = "Pin did not match. Try again";
 
 // Edit PIN
 
