@@ -14,7 +14,7 @@
 
 // Access Camera
 
-"access_camera.message" = "Wir brauchen Zugriff auf deine Kamera um QR-code scannen.\nRufe die Einstellungen auf, um den Zugriff auf die Kamera zu erlauben";
+"access_camera.message" = "Wir brauchen Zugriff auf ihre Kamera um QR-code scannen.\nRufe die Einstellungen auf, um den Zugriff auf die Kamera zu erlauben";
 "access_camera.settings" = "Einstellungen";
 "access_camera.cancel" = "Abbrechen";
 
@@ -36,7 +36,7 @@
 // Backup
 
 "backup.intro.title" = "Sicherung";
-"backup.intro.subtitle" = "Dein Offlineschlüssel ist die einzige Möglichkeit, deine Geldbörse wiederherzustellen, falls du dein Smartphone verlierst, austauscht, es gestohlen wird oder kaputtgeht. \n\nEs besteht aus 12 Wörtern. Speich es sicher offline.\n";
+"backup.intro.subtitle" = "Ihr Offlineschlüssel ist die einzige Möglichkeit, deine Geldbörse wiederherzustellen, falls du dein Smartphone verlierst, austauscht, es gestohlen wird oder kaputtgeht. \n\nEs besteht aus 12 Wörtern. Speich es sicher offline.\n";
 "backup.intro.later" = "Später";
 "backup.intro.backup_now" = "Sicherung";
 
@@ -151,26 +151,26 @@
 "settings_security.face_id" = "Face ID";
 "security_settings.unlink_alert_button" = "Verknüpfung trennen";
 "settings_security.import_wallet_confirmation_1" = "Diese Aktion entfernt deine Geldbörse von diesem Gerät.";
-"settings_security.import_wallet_confirmation_2" = "Make sure you have backed up Secret Key or you will not be able to access your funds in the future.";
+"settings_security.import_wallet_confirmation_2" = "Stellen Sie sicher, Sie haben ihre geheimen Offlineschlüssel oder Sie werden nicht in der Lage, den Zugang zu Mitteln darauf in Zukunft.";
 
 // Set PIN
 
 "set_pin.title" = "Code";
-"set_pin.info" = "Dein Code wird verwendet werden, um Ihren Wallet zu entsperren und Geld schicken";
+"set_pin.info" = "Ihr Code wird verwendet werden, um Ihren Wallet zu entsperren und Geld schicken";
 "set_pin.confirm.info" = "Bestätigen";
 "set_pin.wrong_confirmation" = "PIN stimmt nicht überein. ";
 
 // Edit PIN
 
 "edit_pin.title" = "Code bearbeiten";
-"edit_pin.unlock_info" = "Current Passcode";
-"edit_pin.new_pin_info" = "New Passcode";
-"edit_pin.confirm_info" = "Confirm";
+"edit_pin.unlock_info" = "Aktuelle Code ";
+"edit_pin.new_pin_info" = "Neue Code";
+"edit_pin.confirm_info" = "Bestätigen";
 
 // Unlock PIN
 
-"unlock_pin.info" = "Passcode";
-"unlock_pin.cant_save_pin" = "Ouch! We cant save your passcode, please contact us asap!";
+"unlock_pin.info" = "Code";
+"unlock_pin.cant_save_pin" = "Autsch! Wir können den Code nicht speichern, kontaktieren Sie uns bitte so schnell wie möglich!";
 "unlock_pin.blocked_until" = "Deaktiviert bis: %@ ";
 
 //NumPad
