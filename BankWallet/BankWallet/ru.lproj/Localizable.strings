@@ -1,11 +1,11 @@
 "coin.BTC" = "Bitcoin";
 "coin.BCH" = "Bitcoin Cash";
 "coin.ETH" = "Ethereum";
-"coin.BTCt" = "Биткоин Т";
+"coin.BTCt" = "Bitcoin T";
 "coin.BCHt" = "Bitcoin Cash Т";
 "coin.ETHt" = "Ethereum Т";
 
-"alert.ok" = "Хорошо";
+"alert.ok" = "OK";
 "alert.cancel" = "Отменить";
 "alert.copied" = "Скопировано";
 "alert.confirm" = "Подтвердить";
@@ -38,14 +38,14 @@
 "backup.intro.title" = "Записать Ключ";
 "backup.intro.subtitle" = "Your secret key is the only way to restore your wallet and funds if your phone is ever lost, stolen, broken, or upgraded.\n\nIt consists of 12 words. Store it safely offline.";
 "backup.intro.later" = "Позже";
-"backup.intro.backup_now" = "Записать ключ";
+"backup.intro.backup_now" = "Записать Ключ";
 
 "backup.words.title" = "Секретный Ключ";
 "backup.words.back" = "Назад";
-"backup.words.proceed" = "Продолжить";
+"backup.words.proceed" = "Далее";
 
 "backup.confirmation.title" = "Проверка...";
-"backup.confirmation.description" = "Введите слова из вашего ключа";
+"backup.confirmation.description" = "Введите слова из вашего секретного ключа";
 "backup.confirmation.failure_alert.text" = "Слова не совпадают";
 "backup.confirmation.done_button" = "Готово";
 "backup.confirmation.understand" = "Я понимаю, что мой кошелек и токены хранятся только на этом устройстве.";
