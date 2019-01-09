@@ -163,8 +163,8 @@
 // Edit PIN
 
 "edit_pin.title" = "Editar el código ";
-"edit_pin.unlock_info" = "Current Passcode";
-"edit_pin.new_pin_info" = "New Passcode";
+"edit_pin.unlock_info" = "Código actual";
+"edit_pin.new_pin_info" = "Código Nuevo";
 "edit_pin.confirm_info" = "Confirmar";
 
 // Unlock PIN
