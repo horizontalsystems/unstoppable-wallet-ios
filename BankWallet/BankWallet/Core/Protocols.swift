@@ -55,9 +55,7 @@ protocol ILocalizationManager {
 
 protocol IWalletManager {
     var wallets: [Wallet] { get }
-    var walletsSubject: PublishSubject<[Wallet]> { get }
-
-    var walletsObservable: Observable<[Wallet]> { get }
+    var walletsUpdatedSignal: Signal { get }
 }
 
 protocol IAdapterFactory {
@@ -82,10 +80,11 @@ enum AdapterState {
 }
 
 protocol IAdapter: class {
-    var balanceObservable: Observable<Double> { get }
-    var stateObservable: Observable<AdapterState> { get }
-
     var balance: Double { get }
+    var balanceUpdatedSignal: Signal { get }
+
+    var state: AdapterState { get }
+    var stateUpdatedSignal: Signal { get }
 
     var confirmationsThreshold: Int { get }
     var lastBlockHeight: Int? { get }
@@ -157,7 +156,6 @@ protocol BiometricManagerDelegate: class {
 }
 
 protocol IRateManager {
-    func rate(forCoin coinCode: CoinCode, currencyCode: String) -> Rate?
     func refreshRates(coinCodes: [CoinCode], currencyCode: String)
 }
 
@@ -202,19 +200,16 @@ protocol ITransactionRecordStorage {
 }
 
 protocol ICurrencyManager {
-    var subject: PublishSubject<Currency> { get }
     var currencies: [Currency] { get }
     var baseCurrency: Currency { get }
-
-    var baseCurrencyObservable: Observable<Currency> { get }
+    var baseCurrencyUpdatedSignal: Signal { get }
 
     func setBaseCurrency(code: String)
 }
 
 protocol IReachabilityManager {
-    var subject: PublishSubject<Bool> { get }
-
-    var stateObservable: Observable<Bool> { get }
+    var isReachable: Bool { get }
+    var reachabilitySignal: Signal { get }
 }
 
 protocol IPeriodicTimer {

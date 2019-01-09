@@ -1,24 +1,26 @@
+import RxSwift
+
 class SendInteractor {
     enum SendError: Error {
         case noAddress
         case noAmount
     }
 
+    private let disposeBag = DisposeBag()
+
     weak var delegate: ISendInteractorDelegate?
 
     private let currencyManager: ICurrencyManager
+    private let rateStorage: IRateStorage
     private let pasteboardManager: IPasteboardManager
     private let wallet: Wallet
     private var rate: Rate?
 
-    init(currencyManager: ICurrencyManager, rateManager: IRateManager, pasteboardManager: IPasteboardManager, wallet: Wallet) {
+    init(currencyManager: ICurrencyManager, rateStorage: IRateStorage, pasteboardManager: IPasteboardManager, wallet: Wallet) {
         self.currencyManager = currencyManager
+        self.rateStorage = rateStorage
         self.pasteboardManager = pasteboardManager
         self.wallet = wallet
-
-        if let rate = rateManager.rate(forCoin: wallet.coinCode, currencyCode: currencyManager.baseCurrency.code), !rate.expired {
-            self.rate = rate
-        }
     }
 
 }
@@ -128,6 +130,20 @@ extension SendInteractor: ISendInteractor {
                 self?.delegate?.didSend()
             }
         }
+    }
+
+    func fetchRate() {
+        rateStorage.rateObservable(forCoinCode: wallet.coinCode, currencyCode: currencyManager.baseCurrency.code)
+                .take(1)
+                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
+                .observeOn(MainScheduler.instance)
+                .subscribe(onNext: { [weak self] rate in
+                    if !rate.expired {
+                        self?.rate = rate
+                        self?.delegate?.didUpdateRate()
+                    }
+                })
+                .disposed(by: disposeBag)
     }
 
 }

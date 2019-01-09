@@ -2,16 +2,13 @@ import RxSwift
 
 class WalletManager {
     private let disposeBag = DisposeBag()
-    private let scheduler = ConcurrentDispatchQueueScheduler(qos: .background)
 
     private let walletFactory: IWalletFactory
     private let wordsManager: IWordsManager
     private let coinManager: ICoinManager
 
     private(set) var wallets: [Wallet] = []
-    let walletsSubject = PublishSubject<[Wallet]>()
-
-    private var subject = OptionalSubject<[Wallet]>()
+    let walletsUpdatedSignal = Signal()
 
     init(walletFactory: IWalletFactory, wordsManager: IWordsManager, coinManager: ICoinManager) {
         self.walletFactory = walletFactory
@@ -22,7 +19,7 @@ class WalletManager {
                 { coins, authData -> ([Coin], AuthData) in
                     return (coins, authData)
                 }
-                .subscribeOn(scheduler)
+                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
                 .observeOn(MainScheduler.instance)
                 .subscribe(onNext: { [weak self] coins, authData in
                     self?.handle(coins: coins, authData: authData)
@@ -31,19 +28,14 @@ class WalletManager {
     }
 
     private func handle(coins: [Coin], authData: AuthData) {
-        let wallets = coins.compactMap { coin in
-            subject.value?.first(where: { $0.coinCode == coin.code }) ?? walletFactory.wallet(forCoin: coin, authData: authData)
+        wallets = coins.compactMap { coin in
+            wallets.first(where: { $0.coinCode == coin.code }) ?? walletFactory.wallet(forCoin: coin, authData: authData)
         }
 
-        subject.onNext(wallets)
+        walletsUpdatedSignal.notify()
     }
 
 }
 
 extension WalletManager: IWalletManager {
-
-    var walletsObservable: Observable<[Wallet]> {
-        return subject.asObservable()
-    }
-
 }

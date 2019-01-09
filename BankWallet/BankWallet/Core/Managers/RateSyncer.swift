@@ -1,28 +1,37 @@
 import RxSwift
 
 class RateSyncer {
+    private let refreshIntervalInMinutes: Double = 3
+
     private let disposeBag = DisposeBag()
-    private let scheduler = ConcurrentDispatchQueueScheduler(qos: .background)
 
-    init(rateManager: IRateManager, walletManager: IWalletManager, currencyManager: ICurrencyManager, reachabilityManager: IReachabilityManager, timer: Observable<Int>? = nil) {
-        let timer = timer ?? Observable<Int>.timer(0, period: 5, scheduler: scheduler)
+    private let rateManager: IRateManager
+    private let walletManager: IWalletManager
+    private let currencyManager: ICurrencyManager
+    private let reachabilityManager: IReachabilityManager
 
-        Observable.combineLatest(
-                walletManager.walletsObservable,
-                currencyManager.baseCurrencyObservable,
-                reachabilityManager.stateObservable,
-                timer
-        ) { wallets, baseCurrency, networkConnected, _ -> ([Wallet], Currency, Bool) in
-            return (wallets, baseCurrency, networkConnected)
-        }
+    init(rateManager: IRateManager, walletManager: IWalletManager, currencyManager: ICurrencyManager, reachabilityManager: IReachabilityManager) {
+        self.rateManager = rateManager
+        self.walletManager = walletManager
+        self.currencyManager = currencyManager
+        self.reachabilityManager = reachabilityManager
+
+        let scheduler = ConcurrentDispatchQueueScheduler(qos: .background)
+        let timer = Observable<Int>.timer(0, period: refreshIntervalInMinutes * 60, scheduler: scheduler).map { _ in () }
+
+        Observable.merge(walletManager.walletsUpdatedSignal, currencyManager.baseCurrencyUpdatedSignal, reachabilityManager.reachabilitySignal, timer)
                 .subscribeOn(scheduler)
                 .observeOn(scheduler)
-                .subscribe(onNext: { wallets, baseCurrency, networkConnected in
-                    if networkConnected {
-                        rateManager.refreshRates(coinCodes: wallets.map { $0.coinCode }, currencyCode: baseCurrency.code)
-                    }
+                .subscribe(onNext: { [weak self] in
+                    self?.sync()
                 })
                 .disposed(by: disposeBag)
+    }
+
+    private func sync() {
+        if reachabilityManager.isReachable {
+            rateManager.refreshRates(coinCodes: walletManager.wallets.map { $0.coinCode }, currencyCode: currencyManager.baseCurrency.code)
+        }
     }
 
 }

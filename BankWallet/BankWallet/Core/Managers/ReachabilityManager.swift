@@ -2,42 +2,33 @@ import RxSwift
 import Alamofire
 
 class ReachabilityManager {
-    let subject = PublishSubject<Bool>()
+    private let manager: NetworkReachabilityManager?
 
-    let manager: NetworkReachabilityManager?
-
-    private let subjectNew: OptionalSubject<Bool>
+    private(set) var isReachable: Bool
+    let reachabilitySignal = Signal()
 
     init(appConfigProvider: IAppConfigProvider) {
         manager = NetworkReachabilityManager(host: appConfigProvider.reachabilityHost)
 
-        subjectNew = OptionalSubject(initialValue: manager?.isReachable ?? false)
+        isReachable = manager?.isReachable ?? false
 
-        manager?.listener = { [weak self] status in
-            switch status {
-            case .reachable:
-                self?.subject.onNext(true)
-
-                if let value = self?.subjectNew.value, !value {
-                    self?.subjectNew.onNext(true)
-                }
-            default:
-                self?.subject.onNext(false)
-
-                if let value = self?.subjectNew.value, value {
-                    self?.subjectNew.onNext(false)
-                }
-            }
+        manager?.listener = { [weak self] _ in
+            self?.onUpdateStatus()
         }
 
         manager?.startListening()
     }
+
+    private func onUpdateStatus() {
+        let newReachable = manager?.isReachable ?? false
+
+        if isReachable != newReachable {
+            isReachable = newReachable
+            reachabilitySignal.notify()
+        }
+    }
+
 }
 
 extension ReachabilityManager: IReachabilityManager {
-
-    var stateObservable: Observable<Bool> {
-        return subjectNew.asObservable()
-    }
-
 }

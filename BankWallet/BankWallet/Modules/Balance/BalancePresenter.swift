@@ -28,19 +28,15 @@ extension BalancePresenter: IBalanceInteractorDelegate {
             interactor.fetchRates(currencyCode: currency.code, coinCodes: dataSource.coinCodes)
         }
 
-        DispatchQueue.main.async {
-            self.view?.reload()
-        }
+        view?.reload()
     }
 
     func didUpdate(balance: Double, coinCode: CoinCode) {
         if let index = dataSource.index(for: coinCode) {
             dataSource.set(balance: balance, index: index)
 
-            DispatchQueue.main.async {
-                self.view?.updateItem(at: index)
-                self.view?.updateHeader()
-            }
+            view?.updateItem(at: index)
+            view?.updateHeader()
         }
     }
 
@@ -48,10 +44,8 @@ extension BalancePresenter: IBalanceInteractorDelegate {
         if let index = dataSource.index(for: coinCode) {
             dataSource.set(state: state, index: index)
 
-            DispatchQueue.main.async {
-                self.view?.updateItem(at: index)
-                self.view?.updateHeader()
-            }
+            view?.updateItem(at: index)
+            view?.updateHeader()
         }
     }
 
@@ -61,19 +55,15 @@ extension BalancePresenter: IBalanceInteractorDelegate {
 
         interactor.fetchRates(currencyCode: currency.code, coinCodes: dataSource.coinCodes)
 
-        DispatchQueue.main.async {
-            self.view?.reload()
-        }
+        view?.reload()
     }
 
     func didUpdate(rate: Rate) {
         if let index = dataSource.index(for: rate.coinCode) {
             dataSource.set(rate: rate, index: index)
 
-            DispatchQueue.main.async {
-                self.view?.updateItem(at: index)
-                self.view?.updateHeader()
-            }
+            view?.updateItem(at: index)
+            view?.updateHeader()
         }
     }
 

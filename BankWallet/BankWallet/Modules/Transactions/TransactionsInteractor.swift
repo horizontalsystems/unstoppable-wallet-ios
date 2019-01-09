@@ -27,6 +27,11 @@ class TransactionsInteractor {
                 .disposed(by: disposeBag)
     }
 
+    private func onUpdateWallets() {
+        let coins = walletManager.wallets.map { $0.coinCode }
+        delegate?.didRetrieve(filters: coins)
+    }
+
 }
 
 extension TransactionsInteractor: ITransactionsInteractor {
@@ -44,8 +49,13 @@ extension TransactionsInteractor: ITransactionsInteractor {
     }
 
     func retrieveFilters() {
-        let coins = walletManager.wallets.map { $0.coinCode }
-        delegate?.didRetrieve(filters: coins)
+        onUpdateWallets()
+
+        walletManager.walletsUpdatedSignal
+                .subscribe(onNext: { [weak self] in
+                    self?.onUpdateWallets()
+                })
+                .disposed(by: disposeBag)
     }
 
 }

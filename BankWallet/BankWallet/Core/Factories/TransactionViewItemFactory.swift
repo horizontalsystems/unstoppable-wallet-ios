@@ -22,9 +22,9 @@ extension TransactionViewItemFactory: ITransactionViewItemFactory {
         var rateValue: Double?
 
         if record.rate == 0 {
-            if record.timestamp > Date().timeIntervalSince1970 - 60 * latestRateFallbackThreshold, let rate = rateManager.rate(forCoin: record.coinCode, currencyCode: currencyManager.baseCurrency.code), !rate.expired {
-                rateValue = rate.value
-            }
+//            if record.timestamp > Date().timeIntervalSince1970 - 60 * latestRateFallbackThreshold, let rate = rateManager.rate(forCoin: record.coinCode, currencyCode: currencyManager.baseCurrency.code), !rate.expired {
+//                rateValue = rate.value
+//            }
         } else {
             rateValue = record.rate
         }

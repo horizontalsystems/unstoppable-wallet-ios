@@ -60,8 +60,8 @@ extension MainSettingsPresenter: IMainSettingsInteractorDelegate {
         view?.setTabItemBadge(count: 0)
     }
 
-    func didUpdate(baseCurrency: String) {
-        view?.set(baseCurrency: baseCurrency)
+    func didUpdateBaseCurrency() {
+        view?.set(baseCurrency: interactor.baseCurrency)
     }
 
     func didUpdateLightMode() {

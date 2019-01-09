@@ -30,6 +30,15 @@ class SendPresenter {
 
 extension SendPresenter: ISendInteractorDelegate {
 
+    func didUpdateRate() {
+        let state = interactor.state(forUserInput: userInput)
+        let viewItem = factory.viewItem(forState: state)
+
+        view?.set(switchButtonEnabled: viewItem.switchButtonEnabled)
+        view?.set(hintInfo: viewItem.hintInfo)
+        view?.set(secondaryFeeInfo: viewItem.secondaryFeeInfo)
+    }
+
     func didSend() {
         view?.dismissWithSuccess()
     }
@@ -54,6 +63,8 @@ extension SendPresenter: ISendViewDelegate {
         view?.set(primaryFeeInfo: viewItem.primaryFeeInfo)
         view?.set(secondaryFeeInfo: viewItem.secondaryFeeInfo)
         view?.set(sendButtonEnabled: viewItem.sendButtonEnabled)
+
+        interactor.fetchRate()
     }
 
     func onAmountChanged(amount: Double) {

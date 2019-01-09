@@ -3,8 +3,6 @@ import RxSwift
 class BalanceInteractor {
     weak var delegate: IBalanceInteractorDelegate?
 
-    private let scheduler = ConcurrentDispatchQueueScheduler(qos: .background)
-
     private let disposeBag = DisposeBag()
     private var walletsDisposeBag = DisposeBag()
     private var ratesDisposeBag = DisposeBag()
@@ -19,28 +17,45 @@ class BalanceInteractor {
         self.currencyManager = currencyManager
     }
 
-    private func onUpdate(wallets: [Wallet]) {
+    private func onUpdateWallets() {
         walletsDisposeBag = DisposeBag()
+
+        let wallets = walletManager.wallets
 
         delegate?.didUpdate(wallets: wallets)
 
         for wallet in wallets {
-            wallet.adapter.balanceObservable
-                    .subscribeOn(scheduler)
-                    .observeOn(scheduler)
-                    .subscribe(onNext: { [weak self] balance in
-                        self?.delegate?.didUpdate(balance: balance, coinCode: wallet.coinCode)
+            onUpdateBalance(wallet: wallet)
+            onUpdateState(wallet: wallet)
+
+            wallet.adapter.balanceUpdatedSignal
+                    .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
+                    .observeOn(MainScheduler.instance)
+                    .subscribe(onNext: { [weak self] in
+                        self?.onUpdateBalance(wallet: wallet)
                     })
                     .disposed(by: walletsDisposeBag)
 
-            wallet.adapter.stateObservable
-                    .subscribeOn(scheduler)
-                    .observeOn(scheduler)
-                    .subscribe(onNext: { [weak self] state in
-                        self?.delegate?.didUpdate(state: state, coinCode: wallet.coinCode)
+            wallet.adapter.stateUpdatedSignal
+                    .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
+                    .observeOn(MainScheduler.instance)
+                    .subscribe(onNext: { [weak self] in
+                        self?.onUpdateState(wallet: wallet)
                     })
                     .disposed(by: walletsDisposeBag)
         }
+    }
+
+    private func onUpdateCurrency() {
+        delegate?.didUpdate(currency: currencyManager.baseCurrency)
+    }
+
+    private func onUpdateBalance(wallet: Wallet) {
+        delegate?.didUpdate(balance: wallet.adapter.balance, coinCode: wallet.coinCode)
+    }
+
+    private func onUpdateState(wallet: Wallet) {
+        delegate?.didUpdate(state: wallet.adapter.state, coinCode: wallet.coinCode)
     }
 
 }
@@ -48,19 +63,22 @@ class BalanceInteractor {
 extension BalanceInteractor: IBalanceInteractor {
 
     func initWallets() {
-        walletManager.walletsObservable
-                .subscribeOn(scheduler)
-                .observeOn(scheduler)
-                .subscribe(onNext: { [weak self] wallets in
-                    self?.onUpdate(wallets: wallets)
+        onUpdateWallets()
+        onUpdateCurrency()
+
+        walletManager.walletsUpdatedSignal
+                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
+                .observeOn(MainScheduler.instance)
+                .subscribe(onNext: { [weak self] in
+                    self?.onUpdateWallets()
                 })
                 .disposed(by: disposeBag)
 
-        currencyManager.baseCurrencyObservable
-                .subscribeOn(scheduler)
-                .observeOn(scheduler)
-                .subscribe(onNext: { [weak self] currency in
-                    self?.delegate?.didUpdate(currency: currency)
+        currencyManager.baseCurrencyUpdatedSignal
+                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
+                .observeOn(MainScheduler.instance)
+                .subscribe(onNext: { [weak self] in
+                    self?.onUpdateCurrency()
                 })
                 .disposed(by: disposeBag)
     }
@@ -70,8 +88,8 @@ extension BalanceInteractor: IBalanceInteractor {
 
         for coinCode in coinCodes {
             rateStorage.rateObservable(forCoinCode: coinCode, currencyCode: currencyCode)
-                    .subscribeOn(scheduler)
-                    .observeOn(scheduler)
+                    .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
+                    .observeOn(MainScheduler.instance)
                     .subscribe(onNext: { rate in
                         self.delegate?.didUpdate(rate: rate)
                     })

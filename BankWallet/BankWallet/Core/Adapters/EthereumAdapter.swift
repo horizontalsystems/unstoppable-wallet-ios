@@ -9,27 +9,19 @@ class EthereumAdapter {
     private let coinRate: Double = pow(10, 18)
     private let gWeiMultiply: Double = pow(10, 9)
 
-    let wordsHash: String
     let lastBlockHeightSubject = PublishSubject<Int>()
     let transactionRecordsSubject = PublishSubject<[TransactionRecord]>()
 
-    private let progressSubject: BehaviorSubject<Double>
+    private(set) var state: AdapterState = .syncing(progressSubject: nil)
 
-    private let balanceSubject: BehaviorSubject<Double>
-    private let stateSubject: BehaviorSubject<AdapterState>
+    let balanceUpdatedSignal = Signal()
+    let stateUpdatedSignal = Signal()
 
     init(words: [String], coin: EthereumKit.Coin) {
-        wordsHash = words.joined()
-        progressSubject = BehaviorSubject(value: 1)
-
         let infuraKey = Bundle.main.object(forInfoDictionaryKey: "InfuraApiKey") as? String
         let etherscanKey = Bundle.main.object(forInfoDictionaryKey: "EtherscanApiKey") as? String
 
         ethereumKit = EthereumKit(withWords: words, coin: coin, infuraKey: infuraKey ?? "", etherscanKey: etherscanKey ?? "", debugPrints: false)
-
-        balanceSubject = BehaviorSubject(value: Double(ethereumKit.balance) / coinRate)
-        stateSubject = BehaviorSubject(value: .syncing(progressSubject: nil))
-
         ethereumKit.delegate = self
     }
 
@@ -68,14 +60,6 @@ class EthereumAdapter {
 }
 
 extension EthereumAdapter: IAdapter {
-
-    var balanceObservable: Observable<Double> {
-        return balanceSubject.asObservable()
-    }
-
-    var stateObservable: Observable<AdapterState> {
-        return stateSubject.asObservable()
-    }
 
     var balance: Double {
         return Double(ethereumKit.balance) / coinRate
@@ -148,17 +132,32 @@ extension EthereumAdapter: EthereumKitDelegate {
     }
 
     public func balanceUpdated(ethereumKit: EthereumKit, balance: BInt) {
-        balanceSubject.onNext(Double(balance) / coinRate)
+        balanceUpdatedSignal.notify()
     }
 
     public func kitStateUpdated(state: EthereumKit.KitState) {
         switch state {
         case .synced:
-            stateSubject.onNext(.synced)
+            if case .synced = self.state {
+                // do nothing
+            } else {
+                self.state = .synced
+                stateUpdatedSignal.notify()
+            }
         case .notSynced:
-            stateSubject.onNext(.notSynced)
+            if case .notSynced = self.state {
+                // do nothing
+            } else {
+                self.state = .notSynced
+                stateUpdatedSignal.notify()
+            }
         case .syncing:
-            stateSubject.onNext(.syncing(progressSubject: nil))
+            if case .syncing = self.state {
+                // do nothing
+            } else {
+                self.state = .syncing(progressSubject: nil)
+                stateUpdatedSignal.notify()
+            }
         }
     }
 

@@ -24,9 +24,9 @@ class MainSettingsInteractor {
                 })
                 .disposed(by: disposeBag)
 
-        currencyManager.subject
-                .subscribe(onNext: { [weak self] currency in
-                    self?.delegate?.didUpdate(baseCurrency: currency.code)
+        currencyManager.baseCurrencyUpdatedSignal
+                .subscribe(onNext: { [weak self] in
+                    self?.delegate?.didUpdateBaseCurrency()
                 })
                 .disposed(by: disposeBag)
     }

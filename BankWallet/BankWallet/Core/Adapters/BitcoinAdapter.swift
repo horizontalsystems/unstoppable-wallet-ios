@@ -8,23 +8,21 @@ class BitcoinAdapter {
     private let transactionCompletionThreshold = 6
     private let coinRate: Double = pow(10, 8)
 
-    let wordsHash: String
     let lastBlockHeightSubject = PublishSubject<Int>()
     let transactionRecordsSubject = PublishSubject<[TransactionRecord]>()
 
     private let progressSubject: BehaviorSubject<Double>
 
-    private let balanceSubject: BehaviorSubject<Double>
-    private let stateSubject: BehaviorSubject<AdapterState>
+    private(set) var state: AdapterState
+
+    let balanceUpdatedSignal = Signal()
+    let stateUpdatedSignal = Signal()
 
     init(words: [String], coin: BitcoinKit.Coin, walletId: String) {
-        wordsHash = words.joined()
         bitcoinKit = BitcoinKit(withWords: words, coin: coin, walletId: walletId, minLogLevel: .error)
 
         progressSubject = BehaviorSubject(value: 0)
-
-        balanceSubject = BehaviorSubject(value: Double(bitcoinKit.balance) / coinRate)
-        stateSubject = BehaviorSubject(value: .syncing(progressSubject: progressSubject))
+        state = .syncing(progressSubject: progressSubject)
 
         bitcoinKit.delegate = self
     }
@@ -56,14 +54,6 @@ class BitcoinAdapter {
 }
 
 extension BitcoinAdapter: IAdapter {
-
-    var balanceObservable: Observable<Double> {
-        return balanceSubject.asObservable()
-    }
-
-    var stateObservable: Observable<AdapterState> {
-        return stateSubject.asObservable()
-    }
 
     var balance: Double {
         return Double(bitcoinKit.balance) / coinRate
@@ -144,7 +134,7 @@ extension BitcoinAdapter: BitcoinKitDelegate {
     }
 
     func balanceUpdated(bitcoinKit: BitcoinKit, balance: Int) {
-        balanceSubject.onNext(Double(balance) / coinRate)
+        balanceUpdatedSignal.notify()
     }
 
     func lastBlockInfoUpdated(bitcoinKit: BitcoinKit, lastBlockInfo: BlockInfo) {
@@ -152,28 +142,29 @@ extension BitcoinAdapter: BitcoinKitDelegate {
     }
 
     public func kitStateUpdated(state: BitcoinKit.KitState) {
-        if let currentState = try? stateSubject.value() {
-            switch state {
-            case .synced:
-                if case .synced = currentState {
-                    // do nothing
-                } else {
-                    stateSubject.onNext(.synced)
-                }
-            case .notSynced:
-                if case .notSynced = currentState {
-                    // do nothing
-                } else {
-                    stateSubject.onNext(.notSynced)
-                }
-            case .syncing(let progress):
-                progressSubject.onNext(progress)
+        switch state {
+        case .synced:
+            if case .synced = self.state {
+                // do nothing
+            } else {
+                self.state = .synced
+                stateUpdatedSignal.notify()
+            }
+        case .notSynced:
+            if case .notSynced = self.state {
+                // do nothing
+            } else {
+                self.state = .notSynced
+                stateUpdatedSignal.notify()
+            }
+        case .syncing(let progress):
+            progressSubject.onNext(progress)
 
-                if case .syncing = currentState {
-                    // do nothing
-                } else {
-                    stateSubject.onNext(.syncing(progressSubject: progressSubject))
-                }
+            if case .syncing = self.state {
+                // do nothing
+            } else {
+                self.state = .syncing(progressSubject: progressSubject)
+                stateUpdatedSignal.notify()
             }
         }
     }

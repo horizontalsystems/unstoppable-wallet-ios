@@ -19,14 +19,14 @@ class TransactionManager {
 
         resubscribeToAdapters()
 
-        walletManager.walletsSubject
-                .subscribe(onNext: { [weak self] _ in
+        walletManager.walletsUpdatedSignal
+                .subscribe(onNext: { [weak self] in
                     self?.resubscribeToAdapters()
                 })
                 .disposed(by: disposeBag)
 
-        currencyManager.subject
-                .subscribe(onNext: { [weak self] _ in
+        currencyManager.baseCurrencyUpdatedSignal
+                .subscribe(onNext: { [weak self] in
                     self?.handleCurrencyChange()
                 })
                 .disposed(by: disposeBag)
@@ -39,13 +39,13 @@ class TransactionManager {
                 })
                 .disposed(by: disposeBag)
 
-        reachabilityManager.subject
-                .subscribe(onNext: { [weak self] connected in
-                    if connected {
-                        self?.syncRates()
-                    }
-                })
-                .disposed(by: disposeBag)
+//        reachabilityManager.reachabilitySignal
+//                .subscribe(onNext: { [weak self] in
+//                    if connected {
+//                        self?.syncRates()
+//                    }
+//                })
+//                .disposed(by: disposeBag)
     }
 
     private func resubscribeToAdapters() {
