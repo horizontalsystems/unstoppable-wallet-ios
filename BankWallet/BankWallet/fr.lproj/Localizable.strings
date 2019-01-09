@@ -129,7 +129,7 @@
 
 // Settings -> Manage Wallet
 
-"settings_manage_wallet.title" = "Gérer les coins";
+"settings_manage_wallet.title" = "Wallets";
 
 "settings_manage_wallet.remove_button" = "Supprimer";
 
@@ -158,7 +158,7 @@
 "set_pin.title" = "Code";
 "set_pin.info" = "Votre code sera utilisé pour déverrouiller votre porte-monnaie et envoyer de l’argent";
 "set_pin.confirm.info" = "Confirmer";
-"set_pin.wrong_confirmation" = "Le PIN ne correspond pas. Réessayez";
+"set_pin.wrong_confirmation" = "Passcode did not match. Try again";
 
 // Edit PIN
 
