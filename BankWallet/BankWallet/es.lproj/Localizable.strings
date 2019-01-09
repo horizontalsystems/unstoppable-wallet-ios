@@ -129,7 +129,7 @@
 
 // Settings -> Manage Wallet
 
-"settings_manage_wallet.title" = "Gestionar monedas";
+"settings_manage_wallet.title" = "Wallets";
 
 "settings_manage_wallet.remove_button" = "Eliminar";
 
@@ -158,7 +158,7 @@
 "set_pin.title" = "Código";
 "set_pin.info" = "Your passcode will be used to unlock your wallet and send money";
 "set_pin.confirm.info" = "Confirmar";
-"set_pin.wrong_confirmation" = "El PIN no coincide. Inténtelo de nuevo";
+"set_pin.wrong_confirmation" = "Passcode did not match. Try again";
 
 // Edit PIN
 
