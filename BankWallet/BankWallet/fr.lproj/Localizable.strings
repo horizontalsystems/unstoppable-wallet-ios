@@ -90,10 +90,10 @@
 "tx_info.from_hash" = "De";
 "tx_info.to_hash" = "À";
 "tx_info.alert_close" = "Fermer";
-"tx_info.button_more" = "Full Info";
+"tx_info.button_more" = "Info Complète";
 
 // Full Info
-"full_info.title" = "Full Info";
+"full_info.title" = "Info Complète";
 "full_info.id" = "ID";
 "full_info.time" = "Date";
 "full_info.block" = "Bloc";
