@@ -92,10 +92,10 @@
 "tx_info.from_hash" = "Von";
 "tx_info.to_hash" = "An";
 "tx_info.alert_close" = "Schließen";
-"tx_info.button_more" = "Full Info";
+"tx_info.button_more" = "Volle Info";
 
 // Full Info
-"full_info.title" = "Full Info";
+"full_info.title" = "Volle Info";
 "full_info.id" = "ID";
 "full_info.status" = "Status";
 "full_info.time" = "Zeit";

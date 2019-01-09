@@ -38,7 +38,7 @@ Go to Settings - > Bank and allow access to Camera.";
 // Backup
 
 "backup.intro.title" = "Backup";
-"backup.intro.subtitle" = "Your secret key is the only way to restore your wallet and funds if your phone is ever lost, stolen, broken, or upgraded.\n\nIt consists of 12 words. Write them on a piece of paper and do not ever show it to anyone.";
+"backup.intro.subtitle" = "Your secret key is the only way to restore your wallet and funds if your phone is ever lost, stolen, broken, or upgraded.\n\nIt consists of 12 words. Store it safely offline.";
 "backup.intro.later" = "Later";
 "backup.intro.backup_now" = "Backup";
 
@@ -51,7 +51,7 @@ Go to Settings - > Bank and allow access to Camera.";
 "backup.confirmation.failure_alert.text" = "Words do not match";
 "backup.confirmation.done_button" = "Done";
 "backup.confirmation.understand" = "I understand that my wallet and tokens are held securely on this device only and not any servers.";
-"backup.confirmation.delete_app_warn" = "I understand that if this app is deleted or stops working for any reason, my wallet can only be recovered using the secret key that I have written down and saved in a secure place";
+"backup.confirmation.delete_app_warn" = "I understand that if this app is moved to another device, deleted or malfunctions, my wallet can be only recovered with the Secret Key that I have just written down and saved in a secure place.";
 
 // Balance
 
@@ -60,7 +60,6 @@ Go to Settings - > Bank and allow access to Camera.";
 "balance.send" = "Send";
 "balance.deposit" = "Receive";
 "balance.rate_per_coin" = "%@ per %@";
-"balance.syncing_percent" = "Syncing %@";
 
 // Deposit
 
@@ -84,7 +83,6 @@ Go to Settings - > Bank and allow access to Camera.";
 "transactions.tab_bar_item" = "Transactions";
 "transactions.filter_all" = "All";
 "transactions.empty_text" = "You don't have any pending or past transactions yet";
-"transactions.sending"="Sending...";
 
 // Transaction Info
 
@@ -99,14 +97,14 @@ Go to Settings - > Bank and allow access to Camera.";
 // Full Info
 "full_info.title"= "Full Info";
 "full_info.id"= "ID";
-"full_info.status"= "Status";
 "full_info.time"= "Time";
 "full_info.block"= "Block";
 "full_info.confirmations"= "Confirmations";
 "full_info.total_input"= "Total Input";
 "full_info.total_output"= "Total Output";
+"full_info.size"= "Size";
 "full_info.fee"= "Fee";
-"full_info.subtitle_from"= "From";
+"full_info.fee_per_byte"= "Fee per byte";
 "full_info.subtitle_inputs"= "Inputs";
 "full_info.subtitle_outputs"= "Outputs";
 "full_info.subtitle_provider"= "Data Provider";
@@ -117,7 +115,6 @@ Go to Settings - > Bank and allow access to Camera.";
 "settings.tab_bar_item" = "Settings";
 "settings.security_center" = "Security Center";
 "settings.base_currency" = "Base Currency";
-"settings.manage_wallet" = "Manage Wallet";
 "settings.language" = "Language";
 "settings.about" = "About";
 "settings.light_mode" = "Light Mode";
@@ -135,12 +132,9 @@ Go to Settings - > Bank and allow access to Camera.";
 // Settings -> Manage Wallet
 
 "settings_manage_wallet.title" = "Manage Coins";
-"settings_manage_wallet.add_coins" = "Add coins";
-"settings_manage_wallet.add_button" = "Add";
-"settings_manage_wallet.hide_button" = "Hide";
+
 "settings_manage_wallet.remove_button" = "Remove";
-"settings_manage_wallet.show_button" = "Show";
-"settings_manage_wallet.search_placeholder" = "Search";
+
 
 // Settings -> About
 
@@ -159,32 +153,32 @@ Go to Settings - > Bank and allow access to Camera.";
 "settings_security.title" = "Security Center";
 "settings_security.backup_wallet" = "Backup Wallet";
 "settings_security.unlink_from_this_device" = "Unlink From This Device";
-"settings_security.set_pin" = "Set PIN";
-"settings_security.change_pin" = "Edit PIN";
+"settings_security.set_pin" = "Passcode";
+"settings_security.change_pin" = "Edit Passcode";
 "settings_security.touch_id" = "Touch ID";
 "settings_security.face_id" = "Face ID";
 "security_settings.unlink_alert_button" = "Unlink";
 "settings_security.import_wallet_confirmation_1" = "This action will remove the currently installed wallet from this device.";
-"settings_security.import_wallet_confirmation_2" = "Make sure you have its Secret Key or you will not be able to access the funds on it in the future.";
+"settings_security.import_wallet_confirmation_2" = "Make sure you have backed up Secret Key or you will not be able to access your funds in the future.";
 
 // Set PIN
 
-"set_pin.title" = "Set PIN";
-"set_pin.info" = "Your pin will be used to unlock your wallet and send money";
-"set_pin.confirm.info" = "Confirm PIN";
+"set_pin.title" = "Passcode";
+"set_pin.info" = "Your passcode will be used to unlock your wallet and send money";
+"set_pin.confirm.info" = "Confirm";
 "set_pin.wrong_confirmation" = "Pin did not match. Try again";
 
 // Edit PIN
 
-"edit_pin.title" = "Edit PIN";
-"edit_pin.unlock_info" = "Enter current PIN";
-"edit_pin.new_pin_info" = "Enter new PIN";
-"edit_pin.confirm_info" = "Enter again";
+"edit_pin.title" = "Edit Passcode";
+"edit_pin.unlock_info" = "Current Passcode";
+"edit_pin.new_pin_info" = "New Passcode";
+"edit_pin.confirm_info" = "Confirm";
 
 // Unlock PIN
 
-"unlock_pin.info" = "Enter PIN";
-"unlock_pin.cant_save_pin" = "Ouch! We cant save your pin, please contact us asap!";
+"unlock_pin.info" = "Passcode";
+"unlock_pin.cant_save_pin" = "Ouch! We cant save your passcode, please contact us asap!";
 "unlock_pin.blocked_until" = "Disabled until: %@";
 
 //NumPad
