@@ -40,7 +40,7 @@
 "backup.intro.later" = "Plus tard";
 "backup.intro.backup_now" = "Sauvegarde";
 
-"backup.words.title" = "Le mot secret";
+"backup.words.title" = "Clé Secrete";
 "backup.words.back" = "Retour";
 "backup.words.proceed" = "Suivant";
 
@@ -151,7 +151,7 @@
 "settings_security.face_id" = "Face ID";
 "security_settings.unlink_alert_button" = "Délier";
 "settings_security.import_wallet_confirmation_1" = "Cette action supprimera le porte-monnaie actuellement installé sur cet appareil.";
-"settings_security.import_wallet_confirmation_2" = "Make sure you have backed up Secret Key or you will not be able to access your funds in the future.";
+"settings_security.import_wallet_confirmation_2" = "Assurez-vous de disposer de la clé secrète, sinon vous ne pourrez plus accéder aux fonds.";
 
 // Set PIN
 
