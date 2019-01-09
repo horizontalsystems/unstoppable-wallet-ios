@@ -96,15 +96,15 @@
 "full_info.title" = "Full Info";
 "full_info.id" = "Kimlik";
 "full_info.time" = "Tarih";
-"full_info.block" = "Block";
+"full_info.block" = "Blok ";
 "full_info.confirmations" = "Onaylama";
-"full_info.total_input" = "Total Input";
-"full_info.total_output" = "Total Output";
+"full_info.total_input" = "Toplam Giriş";
+"full_info.total_output" = "Toplam Çıkış";
 "full_info.size" = "Boyut";
 "full_info.fee" = "Masraf";
-"full_info.fee_per_byte" = "Fee per byte";
-"full_info.subtitle_inputs" = "Inputs";
-"full_info.subtitle_outputs" = "Outputs";
+"full_info.fee_per_byte" = "Bayt başına ücret";
+"full_info.subtitle_inputs" = "Girişler";
+"full_info.subtitle_outputs" = "Çıkışlar";
 "full_info.subtitle_provider" = "Data Provider";
 
 // Settings
@@ -145,7 +145,7 @@
 "settings_security.title" = "Güvenlik Merkezi";
 "settings_security.backup_wallet" = "Cüzdanı yedekle";
 "settings_security.unlink_from_this_device" = "Bu cihazla bağlantıyı kes";
-"settings_security.set_pin" = "Passcode";
+"settings_security.set_pin" = "Şifre";
 "settings_security.change_pin" = "Edit Passcode";
 "settings_security.touch_id" = "Touch ID";
 "settings_security.face_id" = "Face ID";
@@ -155,9 +155,9 @@
 
 // Set PIN
 
-"set_pin.title" = "Passcode";
+"set_pin.title" = "Şifre";
 "set_pin.info" = "Your passcode will be used to unlock your wallet and send money";
-"set_pin.confirm.info" = "Confirm";
+"set_pin.confirm.info" = "Onayla";
 "set_pin.wrong_confirmation" = "PİN uyuşmuyor. Tekrar deneyin.";
 
 // Edit PIN
@@ -165,7 +165,7 @@
 "edit_pin.title" = "Edit Passcode";
 "edit_pin.unlock_info" = "Current Passcode";
 "edit_pin.new_pin_info" = "New Passcode";
-"edit_pin.confirm_info" = "Confirm";
+"edit_pin.confirm_info" = "Onayla";
 
 // Unlock PIN
 
