@@ -129,7 +129,7 @@
 
 // Settings -> Manage Wallet
 
-"settings_manage_wallet.title" = "Wallets";
+"settings_manage_wallet.title" = "Monederos";
 
 "settings_manage_wallet.remove_button" = "Eliminar";
 
