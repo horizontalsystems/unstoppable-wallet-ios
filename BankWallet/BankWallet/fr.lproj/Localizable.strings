@@ -155,22 +155,22 @@
 
 // Set PIN
 
-"set_pin.title" = "Passcode";
-"set_pin.info" = "Your passcode will be used to unlock your wallet and send money";
+"set_pin.title" = "Code";
+"set_pin.info" = "Votre code sera utilisé pour déverrouiller votre porte-monnaie et envoyer de l’argent";
 "set_pin.confirm.info" = "Confirmer";
 "set_pin.wrong_confirmation" = "Le PIN ne correspond pas. Réessayez";
 
 // Edit PIN
 
-"edit_pin.title" = "Edit Passcode";
-"edit_pin.unlock_info" = "Current Passcode";
-"edit_pin.new_pin_info" = "New Passcode";
-"edit_pin.confirm_info" = "Confirm";
+"edit_pin.title" = "Modifier le code ";
+"edit_pin.unlock_info" = "Actuel Code";
+"edit_pin.new_pin_info" = "Nouveau Code ";
+"edit_pin.confirm_info" = "Confirmer";
 
 // Unlock PIN
 
-"unlock_pin.info" = "Passcode";
-"unlock_pin.cant_save_pin" = "Ouch! We cant save your passcode, please contact us asap!";
+"unlock_pin.info" = "Code";
+"unlock_pin.cant_save_pin" = "Oops! Nous ne pouvons pas enregistrer votre code, veuillez nous contacter au plus vite!";
 "unlock_pin.blocked_until" = "Désactivé jusqu'à: %@";
 
 //NumPad
