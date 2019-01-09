@@ -45,7 +45,7 @@
 "backup.words.proceed" = "Weiter";
 
 "backup.confirmation.title" = "Prüfen …";
-"backup.confirmation.description" = "Gib bitte die folgenden Wörter deines Offlineschlüssels ein";
+"backup.confirmation.description" = "Geben Sie bitte die folgenden Wörter deines Offlineschlüssels ein";
 "backup.confirmation.failure_alert.text" = "Die Wörter stimmen nicht überein";
 "backup.confirmation.done_button" = "Fertig";
 "backup.confirmation.understand" = "Ich verstehe, dass meine Geldbörse und Token auf diesem Gerät nur ist.";
@@ -80,7 +80,7 @@
 "transactions.title" = "Transaktionen";
 "transactions.tab_bar_item" = "Transaktionen";
 "transactions.filter_all" = "Alle";
-"transactions.empty_text" = "Du hast nicht die anstehenden oder vergangenen Transaktionen noch.";
+"transactions.empty_text" = "Sie haben nicht die anstehenden oder vergangenen Transaktionen noch.";
 
 // Transaction Info
 
@@ -98,7 +98,7 @@
 "full_info.time" = "Zeit";
 "full_info.block" = "Block";
 "full_info.confirmations" = "Bestätigungen";
-"full_info.total_input" = "Insgesamt Eingang";
+"full_info.total_input" = "Insgesamte Eingänge";
 "full_info.total_output" = "Insgesamte Ausgänge";
 "full_info.size" = "Größe";
 "full_info.fee" = "Gebühr";
@@ -129,7 +129,7 @@
 
 // Settings -> Manage Wallet
 
-"settings_manage_wallet.title" = "Coins verwalten";
+"settings_manage_wallet.title" = "Manage Coins";
 
 "settings_manage_wallet.remove_button" = "Entfernen";
 
