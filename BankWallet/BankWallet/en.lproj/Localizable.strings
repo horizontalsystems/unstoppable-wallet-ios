@@ -131,7 +131,7 @@ Go to Settings - > Bank and allow access to Camera.";
 
 // Settings -> Manage Wallet
 
-"settings_manage_wallet.title" = "Manage Coins";
+"settings_manage_wallet.title" = "Wallets";
 
 "settings_manage_wallet.remove_button" = "Remove";
 
@@ -166,7 +166,7 @@ Go to Settings - > Bank and allow access to Camera.";
 "set_pin.title" = "Passcode";
 "set_pin.info" = "Your passcode will be used to unlock your wallet and send money";
 "set_pin.confirm.info" = "Confirm";
-"set_pin.wrong_confirmation" = "Pin did not match. Try again";
+"set_pin.wrong_confirmation" = "Passcode did not match. Try again";
 
 // Edit PIN
 
