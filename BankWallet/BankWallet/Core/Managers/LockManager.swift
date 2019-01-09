@@ -2,16 +2,16 @@ import Foundation
 
 class LockManager {
     private let localStorage: ILocalStorage
-    private let wordsManager: IWordsManager
+    private let authManager: IAuthManager
     private let appConfigProvider: IAppConfigProvider
     private let lockRouter: ILockRouter
 
     private let lockTimeout: Double = 60
     private(set) var isLocked: Bool = false
 
-    init(localStorage: ILocalStorage, wordsManager: IWordsManager, appConfigProvider: IAppConfigProvider, lockRouter: ILockRouter) {
+    init(localStorage: ILocalStorage, authManager: IAuthManager, appConfigProvider: IAppConfigProvider, lockRouter: ILockRouter) {
         self.localStorage = localStorage
-        self.wordsManager = wordsManager
+        self.authManager = authManager
         self.appConfigProvider = appConfigProvider
         self.lockRouter = lockRouter
     }
@@ -21,7 +21,7 @@ class LockManager {
 extension LockManager: ILockManager {
 
     func didEnterBackground() {
-        guard wordsManager.isLoggedIn else {
+        guard authManager.isLoggedIn else {
             return
         }
         guard !isLocked else {
@@ -32,7 +32,7 @@ extension LockManager: ILockManager {
     }
 
     func willEnterForeground() {
-        guard wordsManager.isLoggedIn else {
+        guard authManager.isLoggedIn else {
             return
         }
         guard !isLocked else {

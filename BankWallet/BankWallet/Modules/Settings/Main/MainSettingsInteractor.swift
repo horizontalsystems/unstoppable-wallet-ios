@@ -18,21 +18,21 @@ class MainSettingsInteractor {
         self.systemInfoManager = systemInfoManager
         self.currencyManager = currencyManager
 
-        wordsManager.backedUpSubject
-                .subscribe(onNext: { [weak self] isBackedUp in
-                    self?.onUpdate(isBackedUp: isBackedUp)
+        wordsManager.backedUpSignal
+                .subscribe(onNext: { [weak self] in
+                    self?.onUpdateBackedUp()
                 })
                 .disposed(by: disposeBag)
 
-        currencyManager.subject
-                .subscribe(onNext: { [weak self] currency in
-                    self?.delegate?.didUpdate(baseCurrency: currency.code)
+        currencyManager.baseCurrencyUpdatedSignal
+                .subscribe(onNext: { [weak self] in
+                    self?.delegate?.didUpdateBaseCurrency()
                 })
                 .disposed(by: disposeBag)
     }
 
-    private func onUpdate(isBackedUp: Bool) {
-        if isBackedUp {
+    private func onUpdateBackedUp() {
+        if wordsManager.isBackedUp {
             delegate?.didBackup()
         }
     }

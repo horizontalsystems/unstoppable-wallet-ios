@@ -8,44 +8,34 @@ class TransactionManager {
     private let rateSyncer: ITransactionRateSyncer
     private let walletManager: IWalletManager
     private let currencyManager: ICurrencyManager
-    private let wordsManager: IWordsManager
 
-    init(storage: ITransactionRecordStorage, rateSyncer: ITransactionRateSyncer, walletManager: IWalletManager, currencyManager: ICurrencyManager, wordsManager: IWordsManager, reachabilityManager: IReachabilityManager) {
+    init(storage: ITransactionRecordStorage, rateSyncer: ITransactionRateSyncer, walletManager: IWalletManager, currencyManager: ICurrencyManager, reachabilityManager: IReachabilityManager) {
         self.storage = storage
         self.rateSyncer = rateSyncer
         self.walletManager = walletManager
         self.currencyManager = currencyManager
-        self.wordsManager = wordsManager
 
         resubscribeToAdapters()
 
-        walletManager.walletsSubject
-                .subscribe(onNext: { [weak self] _ in
+        walletManager.walletsUpdatedSignal
+                .subscribe(onNext: { [weak self] in
                     self?.resubscribeToAdapters()
                 })
                 .disposed(by: disposeBag)
 
-        currencyManager.subject
-                .subscribe(onNext: { [weak self] _ in
+        currencyManager.baseCurrencyUpdatedSignal
+                .subscribe(onNext: { [weak self] in
                     self?.handleCurrencyChange()
                 })
                 .disposed(by: disposeBag)
 
-        wordsManager.loggedInSubject
-                .subscribe(onNext: { [weak self] loggedIn in
-                    if !loggedIn {
-                        self?.clear()
-                    }
-                })
-                .disposed(by: disposeBag)
-
-        reachabilityManager.subject
-                .subscribe(onNext: { [weak self] connected in
-                    if connected {
-                        self?.syncRates()
-                    }
-                })
-                .disposed(by: disposeBag)
+//        reachabilityManager.reachabilitySignal
+//                .subscribe(onNext: { [weak self] in
+//                    if connected {
+//                        self?.syncRates()
+//                    }
+//                })
+//                .disposed(by: disposeBag)
     }
 
     private func resubscribeToAdapters() {
@@ -78,12 +68,13 @@ class TransactionManager {
         rateSyncer.sync(currencyCode: currencyManager.baseCurrency.code)
     }
 
-    private func clear() {
+}
+
+extension TransactionManager: ITransactionManager {
+
+    func clear() {
         adaptersDisposeBag = DisposeBag()
         storage.clearRecords()
     }
 
-}
-
-extension TransactionManager: ITransactionManager {
 }

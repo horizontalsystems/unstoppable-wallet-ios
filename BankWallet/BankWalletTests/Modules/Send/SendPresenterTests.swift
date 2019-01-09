@@ -65,6 +65,7 @@ class SendPresenterTests: XCTestCase {
             when(mock.convertedAmount(forInputType: equal(to: inputType), amount: equal(to: amount))).thenReturn(convertedAmount)
             when(mock.copy(address: any())).thenDoNothing()
             when(mock.send(userInput: any())).thenDoNothing()
+            when(mock.fetchRate()).thenDoNothing()
         }
         stub(mockFactory) { mock in
             when(mock.viewItem(forState: equal(to: state))).thenReturn(viewItem)

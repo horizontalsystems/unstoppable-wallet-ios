@@ -4,62 +4,97 @@ class BalanceInteractor {
     weak var delegate: IBalanceInteractorDelegate?
 
     private let disposeBag = DisposeBag()
+    private var walletsDisposeBag = DisposeBag()
+    private var ratesDisposeBag = DisposeBag()
 
     private let walletManager: IWalletManager
-    private let rateManager: IRateManager
+    private let rateStorage: IRateStorage
     private let currencyManager: ICurrencyManager
 
-    private let refreshTimeout: Double
-
-    init(walletManager: IWalletManager, rateManager: IRateManager, currencyManager: ICurrencyManager, refreshTimeout: Double = 2) {
+    init(walletManager: IWalletManager, rateStorage: IRateStorage, currencyManager: ICurrencyManager) {
         self.walletManager = walletManager
-        self.rateManager = rateManager
+        self.rateStorage = rateStorage
         self.currencyManager = currencyManager
+    }
 
-        self.refreshTimeout = refreshTimeout
+    private func onUpdateWallets() {
+        walletsDisposeBag = DisposeBag()
 
-        for wallet in walletManager.wallets {
-            wallet.adapter.balanceSubject
-                    .subscribe(onNext: { [weak self] _ in
-                        self?.delegate?.didUpdate()
-                    })
-                    .disposed(by: disposeBag)
+        let wallets = walletManager.wallets
 
-            wallet.adapter.stateSubject
+        delegate?.didUpdate(wallets: wallets)
+
+        for wallet in wallets {
+            onUpdateBalance(wallet: wallet)
+            onUpdateState(wallet: wallet)
+
+            wallet.adapter.balanceUpdatedSignal
+                    .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
                     .observeOn(MainScheduler.instance)
-                    .subscribe(onNext: { [weak self] _ in
-                        self?.delegate?.didUpdate()
+                    .subscribe(onNext: { [weak self] in
+                        self?.onUpdateBalance(wallet: wallet)
                     })
-                    .disposed(by: disposeBag)
+                    .disposed(by: walletsDisposeBag)
+
+            wallet.adapter.stateUpdatedSignal
+                    .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
+                    .observeOn(MainScheduler.instance)
+                    .subscribe(onNext: { [weak self] in
+                        self?.onUpdateState(wallet: wallet)
+                    })
+                    .disposed(by: walletsDisposeBag)
         }
+    }
 
-        rateManager.subject
-                .subscribe(onNext: { [weak self] in
-                    self?.delegate?.didUpdate()
-                })
-                .disposed(by: disposeBag)
+    private func onUpdateCurrency() {
+        delegate?.didUpdate(currency: currencyManager.baseCurrency)
+    }
 
-        currencyManager.subject
-                .subscribe(onNext: { [weak self] _ in
-                    self?.delegate?.didUpdate()
-                })
-                .disposed(by: disposeBag)
+    private func onUpdateBalance(wallet: Wallet) {
+        delegate?.didUpdate(balance: wallet.adapter.balance, coinCode: wallet.coinCode)
+    }
+
+    private func onUpdateState(wallet: Wallet) {
+        delegate?.didUpdate(state: wallet.adapter.state, coinCode: wallet.coinCode)
     }
 
 }
 
 extension BalanceInteractor: IBalanceInteractor {
 
-    var baseCurrency: Currency {
-        return currencyManager.baseCurrency
+    func initWallets() {
+        onUpdateWallets()
+        onUpdateCurrency()
+
+        walletManager.walletsUpdatedSignal
+                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
+                .observeOn(MainScheduler.instance)
+                .subscribe(onNext: { [weak self] in
+                    self?.onUpdateWallets()
+                })
+                .disposed(by: disposeBag)
+
+        currencyManager.baseCurrencyUpdatedSignal
+                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
+                .observeOn(MainScheduler.instance)
+                .subscribe(onNext: { [weak self] in
+                    self?.onUpdateCurrency()
+                })
+                .disposed(by: disposeBag)
     }
 
-    var wallets: [Wallet] {
-        return walletManager.wallets
-    }
+    func fetchRates(currencyCode: String, coinCodes: [CoinCode]) {
+        ratesDisposeBag = DisposeBag()
 
-    func rate(forCoin coinCode: CoinCode) -> Rate? {
-        return rateManager.rate(forCoin: coinCode, currencyCode: currencyManager.baseCurrency.code)
+        for coinCode in coinCodes {
+            rateStorage.rateObservable(forCoinCode: coinCode, currencyCode: currencyCode)
+                    .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
+                    .observeOn(MainScheduler.instance)
+                    .subscribe(onNext: { rate in
+                        self.delegate?.didUpdate(rate: rate)
+                    })
+                    .disposed(by: ratesDisposeBag)
+        }
     }
 
     func refresh(coinCode: CoinCode) {

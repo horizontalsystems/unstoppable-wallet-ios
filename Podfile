@@ -26,7 +26,10 @@ def appPods
   pod 'KeychainAccess'
 
   pod 'RxCocoa'
-  pod "SnapKit"
+  pod 'SnapKit'
+
+  pod 'GRDB.swift'
+  pod 'RxGRDB'
 end
 
 target 'Bank Dev T' do
@@ -44,7 +47,7 @@ end
 target 'Bank Tests' do
   pod 'RealmSwift'
   pod 'RxSwift'
-  pod "Cuckoo"
+  pod 'Cuckoo'
 end
 
 post_install do |installer|

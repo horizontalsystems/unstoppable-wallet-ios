@@ -1,10 +1,10 @@
 import RxSwift
 
 class CurrencyManager {
-    var subject = PublishSubject<Currency>()
-
     private let localStorage: ILocalStorage
     private let appConfigProvider: IAppConfigProvider
+
+    let baseCurrencyUpdatedSignal = Signal()
 
     init(localStorage: ILocalStorage, appConfigProvider: IAppConfigProvider) {
         self.localStorage = localStorage
@@ -31,7 +31,8 @@ extension CurrencyManager: ICurrencyManager {
 
     func setBaseCurrency(code: String) {
         localStorage.baseCurrencyCode = code
-        subject.onNext(baseCurrency)
+
+        baseCurrencyUpdatedSignal.notify()
     }
 
 }

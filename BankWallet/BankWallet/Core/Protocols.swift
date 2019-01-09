@@ -53,11 +53,10 @@ protocol ILocalizationManager {
     func format(localizedString: String, arguments: [CVarArg]) -> String
 }
 
-protocol IWalletManager {
+protocol IWalletManager: class {
     var wallets: [Wallet] { get }
-    var walletsSubject: PublishSubject<[Wallet]> { get }
-
-    func initWallets(authData: AuthData, coins: [Coin])
+    var walletsUpdatedSignal: Signal { get }
+    func initWallets()
     func clearWallets()
 }
 
@@ -65,10 +64,16 @@ protocol IAdapterFactory {
     func adapter(forCoinType type: CoinType, authData: AuthData) -> IAdapter?
 }
 
+protocol IWalletFactory {
+    func wallet(forCoin coin: Coin, authData: AuthData) -> Wallet?
+}
+
 protocol ICoinManager {
+    var coins: [Coin] { get }
 }
 
 protocol ITransactionManager: class {
+    func clear()
 }
 
 enum AdapterState {
@@ -83,10 +88,10 @@ enum FeeError: Error {
 
 protocol IAdapter: class {
     var balance: Double { get }
-    var balanceSubject: PublishSubject<Double> { get }
+    var balanceUpdatedSignal: Signal { get }
 
     var state: AdapterState { get }
-    var stateSubject: PublishSubject<AdapterState> { get }
+    var stateUpdatedSignal: Signal { get }
 
     var confirmationsThreshold: Int { get }
     var lastBlockHeight: Int? { get }
@@ -112,16 +117,17 @@ protocol IAdapter: class {
 }
 
 protocol IWordsManager {
-    var words: [String]? { get }
-    var authData: AuthData? { get }
     var isBackedUp: Bool { get set }
-    var isLoggedIn: Bool { get }
-    var loggedInSubject: PublishSubject<Bool> { get }
-    var backedUpSubject: PublishSubject<Bool> { get }
-    func createWords() throws
+    var backedUpSignal: Signal { get }
+    func generateWords() throws -> [String]
     func validate(words: [String]) throws
-    func restore(withWords words: [String]) throws
-    func logout()
+}
+
+protocol IAuthManager {
+    var authData: AuthData? { get }
+    var isLoggedIn: Bool { get }
+    func login(withWords words: [String]) throws
+    func logout() throws
 }
 
 protocol ILockManager {
@@ -136,10 +142,11 @@ protocol IBlurManager {
     func didBecomeActive()
 }
 
-protocol IPinManager {
+protocol IPinManager: class {
     var isPinSet: Bool { get }
     func store(pin: String?) throws
     func validate(pin: String) -> Bool
+    func clearPin() throws
 }
 
 protocol ILockRouter {
@@ -156,13 +163,7 @@ protocol BiometricManagerDelegate: class {
 }
 
 protocol IRateManager {
-    var subject: PublishSubject<Void> { get }
-    func rate(forCoin coinCode: CoinCode, currencyCode: String) -> Rate?
-}
-
-protocol IRateSyncer {
-    var delegate: IRateSyncerDelegate? { get set }
-    func sync(coinCodes: [String], currencyCode: String)
+    func refreshRates(coinCodes: [CoinCode], currencyCode: String)
 }
 
 protocol IRateSyncerDelegate: class {
@@ -190,8 +191,8 @@ protocol IRateNetworkManager {
 }
 
 protocol IRateStorage {
-    func rate(forCoin coinCode: CoinCode, currencyCode: String) -> Rate?
-    func save(latestRate: LatestRate, coinCode: CoinCode, currencyCode: String)
+    func rateObservable(forCoinCode coinCode: CoinCode, currencyCode: String) -> Observable<Rate>
+    func save(rate: Rate)
     func clear()
 }
 
@@ -206,15 +207,16 @@ protocol ITransactionRecordStorage {
 }
 
 protocol ICurrencyManager {
-    var subject: PublishSubject<Currency> { get }
     var currencies: [Currency] { get }
     var baseCurrency: Currency { get }
+    var baseCurrencyUpdatedSignal: Signal { get }
 
     func setBaseCurrency(code: String)
 }
 
 protocol IReachabilityManager {
-    var subject: PublishSubject<Bool> { get }
+    var isReachable: Bool { get }
+    var reachabilitySignal: Signal { get }
 }
 
 protocol IPeriodicTimer {

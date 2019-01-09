@@ -1,26 +1,37 @@
 protocol IBalanceView: class {
-    func set(title: String)
-    func show(totalBalance: CurrencyValue, upToDate: Bool)
-    func show(items: [BalanceViewItem])
+    func reload()
+    func updateItem(at index: Int)
+    func updateHeader()
 }
 
 protocol IBalanceViewDelegate {
     func viewDidLoad()
-    func onRefresh(for coinCode: CoinCode)
-    func onReceive(for coinCode: CoinCode)
-    func onPay(for coinCode: CoinCode)
+
+    var itemsCount: Int { get }
+    func viewItem(at index: Int) -> BalanceViewItem
+    func headerViewItem() -> BalanceHeaderViewItem
+
+    func onRefresh(index: Int)
+    func onReceive(index: Int)
+    func onPay(index: Int)
+
     func onOpenManageCoins()
 }
 
 protocol IBalanceInteractor {
-    var baseCurrency: Currency { get }
-    var wallets: [Wallet] { get }
-    func rate(forCoin coinCode: CoinCode) -> Rate?
+    func initWallets()
+    func fetchRates(currencyCode: String, coinCodes: [CoinCode])
+
     func refresh(coinCode: CoinCode)
 }
 
 protocol IBalanceInteractorDelegate: class {
-    func didUpdate()
+    func didUpdate(wallets: [Wallet])
+    func didUpdate(balance: Double, coinCode: CoinCode)
+    func didUpdate(state: AdapterState, coinCode: CoinCode)
+
+    func didUpdate(currency: Currency)
+    func didUpdate(rate: Rate)
 }
 
 protocol IBalanceRouter {
