@@ -21,7 +21,7 @@
 // Guest Page
 
 "guest.title" = "钱包";
-"guest.subtitle" = "分布式应用程序";
+"guest.subtitle" = "Decentralized App";
 "guest.create_wallet" = "新的钱包";
 "guest.restore_wallet" = "恢复钱包";
 
@@ -87,8 +87,8 @@
 "tx_info.title" = "交易";
 "tx_info.time" = "时间";
 "tx_info.status" = "状态";
-"tx_info.from_hash" = "发件人：";
-"tx_info.to_hash" = "收件人：";
+"tx_info.from_hash" = "发件人";
+"tx_info.to_hash" = "收件人";
 "tx_info.alert_close" = "关闭";
 "tx_info.button_more" = "完整信息";
 
@@ -96,7 +96,7 @@
 "full_info.title" = "完整信息";
 "full_info.id" = "ID";
 "full_info.time" = "时间";
-"full_info.block" = "拉黑（for person), 阻止（for emails etc.）";
+"full_info.block" = "Block";
 "full_info.confirmations" = "确认框";
 "full_info.total_input" = "转入总额";
 "full_info.total_output" = "转出总额";
@@ -116,8 +116,8 @@
 "settings.language" = "语言";
 "settings.about" = "更多";
 "settings.light_mode" = "简单模式";
-"settings.info_title" = "银行钱包";
-"settings.info_subtitle" = "分布式应用程序";
+"settings.info_title" = "BANK WALLET";
+"settings.info_subtitle" = "decentralized app";
 
 // Settings -> Base Currency
 
@@ -129,7 +129,7 @@
 
 // Settings -> Manage Wallet
 
-"settings_manage_wallet.title" = "管理Coins";
+"settings_manage_wallet.title" = "Manage Coins";
 
 "settings_manage_wallet.remove_button" = "移除";
 
@@ -157,7 +157,7 @@
 
 "set_pin.title" = "Passcode";
 "set_pin.info" = "Your passcode will be used to unlock your wallet and send money";
-"set_pin.confirm.info" = "Confirm";
+"set_pin.confirm.info" = "确认";
 "set_pin.wrong_confirmation" = "PIN码不匹配。再试一次。";
 
 // Edit PIN
@@ -165,7 +165,7 @@
 "edit_pin.title" = "Edit Passcode";
 "edit_pin.unlock_info" = "Current Passcode";
 "edit_pin.new_pin_info" = "New Passcode";
-"edit_pin.confirm_info" = "Confirm";
+"edit_pin.confirm_info" = "确认";
 
 // Unlock PIN
 
