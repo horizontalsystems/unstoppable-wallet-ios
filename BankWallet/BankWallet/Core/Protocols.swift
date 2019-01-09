@@ -53,9 +53,11 @@ protocol ILocalizationManager {
     func format(localizedString: String, arguments: [CVarArg]) -> String
 }
 
-protocol IWalletManager {
+protocol IWalletManager: class {
     var wallets: [Wallet] { get }
     var walletsUpdatedSignal: Signal { get }
+    func initWallets()
+    func clearWallets()
 }
 
 protocol IAdapterFactory {
@@ -67,10 +69,11 @@ protocol IWalletFactory {
 }
 
 protocol ICoinManager {
-    var coinsObservable: Observable<[Coin]> { get }
+    var coins: [Coin] { get }
 }
 
 protocol ITransactionManager: class {
+    func clear()
 }
 
 enum AdapterState {
@@ -110,18 +113,17 @@ protocol IAdapter: class {
 }
 
 protocol IWordsManager {
-    var words: [String]? { get }
-    var authData: AuthData? { get }
     var isBackedUp: Bool { get set }
-    var isLoggedIn: Bool { get }
-    var loggedInSubject: PublishSubject<Bool> { get }
-    var backedUpSubject: PublishSubject<Bool> { get }
-    func createWords() throws
+    var backedUpSignal: Signal { get }
+    func generateWords() throws -> [String]
     func validate(words: [String]) throws
-    func restore(withWords words: [String]) throws
-    func logout()
+}
 
-    var authDataObservable: Observable<AuthData> { get }
+protocol IAuthManager {
+    var authData: AuthData? { get }
+    var isLoggedIn: Bool { get }
+    func login(withWords words: [String]) throws
+    func logout() throws
 }
 
 protocol ILockManager {
@@ -136,10 +138,11 @@ protocol IBlurManager {
     func didBecomeActive()
 }
 
-protocol IPinManager {
+protocol IPinManager: class {
     var isPinSet: Bool { get }
     func store(pin: String?) throws
     func validate(pin: String) -> Bool
+    func clearPin() throws
 }
 
 protocol ILockRouter {

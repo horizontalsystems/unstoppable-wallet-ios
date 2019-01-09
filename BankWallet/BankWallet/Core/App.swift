@@ -11,6 +11,8 @@ class App {
 
     let secureStorage: ISecureStorage
     let localStorage: ILocalStorage
+
+    let authManager: AuthManager
     let wordsManager: IWordsManager
 
     let appConfigProvider: IAppConfigProvider
@@ -55,13 +57,15 @@ class App {
 
         localStorage = UserDefaultsStorage()
         secureStorage = KeychainStorage(localStorage: localStorage)
-        wordsManager = WordsManager(secureStorage: secureStorage, localStorage: localStorage)
+
+        authManager = AuthManager(secureStorage: secureStorage, localStorage: localStorage)
+        wordsManager = WordsManager(localStorage: localStorage)
 
         appConfigProvider = AppConfigProvider()
 
-        pinManager = PinManager(secureStorage: secureStorage, wordsManager: wordsManager)
+        pinManager = PinManager(secureStorage: secureStorage)
         lockRouter = LockRouter()
-        lockManager = LockManager(localStorage: localStorage, wordsManager: wordsManager, appConfigProvider: appConfigProvider, lockRouter: lockRouter)
+        lockManager = LockManager(localStorage: localStorage, authManager: authManager, appConfigProvider: appConfigProvider, lockRouter: lockRouter)
         blurManager = BlurManager(lockManager: lockManager)
 
         localizationManager = LocalizationManager()
@@ -74,7 +78,7 @@ class App {
 
         adapterFactory = AdapterFactory(appConfigProvider: appConfigProvider)
         walletFactory = WalletFactory(adapterFactory: adapterFactory)
-        walletManager = WalletManager(walletFactory: walletFactory, wordsManager: wordsManager, coinManager: coinManager)
+        walletManager = WalletManager(walletFactory: walletFactory, authManager: authManager, coinManager: coinManager)
 
         realmStorage = RealmStorage(realmFactory: realmFactory)
         grdbStorage = GrdbStorage()
@@ -88,9 +92,13 @@ class App {
         rateSyncer = RateSyncer(rateManager: rateManager, walletManager: walletManager, currencyManager: currencyManager, reachabilityManager: reachabilityManager)
 
         transactionRateSyncer = TransactionRateSyncer(storage: realmStorage, networkManager: networkManager)
-        transactionManager = TransactionManager(storage: realmStorage, rateSyncer: transactionRateSyncer, walletManager: walletManager, currencyManager: currencyManager, wordsManager: wordsManager, reachabilityManager: reachabilityManager)
+        transactionManager = TransactionManager(storage: realmStorage, rateSyncer: transactionRateSyncer, walletManager: walletManager, currencyManager: currencyManager, reachabilityManager: reachabilityManager)
 
         transactionViewItemFactory = TransactionViewItemFactory(walletManager: walletManager, currencyManager: currencyManager, rateManager: rateManager)
+
+        authManager.walletManager = walletManager
+        authManager.pinManager = pinManager
+        authManager.transactionsManager = transactionManager
     }
 
 }

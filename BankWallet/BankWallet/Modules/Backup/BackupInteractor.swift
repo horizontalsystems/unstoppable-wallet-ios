@@ -2,19 +2,21 @@ class BackupInteractor {
 
     weak var delegate: IBackupInteractorDelegate?
 
+    private var authManager: IAuthManager
     private var wordsManager: IWordsManager
     private let pinManager: IPinManager
     private var randomManager: IRandomManager
 
-    init(wordsManager: IWordsManager, pinManager: IPinManager, randomManager: IRandomManager) {
+    init(authManager: IAuthManager, wordsManager: IWordsManager, pinManager: IPinManager, randomManager: IRandomManager) {
+        self.authManager = authManager
         self.wordsManager = wordsManager
         self.pinManager = pinManager
         self.randomManager = randomManager
     }
 
     private func fetchWords() {
-        if let words = wordsManager.words {
-            delegate?.didFetch(words: words)
+        if let authData = authManager.authData {
+            delegate?.didFetch(words: authData.words)
         }
     }
 
@@ -27,10 +29,12 @@ extension BackupInteractor: IBackupInteractor {
     }
 
     func validate(confirmationWords: [Int: String]) {
-        guard let words = wordsManager.words else {
+        guard let authData = authManager.authData else {
             delegate?.didValidateFailure()
             return
         }
+
+        let words = authData.words
 
         for (index, word) in confirmationWords {
             if words[index - 1] != word.trimmingCharacters(in: .whitespaces) {

@@ -18,9 +18,9 @@ class MainSettingsInteractor {
         self.systemInfoManager = systemInfoManager
         self.currencyManager = currencyManager
 
-        wordsManager.backedUpSubject
-                .subscribe(onNext: { [weak self] isBackedUp in
-                    self?.onUpdate(isBackedUp: isBackedUp)
+        wordsManager.backedUpSignal
+                .subscribe(onNext: { [weak self] in
+                    self?.onUpdateBackedUp()
                 })
                 .disposed(by: disposeBag)
 
@@ -31,8 +31,8 @@ class MainSettingsInteractor {
                 .disposed(by: disposeBag)
     }
 
-    private func onUpdate(isBackedUp: Bool) {
-        if isBackedUp {
+    private func onUpdateBackedUp() {
+        if wordsManager.isBackedUp {
             delegate?.didBackup()
         }
     }

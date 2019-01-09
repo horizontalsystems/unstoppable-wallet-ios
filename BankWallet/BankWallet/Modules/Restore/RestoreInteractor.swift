@@ -1,10 +1,12 @@
 class RestoreInteractor {
     weak var delegate: IRestoreInteractorDelegate?
 
-    private let wordsManager: IWordsManager
+    private let authManager: IAuthManager
+    private var wordsManager: IWordsManager
     private let appConfigProvider: IAppConfigProvider
 
-    init(wordsManager: IWordsManager, appConfigProvider: IAppConfigProvider) {
+    init(authManager: IAuthManager, wordsManager: IWordsManager, appConfigProvider: IAppConfigProvider) {
+        self.authManager = authManager
         self.wordsManager = wordsManager
         self.appConfigProvider = appConfigProvider
     }
@@ -27,7 +29,10 @@ extension RestoreInteractor: IRestoreInteractor {
 
     func restore(withWords words: [String]) {
         do {
-            try wordsManager.restore(withWords: words)
+            try wordsManager.validate(words: words)
+            try authManager.login(withWords: words)
+            wordsManager.isBackedUp = true
+
             delegate?.didRestore()
         } catch {
             delegate?.didFailToRestore(withError: error)

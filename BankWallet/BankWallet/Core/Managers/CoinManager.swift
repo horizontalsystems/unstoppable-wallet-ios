@@ -20,8 +20,8 @@ class CoinManager {
 
 extension CoinManager: ICoinManager {
 
-    var coinsObservable: Observable<[Coin]> {
-        return Observable.just(defaultCoins)
+    var coins: [Coin] {
+        return defaultCoins
     }
 
 }

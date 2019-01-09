@@ -32,7 +32,7 @@ extension SecuritySettingsRouter {
 
     static func module() -> UIViewController {
         let router = SecuritySettingsRouter()
-        let interactor = SecuritySettingsInteractor(localStorage: App.shared.localStorage, wordsManager: App.shared.wordsManager, systemInfoManager: App.shared.systemInfoManager)
+        let interactor = SecuritySettingsInteractor(localStorage: App.shared.localStorage, authManager: App.shared.authManager, wordsManager: App.shared.wordsManager, systemInfoManager: App.shared.systemInfoManager)
         let presenter = SecuritySettingsPresenter(router: router, interactor: interactor)
         let view = SecuritySettingsViewController(delegate: presenter)
 

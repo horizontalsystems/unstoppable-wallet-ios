@@ -4,38 +4,43 @@ class WalletManager {
     private let disposeBag = DisposeBag()
 
     private let walletFactory: IWalletFactory
-    private let wordsManager: IWordsManager
+    private let authManager: IAuthManager
     private let coinManager: ICoinManager
 
     private(set) var wallets: [Wallet] = []
     let walletsUpdatedSignal = Signal()
 
-    init(walletFactory: IWalletFactory, wordsManager: IWordsManager, coinManager: ICoinManager) {
+    init(walletFactory: IWalletFactory, authManager: IAuthManager, coinManager: ICoinManager) {
         self.walletFactory = walletFactory
-        self.wordsManager = wordsManager
+        self.authManager = authManager
         self.coinManager = coinManager
 
-        Observable.combineLatest(coinManager.coinsObservable, wordsManager.authDataObservable)
-                { coins, authData -> ([Coin], AuthData) in
-                    return (coins, authData)
-                }
-                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
-                .observeOn(MainScheduler.instance)
-                .subscribe(onNext: { [weak self] coins, authData in
-                    self?.handle(coins: coins, authData: authData)
-                })
-                .disposed(by: disposeBag)
+        initWallets()
     }
 
-    private func handle(coins: [Coin], authData: AuthData) {
-        wallets = coins.compactMap { coin in
+}
+
+extension WalletManager: IWalletManager {
+
+    func initWallets() {
+        guard let authData = authManager.authData else {
+            return
+        }
+
+        wallets = coinManager.coins.compactMap { coin in
             wallets.first(where: { $0.coinCode == coin.code }) ?? walletFactory.wallet(forCoin: coin, authData: authData)
         }
 
         walletsUpdatedSignal.notify()
     }
 
-}
+    func clearWallets() {
+        for wallet in wallets {
+            wallet.adapter.clear()
+        }
 
-extension WalletManager: IWalletManager {
+        wallets = []
+        walletsUpdatedSignal.notify()
+    }
+
 }
