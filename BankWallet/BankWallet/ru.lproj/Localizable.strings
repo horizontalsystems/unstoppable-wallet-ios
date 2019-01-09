@@ -129,7 +129,7 @@
 
 // Settings -> Manage Wallet
 
-"settings_manage_wallet.title" = "Manage Coins";
+"settings_manage_wallet.title" = "Wallets";
 
 "settings_manage_wallet.remove_button" = "Откл.";
 
@@ -158,7 +158,7 @@
 "set_pin.title" = "Код Доступа";
 "set_pin.info" = "Ваш код будет использоваться для разблокировки вашего кошелька и отправки денег";
 "set_pin.confirm.info" = "Подтвердить";
-"set_pin.wrong_confirmation" = "Pin did not match. Try again";
+"set_pin.wrong_confirmation" = "Passcode did not match. Try again";
 
 // Edit PIN
 
