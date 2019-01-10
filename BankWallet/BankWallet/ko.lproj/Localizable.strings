@@ -5,50 +5,50 @@
 "coin.BCHt" = "Bitcoin Cash T";
 "coin.ETHt" = "Ethereum T";
 
-"alert.ok" = "OK";
-"alert.cancel" = "Cancel";
-"alert.copied" = "Copied";
-"alert.confirm" = "Confirm";
+"alert.ok" = "확인";
+"alert.cancel" = "취소";
+"alert.copied" = "복사됨";
+"alert.confirm" = "확인";
 
-"biometric_usage_reason" = "Unlock wallet";
+"biometric_usage_reason" = "지갑 잠금 해제";
 
 // Access Camera
 
-"access_camera.message" = "Bank needs access to your camera to scan QR code.\n\nGo to Settings - > Bank and allow access to Camera.";
-"access_camera.settings" = "Settings";
-"access_camera.cancel" = "Cancel";
+"access_camera.message" = "은행이 QR 코드를 스캔하기 위해서 당신의 카메라에 대한 접근의 허가를 요구합니다. \n설정으로 가서 - > 은행 그리고 카메라에 대한 접근을 허용합니다.";
+"access_camera.settings" = "설정";
+"access_camera.cancel" = "취소";
 
 // Guest Page
 
 "guest.title" = "Bank Wallet";
 "guest.subtitle" = "Decentralized App";
-"guest.create_wallet" = "New Wallet";
-"guest.restore_wallet" = "Restore Wallet";
+"guest.create_wallet" = "새 지갑";
+"guest.restore_wallet" = "지갑 복원";
 
 // Restore
 
-"restore.title" = "Restore";
-"restore.description" = "Enter Secret Key  ";
-"restore.done" = "Done";
-"restore.cancel" = "Cancel";
-"restore.validation_failed" = "Incorrect Secret Key";
+"restore.title" = "복구";
+"restore.description" = "비밀 키를 입력  ";
+"restore.done" = "완료";
+"restore.cancel" = "취소";
+"restore.validation_failed" = "잘못 된 비밀 키";
 
 // Backup
 
-"backup.intro.title" = "Backup";
-"backup.intro.subtitle" = "Your secret key is the only way to restore your wallet and funds if your phone is ever lost, stolen, broken, or upgraded.\n\nIt consists of 12 words. Store it safely offline.";
-"backup.intro.later" = "Later";
-"backup.intro.backup_now" = "Backup";
+"backup.intro.title" = "백업";
+"backup.intro.subtitle" = "비밀 키는 귀하의 휴대 전화를 분실, 도난, 고장, 또는 업그레이드 하는 경우 당신의 지갑과 자금을 복원 하는 유일한 방법입니다.\n\n12 단어로 구성 됩니다. 안전하게 오프라인으로 저장하세요.";
+"backup.intro.later" = "나중에";
+"backup.intro.backup_now" = "백업";
 
-"backup.words.title" = "Secret Key";
-"backup.words.back" = "Back";
-"backup.words.proceed" = "Next";
+"backup.words.title" = "비밀 키";
+"backup.words.back" = "뒤로";
+"backup.words.proceed" = "다음";
 
-"backup.confirmation.title" = "Check ...";
-"backup.confirmation.description" = "Enter words from your secret key";
-"backup.confirmation.failure_alert.text" = "Words do not match";
-"backup.confirmation.done_button" = "Done";
-"backup.confirmation.understand" = "I understand that my wallet and tokens are held securely on this device only and not any servers.";
+"backup.confirmation.title" = "확인 중...";
+"backup.confirmation.description" = "비밀 키에서 단어를 입력";
+"backup.confirmation.failure_alert.text" = "암호가 일치 하지 않습니다.";
+"backup.confirmation.done_button" = "완료";
+"backup.confirmation.understand" = "나는 내 지갑과 토큰이 다른 서버가 아닌 이 장치에만 안전하게 존재하고 있음을 이해한다.";
 "backup.confirmation.delete_app_warn" = "I understand that if this app is moved to another device, deleted or malfunctions, my wallet can be only recovered with the Secret Key that I have just written down and saved in a secure place.";
 
 // Balance
