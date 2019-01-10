@@ -10,6 +10,7 @@ class BalanceViewItemFactory {
         }
 
         return BalanceViewItem(
+                title: item.title,
                 coinValue: CoinValue(coinCode: item.coinCode, value: item.balance),
                 exchangeValue: exchangeValue,
                 currencyValue: currencyValue,

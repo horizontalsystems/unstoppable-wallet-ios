@@ -193,7 +193,7 @@ class BalanceCell: UITableViewCell {
             payButton.state = .disabled
         }
 
-        nameLabel.text = "coin.\(item.coinValue.coinCode)".localized
+        nameLabel.text = item.title.localized
 
         if let value = item.exchangeValue, let formattedValue = ValueFormatter.instance.format(currencyValue: value, shortFractionLimit: 100) {
             rateLabel.text = "balance.rate_per_coin".localized(formattedValue, item.coinValue.coinCode)
