@@ -1,8 +1,6 @@
 import RxSwift
 
 class WalletManager {
-    private let disposeBag = DisposeBag()
-
     private let walletFactory: IWalletFactory
     private let authManager: IAuthManager
     private let coinManager: ICoinManager
