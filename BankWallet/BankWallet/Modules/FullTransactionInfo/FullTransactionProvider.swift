@@ -20,9 +20,7 @@ class FullTransactionProvider {
 extension FullTransactionProvider: IFullTransactionInfoProvider {
 
     func retrieveTransactionInfo(transactionHash: String) -> Observable<FullTransactionRecord?> {
-        let url = adapter.url
-
-        var observable = apiManager.getJSON(url: url + transactionHash, parameters: nil)
+        var observable = apiManager.getJSON(url: adapter.apiUrl + transactionHash, parameters: nil)
 
         if async {
             observable = observable.subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background)).observeOn(MainScheduler.instance)

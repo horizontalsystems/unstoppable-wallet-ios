@@ -189,6 +189,11 @@ protocol IFullTransactionInfoProvider {
     func retrieveTransactionInfo(transactionHash: String) -> Observable<FullTransactionRecord?>
 }
 
+protocol IFullTransactionInfoAdapter {
+    var apiUrl: String { get }
+    func convert(json: [String: Any]) -> FullTransactionRecord?
+}
+
 protocol IRateNetworkManager {
     func getLatestRate(coinCode: String, currencyCode: String) -> Observable<LatestRate>
     func getRate(coinCode: String, currencyCode: String, date: Date) -> Observable<Double>
@@ -253,6 +258,10 @@ protocol ITransactionRateSyncer {
 protocol IPasteboardManager {
     var value: String? { get }
     func set(value: String)
+}
+
+protocol IUrlManager {
+    func open(url: String, from controller: UIViewController?)
 }
 
 protocol ITransactionViewItemFactory {

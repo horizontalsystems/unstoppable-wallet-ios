@@ -6,6 +6,7 @@ class App {
     private let fallbackLanguage = "en"
 
     let pasteboardManager: IPasteboardManager
+    let urlManager: IUrlManager
 
     let realmFactory: IRealmFactory
 
@@ -53,6 +54,7 @@ class App {
 
     init() {
         pasteboardManager = PasteboardManager()
+        urlManager = UrlManager(inApp: true)
 
         realmFactory = RealmFactory()
 

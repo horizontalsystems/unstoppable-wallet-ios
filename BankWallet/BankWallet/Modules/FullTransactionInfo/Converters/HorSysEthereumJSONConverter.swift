@@ -1,6 +1,22 @@
 import Foundation
 import ObjectMapper
 
+class HorSysEthereumJSONConverter: IEthereumJSONConverter {
+    var resource: String
+    let apiUrl: String
+    let url: String
+
+    init(resource: String, apiUrl: String, url: String) {
+        self.resource = resource
+        self.apiUrl = apiUrl
+        self.url = url
+    }
+
+    func convert(json: [String: Any]) -> IEthereumTxResponse? {
+        return try? HorSysEthereumTxResponse(JSONObject: json)
+    }
+}
+
 class HorSysEthereumTxResponse: IEthereumTxResponse, ImmutableMappable {
     var txId: String?
     var blockTime: Int?
@@ -12,6 +28,7 @@ class HorSysEthereumTxResponse: IEthereumTxResponse, ImmutableMappable {
     var gasPrice: Double?
     var gasUsed: Double?
     var gasLimit: Double?
+    var fee: Double?
     var value: Double?
 
     var nonce: Int?
@@ -37,31 +54,6 @@ class HorSysEthereumTxResponse: IEthereumTxResponse, ImmutableMappable {
         nonce = try? map.value("tx.nonce")
         to = try? map.value("tx.to")
         from = try? map.value("tx.from")
-
-
-//        if let fee: Double = try? map.value("data.fee"), let size: Int = try? map.value("data.size") {
-//            self.fee = fee / btcRate
-//            self.size = size
-//            feePerByte = fee / Double(size)
-//        }
-//        if let vInputs: [[String: Any]] = try? map.value("data.inputs") {
-//            vInputs.forEach { input in
-//                if let value = input["prev_value"] as? Double {
-//                    let address = (input["prev_addresses"] as? [String])?.first
-//
-//                    inputs.append((value: value / btcRate, address: address))
-//                }
-//            }
-//        }
-//        if let vOutputs: [[String: Any]] = try? map.value("data.outputs") {
-//            vOutputs.forEach { output in
-//                if let value = output["value"] as? Double {
-//                    let address = (output["addresses"] as? [String])?.first
-//
-//                    outputs.append((value: value / btcRate, address: address))
-//                }
-//            }
-//        }
     }
 
 }

@@ -6,9 +6,8 @@ import RxSwift
 enum TestError: Int, Error { case error = 1 }
 
 class FullTransactionInfoProviderTests: XCTestCase {
-    private var mockDelegate: MockIFullTransactionInfoProviderDelegate!
     private var mockApiManager: MockIJSONApiManager!
-    private var mockFullTransactionHelper: MockIFullTransactionHelper!
+    private var mockAdapter: MockIFullTransactionInfoAdapter!
 
     private var provider: FullTransactionProvider!
     private var transactionHash: String!
@@ -33,31 +32,24 @@ class FullTransactionInfoProviderTests: XCTestCase {
             )
         ])
 
-        mockDelegate = MockIFullTransactionInfoProviderDelegate()
-        stub(mockDelegate) { mock in
-            when(mock.didReceiveTransactionInfo(record: any())).thenDoNothing()
-            when(mock.didReceiveError(error: any())).thenDoNothing()
-        }
         mockApiManager = MockIJSONApiManager()
         stub(mockApiManager) { mock in
-            when(mock.getJSON(path: any(), parameters: any())).thenReturn(Observable.just([:]))
+            when(mock.getJSON(url: any(), parameters: any())).thenReturn(Observable.just([:]))
         }
-        mockFullTransactionHelper = MockIFullTransactionHelper()
-        stub(mockFullTransactionHelper) { mock in
-            when(mock.map(json: any())).thenReturn(transactionRecord)
-            when(mock.path.get).thenReturn(path)
+        mockAdapter = MockIFullTransactionInfoAdapter()
+        stub(mockAdapter) { mock in
+            when(mock.url.get).thenReturn(path)
+            when(mock.convert(json: any())).thenReturn(transactionRecord)
         }
-        provider = FullTransactionProvider(apiManager: mockApiManager, path: path, transactionHelper: mockFullTransactionHelper, async: false)
-        provider.delegate = mockDelegate
+
+        provider = FullTransactionProvider(apiManager: mockApiManager, adapter: mockAdapter, async: false)
     }
 
     override func tearDown() {
         transactionHash = nil
         transactionRecord = nil
 
-        mockDelegate = nil
         mockApiManager = nil
-        mockFullTransactionHelper = nil
 
         provider = nil
 
@@ -65,22 +57,24 @@ class FullTransactionInfoProviderTests: XCTestCase {
     }
 
     func testRetrieveTransactionInfo() {
-        provider.retrieveTransactionInfo(transactionHash: transactionHash)
-        waitForMainQueue()
+        let _ = provider.retrieveTransactionInfo(transactionHash: transactionHash)
 
-        verify(mockDelegate).didReceiveTransactionInfo(record: equal(to: transactionRecord))
+        verify(mockApiManager).getJSON(url: equal(to: "test_url_path" + transactionHash), parameters: any())
     }
 
-    func testError() {
-        let error = TestError.error
+    func testRetrieveMapping() {
+        let jsonObservable = PublishSubject<[String: Any]>()
         stub(mockApiManager) { mock in
-            when(mock.getJSON(path: any(), parameters: any())).thenReturn(Observable.error(error))
+            when(mock.getJSON(url: any(), parameters: any())).thenReturn(jsonObservable)
         }
-        provider.retrieveTransactionInfo(transactionHash: transactionHash)
+
+        let observable = provider.retrieveTransactionInfo(transactionHash: transactionHash)
+        _ = observable.subscribe()
+
+        jsonObservable.onNext([:])
         waitForMainQueue()
 
-        verify(mockDelegate).didReceiveError(error: any())
-        verifyNoMoreInteractions(mockDelegate)
+        verify(mockAdapter).convert(json: any())
     }
 
 }

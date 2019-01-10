@@ -41,6 +41,15 @@ extension FullTransactionInfoPresenter: IFullTransactionInfoViewDelegate {
         return state.transactionRecord?.sections[section]
     }
 
+    func onTap(item: FullTransactionItem) {
+        interactor.onTap(item: item)
+    }
+
+    func onTapResourceCell() {
+        if let url = state.transactionRecord?.url {
+            router.open(url: url + state.transactionHash)
+        }
+    }
 }
 
 extension FullTransactionInfoPresenter: IFullTransactionInfoInteractorDelegate {
@@ -49,6 +58,18 @@ extension FullTransactionInfoPresenter: IFullTransactionInfoInteractorDelegate {
         state.set(transactionRecord: transactionRecord)
         view?.hideLoading()
         view?.reload()
+    }
+
+    func onError() {
+
+    }
+
+    func onCopied() {
+        view?.showCopied()
+    }
+
+    func onOpen(url: String) {
+        router.open(url: url)
     }
 
 }

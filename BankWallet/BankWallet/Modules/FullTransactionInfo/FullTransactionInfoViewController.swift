@@ -46,8 +46,6 @@ class FullTransactionInfoViewController: UIViewController, SectionsDataSource {
         tableView.separatorColor = SettingsTheme.separatorColor
         tableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: FullTransactionInfoTheme.bottomBarHeight))
 
-//        tableView.separatorInset = UIEdgeInsets(top: 0, left: .greatestFiniteMagnitude, bottom: 0, right: 0)
-
         let blurEffect = UIBlurEffect(style: AppTheme.blurStyle)
         let holderView = UIVisualEffectView(effect: blurEffect)
         holderView.backgroundColor = .clear
@@ -147,12 +145,11 @@ class FullTransactionInfoViewController: UIViewController, SectionsDataSource {
     }
 
     func onTap(item: FullTransactionItem) {
-        print("copy data")
-        showCopied()
+        delegate.onTap(item: item)
     }
 
     func onTapResourceCell() {
-        print("resource tapped!")
+        delegate.onTapResourceCell()
     }
 
     @objc func onClose() {

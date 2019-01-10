@@ -33,16 +33,22 @@ class FullTransactionInfoPresenterTests: XCTestCase {
             when(mock.showLoading()).thenDoNothing()
             when(mock.hideLoading()).thenDoNothing()
             when(mock.reload()).thenDoNothing()
+            when(mock.showCopied()).thenDoNothing()
         }
         mockRouter = MockIFullTransactionInfoRouter()
+        stub(mockRouter) { mock in
+            when(mock.open(url: any())).thenDoNothing()
+        }
         mockInteractor = MockIFullTransactionInfoInteractor()
         stub(mockInteractor) { mock in
             when(mock.retrieveTransactionInfo(transactionHash: any())).thenDoNothing()
+            when(mock.onTap(item: any())).thenDoNothing()
         }
         transactionHash = "test_hash"
         mockState = MockIFullTransactionInfoState()
         stub(mockState) { mock in
             when(mock.transactionHash.get).thenReturn(transactionHash)
+            when(mock.transactionRecord.get).thenReturn(transactionRecord)
             when(mock.set(transactionRecord: any())).thenDoNothing()
         }
         presenter = FullTransactionInfoPresenter(interactor: mockInteractor, router: mockRouter, state: mockState)
@@ -76,4 +82,29 @@ class FullTransactionInfoPresenterTests: XCTestCase {
         verify(mockView).reload()
     }
 
+    func testOnTap() {
+        let item = transactionRecord.sections[0].items[0]
+        presenter.onTap(item: item)
+
+        verify(mockInteractor).onTap(item: equal(to: item))
+    }
+
+    func testOnTapResourceCell() {
+        presenter.onTapResourceCell()
+
+        verify(mockRouter).open(url: equal(to: "test_url" + transactionHash))
+    }
+
+    func onCopied() {
+        presenter.onCopied()
+
+        verify(mockView).showCopied()
+    }
+
+    func onOpenUrl() {
+        let url = "test_url"
+        presenter.onOpen(url: url)
+
+        verify(mockRouter).open(url: equal(to: url))
+    }
 }

@@ -1,10 +1,12 @@
 import XCTest
 import Cuckoo
+import RxSwift
 @testable import Bank_Dev_T
 
 class FullTransactionInfoInteractorTests: XCTestCase {
     private var mockProvider: MockIFullTransactionInfoProvider!
     private var mockDelegate: MockIFullTransactionInfoInteractorDelegate!
+    private var mockPasteboardManager: MockIPasteboardManager!
 
     private var interactor: FullTransactionInfoInteractor!
     private var transactionHash: String!
@@ -30,15 +32,21 @@ class FullTransactionInfoInteractorTests: XCTestCase {
 
         mockProvider = MockIFullTransactionInfoProvider()
         stub(mockProvider) { mock in
-            when(mock.retrieveTransactionInfo(transactionHash: any())).thenDoNothing()
-            when(mock.delegate.set(any())).thenDoNothing()
+            when(mock.retrieveTransactionInfo(transactionHash: any())).thenReturn(Observable.just(transactionRecord))
         }
         mockDelegate = MockIFullTransactionInfoInteractorDelegate()
         stub(mockDelegate) { mock in
             when(mock.didReceive(transactionRecord: any())).thenDoNothing()
+            when(mock.onError()).thenDoNothing()
+            when(mock.onCopied()).thenDoNothing()
+            when(mock.onOpen(url: any())).thenDoNothing()
+        }
+        mockPasteboardManager = MockIPasteboardManager()
+        stub(mockPasteboardManager) { mock in
+            when(mock.set(value: any())).thenDoNothing()
         }
 
-        interactor = FullTransactionInfoInteractor(transactionProvider: mockProvider)
+        interactor = FullTransactionInfoInteractor(transactionProvider: mockProvider, pasteboardManager: mockPasteboardManager)
         interactor.delegate = mockDelegate
     }
 
@@ -47,6 +55,7 @@ class FullTransactionInfoInteractorTests: XCTestCase {
         transactionRecord = nil
 
         mockProvider = nil
+        mockPasteboardManager = nil
 
         interactor = nil
 
@@ -55,14 +64,72 @@ class FullTransactionInfoInteractorTests: XCTestCase {
 
     func testRetrieve() {
         interactor.retrieveTransactionInfo(transactionHash: transactionHash)
+        waitForMainQueue()
 
         verify(mockProvider).retrieveTransactionInfo(transactionHash: transactionHash)
+        verify(mockDelegate).didReceive(transactionRecord: equal(to: transactionRecord))
+
+        verifyNoMoreInteractions(mockProvider)
+        verifyNoMoreInteractions(mockDelegate)
     }
 
-    func testDidReceive() {
-        interactor.didReceiveTransactionInfo(record: transactionRecord)
+    func testRetrieveNil() {
+        stub(mockProvider) { mock in
+            when(mock.retrieveTransactionInfo(transactionHash: any())).thenReturn(Observable.just(nil))
+        }
 
-        verify(mockDelegate).didReceive(transactionRecord: equal(to: transactionRecord))
+        interactor.retrieveTransactionInfo(transactionHash: transactionHash)
+        waitForMainQueue()
+
+        verify(mockDelegate).onError()
+        verifyNoMoreInteractions(mockDelegate)
+    }
+
+    func testRetrieveError() {
+        enum TestError: Error { case error }
+        let error = TestError.error
+
+        stub(mockProvider) { mock in
+            when(mock.retrieveTransactionInfo(transactionHash: any())).thenReturn(Observable.error(error))
+        }
+
+        interactor.retrieveTransactionInfo(transactionHash: transactionHash)
+        waitForMainQueue()
+
+        verify(mockDelegate).onError()
+        verifyNoMoreInteractions(mockDelegate)
+    }
+
+    func testTapNothing() {
+        let value = "test_nothing"
+        let item = FullTransactionItem(title: "test_item", value: value, clickable: false)
+        interactor.onTap(item: item)
+
+        verifyNoMoreInteractions(mockPasteboardManager)
+        verifyNoMoreInteractions(mockDelegate)
+    }
+
+    func testTapCopy() {
+        let value = "test_copy"
+        let item = FullTransactionItem(title: "test_item", value: value, clickable: true)
+        interactor.onTap(item: item)
+
+        verify(mockPasteboardManager).set(value: equal(to: value))
+        verify(mockDelegate).onCopied()
+
+        verifyNoMoreInteractions(mockPasteboardManager)
+        verifyNoMoreInteractions(mockDelegate)
+    }
+
+    func testTapOpenUrl() {
+        let value = "test_url"
+        let item = FullTransactionItem(title: "test_item", value: nil, clickable: true, url: value)
+        interactor.onTap(item: item)
+
+        verify(mockDelegate).onOpen(url: equal(to: value))
+
+        verifyNoMoreInteractions(mockPasteboardManager)
+        verifyNoMoreInteractions(mockDelegate)
     }
 
 }

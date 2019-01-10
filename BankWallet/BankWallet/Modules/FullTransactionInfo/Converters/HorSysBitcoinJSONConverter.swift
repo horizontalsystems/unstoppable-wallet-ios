@@ -1,9 +1,23 @@
 import Foundation
 import ObjectMapper
 
-class HorSysBitcoinTxResponse: IBitcoinTxResponse, ImmutableMappable {
-    static let btcRate: Double = 100_000_000
+class HorSysBitcoinJSONConverter: IBitcoinJSONConverter {
+    var resource: String
+    let apiUrl: String
+    let url: String
 
+    init(resource: String, apiUrl: String, url: String) {
+        self.resource = resource
+        self.apiUrl = apiUrl
+        self.url = url
+    }
+
+    func convert(json: [String: Any]) -> IBitcoinTxResponse? {
+        return try? HorSysBitcoinTxResponse(JSONObject: json)
+    }
+}
+
+class HorSysBitcoinTxResponse: IBitcoinTxResponse, ImmutableMappable {
     var txId: String?
     var blockTime: Int?
     var blockHeight: Int?

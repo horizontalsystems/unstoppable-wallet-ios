@@ -20,6 +20,9 @@ protocol IFullTransactionInfoViewDelegate {
     func numberOfSections() -> Int
     func numberOfRows(inSection section: Int) -> Int
     func section(_ section: Int) -> FullTransactionSection?
+
+    func onTap(item: FullTransactionItem)
+    func onTapResourceCell()
 }
 
 protocol IFullTransactionInfoState {
@@ -31,11 +34,18 @@ protocol IFullTransactionInfoState {
 
 protocol IFullTransactionInfoInteractor {
     func retrieveTransactionInfo(transactionHash: String)
+
+    func onTap(item: FullTransactionItem)
 }
 
 protocol IFullTransactionInfoInteractorDelegate: class {
     func didReceive(transactionRecord: FullTransactionRecord)
+    func onError()
+
+    func onCopied()
+    func onOpen(url: String)
 }
 
 protocol IFullTransactionInfoRouter {
+    func open(url: String)
 }

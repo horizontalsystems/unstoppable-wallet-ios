@@ -3,12 +3,14 @@ import RxSwift
 
 class FullTransactionInfoInteractor {
     private let disposeBag = DisposeBag()
-
-    private var transactionProvider: IFullTransactionInfoProvider
     weak var delegate: IFullTransactionInfoInteractorDelegate?
 
-    init(transactionProvider: IFullTransactionInfoProvider) {
+    private var transactionProvider: IFullTransactionInfoProvider
+    private let pasteboardManager: IPasteboardManager
+
+    init(transactionProvider: IFullTransactionInfoProvider, pasteboardManager: IPasteboardManager) {
         self.transactionProvider = transactionProvider
+        self.pasteboardManager = pasteboardManager
     }
 }
 
@@ -19,21 +21,26 @@ extension FullTransactionInfoInteractor: IFullTransactionInfoInteractor {
             if let record = record {
                 self?.delegate?.didReceive(transactionRecord: record)
             } else {
-                print("Nil")
+                self?.delegate?.onError()
             }
+        }, onError: { [weak self] _ in
+            self?.delegate?.onError()
         }).disposed(by: disposeBag)
     }
 
-}
+    func onTap(item: FullTransactionItem) {
+        guard item.clickable else {
+            return
+        }
 
-//extension FullTransactionInfoInteractor: IFullTransactionInfoProviderDelegate {
-//
-//    func didReceiveTransactionInfo(record: FullTransactionRecord) {
-//        delegate?.didReceive(transactionRecord: record)
-//    }
-//
-//    func didReceiveError(error: Error) {
-//        print("error \(error.localizedDescription)")
-//    }
-//
-//}
+        if let url = item.url {
+            delegate?.onOpen(url: url)
+        }
+
+        if let value = item.value {
+            pasteboardManager.set(value: value)
+            delegate?.onCopied()
+        }
+    }
+
+}

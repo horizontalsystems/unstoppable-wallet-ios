@@ -1,6 +1,22 @@
 import Foundation
 import ObjectMapper
 
+class BlockChairBitcoinJSONConverter: IBitcoinJSONConverter {
+    var resource: String
+    let apiUrl: String
+    let url: String
+
+    init(resource: String, apiUrl: String, url: String) {
+        self.resource = resource
+        self.apiUrl = apiUrl
+        self.url = url
+    }
+
+    func convert(json: [String: Any]) -> IBitcoinTxResponse? {
+        return try? BlockChairBitcoinTxResponse(JSONObject: json)
+    }
+}
+
 class BlockChairBitcoinTxResponse: IBitcoinTxResponse, ImmutableMappable {
     var txId: String?
     var blockTime: Int?
@@ -54,3 +70,4 @@ class BlockChairBitcoinTxResponse: IBitcoinTxResponse, ImmutableMappable {
     }
 
 }
+
