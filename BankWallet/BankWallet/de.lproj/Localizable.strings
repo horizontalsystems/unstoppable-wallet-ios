@@ -38,7 +38,7 @@
 "backup.intro.title" = "Sicherung";
 "backup.intro.subtitle" = "Ihr Offlineschlüssel ist die einzige Möglichkeit, deine Geldbörse wiederherzustellen, falls du dein Smartphone verlierst, austauscht, es gestohlen wird oder kaputtgeht. \n\nEs besteht aus 12 Wörtern. Speich es sicher offline.\n";
 "backup.intro.later" = "Später";
-"backup.intro.backup_now" = "Sicherung";
+"backup.intro.backup_now" = "Backup";
 
 "backup.words.title" = "Offlineschlüssel";
 "backup.words.back" = "Zurück";
@@ -90,7 +90,7 @@
 "tx_info.from_hash" = "Von";
 "tx_info.to_hash" = "An";
 "tx_info.alert_close" = "Schließen";
-"tx_info.button_more" = "Volle Info";
+"tx_info.button_more" = "Einblenden";
 
 // Full Info
 "full_info.title" = "Volle Info";
@@ -112,7 +112,7 @@
 "settings.title" = "Einstellungen";
 "settings.tab_bar_item" = "Einstellungen";
 "settings.security_center" = "Sicherheit";
-"settings.base_currency" = "Basiswährung";
+"settings.base_currency" = "Währung";
 "settings.language" = "Sprache";
 "settings.about" = "Info";
 "settings.light_mode" = "Licht Modus";
@@ -121,7 +121,7 @@
 
 // Settings -> Base Currency
 
-"settings_base_currency.title" = "Basiswährung";
+"settings_base_currency.title" = "Währung";
 
 // Settings -> Language
 
