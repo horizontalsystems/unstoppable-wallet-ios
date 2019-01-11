@@ -95,7 +95,7 @@
 // Full Info
 "full_info.title" = "Full Info";
 "full_info.id" = "ID";
-"full_info.time" = "Time";
+"full_info.time" = "시간";
 "full_info.block" = "Block";
 "full_info.confirmations" = "Confirmations";
 "full_info.total_input" = "Total Input";
@@ -157,7 +157,7 @@
 
 "set_pin.title" = "Passcode";
 "set_pin.info" = "Your passcode will be used to unlock your wallet and send money";
-"set_pin.confirm.info" = "Confirm";
+"set_pin.confirm.info" = "확인";
 "set_pin.wrong_confirmation" = "Passcode did not match. Try again";
 
 // Edit PIN
@@ -165,11 +165,11 @@
 "edit_pin.title" = "Edit Passcode";
 "edit_pin.unlock_info" = "Current Passcode";
 "edit_pin.new_pin_info" = "New Passcode";
-"edit_pin.confirm_info" = "Confirm";
+"edit_pin.confirm_info" = "확인";
 
 // Unlock PIN
 
-"unlock_pin.info" = "Passcode";
+"unlock_pin.info" = "비밀번호";
 "unlock_pin.cant_save_pin" = "아야! 우리는 당신의 암호를 저장할 수 없습니다 저희에 게 가능한 빨리 연락 하시기 바랍니다!";
 "unlock_pin.blocked_until" = "~때까지 사용 안 함: %@";
 
