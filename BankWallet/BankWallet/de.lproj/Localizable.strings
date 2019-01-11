@@ -49,14 +49,14 @@
 "backup.confirmation.failure_alert.text" = "Die Wörter stimmen nicht überein";
 "backup.confirmation.done_button" = "Fertig";
 "backup.confirmation.understand" = "Ich  stimme zu, dass mein Wallet und meinen Token nur auf diesem Gerät verfügbar sind.";
-"backup.confirmation.delete_app_warn" = "Ich verstehe, dass wenn diese app auf ein anderes Gerät verschoben wird oder gelöscht, mein Geldbörse nur mit dem Offlineschlüssel wiederhergestellt werden können, die ich aufgeschrieben und an einem sicheren Ort gespeichert.";
+"backup.confirmation.delete_app_warn" = "Ich stimme zu,  dass bei einer Verschiebung  oder Entfernung dieser App, der Zugang zu meinem Walletkonto nur bei Verwendung den Offlineschlüsseln erfolgt , der sicher gespeichert werden muss.";
 
 // Balance
 
 "balance.title" = "Guthaben";
 "balance.tab_bar_item" = "Guthaben";
 "balance.send" = "Senden";
-"balance.deposit" = "Erhalten";
+"balance.deposit" = "Anfordern";
 "balance.rate_per_coin" = "%@ pro %@";
 
 // Deposit
@@ -80,7 +80,7 @@
 "transactions.title" = "Transaktionen";
 "transactions.tab_bar_item" = "Transaktionen";
 "transactions.filter_all" = "Alle";
-"transactions.empty_text" = "Sie haben nicht die anstehenden oder vergangenen Transaktionen noch.";
+"transactions.empty_text" = "Transaktionsliste ist leer.";
 
 // Transaction Info
 
@@ -111,7 +111,7 @@
 
 "settings.title" = "Einstellungen";
 "settings.tab_bar_item" = "Einstellungen";
-"settings.security_center" = "Sicherheits-Center";
+"settings.security_center" = "Sicherheit";
 "settings.base_currency" = "Basiswährung";
 "settings.language" = "Sprache";
 "settings.about" = "Info";
@@ -142,7 +142,7 @@
 
 // Settings -> Security
 
-"settings_security.title" = "Sicherheits-Center";
+"settings_security.title" = "Sicherheit";
 "settings_security.backup_wallet" = "Geldbörse sichern";
 "settings_security.unlink_from_this_device" = "Verknüpfung mit diesem Gerät aufheben";
 "settings_security.set_pin" = "Code";
