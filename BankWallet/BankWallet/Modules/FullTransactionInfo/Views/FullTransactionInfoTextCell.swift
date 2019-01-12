@@ -3,7 +3,6 @@ import SnapKit
 
 class FullTransactionInfoTextCell: UITableViewCell {
     var titleLabel = UILabel()
-//    var descriptionLabel = UILabel()
     let descriptionView = TransactionInfoDescriptionView()
     var separatorView = UIView()
 

@@ -84,7 +84,7 @@ class BitcoinTransactionInfoAdapter: IFullTransactionInfoAdapter {
         for output in txResponse.outputs {
             if let formatted = ValueFormatter.instance.format(amount: output.value) {
                 let clickable = output.address != nil
-                let address = output.address ?? "not available"
+                let address = output.address ?? "full_info.no_address".localized
                 outputItems.append(FullTransactionItem(title: "\(formatted) \(coinCode)", value: address, clickable: clickable, showExtra: clickable ? .icon : .none))
             }
         }

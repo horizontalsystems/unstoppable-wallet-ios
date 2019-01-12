@@ -8,8 +8,6 @@ protocol IFullTransactionInfoView: class {
 
     func reload()
     func showCopied()
-//
-//    func reload()
 }
 
 protocol IFullTransactionInfoViewDelegate {

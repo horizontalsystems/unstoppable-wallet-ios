@@ -24,7 +24,7 @@ class FullTransactionInfoViewController: UIViewController, SectionsDataSource {
 
         super.init(nibName: nil, bundle: nil)
 
-        errorView = RequestErrorView(title: delegate.providerName, subtitle: "offline", buttonText: "Retry", onTapButton: { [weak self] in
+        errorView = RequestErrorView(title: delegate.providerName, subtitle: "full_info.error.subtitle", buttonText: "full_info.error.retry", onTapButton: { [weak self] in
             self?.onRetry()
         })
     }
