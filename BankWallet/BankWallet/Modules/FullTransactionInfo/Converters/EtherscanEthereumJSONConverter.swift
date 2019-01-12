@@ -3,15 +3,6 @@ import ObjectMapper
 import BigInt
 
 class EtherscanEthereumJSONConverter: IEthereumJSONConverter {
-    var resource: String
-    let apiUrl: String
-    let url: String
-
-    init(resource: String, apiUrl: String, url: String) {
-        self.resource = resource
-        self.apiUrl = apiUrl
-        self.url = url
-    }
 
     func convert(json: [String: Any]) -> IEthereumTxResponse? {
         return try? EtherscanEthereumTxResponse(JSONObject: json)

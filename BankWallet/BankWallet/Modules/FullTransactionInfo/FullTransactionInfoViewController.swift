@@ -24,7 +24,7 @@ class FullTransactionInfoViewController: UIViewController, SectionsDataSource {
 
         super.init(nibName: nil, bundle: nil)
 
-        errorView = RequestErrorView(title: "", subtitle: "offline", buttonText: "Retry", onTapButton: { [weak self] in
+        errorView = RequestErrorView(title: delegate.providerName, subtitle: "offline", buttonText: "Retry", onTapButton: { [weak self] in
             self?.onRetry()
         })
     }
@@ -146,19 +146,18 @@ class FullTransactionInfoViewController: UIViewController, SectionsDataSource {
             }
         }
 
-        if let resource = delegate.resource {
-            let header: ViewState<FullTransactionHeaderView> = .cellType(hash: "resource_\(resource)", binder: { view in
-                view.bind(title: "full_info.subtitle_provider".localized)
-            }, dynamicHeight: { _ in FullTransactionInfoTheme.sectionHeight })
-            sections.append(Section(id: "resource_\(resource)", headerState: header, footerState: .marginColor(height: FullTransactionInfoTheme.sectionEmptyMargin, color: .clear), rows: [
-                Row<SettingsCell>(id: "resource", height: FullTransactionInfoTheme.cellHeight, autoDeselect: true, bind: { cell, _ in
-                    cell.bind(titleIcon: nil, title: resource, titleColor: FullTransactionInfoTheme.resourceTitleColor, showDisclosure: true, last: true)
-                    cell.titleLabel.font = FullTransactionInfoTheme.resourceTitleFont
-                }, action: { [weak self] cell in
-                    self?.onTapResourceCell()
-                })
-            ]))
-        }
+        let providerName = delegate.providerName
+        let header: ViewState<FullTransactionHeaderView> = .cellType(hash: "resource_\(providerName)", binder: { view in
+            view.bind(title: "full_info.subtitle_provider".localized)
+        }, dynamicHeight: { _ in FullTransactionInfoTheme.sectionHeight })
+        sections.append(Section(id: "resource_\(providerName)", headerState: header, footerState: .marginColor(height: FullTransactionInfoTheme.sectionEmptyMargin, color: .clear), rows: [
+            Row<SettingsCell>(id: "resource", height: FullTransactionInfoTheme.cellHeight, autoDeselect: true, bind: { cell, _ in
+                cell.bind(titleIcon: nil, title: providerName, titleColor: FullTransactionInfoTheme.resourceTitleColor, showDisclosure: true, last: true)
+                cell.titleLabel.font = FullTransactionInfoTheme.resourceTitleFont
+            }, action: { [weak self] cell in
+                self?.onTapResourceCell()
+            })
+        ]))
         return sections
     }
 
@@ -179,8 +178,8 @@ class FullTransactionInfoViewController: UIViewController, SectionsDataSource {
     }
 
     @objc func onShare() {
+        delegate.onShare()
     }
-
 }
 
 
@@ -198,10 +197,6 @@ extension FullTransactionInfoViewController: IFullTransactionInfoView {
 
     func showCopied() {
         HudHelper.instance.showSuccess(title: "alert.copied".localized)
-    }
-
-    func setProvider(name: String) {
-        errorView?.set(title: "\(name)")
     }
 
     func reload() {

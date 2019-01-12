@@ -9,10 +9,6 @@ class BitcoinTransactionInfoAdapter: IFullTransactionInfoAdapter {
         self.coinCode = coinCode
     }
 
-    var apiUrl: String {
-        return converter.apiUrl
-    }
-
     func convert(json: [String: Any]) -> FullTransactionRecord? {
         guard let txResponse = converter.convert(json: json) else {
             return nil
@@ -96,6 +92,6 @@ class BitcoinTransactionInfoAdapter: IFullTransactionInfoAdapter {
             sections.append(FullTransactionSection(title: "full_info.subtitle_outputs".localized, items: outputItems))
         }
 
-        return FullTransactionRecord(resource: converter.resource, url: converter.url, sections: sections)
+        return FullTransactionRecord(sections: sections)
     }
 }

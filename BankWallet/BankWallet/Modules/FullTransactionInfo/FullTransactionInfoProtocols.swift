@@ -1,16 +1,10 @@
 import Foundation
 
 protocol IBitcoinJSONConverter {
-    var resource: String { get }
-    var apiUrl: String { get }
-    var url: String { get }
     func convert(json: [String: Any]) -> IBitcoinTxResponse?
 }
 
 protocol IEthereumJSONConverter {
-    var resource: String { get }
-    var apiUrl: String { get }
-    var url: String { get }
     func convert(json: [String: Any]) -> IEthereumTxResponse?
 }
 

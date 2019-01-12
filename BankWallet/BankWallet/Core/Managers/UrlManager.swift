@@ -12,10 +12,8 @@ class UrlManager: IUrlManager {
         guard let  url = URL(string: url) else {
             return
         }
-        if let controller = controller {
-            let configuration = SFSafariViewController.Configuration()
-            configuration.entersReaderIfAvailable = true
-            controller.present(SFSafariViewController(url: url, configuration: configuration), animated: true)
+        if let controller = controller, inApp {
+            controller.present(SFSafariViewController(url: url, configuration: SFSafariViewController.Configuration()), animated: true)
         } else {
             UIApplication.shared.open(url, options: [:], completionHandler: nil)
         }

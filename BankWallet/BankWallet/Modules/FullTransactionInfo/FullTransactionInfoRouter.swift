@@ -17,7 +17,8 @@ extension FullTransactionInfoRouter: IFullTransactionInfoRouter {
     }
 
     func share(value: String) {
-
+        let vc = UIActivityViewController(activityItems: [value], applicationActivities: [])
+        viewController?.present(vc, animated: true, completion: nil)
     }
 
     func close() {
@@ -32,8 +33,9 @@ extension FullTransactionInfoRouter {
         let router = FullTransactionInfoRouter(urlManager: App.shared.urlManager)
         let providerFactory = App.shared.fullTransactionInfoProviderFactory
 
-        let interactor = FullTransactionInfoInteractor(transactionProvider: providerFactory.provider(forCoin: coinCode), reachabilityManager: App.shared.reachabilityManager, pasteboardManager: App.shared.pasteboardManager)
-        let state = FullTransactionInfoState(transactionHash: transactionHash)
+        let provider: IFullTransactionInfoProvider = providerFactory.provider(forCoin: coinCode)
+        let interactor = FullTransactionInfoInteractor(transactionProvider: provider, reachabilityManager: App.shared.reachabilityManager, pasteboardManager: App.shared.pasteboardManager)
+        let state = FullTransactionInfoState(providerName: provider.providerName, url: provider.url, transactionHash: transactionHash)
         let presenter = FullTransactionInfoPresenter(interactor: interactor, router: router, state: state)
         let viewController = FullTransactionInfoViewController(delegate: presenter)
 

@@ -17,9 +17,8 @@ class FullTransactionInfoProviderTests: XCTestCase {
     override func setUp() {
         super.setUp()
 
-        let path = "test_url_path"
         transactionHash = "test_hash"
-        transactionRecord = FullTransactionRecord(resource: "test_record", url: "test_url", sections: [
+        transactionRecord = FullTransactionRecord(sections: [
             FullTransactionSection(title: nil, items: [
                 FullTransactionItem(title: "item1", value: "value1", clickable: false, url: nil, showExtra: .none),
                 FullTransactionItem(title: "item2", value: "value2", clickable: true, url: nil, showExtra: .none)
@@ -38,11 +37,10 @@ class FullTransactionInfoProviderTests: XCTestCase {
         }
         mockAdapter = MockIFullTransactionInfoAdapter()
         stub(mockAdapter) { mock in
-            when(mock.apiUrl.get).thenReturn(path)
             when(mock.convert(json: any())).thenReturn(transactionRecord)
         }
 
-        provider = FullTransactionProvider(apiManager: mockApiManager, adapter: mockAdapter, async: false)
+        provider = FullTransactionProvider(apiManager: mockApiManager, adapter: mockAdapter, providerName: "test_provider", apiUrl: "test_api", url: "test_url", async: false)
     }
 
     override func tearDown() {

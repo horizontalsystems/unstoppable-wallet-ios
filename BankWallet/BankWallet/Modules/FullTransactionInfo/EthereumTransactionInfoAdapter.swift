@@ -9,11 +9,7 @@ class EthereumTransactionInfoAdapter: IFullTransactionInfoAdapter {
         self.coinCode = coinCode
     }
 
-    var apiUrl: String {
-        return converter.apiUrl
-    }
-
-    func convert(json: [String: Any]) -> FullTransactionRecord? {
+   func convert(json: [String: Any]) -> FullTransactionRecord? {
         guard let txResponse = converter.convert(json: json) else {
             return nil
         }
@@ -82,6 +78,6 @@ class EthereumTransactionInfoAdapter: IFullTransactionInfoAdapter {
             sections.append(FullTransactionSection(title: nil, items: inputOutputItems))
         }
 
-        return FullTransactionRecord(resource: converter.resource, url: converter.url, sections: sections)
+        return FullTransactionRecord(sections: sections)
     }
 }

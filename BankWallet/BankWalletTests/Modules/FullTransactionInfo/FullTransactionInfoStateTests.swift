@@ -2,7 +2,7 @@ import XCTest
 import Cuckoo
 @testable import Bank_Dev_T
 
-class FullTransactionInfoDataSourceTests: XCTestCase {
+class FullTransactionInfoStateTests: XCTestCase {
 
     private var state: FullTransactionInfoState!
 
@@ -13,7 +13,7 @@ class FullTransactionInfoDataSourceTests: XCTestCase {
         super.setUp()
 
         transactionHash = "test_hash"
-        transactionRecord = FullTransactionRecord(resource: "test_record", url: "test_url", sections: [
+        transactionRecord = FullTransactionRecord(sections: [
             FullTransactionSection(title: nil, items: [
                 FullTransactionItem(title: "item1", value: "value1", clickable: false, url: nil, showExtra: .none),
                 FullTransactionItem(title: "item2", value: "value2", clickable: true, url: nil, showExtra: .none)
@@ -26,7 +26,7 @@ class FullTransactionInfoDataSourceTests: XCTestCase {
             )
         ])
 
-        state = FullTransactionInfoState(transactionHash: transactionHash)
+        state = FullTransactionInfoState(providerName: "test_name", url: "test_url", transactionHash: transactionHash)
     }
 
     override func tearDown() {

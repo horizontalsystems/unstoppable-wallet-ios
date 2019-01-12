@@ -1,6 +1,9 @@
 import Foundation
 
 class FullTransactionInfoState: IFullTransactionInfoState {
+    let providerName: String
+    let fullUrl: String
+
     let transactionHash: String
     var transactionRecord: FullTransactionRecord?
 
@@ -8,7 +11,9 @@ class FullTransactionInfoState: IFullTransactionInfoState {
         self.transactionRecord = transactionRecord
     }
 
-    init(transactionHash: String) {
+    init(providerName: String, url: String, transactionHash: String) {
+        self.providerName = providerName
+        self.fullUrl = url + transactionHash
         self.transactionHash = transactionHash
     }
 

@@ -18,7 +18,7 @@ class FullTransactionInfoInteractorTests: XCTestCase {
         super.setUp()
 
         transactionHash = "test_hash"
-        transactionRecord = FullTransactionRecord(resource: "test_record", url: "test_url", sections: [
+        transactionRecord = FullTransactionRecord(sections: [
             FullTransactionSection(title: nil, items: [
                 FullTransactionItem(title: "item1", value: "value1", clickable: false, url: nil, showExtra: .none),
                 FullTransactionItem(title: "item2", value: "value2", clickable: true, url: nil, showExtra: .none)

@@ -186,11 +186,13 @@ protocol IAppConfigProvider {
 }
 
 protocol IFullTransactionInfoProvider {
+    var providerName: String { get }
+    var url: String { get }
+
     func retrieveTransactionInfo(transactionHash: String) -> Observable<FullTransactionRecord?>
 }
 
 protocol IFullTransactionInfoAdapter {
-    var apiUrl: String { get }
     func convert(json: [String: Any]) -> FullTransactionRecord?
 }
 

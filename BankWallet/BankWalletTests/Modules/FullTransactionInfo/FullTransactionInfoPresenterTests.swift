@@ -10,12 +10,13 @@ class FullTransactionInfoPresenterTests: XCTestCase {
 
     private var presenter: FullTransactionInfoPresenter!
     private var transactionHash: String!
+    private var fullUrl: String!
     private var transactionRecord: FullTransactionRecord!
 
     override func setUp() {
         super.setUp()
 
-        transactionRecord = FullTransactionRecord(resource: "test_record", url: "test_url", sections: [
+        transactionRecord = FullTransactionRecord(sections: [
             FullTransactionSection(title: nil, items: [
                 FullTransactionItem(title: "item1", value: "value1", clickable: false, url: nil, showExtra: .none),
                 FullTransactionItem(title: "item2", value: "value2", clickable: true, url: nil, showExtra: .none)
@@ -51,9 +52,11 @@ class FullTransactionInfoPresenterTests: XCTestCase {
             when(mock.retryLoadInfo()).thenDoNothing()
         }
         transactionHash = "test_hash"
+        fullUrl = "test_url_with_hash"
         mockState = MockIFullTransactionInfoState()
         stub(mockState) { mock in
             when(mock.transactionHash.get).thenReturn(transactionHash)
+            when(mock.fullUrl.get).thenReturn(fullUrl)
             when(mock.transactionRecord.get).thenReturn(transactionRecord)
             when(mock.set(transactionRecord: any())).thenDoNothing()
         }
@@ -63,6 +66,7 @@ class FullTransactionInfoPresenterTests: XCTestCase {
 
     override func tearDown() {
         transactionRecord = nil
+        fullUrl = nil
 
         mockRouter = nil
         mockInteractor = nil
@@ -98,7 +102,7 @@ class FullTransactionInfoPresenterTests: XCTestCase {
     func testOnTapResourceCell() {
         presenter.onTapResourceCell()
 
-        verify(mockRouter).open(url: equal(to: "test_url" + transactionHash))
+        verify(mockRouter).open(url: equal(to: fullUrl))
     }
 
     func testCopied() {
@@ -170,6 +174,12 @@ class FullTransactionInfoPresenterTests: XCTestCase {
 
         verifyNoMoreInteractions(mockView)
         verifyNoMoreInteractions(mockInteractor)
+    }
+
+    func testOnShare() {
+        presenter.onShare()
+
+        verify(mockRouter).share(value: fullUrl)
     }
 
 }

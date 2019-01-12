@@ -6,7 +6,6 @@ protocol IFullTransactionInfoView: class {
     func showLoading()
     func hideLoading()
 
-    func setProvider(name: String)
     func reload()
     func showCopied()
 //
@@ -16,7 +15,7 @@ protocol IFullTransactionInfoView: class {
 protocol IFullTransactionInfoViewDelegate {
     func viewDidLoad()
 
-    var resource: String? { get }
+    var providerName: String { get }
     func numberOfSections() -> Int
     func numberOfRows(inSection section: Int) -> Int
     func section(_ section: Int) -> FullTransactionSection?
@@ -31,6 +30,9 @@ protocol IFullTransactionInfoViewDelegate {
 protocol IFullTransactionInfoState {
     var transactionRecord: FullTransactionRecord? { get }
     var transactionHash: String { get }
+
+    var providerName: String { get }
+    var fullUrl: String { get }
 
     func set(transactionRecord: FullTransactionRecord)
 }

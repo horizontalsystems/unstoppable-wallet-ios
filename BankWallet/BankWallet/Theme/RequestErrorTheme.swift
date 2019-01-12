@@ -2,7 +2,7 @@ import UIKit
 
 class RequestErrorTheme {
     static var buttonBackground: RespondButton.Style {
-        return [.active: .crypto_Steel20_LightBackground, .selected: .crypto_Steel40_LightGray, .disabled: UIColor.crypto_Steel20_LightBackground]
+        return [.active: .crypto_Steel20_White, .selected: .crypto_Steel40_LightGray, .disabled: UIColor.crypto_Steel20_LightBackground]
     }
     static let buttonBorderColor = UIColor.cryptoSteel20
     static let buttonCornerRadius: CGFloat = 4

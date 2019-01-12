@@ -23,13 +23,11 @@ class FullTransactionInfoPresenter {
 extension FullTransactionInfoPresenter: IFullTransactionInfoViewDelegate {
 
     func viewDidLoad() {
-        view?.setProvider(name: "Data Provider")
-
         tryLoadInfo()
     }
 
-    var resource: String? {
-        return state.transactionRecord?.resource
+    var providerName: String {
+        return state.providerName
     }
 
     func numberOfSections() -> Int {
@@ -53,13 +51,11 @@ extension FullTransactionInfoPresenter: IFullTransactionInfoViewDelegate {
     }
 
     func onTapResourceCell() {
-        if let url = state.transactionRecord?.url {
-            router.open(url: url + state.transactionHash)
-        }
+        router.open(url: state.fullUrl)
     }
 
     func onShare() {
-
+        router.share(value: state.fullUrl)
     }
 
     func onClose() {

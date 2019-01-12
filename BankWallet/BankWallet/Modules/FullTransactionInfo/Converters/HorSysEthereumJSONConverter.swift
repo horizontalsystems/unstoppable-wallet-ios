@@ -3,15 +3,6 @@ import ObjectMapper
 import BigInt
 
 class HorSysEthereumJSONConverter: IEthereumJSONConverter {
-    var resource: String
-    let apiUrl: String
-    let url: String
-
-    init(resource: String, apiUrl: String, url: String) {
-        self.resource = resource
-        self.apiUrl = apiUrl
-        self.url = url
-    }
 
     func convert(json: [String: Any]) -> IEthereumTxResponse? {
         return try? HorSysEthereumTxResponse(JSONObject: json)

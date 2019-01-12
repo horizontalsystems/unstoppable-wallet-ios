@@ -1,13 +1,9 @@
 import Foundation
 
 class FullTransactionRecord {
-    let resource: String
-    let url: String
     let sections: [FullTransactionSection]
 
-    init(resource: String, url: String, sections: [FullTransactionSection]) {
-        self.resource = resource
-        self.url = url
+    init(sections: [FullTransactionSection]) {
         self.sections = sections
     }
 }
