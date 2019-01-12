@@ -14,8 +14,7 @@ class UrlManager: IUrlManager {
         }
         if let controller = controller {
             let configuration = SFSafariViewController.Configuration()
-            configuration.entersReaderIfAvailable = inApp
-            configuration.barCollapsingEnabled = true
+            configuration.entersReaderIfAvailable = true
             controller.present(SFSafariViewController(url: url, configuration: configuration), animated: true)
         } else {
             UIApplication.shared.open(url, options: [:], completionHandler: nil)

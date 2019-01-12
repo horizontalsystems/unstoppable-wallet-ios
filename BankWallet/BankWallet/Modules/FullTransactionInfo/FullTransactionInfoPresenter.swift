@@ -12,17 +12,20 @@ class FullTransactionInfoPresenter {
         self.state = state
     }
 
+    private func tryLoadInfo() {
+        view?.hideError()
+        view?.showLoading()
+
+        interactor.retrieveTransactionInfo(transactionHash: state.transactionHash)
+    }
 }
 
 extension FullTransactionInfoPresenter: IFullTransactionInfoViewDelegate {
 
     func viewDidLoad() {
-        start()
-    }
+        view?.setProvider(name: "Data Provider")
 
-    private func start() {
-        view?.showLoading()
-        interactor.retrieveTransactionInfo(transactionHash: state.transactionHash)
+        tryLoadInfo()
     }
 
     var resource: String? {
@@ -41,6 +44,10 @@ extension FullTransactionInfoPresenter: IFullTransactionInfoViewDelegate {
         return state.transactionRecord?.sections[section]
     }
 
+    func onRetryLoad() {
+        interactor.retryLoadInfo()
+    }
+
     func onTap(item: FullTransactionItem) {
         interactor.onTap(item: item)
     }
@@ -50,6 +57,16 @@ extension FullTransactionInfoPresenter: IFullTransactionInfoViewDelegate {
             router.open(url: url + state.transactionHash)
         }
     }
+
+    func onShare() {
+
+    }
+
+    func onClose() {
+        view?.hideLoading()
+        router.close()
+    }
+
 }
 
 extension FullTransactionInfoPresenter: IFullTransactionInfoInteractorDelegate {
@@ -61,7 +78,14 @@ extension FullTransactionInfoPresenter: IFullTransactionInfoInteractorDelegate {
     }
 
     func onError() {
+        view?.hideLoading()
+        view?.showError()
+    }
 
+    func retryLoadInfo() {
+        if state.transactionRecord == nil {
+            tryLoadInfo()
+        }
     }
 
     func onCopied() {

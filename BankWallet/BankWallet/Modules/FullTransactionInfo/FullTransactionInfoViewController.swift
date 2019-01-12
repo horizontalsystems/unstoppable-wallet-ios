@@ -16,10 +16,17 @@ class FullTransactionInfoViewController: UIViewController, SectionsDataSource {
     private let closeButton = UIButton(frame: .zero)
     private let shareButton = UIButton(frame: .zero)
 
+    private var errorView: RequestErrorView?
+
     init(delegate: IFullTransactionInfoViewDelegate) {
         self.delegate = delegate
 
+
         super.init(nibName: nil, bundle: nil)
+
+        errorView = RequestErrorView(title: "", subtitle: "offline", buttonText: "Retry", onTapButton: { [weak self] in
+            self?.onRetry()
+        })
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -90,6 +97,17 @@ class FullTransactionInfoViewController: UIViewController, SectionsDataSource {
             maker.width.equalTo(shareButton.snp.height)
         }
 
+        if let errorView = errorView {
+            view.addSubview(errorView)
+
+            errorView.snp.makeConstraints { maker in
+                maker.top.leading.equalToSuperview().offset(FullTransactionInfoTheme.errorViewMargin)
+                maker.trailing.equalToSuperview().offset(-FullTransactionInfoTheme.errorViewMargin)
+                maker.bottom.equalTo(toolbar.snp.top).offset(-FullTransactionInfoTheme.errorViewMargin)
+            }
+            errorView.set(hidden: true)
+        }
+
         delegate.viewDidLoad()
     }
 
@@ -153,21 +171,20 @@ class FullTransactionInfoViewController: UIViewController, SectionsDataSource {
     }
 
     @objc func onClose() {
-        HudHelper.instance.hide()
-        dismiss(animated: true)
+        delegate.onClose()
+    }
+
+    func onRetry() {
+        delegate.onRetryLoad()
     }
 
     @objc func onShare() {
-
     }
 
 }
 
 
 extension FullTransactionInfoViewController: IFullTransactionInfoView {
-
-    func show() {
-    }
 
     func showLoading() {
         HudHelper.instance.showSpinner()
@@ -183,8 +200,20 @@ extension FullTransactionInfoViewController: IFullTransactionInfoView {
         HudHelper.instance.showSuccess(title: "alert.copied".localized)
     }
 
+    func setProvider(name: String) {
+        errorView?.set(title: "\(name)")
+    }
+
     func reload() {
         tableView.reload()
+    }
+
+    func showError() {
+        errorView?.set(hidden: false, animated: true)
+    }
+
+    func hideError() {
+        errorView?.set(hidden: true, animated: false)
     }
 
 }

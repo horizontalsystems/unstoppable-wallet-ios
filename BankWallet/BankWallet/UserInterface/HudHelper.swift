@@ -31,6 +31,7 @@ class HudHelper {
     public func showSpinner(title: String? = nil) {
         var customConfig = HUDConfig()
         customConfig.style = .center
+        customConfig.hapticType = nil
 
         HUD.instance.config = customConfig
 

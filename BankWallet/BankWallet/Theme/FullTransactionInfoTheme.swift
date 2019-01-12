@@ -20,4 +20,6 @@ class FullTransactionInfoTheme {
     static let bottomBarHeight: CGFloat = 53
     static let bottomBarTintColor = UIColor.cryptoYellow
     static let bottomHighlightBarTintColor = UIColor.cryptoYellowPressed
+
+    static let errorViewMargin: CGFloat = 24
 }

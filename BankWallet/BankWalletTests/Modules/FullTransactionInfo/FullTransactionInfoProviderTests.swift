@@ -38,7 +38,7 @@ class FullTransactionInfoProviderTests: XCTestCase {
         }
         mockAdapter = MockIFullTransactionInfoAdapter()
         stub(mockAdapter) { mock in
-            when(mock.url.get).thenReturn(path)
+            when(mock.apiUrl.get).thenReturn(path)
             when(mock.convert(json: any())).thenReturn(transactionRecord)
         }
 

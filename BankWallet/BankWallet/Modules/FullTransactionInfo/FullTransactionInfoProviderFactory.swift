@@ -17,7 +17,7 @@ class FullTransactionInfoProviderFactory {
 extension FullTransactionInfoProviderFactory: IFullTransactionInfoProviderFactory {
 
     func provider(forCoin coin: String) -> IFullTransactionInfoProvider {
-        let explorerId = coin.range(of: "ETH") != nil ? "BlockChair.com" : "HorizontalSystems.xyz"
+        let explorerId = "HorizontalSystems.xyz"
 
         var adapter: IFullTransactionInfoAdapter
         if coin.range(of: "BTC") != nil {
@@ -64,7 +64,7 @@ extension FullTransactionInfoProviderFactory: IFullTransactionInfoProviderFactor
             let converter: IEthereumJSONConverter
             if explorerId == "Etherscan.io" {
                 let apiUrl = appConfigProvider.testMode ? "http://eth-testnet.horizontalsystems.xyz" : "https://api.etherscan.io/api?module=proxy&action=eth_getTransactionByHash&txhash="
-                let url = appConfigProvider.testMode ? "http://eth-testnet.horizontalsystems.xyz" : "https://etherscan.io/tx/"
+                let url = appConfigProvider.testMode ? "https://ropsten.etherscan.io/tx/" : "https://etherscan.io/tx/"
                 converter = EtherscanEthereumJSONConverter(resource: explorerId, apiUrl: apiUrl, url: url)
             } else if explorerId == "BlockChair.com" {
                 let apiUrl = appConfigProvider.testMode ? "http://eth-testnet.horizontalsystems.xyz" : "https://api.blockchair.com/ethereum/dashboards/transaction/"
@@ -79,35 +79,3 @@ extension FullTransactionInfoProviderFactory: IFullTransactionInfoProviderFactor
     }
 
 }
-
-//        let explorer: IExplorerType
-//                let explorerType = BitcoinExplorerType.horSys
-//        var explorerHelper: IFullTransactionHelper
-//        let host: String
-//
-//        if coin.range(of: "BTC") != nil {
-//            // BTC
-//
-//            switch explorerType {
-//            case .horSys: explorer = BitcoinExplorerType.horSys
-//            case .blockExplorer: explorer = BitcoinExplorerType.blockExplorer
-//            case .btcCom: explorer = BitcoinExplorerType.btcCom
-//            case .blockChair: explorer = BitcoinExplorerType.blockChair
-//            }
-//        } else if coin.range(of: "BCH") != nil {
-//            // BCH
-//            switch explorerType {
-//            case .horSys: explorer = BitcoinCashExplorerType.horSys
-//            case .blockExplorer: explorer = BitcoinCashExplorerType.blockExplorer
-//            case .btcCom: explorer = BitcoinCashExplorerType.btcCom
-//            case .blockChair: explorer = BitcoinCashExplorerType.blockChair
-//            }
-//        } else {
-//            // ETH and ERC20
-//            explorer = EthereumExplorerType.etherScan
-//        }
-//        if explorer is EthereumExplorerType {
-//            return EthereumFullTransactionProvider(apiManager: apiManager, explorerType: explorer, testMode: appConfigProvider.testMode)
-//        }
-//        return BitcoinFullTransactionProvider(apiManager: apiManager, explorerType: explorer, coinCode: coin, testMode: appConfigProvider.testMode)
-//                FullTransactionProvider(apiManager: apiManager, url: host, transactionHelper: explorerHelper, async: true)

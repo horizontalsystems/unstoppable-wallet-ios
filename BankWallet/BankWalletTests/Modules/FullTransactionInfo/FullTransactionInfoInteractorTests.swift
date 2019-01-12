@@ -7,6 +7,7 @@ class FullTransactionInfoInteractorTests: XCTestCase {
     private var mockProvider: MockIFullTransactionInfoProvider!
     private var mockDelegate: MockIFullTransactionInfoInteractorDelegate!
     private var mockPasteboardManager: MockIPasteboardManager!
+    private var mockReachabilityManager: MockIReachabilityManager!
 
     private var interactor: FullTransactionInfoInteractor!
     private var transactionHash: String!
@@ -40,13 +41,19 @@ class FullTransactionInfoInteractorTests: XCTestCase {
             when(mock.onError()).thenDoNothing()
             when(mock.onCopied()).thenDoNothing()
             when(mock.onOpen(url: any())).thenDoNothing()
+            when(mock.retryLoadInfo()).thenDoNothing()
         }
         mockPasteboardManager = MockIPasteboardManager()
         stub(mockPasteboardManager) { mock in
             when(mock.set(value: any())).thenDoNothing()
         }
+        mockReachabilityManager = MockIReachabilityManager()
+        stub(mockReachabilityManager) { mock in
+            when(mock.isReachable.get).thenReturn(true)
+            when(mock.reachabilitySignal.get).thenReturn(Signal())
+        }
 
-        interactor = FullTransactionInfoInteractor(transactionProvider: mockProvider, pasteboardManager: mockPasteboardManager)
+        interactor = FullTransactionInfoInteractor(transactionProvider: mockProvider, reachabilityManager: mockReachabilityManager, pasteboardManager: mockPasteboardManager)
         interactor.delegate = mockDelegate
     }
 
@@ -132,4 +139,20 @@ class FullTransactionInfoInteractorTests: XCTestCase {
         verifyNoMoreInteractions(mockDelegate)
     }
 
+    func retryLoadInfoWithoutConnection() {
+        stub(mockReachabilityManager) { mock in
+            when(mock.isReachable.get).thenReturn(false)
+            when(mock.reachabilitySignal.get).thenReturn(Signal())
+
+        }
+        interactor.retryLoadInfo()
+
+        verifyNoMoreInteractions(mockDelegate)
+    }
+
+    func testRetryLoadInfo() {
+        interactor.retryLoadInfo()
+
+        verify(mockDelegate).retryLoadInfo()
+    }
 }

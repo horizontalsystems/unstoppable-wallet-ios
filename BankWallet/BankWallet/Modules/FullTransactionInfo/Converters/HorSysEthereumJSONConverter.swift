@@ -1,5 +1,6 @@
 import Foundation
 import ObjectMapper
+import BigInt
 
 class HorSysEthereumJSONConverter: IEthereumJSONConverter {
     var resource: String
@@ -48,7 +49,7 @@ class HorSysEthereumTxResponse: IEthereumTxResponse, ImmutableMappable {
         gasUsed = try? map.value("tx.gasUsed")
 
         if let value: String = try? map.value("tx.value") {
-            self.value = Double(value)
+            self.value = NSDecimalNumber(string: value).doubleValue / ethRate
         }
 
         nonce = try? map.value("tx.nonce")

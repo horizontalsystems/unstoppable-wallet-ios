@@ -32,17 +32,23 @@ class FullTransactionInfoPresenterTests: XCTestCase {
         stub(mockView) { mock in
             when(mock.showLoading()).thenDoNothing()
             when(mock.hideLoading()).thenDoNothing()
+            when(mock.showError()).thenDoNothing()
+            when(mock.hideError()).thenDoNothing()
             when(mock.reload()).thenDoNothing()
             when(mock.showCopied()).thenDoNothing()
+            when(mock.setProvider(name: any())).thenDoNothing()
         }
         mockRouter = MockIFullTransactionInfoRouter()
         stub(mockRouter) { mock in
             when(mock.open(url: any())).thenDoNothing()
+            when(mock.share(value: any())).thenDoNothing()
+            when(mock.close()).thenDoNothing()
         }
         mockInteractor = MockIFullTransactionInfoInteractor()
         stub(mockInteractor) { mock in
             when(mock.retrieveTransactionInfo(transactionHash: any())).thenDoNothing()
             when(mock.onTap(item: any())).thenDoNothing()
+            when(mock.retryLoadInfo()).thenDoNothing()
         }
         transactionHash = "test_hash"
         mockState = MockIFullTransactionInfoState()
@@ -95,16 +101,75 @@ class FullTransactionInfoPresenterTests: XCTestCase {
         verify(mockRouter).open(url: equal(to: "test_url" + transactionHash))
     }
 
-    func onCopied() {
+    func testCopied() {
         presenter.onCopied()
 
         verify(mockView).showCopied()
     }
 
-    func onOpenUrl() {
+    func testOpenUrl() {
         let url = "test_url"
         presenter.onOpen(url: url)
 
         verify(mockRouter).open(url: equal(to: url))
     }
+    
+    func testClose() {
+        presenter.onClose()
+        
+        verify(mockView).hideLoading()
+        verify(mockRouter).close()
+    }
+
+    func testShowError() {
+        presenter.onError()
+
+        verify(mockView).hideLoading()
+        verify(mockView).showError()
+    }
+
+    func testOnConnectionRestored() {
+        stub(mockState) { mock in
+            when(mock.transactionHash.get).thenReturn(transactionHash)
+            when(mock.transactionRecord.get).thenReturn(nil)
+            when(mock.set(transactionRecord: any())).thenDoNothing()
+        }
+
+        presenter.retryLoadInfo()
+
+        verify(mockView).hideError()
+        verify(mockView).showLoading()
+        verify(mockInteractor).retrieveTransactionInfo(transactionHash: transactionHash)
+
+        verifyNoMoreInteractions(mockView)
+        verifyNoMoreInteractions(mockInteractor)
+    }
+
+    func testOnConnectionRestoredExistData() {
+        presenter.retryLoadInfo()
+
+        verifyNoMoreInteractions(mockView)
+        verifyNoMoreInteractions(mockInteractor)
+    }
+
+    func testOnRetryLoad() {
+        presenter.onRetryLoad()
+
+        verify(mockInteractor).retryLoadInfo()
+    }
+
+    func testRetryLoadInfo() {
+        stub(mockState) { mock in
+            when(mock.transactionRecord.get).thenReturn(nil)
+        }
+        presenter.retryLoadInfo()
+
+        verify(mockView).hideError()
+        verify(mockView).showLoading()
+        verify(mockInteractor).retrieveTransactionInfo(transactionHash: transactionHash)
+
+        verifyNoMoreInteractions(mockView)
+        verifyNoMoreInteractions(mockInteractor)
+    }
+
 }
