@@ -87,7 +87,7 @@ class ValueFormatter {
         if let string = string {
             for localeIdentifier in Locale.availableIdentifiers {
                 parseFormatter.locale = Locale(identifier: localeIdentifier)
-                if let parsed = parseFormatter.number(from: string) {
+                if let parsed = parseFormatter.number(from: "0\(string)") {
                     return parsed as? Double
                 }
             }
