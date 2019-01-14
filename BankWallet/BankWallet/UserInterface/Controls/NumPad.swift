@@ -4,7 +4,7 @@ import SnapKit
 class NumPad: UICollectionView {
 
     private enum Cell {
-        case number(number: String, letters: String?, action: () -> ())
+        case number(number: String, letters: String?, filled: Bool, action: () -> ())
         case image(image: UIImage?, pressedImage: UIImage?, action: (() -> ())?)
     }
 
@@ -44,16 +44,20 @@ class NumPad: UICollectionView {
             maker.size.equalTo(NumPadTheme.size)
         }
 
-        cells.append(.number(number: "1", letters: style.contains(.letters) ? "" : nil, action: { [weak self] in self?.numPadDelegate?.numPadDidClick(digit: "1") }))
+        let localizedOne = format(number: 1)
+        cells.append(.number(number: localizedOne, letters: style.contains(.letters) ? "" : nil, filled: true, action: { [weak self] in self?.numPadDelegate?.numPadDidClick(digit: localizedOne) }))
         for i in 2...9 {
-            cells.append(.number(number: "\(i)", letters: letters(for: i), action: { [weak self] in self?.numPadDelegate?.numPadDidClick(digit: "\(i)") }))
+            let localizedNumber = format(number: i)
+            cells.append(.number(number: localizedNumber, letters: letters(for: i), filled: true, action: { [weak self] in self?.numPadDelegate?.numPadDidClick(digit: localizedNumber) }))
         }
         if style.contains(.decimal) {
-            cells.append(.image(image: UIImage(named: "Decimal Dot"), pressedImage: UIImage(named: "Decimal Dot"), action: { [weak self] in self?.numPadDelegate?.numPadDidClick(digit: ".") }))
+            let decimalSeparator = ValueFormatter.instance.decimalSeparator
+            cells.append(.number(number: decimalSeparator, letters: nil, filled: false, action: { [weak self] in self?.numPadDelegate?.numPadDidClick(digit: decimalSeparator) }))
         } else {
             cells.append(.image(image: nil, pressedImage: nil, action: nil))
         }
-        cells.append(.number(number: "0", letters: nil, action: { [weak self] in self?.numPadDelegate?.numPadDidClick(digit: "0") }))
+        let localizedZero = format(number: 0)
+        cells.append(.number(number: localizedZero, letters: nil, filled: true, action: { [weak self] in self?.numPadDelegate?.numPadDidClick(digit: localizedZero) }))
         cells.append(.image(image: UIImage(named: "Backspace Icon"), pressedImage: UIImage(named: "Backspace Icon Pressed"), action: { [weak self] in self?.numPadDelegate?.numPadDidClickBackspace() }))
     }
 
@@ -63,6 +67,10 @@ class NumPad: UICollectionView {
 
     func letters(for index: Int) -> String? {
         return style.contains(.letters) ? "numpad_\(index)".localized : nil
+    }
+
+    func format(number: Int) -> String {
+        return ValueFormatter.instance.format(number: number) ?? ""
     }
 
 }
@@ -90,9 +98,9 @@ extension NumPad: UICollectionViewDelegate {
 
     public func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         switch cells[indexPath.item] {
-        case .number(let number, let letters, let action):
+        case .number(let number, let letters, let filled, let action):
             if let cell = cell as? NumPadNumberCell {
-                cell.bind(number: number, letters: letters, onTap: action)
+                cell.bind(number: number, letters: letters, filled: filled, onTap: action)
             }
         case .image(let image, let pressedImage, let action):
             if let cell = cell as? NumPadImageCell {
@@ -122,10 +130,7 @@ class NumPadNumberCell: UICollectionViewCell {
         super.init(frame: frame)
 
         button.borderWidth = NumPadTheme.itemBorderWidth
-        button.borderColor = NumPadTheme.itemBorderColor
         button.cornerRadius = NumPadTheme.itemCornerRadius
-        button.setBackgroundColor(color: NumPadTheme.buttonBackgroundColor, forState: .normal)
-        button.setBackgroundColor(color: NumPadTheme.buttonBackgroundColorHighlighted, forState: .highlighted)
         addSubview(button)
         button.snp.makeConstraints { maker in
             maker.edges.equalToSuperview()
@@ -150,7 +155,17 @@ class NumPadNumberCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func bind(number: String, letters: String?, onTap: @escaping () -> ()) {
+    func bind(number: String, letters: String?, filled: Bool, onTap: @escaping () -> ()) {
+        if filled {
+            button.borderColor = NumPadTheme.itemBorderColor
+            button.setBackgroundColor(color: NumPadTheme.buttonBackgroundColor, forState: .normal)
+            button.setBackgroundColor(color: NumPadTheme.buttonBackgroundColorHighlighted, forState: .highlighted)
+        } else {
+            button.borderColor = .clear
+            button.setBackgroundColor(color: .clear, forState: .normal)
+            button.setBackgroundColor(color: .clear, forState: .highlighted)
+        }
+
         numberLabel.text = number
         lettersLabel.text = letters
         self.onTap = onTap
