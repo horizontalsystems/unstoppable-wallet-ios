@@ -31,6 +31,7 @@ class ValueFormatter {
     private let parseFormatter: NumberFormatter = {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
+        formatter.usesGroupingSeparator = false
         return formatter
     }()
 

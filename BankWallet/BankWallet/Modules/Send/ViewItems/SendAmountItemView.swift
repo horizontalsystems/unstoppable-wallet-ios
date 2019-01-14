@@ -8,7 +8,7 @@ import RxCocoa
 class AmountTextField: UITextField {
 
     override func paste(_ sender: Any?) {
-        if ValueFormatter.instance.parseAnyDecimal(from: UIPasteboard.general.string?.addFallbackZeroForDoubleParsing()) != nil {
+        if ValueFormatter.instance.parseAnyDecimal(from: UIPasteboard.general.string) != nil {
             text = UIPasteboard.general.string
             sendActions(for: .editingChanged)
         }
@@ -105,7 +105,7 @@ class SendAmountItemView: BaseActionItemView {
         inputField.rx.controlEvent(.editingChanged)
                 .subscribe(onNext: { [weak self] _ in
                     var amount: Double = 0
-                    if let doubleAmount = ValueFormatter.instance.parseAnyDecimal(from: self?.inputField.text?.addFallbackZeroForDoubleParsing()) {
+                    if let doubleAmount = ValueFormatter.instance.parseAnyDecimal(from: self?.inputField.text) {
                         amount = doubleAmount
                     }
                     self?.item?.onAmountChanged?(amount)
@@ -157,16 +157,6 @@ class SendAmountItemView: BaseActionItemView {
         } else {
             inputField.insertText(letter)
         }
-    }
-
-}
-
-extension String {
-
-    func addFallbackZeroForDoubleParsing() -> String {
-        var string = self
-        string.insert(Character("0"), at: string.startIndex)
-        return string
     }
 
 }
