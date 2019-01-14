@@ -2,9 +2,7 @@ import UIKit
 import SnapKit
 
 class TransactionInfoDescriptionView: RespondButton {
-    private static let iconImage =  UIImage(named: "Transaction Info Avatar Placeholder")
-    private static let hashImage =  UIImage(named: "Transaction Info Hash Placeholder")
-    let avatarImageView = UIImageView(image: nil)
+    let avatarImageView = UIImageView(image: UIImage(named: "Transaction Info Avatar Placeholder")?.tinted(with: TransactionInfoDescriptionTheme.buttonIconColor))
     let wrapperView = RespondButton()
     let valueLabel = UILabel()
 
@@ -49,20 +47,24 @@ class TransactionInfoDescriptionView: RespondButton {
         valueLabel.font = font
         valueLabel.textColor = color
 
-        avatarImageView.set(hidden: showExtra == .none)
-        var image: UIImage?
-        switch showExtra {
-        case .hash: image = TransactionInfoDescriptionView.hashImage
-        default: image = TransactionInfoDescriptionView.iconImage
-        }
-        avatarImageView.image = image?.tinted(with: TransactionInfoDescriptionTheme.buttonIconColor)
-        avatarImageView.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
-        avatarImageView.setContentHuggingPriority(.defaultHigh, for: .horizontal)
-
         valueLabel.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
         valueLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
 
-        let showImage = showExtra != .none
+        if showExtra == .hash, let value = value {
+            let fullRange = NSRange(location: 0, length: value.count)
+            let attributedText = NSMutableAttributedString(string: "# " + value)
+            attributedText.addAttribute(.font, value: font, range: fullRange)
+            attributedText.addAttribute(.foregroundColor, value: color, range: fullRange)
+            attributedText.addAttribute(.foregroundColor, value: TransactionInfoDescriptionTheme.buttonHashTextColor, range: NSRange(location: 0, length: 1))
+
+            valueLabel.attributedText = attributedText
+        }
+
+        let showImage = showExtra == .icon
+        avatarImageView.set(hidden: !showImage)
+
+        avatarImageView.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
+        avatarImageView.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         avatarImageView.snp.remakeConstraints { maker in
             if !showImage {
                 maker.width.equalTo(0)

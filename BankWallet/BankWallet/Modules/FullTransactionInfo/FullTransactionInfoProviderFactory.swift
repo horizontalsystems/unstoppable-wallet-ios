@@ -1,5 +1,3 @@
-import Foundation
-
 class FullTransactionInfoProviderFactory {
 
     private let apiManager: IJSONApiManager

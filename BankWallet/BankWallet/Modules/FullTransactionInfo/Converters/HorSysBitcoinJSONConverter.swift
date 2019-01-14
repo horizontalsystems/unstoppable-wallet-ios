@@ -1,4 +1,3 @@
-import Foundation
 import ObjectMapper
 
 class HorSysBitcoinJSONConverter: IBitcoinJSONConverter {

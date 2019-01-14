@@ -1,5 +1,3 @@
-import Foundation
-
 class FullTransactionInfoPresenter {
     private let router: IFullTransactionInfoRouter
     private let interactor: IFullTransactionInfoInteractor

@@ -1,5 +1,3 @@
-import Foundation
-
 class FullTransactionInfoState: IFullTransactionInfoState {
     let providerName: String
     let fullUrl: String

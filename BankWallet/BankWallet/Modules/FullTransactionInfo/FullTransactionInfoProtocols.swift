@@ -1,5 +1,3 @@
-import Foundation
-
 protocol IBitcoinJSONConverter {
     func convert(json: [String: Any]) -> IBitcoinTxResponse?
 }

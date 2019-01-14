@@ -1,16 +1,16 @@
 import Foundation
 import GrouviActionSheet
 
-class TransactionCloseItem: BaseButtonItem {
-    override var backgroundStyle: RespondButton.Style { return [RespondButton.State.active: TransactionInfoTheme.closeButtonBackground, RespondButton.State.selected: TransactionInfoTheme.closeButtonBackground] }
-    override var textStyle: RespondButton.Style { return [RespondButton.State.active: TransactionInfoTheme.closeButtonTextColor, RespondButton.State.selected: TransactionInfoTheme.closeButtonTextColorSelected] }
+class TransactionOpenFullInfoItem: BaseButtonItem {
+    override var backgroundStyle: RespondButton.Style { return [RespondButton.State.active: TransactionInfoTheme.openFullInfoButtonBackground, RespondButton.State.selected: TransactionInfoTheme.openFullInfoButtonBackground] }
+    override var textStyle: RespondButton.Style { return [RespondButton.State.active: TransactionInfoTheme.openFullInfoButtonTextColor, RespondButton.State.selected: TransactionInfoTheme.openFullInfoButtonTextColorSelected] }
     override var title: String { return "full_info.title".localized }
 
     init(tag: Int? = nil, hidden: Bool = false, required: Bool = false, onTap: @escaping (() -> ())) {
-        super.init(cellType: TransactionCloseItemView.self, tag: tag, hidden: hidden, required: required)
+        super.init(cellType: TransactionOpenFullInfoItemView.self, tag: tag, hidden: hidden, required: required)
 
         self.onTap = onTap
-        height = TransactionInfoTheme.closeHeight
+        height = TransactionInfoTheme.openFullInfoHeight
         showSeparator = false
     }
 
