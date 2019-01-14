@@ -56,17 +56,6 @@ extension LatestRate: Equatable {
     }
 }
 
-extension Rate {
-    convenience init(coinCode: String, currencyCode: String, value: Double, timestamp: Double) {
-        self.init()
-
-        self.coinCode = coinCode
-        self.currencyCode = currencyCode
-        self.value = value
-        self.timestamp = timestamp
-    }
-}
-
 extension TransactionAddress {
     convenience init(address: String, mine: Bool) {
         self.init()

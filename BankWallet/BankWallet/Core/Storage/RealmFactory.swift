@@ -24,17 +24,12 @@ class RealmFactory {
                             let oldCoin = oldObject!["coin"] as! CoinCode
                             newObject!["coinCode"] = oldCoin
                         }
-                        migration.enumerateObjects(ofType: Rate.className()) { oldObject, newObject in
-                            let oldCoin = oldObject!["coin"] as! CoinCode
-                            newObject!["coinCode"] = oldCoin
-                        }
                     }
 
                 },
                 objectTypes: [
                     TransactionRecord.self,
-                    TransactionAddress.self,
-                    Rate.self
+                    TransactionAddress.self
                 ]
         )
     }

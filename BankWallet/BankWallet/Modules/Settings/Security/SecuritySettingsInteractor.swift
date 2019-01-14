@@ -6,23 +6,25 @@ class SecuritySettingsInteractor {
     weak var delegate: ISecuritySettingsInteractorDelegate?
 
     private let localStorage: ILocalStorage
+    private let authManager: IAuthManager
     private let wordsManager: IWordsManager
     private let systemInfoManager: ISystemInfoManager
 
-    init(localStorage: ILocalStorage, wordsManager: IWordsManager, systemInfoManager: ISystemInfoManager) {
+    init(localStorage: ILocalStorage, authManager: IAuthManager, wordsManager: IWordsManager, systemInfoManager: ISystemInfoManager) {
         self.localStorage = localStorage
+        self.authManager = authManager
         self.wordsManager = wordsManager
         self.systemInfoManager = systemInfoManager
 
-        wordsManager.backedUpSubject
-                .subscribe(onNext: { [weak self] isBackedUp in
-                    self?.onUpdate(isBackedUp: isBackedUp)
+        wordsManager.backedUpSignal
+                .subscribe(onNext: { [weak self] in
+                    self?.onUpdateBackedUp()
                 })
                 .disposed(by: disposeBag)
     }
 
-    private func onUpdate(isBackedUp: Bool) {
-        if isBackedUp {
+    private func onUpdateBackedUp() {
+        if wordsManager.isBackedUp {
             delegate?.didBackup()
         }
     }
@@ -48,8 +50,12 @@ extension SecuritySettingsInteractor: ISecuritySettingsInteractor {
     }
 
     func unlink() {
-        wordsManager.logout()
-        delegate?.didUnlink()
+        do {
+            try authManager.logout()
+            delegate?.didUnlink()
+        } catch {
+            // todo
+        }
     }
 
 }

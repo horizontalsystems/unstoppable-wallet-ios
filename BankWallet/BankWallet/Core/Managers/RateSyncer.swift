@@ -1,41 +1,37 @@
-import Foundation
 import RxSwift
 
 class RateSyncer {
+    private let refreshIntervalInMinutes: Double = 3
+
     private let disposeBag = DisposeBag()
 
-    weak var delegate: IRateSyncerDelegate?
+    private let rateManager: IRateManager
+    private let walletManager: IWalletManager
+    private let currencyManager: ICurrencyManager
+    private let reachabilityManager: IReachabilityManager
 
-    private let networkManager: IRateNetworkManager
-    private let timer: IPeriodicTimer
-    private let async: Bool
+    init(rateManager: IRateManager, walletManager: IWalletManager, currencyManager: ICurrencyManager, reachabilityManager: IReachabilityManager) {
+        self.rateManager = rateManager
+        self.walletManager = walletManager
+        self.currencyManager = currencyManager
+        self.reachabilityManager = reachabilityManager
 
-    init(networkManager: IRateNetworkManager, timer: IPeriodicTimer, async: Bool = true) {
-        self.networkManager = networkManager
-        self.timer = timer
-        self.async = async
+        let scheduler = ConcurrentDispatchQueueScheduler(qos: .background)
+        let timer = Observable<Int>.timer(0, period: refreshIntervalInMinutes * 60, scheduler: scheduler).map { _ in () }
+
+        Observable.merge(walletManager.walletsUpdatedSignal, currencyManager.baseCurrencyUpdatedSignal, reachabilityManager.reachabilitySignal, timer)
+                .subscribeOn(scheduler)
+                .observeOn(scheduler)
+                .subscribe(onNext: { [weak self] in
+                    self?.sync()
+                })
+                .disposed(by: disposeBag)
     }
 
-}
-
-extension RateSyncer: IRateSyncer {
-
-    func sync(coinCodes: [String], currencyCode: String) {
-        for coinCode in coinCodes {
-            var observable = networkManager.getLatestRate(coinCode: coinCode, currencyCode: currencyCode)
-
-            if async {
-                observable = observable.subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background)).observeOn(MainScheduler.instance)
-            }
-
-            observable
-                    .subscribe(onNext: { [weak self] latestRate in
-                        self?.delegate?.didSync(coinCode: coinCode, currencyCode: currencyCode, latestRate: latestRate)
-                    })
-                    .disposed(by: disposeBag)
+    private func sync() {
+        if reachabilityManager.isReachable {
+            rateManager.refreshRates(coinCodes: walletManager.wallets.map { $0.coinCode }, currencyCode: currencyManager.baseCurrency.code)
         }
-
-        timer.schedule()
     }
 
 }

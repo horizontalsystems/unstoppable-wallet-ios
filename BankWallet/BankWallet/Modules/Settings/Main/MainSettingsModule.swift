@@ -31,7 +31,7 @@ protocol IMainSettingsInteractor {
 
 protocol IMainSettingsInteractorDelegate: class {
     func didBackup()
-    func didUpdate(baseCurrency: String)
+    func didUpdateBaseCurrency()
     func didUpdateLightMode()
 }
 

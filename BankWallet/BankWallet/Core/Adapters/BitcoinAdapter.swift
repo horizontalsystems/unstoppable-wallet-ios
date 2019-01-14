@@ -8,24 +8,20 @@ class BitcoinAdapter {
     private let transactionCompletionThreshold = 6
     private let coinRate: Double = pow(10, 8)
 
-    let wordsHash: String
-    let balanceSubject = PublishSubject<Double>()
     let lastBlockHeightSubject = PublishSubject<Int>()
     let transactionRecordsSubject = PublishSubject<[TransactionRecord]>()
-    let stateSubject = PublishSubject<AdapterState>()
-    let progressSubject: BehaviorSubject<Double>
 
-    var state: AdapterState {
-        didSet {
-            stateSubject.onNext(state)
-        }
-    }
+    private let progressSubject: BehaviorSubject<Double>
+
+    private(set) var state: AdapterState
+
+    let balanceUpdatedSignal = Signal()
+    let stateUpdatedSignal = Signal()
 
     init(words: [String], coin: BitcoinKit.Coin, walletId: String) {
-        wordsHash = words.joined()
         bitcoinKit = BitcoinKit(withWords: words, coin: coin, walletId: walletId, minLogLevel: .error)
-        progressSubject = BehaviorSubject(value: 0)
 
+        progressSubject = BehaviorSubject(value: 0)
         state = .syncing(progressSubject: progressSubject)
 
         bitcoinKit.delegate = self
@@ -142,7 +138,7 @@ extension BitcoinAdapter: BitcoinKitDelegate {
     }
 
     func balanceUpdated(bitcoinKit: BitcoinKit, balance: Int) {
-        balanceSubject.onNext(Double(balance) / coinRate)
+        balanceUpdatedSignal.notify()
     }
 
     func lastBlockInfoUpdated(bitcoinKit: BitcoinKit, lastBlockInfo: BlockInfo) {
@@ -152,9 +148,19 @@ extension BitcoinAdapter: BitcoinKitDelegate {
     public func kitStateUpdated(state: BitcoinKit.KitState) {
         switch state {
         case .synced:
-            self.state = .synced
+            if case .synced = self.state {
+                // do nothing
+            } else {
+                self.state = .synced
+                stateUpdatedSignal.notify()
+            }
         case .notSynced:
-            self.state = .notSynced
+            if case .notSynced = self.state {
+                // do nothing
+            } else {
+                self.state = .notSynced
+                stateUpdatedSignal.notify()
+            }
         case .syncing(let progress):
             progressSubject.onNext(progress)
 
@@ -162,6 +168,7 @@ extension BitcoinAdapter: BitcoinKitDelegate {
                 // do nothing
             } else {
                 self.state = .syncing(progressSubject: progressSubject)
+                stateUpdatedSignal.notify()
             }
         }
     }

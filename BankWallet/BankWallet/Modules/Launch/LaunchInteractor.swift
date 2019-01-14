@@ -1,12 +1,12 @@
 class LaunchInteractor {
-    private let wordsManager: IWordsManager
+    private let authManager: IAuthManager
     private let lockManager: ILockManager
     private let pinManager: IPinManager
 
     weak var delegate: ILaunchInteractorDelegate?
 
-    init(wordsManager: IWordsManager, lockManager: ILockManager, pinManager: IPinManager) {
-        self.wordsManager = wordsManager
+    init(authManager: IAuthManager, lockManager: ILockManager, pinManager: IPinManager) {
+        self.authManager = authManager
         self.lockManager = lockManager
         self.pinManager = pinManager
     }
@@ -16,7 +16,7 @@ class LaunchInteractor {
 extension LaunchInteractor: ILaunchInteractor {
 
     func showLaunchModule() {
-        if !wordsManager.isLoggedIn {
+        if !authManager.isLoggedIn {
             delegate?.showGuestModule()
         } else if !App.shared.localStorage.iUnderstand {
             delegate?.showBackupModule()

@@ -124,13 +124,6 @@ class MainSettingsPresenterTests: XCTestCase {
         verify(mockView).setTabItemBadge(count: 0)
     }
 
-    func testDidUpdateBaseCurrency() {
-        let newCurrency = "CHT"
-        presenter.didUpdate(baseCurrency: newCurrency)
-
-        verify(mockView).set(baseCurrency: newCurrency)
-    }
-
     func testReloadAppInterfaceOnLightModeUpdate() {
         presenter.didUpdateLightMode()
         verify(mockRouter).reloadAppInterface()

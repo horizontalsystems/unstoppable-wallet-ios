@@ -1,4 +1,5 @@
 import RealmSwift
+import RxSwift
 
 class RealmStorage {
     private let realmFactory: IRealmFactory
@@ -6,41 +7,6 @@ class RealmStorage {
     init(realmFactory: IRealmFactory) {
         self.realmFactory = realmFactory
     }
-}
-
-extension RealmStorage: IRateStorage {
-
-    func rate(forCoin coinCode: CoinCode, currencyCode: String) -> Rate? {
-        return realmFactory.realm.objects(Rate.self).filter("coinCode = %@ AND currencyCode = %@", coinCode, currencyCode).first
-    }
-
-    func save(latestRate: LatestRate, coinCode: CoinCode, currencyCode: String) {
-        let realm = realmFactory.realm
-
-        try? realm.write {
-            if let rate = realm.objects(Rate.self).filter("coinCode = %@ AND currencyCode = %@", coinCode, currencyCode).first {
-                rate.value = latestRate.value
-                rate.timestamp = latestRate.timestamp
-            } else {
-                let rate = Rate()
-                rate.coinCode = coinCode
-                rate.currencyCode = currencyCode
-                rate.value = latestRate.value
-                rate.timestamp = latestRate.timestamp
-
-                realm.add(rate)
-            }
-        }
-    }
-
-    func clear() {
-        let realm = realmFactory.realm
-
-        try? realm.write {
-            realm.delete(realm.objects(Rate.self))
-        }
-    }
-
 }
 
 extension RealmStorage: ITransactionRecordStorage {

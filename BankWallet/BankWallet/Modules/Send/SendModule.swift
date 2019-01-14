@@ -43,9 +43,12 @@ protocol ISendInteractor {
 
     func copy(address: String)
     func send(userInput: SendUserInput)
+
+    func fetchRate()
 }
 
 protocol ISendInteractorDelegate: class {
+    func didUpdateRate()
     func didSend()
     func didFailToSend(error: Error)
 }
