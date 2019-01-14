@@ -17,6 +17,7 @@ class ValueFormatter {
         let formatter = NumberFormatter()
         formatter.numberStyle = .currency
         formatter.minimumFractionDigits = 2
+        formatter.roundingMode = .down
         return formatter
     }()
 

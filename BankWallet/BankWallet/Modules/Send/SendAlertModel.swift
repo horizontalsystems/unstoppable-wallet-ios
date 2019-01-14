@@ -163,7 +163,7 @@ extension SendAlertModel: ISendView {
         case .coinValue(let coinValue):
             feeItem.bindFee?(ValueFormatter.instance.format(coinValue: coinValue))
         case .currencyValue(let currencyValue):
-            feeItem.bindFee?(ValueFormatter.instance.format(currencyValue: currencyValue))
+            feeItem.bindFee?(ValueFormatter.instance.format(currencyValue: currencyValue).map { return "~\($0)" })
         }
     }
 
@@ -173,7 +173,7 @@ extension SendAlertModel: ISendView {
             case .coinValue(let coinValue):
                 feeItem.bindConvertedFee?(ValueFormatter.instance.format(coinValue: coinValue))
             case .currencyValue(let currencyValue):
-                feeItem.bindConvertedFee?(ValueFormatter.instance.format(currencyValue: currencyValue))
+                feeItem.bindConvertedFee?(ValueFormatter.instance.format(currencyValue: currencyValue).map { return "~\($0)" })
             }
         } else {
             feeItem.bindConvertedFee?(nil)
