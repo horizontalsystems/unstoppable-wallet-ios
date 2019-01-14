@@ -1,5 +1,4 @@
 import UIKit
-import GrouviHUD
 import GrouviExtensions
 
 class BlurManager {
