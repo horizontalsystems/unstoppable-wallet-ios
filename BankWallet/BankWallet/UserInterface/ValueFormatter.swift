@@ -28,11 +28,16 @@ class ValueFormatter {
         return formatter
     }()
 
-    let parseFormatter: NumberFormatter = {
+    private let parseFormatter: NumberFormatter = {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
+        formatter.usesGroupingSeparator = false
         return formatter
     }()
+
+    var decimalSeparator: String {
+        return amountFormatter.decimalSeparator
+    }
 
     func format(coinValue: CoinValue) -> String? {
         coinFormatter.minimumFractionDigits = coinValue.value == 0 ? 2 : 0
@@ -78,13 +83,20 @@ class ValueFormatter {
         return amountFormatter.string(from: amount as NSNumber)
     }
 
-    func formattedInput(string: String?) -> String? {
-        let stringNumber = "0\(string ?? "")"
-        let number = parseFormatter.number(from: stringNumber) as? Double
-        if let number = number {
-            return format(amount: number)
+    func parseAnyDecimal(from string: String?) -> Double? {
+        if let string = string {
+            for localeIdentifier in Locale.availableIdentifiers {
+                parseFormatter.locale = Locale(identifier: localeIdentifier)
+                if let parsed = parseFormatter.number(from: "0\(string)") {
+                    return parsed as? Double
+                }
+            }
         }
         return nil
+    }
+
+    func format(number: Int) -> String? {
+        return amountFormatter.string(from: number as NSNumber)
     }
 
 }

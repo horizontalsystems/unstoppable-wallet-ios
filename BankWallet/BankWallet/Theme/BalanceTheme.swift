@@ -9,9 +9,10 @@ class BalanceTheme {
 
     static let editButtonSideSize: CGFloat = 32
     static let cellBigMargin: CGFloat = 12
-    static let editButtonBackground = UIColor.cryptoSteel20
+    static var editButtonBackground: UIColor { return UIColor.crypto_Steel20_White }
     static let editButtonSelectedBackground = UIColor.cryptoSteel40
     static let cellSmallMargin: CGFloat = 8
+    static let editButtonStrokeColor = UIColor.cryptoSteel20
     static let expandedCellHeight: CGFloat = 138
     static let cellPadding: CGFloat = 8
     static let cellHeight: CGFloat = 80

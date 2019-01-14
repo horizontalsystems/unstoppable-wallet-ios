@@ -14,6 +14,8 @@ class BalanceEditCell: UITableViewCell {
         contentView.backgroundColor = .clear
 
         editButton.cornerRadius = BalanceTheme.editButtonSideSize / 2
+        editButton.layer.borderWidth = 1
+        editButton.layer.borderColor = BalanceTheme.editButtonStrokeColor.cgColor
         editButton.setBackgroundColor(color: BalanceTheme.editButtonBackground, forState: .normal)
         editButton.setBackgroundColor(color: BalanceTheme.editButtonSelectedBackground, forState: .selected)
         editButton.addTarget(self, action: #selector(didTap), for: .touchUpInside)

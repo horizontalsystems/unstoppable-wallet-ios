@@ -4,13 +4,14 @@ PODS:
     - SipHash (~> 1.2)
   - Cuckoo (0.12.0)
   - GRDB.swift (3.6.1)
-  - GrouviActionSheet (1.2.5):
+  - GrouviActionSheet (1.3):
     - GrouviExtensions
     - SnapKit (~> 4.0.0)
-  - GrouviExtensions (1.1.2):
+  - GrouviExtensions (1.2):
     - RxSwift (~> 4.2.0)
     - SnapKit (~> 4.0.0)
-  - GrouviHUD (1.0.3):
+  - GrouviHUD (1.1):
+    - GrouviExtensions
     - RxSwift
     - SnapKit (~> 4.0.0)
   - HSBitcoinKit (0.2.0):
@@ -62,9 +63,9 @@ DEPENDENCIES:
   - BigInt
   - Cuckoo
   - GRDB.swift
-  - GrouviActionSheet (= 1.2.5)
-  - GrouviExtensions (~> 1.1.2)
-  - GrouviHUD (= 1.0.3)
+  - GrouviActionSheet (= 1.3)
+  - GrouviExtensions (~> 1.2)
+  - GrouviHUD (= 1.1)
   - HSBitcoinKit (from `https://github.com/horizontalsystems/bitcoin-kit-ios/`)
   - HSEthereumKit (from `https://github.com/horizontalsystems/ethereum-kit-ios/`)
   - KeychainAccess
@@ -119,9 +120,9 @@ SPEC CHECKSUMS:
   BigInt: 76b5dfdfa3e2e478d4ffdf161aeede5502e2742f
   Cuckoo: d30b6c149e52ffbcfe6b4a9543e4627d08947274
   GRDB.swift: 2ea998984ce0d8b869917e1452b5d87f1ec5e0dd
-  GrouviActionSheet: a966bf187addebab0d00aa9e66083e9112a60af7
-  GrouviExtensions: ae9e74948ff6490184584610b1cff34ee4112a59
-  GrouviHUD: 7a71f6e142724c1a5657084ee35afa9a328ec88d
+  GrouviActionSheet: dd73bd76eaca3d5bb54fa51960f293d4a176e68c
+  GrouviExtensions: 025fe6dbdf9df3015a5a2eddd69cd150b451d578
+  GrouviHUD: e8cc5034679e4f4823ae97d31eb71755bd4cfffa
   HSBitcoinKit: 999eb532a456f757aa0b354f0b9e9e20adf8dc27
   HSCryptoKit: 8679d53083d1136fc128bbf9b040976110ce1491
   HSEthereumKit: 1638d4e6ed49c8086050e6ea837915d3cce405e3
@@ -138,6 +139,6 @@ SPEC CHECKSUMS:
   SipHash: fad90a4683e420c52ef28063063dbbce248ea6d4
   SnapKit: 0de968a9fec17499afa29683b05d0c775b6d1c29
 
-PODFILE CHECKSUM: 8363e63b6ef0912c994ef564613fc4ccfbadc0bf
+PODFILE CHECKSUM: 36e4b1bc0fc3ac83b0ba472a90ce69a64b8f46bc
 
 COCOAPODS: 1.5.3
