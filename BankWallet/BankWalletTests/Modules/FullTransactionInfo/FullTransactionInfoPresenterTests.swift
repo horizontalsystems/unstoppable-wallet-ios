@@ -10,13 +10,15 @@ class FullTransactionInfoPresenterTests: XCTestCase {
 
     private var presenter: FullTransactionInfoPresenter!
     private var transactionHash: String!
+    private var providerName: String!
     private var fullUrl: String!
     private var transactionRecord: FullTransactionRecord!
 
     override func setUp() {
         super.setUp()
 
-        transactionRecord = FullTransactionRecord(sections: [
+        providerName = "test_provider"
+        transactionRecord = FullTransactionRecord(providerName: providerName, sections: [
             FullTransactionSection(title: nil, items: [
                 FullTransactionItem(title: "item1", value: "value1", clickable: false, url: nil, showExtra: .none),
                 FullTransactionItem(title: "item2", value: "value2", clickable: true, url: nil, showExtra: .none)
@@ -33,11 +35,10 @@ class FullTransactionInfoPresenterTests: XCTestCase {
         stub(mockView) { mock in
             when(mock.showLoading()).thenDoNothing()
             when(mock.hideLoading()).thenDoNothing()
-            when(mock.showError()).thenDoNothing()
+            when(mock.showError(providerName: any())).thenDoNothing()
             when(mock.hideError()).thenDoNothing()
             when(mock.reload()).thenDoNothing()
             when(mock.showCopied()).thenDoNothing()
-            when(mock.setProvider(name: any())).thenDoNothing()
         }
         mockRouter = MockIFullTransactionInfoRouter()
         stub(mockRouter) { mock in
@@ -45,18 +46,18 @@ class FullTransactionInfoPresenterTests: XCTestCase {
             when(mock.share(value: any())).thenDoNothing()
             when(mock.close()).thenDoNothing()
         }
+        fullUrl = "test_url_with_hash"
         mockInteractor = MockIFullTransactionInfoInteractor()
         stub(mockInteractor) { mock in
             when(mock.retrieveTransactionInfo(transactionHash: any())).thenDoNothing()
             when(mock.onTap(item: any())).thenDoNothing()
             when(mock.retryLoadInfo()).thenDoNothing()
+            when(mock.url(for: any())).thenReturn(fullUrl)
         }
         transactionHash = "test_hash"
-        fullUrl = "test_url_with_hash"
         mockState = MockIFullTransactionInfoState()
         stub(mockState) { mock in
             when(mock.transactionHash.get).thenReturn(transactionHash)
-            when(mock.fullUrl.get).thenReturn(fullUrl)
             when(mock.transactionRecord.get).thenReturn(transactionRecord)
             when(mock.set(transactionRecord: any())).thenDoNothing()
         }
@@ -67,6 +68,7 @@ class FullTransactionInfoPresenterTests: XCTestCase {
     override func tearDown() {
         transactionRecord = nil
         fullUrl = nil
+        providerName = nil
 
         mockRouter = nil
         mockInteractor = nil
@@ -126,10 +128,10 @@ class FullTransactionInfoPresenterTests: XCTestCase {
     }
 
     func testShowError() {
-        presenter.onError()
+        presenter.onError(providerName: providerName)
 
         verify(mockView).hideLoading()
-        verify(mockView).showError()
+        verify(mockView).showError(providerName: equal(to: providerName))
     }
 
     func testOnConnectionRestored() {

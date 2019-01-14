@@ -1,6 +1,6 @@
 protocol IFullTransactionInfoView: class {
 
-    func showError()
+    func showError(providerName: String?)
     func hideError()
 
     func showLoading()
@@ -13,7 +13,7 @@ protocol IFullTransactionInfoView: class {
 protocol IFullTransactionInfoViewDelegate {
     func viewDidLoad()
 
-    var providerName: String { get }
+    var providerName: String? { get }
     func numberOfSections() -> Int
     func numberOfRows(inSection section: Int) -> Int
     func section(_ section: Int) -> FullTransactionSection?
@@ -29,9 +29,6 @@ protocol IFullTransactionInfoState {
     var transactionRecord: FullTransactionRecord? { get }
     var transactionHash: String { get }
 
-    var providerName: String { get }
-    var fullUrl: String { get }
-
     func set(transactionRecord: FullTransactionRecord)
 }
 
@@ -39,12 +36,13 @@ protocol IFullTransactionInfoInteractor {
     func retrieveTransactionInfo(transactionHash: String)
     func retryLoadInfo()
 
+    func url(for hash: String) -> String
     func onTap(item: FullTransactionItem)
 }
 
 protocol IFullTransactionInfoInteractorDelegate: class {
     func didReceive(transactionRecord: FullTransactionRecord)
-    func onError()
+    func onError(providerName: String?)
 
     func retryLoadInfo()
 

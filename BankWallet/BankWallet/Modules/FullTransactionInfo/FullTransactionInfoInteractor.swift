@@ -38,11 +38,15 @@ extension FullTransactionInfoInteractor: IFullTransactionInfoInteractor {
             if let record = record {
                 self?.delegate?.didReceive(transactionRecord: record)
             } else {
-                self?.delegate?.onError()
+                self?.delegate?.onError(providerName: self?.transactionProvider.providerName)
             }
         }, onError: { [weak self] _ in
-            self?.delegate?.onError()
+            self?.delegate?.onError(providerName: self?.transactionProvider.providerName)
         }).disposed(by: disposeBag)
+    }
+
+    func url(for hash: String) -> String {
+        return transactionProvider.url(for: hash)
     }
 
     func onTap(item: FullTransactionItem) {

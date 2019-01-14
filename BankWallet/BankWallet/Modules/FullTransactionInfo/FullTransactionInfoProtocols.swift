@@ -1,8 +1,16 @@
 protocol IBitcoinJSONConverter {
+    var providerName: String { get }
+    func apiUrl(for hash: String) -> String
+    func url(for hash: String) -> String
+
     func convert(json: [String: Any]) -> IBitcoinTxResponse?
 }
 
 protocol IEthereumJSONConverter {
+    var providerName: String { get }
+    func apiUrl(for hash: String) -> String
+    func url(for hash: String) -> String
+
     func convert(json: [String: Any]) -> IEthereumTxResponse?
 }
 

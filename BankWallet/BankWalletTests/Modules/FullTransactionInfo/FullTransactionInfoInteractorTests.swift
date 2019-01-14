@@ -11,14 +11,16 @@ class FullTransactionInfoInteractorTests: XCTestCase {
 
     private var interactor: FullTransactionInfoInteractor!
     private var transactionHash: String!
+    private var providerName: String!
 
     private var transactionRecord: FullTransactionRecord!
 
     override func setUp() {
         super.setUp()
 
+        providerName = "test_provider"
         transactionHash = "test_hash"
-        transactionRecord = FullTransactionRecord(sections: [
+        transactionRecord = FullTransactionRecord(providerName: providerName, sections: [
             FullTransactionSection(title: nil, items: [
                 FullTransactionItem(title: "item1", value: "value1", clickable: false, url: nil, showExtra: .none),
                 FullTransactionItem(title: "item2", value: "value2", clickable: true, url: nil, showExtra: .none)
@@ -34,11 +36,13 @@ class FullTransactionInfoInteractorTests: XCTestCase {
         mockProvider = MockIFullTransactionInfoProvider()
         stub(mockProvider) { mock in
             when(mock.retrieveTransactionInfo(transactionHash: any())).thenReturn(Observable.just(transactionRecord))
+            when(mock.url(for: any())).thenReturn("test_url")
+            when(mock.providerName.get).thenReturn(providerName)
         }
         mockDelegate = MockIFullTransactionInfoInteractorDelegate()
         stub(mockDelegate) { mock in
             when(mock.didReceive(transactionRecord: any())).thenDoNothing()
-            when(mock.onError()).thenDoNothing()
+            when(mock.onError(providerName: any())).thenDoNothing()
             when(mock.onCopied()).thenDoNothing()
             when(mock.onOpen(url: any())).thenDoNothing()
             when(mock.retryLoadInfo()).thenDoNothing()
@@ -59,6 +63,7 @@ class FullTransactionInfoInteractorTests: XCTestCase {
 
     override func tearDown() {
         transactionHash = nil
+        providerName = nil
         transactionRecord = nil
 
         mockProvider = nil
@@ -88,7 +93,7 @@ class FullTransactionInfoInteractorTests: XCTestCase {
         interactor.retrieveTransactionInfo(transactionHash: transactionHash)
         waitForMainQueue()
 
-        verify(mockDelegate).onError()
+        verify(mockDelegate).onError(providerName: equal(to: providerName))
         verifyNoMoreInteractions(mockDelegate)
     }
 
@@ -103,7 +108,7 @@ class FullTransactionInfoInteractorTests: XCTestCase {
         interactor.retrieveTransactionInfo(transactionHash: transactionHash)
         waitForMainQueue()
 
-        verify(mockDelegate).onError()
+        verify(mockDelegate).onError(providerName: equal(to: providerName))
         verifyNoMoreInteractions(mockDelegate)
     }
 
@@ -154,5 +159,11 @@ class FullTransactionInfoInteractorTests: XCTestCase {
         interactor.retryLoadInfo()
 
         verify(mockDelegate).retryLoadInfo()
+    }
+
+    func testUrlForHash() {
+        let url = interactor.url(for: transactionHash)
+
+        XCTAssertEqual(url, "test_url")
     }
 }

@@ -24,8 +24,8 @@ extension FullTransactionInfoPresenter: IFullTransactionInfoViewDelegate {
         tryLoadInfo()
     }
 
-    var providerName: String {
-        return state.providerName
+    var providerName: String? {
+        return state.transactionRecord?.providerName
     }
 
     func numberOfSections() -> Int {
@@ -49,11 +49,11 @@ extension FullTransactionInfoPresenter: IFullTransactionInfoViewDelegate {
     }
 
     func onTapResourceCell() {
-        router.open(url: state.fullUrl)
+        router.open(url: interactor.url(for: state.transactionHash))
     }
 
     func onShare() {
-        router.share(value: state.fullUrl)
+        router.share(value: interactor.url(for: state.transactionHash))
     }
 
     func onClose() {
@@ -71,9 +71,9 @@ extension FullTransactionInfoPresenter: IFullTransactionInfoInteractorDelegate {
         view?.reload()
     }
 
-    func onError() {
+    func onError(providerName: String?) {
         view?.hideLoading()
-        view?.showError()
+        view?.showError(providerName: providerName)
     }
 
     func retryLoadInfo() {

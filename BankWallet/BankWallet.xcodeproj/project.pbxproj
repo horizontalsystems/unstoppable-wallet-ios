@@ -511,7 +511,7 @@
 		58AAA2421531C80F1D3C0511 /* HorSysBitcoinJSONConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA94D476C4C18FFD07BCF /* HorSysBitcoinJSONConverter.swift */; };
 		58AAA290CD7ABA86FD6A6F65 /* EthereumTransactionInfoAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA01DEF6280C1A0F1DA2D /* EthereumTransactionInfoAdapter.swift */; };
 		58AAA29200B28D92FE706204 /* EthereumTransactionInfoAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA01DEF6280C1A0F1DA2D /* EthereumTransactionInfoAdapter.swift */; };
-		58AAA2B6DE1387076505D7A4 /* FullTransactionProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAD82EF02D5AA6E8ED4CB /* FullTransactionProvider.swift */; };
+		58AAA2B6DE1387076505D7A4 /* FullTransactionInfoProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAD82EF02D5AA6E8ED4CB /* FullTransactionInfoProvider.swift */; };
 		58AAA2DBEA744F59EE0AA2D2 /* RequestErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAF286BB3532AF94E4EB8 /* RequestErrorView.swift */; };
 		58AAA320C8EF4841893AC0BA /* FullTransactionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAC123E3138007B4D6E05 /* FullTransactionHeaderView.swift */; };
 		58AAA33E05D0F609E0B2CBFC /* BlockChairBitcoinJSONConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA51DB2A7D452F2489C77 /* BlockChairBitcoinJSONConverter.swift */; };
@@ -566,12 +566,12 @@
 		58AAAC6F72C64607A3AA707F /* HorSysEthereumJSONConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAE7B19401F859DD71D9C /* HorSysEthereumJSONConverter.swift */; };
 		58AAAC80F629D742B02AC29A /* FullTransactionInfoPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAEA9AB2118A46863AEB5 /* FullTransactionInfoPresenterTests.swift */; };
 		58AAAC932FCD8F3A61640752 /* FullTransactionInfoInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA687FC0253AD175BA756 /* FullTransactionInfoInteractor.swift */; };
-		58AAACA87940BF3CC5401691 /* FullTransactionProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAD82EF02D5AA6E8ED4CB /* FullTransactionProvider.swift */; };
+		58AAACA87940BF3CC5401691 /* FullTransactionInfoProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAD82EF02D5AA6E8ED4CB /* FullTransactionInfoProvider.swift */; };
 		58AAACBED22C4EC16CAB9C7B /* HorSysEthereumJSONConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAE7B19401F859DD71D9C /* HorSysEthereumJSONConverter.swift */; };
 		58AAAD04C6E1A7F1F21E1912 /* BlockExplorerBitcoinJSONConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA5DE9E2BFD516441B426 /* BlockExplorerBitcoinJSONConverter.swift */; };
 		58AAAD4B1F557C9B2BA30681 /* FullTransactionRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAADF00D642CB746C44C51 /* FullTransactionRecord.swift */; };
 		58AAAD8961C7825A809C717E /* BlockExplorerBitcoinJSONConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA5DE9E2BFD516441B426 /* BlockExplorerBitcoinJSONConverter.swift */; };
-		58AAADD4A8BA1090780CEA11 /* FullTransactionProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAD82EF02D5AA6E8ED4CB /* FullTransactionProvider.swift */; };
+		58AAADD4A8BA1090780CEA11 /* FullTransactionInfoProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAD82EF02D5AA6E8ED4CB /* FullTransactionInfoProvider.swift */; };
 		58AAADF6F4A1265FB9B0546C /* EtherscanEthereumJSONConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA0203BE96D0D7E990287 /* EtherscanEthereumJSONConverter.swift */; };
 		58AAAE2E0615EBEF98E58BE8 /* BitcoinTransactionInfoAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA1C151E737B0B32208B4 /* BitcoinTransactionInfoAdapter.swift */; };
 		58AAAF2121BD3562E68A5CB4 /* FullTransactionInfoProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAC944A9DCACFAF1DDA15 /* FullTransactionInfoProtocols.swift */; };
@@ -1365,7 +1365,7 @@
 		58AAAC944A9DCACFAF1DDA15 /* FullTransactionInfoProtocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FullTransactionInfoProtocols.swift; sourceTree = "<group>"; };
 		58AAAC9716B68916B4EA0B9B /* TransactionInfoDescriptionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionInfoDescriptionView.swift; sourceTree = "<group>"; };
 		58AAAC9A4A60E2F1F248F928 /* FullTransactionItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FullTransactionItem.swift; sourceTree = "<group>"; };
-		58AAAD82EF02D5AA6E8ED4CB /* FullTransactionProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FullTransactionProvider.swift; sourceTree = "<group>"; };
+		58AAAD82EF02D5AA6E8ED4CB /* FullTransactionInfoProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FullTransactionInfoProvider.swift; sourceTree = "<group>"; };
 		58AAADF00D642CB746C44C51 /* FullTransactionRecord.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FullTransactionRecord.swift; sourceTree = "<group>"; };
 		58AAAE7B19401F859DD71D9C /* HorSysEthereumJSONConverter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HorSysEthereumJSONConverter.swift; sourceTree = "<group>"; };
 		58AAAEA9AB2118A46863AEB5 /* FullTransactionInfoPresenterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FullTransactionInfoPresenterTests.swift; sourceTree = "<group>"; };
@@ -2155,7 +2155,7 @@
 				58AAA687FC0253AD175BA756 /* FullTransactionInfoInteractor.swift */,
 				58AAA79D129F7B3E64598E5F /* FullTransactionInfoModule.swift */,
 				58AAA823D090E4B3E0D03A91 /* FullTransactionInfoPresenter.swift */,
-				58AAAD82EF02D5AA6E8ED4CB /* FullTransactionProvider.swift */,
+				58AAAD82EF02D5AA6E8ED4CB /* FullTransactionInfoProvider.swift */,
 				58AAA72A3BACDB574838A8CC /* FullTransactionInfoProviderFactory.swift */,
 				58AAA842D6734B75D88E578C /* FullTransactionInfoRouter.swift */,
 				58AAA90F7BDC0FD487A0C495 /* FullTransactionInfoState.swift */,
@@ -3275,7 +3275,7 @@
 				58AAA320C8EF4841893AC0BA /* FullTransactionHeaderView.swift in Sources */,
 				58AAA1EEC400E3FE695E6C0B /* TransactionInfoDescriptionView.swift in Sources */,
 				58AAAF8C7BE350256A86F681 /* TransactionInfoDescriptionTheme.swift in Sources */,
-				58AAADD4A8BA1090780CEA11 /* FullTransactionProvider.swift in Sources */,
+				58AAADD4A8BA1090780CEA11 /* FullTransactionInfoProvider.swift in Sources */,
 				58AAABB4991882979199CA1F /* FullTransactionInfoProviderFactory.swift in Sources */,
 				58AAA45240AA8969546B34A2 /* EthereumTransactionInfoAdapter.swift in Sources */,
 				58AAAB45621FAF77A7C091C3 /* FullTransactionInfoProtocols.swift in Sources */,
@@ -3621,7 +3621,7 @@
 				58AAA5D856195A6F1DE5C4B4 /* FullTransactionHeaderView.swift in Sources */,
 				58AAAF64F252D72D71D6D995 /* TransactionInfoDescriptionView.swift in Sources */,
 				58AAA5A3B8E3D00CB0F5E504 /* TransactionInfoDescriptionTheme.swift in Sources */,
-				58AAACA87940BF3CC5401691 /* FullTransactionProvider.swift in Sources */,
+				58AAACA87940BF3CC5401691 /* FullTransactionInfoProvider.swift in Sources */,
 				58AAA1EE015E354E285FCCD3 /* FullTransactionInfoProviderFactory.swift in Sources */,
 				58AAA29200B28D92FE706204 /* EthereumTransactionInfoAdapter.swift in Sources */,
 				58AAAF2121BD3562E68A5CB4 /* FullTransactionInfoProtocols.swift in Sources */,
@@ -3920,7 +3920,7 @@
 				58AAA6ECE042DAD0D4137ECA /* FullTransactionHeaderView.swift in Sources */,
 				58AAA38D55F9ED6F3FC1C9F9 /* TransactionInfoDescriptionView.swift in Sources */,
 				58AAA90B0E639B0D044EA653 /* TransactionInfoDescriptionTheme.swift in Sources */,
-				58AAA2B6DE1387076505D7A4 /* FullTransactionProvider.swift in Sources */,
+				58AAA2B6DE1387076505D7A4 /* FullTransactionInfoProvider.swift in Sources */,
 				58AAA71CA53B53E8FE695DF3 /* FullTransactionInfoProviderFactory.swift in Sources */,
 				58AAA290CD7ABA86FD6A6F65 /* EthereumTransactionInfoAdapter.swift in Sources */,
 				58AAA0E8388C917EB1D4E022 /* FullTransactionInfoProtocols.swift in Sources */,

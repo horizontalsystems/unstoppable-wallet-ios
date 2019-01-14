@@ -1,6 +1,8 @@
 import Foundation
 
 class EthereumTransactionInfoAdapter: IFullTransactionInfoAdapter {
+    private static let gWeiCode = "GWei"
+
     private let converter: IEthereumJSONConverter
     private let coinCode: String
 
@@ -9,7 +11,11 @@ class EthereumTransactionInfoAdapter: IFullTransactionInfoAdapter {
         self.coinCode = coinCode
     }
 
-   func convert(json: [String: Any]) -> FullTransactionRecord? {
+    var providerName: String { return converter.providerName }
+    func apiUrl(for hash: String) -> String { return converter.apiUrl(for: hash) }
+    func url(for hash: String) -> String { return converter.url(for: hash) }
+
+    func convert(json: [String: Any]) -> FullTransactionRecord? {
         guard let txResponse = converter.convert(json: json) else {
             return nil
         }
@@ -45,17 +51,21 @@ class EthereumTransactionInfoAdapter: IFullTransactionInfoAdapter {
         if let size = txResponse.size {
             transactionItems.append(FullTransactionItem(title: "full_info.size".localized, value: "\(size) \("full_info.bytes".localized)"))
         }
-        if let gasLimit = txResponse.gasLimit, let formatted = ValueFormatter.instance.format(amount: gasLimit) {
-            transactionItems.append(FullTransactionItem(title: "full_info.gas_limit".localized, value: "\(formatted) GWei"))
+        if let gasLimit = txResponse.gasLimit {
+            let gasValue = CoinValue(coinCode: EthereumTransactionInfoAdapter.gWeiCode, value: gasLimit)
+            transactionItems.append(FullTransactionItem(title: "full_info.gas_limit".localized, value: ValueFormatter.instance.format(coinValue: gasValue)))
         }
-        if let gasUsed = txResponse.gasUsed, let formatted = ValueFormatter.instance.format(amount: gasUsed) {
-            transactionItems.append(FullTransactionItem(title: "full_info.gas_used".localized, value: "\(formatted) GWei"))
+        if let gasUsed = txResponse.gasUsed {
+            let gasValue = CoinValue(coinCode: EthereumTransactionInfoAdapter.gWeiCode, value: gasUsed)
+            transactionItems.append(FullTransactionItem(title: "full_info.gas_used".localized, value: ValueFormatter.instance.format(coinValue: gasValue)))
         }
-        if let gasPrice = txResponse.gasPrice, let formatted = ValueFormatter.instance.format(amount: gasPrice) {
-            transactionItems.append(FullTransactionItem(title: "full_info.gas_price".localized, value: "\(formatted) GWei"))
+        if let gasPrice = txResponse.gasPrice {
+            let gasValue = CoinValue(coinCode: EthereumTransactionInfoAdapter.gWeiCode, value: gasPrice)
+            transactionItems.append(FullTransactionItem(title: "full_info.gas_price".localized, value: ValueFormatter.instance.format(coinValue: gasValue)))
         }
-        if let fee = txResponse.fee, let formatted = ValueFormatter.instance.format(amount: fee) {
-            transactionItems.append(FullTransactionItem(title: "full_info.fee".localized, value: "\(formatted) \(coinCode)"))
+        if let fee = txResponse.fee {
+            let feeValue = CoinValue(coinCode: coinCode, value: fee)
+            transactionItems.append(FullTransactionItem(title: "full_info.fee".localized, value: ValueFormatter.instance.format(coinValue: feeValue)))
         }
         if !transactionItems.isEmpty {
             sections.append(FullTransactionSection(title: nil, items: transactionItems))
@@ -66,7 +76,8 @@ class EthereumTransactionInfoAdapter: IFullTransactionInfoAdapter {
             inputOutputItems.append(FullTransactionItem(title: "full_info.nonce".localized, value: "\(nonce)"))
         }
         if let value = txResponse.value {
-            inputOutputItems.append(FullTransactionItem(title: "full_info.value".localized, value: "\(value) \(coinCode)"))
+            let coinValue = CoinValue(coinCode: coinCode, value: value)
+            inputOutputItems.append(FullTransactionItem(title: "full_info.value".localized, value: ValueFormatter.instance.format(coinValue: coinValue)))
         }
         if let from = txResponse.from {
             inputOutputItems.append(FullTransactionItem(title: "full_info.from".localized, value: from, clickable: true, showExtra: .icon))
@@ -78,6 +89,6 @@ class EthereumTransactionInfoAdapter: IFullTransactionInfoAdapter {
             sections.append(FullTransactionSection(title: nil, items: inputOutputItems))
         }
 
-        return FullTransactionRecord(sections: sections)
+        return FullTransactionRecord(providerName: converter.providerName, sections: sections)
     }
 }

@@ -13,7 +13,7 @@ class FullTransactionInfoStateTests: XCTestCase {
         super.setUp()
 
         transactionHash = "test_hash"
-        transactionRecord = FullTransactionRecord(sections: [
+        transactionRecord = FullTransactionRecord(providerName: "test_provider", sections: [
             FullTransactionSection(title: nil, items: [
                 FullTransactionItem(title: "item1", value: "value1", clickable: false, url: nil, showExtra: .none),
                 FullTransactionItem(title: "item2", value: "value2", clickable: true, url: nil, showExtra: .none)
@@ -26,7 +26,7 @@ class FullTransactionInfoStateTests: XCTestCase {
             )
         ])
 
-        state = FullTransactionInfoState(providerName: "test_name", url: "test_url", transactionHash: transactionHash)
+        state = FullTransactionInfoState(transactionHash: transactionHash)
     }
 
     override func tearDown() {

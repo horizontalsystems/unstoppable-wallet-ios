@@ -1,6 +1,17 @@
 import ObjectMapper
 
 class BlockExplorerBitcoinJSONConverter: IBitcoinJSONConverter {
+    let providerName = "BlockExplorer.com"
+    private let url: String
+    private let apiUrl: String
+
+    init(url: String, apiUrl: String) {
+        self.url = url
+        self.apiUrl = apiUrl
+    }
+
+    func apiUrl(for hash: String) -> String { return apiUrl + hash }
+    func url(for hash: String) -> String { return url + hash }
 
     func convert(json: [String: Any]) -> IBitcoinTxResponse? {
         return try? BlockExplorerBitcoinTxResponse(JSONObject: json)

@@ -1,7 +1,4 @@
 class FullTransactionInfoState: IFullTransactionInfoState {
-    let providerName: String
-    let fullUrl: String
-
     let transactionHash: String
     var transactionRecord: FullTransactionRecord?
 
@@ -9,9 +6,7 @@ class FullTransactionInfoState: IFullTransactionInfoState {
         self.transactionRecord = transactionRecord
     }
 
-    init(providerName: String, url: String, transactionHash: String) {
-        self.providerName = providerName
-        self.fullUrl = url + transactionHash
+    init(transactionHash: String) {
         self.transactionHash = transactionHash
     }
 

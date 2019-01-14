@@ -12,7 +12,7 @@ class RequestErrorView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    required public init(title: String, subtitle: String?, buttonText: String?, onTapButton: (() -> ())? = nil) {
+    required public init(subtitle: String?, buttonText: String?, onTapButton: (() -> ())? = nil) {
         super.init(frame: CGRect.zero)
 
         backgroundColor = .clear
@@ -30,7 +30,6 @@ class RequestErrorView: UIView {
         titleLabel.font = .cryptoBody2
         titleLabel.textColor = .crypto_White_Black
         titleLabel.textAlignment = .center
-        titleLabel.text = title
 
         var bottomView: UIView = titleLabel
         if let subtitle = subtitle {
@@ -82,7 +81,7 @@ class RequestErrorView: UIView {
         }
     }
 
-    public func set(title: String) {
+    public func set(title: String?) {
         titleLabel.text = title
         setNeedsDisplay()
     }

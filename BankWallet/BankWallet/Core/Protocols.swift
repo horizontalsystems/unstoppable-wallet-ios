@@ -187,12 +187,16 @@ protocol IAppConfigProvider {
 
 protocol IFullTransactionInfoProvider {
     var providerName: String { get }
-    var url: String { get }
+    func url(for hash: String) -> String
 
     func retrieveTransactionInfo(transactionHash: String) -> Observable<FullTransactionRecord?>
 }
 
 protocol IFullTransactionInfoAdapter {
+    var providerName: String { get }
+    func apiUrl(for hash: String) -> String
+    func url(for hash: String) -> String
+
     func convert(json: [String: Any]) -> FullTransactionRecord?
 }
 
@@ -271,7 +275,7 @@ protocol ITransactionViewItemFactory {
 }
 
 protocol IFullTransactionInfoProviderFactory {
-    func provider(forCoin coin: String) -> IFullTransactionInfoProvider
+    func provider(forCoinCode coinCode: String) -> IFullTransactionInfoProvider
 }
 
 protocol ILockoutManager {

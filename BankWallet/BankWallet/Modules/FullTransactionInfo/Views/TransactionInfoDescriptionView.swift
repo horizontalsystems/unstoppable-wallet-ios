@@ -51,8 +51,8 @@ class TransactionInfoDescriptionView: RespondButton {
         valueLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
 
         if showExtra == .hash, let value = value {
-            let fullRange = NSRange(location: 0, length: value.count)
             let attributedText = NSMutableAttributedString(string: "# " + value)
+            let fullRange = NSRange(location: 0, length: attributedText.length)
             attributedText.addAttribute(.font, value: font, range: fullRange)
             attributedText.addAttribute(.foregroundColor, value: color, range: fullRange)
             attributedText.addAttribute(.foregroundColor, value: TransactionInfoDescriptionTheme.buttonHashTextColor, range: NSRange(location: 0, length: 1))
