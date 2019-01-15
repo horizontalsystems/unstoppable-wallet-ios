@@ -106,6 +106,25 @@
 "full_info.subtitle_inputs" = "Entrées";
 "full_info.subtitle_outputs" = "Sorties";
 "full_info.subtitle_provider" = "Data Provider";
+"full_info.no_address" = "No Available";
+"full_info.sat_byte" = "sat/B";
+"full_info.fee_rate" = "Fee Rate";
+"full_info.bytes" = "bytes";
+
+
+// Full Info Ethereum
+"full_info_eth.gas_limit" = "Gas Limit";
+"full_info_eth.gas_used" = "Gas Used";
+"full_info_eth.gas_price" = "Gas Price";
+"full_info_eth.nonce" = "Nonce";
+"full_info_eth.value" = "Value";
+"full_info_eth.from" = "From";
+"full_info_eth.to" = "To";
+
+// Full Info Error
+
+"full_info_error.subtitle" = "Offline";
+"full_info_error.retry" = "Retry";
 
 // Settings
 
