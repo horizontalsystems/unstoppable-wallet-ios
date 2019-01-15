@@ -12,7 +12,7 @@ class FullTransactionInfoInteractorTests: XCTestCase {
     private var interactor: FullTransactionInfoInteractor!
     private var transactionHash: String!
     private var providerName: String!
-
+    private var signal: Signal!
     private var transactionRecord: FullTransactionRecord!
 
     override func setUp() {
@@ -43,21 +43,21 @@ class FullTransactionInfoInteractorTests: XCTestCase {
         stub(mockDelegate) { mock in
             when(mock.didReceive(transactionRecord: any())).thenDoNothing()
             when(mock.onError(providerName: any())).thenDoNothing()
-            when(mock.onCopied()).thenDoNothing()
             when(mock.onOpen(url: any())).thenDoNothing()
-            when(mock.retryLoadInfo()).thenDoNothing()
+            when(mock.onConnectionChanged()).thenDoNothing()
         }
         mockPasteboardManager = MockIPasteboardManager()
         stub(mockPasteboardManager) { mock in
             when(mock.set(value: any())).thenDoNothing()
         }
+        signal = Signal()
         mockReachabilityManager = MockIReachabilityManager()
         stub(mockReachabilityManager) { mock in
             when(mock.isReachable.get).thenReturn(true)
-            when(mock.reachabilitySignal.get).thenReturn(Signal())
+            when(mock.reachabilitySignal.get).thenReturn(signal)
         }
 
-        interactor = FullTransactionInfoInteractor(transactionProvider: mockProvider, reachabilityManager: mockReachabilityManager, pasteboardManager: mockPasteboardManager)
+        interactor = FullTransactionInfoInteractor(transactionProvider: mockProvider, reachabilityManager: mockReachabilityManager, pasteboardManager: mockPasteboardManager, async: false)
         interactor.delegate = mockDelegate
     }
 
@@ -65,6 +65,7 @@ class FullTransactionInfoInteractorTests: XCTestCase {
         transactionHash = nil
         providerName = nil
         transactionRecord = nil
+        signal = nil
 
         mockProvider = nil
         mockPasteboardManager = nil
@@ -72,6 +73,24 @@ class FullTransactionInfoInteractorTests: XCTestCase {
         interactor = nil
 
         super.tearDown()
+    }
+
+    func testReachableConnection() {
+        XCTAssertEqual(interactor.reachableConnection, true)
+
+        stub(mockReachabilityManager) { mock in
+            when(mock.isReachable.get).thenReturn(false)
+        }
+
+        XCTAssertEqual(interactor.reachableConnection, false)
+    }
+
+    func testDidLoad() {
+        interactor.didLoad()
+        signal.notify()
+
+        waitForMainQueue()
+        verify(mockDelegate).onConnectionChanged()
     }
 
     func testRetrieve() {
@@ -112,53 +131,11 @@ class FullTransactionInfoInteractorTests: XCTestCase {
         verifyNoMoreInteractions(mockDelegate)
     }
 
-    func testTapNothing() {
-        let value = "test_nothing"
-        let item = FullTransactionItem(title: "test_item", value: value, clickable: false)
-        interactor.onTap(item: item)
+    func testCopyToPasteboard() {
+        let value = "test_value"
+        interactor.copyToPasteboard(value: value)
 
-        verifyNoMoreInteractions(mockPasteboardManager)
-        verifyNoMoreInteractions(mockDelegate)
-    }
-
-    func testTapCopy() {
-        let value = "test_copy"
-        let item = FullTransactionItem(title: "test_item", value: value, clickable: true)
-        interactor.onTap(item: item)
-
-        verify(mockPasteboardManager).set(value: equal(to: value))
-        verify(mockDelegate).onCopied()
-
-        verifyNoMoreInteractions(mockPasteboardManager)
-        verifyNoMoreInteractions(mockDelegate)
-    }
-
-    func testTapOpenUrl() {
-        let value = "test_url"
-        let item = FullTransactionItem(title: "test_item", value: nil, clickable: true, url: value)
-        interactor.onTap(item: item)
-
-        verify(mockDelegate).onOpen(url: equal(to: value))
-
-        verifyNoMoreInteractions(mockPasteboardManager)
-        verifyNoMoreInteractions(mockDelegate)
-    }
-
-    func retryLoadInfoWithoutConnection() {
-        stub(mockReachabilityManager) { mock in
-            when(mock.isReachable.get).thenReturn(false)
-            when(mock.reachabilitySignal.get).thenReturn(Signal())
-
-        }
-        interactor.retryLoadInfo()
-
-        verifyNoMoreInteractions(mockDelegate)
-    }
-
-    func testRetryLoadInfo() {
-        interactor.retryLoadInfo()
-
-        verify(mockDelegate).retryLoadInfo()
+        verify(mockPasteboardManager).set(value: value)
     }
 
     func testUrlForHash() {

@@ -93,6 +93,7 @@ class FullTransactionInfoProviderTests: XCTestCase {
         let url = provider.url(for: transactionHash)
 
         verify(mockProvider).url(for: transactionHash)
+        XCTAssertEqual(url, self.url)
     }
 
 }

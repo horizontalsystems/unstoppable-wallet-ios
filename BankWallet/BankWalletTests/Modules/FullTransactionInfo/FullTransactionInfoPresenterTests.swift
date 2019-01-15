@@ -49,10 +49,11 @@ class FullTransactionInfoPresenterTests: XCTestCase {
         fullUrl = "test_url_with_hash"
         mockInteractor = MockIFullTransactionInfoInteractor()
         stub(mockInteractor) { mock in
-            when(mock.retrieveTransactionInfo(transactionHash: any())).thenDoNothing()
-            when(mock.onTap(item: any())).thenDoNothing()
-            when(mock.retryLoadInfo()).thenDoNothing()
+            when(mock.reachableConnection.get).thenReturn(true)
+            when(mock.didLoad()).thenDoNothing()
             when(mock.url(for: any())).thenReturn(fullUrl)
+            when(mock.retrieveTransactionInfo(transactionHash: any())).thenDoNothing()
+            when(mock.copyToPasteboard(value: any())).thenDoNothing()
         }
         transactionHash = "test_hash"
         mockState = MockIFullTransactionInfoState()
@@ -83,6 +84,7 @@ class FullTransactionInfoPresenterTests: XCTestCase {
     func testDidLoad() {
         presenter.viewDidLoad()
 
+        verify(mockInteractor).didLoad()
         verify(mockView).showLoading()
         verify(mockInteractor).retrieveTransactionInfo(transactionHash: transactionHash)
     }
@@ -94,23 +96,41 @@ class FullTransactionInfoPresenterTests: XCTestCase {
         verify(mockView).reload()
     }
 
-    func testOnTap() {
-        let item = transactionRecord.sections[0].items[0]
+    func testTapNothing() {
+        let value = "test_nothing"
+        let item = FullTransactionItem(title: "test_item", value: value, clickable: false)
         presenter.onTap(item: item)
 
-        verify(mockInteractor).onTap(item: equal(to: item))
+        verifyNoMoreInteractions(mockInteractor)
+        verifyNoMoreInteractions(mockRouter)
+    }
+
+    func testTapCopy() {
+        let value = "test_copy"
+        let item = FullTransactionItem(title: "test_item", value: value, clickable: true)
+        presenter.onTap(item: item)
+
+        verify(mockInteractor).copyToPasteboard(value: equal(to: value))
+        verify(mockView).showCopied()
+
+        verifyNoMoreInteractions(mockInteractor)
+        verifyNoMoreInteractions(mockView)
+    }
+
+    func testTapOpenUrl() {
+        let value = "test_url"
+        let item = FullTransactionItem(title: "test_item", value: nil, clickable: true, url: value)
+        presenter.onTap(item: item)
+
+        verify(mockRouter).open(url: value)
+
+        verifyNoMoreInteractions(mockRouter)
     }
 
     func testOnTapResourceCell() {
         presenter.onTapResourceCell()
 
         verify(mockRouter).open(url: equal(to: fullUrl))
-    }
-
-    func testCopied() {
-        presenter.onCopied()
-
-        verify(mockView).showCopied()
     }
 
     func testOpenUrl() {
@@ -141,41 +161,28 @@ class FullTransactionInfoPresenterTests: XCTestCase {
             when(mock.set(transactionRecord: any())).thenDoNothing()
         }
 
-        presenter.retryLoadInfo()
+        presenter.onConnectionChanged()
 
         verify(mockView).hideError()
         verify(mockView).showLoading()
         verify(mockInteractor).retrieveTransactionInfo(transactionHash: transactionHash)
-
-        verifyNoMoreInteractions(mockView)
-        verifyNoMoreInteractions(mockInteractor)
     }
 
     func testOnConnectionRestoredExistData() {
-        presenter.retryLoadInfo()
+        presenter.onConnectionChanged()
 
-        verifyNoMoreInteractions(mockView)
-        verifyNoMoreInteractions(mockInteractor)
+        verify(mockInteractor, never()).retrieveTransactionInfo(transactionHash: transactionHash)
     }
 
     func testOnRetryLoad() {
-        presenter.onRetryLoad()
-
-        verify(mockInteractor).retryLoadInfo()
-    }
-
-    func testRetryLoadInfo() {
         stub(mockState) { mock in
             when(mock.transactionRecord.get).thenReturn(nil)
         }
-        presenter.retryLoadInfo()
+        presenter.onRetryLoad()
 
         verify(mockView).hideError()
         verify(mockView).showLoading()
         verify(mockInteractor).retrieveTransactionInfo(transactionHash: transactionHash)
-
-        verifyNoMoreInteractions(mockView)
-        verifyNoMoreInteractions(mockInteractor)
     }
 
     func testOnShare() {

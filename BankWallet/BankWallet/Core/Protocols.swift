@@ -211,10 +211,6 @@ protocol IJSONApiManager {
     func getJSON(url: String, parameters: [String: Any]?) -> Observable<[String: Any]>
 }
 
-protocol IFullTransactionHelper {
-    func map(json: [String: Any]) -> FullTransactionRecord?
-}
-
 protocol ITransactionRecordStorage {
     func record(forHash hash: String) -> TransactionRecord?
     var nonFilledRecords: [TransactionRecord] { get }

@@ -8,29 +8,32 @@ class FullTransactionInfoInteractor {
     private let reachabilityManager: IReachabilityManager
     private let pasteboardManager: IPasteboardManager
 
-    init(transactionProvider: IFullTransactionInfoProvider, reachabilityManager: IReachabilityManager, pasteboardManager: IPasteboardManager) {
+    private let async: Bool
+
+    init(transactionProvider: IFullTransactionInfoProvider, reachabilityManager: IReachabilityManager, pasteboardManager: IPasteboardManager, async: Bool = true) {
         self.transactionProvider = transactionProvider
         self.reachabilityManager = reachabilityManager
         self.pasteboardManager = pasteboardManager
 
-        reachabilityManager.reachabilitySignal
-                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
-                .observeOn(ConcurrentMainScheduler.instance)
-                .subscribe(onNext: { [weak self] in
-                    self?.retryLoadInfo()
-                })
-                .disposed(by: disposeBag)
-
+        self.async = async
     }
 
 }
 
 extension FullTransactionInfoInteractor: IFullTransactionInfoInteractor {
 
-    func retryLoadInfo() {
-        if reachabilityManager.isReachable {
-            delegate?.retryLoadInfo()
+    var reachableConnection: Bool { return reachabilityManager.isReachable }
+
+    func didLoad() {
+        var signal: Observable = reachabilityManager.reachabilitySignal.asObserver()
+
+        if async {
+            signal = signal.subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background)).observeOn(MainScheduler.instance)
         }
+
+        signal.subscribe(onNext: { [weak self] in
+            self?.delegate?.onConnectionChanged()
+        }).disposed(by: disposeBag)
     }
 
     func retrieveTransactionInfo(transactionHash: String) {
@@ -49,19 +52,8 @@ extension FullTransactionInfoInteractor: IFullTransactionInfoInteractor {
         return transactionProvider.url(for: hash)
     }
 
-    func onTap(item: FullTransactionItem) {
-        guard item.clickable else {
-            return
-        }
-
-        if let url = item.url {
-            delegate?.onOpen(url: url)
-        }
-
-        if let value = item.value {
-            pasteboardManager.set(value: value)
-            delegate?.onCopied()
-        }
+    func copyToPasteboard(value: String) {
+        pasteboardManager.set(value: value)
     }
 
 }

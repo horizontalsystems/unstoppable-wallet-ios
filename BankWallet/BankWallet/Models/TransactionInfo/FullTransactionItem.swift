@@ -1,5 +1,3 @@
-import Foundation
-
 enum ShowExtra { case none, icon, hash }
 
 struct FullTransactionItem {

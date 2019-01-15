@@ -33,20 +33,22 @@ protocol IFullTransactionInfoState {
 }
 
 protocol IFullTransactionInfoInteractor {
+    var reachableConnection: Bool { get }
+
+    func didLoad()
+
     func retrieveTransactionInfo(transactionHash: String)
-    func retryLoadInfo()
 
     func url(for hash: String) -> String
-    func onTap(item: FullTransactionItem)
+    func copyToPasteboard(value: String)
 }
 
 protocol IFullTransactionInfoInteractorDelegate: class {
     func didReceive(transactionRecord: FullTransactionRecord)
     func onError(providerName: String?)
 
-    func retryLoadInfo()
+    func onConnectionChanged()
 
-    func onCopied()
     func onOpen(url: String)
 }
 

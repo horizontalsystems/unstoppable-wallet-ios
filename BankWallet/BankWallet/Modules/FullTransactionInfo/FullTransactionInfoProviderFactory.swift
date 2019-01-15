@@ -16,7 +16,7 @@ class FullTransactionInfoProviderFactory {
 
 extension FullTransactionInfoProviderFactory: IFullTransactionInfoProviderFactory {
 
-    func provider(`for` coinCode: String) -> IFullTransactionInfoProvider {
+    func provider(for coinCode: String) -> IFullTransactionInfoProvider {
         let providerName = "HorizontalSystems.xyz"
 
         var provider: IProvider

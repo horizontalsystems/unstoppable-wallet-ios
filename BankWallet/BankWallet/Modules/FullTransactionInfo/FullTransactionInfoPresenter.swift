@@ -21,6 +21,8 @@ class FullTransactionInfoPresenter {
 extension FullTransactionInfoPresenter: IFullTransactionInfoViewDelegate {
 
     func viewDidLoad() {
+        interactor.didLoad()
+
         tryLoadInfo()
     }
 
@@ -41,11 +43,24 @@ extension FullTransactionInfoPresenter: IFullTransactionInfoViewDelegate {
     }
 
     func onRetryLoad() {
-        interactor.retryLoadInfo()
+        if state.transactionRecord == nil, interactor.reachableConnection {
+            tryLoadInfo()
+        }
     }
 
     func onTap(item: FullTransactionItem) {
-        interactor.onTap(item: item)
+        guard item.clickable else {
+            return
+        }
+
+        if let url = item.url {
+            router.open(url: url)
+        }
+
+        if let value = item.value {
+            interactor.copyToPasteboard(value: value)
+            view?.showCopied()
+        }
     }
 
     func onTapResourceCell() {
@@ -76,14 +91,8 @@ extension FullTransactionInfoPresenter: IFullTransactionInfoInteractorDelegate {
         view?.showError(providerName: providerName)
     }
 
-    func retryLoadInfo() {
-        if state.transactionRecord == nil {
-            tryLoadInfo()
-        }
-    }
-
-    func onCopied() {
-        view?.showCopied()
+    func onConnectionChanged() {
+        onRetryLoad()
     }
 
     func onOpen(url: String) {

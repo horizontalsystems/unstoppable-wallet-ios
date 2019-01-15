@@ -1,5 +1,3 @@
-import Foundation
-
 class FullTransactionRecord {
     let providerName: String
     let sections: [FullTransactionSection]
