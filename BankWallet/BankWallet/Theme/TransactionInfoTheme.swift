@@ -41,9 +41,9 @@ class TransactionInfoTheme {
     static let barsProgressColor: UIColor = .cryptoGreen
     static let barsProgressInactiveColor: UIColor = .cryptoSteel20
 
-    static let closeHeight: CGFloat = 52
-    static let closeButtonBackground = UIColor.clear
-    static let closeButtonTextColor = UIColor.cryptoGray
-    static let closeButtonTextColorSelected = UIColor.cryptoSilver
+    static let openFullInfoHeight: CGFloat = 52
+    static let openFullInfoButtonBackground = UIColor.clear
+    static let openFullInfoButtonTextColor = UIColor.cryptoGray
+    static let openFullInfoButtonTextColorSelected = UIColor.cryptoSilver
 
 }

@@ -47,7 +47,7 @@ class RestoreViewController: KeyboardObservingViewController {
     }
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
+        return AppTheme.statusBarStyle
     }
 
     @objc func cancelDidTap() {

@@ -185,6 +185,17 @@ protocol IAppConfigProvider {
     var disablePinLock: Bool { get }
 }
 
+protocol IFullTransactionInfoProvider {
+    var providerName: String { get }
+    func url(for hash: String) -> String
+
+    func retrieveTransactionInfo(transactionHash: String) -> Observable<FullTransactionRecord?>
+}
+
+protocol IFullTransactionInfoAdapter {
+    func convert(json: [String: Any]) -> FullTransactionRecord?
+}
+
 protocol IRateNetworkManager {
     func getLatestRate(coinCode: String, currencyCode: String) -> Observable<LatestRate>
     func getRate(coinCode: String, currencyCode: String, date: Date) -> Observable<Double>
@@ -194,6 +205,10 @@ protocol IRateStorage {
     func rateObservable(forCoinCode coinCode: CoinCode, currencyCode: String) -> Observable<Rate>
     func save(rate: Rate)
     func clear()
+}
+
+protocol IJSONApiManager {
+    func getJSON(url: String, parameters: [String: Any]?) -> Observable<[String: Any]>
 }
 
 protocol ITransactionRecordStorage {
@@ -243,8 +258,28 @@ protocol IPasteboardManager {
     func set(value: String)
 }
 
+protocol IUrlManager {
+    func open(url: String, from controller: UIViewController?)
+}
+
 protocol ITransactionViewItemFactory {
     func item(fromRecord record: TransactionRecord) -> TransactionViewItem
+}
+
+protocol IFullTransactionInfoProviderFactory {
+    func provider(`for` coinCode: String) -> IFullTransactionInfoProvider
+}
+
+protocol ISettingsProviderMap {
+    func bitcoin(for name: String) -> IBitcoinForksProvider
+    func bitcoinCash(for name: String) -> IBitcoinForksProvider
+    func ethereum(for name: String) -> IEthereumForksProvider
+}
+
+protocol IProvider {
+    var name: String { get }
+    func url(for hash: String) -> String
+    func apiUrl(for hash: String) -> String
 }
 
 protocol ILockoutManager {

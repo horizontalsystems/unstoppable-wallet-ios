@@ -29,7 +29,7 @@ class MainViewController: UITabBarController {
     }
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
+        return AppTheme.statusBarStyle
     }
 
 }

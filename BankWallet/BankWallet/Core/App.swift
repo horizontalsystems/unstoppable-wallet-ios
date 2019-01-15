@@ -6,6 +6,7 @@ class App {
     private let fallbackLanguage = "en"
 
     let pasteboardManager: IPasteboardManager
+    let urlManager: IUrlManager
 
     let realmFactory: IRealmFactory
 
@@ -48,10 +49,13 @@ class App {
     let transactionRateSyncer: ITransactionRateSyncer
     let transactionManager: ITransactionManager
 
+    let settingsProviderMap: ISettingsProviderMap
     let transactionViewItemFactory: ITransactionViewItemFactory
+    let fullTransactionInfoProviderFactory: IFullTransactionInfoProviderFactory
 
     init() {
         pasteboardManager = PasteboardManager()
+        urlManager = UrlManager(inApp: true)
 
         realmFactory = RealmFactory()
 
@@ -99,6 +103,9 @@ class App {
         authManager.walletManager = walletManager
         authManager.pinManager = pinManager
         authManager.transactionsManager = transactionManager
+
+        settingsProviderMap = SettingsProviderMap()
+        fullTransactionInfoProviderFactory = FullTransactionInfoProviderFactory(apiManager: networkManager, appConfigProvider: appConfigProvider, providerMap: settingsProviderMap, localStorage: localStorage)
     }
 
 }

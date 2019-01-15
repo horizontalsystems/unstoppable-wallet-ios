@@ -59,7 +59,7 @@ class MainSettingsViewController: UIViewController, SectionsDataSource {
     }
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
+        return AppTheme.statusBarStyle
     }
 
     func buildSections() -> [SectionProtocol] {
