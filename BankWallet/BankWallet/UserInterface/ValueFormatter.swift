@@ -55,11 +55,11 @@ class ValueFormatter {
         return result
     }
 
-    func format(currencyValue: CurrencyValue, shortFractionLimit: Double? = nil, isDown: Bool = false) -> String? {
+    func format(currencyValue: CurrencyValue, shortFractionLimit: Double? = nil, roundingMode: NumberFormatter.RoundingMode = .halfEven) -> String? {
         let absoluteValue = abs(currencyValue.value)
 
         let formatter = currencyFormatter
-        formatter.roundingMode = isDown ? .down : .halfEven
+        formatter.roundingMode = roundingMode
         formatter.currencyCode = currencyValue.currency.code
         formatter.currencySymbol = currencyValue.currency.symbol
 
