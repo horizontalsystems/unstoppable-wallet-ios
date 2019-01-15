@@ -163,20 +163,21 @@ extension SendAlertModel: ISendView {
         case .coinValue(let coinValue):
             feeItem.bindFee?(ValueFormatter.instance.format(coinValue: coinValue))
         case .currencyValue(let currencyValue):
-            feeItem.bindFee?(ValueFormatter.instance.format(currencyValue: currencyValue))
+            feeItem.bindFee?(ValueFormatter.instance.format(currencyValue: currencyValue, roundingMode: .floor).map { return "~\($0)" })
         }
     }
 
     func set(secondaryFeeInfo: AmountInfo?) {
-        if let secondaryFeeInfo = secondaryFeeInfo {
-            switch secondaryFeeInfo {
-            case .coinValue(let coinValue):
-                feeItem.bindConvertedFee?(ValueFormatter.instance.format(coinValue: coinValue))
-            case .currencyValue(let currencyValue):
-                feeItem.bindConvertedFee?(ValueFormatter.instance.format(currencyValue: currencyValue))
-            }
-        } else {
+        guard let secondaryFeeInfo = secondaryFeeInfo else {
             feeItem.bindConvertedFee?(nil)
+            return
+        }
+
+        switch secondaryFeeInfo {
+        case .coinValue(let coinValue):
+            feeItem.bindConvertedFee?(ValueFormatter.instance.format(coinValue: coinValue))
+        case .currencyValue(let currencyValue):
+            feeItem.bindConvertedFee?(ValueFormatter.instance.format(currencyValue: currencyValue, roundingMode: .floor).map { return "~\($0)" })
         }
     }
 
