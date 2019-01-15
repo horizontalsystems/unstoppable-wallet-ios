@@ -2,7 +2,8 @@ import UIKit
 import GrouviActionSheet
 
 class AppTheme {
-    static var blurStyle: UIBlurEffectStyle { return App.shared.localStorage.lightMode ? .prominent : .dark }
+    static var blurStyle: UIBlurEffect.Style { return App.shared.localStorage.lightMode ? .prominent : .dark }
+    static var actionSheetBlurStyle: UIBlurEffect.Style { return App.shared.localStorage.lightMode ? .dark : .light }
 
     static var keyboardAppearance: UIKeyboardAppearance { return App.shared.localStorage.lightMode ? .default : .dark }
     static var textFieldTintColor: UIColor { return .crypto_White_Black }
@@ -16,6 +17,15 @@ class AppTheme {
     static var navigationBarTintColor = UIColor.cryptoYellow
     static var statusBarStyle: UIStatusBarStyle { return App.shared.localStorage.lightMode ? .default : .lightContent}
 
-    static let actionSheetConfig = ActionSheetThemeConfig(actionStyle: .sheet(showDismiss: false), topMargin: 8, cornerRadius: 16)
+    static var actionSheetConfig: ActionSheetThemeConfig {
+        get {
+            return ActionSheetThemeConfig(
+                    actionStyle: .sheet(showDismiss: false),
+                    topMargin: 8,
+                    cornerRadius: 16,
+                    separatorColor: UIColor.crypto_Steel40OnDark_Steel20,
+                    backgroundStyle: .blur(intensity: 0.55, style: AppTheme.actionSheetBlurStyle))
+        }
+    }
     static let actionAlertConfig = ActionSheetThemeConfig(actionStyle: .alert, cornerRadius: 16)
 }

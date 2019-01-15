@@ -9,6 +9,7 @@ class SendAlertModel: BaseAlertModel {
     private let addressItem: SendAddressItem
     private let feeItem: SendFeeItem
     private let sendButtonItem: SendButtonItem
+    private let keyboardItem: SendKeyboardItem
 
     var onScanClicked: (() -> ())?
     var onShowConfirmation: ((SendConfirmationViewItem) -> ())?
@@ -22,6 +23,7 @@ class SendAlertModel: BaseAlertModel {
         addressItem = SendAddressItem(tag: 2)
         feeItem = SendFeeItem(tag: 3)
         sendButtonItem = SendButtonItem(buttonTitle: "send.send_button".localized, tag: 4)
+        keyboardItem = SendKeyboardItem(tag: 5)
 
         super.init()
 
@@ -29,6 +31,11 @@ class SendAlertModel: BaseAlertModel {
         observeKeyboard = .onlyShow
 
         addItemView(titleItem)
+        addItemView(amountItem)
+        addItemView(addressItem)
+        addItemView(feeItem)
+        addItemView(sendButtonItem)
+        addItemView(keyboardItem)
 
         amountItem.onAmountChanged = { [weak self] in
             self?.delegate.onAmountChanged(amount: $0)
@@ -36,7 +43,6 @@ class SendAlertModel: BaseAlertModel {
         amountItem.onSwitchClicked = { [weak self] in
             self?.delegate.onSwitchClicked()
         }
-        addItemView(amountItem)
 
         addressItem.onPasteClicked = { [weak self] in
             self?.delegate.onPasteClicked()
@@ -47,17 +53,18 @@ class SendAlertModel: BaseAlertModel {
         addressItem.onDeleteClicked = { [weak self] in
             self?.delegate.onDeleteClicked()
         }
-        addItemView(addressItem)
-
-        addItemView(feeItem)
 
         sendButtonItem.onClicked = { [weak self] in
             self?.delegate.onSendClicked()
         }
-        addItemView(sendButtonItem)
-
         onCopyAddress = { [weak self] in
             self?.delegate.onCopyAddress()
+        }
+        keyboardItem.addLetter = { [weak self] text in
+            self?.amountItem.addLetter?(text)
+        }
+        keyboardItem.removeLetter = { [weak self] in
+            self?.amountItem.removeLetter?()
         }
     }
 
@@ -156,20 +163,21 @@ extension SendAlertModel: ISendView {
         case .coinValue(let coinValue):
             feeItem.bindFee?(ValueFormatter.instance.format(coinValue: coinValue))
         case .currencyValue(let currencyValue):
-            feeItem.bindFee?(ValueFormatter.instance.format(currencyValue: currencyValue))
+            feeItem.bindFee?(ValueFormatter.instance.format(currencyValue: currencyValue, roundingMode: .floor).map { return "~\($0)" })
         }
     }
 
     func set(secondaryFeeInfo: AmountInfo?) {
-        if let secondaryFeeInfo = secondaryFeeInfo {
-            switch secondaryFeeInfo {
-            case .coinValue(let coinValue):
-                feeItem.bindConvertedFee?(ValueFormatter.instance.format(coinValue: coinValue))
-            case .currencyValue(let currencyValue):
-                feeItem.bindConvertedFee?(ValueFormatter.instance.format(currencyValue: currencyValue))
-            }
-        } else {
+        guard let secondaryFeeInfo = secondaryFeeInfo else {
             feeItem.bindConvertedFee?(nil)
+            return
+        }
+
+        switch secondaryFeeInfo {
+        case .coinValue(let coinValue):
+            feeItem.bindConvertedFee?(ValueFormatter.instance.format(coinValue: coinValue))
+        case .currencyValue(let currencyValue):
+            feeItem.bindConvertedFee?(ValueFormatter.instance.format(currencyValue: currencyValue, roundingMode: .floor).map { return "~\($0)" })
         }
     }
 

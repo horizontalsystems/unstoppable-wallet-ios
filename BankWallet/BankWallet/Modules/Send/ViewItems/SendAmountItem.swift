@@ -10,6 +10,9 @@ class SendAmountItem: BaseActionItem {
     var bindError: ((String?) -> ())?
     var bindSwitchEnabled: ((Bool) -> ())?
 
+    var addLetter: ((String) -> ())?
+    var removeLetter: (() -> ())?
+
     var showKeyboard: (() -> ())?
 
     init(tag: Int) {

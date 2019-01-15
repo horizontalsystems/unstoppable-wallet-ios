@@ -25,6 +25,7 @@ class BackupIntroController: UIViewController {
 
         title = "backup.intro.title".localized
 
+        laterButton?.setBackgroundColor(color: BackupTheme.laterButtonBackground, forState: .normal)
         subtitleLabel?.text = "backup.intro.subtitle".localized
         laterButton?.setTitle("backup.intro.later".localized, for: .normal)
         backupButton?.setTitle("backup.intro.backup_now".localized, for: .normal)

@@ -44,9 +44,14 @@ class SendTheme {
     static let feeFont: UIFont = .systemFont(ofSize: 14)
     static let feeColor: UIColor = .cryptoGray
 
-    static let sendHeight: CGFloat = 78
+    static let sendHeight: CGFloat = 77
     static let sendButtonHeight: CGFloat = 50
     static let sendButtonCornerRadius: CGFloat = 8
+
+    static let keyboardHeight: CGFloat = 209
+    static let keyboardTopMargin: CGFloat = 0
+    static let keyboardSideMargin: CGFloat = 7
+    static let keyboardBottomMargin: CGFloat = 8
 
     static let confirmationAmountHeight: CGFloat = 78
     static let confirmationCurrencyAmountFont: UIFont = .cryptoTitle3
