@@ -1,20 +1,16 @@
 import Foundation
 
 class BitcoinTransactionInfoAdapter: IFullTransactionInfoAdapter {
-    private let converter: IBitcoinJSONConverter
+    private let provider: IBitcoinForksProvider
     private let coinCode: String
 
-    init(jsonConverter: IBitcoinJSONConverter, coinCode: String) {
-        self.converter = jsonConverter
+    init(provider: IBitcoinForksProvider, coinCode: String) {
+        self.provider = provider
         self.coinCode = coinCode
     }
 
-    var providerName: String { return converter.providerName }
-    func apiUrl(for hash: String) -> String { return converter.apiUrl(for: hash) }
-    func url(for hash: String) -> String { return converter.url(for: hash) }
-
     func convert(json: [String: Any]) -> FullTransactionRecord? {
-        guard let txResponse = converter.convert(json: json) else {
+        guard let txResponse = provider.convert(json: json) else {
             return nil
         }
 
@@ -100,6 +96,6 @@ class BitcoinTransactionInfoAdapter: IFullTransactionInfoAdapter {
             sections.append(FullTransactionSection(title: "full_info.subtitle_outputs".localized, items: outputItems))
         }
 
-        return FullTransactionRecord(providerName: converter.providerName, sections: sections)
+        return FullTransactionRecord(providerName: provider.name, sections: sections)
     }
 }

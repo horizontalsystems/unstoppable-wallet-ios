@@ -3,20 +3,16 @@ import Foundation
 class EthereumTransactionInfoAdapter: IFullTransactionInfoAdapter {
     private static let gWeiCode = "GWei"
 
-    private let converter: IEthereumJSONConverter
+    private let provider: IEthereumForksProvider
     private let coinCode: String
 
-    init(jsonConverter: IEthereumJSONConverter, coinCode: String) {
-        self.converter = jsonConverter
+    init(provider: IEthereumForksProvider, coinCode: String) {
+        self.provider = provider
         self.coinCode = coinCode
     }
 
-    var providerName: String { return converter.providerName }
-    func apiUrl(for hash: String) -> String { return converter.apiUrl(for: hash) }
-    func url(for hash: String) -> String { return converter.url(for: hash) }
-
     func convert(json: [String: Any]) -> FullTransactionRecord? {
-        guard let txResponse = converter.convert(json: json) else {
+        guard let txResponse = provider.convert(json: json) else {
             return nil
         }
 
@@ -89,6 +85,6 @@ class EthereumTransactionInfoAdapter: IFullTransactionInfoAdapter {
             sections.append(FullTransactionSection(title: nil, items: inputOutputItems))
         }
 
-        return FullTransactionRecord(providerName: converter.providerName, sections: sections)
+        return FullTransactionRecord(providerName: provider.name, sections: sections)
     }
 }

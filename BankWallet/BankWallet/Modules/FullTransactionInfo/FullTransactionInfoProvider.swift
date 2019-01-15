@@ -6,11 +6,13 @@ class FullTransactionInfoProvider {
 
     private let apiManager: IJSONApiManager
     private let adapter: IFullTransactionInfoAdapter
+    private let provider: IProvider
     private let async: Bool
 
-    init(apiManager: IJSONApiManager, adapter: IFullTransactionInfoAdapter, async: Bool = true) {
+    init(apiManager: IJSONApiManager, adapter: IFullTransactionInfoAdapter, provider: IProvider, async: Bool = true) {
         self.apiManager = apiManager
         self.adapter = adapter
+        self.provider = provider
 
         self.async = async
     }
@@ -19,11 +21,11 @@ class FullTransactionInfoProvider {
 
 extension FullTransactionInfoProvider: IFullTransactionInfoProvider {
 
-    var providerName: String { return adapter.providerName }
-    func url(for hash: String) -> String { return adapter.url(for: hash) }
+    var providerName: String { return provider.name }
+    func url(for hash: String) -> String { return provider.url(for: hash) }
 
     func retrieveTransactionInfo(transactionHash: String) -> Observable<FullTransactionRecord?> {
-        var observable = apiManager.getJSON(url: adapter.apiUrl(for: transactionHash), parameters: nil)
+        var observable = apiManager.getJSON(url: provider.apiUrl(for: transactionHash), parameters: nil)
 
         if async {
             observable = observable.subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background)).observeOn(MainScheduler.instance)

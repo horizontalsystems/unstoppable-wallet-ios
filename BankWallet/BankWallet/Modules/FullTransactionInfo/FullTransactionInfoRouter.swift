@@ -33,8 +33,7 @@ extension FullTransactionInfoRouter {
         let router = FullTransactionInfoRouter(urlManager: App.shared.urlManager)
         let providerFactory = App.shared.fullTransactionInfoProviderFactory
 
-        let provider: IFullTransactionInfoProvider = providerFactory.provider(forCoinCode: coinCode)
-        let interactor = FullTransactionInfoInteractor(transactionProvider: provider, reachabilityManager: App.shared.reachabilityManager, pasteboardManager: App.shared.pasteboardManager)
+        let interactor = FullTransactionInfoInteractor(transactionProvider: providerFactory.provider(for: coinCode), reachabilityManager: App.shared.reachabilityManager, pasteboardManager: App.shared.pasteboardManager)
         let state = FullTransactionInfoState(transactionHash: transactionHash)
         let presenter = FullTransactionInfoPresenter(interactor: interactor, router: router, state: state)
         let viewController = FullTransactionInfoViewController(delegate: presenter)

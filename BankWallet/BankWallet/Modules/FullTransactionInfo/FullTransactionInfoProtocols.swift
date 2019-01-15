@@ -1,20 +1,4 @@
-protocol IBitcoinJSONConverter {
-    var providerName: String { get }
-    func apiUrl(for hash: String) -> String
-    func url(for hash: String) -> String
-
-    func convert(json: [String: Any]) -> IBitcoinTxResponse?
-}
-
-protocol IEthereumJSONConverter {
-    var providerName: String { get }
-    func apiUrl(for hash: String) -> String
-    func url(for hash: String) -> String
-
-    func convert(json: [String: Any]) -> IEthereumTxResponse?
-}
-
-protocol IBitcoinTxResponse {
+protocol IBitcoinResponse {
     var btcRate: Double { get }
 
     var txId: String? { get }
@@ -30,13 +14,13 @@ protocol IBitcoinTxResponse {
     var outputs: [(value: Double, address: String?)] { get }
 }
 
-extension IBitcoinTxResponse {
+extension IBitcoinResponse {
     var btcRate: Double {
         return 100_000_000
     }
 }
 
-protocol IEthereumTxResponse {
+protocol IEthereumResponse {
     var ethRate: Double { get }
     var gweiRate: Double { get }
 
@@ -57,11 +41,19 @@ protocol IEthereumTxResponse {
     var to: String? { get }
 }
 
-extension IEthereumTxResponse {
+extension IEthereumResponse {
     var ethRate: Double {
         return 1_000_000_000_000_000_000
     }
     var gweiRate: Double {
         return 1_000_000_000
     }
+}
+
+protocol IBitcoinForksProvider: IProvider {
+    func convert(json: [String: Any]) -> IBitcoinResponse?
+}
+
+protocol IEthereumForksProvider: IProvider {
+    func convert(json: [String: Any]) -> IEthereumResponse?
 }

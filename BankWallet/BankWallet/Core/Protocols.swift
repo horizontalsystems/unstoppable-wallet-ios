@@ -193,10 +193,6 @@ protocol IFullTransactionInfoProvider {
 }
 
 protocol IFullTransactionInfoAdapter {
-    var providerName: String { get }
-    func apiUrl(for hash: String) -> String
-    func url(for hash: String) -> String
-
     func convert(json: [String: Any]) -> FullTransactionRecord?
 }
 
@@ -275,7 +271,19 @@ protocol ITransactionViewItemFactory {
 }
 
 protocol IFullTransactionInfoProviderFactory {
-    func provider(forCoinCode coinCode: String) -> IFullTransactionInfoProvider
+    func provider(`for` coinCode: String) -> IFullTransactionInfoProvider
+}
+
+protocol ISettingsProviderMap {
+    func bitcoin(for name: String) -> IBitcoinForksProvider
+    func bitcoinCash(for name: String) -> IBitcoinForksProvider
+    func ethereum(for name: String) -> IEthereumForksProvider
+}
+
+protocol IProvider {
+    var name: String { get }
+    func url(for hash: String) -> String
+    func apiUrl(for hash: String) -> String
 }
 
 protocol ILockoutManager {

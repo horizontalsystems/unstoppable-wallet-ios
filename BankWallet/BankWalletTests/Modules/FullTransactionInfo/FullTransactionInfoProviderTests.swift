@@ -8,6 +8,7 @@ enum TestError: Int, Error { case error = 1 }
 class FullTransactionInfoProviderTests: XCTestCase {
     private var mockApiManager: MockIJSONApiManager!
     private var mockAdapter: MockIFullTransactionInfoAdapter!
+    private var mockProvider: MockIProvider!
 
     private var provider: FullTransactionInfoProvider!
     private var transactionHash: String!
@@ -22,7 +23,8 @@ class FullTransactionInfoProviderTests: XCTestCase {
         url = "test_url"
         transactionHash = "test_hash"
         apiUrl = "test_url_" + transactionHash
-        transactionRecord = FullTransactionRecord(providerName: "test_provider", sections: [
+        let providerName = "test_provider"
+        transactionRecord = FullTransactionRecord(providerName: providerName, sections: [
             FullTransactionSection(title: nil, items: [
                 FullTransactionItem(title: "item1", value: "value1", clickable: false, url: nil, showExtra: .none),
                 FullTransactionItem(title: "item2", value: "value2", clickable: true, url: nil, showExtra: .none)
@@ -42,11 +44,14 @@ class FullTransactionInfoProviderTests: XCTestCase {
         mockAdapter = MockIFullTransactionInfoAdapter()
         stub(mockAdapter) { mock in
             when(mock.convert(json: any())).thenReturn(transactionRecord)
+        }
+        mockProvider = MockIProvider()
+        stub(mockProvider) { mock in
+            when(mock.name.get).thenReturn(providerName)
             when(mock.url(for: any())).thenReturn(url)
             when(mock.apiUrl(for: any())).thenReturn(apiUrl)
         }
-
-        provider = FullTransactionInfoProvider(apiManager: mockApiManager, adapter: mockAdapter, async: false)
+        provider = FullTransactionInfoProvider(apiManager: mockApiManager, adapter: mockAdapter, provider: mockProvider, async: false)
     }
 
     override func tearDown() {
@@ -56,6 +61,7 @@ class FullTransactionInfoProviderTests: XCTestCase {
         transactionRecord = nil
 
         mockApiManager = nil
+        mockProvider = nil
 
         provider = nil
 
@@ -86,7 +92,7 @@ class FullTransactionInfoProviderTests: XCTestCase {
     func testUrl() {
         let url = provider.url(for: transactionHash)
 
-        verify(mockAdapter).url(for: transactionHash)
+        verify(mockProvider).url(for: transactionHash)
     }
 
 }
