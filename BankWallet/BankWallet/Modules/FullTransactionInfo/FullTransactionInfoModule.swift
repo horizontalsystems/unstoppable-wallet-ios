@@ -20,7 +20,8 @@ protocol IFullTransactionInfoViewDelegate {
 
     func onRetryLoad()
     func onTap(item: FullTransactionItem)
-    func onTapResourceCell()
+    func onTapChangeResource()
+    func onTapProviderLink()
     func onShare()
     func onClose()
 }
@@ -30,7 +31,7 @@ protocol IFullTransactionInfoState {
     var coinCode: String { get }
     var transactionHash: String { get }
 
-    func set(transactionRecord: FullTransactionRecord)
+    func set(transactionRecord: FullTransactionRecord?)
 }
 
 protocol IFullTransactionInfoInteractor {
@@ -46,6 +47,8 @@ protocol IFullTransactionInfoInteractor {
 }
 
 protocol IFullTransactionInfoInteractorDelegate: class {
+    func onProviderChanged()
+
     func didReceive(transactionRecord: FullTransactionRecord)
     func onError(providerName: String?)
 
@@ -54,7 +57,7 @@ protocol IFullTransactionInfoInteractorDelegate: class {
 
 protocol IFullTransactionInfoRouter {
     func openProviderSettings(coinCode: String)
-    func open(url: String)
+    func open(url: String?)
     func share(value: String)
     func close()
 }

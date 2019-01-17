@@ -9,11 +9,13 @@ class FullTransactionInfoInteractorTests: XCTestCase {
     private var mockDelegate: MockIFullTransactionInfoInteractorDelegate!
     private var mockPasteboardManager: MockIPasteboardManager!
     private var mockReachabilityManager: MockIReachabilityManager!
+    private var mockDataProviderManager: MockIFullTransactionDataProviderManager!
 
     private var interactor: FullTransactionInfoInteractor!
     private var transactionHash: String!
     private var providerName: String!
-    private var signal: Signal!
+    private var reachabilitySignal: Signal!
+    private var dataProviderSignal: Signal!
     private var transactionRecord: FullTransactionRecord!
 
     private let coinCode = "BTC"
@@ -47,6 +49,7 @@ class FullTransactionInfoInteractorTests: XCTestCase {
         }
         mockDelegate = MockIFullTransactionInfoInteractorDelegate()
         stub(mockDelegate) { mock in
+            when(mock.onProviderChanged()).thenDoNothing()
             when(mock.didReceive(transactionRecord: any())).thenDoNothing()
             when(mock.onError(providerName: any())).thenDoNothing()
             when(mock.onConnectionChanged()).thenDoNothing()
@@ -55,14 +58,19 @@ class FullTransactionInfoInteractorTests: XCTestCase {
         stub(mockPasteboardManager) { mock in
             when(mock.set(value: any())).thenDoNothing()
         }
-        signal = Signal()
+        reachabilitySignal = Signal()
         mockReachabilityManager = MockIReachabilityManager()
         stub(mockReachabilityManager) { mock in
             when(mock.isReachable.get).thenReturn(true)
-            when(mock.reachabilitySignal.get).thenReturn(signal)
+            when(mock.reachabilitySignal.get).thenReturn(reachabilitySignal)
+        }
+        dataProviderSignal = Signal()
+        mockDataProviderManager = MockIFullTransactionDataProviderManager()
+        stub(mockDataProviderManager) { mock in
+            when(mock.dataProviderUpdatedSignal.get).thenReturn(dataProviderSignal)
         }
 
-        interactor = FullTransactionInfoInteractor(providerFactory: mockProviderFactory, reachabilityManager: mockReachabilityManager, pasteboardManager: mockPasteboardManager, async: false)
+        interactor = FullTransactionInfoInteractor(providerFactory: mockProviderFactory, reachabilityManager: mockReachabilityManager, dataProviderManager: mockDataProviderManager, pasteboardManager: mockPasteboardManager, async: false)
         interactor.delegate = mockDelegate
     }
 
@@ -70,10 +78,12 @@ class FullTransactionInfoInteractorTests: XCTestCase {
         transactionHash = nil
         providerName = nil
         transactionRecord = nil
-        signal = nil
+        reachabilitySignal = nil
 
         mockProvider = nil
         mockPasteboardManager = nil
+        mockReachabilityManager = nil
+        mockDataProviderManager = nil
 
         interactor = nil
 
@@ -97,10 +107,12 @@ class FullTransactionInfoInteractorTests: XCTestCase {
 
     func testDidLoad() {
         interactor.didLoad()
-        signal.notify()
+        reachabilitySignal.notify()
+        dataProviderSignal.notify()
 
         waitForMainQueue()
         verify(mockDelegate).onConnectionChanged()
+        verify(mockDelegate).onProviderChanged()
     }
 
     func testRetrieve() {

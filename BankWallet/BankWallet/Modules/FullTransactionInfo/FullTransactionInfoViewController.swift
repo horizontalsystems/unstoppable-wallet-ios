@@ -24,8 +24,11 @@ class FullTransactionInfoViewController: UIViewController, SectionsDataSource {
 
         super.init(nibName: nil, bundle: nil)
 
-        errorView = RequestErrorView(subtitle: "full_info.error.subtitle", buttonText: "full_info.error.retry", onTapButton: { [weak self] in
+        errorView = RequestErrorView(subtitle: "full_info.error.subtitle", buttonText: "full_info.error.retry", linkText: "full_info.error.change_source".localized, onTapButton: { [weak self] in
             self?.onRetry()
+            self?.onRetry()
+        }, onTapLink: { [weak self] in
+            self?.onTapChangeResource()
         })
     }
 
@@ -47,6 +50,7 @@ class FullTransactionInfoViewController: UIViewController, SectionsDataSource {
         }
 
         tableView.registerCell(forClass: FullTransactionInfoTextCell.self)
+        tableView.registerCell(forClass: FullTransactionProviderLinkCell.self)
         tableView.registerCell(forClass: SettingsCell.self)
         tableView.registerHeaderFooter(forClass: FullTransactionHeaderView.self)
         tableView.sectionDataSource = self
@@ -155,7 +159,14 @@ class FullTransactionInfoViewController: UIViewController, SectionsDataSource {
                     cell.bind(titleIcon: nil, title: providerName, titleColor: FullTransactionInfoTheme.resourceTitleColor, showDisclosure: true, last: true)
                     cell.titleLabel.font = FullTransactionInfoTheme.resourceTitleFont
                 }, action: { [weak self] cell in
-                    self?.onTapResourceCell()
+                    self?.onTapChangeResource()
+                })
+            ]))
+            sections.append(Section(id: "link_provider", footerState: .margin(height: FullTransactionInfoTheme.linkCellBottomMargin), rows: [
+                Row<FullTransactionProviderLinkCell>(id: "link_cell", height: FullTransactionInfoTheme.linkCellHeight, bind: { cell, _ in
+                    cell.bind(text: providerName) { [weak self] in
+                        self?.onTapProviderLink()
+                    }
                 })
             ]))
         }
@@ -166,8 +177,12 @@ class FullTransactionInfoViewController: UIViewController, SectionsDataSource {
         delegate.onTap(item: item)
     }
 
-    func onTapResourceCell() {
-        delegate.onTapResourceCell()
+    func onTapChangeResource() {
+        delegate.onTapChangeResource()
+    }
+
+    func onTapProviderLink() {
+        delegate.onTapProviderLink()
     }
 
     @objc func onClose() {

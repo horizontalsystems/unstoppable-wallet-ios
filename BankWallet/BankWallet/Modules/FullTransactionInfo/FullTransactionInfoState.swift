@@ -3,7 +3,7 @@ class FullTransactionInfoState: IFullTransactionInfoState {
     let coinCode: String
     var transactionRecord: FullTransactionRecord?
 
-    func set(transactionRecord: FullTransactionRecord) {
+    func set(transactionRecord: FullTransactionRecord?) {
         self.transactionRecord = transactionRecord
     }
 

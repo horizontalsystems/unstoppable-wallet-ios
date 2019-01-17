@@ -95,6 +95,17 @@ class FullTransactionInfoPresenterTests: XCTestCase {
         verify(mockInteractor).retrieveTransactionInfo(transactionHash: transactionHash)
     }
 
+    func testOnProviderChanged() {
+        presenter.onProviderChanged()
+
+        verify(mockState).set(transactionRecord: equal(to: nil))
+        verify(mockView).reload()
+
+        verify(mockInteractor).updateProvider(for: coinCode)
+        verify(mockView).showLoading()
+        verify(mockInteractor).retrieveTransactionInfo(transactionHash: transactionHash)
+    }
+
     func testDidReceiveTransactionRecord() {
         presenter.didReceive(transactionRecord: transactionRecord)
         verify(mockState).set(transactionRecord: equal(to: transactionRecord))
@@ -128,16 +139,19 @@ class FullTransactionInfoPresenterTests: XCTestCase {
         let item = FullTransactionItem(title: "test_item", value: nil, clickable: true, url: value)
         presenter.onTap(item: item)
 
-        verify(mockRouter).open(url: value)
+        verify(mockRouter).open(url: equal(to: value))
 
         verifyNoMoreInteractions(mockRouter)
     }
 
-    func testOnTapResourceCell() {
-        presenter.onTapResourceCell()
-
+    func testOnTapChangeResource() {
+        presenter.onTapChangeResource()
         verify(mockRouter).openProviderSettings(coinCode: coinCode)
-//        verify(mockRouter).open(url: equal(to: fullUrl))
+    }
+
+    func testOnTapProviderLink() {
+        presenter.onTapProviderLink()
+        verify(mockRouter).open(url: equal(to: fullUrl))
     }
 
     func testClose() {

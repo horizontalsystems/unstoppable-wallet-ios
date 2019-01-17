@@ -17,7 +17,10 @@ extension FullTransactionInfoRouter: IFullTransactionInfoRouter {
         viewController?.pushViewController(vc, animated: true)
     }
 
-    func open(url: String) {
+    func open(url: String?) {
+        guard let url = url else {
+            return
+        }
         urlManager.open(url: url, from: viewController)
     }
 
@@ -37,7 +40,7 @@ extension FullTransactionInfoRouter {
     static func module(transactionHash: String, coinCode: String) -> UIViewController {
         let router = FullTransactionInfoRouter(urlManager: App.shared.urlManager)
 
-        let interactor = FullTransactionInfoInteractor(providerFactory: App.shared.fullTransactionInfoProviderFactory, reachabilityManager: App.shared.reachabilityManager, pasteboardManager: App.shared.pasteboardManager)
+        let interactor = FullTransactionInfoInteractor(providerFactory: App.shared.fullTransactionInfoProviderFactory, reachabilityManager: App.shared.reachabilityManager, dataProviderManager: App.shared.dataProviderManager, pasteboardManager: App.shared.pasteboardManager)
         let state = FullTransactionInfoState(coinCode: coinCode, transactionHash: transactionHash)
         let presenter = FullTransactionInfoPresenter(interactor: interactor, router: router, state: state)
         let viewController = FullTransactionInfoViewController(delegate: presenter)

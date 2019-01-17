@@ -45,6 +45,7 @@ class DataProviderSettingsPresenterTests: XCTestCase {
             when(mock.show(items: any())).thenDoNothing()
         }
         stub(mockRouter) { mock in
+            when(mock.popViewController()).thenDoNothing()
         }
         stub(mockInteractor) { mock in
             when(mock.providers(for: any())).thenReturn(providers)
@@ -84,6 +85,7 @@ class DataProviderSettingsPresenterTests: XCTestCase {
     func testReloadItemsOnSetBaseCurrency() {
         presenter.didSetBaseProvider()
         verify(mockView).show(items: equal(to: expectedItems))
+        verify(mockRouter).popViewController()
     }
 
 }

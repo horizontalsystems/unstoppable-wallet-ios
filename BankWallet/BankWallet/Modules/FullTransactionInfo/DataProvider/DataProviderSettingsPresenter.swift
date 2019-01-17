@@ -40,6 +40,7 @@ extension DataProviderSettingsPresenter: IDataProviderSettingsInteractorDelegate
 
     func didSetBaseProvider() {
         showItems()
+        router.popViewController()
     }
 
 }

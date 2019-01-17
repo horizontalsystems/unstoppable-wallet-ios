@@ -7,12 +7,13 @@ class RequestErrorView: UIView {
     private let titleLabel = UILabel(frame: .zero)
     private var subtitleLabel: UILabel?
     private var button: RespondButton?
+    private var linkView = FullTransactionLinkView()
 
     public required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    required public init(subtitle: String?, buttonText: String?, onTapButton: (() -> ())? = nil) {
+    required public init(subtitle: String?, buttonText: String?, linkText: String, onTapButton: (() -> ())? = nil, onTapLink: (() -> ())? = nil) {
         super.init(frame: CGRect.zero)
 
         backgroundColor = .clear
@@ -73,7 +74,15 @@ class RequestErrorView: UIView {
 
             bottomView = button
         }
-        self.addSubview(holderView)
+        holderView.addSubview(linkView)
+        linkView.snp.makeConstraints { maker in
+            maker.centerX.equalToSuperview()
+            maker.top.equalTo(bottomView.snp.bottom).offset(RequestErrorTheme.linkMargin)
+        }
+        linkView.bind(text: linkText, onTap: onTapLink)
+        bottomView = linkView
+
+        addSubview(holderView)
         holderView.snp.makeConstraints { maker in
             maker.bottom.equalTo(bottomView.snp.bottom)
             maker.leading.trailing.equalToSuperview()

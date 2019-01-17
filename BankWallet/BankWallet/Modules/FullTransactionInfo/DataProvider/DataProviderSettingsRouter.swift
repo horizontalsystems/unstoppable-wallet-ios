@@ -1,9 +1,15 @@
 import UIKit
 
 class DataProviderSettingsRouter {
+    weak var viewController: UIViewController?
 }
 
 extension DataProviderSettingsRouter: IDataProviderSettingsRouter {
+
+    func popViewController() {
+        viewController?.navigationController?.popViewController(animated: true)
+    }
+
 }
 
 extension DataProviderSettingsRouter {
@@ -17,6 +23,7 @@ extension DataProviderSettingsRouter {
         interactor.delegate = presenter
         presenter.view = view
 
+        router.viewController = view
         return view
     }
 

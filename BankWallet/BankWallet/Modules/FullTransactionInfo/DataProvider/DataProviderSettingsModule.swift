@@ -28,4 +28,5 @@ protocol IDataProviderSettingsInteractorDelegate: class {
 }
 
 protocol IDataProviderSettingsRouter {
+    func popViewController()
 }
