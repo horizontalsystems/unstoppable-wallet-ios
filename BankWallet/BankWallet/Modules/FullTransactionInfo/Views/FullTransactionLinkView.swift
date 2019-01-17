@@ -11,12 +11,10 @@ class FullTransactionLinkView: UIView {
         backgroundColor = .clear
 
         addSubview(linkWrapper)
-//        linkWrapper.backgroundColor = .yellow
         linkWrapper.snp.makeConstraints { maker in
             maker.edges.equalToSuperview()
         }
         linkWrapper.addSubview(linkLabel)
-//        linkLabel.backgroundColor = .green
         linkLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         linkLabel.setContentHuggingPriority(.defaultHigh, for: .vertical)
         linkLabel.snp.makeConstraints { maker in
