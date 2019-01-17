@@ -86,6 +86,8 @@ class ManageCoinsPresenterTests: XCTestCase {
 
     func testDidLoadCoins() {
         presenter.didLoadCoins(all: allCoins, enabled: enabledCoins)
+        verify(mockState).allCoins.set(equal(to: allCoins))
+        verify(mockState).enabledCoins.set(equal(to: enabledCoins))
         verify(mockView).updateUI()
     }
 

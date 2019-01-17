@@ -7,13 +7,13 @@ class FullTransactionInfoRouterTests: XCTestCase {
     private var router: FullTransactionInfoRouter!
     private var mockUrlManager: MockIUrlManager!
     private var url: String!
-    private var controller: UIViewController!
+    private var controller: UINavigationController!
 
     override func setUp() {
         super.setUp()
 
         url = "test_url"
-        controller = UIViewController()
+        controller = UINavigationController()
         mockUrlManager = MockIUrlManager()
         stub(mockUrlManager) { mock in
             when(mock.open(url: any(), from: any())).thenDoNothing()

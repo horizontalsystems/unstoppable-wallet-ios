@@ -2,7 +2,7 @@ import UIKit
 import GrouviExtensions
 import SnapKit
 
-class CurrencyCell: UITableViewCell {
+class DataProviderCell: UITableViewCell {
     var titleLabel = UILabel()
     var subtitleLabel = UILabel()
     var checkmarkImageView = TintImageView(image: UIImage(named: "Transaction Success Icon"), tintColor: SettingsTheme.checkmarkTintColor, selectedTintColor: SettingsTheme.checkmarkTintColor)
@@ -11,7 +11,6 @@ class CurrencyCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         backgroundColor = SettingsTheme.cellBackground
         contentView.backgroundColor = .clear
-//        separatorInset.left = self.layoutMargins.left * 2
         selectionStyle = .none
 
         titleLabel.font = SettingsTheme.titleFont
@@ -22,7 +21,6 @@ class CurrencyCell: UITableViewCell {
             maker.top.equalToSuperview().offset(SettingsTheme.cellMiddleMargin)
         }
         subtitleLabel.font = SettingsTheme.subtitleFont
-        subtitleLabel.textColor = SettingsTheme.subtitleColor
         contentView.addSubview(subtitleLabel)
         subtitleLabel.snp.makeConstraints { maker in
             maker.leading.equalTo(contentView.snp.leadingMargin)
@@ -40,9 +38,15 @@ class CurrencyCell: UITableViewCell {
         fatalError()
     }
 
-    func bind(title: String, subtitle: String, selected: Bool) {
+    func bind(title: String, online: Bool, selected: Bool) {
         titleLabel.text = title
-        subtitleLabel.text = subtitle
+        if online {
+            subtitleLabel.text = "settings_provider.online".localized
+            subtitleLabel.textColor = SettingsTheme.onlineSubtitleColor
+        } else {
+            subtitleLabel.text = "settings_provider.offline".localized
+            subtitleLabel.textColor = SettingsTheme.offlineSubtitleColor
+        }
 
         checkmarkImageView.isHidden = !selected
     }

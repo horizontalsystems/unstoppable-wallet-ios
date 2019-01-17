@@ -5,28 +5,28 @@ import SnapKit
 class LanguageCell: UITableViewCell {
     var titleLabel = UILabel()
     var subtitleLabel = UILabel()
-    var checkmarkImageView = TintImageView(image: UIImage(named: "Transaction Success Icon"), tintColor: SettingsTheme.languageCheckmarkTintColor, selectedTintColor: SettingsTheme.languageCheckmarkTintColor)
+    var checkmarkImageView = TintImageView(image: UIImage(named: "Transaction Success Icon"), tintColor: SettingsTheme.checkmarkTintColor, selectedTintColor: SettingsTheme.checkmarkTintColor)
 
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        backgroundColor = SettingsTheme.languageCellBackground
+        backgroundColor = SettingsTheme.cellBackground
         contentView.backgroundColor = .clear
 //        separatorInset.left = self.layoutMargins.left * 2
         selectionStyle = .none
 
-        titleLabel.font = SettingsTheme.languageTitleFont
-        titleLabel.textColor = SettingsTheme.languageTitleColor
+        titleLabel.font = SettingsTheme.titleFont
+        titleLabel.textColor = SettingsTheme.titleColor
         contentView.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { maker in
             maker.leading.equalTo(contentView.snp.leadingMargin)
             maker.top.equalToSuperview().offset(SettingsTheme.cellMiddleMargin)
         }
-        subtitleLabel.font = SettingsTheme.languageSubtitleFont
-        subtitleLabel.textColor = SettingsTheme.languageSubtitleColor
+        subtitleLabel.font = SettingsTheme.subtitleFont
+        subtitleLabel.textColor = SettingsTheme.subtitleColor
         contentView.addSubview(subtitleLabel)
         subtitleLabel.snp.makeConstraints { maker in
             maker.leading.equalTo(contentView.snp.leadingMargin)
-            maker.top.equalTo(self.titleLabel.snp.bottom).offset(SettingsTheme.languageSubtitleTopMargin)
+            maker.top.equalTo(self.titleLabel.snp.bottom).offset(SettingsTheme.subtitleTopMargin)
         }
 
         contentView.addSubview(checkmarkImageView)

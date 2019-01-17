@@ -49,7 +49,7 @@ class App {
     let transactionRateSyncer: ITransactionRateSyncer
     let transactionManager: ITransactionManager
 
-    let settingsProviderMap: ISettingsProviderMap
+    let dataProviderManager: IFullTransactionDataProviderManager
     let transactionViewItemFactory: ITransactionViewItemFactory
     let fullTransactionInfoProviderFactory: IFullTransactionInfoProviderFactory
 
@@ -104,8 +104,8 @@ class App {
         authManager.pinManager = pinManager
         authManager.transactionsManager = transactionManager
 
-        settingsProviderMap = SettingsProviderMap()
-        fullTransactionInfoProviderFactory = FullTransactionInfoProviderFactory(apiManager: networkManager, appConfigProvider: appConfigProvider, providerMap: settingsProviderMap, localStorage: localStorage)
+        dataProviderManager = FullTransactionDataProviderManager(localStorage: localStorage, appConfigProvider: appConfigProvider)
+        fullTransactionInfoProviderFactory = FullTransactionInfoProviderFactory(apiManager: networkManager, appConfigProvider: appConfigProvider, dataProviderManager: dataProviderManager, localStorage: localStorage)
     }
 
 }

@@ -22,9 +22,15 @@ extension FullTransactionInfoPresenter: IFullTransactionInfoViewDelegate {
 
     func viewDidLoad() {
         interactor.didLoad()
+        interactor.updateProvider(for: state.coinCode)
 
         tryLoadInfo()
     }
+
+    // func viewDidLoadRestart() {
+    //      state.setRecord( nil )
+    //      view?.reload()
+    //      tryLoadInfo()
 
     var providerName: String? {
         return state.transactionRecord?.providerName
@@ -64,11 +70,15 @@ extension FullTransactionInfoPresenter: IFullTransactionInfoViewDelegate {
     }
 
     func onTapResourceCell() {
-        router.open(url: interactor.url(for: state.transactionHash))
+        router.openProviderSettings(coinCode: state.coinCode)
+//        router.open(url: interactor.url(for: state.transactionHash))
     }
 
     func onShare() {
-        router.share(value: interactor.url(for: state.transactionHash))
+        guard let url = interactor.url(for: state.transactionHash) else {
+            return
+        }
+        router.share(value: url)
     }
 
     func onClose() {
@@ -93,10 +103,6 @@ extension FullTransactionInfoPresenter: IFullTransactionInfoInteractorDelegate {
 
     func onConnectionChanged() {
         onRetryLoad()
-    }
-
-    func onOpen(url: String) {
-        router.open(url: url)
     }
 
 }

@@ -26,7 +26,7 @@ class FullTransactionInfoStateTests: XCTestCase {
             )
         ])
 
-        state = FullTransactionInfoState(transactionHash: transactionHash)
+        state = FullTransactionInfoState(coinCode: "test_code", transactionHash: transactionHash)
     }
 
     override func tearDown() {

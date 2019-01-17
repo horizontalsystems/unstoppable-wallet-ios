@@ -21,6 +21,16 @@ class SettingsProviderMap: ISettingsProviderMap {
         ]
     }
 
+    func providers(for coinCode: String) -> [IProvider] {
+        if coinCode.range(of: "BTC") != nil {
+            return SettingsProviderMap.bitcoinProviders
+        } else if coinCode.range(of: "BCH") != nil {
+            return SettingsProviderMap.bitcoinCashProviders
+        } else {
+            return SettingsProviderMap.ethereumProviders
+        }
+    }
+
     func bitcoin(for name: String) -> IBitcoinForksProvider {
         return SettingsProviderMap.bitcoinProviders.first(where: { provider in provider.name == name }) ?? HorSysBitcoinProvider(testMode: false)
     }

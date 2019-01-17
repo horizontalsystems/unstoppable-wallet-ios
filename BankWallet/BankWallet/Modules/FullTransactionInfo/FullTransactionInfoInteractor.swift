@@ -4,18 +4,24 @@ class FullTransactionInfoInteractor {
     private let disposeBag = DisposeBag()
     weak var delegate: IFullTransactionInfoInteractorDelegate?
 
-    private let transactionProvider: IFullTransactionInfoProvider
+    private let providerFactory: IFullTransactionInfoProviderFactory
+    private var provider: IFullTransactionInfoProvider?
+
     private let reachabilityManager: IReachabilityManager
     private let pasteboardManager: IPasteboardManager
 
     private let async: Bool
 
-    init(transactionProvider: IFullTransactionInfoProvider, reachabilityManager: IReachabilityManager, pasteboardManager: IPasteboardManager, async: Bool = true) {
-        self.transactionProvider = transactionProvider
+    init(providerFactory: IFullTransactionInfoProviderFactory, reachabilityManager: IReachabilityManager, pasteboardManager: IPasteboardManager, async: Bool = true) {
+        self.providerFactory = providerFactory
         self.reachabilityManager = reachabilityManager
         self.pasteboardManager = pasteboardManager
 
         self.async = async
+    }
+
+    private func showError() {
+        delegate?.onError(providerName: provider?.providerName)
     }
 
 }
@@ -34,22 +40,28 @@ extension FullTransactionInfoInteractor: IFullTransactionInfoInteractor {
         signal.subscribe(onNext: { [weak self] in
             self?.delegate?.onConnectionChanged()
         }).disposed(by: disposeBag)
+
+        // changeProviderSignal.onNext() -> delegate.didLoadRestart()
+    }
+
+    func updateProvider(for coinCode: String) {
+        provider = providerFactory.provider(for: coinCode)
     }
 
     func retrieveTransactionInfo(transactionHash: String) {
-        transactionProvider.retrieveTransactionInfo(transactionHash: transactionHash).subscribe(onNext: { [weak self] record in
+        provider?.retrieveTransactionInfo(transactionHash: transactionHash).subscribe(onNext: { [weak self] record in
             if let record = record {
                 self?.delegate?.didReceive(transactionRecord: record)
             } else {
-                self?.delegate?.onError(providerName: self?.transactionProvider.providerName)
+                self?.showError()
             }
         }, onError: { [weak self] _ in
-            self?.delegate?.onError(providerName: self?.transactionProvider.providerName)
+            self?.showError()
         }).disposed(by: disposeBag)
     }
 
-    func url(for hash: String) -> String {
-        return transactionProvider.url(for: hash)
+    func url(for hash: String) -> String? {
+        return provider?.url(for: hash)
     }
 
     func copyToPasteboard(value: String) {

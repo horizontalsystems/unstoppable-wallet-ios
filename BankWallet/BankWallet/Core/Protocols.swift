@@ -14,6 +14,8 @@ protocol IRealmFactory {
 protocol ILocalStorage: class {
     var isBackedUp: Bool { get set }
     var baseCurrencyCode: String? { get set }
+    var baseBitcoinProvider: String? { get set }
+    var baseEthereumProvider: String? { get set }
     var lightMode: Bool { get set }
     var iUnderstand: Bool { get set }
     var isBiometricOn: Bool { get set }
@@ -229,6 +231,19 @@ protocol ICurrencyManager {
     func setBaseCurrency(code: String)
 }
 
+protocol IFullTransactionDataProviderManager {
+    var dataProviderUpdatedSignal: Signal { get }
+
+    func providers(for coinCode: String) -> [IProvider]
+    func baseProvider(for coinCode: String) -> IProvider
+    func setBaseProvider(name: String, for coinCode: String)
+
+    func bitcoin(for name: String) -> IBitcoinForksProvider
+    func bitcoinCash(for name: String) -> IBitcoinForksProvider
+    func ethereum(for name: String) -> IEthereumForksProvider
+
+}
+
 protocol IReachabilityManager {
     var isReachable: Bool { get }
     var reachabilitySignal: Signal { get }
@@ -271,6 +286,7 @@ protocol IFullTransactionInfoProviderFactory {
 }
 
 protocol ISettingsProviderMap {
+    func providers(for coinCode: String) -> [IProvider]
     func bitcoin(for name: String) -> IBitcoinForksProvider
     func bitcoinCash(for name: String) -> IBitcoinForksProvider
     func ethereum(for name: String) -> IEthereumForksProvider
