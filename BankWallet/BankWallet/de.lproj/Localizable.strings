@@ -90,22 +90,22 @@
 "tx_info.from_hash" = "Von";
 "tx_info.to_hash" = "An";
 "tx_info.alert_close" = "Schließen";
-"tx_info.button_more" = "More";
+"tx_info.button_more" = "Mehr";
 
 // Full Info
 
-"full_info.title" = "Transaction";
+"full_info.title" = "Transaktion";
 "full_info.time" = "Zeit";
 "full_info.block" = "Block";
 "full_info.confirmations" = "Bestätigungen";
 "full_info.size" = "Größe";
 "full_info.fee" = "Gebühr";
 "full_info.rate" = "Rate";
-"full_info.inputs" = "Inputs";
-"full_info.outputs" = "Outputs";
+"full_info.inputs" = "Eingänge";
+"full_info.outputs" = "Ausgänge";
 "full_info.source" = "Source";
-"full_info.from" = "From";
-"full_info.to" = "To";
+"full_info.from" = "Von";
+"full_info.to" = "An";
 
 "full_info.gas_limit" = "Gas Limit";
 "full_info.gas_used" = "Gas Used";
