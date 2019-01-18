@@ -1,7 +1,7 @@
 import UIKit
 
 class TransactionInfoDescriptionTheme {
-    static let middleMargin: CGFloat = 8
+    static let horizontalMargin: CGFloat = 8
     static let verticalMargin: CGFloat = 8
 
     static let buttonCornerRadius: CGFloat = 4

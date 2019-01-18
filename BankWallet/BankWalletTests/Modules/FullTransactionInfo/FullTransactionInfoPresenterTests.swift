@@ -14,6 +14,8 @@ class FullTransactionInfoPresenterTests: XCTestCase {
     private var fullUrl: String!
     private var transactionRecord: FullTransactionRecord!
 
+    private let  coinCode: String = "BTC"
+
     override func setUp() {
         super.setUp()
 
@@ -43,6 +45,7 @@ class FullTransactionInfoPresenterTests: XCTestCase {
         mockRouter = MockIFullTransactionInfoRouter()
         stub(mockRouter) { mock in
             when(mock.open(url: any())).thenDoNothing()
+            when(mock.openProviderSettings(coinCode: any())).thenDoNothing()
             when(mock.share(value: any())).thenDoNothing()
             when(mock.close()).thenDoNothing()
         }
@@ -52,6 +55,7 @@ class FullTransactionInfoPresenterTests: XCTestCase {
             when(mock.reachableConnection.get).thenReturn(true)
             when(mock.didLoad()).thenDoNothing()
             when(mock.url(for: any())).thenReturn(fullUrl)
+            when(mock.updateProvider(for: any())).thenDoNothing()
             when(mock.retrieveTransactionInfo(transactionHash: any())).thenDoNothing()
             when(mock.copyToPasteboard(value: any())).thenDoNothing()
         }
@@ -59,6 +63,7 @@ class FullTransactionInfoPresenterTests: XCTestCase {
         mockState = MockIFullTransactionInfoState()
         stub(mockState) { mock in
             when(mock.transactionHash.get).thenReturn(transactionHash)
+            when(mock.coinCode.get).thenReturn(coinCode)
             when(mock.transactionRecord.get).thenReturn(transactionRecord)
             when(mock.set(transactionRecord: any())).thenDoNothing()
         }
@@ -84,7 +89,19 @@ class FullTransactionInfoPresenterTests: XCTestCase {
     func testDidLoad() {
         presenter.viewDidLoad()
 
+        verify(mockInteractor).updateProvider(for: coinCode)
         verify(mockInteractor).didLoad()
+        verify(mockView).showLoading()
+        verify(mockInteractor).retrieveTransactionInfo(transactionHash: transactionHash)
+    }
+
+    func testOnProviderChanged() {
+        presenter.onProviderChanged()
+
+        verify(mockState).set(transactionRecord: equal(to: nil))
+        verify(mockView).reload()
+
+        verify(mockInteractor).updateProvider(for: coinCode)
         verify(mockView).showLoading()
         verify(mockInteractor).retrieveTransactionInfo(transactionHash: transactionHash)
     }
@@ -122,24 +139,21 @@ class FullTransactionInfoPresenterTests: XCTestCase {
         let item = FullTransactionItem(title: "test_item", value: nil, clickable: true, url: value)
         presenter.onTap(item: item)
 
-        verify(mockRouter).open(url: value)
+        verify(mockRouter).open(url: equal(to: value))
 
         verifyNoMoreInteractions(mockRouter)
     }
 
-    func testOnTapResourceCell() {
-        presenter.onTapResourceCell()
+    func testOnTapChangeResource() {
+        presenter.onTapChangeResource()
+        verify(mockRouter).openProviderSettings(coinCode: coinCode)
+    }
 
+    func testOnTapProviderLink() {
+        presenter.onTapProviderLink()
         verify(mockRouter).open(url: equal(to: fullUrl))
     }
 
-    func testOpenUrl() {
-        let url = "test_url"
-        presenter.onOpen(url: url)
-
-        verify(mockRouter).open(url: equal(to: url))
-    }
-    
     func testClose() {
         presenter.onClose()
         

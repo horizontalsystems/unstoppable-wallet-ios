@@ -20,40 +20,44 @@ protocol IFullTransactionInfoViewDelegate {
 
     func onRetryLoad()
     func onTap(item: FullTransactionItem)
-    func onTapResourceCell()
+    func onTapChangeResource()
+    func onTapProviderLink()
     func onShare()
     func onClose()
 }
 
 protocol IFullTransactionInfoState {
     var transactionRecord: FullTransactionRecord? { get }
+    var coinCode: String { get }
     var transactionHash: String { get }
 
-    func set(transactionRecord: FullTransactionRecord)
+    func set(transactionRecord: FullTransactionRecord?)
 }
 
 protocol IFullTransactionInfoInteractor {
     var reachableConnection: Bool { get }
 
     func didLoad()
+    func updateProvider(for coinCode: String)
 
     func retrieveTransactionInfo(transactionHash: String)
 
-    func url(for hash: String) -> String
+    func url(for hash: String) -> String?
     func copyToPasteboard(value: String)
 }
 
 protocol IFullTransactionInfoInteractorDelegate: class {
+    func onProviderChanged()
+
     func didReceive(transactionRecord: FullTransactionRecord)
     func onError(providerName: String?)
 
     func onConnectionChanged()
-
-    func onOpen(url: String)
 }
 
 protocol IFullTransactionInfoRouter {
-    func open(url: String)
+    func openProviderSettings(coinCode: String)
+    func open(url: String?)
     func share(value: String)
     func close()
 }

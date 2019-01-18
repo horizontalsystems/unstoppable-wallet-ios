@@ -24,8 +24,10 @@ class FullTransactionInfoViewController: UIViewController, SectionsDataSource {
 
         super.init(nibName: nil, bundle: nil)
 
-        errorView = RequestErrorView(subtitle: "full_info.error.subtitle", buttonText: "full_info.error.retry", onTapButton: { [weak self] in
+        errorView = RequestErrorView(subtitle: "full_info.error.subtitle", buttonText: "full_info.error.retry", linkText: "full_info.error.change_source".localized, onTapButton: { [weak self] in
             self?.onRetry()
+        }, onTapLink: { [weak self] in
+            self?.onTapChangeResource()
         })
     }
 
@@ -47,7 +49,8 @@ class FullTransactionInfoViewController: UIViewController, SectionsDataSource {
         }
 
         tableView.registerCell(forClass: FullTransactionInfoTextCell.self)
-        tableView.registerCell(forClass: SettingsCell.self)
+        tableView.registerCell(forClass: FullTransactionProviderLinkCell.self)
+        tableView.registerCell(forClass: SettingsRightLabelCell.self)
         tableView.registerHeaderFooter(forClass: FullTransactionHeaderView.self)
         tableView.sectionDataSource = self
         tableView.separatorColor = SettingsTheme.separatorColor
@@ -147,15 +150,19 @@ class FullTransactionInfoViewController: UIViewController, SectionsDataSource {
         }
 
         if let providerName = delegate.providerName {
-            let header: ViewState<FullTransactionHeaderView> = .cellType(hash: "resource_\(providerName)", binder: { view in
-                view.bind(title: "full_info.subtitle_provider".localized)
-            }, dynamicHeight: { _ in FullTransactionInfoTheme.sectionHeight })
-            sections.append(Section(id: "resource_\(providerName)", headerState: header, footerState: .marginColor(height: FullTransactionInfoTheme.sectionEmptyMargin, color: .clear), rows: [
-                Row<SettingsCell>(id: "resource", height: FullTransactionInfoTheme.cellHeight, autoDeselect: true, bind: { cell, _ in
-                    cell.bind(titleIcon: nil, title: providerName, titleColor: FullTransactionInfoTheme.resourceTitleColor, showDisclosure: true, last: true)
+            sections.append(Section(id: "resource_\(providerName)", headerState: .marginColor(height: FullTransactionInfoTheme.sectionEmptyMargin, color: .clear), footerState: .marginColor(height: FullTransactionInfoTheme.sectionEmptyMargin, color: .clear), rows: [
+                Row<SettingsRightLabelCell>(id: "resource", height: FullTransactionInfoTheme.cellHeight, autoDeselect: true, bind: { cell, _ in
+                    cell.bind(titleIcon: nil, title: "Source", rightText: providerName, showDisclosure: true, last: true)
                     cell.titleLabel.font = FullTransactionInfoTheme.resourceTitleFont
                 }, action: { [weak self] cell in
-                    self?.onTapResourceCell()
+                    self?.onTapChangeResource()
+                })
+            ]))
+            sections.append(Section(id: "link_provider", footerState: .margin(height: FullTransactionInfoTheme.linkCellBottomMargin), rows: [
+                Row<FullTransactionProviderLinkCell>(id: "link_cell", height: FullTransactionInfoTheme.linkCellHeight, bind: { cell, _ in
+                    cell.bind(text: providerName) { [weak self] in
+                        self?.onTapProviderLink()
+                    }
                 })
             ]))
         }
@@ -166,8 +173,12 @@ class FullTransactionInfoViewController: UIViewController, SectionsDataSource {
         delegate.onTap(item: item)
     }
 
-    func onTapResourceCell() {
-        delegate.onTapResourceCell()
+    func onTapChangeResource() {
+        delegate.onTapChangeResource()
+    }
+
+    func onTapProviderLink() {
+        delegate.onTapProviderLink()
     }
 
     @objc func onClose() {

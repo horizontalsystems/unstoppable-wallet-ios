@@ -49,11 +49,3 @@ extension IEthereumResponse {
         return 1_000_000_000
     }
 }
-
-protocol IBitcoinForksProvider: IProvider {
-    func convert(json: [String: Any]) -> IBitcoinResponse?
-}
-
-protocol IEthereumForksProvider: IProvider {
-    func convert(json: [String: Any]) -> IEthereumResponse?
-}

@@ -17,5 +17,6 @@ class RequestErrorTheme {
     static let titleMargin: CGFloat = 24
     static let subtitleMargin: CGFloat = 4
     static let buttonMargin: CGFloat = 16
+    static let linkMargin: CGFloat = 24
 
 }

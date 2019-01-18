@@ -4,18 +4,26 @@ class FullTransactionInfoInteractor {
     private let disposeBag = DisposeBag()
     weak var delegate: IFullTransactionInfoInteractorDelegate?
 
-    private let transactionProvider: IFullTransactionInfoProvider
+    private let providerFactory: IFullTransactionInfoProviderFactory
+    private var provider: IFullTransactionInfoProvider?
+
     private let reachabilityManager: IReachabilityManager
+    private let dataProviderManager: IFullTransactionDataProviderManager
     private let pasteboardManager: IPasteboardManager
 
     private let async: Bool
 
-    init(transactionProvider: IFullTransactionInfoProvider, reachabilityManager: IReachabilityManager, pasteboardManager: IPasteboardManager, async: Bool = true) {
-        self.transactionProvider = transactionProvider
+    init(providerFactory: IFullTransactionInfoProviderFactory, reachabilityManager: IReachabilityManager, dataProviderManager: IFullTransactionDataProviderManager, pasteboardManager: IPasteboardManager, async: Bool = true) {
+        self.providerFactory = providerFactory
         self.reachabilityManager = reachabilityManager
+        self.dataProviderManager = dataProviderManager
         self.pasteboardManager = pasteboardManager
 
         self.async = async
+    }
+
+    private func showError() {
+        delegate?.onError(providerName: provider?.providerName)
     }
 
 }
@@ -25,31 +33,47 @@ extension FullTransactionInfoInteractor: IFullTransactionInfoInteractor {
     var reachableConnection: Bool { return reachabilityManager.isReachable }
 
     func didLoad() {
-        var signal: Observable = reachabilityManager.reachabilitySignal.asObserver()
+        //  Reachability Manager Signal
+        var reachabilitySignal: Observable = reachabilityManager.reachabilitySignal.asObserver()
 
         if async {
-            signal = signal.subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background)).observeOn(MainScheduler.instance)
+            reachabilitySignal = reachabilitySignal.subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background)).observeOn(MainScheduler.instance)
         }
 
-        signal.subscribe(onNext: { [weak self] in
+        reachabilitySignal.subscribe(onNext: { [weak self] in
             self?.delegate?.onConnectionChanged()
         }).disposed(by: disposeBag)
+
+        //  DataProvider Manager Signal
+        var dataProviderUpdatedSignal: Observable = dataProviderManager.dataProviderUpdatedSignal.asObserver()
+
+        if async {
+            dataProviderUpdatedSignal = dataProviderUpdatedSignal.subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background)).observeOn(MainScheduler.instance)
+        }
+
+        dataProviderUpdatedSignal.subscribe(onNext: { [weak self] in
+            self?.delegate?.onProviderChanged()
+        }).disposed(by: disposeBag)
+    }
+
+    func updateProvider(for coinCode: String) {
+        provider = providerFactory.provider(for: coinCode)
     }
 
     func retrieveTransactionInfo(transactionHash: String) {
-        transactionProvider.retrieveTransactionInfo(transactionHash: transactionHash).subscribe(onNext: { [weak self] record in
+        provider?.retrieveTransactionInfo(transactionHash: transactionHash).subscribe(onNext: { [weak self] record in
             if let record = record {
                 self?.delegate?.didReceive(transactionRecord: record)
             } else {
-                self?.delegate?.onError(providerName: self?.transactionProvider.providerName)
+                self?.showError()
             }
         }, onError: { [weak self] _ in
-            self?.delegate?.onError(providerName: self?.transactionProvider.providerName)
+            self?.showError()
         }).disposed(by: disposeBag)
     }
 
-    func url(for hash: String) -> String {
-        return transactionProvider.url(for: hash)
+    func url(for hash: String) -> String? {
+        return provider?.url(for: hash)
     }
 
     func copyToPasteboard(value: String) {
