@@ -90,7 +90,7 @@
 "tx_info.from_hash" = "De";
 "tx_info.to_hash" = "À";
 "tx_info.alert_close" = "Fermer";
-"tx_info.button_more" = "More";
+"tx_info.button_more" = "Plus";
 
 // Full Info
 
@@ -101,11 +101,11 @@
 "full_info.size" = "Taille";
 "full_info.fee" = "Frais";
 "full_info.rate" = "Rate";
-"full_info.inputs" = "Inputs";
-"full_info.outputs" = "Outputs";
+"full_info.inputs" = "Entrées";
+"full_info.outputs" = "Sorties";
 "full_info.source" = "Source";
-"full_info.from" = "From";
-"full_info.to" = "To";
+"full_info.from" = "De";
+"full_info.to" = "À";
 
 "full_info.gas_limit" = "Gas Limit";
 "full_info.gas_used" = "Gas Used";
