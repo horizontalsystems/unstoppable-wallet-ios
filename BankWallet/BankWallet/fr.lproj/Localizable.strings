@@ -90,35 +90,34 @@
 "tx_info.from_hash" = "De";
 "tx_info.to_hash" = "À";
 "tx_info.alert_close" = "Fermer";
-"tx_info.button_more" = "Info Complète";
+"tx_info.button_more" = "More";
 
 // Full Info
-"full_info.title" = "Info Complète";
-"full_info.id" = "ID";
+
+"full_info.title" = "Transaction";
 "full_info.time" = "Date";
 "full_info.block" = "Bloc";
 "full_info.confirmations" = "Confirmation";
-"full_info.total_input" = "Total des entrées";
-"full_info.total_output" = "Total des sorties";
 "full_info.size" = "Taille";
 "full_info.fee" = "Frais";
-"full_info.fee_per_byte" = "Frais par octet";
-"full_info.subtitle_inputs" = "Entrées";
-"full_info.subtitle_outputs" = "Sorties";
-"full_info.subtitle_provider" = "Data Provider";
-"full_info.no_address" = "No Available";
-"full_info.sat_byte" = "sat/B";
-"full_info.fee_rate" = "Fee Rate";
-"full_info.bytes" = "bytes";
+"full_info.rate" = "Rate";
+"full_info.inputs" = "Inputs";
+"full_info.outputs" = "Outputs";
+"full_info.source" = "Source";
+"full_info.from" = "From";
+"full_info.to" = "To";
+
 "full_info.gas_limit" = "Gas Limit";
 "full_info.gas_used" = "Gas Used";
 "full_info.gas_price" = "Gas Price";
-"full_info.nonce" = "Nonce";
-"full_info.value" = "Value";
-"full_info.from" = "From";
-"full_info.to" = "To";
+
+"full_info.source.title" = "Source";
+"full_info.source.online" = "online";
+"full_info.source.offline" = "offline";
+
 "full_info.error.subtitle" = "offline";
 "full_info.error.retry" = "Retry";
+"full_info.error.change_source" = "Change Source";
 
 // Settings
 
