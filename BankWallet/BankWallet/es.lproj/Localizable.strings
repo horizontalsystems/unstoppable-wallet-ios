@@ -115,8 +115,8 @@
 "full_info.gas_price" = "Gas Price";
 "full_info.nonce" = "Nonce";
 "full_info.value" = "Value";
-"full_info.from" = "From";
-"full_info.to" = "To";
+"full_info.from" = "Desde ";
+"full_info.to" = "Para";
 "full_info.error.subtitle" = "offline";
 "full_info.error.retry" = "Retry";
 
