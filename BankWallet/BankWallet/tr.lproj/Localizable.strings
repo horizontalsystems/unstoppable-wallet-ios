@@ -90,19 +90,19 @@
 "tx_info.from_hash" = "Gönderen";
 "tx_info.to_hash" = "Alan";
 "tx_info.alert_close" = "Kapat";
-"tx_info.button_more" = "More";
+"tx_info.button_more" = "Daha fazlası";
 
 // Full Info
 
-"full_info.title" = "Transaction";
+"full_info.title" = "Hesap işlemi";
 "full_info.time" = "Tarih";
 "full_info.block" = "Blok ";
 "full_info.confirmations" = "Onaylama";
 "full_info.size" = "Boyut";
 "full_info.fee" = "Masraf";
 "full_info.rate" = "Rate";
-"full_info.inputs" = "Inputs";
-"full_info.outputs" = "Outputs";
+"full_info.inputs" = "Girişler";
+"full_info.outputs" = "Çıkışlar";
 "full_info.source" = "Source";
 "full_info.from" = "From";
 "full_info.to" = "To";
