@@ -90,19 +90,19 @@
 "tx_info.from_hash" = "Desde ";
 "tx_info.to_hash" = "Para";
 "tx_info.alert_close" = "Cerrar";
-"tx_info.button_more" = "More";
+"tx_info.button_more" = "Más";
 
 // Full Info
 
-"full_info.title" = "Transaction";
+"full_info.title" = "Transacción";
 "full_info.time" = "Hora";
 "full_info.block" = "Bloquear";
 "full_info.confirmations" = "Confirmaciones";
 "full_info.size" = "Tamaño";
 "full_info.fee" = "Comisión";
 "full_info.rate" = "Rate";
-"full_info.inputs" = "Inputs";
-"full_info.outputs" = "Outputs";
+"full_info.inputs" = "Aportaciones";
+"full_info.outputs" = "Rendimientos";
 "full_info.source" = "Source";
 "full_info.from" = "Desde ";
 "full_info.to" = "Para";
