@@ -90,35 +90,34 @@
 "tx_info.from_hash" = "发件人";
 "tx_info.to_hash" = "收件人";
 "tx_info.alert_close" = "关闭";
-"tx_info.button_more" = "完整信息";
+"tx_info.button_more" = "More";
 
 // Full Info
-"full_info.title" = "完整信息";
-"full_info.id" = "ID";
+
+"full_info.title" = "Transaction";
 "full_info.time" = "时间";
 "full_info.block" = "Block";
 "full_info.confirmations" = "确认框";
-"full_info.total_input" = "转入总额";
-"full_info.total_output" = "转出总额";
 "full_info.size" = "Size";
 "full_info.fee" = "费用";
-"full_info.fee_per_byte" = "Fee per byte";
-"full_info.subtitle_inputs" = "收入";
-"full_info.subtitle_outputs" = "转出";
-"full_info.subtitle_provider" = "数据提供者";
-"full_info.no_address" = "No Available";
-"full_info.sat_byte" = "sat/B";
-"full_info.fee_rate" = "Fee Rate";
-"full_info.bytes" = "bytes";
+"full_info.rate" = "Rate";
+"full_info.inputs" = "Inputs";
+"full_info.outputs" = "Outputs";
+"full_info.source" = "Source";
+"full_info.from" = "From";
+"full_info.to" = "To";
+
 "full_info.gas_limit" = "Gas Limit";
 "full_info.gas_used" = "Gas Used";
 "full_info.gas_price" = "Gas Price";
-"full_info.nonce" = "Nonce";
-"full_info.value" = "Value";
-"full_info.from" = "From";
-"full_info.to" = "To";
+
+"full_info.source.title" = "Source";
+"full_info.source.online" = "online";
+"full_info.source.offline" = "offline";
+
 "full_info.error.subtitle" = "offline";
 "full_info.error.retry" = "Retry";
+"full_info.error.change_source" = "Change Source";
 
 // Settings
 
