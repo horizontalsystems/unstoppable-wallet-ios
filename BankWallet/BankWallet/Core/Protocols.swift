@@ -244,6 +244,14 @@ protocol IFullTransactionDataProviderManager {
 
 }
 
+protocol IBitcoinForksProvider: IProvider {
+    func convert(json: [String: Any]) -> IBitcoinResponse?
+}
+
+protocol IEthereumForksProvider: IProvider {
+    func convert(json: [String: Any]) -> IEthereumResponse?
+}
+
 protocol IReachabilityManager {
     var isReachable: Bool { get }
     var reachabilitySignal: Signal { get }

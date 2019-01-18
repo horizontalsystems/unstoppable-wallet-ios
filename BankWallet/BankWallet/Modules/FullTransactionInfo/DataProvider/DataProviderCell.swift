@@ -41,10 +41,10 @@ class DataProviderCell: UITableViewCell {
     func bind(title: String, online: Bool, selected: Bool) {
         titleLabel.text = title
         if online {
-            subtitleLabel.text = "settings_provider.online".localized
+            subtitleLabel.text = "full_info.source.online".localized
             subtitleLabel.textColor = SettingsTheme.onlineSubtitleColor
         } else {
-            subtitleLabel.text = "settings_provider.offline".localized
+            subtitleLabel.text = "full_info.source.offline".localized
             subtitleLabel.textColor = SettingsTheme.offlineSubtitleColor
         }
 

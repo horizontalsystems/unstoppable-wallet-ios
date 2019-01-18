@@ -561,6 +561,7 @@
 		58AAA688351BEAF1B154C0F8 /* BtcComProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA58097EB8413FEA75EE8 /* BtcComProvider.swift */; };
 		58AAA6A8CFD4F5363036B823 /* FullTransactionInfoState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA90F7BDC0FD487A0C495 /* FullTransactionInfoState.swift */; };
 		58AAA6ECE042DAD0D4137ECA /* FullTransactionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAC123E3138007B4D6E05 /* FullTransactionHeaderView.swift */; };
+		58AAA70DA6DB5AE33CA2DBD9 /* FullTransactionInfoProviderFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA4D67CF8410B7F073319 /* FullTransactionInfoProviderFactoryTests.swift */; };
 		58AAA71CA53B53E8FE695DF3 /* FullTransactionInfoProviderFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA72A3BACDB574838A8CC /* FullTransactionInfoProviderFactory.swift */; };
 		58AAA7253F95C8ADECB77A7F /* EtherscanProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA07E7147F10E59DC1CED /* EtherscanProvider.swift */; };
 		58AAA73C535D82C9DD991417 /* FullTransactionInfoInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA12F81B0D2587DB52D94 /* FullTransactionInfoInteractorTests.swift */; };
@@ -1392,6 +1393,7 @@
 		58AAA452B368DF573BDB2E41 /* RequestErrorTheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestErrorTheme.swift; sourceTree = "<group>"; };
 		58AAA4679CB188876817185B /* FullTransactionInfoProviderTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FullTransactionInfoProviderTests.swift; sourceTree = "<group>"; };
 		58AAA4B3E970540EE2F76C6E /* DataProviderSettingsInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataProviderSettingsInteractor.swift; sourceTree = "<group>"; };
+		58AAA4D67CF8410B7F073319 /* FullTransactionInfoProviderFactoryTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FullTransactionInfoProviderFactoryTests.swift; sourceTree = "<group>"; };
 		58AAA56AA98F7B0DB2E97971 /* DataProviderSettingsRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataProviderSettingsRouter.swift; sourceTree = "<group>"; };
 		58AAA58097EB8413FEA75EE8 /* BtcComProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BtcComProvider.swift; sourceTree = "<group>"; };
 		58AAA687FC0253AD175BA756 /* FullTransactionInfoInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FullTransactionInfoInteractor.swift; sourceTree = "<group>"; };
@@ -2371,6 +2373,7 @@
 				58AAA4679CB188876817185B /* FullTransactionInfoProviderTests.swift */,
 				58AAA2F49CD663006371EF2A /* FullTransactionInfoStateTests.swift */,
 				58AAA36F24D9B30298D67BCB /* FullTransactionInfoRouterTests.swift */,
+				58AAA4D67CF8410B7F073319 /* FullTransactionInfoProviderFactoryTests.swift */,
 			);
 			path = FullTransactionInfo;
 			sourceTree = "<group>";
@@ -3430,6 +3433,7 @@
 				58AAAD724328C58677E1FC92 /* DataProviderSettingsInteractorTests.swift in Sources */,
 				58AAAC27D62C87BEB5F5D633 /* DataProviderSettingsPresenterTests.swift in Sources */,
 				58AAA23E15CBC7EBB94086E2 /* FullTransactionDataProviderManagerTests.swift in Sources */,
+				58AAA70DA6DB5AE33CA2DBD9 /* FullTransactionInfoProviderFactoryTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

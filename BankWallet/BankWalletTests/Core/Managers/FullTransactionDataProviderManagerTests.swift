@@ -68,6 +68,20 @@ class FullTransactionDataProviderManagerTests: XCTestCase {
         XCTAssertEqual(providerNames, ethereumProviderNames)
     }
 
+    func testTestProviders() {
+        stub(mockAppConfigProvider) { mock in
+            when(mock.testMode.get).thenReturn(true)
+        }
+        var providerUrls = manager.providers(for: "BTC").map { $0.url(for: "test") }
+        XCTAssertEqual(providerUrls, ["http://btc-testnet.horizontalsystems.xyz/tx/test"])
+
+        providerUrls = manager.providers(for: "BCH").map { $0.url(for: "test") }
+        XCTAssertEqual(providerUrls, ["http://bch-testnet.horizontalsystems.xyz/tx/test"])
+
+        providerUrls = manager.providers(for: "ETH").map { $0.url(for: "test") }
+        XCTAssertEqual(providerUrls, ["http://eth-testnet.horizontalsystems.xyz/tx/test"])
+    }
+
     func testBaseProvider() {
         var baseProviderName = manager.baseProvider(for: "BTC").name
         XCTAssertEqual(baseProviderName, firstName)

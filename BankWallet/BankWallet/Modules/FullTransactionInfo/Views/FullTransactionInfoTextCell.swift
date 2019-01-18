@@ -2,9 +2,10 @@ import UIKit
 import SnapKit
 
 class FullTransactionInfoTextCell: UITableViewCell {
-    var titleLabel = UILabel()
-    let descriptionView = TransactionInfoDescriptionView()
-    var separatorView = UIView()
+    private let iconImageView = UIImageView()
+    private let titleLabel = UILabel()
+    private let descriptionView = TransactionInfoDescriptionView()
+    let separatorView = UIView()
 
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -12,6 +13,7 @@ class FullTransactionInfoTextCell: UITableViewCell {
         contentView.backgroundColor = .clear
         selectionStyle = .none
 
+        contentView.addSubview(iconImageView)
         contentView.addSubview(titleLabel)
         titleLabel.font = FullTransactionInfoTheme.font
         titleLabel.textColor = FullTransactionInfoTheme.titleColor
@@ -19,7 +21,13 @@ class FullTransactionInfoTextCell: UITableViewCell {
         titleLabel.setContentCompressionResistancePriority(.required, for: .horizontal)
 
         titleLabel.snp.makeConstraints { maker in
+            maker.centerY.equalToSuperview()
+        }
+        iconImageView.setContentHuggingPriority(.required, for: .horizontal)
+        contentView.addSubview(titleLabel)
+        iconImageView.snp.makeConstraints { maker in
             maker.leading.equalTo(contentView.snp.leadingMargin)
+            maker.trailing.equalTo(titleLabel.snp.leading).offset(-FullTransactionInfoTheme.iconRightMargin)
             maker.centerY.equalToSuperview()
         }
         contentView.addSubview(descriptionView)
@@ -41,9 +49,25 @@ class FullTransactionInfoTextCell: UITableViewCell {
     }
 
     func bind(item: FullTransactionItem, last: Bool = false, onTap: (() -> ())? = nil) {
+        if let icon = item.icon {
+            iconImageView.image = UIImage(named: icon)?.tinted(with: TransactionInfoDescriptionTheme.buttonIconColor)
+            iconImageView.snp.remakeConstraints { maker in
+                maker.leading.equalTo(contentView.snp.leadingMargin)
+                maker.trailing.equalTo(titleLabel.snp.leading).offset(-FullTransactionInfoTheme.iconRightMargin)
+                maker.centerY.equalToSuperview()
+            }
+        } else {
+            iconImageView.snp.remakeConstraints { maker in
+                maker.leading.equalTo(contentView.snp.leadingMargin)
+                maker.trailing.equalTo(titleLabel.snp.leading)
+                maker.width.equalTo(0)
+                maker.centerY.equalToSuperview()
+            }
+        }
+        contentView.updateConstraintsIfNeeded()
         titleLabel.text = item.title
         separatorView.set(hidden: last)
-        descriptionView.bind(value: item.value, font: FullTransactionInfoTheme.font, color: FullTransactionInfoTheme.descriptionColor, showExtra: item.showExtra, onTap: onTap)
+        descriptionView.bind(value: item.value, font: FullTransactionInfoTheme.font, color: item.titleColor ?? FullTransactionInfoTheme.descriptionColor, showExtra: item.showExtra, onTap: onTap)
     }
 
 }

@@ -1,24 +1,27 @@
 import RxSwift
 
 class FullTransactionDataProviderManager {
-    static var bitcoinProviders: [IBitcoinForksProvider] {
-        return [HorSysBitcoinProvider(testMode: false),
-                BlockChairBitcoinProvider(),
-                BlockExplorerBitcoinProvider(),
-                BtcComBitcoinProvider()
+    private var bitcoinProviders: [IBitcoinForksProvider] {
+        return appConfigProvider.testMode ? [HorSysBitcoinProvider(testMode: true)] : [
+            HorSysBitcoinProvider(testMode: false),
+            BlockChairBitcoinProvider(),
+            BlockExplorerBitcoinProvider(),
+            BtcComBitcoinProvider()
         ]
     }
-    static var bitcoinCashProviders: [IBitcoinForksProvider] {
-        return [HorSysBitcoinCashProvider(testMode: false),
-                BlockChairBitcoinCashProvider(),
-                BlockExplorerBitcoinCashProvider(),
-                BtcComBitcoinCashProvider()
+    private var bitcoinCashProviders: [IBitcoinForksProvider] {
+        return appConfigProvider.testMode ? [HorSysBitcoinCashProvider(testMode: true)] : [
+            HorSysBitcoinCashProvider(testMode: false),
+            BlockChairBitcoinCashProvider(),
+            BlockExplorerBitcoinCashProvider(),
+            BtcComBitcoinCashProvider()
         ]
     }
-    static var ethereumProviders: [IEthereumForksProvider] {
-        return [HorSysEthereumProvider(testMode: false),
-                EtherscanEthereumProvider(),
-                BlockChairEthereumProvider()
+    private var ethereumProviders: [IEthereumForksProvider] {
+        return appConfigProvider.testMode ? [HorSysEthereumProvider(testMode: true)] : [
+            HorSysEthereumProvider(testMode: false),
+            EtherscanEthereumProvider(),
+            BlockChairEthereumProvider()
         ]
     }
 
@@ -38,19 +41,19 @@ extension FullTransactionDataProviderManager: IFullTransactionDataProviderManage
 
     func providers(for coinCode: String) -> [IProvider] {
         if coinCode.range(of: "BTC") != nil {
-            return FullTransactionDataProviderManager.bitcoinProviders
+            return bitcoinProviders
         } else if coinCode.range(of: "BCH") != nil {
-            return FullTransactionDataProviderManager.bitcoinCashProviders
+            return bitcoinCashProviders
         }
-        return FullTransactionDataProviderManager.ethereumProviders
+        return ethereumProviders
     }
 
     func baseProvider(for coinCode: String) -> IProvider {
         if coinCode.range(of: "ETH") != nil {
-            let name = localStorage.baseEthereumProvider ?? FullTransactionDataProviderManager.ethereumProviders[0].name
+            let name = localStorage.baseEthereumProvider ?? ethereumProviders[0].name
             return ethereum(for: name)
         }
-        let name = localStorage.baseBitcoinProvider ?? FullTransactionDataProviderManager.bitcoinProviders[0].name
+        let name = localStorage.baseBitcoinProvider ?? bitcoinProviders[0].name
         return bitcoin(for: name)
     }
 
@@ -65,15 +68,18 @@ extension FullTransactionDataProviderManager: IFullTransactionDataProviderManage
     }
 
     func bitcoin(for name: String) -> IBitcoinForksProvider {
-        return FullTransactionDataProviderManager.bitcoinProviders.first(where: { provider in provider.name == name }) ?? HorSysBitcoinProvider(testMode: false)
+        let providers = bitcoinProviders
+        return providers.first(where: { provider in provider.name == name }) ?? providers[0]
     }
 
     func bitcoinCash(for name: String) -> IBitcoinForksProvider {
-        return FullTransactionDataProviderManager.bitcoinCashProviders.first(where: { provider in provider.name == name }) ?? HorSysBitcoinCashProvider(testMode: false)
+        let providers = bitcoinCashProviders
+        return providers.first(where: { provider in provider.name == name }) ?? providers[0]
     }
 
     func ethereum(for name: String) -> IEthereumForksProvider {
-        return FullTransactionDataProviderManager.ethereumProviders.first(where: { provider in provider.name == name }) ?? HorSysEthereumProvider(testMode: false)
+        let providers = ethereumProviders
+        return providers.first(where: { provider in provider.name == name }) ?? providers[0]
     }
 
 }

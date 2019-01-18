@@ -3,7 +3,7 @@ import UIKit
 class FullTransactionInfoTheme {
     static let font = UIFont.cryptoBody2
     static let titleColor = UIColor.cryptoGray
-    static let resourceTitleColor = UIColor.cryptoYellow
+    static let iconColor = UIColor.cryptoGray50
     static let resourceTitleFont = UIFont.cryptoBody2
     static var descriptionColor: UIColor { return .crypto_Bars_Dark }
     static let linkLabelColor = UIColor.crypto_Bars_Dark
@@ -18,6 +18,7 @@ class FullTransactionInfoTheme {
 
     static let margin: CGFloat = 48
     static let cellHeight: CGFloat = 44
+    static let iconRightMargin: CGFloat = 8
     static let linkCellHeight: CGFloat = 36
     static let linkCellHorizontalMargin: CGFloat = 8
     static let linkCellBottomMargin: CGFloat = 72

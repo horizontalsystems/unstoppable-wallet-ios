@@ -46,7 +46,7 @@ class BlockExplorerBitcoinResponse: IBitcoinResponse, ImmutableMappable {
         fee = try? map.value("fees")
 
         if let fee = fee, let size = size {
-            feePerByte = fee / Double(size)
+            feePerByte = fee * btcRate / Double(size)
         }
 
         if let vInputs: [[String: Any]] = try? map.value("vin") {

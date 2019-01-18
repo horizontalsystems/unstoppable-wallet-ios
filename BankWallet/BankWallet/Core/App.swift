@@ -105,7 +105,7 @@ class App {
         authManager.transactionsManager = transactionManager
 
         dataProviderManager = FullTransactionDataProviderManager(localStorage: localStorage, appConfigProvider: appConfigProvider)
-        fullTransactionInfoProviderFactory = FullTransactionInfoProviderFactory(apiManager: networkManager, appConfigProvider: appConfigProvider, dataProviderManager: dataProviderManager, localStorage: localStorage)
+        fullTransactionInfoProviderFactory = FullTransactionInfoProviderFactory(apiManager: networkManager, dataProviderManager: dataProviderManager)
     }
 
 }

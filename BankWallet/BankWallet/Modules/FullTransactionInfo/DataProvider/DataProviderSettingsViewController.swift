@@ -27,7 +27,7 @@ class DataProviderSettingsViewController: UIViewController, SectionsDataSource {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        title = "settings_provider.title".localized
+        title = "full_info.source.title".localized
 
         tableView.backgroundColor = .clear
         view.addSubview(tableView)
