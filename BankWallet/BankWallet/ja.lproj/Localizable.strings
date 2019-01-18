@@ -15,7 +15,7 @@
 // Access Camera
 
 "access_camera.message" = "Bank needs access to your camera to scan QR code.\n\nGo to Settings - > Bank and allow access to Camera.";
-"access_camera.settings" = "Settings";
+"access_camera.settings" = "設定";
 "access_camera.cancel" = "キャンセル";
 
 // Guest Page
@@ -89,34 +89,34 @@
 "tx_info.status" = "状況";
 "tx_info.from_hash" = "From";
 "tx_info.to_hash" = "To";
-"tx_info.alert_close" = "Close";
-"tx_info.button_more" = "More";
+"tx_info.alert_close" = "閉じる";
+"tx_info.button_more" = "より";
 
 // Full Info
 
 "full_info.title" = "Transaction";
-"full_info.time" = "Time";
+"full_info.time" = "時間";
 "full_info.block" = "Block";
 "full_info.confirmations" = "Confirmations";
 "full_info.size" = "Size";
-"full_info.fee" = "Fee";
+"full_info.fee" = "料金";
 "full_info.rate" = "Rate";
-"full_info.inputs" = "Inputs";
+"full_info.inputs" = "入力";
 "full_info.outputs" = "Outputs";
 "full_info.source" = "Source";
 "full_info.from" = "From";
 "full_info.to" = "To";
 
-"full_info.gas_limit" = "Gas Price";
+"full_info.gas_limit" = "Gas Limit";
 "full_info.gas_used" = "Gas Used";
 "full_info.gas_price" = "Gas Price";
 
 "full_info.source.title" = "Source";
 "full_info.source.online" = "online";
-"full_info.source.offline" = "offline";
+"full_info.source.offline" = "オフライン";
 
-"full_info.error.subtitle" = "offline";
-"full_info.error.retry" = "Retry";
+"full_info.error.subtitle" = "オフライン";
+"full_info.error.retry" = "リトライ";
 "full_info.error.change_source" = "Change Source";
 
 // Settings
