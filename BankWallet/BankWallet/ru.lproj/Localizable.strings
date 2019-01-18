@@ -90,34 +90,34 @@
 "tx_info.from_hash" = "От";
 "tx_info.to_hash" = "Кому";
 "tx_info.alert_close" = "Закрыть";
-"tx_info.button_more" = "More";
+"tx_info.button_more" = "Ещё";
 
 // Full Info
 
-"full_info.title" = "Transaction";
+"full_info.title" = "Транзакция";
 "full_info.time" = "Время";
 "full_info.block" = "Блок";
 "full_info.confirmations" = "Подтверждения";
 "full_info.size" = "Размер";
 "full_info.fee" = "Комиссия";
-"full_info.rate" = "Rate";
-"full_info.inputs" = "Inputs";
-"full_info.outputs" = "Outputs";
-"full_info.source" = "Source";
-"full_info.from" = "From";
-"full_info.to" = "To";
+"full_info.rate" = "Ставка";
+"full_info.inputs" = "Входы";
+"full_info.outputs" = "Выходы";
+"full_info.source" = "Источник";
+"full_info.from" = "От";
+"full_info.to" = "Кому";
 
 "full_info.gas_limit" = "Gas Limit";
 "full_info.gas_used" = "Gas Used";
 "full_info.gas_price" = "Gas Price";
 
-"full_info.source.title" = "Source";
+"full_info.source.title" = "Источник";
 "full_info.source.online" = "online";
 "full_info.source.offline" = "offline";
 
 "full_info.error.subtitle" = "offline";
 "full_info.error.retry" = "Retry";
-"full_info.error.change_source" = "Change Source";
+"full_info.error.change_source" = "Сменить Источник";
 
 // Settings
 
