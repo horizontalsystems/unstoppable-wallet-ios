@@ -104,8 +104,8 @@
 "full_info.inputs" = "Girişler";
 "full_info.outputs" = "Çıkışlar";
 "full_info.source" = "Source";
-"full_info.from" = "From";
-"full_info.to" = "To";
+"full_info.from" = "Gönderen";
+"full_info.to" = "Alan";
 
 "full_info.gas_limit" = "Gas Limit";
 "full_info.gas_used" = "Gas Used";
