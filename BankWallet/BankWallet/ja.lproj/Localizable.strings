@@ -73,7 +73,7 @@
 "send.paste_button" = "Paste";
 "send.amount_placeholder" = "Amount";
 "send.fee" = "料金";
-"send.total" = "Total";
+"send.total" = "合計";
 
 // Transactions
 
@@ -84,7 +84,7 @@
 
 // Transaction Info
 
-"tx_info.title" = "Transaction";
+"tx_info.title" = "トランザクション";
 "tx_info.time" = "時間";
 "tx_info.status" = "状況";
 "tx_info.from_hash" = "From";
@@ -94,7 +94,7 @@
 
 // Full Info
 
-"full_info.title" = "Transaction";
+"full_info.title" = "トランザクション";
 "full_info.time" = "時間";
 "full_info.block" = "Block";
 "full_info.confirmations" = "Confirmations";
@@ -105,7 +105,7 @@
 "full_info.outputs" = "Outputs";
 "full_info.source" = "Source";
 "full_info.from" = "From";
-"full_info.to" = "To";
+"full_info.to" = "宛先";
 
 "full_info.gas_limit" = "Gas Limit";
 "full_info.gas_used" = "Gas Used";
@@ -154,7 +154,7 @@
 
 // Settings -> Security
 
-"settings_security.title" = "Security Center";
+"settings_security.title" = "セキュリティ センター";
 "settings_security.backup_wallet" = "Backup Wallet";
 "settings_security.unlink_from_this_device" = "Unlink From This Device";
 "settings_security.set_pin" = "Passcode";
