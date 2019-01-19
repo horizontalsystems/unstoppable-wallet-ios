@@ -87,36 +87,36 @@
 "tx_info.title" = "거래기록";
 "tx_info.time" = "시간";
 "tx_info.status" = "상태";
-"tx_info.from_hash" = "From";
-"tx_info.to_hash" = "To";
-"tx_info.alert_close" = "Close";
-"tx_info.button_more" = "More";
+"tx_info.from_hash" = "로 부터";
+"tx_info.to_hash" = "에게";
+"tx_info.alert_close" = "가까운, 닫힌";
+"tx_info.button_more" = "보다";
 
 // Full Info
 
-"full_info.title" = "Transaction";
+"full_info.title" = "거래";
 "full_info.time" = "시간";
-"full_info.block" = "Block";
-"full_info.confirmations" = "Confirmations";
-"full_info.size" = "Size";
-"full_info.fee" = "Fee";
-"full_info.rate" = "Rate";
-"full_info.inputs" = "Inputs";
-"full_info.outputs" = "Outputs";
-"full_info.source" = "Source";
-"full_info.from" = "From";
-"full_info.to" = "To";
+"full_info.block" = "덩어리";
+"full_info.confirmations" = "확인";
+"full_info.size" = "크기";
+"full_info.fee" = "비용";
+"full_info.rate" = "비율, 속도, 평가";
+"full_info.inputs" = "입력값";
+"full_info.outputs" = "산출값";
+"full_info.source" = "원천, 자료";
+"full_info.from" = "로 부터";
+"full_info.to" = "에게";
 
 "full_info.gas_limit" = "Gas Limit";
 "full_info.gas_used" = "Gas Used";
 "full_info.gas_price" = "Gas Price";
 
-"full_info.source.title" = "Source";
-"full_info.source.online" = "online";
-"full_info.source.offline" = "offline";
+"full_info.source.title" = "원천, 자료";
+"full_info.source.online" = "온라인";
+"full_info.source.offline" = "오프라인";
 
-"full_info.error.subtitle" = "offline";
-"full_info.error.retry" = "Retry";
+"full_info.error.subtitle" = "오프라인";
+"full_info.error.retry" = "재시도";
 "full_info.error.change_source" = "Change Source";
 
 // Settings
