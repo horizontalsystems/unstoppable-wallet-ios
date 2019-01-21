@@ -48,15 +48,15 @@ class EthereumTransactionInfoAdapter: IFullTransactionInfoAdapter {
         }
         if let gasPrice = txResponse.gasPrice {
             let gasValue = CoinValue(coinCode: EthereumTransactionInfoAdapter.gWeiCode, value: gasPrice)
-            transactionItems.append(FullTransactionItem(title: "full_info.gas_price".localized, value: ValueFormatter.instance.format(coinValue: gasValue)))
+            transactionItems.append(FullTransactionItem(title: "full_info.gas_price".localized, titleColor: .cryptoGray, value: ValueFormatter.instance.format(coinValue: gasValue)))
         }
         if let gasUsed = txResponse.gasUsed {
             let gasValue = CoinValue(coinCode: EthereumTransactionInfoAdapter.gWeiCode, value: gasUsed)
-            transactionItems.append(FullTransactionItem(title: "full_info.gas_used".localized, value: ValueFormatter.instance.format(coinValue: gasValue)))
+            transactionItems.append(FullTransactionItem(title: "full_info.gas_used".localized, titleColor: .cryptoGray, value: ValueFormatter.instance.format(coinValue: gasValue)))
         }
         if let gasLimit = txResponse.gasLimit {
             let gasValue = CoinValue(coinCode: EthereumTransactionInfoAdapter.gWeiCode, value: gasLimit)
-            transactionItems.append(FullTransactionItem(title: "full_info.gas_limit".localized, value: ValueFormatter.instance.format(coinValue: gasValue)))
+            transactionItems.append(FullTransactionItem(title: "full_info.gas_limit".localized, titleColor: .cryptoGray, value: ValueFormatter.instance.format(coinValue: gasValue)))
         }
         if !transactionItems.isEmpty {
             sections.append(FullTransactionSection(title: nil, items: transactionItems))
