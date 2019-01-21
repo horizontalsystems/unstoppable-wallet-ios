@@ -205,14 +205,14 @@ class FullTransactionInfoViewController: UIViewController, SectionsDataSource {
 extension FullTransactionInfoViewController: IFullTransactionInfoView {
 
     func showLoading() {
-        loadingView.set(hidden: false, animated: true, duration: FullTransactionInfoTheme.spinnerShowDuration)
+        loadingView.set(hidden: false)
         loadingView.startAnimating()
 
         shareButton.isEnabled = false
     }
 
     func hideLoading() {
-        self.loadingView.set(hidden: true, animated: false)
+        self.loadingView.set(hidden: true)
         loadingView.stopAnimating()
         shareButton.isEnabled = true
     }
