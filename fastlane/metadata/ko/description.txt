@@ -5,14 +5,14 @@
 
   독립적인 & 분산화된
 뱅크 월렛은 완전히 사용자간의 직접 접속이 중앙 운영 서버없이 작동합니다. 그것은 멈출 수도, 막을 수도, 무너질 수도 없습니다. 그 지급은 집적적은 통화 넹트워크에 연결됩니다. 예를들어 매개체가 필요없는 비트코인. 그러한 접근은 뱅크월렛이 어디서나 작동되고 검열에 저항있게 유지하게 할 수 있게 해줍니다. 오직 사용자들은 돈을 관리합니다.
-대부분의 암호화폐들은 중앙화되어 있지 않습니다. 자금은 지갑 제공자들에 의해 작동하는 무선 서버에 저장됩니다. Due to the unregulated nature of the cryptocurrencies there are no mechanisms in place to guarantee that a wallet provider doesn't cheat or that provider's servers not get hacked.
-Being a fully decentralized app the BANK wallet implements all of its functionality in a decentralized manner. Every single feature in the app is implemented in a decentralized manner substantially increasing the security and privacy aspects of the wallet.
-There are no centrally managed servers that can fail, and as a result stop app from functioning.
+대부분의 암호화폐들은 중앙화되어 있지 않습니다. 자금은 지갑 제공자들에 의해 작동하는 무선 서버에 저장됩니다. 암호화폐의 통제할 수 없는 속성 때문에 그 지갑 제공자들을 훔칠수도 해킹할 수도 없는 것을 보장하는 어떠한 메커니즘도 없습니다.
+완전히 분산화된 어플인 뱅크 지갑은 분산화된 방식을 통해 작동합니다. 이 어플의 모든 특징은 지갑의 안전 및 사적인 보호 측면을 상당히 증가시켜줄 분산하된 방법으로 작동합니다.
+작동을 멈추게할 어떠한 중앙운영서버가 없습니다.
 
-  Secure & Open Source
-The entire code of the BANK wallet is public and open-source, giving an option for anyone to analyze all of its code. It works exactly as shown in the code. It can't cheat!
-The BANK wallet stores user's private keys and funds encrypted on a device itself using secure native storage mechanisms provided by iOS operating systems. Only user can access and use his or her funds.
-In case of a device loss or replacement the user may easily restore the wallet using a secret 12-word recovery phrase. Infact, with the help of these secret phrase the user may restore the wallet and access funds on any deterministic wallet (aka HD wallet) not just the BANK wallet 
+  안전 & 오픈소스
+뱅크 지갑의 모든 코드는 공공에게 열리는 오픈소스이기 때문에 모든 사람이 그 코드를 분석할 수 있는 기회가 주어진다. 그것은 코드에 표시된대로 정확하게 작동한다. 그것은 속일 수 없습니다!
+은행 지갑은 사용자의 개인 키와 자금을 장치 자체에 암호화 iOS 운영 체제에서 제공 하는 보안 기본 저장 메커니즘을 사용하여 저장합니다. 오직 사용자들만 접근할 수 있고 그/그녀의 자금을 사용할 수 있습니다.
+장치를 잃어버리거나 바꾸는 경우, 사용자들은 쉽게 12개의 단어로 이루어진  복구문장을 사용하여 쉽게 복구할 수 있습니다. Infact, with the help of these secret phrase the user may restore the wallet and access funds on any deterministic wallet (aka HD wallet) not just the BANK wallet 
 
 NOTE: DO NOT install the BANK wallet on a jailbroken device due to substantial security risks. A jailbroken iOS operating system cannot guarantee the security of your private keys. This means that some malicious app running on jailbroken device can potentially access the private keys for your funds and steal them.
 
