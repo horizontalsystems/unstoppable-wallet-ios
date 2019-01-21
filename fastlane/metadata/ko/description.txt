@@ -1,11 +1,11 @@
   당신의 돈을 지켜라!
 월렛 뱅크는 비트코인, 이더리움, 비트코인 케쉬, 이알씨 20 토크들들을 포함한 주요한 암호통화를 지킬 안전하고 완전하게 분산화된 비밀 지갑 어플입니다. 지원되는 통화들의 수는 점점 추가되어 배포할 것입니다.
-This BANK wallet provides a seamless way to get started with Bitcoin and other crypto currencies for masses. You don't need to understand the inner workings of cryptocurrencies to be able to use it.
-It has been built using best practices from the design of the interface to the implementation of blockchain protocols.
+이 뱅크 월렛은 자연스러운 방법으로 비트코인과 다른 암호화폐들을 대중에게 제공합니다. 당신은 암호화폐들을 사용하기 위해서 내부 작동을 이해할 필요없습니다.
+인터페이스 디자인부터 블록체인 프로토콜 수행까지 아주 실용적으로 설계되었습니다.
 
-  Independent & Decentralized
-The BANK wallet is fully peer-to-peer and works without any centrally managed servers. It can't be stopped, blocked or taken down. The wallet connects directly to the currency networks i.e. Bitcoin without the need for intermediary. Such approach enables the BANK wallet to operate anywhere and remain censorship-resistant. Only the user is in control of the money.
-Most crypto wallet apps out there are centralized. The funds are stored on a remote server which is operated by the wallet provider. Due to the unregulated nature of the cryptocurrencies there are no mechanisms in place to guarantee that a wallet provider doesn't cheat or that provider's servers not get hacked.
+  독립적인 & 분산화된
+뱅크 월렛은 완전히 사용자간의 직접 접속이 중앙 운영 서버없이 작동합니다. 그것은 멈출 수도, 막을 수도, 무너질 수도 없습니다. 그 지급은 집적적은 통화 넹트워크에 연결됩니다. 예를들어 매개체가 필요없는 비트코인. 그러한 접근은 뱅크월렛이 어디서나 작동되고 검열에 저항있게 유지하게 할 수 있게 해줍니다. 오직 사용자들은 돈을 관리합니다.
+대부분의 암호화폐들은 중앙화되어 있지 않습니다. 자금은 지갑 제공자들에 의해 작동하는 무선 서버에 저장됩니다. Due to the unregulated nature of the cryptocurrencies there are no mechanisms in place to guarantee that a wallet provider doesn't cheat or that provider's servers not get hacked.
 Being a fully decentralized app the BANK wallet implements all of its functionality in a decentralized manner. Every single feature in the app is implemented in a decentralized manner substantially increasing the security and privacy aspects of the wallet.
 There are no centrally managed servers that can fail, and as a result stop app from functioning.
 
