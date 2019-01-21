@@ -168,9 +168,9 @@
 // Set PIN
 
 "set_pin.title" = "密码";
-"set_pin.info" = "Your passcode will be used to unlock your wallet and send money";
+"set_pin.info" = "您的密码将用于解锁钱包app。";
 "set_pin.confirm.info" = "确认";
-"set_pin.wrong_confirmation" = "Passcode did not match. Try again";
+"set_pin.wrong_confirmation" = "密码不匹配。请再试一次。";
 
 // Edit PIN
 
