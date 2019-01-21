@@ -40,7 +40,7 @@
 "backup.intro.later" = "後で";
 "backup.intro.backup_now" = "バックアップ";
 
-"backup.words.title" = "Secret Key";
+"backup.words.title" = "秘密鍵";
 "backup.words.back" = "戻る";
 "backup.words.proceed" = "次";
 
@@ -57,21 +57,21 @@
 "balance.tab_bar_item" = "残額";
 "balance.send" = "送る";
 "balance.deposit" = "受取";
-"balance.rate_per_coin" = "%@ per %@";
+"balance.rate_per_coin" = "%@ 毎 %@";
 
 // Deposit
 
-"deposit.receive_coin" = "Receive %@";
+"deposit.receive_coin" = "受取 %@";
 "deposit.alert_copy" = "コピー";
 
 // Send
 
-"send.title" = "Send %@";
-"send.address_placeholder" = "Address";
+"send.title" = "%@ を送る";
+"send.address_placeholder" = "住所";
 "send.amount_error.balance" = "Balance %@";
 "send.send_button" = "送る";
-"send.paste_button" = "Paste";
-"send.amount_placeholder" = "Amount";
+"send.paste_button" = "貼付け";
+"send.amount_placeholder" = "量";
 "send.fee" = "料金";
 "send.total" = "合計";
 
@@ -87,8 +87,8 @@
 "tx_info.title" = "トランザクション";
 "tx_info.time" = "時間";
 "tx_info.status" = "状況";
-"tx_info.from_hash" = "From";
-"tx_info.to_hash" = "To";
+"tx_info.from_hash" = "差出人";
+"tx_info.to_hash" = "宛先";
 "tx_info.alert_close" = "閉じる";
 "tx_info.button_more" = "より";
 
@@ -96,15 +96,15 @@
 
 "full_info.title" = "トランザクション";
 "full_info.time" = "時間";
-"full_info.block" = "Block";
-"full_info.confirmations" = "Confirmations";
-"full_info.size" = "Size";
+"full_info.block" = "ブロック";
+"full_info.confirmations" = "確認";
+"full_info.size" = "サイズ";
 "full_info.fee" = "料金";
 "full_info.rate" = "Rate";
 "full_info.inputs" = "入力";
-"full_info.outputs" = "Outputs";
+"full_info.outputs" = "出力";
 "full_info.source" = "Source";
-"full_info.from" = "From";
+"full_info.from" = "差出人";
 "full_info.to" = "宛先";
 
 "full_info.gas_limit" = "Gas Limit";
@@ -155,10 +155,10 @@
 // Settings -> Security
 
 "settings_security.title" = "セキュリティ センター";
-"settings_security.backup_wallet" = "Backup Wallet";
+"settings_security.backup_wallet" = "ウォレットをバックアップ";
 "settings_security.unlink_from_this_device" = "Unlink From This Device";
-"settings_security.set_pin" = "Passcode";
-"settings_security.change_pin" = "Edit Passcode";
+"settings_security.set_pin" = "パスコード";
+"settings_security.change_pin" = "パスコードを編集";
 "settings_security.touch_id" = "Touch ID";
 "settings_security.face_id" = "Face ID";
 "security_settings.unlink_alert_button" = "Unlink";
@@ -167,21 +167,21 @@
 
 // Set PIN
 
-"set_pin.title" = "Passcode";
+"set_pin.title" = "パスコード";
 "set_pin.info" = "Your passcode will be used to unlock your wallet and send money";
 "set_pin.confirm.info" = "確定する";
 "set_pin.wrong_confirmation" = "Passcode did not match. Try again";
 
 // Edit PIN
 
-"edit_pin.title" = "Edit Passcode";
+"edit_pin.title" = "パスコードを編集";
 "edit_pin.unlock_info" = "Current Passcode";
 "edit_pin.new_pin_info" = "New Passcode";
 "edit_pin.confirm_info" = "確定する";
 
 // Unlock PIN
 
-"unlock_pin.info" = "Passcode";
+"unlock_pin.info" = "パスコード";
 "unlock_pin.cant_save_pin" = "Ouch! We cant save your passcode, please contact us asap!";
 "unlock_pin.blocked_until" = "Disabled until: %@";
 
