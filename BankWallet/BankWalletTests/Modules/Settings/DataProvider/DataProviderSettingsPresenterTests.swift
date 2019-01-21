@@ -12,6 +12,7 @@ class DataProviderSettingsPresenterTests: XCTestCase {
     private let coinCode = "coin_code"
     private let firstName = "first_provider"
     private let secondName = "second_provider"
+    private let txHash = "tx_hash"
 
     private var firstProvider: MockIProvider!
     private var secondProvider: MockIProvider!
@@ -25,16 +26,18 @@ class DataProviderSettingsPresenterTests: XCTestCase {
         firstProvider = MockIProvider()
         stub(firstProvider) { mock in
             when(mock.name.get).thenReturn(firstName)
+            when(mock.apiUrl(for: any())).thenReturn("first_url")
         }
         secondProvider = MockIProvider()
         stub(secondProvider) { mock in
             when(mock.name.get).thenReturn(secondName)
+            when(mock.apiUrl(for: any())).thenReturn("second_url")
         }
         providers = [firstProvider, secondProvider]
 
         expectedItems = [
-            DataProviderItem(name: firstName, online: true, selected: true),
-            DataProviderItem(name: secondName, online: true, selected: false)
+            DataProviderItem(name: firstName, online: true, checking: true, selected: true),
+            DataProviderItem(name: secondName, online: true, checking: true, selected: false)
         ]
 
         mockRouter = MockIDataProviderSettingsRouter()
@@ -51,9 +54,10 @@ class DataProviderSettingsPresenterTests: XCTestCase {
             when(mock.providers(for: any())).thenReturn(providers)
             when(mock.baseProvider(for: any())).thenReturn(firstProvider)
             when(mock.setBaseProvider(name: any(), for: any())).thenDoNothing()
+            when(mock.pingProvider(name: any(), url: any())).thenDoNothing()
         }
 
-        presenter = DataProviderSettingsPresenter(coinCode: coinCode, router: mockRouter, interactor: mockInteractor)
+        presenter = DataProviderSettingsPresenter(coinCode: coinCode, transactionHash: txHash, router: mockRouter, interactor: mockInteractor)
         presenter.view = mockView
     }
 
@@ -69,23 +73,58 @@ class DataProviderSettingsPresenterTests: XCTestCase {
 
     func testShowItemsOnLoad() {
         presenter.viewDidLoad()
+        verify(mockInteractor).pingProvider(name: firstName, url: "first_url")
+        verify(mockInteractor).pingProvider(name: secondName, url: "second_url")
+        XCTAssertEqual(presenter.items, expectedItems)
         verify(mockView).show(items: equal(to: expectedItems))
     }
 
     func testSelectItem() {
-        presenter.didSelect(item: DataProviderItem(name: secondName, online: true, selected: false))
+        presenter.didSelect(item: DataProviderItem(name: secondName, online: true, checking: false, selected: false))
         verify(mockInteractor).setBaseProvider(name: equal(to: secondName), for: equal(to: coinCode))
     }
 
     func testSelectItem_AlreadySelected() {
-        presenter.didSelect(item: DataProviderItem(name: secondName, online: false, selected: true))
+        presenter.didSelect(item: DataProviderItem(name: secondName, online: false, checking: false, selected: true))
         verify(mockInteractor, never()).setBaseProvider(name: any(), for: any())
     }
 
     func testReloadItemsOnSetBaseCurrency() {
         presenter.didSetBaseProvider()
-        verify(mockView).show(items: equal(to: expectedItems))
         verify(mockRouter).popViewController()
+    }
+
+    func testDidPingSuccess() {
+        let items = [
+            DataProviderItem(name: firstName, online: false, checking: true, selected: true)
+        ]
+        presenter.items = items
+        presenter.didPingSuccess(name: firstName, timeInterval: 1)
+
+        XCTAssertEqual(presenter.items, [DataProviderItem(name: firstName, online: true, checking: false, selected: true)])
+        verify(mockView).show(items: equal(to: [DataProviderItem(name: firstName, online: true, checking: false, selected: true)]))
+    }
+
+    func testDidPingFailure() {
+        let items = [
+            DataProviderItem(name: firstName, online: true, checking: true, selected: true)
+        ]
+        presenter.items = items
+        presenter.didPingFailure(name: firstName)
+
+        XCTAssertEqual(presenter.items, [DataProviderItem(name: firstName, online: false, checking: false, selected: true)])
+        verify(mockView).show(items: equal(to: [DataProviderItem(name: firstName, online: false, checking: false, selected: true)]))
+    }
+
+    func testDidPingWrongName() {
+        let items = [
+            DataProviderItem(name: firstName, online: true, checking: true, selected: true)
+        ]
+        presenter.items = items
+        presenter.didPingFailure(name: "wrong_name")
+
+        XCTAssertNotEqual(presenter.items, [DataProviderItem(name: "wrong_name", online: false, checking: false, selected: true)])
+        verify(mockView, never()).show(items: any())
     }
 
 }

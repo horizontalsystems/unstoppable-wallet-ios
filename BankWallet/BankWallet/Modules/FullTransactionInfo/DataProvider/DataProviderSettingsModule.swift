@@ -1,10 +1,11 @@
 struct DataProviderItem: Equatable {
     let name: String
     let online: Bool
+    let checking: Bool
     let selected: Bool
 
     static func ==(lhs: DataProviderItem, rhs: DataProviderItem) -> Bool {
-        return lhs.name == rhs.name
+        return lhs.name == rhs.name && lhs.online == rhs.online && lhs.checking == rhs.checking
     }
 }
 
@@ -18,6 +19,7 @@ protocol IDataProviderSettingsViewDelegate {
 }
 
 protocol IDataProviderSettingsInteractor {
+    func pingProvider(name: String, url: String)
     func providers(for coinCode: String) -> [IProvider]
     func baseProvider(for coinCode: String) -> IProvider
     func setBaseProvider(name: String, for coinCode: String)
@@ -25,6 +27,8 @@ protocol IDataProviderSettingsInteractor {
 
 protocol IDataProviderSettingsInteractorDelegate: class {
     func didSetBaseProvider()
+    func didPingSuccess(name: String, timeInterval: Double)
+    func didPingFailure(name: String)
 }
 
 protocol IDataProviderSettingsRouter {
