@@ -1,5 +1,5 @@
-  Control Your Money!
-Wallet BANK is a secure and a fully decentralized crypto wallet app that supports major cryptocurrencies, including Bitcoin, Ethereum, Bitcoin Cash and ERC 20 tokens. The number of supported currencies being gradually added with every release.
+  당신의 돈을 지켜라!
+월렛 뱅크는 비트코인, 이더리움, 비트코인 케쉬, 이알씨 20 토크들들을 포함한 주요한 암호통화를 지킬 안전하고 완전하게 분산화된 비밀 지갑 어플입니다. 지원되는 통화들의 수는 점점 추가되어 배포할 것입니다.
 This BANK wallet provides a seamless way to get started with Bitcoin and other crypto currencies for masses. You don't need to understand the inner workings of cryptocurrencies to be able to use it.
 It has been built using best practices from the design of the interface to the implementation of blockchain protocols.
 
