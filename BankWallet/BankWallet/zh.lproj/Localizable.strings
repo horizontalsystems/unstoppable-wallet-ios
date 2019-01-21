@@ -96,7 +96,7 @@
 
 "full_info.title" = "交易";
 "full_info.time" = "时间";
-"full_info.block" = "Block";
+"full_info.block" = "区块";
 "full_info.confirmations" = "确认框";
 "full_info.size" = "文件大小";
 "full_info.fee" = "费用";
@@ -113,9 +113,9 @@
 
 "full_info.source.title" = "Source";
 "full_info.source.online" = "online";
-"full_info.source.offline" = "offline";
+"full_info.source.offline" = "离线";
 
-"full_info.error.subtitle" = "offline";
+"full_info.error.subtitle" = "离线";
 "full_info.error.retry" = "重试";
 "full_info.error.change_source" = "更改源";
 
