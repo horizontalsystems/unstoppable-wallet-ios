@@ -5,14 +5,16 @@ class AuthManager {
     private let localStorage: ILocalStorage
 
     weak var walletManager: IWalletManager?
+    weak var coinManager: ICoinManager?
     weak var pinManager: IPinManager?
     weak var transactionsManager: ITransactionManager?
 
     private(set) var authData: AuthData?
 
-    init(secureStorage: ISecureStorage, localStorage: ILocalStorage) {
+    init(secureStorage: ISecureStorage, localStorage: ILocalStorage, coinManager: ICoinManager) {
         self.secureStorage = secureStorage
         self.localStorage = localStorage
+        self.coinManager = coinManager
 
         authData = secureStorage.authData
     }
@@ -31,6 +33,7 @@ extension AuthManager: IAuthManager {
 
         self.authData = authData
 
+        coinManager?.enableDefaultCoins()
         walletManager?.initWallets()
     }
 

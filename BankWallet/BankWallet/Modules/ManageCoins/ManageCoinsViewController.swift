@@ -126,7 +126,7 @@ extension ManageCoinsViewController {
     }
 
     public override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return ManageCoinsTheme.headerHeight
+        return section == enabledSection && delegate.enabledCoinsCount > 0 || section == disabledSection ? ManageCoinsTheme.headerHeight : 0
     }
 
 }

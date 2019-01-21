@@ -303,6 +303,7 @@
 		1A564274EEC6A31D6B287B09 /* TransactionFromToHashItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564C4C8EFE1B1BBE03C9E6 /* TransactionFromToHashItem.swift */; };
 		1A56427D41F16B2D9C7B5F88 /* SendModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5641C2FAD616C358A319A0 /* SendModule.swift */; };
 		1A56429346081B64A56608FA /* SecuritySettingsInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564082B28C17265B23D88A /* SecuritySettingsInteractor.swift */; };
+		1A56429A1D6B9D172E140E1C /* CoinManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564A1732F105ABE241E908 /* CoinManagerTests.swift */; };
 		1A5642A7500FDC8E971D6C62 /* CoinValueHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5640B6691F4FD048C82A49 /* CoinValueHelper.swift */; };
 		1A5642B379FFD0448FC18FB8 /* EditPinPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5646F390EE2D74304C8CDA /* EditPinPresenter.swift */; };
 		1A5642B4408B226121677590 /* SendInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564260BF2C73B9F2450FB8 /* SendInteractor.swift */; };
@@ -1194,6 +1195,7 @@
 		1A5649BED7237B075AE7F8B8 /* SendTitleItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendTitleItemView.swift; sourceTree = "<group>"; };
 		1A5649C888E12C1A0B70EFA8 /* TransactionsCurrencyCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionsCurrencyCell.swift; sourceTree = "<group>"; };
 		1A5649DB879A57761C09842E /* AppTheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppTheme.swift; sourceTree = "<group>"; };
+		1A564A1732F105ABE241E908 /* CoinManagerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoinManagerTests.swift; sourceTree = "<group>"; };
 		1A564A19508B4730BC016037 /* LockoutManagerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LockoutManagerTests.swift; sourceTree = "<group>"; };
 		1A564A3E6B23CF04ECEB40DC /* ManagePinPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManagePinPresenter.swift; sourceTree = "<group>"; };
 		1A564A6CCF1B907F25255D2E /* LockRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LockRouter.swift; sourceTree = "<group>"; };
@@ -1734,6 +1736,7 @@
 				11B35C8CE85CE0CE4E323F97 /* RateSyncerTests.swift */,
 				11B35924A855AA25B6DC370E /* TransactionRateSyncerTests.swift */,
 				1A564A19508B4730BC016037 /* LockoutManagerTests.swift */,
+				1A564A1732F105ABE241E908 /* CoinManagerTests.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -3158,6 +3161,7 @@
 				1A5647709A2B63D16BF5131B /* ManageCoinsPresenterTests.swift in Sources */,
 				1A5649C5CA36C74FD2EF4BE9 /* ManageCoinsPresenterStateTests.swift in Sources */,
 				1A5645069C88C146A3E6B853 /* ManageCoinsInteractorTests.swift in Sources */,
+				1A56429A1D6B9D172E140E1C /* CoinManagerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -33,4 +33,13 @@ class AppConfigProvider: IAppConfigProvider {
         Currency(code: "JPY", symbol: "\u{00A5}")
     ]
 
+    var defaultCoins: [Coin] {
+        let suffix = testMode ? "t" : ""
+        return [
+            Coin(title: "Bitcoin", code: "BTC\(suffix)", type: .bitcoin),
+            Coin(title: "Bitcoin Cash", code: "BCH\(suffix)", type: .bitcoinCash),
+            Coin(title: "Ethereum", code: "ETH\(suffix)", type: .ethereum)
+        ]
+    }
+
 }
