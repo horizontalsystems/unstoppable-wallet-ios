@@ -92,22 +92,34 @@ Go to Settings - > Bank and allow access to Camera.";
 "tx_info.from_hash" = "From";
 "tx_info.to_hash" = "To";
 "tx_info.alert_close" = "Close";
-"tx_info.button_more" = "Full Info";
+"tx_info.button_more" = "More";
 
 // Full Info
-"full_info.title"= "Full Info";
-"full_info.id"= "ID";
-"full_info.time"= "Time";
-"full_info.block"= "Block";
-"full_info.confirmations"= "Confirmations";
-"full_info.total_input"= "Total Input";
-"full_info.total_output"= "Total Output";
-"full_info.size"= "Size";
-"full_info.fee"= "Fee";
-"full_info.fee_per_byte"= "Fee per byte";
-"full_info.subtitle_inputs"= "Inputs";
-"full_info.subtitle_outputs"= "Outputs";
-"full_info.subtitle_provider"= "Data Provider";
+
+"full_info.title" = "Transaction";
+"full_info.time" = "Time";
+"full_info.block" = "Block";
+"full_info.confirmations" = "Confirmations";
+"full_info.size" = "Size";
+"full_info.fee" = "Fee";
+"full_info.rate" = "Rate";
+"full_info.inputs" = "Inputs";
+"full_info.outputs" = "Outputs";
+"full_info.source" = "Source";
+"full_info.from" = "From";
+"full_info.to" = "To";
+
+"full_info.gas_limit" = "Gas Limit";
+"full_info.gas_used" = "Gas Used";
+"full_info.gas_price" = "Gas Price";
+
+"full_info.source.title" = "Source";
+"full_info.source.online" = "online";
+"full_info.source.offline" = "offline";
+
+"full_info.error.subtitle" = "offline";
+"full_info.error.retry" = "Retry";
+"full_info.error.change_source" = "Change Source";
 
 // Settings
 

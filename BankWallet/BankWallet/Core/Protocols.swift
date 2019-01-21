@@ -14,6 +14,8 @@ protocol IRealmFactory {
 protocol ILocalStorage: class {
     var isBackedUp: Bool { get set }
     var baseCurrencyCode: String? { get set }
+    var baseBitcoinProvider: String? { get set }
+    var baseEthereumProvider: String? { get set }
     var lightMode: Bool { get set }
     var iUnderstand: Bool { get set }
     var isBiometricOn: Bool { get set }
@@ -189,6 +191,17 @@ protocol IAppConfigProvider {
     var defaultCoins: [Coin] { get }
 }
 
+protocol IFullTransactionInfoProvider {
+    var providerName: String { get }
+    func url(for hash: String) -> String
+
+    func retrieveTransactionInfo(transactionHash: String) -> Observable<FullTransactionRecord?>
+}
+
+protocol IFullTransactionInfoAdapter {
+    func convert(json: [String: Any]) -> FullTransactionRecord?
+}
+
 protocol IRateNetworkManager {
     func getLatestRate(coinCode: String, currencyCode: String) -> Observable<LatestRate>
     func getRate(coinCode: String, currencyCode: String, date: Date) -> Observable<Double>
@@ -204,6 +217,10 @@ protocol ICoinStorage {
     func enabledCoinsObservable() -> Observable<[Coin]>
     func allCoinsObservable() -> Observable<[Coin]>
     func save(enabledCoins: [Coin])
+}
+
+protocol IJSONApiManager {
+    func getJSON(url: String, parameters: [String: Any]?) -> Observable<[String: Any]>
 }
 
 protocol ITransactionRecordStorage {
@@ -222,6 +239,27 @@ protocol ICurrencyManager {
     var baseCurrencyUpdatedSignal: Signal { get }
 
     func setBaseCurrency(code: String)
+}
+
+protocol IFullTransactionDataProviderManager {
+    var dataProviderUpdatedSignal: Signal { get }
+
+    func providers(for coinCode: String) -> [IProvider]
+    func baseProvider(for coinCode: String) -> IProvider
+    func setBaseProvider(name: String, for coinCode: String)
+
+    func bitcoin(for name: String) -> IBitcoinForksProvider
+    func bitcoinCash(for name: String) -> IBitcoinForksProvider
+    func ethereum(for name: String) -> IEthereumForksProvider
+
+}
+
+protocol IBitcoinForksProvider: IProvider {
+    func convert(json: [String: Any]) -> IBitcoinResponse?
+}
+
+protocol IEthereumForksProvider: IProvider {
+    func convert(json: [String: Any]) -> IEthereumResponse?
 }
 
 protocol IReachabilityManager {
@@ -253,8 +291,29 @@ protocol IPasteboardManager {
     func set(value: String)
 }
 
+protocol IUrlManager {
+    func open(url: String, from controller: UIViewController?)
+}
+
 protocol ITransactionViewItemFactory {
     func item(fromRecord record: TransactionRecord) -> TransactionViewItem
+}
+
+protocol IFullTransactionInfoProviderFactory {
+    func provider(`for` coinCode: String) -> IFullTransactionInfoProvider
+}
+
+protocol ISettingsProviderMap {
+    func providers(for coinCode: String) -> [IProvider]
+    func bitcoin(for name: String) -> IBitcoinForksProvider
+    func bitcoinCash(for name: String) -> IBitcoinForksProvider
+    func ethereum(for name: String) -> IEthereumForksProvider
+}
+
+protocol IProvider {
+    var name: String { get }
+    func url(for hash: String) -> String
+    func apiUrl(for hash: String) -> String
 }
 
 protocol ILockoutManager {

@@ -17,8 +17,6 @@ class TransactionsTheme {
     static let cellMediumMargin: CGFloat = 12
     static let cellSmallMargin: CGFloat = 8
     static let cellHighlightBackgroundColor = UIColor.cryptoSteel20
-    static let cellMicroMargin: CGFloat = 3
-    static let cellMilliMargin: CGFloat = 4
     static let separatorColor = UIColor.cryptoSteel20
     static let amountLabelFont = UIFont.cryptoCaption1
     static let fiatAmountLabelColor = UIColor.cryptoGray

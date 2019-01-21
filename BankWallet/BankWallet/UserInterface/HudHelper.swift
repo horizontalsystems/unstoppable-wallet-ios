@@ -28,4 +28,22 @@ class HudHelper {
         })
     }
 
+    public func showSpinner(title: String? = nil) {
+        var customConfig = HUDConfig()
+        customConfig.style = .center
+        customConfig.hapticType = nil
+
+        HUD.instance.config = customConfig
+
+        HUDStatusFactory.instance.config.dismissTimeInterval = nil
+        HUDStatusFactory.instance.config.customShowCancelInterval = nil
+        HUDStatusFactory.instance.config.customProgressValue = nil
+        let content = HUDStatusFactory.instance.view(type: .progress(.custom), title: title)
+        HUD.instance.showHUD(content)
+    }
+
+    public func hide() {
+        HUD.instance.hide()
+    }
+
 }

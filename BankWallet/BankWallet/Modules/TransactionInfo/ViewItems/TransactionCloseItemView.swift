@@ -1,9 +1,9 @@
 import Foundation
 import GrouviActionSheet
 
-class TransactionCloseItemView: BaseButtonItemView {
+class TransactionOpenFullInfoItemView: BaseButtonItemView {
 
-    override var item: TransactionCloseItem? { return _item as? TransactionCloseItem }
+    override var item: TransactionOpenFullInfoItem? { return _item as? TransactionOpenFullInfoItem }
 
     override func initView() {
         super.initView()

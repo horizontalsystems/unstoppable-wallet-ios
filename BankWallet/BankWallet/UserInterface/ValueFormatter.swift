@@ -28,6 +28,14 @@ class ValueFormatter {
         return formatter
     }()
 
+    private let twoDigitFormatter: NumberFormatter = {
+        let formatter = NumberFormatter()
+        formatter.maximumFractionDigits = 2
+        formatter.numberStyle = .decimal
+        formatter.groupingSeparator = ""
+        return formatter
+    }()
+
     private let parseFormatter: NumberFormatter = {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
@@ -82,6 +90,10 @@ class ValueFormatter {
 
     func format(amount: Double) -> String? {
         return amountFormatter.string(from: amount as NSNumber)
+    }
+
+    func format(twoDigitValue: Double) -> String? {
+        return twoDigitFormatter.string(from: twoDigitValue as NSNumber)
     }
 
     func parseAnyDecimal(from string: String?) -> Double? {
