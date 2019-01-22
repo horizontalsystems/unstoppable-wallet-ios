@@ -3,9 +3,11 @@ import GRDB
 import RxGRDB
 
 class GrdbStorage {
+    private let appConfigProvider: IAppConfigProvider
     private let dbPool: DatabasePool
 
-    init() {
+    init(appConfigProvider: IAppConfigProvider) {
+        self.appConfigProvider = appConfigProvider
         let databaseURL = try! FileManager.default
                 .url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
                 .appendingPathComponent("bank.sqlite")
@@ -28,7 +30,7 @@ class GrdbStorage {
                 t.primaryKey(["coinCode", "currencyCode"], onConflict: .replace)
             }
         }
-        migrator.registerMigration("createCoinsTable") { db in
+        migrator.registerMigration("createCoinsTable") { [weak self] db in
             try db.create(table: StorableCoin.databaseTableName) { t in
                 t.column(StorableCoin.Columns.title.name, .text).notNull()
                 t.column(StorableCoin.Columns.code.name, .text).notNull()
@@ -37,6 +39,12 @@ class GrdbStorage {
                 t.column(StorableCoin.Columns.coinOrder.name, .integer)
 
                 t.primaryKey([StorableCoin.Columns.code.name, StorableCoin.Columns.type.name], onConflict: .replace)
+            }
+            if let strongSelf = self {
+                for (index, coin) in strongSelf.appConfigProvider.defaultCoins.enumerated() {
+                    let storableCoin = StorableCoin(coin: coin, enabled: true, order: index)
+                    try storableCoin.insert(db)
+                }
             }
         }
 
@@ -91,6 +99,12 @@ extension GrdbStorage: ICoinStorage {
                 let storableCoin = StorableCoin(coin: coin, enabled: true, order: index)
                 try storableCoin.insert(db)
             }
+        }
+    }
+
+    func cleanCoins() {
+        _ = try? dbPool.write { db in
+            try StorableCoin.deleteAll(db)
         }
     }
 

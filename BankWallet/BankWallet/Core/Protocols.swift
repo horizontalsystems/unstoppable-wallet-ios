@@ -217,6 +217,7 @@ protocol ICoinStorage {
     func enabledCoinsObservable() -> Observable<[Coin]>
     func allCoinsObservable() -> Observable<[Coin]>
     func save(enabledCoins: [Coin])
+    func cleanCoins()
 }
 
 protocol IJSONApiManager {

@@ -2,6 +2,7 @@ import RxSwift
 
 class AuthManager {
     private let secureStorage: ISecureStorage
+    private let coinStorage: ICoinStorage
     private let localStorage: ILocalStorage
 
     weak var walletManager: IWalletManager?
@@ -11,8 +12,9 @@ class AuthManager {
 
     private(set) var authData: AuthData?
 
-    init(secureStorage: ISecureStorage, localStorage: ILocalStorage, coinManager: ICoinManager) {
+    init(secureStorage: ISecureStorage, coinStorage: ICoinStorage, localStorage: ILocalStorage, coinManager: ICoinManager) {
         self.secureStorage = secureStorage
+        self.coinStorage = coinStorage
         self.localStorage = localStorage
         self.coinManager = coinManager
 
@@ -42,6 +44,7 @@ extension AuthManager: IAuthManager {
         try pinManager?.clearPin()
         transactionsManager?.clear()
         localStorage.clear()
+        coinStorage.cleanCoins()
 
         try secureStorage.set(authData: nil)
         authData = nil

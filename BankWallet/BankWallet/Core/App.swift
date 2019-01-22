@@ -63,10 +63,10 @@ class App {
         secureStorage = KeychainStorage(localStorage: localStorage)
 
         appConfigProvider = AppConfigProvider()
-        grdbStorage = GrdbStorage()
+        grdbStorage = GrdbStorage(appConfigProvider: appConfigProvider)
         coinManager = CoinManager(appConfigProvider: appConfigProvider, storage: grdbStorage)
 
-        authManager = AuthManager(secureStorage: secureStorage, localStorage: localStorage, coinManager: coinManager)
+        authManager = AuthManager(secureStorage: secureStorage, coinStorage: grdbStorage, localStorage: localStorage, coinManager: coinManager)
         wordsManager = WordsManager(localStorage: localStorage)
 
         pinManager = PinManager(secureStorage: secureStorage)
