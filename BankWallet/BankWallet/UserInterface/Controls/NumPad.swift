@@ -114,7 +114,9 @@ extension NumPad: UICollectionViewDelegate {
 extension NumPad: UICollectionViewDelegateFlowLayout {
 
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: (bounds.size.width - NumPadTheme.itemSpacing * 2) / 3, height: NumPadTheme.itemHeight)
+        var width = Double((bounds.size.width - NumPadTheme.itemSpacing * 2) / 3)
+        width.round(.towardZero)
+        return CGSize(width: CGFloat(width), height: NumPadTheme.itemHeight)
     }
 
 }
