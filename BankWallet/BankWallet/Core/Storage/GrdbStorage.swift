@@ -3,11 +3,9 @@ import GRDB
 import RxGRDB
 
 class GrdbStorage {
-    private let appConfigProvider: IAppConfigProvider
     private let dbPool: DatabasePool
 
-    init(appConfigProvider: IAppConfigProvider) {
-        self.appConfigProvider = appConfigProvider
+    init() {
         let databaseURL = try! FileManager.default
                 .url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
                 .appendingPathComponent("bank.sqlite")
@@ -30,7 +28,7 @@ class GrdbStorage {
                 t.primaryKey(["coinCode", "currencyCode"], onConflict: .replace)
             }
         }
-        migrator.registerMigration("createCoinsTable") { [weak self] db in
+        migrator.registerMigration("createCoinsTable") { db in
             try db.create(table: StorableCoin.databaseTableName) { t in
                 t.column(StorableCoin.Columns.title.name, .text).notNull()
                 t.column(StorableCoin.Columns.code.name, .text).notNull()
@@ -40,11 +38,16 @@ class GrdbStorage {
 
                 t.primaryKey([StorableCoin.Columns.code.name, StorableCoin.Columns.type.name], onConflict: .replace)
             }
-            if let strongSelf = self {
-                for (index, coin) in strongSelf.appConfigProvider.defaultCoins.enumerated() {
-                    let storableCoin = StorableCoin(coin: coin, enabled: true, order: index)
-                    try storableCoin.insert(db)
-                }
+
+            let suffix = Bundle.main.object(forInfoDictionaryKey: "TestMode") as? String == "true"
+            let defaultCoins = [
+                Coin(title: "Bitcoin", code: "BTC\(suffix)", type: .bitcoin),
+                Coin(title: "Bitcoin Cash", code: "BCH\(suffix)", type: .bitcoinCash),
+                Coin(title: "Ethereum", code: "ETH\(suffix)", type: .ethereum)
+            ]
+            for (index, coin) in defaultCoins.enumerated() {
+                let storableCoin = StorableCoin(coin: coin, enabled: true, order: index)
+                try storableCoin.insert(db)
             }
         }
 
