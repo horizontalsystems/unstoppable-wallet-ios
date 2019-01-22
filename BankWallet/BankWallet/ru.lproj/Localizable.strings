@@ -174,7 +174,7 @@
 
 // Edit PIN
 
-"edit_pin.title" = "Изменить Код";
+"edit_pin.title" = "Код Доступа";
 "edit_pin.unlock_info" = "Текущий Код";
 "edit_pin.new_pin_info" = "Новый Код";
 "edit_pin.confirm_info" = "Подтвердить";
