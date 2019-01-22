@@ -112,7 +112,7 @@
 "full_info.gas_price" = "Gas Price";
 
 "full_info.source.title" = "Source";
-"full_info.source.online" = "online";
+"full_info.source.online" = "çevrimiçi";
 "full_info.source.offline" = "offline";
 
 "full_info.error.subtitle" = "offline";
