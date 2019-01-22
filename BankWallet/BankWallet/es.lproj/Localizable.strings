@@ -112,11 +112,11 @@
 "full_info.gas_price" = "Gas Price";
 
 "full_info.source.title" = "Source";
-"full_info.source.online" = "online";
-"full_info.source.offline" = "offline";
+"full_info.source.online" = "en línea";
+"full_info.source.offline" = "desconectado";
 
-"full_info.error.subtitle" = "offline";
-"full_info.error.retry" = "Retry";
+"full_info.error.subtitle" = "desconectado";
+"full_info.error.retry" = "Volver a intentarlo";
 "full_info.error.change_source" = "Change Source";
 
 // Settings
