@@ -63,10 +63,12 @@ class App {
         localStorage = UserDefaultsStorage()
         secureStorage = KeychainStorage(localStorage: localStorage)
 
-        authManager = AuthManager(secureStorage: secureStorage, localStorage: localStorage)
-        wordsManager = WordsManager(localStorage: localStorage)
-
         appConfigProvider = AppConfigProvider()
+        grdbStorage = GrdbStorage()
+        coinManager = CoinManager(appConfigProvider: appConfigProvider, storage: grdbStorage)
+
+        authManager = AuthManager(secureStorage: secureStorage, coinStorage: grdbStorage, localStorage: localStorage, coinManager: coinManager)
+        wordsManager = WordsManager(localStorage: localStorage)
 
         pinManager = PinManager(secureStorage: secureStorage)
         lockRouter = LockRouter()
@@ -79,14 +81,11 @@ class App {
         randomManager = RandomManager()
         systemInfoManager = SystemInfoManager()
 
-        coinManager = CoinManager(appConfigProvider: appConfigProvider)
-
         adapterFactory = AdapterFactory(appConfigProvider: appConfigProvider)
         walletFactory = WalletFactory(adapterFactory: adapterFactory)
         walletManager = WalletManager(walletFactory: walletFactory, authManager: authManager, coinManager: coinManager)
 
         realmStorage = RealmStorage(realmFactory: realmFactory)
-        grdbStorage = GrdbStorage()
         networkManager = NetworkManager(appConfigProvider: appConfigProvider)
 
         reachabilityManager = ReachabilityManager(appConfigProvider: appConfigProvider)

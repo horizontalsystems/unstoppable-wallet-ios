@@ -1,7 +1,18 @@
+import RxSwift
+
 class ManageCoinsInteractor {
     weak var delegate: IManageCoinsInteractorDelegate?
 
-    init() {
+    private let disposeBag = DisposeBag()
+
+    private let coinManager: ICoinManager
+    private let storage: ICoinStorage
+    private let async: Bool
+
+    init(coinManager: ICoinManager, storage: ICoinStorage, async: Bool) {
+        self.coinManager = coinManager
+        self.storage = storage
+        self.async = async
     }
 
 }
@@ -9,27 +20,28 @@ class ManageCoinsInteractor {
 extension ManageCoinsInteractor: IManageCoinsInteractor {
 
     func loadCoins() {
-        //todo
-        let bitcoin = Coin(title: "Bitcoin", code: "BTC", type: .bitcoin)
-        let bitcoinCash = Coin(title: "Bitcoin Cash", code: "BCH", type: .bitcoinCash)
-        let ethereum = Coin(title: "Ethereum", code: "ETH", type: .ethereum)
-        let some = Coin(title: "some", code: "som", type: .bitcoin)
-        let some2 = Coin(title: "some2", code: "som2", type: .bitcoin)
-        let allCoins = [
-            bitcoin,
-            bitcoinCash,
-            ethereum,
-            some,
-            some2
-        ]
-        let enabledCoins = [
-            bitcoin,
-            ethereum
-        ]
-        delegate?.didLoadCoins(all: allCoins, enabled: enabledCoins)
+        var allCoinsObservable = coinManager.allCoinsObservable
+        var enabledCoinsObservable = storage.enabledCoinsObservable()
+
+        if async {
+            allCoinsObservable = allCoinsObservable
+                    .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
+                    .observeOn(MainScheduler.instance)
+            enabledCoinsObservable = enabledCoinsObservable
+                    .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
+                    .observeOn(MainScheduler.instance)
+        }
+
+        allCoinsObservable.subscribe(onNext: { [weak self] allCoins in
+            self?.delegate?.didLoad(allCoins: allCoins)
+        }).disposed(by: disposeBag)
+        enabledCoinsObservable.subscribe(onNext: { [weak self] enabledCoins in
+            self?.delegate?.didLoad(enabledCoins: enabledCoins)
+        }).disposed(by: disposeBag)
     }
 
     func save(enabledCoins: [Coin]) {
+        storage.save(enabledCoins: enabledCoins)
         delegate?.didSaveCoins()
     }
 
