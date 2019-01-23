@@ -182,7 +182,7 @@
 // Unlock PIN
 
 "unlock_pin.info" = "密码";
-"unlock_pin.cant_save_pin" = "Ouch! We cant save your passcode, please contact us asap!";
+"unlock_pin.cant_save_pin" = "哎哟！我们无法保存您的密码，请尽快与我们联系，谢谢。";
 "unlock_pin.blocked_until" = "禁用至: %@";
 
 //NumPad
