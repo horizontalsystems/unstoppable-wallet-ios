@@ -25,12 +25,12 @@ Bei Verlust oder Austausch des Geräts kann der Benutzer die BANK-Geldbörse mit
 HINWEIS. Installieren Sie die BANK-Geldbörse auf einem gehackten Gerät wegen erheblicher Sicherheitsrisiken nicht.  Das gebrochene iOS- oder Android-Betriebssystem kann die Sicherheit Ihrer privaten Offlineschlüssel nicht gewährleisten. Dies bedeutet, dass einige schädliche Anwendungen, die auf einem gehackten Gerät funktionieren, Zugriff auf private Offlineschlüssel erhalten und Ihr Geld stehlen können.
 
 
-DISCLAIMER:
+HAFTUNGSAUSSCHLUSS:
 
 1. This Wallet is in its early days and just like any other software product it may have undiscovered issues which may potentially result in wallet having problems, like say the loss of access to specific transactions. While the wallet has been thoroughly tested over and over no one can say for sure that it's error-free. We believe it to be very secure, more than any crypto currency app out there.
 
-2. HINWEIS. Installieren Sie die BANK-Geldbörse auf einem gehackten Gerät wegen erheblicher Sicherheitsrisiken nicht.  Das gebrochene iOS Betriebssystem kann die Sicherheit Ihrer privaten Offlineschlüssel nicht gewährleisten. Dies bedeutet, dass einige schädliche Anwendungen, die auf einem gehackten Gerät funktionieren, Zugriff auf private Offlineschlüssel erhalten und Ihr Geld stehlen können.
+2.  HINWEIS. Installieren Sie die BANK-Geldbörse auf einem gehackten Gerät wegen erheblicher Sicherheitsrisiken nicht.  Das gebrochene iOS Betriebssystem kann die Sicherheit Ihrer privaten Offlineschlüssel nicht gewährleisten. Dies bedeutet, dass einige schädliche Anwendungen, die auf einem gehackten Gerät funktionieren, Zugriff auf private Offlineschlüssel erhalten und Ihr Geld stehlen können.
 
 
-3. Source Code: https://github.com/horizontalsystems
+3. Quellcode
 
