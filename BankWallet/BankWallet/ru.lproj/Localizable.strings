@@ -1,11 +1,11 @@
 "coin.BTC" = "Bitcoin";
 "coin.BCH" = "Bitcoin Cash";
 "coin.ETH" = "Ethereum";
-"coin.BTCt" = "Биткоин Т";
+"coin.BTCt" = "Bitcoin T";
 "coin.BCHt" = "Bitcoin Cash Т";
 "coin.ETHt" = "Ethereum Т";
 
-"alert.ok" = "Хорошо";
+"alert.ok" = "OK";
 "alert.cancel" = "Отменить";
 "alert.copied" = "Скопировано";
 "alert.confirm" = "Подтвердить";
@@ -36,20 +36,20 @@
 // Backup
 
 "backup.intro.title" = "Записать Ключ";
-"backup.intro.subtitle" = "Ваш секретный ключ является единственным способом для восстановления вашего кошелька.\n\nМы покажем вам список слов, чтобы вы записали их на бумаге и хранили в безопасном месте.";
+"backup.intro.subtitle" = "Ваш секретный ключ является единственным способом для восстановления вашего кошелька.\n\nОн состоит из 12 слов. Храните его в безопасном месте.";
 "backup.intro.later" = "Позже";
-"backup.intro.backup_now" = "Записать ключ";
+"backup.intro.backup_now" = "Записать Ключ";
 
 "backup.words.title" = "Секретный Ключ";
 "backup.words.back" = "Назад";
-"backup.words.proceed" = "Продолжить";
+"backup.words.proceed" = "Далее";
 
 "backup.confirmation.title" = "Проверка...";
-"backup.confirmation.description" = "Введите слова из вашего ключа";
+"backup.confirmation.description" = "Введите слова из вашего секретного ключа";
 "backup.confirmation.failure_alert.text" = "Слова не совпадают";
 "backup.confirmation.done_button" = "Готово";
 "backup.confirmation.understand" = "Я понимаю, что мой кошелек и токены хранятся только на этом устройстве.";
-"backup.confirmation.delete_app_warn" = "Я понимаю, что если это приложение удаляется или устанавливается на другое устройство, мой кошелек можно восстановить только с помощью секретного ключа";
+"backup.confirmation.delete_app_warn" = "Я понимаю, что если это приложение удаляется или устанавливается на другое устройство, мой кошелек можно восстановить только с помощью секретного ключа, который я храню в безопасном месте.";
 
 // Balance
 
@@ -58,7 +58,6 @@
 "balance.send" = "Отправить";
 "balance.deposit" = "Получить";
 "balance.rate_per_coin" = "%@ за %@";
-"balance.syncing_percent" = "Синхронизация %@";
 
 // Deposit
 
@@ -82,7 +81,6 @@
 "transactions.tab_bar_item" = "Транзакции";
 "transactions.filter_all" = "Все";
 "transactions.empty_text" = "У Вас ещё нет ожидаемых или прошлых транзакций ";
-"transactions.sending" = "Отправка... ";
 
 // Transaction Info
 
@@ -92,22 +90,34 @@
 "tx_info.from_hash" = "От";
 "tx_info.to_hash" = "Кому";
 "tx_info.alert_close" = "Закрыть";
-"tx_info.button_more" = "Full Info";
+"tx_info.button_more" = "Ещё";
 
 // Full Info
-"full_info.title" = "Full Info";
-"full_info.id" = "ID";
-"full_info.status" = "Статус";
+
+"full_info.title" = "Транзакция";
 "full_info.time" = "Время";
 "full_info.block" = "Блок";
 "full_info.confirmations" = "Подтверждения";
-"full_info.total_input" = "Всего Входов";
-"full_info.total_output" = "Всего Выходов";
+"full_info.size" = "Размер";
 "full_info.fee" = "Комиссия";
-"full_info.subtitle_from" = "От";
-"full_info.subtitle_inputs" = "Входы";
-"full_info.subtitle_outputs" = "Выходы";
-"full_info.subtitle_provider" = "Data Provider";
+"full_info.rate" = "Ставка";
+"full_info.inputs" = "Входы";
+"full_info.outputs" = "Выходы";
+"full_info.source" = "Источник";
+"full_info.from" = "От";
+"full_info.to" = "Кому";
+
+"full_info.gas_limit" = "Gas Limit";
+"full_info.gas_used" = "Gas Used";
+"full_info.gas_price" = "Gas Price";
+
+"full_info.source.title" = "Источник";
+"full_info.source.online" = "в сети";
+"full_info.source.offline" = "не в сети";
+
+"full_info.error.subtitle" = "не в сети";
+"full_info.error.retry" = "Повторить";
+"full_info.error.change_source" = "Сменить Источник";
 
 // Settings
 
@@ -115,7 +125,6 @@
 "settings.tab_bar_item" = "Настройки";
 "settings.security_center" = "Центр Безопасности";
 "settings.base_currency" = "Базовая Валюта";
-"settings.manage_wallet" = "Manage Wallet";
 "settings.language" = "Язык";
 "settings.about" = "О приложении";
 "settings.light_mode" = "Светлый Режим";
@@ -132,18 +141,15 @@
 
 // Settings -> Manage Wallet
 
-"settings_manage_wallet.title" = "Manage Coins";
-"settings_manage_wallet.add_coins" = "Добавить валюту";
-"settings_manage_wallet.add_button" = "Добавить";
-"settings_manage_wallet.hide_button" = "Скрыть";
-"settings_manage_wallet.remove_button" = "Удалить";
-"settings_manage_wallet.show_button" = "Показать";
-"settings_manage_wallet.search_placeholder" = "Поиск";
+"settings_manage_wallet.title" = "Кошельки";
+
+"settings_manage_wallet.remove_button" = "Откл.";
+
 
 // Settings -> About
 
 "settings_about.title" = "О приложении";
-"settings_about.terms_privacy_subtitle" = "Условия & Политика конфиденциальности:";
+"settings_about.terms_privacy_subtitle" = "Условия & Политика Конфиденциальности:";
 "settings_about.terms_privacy_text" = "Это приложение полностью децентрализованно. Работоспособность этого приложения не зависит от сторонних серверов или какой-либо команды тех поддержки.\n\nПриложение работает везде, пока есть интернет. Этот кошелек или его пользователи не могут быть заблокированы кем-либо.\n\nВаши средства хранятся только на вашем телефоне.\n\nВы несëте полную ответственность за безопасное хранение секретного ключа. Никогда никому не показывайте ваш секретный ключ. Если ключ будет утерян, украден или забыт то контроль над вашими средствами попадет к тому у кого окажется ваш секретный ключ.\n\nНе взламывайте ваш телефон, не устанавливайте приложения из неофициальных источников и никогда не предоставляйте ваше устройство другим лицам. Безопасность вашего кошелька напрямую зависит от этого.\n\nВесь программный код этого приложения является бесплатным и открытым для общественности. Мы старались сделать самый безопасный и в то же время децентрализованный кошелек, но нет гарантий, что в коде приложения не имеется ошибок. Тем не менее, мы верим что по уровню безопасности этот кошелек значительно превосходит почти все доступные мобильные криптокошельки на сегодня.\n\nНекоторые публичные данные используемые приложением такие, как обменные курсы валют хранятся в децентрализованном хранилище (IPFS).";
 
 // Settings -> Security
@@ -151,32 +157,32 @@
 "settings_security.title" = "Безопасность";
 "settings_security.backup_wallet" = "Записать Кошелёк";
 "settings_security.unlink_from_this_device" = "Отсоединить это устройство";
-"settings_security.set_pin" = "Установить PIN";
-"settings_security.change_pin" = "Изменить PIN";
+"settings_security.set_pin" = "Код Доступа";
+"settings_security.change_pin" = "Изменить Код";
 "settings_security.touch_id" = "Touch ID";
 "settings_security.face_id" = "Face ID";
 "security_settings.unlink_alert_button" = "Отсоединить";
 "settings_security.import_wallet_confirmation_1" = "Это действие удалит ваш кошелёк с этого устройства.";
-"settings_security.import_wallet_confirmation_2" = "Убедитесь, что у вас есть свой секретный ключ, иначе вы не сможете получить доступ к денежным средствам.";
+"settings_security.import_wallet_confirmation_2" = "Убедитесь, что у вас есть свой Секретный Ключ, иначе вы не сможете получить доступ к денежным средствам.";
 
 // Set PIN
 
-"set_pin.title" = "Установить PIN-код";
-"set_pin.info" = "Ваш PIN-код будет использоваться для разблокировки вашего кошелька и отправки денег";
-"set_pin.confirm.info" = "Подтвердить PIN-код";
-"set_pin.wrong_confirmation" = "PIN-код не совпадает. ";
+"set_pin.title" = "Код Доступа";
+"set_pin.info" = "Ваш код будет использоваться для разблокировки вашего кошелька и отправки денег";
+"set_pin.confirm.info" = "Подтвердить";
+"set_pin.wrong_confirmation" = "Код не совпадает. Попробуйте еще раз";
 
 // Edit PIN
 
-"edit_pin.title" = "Изменить PIN-код";
-"edit_pin.unlock_info" = "Введите текущий PIN-код";
-"edit_pin.new_pin_info" = "Введите новый PIN-код";
-"edit_pin.confirm_info" = "Введите еще раз";
+"edit_pin.title" = "Код Доступа";
+"edit_pin.unlock_info" = "Текущий Код";
+"edit_pin.new_pin_info" = "Новый Код";
+"edit_pin.confirm_info" = "Подтвердить";
 
 // Unlock PIN
 
-"unlock_pin.info" = "Введите PIN-код";
-"unlock_pin.cant_save_pin" = "Ой! Мы не можем сохранить ваш ПИН-код. Пожалуйста, свяжитесь с нами как можно скорее!";
+"unlock_pin.info" = "Код Доступа";
+"unlock_pin.cant_save_pin" = "Ой! Мы не можем сохранить ваш код. Пожалуйста, свяжитесь с нами как можно скорее!";
 "unlock_pin.blocked_until" = "Отключено до: %@";
 
 //NumPad

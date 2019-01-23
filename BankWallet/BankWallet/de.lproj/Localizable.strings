@@ -14,7 +14,7 @@
 
 // Access Camera
 
-"access_camera.message" = "Wir brauchen Zugriff auf deine Kamera um QR-code scannen.\nRufe die Einstellungen auf, um den Zugriff auf die Kamera zu erlauben";
+"access_camera.message" = "Wir brauchen Zugriff auf ihre Kamera um QR-code scannen.\nRufe die Einstellungen auf, um den Zugriff auf die Kamera zu erlauben";
 "access_camera.settings" = "Einstellungen";
 "access_camera.cancel" = "Abbrechen";
 
@@ -36,29 +36,28 @@
 // Backup
 
 "backup.intro.title" = "Sicherung";
-"backup.intro.subtitle" = "Dein Offlineschlüssel ist die einzige Möglichkeit, deine Geldbörse wiederherzustellen, falls du dein Smartphone verlierst, austauscht, es gestohlen wird oder kaputtgeht. \n\nHierfür zeigen wir die eine Liste von Wörtern an, damit du sie dir auf ein Stück Papier notieren kannst, das es sicher aufzubewahren  gilt.";
+"backup.intro.subtitle" = "Ihr Offlineschlüssel ist die einzige Möglichkeit, deine Geldbörse wiederherzustellen, falls du dein Smartphone verlierst, austauscht, es gestohlen wird oder kaputtgeht. \n\nEs besteht aus 12 Wörtern. Speich es sicher offline.\n";
 "backup.intro.later" = "Später";
-"backup.intro.backup_now" = "Sicherung";
+"backup.intro.backup_now" = "Backup";
 
 "backup.words.title" = "Offlineschlüssel";
 "backup.words.back" = "Zurück";
 "backup.words.proceed" = "Weiter";
 
 "backup.confirmation.title" = "Prüfen …";
-"backup.confirmation.description" = "Gib bitte die folgenden Wörter deines Offlineschlüssels ein";
+"backup.confirmation.description" = "Geben Sie bitte die folgenden Wörter deines Offlineschlüssels ein";
 "backup.confirmation.failure_alert.text" = "Die Wörter stimmen nicht überein";
 "backup.confirmation.done_button" = "Fertig";
-"backup.confirmation.understand" = "Ich verstehe, dass meine Geldbörse und Token auf diesem Gerät nur ist.";
-"backup.confirmation.delete_app_warn" = "Ich verstehe, dass wenn diese app auf ein anderes Gerät verschoben wird oder gelöscht, meine Geldbörse nur mit dem backup-Satz wiederhergestellt werden können, die ich aufgeschrieben und an einem sicheren Ort gespeichert";
+"backup.confirmation.understand" = "Ich  stimme zu, dass mein Wallet und meinen Token nur auf diesem Gerät verfügbar sind.";
+"backup.confirmation.delete_app_warn" = "Ich stimme zu,  dass bei einer Verschiebung  oder Entfernung dieser App, der Zugang zu meinem Walletkonto nur bei Verwendung den Offlineschlüsseln erfolgt , der sicher gespeichert werden muss.";
 
 // Balance
 
 "balance.title" = "Guthaben";
 "balance.tab_bar_item" = "Guthaben";
 "balance.send" = "Senden";
-"balance.deposit" = "Erhalten";
+"balance.deposit" = "Anfordern";
 "balance.rate_per_coin" = "%@ pro %@";
-"balance.syncing_percent" = "Synchronisiert %@";
 
 // Deposit
 
@@ -81,8 +80,7 @@
 "transactions.title" = "Transaktionen";
 "transactions.tab_bar_item" = "Transaktionen";
 "transactions.filter_all" = "Alle";
-"transactions.empty_text" = "Du hast nicht die anstehenden oder vergangenen Transaktionen noch.";
-"transactions.sending" = "Wird gesendet...";
+"transactions.empty_text" = "Transaktionsliste ist leer.";
 
 // Transaction Info
 
@@ -92,30 +90,41 @@
 "tx_info.from_hash" = "Von";
 "tx_info.to_hash" = "An";
 "tx_info.alert_close" = "Schließen";
-"tx_info.button_more" = "Volle Info";
+"tx_info.button_more" = "Mehr";
 
 // Full Info
-"full_info.title" = "Volle Info";
-"full_info.id" = "ID";
-"full_info.status" = "Status";
+
+"full_info.title" = "Transaktion";
 "full_info.time" = "Zeit";
 "full_info.block" = "Block";
 "full_info.confirmations" = "Bestätigungen";
-"full_info.total_input" = "Insgesamt Eingang";
-"full_info.total_output" = "Insgesamte Ausgänge";
+"full_info.size" = "Größe";
 "full_info.fee" = "Gebühr";
-"full_info.subtitle_from" = "Von";
-"full_info.subtitle_inputs" = "Eingänge";
-"full_info.subtitle_outputs" = "Ausgänge";
-"full_info.subtitle_provider" = "Data Provider";
+"full_info.rate" = "Bewerten";
+"full_info.inputs" = "Eingänge";
+"full_info.outputs" = "Ausgänge";
+"full_info.source" = "Quelle";
+"full_info.from" = "Von";
+"full_info.to" = "An";
+
+"full_info.gas_limit" = "Gas Limit";
+"full_info.gas_used" = "Gas Used";
+"full_info.gas_price" = "Gas Price";
+
+"full_info.source.title" = "Quelle";
+"full_info.source.online" = "online";
+"full_info.source.offline" = "offline";
+
+"full_info.error.subtitle" = "offline";
+"full_info.error.retry" = "Wiederholen";
+"full_info.error.change_source" = "Quelle ändern";
 
 // Settings
 
 "settings.title" = "Einstellungen";
 "settings.tab_bar_item" = "Einstellungen";
-"settings.security_center" = "Sicherheits-Center";
-"settings.base_currency" = "Basiswährung";
-"settings.manage_wallet" = "Geldbörse organisieren";
+"settings.security_center" = "Sicherheit";
+"settings.base_currency" = "Währung";
 "settings.language" = "Sprache";
 "settings.about" = "Info";
 "settings.light_mode" = "Licht Modus";
@@ -124,7 +133,7 @@
 
 // Settings -> Base Currency
 
-"settings_base_currency.title" = "Basiswährung";
+"settings_base_currency.title" = "Währung";
 
 // Settings -> Language
 
@@ -132,13 +141,10 @@
 
 // Settings -> Manage Wallet
 
-"settings_manage_wallet.title" = "Coins verwalten";
-"settings_manage_wallet.add_coins" = "Coins Hinzufügen";
-"settings_manage_wallet.add_button" = "Hinzufügen";
-"settings_manage_wallet.hide_button" = "Verbergen";
+"settings_manage_wallet.title" = "Geldbörsen";
+
 "settings_manage_wallet.remove_button" = "Entfernen";
-"settings_manage_wallet.show_button" = "Anzeigen";
-"settings_manage_wallet.search_placeholder" = "Suche";
+
 
 // Settings -> About
 
@@ -148,11 +154,11 @@
 
 // Settings -> Security
 
-"settings_security.title" = "Sicherheits-Center";
+"settings_security.title" = "Sicherheit";
 "settings_security.backup_wallet" = "Geldbörse sichern";
 "settings_security.unlink_from_this_device" = "Verknüpfung mit diesem Gerät aufheben";
-"settings_security.set_pin" = "PIN festlegen";
-"settings_security.change_pin" = "PIN bearbeiten";
+"settings_security.set_pin" = "Code";
+"settings_security.change_pin" = "Code bearbeiten";
 "settings_security.touch_id" = "Touch ID";
 "settings_security.face_id" = "Face ID";
 "security_settings.unlink_alert_button" = "Verknüpfung trennen";
@@ -161,22 +167,22 @@
 
 // Set PIN
 
-"set_pin.title" = "PIN festlegen";
-"set_pin.info" = "Dein PIN wird verwendet werden, um deinen Geldbörse zu entsperren und Geld schicken";
-"set_pin.confirm.info" = "PIN bestätigen";
-"set_pin.wrong_confirmation" = "PIN stimmt nicht überein. ";
+"set_pin.title" = "Code";
+"set_pin.info" = "Ihr Code wird verwendet werden, um Ihren Wallet zu entsperren und Geld schicken";
+"set_pin.confirm.info" = "Bestätigen";
+"set_pin.wrong_confirmation" = "Code stimmt nicht überein. Bitte noch einmal versuchen.";
 
 // Edit PIN
 
-"edit_pin.title" = "PIN bearbeiten";
-"edit_pin.unlock_info" = "Gib derzeitige PIN ein";
-"edit_pin.new_pin_info" = "Gib neue PIN ein";
-"edit_pin.confirm_info" = "Erneut eingeben";
+"edit_pin.title" = "Code bearbeiten";
+"edit_pin.unlock_info" = "Aktuelle Code ";
+"edit_pin.new_pin_info" = "Neue Code";
+"edit_pin.confirm_info" = "Bestätigen";
 
 // Unlock PIN
 
-"unlock_pin.info" = "Gib deine PIN ein";
-"unlock_pin.cant_save_pin" = "Autsch! Wir können den PIN nicht speichern, kontaktieren Sie uns bitte so schnell wie möglich!";
+"unlock_pin.info" = "Code";
+"unlock_pin.cant_save_pin" = "Autsch! Wir können den Code nicht speichern, kontaktieren Sie uns bitte so schnell wie möglich!";
 "unlock_pin.blocked_until" = "Deaktiviert bis: %@ ";
 
 //NumPad

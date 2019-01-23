@@ -1,183 +1,189 @@
-"coin.BTC" = "Bitcoin";
-"coin.BCH" = "Bitcoin Cash ";
-"coin.ETH" = "Ethereum";
-"coin.BTCt" = "Bitcoin T";
-"coin.BCHt" = "Bitcoin Cash T";
-"coin.ETHt" = "Ethereum T";
+"coin.BTC" = "비트코인";
+"coin.BCH" = "비트코인 캐시";
+"coin.ETH" = "이더리움";
+"coin.BTCt" = "비트코인 티";
+"coin.BCHt" = "비트코인 캐시 티";
+"coin.ETHt" = "이더리움 티";
 
-"alert.ok" = "OK";
-"alert.cancel" = "Cancel";
-"alert.copied" = "Copied";
-"alert.confirm" = "Confirm";
+"alert.ok" = "확인";
+"alert.cancel" = "취소";
+"alert.copied" = "복사됨";
+"alert.confirm" = "확인";
 
-"biometric_usage_reason" = "Unlock wallet";
+"biometric_usage_reason" = "지갑 잠금 해제";
 
 // Access Camera
 
-"access_camera.message" = "Bank needs access to your camera to scan QR code.\n\nGo to Settings - > Bank and allow access to Camera.";
-"access_camera.settings" = "Settings";
-"access_camera.cancel" = "Cancel";
+"access_camera.message" = "은행이 큐알 코드를 스캔하기 위해서 당신의 카메라에 대한 접근의 허가를 요구합니다. \n설정으로 갑니다 - > 은행 그리고 카메라에 대한 접근을 허용합니다.";
+"access_camera.settings" = "설정";
+"access_camera.cancel" = "취소";
 
 // Guest Page
 
-"guest.title" = "Bank Wallet";
-"guest.subtitle" = "Decentralized App";
-"guest.create_wallet" = "New Wallet";
-"guest.restore_wallet" = "Restore Wallet";
+"guest.title" = "은행 지갑";
+"guest.subtitle" = "분산하된 어플";
+"guest.create_wallet" = "새 지갑";
+"guest.restore_wallet" = "지갑 복원";
 
 // Restore
 
-"restore.title" = "Restore";
-"restore.description" = "Enter Secret Key  ";
-"restore.done" = "Done";
-"restore.cancel" = "Cancel";
-"restore.validation_failed" = "Incorrect Secret Key";
+"restore.title" = "복구";
+"restore.description" = "비밀 키를 입력  ";
+"restore.done" = "완료";
+"restore.cancel" = "취소";
+"restore.validation_failed" = "잘못된 비밀 키";
 
 // Backup
 
-"backup.intro.title" = "Backup";
-"backup.intro.subtitle" = "Your secret key is the only way to restore your wallet and funds if your phone is ever lost, stolen, broken, or upgraded.\n\nIt consists of 12 words. Write them on a piece of paper and do not ever show it to anyone.";
-"backup.intro.later" = "Later";
-"backup.intro.backup_now" = "Backup";
+"backup.intro.title" = "백업";
+"backup.intro.subtitle" = "비밀 키는 귀하의 휴대 전화를 분실, 도난, 고장, 또는 업그레이드 하는 경우 당신의 지갑과 자금을 복원 하는 유일한 방법입니다.\n\n12개의 단어로 구성 됩니다. 안전하게 오프라인으로 저장하세요.";
+"backup.intro.later" = "나중에";
+"backup.intro.backup_now" = "백업";
 
-"backup.words.title" = "Secret Key";
-"backup.words.back" = "Back";
-"backup.words.proceed" = "Next";
+"backup.words.title" = "비밀 키";
+"backup.words.back" = "뒤로";
+"backup.words.proceed" = "다음";
 
-"backup.confirmation.title" = "Check ...";
-"backup.confirmation.description" = "Enter words from your secret key";
-"backup.confirmation.failure_alert.text" = "Words do not match";
-"backup.confirmation.done_button" = "Done";
-"backup.confirmation.understand" = "I understand that my wallet and tokens are held securely on this device only and not any servers.";
-"backup.confirmation.delete_app_warn" = "I understand that if this app is deleted or stops working for any reason, my wallet can only be recovered using the secret key that I have written down and saved in a secure place";
+"backup.confirmation.title" = "확인 중...";
+"backup.confirmation.description" = "비밀 키에서 단어를 입력";
+"backup.confirmation.failure_alert.text" = "암호가 일치 하지 않습니다.";
+"backup.confirmation.done_button" = "완료";
+"backup.confirmation.understand" = "나는 내 지갑과 토큰이 다른 서버가 아닌 이 장치에만 안전하게 존재하고 있음을 이해한다.";
+"backup.confirmation.delete_app_warn" = "나는 이 앱이 다른 장치로 이동, 삭제 또는 오작동하는 경우 내 지갑이 내가 작성하고 안전한 장소에 저장한 비밀 키로만 복구 될 수 있음을 이해한다.";
 
 // Balance
 
-"balance.title" = "Balance";
-"balance.tab_bar_item" = "Balance";
-"balance.send" = "Send";
-"balance.deposit" = "Receive";
-"balance.rate_per_coin" = "%@ per %@";
-"balance.syncing_percent" = "Syncing %@";
+"balance.title" = "잔액";
+"balance.tab_bar_item" = "잔액";
+"balance.send" = "전송";
+"balance.deposit" = "수신";
+"balance.rate_per_coin" = "%@ 당 %@";
 
 // Deposit
 
-"deposit.receive_coin" = "Receive %@";
-"deposit.alert_copy" = "Copy";
+"deposit.receive_coin" = "수신%@";
+"deposit.alert_copy" = "복사";
 
 // Send
 
-"send.title" = "Send %@";
-"send.address_placeholder" = "Address";
-"send.amount_error.balance" = "Balance %@";
-"send.send_button" = "Send";
-"send.paste_button" = "Paste";
-"send.amount_placeholder" = "Amount";
-"send.fee" = "Fee";
-"send.total" = "Total";
+"send.title" = "전송 %@";
+"send.address_placeholder" = "주소";
+"send.amount_error.balance" = "잔액%@";
+"send.send_button" = "전송";
+"send.paste_button" = "붙여넣기";
+"send.amount_placeholder" = "양";
+"send.fee" = "수수료";
+"send.total" = "합계";
 
 // Transactions
 
-"transactions.title" = "Transactions";
-"transactions.tab_bar_item" = "Transactions";
-"transactions.filter_all" = "All";
-"transactions.empty_text" = "You don't have any pending or past transactions yet";
-"transactions.sending" = "Sending...";
+"transactions.title" = "거래기록";
+"transactions.tab_bar_item" = "거래기록";
+"transactions.filter_all" = "모든";
+"transactions.empty_text" = "당신은 아직 보류 중 또는 과거에 완료된 거래가 없습니다";
 
 // Transaction Info
 
-"tx_info.title" = "Transaction";
-"tx_info.time" = "Time";
-"tx_info.status" = "Status";
-"tx_info.from_hash" = "From";
-"tx_info.to_hash" = "To";
-"tx_info.alert_close" = "Close";
-"tx_info.button_more" = "Full Info";
+"tx_info.title" = "거래기록";
+"tx_info.time" = "시간";
+"tx_info.status" = "상태";
+"tx_info.from_hash" = "로 부터";
+"tx_info.to_hash" = "에게";
+"tx_info.alert_close" = "가까운, 닫힌";
+"tx_info.button_more" = "보다";
 
 // Full Info
-"full_info.title" = "Full Info";
-"full_info.id" = "ID";
-"full_info.time" = "Time";
-"full_info.block" = "Block";
-"full_info.confirmations" = "Confirmations";
-"full_info.total_input" = "Total Input";
-"full_info.total_output" = "Total Output";
-"full_info.size" = "Size";
-"full_info.fee" = "Fee";
-"full_info.fee_per_byte" = "Fee per byte";
-"full_info.subtitle_inputs" = "Inputs";
-"full_info.subtitle_outputs" = "Outputs";
-"full_info.subtitle_provider" = "Data Provider";
+
+"full_info.title" = "거래";
+"full_info.time" = "시간";
+"full_info.block" = "덩어리";
+"full_info.confirmations" = "확인";
+"full_info.size" = "크기";
+"full_info.fee" = "비용";
+"full_info.rate" = "비율, 속도, 평가";
+"full_info.inputs" = "입력값";
+"full_info.outputs" = "산출값";
+"full_info.source" = "원천, 자료";
+"full_info.from" = "로 부터";
+"full_info.to" = "에게";
+
+"full_info.gas_limit" = "Gas Limit";
+"full_info.gas_used" = "Gas Used";
+"full_info.gas_price" = "Gas Price";
+
+"full_info.source.title" = "원천, 자료";
+"full_info.source.online" = "온라인";
+"full_info.source.offline" = "오프라인";
+
+"full_info.error.subtitle" = "오프라인";
+"full_info.error.retry" = "재시도";
+"full_info.error.change_source" = "출처를 변경하다";
 
 // Settings
 
-"settings.title" = "Settings";
-"settings.tab_bar_item" = "Settings";
-"settings.security_center" = "Security Center";
-"settings.base_currency" = "Base Currency";
-"settings.manage_wallet" = "Manage Wallet";
-"settings.language" = "Language";
-"settings.about" = "About";
-"settings.light_mode" = "Light Mode";
+"settings.title" = "설정";
+"settings.tab_bar_item" = "설정";
+"settings.security_center" = "보안 센터";
+"settings.base_currency" = "기초 통화";
+"settings.language" = "언어";
+"settings.about" = "에 대해";
+"settings.light_mode" = "밝은 모드";
 "settings.info_title" = "BANK WALLET";
 "settings.info_subtitle" = "decentralized app";
 
 // Settings -> Base Currency
 
-"settings_base_currency.title" = "Base Currency";
+"settings_base_currency.title" = "기초 통화";
 
 // Settings -> Language
 
-"settings_language.title" = "Language";
+"settings_language.title" = "언어";
 
 // Settings -> Manage Wallet
 
-"settings_manage_wallet.title" = "Manage Coins";
-"settings_manage_wallet.add_coins" = "Add coins";
-"settings_manage_wallet.add_button" = "Add";
-"settings_manage_wallet.hide_button" = "Hide";
-"settings_manage_wallet.remove_button" = "Remove";
-"settings_manage_wallet.show_button" = "Show";
-"settings_manage_wallet.search_placeholder" = "Search";
+"settings_manage_wallet.title" = "지갑";
+
+"settings_manage_wallet.remove_button" = "삭제";
+
 
 // Settings -> About
 
-"settings_about.title" = "About";
-"settings_about.terms_privacy_subtitle" = "Terms & Privacy:";
-"settings_about.terms_privacy_text" = "This app is peer-to-peer. It does not depend on any web server or tech support personnel to function.\n\nIt works everywhere as long as there is internet. No entity can block this app from working or to block someone from using it.\n\nYour funds are securely stored on the phone itself, not anywhere else.\n\nIt’s your responsibility to backup your Secret Key and keep it private. Never show it to anyone. If it’s lost, forgotten or stollen your funds can be used by the person who has your Secret key.\n\nDo not jailbreak your phone, do not install apps from unknown (untrusted) sources, do not give your device to untrusted people, and keep the Operating System on your phone up to date. The security of your wallet depends on this.\n\nThe entire code powering this app been open to the public scrutiny since the beginning. We tried to build the most secure and decentralized wallet we could, however there are no guarantees that there are no unintended software issues. That said, this wallet is likely to be significantly more secure than any smartphone wallet app out there.\n\nSome generic non-private app data like currency exchange rates are stored on decentralized storage (IPFS). ";
+"settings_about.title" = "에 대해";
+"settings_about.terms_privacy_subtitle" = "용어 및 정책";
+"settings_about.terms_privacy_text" = "이 응용 프로그램은 peer-to-peer방식입니다. 작동하기 위해서 어떠한 웹 서버 또는 기술 지원 담당자에게 의존하지 않습니다.\n\n인터넷이 되는 어느 곳에서나 작동합니다. 누구도 이 어플을 작동하는 것을 막을 수 없고 그것을 사용하기 위해 누군가를 차단할 수 없습니다.\n\n당신의 자금은 안전하게 다른 어떤한 곳도 아닌 핸드폰 자체에 저장됩니다.\n\n너의 비밀 키를 백업하고 그것을 비공개로 지키는 것은 당신의 책임에 달려있습니다. 절대로 누군가에게 보여주지 마세요. 만약에 잃어버린다면, 당신의 비밀 키를 가진 사람이 당신의 자금을 훔치거나 잃어버리게 할 수 있습니다.\n\n당신의 핸드폰을 탈옥하지마세요, 알려지지 않은 (믿을 수 없는) 출처로부터의 어플을 설치하지마세요, 당신의 핸드폰을 믿을 수 없는 사람에게 주지 마세요, 그리고 당신의 핸드폰의 운영체제을 최신버전으로 유지하세요. 이것은 당신의 지갑의 안전을 지켜줄 것입니다. \n\n이 어플을 작동시키는 전체코드는 시작할 때부터 대중의 감시에 공개됩니다. 의도하지 않은 소프트웨어 문제들이 없다는 보장은 없지만, 우리는 가장 안전하고 분권화된 지갑을 만들기 위해 시도할 것입니다. 즉, 이 지갑은 어떠한 스마트폰 어플보다 안전할 것입니다.\n\n통화 환율과 같은 총괄적이고 사적이지 않은 데이터는 분산된 저장소(IPFS)에 저장될 것입니다.\n";
 
 // Settings -> Security
 
-"settings_security.title" = "Security Center";
-"settings_security.backup_wallet" = "Backup Wallet";
-"settings_security.unlink_from_this_device" = "Unlink From This Device";
-"settings_security.set_pin" = "Set PIN";
-"settings_security.change_pin" = "Edit PIN";
-"settings_security.touch_id" = "Touch ID";
-"settings_security.face_id" = "Face ID";
-"security_settings.unlink_alert_button" = "Unlink";
-"settings_security.import_wallet_confirmation_1" = "This action will remove the currently installed wallet from this device.";
-"settings_security.import_wallet_confirmation_2" = "Make sure you have its Secret Key or you will not be able to access the funds on it in the future.";
+"settings_security.title" = "보안 센터";
+"settings_security.backup_wallet" = "백업용 지갑";
+"settings_security.unlink_from_this_device" = "이 장치로부터 연결되지 않은";
+"settings_security.set_pin" = "비밀번호";
+"settings_security.change_pin" = "비밀번호 변경";
+"settings_security.touch_id" = "터치 아이디";
+"settings_security.face_id" = "얼굴인식 아이디";
+"security_settings.unlink_alert_button" = "연결되지 않은";
+"settings_security.import_wallet_confirmation_1" = "이 장치로부터 현재 설치되지 않은 지갑을 제거해줄 것입니다.";
+"settings_security.import_wallet_confirmation_2" = "안전 키를 백업을 확인하거나 너가 너의 자금에 미래에 접근할 수 없을 것입니다.";
 
 // Set PIN
 
-"set_pin.title" = "Set PIN";
-"set_pin.info" = "Your pin will be used to unlock your wallet and send money";
-"set_pin.confirm.info" = "Confirm PIN";
-"set_pin.wrong_confirmation" = "Pin did not match. Try again";
+"set_pin.title" = "비밀번호";
+"set_pin.info" = "너의 비밀번호는 너의 지갑을 열어주고 돈을 보내는데 사용될 것입니다.";
+"set_pin.confirm.info" = "확인";
+"set_pin.wrong_confirmation" = "비밀번호가 일치하지 않는다. 다시 시도하세요.";
 
 // Edit PIN
 
-"edit_pin.title" = "Edit PIN";
-"edit_pin.unlock_info" = "Enter current PIN";
-"edit_pin.new_pin_info" = "Enter new PIN";
-"edit_pin.confirm_info" = "Enter again";
+"edit_pin.title" = "비밀번호 변경";
+"edit_pin.unlock_info" = "현재 비밀번호";
+"edit_pin.new_pin_info" = "새로운 비밀번호";
+"edit_pin.confirm_info" = "확인";
 
 // Unlock PIN
 
-"unlock_pin.info" = "Enter PIN";
-"unlock_pin.cant_save_pin" = "Ouch! We cant save your pin, please contact us asap!";
-"unlock_pin.blocked_until" = "Disabled until: %@";
+"unlock_pin.info" = "비밀번호";
+"unlock_pin.cant_save_pin" = "아야! 우리는 당신의 암호를 저장할 수 없습니다 저희에 게 가능한 빨리 연락 하시기 바랍니다!";
+"unlock_pin.blocked_until" = "~때까지 사용 안 함: %@";
 
 //NumPad
 

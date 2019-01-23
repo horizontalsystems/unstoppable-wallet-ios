@@ -36,7 +36,7 @@
 // Backup
 
 "backup.intro.title" = "Yedekle";
-"backup.intro.subtitle" = "Gizli Anahtar, telefonunuzun kaybolması, çalınması, bozulması veya programın tekrar kurulması durumunda cüzdana erişebilmenin tek yoludur.\n12 kelimeden oluşur. Gizli Anahtarı not alıp güvenli bir yerde tutun ve kimseye göstermeyin.";
+"backup.intro.subtitle" = "Your secret key is the only way to restore your wallet and funds if your phone is ever lost, stolen, broken, or upgraded.\n\nIt consists of 12 words. Store it safely offline.";
 "backup.intro.later" = "Sonra";
 "backup.intro.backup_now" = "Yedekle";
 
@@ -49,7 +49,7 @@
 "backup.confirmation.failure_alert.text" = "Kelimeler eşleşmiyor";
 "backup.confirmation.done_button" = "Bitti";
 "backup.confirmation.understand" = "Cüzdanımın güvenle, sadece bu cihazda bulunduğunu ve herhangi bir sunucuda olmadığını biliyorum.";
-"backup.confirmation.delete_app_warn" = "Bu uygulama silinirse veya herhengi bir sebepten dolayı çalışmayı bırakırsa, cüzdanımı kurtarmanın tek yolunun yenice yazıp güvenli bir yerde koruduğum gizli anahtar olduğunu biliyorum";
+"backup.confirmation.delete_app_warn" = "I understand that if this app is moved to another device, deleted or malfunctions, my wallet can be only recovered with the Secret Key that I have just written down and saved in a secure place.";
 
 // Balance
 
@@ -58,7 +58,6 @@
 "balance.send" = "Gönder";
 "balance.deposit" = "Al";
 "balance.rate_per_coin" = "%@ için %@";
-"balance.syncing_percent" = "%@ eşitleniyor";
 
 // Deposit
 
@@ -82,7 +81,6 @@
 "transactions.tab_bar_item" = "Hesap işlemleri";
 "transactions.filter_all" = "Hepsi";
 "transactions.empty_text" = "Henüz herhangi bir bekleyen veya geçmiş işlem yok";
-"transactions.sending" = "Sending...";
 
 // Transaction Info
 
@@ -92,22 +90,34 @@
 "tx_info.from_hash" = "Gönderen";
 "tx_info.to_hash" = "Alan";
 "tx_info.alert_close" = "Kapat";
-"tx_info.button_more" = "Full Info";
+"tx_info.button_more" = "Daha fazlası";
 
 // Full Info
-"full_info.title" = "Full Info";
-"full_info.id" = "Kimlik";
+
+"full_info.title" = "Hesap işlemi";
 "full_info.time" = "Tarih";
-"full_info.block" = "Block";
+"full_info.block" = "Blok ";
 "full_info.confirmations" = "Onaylama";
-"full_info.total_input" = "Total Input";
-"full_info.total_output" = "Total Output";
-"full_info.size" = "Size";
+"full_info.size" = "Boyut";
 "full_info.fee" = "Masraf";
-"full_info.fee_per_byte" = "Fee per byte";
-"full_info.subtitle_inputs" = "Inputs";
-"full_info.subtitle_outputs" = "Outputs";
-"full_info.subtitle_provider" = "Data Provider";
+"full_info.rate" = "Rate";
+"full_info.inputs" = "Girişler";
+"full_info.outputs" = "Çıkışlar";
+"full_info.source" = "Source";
+"full_info.from" = "Gönderen";
+"full_info.to" = "Alan";
+
+"full_info.gas_limit" = "Gas Limit";
+"full_info.gas_used" = "Gas Used";
+"full_info.gas_price" = "Gas Price";
+
+"full_info.source.title" = "Source";
+"full_info.source.online" = "çevrimiçi";
+"full_info.source.offline" = "offline";
+
+"full_info.error.subtitle" = "offline";
+"full_info.error.retry" = "Retry";
+"full_info.error.change_source" = "Change Source";
 
 // Settings
 
@@ -115,7 +125,6 @@
 "settings.tab_bar_item" = "Ayarlar";
 "settings.security_center" = "Güvenlik Merkezi";
 "settings.base_currency" = "Para birimi";
-"settings.manage_wallet" = "Manage Wallet";
 "settings.language" = "Dil";
 "settings.about" = "Hakkında";
 "settings.light_mode" = "Aydınlık mod";
@@ -132,13 +141,10 @@
 
 // Settings -> Manage Wallet
 
-"settings_manage_wallet.title" = "Manage Coins";
-"settings_manage_wallet.add_coins" = "Add coins";
-"settings_manage_wallet.add_button" = "Add";
-"settings_manage_wallet.hide_button" = "Hide";
-"settings_manage_wallet.remove_button" = "Remove";
-"settings_manage_wallet.show_button" = "Show";
-"settings_manage_wallet.search_placeholder" = "Search";
+"settings_manage_wallet.title" = "Wallets";
+
+"settings_manage_wallet.remove_button" = "Kaldır";
+
 
 // Settings -> About
 
@@ -151,32 +157,32 @@
 "settings_security.title" = "Güvenlik Merkezi";
 "settings_security.backup_wallet" = "Cüzdanı yedekle";
 "settings_security.unlink_from_this_device" = "Bu cihazla bağlantıyı kes";
-"settings_security.set_pin" = "PIN oluştur";
-"settings_security.change_pin" = "PIN'i değiştir";
+"settings_security.set_pin" = "Kod";
+"settings_security.change_pin" = "Edit Passcode";
 "settings_security.touch_id" = "Touch ID";
 "settings_security.face_id" = "Face ID";
 "security_settings.unlink_alert_button" = "Ayır";
 "settings_security.import_wallet_confirmation_1" = "Bu işlemle, cüzdan cihazdan kaldırılacak.";
-"settings_security.import_wallet_confirmation_2" = "Gizli Anahtarı yedeklediğinizden emin olun. Onsuz, cüzdana gelecekte ulaşamayacaksınız.";
+"settings_security.import_wallet_confirmation_2" = "Make sure you have backed up Secret Key or you will not be able to access your funds in the future.";
 
 // Set PIN
 
-"set_pin.title" = "PIN oluştur";
-"set_pin.info" = "PİN, program'ı açmak ve para göndermek için kullanılacak";
-"set_pin.confirm.info" = "PIN'i onaylayın";
-"set_pin.wrong_confirmation" = "PİN uyuşmuyor. Tekrar deneyin.";
+"set_pin.title" = "Kod";
+"set_pin.info" = "Your passcode will be used to unlock your wallet and send money";
+"set_pin.confirm.info" = "Onayla";
+"set_pin.wrong_confirmation" = "Passcode did not match. Try again";
 
 // Edit PIN
 
-"edit_pin.title" = "PİN'i değiştir";
-"edit_pin.unlock_info" = "Şu an kullandığınız PİN'i girin";
-"edit_pin.new_pin_info" = "Yeni PİN gerin";
-"edit_pin.confirm_info" = "Tekrar girin";
+"edit_pin.title" = "Edit Passcode";
+"edit_pin.unlock_info" = "Current Passcode";
+"edit_pin.new_pin_info" = "Yeni Kod";
+"edit_pin.confirm_info" = "Onayla";
 
 // Unlock PIN
 
-"unlock_pin.info" = "PIN'i girin";
-"unlock_pin.cant_save_pin" = "Eyvah! PIN kodu çalışmadı, ACİLEN bize ulaşın!";
+"unlock_pin.info" = "Kod";
+"unlock_pin.cant_save_pin" = "Ouch! We cant save your passcode, please contact us asap!";
 "unlock_pin.blocked_until" = "Engellendi: %@";
 
 //NumPad

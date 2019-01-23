@@ -36,11 +36,11 @@
 // Backup
 
 "backup.intro.title" = "Sauvegarde";
-"backup.intro.subtitle" = "Votre clé secrete est le seul moyen de restaurer votre porte-monnaie et vos fonds si votre téléphone est perdu, volé, cassé ou mis à jour. \nElle contient 12 mots. Ecrivez-les sur un morceau de papier et ne les montrez jamais à personne.";
+"backup.intro.subtitle" = "Votre clé secrete est le seul moyen de restaurer votre porte-monnaie et vos fonds si votre téléphone est perdu, volé, cassé ou mis à jour.\n\n Elle contient 12 mots. Stockez-le en toute sécurité hors ligne.";
 "backup.intro.later" = "Plus tard";
 "backup.intro.backup_now" = "Sauvegarde";
 
-"backup.words.title" = "Le mot secret";
+"backup.words.title" = "Clé Secrete";
 "backup.words.back" = "Retour";
 "backup.words.proceed" = "Suivant";
 
@@ -49,7 +49,7 @@
 "backup.confirmation.failure_alert.text" = "Les mots ne correspondent pas";
 "backup.confirmation.done_button" = "Fait";
 "backup.confirmation.understand" = "Je comprends que mon porte-monnaie et mes tokens sont en toute sécurité sur cet appareil uniquement et pas sur les autres appareils.";
-"backup.confirmation.delete_app_warn" = "Je comprends que si cette appli est déplacée vers un autre appareil ou supprimée, mon porte-monnaie ne peut être récupéré qu'avec la clé secrète que je viens d'écrire et de sauvegarder dans un endroit sécurisé";
+"backup.confirmation.delete_app_warn" = "Je comprends que si cette appli est déplacée vers un autre appareil ou supprimée, mon porte-monnaie ne peut être récupéré qu'avec la clé secrète que je viens d'écrire et de sauvegarder dans un endroit sécurisé.";
 
 // Balance
 
@@ -58,7 +58,6 @@
 "balance.send" = "Envoyer";
 "balance.deposit" = "Recevoir";
 "balance.rate_per_coin" = "%@ par %@";
-"balance.syncing_percent" = "Synchronisation %@";
 
 // Deposit
 
@@ -82,7 +81,6 @@
 "transactions.tab_bar_item" = "Transactions";
 "transactions.filter_all" = "Tous";
 "transactions.empty_text" = "Vous n'avez encore aucune transaction en cours ou passée";
-"transactions.sending" = "Envoie…";
 
 // Transaction Info
 
@@ -92,22 +90,34 @@
 "tx_info.from_hash" = "De";
 "tx_info.to_hash" = "À";
 "tx_info.alert_close" = "Fermer";
-"tx_info.button_more" = "Full Info";
+"tx_info.button_more" = "Plus";
 
 // Full Info
-"full_info.title" = "Full Info";
-"full_info.id" = "ID";
-"full_info.status" = "Statut";
+
+"full_info.title" = "Transaction";
 "full_info.time" = "Date";
 "full_info.block" = "Bloc";
 "full_info.confirmations" = "Confirmation";
-"full_info.total_input" = "Total des entrées";
-"full_info.total_output" = "Total des sorties";
+"full_info.size" = "Taille";
 "full_info.fee" = "Frais";
-"full_info.subtitle_from" = "De";
-"full_info.subtitle_inputs" = "Entrées";
-"full_info.subtitle_outputs" = "Sorties";
-"full_info.subtitle_provider" = "Data Provider";
+"full_info.rate" = "Taux";
+"full_info.inputs" = "Entrées";
+"full_info.outputs" = "Sorties";
+"full_info.source" = "Source";
+"full_info.from" = "De";
+"full_info.to" = "À";
+
+"full_info.gas_limit" = "Gas Limit";
+"full_info.gas_used" = "Gas Used";
+"full_info.gas_price" = "Gas Price";
+
+"full_info.source.title" = "Source";
+"full_info.source.online" = "en ligne";
+"full_info.source.offline" = "déconnecté";
+
+"full_info.error.subtitle" = "déconnecté";
+"full_info.error.retry" = "Réessayer";
+"full_info.error.change_source" = "Changer la Source";
 
 // Settings
 
@@ -115,7 +125,6 @@
 "settings.tab_bar_item" = "Paramètres";
 "settings.security_center" = "Centre de Sécurité";
 "settings.base_currency" = "Devise de Base";
-"settings.manage_wallet" = "Gérer le port-monnaie";
 "settings.language" = "Langue";
 "settings.about" = "À propos de";
 "settings.light_mode" = "Mode lumineux";
@@ -132,13 +141,10 @@
 
 // Settings -> Manage Wallet
 
-"settings_manage_wallet.title" = "Gérer les coins";
-"settings_manage_wallet.add_coins" = "Ajouter des coins";
-"settings_manage_wallet.add_button" = "Ajouter";
-"settings_manage_wallet.hide_button" = "Cacher";
+"settings_manage_wallet.title" = "Portefeuilles";
+
 "settings_manage_wallet.remove_button" = "Supprimer";
-"settings_manage_wallet.show_button" = "Afficher";
-"settings_manage_wallet.search_placeholder" = "Chercher";
+
 
 // Settings -> About
 
@@ -151,8 +157,8 @@
 "settings_security.title" = "Centre de Sécurité";
 "settings_security.backup_wallet" = "Porte-monnaie de Sauvegarde";
 "settings_security.unlink_from_this_device" = "Supprimer le lien de cet appareil";
-"settings_security.set_pin" = "Définir le PIN";
-"settings_security.change_pin" = "Modifier le PIN";
+"settings_security.set_pin" = "Code";
+"settings_security.change_pin" = "Modifier le code ";
 "settings_security.touch_id" = "Touch ID";
 "settings_security.face_id" = "Face ID";
 "security_settings.unlink_alert_button" = "Délier";
@@ -161,22 +167,22 @@
 
 // Set PIN
 
-"set_pin.title" = "Définir le PIN";
-"set_pin.info" = "Votre Pin sera utilisé pour déverrouiller votre porte-monnaie et envoyer de l’argent";
-"set_pin.confirm.info" = "Confirmez le PIN";
-"set_pin.wrong_confirmation" = "Le PIN ne correspond pas. Réessayez";
+"set_pin.title" = "Code";
+"set_pin.info" = "Votre code sera utilisé pour déverrouiller votre porte-monnaie et envoyer de l’argent";
+"set_pin.confirm.info" = "Confirmer";
+"set_pin.wrong_confirmation" = "Le Code ne correspond pas. Réessayez";
 
 // Edit PIN
 
-"edit_pin.title" = "Modifier le PIN";
-"edit_pin.unlock_info" = "Entrez le PIN actuel";
-"edit_pin.new_pin_info" = "Entrez le nouveau PIN";
-"edit_pin.confirm_info" = "Entrez encore";
+"edit_pin.title" = "Modifier le code ";
+"edit_pin.unlock_info" = "Le code actuel";
+"edit_pin.new_pin_info" = "Le code nouveu";
+"edit_pin.confirm_info" = "Confirmer";
 
 // Unlock PIN
 
-"unlock_pin.info" = "Entrez PIN";
-"unlock_pin.cant_save_pin" = "Oops! Nous ne pouvons pas enregistrer votre Pin, veuillez nous contacter au plus vite!";
+"unlock_pin.info" = "Code";
+"unlock_pin.cant_save_pin" = "Oops! Nous ne pouvons pas enregistrer votre code, veuillez nous contacter au plus vite!";
 "unlock_pin.blocked_until" = "Désactivé jusqu'à: %@";
 
 //NumPad
