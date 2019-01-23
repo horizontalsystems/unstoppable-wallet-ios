@@ -1,6 +1,6 @@
-"coin.BTC" = "Bitcoin";
+"coin.BTC" = "比特币";
 "coin.BCH" = "Bitcoin Cash";
-"coin.ETH" = "Ethereum";
+"coin.ETH" = "以太坊";
 "coin.BTCt" = "Bitcoin T";
 "coin.BCHt" = "Bitcoin Cash T";
 "coin.ETHt" = "Ethereum T";
@@ -36,7 +36,7 @@
 // Backup
 
 "backup.intro.title" = "备份";
-"backup.intro.subtitle" = "如果您的手机被丢失、被盗、损坏、或更新，您的密钥是恢复钱包和资金的唯一方法。\n\n密钥由12个单词组成。";
+"backup.intro.subtitle" = "Your secret key is the only way to restore your wallet and funds if your phone is ever lost, stolen, broken, or upgraded.\n\nIt consists of 12 words. Store it safely offline.";
 "backup.intro.later" = "稍后";
 "backup.intro.backup_now" = "备份";
 
