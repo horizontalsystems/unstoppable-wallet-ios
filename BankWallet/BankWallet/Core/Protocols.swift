@@ -65,8 +65,11 @@ protocol IWalletFactory {
     func wallet(forCoin coin: Coin, authData: AuthData) -> Wallet?
 }
 
-protocol ICoinManager {
+protocol ICoinManager: class {
+    func enableDefaultCoins()
+    var coinsUpdatedSignal: Signal { get }
     var coins: [Coin] { get }
+    var allCoinsObservable: Observable<[Coin]> { get }
 }
 
 protocol ITransactionManager: class {
@@ -184,6 +187,7 @@ protocol IAppConfigProvider {
 
     var defaultWords: [String] { get }
     var disablePinLock: Bool { get }
+    var defaultCoins: [Coin] { get }
 }
 
 protocol IFullTransactionInfoProvider {
@@ -209,6 +213,13 @@ protocol IRateStorage {
     func save(latestRate: Rate)
     func save(rate: Rate)
     func clear()
+}
+
+protocol ICoinStorage {
+    func enabledCoinsObservable() -> Observable<[Coin]>
+    func allCoinsObservable() -> Observable<[Coin]>
+    func save(enabledCoins: [Coin])
+    func cleanCoins()
 }
 
 protocol IJSONApiManager {
@@ -243,7 +254,10 @@ protocol IFullTransactionDataProviderManager {
     func bitcoin(for name: String) -> IBitcoinForksProvider
     func bitcoinCash(for name: String) -> IBitcoinForksProvider
     func ethereum(for name: String) -> IEthereumForksProvider
+}
 
+protocol IPingManager {
+    func serverAvailable(url: String, timeoutInterval: TimeInterval) -> Observable<TimeInterval>
 }
 
 protocol IBitcoinForksProvider: IProvider {

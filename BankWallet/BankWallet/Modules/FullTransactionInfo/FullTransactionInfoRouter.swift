@@ -12,8 +12,8 @@ class FullTransactionInfoRouter {
 
 extension FullTransactionInfoRouter: IFullTransactionInfoRouter {
 
-    func openProviderSettings(coinCode: String) {
-        let vc = DataProviderSettingsRouter.module(for: coinCode)
+    func openProviderSettings(coinCode: String, transactionHash: String) {
+        let vc = DataProviderSettingsRouter.module(for: coinCode, transactionHash: transactionHash)
         viewController?.pushViewController(vc, animated: true)
     }
 

@@ -36,6 +36,10 @@ In case of a device loss or replacement the user may easily restore the wallet u
 
 Source code: https://github.com/horizontalsystems/bank-wallet-ios-app
 
+## Get Bank Wallet
+
+App Store: [https://itunes.apple.com/us/app/bank-wallet/id1447619907?ls=1&mt=8](https://itunes.apple.com/us/app/bank-wallet/id1447619907?ls=1&mt=8)
+
 ## License
 
 The BANK wallet is open source and available under the terms of the MIT Lincense.

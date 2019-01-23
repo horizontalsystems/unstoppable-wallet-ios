@@ -21,7 +21,7 @@
 // Guest Page
 
 "guest.title" = "钱包";
-"guest.subtitle" = "分布式应用程序";
+"guest.subtitle" = "Decentralized App";
 "guest.create_wallet" = "新的钱包";
 "guest.restore_wallet" = "恢复钱包";
 
@@ -36,7 +36,7 @@
 // Backup
 
 "backup.intro.title" = "备份";
-"backup.intro.subtitle" = "如果您的手机被丢失、被盗、损坏、或更新，您的密钥是恢复钱包和资金的唯一方法。\n\n密钥由12个单词组成。都必须保管好您的密钥";
+"backup.intro.subtitle" = "如果您的手机被丢失、被盗、损坏、或更新，您的密钥是恢复钱包和资金的唯一方法。\n\n密钥由12个单词组成。";
 "backup.intro.later" = "稍后";
 "backup.intro.backup_now" = "备份";
 
@@ -49,7 +49,7 @@
 "backup.confirmation.failure_alert.text" = "单词不匹配";
 "backup.confirmation.done_button" = "完成";
 "backup.confirmation.understand" = "我的钱包和代币仅在这个设备上，而不是在任何服务器上安全地保存着。这个重点我都理解。";
-"backup.confirmation.delete_app_warn" = "此应用程序因任何原因被删除或停止工作，则只有使用密钥，才能恢复钱包。这个重点我都理解。";
+"backup.confirmation.delete_app_warn" = "此应用程序因任何原因移动到其他设备被删除或出了故障，则只有使用密钥，才能恢复钱包。这个重点我都理解。";
 
 // Balance
 
@@ -58,7 +58,6 @@
 "balance.send" = "发送​​";
 "balance.deposit" = "收到";
 "balance.rate_per_coin" = "%@ 每 %@";
-"balance.syncing_percent" = "%@ 正在同步";
 
 // Deposit
 
@@ -82,32 +81,43 @@
 "transactions.tab_bar_item" = "交易记录";
 "transactions.filter_all" = "全部";
 "transactions.empty_text" = "您还没有任何待定或成功的交易";
-"transactions.sending" = "发送中...";
 
 // Transaction Info
 
 "tx_info.title" = "交易";
 "tx_info.time" = "时间";
 "tx_info.status" = "状态";
-"tx_info.from_hash" = "发件人：";
-"tx_info.to_hash" = "收件人：";
+"tx_info.from_hash" = "发件人";
+"tx_info.to_hash" = "收件人";
 "tx_info.alert_close" = "关闭";
-"tx_info.button_more" = "完整信息";
+"tx_info.button_more" = "更多";
 
 // Full Info
-"full_info.title" = "完整信息";
-"full_info.id" = "ID";
+
+"full_info.title" = "交易";
 "full_info.time" = "时间";
-"full_info.block" = "拉黑（for person), 阻止（for emails etc.）";
+"full_info.block" = "区块";
 "full_info.confirmations" = "确认框";
-"full_info.total_input" = "转入总额";
-"full_info.total_output" = "转出总额";
-"full_info.size" = "Size";
+"full_info.size" = "文件大小";
 "full_info.fee" = "费用";
-"full_info.fee_per_byte" = "Fee per byte";
-"full_info.subtitle_inputs" = "收入";
-"full_info.subtitle_outputs" = "转出";
-"full_info.subtitle_provider" = "数据提供者";
+"full_info.rate" = "费率\n";
+"full_info.inputs" = "收入";
+"full_info.outputs" = "转出";
+"full_info.source" = "来源";
+"full_info.from" = "发件人";
+"full_info.to" = "收件人";
+
+"full_info.gas_limit" = "Gas Limit";
+"full_info.gas_used" = "Gas Used";
+"full_info.gas_price" = "Gas Price";
+
+"full_info.source.title" = "来源";
+"full_info.source.online" = "線上";
+"full_info.source.offline" = "离线";
+
+"full_info.error.subtitle" = "离线";
+"full_info.error.retry" = "重试";
+"full_info.error.change_source" = "更改源";
 
 // Settings
 
@@ -115,12 +125,11 @@
 "settings.tab_bar_item" = "设置";
 "settings.security_center" = "安全中心";
 "settings.base_currency" = "基本货币";
-"settings.manage_wallet" = "管理钱包";
 "settings.language" = "语言";
 "settings.about" = "更多";
 "settings.light_mode" = "简单模式";
-"settings.info_title" = "银行钱包";
-"settings.info_subtitle" = "分布式应用程序";
+"settings.info_title" = "BANK WALLET";
+"settings.info_subtitle" = "decentralized app";
 
 // Settings -> Base Currency
 
@@ -132,13 +141,10 @@
 
 // Settings -> Manage Wallet
 
-"settings_manage_wallet.title" = "管理Coins";
-"settings_manage_wallet.add_coins" = "添加Coins";
-"settings_manage_wallet.add_button" = "添加";
-"settings_manage_wallet.hide_button" = "隐藏";
+"settings_manage_wallet.title" = "钱包";
+
 "settings_manage_wallet.remove_button" = "移除";
-"settings_manage_wallet.show_button" = "查看";
-"settings_manage_wallet.search_placeholder" = "搜索​​​​";
+
 
 // Settings -> About
 
@@ -151,32 +157,32 @@
 "settings_security.title" = "安全中心";
 "settings_security.backup_wallet" = "备份钱包";
 "settings_security.unlink_from_this_device" = "与此设备断开连接";
-"settings_security.set_pin" = "设置PIN码";
-"settings_security.change_pin" = "编辑 PIN码";
+"settings_security.set_pin" = "密码";
+"settings_security.change_pin" = "修改密码";
 "settings_security.touch_id" = "Touch ID指纹识别";
 "settings_security.face_id" = "Face ID 面容识别";
 "security_settings.unlink_alert_button" = "取消链接";
 "settings_security.import_wallet_confirmation_1" = "此操作从此设备中将删除当前安装的钱包";
-"settings_security.import_wallet_confirmation_2" = "确保你有钱包的密钥，否则您将无法访问资金。";
+"settings_security.import_wallet_confirmation_2" = "确保你已备份钱包的密钥，否则您将无法访问资金。";
 
 // Set PIN
 
-"set_pin.title" = "设置PIN码";
-"set_pin.info" = "您的PIN码将用于解锁钱包及转钱。";
-"set_pin.confirm.info" = "确认PIN码";
-"set_pin.wrong_confirmation" = "PIN码不匹配。再试一次。";
+"set_pin.title" = "密码";
+"set_pin.info" = "您的密码将用于解锁钱包app。";
+"set_pin.confirm.info" = "确认";
+"set_pin.wrong_confirmation" = "密码不匹配。请再试一次。";
 
 // Edit PIN
 
-"edit_pin.title" = "编辑 PIN码";
-"edit_pin.unlock_info" = "输入当前的 PIN码";
-"edit_pin.new_pin_info" = "输入新的 PIN码";
-"edit_pin.confirm_info" = "再次输入PIN 码";
+"edit_pin.title" = "修改密码";
+"edit_pin.unlock_info" = "当前密码";
+"edit_pin.new_pin_info" = "新密碼";
+"edit_pin.confirm_info" = "确认";
 
 // Unlock PIN
 
-"unlock_pin.info" = "输入PIN码";
-"unlock_pin.cant_save_pin" = "哎哟！我们无法保存您的PIN码，请尽快与我们联系，谢谢。";
+"unlock_pin.info" = "密码";
+"unlock_pin.cant_save_pin" = "哎哟！我们无法保存您的密码，请尽快与我们联系，谢谢。";
 "unlock_pin.blocked_until" = "禁用至: %@";
 
 //NumPad

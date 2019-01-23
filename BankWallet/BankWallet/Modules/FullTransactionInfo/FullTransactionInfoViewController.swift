@@ -3,6 +3,7 @@ import SectionsTableViewKit
 import GrouviExtensions
 import GrouviHUD
 import SnapKit
+import RxSwift
 
 class FullTransactionInfoViewController: UIViewController, SectionsDataSource {
     private let cellName = String(describing: FullTransactionInfoTextCell.self)
@@ -17,11 +18,10 @@ class FullTransactionInfoViewController: UIViewController, SectionsDataSource {
     private let shareButton = UIButton(frame: .zero)
 
     private var errorView: RequestErrorView?
+    private let loadingView = HUDProgressView(strokeLineWidth: FullTransactionInfoTheme.spinnerLineWidth, radius: FullTransactionInfoTheme.spinnerSideSize / 2 - FullTransactionInfoTheme.spinnerLineWidth / 2, strokeColor: UIColor.cryptoGray)
 
     init(delegate: IFullTransactionInfoViewDelegate) {
         self.delegate = delegate
-
-
         super.init(nibName: nil, bundle: nil)
 
         errorView = RequestErrorView(subtitle: "full_info.error.subtitle", buttonText: "full_info.error.retry", linkText: "full_info.error.change_source".localized, onTapButton: { [weak self] in
@@ -99,7 +99,14 @@ class FullTransactionInfoViewController: UIViewController, SectionsDataSource {
             maker.leading.equalTo(toolbar.snp.leadingMargin)
             maker.width.equalTo(shareButton.snp.height)
         }
-
+        view.addSubview(loadingView)
+        loadingView.snp.makeConstraints { maker in
+            maker.top.equalToSuperview()
+            maker.leading.equalToSuperview()
+            maker.trailing.equalToSuperview()
+            maker.bottom.equalTo(toolbar.snp.top)
+        }
+        loadingView.set(hidden: true)
         if let errorView = errorView {
             view.addSubview(errorView)
 
@@ -110,11 +117,11 @@ class FullTransactionInfoViewController: UIViewController, SectionsDataSource {
             }
             errorView.set(hidden: true)
         }
-
         delegate.viewDidLoad()
     }
 
     override func viewWillAppear(_ animated: Bool) {
+        navigationController?.navigationBar.prefersLargeTitles = false
         tableView.deselectCell(withCoordinator: transitionCoordinator, animated: animated)
     }
 
@@ -198,12 +205,15 @@ class FullTransactionInfoViewController: UIViewController, SectionsDataSource {
 extension FullTransactionInfoViewController: IFullTransactionInfoView {
 
     func showLoading() {
-        HudHelper.instance.showSpinner()
+        loadingView.set(hidden: false)
+        loadingView.startAnimating()
+
         shareButton.isEnabled = false
     }
 
     func hideLoading() {
-        HudHelper.instance.hide()
+        self.loadingView.set(hidden: true)
+        loadingView.stopAnimating()
         shareButton.isEnabled = true
     }
 

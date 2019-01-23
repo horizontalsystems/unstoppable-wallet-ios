@@ -10,6 +10,9 @@ class FullTransactionInfoTheme {
     static let linkLabelUnderlineStyle: NSNumber = 1
     static let linkLabelFont = UIFont.cryptoSectionCaption
 
+    static let spinnerLineWidth: CGFloat = 4
+    static let spinnerSideSize: CGFloat = 32
+
     static let sectionEmptyMargin: CGFloat = 32
     static let sectionTitleTopMargin: CGFloat = 19
     static let sectionTitleFont = UIFont.cryptoSectionCaption

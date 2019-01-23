@@ -1,6 +1,8 @@
 import RxSwift
 
 class WalletManager {
+    private let disposeBag = DisposeBag()
+
     private let walletFactory: IWalletFactory
     private let authManager: IAuthManager
     private let coinManager: ICoinManager
@@ -13,7 +15,13 @@ class WalletManager {
         self.authManager = authManager
         self.coinManager = coinManager
 
-        initWallets()
+        coinManager.coinsUpdatedSignal
+                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
+                .observeOn(MainScheduler.instance)
+                .subscribe(onNext: { [weak self] in
+                    self?.initWallets()
+                })
+                .disposed(by: disposeBag)
     }
 
 }

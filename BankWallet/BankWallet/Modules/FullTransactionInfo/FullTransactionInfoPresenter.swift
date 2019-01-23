@@ -65,7 +65,7 @@ extension FullTransactionInfoPresenter: IFullTransactionInfoViewDelegate {
     }
 
     func onTapChangeResource() {
-        router.openProviderSettings(coinCode: state.coinCode)
+        router.openProviderSettings(coinCode: state.coinCode, transactionHash: state.transactionHash)
     }
 
     func onTapProviderLink() {

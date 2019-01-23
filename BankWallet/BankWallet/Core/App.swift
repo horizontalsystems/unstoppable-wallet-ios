@@ -41,6 +41,7 @@ class App {
     var rateSyncer: RateSyncer
     let rateManager: RateManager
 
+    let pingManager: IPingManager
     let dataProviderManager: IFullTransactionDataProviderManager
     let fullTransactionInfoProviderFactory: IFullTransactionInfoProviderFactory
 
@@ -51,10 +52,12 @@ class App {
         localStorage = UserDefaultsStorage()
         secureStorage = KeychainStorage(localStorage: localStorage)
 
-        authManager = AuthManager(secureStorage: secureStorage, localStorage: localStorage)
-        wordsManager = WordsManager(localStorage: localStorage)
-
         appConfigProvider = AppConfigProvider()
+        grdbStorage = GrdbStorage()
+        coinManager = CoinManager(appConfigProvider: appConfigProvider, storage: grdbStorage)
+
+        authManager = AuthManager(secureStorage: secureStorage, coinStorage: grdbStorage, localStorage: localStorage, coinManager: coinManager)
+        wordsManager = WordsManager(localStorage: localStorage)
 
         pinManager = PinManager(secureStorage: secureStorage)
         lockRouter = LockRouter()
@@ -66,8 +69,6 @@ class App {
 
         randomManager = RandomManager()
         systemInfoManager = SystemInfoManager()
-
-        coinManager = CoinManager(appConfigProvider: appConfigProvider)
 
         adapterFactory = AdapterFactory(appConfigProvider: appConfigProvider)
         walletFactory = WalletFactory(adapterFactory: adapterFactory)
@@ -86,6 +87,7 @@ class App {
         authManager.walletManager = walletManager
         authManager.pinManager = pinManager
 
+        pingManager = PingManager()
         dataProviderManager = FullTransactionDataProviderManager(localStorage: localStorage, appConfigProvider: appConfigProvider)
         fullTransactionInfoProviderFactory = FullTransactionInfoProviderFactory(apiManager: networkManager, dataProviderManager: dataProviderManager)
     }
