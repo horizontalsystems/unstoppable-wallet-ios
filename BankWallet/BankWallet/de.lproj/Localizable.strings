@@ -100,10 +100,10 @@
 "full_info.confirmations" = "Bestätigungen";
 "full_info.size" = "Größe";
 "full_info.fee" = "Gebühr";
-"full_info.rate" = "Rate";
+"full_info.rate" = "Bewerten";
 "full_info.inputs" = "Eingänge";
 "full_info.outputs" = "Ausgänge";
-"full_info.source" = "Source";
+"full_info.source" = "Quelle";
 "full_info.from" = "Von";
 "full_info.to" = "An";
 
@@ -111,13 +111,13 @@
 "full_info.gas_used" = "Gas Used";
 "full_info.gas_price" = "Gas Price";
 
-"full_info.source.title" = "Source";
+"full_info.source.title" = "Quelle";
 "full_info.source.online" = "online";
 "full_info.source.offline" = "offline";
 
 "full_info.error.subtitle" = "offline";
-"full_info.error.retry" = "Retry";
-"full_info.error.change_source" = "Change Source";
+"full_info.error.retry" = "Wiederholen";
+"full_info.error.change_source" = "Quelle ändern";
 
 // Settings
 
