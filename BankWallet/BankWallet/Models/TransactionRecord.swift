@@ -1,22 +1,26 @@
-import RealmSwift
+struct TransactionRecord {
+    let transactionHash: String
+    let blockHeight: Int?
+    let amount: Double
+    let timestamp: Double
 
-class TransactionRecord: Object {
-    @objc dynamic var transactionHash: String = ""
-    @objc dynamic var blockHeight: Int = 0
-    @objc dynamic var coinCode: String = ""
-    @objc dynamic var amount: Double = 0
-    @objc dynamic var timestamp: Double = 0
-    @objc dynamic var rate: Double = 0
-
-    let from = List<TransactionAddress>()
-    let to = List<TransactionAddress>()
-
-    override class func primaryKey() -> String? {
-        return "transactionHash"
-    }
+    let from: [TransactionAddress]
+    let to: [TransactionAddress]
 }
 
-class TransactionAddress: Object {
-    @objc dynamic var address: String = ""
-    @objc dynamic var mine: Bool = false
+struct TransactionAddress {
+    let address: String
+    let mine: Bool
+}
+
+extension TransactionRecord: Comparable {
+
+    public static func <(lhs: TransactionRecord, rhs: TransactionRecord) -> Bool {
+        return lhs.timestamp < rhs.timestamp
+    }
+
+    public static func ==(lhs: TransactionRecord, rhs: TransactionRecord) -> Bool {
+        return lhs.transactionHash == rhs.transactionHash
+    }
+
 }

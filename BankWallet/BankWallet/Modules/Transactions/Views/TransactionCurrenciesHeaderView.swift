@@ -3,7 +3,7 @@ import SnapKit
 
 class TransactionCurrenciesHeaderView: UIVisualEffectView, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
 
-    var filters = [TransactionFilterItem]()
+    var filters = [CoinCode?]()
     var collectionView: UICollectionView
     var onSelectCoin: ((CoinCode?) -> ())?
 
@@ -52,12 +52,12 @@ class TransactionCurrenciesHeaderView: UIVisualEffectView, UICollectionViewDeleg
 
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         if let cell = cell as? TransactionsCurrencyCell {
-            cell.bind(transactionFilter: filters[indexPath.item], selected: collectionView.indexPathsForSelectedItems?.contains(indexPath) ?? false)
+            cell.bind(title: title(index: indexPath.item), selected: collectionView.indexPathsForSelectedItems?.contains(indexPath) ?? false)
         }
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return TransactionsCurrencyCell.size(for: filters[indexPath.item])
+        return TransactionsCurrencyCell.size(for: title(index: indexPath.item))
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
@@ -65,15 +65,21 @@ class TransactionCurrenciesHeaderView: UIVisualEffectView, UICollectionViewDeleg
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        onSelectCoin?(filters[indexPath.item].coinCode)
+        onSelectCoin?(filters[indexPath.item])
     }
 
-    func reload(filters: [TransactionFilterItem]) {
+    func reload(filters: [CoinCode?]) {
         self.filters = filters
         collectionView.reloadData()
+
         if filters.count > 0 {
             collectionView.selectItem(at: IndexPath(item: 0, section: 0), animated: false, scrollPosition: .left)
         }
+    }
+
+    private func title(index: Int) -> String {
+        let title = filters[index] ?? "transactions.filter_all".localized
+        return title.uppercased()
     }
 
 }

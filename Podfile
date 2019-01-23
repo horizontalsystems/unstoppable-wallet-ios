@@ -15,8 +15,6 @@ def appPods
   pod 'RxSwift'
 
   pod 'BigInt'
-  pod 'RealmSwift'
-  pod "RxRealm"
 
   pod 'GrouviExtensions', '~> 1.2'
   pod 'GrouviActionSheet', '1.3'
@@ -45,7 +43,6 @@ target 'Bank' do
 end
 
 target 'Bank Tests' do
-  pod 'RealmSwift'
   pod 'RxSwift'
   pod 'Cuckoo'
 end

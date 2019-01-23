@@ -1,16 +1,34 @@
-import Foundation
+import RxSwift
 
 class TransactionsPresenter {
-
-    weak var view: ITransactionsView?
     private let interactor: ITransactionsInteractor
     private let router: ITransactionsRouter
     private let factory: ITransactionViewItemFactory
+    private let loader: TransactionsLoader
+    private let dataSource: TransactionsMetadataDataSource
 
-    init(interactor: ITransactionsInteractor, router: ITransactionsRouter, factory: ITransactionViewItemFactory) {
+    weak var view: ITransactionsView?
+
+    init(interactor: ITransactionsInteractor, router: ITransactionsRouter, factory: ITransactionViewItemFactory, loader: TransactionsLoader, dataSource: TransactionsMetadataDataSource) {
         self.interactor = interactor
         self.router = router
         self.factory = factory
+        self.loader = loader
+        self.dataSource = dataSource
+    }
+
+}
+
+extension TransactionsPresenter: ITransactionLoaderDelegate {
+
+    func fetchRecords(fetchDataList: [FetchData]) {
+        interactor.fetchRecords(fetchDataList: fetchDataList)
+    }
+
+    func didChangeData() {
+//        print("Reload View")
+
+        view?.reload()
     }
 
 }
@@ -18,41 +36,118 @@ class TransactionsPresenter {
 extension TransactionsPresenter: ITransactionsViewDelegate {
 
     func viewDidLoad() {
-        view?.set(title: "transactions.title")
-        interactor.retrieveFilters()
-    }
-
-    func onTransactionItemClick(transaction: TransactionViewItem) {
-        router.openTransactionInfo(transactionHash: transaction.transactionHash)
+        interactor.initialFetch()
     }
 
     func onFilterSelect(coinCode: CoinCode?) {
-        interactor.set(coinCode: coinCode)
+        let coinCodes = coinCode.map { [$0] } ?? []
+        interactor.set(selectedCoinCodes: coinCodes)
     }
 
     var itemsCount: Int {
-        return interactor.recordsCount
+        return loader.itemsCount
     }
 
     func item(forIndex index: Int) -> TransactionViewItem {
-        let record = interactor.record(forIndex: index)
-        return factory.item(fromRecord: record)
+        let item = loader.item(forIndex: index)
+        let lastBlockHeight = dataSource.lastBlockHeight(coinCode: item.coinCode)
+        let threshold = dataSource.threshold(coinCode: item.coinCode)
+        let rate = dataSource.rate(coinCode: item.coinCode, timestamp: item.record.timestamp)
+
+        return factory.viewItem(fromItem: loader.item(forIndex: index), lastBlockHeight: lastBlockHeight, threshold: threshold, rate: rate)
+    }
+
+    func onBottomReached() {
+        DispatchQueue.main.async {
+//            print("On Bottom Reached")
+
+            self.loader.loadNext()
+        }
+    }
+
+    func onTransactionItemClick(index: Int) {
+        router.openTransactionInfo(viewItem: item(forIndex: index))
     }
 
 }
 
 extension TransactionsPresenter: ITransactionsInteractorDelegate {
 
-    func didUpdateDataSource() {
+    func onUpdate(selectedCoinCodes: [CoinCode]) {
+//        print("Selected Coin Codes Updated: \(selectedCoinCodes)")
+
+        loader.set(coinCodes: selectedCoinCodes)
+        loader.loadNext(initial: true)
+    }
+
+    func onUpdate(coinCodes: [CoinCode]) {
+//        print("Coin Codes Updated: \(coinCodes)")
+
+        interactor.fetchLastBlockHeights()
+
+        view?.show(filters: [nil] + coinCodes)
+
+        loader.set(coinCodes: coinCodes)
+        loader.loadNext(initial: true)
+    }
+
+    func onUpdateBaseCurrency() {
+//        print("Base Currency Updated")
+
+        dataSource.clearRates()
+        view?.reload()
+
+        var timestamps = [CoinCode: [Double]]()
+
+        for (coinCode, records) in loader.allRecords {
+            timestamps[coinCode] = records.map { $0.timestamp }
+        }
+
+        interactor.fetchRates(timestamps: timestamps)
+    }
+
+    func onUpdate(lastBlockHeight: Int, coinCode: CoinCode) {
+//        print("Last Block Height Updated: \(coinCode) - \(lastBlockHeight)")
+
+        dataSource.set(lastBlockHeight: lastBlockHeight, coinCode: coinCode)
+
         view?.reload()
     }
 
-    func didRetrieve(filters: [CoinCode]) {
-        var filterItems: [TransactionFilterItem] = filters.map {
-            return TransactionFilterItem(coinCode: $0, name: "coin.\($0)")
+    func onUpdate(threshold: Int, coinCode: CoinCode) {
+//        print("Threshold Updated: \(coinCode) - \(threshold)")
+
+        dataSource.set(threshold: threshold, coinCode: coinCode)
+
+        view?.reload()
+    }
+
+    func didUpdate(records: [TransactionRecord], coinCode: CoinCode) {
+        loader.didUpdate(records: records, coinCode: coinCode)
+    }
+
+    func didFetch(rateValue: Double, coinCode: CoinCode, currency: Currency, timestamp: Double) {
+        dataSource.set(rate: CurrencyValue(currency: currency, value: rateValue), coinCode: coinCode, timestamp: timestamp)
+
+        let indexes = loader.itemIndexes(coinCode: coinCode, timestamp: timestamp)
+
+        if !indexes.isEmpty {
+            view?.reload()
         }
-        filterItems.insert(TransactionFilterItem(coinCode: nil, name: "transactions.filter_all"), at: 0)
-        view?.show(filters: filterItems)
+    }
+
+    func didFetch(records: [CoinCode: [TransactionRecord]]) {
+//        print("Did Fetch Records: \(records.map { key, value -> String in "\(key) - \(value.count)" })")
+
+        var timestamps = [CoinCode: [Double]]()
+
+        for (coinCode, records) in records {
+            timestamps[coinCode] = records.map { $0.timestamp }
+        }
+
+        interactor.fetchRates(timestamps: timestamps)
+
+        loader.didFetch(records: records)
     }
 
 }

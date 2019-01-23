@@ -6,8 +6,8 @@ class TransactionsRouter {
 
 extension TransactionsRouter: ITransactionsRouter {
 
-    func openTransactionInfo(transactionHash: String) {
-        viewController?.present(TransactionInfoRouter.module(transactionHash: transactionHash), animated: true)
+    func openTransactionInfo(viewItem: TransactionViewItem) {
+        viewController?.present(TransactionInfoRouter.module(viewItem: viewItem), animated: true)
     }
 
 }
@@ -15,14 +15,15 @@ extension TransactionsRouter: ITransactionsRouter {
 extension TransactionsRouter {
 
     static func module() -> UIViewController {
-        let dataSource = TransactionRecordDataSource(realmFactory: App.shared.realmFactory)
+        let dataSource = TransactionRecordDataSource(poolRepo: TransactionRecordPoolRepo(), itemsDataSource: TransactionItemDataSource(), factory: TransactionItemFactory())
+        let loader = TransactionsLoader(dataSource: dataSource)
 
         let router = TransactionsRouter()
-        let interactor = TransactionsInteractor(walletManager: App.shared.walletManager, exchangeRateManager: App.shared.rateManager, dataSource: dataSource)
-        let presenter = TransactionsPresenter(interactor: interactor, router: router, factory: App.shared.transactionViewItemFactory)
+        let interactor = TransactionsInteractor(walletManager: App.shared.walletManager, currencyManager: App.shared.currencyManager, rateManager: App.shared.rateManager)
+        let presenter = TransactionsPresenter(interactor: interactor, router: router, factory: TransactionViewItemFactory(), loader: loader, dataSource: TransactionsMetadataDataSource())
         let viewController = TransactionsViewController(delegate: presenter)
 
-        dataSource.delegate = interactor
+        loader.delegate = presenter
         interactor.delegate = presenter
         presenter.view = viewController
         router.viewController = viewController

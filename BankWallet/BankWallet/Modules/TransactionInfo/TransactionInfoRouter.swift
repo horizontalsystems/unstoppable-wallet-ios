@@ -15,12 +15,12 @@ extension TransactionInfoRouter: ITransactionInfoRouter {
 
 extension TransactionInfoRouter {
 
-    static func module(transactionHash: String) -> ActionSheetController {
+    static func module(viewItem: TransactionViewItem) -> ActionSheetController {
         let router = TransactionInfoRouter()
 
-        let interactor = TransactionInfoInteractor(storage: App.shared.realmStorage, pasteboardManager: App.shared.pasteboardManager)
-        let presenter = TransactionInfoPresenter(interactor: interactor, router: router, factory: App.shared.transactionViewItemFactory)
-        let alertModel = TransactionInfoAlertModel(delegate: presenter, transactionHash: transactionHash)
+        let interactor = TransactionInfoInteractor(pasteboardManager: App.shared.pasteboardManager)
+        let presenter = TransactionInfoPresenter(interactor: interactor, router: router, factory: TransactionViewItemFactory())
+        let alertModel = TransactionInfoAlertModel(item: viewItem, delegate: presenter)
 
         interactor.delegate = presenter
         presenter.view = alertModel

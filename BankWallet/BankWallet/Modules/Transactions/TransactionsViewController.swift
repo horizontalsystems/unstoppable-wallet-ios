@@ -1,10 +1,6 @@
 import UIKit
 import SnapKit
-
-struct TransactionFilterItem {
-    let coinCode: CoinCode?
-    let name: String
-}
+import GrouviActionSheet
 
 class TransactionsViewController: UITableViewController {
 
@@ -29,6 +25,8 @@ class TransactionsViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        title = "transactions.title".localized
 
         filterHeaderView.onSelectCoin = { coin in
             self.delegate.onFilterSelect(coinCode: coin)
@@ -69,11 +67,7 @@ class TransactionsViewController: UITableViewController {
 
 extension TransactionsViewController: ITransactionsView {
 
-    func set(title: String) {
-        self.title = title.localized
-    }
-
-    func show(filters: [TransactionFilterItem]) {
+    func show(filters: [CoinCode?]) {
         filterHeaderView.reload(filters: filters)
     }
 
@@ -101,12 +95,15 @@ extension TransactionsViewController {
         if let cell = cell as? TransactionCell {
             cell.bind(item: delegate.item(forIndex: indexPath.row))
         }
+
+        if indexPath.row >= self.tableView(tableView, numberOfRowsInSection: 0) - 1 {
+            delegate.onBottomReached()
+        }
     }
 
     override public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        let item = delegate.item(forIndex: indexPath.row)
-        delegate.onTransactionItemClick(transaction: item)
+        delegate.onTransactionItemClick(index: indexPath.row)
     }
 
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
