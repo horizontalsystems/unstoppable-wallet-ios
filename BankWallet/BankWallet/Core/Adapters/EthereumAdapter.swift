@@ -1,6 +1,4 @@
-import Foundation
 import HSEthereumKit
-import RealmSwift
 import RxSwift
 
 class EthereumAdapter {
@@ -9,7 +7,7 @@ class EthereumAdapter {
     private let coinRate: Double = pow(10, 18)
     private let gWeiMultiply: Double = pow(10, 9)
 
-    let lastBlockHeightSubject = PublishSubject<Int>()
+    let lastBlockHeightUpdatedSignal = Signal()
     let transactionRecordsSubject = PublishSubject<[TransactionRecord]>()
 
     private(set) var state: AdapterState = .syncing(progressSubject: nil)
@@ -29,25 +27,24 @@ class EthereumAdapter {
         let amountEther = convertToValue(amount: transaction.value) ?? 0
         let mineAddress = ethereumKit.receiveAddress.lowercased()
 
-        let from = TransactionAddress()
-        from.address = transaction.from
-        from.mine = transaction.from.lowercased() == mineAddress
+        let from = TransactionAddress(
+                address: transaction.from,
+                mine: transaction.from.lowercased() == mineAddress
+        )
 
-        let to = TransactionAddress()
-        to.address = transaction.to
-        to.mine = transaction.to.lowercased() == mineAddress
+        let to = TransactionAddress(
+                address: transaction.to,
+                mine: transaction.to.lowercased() == mineAddress
+        )
 
-        let record = TransactionRecord()
-
-        record.transactionHash = transaction.txHash
-        record.blockHeight = transaction.blockNumber
-        record.amount = amountEther * (from.mine ? -1 : 1)
-        record.timestamp = Double(transaction.timestamp)
-
-        record.from.append(from)
-        record.to.append(to)
-
-        return record
+        return TransactionRecord(
+                transactionHash: transaction.txHash,
+                blockHeight: transaction.blockNumber,
+                amount: amountEther * (from.mine ? -1 : 1),
+                timestamp: Double(transaction.timestamp),
+                from: [from],
+                to: [to]
+        )
     }
 
     private func convertToValue(amount: String) -> Double? {
@@ -116,6 +113,15 @@ extension EthereumAdapter: IAdapter {
 
     var receiveAddress: String {
         return ethereumKit.receiveAddress
+    }
+
+    func transactionsSingle(hashFrom: String?, limit: Int) -> Single<[TransactionRecord]> {
+        return ethereumKit.transactions(fromHash: hashFrom, limit: limit)
+                .map { [weak self] transactions -> [TransactionRecord] in
+                    return transactions.compactMap {
+                        self?.transactionRecord(fromTransaction: $0)
+                    }
+                }
     }
 
 }

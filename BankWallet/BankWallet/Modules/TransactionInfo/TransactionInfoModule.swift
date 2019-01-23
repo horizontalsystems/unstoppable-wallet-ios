@@ -3,13 +3,11 @@ protocol ITransactionInfoView: class {
 }
 
 protocol ITransactionInfoViewDelegate: class {
-    func transactionViewItem(forTransactionHash hash: String) -> TransactionViewItem?
     func onCopy(value: String)
-    func openFullInfo(transactionHash: String)
+    func openFullInfo(coinCode: CoinCode, transactionHash: String)
 }
 
 protocol ITransactionInfoInteractor {
-    func transactionRecord(forTransactionHash hash: String) -> TransactionRecord?
     func onCopy(value: String)
 }
 

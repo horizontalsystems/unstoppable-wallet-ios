@@ -1,5 +1,3 @@
-import RealmSwift
-
 class App {
     static let shared = App()
 
@@ -7,8 +5,6 @@ class App {
 
     let pasteboardManager: IPasteboardManager
     let urlManager: IUrlManager
-
-    let realmFactory: IRealmFactory
 
     let secureStorage: ISecureStorage
     let localStorage: ILocalStorage
@@ -35,7 +31,6 @@ class App {
     let walletFactory: IWalletFactory
     let walletManager: IWalletManager
 
-    let realmStorage: RealmStorage
     let grdbStorage: GrdbStorage
     let networkManager: NetworkManager
 
@@ -46,19 +41,13 @@ class App {
     var rateSyncer: RateSyncer
     let rateManager: RateManager
 
-    let transactionRateSyncer: ITransactionRateSyncer
-    let transactionManager: ITransactionManager
-
     let pingManager: IPingManager
     let dataProviderManager: IFullTransactionDataProviderManager
-    let transactionViewItemFactory: ITransactionViewItemFactory
     let fullTransactionInfoProviderFactory: IFullTransactionInfoProviderFactory
 
     init() {
         pasteboardManager = PasteboardManager()
         urlManager = UrlManager(inApp: true)
-
-        realmFactory = RealmFactory()
 
         localStorage = UserDefaultsStorage()
         secureStorage = KeychainStorage(localStorage: localStorage)
@@ -85,7 +74,6 @@ class App {
         walletFactory = WalletFactory(adapterFactory: adapterFactory)
         walletManager = WalletManager(walletFactory: walletFactory, authManager: authManager, coinManager: coinManager)
 
-        realmStorage = RealmStorage(realmFactory: realmFactory)
         networkManager = NetworkManager(appConfigProvider: appConfigProvider)
 
         reachabilityManager = ReachabilityManager(appConfigProvider: appConfigProvider)
@@ -95,14 +83,8 @@ class App {
         rateManager = RateManager(storage: grdbStorage, networkManager: networkManager)
         rateSyncer = RateSyncer(rateManager: rateManager, walletManager: walletManager, currencyManager: currencyManager, reachabilityManager: reachabilityManager)
 
-        transactionRateSyncer = TransactionRateSyncer(storage: realmStorage, networkManager: networkManager)
-        transactionManager = TransactionManager(storage: realmStorage, rateSyncer: transactionRateSyncer, walletManager: walletManager, currencyManager: currencyManager, reachabilityManager: reachabilityManager)
-
-        transactionViewItemFactory = TransactionViewItemFactory(walletManager: walletManager, currencyManager: currencyManager, rateManager: rateManager)
-
         authManager.walletManager = walletManager
         authManager.pinManager = pinManager
-        authManager.transactionsManager = transactionManager
 
         pingManager = PingManager()
         dataProviderManager = FullTransactionDataProviderManager(localStorage: localStorage, appConfigProvider: appConfigProvider)

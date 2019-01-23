@@ -1,6 +1,5 @@
 import Foundation
 import HSBitcoinKit
-import RealmSwift
 import RxSwift
 
 class BitcoinAdapter {
@@ -8,7 +7,7 @@ class BitcoinAdapter {
     private let transactionCompletionThreshold = 6
     private let coinRate: Double = pow(10, 8)
 
-    let lastBlockHeightSubject = PublishSubject<Int>()
+    let lastBlockHeightUpdatedSignal = Signal()
     let transactionRecordsSubject = PublishSubject<[TransactionRecord]>()
 
     private let progressSubject: BehaviorSubject<Double>
@@ -28,27 +27,22 @@ class BitcoinAdapter {
     }
 
     private func transactionRecord(fromTransaction transaction: TransactionInfo) -> TransactionRecord {
-        let record = TransactionRecord()
-
-        record.transactionHash = transaction.transactionHash
-        record.blockHeight = transaction.blockHeight ?? 0
-        record.amount = Double(transaction.amount) / coinRate
-        record.timestamp = transaction.timestamp.map { Double($0) } ?? Date().timeIntervalSince1970
-
-        transaction.from.forEach {
-            let address = TransactionAddress()
-            address.address = $0.address
-            address.mine = $0.mine
-            record.from.append(address)
-        }
-        transaction.to.forEach {
-            let address = TransactionAddress()
-            address.address = $0.address
-            address.mine = $0.mine
-            record.to.append(address)
+        let fromAddresses = transaction.from.map {
+            TransactionAddress(address: $0.address, mine: $0.mine)
         }
 
-        return record
+        let toAddresses = transaction.to.map {
+            TransactionAddress(address: $0.address, mine: $0.mine)
+        }
+
+        return TransactionRecord(
+                transactionHash: transaction.transactionHash,
+                blockHeight: transaction.blockHeight,
+                amount: Double(transaction.amount) / coinRate,
+                timestamp: transaction.timestamp.map { Double($0) } ?? Date().timeIntervalSince1970,
+                from: fromAddresses,
+                to: toAddresses
+        )
     }
 
 }
@@ -120,6 +114,15 @@ extension BitcoinAdapter: IAdapter {
         return bitcoinKit.receiveAddress
     }
 
+    func transactionsSingle(hashFrom: String?, limit: Int) -> Single<[TransactionRecord]> {
+        return bitcoinKit.transactions(fromHash: hashFrom, limit: limit)
+                .map { [weak self] transactions -> [TransactionRecord] in
+                    return transactions.compactMap {
+                        self?.transactionRecord(fromTransaction: $0)
+                    }
+                }
+    }
+
 }
 
 extension BitcoinAdapter: BitcoinKitDelegate {
@@ -142,7 +145,7 @@ extension BitcoinAdapter: BitcoinKitDelegate {
     }
 
     func lastBlockInfoUpdated(bitcoinKit: BitcoinKit, lastBlockInfo: BlockInfo) {
-        lastBlockHeightSubject.onNext(lastBlockInfo.height)
+        lastBlockHeightUpdatedSignal.notify()
     }
 
     public func kitStateUpdated(state: BitcoinKit.KitState) {

@@ -1,5 +1,3 @@
-import RealmSwift
-
 enum TransactionStatus {
     case pending
     case processing(confirmations: Int)
@@ -20,45 +18,60 @@ extension TransactionStatus: Equatable {
 }
 
 protocol ITransactionsView: class {
-    func set(title: String)
-    func show(filters: [TransactionFilterItem])
+    func show(filters: [CoinCode?])
     func reload()
 }
 
 protocol ITransactionsViewDelegate {
     func viewDidLoad()
-    func onTransactionItemClick(transaction: TransactionViewItem)
     func onFilterSelect(coinCode: CoinCode?)
 
     var itemsCount: Int { get }
     func item(forIndex index: Int) -> TransactionViewItem
+    func onBottomReached()
+
+    func onTransactionItemClick(index: Int)
 }
 
 protocol ITransactionsInteractor {
-    func retrieveFilters()
-    func set(coinCode: CoinCode?)
+    func initialFetch()
+    func fetchLastBlockHeights()
 
-    var recordsCount: Int { get }
-    func record(forIndex index: Int) -> TransactionRecord
+    func fetchRecords(fetchDataList: [FetchData])
+    func set(selectedCoinCodes: [CoinCode])
+
+    func fetchRates(timestamps: [CoinCode: [Double]])
 }
 
 protocol ITransactionsInteractorDelegate: class {
-    func didRetrieve(filters: [CoinCode])
-    func didUpdateDataSource()
+    func onUpdate(selectedCoinCodes: [CoinCode])
+    func onUpdate(coinCodes: [CoinCode])
+    func onUpdateBaseCurrency()
+
+    func onUpdate(lastBlockHeight: Int, coinCode: CoinCode)
+    func onUpdate(threshold: Int, coinCode: CoinCode)
+
+    func didUpdate(records: [TransactionRecord], coinCode: CoinCode)
+
+    func didFetch(rateValue: Double, coinCode: CoinCode, currency: Currency, timestamp: Double)
+    func didFetch(records: [CoinCode: [TransactionRecord]])
 }
 
 protocol ITransactionsRouter {
-    func openTransactionInfo(transactionHash: String)
+    func openTransactionInfo(viewItem: TransactionViewItem)
 }
 
-protocol ITransactionRecordDataSource {
-    var delegate: ITransactionRecordDataSourceDelegate? { get set }
-
-    var count: Int { get }
-    func record(forIndex index: Int) -> TransactionRecord
-    func set(coinCode: CoinCode?)
+protocol ITransactionLoaderDelegate: class {
+    func fetchRecords(fetchDataList: [FetchData])
+    func didChangeData()
 }
 
-protocol ITransactionRecordDataSourceDelegate: class {
-    func onUpdateResults()
+protocol ITransactionViewItemFactory {
+    func viewItem(fromItem item: TransactionItem, lastBlockHeight: Int?, threshold: Int?, rate: CurrencyValue?) -> TransactionViewItem
+}
+
+struct FetchData {
+    let coinCode: CoinCode
+    let hashFrom: String?
+    let limit: Int
 }

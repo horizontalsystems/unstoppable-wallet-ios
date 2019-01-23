@@ -15,21 +15,13 @@ class TransactionInfoPresenter {
 
 extension TransactionInfoPresenter: ITransactionInfoViewDelegate {
 
-    func transactionViewItem(forTransactionHash hash: String) -> TransactionViewItem? {
-        return interactor.transactionRecord(forTransactionHash: hash).map { record in
-            factory.item(fromRecord: record)
-        }
-    }
-
     func onCopy(value: String) {
         interactor.onCopy(value: value)
         view?.showCopied()
     }
 
-    func openFullInfo(transactionHash: String) {
-        if let transactionRecord = interactor.transactionRecord(forTransactionHash: transactionHash) {
-            router.openFullInfo(transactionHash: transactionHash, coinCode: transactionRecord.coinCode)
-        }
+    func openFullInfo(coinCode: CoinCode, transactionHash: String) {
+        router.openFullInfo(transactionHash: transactionHash, coinCode: coinCode)
     }
 
 }

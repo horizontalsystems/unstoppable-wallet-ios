@@ -1,14 +1,9 @@
 import RxSwift
-import RealmSwift
 
 typealias CoinCode = String
 
 protocol IRandomManager {
     func getRandomIndexes(count: Int) -> [Int]
-}
-
-protocol IRealmFactory {
-    var realm: Realm { get }
 }
 
 protocol ILocalStorage: class {
@@ -98,9 +93,12 @@ protocol IAdapter: class {
     var state: AdapterState { get }
     var stateUpdatedSignal: Signal { get }
 
+    func transactionsSingle(hashFrom: String?, limit: Int) -> Single<[TransactionRecord]>
+
     var confirmationsThreshold: Int { get }
+
     var lastBlockHeight: Int? { get }
-    var lastBlockHeightSubject: PublishSubject<Int> { get }
+    var lastBlockHeightUpdatedSignal: Signal { get }
 
     var transactionRecordsSubject: PublishSubject<[TransactionRecord]> { get }
 
@@ -168,7 +166,8 @@ protocol BiometricManagerDelegate: class {
 }
 
 protocol IRateManager {
-    func refreshRates(coinCodes: [CoinCode], currencyCode: String)
+    func refreshLatestRates(coinCodes: [CoinCode], currencyCode: String)
+    func timestampRateValueObservable(coinCode: CoinCode, currencyCode: String, timestamp: Double) -> Observable<Double>
 }
 
 protocol IRateSyncerDelegate: class {
@@ -208,7 +207,10 @@ protocol IRateNetworkManager {
 }
 
 protocol IRateStorage {
-    func rateObservable(forCoinCode coinCode: CoinCode, currencyCode: String) -> Observable<Rate>
+    func latestRateObservable(forCoinCode coinCode: CoinCode, currencyCode: String) -> Observable<Rate>
+    func timestampRateObservable(coinCode: CoinCode, currencyCode: String, timestamp: Double) -> Observable<Rate?>
+    func emptyTimestampRatesObservable() -> Observable<[Rate]>
+    func save(latestRate: Rate)
     func save(rate: Rate)
     func clear()
 }
@@ -297,10 +299,6 @@ protocol IPasteboardManager {
 
 protocol IUrlManager {
     func open(url: String, from controller: UIViewController?)
-}
-
-protocol ITransactionViewItemFactory {
-    func item(fromRecord record: TransactionRecord) -> TransactionViewItem
 }
 
 protocol IFullTransactionInfoProviderFactory {

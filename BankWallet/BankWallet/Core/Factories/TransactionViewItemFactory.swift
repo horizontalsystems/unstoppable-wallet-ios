@@ -1,43 +1,18 @@
 import Foundation
 
-class TransactionViewItemFactory {
-    private let latestRateFallbackThreshold: Double = 60 // in minutes
+class TransactionViewItemFactory: ITransactionViewItemFactory {
 
-    private let walletManager: IWalletManager
-    private let currencyManager: ICurrencyManager
-    private let rateManager: IRateManager
+    func viewItem(fromItem item: TransactionItem, lastBlockHeight: Int?, threshold: Int?, rate: CurrencyValue?) -> TransactionViewItem {
+        let record = item.record
 
-    init(walletManager: IWalletManager, currencyManager: ICurrencyManager, rateManager: IRateManager) {
-        self.walletManager = walletManager
-        self.currencyManager = currencyManager
-        self.rateManager = rateManager
-    }
-}
-
-extension TransactionViewItemFactory: ITransactionViewItemFactory {
-
-    func item(fromRecord record: TransactionRecord) -> TransactionViewItem {
-        let adapter = walletManager.wallets.first(where: { $0.coinCode == record.coinCode })?.adapter
-
-        var rateValue: Double?
-
-        if record.rate == 0 {
-//            if record.timestamp > Date().timeIntervalSince1970 - 60 * latestRateFallbackThreshold, let rate = rateManager.rate(forCoin: record.coinCode, currencyCode: currencyManager.baseCurrency.code), !rate.expired {
-//                rateValue = rate.value
-//            }
-        } else {
-            rateValue = record.rate
-        }
-
-        let convertedValue = rateValue.map { $0 * record.amount }
+        let currencyValue = rate.map { CurrencyValue(currency: $0.currency, value: $0.value * record.amount) }
 
         var status: TransactionStatus = .pending
 
-        if record.blockHeight != 0, let adapter = adapter, let lastBlockHeight = adapter.lastBlockHeight {
-            let confirmations = lastBlockHeight - record.blockHeight + 1
-            let threshold = adapter.confirmationsThreshold
+        if let blockHeight = record.blockHeight, let lastBlockHeight = lastBlockHeight {
+            let confirmations = lastBlockHeight - blockHeight + 1
 
-            if confirmations >= threshold {
+            if confirmations >= threshold ?? 1 {
                 status = .completed
             } else {
                 status = .processing(confirmations: confirmations)
@@ -48,8 +23,8 @@ extension TransactionViewItemFactory: ITransactionViewItemFactory {
 
         return TransactionViewItem(
                 transactionHash: record.transactionHash,
-                coinValue: CoinValue(coinCode: record.coinCode, value: record.amount),
-                currencyValue: convertedValue.map { CurrencyValue(currency: currencyManager.baseCurrency, value: $0) },
+                coinValue: CoinValue(coinCode: item.coinCode, value: record.amount),
+                currencyValue: currencyValue,
                 from: record.from.first(where: { $0.mine != incoming })?.address,
                 to: record.to.first(where: { $0.mine == incoming })?.address,
                 incoming: incoming,

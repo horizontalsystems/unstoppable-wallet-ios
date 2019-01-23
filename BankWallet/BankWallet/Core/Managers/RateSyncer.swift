@@ -30,7 +30,7 @@ class RateSyncer {
 
     private func sync() {
         if reachabilityManager.isReachable {
-            rateManager.refreshRates(coinCodes: walletManager.wallets.map { $0.coinCode }, currencyCode: currencyManager.baseCurrency.code)
+            rateManager.refreshLatestRates(coinCodes: walletManager.wallets.map { $0.coinCode }, currencyCode: currencyManager.baseCurrency.code)
         }
     }
 

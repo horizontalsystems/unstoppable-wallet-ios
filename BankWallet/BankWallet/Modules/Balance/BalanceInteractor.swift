@@ -87,7 +87,7 @@ extension BalanceInteractor: IBalanceInteractor {
         ratesDisposeBag = DisposeBag()
 
         for coinCode in coinCodes {
-            rateStorage.rateObservable(forCoinCode: coinCode, currencyCode: currencyCode)
+            rateStorage.latestRateObservable(forCoinCode: coinCode, currencyCode: currencyCode)
                     .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
                     .observeOn(MainScheduler.instance)
                     .subscribe(onNext: { rate in

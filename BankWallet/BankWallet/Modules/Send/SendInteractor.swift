@@ -148,7 +148,7 @@ extension SendInteractor: ISendInteractor {
     }
 
     func fetchRate() {
-        rateStorage.rateObservable(forCoinCode: wallet.coinCode, currencyCode: currencyManager.baseCurrency.code)
+        rateStorage.latestRateObservable(forCoinCode: wallet.coinCode, currencyCode: currencyManager.baseCurrency.code)
                 .take(1)
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
                 .observeOn(MainScheduler.instance)
