@@ -1460,6 +1460,8 @@
 		D348A77120C7C58900803B9E /* BackupIntroController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BackupIntroController.xib; sourceTree = "<group>"; };
 		D348A77420C7D34100803B9E /* BackupConfirmationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupConfirmationController.swift; sourceTree = "<group>"; };
 		D348A77520C7D34100803B9E /* BackupConfirmationController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BackupConfirmationController.xib; sourceTree = "<group>"; };
+		D34E941B21F86C3500AD8E90 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		D34E941C21F86C3500AD8E90 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Localizable.strings; sourceTree = "<group>"; };
 		D35B518821942E7A00504FBA /* AboutSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutSettingsViewController.swift; sourceTree = "<group>"; };
 		D38405CE218317DF007D50AD /* Bank Dev.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Bank Dev.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D38406BE21831B3D007D50AD /* Bank.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Bank.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -2648,6 +2650,7 @@
 				tr,
 				es,
 				zh,
+				ko,
 			);
 			mainGroup = D3285F3920BD158E00644076;
 			productRefGroup = D3285F4320BD158E00644076 /* Products */;
@@ -4116,6 +4119,7 @@
 				50EED191218822FA00E200AD /* tr */,
 				D3B476A321D0D64E008B0C3E /* es */,
 				D3B476A521D0D659008B0C3E /* zh */,
+				D34E941B21F86C3500AD8E90 /* ko */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -4130,6 +4134,7 @@
 				50EED192218822FA00E200AD /* tr */,
 				D3B476A421D0D64E008B0C3E /* es */,
 				D3B476A621D0D659008B0C3E /* zh */,
+				D34E941C21F86C3500AD8E90 /* ko */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
