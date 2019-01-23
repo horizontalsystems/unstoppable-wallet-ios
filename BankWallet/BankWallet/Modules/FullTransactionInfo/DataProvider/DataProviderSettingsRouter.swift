@@ -14,10 +14,10 @@ extension DataProviderSettingsRouter: IDataProviderSettingsRouter {
 
 extension DataProviderSettingsRouter {
 
-    static func module(for coinCode: String) -> UIViewController {
+    static func module(for coinCode: String, transactionHash: String) -> UIViewController {
         let router = DataProviderSettingsRouter()
-        let interactor = DataProviderSettingsInteractor(dataProviderManager: App.shared.dataProviderManager)
-        let presenter = DataProviderSettingsPresenter(coinCode: coinCode, router: router, interactor: interactor)
+        let interactor = DataProviderSettingsInteractor(dataProviderManager: App.shared.dataProviderManager, pingManager: App.shared.pingManager)
+        let presenter = DataProviderSettingsPresenter(coinCode: coinCode, transactionHash: transactionHash, router: router, interactor: interactor)
         let view = DataProviderSettingsViewController(delegate: presenter)
 
         interactor.delegate = presenter

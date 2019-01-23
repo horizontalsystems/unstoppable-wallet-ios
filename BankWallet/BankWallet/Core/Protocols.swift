@@ -241,7 +241,10 @@ protocol IFullTransactionDataProviderManager {
     func bitcoin(for name: String) -> IBitcoinForksProvider
     func bitcoinCash(for name: String) -> IBitcoinForksProvider
     func ethereum(for name: String) -> IEthereumForksProvider
+}
 
+protocol IPingManager {
+    func serverAvailable(url: String, timeoutInterval: TimeInterval) -> Observable<TimeInterval>
 }
 
 protocol IBitcoinForksProvider: IProvider {

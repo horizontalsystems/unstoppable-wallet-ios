@@ -56,7 +56,7 @@ protocol IFullTransactionInfoInteractorDelegate: class {
 }
 
 protocol IFullTransactionInfoRouter {
-    func openProviderSettings(coinCode: String)
+    func openProviderSettings(coinCode: String, transactionHash: String)
     func open(url: String?)
     func share(value: String)
     func close()

@@ -48,4 +48,8 @@ class SettingsTheme {
     static let logoTintColor = UIColor.cryptoGray
     static let logoSelectedTintColor = UIColor.cryptoSilver
     static let attentionIconTint = UIColor.cryptoRed
+    static let spinnerTopMargin: CGFloat = 6
+    static let spinnerLineWidth: CGFloat = 2
+    static let spinnerSideSize: CGFloat = 12
+
 }

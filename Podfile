@@ -20,7 +20,7 @@ def appPods
 
   pod 'GrouviExtensions', '~> 1.2'
   pod 'GrouviActionSheet', '1.3'
-  pod 'GrouviHUD', '1.1'
+  pod 'GrouviHUD', '1.1.1'
   pod 'SectionsTableViewKit'
 
   pod 'KeychainAccess'

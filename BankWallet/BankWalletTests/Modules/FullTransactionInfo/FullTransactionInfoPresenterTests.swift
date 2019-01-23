@@ -45,7 +45,7 @@ class FullTransactionInfoPresenterTests: XCTestCase {
         mockRouter = MockIFullTransactionInfoRouter()
         stub(mockRouter) { mock in
             when(mock.open(url: any())).thenDoNothing()
-            when(mock.openProviderSettings(coinCode: any())).thenDoNothing()
+            when(mock.openProviderSettings(coinCode: any(), transactionHash: any())).thenDoNothing()
             when(mock.share(value: any())).thenDoNothing()
             when(mock.close()).thenDoNothing()
         }
@@ -146,7 +146,7 @@ class FullTransactionInfoPresenterTests: XCTestCase {
 
     func testOnTapChangeResource() {
         presenter.onTapChangeResource()
-        verify(mockRouter).openProviderSettings(coinCode: coinCode)
+        verify(mockRouter).openProviderSettings(coinCode: coinCode, transactionHash: transactionHash)
     }
 
     func testOnTapProviderLink() {
