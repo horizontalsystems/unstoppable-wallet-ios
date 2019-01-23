@@ -74,7 +74,6 @@ class App {
         walletFactory = WalletFactory(adapterFactory: adapterFactory)
         walletManager = WalletManager(walletFactory: walletFactory, authManager: authManager, coinManager: coinManager)
 
-        grdbStorage = GrdbStorage()
         networkManager = NetworkManager(appConfigProvider: appConfigProvider)
 
         reachabilityManager = ReachabilityManager(appConfigProvider: appConfigProvider)

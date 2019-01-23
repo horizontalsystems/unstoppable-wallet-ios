@@ -40,7 +40,10 @@ class GrdbStorage {
                 t.primaryKey([StorableCoin.Columns.code.name, StorableCoin.Columns.type.name], onConflict: .replace)
             }
 
-            let suffix = Bundle.main.object(forInfoDictionaryKey: "TestMode") as? String == "true"
+            let testMode = Bundle.main.object(forInfoDictionaryKey: "TestMode") as? String == "true"
+
+            let suffix = testMode ? "t" : ""
+
             let defaultCoins = [
                 Coin(title: "Bitcoin", code: "BTC\(suffix)", type: .bitcoin),
                 Coin(title: "Bitcoin Cash", code: "BCH\(suffix)", type: .bitcoinCash),
