@@ -100,10 +100,10 @@
 "full_info.confirmations" = "确认框";
 "full_info.size" = "文件大小";
 "full_info.fee" = "费用";
-"full_info.rate" = "费率\n";
+"full_info.rate" = "Rate";
 "full_info.inputs" = "收入";
 "full_info.outputs" = "转出";
-"full_info.source" = "来源";
+"full_info.source" = "Source";
 "full_info.from" = "发件人";
 "full_info.to" = "收件人";
 
@@ -111,8 +111,8 @@
 "full_info.gas_used" = "Gas Used";
 "full_info.gas_price" = "Gas Price";
 
-"full_info.source.title" = "来源";
-"full_info.source.online" = "線上";
+"full_info.source.title" = "Source";
+"full_info.source.online" = "online";
 "full_info.source.offline" = "离线";
 
 "full_info.error.subtitle" = "离线";
