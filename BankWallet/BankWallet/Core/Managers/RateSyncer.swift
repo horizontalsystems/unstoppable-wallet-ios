@@ -23,14 +23,30 @@ class RateSyncer {
                 .subscribeOn(scheduler)
                 .observeOn(scheduler)
                 .subscribe(onNext: { [weak self] in
-                    self?.sync()
+                    self?.syncLatestRates()
                 })
                 .disposed(by: disposeBag)
+
+        Observable.merge(currencyManager.baseCurrencyUpdatedSignal, reachabilityManager.reachabilitySignal)
+                .subscribeOn(scheduler)
+                .observeOn(scheduler)
+                .subscribe(onNext: { [weak self] in
+                    self?.syncTimestampRates()
+                })
+                .disposed(by: disposeBag)
+
+        syncTimestampRates()
     }
 
-    private func sync() {
+    private func syncLatestRates() {
         if reachabilityManager.isReachable {
             rateManager.refreshLatestRates(coinCodes: walletManager.wallets.map { $0.coinCode }, currencyCode: currencyManager.baseCurrency.code)
+        }
+    }
+
+    private func syncTimestampRates() {
+        if reachabilityManager.isReachable {
+            rateManager.syncZeroValueTimestampRates(currencyCode: currencyManager.baseCurrency.code)
         }
     }
 

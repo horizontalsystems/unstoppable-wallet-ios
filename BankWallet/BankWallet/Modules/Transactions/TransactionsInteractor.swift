@@ -12,6 +12,8 @@ class TransactionsInteractor {
     private let currencyManager: ICurrencyManager
     private let rateManager: IRateManager
 
+    private var requestedTimestamps = [CoinCode: [Double]]()
+
     init(walletManager: IWalletManager, currencyManager: ICurrencyManager, rateManager: IRateManager) {
         self.walletManager = walletManager
         self.currencyManager = currencyManager
@@ -61,6 +63,7 @@ extension TransactionsInteractor: ITransactionsInteractor {
                 .observeOn(MainScheduler.instance)
                 .subscribe(onNext: { [weak self] in
                     self?.ratesDisposeBag = DisposeBag()
+                    self?.requestedTimestamps = [:]
                     self?.delegate?.onUpdateBaseCurrency()
                 })
                 .disposed(by: disposeBag)
@@ -86,7 +89,7 @@ extension TransactionsInteractor: ITransactionsInteractor {
 
     func fetchRecords(fetchDataList: [FetchData]) {
         guard !fetchDataList.isEmpty else {
-            delegate?.didFetch(records: [:])
+            delegate?.didFetch(recordsData: [:])
             return
         }
 
@@ -110,18 +113,18 @@ extension TransactionsInteractor: ITransactionsInteractor {
 
         Single.zip(singles)
                 { tuples -> [CoinCode: [TransactionRecord]] in
-                    var result = [CoinCode: [TransactionRecord]]()
+                    var recordsData = [CoinCode: [TransactionRecord]]()
 
                     for (coinCode, records) in tuples {
-                        result[coinCode] = records
+                        recordsData[coinCode] = records
                     }
 
-                    return result
+                    return recordsData
                 }
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
                 .observeOn(MainScheduler.instance)
-                .subscribe(onSuccess: { [weak self] records in
-                    self?.delegate?.didFetch(records: records)
+                .subscribe(onSuccess: { [weak self] recordsData in
+                    self?.delegate?.didFetch(recordsData: recordsData)
                 })
                 .disposed(by: disposeBag)
     }
@@ -131,13 +134,23 @@ extension TransactionsInteractor: ITransactionsInteractor {
         delegate?.onUpdate(selectedCoinCodes: selectedCoinCodes.isEmpty ? allCoinCodes : selectedCoinCodes)
     }
 
-    func fetchRates(timestamps: [CoinCode: [Double]]) {
+    func fetchRates(timestampsData: [CoinCode: [Double]]) {
         let currency = currencyManager.baseCurrency
 
-        for (coinCode, timestamps) in timestamps {
+        for (coinCode, timestamps) in timestampsData {
             for timestamp in timestamps {
+                if let timestamps = requestedTimestamps[coinCode], timestamps.contains(timestamp) {
+                    continue
+                }
+
+                if requestedTimestamps[coinCode] == nil {
+                    requestedTimestamps[coinCode] = [Double]()
+                }
+                requestedTimestamps[coinCode]?.append(timestamp)
+
                 rateManager.timestampRateValueObservable(coinCode: coinCode, currencyCode: currency.code, timestamp: timestamp)
                         .subscribe(onNext: { rateValue in
+//                            print("did fetch: \(coinCode) -- \(currency.code) -- \(timestamp) -- \(rateValue)")
                             self.delegate?.didFetch(rateValue: rateValue, coinCode: coinCode, currency: currency, timestamp: timestamp)
                         })
                         .disposed(by: ratesDisposeBag)

@@ -73,8 +73,8 @@ extension GrdbStorage: IRateStorage {
         return request.rx.fetchOne(in: dbPool)
     }
 
-    func emptyTimestampRatesObservable() -> Observable<[Rate]> {
-        let request = Rate.filter(Rate.Columns.value == 0 && Rate.Columns.isLatest == false)
+    func zeroValueTimestampRatesObservable(currencyCode: String) -> Observable<[Rate]> {
+        let request = Rate.filter(Rate.Columns.currencyCode == currencyCode && Rate.Columns.value == 0 && Rate.Columns.isLatest == false)
         return request.rx.fetchAll(in: dbPool)
     }
 

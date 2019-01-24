@@ -25,14 +25,14 @@ class TransactionRecordDataSource {
         return true
     }
 
-    var allRecords: [CoinCode: [TransactionRecord]] {
-        var records = [CoinCode: [TransactionRecord]]()
+    var allRecordsData: [CoinCode: [TransactionRecord]] {
+        var recordsData = [CoinCode: [TransactionRecord]]()
 
-        for pool in poolRepo.activePools {
-            records[pool.coinCode] = pool.records
+        for pool in poolRepo.allPools {
+            recordsData[pool.coinCode] = pool.records
         }
 
-        return records
+        return recordsData
     }
 
     func item(forIndex index: Int) -> TransactionItem {
@@ -49,8 +49,8 @@ class TransactionRecordDataSource {
         }
     }
 
-    func handleNext(records: [CoinCode: [TransactionRecord]]) {
-        records.forEach { coinCode, records in
+    func handleNext(recordsData: [CoinCode: [TransactionRecord]]) {
+        recordsData.forEach { coinCode, records in
             poolRepo.pool(byCoinCode: coinCode)?.add(records: records)
         }
     }
