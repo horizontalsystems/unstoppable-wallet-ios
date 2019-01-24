@@ -96,7 +96,7 @@
 
 "full_info.title" = "Transacción";
 "full_info.time" = "Hora";
-"full_info.block" = "Block";
+"full_info.block" = "Bloque";
 "full_info.confirmations" = "Confirmaciones";
 "full_info.size" = "Tamaño";
 "full_info.fee" = "Comisión";
