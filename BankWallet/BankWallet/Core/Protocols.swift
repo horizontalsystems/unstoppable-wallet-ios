@@ -167,6 +167,7 @@ protocol BiometricManagerDelegate: class {
 
 protocol IRateManager {
     func refreshLatestRates(coinCodes: [CoinCode], currencyCode: String)
+    func syncZeroValueTimestampRates(currencyCode: String)
     func timestampRateValueObservable(coinCode: CoinCode, currencyCode: String, timestamp: Double) -> Observable<Double>
 }
 
@@ -209,7 +210,7 @@ protocol IRateNetworkManager {
 protocol IRateStorage {
     func latestRateObservable(forCoinCode coinCode: CoinCode, currencyCode: String) -> Observable<Rate>
     func timestampRateObservable(coinCode: CoinCode, currencyCode: String, timestamp: Double) -> Observable<Rate?>
-    func emptyTimestampRatesObservable() -> Observable<[Rate]>
+    func zeroValueTimestampRatesObservable(currencyCode: String) -> Observable<[Rate]>
     func save(latestRate: Rate)
     func save(rate: Rate)
     func clear()

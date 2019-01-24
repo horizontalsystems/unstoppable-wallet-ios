@@ -40,7 +40,7 @@ protocol ITransactionsInteractor {
     func fetchRecords(fetchDataList: [FetchData])
     func set(selectedCoinCodes: [CoinCode])
 
-    func fetchRates(timestamps: [CoinCode: [Double]])
+    func fetchRates(timestampsData: [CoinCode: [Double]])
 }
 
 protocol ITransactionsInteractorDelegate: class {
@@ -54,7 +54,7 @@ protocol ITransactionsInteractorDelegate: class {
     func didUpdate(records: [TransactionRecord], coinCode: CoinCode)
 
     func didFetch(rateValue: Double, coinCode: CoinCode, currency: Currency, timestamp: Double)
-    func didFetch(records: [CoinCode: [TransactionRecord]])
+    func didFetch(recordsData: [CoinCode: [TransactionRecord]])
 }
 
 protocol ITransactionsRouter {

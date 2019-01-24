@@ -97,13 +97,7 @@ extension TransactionsPresenter: ITransactionsInteractorDelegate {
         dataSource.clearRates()
         view?.reload()
 
-        var timestamps = [CoinCode: [Double]]()
-
-        for (coinCode, records) in loader.allRecords {
-            timestamps[coinCode] = records.map { $0.timestamp }
-        }
-
-        interactor.fetchRates(timestamps: timestamps)
+        fetchRates(recordsData: loader.allRecordsData)
     }
 
     func onUpdate(lastBlockHeight: Int, coinCode: CoinCode) {
@@ -136,18 +130,22 @@ extension TransactionsPresenter: ITransactionsInteractorDelegate {
         }
     }
 
-    func didFetch(records: [CoinCode: [TransactionRecord]]) {
+    func didFetch(recordsData: [CoinCode: [TransactionRecord]]) {
 //        print("Did Fetch Records: \(records.map { key, value -> String in "\(key) - \(value.count)" })")
 
-        var timestamps = [CoinCode: [Double]]()
+        fetchRates(recordsData: recordsData)
 
-        for (coinCode, records) in records {
-            timestamps[coinCode] = records.map { $0.timestamp }
+        loader.didFetch(recordsData: recordsData)
+    }
+
+    private func fetchRates(recordsData: [CoinCode: [TransactionRecord]]) {
+        var timestampsData = [CoinCode: [Double]]()
+
+        for (coinCode, records) in recordsData {
+            timestampsData[coinCode] = records.map { $0.timestamp }
         }
 
-        interactor.fetchRates(timestamps: timestamps)
-
-        loader.didFetch(records: records)
+        interactor.fetchRates(timestampsData: timestampsData)
     }
 
 }

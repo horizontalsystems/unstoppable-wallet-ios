@@ -17,8 +17,8 @@ class TransactionsLoader {
         return dataSource.item(forIndex: index)
     }
 
-    var allRecords: [CoinCode: [TransactionRecord]] {
-        return dataSource.allRecords
+    var allRecordsData: [CoinCode: [TransactionRecord]] {
+        return dataSource.allRecordsData
     }
 
     func itemIndexes(coinCode: CoinCode, timestamp: Double) -> [Int] {
@@ -78,8 +78,8 @@ class TransactionsLoader {
         }
     }
 
-    func didFetch(records: [CoinCode: [TransactionRecord]]) {
-        dataSource.handleNext(records: records)
+    func didFetch(recordsData: [CoinCode: [TransactionRecord]]) {
+        dataSource.handleNext(recordsData: recordsData)
 
         if dataSource.increasePage() {
             delegate?.didChangeData()

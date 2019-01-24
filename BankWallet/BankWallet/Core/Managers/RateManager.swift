@@ -9,16 +9,6 @@ class RateManager {
     init(storage: IRateStorage, networkManager: IRateNetworkManager) {
         self.storage = storage
         self.networkManager = networkManager
-
-        storage.emptyTimestampRatesObservable()
-                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
-                .observeOn(ConcurrentDispatchQueueScheduler(qos: .background))
-                .subscribe(onNext: { [weak self] rates in
-                    for rate in rates {
-                        self?.sync(coinCode: rate.coinCode, currencyCode: rate.currencyCode, timestamp: rate.timestamp)
-                    }
-                })
-                .disposed(by: disposeBag)
     }
 
     private func sync(coinCode: CoinCode, currencyCode: String, timestamp: Double) {
@@ -49,7 +39,19 @@ extension RateManager: IRateManager {
                     })
                     .disposed(by: disposeBag)
         }
+    }
 
+    func syncZeroValueTimestampRates(currencyCode: String) {
+        storage.zeroValueTimestampRatesObservable(currencyCode: currencyCode)
+                .take(1)
+                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
+                .observeOn(ConcurrentDispatchQueueScheduler(qos: .background))
+                .subscribe(onNext: { [weak self] rates in
+                    for rate in rates {
+                        self?.sync(coinCode: rate.coinCode, currencyCode: rate.currencyCode, timestamp: rate.timestamp)
+                    }
+                })
+                .disposed(by: disposeBag)
     }
 
     func timestampRateValueObservable(coinCode: CoinCode, currencyCode: String, timestamp: Double) -> Observable<Double> {
@@ -59,11 +61,12 @@ extension RateManager: IRateManager {
                         if rate.value != 0 {
                             return Observable.just(rate.value)
                         }
-                        return Observable.empty()
-                    }
+                    } else {
+                        let rate = Rate(coinCode: coinCode, currencyCode: currencyCode, value: 0, timestamp: timestamp, isLatest: false)
+                        self?.storage.save(rate: rate)
 
-                    let rate = Rate(coinCode: coinCode, currencyCode: currencyCode, value: 0, timestamp: timestamp, isLatest: false)
-                    self?.storage.save(rate: rate)
+                        self?.sync(coinCode: coinCode, currencyCode: currencyCode, timestamp: timestamp)
+                    }
 
                     return Observable.empty()
                 }
