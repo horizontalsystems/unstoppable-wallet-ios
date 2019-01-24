@@ -36,7 +36,7 @@
 // Backup
 
 "backup.intro.title" = "Copia de seguridad";
-"backup.intro.subtitle" = "Su clave secreta es la única manera de recuperar su cartera y otros fondos si su teléfono alguna vez se pierde, se rompe, es sustraído o se actualiza a otra versión.";
+"backup.intro.subtitle" = "Your secret key is the only way to restore your wallet and funds if your phone is ever lost, stolen, broken, or upgraded.\n\nIt consists of 12 words. Store it safely offline.";
 "backup.intro.later" = "Posterior";
 "backup.intro.backup_now" = "Copia de seguridad";
 
@@ -49,7 +49,7 @@
 "backup.confirmation.failure_alert.text" = "Las contraseñas no coinciden";
 "backup.confirmation.done_button" = "Listo";
 "backup.confirmation.understand" = "Entiendo que mis datos y mi monedero se guardan de manera segura en este dispositivo y no en ningún otro servidor";
-"backup.confirmation.delete_app_warn" = "Entiendo que si esta aplicación se elimina o deja de funcionar por alguna razón, mi monedero sólo puede ser recuperado utilizando mi clave secreta, que he anotado y guardado en un lugar seguro.";
+"backup.confirmation.delete_app_warn" = "I understand that if this app is moved to another device, deleted or malfunctions, my wallet can be only recovered with the Secret Key that I have just written down and saved in a secure place.";
 
 // Balance
 
@@ -96,14 +96,14 @@
 
 "full_info.title" = "Transacción";
 "full_info.time" = "Hora";
-"full_info.block" = "Bloquear";
+"full_info.block" = "Block";
 "full_info.confirmations" = "Confirmaciones";
 "full_info.size" = "Tamaño";
 "full_info.fee" = "Comisión";
-"full_info.rate" = "Tasa";
+"full_info.rate" = "Rate";
 "full_info.inputs" = "Aportaciones";
 "full_info.outputs" = "Rendimientos";
-"full_info.source" = "Fuente";
+"full_info.source" = "Source";
 "full_info.from" = "Desde ";
 "full_info.to" = "Para";
 
@@ -111,13 +111,13 @@
 "full_info.gas_used" = "Gas Used";
 "full_info.gas_price" = "Gas Price";
 
-"full_info.source.title" = "Fuente";
+"full_info.source.title" = "Source";
 "full_info.source.online" = "en línea";
-"full_info.source.offline" = "desconectado";
+"full_info.source.offline" = "offline";
 
-"full_info.error.subtitle" = "desconectado";
-"full_info.error.retry" = "Volver a procesar";
-"full_info.error.change_source" = "Cambiar la fuente";
+"full_info.error.subtitle" = "offline";
+"full_info.error.retry" = "Retry";
+"full_info.error.change_source" = "Change Source";
 
 // Settings
 
@@ -182,7 +182,7 @@
 // Unlock PIN
 
 "unlock_pin.info" = "Código";
-"unlock_pin.cant_save_pin" = "Ups! No podemos guardar su code, póngase en contacto con nosotros lo antes posible";
+"unlock_pin.cant_save_pin" = "¡Ups! No podemos guardar su código, póngase en contacto con nosotros lo antes posible";
 "unlock_pin.blocked_until" = "Inhabilitado hasta: %@";
 
 //NumPad
