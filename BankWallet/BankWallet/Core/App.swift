@@ -70,7 +70,7 @@ class App {
         randomManager = RandomManager()
         systemInfoManager = SystemInfoManager()
 
-        adapterFactory = AdapterFactory(appConfigProvider: appConfigProvider)
+        adapterFactory = AdapterFactory(appConfigProvider: appConfigProvider, localStorage: localStorage)
         walletFactory = WalletFactory(adapterFactory: adapterFactory)
         walletManager = WalletManager(walletFactory: walletFactory, authManager: authManager, coinManager: coinManager)
 

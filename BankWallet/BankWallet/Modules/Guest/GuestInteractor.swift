@@ -15,7 +15,7 @@ extension GuestInteractor: IGuestInteractor {
     func createWallet() {
         do {
             let words = try wordsManager.generateWords()
-            try authManager.login(withWords: words)
+            try authManager.login(withWords: words, newWallet: true)
 
             delegate?.didCreateWallet()
         } catch {

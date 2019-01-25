@@ -30,7 +30,7 @@ extension RestoreInteractor: IRestoreInteractor {
     func restore(withWords words: [String]) {
         do {
             try wordsManager.validate(words: words)
-            try authManager.login(withWords: words)
+            try authManager.login(withWords: words, newWallet: false)
             wordsManager.isBackedUp = true
 
             delegate?.didRestore()

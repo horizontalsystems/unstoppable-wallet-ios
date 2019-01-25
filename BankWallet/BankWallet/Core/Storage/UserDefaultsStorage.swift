@@ -1,6 +1,7 @@
 import Foundation
 
 class UserDefaultsStorage: ILocalStorage {
+    private let keyIsNewWallet = "is_new_wallet"
     private let keyIsBackedUp = "is_backed_up"
     private let keyCurrentLanguage = "current_language"
     private let keyBaseCurrencyCode = "base_currency_code"
@@ -11,6 +12,11 @@ class UserDefaultsStorage: ILocalStorage {
     private let biometricOnKey = "biometric_on_key"
     private let lastExitDateKey = "last_exit_date_key"
     private let didLaunchOnceKey = "did_launch_once_key"
+
+    var isNewWallet: Bool {
+        get { return bool(for: keyIsNewWallet) ?? false }
+        set { set(newValue, for: keyIsNewWallet) }
+    }
 
     var isBackedUp: Bool {
         get { return bool(for: keyIsBackedUp) ?? false }
@@ -66,6 +72,7 @@ class UserDefaultsStorage: ILocalStorage {
     }
 
     func clear() {
+        isNewWallet = false
         isBackedUp = false
         lightMode = false
         iUnderstand = false
