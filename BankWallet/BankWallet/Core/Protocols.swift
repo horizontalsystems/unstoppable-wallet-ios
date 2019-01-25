@@ -54,7 +54,7 @@ protocol IWalletManager: class {
     var wallets: [Wallet] { get }
     var walletsUpdatedSignal: Signal { get }
     func initWallets()
-    func clearWallets()
+    func clear()
 }
 
 protocol IAdapterFactory {
@@ -70,9 +70,6 @@ protocol ICoinManager: class {
     var coinsUpdatedSignal: Signal { get }
     var coins: [Coin] { get }
     var allCoinsObservable: Observable<[Coin]> { get }
-}
-
-protocol ITransactionManager: class {
     func clear()
 }
 
@@ -149,7 +146,7 @@ protocol IPinManager: class {
     var isPinSet: Bool { get }
     func store(pin: String?) throws
     func validate(pin: String) -> Bool
-    func clearPin() throws
+    func clear() throws
 }
 
 protocol ILockRouter {
@@ -169,6 +166,7 @@ protocol IRateManager {
     func refreshLatestRates(coinCodes: [CoinCode], currencyCode: String)
     func syncZeroValueTimestampRates(currencyCode: String)
     func timestampRateValueObservable(coinCode: CoinCode, currencyCode: String, timestamp: Double) -> Observable<Double>
+    func clear()
 }
 
 protocol IRateSyncerDelegate: class {
@@ -213,14 +211,14 @@ protocol IRateStorage {
     func zeroValueTimestampRatesObservable(currencyCode: String) -> Observable<[Rate]>
     func save(latestRate: Rate)
     func save(rate: Rate)
-    func clear()
+    func clearRates()
 }
 
 protocol ICoinStorage {
     func enabledCoinsObservable() -> Observable<[Coin]>
     func allCoinsObservable() -> Observable<[Coin]>
     func save(enabledCoins: [Coin])
-    func cleanCoins()
+    func clearCoins()
 }
 
 protocol IJSONApiManager {

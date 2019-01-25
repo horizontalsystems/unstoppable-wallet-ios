@@ -51,6 +51,7 @@ class CoinManagerTests: XCTestCase {
             when(mock.allCoinsObservable()).thenReturn(coinsObservable)
             when(mock.enabledCoinsObservable()).thenReturn(coinsObservable)
             when(mock.save(enabledCoins: any())).thenDoNothing()
+            when(mock.clearCoins()).thenDoNothing()
         }
 
         manager = CoinManager(appConfigProvider: mockAppConfigProvider, storage: mockStorage, async: false)
@@ -88,6 +89,20 @@ class CoinManagerTests: XCTestCase {
         }).disposed(by: disposeBag)
         coinsObservable.onNext([])
         waitForExpectations(timeout: 2)
+    }
+
+    func testClear_clearStorage() {
+        manager.clear()
+
+        verify(mockStorage).clearCoins()
+    }
+
+    func testClear_clearCoinsInMemory() {
+        coinsObservable.onNext([bitcoin])
+
+        manager.clear()
+
+        XCTAssertTrue(manager.coins.isEmpty)
     }
 
 }

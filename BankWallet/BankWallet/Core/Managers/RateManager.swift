@@ -91,4 +91,8 @@ extension RateManager: IRateManager {
                 }
     }
 
+    func clear() {
+        storage.clearRates()
+    }
+
 }
