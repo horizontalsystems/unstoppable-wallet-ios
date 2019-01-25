@@ -45,11 +45,10 @@ protocol ITransactionsInteractor {
 
 protocol ITransactionsInteractorDelegate: class {
     func onUpdate(selectedCoinCodes: [CoinCode])
-    func onUpdate(coinCodes: [CoinCode])
+    func onUpdate(coinsData: [(CoinCode, Int, Int?)])
     func onUpdateBaseCurrency()
 
     func onUpdate(lastBlockHeight: Int, coinCode: CoinCode)
-    func onUpdate(threshold: Int, coinCode: CoinCode)
 
     func didUpdate(records: [TransactionRecord], coinCode: CoinCode)
 
