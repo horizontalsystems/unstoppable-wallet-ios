@@ -112,10 +112,10 @@
 "full_info.gas_price" = "Gas Price";
 
 "full_info.source.title" = "Источник";
-"full_info.source.online" = "в сети";
-"full_info.source.offline" = "не в сети";
+"full_info.source.online" = "доступен";
+"full_info.source.offline" = "недоступен";
 
-"full_info.error.subtitle" = "не в сети";
+"full_info.error.subtitle" = "недоступен";
 "full_info.error.retry" = "Повторить";
 "full_info.error.change_source" = "Сменить Источник";
 
