@@ -29,9 +29,10 @@ extension AuthManager: IAuthManager {
         return authData != nil
     }
 
-    func login(withWords words: [String]) throws {
+    func login(withWords words: [String], newWallet: Bool) throws {
         let authData = AuthData(words: words)
         try secureStorage.set(authData: authData)
+        localStorage.isNewWallet = newWallet
 
         self.authData = authData
 

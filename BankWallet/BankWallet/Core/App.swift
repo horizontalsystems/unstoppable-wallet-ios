@@ -71,7 +71,7 @@ class App {
         authManager = AuthManager(secureStorage: secureStorage, localStorage: localStorage, pinManager: pinManager, coinManager: coinManager, rateManager: rateManager)
         wordsManager = WordsManager(localStorage: localStorage)
 
-        adapterFactory = AdapterFactory(appConfigProvider: appConfigProvider)
+        adapterFactory = AdapterFactory(appConfigProvider: appConfigProvider, localStorage: localStorage)
         walletFactory = WalletFactory(adapterFactory: adapterFactory)
         walletManager = WalletManager(walletFactory: walletFactory, authManager: authManager, coinManager: coinManager)
 

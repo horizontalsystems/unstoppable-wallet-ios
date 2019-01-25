@@ -17,8 +17,8 @@ class BitcoinAdapter {
     let balanceUpdatedSignal = Signal()
     let stateUpdatedSignal = Signal()
 
-    init(words: [String], coin: BitcoinKit.Coin, walletId: String) {
-        bitcoinKit = BitcoinKit(withWords: words, coin: coin, walletId: walletId, minLogLevel: .error)
+    init(words: [String], coin: BitcoinKit.Coin, walletId: String, newWallet: Bool) {
+        bitcoinKit = BitcoinKit(withWords: words, coin: coin, walletId: walletId, newWallet: newWallet, minLogLevel: .error)
 
         progressSubject = BehaviorSubject(value: 0)
         state = .syncing(progressSubject: progressSubject)
@@ -180,14 +180,14 @@ extension BitcoinAdapter: BitcoinKitDelegate {
 
 extension BitcoinAdapter {
 
-    static func bitcoinAdapter(authData: AuthData, testMode: Bool) -> BitcoinAdapter {
+    static func bitcoinAdapter(authData: AuthData, newWallet: Bool, testMode: Bool) -> BitcoinAdapter {
         let network: BitcoinKit.Network = testMode ? .testNet : .mainNet
-        return BitcoinAdapter(words: authData.words, coin: .bitcoin(network: network), walletId: authData.walletId)
+        return BitcoinAdapter(words: authData.words, coin: .bitcoin(network: network), walletId: authData.walletId, newWallet: newWallet)
     }
 
-    static func bitcoinCashAdapter(authData: AuthData, testMode: Bool) -> BitcoinAdapter {
+    static func bitcoinCashAdapter(authData: AuthData, newWallet: Bool, testMode: Bool) -> BitcoinAdapter {
         let network: BitcoinKit.Network = testMode ? .testNet : .mainNet
-        return BitcoinAdapter(words: authData.words, coin: .bitcoinCash(network: network), walletId: authData.walletId)
+        return BitcoinAdapter(words: authData.words, coin: .bitcoinCash(network: network), walletId: authData.walletId, newWallet: newWallet)
     }
 
 }

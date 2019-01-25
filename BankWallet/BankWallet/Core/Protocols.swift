@@ -7,6 +7,7 @@ protocol IRandomManager {
 }
 
 protocol ILocalStorage: class {
+    var isNewWallet: Bool { get set }
     var isBackedUp: Bool { get set }
     var baseCurrencyCode: String? { get set }
     var baseBitcoinProvider: String? { get set }
@@ -126,7 +127,7 @@ protocol IWordsManager {
 protocol IAuthManager {
     var authData: AuthData? { get }
     var isLoggedIn: Bool { get }
-    func login(withWords words: [String]) throws
+    func login(withWords words: [String], newWallet: Bool) throws
     func logout() throws
 }
 
