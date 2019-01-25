@@ -119,6 +119,7 @@ extension TransactionsPresenter: ITransactionsInteractorDelegate {
 
     func didUpdate(records: [TransactionRecord], coinCode: CoinCode) {
         loader.didUpdate(records: records, coinCode: coinCode)
+        fetchRates(recordsData: [coinCode: records])
     }
 
     func didFetch(rateValue: Double, coinCode: CoinCode, currency: Currency, timestamp: Double) {
