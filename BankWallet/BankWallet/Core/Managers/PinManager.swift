@@ -21,7 +21,7 @@ extension PinManager: IPinManager {
         return secureStorage.pin == pin
     }
 
-    func clearPin() throws {
+    func clear() throws {
         try secureStorage.set(pin: nil)
     }
 

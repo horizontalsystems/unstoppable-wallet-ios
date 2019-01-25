@@ -2,21 +2,21 @@ import RxSwift
 
 class AuthManager {
     private let secureStorage: ISecureStorage
-    private let coinStorage: ICoinStorage
     private let localStorage: ILocalStorage
+    private let pinManager: IPinManager
+    private let coinManager: ICoinManager
+    private let rateManager: IRateManager
 
     weak var walletManager: IWalletManager?
-    weak var coinManager: ICoinManager?
-    weak var pinManager: IPinManager?
-    weak var transactionsManager: ITransactionManager?
 
     private(set) var authData: AuthData?
 
-    init(secureStorage: ISecureStorage, coinStorage: ICoinStorage, localStorage: ILocalStorage, coinManager: ICoinManager) {
+    init(secureStorage: ISecureStorage, localStorage: ILocalStorage, pinManager: IPinManager, coinManager: ICoinManager, rateManager: IRateManager) {
         self.secureStorage = secureStorage
-        self.coinStorage = coinStorage
         self.localStorage = localStorage
+        self.pinManager = pinManager
         self.coinManager = coinManager
+        self.rateManager = rateManager
 
         authData = secureStorage.authData
     }
@@ -35,16 +35,16 @@ extension AuthManager: IAuthManager {
 
         self.authData = authData
 
-        coinManager?.enableDefaultCoins()
+        coinManager.enableDefaultCoins()
         walletManager?.initWallets()
     }
 
     func logout() throws {
-        walletManager?.clearWallets()
-        try pinManager?.clearPin()
-        transactionsManager?.clear()
+        walletManager?.clear()
+        try pinManager.clear()
         localStorage.clear()
-        coinStorage.cleanCoins()
+        coinManager.clear()
+        rateManager.clear()
 
         try secureStorage.set(authData: nil)
         authData = nil

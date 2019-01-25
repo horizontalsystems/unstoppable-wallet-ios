@@ -42,7 +42,7 @@ extension WalletManager: IWalletManager {
         walletsUpdatedSignal.notify()
     }
 
-    func clearWallets() {
+    func clear() {
         for wallet in wallets {
             wallet.adapter.clear()
         }

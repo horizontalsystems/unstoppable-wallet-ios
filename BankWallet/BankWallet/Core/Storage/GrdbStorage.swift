@@ -91,7 +91,7 @@ extension GrdbStorage: IRateStorage {
         }
     }
 
-    func clear() {
+    func clearRates() {
         _ = try? dbPool.write { db in
             try Rate.deleteAll(db)
         }
@@ -126,7 +126,7 @@ extension GrdbStorage: ICoinStorage {
         }
     }
 
-    func cleanCoins() {
+    func clearCoins() {
         _ = try? dbPool.write { db in
             try StorableCoin.deleteAll(db)
         }

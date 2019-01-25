@@ -1,4 +1,3 @@
-import Foundation
 import RxSwift
 
 class CoinManager {
@@ -47,6 +46,11 @@ extension CoinManager: ICoinManager {
 
     func enableDefaultCoins() {
         storage.save(enabledCoins: appConfigProvider.defaultCoins)
+    }
+
+    func clear() {
+        coins = []
+        storage.clearCoins()
     }
 
 }
