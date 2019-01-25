@@ -49,9 +49,9 @@ class TransactionStatusItemView: BaseActionItemView {
             iconImageView.isHidden = true
         }
 
-        if let confirmations = item?.confirmations {
+        if let progress = item?.progress {
             barsProgressView.isHidden = false
-            barsProgressView.filledCount = confirmations
+            barsProgressView.filledCount = Int(floor(6 * progress))
         } else {
             barsProgressView.isHidden = true
         }

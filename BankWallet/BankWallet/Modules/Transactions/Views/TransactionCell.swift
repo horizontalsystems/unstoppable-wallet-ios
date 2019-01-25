@@ -126,12 +126,12 @@ class TransactionCell: UITableViewCell {
             completedImageView.isHidden = true
 
             barsProgressView.filledCount = 0
-        case .processing(let confirmations):
+        case .processing(let progress):
             pendingImageView.isHidden = true
             barsProgressView.isHidden = false
             completedImageView.isHidden = true
 
-            barsProgressView.filledCount = confirmations
+            barsProgressView.filledCount = Int(floor(6 * progress))
         case .completed:
             pendingImageView.isHidden = true
             barsProgressView.isHidden = true

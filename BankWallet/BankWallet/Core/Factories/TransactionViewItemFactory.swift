@@ -2,7 +2,7 @@ import Foundation
 
 class TransactionViewItemFactory: ITransactionViewItemFactory {
 
-    func viewItem(fromItem item: TransactionItem, lastBlockHeight: Int?, threshold: Int?, rate: CurrencyValue?) -> TransactionViewItem {
+    func viewItem(fromItem item: TransactionItem, lastBlockHeight: Int? = nil, threshold: Int? = nil, rate: CurrencyValue? = nil) -> TransactionViewItem {
         let record = item.record
 
         let currencyValue = rate.map { CurrencyValue(currency: $0.currency, value: $0.value * record.amount) }
@@ -10,12 +10,13 @@ class TransactionViewItemFactory: ITransactionViewItemFactory {
         var status: TransactionStatus = .pending
 
         if let blockHeight = record.blockHeight, let lastBlockHeight = lastBlockHeight {
+            let threshold = threshold ?? 1
             let confirmations = lastBlockHeight - blockHeight + 1
 
-            if confirmations >= threshold ?? 1 {
+            if confirmations >= threshold {
                 status = .completed
             } else {
-                status = .processing(confirmations: confirmations)
+                status = .processing(progress: Double(confirmations) / Double(threshold))
             }
         }
 
@@ -28,7 +29,7 @@ class TransactionViewItemFactory: ITransactionViewItemFactory {
                 from: record.from.first(where: { $0.mine != incoming })?.address,
                 to: record.to.first(where: { $0.mine == incoming })?.address,
                 incoming: incoming,
-                date: status == .pending || record.timestamp == 0 ? nil : Date(timeIntervalSince1970: Double(record.timestamp)),
+                date: Date(timeIntervalSince1970: record.timestamp),
                 status: status
         )
     }
