@@ -34,34 +34,9 @@ extension BalanceViewItem: Equatable {
     }
 }
 
-extension TransactionFilterItem: Equatable {
-    public static func ==(lhs: TransactionFilterItem, rhs: TransactionFilterItem) -> Bool {
-        return lhs.coinCode == rhs.coinCode && lhs.name == rhs.name
-    }
-}
-
-extension TransactionRecord {
-    convenience init(transactionHash: String, coinCode: String, timestamp: Double) {
-        self.init()
-
-        self.transactionHash = transactionHash
-        self.coinCode = coinCode
-        self.timestamp = timestamp
-    }
-}
-
 extension LatestRate: Equatable {
     public static func ==(lhs: LatestRate, rhs: LatestRate) -> Bool {
         return lhs.value == rhs.value && lhs.timestamp == rhs.timestamp
-    }
-}
-
-extension TransactionAddress {
-    convenience init(address: String, mine: Bool) {
-        self.init()
-
-        self.address = address
-        self.mine = mine
     }
 }
 

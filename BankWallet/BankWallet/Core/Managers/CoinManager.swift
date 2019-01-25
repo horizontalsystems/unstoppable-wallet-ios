@@ -19,10 +19,10 @@ class CoinManager {
         self.appConfigProvider = appConfigProvider
         self.storage = storage
 
-        let scheduler: ImmediateSchedulerType = async ? ConcurrentDispatchQueueScheduler(qos: .background) : MainScheduler.instance
+//        let scheduler: ImmediateSchedulerType = async ? ConcurrentDispatchQueueScheduler(qos: .background) : MainScheduler.instance
         storage.enabledCoinsObservable()
-                .subscribeOn(scheduler)
-                .observeOn(MainScheduler.instance)
+//                .subscribeOn(scheduler)
+//                .observeOn(MainScheduler.instance)
                 .subscribe(onNext: { enabledCoins in
                     self.coins = enabledCoins
                 })

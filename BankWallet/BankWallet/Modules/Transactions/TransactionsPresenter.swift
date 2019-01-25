@@ -80,8 +80,17 @@ extension TransactionsPresenter: ITransactionsInteractorDelegate {
         loader.loadNext(initial: true)
     }
 
-    func onUpdate(coinCodes: [CoinCode]) {
-//        print("Coin Codes Updated: \(coinCodes)")
+    func onUpdate(coinsData: [(CoinCode, Int, Int?)]) {
+        var coinCodes = [CoinCode]()
+
+        for (coinCode, threshold, lastBlockHeight) in coinsData {
+            coinCodes.append(coinCode)
+            dataSource.set(threshold: threshold, coinCode: coinCode)
+
+            if let lastBlockHeight = lastBlockHeight {
+                dataSource.set(lastBlockHeight: lastBlockHeight, coinCode: coinCode)
+            }
+        }
 
         interactor.fetchLastBlockHeights()
 
@@ -104,14 +113,6 @@ extension TransactionsPresenter: ITransactionsInteractorDelegate {
 //        print("Last Block Height Updated: \(coinCode) - \(lastBlockHeight)")
 
         dataSource.set(lastBlockHeight: lastBlockHeight, coinCode: coinCode)
-
-        view?.reload()
-    }
-
-    func onUpdate(threshold: Int, coinCode: CoinCode) {
-//        print("Threshold Updated: \(coinCode) - \(threshold)")
-
-        dataSource.set(threshold: threshold, coinCode: coinCode)
 
         view?.reload()
     }

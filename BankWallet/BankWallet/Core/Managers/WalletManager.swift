@@ -22,6 +22,8 @@ class WalletManager {
                     self?.initWallets()
                 })
                 .disposed(by: disposeBag)
+
+        initWallets()
     }
 
 }

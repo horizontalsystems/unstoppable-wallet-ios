@@ -20,9 +20,14 @@ class TransactionsInteractor {
         self.rateManager = rateManager
     }
 
-    private func onUpdateCoinCodes(selectedCoinCodes: [CoinCode] = []) {
-        let allCoinCodes = walletManager.wallets.map { $0.coinCode }
-        delegate?.onUpdate(coinCodes: allCoinCodes)
+    private func onUpdateCoinsData() {
+        var coinsData = [(CoinCode, Int, Int?)]()
+
+        for wallet in walletManager.wallets {
+            coinsData.append((wallet.coinCode, wallet.adapter.confirmationsThreshold, wallet.adapter.lastBlockHeight))
+        }
+
+        delegate?.onUpdate(coinsData: coinsData)
 
         transactionRecordsDisposeBag = DisposeBag()
 
@@ -48,13 +53,13 @@ class TransactionsInteractor {
 extension TransactionsInteractor: ITransactionsInteractor {
 
     func initialFetch() {
-        onUpdateCoinCodes()
+        onUpdateCoinsData()
 
         walletManager.walletsUpdatedSignal
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
                 .observeOn(MainScheduler.instance)
                 .subscribe(onNext: { [weak self] in
-                    self?.onUpdateCoinCodes()
+                    self?.onUpdateCoinsData()
                 })
                 .disposed(by: disposeBag)
 
@@ -73,9 +78,6 @@ extension TransactionsInteractor: ITransactionsInteractor {
         lastBlockHeightsDisposeBag = DisposeBag()
 
         walletManager.wallets.forEach { wallet in
-            onUpdateLastBlockHeight(wallet: wallet)
-            delegate?.onUpdate(threshold: wallet.adapter.confirmationsThreshold, coinCode: wallet.coinCode)
-
             wallet.adapter.lastBlockHeightUpdatedSignal
                     .throttle(3, latest: true, scheduler: ConcurrentDispatchQueueScheduler(qos: .background))
                     .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
