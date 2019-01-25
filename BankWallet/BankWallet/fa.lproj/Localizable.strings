@@ -85,27 +85,27 @@
 // Transaction Info
 
 "tx_info.title" = "تراکنش";
-"tx_info.time" = "Time";
-"tx_info.status" = "Status";
+"tx_info.time" = "زمان";
+"tx_info.status" = "وضيعت";
 "tx_info.from_hash" = "از";
-"tx_info.to_hash" = "To";
+"tx_info.to_hash" = "به";
 "tx_info.alert_close" = "بستن";
-"tx_info.button_more" = "More";
+"tx_info.button_more" = "بیشتر";
 
 // Full Info
 
-"full_info.title" = "Transaction";
-"full_info.time" = "Time";
-"full_info.block" = "Block";
-"full_info.confirmations" = "Confirmations";
-"full_info.size" = "Size";
-"full_info.fee" = "Fee";
+"full_info.title" = "معاملات";
+"full_info.time" = "زمان";
+"full_info.block" = "مسدود";
+"full_info.confirmations" = "تاييدات";
+"full_info.size" = "اندازه";
+"full_info.fee" = "هزينه";
 "full_info.rate" = "Rate";
 "full_info.inputs" = "Inputs";
 "full_info.outputs" = "Outputs";
 "full_info.source" = "Source";
-"full_info.from" = "From";
-"full_info.to" = "To";
+"full_info.from" = "از";
+"full_info.to" = "به";
 
 "full_info.gas_limit" = "Gas Limit";
 "full_info.gas_used" = "Gas Used";
@@ -169,7 +169,7 @@
 
 "set_pin.title" = "Passcode";
 "set_pin.info" = "Your passcode will be used to unlock your wallet and send money";
-"set_pin.confirm.info" = "Confirm";
+"set_pin.confirm.info" = "تاييد";
 "set_pin.wrong_confirmation" = "Passcode did not match. Try again";
 
 // Edit PIN
@@ -177,7 +177,7 @@
 "edit_pin.title" = "Edit Passcode";
 "edit_pin.unlock_info" = "Current Passcode";
 "edit_pin.new_pin_info" = "New Passcode";
-"edit_pin.confirm_info" = "Confirm";
+"edit_pin.confirm_info" = "تاييد";
 
 // Unlock PIN
 
