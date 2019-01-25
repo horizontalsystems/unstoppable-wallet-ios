@@ -1,6 +1,8 @@
 import RxSwift
 
 class RateManager {
+    private let latestRateFallbackThreshold: Double = 60 // in minutes
+
     private let disposeBag = DisposeBag()
 
     private let storage: IRateStorage
@@ -22,6 +24,23 @@ class RateManager {
                     self?.storage.save(rate: rate)
                 })
                 .disposed(by: disposeBag)
+    }
+
+    private func latestRateFallbackObservable(coinCode: CoinCode, currencyCode: String, timestamp: Double) -> Observable<Double>? {
+        let currentTimestamp = Date().timeIntervalSince1970
+
+        guard timestamp > currentTimestamp - 60 * latestRateFallbackThreshold else {
+            return nil
+        }
+
+        return storage.latestRateObservable(forCoinCode: coinCode, currencyCode: currencyCode)
+                .flatMap { rate -> Observable<Double> in
+                    guard !rate.expired else {
+                        return Observable.empty()
+                    }
+
+                    return Observable.just(rate.value)
+                }
     }
 
 }
@@ -68,7 +87,7 @@ extension RateManager: IRateManager {
                         self?.sync(coinCode: coinCode, currencyCode: currencyCode, timestamp: timestamp)
                     }
 
-                    return Observable.empty()
+                    return self?.latestRateFallbackObservable(coinCode: coinCode, currencyCode: currencyCode, timestamp: timestamp) ?? Observable.empty()
                 }
     }
 
