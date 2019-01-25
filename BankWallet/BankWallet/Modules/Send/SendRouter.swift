@@ -30,19 +30,19 @@ extension SendRouter {
         viewController.backgroundColor = .crypto_Dark_Bars
         router.viewController = viewController
 
-        view.onScanClicked = {
+        view.onScanClicked = { [weak view, weak viewController] in
             let scanController = ScanQRController()
             scanController.onCodeParse = { address in
-                view.onScan(address: address)
+                view?.onScan(address: address)
             }
-            viewController.present(scanController, animated: true)
+            viewController?.present(scanController, animated: true)
         }
 
-        view.onShowConfirmation = { viewItem in
+        view.onShowConfirmation = {  [weak view, weak viewController] viewItem in
             let model = SendConfirmationAlertModel(viewItem: viewItem)
 
             model.onCopyAddress = {
-                view.onCopyAddress?()
+                view?.onCopyAddress?()
             }
 
             let confirmationController = ActionSheetController(withModel: model, actionSheetThemeConfig: SendTheme.confirmationSheetConfig)
@@ -50,11 +50,11 @@ extension SendRouter {
 
             confirmationController.onDismiss = { success in
                 if success {
-                    view.onConfirm()
+                    view?.onConfirm()
                 }
             }
 
-            viewController.present(confirmationController, animated: true)
+            viewController?.present(confirmationController, animated: true)
         }
 
         return viewController
