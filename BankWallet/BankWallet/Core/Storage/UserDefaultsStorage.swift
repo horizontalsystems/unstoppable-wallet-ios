@@ -12,6 +12,7 @@ class UserDefaultsStorage: ILocalStorage {
     private let biometricOnKey = "biometric_on_key"
     private let lastExitDateKey = "last_exit_date_key"
     private let didLaunchOnceKey = "did_launch_once_key"
+    private let keySendInputType = "send_input_type_key"
 
     var isNewWallet: Bool {
         get { return bool(for: keyIsNewWallet) ?? false }
@@ -69,6 +70,18 @@ class UserDefaultsStorage: ILocalStorage {
     var isBiometricOn: Bool {
         get { return bool(for: biometricOnKey) ?? false }
         set { set(newValue, for: biometricOnKey) }
+    }
+
+    var sendInputType: SendInputType? {
+        get {
+            if let rawValue = getString(keySendInputType), let value = SendInputType(rawValue: rawValue) {
+                return value
+            }
+            return nil
+        }
+        set {
+            setString(keySendInputType, value: newValue?.rawValue)
+        }
     }
 
     func clear() {

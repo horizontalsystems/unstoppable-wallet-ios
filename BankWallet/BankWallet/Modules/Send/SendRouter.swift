@@ -15,11 +15,12 @@ extension SendRouter {
             return nil
         }
 
+        let interactorState = SendInteractorState(wallet: wallet)
         let factory = SendStateViewItemFactory()
         let userInput = SendUserInput()
 
         let router = SendRouter()
-        let interactor = SendInteractor(currencyManager: App.shared.currencyManager, rateStorage: App.shared.grdbStorage, pasteboardManager: App.shared.pasteboardManager, wallet: wallet)
+        let interactor = SendInteractor(currencyManager: App.shared.currencyManager, rateStorage: App.shared.grdbStorage, localStorage: App.shared.localStorage, pasteboardManager: App.shared.pasteboardManager, state: interactorState)
         let presenter = SendPresenter(interactor: interactor, router: router, factory: factory, userInput: userInput)
         let view = SendAlertModel(delegate: presenter)
 

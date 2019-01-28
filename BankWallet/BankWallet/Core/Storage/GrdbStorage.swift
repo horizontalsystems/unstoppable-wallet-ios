@@ -62,6 +62,16 @@ class GrdbStorage {
 
 extension GrdbStorage: IRateStorage {
 
+    func nonExpiredLatestRateValueObservable(forCoinCode coinCode: CoinCode, currencyCode: String) -> Observable<Double> {
+        return latestRateObservable(forCoinCode: coinCode, currencyCode: currencyCode)
+                .flatMap { rate -> Observable<Double> in
+                    guard !rate.expired else {
+                        return Observable.empty()
+                    }
+                    return Observable.just(rate.value)
+                }
+    }
+
     func latestRateObservable(forCoinCode coinCode: CoinCode, currencyCode: String) -> Observable<Rate> {
         let request = Rate.filter(Rate.Columns.coinCode == coinCode && Rate.Columns.currencyCode == currencyCode && Rate.Columns.isLatest == true)
         return request.rx.fetchOne(in: dbPool)
