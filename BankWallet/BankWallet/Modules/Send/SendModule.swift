@@ -89,6 +89,15 @@ enum AmountInfo {
     case currencyValue(currencyValue: CurrencyValue)
 }
 
+class SendInteractorState {
+    let wallet: Wallet
+    var rateValue: Double?
+
+    init(wallet: Wallet) {
+        self.wallet = wallet
+    }
+}
+
 class SendUserInput {
     var inputType: SendInputType = .coin
     var amount: Double = 0

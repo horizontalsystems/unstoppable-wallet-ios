@@ -207,6 +207,7 @@ protocol IRateNetworkManager {
 }
 
 protocol IRateStorage {
+    func nonExpiredLatestRateValueObservable(forCoinCode coinCode: CoinCode, currencyCode: String) -> Observable<Double>
     func latestRateObservable(forCoinCode coinCode: CoinCode, currencyCode: String) -> Observable<Rate>
     func timestampRateObservable(coinCode: CoinCode, currencyCode: String, timestamp: Double) -> Observable<Rate?>
     func zeroValueTimestampRatesObservable(currencyCode: String) -> Observable<[Rate]>
