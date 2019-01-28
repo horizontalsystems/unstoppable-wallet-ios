@@ -12,12 +12,14 @@ class SendInteractor {
 
     private let currencyManager: ICurrencyManager
     private let rateStorage: IRateStorage
+    private let localStorage: ILocalStorage
     private let pasteboardManager: IPasteboardManager
     private let state: SendInteractorState
 
-    init(currencyManager: ICurrencyManager, rateStorage: IRateStorage, pasteboardManager: IPasteboardManager, state: SendInteractorState) {
+    init(currencyManager: ICurrencyManager, rateStorage: IRateStorage, localStorage: ILocalStorage, pasteboardManager: IPasteboardManager, state: SendInteractorState) {
         self.currencyManager = currencyManager
         self.rateStorage = rateStorage
+        self.localStorage = localStorage
         self.pasteboardManager = pasteboardManager
         self.state = state
     }
@@ -25,6 +27,10 @@ class SendInteractor {
 }
 
 extension SendInteractor: ISendInteractor {
+
+    var defaultInputType: SendInputType {
+        return localStorage.sendInputType ?? .coin
+    }
 
     var coinCode: CoinCode {
         return state.wallet.coinCode
@@ -143,6 +149,10 @@ extension SendInteractor: ISendInteractor {
                 self?.delegate?.didSend()
             }
         }
+    }
+
+    func set(inputType: SendInputType) {
+        localStorage.sendInputType = inputType
     }
 
     func fetchRate() {

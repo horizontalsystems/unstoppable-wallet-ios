@@ -9,6 +9,7 @@ class SendInteractorTests: XCTestCase {
     private var mockDelegate: MockISendInteractorDelegate!
     private var mockCurrencyManager: MockICurrencyManager!
     private var mockRateStorage: MockIRateStorage!
+    private var mockLocalStorage: MockILocalStorage!
     private var mockPasteboardManager: MockIPasteboardManager!
 
     private let coinCode = "BTC"
@@ -32,6 +33,7 @@ class SendInteractorTests: XCTestCase {
         mockDelegate = MockISendInteractorDelegate()
         mockCurrencyManager = MockICurrencyManager()
         mockRateStorage = MockIRateStorage()
+        mockLocalStorage = MockILocalStorage()
         mockPasteboardManager = MockIPasteboardManager()
 
         stub(mockDelegate) { mock in
@@ -49,7 +51,7 @@ class SendInteractorTests: XCTestCase {
             when(mock.set(value: any())).thenDoNothing()
         }
 
-        interactor = SendInteractor(currencyManager: mockCurrencyManager, rateStorage: mockRateStorage, pasteboardManager: mockPasteboardManager, state: interactorState)
+        interactor = SendInteractor(currencyManager: mockCurrencyManager, rateStorage: mockRateStorage, localStorage: mockLocalStorage, pasteboardManager: mockPasteboardManager, state: interactorState)
         interactor.delegate = mockDelegate
     }
 
@@ -57,6 +59,7 @@ class SendInteractorTests: XCTestCase {
         mockDelegate = nil
         mockCurrencyManager = nil
         mockRateStorage = nil
+        mockLocalStorage = nil
         mockPasteboardManager = nil
 
         mockAdapter = nil
@@ -395,13 +398,36 @@ class SendInteractorTests: XCTestCase {
 
         XCTAssertEqual(interactorState.rateValue, rateValue)
         verify(mockDelegate).didUpdateRate()
+    }
 
-//        let stateExpectation = expectation(description: "Wait for set rate value to state")
-//        let delegateExpectation = expectation(description: "Wait for call delegate")
+    func testDefaultInputType() {
+        let inputType = SendInputType.currency
 
+        stub(mockLocalStorage) { mock in
+            when(mock.sendInputType.get).thenReturn(inputType)
+        }
 
+        XCTAssertEqual(interactor.defaultInputType, inputType)
+    }
 
-//        waitForExpectations(timeout: 2)
+    func testDefaultInputType_noValueInLocalStorage() {
+        stub(mockLocalStorage) { mock in
+            when(mock.sendInputType.get).thenReturn(nil)
+        }
+
+        XCTAssertEqual(interactor.defaultInputType, SendInputType.coin)
+    }
+
+    func testSetInputType() {
+        let inputType = SendInputType.currency
+
+        stub(mockLocalStorage) { mock in
+            when(mock.sendInputType.set(any())).thenDoNothing()
+        }
+
+        interactor.set(inputType: inputType)
+
+        verify(mockLocalStorage).sendInputType.set(equal(to: inputType))
     }
 
 }

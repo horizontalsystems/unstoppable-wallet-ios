@@ -52,6 +52,8 @@ extension SendPresenter: ISendInteractorDelegate {
 extension SendPresenter: ISendViewDelegate {
 
     func onViewDidLoad() {
+        userInput.inputType = interactor.defaultInputType
+
         let state = interactor.state(forUserInput: userInput)
         let viewItem = factory.viewItem(forState: state)
 
@@ -84,8 +86,10 @@ extension SendPresenter: ISendViewDelegate {
             return
         }
 
+        let newInputType: SendInputType = userInput.inputType == .currency ? .coin : .currency
+
         userInput.amount = convertedAmount
-        userInput.inputType = userInput.inputType == .currency ? .coin : .currency
+        userInput.inputType = newInputType
 
         let state = interactor.state(forUserInput: userInput)
         let viewItem = factory.viewItem(forState: state)
@@ -94,6 +98,8 @@ extension SendPresenter: ISendViewDelegate {
         view?.set(hintInfo: viewItem.hintInfo)
         view?.set(primaryFeeInfo: viewItem.primaryFeeInfo)
         view?.set(secondaryFeeInfo: viewItem.secondaryFeeInfo)
+
+        interactor.set(inputType: newInputType)
     }
 
     private func onAddressEnter(address: String) {

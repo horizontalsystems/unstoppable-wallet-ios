@@ -65,6 +65,7 @@ class SendPresenterTests: XCTestCase {
             when(mock.convertedAmount(forInputType: equal(to: inputType), amount: equal(to: amount))).thenReturn(convertedAmount)
             when(mock.copy(address: any())).thenDoNothing()
             when(mock.send(userInput: any())).thenDoNothing()
+            when(mock.set(inputType: any())).thenDoNothing()
             when(mock.fetchRate()).thenDoNothing()
         }
         stub(mockFactory) { mock in
@@ -98,7 +99,15 @@ class SendPresenterTests: XCTestCase {
     }
 
     func testOnViewDidLoad() {
+        let defaultInputType = SendInputType.currency
+
+        stub(mockInteractor) { mock in
+            when(mock.defaultInputType.get).thenReturn(defaultInputType)
+        }
+
         presenter.onViewDidLoad()
+
+        verify(mockUserInput).inputType.set(equal(to: defaultInputType))
 
         verify(mockView).set(coinCode: equal(to: coinCode))
         verify(mockView).set(amountInfo: equal(to: viewItem.amountInfo))
@@ -108,6 +117,8 @@ class SendPresenterTests: XCTestCase {
         verify(mockView).set(primaryFeeInfo: equal(to: viewItem.primaryFeeInfo))
         verify(mockView).set(secondaryFeeInfo: equal(to: viewItem.secondaryFeeInfo))
         verify(mockView).set(sendButtonEnabled: viewItem.sendButtonEnabled)
+
+        verify(mockInteractor).fetchRate()
     }
 
     func testOnSwitchClicked_UpdateView() {
@@ -124,6 +135,7 @@ class SendPresenterTests: XCTestCase {
 
         verify(mockUserInput).inputType.set(equal(to: SendInputType.currency))
         verify(mockUserInput).amount.set(equal(to: convertedAmount))
+        verify(mockInteractor).set(inputType: equal(to: SendInputType.currency))
     }
 
     func testOnSwitchClicked_FromCurrencyToCoin() {
@@ -139,6 +151,7 @@ class SendPresenterTests: XCTestCase {
 
         verify(mockUserInput).inputType.set(equal(to: SendInputType.coin))
         verify(mockUserInput).amount.set(equal(to: convertedAmount))
+        verify(mockInteractor).set(inputType: equal(to: SendInputType.coin))
     }
 
     func testOnSwitchClicked_NoConvertedAmount() {

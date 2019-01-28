@@ -18,6 +18,7 @@ protocol ILocalStorage: class {
     var currentLanguage: String? { get set }
     var lastExitDate: Double { get set }
     var didLaunchOnce: Bool { get }
+    var sendInputType: SendInputType? { get set }
     func clear()
 }
 

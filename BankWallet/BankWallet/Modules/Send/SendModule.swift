@@ -35,6 +35,7 @@ protocol ISendViewDelegate {
 }
 
 protocol ISendInteractor {
+    var defaultInputType: SendInputType { get }
     var coinCode: CoinCode { get }
     var addressFromPasteboard: String? { get }
     func parse(paymentAddress: String) -> PaymentRequestAddress
@@ -44,6 +45,7 @@ protocol ISendInteractor {
     func copy(address: String)
     func send(userInput: SendUserInput)
 
+    func set(inputType: SendInputType)
     func fetchRate()
 }
 
@@ -61,9 +63,9 @@ protocol ISendStateViewItemFactory {
     func confirmationViewItem(forState state: SendState) -> SendConfirmationViewItem?
 }
 
-enum SendInputType {
-    case coin
-    case currency
+enum SendInputType: String {
+    case coin = "coin"
+    case currency = "currency"
 }
 
 enum AmountError: Error {
