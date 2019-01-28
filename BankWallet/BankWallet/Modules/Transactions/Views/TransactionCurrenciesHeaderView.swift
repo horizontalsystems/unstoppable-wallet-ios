@@ -64,8 +64,16 @@ class TransactionCurrenciesHeaderView: UIVisualEffectView, UICollectionViewDeleg
         return TransactionsFilterTheme.spacing
     }
 
+    func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
+        if let selectedIndexPath = collectionView.indexPathsForSelectedItems?.first, selectedIndexPath == indexPath {
+            return false
+        }
+        return true
+    }
+
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         onSelectCoin?(filters[indexPath.item])
+        collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
     }
 
     func reload(filters: [CoinCode?]) {

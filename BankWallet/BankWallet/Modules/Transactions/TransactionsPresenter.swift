@@ -94,7 +94,11 @@ extension TransactionsPresenter: ITransactionsInteractorDelegate {
 
         interactor.fetchLastBlockHeights()
 
-        view?.show(filters: [nil] + coinCodes)
+        if coinCodes.count < 2 {
+            view?.show(filters: [])
+        } else {
+            view?.show(filters: [nil] + coinCodes)
+        }
 
         loader.set(coinCodes: coinCodes)
         loader.loadNext(initial: true)

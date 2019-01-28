@@ -2,16 +2,17 @@ import UIKit
 import SnapKit
 
 class TransactionsCurrencyCell: UICollectionViewCell {
-
-    var roundedView = UIView()
-    var nameLabel = UILabel()
+    private let roundedView = UIView()
+    private let nameLabel = UILabel()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
+
         roundedView.layer.cornerRadius = TransactionsFilterTheme.cornerRadius
         roundedView.layer.borderColor = TransactionsFilterTheme.borderColor.cgColor
         roundedView.layer.borderWidth = TransactionsFilterTheme.borderWidth
         roundedView.clipsToBounds = true
+
         contentView.addSubview(roundedView)
         roundedView.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview()
