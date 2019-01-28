@@ -39,6 +39,8 @@
 	<string>We need access to camera to scan QR codes.</string>
 	<key>NSFaceIDUsageDescription</key>
 	<string>We use Face ID to unlock wallet.</string>
+	<key>ShowBuildNumber</key>
+	<string>${ShowBuildNumber}</string>
 	<key>TestMode</key>
 	<string>${TestMode}</string>
 	<key>UILaunchStoryboardName</key>
