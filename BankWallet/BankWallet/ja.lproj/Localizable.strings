@@ -23,7 +23,7 @@
 "guest.title" = "Bank Wallet";
 "guest.subtitle" = "Decentralized App";
 "guest.create_wallet" = "新規ウォレット";
-"guest.restore_wallet" = "Restore Wallet";
+"guest.restore_wallet" = "ウォレットを復元する";
 
 // Restore
 
@@ -31,7 +31,7 @@
 "restore.description" = "Enter Secret Key  ";
 "restore.done" = "Done";
 "restore.cancel" = "キャンセル";
-"restore.validation_failed" = "Incorrect Secret Key";
+"restore.validation_failed" = "正しくない秘密鍵";
 
 // Backup
 
@@ -141,7 +141,7 @@
 
 // Settings -> Manage Wallet
 
-"settings_manage_wallet.title" = "Wallets";
+"settings_manage_wallet.title" = "ウォレット";
 
 "settings_manage_wallet.remove_button" = "Remove";
 
