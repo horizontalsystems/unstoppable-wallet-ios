@@ -153,6 +153,7 @@ extension EthereumAdapter: EthereumKitDelegate {
             } else {
                 self.state = .synced
                 stateUpdatedSignal.notify()
+                lastBlockHeightUpdatedSignal.notify()
             }
         case .notSynced:
             if case .notSynced = self.state {
