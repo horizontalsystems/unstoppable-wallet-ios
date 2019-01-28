@@ -4269,6 +4269,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "io.horizontalsystems.bank-wallet.dev.testnet";
 				PRODUCT_NAME = "Bank Dev T";
 				PROVISIONING_PROFILE_SPECIFIER = "io.horizontalsystems.bank-wallet.dev.testnet Dev";
+				ShowBuildNumber = true;
 				TestMode = true;
 			};
 			name = Debug;
@@ -4280,6 +4281,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "io.horizontalsystems.bank-wallet.dev.testnet";
 				PRODUCT_NAME = "Bank Dev T";
 				PROVISIONING_PROFILE_SPECIFIER = "io.horizontalsystems.bank-wallet.dev.testnet AdHoc";
+				ShowBuildNumber = true;
 				TestMode = true;
 			};
 			name = Release;
@@ -4337,7 +4339,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "io.horizontalsystems.bank-wallet.dev";
 				PRODUCT_NAME = "Bank Dev";
 				PROVISIONING_PROFILE_SPECIFIER = "io.horizontalsystems.bank-wallet.dev Dev";
-				TestMode = false;
+				ShowBuildNumber = true;
 			};
 			name = Debug;
 		};
@@ -4348,7 +4350,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "io.horizontalsystems.bank-wallet.dev";
 				PRODUCT_NAME = "Bank Dev";
 				PROVISIONING_PROFILE_SPECIFIER = "io.horizontalsystems.bank-wallet.dev AdHoc";
-				TestMode = false;
+				ShowBuildNumber = true;
 			};
 			name = Release;
 		};
@@ -4359,7 +4361,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "io.horizontalsystems.bank-wallet";
 				PRODUCT_NAME = Bank;
 				PROVISIONING_PROFILE_SPECIFIER = "io.horizontalsystems.bank-wallet Dev";
-				TestMode = false;
 			};
 			name = Debug;
 		};
@@ -4370,7 +4371,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "io.horizontalsystems.bank-wallet";
 				PRODUCT_NAME = Bank;
 				PROVISIONING_PROFILE_SPECIFIER = "io.horizontalsystems.bank-wallet AppStore";
-				TestMode = false;
 			};
 			name = Release;
 		};
