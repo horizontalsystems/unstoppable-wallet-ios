@@ -90,6 +90,7 @@
 "tx_info.title" = "Транзакция";
 "tx_info.time" = "Время";
 "tx_info.status" = "Статус";
+"tx_info.status.pending" = "Pending";
 "tx_info.from_hash" = "От";
 "tx_info.to_hash" = "Кому";
 "tx_info.alert_close" = "Закрыть";
