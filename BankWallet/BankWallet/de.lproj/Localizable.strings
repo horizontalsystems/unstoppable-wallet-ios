@@ -45,7 +45,7 @@
 "backup.words.proceed" = "Weiter";
 
 "backup.confirmation.title" = "Prüfen …";
-"backup.confirmation.description" = "Geben Sie bitte die folgenden Wörter deines Offlineschlüssels ein";
+"backup.confirmation.description" = "Geben Sie bitte die Wörter deines Offlineschlüssels ein";
 "backup.confirmation.failure_alert.text" = "Die Wörter stimmen nicht überein";
 "backup.confirmation.done_button" = "Fertig";
 "backup.confirmation.understand" = "Ich  stimme zu, dass mein Wallet und meinen Token nur auf diesem Gerät verfügbar sind.";
