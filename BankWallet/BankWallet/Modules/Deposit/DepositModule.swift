@@ -1,5 +1,3 @@
-import Foundation
-
 protocol IDepositView: class {
     func showCopied()
 }
@@ -7,6 +5,7 @@ protocol IDepositView: class {
 protocol IDepositViewDelegate {
     func addressItems(forCoin coinCode: CoinCode?) -> [AddressItem]
     func onCopy(addressItem: AddressItem)
+    func onShare(addressItem: AddressItem)
 }
 
 protocol IDepositInteractor {
@@ -18,4 +17,5 @@ protocol IDepositInteractorDelegate: class {
 }
 
 protocol IDepositRouter {
+    func share(address: String)
 }

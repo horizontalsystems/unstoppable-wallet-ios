@@ -2,9 +2,16 @@ import UIKit
 import GrouviActionSheet
 
 class DepositRouter {
+    var viewController: UIViewController?
 }
 
 extension DepositRouter: IDepositRouter {
+
+    func share(address: String) {
+        let activityViewController = UIActivityViewController(activityItems: [address], applicationActivities: [])
+        viewController?.present(activityViewController, animated: true, completion: nil)
+    }
+
 }
 
 extension DepositRouter {
@@ -20,6 +27,9 @@ extension DepositRouter {
 
         let viewController = ActionSheetController(withModel: depositAlertModel, actionSheetThemeConfig: AppTheme.actionSheetConfig)
         viewController.backgroundColor = .crypto_Dark_Bars
+
+        router.viewController = viewController
+
         return viewController
     }
 

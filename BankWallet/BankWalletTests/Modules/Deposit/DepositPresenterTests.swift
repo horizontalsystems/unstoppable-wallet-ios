@@ -13,6 +13,9 @@ class DepositPresenterTests: XCTestCase {
     private let bitcoin = "BTC"
     private let ether = "ETH"
 
+    private let bitcoinTitle = "Bitcoin"
+    private let etherTitle = "Ethereum"
+
     private let bitcoinAddress = "bitcoin_address"
     private let etherAddress = "ether_address"
 
@@ -28,13 +31,16 @@ class DepositPresenterTests: XCTestCase {
         mockBitcoinAdapter = MockIAdapter()
         mockEtherAdapter = MockIAdapter()
 
-        bitcoinWallet = Wallet(title: "some", coinCode: bitcoin, adapter: mockBitcoinAdapter)
-        etherWallet = Wallet(title: "some", coinCode: ether, adapter: mockEtherAdapter)
+        bitcoinWallet = Wallet(title: bitcoinTitle, coinCode: bitcoin, adapter: mockBitcoinAdapter)
+        etherWallet = Wallet(title: etherTitle, coinCode: ether, adapter: mockEtherAdapter)
 
         mockRouter = MockIDepositRouter()
         mockInteractor = MockIDepositInteractor()
         mockView = MockIDepositView()
 
+        stub(mockRouter) { mock in
+            when(mock.share(address: any())).thenDoNothing()
+        }
         stub(mockView) { mock in
             when(mock.showCopied()).thenDoNothing()
         }
@@ -66,17 +72,24 @@ class DepositPresenterTests: XCTestCase {
 
     func testGetAddressItems() {
         let expectedItems = [
-            AddressItem(address: bitcoinAddress, coinCode: bitcoin),
-            AddressItem(address: etherAddress, coinCode: ether)
+            AddressItem(title: bitcoinTitle, address: bitcoinAddress, coinCode: bitcoin),
+            AddressItem(title: etherTitle, address: etherAddress, coinCode: ether)
         ]
 
         XCTAssertEqual(presenter.addressItems(forCoin: nil), expectedItems)
     }
 
     func testOnCopy() {
-        presenter.onCopy(addressItem: AddressItem(address: bitcoinAddress, coinCode: bitcoin))
+        presenter.onCopy(addressItem: AddressItem(title: bitcoinTitle, address: bitcoinAddress, coinCode: bitcoin))
 
         verify(mockInteractor).copy(address: equal(to: bitcoinAddress))
         verify(mockView).showCopied()
     }
+
+    func testOnShare() {
+        presenter.onShare(addressItem: AddressItem(title: bitcoinTitle, address: bitcoinAddress, coinCode: bitcoin))
+
+        verify(mockRouter).share(address: equal(to: bitcoinAddress))
+    }
+
 }

@@ -47,7 +47,9 @@ extension DepositCollectionItemView: UICollectionViewDataSource, UICollectionVie
 
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         if let cell = cell as? DepositAddressCollectionCell, let address = item?.addresses[indexPath.item] {
-            cell.bind(address: address)
+            cell.bind(address: address, onCopy: { [weak self] in
+                self?.item?.onCopy?(address)
+            })
         }
     }
 
@@ -69,4 +71,5 @@ extension DepositCollectionItemView: UICollectionViewDataSource, UICollectionVie
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 0
     }
+
 }

@@ -6,29 +6,29 @@ class DepositAddressCollectionCell: UICollectionViewCell {
     var titleLabel = UILabel()
     var separatorView = UIView()
     var qrCodeImageView = UIImageView()
-    var addressLabel = UILabel()
+    var addressButton = AddressButton()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
 
         contentView.addSubview(iconImageView)
         iconImageView.snp.makeConstraints { maker in
-            maker.leading.equalToSuperview().offset(DepositTheme.iconMargin)
-            maker.top.equalToSuperview().offset(DepositTheme.iconMargin)
+            maker.leading.equalToSuperview().offset(DepositTheme.regularMargin)
+            maker.top.equalToSuperview().offset(DepositTheme.regularMargin)
         }
 
         titleLabel.font = DepositTheme.titleFont
         titleLabel.textColor = DepositTheme.titleColor
         contentView.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { maker in
-            maker.leading.equalTo(self.iconImageView.snp.trailing).offset(DepositTheme.iconMargin)
+            maker.leading.equalTo(self.iconImageView.snp.trailing).offset(DepositTheme.regularMargin)
             maker.centerY.equalTo(self.iconImageView.snp.centerY)
         }
 
         separatorView.backgroundColor = .cryptoSteel20
         contentView.addSubview(separatorView)
         separatorView.snp.makeConstraints { maker in
-            maker.top.equalTo(self.iconImageView.snp.bottom).offset(DepositTheme.iconMargin)
+            maker.top.equalTo(self.iconImageView.snp.bottom).offset(DepositTheme.regularMargin)
             maker.left.right.equalToSuperview()
             maker.height.equalTo(0.5)
         }
@@ -40,15 +40,22 @@ class DepositAddressCollectionCell: UICollectionViewCell {
             maker.size.equalTo(CGSize(width: DepositTheme.qrCodeSideSize, height: DepositTheme.qrCodeSideSize))
         }
 
-        addressLabel.font = DepositTheme.addressFont
-        addressLabel.textColor = DepositTheme.addressColor
-        addressLabel.lineBreakMode = .byTruncatingMiddle
-        addressLabel.textAlignment = .center
-        contentView.addSubview(addressLabel)
-        addressLabel.snp.makeConstraints { maker in
-            maker.top.equalTo(self.qrCodeImageView.snp.bottom).offset(DepositTheme.qrCodeBottomMargin)
-            maker.left.equalToSuperview().offset(DepositTheme.addressSideMargin)
-            maker.right.equalToSuperview().offset(-DepositTheme.addressSideMargin)
+        let addressTitleLabel = UILabel()
+        addressTitleLabel.text = "deposit.your_address".localized
+        addressTitleLabel.font = DepositTheme.addressTitleFont
+        addressTitleLabel.textColor = DepositTheme.addressTitleColor
+        addressTitleLabel.textAlignment = .center
+        contentView.addSubview(addressTitleLabel)
+        addressTitleLabel.snp.makeConstraints { maker in
+            maker.top.equalTo(self.qrCodeImageView.snp.bottom).offset(DepositTheme.addressTitleTopMargin)
+            maker.leading.trailing.equalToSuperview()
+        }
+
+        contentView.addSubview(addressButton)
+        addressButton.snp.makeConstraints { maker in
+            maker.top.equalTo(addressTitleLabel.snp.bottom).offset(DepositTheme.addressTopMargin)
+            maker.leading.equalToSuperview().offset(DepositTheme.regularMargin)
+            maker.trailing.equalToSuperview().offset(-DepositTheme.regularMargin)
         }
     }
 
@@ -56,11 +63,13 @@ class DepositAddressCollectionCell: UICollectionViewCell {
         fatalError("not implemented")
     }
 
-    func bind(address: AddressItem) {
+    func bind(address: AddressItem, onCopy: @escaping () -> ()) {
         iconImageView.image = UIImage(named: "\(address.coinCode) Icon")?.tinted(with: DepositTheme.iconTintColor)
-        titleLabel.text = "deposit.receive_coin".localized(address.coinCode)
+        titleLabel.text = "deposit.receive_coin".localized(address.title)
         qrCodeImageView.backgroundColor = .lightGray
-        addressLabel.text = address.address
+        addressButton.bind(value: address.address)
+
+        addressButton.onTap = onCopy
 
         qrCodeImageView.image = createQRFromString(address.address, size: CGSize(width: 150, height: 150))
     }

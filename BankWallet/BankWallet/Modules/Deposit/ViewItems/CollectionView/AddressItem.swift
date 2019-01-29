@@ -1,4 +1,5 @@
 struct AddressItem {
+    let title: String
     let address: String
     let coinCode: CoinCode
 }
@@ -6,7 +7,7 @@ struct AddressItem {
 extension AddressItem: Equatable {
 
     public static func ==(lhs: AddressItem, rhs: AddressItem) -> Bool {
-        return lhs.coinCode == rhs.coinCode && lhs.address == rhs.address
+        return lhs.title == rhs.title && lhs.address == rhs.address && lhs.coinCode == rhs.coinCode
     }
 
 }
