@@ -75,6 +75,8 @@
 "send.amount_placeholder" = "مبلغ";
 "send.fee" = "هزينه";
 "send.total" = "مجموع";
+"send.max_button" = "Max";
+"send_erc.alert" = "You need ETH to transfer ERC Tokens";
 
 // Transactions
 
