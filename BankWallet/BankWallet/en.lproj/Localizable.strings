@@ -64,7 +64,8 @@ Go to Settings - > Bank and allow access to Camera.";
 // Deposit
 
 "deposit.receive_coin" = "Receive %@";
-"deposit.alert_copy" = "Copy";
+"deposit.your_address" = "Your Address";
+"deposit.share" = "Share";
 
 // Send
 

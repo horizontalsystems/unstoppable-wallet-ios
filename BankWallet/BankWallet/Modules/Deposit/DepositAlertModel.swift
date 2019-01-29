@@ -17,10 +17,12 @@ class DepositAlertModel: BaseAlertModel {
         var currentPage = 0
         var pagingItem: PagingDotsItem?
 
-        let depositItem = DepositCollectionItem(addresses: items, tag: 0, required: true, onPageChange: { index in
+        let depositItem = DepositCollectionItem(addresses: items, tag: 0, onPageChange: { index in
             currentPage = index
             pagingItem?.currentPage = index
             pagingItem?.updateView?()
+        }, onCopy: { [weak self] item in
+            self?.delegate.onCopy(addressItem: item)
         })
         addItemView(depositItem)
 
@@ -29,8 +31,8 @@ class DepositAlertModel: BaseAlertModel {
             addItemView(pagingItem!)
         }
 
-        let shareItem = DepositCopyButtonItem(tag: 2, required: true, onTap: { [weak self] in
-            self?.delegate.onCopy(addressItem: items[currentPage])
+        let shareItem = DepositShareButtonItem(tag: 2, onTap: { [weak self] in
+            self?.delegate.onShare(addressItem: items[currentPage])
         })
         addItemView(shareItem)
     }
