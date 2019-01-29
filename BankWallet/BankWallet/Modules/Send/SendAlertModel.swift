@@ -43,6 +43,9 @@ class SendAlertModel: BaseAlertModel {
         amountItem.onSwitchClicked = { [weak self] in
             self?.delegate.onSwitchClicked()
         }
+        amountItem.onMaxClicked = { [weak self] in
+            self?.delegate.onMaxClicked()
+        }
 
         addressItem.onPasteClicked = { [weak self] in
             self?.delegate.onPasteClicked()

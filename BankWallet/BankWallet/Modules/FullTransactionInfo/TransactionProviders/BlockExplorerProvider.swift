@@ -30,11 +30,11 @@ class BlockExplorerBitcoinResponse: IBitcoinResponse, ImmutableMappable {
     var confirmations: Int?
 
     var size: Int?
-    var fee: Double?
-    var feePerByte: Double?
+    var fee: Decimal?
+    var feePerByte: Decimal?
 
-    var inputs = [(value: Double, address: String?)]()
-    var outputs = [(value: Double, address: String?)]()
+    var inputs = [(value: Decimal, address: String?)]()
+    var outputs = [(value: Decimal, address: String?)]()
 
     required init(map: Map) throws {
         txId = try? map.value("txid")
@@ -46,12 +46,13 @@ class BlockExplorerBitcoinResponse: IBitcoinResponse, ImmutableMappable {
         fee = try? map.value("fees")
 
         if let fee = fee, let size = size {
-            feePerByte = fee * btcRate / Double(size)
+            feePerByte = fee * btcRate / Decimal(size)
         }
 
         if let vInputs: [[String: Any]] = try? map.value("vin") {
             vInputs.forEach { input in
-                if let value = input["value"] as? Double {
+                if let valueDouble = input["value"] as? Double {
+                    let value = Decimal(valueDouble)
                     let address = input["addr"] as? String
 
                     inputs.append((value: value, address: address))
@@ -61,10 +62,10 @@ class BlockExplorerBitcoinResponse: IBitcoinResponse, ImmutableMappable {
         }
         if let vOutputs: [[String: Any]] = try? map.value("vout") {
             vOutputs.forEach { output in
-                if let value = output["value"] as? String, let doubleValue = Double(value), let txScriptPubKey = output["scriptPubKey"] as? [String: Any] {
+                if let valueString = output["value"] as? String, let value = Decimal(string: valueString), let txScriptPubKey = output["scriptPubKey"] as? [String: Any] {
                     let address = (txScriptPubKey["addresses"] as? [String])?.first
 
-                    outputs.append((value: doubleValue, address: address))
+                    outputs.append((value: value, address: address))
                 }
 
             }

@@ -31,11 +31,11 @@ class BtcComBitcoinResponse: IBitcoinResponse, ImmutableMappable {
     var confirmations: Int?
 
     var size: Int?
-    var fee: Double?
-    var feePerByte: Double?
+    var fee: Decimal?
+    var feePerByte: Decimal?
 
-    var inputs = [(value: Double, address: String?)]()
-    var outputs = [(value: Double, address: String?)]()
+    var inputs = [(value: Decimal, address: String?)]()
+    var outputs = [(value: Decimal, address: String?)]()
 
     required init(map: Map) throws {
         txId = try? map.value("data.hash")
@@ -44,16 +44,16 @@ class BtcComBitcoinResponse: IBitcoinResponse, ImmutableMappable {
         confirmations = try? map.value("data.confirmations")
 
         if let fee: Double = try? map.value("data.fee"), let size: Int = try? map.value("data.size") {
-            self.fee = fee / btcRate
+            self.fee = Decimal(fee) / btcRate
             self.size = size
-            feePerByte = fee / Double(size)
+            feePerByte = Decimal(fee) / Decimal(size)
         }
         if let vInputs: [[String: Any]] = try? map.value("data.inputs") {
             vInputs.forEach { input in
                 if let value = input["prev_value"] as? Double {
                     let address = (input["prev_addresses"] as? [String])?.first
 
-                    inputs.append((value: value / btcRate, address: address))
+                    inputs.append((value: Decimal(value) / btcRate, address: address))
                 }
             }
         }
@@ -62,7 +62,7 @@ class BtcComBitcoinResponse: IBitcoinResponse, ImmutableMappable {
                 if let value = output["value"] as? Double {
                     let address = (output["addresses"] as? [String])?.first
 
-                    outputs.append((value: value / btcRate, address: address))
+                    outputs.append((value: Decimal(value) / btcRate, address: address))
                 }
             }
         }

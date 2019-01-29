@@ -151,7 +151,7 @@ extension NetworkManager: IRateNetworkManager {
         return observable(forRequest: request(withMethod: .get, path: "\(coin)/\(currencyCode)/index.json"))
     }
 
-    func getRate(coinCode: String, currencyCode: String, date: Date) -> Observable<Double> {
+    func getRate(coinCode: String, currencyCode: String, date: Date) -> Observable<Decimal> {
         var coin = coinCode
         if coin.last == "t" || coin.last == "r" {
             coin.removeLast()
@@ -165,15 +165,17 @@ extension NetworkManager: IRateNetworkManager {
         let dayObservable: Observable<Double> = observable(forRequest: request(withMethod: .get, path: "\(coin)/\(currencyCode)/\(dayPath)/index.json"))
 
         return hourObservable
-                .flatMap { rates -> Observable<Double> in
+                .flatMap { rates -> Observable<Decimal> in
                     if let rate = rates[minuteString] {
-                        return Observable.just(rate)
+                        return Observable.just(Decimal(rate))
                     }
 
                     return Observable.error(NetworkError.mappingError)
                 }
                 .catchError { _ in
-                    return dayObservable
+                    return dayObservable.map {
+                        Decimal($0)
+                    }
                 }
     }
 

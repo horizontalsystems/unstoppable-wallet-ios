@@ -31,7 +31,7 @@ extension BalancePresenter: IBalanceInteractorDelegate {
         view?.reload()
     }
 
-    func didUpdate(balance: Double, coinCode: CoinCode) {
+    func didUpdate(balance: Decimal, coinCode: CoinCode) {
         if let index = dataSource.index(for: coinCode) {
             dataSource.set(balance: balance, index: index)
 

@@ -63,7 +63,7 @@ class ValueFormatter {
         return result
     }
 
-    func format(currencyValue: CurrencyValue, shortFractionLimit: Double? = nil, roundingMode: NumberFormatter.RoundingMode = .halfEven) -> String? {
+    func format(currencyValue: CurrencyValue, shortFractionLimit: Decimal? = nil, roundingMode: NumberFormatter.RoundingMode = .halfEven) -> String? {
         let absoluteValue = abs(currencyValue.value)
 
         let formatter = currencyFormatter
@@ -92,16 +92,16 @@ class ValueFormatter {
         return amountFormatter.string(from: amount as NSNumber)
     }
 
-    func format(twoDigitValue: Double) -> String? {
+    func format(twoDigitValue: Decimal) -> String? {
         return twoDigitFormatter.string(from: twoDigitValue as NSNumber)
     }
 
-    func parseAnyDecimal(from string: String?) -> Double? {
+    func parseAnyDecimal(from string: String?) -> Decimal? {
         if let string = string {
             for localeIdentifier in Locale.availableIdentifiers {
                 parseFormatter.locale = Locale(identifier: localeIdentifier)
                 if let parsed = parseFormatter.number(from: "0\(string)") {
-                    return parsed as? Double
+                    return parsed.decimalValue
                 }
             }
         }

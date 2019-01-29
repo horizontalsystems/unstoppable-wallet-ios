@@ -1,6 +1,8 @@
+import Foundation
+
 struct CoinValue {
 
     let coinCode: CoinCode
-    let value: Double
+    let value: Decimal
 
 }

@@ -21,11 +21,11 @@ class EtherscanEthereumResponse: IEthereumResponse, ImmutableMappable {
 
     var size: Int?
 
-    var gasPrice: Double?
-    var gasUsed: Double?
-    var gasLimit: Double?
-    var fee: Double?
-    var value: Double?
+    var gasPrice: Decimal?
+    var gasUsed: Decimal?
+    var gasLimit: Decimal?
+    var fee: Decimal?
+    var value: Decimal?
 
     var nonce: Int?
     var from: String?
@@ -39,19 +39,19 @@ class EtherscanEthereumResponse: IEthereumResponse, ImmutableMappable {
         }
 
         if let gasString: String = try? map.value("result.gas"), let gasInt = Int(gasString.replacingOccurrences(of: "0x", with: ""), radix: 16) {
-            gasLimit = Double(gasInt)
+            gasLimit = Decimal(gasInt)
         }
 
         if let gasPriceString: String = try? map.value("result.gasPrice"), let gasPriceInt = Int(gasPriceString.replacingOccurrences(of: "0x", with: ""), radix: 16) {
-            gasPrice = Double(gasPriceInt) / gweiRate
+            gasPrice = Decimal(gasPriceInt) / gweiRate
         }
 
         if let nonceString: String = try? map.value("result.nonce") {
             nonce = Int(nonceString.replacingOccurrences(of: "0x", with: ""), radix: 16)
         }
 
-        if let valueString: String = try? map.value("result.value"), let valueBigInt = BigInt(valueString.replacingOccurrences(of: "0x", with: ""), radix: 16) {
-            self.value = NSDecimalNumber(string: valueBigInt.description).doubleValue / ethRate
+        if let valueString: String = try? map.value("result.value"), let valueBigInt = BigInt(valueString.replacingOccurrences(of: "0x", with: ""), radix: 16), let value = Decimal(string: valueBigInt.description) {
+            self.value = value / ethRate
         }
 
         from = try? map.value("result.from")

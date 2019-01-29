@@ -44,7 +44,7 @@ extension SendInteractor: ISendInteractor {
         return state.wallet.adapter.parse(paymentAddress: paymentAddress)
     }
 
-    func convertedAmount(forInputType inputType: SendInputType, amount: Double) -> Double? {
+    func convertedAmount(forInputType inputType: SendInputType, amount: Decimal) -> Decimal? {
         guard let rateValue = state.rateValue else {
             return nil
         }
@@ -81,10 +81,11 @@ extension SendInteractor: ISendInteractor {
             }
         }
 
-        var feeValue: Double?
+        var feeValue: Decimal?
         if let coinValue = sendState.coinValue {
             do {
-                feeValue = try adapter.fee(for: coinValue.value, address: input.address, senderPay: true)
+                let value = try adapter.fee(for: coinValue.value, address: input.address, senderPay: true)
+                feeValue = value
             } catch FeeError.insufficientAmount(let fee) {
                 feeValue = fee
                 sendState.amountError = createAmountError(forInput: input, fee: fee)
@@ -103,7 +104,7 @@ extension SendInteractor: ISendInteractor {
         return sendState
     }
 
-    func createAmountError(forInput input: SendUserInput, fee: Double) -> AmountError? {
+    private func createAmountError(forInput input: SendUserInput, fee: Decimal) -> AmountError? {
         var balanceMinusFee = state.wallet.adapter.balance - fee
         if balanceMinusFee < 0 {
             balanceMinusFee = 0
@@ -119,6 +120,25 @@ extension SendInteractor: ISendInteractor {
         }
     }
 
+    func totalBalanceMinusFee(forInputType input: SendInputType, address: String?) -> Decimal {
+        var fee: Decimal
+        do {
+            fee = try state.wallet.adapter.fee(for: state.wallet.adapter.balance, address: address, senderPay: false)
+        } catch {
+            print(error)
+            return 0
+        }
+        let balanceMinusFee = state.wallet.adapter.balance - fee
+        switch input {
+        case .coin:
+            return balanceMinusFee
+        case .currency:
+            return state.rateValue.map {
+                return balanceMinusFee * $0
+            } ?? 0
+        }
+    }
+
     func copy(address: String) {
         pasteboardManager.set(value: address)
     }
@@ -129,7 +149,7 @@ extension SendInteractor: ISendInteractor {
             return
         }
 
-        var computedAmount: Double?
+        var computedAmount: Decimal?
 
         if userInput.inputType == .coin {
             computedAmount = userInput.amount

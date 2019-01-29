@@ -2,9 +2,9 @@ import Foundation
 
 struct PaymentRequestAddress {
     let address: String
-    let amount: Double?
+    let amount: Decimal?
 
-    init(address: String, amount: Double? = nil) {
+    init(address: String, amount: Decimal? = nil) {
         self.address = address
         self.amount = amount
     }

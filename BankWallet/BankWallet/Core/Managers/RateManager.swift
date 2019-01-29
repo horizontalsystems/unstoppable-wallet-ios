@@ -26,7 +26,7 @@ class RateManager {
                 .disposed(by: disposeBag)
     }
 
-    private func latestRateFallbackObservable(coinCode: CoinCode, currencyCode: String, timestamp: Double) -> Observable<Double>? {
+    private func latestRateFallbackObservable(coinCode: CoinCode, currencyCode: String, timestamp: Double) -> Observable<Decimal>? {
         let currentTimestamp = Date().timeIntervalSince1970
 
         guard timestamp > currentTimestamp - 60 * latestRateFallbackThreshold else {
@@ -34,7 +34,7 @@ class RateManager {
         }
 
         return storage.latestRateObservable(forCoinCode: coinCode, currencyCode: currencyCode)
-                .flatMap { rate -> Observable<Double> in
+                .flatMap { rate -> Observable<Decimal> in
                     guard !rate.expired else {
                         return Observable.empty()
                     }
@@ -73,9 +73,9 @@ extension RateManager: IRateManager {
                 .disposed(by: disposeBag)
     }
 
-    func timestampRateValueObservable(coinCode: CoinCode, currencyCode: String, timestamp: Double) -> Observable<Double> {
+    func timestampRateValueObservable(coinCode: CoinCode, currencyCode: String, timestamp: Double) -> Observable<Decimal> {
         return storage.timestampRateObservable(coinCode: coinCode, currencyCode: currencyCode, timestamp: timestamp)
-                .flatMap { [weak self] rate -> Observable<Double> in
+                .flatMap { [weak self] rate -> Observable<Decimal> in
                     if let rate = rate {
                         if rate.value != 0 {
                             return Observable.just(rate.value)

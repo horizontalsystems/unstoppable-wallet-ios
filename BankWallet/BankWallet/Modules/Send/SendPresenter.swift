@@ -1,3 +1,5 @@
+import Foundation
+
 class SendPresenter {
     weak var view: ISendView?
 
@@ -69,7 +71,7 @@ extension SendPresenter: ISendViewDelegate {
         interactor.fetchRate()
     }
 
-    func onAmountChanged(amount: Double) {
+    func onAmountChanged(amount: Decimal) {
         userInput.amount = amount
 
         let state = interactor.state(forUserInput: userInput)
@@ -145,6 +147,17 @@ extension SendPresenter: ISendViewDelegate {
 
         interactor.copy(address: address)
         view?.showCopied()
+    }
+
+    func onMaxClicked() {
+        let totalBalanceMinusFee = interactor.totalBalanceMinusFee(forInputType: userInput.inputType, address: userInput.address)
+        userInput.amount = totalBalanceMinusFee
+
+        let state = interactor.state(forUserInput: userInput)
+        let viewItem = factory.viewItem(forState: state)
+
+        view?.set(amountInfo: viewItem.amountInfo)
+        onAmountChanged(amount: totalBalanceMinusFee)
     }
 
 }

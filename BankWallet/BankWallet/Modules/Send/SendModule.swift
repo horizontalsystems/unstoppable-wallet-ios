@@ -1,3 +1,5 @@
+import Foundation
+
 protocol ISendView: class {
     func set(coinCode: CoinCode)
 
@@ -21,7 +23,7 @@ protocol ISendView: class {
 protocol ISendViewDelegate {
     func onViewDidLoad()
 
-    func onAmountChanged(amount: Double)
+    func onAmountChanged(amount: Decimal)
     func onSwitchClicked()
 
     func onPasteClicked()
@@ -32,6 +34,7 @@ protocol ISendViewDelegate {
     func onConfirmClicked()
 
     func onCopyAddress()
+    func onMaxClicked()
 }
 
 protocol ISendInteractor {
@@ -39,9 +42,9 @@ protocol ISendInteractor {
     var coinCode: CoinCode { get }
     var addressFromPasteboard: String? { get }
     func parse(paymentAddress: String) -> PaymentRequestAddress
-    func convertedAmount(forInputType inputType: SendInputType, amount: Double) -> Double?
+    func convertedAmount(forInputType inputType: SendInputType, amount: Decimal) -> Decimal?
     func state(forUserInput input: SendUserInput) -> SendState
-
+    func totalBalanceMinusFee(forInputType input: SendInputType, address: String?) -> Decimal
     func copy(address: String)
     func send(userInput: SendUserInput)
 
@@ -93,7 +96,7 @@ enum AmountInfo {
 
 class SendInteractorState {
     let wallet: Wallet
-    var rateValue: Double?
+    var rateValue: Decimal?
 
     init(wallet: Wallet) {
         self.wallet = wallet
@@ -102,7 +105,7 @@ class SendInteractorState {
 
 class SendUserInput {
     var inputType: SendInputType = .coin
-    var amount: Double = 0
+    var amount: Decimal = 0
     var address: String?
 }
 

@@ -22,7 +22,7 @@ class GrdbStorage {
             try db.create(table: "rate") { t in
                 t.column("coinCode", .text).notNull()
                 t.column("currencyCode", .text).notNull()
-                t.column("value", .double).notNull()
+                t.column("value", .text).notNull()
                 t.column("timestamp", .double).notNull()
                 t.column("isLatest", .boolean).notNull()
 
@@ -62,9 +62,9 @@ class GrdbStorage {
 
 extension GrdbStorage: IRateStorage {
 
-    func nonExpiredLatestRateValueObservable(forCoinCode coinCode: CoinCode, currencyCode: String) -> Observable<Double> {
+    func nonExpiredLatestRateValueObservable(forCoinCode coinCode: CoinCode, currencyCode: String) -> Observable<Decimal> {
         return latestRateObservable(forCoinCode: coinCode, currencyCode: currencyCode)
-                .flatMap { rate -> Observable<Double> in
+                .flatMap { rate -> Observable<Decimal> in
                     guard !rate.expired else {
                         return Observable.empty()
                     }

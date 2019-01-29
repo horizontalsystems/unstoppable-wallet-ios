@@ -82,11 +82,11 @@ enum AdapterState {
 }
 
 enum FeeError: Error {
-    case insufficientAmount(fee: Double)
+    case insufficientAmount(fee: Decimal)
 }
 
 protocol IAdapter: class {
-    var balance: Double { get }
+    var balance: Decimal { get }
     var balanceUpdatedSignal: Signal { get }
 
     var state: AdapterState { get }
@@ -109,9 +109,9 @@ protocol IAdapter: class {
     func refresh()
     func clear()
 
-    func send(to address: String, value: Double, completion: ((Error?) -> ())?)
+    func send(to address: String, value: Decimal, completion: ((Error?) -> ())?)
 
-    func fee(for value: Double, address: String?, senderPay: Bool) throws -> Double
+    func fee(for value: Decimal, address: String?, senderPay: Bool) throws -> Decimal
     func validate(address: String) throws
     func parse(paymentAddress: String) -> PaymentRequestAddress
 
@@ -167,7 +167,7 @@ protocol BiometricManagerDelegate: class {
 protocol IRateManager {
     func refreshLatestRates(coinCodes: [CoinCode], currencyCode: String)
     func syncZeroValueTimestampRates(currencyCode: String)
-    func timestampRateValueObservable(coinCode: CoinCode, currencyCode: String, timestamp: Double) -> Observable<Double>
+    func timestampRateValueObservable(coinCode: CoinCode, currencyCode: String, timestamp: Double) -> Observable<Decimal>
     func clear()
 }
 
@@ -204,11 +204,11 @@ protocol IFullTransactionInfoAdapter {
 
 protocol IRateNetworkManager {
     func getLatestRate(coinCode: String, currencyCode: String) -> Observable<LatestRate>
-    func getRate(coinCode: String, currencyCode: String, date: Date) -> Observable<Double>
+    func getRate(coinCode: String, currencyCode: String, date: Date) -> Observable<Decimal>
 }
 
 protocol IRateStorage {
-    func nonExpiredLatestRateValueObservable(forCoinCode coinCode: CoinCode, currencyCode: String) -> Observable<Double>
+    func nonExpiredLatestRateValueObservable(forCoinCode coinCode: CoinCode, currencyCode: String) -> Observable<Decimal>
     func latestRateObservable(forCoinCode coinCode: CoinCode, currencyCode: String) -> Observable<Rate>
     func timestampRateObservable(coinCode: CoinCode, currencyCode: String, timestamp: Double) -> Observable<Rate?>
     func zeroValueTimestampRatesObservable(currencyCode: String) -> Observable<[Rate]>
