@@ -75,6 +75,8 @@
 "send.amount_placeholder" = "Montant";
 "send.fee" = "Frais";
 "send.total" = "Total";
+"send.max_button" = "Max";
+"send_erc.alert" = "You need ETH to transfer ERC Tokens";
 
 // Transactions
 
