@@ -62,8 +62,8 @@
 // Deposit
 
 "deposit.receive_coin" = "Anfordern %@";
-"deposit.your_address" = "Your Address";
-"deposit.share" = "Share";
+"deposit.your_address" = "Ihre Adresse";
+"deposit.share" = "Teilen";
 
 // Send
 
