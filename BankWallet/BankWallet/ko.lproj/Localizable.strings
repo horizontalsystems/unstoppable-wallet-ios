@@ -62,8 +62,8 @@
 // Deposit
 
 "deposit.receive_coin" = "수신%@";
-"deposit.your_address" = "Your Address";
-"deposit.share" = "Share";
+"deposit.your_address" = "당신의 주소";
+"deposit.share" = "공유";
 
 // Send
 
