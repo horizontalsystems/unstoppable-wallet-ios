@@ -36,7 +36,7 @@
 // Backup
 
 "backup.intro.title" = "Sicherung";
-"backup.intro.subtitle" = "Ihr Offlineschlüssel ist die einzige Möglichkeit, dein Wallet wiederherzustellen, falls du dein Smartphone verlierst, austauscht, es gestohlen wird oder kaputtgeht. \n\nEs besteht aus 12 Wörtern. Speich es sicher offline.\n";
+"backup.intro.subtitle" = "Ihr Offlineschlüssel ist die einzige Möglichkeit, dein Wallet wiederherzustellen, falls du dein Smartphone verlierst, austauscht, es gestohlen wird oder kaputtgeht. \n\nEs besteht aus 12 Wörtern. Speichen Sie  es sicher offline.\n";
 "backup.intro.later" = "Später";
 "backup.intro.backup_now" = "Backup";
 
