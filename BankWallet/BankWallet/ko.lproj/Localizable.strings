@@ -75,6 +75,8 @@
 "send.amount_placeholder" = "양";
 "send.fee" = "수수료";
 "send.total" = "합계";
+"send.max_button" = "Max";
+"send_erc.alert" = "You need ETH to transfer ERC Tokens";
 
 // Transactions
 
