@@ -36,6 +36,9 @@ class TransactionInfoTheme {
     static let incomingAmountColor = UIColor.cryptoGreen
     static let outgoingAmountColor = UIColor.cryptoYellow
 
+    static let statusTextFont: UIFont = .systemFont(ofSize: 14)
+    static let statusTextColor: UIColor = .cryptoGray
+
     static let barsProgressBarWidth: CGFloat = 4
     static let barsProgressHeight: CGFloat = 16
     static let barsProgressColor: UIColor = .cryptoGreen
