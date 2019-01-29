@@ -19,14 +19,19 @@ class GrdbStorage {
         var migrator = DatabaseMigrator()
 
         migrator.registerMigration("createRate") { db in
-            try db.create(table: "rate") { t in
-                t.column("coinCode", .text).notNull()
-                t.column("currencyCode", .text).notNull()
-                t.column("value", .text).notNull()
-                t.column("timestamp", .double).notNull()
-                t.column("isLatest", .boolean).notNull()
+            try db.create(table: Rate.databaseTableName) { t in
+                t.column(Rate.Columns.coinCode.name, .text).notNull()
+                t.column(Rate.Columns.currencyCode.name, .text).notNull()
+                t.column(Rate.Columns.value.name, .double).notNull()
+                t.column(Rate.Columns.timestamp.name, .double).notNull()
+                t.column(Rate.Columns.isLatest.name, .boolean).notNull()
 
-                t.primaryKey(["coinCode", "currencyCode", "timestamp", "isLatest"], onConflict: .replace)
+                t.primaryKey([
+                    Rate.Columns.coinCode.name,
+                    Rate.Columns.currencyCode.name,
+                    Rate.Columns.timestamp.name,
+                    Rate.Columns.isLatest.name
+                ], onConflict: .replace)
             }
         }
         migrator.registerMigration("createCoinsTable") { db in
@@ -52,6 +57,24 @@ class GrdbStorage {
             for (index, coin) in defaultCoins.enumerated() {
                 let storableCoin = StorableCoin(coin: coin, enabled: true, order: index)
                 try storableCoin.insert(db)
+            }
+        }
+        migrator.registerMigration("changeRateValueType") { db in
+            try db.drop(table: Rate.databaseTableName)
+
+            try db.create(table: Rate.databaseTableName) { t in
+                t.column(Rate.Columns.coinCode.name, .text).notNull()
+                t.column(Rate.Columns.currencyCode.name, .text).notNull()
+                t.column(Rate.Columns.value.name, .text).notNull()
+                t.column(Rate.Columns.timestamp.name, .double).notNull()
+                t.column(Rate.Columns.isLatest.name, .boolean).notNull()
+
+                t.primaryKey([
+                    Rate.Columns.coinCode.name,
+                    Rate.Columns.currencyCode.name,
+                    Rate.Columns.timestamp.name,
+                    Rate.Columns.isLatest.name
+                ], onConflict: .replace)
             }
         }
 
