@@ -129,4 +129,8 @@ extension ManageCoinsViewController {
         return section == enabledSection && delegate.enabledCoinsCount > 0 || section == disabledSection ? ManageCoinsTheme.headerHeight : 0
     }
 
+    public override func tableView(_ tableView: UITableView, titleForDeleteConfirmationButtonForRowAt indexPath: IndexPath) -> String? {
+        return "settings_manage_wallet.remove_button".localized
+    }
+
 }
