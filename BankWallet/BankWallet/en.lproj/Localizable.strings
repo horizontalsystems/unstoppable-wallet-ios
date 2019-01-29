@@ -77,6 +77,10 @@ Go to Settings - > Bank and allow access to Camera.";
 "send.amount_placeholder" = "Amount";
 "send.fee" = "Fee";
 "send.total" = "Total";
+"send.max_button" = "Max";
+"send_erc.alert"="You need ETH to transfer ERC Tokens";
+
+
 
 // Transactions
 
