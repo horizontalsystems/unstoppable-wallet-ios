@@ -5,6 +5,7 @@ import SnapKit
 
 class TransactionStatusItemView: BaseActionItemView {
     let titleLabel = UILabel()
+    let statusTextLabel = UILabel()
     let iconImageView = UIImageView()
     let barsProgressView = BarsProgressView(count: 6, barWidth: TransactionInfoTheme.barsProgressBarWidth, color: TransactionInfoTheme.barsProgressColor, inactiveColor: TransactionInfoTheme.barsProgressInactiveColor)
 
@@ -29,6 +30,14 @@ class TransactionStatusItemView: BaseActionItemView {
             maker.trailing.equalToSuperview().offset(-TransactionInfoTheme.regularMargin)
         }
 
+        statusTextLabel.font = TransactionInfoTheme.statusTextFont
+        statusTextLabel.textColor = TransactionInfoTheme.statusTextColor
+        addSubview(statusTextLabel)
+        statusTextLabel.snp.makeConstraints { maker in
+            maker.centerY.equalToSuperview()
+            maker.trailing.equalTo(self.iconImageView.snp.leading).offset(-TransactionInfoTheme.smallMargin)
+        }
+
         addSubview(barsProgressView)
         barsProgressView.snp.makeConstraints { maker in
             maker.centerY.equalToSuperview()
@@ -41,6 +50,7 @@ class TransactionStatusItemView: BaseActionItemView {
         super.updateView()
 
         titleLabel.text = item?.title
+        statusTextLabel.text = item?.statusText
 
         if let icon = item?.icon {
             iconImageView.isHidden = false
