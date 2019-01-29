@@ -16,8 +16,8 @@ class SendPresenterTests: XCTestCase {
     private let state = SendState(inputType: .coin)
 
     private let inputType: SendInputType = .coin
-    private let amount: Double = 123.45
-    private let convertedAmount: Double = 543.21
+    private let amount: Decimal = 123.45
+    private let convertedAmount: Decimal = 543.21
     private let amountInfo: AmountInfo = .coinValue(coinValue: CoinValue(coinCode: "BTC", value: 10.2))
 
     private var presenter: SendPresenter!
@@ -167,7 +167,7 @@ class SendPresenterTests: XCTestCase {
     }
 
     func testOnAmountChanged() {
-        let newAmount = 987.65
+        let newAmount: Decimal = 987.65
 
         presenter.onAmountChanged(amount: newAmount)
 
@@ -272,19 +272,19 @@ class SendPresenterTests: XCTestCase {
     }
 
     func testOnMaxClicked() {
-        let maxBalance: Double = 15
+        let maxBalance: Decimal = 15
         let address = "some_test_address"
 
         stub(mockUserInput) { mock in
             when(mock.address.get).thenReturn(address)
         }
         stub(mockInteractor) { mock in
-            when(mock.totalBalanceMinusFee(forUserInput: equal(to: inputType), address: equal(to: address))).thenReturn(maxBalance)
+            when(mock.totalBalanceMinusFee(forInputType: equal(to: inputType), address: equal(to: address))).thenReturn(maxBalance)
         }
 
         presenter.onMaxClicked()
 
-        verify(mockInteractor).totalBalanceMinusFee(forUserInput: equal(to: inputType), address: equal(to: address))
+        verify(mockInteractor).totalBalanceMinusFee(forInputType: equal(to: inputType), address: equal(to: address))
         verify(mockView).set(amountInfo: equal(to: amountInfo))
     }
 

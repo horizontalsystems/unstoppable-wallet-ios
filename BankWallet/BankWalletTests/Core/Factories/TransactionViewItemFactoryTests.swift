@@ -35,7 +35,7 @@ class TransactionViewItemFactoryTests: XCTestCase {
 
     func testCoinValue() {
         let coinCode = "BTC"
-        let amount = 123.45
+        let amount: Decimal = 123.45
         let item = transactionItem(coinCode: coinCode, amount: amount)
 
         let viewItem = factory.viewItem(fromItem: item)
@@ -45,8 +45,8 @@ class TransactionViewItemFactoryTests: XCTestCase {
 
     func testCurrencyValue() {
         let currency = Currency(code: "USD", symbol: "")
-        let amount = 123.45
-        let rateValue = 9876.54
+        let amount: Decimal = 123.45
+        let rateValue: Decimal = 9876.54
         let rate = CurrencyValue(currency: currency, value: rateValue)
 
         let item = transactionItem(amount: amount)
@@ -65,7 +65,7 @@ class TransactionViewItemFactoryTests: XCTestCase {
     }
 
     func testIncoming_positiveAmount() {
-        let amount = 123.45
+        let amount: Decimal = 123.45
         let item = transactionItem(amount: amount)
 
         let viewItem = factory.viewItem(fromItem: item)
@@ -74,7 +74,7 @@ class TransactionViewItemFactoryTests: XCTestCase {
     }
 
     func testIncoming_negativeAmount() {
-        let amount = -123.45
+        let amount: Decimal = -123.45
         let item = transactionItem(amount: amount)
 
         let viewItem = factory.viewItem(fromItem: item)
@@ -189,7 +189,7 @@ class TransactionViewItemFactoryTests: XCTestCase {
             coinCode: String = "",
             transactionHash: String = "",
             blockHeight: Int? = nil,
-            amount: Double = 0,
+            amount: Decimal = 0,
             timestamp: Double = 0,
             from: [TransactionAddress] = [],
             to: [TransactionAddress] = []
