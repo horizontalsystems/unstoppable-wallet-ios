@@ -67,8 +67,8 @@ class TransactionCell: UITableViewCell {
         contentView.addSubview(pendingImageView)
         pendingImageView.snp.makeConstraints { maker in
             maker.size.equalTo(TransactionsTheme.statusImageViewSize)
-            maker.leading.equalTo(self.dateLabel.snp.trailing).offset(TransactionsTheme.cellSmallMargin)
-            maker.top.equalToSuperview().offset(TransactionsTheme.pendingIconTopMargin)
+            maker.leading.equalTo(contentView.snp.leadingMargin).offset(TransactionsTheme.leftAdditionalMargin)
+            maker.centerY.equalTo(self.amountLabel)
         }
 
         completedImageView.image = UIImage(named: "Transaction Success Icon")
@@ -80,11 +80,6 @@ class TransactionCell: UITableViewCell {
         }
 
         contentView.addSubview(barsProgressView)
-        barsProgressView.snp.makeConstraints { maker in
-            maker.height.equalTo(TransactionsTheme.barsProgressHeight)
-            maker.leading.equalTo(self.timeLabel.snp.trailing).offset(TransactionsTheme.cellSmallMargin)
-            maker.centerY.equalTo(self.amountLabel)
-        }
 
         let separatorView = UIView()
         separatorView.backgroundColor = TransactionsTheme.separatorColor
@@ -124,25 +119,32 @@ class TransactionCell: UITableViewCell {
             pendingImageView.isHidden = false
             barsProgressView.isHidden = false
             completedImageView.isHidden = true
+            timeLabel.isHidden = true
 
             barsProgressView.filledCount = 0
         case .processing(let progress):
             pendingImageView.isHidden = true
             barsProgressView.isHidden = false
             completedImageView.isHidden = true
+            timeLabel.isHidden = false
 
             barsProgressView.filledCount = Int(floor(6 * progress))
         case .completed:
             pendingImageView.isHidden = true
             barsProgressView.isHidden = true
             completedImageView.isHidden = false
+            timeLabel.isHidden = false
         }
 
-        pendingImageView.snp.updateConstraints { maker in
-            maker.leading.equalTo(self.dateLabel.snp.trailing).offset(item.date == nil ? 0 : TransactionsTheme.cellSmallMargin)
-        }
-        barsProgressView.snp.updateConstraints { maker in
-            maker.leading.equalTo(self.timeLabel.snp.trailing).offset(item.date == nil ? 0 : TransactionsTheme.cellSmallMargin)
+        barsProgressView.snp.makeConstraints { maker in
+            maker.height.equalTo(TransactionsTheme.barsProgressHeight)
+            maker.centerY.equalTo(self.amountLabel)
+
+            if self.pendingImageView.isHidden {
+                maker.leading.equalTo(self.timeLabel.snp.trailing).offset(TransactionsTheme.cellSmallMargin)
+            } else {
+                maker.leading.equalTo(self.pendingImageView.snp.trailing).offset(TransactionsTheme.cellSmallMargin)
+            }
         }
     }
 
