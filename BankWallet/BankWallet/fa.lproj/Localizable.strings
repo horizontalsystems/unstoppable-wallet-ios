@@ -90,6 +90,7 @@
 "tx_info.title" = "تراکنش";
 "tx_info.time" = "زمان";
 "tx_info.status" = "وضيعت";
+"tx_info.status.pending" = "Pending";
 "tx_info.from_hash" = "از";
 "tx_info.to_hash" = "به";
 "tx_info.alert_close" = "بستن";
