@@ -90,6 +90,7 @@
 "tx_info.title" = "Transaction";
 "tx_info.time" = "Date";
 "tx_info.status" = "Statut";
+"tx_info.status.pending" = "Pending";
 "tx_info.from_hash" = "De";
 "tx_info.to_hash" = "À";
 "tx_info.alert_close" = "Fermer";
