@@ -75,6 +75,8 @@
 "send.amount_placeholder" = "量";
 "send.fee" = "料金";
 "send.total" = "合計";
+"send.max_button" = "Max";
+"send_erc.alert" = "You need ETH to transfer ERC Tokens";
 
 // Transactions
 
