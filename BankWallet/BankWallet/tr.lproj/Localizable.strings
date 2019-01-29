@@ -75,6 +75,8 @@
 "send.amount_placeholder" = "Tutar";
 "send.fee" = "Masraf";
 "send.total" = "Toplam";
+"send.max_button" = "Max";
+"send_erc.alert" = "You need ETH to transfer ERC Tokens";
 
 // Transactions
 
