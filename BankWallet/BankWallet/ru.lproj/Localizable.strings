@@ -75,6 +75,8 @@
 "send.amount_placeholder" = "Сумма";
 "send.fee" = "Комиссия";
 "send.total" = "Итого";
+"send.max_button" = "Max";
+"send_erc.alert" = "You need ETH to transfer ERC Tokens";
 
 // Transactions
 
