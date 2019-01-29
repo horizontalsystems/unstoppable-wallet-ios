@@ -90,6 +90,7 @@
 "tx_info.title" = "トランザクション";
 "tx_info.time" = "時間";
 "tx_info.status" = "状況";
+"tx_info.status.pending" = "Pending";
 "tx_info.from_hash" = "差出人";
 "tx_info.to_hash" = "宛先";
 "tx_info.alert_close" = "閉じる";
