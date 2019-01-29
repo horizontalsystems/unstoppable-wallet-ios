@@ -62,8 +62,8 @@
 // Deposit
 
 "deposit.receive_coin" = "收到%@";
-"deposit.your_address" = "Your Address";
-"deposit.share" = "Share";
+"deposit.your_address" = "您的地址";
+"deposit.share" = "分享";
 
 // Send
 
