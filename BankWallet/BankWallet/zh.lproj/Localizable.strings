@@ -75,6 +75,8 @@
 "send.amount_placeholder" = "金额";
 "send.fee" = "费用";
 "send.total" = "总额";
+"send.max_button" = "Max";
+"send_erc.alert" = "You need ETH to transfer ERC Tokens";
 
 // Transactions
 
