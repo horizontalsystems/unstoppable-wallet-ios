@@ -62,7 +62,8 @@
 // Deposit
 
 "deposit.receive_coin" = "%@ al";
-"deposit.alert_copy" = "Kopyala";
+"deposit.your_address" = "Your Address";
+"deposit.share" = "Share";
 
 // Send
 

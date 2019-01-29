@@ -10,7 +10,7 @@
 "alert.copied" = "Kopiert";
 "alert.confirm" = "Bestätigen";
 
-"biometric_usage_reason" = "Geldbörse entsperren";
+"biometric_usage_reason" = "Wallet entsperren";
 
 // Access Camera
 
@@ -22,8 +22,8 @@
 
 "guest.title" = "Bank Wallet";
 "guest.subtitle" = "Decentralized App";
-"guest.create_wallet" = "Geldbörse Erstellen";
-"guest.restore_wallet" = "Geldbörse Wiederherstellen";
+"guest.create_wallet" = "Wallet Erstellen";
+"guest.restore_wallet" = "Wallet Wiederherstellen";
 
 // Restore
 
@@ -36,7 +36,7 @@
 // Backup
 
 "backup.intro.title" = "Sicherung";
-"backup.intro.subtitle" = "Ihr Offlineschlüssel ist die einzige Möglichkeit, deine Geldbörse wiederherzustellen, falls du dein Smartphone verlierst, austauscht, es gestohlen wird oder kaputtgeht. \n\nEs besteht aus 12 Wörtern. Speich es sicher offline.\n";
+"backup.intro.subtitle" = "Ihr Offlineschlüssel ist die einzige Möglichkeit, dein Wallet wiederherzustellen, falls du dein Smartphone verlierst, austauscht, es gestohlen wird oder kaputtgeht. \n\nEs besteht aus 12 Wörtern. Speichen Sie  es sicher offline.\n";
 "backup.intro.later" = "Später";
 "backup.intro.backup_now" = "Backup";
 
@@ -45,7 +45,7 @@
 "backup.words.proceed" = "Weiter";
 
 "backup.confirmation.title" = "Prüfen …";
-"backup.confirmation.description" = "Geben Sie bitte die folgenden Wörter deines Offlineschlüssels ein";
+"backup.confirmation.description" = "Geben Sie bitte die Wörter deines Offlineschlüssels ein";
 "backup.confirmation.failure_alert.text" = "Die Wörter stimmen nicht überein";
 "backup.confirmation.done_button" = "Fertig";
 "backup.confirmation.understand" = "Ich  stimme zu, dass mein Wallet und meinen Token nur auf diesem Gerät verfügbar sind.";
@@ -61,8 +61,9 @@
 
 // Deposit
 
-"deposit.receive_coin" = "Erhalten %@";
-"deposit.alert_copy" = "Kopieren";
+"deposit.receive_coin" = "Anfordern %@";
+"deposit.your_address" = "Ihre Adresse";
+"deposit.share" = "Teilen";
 
 // Send
 
@@ -80,7 +81,7 @@
 "transactions.title" = "Transaktionen";
 "transactions.tab_bar_item" = "Transaktionen";
 "transactions.filter_all" = "Alle";
-"transactions.empty_text" = "Transaktionsliste ist leer.";
+"transactions.empty_text" = "Transaktionsliste ist leer";
 
 // Transaction Info
 
@@ -141,7 +142,7 @@
 
 // Settings -> Manage Wallet
 
-"settings_manage_wallet.title" = "Geldbörsen";
+"settings_manage_wallet.title" = "Wallets";
 
 "settings_manage_wallet.remove_button" = "Entfernen";
 
@@ -150,19 +151,19 @@
 
 "settings_about.title" = "Info";
 "settings_about.terms_privacy_subtitle" = "ANB & Datenschutz:";
-"settings_about.terms_privacy_text" = "Diese Anwendung ist vollständig dezentralisiert\n\nDie Leistung dieser Anwendung hängt nicht von Servern von Drittanbietern oder einem technischen Supportteam ab.\n\nDie Anwendung funktioniert überall, solange es Internet gibt. Diese Geldbörse oder deren Benutzer können von niemandem blockiert werden.\n\nDein Geld wird nur auf Ihrem Telefon gespeichert.\n\nDu bist allein für die sichere Aufbewahrung des Offlineschlüssels verantwortlich. Teil deinen Offlineschlüssel nie mit jemandem. Wenn der Offlineschlüssel verloren geht, gestohlen oder vergessen wird, erhält derjenige, der über deinen Offlineschlüssel verfügt, die Kontrolle über dein Geld.\nHack dein Telefon nicht, installier keine Anwendungen von inoffiziellen Quellen und gib dein Telefon niemals den anderen. Die Sicherheit  deiner Geldbörse hängt direkt davon ab.\n\nDer gesamte Programmcode dieser Anwendung ist kostenlos und für die Öffentlichkeit zugänglich. Wir haben versucht, die sicherste und gleichzeitig dezentralisierte Geldbörse zu schaffen, aber es gibt keine Garantie dafür, dass der Anwendungscode fehlerfrei ist. Wir glauben jedoch, dass diese Geldbörse in Bezug auf die Sicherheit fast alle heute verfügbare mobile Kryptobörsen deutlich übertrifft.\n\nEinige von der Anwendung verwendete öffentliche Daten, wie z. B. Wechselkurse, werden im dezentralen Repository (IPFS) gespeichert\n";
+"settings_about.terms_privacy_text" = "Diese Anwendung ist vollständig dezentralisiert\n\nDie Leistung dieser Anwendung hängt nicht von Servern von Drittanbietern oder einem technischen Supportteam ab.\n\nDie Anwendung funktioniert überall, solange es Internet gibt. Dieser Wallet oder deren Benutzer können von niemandem blockiert werden.\n\nDein Geld wird nur auf Ihrem Telefon gespeichert.\n\nDu bist allein für die sichere Aufbewahrung des Offlineschlüssels verantwortlich. Teil deinen Offlineschlüssel nie mit jemandem. Wenn der Offlineschlüssel verloren geht, gestohlen oder vergessen wird, erhält derjenige, der über deinen Offlineschlüssel verfügt, die Kontrolle über dein Geld.\nHack dein Telefon nicht, installier keine Anwendungen von inoffiziellen Quellen und gib dein Telefon niemals den anderen. Die Sicherheit  deiner Wallet hängt direkt davon ab.\n\nDer gesamte Programmcode dieser Anwendung ist kostenlos und für die Öffentlichkeit zugänglich. Wir haben versucht, die sicherste und gleichzeitig dezentralisierte Wallet zu schaffen, aber es gibt keine Garantie dafür, dass der Anwendungscode fehlerfrei ist. Wir glauben jedoch, dass dieser Wallet in Bezug auf die Sicherheit fast alle heute verfügbare mobile Kryptobörsen deutlich übertrifft.\n\nEinige von der Anwendung verwendete öffentliche Daten, wie z. B. Wechselkurse, werden im dezentralen Repository (IPFS) gespeichert";
 
 // Settings -> Security
 
 "settings_security.title" = "Sicherheit";
-"settings_security.backup_wallet" = "Geldbörse sichern";
+"settings_security.backup_wallet" = "Wallet sichern";
 "settings_security.unlink_from_this_device" = "Verknüpfung mit diesem Gerät aufheben";
 "settings_security.set_pin" = "Code";
 "settings_security.change_pin" = "Code bearbeiten";
 "settings_security.touch_id" = "Touch ID";
 "settings_security.face_id" = "Face ID";
 "security_settings.unlink_alert_button" = "Verknüpfung trennen";
-"settings_security.import_wallet_confirmation_1" = "Diese Aktion entfernt deine Geldbörse von diesem Gerät.";
+"settings_security.import_wallet_confirmation_1" = "Diese Aktion entfernt dein Wallet von diesem Gerät.";
 "settings_security.import_wallet_confirmation_2" = "Stellen Sie sicher, Sie haben ihre geheimen Offlineschlüssel oder Sie werden nicht in der Lage, den Zugang zu Mitteln darauf in Zukunft.";
 
 // Set PIN
