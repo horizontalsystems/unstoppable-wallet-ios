@@ -90,6 +90,7 @@
 "tx_info.title" = "Hesap işlemi";
 "tx_info.time" = "Tarih";
 "tx_info.status" = "Durum";
+"tx_info.status.pending" = "Pending";
 "tx_info.from_hash" = "Gönderen";
 "tx_info.to_hash" = "Alan";
 "tx_info.alert_close" = "Kapat";
