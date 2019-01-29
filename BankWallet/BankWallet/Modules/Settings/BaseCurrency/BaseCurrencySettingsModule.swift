@@ -28,4 +28,5 @@ protocol IBaseCurrencySettingsInteractorDelegate: class {
 }
 
 protocol IBaseCurrencySettingsRouter {
+    func dismiss()
 }

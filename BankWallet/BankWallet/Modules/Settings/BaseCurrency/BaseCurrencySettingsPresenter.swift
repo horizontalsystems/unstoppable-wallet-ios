@@ -29,6 +29,8 @@ extension BaseCurrencySettingsPresenter: IBaseCurrencySettingsViewDelegate {
         if !item.selected {
             interactor.setBaseCurrency(code: item.code)
         }
+        }
+        router.dismiss()
     }
 
 }
