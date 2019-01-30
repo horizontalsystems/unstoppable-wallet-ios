@@ -110,6 +110,8 @@
 "full_info.source" = "원천, 자료";
 "full_info.from" = "로 부터";
 "full_info.to" = "에게";
+"full_info.value" = "Value";
+"full_info.nonce" = "Nonce";
 
 "full_info.gas_limit" = "Gas Limit";
 "full_info.gas_used" = "Gas Used";
