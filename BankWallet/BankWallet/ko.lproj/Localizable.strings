@@ -75,7 +75,7 @@
 "send.amount_placeholder" = "양";
 "send.fee" = "수수료";
 "send.total" = "합계";
-"send.max_button" = "Max";
+"send.max_button" = "최대";
 "send_erc.alert" = "You need ETH to transfer ERC Tokens";
 
 // Transactions
@@ -90,7 +90,7 @@
 "tx_info.title" = "거래기록";
 "tx_info.time" = "시간";
 "tx_info.status" = "상태";
-"tx_info.status.pending" = "Pending";
+"tx_info.status.pending" = "보류 중";
 "tx_info.from_hash" = "로 부터";
 "tx_info.to_hash" = "에게";
 "tx_info.alert_close" = "가까운, 닫힌";
