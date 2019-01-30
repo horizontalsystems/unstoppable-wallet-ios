@@ -76,7 +76,9 @@ class SecuritySettingsViewController: UIViewController, SectionsDataSource {
         pinTouchFaceRows.append(Row<SettingsCell>(id: "set_pin", hash: "pinned_\(App.shared.pinManager.isPinSet)", height: SettingsTheme.securityCellHeight, bind: { cell, _ in
             cell.bind(titleIcon: nil, title: setOrChangePinTitle, showDisclosure: true, last: true)
         }, action: { [weak self] _ in
-            self?.delegate.didTapEditPin()
+            DispatchQueue.main.async {
+                self?.delegate.didTapEditPin()
+            }
         }))
         sections.append(Section(id: "face_id", headerState: .margin(height: SettingsTheme.subSettingsHeaderHeight), rows: pinTouchFaceRows))
 
