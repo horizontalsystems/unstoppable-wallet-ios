@@ -9,7 +9,7 @@ class HorSysBitcoinProvider: IBitcoinForksProvider {
     func apiUrl(for hash: String) -> String { return apiUrl + hash }
 
     init(testMode: Bool) {
-        url = testMode ? "http://btc-testnet.horizontalsystems.xyz/tx/" : "https://btc.horizontalsystems.xyz/tx/"
+        url = testMode ? "http://btc-testnet.horizontalsystems.xyz/apg/tx/" : "https://btc.horizontalsystems.xyz/apg/tx/"
         apiUrl = url
     }
 
@@ -27,7 +27,7 @@ class HorSysBitcoinCashProvider: IBitcoinForksProvider {
     func apiUrl(for hash: String) -> String { return apiUrl + hash }
 
     init(testMode: Bool) {
-        url = testMode ? "http://bch-testnet.horizontalsystems.xyz/tx/" : "https://bch.horizontalsystems.xyz/tx/"
+        url = testMode ? "http://bch-testnet.horizontalsystems.xyz/apg/tx/" : "https://bch.horizontalsystems.xyz/apg/tx/"
         apiUrl = url
     }
 
@@ -46,7 +46,7 @@ class HorSysEthereumProvider: IEthereumForksProvider {
     func apiUrl(for hash: String) -> String { return apiUrl + hash }
 
     init(testMode: Bool) {
-        url = testMode ? "http://eth-testnet.horizontalsystems.xyz/tx/" : "https://eth.horizontalsystems.xyz/tx/"
+        url = testMode ? "http://eth-testnet.horizontalsystems.xyz/apg/tx/" : "https://eth.horizontalsystems.xyz/apg/tx/"
         apiUrl = url
     }
 
