@@ -75,7 +75,7 @@
 "send.amount_placeholder" = "金额";
 "send.fee" = "费用";
 "send.total" = "总额";
-"send.max_button" = "Max";
+"send.max_button" = "最多";
 "send_erc.alert" = "You need ETH to transfer ERC Tokens";
 
 // Transactions
@@ -90,7 +90,7 @@
 "tx_info.title" = "交易";
 "tx_info.time" = "时间";
 "tx_info.status" = "状态";
-"tx_info.status.pending" = "Pending";
+"tx_info.status.pending" = "在过程中";
 "tx_info.from_hash" = "发件人";
 "tx_info.to_hash" = "收件人";
 "tx_info.alert_close" = "关闭";
