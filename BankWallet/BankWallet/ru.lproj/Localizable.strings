@@ -75,7 +75,7 @@
 "send.amount_placeholder" = "Сумма";
 "send.fee" = "Комиссия";
 "send.total" = "Итого";
-"send.max_button" = "Max";
+"send.max_button" = "Макс.";
 "send_erc.alert" = "You need ETH to transfer ERC Tokens";
 
 // Transactions
@@ -90,7 +90,7 @@
 "tx_info.title" = "Транзакция";
 "tx_info.time" = "Время";
 "tx_info.status" = "Статус";
-"tx_info.status.pending" = "Pending";
+"tx_info.status.pending" = "В процессе";
 "tx_info.from_hash" = "От";
 "tx_info.to_hash" = "Кому";
 "tx_info.alert_close" = "Закрыть";
