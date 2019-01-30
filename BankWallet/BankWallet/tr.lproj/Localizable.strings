@@ -63,7 +63,7 @@
 
 "deposit.receive_coin" = "%@ al";
 "deposit.your_address" = "Your Address";
-"deposit.share" = "Share";
+"deposit.share" = "Paylaş";
 
 // Send
 
@@ -90,7 +90,7 @@
 "tx_info.title" = "Hesap işlemi";
 "tx_info.time" = "Tarih";
 "tx_info.status" = "Durum";
-"tx_info.status.pending" = "Pending";
+"tx_info.status.pending" = "Devam ediyor";
 "tx_info.from_hash" = "Gönderen";
 "tx_info.to_hash" = "Alan";
 "tx_info.alert_close" = "Kapat";
@@ -107,7 +107,7 @@
 "full_info.rate" = "Rate";
 "full_info.inputs" = "Girişler";
 "full_info.outputs" = "Çıkışlar";
-"full_info.source" = "Source";
+"full_info.source" = "Kaynak";
 "full_info.from" = "Gönderen";
 "full_info.to" = "Alan";
 
@@ -115,7 +115,7 @@
 "full_info.gas_used" = "Gas Used";
 "full_info.gas_price" = "Gas Price";
 
-"full_info.source.title" = "Source";
+"full_info.source.title" = "Kaynak";
 "full_info.source.online" = "çevrimiçi";
 "full_info.source.offline" = "offline";
 
