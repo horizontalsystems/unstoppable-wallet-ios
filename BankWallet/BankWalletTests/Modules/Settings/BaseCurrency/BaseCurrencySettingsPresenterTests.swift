@@ -41,6 +41,7 @@ class BaseCurrencySettingsPresenterTests: XCTestCase {
             when(mock.show(items: any())).thenDoNothing()
         }
         stub(mockRouter) { mock in
+            when(mock.dismiss()).thenDoNothing()
         }
         stub(mockInteractor) { mock in
             when(mock.currencies.get).thenReturn(currencies)
@@ -70,11 +71,13 @@ class BaseCurrencySettingsPresenterTests: XCTestCase {
     func testSelectItem() {
         presenter.didSelect(item: CurrencyItem(code: rubleCode, symbol: rubleSymbol, selected: false))
         verify(mockInteractor).setBaseCurrency(code: equal(to: rubleCode))
+        verify(mockRouter).dismiss()
     }
 
     func testSelectItem_AlreadySelected() {
         presenter.didSelect(item: CurrencyItem(code: rubleCode, symbol: rubleSymbol, selected: true))
         verify(mockInteractor, never()).setBaseCurrency(code: any())
+        verify(mockRouter).dismiss()
     }
 
     func testReloadItemsOnSetBaseCurrency() {
