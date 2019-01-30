@@ -110,6 +110,8 @@
 "full_info.source" = "Source";
 "full_info.from" = "差出人";
 "full_info.to" = "宛先";
+"full_info.value" = "Value";
+"full_info.nonce" = "Nonce";
 
 "full_info.gas_limit" = "Gas Limit";
 "full_info.gas_used" = "Gas Used";
