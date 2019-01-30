@@ -185,6 +185,7 @@ extension NetworkManager: IJSONApiManager {
         let baseUrl = URL(string: url)!
 
         var request = URLRequest(url: baseUrl)
+        request.timeoutInterval = 10
         request.httpMethod = HTTPMethod.get.rawValue
         request.setValue("application/json", forHTTPHeaderField: "Accept")
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
