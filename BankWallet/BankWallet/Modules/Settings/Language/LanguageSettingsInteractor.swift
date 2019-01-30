@@ -16,14 +16,16 @@ extension LanguageSettingsInteractor: ILanguageSettingsInteractor {
     var items: [LanguageItem] {
         let currentLanguage = languageManager.currentLanguage
 
-        return localizationManager.availableLanguages.map { language in
-            LanguageItem(
-                    id: language,
-                    title: localizationManager.displayName(forLanguage: language, inLanguage: currentLanguage),
-                    subtitle: localizationManager.displayName(forLanguage: language, inLanguage: language),
-                    current: language == currentLanguage
-            )
-        }
+        return localizationManager.availableLanguages
+                .map { language in
+                    LanguageItem(
+                            id: language,
+                            title: localizationManager.displayName(forLanguage: language, inLanguage: currentLanguage),
+                            subtitle: localizationManager.displayName(forLanguage: language, inLanguage: language),
+                            current: language == currentLanguage
+                    )
+                }
+                .sorted()
     }
 
     func setCurrentLanguage(with item: LanguageItem) {
