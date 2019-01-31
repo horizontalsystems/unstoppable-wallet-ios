@@ -32,6 +32,11 @@ class MainViewController: UITabBarController {
         return AppTheme.statusBarStyle
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        tabBar.superview?.setNeedsLayout()
+    }
 }
 
 extension MainViewController: IMainView {

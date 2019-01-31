@@ -15,15 +15,7 @@ extension SecuritySettingsRouter: ISecuritySettingsRouter {
     }
 
     func showGuestModule() {
-        guard let window = UIApplication.shared.keyWindow else {
-            return
-        }
-
-        let viewController = GuestRouter.module()
-
-        UIView.transition(with: window, duration: 0.5, options: .transitionCrossDissolve, animations: {
-            window.rootViewController = viewController
-        })
+        UIApplication.shared.keyWindow?.set(newRootController: GuestRouter.module())
     }
 
 }
