@@ -1,4 +1,4 @@
-  Control Your Money!
+  Kontrolliere dein Geld!
 Die BANK-Geldbörse ist eine sichere und vollständig dezentralisierte Kryptobörse, die die wichtigsten Kryptowährungen einhält, darunter Bitcoin, Ethereum, Bitcoin Cash und ERC 20-Token. Die Anzahl der unterstützten Währungen wird mit jedem Release nach und nach hinzugefügt.
 
 Die BANK-Geldbörse gewährt sicheres Mittel, mit Bitcoins und anderen Kryptowährungen arbeiten anzufangen. Sie müssen die inneren Abläufe der Kryptowährung nicht verstehen, um sie verwenden zu können.
@@ -32,5 +32,5 @@ HAFTUNGSAUSSCHLUSS:
 2.  HINWEIS. Installieren Sie die BANK-Geldbörse auf einem gehackten Gerät wegen erheblicher Sicherheitsrisiken nicht.  Das gebrochene iOS Betriebssystem kann die Sicherheit Ihrer privaten Offlineschlüssel nicht gewährleisten. Dies bedeutet, dass einige schädliche Anwendungen, die auf einem gehackten Gerät funktionieren, Zugriff auf private Offlineschlüssel erhalten und Ihr Geld stehlen können.
 
 
-3. Quellcode
+3. Quellcode: https://github.com/horizontalsystems
 
