@@ -6,7 +6,7 @@ class LanguageSettingsRouter {
 extension LanguageSettingsRouter: ILanguageSettingsRouter {
 
     func reloadAppInterface() {
-        UIApplication.shared.keyWindow?.set(newRootController: MainRouter.module())
+        UIApplication.shared.keyWindow?.set(newRootController: MainRouter.module(selectedTab: .settings))
     }
 
 }

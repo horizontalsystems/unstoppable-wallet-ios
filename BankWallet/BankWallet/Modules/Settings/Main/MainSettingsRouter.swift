@@ -29,7 +29,7 @@ extension MainSettingsRouter: IMainSettingsRouter {
     }
 
     func reloadAppInterface() {
-        UIApplication.shared.keyWindow?.set(newRootController: MainRouter.module())
+        UIApplication.shared.keyWindow?.set(newRootController: MainRouter.module(selectedTab: .settings))
     }
 
 }
