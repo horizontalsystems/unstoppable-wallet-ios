@@ -137,6 +137,7 @@
 		11B3578724E0C1AF807C7784 /* TransactionsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3B491E621F1ECC600DAE203 /* TransactionsLoader.swift */; };
 		11B3578A6B587E760D12B28E /* PermissionsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B354B43B5120F594318FDA /* PermissionsHelper.swift */; };
 		11B357941D6FFB7AEF9CB45F /* TestExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B351C72700B40AB457AFA8 /* TestExtensions.swift */; };
+		11B357C1EC04FB73A9921BFA /* UIWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B358407DC8E2314E66124E /* UIWindow.swift */; };
 		11B357CFFB630DFC08549D44 /* LanguageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B357C9E0AA5CE75C3CC825 /* LanguageCell.swift */; };
 		11B357FE4C2E1EC8E26ED68F /* GrdbStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35A1AE56A94BEB52AC4D1 /* GrdbStorage.swift */; };
 		11B357FF0E2440D91193C476 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3535DD03F9264351E13A9 /* NetworkManager.swift */; };
@@ -260,6 +261,7 @@
 		11B35E846A0F60A4BCF77B3B /* CurrencyManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3592BB989584CB1E4129B /* CurrencyManagerTests.swift */; };
 		11B35E9C0E8F38C063A48367 /* BackupPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B355771A1D96DB96FBC975 /* BackupPresenter.swift */; };
 		11B35E9D76B0EFAC4B49AB2A /* SendAmountItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B359DEE539B7406C382B80 /* SendAmountItem.swift */; };
+		11B35EB60A84C8E42ACB706D /* UIWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B358407DC8E2314E66124E /* UIWindow.swift */; };
 		11B35EBB0DC7C0CE6F51E9DA /* BarsProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35A686DD5BA335FEB6BEB /* BarsProgressView.swift */; };
 		11B35EBB724E7ECC932BC762 /* BackupConfirmationAlertModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35DFF5136FA50CB5FBCA6 /* BackupConfirmationAlertModel.swift */; };
 		11B35EC72662D83DF2D55438 /* AppConfigProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B358A2ED820E5741F0701A /* AppConfigProvider.swift */; };
@@ -283,6 +285,7 @@
 		11B35FAE71A2259D4E4CBF0C /* SendConfirmationAmountItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B356AA9A3DDA541D5EBEAC /* SendConfirmationAmountItemView.swift */; };
 		11B35FB3EFDEE0DAD433D0AC /* SendConfirmationAmountItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B356AA9A3DDA541D5EBEAC /* SendConfirmationAmountItemView.swift */; };
 		11B35FB674D5ADB9301E529F /* AboutSettingsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35BDC4FD741BE033D1956 /* AboutSettingsRouter.swift */; };
+		11B35FC057204B9CDFE5B040 /* UIWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B358407DC8E2314E66124E /* UIWindow.swift */; };
 		11B35FE41FA9977CC36989D3 /* MainInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35B88A2D6C85E1600F3AF /* MainInteractor.swift */; };
 		11B35FE4D04DCA277273F435 /* TransactionRecordPoolRepo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35B93B5B43FF00B24528B /* TransactionRecordPoolRepo.swift */; };
 		1A56400E8DE9EF93F85C7F08 /* UnlockPinInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5647E28DF774B3CE01D2C4 /* UnlockPinInteractor.swift */; };
@@ -1148,6 +1151,7 @@
 		11B357E4A859AC4A201F6ABB /* WalletManagerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletManagerTests.swift; sourceTree = "<group>"; };
 		11B357F5E2BDAAAE4E5446E3 /* WalletManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletManager.swift; sourceTree = "<group>"; };
 		11B3581BC59DE52C60AED5F5 /* BaseCurrencySettingsInteractorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseCurrencySettingsInteractorTests.swift; sourceTree = "<group>"; };
+		11B358407DC8E2314E66124E /* UIWindow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIWindow.swift; sourceTree = "<group>"; };
 		11B358414185C1B924E91A32 /* UIView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
 		11B3584E1C6B6FA22B89D82C /* KeychainStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainStorage.swift; sourceTree = "<group>"; };
 		11B358586003E20B167B1442 /* RestoreModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestoreModule.swift; sourceTree = "<group>"; };
@@ -1605,6 +1609,7 @@
 				11B351D55B31D37B7194DE55 /* UITableView.swift */,
 				11B351E743E45282859B08D3 /* UIButton.swift */,
 				11B3572B7C2F16CD51F37FF0 /* UIImage.swift */,
+				11B358407DC8E2314E66124E /* UIWindow.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -3409,6 +3414,7 @@
 				58AAA4D83BCA31D557D9CAC3 /* PingManager.swift in Sources */,
 				11B35F4D671B14AB378DC063 /* AddressButton.swift in Sources */,
 				11B353D96E70A4BACFA1C589 /* AddressButtonTheme.swift in Sources */,
+				11B35FC057204B9CDFE5B040 /* UIWindow.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3775,6 +3781,7 @@
 				58AAA4FBD1DD3045472041A1 /* PingManager.swift in Sources */,
 				11B355C543E51D39D040EA18 /* AddressButton.swift in Sources */,
 				11B355E2BBC265EDA1E3EB28 /* AddressButtonTheme.swift in Sources */,
+				11B357C1EC04FB73A9921BFA /* UIWindow.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4091,6 +4098,7 @@
 				58AAA72BF33F0AF251128499 /* PingManager.swift in Sources */,
 				11B3516FF104B550A2EA1795 /* AddressButton.swift in Sources */,
 				11B350436565D10C5EF535B0 /* AddressButtonTheme.swift in Sources */,
+				11B35EB60A84C8E42ACB706D /* UIWindow.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
