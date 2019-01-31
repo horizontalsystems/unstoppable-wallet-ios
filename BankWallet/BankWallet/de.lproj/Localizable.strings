@@ -36,7 +36,7 @@
 // Backup
 
 "backup.intro.title" = "Sicherung";
-"backup.intro.subtitle" = "Ihr Offlineschlüssel ist die einzige Möglichkeit, dein Wallet wiederherzustellen, falls du dein Smartphone verlierst, austauscht, es gestohlen wird oder kaputtgeht. \n\nEs besteht aus 12 Wörtern. Speichen Sie  es sicher offline.\n";
+"backup.intro.subtitle" = "Dein Offlineschlüssel ist die einzige Möglichkeit, dein Wallet wiederherzustellen, falls du dein Smartphone verlierst, austauscht, es gestohlen wird oder kaputtgeht. \n\nEs besteht aus 12 Wörtern. Speich es sicher offline.\n";
 "backup.intro.later" = "Später";
 "backup.intro.backup_now" = "Backup";
 
@@ -45,7 +45,7 @@
 "backup.words.proceed" = "Weiter";
 
 "backup.confirmation.title" = "Prüfen …";
-"backup.confirmation.description" = "Geben Sie bitte die Wörter deines Offlineschlüssels ein";
+"backup.confirmation.description" = "Gib bitte die Wörter deines Offlineschlüssels ein";
 "backup.confirmation.failure_alert.text" = "Die Wörter stimmen nicht überein";
 "backup.confirmation.done_button" = "Fertig";
 "backup.confirmation.understand" = "Ich  stimme zu, dass mein Wallet und meinen Token nur auf diesem Gerät verfügbar sind.";
@@ -61,8 +61,8 @@
 
 // Deposit
 
-"deposit.receive_coin" = "Anfordern %@";
-"deposit.your_address" = "Ihre Adresse";
+"deposit.receive_coin" = "%@ Anfordern ";
+"deposit.your_address" = "Deine Adresse";
 "deposit.share" = "Teilen";
 
 // Send
@@ -74,7 +74,7 @@
 "send.paste_button" = "Einfügen";
 "send.amount_placeholder" = "Betrag";
 "send.fee" = "Gebühr";
-"send.total" = "Gesamt";
+"send.total" = "Insgesamt";
 "send.max_button" = "Max.";
 "send_erc.alert" = "You need ETH to transfer ERC Tokens";
 
@@ -169,12 +169,12 @@
 "settings_security.face_id" = "Face ID";
 "security_settings.unlink_alert_button" = "Verknüpfung trennen";
 "settings_security.import_wallet_confirmation_1" = "Diese Aktion entfernt dein Wallet von diesem Gerät.";
-"settings_security.import_wallet_confirmation_2" = "Stellen Sie sicher, Sie haben ihre geheimen Offlineschlüssel oder Sie werden nicht in der Lage, den Zugang zu Mitteln darauf in Zukunft.";
+"settings_security.import_wallet_confirmation_2" = "Stell sicher, du hast deine geheimen Offlineschlüssel oder du wirst nicht in der Lage, den Zugang zu Mitteln darauf in Zukunft.";
 
 // Set PIN
 
 "set_pin.title" = "Code";
-"set_pin.info" = "Ihr Code wird verwendet werden, um Ihren Wallet zu entsperren und Geld schicken";
+"set_pin.info" = "Dein Code wird verwendet werden, um deinen Wallet zu entsperren und Geld schicken";
 "set_pin.confirm.info" = "Bestätigen";
 "set_pin.wrong_confirmation" = "Code stimmt nicht überein. Bitte noch einmal versuchen.";
 
@@ -188,7 +188,7 @@
 // Unlock PIN
 
 "unlock_pin.info" = "Code";
-"unlock_pin.cant_save_pin" = "Autsch! Wir können den Code nicht speichern, kontaktieren Sie uns bitte so schnell wie möglich!";
+"unlock_pin.cant_save_pin" = "Autsch! Wir können den Code nicht speichern, kontaktier uns bitte so schnell wie möglich!";
 "unlock_pin.blocked_until" = "Deaktiviert bis: %@ ";
 
 //NumPad
