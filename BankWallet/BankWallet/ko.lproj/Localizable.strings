@@ -1,9 +1,9 @@
-"coin.BTC" = "비트코인";
-"coin.BCH" = "비트코인 캐시";
-"coin.ETH" = "이더리움";
-"coin.BTCt" = "비트코인 티";
-"coin.BCHt" = "비트코인 캐시 티";
-"coin.ETHt" = "이더리움 티";
+"coin.BTC" = "Bitcoin";
+"coin.BCH" = "Bitcoin Cash ";
+"coin.ETH" = "Ethereum";
+"coin.BTCt" = "Bitcoin T";
+"coin.BCHt" = "Bitcoin Cash T";
+"coin.ETHt" = "Ethereum T";
 
 "alert.ok" = "확인";
 "alert.cancel" = "취소";
