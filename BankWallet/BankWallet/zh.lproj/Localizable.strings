@@ -110,7 +110,7 @@
 "full_info.source" = "信息源";
 "full_info.from" = "发件人";
 "full_info.to" = "收件人";
-"full_info.value" = "Value";
+"full_info.value" = "价值";
 "full_info.nonce" = "Nonce";
 
 "full_info.gas_limit" = "Gas Limit";
