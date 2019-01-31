@@ -110,7 +110,7 @@
 "full_info.source" = "Source";
 "full_info.from" = "De";
 "full_info.to" = "À";
-"full_info.value" = "Value";
+"full_info.value" = "Valeur";
 "full_info.nonce" = "Nonce";
 
 "full_info.gas_limit" = "Gas Limit";
