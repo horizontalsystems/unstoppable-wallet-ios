@@ -138,6 +138,7 @@ Go to Settings - > Bank and allow access to Camera.";
 "settings.light_mode" = "Light Mode";
 "settings.info_title" = "BANK WALLET";
 "settings.info_subtitle" = "decentralized app";
+"settings.back_button" = "Back";
 
 // Settings -> Base Currency
 
