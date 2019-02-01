@@ -41,7 +41,6 @@
 "backup.intro.backup_now" = "备份";
 
 "backup.words.title" = "密钥";
-"backup.words.back" = "返回";
 "backup.words.proceed" = "继续";
 
 "backup.confirmation.title" = "正在检查...";
