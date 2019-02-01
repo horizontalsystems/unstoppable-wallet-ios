@@ -12,14 +12,7 @@ extension SetPinRouter: ISetPinRouter {
 
     func navigateToMain() {
         navigationController?.topViewController?.view.endEditing(true)
-
-        guard let window = UIApplication.shared.keyWindow else {
-            return
-        }
-
-        UIView.transition(with: window, duration: 0.5, options: .transitionCrossDissolve, animations: {
-            window.rootViewController = MainRouter.module()
-        })
+        UIApplication.shared.keyWindow?.set(newRootController: MainRouter.module())
     }
 
 }

@@ -75,6 +75,8 @@
 "send.amount_placeholder" = "مبلغ";
 "send.fee" = "هزينه";
 "send.total" = "مجموع";
+"send.max_button" = "Max";
+"send_erc.alert" = "You need ETH to transfer ERC Tokens";
 
 // Transactions
 
@@ -88,6 +90,7 @@
 "tx_info.title" = "تراکنش";
 "tx_info.time" = "زمان";
 "tx_info.status" = "وضيعت";
+"tx_info.status.pending" = "در حالت انتظار";
 "tx_info.from_hash" = "از";
 "tx_info.to_hash" = "به";
 "tx_info.alert_close" = "بستن";
@@ -107,6 +110,8 @@
 "full_info.source" = "Source";
 "full_info.from" = "از";
 "full_info.to" = "به";
+"full_info.value" = "Value";
+"full_info.nonce" = "Nonce";
 
 "full_info.gas_limit" = "Gas Limit";
 "full_info.gas_used" = "Gas Used";

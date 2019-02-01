@@ -1,9 +1,15 @@
 import UIKit
 
 class BaseCurrencySettingsRouter {
+    var viewController: UIViewController?
 }
 
 extension BaseCurrencySettingsRouter: IBaseCurrencySettingsRouter {
+
+    func dismiss() {
+        viewController?.navigationController?.popViewController(animated: true)
+    }
+
 }
 
 extension BaseCurrencySettingsRouter {
@@ -16,6 +22,7 @@ extension BaseCurrencySettingsRouter {
 
         interactor.delegate = presenter
         presenter.view = view
+        router.viewController = view
 
         return view
     }

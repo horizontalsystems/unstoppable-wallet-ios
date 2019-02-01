@@ -54,8 +54,9 @@ class DepositAddressCollectionCell: UICollectionViewCell {
         contentView.addSubview(addressButton)
         addressButton.snp.makeConstraints { maker in
             maker.top.equalTo(addressTitleLabel.snp.bottom).offset(DepositTheme.addressTopMargin)
-            maker.leading.equalToSuperview().offset(DepositTheme.regularMargin)
-            maker.trailing.equalToSuperview().offset(-DepositTheme.regularMargin)
+            maker.leading.equalToSuperview().offset(DepositTheme.regularMargin).priority(.high)
+            maker.trailing.equalToSuperview().offset(-DepositTheme.regularMargin).priority(.high)
+            maker.centerX.equalToSuperview()
         }
     }
 

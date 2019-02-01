@@ -9,6 +9,16 @@ struct LanguageItem: Equatable {
     }
 }
 
+extension LanguageItem: Comparable {
+
+    public static func <(lhs: LanguageItem, rhs: LanguageItem) -> Bool {
+        if lhs.id == "en" { return true }
+        if rhs.id == "en" { return false }
+        return lhs.title < rhs.title
+    }
+
+}
+
 protocol ILanguageSettingsView: class {
     func set(title: String)
     func show(items: [LanguageItem])

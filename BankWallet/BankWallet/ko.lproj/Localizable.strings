@@ -1,9 +1,9 @@
-"coin.BTC" = "비트코인";
-"coin.BCH" = "비트코인 캐시";
-"coin.ETH" = "이더리움";
-"coin.BTCt" = "비트코인 티";
-"coin.BCHt" = "비트코인 캐시 티";
-"coin.ETHt" = "이더리움 티";
+"coin.BTC" = "Bitcoin";
+"coin.BCH" = "Bitcoin Cash ";
+"coin.ETH" = "Ethereum";
+"coin.BTCt" = "Bitcoin T";
+"coin.BCHt" = "Bitcoin Cash T";
+"coin.ETHt" = "Ethereum T";
 
 "alert.ok" = "확인";
 "alert.cancel" = "취소";
@@ -75,6 +75,8 @@
 "send.amount_placeholder" = "양";
 "send.fee" = "수수료";
 "send.total" = "합계";
+"send.max_button" = "최대";
+"send_erc.alert" = "You need ETH to transfer ERC Tokens";
 
 // Transactions
 
@@ -88,6 +90,7 @@
 "tx_info.title" = "거래기록";
 "tx_info.time" = "시간";
 "tx_info.status" = "상태";
+"tx_info.status.pending" = "보류 중";
 "tx_info.from_hash" = "로 부터";
 "tx_info.to_hash" = "에게";
 "tx_info.alert_close" = "가까운, 닫힌";
@@ -107,6 +110,8 @@
 "full_info.source" = "원천, 자료";
 "full_info.from" = "로 부터";
 "full_info.to" = "에게";
+"full_info.value" = "Value";
+"full_info.nonce" = "Nonce";
 
 "full_info.gas_limit" = "Gas Limit";
 "full_info.gas_used" = "Gas Used";

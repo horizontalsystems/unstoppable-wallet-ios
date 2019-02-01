@@ -74,5 +74,13 @@ class SendTheme {
     static let valueFont: UIFont = .cryptoCaption1
     static let valueColor: UIColor = .cryptoGray
 
-    static let confirmationSheetConfig = ActionSheetThemeConfig(actionStyle: .alert, sideMargin: 30, cornerRadius: 16)
+    static var confirmationSheetConfig: ActionSheetThemeConfig {
+        return ActionSheetThemeConfig(
+                actionStyle: .alert,
+                sideMargin: 30,
+                cornerRadius: 16,
+                separatorColor: UIColor.crypto_Steel40OnDark_Steel20,
+                backgroundStyle: .blur(intensity: 0.55, style: AppTheme.actionSheetBlurStyle)
+        )
+    }
 }

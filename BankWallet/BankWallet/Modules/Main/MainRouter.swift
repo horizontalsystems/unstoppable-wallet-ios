@@ -9,7 +9,11 @@ extension MainRouter: IMainRouter {
 
 extension MainRouter {
 
-    static func module() -> UIViewController {
+    enum Tab: Int {
+        case balance, transactions, settings
+    }
+
+    static func module(selectedTab: Tab = .balance) -> UIViewController {
         let router = MainRouter()
         let interactor = MainInteractor()
         let presenter = MainPresenter(interactor: interactor, router: router)
@@ -20,7 +24,7 @@ extension MainRouter {
             settingsNavigation
         ]
 
-        let viewController = MainViewController(viewDelegate: presenter, viewControllers: viewControllers)
+        let viewController = MainViewController(viewDelegate: presenter, viewControllers: viewControllers, selectedIndex: selectedTab.rawValue)
 
         interactor.delegate = presenter
         presenter.view = viewController

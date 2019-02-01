@@ -75,6 +75,8 @@
 "send.amount_placeholder" = "量";
 "send.fee" = "料金";
 "send.total" = "合計";
+"send.max_button" = "Max";
+"send_erc.alert" = "You need ETH to transfer ERC Tokens";
 
 // Transactions
 
@@ -88,6 +90,7 @@
 "tx_info.title" = "トランザクション";
 "tx_info.time" = "時間";
 "tx_info.status" = "状況";
+"tx_info.status.pending" = "Pending";
 "tx_info.from_hash" = "差出人";
 "tx_info.to_hash" = "宛先";
 "tx_info.alert_close" = "閉じる";
@@ -107,6 +110,8 @@
 "full_info.source" = "Source";
 "full_info.from" = "差出人";
 "full_info.to" = "宛先";
+"full_info.value" = "Value";
+"full_info.nonce" = "Nonce";
 
 "full_info.gas_limit" = "Gas Limit";
 "full_info.gas_used" = "Gas Used";

@@ -22,9 +22,9 @@ class FullTransactionInfoTheme {
     static let margin: CGFloat = 48
     static let cellHeight: CGFloat = 44
     static let iconRightMargin: CGFloat = 8
-    static let linkCellHeight: CGFloat = 36
+    static let linkCellHeight: CGFloat = 20
     static let linkCellHorizontalMargin: CGFloat = 8
-    static let linkCellBottomMargin: CGFloat = 72
+    static let linkCellBottomMargin: CGFloat = 32
     static var cellBackground: UIColor { return .crypto_Steel20_White }
     static let separatorColor = UIColor.cryptoSteel40
     static let bottomBarHeight: CGFloat = 53
