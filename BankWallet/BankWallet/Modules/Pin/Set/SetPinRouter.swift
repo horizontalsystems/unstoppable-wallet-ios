@@ -5,13 +5,11 @@ protocol SetPinDelegate: class {
 }
 
 class SetPinRouter {
-    weak var navigationController: UINavigationController?
 }
 
 extension SetPinRouter: ISetPinRouter {
 
     func navigateToMain() {
-        navigationController?.topViewController?.view.endEditing(true)
         UIApplication.shared.keyWindow?.set(newRootController: MainRouter.module())
     }
 
@@ -29,7 +27,6 @@ extension SetPinRouter {
 
         interactor.delegate = presenter
         presenter.view = controller
-        router.navigationController = navigationController
 
         return navigationController
     }

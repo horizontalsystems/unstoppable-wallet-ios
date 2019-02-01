@@ -14,7 +14,7 @@ class TransactionsFilterTheme {
     static let selectedNameColor: UIColor = .cryptoDark
     static var deselectedNameColor: UIColor { return .crypto_Bars_Dark }
     static let selectedBackgroundColor: UIColor = .cryptoYellow
-    static let deselectedBackgroundColor: UIColor = .cryptoSteel20
+    static var deselectedBackgroundColor: UIColor { return .crypto_Steel20_LightBackground }
 
     static let filterHeaderHeight: CGFloat = 44
 }
