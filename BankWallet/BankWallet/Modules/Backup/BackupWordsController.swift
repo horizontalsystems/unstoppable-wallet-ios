@@ -5,7 +5,6 @@ class BackupWordsController: UIViewController {
     let delegate: IBackupViewDelegate
 
     @IBOutlet weak var wordsLabel: UILabel?
-    @IBOutlet weak var backButton: UIButton?
     @IBOutlet weak var proceedButton: UIButton?
 
     let words: [String]
@@ -27,8 +26,8 @@ class BackupWordsController: UIViewController {
         view.backgroundColor = AppTheme.controllerBackground
 
         title = "backup.words.title".localized
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
 
-        backButton?.setTitle("backup.words.back".localized, for: .normal)
         proceedButton?.setTitle("backup.words.proceed".localized, for: .normal)
 
         let joinedWords = words.enumerated().map { "\($0 + 1). \($1)" }.joined(separator: "\n")
