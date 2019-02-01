@@ -45,6 +45,7 @@ class BaseCurrencySettingsViewController: UIViewController, SectionsDataSource {
 
         sections.append(Section(id: "currencies", headerState: .margin(height: SettingsTheme.subSettingsHeaderHeight), footerState: .margin(height: SettingsTheme.subSettingsHeaderHeight), rows: items.map { item in
             Row<CurrencyCell>(id: item.code, height: SettingsTheme.currencyCellHeight, bind: { cell, _ in
+                cell.selectionStyle = .default
                 cell.bind(title: item.code, subtitle: item.symbol, selected: item.selected)
             }, action: { [weak self] _ in
                 self?.delegate.didSelect(item: item)
