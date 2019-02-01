@@ -41,7 +41,6 @@
 "backup.intro.backup_now" = "Backup";
 
 "backup.words.title" = "Offlineschlüssel";
-"backup.words.back" = "Zurück";
 "backup.words.proceed" = "Weiter";
 
 "backup.confirmation.title" = "Prüfen …";
