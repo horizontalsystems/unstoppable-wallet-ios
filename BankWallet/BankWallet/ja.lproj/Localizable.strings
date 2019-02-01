@@ -28,7 +28,7 @@
 // Restore
 
 "restore.title" = "Restore";
-"restore.description" = "Enter Secret Key  ";
+"restore.description" = "秘密キーを入力する  ";
 "restore.done" = "Done";
 "restore.cancel" = "キャンセル";
 "restore.validation_failed" = "正しくない秘密鍵";
@@ -36,7 +36,7 @@
 // Backup
 
 "backup.intro.title" = "バックアップ";
-"backup.intro.subtitle" = "Your secret key is the only way to restore your wallet and funds if your phone is ever lost, stolen, broken, or upgraded.\n\nIt consists of 12 words. Store it safely offline.";
+"backup.intro.subtitle" = "あなたの電話は今まで紛失、盗難、破損、またはアップグレードする場合、あなたの秘密鍵は、あなたの財布と資金を復元する唯一の方法です。\n\n それは 12 の単語で構成されています。オフラインに安全に保管してください。";
 "backup.intro.later" = "後で";
 "backup.intro.backup_now" = "バックアップ";
 
@@ -45,8 +45,8 @@
 "backup.words.proceed" = "次";
 
 "backup.confirmation.title" = "Check ...";
-"backup.confirmation.description" = "Enter words from your secret key";
-"backup.confirmation.failure_alert.text" = "Words do not match";
+"backup.confirmation.description" = "あなたの秘密鍵の単語を入力してください。";
+"backup.confirmation.failure_alert.text" = "言葉が一致しません";
 "backup.confirmation.done_button" = "Done";
 "backup.confirmation.understand" = "私は私の財布とトークンは、ほかのサーバーではなく、このデバイスだけに安全に開催されること理解します。";
 "backup.confirmation.delete_app_warn" = "私は、このアプリケーションが別のデバイスは、削除または誤動作に移動した場合、私の財布回復できるのは、安全な場所に保存されている秘密鍵だけのを理解します。";
@@ -69,13 +69,13 @@
 
 "send.title" = "%@ を送る";
 "send.address_placeholder" = "住所";
-"send.amount_error.balance" = "Balance %@";
+"send.amount_error.balance" = "残高 %@";
 "send.send_button" = "送る";
 "send.paste_button" = "貼付け";
 "send.amount_placeholder" = "量";
 "send.fee" = "料金";
 "send.total" = "合計";
-"send.max_button" = "Max";
+"send.max_button" = "最大";
 "send_erc.alert" = "You need ETH to transfer ERC Tokens";
 
 // Transactions
@@ -90,7 +90,7 @@
 "tx_info.title" = "トランザクション";
 "tx_info.time" = "時間";
 "tx_info.status" = "状況";
-"tx_info.status.pending" = "Pending";
+"tx_info.status.pending" = "ペンディング";
 "tx_info.from_hash" = "差出人";
 "tx_info.to_hash" = "宛先";
 "tx_info.alert_close" = "閉じる";
@@ -104,33 +104,33 @@
 "full_info.confirmations" = "確認";
 "full_info.size" = "サイズ";
 "full_info.fee" = "料金";
-"full_info.rate" = "Rate";
+"full_info.rate" = "換算率";
 "full_info.inputs" = "入力";
 "full_info.outputs" = "出力";
-"full_info.source" = "Source";
+"full_info.source" = "ソース";
 "full_info.from" = "差出人";
 "full_info.to" = "宛先";
-"full_info.value" = "Value";
+"full_info.value" = "値";
 "full_info.nonce" = "Nonce";
 
 "full_info.gas_limit" = "Gas Limit";
 "full_info.gas_used" = "Gas Used";
 "full_info.gas_price" = "Gas Price";
 
-"full_info.source.title" = "Source";
-"full_info.source.online" = "online";
+"full_info.source.title" = "ソース";
+"full_info.source.online" = "オンライン";
 "full_info.source.offline" = "オフライン";
 
 "full_info.error.subtitle" = "オフライン";
 "full_info.error.retry" = "リトライ";
-"full_info.error.change_source" = "Change Source";
+"full_info.error.change_source" = "ソースの変更";
 
 // Settings
 
 "settings.title" = "設定";
 "settings.tab_bar_item" = "設定";
 "settings.security_center" = "セキュリティ センター";
-"settings.base_currency" = "Base Currency";
+"settings.base_currency" = "基本通貨";
 "settings.language" = "言語";
 "settings.about" = "について";
 "settings.light_mode" = "ライトモード";
@@ -139,7 +139,7 @@
 
 // Settings -> Base Currency
 
-"settings_base_currency.title" = "Base Currency";
+"settings_base_currency.title" = "基本通貨";
 
 // Settings -> Language
 
@@ -181,8 +181,8 @@
 // Edit PIN
 
 "edit_pin.title" = "パスコードを編集";
-"edit_pin.unlock_info" = "Current Passcode";
-"edit_pin.new_pin_info" = "New Passcode";
+"edit_pin.unlock_info" = "現在のパスコード";
+"edit_pin.new_pin_info" = "新しいパスコード";
 "edit_pin.confirm_info" = "確定する";
 
 // Unlock PIN
