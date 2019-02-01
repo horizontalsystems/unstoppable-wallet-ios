@@ -41,7 +41,6 @@
 "backup.intro.backup_now" = "Резервная копия";
 
 "backup.words.title" = "Секретный Ключ";
-"backup.words.back" = "Назад";
 "backup.words.proceed" = "Далее";
 
 "backup.confirmation.title" = "Проверка...";
