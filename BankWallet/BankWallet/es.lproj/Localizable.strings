@@ -41,7 +41,6 @@
 "backup.intro.backup_now" = "Copia de seguridad";
 
 "backup.words.title" = "Clave secreta";
-"backup.words.back" = "Atrás";
 "backup.words.proceed" = "Siguiente";
 
 "backup.confirmation.title" = "Comprobar";
