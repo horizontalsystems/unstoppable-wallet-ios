@@ -63,7 +63,9 @@ class PinDotsView: UIView {
         highlightPinDot()
 
         if enteredPin.count == pinLength {
-            onPinEnter?(enteredPin)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                self.onPinEnter?(self.enteredPin)
+            }
         }
     }
 
