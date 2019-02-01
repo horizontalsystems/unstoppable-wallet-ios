@@ -75,6 +75,8 @@
 "send.amount_placeholder" = "Montant";
 "send.fee" = "Frais";
 "send.total" = "Total";
+"send.max_button" = "Max";
+"send_erc.alert" = "You need ETH to transfer ERC Tokens";
 
 // Transactions
 
@@ -88,6 +90,7 @@
 "tx_info.title" = "Transaction";
 "tx_info.time" = "Date";
 "tx_info.status" = "Statut";
+"tx_info.status.pending" = "En attente";
 "tx_info.from_hash" = "De";
 "tx_info.to_hash" = "À";
 "tx_info.alert_close" = "Fermer";
@@ -107,6 +110,8 @@
 "full_info.source" = "Source";
 "full_info.from" = "De";
 "full_info.to" = "À";
+"full_info.value" = "Valeur";
+"full_info.nonce" = "Nonce";
 
 "full_info.gas_limit" = "Gas Limit";
 "full_info.gas_used" = "Gas Used";
