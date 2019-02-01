@@ -41,7 +41,6 @@
 "backup.intro.backup_now" = "백업";
 
 "backup.words.title" = "비밀 키";
-"backup.words.back" = "뒤로";
 "backup.words.proceed" = "다음";
 
 "backup.confirmation.title" = "확인 중...";
