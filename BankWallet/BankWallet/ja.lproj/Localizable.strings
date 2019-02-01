@@ -41,7 +41,6 @@
 "backup.intro.backup_now" = "バックアップ";
 
 "backup.words.title" = "秘密鍵";
-"backup.words.back" = "戻る";
 "backup.words.proceed" = "次";
 
 "backup.confirmation.title" = "Check ...";
