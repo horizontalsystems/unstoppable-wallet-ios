@@ -2,6 +2,7 @@ import GrouviActionSheet
 
 class TransactionStatusItem: BaseActionItem {
     let title: String
+    var statusText: String?
     var icon: UIImage?
     var progress: Double?
 
@@ -13,6 +14,7 @@ class TransactionStatusItem: BaseActionItem {
         switch item.status {
         case .pending:
             icon = UIImage(named: "Transaction Info Pending Icon")
+            statusText = "tx_info.status.pending".localized
         case .processing(let progress):
             self.progress = progress
         case .completed:

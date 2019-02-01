@@ -24,6 +24,7 @@ class AddressButton: UIView {
         }
 
         let avatarImageView = UIImageView(image: UIImage(named: "Transaction Info Avatar Placeholder")?.tinted(with: AddressButtonTheme.iconColor))
+        avatarImageView.setContentHuggingPriority(.required, for: .horizontal)
         wrapperView.addSubview(avatarImageView)
         avatarImageView.snp.makeConstraints { maker in
             maker.leading.equalToSuperview().offset(AddressButtonTheme.sideMargin)
@@ -33,6 +34,8 @@ class AddressButton: UIView {
         valueLabel.font = AddressButtonTheme.valueFont
         valueLabel.textColor = AddressButtonTheme.valueColor
         valueLabel.lineBreakMode = .byTruncatingMiddle
+        valueLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+        valueLabel.setContentHuggingPriority(.required, for: .horizontal)
         wrapperView.addSubview(valueLabel)
         valueLabel.snp.makeConstraints { maker in
             maker.top.bottom.equalToSuperview()

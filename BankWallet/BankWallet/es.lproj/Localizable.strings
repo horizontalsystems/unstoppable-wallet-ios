@@ -36,7 +36,7 @@
 // Backup
 
 "backup.intro.title" = "Copia de seguridad";
-"backup.intro.subtitle" = "Your secret key is the only way to restore your wallet and funds if your phone is ever lost, stolen, broken, or upgraded.\n\nIt consists of 12 words. Store it safely offline.";
+"backup.intro.subtitle" = "Su clave secreta es la única manera de recuperar su cartera y otros fondos si su teléfono alguna vez se pierde, se rompe, es sustraído o se actualiza a otra versión.\n\nConsiste de 12 palabras. Almacen esta desconectado sin peligro.";
 "backup.intro.later" = "Posterior";
 "backup.intro.backup_now" = "Copia de seguridad";
 
@@ -49,7 +49,7 @@
 "backup.confirmation.failure_alert.text" = "Las contraseñas no coinciden";
 "backup.confirmation.done_button" = "Listo";
 "backup.confirmation.understand" = "Entiendo que mis datos y mi monedero se guardan de manera segura en este dispositivo y no en ningún otro servidor";
-"backup.confirmation.delete_app_warn" = "I understand that if this app is moved to another device, deleted or malfunctions, my wallet can be only recovered with the Secret Key that I have just written down and saved in a secure place.";
+"backup.confirmation.delete_app_warn" = "Entiendo que si esta aplicación se elimina o deja de funcionar por alguna razón, mi monedero sólo puede ser recuperado utilizando mi clave secreta, que esta escrita abajo y guardada en un lugar seguro.";
 
 // Balance
 
@@ -75,6 +75,8 @@
 "send.amount_placeholder" = "Importe";
 "send.fee" = "Comisión";
 "send.total" = "Total";
+"send.max_button" = "Máx.";
+"send_erc.alert" = "You need ETH to transfer ERC Tokens";
 
 // Transactions
 
@@ -88,6 +90,7 @@
 "tx_info.title" = "Transacción";
 "tx_info.time" = "Hora";
 "tx_info.status" = "Estado";
+"tx_info.status.pending" = "Pendiente";
 "tx_info.from_hash" = "Desde ";
 "tx_info.to_hash" = "Para";
 "tx_info.alert_close" = "Cerrar";
@@ -101,24 +104,26 @@
 "full_info.confirmations" = "Confirmaciones";
 "full_info.size" = "Tamaño";
 "full_info.fee" = "Comisión";
-"full_info.rate" = "Rate";
+"full_info.rate" = "Puntuación";
 "full_info.inputs" = "Aportaciones";
 "full_info.outputs" = "Rendimientos";
-"full_info.source" = "Source";
+"full_info.source" = "Origen";
 "full_info.from" = "Desde ";
 "full_info.to" = "Para";
+"full_info.value" = "Valor";
+"full_info.nonce" = "Nonce";
 
 "full_info.gas_limit" = "Gas Limit";
 "full_info.gas_used" = "Gas Used";
 "full_info.gas_price" = "Gas Price";
 
-"full_info.source.title" = "Source";
+"full_info.source.title" = "Origen";
 "full_info.source.online" = "en línea";
-"full_info.source.offline" = "offline";
+"full_info.source.offline" = "desconectado";
 
-"full_info.error.subtitle" = "offline";
-"full_info.error.retry" = "Retry";
-"full_info.error.change_source" = "Change Source";
+"full_info.error.subtitle" = "desconectado";
+"full_info.error.retry" = "Reintentar";
+"full_info.error.change_source" = "Cambiar Origen";
 
 // Settings
 
@@ -164,7 +169,7 @@
 "settings_security.face_id" = "Face ID";
 "security_settings.unlink_alert_button" = "Desvincular";
 "settings_security.import_wallet_confirmation_1" = "Esta acción eliminará de este dispositivo la carpeta instalada actualmente ";
-"settings_security.import_wallet_confirmation_2" = "Make sure you have backed up Secret Key or you will not be able to access your funds in the future.";
+"settings_security.import_wallet_confirmation_2" = "Asegúrese de que usted tiene su clave secreta o no podrá acceder a los fondos en el futuro.";
 
 // Set PIN
 

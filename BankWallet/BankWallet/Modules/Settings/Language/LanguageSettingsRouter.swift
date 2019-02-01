@@ -6,11 +6,7 @@ class LanguageSettingsRouter {
 extension LanguageSettingsRouter: ILanguageSettingsRouter {
 
     func reloadAppInterface() {
-        if let window = UIApplication.shared.keyWindow {
-            UIView.transition(with: window, duration: 0.5, options: .transitionCrossDissolve, animations: {
-                window.rootViewController = MainRouter.module()
-            })
-        }
+        UIApplication.shared.keyWindow?.set(newRootController: MainRouter.module(selectedTab: .settings))
     }
 
 }

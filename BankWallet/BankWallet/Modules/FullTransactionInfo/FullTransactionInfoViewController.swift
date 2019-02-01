@@ -24,7 +24,7 @@ class FullTransactionInfoViewController: UIViewController, SectionsDataSource {
         self.delegate = delegate
         super.init(nibName: nil, bundle: nil)
 
-        errorView = RequestErrorView(subtitle: "full_info.error.subtitle", buttonText: "full_info.error.retry", linkText: "full_info.error.change_source".localized, onTapButton: { [weak self] in
+        errorView = RequestErrorView(subtitle: "full_info.error.subtitle".localized, buttonText: "full_info.error.retry".localized, linkText: "full_info.error.change_source".localized, onTapButton: { [weak self] in
             self?.onRetry()
         }, onTapLink: { [weak self] in
             self?.onTapChangeResource()
@@ -159,7 +159,7 @@ class FullTransactionInfoViewController: UIViewController, SectionsDataSource {
         if let providerName = delegate.providerName {
             sections.append(Section(id: "resource_\(providerName)", headerState: .marginColor(height: FullTransactionInfoTheme.sectionEmptyMargin, color: .clear), footerState: .marginColor(height: FullTransactionInfoTheme.sectionEmptyMargin, color: .clear), rows: [
                 Row<SettingsRightLabelCell>(id: "resource", height: FullTransactionInfoTheme.cellHeight, autoDeselect: true, bind: { cell, _ in
-                    cell.bind(titleIcon: nil, title: "Source", rightText: providerName, showDisclosure: true, last: true)
+                    cell.bind(titleIcon: nil, title: "full_info.source.title".localized, rightText: providerName, showDisclosure: true, last: true)
                     cell.titleLabel.font = FullTransactionInfoTheme.resourceTitleFont
                 }, action: { [weak self] cell in
                     self?.onTapChangeResource()
