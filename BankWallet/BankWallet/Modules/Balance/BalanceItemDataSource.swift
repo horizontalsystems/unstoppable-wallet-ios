@@ -1,3 +1,5 @@
+import Foundation
+
 class BalanceItemDataSource {
     var items = [BalanceItem]()
     var currency: Currency?
@@ -18,7 +20,7 @@ class BalanceItemDataSource {
         return items.firstIndex(where: { $0.coinCode == coinCode })
     }
 
-    func set(balance: Double, index: Int) {
+    func set(balance: Decimal, index: Int) {
         items[index].balance = balance
     }
 

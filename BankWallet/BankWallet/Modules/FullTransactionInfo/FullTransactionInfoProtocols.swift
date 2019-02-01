@@ -1,5 +1,7 @@
+import Foundation
+
 protocol IBitcoinResponse {
-    var btcRate: Double { get }
+    var btcRate: Decimal { get }
 
     var txId: String? { get }
     var blockTime: Int? { get }
@@ -7,22 +9,22 @@ protocol IBitcoinResponse {
     var confirmations: Int? { get }
 
     var size: Int? { get }
-    var fee: Double? { get }
-    var feePerByte: Double? { get }
+    var fee: Decimal? { get }
+    var feePerByte: Decimal? { get }
 
-    var inputs: [(value: Double, address: String?)] { get }
-    var outputs: [(value: Double, address: String?)] { get }
+    var inputs: [(value: Decimal, address: String?)] { get }
+    var outputs: [(value: Decimal, address: String?)] { get }
 }
 
 extension IBitcoinResponse {
-    var btcRate: Double {
+    var btcRate: Decimal {
         return 100_000_000
     }
 }
 
 protocol IEthereumResponse {
-    var ethRate: Double { get }
-    var gweiRate: Double { get }
+    var ethRate: Decimal { get }
+    var gweiRate: Decimal { get }
 
     var txId: String? { get }
     var blockTime: Int? { get }
@@ -30,11 +32,11 @@ protocol IEthereumResponse {
     var confirmations: Int? { get }
 
     var size: Int? { get }
-    var gasPrice: Double? { get }
-    var gasUsed: Double? { get }
-    var gasLimit: Double? { get }
-    var fee: Double? { get }
-    var value: Double? { get }
+    var gasPrice: Decimal? { get }
+    var gasUsed: Decimal? { get }
+    var gasLimit: Decimal? { get }
+    var fee: Decimal? { get }
+    var value: Decimal? { get }
 
     var nonce: Int? { get }
     var from: String? { get }
@@ -42,10 +44,10 @@ protocol IEthereumResponse {
 }
 
 extension IEthereumResponse {
-    var ethRate: Double {
+    var ethRate: Decimal {
         return 1_000_000_000_000_000_000
     }
-    var gweiRate: Double {
+    var gweiRate: Decimal {
         return 1_000_000_000
     }
 }

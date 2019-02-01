@@ -2,10 +2,11 @@ import GrouviActionSheet
 
 class SendAmountItem: BaseActionItem {
     var onSwitchClicked: (() -> ())?
-    var onAmountChanged: ((Double) -> ())?
+    var onAmountChanged: ((Decimal) -> ())?
+    var onMaxClicked: (() -> ())?
 
     var bindAmountType: ((String?) -> ())?
-    var bindAmount: ((Double?) -> ())?
+    var bindAmount: ((Decimal?) -> ())?
     var bindHint: ((String?) -> ())?
     var bindError: ((String?) -> ())?
     var bindSwitchEnabled: ((Bool) -> ())?

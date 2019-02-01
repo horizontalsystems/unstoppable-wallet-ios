@@ -1,3 +1,5 @@
+import Foundation
+
 protocol IBalanceView: class {
     func reload()
     func updateItem(at index: Int)
@@ -27,7 +29,7 @@ protocol IBalanceInteractor {
 
 protocol IBalanceInteractorDelegate: class {
     func didUpdate(wallets: [Wallet])
-    func didUpdate(balance: Double, coinCode: CoinCode)
+    func didUpdate(balance: Decimal, coinCode: CoinCode)
     func didUpdate(state: AdapterState, coinCode: CoinCode)
 
     func didUpdate(currency: Currency)

@@ -1,3 +1,5 @@
+import Foundation
+
 class BalanceViewItemFactory {
 
     func viewItem(from item: BalanceItem, currency: Currency?) -> BalanceViewItem {
@@ -25,7 +27,7 @@ class BalanceViewItemFactory {
         var upToDate = true
 
         if let currency = currency {
-            var total: Double = 0
+            var total: Decimal = 0
 
             for item in items {
                 if let rate = item.rate {

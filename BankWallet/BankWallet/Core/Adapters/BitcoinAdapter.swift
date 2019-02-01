@@ -5,7 +5,7 @@ import RxSwift
 class BitcoinAdapter {
     private let bitcoinKit: BitcoinKit
     private let transactionCompletionThreshold = 6
-    private let coinRate: Double = pow(10, 8)
+    private let coinRate: Decimal = pow(10, 8)
 
     let lastBlockHeightUpdatedSignal = Signal()
     let transactionRecordsSubject = PublishSubject<[TransactionRecord]>()
@@ -38,7 +38,7 @@ class BitcoinAdapter {
         return TransactionRecord(
                 transactionHash: transaction.transactionHash,
                 blockHeight: transaction.blockHeight,
-                amount: Double(transaction.amount) / coinRate,
+                amount: Decimal(transaction.amount) / coinRate,
                 timestamp: Double(transaction.timestamp),
                 from: fromAddresses,
                 to: toAddresses
@@ -49,8 +49,8 @@ class BitcoinAdapter {
 
 extension BitcoinAdapter: IAdapter {
 
-    var balance: Double {
-        return Double(bitcoinKit.balance) / coinRate
+    var balance: Decimal {
+        return Decimal(bitcoinKit.balance) / coinRate
     }
 
     var confirmationsThreshold: Int {
@@ -81,9 +81,9 @@ extension BitcoinAdapter: IAdapter {
         try? bitcoinKit.clear()
     }
 
-    func send(to address: String, value: Double, completion: ((Error?) -> ())?) {
+    func send(to address: String, value: Decimal, completion: ((Error?) -> ())?) {
         do {
-            let amount = Int(value * coinRate)
+            let amount = NSDecimalNumber(decimal: value * coinRate).intValue
             try bitcoinKit.send(to: address, value: amount)
             completion?(nil)
         } catch {
@@ -91,13 +91,13 @@ extension BitcoinAdapter: IAdapter {
         }
     }
 
-    func fee(for value: Double, address: String?, senderPay: Bool) throws -> Double {
-        let amount = Int(value * coinRate)
+    func fee(for value: Decimal, address: String?, senderPay: Bool) throws -> Decimal {
+        let amount = NSDecimalNumber(decimal: value * coinRate).intValue
         do {
             let fee = try bitcoinKit.fee(for: amount, toAddress: address, senderPay: senderPay)
-            return Double(fee) / coinRate
+            return Decimal(fee) / coinRate
         } catch SelectorError.notEnough(let maxFee) {
-            throw FeeError.insufficientAmount(fee: Double(maxFee) / coinRate)
+            throw FeeError.insufficientAmount(fee: Decimal(maxFee) / coinRate)
         }
     }
 
@@ -107,7 +107,7 @@ extension BitcoinAdapter: IAdapter {
 
     func parse(paymentAddress: String) -> PaymentRequestAddress {
         let paymentData = bitcoinKit.parse(paymentAddress: paymentAddress)
-        return PaymentRequestAddress(address: paymentData.address, amount: paymentData.amount)
+        return PaymentRequestAddress(address: paymentData.address, amount: paymentData.amount.map { Decimal($0) })
     }
 
     var receiveAddress: String {

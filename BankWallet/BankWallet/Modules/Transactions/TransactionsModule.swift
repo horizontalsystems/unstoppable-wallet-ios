@@ -1,3 +1,5 @@
+import Foundation
+
 enum TransactionStatus {
     case pending
     case processing(progress: Double)
@@ -52,7 +54,7 @@ protocol ITransactionsInteractorDelegate: class {
 
     func didUpdate(records: [TransactionRecord], coinCode: CoinCode)
 
-    func didFetch(rateValue: Double, coinCode: CoinCode, currency: Currency, timestamp: Double)
+    func didFetch(rateValue: Decimal, coinCode: CoinCode, currency: Currency, timestamp: Double)
     func didFetch(recordsData: [CoinCode: [TransactionRecord]])
 }
 

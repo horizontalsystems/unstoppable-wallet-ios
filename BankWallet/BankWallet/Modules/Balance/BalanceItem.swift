@@ -1,9 +1,11 @@
+import Foundation
+
 struct BalanceItem {
     let title: String
     let coinCode: CoinCode
     let refreshable: Bool
 
-    var balance: Double = 0
+    var balance: Decimal = 0
     var state: AdapterState = .synced
     var rate: Rate?
 

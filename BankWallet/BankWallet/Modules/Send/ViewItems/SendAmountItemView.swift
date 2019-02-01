@@ -22,6 +22,7 @@ class SendAmountItemView: BaseActionItemView {
     private let amountTypeLabel = UILabel()
     private let inputField = AmountTextField()
     private let lineView = UIView()
+    private let maxButton = RespondButton()
     private let hintLabel = UILabel()
     private let errorLabel = UILabel()
     private let switchButton = RespondButton()
@@ -36,6 +37,7 @@ class SendAmountItemView: BaseActionItemView {
 
         addSubview(amountTypeLabel)
         addSubview(lineView)
+        addSubview(maxButton)
         addSubview(inputField)
         addSubview(switchButton)
         addSubview(hintLabel)
@@ -54,6 +56,28 @@ class SendAmountItemView: BaseActionItemView {
             maker.leading.equalTo(amountTypeLabel)
             maker.top.equalTo(inputField.snp.bottom).offset(SendTheme.amountLineTopMargin)
             maker.height.equalTo(SendTheme.amountLineHeight)
+        }
+
+        maxButton.onTap = { [weak self] in
+            self?.item?.onMaxClicked?()
+        }
+        maxButton.titleLabel.text = "send.max_button".localized
+        maxButton.borderWidth = 1 / UIScreen.main.scale
+        maxButton.borderColor = SendTheme.buttonBorderColor
+        maxButton.cornerRadius = SendTheme.buttonCornerRadius
+        maxButton.backgrounds = SendTheme.buttonBackground
+        maxButton.textColors = [.active: SendTheme.buttonIconColor, .selected: SendTheme.buttonIconColor]
+        maxButton.titleLabel.font = SendTheme.buttonFont
+        maxButton.titleLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+        maxButton.snp.makeConstraints { maker in
+            maker.leading.equalTo(lineView.snp.trailing).offset(SendTheme.smallMargin)
+            maker.centerY.equalTo(lineView)
+            maker.height.equalTo(SendTheme.buttonSize)
+        }
+        maxButton.titleLabel.snp.remakeConstraints { maker in
+            maker.leading.equalToSuperview().offset(SendTheme.buttonTitleHorizontalMargin)
+            maker.top.bottom.equalToSuperview()
+            maker.trailing.equalToSuperview().offset(-SendTheme.buttonTitleHorizontalMargin)
         }
 
         inputField.inputView = UIView()
@@ -77,7 +101,7 @@ class SendAmountItemView: BaseActionItemView {
         switchButton.snp.makeConstraints { maker in
             maker.trailing.equalToSuperview().offset(-SendTheme.margin)
             maker.centerY.equalTo(lineView.snp.centerY)
-            maker.leading.equalTo(lineView.snp.trailing).offset(SendTheme.margin)
+            maker.leading.equalTo(maxButton.snp.trailing).offset(SendTheme.margin)
             maker.size.equalTo(SendTheme.buttonSize)
         }
 
@@ -104,10 +128,7 @@ class SendAmountItemView: BaseActionItemView {
 
         inputField.rx.controlEvent(.editingChanged)
                 .subscribe(onNext: { [weak self] _ in
-                    var amount: Double = 0
-                    if let doubleAmount = ValueFormatter.instance.parseAnyDecimal(from: self?.inputField.text) {
-                        amount = doubleAmount
-                    }
+                    let amount: Decimal = ValueFormatter.instance.parseAnyDecimal(from: self?.inputField.text) ?? 0
                     self?.item?.onAmountChanged?(amount)
                 })
                 .disposed(by: disposeBag)

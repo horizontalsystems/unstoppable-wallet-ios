@@ -126,7 +126,7 @@ extension TransactionsPresenter: ITransactionsInteractorDelegate {
         fetchRates(recordsData: [coinCode: records])
     }
 
-    func didFetch(rateValue: Double, coinCode: CoinCode, currency: Currency, timestamp: Double) {
+    func didFetch(rateValue: Decimal, coinCode: CoinCode, currency: Currency, timestamp: Double) {
         dataSource.set(rate: CurrencyValue(currency: currency, value: rateValue), coinCode: coinCode, timestamp: timestamp)
 
         let indexes = loader.itemIndexes(coinCode: coinCode, timestamp: timestamp)

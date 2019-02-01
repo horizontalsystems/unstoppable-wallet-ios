@@ -63,11 +63,11 @@ class HorSysBitcoinResponse: IBitcoinResponse, ImmutableMappable {
     var confirmations: Int?
 
     var size: Int?
-    var fee: Double?
-    var feePerByte: Double?
+    var fee: Decimal?
+    var feePerByte: Decimal?
 
-    var inputs = [(value: Double, address: String?)]()
-    var outputs = [(value: Double, address: String?)]()
+    var inputs = [(value: Decimal, address: String?)]()
+    var outputs = [(value: Decimal, address: String?)]()
 
     required init(map: Map) throws {
         txId = try? map.value("hash")
@@ -76,17 +76,17 @@ class HorSysBitcoinResponse: IBitcoinResponse, ImmutableMappable {
         confirmations = try? map.value("confirmations")
 
         if let fee: Double = try? map.value("fee"), let rate: Int = try? map.value("rate") {
-            let feePerByte = Double(rate) / 1000
+            let feePerByte = Decimal(rate) / 1000
             self.feePerByte = feePerByte
-            size = Int(fee / feePerByte)
-            self.fee = fee / btcRate
+            size = NSDecimalNumber(decimal: Decimal(fee) / feePerByte).intValue
+            self.fee = Decimal(fee) / btcRate
         }
         if let vInputs: [[String: Any]] = try? map.value("inputs") {
             vInputs.forEach { input in
                 if let coin = input["coin"] as? [String: Any], let value = coin["value"] as? Int {
                     let address = coin["address"] as? String
 
-                    inputs.append((value: Double(value) / btcRate, address: address))
+                    inputs.append((value: Decimal(value) / btcRate, address: address))
                 }
 
             }
@@ -96,7 +96,7 @@ class HorSysBitcoinResponse: IBitcoinResponse, ImmutableMappable {
                 if let value = output["value"] as? Int {
                     let address = output["address"] as? String
 
-                    outputs.append((value: Double(value) / btcRate, address: address))
+                    outputs.append((value: Decimal(value) / btcRate, address: address))
                 }
 
             }
@@ -113,11 +113,11 @@ class HorSysEthereumResponse: IEthereumResponse, ImmutableMappable {
 
     var size: Int?
 
-    var gasPrice: Double?
-    var gasUsed: Double?
-    var gasLimit: Double?
-    var fee: Double?
-    var value: Double?
+    var gasPrice: Decimal?
+    var gasUsed: Decimal?
+    var gasLimit: Decimal?
+    var fee: Decimal?
+    var value: Decimal?
 
     var nonce: Int?
     var from: String?
@@ -128,13 +128,13 @@ class HorSysEthereumResponse: IEthereumResponse, ImmutableMappable {
         blockHeight = try? map.value("tx.blockNumber")
 
         gasLimit = try? map.value("tx.gas")
-        if let price: String = try? map.value("tx.gasPrice"), let priceDouble = Double(price) {
-            gasPrice = priceDouble / gweiRate
+        if let priceString: String = try? map.value("tx.gasPrice"), let price = Decimal(string: priceString) {
+            gasPrice = price / gweiRate
         }
         gasUsed = try? map.value("tx.gasUsed")
 
-        if let value: String = try? map.value("tx.value") {
-            self.value = NSDecimalNumber(string: value).doubleValue / ethRate
+        if let valueString: String = try? map.value("tx.value"), let value = Decimal(string: valueString) {
+            self.value = value / ethRate
         }
 
         nonce = try? map.value("tx.nonce")

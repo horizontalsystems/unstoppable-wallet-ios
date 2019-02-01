@@ -3,11 +3,11 @@ import GRDB
 class Rate: Record {
     let coinCode: String
     let currencyCode: String
-    let value: Double
+    let value: Decimal
     let timestamp: Double
     let isLatest: Bool
 
-    init(coinCode: String, currencyCode: String, value: Double, timestamp: Double, isLatest: Bool) {
+    init(coinCode: String, currencyCode: String, value: Decimal, timestamp: Double, isLatest: Bool) {
         self.coinCode = coinCode
         self.currencyCode = currencyCode
         self.value = value
@@ -46,6 +46,21 @@ class Rate: Record {
         container[Columns.value] = value
         container[Columns.timestamp] = timestamp
         container[Columns.isLatest] = isLatest
+    }
+
+}
+
+extension Decimal: DatabaseValueConvertible {
+
+    public var databaseValue: DatabaseValue {
+        return NSDecimalNumber(decimal: self).stringValue.databaseValue
+    }
+
+    public static func fromDatabaseValue(_ dbValue: DatabaseValue) -> Decimal? {
+        guard case .string(let rawValue) = dbValue.storage else {
+            return nil
+        }
+        return Decimal(string: rawValue)
     }
 
 }

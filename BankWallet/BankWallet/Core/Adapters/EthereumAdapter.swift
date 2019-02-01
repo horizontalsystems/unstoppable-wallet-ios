@@ -4,8 +4,8 @@ import RxSwift
 class EthereumAdapter {
     private let ethereumKit: EthereumKit
     private let transactionCompletionThreshold = 12
-    private let coinRate: Double = pow(10, 18)
-    private let gWeiMultiply: Double = pow(10, 9)
+    private let coinRate: Decimal = pow(10, 18)
+    private let gWeiMultiply: Decimal = pow(10, 9)
 
     let lastBlockHeightUpdatedSignal = Signal()
     let transactionRecordsSubject = PublishSubject<[TransactionRecord]>()
@@ -47,9 +47,9 @@ class EthereumAdapter {
         )
     }
 
-    private func convertToValue(amount: String) -> Double? {
+    private func convertToValue(amount: String) -> Decimal? {
         if let result = Decimal(string: amount) {
-            return Double(truncating: (result / pow(10, 18)) as NSNumber)
+            return result / pow(10, 18)
         }
         return nil
     }
@@ -58,8 +58,8 @@ class EthereumAdapter {
 
 extension EthereumAdapter: IAdapter {
 
-    var balance: Double {
-        return Double(ethereumKit.balance) / coinRate
+    var balance: Decimal {
+        return Decimal(Double(ethereumKit.balance)) / coinRate
     }
 
     var confirmationsThreshold: Int {
@@ -90,14 +90,16 @@ extension EthereumAdapter: IAdapter {
         try? ethereumKit.clear()
     }
 
-    func send(to address: String, value: Double, completion: ((Error?) -> ())?) {
-        ethereumKit.send(to: address, value: value, completion: completion)
+    func send(to address: String, value: Decimal, completion: ((Error?) -> ())?) {
+        ethereumKit.send(to: address, value: NSDecimalNumber(decimal: value).doubleValue, completion: completion)
     }
 
-    func fee(for value: Double, address: String?, senderPay: Bool) throws -> Double {
+    func fee(for value: Decimal, address: String?, senderPay: Bool) throws -> Decimal {
         // ethereum fee comes in GWei integer value
-        let fee = Double(ethereumKit.fee) * gWeiMultiply / coinRate
-        if balance > 0, balance - value - fee < 0 {
+
+        let fee = Decimal(ethereumKit.fee) * gWeiMultiply / coinRate
+        let balance = Decimal(Double(ethereumKit.balance)) / coinRate
+        if balance > 0, balance - value - (senderPay ? fee : 0) < 0 {
             throw FeeError.insufficientAmount(fee: fee)
         }
         return fee

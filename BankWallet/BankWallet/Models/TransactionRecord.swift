@@ -1,7 +1,9 @@
+import Foundation
+
 struct TransactionRecord {
     let transactionHash: String
     let blockHeight: Int?
-    let amount: Double
+    let amount: Decimal
     let timestamp: Double
 
     let from: [TransactionAddress]

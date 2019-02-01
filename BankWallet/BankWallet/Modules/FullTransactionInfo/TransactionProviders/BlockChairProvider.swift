@@ -44,11 +44,11 @@ class BlockChairBitcoinResponse: IBitcoinResponse, ImmutableMappable {
     var confirmations: Int?
 
     var size: Int?
-    var fee: Double?
-    var feePerByte: Double?
+    var fee: Decimal?
+    var feePerByte: Decimal?
 
-    var inputs = [(value: Double, address: String?)]()
-    var outputs = [(value: Double, address: String?)]()
+    var inputs = [(value: Decimal, address: String?)]()
+    var outputs = [(value: Decimal, address: String?)]()
 
     required init(map: Map) throws {
         guard let data: [String: Any] = try? map.value("data"), let key = data.keys.first else {
@@ -68,21 +68,21 @@ class BlockChairBitcoinResponse: IBitcoinResponse, ImmutableMappable {
         }
         blockHeight = try? map.value("data.\(key).transaction.block_id")
 
-        if let fee: Double = try? map.value("data.\(key).transaction.fee"), let size: Int = try? map.value("data.\(key).transaction.size") {
+        if let fee: Decimal = try? map.value("data.\(key).transaction.fee"), let size: Int = try? map.value("data.\(key).transaction.size") {
             self.fee = fee / btcRate
             self.size = size
-            feePerByte = fee / Double(size)
+            feePerByte = fee / Decimal(size)
         }
         if let vInputs: [[String: Any]] = try? map.value("data.\(key).inputs") {
             vInputs.forEach { input in
-                if let value = input["value"] as? Double {
+                if let value = input["value"] as? Decimal {
                     inputs.append((value: value / btcRate, address: input["recipient"] as? String))
                 }
             }
         }
         if let vOutputs: [[String: Any]] = try? map.value("data.\(key).outputs") {
             vOutputs.forEach { output in
-                if let value = output["value"] as? Double {
+                if let value = output["value"] as? Decimal {
                     outputs.append((value: value / btcRate, address: output["recipient"] as? String))
                 }
             }
@@ -99,11 +99,11 @@ class BlockChairEthereumResponse: IEthereumResponse, ImmutableMappable {
 
     var size: Int?
 
-    var gasPrice: Double?
-    var gasUsed: Double?
-    var gasLimit: Double?
-    var fee: Double?
-    var value: Double?
+    var gasPrice: Decimal?
+    var gasUsed: Decimal?
+    var gasLimit: Decimal?
+    var fee: Decimal?
+    var value: Decimal?
 
     var nonce: Int?
     var from: String?
@@ -128,20 +128,20 @@ class BlockChairEthereumResponse: IEthereumResponse, ImmutableMappable {
         blockHeight = try? map.value("data.\(key).transaction.block_id")
 
         gasLimit = try? map.value("data.\(key).transaction.gas_limit")
-        if let gasPrice: Double = try? map.value("data.\(key).transaction.gas_price") {
-            self.gasPrice = gasPrice / gweiRate
+        if let gasPriceDouble: Double = try? map.value("data.\(key).transaction.gas_price") {
+            self.gasPrice = Decimal(gasPriceDouble) / gweiRate
         }
         gasUsed = try? map.value("data.\(key).transaction.gas_used")
-        if let feeString: String = try? map.value("data.\(key).transaction.fee"), let feeBigInt = BigInt(feeString) {
-            fee = NSDecimalNumber(string: feeBigInt.description).doubleValue / ethRate
+        if let feeString: String = try? map.value("data.\(key).transaction.fee"), let value = Decimal(string: feeString) {
+            fee = value / ethRate
         }
 
         if let nonceString: String = try? map.value("data.\(key).transaction.nonce") {
             nonce = Int(nonceString)
         }
 
-        if let valueString: String = try? map.value("data.\(key).transaction.value"), let valueBigInt = BigInt(valueString) {
-            value = NSDecimalNumber(string: valueBigInt.description).doubleValue / ethRate
+        if let valueString: String = try? map.value("data.\(key).transaction.value"), let value = Decimal(string: valueString) {
+            self.value = value / ethRate
         }
 
         from = try? map.value("data.\(key).transaction.sender")

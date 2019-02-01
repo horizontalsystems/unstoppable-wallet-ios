@@ -271,4 +271,21 @@ class SendPresenterTests: XCTestCase {
         verify(mockView).showCopied()
     }
 
+    func testOnMaxClicked() {
+        let maxBalance: Double = 15
+        let address = "some_test_address"
+
+        stub(mockUserInput) { mock in
+            when(mock.address.get).thenReturn(address)
+        }
+        stub(mockInteractor) { mock in
+            when(mock.totalBalanceMinusFee(forUserInput: equal(to: inputType), address: equal(to: address))).thenReturn(maxBalance)
+        }
+
+        presenter.onMaxClicked()
+
+        verify(mockInteractor).totalBalanceMinusFee(forUserInput: equal(to: inputType), address: equal(to: address))
+        verify(mockView).set(amountInfo: equal(to: amountInfo))
+    }
+
 }
