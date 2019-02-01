@@ -48,8 +48,8 @@
 "backup.confirmation.description" = "Enter words from your secret key";
 "backup.confirmation.failure_alert.text" = "Words do not match";
 "backup.confirmation.done_button" = "Done";
-"backup.confirmation.understand" = "I understand that my wallet and tokens are held securely on this device only and not any servers.";
-"backup.confirmation.delete_app_warn" = "I understand that if this app is moved to another device, deleted or malfunctions, my wallet can be only recovered with the Secret Key that I have just written down and saved in a secure place.";
+"backup.confirmation.understand" = "私は私の財布とトークンは、ほかのサーバーではなく、このデバイスだけに安全に開催されること理解します。";
+"backup.confirmation.delete_app_warn" = "私は、このアプリケーションが別のデバイスは、削除または誤動作に移動した場合、私の財布回復できるのは、安全な場所に保存されている秘密鍵だけのを理解します。";
 
 // Balance
 
@@ -62,8 +62,8 @@
 // Deposit
 
 "deposit.receive_coin" = "受取 %@";
-"deposit.your_address" = "Your Address";
-"deposit.share" = "Share";
+"deposit.your_address" = "お客様のアドレス";
+"deposit.share" = "共有";
 
 // Send
 
