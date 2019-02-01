@@ -21,7 +21,6 @@ class MainSettingsPresenterTests: XCTestCase {
         mockView = MockIMainSettingsView()
 
         stub(mockView) { mock in
-            when(mock.set(title: any())).thenDoNothing()
             when(mock.set(backedUp: any())).thenDoNothing()
             when(mock.set(language: any())).thenDoNothing()
             when(mock.set(baseCurrency: any())).thenDoNothing()
@@ -58,12 +57,6 @@ class MainSettingsPresenterTests: XCTestCase {
         presenter = nil
 
         super.tearDown()
-    }
-
-    func testShowTitle() {
-        presenter.viewDidLoad()
-
-        verify(mockView).set(title: "settings.title")
     }
 
     func testBackedUpOnLoad() {

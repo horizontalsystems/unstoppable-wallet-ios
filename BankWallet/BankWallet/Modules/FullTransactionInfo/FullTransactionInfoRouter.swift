@@ -51,6 +51,7 @@ extension FullTransactionInfoRouter {
         let navigationController = UINavigationController(rootViewController: viewController)
         navigationController.navigationBar.tintColor = AppTheme.navigationBarTintColor
         navigationController.navigationBar.barStyle = AppTheme.navigationBarStyle
+        navigationController.navigationBar.prefersLargeTitles = true
 
         router.viewController = navigationController
         return navigationController

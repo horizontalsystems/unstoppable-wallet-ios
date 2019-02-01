@@ -39,7 +39,9 @@ class FullTransactionInfoViewController: UIViewController, SectionsDataSource {
         super.viewDidLoad()
 
         view.backgroundColor = AppTheme.controllerBackground
+
         title = "full_info.title".localized
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: title, style: .plain, target: nil, action: nil)
 
         view.addSubview(tableView)
         tableView.backgroundColor = .clear
@@ -121,7 +123,6 @@ class FullTransactionInfoViewController: UIViewController, SectionsDataSource {
     }
 
     override func viewWillAppear(_ animated: Bool) {
-        navigationController?.navigationBar.prefersLargeTitles = false
         tableView.deselectCell(withCoordinator: transitionCoordinator, animated: animated)
     }
 

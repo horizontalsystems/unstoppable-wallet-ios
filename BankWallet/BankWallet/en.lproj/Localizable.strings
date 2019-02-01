@@ -43,7 +43,6 @@ Go to Settings - > Bank and allow access to Camera.";
 "backup.intro.backup_now" = "Backup";
 
 "backup.words.title" = "Secret Key";
-"backup.words.back" = "Back";
 "backup.words.proceed" = "Next";
 
 "backup.confirmation.title" = "Check ...";
