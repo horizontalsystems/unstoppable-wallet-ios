@@ -3,6 +3,8 @@ import HSBitcoinKit
 import RxSwift
 
 class BitcoinAdapter {
+    let decimal = 8
+
     private let bitcoinKit: BitcoinKit
     private let transactionCompletionThreshold = 6
     private let coinRate: Decimal = pow(10, 8)
@@ -75,6 +77,9 @@ extension BitcoinAdapter: IAdapter {
 
     func start() {
         try? bitcoinKit.start()
+    }
+
+    func stop() {
     }
 
     func refresh() {

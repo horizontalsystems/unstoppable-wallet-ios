@@ -1,7 +1,4 @@
-import Foundation
-
 class GuestPresenter {
-
     private let interactor: IGuestInteractor
     private let router: IGuestRouter
 

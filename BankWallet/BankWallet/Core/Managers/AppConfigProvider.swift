@@ -19,6 +19,15 @@ class AppConfigProvider: IAppConfigProvider {
         return wordsString.split(separator: " ", omittingEmptySubsequences: true).map(String.init)
     }
 
+    var infuraKey: String {
+        return (Bundle.main.object(forInfoDictionaryKey: "InfuraApiKey") as? String) ?? ""
+    }
+
+    var etherscanKey: String {
+        return (Bundle.main.object(forInfoDictionaryKey: "EtherscanApiKey") as? String) ?? ""
+    }
+
+
     var disablePinLock: Bool {
         return Bundle.main.object(forInfoDictionaryKey: "DisablePinLock") as? String == "true"
     }
@@ -42,7 +51,8 @@ class AppConfigProvider: IAppConfigProvider {
         return [
             Coin(title: "Bitcoin", code: "BTC\(suffix)", type: .bitcoin),
             Coin(title: "Bitcoin Cash", code: "BCH\(suffix)", type: .bitcoinCash),
-            Coin(title: "Ethereum", code: "ETH\(suffix)", type: .ethereum)
+            Coin(title: "Ethereum", code: "ETH\(suffix)", type: .ethereum),
+            Coin(title: "Pundi X Token", code: "NPXS\(suffix)", type: .erc20(address: "0xA15C7Ebe1f07CaF6bFF097D8a589fb8AC49Ae5B3", decimal: 18)),
         ]
     }
 

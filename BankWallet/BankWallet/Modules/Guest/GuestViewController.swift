@@ -1,8 +1,7 @@
 import UIKit
 
 class GuestViewController: UIViewController {
-
-    let delegate: IGuestViewDelegate
+    private let delegate: IGuestViewDelegate
 
     @IBOutlet weak var titleLabel: UILabel?
     @IBOutlet weak var subtitleLabel: UILabel?

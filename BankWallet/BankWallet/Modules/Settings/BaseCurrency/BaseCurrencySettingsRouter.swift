@@ -1,7 +1,7 @@
 import UIKit
 
 class BaseCurrencySettingsRouter {
-    var viewController: UIViewController?
+    weak var viewController: UIViewController?
 }
 
 extension BaseCurrencySettingsRouter: IBaseCurrencySettingsRouter {
