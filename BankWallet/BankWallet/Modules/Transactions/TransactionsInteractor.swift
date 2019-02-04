@@ -151,6 +151,8 @@ extension TransactionsInteractor: ITransactionsInteractor {
                 requestedTimestamps[coinCode]?.append(timestamp)
 
                 rateManager.timestampRateValueObservable(coinCode: coinCode, currencyCode: currency.code, timestamp: timestamp)
+                        .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
+                        .observeOn(MainScheduler.instance)
                         .subscribe(onNext: { rateValue in
 //                            print("did fetch: \(coinCode) -- \(currency.code) -- \(timestamp) -- \(rateValue)")
                             self.delegate?.didFetch(rateValue: rateValue, coinCode: coinCode, currency: currency, timestamp: timestamp)

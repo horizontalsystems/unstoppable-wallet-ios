@@ -75,6 +75,12 @@ extension TransactionsViewController: ITransactionsView {
         tableView.reloadData()
     }
 
+    func reload(indexes: [Int]) {
+        tableView.beginUpdates()
+        tableView.reloadRows(at: indexes.map { IndexPath(row: $0, section: 0) }, with: .none)
+        tableView.endUpdates()
+    }
+
 }
 
 extension TransactionsViewController {

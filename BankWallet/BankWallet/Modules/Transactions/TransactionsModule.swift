@@ -22,6 +22,7 @@ extension TransactionStatus: Equatable {
 protocol ITransactionsView: class {
     func show(filters: [CoinCode?])
     func reload()
+    func reload(indexes: [Int])
 }
 
 protocol ITransactionsViewDelegate {

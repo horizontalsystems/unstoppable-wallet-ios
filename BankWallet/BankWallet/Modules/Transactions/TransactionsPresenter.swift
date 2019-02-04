@@ -132,7 +132,7 @@ extension TransactionsPresenter: ITransactionsInteractorDelegate {
         let indexes = loader.itemIndexes(coinCode: coinCode, timestamp: timestamp)
 
         if !indexes.isEmpty {
-            view?.reload()
+            view?.reload(indexes: indexes)
         }
     }
 
