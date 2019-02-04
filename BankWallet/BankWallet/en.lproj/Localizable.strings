@@ -43,7 +43,6 @@ Go to Settings - > Bank and allow access to Camera.";
 "backup.intro.backup_now" = "Backup";
 
 "backup.words.title" = "Secret Key";
-"backup.words.back" = "Back";
 "backup.words.proceed" = "Next";
 
 "backup.confirmation.title" = "Check ...";
@@ -65,7 +64,7 @@ Go to Settings - > Bank and allow access to Camera.";
 
 "deposit.receive_coin" = "Receive %@";
 "deposit.your_address" = "Your Address";
-"deposit.share" = "Share";
+"deposit.share" = "Forward";
 
 // Send
 
@@ -78,7 +77,7 @@ Go to Settings - > Bank and allow access to Camera.";
 "send.fee" = "Fee";
 "send.total" = "Total";
 "send.max_button" = "Max";
-"send_erc.alert" = "You need ETH to transfer ERC Tokens";
+"send_erc.alert" = "%@ is an ERC20 token on Ethereum. To send such token get some ETH on your balance.";
 
 // Transactions
 
@@ -149,7 +148,7 @@ Go to Settings - > Bank and allow access to Camera.";
 
 // Settings -> Manage Wallet
 
-"settings_manage_wallet.title" = "Wallets";
+"settings_manage_wallet.title" = "Coin Manager";
 
 "settings_manage_wallet.remove_button" = "Remove";
 

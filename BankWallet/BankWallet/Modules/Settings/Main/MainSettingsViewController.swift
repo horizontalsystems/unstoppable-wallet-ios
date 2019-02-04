@@ -21,6 +21,9 @@ class MainSettingsViewController: UIViewController, SectionsDataSource {
 
         super.init(nibName: nil, bundle: nil)
 
+        title = "settings.title".localized
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: title, style: .plain, target: nil, action: nil)
+
         tabBarItem = UITabBarItem(title: "settings.tab_bar_item".localized, image: UIImage(named: "settings.tab_bar_item"), tag: 0)
 
         tableView.registerCell(forClass: SettingsCell.self)
@@ -149,11 +152,6 @@ class MainSettingsViewController: UIViewController, SectionsDataSource {
 }
 
 extension MainSettingsViewController: IMainSettingsView {
-
-    func set(title: String) {
-        self.title = title.localized
-        reloadIfNeeded()
-    }
 
     func set(backedUp: Bool) {
         self.backedUp = backedUp

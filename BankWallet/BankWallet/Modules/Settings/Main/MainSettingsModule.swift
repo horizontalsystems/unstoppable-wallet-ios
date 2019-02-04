@@ -1,7 +1,6 @@
 import Foundation
 
 protocol IMainSettingsView: class {
-    func set(title: String)
     func set(backedUp: Bool)
     func set(baseCurrency: String)
     func set(language: String)

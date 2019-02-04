@@ -16,8 +16,6 @@ class MainSettingsPresenter {
 extension MainSettingsPresenter: IMainSettingsViewDelegate {
 
     func viewDidLoad() {
-        view?.set(title: "settings.title")
-
         view?.set(backedUp: interactor.isBackedUp)
         view?.set(baseCurrency: interactor.baseCurrency)
         view?.set(language: interactor.currentLanguage)
