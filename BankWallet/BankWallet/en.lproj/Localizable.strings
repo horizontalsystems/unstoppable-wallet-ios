@@ -64,7 +64,7 @@ Go to Settings - > Bank and allow access to Camera.";
 
 "deposit.receive_coin" = "Receive %@";
 "deposit.your_address" = "Your Address";
-"deposit.share" = "Share";
+"deposit.share" = "Forward";
 
 // Send
 
@@ -148,7 +148,7 @@ Go to Settings - > Bank and allow access to Camera.";
 
 // Settings -> Manage Wallet
 
-"settings_manage_wallet.title" = "Wallets";
+"settings_manage_wallet.title" = "Coin Manager";
 
 "settings_manage_wallet.remove_button" = "Remove";
 
