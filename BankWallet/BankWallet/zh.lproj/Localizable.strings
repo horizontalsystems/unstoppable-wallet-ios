@@ -62,7 +62,7 @@
 
 "deposit.receive_coin" = "收到%@";
 "deposit.your_address" = "您的地址";
-"deposit.share" = "分享";
+"deposit.share" = "Forward";
 
 // Send
 
@@ -146,7 +146,7 @@
 
 // Settings -> Manage Wallet
 
-"settings_manage_wallet.title" = "钱包";
+"settings_manage_wallet.title" = "Coin Manager";
 
 "settings_manage_wallet.remove_button" = "移除";
 
