@@ -24,7 +24,7 @@ PODS:
     - RxRealm (~> 0.7.0)
     - RxSwift (~> 4.0)
   - HSCryptoKit (1.1.0)
-  - HSEthereumKit (0.2.3):
+  - HSEthereumKit (0.3.1):
     - Alamofire (~> 4.8.0)
     - HSCryptoKit (~> 1.1.0)
     - HSHDWalletKit (~> 1.0.3)
@@ -110,7 +110,7 @@ CHECKOUT OPTIONS:
     :commit: 91169713bbb32918a7dae233caac6c6b62350799
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios/
   HSEthereumKit:
-    :commit: 738a3d8942b54d7e0664710e95a85c26cac77995
+    :commit: b6303e4f80ac4c4376c10617f00e8ca71b83dcca
     :git: https://github.com/horizontalsystems/ethereum-kit-ios/
 
 SPEC CHECKSUMS:
@@ -123,7 +123,7 @@ SPEC CHECKSUMS:
   GrouviHUD: f15d839f88d262278f5d7a7a951236e7d0fe4e31
   HSBitcoinKit: 999eb532a456f757aa0b354f0b9e9e20adf8dc27
   HSCryptoKit: 8679d53083d1136fc128bbf9b040976110ce1491
-  HSEthereumKit: 1638d4e6ed49c8086050e6ea837915d3cce405e3
+  HSEthereumKit: 4c55ba9c256ddce4286fa7d4f7bdcf25315bb31b
   HSHDWalletKit: f75cd8186f00bae4f6aa76548a0b1f24c13dff72
   KeychainAccess: b3816fddcf28aa29d94b10ec305cd52be14c472b
   ObjectMapper: b612bf8c8e99c4dc0bb6013a51f7c27966ed5da9

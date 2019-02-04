@@ -1,4 +1,5 @@
 import RxSwift
+import HSEthereumKit
 
 typealias CoinCode = String
 
@@ -86,6 +87,7 @@ enum FeeError: Error {
 }
 
 protocol IAdapter: class {
+    var decimal: Int { get }
     var balance: Decimal { get }
     var balanceUpdatedSignal: Signal { get }
 
@@ -106,6 +108,7 @@ protocol IAdapter: class {
     var refreshable: Bool { get }
 
     func start()
+    func stop()
     func refresh()
     func clear()
 
@@ -184,11 +187,36 @@ protocol IAppConfigProvider {
     var reachabilityHost: String { get }
     var ratesApiUrl: String { get }
     var testMode: Bool { get }
+    var infuraKey: String { get }
+    var etherscanKey: String { get }
     var currencies: [Currency] { get }
 
     var defaultWords: [String] { get }
     var disablePinLock: Bool { get }
     var defaultCoins: [Coin] { get }
+}
+
+protocol IEthereumKitManager {
+    func ethereumKit(authData: AuthData) -> EthereumKit
+    func clear() throws
+}
+
+protocol IKitWrapper {
+    var receiveAddress: String { get }
+    var balance: Decimal { get }
+    var fee: Decimal { get }
+    var lastBlockHeight: Int? { get }
+    var debugInfo: String { get }
+    var decimal: Int { get }
+
+    func start()
+    func refresh()
+    func clear() throws
+
+    func validate(address: String) throws
+    func send(to address: String, value: Decimal, gasPrice: Int?, completion: ((Error?) -> ())?)
+
+    func transactions(fromHash: String?, limit: Int?) -> Single<[EthereumTransaction]>
 }
 
 protocol IFullTransactionInfoProvider {

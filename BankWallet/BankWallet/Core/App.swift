@@ -30,6 +30,7 @@ class App {
     let authManager: AuthManager
     let wordsManager: IWordsManager
 
+    let ethereumKitManager: IEthereumKitManager
     let adapterFactory: IAdapterFactory
     let walletFactory: IWalletFactory
     let walletManager: IWalletManager
@@ -68,10 +69,12 @@ class App {
         rateManager = RateManager(storage: grdbStorage, networkManager: networkManager)
         currencyManager = CurrencyManager(localStorage: localStorage, appConfigProvider: appConfigProvider)
 
-        authManager = AuthManager(secureStorage: secureStorage, localStorage: localStorage, pinManager: pinManager, coinManager: coinManager, rateManager: rateManager)
+        ethereumKitManager = EthereumKitManager(appConfigProvider: appConfigProvider)
+
+        authManager = AuthManager(secureStorage: secureStorage, localStorage: localStorage, pinManager: pinManager, coinManager: coinManager, rateManager: rateManager, ethereumKitManager: ethereumKitManager)
         wordsManager = WordsManager(localStorage: localStorage)
 
-        adapterFactory = AdapterFactory(appConfigProvider: appConfigProvider, localStorage: localStorage)
+        adapterFactory = AdapterFactory(appConfigProvider: appConfigProvider, localStorage: localStorage, ethereumKitManager: ethereumKitManager)
         walletFactory = WalletFactory(adapterFactory: adapterFactory)
         walletManager = WalletManager(walletFactory: walletFactory, authManager: authManager, coinManager: coinManager)
 

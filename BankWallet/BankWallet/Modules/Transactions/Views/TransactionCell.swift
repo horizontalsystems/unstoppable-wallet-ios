@@ -136,7 +136,7 @@ class TransactionCell: UITableViewCell {
             timeLabel.isHidden = false
         }
 
-        barsProgressView.snp.makeConstraints { maker in
+        barsProgressView.snp.remakeConstraints { maker in
             maker.height.equalTo(TransactionsTheme.barsProgressHeight)
             maker.centerY.equalTo(self.amountLabel)
 

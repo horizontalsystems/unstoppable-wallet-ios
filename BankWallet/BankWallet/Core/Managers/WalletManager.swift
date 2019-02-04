@@ -35,8 +35,16 @@ extension WalletManager: IWalletManager {
             return
         }
 
+        let oldWallets = wallets
+
         wallets = coinManager.coins.compactMap { coin in
             wallets.first(where: { $0.coinCode == coin.code }) ?? walletFactory.wallet(forCoin: coin, authData: authData)
+        }
+
+        for oldWallet in oldWallets {
+            if !wallets.contains(where: { wallet in wallet.coinCode == oldWallet.coinCode }) {
+                oldWallet.adapter.stop()
+            }
         }
 
         walletsUpdatedSignal.notify()
