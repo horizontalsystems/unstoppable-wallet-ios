@@ -62,7 +62,7 @@
 
 "deposit.receive_coin" = "%@ al";
 "deposit.your_address" = "Adresiniz";
-"deposit.share" = "Paylaş";
+"deposit.share" = "Forward";
 
 // Send
 
@@ -146,7 +146,7 @@
 
 // Settings -> Manage Wallet
 
-"settings_manage_wallet.title" = "Cüzdanlar";
+"settings_manage_wallet.title" = "Coin Manager";
 
 "settings_manage_wallet.remove_button" = "Kaldır";
 
