@@ -75,7 +75,7 @@
 "send.fee" = "Gebühr";
 "send.total" = "Insgesamt";
 "send.max_button" = "Max.";
-"send_erc.alert" = "You need ETH to transfer ERC Tokens";
+"send_erc.alert" = "%@ is an ERC20 token on Ethereum. To send such token get some ETH on your balance.";
 
 // Transactions
 
