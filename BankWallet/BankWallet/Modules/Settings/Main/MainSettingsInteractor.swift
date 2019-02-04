@@ -25,6 +25,8 @@ class MainSettingsInteractor {
                 .disposed(by: disposeBag)
 
         currencyManager.baseCurrencyUpdatedSignal
+                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
+                .observeOn(MainScheduler.instance)
                 .subscribe(onNext: { [weak self] in
                     self?.delegate?.didUpdateBaseCurrency()
                 })

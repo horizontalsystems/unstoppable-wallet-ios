@@ -43,7 +43,6 @@ class LanguageSettingsViewController: UIViewController, SectionsDataSource {
 
         sections.append(Section(id: "languages", headerState: .margin(height: SettingsTheme.subSettingsHeaderHeight), footerState: .margin(height: SettingsTheme.subSettingsHeaderHeight), rows: items.map { item in
             Row<LanguageCell>(id: item.id, height: SettingsTheme.languageCellHeight, bind: { cell, _ in
-                cell.selectionStyle = .default
                 cell.bind(title: item.title, subtitle: item.subtitle, selected: item.current)
             }, action: { [weak self] _ in
                 self?.delegate.didSelect(item: item)

@@ -9,10 +9,13 @@ class LanguageCell: UITableViewCell {
 
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+
         backgroundColor = SettingsTheme.cellBackground
         contentView.backgroundColor = .clear
-//        separatorInset.left = self.layoutMargins.left * 2
-        selectionStyle = .none
+
+        let backgroundView = UIView()
+        backgroundView.backgroundColor = SettingsTheme.cellSelectBackground
+        selectedBackgroundView = backgroundView
 
         titleLabel.font = SettingsTheme.titleFont
         titleLabel.textColor = SettingsTheme.titleColor
