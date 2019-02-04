@@ -18,6 +18,7 @@ protocol ISendView: class {
     func showCopied()
     func show(error: Error)
     func dismissWithSuccess()
+    func set(decimal: Int)
 }
 
 protocol ISendViewDelegate {
@@ -26,7 +27,7 @@ protocol ISendViewDelegate {
     func onAmountChanged(amount: Decimal)
     func onSwitchClicked()
 
-    func onPasteClicked()
+    func onPasteAddressClicked()
     func onScan(address: String)
     func onDeleteClicked()
 
@@ -35,12 +36,14 @@ protocol ISendViewDelegate {
 
     func onCopyAddress()
     func onMaxClicked()
+
+    func onPasteAmountClicked()
 }
 
 protocol ISendInteractor {
     var defaultInputType: SendInputType { get }
     var coinCode: CoinCode { get }
-    var addressFromPasteboard: String? { get }
+    var valueFromPasteboard: String? { get }
     func parse(paymentAddress: String) -> PaymentRequestAddress
     func convertedAmount(forInputType inputType: SendInputType, amount: Decimal) -> Decimal?
     func state(forUserInput input: SendUserInput) -> SendState
@@ -62,7 +65,7 @@ protocol ISendRouter {
 }
 
 protocol ISendStateViewItemFactory {
-    func viewItem(forState state: SendState) -> SendStateViewItem
+    func viewItem(forState state: SendState, forceRoundDown: Bool) -> SendStateViewItem
     func confirmationViewItem(forState state: SendState) -> SendConfirmationViewItem?
 }
 
@@ -110,6 +113,7 @@ class SendUserInput {
 }
 
 class SendState {
+    var decimal: Int
     var inputType: SendInputType
     var coinValue: CoinValue?
     var currencyValue: CurrencyValue?
@@ -119,12 +123,14 @@ class SendState {
     var feeCoinValue: CoinValue?
     var feeCurrencyValue: CurrencyValue?
 
-    init(inputType: SendInputType) {
+    init(decimal: Int, inputType: SendInputType) {
+        self.decimal = decimal
         self.inputType = inputType
     }
 }
 
 class SendStateViewItem {
+    var decimal: Int
     var amountInfo: AmountInfo?
     var switchButtonEnabled: Bool = false
     var hintInfo: HintInfo?
@@ -132,6 +138,11 @@ class SendStateViewItem {
     var primaryFeeInfo: AmountInfo?
     var secondaryFeeInfo: AmountInfo?
     var sendButtonEnabled: Bool = false
+
+    init(decimal: Int) {
+        self.decimal = decimal
+    }
+
 }
 
 class SendConfirmationViewItem {

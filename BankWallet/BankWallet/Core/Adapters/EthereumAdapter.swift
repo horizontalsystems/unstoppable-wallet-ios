@@ -58,6 +58,10 @@ class EthereumAdapter {
 
 extension EthereumAdapter: IAdapter {
 
+    var decimal: Int {
+        return 18
+    }
+
     var balance: Decimal {
         return Decimal(Double(ethereumKit.balance)) / coinRate
     }

@@ -49,6 +49,10 @@ class BitcoinAdapter {
 
 extension BitcoinAdapter: IAdapter {
 
+    var decimal: Int {
+        return 8
+    }
+
     var balance: Decimal {
         return Decimal(bitcoinKit.balance) / coinRate
     }
@@ -83,7 +87,7 @@ extension BitcoinAdapter: IAdapter {
 
     func send(to address: String, value: Decimal, completion: ((Error?) -> ())?) {
         do {
-            let amount = NSDecimalNumber(decimal: value * coinRate).intValue
+            let amount = convertToSatoshi(value: value)
             try bitcoinKit.send(to: address, value: amount)
             completion?(nil)
         } catch {
@@ -92,13 +96,18 @@ extension BitcoinAdapter: IAdapter {
     }
 
     func fee(for value: Decimal, address: String?, senderPay: Bool) throws -> Decimal {
-        let amount = NSDecimalNumber(decimal: value * coinRate).intValue
         do {
+            let amount = convertToSatoshi(value: value)
             let fee = try bitcoinKit.fee(for: amount, toAddress: address, senderPay: senderPay)
             return Decimal(fee) / coinRate
         } catch SelectorError.notEnough(let maxFee) {
             throw FeeError.insufficientAmount(fee: Decimal(maxFee) / coinRate)
         }
+    }
+
+    private func convertToSatoshi(value: Decimal) -> Int {
+        let coinValue: Decimal = value * coinRate
+        return NSDecimalNumber(decimal: ValueFormatter.instance.round(value: coinValue, scale: 0, roundingMode: .plain)).intValue
     }
 
     func validate(address: String) throws {

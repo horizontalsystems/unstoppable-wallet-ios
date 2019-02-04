@@ -11,10 +11,14 @@ class SendInteractorTests: XCTestCase {
     private var mockRateStorage: MockIRateStorage!
     private var mockLocalStorage: MockILocalStorage!
     private var mockPasteboardManager: MockIPasteboardManager!
+    private var mockAppConfigProvider: MockIAppConfigProvider!
 
     private let coinCode = "BTC"
     private let baseCurrency = Currency(code: "USD", symbol: "$")
     private let balance: Decimal = 123.45
+
+    private let fiatDecimal = 2
+    private let maxDecimal = 8
 
     private var mockAdapter: MockIAdapter!
     private var wallet: Wallet!
@@ -35,6 +39,7 @@ class SendInteractorTests: XCTestCase {
         mockRateStorage = MockIRateStorage()
         mockLocalStorage = MockILocalStorage()
         mockPasteboardManager = MockIPasteboardManager()
+        mockAppConfigProvider = MockIAppConfigProvider()
 
         stub(mockDelegate) { mock in
             when(mock.didUpdateRate()).thenDoNothing()
@@ -43,6 +48,7 @@ class SendInteractorTests: XCTestCase {
             when(mock.baseCurrency.get).thenReturn(baseCurrency)
         }
         stub(mockAdapter) { mock in
+            when(mock.decimal.get).thenReturn(0)
             when(mock.balance.get).thenReturn(balance)
             when(mock.validate(address: any())).thenDoNothing()
             when(mock.fee(for: any(), address: any(), senderPay: any())).thenReturn(0)
@@ -50,8 +56,12 @@ class SendInteractorTests: XCTestCase {
         stub(mockPasteboardManager) { mock in
             when(mock.set(value: any())).thenDoNothing()
         }
+        stub(mockAppConfigProvider) { mock in
+            when(mock.fiatDecimal.get).thenReturn(fiatDecimal)
+            when(mock.maxDecimal.get).thenReturn(maxDecimal)
+        }
 
-        interactor = SendInteractor(currencyManager: mockCurrencyManager, rateStorage: mockRateStorage, localStorage: mockLocalStorage, pasteboardManager: mockPasteboardManager, state: interactorState)
+        interactor = SendInteractor(currencyManager: mockCurrencyManager, rateStorage: mockRateStorage, localStorage: mockLocalStorage, pasteboardManager: mockPasteboardManager, state: interactorState, appConfigProvider: mockAppConfigProvider)
         interactor.delegate = mockDelegate
     }
 
@@ -61,6 +71,7 @@ class SendInteractorTests: XCTestCase {
         mockRateStorage = nil
         mockLocalStorage = nil
         mockPasteboardManager = nil
+        mockAppConfigProvider = nil
 
         mockAdapter = nil
         wallet = nil
@@ -71,14 +82,14 @@ class SendInteractorTests: XCTestCase {
         super.tearDown()
     }
 
-    func testAddressFromPasteboard() {
+    func testValueFromPasteboard() {
         let address = "address"
 
         stub(mockPasteboardManager) { mock in
             when(mock.value.get).thenReturn(address)
         }
 
-        XCTAssertEqual(interactor.addressFromPasteboard, address)
+        XCTAssertEqual(interactor.valueFromPasteboard, address)
     }
 
     func testConvertedAmount_FromCoinToCurrency() {
@@ -101,6 +112,37 @@ class SendInteractorTests: XCTestCase {
 
     func testConvertedAmount_NoRate() {
         XCTAssertEqual(interactor.convertedAmount(forInputType: .coin, amount: 123.45), nil)
+    }
+
+    func testState_numberOfDecimals_coin() {
+        let decimal = 8
+        stub(mockAdapter) { mock in
+            when(mock.decimal.get).thenReturn(decimal)
+        }
+
+        let state = interactor.state(forUserInput: input)
+
+        XCTAssertEqual(state.decimal, decimal)
+    }
+
+    func testState_numberOfDecimals_fiat() {
+        input.inputType = .currency
+
+        let state = interactor.state(forUserInput: input)
+
+        XCTAssertEqual(state.decimal, fiatDecimal)
+    }
+
+    func testState_numberOfDecimals_maxDecimal() {
+        let expectedDecimal = 8
+
+        stub(mockAdapter) { mock in
+            when(mock.decimal.get).thenReturn(18)
+        }
+
+        let state = interactor.state(forUserInput: input)
+
+        XCTAssertEqual(state.decimal, expectedDecimal)
     }
 
     func testState_InputType_Coin() {

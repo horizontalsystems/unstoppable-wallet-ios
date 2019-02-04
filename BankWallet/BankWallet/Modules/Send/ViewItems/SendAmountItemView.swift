@@ -6,12 +6,10 @@ import RxSwift
 import RxCocoa
 
 class AmountTextField: UITextField {
+    var onPaste: (() -> ())?
 
     override func paste(_ sender: Any?) {
-        if ValueFormatter.instance.parseAnyDecimal(from: UIPasteboard.general.string) != nil {
-            text = UIPasteboard.general.string
-            sendActions(for: .editingChanged)
-        }
+        onPaste?()
     }
 
 }
@@ -101,7 +99,7 @@ class SendAmountItemView: BaseActionItemView {
         switchButton.snp.makeConstraints { maker in
             maker.trailing.equalToSuperview().offset(-SendTheme.margin)
             maker.centerY.equalTo(lineView.snp.centerY)
-            maker.leading.equalTo(maxButton.snp.trailing).offset(SendTheme.margin)
+            maker.leading.equalTo(maxButton.snp.trailing).offset(SendTheme.smallMargin)
             maker.size.equalTo(SendTheme.buttonSize)
         }
 
@@ -126,8 +124,13 @@ class SendAmountItemView: BaseActionItemView {
             maker.trailing.equalTo(lineView)
         }
 
+        inputField.onPaste = { [weak self] in
+            self?.item?.onPasteClicked?()
+        }
         inputField.rx.controlEvent(.editingChanged)
                 .subscribe(onNext: { [weak self] _ in
+                    self?.updateUI()
+
                     let amount: Decimal = ValueFormatter.instance.parseAnyDecimal(from: self?.inputField.text) ?? 0
                     self?.item?.onAmountChanged?(amount)
                 })
@@ -144,7 +147,10 @@ class SendAmountItemView: BaseActionItemView {
             self?.amountTypeLabel.text = $0
         }
         item?.bindAmount = { [weak self] in
-            self?.inputField.text = $0.flatMap { $0 == 0 ? nil : "\($0)"}
+            let amount = $0 ?? 0
+            let formattedAmount = ValueFormatter.instance.format(amount: amount)
+            self?.inputField.text = amount == 0 ? nil : formattedAmount
+            self?.inputField.sendActions(for: .editingChanged)
         }
         item?.bindHint = { [weak self] in
             self?.hintLabel.text = $0
@@ -172,11 +178,29 @@ class SendAmountItemView: BaseActionItemView {
 
             var text = text
             text.insert(Character(letter), at: index)
-            if ValueFormatter.instance.parseAnyDecimal(from: text) != nil {
+            if let value = ValueFormatter.instance.parseAnyDecimal(from: text), value.decimalCount <= (item?.decimal ?? 0) {
                 inputField.insertText(letter)
+            } else {
+                inputField.shakeView()
             }
         } else {
             inputField.insertText(letter)
+        }
+    }
+
+    func updateUI() {
+        let text = inputField.text ?? ""
+        maxButton.snp.remakeConstraints { maker in
+            if text.count == 0 {
+                maker.leading.equalTo(lineView.snp.trailing).offset(SendTheme.smallMargin)
+                maker.centerY.equalTo(lineView)
+                maker.height.equalTo(SendTheme.buttonSize)
+            } else {
+                maker.leading.equalTo(lineView.snp.trailing).offset(0)
+                maker.centerY.equalTo(lineView)
+                maker.height.equalTo(SendTheme.buttonSize)
+                maker.width.equalTo(0)
+            }
         }
     }
 

@@ -86,6 +86,7 @@ enum FeeError: Error {
 }
 
 protocol IAdapter: class {
+    var decimal: Int { get }
     var balance: Decimal { get }
     var balanceUpdatedSignal: Signal { get }
 
@@ -181,6 +182,8 @@ protocol ISystemInfoManager {
 }
 
 protocol IAppConfigProvider {
+    var fiatDecimal: Int { get }
+    var maxDecimal: Int { get }
     var reachabilityHost: String { get }
     var ratesApiUrl: String { get }
     var testMode: Bool { get }

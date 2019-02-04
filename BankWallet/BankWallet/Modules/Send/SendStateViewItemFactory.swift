@@ -1,15 +1,21 @@
 class SendStateViewItemFactory: ISendStateViewItemFactory {
 
-    func viewItem(forState state: SendState) -> SendStateViewItem {
-        let viewItem = SendStateViewItem()
+    func viewItem(forState state: SendState, forceRoundDown: Bool) -> SendStateViewItem {
+        let viewItem = SendStateViewItem(decimal: state.decimal)
 
         switch state.inputType {
         case .coin:
-            viewItem.amountInfo = state.coinValue.map { AmountInfo.coinValue(coinValue: $0) }
+            viewItem.amountInfo = state.coinValue.map {
+                let roundedValue = ValueFormatter.instance.round(value: $0.value, scale: state.decimal, roundingMode: .down)
+                return AmountInfo.coinValue(coinValue: CoinValue(coinCode: $0.coinCode, value: roundedValue))
+            }
             viewItem.primaryFeeInfo = state.feeCoinValue.map { AmountInfo.coinValue(coinValue: $0) }
             viewItem.secondaryFeeInfo = state.feeCurrencyValue.map { AmountInfo.currencyValue(currencyValue: $0) }
         case .currency:
-            viewItem.amountInfo = state.currencyValue.map { AmountInfo.currencyValue(currencyValue: $0) }
+            viewItem.amountInfo = state.currencyValue.map {
+                let roundedValue = ValueFormatter.instance.round(value: $0.value, scale: state.decimal, roundingMode: forceRoundDown ? .down : .up)
+                return AmountInfo.currencyValue(currencyValue: CurrencyValue(currency: $0.currency, value: roundedValue))
+            }
             viewItem.primaryFeeInfo = state.feeCurrencyValue.map { AmountInfo.currencyValue(currencyValue: $0) }
             viewItem.secondaryFeeInfo = state.feeCoinValue.map { AmountInfo.coinValue(coinValue: $0) }
         }
