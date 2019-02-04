@@ -13,7 +13,6 @@
 		11B3501C8BBD0D43D5CDD337 /* PeriodicTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35FA1C1FF965AA2EB6666 /* PeriodicTimer.swift */; };
 		11B35034E4E93ACC8BFA0F51 /* SendAddressItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35AC7305FD5CEB5690DD9 /* SendAddressItemView.swift */; };
 		11B350436565D10C5EF535B0 /* AddressButtonTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B356735664DE743AF097C8 /* AddressButtonTheme.swift */; };
-		11B3504D748B4AB83CC42B39 /* WalletNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B353F1BD63011E1D536631 /* WalletNavigationController.swift */; };
 		11B3505130AE50140070F82F /* CurrencyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35B0378C5EA6E02CB2E37 /* CurrencyCell.swift */; };
 		11B35074B817C492D2534D71 /* SendFeeItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B357B45FC7216E5D1BA309 /* SendFeeItem.swift */; };
 		11B35075ECB2F181418CD3A8 /* NumPadTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35BFD94DA13D66AD6A86D /* NumPadTheme.swift */; };
@@ -817,7 +816,6 @@
 		D3840598218317DF007D50AD /* IndexedInputField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35C8856A137E92441AF19 /* IndexedInputField.swift */; };
 		D3840599218317DF007D50AD /* RespondButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3570598EDE26F96BC5F41 /* RespondButton.swift */; };
 		D384059A218317DF007D50AD /* KeyboardObservingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3535FC407BA20765EBCF4 /* KeyboardObservingViewController.swift */; };
-		D384059B218317DF007D50AD /* WalletNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B353F1BD63011E1D536631 /* WalletNavigationController.swift */; };
 		D384059C218317DF007D50AD /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B351FFC025462BB9F01184 /* UIColor.swift */; };
 		D384059D218317DF007D50AD /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35F4AF52970B217AD4DC6 /* String.swift */; };
 		D384059E218317DF007D50AD /* Satoshi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3522E7181FB5F0A647944 /* Satoshi.swift */; };
@@ -1013,7 +1011,6 @@
 		D384068721831B3D007D50AD /* IndexedInputField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35C8856A137E92441AF19 /* IndexedInputField.swift */; };
 		D384068821831B3D007D50AD /* RespondButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3570598EDE26F96BC5F41 /* RespondButton.swift */; };
 		D384068921831B3D007D50AD /* KeyboardObservingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3535FC407BA20765EBCF4 /* KeyboardObservingViewController.swift */; };
-		D384068A21831B3D007D50AD /* WalletNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B353F1BD63011E1D536631 /* WalletNavigationController.swift */; };
 		D384068B21831B3D007D50AD /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B351FFC025462BB9F01184 /* UIColor.swift */; };
 		D384068C21831B3D007D50AD /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35F4AF52970B217AD4DC6 /* String.swift */; };
 		D384068D21831B3D007D50AD /* Satoshi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3522E7181FB5F0A647944 /* Satoshi.swift */; };
@@ -1121,7 +1118,6 @@
 		11B353A2F8FFE93DC7E58F98 /* TransactionValueItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionValueItem.swift; sourceTree = "<group>"; };
 		11B353A3B460BF1B24349F9F /* BackupInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackupInteractor.swift; sourceTree = "<group>"; };
 		11B353D57AB36A9CF4DEE090 /* GuestViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GuestViewController.swift; sourceTree = "<group>"; };
-		11B353F1BD63011E1D536631 /* WalletNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletNavigationController.swift; sourceTree = "<group>"; };
 		11B3543C6E6212154344AD63 /* SendConfirmationAddressItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendConfirmationAddressItemView.swift; sourceTree = "<group>"; };
 		11B35458E7255EFB7BD0FB67 /* BalanceViewItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BalanceViewItem.swift; sourceTree = "<group>"; };
 		11B35461B70501F290DFC166 /* TransactionViewItemFactoryTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionViewItemFactoryTests.swift; sourceTree = "<group>"; };
@@ -1664,7 +1660,6 @@
 			isa = PBXGroup;
 			children = (
 				11B3535FC407BA20765EBCF4 /* KeyboardObservingViewController.swift */,
-				11B353F1BD63011E1D536631 /* WalletNavigationController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -3284,7 +3279,6 @@
 				11B355D74C9D67C254B90297 /* IndexedInputField.swift in Sources */,
 				11B35BEF5EA4730B85DEA6C3 /* RespondButton.swift in Sources */,
 				11B3553FE441E814B14A29F6 /* KeyboardObservingViewController.swift in Sources */,
-				11B3504D748B4AB83CC42B39 /* WalletNavigationController.swift in Sources */,
 				11B3508D4D574217447418D5 /* UIColor.swift in Sources */,
 				11B3524D24D3AE736839690A /* String.swift in Sources */,
 				11B350B7FE5660DE0BD3DA64 /* Satoshi.swift in Sources */,
@@ -3652,7 +3646,6 @@
 				D3840598218317DF007D50AD /* IndexedInputField.swift in Sources */,
 				D3840599218317DF007D50AD /* RespondButton.swift in Sources */,
 				D384059A218317DF007D50AD /* KeyboardObservingViewController.swift in Sources */,
-				D384059B218317DF007D50AD /* WalletNavigationController.swift in Sources */,
 				D384059C218317DF007D50AD /* UIColor.swift in Sources */,
 				D384059D218317DF007D50AD /* String.swift in Sources */,
 				D384059E218317DF007D50AD /* Satoshi.swift in Sources */,
@@ -3972,7 +3965,6 @@
 				D384068721831B3D007D50AD /* IndexedInputField.swift in Sources */,
 				D384068821831B3D007D50AD /* RespondButton.swift in Sources */,
 				D384068921831B3D007D50AD /* KeyboardObservingViewController.swift in Sources */,
-				D384068A21831B3D007D50AD /* WalletNavigationController.swift in Sources */,
 				D384068B21831B3D007D50AD /* UIColor.swift in Sources */,
 				D384068C21831B3D007D50AD /* String.swift in Sources */,
 				D384068D21831B3D007D50AD /* Satoshi.swift in Sources */,

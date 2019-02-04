@@ -139,10 +139,10 @@ class FullTransactionInfoViewController: UIViewController, SectionsDataSource {
                 continue
             }
             for (rowIndex, item) in section.items.enumerated() {
-                sectionRows.append(Row<FullTransactionInfoTextCell>(id: "section_\(sectionIndex)_row_\(rowIndex)", height: FullTransactionInfoTheme.cellHeight, bind: { cell, _ in
+                sectionRows.append(Row<FullTransactionInfoTextCell>(id: "section_\(sectionIndex)_row_\(rowIndex)", height: FullTransactionInfoTheme.cellHeight, bind: { [weak self] cell, _ in
                     cell.separatorView.backgroundColor = FullTransactionInfoTheme.separatorColor
 
-                    cell.bind(item: item, last: rowIndex == section.items.count - 1, onTap: item.clickable ? { [weak self] in
+                    cell.bind(item: item, last: rowIndex == section.items.count - 1, onTap: item.clickable ? {
                         self?.onTap(item: item)
                     } : nil)
                 }))
@@ -167,8 +167,8 @@ class FullTransactionInfoViewController: UIViewController, SectionsDataSource {
                 })
             ]))
             sections.append(Section(id: "link_provider", footerState: .margin(height: FullTransactionInfoTheme.linkCellBottomMargin), rows: [
-                Row<FullTransactionProviderLinkCell>(id: "link_cell", height: FullTransactionInfoTheme.linkCellHeight, bind: { cell, _ in
-                    cell.bind(text: providerName) { [weak self] in
+                Row<FullTransactionProviderLinkCell>(id: "link_cell", height: FullTransactionInfoTheme.linkCellHeight, bind: { [weak self] cell, _ in
+                    cell.bind(text: providerName) {
                         self?.onTapProviderLink()
                     }
                 })

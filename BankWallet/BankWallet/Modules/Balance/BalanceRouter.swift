@@ -17,7 +17,7 @@ extension BalanceRouter: IBalanceRouter {
     }
 
     func openManageCoins() {
-        ManageCoinsRouter.module(from: viewController)
+        viewController?.present(ManageCoinsRouter.module(), animated: true)
     }
 
 }

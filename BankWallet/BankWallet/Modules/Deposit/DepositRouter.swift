@@ -2,7 +2,7 @@ import UIKit
 import GrouviActionSheet
 
 class DepositRouter {
-    var viewController: UIViewController?
+    weak var viewController: UIViewController?
 }
 
 extension DepositRouter: IDepositRouter {
