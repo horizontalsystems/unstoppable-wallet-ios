@@ -12,8 +12,8 @@ class TransactionInfoAlertModel: BaseAlertModel {
 
         hideInBackground = false
 
-        let titleItem = TransactionTitleItem(item: item, tag: 0, onIdTap: {
-            delegate.onCopy(value: item.transactionHash)
+        let titleItem = TransactionTitleItem(item: item, tag: 0, onIdTap: { [weak self] in
+            self?.delegate.onCopy(value: item.transactionHash)
         })
         addItemView(titleItem)
 
@@ -29,14 +29,14 @@ class TransactionInfoAlertModel: BaseAlertModel {
         addItemView(statusItem)
 
         if let from = item.from {
-            addItemView(TransactionFromToHashItem(title: "tx_info.from_hash".localized, value: from, tag: 4, required: true, onHashTap: {
-                delegate.onCopy(value: from)
+            addItemView(TransactionFromToHashItem(title: "tx_info.from_hash".localized, value: from, tag: 4, required: true, onHashTap: { [weak self] in
+                self?.delegate.onCopy(value: from)
             }))
         }
 
         if let to = item.to {
-            addItemView(TransactionFromToHashItem(title: "tx_info.to_hash".localized, value: to, tag: 5, required: true, onHashTap: {
-                delegate.onCopy(value: to)
+            addItemView(TransactionFromToHashItem(title: "tx_info.to_hash".localized, value: to, tag: 5, required: true, onHashTap: { [weak self] in
+                self?.delegate.onCopy(value: to)
             }))
         }
 

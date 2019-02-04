@@ -7,7 +7,7 @@ class SecuritySettingsRouter {
 extension SecuritySettingsRouter: ISecuritySettingsRouter {
 
     func showEditPin() {
-        EditPinRouter.module(from: viewController)
+        viewController?.present(EditPinRouter.module(), animated: true)
     }
 
     func showSecretKey() {

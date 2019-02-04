@@ -28,8 +28,8 @@ class TransactionsViewController: UITableViewController {
 
         title = "transactions.title".localized
 
-        filterHeaderView.onSelectCoin = { coin in
-            self.delegate.onFilterSelect(coinCode: coin)
+        filterHeaderView.onSelectCoin = { [weak self] coin in
+            self?.delegate.onFilterSelect(coinCode: coin)
         }
 
         tableView.backgroundColor = AppTheme.controllerBackground

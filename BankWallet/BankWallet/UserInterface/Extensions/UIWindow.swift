@@ -3,6 +3,8 @@ import UIKit
 extension UIWindow {
 
     func set(newRootController: UIViewController) {
+        rootViewController?.dismiss(animated: false)
+
         let transition = CATransition()
         transition.type = kCATransitionFade
 

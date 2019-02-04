@@ -90,8 +90,8 @@ extension BalanceInteractor: IBalanceInteractor {
             rateStorage.latestRateObservable(forCoinCode: coinCode, currencyCode: currencyCode)
                     .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
                     .observeOn(MainScheduler.instance)
-                    .subscribe(onNext: { rate in
-                        self.delegate?.didUpdate(rate: rate)
+                    .subscribe(onNext: { [weak self] rate in
+                        self?.delegate?.didUpdate(rate: rate)
                     })
                     .disposed(by: ratesDisposeBag)
         }
