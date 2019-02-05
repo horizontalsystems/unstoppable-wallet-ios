@@ -5,7 +5,7 @@ import SnapKit
 
 class DepositCollectionItemView: BaseActionItemView {
 
-    var walletsCollectionView: UICollectionView?
+    var collectionView: UICollectionView?
 
     override var item: DepositCollectionItem? { return _item as? DepositCollectionItem }
 
@@ -14,18 +14,18 @@ class DepositCollectionItemView: BaseActionItemView {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         
-        walletsCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        walletsCollectionView?.delegate = self
-        walletsCollectionView?.dataSource = self
-        walletsCollectionView?.registerCell(forClass: DepositAddressCollectionCell.self)
-        walletsCollectionView?.isPagingEnabled = true
-        walletsCollectionView?.alwaysBounceHorizontal = (item?.addresses.count ?? 1) > 1
-        walletsCollectionView?.showsHorizontalScrollIndicator = false
-        addSubview(walletsCollectionView!)
-        walletsCollectionView?.snp.makeConstraints { maker in
+        collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView?.delegate = self
+        collectionView?.dataSource = self
+        collectionView?.registerCell(forClass: DepositAddressCollectionCell.self)
+        collectionView?.isPagingEnabled = true
+        collectionView?.alwaysBounceHorizontal = (item?.addresses.count ?? 1) > 1
+        collectionView?.showsHorizontalScrollIndicator = false
+        addSubview(collectionView!)
+        collectionView?.snp.makeConstraints { maker in
             maker.edges.equalToSuperview()
         }
-        walletsCollectionView?.backgroundColor = .clear
+        collectionView?.backgroundColor = .clear
     }
 
     override func updateView() {

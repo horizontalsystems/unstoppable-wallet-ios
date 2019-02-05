@@ -85,7 +85,7 @@ class App {
         dataProviderManager = FullTransactionDataProviderManager(localStorage: localStorage, appConfigProvider: appConfigProvider)
         fullTransactionInfoProviderFactory = FullTransactionInfoProviderFactory(apiManager: networkManager, dataProviderManager: dataProviderManager)
 
-        authManager.walletManager = adapterManager
+        authManager.adapterManager = adapterManager
     }
 
 }
