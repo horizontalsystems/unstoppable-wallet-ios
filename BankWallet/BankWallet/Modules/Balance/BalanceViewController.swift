@@ -123,8 +123,10 @@ extension BalanceViewController {
     func bind(at indexPath: IndexPath, animated: Bool = false) {
         if let cell = tableView?.cellForRow(at: indexPath) as? BalanceCell {
             cell.bindView(item: delegate.viewItem(at: indexPath.row), selected: indexPathForSelectedRow == indexPath, animated: true)
-            tableView?.beginUpdates()
-            tableView?.endUpdates()
+            UIView.animate(withDuration: BalanceTheme.buttonsAnimationDuration) {
+                self.tableView?.beginUpdates()
+                self.tableView?.endUpdates()
+            }
         }
     }
 
