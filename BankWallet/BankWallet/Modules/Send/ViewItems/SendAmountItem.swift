@@ -16,6 +16,10 @@ class SendAmountItem: BaseActionItem {
 
     var showKeyboard: (() -> ())?
 
+    var decimal: Int = 2
+
+    var onPasteClicked: (() -> ())?
+
     init(tag: Int) {
         super.init(cellType: SendAmountItemView.self, tag: tag, required: true)
 

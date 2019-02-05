@@ -1,6 +1,8 @@
 import Foundation
 
 class AppConfigProvider: IAppConfigProvider {
+    let fiatDecimal: Int = 2
+    let maxDecimal: Int = 8
 
     let reachabilityHost = "ipfs.horizontalsystems.xyz"
     let ratesApiUrl = "https://ipfs.horizontalsystems.xyz/ipns/Qmd4Gv2YVPqs6dmSy1XEq7pQRSgLihqYKL2JjK7DMUFPVz/io-hs/data/xrates"

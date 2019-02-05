@@ -46,9 +46,12 @@ class SendAlertModel: BaseAlertModel {
         amountItem.onMaxClicked = { [weak self] in
             self?.delegate.onMaxClicked()
         }
+        amountItem.onPasteClicked = { [weak self] in
+            self?.delegate.onPasteAmountClicked()
+        }
 
         addressItem.onPasteClicked = { [weak self] in
-            self?.delegate.onPasteClicked()
+            self?.delegate.onPasteAddressClicked()
         }
         addressItem.onScanClicked = { [weak self] in
             self?.onScanClicked?()
@@ -166,7 +169,7 @@ extension SendAlertModel: ISendView {
         case .coinValue(let coinValue):
             feeItem.bindFee?(ValueFormatter.instance.format(coinValue: coinValue))
         case .currencyValue(let currencyValue):
-            feeItem.bindFee?(ValueFormatter.instance.format(currencyValue: currencyValue, roundingMode: .floor).map { return "~\($0)" })
+            feeItem.bindFee?(ValueFormatter.instance.format(currencyValue: currencyValue, roundingMode: .ceiling).map { return "~\($0)" })
         }
     }
 
@@ -180,7 +183,7 @@ extension SendAlertModel: ISendView {
         case .coinValue(let coinValue):
             feeItem.bindConvertedFee?(ValueFormatter.instance.format(coinValue: coinValue))
         case .currencyValue(let currencyValue):
-            feeItem.bindConvertedFee?(ValueFormatter.instance.format(currencyValue: currencyValue, roundingMode: .floor).map { return "~\($0)" })
+            feeItem.bindConvertedFee?(ValueFormatter.instance.format(currencyValue: currencyValue, roundingMode: .ceiling).map { return "~\($0)" })
         }
     }
 
@@ -204,6 +207,10 @@ extension SendAlertModel: ISendView {
     func dismissWithSuccess() {
         dismiss?(true)
         HudHelper.instance.showSuccess()
+    }
+
+    func set(decimal: Int) {
+        amountItem.decimal = decimal
     }
 
 }

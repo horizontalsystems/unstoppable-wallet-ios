@@ -88,7 +88,7 @@ class ValueFormatter {
         return result
     }
 
-    func format(amount: Double) -> String? {
+    func format(amount: Decimal) -> String? {
         return amountFormatter.string(from: amount as NSNumber)
     }
 
@@ -100,16 +100,26 @@ class ValueFormatter {
         if let string = string {
             for localeIdentifier in Locale.availableIdentifiers {
                 parseFormatter.locale = Locale(identifier: localeIdentifier)
-                if let parsed = parseFormatter.number(from: "0\(string)") {
-                    return parsed.decimalValue
+                if parseFormatter.number(from: "0\(string)") == nil {
+                    continue
+                }
+
+                let string = string.replacingOccurrences(of: parseFormatter.decimalSeparator, with: ".")
+                if let decimal = Decimal(string: string) {
+                    return decimal
                 }
             }
         }
         return nil
     }
 
-    func format(number: Int) -> String? {
+    func format(number: Int) -> String? {//translator for numpad
         return amountFormatter.string(from: number as NSNumber)
+    }
+
+    func round(value: Decimal, scale: Int, roundingMode: NSDecimalNumber.RoundingMode) -> Decimal {
+        let handler = NSDecimalNumberHandler(roundingMode: roundingMode, scale: Int16(truncatingIfNeeded: scale), raiseOnExactness: false, raiseOnOverflow: false, raiseOnUnderflow: false, raiseOnDivideByZero: false)
+        return NSDecimalNumber(decimal: value).rounding(accordingToBehavior: handler).decimalValue
     }
 
 }

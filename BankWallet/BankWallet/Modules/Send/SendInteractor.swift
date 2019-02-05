@@ -14,13 +14,15 @@ class SendInteractor {
     private let rateStorage: IRateStorage
     private let localStorage: ILocalStorage
     private let pasteboardManager: IPasteboardManager
+    private let appConfigProvider: IAppConfigProvider
     private let state: SendInteractorState
 
-    init(currencyManager: ICurrencyManager, rateStorage: IRateStorage, localStorage: ILocalStorage, pasteboardManager: IPasteboardManager, state: SendInteractorState) {
+    init(currencyManager: ICurrencyManager, rateStorage: IRateStorage, localStorage: ILocalStorage, pasteboardManager: IPasteboardManager, state: SendInteractorState, appConfigProvider: IAppConfigProvider) {
         self.currencyManager = currencyManager
         self.rateStorage = rateStorage
         self.localStorage = localStorage
         self.pasteboardManager = pasteboardManager
+        self.appConfigProvider = appConfigProvider
         self.state = state
     }
 
@@ -36,7 +38,7 @@ extension SendInteractor: ISendInteractor {
         return state.wallet.coinCode
     }
 
-    var addressFromPasteboard: String? {
+    var valueFromPasteboard: String? {
         return pasteboardManager.value
     }
 
@@ -60,7 +62,9 @@ extension SendInteractor: ISendInteractor {
         let adapter = state.wallet.adapter
         let baseCurrency = currencyManager.baseCurrency
 
-        let sendState = SendState(inputType: input.inputType)
+        let decimal = input.inputType == .coin ? min(adapter.decimal, appConfigProvider.maxDecimal) : appConfigProvider.fiatDecimal
+
+        let sendState = SendState(decimal: decimal, inputType: input.inputType)
 
         switch input.inputType {
         case .coin:

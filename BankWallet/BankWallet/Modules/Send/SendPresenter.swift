@@ -19,7 +19,7 @@ class SendPresenter {
         userInput.address = address
 
         let state = interactor.state(forUserInput: userInput)
-        let viewItem = factory.viewItem(forState: state)
+        let viewItem = factory.viewItem(forState: state, forceRoundDown: false)
 
         view?.set(addressInfo: viewItem.addressInfo)
         view?.set(amountInfo: viewItem.amountInfo)
@@ -34,7 +34,7 @@ extension SendPresenter: ISendInteractorDelegate {
 
     func didUpdateRate() {
         let state = interactor.state(forUserInput: userInput)
-        let viewItem = factory.viewItem(forState: state)
+        let viewItem = factory.viewItem(forState: state, forceRoundDown: false)
 
         view?.set(switchButtonEnabled: viewItem.switchButtonEnabled)
         view?.set(hintInfo: viewItem.hintInfo)
@@ -57,8 +57,9 @@ extension SendPresenter: ISendViewDelegate {
         userInput.inputType = interactor.defaultInputType
 
         let state = interactor.state(forUserInput: userInput)
-        let viewItem = factory.viewItem(forState: state)
+        let viewItem = factory.viewItem(forState: state, forceRoundDown: false)
 
+        view?.set(decimal: viewItem.decimal)
         view?.set(coinCode: interactor.coinCode)
         view?.set(amountInfo: viewItem.amountInfo)
         view?.set(switchButtonEnabled: viewItem.switchButtonEnabled)
@@ -75,7 +76,7 @@ extension SendPresenter: ISendViewDelegate {
         userInput.amount = amount
 
         let state = interactor.state(forUserInput: userInput)
-        let viewItem = factory.viewItem(forState: state)
+        let viewItem = factory.viewItem(forState: state, forceRoundDown: false)
 
         view?.set(hintInfo: viewItem.hintInfo)
         view?.set(primaryFeeInfo: viewItem.primaryFeeInfo)
@@ -94,8 +95,9 @@ extension SendPresenter: ISendViewDelegate {
         userInput.inputType = newInputType
 
         let state = interactor.state(forUserInput: userInput)
-        let viewItem = factory.viewItem(forState: state)
+        let viewItem = factory.viewItem(forState: state, forceRoundDown: false)
 
+        view?.set(decimal: viewItem.decimal)
         view?.set(amountInfo: viewItem.amountInfo)
         view?.set(hintInfo: viewItem.hintInfo)
         view?.set(primaryFeeInfo: viewItem.primaryFeeInfo)
@@ -112,8 +114,8 @@ extension SendPresenter: ISendViewDelegate {
         onChange(address: paymentAddress.address)
     }
 
-    func onPasteClicked() {
-        if let address = interactor.addressFromPasteboard {
+    func onPasteAddressClicked() {
+        if let address = interactor.valueFromPasteboard {
             onAddressEnter(address: address)
         }
     }
@@ -154,10 +156,20 @@ extension SendPresenter: ISendViewDelegate {
         userInput.amount = totalBalanceMinusFee
 
         let state = interactor.state(forUserInput: userInput)
-        let viewItem = factory.viewItem(forState: state)
+        let viewItem = factory.viewItem(forState: state, forceRoundDown: true)
 
         view?.set(amountInfo: viewItem.amountInfo)
-        onAmountChanged(amount: totalBalanceMinusFee)
+    }
+
+    func onPasteAmountClicked() {
+        if let value = ValueFormatter.instance.parseAnyDecimal(from: interactor.valueFromPasteboard) {
+            userInput.amount = value
+
+            let state = interactor.state(forUserInput: userInput)
+            let viewItem = factory.viewItem(forState: state, forceRoundDown: false)
+
+            view?.set(amountInfo: viewItem.amountInfo)
+        }
     }
 
 }

@@ -7,7 +7,7 @@ class BitcoinAdapter {
 
     private let bitcoinKit: BitcoinKit
     private let transactionCompletionThreshold = 6
-    private let coinRate: Decimal = pow(10, 8)
+    private let coinRate: Decimal
 
     let lastBlockHeightUpdatedSignal = Signal()
     let transactionRecordsSubject = PublishSubject<[TransactionRecord]>()
@@ -20,6 +20,7 @@ class BitcoinAdapter {
     let stateUpdatedSignal = Signal()
 
     init(words: [String], coin: BitcoinKit.Coin, walletId: String, newWallet: Bool) {
+        coinRate = pow(10, decimal)
         bitcoinKit = BitcoinKit(withWords: words, coin: coin, walletId: walletId, newWallet: newWallet, minLogLevel: .error)
 
         progressSubject = BehaviorSubject(value: 0)
@@ -88,7 +89,7 @@ extension BitcoinAdapter: IAdapter {
 
     func send(to address: String, value: Decimal, completion: ((Error?) -> ())?) {
         do {
-            let amount = NSDecimalNumber(decimal: value * coinRate).intValue
+            let amount = convertToSatoshi(value: value)
             try bitcoinKit.send(to: address, value: amount)
             completion?(nil)
         } catch {
@@ -97,13 +98,18 @@ extension BitcoinAdapter: IAdapter {
     }
 
     func fee(for value: Decimal, address: String?, senderPay: Bool) throws -> Decimal {
-        let amount = NSDecimalNumber(decimal: value * coinRate).intValue
         do {
+            let amount = convertToSatoshi(value: value)
             let fee = try bitcoinKit.fee(for: amount, toAddress: address, senderPay: senderPay)
             return Decimal(fee) / coinRate
         } catch SelectorError.notEnough(let maxFee) {
             throw FeeError.insufficientAmount(fee: Decimal(maxFee) / coinRate)
         }
+    }
+
+    private func convertToSatoshi(value: Decimal) -> Int {
+        let coinValue: Decimal = value * coinRate
+        return NSDecimalNumber(decimal: ValueFormatter.instance.round(value: coinValue, scale: 0, roundingMode: .plain)).intValue
     }
 
     func validate(address: String) throws {
