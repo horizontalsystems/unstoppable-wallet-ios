@@ -7,7 +7,7 @@ class BitcoinAdapter {
 
     private let bitcoinKit: BitcoinKit
     private let transactionCompletionThreshold = 6
-    private let coinRate: Decimal = pow(10, 8)
+    private let coinRate: Decimal
 
     let lastBlockHeightUpdatedSignal = Signal()
     let transactionRecordsSubject = PublishSubject<[TransactionRecord]>()
@@ -20,6 +20,7 @@ class BitcoinAdapter {
     let stateUpdatedSignal = Signal()
 
     init(words: [String], coin: BitcoinKit.Coin, walletId: String, newWallet: Bool) {
+        coinRate = pow(10, decimal)
         bitcoinKit = BitcoinKit(withWords: words, coin: coin, walletId: walletId, newWallet: newWallet, minLogLevel: .error)
 
         progressSubject = BehaviorSubject(value: 0)
@@ -50,10 +51,6 @@ class BitcoinAdapter {
 }
 
 extension BitcoinAdapter: IAdapter {
-
-    var decimal: Int {
-        return 8
-    }
 
     var balance: Decimal {
         return Decimal(bitcoinKit.balance) / coinRate
