@@ -2,7 +2,7 @@ import GrouviActionSheet
 
 class SendTitleItem: BaseActionItem {
 
-    var bindCoin: ((CoinCode) -> ())?
+    var bindCoin: ((Coin) -> ())?
 
     init(tag: Int) {
         super.init(cellType: SendTitleItemView.self, tag: tag, required: true)

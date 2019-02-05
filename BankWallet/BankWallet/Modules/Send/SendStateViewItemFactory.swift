@@ -47,7 +47,7 @@ class SendStateViewItemFactory: ISendStateViewItemFactory {
         return viewItem
     }
 
-    func confirmationViewItem(forState state: SendState) -> SendConfirmationViewItem? {
+    func confirmationViewItem(forState state: SendState, coin: Coin) -> SendConfirmationViewItem? {
         guard let coinValue = state.coinValue else {
             return nil
         }
@@ -77,6 +77,7 @@ class SendStateViewItemFactory: ISendStateViewItemFactory {
         }
 
         let viewItem = SendConfirmationViewItem(
+                coin: coin,
                 coinValue: coinValue,
                 address: address,
                 feeInfo: feeInfo,

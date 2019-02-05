@@ -26,8 +26,8 @@ class SendTitleItemView: BaseActionItemView {
         }
 
         item?.bindCoin = { [weak self] coin in
-            self?.iconImageView.image = UIImage(named: "\(coin) Icon")?.tinted(with: SendTheme.iconColor)
-            self?.titleLabel.text = "send.title".localized(coin)
+            self?.iconImageView.image = UIImage(named: "\(coin.code) Icon")?.tinted(with: SendTheme.iconColor)
+            self?.titleLabel.text = "send.title".localized(coin.title)
         }
     }
 

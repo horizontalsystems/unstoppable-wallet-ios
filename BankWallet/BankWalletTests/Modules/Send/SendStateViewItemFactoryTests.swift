@@ -3,6 +3,7 @@ import Cuckoo
 @testable import Bank_Dev_T
 
 class SendStateViewItemFactoryTests: XCTestCase {
+    private let coin = Coin(title: "Bitcoin", code: "BTC", type: .bitcoin)
     private var state = SendState(decimal: 8, inputType: .coin)
     private var confirmationState = SendState(decimal: 8, inputType: .coin)
 
@@ -234,25 +235,25 @@ class SendStateViewItemFactoryTests: XCTestCase {
     }
 
     func testConfirmation_CoinValue() {
-        let viewItem = factory.confirmationViewItem(forState: confirmationState)
+        let viewItem = factory.confirmationViewItem(forState: confirmationState, coin: coin)
         XCTAssertEqual(viewItem?.coinValue, coinValue)
     }
 
     func testConfirmation_CurrencyValue() {
         confirmationState.currencyValue = currencyValue
 
-        let viewItem = factory.confirmationViewItem(forState: confirmationState)
+        let viewItem = factory.confirmationViewItem(forState: confirmationState, coin: coin)
 
         XCTAssertEqual(viewItem?.currencyValue, currencyValue)
     }
 
     func testConfirmation_Address() {
-        let viewItem = factory.confirmationViewItem(forState: confirmationState)
+        let viewItem = factory.confirmationViewItem(forState: confirmationState, coin: coin)
         XCTAssertEqual(viewItem?.address, address)
     }
 
     func testConfirmation_FeeInfo_WithoutCurrencyValue() {
-        let viewItem = factory.confirmationViewItem(forState: confirmationState)
+        let viewItem = factory.confirmationViewItem(forState: confirmationState, coin: coin)
         XCTAssertEqual(viewItem?.feeInfo, AmountInfo.coinValue(coinValue: feeCoinValue))
     }
 
@@ -260,7 +261,7 @@ class SendStateViewItemFactoryTests: XCTestCase {
         confirmationState.currencyValue = currencyValue
         confirmationState.feeCurrencyValue = feeCurrencyValue
 
-        let viewItem = factory.confirmationViewItem(forState: confirmationState)
+        let viewItem = factory.confirmationViewItem(forState: confirmationState, coin: coin)
 
         XCTAssertEqual(viewItem?.feeInfo, AmountInfo.currencyValue(currencyValue: feeCurrencyValue))
     }
@@ -268,7 +269,7 @@ class SendStateViewItemFactoryTests: XCTestCase {
     func testConfirmation_TotalInfo_WithoutCurrencyValue() {
         let totalValue = coinValue.value + feeCoinValue.value
 
-        let viewItem = factory.confirmationViewItem(forState: confirmationState)
+        let viewItem = factory.confirmationViewItem(forState: confirmationState, coin: coin)
 
         XCTAssertEqual(viewItem?.totalInfo, AmountInfo.coinValue(coinValue: CoinValue(coinCode: coinValue.coinCode, value: totalValue)))
     }
@@ -279,7 +280,7 @@ class SendStateViewItemFactoryTests: XCTestCase {
 
         let totalValue = currencyValue.value + feeCurrencyValue.value
 
-        let viewItem = factory.confirmationViewItem(forState: confirmationState)
+        let viewItem = factory.confirmationViewItem(forState: confirmationState, coin: coin)
 
         XCTAssertEqual(viewItem?.totalInfo, AmountInfo.currencyValue(currencyValue: CurrencyValue(currency: currencyValue.currency, value: totalValue)))
     }

@@ -13,7 +13,7 @@ class SendPresenterTests: XCTestCase {
     private var viewItem = SendStateViewItem(decimal: 8)
     private var confirmationViewItem: SendConfirmationViewItem!
 
-    private let coinCode = "BTC"
+    private let coin = Coin(title: "Bitcoin", code: "BTC", type: .bitcoin)
     private let state = SendState(decimal: 8, inputType: .coin)
 
     private let inputType: SendInputType = .coin
@@ -35,6 +35,7 @@ class SendPresenterTests: XCTestCase {
         viewItem.sendButtonEnabled = false
 
         confirmationViewItem = SendConfirmationViewItem(
+                coin: coin,
                 coinValue: CoinValue(coinCode: "BTC", value: 10.2),
                 address: "address",
                 feeInfo: amountInfo,
@@ -48,7 +49,7 @@ class SendPresenterTests: XCTestCase {
         mockUserInput = MockSendUserInput()
 
         stub(mockView) { mock in
-            when(mock.set(coinCode: any())).thenDoNothing()
+            when(mock.set(coin: any())).thenDoNothing()
             when(mock.set(amountInfo: any())).thenDoNothing()
             when(mock.set(switchButtonEnabled: any())).thenDoNothing()
             when(mock.set(hintInfo: any())).thenDoNothing()
@@ -62,7 +63,7 @@ class SendPresenterTests: XCTestCase {
             when(mock.dismissWithSuccess()).thenDoNothing()
         }
         stub(mockInteractor) { mock in
-            when(mock.coinCode.get).thenReturn(coinCode)
+            when(mock.coin.get).thenReturn(coin)
             when(mock.state(forUserInput: sameInstance(as: mockUserInput))).thenReturn(state)
             when(mock.convertedAmount(forInputType: equal(to: inputType), amount: equal(to: amount))).thenReturn(convertedAmount)
             when(mock.copy(address: any())).thenDoNothing()
@@ -72,7 +73,7 @@ class SendPresenterTests: XCTestCase {
         }
         stub(mockFactory) { mock in
             when(mock.viewItem(forState: equal(to: state), forceRoundDown: any())).thenReturn(viewItem)
-            when(mock.confirmationViewItem(forState: equal(to: state))).thenReturn(confirmationViewItem)
+            when(mock.confirmationViewItem(forState: equal(to: state), coin: equal(to: coin))).thenReturn(confirmationViewItem)
         }
         stub(mockUserInput) { mock in
             when(mock.inputType.get).thenReturn(inputType)
@@ -112,7 +113,7 @@ class SendPresenterTests: XCTestCase {
         verify(mockUserInput).inputType.set(equal(to: defaultInputType))
 
         verify(mockView).set(decimal: equal(to: decimal))
-        verify(mockView).set(coinCode: equal(to: coinCode))
+        verify(mockView).set(coin: equal(to: coin))
         verify(mockView).set(amountInfo: equal(to: viewItem.amountInfo))
         verify(mockView).set(switchButtonEnabled: viewItem.switchButtonEnabled)
         verify(mockView).set(hintInfo: equal(to: viewItem.hintInfo))
@@ -248,7 +249,7 @@ class SendPresenterTests: XCTestCase {
 
     func testOnSendClicked_NoViewItem() {
         stub(mockFactory) { mock in
-            when(mock.confirmationViewItem(forState: equal(to: state))).thenReturn(nil)
+            when(mock.confirmationViewItem(forState: equal(to: state), coin: equal(to: coin))).thenReturn(nil)
         }
 
         presenter.onSendClicked()
@@ -296,7 +297,7 @@ class SendPresenterTests: XCTestCase {
     func testPasteAmount() {
         let stringAmount = "1.234"
         let expectedAmount = Decimal(string: stringAmount)!
-        let expectedAmountInfo = AmountInfo.coinValue(coinValue: CoinValue(coinCode: coinCode, value: expectedAmount))
+        let expectedAmountInfo = AmountInfo.coinValue(coinValue: CoinValue(coinCode: coin.code, value: expectedAmount))
         viewItem.amountInfo = expectedAmountInfo
 
         stub(mockInteractor) { mock in

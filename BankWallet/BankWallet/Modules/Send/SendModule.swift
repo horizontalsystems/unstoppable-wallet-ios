@@ -1,7 +1,7 @@
 import Foundation
 
 protocol ISendView: class {
-    func set(coinCode: CoinCode)
+    func set(coin: Coin)
 
     func set(amountInfo: AmountInfo?)
     func set(switchButtonEnabled: Bool)
@@ -42,7 +42,7 @@ protocol ISendViewDelegate {
 
 protocol ISendInteractor {
     var defaultInputType: SendInputType { get }
-    var coinCode: CoinCode { get }
+    var coin: Coin { get }
     var valueFromPasteboard: String? { get }
     func parse(paymentAddress: String) -> PaymentRequestAddress
     func convertedAmount(forInputType inputType: SendInputType, amount: Decimal) -> Decimal?
@@ -66,7 +66,7 @@ protocol ISendRouter {
 
 protocol ISendStateViewItemFactory {
     func viewItem(forState state: SendState, forceRoundDown: Bool) -> SendStateViewItem
-    func confirmationViewItem(forState state: SendState) -> SendConfirmationViewItem?
+    func confirmationViewItem(forState state: SendState, coin: Coin) -> SendConfirmationViewItem?
 }
 
 enum SendInputType: String {
@@ -146,13 +146,15 @@ class SendStateViewItem {
 }
 
 class SendConfirmationViewItem {
+    let coin: Coin
     let coinValue: CoinValue
     var currencyValue: CurrencyValue?
     let address: String
     let feeInfo: AmountInfo
     let totalInfo: AmountInfo
 
-    init(coinValue: CoinValue, address: String, feeInfo: AmountInfo, totalInfo: AmountInfo) {
+    init(coin: Coin, coinValue: CoinValue, address: String, feeInfo: AmountInfo, totalInfo: AmountInfo) {
+        self.coin = coin
         self.coinValue = coinValue
         self.address = address
         self.feeInfo = feeInfo
