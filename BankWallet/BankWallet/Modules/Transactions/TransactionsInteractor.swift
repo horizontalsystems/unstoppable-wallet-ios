@@ -8,14 +8,14 @@ class TransactionsInteractor {
 
     weak var delegate: ITransactionsInteractorDelegate?
 
-    private let walletManager: IWalletManager
+    private let adapterManager: IAdapterManager
     private let currencyManager: ICurrencyManager
     private let rateManager: IRateManager
 
     private var requestedTimestamps = [CoinCode: [Double]]()
 
-    init(walletManager: IWalletManager, currencyManager: ICurrencyManager, rateManager: IRateManager) {
-        self.walletManager = walletManager
+    init(adapterManager: IAdapterManager, currencyManager: ICurrencyManager, rateManager: IRateManager) {
+        self.adapterManager = adapterManager
         self.currencyManager = currencyManager
         self.rateManager = rateManager
     }
@@ -23,28 +23,28 @@ class TransactionsInteractor {
     private func onUpdateCoinsData() {
         var coinsData = [(CoinCode, Int, Int?)]()
 
-        for wallet in walletManager.wallets {
-            coinsData.append((wallet.coinCode, wallet.adapter.confirmationsThreshold, wallet.adapter.lastBlockHeight))
+        for adapter in adapterManager.adapters {
+            coinsData.append((adapter.coin.code, adapter.confirmationsThreshold, adapter.lastBlockHeight))
         }
 
         delegate?.onUpdate(coinsData: coinsData)
 
         transactionRecordsDisposeBag = DisposeBag()
 
-        walletManager.wallets.forEach { wallet in
-            wallet.adapter.transactionRecordsSubject
+        adapterManager.adapters.forEach { adapter in
+            adapter.transactionRecordsSubject
                     .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
                     .observeOn(MainScheduler.instance)
                     .subscribe(onNext: { [weak self] records in
-                        self?.delegate?.didUpdate(records: records, coinCode: wallet.coinCode)
+                        self?.delegate?.didUpdate(records: records, coinCode: adapter.coin.code)
                     })
                     .disposed(by: transactionRecordsDisposeBag)
         }
     }
 
-    private func onUpdateLastBlockHeight(wallet: Wallet) {
-        if let lastBlockHeight = wallet.adapter.lastBlockHeight {
-            delegate?.onUpdate(lastBlockHeight: lastBlockHeight, coinCode: wallet.coinCode)
+    private func onUpdateLastBlockHeight(adapter: IAdapter) {
+        if let lastBlockHeight = adapter.lastBlockHeight {
+            delegate?.onUpdate(lastBlockHeight: lastBlockHeight, coinCode: adapter.coin.code)
         }
     }
 
@@ -55,7 +55,7 @@ extension TransactionsInteractor: ITransactionsInteractor {
     func initialFetch() {
         onUpdateCoinsData()
 
-        walletManager.walletsUpdatedSignal
+        adapterManager.adaptersUpdatedSignal
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
                 .observeOn(MainScheduler.instance)
                 .subscribe(onNext: { [weak self] in
@@ -77,13 +77,13 @@ extension TransactionsInteractor: ITransactionsInteractor {
     func fetchLastBlockHeights() {
         lastBlockHeightsDisposeBag = DisposeBag()
 
-        walletManager.wallets.forEach { wallet in
-            wallet.adapter.lastBlockHeightUpdatedSignal
+        adapterManager.adapters.forEach { adapter in
+            adapter.lastBlockHeightUpdatedSignal
                     .throttle(3, latest: true, scheduler: ConcurrentDispatchQueueScheduler(qos: .background))
                     .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
                     .observeOn(MainScheduler.instance)
                     .subscribe(onNext: { [weak self] in
-                        self?.onUpdateLastBlockHeight(wallet: wallet)
+                        self?.onUpdateLastBlockHeight(adapter: adapter)
                     })
                     .disposed(by: lastBlockHeightsDisposeBag)
         }
@@ -98,7 +98,7 @@ extension TransactionsInteractor: ITransactionsInteractor {
         var singles = [Single<(CoinCode, [TransactionRecord])>]()
 
         for fetchData in fetchDataList {
-            let adapter = walletManager.wallets.first(where: { $0.coinCode == fetchData.coinCode })?.adapter
+            let adapter = adapterManager.adapters.first(where: { $0.coin.code == fetchData.coinCode })
             let single: Single<(CoinCode, [TransactionRecord])>
 
             if let adapter = adapter {
@@ -132,7 +132,7 @@ extension TransactionsInteractor: ITransactionsInteractor {
     }
 
     func set(selectedCoinCodes: [CoinCode]) {
-        let allCoinCodes = walletManager.wallets.map { $0.coinCode }
+        let allCoinCodes = adapterManager.adapters.map { $0.coin.code }
         delegate?.onUpdate(selectedCoinCodes: selectedCoinCodes.isEmpty ? allCoinCodes : selectedCoinCodes)
     }
 

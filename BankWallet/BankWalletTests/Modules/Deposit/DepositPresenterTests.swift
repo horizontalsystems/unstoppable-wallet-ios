@@ -22,17 +22,11 @@ class DepositPresenterTests: XCTestCase {
     private var mockBitcoinAdapter: MockIAdapter!
     private var mockEtherAdapter: MockIAdapter!
 
-    private var bitcoinWallet: Wallet!
-    private var etherWallet: Wallet!
-
     override func setUp() {
         super.setUp()
 
         mockBitcoinAdapter = MockIAdapter()
         mockEtherAdapter = MockIAdapter()
-
-        bitcoinWallet = Wallet(title: bitcoinTitle, coinCode: bitcoin, adapter: mockBitcoinAdapter)
-        etherWallet = Wallet(title: etherTitle, coinCode: ether, adapter: mockEtherAdapter)
 
         mockRouter = MockIDepositRouter()
         mockInteractor = MockIDepositInteractor()
@@ -45,14 +39,16 @@ class DepositPresenterTests: XCTestCase {
             when(mock.showCopied()).thenDoNothing()
         }
         stub(mockInteractor) { mock in
-            when(mock.wallets(forCoin: equal(to: nil))).thenReturn([bitcoinWallet, etherWallet])
+            when(mock.adapters(forCoin: equal(to: nil))).thenReturn([mockBitcoinAdapter, mockEtherAdapter])
             when(mock.copy(address: any())).thenDoNothing()
         }
 
         stub(mockBitcoinAdapter) { mock in
+            when(mock.coin.get).thenReturn(Coin(title: bitcoinTitle, code: bitcoin, type: .bitcoin))
             when(mock.receiveAddress.get).thenReturn(bitcoinAddress)
         }
         stub(mockEtherAdapter) { mock in
+            when(mock.coin.get).thenReturn(Coin(title: etherTitle, code: ether, type: .ethereum))
             when(mock.receiveAddress.get).thenReturn(etherAddress)
         }
 

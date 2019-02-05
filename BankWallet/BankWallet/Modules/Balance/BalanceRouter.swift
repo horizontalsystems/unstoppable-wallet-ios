@@ -26,7 +26,7 @@ extension BalanceRouter {
 
     static func module() -> UIViewController {
         let router = BalanceRouter()
-        let interactor = BalanceInteractor(walletManager: App.shared.walletManager, rateStorage: App.shared.grdbStorage, currencyManager: App.shared.currencyManager)
+        let interactor = BalanceInteractor(adapterManager: App.shared.adapterManager, rateStorage: App.shared.grdbStorage, currencyManager: App.shared.currencyManager)
         let presenter = BalancePresenter(interactor: interactor, router: router, dataSource: BalanceItemDataSource(), factory: BalanceViewItemFactory())
         let viewController = BalanceViewController(viewDelegate: presenter)
 

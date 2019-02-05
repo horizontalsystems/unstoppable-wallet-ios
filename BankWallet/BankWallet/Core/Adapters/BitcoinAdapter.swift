@@ -5,6 +5,8 @@ import RxSwift
 class BitcoinAdapter {
     let decimal = 8
 
+    let coin: Coin
+
     private let bitcoinKit: BitcoinKit
     private let transactionCompletionThreshold = 6
     private let coinRate: Decimal
@@ -19,9 +21,20 @@ class BitcoinAdapter {
     let balanceUpdatedSignal = Signal()
     let stateUpdatedSignal = Signal()
 
-    init(words: [String], coin: BitcoinKit.Coin, walletId: String, newWallet: Bool) {
+    init?(coin: Coin, authData: AuthData, newWallet: Bool, testMode: Bool) {
+        let network: BitcoinKit.Network = testMode ? .testNet : .mainNet
+        let kitCoin: BitcoinKit.Coin
+
+        switch coin.type {
+        case .bitcoin: kitCoin = .bitcoin(network: network)
+        case .bitcoinCash: kitCoin = .bitcoinCash(network: network)
+        default: return nil
+        }
+
+        self.coin = coin
         coinRate = pow(10, decimal)
-        bitcoinKit = BitcoinKit(withWords: words, coin: coin, walletId: walletId, newWallet: newWallet, minLogLevel: .error)
+
+        bitcoinKit = BitcoinKit(withWords: authData.words, coin: kitCoin, walletId: authData.walletId, newWallet: newWallet, minLogLevel: .error)
 
         progressSubject = BehaviorSubject(value: 0)
         state = .syncing(progressSubject: progressSubject)
@@ -185,20 +198,6 @@ extension BitcoinAdapter: BitcoinKitDelegate {
                 stateUpdatedSignal.notify()
             }
         }
-    }
-
-}
-
-extension BitcoinAdapter {
-
-    static func bitcoinAdapter(authData: AuthData, newWallet: Bool, testMode: Bool) -> BitcoinAdapter {
-        let network: BitcoinKit.Network = testMode ? .testNet : .mainNet
-        return BitcoinAdapter(words: authData.words, coin: .bitcoin(network: network), walletId: authData.walletId, newWallet: newWallet)
-    }
-
-    static func bitcoinCashAdapter(authData: AuthData, newWallet: Bool, testMode: Bool) -> BitcoinAdapter {
-        let network: BitcoinKit.Network = testMode ? .testNet : .mainNet
-        return BitcoinAdapter(words: authData.words, coin: .bitcoinCash(network: network), walletId: authData.walletId, newWallet: newWallet)
     }
 
 }

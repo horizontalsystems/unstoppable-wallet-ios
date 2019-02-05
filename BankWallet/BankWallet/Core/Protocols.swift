@@ -52,19 +52,15 @@ protocol ILocalizationManager {
     func format(localizedString: String, arguments: [CVarArg]) -> String
 }
 
-protocol IWalletManager: class {
-    var wallets: [Wallet] { get }
-    var walletsUpdatedSignal: Signal { get }
-    func initWallets()
+protocol IAdapterManager: class {
+    var adapters: [IAdapter] { get }
+    var adaptersUpdatedSignal: Signal { get }
+    func initAdapters()
     func clear()
 }
 
 protocol IAdapterFactory {
-    func adapter(forCoinType type: CoinType, authData: AuthData) -> IAdapter?
-}
-
-protocol IWalletFactory {
-    func wallet(forCoin coin: Coin, authData: AuthData) -> Wallet?
+    func adapter(forCoin coin: Coin, authData: AuthData) -> IAdapter?
 }
 
 protocol ICoinManager: class {
@@ -86,6 +82,8 @@ enum FeeError: Error {
 }
 
 protocol IAdapter: class {
+    var coin: Coin { get }
+
     var decimal: Int { get }
     var balance: Decimal { get }
     var balanceUpdatedSignal: Signal { get }

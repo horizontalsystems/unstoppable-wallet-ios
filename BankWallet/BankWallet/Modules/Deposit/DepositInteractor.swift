@@ -3,19 +3,19 @@ import UIKit
 class DepositInteractor {
     weak var delegate: IDepositInteractorDelegate?
 
-    private let walletManager: IWalletManager
+    private let adapterManager: IAdapterManager
     private let pasteboardManager: IPasteboardManager
 
-    init(walletManager: IWalletManager, pasteboardManager: IPasteboardManager) {
-        self.walletManager = walletManager
+    init(adapterManager: IAdapterManager, pasteboardManager: IPasteboardManager) {
+        self.adapterManager = adapterManager
         self.pasteboardManager = pasteboardManager
     }
 }
 
 extension DepositInteractor: IDepositInteractor {
 
-    func wallets(forCoin coinCode: CoinCode?) -> [Wallet] {
-        return walletManager.wallets.filter { coinCode == nil || coinCode == $0.coinCode }
+    func adapters(forCoin coinCode: CoinCode?) -> [IAdapter] {
+        return adapterManager.adapters.filter { coinCode == nil || coinCode == $0.coin.code }
     }
 
     func copy(address: String) {

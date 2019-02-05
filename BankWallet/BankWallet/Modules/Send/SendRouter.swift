@@ -11,11 +11,11 @@ extension SendRouter: ISendRouter {
 extension SendRouter {
 
     static func module(coinCode: CoinCode) -> ActionSheetController? {
-        guard let wallet = App.shared.walletManager.wallets.first(where: { $0.coinCode == coinCode }) else {
+        guard let adapter = App.shared.adapterManager.adapters.first(where: { $0.coin.code == coinCode }) else {
             return nil
         }
 
-        let interactorState = SendInteractorState(wallet: wallet)
+        let interactorState = SendInteractorState(adapter: adapter)
         let factory = SendStateViewItemFactory()
         let userInput = SendUserInput()
 
