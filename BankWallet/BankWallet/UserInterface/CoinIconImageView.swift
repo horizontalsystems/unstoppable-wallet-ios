@@ -12,8 +12,7 @@ class CoinIconImageView: UIImageView {
     func bind(coin: Coin) {
         switch coin.type {
         case let .erc20(address, _):
-//            let baseApiUrl = App.shared.appConfigProvider.ratesApiUrl
-            let baseApiUrl = "https://ipfs.horizontalsystems.xyz/ipns/Qmd4Gv2YVPqs6dmSy1XEq7pQRSgLihqYKL2JjK7DMUFPVz/io-hs/data"
+            let baseApiUrl = App.shared.appConfigProvider.apiUrl
             let screenScale = Int(UIScreen.main.scale)
 
             let urlString = "\(baseApiUrl)/blockchain/ETH/erc20/\(address)/icons/ios/icon@\(screenScale)x.png"

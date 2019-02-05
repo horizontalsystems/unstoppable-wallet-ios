@@ -51,6 +51,7 @@ class ManageCoinsPresenterTests: XCTestCase {
         }
         stub(mockInteractor) { mock in
             when(mock.loadCoins()).thenDoNothing()
+            when(mock.syncCoins()).thenDoNothing()
             when(mock.save(enabledCoins: any())).thenDoNothing()
         }
         stub(mockState) { mock in
@@ -77,6 +78,11 @@ class ManageCoinsPresenterTests: XCTestCase {
         presenter = nil
 
         super.tearDown()
+    }
+
+    func testSyncCoins() {
+        presenter.viewDidLoad()
+        verify(mockInteractor).syncCoins()
     }
 
     func testLoadCoins() {

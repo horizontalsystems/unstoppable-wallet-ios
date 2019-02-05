@@ -159,6 +159,17 @@ extension GrdbStorage: ICoinStorage {
         }
     }
 
+    func update(inserted: [Coin], deleted: [Coin]) {
+        _ = try? dbPool.write { db in
+            for coin in inserted {
+                let storableCoin = StorableCoin(coin: coin, enabled: false, order: nil)
+                try storableCoin.insert(db)
+            }
+            let deletedCoinCodes = deleted.map { $0.code }
+            try StorableCoin.filter(deletedCoinCodes.contains(StorableCoin.Columns.code)).deleteAll(db)
+        }
+    }
+
     func clearCoins() {
         _ = try? dbPool.write { db in
             try StorableCoin.deleteAll(db)

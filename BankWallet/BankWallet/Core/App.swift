@@ -21,6 +21,7 @@ class App {
     let reachabilityManager: IReachabilityManager
 
     let grdbStorage: GrdbStorage
+    let tokenSyncer: ITokenSyncer
 
     let pinManager: IPinManager
     let coinManager: ICoinManager
@@ -62,6 +63,7 @@ class App {
         reachabilityManager = ReachabilityManager(appConfigProvider: appConfigProvider)
 
         grdbStorage = GrdbStorage()
+        tokenSyncer = TokenSyncer(tokenNetworkManager: networkManager, storage: grdbStorage)
 
         pinManager = PinManager(secureStorage: secureStorage)
         coinManager = CoinManager(appConfigProvider: appConfigProvider, storage: grdbStorage)
