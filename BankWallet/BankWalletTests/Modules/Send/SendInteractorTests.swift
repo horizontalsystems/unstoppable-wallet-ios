@@ -21,7 +21,6 @@ class SendInteractorTests: XCTestCase {
     private let maxDecimal = 8
 
     private var mockAdapter: MockIAdapter!
-    private var wallet: Wallet!
     private var interactorState: SendInteractorState!
     private var input = SendUserInput()
 
@@ -31,8 +30,7 @@ class SendInteractorTests: XCTestCase {
         super.setUp()
 
         mockAdapter = MockIAdapter()
-        wallet = Wallet(title: "some", coinCode: coinCode, adapter: mockAdapter)
-        interactorState = SendInteractorState(wallet: wallet)
+        interactorState = SendInteractorState(adapter: mockAdapter)
 
         mockDelegate = MockISendInteractorDelegate()
         mockCurrencyManager = MockICurrencyManager()
@@ -48,6 +46,7 @@ class SendInteractorTests: XCTestCase {
             when(mock.baseCurrency.get).thenReturn(baseCurrency)
         }
         stub(mockAdapter) { mock in
+            when(mock.coin.get).thenReturn(Coin(title: "some", code: coinCode, type: .bitcoin))
             when(mock.decimal.get).thenReturn(0)
             when(mock.balance.get).thenReturn(balance)
             when(mock.validate(address: any())).thenDoNothing()
@@ -74,7 +73,6 @@ class SendInteractorTests: XCTestCase {
         mockAppConfigProvider = nil
 
         mockAdapter = nil
-        wallet = nil
         interactorState = nil
 
         interactor = nil

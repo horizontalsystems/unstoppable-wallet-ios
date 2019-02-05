@@ -32,8 +32,7 @@ class App {
 
     let ethereumKitManager: IEthereumKitManager
     let adapterFactory: IAdapterFactory
-    let walletFactory: IWalletFactory
-    let walletManager: IWalletManager
+    let adapterManager: IAdapterManager
 
     let lockRouter: LockRouter
     let lockManager: ILockManager
@@ -75,19 +74,18 @@ class App {
         wordsManager = WordsManager(localStorage: localStorage)
 
         adapterFactory = AdapterFactory(appConfigProvider: appConfigProvider, localStorage: localStorage, ethereumKitManager: ethereumKitManager)
-        walletFactory = WalletFactory(adapterFactory: adapterFactory)
-        walletManager = WalletManager(walletFactory: walletFactory, authManager: authManager, coinManager: coinManager)
+        adapterManager = AdapterManager(adapterFactory: adapterFactory, authManager: authManager, coinManager: coinManager)
 
         lockRouter = LockRouter()
         lockManager = LockManager(localStorage: localStorage, authManager: authManager, appConfigProvider: appConfigProvider, lockRouter: lockRouter)
         blurManager = BlurManager(lockManager: lockManager)
 
-        rateSyncer = RateSyncer(rateManager: rateManager, walletManager: walletManager, currencyManager: currencyManager, reachabilityManager: reachabilityManager)
+        rateSyncer = RateSyncer(rateManager: rateManager, adapterManager: adapterManager, currencyManager: currencyManager, reachabilityManager: reachabilityManager)
 
         dataProviderManager = FullTransactionDataProviderManager(localStorage: localStorage, appConfigProvider: appConfigProvider)
         fullTransactionInfoProviderFactory = FullTransactionInfoProviderFactory(apiManager: networkManager, dataProviderManager: dataProviderManager)
 
-        authManager.walletManager = walletManager
+        authManager.adapterManager = adapterManager
     }
 
 }

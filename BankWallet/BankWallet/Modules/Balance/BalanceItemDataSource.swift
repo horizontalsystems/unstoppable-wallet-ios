@@ -9,7 +9,7 @@ class BalanceItemDataSource {
     }
 
     var coinCodes: [CoinCode] {
-        return items.map { $0.coinCode }
+        return items.map { $0.coin.code }
     }
 
     func item(at index: Int) -> BalanceItem {
@@ -17,7 +17,7 @@ class BalanceItemDataSource {
     }
 
     func index(for coinCode: CoinCode) -> Int? {
-        return items.firstIndex(where: { $0.coinCode == coinCode })
+        return items.firstIndex(where: { $0.coin.code == coinCode })
     }
 
     func set(balance: Decimal, index: Int) {

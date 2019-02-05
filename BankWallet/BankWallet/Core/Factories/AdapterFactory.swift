@@ -13,18 +13,16 @@ class AdapterFactory: IAdapterFactory {
         self.ethereumKitManager = ethereumKitManager
     }
 
-    func adapter(forCoinType type: CoinType, authData: AuthData) -> IAdapter? {
-        switch type {
-        case .bitcoin:
-            return BitcoinAdapter.bitcoinAdapter(authData: authData, newWallet: localStorage.isNewWallet, testMode: appConfigProvider.testMode)
-        case .bitcoinCash:
-            return BitcoinAdapter.bitcoinCashAdapter(authData: authData, newWallet: localStorage.isNewWallet, testMode: appConfigProvider.testMode)
+    func adapter(forCoin coin: Coin, authData: AuthData) -> IAdapter? {
+        switch coin.type {
+        case .bitcoin, .bitcoinCash:
+            return BitcoinAdapter(coin: coin, authData: authData, newWallet: localStorage.isNewWallet, testMode: appConfigProvider.testMode)
         case .ethereum:
             let ethereumKit = ethereumKitManager.ethereumKit(authData: authData)
-            return EthereumAdapter.ethereumAdapter(ethereumKit: ethereumKit)
+            return EthereumAdapter(coin: coin, ethereumKit: ethereumKit)
         case let .erc20(address, decimal):
             let ethereumKit = ethereumKitManager.ethereumKit(authData: authData)
-            return Erc20Adapter.adapter(ethereumKit: ethereumKit, contractAddress: address, decimal: decimal)
+            return Erc20Adapter(coin: coin, ethereumKit: ethereumKit, contractAddress: address, decimal: decimal)
         }
     }
 

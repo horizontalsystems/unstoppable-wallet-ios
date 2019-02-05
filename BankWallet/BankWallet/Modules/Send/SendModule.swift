@@ -98,11 +98,11 @@ enum AmountInfo {
 }
 
 class SendInteractorState {
-    let wallet: Wallet
+    let adapter: IAdapter
     var rateValue: Decimal?
 
-    init(wallet: Wallet) {
-        self.wallet = wallet
+    init(adapter: IAdapter) {
+        self.adapter = adapter
     }
 }
 

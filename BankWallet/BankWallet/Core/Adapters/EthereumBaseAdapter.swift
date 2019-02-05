@@ -5,6 +5,8 @@ import RxSwift
 class EthereumBaseAdapter {
     private let transactionCompletionThreshold = 12
 
+    let coin: Coin
+
     let ethereumKit: EthereumKit
     let decimal: Int
 
@@ -16,7 +18,8 @@ class EthereumBaseAdapter {
     let lastBlockHeightUpdatedSignal = Signal()
     let stateUpdatedSignal = Signal()
 
-    init(ethereumKit: EthereumKit, decimal: Int) {
+    init(coin: Coin, ethereumKit: EthereumKit, decimal: Int) {
+        self.coin = coin
         self.ethereumKit = ethereumKit
         self.decimal = decimal
     }

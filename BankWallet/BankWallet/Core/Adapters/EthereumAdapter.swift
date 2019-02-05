@@ -3,8 +3,8 @@ import RxSwift
 
 class EthereumAdapter: EthereumBaseAdapter {
 
-    init(ethereumKit: EthereumKit) {
-        super.init(ethereumKit: ethereumKit, decimal: 18)
+    init(coin: Coin, ethereumKit: EthereumKit) {
+        super.init(coin: coin, ethereumKit: ethereumKit, decimal: 18)
 
         ethereumKit.delegate = self
     }
@@ -43,13 +43,5 @@ extension EthereumAdapter: IAdapter {
 }
 
 extension EthereumAdapter: EthereumKitDelegate {
-
-}
-
-extension EthereumAdapter {
-
-    static func ethereumAdapter(ethereumKit: EthereumKit) -> EthereumAdapter {
-        return EthereumAdapter(ethereumKit: ethereumKit)
-    }
 
 }

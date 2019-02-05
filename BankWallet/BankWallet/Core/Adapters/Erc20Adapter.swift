@@ -4,10 +4,10 @@ import RxSwift
 class Erc20Adapter: EthereumBaseAdapter {
     let contractAddress: String
 
-    init(ethereumKit: EthereumKit, contractAddress: String, decimal: Int) {
+    init(coin: Coin, ethereumKit: EthereumKit, contractAddress: String, decimal: Int) {
         self.contractAddress = contractAddress
 
-        super.init(ethereumKit: ethereumKit, decimal: decimal)
+        super.init(coin: coin, ethereumKit: ethereumKit, decimal: decimal)
 
         ethereumKit.register(token: self)
     }
@@ -47,13 +47,5 @@ extension Erc20Adapter: IAdapter {
 }
 
 extension Erc20Adapter: Erc20KitDelegate {
-
-}
-
-extension Erc20Adapter {
-
-    static func adapter(ethereumKit: EthereumKit, contractAddress: String, decimal: Int) -> Erc20Adapter {
-        return Erc20Adapter(ethereumKit: ethereumKit, contractAddress: contractAddress, decimal: decimal)
-    }
 
 }

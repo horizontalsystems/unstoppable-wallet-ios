@@ -5,41 +5,44 @@ import Cuckoo
 
 class DepositInteractorTests: XCTestCase {
     private var mockDelegate: MockIDepositInteractorDelegate!
-    private var mockWalletManager: MockIWalletManager!
+    private var mockAdapterManager: MockIAdapterManager!
     private var mockPasteboardManager: MockIPasteboardManager!
 
     private var interactor: DepositInteractor!
 
-    private let bitcoin = "BTC"
-    private let ether = "ETH"
+    private let bitcoin = Coin(title: "Bitcoin", code: "BTC", type: .bitcoin)
+    private let ether = Coin(title: "Ethereum", code: "ETH", type: .ethereum)
 
-    private var bitcoinWallet: Wallet!
-    private var etherWallet: Wallet!
+    private let mockBitcoinAdapter = MockIAdapter()
+    private let mockEtherAdapter = MockIAdapter()
 
     override func setUp() {
         super.setUp()
 
-        bitcoinWallet = Wallet(title: "some", coinCode: bitcoin, adapter: MockIAdapter())
-        etherWallet = Wallet(title: "some", coinCode: ether, adapter: MockIAdapter())
-
         mockDelegate = MockIDepositInteractorDelegate()
-        mockWalletManager = MockIWalletManager()
+        mockAdapterManager = MockIAdapterManager()
         mockPasteboardManager = MockIPasteboardManager()
 
-        stub(mockWalletManager) { mock in
-            when(mock.wallets.get).thenReturn([bitcoinWallet, etherWallet])
+        stub(mockBitcoinAdapter) { mock in
+            when(mock.coin.get).thenReturn(bitcoin)
+        }
+        stub(mockEtherAdapter) { mock in
+            when(mock.coin.get).thenReturn(ether)
+        }
+        stub(mockAdapterManager) { mock in
+            when(mock.adapters.get).thenReturn([mockBitcoinAdapter, mockEtherAdapter])
         }
         stub(mockPasteboardManager) { mock in
             when(mock.set(value: any())).thenDoNothing()
         }
 
-        interactor = DepositInteractor(walletManager: mockWalletManager, pasteboardManager: mockPasteboardManager)
+        interactor = DepositInteractor(adapterManager: mockAdapterManager, pasteboardManager: mockPasteboardManager)
         interactor.delegate = mockDelegate
     }
 
     override func tearDown() {
         mockDelegate = nil
-        mockWalletManager = nil
+        mockAdapterManager = nil
         mockPasteboardManager = nil
 
         interactor = nil
@@ -48,18 +51,18 @@ class DepositInteractorTests: XCTestCase {
     }
 
     func testWalletsForCoin_AllCoins() {
-        let wallets = interactor.wallets(forCoin: nil)
+        let adapters = interactor.adapters(forCoin: nil)
 
-        XCTAssertEqual(wallets.count, 2)
-        XCTAssertTrue(wallets[0] === bitcoinWallet)
-        XCTAssertTrue(wallets[1] === etherWallet)
+        XCTAssertEqual(adapters.count, 2)
+        XCTAssertTrue(adapters[0] === mockBitcoinAdapter)
+        XCTAssertTrue(adapters[1] === mockEtherAdapter)
     }
 
     func testWalletsForCoin_DefiniteCoin() {
-        let wallets = interactor.wallets(forCoin: ether)
+        let adapters = interactor.adapters(forCoin: ether.code)
 
-        XCTAssertEqual(wallets.count, 1)
-        XCTAssertTrue(wallets[0] === etherWallet)
+        XCTAssertEqual(adapters.count, 1)
+        XCTAssertTrue(adapters[0] === mockEtherAdapter)
     }
 
     func testCopyAddress() {

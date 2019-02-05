@@ -1,17 +1,15 @@
 import Foundation
 
 struct BalanceItem {
-    let title: String
-    let coinCode: CoinCode
+    let coin: Coin
     let refreshable: Bool
 
     var balance: Decimal = 0
     var state: AdapterState = .synced
     var rate: Rate?
 
-    init(title: String, coinCode: CoinCode, refreshable: Bool) {
-        self.title = title
-        self.coinCode = coinCode
+    init(coin: Coin, refreshable: Bool) {
+        self.coin = coin
         self.refreshable = refreshable
     }
 

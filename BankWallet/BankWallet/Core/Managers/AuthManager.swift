@@ -8,7 +8,7 @@ class AuthManager {
     private let rateManager: IRateManager
     private let ethereumKitManager: IEthereumKitManager
 
-    weak var walletManager: IWalletManager?
+    weak var adapterManager: IAdapterManager?
 
     private(set) var authData: AuthData?
 
@@ -39,11 +39,11 @@ extension AuthManager: IAuthManager {
         self.authData = authData
 
         coinManager.enableDefaultCoins()
-        walletManager?.initWallets()
+        adapterManager?.initAdapters()
     }
 
     func logout() throws {
-        walletManager?.clear()
+        adapterManager?.clear()
         try ethereumKitManager.clear()
         try pinManager.clear()
         localStorage.clear()

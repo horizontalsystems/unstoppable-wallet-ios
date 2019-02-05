@@ -19,9 +19,9 @@ class BalancePresenter {
 
 extension BalancePresenter: IBalanceInteractorDelegate {
 
-    func didUpdate(wallets: [Wallet]) {
-        dataSource.items = wallets.map { wallet in
-            BalanceItem(title: wallet.title, coinCode: wallet.coinCode, refreshable: wallet.adapter.refreshable)
+    func didUpdate(adapters: [IAdapter]) {
+        dataSource.items = adapters.map { adapter in
+            BalanceItem(coin: adapter.coin, refreshable: adapter.refreshable)
         }
 
         if let currency = dataSource.currency {
@@ -72,7 +72,7 @@ extension BalancePresenter: IBalanceInteractorDelegate {
 extension BalancePresenter: IBalanceViewDelegate {
 
     func viewDidLoad() {
-        interactor.initWallets()
+        interactor.initAdapters()
     }
 
     var itemsCount: Int {
@@ -88,15 +88,15 @@ extension BalancePresenter: IBalanceViewDelegate {
     }
 
     func onRefresh(index: Int) {
-        interactor.refresh(coinCode: dataSource.item(at: index).coinCode)
+        interactor.refresh(coinCode: dataSource.item(at: index).coin.code)
     }
 
     func onReceive(index: Int) {
-        router.openReceive(for: dataSource.item(at: index).coinCode)
+        router.openReceive(for: dataSource.item(at: index).coin.code)
     }
 
     func onPay(index: Int) {
-        router.openSend(for: dataSource.item(at: index).coinCode)
+        router.openSend(for: dataSource.item(at: index).coin.code)
     }
 
     func onOpenManageCoins() {

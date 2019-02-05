@@ -21,14 +21,14 @@ protocol IBalanceViewDelegate {
 }
 
 protocol IBalanceInteractor {
-    func initWallets()
+    func initAdapters()
     func fetchRates(currencyCode: String, coinCodes: [CoinCode])
 
     func refresh(coinCode: CoinCode)
 }
 
 protocol IBalanceInteractorDelegate: class {
-    func didUpdate(wallets: [Wallet])
+    func didUpdate(adapters: [IAdapter])
     func didUpdate(balance: Decimal, coinCode: CoinCode)
     func didUpdate(state: AdapterState, coinCode: CoinCode)
 

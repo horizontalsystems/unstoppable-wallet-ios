@@ -35,7 +35,7 @@ extension SendInteractor: ISendInteractor {
     }
 
     var coinCode: CoinCode {
-        return state.wallet.coinCode
+        return state.adapter.coin.code
     }
 
     var valueFromPasteboard: String? {
@@ -43,7 +43,7 @@ extension SendInteractor: ISendInteractor {
     }
 
     func parse(paymentAddress: String) -> PaymentRequestAddress {
-        return state.wallet.adapter.parse(paymentAddress: paymentAddress)
+        return state.adapter.parse(paymentAddress: paymentAddress)
     }
 
     func convertedAmount(forInputType inputType: SendInputType, amount: Decimal) -> Decimal? {
@@ -58,8 +58,8 @@ extension SendInteractor: ISendInteractor {
     }
 
     func state(forUserInput input: SendUserInput) -> SendState {
-        let coin = state.wallet.coinCode
-        let adapter = state.wallet.adapter
+        let coinCode = state.adapter.coin.code
+        let adapter = state.adapter
         let baseCurrency = currencyManager.baseCurrency
 
         let decimal = input.inputType == .coin ? min(adapter.decimal, appConfigProvider.maxDecimal) : appConfigProvider.fiatDecimal
@@ -68,10 +68,10 @@ extension SendInteractor: ISendInteractor {
 
         switch input.inputType {
         case .coin:
-            sendState.coinValue = CoinValue(coinCode: coin, value: input.amount)
+            sendState.coinValue = CoinValue(coinCode: coinCode, value: input.amount)
             sendState.currencyValue = state.rateValue.map { CurrencyValue(currency: baseCurrency, value: input.amount * $0) }
         case .currency:
-            sendState.coinValue = state.rateValue.map { CoinValue(coinCode: coin, value: input.amount / $0) }
+            sendState.coinValue = state.rateValue.map { CoinValue(coinCode: coinCode, value: input.amount / $0) }
             sendState.currencyValue = CurrencyValue(currency: baseCurrency, value: input.amount)
         }
 
@@ -109,7 +109,7 @@ extension SendInteractor: ISendInteractor {
     }
 
     private func createAmountError(forInput input: SendUserInput, fee: Decimal) -> AmountError? {
-        var balanceMinusFee = state.wallet.adapter.balance - fee
+        var balanceMinusFee = state.adapter.balance - fee
         if balanceMinusFee < 0 {
             balanceMinusFee = 0
         }
@@ -127,12 +127,12 @@ extension SendInteractor: ISendInteractor {
     func totalBalanceMinusFee(forInputType input: SendInputType, address: String?) -> Decimal {
         var fee: Decimal
         do {
-            fee = try state.wallet.adapter.fee(for: state.wallet.adapter.balance, address: address, senderPay: false)
+            fee = try state.adapter.fee(for: state.adapter.balance, address: address, senderPay: false)
         } catch {
             print(error)
             return 0
         }
-        let balanceMinusFee = state.wallet.adapter.balance - fee
+        let balanceMinusFee = state.adapter.balance - fee
         switch input {
         case .coin:
             return balanceMinusFee
@@ -166,7 +166,7 @@ extension SendInteractor: ISendInteractor {
             return
         }
 
-        state.wallet.adapter.send(to: address, value: amount) { [weak self] error in
+        state.adapter.send(to: address, value: amount) { [weak self] error in
             if let error = error {
                 self?.delegate?.didFailToSend(error: error)
             } else {
@@ -180,7 +180,7 @@ extension SendInteractor: ISendInteractor {
     }
 
     func fetchRate() {
-        rateStorage.nonExpiredLatestRateValueObservable(forCoinCode: state.wallet.coinCode, currencyCode: currencyManager.baseCurrency.code)
+        rateStorage.nonExpiredLatestRateValueObservable(forCoinCode: state.adapter.coin.code, currencyCode: currencyManager.baseCurrency.code)
                 .take(1)
                 .subscribe(onNext: { [weak self] rateValue in
                     self?.state.rateValue = rateValue
