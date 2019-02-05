@@ -59,8 +59,8 @@ extension SendPresenter: ISendViewDelegate {
         let state = interactor.state(forUserInput: userInput)
         let viewItem = factory.viewItem(forState: state, forceRoundDown: false)
 
+        view?.set(coin: interactor.coin)
         view?.set(decimal: viewItem.decimal)
-        view?.set(coinCode: interactor.coinCode)
         view?.set(amountInfo: viewItem.amountInfo)
         view?.set(switchButtonEnabled: viewItem.switchButtonEnabled)
         view?.set(hintInfo: viewItem.hintInfo)
@@ -131,7 +131,7 @@ extension SendPresenter: ISendViewDelegate {
     func onSendClicked() {
         let state = interactor.state(forUserInput: userInput)
 
-        guard let viewItem = factory.confirmationViewItem(forState: state) else {
+        guard let viewItem = factory.confirmationViewItem(forState: state, coin: interactor.coin) else {
             return
         }
 

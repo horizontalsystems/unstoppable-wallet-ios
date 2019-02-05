@@ -34,8 +34,8 @@ extension SendInteractor: ISendInteractor {
         return localStorage.sendInputType ?? .coin
     }
 
-    var coinCode: CoinCode {
-        return state.adapter.coin.code
+    var coin: Coin {
+        return state.adapter.coin
     }
 
     var valueFromPasteboard: String? {
@@ -115,7 +115,7 @@ extension SendInteractor: ISendInteractor {
         }
         switch input.inputType {
         case .coin:
-            return AmountError.insufficientAmount(amountInfo: .coinValue(coinValue: CoinValue(coinCode: coinCode, value: balanceMinusFee)))
+            return AmountError.insufficientAmount(amountInfo: .coinValue(coinValue: CoinValue(coinCode: coin.code, value: balanceMinusFee)))
         case .currency:
             return state.rateValue.map {
                 let currencyBalanceMinusFee = balanceMinusFee * $0

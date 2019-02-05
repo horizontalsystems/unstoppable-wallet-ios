@@ -94,8 +94,8 @@ class SendAlertModel: BaseAlertModel {
 
 extension SendAlertModel: ISendView {
 
-    func set(coinCode: CoinCode) {
-        titleItem.bindCoin?(coinCode)
+    func set(coin: Coin) {
+        titleItem.bindCoin?(coin)
     }
 
     func set(amountInfo: AmountInfo?) {
