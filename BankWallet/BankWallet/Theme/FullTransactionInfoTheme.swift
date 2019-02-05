@@ -6,7 +6,7 @@ class FullTransactionInfoTheme {
     static let iconColor = UIColor.cryptoGray50
     static let resourceTitleFont = UIFont.cryptoBody2
     static var descriptionColor: UIColor { return .crypto_Bars_Dark }
-    static let linkLabelColor = UIColor.crypto_Bars_Dark
+    static var linkLabelColor: UIColor { return .crypto_Bars_Dark }
     static let linkLabelUnderlineStyle: NSNumber = 1
     static let linkLabelFont = UIFont.cryptoSectionCaption
 
