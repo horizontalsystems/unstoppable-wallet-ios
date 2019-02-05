@@ -20,7 +20,7 @@ extension DepositPresenter: IDepositViewDelegate {
 
     func addressItems(forCoin coinCode: CoinCode?) -> [AddressItem] {
         return interactor.adapters(forCoin: coinCode).map {
-            AddressItem(title: $0.coin.title, address: $0.receiveAddress, coinCode: $0.coin.code)
+            AddressItem(coin: $0.coin, address: $0.receiveAddress)
         }
     }
 

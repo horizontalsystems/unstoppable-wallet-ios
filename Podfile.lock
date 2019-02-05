@@ -1,5 +1,7 @@
 PODS:
   - Alamofire (4.8.1)
+  - AlamofireImage (3.5.0):
+    - Alamofire (~> 4.8)
   - BigInt (3.1.0):
     - SipHash (~> 1.2)
   - Cuckoo (0.12.0)
@@ -60,6 +62,7 @@ PODS:
 
 DEPENDENCIES:
   - Alamofire
+  - AlamofireImage
   - BigInt
   - Cuckoo
   - GRDB.swift
@@ -79,6 +82,7 @@ DEPENDENCIES:
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - Alamofire
+    - AlamofireImage
     - BigInt
     - Cuckoo
     - GRDB.swift
@@ -115,6 +119,7 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   Alamofire: 16ce2c353fb72865124ddae8a57c5942388f4f11
+  AlamofireImage: 1aea346f4dda2f6c67622fa5a89fcbb80d79cc16
   BigInt: 76b5dfdfa3e2e478d4ffdf161aeede5502e2742f
   Cuckoo: d30b6c149e52ffbcfe6b4a9543e4627d08947274
   GRDB.swift: e10787d857b6b8135354b9e08fb23b4bb8e2fab7
@@ -137,6 +142,6 @@ SPEC CHECKSUMS:
   SipHash: fad90a4683e420c52ef28063063dbbce248ea6d4
   SnapKit: 0de968a9fec17499afa29683b05d0c775b6d1c29
 
-PODFILE CHECKSUM: 14ed39e1548e5ca0907e5d340cc7d44c5633af32
+PODFILE CHECKSUM: 08551fb959c93340ac861ee14dd0c167f15c0711
 
 COCOAPODS: 1.5.3

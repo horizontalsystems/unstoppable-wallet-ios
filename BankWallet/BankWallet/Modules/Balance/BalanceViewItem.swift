@@ -1,5 +1,5 @@
 struct BalanceViewItem {
-    let title: String
+    let coin: Coin
     let coinValue: CoinValue
     let exchangeValue: CurrencyValue?
     let currencyValue: CurrencyValue?

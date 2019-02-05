@@ -4,7 +4,7 @@ import GrouviActionSheet
 import SnapKit
 
 class SendTitleItemView: BaseActionItemView {
-    private let iconImageView = UIImageView()
+    private let iconImageView = CoinIconImageView()
     private let titleLabel = UILabel()
 
     override var item: SendTitleItem? { return _item as? SendTitleItem }
@@ -12,6 +12,7 @@ class SendTitleItemView: BaseActionItemView {
     override func initView() {
         super.initView()
 
+        iconImageView.tintColor = SendTheme.iconColor
         addSubview(iconImageView)
         iconImageView.snp.makeConstraints { maker in
             maker.leading.top.equalToSuperview().offset(SendTheme.margin)
@@ -26,7 +27,7 @@ class SendTitleItemView: BaseActionItemView {
         }
 
         item?.bindCoin = { [weak self] coin in
-            self?.iconImageView.image = UIImage(named: "\(coin.code) Icon")?.tinted(with: SendTheme.iconColor)
+            self?.iconImageView.bind(coin: coin)
             self?.titleLabel.text = "send.title".localized(coin.title)
         }
     }
