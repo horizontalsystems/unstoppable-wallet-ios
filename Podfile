@@ -10,6 +10,7 @@ def appPods
   pod 'HSEthereumKit', git: 'https://github.com/horizontalsystems/ethereum-kit-ios/'
 
   pod 'Alamofire'
+  pod 'AlamofireImage'
   pod 'ObjectMapper'
 
   pod 'RxSwift'

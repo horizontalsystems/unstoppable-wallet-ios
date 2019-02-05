@@ -68,22 +68,22 @@ class DepositPresenterTests: XCTestCase {
 
     func testGetAddressItems() {
         let expectedItems = [
-            AddressItem(title: bitcoinTitle, address: bitcoinAddress, coinCode: bitcoin),
-            AddressItem(title: etherTitle, address: etherAddress, coinCode: ether)
+            AddressItem(coin: Coin(title: bitcoinTitle, code: bitcoin, type: .bitcoin), address: bitcoinAddress),
+            AddressItem(coin: Coin(title: etherTitle, code: ether, type: .ethereum), address: etherAddress)
         ]
 
         XCTAssertEqual(presenter.addressItems(forCoin: nil), expectedItems)
     }
 
     func testOnCopy() {
-        presenter.onCopy(addressItem: AddressItem(title: bitcoinTitle, address: bitcoinAddress, coinCode: bitcoin))
+        presenter.onCopy(addressItem: AddressItem(coin: Coin(title: bitcoinTitle, code: bitcoin, type: .bitcoin), address: bitcoinAddress))
 
         verify(mockInteractor).copy(address: equal(to: bitcoinAddress))
         verify(mockView).showCopied()
     }
 
     func testOnShare() {
-        presenter.onShare(addressItem: AddressItem(title: bitcoinTitle, address: bitcoinAddress, coinCode: bitcoin))
+        presenter.onShare(addressItem: AddressItem(coin: Coin(title: bitcoinTitle, code: bitcoin, type: .bitcoin), address: bitcoinAddress))
 
         verify(mockRouter).share(address: equal(to: bitcoinAddress))
     }

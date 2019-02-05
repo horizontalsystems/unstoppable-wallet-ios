@@ -4,7 +4,7 @@ import SnapKit
 class ManageCoinCell: UITableViewCell {
     let titleLabel = UILabel()
     let coinLabel = UILabel()
-    let coinImageView = UIImageView()
+    let coinImageView = CoinIconImageView()
 
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -26,6 +26,7 @@ class ManageCoinCell: UITableViewCell {
             maker.top.equalTo(self.titleLabel.snp.bottom).offset(ManageCoinsTheme.coinLabelTopMargin)
         }
 
+        coinImageView.tintColor = ManageCoinsTheme.iconTintColor
         contentView.addSubview(coinImageView)
         coinImageView.snp.makeConstraints { maker in
             maker.centerY.equalToSuperview()
@@ -40,7 +41,7 @@ class ManageCoinCell: UITableViewCell {
     func bind(coin: Coin) {
         titleLabel.text = coin.title
         coinLabel.text = coin.code
-        coinImageView.image = UIImage(named: "\(coin.code) Icon")?.tinted(with: ManageCoinsTheme.iconTintColor)
+        coinImageView.bind(coin: coin)
     }
 
 }
