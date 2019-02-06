@@ -64,7 +64,7 @@ class FullTransactionInfoTextCell: UITableViewCell {
                 maker.centerY.equalToSuperview()
             }
         }
-        contentView.updateConstraintsIfNeeded()
+        iconImageView.updateConstraintsIfNeeded()
         titleLabel.text = item.title
         separatorView.set(hidden: last)
         descriptionView.bind(value: item.value, font: FullTransactionInfoTheme.font, color: item.titleColor ?? FullTransactionInfoTheme.descriptionColor, showExtra: item.showExtra, onTap: onTap)
