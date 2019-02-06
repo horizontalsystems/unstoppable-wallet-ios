@@ -49,6 +49,6 @@ class BalanceTheme {
     static let buttonsTopMargin: CGFloat = 50
     static let buttonsHeight: CGFloat = 50
     static let buttonCornerRadius: CGFloat = 12
-    static let buttonsAnimationDuration = 0.2
+    static let buttonsAnimationDuration = 0.15
     static let editCellHeight: CGFloat = 64
 }
