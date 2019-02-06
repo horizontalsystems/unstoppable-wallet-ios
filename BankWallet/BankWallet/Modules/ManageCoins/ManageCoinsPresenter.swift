@@ -38,6 +38,7 @@ extension ManageCoinsPresenter: IManageCoinsInteractorDelegate {
 extension ManageCoinsPresenter: IManageCoinsViewDelegate {
 
     func viewDidLoad() {
+        interactor.syncCoins()
         interactor.loadCoins()
     }
 

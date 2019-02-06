@@ -5,7 +5,7 @@ class AppConfigProvider: IAppConfigProvider {
     let maxDecimal: Int = 8
 
     let reachabilityHost = "ipfs.horizontalsystems.xyz"
-    let ratesApiUrl = "https://ipfs.horizontalsystems.xyz/ipns/Qmd4Gv2YVPqs6dmSy1XEq7pQRSgLihqYKL2JjK7DMUFPVz/io-hs/data/xrates"
+    let apiUrl = "https://ipfs.horizontalsystems.xyz/ipns/Qmd4Gv2YVPqs6dmSy1XEq7pQRSgLihqYKL2JjK7DMUFPVz/io-hs/data"
 
     var testMode: Bool {
         return Bundle.main.object(forInfoDictionaryKey: "TestMode") as? String == "true"
@@ -52,7 +52,6 @@ class AppConfigProvider: IAppConfigProvider {
             Coin(title: "Bitcoin", code: "BTC\(suffix)", type: .bitcoin),
             Coin(title: "Bitcoin Cash", code: "BCH\(suffix)", type: .bitcoinCash),
             Coin(title: "Ethereum", code: "ETH\(suffix)", type: .ethereum),
-            Coin(title: "Pundi X Token", code: "NPXS\(suffix)", type: .erc20(address: "0xA15C7Ebe1f07CaF6bFF097D8a589fb8AC49Ae5B3", decimal: 18)),
         ]
     }
 
