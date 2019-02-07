@@ -31,6 +31,9 @@ class SendInteractor {
 extension SendInteractor: ISendInteractor {
 
     var defaultInputType: SendInputType {
+        if state.rateValue == nil {
+            return .coin
+        }
         return localStorage.sendInputType ?? .coin
     }
 
@@ -88,8 +91,7 @@ extension SendInteractor: ISendInteractor {
         var feeValue: Decimal?
         if let coinValue = sendState.coinValue {
             do {
-                let value = try adapter.fee(for: coinValue.value, address: input.address, senderPay: true)
-                feeValue = value
+                feeValue = try adapter.fee(for: coinValue.value, address: input.address, senderPay: true)
             } catch FeeError.insufficientAmount(let fee) {
                 feeValue = fee
                 sendState.amountError = createAmountError(forInput: input, fee: fee)
