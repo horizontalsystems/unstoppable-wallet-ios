@@ -35,7 +35,7 @@ class NetworkManager {
     private let ipfsMinuteFormatter = DateFormatter()
 
     required init(appConfigProvider: IAppConfigProvider) {
-        self.apiUrl = appConfigProvider.ratesApiUrl
+        self.apiUrl = appConfigProvider.apiUrl
 
         ipfsHourFormatter.timeZone = TimeZone(abbreviation: "UTC")
         ipfsHourFormatter.dateFormat = "yyyy/MM/dd/HH"
@@ -148,7 +148,7 @@ extension NetworkManager: IRateNetworkManager {
             coin.removeLast()
         }
 
-        return observable(forRequest: request(withMethod: .get, path: "\(coin)/\(currencyCode)/index.json"))
+        return observable(forRequest: request(withMethod: .get, path: "xrates/\(coin)/\(currencyCode)/index.json"))
     }
 
     func getRate(coinCode: String, currencyCode: String, date: Date) -> Observable<Decimal> {
@@ -161,8 +161,8 @@ extension NetworkManager: IRateNetworkManager {
         let hourPath = ipfsHourFormatter.string(from: date)
         let minuteString = ipfsMinuteFormatter.string(from: date)
 
-        let hourObservable: Observable<[String: Double]> = observable(forRequest: request(withMethod: .get, path: "\(coin)/\(currencyCode)/\(hourPath)/index.json"))
-        let dayObservable: Observable<Double> = observable(forRequest: request(withMethod: .get, path: "\(coin)/\(currencyCode)/\(dayPath)/index.json"))
+        let hourObservable: Observable<[String: Double]> = observable(forRequest: request(withMethod: .get, path: "xrates/\(coin)/\(currencyCode)/\(hourPath)/index.json"))
+        let dayObservable: Observable<Double> = observable(forRequest: request(withMethod: .get, path: "xrates/\(coin)/\(currencyCode)/\(dayPath)/index.json"))
 
         return hourObservable
                 .flatMap { rates -> Observable<Decimal> in
@@ -180,6 +180,27 @@ extension NetworkManager: IRateNetworkManager {
     }
 
 }
+extension NetworkManager: ITokenNetworkManager {
+
+    func getTokens() -> Observable<[Coin]> {
+        let tokenObservable: Observable<[[String: Any]]> = observable(forRequest: request(withMethod: .get, path: "blockchain/ETH/erc20/index.json"))
+        return tokenObservable
+                .map { tokens -> [Coin] in
+                    var coins = [Coin]()
+                    for token in tokens {
+                        if let code = token["code"] as? String,
+                           let name = token["name"] as? String,
+                           let contract = token["contract"] as? String,
+                           let decimal = token["decimal"] as? Int {
+                                coins.append(Coin(title: name, code: code, type: .erc20(address: contract, decimal: decimal)))
+                        }
+                    }
+                    return coins
+                }
+    }
+
+}
+
 
 extension NetworkManager: IJSONApiManager {
 

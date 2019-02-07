@@ -68,22 +68,22 @@ class BlockChairBitcoinResponse: IBitcoinResponse, ImmutableMappable {
         }
         blockHeight = try? map.value("data.\(key).transaction.block_id")
 
-        if let fee: Decimal = try? map.value("data.\(key).transaction.fee"), let size: Int = try? map.value("data.\(key).transaction.size") {
-            self.fee = fee / btcRate
+        if let fee: Int = try? map.value("data.\(key).transaction.fee"), let size: Int = try? map.value("data.\(key).transaction.size") {
+            self.fee = Decimal(fee) / btcRate
             self.size = size
-            feePerByte = fee / Decimal(size)
+            feePerByte = Decimal(fee) / Decimal(size)
         }
         if let vInputs: [[String: Any]] = try? map.value("data.\(key).inputs") {
             vInputs.forEach { input in
-                if let value = input["value"] as? Decimal {
-                    inputs.append((value: value / btcRate, address: input["recipient"] as? String))
+                if let value = input["value"] as? Double {
+                    inputs.append((value: Decimal(value) / btcRate, address: input["recipient"] as? String))
                 }
             }
         }
         if let vOutputs: [[String: Any]] = try? map.value("data.\(key).outputs") {
             vOutputs.forEach { output in
-                if let value = output["value"] as? Decimal {
-                    outputs.append((value: value / btcRate, address: output["recipient"] as? String))
+                if let value = output["value"] as? Double {
+                    outputs.append((value: Decimal(value) / btcRate, address: output["recipient"] as? String))
                 }
             }
         }

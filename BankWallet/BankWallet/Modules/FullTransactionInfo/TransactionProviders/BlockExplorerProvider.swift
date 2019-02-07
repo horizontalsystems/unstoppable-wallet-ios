@@ -43,7 +43,9 @@ class BlockExplorerBitcoinResponse: IBitcoinResponse, ImmutableMappable {
         confirmations = try? map.value("confirmations")
 
         size = try? map.value("size")
-        fee = try? map.value("fees")
+        if let feeDouble: Double = try? map.value("fees") {
+            fee = Decimal(feeDouble)
+        }
 
         if let fee = fee, let size = size {
             feePerByte = fee * btcRate / Decimal(size)

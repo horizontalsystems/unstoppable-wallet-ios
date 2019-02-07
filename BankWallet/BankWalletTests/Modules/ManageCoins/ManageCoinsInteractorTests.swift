@@ -7,6 +7,7 @@ import RxSwift
 class ManageCoinsInteractorTests: XCTestCase {
     private var mockDelegate: MockIManageCoinsInteractorDelegate!
     private var mockCoinManager: MockICoinManager!
+    private var mockTokenSyncer: MockITokenSyncer!
     private var mockStorage: MockICoinStorage!
 
     private var interactor: ManageCoinsInteractor!
@@ -42,6 +43,7 @@ class ManageCoinsInteractorTests: XCTestCase {
 
         mockDelegate = MockIManageCoinsInteractorDelegate()
         mockCoinManager = MockICoinManager()
+        mockTokenSyncer = MockITokenSyncer()
         mockStorage = MockICoinStorage()
 
         stub(mockDelegate) { mock in
@@ -52,23 +54,33 @@ class ManageCoinsInteractorTests: XCTestCase {
         stub(mockCoinManager) { mock in
             when(mock.allCoinsObservable.get).thenReturn(coinsObservable)
         }
+        stub(mockTokenSyncer) { mock in
+            when(mock.sync()).thenDoNothing()
+        }
         stub(mockStorage) { mock in
             when(mock.enabledCoinsObservable()).thenReturn(coinsObservable)
             when(mock.save(enabledCoins: any())).thenDoNothing()
         }
 
-        interactor = ManageCoinsInteractor(coinManager: mockCoinManager, storage: mockStorage, async: false)
+        interactor = ManageCoinsInteractor(coinManager: mockCoinManager, tokenSyncer: mockTokenSyncer, storage: mockStorage, async: false)
         interactor.delegate = mockDelegate
     }
 
     override func tearDown() {
         mockDelegate = nil
         mockCoinManager = nil
+        mockTokenSyncer = nil
         mockStorage = nil
 
         interactor = nil
 
         super.tearDown()
+    }
+
+    func testSyncCoins() {
+        interactor.syncCoins()
+
+        verify(mockTokenSyncer).sync()
     }
 
     func testLoadAllCoins() {

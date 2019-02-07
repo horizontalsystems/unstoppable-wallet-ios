@@ -21,6 +21,7 @@ class App {
     let reachabilityManager: IReachabilityManager
 
     let grdbStorage: GrdbStorage
+    let tokenSyncer: ITokenSyncer
 
     let pinManager: IPinManager
     let coinManager: ICoinManager
@@ -43,6 +44,8 @@ class App {
     let dataProviderManager: IFullTransactionDataProviderManager
     let fullTransactionInfoProviderFactory: IFullTransactionInfoProviderFactory
 
+    private let testModeIndicator: TestModeIndicator
+
     init() {
         pasteboardManager = PasteboardManager()
         randomManager = RandomManager()
@@ -62,6 +65,7 @@ class App {
         reachabilityManager = ReachabilityManager(appConfigProvider: appConfigProvider)
 
         grdbStorage = GrdbStorage()
+        tokenSyncer = TokenSyncer(tokenNetworkManager: networkManager, storage: grdbStorage)
 
         pinManager = PinManager(secureStorage: secureStorage)
         coinManager = CoinManager(appConfigProvider: appConfigProvider, storage: grdbStorage)
@@ -84,6 +88,8 @@ class App {
 
         dataProviderManager = FullTransactionDataProviderManager(localStorage: localStorage, appConfigProvider: appConfigProvider)
         fullTransactionInfoProviderFactory = FullTransactionInfoProviderFactory(apiManager: networkManager, dataProviderManager: dataProviderManager)
+
+        testModeIndicator = TestModeIndicator(appConfigProvider: appConfigProvider)
 
         authManager.adapterManager = adapterManager
     }

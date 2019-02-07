@@ -8,7 +8,7 @@ class BalanceCell: UITableViewCell {
 
     var roundedBackground = UIView()
 
-    var coinIconImageView = TintImageView(image: nil, tintColor: BalanceTheme.coinIconTintColor, selectedTintColor: BalanceTheme.coinIconTintColor)
+    private let coinIconImageView = CoinIconImageView()
     var nameLabel = UILabel()
     var rateLabel = UILabel()
     var currencyValueLabel = UILabel()
@@ -46,6 +46,7 @@ class BalanceCell: UITableViewCell {
         roundedBackground.clipsToBounds = true
         roundedBackground.layer.cornerRadius = BalanceTheme.roundedBackgroundCornerRadius
 
+        coinIconImageView.tintColor = BalanceTheme.coinIconTintColor
         roundedBackground.addSubview(coinIconImageView)
         coinIconImageView.snp.makeConstraints { maker in
             maker.leading.equalToSuperview().offset(BalanceTheme.cellBigMargin)
@@ -182,7 +183,7 @@ class BalanceCell: UITableViewCell {
     }
 
     func bindView(item: BalanceViewItem, selected: Bool, animated: Bool = false) {
-        coinIconImageView.image = UIImage(named: "\(item.coinValue.coinCode) Icon")
+        coinIconImageView.bind(coin: item.coin)
 
         receiveButton.set(hidden: !selected, animated: animated, duration: BalanceTheme.buttonsAnimationDuration)
         payButton.set(hidden: !selected, animated: animated, duration: BalanceTheme.buttonsAnimationDuration)
@@ -193,7 +194,7 @@ class BalanceCell: UITableViewCell {
             payButton.state = .disabled
         }
 
-        nameLabel.text = item.title.localized
+        nameLabel.text = item.coin.title.localized
 
         if let value = item.exchangeValue, let formattedValue = ValueFormatter.instance.format(currencyValue: value, shortFractionLimit: 100) {
             rateLabel.text = "balance.rate_per_coin".localized(formattedValue, item.coinValue.coinCode)

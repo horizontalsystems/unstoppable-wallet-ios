@@ -184,7 +184,7 @@ protocol IAppConfigProvider {
     var fiatDecimal: Int { get }
     var maxDecimal: Int { get }
     var reachabilityHost: String { get }
-    var ratesApiUrl: String { get }
+    var apiUrl: String { get }
     var testMode: Bool { get }
     var infuraKey: String { get }
     var etherscanKey: String { get }
@@ -211,6 +211,14 @@ protocol IRateNetworkManager {
     func getRate(coinCode: String, currencyCode: String, date: Date) -> Observable<Decimal>
 }
 
+protocol ITokenNetworkManager {
+    func getTokens() -> Observable<[Coin]>
+}
+
+protocol ITokenSyncer {
+    func sync()
+}
+
 protocol IRateStorage {
     func nonExpiredLatestRateValueObservable(forCoinCode coinCode: CoinCode, currencyCode: String) -> Observable<Decimal>
     func latestRateObservable(forCoinCode coinCode: CoinCode, currencyCode: String) -> Observable<Rate>
@@ -225,6 +233,7 @@ protocol ICoinStorage {
     func enabledCoinsObservable() -> Observable<[Coin]>
     func allCoinsObservable() -> Observable<[Coin]>
     func save(enabledCoins: [Coin])
+    func update(inserted: [Coin], deleted: [Coin])
     func clearCoins()
 }
 

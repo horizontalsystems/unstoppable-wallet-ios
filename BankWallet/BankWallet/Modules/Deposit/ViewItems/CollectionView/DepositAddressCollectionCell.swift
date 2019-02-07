@@ -2,7 +2,7 @@ import UIKit
 import SnapKit
 
 class DepositAddressCollectionCell: UICollectionViewCell {
-    var iconImageView = UIImageView()
+    private let iconImageView = CoinIconImageView()
     var titleLabel = UILabel()
     var separatorView = UIView()
     var qrCodeImageView = UIImageView()
@@ -11,6 +11,7 @@ class DepositAddressCollectionCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
 
+        iconImageView.tintColor = DepositTheme.iconTintColor
         contentView.addSubview(iconImageView)
         iconImageView.snp.makeConstraints { maker in
             maker.leading.equalToSuperview().offset(DepositTheme.regularMargin)
@@ -65,8 +66,8 @@ class DepositAddressCollectionCell: UICollectionViewCell {
     }
 
     func bind(address: AddressItem, onCopy: @escaping () -> ()) {
-        iconImageView.image = UIImage(named: "\(address.coinCode) Icon")?.tinted(with: DepositTheme.iconTintColor)
-        titleLabel.text = "deposit.receive_coin".localized(address.title)
+        iconImageView.bind(coin: address.coin)
+        titleLabel.text = "deposit.receive_coin".localized(address.coin.title)
         qrCodeImageView.backgroundColor = .lightGray
         addressButton.bind(value: address.address)
 
