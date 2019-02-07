@@ -77,12 +77,9 @@ enum AdapterState {
     case notSynced
 }
 
-enum FeeError: Error {
-    case insufficientAmount(fee: Decimal)
-}
-
 protocol IAdapter: class {
     var coin: Coin { get }
+    var feeCoinCode: CoinCode? { get }
 
     var decimal: Int { get }
     var balance: Decimal { get }
@@ -111,11 +108,17 @@ protocol IAdapter: class {
 
     func send(to address: String, value: Decimal, completion: ((Error?) -> ())?)
 
-    func fee(for value: Decimal, address: String?, senderPay: Bool) throws -> Decimal
+    func availableBalance(for address: String?) -> Decimal
+    func fee(for value: Decimal, address: String?) -> Decimal
     func validate(address: String) throws
+    func validate(amount: Decimal, address: String?) -> [SendStateError]
     func parse(paymentAddress: String) -> PaymentRequestAddress
 
     var receiveAddress: String { get }
+}
+
+extension IAdapter {
+    var feeCoinCode: CoinCode? { return nil }
 }
 
 protocol IWordsManager {

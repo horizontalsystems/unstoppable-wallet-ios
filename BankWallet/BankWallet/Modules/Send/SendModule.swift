@@ -74,6 +74,11 @@ enum SendInputType: String {
     case currency = "currency"
 }
 
+enum SendStateError {
+    case insufficientAmount
+    case insufficientFeeBalance
+}
+
 enum AmountError: Error {
     case insufficientAmount(amountInfo: AmountInfo)
 }
@@ -118,6 +123,7 @@ class SendState {
     var coinValue: CoinValue?
     var currencyValue: CurrencyValue?
     var amountError: AmountError?
+    var feeError: AmountError?
     var address: String?
     var addressError: AddressError?
     var feeCoinValue: CoinValue?

@@ -88,21 +88,17 @@ extension SendInteractor: ISendInteractor {
             }
         }
 
-        var feeValue: Decimal?
-        if let coinValue = sendState.coinValue {
-            do {
-                feeValue = try adapter.fee(for: coinValue.value, address: input.address, senderPay: true)
-            } catch FeeError.insufficientAmount(let fee) {
-                feeValue = fee
-                sendState.amountError = createAmountError(forInput: input, fee: fee)
-            } catch {
-                print("unhandled error: \(error)")
+        let errors = adapter.validate(amount: sendState.coinValue?.value ?? 0, address: input.address)
+        errors.forEach {
+            switch($0) {
+            case .insufficientAmount: sendState.amountError = createAmountError(forInput: input)
+            case .insufficientFeeBalance: break//sendState.feeError = createAmountError(forInput: input)
             }
         }
-        if let feeValue = feeValue {
+        if let coinValue = sendState.coinValue {
+            let feeValue = adapter.fee(for: coinValue.value, address: input.address)
             sendState.feeCoinValue = CoinValue(coinCode: coinCode, value: feeValue)
         }
-
         if let rateValue = state.rateValue, let feeCoinValue = sendState.feeCoinValue {
             sendState.feeCurrencyValue = CurrencyValue(currency: baseCurrency, value: rateValue * feeCoinValue.value)
         }
@@ -110,37 +106,27 @@ extension SendInteractor: ISendInteractor {
         return sendState
     }
 
-    private func createAmountError(forInput input: SendUserInput, fee: Decimal) -> AmountError? {
-        var balanceMinusFee = state.adapter.balance - fee
-        if balanceMinusFee < 0 {
-            balanceMinusFee = 0
-        }
+    private func createAmountError(forInput input: SendUserInput) -> AmountError? {
+        let availableBalance = state.adapter.availableBalance(for: input.address)
         switch input.inputType {
         case .coin:
-            return AmountError.insufficientAmount(amountInfo: .coinValue(coinValue: CoinValue(coinCode: coin.code, value: balanceMinusFee)))
+            return .insufficientAmount(amountInfo: .coinValue(coinValue: CoinValue(coinCode: coin.code, value: availableBalance)))
         case .currency:
             return state.rateValue.map {
-                let currencyBalanceMinusFee = balanceMinusFee * $0
-                return AmountError.insufficientAmount(amountInfo: .currencyValue(currencyValue: CurrencyValue(currency: currencyManager.baseCurrency, value: currencyBalanceMinusFee)))
+                let currencyBalanceMinusFee = availableBalance * $0
+                return .insufficientAmount(amountInfo: .currencyValue(currencyValue: CurrencyValue(currency: currencyManager.baseCurrency, value: currencyBalanceMinusFee)))
             }
         }
     }
 
     func totalBalanceMinusFee(forInputType input: SendInputType, address: String?) -> Decimal {
-        var fee: Decimal
-        do {
-            fee = try state.adapter.fee(for: state.adapter.balance, address: address, senderPay: false)
-        } catch {
-            print(error)
-            return 0
-        }
-        let balanceMinusFee = state.adapter.balance - fee
+        let availableBalance =  state.adapter.availableBalance(for: address)
         switch input {
         case .coin:
-            return balanceMinusFee
+            return availableBalance
         case .currency:
             return state.rateValue.map {
-                return balanceMinusFee * $0
+                return availableBalance * $0
             } ?? 0
         }
     }
