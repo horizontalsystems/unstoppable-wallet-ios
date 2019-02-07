@@ -4,7 +4,6 @@ import RxSwift
 
 class BitcoinAdapter {
     let decimal = 8
-    let feeCoinCode: CoinCode? = nil
 
     let coin: Coin
 
@@ -112,13 +111,13 @@ extension BitcoinAdapter: IAdapter {
     }
 
     func availableBalance(for address: String?) -> Decimal {
-        return max(0, balance - fee(for: balance, address: address, senderPay: true))
+        return max(0, balance - fee(for: balance, address: address))
     }
 
-    func fee(for value: Decimal, address: String?, senderPay: Bool) -> Decimal {
+    func fee(for value: Decimal, address: String?) -> Decimal {
         do {
             let amount = convertToSatoshi(value: value)
-            let fee = try bitcoinKit.fee(for: amount, toAddress: address, senderPay: senderPay)
+            let fee = try bitcoinKit.fee(for: amount, toAddress: address, senderPay: true)
             return Decimal(fee) / coinRate
         } catch SelectorError.notEnough(let maxFee) {
             return Decimal(maxFee) / coinRate
@@ -136,7 +135,7 @@ extension BitcoinAdapter: IAdapter {
         try bitcoinKit.validate(address: address)
     }
 
-    func validate(amount: Decimal, address: String?, senderPay: Bool) -> [SendStateError] {
+    func validate(amount: Decimal, address: String?) -> [SendStateError] {
         var errors = [SendStateError]()
         if amount > availableBalance(for: address) {
             errors.append(.insufficientAmount)

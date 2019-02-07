@@ -45,14 +45,10 @@ class GrdbStorage {
                 t.primaryKey([StorableCoin.Columns.code.name, StorableCoin.Columns.type.name], onConflict: .replace)
             }
 
-            let testMode = Bundle.main.object(forInfoDictionaryKey: "TestMode") as? String == "true"
-
-            let suffix = testMode ? "t" : ""
-
             let defaultCoins = [
-                Coin(title: "Bitcoin", code: "BTC\(suffix)", type: .bitcoin),
-                Coin(title: "Bitcoin Cash", code: "BCH\(suffix)", type: .bitcoinCash),
-                Coin(title: "Ethereum", code: "ETH\(suffix)", type: .ethereum)
+                Coin(title: "Bitcoin", code: "BTC", type: .bitcoin),
+                Coin(title: "Bitcoin Cash", code: "BCH", type: .bitcoinCash),
+                Coin(title: "Ethereum", code: "ETH", type: .ethereum)
             ]
             for (index, coin) in defaultCoins.enumerated() {
                 let storableCoin = StorableCoin(coin: coin, enabled: true, order: index)

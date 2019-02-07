@@ -109,12 +109,16 @@ protocol IAdapter: class {
     func send(to address: String, value: Decimal, completion: ((Error?) -> ())?)
 
     func availableBalance(for address: String?) -> Decimal
-    func fee(for value: Decimal, address: String?, senderPay: Bool) -> Decimal
+    func fee(for value: Decimal, address: String?) -> Decimal
     func validate(address: String) throws
-    func validate(amount: Decimal, address: String?, senderPay: Bool) -> [SendStateError]
+    func validate(amount: Decimal, address: String?) -> [SendStateError]
     func parse(paymentAddress: String) -> PaymentRequestAddress
 
     var receiveAddress: String { get }
+}
+
+extension IAdapter {
+    var feeCoinCode: CoinCode? { return nil }
 }
 
 protocol IWordsManager {

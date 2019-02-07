@@ -41,16 +41,16 @@ extension Erc20Adapter: IAdapter {
         return balance
     }
 
-    func fee(for value: Decimal, address: String?, senderPay: Bool) -> Decimal {
+    func fee(for value: Decimal, address: String?) -> Decimal {
         return ethereumKit.erc20Fee
     }
 
-    func validate(amount: Decimal, address: String?, senderPay: Bool) -> [SendStateError] {
+    func validate(amount: Decimal, address: String?) -> [SendStateError] {
         var errors = [SendStateError]()
         if amount > availableBalance(for: address) {
             errors.append(.insufficientAmount)
         }
-        if ethereumKit.balance < fee(for: amount, address: address, senderPay: senderPay) {
+        if ethereumKit.balance < fee(for: amount, address: address) {
             errors.append(.insufficientFeeBalance)
         }
         return errors

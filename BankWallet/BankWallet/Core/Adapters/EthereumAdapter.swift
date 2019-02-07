@@ -2,7 +2,6 @@ import HSEthereumKit
 import RxSwift
 
 class EthereumAdapter: EthereumBaseAdapter {
-    let feeCoinCode: CoinCode? = nil
 
     init(coin: Coin, ethereumKit: EthereumKit) {
         super.init(coin: coin, ethereumKit: ethereumKit, decimal: 18)
@@ -34,14 +33,14 @@ extension EthereumAdapter: IAdapter {
     }
 
     func availableBalance(for address: String?) -> Decimal {
-        return max(0, balance - fee(for: balance, address: address, senderPay: true))
+        return max(0, balance - fee(for: balance, address: address))
     }
 
-    func fee(for value: Decimal, address: String?, senderPay: Bool) -> Decimal {
+    func fee(for value: Decimal, address: String?) -> Decimal {
         return ethereumKit.fee
     }
 
-    func validate(amount: Decimal, address: String?, senderPay: Bool) -> [SendStateError] {
+    func validate(amount: Decimal, address: String?) -> [SendStateError] {
         var errors = [SendStateError]()
         if amount > availableBalance(for: address) {
             errors.append(.insufficientAmount)

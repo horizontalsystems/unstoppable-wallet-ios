@@ -88,7 +88,7 @@ extension SendInteractor: ISendInteractor {
             }
         }
 
-        let errors = adapter.validate(amount: sendState.coinValue?.value ?? 0, address: input.address, senderPay: true)
+        let errors = adapter.validate(amount: sendState.coinValue?.value ?? 0, address: input.address)
         errors.forEach {
             switch($0) {
             case .insufficientAmount: sendState.amountError = createAmountError(forInput: input)
@@ -96,7 +96,7 @@ extension SendInteractor: ISendInteractor {
             }
         }
         if let coinValue = sendState.coinValue {
-            let feeValue = adapter.fee(for: coinValue.value, address: input.address, senderPay: true)
+            let feeValue = adapter.fee(for: coinValue.value, address: input.address)
             sendState.feeCoinValue = CoinValue(coinCode: coinCode, value: feeValue)
         }
         if let rateValue = state.rateValue, let feeCoinValue = sendState.feeCoinValue {

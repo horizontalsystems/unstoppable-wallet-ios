@@ -50,8 +50,8 @@ class SendInteractorTests: XCTestCase {
             when(mock.decimal.get).thenReturn(0)
             when(mock.balance.get).thenReturn(balance)
             when(mock.validate(address: any())).thenDoNothing()
-            when(mock.fee(for: any(), address: any(), senderPay: any())).thenReturn(0)
-            when(mock.validate(amount: any(), address: any(), senderPay: any())).thenReturn([])
+            when(mock.fee(for: any(), address: any())).thenReturn(0)
+            when(mock.validate(amount: any(), address: any())).thenReturn([])
             when(mock.availableBalance(for: any())).thenReturn(0)
         }
         stub(mockPasteboardManager) { mock in
@@ -327,7 +327,7 @@ class SendInteractorTests: XCTestCase {
         let address = "address"
 
         stub(mockAdapter) { mock in
-            when(mock.fee(for: equal(to: amount), address: equal(to: address), senderPay: true)).thenReturn(fee)
+            when(mock.fee(for: equal(to: amount), address: equal(to: address))).thenReturn(fee)
         }
 
         input.inputType = .coin
@@ -347,7 +347,7 @@ class SendInteractorTests: XCTestCase {
         let coinAmount = amount / rateValue
 
         stub(mockAdapter) { mock in
-            when(mock.fee(for: equal(to: coinAmount), address: equal(to: address), senderPay: true)).thenReturn(fee)
+            when(mock.fee(for: equal(to: coinAmount), address: equal(to: address))).thenReturn(fee)
         }
 
         interactorState.rateValue = rateValue
@@ -367,7 +367,7 @@ class SendInteractorTests: XCTestCase {
         let address = "address"
 
         stub(mockAdapter) { mock in
-            when(mock.fee(for: equal(to: amount), address: equal(to: address), senderPay: true)).thenReturn(fee)
+            when(mock.fee(for: equal(to: amount), address: equal(to: address))).thenReturn(fee)
         }
 
         interactorState.rateValue = rateValue
@@ -387,7 +387,7 @@ class SendInteractorTests: XCTestCase {
         let address = "address"
 
         stub(mockAdapter) { mock in
-            when(mock.fee(for: equal(to: amount), address: equal(to: address), senderPay: true)).thenReturn(fee)
+            when(mock.fee(for: equal(to: amount), address: equal(to: address))).thenReturn(fee)
         }
 
         interactorState.rateValue = rateValue
@@ -408,7 +408,7 @@ class SendInteractorTests: XCTestCase {
         let coinAmount = amount / rateValue
 
         stub(mockAdapter) { mock in
-            when(mock.fee(for: equal(to: coinAmount), address: equal(to: address), senderPay: true)).thenReturn(fee)
+            when(mock.fee(for: equal(to: coinAmount), address: equal(to: address))).thenReturn(fee)
         }
 
         interactorState.rateValue = rateValue
@@ -444,6 +444,7 @@ class SendInteractorTests: XCTestCase {
 
     func testDefaultInputType() {
         let inputType = SendInputType.currency
+        interactorState.rateValue = 2
 
         stub(mockLocalStorage) { mock in
             when(mock.sendInputType.get).thenReturn(inputType)
@@ -465,9 +466,6 @@ class SendInteractorTests: XCTestCase {
 
         stub(mockLocalStorage) { mock in
             when(mock.sendInputType.get).thenReturn(inputType)
-        }
-        stub(mockRateStorage) { mock in
-            when(mock.nonExpiredLatestRateValueObservable(forCoinCode: any(), currencyCode: any())).thenReturn(Observable.error(NetworkError.noConnection))
         }
 
         XCTAssertEqual(interactor.defaultInputType, SendInputType.coin)
@@ -524,12 +522,5 @@ class SendInteractorTests: XCTestCase {
 //        let expectedBalanceMinusFee: Decimal = 123 * rateValue
 //        XCTAssertEqual(balanceMinusFee, expectedBalanceMinusFee)
 //    }
-
-    func testZeroFee_emptyInput() {
-        stub(mockAdapter) { mock in
-            when(mock.fee(for: any(), address: any(), senderPay: any())).thenThrow(SelectorError.wrongValue)
-        }
-
-    }
 
 }
