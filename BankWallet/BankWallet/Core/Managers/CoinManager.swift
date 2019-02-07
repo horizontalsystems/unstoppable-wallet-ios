@@ -33,14 +33,15 @@ class CoinManager {
 extension CoinManager: ICoinManager {
 
     var allCoinsObservable: Observable<[Coin]> {
-        return storage.allCoinsObservable().map { [weak self] coins -> [Coin] in
+        let defaultCoins = appConfigProvider.defaultCoins
+        return storage.allCoinsObservable().map { coins -> [Coin] in
             var coins = coins
-            for coin in self?.appConfigProvider.defaultCoins ?? [] {
-                if !coins.contains(coin) {
-                    coins.append(coin)
+            for coin in defaultCoins {
+                if let index = coins.firstIndex(of: coin) {
+                    coins.remove(at: index)
                 }
             }
-            return coins
+            return defaultCoins + coins
         }
     }
 

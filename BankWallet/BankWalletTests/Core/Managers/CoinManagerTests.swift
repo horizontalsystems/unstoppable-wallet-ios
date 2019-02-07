@@ -105,4 +105,24 @@ class CoinManagerTests: XCTestCase {
         XCTAssertTrue(manager.coins.isEmpty)
     }
 
+    func testSortingDefaultCoins() {
+        let allCoins = [
+            Coin(title: "ERC20", code: "ERC", type: .erc20(address: "test", decimal: 1)),
+            Coin(title: "Ethereum", code: "ETH", type: .ethereum),
+            Coin(title: "ZYC20", code: "ZYC", type: .erc20(address: "test", decimal: 1))
+        ]
+
+        let expectationCoins = defaultCoins + [
+            Coin(title: "ERC20", code: "ERC", type: .erc20(address: "test", decimal: 1)),
+            Coin(title: "ZYC20", code: "ZYC", type: .erc20(address: "test", decimal: 1))
+        ]
+
+        manager.allCoinsObservable.subscribe(onNext: { coins in
+            XCTAssertEqual(expectationCoins, coins)
+        }).disposed(by: disposeBag)
+
+        coinsObservable.onNext(allCoins)
+
+    }
+
 }
