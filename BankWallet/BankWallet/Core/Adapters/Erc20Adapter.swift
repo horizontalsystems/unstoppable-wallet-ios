@@ -3,6 +3,7 @@ import RxSwift
 
 class Erc20Adapter: EthereumBaseAdapter {
     let contractAddress: String
+    let feeCoinCode: CoinCode? = "ETH"
 
     init(coin: Coin, ethereumKit: EthereumKit, contractAddress: String, decimal: Int) {
         self.contractAddress = contractAddress
@@ -36,12 +37,23 @@ extension Erc20Adapter: IAdapter {
         ethereumKit.erc20Send(to: address, contractAddress: contractAddress, value: value, gasPrice: nil, completion: completion)
     }
 
-    func fee(for value: Decimal, address: String?, senderPay: Bool) throws -> Decimal {
-        let fee =  ethereumKit.erc20Fee
-        if ethereumKit.balance > 0, ethereumKit.balance - fee < 0 {
-            throw FeeError.insufficientAmount(fee: fee)
+    func availableBalance(for address: String?) -> Decimal {
+        return balance
+    }
+
+    func fee(for value: Decimal, address: String?, senderPay: Bool) -> Decimal {
+        return ethereumKit.erc20Fee
+    }
+
+    func validate(amount: Decimal, address: String?, senderPay: Bool) -> [SendStateError] {
+        var errors = [SendStateError]()
+        if amount > availableBalance(for: address) {
+            errors.append(.insufficientAmount)
         }
-        return fee
+        if ethereumKit.balance < fee(for: amount, address: address, senderPay: senderPay) {
+            errors.append(.insufficientFeeBalance)
+        }
+        return errors
     }
 
 }

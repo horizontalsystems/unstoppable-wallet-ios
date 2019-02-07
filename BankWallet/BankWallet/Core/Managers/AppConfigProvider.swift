@@ -47,11 +47,10 @@ class AppConfigProvider: IAppConfigProvider {
     ]
 
     var defaultCoins: [Coin] {
-        let suffix = testMode ? "t" : ""
         return [
-            Coin(title: "Bitcoin", code: "BTC\(suffix)", type: .bitcoin),
-            Coin(title: "Bitcoin Cash", code: "BCH\(suffix)", type: .bitcoinCash),
-            Coin(title: "Ethereum", code: "ETH\(suffix)", type: .ethereum),
+            Coin(title: "Bitcoin", code: "BTC", type: .bitcoin),
+            Coin(title: "Bitcoin Cash", code: "BCH", type: .bitcoinCash),
+            Coin(title: "Ethereum", code: "ETH", type: .ethereum),
         ]
     }
 
