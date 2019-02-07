@@ -5,7 +5,7 @@ class LaunchRouter {
 
     static func presenter(window: UIWindow?) -> ILaunchPresenter {
         let router = LaunchRouter()
-        let interactor = LaunchInteractor(authManager: App.shared.authManager, lockManager: App.shared.lockManager, pinManager: App.shared.pinManager)
+        let interactor = LaunchInteractor(authManager: App.shared.authManager, lockManager: App.shared.lockManager, pinManager: App.shared.pinManager, appConfigProvider: App.shared.appConfigProvider)
         let presenter = LaunchPresenter(interactor: interactor, router: router)
 
         interactor.delegate = presenter
@@ -20,6 +20,10 @@ class LaunchRouter {
 }
 
 extension LaunchRouter: ILaunchRouter {
+
+    func showUnlockModule() {
+        show(viewController: UnlockPinRouter.module(appStart: true))
+    }
 
     func showMainModule() {
         show(viewController: MainRouter.module())

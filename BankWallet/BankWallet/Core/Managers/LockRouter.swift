@@ -10,7 +10,7 @@ class LockRouter: ILockRouter {
             controller = presentedController
         }
 
-        controller?.present(UnlockPinRouter.module(unlockDelegate: delegate), animated: false)
+        controller?.present(UnlockPinRouter.module(unlockDelegate: delegate), animated: true)
     }
 
 }
