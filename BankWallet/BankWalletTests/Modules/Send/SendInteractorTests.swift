@@ -460,6 +460,19 @@ class SendInteractorTests: XCTestCase {
         XCTAssertEqual(interactor.defaultInputType, SendInputType.coin)
     }
 
+    func testDefaultInputType_noRate() {
+        let inputType = SendInputType.currency
+
+        stub(mockLocalStorage) { mock in
+            when(mock.sendInputType.get).thenReturn(inputType)
+        }
+        stub(mockRateStorage) { mock in
+            when(mock.nonExpiredLatestRateValueObservable(forCoinCode: any(), currencyCode: any())).thenReturn(Observable.error(NetworkError.noConnection))
+        }
+
+        XCTAssertEqual(interactor.defaultInputType, SendInputType.coin)
+    }
+
     func testSetInputType() {
         let inputType = SendInputType.currency
 
@@ -511,5 +524,12 @@ class SendInteractorTests: XCTestCase {
 //        let expectedBalanceMinusFee: Decimal = 123 * rateValue
 //        XCTAssertEqual(balanceMinusFee, expectedBalanceMinusFee)
 //    }
+
+    func testZeroFee_emptyInput() {
+        stub(mockAdapter) { mock in
+            when(mock.fee(for: any(), address: any(), senderPay: any())).thenThrow(SelectorError.wrongValue)
+        }
+
+    }
 
 }

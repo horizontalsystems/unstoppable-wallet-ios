@@ -31,6 +31,9 @@ class SendInteractor {
 extension SendInteractor: ISendInteractor {
 
     var defaultInputType: SendInputType {
+        if state.rateValue == nil {
+            return .coin
+        }
         return localStorage.sendInputType ?? .coin
     }
 
