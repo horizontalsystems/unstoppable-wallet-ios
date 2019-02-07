@@ -21,6 +21,10 @@ extension LaunchPresenter: ILaunchPresenter {
 
 extension LaunchPresenter: ILaunchInteractorDelegate {
 
+    func showUnlockModule() {
+        router.showUnlockModule()
+    }
+
     func showMainModule() {
         router.showMainModule()
     }

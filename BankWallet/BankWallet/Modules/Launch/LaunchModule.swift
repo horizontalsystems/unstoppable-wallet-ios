@@ -5,6 +5,7 @@ protocol ILaunchInteractor {
 }
 
 protocol ILaunchInteractorDelegate: class {
+    func showUnlockModule()
     func showMainModule()
     func showGuestModule()
     func showSetPinModule()
@@ -12,6 +13,7 @@ protocol ILaunchInteractorDelegate: class {
 }
 
 protocol ILaunchRouter {
+    func showUnlockModule()
     func showMainModule()
     func showGuestModule()
     func showSetPinModule()
