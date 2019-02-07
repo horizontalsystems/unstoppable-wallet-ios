@@ -44,6 +44,8 @@ class App {
     let dataProviderManager: IFullTransactionDataProviderManager
     let fullTransactionInfoProviderFactory: IFullTransactionInfoProviderFactory
 
+    private let testModeIndicator: TestModeIndicator
+
     init() {
         pasteboardManager = PasteboardManager()
         randomManager = RandomManager()
@@ -86,6 +88,8 @@ class App {
 
         dataProviderManager = FullTransactionDataProviderManager(localStorage: localStorage, appConfigProvider: appConfigProvider)
         fullTransactionInfoProviderFactory = FullTransactionInfoProviderFactory(apiManager: networkManager, dataProviderManager: dataProviderManager)
+
+        testModeIndicator = TestModeIndicator(appConfigProvider: appConfigProvider)
 
         authManager.adapterManager = adapterManager
     }
