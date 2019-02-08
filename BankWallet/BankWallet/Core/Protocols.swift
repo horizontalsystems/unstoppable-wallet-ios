@@ -73,7 +73,7 @@ protocol ICoinManager: class {
 
 enum AdapterState {
     case synced
-    case syncing(progressSubject: BehaviorSubject<Double>?)
+    case syncing(progressSubject: BehaviorSubject<(Double, Date?)>?)
     case notSynced
 }
 

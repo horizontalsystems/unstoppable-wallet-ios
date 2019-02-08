@@ -31,8 +31,12 @@ class BalanceTheme {
     static let rateColor = UIColor.cryptoGray
     static let rateExpiredColor = UIColor.cryptoGray50
 
+    static let spinnerSideSize: CGFloat = 24
     static let spinnerLineWidth: CGFloat = 2
-    static let spinnerSideSize: CGFloat = 16
+    static let spinnerDonutRadius: CGFloat = 8
+    static let spinnerBackgroundColor: UIColor = .cryptoGray
+    static var spinnerLineColor: UIColor { return .crypto_Dark_Bars }
+    static var spinnerDonutColor: UIColor { return App.shared.localStorage.lightMode ? UIColor(white: 1, alpha: 0.2) : UIColor(white: 0, alpha: 0.15) }
 
     static let refreshButtonSize: CGFloat = 32
     static let refreshButtonColor: UIColor = .cryptoGray
@@ -50,5 +54,5 @@ class BalanceTheme {
     static let buttonsHeight: CGFloat = 50
     static let buttonCornerRadius: CGFloat = 12
     static let buttonsAnimationDuration = 0.15
-    static let editCellHeight: CGFloat = 64
+    static let editCellHeight: CGFloat = 96
 }

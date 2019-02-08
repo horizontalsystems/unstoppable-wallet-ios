@@ -97,12 +97,21 @@ extension BalanceInteractor: IBalanceInteractor {
         }
     }
 
-    func refresh(coinCode: CoinCode) {
-        guard let adapter = adapterManager.adapters.first(where: { $0.coin.code == coinCode }) else {
-            return
-        }
+    func refresh() {
+        adapterManager.adapters
+                .filter { (adapter: IAdapter) -> Bool in
+                    if case .notSynced = adapter.state {
+                        return true
+                    }
+                    return false
+                }
+                .forEach { adapter in
+                    adapter.refresh()
+                }
 
-        adapter.refresh()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            self.delegate?.didRefresh()
+        }
     }
 
 }
