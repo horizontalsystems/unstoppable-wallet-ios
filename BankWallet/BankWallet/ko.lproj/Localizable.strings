@@ -57,6 +57,7 @@
 "balance.send" = "전송";
 "balance.deposit" = "수신";
 "balance.rate_per_coin" = "%@ 당 %@";
+"balance.synced_through" = "Synced through %@";
 
 // Deposit
 
