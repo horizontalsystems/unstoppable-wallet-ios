@@ -57,6 +57,7 @@
 "balance.send" = "Enviar";
 "balance.deposit" = "Recibir";
 "balance.rate_per_coin" = "%@ por %@";
+"balance.synced_through" = "Synced through %@";
 
 // Deposit
 
