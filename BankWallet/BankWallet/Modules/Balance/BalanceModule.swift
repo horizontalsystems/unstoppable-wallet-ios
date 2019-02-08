@@ -4,6 +4,7 @@ protocol IBalanceView: class {
     func reload()
     func updateItem(at index: Int)
     func updateHeader()
+    func didRefresh()
 }
 
 protocol IBalanceViewDelegate {
@@ -12,6 +13,8 @@ protocol IBalanceViewDelegate {
     var itemsCount: Int { get }
     func viewItem(at index: Int) -> BalanceViewItem
     func headerViewItem() -> BalanceHeaderViewItem
+
+    func refresh()
 
     func onReceive(index: Int)
     func onPay(index: Int)
@@ -22,6 +25,7 @@ protocol IBalanceViewDelegate {
 protocol IBalanceInteractor {
     func initAdapters()
     func fetchRates(currencyCode: String, coinCodes: [CoinCode])
+    func refresh()
 }
 
 protocol IBalanceInteractorDelegate: class {
@@ -31,6 +35,8 @@ protocol IBalanceInteractorDelegate: class {
 
     func didUpdate(currency: Currency)
     func didUpdate(rate: Rate)
+
+    func didRefresh()
 }
 
 protocol IBalanceRouter {

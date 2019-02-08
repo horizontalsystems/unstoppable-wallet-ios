@@ -35,11 +35,18 @@ class BalanceViewController: UITableViewController {
         tableView?.registerCell(forClass: BalanceCell.self)
         tableView?.registerCell(forClass: BalanceEditCell.self)
 
+        refreshControl = UIRefreshControl()
+        refreshControl?.addTarget(self, action: #selector(onRefresh), for: .valueChanged)
+
         delegate.viewDidLoad()
     }
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return AppTheme.statusBarStyle
+    }
+
+    @objc func onRefresh() {
+        delegate.refresh()
     }
 
 }
@@ -159,6 +166,10 @@ extension BalanceViewController: IBalanceView {
         let viewItem = delegate.headerViewItem()
         let amount = viewItem.currencyValue.flatMap { ValueFormatter.instance.format(currencyValue: $0) }
         headerView?.bind(amount: amount, upToDate: viewItem.upToDate)
+    }
+
+    func didRefresh() {
+        refreshControl?.endRefreshing()
     }
 
 }

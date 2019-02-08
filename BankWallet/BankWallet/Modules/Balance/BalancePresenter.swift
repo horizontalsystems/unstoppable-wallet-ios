@@ -67,6 +67,10 @@ extension BalancePresenter: IBalanceInteractorDelegate {
         }
     }
 
+    func didRefresh() {
+        view?.didRefresh()
+    }
+
 }
 
 extension BalancePresenter: IBalanceViewDelegate {
@@ -85,6 +89,10 @@ extension BalancePresenter: IBalanceViewDelegate {
 
     func headerViewItem() -> BalanceHeaderViewItem {
         return factory.headerViewItem(from: dataSource.items, currency: dataSource.currency)
+    }
+
+    func refresh() {
+        interactor.refresh()
     }
 
     func onReceive(index: Int) {
