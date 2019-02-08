@@ -50,11 +50,17 @@ extension AmountInfo: Equatable {
     }
 }
 
-extension AmountError: Equatable {
-    public static func ==(lhs: AmountError, rhs: AmountError) -> Bool {
+extension FeeError: Equatable {
+    public static func ==(lhs: FeeError, rhs: FeeError) -> Bool {
         switch (lhs, rhs) {
-        case (let .insufficientAmount(lhsAmountInfo), let .insufficientAmount(rhsAmountInfo)): return lhsAmountInfo == rhsAmountInfo
+        case (let .erc20error(lhsCoinCode, lhsFee), let .erc20error(rhsCoinCode, rhsFee)): return lhsCoinCode == rhsCoinCode && lhsFee == rhsFee
         }
+    }
+}
+
+extension FeeInfo: Equatable {
+    public static func ==(lhs: FeeInfo, rhs: FeeInfo) -> Bool {
+        return lhs.primaryFeeInfo == rhs.primaryFeeInfo && lhs.secondaryFeeInfo == rhs.secondaryFeeInfo && lhs.error == rhs.error
     }
 }
 

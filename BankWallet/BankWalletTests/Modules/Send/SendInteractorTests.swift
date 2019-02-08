@@ -234,26 +234,19 @@ class SendInteractorTests: XCTestCase {
         XCTAssertNil(state.amountError)
     }
 
-//    func testState_AmountError_CoinType_InsufficientBalance() {
-//        let address = "address"
-//        input.inputType = .coin
-//        input.amount = balance + 1
-//        input.address = address
-//
-//        let fee: Decimal = 0.00000123
-//        let expectedAvailableBalance: Decimal = 123.45 - fee
-//
-//        stub(mockAdapter) { mock in
-//            when(mock.fee(for: equal(to: input.amount), address: equal(to: address), senderPay: true)).thenReturn(fee)
-//        }
-//
-//        let state = interactor.state(forUserInput: input)
-//
-//        let expectedAmountError = AmountError.insufficientAmount(
-//                amountInfo: .coinValue(coinValue: CoinValue(coinCode: coinCode, value: expectedAvailableBalance))
-//        )
-//        XCTAssertEqual(state.amountError, expectedAmountError)
-//    }
+    func testState_AmountError_CoinType_InsufficientBalance() {
+        let expectedAvailableBalance: Decimal = 123.45
+        let expectedAmountError = AmountInfo.coinValue(coinValue: CoinValue(coinCode: coinCode, value: expectedAvailableBalance))
+
+        stub(mockAdapter) { mock in
+            when(mock.validate(amount: any(), address: any())).thenReturn([SendStateError.insufficientAmount])
+            when(mock.availableBalance(for: any())).thenReturn(expectedAvailableBalance)
+        }
+
+        let state = interactor.state(forUserInput: input)
+
+        XCTAssertEqual(expectedAmountError, state.amountError)
+    }
 
     func testState_AmountError_CurrencyType_EnoughBalance() {
         let rateValue: Decimal = 987.65
@@ -268,30 +261,43 @@ class SendInteractorTests: XCTestCase {
         XCTAssertNil(state.amountError)
     }
 
-//    func testState_AmountError_CurrencyType_InsufficientBalance() {
-//        let rateValue: Decimal = 987.65
-//        let currencyBalance = balance * rateValue
-//        let address = "address"
-//
-//        interactorState.rateValue = rateValue
-//        input.inputType = .currency
-//        input.amount = currencyBalance + 1
-//        input.address = address
-//
-//        let fee: Decimal = 0.00000123
-//
-//        stub(mockAdapter) { mock in
-//            when(mock.fee(for: any(), address: any(), senderPay: any())).thenReturn(fee)//any, because 123.45 * 6543.21 / 6543.21 = 123.4501528301858
-//        }
-//
-//        let state = interactor.state(forUserInput: input)
-//
-//        let expectedCurrencyAvailableBalance = (123.45 - fee) * rateValue
-//        let expectedAmountError = AmountError.insufficientAmount(
-//                amountInfo: .currencyValue(currencyValue: CurrencyValue(currency: baseCurrency, value: expectedCurrencyAvailableBalance))
-//        )
-//        XCTAssertEqual(state.amountError, expectedAmountError)
-//    }
+    func testState_AmountError_CurrencyType_InsufficientBalance() {
+        input.inputType = .currency
+        let rateValue: Decimal = 987.65
+        interactorState.rateValue = rateValue
+
+        let coinAvailableBalance: Decimal = 1.2345
+        let expectedAvailableBalance: Decimal = coinAvailableBalance * rateValue
+        let expectedAmountError = AmountInfo.currencyValue(currencyValue: CurrencyValue(currency: baseCurrency, value: expectedAvailableBalance))
+
+        stub(mockAdapter) { mock in
+            when(mock.validate(amount: any(), address: any())).thenReturn([SendStateError.insufficientAmount])
+            when(mock.availableBalance(for: any())).thenReturn(coinAvailableBalance)
+        }
+
+        let state = interactor.state(forUserInput: input)
+
+        XCTAssertEqual(expectedAmountError, state.amountError)
+    }
+
+    func testState_FeeError_CoinType_InsufficientFeeBalance() {
+        let feeCoinCode = "ETH"
+        let erc20CoinCode = "TNT"
+        let erc20Coin = Coin(title: "trinitrotoluene", code: erc20CoinCode, type: .erc20(address: "some_address", decimal: 3))
+        let fee = Decimal(string: "0.00004")!
+        let expectedFeeError = FeeError.erc20error(erc20CoinCode: erc20CoinCode, fee: CoinValue(coinCode: feeCoinCode, value: fee))
+
+        stub(mockAdapter) { mock in
+            when(mock.fee(for: any(), address: any())).thenReturn(fee)
+            when(mock.coin.get).thenReturn(erc20Coin)
+            when(mock.feeCoinCode.get).thenReturn(feeCoinCode)
+            when(mock.validate(amount: any(), address: any())).thenReturn([SendStateError.insufficientFeeBalance])
+        }
+
+        let state = interactor.state(forUserInput: input)
+
+        XCTAssertEqual(expectedFeeError, state.feeError)
+    }
 
     func testState_Address() {
         let address = "address"
