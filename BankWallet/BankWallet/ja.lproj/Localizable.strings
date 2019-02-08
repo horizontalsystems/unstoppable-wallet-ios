@@ -57,6 +57,7 @@
 "balance.send" = "送る";
 "balance.deposit" = "受取";
 "balance.rate_per_coin" = "%@ 毎 %@";
+"balance.synced_through" = "Synced through %@";
 
 // Deposit
 
