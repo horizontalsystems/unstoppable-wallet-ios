@@ -87,10 +87,6 @@ extension BalancePresenter: IBalanceViewDelegate {
         return factory.headerViewItem(from: dataSource.items, currency: dataSource.currency)
     }
 
-    func onRefresh(index: Int) {
-        interactor.refresh(coinCode: dataSource.item(at: index).coin.code)
-    }
-
     func onReceive(index: Int) {
         router.openReceive(for: dataSource.item(at: index).coin.code)
     }

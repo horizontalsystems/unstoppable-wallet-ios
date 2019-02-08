@@ -79,9 +79,7 @@ extension BalanceViewController {
 
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if let cell = cell as? BalanceCell {
-            cell.bind(item: delegate.viewItem(at: indexPath.row), selected: indexPathForSelectedRow == indexPath, onRefresh: { [weak self] in
-                self?.delegate.onRefresh(index: indexPath.row)
-            }, onReceive: { [weak self] in
+            cell.bind(item: delegate.viewItem(at: indexPath.row), selected: indexPathForSelectedRow == indexPath, onReceive: { [weak self] in
                 self?.delegate.onReceive(index: indexPath.row)
             }, onPay: { [weak self] in
                 self?.delegate.onPay(index: indexPath.row)

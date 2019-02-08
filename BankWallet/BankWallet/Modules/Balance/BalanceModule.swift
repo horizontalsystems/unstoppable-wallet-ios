@@ -13,7 +13,6 @@ protocol IBalanceViewDelegate {
     func viewItem(at index: Int) -> BalanceViewItem
     func headerViewItem() -> BalanceHeaderViewItem
 
-    func onRefresh(index: Int)
     func onReceive(index: Int)
     func onPay(index: Int)
 
@@ -23,8 +22,6 @@ protocol IBalanceViewDelegate {
 protocol IBalanceInteractor {
     func initAdapters()
     func fetchRates(currencyCode: String, coinCodes: [CoinCode])
-
-    func refresh(coinCode: CoinCode)
 }
 
 protocol IBalanceInteractorDelegate: class {

@@ -71,4 +71,8 @@ public class DateHelper {
         return getFormatter(forFormat: "\(DateHelper.correctedSystemHourFormat):mm:ss").string(from: date)
     }
 
+    func formatSyncedThroughDate(from date: Date) -> String {
+        return getFormatter(forFormat: "yyyy MMM d").string(from: date)
+    }
+
 }

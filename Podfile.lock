@@ -12,7 +12,7 @@ PODS:
   - GrouviExtensions (1.2):
     - RxSwift (~> 4.2.0)
     - SnapKit (~> 4.0.0)
-  - GrouviHUD (1.1.1):
+  - GrouviHUD (1.1.3):
     - GrouviExtensions
     - RxSwift
     - SnapKit (~> 4.0.0)
@@ -68,7 +68,7 @@ DEPENDENCIES:
   - GRDB.swift
   - GrouviActionSheet (= 1.3)
   - GrouviExtensions (~> 1.2)
-  - GrouviHUD (= 1.1.1)
+  - GrouviHUD (= 1.1.3)
   - HSBitcoinKit (from `https://github.com/horizontalsystems/bitcoin-kit-ios/`)
   - HSEthereumKit (from `https://github.com/horizontalsystems/ethereum-kit-ios/`)
   - KeychainAccess
@@ -125,7 +125,7 @@ SPEC CHECKSUMS:
   GRDB.swift: e10787d857b6b8135354b9e08fb23b4bb8e2fab7
   GrouviActionSheet: dd73bd76eaca3d5bb54fa51960f293d4a176e68c
   GrouviExtensions: 025fe6dbdf9df3015a5a2eddd69cd150b451d578
-  GrouviHUD: f15d839f88d262278f5d7a7a951236e7d0fe4e31
+  GrouviHUD: 4a98d354149b95d1a4a19c673e8fe8aa255f9b0d
   HSBitcoinKit: 999eb532a456f757aa0b354f0b9e9e20adf8dc27
   HSCryptoKit: 8679d53083d1136fc128bbf9b040976110ce1491
   HSEthereumKit: 4c55ba9c256ddce4286fa7d4f7bdcf25315bb31b
@@ -142,6 +142,6 @@ SPEC CHECKSUMS:
   SipHash: fad90a4683e420c52ef28063063dbbce248ea6d4
   SnapKit: 0de968a9fec17499afa29683b05d0c775b6d1c29
 
-PODFILE CHECKSUM: 08551fb959c93340ac861ee14dd0c167f15c0711
+PODFILE CHECKSUM: 696003898d439e6044f4a8e280e742acf7d85514
 
 COCOAPODS: 1.5.3

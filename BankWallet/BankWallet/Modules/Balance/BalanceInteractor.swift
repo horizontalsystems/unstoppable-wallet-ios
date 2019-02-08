@@ -97,12 +97,4 @@ extension BalanceInteractor: IBalanceInteractor {
         }
     }
 
-    func refresh(coinCode: CoinCode) {
-        guard let adapter = adapterManager.adapters.first(where: { $0.coin.code == coinCode }) else {
-            return
-        }
-
-        adapter.refresh()
-    }
-
 }

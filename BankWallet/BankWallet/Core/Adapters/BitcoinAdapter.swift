@@ -14,7 +14,7 @@ class BitcoinAdapter {
     let lastBlockHeightUpdatedSignal = Signal()
     let transactionRecordsSubject = PublishSubject<[TransactionRecord]>()
 
-    private let progressSubject: BehaviorSubject<Double>
+    private let progressSubject: BehaviorSubject<(Double, Date?)>
 
     private(set) var state: AdapterState
 
@@ -36,7 +36,7 @@ class BitcoinAdapter {
 
         bitcoinKit = BitcoinKit(withWords: authData.words, coin: kitCoin, walletId: authData.walletId, newWallet: newWallet, minLogLevel: .error)
 
-        progressSubject = BehaviorSubject(value: 0)
+        progressSubject = BehaviorSubject(value: (0, nil))
         state = .syncing(progressSubject: progressSubject)
 
         bitcoinKit.delegate = self
@@ -203,7 +203,7 @@ extension BitcoinAdapter: BitcoinKitDelegate {
                 stateUpdatedSignal.notify()
             }
         case .syncing(let progress):
-            progressSubject.onNext(progress)
+            progressSubject.onNext((progress, bitcoinKit.lastBlockInfo?.timestamp.map { Date(timeIntervalSince1970: Double($0)) }))
 
             if case .syncing = self.state {
                 // do nothing

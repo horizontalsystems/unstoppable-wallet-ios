@@ -147,10 +147,10 @@ extension EthereumBaseAdapter {
                 stateUpdatedSignal.notify()
             }
         case .syncing:
-            if case .syncing = self.state {
+            if case .synced = self.state {
                 // do nothing
             } else {
-                self.state = .syncing(progressSubject: nil)
+                self.state = .synced
                 stateUpdatedSignal.notify()
             }
         }
