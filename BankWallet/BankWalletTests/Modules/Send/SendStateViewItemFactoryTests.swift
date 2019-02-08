@@ -121,7 +121,7 @@ class SendStateViewItemFactoryTests: XCTestCase {
     }
 
     func testHintInfo_Error() {
-        let amountError: AmountError = .insufficientAmount(amountInfo: .coinValue(coinValue: coinValue))
+        let amountError: AmountInfo = .coinValue(coinValue: coinValue)
         state.currencyValue = currencyValue
         state.amountError = amountError
 
@@ -152,40 +152,44 @@ class SendStateViewItemFactoryTests: XCTestCase {
         XCTAssertEqual(viewItem.addressInfo, AddressInfo.invalidAddress(address: address, error: addressError))
     }
 
-    func testPrimaryFeeInfo_CoinType() {
+    func testFeeInfo_CoinType() {
         state.inputType = .coin
         state.feeCoinValue = coinValue
-
-        let viewItem = factory.viewItem(forState: state, forceRoundDown: false)
-
-        XCTAssertEqual(viewItem.primaryFeeInfo, AmountInfo.coinValue(coinValue: coinValue))
-    }
-
-    func testPrimaryFeeInfo_CurrencyType() {
-        state.inputType = .currency
         state.feeCurrencyValue = currencyValue
+        state.feeError = nil
 
         let viewItem = factory.viewItem(forState: state, forceRoundDown: false)
 
-        XCTAssertEqual(viewItem.primaryFeeInfo, AmountInfo.currencyValue(currencyValue: currencyValue))
+        let expectedFeeInfo = FeeInfo(primaryFeeInfo: AmountInfo.coinValue(coinValue: coinValue), secondaryFeeInfo: AmountInfo.currencyValue(currencyValue: currencyValue), error: nil)
+
+        XCTAssertEqual(expectedFeeInfo, viewItem.feeInfo)
     }
 
-    func testSecondaryFeeInfo_CoinType() {
-        state.inputType = .coin
-        state.feeCurrencyValue = currencyValue
-
-        let viewItem = factory.viewItem(forState: state, forceRoundDown: false)
-
-        XCTAssertEqual(viewItem.secondaryFeeInfo, AmountInfo.currencyValue(currencyValue: currencyValue))
-    }
-
-    func testSecondaryFeeInfo_CurrencyType() {
+    func testFeeInfo_CurrencyType() {
         state.inputType = .currency
         state.feeCoinValue = coinValue
+        state.feeCurrencyValue = currencyValue
+        state.feeError = nil
 
         let viewItem = factory.viewItem(forState: state, forceRoundDown: false)
 
-        XCTAssertEqual(viewItem.secondaryFeeInfo, AmountInfo.coinValue(coinValue: coinValue))
+        let expectedFeeInfo = FeeInfo(primaryFeeInfo: AmountInfo.currencyValue(currencyValue: currencyValue), secondaryFeeInfo: AmountInfo.coinValue(coinValue: coinValue), error: nil)
+
+        XCTAssertEqual(expectedFeeInfo, viewItem.feeInfo)
+    }
+
+    func testFeeInfo_feeError() {
+        state.inputType = .currency
+        state.feeCoinValue = nil
+        state.feeCurrencyValue = nil
+        let feeError = FeeError.erc20error(erc20CoinCode: "TNT", fee: CoinValue(coinCode: "ETH", value: Decimal(string: "0.04")!))
+        state.feeError = feeError
+
+        let viewItem = factory.viewItem(forState: state, forceRoundDown: false)
+
+        let expectedFeeInfo = FeeInfo(primaryFeeInfo: nil, secondaryFeeInfo: nil, error: feeError)
+
+        XCTAssertEqual(expectedFeeInfo, viewItem.feeInfo)
     }
 
     func testSendButtonEnabled_ZeroAmount() {
@@ -200,7 +204,7 @@ class SendStateViewItemFactoryTests: XCTestCase {
     func testSendButtonEnabled_AmountError() {
         state.coinValue = coinValue
         state.address = "address"
-        state.amountError = .insufficientAmount(amountInfo: .coinValue(coinValue: coinValue))
+        state.amountError = .coinValue(coinValue: coinValue)
 
         let viewItem = factory.viewItem(forState: state, forceRoundDown: false)
 
@@ -219,6 +223,16 @@ class SendStateViewItemFactoryTests: XCTestCase {
 
     func testSendButtonEnabled_NoAddress() {
         state.coinValue = coinValue
+
+        let viewItem = factory.viewItem(forState: state, forceRoundDown: false)
+
+        XCTAssertFalse(viewItem.sendButtonEnabled)
+    }
+
+    func testSendButtonEnabled_feeError() {
+        state.coinValue = coinValue
+        state.address = "address"
+        state.feeError = .erc20error(erc20CoinCode: "TNT", fee: CoinValue(coinCode: "ETH", value: 0))
 
         let viewItem = factory.viewItem(forState: state, forceRoundDown: false)
 

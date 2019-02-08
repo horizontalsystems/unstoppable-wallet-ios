@@ -9,8 +9,7 @@ protocol ISendView: class {
 
     func set(addressInfo: AddressInfo?)
 
-    func set(primaryFeeInfo: AmountInfo?)
-    func set(secondaryFeeInfo: AmountInfo?)
+    func set(feeInfo: FeeInfo?)
 
     func set(sendButtonEnabled: Bool)
 
@@ -79,17 +78,19 @@ enum SendStateError {
     case insufficientFeeBalance
 }
 
-enum AmountError: Error {
-    case insufficientAmount(amountInfo: AmountInfo)
-}
-
 enum AddressError: Error {
     case invalidAddress
 }
 
 enum HintInfo {
     case amount(amountInfo: AmountInfo)
-    case error(error: AmountError)
+    case error(error: AmountInfo)
+}
+
+struct FeeInfo {
+    var primaryFeeInfo: AmountInfo?
+    var secondaryFeeInfo: AmountInfo?
+    var error: FeeError?
 }
 
 enum AddressInfo {
@@ -100,6 +101,10 @@ enum AddressInfo {
 enum AmountInfo {
     case coinValue(coinValue: CoinValue)
     case currencyValue(currencyValue: CurrencyValue)
+}
+
+enum FeeError {
+    case erc20error(erc20CoinCode: String, fee: CoinValue)
 }
 
 class SendInteractorState {
@@ -122,8 +127,8 @@ class SendState {
     var inputType: SendInputType
     var coinValue: CoinValue?
     var currencyValue: CurrencyValue?
-    var amountError: AmountError?
-    var feeError: AmountError?
+    var amountError: AmountInfo?
+    var feeError: FeeError?
     var address: String?
     var addressError: AddressError?
     var feeCoinValue: CoinValue?
@@ -141,8 +146,7 @@ class SendStateViewItem {
     var switchButtonEnabled: Bool = false
     var hintInfo: HintInfo?
     var addressInfo: AddressInfo?
-    var primaryFeeInfo: AmountInfo?
-    var secondaryFeeInfo: AmountInfo?
+    var feeInfo: FeeInfo?
     var sendButtonEnabled: Bool = false
 
     init(decimal: Int) {

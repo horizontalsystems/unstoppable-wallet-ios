@@ -2,6 +2,7 @@ class SendStateViewItemFactory: ISendStateViewItemFactory {
 
     func viewItem(forState state: SendState, forceRoundDown: Bool) -> SendStateViewItem {
         let viewItem = SendStateViewItem(decimal: state.decimal)
+        viewItem.feeInfo = FeeInfo()
 
         switch state.inputType {
         case .coin:
@@ -9,15 +10,15 @@ class SendStateViewItemFactory: ISendStateViewItemFactory {
                 let roundedValue = ValueFormatter.instance.round(value: $0.value, scale: state.decimal, roundingMode: .down)
                 return AmountInfo.coinValue(coinValue: CoinValue(coinCode: $0.coinCode, value: roundedValue))
             }
-            viewItem.primaryFeeInfo = state.feeCoinValue.map { AmountInfo.coinValue(coinValue: $0) }
-            viewItem.secondaryFeeInfo = state.feeCurrencyValue.map { AmountInfo.currencyValue(currencyValue: $0) }
+            viewItem.feeInfo?.primaryFeeInfo = state.feeCoinValue.map { AmountInfo.coinValue(coinValue: $0) }
+            viewItem.feeInfo?.secondaryFeeInfo = state.feeCurrencyValue.map { AmountInfo.currencyValue(currencyValue: $0) }
         case .currency:
             viewItem.amountInfo = state.currencyValue.map {
                 let roundedValue = ValueFormatter.instance.round(value: $0.value, scale: state.decimal, roundingMode: forceRoundDown ? .down : .up)
                 return AmountInfo.currencyValue(currencyValue: CurrencyValue(currency: $0.currency, value: roundedValue))
             }
-            viewItem.primaryFeeInfo = state.feeCurrencyValue.map { AmountInfo.currencyValue(currencyValue: $0) }
-            viewItem.secondaryFeeInfo = state.feeCoinValue.map { AmountInfo.coinValue(coinValue: $0) }
+            viewItem.feeInfo?.primaryFeeInfo = state.feeCurrencyValue.map { AmountInfo.currencyValue(currencyValue: $0) }
+            viewItem.feeInfo?.secondaryFeeInfo = state.feeCoinValue.map { AmountInfo.coinValue(coinValue: $0) }
         }
 
         viewItem.switchButtonEnabled = state.currencyValue != nil
@@ -33,6 +34,8 @@ class SendStateViewItemFactory: ISendStateViewItemFactory {
             }
         }
 
+        viewItem.feeInfo?.error = state.feeError
+
         if let address = state.address {
             if let addressError = state.addressError {
                 viewItem.addressInfo = .invalidAddress(address: address, error: addressError)
@@ -42,7 +45,7 @@ class SendStateViewItemFactory: ISendStateViewItemFactory {
         }
 
         let zeroAmount = state.coinValue.map { $0.value == 0 } ?? true
-        viewItem.sendButtonEnabled = !zeroAmount && state.address != nil && state.amountError == nil && state.addressError == nil
+        viewItem.sendButtonEnabled = !zeroAmount && state.address != nil && state.amountError == nil && state.addressError == nil && state.feeError == nil
 
         return viewItem
     }

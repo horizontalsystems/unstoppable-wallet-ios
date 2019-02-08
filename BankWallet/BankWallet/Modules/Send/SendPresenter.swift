@@ -23,8 +23,7 @@ class SendPresenter {
 
         view?.set(addressInfo: viewItem.addressInfo)
         view?.set(amountInfo: viewItem.amountInfo)
-        view?.set(primaryFeeInfo: viewItem.primaryFeeInfo)
-        view?.set(secondaryFeeInfo: viewItem.secondaryFeeInfo)
+        view?.set(feeInfo: viewItem.feeInfo)
         view?.set(sendButtonEnabled: viewItem.sendButtonEnabled)
     }
 
@@ -38,7 +37,7 @@ extension SendPresenter: ISendInteractorDelegate {
 
         view?.set(switchButtonEnabled: viewItem.switchButtonEnabled)
         view?.set(hintInfo: viewItem.hintInfo)
-        view?.set(secondaryFeeInfo: viewItem.secondaryFeeInfo)
+        view?.set(feeInfo: viewItem.feeInfo)
     }
 
     func didSend() {
@@ -65,8 +64,7 @@ extension SendPresenter: ISendViewDelegate {
         view?.set(switchButtonEnabled: viewItem.switchButtonEnabled)
         view?.set(hintInfo: viewItem.hintInfo)
         view?.set(addressInfo: viewItem.addressInfo)
-        view?.set(primaryFeeInfo: viewItem.primaryFeeInfo)
-        view?.set(secondaryFeeInfo: viewItem.secondaryFeeInfo)
+        view?.set(feeInfo: viewItem.feeInfo)
         view?.set(sendButtonEnabled: viewItem.sendButtonEnabled)
 
         interactor.fetchRate()
@@ -79,8 +77,7 @@ extension SendPresenter: ISendViewDelegate {
         let viewItem = factory.viewItem(forState: state, forceRoundDown: false)
 
         view?.set(hintInfo: viewItem.hintInfo)
-        view?.set(primaryFeeInfo: viewItem.primaryFeeInfo)
-        view?.set(secondaryFeeInfo: viewItem.secondaryFeeInfo)
+        view?.set(feeInfo: viewItem.feeInfo)
         view?.set(sendButtonEnabled: viewItem.sendButtonEnabled)
     }
 
@@ -100,8 +97,7 @@ extension SendPresenter: ISendViewDelegate {
         view?.set(decimal: viewItem.decimal)
         view?.set(amountInfo: viewItem.amountInfo)
         view?.set(hintInfo: viewItem.hintInfo)
-        view?.set(primaryFeeInfo: viewItem.primaryFeeInfo)
-        view?.set(secondaryFeeInfo: viewItem.secondaryFeeInfo)
+        view?.set(feeInfo: viewItem.feeInfo)
 
         interactor.set(inputType: newInputType)
     }

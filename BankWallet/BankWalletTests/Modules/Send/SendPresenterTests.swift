@@ -9,6 +9,7 @@ class SendPresenterTests: XCTestCase {
     private var mockFactory: MockISendStateViewItemFactory!
     private var mockUserInput: MockSendUserInput!
 
+    private var feeInfo = FeeInfo()
     private let decimal: Int = 8
     private var viewItem = SendStateViewItem(decimal: 8)
     private var confirmationViewItem: SendConfirmationViewItem!
@@ -26,12 +27,14 @@ class SendPresenterTests: XCTestCase {
     override func setUp() {
         super.setUp()
 
+        feeInfo.primaryFeeInfo = amountInfo
+        feeInfo.secondaryFeeInfo = amountInfo
+
         viewItem.amountInfo = amountInfo
         viewItem.switchButtonEnabled = true
-        viewItem.hintInfo = .error(error: .insufficientAmount(amountInfo: amountInfo))
+        viewItem.hintInfo = .error(error: amountInfo)
         viewItem.addressInfo = .address(address: "address")
-        viewItem.primaryFeeInfo = amountInfo
-        viewItem.secondaryFeeInfo = amountInfo
+        viewItem.feeInfo = feeInfo
         viewItem.sendButtonEnabled = false
 
         confirmationViewItem = SendConfirmationViewItem(
@@ -118,8 +121,7 @@ class SendPresenterTests: XCTestCase {
         verify(mockView).set(switchButtonEnabled: viewItem.switchButtonEnabled)
         verify(mockView).set(hintInfo: equal(to: viewItem.hintInfo))
         verify(mockView).set(addressInfo: equal(to: viewItem.addressInfo))
-        verify(mockView).set(primaryFeeInfo: equal(to: viewItem.primaryFeeInfo))
-        verify(mockView).set(secondaryFeeInfo: equal(to: viewItem.secondaryFeeInfo))
+        verify(mockView).set(feeInfo: equal(to: feeInfo))
         verify(mockView).set(sendButtonEnabled: viewItem.sendButtonEnabled)
 
         verify(mockInteractor).fetchRate()
@@ -131,8 +133,7 @@ class SendPresenterTests: XCTestCase {
         verify(mockView).set(decimal: equal(to: decimal))
         verify(mockView).set(amountInfo: equal(to: viewItem.amountInfo))
         verify(mockView).set(hintInfo: equal(to: viewItem.hintInfo))
-        verify(mockView).set(primaryFeeInfo: equal(to: viewItem.primaryFeeInfo))
-        verify(mockView).set(secondaryFeeInfo: equal(to: viewItem.secondaryFeeInfo))
+        verify(mockView).set(feeInfo: equal(to: feeInfo))
     }
 
     func testOnSwitchClicked_FromCoinToCurrency() {
@@ -179,8 +180,7 @@ class SendPresenterTests: XCTestCase {
         verify(mockUserInput).amount.set(equal(to: newAmount))
 
         verify(mockView).set(hintInfo: equal(to: viewItem.hintInfo))
-        verify(mockView).set(primaryFeeInfo: equal(to: viewItem.primaryFeeInfo))
-        verify(mockView).set(secondaryFeeInfo: equal(to: viewItem.secondaryFeeInfo))
+        verify(mockView).set(feeInfo: equal(to: feeInfo))
         verify(mockView).set(sendButtonEnabled: viewItem.sendButtonEnabled)
     }
 
@@ -197,8 +197,7 @@ class SendPresenterTests: XCTestCase {
         verify(mockUserInput).address.set(equal(to: address))
 
         verify(mockView).set(addressInfo: equal(to: viewItem.addressInfo))
-        verify(mockView).set(primaryFeeInfo: equal(to: viewItem.primaryFeeInfo))
-        verify(mockView).set(secondaryFeeInfo: equal(to: viewItem.secondaryFeeInfo))
+        verify(mockView).set(feeInfo: equal(to: feeInfo))
         verify(mockView).set(sendButtonEnabled: viewItem.sendButtonEnabled)
     }
 
@@ -225,8 +224,7 @@ class SendPresenterTests: XCTestCase {
         verify(mockUserInput).address.set(equal(to: address))
 
         verify(mockView).set(addressInfo: equal(to: viewItem.addressInfo))
-        verify(mockView).set(primaryFeeInfo: equal(to: viewItem.primaryFeeInfo))
-        verify(mockView).set(secondaryFeeInfo: equal(to: viewItem.secondaryFeeInfo))
+        verify(mockView).set(feeInfo: equal(to: feeInfo))
         verify(mockView).set(sendButtonEnabled: viewItem.sendButtonEnabled)
     }
 
@@ -236,8 +234,7 @@ class SendPresenterTests: XCTestCase {
         verify(mockUserInput).address.set(equal(to: nil))
 
         verify(mockView).set(addressInfo: equal(to: viewItem.addressInfo))
-        verify(mockView).set(primaryFeeInfo: equal(to: viewItem.primaryFeeInfo))
-        verify(mockView).set(secondaryFeeInfo: equal(to: viewItem.secondaryFeeInfo))
+        verify(mockView).set(feeInfo: equal(to: feeInfo))
         verify(mockView).set(sendButtonEnabled: viewItem.sendButtonEnabled)
     }
 

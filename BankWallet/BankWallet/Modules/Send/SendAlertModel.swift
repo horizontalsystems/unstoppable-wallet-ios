@@ -90,6 +90,38 @@ class SendAlertModel: BaseAlertModel {
         delegate.onConfirmClicked()
     }
 
+    private func set(primaryFeeInfo: AmountInfo?) {
+        guard let primaryFeeInfo = primaryFeeInfo else {
+            feeItem.bindFee?(nil)
+            return
+        }
+
+        switch primaryFeeInfo {
+        case .coinValue(let coinValue):
+            feeItem.bindFee?(ValueFormatter.instance.format(coinValue: coinValue))
+        case .currencyValue(let currencyValue):
+            feeItem.bindFee?(ValueFormatter.instance.format(currencyValue: currencyValue, roundingMode: .ceiling).map { return "~\($0)" })
+        }
+    }
+
+    private func set(secondaryFeeInfo: AmountInfo?) {
+        guard let secondaryFeeInfo = secondaryFeeInfo else {
+            feeItem.bindConvertedFee?(nil)
+            return
+        }
+
+        switch secondaryFeeInfo {
+        case .coinValue(let coinValue):
+            feeItem.bindConvertedFee?(ValueFormatter.instance.format(coinValue: coinValue))
+        case .currencyValue(let currencyValue):
+            feeItem.bindConvertedFee?(ValueFormatter.instance.format(currencyValue: currencyValue, roundingMode: .ceiling).map { return "~\($0)" })
+        }
+    }
+
+    private func set(feeError: FeeError?) {
+
+    }
+
 }
 
 extension SendAlertModel: ISendView {
@@ -134,13 +166,10 @@ extension SendAlertModel: ISendView {
                 }
             case .error(let error):
                 switch error {
-                case .insufficientAmount(let amountInfo):
-                    switch amountInfo {
-                    case .coinValue(let coinValue):
-                        amountItem.bindError?("send.amount_error.balance".localized(ValueFormatter.instance.format(coinValue: coinValue) ?? ""))
-                    case .currencyValue(let currencyValue):
-                        amountItem.bindError?("send.amount_error.balance".localized(ValueFormatter.instance.format(currencyValue: currencyValue) ?? ""))
-                    }
+                case .coinValue(let coinValue):
+                    amountItem.bindError?("send.amount_error.balance".localized(ValueFormatter.instance.format(coinValue: coinValue) ?? ""))
+                case .currencyValue(let currencyValue):
+                    amountItem.bindError?("send.amount_error.balance".localized(ValueFormatter.instance.format(currencyValue: currencyValue) ?? ""))
                 }
             }
         }
@@ -159,31 +188,12 @@ extension SendAlertModel: ISendView {
         }
     }
 
-    func set(primaryFeeInfo: AmountInfo?) {
-        guard let primaryFeeInfo = primaryFeeInfo else {
-            feeItem.bindFee?(nil)
-            return
-        }
-
-        switch primaryFeeInfo {
-        case .coinValue(let coinValue):
-            feeItem.bindFee?(ValueFormatter.instance.format(coinValue: coinValue))
-        case .currencyValue(let currencyValue):
-            feeItem.bindFee?(ValueFormatter.instance.format(currencyValue: currencyValue, roundingMode: .ceiling).map { return "~\($0)" })
-        }
-    }
-
-    func set(secondaryFeeInfo: AmountInfo?) {
-        guard let secondaryFeeInfo = secondaryFeeInfo else {
-            feeItem.bindConvertedFee?(nil)
-            return
-        }
-
-        switch secondaryFeeInfo {
-        case .coinValue(let coinValue):
-            feeItem.bindConvertedFee?(ValueFormatter.instance.format(coinValue: coinValue))
-        case .currencyValue(let currencyValue):
-            feeItem.bindConvertedFee?(ValueFormatter.instance.format(currencyValue: currencyValue, roundingMode: .ceiling).map { return "~\($0)" })
+    func set(feeInfo: FeeInfo?) {
+        if let error = feeInfo?.error {
+            set(feeError: error)
+        } else {
+            set(primaryFeeInfo: feeInfo?.primaryFeeInfo)
+            set(secondaryFeeInfo: feeInfo?.secondaryFeeInfo)
         }
     }
 

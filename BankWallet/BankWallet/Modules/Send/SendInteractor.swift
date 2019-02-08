@@ -92,7 +92,7 @@ extension SendInteractor: ISendInteractor {
         errors.forEach {
             switch($0) {
             case .insufficientAmount: sendState.amountError = createAmountError(forInput: input)
-            case .insufficientFeeBalance: break//sendState.feeError = createAmountError(forInput: input)
+            case .insufficientFeeBalance: sendState.feeError = createFeeError(forInput: input, amount: sendState.coinValue?.value ?? 0)
             }
         }
         if let coinValue = sendState.coinValue {
@@ -106,17 +106,26 @@ extension SendInteractor: ISendInteractor {
         return sendState
     }
 
-    private func createAmountError(forInput input: SendUserInput) -> AmountError? {
+    private func createAmountError(forInput input: SendUserInput) -> AmountInfo? {
         let availableBalance = state.adapter.availableBalance(for: input.address)
         switch input.inputType {
         case .coin:
-            return .insufficientAmount(amountInfo: .coinValue(coinValue: CoinValue(coinCode: coin.code, value: availableBalance)))
+            return .coinValue(coinValue: CoinValue(coinCode: coin.code, value: availableBalance))
         case .currency:
             return state.rateValue.map {
                 let currencyBalanceMinusFee = availableBalance * $0
-                return .insufficientAmount(amountInfo: .currencyValue(currencyValue: CurrencyValue(currency: currencyManager.baseCurrency, value: currencyBalanceMinusFee)))
+                return .currencyValue(currencyValue: CurrencyValue(currency: currencyManager.baseCurrency, value: currencyBalanceMinusFee))
             }
         }
+    }
+
+    private func createFeeError(forInput input: SendUserInput, amount: Decimal) -> FeeError? {
+        guard let code = state.adapter.feeCoinCode else {
+            return nil
+        }
+        let fee = state.adapter.fee(for: amount, address: input.address)
+        let feeValue = CoinValue(coinCode: code, value: fee)
+        return .erc20error(erc20CoinCode: state.adapter.coin.code, fee: feeValue)
     }
 
     func totalBalanceMinusFee(forInputType input: SendInputType, address: String?) -> Decimal {
