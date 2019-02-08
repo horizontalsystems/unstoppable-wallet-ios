@@ -4,30 +4,37 @@ import GrouviHUD
 import RxSwift
 
 class BalanceCell: UITableViewCell {
-    var progressDisposable: Disposable?
+    private static let minimumProgress: Float = 0.1
 
-    var roundedBackground = UIView()
+    private var progressDisposable: Disposable?
+
+    private let roundedBackground = UIView()
 
     private let coinIconImageView = CoinIconImageView()
-    var nameLabel = UILabel()
-    var rateLabel = UILabel()
-    var currencyValueLabel = UILabel()
-    var coinValueLabel = UILabel()
+    private let nameLabel = UILabel()
+    private let currencyValueLabel = UILabel()
+    private let coinValueLabel = UILabel()
+    private let rateLabel = UILabel()
 
-    var syncSpinner = HUDProgressView(strokeLineWidth: BalanceTheme.spinnerLineWidth, radius: BalanceTheme.spinnerSideSize / 2 - BalanceTheme.spinnerLineWidth / 2, strokeColor: UIColor.cryptoGray)
-    var syncLabel = UILabel()
+    private let syncSpinner = HUDProgressView(
+            progress: BalanceCell.minimumProgress,
+            strokeLineWidth: BalanceTheme.spinnerLineWidth,
+            radius: BalanceTheme.spinnerDonutRadius,
+            strokeColor: BalanceTheme.spinnerLineColor,
+            donutColor: BalanceTheme.spinnerDonutColor,
+            duration: 2
+    )
 
-    var failedImageView = UIImageView()
+    private let failedImageView = UIImageView()
 
-    var refreshImageView = TintImageView(image: UIImage(named: "Refresh Icon"), tintColor: BalanceTheme.refreshButtonColor, selectedTintColor: BalanceTheme.refreshButtonColorHighlighted)
-    var refreshButton = RespondView()
+    private let receiveButton = RespondButton()
+    private let payButton = RespondButton()
 
-    var receiveButton = RespondButton()
-    var payButton = RespondButton()
+    private var onPay: (() -> ())?
+    private var onReceive: (() -> ())?
 
-    var onRefresh: (() -> ())?
-    var onPay: (() -> ())?
-    var onReceive: (() -> ())?
+    private var progressDateString: String?
+    private var expanded = false
 
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -64,22 +71,6 @@ class BalanceCell: UITableViewCell {
         nameLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         nameLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
 
-        roundedBackground.addSubview(refreshButton)
-        refreshButton.snp.makeConstraints { maker in
-            maker.leading.equalTo(self.nameLabel.snp.trailing)
-            maker.centerY.equalTo(self.nameLabel.snp.centerY)
-            maker.width.equalTo(BalanceTheme.refreshButtonSize)
-            maker.height.equalTo(BalanceTheme.refreshButtonSize)
-        }
-        refreshButton.handleTouch = { [weak self] in self?.refresh() }
-        refreshButton.cornerRadius = BalanceTheme.buttonCornerRadius
-
-        refreshButton.addSubview(refreshImageView)
-        refreshImageView.snp.makeConstraints { maker in
-            maker.center.equalToSuperview()
-        }
-        refreshButton.delegate = refreshImageView
-
         roundedBackground.addSubview(rateLabel)
         rateLabel.snp.makeConstraints { maker in
             maker.leading.equalToSuperview().offset(BalanceTheme.cellBigMargin)
@@ -91,7 +82,7 @@ class BalanceCell: UITableViewCell {
 
         roundedBackground.addSubview(coinValueLabel)
         coinValueLabel.snp.makeConstraints { maker in
-            maker.leading.equalTo(self.refreshButton.snp.trailing).offset(BalanceTheme.cellSmallMargin).priority(.high)
+            maker.leading.equalTo(self.nameLabel.snp.trailing).offset(BalanceTheme.cellSmallMargin)
             maker.trailing.equalToSuperview().offset(-BalanceTheme.cellBigMargin)
             maker.centerY.equalTo(self.nameLabel.snp.centerY)
         }
@@ -108,30 +99,18 @@ class BalanceCell: UITableViewCell {
         currencyValueLabel.font = BalanceTheme.currencyValueFont
         currencyValueLabel.textAlignment = .right
 
-        roundedBackground.addSubview(syncLabel)
-        syncLabel.snp.makeConstraints { maker in
-            maker.leading.equalTo(self.rateLabel.snp.trailing).offset(BalanceTheme.cellSmallMargin)
-            maker.centerY.equalTo(self.rateLabel.snp.centerY)
-            maker.trailing.equalToSuperview().offset(-BalanceTheme.cellBigMargin)
-        }
-        syncLabel.font = .cryptoCaption3
-        syncLabel.textColor = BalanceTheme.rateColor
-        syncLabel.textAlignment = .right
-
+        syncSpinner.backgroundColor = BalanceTheme.spinnerBackgroundColor
+        syncSpinner.layer.cornerRadius = BalanceTheme.spinnerSideSize / 2
         roundedBackground.addSubview(syncSpinner)
         syncSpinner.snp.makeConstraints { maker in
-            maker.trailing.equalToSuperview().offset(-BalanceTheme.cellBigMargin)
-            maker.leading.equalTo(self.refreshButton.snp.trailing).offset(BalanceTheme.cellSmallMargin).priority(.medium)
-            maker.centerY.equalTo(self.nameLabel.snp.centerY)
+            maker.center.equalTo(self.coinIconImageView.snp.center)
             maker.size.equalTo(BalanceTheme.spinnerSideSize)
         }
 
-        failedImageView.image = UIImage(named: "Attention Icon")
+        failedImageView.image = UIImage(named: "Balance Sync Failed Icon")
         roundedBackground.addSubview(failedImageView)
         failedImageView.snp.makeConstraints { maker in
-            maker.trailing.equalToSuperview().offset(-BalanceTheme.cellBigMargin)
-            maker.centerY.equalTo(self.nameLabel.snp.centerY)
-            maker.size.equalTo(BalanceTheme.spinnerSideSize)
+            maker.center.equalTo(self.coinIconImageView.snp.center)
         }
 
         roundedBackground.addSubview(receiveButton)
@@ -164,8 +143,7 @@ class BalanceCell: UITableViewCell {
         fatalError("not implemented")
     }
 
-    func bind(item: BalanceViewItem, selected: Bool, animated: Bool = false, onRefresh: @escaping (() -> ()), onReceive: @escaping (() -> ()), onPay: @escaping (() -> ())) {
-        self.onRefresh = onRefresh
+    func bind(item: BalanceViewItem, selected: Bool, animated: Bool = false, onReceive: @escaping (() -> ()), onPay: @escaping (() -> ())) {
         self.onPay = onPay
         self.onReceive = onReceive
 
@@ -174,37 +152,43 @@ class BalanceCell: UITableViewCell {
         if case let .syncing(progressSubject) = item.state, let subject = progressSubject {
             progressDisposable = subject
                     .observeOn(MainScheduler.instance)
-                    .subscribe(onNext: { [weak self] progress in
-                        self?.bind(progress: progress)
+                    .subscribe(onNext: { [weak self] progress, date in
+                        self?.bind(progress: progress, date: date)
                     })
         } else {
-            syncLabel.text = nil
+            syncSpinner.set(progress: 1)
         }
     }
 
     func bindView(item: BalanceViewItem, selected: Bool, animated: Bool = false) {
+        expanded = selected
+
         coinIconImageView.bind(coin: item.coin)
 
         receiveButton.set(hidden: !selected, animated: animated, duration: BalanceTheme.buttonsAnimationDuration)
         payButton.set(hidden: !selected, animated: animated, duration: BalanceTheme.buttonsAnimationDuration)
 
         if case .synced = item.state {
+            coinIconImageView.isHidden = false
             payButton.state = .active
         } else {
+            coinIconImageView.isHidden = true
             payButton.state = .disabled
         }
 
         nameLabel.text = item.coin.title.localized
 
-        if let value = item.exchangeValue, let formattedValue = ValueFormatter.instance.format(currencyValue: value, shortFractionLimit: 100) {
+        if let progressDateString = progressDateString, selected {
+            rateLabel.text = progressDateString
+            rateLabel.textColor = BalanceTheme.rateColor
+        } else if let value = item.exchangeValue, let formattedValue = ValueFormatter.instance.format(currencyValue: value, shortFractionLimit: 100) {
             rateLabel.text = "balance.rate_per_coin".localized(formattedValue, item.coinValue.coinCode)
+            rateLabel.textColor = item.rateExpired ? BalanceTheme.rateExpiredColor : BalanceTheme.rateColor
         } else {
             rateLabel.text = " " // space required for constraints
         }
 
-        rateLabel.textColor = item.rateExpired ? BalanceTheme.rateExpiredColor : BalanceTheme.rateColor
-
-        if case .synced = item.state, let value = item.currencyValue, value.value != 0 {
+        if let value = item.currencyValue, value.value != 0 {
             currencyValueLabel.text = ValueFormatter.instance.format(currencyValue: value)
             let nonZeroBalanceTextColor = item.rateExpired ? BalanceTheme.nonZeroBalanceExpiredTextColor : BalanceTheme.nonZeroBalanceTextColor
             currencyValueLabel.textColor = value.value > 0 ? nonZeroBalanceTextColor : BalanceTheme.zeroBalanceTextColor
@@ -212,21 +196,7 @@ class BalanceCell: UITableViewCell {
             currencyValueLabel.text = nil
         }
 
-        if case .synced = item.state {
-            coinValueLabel.isHidden = false
-        } else {
-            coinValueLabel.isHidden = true
-        }
         coinValueLabel.text = ValueFormatter.instance.format(coinValue: item.coinValue)
-
-        if case .syncing = item.state {
-            syncLabel.isHidden = false
-            syncSpinner.isHidden = false
-            syncSpinner.startAnimating()
-        } else {
-            syncLabel.isHidden = true
-            syncSpinner.isHidden = true
-        }
 
         if case .notSynced = item.state {
             failedImageView.isHidden = false
@@ -234,22 +204,27 @@ class BalanceCell: UITableViewCell {
             failedImageView.isHidden = true
         }
 
-        refreshButton.snp.updateConstraints { maker in
-            maker.width.equalTo(item.refreshVisible ? BalanceTheme.refreshButtonSize : 0)
+        if case .syncing = item.state {
+            syncSpinner.isHidden = false
+            syncSpinner.startAnimating()
+        } else {
+            syncSpinner.isHidden = true
         }
     }
 
-    private func bind(progress: Double) {
-        syncLabel.text = "\(Int(progress * 100))%"
+    private func bind(progress: Double, date: Date?) {
+        syncSpinner.set(progress: max(BalanceCell.minimumProgress, Float(progress)))
+        progressDateString = date.map { "balance.synced_through".localized(DateHelper.instance.formatSyncedThroughDate(from: $0)) }
+
+        if let progressDateString = progressDateString, expanded {
+            rateLabel.text = progressDateString
+        }
     }
 
     func unbind() {
         progressDisposable?.dispose()
         progressDisposable = nil
-    }
-
-    func refresh() {
-        onRefresh?()
+        progressDateString = nil
     }
 
     func receive() {

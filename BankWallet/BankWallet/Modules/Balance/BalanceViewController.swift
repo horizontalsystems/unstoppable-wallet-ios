@@ -35,11 +35,18 @@ class BalanceViewController: UITableViewController {
         tableView?.registerCell(forClass: BalanceCell.self)
         tableView?.registerCell(forClass: BalanceEditCell.self)
 
+        refreshControl = UIRefreshControl()
+        refreshControl?.addTarget(self, action: #selector(onRefresh), for: .valueChanged)
+
         delegate.viewDidLoad()
     }
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return AppTheme.statusBarStyle
+    }
+
+    @objc func onRefresh() {
+        delegate.refresh()
     }
 
 }
@@ -79,9 +86,7 @@ extension BalanceViewController {
 
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if let cell = cell as? BalanceCell {
-            cell.bind(item: delegate.viewItem(at: indexPath.row), selected: indexPathForSelectedRow == indexPath, onRefresh: { [weak self] in
-                self?.delegate.onRefresh(index: indexPath.row)
-            }, onReceive: { [weak self] in
+            cell.bind(item: delegate.viewItem(at: indexPath.row), selected: indexPathForSelectedRow == indexPath, onReceive: { [weak self] in
                 self?.delegate.onReceive(index: indexPath.row)
             }, onPay: { [weak self] in
                 self?.delegate.onPay(index: indexPath.row)
@@ -161,6 +166,10 @@ extension BalanceViewController: IBalanceView {
         let viewItem = delegate.headerViewItem()
         let amount = viewItem.currencyValue.flatMap { ValueFormatter.instance.format(currencyValue: $0) }
         headerView?.bind(amount: amount, upToDate: viewItem.upToDate)
+    }
+
+    func didRefresh() {
+        refreshControl?.endRefreshing()
     }
 
 }

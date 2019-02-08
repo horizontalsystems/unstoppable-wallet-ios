@@ -21,8 +21,7 @@ class BalanceEditCell: UITableViewCell {
         editButton.addTarget(self, action: #selector(didTap), for: .touchUpInside)
         contentView.addSubview(editButton)
         editButton.snp.makeConstraints { maker in
-            maker.centerX.equalToSuperview()
-            maker.bottom.equalToSuperview()
+            maker.center.equalToSuperview()
             maker.size.equalTo(BalanceTheme.editButtonSideSize)
         }
         editImageView.image = UIImage(named: "Edit Coins Icon")
