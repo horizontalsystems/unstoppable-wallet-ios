@@ -24,7 +24,7 @@ class BalanceViewItemFactory {
 
     func headerViewItem(from items: [BalanceItem], currency: Currency?) -> BalanceHeaderViewItem {
         var currencyValue: CurrencyValue?
-        var upToDate = true
+//        var upToDate = true
 
         if let currency = currency {
             var total: Decimal = 0
@@ -34,16 +34,16 @@ class BalanceViewItemFactory {
                     total += item.balance * rate.value
 
                     if rate.expired {
-                        upToDate = false
+//                        upToDate = false
                     }
                 } else {
-                    upToDate = false
+//                    upToDate = false
                 }
 
                 if case .synced = item.state {
                     // do nothing
                 } else {
-                    upToDate = false
+//                    upToDate = false
                 }
             }
 
@@ -52,7 +52,7 @@ class BalanceViewItemFactory {
 
         return BalanceHeaderViewItem(
                 currencyValue: currencyValue,
-                upToDate: upToDate
+                upToDate: true
         )
     }
 
