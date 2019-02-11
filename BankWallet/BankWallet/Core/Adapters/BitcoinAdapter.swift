@@ -14,8 +14,6 @@ class BitcoinAdapter {
     let lastBlockHeightUpdatedSignal = Signal()
     let transactionRecordsSubject = PublishSubject<[TransactionRecord]>()
 
-    private let progressSubject: BehaviorSubject<(Double, Date?)>
-
     private(set) var state: AdapterState
 
     let balanceUpdatedSignal = Signal()
@@ -36,8 +34,7 @@ class BitcoinAdapter {
 
         bitcoinKit = BitcoinKit(withWords: authData.words, coin: kitCoin, walletId: authData.walletId, newWallet: newWallet, minLogLevel: .error)
 
-        progressSubject = BehaviorSubject(value: (0, nil))
-        state = .syncing(progressSubject: progressSubject)
+        state = .syncing(progress: 0, lastBlockDate: nil)
 
         bitcoinKit.delegate = self
     }
@@ -190,27 +187,30 @@ extension BitcoinAdapter: BitcoinKitDelegate {
         switch state {
         case .synced:
             if case .synced = self.state {
-                // do nothing
-            } else {
-                self.state = .synced
-                stateUpdatedSignal.notify()
+                return
             }
+
+            self.state = .synced
+            stateUpdatedSignal.notify()
         case .notSynced:
             if case .notSynced = self.state {
-                // do nothing
-            } else {
-                self.state = .notSynced
-                stateUpdatedSignal.notify()
+                return
             }
-        case .syncing(let progress):
-            progressSubject.onNext((progress, bitcoinKit.lastBlockInfo?.timestamp.map { Date(timeIntervalSince1970: Double($0)) }))
 
-            if case .syncing = self.state {
-                // do nothing
-            } else {
-                self.state = .syncing(progressSubject: progressSubject)
-                stateUpdatedSignal.notify()
+            self.state = .notSynced
+            stateUpdatedSignal.notify()
+        case .syncing(let progress):
+            let newProgress = Int(progress * 100)
+
+            if case let .syncing(currentProgress, _) = self.state {
+                if newProgress == currentProgress {
+                    return
+                }
             }
+
+            let lastBlockDate = bitcoinKit.lastBlockInfo?.timestamp.map { Date(timeIntervalSince1970: Double($0)) }
+            self.state = .syncing(progress: newProgress, lastBlockDate: lastBlockDate)
+            stateUpdatedSignal.notify()
         }
     }
 

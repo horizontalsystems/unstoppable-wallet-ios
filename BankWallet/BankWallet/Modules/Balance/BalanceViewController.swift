@@ -29,11 +29,11 @@ class BalanceViewController: UITableViewController {
 
         tableView.backgroundColor = AppTheme.controllerBackground
         tableView.separatorColor = .clear
-        tableView?.estimatedRowHeight = 0
-        tableView?.delaysContentTouches = false
+        tableView.estimatedRowHeight = 0
+        tableView.delaysContentTouches = false
 
-        tableView?.registerCell(forClass: BalanceCell.self)
-        tableView?.registerCell(forClass: BalanceEditCell.self)
+        tableView.registerCell(forClass: BalanceCell.self)
+        tableView.registerCell(forClass: BalanceEditCell.self)
 
         refreshControl = UIRefreshControl()
         refreshControl?.addTarget(self, action: #selector(onRefresh), for: .valueChanged)
@@ -68,7 +68,7 @@ extension BalanceViewController {
 
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.section == balanceSection {
-            return indexPathForSelectedRow == indexPath ? BalanceTheme.expandedCellHeight + BalanceTheme.cellPadding : BalanceTheme.cellHeight + BalanceTheme.cellPadding
+            return (indexPathForSelectedRow == indexPath ? BalanceTheme.expandedCellHeight : BalanceTheme.cellHeight) + BalanceTheme.cellPadding
         } else if indexPath.section == editSection {
             return BalanceTheme.editCellHeight
         }
@@ -105,32 +105,34 @@ extension BalanceViewController {
     }
 
     override func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-        bind(at: indexPath)
+        bind(at: indexPath, heightChange: true)
     }
 
     override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
-        if let indexPathForSelectedRow = indexPathForSelectedRow {
+        if let indexPathForSelectedRow = indexPathForSelectedRow, indexPathForSelectedRow == indexPath {
             self.indexPathForSelectedRow = nil
             tableView.deselectRow(at: indexPathForSelectedRow, animated: true)
-            bind(at: indexPathForSelectedRow)
-            if indexPathForSelectedRow == indexPath {
-                return nil
-            }
+            bind(at: indexPath, heightChange: true)
+            return nil
         }
+
         indexPathForSelectedRow = indexPath
         return indexPath
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        bind(at: indexPath)
+        bind(at: indexPath, heightChange: true)
     }
 
-    func bind(at indexPath: IndexPath, animated: Bool = false) {
-        if let cell = tableView?.cellForRow(at: indexPath) as? BalanceCell {
-            cell.bindView(item: delegate.viewItem(at: indexPath.row), selected: indexPathForSelectedRow == indexPath, animated: true)
-            UIView.animate(withDuration: BalanceTheme.buttonsAnimationDuration) {
-                self.tableView?.beginUpdates()
-                self.tableView?.endUpdates()
+    func bind(at indexPath: IndexPath, heightChange: Bool = false) {
+        if let cell = tableView.cellForRow(at: indexPath) as? BalanceCell {
+            cell.bindView(item: delegate.viewItem(at: indexPath.row), selected: indexPathForSelectedRow == indexPath, animated: heightChange)
+
+            if heightChange {
+                UIView.animate(withDuration: BalanceTheme.buttonsAnimationDuration) {
+                    self.tableView.beginUpdates()
+                    self.tableView.endUpdates()
+                }
             }
         }
     }
@@ -159,7 +161,7 @@ extension BalanceViewController: IBalanceView {
     }
 
     func updateItem(at index: Int) {
-        tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .none)
+        bind(at: IndexPath(row: index, section: balanceSection))
     }
 
     func updateHeader() {
