@@ -77,7 +77,7 @@
 "send.fee" = "수수료";
 "send.total" = "합계";
 "send.max_button" = "최대";
-"send_erc.alert" = "%@ is an ERC20 token on Ethereum. To send such token get some ETH on your balance.";
+"send_erc.alert" = "Transaction fees for %@ (ERC20) paid in ETH. You don't have %@.";
 
 // Transactions
 
