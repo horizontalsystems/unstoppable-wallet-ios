@@ -79,7 +79,7 @@ Go to Settings - > Bank and allow access to Camera.";
 "send.fee" = "Fee";
 "send.total" = "Total";
 "send.max_button" = "Max";
-"send_erc.alert" = "%@ is an ERC20 token on Ethereum. To send such token get some ETH on your balance.";
+"send_erc.alert" = "Transaction fees for %@ (ERC20) paid in ETH. You don't have %@.";
 
 // Transactions
 
