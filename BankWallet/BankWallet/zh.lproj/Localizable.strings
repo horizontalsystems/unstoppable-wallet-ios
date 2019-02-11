@@ -77,7 +77,7 @@
 "send.fee" = "费用";
 "send.total" = "总额";
 "send.max_button" = "最多";
-"send_erc.alert" = "%@ is an ERC20 token on Ethereum. To send such token get some ETH on your balance.";
+"send_erc.alert" = "Transaction fees for %@ (ERC20) paid in ETH. You don't have %@.";
 
 // Transactions
 
