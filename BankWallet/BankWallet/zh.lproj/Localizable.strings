@@ -58,6 +58,7 @@
 "balance.deposit" = "收到";
 "balance.rate_per_coin" = "%@ 每 %@";
 "balance.synced_through" = "Synced through %@";
+"balance.syncing" = "Syncing...";
 
 // Deposit
 
