@@ -53,6 +53,8 @@ extension SendPresenter: ISendInteractorDelegate {
 extension SendPresenter: ISendViewDelegate {
 
     func onViewDidLoad() {
+        interactor.fetchRate()
+
         userInput.inputType = interactor.defaultInputType
 
         let state = interactor.state(forUserInput: userInput)
@@ -66,8 +68,6 @@ extension SendPresenter: ISendViewDelegate {
         view?.set(addressInfo: viewItem.addressInfo)
         view?.set(feeInfo: viewItem.feeInfo)
         view?.set(sendButtonEnabled: viewItem.sendButtonEnabled)
-
-        interactor.fetchRate()
     }
 
     func onAmountChanged(amount: Decimal) {
