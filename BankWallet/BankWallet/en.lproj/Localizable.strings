@@ -60,6 +60,7 @@ Go to Settings - > Bank and allow access to Camera.";
 "balance.deposit" = "Receive";
 "balance.rate_per_coin" = "%@ per %@";
 "balance.synced_through" = "Synced through %@";
+"balance.syncing" = "Syncing...";
 
 // Deposit
 

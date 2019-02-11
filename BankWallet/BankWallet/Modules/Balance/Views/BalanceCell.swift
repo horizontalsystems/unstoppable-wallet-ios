@@ -4,9 +4,7 @@ import GrouviHUD
 import RxSwift
 
 class BalanceCell: UITableViewCell {
-    private static let minimumProgress: Float = 0.1
-
-    private var progressDisposable: Disposable?
+    private static let minimumProgress = 10
 
     private let roundedBackground = UIView()
 
@@ -17,7 +15,7 @@ class BalanceCell: UITableViewCell {
     private let rateLabel = UILabel()
 
     private let syncSpinner = HUDProgressView(
-            progress: BalanceCell.minimumProgress,
+            progress: Float(BalanceCell.minimumProgress) / 100,
             strokeLineWidth: BalanceTheme.spinnerLineWidth,
             radius: BalanceTheme.spinnerDonutRadius,
             strokeColor: BalanceTheme.spinnerLineColor,
@@ -32,9 +30,6 @@ class BalanceCell: UITableViewCell {
 
     private var onPay: (() -> ())?
     private var onReceive: (() -> ())?
-
-    private var progressDateString: String?
-    private var expanded = false
 
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -148,22 +143,11 @@ class BalanceCell: UITableViewCell {
         self.onReceive = onReceive
 
         bindView(item: item, selected: selected, animated: animated)
-
-        if case let .syncing(progressSubject) = item.state, let subject = progressSubject {
-            progressDisposable = subject
-                    .observeOn(MainScheduler.instance)
-                    .subscribe(onNext: { [weak self] progress, date in
-                        self?.bind(progress: progress, date: date)
-                    })
-        } else {
-            syncSpinner.set(progress: 1)
-        }
     }
 
     func bindView(item: BalanceViewItem, selected: Bool, animated: Bool = false) {
-        expanded = selected
-
         coinIconImageView.bind(coin: item.coin)
+        nameLabel.text = item.coin.title.localized
 
         receiveButton.set(hidden: !selected, animated: animated, duration: BalanceTheme.buttonsAnimationDuration)
         payButton.set(hidden: !selected, animated: animated, duration: BalanceTheme.buttonsAnimationDuration)
@@ -176,10 +160,21 @@ class BalanceCell: UITableViewCell {
             payButton.state = .disabled
         }
 
-        nameLabel.text = item.coin.title.localized
+        if case let .syncing(progress, _) = item.state {
+            syncSpinner.isHidden = false
+            syncSpinner.set(progress: Float(max(BalanceCell.minimumProgress, progress)) / 100)
+            syncSpinner.startAnimating()
+        } else {
+            syncSpinner.isHidden = true
+            syncSpinner.stopAnimating()
+        }
 
-        if let progressDateString = progressDateString, selected {
-            rateLabel.text = progressDateString
+        if case let .syncing(_, lastBlockDate) = item.state, selected {
+            if let lastBlockDate = lastBlockDate {
+                rateLabel.text = "balance.synced_through".localized(DateHelper.instance.formatSyncedThroughDate(from: lastBlockDate))
+            } else {
+                rateLabel.text = "balance.syncing".localized
+            }
             rateLabel.textColor = BalanceTheme.rateColor
         } else if let value = item.exchangeValue, let formattedValue = ValueFormatter.instance.format(currencyValue: value, shortFractionLimit: 100) {
             rateLabel.text = "balance.rate_per_coin".localized(formattedValue, item.coinValue.coinCode)
@@ -203,28 +198,9 @@ class BalanceCell: UITableViewCell {
         } else {
             failedImageView.isHidden = true
         }
-
-        if case .syncing = item.state {
-            syncSpinner.isHidden = false
-            syncSpinner.startAnimating()
-        } else {
-            syncSpinner.isHidden = true
-        }
-    }
-
-    private func bind(progress: Double, date: Date?) {
-        syncSpinner.set(progress: max(BalanceCell.minimumProgress, Float(progress)))
-        progressDateString = date.map { "balance.synced_through".localized(DateHelper.instance.formatSyncedThroughDate(from: $0)) }
-
-        if let progressDateString = progressDateString, expanded {
-            rateLabel.text = progressDateString
-        }
     }
 
     func unbind() {
-        progressDisposable?.dispose()
-        progressDisposable = nil
-        progressDateString = nil
     }
 
     func receive() {

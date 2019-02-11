@@ -12,7 +12,7 @@ class EthereumBaseAdapter {
 
     let transactionRecordsSubject = PublishSubject<[TransactionRecord]>()
 
-    private(set) var state: AdapterState = .syncing(progressSubject: nil)
+    private(set) var state: AdapterState = .synced
 
     let balanceUpdatedSignal = Signal()
     let lastBlockHeightUpdatedSignal = Signal()
@@ -134,25 +134,25 @@ extension EthereumBaseAdapter {
         switch state {
         case .synced:
             if case .synced = self.state {
-                // do nothing
-            } else {
-                self.state = .synced
-                stateUpdatedSignal.notify()
+                return
             }
+
+            self.state = .synced
+            stateUpdatedSignal.notify()
         case .notSynced:
             if case .notSynced = self.state {
-                // do nothing
-            } else {
-                self.state = .notSynced
-                stateUpdatedSignal.notify()
+                return
             }
+
+            self.state = .notSynced
+            stateUpdatedSignal.notify()
         case .syncing:
             if case .synced = self.state {
-                // do nothing
-            } else {
-                self.state = .synced
-                stateUpdatedSignal.notify()
+                return
             }
+
+            self.state = .synced
+            stateUpdatedSignal.notify()
         }
     }
 
