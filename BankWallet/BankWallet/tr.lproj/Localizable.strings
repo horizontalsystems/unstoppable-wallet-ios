@@ -58,6 +58,7 @@
 "balance.deposit" = "Al";
 "balance.rate_per_coin" = "%@ için %@";
 "balance.synced_through" = "Synced through %@";
+"balance.syncing" = "Syncing...";
 
 // Deposit
 
