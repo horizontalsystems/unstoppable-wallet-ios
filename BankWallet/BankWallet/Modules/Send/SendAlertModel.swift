@@ -119,7 +119,12 @@ class SendAlertModel: BaseAlertModel {
     }
 
     private func set(feeError: FeeError?) {
+        guard let error = feeError, case .erc20error(let erc20CoinCode, let fee) = error, let amount = ValueFormatter.instance.format(coinValue: fee) else {
+            feeItem.bindError?(nil)
+            return
+        }
 
+        feeItem.bindError?("send_erc.alert".localized(erc20CoinCode, amount))
     }
 
 }
@@ -190,8 +195,13 @@ extension SendAlertModel: ISendView {
 
     func set(feeInfo: FeeInfo?) {
         if let error = feeInfo?.error {
+            set(primaryFeeInfo: nil)
+            set(secondaryFeeInfo: nil)
+
             set(feeError: error)
         } else {
+            set(feeError: nil)
+
             set(primaryFeeInfo: feeInfo?.primaryFeeInfo)
             set(secondaryFeeInfo: feeInfo?.secondaryFeeInfo)
         }
