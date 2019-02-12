@@ -48,7 +48,7 @@
 "backup.confirmation.failure_alert.text" = "Les mots ne correspondent pas";
 "backup.confirmation.done_button" = "Fait";
 "backup.confirmation.understand" = "Je comprends que mon porte-monnaie et mes tokens sont en toute sécurité sur cet appareil uniquement et pas sur les autres appareils.";
-"backup.confirmation.delete_app_warn" = "I understand that if this app is moved to another device, deleted or malfunctions, my wallet can be only recovered with the Secret Key.";
+"backup.confirmation.delete_app_warn" = "Je comprends que si cette appli est déplacée vers un autre appareil ou supprimée, mon porte-monnaie ne peut être récupéré qu'avec la clé secrète.";
 
 // Balance
 
