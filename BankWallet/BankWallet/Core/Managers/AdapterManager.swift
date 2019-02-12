@@ -67,10 +67,8 @@ extension AdapterManager: IAdapterManager {
 
     func willEnterForeground() {
         adapters.forEach { adapter in
-            switch adapter.state {
-            case .notSynced:
+            if case .notSynced = adapter.state {
                 adapter.refresh()
-            default: break
             }
         }
     }
