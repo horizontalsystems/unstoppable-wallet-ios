@@ -58,13 +58,13 @@
 "balance.deposit" = "收到";
 "balance.rate_per_coin" = "%@ 每 %@";
 "balance.synced_through" = "直到 %@";
-"balance.syncing" = "Syncing...";
+"balance.syncing" = "正在同步...";
 
 // Deposit
 
 "deposit.receive_coin" = "收到%@";
 "deposit.your_address" = "您的地址";
-"deposit.share" = "Forward";
+"deposit.share" = "转发";
 
 // Send
 
@@ -77,7 +77,7 @@
 "send.fee" = "费用";
 "send.total" = "总额";
 "send.max_button" = "最多";
-"send_erc.alert" = "Transaction fees for %@ (ERC20) paid in ETH. You don't have %@.";
+"send_erc.alert" = "Transaction fees for %@ (ERC20) paid in ETH. You need %@ ETH.";
 
 // Transactions
 
