@@ -57,7 +57,7 @@
 "balance.send" = "ارسال";
 "balance.deposit" = "دريافت";
 "balance.rate_per_coin" = "%@ به ازا %@";
-"balance.synced_through" = "Until %@";
+"balance.synced_through" = "until: %@";
 "balance.syncing" = "Syncing...";
 
 // Deposit
