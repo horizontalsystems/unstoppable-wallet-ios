@@ -48,7 +48,7 @@
 "backup.confirmation.failure_alert.text" = "Слова не совпадают";
 "backup.confirmation.done_button" = "Готово";
 "backup.confirmation.understand" = "Я понимаю, что мой кошелек и токены хранятся только на этом устройстве.";
-"backup.confirmation.delete_app_warn" = "I understand that if this app is moved to another device, deleted or malfunctions, my wallet can be only recovered with the Secret Key.";
+"backup.confirmation.delete_app_warn" = "Я понимаю, что если это приложение удаляется или устанавливается на другое устройство, мой кошелек можно восстановить только с помощью секретного ключа.";
 
 // Balance
 
@@ -57,8 +57,8 @@
 "balance.send" = "Отправить";
 "balance.deposit" = "Получить";
 "balance.rate_per_coin" = "%@ за %@";
-"balance.synced_through" = "Until %@";
-"balance.syncing" = "Syncing...";
+"balance.synced_through" = "До %@";
+"balance.syncing" = "Синхронизация...";
 
 // Deposit
 
