@@ -148,7 +148,7 @@
 
 // Settings -> Manage Wallet
 
-"settings_manage_wallet.title" = "Coin Manager";
+"settings_manage_wallet.title" = "지갑";
 
 "settings_manage_wallet.remove_button" = "삭제";
 
