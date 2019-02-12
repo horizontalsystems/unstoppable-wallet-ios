@@ -89,5 +89,4 @@ class AppConfigProvider: IAppConfigProvider {
         Coin(title: "Zilliqa", code: "ZIL", type: .erc20(address: "0x05f4a42e251f2d52b8ed15E9FEdAacFcEF1FAD27", decimal: 12)),
     ]
 
-
 }
