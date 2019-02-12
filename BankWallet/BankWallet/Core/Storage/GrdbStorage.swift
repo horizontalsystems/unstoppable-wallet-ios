@@ -42,7 +42,7 @@ class GrdbStorage {
                 t.column(StorableCoin.Columns.enabled.name, .boolean).notNull()
                 t.column(StorableCoin.Columns.coinOrder.name, .integer)
 
-                t.primaryKey([StorableCoin.Columns.code.name, StorableCoin.Columns.type.name], onConflict: .replace)
+                t.primaryKey([StorableCoin.Columns.code.name], onConflict: .replace)
             }
 
             let defaultCoins = [
