@@ -108,12 +108,6 @@ extension GrdbStorage: ICoinStorage {
                 .map { $0.map { $0.coin } }
     }
 
-    func allCoinsObservable() -> Observable<[Coin]> {
-        let request = StorableCoin.all().order(StorableCoin.Columns.title)
-        return request.rx.fetchAll(in: dbPool)
-                .map { $0.map { $0.coin } }
-    }
-
     func save(enabledCoins: [Coin]) {
         _ = try? dbPool.write { db in
             let sql = "UPDATE \(StorableCoin.databaseTableName) SET \(StorableCoin.Columns.enabled.name) = :enabled, \(StorableCoin.Columns.coinOrder.name) = :order"
@@ -124,17 +118,6 @@ extension GrdbStorage: ICoinStorage {
                 let storableCoin = StorableCoin(coin: coin, enabled: true, order: index)
                 try storableCoin.insert(db)
             }
-        }
-    }
-
-    func update(inserted: [Coin], deleted: [Coin]) {
-        _ = try? dbPool.write { db in
-            for coin in inserted {
-                let storableCoin = StorableCoin(coin: coin, enabled: false, order: nil)
-                try storableCoin.insert(db)
-            }
-            let deletedCoinCodes = deleted.map { $0.code }
-            try StorableCoin.filter(deletedCoinCodes.contains(StorableCoin.Columns.code)).deleteAll(db)
         }
     }
 
