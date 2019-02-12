@@ -58,13 +58,13 @@
 "balance.deposit" = "Al";
 "balance.rate_per_coin" = "%@ için %@";
 "balance.synced_through" = "Until %@";
-"balance.syncing" = "Syncing...";
+"balance.syncing" = "Eşitleniyor...";
 
 // Deposit
 
 "deposit.receive_coin" = "%@ al";
 "deposit.your_address" = "Adresiniz";
-"deposit.share" = "Forward";
+"deposit.share" = "İlet";
 
 // Send
 
@@ -148,7 +148,7 @@
 
 // Settings -> Manage Wallet
 
-"settings_manage_wallet.title" = "Coin Manager";
+"settings_manage_wallet.title" = "Cüzdanlar";
 
 "settings_manage_wallet.remove_button" = "Kaldır";
 
