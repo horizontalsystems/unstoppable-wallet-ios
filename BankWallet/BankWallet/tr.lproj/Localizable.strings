@@ -57,7 +57,7 @@
 "balance.send" = "Gönder";
 "balance.deposit" = "Al";
 "balance.rate_per_coin" = "%@ için %@";
-"balance.synced_through" = "Until %@";
+"balance.synced_through" = "until: %@";
 "balance.syncing" = "Eşitleniyor...";
 
 // Deposit
