@@ -6,7 +6,7 @@ class Erc20Adapter: EthereumBaseAdapter {
     let feeCoinCode: CoinCode? = "ETH"
 
     init(coin: Coin, ethereumKit: EthereumKit, contractAddress: String, decimal: Int) {
-        self.contractAddress = contractAddress
+        self.contractAddress = EIP55.format(contractAddress)
 
         super.init(coin: coin, ethereumKit: ethereumKit, decimal: decimal)
 
@@ -30,11 +30,12 @@ extension Erc20Adapter: IAdapter {
     }
 
     func refresh() {
-        ethereumKit.erc20Refresh(contractAddress: contractAddress)
+        ethereumKit.refresh()
     }
 
     func send(to address: String, value: Decimal, completion: ((Error?) -> ())?) {
-        ethereumKit.erc20Send(to: address, contractAddress: contractAddress, value: value, gasPrice: nil, completion: completion)
+        let formattedValue = ValueFormatter.instance.round(value: value, scale: decimal, roundingMode: .plain)
+        ethereumKit.erc20Send(to: address, contractAddress: contractAddress, value: formattedValue, gasPrice: nil, completion: completion)
     }
 
     func availableBalance(for address: String?) -> Decimal {

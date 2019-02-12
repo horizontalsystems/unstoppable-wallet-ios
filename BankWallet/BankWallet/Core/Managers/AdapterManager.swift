@@ -65,4 +65,12 @@ extension AdapterManager: IAdapterManager {
         adaptersUpdatedSignal.notify()
     }
 
+    func willEnterForeground() {
+        adapters.forEach { adapter in
+            if case .notSynced = adapter.state {
+                adapter.refresh()
+            }
+        }
+    }
+
 }
