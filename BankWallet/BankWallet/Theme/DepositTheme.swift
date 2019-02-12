@@ -4,8 +4,6 @@ class DepositTheme {
     static let collectionHeight: CGFloat = 300
     static let regularMargin: CGFloat = 16
 
-    static let iconTintColor: UIColor = .cryptoGray
-
     static let titleFont = UIFont.systemFont(ofSize: 17, weight: .bold)
     static var titleColor: UIColor { return .crypto_White_Black }
 

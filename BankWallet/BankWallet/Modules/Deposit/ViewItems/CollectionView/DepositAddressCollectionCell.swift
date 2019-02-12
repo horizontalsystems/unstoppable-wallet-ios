@@ -11,7 +11,6 @@ class DepositAddressCollectionCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-        iconImageView.tintColor = DepositTheme.iconTintColor
         contentView.addSubview(iconImageView)
         iconImageView.snp.makeConstraints { maker in
             maker.leading.equalToSuperview().offset(DepositTheme.regularMargin)

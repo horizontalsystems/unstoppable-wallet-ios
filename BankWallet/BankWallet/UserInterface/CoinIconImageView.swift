@@ -1,4 +1,5 @@
 import UIKit
+import SnapKit
 import AlamofireImage
 
 class CoinIconImageView: UIImageView {
@@ -7,9 +8,25 @@ class CoinIconImageView: UIImageView {
         return image.withRenderingMode(.alwaysTemplate)
     }
 
-    private static let erc20placeholderImage = UIImage(named: "Erc20 Placeholder Icon")?.withRenderingMode(.alwaysTemplate)
+    init() {
+        super.init(frame: .zero)
+
+        tintColor = AppTheme.coinIconColor
+        layer.cornerRadius = AppTheme.coinIconSize / 2
+
+        snp.makeConstraints { maker in
+            maker.size.equalTo(AppTheme.coinIconSize)
+        }
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     func bind(coin: Coin) {
+        image = nil
+        backgroundColor = AppTheme.coinIconColor
+
         switch coin.type {
         case let .erc20(address, _):
             let baseApiUrl = App.shared.appConfigProvider.apiUrl
@@ -20,12 +37,17 @@ class CoinIconImageView: UIImageView {
             if let url = URL(string: urlString) {
                 af_setImage(
                         withURL: url,
-                        placeholderImage: CoinIconImageView.erc20placeholderImage,
-                        filter: CoinIconImageView.filter
+                        filter: CoinIconImageView.filter,
+                        completion: { [weak self] response in
+                            if response.value != nil {
+                                self?.backgroundColor = .clear
+                            }
+                        }
                 )
             }
         default:
             image = UIImage(named: "\(coin.code) Icon")?.withRenderingMode(.alwaysTemplate)
+            backgroundColor = .clear
         }
     }
 

@@ -48,12 +48,10 @@ class BalanceCell: UITableViewCell {
         roundedBackground.clipsToBounds = true
         roundedBackground.layer.cornerRadius = BalanceTheme.roundedBackgroundCornerRadius
 
-        coinIconImageView.tintColor = BalanceTheme.coinIconTintColor
         roundedBackground.addSubview(coinIconImageView)
         coinIconImageView.snp.makeConstraints { maker in
             maker.leading.equalToSuperview().offset(BalanceTheme.cellBigMargin)
             maker.top.equalToSuperview().offset(BalanceTheme.cellSmallMargin)
-            maker.size.equalTo(BalanceTheme.coinIconSide)
         }
 
         roundedBackground.addSubview(nameLabel)

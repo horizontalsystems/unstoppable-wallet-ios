@@ -26,7 +26,6 @@ class ManageCoinCell: UITableViewCell {
             maker.top.equalTo(self.titleLabel.snp.bottom).offset(ManageCoinsTheme.coinLabelTopMargin)
         }
 
-        coinImageView.tintColor = ManageCoinsTheme.iconTintColor
         contentView.addSubview(coinImageView)
         coinImageView.snp.makeConstraints { maker in
             maker.centerY.equalToSuperview()

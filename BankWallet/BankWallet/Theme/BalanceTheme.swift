@@ -20,9 +20,6 @@ class BalanceTheme {
     static var roundedBackgroundColor: UIColor { return .crypto_Steel20_White }
     static let roundedBackgroundCornerRadius: CGFloat = 15
 
-    static let coinIconTintColor = UIColor.cryptoGray
-    static let coinIconSide: CGFloat = 24
-
     static let cellTitleFont = UIFont.cryptoHeadline
     static var cellTitleColor: UIColor { return .crypto_White_Black }
 
