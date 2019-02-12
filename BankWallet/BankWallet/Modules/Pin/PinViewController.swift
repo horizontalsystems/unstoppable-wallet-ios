@@ -38,7 +38,6 @@ class PinViewController: UIViewController {
         numPad.snp.makeConstraints { maker in
             maker.top.equalTo(self.holderView.snp.bottom)
             maker.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).offset(-PinTheme.keyboardBottomMargin)
-            maker.centerX.equalToSuperview()
             maker.leading.equalToSuperview().offset(PinTheme.keyboardSideMargin)
             maker.trailing.equalToSuperview().offset(-PinTheme.keyboardSideMargin)
             maker.height.equalTo(PinTheme.keyboardHeight)

@@ -1,7 +1,6 @@
 import UIKit
 
 class NumPadTheme {
-    static let size: CGSize = CGSize(width: 276, height: 308)
     static let itemSpacing: CGFloat = 6
     static let lineSpacing: CGFloat = 7
 
