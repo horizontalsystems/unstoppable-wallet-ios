@@ -19,6 +19,7 @@ class TestModeIndicator {
         window?.backgroundColor = .clear
         window?.isOpaque = false
         window?.isHidden = false
+        window?.isUserInteractionEnabled = false
 
         let view = UIView()
         view.layer.cornerRadius = 4
