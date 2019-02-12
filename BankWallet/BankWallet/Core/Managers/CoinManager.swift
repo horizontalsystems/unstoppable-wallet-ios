@@ -3,6 +3,7 @@ import RxSwift
 class CoinManager {
     private let appConfigProvider: IAppConfigProvider
     private let storage: ICoinStorage
+    private let tokenLocalStorage: ITokenLocalStorage
 
     private let disposeBag = DisposeBag()
 
@@ -14,9 +15,10 @@ class CoinManager {
 
     let coinsUpdatedSignal = Signal()
 
-    init(appConfigProvider: IAppConfigProvider, storage: ICoinStorage, async: Bool = true) {
+    init(appConfigProvider: IAppConfigProvider, storage: ICoinStorage, tokenLocalStorage: ITokenLocalStorage, async: Bool = true) {
         self.appConfigProvider = appConfigProvider
         self.storage = storage
+        self.tokenLocalStorage = tokenLocalStorage
 
 //        let scheduler: ImmediateSchedulerType = async ? ConcurrentDispatchQueueScheduler(qos: .background) : MainScheduler.instance
         storage.enabledCoinsObservable()
@@ -34,15 +36,13 @@ extension CoinManager: ICoinManager {
 
     var allCoinsObservable: Observable<[Coin]> {
         let defaultCoins = appConfigProvider.defaultCoins
-        return storage.allCoinsObservable().map { coins -> [Coin] in
-            var coins = coins
-            for coin in defaultCoins {
-                if let index = coins.firstIndex(of: coin) {
-                    coins.remove(at: index)
-                }
+        var coins = tokenLocalStorage.coins
+        for coin in defaultCoins {
+            if let index = coins.firstIndex(of: coin) {
+                coins.remove(at: index)
             }
-            return defaultCoins + coins
         }
+        return Observable.just(defaultCoins + coins)
     }
 
     func enableDefaultCoins() {

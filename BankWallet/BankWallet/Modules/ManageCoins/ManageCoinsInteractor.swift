@@ -6,13 +6,11 @@ class ManageCoinsInteractor {
     private let disposeBag = DisposeBag()
 
     private let coinManager: ICoinManager
-    private let tokenSyncer: ITokenSyncer
     private let storage: ICoinStorage
     private let async: Bool
 
-    init(coinManager: ICoinManager, tokenSyncer: ITokenSyncer, storage: ICoinStorage, async: Bool) {
+    init(coinManager: ICoinManager, storage: ICoinStorage, async: Bool) {
         self.coinManager = coinManager
-        self.tokenSyncer = tokenSyncer
         self.storage = storage
         self.async = async
     }
@@ -20,10 +18,6 @@ class ManageCoinsInteractor {
 }
 
 extension ManageCoinsInteractor: IManageCoinsInteractor {
-
-    func syncCoins() {
-        tokenSyncer.sync()
-    }
 
     func loadCoins() {
         var allCoinsObservable = coinManager.allCoinsObservable

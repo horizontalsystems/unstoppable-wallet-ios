@@ -5,6 +5,7 @@ import Cuckoo
 
 class CoinManagerTests: XCTestCase {
     private var mockStorage: MockICoinStorage!
+    private var mockTokenLocalStorage: MockITokenLocalStorage!
     private var mockAppConfigProvider: MockIAppConfigProvider!
 
     private var manager: CoinManager!
@@ -26,6 +27,7 @@ class CoinManagerTests: XCTestCase {
         mockStorage = MockICoinStorage()
         mockAppConfigProvider = MockIAppConfigProvider()
         mockStorage = MockICoinStorage()
+        mockTokenLocalStorage = MockITokenLocalStorage()
         disposeBag = DisposeBag()
 
         bitcoin = Coin(title: "Bitcoin", code: "BTC", type: .bitcoin)
@@ -53,12 +55,15 @@ class CoinManagerTests: XCTestCase {
             when(mock.save(enabledCoins: any())).thenDoNothing()
             when(mock.clearCoins()).thenDoNothing()
         }
-
-        manager = CoinManager(appConfigProvider: mockAppConfigProvider, storage: mockStorage, async: false)
+        stub(mockTokenLocalStorage) { mock in
+            when(mock.coins.get).thenReturn(defaultCoins)
+        }
+        manager = CoinManager(appConfigProvider: mockAppConfigProvider, storage: mockStorage, tokenLocalStorage: mockTokenLocalStorage, async: false)
     }
 
     override func tearDown() {
         mockStorage = nil
+        mockTokenLocalStorage = nil
         mockAppConfigProvider = nil
         mockStorage = nil
         disposeBag = nil
@@ -103,26 +108,6 @@ class CoinManagerTests: XCTestCase {
         manager.clear()
 
         XCTAssertTrue(manager.coins.isEmpty)
-    }
-
-    func testSortingDefaultCoins() {
-        let allCoins = [
-            Coin(title: "ERC20", code: "ERC", type: .erc20(address: "test", decimal: 1)),
-            Coin(title: "Ethereum", code: "ETH", type: .ethereum),
-            Coin(title: "ZYC20", code: "ZYC", type: .erc20(address: "test", decimal: 1))
-        ]
-
-        let expectationCoins = defaultCoins + [
-            Coin(title: "ERC20", code: "ERC", type: .erc20(address: "test", decimal: 1)),
-            Coin(title: "ZYC20", code: "ZYC", type: .erc20(address: "test", decimal: 1))
-        ]
-
-        manager.allCoinsObservable.subscribe(onNext: { coins in
-            XCTAssertEqual(expectationCoins, coins)
-        }).disposed(by: disposeBag)
-
-        coinsObservable.onNext(allCoins)
-
     }
 
 }
