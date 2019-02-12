@@ -22,7 +22,7 @@ class SendInteractorTests: XCTestCase {
 
     private var mockAdapter: MockIAdapter!
     private var interactorState: SendInteractorState!
-    private var input = SendUserInput()
+    private var input: SendUserInput!
 
     private var interactor: SendInteractor!
 
@@ -46,6 +46,7 @@ class SendInteractorTests: XCTestCase {
             when(mock.baseCurrency.get).thenReturn(baseCurrency)
         }
         stub(mockAdapter) { mock in
+            when(mock.feeCoinCode.get).thenReturn(nil)
             when(mock.coin.get).thenReturn(Coin(title: "some", code: coinCode, type: .bitcoin))
             when(mock.decimal.get).thenReturn(0)
             when(mock.balance.get).thenReturn(balance)
@@ -61,6 +62,7 @@ class SendInteractorTests: XCTestCase {
             when(mock.fiatDecimal.get).thenReturn(fiatDecimal)
             when(mock.maxDecimal.get).thenReturn(maxDecimal)
         }
+        input = SendUserInput()
 
         interactor = SendInteractor(currencyManager: mockCurrencyManager, rateStorage: mockRateStorage, localStorage: mockLocalStorage, pasteboardManager: mockPasteboardManager, state: interactorState, appConfigProvider: mockAppConfigProvider)
         interactor.delegate = mockDelegate
@@ -76,6 +78,8 @@ class SendInteractorTests: XCTestCase {
 
         mockAdapter = nil
         interactorState = nil
+
+        input = nil
 
         interactor = nil
 
@@ -386,26 +390,6 @@ class SendInteractorTests: XCTestCase {
         XCTAssertEqual(state.feeCurrencyValue, CurrencyValue(currency: baseCurrency, value: fee * rateValue))
     }
 
-    func testState_FeeCurrencyValue_CoinType_InsufficientBalance() {
-        let rateValue: Decimal = 987.65
-        let fee: Decimal = 0.123
-        let amount: Decimal = 123.45
-        let address = "address"
-
-        stub(mockAdapter) { mock in
-            when(mock.fee(for: equal(to: amount), address: equal(to: address))).thenReturn(fee)
-        }
-
-        interactorState.rateValue = rateValue
-        input.inputType = .coin
-        input.amount = amount
-        input.address = address
-
-        let state = interactor.state(forUserInput: input)
-
-        XCTAssertEqual(state.feeCurrencyValue, CurrencyValue(currency: baseCurrency, value: fee * rateValue))
-    }
-
     func testState_FeeCurrencyValue_CurrencyType() {
         let rateValue: Decimal = 987.65
         let fee: Decimal = 0.123
@@ -427,6 +411,47 @@ class SendInteractorTests: XCTestCase {
         XCTAssertEqual(state.feeCurrencyValue, CurrencyValue(currency: baseCurrency, value: fee * rateValue))
     }
 
+    func testState_feeCurrencyValue_currencyType_erc20() {
+        let feeCoinCode = "ETH"
+        let feeRateValue: Decimal = 789.65
+        let fee: Decimal = 0.123
+        let amount: Decimal = 123.45
+        let address = "address"
+
+        stub(mockAdapter) { mock in
+            when(mock.feeCoinCode.get).thenReturn(feeCoinCode)
+            when(mock.fee(for: equal(to: amount), address: equal(to: address))).thenReturn(fee)
+        }
+
+        interactorState.feeRateValue = feeRateValue
+        input.amount = amount
+        input.address = address
+
+        let state = interactor.state(forUserInput: input)
+
+        XCTAssertEqual(state.feeCurrencyValue, CurrencyValue(currency: baseCurrency, value: fee * feeRateValue))
+    }
+
+    func testState_erc20FeeCoinCode() {
+        let feeCoinCode = "ETH"
+        let fee: Decimal = 0.123
+        let amount: Decimal = 123.45
+        let address: String = "address"
+
+        input.inputType = .coin
+        input.amount = amount
+        input.address = address
+
+        stub(mockAdapter) { mock in
+            when(mock.feeCoinCode.get).thenReturn(feeCoinCode)
+            when(mock.fee(for: any(), address: any())).thenReturn(fee)
+        }
+
+        let state = interactor.state(forUserInput: input)
+
+        XCTAssertEqual(state.feeCoinValue, CoinValue(coinCode: feeCoinCode, value: fee))
+    }
+
     func testCopyAddress() {
         let address = "some_address"
 
@@ -446,6 +471,35 @@ class SendInteractorTests: XCTestCase {
 
         XCTAssertEqual(interactorState.rateValue, rateValue)
         verify(mockDelegate).didUpdateRate()
+    }
+
+    func testFetchFeeRate() {
+        let rateValue: Decimal = 987.65
+        let feeCoinCode = "ETH"
+
+        stub(mockAdapter) { mock in
+            when(mock.feeCoinCode.get).thenReturn(feeCoinCode)
+        }
+        stub(mockRateStorage) { mock in
+            when(mock.nonExpiredLatestRateValueObservable(forCoinCode: equal(to: coinCode), currencyCode: equal(to: baseCurrency.code))).thenReturn(Observable.just(0))
+            when(mock.nonExpiredLatestRateValueObservable(forCoinCode: equal(to: feeCoinCode), currencyCode: equal(to: baseCurrency.code))).thenReturn(Observable.just(rateValue))
+        }
+
+        interactor.fetchRate()
+
+        XCTAssertEqual(interactorState.feeRateValue, rateValue)
+        verify(mockDelegate, times(2)).didUpdateRate()
+    }
+
+    func testFetchFeeRate_noFeeCoinCode() {
+        stub(mockRateStorage) { mock in
+            when(mock.nonExpiredLatestRateValueObservable(forCoinCode: equal(to: coinCode), currencyCode: equal(to: baseCurrency.code))).thenReturn(Observable.just(0))
+        }
+
+        interactor.fetchRate()
+
+        XCTAssertNil(interactorState.feeRateValue)
+        verify(mockRateStorage, never()).nonExpiredLatestRateValueObservable(forCoinCode: equal(to: "ETH"), currencyCode: equal(to: baseCurrency.code))
     }
 
     func testDefaultInputType() {
@@ -488,45 +542,5 @@ class SendInteractorTests: XCTestCase {
 
         verify(mockLocalStorage).sendInputType.set(equal(to: inputType))
     }
-
-//    func testTotalBalanceMinusFee_Coin() {
-//        let fee: Decimal = 0.45
-//        let rateValue: Decimal = 987.65
-//        let amount: Decimal = 123.45
-//        let address = "address"
-//
-//        interactorState.rateValue = rateValue
-//        input.inputType = .coin
-//        input.amount = amount
-//        input.address = address
-//
-//        stub(mockAdapter) { mock in
-//            when(mock.fee(for: equal(to: input.amount), address: equal(to: address), senderPay: false)).thenReturn(fee)
-//        }
-//
-//        let balanceMinusFee = interactor.totalBalanceMinusFee(forInputType: input.inputType, address: address)
-//        let expectedBalanceMinusFee: Decimal = 123
-//        XCTAssertEqual(balanceMinusFee, expectedBalanceMinusFee)
-//    }
-
-//    func testTotalBalanceMinusFee_Currency() {
-//        let fee: Decimal = 0.45
-//        let rateValue: Decimal = 987.65
-//        let amount: Decimal = 123.45
-//        let address = "address"
-//
-//        interactorState.rateValue = rateValue
-//        input.inputType = .currency
-//        input.amount = amount
-//        input.address = address
-//
-//        stub(mockAdapter) { mock in
-//            when(mock.fee(for: equal(to: input.amount), address: equal(to: address), senderPay: false)).thenReturn(fee)
-//        }
-//
-//        let balanceMinusFee = interactor.totalBalanceMinusFee(forInputType: input.inputType, address: address)
-//        let expectedBalanceMinusFee: Decimal = 123 * rateValue
-//        XCTAssertEqual(balanceMinusFee, expectedBalanceMinusFee)
-//    }
 
 }

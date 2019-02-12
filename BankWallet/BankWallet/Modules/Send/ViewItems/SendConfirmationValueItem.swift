@@ -11,7 +11,7 @@ class SendConfirmationValueItem: BaseActionItem {
         case .coinValue(let coinValue):
             value = ValueFormatter.instance.format(coinValue: coinValue)
         case .currencyValue(let currencyValue):
-            value = ValueFormatter.instance.format(currencyValue: currencyValue)
+            value = ValueFormatter.instance.format(currencyValue: currencyValue, roundingMode: .up)
         }
 
         super.init(cellType: SendConfirmationValueItemView.self, tag: tag, required: true)
