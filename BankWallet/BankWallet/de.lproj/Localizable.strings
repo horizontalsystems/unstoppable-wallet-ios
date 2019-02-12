@@ -57,7 +57,7 @@
 "balance.send" = "Senden";
 "balance.deposit" = "Anfordern";
 "balance.rate_per_coin" = "%@ pro %@";
-"balance.synced_through" = "until: %@";
+"balance.synced_through" = "bis: %@";
 "balance.syncing" = "Synchronisieren...";
 
 // Deposit
