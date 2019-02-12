@@ -79,7 +79,7 @@ Go to Settings - > Bank and allow access to Camera.";
 "send.fee" = "Fee";
 "send.total" = "Total";
 "send.max_button" = "Max";
-"send_erc.alert" = "Transaction fees for %@ (ERC20) paid in ETH. You don't have %@ ETH.";
+"send_erc.alert" = "Transaction fees for %@ (ERC20) paid in ETH. You need %@ ETH.";
 
 // Transactions
 
