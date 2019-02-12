@@ -99,12 +99,6 @@ extension BalanceInteractor: IBalanceInteractor {
 
     func refresh() {
         adapterManager.adapters
-                .filter { (adapter: IAdapter) -> Bool in
-                    if case .notSynced = adapter.state {
-                        return true
-                    }
-                    return false
-                }
                 .forEach { adapter in
                     adapter.refresh()
                 }

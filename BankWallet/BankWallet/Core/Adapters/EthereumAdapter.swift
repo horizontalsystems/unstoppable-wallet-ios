@@ -29,7 +29,8 @@ extension EthereumAdapter: IAdapter {
     }
 
     func send(to address: String, value: Decimal, completion: ((Error?) -> ())?) {
-        ethereumKit.send(to: address, value: value, gasPrice: nil, completion: completion)
+        let formattedValue = ValueFormatter.instance.round(value: value, scale: decimal, roundingMode: .plain)
+        ethereumKit.send(to: address, value: formattedValue, gasPrice: nil, completion: completion)
     }
 
     func availableBalance(for address: String?) -> Decimal {
