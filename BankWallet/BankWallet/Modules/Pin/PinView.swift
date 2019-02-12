@@ -25,7 +25,6 @@ class PinView: UIView {
         addSubview(descriptionLabel)
         descriptionLabel.snp.makeConstraints { maker in
             maker.bottom.equalTo(self.pinDotsView.snp.top).offset(-PinTheme.infoVerticalMargin)
-            maker.centerX.equalToSuperview()
             maker.leading.equalToSuperview().offset(PinTheme.infoHorizontalMargin)
             maker.trailing.equalToSuperview().offset(-PinTheme.infoHorizontalMargin)
         }
@@ -38,7 +37,6 @@ class PinView: UIView {
         addSubview(errorLabel)
         errorLabel.snp.makeConstraints { maker in
             maker.top.equalTo(self.pinDotsView.snp.bottom).offset(PinTheme.infoVerticalMargin)
-            maker.centerX.equalToSuperview()
             maker.leading.equalToSuperview().offset(PinTheme.infoHorizontalMargin)
             maker.trailing.equalToSuperview().offset(-PinTheme.infoHorizontalMargin)
         }

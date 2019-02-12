@@ -40,10 +40,6 @@ class NumPad: UICollectionView {
 
         isScrollEnabled = false
 
-        snp.makeConstraints { maker in
-            maker.size.equalTo(NumPadTheme.size)
-        }
-
         let localizedOne = format(number: 1)
         cells.append(.number(number: localizedOne, letters: style.contains(.letters) ? "" : nil, filled: true, action: { [weak self] in self?.numPadDelegate?.numPadDidClick(digit: localizedOne) }))
         for i in 2...9 {
