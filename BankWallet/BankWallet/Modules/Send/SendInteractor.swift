@@ -97,9 +97,15 @@ extension SendInteractor: ISendInteractor {
         }
         if let coinValue = sendState.coinValue {
             let feeValue = adapter.fee(for: coinValue.value, address: input.address)
-            sendState.feeCoinValue = CoinValue(coinCode: coinCode, value: feeValue)
+            sendState.feeCoinValue = CoinValue(coinCode: state.adapter.feeCoinCode ?? coinCode, value: feeValue)
         }
-        if let rateValue = state.rateValue, let feeCoinValue = sendState.feeCoinValue {
+        let rateValue: Decimal?
+        if state.adapter.feeCoinCode != nil {
+            rateValue = state.feeRateValue
+        } else {
+            rateValue = state.rateValue
+        }
+        if let rateValue = rateValue, let feeCoinValue = sendState.feeCoinValue {
             sendState.feeCurrencyValue = CurrencyValue(currency: baseCurrency, value: rateValue * feeCoinValue.value)
         }
 
@@ -184,6 +190,16 @@ extension SendInteractor: ISendInteractor {
                     self?.delegate?.didUpdateRate()
                 })
                 .disposed(by: disposeBag)
+
+        if let feeCoinCode = state.adapter.feeCoinCode {
+            rateStorage.nonExpiredLatestRateValueObservable(forCoinCode: feeCoinCode, currencyCode: currencyManager.baseCurrency.code)
+                    .take(1)
+                    .subscribe(onNext: { [weak self] rateValue in
+                        self?.state.feeRateValue = rateValue
+                        self?.delegate?.didUpdateRate()
+                    })
+                    .disposed(by: disposeBag)
+        }
     }
 
 }

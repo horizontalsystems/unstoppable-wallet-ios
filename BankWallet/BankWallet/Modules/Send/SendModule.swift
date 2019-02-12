@@ -110,6 +110,7 @@ enum FeeError {
 class SendInteractorState {
     let adapter: IAdapter
     var rateValue: Decimal?
+    var feeRateValue: Decimal?
 
     init(adapter: IAdapter) {
         self.adapter = adapter
