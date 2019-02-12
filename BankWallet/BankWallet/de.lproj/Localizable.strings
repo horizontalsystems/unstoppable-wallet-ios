@@ -57,14 +57,14 @@
 "balance.send" = "Senden";
 "balance.deposit" = "Anfordern";
 "balance.rate_per_coin" = "%@ pro %@";
-"balance.synced_through" = "Until %@";
-"balance.syncing" = "Syncing...";
+"balance.synced_through" = "Bis %@";
+"balance.syncing" = "Synchronisieren...";
 
 // Deposit
 
 "deposit.receive_coin" = "%@ Anfordern ";
 "deposit.your_address" = "Deine Adresse";
-"deposit.share" = "Forward";
+"deposit.share" = "Weiterleiten";
 
 // Send
 
@@ -148,7 +148,7 @@
 
 // Settings -> Manage Wallet
 
-"settings_manage_wallet.title" = "Coin Manager";
+"settings_manage_wallet.title" = "Wallets";
 
 "settings_manage_wallet.remove_button" = "Entfernen";
 
