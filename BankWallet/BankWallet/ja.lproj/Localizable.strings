@@ -48,7 +48,7 @@
 "backup.confirmation.failure_alert.text" = "言葉が一致しません";
 "backup.confirmation.done_button" = "Done";
 "backup.confirmation.understand" = "私は私の財布とトークンは、ほかのサーバーではなく、このデバイスだけに安全に開催されること理解します。";
-"backup.confirmation.delete_app_warn" = "私は、このアプリケーションが別のデバイスは、削除または誤動作に移動した場合、私の財布回復できるのは、安全な場所に保存されている秘密鍵だけのを理解します。";
+"backup.confirmation.delete_app_warn" = "I understand that if this app is moved to another device, deleted or malfunctions, my wallet can be only recovered with the Secret Key.";
 
 // Balance
 
@@ -57,7 +57,7 @@
 "balance.send" = "送る";
 "balance.deposit" = "受取";
 "balance.rate_per_coin" = "%@ 毎 %@";
-"balance.synced_through" = "Synced through %@";
+"balance.synced_through" = "Until %@";
 "balance.syncing" = "Syncing...";
 
 // Deposit
