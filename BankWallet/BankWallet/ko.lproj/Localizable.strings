@@ -48,7 +48,7 @@
 "backup.confirmation.failure_alert.text" = "암호가 일치 하지 않습니다.";
 "backup.confirmation.done_button" = "완료";
 "backup.confirmation.understand" = "나는 내 지갑과 토큰이 다른 서버가 아닌 이 장치에만 안전하게 존재하고 있음을 이해한다.";
-"backup.confirmation.delete_app_warn" = "나는 이 앱이 다른 장치로 이동, 삭제 또는 오작동하는 경우 내 지갑이 내가 작성하고 안전한 장소에 저장한 비밀 키로만 복구 될 수 있음을 이해한다.";
+"backup.confirmation.delete_app_warn" = "I understand that if this app is moved to another device, deleted or malfunctions, my wallet can be only recovered with the Secret Key.";
 
 // Balance
 
@@ -57,7 +57,7 @@
 "balance.send" = "전송";
 "balance.deposit" = "수신";
 "balance.rate_per_coin" = "%@ 당 %@";
-"balance.synced_through" = "Synced through %@";
+"balance.synced_through" = "Until %@";
 "balance.syncing" = "Syncing...";
 
 // Deposit
