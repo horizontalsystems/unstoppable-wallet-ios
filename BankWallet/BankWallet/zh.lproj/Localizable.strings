@@ -41,7 +41,6 @@
 "backup.intro.backup_now" = "备份";
 
 "backup.words.title" = "密钥";
-"backup.words.back" = "返回";
 "backup.words.proceed" = "继续";
 
 "backup.confirmation.title" = "正在检查...";
@@ -49,7 +48,7 @@
 "backup.confirmation.failure_alert.text" = "单词不匹配";
 "backup.confirmation.done_button" = "完成";
 "backup.confirmation.understand" = "我的钱包和代币仅在这个设备上，而不是在任何服务器上安全地保存着。这个重点我都理解。";
-"backup.confirmation.delete_app_warn" = "此应用程序因任何原因移动到其他设备被删除或出了故障，则只有使用密钥，才能恢复钱包。这个重点我都理解。";
+"backup.confirmation.delete_app_warn" = "我理解, 如果此app被移动到另一个设备、删除或故障，密钥是恢复我钱包的唯一方法。";
 
 // Balance
 
@@ -58,12 +57,14 @@
 "balance.send" = "发送​​";
 "balance.deposit" = "收到";
 "balance.rate_per_coin" = "%@ 每 %@";
+"balance.synced_through" = "直到 %@";
+"balance.syncing" = "正在同步...";
 
 // Deposit
 
 "deposit.receive_coin" = "收到%@";
 "deposit.your_address" = "您的地址";
-"deposit.share" = "分享";
+"deposit.share" = "转发";
 
 // Send
 
@@ -76,7 +77,7 @@
 "send.fee" = "费用";
 "send.total" = "总额";
 "send.max_button" = "最多";
-"send_erc.alert" = "You need ETH to transfer ERC Tokens";
+"send_erc.alert" = "以 ETH 支付的 %@ (ERC20) 交易费用。你需要 %@ ETH。";
 
 // Transactions
 

@@ -22,7 +22,7 @@ class GrdbStorage {
             try db.create(table: Rate.databaseTableName) { t in
                 t.column(Rate.Columns.coinCode.name, .text).notNull()
                 t.column(Rate.Columns.currencyCode.name, .text).notNull()
-                t.column(Rate.Columns.value.name, .double).notNull()
+                t.column(Rate.Columns.value.name, .text).notNull()
                 t.column(Rate.Columns.timestamp.name, .double).notNull()
                 t.column(Rate.Columns.isLatest.name, .boolean).notNull()
 
@@ -43,34 +43,6 @@ class GrdbStorage {
                 t.column(StorableCoin.Columns.coinOrder.name, .integer)
 
                 t.primaryKey([StorableCoin.Columns.code.name], onConflict: .replace)
-            }
-
-            let defaultCoins = [
-                Coin(title: "Bitcoin", code: "BTC", type: .bitcoin),
-                Coin(title: "Bitcoin Cash", code: "BCH", type: .bitcoinCash),
-                Coin(title: "Ethereum", code: "ETH", type: .ethereum)
-            ]
-            for (index, coin) in defaultCoins.enumerated() {
-                let storableCoin = StorableCoin(coin: coin, enabled: true, order: index)
-                try storableCoin.insert(db)
-            }
-        }
-        migrator.registerMigration("changeRateValueType") { db in
-            try db.drop(table: Rate.databaseTableName)
-
-            try db.create(table: Rate.databaseTableName) { t in
-                t.column(Rate.Columns.coinCode.name, .text).notNull()
-                t.column(Rate.Columns.currencyCode.name, .text).notNull()
-                t.column(Rate.Columns.value.name, .text).notNull()
-                t.column(Rate.Columns.timestamp.name, .double).notNull()
-                t.column(Rate.Columns.isLatest.name, .boolean).notNull()
-
-                t.primaryKey([
-                    Rate.Columns.coinCode.name,
-                    Rate.Columns.currencyCode.name,
-                    Rate.Columns.timestamp.name,
-                    Rate.Columns.isLatest.name
-                ], onConflict: .replace)
             }
         }
 
