@@ -148,7 +148,7 @@
 
 // Settings -> Manage Wallet
 
-"settings_manage_wallet.title" = "Крипто Валюты";
+"settings_manage_wallet.title" = "Кошельки";
 
 "settings_manage_wallet.remove_button" = "Откл.";
 
