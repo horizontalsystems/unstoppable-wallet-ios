@@ -41,7 +41,6 @@
 "backup.intro.backup_now" = "پيشتيباني";
 
 "backup.words.title" = "رقم مخفی";
-"backup.words.back" = "برگشت";
 "backup.words.proceed" = "بعدي";
 
 "backup.confirmation.title" = "برسي...";
@@ -49,7 +48,7 @@
 "backup.confirmation.failure_alert.text" = "ارقام با هم شباهت ندارند";
 "backup.confirmation.done_button" = "انجام شد";
 "backup.confirmation.understand" = "من فهميدم كي پول كيف من و توكن هاي من همه شان حفظ و امانط است در اين دستگاه و نخير در ديگر سيرفير ها.";
-"backup.confirmation.delete_app_warn" = "I understand that if this app is moved to another device, deleted or malfunctions, my wallet can be only recovered with the Secret Key that I have just written down and saved in a secure place.";
+"backup.confirmation.delete_app_warn" = "I understand that if this app is moved to another device, deleted or malfunctions, my wallet can be only recovered with the Secret Key.";
 
 // Balance
 
@@ -58,12 +57,14 @@
 "balance.send" = "ارسال";
 "balance.deposit" = "دريافت";
 "balance.rate_per_coin" = "%@ به ازا %@";
+"balance.synced_through" = "Until %@";
+"balance.syncing" = "Syncing...";
 
 // Deposit
 
 "deposit.receive_coin" = "دریافت %@";
 "deposit.your_address" = "Your Address";
-"deposit.share" = "Share";
+"deposit.share" = "Forward";
 
 // Send
 
@@ -76,7 +77,7 @@
 "send.fee" = "هزينه";
 "send.total" = "مجموع";
 "send.max_button" = "Max";
-"send_erc.alert" = "You need ETH to transfer ERC Tokens";
+"send_erc.alert" = "Transaction fees for %@ (ERC20) paid in ETH. You need %@ ETH.";
 
 // Transactions
 
@@ -147,7 +148,7 @@
 
 // Settings -> Manage Wallet
 
-"settings_manage_wallet.title" = "Wallets";
+"settings_manage_wallet.title" = "Coin Manager";
 
 "settings_manage_wallet.remove_button" = "حذف";
 
