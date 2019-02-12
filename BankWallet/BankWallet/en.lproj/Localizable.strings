@@ -50,7 +50,7 @@ Go to Settings - > Bank and allow access to Camera.";
 "backup.confirmation.failure_alert.text" = "Words do not match";
 "backup.confirmation.done_button" = "Done";
 "backup.confirmation.understand" = "I understand that my wallet and tokens are held securely on this device only and not any servers.";
-"backup.confirmation.delete_app_warn" = "I understand that if this app is moved to another device, deleted or malfunctions, my wallet can be only recovered with the Secret Key that I have just written down and saved in a secure place.";
+"backup.confirmation.delete_app_warn" = "I understand that if this app is moved to another device, deleted or malfunctions, my wallet can be only recovered with the Secret Key.";
 
 // Balance
 
@@ -59,7 +59,7 @@ Go to Settings - > Bank and allow access to Camera.";
 "balance.send" = "Send";
 "balance.deposit" = "Receive";
 "balance.rate_per_coin" = "%@ per %@";
-"balance.synced_through" = "Synced through %@";
+"balance.synced_through" = "Until %@";
 "balance.syncing" = "Syncing...";
 
 // Deposit
