@@ -12,7 +12,6 @@ class SendTitleItemView: BaseActionItemView {
     override func initView() {
         super.initView()
 
-        iconImageView.tintColor = SendTheme.iconColor
         addSubview(iconImageView)
         iconImageView.snp.makeConstraints { maker in
             maker.leading.top.equalToSuperview().offset(SendTheme.margin)

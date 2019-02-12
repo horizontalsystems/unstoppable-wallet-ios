@@ -28,4 +28,7 @@ class AppTheme {
         }
     }
     static let actionAlertConfig = ActionSheetThemeConfig(actionStyle: .alert, cornerRadius: 16)
+
+    static let coinIconColor: UIColor = .cryptoGray
+    static let coinIconSize: CGFloat = 24
 }

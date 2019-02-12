@@ -13,5 +13,4 @@ class ManageCoinsTheme {
     static let coinLabelFont = UIFont.cryptoCaption
     static let coinLabelTopMargin: CGFloat = 3
     static let iconRightMargin: CGFloat = 13
-    static let iconTintColor = UIColor.cryptoGray
 }

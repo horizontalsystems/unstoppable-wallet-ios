@@ -21,7 +21,6 @@ class SendTheme {
     static let titleHeight: CGFloat = 52
     static let titleFont = UIFont.cryptoHeadline
     static var titleColor: UIColor { return .crypto_White_Black }
-    static let iconColor: UIColor = .cryptoGray
 
     static let amountHeight: CGFloat = 80
     static let amountFont: UIFont = .systemFont(ofSize: 17)
