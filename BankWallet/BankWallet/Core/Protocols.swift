@@ -233,6 +233,10 @@ protocol IRateStorage {
     func clearRates()
 }
 
+protocol ITokenLocalStorage {
+    var coins: [Coin] { get }
+}
+
 protocol ICoinStorage {
     func enabledCoinsObservable() -> Observable<[Coin]>
     func allCoinsObservable() -> Observable<[Coin]>

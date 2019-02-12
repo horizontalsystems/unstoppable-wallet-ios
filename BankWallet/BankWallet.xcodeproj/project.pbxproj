@@ -530,7 +530,9 @@
 		58AAA09CAEB6AF43CA020636 /* FullTransactionInfoPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA823D090E4B3E0D03A91 /* FullTransactionInfoPresenter.swift */; };
 		58AAA0A3411206AAE7312512 /* TokenSyncer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA84935922407464F5624 /* TokenSyncer.swift */; };
 		58AAA0A54A64F5548C65F5F1 /* FullTransactionInfoInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA687FC0253AD175BA756 /* FullTransactionInfoInteractor.swift */; };
+		58AAA0A7F664483B98A8A27E /* TokenLocalStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAEB3D49AE13A5F803FAC /* TokenLocalStorage.swift */; };
 		58AAA0B04B8E3BD80EC3085E /* FullTransactionInfoModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA79D129F7B3E64598E5F /* FullTransactionInfoModule.swift */; };
+		58AAA0C59CA7FBF079A60465 /* TokenLocalStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAEB3D49AE13A5F803FAC /* TokenLocalStorage.swift */; };
 		58AAA0E8388C917EB1D4E022 /* FullTransactionInfoProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAC944A9DCACFAF1DDA15 /* FullTransactionInfoProtocols.swift */; };
 		58AAA10B3852EDA5DC15901F /* DataProviderSettingsModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA390E4B59B8CB7C2D2E8 /* DataProviderSettingsModule.swift */; };
 		58AAA12F931DF9C1FE5DDBCB /* DataProviderSettingsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA56AA98F7B0DB2E97971 /* DataProviderSettingsRouter.swift */; };
@@ -542,6 +544,7 @@
 		58AAA1EE015E354E285FCCD3 /* FullTransactionInfoProviderFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA72A3BACDB574838A8CC /* FullTransactionInfoProviderFactory.swift */; };
 		58AAA1EEC400E3FE695E6C0B /* TransactionInfoDescriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAC9716B68916B4EA0B9B /* TransactionInfoDescriptionView.swift */; };
 		58AAA2171F75CCDDC287A550 /* TokenSyncerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAF290870CC9456A81C2C /* TokenSyncerTests.swift */; };
+		58AAA226B01053B1A599E9A5 /* TokenLocalStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAEB3D49AE13A5F803FAC /* TokenLocalStorage.swift */; };
 		58AAA2363892ED5743CBF2EB /* EthereumBaseAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA656A81B2C12F618FB44 /* EthereumBaseAdapter.swift */; };
 		58AAA23E15CBC7EBB94086E2 /* FullTransactionDataProviderManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAAC5854D58969ECE57A1 /* FullTransactionDataProviderManagerTests.swift */; };
 		58AAA2761F98B944428578B8 /* DataProviderSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAB2A7397DE3BBC456E96 /* DataProviderSettingsViewController.swift */; };
@@ -1452,6 +1455,7 @@
 		58AAADF00D642CB746C44C51 /* FullTransactionRecord.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FullTransactionRecord.swift; sourceTree = "<group>"; };
 		58AAAEA9AB2118A46863AEB5 /* FullTransactionInfoPresenterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FullTransactionInfoPresenterTests.swift; sourceTree = "<group>"; };
 		58AAAEB2610B22FF5C9E9A41 /* BlockExplorerProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockExplorerProvider.swift; sourceTree = "<group>"; };
+		58AAAEB3D49AE13A5F803FAC /* TokenLocalStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokenLocalStorage.swift; sourceTree = "<group>"; };
 		58AAAF286BB3532AF94E4EB8 /* RequestErrorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestErrorView.swift; sourceTree = "<group>"; };
 		58AAAF290870CC9456A81C2C /* TokenSyncerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokenSyncerTests.swift; sourceTree = "<group>"; };
 		754FC632F3964D9EF1172D85 /* Pods_Bank.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Bank.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1830,6 +1834,7 @@
 				11B352044BCE494491257933 /* UserDefaultsStorage.swift */,
 				11B3584E1C6B6FA22B89D82C /* KeychainStorage.swift */,
 				11B35A1AE56A94BEB52AC4D1 /* GrdbStorage.swift */,
+				58AAAEB3D49AE13A5F803FAC /* TokenLocalStorage.swift */,
 			);
 			path = Storage;
 			sourceTree = "<group>";
@@ -3436,6 +3441,7 @@
 				58AAABC3FB85309D31E2F893 /* TokenSyncer.swift in Sources */,
 				11B35D3A74237CE0B77295B6 /* CoinIconImageView.swift in Sources */,
 				11B35A4912C5B73767232C95 /* TestModeIndicator.swift in Sources */,
+				58AAA226B01053B1A599E9A5 /* TokenLocalStorage.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3804,6 +3810,7 @@
 				58AAA0A3411206AAE7312512 /* TokenSyncer.swift in Sources */,
 				11B3580BECA360DE35E89286 /* CoinIconImageView.swift in Sources */,
 				11B3524C9BD6FDCE5D72CB81 /* TestModeIndicator.swift in Sources */,
+				58AAA0C59CA7FBF079A60465 /* TokenLocalStorage.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4125,6 +4132,7 @@
 				58AAA1CBB01C5CD2D53BDE14 /* TokenSyncer.swift in Sources */,
 				11B3590CC5D7FB68ED00F7B7 /* CoinIconImageView.swift in Sources */,
 				11B355522F6E7CD38E985901 /* TestModeIndicator.swift in Sources */,
+				58AAA0A7F664483B98A8A27E /* TokenLocalStorage.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

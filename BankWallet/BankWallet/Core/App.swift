@@ -6,6 +6,7 @@ class App {
     let pasteboardManager: IPasteboardManager
     let randomManager: IRandomManager
 
+    let tokenLocalStorage: ITokenLocalStorage
     let localStorage: ILocalStorage
     let secureStorage: ISecureStorage
 
@@ -21,7 +22,6 @@ class App {
     let reachabilityManager: IReachabilityManager
 
     let grdbStorage: GrdbStorage
-    let tokenSyncer: ITokenSyncer
 
     let pinManager: IPinManager
     let coinManager: ICoinManager
@@ -65,10 +65,11 @@ class App {
         reachabilityManager = ReachabilityManager(appConfigProvider: appConfigProvider)
 
         grdbStorage = GrdbStorage()
-        tokenSyncer = TokenSyncer(tokenNetworkManager: networkManager, storage: grdbStorage)
+
+        tokenLocalStorage = TokenLocalStorage()
 
         pinManager = PinManager(secureStorage: secureStorage)
-        coinManager = CoinManager(appConfigProvider: appConfigProvider, storage: grdbStorage)
+        coinManager = CoinManager(appConfigProvider: appConfigProvider, storage: grdbStorage, tokenLocalStorage: tokenLocalStorage)
         rateManager = RateManager(storage: grdbStorage, networkManager: networkManager)
         currencyManager = CurrencyManager(localStorage: localStorage, appConfigProvider: appConfigProvider)
 
