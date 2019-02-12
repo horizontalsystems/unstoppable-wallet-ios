@@ -6,7 +6,6 @@ class App {
     let pasteboardManager: IPasteboardManager
     let randomManager: IRandomManager
 
-    let tokenLocalStorage: ITokenLocalStorage
     let localStorage: ILocalStorage
     let secureStorage: ISecureStorage
 
@@ -66,10 +65,8 @@ class App {
 
         grdbStorage = GrdbStorage()
 
-        tokenLocalStorage = TokenLocalStorage()
-
         pinManager = PinManager(secureStorage: secureStorage)
-        coinManager = CoinManager(appConfigProvider: appConfigProvider, storage: grdbStorage, tokenLocalStorage: tokenLocalStorage)
+        coinManager = CoinManager(appConfigProvider: appConfigProvider, storage: grdbStorage)
         rateManager = RateManager(storage: grdbStorage, networkManager: networkManager)
         currencyManager = CurrencyManager(localStorage: localStorage, appConfigProvider: appConfigProvider)
 

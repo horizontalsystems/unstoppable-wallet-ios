@@ -20,21 +20,16 @@ class ManageCoinsInteractor {
 extension ManageCoinsInteractor: IManageCoinsInteractor {
 
     func loadCoins() {
-        var allCoinsObservable = coinManager.allCoinsObservable
+        delegate?.didLoad(allCoins: coinManager.allCoins)
+
         var enabledCoinsObservable = storage.enabledCoinsObservable()
 
         if async {
-            allCoinsObservable = allCoinsObservable
-                    .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
-                    .observeOn(MainScheduler.instance)
             enabledCoinsObservable = enabledCoinsObservable
                     .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
                     .observeOn(MainScheduler.instance)
         }
 
-        allCoinsObservable.subscribe(onNext: { [weak self] allCoins in
-            self?.delegate?.didLoad(allCoins: allCoins)
-        }).disposed(by: disposeBag)
         enabledCoinsObservable.subscribe(onNext: { [weak self] enabledCoins in
             self?.delegate?.didLoad(enabledCoins: enabledCoins)
         }).disposed(by: disposeBag)
