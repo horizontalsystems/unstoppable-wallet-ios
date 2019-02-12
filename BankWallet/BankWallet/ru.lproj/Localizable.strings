@@ -57,7 +57,7 @@
 "balance.send" = "Отправить";
 "balance.deposit" = "Получить";
 "balance.rate_per_coin" = "%@ за %@";
-"balance.synced_through" = "До %@";
+"balance.synced_through" = "until: %@";
 "balance.syncing" = "Синхронизация...";
 
 // Deposit
