@@ -64,7 +64,7 @@
 
 "deposit.receive_coin" = "受取 %@";
 "deposit.your_address" = "お客様のアドレス";
-"deposit.share" = "Forward";
+"deposit.share" = "転送";
 
 // Send
 
