@@ -40,7 +40,14 @@ class RateSyncer {
 
     private func syncLatestRates() {
         if reachabilityManager.isReachable {
-            rateManager.refreshLatestRates(coinCodes: adapterManager.adapters.map { $0.coin.code }, currencyCode: currencyManager.baseCurrency.code)
+            var coinCodes = Set<CoinCode>()
+            for adapter in adapterManager.adapters {
+                coinCodes.insert(adapter.coin.code)
+                if let feeCoinCode = adapter.feeCoinCode {
+                    coinCodes.insert(feeCoinCode)
+                }
+            }
+            rateManager.refreshLatestRates(coinCodes: Array(coinCodes), currencyCode: currencyManager.baseCurrency.code)
         }
     }
 
