@@ -132,6 +132,8 @@ extension KeychainStorage: ISecureStorage {
     func clear() {
         try? set(authData: nil)
         try? set(pin: nil)
+        try? set(unlockAttempts: nil)
+        try? set(lockoutTimestamp: nil)
     }
 
 }
