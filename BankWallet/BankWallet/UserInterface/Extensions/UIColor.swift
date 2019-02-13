@@ -9,6 +9,7 @@ extension UIColor {
     static var crypto_Steel20_Clear: UIColor { return App.shared.localStorage.lightMode ? .cryptoSteel20 : .clear }
     static var crypto_White_Black: UIColor { return App.shared.localStorage.lightMode ? .black : white }
     static var crypto_Bars_Black: UIColor { return App.shared.localStorage.lightMode ? .black : cryptoBars }
+    static var crypto_Black_Bars: UIColor { return App.shared.localStorage.lightMode ? .cryptoBars : black }
     static var crypto_White_Steel20: UIColor { return App.shared.localStorage.lightMode ? .white : cryptoSteel20 }
     static var crypto_Clear_White: UIColor { return App.shared.localStorage.lightMode ? .white : .clear }
     static var crypto_Silver_Black: UIColor { return App.shared.localStorage.lightMode ? .black : .cryptoSilver }
