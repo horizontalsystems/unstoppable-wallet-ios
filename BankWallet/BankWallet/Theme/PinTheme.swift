@@ -9,10 +9,12 @@ class PinTheme {
     static let infoVerticalMargin: CGFloat = 16
 
     static let dismissAnimationDuration: Double = 0.3
+    static var lockoutIconBackground: UIColor { return App.shared.localStorage.lightMode ? .white : .cryptoGray50 }
     static let cancelColor = UIColor.cryptoYellow
     static let cancelSelectedColor = UIColor.cryptoYellowPressed
     static let lockoutLabelTopMargin: CGFloat = 24
     static let lockoutLabelFont = UIFont.cryptoBody2
+    static let lockIconBackgroundSideSize: CGFloat = 94
     static let lockoutLabelColor = UIColor.cryptoGray
     static let lockoutLabelSideMargin: CGFloat = 32
     static let keyboardSideMargin: CGFloat = 17
