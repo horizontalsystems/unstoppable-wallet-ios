@@ -11,22 +11,32 @@ class MainSettingsInteractor {
     private let systemInfoManager: ISystemInfoManager
     private let currencyManager: ICurrencyManager
 
-    init(localStorage: ILocalStorage, wordsManager: IWordsManager, languageManager: ILanguageManager, systemInfoManager: ISystemInfoManager, currencyManager: ICurrencyManager) {
+    init(localStorage: ILocalStorage, wordsManager: IWordsManager, languageManager: ILanguageManager, systemInfoManager: ISystemInfoManager, currencyManager: ICurrencyManager, async: Bool = true) {
         self.localStorage = localStorage
         self.wordsManager = wordsManager
         self.languageManager = languageManager
         self.systemInfoManager = systemInfoManager
         self.currencyManager = currencyManager
 
-        wordsManager.backedUpSignal
+        var backedUpSignal: Observable<Void> = wordsManager.backedUpSignal
+        var baseCurrencyUpdatedSignal: Observable<Void> = currencyManager.baseCurrencyUpdatedSignal
+
+        if async {
+            backedUpSignal = backedUpSignal
+                    .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
+                    .observeOn(MainScheduler.instance)
+            baseCurrencyUpdatedSignal = baseCurrencyUpdatedSignal
+                    .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
+                    .observeOn(MainScheduler.instance)
+        }
+
+        backedUpSignal
                 .subscribe(onNext: { [weak self] in
                     self?.onUpdateBackedUp()
                 })
                 .disposed(by: disposeBag)
 
-        currencyManager.baseCurrencyUpdatedSignal
-                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
-                .observeOn(MainScheduler.instance)
+        baseCurrencyUpdatedSignal
                 .subscribe(onNext: { [weak self] in
                     self?.delegate?.didUpdateBaseCurrency()
                 })
