@@ -17,9 +17,9 @@ def appPods
 
   pod 'BigInt'
 
-  pod 'GrouviExtensions', '~> 1.2'
-  pod 'GrouviActionSheet', '1.3'
-  pod 'GrouviHUD', '1.1.4'
+  pod 'GrouviExtensions'
+  pod 'GrouviActionSheet'
+  pod 'GrouviHUD'
   pod 'SectionsTableViewKit'
 
   pod 'KeychainAccess'
