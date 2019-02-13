@@ -12,7 +12,7 @@ PODS:
   - GrouviExtensions (1.2):
     - RxSwift (~> 4.2.0)
     - SnapKit (~> 4.0.0)
-  - GrouviHUD (1.1.5):
+  - GrouviHUD (1.1.6):
     - GrouviExtensions
     - RxSwift
     - SnapKit (~> 4.0.0)
@@ -125,7 +125,7 @@ SPEC CHECKSUMS:
   GRDB.swift: e10787d857b6b8135354b9e08fb23b4bb8e2fab7
   GrouviActionSheet: dd73bd76eaca3d5bb54fa51960f293d4a176e68c
   GrouviExtensions: 025fe6dbdf9df3015a5a2eddd69cd150b451d578
-  GrouviHUD: dfff5b78b7af4e6c79c80dba3e8a7253d147f472
+  GrouviHUD: 8ec58da8533d41d78a79766d1108246398d87692
   HSBitcoinKit: cb74cebe7081cb5d0b66a9017ff2a2e81c807f87
   HSCryptoKit: 8679d53083d1136fc128bbf9b040976110ce1491
   HSEthereumKit: 89a24dd065fa389d1f8ad02b32e4412f04883418
