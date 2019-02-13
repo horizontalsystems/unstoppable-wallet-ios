@@ -12,11 +12,11 @@ class LockoutView: UIView {
 
         addSubview(iconBackgroundView)
         iconBackgroundView.backgroundColor = PinTheme.lockoutIconBackground
-        iconBackgroundView.layer.cornerRadius = PinTheme.lockIconBackgroundSideSize / 2
+        iconBackgroundView.layer.cornerRadius = PinTheme.lockoutIconBackgroundSideSize / 2
         iconBackgroundView.snp.makeConstraints { maker in
             maker.centerX.equalToSuperview()
             maker.centerY.equalToSuperview().multipliedBy(0.66)
-            maker.size.equalTo(CGSize(width: PinTheme.lockIconBackgroundSideSize, height: PinTheme.lockIconBackgroundSideSize))
+            maker.size.equalTo(PinTheme.lockoutIconBackgroundSideSize)
         }
 
         addSubview(lockIcon)
