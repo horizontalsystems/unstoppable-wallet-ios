@@ -5,7 +5,6 @@ import Cuckoo
 
 class CoinManagerTests: XCTestCase {
     private var mockStorage: MockICoinStorage!
-    private var mockTokenLocalStorage: MockITokenLocalStorage!
     private var mockAppConfigProvider: MockIAppConfigProvider!
 
     private var manager: CoinManager!
@@ -27,7 +26,6 @@ class CoinManagerTests: XCTestCase {
         mockStorage = MockICoinStorage()
         mockAppConfigProvider = MockIAppConfigProvider()
         mockStorage = MockICoinStorage()
-        mockTokenLocalStorage = MockITokenLocalStorage()
         disposeBag = DisposeBag()
 
         bitcoin = Coin(title: "Bitcoin", code: "BTC", type: .bitcoin)
@@ -50,20 +48,15 @@ class CoinManagerTests: XCTestCase {
             when(mock.defaultCoins.get).thenReturn(defaultCoins)
         }
         stub(mockStorage) { mock in
-            when(mock.allCoinsObservable()).thenReturn(coinsObservable)
             when(mock.enabledCoinsObservable()).thenReturn(coinsObservable)
             when(mock.save(enabledCoins: any())).thenDoNothing()
             when(mock.clearCoins()).thenDoNothing()
         }
-        stub(mockTokenLocalStorage) { mock in
-            when(mock.coins.get).thenReturn(defaultCoins)
-        }
-        manager = CoinManager(appConfigProvider: mockAppConfigProvider, storage: mockStorage, tokenLocalStorage: mockTokenLocalStorage, async: false)
+        manager = CoinManager(appConfigProvider: mockAppConfigProvider, storage: mockStorage, async: false)
     }
 
     override func tearDown() {
         mockStorage = nil
-        mockTokenLocalStorage = nil
         mockAppConfigProvider = nil
         mockStorage = nil
         disposeBag = nil
@@ -80,11 +73,11 @@ class CoinManagerTests: XCTestCase {
 
     func testAllCoins() {
         let defaultCoins = self.defaultCoins
-        manager.allCoinsObservable.subscribe(onNext: {
-            XCTAssertEqual(defaultCoins, $0)
-        }).disposed(by: disposeBag)
+        stub(mockAppConfigProvider) { mock in
+            when(mock.erc20Coins.get).thenReturn([])
+        }
 
-        coinsObservable.onNext([])
+        XCTAssertEqual(manager.allCoins, defaultCoins)
     }
 
     func testUpdateSignal() {

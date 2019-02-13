@@ -68,7 +68,7 @@ protocol ICoinManager: class {
     func enableDefaultCoins()
     var coinsUpdatedSignal: Signal { get }
     var coins: [Coin] { get }
-    var allCoinsObservable: Observable<[Coin]> { get }
+    var allCoins: [Coin] { get }
     func clear()
 }
 
@@ -197,6 +197,7 @@ protocol IAppConfigProvider {
     var defaultWords: [String] { get }
     var disablePinLock: Bool { get }
     var defaultCoins: [Coin] { get }
+    var erc20Coins: [Coin] { get }
 }
 
 protocol IFullTransactionInfoProvider {
@@ -219,10 +220,6 @@ protocol ITokenNetworkManager {
     func getTokens() -> Observable<[Coin]>
 }
 
-protocol ITokenSyncer {
-    func sync()
-}
-
 protocol IRateStorage {
     func nonExpiredLatestRateValueObservable(forCoinCode coinCode: CoinCode, currencyCode: String) -> Observable<Decimal>
     func latestRateObservable(forCoinCode coinCode: CoinCode, currencyCode: String) -> Observable<Rate>
@@ -233,15 +230,9 @@ protocol IRateStorage {
     func clearRates()
 }
 
-protocol ITokenLocalStorage {
-    var coins: [Coin] { get }
-}
-
 protocol ICoinStorage {
     func enabledCoinsObservable() -> Observable<[Coin]>
-    func allCoinsObservable() -> Observable<[Coin]>
     func save(enabledCoins: [Coin])
-    func update(inserted: [Coin], deleted: [Coin])
     func clearCoins()
 }
 

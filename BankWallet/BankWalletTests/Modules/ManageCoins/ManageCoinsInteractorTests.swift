@@ -50,7 +50,7 @@ class ManageCoinsInteractorTests: XCTestCase {
             when(mock.didSaveCoins()).thenDoNothing()
         }
         stub(mockCoinManager) { mock in
-            when(mock.allCoinsObservable.get).thenReturn(coinsObservable)
+            when(mock.allCoins.get).thenReturn(allCoins)
         }
         stub(mockStorage) { mock in
             when(mock.enabledCoinsObservable()).thenReturn(coinsObservable)
