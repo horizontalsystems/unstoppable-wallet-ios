@@ -12,7 +12,7 @@ class SecuritySettingsInteractorTests: XCTestCase {
 
     private var interactor: SecuritySettingsInteractor!
 
-    let backedUpSignal = Signal()
+    private let backedUpSignal = Signal()
 
     override func setUp() {
         super.setUp()
