@@ -543,4 +543,36 @@ class SendInteractorTests: XCTestCase {
         verify(mockLocalStorage).sendInputType.set(equal(to: inputType))
     }
 
+    func testAvailableBalance_Coin() {
+        let amount: Decimal = 123.45
+        let address = "address"
+
+        input.address = address
+
+        stub(mockAdapter) { mock in
+            when(mock.availableBalance(for: equal(to: address))).thenReturn(amount)
+        }
+
+        let availableBalance = interactor.totalBalanceMinusFee(forInputType: input.inputType, address: address)
+        XCTAssertEqual(amount, availableBalance)
+    }
+
+    func testAvailableBalance_Currency() {
+        let rateValue: Decimal = 987.65
+        let amount: Decimal = 123.45
+        let address = "address"
+
+        interactorState.rateValue = rateValue
+        input.inputType = .currency
+        input.address = address
+
+        stub(mockAdapter) { mock in
+            when(mock.availableBalance(for: equal(to: address))).thenReturn(amount)
+        }
+
+        let availableBalance = interactor.totalBalanceMinusFee(forInputType: input.inputType, address: address)
+        let expectedBalanceMinusFee: Decimal = amount * rateValue
+        XCTAssertEqual(expectedBalanceMinusFee, availableBalance)
+    }
+
 }
