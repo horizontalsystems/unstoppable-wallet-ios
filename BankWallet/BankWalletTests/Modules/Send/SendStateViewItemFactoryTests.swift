@@ -288,6 +288,14 @@ class SendStateViewItemFactoryTests: XCTestCase {
         XCTAssertEqual(viewItem?.totalInfo, AmountInfo.coinValue(coinValue: CoinValue(coinCode: coinValue.coinCode, value: totalValue)))
     }
 
+    func testConfirmation_totalInfo_erc20_withoutCurrencyValue() {
+        confirmationState.feeCoinValue = CoinValue(coinCode: "ETH", value: 1.234)
+
+        let viewItem = factory.confirmationViewItem(forState: confirmationState, coin: coin)
+
+        XCTAssertNil(viewItem?.totalInfo)
+    }
+
     func testConfirmation_TotalInfo_WithCurrencyValue() {
         confirmationState.currencyValue = currencyValue
         confirmationState.feeCurrencyValue = feeCurrencyValue

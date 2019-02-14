@@ -54,6 +54,9 @@ class SendStateViewItemFactory: ISendStateViewItemFactory {
         guard let coinValue = state.coinValue else {
             return nil
         }
+        guard let feeCoinValue = state.feeCoinValue else {
+            return nil
+        }
         guard let address = state.address else {
             return nil
         }
@@ -61,21 +64,17 @@ class SendStateViewItemFactory: ISendStateViewItemFactory {
         var stateFeeInfo: AmountInfo?
         var stateTotalInfo: AmountInfo?
 
-        if let feeCurrencyValue = state.feeCurrencyValue {
+        if let currencyValue = state.currencyValue, let feeCurrencyValue = state.feeCurrencyValue {
             stateFeeInfo = .currencyValue(currencyValue: feeCurrencyValue)
-
-            if let currencyValue = state.currencyValue {
-                stateTotalInfo = .currencyValue(currencyValue: CurrencyValue(currency: currencyValue.currency, value: currencyValue.value + feeCurrencyValue.value))
-            }
-        } else if let feeCoinValue = state.feeCoinValue {
+            stateTotalInfo = .currencyValue(currencyValue: CurrencyValue(currency: currencyValue.currency, value: currencyValue.value + feeCurrencyValue.value))
+        } else {
             stateFeeInfo = .coinValue(coinValue: feeCoinValue)
-            stateTotalInfo = .coinValue(coinValue: CoinValue(coinCode: coinValue.coinCode, value: coinValue.value + feeCoinValue.value))
+            if coinValue.coinCode == feeCoinValue.coinCode {
+                stateTotalInfo = .coinValue(coinValue: CoinValue(coinCode: coinValue.coinCode, value: coinValue.value + feeCoinValue.value))
+            }
         }
 
         guard let feeInfo = stateFeeInfo else {
-            return nil
-        }
-        guard let totalInfo = stateTotalInfo else {
             return nil
         }
 
@@ -84,7 +83,7 @@ class SendStateViewItemFactory: ISendStateViewItemFactory {
                 coinValue: coinValue,
                 address: address,
                 feeInfo: feeInfo,
-                totalInfo: totalInfo
+                totalInfo: stateTotalInfo
         )
 
         viewItem.currencyValue = state.currencyValue

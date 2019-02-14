@@ -162,9 +162,9 @@ class SendConfirmationViewItem {
     var currencyValue: CurrencyValue?
     let address: String
     let feeInfo: AmountInfo
-    let totalInfo: AmountInfo
+    let totalInfo: AmountInfo?
 
-    init(coin: Coin, coinValue: CoinValue, address: String, feeInfo: AmountInfo, totalInfo: AmountInfo) {
+    init(coin: Coin, coinValue: CoinValue, address: String, feeInfo: AmountInfo, totalInfo: AmountInfo?) {
         self.coin = coin
         self.coinValue = coinValue
         self.address = address
