@@ -5,7 +5,8 @@ class AppConfigProvider: IAppConfigProvider {
     let maxDecimal: Int = 8
 
     let reachabilityHost = "ipfs.horizontalsystems.xyz"
-    let apiUrl = "https://ipfs.horizontalsystems.xyz/ipns/Qmd4Gv2YVPqs6dmSy1XEq7pQRSgLihqYKL2JjK7DMUFPVz/io-hs/data"
+    let apiUrl = "https://gateway.ipfs.io/ipns/Qmd4Gv2YVPqs6dmSy1XEq7pQRSgLihqYKL2JjK7DMUFPVz/io-hs/data"
+//    let localApiUrl = "https://ipfs.horizontalsystems.xyz/ipns/Qmd4Gv2YVPqs6dmSy1XEq7pQRSgLihqYKL2JjK7DMUFPVz/io-hs/data"
 
     var testMode: Bool {
         return Bundle.main.object(forInfoDictionaryKey: "TestMode") as? String == "true"
