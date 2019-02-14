@@ -22,7 +22,10 @@ extension UnlockPinPresenter: IPinViewDelegate {
 
     func viewDidLoad() {
         view?.addPage(withDescription: "unlock_pin.info")
-        interactor.biometricUnlock()
+
+        if interactor.failedAttempts == 0 {
+            interactor.biometricUnlock()
+        }
 
         if configuration.cancellable {
             view?.showCancel()

@@ -7,13 +7,15 @@ class UnlockPinInteractor {
     private let biometricManager: IBiometricManager
     private let localStorage: ILocalStorage
     private let lockoutManager: ILockoutManager
+    private let secureStorage: ISecureStorage
     private var timer: IOneTimeTimer
 
-    init(pinManager: IPinManager, biometricManager: IBiometricManager, localStorage: ILocalStorage, lockoutManager: ILockoutManager, timer: IOneTimeTimer) {
+    init(pinManager: IPinManager, biometricManager: IBiometricManager, localStorage: ILocalStorage, lockoutManager: ILockoutManager, timer: IOneTimeTimer, secureStorage: ISecureStorage) {
         self.pinManager = pinManager
         self.biometricManager = biometricManager
         self.localStorage = localStorage
         self.lockoutManager = lockoutManager
+        self.secureStorage = secureStorage
         self.timer = timer
         self.timer.delegate = self
     }
@@ -21,6 +23,10 @@ class UnlockPinInteractor {
 }
 
 extension UnlockPinInteractor: IUnlockPinInteractor {
+
+    var failedAttempts: Int {
+        return secureStorage.unlockAttempts ?? 0
+    }
 
     func updateLockoutState() {
         let state = lockoutManager.currentState

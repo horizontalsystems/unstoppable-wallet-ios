@@ -14,6 +14,7 @@ protocol IUnlockPinRouter {
 }
 
 protocol IUnlockPinInteractor {
+    var failedAttempts: Int { get }
     func updateLockoutState()
     func unlock(with pin: String) -> Bool
     func biometricUnlock()
