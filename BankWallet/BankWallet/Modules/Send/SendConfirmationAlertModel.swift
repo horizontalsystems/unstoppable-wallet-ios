@@ -8,7 +8,6 @@ class SendConfirmationAlertModel: BaseAlertModel {
     private let amountItem: SendConfirmationAmounItem
     private let addressItem: SendConfirmationAddressItem
     private let feeItem: SendConfirmationValueItem
-    private var totalItem: SendConfirmationValueItem?
     private let sendButtonItem: SendButtonItem
 
     var onCopyAddress: (() -> ())?
@@ -20,9 +19,6 @@ class SendConfirmationAlertModel: BaseAlertModel {
         amountItem = SendConfirmationAmounItem(viewItem: viewItem, tag: 1)
         addressItem = SendConfirmationAddressItem(address: viewItem.address, tag: 2)
         feeItem = SendConfirmationValueItem(title: "send.fee".localized, amountInfo: viewItem.feeInfo, tag: 3)
-        if let totalInfo = viewItem.totalInfo {
-            totalItem = SendConfirmationValueItem(title: "send.total".localized, amountInfo: totalInfo, tag: 4)
-        }
         sendButtonItem = SendButtonItem(buttonTitle: "alert.confirm".localized, tag: 5)
 
         super.init()
@@ -38,7 +34,8 @@ class SendConfirmationAlertModel: BaseAlertModel {
         addItemView(addressItem)
 
         addItemView(feeItem)
-        if let totalItem = totalItem {
+        if let totalInfo = viewItem.totalInfo {
+            let totalItem = SendConfirmationValueItem(title: "send.total".localized, amountInfo: totalInfo, tag: 4)
             addItemView(totalItem)
         }
 
