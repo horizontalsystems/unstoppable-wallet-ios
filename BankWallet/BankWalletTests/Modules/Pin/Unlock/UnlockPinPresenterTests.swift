@@ -37,6 +37,7 @@ class UnlockPinPresenterTests: XCTestCase {
         stub(mockInteractor) { mock in
             when(mock.biometricUnlock()).thenDoNothing()
             when(mock.updateLockoutState()).thenDoNothing()
+            when(mock.failedAttempts.get).thenReturn(0)
         }
         stub(mockConfiguration) { mock in
             when(mock.cancellable.get).thenReturn(false)
@@ -104,6 +105,16 @@ class UnlockPinPresenterTests: XCTestCase {
     func testBiometricUnlockOnLoad() {
         presenter.viewDidLoad()
         verify(mockInteractor).biometricUnlock()
+    }
+
+    func testNoBiometrics_failedAttempts() {
+        stub(mockInteractor) { mock in
+            when(mock.failedAttempts.get).thenReturn(1)
+        }
+
+        presenter.viewDidLoad()
+
+        verify(mockInteractor, never()).biometricUnlock()
     }
 
     func testDismissOnSuccessBiometricUnlock() {
