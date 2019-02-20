@@ -10,7 +10,7 @@ class EthereumAdapter: EthereumBaseAdapter {
     }
 
     override func transactionsObservable(hashFrom: String?, limit: Int) -> Single<[EthereumTransaction]> {
-        return ethereumKit.transactions(fromHash: hashFrom, limit: limit)
+        return ethereumKit.transactionsSingle(fromHash: hashFrom, limit: limit)
     }
 
 }
@@ -25,12 +25,13 @@ extension EthereumAdapter: IAdapter {
     }
 
     func refresh() {
-        ethereumKit.refresh()
+        ethereumKit.start()
     }
 
-    func send(to address: String, value: Decimal, completion: ((Error?) -> ())?) {
-        let formattedValue = ValueFormatter.instance.round(value: value, scale: decimal, roundingMode: .plain)
-        ethereumKit.send(to: address, value: formattedValue, gasPrice: nil, completion: completion)
+    func sendSingle(to address: String, amount: Decimal) -> Single<Void> {
+        let formattedAmount = ValueFormatter.instance.round(value: amount, scale: decimal, roundingMode: .plain)
+        return ethereumKit.sendSingle(to: address, amount: formattedAmount)
+                .map { _ in ()}
     }
 
     func availableBalance(for address: String?) -> Decimal {
@@ -38,7 +39,7 @@ extension EthereumAdapter: IAdapter {
     }
 
     func fee(for value: Decimal, address: String?) -> Decimal {
-        return ethereumKit.fee
+        return ethereumKit.fee()
     }
 
     func validate(amount: Decimal, address: String?) -> [SendStateError] {
@@ -51,6 +52,6 @@ extension EthereumAdapter: IAdapter {
 
 }
 
-extension EthereumAdapter: EthereumKitDelegate {
+extension EthereumAdapter: IEthereumKitDelegate {
 
 }

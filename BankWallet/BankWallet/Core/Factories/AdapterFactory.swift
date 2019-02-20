@@ -18,12 +18,16 @@ class AdapterFactory: IAdapterFactory {
         case .bitcoin, .bitcoinCash:
             return BitcoinAdapter(coin: coin, authData: authData, newWallet: localStorage.isNewWallet, testMode: appConfigProvider.testMode)
         case .ethereum:
-            let ethereumKit = ethereumKitManager.ethereumKit(authData: authData)
-            return EthereumAdapter(coin: coin, ethereumKit: ethereumKit)
+            if let ethereumKit = try? ethereumKitManager.ethereumKit(authData: authData) {
+                return EthereumAdapter(coin: coin, ethereumKit: ethereumKit)
+            }
         case let .erc20(address, decimal):
-            let ethereumKit = ethereumKitManager.ethereumKit(authData: authData)
-            return Erc20Adapter(coin: coin, ethereumKit: ethereumKit, contractAddress: address, decimal: decimal)
+            if let ethereumKit = try? ethereumKitManager.ethereumKit(authData: authData) {
+                return Erc20Adapter(coin: coin, ethereumKit: ethereumKit, contractAddress: address, decimal: decimal)
+            }
         }
+
+        return nil
     }
 
 }

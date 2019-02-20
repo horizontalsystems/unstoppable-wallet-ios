@@ -44,7 +44,7 @@ extension AuthManager: IAuthManager {
 
     func logout() throws {
         adapterManager?.clear()
-        try ethereumKitManager.clear()
+        ethereumKitManager.clear()
         try pinManager.clear()
         localStorage.clear()
         coinManager.clear()

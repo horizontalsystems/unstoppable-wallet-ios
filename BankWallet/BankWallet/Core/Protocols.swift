@@ -107,7 +107,7 @@ protocol IAdapter: class {
     func refresh()
     func clear()
 
-    func send(to address: String, value: Decimal, completion: ((Error?) -> ())?)
+    func sendSingle(to address: String, amount: Decimal) -> Single<Void>
 
     func availableBalance(for address: String?) -> Decimal
     func fee(for value: Decimal, address: String?) -> Decimal

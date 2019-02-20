@@ -10,11 +10,11 @@ class Erc20Adapter: EthereumBaseAdapter {
 
         super.init(coin: coin, ethereumKit: ethereumKit, decimal: decimal)
 
-        ethereumKit.register(token: self)
+        ethereumKit.register(contractAddress: contractAddress, decimal: decimal, delegate: self)
     }
 
     override func transactionsObservable(hashFrom: String?, limit: Int) -> Single<[EthereumTransaction]> {
-        return ethereumKit.erc20Transactions(contractAddress: contractAddress, fromHash: hashFrom, limit: limit)
+        return ethereumKit.transactionsErc20Single(contractAddress: contractAddress, fromHash: hashFrom, limit: limit)
     }
 
 }
@@ -26,16 +26,17 @@ extension Erc20Adapter: IAdapter {
     }
 
     var balance: Decimal {
-        return ethereumKit.erc20Balance(contractAddress: contractAddress)
+        return ethereumKit.balanceErc20(contractAddress: contractAddress)
     }
 
     func refresh() {
-        ethereumKit.refresh()
+        ethereumKit.start()
     }
 
-    func send(to address: String, value: Decimal, completion: ((Error?) -> ())?) {
-        let formattedValue = ValueFormatter.instance.round(value: value, scale: decimal, roundingMode: .plain)
-        ethereumKit.erc20Send(to: address, contractAddress: contractAddress, value: formattedValue, gasPrice: nil, completion: completion)
+    func sendSingle(to address: String, amount: Decimal) -> Single<Void> {
+        let formattedAmount = ValueFormatter.instance.round(value: amount, scale: decimal, roundingMode: .plain)
+        return ethereumKit.sendErc20Single(to: address, contractAddress: contractAddress, amount: formattedAmount)
+                .map { _ in ()}
     }
 
     func availableBalance(for address: String?) -> Decimal {
@@ -43,7 +44,7 @@ extension Erc20Adapter: IAdapter {
     }
 
     func fee(for value: Decimal, address: String?) -> Decimal {
-        return ethereumKit.erc20Fee
+        return ethereumKit.feeErc20()
     }
 
     func validate(amount: Decimal, address: String?) -> [SendStateError] {
@@ -59,6 +60,6 @@ extension Erc20Adapter: IAdapter {
 
 }
 
-extension Erc20Adapter: Erc20KitDelegate {
+extension Erc20Adapter: IEthereumKitDelegate {
 
 }

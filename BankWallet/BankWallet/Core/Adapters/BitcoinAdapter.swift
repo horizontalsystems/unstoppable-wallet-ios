@@ -97,13 +97,18 @@ extension BitcoinAdapter: IAdapter {
         try? bitcoinKit.clear()
     }
 
-    func send(to address: String, value: Decimal, completion: ((Error?) -> ())?) {
-        do {
-            let amount = convertToSatoshi(value: value)
-            try bitcoinKit.send(to: address, value: amount)
-            completion?(nil)
-        } catch {
-            completion?(error)
+    func sendSingle(to address: String, amount: Decimal) -> Single<Void> {
+        let satoshiAmount = convertToSatoshi(value: amount)
+
+        return Single.create { [weak self] observer in
+            do {
+                try self?.bitcoinKit.send(to: address, value: satoshiAmount)
+                observer(.success(()))
+            } catch {
+                observer(.error(error))
+            }
+
+            return Disposables.create()
         }
     }
 
@@ -162,7 +167,7 @@ extension BitcoinAdapter: IAdapter {
 
 extension BitcoinAdapter: BitcoinKitDelegate {
 
-    func transactionsUpdated(bitcoinKit: BitcoinKit, inserted: [TransactionInfo], updated: [TransactionInfo], deleted: [Int]) {
+    func transactionsUpdated(bitcoinKit: BitcoinKit, inserted: [TransactionInfo], updated: [TransactionInfo]) {
         var records = [TransactionRecord]()
 
         for info in inserted {
@@ -173,6 +178,9 @@ extension BitcoinAdapter: BitcoinKitDelegate {
         }
 
         transactionRecordsSubject.onNext(records)
+    }
+
+    func transactionsDeleted(hashes: [String]) {
     }
 
     func balanceUpdated(bitcoinKit: BitcoinKit, balance: Int) {
