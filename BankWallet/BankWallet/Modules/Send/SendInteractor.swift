@@ -169,13 +169,15 @@ extension SendInteractor: ISendInteractor {
             return
         }
 
-        state.adapter.send(to: address, value: amount) { [weak self] error in
-            if let error = error {
-                self?.delegate?.didFailToSend(error: error)
-            } else {
-                self?.delegate?.didSend()
-            }
-        }
+        state.adapter.sendSingle(to: address, amount: amount)
+                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+                .observeOn(MainScheduler.instance)
+                .subscribe(onSuccess: { [weak self] in
+                    self?.delegate?.didSend()
+                }, onError: { [weak self] error in
+                    self?.delegate?.didFailToSend(error: error)
+                })
+                .disposed(by: disposeBag)
     }
 
     func set(inputType: SendInputType) {

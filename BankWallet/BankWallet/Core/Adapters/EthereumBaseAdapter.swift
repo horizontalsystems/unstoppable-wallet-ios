@@ -25,7 +25,6 @@ class EthereumBaseAdapter {
     }
 
     func transactionRecord(fromTransaction transaction: EthereumTransaction) -> TransactionRecord {
-        let amountEther = convertToValue(amount: transaction.value) ?? 0
         let mineAddress = ethereumKit.receiveAddress.lowercased()
 
         let from = TransactionAddress(
@@ -39,20 +38,13 @@ class EthereumBaseAdapter {
         )
 
         return TransactionRecord(
-                transactionHash: transaction.txHash,
-                blockHeight: transaction.blockNumber > 0 ? transaction.blockNumber : nil,
-                amount: amountEther * (from.mine ? -1 : 1),
+                transactionHash: transaction.hash,
+                blockHeight: transaction.blockNumber,
+                amount: transaction.amount * (from.mine ? -1 : 1),
                 timestamp: Double(transaction.timestamp),
                 from: [from],
                 to: [to]
         )
-    }
-
-    private func convertToValue(amount: String) -> Decimal? {
-        if let result = Decimal(string: amount) {
-            return result / pow(10, decimal)
-        }
-        return nil
     }
 
     func transactionsObservable(hashFrom: String?, limit: Int) -> Single<[EthereumTransaction]> {
@@ -109,48 +101,27 @@ extension EthereumBaseAdapter {
 
 extension EthereumBaseAdapter {
 
-    public func transactionsUpdated(inserted: [EthereumTransaction], updated: [EthereumTransaction], deleted: [Int]) {
-        var records = [TransactionRecord]()
-
-        for info in inserted {
-            records.append(transactionRecord(fromTransaction: info))
-        }
-        for info in updated {
-            records.append(transactionRecord(fromTransaction: info))
-        }
-
-        transactionRecordsSubject.onNext(records)
+    public func onUpdate(transactions: [EthereumTransaction]) {
+        transactionRecordsSubject.onNext(transactions.map { transactionRecord(fromTransaction: $0) })
     }
 
-    public func balanceUpdated(balance: Decimal) {
+    public func onUpdateBalance() {
         balanceUpdatedSignal.notify()
     }
 
-    public func lastBlockHeightUpdated(height: Int) {
+    public func onUpdateLastBlockHeight() {
         lastBlockHeightUpdatedSignal.notify()
     }
 
-    public func kitStateUpdated(state: EthereumKit.KitState) {
+    public func onUpdateSyncState() {
         switch state {
         case .synced:
-            if case .synced = self.state {
-                return
-            }
-
             self.state = .synced
             stateUpdatedSignal.notify()
         case .notSynced:
-            if case .notSynced = self.state {
-                return
-            }
-
             self.state = .notSynced
             stateUpdatedSignal.notify()
         case .syncing:
-            if case .synced = self.state {
-                return
-            }
-
             self.state = .synced
             stateUpdatedSignal.notify()
         }
