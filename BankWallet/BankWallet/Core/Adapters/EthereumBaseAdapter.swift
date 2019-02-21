@@ -24,6 +24,21 @@ class EthereumBaseAdapter {
         self.decimal = decimal
     }
 
+    func balanceDecimal(balanceString: String?, decimal: Int) -> Decimal {
+        if let balanceString = balanceString, let significand = Decimal(string: balanceString) {
+            return Decimal(sign: .plus, exponent: -decimal, significand: significand)
+        }
+        return 0
+    }
+
+    func transactionsObservable(hashFrom: String?, limit: Int) -> Single<[EthereumTransaction]> {
+        return Single.just([])
+    }
+
+    func sendSingle(to address: String, amount: String) -> Single<Void> {
+        return Single.just(())
+    }
+
     func transactionRecord(fromTransaction transaction: EthereumTransaction) -> TransactionRecord {
         let mineAddress = ethereumKit.receiveAddress.lowercased()
 
@@ -37,32 +52,27 @@ class EthereumBaseAdapter {
                 mine: transaction.to.lowercased() == mineAddress
         )
 
+        var amount: Decimal = 0
+
+        if let significand = Decimal(string: transaction.amount) {
+            let sign: FloatingPointSign = from.mine ? .minus : .plus
+            amount = Decimal(sign: sign, exponent: -decimal, significand: significand)
+        }
+
         return TransactionRecord(
                 transactionHash: transaction.hash,
                 blockHeight: transaction.blockNumber,
-                amount: transaction.amount * (from.mine ? -1 : 1),
+                amount: amount,
                 timestamp: Double(transaction.timestamp),
                 from: [from],
                 to: [to]
         )
     }
 
-    func transactionsObservable(hashFrom: String?, limit: Int) -> Single<[EthereumTransaction]> {
-        return Single.just([])
-    }
-
-    func transactionsSingle(hashFrom: String?, limit: Int) -> Single<[TransactionRecord]> {
-        return transactionsObservable(hashFrom: hashFrom, limit: limit)
-                .map { [weak self] transactions -> [TransactionRecord] in
-                    return transactions.compactMap {
-                        self?.transactionRecord(fromTransaction: $0)
-                    }
-                }
-    }
-
 }
 
 extension EthereumBaseAdapter {
+
     var confirmationsThreshold: Int {
         return 12
     }
@@ -95,6 +105,25 @@ extension EthereumBaseAdapter {
 
     var receiveAddress: String {
         return ethereumKit.receiveAddress
+    }
+
+    func transactionsSingle(hashFrom: String?, limit: Int) -> Single<[TransactionRecord]> {
+        return transactionsObservable(hashFrom: hashFrom, limit: limit)
+                .map { [weak self] transactions -> [TransactionRecord] in
+                    return transactions.compactMap {
+                        self?.transactionRecord(fromTransaction: $0)
+                    }
+                }
+    }
+
+    func sendSingle(to address: String, amount: Decimal) -> Single<Void> {
+        let poweredDecimal = amount * pow(10, decimal)
+        let handler = NSDecimalNumberHandler(roundingMode: .plain, scale: 0, raiseOnExactness: false, raiseOnOverflow: false, raiseOnUnderflow: false, raiseOnDivideByZero: false)
+        let roundedDecimal = NSDecimalNumber(decimal: poweredDecimal).rounding(accordingToBehavior: handler).decimalValue
+
+        let amountString = String(describing: roundedDecimal)
+
+        return sendSingle(to: address, amount: amountString)
     }
 
 }

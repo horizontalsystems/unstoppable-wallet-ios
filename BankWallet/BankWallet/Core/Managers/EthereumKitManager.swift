@@ -6,24 +6,6 @@ protocol IEthereumKitManager {
     func clear()
 }
 
-protocol IKitWrapper {
-    var receiveAddress: String { get }
-    var balance: Decimal { get }
-    var fee: Decimal { get }
-    var lastBlockHeight: Int? { get }
-    var debugInfo: String { get }
-    var decimal: Int { get }
-
-    func start()
-    func refresh()
-    func clear() throws
-
-    func validate(address: String) throws
-    func send(to address: String, value: Decimal, gasPrice: Int?, completion: ((Error?) -> ())?)
-
-    func transactions(fromHash: String?, limit: Int?) -> Single<[EthereumTransaction]>
-}
-
 class EthereumKitManager: IEthereumKitManager {
     private let appConfigProvider: IAppConfigProvider
     private weak var ethereumKit: EthereumKit?

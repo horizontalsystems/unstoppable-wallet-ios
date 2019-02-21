@@ -2,15 +2,20 @@ import HSEthereumKit
 import RxSwift
 
 class EthereumAdapter: EthereumBaseAdapter {
+    static let decimal = 18
 
     init(coin: Coin, ethereumKit: EthereumKit) {
-        super.init(coin: coin, ethereumKit: ethereumKit, decimal: 18)
+        super.init(coin: coin, ethereumKit: ethereumKit, decimal: EthereumAdapter.decimal)
 
         ethereumKit.delegate = self
     }
 
     override func transactionsObservable(hashFrom: String?, limit: Int) -> Single<[EthereumTransaction]> {
         return ethereumKit.transactionsSingle(fromHash: hashFrom, limit: limit)
+    }
+
+    override func sendSingle(to address: String, amount: String) -> Single<Void> {
+        return ethereumKit.sendSingle(to: address, amount: amount).map { _ in ()}
     }
 
 }
@@ -21,17 +26,11 @@ extension EthereumAdapter: IAdapter {
     }
 
     var balance: Decimal {
-        return ethereumKit.balance
+        return balanceDecimal(balanceString: ethereumKit.balance, decimal: EthereumAdapter.decimal)
     }
 
     func refresh() {
         ethereumKit.start()
-    }
-
-    func sendSingle(to address: String, amount: Decimal) -> Single<Void> {
-        let formattedAmount = ValueFormatter.instance.round(value: amount, scale: decimal, roundingMode: .plain)
-        return ethereumKit.sendSingle(to: address, amount: formattedAmount)
-                .map { _ in ()}
     }
 
     func availableBalance(for address: String?) -> Decimal {
@@ -39,7 +38,7 @@ extension EthereumAdapter: IAdapter {
     }
 
     func fee(for value: Decimal, address: String?) -> Decimal {
-        return ethereumKit.fee()
+        return ethereumKit.fee() / pow(10, EthereumAdapter.decimal)
     }
 
     func validate(amount: Decimal, address: String?) -> [SendStateError] {

@@ -110,10 +110,10 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   HSBitcoinKit:
-    :commit: bfc61461f31dd4f70e3c3e1fb5928243a9c7b081
+    :commit: e5becc8cbfb6dfaae2ce6b20aa22d2007270024e
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios/
   HSEthereumKit:
-    :commit: ea8b86206f9a0946b965ec4b5d61cd0061fb6766
+    :commit: 4616befa32c0c889d8a62966a9261587f0161fe6
     :git: https://github.com/horizontalsystems/ethereum-kit-ios/
 
 SPEC CHECKSUMS:
