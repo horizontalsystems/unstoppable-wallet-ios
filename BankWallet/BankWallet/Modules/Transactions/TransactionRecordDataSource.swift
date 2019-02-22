@@ -43,8 +43,8 @@ class TransactionRecordDataSource {
         return itemsDataSource.itemIndexes(coinCode: coinCode, timestamp: timestamp)
     }
 
-    func itemIndexes(coinCode: String, lastBlockHeight: Int, threshold: Int) -> [Int] {
-        return itemsDataSource.itemIndexes(coinCode: coinCode, lastBlockHeight: lastBlockHeight, threshold: threshold)
+    func itemIndexesForPending(coinCode: String, blockHeight: Int) -> [Int] {
+        return itemsDataSource.recordIndexes(greaterThan: blockHeight, coinCode: coinCode)
     }
 
     var fetchDataList: [FetchData] {
@@ -66,7 +66,6 @@ class TransactionRecordDataSource {
 
         var updatedRecords = [TransactionRecord]()
         var insertedRecords = [TransactionRecord]()
-//        var newData = false
 
         for record in records {
             switch pool.handleUpdated(record: record) {
@@ -77,20 +76,13 @@ class TransactionRecordDataSource {
                     insertedRecords.append(record)
                     pool.increaseFirstUnusedIndex()
                 }
-//                newData = true
             case .ignored: ()
             }
         }
 
-//        print("Handled Records: updated: \(updatedRecords.count), inserted: \(insertedRecords.count), new data: \(newData)")
-
         guard poolRepo.isPoolActive(coinCode: coinCode) else {
             return []
         }
-
-//        guard !updatedRecords.isEmpty || !insertedRecords.isEmpty else {
-//            return newData
-//        }
 
         let updatedItems = updatedRecords.map { factory.create(coinCode: coinCode, record: $0) }
         let insertedItems = insertedRecords.map { factory.create(coinCode: coinCode, record: $0) }

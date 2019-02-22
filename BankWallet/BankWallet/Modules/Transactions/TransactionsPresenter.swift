@@ -124,7 +124,7 @@ extension TransactionsPresenter: ITransactionsInteractorDelegate {
         dataSource.set(lastBlockHeight: lastBlockHeight, coinCode: coinCode)
 
         if let threshold = dataSource.threshold(coinCode: coinCode), let oldLastBlockHeight = oldLastBlockHeight {
-            let indexes = loader.itemIndexes(coinCode: coinCode, lastBlockHeight: oldLastBlockHeight, threshold: threshold)
+            let indexes = loader.itemIndexesForPending(coinCode: coinCode, blockHeight: oldLastBlockHeight - threshold)
 
             if !indexes.isEmpty {
                 view?.reload(indexes: indexes)

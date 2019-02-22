@@ -104,11 +104,8 @@ extension TransactionsViewController: ITransactionsView {
             }
         }
 
-        let updateBlock: ((Bool) -> ()) = { [weak self] _ in
-            self?.reload(indexes: updateIndexes)
-        }
         guard !insertIndexes.isEmpty || !moveIndexes.isEmpty else {
-            updateBlock(true)
+            reload(indexes: updateIndexes)
             return
         }
 
@@ -119,7 +116,9 @@ extension TransactionsViewController: ITransactionsView {
             for movedIndex in moveIndexes {
                 self?.tableView.moveRow(at: IndexPath(row: movedIndex.0, section: 0), to: IndexPath(row: movedIndex.1, section: 0))
             }
-        }, completion: updateBlock)
+        }, completion: { [weak self] _ in
+            self?.reload(indexes: updateIndexes)
+        })
     }
 
 }

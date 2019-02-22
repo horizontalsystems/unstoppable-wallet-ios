@@ -25,8 +25,8 @@ class TransactionsLoader {
         return dataSource.itemIndexes(coinCode: coinCode, timestamp: timestamp)
     }
 
-    func itemIndexes(coinCode: CoinCode, lastBlockHeight: Int, threshold: Int) -> [Int] {
-        return dataSource.itemIndexes(coinCode: coinCode, lastBlockHeight: lastBlockHeight, threshold: threshold)
+    func itemIndexesForPending(coinCode: CoinCode, blockHeight: Int) -> [Int] {
+        return dataSource.itemIndexesForPending(coinCode: coinCode, blockHeight: blockHeight)
     }
 
     func set(coinCodes: [CoinCode]) {
@@ -73,11 +73,7 @@ class TransactionsLoader {
     }
 
     func didUpdate(records: [TransactionRecord], coinCode: CoinCode) {
-//        print("Did Update Records: \(records.count) --- \(coinCode)")
-
-//            print("Update Records Needs Reload")
-
-            delegate?.reload(with: dataSource.handleUpdated(records: records, coinCode: coinCode))
+        delegate?.reload(with: dataSource.handleUpdated(records: records, coinCode: coinCode))
     }
 
     func didFetch(recordsData: [CoinCode: [TransactionRecord]]) {

@@ -37,11 +37,11 @@ class TransactionItemDataSource {
         return indexes
     }
 
-    func itemIndexes(coinCode: String, lastBlockHeight: Int, threshold: Int) -> [Int] {
+    func recordIndexes(greaterThan thresholdBlockHeight: Int, coinCode: String) -> [Int] {
         var indexes = [Int]()
 
         for (index, item) in items.enumerated() {
-            if let blockHeight = item.record.blockHeight, item.coinCode == coinCode && lastBlockHeight - blockHeight <= threshold {
+            if let blockHeight = item.record.blockHeight, item.coinCode == coinCode && blockHeight > thresholdBlockHeight {
                 indexes.append(index)
             }
         }
