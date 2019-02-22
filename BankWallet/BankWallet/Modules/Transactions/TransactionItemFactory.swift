@@ -1,7 +1,7 @@
 class TransactionItemFactory {
 
-    func create(coinCode: CoinCode, record: TransactionRecord) -> TransactionItem {
-        return TransactionItem(coinCode: coinCode, record: record)
+    func create(coin: Coin, record: TransactionRecord) -> TransactionItem {
+        return TransactionItem(coin: coin, record: record)
     }
 
 }

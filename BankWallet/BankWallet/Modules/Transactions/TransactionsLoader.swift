@@ -17,20 +17,20 @@ class TransactionsLoader {
         return dataSource.item(forIndex: index)
     }
 
-    var allRecordsData: [CoinCode: [TransactionRecord]] {
+    var allRecordsData: [Coin: [TransactionRecord]] {
         return dataSource.allRecordsData
     }
 
-    func itemIndexes(coinCode: CoinCode, timestamp: Double) -> [Int] {
-        return dataSource.itemIndexes(coinCode: coinCode, timestamp: timestamp)
+    func itemIndexes(coin: Coin, timestamp: Double) -> [Int] {
+        return dataSource.itemIndexes(coin: coin, timestamp: timestamp)
     }
 
-    func itemIndexesForPending(coinCode: CoinCode, blockHeight: Int) -> [Int] {
-        return dataSource.itemIndexesForPending(coinCode: coinCode, blockHeight: blockHeight)
+    func itemIndexesForPending(coin: Coin, blockHeight: Int) -> [Int] {
+        return dataSource.itemIndexesForPending(coin: coin, blockHeight: blockHeight)
     }
 
-    func set(coinCodes: [CoinCode]) {
-        dataSource.set(coinCodes: coinCodes)
+    func set(coins: [Coin]) {
+        dataSource.set(coins: coins)
     }
 
     func loadNext(initial: Bool = false) {
@@ -66,17 +66,17 @@ class TransactionsLoader {
 
             loading = false
         } else {
-//            print("Load Next: fetch: \(fetchDataList.map { data -> String in "\(data.coinCode) -- \(data.limit) -- \(data.hashFrom ?? "nil")" })")
+//            print("Load Next: fetch: \(fetchDataList.map { data -> String in "\(data.coin) -- \(data.limit) -- \(data.hashFrom ?? "nil")" })")
 
             delegate?.fetchRecords(fetchDataList: fetchDataList)
         }
     }
 
-    func didUpdate(records: [TransactionRecord], coinCode: CoinCode) {
-        delegate?.reload(with: dataSource.handleUpdated(records: records, coinCode: coinCode))
+    func didUpdate(records: [TransactionRecord], coin: Coin) {
+        delegate?.reload(with: dataSource.handleUpdated(records: records, coin: coin))
     }
 
-    func didFetch(recordsData: [CoinCode: [TransactionRecord]]) {
+    func didFetch(recordsData: [Coin: [TransactionRecord]]) {
         dataSource.handleNext(recordsData: recordsData)
 
         if dataSource.increasePage() {

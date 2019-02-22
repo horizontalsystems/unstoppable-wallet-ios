@@ -25,11 +25,11 @@ class TransactionRecordDataSource {
         return true
     }
 
-    var allRecordsData: [CoinCode: [TransactionRecord]] {
-        var recordsData = [CoinCode: [TransactionRecord]]()
+    var allRecordsData: [Coin: [TransactionRecord]] {
+        var recordsData = [Coin: [TransactionRecord]]()
 
         for pool in poolRepo.allPools {
-            recordsData[pool.coinCode] = pool.records
+            recordsData[pool.coin] = pool.records
         }
 
         return recordsData
@@ -39,12 +39,12 @@ class TransactionRecordDataSource {
         return itemsDataSource.item(forIndex: index)
     }
 
-    func itemIndexes(coinCode: CoinCode, timestamp: Double) -> [Int] {
-        return itemsDataSource.itemIndexes(coinCode: coinCode, timestamp: timestamp)
+    func itemIndexes(coin: Coin, timestamp: Double) -> [Int] {
+        return itemsDataSource.itemIndexes(coin: coin, timestamp: timestamp)
     }
 
-    func itemIndexesForPending(coinCode: String, blockHeight: Int) -> [Int] {
-        return itemsDataSource.recordIndexes(greaterThan: blockHeight, coinCode: coinCode)
+    func itemIndexesForPending(coin: Coin, blockHeight: Int) -> [Int] {
+        return itemsDataSource.recordIndexes(greaterThan: blockHeight, coin: coin)
     }
 
     var fetchDataList: [FetchData] {
@@ -53,14 +53,14 @@ class TransactionRecordDataSource {
         }
     }
 
-    func handleNext(recordsData: [CoinCode: [TransactionRecord]]) {
-        recordsData.forEach { coinCode, records in
-            poolRepo.pool(byCoinCode: coinCode)?.add(records: records)
+    func handleNext(recordsData: [Coin: [TransactionRecord]]) {
+        recordsData.forEach { coin, records in
+            poolRepo.pool(byCoin: coin)?.add(records: records)
         }
     }
 
-    func handleUpdated(records: [TransactionRecord], coinCode: CoinCode) -> [IndexChange] {
-        guard let pool = poolRepo.pool(byCoinCode: coinCode) else {
+    func handleUpdated(records: [TransactionRecord], coin: Coin) -> [IndexChange] {
+        guard let pool = poolRepo.pool(byCoin: coin) else {
             return []
         }
 
@@ -80,12 +80,12 @@ class TransactionRecordDataSource {
             }
         }
 
-        guard poolRepo.isPoolActive(coinCode: coinCode) else {
+        guard poolRepo.isPoolActive(coin: coin) else {
             return []
         }
 
-        let updatedItems = updatedRecords.map { factory.create(coinCode: coinCode, record: $0) }
-        let insertedItems = insertedRecords.map { factory.create(coinCode: coinCode, record: $0) }
+        let updatedItems = updatedRecords.map { factory.create(coin: coin, record: $0) }
+        let insertedItems = insertedRecords.map { factory.create(coin: coin, record: $0) }
 
         return itemsDataSource.handle(updatedItems: updatedItems, insertedItems: insertedItems)
     }
@@ -95,7 +95,7 @@ class TransactionRecordDataSource {
 
         poolRepo.activePools.forEach { pool in
             pool.unusedRecords.forEach { record in
-                unusedItems.append(factory.create(coinCode: pool.coinCode, record: record))
+                unusedItems.append(factory.create(coin: pool.coin, record: record))
             }
         }
 
@@ -111,18 +111,18 @@ class TransactionRecordDataSource {
         itemsDataSource.add(items: usedItems)
 
         usedItems.forEach { item in
-            poolRepo.pool(byCoinCode: item.coinCode)?.increaseFirstUnusedIndex()
+            poolRepo.pool(byCoin: item.coin)?.increaseFirstUnusedIndex()
         }
 
         return true
     }
 
-    func set(coinCodes: [CoinCode]) {
+    func set(coins: [Coin]) {
         poolRepo.allPools.forEach { pool in
             pool.resetFirstUnusedIndex()
         }
 
-        poolRepo.activatePools(coinCodes: coinCodes)
+        poolRepo.activatePools(coins: coins)
         itemsDataSource.clear()
     }
 

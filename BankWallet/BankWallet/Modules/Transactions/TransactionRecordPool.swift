@@ -5,8 +5,8 @@ class TransactionRecordPool {
         self.state = state
     }
 
-    var coinCode: CoinCode {
-        return state.coinCode
+    var coin: Coin {
+        return state.coin
     }
 
     var records: [TransactionRecord] {
@@ -43,7 +43,7 @@ class TransactionRecordPool {
         let hashFrom = state.records.last?.transactionHash
         let fetchLimit = limit + 1 - unusedRecordsCount
 
-        return FetchData(coinCode: state.coinCode, hashFrom: hashFrom, limit: fetchLimit)
+        return FetchData(coin: state.coin, hashFrom: hashFrom, limit: fetchLimit)
     }
 
     func add(records: [TransactionRecord]) {
