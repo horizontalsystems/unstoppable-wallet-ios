@@ -28,7 +28,6 @@ class SendAlertModel: BaseAlertModel {
         super.init()
 
         hideInBackground = false
-        observeKeyboard = .onlyShow
 
         addItemView(titleItem)
         addItemView(amountItem)
