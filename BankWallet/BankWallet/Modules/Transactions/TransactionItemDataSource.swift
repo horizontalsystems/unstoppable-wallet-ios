@@ -37,15 +37,69 @@ class TransactionItemDataSource {
         return indexes
     }
 
-    func handle(updatedItems: [TransactionItem], insertedItems: [TransactionItem]) {
+    func recordIndexes(greaterThan thresholdBlockHeight: Int, coinCode: String) -> [Int] {
+        var indexes = [Int]()
+
+        for (index, item) in items.enumerated() {
+            if let blockHeight = item.record.blockHeight, item.coinCode == coinCode && blockHeight > thresholdBlockHeight {
+                indexes.append(index)
+            }
+        }
+
+        return indexes
+    }
+
+    func handle(updatedItems: [TransactionItem], insertedItems: [TransactionItem]) -> [IndexChange] {
+        let oldItems = items
+
         for item in updatedItems {
             items.removeAll { $0 == item }
         }
 
-        items.append(contentsOf: updatedItems + insertedItems)
+        items.append(contentsOf: updatedItems)
 
         items.sort()
         items.reverse()
+
+        var updated = [TransactionItem]()
+        var moved = [(Int, TransactionItem)]()
+
+        for item in updatedItems {
+            if let oldIndex = oldItems.firstIndex(of: item), let index = items.firstIndex(of: item) {
+                if oldIndex == index {
+                    updated.append(item)
+                } else {
+                    moved.append((oldIndex, item))
+                }
+            }
+        }
+
+        items.append(contentsOf: insertedItems)
+
+        items.sort()
+        items.reverse()
+
+        var changes = [IndexChange]()
+
+        for updatedItem in updated {
+            if let index = items.firstIndex(of: updatedItem) {
+                changes.append(.update(index: index))
+            }
+        }
+
+        for (oldIndex, movedItem) in moved {
+            if let index = items.firstIndex(of: movedItem) {
+                changes.append(.move(fromIndex: oldIndex, toIndex: index))
+            }
+        }
+
+        for item in insertedItems {
+            if let index = items.firstIndex(of: item) {
+                changes.append(.insert(index: index))
+            }
+        }
+
+        return changes
     }
 
 }

@@ -43,6 +43,10 @@ class TransactionRecordDataSource {
         return itemsDataSource.itemIndexes(coinCode: coinCode, timestamp: timestamp)
     }
 
+    func itemIndexesForPending(coinCode: String, blockHeight: Int) -> [Int] {
+        return itemsDataSource.recordIndexes(greaterThan: blockHeight, coinCode: coinCode)
+    }
+
     var fetchDataList: [FetchData] {
         return poolRepo.activePools.compactMap { pool in
             pool.getFetchData(limit: limit)
@@ -55,14 +59,13 @@ class TransactionRecordDataSource {
         }
     }
 
-    func handleUpdated(records: [TransactionRecord], coinCode: CoinCode) -> Bool {
+    func handleUpdated(records: [TransactionRecord], coinCode: CoinCode) -> [IndexChange] {
         guard let pool = poolRepo.pool(byCoinCode: coinCode) else {
-            return false
+            return []
         }
 
         var updatedRecords = [TransactionRecord]()
         var insertedRecords = [TransactionRecord]()
-        var newData = false
 
         for record in records {
             switch pool.handleUpdated(record: record) {
@@ -73,27 +76,18 @@ class TransactionRecordDataSource {
                     insertedRecords.append(record)
                     pool.increaseFirstUnusedIndex()
                 }
-                newData = true
             case .ignored: ()
             }
         }
 
-//        print("Handled Records: updated: \(updatedRecords.count), inserted: \(insertedRecords.count), new data: \(newData)")
-
         guard poolRepo.isPoolActive(coinCode: coinCode) else {
-            return false
-        }
-
-        guard !updatedRecords.isEmpty || !insertedRecords.isEmpty else {
-            return newData
+            return []
         }
 
         let updatedItems = updatedRecords.map { factory.create(coinCode: coinCode, record: $0) }
         let insertedItems = insertedRecords.map { factory.create(coinCode: coinCode, record: $0) }
 
-        itemsDataSource.handle(updatedItems: updatedItems, insertedItems: insertedItems)
-
-        return true
+        return itemsDataSource.handle(updatedItems: updatedItems, insertedItems: insertedItems)
     }
 
     func increasePage() -> Bool {
