@@ -18,7 +18,7 @@ struct TransactionAddress {
 extension TransactionRecord: Comparable {
 
     public static func <(lhs: TransactionRecord, rhs: TransactionRecord) -> Bool {
-        return lhs.timestamp < rhs.timestamp
+        return lhs.timestamp != rhs.timestamp ? lhs.timestamp < rhs.timestamp : lhs.transactionHash < rhs.transactionHash
     }
 
     public static func ==(lhs: TransactionRecord, rhs: TransactionRecord) -> Bool {

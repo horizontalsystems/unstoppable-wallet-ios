@@ -31,6 +31,10 @@ extension TransactionsPresenter: ITransactionLoaderDelegate {
         view?.reload()
     }
 
+    func reload(with diff: [IndexChange]) {
+        view?.reload(with: diff)
+    }
+
 }
 
 extension TransactionsPresenter: ITransactionsViewDelegate {
@@ -115,10 +119,19 @@ extension TransactionsPresenter: ITransactionsInteractorDelegate {
 
     func onUpdate(lastBlockHeight: Int, coinCode: CoinCode) {
 //        print("Last Block Height Updated: \(coinCode) - \(lastBlockHeight)")
+        let oldLastBlockHeight = dataSource.lastBlockHeight(coinCode: coinCode)
 
         dataSource.set(lastBlockHeight: lastBlockHeight, coinCode: coinCode)
 
-        view?.reload()
+        if let threshold = dataSource.threshold(coinCode: coinCode), let oldLastBlockHeight = oldLastBlockHeight {
+            let indexes = loader.itemIndexes(coinCode: coinCode, lastBlockHeight: oldLastBlockHeight, threshold: threshold)
+
+            if !indexes.isEmpty {
+                view?.reload(indexes: indexes)
+            }
+        } else {
+            view?.reload()
+        }
     }
 
     func didUpdate(records: [TransactionRecord], coinCode: CoinCode) {

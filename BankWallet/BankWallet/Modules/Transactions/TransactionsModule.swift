@@ -23,6 +23,7 @@ protocol ITransactionsView: class {
     func show(filters: [CoinCode?])
     func reload()
     func reload(indexes: [Int])
+    func reload(with diff: [IndexChange])
 }
 
 protocol ITransactionsViewDelegate {
@@ -66,6 +67,7 @@ protocol ITransactionsRouter {
 protocol ITransactionLoaderDelegate: class {
     func fetchRecords(fetchDataList: [FetchData])
     func didChangeData()
+    func reload(with diff: [IndexChange])
 }
 
 protocol ITransactionViewItemFactory {
@@ -76,4 +78,10 @@ struct FetchData {
     let coinCode: CoinCode
     let hashFrom: String?
     let limit: Int
+}
+
+enum IndexChange {
+    case insert(index: Int)
+    case update(index: Int)
+    case move(fromIndex: Int, toIndex: Int)
 }

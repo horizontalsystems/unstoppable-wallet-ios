@@ -43,6 +43,10 @@ class TransactionRecordDataSource {
         return itemsDataSource.itemIndexes(coinCode: coinCode, timestamp: timestamp)
     }
 
+    func itemIndexes(coinCode: String, lastBlockHeight: Int, threshold: Int) -> [Int] {
+        return itemsDataSource.itemIndexes(coinCode: coinCode, lastBlockHeight: lastBlockHeight, threshold: threshold)
+    }
+
     var fetchDataList: [FetchData] {
         return poolRepo.activePools.compactMap { pool in
             pool.getFetchData(limit: limit)
@@ -55,14 +59,14 @@ class TransactionRecordDataSource {
         }
     }
 
-    func handleUpdated(records: [TransactionRecord], coinCode: CoinCode) -> Bool {
+    func handleUpdated(records: [TransactionRecord], coinCode: CoinCode) -> [IndexChange] {
         guard let pool = poolRepo.pool(byCoinCode: coinCode) else {
-            return false
+            return []
         }
 
         var updatedRecords = [TransactionRecord]()
         var insertedRecords = [TransactionRecord]()
-        var newData = false
+//        var newData = false
 
         for record in records {
             switch pool.handleUpdated(record: record) {
@@ -73,7 +77,7 @@ class TransactionRecordDataSource {
                     insertedRecords.append(record)
                     pool.increaseFirstUnusedIndex()
                 }
-                newData = true
+//                newData = true
             case .ignored: ()
             }
         }
@@ -81,19 +85,17 @@ class TransactionRecordDataSource {
 //        print("Handled Records: updated: \(updatedRecords.count), inserted: \(insertedRecords.count), new data: \(newData)")
 
         guard poolRepo.isPoolActive(coinCode: coinCode) else {
-            return false
+            return []
         }
 
-        guard !updatedRecords.isEmpty || !insertedRecords.isEmpty else {
-            return newData
-        }
+//        guard !updatedRecords.isEmpty || !insertedRecords.isEmpty else {
+//            return newData
+//        }
 
         let updatedItems = updatedRecords.map { factory.create(coinCode: coinCode, record: $0) }
         let insertedItems = insertedRecords.map { factory.create(coinCode: coinCode, record: $0) }
 
-        itemsDataSource.handle(updatedItems: updatedItems, insertedItems: insertedItems)
-
-        return true
+        return itemsDataSource.handle(updatedItems: updatedItems, insertedItems: insertedItems)
     }
 
     func increasePage() -> Bool {
