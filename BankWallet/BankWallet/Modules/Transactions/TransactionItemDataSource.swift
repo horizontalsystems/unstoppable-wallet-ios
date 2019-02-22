@@ -43,6 +43,8 @@ class TransactionItemDataSource {
         for (index, item) in items.enumerated() {
             if let blockHeight = item.record.blockHeight, item.coinCode == coinCode && blockHeight > thresholdBlockHeight {
                 indexes.append(index)
+            } else if item.record.blockHeight == nil {
+                indexes.append(index)
             }
         }
 
