@@ -12,8 +12,8 @@ class FullTransactionInfoRouter {
 
 extension FullTransactionInfoRouter: IFullTransactionInfoRouter {
 
-    func openProviderSettings(coinCode: String, transactionHash: String) {
-        let vc = DataProviderSettingsRouter.module(for: coinCode, transactionHash: transactionHash)
+    func openProviderSettings(coin: Coin, transactionHash: String) {
+        let vc = DataProviderSettingsRouter.module(for: coin, transactionHash: transactionHash)
         viewController?.pushViewController(vc, animated: true)
     }
 
@@ -37,11 +37,11 @@ extension FullTransactionInfoRouter: IFullTransactionInfoRouter {
 
 extension FullTransactionInfoRouter {
 
-    static func module(transactionHash: String, coinCode: String) -> UIViewController {
+    static func module(transactionHash: String, coin: Coin) -> UIViewController {
         let router = FullTransactionInfoRouter(urlManager: App.shared.urlManager)
 
         let interactor = FullTransactionInfoInteractor(providerFactory: App.shared.fullTransactionInfoProviderFactory, reachabilityManager: App.shared.reachabilityManager, dataProviderManager: App.shared.dataProviderManager, pasteboardManager: App.shared.pasteboardManager)
-        let state = FullTransactionInfoState(coinCode: coinCode, transactionHash: transactionHash)
+        let state = FullTransactionInfoState(coin: coin, transactionHash: transactionHash)
         let presenter = FullTransactionInfoPresenter(interactor: interactor, router: router, state: state)
         let viewController = FullTransactionInfoViewController(delegate: presenter)
 

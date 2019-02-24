@@ -2,11 +2,11 @@ import Foundation
 
 class BitcoinTransactionInfoAdapter: IFullTransactionInfoAdapter {
     private let provider: IBitcoinForksProvider
-    private let coinCode: String
+    private let coin: Coin
 
-    init(provider: IBitcoinForksProvider, coinCode: String) {
+    init(provider: IBitcoinForksProvider, coin: Coin) {
         self.provider = provider
-        self.coinCode = coinCode
+        self.coin = coin
     }
 
     func convert(json: [String: Any]) -> FullTransactionRecord? {
@@ -39,7 +39,7 @@ class BitcoinTransactionInfoAdapter: IFullTransactionInfoAdapter {
         // TRANSACTION
         var transactionItems = [FullTransactionItem]()
         if let fee = txResponse.fee {
-            let feeValue = CoinValue(coinCode: coinCode, value: fee)
+            let feeValue = CoinValue(coinCode: coin.code, value: fee)
             transactionItems.append(FullTransactionItem(title: "full_info.fee".localized, value: ValueFormatter.instance.format(coinValue: feeValue)))
         }
         if let size = txResponse.size {
@@ -57,12 +57,12 @@ class BitcoinTransactionInfoAdapter: IFullTransactionInfoAdapter {
         var inputItems = [FullTransactionItem]()
         if !txResponse.inputs.isEmpty {
             let totalInputs = txResponse.inputs.reduce(0) { $0 + $1.value }
-            let totalValue = CoinValue(coinCode: coinCode, value: totalInputs)
+            let totalValue = CoinValue(coinCode: coin.code, value: totalInputs)
 
             inputItems.append(FullTransactionItem(title: "full_info.inputs".localized, value: ValueFormatter.instance.format(coinValue: totalValue)))
         }
         for input in txResponse.inputs {
-            guard let title = ValueFormatter.instance.format(coinValue: CoinValue(coinCode: coinCode, value: input.value)) else {
+            guard let title = ValueFormatter.instance.format(coinValue: CoinValue(coinCode: coin.code, value: input.value)) else {
                 continue
             }
             let clickable = input.address != nil
@@ -76,12 +76,12 @@ class BitcoinTransactionInfoAdapter: IFullTransactionInfoAdapter {
         var outputItems = [FullTransactionItem]()
         if !txResponse.outputs.isEmpty {
             let totalOutputs = txResponse.outputs.reduce(0) { $0 + $1.value }
-            let totalValue = CoinValue(coinCode: coinCode, value: totalOutputs)
+            let totalValue = CoinValue(coinCode: coin.code, value: totalOutputs)
 
             outputItems.append(FullTransactionItem(title: "full_info.outputs".localized, value: ValueFormatter.instance.format(coinValue: totalValue)))
         }
         for output in txResponse.outputs {
-            guard let title = ValueFormatter.instance.format(coinValue: CoinValue(coinCode: coinCode, value: output.value)) else {
+            guard let title = ValueFormatter.instance.format(coinValue: CoinValue(coinCode: coin.code, value: output.value)) else {
                 continue
             }
             let clickable = output.address != nil

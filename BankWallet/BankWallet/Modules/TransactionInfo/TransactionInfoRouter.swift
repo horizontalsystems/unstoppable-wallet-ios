@@ -8,7 +8,7 @@ class TransactionInfoRouter {
 extension TransactionInfoRouter: ITransactionInfoRouter {
 
     func openFullInfo(transactionHash: String, coin: Coin) {
-        viewController?.present(FullTransactionInfoRouter.module(transactionHash: transactionHash, coinCode: coin.code), animated: true)
+        viewController?.present(FullTransactionInfoRouter.module(transactionHash: transactionHash, coin: coin), animated: true)
     }
 
 }

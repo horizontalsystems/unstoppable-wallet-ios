@@ -4,11 +4,11 @@ class EthereumTransactionInfoAdapter: IFullTransactionInfoAdapter {
     private static let gWeiCode = "GWei"
 
     private let provider: IEthereumForksProvider
-    private let coinCode: String
+    private let coin: Coin
 
-    init(provider: IEthereumForksProvider, coinCode: String) {
+    init(provider: IEthereumForksProvider, coin: Coin) {
         self.provider = provider
-        self.coinCode = coinCode
+        self.coin = coin
     }
 
     func convert(json: [String: Any]) -> FullTransactionRecord? {
@@ -35,7 +35,7 @@ class EthereumTransactionInfoAdapter: IFullTransactionInfoAdapter {
             topSectionItems.append(FullTransactionItem(icon: "Confirmations Icon", title: "full_info.confirmations".localized, value: "\(confirmations)"))
         }
         if let value = txResponse.value {
-            let coinValue = CoinValue(coinCode: coinCode, value: value)
+            let coinValue = CoinValue(coinCode: coin.code, value: value)
             topSectionItems.append(FullTransactionItem(title: "full_info.value".localized, value: ValueFormatter.instance.format(coinValue: coinValue)))
         }
         if let nonce = txResponse.nonce {
@@ -49,7 +49,7 @@ class EthereumTransactionInfoAdapter: IFullTransactionInfoAdapter {
 
         var feeGasItems = [FullTransactionItem]()
         if let fee = txResponse.fee {
-            let feeValue = CoinValue(coinCode: coinCode, value: fee)
+            let feeValue = CoinValue(coinCode: coin.code, value: fee)
             feeGasItems.append(FullTransactionItem(title: "full_info.fee".localized, value: ValueFormatter.instance.format(coinValue: feeValue)))
         }
         if let size = txResponse.size {

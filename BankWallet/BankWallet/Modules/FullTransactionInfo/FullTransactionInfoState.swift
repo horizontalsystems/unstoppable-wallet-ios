@@ -1,14 +1,14 @@
 class FullTransactionInfoState: IFullTransactionInfoState {
     let transactionHash: String
-    let coinCode: String
+    let coin: Coin
     var transactionRecord: FullTransactionRecord?
 
     func set(transactionRecord: FullTransactionRecord?) {
         self.transactionRecord = transactionRecord
     }
 
-    init(coinCode: String, transactionHash: String) {
-        self.coinCode = coinCode
+    init(coin: Coin, transactionHash: String) {
+        self.coin = coin
         self.transactionHash = transactionHash
     }
 

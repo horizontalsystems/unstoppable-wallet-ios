@@ -9,7 +9,7 @@ class DataProviderSettingsPresenterTests: XCTestCase {
 
     private var presenter: DataProviderSettingsPresenter!
 
-    private let coinCode = "coin_code"
+    private let coin = Coin(title: "Bitcoin", code: "BTC", type: .bitcoin)
     private let firstName = "first_provider"
     private let secondName = "second_provider"
     private let txHash = "tx_hash"
@@ -57,7 +57,7 @@ class DataProviderSettingsPresenterTests: XCTestCase {
             when(mock.pingProvider(name: any(), url: any())).thenDoNothing()
         }
 
-        presenter = DataProviderSettingsPresenter(coinCode: coinCode, transactionHash: txHash, router: mockRouter, interactor: mockInteractor)
+        presenter = DataProviderSettingsPresenter(coin: coin, transactionHash: txHash, router: mockRouter, interactor: mockInteractor)
         presenter.view = mockView
     }
 
@@ -81,7 +81,7 @@ class DataProviderSettingsPresenterTests: XCTestCase {
 
     func testSelectItem() {
         presenter.didSelect(item: DataProviderItem(name: secondName, online: true, checking: false, selected: false))
-        verify(mockInteractor).setBaseProvider(name: equal(to: secondName), for: equal(to: coinCode))
+        verify(mockInteractor).setBaseProvider(name: equal(to: secondName), for: equal(to: coin))
     }
 
     func testSelectItem_AlreadySelected() {

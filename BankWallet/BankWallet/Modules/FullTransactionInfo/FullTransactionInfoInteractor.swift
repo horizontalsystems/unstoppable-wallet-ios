@@ -56,8 +56,8 @@ extension FullTransactionInfoInteractor: IFullTransactionInfoInteractor {
         }).disposed(by: disposeBag)
     }
 
-    func updateProvider(for coinCode: String) {
-        provider = providerFactory.provider(for: coinCode)
+    func updateProvider(for coin: Coin) {
+        provider = providerFactory.provider(for: coin)
     }
 
     func retrieveTransactionInfo(transactionHash: String) {

@@ -35,8 +35,9 @@ class TransactionViewItemFactoryTests: XCTestCase {
 
     func testCoinValue() {
         let coinCode = "BTC"
+        let coin = Coin(title: "Bitcoin", code: coinCode, type: .bitcoin)
         let amount: Decimal = 123.45
-        let item = transactionItem(coinCode: coinCode, amount: amount)
+        let item = transactionItem(coin: coin, amount: amount)
 
         let viewItem = factory.viewItem(fromItem: item)
 
@@ -186,7 +187,7 @@ class TransactionViewItemFactoryTests: XCTestCase {
     }
 
     private func transactionItem(
-            coinCode: String = "",
+            coin: Coin = Coin(title: "Bitcoin", code: "BTC", type: .bitcoin),
             transactionHash: String = "",
             blockHeight: Int? = nil,
             amount: Decimal = 0,
@@ -195,7 +196,7 @@ class TransactionViewItemFactoryTests: XCTestCase {
             to: [TransactionAddress] = []
     ) -> TransactionItem {
         return TransactionItem(
-                coinCode: coinCode,
+                coin: coin,
                 record: TransactionRecord(
                         transactionHash: transactionHash,
                         blockHeight: blockHeight,
