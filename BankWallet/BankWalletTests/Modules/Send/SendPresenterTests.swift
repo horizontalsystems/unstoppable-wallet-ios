@@ -39,7 +39,7 @@ class SendPresenterTests: XCTestCase {
 
         confirmationViewItem = SendConfirmationViewItem(
                 coin: coin,
-                coinValue: CoinValue(coinCode: "BTC", value: 10.2),
+                primaryAmountInfo: amountInfo,
                 address: "address",
                 feeInfo: amountInfo,
                 totalInfo: amountInfo

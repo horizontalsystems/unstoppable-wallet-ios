@@ -61,8 +61,15 @@ class SendStateViewItemFactory: ISendStateViewItemFactory {
             return nil
         }
 
+        let primaryAmountInfo: AmountInfo
         var stateFeeInfo: AmountInfo?
         var stateTotalInfo: AmountInfo?
+
+        if state.inputType == .currency, let currencyValue = state.currencyValue {
+            primaryAmountInfo = .currencyValue(currencyValue: currencyValue)
+        } else {
+            primaryAmountInfo = .coinValue(coinValue: coinValue)
+        }
 
         if let currencyValue = state.currencyValue, let feeCurrencyValue = state.feeCurrencyValue {
             stateFeeInfo = .currencyValue(currencyValue: feeCurrencyValue)
@@ -80,13 +87,17 @@ class SendStateViewItemFactory: ISendStateViewItemFactory {
 
         let viewItem = SendConfirmationViewItem(
                 coin: coin,
-                coinValue: coinValue,
+                primaryAmountInfo: primaryAmountInfo,
                 address: address,
                 feeInfo: feeInfo,
                 totalInfo: stateTotalInfo
         )
 
-        viewItem.currencyValue = state.currencyValue
+        if state.inputType == .currency {
+            viewItem.secondaryAmountInfo = .coinValue(coinValue: coinValue)
+        } else {
+            viewItem.secondaryAmountInfo = state.currencyValue.map { .currencyValue(currencyValue: $0) }
+        }
 
         return viewItem
     }

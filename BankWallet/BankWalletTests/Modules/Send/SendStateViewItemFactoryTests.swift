@@ -248,17 +248,46 @@ class SendStateViewItemFactoryTests: XCTestCase {
         XCTAssertTrue(viewItem.sendButtonEnabled)
     }
 
-    func testConfirmation_CoinValue() {
+    func testConfirmation_primaryAmountInfo_coinInputType() {
+        confirmationState.inputType = .coin
+
         let viewItem = factory.confirmationViewItem(forState: confirmationState, coin: coin)
-        XCTAssertEqual(viewItem?.coinValue, coinValue)
+
+        XCTAssertEqual(viewItem?.primaryAmountInfo, AmountInfo.coinValue(coinValue: coinValue))
     }
 
-    func testConfirmation_CurrencyValue() {
+    func testConfirmation_primaryAmountInfo_currencyInputType() {
+        confirmationState.inputType = .currency
         confirmationState.currencyValue = currencyValue
 
         let viewItem = factory.confirmationViewItem(forState: confirmationState, coin: coin)
 
-        XCTAssertEqual(viewItem?.currencyValue, currencyValue)
+        XCTAssertEqual(viewItem?.primaryAmountInfo, AmountInfo.currencyValue(currencyValue: currencyValue))
+    }
+
+    func testConfirmation_secondaryAmountInfo_coinInputType() {
+        confirmationState.inputType = .coin
+        confirmationState.currencyValue = currencyValue
+
+        let viewItem = factory.confirmationViewItem(forState: confirmationState, coin: coin)
+
+        XCTAssertEqual(viewItem?.secondaryAmountInfo, AmountInfo.currencyValue(currencyValue: currencyValue))
+    }
+
+    func testConfirmation_secondaryAmountInfo_coinInputType_noCurrencyValue() {
+        confirmationState.inputType = .coin
+
+        let viewItem = factory.confirmationViewItem(forState: confirmationState, coin: coin)
+
+        XCTAssertNil(viewItem?.secondaryAmountInfo)
+    }
+
+    func testConfirmation_secondaryAmountInfo_currencyInputType() {
+        confirmationState.inputType = .currency
+
+        let viewItem = factory.confirmationViewItem(forState: confirmationState, coin: coin)
+
+        XCTAssertEqual(viewItem?.secondaryAmountInfo, AmountInfo.coinValue(coinValue: coinValue))
     }
 
     func testConfirmation_Address() {
