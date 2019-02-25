@@ -25,11 +25,11 @@ class TransactionItemDataSource {
         self.items.append(contentsOf: items)
     }
 
-    func itemIndexes(coinCode: CoinCode, timestamp: Double) -> [Int] {
+    func itemIndexes(coin: Coin, timestamp: Double) -> [Int] {
         var indexes = [Int]()
 
         for (index, item) in items.enumerated() {
-            if item.coinCode == coinCode && item.record.timestamp == timestamp {
+            if item.coin == coin && item.record.timestamp == timestamp {
                 indexes.append(index)
             }
         }
@@ -37,11 +37,11 @@ class TransactionItemDataSource {
         return indexes
     }
 
-    func recordIndexes(greaterThan thresholdBlockHeight: Int, coinCode: String) -> [Int] {
+    func recordIndexes(greaterThan thresholdBlockHeight: Int, coin: Coin) -> [Int] {
         var indexes = [Int]()
 
         for (index, item) in items.enumerated() {
-            if let blockHeight = item.record.blockHeight, item.coinCode == coinCode && blockHeight > thresholdBlockHeight {
+            if let blockHeight = item.record.blockHeight, item.coin == coin && blockHeight > thresholdBlockHeight {
                 indexes.append(index)
             } else if item.record.blockHeight == nil {
                 indexes.append(index)

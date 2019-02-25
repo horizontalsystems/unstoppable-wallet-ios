@@ -1,6 +1,7 @@
 import Foundation
 
 class TransactionViewItem {
+    let coin: Coin
     let transactionHash: String
     let coinValue: CoinValue
     let currencyValue: CurrencyValue?
@@ -10,7 +11,8 @@ class TransactionViewItem {
     let date: Date?
     let status: TransactionStatus
 
-    init(transactionHash: String, coinValue: CoinValue, currencyValue: CurrencyValue?, from: String?, to: String?, incoming: Bool, date: Date?, status: TransactionStatus) {
+    init(coin: Coin, transactionHash: String, coinValue: CoinValue, currencyValue: CurrencyValue?, from: String?, to: String?, incoming: Bool, date: Date?, status: TransactionStatus) {
+        self.coin = coin
         self.transactionHash = transactionHash
         self.coinValue = coinValue
         self.currencyValue = currencyValue

@@ -18,7 +18,7 @@ class FullTransactionInfoInteractorTests: XCTestCase {
     private var dataProviderSignal: Signal!
     private var transactionRecord: FullTransactionRecord!
 
-    private let coinCode = "BTC"
+    private let coin = Coin(title: "Bitcoin", code: "BTC", type: .bitcoin)
 
     override func setUp() {
         super.setUp()
@@ -91,8 +91,8 @@ class FullTransactionInfoInteractorTests: XCTestCase {
     }
 
     func testUpdateProvider() {
-        interactor.updateProvider(for: coinCode)
-        verify(mockProviderFactory).provider(for: coinCode)
+        interactor.updateProvider(for: coin)
+        verify(mockProviderFactory).provider(for: equal(to: coin))
     }
 
     func testReachableConnection() {
@@ -116,7 +116,7 @@ class FullTransactionInfoInteractorTests: XCTestCase {
     }
 
     func testRetrieve() {
-        interactor.updateProvider(for: coinCode)
+        interactor.updateProvider(for: coin)
 
         interactor.retrieveTransactionInfo(transactionHash: transactionHash)
         waitForMainQueue()
@@ -133,7 +133,7 @@ class FullTransactionInfoInteractorTests: XCTestCase {
             when(mock.retrieveTransactionInfo(transactionHash: any())).thenReturn(Observable.just(nil))
         }
 
-        interactor.updateProvider(for: coinCode)
+        interactor.updateProvider(for: coin)
 
         interactor.retrieveTransactionInfo(transactionHash: transactionHash)
         waitForMainQueue()
@@ -146,7 +146,7 @@ class FullTransactionInfoInteractorTests: XCTestCase {
         enum TestError: Error { case error }
         let error = TestError.error
 
-        interactor.updateProvider(for: coinCode)
+        interactor.updateProvider(for: coin)
 
         stub(mockProvider) { mock in
             when(mock.retrieveTransactionInfo(transactionHash: any())).thenReturn(Observable.error(error))
@@ -162,14 +162,14 @@ class FullTransactionInfoInteractorTests: XCTestCase {
     func testCopyToPasteboard() {
         let value = "test_value"
 
-        interactor.updateProvider(for: coinCode)
+        interactor.updateProvider(for: coin)
 
         interactor.copyToPasteboard(value: value)
         verify(mockPasteboardManager).set(value: value)
     }
 
     func testUrlForHash() {
-        interactor.updateProvider(for: coinCode)
+        interactor.updateProvider(for: coin)
 
         let url = interactor.url(for: transactionHash)
         XCTAssertEqual(url, "test_url")

@@ -1,31 +1,31 @@
 class TransactionRecordPoolRepo {
-    private var pools = [CoinCode: TransactionRecordPool]()
-    private var activePoolCoinCodes = [CoinCode]()
+    private var pools = [Coin: TransactionRecordPool]()
+    private var activePoolCoins = [Coin]()
 
     var activePools: [TransactionRecordPool] {
-        return activePoolCoinCodes.compactMap { pools[$0] }
+        return activePoolCoins.compactMap { pools[$0] }
     }
 
     var allPools: [TransactionRecordPool] {
         return Array(pools.values)
     }
 
-    func activatePools(coinCodes: [CoinCode]) {
-        coinCodes.forEach { coinCode in
-            if pools[coinCode] == nil {
-                pools[coinCode] = TransactionRecordPool(state: TransactionRecordPoolState(coinCode: coinCode))
+    func activatePools(coins: [Coin]) {
+        coins.forEach { coin in
+            if pools[coin] == nil {
+                pools[coin] = TransactionRecordPool(state: TransactionRecordPoolState(coin: coin))
             }
         }
 
-        activePoolCoinCodes = coinCodes
+        activePoolCoins = coins
     }
 
-    func pool(byCoinCode coinCode: CoinCode) -> TransactionRecordPool? {
-        return pools[coinCode]
+    func pool(byCoin coin: Coin) -> TransactionRecordPool? {
+        return pools[coin]
     }
 
-    func isPoolActive(coinCode: CoinCode) -> Bool {
-        return activePoolCoinCodes.contains(coinCode)
+    func isPoolActive(coin: Coin) -> Bool {
+        return activePoolCoins.contains(coin)
     }
 
 }

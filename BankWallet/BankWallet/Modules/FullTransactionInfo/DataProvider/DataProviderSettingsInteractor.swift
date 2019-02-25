@@ -33,16 +33,16 @@ extension DataProviderSettingsInteractor: IDataProviderSettingsInteractor {
         }).disposed(by: disposeBag)
     }
 
-    func providers(for coinCode: String) -> [IProvider] {
-        return dataProviderManager.providers(for: coinCode)
+    func providers(for coin: Coin) -> [IProvider] {
+        return dataProviderManager.providers(for: coin)
     }
 
-    func baseProvider(for coinCode: String) -> IProvider {
-        return dataProviderManager.baseProvider(for: coinCode)
+    func baseProvider(for coin: Coin) -> IProvider {
+        return dataProviderManager.baseProvider(for: coin)
     }
 
-    func setBaseProvider(name: String, for coinCode: String) {
-        dataProviderManager.setBaseProvider(name: name, for: coinCode)
+    func setBaseProvider(name: String, for coin: Coin) {
+        dataProviderManager.setBaseProvider(name: name, for: coin)
         delegate?.didSetBaseProvider()
     }
 

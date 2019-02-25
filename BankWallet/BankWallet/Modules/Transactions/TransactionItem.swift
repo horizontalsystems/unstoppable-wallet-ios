@@ -1,5 +1,5 @@
 struct TransactionItem {
-    let coinCode: CoinCode
+    let coin: Coin
     let record: TransactionRecord
 }
 

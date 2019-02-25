@@ -7,8 +7,8 @@ class TransactionInfoRouter {
 
 extension TransactionInfoRouter: ITransactionInfoRouter {
 
-    func openFullInfo(transactionHash: String, coinCode: String) {
-        viewController?.present(FullTransactionInfoRouter.module(transactionHash: transactionHash, coinCode: coinCode), animated: true)
+    func openFullInfo(transactionHash: String, coin: Coin) {
+        viewController?.present(FullTransactionInfoRouter.module(transactionHash: transactionHash, coin: coin), animated: true)
     }
 
 }

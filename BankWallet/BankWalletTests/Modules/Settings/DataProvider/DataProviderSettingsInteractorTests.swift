@@ -10,7 +10,7 @@ class DataProviderSettingsInteractorTests: XCTestCase {
 
     private var interactor: DataProviderSettingsInteractor!
 
-    private let coinCode = "coin_code"
+    private let coin = Coin(title: "Bitcoin", code: "BTC", type: .bitcoin)
     private let firstName = "first_provider"
     private let secondName = "second_provider"
 
@@ -81,17 +81,17 @@ class DataProviderSettingsInteractorTests: XCTestCase {
     }
 
     func testGetProviders() {
-        XCTAssertEqual(interactor.providers(for: coinCode).map { $0.name }, providers.map { $0.name })
+        XCTAssertEqual(interactor.providers(for: coin).map { $0.name }, providers.map { $0.name })
     }
 
     func testGetBaseProvider() {
-        XCTAssertEqual(interactor.baseProvider(for: coinCode).name, firstName)
+        XCTAssertEqual(interactor.baseProvider(for: coin).name, firstName)
     }
 
     func testSetBaseCurrency() {
-        interactor.setBaseProvider(name: firstName, for: coinCode)
+        interactor.setBaseProvider(name: firstName, for: coin)
 
-        verify(mockDataProviderManager).setBaseProvider(name: equal(to: firstName), for: equal(to: coinCode))
+        verify(mockDataProviderManager).setBaseProvider(name: equal(to: firstName), for: equal(to: coin))
         verify(mockDelegate).didSetBaseProvider()
     }
 

@@ -94,6 +94,12 @@ class StorableCoin: Record {
 
 }
 
+extension Coin: Hashable {
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(code)
+    }
+}
+
 extension Coin: Equatable {
     public static func ==(lhs: Coin, rhs: Coin) -> Bool {
         return lhs.code == rhs.code && lhs.title == rhs.title && lhs.type == rhs.type

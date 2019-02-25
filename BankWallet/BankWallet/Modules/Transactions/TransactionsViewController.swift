@@ -29,7 +29,7 @@ class TransactionsViewController: UITableViewController {
         title = "transactions.title".localized
 
         filterHeaderView.onSelectCoin = { [weak self] coin in
-            self?.delegate.onFilterSelect(coinCode: coin)
+            self?.delegate.onFilterSelect(coin: coin)
         }
 
         tableView.backgroundColor = AppTheme.controllerBackground
@@ -74,7 +74,7 @@ class TransactionsViewController: UITableViewController {
 
 extension TransactionsViewController: ITransactionsView {
 
-    func show(filters: [CoinCode?]) {
+    func show(filters: [Coin?]) {
         filterHeaderView.reload(filters: filters)
     }
 

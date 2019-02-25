@@ -43,9 +43,9 @@ extension TransactionsPresenter: ITransactionsViewDelegate {
         interactor.initialFetch()
     }
 
-    func onFilterSelect(coinCode: CoinCode?) {
-        let coinCodes = coinCode.map { [$0] } ?? []
-        interactor.set(selectedCoinCodes: coinCodes)
+    func onFilterSelect(coin: Coin?) {
+        let coins = coin.map { [$0] } ?? []
+        interactor.set(selectedCoins: coins)
     }
 
     var itemsCount: Int {
@@ -54,9 +54,9 @@ extension TransactionsPresenter: ITransactionsViewDelegate {
 
     func item(forIndex index: Int) -> TransactionViewItem {
         let item = loader.item(forIndex: index)
-        let lastBlockHeight = dataSource.lastBlockHeight(coinCode: item.coinCode)
-        let threshold = dataSource.threshold(coinCode: item.coinCode)
-        let rate = dataSource.rate(coinCode: item.coinCode, timestamp: item.record.timestamp)
+        let lastBlockHeight = dataSource.lastBlockHeight(coin: item.coin)
+        let threshold = dataSource.threshold(coin: item.coin)
+        let rate = dataSource.rate(coin: item.coin, timestamp: item.record.timestamp)
 
         return factory.viewItem(fromItem: loader.item(forIndex: index), lastBlockHeight: lastBlockHeight, threshold: threshold, rate: rate)
     }
@@ -77,34 +77,34 @@ extension TransactionsPresenter: ITransactionsViewDelegate {
 
 extension TransactionsPresenter: ITransactionsInteractorDelegate {
 
-    func onUpdate(selectedCoinCodes: [CoinCode]) {
-//        print("Selected Coin Codes Updated: \(selectedCoinCodes)")
+    func onUpdate(selectedCoins: [Coin]) {
+//        print("Selected Coin Codes Updated: \(selectedCoins)")
 
-        loader.set(coinCodes: selectedCoinCodes)
+        loader.set(coins: selectedCoins)
         loader.loadNext(initial: true)
     }
 
-    func onUpdate(coinsData: [(CoinCode, Int, Int?)]) {
-        var coinCodes = [CoinCode]()
+    func onUpdate(coinsData: [(Coin, Int, Int?)]) {
+        var coins = [Coin]()
 
-        for (coinCode, threshold, lastBlockHeight) in coinsData {
-            coinCodes.append(coinCode)
-            dataSource.set(threshold: threshold, coinCode: coinCode)
+        for (coin, threshold, lastBlockHeight) in coinsData {
+            coins.append(coin)
+            dataSource.set(threshold: threshold, coin: coin)
 
             if let lastBlockHeight = lastBlockHeight {
-                dataSource.set(lastBlockHeight: lastBlockHeight, coinCode: coinCode)
+                dataSource.set(lastBlockHeight: lastBlockHeight, coin: coin)
             }
         }
 
         interactor.fetchLastBlockHeights()
 
-        if coinCodes.count < 2 {
+        if coins.count < 2 {
             view?.show(filters: [])
         } else {
-            view?.show(filters: [nil] + coinCodes)
+            view?.show(filters: [nil] + coins)
         }
 
-        loader.set(coinCodes: coinCodes)
+        loader.set(coins: coins)
         loader.loadNext(initial: true)
     }
 
@@ -117,14 +117,14 @@ extension TransactionsPresenter: ITransactionsInteractorDelegate {
         fetchRates(recordsData: loader.allRecordsData)
     }
 
-    func onUpdate(lastBlockHeight: Int, coinCode: CoinCode) {
-//        print("Last Block Height Updated: \(coinCode) - \(lastBlockHeight)")
-        let oldLastBlockHeight = dataSource.lastBlockHeight(coinCode: coinCode)
+    func onUpdate(lastBlockHeight: Int, coin: Coin) {
+//        print("Last Block Height Updated: \(coin) - \(lastBlockHeight)")
+        let oldLastBlockHeight = dataSource.lastBlockHeight(coin: coin)
 
-        dataSource.set(lastBlockHeight: lastBlockHeight, coinCode: coinCode)
+        dataSource.set(lastBlockHeight: lastBlockHeight, coin: coin)
 
-        if let threshold = dataSource.threshold(coinCode: coinCode), let oldLastBlockHeight = oldLastBlockHeight {
-            let indexes = loader.itemIndexesForPending(coinCode: coinCode, blockHeight: oldLastBlockHeight - threshold)
+        if let threshold = dataSource.threshold(coin: coin), let oldLastBlockHeight = oldLastBlockHeight {
+            let indexes = loader.itemIndexesForPending(coin: coin, blockHeight: oldLastBlockHeight - threshold)
 
             if !indexes.isEmpty {
                 view?.reload(indexes: indexes)
@@ -134,22 +134,22 @@ extension TransactionsPresenter: ITransactionsInteractorDelegate {
         }
     }
 
-    func didUpdate(records: [TransactionRecord], coinCode: CoinCode) {
-        loader.didUpdate(records: records, coinCode: coinCode)
-        fetchRates(recordsData: [coinCode: records])
+    func didUpdate(records: [TransactionRecord], coin: Coin) {
+        loader.didUpdate(records: records, coin: coin)
+        fetchRates(recordsData: [coin: records])
     }
 
-    func didFetch(rateValue: Decimal, coinCode: CoinCode, currency: Currency, timestamp: Double) {
-        dataSource.set(rate: CurrencyValue(currency: currency, value: rateValue), coinCode: coinCode, timestamp: timestamp)
+    func didFetch(rateValue: Decimal, coin: Coin, currency: Currency, timestamp: Double) {
+        dataSource.set(rate: CurrencyValue(currency: currency, value: rateValue), coin: coin, timestamp: timestamp)
 
-        let indexes = loader.itemIndexes(coinCode: coinCode, timestamp: timestamp)
+        let indexes = loader.itemIndexes(coin: coin, timestamp: timestamp)
 
         if !indexes.isEmpty {
             view?.reload(indexes: indexes)
         }
     }
 
-    func didFetch(recordsData: [CoinCode: [TransactionRecord]]) {
+    func didFetch(recordsData: [Coin: [TransactionRecord]]) {
 //        print("Did Fetch Records: \(records.map { key, value -> String in "\(key) - \(value.count)" })")
 
         fetchRates(recordsData: recordsData)
@@ -157,11 +157,11 @@ extension TransactionsPresenter: ITransactionsInteractorDelegate {
         loader.didFetch(recordsData: recordsData)
     }
 
-    private func fetchRates(recordsData: [CoinCode: [TransactionRecord]]) {
-        var timestampsData = [CoinCode: [Double]]()
+    private func fetchRates(recordsData: [Coin: [TransactionRecord]]) {
+        var timestampsData = [Coin: [Double]]()
 
-        for (coinCode, records) in recordsData {
-            timestampsData[coinCode] = records.map { $0.timestamp }
+        for (coin, records) in recordsData {
+            timestampsData[coin] = records.map { $0.timestamp }
         }
 
         interactor.fetchRates(timestampsData: timestampsData)

@@ -39,29 +39,29 @@ class FullTransactionDataProviderManager {
 
 extension FullTransactionDataProviderManager: IFullTransactionDataProviderManager {
 
-    func providers(for coinCode: String) -> [IProvider] {
-        if coinCode.range(of: "BTC") != nil {
+    func providers(for coin: Coin) -> [IProvider] {
+        if coin.type == .bitcoin {
             return bitcoinProviders
-        } else if coinCode.range(of: "BCH") != nil {
+        } else if coin.type == .bitcoinCash {
             return bitcoinCashProviders
         }
         return ethereumProviders
     }
 
-    func baseProvider(for coinCode: String) -> IProvider {
-        if coinCode.range(of: "ETH") != nil {
-            let name = localStorage.baseEthereumProvider ?? ethereumProviders[0].name
-            return ethereum(for: name)
+    func baseProvider(for coin: Coin) -> IProvider {
+        if coin.type == .bitcoin || coin.type == .bitcoinCash {
+            let name = localStorage.baseBitcoinProvider ?? bitcoinProviders[0].name
+            return bitcoin(for: name)
         }
-        let name = localStorage.baseBitcoinProvider ?? bitcoinProviders[0].name
-        return bitcoin(for: name)
+        let name = localStorage.baseEthereumProvider ?? ethereumProviders[0].name
+        return ethereum(for: name)
     }
 
-    func setBaseProvider(name: String, for coinCode: String) {
-        if coinCode.range(of: "ETH") != nil {
-            localStorage.baseEthereumProvider = name
-        } else {
+    func setBaseProvider(name: String, for coin: Coin) {
+        if coin.type == .bitcoin || coin.type == .bitcoinCash {
             localStorage.baseBitcoinProvider = name
+        } else {
+            localStorage.baseEthereumProvider = name
         }
 
         dataProviderUpdatedSignal.notify()

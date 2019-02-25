@@ -20,9 +20,9 @@ protocol IDataProviderSettingsViewDelegate {
 
 protocol IDataProviderSettingsInteractor {
     func pingProvider(name: String, url: String)
-    func providers(for coinCode: String) -> [IProvider]
-    func baseProvider(for coinCode: String) -> IProvider
-    func setBaseProvider(name: String, for coinCode: String)
+    func providers(for coin: Coin) -> [IProvider]
+    func baseProvider(for coin: Coin) -> IProvider
+    func setBaseProvider(name: String, for coin: Coin)
 }
 
 protocol IDataProviderSettingsInteractorDelegate: class {

@@ -4,7 +4,7 @@ protocol ITransactionInfoView: class {
 
 protocol ITransactionInfoViewDelegate: class {
     func onCopy(value: String)
-    func openFullInfo(coinCode: CoinCode, transactionHash: String)
+    func openFullInfo(coin: Coin, transactionHash: String)
 }
 
 protocol ITransactionInfoInteractor {
@@ -15,5 +15,5 @@ protocol ITransactionInfoInteractorDelegate: class {
 }
 
 protocol ITransactionInfoRouter {
-    func openFullInfo(transactionHash: String, coinCode: String)
+    func openFullInfo(transactionHash: String, coin: Coin)
 }

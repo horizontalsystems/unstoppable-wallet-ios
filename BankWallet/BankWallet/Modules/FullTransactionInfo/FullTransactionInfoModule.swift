@@ -28,7 +28,7 @@ protocol IFullTransactionInfoViewDelegate {
 
 protocol IFullTransactionInfoState {
     var transactionRecord: FullTransactionRecord? { get }
-    var coinCode: String { get }
+    var coin: Coin { get }
     var transactionHash: String { get }
 
     func set(transactionRecord: FullTransactionRecord?)
@@ -38,7 +38,7 @@ protocol IFullTransactionInfoInteractor {
     var reachableConnection: Bool { get }
 
     func didLoad()
-    func updateProvider(for coinCode: String)
+    func updateProvider(for coin: Coin)
 
     func retrieveTransactionInfo(transactionHash: String)
 
@@ -56,7 +56,7 @@ protocol IFullTransactionInfoInteractorDelegate: class {
 }
 
 protocol IFullTransactionInfoRouter {
-    func openProviderSettings(coinCode: String, transactionHash: String)
+    func openProviderSettings(coin: Coin, transactionHash: String)
     func open(url: String?)
     func share(value: String)
     func close()

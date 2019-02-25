@@ -3,9 +3,9 @@ import SnapKit
 
 class TransactionCurrenciesHeaderView: UIVisualEffectView, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
 
-    var filters = [CoinCode?]()
+    var filters = [Coin?]()
     var collectionView: UICollectionView
-    var onSelectCoin: ((CoinCode?) -> ())?
+    var onSelectCoin: ((Coin?) -> ())?
 
     let separatorView = UIView()
 
@@ -76,7 +76,7 @@ class TransactionCurrenciesHeaderView: UIVisualEffectView, UICollectionViewDeleg
         collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
     }
 
-    func reload(filters: [CoinCode?]) {
+    func reload(filters: [Coin?]) {
         self.filters = filters
         collectionView.reloadData()
 
@@ -86,7 +86,7 @@ class TransactionCurrenciesHeaderView: UIVisualEffectView, UICollectionViewDeleg
     }
 
     private func title(index: Int) -> String {
-        let title = filters[index] ?? "transactions.filter_all".localized
+        let title = filters[index]?.code ?? "transactions.filter_all".localized
         return title.uppercased()
     }
 

@@ -23,8 +23,9 @@ class TransactionViewItemFactory: ITransactionViewItemFactory {
         let incoming = record.amount > 0
 
         return TransactionViewItem(
+                coin: item.coin,
                 transactionHash: record.transactionHash,
-                coinValue: CoinValue(coinCode: item.coinCode, value: record.amount),
+                coinValue: CoinValue(coinCode: item.coin.code, value: record.amount),
                 currencyValue: currencyValue,
                 from: record.from.first(where: { $0.mine != incoming })?.address,
                 to: record.to.first(where: { $0.mine == incoming })?.address,

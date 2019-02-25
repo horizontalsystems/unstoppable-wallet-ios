@@ -1,34 +1,34 @@
 class TransactionsMetadataDataSource {
-    private var lastBlockHeights = [CoinCode: Int]()
-    private var thresholds = [CoinCode: Int]()
-    private var rates = [CoinCode: [Double: CurrencyValue]]()
+    private var lastBlockHeights = [Coin: Int]()
+    private var thresholds = [Coin: Int]()
+    private var rates = [Coin: [Double: CurrencyValue]]()
 
-    func lastBlockHeight(coinCode: CoinCode) -> Int? {
-        return lastBlockHeights[coinCode]
+    func lastBlockHeight(coin: Coin) -> Int? {
+        return lastBlockHeights[coin]
     }
 
-    func threshold(coinCode: CoinCode) -> Int? {
-        return thresholds[coinCode]
+    func threshold(coin: Coin) -> Int? {
+        return thresholds[coin]
     }
 
-    func rate(coinCode: CoinCode, timestamp: Double) -> CurrencyValue? {
-        return rates[coinCode]?[timestamp]
+    func rate(coin: Coin, timestamp: Double) -> CurrencyValue? {
+        return rates[coin]?[timestamp]
     }
 
-    func set(lastBlockHeight: Int, coinCode: CoinCode) {
-        lastBlockHeights[coinCode] = lastBlockHeight
+    func set(lastBlockHeight: Int, coin: Coin) {
+        lastBlockHeights[coin] = lastBlockHeight
     }
 
-    func set(threshold: Int, coinCode: CoinCode) {
-        thresholds[coinCode] = threshold
+    func set(threshold: Int, coin: Coin) {
+        thresholds[coin] = threshold
     }
 
-    func set(rate: CurrencyValue, coinCode: CoinCode, timestamp: Double) {
-        if rates[coinCode] == nil {
-            rates[coinCode] = [Double: CurrencyValue]()
+    func set(rate: CurrencyValue, coin: Coin, timestamp: Double) {
+        if rates[coin] == nil {
+            rates[coin] = [Double: CurrencyValue]()
         }
 
-        rates[coinCode]?[timestamp] = rate
+        rates[coin]?[timestamp] = rate
     }
 
     func clearRates() {

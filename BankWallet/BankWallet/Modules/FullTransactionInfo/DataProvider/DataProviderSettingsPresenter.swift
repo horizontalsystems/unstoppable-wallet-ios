@@ -1,5 +1,5 @@
 class DataProviderSettingsPresenter {
-    private let coinCode: String
+    private let coin: Coin
     private let transactionHash: String
 
     private let router: IDataProviderSettingsRouter
@@ -9,8 +9,8 @@ class DataProviderSettingsPresenter {
 
     var items = [DataProviderItem]()
 
-    init(coinCode: String, transactionHash: String, router: IDataProviderSettingsRouter, interactor: IDataProviderSettingsInteractor) {
-        self.coinCode = coinCode
+    init(coin: Coin, transactionHash: String, router: IDataProviderSettingsRouter, interactor: IDataProviderSettingsInteractor) {
+        self.coin = coin
         self.transactionHash = transactionHash
         self.router = router
         self.interactor = interactor
@@ -21,9 +21,9 @@ class DataProviderSettingsPresenter {
 extension DataProviderSettingsPresenter: IDataProviderSettingsViewDelegate {
 
     func viewDidLoad() {
-        let baseProviderName = interactor.baseProvider(for: coinCode).name
+        let baseProviderName = interactor.baseProvider(for: coin).name
 
-        let providers = interactor.providers(for: coinCode)
+        let providers = interactor.providers(for: coin)
         providers.forEach { provider in
             interactor.pingProvider(name: provider.name, url: provider.apiUrl(for: transactionHash))
         }
@@ -37,7 +37,7 @@ extension DataProviderSettingsPresenter: IDataProviderSettingsViewDelegate {
 
     func didSelect(item: DataProviderItem) {
         if !item.selected {
-            interactor.setBaseProvider(name: item.name, for: coinCode)
+            interactor.setBaseProvider(name: item.name, for: coin)
         }
     }
 
@@ -54,7 +54,7 @@ extension DataProviderSettingsPresenter: IDataProviderSettingsInteractorDelegate
     }
 
     private func setStateForItem(name: String, online: Bool) {
-        let baseProviderName = interactor.baseProvider(for: coinCode).name
+        let baseProviderName = interactor.baseProvider(for: coin).name
 
         let item = DataProviderItem(name: name, online: online, checking: false, selected: name == baseProviderName)
         if let index = items.firstIndex(where: { $0.name == name }) {

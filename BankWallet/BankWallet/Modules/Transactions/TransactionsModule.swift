@@ -20,7 +20,7 @@ extension TransactionStatus: Equatable {
 }
 
 protocol ITransactionsView: class {
-    func show(filters: [CoinCode?])
+    func show(filters: [Coin?])
     func reload()
     func reload(indexes: [Int])
     func reload(with diff: [IndexChange])
@@ -28,7 +28,7 @@ protocol ITransactionsView: class {
 
 protocol ITransactionsViewDelegate {
     func viewDidLoad()
-    func onFilterSelect(coinCode: CoinCode?)
+    func onFilterSelect(coin: Coin?)
 
     var itemsCount: Int { get }
     func item(forIndex index: Int) -> TransactionViewItem
@@ -42,22 +42,22 @@ protocol ITransactionsInteractor {
     func fetchLastBlockHeights()
 
     func fetchRecords(fetchDataList: [FetchData])
-    func set(selectedCoinCodes: [CoinCode])
+    func set(selectedCoins: [Coin])
 
-    func fetchRates(timestampsData: [CoinCode: [Double]])
+    func fetchRates(timestampsData: [Coin: [Double]])
 }
 
 protocol ITransactionsInteractorDelegate: class {
-    func onUpdate(selectedCoinCodes: [CoinCode])
-    func onUpdate(coinsData: [(CoinCode, Int, Int?)])
+    func onUpdate(selectedCoins: [Coin])
+    func onUpdate(coinsData: [(Coin, Int, Int?)])
     func onUpdateBaseCurrency()
 
-    func onUpdate(lastBlockHeight: Int, coinCode: CoinCode)
+    func onUpdate(lastBlockHeight: Int, coin: Coin)
 
-    func didUpdate(records: [TransactionRecord], coinCode: CoinCode)
+    func didUpdate(records: [TransactionRecord], coin: Coin)
 
-    func didFetch(rateValue: Decimal, coinCode: CoinCode, currency: Currency, timestamp: Double)
-    func didFetch(recordsData: [CoinCode: [TransactionRecord]])
+    func didFetch(rateValue: Decimal, coin: Coin, currency: Currency, timestamp: Double)
+    func didFetch(recordsData: [Coin: [TransactionRecord]])
 }
 
 protocol ITransactionsRouter {
@@ -75,7 +75,7 @@ protocol ITransactionViewItemFactory {
 }
 
 struct FetchData {
-    let coinCode: CoinCode
+    let coin: Coin
     let hashFrom: String?
     let limit: Int
 }

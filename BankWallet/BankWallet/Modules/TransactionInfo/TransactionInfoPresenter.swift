@@ -20,8 +20,8 @@ extension TransactionInfoPresenter: ITransactionInfoViewDelegate {
         view?.showCopied()
     }
 
-    func openFullInfo(coinCode: CoinCode, transactionHash: String) {
-        router.openFullInfo(transactionHash: transactionHash, coinCode: coinCode)
+    func openFullInfo(coin: Coin, transactionHash: String) {
+        router.openFullInfo(transactionHash: transactionHash, coin: coin)
     }
 
 }

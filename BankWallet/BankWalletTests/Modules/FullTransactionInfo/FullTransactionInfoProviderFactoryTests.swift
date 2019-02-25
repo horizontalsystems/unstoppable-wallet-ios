@@ -10,6 +10,9 @@ class FullTransactionInfoProviderFactoryTests: XCTestCase {
     private var mockBchProvider: MockIProvider!
     private var mockEthProvider: MockIProvider!
 
+    private let bitcoin = Coin(title: "", code: "", type: .bitcoin)
+    private let bitcoinCash = Coin(title: "", code: "", type: .bitcoinCash)
+    private let ethereum = Coin(title: "", code: "", type: .ethereum)
     private let btcProvider = "btc_provider"
     private let bchProvider = "bch_provider"
     private let ethProvider = "eth_provider"
@@ -31,9 +34,9 @@ class FullTransactionInfoProviderFactoryTests: XCTestCase {
         }
         mockProviderManager = MockIFullTransactionDataProviderManager()
         stub(mockProviderManager) { mock in
-            when(mock.baseProvider(for: "BTC")).thenReturn(mockBtcProvider)
-            when(mock.baseProvider(for: "BCH")).thenReturn(mockBchProvider)
-            when(mock.baseProvider(for: "ETH")).thenReturn(mockEthProvider)
+            when(mock.baseProvider(for: equal(to: bitcoin))).thenReturn(mockBtcProvider)
+            when(mock.baseProvider(for: equal(to: bitcoinCash))).thenReturn(mockBchProvider)
+            when(mock.baseProvider(for: equal(to: ethereum))).thenReturn(mockEthProvider)
             when(mock.bitcoin(for: any())).thenReturn(MockIBitcoinForksProvider())
             when(mock.bitcoinCash(for: any())).thenReturn(MockIBitcoinForksProvider())
             when(mock.ethereum(for: any())).thenReturn(MockIEthereumForksProvider())
@@ -54,17 +57,17 @@ class FullTransactionInfoProviderFactoryTests: XCTestCase {
     }
 
     func testBTC() {
-        _ = factory.provider(for: "BTC")
+        _ = factory.provider(for: bitcoin)
         verify(mockProviderManager).bitcoin(for: btcProvider)
     }
 
     func testBCH() {
-        _ = factory.provider(for: "BCH")
+        _ = factory.provider(for: bitcoinCash)
         verify(mockProviderManager).bitcoinCash(for: bchProvider)
     }
 
     func testETH() {
-        _ = factory.provider(for: "ETH")
+        _ = factory.provider(for: ethereum)
         verify(mockProviderManager).ethereum(for: ethProvider)
     }
 

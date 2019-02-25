@@ -41,7 +41,7 @@ class TransactionInfoAlertModel: BaseAlertModel {
         }
 
         let openFullInfoItem = TransactionOpenFullInfoItem(tag: 6, required: true, onTap: { [weak self] in
-            self?.delegate.openFullInfo(coinCode: item.coinValue.coinCode, transactionHash: item.transactionHash)
+            self?.delegate.openFullInfo(coin: item.coin, transactionHash: item.transactionHash)
         })
         addItemView(openFullInfoItem)
     }

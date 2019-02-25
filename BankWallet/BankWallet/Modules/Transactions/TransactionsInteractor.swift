@@ -12,7 +12,7 @@ class TransactionsInteractor {
     private let currencyManager: ICurrencyManager
     private let rateManager: IRateManager
 
-    private var requestedTimestamps = [CoinCode: [Double]]()
+    private var requestedTimestamps = [Coin: [Double]]()
 
     init(adapterManager: IAdapterManager, currencyManager: ICurrencyManager, rateManager: IRateManager) {
         self.adapterManager = adapterManager
@@ -21,10 +21,10 @@ class TransactionsInteractor {
     }
 
     private func onUpdateCoinsData() {
-        var coinsData = [(CoinCode, Int, Int?)]()
+        var coinsData = [(Coin, Int, Int?)]()
 
         for adapter in adapterManager.adapters {
-            coinsData.append((adapter.coin.code, adapter.confirmationsThreshold, adapter.lastBlockHeight))
+            coinsData.append((adapter.coin, adapter.confirmationsThreshold, adapter.lastBlockHeight))
         }
 
         delegate?.onUpdate(coinsData: coinsData)
@@ -36,7 +36,7 @@ class TransactionsInteractor {
                     .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
                     .observeOn(MainScheduler.instance)
                     .subscribe(onNext: { [weak self] records in
-                        self?.delegate?.didUpdate(records: records, coinCode: adapter.coin.code)
+                        self?.delegate?.didUpdate(records: records, coin: adapter.coin)
                     })
                     .disposed(by: transactionRecordsDisposeBag)
         }
@@ -44,7 +44,7 @@ class TransactionsInteractor {
 
     private func onUpdateLastBlockHeight(adapter: IAdapter) {
         if let lastBlockHeight = adapter.lastBlockHeight {
-            delegate?.onUpdate(lastBlockHeight: lastBlockHeight, coinCode: adapter.coin.code)
+            delegate?.onUpdate(lastBlockHeight: lastBlockHeight, coin: adapter.coin)
         }
     }
 
@@ -95,30 +95,30 @@ extension TransactionsInteractor: ITransactionsInteractor {
             return
         }
 
-        var singles = [Single<(CoinCode, [TransactionRecord])>]()
+        var singles = [Single<(Coin, [TransactionRecord])>]()
 
         for fetchData in fetchDataList {
-            let adapter = adapterManager.adapters.first(where: { $0.coin.code == fetchData.coinCode })
-            let single: Single<(CoinCode, [TransactionRecord])>
+            let adapter = adapterManager.adapters.first(where: { $0.coin == fetchData.coin })
+            let single: Single<(Coin, [TransactionRecord])>
 
             if let adapter = adapter {
                 single = adapter.transactionsSingle(hashFrom: fetchData.hashFrom, limit: fetchData.limit)
-                        .map { records -> (CoinCode, [TransactionRecord]) in
-                            (fetchData.coinCode, records)
+                        .map { records -> (Coin, [TransactionRecord]) in
+                            (fetchData.coin, records)
                         }
             } else {
-                single = Single.just((fetchData.coinCode, []))
+                single = Single.just((fetchData.coin, []))
             }
 
             singles.append(single)
         }
 
         Single.zip(singles)
-                { tuples -> [CoinCode: [TransactionRecord]] in
-                    var recordsData = [CoinCode: [TransactionRecord]]()
+                { tuples -> [Coin: [TransactionRecord]] in
+                    var recordsData = [Coin: [TransactionRecord]]()
 
-                    for (coinCode, records) in tuples {
-                        recordsData[coinCode] = records
+                    for (coin, records) in tuples {
+                        recordsData[coin] = records
                     }
 
                     return recordsData
@@ -131,31 +131,31 @@ extension TransactionsInteractor: ITransactionsInteractor {
                 .disposed(by: disposeBag)
     }
 
-    func set(selectedCoinCodes: [CoinCode]) {
-        let allCoinCodes = adapterManager.adapters.map { $0.coin.code }
-        delegate?.onUpdate(selectedCoinCodes: selectedCoinCodes.isEmpty ? allCoinCodes : selectedCoinCodes)
+    func set(selectedCoins: [Coin]) {
+        let allCoins = adapterManager.adapters.map { $0.coin }
+        delegate?.onUpdate(selectedCoins: selectedCoins.isEmpty ? allCoins : selectedCoins)
     }
 
-    func fetchRates(timestampsData: [CoinCode: [Double]]) {
+    func fetchRates(timestampsData: [Coin: [Double]]) {
         let currency = currencyManager.baseCurrency
 
-        for (coinCode, timestamps) in timestampsData {
+        for (coin, timestamps) in timestampsData {
             for timestamp in timestamps {
-                if let timestamps = requestedTimestamps[coinCode], timestamps.contains(timestamp) {
+                if let timestamps = requestedTimestamps[coin], timestamps.contains(timestamp) {
                     continue
                 }
 
-                if requestedTimestamps[coinCode] == nil {
-                    requestedTimestamps[coinCode] = [Double]()
+                if requestedTimestamps[coin] == nil {
+                    requestedTimestamps[coin] = [Double]()
                 }
-                requestedTimestamps[coinCode]?.append(timestamp)
+                requestedTimestamps[coin]?.append(timestamp)
 
-                rateManager.timestampRateValueObservable(coinCode: coinCode, currencyCode: currency.code, timestamp: timestamp)
+                rateManager.timestampRateValueObservable(coinCode: coin.code, currencyCode: currency.code, timestamp: timestamp)
                         .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
                         .observeOn(MainScheduler.instance)
                         .subscribe(onNext: { [weak self] rateValue in
 //                            print("did fetch: \(coinCode) -- \(currency.code) -- \(timestamp) -- \(rateValue)")
-                            self?.delegate?.didFetch(rateValue: rateValue, coinCode: coinCode, currency: currency, timestamp: timestamp)
+                            self?.delegate?.didFetch(rateValue: rateValue, coin: coin, currency: currency, timestamp: timestamp)
                         })
                         .disposed(by: ratesDisposeBag)
             }

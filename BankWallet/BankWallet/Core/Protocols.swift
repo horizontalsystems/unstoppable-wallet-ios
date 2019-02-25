@@ -261,9 +261,9 @@ protocol ICurrencyManager {
 protocol IFullTransactionDataProviderManager {
     var dataProviderUpdatedSignal: Signal { get }
 
-    func providers(for coinCode: String) -> [IProvider]
-    func baseProvider(for coinCode: String) -> IProvider
-    func setBaseProvider(name: String, for coinCode: String)
+    func providers(for coin: Coin) -> [IProvider]
+    func baseProvider(for coin: Coin) -> IProvider
+    func setBaseProvider(name: String, for coin: Coin)
 
     func bitcoin(for name: String) -> IBitcoinForksProvider
     func bitcoinCash(for name: String) -> IBitcoinForksProvider
@@ -316,7 +316,7 @@ protocol IUrlManager {
 }
 
 protocol IFullTransactionInfoProviderFactory {
-    func provider(`for` coinCode: String) -> IFullTransactionInfoProvider
+    func provider(`for` coin: Coin) -> IFullTransactionInfoProvider
 }
 
 protocol ISettingsProviderMap {
