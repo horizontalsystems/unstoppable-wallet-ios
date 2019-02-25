@@ -209,15 +209,15 @@ extension BitcoinAdapter: BitcoinKitDelegate {
             stateUpdatedSignal.notify()
         case .syncing(let progress):
             let newProgress = Int(progress * 100)
+            let newDate = bitcoinKit.lastBlockInfo?.timestamp.map { Date(timeIntervalSince1970: Double($0)) }
 
-            if case let .syncing(currentProgress, _) = self.state {
-                if newProgress == currentProgress {
+            if case let .syncing(currentProgress, currentDate) = self.state, newProgress == currentProgress {
+                if let currentDate = currentDate, let newDate = newDate, currentDate.isSameDay(as: newDate) {
                     return
                 }
             }
 
-            let lastBlockDate = bitcoinKit.lastBlockInfo?.timestamp.map { Date(timeIntervalSince1970: Double($0)) }
-            self.state = .syncing(progress: newProgress, lastBlockDate: lastBlockDate)
+            self.state = .syncing(progress: newProgress, lastBlockDate: newDate)
             stateUpdatedSignal.notify()
         }
     }
