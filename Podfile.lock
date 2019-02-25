@@ -4,7 +4,7 @@ PODS:
     - Alamofire (~> 4.8)
   - BigInt (3.1.0):
     - SipHash (~> 1.2)
-  - Cuckoo (0.12.0)
+  - Cuckoo (0.12.1)
   - GRDB.swift (3.6.2)
   - GrouviActionSheet (1.3):
     - GrouviExtensions
@@ -113,14 +113,14 @@ CHECKOUT OPTIONS:
     :commit: fb58e4ad13c4364b426fc4e1c9277d8be001d12c
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios/
   HSEthereumKit:
-    :commit: c9508234e61bfaca2f49df63dce0b8dd1b506918
+    :commit: 6aed772077d3c7edd0f824cf13dbdf983fd3a36a
     :git: https://github.com/horizontalsystems/ethereum-kit-ios/
 
 SPEC CHECKSUMS:
   Alamofire: 16ce2c353fb72865124ddae8a57c5942388f4f11
   AlamofireImage: 1aea346f4dda2f6c67622fa5a89fcbb80d79cc16
   BigInt: 76b5dfdfa3e2e478d4ffdf161aeede5502e2742f
-  Cuckoo: d30b6c149e52ffbcfe6b4a9543e4627d08947274
+  Cuckoo: 2f10364798baa4b0d4aacabfa475249cf29977bc
   GRDB.swift: e10787d857b6b8135354b9e08fb23b4bb8e2fab7
   GrouviActionSheet: dd73bd76eaca3d5bb54fa51960f293d4a176e68c
   GrouviExtensions: 025fe6dbdf9df3015a5a2eddd69cd150b451d578
