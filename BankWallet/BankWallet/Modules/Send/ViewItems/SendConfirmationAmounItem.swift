@@ -1,14 +1,24 @@
 import GrouviActionSheet
 
 class SendConfirmationAmounItem: BaseActionItem {
-    let amount: String?
-    var fiatAmount: String?
+    let primaryAmount: String?
+    var secondaryAmount: String?
 
     init(viewItem: SendConfirmationViewItem, tag: Int) {
-        amount = ValueFormatter.instance.format(coinValue: viewItem.coinValue)
+        switch viewItem.primaryAmountInfo {
+        case .coinValue(let coinValue):
+            primaryAmount = ValueFormatter.instance.format(coinValue: coinValue)
+        case .currencyValue(let currencyValue):
+            primaryAmount = ValueFormatter.instance.format(currencyValue: currencyValue)
+        }
 
-        if let value = viewItem.currencyValue, let formattedValue = ValueFormatter.instance.format(currencyValue: value) {
-            fiatAmount = formattedValue
+        if let secondaryAmountInfo = viewItem.secondaryAmountInfo {
+            switch secondaryAmountInfo {
+            case .coinValue(let coinValue):
+                secondaryAmount = ValueFormatter.instance.format(coinValue: coinValue)
+            case .currencyValue(let currencyValue):
+                secondaryAmount = ValueFormatter.instance.format(currencyValue: currencyValue)
+            }
         }
 
         super.init(cellType: SendConfirmationAmountItemView.self, tag: tag, required: true)
