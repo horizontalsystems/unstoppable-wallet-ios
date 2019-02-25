@@ -41,4 +41,8 @@ extension Date {
         return year == calendar.component(.year, from: Date())
     }
 
+    func isSameDay(as date: Date) -> Bool {
+        return Calendar.current.compare(self, to: date, toGranularity: .day) == .orderedSame
+    }
+
 }
