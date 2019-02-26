@@ -1,14 +1,20 @@
 import UIKit
 
 class DepositPresenter {
+    weak var view: IDepositView?
+
     private let interactor: IDepositInteractor
     private let router: IDepositRouter
 
-    weak var view: IDepositView?
+    let addressItems: [AddressItem]
 
-    init(interactor: IDepositInteractor, router: IDepositRouter) {
+    init(interactor: IDepositInteractor, router: IDepositRouter, coin: Coin?) {
         self.interactor = interactor
         self.router = router
+
+        addressItems = interactor.adapters(forCoin: coin).map {
+            AddressItem(coin: $0.coin, address: $0.receiveAddress)
+        }
     }
 
 }
@@ -18,19 +24,13 @@ extension DepositPresenter: IDepositInteractorDelegate {
 
 extension DepositPresenter: IDepositViewDelegate {
 
-    func addressItems(forCoin coinCode: CoinCode?) -> [AddressItem] {
-        return interactor.adapters(forCoin: coinCode).map {
-            AddressItem(coin: $0.coin, address: $0.receiveAddress)
-        }
-    }
-
-    func onCopy(addressItem: AddressItem) {
-        interactor.copy(address: addressItem.address)
+    func onCopy(index: Int) {
+        interactor.copy(address: addressItems[index].address)
         view?.showCopied()
     }
 
-    func onShare(addressItem: AddressItem) {
-        router.share(address: addressItem.address)
+    func onShare(index: Int) {
+        router.share(address: addressItems[index].address)
     }
 
 }

@@ -1,40 +1,38 @@
 import UIKit
 import GrouviActionSheet
 
-class SendAlertModel: BaseAlertModel {
+class SendViewController: ActionSheetController {
     private let delegate: ISendViewDelegate
 
-    private let titleItem: SendTitleItem
-    private let amountItem: SendAmountItem
-    private let addressItem: SendAddressItem
-    private let feeItem: SendFeeItem
-    private let sendButtonItem: SendButtonItem
-    private let keyboardItem: SendKeyboardItem
-
-    var onScanClicked: (() -> ())?
-    var onShowConfirmation: ((SendConfirmationViewItem) -> ())?
-    var onCopyAddress: (() -> ())?
+    private let titleItem = SendTitleItem(tag: 0)
+    private let amountItem = SendAmountItem(tag: 1)
+    private let addressItem = SendAddressItem(tag: 2)
+    private let feeItem = SendFeeItem(tag: 3)
+    private let sendButtonItem = SendButtonItem(buttonTitle: "send.send_button".localized, tag: 4)
+    private let keyboardItem = SendKeyboardItem(tag: 5)
 
     init(delegate: ISendViewDelegate) {
         self.delegate = delegate
+        super.init(withModel: BaseAlertModel(), actionSheetThemeConfig: AppTheme.actionSheetConfig)
+    }
 
-        titleItem = SendTitleItem(tag: 0)
-        amountItem = SendAmountItem(tag: 1)
-        addressItem = SendAddressItem(tag: 2)
-        feeItem = SendFeeItem(tag: 3)
-        sendButtonItem = SendButtonItem(buttonTitle: "send.send_button".localized, tag: 4)
-        keyboardItem = SendKeyboardItem(tag: 5)
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
-        super.init()
+    override func viewDidLoad() {
+        super.viewDidLoad()
 
-        hideInBackground = false
+        backgroundColor = .crypto_Dark_Bars
 
-        addItemView(titleItem)
-        addItemView(amountItem)
-        addItemView(addressItem)
-        addItemView(feeItem)
-        addItemView(sendButtonItem)
-        addItemView(keyboardItem)
+        model.hideInBackground = false
+
+        model.addItemView(titleItem)
+        model.addItemView(amountItem)
+        model.addItemView(addressItem)
+        model.addItemView(feeItem)
+        model.addItemView(sendButtonItem)
+        model.addItemView(keyboardItem)
 
         amountItem.onAmountChanged = { [weak self] in
             self?.delegate.onAmountChanged(amount: $0)
@@ -53,7 +51,7 @@ class SendAlertModel: BaseAlertModel {
             self?.delegate.onPasteAddressClicked()
         }
         addressItem.onScanClicked = { [weak self] in
-            self?.onScanClicked?()
+            self?.onScanQrCode()
         }
         addressItem.onDeleteClicked = { [weak self] in
             self?.delegate.onDeleteClicked()
@@ -62,31 +60,29 @@ class SendAlertModel: BaseAlertModel {
         sendButtonItem.onClicked = { [weak self] in
             self?.delegate.onSendClicked()
         }
-        onCopyAddress = { [weak self] in
-            self?.delegate.onCopyAddress()
-        }
         keyboardItem.addLetter = { [weak self] text in
             self?.amountItem.addLetter?(text)
         }
         keyboardItem.removeLetter = { [weak self] in
             self?.amountItem.removeLetter?()
         }
-    }
 
-    override func viewDidLoad() {
+//        delegate.onViewDidLoad()
     }
 
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
         delegate.onViewDidLoad()
         amountItem.showKeyboard?()
     }
 
-    func onScan(address: String) {
-        delegate.onScan(address: address)
-    }
-
-    func onConfirm() {
-        delegate.onConfirmClicked()
+    private func onScanQrCode() {
+        let scanController = ScanQRController()
+        scanController.onCodeParse = { [weak self] address in
+            self?.delegate.onScan(address: address)
+        }
+        present(scanController, animated: true)
     }
 
     private func set(primaryFeeInfo: AmountInfo?) {
@@ -99,7 +95,7 @@ class SendAlertModel: BaseAlertModel {
         case .coinValue(let coinValue):
             feeItem.bindFee?(ValueFormatter.instance.format(coinValue: coinValue))
         case .currencyValue(let currencyValue):
-            feeItem.bindFee?(ValueFormatter.instance.format(currencyValue: currencyValue, roundingMode: .ceiling).map { return "~\($0)" })
+            feeItem.bindFee?(ValueFormatter.instance.format(currencyValue: currencyValue, roundingMode: .up))
         }
     }
 
@@ -113,7 +109,7 @@ class SendAlertModel: BaseAlertModel {
         case .coinValue(let coinValue):
             feeItem.bindConvertedFee?(ValueFormatter.instance.format(coinValue: coinValue))
         case .currencyValue(let currencyValue):
-            feeItem.bindConvertedFee?(ValueFormatter.instance.format(currencyValue: currencyValue, roundingMode: .ceiling).map { return "~\($0)" })
+            feeItem.bindConvertedFee?(ValueFormatter.instance.format(currencyValue: currencyValue, roundingMode: .up))
         }
     }
 
@@ -128,7 +124,7 @@ class SendAlertModel: BaseAlertModel {
 
 }
 
-extension SendAlertModel: ISendView {
+extension SendViewController: ISendView {
 
     func set(coin: Coin) {
         titleItem.bindCoin?(coin)
@@ -208,11 +204,11 @@ extension SendAlertModel: ISendView {
 
     func set(sendButtonEnabled: Bool) {
         sendButtonItem.isActive = sendButtonEnabled
-        reload?()
     }
 
     func showConfirmation(viewItem: SendConfirmationViewItem) {
-        onShowConfirmation?(viewItem)
+        let confirmationController = SendConfirmationViewController(delegate: delegate, viewItem: viewItem)
+        present(confirmationController, animated: true)
     }
 
     func showCopied() {
@@ -224,7 +220,9 @@ extension SendAlertModel: ISendView {
     }
 
     func dismissWithSuccess() {
-        dismiss?(true)
+        presentedViewController?.dismiss(animated: true, completion: { [weak self] in
+            self?.dismiss(animated: true)
+        })
         HudHelper.instance.showSuccess()
     }
 
