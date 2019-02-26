@@ -5,18 +5,21 @@ class ValueFormatter {
 
     static private let fractionDigits = 8
 
+    enum FractionPolicy {
+        case full
+        case threshold(threshold: Decimal)
+    }
+
     private let coinFormatter: NumberFormatter = {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
-        formatter.minimumFractionDigits = 2
-        formatter.maximumFractionDigits = ValueFormatter.fractionDigits
+        formatter.minimumFractionDigits = 0
         return formatter
     }()
 
     private let currencyFormatter: NumberFormatter = {
         let formatter = NumberFormatter()
         formatter.numberStyle = .currency
-        formatter.minimumFractionDigits = 2
         return formatter
     }()
 
@@ -47,41 +50,65 @@ class ValueFormatter {
         return amountFormatter.decimalSeparator
     }
 
-    func format(coinValue: CoinValue) -> String? {
-        coinFormatter.minimumFractionDigits = coinValue.value == 0 ? 2 : 0
+    func format(coinValue: CoinValue, fractionPolicy: FractionPolicy = .full) -> String? {
+        let absoluteValue = abs(coinValue.value)
 
-        guard let formattedValue = coinFormatter.string(from: abs(coinValue.value) as NSNumber) else {
+        let formatter = coinFormatter
+        formatter.roundingMode = .halfUp
+
+        switch fractionPolicy {
+        case .full:
+            formatter.maximumFractionDigits = 8
+        case let .threshold(threshold):
+            formatter.maximumFractionDigits = absoluteValue > threshold ? 4 : 8
+        }
+
+        guard let formattedValue = formatter.string(from: absoluteValue as NSNumber) else {
             return nil
         }
 
         var result = "\(formattedValue) \(coinValue.coinCode)"
 
-        if coinValue.value < 0 {
+        if coinValue.value.isSignMinus {
             result = "- \(result)"
         }
 
         return result
     }
 
-    func format(currencyValue: CurrencyValue, shortFractionLimit: Decimal? = nil, roundingMode: NumberFormatter.RoundingMode = .halfEven) -> String? {
-        let absoluteValue = abs(currencyValue.value)
+    func format(currencyValue: CurrencyValue, fractionPolicy: FractionPolicy = .full, smallValueThreshold: Decimal = 0.01, roundingMode: NumberFormatter.RoundingMode = .halfUp) -> String? {
+        var absoluteValue = abs(currencyValue.value)
 
         let formatter = currencyFormatter
         formatter.roundingMode = roundingMode
         formatter.currencyCode = currencyValue.currency.code
         formatter.currencySymbol = currencyValue.currency.symbol
 
-        if let limit = shortFractionLimit {
-            formatter.maximumFractionDigits = absoluteValue > limit ? 0 : 2
-        } else {
+        switch fractionPolicy {
+        case .full:
             formatter.maximumFractionDigits = 2
+            formatter.minimumFractionDigits = 2
+        case let .threshold(threshold):
+            formatter.maximumFractionDigits = absoluteValue > threshold ? 0 : 2
+            formatter.minimumFractionDigits = 0
+        }
+
+        var showSmallSign = false
+
+        if absoluteValue > 0 && absoluteValue < smallValueThreshold {
+            absoluteValue = smallValueThreshold
+            showSmallSign = true
         }
 
         guard var result = formatter.string(from: absoluteValue as NSNumber) else {
             return nil
         }
 
-        if currencyValue.value < 0 {
+        if showSmallSign {
+            result = "< \(result)"
+        }
+
+        if currencyValue.value.isSignMinus {
             result = "- \(result)"
         }
 

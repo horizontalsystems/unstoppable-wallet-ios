@@ -106,9 +106,9 @@ class TransactionCell: UITableViewCell {
         dateLabel.text = (item.date.map { DateHelper.instance.formatTransactionDate(from: $0) })?.uppercased()
         timeLabel.text = item.date.map { DateHelper.instance.formatTransactionTime(from: $0) }
 
-        amountLabel.text = ValueFormatter.instance.format(coinValue: item.coinValue)
+        amountLabel.text = ValueFormatter.instance.format(coinValue: item.coinValue, fractionPolicy: .threshold(threshold: 0.01))
 
-        if let value = item.currencyValue, let formattedValue = ValueFormatter.instance.format(currencyValue: value, shortFractionLimit: 10) {
+        if let value = item.currencyValue, let formattedValue = ValueFormatter.instance.format(currencyValue: value, fractionPolicy: .threshold(threshold: 1000)) {
             currencyAmountLabel.text = formattedValue
         } else {
             currencyAmountLabel.text = nil

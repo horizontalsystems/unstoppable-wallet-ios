@@ -174,7 +174,7 @@ class BalanceCell: UITableViewCell {
                 rateLabel.text = "balance.syncing".localized
             }
             rateLabel.textColor = BalanceTheme.rateColor
-        } else if let value = item.exchangeValue, let formattedValue = ValueFormatter.instance.format(currencyValue: value, shortFractionLimit: 100) {
+        } else if let value = item.exchangeValue, let formattedValue = ValueFormatter.instance.format(currencyValue: value, fractionPolicy: .threshold(threshold: 1000)) {
             rateLabel.text = "balance.rate_per_coin".localized(formattedValue, item.coinValue.coinCode)
             rateLabel.textColor = item.rateExpired ? BalanceTheme.rateExpiredColor : BalanceTheme.rateColor
         } else {
@@ -182,14 +182,14 @@ class BalanceCell: UITableViewCell {
         }
 
         if let value = item.currencyValue, value.value != 0 {
-            currencyValueLabel.text = ValueFormatter.instance.format(currencyValue: value)
+            currencyValueLabel.text = ValueFormatter.instance.format(currencyValue: value, fractionPolicy: .threshold(threshold: 1000))
             let nonZeroBalanceTextColor = item.rateExpired ? BalanceTheme.nonZeroBalanceExpiredTextColor : BalanceTheme.nonZeroBalanceTextColor
             currencyValueLabel.textColor = value.value > 0 ? nonZeroBalanceTextColor : BalanceTheme.zeroBalanceTextColor
         } else {
             currencyValueLabel.text = nil
         }
 
-        coinValueLabel.text = ValueFormatter.instance.format(coinValue: item.coinValue)
+        coinValueLabel.text = ValueFormatter.instance.format(coinValue: item.coinValue, fractionPolicy: .threshold(threshold: 0.01))
 
         if case .notSynced = item.state {
             failedImageView.isHidden = false
