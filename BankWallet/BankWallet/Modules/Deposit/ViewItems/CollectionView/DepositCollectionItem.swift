@@ -5,9 +5,9 @@ class DepositCollectionItem: BaseActionItem {
 
     var addresses: [AddressItem]
     var onPageChange: ((Int) -> ())?
-    var onCopy: ((AddressItem) -> ())?
+    var onCopy: (() -> ())?
 
-    init(addresses: [AddressItem], tag: Int, onPageChange: @escaping (Int) -> (), onCopy: @escaping (AddressItem) -> ()) {
+    init(addresses: [AddressItem], tag: Int, onPageChange: @escaping (Int) -> (), onCopy: @escaping () -> ()) {
         self.addresses = addresses
         self.onPageChange = onPageChange
         self.onCopy = onCopy
