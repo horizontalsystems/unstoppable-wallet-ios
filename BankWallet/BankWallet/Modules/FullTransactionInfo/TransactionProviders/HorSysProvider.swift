@@ -46,7 +46,7 @@ class HorSysEthereumProvider: IEthereumForksProvider {
     func apiUrl(for hash: String) -> String { return apiUrl + hash }
 
     init(testMode: Bool) {
-        url = testMode ? "http://eth-testnet.horizontalsystems.xyz/apg/tx/" : "https://eth.horizontalsystems.xyz/apg/tx/"
+        url = testMode ? "http://eth-testnet.horizontalsystems.xyz/tx/" : "https://eth.horizontalsystems.xyz/tx/"
         apiUrl = url
     }
 
@@ -122,6 +122,7 @@ class HorSysEthereumResponse: IEthereumResponse, ImmutableMappable {
     var nonce: Int?
     var from: String?
     var to: String?
+    var contractAddress: String?
 
     required init(map: Map) throws {
         txId = try? map.value("tx.hash")
@@ -134,7 +135,7 @@ class HorSysEthereumResponse: IEthereumResponse, ImmutableMappable {
         gasUsed = try? map.value("tx.gasUsed")
 
         if let valueString: String = try? map.value("tx.value"), let value = Decimal(string: valueString) {
-            self.value = value / ethRate
+            self.value = value
         }
 
         nonce = try? map.value("tx.nonce")

@@ -79,7 +79,7 @@ class FullTransactionDataProviderManagerTests: XCTestCase {
         XCTAssertEqual(providerUrls, ["http://bch-testnet.horizontalsystems.xyz/apg/tx/test"])
 
         providerUrls = manager.providers(for: Coin(title: "", code: "", type: .ethereum)).map { $0.url(for: "test") }
-        XCTAssertEqual(providerUrls, ["http://eth-testnet.horizontalsystems.xyz/apg/tx/test"])
+        XCTAssertEqual(providerUrls, ["http://eth-testnet.horizontalsystems.xyz/tx/test"])
     }
 
     func testBaseProvider() {

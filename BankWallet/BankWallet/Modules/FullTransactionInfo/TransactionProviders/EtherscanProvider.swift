@@ -30,6 +30,7 @@ class EtherscanEthereumResponse: IEthereumResponse, ImmutableMappable {
     var nonce: Int?
     var from: String?
     var to: String?
+    var contractAddress: String?
 
     required init(map: Map) throws {
         txId = try? map.value("result.hash")
@@ -51,20 +52,18 @@ class EtherscanEthereumResponse: IEthereumResponse, ImmutableMappable {
         }
 
         let input: String? = try? map.value("result.input")
-
-        if input == "0x", let valueString: String = try? map.value("result.value"), let valueBigInt = BigInt(valueString.replacingOccurrences(of: "0x", with: ""), radix: 16), let value = Decimal(string: valueBigInt.description) {
-            self.value = value / ethRate
-        } else if let input = input, input.contains("0xa9059cbb") {
-            let startIndex = input.index(input.startIndex, offsetBy: 10 + 64)
-            let endIndex = input.index(startIndex, offsetBy: 64)
-            let amountHexString = String(input[startIndex..<endIndex])
-            if let weiAmount = BigInt(amountHexString, radix: 16), let weiAmountDecimal = Decimal(string: "\(weiAmount)") {
-                self.value = weiAmountDecimal / ethRate
+        if input == "0x" {
+            if let valueString: String = try? map.value("result.value"), let valueBigInt = BigInt(valueString.replacingOccurrences(of: "0x", with: ""), radix: 16), let value = Decimal(string: valueBigInt.description) {
+                self.value = value
             }
+            to = try? map.value("result.to")
+        } else if let input = input, let inputData = ERC20InputParser.parse(input: input) {
+            value = inputData.value
+            to = inputData.to
+            contractAddress = try? map.value("result.to")
         }
 
         from = try? map.value("result.from")
-        to = try? map.value("result.to")
     }
 
 }
