@@ -18,7 +18,7 @@ def appPods
   pod 'BigInt'
 
   pod 'GrouviExtensions'
-  pod 'GrouviActionSheet'
+  pod 'GrouviActionSheet', git: 'https://github.com/horizontalsystems/GrouviActoinSheet'
   pod 'GrouviHUD'
   pod 'SectionsTableViewKit'
 

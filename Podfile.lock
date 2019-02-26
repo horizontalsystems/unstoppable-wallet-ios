@@ -65,7 +65,7 @@ DEPENDENCIES:
   - BigInt
   - Cuckoo
   - GRDB.swift
-  - GrouviActionSheet
+  - GrouviActionSheet (from `https://github.com/horizontalsystems/GrouviActoinSheet`)
   - GrouviExtensions
   - GrouviHUD
   - HSBitcoinKit (from `https://github.com/horizontalsystems/bitcoin-kit-ios/`)
@@ -85,7 +85,6 @@ SPEC REPOS:
     - BigInt
     - Cuckoo
     - GRDB.swift
-    - GrouviActionSheet
     - GrouviExtensions
     - GrouviHUD
     - HSCryptoKit
@@ -103,14 +102,19 @@ SPEC REPOS:
     - SnapKit
 
 EXTERNAL SOURCES:
+  GrouviActionSheet:
+    :git: https://github.com/horizontalsystems/GrouviActoinSheet
   HSBitcoinKit:
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios/
   HSEthereumKit:
     :git: https://github.com/horizontalsystems/ethereum-kit-ios/
 
 CHECKOUT OPTIONS:
+  GrouviActionSheet:
+    :commit: 2a73d8c43e5fe8441604eef18fd60c0d271b73ee
+    :git: https://github.com/horizontalsystems/GrouviActoinSheet
   HSBitcoinKit:
-    :commit: fb58e4ad13c4364b426fc4e1c9277d8be001d12c
+    :commit: 35a3de442cd7bb62547a6b6b1b05d55e963088aa
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios/
   HSEthereumKit:
     :commit: 6aed772077d3c7edd0f824cf13dbdf983fd3a36a
@@ -141,6 +145,6 @@ SPEC CHECKSUMS:
   SipHash: fad90a4683e420c52ef28063063dbbce248ea6d4
   SnapKit: 0de968a9fec17499afa29683b05d0c775b6d1c29
 
-PODFILE CHECKSUM: 32e3cbc99a9b82297d6c091a353c3a6b7afecc61
+PODFILE CHECKSUM: 8161e57375ccc900f0ff484e6b593747fb22d7f7
 
 COCOAPODS: 1.5.3
