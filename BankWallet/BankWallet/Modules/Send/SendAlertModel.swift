@@ -99,7 +99,7 @@ class SendAlertModel: BaseAlertModel {
         case .coinValue(let coinValue):
             feeItem.bindFee?(ValueFormatter.instance.format(coinValue: coinValue))
         case .currencyValue(let currencyValue):
-            feeItem.bindFee?(ValueFormatter.instance.format(currencyValue: currencyValue, roundingMode: .ceiling).map { return "~\($0)" })
+            feeItem.bindFee?(ValueFormatter.instance.format(currencyValue: currencyValue, roundingMode: .up))
         }
     }
 
@@ -113,7 +113,7 @@ class SendAlertModel: BaseAlertModel {
         case .coinValue(let coinValue):
             feeItem.bindConvertedFee?(ValueFormatter.instance.format(coinValue: coinValue))
         case .currencyValue(let currencyValue):
-            feeItem.bindConvertedFee?(ValueFormatter.instance.format(currencyValue: currencyValue, roundingMode: .ceiling).map { return "~\($0)" })
+            feeItem.bindConvertedFee?(ValueFormatter.instance.format(currencyValue: currencyValue, roundingMode: .up))
         }
     }
 
