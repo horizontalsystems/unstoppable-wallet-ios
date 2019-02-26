@@ -1,7 +1,8 @@
 import UIKit
 import GrouviActionSheet
 
-class SendConfirmationAlertModel: BaseAlertModel {
+class SendConfirmationViewController: ActionSheetController {
+    private let delegate: ISendViewDelegate
     private let viewItem: SendConfirmationViewItem
 
     private let titleItem: SendTitleItem
@@ -10,9 +11,8 @@ class SendConfirmationAlertModel: BaseAlertModel {
     private let feeItem: SendConfirmationValueItem
     private let sendButtonItem: SendButtonItem
 
-    var onCopyAddress: (() -> ())?
-
-    init(viewItem: SendConfirmationViewItem) {
+    init(delegate: ISendViewDelegate, viewItem: SendConfirmationViewItem) {
+        self.delegate = delegate
         self.viewItem = viewItem
 
         titleItem = SendTitleItem(tag: 0)
@@ -21,31 +21,42 @@ class SendConfirmationAlertModel: BaseAlertModel {
         feeItem = SendConfirmationValueItem(title: "send.fee".localized, amountInfo: viewItem.feeInfo, tag: 3)
         sendButtonItem = SendButtonItem(buttonTitle: "alert.confirm".localized, tag: 5)
 
-        super.init()
+        super.init(withModel: BaseAlertModel(), actionSheetThemeConfig: SendTheme.confirmationSheetConfig)
+    }
 
-        hideInBackground = false
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
-        addItemView(titleItem)
-        addItemView(amountItem)
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        backgroundColor = .crypto_Dark_Bars
+        model.hideInBackground = false
+
+        model.addItemView(titleItem)
+        model.addItemView(amountItem)
 
         addressItem.onHashTap = { [weak self] in
-            self?.onCopyAddress?()
+            self?.delegate.onCopyAddress()
         }
-        addItemView(addressItem)
+        model.addItemView(addressItem)
 
-        addItemView(feeItem)
+        model.addItemView(feeItem)
         if let totalInfo = viewItem.totalInfo {
             let totalItem = SendConfirmationValueItem(title: "send.total".localized, amountInfo: totalInfo, tag: 4)
-            addItemView(totalItem)
+            model.addItemView(totalItem)
         }
 
         sendButtonItem.onClicked = { [weak self] in
-            self?.dismiss?(true)
+            self?.delegate.onConfirmClicked()
         }
-        addItemView(sendButtonItem)
+        model.addItemView(sendButtonItem)
     }
 
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
         titleItem.bindCoin?(viewItem.coin)
     }
 
