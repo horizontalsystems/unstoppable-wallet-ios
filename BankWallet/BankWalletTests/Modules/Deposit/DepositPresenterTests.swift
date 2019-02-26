@@ -10,14 +10,11 @@ class DepositPresenterTests: XCTestCase {
 
     private var presenter: DepositPresenter!
 
-    private let bitcoin = "BTC"
-    private let ether = "ETH"
-
-    private let bitcoinTitle = "Bitcoin"
-    private let etherTitle = "Ethereum"
+    private let bitcoin = Coin(title: "Bitcoin", code: "BTC", type: .bitcoin)
+    private let ethereum = Coin(title: "Ethereum", code: "ETH", type: .ethereum)
 
     private let bitcoinAddress = "bitcoin_address"
-    private let etherAddress = "ether_address"
+    private let ethereumAddress = "ether_address"
 
     private var mockBitcoinAdapter: MockIAdapter!
     private var mockEtherAdapter: MockIAdapter!
@@ -44,15 +41,15 @@ class DepositPresenterTests: XCTestCase {
         }
 
         stub(mockBitcoinAdapter) { mock in
-            when(mock.coin.get).thenReturn(Coin(title: bitcoinTitle, code: bitcoin, type: .bitcoin))
+            when(mock.coin.get).thenReturn(bitcoin)
             when(mock.receiveAddress.get).thenReturn(bitcoinAddress)
         }
         stub(mockEtherAdapter) { mock in
-            when(mock.coin.get).thenReturn(Coin(title: etherTitle, code: ether, type: .ethereum))
-            when(mock.receiveAddress.get).thenReturn(etherAddress)
+            when(mock.coin.get).thenReturn(ethereum)
+            when(mock.receiveAddress.get).thenReturn(ethereumAddress)
         }
 
-        presenter = DepositPresenter(interactor: mockInteractor, router: mockRouter)
+        presenter = DepositPresenter(interactor: mockInteractor, router: mockRouter, coin: nil)
         presenter.view = mockView
     }
 
@@ -68,24 +65,24 @@ class DepositPresenterTests: XCTestCase {
 
     func testGetAddressItems() {
         let expectedItems = [
-            AddressItem(coin: Coin(title: bitcoinTitle, code: bitcoin, type: .bitcoin), address: bitcoinAddress),
-            AddressItem(coin: Coin(title: etherTitle, code: ether, type: .ethereum), address: etherAddress)
+            AddressItem(coin: bitcoin, address: bitcoinAddress),
+            AddressItem(coin: ethereum, address: ethereumAddress)
         ]
 
-        XCTAssertEqual(presenter.addressItems(forCoin: nil), expectedItems)
+        XCTAssertEqual(presenter.addressItems, expectedItems)
     }
 
     func testOnCopy() {
-        presenter.onCopy(addressItem: AddressItem(coin: Coin(title: bitcoinTitle, code: bitcoin, type: .bitcoin), address: bitcoinAddress))
+        presenter.onCopy(index: 1)
 
-        verify(mockInteractor).copy(address: equal(to: bitcoinAddress))
+        verify(mockInteractor).copy(address: equal(to: ethereumAddress))
         verify(mockView).showCopied()
     }
 
     func testOnShare() {
-        presenter.onShare(addressItem: AddressItem(coin: Coin(title: bitcoinTitle, code: bitcoin, type: .bitcoin), address: bitcoinAddress))
+        presenter.onShare(index: 1)
 
-        verify(mockRouter).share(address: equal(to: bitcoinAddress))
+        verify(mockRouter).share(address: equal(to: ethereumAddress))
     }
 
 }

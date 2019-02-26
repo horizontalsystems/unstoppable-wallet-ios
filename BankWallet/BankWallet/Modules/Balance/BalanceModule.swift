@@ -40,7 +40,7 @@ protocol IBalanceInteractorDelegate: class {
 }
 
 protocol IBalanceRouter {
-    func openReceive(for coinCode: CoinCode)
+    func openReceive(for coin: Coin)
     func openSend(for coinCode: CoinCode)
     func openManageCoins()
 }

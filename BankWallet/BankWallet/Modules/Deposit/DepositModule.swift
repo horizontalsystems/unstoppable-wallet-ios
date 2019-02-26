@@ -3,13 +3,13 @@ protocol IDepositView: class {
 }
 
 protocol IDepositViewDelegate {
-    func addressItems(forCoin coinCode: CoinCode?) -> [AddressItem]
-    func onCopy(addressItem: AddressItem)
-    func onShare(addressItem: AddressItem)
+    var addressItems: [AddressItem] { get }
+    func onCopy(index: Int)
+    func onShare(index: Int)
 }
 
 protocol IDepositInteractor {
-    func adapters(forCoin coinCode: CoinCode?) -> [IAdapter]
+    func adapters(forCoin coin: Coin?) -> [IAdapter]
     func copy(address: String)
 }
 
