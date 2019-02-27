@@ -9,6 +9,7 @@
 "alert.cancel" = "Cancelar";
 "alert.copied" = "Copiado";
 "alert.confirm" = "Confirmar";
+"alert.no_internet" = "No Internet";
 
 "biometric_usage_reason" = "Desbloquear cartera";
 
