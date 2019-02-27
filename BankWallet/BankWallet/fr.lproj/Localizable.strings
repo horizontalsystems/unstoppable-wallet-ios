@@ -109,6 +109,7 @@
 "full_info.inputs" = "Entrées";
 "full_info.outputs" = "Sorties";
 "full_info.source" = "Source";
+"full_info.token" = "Token";
 "full_info.from" = "De";
 "full_info.to" = "À";
 "full_info.value" = "Valeur";
