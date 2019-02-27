@@ -7,10 +7,13 @@ class ConfirmationCheckboxItem: BaseActionItem {
 
     var descriptionText: NSAttributedString
 
-    init(descriptionText: NSAttributedString, tag: Int? = nil, hidden: Bool = false, required: Bool = false, action: @escaping ((BaseActionItemView) -> ())) {
+    init(descriptionText: NSAttributedString, tag: Int, action: @escaping ((BaseActionItemView) -> ())) {
         self.descriptionText = descriptionText
 
-        super.init(cellType: ConfirmationCheckboxView.self, tag: tag, hidden: hidden, required: required, action: action)
+        super.init(cellType: ConfirmationCheckboxView.self, tag: tag, required: true, action: action)
+
+        showSeparator = false
+        height = ConfirmationCheckboxItem.height(for: descriptionText)
     }
 
     class func height(for string: NSAttributedString) -> CGFloat {

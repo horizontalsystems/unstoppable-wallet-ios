@@ -7,7 +7,7 @@ class GuestRouter {
 extension GuestRouter: IGuestRouter {
 
     func navigateToBackupRoutingToMain() {
-        viewController?.present(BackupRouter.module(dismissMode: .toSetPin), animated: true)
+        viewController?.present(BackupRouter.module(mode: .initial), animated: true)
     }
 
     func navigateToRestore() {

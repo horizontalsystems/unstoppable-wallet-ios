@@ -5,7 +5,7 @@ class LaunchRouter {
 
     static func presenter(window: UIWindow?) -> ILaunchPresenter {
         let router = LaunchRouter()
-        let interactor = LaunchInteractor(authManager: App.shared.authManager, lockManager: App.shared.lockManager, pinManager: App.shared.pinManager, appConfigProvider: App.shared.appConfigProvider)
+        let interactor = LaunchInteractor(authManager: App.shared.authManager, lockManager: App.shared.lockManager, pinManager: App.shared.pinManager, appConfigProvider: App.shared.appConfigProvider, localStorage: App.shared.localStorage)
         let presenter = LaunchPresenter(interactor: interactor, router: router)
 
         interactor.delegate = presenter
@@ -38,7 +38,7 @@ extension LaunchRouter: ILaunchRouter {
     }
 
     func showBackupModule() {
-        show(viewController: BackupRouter.module(dismissMode: .toSetPin))
+        show(viewController: BackupRouter.module(mode: .initial))
     }
 
 }

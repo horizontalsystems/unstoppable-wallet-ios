@@ -1,40 +1,47 @@
 import UIKit
 
 class BackupRouter {
-    weak var navigationController: UINavigationController?
+    weak var viewController: UIViewController?
     weak var unlockDelegate: IUnlockDelegate?
+    weak var agreementDelegate: IAgreementDelegate?
 }
 
 extension BackupRouter: IBackupRouter {
 
+    func showAgreement() {
+        viewController?.present(AgreementRouter.module(agreementDelegate: agreementDelegate), animated: true)
+    }
+
     func close() {
-        navigationController?.dismiss(animated: true)
+        viewController?.dismiss(animated: true)
     }
 
     func navigateToSetPin() {
-        navigationController?.present(SetPinRouter.module(), animated: true)
+        viewController?.present(SetPinRouter.module(), animated: true)
     }
 
     func showUnlock() {
-        navigationController?.present(UnlockPinRouter.module(unlockDelegate: unlockDelegate, cancelable: true), animated: true)
+        viewController?.present(UnlockPinRouter.module(unlockDelegate: unlockDelegate, cancelable: true), animated: true)
     }
 
 }
 
 extension BackupRouter {
 
-    static func module(dismissMode: BackupPresenter.DismissMode) -> UIViewController {
+    static func module(mode: BackupPresenter.Mode) -> UIViewController {
         let router = BackupRouter()
         let interactor = BackupInteractor(authManager: App.shared.authManager, wordsManager: App.shared.wordsManager, pinManager: App.shared.pinManager, randomManager: App.shared.randomManager)
-        let presenter = BackupPresenter(interactor: interactor, router: router, dismissMode: dismissMode)
-        let navigationController = BackupNavigationController(viewDelegate: presenter)
+        let presenter = BackupPresenter(interactor: interactor, router: router, mode: mode)
+        let viewController = BackupNavigationController(viewDelegate: presenter)
 
         interactor.delegate = presenter
-        presenter.view = navigationController
-        router.navigationController = navigationController
-        router.unlockDelegate = interactor
+        presenter.view = viewController
 
-        return navigationController
+        router.viewController = viewController
+        router.unlockDelegate = interactor
+        router.agreementDelegate = interactor
+
+        return viewController
     }
 
 }

@@ -135,10 +135,4 @@ extension RestoreViewController: IRestoreView {
         HudHelper.instance.showError(title: "restore.validation_failed".localized)
     }
 
-    func showConfirmAlert() {
-        BackupConfirmationViewController.show(from: self) { [weak self] in
-            self?.delegate.didConfirm(words: self?.words ?? [])
-        }
-    }
-
 }

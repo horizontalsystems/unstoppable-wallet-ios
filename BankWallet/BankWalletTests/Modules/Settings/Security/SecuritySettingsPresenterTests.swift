@@ -21,19 +21,17 @@ class SecuritySettingsPresenterTests: XCTestCase {
             when(mock.set(biometricUnlockOn: any())).thenDoNothing()
             when(mock.set(biometryType: any())).thenDoNothing()
             when(mock.set(backedUp: any())).thenDoNothing()
-            when(mock.showUnlinkConfirmation()).thenDoNothing()
         }
         stub(mockRouter) { mock in
             when(mock.showEditPin()).thenDoNothing()
             when(mock.showSecretKey()).thenDoNothing()
-            when(mock.showGuestModule()).thenDoNothing()
+            when(mock.showUnlink()).thenDoNothing()
         }
         stub(mockInteractor) { mock in
             when(mock.isBiometricUnlockOn.get).thenReturn(true)
             when(mock.biometryType.get).thenReturn(.faceId)
             when(mock.isBackedUp.get).thenReturn(true)
             when(mock.set(biometricUnlockOn: any())).thenDoNothing()
-            when(mock.unlink()).thenDoNothing()
         }
 
         presenter = SecuritySettingsPresenter(router: mockRouter, interactor: mockInteractor)
@@ -119,22 +117,12 @@ class SecuritySettingsPresenterTests: XCTestCase {
 
     func testDidTapUnlink() {
         presenter.didTapUnlink()
-        verify(mockView).showUnlinkConfirmation()
-    }
-
-    func testDidConfirmUnlink() {
-        presenter.didConfirmUnlink()
-        verify(mockInteractor).unlink()
+        verify(mockRouter).showUnlink()
     }
 
     func testDidBackup() {
         presenter.didBackup()
         verify(mockView).set(backedUp: true)
-    }
-
-    func testDidUnlink() {
-        presenter.didUnlink()
-        verify(mockRouter).showGuestModule()
     }
 
 }

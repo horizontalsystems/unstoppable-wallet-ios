@@ -1,30 +1,22 @@
 import Foundation
 
 class BackupPresenter {
-    enum DismissMode {
-        case toSetPin
-        case dismissSelf
+    enum Mode {
+        case initial
+        case regular
     }
 
     private let interactor: IBackupInteractor
     private let router: IBackupRouter
     weak var view: IBackupView?
 
-    private let dismissMode: DismissMode
+    private let mode: Mode
+    private var validated = false
 
-    init(interactor: IBackupInteractor, router: IBackupRouter, dismissMode: DismissMode) {
+    init(interactor: IBackupInteractor, router: IBackupRouter, mode: Mode) {
         self.interactor = interactor
         self.router = router
-        self.dismissMode = dismissMode
-    }
-
-    private func dismiss() {
-        switch dismissMode {
-        case .toSetPin:
-            router.navigateToSetPin()
-        case .dismissSelf:
-            router.close()
-        }
+        self.mode = mode
     }
 
 }
@@ -40,7 +32,14 @@ extension BackupPresenter: IBackupInteractorDelegate {
     }
 
     func didValidateSuccess() {
-        view?.onValidateSuccess()
+        switch mode {
+        case .initial:
+            validated = true
+            router.showAgreement()
+        case .regular:
+            interactor.setBackedUp()
+            router.close()
+        }
     }
 
     func didValidateFailure() {
@@ -51,12 +50,25 @@ extension BackupPresenter: IBackupInteractorDelegate {
         router.showUnlock()
     }
 
+    func onConfirmAgreement() {
+        if validated {
+            interactor.setBackedUp()
+        }
+
+        router.navigateToSetPin()
+    }
+
 }
 
 extension BackupPresenter: IBackupViewDelegate {
 
     func cancelDidClick() {
-        view?.showWarning()
+        switch mode {
+        case .initial:
+            router.showAgreement()
+        case .regular:
+            router.close()
+        }
     }
 
     func showWordsDidClick() {
@@ -77,10 +89,6 @@ extension BackupPresenter: IBackupViewDelegate {
 
     func validateDidClick(confirmationWords: [Int: String]) {
         interactor.validate(confirmationWords: confirmationWords)
-    }
-
-    func onConfirm() {
-        dismiss()
     }
 
 }

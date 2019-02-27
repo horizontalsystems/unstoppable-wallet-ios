@@ -46,16 +46,4 @@ extension BackupNavigationController: IBackupView {
         }
     }
 
-    func onValidateSuccess() {
-        if let confirmationController = topViewController as? BackupConfirmationController {
-            confirmationController.showConfirmAlert()
-        }
-    }
-
-    func showWarning() {
-        BackupConfirmationViewController.show(from: self) { [weak self] in
-            self?.viewDelegate.onConfirm()
-        }
-    }
-
 }

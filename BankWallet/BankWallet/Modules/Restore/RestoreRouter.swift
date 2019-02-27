@@ -2,9 +2,14 @@ import UIKit
 
 class RestoreRouter {
     weak var viewController: UIViewController?
+    weak var agreementDelegate: IAgreementDelegate?
 }
 
 extension RestoreRouter: IRestoreRouter {
+
+    func showAgreement() {
+        viewController?.present(AgreementRouter.module(agreementDelegate: agreementDelegate), animated: true)
+    }
 
     func navigateToSetPin() {
         viewController?.present(SetPinRouter.module(), animated: true)
@@ -27,6 +32,7 @@ extension RestoreRouter {
         interactor.delegate = presenter
         presenter.view = viewController
         router.viewController = viewController
+        router.agreementDelegate = interactor
 
         let navigationController = UINavigationController(rootViewController: viewController)
         navigationController.navigationBar.barStyle = .blackTranslucent

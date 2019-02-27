@@ -130,12 +130,4 @@ extension SecuritySettingsViewController: ISecuritySettingsView {
         reloadIfNeeded()
     }
 
-    func showUnlinkConfirmation() {
-        let viewController = UnlinkConfirmationViewController(onConfirm: { [weak self] in
-            self?.delegate.didConfirmUnlink()
-        })
-
-        present(viewController, animated: true)
-    }
-
 }

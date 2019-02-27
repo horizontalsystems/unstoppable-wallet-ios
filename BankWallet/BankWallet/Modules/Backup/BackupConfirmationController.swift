@@ -64,12 +64,6 @@ class BackupConfirmationController: UIViewController {
         }
     }
 
-    func showConfirmAlert() {
-        BackupConfirmationViewController.show(from: self) { [weak self] in
-            self?.delegate.onConfirm()
-        }
-    }
-
     func showValidationFailure() {
         HudHelper.instance.showError(title: "backup.confirmation.failure_alert.text".localized)
     }

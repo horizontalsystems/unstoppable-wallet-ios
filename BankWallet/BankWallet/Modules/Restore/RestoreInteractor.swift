@@ -21,7 +21,7 @@ extension RestoreInteractor: IRestoreInteractor {
     func validate(words: [String]) {
         do {
             try wordsManager.validate(words: words)
-            delegate?.didValidate()
+            delegate?.didValidate(words: words)
         } catch {
             delegate?.didFailToValidate(withError: error)
         }
@@ -37,6 +37,14 @@ extension RestoreInteractor: IRestoreInteractor {
         } catch {
             delegate?.didFailToRestore(withError: error)
         }
+    }
+
+}
+
+extension RestoreInteractor: IAgreementDelegate {
+
+    func onConfirmAgreement() {
+        delegate?.didConfirmAgreement()
     }
 
 }
