@@ -109,6 +109,7 @@
 "full_info.inputs" = "Aportaciones";
 "full_info.outputs" = "Rendimientos";
 "full_info.source" = "Origen";
+"full_info.token" = "Token";
 "full_info.from" = "Desde ";
 "full_info.to" = "Para";
 "full_info.value" = "Valor";
