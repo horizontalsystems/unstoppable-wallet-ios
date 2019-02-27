@@ -133,6 +133,17 @@ class FullTransactionInfoViewController: UIViewController, SectionsDataSource {
     func buildSections() -> [SectionProtocol] {
         var sections = [SectionProtocol]()
 
+        if let providerName = delegate.providerName {
+            sections.append(Section(id: "resource_\(providerName)", headerState: .marginColor(height: FullTransactionInfoTheme.sectionEmptyMargin, color: .clear), rows: [
+                Row<SettingsRightLabelCell>(id: "resource", height: FullTransactionInfoTheme.cellHeight, autoDeselect: true, bind: { cell, _ in
+                    cell.bind(titleIcon: nil, title: "full_info.source.title".localized, rightText: providerName, showDisclosure: true, last: true)
+                    cell.titleLabel.font = FullTransactionInfoTheme.resourceTitleFont
+                }, action: { [weak self] cell in
+                    self?.onTapChangeResource()
+                })
+            ]))
+        }
+
         for sectionIndex in 0..<delegate.numberOfSections() {
             var sectionRows = [RowProtocol]()
             guard let section = delegate.section(sectionIndex) else {
@@ -158,15 +169,7 @@ class FullTransactionInfoViewController: UIViewController, SectionsDataSource {
         }
 
         if let providerName = delegate.providerName {
-            sections.append(Section(id: "resource_\(providerName)", headerState: .marginColor(height: FullTransactionInfoTheme.sectionEmptyMargin, color: .clear), footerState: .marginColor(height: FullTransactionInfoTheme.sectionEmptyMargin, color: .clear), rows: [
-                Row<SettingsRightLabelCell>(id: "resource", height: FullTransactionInfoTheme.cellHeight, autoDeselect: true, bind: { cell, _ in
-                    cell.bind(titleIcon: nil, title: "full_info.source.title".localized, rightText: providerName, showDisclosure: true, last: true)
-                    cell.titleLabel.font = FullTransactionInfoTheme.resourceTitleFont
-                }, action: { [weak self] cell in
-                    self?.onTapChangeResource()
-                })
-            ]))
-            sections.append(Section(id: "link_provider", footerState: .margin(height: FullTransactionInfoTheme.linkCellBottomMargin), rows: [
+            sections.append(Section(id: "link_provider", headerState: .marginColor(height: FullTransactionInfoTheme.sectionEmptyMargin, color: .clear), footerState: .margin(height: FullTransactionInfoTheme.linkCellBottomMargin), rows: [
                 Row<FullTransactionProviderLinkCell>(id: "link_cell", height: FullTransactionInfoTheme.linkCellHeight, bind: { [weak self] cell, _ in
                     cell.bind(text: providerName) {
                         self?.onTapProviderLink()

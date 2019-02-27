@@ -41,6 +41,7 @@ protocol IEthereumResponse {
     var nonce: Int? { get }
     var from: String? { get }
     var to: String? { get }
+    var contractAddress: String? { get }
 }
 
 extension IEthereumResponse {

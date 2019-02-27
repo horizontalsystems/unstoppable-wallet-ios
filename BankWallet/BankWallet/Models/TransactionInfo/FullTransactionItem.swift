@@ -1,6 +1,6 @@
 import UIKit
 
-enum ShowExtra { case none, icon, hash }
+enum ShowExtra { case none, icon, token, hash }
 
 struct FullTransactionItem {
     let icon: String?

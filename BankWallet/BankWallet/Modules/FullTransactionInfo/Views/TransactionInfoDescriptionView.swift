@@ -2,7 +2,7 @@ import UIKit
 import SnapKit
 
 class TransactionInfoDescriptionView: RespondButton {
-    private let avatarImageView = UIImageView(image: UIImage(named: "Transaction Info Avatar Placeholder")?.tinted(with: TransactionInfoDescriptionTheme.buttonIconColor))
+    private let avatarImageView = UIImageView()
     private let valueLabel = UILabel()
 
     init() {
@@ -58,8 +58,10 @@ class TransactionInfoDescriptionView: RespondButton {
             valueLabel.textColor = color
         }
 
-        let showImage = showExtra == .icon
+        let showImage = showExtra == .icon || showExtra == .token
         avatarImageView.set(hidden: !showImage)
+        let image = showExtra == .icon ? UIImage(named: "Transaction Info Avatar Placeholder") : UIImage(named: "Transaction Info Token Placeholder")
+        avatarImageView.image = image?.tinted(with: TransactionInfoDescriptionTheme.buttonIconColor)
 
         avatarImageView.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
         avatarImageView.setContentHuggingPriority(.defaultHigh, for: .horizontal)

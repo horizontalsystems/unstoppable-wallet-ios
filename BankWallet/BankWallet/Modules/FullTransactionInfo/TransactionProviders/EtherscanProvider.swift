@@ -30,6 +30,7 @@ class EtherscanEthereumResponse: IEthereumResponse, ImmutableMappable {
     var nonce: Int?
     var from: String?
     var to: String?
+    var contractAddress: String?
 
     required init(map: Map) throws {
         txId = try? map.value("result.hash")
@@ -50,12 +51,19 @@ class EtherscanEthereumResponse: IEthereumResponse, ImmutableMappable {
             nonce = Int(nonceString.replacingOccurrences(of: "0x", with: ""), radix: 16)
         }
 
-        if let valueString: String = try? map.value("result.value"), let valueBigInt = BigInt(valueString.replacingOccurrences(of: "0x", with: ""), radix: 16), let value = Decimal(string: valueBigInt.description) {
-            self.value = value / ethRate
+        let input: String? = try? map.value("result.input")
+        if input == "0x" {
+            if let valueString: String = try? map.value("result.value"), let valueBigInt = BigInt(valueString.replacingOccurrences(of: "0x", with: ""), radix: 16), let value = Decimal(string: valueBigInt.description) {
+                self.value = value
+            }
+            to = try? map.value("result.to")
+        } else if let input = input, let inputData = ERC20InputParser.parse(input: input) {
+            value = inputData.value
+            to = inputData.to
+            contractAddress = try? map.value("result.to")
         }
 
         from = try? map.value("result.from")
-        to = try? map.value("result.to")
     }
 
 }
