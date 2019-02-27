@@ -110,7 +110,7 @@
 "full_info.inputs" = "Inputs";
 "full_info.outputs" = "Outputs";
 "full_info.source" = "Source";
-"full_info.token" = "Token";
+"full_info.contract" = "Contract";
 "full_info.from" = "از";
 "full_info.to" = "به";
 "full_info.value" = "Value";
