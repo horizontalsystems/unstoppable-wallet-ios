@@ -109,6 +109,7 @@
 "full_info.inputs" = "Eingänge";
 "full_info.outputs" = "Ausgänge";
 "full_info.source" = "Quelle";
+"full_info.token" = "Token";
 "full_info.from" = "Von";
 "full_info.to" = "An";
 "full_info.value" = "Wert";
