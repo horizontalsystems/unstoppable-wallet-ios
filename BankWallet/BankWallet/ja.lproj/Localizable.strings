@@ -9,6 +9,7 @@
 "alert.cancel" = "キャンセル";
 "alert.copied" = "コピー完了";
 "alert.confirm" = "確定する";
+"alert.no_internet" = "No Internet";
 
 "biometric_usage_reason" = "Unlock wallet";
 
