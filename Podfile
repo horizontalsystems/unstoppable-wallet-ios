@@ -19,7 +19,7 @@ def appPods
 
   pod 'GrouviExtensions'
   pod 'GrouviActionSheet', git: 'https://github.com/horizontalsystems/GrouviActoinSheet'
-  pod 'GrouviHUD'
+  pod 'GrouviHUD', git: 'https://github.com/horizontalsystems/GrouviHUD'
   pod 'SectionsTableViewKit'
 
   pod 'KeychainAccess'
