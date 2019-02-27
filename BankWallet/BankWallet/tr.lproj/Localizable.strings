@@ -9,6 +9,7 @@
 "alert.cancel" = "İptal";
 "alert.copied" = "Kopyalandı";
 "alert.confirm" = "Onayla";
+"alert.no_internet" = "No Internet";
 
 "biometric_usage_reason" = "Cüzdan kilidini aç";
 
