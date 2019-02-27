@@ -49,9 +49,10 @@ class HudHelper {
         show(type: .attention, title: title, subtitle: subtitle)
     }
 
-    public func showSpinner(title: String? = nil) {
+    public func showSpinner(title: String? = nil, userInteractionEnabled: Bool = true) {
         var customConfig = cryptoConfigHud()
         customConfig.hapticType = nil
+        customConfig.userInteractionEnabled = userInteractionEnabled
 
         HUD.instance.config = customConfig
 

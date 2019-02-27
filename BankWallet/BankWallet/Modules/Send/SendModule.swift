@@ -16,6 +16,7 @@ protocol ISendView: class {
     func showConfirmation(viewItem: SendConfirmationViewItem)
     func showCopied()
     func show(error: Error)
+    func showProgress()
     func dismissWithSuccess()
     func set(decimal: Int)
 }

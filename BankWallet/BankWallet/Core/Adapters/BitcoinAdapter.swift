@@ -58,6 +58,10 @@ class BitcoinAdapter {
         )
     }
 
+    func createSendError(from: Error) -> Error {
+        return SendTransactionError.connection
+    }
+
 }
 
 extension BitcoinAdapter: IAdapter {
@@ -105,7 +109,7 @@ extension BitcoinAdapter: IAdapter {
                 try self?.bitcoinKit.send(to: address, value: satoshiAmount)
                 observer(.success(()))
             } catch {
-                observer(.error(error))
+                observer(.error(self?.createSendError(from: error) ?? error))
             }
 
             return Disposables.create()
