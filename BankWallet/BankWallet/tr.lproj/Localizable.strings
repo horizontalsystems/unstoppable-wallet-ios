@@ -109,6 +109,7 @@
 "full_info.inputs" = "Girişler";
 "full_info.outputs" = "Çıkışlar";
 "full_info.source" = "Kaynak";
+"full_info.token" = "Token";
 "full_info.from" = "Gönderen";
 "full_info.to" = "Alan";
 "full_info.value" = "Değer";
