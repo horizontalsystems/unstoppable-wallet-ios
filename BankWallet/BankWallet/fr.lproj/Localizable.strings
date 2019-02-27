@@ -9,6 +9,7 @@
 "alert.cancel" = "Annuler";
 "alert.copied" = "Copié";
 "alert.confirm" = "Confirmer";
+"alert.no_internet" = "No Internet";
 
 "biometric_usage_reason" = "Déverrouiller le porte-monnaie";
 
