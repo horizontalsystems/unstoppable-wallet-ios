@@ -136,10 +136,8 @@ extension RestoreViewController: IRestoreView {
     }
 
     func showConfirmAlert() {
-        BackupConfirmationAlertModel.show(from: self) { [weak self] success in
-            if success {
-                self?.delegate.didConfirm(words: self?.words ?? [])
-            }
+        BackupConfirmationViewController.show(from: self) { [weak self] in
+            self?.delegate.didConfirm(words: self?.words ?? [])
         }
     }
 

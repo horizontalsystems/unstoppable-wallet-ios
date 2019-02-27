@@ -19,15 +19,11 @@ extension TransactionInfoRouter {
         let router = TransactionInfoRouter()
 
         let interactor = TransactionInfoInteractor(pasteboardManager: App.shared.pasteboardManager)
-        let presenter = TransactionInfoPresenter(interactor: interactor, router: router, factory: TransactionViewItemFactory())
-        let alertModel = TransactionInfoAlertModel(item: viewItem, delegate: presenter)
+        let presenter = TransactionInfoPresenter(interactor: interactor, router: router, viewItem: viewItem)
+        let viewController = TransactionInfoViewController(delegate: presenter)
 
         interactor.delegate = presenter
-        presenter.view = alertModel
-
-        let viewController = ActionSheetController(withModel: alertModel, actionSheetThemeConfig: AppTheme.actionSheetConfig)
-        viewController.backgroundColor = .crypto_Dark_Bars
-
+        presenter.view = viewController
         router.viewController = viewController
 
         return viewController

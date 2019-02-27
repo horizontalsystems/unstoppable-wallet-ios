@@ -53,10 +53,8 @@ extension BackupNavigationController: IBackupView {
     }
 
     func showWarning() {
-        BackupConfirmationAlertModel.show(from: self) { [weak self] success in
-            if success {
-                self?.viewDelegate.onConfirm()
-            }
+        BackupConfirmationViewController.show(from: self) { [weak self] in
+            self?.viewDelegate.onConfirm()
         }
     }
 
