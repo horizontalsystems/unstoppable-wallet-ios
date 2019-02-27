@@ -110,7 +110,7 @@
 "full_info.inputs" = "입력값";
 "full_info.outputs" = "산출값";
 "full_info.source" = "원천, 자료";
-"full_info.token" = "Token";
+"full_info.contract" = "Contract";
 "full_info.from" = "로 부터";
 "full_info.to" = "에게";
 "full_info.value" = "Value";
