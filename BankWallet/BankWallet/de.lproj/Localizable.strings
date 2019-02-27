@@ -9,6 +9,7 @@
 "alert.cancel" = "Abbrechen";
 "alert.copied" = "Kopiert";
 "alert.confirm" = "Bestätigen";
+"alert.no_internet" = "No Internet";
 
 "biometric_usage_reason" = "Wallet entsperren";
 
