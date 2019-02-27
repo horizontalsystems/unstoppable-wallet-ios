@@ -112,7 +112,7 @@ Go to Settings - > Bank and allow access to Camera.";
 "full_info.inputs" = "Inputs";
 "full_info.outputs" = "Outputs";
 "full_info.source" = "Source";
-"full_info.token" = "Token";
+"full_info.token" = "Contract";
 "full_info.from" = "From";
 "full_info.to" = "To";
 "full_info.value" = "Value";
