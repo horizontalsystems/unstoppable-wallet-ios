@@ -110,7 +110,7 @@
 "full_info.inputs" = "入力";
 "full_info.outputs" = "出力";
 "full_info.source" = "ソース";
-"full_info.token" = "Token";
+"full_info.contract" = "Contract";
 "full_info.from" = "差出人";
 "full_info.to" = "宛先";
 "full_info.value" = "値";
