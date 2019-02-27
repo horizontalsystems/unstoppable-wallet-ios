@@ -9,6 +9,7 @@
 "alert.cancel" = "Отменить";
 "alert.copied" = "Скопировано";
 "alert.confirm" = "Подтвердить";
+"alert.no_internet" = "No Internet";
 
 "biometric_usage_reason" = "Разблокировать";
 
