@@ -219,6 +219,10 @@ extension SendViewController: ISendView {
         HudHelper.instance.showError(title: error.localizedDescription)
     }
 
+    func showProgress() {
+        HudHelper.instance.showSpinner(userInteractionEnabled: false)
+    }
+
     func dismissWithSuccess() {
         presentedViewController?.dismiss(animated: true, completion: { [weak self] in
             self?.dismiss(animated: true)

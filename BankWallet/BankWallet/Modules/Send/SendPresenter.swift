@@ -135,6 +135,7 @@ extension SendPresenter: ISendViewDelegate {
     }
 
     func onConfirmClicked() {
+        view?.showProgress()
         interactor.send(userInput: userInput)
     }
 

@@ -61,6 +61,7 @@ class SendPresenterTests: XCTestCase {
             when(mock.set(sendButtonEnabled: any())).thenDoNothing()
             when(mock.set(decimal: any())).thenDoNothing()
             when(mock.showCopied()).thenDoNothing()
+            when(mock.showProgress()).thenDoNothing()
             when(mock.showConfirmation(viewItem: any())).thenDoNothing()
             when(mock.dismissWithSuccess()).thenDoNothing()
         }
@@ -257,6 +258,7 @@ class SendPresenterTests: XCTestCase {
         presenter.onConfirmClicked()
 
         verify(mockInteractor).send(userInput: equal(to: mockUserInput))
+        verify(mockView).showProgress()
     }
 
     func testOnCopyAddress() {

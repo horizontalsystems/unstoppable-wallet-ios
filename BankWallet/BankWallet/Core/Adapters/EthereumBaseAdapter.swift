@@ -69,6 +69,14 @@ class EthereumBaseAdapter {
         )
     }
 
+    func createSendError(from error: Error) -> Error {
+        if let error = error as? EthereumKitError.ResponseError, case .connectionError(_) = error {
+            return SendTransactionError.connection
+        } else {
+            return SendTransactionError.unknown
+        }
+    }
+
 }
 
 extension EthereumBaseAdapter {

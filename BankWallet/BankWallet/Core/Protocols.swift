@@ -122,6 +122,19 @@ extension IAdapter {
     var feeCoinCode: CoinCode? { return nil }
 }
 
+enum SendTransactionError: LocalizedError {
+    case connection
+    case unknown
+
+    public var errorDescription: String? {
+        switch self {
+        case .connection: return "alert.no_internet".localized
+        case .unknown: return "alert.network_issue".localized
+        }
+    }
+
+}
+
 protocol IWordsManager {
     var isBackedUp: Bool { get set }
     var backedUpSignal: Signal { get }

@@ -15,7 +15,11 @@ class EthereumAdapter: EthereumBaseAdapter {
     }
 
     override func sendSingle(to address: String, amount: String) -> Single<Void> {
-        return ethereumKit.sendSingle(to: address, amount: amount).map { _ in ()}
+        return ethereumKit.sendSingle(to: address, amount: amount)
+                .map { _ in ()}
+                .catchError { [weak self] error in
+                    return Single.error(self?.createSendError(from: error) ?? error)
+                }
     }
 
 }
