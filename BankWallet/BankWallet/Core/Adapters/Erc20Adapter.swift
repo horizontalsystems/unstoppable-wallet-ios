@@ -20,9 +20,9 @@ class Erc20Adapter: EthereumBaseAdapter {
     override func sendSingle(to address: String, amount: String) -> Single<Void> {
         return ethereumKit.sendErc20Single(to: address, contractAddress: contractAddress, amount: amount)
                 .map { _ in ()}
-                .catchError({ [weak self] error in
+                .catchError { [weak self] error in
                     return Single.error(self?.createSendError(from: error) ?? error)
-                })
+                }
     }
 
 }
