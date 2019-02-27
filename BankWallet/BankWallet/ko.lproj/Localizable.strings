@@ -9,6 +9,7 @@
 "alert.cancel" = "취소";
 "alert.copied" = "복사됨";
 "alert.confirm" = "확인";
+"alert.no_internet" = "No Internet";
 
 "biometric_usage_reason" = "지갑 잠금 해제";
 
