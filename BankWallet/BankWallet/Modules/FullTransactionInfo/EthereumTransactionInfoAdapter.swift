@@ -79,7 +79,7 @@ class EthereumTransactionInfoAdapter: IFullTransactionInfoAdapter {
 
         var inputOutputItems = [FullTransactionItem]()
         if let contractAddress = txResponse.contractAddress {
-            inputOutputItems.append(FullTransactionItem(title: "full_info.token".localized, value: contractAddress, clickable: true, showExtra: .token))
+            inputOutputItems.append(FullTransactionItem(title: "full_info.contract".localized, value: contractAddress, clickable: true, showExtra: .token))
         }
         if let from = txResponse.from {
             inputOutputItems.append(FullTransactionItem(title: "full_info.from".localized, value: from, clickable: true, showExtra: .icon))
