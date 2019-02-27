@@ -110,7 +110,7 @@
 "full_info.inputs" = "Входы";
 "full_info.outputs" = "Выходы";
 "full_info.source" = "Источник";
-"full_info.token" = "Token";
+"full_info.contract" = "Contract";
 "full_info.from" = "От";
 "full_info.to" = "Кому";
 "full_info.value" = "Значение";
