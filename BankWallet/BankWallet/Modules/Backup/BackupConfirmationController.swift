@@ -65,10 +65,8 @@ class BackupConfirmationController: UIViewController {
     }
 
     func showConfirmAlert() {
-        BackupConfirmationAlertModel.show(from: self) { [weak self] success in
-            if success {
-                self?.delegate.onConfirm()
-            }
+        BackupConfirmationViewController.show(from: self) { [weak self] in
+            self?.delegate.onConfirm()
         }
     }
 

@@ -3,12 +3,12 @@ class TransactionInfoPresenter {
 
     private let interactor: ITransactionInfoInteractor
     private let router: ITransactionInfoRouter
-    private let factory: ITransactionViewItemFactory
+    let viewItem: TransactionViewItem
 
-    init(interactor: ITransactionInfoInteractor, router: ITransactionInfoRouter, factory: ITransactionViewItemFactory) {
+    init(interactor: ITransactionInfoInteractor, router: ITransactionInfoRouter, viewItem: TransactionViewItem) {
         self.interactor = interactor
         self.router = router
-        self.factory = factory
+        self.viewItem = viewItem
     }
 
 }
@@ -20,8 +20,8 @@ extension TransactionInfoPresenter: ITransactionInfoViewDelegate {
         view?.showCopied()
     }
 
-    func openFullInfo(coin: Coin, transactionHash: String) {
-        router.openFullInfo(transactionHash: transactionHash, coin: coin)
+    func openFullInfo() {
+        router.openFullInfo(transactionHash: viewItem.transactionHash, coin: viewItem.coin)
     }
 
 }

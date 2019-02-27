@@ -3,8 +3,9 @@ protocol ITransactionInfoView: class {
 }
 
 protocol ITransactionInfoViewDelegate: class {
+    var viewItem: TransactionViewItem { get }
     func onCopy(value: String)
-    func openFullInfo(coin: Coin, transactionHash: String)
+    func openFullInfo()
 }
 
 protocol ITransactionInfoInteractor {
