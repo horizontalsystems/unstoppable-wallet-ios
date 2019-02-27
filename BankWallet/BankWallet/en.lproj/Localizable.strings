@@ -9,6 +9,7 @@
 "alert.cancel" = "Cancel";
 "alert.copied" = "Copied";
 "alert.confirm" = "Confirm";
+"alert.no_internet" = "No Internet";
 
 "biometric_usage_reason" = "Unlock wallet";
 
