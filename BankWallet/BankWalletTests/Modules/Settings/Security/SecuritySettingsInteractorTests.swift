@@ -6,7 +6,6 @@ class SecuritySettingsInteractorTests: XCTestCase {
     private var mockDelegate: MockISecuritySettingsInteractorDelegate!
 
     private var mockLocalStorage: MockILocalStorage!
-    private var mockAuthManager: MockIAuthManager!
     private var mockWordsManager: MockIWordsManager!
     private var mockSystemInfoManager: MockISystemInfoManager!
 
@@ -20,7 +19,6 @@ class SecuritySettingsInteractorTests: XCTestCase {
         mockDelegate = MockISecuritySettingsInteractorDelegate()
 
         mockLocalStorage = MockILocalStorage()
-        mockAuthManager = MockIAuthManager()
         mockWordsManager = MockIWordsManager()
         mockSystemInfoManager = MockISystemInfoManager()
 
@@ -28,7 +26,7 @@ class SecuritySettingsInteractorTests: XCTestCase {
             when(mock.backedUpSignal.get).thenReturn(backedUpSignal)
         }
 
-        interactor = SecuritySettingsInteractor(localStorage: mockLocalStorage, authManager: mockAuthManager, wordsManager: mockWordsManager, systemInfoManager: mockSystemInfoManager)
+        interactor = SecuritySettingsInteractor(localStorage: mockLocalStorage, wordsManager: mockWordsManager, systemInfoManager: mockSystemInfoManager)
         interactor.delegate = mockDelegate
     }
 
@@ -36,7 +34,6 @@ class SecuritySettingsInteractorTests: XCTestCase {
         mockDelegate = nil
 
         mockLocalStorage = nil
-        mockAuthManager = nil
         mockWordsManager = nil
         mockSystemInfoManager = nil
 
@@ -105,33 +102,6 @@ class SecuritySettingsInteractorTests: XCTestCase {
         interactor.set(biometricUnlockOn: false)
 
         verify(mockLocalStorage).isBiometricOn.set(false)
-    }
-
-    func testUnlink() {
-        stub(mockAuthManager) { mock in
-            when(mock.logout()).thenDoNothing()
-        }
-        stub(mockDelegate) { mock in
-            when(mock.didUnlink()).thenDoNothing()
-        }
-
-        interactor.unlink()
-
-        verify(mockAuthManager).logout()
-        verify(mockDelegate).didUnlink()
-    }
-
-    func testUnlink_error() {
-        struct UnlinkError: Error {}
-
-        stub(mockAuthManager) { mock in
-            when(mock.logout()).thenThrow(UnlinkError())
-        }
-
-        interactor.unlink()
-
-        verify(mockAuthManager).logout()
-        verify(mockDelegate, never()).didUnlink()
     }
 
     func testBackedUpSignal_true() {

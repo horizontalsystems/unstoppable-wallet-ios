@@ -1,10 +1,9 @@
-import Foundation
-
 class RestorePresenter {
-
     private let interactor: IRestoreInteractor
     private let router: IRestoreRouter
     weak var view: IRestoreView?
+
+    private var words = [String]()
 
     init(interactor: IRestoreInteractor, router: IRestoreRouter) {
         self.interactor = interactor
@@ -23,12 +22,17 @@ extension RestorePresenter: IRestoreInteractorDelegate {
         view?.showInvalidWordsError()
     }
 
-    func didValidate() {
-        view?.showConfirmAlert()
+    func didValidate(words: [String]) {
+        self.words = words
+        router.showAgreement()
     }
 
     func didFailToValidate(withError error: Error) {
         view?.showInvalidWordsError()
+    }
+
+    func didConfirmAgreement() {
+        interactor.restore(withWords: words)
     }
 
 }
@@ -45,10 +49,6 @@ extension RestorePresenter: IRestoreViewDelegate {
 
     func cancelDidClick() {
         router.close()
-    }
-
-    func didConfirm(words: [String]) {
-        interactor.restore(withWords: words)
     }
 
 }

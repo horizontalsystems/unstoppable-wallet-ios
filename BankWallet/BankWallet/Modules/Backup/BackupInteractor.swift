@@ -24,6 +24,10 @@ class BackupInteractor {
 
 extension BackupInteractor: IBackupInteractor {
 
+    func setBackedUp() {
+        wordsManager.isBackedUp = true
+    }
+
     func fetchConfirmationIndexes() {
         delegate?.didFetch(confirmationIndexes: randomManager.getRandomIndexes(count: 2))
     }
@@ -42,7 +46,7 @@ extension BackupInteractor: IBackupInteractor {
                 return
             }
         }
-        wordsManager.isBackedUp = true
+
         delegate?.didValidateSuccess()
     }
 
@@ -60,6 +64,14 @@ extension BackupInteractor: IUnlockDelegate {
 
     func onUnlock() {
         fetchWords()
+    }
+
+}
+
+extension BackupInteractor: IAgreementDelegate {
+
+    func onConfirmAgreement() {
+        delegate?.onConfirmAgreement()
     }
 
 }

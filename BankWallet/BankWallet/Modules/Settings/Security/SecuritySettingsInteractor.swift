@@ -6,13 +6,11 @@ class SecuritySettingsInteractor {
     weak var delegate: ISecuritySettingsInteractorDelegate?
 
     private let localStorage: ILocalStorage
-    private let authManager: IAuthManager
     private let wordsManager: IWordsManager
     private let systemInfoManager: ISystemInfoManager
 
-    init(localStorage: ILocalStorage, authManager: IAuthManager, wordsManager: IWordsManager, systemInfoManager: ISystemInfoManager) {
+    init(localStorage: ILocalStorage, wordsManager: IWordsManager, systemInfoManager: ISystemInfoManager) {
         self.localStorage = localStorage
-        self.authManager = authManager
         self.wordsManager = wordsManager
         self.systemInfoManager = systemInfoManager
 
@@ -47,15 +45,6 @@ extension SecuritySettingsInteractor: ISecuritySettingsInteractor {
 
     func set(biometricUnlockOn: Bool) {
         localStorage.isBiometricOn = biometricUnlockOn
-    }
-
-    func unlink() {
-        do {
-            try authManager.logout()
-            delegate?.didUnlink()
-        } catch {
-            // todo
-        }
     }
 
 }

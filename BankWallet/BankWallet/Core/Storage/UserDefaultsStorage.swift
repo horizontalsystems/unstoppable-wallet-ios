@@ -8,7 +8,7 @@ class UserDefaultsStorage: ILocalStorage {
     private let keyBaseBitcoinProvider = "base_bitcoin_provider"
     private let keyBaseEthereumProvider = "base_ethereum_provider"
     private let keyLightMode = "light_mode"
-    private let iUnderstandKey = "i_understand_key"
+    private let agreementAcceptedKey = "i_understand_key"
     private let biometricOnKey = "biometric_on_key"
     private let lastExitDateKey = "last_exit_date_key"
     private let didLaunchOnceKey = "did_launch_once_key"
@@ -62,9 +62,9 @@ class UserDefaultsStorage: ILocalStorage {
         set { set(newValue, for: keyLightMode) }
     }
 
-    var iUnderstand: Bool {
-        get { return bool(for: iUnderstandKey) ?? false }
-        set { set(newValue, for: iUnderstandKey) }
+    var agreementAccepted: Bool {
+        get { return bool(for: agreementAcceptedKey) ?? false }
+        set { set(newValue, for: agreementAcceptedKey) }
     }
 
     var isBiometricOn: Bool {
@@ -88,7 +88,7 @@ class UserDefaultsStorage: ILocalStorage {
         isNewWallet = false
         isBackedUp = false
         lightMode = false
-        iUnderstand = false
+        agreementAccepted = false
         isBiometricOn = false
     }
 

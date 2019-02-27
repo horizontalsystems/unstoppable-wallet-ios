@@ -13,7 +13,7 @@ protocol ILocalStorage: class {
     var baseBitcoinProvider: String? { get set }
     var baseEthereumProvider: String? { get set }
     var lightMode: Bool { get set }
-    var iUnderstand: Bool { get set }
+    var agreementAccepted: Bool { get set }
     var isBiometricOn: Bool { get set }
     var currentLanguage: String? { get set }
     var lastExitDate: Double { get set }

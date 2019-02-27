@@ -34,11 +34,7 @@ extension SecuritySettingsPresenter: ISecuritySettingsViewDelegate {
     }
 
     func didTapUnlink() {
-        view?.showUnlinkConfirmation()
-    }
-
-    func didConfirmUnlink() {
-        interactor.unlink()
+        router.showUnlink()
     }
 
 }
@@ -47,10 +43,6 @@ extension SecuritySettingsPresenter: ISecuritySettingsInteractorDelegate {
 
     func didBackup() {
         view?.set(backedUp: true)
-    }
-
-    func didUnlink() {
-        router.showGuestModule()
     }
 
 }
