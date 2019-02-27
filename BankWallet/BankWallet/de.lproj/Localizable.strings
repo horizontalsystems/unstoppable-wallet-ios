@@ -10,6 +10,7 @@
 "alert.copied" = "Kopiert";
 "alert.confirm" = "Bestätigen";
 "alert.no_internet" = "No Internet";
+"alert.network_issue" = "Network issues. Try again in a short moment";
 
 "biometric_usage_reason" = "Wallet entsperren";
 
