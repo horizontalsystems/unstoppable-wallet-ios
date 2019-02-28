@@ -79,7 +79,7 @@
 "send.fee" = "费用";
 "send.total" = "总额";
 "send.max_button" = "最多";
-"send_erc.alert" = "Transaction fees for %@ (ERC20) paid in Ethereum. You need %@.";
+"send_erc.alert" = "以 Ethereum 支付的 %@ (ERC20) 交易费用。你需要 %@ ETH。";
 
 // Transactions
 
