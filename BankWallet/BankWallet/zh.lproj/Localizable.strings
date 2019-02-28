@@ -9,7 +9,7 @@
 "alert.cancel" = "取消";
 "alert.copied" = "复制成功";
 "alert.confirm" = "确认";
-"alert.no_internet" = "No Internet";
+"alert.no_internet" = "没有网络连接";
 "alert.network_issue" = "Network issues. Try again in a short moment";
 
 "biometric_usage_reason" = "解锁钱包";
