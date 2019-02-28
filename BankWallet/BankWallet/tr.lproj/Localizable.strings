@@ -9,8 +9,8 @@
 "alert.cancel" = "İptal";
 "alert.copied" = "Kopyalandı";
 "alert.confirm" = "Onayla";
-"alert.no_internet" = "No Internet";
-"alert.network_issue" = "Network issues. Try again in a short moment";
+"alert.no_internet" = "Internet Bağlantısı Yok";
+"alert.network_issue" = "Ağ sorunu. Tekrar deneyin.";
 
 "biometric_usage_reason" = "Cüzdan kilidini aç";
 
@@ -79,7 +79,7 @@
 "send.fee" = "Masraf";
 "send.total" = "Toplam";
 "send.max_button" = "Azami";
-"send_erc.alert" = "Transaction fees for %@ (ERC20) paid in Ethereum. You need %@.";
+"send_erc.alert" = "%@ (ERC20) için ișlem ücreti Ethereum hesabından ödenir. Asgari %@ ETH gerekiyor\n";
 
 // Transactions
 
@@ -111,7 +111,7 @@
 "full_info.inputs" = "Girişler";
 "full_info.outputs" = "Çıkışlar";
 "full_info.source" = "Kaynak";
-"full_info.contract" = "Contract";
+"full_info.contract" = "Sözleşme";
 "full_info.from" = "Gönderen";
 "full_info.to" = "Alan";
 "full_info.value" = "Değer";
