@@ -111,7 +111,7 @@
 "full_info.inputs" = "收入";
 "full_info.outputs" = "转出";
 "full_info.source" = "信息源";
-"full_info.contract" = "Contract";
+"full_info.contract" = "合同";
 "full_info.from" = "发件人";
 "full_info.to" = "收件人";
 "full_info.value" = "价值";
