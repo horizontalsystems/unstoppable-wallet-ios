@@ -9,8 +9,8 @@
 "alert.cancel" = "Отменить";
 "alert.copied" = "Скопировано";
 "alert.confirm" = "Подтвердить";
-"alert.no_internet" = "No Internet";
-"alert.network_issue" = "Network issues. Try again in a short moment";
+"alert.no_internet" = "Нет интернета";
+"alert.network_issue" = "Проблемы с сетью. Попробуйте еще раз ";
 
 "biometric_usage_reason" = "Разблокировать";
 
@@ -79,7 +79,7 @@
 "send.fee" = "Комиссия";
 "send.total" = "Итого";
 "send.max_button" = "Макс.";
-"send_erc.alert" = "Transaction fees for %@ (ERC20) paid in Ethereum. You need %@.";
+"send_erc.alert" = "Комиссия за отправку %@ (ERC20) взимается в ETH. Необходимо %@ ETH.\n\n";
 
 // Transactions
 
@@ -111,7 +111,7 @@
 "full_info.inputs" = "Входы";
 "full_info.outputs" = "Выходы";
 "full_info.source" = "Источник";
-"full_info.contract" = "Contract";
+"full_info.contract" = "Контракт";
 "full_info.from" = "От";
 "full_info.to" = "Кому";
 "full_info.value" = "Значение";
