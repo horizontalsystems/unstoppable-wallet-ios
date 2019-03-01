@@ -3,10 +3,12 @@ class GuestInteractor {
 
     private let authManager: IAuthManager
     private let wordsManager: IWordsManager
+    private let systemInfoManager: ISystemInfoManager
 
-    init(authManager: IAuthManager, wordsManager: IWordsManager) {
+    init(authManager: IAuthManager, wordsManager: IWordsManager, systemInfoManager: ISystemInfoManager) {
         self.authManager = authManager
         self.wordsManager = wordsManager
+        self.systemInfoManager = systemInfoManager
     }
 }
 
@@ -21,6 +23,10 @@ extension GuestInteractor: IGuestInteractor {
         } catch {
             delegate?.didFailToCreateWallet(withError: error)
         }
+    }
+
+    var appVersion: String {
+        return systemInfoManager.appVersion
     }
 
 }

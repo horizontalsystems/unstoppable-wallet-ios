@@ -2,6 +2,8 @@ class GuestPresenter {
     private let interactor: IGuestInteractor
     private let router: IGuestRouter
 
+    weak var view: IGuestView?
+
     init(interactor: IGuestInteractor, router: IGuestRouter) {
         self.interactor = interactor
         self.router = router
@@ -23,6 +25,10 @@ extension GuestPresenter: IGuestInteractorDelegate {
 }
 
 extension GuestPresenter: IGuestViewDelegate {
+
+    func viewDidLoad() {
+        view?.set(appVersion: interactor.appVersion)
+    }
 
     func createWalletDidClick() {
         interactor.createWallet()
