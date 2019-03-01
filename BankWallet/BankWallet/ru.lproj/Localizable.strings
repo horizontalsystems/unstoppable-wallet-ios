@@ -114,7 +114,7 @@
 "full_info.contract" = "Контракт";
 "full_info.from" = "От";
 "full_info.to" = "Кому";
-"full_info.value" = "Значение";
+"full_info.amount" = "Amount";
 "full_info.nonce" = "Nonce";
 
 "full_info.gas_limit" = "Gas Limit";
@@ -128,6 +128,7 @@
 "full_info.error.subtitle" = "недоступен";
 "full_info.error.retry" = "Повторить";
 "full_info.error.change_source" = "Сменить Источник";
+"full_info.no_address" = "Empty Address";
 
 // Settings
 
