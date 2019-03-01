@@ -3,8 +3,6 @@ import Cuckoo
 import RxSwift
 @testable import Bank_Dev_T
 
-enum TestError: Int, Error { case error = 1 }
-
 class FullTransactionInfoProviderTests: XCTestCase {
     private var mockApiManager: MockIJSONApiManager!
     private var mockAdapter: MockIFullTransactionInfoAdapter!

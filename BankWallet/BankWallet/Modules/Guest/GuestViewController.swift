@@ -4,9 +4,9 @@ class GuestViewController: UIViewController {
     private let delegate: IGuestViewDelegate
 
     @IBOutlet weak var titleLabel: UILabel?
-    @IBOutlet weak var subtitleLabel: UILabel?
     @IBOutlet weak var createButton: UIButton?
-    @IBOutlet weak var restoreButton: UIButton?
+    @IBOutlet weak var importButton: UIButton?
+    @IBOutlet weak var versionLabel: UILabel?
 
     init(delegate: IGuestViewDelegate) {
         self.delegate = delegate
@@ -20,11 +20,11 @@ class GuestViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        delegate.viewDidLoad()
 
         titleLabel?.text = "guest.title".localized
-        subtitleLabel?.text = "guest.subtitle".localized
         createButton?.setTitle("guest.create_wallet".localized, for: .normal)
-        restoreButton?.setTitle("guest.restore_wallet".localized, for: .normal)
+        importButton?.setTitle("guest.restore_wallet".localized, for: .normal)
     }
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -37,6 +37,14 @@ class GuestViewController: UIViewController {
 
     @IBAction func restoreWalletDidTap() {
         delegate.restoreWalletDidClick()
+    }
+
+}
+
+extension GuestViewController: IGuestView {
+
+    func set(appVersion: String) {
+        versionLabel?.text = appVersion
     }
 
 }

@@ -339,6 +339,7 @@
 		1A5641E8642AA6004640F15C /* SendButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56425E1873BC8574539D2B /* SendButtonItem.swift */; };
 		1A5641EFE66E67F1FCFAABCF /* LatestRate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5640AA47846498D56A36E6 /* LatestRate.swift */; };
 		1A5642019E9D4A25C650F453 /* UnlockPinInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564083CF8DF7A89314820D /* UnlockPinInteractorTests.swift */; };
+		1A564203C389601DBDF8CDFB /* GuestPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56465843CD9981F548A058 /* GuestPresenterTests.swift */; };
 		1A56421861068166E044D0A9 /* BalanceEditCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564DDACAD5CFB092AE6496 /* BalanceEditCell.swift */; };
 		1A56422B4DA1DE0ACD09C4BC /* TransactionInfoModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5643996D67B74F800DFFE4 /* TransactionInfoModule.swift */; };
 		1A5642456ECAEF77788380C5 /* Production.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 1A5648F3AB070B0ACB98C7EE /* Production.xcconfig */; };
@@ -441,6 +442,7 @@
 		1A5649B033524339B93F838E /* Development.template.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 1A5641679DC88BE355F0F3A0 /* Development.template.xcconfig */; };
 		1A5649BB2D3C58F17A04F7EA /* Development.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 1A56433D5D39CCA995F97777 /* Development.xcconfig */; };
 		1A5649C5CA36C74FD2EF4BE9 /* ManageCoinsPresenterStateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5640FA19AF1EC2B9C0F407 /* ManageCoinsPresenterStateTests.swift */; };
+		1A5649F47F8DF39537BB470B /* GuestInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564DB006512443F06D8004 /* GuestInteractorTests.swift */; };
 		1A564A0F7A969658D13D8EDE /* TransactionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5643AAE35C8D8C5DA5924C /* TransactionCell.swift */; };
 		1A564A1D5A4E50A8C5A86FEE /* UnlockPinPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5641742308EC67C1292980 /* UnlockPinPresenter.swift */; };
 		1A564A27A29C3AC7EF21B57D /* OneTimeTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56468BE2370BCAA8BDA2FC /* OneTimeTimer.swift */; };
@@ -1322,6 +1324,7 @@
 		1A56463AFF1D05E33BA25C8A /* BalanceHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BalanceHeaderView.swift; sourceTree = "<group>"; };
 		1A56464DB0EEF75F63C91760 /* TransactionAmountItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionAmountItem.swift; sourceTree = "<group>"; };
 		1A56464E8EDBFB0B67DB593F /* SettingsRightLabelCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsRightLabelCell.swift; sourceTree = "<group>"; };
+		1A56465843CD9981F548A058 /* GuestPresenterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GuestPresenterTests.swift; sourceTree = "<group>"; };
 		1A564679937963085A8530F4 /* CurrencyHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrencyHelper.swift; sourceTree = "<group>"; };
 		1A56468BE2370BCAA8BDA2FC /* OneTimeTimer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OneTimeTimer.swift; sourceTree = "<group>"; };
 		1A56469DF9D0C335228E88EE /* TransactionTitleItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionTitleItemView.swift; sourceTree = "<group>"; };
@@ -1390,6 +1393,7 @@
 		1A564D7FA287326CBE96353A /* ButtonTheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonTheme.swift; sourceTree = "<group>"; };
 		1A564DA173BE95B4681E5395 /* DepositShareButtonItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DepositShareButtonItemView.swift; sourceTree = "<group>"; };
 		1A564DAA99070A03BBC10871 /* LockoutUntilDateFactoryTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LockoutUntilDateFactoryTests.swift; sourceTree = "<group>"; };
+		1A564DB006512443F06D8004 /* GuestInteractorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GuestInteractorTests.swift; sourceTree = "<group>"; };
 		1A564DB37A289E1AEA981458 /* LanguageSettingsInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LanguageSettingsInteractor.swift; sourceTree = "<group>"; };
 		1A564DDACAD5CFB092AE6496 /* BalanceEditCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BalanceEditCell.swift; sourceTree = "<group>"; };
 		1A564E017B299CF4BA6F337C /* UnlockPinModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnlockPinModule.swift; sourceTree = "<group>"; };
@@ -1904,6 +1908,7 @@
 		11B35A1D12389D09984007C1 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				503E42082227E36F00982DFC /* Guest */,
 				1A564387C2E130D390213811 /* Settings */,
 				1A564B2390BF0C3D6886E8E7 /* Pin */,
 				1A564AFD44EE99E8E072D775 /* Balance */,
@@ -2456,6 +2461,16 @@
 				1A56433D5D39CCA995F97777 /* Development.xcconfig */,
 			);
 			path = Configuration;
+			sourceTree = "<group>";
+		};
+		503E42082227E36F00982DFC /* Guest */ = {
+			isa = PBXGroup;
+			children = (
+				1A564DB006512443F06D8004 /* GuestInteractorTests.swift */,
+				1A56465843CD9981F548A058 /* GuestPresenterTests.swift */,
+			);
+			name = Guest;
+			path = "New Group";
 			sourceTree = "<group>";
 		};
 		58AAA02D50A268980DE3A5C7 /* FullTransactionInfo */ = {
@@ -3163,6 +3178,7 @@
 				"$(SRCROOT)/${PROJECT_NAME}/Modules/ManageCoins/ManageCoinsModule.swift",
 				"$(SRCROOT)/${PROJECT_NAME}/Modules/FullTransactionInfo/FullTransactionInfoModule.swift",
 				"$(SRCROOT)/${PROJECT_NAME}/Modules/FullTransactionInfo/DataProvider/DataProviderSettingsModule.swift",
+				"$(SRCROOT)/${PROJECT_NAME}/Modules/Guest/GuestModule.swift",
 			);
 			name = Cuckoo;
 			outputPaths = (
@@ -3547,6 +3563,8 @@
 				58AAA70DA6DB5AE33CA2DBD9 /* FullTransactionInfoProviderFactoryTests.swift in Sources */,
 				1A56429A1D6B9D172E140E1C /* CoinManagerTests.swift in Sources */,
 				1A56435A3F2A592E067EE5CD /* EtherscanEthereumProviderTests.swift in Sources */,
+				1A5649F47F8DF39537BB470B /* GuestInteractorTests.swift in Sources */,
+				1A564203C389601DBDF8CDFB /* GuestPresenterTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
