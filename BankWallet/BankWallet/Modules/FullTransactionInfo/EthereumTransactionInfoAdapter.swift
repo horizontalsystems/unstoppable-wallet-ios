@@ -42,7 +42,7 @@ class EthereumTransactionInfoAdapter: IFullTransactionInfoAdapter {
                 value = weiValue / pow(10, 18)
             }
             let coinValue = CoinValue(coinCode: coin.code, value: value)
-            topSectionItems.append(FullTransactionItem(title: "full_info.value".localized, value: ValueFormatter.instance.format(coinValue: coinValue)))
+            topSectionItems.append(FullTransactionItem(title: "full_info.amount".localized, value: ValueFormatter.instance.format(coinValue: coinValue)))
         }
         if let nonce = txResponse.nonce {
             topSectionItems.append(FullTransactionItem(title: "full_info.nonce".localized, value: "\(nonce)"))
