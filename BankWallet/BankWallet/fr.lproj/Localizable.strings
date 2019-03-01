@@ -114,7 +114,7 @@
 "full_info.contract" = "Contrat";
 "full_info.from" = "De";
 "full_info.to" = "À";
-"full_info.value" = "Valeur";
+"full_info.amount" = "Montant";
 "full_info.nonce" = "Nonce";
 
 "full_info.gas_limit" = "Gas Limit";
@@ -128,6 +128,7 @@
 "full_info.error.subtitle" = "déconnecté";
 "full_info.error.retry" = "Réessayer";
 "full_info.error.change_source" = "Changer la Source";
+"full_info.no_address" = "Adresse vide";
 
 // Settings
 
