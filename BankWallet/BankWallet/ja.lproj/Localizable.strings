@@ -114,7 +114,7 @@
 "full_info.contract" = "Contract";
 "full_info.from" = "差出人";
 "full_info.to" = "宛先";
-"full_info.value" = "値";
+"full_info.amount" = "Amount";
 "full_info.nonce" = "Nonce";
 
 "full_info.gas_limit" = "Gas Limit";
@@ -128,6 +128,7 @@
 "full_info.error.subtitle" = "オフライン";
 "full_info.error.retry" = "リトライ";
 "full_info.error.change_source" = "ソースの変更";
+"full_info.no_address" = "Empty Address";
 
 // Settings
 

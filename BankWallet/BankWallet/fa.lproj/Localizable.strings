@@ -114,7 +114,7 @@
 "full_info.contract" = "Contract";
 "full_info.from" = "از";
 "full_info.to" = "به";
-"full_info.value" = "Value";
+"full_info.amount" = "Amount";
 "full_info.nonce" = "Nonce";
 
 "full_info.gas_limit" = "Gas Limit";
@@ -128,6 +128,7 @@
 "full_info.error.subtitle" = "offline";
 "full_info.error.retry" = "Retry";
 "full_info.error.change_source" = "Change Source";
+"full_info.no_address" = "Empty Address";
 
 // Settings
 
