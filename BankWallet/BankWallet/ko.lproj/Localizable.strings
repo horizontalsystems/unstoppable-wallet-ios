@@ -114,7 +114,7 @@
 "full_info.contract" = "Contract";
 "full_info.from" = "로 부터";
 "full_info.to" = "에게";
-"full_info.value" = "Value";
+"full_info.amount" = "Amount";
 "full_info.nonce" = "Nonce";
 
 "full_info.gas_limit" = "Gas Limit";
@@ -128,6 +128,7 @@
 "full_info.error.subtitle" = "오프라인";
 "full_info.error.retry" = "재시도";
 "full_info.error.change_source" = "출처를 변경하다";
+"full_info.no_address" = "Empty Address";
 
 // Settings
 
