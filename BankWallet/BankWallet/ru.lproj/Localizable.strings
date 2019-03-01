@@ -9,6 +9,8 @@
 "alert.cancel" = "Отменить";
 "alert.copied" = "Скопировано";
 "alert.confirm" = "Подтвердить";
+"alert.no_internet" = "Нет интернета";
+"alert.network_issue" = "Проблемы с сетью. Попробуйте еще раз ";
 
 "biometric_usage_reason" = "Разблокировать";
 
@@ -109,6 +111,7 @@
 "full_info.inputs" = "Входы";
 "full_info.outputs" = "Выходы";
 "full_info.source" = "Источник";
+"full_info.contract" = "Контракт";
 "full_info.from" = "От";
 "full_info.to" = "Кому";
 "full_info.value" = "Значение";
