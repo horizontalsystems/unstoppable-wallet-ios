@@ -61,7 +61,6 @@
 		11B352FF572078C646A92322 /* SendConfirmationAddressItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3522F9D6DB1D04EA92CCE /* SendConfirmationAddressItem.swift */; };
 		11B35303EF169A14070D4AF9 /* RateSyncer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B350C8341DFAF14D974ACC /* RateSyncer.swift */; };
 		11B3530B19A8D80E40AD75EE /* BalanceItemDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35F79F5274A2603296EFF /* BalanceItemDataSource.swift */; };
-		11B35319892846CB42A23599 /* GuestViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 11B35119CB772BB43AE8B1D5 /* GuestViewController.xib */; };
 		11B3531C51A0413CE9E255F2 /* GuestPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B350896FD41EC360BF7C25 /* GuestPresenter.swift */; };
 		11B3532113CCB65C304DDBE4 /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35199A163073996FDE426 /* AuthManager.swift */; };
 		11B35327F187159E57BA638C /* AgreementRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3555B8A1BB021B722B1D6 /* AgreementRouter.swift */; };
@@ -332,6 +331,7 @@
 		1A564121474C094BD9770C13 /* ManageCoinsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5642992929CF74471FE0B4 /* ManageCoinsViewController.swift */; };
 		1A564130F517CD26BF9E8A57 /* LanguageSettingsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564238192BEA3F5470E204 /* LanguageSettingsPresenter.swift */; };
 		1A56415A4BB89B9156C6442D /* Decimal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564D5E55767404ED6C88E0 /* Decimal.swift */; };
+		1A56418DF3DE87FF9F1919BF /* GuestTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564429BCB7A2DCFFE4104F /* GuestTheme.swift */; };
 		1A564191A16F15B25768FF30 /* SendTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564077BF075C35B6FF3BCB /* SendTheme.swift */; };
 		1A5641BD2DA1FB1803D3B044 /* DepositInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5648DA32EA5FC27E4CEF64 /* DepositInteractor.swift */; };
 		1A5641C3B8E88DA8E54FEFEB /* PinDotsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564326AB442FFB65E1CA29 /* PinDotsView.swift */; };
@@ -377,6 +377,7 @@
 		1A564462CB4BF369442CE381 /* TransactionOpenFullInfoItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564181733CBC44EECFBBF3 /* TransactionOpenFullInfoItem.swift */; };
 		1A564467771724BAB0A3CD8A /* PinManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5645B289EFBDB3EAB27E3A /* PinManager.swift */; };
 		1A564469BA136A5532DEF182 /* ManageCoinsTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564A860AD2DA3CFBF9C04A /* ManageCoinsTheme.swift */; };
+		1A564480BBE1C6D86DE8C9F7 /* GuestTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564429BCB7A2DCFFE4104F /* GuestTheme.swift */; };
 		1A564495D5AC5AC6E20B1EB9 /* ManageCoinsInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564ED7C1B06B04230F3C36 /* ManageCoinsInteractor.swift */; };
 		1A564497DCA3CD398FFF0045 /* DepositShareButtonItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564DA173BE95B4681E5395 /* DepositShareButtonItemView.swift */; };
 		1A5645069C88C146A3E6B853 /* ManageCoinsInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5644C4CCD9EBD71BD69D40 /* ManageCoinsInteractorTests.swift */; };
@@ -487,6 +488,7 @@
 		1A564D29C715EE06C30C8B2B /* LaunchInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56458C7C29504755A09E00 /* LaunchInteractor.swift */; };
 		1A564D45DD956D909C7B6C16 /* OneTimeTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56468BE2370BCAA8BDA2FC /* OneTimeTimer.swift */; };
 		1A564D5F202F7ED3AA797E20 /* Production.template.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 1A564370A637B30D34776F2A /* Production.template.xcconfig */; };
+		1A564D60DD2935CBD2B23EF3 /* GuestTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564429BCB7A2DCFFE4104F /* GuestTheme.swift */; };
 		1A564D6E1FB65C20AAD6C54B /* DepositTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56481E8D97841B12893D00 /* DepositTheme.swift */; };
 		1A564D837A9AB8A7EA5EB71A /* LatestRate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5640AA47846498D56A36E6 /* LatestRate.swift */; };
 		1A564D9038D65D88CF97329C /* TransactionTitleItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56469DF9D0C335228E88EE /* TransactionTitleItemView.swift */; };
@@ -882,7 +884,6 @@
 		D38405C1218317DF007D50AD /* MainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D3B62A8920CA40DC005A9F80 /* MainViewController.xib */; };
 		D38405C2218317DF007D50AD /* BackupIntroController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D348A77120C7C58900803B9E /* BackupIntroController.xib */; };
 		D38405C3218317DF007D50AD /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = D3B62A9C20CA73A0005A9F80 /* Localizable.strings */; };
-		D38405C6218317DF007D50AD /* GuestViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 11B35119CB772BB43AE8B1D5 /* GuestViewController.xib */; };
 		D38405C7218317DF007D50AD /* BackupWordsController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D3373DB820C564450082BC4A /* BackupWordsController.xib */; };
 		D38405C8218317DF007D50AD /* BalanceHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1A5646B68188CD13969CE766 /* BalanceHeaderView.xib */; };
 		D38405C9218317DF007D50AD /* BaseTwinItemView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 11B35B5CE0ED32CD93DFBB56 /* BaseTwinItemView.xib */; };
@@ -1074,7 +1075,6 @@
 		D38406B221831B3D007D50AD /* BackupIntroController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D348A77120C7C58900803B9E /* BackupIntroController.xib */; };
 		D38406B321831B3D007D50AD /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = D3B62A9C20CA73A0005A9F80 /* Localizable.strings */; };
 		D38406B521831B3D007D50AD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D3285F4C20BD158F00644076 /* Assets.xcassets */; };
-		D38406B621831B3D007D50AD /* GuestViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 11B35119CB772BB43AE8B1D5 /* GuestViewController.xib */; };
 		D38406B721831B3D007D50AD /* BackupWordsController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D3373DB820C564450082BC4A /* BackupWordsController.xib */; };
 		D38406B821831B3D007D50AD /* BalanceHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1A5646B68188CD13969CE766 /* BalanceHeaderView.xib */; };
 		D38406B921831B3D007D50AD /* BaseTwinItemView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 11B35B5CE0ED32CD93DFBB56 /* BaseTwinItemView.xib */; };
@@ -1122,7 +1122,6 @@
 		11B350DFDC2CC98086520BFA /* TransactionItemDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionItemDataSource.swift; sourceTree = "<group>"; };
 		11B350EB27AD6B432BD7DCD1 /* SendConfirmationAmounItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendConfirmationAmounItem.swift; sourceTree = "<group>"; };
 		11B3511175F5F85BE5677E1A /* BalanceInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BalanceInteractor.swift; sourceTree = "<group>"; };
-		11B35119CB772BB43AE8B1D5 /* GuestViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GuestViewController.xib; sourceTree = "<group>"; };
 		11B3513A0023455D438BAC4C /* BaseTwinItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseTwinItemView.swift; sourceTree = "<group>"; };
 		11B35142DB758C8B2397D115 /* RestoreRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestoreRouter.swift; sourceTree = "<group>"; };
 		11B35199A163073996FDE426 /* AuthManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
@@ -1302,6 +1301,7 @@
 		1A564370A637B30D34776F2A /* Production.template.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = file.template; path = Production.template.xcconfig; sourceTree = "<group>"; };
 		1A5643996D67B74F800DFFE4 /* TransactionInfoModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionInfoModule.swift; sourceTree = "<group>"; };
 		1A5643AAE35C8D8C5DA5924C /* TransactionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionCell.swift; sourceTree = "<group>"; };
+		1A564429BCB7A2DCFFE4104F /* GuestTheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GuestTheme.swift; sourceTree = "<group>"; };
 		1A564447850F619EDD37CBC3 /* SetPinRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetPinRouter.swift; sourceTree = "<group>"; };
 		1A56444A8B170E65EE00C33F /* SecuritySettingsPresenterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecuritySettingsPresenterTests.swift; sourceTree = "<group>"; };
 		1A56445B53883A652362E9D6 /* MainSettingsPresenterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainSettingsPresenterTests.swift; sourceTree = "<group>"; };
@@ -2018,7 +2018,6 @@
 				11B3566ED622AE7606EF76B9 /* GuestInteractor.swift */,
 				11B350896FD41EC360BF7C25 /* GuestPresenter.swift */,
 				11B353D57AB36A9CF4DEE090 /* GuestViewController.swift */,
-				11B35119CB772BB43AE8B1D5 /* GuestViewController.xib */,
 			);
 			path = Guest;
 			sourceTree = "<group>";
@@ -2111,6 +2110,7 @@
 				58AAA98833B2412BBE860CA5 /* TransactionInfoDescriptionTheme.swift */,
 				58AAA452B368DF573BDB2E41 /* RequestErrorTheme.swift */,
 				11B356735664DE743AF097C8 /* AddressButtonTheme.swift */,
+				1A564429BCB7A2DCFFE4104F /* GuestTheme.swift */,
 			);
 			path = Theme;
 			sourceTree = "<group>";
@@ -2765,7 +2765,6 @@
 				D348A77320C7C58900803B9E /* BackupIntroController.xib in Resources */,
 				D3A6D6BE219430BA00D11AFE /* AboutCell.xib in Resources */,
 				D3B62A9A20CA73A0005A9F80 /* Localizable.strings in Resources */,
-				11B35319892846CB42A23599 /* GuestViewController.xib in Resources */,
 				5026000321C3CA280023EEA2 /* Bank Dev T.debug.xcconfig in Resources */,
 				D3373DBA20C564450082BC4A /* BackupWordsController.xib in Resources */,
 				1A564BE5BF0E283B1758F2F0 /* BalanceHeaderView.xib in Resources */,
@@ -2803,7 +2802,6 @@
 				D38405C2218317DF007D50AD /* BackupIntroController.xib in Resources */,
 				D38405C3218317DF007D50AD /* Localizable.strings in Resources */,
 				D3A6D6BF219430BA00D11AFE /* AboutCell.xib in Resources */,
-				D38405C6218317DF007D50AD /* GuestViewController.xib in Resources */,
 				D38405C7218317DF007D50AD /* BackupWordsController.xib in Resources */,
 				5026000421C3CA280023EEA2 /* Bank Dev T.debug.xcconfig in Resources */,
 				D38405C8218317DF007D50AD /* BalanceHeaderView.xib in Resources */,
@@ -2836,7 +2834,6 @@
 				D38406B321831B3D007D50AD /* Localizable.strings in Resources */,
 				D3A6D6C0219430BA00D11AFE /* AboutCell.xib in Resources */,
 				D38406B521831B3D007D50AD /* Assets.xcassets in Resources */,
-				D38406B621831B3D007D50AD /* GuestViewController.xib in Resources */,
 				5026000521C3CA280023EEA2 /* Bank Dev T.debug.xcconfig in Resources */,
 				D38406B721831B3D007D50AD /* BackupWordsController.xib in Resources */,
 				D38406B821831B3D007D50AD /* BalanceHeaderView.xib in Resources */,
@@ -3516,6 +3513,7 @@
 				11B35327F187159E57BA638C /* AgreementRouter.swift in Sources */,
 				11B35702CB29F32BCA3B99F2 /* AgreementInteractor.swift in Sources */,
 				11B35F71F0B69E37BED3D930 /* AgreementModule.swift in Sources */,
+				1A564480BBE1C6D86DE8C9F7 /* GuestTheme.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3894,6 +3892,7 @@
 				11B357281ED1E4C7103A5804 /* AgreementRouter.swift in Sources */,
 				11B35A0794BC9987175C1150 /* AgreementInteractor.swift in Sources */,
 				11B3508E68D010A9507E2A48 /* AgreementModule.swift in Sources */,
+				1A564D60DD2935CBD2B23EF3 /* GuestTheme.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4223,6 +4222,7 @@
 				11B35B63066CCED71B06002F /* AgreementRouter.swift in Sources */,
 				11B350A9DE3A25E834D9C14B /* AgreementInteractor.swift in Sources */,
 				11B35A1FBC85B13DAF063BC3 /* AgreementModule.swift in Sources */,
+				1A56418DF3DE87FF9F1919BF /* GuestTheme.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
