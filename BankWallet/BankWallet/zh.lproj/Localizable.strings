@@ -114,7 +114,7 @@
 "full_info.contract" = "合同";
 "full_info.from" = "发件人";
 "full_info.to" = "收件人";
-"full_info.amount" = "Amount";
+"full_info.amount" = "金额";
 "full_info.nonce" = "Nonce";
 
 "full_info.gas_limit" = "Gas Limit";
@@ -128,7 +128,7 @@
 "full_info.error.subtitle" = "离线";
 "full_info.error.retry" = "重试";
 "full_info.error.change_source" = "更改源";
-"full_info.no_address" = "Empty Address";
+"full_info.no_address" = "空地址";
 
 // Settings
 
