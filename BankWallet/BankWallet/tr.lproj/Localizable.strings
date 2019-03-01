@@ -114,7 +114,7 @@
 "full_info.contract" = "Sözleşme";
 "full_info.from" = "Gönderen";
 "full_info.to" = "Alan";
-"full_info.amount" = "Amount";
+"full_info.amount" = "Tutar";
 "full_info.nonce" = "Nonce";
 
 "full_info.gas_limit" = "Gas Limit";
@@ -128,7 +128,7 @@
 "full_info.error.subtitle" = "çevrimdışı";
 "full_info.error.retry" = "Yeniden Dene";
 "full_info.error.change_source" = "Kaynağı Değiştir";
-"full_info.no_address" = "Empty Address";
+"full_info.no_address" = "Boş adres";
 
 // Settings
 
