@@ -9,6 +9,8 @@
 "alert.cancel" = "キャンセル";
 "alert.copied" = "コピー完了";
 "alert.confirm" = "確定する";
+"alert.no_internet" = "No Internet";
+"alert.network_issue" = "Network issues. Try again in a short moment";
 
 "biometric_usage_reason" = "Unlock wallet";
 
@@ -77,7 +79,7 @@
 "send.fee" = "料金";
 "send.total" = "合計";
 "send.max_button" = "最大";
-"send_erc.alert" = "Transaction fees for %@ (ERC20) paid in ETH. You need %@ ETH.";
+"send_erc.alert" = "Transaction fees for %@ (ERC20) paid in Ethereum. You need %@.";
 
 // Transactions
 
@@ -109,6 +111,7 @@
 "full_info.inputs" = "入力";
 "full_info.outputs" = "出力";
 "full_info.source" = "ソース";
+"full_info.contract" = "Contract";
 "full_info.from" = "差出人";
 "full_info.to" = "宛先";
 "full_info.value" = "値";

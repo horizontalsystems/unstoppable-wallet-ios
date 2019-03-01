@@ -9,6 +9,8 @@
 "alert.cancel" = "Annuler";
 "alert.copied" = "Copié";
 "alert.confirm" = "Confirmer";
+"alert.no_internet" = "Aucune connexion Internet";
+"alert.network_issue" = "Problèmes réseau. Réessayez";
 
 "biometric_usage_reason" = "Déverrouiller le porte-monnaie";
 
@@ -77,7 +79,7 @@
 "send.fee" = "Frais";
 "send.total" = "Total";
 "send.max_button" = "Max";
-"send_erc.alert" = "Frais de transaction pour %@ (ERC20) payé en ETH. Il est nécessaire %@ ETH.";
+"send_erc.alert" = "Frais de transaction pour %@ (ERC20) payé en Ethereum. Il est nécessaire %@ ETH.";
 
 // Transactions
 
@@ -109,6 +111,7 @@
 "full_info.inputs" = "Entrées";
 "full_info.outputs" = "Sorties";
 "full_info.source" = "Source";
+"full_info.contract" = "Contrat";
 "full_info.from" = "De";
 "full_info.to" = "À";
 "full_info.value" = "Valeur";

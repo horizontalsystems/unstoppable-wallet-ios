@@ -9,6 +9,8 @@
 "alert.cancel" = "انصراف";
 "alert.copied" = "کپی انجام شد";
 "alert.confirm" = "تأیید";
+"alert.no_internet" = "No Internet";
+"alert.network_issue" = "Network issues. Try again in a short moment";
 
 "biometric_usage_reason" = "باز كردن كيف پول";
 
@@ -77,7 +79,7 @@
 "send.fee" = "هزينه";
 "send.total" = "مجموع";
 "send.max_button" = "Max";
-"send_erc.alert" = "Transaction fees for %@ (ERC20) paid in ETH. You need %@ ETH.";
+"send_erc.alert" = "Transaction fees for %@ (ERC20) paid in Ethereum. You need %@.";
 
 // Transactions
 
@@ -109,6 +111,7 @@
 "full_info.inputs" = "Inputs";
 "full_info.outputs" = "Outputs";
 "full_info.source" = "Source";
+"full_info.contract" = "Contract";
 "full_info.from" = "از";
 "full_info.to" = "به";
 "full_info.value" = "Value";

@@ -9,6 +9,8 @@
 "alert.cancel" = "Cancelar";
 "alert.copied" = "Copiado";
 "alert.confirm" = "Confirmar";
+"alert.no_internet" = "Sin conexión a Internet";
+"alert.network_issue" = "Problemas de red. Inténtelo de nuevo";
 
 "biometric_usage_reason" = "Desbloquear cartera";
 
@@ -77,7 +79,7 @@
 "send.fee" = "Comisión";
 "send.total" = "Total";
 "send.max_button" = "Máx.";
-"send_erc.alert" = "Tarifas de transacción para %@ (ERC20) pagado en ETH. Es necesario %@ ETH.";
+"send_erc.alert" = "Tarifas de transacción para %@ (ERC20) pagado en Ethereum. Es necesario %@ ETH.";
 
 // Transactions
 
@@ -109,6 +111,7 @@
 "full_info.inputs" = "Aportaciones";
 "full_info.outputs" = "Rendimientos";
 "full_info.source" = "Origen";
+"full_info.contract" = "Contrato";
 "full_info.from" = "Desde ";
 "full_info.to" = "Para";
 "full_info.value" = "Valor";
