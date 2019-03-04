@@ -26,6 +26,7 @@
 "guest.subtitle" = "Decentralized App";
 "guest.create_wallet" = "Wallet Erstellen";
 "guest.restore_wallet" = "Wallet Wiederherstellen";
+"guest.version" = "version %@";
 
 // Restore
 
