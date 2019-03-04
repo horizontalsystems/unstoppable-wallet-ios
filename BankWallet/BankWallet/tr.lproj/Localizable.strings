@@ -26,6 +26,7 @@
 "guest.subtitle" = "Decentralized App";
 "guest.create_wallet" = "Yeni Cüzdan";
 "guest.restore_wallet" = "Cüzdanı Geri Yükle";
+"guest.version" = "version %@";
 
 // Restore
 
