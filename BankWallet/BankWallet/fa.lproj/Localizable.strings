@@ -26,6 +26,7 @@
 "guest.subtitle" = "Decentralized app";
 "guest.create_wallet" = "کیف پول جدید";
 "guest.restore_wallet" = "بازگرداندن كيف پول";
+"guest.version" = "version %@";
 
 // Restore
 
