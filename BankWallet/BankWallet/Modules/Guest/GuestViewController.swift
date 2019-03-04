@@ -97,7 +97,7 @@ class GuestViewController: UIViewController {
 extension GuestViewController: IGuestView {
 
     func set(appVersion: String) {
-        versionLabel.text = appVersion
+        versionLabel.text = "guest.version".localized(appVersion)
     }
 
 }

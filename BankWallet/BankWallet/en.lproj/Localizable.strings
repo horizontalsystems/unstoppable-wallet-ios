@@ -28,6 +28,7 @@ Go to Settings - > Bank and allow access to Camera.";
 "guest.subtitle" = "Decentralized App";
 "guest.create_wallet" = "New Wallet";
 "guest.restore_wallet" = "Restore Wallet";
+"guest.version" = "version %@";
 
 // Restore
 
