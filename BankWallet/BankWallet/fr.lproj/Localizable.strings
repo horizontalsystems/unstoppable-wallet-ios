@@ -26,6 +26,7 @@
 "guest.subtitle" = "Decentralized app";
 "guest.create_wallet" = "Nouveau porte-monnaie";
 "guest.restore_wallet" = "Restaurer le porte-monnaie";
+"guest.version" = "version %@";
 
 // Restore
 
