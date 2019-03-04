@@ -26,6 +26,7 @@
 "guest.subtitle" = "분산하된 어플";
 "guest.create_wallet" = "새 지갑";
 "guest.restore_wallet" = "지갑 복원";
+"guest.version" = "version %@";
 
 // Restore
 
