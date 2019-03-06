@@ -73,6 +73,7 @@
 
 "send.title" = "Отправить %@";
 "send.address_placeholder" = "Адрес";
+"send.to_address" = "@";
 "send.amount_error.balance" = "Баланс %@";
 "send.send_button" = "Отправить";
 "send.paste_button" = "Вставить";
