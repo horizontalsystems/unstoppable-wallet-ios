@@ -6,6 +6,8 @@ class SendFeeItem: BaseActionItem {
     var bindConvertedFee: ((String?) -> ())?
     var bindError: ((String?) -> ())?
 
+    var onFeeMultiplierChange: ((Decimal) -> ())?
+
     init(tag: Int) {
         super.init(cellType: SendFeeItemView.self, tag: tag, required: true)
 

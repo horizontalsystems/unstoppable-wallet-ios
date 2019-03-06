@@ -135,7 +135,7 @@ class SendAmountItemView: BaseActionItemView {
         errorLabel.textColor = SendTheme.errorColor
         errorLabel.snp.makeConstraints { maker in
             maker.leading.equalToSuperview().offset(SendTheme.holderLeadingPadding)
-            maker.top.equalTo(lineView).offset(SendTheme.smallMargin)
+            maker.top.equalTo(lineView).offset(SendTheme.amountErrorLabelTopMargin)
             maker.trailing.equalTo(lineView)
         }
 

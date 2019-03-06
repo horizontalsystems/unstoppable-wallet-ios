@@ -86,7 +86,7 @@ class SendFeeItemView: BaseActionItemView {
     }
 
     @objc func sliderShift() {
-        print("slider value: \(feeSlider.value)")
+        item?.onFeeMultiplierChange?(Decimal(Double(feeSlider.value)))
     }
 
 }

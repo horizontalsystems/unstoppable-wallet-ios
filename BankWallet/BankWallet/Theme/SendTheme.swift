@@ -14,7 +14,7 @@ class SendTheme {
     static let holderBorderColor: UIColor = .cryptoSteel20
     static var holderBackground: UIColor { return .crypto_SteelDark_White }
     static let holderLeadingPadding: CGFloat = 12
-    static let holderTopPadding: CGFloat = 9
+    static let holderTopPadding: CGFloat = 8
 
     static var buttonBackground: RespondButton.Style { return [.active: .crypto_Steel20_LightBackground, .selected: .crypto_Steel40_LightGray, .disabled: UIColor.crypto_Steel20_LightBackground] }
     static let buttonBorderColor = UIColor.cryptoSteel20
@@ -43,12 +43,13 @@ class SendTheme {
     static let amountHintFont: UIFont = .cryptoCaption3
     static let amountHintColor: UIColor = .cryptoGray
     static let amountTopMargin: CGFloat = 5
+    static let amountErrorLabelTopMargin: CGFloat = 4
 
     static let addressHeight: CGFloat = 56
     static let addressFont: UIFont = .cryptoBody2
     static var addressColor: UIColor { return .crypto_Bars_Dark }
     static let addressHintColor: UIColor = .cryptoSteel40
-    static let addressErrorTopMargin: CGFloat = 3
+    static let addressErrorTopMargin: CGFloat = 2
     static let addressToLabelTextColor: UIColor = .cryptoGray
 
     static let feeTitleTopMargin: CGFloat = 11
