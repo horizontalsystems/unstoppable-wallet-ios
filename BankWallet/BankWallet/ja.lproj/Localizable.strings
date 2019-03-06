@@ -73,6 +73,7 @@
 
 "send.title" = "%@ を送る";
 "send.address_placeholder" = "住所";
+"send.to_address" = "@";
 "send.amount_error.balance" = "残高 %@";
 "send.send_button" = "送る";
 "send.paste_button" = "貼付け";
