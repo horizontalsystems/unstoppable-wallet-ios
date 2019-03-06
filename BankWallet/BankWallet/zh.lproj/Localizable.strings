@@ -73,6 +73,7 @@
 
 "send.title" = "发送%@";
 "send.address_placeholder" = "地址";
+"send.to_address" = "@";
 "send.amount_error.balance" = "余额%@";
 "send.send_button" = "发送​​";
 "send.paste_button" = "粘帖";
