@@ -73,6 +73,7 @@
 
 "send.title" = "전송 %@";
 "send.address_placeholder" = "주소";
+"send.to_address" = "@";
 "send.amount_error.balance" = "잔액%@";
 "send.send_button" = "전송";
 "send.paste_button" = "붙여넣기";
