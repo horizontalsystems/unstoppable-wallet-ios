@@ -73,6 +73,7 @@
 
 "send.title" = "Envoyer %@";
 "send.address_placeholder" = "Adresse";
+"send.to_address" = "@";
 "send.amount_error.balance" = "Balance %@";
 "send.send_button" = "Envoyer";
 "send.paste_button" = "Coller";
