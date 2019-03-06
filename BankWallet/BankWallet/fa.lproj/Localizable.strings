@@ -73,6 +73,7 @@
 
 "send.title" = "ارسال%@";
 "send.address_placeholder" = "آدرس";
+"send.to_address" = "@";
 "send.amount_error.balance" = "مانده حساب %@";
 "send.send_button" = "ارسال";
 "send.paste_button" = "جای‌گذاری";
