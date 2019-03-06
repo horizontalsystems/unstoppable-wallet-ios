@@ -11,6 +11,7 @@ class SendAddressItem: BaseActionItem {
     init(tag: Int) {
         super.init(cellType: SendAddressItemView.self, tag: tag, required: true)
 
+        showSeparator = false
         height = SendTheme.addressHeight
     }
 

@@ -13,7 +13,7 @@ class SendButtonItemView: BaseButtonItemView {
 
         button.snp.makeConstraints { maker in
             maker.leading.equalToSuperview().offset(SendTheme.margin)
-            maker.bottom.equalToSuperview().offset(-SendTheme.margin)
+            maker.bottom.equalToSuperview().offset(-SendTheme.mediumMargin)
             maker.trailing.equalToSuperview().offset(-SendTheme.margin)
             maker.height.equalTo(SendTheme.sendButtonHeight)
         }

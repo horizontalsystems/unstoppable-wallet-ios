@@ -23,6 +23,7 @@ class SendAmountItem: BaseActionItem {
     init(tag: Int) {
         super.init(cellType: SendAmountItemView.self, tag: tag, required: true)
 
+        showSeparator = false
         height = SendTheme.amountHeight
     }
 

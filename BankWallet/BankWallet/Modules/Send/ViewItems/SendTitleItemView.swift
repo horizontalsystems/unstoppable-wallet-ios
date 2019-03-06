@@ -14,14 +14,14 @@ class SendTitleItemView: BaseActionItemView {
 
         addSubview(iconImageView)
         iconImageView.snp.makeConstraints { maker in
-            maker.leading.top.equalToSuperview().offset(SendTheme.margin)
+            maker.leading.top.equalToSuperview().offset(SendTheme.mediumMargin)
         }
 
         titleLabel.font = SendTheme.titleFont
         titleLabel.textColor = SendTheme.titleColor
         addSubview(titleLabel)
         titleLabel.snp.makeConstraints { maker in
-            maker.leading.equalTo(self.iconImageView.snp.trailing).offset(SendTheme.margin)
+            maker.leading.equalTo(self.iconImageView.snp.trailing).offset(SendTheme.mediumMargin)
             maker.centerY.equalTo(self.iconImageView.snp.centerY)
         }
 

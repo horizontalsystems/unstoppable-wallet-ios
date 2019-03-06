@@ -17,6 +17,8 @@ class AmountTextField: UITextField {
 class SendAmountItemView: BaseActionItemView {
     private let disposeBag = DisposeBag()
 
+    private let holderView = UIView()
+
     private let amountTypeLabel = UILabel()
     private let inputField = AmountTextField()
     private let lineView = UIView()
@@ -31,22 +33,35 @@ class SendAmountItemView: BaseActionItemView {
     override func initView() {
         super.initView()
 
-        backgroundColor = SendTheme.itemBackground
+        backgroundColor = .clear
 
-        addSubview(amountTypeLabel)
-        addSubview(lineView)
-        addSubview(maxButton)
-        addSubview(inputField)
-        addSubview(switchButton)
-        addSubview(hintLabel)
-        addSubview(errorLabel)
+        addSubview(holderView)
+
+        holderView.addSubview(amountTypeLabel)
+        holderView.addSubview(lineView)
+        holderView.addSubview(maxButton)
+        holderView.addSubview(inputField)
+        holderView.addSubview(switchButton)
+        holderView.addSubview(hintLabel)
+        holderView.addSubview(errorLabel)
         switchButton.addSubview(switchButtonIcon)
+
+        holderView.layer.cornerRadius = SendTheme.holderCornerRadius
+        holderView.layer.borderWidth = SendTheme.holderBorderWidth
+        holderView.layer.borderColor = SendTheme.holderBorderColor.cgColor
+        holderView.backgroundColor = SendTheme.holderBackground
+        holderView.snp.makeConstraints { maker in
+            maker.leading.equalToSuperview().offset(SendTheme.margin)
+            maker.trailing.equalToSuperview().offset(-SendTheme.margin)
+            maker.top.equalToSuperview().offset(SendTheme.holderTopMargin)
+            maker.bottom.equalToSuperview()
+        }
 
         amountTypeLabel.font = SendTheme.amountFont
         amountTypeLabel.textColor = SendTheme.amountColor
         amountTypeLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         amountTypeLabel.snp.makeConstraints { maker in
-            maker.leading.equalToSuperview().offset(SendTheme.margin)
+            maker.leading.equalToSuperview().offset(SendTheme.holderLeadingPadding)
         }
 
         lineView.backgroundColor = SendTheme.amountLineColor
@@ -67,15 +82,15 @@ class SendAmountItemView: BaseActionItemView {
         maxButton.textColors = [.active: SendTheme.buttonIconColor, .selected: SendTheme.buttonIconColor]
         maxButton.titleLabel.font = SendTheme.buttonFont
         maxButton.titleLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
-        maxButton.snp.makeConstraints { maker in
+        maxButton.snp.makeConstraints { maker in //constraints need to be set on init
             maker.leading.equalTo(lineView.snp.trailing).offset(SendTheme.smallMargin)
-            maker.centerY.equalTo(lineView)
+            maker.centerY.equalToSuperview()
             maker.height.equalTo(SendTheme.buttonSize)
         }
         maxButton.titleLabel.snp.remakeConstraints { maker in
-            maker.leading.equalToSuperview().offset(SendTheme.buttonTitleHorizontalMargin)
+            maker.leading.equalToSuperview().offset(SendTheme.smallMargin)
             maker.top.bottom.equalToSuperview()
-            maker.trailing.equalToSuperview().offset(-SendTheme.buttonTitleHorizontalMargin)
+            maker.trailing.equalToSuperview().offset(-SendTheme.smallMargin)
         }
 
         inputField.inputView = UIView()
@@ -88,7 +103,7 @@ class SendAmountItemView: BaseActionItemView {
         inputField.snp.makeConstraints { maker in
             maker.centerY.equalTo(amountTypeLabel.snp.centerY)
             maker.leading.equalTo(amountTypeLabel.snp.trailing).offset(SendTheme.smallMargin)
-            maker.top.equalToSuperview().offset(SendTheme.margin)
+            maker.top.equalToSuperview().offset(SendTheme.holderTopPadding)
             maker.trailing.equalTo(lineView)
         }
 
@@ -97,8 +112,8 @@ class SendAmountItemView: BaseActionItemView {
         switchButton.cornerRadius = SendTheme.buttonCornerRadius
         switchButton.backgrounds = SendTheme.buttonBackground
         switchButton.snp.makeConstraints { maker in
-            maker.trailing.equalToSuperview().offset(-SendTheme.margin)
-            maker.centerY.equalTo(lineView.snp.centerY)
+            maker.trailing.equalToSuperview().offset(-SendTheme.switchRightMargin)
+            maker.centerY.equalToSuperview()
             maker.leading.equalTo(maxButton.snp.trailing).offset(SendTheme.smallMargin)
             maker.size.equalTo(SendTheme.buttonSize)
         }
@@ -111,15 +126,15 @@ class SendAmountItemView: BaseActionItemView {
         hintLabel.font = SendTheme.amountHintFont
         hintLabel.textColor = SendTheme.amountHintColor
         hintLabel.snp.makeConstraints { maker in
-            maker.leading.equalToSuperview().offset(SendTheme.margin)
-            maker.top.equalTo(lineView).offset(SendTheme.smallMargin)
+            maker.leading.equalToSuperview().offset(SendTheme.holderLeadingPadding)
+            maker.top.equalTo(lineView).offset(SendTheme.amountTopMargin)
             maker.trailing.equalTo(lineView)
         }
 
         errorLabel.font = SendTheme.errorFont
         errorLabel.textColor = SendTheme.errorColor
         errorLabel.snp.makeConstraints { maker in
-            maker.leading.equalToSuperview().offset(SendTheme.margin)
+            maker.leading.equalToSuperview().offset(SendTheme.holderLeadingPadding)
             maker.top.equalTo(lineView).offset(SendTheme.smallMargin)
             maker.trailing.equalTo(lineView)
         }
@@ -193,11 +208,11 @@ class SendAmountItemView: BaseActionItemView {
         maxButton.snp.remakeConstraints { maker in
             if text.count == 0 {
                 maker.leading.equalTo(lineView.snp.trailing).offset(SendTheme.smallMargin)
-                maker.centerY.equalTo(lineView)
+                maker.centerY.equalToSuperview()
                 maker.height.equalTo(SendTheme.buttonSize)
             } else {
                 maker.leading.equalTo(lineView.snp.trailing).offset(0)
-                maker.centerY.equalTo(lineView)
+                maker.centerY.equalToSuperview()
                 maker.height.equalTo(SendTheme.buttonSize)
                 maker.width.equalTo(0)
             }
