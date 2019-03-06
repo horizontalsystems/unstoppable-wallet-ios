@@ -3,10 +3,19 @@ import GrouviExtensions
 import GrouviActionSheet
 import SnapKit
 
+class TappableSlider: UISlider {
+    override func beginTracking(_ touch: UITouch, with event: UIEvent?) -> Bool {
+        return true
+    }
+}
+
 class SendFeeItemView: BaseActionItemView {
     private let feeLabel = UILabel()
     private let convertedFeeLabel = UILabel()
     private let errorLabel = UILabel()
+    private let feeSlider = TappableSlider()
+    private let feeSliderSlowImageView = UIImageView(image: UIImage(named: "Fee Slider Slow"))
+    private let feeSliderFastImageView = UIImageView(image: UIImage(named: "Fee Slider Fast"))
 
     override var item: SendFeeItem? { return _item as? SendFeeItem }
 
@@ -16,11 +25,15 @@ class SendFeeItemView: BaseActionItemView {
         addSubview(feeLabel)
         addSubview(errorLabel)
         addSubview(convertedFeeLabel)
+        addSubview(feeSlider)
+        addSubview(feeSliderSlowImageView)
+        addSubview(feeSliderFastImageView)
 
         feeLabel.font = SendTheme.feeFont
         feeLabel.textColor = SendTheme.feeColor
         feeLabel.snp.makeConstraints { maker in
-            maker.leading.top.equalToSuperview().offset(SendTheme.margin)
+            maker.leading.equalToSuperview().offset(SendTheme.margin)
+            maker.top.equalToSuperview().offset(SendTheme.feeTitleTopMargin)
         }
 
         convertedFeeLabel.font = SendTheme.feeFont
@@ -39,6 +52,26 @@ class SendFeeItemView: BaseActionItemView {
             maker.leading.equalToSuperview().offset(SendTheme.margin)
             maker.top.equalToSuperview().offset(SendTheme.smallMargin)
             maker.trailing.equalToSuperview().offset(-SendTheme.margin)
+            maker.bottom.equalToSuperview().offset(-SendTheme.smallMargin)
+        }
+
+        feeSliderSlowImageView.snp.makeConstraints { maker in
+            maker.leading.equalToSuperview().offset(SendTheme.margin)
+            maker.top.equalTo(self.feeLabel.snp.bottom).offset(SendTheme.feeSliderTopMargin)
+        }
+        feeSliderFastImageView.snp.makeConstraints { maker in
+            maker.trailing.equalToSuperview().offset(-SendTheme.margin)
+            maker.centerY.equalTo(self.feeSliderSlowImageView)
+        }
+        feeSlider.value = 0.5
+        feeSlider.minimumTrackTintColor = SendTheme.feeSliderTint
+        feeSlider.maximumTrackTintColor = SendTheme.feeSliderBackground
+        feeSlider.setThumbImage(UIImage(named: "Fee Slider Thumb Image")?.tinted(with: SendTheme.feeSliderThumbColor), for: .normal)
+        feeSlider.addTarget(self, action: #selector(sliderShift), for: .valueChanged)
+        feeSlider.snp.makeConstraints { maker in
+            maker.leading.equalTo(feeSliderSlowImageView.snp.trailing).offset(SendTheme.mediumMargin)
+            maker.trailing.equalTo(feeSliderFastImageView.snp.leading).offset(-SendTheme.mediumMargin)
+            maker.centerY.equalTo(self.feeSliderSlowImageView)
         }
 
         item?.bindFee = { [weak self] in
@@ -50,6 +83,10 @@ class SendFeeItemView: BaseActionItemView {
         item?.bindError = { [weak self] in
             self?.errorLabel.text = $0
         }
+    }
+
+    @objc func sliderShift() {
+        item?.onFeeMultiplierChange?(Decimal(Double(feeSlider.value)))
     }
 
 }

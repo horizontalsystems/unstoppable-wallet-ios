@@ -4,6 +4,7 @@ import GrouviActionSheet
 import SnapKit
 
 class SendAddressItemView: BaseActionItemView {
+    private let holderView = UIView()
     private let addressWrapperView = UIView()
     private let addressLabel = UILabel()
     private let errorLabel = UILabel()
@@ -18,16 +19,29 @@ class SendAddressItemView: BaseActionItemView {
     override func initView() {
         super.initView()
 
-        backgroundColor = SendTheme.itemBackground
+        backgroundColor = .clear
 
-        addSubview(addressWrapperView)
+        addSubview(holderView)
+
+        holderView.addSubview(addressWrapperView)
         addressWrapperView.addSubview(addressLabel)
         addressWrapperView.addSubview(errorLabel)
-        addSubview(scanButton)
+        holderView.addSubview(scanButton)
         scanButton.addSubview(scanButtonIcon)
-        addSubview(deleteButton)
+        holderView.addSubview(deleteButton)
         deleteButton.addSubview(deleteButtonIcon)
-        addSubview(pasteButton)
+        holderView.addSubview(pasteButton)
+
+        holderView.layer.cornerRadius = SendTheme.holderCornerRadius
+        holderView.layer.borderWidth = SendTheme.holderBorderWidth
+        holderView.layer.borderColor = SendTheme.holderBorderColor.cgColor
+        holderView.backgroundColor = SendTheme.holderBackground
+        holderView.snp.makeConstraints { maker in
+            maker.leading.equalToSuperview().offset(SendTheme.margin)
+            maker.trailing.equalToSuperview().offset(-SendTheme.margin)
+            maker.top.equalToSuperview().offset(SendTheme.holderTopMargin)
+            maker.bottom.equalToSuperview()
+        }
 
         addressLabel.font = SendTheme.addressFont
         addressLabel.lineBreakMode = .byTruncatingMiddle
@@ -44,14 +58,14 @@ class SendAddressItemView: BaseActionItemView {
         pasteButton.titleLabel.font = SendTheme.buttonFont
         pasteButton.titleLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         pasteButton.snp.makeConstraints { maker in
-            maker.trailing.equalToSuperview().offset(-SendTheme.margin)
-            maker.top.equalToSuperview().offset(SendTheme.margin)
+            maker.trailing.equalToSuperview().offset(-SendTheme.switchRightMargin)
+            maker.centerY.equalToSuperview()
             maker.height.equalTo(SendTheme.buttonSize)
         }
         pasteButton.titleLabel.snp.remakeConstraints { maker in
-            maker.leading.equalToSuperview().offset(SendTheme.buttonTitleHorizontalMargin)
+            maker.leading.equalToSuperview().offset(SendTheme.smallMargin)
             maker.top.bottom.equalToSuperview()
-            maker.trailing.equalToSuperview().offset(-SendTheme.buttonTitleHorizontalMargin)
+            maker.trailing.equalToSuperview().offset(-SendTheme.smallMargin)
         }
 
         scanButton.borderWidth = 1 / UIScreen.main.scale
@@ -61,7 +75,8 @@ class SendAddressItemView: BaseActionItemView {
         scanButton.snp.makeConstraints { maker in
             maker.trailing.equalTo(pasteButton.snp.leading).offset(-SendTheme.smallMargin)
             maker.centerY.equalTo(pasteButton.snp.centerY)
-            maker.size.equalTo(SendTheme.buttonSize)
+            maker.height.equalTo(SendTheme.buttonSize)
+            maker.width.equalTo(SendTheme.scanButtonWidth)
         }
 
         scanButtonIcon.image = UIImage(named: "Send Scan Icon")?.tinted(with: SendTheme.buttonIconColor)
@@ -74,8 +89,7 @@ class SendAddressItemView: BaseActionItemView {
         deleteButton.cornerRadius = SendTheme.buttonCornerRadius
         deleteButton.backgrounds = SendTheme.buttonBackground
         deleteButton.snp.makeConstraints { maker in
-            maker.trailing.equalToSuperview().offset(-SendTheme.margin)
-            maker.top.equalToSuperview().offset(SendTheme.margin)
+            maker.trailing.equalTo(self.pasteButton)
             maker.centerY.equalTo(pasteButton.snp.centerY)
             maker.size.equalTo(SendTheme.buttonSize)
         }
@@ -105,9 +119,10 @@ class SendAddressItemView: BaseActionItemView {
             deleteButton.isHidden = false
 
             addressWrapperView.snp.remakeConstraints { maker in
-                maker.leading.equalToSuperview().offset(SendTheme.margin)
+                maker.leading.equalToSuperview().offset(SendTheme.mediumMargin)
                 maker.centerY.equalTo(deleteButton.snp.centerY)
-                maker.trailing.equalTo(deleteButton.snp.leading).offset(-SendTheme.margin)
+
+                maker.trailing.equalTo(deleteButton.snp.leading).offset(-SendTheme.mediumMargin)
             }
         } else {
             addressLabel.text = "send.address_placeholder".localized
@@ -117,9 +132,10 @@ class SendAddressItemView: BaseActionItemView {
             deleteButton.isHidden = true
 
             addressWrapperView.snp.remakeConstraints { maker in
-                maker.leading.equalToSuperview().offset(SendTheme.margin)
+                maker.leading.equalToSuperview().offset(SendTheme.mediumMargin)
                 maker.centerY.equalTo(pasteButton.snp.centerY)
-                maker.trailing.equalTo(pasteButton.snp.leading).offset(-SendTheme.margin)
+
+                maker.trailing.equalTo(pasteButton.snp.leading).offset(-SendTheme.mediumMargin)
             }
         }
 
@@ -128,7 +144,7 @@ class SendAddressItemView: BaseActionItemView {
             errorLabel.text = error
 
             addressLabel.snp.remakeConstraints { maker in
-                maker.leading.top.trailing.equalToSuperview()
+                maker.leading.top.equalToSuperview()
             }
             errorLabel.snp.remakeConstraints { maker in
                 maker.leading.bottom.trailing.equalToSuperview()
@@ -137,7 +153,7 @@ class SendAddressItemView: BaseActionItemView {
         } else {
             errorLabel.isHidden = true
             addressLabel.snp.remakeConstraints { maker in
-                maker.edges.equalToSuperview()
+                maker.leading.top.bottom.equalToSuperview()
             }
         }
 

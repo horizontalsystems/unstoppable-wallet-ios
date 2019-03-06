@@ -67,6 +67,9 @@ class SendViewController: ActionSheetController {
             self?.amountItem.removeLetter?()
         }
 
+        feeItem.onFeeMultiplierChange = { [weak self] value in
+            self?.delegate.onFeeMultiplierChange(value: value)
+        }
 //        delegate.onViewDidLoad()
     }
 

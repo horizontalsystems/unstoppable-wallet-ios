@@ -75,6 +75,7 @@ Go to Settings - > Bank and allow access to Camera.";
 
 "send.title" = "Send %@";
 "send.address_placeholder" = "Address";
+"send.to_address" = "@";
 "send.amount_error.balance" = "Balance %@";
 "send.send_button" = "Send";
 "send.paste_button" = "Paste";

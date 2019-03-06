@@ -21,7 +21,7 @@ class AppTheme {
         get {
             return ActionSheetThemeConfig(
                     actionStyle: .sheet(showDismiss: false),
-                    topMargin: 8,
+                    topMargin: 0,
                     cornerRadius: 16,
                     separatorColor: UIColor.crypto_Steel40OnDark_Steel20,
                     backgroundStyle: .blur(intensity: 0.55, style: AppTheme.actionSheetBlurStyle))

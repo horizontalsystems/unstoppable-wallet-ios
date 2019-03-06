@@ -169,4 +169,8 @@ extension SendPresenter: ISendViewDelegate {
         }
     }
 
+    func onFeeMultiplierChange(value: Decimal) {
+        print("change fee multiplier: \(value)")
+    }
+
 }

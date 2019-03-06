@@ -38,6 +38,7 @@ protocol ISendViewDelegate {
     func onMaxClicked()
 
     func onPasteAmountClicked()
+    func onFeeMultiplierChange(value: Decimal)
 }
 
 protocol ISendInteractor {
