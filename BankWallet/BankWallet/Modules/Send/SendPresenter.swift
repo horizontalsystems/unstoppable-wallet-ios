@@ -52,6 +52,10 @@ extension SendPresenter: ISendInteractorDelegate {
 
 extension SendPresenter: ISendViewDelegate {
 
+    var isFeeAdjustable: Bool {
+        return true
+    }
+
     func onViewDidLoad() {
         interactor.fetchRate()
 

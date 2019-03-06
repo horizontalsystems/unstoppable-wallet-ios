@@ -29,11 +29,17 @@ class SendFeeItemView: BaseActionItemView {
         addSubview(feeSliderSlowImageView)
         addSubview(feeSliderFastImageView)
 
+        if let item = item {
+            feeSlider.isHidden = !item.isFeeAdjustable
+            feeSliderSlowImageView.isHidden = !item.isFeeAdjustable
+            feeSliderFastImageView.isHidden = !item.isFeeAdjustable
+        }
         feeLabel.font = SendTheme.feeFont
         feeLabel.textColor = SendTheme.feeColor
+        let feeTitleTopMargin = (item?.isFeeAdjustable ?? false) ? SendTheme.feeTitleTopMargin : SendTheme.constantFeeTitleTopMargin
         feeLabel.snp.makeConstraints { maker in
             maker.leading.equalToSuperview().offset(SendTheme.margin)
-            maker.top.equalToSuperview().offset(SendTheme.feeTitleTopMargin)
+            maker.top.equalToSuperview().offset(feeTitleTopMargin)
         }
 
         convertedFeeLabel.font = SendTheme.feeFont

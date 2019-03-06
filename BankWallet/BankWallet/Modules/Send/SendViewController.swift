@@ -7,12 +7,13 @@ class SendViewController: ActionSheetController {
     private let titleItem = SendTitleItem(tag: 0)
     private let amountItem = SendAmountItem(tag: 1)
     private let addressItem = SendAddressItem(tag: 2)
-    private let feeItem = SendFeeItem(tag: 3)
+    private let feeItem: SendFeeItem
     private let sendButtonItem = SendButtonItem(buttonTitle: "send.send_button".localized, tag: 4)
     private let keyboardItem = SendKeyboardItem(tag: 5)
 
     init(delegate: ISendViewDelegate) {
         self.delegate = delegate
+        feeItem = SendFeeItem(tag: 3, isFeeAdjustable: delegate.isFeeAdjustable)
         super.init(withModel: BaseAlertModel(), actionSheetThemeConfig: AppTheme.actionSheetConfig)
     }
 
