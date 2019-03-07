@@ -22,6 +22,7 @@ protocol ISendView: class {
 }
 
 protocol ISendViewDelegate {
+    var isFeeAdjustable: Bool { get }
     func onViewDidLoad()
 
     func onAmountChanged(amount: Decimal)

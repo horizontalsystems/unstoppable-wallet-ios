@@ -23,7 +23,7 @@ class AppTheme {
                     actionStyle: .sheet(showDismiss: false),
                     topMargin: 0,
                     cornerRadius: 16,
-                    separatorColor: UIColor.crypto_Steel40OnDark_Steel20,
+                    separatorColor: UIColor.cryptoSteel20,
                     backgroundStyle: .blur(intensity: 0.55, style: AppTheme.actionSheetBlurStyle))
         }
     }

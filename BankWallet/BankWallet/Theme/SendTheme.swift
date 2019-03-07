@@ -52,6 +52,8 @@ class SendTheme {
     static let addressErrorTopMargin: CGFloat = 2
     static let addressToLabelTextColor: UIColor = .cryptoGray
 
+    static let constantFeeTitleTopMargin: CGFloat = 18
+    static let constantFeeHeight: CGFloat = 56
     static let feeTitleTopMargin: CGFloat = 11
     static let feeHeight: CGFloat = 80
     static let feeFont: UIFont = .systemFont(ofSize: 14)
@@ -99,7 +101,7 @@ class SendTheme {
                 actionStyle: .alert,
                 sideMargin: 30,
                 cornerRadius: 16,
-                separatorColor: UIColor.crypto_Steel40OnDark_Steel20,
+                separatorColor: UIColor.cryptoSteel20,
                 backgroundStyle: .blur(intensity: 0.55, style: AppTheme.actionSheetBlurStyle)
         )
     }
