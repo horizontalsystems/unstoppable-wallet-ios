@@ -118,7 +118,7 @@ extension SendInteractor: ISendInteractor {
         return sendState
     }
 
-    private func createAmountError(forInput input: SendUserInput, feeRate: Int) -> AmountInfo? {
+    private func createAmountError(forInput input: SendUserInput, feeRate: Int?) -> AmountInfo? {
         let availableBalance = state.adapter.availableBalance(for: input.address, feeRate: feeRate)
         switch input.inputType {
         case .coin:
@@ -131,7 +131,7 @@ extension SendInteractor: ISendInteractor {
         }
     }
 
-    private func createFeeError(forInput input: SendUserInput, amount: Decimal, feeRate: Int) -> FeeError? {
+    private func createFeeError(forInput input: SendUserInput, amount: Decimal, feeRate: Int?) -> FeeError? {
         guard let code = state.adapter.feeCoinCode else {
             return nil
         }
@@ -140,7 +140,7 @@ extension SendInteractor: ISendInteractor {
         return .erc20error(erc20CoinCode: state.adapter.coin.code, fee: feeValue)
     }
 
-    func totalBalanceMinusFee(forInputType input: SendInputType, address: String?, feeRate: Int) -> Decimal {
+    func totalBalanceMinusFee(forInputType input: SendInputType, address: String?, feeRate: Int?) -> Decimal {
         let availableBalance =  state.adapter.availableBalance(for: address, feeRate: feeRate)
         switch input {
         case .coin:

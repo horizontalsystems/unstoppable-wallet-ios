@@ -51,7 +51,7 @@ protocol ISendInteractor {
     func parse(paymentAddress: String) -> PaymentRequestAddress
     func convertedAmount(forInputType inputType: SendInputType, amount: Decimal) -> Decimal?
     func state(forUserInput input: SendUserInput) -> SendState
-    func totalBalanceMinusFee(forInputType input: SendInputType, address: String?, feeRate: Int) -> Decimal
+    func totalBalanceMinusFee(forInputType input: SendInputType, address: String?, feeRate: Int?) -> Decimal
     func copy(address: String)
     func send(userInput: SendUserInput)
 
@@ -131,7 +131,7 @@ class SendUserInput {
     var inputType: SendInputType = .coin
     var amount: Decimal = 0
     var address: String?
-    var feeRate: Int = 1
+    var feeRate: Int?
 }
 
 class SendState {

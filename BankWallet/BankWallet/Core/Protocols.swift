@@ -109,12 +109,12 @@ protocol IAdapter: class {
     func refresh()
     func clear()
 
-    func sendSingle(to address: String, amount: Decimal, feeRate: Int) -> Single<Void>
+    func sendSingle(to address: String, amount: Decimal, feeRate: Int?) -> Single<Void>
 
-    func availableBalance(for address: String?, feeRate: Int) -> Decimal
-    func fee(for value: Decimal, address: String?, feeRate: Int) -> Decimal
+    func availableBalance(for address: String?, feeRate: Int?) -> Decimal
+    func fee(for value: Decimal, address: String?, feeRate: Int?) -> Decimal
     func validate(address: String) throws
-    func validate(amount: Decimal, address: String?, feeRate: Int) -> [SendStateError]
+    func validate(amount: Decimal, address: String?, feeRate: Int?) -> [SendStateError]
     func parse(paymentAddress: String) -> PaymentRequestAddress
 
     var receiveAddress: String { get }
