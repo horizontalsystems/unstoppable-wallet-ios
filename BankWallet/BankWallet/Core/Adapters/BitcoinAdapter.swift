@@ -70,6 +70,10 @@ extension BitcoinAdapter: IAdapter {
         return Decimal(bitcoinKit.balance) / coinRate
     }
 
+    var feeRates: FeeRates {
+        return FeeRates(value: (2, 8, 21))
+    }
+
     var confirmationsThreshold: Int {
         return 6
     }
@@ -101,7 +105,7 @@ extension BitcoinAdapter: IAdapter {
         try? bitcoinKit.clear()
     }
 
-    func sendSingle(to address: String, amount: Decimal) -> Single<Void> {
+    func sendSingle(to address: String, amount: Decimal, feeRate: Int) -> Single<Void> {
         let satoshiAmount = convertToSatoshi(value: amount)
 
         return Single.create { [weak self] observer in
@@ -116,11 +120,11 @@ extension BitcoinAdapter: IAdapter {
         }
     }
 
-    func availableBalance(for address: String?) -> Decimal {
-        return max(0, balance - fee(for: balance, address: address))
+    func availableBalance(for address: String?, feeRate: Int) -> Decimal {
+        return max(0, balance - fee(for: balance, address: address, feeRate: feeRate))
     }
 
-    func fee(for value: Decimal, address: String?) -> Decimal {
+    func fee(for value: Decimal, address: String?, feeRate: Int) -> Decimal {
         do {
             let amount = convertToSatoshi(value: value)
             let fee = try bitcoinKit.fee(for: amount, toAddress: address, senderPay: true)
@@ -141,9 +145,9 @@ extension BitcoinAdapter: IAdapter {
         try bitcoinKit.validate(address: address)
     }
 
-    func validate(amount: Decimal, address: String?) -> [SendStateError] {
+    func validate(amount: Decimal, address: String?, feeRate: Int) -> [SendStateError] {
         var errors = [SendStateError]()
-        if amount > availableBalance(for: address) {
+        if amount > availableBalance(for: address, feeRate: feeRate) {
             errors.append(.insufficientAmount)
         }
         return errors

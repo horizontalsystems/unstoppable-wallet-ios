@@ -89,10 +89,18 @@ class SendFeeItemView: BaseActionItemView {
         item?.bindError = { [weak self] in
             self?.errorLabel.text = $0
         }
+        item?.bindRatePercents = { [weak self] percent in
+            self?.feeSlider.value = Float(percent ?? 0) / 100
+        }
     }
 
+    var valueSent: Int?
     @objc func sliderShift() {
-        item?.onFeeMultiplierChange?(Decimal(Double(feeSlider.value)))
+        let valueToSend = Int(feeSlider.value * 100)
+        if valueSent != valueToSend {
+            item?.onFeeMultiplierChange?(valueToSend)
+            valueSent = valueToSend
+        }
     }
 
 }

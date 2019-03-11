@@ -1,6 +1,13 @@
 import Foundation
 import XCTest
+import Cuckoo
 @testable import Bank_Dev_T
+
+class TestError: Error {}
+
+func equal<T, T2: AnyObject>(to value: T, type: T2.Type) -> ParameterMatcher<T> {
+    return equal(to: value) { $0 as! T2 === $1 as! T2 }
+}
 
 extension XCTestCase {
     func waitForMainQueue() {
@@ -109,5 +116,11 @@ extension FullTransactionSection: Equatable {
 extension FullTransactionItem: Equatable {
     public static func ==(lhs: FullTransactionItem, rhs: FullTransactionItem) -> Bool {
         return lhs.value == rhs.value && lhs.title == rhs.title && lhs.clickable == rhs.clickable && lhs.showExtra == rhs.showExtra && lhs.url == rhs.url
+    }
+}
+
+extension FeeRates: Equatable {
+    public static func ==(lhs: FeeRates, rhs: FeeRates) -> Bool {
+        return lhs.lowest == rhs.lowest && lhs.medium == rhs.medium && lhs.highest == rhs.highest
     }
 }

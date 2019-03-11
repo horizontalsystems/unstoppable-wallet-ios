@@ -238,4 +238,8 @@ extension SendViewController: ISendView {
         amountItem.decimal = decimal
     }
 
+    func set(feeRatePercents: Int?) {
+        feeItem.bindRatePercents?(feeRatePercents)
+    }
+
 }

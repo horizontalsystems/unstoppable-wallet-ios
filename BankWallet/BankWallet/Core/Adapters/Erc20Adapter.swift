@@ -17,7 +17,7 @@ class Erc20Adapter: EthereumBaseAdapter {
         return ethereumKit.transactionsErc20Single(contractAddress: contractAddress, fromHash: hashFrom, limit: limit)
     }
 
-    override func sendSingle(to address: String, amount: String) -> Single<Void> {
+    override func sendSingle(to address: String, amount: String, feeRate: Int) -> Single<Void> {
         return ethereumKit.sendErc20Single(to: address, contractAddress: contractAddress, amount: amount)
                 .map { _ in ()}
                 .catchError { [weak self] error in
@@ -37,27 +37,31 @@ extension Erc20Adapter: IAdapter {
         return balanceDecimal(balanceString: ethereumKit.balanceErc20(contractAddress: contractAddress), decimal: decimal)
     }
 
+    var feeRates: FeeRates {
+        return FeeRates(value: (8, 40, 80))
+    }
+
     func refresh() {
         ethereumKit.start()
     }
 
-    func availableBalance(for address: String?) -> Decimal {
+    func availableBalance(for address: String?, feeRate: Int) -> Decimal {
         return balance
     }
 
-    func fee(for value: Decimal, address: String?) -> Decimal {
+    func fee(for value: Decimal, address: String?, feeRate: Int) -> Decimal {
         return ethereumKit.feeErc20() / pow(10, EthereumAdapter.decimal)
     }
 
-    func validate(amount: Decimal, address: String?) -> [SendStateError] {
+    func validate(amount: Decimal, address: String?, feeRate: Int) -> [SendStateError] {
         var errors = [SendStateError]()
-        if amount > availableBalance(for: address) {
+        if amount > availableBalance(for: address, feeRate: feeRate) {
             errors.append(.insufficientAmount)
         }
 
         let ethereumBalance = balanceDecimal(balanceString: ethereumKit.balance, decimal: EthereumAdapter.decimal)
 
-        if ethereumBalance < fee(for: amount, address: address) {
+        if ethereumBalance < fee(for: amount, address: address, feeRate: feeRate) {
             errors.append(.insufficientFeeBalance)
         }
         return errors

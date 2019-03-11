@@ -19,6 +19,7 @@ protocol ISendView: class {
     func showProgress()
     func dismissWithSuccess()
     func set(decimal: Int)
+    func set(feeRatePercents: Int?)
 }
 
 protocol ISendViewDelegate {
@@ -39,17 +40,18 @@ protocol ISendViewDelegate {
     func onMaxClicked()
 
     func onPasteAmountClicked()
-    func onFeeMultiplierChange(value: Decimal)
+    func onFeeMultiplierChange(value: Int)
 }
 
 protocol ISendInteractor {
     var defaultInputType: SendInputType { get }
     var coin: Coin { get }
     var valueFromPasteboard: String? { get }
+    var feeRates: FeeRates { get }
     func parse(paymentAddress: String) -> PaymentRequestAddress
     func convertedAmount(forInputType inputType: SendInputType, amount: Decimal) -> Decimal?
     func state(forUserInput input: SendUserInput) -> SendState
-    func totalBalanceMinusFee(forInputType input: SendInputType, address: String?) -> Decimal
+    func totalBalanceMinusFee(forInputType input: SendInputType, address: String?, feeRate: Int) -> Decimal
     func copy(address: String)
     func send(userInput: SendUserInput)
 
@@ -69,6 +71,11 @@ protocol ISendRouter {
 protocol ISendStateViewItemFactory {
     func viewItem(forState state: SendState, forceRoundDown: Bool) -> SendStateViewItem
     func confirmationViewItem(forState state: SendState, coin: Coin) -> SendConfirmationViewItem?
+}
+
+protocol IFeeRateSliderConverter {
+    func percent(for unit: Int) -> Int
+    func unit(for percent: Int) -> Int
 }
 
 enum SendInputType: String {
@@ -112,8 +119,8 @@ enum FeeError {
 
 class SendInteractorState {
     let adapter: IAdapter
-    var rateValue: Decimal?
-    var feeRateValue: Decimal?
+    var exchangeRate: Decimal?
+    var feeExchangeRate: Decimal?
 
     init(adapter: IAdapter) {
         self.adapter = adapter
@@ -124,6 +131,7 @@ class SendUserInput {
     var inputType: SendInputType = .coin
     var amount: Decimal = 0
     var address: String?
+    var feeRate: Int = 1
 }
 
 class SendState {
