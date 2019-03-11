@@ -24,11 +24,11 @@ class AgreementViewController: ActionSheetController {
 
         var texts = [NSAttributedString]()
 
-        let confirm = "backup.confirmation1".localized
+        let confirm = "backup.confirmation.secret_key".localized
         let confirmAttributed = NSMutableAttributedString(string: confirm, attributes: [NSAttributedStringKey.foregroundColor: ConfirmationTheme.textColor, NSAttributedStringKey.font: UIFont.systemFont(ofSize: 17)])
         confirmAttributed.addAttribute(NSAttributedStringKey.font, value: ConfirmationTheme.regularFont, range: NSMakeRange(0, confirm.count))
         texts.append(confirmAttributed)
-        texts.append(NSAttributedString(string: "backup.confirmation2".localized, attributes: [NSAttributedStringKey.foregroundColor: ConfirmationTheme.textColor, NSAttributedStringKey.font: ConfirmationTheme.regularFont]))
+        texts.append(NSAttributedString(string: "backup.confirmation.secure".localized, attributes: [NSAttributedStringKey.foregroundColor: ConfirmationTheme.textColor, NSAttributedStringKey.font: ConfirmationTheme.regularFont]))
 
         for (index, text) in texts.enumerated() {
             let item = ConfirmationCheckboxItem(descriptionText: text, tag: index) { [weak self] view in
