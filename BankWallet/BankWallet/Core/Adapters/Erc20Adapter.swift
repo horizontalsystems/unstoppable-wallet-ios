@@ -17,7 +17,7 @@ class Erc20Adapter: EthereumBaseAdapter {
         return ethereumKit.transactionsErc20Single(contractAddress: contractAddress, fromHash: hashFrom, limit: limit)
     }
 
-    override func sendSingle(to address: String, amount: String, feeRate: Int?) -> Single<Void> {
+    override func sendSingle(to address: String, amount: String, feeRatePriority: FeeRatePriority) -> Single<Void> {
         return ethereumKit.sendErc20Single(to: address, contractAddress: contractAddress, amount: amount)
                 .map { _ in ()}
                 .catchError { [weak self] error in
@@ -37,31 +37,27 @@ extension Erc20Adapter: IAdapter {
         return balanceDecimal(balanceString: ethereumKit.balanceErc20(contractAddress: contractAddress), decimal: decimal)
     }
 
-    var feeRates: FeeRates {
-        return FeeRates(value: (8, 40, 80))
-    }
-
     func refresh() {
         ethereumKit.start()
     }
 
-    func availableBalance(for address: String?, feeRate: Int?) -> Decimal {
+    func availableBalance(for address: String?, feeRatePriority: FeeRatePriority) -> Decimal {
         return balance
     }
 
-    func fee(for value: Decimal, address: String?, feeRate: Int?) -> Decimal {
+    func fee(for value: Decimal, address: String?, feeRatePriority: FeeRatePriority) -> Decimal {
         return ethereumKit.feeErc20() / pow(10, EthereumAdapter.decimal)
     }
 
-    func validate(amount: Decimal, address: String?, feeRate: Int?) -> [SendStateError] {
+    func validate(amount: Decimal, address: String?, feeRatePriority: FeeRatePriority) -> [SendStateError] {
         var errors = [SendStateError]()
-        if amount > availableBalance(for: address, feeRate: feeRate) {
+        if amount > availableBalance(for: address, feeRatePriority: feeRatePriority) {
             errors.append(.insufficientAmount)
         }
 
         let ethereumBalance = balanceDecimal(balanceString: ethereumKit.balance, decimal: EthereumAdapter.decimal)
 
-        if ethereumBalance < fee(for: amount, address: address, feeRate: feeRate) {
+        if ethereumBalance < fee(for: amount, address: address, feeRatePriority: feeRatePriority) {
             errors.append(.insufficientFeeBalance)
         }
         return errors

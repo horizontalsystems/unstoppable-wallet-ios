@@ -7,14 +7,12 @@ class SendPresenter {
     private let router: ISendRouter
     private let factory: ISendStateViewItemFactory
     private let userInput: SendUserInput
-    private let feeRateSliderConverter: IFeeRateSliderConverter?
 
-    init(interactor: ISendInteractor, router: ISendRouter, factory: ISendStateViewItemFactory, userInput: SendUserInput, feeRateSliderConverter: IFeeRateSliderConverter?) {
+    init(interactor: ISendInteractor, router: ISendRouter, factory: ISendStateViewItemFactory, userInput: SendUserInput) {
         self.interactor = interactor
         self.router = router
         self.factory = factory
         self.userInput = userInput
-        self.feeRateSliderConverter = feeRateSliderConverter
     }
 
     private func onChange(address: String?) {
@@ -55,20 +53,17 @@ extension SendPresenter: ISendInteractorDelegate {
 extension SendPresenter: ISendViewDelegate {
 
     var isFeeAdjustable: Bool {
-        return true && feeRateSliderConverter != nil
+        return true
     }
 
     func onViewDidLoad() {
         interactor.fetchRate()
 
         userInput.inputType = interactor.defaultInputType
-        let mediumFeeRate = interactor.feeRates.medium
-        userInput.feeRate = mediumFeeRate
 
         let state = interactor.state(forUserInput: userInput)
         let viewItem = factory.viewItem(forState: state, forceRoundDown: false)
 
-        view?.set(feeRatePercents: feeRateSliderConverter?.percent(for: mediumFeeRate))
         view?.set(coin: interactor.coin)
         view?.set(decimal: viewItem.decimal)
         view?.set(amountInfo: viewItem.amountInfo)
@@ -158,7 +153,7 @@ extension SendPresenter: ISendViewDelegate {
     }
 
     func onMaxClicked() {
-        let totalBalanceMinusFee = interactor.totalBalanceMinusFee(forInputType: userInput.inputType, address: userInput.address, feeRate: userInput.feeRate)
+        let totalBalanceMinusFee = interactor.totalBalanceMinusFee(forInputType: userInput.inputType, address: userInput.address, feeRatePriority: userInput.feeRatePriority)
         userInput.amount = totalBalanceMinusFee
 
         let state = interactor.state(forUserInput: userInput)
@@ -178,8 +173,8 @@ extension SendPresenter: ISendViewDelegate {
         }
     }
 
-    func onFeeMultiplierChange(value: Int) {
-        userInput.feeRate = feeRateSliderConverter?.unit(for: value) ?? interactor.feeRates.medium
+    func onFeePriorityChange(value: Int) {
+        userInput.feeRatePriority = FeeRatePriority(rawValue: value)
     }
 
 }

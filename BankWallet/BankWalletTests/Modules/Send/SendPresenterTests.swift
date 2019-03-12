@@ -8,7 +8,6 @@ class SendPresenterTests: XCTestCase {
     private var mockView: MockISendView!
     private var mockFactory: MockISendStateViewItemFactory!
     private var mockUserInput: MockSendUserInput!
-    private var mockFeeRateSliderConverter: MockIFeeRateSliderConverter!
 
     private var feeInfo = FeeInfo()
     private let decimal: Int = 8
@@ -18,8 +17,7 @@ class SendPresenterTests: XCTestCase {
     private let coin = Coin(title: "Bitcoin", code: "BTC", type: .bitcoin)
     private let state = SendState(decimal: 8, inputType: .coin)
 
-    private let feeRates = FeeRates(value: (13, 22, 34))
-    private let feeRate = 22
+    private let feeRatePriority: FeeRatePriority = .medium
 
     private let inputType: SendInputType = .coin
     private let amount: Decimal = 123.45
@@ -56,10 +54,8 @@ class SendPresenterTests: XCTestCase {
         mockView = MockISendView()
         mockFactory = MockISendStateViewItemFactory()
         mockUserInput = MockSendUserInput()
-        mockFeeRateSliderConverter = MockIFeeRateSliderConverter()
 
         stub(mockView) { mock in
-            when(mock.set(feeRatePercents: any())).thenDoNothing()
             when(mock.set(coin: any())).thenDoNothing()
             when(mock.set(amountInfo: any())).thenDoNothing()
             when(mock.set(switchButtonEnabled: any())).thenDoNothing()
@@ -75,14 +71,13 @@ class SendPresenterTests: XCTestCase {
         }
         stub(mockInteractor) { mock in
             when(mock.coin.get).thenReturn(coin)
-            when(mock.feeRates.get).thenReturn(feeRates)
             when(mock.state(forUserInput: sameInstance(as: mockUserInput))).thenReturn(state)
             when(mock.convertedAmount(forInputType: equal(to: inputType), amount: equal(to: amount))).thenReturn(convertedAmount)
             when(mock.copy(address: any())).thenDoNothing()
             when(mock.send(userInput: any())).thenDoNothing()
             when(mock.set(inputType: any())).thenDoNothing()
             when(mock.fetchRate()).thenDoNothing()
-            when(mock.totalBalanceMinusFee(forInputType: any(), address: any(), feeRate: any())).thenReturn(0)
+            when(mock.totalBalanceMinusFee(forInputType: any(), address: any(), feeRatePriority: any())).thenReturn(0)
         }
         stub(mockFactory) { mock in
             when(mock.viewItem(forState: equal(to: state), forceRoundDown: any())).thenReturn(viewItem)
@@ -92,17 +87,13 @@ class SendPresenterTests: XCTestCase {
             when(mock.inputType.get).thenReturn(inputType)
             when(mock.amount.get).thenReturn(amount)
             when(mock.inputType.set(any())).thenDoNothing()
-            when(mock.feeRate.get).thenReturn(feeRate)
-            when(mock.feeRate.set(any())).thenDoNothing()
+            when(mock.feeRatePriority.get).thenReturn(feeRatePriority)
+            when(mock.feeRatePriority.set(any())).thenDoNothing()
             when(mock.amount.set(any())).thenDoNothing()
             when(mock.address.set(any())).thenDoNothing()
         }
-        stub(mockFeeRateSliderConverter) { mock in
-            when(mock.percent(for: any())).thenReturn(feeRatePercent)
-            when(mock.unit(for: any())).thenReturn(feeRates.medium)
-        }
 
-        presenter = SendPresenter(interactor: mockInteractor, router: mockRouter, factory: mockFactory, userInput: mockUserInput, feeRateSliderConverter: mockFeeRateSliderConverter)
+        presenter = SendPresenter(interactor: mockInteractor, router: mockRouter, factory: mockFactory, userInput: mockUserInput)
         presenter.view = mockView
     }
 
@@ -112,7 +103,6 @@ class SendPresenterTests: XCTestCase {
         mockView = nil
         mockFactory = nil
         mockUserInput = nil
-        mockFeeRateSliderConverter = nil
 
         confirmationViewItem = nil
 
@@ -131,9 +121,7 @@ class SendPresenterTests: XCTestCase {
         presenter.onViewDidLoad()
 
         verify(mockUserInput).inputType.set(equal(to: defaultInputType))
-        verify(mockUserInput).feeRate.set(equal(to: feeRates.medium))
 
-        verify(mockView).set(feeRatePercents: equal(to: feeRatePercent))
         verify(mockView).set(decimal: equal(to: decimal))
         verify(mockView).set(coin: equal(to: coin))
         verify(mockView).set(amountInfo: equal(to: viewItem.amountInfo))
@@ -301,13 +289,13 @@ class SendPresenterTests: XCTestCase {
             when(mock.address.get).thenReturn(address)
         }
         stub(mockInteractor) { mock in
-            when(mock.totalBalanceMinusFee(forInputType: equal(to: inputType), address: equal(to: address), feeRate: equal(to: feeRate))).thenReturn(maxBalance)
+            when(mock.totalBalanceMinusFee(forInputType: equal(to: inputType), address: equal(to: address), feeRatePriority: equal(to: feeRatePriority))).thenReturn(maxBalance)
         }
 
         presenter.onMaxClicked()
 
         verify(mockFactory).viewItem(forState: equal(to: state), forceRoundDown: true)
-        verify(mockInteractor).totalBalanceMinusFee(forInputType: equal(to: inputType), address: equal(to: address), feeRate: equal(to: feeRate))
+        verify(mockInteractor).totalBalanceMinusFee(forInputType: equal(to: inputType), address: equal(to: address), feeRatePriority: equal(to: feeRatePriority))
         verify(mockView).set(amountInfo: equal(to: amountInfo))
     }
 
@@ -331,27 +319,13 @@ class SendPresenterTests: XCTestCase {
     }
 
     func testFeeMultiplierChange() {
-        presenter.onFeeMultiplierChange(value: 20)
+        presenter.onFeePriorityChange(value: 2)
 
-        verify(mockUserInput).feeRate.set(equal(to: feeRates.medium))
-    }
-
-    func testFeeMultiplierChange_constantFee() {
-        presenter = SendPresenter(interactor: mockInteractor, router: mockRouter, factory: mockFactory, userInput: mockUserInput, feeRateSliderConverter: nil)
-
-        presenter.onFeeMultiplierChange(value: 20)
-
-        verify(mockUserInput).feeRate.set(equal(to: feeRates.medium))
+        verify(mockUserInput).feeRatePriority.set(equal(to: FeeRatePriority.medium))
     }
 
     func testIsFeeAdjustable() {
         XCTAssertEqual(true, presenter.isFeeAdjustable)
-    }
-
-    func testIsFeeAdjustable_constantFee() {
-        presenter = SendPresenter(interactor: mockInteractor, router: mockRouter, factory: mockFactory, userInput: mockUserInput, feeRateSliderConverter: nil)
-
-        XCTAssertEqual(false, presenter.isFeeAdjustable)
     }
 
 }

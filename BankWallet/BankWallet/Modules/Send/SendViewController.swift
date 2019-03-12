@@ -69,7 +69,7 @@ class SendViewController: ActionSheetController {
         }
 
         feeItem.onFeeMultiplierChange = { [weak self] value in
-            self?.delegate.onFeeMultiplierChange(value: value)
+            self?.delegate.onFeePriorityChange(value: value)
         }
 //        delegate.onViewDidLoad()
     }
@@ -236,10 +236,6 @@ extension SendViewController: ISendView {
 
     func set(decimal: Int) {
         amountItem.decimal = decimal
-    }
-
-    func set(feeRatePercents: Int?) {
-        feeItem.bindRatePercents?(feeRatePercents)
     }
 
 }

@@ -62,6 +62,8 @@ class SendTheme {
     static let feeSliderTint: UIColor = .cryptoGray
     static let feeSliderBackground: UIColor = .cryptoSteel20
     static let feeSliderThumbColor: UIColor = .cryptoGray
+    static let stepViewHeight: CGFloat = 10
+    static let stepViewWidth: CGFloat = 1
 
     static let switchRightMargin: CGFloat = 6
     static let pasteRightMargin: CGFloat = 6

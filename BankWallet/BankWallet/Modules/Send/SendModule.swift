@@ -19,7 +19,6 @@ protocol ISendView: class {
     func showProgress()
     func dismissWithSuccess()
     func set(decimal: Int)
-    func set(feeRatePercents: Int?)
 }
 
 protocol ISendViewDelegate {
@@ -40,18 +39,17 @@ protocol ISendViewDelegate {
     func onMaxClicked()
 
     func onPasteAmountClicked()
-    func onFeeMultiplierChange(value: Int)
+    func onFeePriorityChange(value: Int)
 }
 
 protocol ISendInteractor {
     var defaultInputType: SendInputType { get }
     var coin: Coin { get }
     var valueFromPasteboard: String? { get }
-    var feeRates: FeeRates { get }
     func parse(paymentAddress: String) -> PaymentRequestAddress
     func convertedAmount(forInputType inputType: SendInputType, amount: Decimal) -> Decimal?
     func state(forUserInput input: SendUserInput) -> SendState
-    func totalBalanceMinusFee(forInputType input: SendInputType, address: String?, feeRate: Int?) -> Decimal
+    func totalBalanceMinusFee(forInputType input: SendInputType, address: String?, feeRatePriority: FeeRatePriority) -> Decimal
     func copy(address: String)
     func send(userInput: SendUserInput)
 
@@ -131,7 +129,7 @@ class SendUserInput {
     var inputType: SendInputType = .coin
     var amount: Decimal = 0
     var address: String?
-    var feeRate: Int?
+    var feeRatePriority: FeeRatePriority = .medium
 }
 
 class SendState {

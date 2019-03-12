@@ -24,8 +24,6 @@ class SendInteractorTests: XCTestCase {
     private var interactorState: SendInteractorState!
     private var input: SendUserInput!
 
-    private var feeRates = FeeRates(value: (11, 23, 56))
-
     private var interactor: SendInteractor!
 
     override func setUp() {
@@ -55,10 +53,9 @@ class SendInteractorTests: XCTestCase {
             when(mock.decimal.get).thenReturn(0)
             when(mock.balance.get).thenReturn(balance)
             when(mock.validate(address: any())).thenDoNothing()
-            when(mock.fee(for: any(), address: any(), feeRate: any())).thenReturn(0)
-            when(mock.validate(amount: any(), address: any(), feeRate: any())).thenReturn([])
-            when(mock.availableBalance(for: any(), feeRate: any())).thenReturn(0)
-            when(mock.feeRates.get).thenReturn(feeRates)
+            when(mock.fee(for: any(), address: any(), feeRatePriority: any())).thenReturn(0)
+            when(mock.validate(amount: any(), address: any(), feeRatePriority: any())).thenReturn([])
+            when(mock.availableBalance(for: any(), feeRatePriority: any())).thenReturn(0)
         }
         stub(mockPasteboardManager) { mock in
             when(mock.set(value: any())).thenDoNothing()
@@ -68,7 +65,7 @@ class SendInteractorTests: XCTestCase {
             when(mock.maxDecimal.get).thenReturn(maxDecimal)
         }
         input = SendUserInput()
-        input.feeRate = feeRates.medium
+        input.feeRatePriority = .medium
 
         interactor = SendInteractor(currencyManager: mockCurrencyManager, rateStorage: mockRateStorage, localStorage: mockLocalStorage, pasteboardManager: mockPasteboardManager, state: interactorState, appConfigProvider: mockAppConfigProvider, async: false)
         interactor.delegate = mockDelegate
@@ -254,8 +251,8 @@ class SendInteractorTests: XCTestCase {
         let expectedAmountError = AmountInfo.coinValue(coinValue: CoinValue(coinCode: coinCode, value: expectedAvailableBalance))
 
         stub(mockAdapter) { mock in
-            when(mock.validate(amount: equal(to: amount), address: equal(to: address), feeRate: equal(to: input.feeRate))).thenReturn([SendStateError.insufficientAmount])
-            when(mock.availableBalance(for: equal(to: address), feeRate: equal(to: input.feeRate))).thenReturn(expectedAvailableBalance)
+            when(mock.validate(amount: equal(to: amount), address: equal(to: address), feeRatePriority: equal(to: input.feeRatePriority))).thenReturn([SendStateError.insufficientAmount])
+            when(mock.availableBalance(for: equal(to: address), feeRatePriority: equal(to: input.feeRatePriority))).thenReturn(expectedAvailableBalance)
         }
 
         let state = interactor.state(forUserInput: input)
@@ -292,8 +289,8 @@ class SendInteractorTests: XCTestCase {
         let expectedAmountError = AmountInfo.currencyValue(currencyValue: CurrencyValue(currency: baseCurrency, value: expectedAvailableBalance))
 
         stub(mockAdapter) { mock in
-            when(mock.validate(amount: equal(to: coinAmount), address: equal(to: address), feeRate: equal(to: input.feeRate))).thenReturn([SendStateError.insufficientAmount])
-            when(mock.availableBalance(for: equal(to: address), feeRate: equal(to: input.feeRate))).thenReturn(coinAvailableBalance)
+            when(mock.validate(amount: equal(to: coinAmount), address: equal(to: address), feeRatePriority: equal(to: input.feeRatePriority))).thenReturn([SendStateError.insufficientAmount])
+            when(mock.availableBalance(for: equal(to: address), feeRatePriority: equal(to: input.feeRatePriority))).thenReturn(coinAvailableBalance)
         }
 
         let state = interactor.state(forUserInput: input)
@@ -315,10 +312,10 @@ class SendInteractorTests: XCTestCase {
         let expectedFeeError = FeeError.erc20error(erc20CoinCode: erc20CoinCode, fee: CoinValue(coinCode: feeCoinCode, value: fee))
 
         stub(mockAdapter) { mock in
-            when(mock.fee(for: equal(to: amount), address: equal(to: address), feeRate: equal(to: input.feeRate))).thenReturn(fee)
+            when(mock.fee(for: equal(to: amount), address: equal(to: address), feeRatePriority: equal(to: input.feeRatePriority))).thenReturn(fee)
             when(mock.coin.get).thenReturn(erc20Coin)
             when(mock.feeCoinCode.get).thenReturn(feeCoinCode)
-            when(mock.validate(amount: equal(to: amount), address: equal(to: address), feeRate: equal(to: input.feeRate))).thenReturn([SendStateError.insufficientFeeBalance])
+            when(mock.validate(amount: equal(to: amount), address: equal(to: address), feeRatePriority: equal(to: input.feeRatePriority))).thenReturn([SendStateError.insufficientFeeBalance])
         }
 
         let state = interactor.state(forUserInput: input)
@@ -360,7 +357,7 @@ class SendInteractorTests: XCTestCase {
         let address = "address"
 
         stub(mockAdapter) { mock in
-            when(mock.fee(for: equal(to: amount), address: equal(to: address), feeRate: equal(to: input.feeRate))).thenReturn(fee)
+            when(mock.fee(for: equal(to: amount), address: equal(to: address), feeRatePriority: equal(to: input.feeRatePriority))).thenReturn(fee)
         }
 
         input.inputType = .coin
@@ -380,7 +377,7 @@ class SendInteractorTests: XCTestCase {
         let coinAmount = amount / rateValue
 
         stub(mockAdapter) { mock in
-            when(mock.fee(for: equal(to: coinAmount), address: equal(to: address), feeRate: equal(to: input.feeRate))).thenReturn(fee)
+            when(mock.fee(for: equal(to: coinAmount), address: equal(to: address), feeRatePriority: equal(to: input.feeRatePriority))).thenReturn(fee)
         }
 
         interactorState.exchangeRate = rateValue
@@ -400,7 +397,7 @@ class SendInteractorTests: XCTestCase {
         let address = "address"
 
         stub(mockAdapter) { mock in
-            when(mock.fee(for: equal(to: amount), address: equal(to: address), feeRate: equal(to: input.feeRate))).thenReturn(fee)
+            when(mock.fee(for: equal(to: amount), address: equal(to: address), feeRatePriority: equal(to: input.feeRatePriority))).thenReturn(fee)
         }
 
         interactorState.exchangeRate = rateValue
@@ -421,7 +418,7 @@ class SendInteractorTests: XCTestCase {
         let coinAmount = amount / rateValue
 
         stub(mockAdapter) { mock in
-            when(mock.fee(for: equal(to: coinAmount), address: equal(to: address), feeRate: equal(to: input.feeRate))).thenReturn(fee)
+            when(mock.fee(for: equal(to: coinAmount), address: equal(to: address), feeRatePriority: equal(to: input.feeRatePriority))).thenReturn(fee)
         }
 
         interactorState.exchangeRate = rateValue
@@ -443,7 +440,7 @@ class SendInteractorTests: XCTestCase {
 
         stub(mockAdapter) { mock in
             when(mock.feeCoinCode.get).thenReturn(feeCoinCode)
-            when(mock.fee(for: equal(to: amount), address: equal(to: address), feeRate: equal(to: input.feeRate))).thenReturn(fee)
+            when(mock.fee(for: equal(to: amount), address: equal(to: address), feeRatePriority: equal(to: input.feeRatePriority))).thenReturn(fee)
         }
 
         interactorState.feeExchangeRate = feeRateValue
@@ -467,7 +464,7 @@ class SendInteractorTests: XCTestCase {
 
         stub(mockAdapter) { mock in
             when(mock.feeCoinCode.get).thenReturn(feeCoinCode)
-            when(mock.fee(for: equal(to: amount), address: equal(to: address), feeRate: equal(to: input.feeRate))).thenReturn(fee)
+            when(mock.fee(for: equal(to: amount), address: equal(to: address), feeRatePriority: equal(to: input.feeRatePriority))).thenReturn(fee)
         }
 
         let state = interactor.state(forUserInput: input)
@@ -573,10 +570,10 @@ class SendInteractorTests: XCTestCase {
         input.address = address
 
         stub(mockAdapter) { mock in
-            when(mock.availableBalance(for: equal(to: address), feeRate: equal(to: input.feeRate))).thenReturn(amount)
+            when(mock.availableBalance(for: equal(to: address), feeRatePriority: equal(to: input.feeRatePriority))).thenReturn(amount)
         }
 
-        let availableBalance = interactor.totalBalanceMinusFee(forInputType: input.inputType, address: address, feeRate: input.feeRate)
+        let availableBalance = interactor.totalBalanceMinusFee(forInputType: input.inputType, address: address, feeRatePriority: input.feeRatePriority)
         XCTAssertEqual(amount, availableBalance)
     }
 
@@ -590,16 +587,12 @@ class SendInteractorTests: XCTestCase {
         input.address = address
 
         stub(mockAdapter) { mock in
-            when(mock.availableBalance(for: equal(to: address), feeRate: equal(to: input.feeRate))).thenReturn(amount)
+            when(mock.availableBalance(for: equal(to: address), feeRatePriority: equal(to: input.feeRatePriority))).thenReturn(amount)
         }
 
-        let availableBalance = interactor.totalBalanceMinusFee(forInputType: input.inputType, address: address, feeRate: input.feeRate)
+        let availableBalance = interactor.totalBalanceMinusFee(forInputType: input.inputType, address: address, feeRatePriority: input.feeRatePriority)
         let expectedBalanceMinusFee: Decimal = amount * rateValue
         XCTAssertEqual(expectedBalanceMinusFee, availableBalance)
-    }
-
-    func testFeeRate() {
-        XCTAssertEqual(feeRates, interactor.feeRates)
     }
 
     func testSend() {
@@ -609,12 +602,12 @@ class SendInteractorTests: XCTestCase {
         input.amount = amount
 
         stub(mockAdapter) { mock in
-            when(mock.sendSingle(to: any(), amount: any(), feeRate: any())).thenReturn(Single.just(()))
+            when(mock.sendSingle(to: any(), amount: any(), feeRatePriority: any())).thenReturn(Single.just(()))
         }
 
         interactor.send(userInput: input)
 
-        verify(mockAdapter).sendSingle(to: equal(to: address), amount: equal(to: amount), feeRate: equal(to: input.feeRate))
+        verify(mockAdapter).sendSingle(to: equal(to: address), amount: equal(to: amount), feeRatePriority: equal(to: input.feeRatePriority))
     }
 
     func testSuccessSend() {
@@ -624,7 +617,7 @@ class SendInteractorTests: XCTestCase {
         input.amount = amount
 
         stub(mockAdapter) { mock in
-            when(mock.sendSingle(to: equal(to: address), amount: equal(to: amount), feeRate: equal(to: input.feeRate))).thenReturn(Single.just(()))
+            when(mock.sendSingle(to: equal(to: address), amount: equal(to: amount), feeRatePriority: equal(to: input.feeRatePriority))).thenReturn(Single.just(()))
         }
 
         interactor.send(userInput: input)
@@ -640,7 +633,7 @@ class SendInteractorTests: XCTestCase {
         let error = TestError()
 
         stub(mockAdapter) { mock in
-            when(mock.sendSingle(to: equal(to: address), amount: equal(to: amount), feeRate: equal(to: input.feeRate))).thenReturn(Single.error(error))
+            when(mock.sendSingle(to: equal(to: address), amount: equal(to: amount), feeRatePriority: equal(to: input.feeRatePriority))).thenReturn(Single.error(error))
         }
 
         interactor.send(userInput: input)

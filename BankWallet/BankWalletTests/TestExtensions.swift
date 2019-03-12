@@ -119,8 +119,15 @@ extension FullTransactionItem: Equatable {
     }
 }
 
-extension FeeRates: Equatable {
-    public static func ==(lhs: FeeRates, rhs: FeeRates) -> Bool {
-        return lhs.lowest == rhs.lowest && lhs.medium == rhs.medium && lhs.highest == rhs.highest
+extension FeeRatePriority: Equatable {
+    public static func ==(lhs: FeeRatePriority, rhs: FeeRatePriority) -> Bool {
+        switch (lhs, rhs) {
+        case (.lowest, .lowest): return true
+        case (.low, .low): return true
+        case (.medium, .medium): return true
+        case (.high, .high): return true
+        case (.highest, .highest): return true
+        default: return false
+        }
     }
 }

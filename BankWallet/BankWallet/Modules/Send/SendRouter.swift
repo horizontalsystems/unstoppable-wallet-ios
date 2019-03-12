@@ -18,11 +18,10 @@ extension SendRouter {
         let interactorState = SendInteractorState(adapter: adapter)
         let factory = SendStateViewItemFactory()
         let userInput = SendUserInput()
-        let feeRateSliderConverter = FeeRateSliderConverter(feeRates: adapter.feeRates)
 
         let router = SendRouter()
         let interactor = SendInteractor(currencyManager: App.shared.currencyManager, rateStorage: App.shared.grdbStorage, localStorage: App.shared.localStorage, pasteboardManager: App.shared.pasteboardManager, state: interactorState, appConfigProvider: App.shared.appConfigProvider)
-        let presenter = SendPresenter(interactor: interactor, router: router, factory: factory, userInput: userInput, feeRateSliderConverter: feeRateSliderConverter)
+        let presenter = SendPresenter(interactor: interactor, router: router, factory: factory, userInput: userInput)
         let viewController = SendViewController(delegate: presenter)
 
         interactor.delegate = presenter

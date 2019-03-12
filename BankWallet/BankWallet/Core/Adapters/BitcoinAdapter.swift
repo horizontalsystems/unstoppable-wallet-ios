@@ -70,10 +70,6 @@ extension BitcoinAdapter: IAdapter {
         return Decimal(bitcoinKit.balance) / coinRate
     }
 
-    var feeRates: FeeRates {
-        return FeeRates(value: (2, 8, 21))
-    }
-
     var confirmationsThreshold: Int {
         return 6
     }
@@ -105,7 +101,7 @@ extension BitcoinAdapter: IAdapter {
         try? bitcoinKit.clear()
     }
 
-    func sendSingle(to address: String, amount: Decimal, feeRate: Int?) -> Single<Void> {
+    func sendSingle(to address: String, amount: Decimal, feeRatePriority: FeeRatePriority) -> Single<Void> {
         let satoshiAmount = convertToSatoshi(value: amount)
 
         return Single.create { [weak self] observer in
@@ -120,11 +116,11 @@ extension BitcoinAdapter: IAdapter {
         }
     }
 
-    func availableBalance(for address: String?, feeRate: Int?) -> Decimal {
-        return max(0, balance - fee(for: balance, address: address, feeRate: feeRate))
+    func availableBalance(for address: String?, feeRatePriority: FeeRatePriority) -> Decimal {
+        return max(0, balance - fee(for: balance, address: address, feeRatePriority: feeRatePriority))
     }
 
-    func fee(for value: Decimal, address: String?, feeRate: Int?) -> Decimal {
+    func fee(for value: Decimal, address: String?, feeRatePriority: FeeRatePriority) -> Decimal {
         do {
             let amount = convertToSatoshi(value: value)
             let fee = try bitcoinKit.fee(for: amount, toAddress: address, senderPay: true)
@@ -145,9 +141,9 @@ extension BitcoinAdapter: IAdapter {
         try bitcoinKit.validate(address: address)
     }
 
-    func validate(amount: Decimal, address: String?, feeRate: Int?) -> [SendStateError] {
+    func validate(amount: Decimal, address: String?, feeRatePriority: FeeRatePriority) -> [SendStateError] {
         var errors = [SendStateError]()
-        if amount > availableBalance(for: address, feeRate: feeRate) {
+        if amount > availableBalance(for: address, feeRatePriority: feeRatePriority) {
             errors.append(.insufficientAmount)
         }
         return errors

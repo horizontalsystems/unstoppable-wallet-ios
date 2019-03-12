@@ -47,10 +47,6 @@ extension SendInteractor: ISendInteractor {
         return pasteboardManager.value
     }
 
-    var feeRates: FeeRates {
-        return state.adapter.feeRates
-    }
-
     func parse(paymentAddress: String) -> PaymentRequestAddress {
         return state.adapter.parse(paymentAddress: paymentAddress)
     }
@@ -94,15 +90,15 @@ extension SendInteractor: ISendInteractor {
             }
         }
 
-        let errors = adapter.validate(amount: sendState.coinValue?.value ?? 0, address: input.address, feeRate: input.feeRate)
+        let errors = adapter.validate(amount: sendState.coinValue?.value ?? 0, address: input.address, feeRatePriority: input.feeRatePriority)
         errors.forEach {
             switch($0) {
-            case .insufficientAmount: sendState.amountError = createAmountError(forInput: input, feeRate: input.feeRate)
-            case .insufficientFeeBalance: sendState.feeError = createFeeError(forInput: input, amount: sendState.coinValue?.value ?? 0, feeRate: input.feeRate)
+            case .insufficientAmount: sendState.amountError = createAmountError(forInput: input, feeRatePriority: input.feeRatePriority)
+            case .insufficientFeeBalance: sendState.feeError = createFeeError(forInput: input, amount: sendState.coinValue?.value ?? 0, feeRatePriority: input.feeRatePriority)
             }
         }
         if let coinValue = sendState.coinValue {
-            let feeValue = adapter.fee(for: coinValue.value, address: input.address, feeRate: input.feeRate)
+            let feeValue = adapter.fee(for: coinValue.value, address: input.address, feeRatePriority: input.feeRatePriority)
             sendState.feeCoinValue = CoinValue(coinCode: state.adapter.feeCoinCode ?? coinCode, value: feeValue)
         }
         let rateValue: Decimal?
@@ -118,8 +114,8 @@ extension SendInteractor: ISendInteractor {
         return sendState
     }
 
-    private func createAmountError(forInput input: SendUserInput, feeRate: Int?) -> AmountInfo? {
-        let availableBalance = state.adapter.availableBalance(for: input.address, feeRate: feeRate)
+    private func createAmountError(forInput input: SendUserInput, feeRatePriority: FeeRatePriority) -> AmountInfo? {
+        let availableBalance = state.adapter.availableBalance(for: input.address, feeRatePriority: feeRatePriority)
         switch input.inputType {
         case .coin:
             return .coinValue(coinValue: CoinValue(coinCode: coin.code, value: availableBalance))
@@ -131,17 +127,17 @@ extension SendInteractor: ISendInteractor {
         }
     }
 
-    private func createFeeError(forInput input: SendUserInput, amount: Decimal, feeRate: Int?) -> FeeError? {
+    private func createFeeError(forInput input: SendUserInput, amount: Decimal, feeRatePriority: FeeRatePriority) -> FeeError? {
         guard let code = state.adapter.feeCoinCode else {
             return nil
         }
-        let fee = state.adapter.fee(for: amount, address: input.address, feeRate: feeRate)
+        let fee = state.adapter.fee(for: amount, address: input.address, feeRatePriority: feeRatePriority)
         let feeValue = CoinValue(coinCode: code, value: fee)
         return .erc20error(erc20CoinCode: state.adapter.coin.code, fee: feeValue)
     }
 
-    func totalBalanceMinusFee(forInputType input: SendInputType, address: String?, feeRate: Int?) -> Decimal {
-        let availableBalance =  state.adapter.availableBalance(for: address, feeRate: feeRate)
+    func totalBalanceMinusFee(forInputType input: SendInputType, address: String?, feeRatePriority: FeeRatePriority) -> Decimal {
+        let availableBalance =  state.adapter.availableBalance(for: address, feeRatePriority: feeRatePriority)
         switch input {
         case .coin:
             return availableBalance
@@ -175,7 +171,7 @@ extension SendInteractor: ISendInteractor {
             return
         }
 
-        var single = state.adapter.sendSingle(to: address, amount: amount, feeRate: userInput.feeRate)
+        var single = state.adapter.sendSingle(to: address, amount: amount, feeRatePriority: userInput.feeRatePriority)
         if async {
             single = single.subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
                     .observeOn(MainScheduler.instance)

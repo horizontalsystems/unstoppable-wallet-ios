@@ -5,7 +5,6 @@ class SendFeeItem: BaseActionItem {
     var bindFee: ((String?) -> ())?
     var bindConvertedFee: ((String?) -> ())?
     var bindError: ((String?) -> ())?
-    var bindRatePercents: ((Int?) -> ())?
     var isFeeAdjustable: Bool
 
     var onFeeMultiplierChange: ((Int) -> ())?

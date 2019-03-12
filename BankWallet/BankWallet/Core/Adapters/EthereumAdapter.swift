@@ -14,7 +14,7 @@ class EthereumAdapter: EthereumBaseAdapter {
         return ethereumKit.transactionsSingle(fromHash: hashFrom, limit: limit)
     }
 
-    override func sendSingle(to address: String, amount: String, feeRate: Int?) -> Single<Void> {
+    override func sendSingle(to address: String, amount: String, feeRatePriority: FeeRatePriority) -> Single<Void> {
         return ethereumKit.sendSingle(to: address, amount: amount)
                 .map { _ in ()}
                 .catchError { [weak self] error in
@@ -33,25 +33,21 @@ extension EthereumAdapter: IAdapter {
         return balanceDecimal(balanceString: ethereumKit.balance, decimal: EthereumAdapter.decimal)
     }
 
-    var feeRates: FeeRates {
-        return FeeRates(value: (8, 40, 80))
-    }
-
     func refresh() {
         ethereumKit.start()
     }
 
-    func availableBalance(for address: String?, feeRate: Int?) -> Decimal {
-        return max(0, balance - fee(for: balance, address: address, feeRate: feeRate))
+    func availableBalance(for address: String?, feeRatePriority: FeeRatePriority) -> Decimal {
+        return max(0, balance - fee(for: balance, address: address, feeRatePriority: feeRatePriority))
     }
 
-    func fee(for value: Decimal, address: String?, feeRate: Int?) -> Decimal {
+    func fee(for value: Decimal, address: String?, feeRatePriority: FeeRatePriority) -> Decimal {
         return ethereumKit.fee() / pow(10, EthereumAdapter.decimal)
     }
 
-    func validate(amount: Decimal, address: String?, feeRate: Int?) -> [SendStateError] {
+    func validate(amount: Decimal, address: String?, feeRatePriority: FeeRatePriority) -> [SendStateError] {
         var errors = [SendStateError]()
-        if amount > availableBalance(for: address, feeRate: feeRate) {
+        if amount > availableBalance(for: address, feeRatePriority: feeRatePriority) {
             errors.append(.insufficientAmount)
         }
         return errors

@@ -78,6 +78,26 @@ enum AdapterState {
     case notSynced
 }
 
+enum FeeRatePriority {
+    case lowest
+    case low
+    case medium
+    case high
+    case highest
+
+    init(rawValue: Int) {
+        switch rawValue {
+        case 0: self = .lowest
+        case 1: self = .low
+        case 2: self = .medium
+        case 3: self = .high
+        case 4: self = .highest
+        default: self = .medium
+        }
+    }
+
+}
+
 protocol IAdapter: class {
     var coin: Coin { get }
     var feeCoinCode: CoinCode? { get }
@@ -85,8 +105,6 @@ protocol IAdapter: class {
     var decimal: Int { get }
     var balance: Decimal { get }
     var balanceUpdatedSignal: Signal { get }
-
-    var feeRates: FeeRates { get }
 
     var state: AdapterState { get }
     var stateUpdatedSignal: Signal { get }
@@ -109,12 +127,12 @@ protocol IAdapter: class {
     func refresh()
     func clear()
 
-    func sendSingle(to address: String, amount: Decimal, feeRate: Int?) -> Single<Void>
+    func sendSingle(to address: String, amount: Decimal, feeRatePriority: FeeRatePriority) -> Single<Void>
 
-    func availableBalance(for address: String?, feeRate: Int?) -> Decimal
-    func fee(for value: Decimal, address: String?, feeRate: Int?) -> Decimal
+    func availableBalance(for address: String?, feeRatePriority: FeeRatePriority) -> Decimal
+    func fee(for value: Decimal, address: String?, feeRatePriority: FeeRatePriority) -> Decimal
     func validate(address: String) throws
-    func validate(amount: Decimal, address: String?, feeRate: Int?) -> [SendStateError]
+    func validate(amount: Decimal, address: String?, feeRatePriority: FeeRatePriority) -> [SendStateError]
     func parse(paymentAddress: String) -> PaymentRequestAddress
 
     var receiveAddress: String { get }
@@ -122,24 +140,6 @@ protocol IAdapter: class {
 
 extension IAdapter {
     var feeCoinCode: CoinCode? { return nil }
-}
-
-struct FeeRates {
-    var lowest: Int
-    var medium: Int
-    var highest: Int
-
-    init(value: (Int, Int, Int)) {
-        lowest = value.0
-        medium = value.1
-        highest = value.2
-    }
-
-    init(lowest: Int, medium: Int, highest: Int) {
-        self.lowest = lowest
-        self.medium = medium
-        self.highest = highest
-    }
 }
 
 enum SendTransactionError: LocalizedError {
