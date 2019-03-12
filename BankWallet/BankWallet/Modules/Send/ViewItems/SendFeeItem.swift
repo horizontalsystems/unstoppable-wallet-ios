@@ -7,7 +7,7 @@ class SendFeeItem: BaseActionItem {
     var bindError: ((String?) -> ())?
     var isFeeAdjustable: Bool
 
-    var onFeeMultiplierChange: ((Int) -> ())?
+    var onFeePriorityChange: ((Int) -> ())?
 
     init(tag: Int, isFeeAdjustable: Bool = true) {
         self.isFeeAdjustable = isFeeAdjustable

@@ -44,4 +44,5 @@ extension UIColor {
     static var cryptoYellow50: UIColor = UIColor(named: "Yellow50") ?? .black
     static var cryptoYellow40: UIColor = UIColor(named: "Yellow40") ?? .black
     static var cryptoYellowPressed: UIColor = UIColor(named: "YellowPressed") ?? .black
+    static var cryptoSteel20OnDark: UIColor = UIColor(named: "Steel20OnDark") ?? .black
 }
