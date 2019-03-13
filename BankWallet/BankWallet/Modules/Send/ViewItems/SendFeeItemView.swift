@@ -101,7 +101,7 @@ class SendFeeItemView: BaseActionItemView {
                     maker.trailing.equalTo(self.feeSlider)
                 } else {
                     let multiplier: CGFloat = CGFloat(i) * 0.25
-                    maker.leading.equalTo(self.feeSlider.snp.trailing).multipliedBy(multiplier)
+                    maker.centerX.equalTo(self.feeSlider.snp.trailing).multipliedBy(multiplier)
                 }
             }
             stepViews.append(stepView)
