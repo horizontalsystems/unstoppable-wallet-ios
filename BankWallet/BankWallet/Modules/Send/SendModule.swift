@@ -39,7 +39,7 @@ protocol ISendViewDelegate {
     func onMaxClicked()
 
     func onPasteAmountClicked()
-    func onFeeMultiplierChange(value: Decimal)
+    func onFeePriorityChange(value: Int)
 }
 
 protocol ISendInteractor {
@@ -49,7 +49,7 @@ protocol ISendInteractor {
     func parse(paymentAddress: String) -> PaymentRequestAddress
     func convertedAmount(forInputType inputType: SendInputType, amount: Decimal) -> Decimal?
     func state(forUserInput input: SendUserInput) -> SendState
-    func totalBalanceMinusFee(forInputType input: SendInputType, address: String?) -> Decimal
+    func totalBalanceMinusFee(forInputType input: SendInputType, address: String?, feeRatePriority: FeeRatePriority) -> Decimal
     func copy(address: String)
     func send(userInput: SendUserInput)
 
@@ -112,8 +112,8 @@ enum FeeError {
 
 class SendInteractorState {
     let adapter: IAdapter
-    var rateValue: Decimal?
-    var feeRateValue: Decimal?
+    var exchangeRate: Decimal?
+    var feeExchangeRate: Decimal?
 
     init(adapter: IAdapter) {
         self.adapter = adapter
@@ -124,6 +124,7 @@ class SendUserInput {
     var inputType: SendInputType = .coin
     var amount: Decimal = 0
     var address: String?
+    var feeRatePriority: FeeRatePriority = .medium
 }
 
 class SendState {

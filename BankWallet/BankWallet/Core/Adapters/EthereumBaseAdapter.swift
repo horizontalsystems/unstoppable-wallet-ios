@@ -35,7 +35,7 @@ class EthereumBaseAdapter {
         return Single.just([])
     }
 
-    func sendSingle(to address: String, amount: String) -> Single<Void> {
+    func sendSingle(to address: String, amount: String, feeRatePriority: FeeRatePriority) -> Single<Void> {
         return Single.just(())
     }
 
@@ -124,14 +124,14 @@ extension EthereumBaseAdapter {
                 }
     }
 
-    func sendSingle(to address: String, amount: Decimal) -> Single<Void> {
+    func sendSingle(to address: String, amount: Decimal, feeRatePriority: FeeRatePriority) -> Single<Void> {
         let poweredDecimal = amount * pow(10, decimal)
         let handler = NSDecimalNumberHandler(roundingMode: .plain, scale: 0, raiseOnExactness: false, raiseOnOverflow: false, raiseOnUnderflow: false, raiseOnDivideByZero: false)
         let roundedDecimal = NSDecimalNumber(decimal: poweredDecimal).rounding(accordingToBehavior: handler).decimalValue
 
         let amountString = String(describing: roundedDecimal)
 
-        return sendSingle(to: address, amount: amountString)
+        return sendSingle(to: address, amount: amountString, feeRatePriority: feeRatePriority)
     }
 
 }

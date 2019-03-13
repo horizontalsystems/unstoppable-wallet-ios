@@ -58,10 +58,14 @@ class SendTheme {
     static let feeHeight: CGFloat = 80
     static let feeFont: UIFont = .systemFont(ofSize: 14)
     static let feeColor: UIColor = .cryptoGray
-    static let feeSliderTopMargin: CGFloat = 9
-    static let feeSliderTint: UIColor = .cryptoGray
-    static let feeSliderBackground: UIColor = .cryptoSteel20
+    static var feeSliderTintColor: UIColor { return .crypto_LightGray_SteelDark }
     static let feeSliderThumbColor: UIColor = .cryptoGray
+    static let stepViewSideSize: CGFloat = 7
+    static let slideBarHeight: CGFloat = 2
+    static let feeSliderTopMargin: CGFloat = -6
+    static let feeSliderLeftMargin: CGFloat = 19
+    static let feeSliderRightMargin: CGFloat = 17
+    static let feeSliderHeight: CGFloat = 50
 
     static let switchRightMargin: CGFloat = 6
     static let pasteRightMargin: CGFloat = 6

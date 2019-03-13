@@ -16,14 +16,16 @@ class SendInteractor {
     private let pasteboardManager: IPasteboardManager
     private let appConfigProvider: IAppConfigProvider
     private let state: SendInteractorState
+    private let async: Bool
 
-    init(currencyManager: ICurrencyManager, rateStorage: IRateStorage, localStorage: ILocalStorage, pasteboardManager: IPasteboardManager, state: SendInteractorState, appConfigProvider: IAppConfigProvider) {
+    init(currencyManager: ICurrencyManager, rateStorage: IRateStorage, localStorage: ILocalStorage, pasteboardManager: IPasteboardManager, state: SendInteractorState, appConfigProvider: IAppConfigProvider, async: Bool = true) {
         self.currencyManager = currencyManager
         self.rateStorage = rateStorage
         self.localStorage = localStorage
         self.pasteboardManager = pasteboardManager
         self.appConfigProvider = appConfigProvider
         self.state = state
+        self.async = async
     }
 
 }
@@ -31,7 +33,7 @@ class SendInteractor {
 extension SendInteractor: ISendInteractor {
 
     var defaultInputType: SendInputType {
-        if state.rateValue == nil {
+        if state.exchangeRate == nil {
             return .coin
         }
         return localStorage.sendInputType ?? .coin
@@ -50,7 +52,7 @@ extension SendInteractor: ISendInteractor {
     }
 
     func convertedAmount(forInputType inputType: SendInputType, amount: Decimal) -> Decimal? {
-        guard let rateValue = state.rateValue else {
+        guard let rateValue = state.exchangeRate else {
             return nil
         }
 
@@ -72,9 +74,9 @@ extension SendInteractor: ISendInteractor {
         switch input.inputType {
         case .coin:
             sendState.coinValue = CoinValue(coinCode: coinCode, value: input.amount)
-            sendState.currencyValue = state.rateValue.map { CurrencyValue(currency: baseCurrency, value: input.amount * $0) }
+            sendState.currencyValue = state.exchangeRate.map { CurrencyValue(currency: baseCurrency, value: input.amount * $0) }
         case .currency:
-            sendState.coinValue = state.rateValue.map { CoinValue(coinCode: coinCode, value: input.amount / $0) }
+            sendState.coinValue = state.exchangeRate.map { CoinValue(coinCode: coinCode, value: input.amount / $0) }
             sendState.currencyValue = CurrencyValue(currency: baseCurrency, value: input.amount)
         }
 
@@ -88,22 +90,22 @@ extension SendInteractor: ISendInteractor {
             }
         }
 
-        let errors = adapter.validate(amount: sendState.coinValue?.value ?? 0, address: input.address)
+        let errors = adapter.validate(amount: sendState.coinValue?.value ?? 0, address: input.address, feeRatePriority: input.feeRatePriority)
         errors.forEach {
             switch($0) {
-            case .insufficientAmount: sendState.amountError = createAmountError(forInput: input)
-            case .insufficientFeeBalance: sendState.feeError = createFeeError(forInput: input, amount: sendState.coinValue?.value ?? 0)
+            case .insufficientAmount: sendState.amountError = createAmountError(forInput: input, feeRatePriority: input.feeRatePriority)
+            case .insufficientFeeBalance: sendState.feeError = createFeeError(forInput: input, amount: sendState.coinValue?.value ?? 0, feeRatePriority: input.feeRatePriority)
             }
         }
         if let coinValue = sendState.coinValue {
-            let feeValue = adapter.fee(for: coinValue.value, address: input.address)
+            let feeValue = adapter.fee(for: coinValue.value, address: input.address, feeRatePriority: input.feeRatePriority)
             sendState.feeCoinValue = CoinValue(coinCode: state.adapter.feeCoinCode ?? coinCode, value: feeValue)
         }
         let rateValue: Decimal?
         if state.adapter.feeCoinCode != nil {
-            rateValue = state.feeRateValue
+            rateValue = state.feeExchangeRate
         } else {
-            rateValue = state.rateValue
+            rateValue = state.exchangeRate
         }
         if let rateValue = rateValue, let feeCoinValue = sendState.feeCoinValue {
             sendState.feeCurrencyValue = CurrencyValue(currency: baseCurrency, value: rateValue * feeCoinValue.value)
@@ -112,35 +114,35 @@ extension SendInteractor: ISendInteractor {
         return sendState
     }
 
-    private func createAmountError(forInput input: SendUserInput) -> AmountInfo? {
-        let availableBalance = state.adapter.availableBalance(for: input.address)
+    private func createAmountError(forInput input: SendUserInput, feeRatePriority: FeeRatePriority) -> AmountInfo? {
+        let availableBalance = state.adapter.availableBalance(for: input.address, feeRatePriority: feeRatePriority)
         switch input.inputType {
         case .coin:
             return .coinValue(coinValue: CoinValue(coinCode: coin.code, value: availableBalance))
         case .currency:
-            return state.rateValue.map {
+            return state.exchangeRate.map {
                 let currencyBalanceMinusFee = availableBalance * $0
                 return .currencyValue(currencyValue: CurrencyValue(currency: currencyManager.baseCurrency, value: currencyBalanceMinusFee))
             }
         }
     }
 
-    private func createFeeError(forInput input: SendUserInput, amount: Decimal) -> FeeError? {
+    private func createFeeError(forInput input: SendUserInput, amount: Decimal, feeRatePriority: FeeRatePriority) -> FeeError? {
         guard let code = state.adapter.feeCoinCode else {
             return nil
         }
-        let fee = state.adapter.fee(for: amount, address: input.address)
+        let fee = state.adapter.fee(for: amount, address: input.address, feeRatePriority: feeRatePriority)
         let feeValue = CoinValue(coinCode: code, value: fee)
         return .erc20error(erc20CoinCode: state.adapter.coin.code, fee: feeValue)
     }
 
-    func totalBalanceMinusFee(forInputType input: SendInputType, address: String?) -> Decimal {
-        let availableBalance =  state.adapter.availableBalance(for: address)
+    func totalBalanceMinusFee(forInputType input: SendInputType, address: String?, feeRatePriority: FeeRatePriority) -> Decimal {
+        let availableBalance =  state.adapter.availableBalance(for: address, feeRatePriority: feeRatePriority)
         switch input {
         case .coin:
             return availableBalance
         case .currency:
-            return state.rateValue.map {
+            return state.exchangeRate.map {
                 return availableBalance * $0
             } ?? 0
         }
@@ -160,7 +162,7 @@ extension SendInteractor: ISendInteractor {
 
         if userInput.inputType == .coin {
             computedAmount = userInput.amount
-        } else if let rateValue = state.rateValue {
+        } else if let rateValue = state.exchangeRate {
             computedAmount = userInput.amount / rateValue
         }
 
@@ -169,10 +171,12 @@ extension SendInteractor: ISendInteractor {
             return
         }
 
-        state.adapter.sendSingle(to: address, amount: amount)
-                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-                .observeOn(MainScheduler.instance)
-                .subscribe(onSuccess: { [weak self] in
+        var single = state.adapter.sendSingle(to: address, amount: amount, feeRatePriority: userInput.feeRatePriority)
+        if async {
+            single = single.subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+                    .observeOn(MainScheduler.instance)
+        }
+        single.subscribe(onSuccess: { [weak self] in
                     self?.delegate?.didSend()
                 }, onError: { [weak self] error in
                     self?.delegate?.didFailToSend(error: error)
@@ -188,7 +192,7 @@ extension SendInteractor: ISendInteractor {
         rateStorage.nonExpiredLatestRateValueObservable(forCoinCode: state.adapter.coin.code, currencyCode: currencyManager.baseCurrency.code)
                 .take(1)
                 .subscribe(onNext: { [weak self] rateValue in
-                    self?.state.rateValue = rateValue
+                    self?.state.exchangeRate = rateValue
                     self?.delegate?.didUpdateRate()
                 })
                 .disposed(by: disposeBag)
@@ -197,7 +201,7 @@ extension SendInteractor: ISendInteractor {
             rateStorage.nonExpiredLatestRateValueObservable(forCoinCode: feeCoinCode, currencyCode: currencyManager.baseCurrency.code)
                     .take(1)
                     .subscribe(onNext: { [weak self] rateValue in
-                        self?.state.feeRateValue = rateValue
+                        self?.state.feeExchangeRate = rateValue
                         self?.delegate?.didUpdateRate()
                     })
                     .disposed(by: disposeBag)

@@ -144,7 +144,7 @@ class SendAddressItemView: BaseActionItemView {
             errorLabel.text = error
 
             addressLabel.snp.remakeConstraints { maker in
-                maker.leading.top.equalToSuperview()
+                maker.leading.top.trailing.equalToSuperview()
             }
             errorLabel.snp.remakeConstraints { maker in
                 maker.leading.bottom.trailing.equalToSuperview()
@@ -153,7 +153,7 @@ class SendAddressItemView: BaseActionItemView {
         } else {
             errorLabel.isHidden = true
             addressLabel.snp.remakeConstraints { maker in
-                maker.leading.top.bottom.equalToSuperview()
+                maker.leading.top.bottom.trailing.equalToSuperview()
             }
         }
 

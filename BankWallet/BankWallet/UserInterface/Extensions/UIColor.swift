@@ -18,6 +18,7 @@ extension UIColor {
     static var crypto_White_Gray: UIColor { return App.shared.localStorage.lightMode ? .white : .cryptoGray }
     static var crypto_Dark50_White50: UIColor { return App.shared.localStorage.lightMode ? .cryptoWhite50: .cryptoDark50 }
     static var crypto_SteelDark_White: UIColor { return App.shared.localStorage.lightMode ? .white: .cryptoSteelDark }
+    static var crypto_LightGray_SteelDark: UIColor { return App.shared.localStorage.lightMode ? .cryptoLightGray: .cryptoSteelDark }
 
     static var crypto_Silver_Dark50: UIColor { return App.shared.localStorage.lightMode ? .cryptoDark50 : .cryptoSilver50 }
 
@@ -44,4 +45,5 @@ extension UIColor {
     static var cryptoYellow50: UIColor = UIColor(named: "Yellow50") ?? .black
     static var cryptoYellow40: UIColor = UIColor(named: "Yellow40") ?? .black
     static var cryptoYellowPressed: UIColor = UIColor(named: "YellowPressed") ?? .black
+    static var cryptoSteel20OnDark: UIColor = UIColor(named: "Steel20OnDark") ?? .black
 }

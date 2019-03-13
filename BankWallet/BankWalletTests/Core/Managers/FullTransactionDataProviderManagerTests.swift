@@ -5,7 +5,7 @@ import Cuckoo
 class FullTransactionDataProviderManagerTests: XCTestCase {
     private let bitcoinProviderNames = ["HorizontalSystems.xyz", "BlockChair.com", "BlockExplorer.com", "Btc.com"]
     private let bitcoinCashProviderNames = ["HorizontalSystems.xyz", "BlockChair.com", "BlockExplorer.com", "Btc.com"]
-    private let ethereumProviderNames = ["HorizontalSystems.xyz", "Etherscan.io", "BlockChair.com"]
+    private let ethereumProviderNames = ["Etherscan.io", "HorizontalSystems.xyz", "BlockChair.com"]
 
     private var mockLocalStorage: MockILocalStorage!
     private var mockAppConfigProvider: MockIAppConfigProvider!

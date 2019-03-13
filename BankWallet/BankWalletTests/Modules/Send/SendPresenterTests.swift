@@ -17,10 +17,14 @@ class SendPresenterTests: XCTestCase {
     private let coin = Coin(title: "Bitcoin", code: "BTC", type: .bitcoin)
     private let state = SendState(decimal: 8, inputType: .coin)
 
+    private let feeRatePriority: FeeRatePriority = .medium
+
     private let inputType: SendInputType = .coin
     private let amount: Decimal = 123.45
     private let convertedAmount: Decimal = 543.21
     private let amountInfo: AmountInfo = .coinValue(coinValue: CoinValue(coinCode: "BTC", value: 10.2))
+
+    private let feeRatePercent: Int = 20
 
     private var presenter: SendPresenter!
 
@@ -73,6 +77,7 @@ class SendPresenterTests: XCTestCase {
             when(mock.send(userInput: any())).thenDoNothing()
             when(mock.set(inputType: any())).thenDoNothing()
             when(mock.fetchRate()).thenDoNothing()
+            when(mock.totalBalanceMinusFee(forInputType: any(), address: any(), feeRatePriority: any())).thenReturn(0)
         }
         stub(mockFactory) { mock in
             when(mock.viewItem(forState: equal(to: state), forceRoundDown: any())).thenReturn(viewItem)
@@ -82,6 +87,8 @@ class SendPresenterTests: XCTestCase {
             when(mock.inputType.get).thenReturn(inputType)
             when(mock.amount.get).thenReturn(amount)
             when(mock.inputType.set(any())).thenDoNothing()
+            when(mock.feeRatePriority.get).thenReturn(feeRatePriority)
+            when(mock.feeRatePriority.set(any())).thenDoNothing()
             when(mock.amount.set(any())).thenDoNothing()
             when(mock.address.set(any())).thenDoNothing()
         }
@@ -282,13 +289,13 @@ class SendPresenterTests: XCTestCase {
             when(mock.address.get).thenReturn(address)
         }
         stub(mockInteractor) { mock in
-            when(mock.totalBalanceMinusFee(forInputType: equal(to: inputType), address: equal(to: address))).thenReturn(maxBalance)
+            when(mock.totalBalanceMinusFee(forInputType: equal(to: inputType), address: equal(to: address), feeRatePriority: equal(to: feeRatePriority))).thenReturn(maxBalance)
         }
 
         presenter.onMaxClicked()
 
         verify(mockFactory).viewItem(forState: equal(to: state), forceRoundDown: true)
-        verify(mockInteractor).totalBalanceMinusFee(forInputType: equal(to: inputType), address: equal(to: address))
+        verify(mockInteractor).totalBalanceMinusFee(forInputType: equal(to: inputType), address: equal(to: address), feeRatePriority: equal(to: feeRatePriority))
         verify(mockView).set(amountInfo: equal(to: amountInfo))
     }
 
@@ -309,6 +316,22 @@ class SendPresenterTests: XCTestCase {
 
         verify(mockUserInput).amount.set(equal(to: expectedAmount))
         verify(mockView).set(amountInfo: equal(to: expectedAmountInfo))
+    }
+
+    func testFeePriorityChange() {
+        presenter.onFeePriorityChange(value: 2)
+
+        verify(mockUserInput).feeRatePriority.set(equal(to: FeeRatePriority.medium))
+    }
+
+    func testFeePriorityChange_fallback() {
+        presenter.onFeePriorityChange(value: 16)
+
+        verify(mockUserInput).feeRatePriority.set(equal(to: FeeRatePriority.medium))
+    }
+
+    func testIsFeeAdjustable() {
+        XCTAssertEqual(true, presenter.isFeeAdjustable)
     }
 
 }

@@ -2,20 +2,15 @@ import UIKit
 import GrouviExtensions
 import GrouviActionSheet
 import SnapKit
-
-class TappableSlider: UISlider {
-    override func beginTracking(_ touch: UITouch, with event: UIEvent?) -> Bool {
-        return true
-    }
-}
+import AudioToolbox
 
 class SendFeeItemView: BaseActionItemView {
     private let feeLabel = UILabel()
     private let convertedFeeLabel = UILabel()
     private let errorLabel = UILabel()
-    private let feeSlider = TappableSlider()
-    private let feeSliderSlowImageView = UIImageView(image: UIImage(named: "Fee Slider Slow"))
-    private let feeSliderFastImageView = UIImageView(image: UIImage(named: "Fee Slider Fast"))
+    private let feeSlider = FeeSlider()
+
+    private var previousValue: Int?
 
     override var item: SendFeeItem? { return _item as? SendFeeItem }
 
@@ -26,13 +21,9 @@ class SendFeeItemView: BaseActionItemView {
         addSubview(errorLabel)
         addSubview(convertedFeeLabel)
         addSubview(feeSlider)
-        addSubview(feeSliderSlowImageView)
-        addSubview(feeSliderFastImageView)
 
         if let item = item {
             feeSlider.isHidden = !item.isFeeAdjustable
-            feeSliderSlowImageView.isHidden = !item.isFeeAdjustable
-            feeSliderFastImageView.isHidden = !item.isFeeAdjustable
         }
         feeLabel.font = SendTheme.feeFont
         feeLabel.textColor = SendTheme.feeColor
@@ -61,24 +52,16 @@ class SendFeeItemView: BaseActionItemView {
             maker.bottom.equalToSuperview().offset(-SendTheme.smallMargin)
         }
 
-        feeSliderSlowImageView.snp.makeConstraints { maker in
-            maker.leading.equalToSuperview().offset(SendTheme.margin)
-            maker.top.equalTo(self.feeLabel.snp.bottom).offset(SendTheme.feeSliderTopMargin)
-        }
-        feeSliderFastImageView.snp.makeConstraints { maker in
-            maker.trailing.equalToSuperview().offset(-SendTheme.margin)
-            maker.centerY.equalTo(self.feeSliderSlowImageView)
-        }
-        feeSlider.value = 0.5
-        feeSlider.minimumTrackTintColor = SendTheme.feeSliderTint
-        feeSlider.maximumTrackTintColor = SendTheme.feeSliderBackground
-        feeSlider.setThumbImage(UIImage(named: "Fee Slider Thumb Image")?.tinted(with: SendTheme.feeSliderThumbColor), for: .normal)
         feeSlider.addTarget(self, action: #selector(sliderShift), for: .valueChanged)
+        feeSlider.addTarget(self, action: #selector(onFinishSliding), for: [.touchUpOutside, .touchUpInside])
         feeSlider.snp.makeConstraints { maker in
-            maker.leading.equalTo(feeSliderSlowImageView.snp.trailing).offset(SendTheme.mediumMargin)
-            maker.trailing.equalTo(feeSliderFastImageView.snp.leading).offset(-SendTheme.mediumMargin)
-            maker.centerY.equalTo(self.feeSliderSlowImageView)
+            maker.leading.equalToSuperview().offset(SendTheme.feeSliderLeftMargin)
+            maker.top.equalTo(self.feeLabel.snp.bottom).offset(SendTheme.feeSliderTopMargin)
+            maker.trailing.equalToSuperview().offset(-SendTheme.feeSliderRightMargin)
+            maker.height.equalTo(SendTheme.feeSliderHeight)
         }
+
+        sliderShift(disableSend: true)
 
         item?.bindFee = { [weak self] in
             self?.feeLabel.text = $0.map { "send.fee".localized + ": \($0)" }
@@ -88,11 +71,33 @@ class SendFeeItemView: BaseActionItemView {
         }
         item?.bindError = { [weak self] in
             self?.errorLabel.text = $0
+
+            self?.feeSlider.isHidden = $0 != nil
         }
     }
 
-    @objc func sliderShift() {
-        item?.onFeeMultiplierChange?(Decimal(Double(feeSlider.value)))
+    @objc func sliderShift(disableSend: Bool = false) {
+        let a = Int(feeSlider.value * 10)
+        let b = Int(feeSlider.value) * 10
+
+        let value = Int(floor(feeSlider.value))
+        if previousValue != value, !disableSend, a == b {
+            item?.onFeePriorityChange?(value)
+
+            let generator = UIImpactFeedbackGenerator(style: .light)
+            generator.prepare()
+            generator.impactOccurred()
+
+            previousValue = value
+        }
+    }
+
+    @objc func onFinishSliding() {
+        UIView.animate(withDuration: 0.2, animations: {
+            self.feeSlider.setValue(Float(Int(round(self.feeSlider.value))), animated: true)
+        }, completion: { _ in
+            self.sliderShift()
+        })
     }
 
 }

@@ -68,8 +68,8 @@ class SendViewController: ActionSheetController {
             self?.amountItem.removeLetter?()
         }
 
-        feeItem.onFeeMultiplierChange = { [weak self] value in
-            self?.delegate.onFeeMultiplierChange(value: value)
+        feeItem.onFeePriorityChange = { [weak self] value in
+            self?.delegate.onFeePriorityChange(value: value)
         }
 //        delegate.onViewDidLoad()
     }

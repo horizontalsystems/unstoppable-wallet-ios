@@ -153,7 +153,7 @@ extension SendPresenter: ISendViewDelegate {
     }
 
     func onMaxClicked() {
-        let totalBalanceMinusFee = interactor.totalBalanceMinusFee(forInputType: userInput.inputType, address: userInput.address)
+        let totalBalanceMinusFee = interactor.totalBalanceMinusFee(forInputType: userInput.inputType, address: userInput.address, feeRatePriority: userInput.feeRatePriority)
         userInput.amount = totalBalanceMinusFee
 
         let state = interactor.state(forUserInput: userInput)
@@ -173,8 +173,8 @@ extension SendPresenter: ISendViewDelegate {
         }
     }
 
-    func onFeeMultiplierChange(value: Decimal) {
-        print("change fee multiplier: \(value)")
+    func onFeePriorityChange(value: Int) {
+        userInput.feeRatePriority = FeeRatePriority(rawValue: value) ?? .medium
     }
 
 }

@@ -78,6 +78,14 @@ enum AdapterState {
     case notSynced
 }
 
+enum FeeRatePriority: Int {
+    case lowest
+    case low
+    case medium
+    case high
+    case highest
+}
+
 protocol IAdapter: class {
     var coin: Coin { get }
     var feeCoinCode: CoinCode? { get }
@@ -107,12 +115,12 @@ protocol IAdapter: class {
     func refresh()
     func clear()
 
-    func sendSingle(to address: String, amount: Decimal) -> Single<Void>
+    func sendSingle(to address: String, amount: Decimal, feeRatePriority: FeeRatePriority) -> Single<Void>
 
-    func availableBalance(for address: String?) -> Decimal
-    func fee(for value: Decimal, address: String?) -> Decimal
+    func availableBalance(for address: String?, feeRatePriority: FeeRatePriority) -> Decimal
+    func fee(for value: Decimal, address: String?, feeRatePriority: FeeRatePriority) -> Decimal
     func validate(address: String) throws
-    func validate(amount: Decimal, address: String?) -> [SendStateError]
+    func validate(amount: Decimal, address: String?, feeRatePriority: FeeRatePriority) -> [SendStateError]
     func parse(paymentAddress: String) -> PaymentRequestAddress
 
     var receiveAddress: String { get }
