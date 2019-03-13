@@ -78,24 +78,12 @@ enum AdapterState {
     case notSynced
 }
 
-enum FeeRatePriority {
+enum FeeRatePriority: Int {
     case lowest
     case low
     case medium
     case high
     case highest
-
-    init(rawValue: Int) {
-        switch rawValue {
-        case 0: self = .lowest
-        case 1: self = .low
-        case 2: self = .medium
-        case 3: self = .high
-        case 4: self = .highest
-        default: self = .medium
-        }
-    }
-
 }
 
 protocol IAdapter: class {

@@ -71,11 +71,6 @@ protocol ISendStateViewItemFactory {
     func confirmationViewItem(forState state: SendState, coin: Coin) -> SendConfirmationViewItem?
 }
 
-protocol IFeeRateSliderConverter {
-    func percent(for unit: Int) -> Int
-    func unit(for percent: Int) -> Int
-}
-
 enum SendInputType: String {
     case coin = "coin"
     case currency = "currency"

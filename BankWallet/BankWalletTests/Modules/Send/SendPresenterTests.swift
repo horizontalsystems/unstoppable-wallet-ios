@@ -318,8 +318,14 @@ class SendPresenterTests: XCTestCase {
         verify(mockView).set(amountInfo: equal(to: expectedAmountInfo))
     }
 
-    func testFeeMultiplierChange() {
+    func testFeePriorityChange() {
         presenter.onFeePriorityChange(value: 2)
+
+        verify(mockUserInput).feeRatePriority.set(equal(to: FeeRatePriority.medium))
+    }
+
+    func testFeePriorityChange_fallback() {
+        presenter.onFeePriorityChange(value: 16)
 
         verify(mockUserInput).feeRatePriority.set(equal(to: FeeRatePriority.medium))
     }

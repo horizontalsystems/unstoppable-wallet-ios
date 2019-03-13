@@ -76,8 +76,8 @@ class SendFeeItemView: BaseActionItemView {
         feeSlider.maximumValue = 4
         feeSlider.minimumValue = 0
         feeSlider.value = 2
-        feeSlider.minimumTrackTintColor = SendTheme.feeSliderTint
-        feeSlider.maximumTrackTintColor = SendTheme.stepViewInactiveColor
+        feeSlider.minimumTrackTintColor = SendTheme.feeSliderTintColor
+        feeSlider.maximumTrackTintColor = SendTheme.feeSliderTintColor
         feeSlider.setThumbImage(UIImage(named: "Fee Slider Thumb Image")?.tinted(with: SendTheme.feeSliderThumbColor), for: .normal)
         feeSlider.addTarget(self, action: #selector(sliderShift), for: .valueChanged)
         feeSlider.addTarget(self, action: #selector(onFinishSliding), for: [.touchUpOutside, .touchUpInside])
@@ -90,6 +90,7 @@ class SendFeeItemView: BaseActionItemView {
         for i in 0..<5 {
             let stepView = UIView()
             feeSlider.addSubview(stepView)
+            stepView.backgroundColor = SendTheme.feeSliderTintColor
             stepView.isUserInteractionEnabled = false
             stepView.layer.cornerRadius = SendTheme.stepViewSideSize / 2
             stepView.snp.makeConstraints { maker in
@@ -142,14 +143,6 @@ class SendFeeItemView: BaseActionItemView {
             generator.impactOccurred()
 
             previousValue = value
-        }
-
-        for (index, view) in stepViews.enumerated() {
-            if index <= value {
-                view.backgroundColor = SendTheme.feeSliderTint
-            } else {
-                view.backgroundColor = SendTheme.stepViewInactiveColor
-            }
         }
     }
 

@@ -174,7 +174,7 @@ extension SendPresenter: ISendViewDelegate {
     }
 
     func onFeePriorityChange(value: Int) {
-        userInput.feeRatePriority = FeeRatePriority(rawValue: value)
+        userInput.feeRatePriority = FeeRatePriority(rawValue: value) ?? .medium
     }
 
 }
