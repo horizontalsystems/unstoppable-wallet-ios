@@ -4,20 +4,11 @@ import GrouviActionSheet
 import SnapKit
 import AudioToolbox
 
-class TappableSlider: UISlider {
-    override func beginTracking(_ touch: UITouch, with event: UIEvent?) -> Bool {
-        return true
-    }
-}
-
 class SendFeeItemView: BaseActionItemView {
     private let feeLabel = UILabel()
     private let convertedFeeLabel = UILabel()
     private let errorLabel = UILabel()
-    private let feeSlider = TappableSlider()
-    private let feeSliderSlowImageView = UIImageView(image: UIImage(named: "Fee Slider Slow"))
-    private let feeSliderFastImageView = UIImageView(image: UIImage(named: "Fee Slider Fast"))
-    private var stepViews = [UIView]()
+    private let feeSlider = FeeSlider()
 
     private var previousValue: Int?
 
@@ -30,13 +21,9 @@ class SendFeeItemView: BaseActionItemView {
         addSubview(errorLabel)
         addSubview(convertedFeeLabel)
         addSubview(feeSlider)
-        addSubview(feeSliderSlowImageView)
-        addSubview(feeSliderFastImageView)
 
         if let item = item {
             feeSlider.isHidden = !item.isFeeAdjustable
-            feeSliderSlowImageView.isHidden = !item.isFeeAdjustable
-            feeSliderFastImageView.isHidden = !item.isFeeAdjustable
         }
         feeLabel.font = SendTheme.feeFont
         feeLabel.textColor = SendTheme.feeColor
@@ -65,48 +52,15 @@ class SendFeeItemView: BaseActionItemView {
             maker.bottom.equalToSuperview().offset(-SendTheme.smallMargin)
         }
 
-        feeSliderSlowImageView.snp.makeConstraints { maker in
-            maker.leading.equalToSuperview().offset(SendTheme.margin)
-            maker.top.equalTo(self.feeLabel.snp.bottom).offset(SendTheme.feeSliderTopMargin)
-        }
-        feeSliderFastImageView.snp.makeConstraints { maker in
-            maker.trailing.equalToSuperview().offset(-SendTheme.margin)
-            maker.centerY.equalTo(self.feeSliderSlowImageView)
-        }
-        feeSlider.maximumValue = 4
-        feeSlider.minimumValue = 0
-        feeSlider.value = 2
-        feeSlider.minimumTrackTintColor = SendTheme.feeSliderTintColor
-        feeSlider.maximumTrackTintColor = SendTheme.feeSliderTintColor
-        feeSlider.setThumbImage(UIImage(named: "Fee Slider Thumb Image")?.tinted(with: SendTheme.feeSliderThumbColor), for: .normal)
         feeSlider.addTarget(self, action: #selector(sliderShift), for: .valueChanged)
         feeSlider.addTarget(self, action: #selector(onFinishSliding), for: [.touchUpOutside, .touchUpInside])
         feeSlider.snp.makeConstraints { maker in
-            maker.leading.equalTo(feeSliderSlowImageView.snp.trailing).offset(SendTheme.mediumMargin)
-            maker.trailing.equalTo(feeSliderFastImageView.snp.leading).offset(-SendTheme.mediumMargin)
-            maker.centerY.equalTo(self.feeSliderSlowImageView)
+            maker.leading.equalToSuperview().offset(SendTheme.feeSliderLeftMargin)
+            maker.top.equalTo(self.feeLabel.snp.bottom).offset(SendTheme.feeSliderTopMargin)
+            maker.trailing.equalToSuperview().offset(-SendTheme.feeSliderRightMargin)
+            maker.height.equalTo(SendTheme.feeSliderHeight)
         }
 
-        for i in 0..<5 {
-            let stepView = UIView()
-            feeSlider.addSubview(stepView)
-            stepView.backgroundColor = SendTheme.feeSliderTintColor
-            stepView.isUserInteractionEnabled = false
-            stepView.layer.cornerRadius = SendTheme.stepViewSideSize / 2
-            stepView.snp.makeConstraints { maker in
-                maker.centerY.equalTo(self.feeSlider).offset(1 / UIScreen.main.scale)
-                maker.size.equalTo(SendTheme.stepViewSideSize)
-                if i == 0 {
-                    maker.leading.equalTo(self.feeSlider)
-                } else if i == 4 {
-                    maker.trailing.equalTo(self.feeSlider)
-                } else {
-                    let multiplier: CGFloat = CGFloat(i) * 0.25
-                    maker.centerX.equalTo(self.feeSlider.snp.trailing).multipliedBy(multiplier)
-                }
-            }
-            stepViews.append(stepView)
-        }
         sliderShift(disableSend: true)
 
         item?.bindFee = { [weak self] in
@@ -118,15 +72,7 @@ class SendFeeItemView: BaseActionItemView {
         item?.bindError = { [weak self] in
             self?.errorLabel.text = $0
 
-            if $0 == nil {
-                self?.feeSlider.isHidden = false
-                self?.feeSliderSlowImageView.isHidden = false
-                self?.feeSliderFastImageView.isHidden = false
-            } else {
-                self?.feeSlider.isHidden = true
-                self?.feeSliderSlowImageView.isHidden = true
-                self?.feeSliderFastImageView.isHidden = true
-            }
+            self?.feeSlider.isHidden = $0 != nil
         }
     }
 
