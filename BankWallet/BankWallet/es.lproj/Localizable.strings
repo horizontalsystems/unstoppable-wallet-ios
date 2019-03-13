@@ -74,7 +74,6 @@
 
 "send.title" = "Enviar %@";
 "send.address_placeholder" = "Dirección";
-"send.to_address" = "@";
 "send.amount_error.balance" = "Saldo %@";
 "send.send_button" = "Enviar";
 "send.paste_button" = "Pegar";
@@ -99,7 +98,6 @@
 "tx_info.status.pending" = "Pendiente";
 "tx_info.from_hash" = "Desde ";
 "tx_info.to_hash" = "Para";
-"tx_info.alert_close" = "Cerrar";
 "tx_info.button_more" = "Más";
 
 // Full Info
