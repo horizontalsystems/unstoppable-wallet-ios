@@ -74,7 +74,6 @@
 
 "send.title" = "ارسال%@";
 "send.address_placeholder" = "آدرس";
-"send.to_address" = "@";
 "send.amount_error.balance" = "مانده حساب %@";
 "send.send_button" = "ارسال";
 "send.paste_button" = "جای‌گذاری";
@@ -99,7 +98,6 @@
 "tx_info.status.pending" = "در حالت انتظار";
 "tx_info.from_hash" = "از";
 "tx_info.to_hash" = "به";
-"tx_info.alert_close" = "بستن";
 "tx_info.button_more" = "بیشتر";
 
 // Full Info
