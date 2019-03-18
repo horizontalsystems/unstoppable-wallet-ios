@@ -15,7 +15,7 @@ class EthereumAdapter: EthereumBaseAdapter {
     }
 
     override func sendSingle(to address: String, amount: String, feeRatePriority: FeeRatePriority) -> Single<Void> {
-        return ethereumKit.sendSingle(to: address, amount: amount)
+        return ethereumKit.sendSingle(to: address, amount: amount, priority: kitPriority(from: feeRatePriority))
                 .map { _ in ()}
                 .catchError { [weak self] error in
                     return Single.error(self?.createSendError(from: error) ?? error)
@@ -42,7 +42,7 @@ extension EthereumAdapter: IAdapter {
     }
 
     func fee(for value: Decimal, address: String?, feeRatePriority: FeeRatePriority) -> Decimal {
-        return ethereumKit.fee() / pow(10, EthereumAdapter.decimal)
+        return ethereumKit.fee(priority: kitPriority(from: feeRatePriority)) / pow(10, EthereumAdapter.decimal)
     }
 
     func validate(amount: Decimal, address: String?, feeRatePriority: FeeRatePriority) -> [SendStateError] {

@@ -77,6 +77,16 @@ class EthereumBaseAdapter {
         }
     }
 
+    func kitPriority(from priority: FeeRatePriority) -> FeePriority {
+        switch priority {
+        case .lowest: return .lowest
+        case .low: return .low
+        case .medium: return .medium
+        case .high: return .high
+        case .highest: return .highest
+        }
+    }
+
 }
 
 extension EthereumBaseAdapter {
