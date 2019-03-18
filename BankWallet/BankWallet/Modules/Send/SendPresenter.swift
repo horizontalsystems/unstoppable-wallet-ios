@@ -175,6 +175,13 @@ extension SendPresenter: ISendViewDelegate {
 
     func onFeePriorityChange(value: Int) {
         userInput.feeRatePriority = FeeRatePriority(rawValue: value) ?? .medium
+
+        let state = interactor.state(forUserInput: userInput)
+        let viewItem = factory.viewItem(forState: state, forceRoundDown: false)
+
+        view?.set(hintInfo: viewItem.hintInfo)
+        view?.set(feeInfo: viewItem.feeInfo)
+        view?.set(sendButtonEnabled: viewItem.sendButtonEnabled)
     }
 
 }
