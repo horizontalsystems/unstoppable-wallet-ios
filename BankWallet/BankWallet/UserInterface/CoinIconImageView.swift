@@ -4,10 +4,6 @@ import AlamofireImage
 
 class CoinIconImageView: UIImageView {
 
-    private static let filter = DynamicImageFilter("TemplateImageFilter") { image in
-        return image.withRenderingMode(.alwaysTemplate)
-    }
-
     init() {
         super.init(frame: .zero)
 
@@ -24,11 +20,8 @@ class CoinIconImageView: UIImageView {
     }
 
     func bind(coin: Coin) {
-        image = nil
-        backgroundColor = AppTheme.coinIconColor
-
-        image = UIImage(named: "\(coin.code.lowercased())")?.withRenderingMode(.alwaysTemplate)
         backgroundColor = .clear
+        image = UIImage(named: "\(coin.code.lowercased())")?.withRenderingMode(.alwaysTemplate)
     }
 
 }
