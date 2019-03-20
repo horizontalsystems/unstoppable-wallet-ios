@@ -337,7 +337,7 @@
 		1A5641C3B8E88DA8E54FEFEB /* PinDotsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564326AB442FFB65E1CA29 /* PinDotsView.swift */; };
 		1A5641D57A7D6928C9D0984D /* TransactionRecordDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56425A421C1C9FB383DCDA /* TransactionRecordDataSource.swift */; };
 		1A5641E8642AA6004640F15C /* SendButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56425E1873BC8574539D2B /* SendButtonItem.swift */; };
-		1A5641EFE66E67F1FCFAABCF /* LatestRate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5640AA47846498D56A36E6 /* LatestRate.swift */; };
+		1A5641EFE66E67F1FCFAABCF /* LatestRateData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5640AA47846498D56A36E6 /* LatestRateData.swift */; };
 		1A5642019E9D4A25C650F453 /* UnlockPinInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564083CF8DF7A89314820D /* UnlockPinInteractorTests.swift */; };
 		1A564203C389601DBDF8CDFB /* GuestPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56465843CD9981F548A058 /* GuestPresenterTests.swift */; };
 		1A56421861068166E044D0A9 /* BalanceEditCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564DDACAD5CFB092AE6496 /* BalanceEditCell.swift */; };
@@ -474,7 +474,7 @@
 		1A564B955AE4E27AD7B232CC /* TransactionTitleItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564C27C6CDAE6E692C4A14 /* TransactionTitleItem.swift */; };
 		1A564BAAAD199DDF96A84006 /* SecuritySettingsInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564258FC24334581197AC1 /* SecuritySettingsInteractorTests.swift */; };
 		1A564BD5E7709C07FD063961 /* TransactionsFilterTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5647CE5852E959DA7EB89A /* TransactionsFilterTheme.swift */; };
-		1A564BDABCF8EA54F5599FF7 /* LatestRate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5640AA47846498D56A36E6 /* LatestRate.swift */; };
+		1A564BDABCF8EA54F5599FF7 /* LatestRateData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5640AA47846498D56A36E6 /* LatestRateData.swift */; };
 		1A564BE00FB2C76EAA44A2E3 /* SettingsRightImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56499AAEEED9EA3CE9E0A7 /* SettingsRightImageCell.swift */; };
 		1A564BE5BF0E283B1758F2F0 /* BalanceHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1A5646B68188CD13969CE766 /* BalanceHeaderView.xib */; };
 		1A564BF5CEF2800EF05EAAB0 /* BalancePresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5646AB24E23765AD12C83E /* BalancePresenterTests.swift */; };
@@ -493,7 +493,7 @@
 		1A564D5F202F7ED3AA797E20 /* Production.template.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 1A564370A637B30D34776F2A /* Production.template.xcconfig */; };
 		1A564D60DD2935CBD2B23EF3 /* GuestTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564429BCB7A2DCFFE4104F /* GuestTheme.swift */; };
 		1A564D6E1FB65C20AAD6C54B /* DepositTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56481E8D97841B12893D00 /* DepositTheme.swift */; };
-		1A564D837A9AB8A7EA5EB71A /* LatestRate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5640AA47846498D56A36E6 /* LatestRate.swift */; };
+		1A564D837A9AB8A7EA5EB71A /* LatestRateData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5640AA47846498D56A36E6 /* LatestRateData.swift */; };
 		1A564D9038D65D88CF97329C /* TransactionTitleItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56469DF9D0C335228E88EE /* TransactionTitleItemView.swift */; };
 		1A564DCD5D3D7A6FB741DF3B /* Development.template.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 1A5641679DC88BE355F0F3A0 /* Development.template.xcconfig */; };
 		1A564DEAF0A6DF97F029594E /* LockoutManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5645447A24FE94F0D87BFF /* LockoutManager.swift */; };
@@ -1272,7 +1272,7 @@
 		1A56408C8281C80FD365E5BE /* LaunchModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LaunchModule.swift; sourceTree = "<group>"; };
 		1A564091A9C12F224A18B740 /* TransactionInfoPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionInfoPresenter.swift; sourceTree = "<group>"; };
 		1A564094488F092EDA007FE9 /* LanguageSettingsRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LanguageSettingsRouter.swift; sourceTree = "<group>"; };
-		1A5640AA47846498D56A36E6 /* LatestRate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LatestRate.swift; sourceTree = "<group>"; };
+		1A5640AA47846498D56A36E6 /* LatestRateData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LatestRateData.swift; sourceTree = "<group>"; };
 		1A5640B6691F4FD048C82A49 /* CoinValueHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoinValueHelper.swift; sourceTree = "<group>"; };
 		1A5640B8B65EAECA3A36F89E /* PinInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinInteractor.swift; sourceTree = "<group>"; };
 		1A5640FA19AF1EC2B9C0F407 /* ManageCoinsPresenterStateTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManageCoinsPresenterStateTests.swift; sourceTree = "<group>"; };
@@ -1825,7 +1825,7 @@
 				11B3589DC1945CAFBEEB1EED /* CurrencyValue.swift */,
 				11B356738853E2305B5CC34B /* TransactionRecord.swift */,
 				11B35BBAAAE1A3981B902E89 /* Rate.swift */,
-				1A5640AA47846498D56A36E6 /* LatestRate.swift */,
+				1A5640AA47846498D56A36E6 /* LatestRateData.swift */,
 				58AAA7A94D25C20240FD75C6 /* PaymentRequestAddress.swift */,
 				1A56488B2051E9529CE8742E /* LockoutState.swift */,
 				1A56404690D0235A5183C12D /* Coin.swift */,
@@ -3411,7 +3411,7 @@
 				11B350D872DA13413A850044 /* SendAmountItemView.swift in Sources */,
 				11B35766672E6B9646B84389 /* SendAddressItem.swift in Sources */,
 				11B35848297F392FE9F72BF2 /* SendStateViewItemFactory.swift in Sources */,
-				1A564BDABCF8EA54F5599FF7 /* LatestRate.swift in Sources */,
+				1A564BDABCF8EA54F5599FF7 /* LatestRateData.swift in Sources */,
 				11B3516D955D9654B474C00C /* SendConfirmationAmounItem.swift in Sources */,
 				11B35FB3EFDEE0DAD433D0AC /* SendConfirmationAmountItemView.swift in Sources */,
 				11B352FF572078C646A92322 /* SendConfirmationAddressItem.swift in Sources */,
@@ -3788,7 +3788,7 @@
 				11B35E68F07D31BAE2E696A6 /* SendAmountItemView.swift in Sources */,
 				11B35F037EFA396581A9624B /* SendAddressItem.swift in Sources */,
 				11B35B3F32BFA82A66C4F797 /* SendStateViewItemFactory.swift in Sources */,
-				1A564D837A9AB8A7EA5EB71A /* LatestRate.swift in Sources */,
+				1A564D837A9AB8A7EA5EB71A /* LatestRateData.swift in Sources */,
 				11B359F527246E329BAD3BC7 /* SendConfirmationAmounItem.swift in Sources */,
 				11B356D2F4655ACA22659DA2 /* SendConfirmationAmountItemView.swift in Sources */,
 				11B358BCBAF4A9C9233C3FC0 /* SendConfirmationAddressItem.swift in Sources */,
@@ -4119,7 +4119,7 @@
 				11B357328A236064FC0B3DA7 /* SendAmountItemView.swift in Sources */,
 				11B35901F6922FADADD0CC87 /* SendAddressItem.swift in Sources */,
 				11B3571732539375DCFE67ED /* SendStateViewItemFactory.swift in Sources */,
-				1A5641EFE66E67F1FCFAABCF /* LatestRate.swift in Sources */,
+				1A5641EFE66E67F1FCFAABCF /* LatestRateData.swift in Sources */,
 				11B356B01A92AFE22DDB8754 /* SendConfirmationAmounItem.swift in Sources */,
 				11B35FAE71A2259D4E4CBF0C /* SendConfirmationAmountItemView.swift in Sources */,
 				11B35BE00F8891F220DECB76 /* SendConfirmationAddressItem.swift in Sources */,

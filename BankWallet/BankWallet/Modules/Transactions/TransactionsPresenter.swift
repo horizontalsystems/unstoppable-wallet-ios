@@ -58,6 +58,8 @@ extension TransactionsPresenter: ITransactionsViewDelegate {
         let threshold = dataSource.threshold(coin: item.coin)
         let rate = dataSource.rate(coin: item.coin, timestamp: item.record.timestamp)
 
+        interactor.fetchRates(timestampsData: [item.coin: [item.record.timestamp]])
+
         return factory.viewItem(fromItem: loader.item(forIndex: index), lastBlockHeight: lastBlockHeight, threshold: threshold, rate: rate)
     }
 
@@ -113,8 +115,6 @@ extension TransactionsPresenter: ITransactionsInteractorDelegate {
 
         dataSource.clearRates()
         view?.reload()
-
-        fetchRates(recordsData: loader.allRecordsData)
     }
 
     func onUpdate(lastBlockHeight: Int, coin: Coin) {
@@ -136,7 +136,6 @@ extension TransactionsPresenter: ITransactionsInteractorDelegate {
 
     func didUpdate(records: [TransactionRecord], coin: Coin) {
         loader.didUpdate(records: records, coin: coin)
-        fetchRates(recordsData: [coin: records])
     }
 
     func didFetch(rateValue: Decimal, coin: Coin, currency: Currency, timestamp: Double) {
@@ -152,19 +151,7 @@ extension TransactionsPresenter: ITransactionsInteractorDelegate {
     func didFetch(recordsData: [Coin: [TransactionRecord]]) {
 //        print("Did Fetch Records: \(records.map { key, value -> String in "\(key) - \(value.count)" })")
 
-        fetchRates(recordsData: recordsData)
-
         loader.didFetch(recordsData: recordsData)
-    }
-
-    private func fetchRates(recordsData: [Coin: [TransactionRecord]]) {
-        var timestampsData = [Coin: [Double]]()
-
-        for (coin, records) in recordsData {
-            timestampsData[coin] = records.map { $0.timestamp }
-        }
-
-        interactor.fetchRates(timestampsData: timestampsData)
     }
 
 }

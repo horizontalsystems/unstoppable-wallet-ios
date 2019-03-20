@@ -41,9 +41,9 @@ extension BalanceViewItem: Equatable {
     }
 }
 
-extension LatestRate: Equatable {
-    public static func ==(lhs: LatestRate, rhs: LatestRate) -> Bool {
-        return lhs.value == rhs.value && lhs.timestamp == rhs.timestamp
+extension LatestRateData: Equatable {
+    public static func ==(lhs: LatestRateData, rhs: LatestRateData) -> Bool {
+        return lhs.values == rhs.values && lhs.timestamp == rhs.timestamp
     }
 }
 
