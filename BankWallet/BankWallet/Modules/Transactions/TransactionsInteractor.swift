@@ -11,13 +11,15 @@ class TransactionsInteractor {
     private let adapterManager: IAdapterManager
     private let currencyManager: ICurrencyManager
     private let rateManager: IRateManager
+    private let reachabilityManager: IReachabilityManager
 
     private var requestedTimestamps = [Coin: [Double]]()
 
-    init(adapterManager: IAdapterManager, currencyManager: ICurrencyManager, rateManager: IRateManager) {
+    init(adapterManager: IAdapterManager, currencyManager: ICurrencyManager, rateManager: IRateManager, reachabilityManager: IReachabilityManager) {
         self.adapterManager = adapterManager
         self.currencyManager = currencyManager
         self.rateManager = rateManager
+        self.reachabilityManager = reachabilityManager
     }
 
     private func onUpdateCoinsData() {
@@ -72,6 +74,12 @@ extension TransactionsInteractor: ITransactionsInteractor {
                     self?.delegate?.onUpdateBaseCurrency()
                 })
                 .disposed(by: disposeBag)
+
+        reachabilityManager.reachabilitySignal.subscribe(onNext: { [weak self] in
+            if let reachabilityManager = self?.reachabilityManager, reachabilityManager.isReachable {
+                self?.delegate?.onConnectionRestore()
+            }
+        }).disposed(by: disposeBag)
     }
 
     func fetchLastBlockHeights() {
@@ -156,6 +164,8 @@ extension TransactionsInteractor: ITransactionsInteractor {
                         .subscribe(onNext: { [weak self] rateValue in
 //                            print("did fetch: \(coinCode) -- \(currency.code) -- \(timestamp) -- \(rateValue)")
                             self?.delegate?.didFetch(rateValue: rateValue, coin: coin, currency: currency, timestamp: timestamp)
+                        }, onError: { [weak self] _ in
+                            self?.requestedTimestamps[coin] = nil
                         })
                         .disposed(by: ratesDisposeBag)
             }

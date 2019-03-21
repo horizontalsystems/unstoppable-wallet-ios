@@ -43,6 +43,10 @@ extension TransactionsPresenter: ITransactionsViewDelegate {
         interactor.initialFetch()
     }
 
+    func onViewAppear() {
+        view?.reload()
+    }
+
     func onFilterSelect(coin: Coin?) {
         let coins = coin.map { [$0] } ?? []
         interactor.set(selectedCoins: coins)
@@ -152,6 +156,10 @@ extension TransactionsPresenter: ITransactionsInteractorDelegate {
 //        print("Did Fetch Records: \(records.map { key, value -> String in "\(key) - \(value.count)" })")
 
         loader.didFetch(recordsData: recordsData)
+    }
+
+    func onConnectionRestore() {
+        view?.reload()
     }
 
 }
