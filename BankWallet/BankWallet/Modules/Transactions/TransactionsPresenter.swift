@@ -62,7 +62,9 @@ extension TransactionsPresenter: ITransactionsViewDelegate {
         let threshold = dataSource.threshold(coin: item.coin)
         let rate = dataSource.rate(coin: item.coin, timestamp: item.record.timestamp)
 
-        interactor.fetchRates(timestampsData: [item.coin: [item.record.timestamp]])
+        if rate == nil {
+            interactor.fetchRate(coin: item.coin, timestamp: item.record.timestamp)
+        }
 
         return factory.viewItem(fromItem: loader.item(forIndex: index), lastBlockHeight: lastBlockHeight, threshold: threshold, rate: rate)
     }

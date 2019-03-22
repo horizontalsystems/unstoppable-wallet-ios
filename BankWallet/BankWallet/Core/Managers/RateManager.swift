@@ -13,20 +13,20 @@ class RateManager {
         self.networkManager = networkManager
     }
 
-    private func latestRateFallbackObservable(coinCode: CoinCode, currencyCode: String, timestamp: Double, error: Error) -> Observable<Decimal>? {
+    private func latestRateFallbackObservable(coinCode: CoinCode, currencyCode: String, timestamp: Double) -> Observable<Decimal?> {
         let currentTimestamp = Date().timeIntervalSince1970
 
         guard timestamp > currentTimestamp - 60 * latestRateFallbackThreshold else {
-            return nil
+            return Observable.just(nil)
         }
 
         return storage.latestRateObservable(forCoinCode: coinCode, currencyCode: currencyCode)
-                .flatMap { rate -> Observable<Decimal> in
+                .map { rate -> Decimal? in
                     guard !rate.expired else {
-                        return Observable.error(error)
+                        return nil
                     }
 
-                    return Observable.just(rate.value)
+                    return rate.value
                 }
     }
 
@@ -51,26 +51,29 @@ extension RateManager: IRateManager {
                 .disposed(by: disposeBag)
     }
 
-    func timestampRateValueObservable(coinCode: CoinCode, currencyCode: String, timestamp: Double) -> Observable<Decimal> {
+    func timestampRateValueObservable(coinCode: CoinCode, currencyCode: String, timestamp: Double) -> Single<Decimal?> {
         return storage.timestampRateObservable(coinCode: coinCode, currencyCode: currencyCode, timestamp: timestamp)
                 .take(1)
-                .flatMap { [weak self] rate -> Observable<Decimal> in
+                .flatMap { [unowned self] rate -> Observable<Decimal?> in
                     if let rate = rate {
                         return Observable.just(rate.value)
                     } else {
                         let date = Date(timeIntervalSince1970: timestamp)
 
-                        let networkObservable = self?.networkManager.getRate(coinCode: coinCode, currencyCode: currencyCode, date: date)
+                        let networkObservable = self.networkManager.getRate(coinCode: coinCode, currencyCode: currencyCode, date: date)
                                 .do(onNext: { [weak self] value in
-                                    let rate = Rate(coinCode: coinCode, currencyCode: currencyCode, value: value, timestamp: timestamp, isLatest: false)
-                                    self?.storage.save(rate: rate)
-                                }) ?? Observable.error(NetworkError.noConnection)
+                                    if let value = value {
+                                        let rate = Rate(coinCode: coinCode, currencyCode: currencyCode, value: value, timestamp: timestamp, isLatest: false)
+                                        self?.storage.save(rate: rate)
+                                    }
+                                })
 
                         return networkObservable.catchError { error in
-                            return self?.latestRateFallbackObservable(coinCode: coinCode, currencyCode: currencyCode, timestamp: timestamp, error: error) ?? Observable.error(error)
+                            return self.latestRateFallbackObservable(coinCode: coinCode, currencyCode: currencyCode, timestamp: timestamp)
                         }
                     }
                 }
+                .asSingle()
     }
 
     func clear() {

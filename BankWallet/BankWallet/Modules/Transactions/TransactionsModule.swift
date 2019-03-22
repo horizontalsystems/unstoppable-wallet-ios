@@ -45,7 +45,7 @@ protocol ITransactionsInteractor {
     func fetchRecords(fetchDataList: [FetchData])
     func set(selectedCoins: [Coin])
 
-    func fetchRates(timestampsData: [Coin: [Double]])
+    func fetchRate(coin: Coin, timestamp: Double)
 }
 
 protocol ITransactionsInteractorDelegate: class {

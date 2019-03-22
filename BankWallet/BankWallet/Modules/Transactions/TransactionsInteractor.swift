@@ -13,7 +13,7 @@ class TransactionsInteractor {
     private let rateManager: IRateManager
     private let reachabilityManager: IReachabilityManager
 
-    private var requestedTimestamps = [Coin: [Double]]()
+    private var requestedTimestamps = [(Coin, Double)]()
 
     init(adapterManager: IAdapterManager, currencyManager: ICurrencyManager, rateManager: IRateManager, reachabilityManager: IReachabilityManager) {
         self.adapterManager = adapterManager
@@ -50,6 +50,11 @@ class TransactionsInteractor {
         }
     }
 
+    private func onReachabilityChange() {
+        if reachabilityManager.isReachable {
+            delegate?.onConnectionRestore()
+        }
+    }
 }
 
 extension TransactionsInteractor: ITransactionsInteractor {
@@ -70,16 +75,16 @@ extension TransactionsInteractor: ITransactionsInteractor {
                 .observeOn(MainScheduler.instance)
                 .subscribe(onNext: { [weak self] in
                     self?.ratesDisposeBag = DisposeBag()
-                    self?.requestedTimestamps = [:]
+                    self?.requestedTimestamps = []
                     self?.delegate?.onUpdateBaseCurrency()
                 })
                 .disposed(by: disposeBag)
 
-        reachabilityManager.reachabilitySignal.subscribe(onNext: { [weak self] in
-            if let reachabilityManager = self?.reachabilityManager, reachabilityManager.isReachable {
-                self?.delegate?.onConnectionRestore()
-            }
-        }).disposed(by: disposeBag)
+        reachabilityManager.reachabilitySignal
+                .subscribe(onNext: { [weak self] in
+                    self?.onReachabilityChange()
+                })
+                .disposed(by: disposeBag)
     }
 
     func fetchLastBlockHeights() {
@@ -144,32 +149,26 @@ extension TransactionsInteractor: ITransactionsInteractor {
         delegate?.onUpdate(selectedCoins: selectedCoins.isEmpty ? allCoins : selectedCoins)
     }
 
-    func fetchRates(timestampsData: [Coin: [Double]]) {
+    func fetchRate(coin: Coin, timestamp: Double) {
+        guard !requestedTimestamps.contains(where: { $0 == coin && $1 == timestamp }) else {
+            return
+        }
+
+        requestedTimestamps.append((coin, timestamp))
+
         let currency = currencyManager.baseCurrency
 
-        for (coin, timestamps) in timestampsData {
-            for timestamp in timestamps {
-                if let timestamps = requestedTimestamps[coin], timestamps.contains(timestamp) {
-                    continue
-                }
-
-                if requestedTimestamps[coin] == nil {
-                    requestedTimestamps[coin] = [Double]()
-                }
-                requestedTimestamps[coin]?.append(timestamp)
-
-                rateManager.timestampRateValueObservable(coinCode: coin.code, currencyCode: currency.code, timestamp: timestamp)
-                        .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
-                        .observeOn(MainScheduler.instance)
-                        .subscribe(onNext: { [weak self] rateValue in
-//                            print("did fetch: \(coinCode) -- \(currency.code) -- \(timestamp) -- \(rateValue)")
-                            self?.delegate?.didFetch(rateValue: rateValue, coin: coin, currency: currency, timestamp: timestamp)
-                        }, onError: { [weak self] _ in
-                            self?.requestedTimestamps[coin] = nil
-                        })
-                        .disposed(by: ratesDisposeBag)
-            }
-        }
+        rateManager.timestampRateValueObservable(coinCode: coin.code, currencyCode: currency.code, timestamp: timestamp)
+                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
+                .observeOn(MainScheduler.instance)
+                .subscribe(onSuccess: { [weak self] rateValue in
+                    if let rateValue = rateValue {
+                        self?.delegate?.didFetch(rateValue: rateValue, coin: coin, currency: currency, timestamp: timestamp)
+                    } else {
+                        self?.requestedTimestamps.removeAll { $0 == coin && $1 == timestamp }
+                    }
+                })
+                .disposed(by: ratesDisposeBag)
     }
 
 }

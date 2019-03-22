@@ -122,7 +122,7 @@ CHECKOUT OPTIONS:
     :commit: b7fd3429fed46979be345266f4a704b4e1fac4a0
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios/
   HSEthereumKit:
-    :commit: a136ebf7b2f5455b98c8cae9269938f3ab4926cd
+    :commit: 4f15a5ca3c0479c9a4a95d174f9b0e27857992c0
     :git: https://github.com/horizontalsystems/ethereum-kit-ios/
 
 SPEC CHECKSUMS:

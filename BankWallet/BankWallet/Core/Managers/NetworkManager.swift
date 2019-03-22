@@ -146,33 +146,22 @@ extension NetworkManager: IRateNetworkManager {
         return observable(forRequest: request(withMethod: .get, path: "xrates/latest/\(currencyCode)/index.json"))
     }
 
-    func getRate(coinCode: String, currencyCode: String, date: Date) -> Observable<Decimal> {
-        var coin = coinCode
-        if coin.last == "t" || coin.last == "r" {
-            coin.removeLast()
-        }
-
+    func getRate(coinCode: String, currencyCode: String, date: Date) -> Observable<Decimal?> {
         let dayPath = ipfsDayFormatter.string(from: date)
         let hourPath = ipfsHourFormatter.string(from: date)
         let minuteString = ipfsMinuteFormatter.string(from: date)
 
-        let hourObservable: Observable<[String: String]> = observable(forRequest: request(withMethod: .get, path: "xrates/historical/\(coin)/\(currencyCode)/\(hourPath)/index.json"))
-        let dayObservable: Observable<String> = observable(forRequest: request(withMethod: .get, path: "xrates/historical/\(coin)/\(currencyCode)/\(dayPath)/index.json"))
+        let hourObservable: Observable<[String: String]> = observable(forRequest: request(withMethod: .get, path: "xrates/historical/\(coinCode)/\(currencyCode)/\(hourPath)/index.json"))
+        let dayObservable: Observable<String> = observable(forRequest: request(withMethod: .get, path: "xrates/historical/\(coinCode)/\(currencyCode)/\(dayPath)/index.json"))
 
         return hourObservable
-                .flatMap { rates -> Observable<Decimal> in
+                .flatMap { rates -> Observable<Decimal?> in
                     if let rate = rates[minuteString], let decimal = Decimal(string: rate) {
                         return Observable.just(decimal)
                     }
 
-                    return Observable.error(NetworkError.mappingError)
-                }
-                .catchError { _ in
-                    return dayObservable.flatMap { rate -> Observable<Decimal> in
-                        if let decimal = Decimal(string: rate) {
-                            return Observable.just(decimal)
-                        }
-                        return Observable.error(NetworkError.mappingError)
+                    return dayObservable.map { rate -> Decimal? in
+                        return Decimal(string: rate)
                     }
                 }
     }
