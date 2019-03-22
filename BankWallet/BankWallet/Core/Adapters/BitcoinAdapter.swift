@@ -62,6 +62,16 @@ class BitcoinAdapter {
         return SendTransactionError.connection
     }
 
+    func kitPriority(from priority: FeeRatePriority) -> FeePriority {
+        switch priority {
+        case .lowest: return .lowest
+        case .low: return .low
+        case .medium: return .medium
+        case .high: return .high
+        case .highest: return .highest
+        }
+    }
+
 }
 
 extension BitcoinAdapter: IAdapter {
@@ -103,10 +113,11 @@ extension BitcoinAdapter: IAdapter {
 
     func sendSingle(to address: String, amount: Decimal, feeRatePriority: FeeRatePriority) -> Single<Void> {
         let satoshiAmount = convertToSatoshi(value: amount)
+        let feePriority = kitPriority(from: feeRatePriority)
 
         return Single.create { [weak self] observer in
             do {
-                try self?.bitcoinKit.send(to: address, value: satoshiAmount)
+                try self?.bitcoinKit.send(to: address, value: satoshiAmount, feePriority: feePriority)
                 observer(.success(()))
             } catch {
                 observer(.error(self?.createSendError(from: error) ?? error))
@@ -121,9 +132,10 @@ extension BitcoinAdapter: IAdapter {
     }
 
     func fee(for value: Decimal, address: String?, feeRatePriority: FeeRatePriority) -> Decimal {
+        let feePriority = kitPriority(from: feeRatePriority)
         do {
             let amount = convertToSatoshi(value: value)
-            let fee = try bitcoinKit.fee(for: amount, toAddress: address, senderPay: true)
+            let fee = try bitcoinKit.fee(for: amount, toAddress: address, senderPay: true, feePriority: feePriority)
             return Decimal(fee) / coinRate
         } catch SelectorError.notEnough(let maxFee) {
             return Decimal(maxFee) / coinRate
