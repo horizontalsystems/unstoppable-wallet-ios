@@ -54,13 +54,13 @@ class NetworkManager {
 
         request.setValue("application/json", forHTTPHeaderField: "Accept")
 
-//        print("API OUT: \(method.rawValue) \(path) \(parameters.map { String(describing: $0) } ?? "")")
-
         return RequestRouter(request: request, encoding: method == .get ? URLEncoding.default : JSONEncoding.default, parameters: parameters)
     }
 
     private func observable(forRequest request: URLRequestConvertible) -> Observable<DataResponse<Any>> {
         let observable = Observable<DataResponse<Any>>.create { observer in
+//            print("API OUT: \(request.urlRequest?.url?.path ?? "nil path")")
+
             let requestReference = Alamofire.request(request)
                     .validate()
                     .responseJSON(queue: DispatchQueue.global(qos: .background), completionHandler: { response in
@@ -142,39 +142,26 @@ class NetworkManager {
 
 extension NetworkManager: IRateNetworkManager {
 
-    func getLatestRate(coinCode: String, currencyCode: String) -> Observable<LatestRate> {
-        var coin = coinCode
-        if coin.last == "t" || coin.last == "r" {
-            coin.removeLast()
-        }
-
-        return observable(forRequest: request(withMethod: .get, path: "xrates/\(coin)/\(currencyCode)/index.json"))
+    func getLatestRateData(currencyCode: String) -> Observable<LatestRateData> {
+        return observable(forRequest: request(withMethod: .get, path: "xrates/latest/\(currencyCode)/index.json"))
     }
 
-    func getRate(coinCode: String, currencyCode: String, date: Date) -> Observable<Decimal> {
-        var coin = coinCode
-        if coin.last == "t" || coin.last == "r" {
-            coin.removeLast()
-        }
-
+    func getRate(coinCode: String, currencyCode: String, date: Date) -> Observable<Decimal?> {
         let dayPath = ipfsDayFormatter.string(from: date)
         let hourPath = ipfsHourFormatter.string(from: date)
         let minuteString = ipfsMinuteFormatter.string(from: date)
 
-        let hourObservable: Observable<[String: Double]> = observable(forRequest: request(withMethod: .get, path: "xrates/\(coin)/\(currencyCode)/\(hourPath)/index.json"))
-        let dayObservable: Observable<Double> = observable(forRequest: request(withMethod: .get, path: "xrates/\(coin)/\(currencyCode)/\(dayPath)/index.json"))
+        let hourObservable: Observable<[String: String]> = observable(forRequest: request(withMethod: .get, path: "xrates/historical/\(coinCode)/\(currencyCode)/\(hourPath)/index.json"))
+        let dayObservable: Observable<String> = observable(forRequest: request(withMethod: .get, path: "xrates/historical/\(coinCode)/\(currencyCode)/\(dayPath)/index.json"))
 
         return hourObservable
-                .flatMap { rates -> Observable<Decimal> in
-                    if let rate = rates[minuteString] {
-                        return Observable.just(Decimal(rate))
+                .flatMap { rates -> Observable<Decimal?> in
+                    if let rate = rates[minuteString], let decimal = Decimal(string: rate) {
+                        return Observable.just(decimal)
                     }
 
-                    return Observable.error(NetworkError.mappingError)
-                }
-                .catchError { _ in
-                    return dayObservable.map {
-                        Decimal($0)
+                    return dayObservable.map { rate -> Decimal? in
+                        return Decimal(string: rate)
                     }
                 }
     }
