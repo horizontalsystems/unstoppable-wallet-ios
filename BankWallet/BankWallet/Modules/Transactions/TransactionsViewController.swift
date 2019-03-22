@@ -59,6 +59,11 @@ class TransactionsViewController: UITableViewController {
         delegate.viewDidLoad()
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        delegate.onViewAppear()
+    }
+
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return AppTheme.statusBarStyle
     }

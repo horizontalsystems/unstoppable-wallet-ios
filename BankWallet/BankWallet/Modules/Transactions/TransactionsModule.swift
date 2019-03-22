@@ -28,6 +28,7 @@ protocol ITransactionsView: class {
 
 protocol ITransactionsViewDelegate {
     func viewDidLoad()
+    func onViewAppear()
     func onFilterSelect(coin: Coin?)
 
     var itemsCount: Int { get }
@@ -44,7 +45,7 @@ protocol ITransactionsInteractor {
     func fetchRecords(fetchDataList: [FetchData])
     func set(selectedCoins: [Coin])
 
-    func fetchRates(timestampsData: [Coin: [Double]])
+    func fetchRate(coin: Coin, timestamp: Double)
 }
 
 protocol ITransactionsInteractorDelegate: class {
@@ -58,6 +59,7 @@ protocol ITransactionsInteractorDelegate: class {
 
     func didFetch(rateValue: Decimal, coin: Coin, currency: Currency, timestamp: Double)
     func didFetch(recordsData: [Coin: [TransactionRecord]])
+    func onConnectionRestore()
 }
 
 protocol ITransactionsRouter {

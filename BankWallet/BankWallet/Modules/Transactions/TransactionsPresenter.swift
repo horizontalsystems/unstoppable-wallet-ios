@@ -43,6 +43,10 @@ extension TransactionsPresenter: ITransactionsViewDelegate {
         interactor.initialFetch()
     }
 
+    func onViewAppear() {
+        view?.reload()
+    }
+
     func onFilterSelect(coin: Coin?) {
         let coins = coin.map { [$0] } ?? []
         interactor.set(selectedCoins: coins)
@@ -58,7 +62,9 @@ extension TransactionsPresenter: ITransactionsViewDelegate {
         let threshold = dataSource.threshold(coin: item.coin)
         let rate = dataSource.rate(coin: item.coin, timestamp: item.record.timestamp)
 
-        interactor.fetchRates(timestampsData: [item.coin: [item.record.timestamp]])
+        if rate == nil {
+            interactor.fetchRate(coin: item.coin, timestamp: item.record.timestamp)
+        }
 
         return factory.viewItem(fromItem: loader.item(forIndex: index), lastBlockHeight: lastBlockHeight, threshold: threshold, rate: rate)
     }
@@ -152,6 +158,10 @@ extension TransactionsPresenter: ITransactionsInteractorDelegate {
 //        print("Did Fetch Records: \(records.map { key, value -> String in "\(key) - \(value.count)" })")
 
         loader.didFetch(recordsData: recordsData)
+    }
+
+    func onConnectionRestore() {
+        view?.reload()
     }
 
 }
