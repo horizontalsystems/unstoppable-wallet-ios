@@ -5,10 +5,10 @@ class Erc20Adapter: EthereumBaseAdapter {
     let contractAddress: String
     let feeCoinCode: CoinCode? = "ETH"
 
-    init(coin: Coin, ethereumKit: EthereumKit, contractAddress: String, decimal: Int) {
+    init(coin: Coin, ethereumKit: EthereumKit, contractAddress: String, decimal: Int, addressParser: IAddressParser) {
         self.contractAddress = EIP55.format(contractAddress)
 
-        super.init(coin: coin, ethereumKit: ethereumKit, decimal: decimal)
+        super.init(coin: coin, ethereumKit: ethereumKit, decimal: decimal, addressParser: addressParser)
 
         ethereumKit.register(contractAddress: contractAddress, delegate: self)
     }

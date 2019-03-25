@@ -4,8 +4,8 @@ import RxSwift
 class EthereumAdapter: EthereumBaseAdapter {
     static let decimal = 18
 
-    init(coin: Coin, ethereumKit: EthereumKit) {
-        super.init(coin: coin, ethereumKit: ethereumKit, decimal: EthereumAdapter.decimal)
+    init(coin: Coin, ethereumKit: EthereumKit, addressParser: IAddressParser) {
+        super.init(coin: coin, ethereumKit: ethereumKit, decimal: EthereumAdapter.decimal, addressParser: addressParser)
 
         ethereumKit.delegate = self
     }
