@@ -1,6 +1,4 @@
-import Foundation
-
-public struct AddressData: Equatable {
+struct AddressData: Equatable {
     public let address: String
 
     public let version: String?
