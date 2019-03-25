@@ -152,9 +152,12 @@ class BalanceCell: UITableViewCell {
 
         if case .synced = item.state {
             coinIconImageView.isHidden = false
-            payButton.state = .active
         } else {
             coinIconImageView.isHidden = true
+        }
+        if case .synced = item.state, item.coinValue.value > 0 {
+            payButton.state = .active
+        } else {
             payButton.state = .disabled
         }
 
