@@ -10,6 +10,7 @@ class BitcoinAdapter {
     private let bitcoinKit: BitcoinKit
     private let transactionCompletionThreshold = 6
     private let coinRate: Decimal
+    private let addressParser: IAddressParser
 
     let lastBlockHeightUpdatedSignal = Signal()
     let transactionRecordsSubject = PublishSubject<[TransactionRecord]>()
@@ -19,7 +20,9 @@ class BitcoinAdapter {
     let balanceUpdatedSignal = Signal()
     let stateUpdatedSignal = Signal()
 
-    init?(coin: Coin, authData: AuthData, newWallet: Bool, testMode: Bool) {
+    init?(coin: Coin, authData: AuthData, newWallet: Bool, addressParser: IAddressParser, testMode: Bool) {
+        self.addressParser = addressParser
+
         let network: BitcoinKit.Network = testMode ? .testNet : .mainNet
         let kitCoin: BitcoinKit.Coin
 
@@ -162,7 +165,7 @@ extension BitcoinAdapter: IAdapter {
     }
 
     func parse(paymentAddress: String) -> PaymentRequestAddress {
-        let paymentData = bitcoinKit.parse(paymentAddress: paymentAddress)
+        let paymentData = addressParser.parse(paymentAddress: paymentAddress)
         return PaymentRequestAddress(address: paymentData.address, amount: paymentData.amount.map { Decimal($0) })
     }
 

@@ -9,6 +9,7 @@ class EthereumBaseAdapter {
 
     let ethereumKit: EthereumKit
     let decimal: Int
+    private let addressParser: IAddressParser
 
     let transactionRecordsSubject = PublishSubject<[TransactionRecord]>()
 
@@ -18,10 +19,11 @@ class EthereumBaseAdapter {
     let lastBlockHeightUpdatedSignal = Signal()
     let stateUpdatedSignal = Signal()
 
-    init(coin: Coin, ethereumKit: EthereumKit, decimal: Int) {
+    init(coin: Coin, ethereumKit: EthereumKit, decimal: Int, addressParser: IAddressParser) {
         self.coin = coin
         self.ethereumKit = ethereumKit
         self.decimal = decimal
+        self.addressParser = addressParser
     }
 
     func balanceDecimal(balanceString: String?, decimal: Int) -> Decimal {
@@ -118,7 +120,8 @@ extension EthereumBaseAdapter {
     }
 
     func parse(paymentAddress: String) -> PaymentRequestAddress {
-        return PaymentRequestAddress(address: paymentAddress)
+        let paymentData = addressParser.parse(paymentAddress: paymentAddress)
+        return PaymentRequestAddress(address: paymentData.address, amount: paymentData.amount.map { Decimal($0) })
     }
 
     var receiveAddress: String {

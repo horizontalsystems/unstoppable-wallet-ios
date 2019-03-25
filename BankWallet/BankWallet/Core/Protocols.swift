@@ -373,3 +373,7 @@ protocol IUptimeProvider {
 protocol ILockoutTimeFrameFactory {
     func lockoutTimeFrame(failedAttempts: Int, lockoutTimestamp: TimeInterval, uptime: TimeInterval) -> TimeInterval
 }
+
+protocol IAddressParser {
+    func parse(paymentAddress: String) -> AddressData
+}
