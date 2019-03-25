@@ -1,12 +1,12 @@
 struct AddressData: Equatable {
-    public let address: String
+    let address: String
 
-    public let version: String?
-    public let amount: Double?
-    public let label: String?
-    public let message: String?
+    let version: String?
+    let amount: Double?
+    let label: String?
+    let message: String?
 
-    public let parameters: [String: String]?
+    let parameters: [String: String]?
 
     init(address: String, version: String? = nil, amount: Double? = nil, label: String? = nil, message: String? = nil, parameters: [String: String]? = nil) {
         self.address = address
@@ -40,7 +40,7 @@ struct AddressData: Equatable {
         return uriAddress
     }
 
-    public static func ==(lhs: AddressData, rhs: AddressData) -> Bool {
+    static func ==(lhs: AddressData, rhs: AddressData) -> Bool {
         return lhs.address == rhs.address &&
                 lhs.version == rhs.version &&
                 lhs.amount == rhs.amount &&
