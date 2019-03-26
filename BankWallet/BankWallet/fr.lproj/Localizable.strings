@@ -93,12 +93,14 @@
 // Transaction Info
 
 "tx_info.title" = "Transaction";
+"tx_info.historical_rate" = "Historical Rate";
 "tx_info.time" = "Date";
 "tx_info.status" = "Statut";
 "tx_info.status.pending" = "En attente";
+"tx_ibnfo.status.confirmed" = "CONFIRMED";
 "tx_info.from_hash" = "De";
 "tx_info.to_hash" = "À";
-"tx_info.button_more" = "Plus";
+"tx_info.button_verify" = "Verify";
 
 // Full Info
 
