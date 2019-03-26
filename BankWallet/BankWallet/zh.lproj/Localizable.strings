@@ -93,12 +93,14 @@
 // Transaction Info
 
 "tx_info.title" = "交易";
+"tx_info.historical_rate" = "Historical Rate";
 "tx_info.time" = "时间";
 "tx_info.status" = "状态";
 "tx_info.status.pending" = "在过程中";
+"tx_ibnfo.status.confirmed" = "CONFIRMED";
 "tx_info.from_hash" = "发件人";
 "tx_info.to_hash" = "收件人";
-"tx_info.button_more" = "更多";
+"tx_info.button_verify" = "Verify";
 
 // Full Info
 
