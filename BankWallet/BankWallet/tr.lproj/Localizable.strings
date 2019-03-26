@@ -93,12 +93,14 @@
 // Transaction Info
 
 "tx_info.title" = "Hesap işlemi";
+"tx_info.historical_rate" = "Historical Rate";
 "tx_info.time" = "Tarih";
 "tx_info.status" = "Durum";
 "tx_info.status.pending" = "Devam ediyor";
+"tx_ibnfo.status.confirmed" = "CONFIRMED";
 "tx_info.from_hash" = "Gönderen";
 "tx_info.to_hash" = "Alan";
-"tx_info.button_more" = "Daha fazlası";
+"tx_info.button_verify" = "Verify";
 
 // Full Info
 
