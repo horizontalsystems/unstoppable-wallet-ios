@@ -93,12 +93,14 @@
 // Transaction Info
 
 "tx_info.title" = "トランザクション";
+"tx_info.historical_rate" = "Historical Rate";
 "tx_info.time" = "時間";
 "tx_info.status" = "状況";
 "tx_info.status.pending" = "ペンディング";
+"tx_ibnfo.status.confirmed" = "CONFIRMED";
 "tx_info.from_hash" = "差出人";
 "tx_info.to_hash" = "宛先";
-"tx_info.button_more" = "より";
+"tx_info.button_verify" = "Verify";
 
 // Full Info
 
