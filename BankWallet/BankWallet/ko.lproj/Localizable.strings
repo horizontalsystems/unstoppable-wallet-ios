@@ -93,12 +93,14 @@
 // Transaction Info
 
 "tx_info.title" = "거래기록";
+"tx_info.historical_rate" = "Historical Rate";
 "tx_info.time" = "시간";
 "tx_info.status" = "상태";
 "tx_info.status.pending" = "보류 중";
+"tx_ibnfo.status.confirmed" = "CONFIRMED";
 "tx_info.from_hash" = "로 부터";
 "tx_info.to_hash" = "에게";
-"tx_info.button_more" = "보다";
+"tx_info.button_verify" = "Verify";
 
 // Full Info
 
