@@ -100,7 +100,7 @@ Go to Settings - > Bank and allow access to Camera.";
 "tx_info.status.pending" = "Pending";
 "tx_info.from_hash" = "From";
 "tx_info.to_hash" = "To";
-"tx_info.button_more" = "More";
+"tx_info.button_more" = "Verify";
 
 // Full Info
 
