@@ -93,12 +93,14 @@
 // Transaction Info
 
 "tx_info.title" = "Транзакция";
+"tx_info.historical_rate" = "Historical Rate";
 "tx_info.time" = "Время";
 "tx_info.status" = "Статус";
 "tx_info.status.pending" = "В процессе";
+"tx_ibnfo.status.confirmed" = "CONFIRMED";
 "tx_info.from_hash" = "От";
 "tx_info.to_hash" = "Кому";
-"tx_info.button_more" = "Ещё";
+"tx_info.button_verify" = "Verify";
 
 // Full Info
 
