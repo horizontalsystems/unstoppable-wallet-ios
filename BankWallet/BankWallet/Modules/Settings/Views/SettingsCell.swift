@@ -8,7 +8,7 @@ class SettingsCell: UITableViewCell {
     var disclosureImageView = UIImageView(image: UIImage(named: "Disclosure Indicator"))
 
     var selectView = UIView()
-    let separator = UIView()
+    let bottomSeparatorView = UIView()
 
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -38,17 +38,11 @@ class SettingsCell: UITableViewCell {
         }
 
         contentView.addSubview(disclosureImageView)
-        disclosureImageView.snp.makeConstraints { maker in
-            maker.trailing.equalTo(contentView.snp.trailingMargin)
-            maker.centerY.equalToSuperview()
-            maker.size.equalTo(SettingsTheme.disclosureSize)
-        }
 
-        separator.backgroundColor = SettingsTheme.cellSelectBackground
-        contentView.addSubview(separator)
-        separator.snp.makeConstraints { maker in
-            maker.leading.equalTo(contentView.snp.leadingMargin).offset(SettingsTheme.separatorInset)
-            maker.bottom.trailing.equalToSuperview()
+        bottomSeparatorView.backgroundColor = AppTheme.separatorColor
+        addSubview(bottomSeparatorView)
+        bottomSeparatorView.snp.makeConstraints { maker in
+            maker.leading.bottom.trailing.equalToSuperview()
             maker.height.equalTo(1 / UIScreen.main.scale)
         }
     }
@@ -83,15 +77,7 @@ class SettingsCell: UITableViewCell {
             maker.centerY.equalToSuperview()
         }
 
-        if last {
-            separator.isHidden = true
-        } else {
-            separator.isHidden = false
-            separator.snp.updateConstraints { maker in
-                let float = (titleIcon != nil ? SettingsTheme.separatorInset : 0)
-                maker.leading.equalTo(contentView.snp.leadingMargin).offset(float)
-            }
-        }
+        bottomSeparatorView.isHidden = last
     }
 
     override func setHighlighted(_ highlighted: Bool, animated: Bool) {

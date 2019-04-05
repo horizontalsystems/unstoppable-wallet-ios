@@ -87,7 +87,7 @@ class IndexedInputField: UIView, UITextFieldDelegate {
     }
 
     func commonInit() {
-        backgroundColor = .crypto_Steel20_White
+        backgroundColor = .crypto_SteelDark_White
 
         clearTextButton.addTarget(self, action: #selector(onClearText), for: .touchUpInside)
 
@@ -115,12 +115,13 @@ class IndexedInputField: UIView, UITextFieldDelegate {
             maker.width.equalTo(InputFieldTheme.indexWidth)
         }
         indexLabel.textColor = InputFieldTheme.indexColor
-        indexLabel.textAlignment = .right
+        indexLabel.font = InputFieldTheme.indexFont
 
         textField.keyboardAppearance = AppTheme.keyboardAppearance
+        textField.autocorrectionType = .yes
         textField.autocapitalizationType = .none
         textField.tintColor = AppTheme.textFieldTintColor
-        
+
         textField.addTarget(self, action: #selector(textChange), for: .editingChanged)
         textField.textColor = InputFieldTheme.textColor
         textField.delegate = self

@@ -52,6 +52,14 @@ class SettingsInfoFooter: UITableViewHeaderFooterView {
             maker.top.equalTo(titleLabel.snp.bottom).offset(SettingsTheme.infoImageTopMargin)
             maker.centerX.equalToSuperview()
         }
+
+        let topSeparatorView = UIView()
+        topSeparatorView.backgroundColor = AppTheme.darkSeparatorColor
+        contentView.addSubview(topSeparatorView)
+        topSeparatorView.snp.makeConstraints { maker in
+            maker.leading.top.trailing.equalToSuperview()
+            maker.height.equalTo(1 / UIScreen.main.scale)
+        }
     }
 
     required init?(coder aDecoder: NSCoder) {

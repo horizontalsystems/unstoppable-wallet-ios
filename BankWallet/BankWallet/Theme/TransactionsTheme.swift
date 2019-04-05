@@ -17,7 +17,6 @@ class TransactionsTheme {
     static let cellMediumMargin: CGFloat = 12
     static let cellSmallMargin: CGFloat = 8
     static let cellHighlightBackgroundColor = UIColor.cryptoSteel20
-    static let separatorColor = UIColor.cryptoSteel20
     static let amountLabelFont = UIFont.cryptoCaption1
     static let fiatAmountLabelColor = UIColor.cryptoGray
     static let fiatAmountLabelColor50 = UIColor.cryptoGray50
@@ -26,7 +25,6 @@ class TransactionsTheme {
     static let leftAdditionalMargin: CGFloat = 8
     static let avatarSize = CGSize(width: 40, height: 40)
     static let timeLabelFont = UIFont.cryptoCaption1
-    static var headerSeparatorBackground: UIColor { return .cryptoSteel20 }
     static let timeLabelTextColor = UIColor.cryptoGray
     static let timeLabelTextColor50 = UIColor.cryptoGray50
     static let pendingStatusIconTransparency: CGFloat = 0.5

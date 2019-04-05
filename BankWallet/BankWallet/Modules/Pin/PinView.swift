@@ -14,11 +14,10 @@ class PinView: UIView {
 
         addSubview(pinDotsView)
         pinDotsView.snp.makeConstraints { maker in
-            maker.center.equalToSuperview()
+            maker.centerX.equalToSuperview()
+            maker.centerY.equalToSuperview().multipliedBy(0.7)
         }
 
-        descriptionLabel.font = PinTheme.infoFontRegular
-        descriptionLabel.textColor = PinTheme.infoColor
         descriptionLabel.lineBreakMode = .byWordWrapping
         descriptionLabel.numberOfLines = 0
         descriptionLabel.textAlignment = .center
@@ -29,8 +28,6 @@ class PinView: UIView {
             maker.trailing.equalToSuperview().offset(-PinTheme.infoHorizontalMargin)
         }
 
-        errorLabel.font = PinTheme.infoFontRegular
-        errorLabel.textColor = PinTheme.errorColor
         errorLabel.lineBreakMode = .byWordWrapping
         errorLabel.numberOfLines = 0
         errorLabel.textAlignment = .center
@@ -62,8 +59,26 @@ class PinView: UIView {
     }
 
     func bind(page: PinPage, onPinChange: ((String) -> ())? = nil) {
-        descriptionLabel.text = page.description?.localized
-        errorLabel.text = page.error?.localized
+        let style = NSMutableParagraphStyle()
+        style.lineSpacing = 2.2
+        style.alignment = .center
+        let descriptionAttributes: [NSAttributedStringKey: Any] = [
+            NSAttributedStringKey.foregroundColor: PinTheme.infoColor,
+            NSAttributedStringKey.font: PinTheme.infoFontRegular,
+            NSAttributedStringKey.paragraphStyle: style,
+            NSAttributedStringKey.kern: -0.1
+        ]
+        let description = NSMutableAttributedString(string: page.description?.localized ?? "", attributes: descriptionAttributes)
+        descriptionLabel.attributedText = description
+
+        let errorAttributes: [NSAttributedStringKey: Any] = [
+            NSAttributedStringKey.foregroundColor: PinTheme.errorColor,
+            NSAttributedStringKey.font: PinTheme.infoFontRegular,
+            NSAttributedStringKey.paragraphStyle: style,
+            NSAttributedStringKey.kern: -0.1
+        ]
+        let error = NSMutableAttributedString(string: page.error?.localized ?? "", attributes: errorAttributes)
+        errorLabel.attributedText = error
 
         pinDotsView.clean()
         pinDotsView.onPinEnter = onPinChange

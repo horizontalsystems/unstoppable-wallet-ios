@@ -1,13 +1,18 @@
 import UIKit
+import SnapKit
 
-class BalanceViewController: UITableViewController {
+class BalanceViewController: WalletViewController {
     private let numberOfSections = 2
     private let balanceSection = 0
     private let editSection = 1
+    private var headerBackgroundTriggerOffset: CGFloat?
+
+    let tableView = UITableView()
+    let refreshControl = UIRefreshControl()
 
     private let delegate: IBalanceViewDelegate
 
-    private var headerView = UINib(nibName: String(describing: BalanceHeaderView.self), bundle: Bundle(for: BalanceHeaderView.self)).instantiate(withOwner: nil, options: nil)[0] as? BalanceHeaderView
+    private var headerView = BalanceHeaderView(frame: .zero)
     private var indexPathForSelectedRow: IndexPath?
 
     init(viewDelegate: IBalanceViewDelegate) {
@@ -27,7 +32,14 @@ class BalanceViewController: UITableViewController {
 
         title = "balance.title".localized
 
-        tableView.backgroundColor = AppTheme.controllerBackground
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.backgroundColor = .clear
+        view.addSubview(tableView)
+        tableView.snp.makeConstraints { maker in
+            maker.edges.equalToSuperview()
+        }
+
         tableView.separatorColor = .clear
         tableView.estimatedRowHeight = 0
         tableView.delaysContentTouches = false
@@ -35,10 +47,15 @@ class BalanceViewController: UITableViewController {
         tableView.registerCell(forClass: BalanceCell.self)
         tableView.registerCell(forClass: BalanceEditCell.self)
 
-        refreshControl = UIRefreshControl()
-        refreshControl?.addTarget(self, action: #selector(onRefresh), for: .valueChanged)
+        refreshControl.addTarget(self, action: #selector(onRefresh), for: .valueChanged)
+        tableView.refreshControl = refreshControl
 
         delegate.viewDidLoad()
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        headerBackgroundTriggerOffset = headerBackgroundTriggerOffset == nil ? tableView.contentOffset.y : headerBackgroundTriggerOffset
     }
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -51,13 +68,13 @@ class BalanceViewController: UITableViewController {
 
 }
 
-extension BalanceViewController {
+extension BalanceViewController: UITableViewDelegate, UITableViewDataSource {
 
-    override func numberOfSections(in tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return numberOfSections
     }
 
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == balanceSection {
             return delegate.itemsCount
         } else if section == editSection {
@@ -66,7 +83,7 @@ extension BalanceViewController {
         return 0
     }
 
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.section == balanceSection {
             return (indexPathForSelectedRow == indexPath ? BalanceTheme.expandedCellHeight : BalanceTheme.cellHeight) + BalanceTheme.cellPadding
         } else if indexPath.section == editSection {
@@ -75,7 +92,7 @@ extension BalanceViewController {
         return 0
     }
 
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == balanceSection {
             return tableView.dequeueReusableCell(withIdentifier: String(describing: BalanceCell.self), for: indexPath)
         } else if indexPath.section == editSection {
@@ -84,7 +101,7 @@ extension BalanceViewController {
         return UITableViewCell()
     }
 
-    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if let cell = cell as? BalanceCell {
             cell.bind(item: delegate.viewItem(at: indexPath.row), selected: indexPathForSelectedRow == indexPath, onReceive: { [weak self] in
                 self?.delegate.onReceive(index: indexPath.row)
@@ -98,17 +115,17 @@ extension BalanceViewController {
         }
     }
 
-    override func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if let cell = cell as? BalanceCell {
             cell.unbind()
         }
     }
 
-    override func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
         bind(at: indexPath, heightChange: true)
     }
 
-    override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
+    func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
         if let indexPathForSelectedRow = indexPathForSelectedRow, indexPathForSelectedRow == indexPath {
             self.indexPathForSelectedRow = nil
             tableView.deselectRow(at: indexPathForSelectedRow, animated: true)
@@ -120,7 +137,7 @@ extension BalanceViewController {
         return indexPath
     }
 
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         bind(at: indexPath, heightChange: true)
     }
 
@@ -137,18 +154,24 @@ extension BalanceViewController {
         }
     }
 
-    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         if section == balanceSection {
             return BalanceTheme.headerHeight
         }
         return 0
     }
 
-    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         if section == balanceSection {
             return headerView
         }
         return nil
+    }
+
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if let headerBackgroundTriggerOffset = headerBackgroundTriggerOffset {
+            headerView.backgroundColor = scrollView.contentOffset.y > headerBackgroundTriggerOffset ? AppTheme.navigationBarBackgroundColor : .clear
+        }
     }
 
 }
@@ -167,11 +190,11 @@ extension BalanceViewController: IBalanceView {
     func updateHeader() {
         let viewItem = delegate.headerViewItem()
         let amount = viewItem.currencyValue.flatMap { ValueFormatter.instance.format(currencyValue: $0) }
-        headerView?.bind(amount: amount, upToDate: viewItem.upToDate)
+        headerView.bind(amount: amount, upToDate: viewItem.upToDate)
     }
 
     func didRefresh() {
-        refreshControl?.endRefreshing()
+        refreshControl.endRefreshing()
     }
 
 }

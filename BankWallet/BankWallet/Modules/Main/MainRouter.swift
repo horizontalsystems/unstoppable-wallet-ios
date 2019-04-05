@@ -36,27 +36,15 @@ extension MainRouter {
     }
 
     private static var balanceNavigation: UIViewController {
-        let navigation = UINavigationController(rootViewController: BalanceRouter.module())
-        navigation.navigationBar.barStyle = AppTheme.navigationBarStyle
-        navigation.navigationBar.tintColor = AppTheme.navigationBarTintColor
-        navigation.navigationBar.prefersLargeTitles = true
-        return navigation
+        return WalletNavigationController(rootViewController: BalanceRouter.module())
     }
 
     private static var transactionsNavigation: UIViewController {
-        let navigation = UINavigationController(rootViewController: TransactionsRouter.module())
-        navigation.navigationBar.barStyle = AppTheme.navigationBarStyle
-        navigation.navigationBar.tintColor = AppTheme.navigationBarTintColor
-        navigation.navigationBar.prefersLargeTitles = true
-        return navigation
+        return WalletNavigationController(rootViewController: TransactionsRouter.module())
     }
 
     private static var settingsNavigation: UIViewController {
-        let navigation = UINavigationController(rootViewController: MainSettingsRouter.module())
-        navigation.navigationBar.barStyle = AppTheme.navigationBarStyle
-        navigation.navigationBar.tintColor = AppTheme.navigationBarTintColor
-        navigation.navigationBar.prefersLargeTitles = true
-        return navigation
+        return WalletNavigationController(rootViewController: MainSettingsRouter.module())
     }
 
 }

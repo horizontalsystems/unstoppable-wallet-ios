@@ -3,7 +3,7 @@ import GrouviExtensions
 import SectionsTableViewKit
 import RxSwift
 
-class SecuritySettingsViewController: UIViewController, SectionsDataSource {
+class SecuritySettingsViewController: WalletViewController, SectionsDataSource {
     let tableView = SectionsTableView(style: .grouped)
 
     var backedUp = false
@@ -22,8 +22,9 @@ class SecuritySettingsViewController: UIViewController, SectionsDataSource {
         tableView.registerCell(forClass: SettingsCell.self)
         tableView.registerCell(forClass: SettingsRightImageCell.self)
         tableView.registerCell(forClass: SettingsToggleCell.self)
+        tableView.registerHeaderFooter(forClass: SectionSeparator.self)
         tableView.sectionDataSource = self
-        tableView.separatorColor = SettingsTheme.separatorColor
+        tableView.separatorColor = .clear
 
         hidesBottomBarWhenPushed = true
     }
@@ -39,8 +40,6 @@ class SecuritySettingsViewController: UIViewController, SectionsDataSource {
         tableView.snp.makeConstraints { maker in
             maker.edges.equalToSuperview()
         }
-
-        view.backgroundColor = AppTheme.controllerBackground
 
         delegate.viewDidLoad()
 
@@ -80,7 +79,10 @@ class SecuritySettingsViewController: UIViewController, SectionsDataSource {
                 self?.delegate.didTapEditPin()
             }
         }))
-        sections.append(Section(id: "face_id", headerState: .margin(height: SettingsTheme.subSettingsHeaderHeight), rows: pinTouchFaceRows))
+        let faceHeader: ViewState<SectionSeparator> = .cellType(hash: "face_header", binder: { view in
+            view.bind(showTopSeparator: false)
+        }, dynamicHeight: { _ in SettingsTheme.subSettingsHeaderHeight })
+        sections.append(Section(id: "face_id", headerState: faceHeader, rows: pinTouchFaceRows))
 
         var backupRows = [RowProtocol]()
         let securityAttentionImage = backedUp ? nil : UIImage(named: "Attention Icon")
@@ -89,7 +91,8 @@ class SecuritySettingsViewController: UIViewController, SectionsDataSource {
         }, action: { [weak self] _ in
             self?.delegate.didTapBackupWallet()
         }))
-        sections.append(Section(id: "backup", headerState: .margin(height: SettingsTheme.headerHeight), rows: backupRows))
+        let backupHeader: ViewState<SectionSeparator> = .cellType(hash: "appearance_header", binder: nil, dynamicHeight: { _ in SettingsTheme.headerHeight })
+        sections.append(Section(id: "backup", headerState: backupHeader, rows: backupRows))
 
         var unlinkRows = [RowProtocol]()
         unlinkRows.append(Row<SettingsCell>(id: "unlink", hash: "unlink", height: SettingsTheme.cellHeight, autoDeselect: true, bind: { cell, _ in
@@ -97,7 +100,11 @@ class SecuritySettingsViewController: UIViewController, SectionsDataSource {
         }, action: { [weak self] _ in
             self?.delegate.didTapUnlink()
         }))
-        sections.append(Section(id: "unlink", headerState: .margin(height: SettingsTheme.headerHeight), rows: unlinkRows))
+        let unlinkHeader: ViewState<SectionSeparator> = .cellType(hash: "unlink_header", binder: nil, dynamicHeight: { _ in SettingsTheme.headerHeight })
+        let unlinkFooter: ViewState<SectionSeparator> = .cellType(hash: "unlink_header", binder: { view in
+            view.bind(showBottomSeparator: false)
+        }, dynamicHeight: { _ in 1 })
+        sections.append(Section(id: "unlink", headerState: unlinkHeader, footerState: unlinkFooter, rows: unlinkRows))
 
         return sections
     }

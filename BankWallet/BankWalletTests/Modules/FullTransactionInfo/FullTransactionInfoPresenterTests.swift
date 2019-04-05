@@ -134,6 +134,13 @@ class FullTransactionInfoPresenterTests: XCTestCase {
         verifyNoMoreInteractions(mockView)
     }
 
+    func testTapHash() {
+        presenter.onTapHash()
+
+        verify(mockInteractor).copyToPasteboard(value: mockState.transactionHash)
+        verify(mockView).showCopied()
+    }
+
     func testTapOpenUrl() {
         let value = "test_url"
         let item = FullTransactionItem(title: "test_item", value: nil, clickable: true, url: value)
@@ -156,7 +163,7 @@ class FullTransactionInfoPresenterTests: XCTestCase {
 
     func testClose() {
         presenter.onClose()
-        
+
         verify(mockView).hideLoading()
         verify(mockRouter).close()
     }
@@ -203,6 +210,10 @@ class FullTransactionInfoPresenterTests: XCTestCase {
         presenter.onShare()
 
         verify(mockRouter).share(value: fullUrl)
+    }
+
+    func testTransactionHash() {
+        XCTAssertEqual(transactionHash, presenter.transactionHash)
     }
 
 }

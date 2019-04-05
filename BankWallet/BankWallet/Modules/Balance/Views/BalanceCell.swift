@@ -45,8 +45,11 @@ class BalanceCell: UITableViewCell {
             maker.bottom.equalToSuperview()
         }
         roundedBackground.backgroundColor = BalanceTheme.roundedBackgroundColor
-        roundedBackground.clipsToBounds = true
+        roundedBackground.layer.shadowOpacity = BalanceTheme.roundedBackgroundShadowOpacity
         roundedBackground.layer.cornerRadius = BalanceTheme.roundedBackgroundCornerRadius
+        roundedBackground.layer.shadowColor = BalanceTheme.roundedBackgroundShadowColor.cgColor
+        roundedBackground.layer.shadowRadius = 4
+        roundedBackground.layer.shadowOffset = CGSize(width: 0, height: 4)
 
         roundedBackground.addSubview(coinIconImageView)
         coinIconImageView.snp.makeConstraints { maker in

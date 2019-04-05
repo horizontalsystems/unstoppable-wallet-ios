@@ -3,7 +3,7 @@ import GrouviExtensions
 import SectionsTableViewKit
 import SnapKit
 
-class MainSettingsViewController: UIViewController, SectionsDataSource {
+class MainSettingsViewController: WalletViewController, SectionsDataSource {
     let delegate: IMainSettingsViewDelegate
 
     let tableView = SectionsTableView(style: .grouped)
@@ -30,9 +30,10 @@ class MainSettingsViewController: UIViewController, SectionsDataSource {
         tableView.registerCell(forClass: SettingsRightImageCell.self)
         tableView.registerCell(forClass: SettingsRightLabelCell.self)
         tableView.registerCell(forClass: SettingsToggleCell.self)
+        tableView.registerHeaderFooter(forClass: SectionSeparator.self)
         tableView.registerHeaderFooter(forClass: SettingsInfoFooter.self)
         tableView.sectionDataSource = self
-        tableView.separatorColor = SettingsTheme.separatorColor
+        tableView.separatorColor = .clear
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -48,12 +49,9 @@ class MainSettingsViewController: UIViewController, SectionsDataSource {
             maker.edges.equalToSuperview()
         }
 
-        view.backgroundColor = AppTheme.controllerBackground
-
         delegate.viewDidLoad()
 
         tableView.reload()
-
         didLoad = true
     }
 
@@ -82,7 +80,10 @@ class MainSettingsViewController: UIViewController, SectionsDataSource {
         }, action: { [weak self] _ in
             self?.delegate.didTapBaseCurrency()
         }))
-        sections.append(Section(id: "app_settings", headerState: .marginColor(height: SettingsTheme.topHeaderHeight, color: .clear), rows: appSettingsRows))
+        let settingsHeader: ViewState<SectionSeparator> = .cellType(hash: "settings_header", binder: { view in
+            view.bind(showTopSeparator: false)
+        }, dynamicHeight: { _ in SettingsTheme.topHeaderHeight })
+        sections.append(Section(id: "app_settings", headerState: settingsHeader, rows: appSettingsRows))
 
         var appearanceRows = [RowProtocol]()
         appearanceRows.append(Row<SettingsRightLabelCell>(id: "language", hash: "language", height: SettingsTheme.cellHeight, bind: { [weak self] cell, _ in
@@ -96,7 +97,8 @@ class MainSettingsViewController: UIViewController, SectionsDataSource {
                 self?.delegate.didSwitch(lightMode: isOn)
             })
         }))
-        sections.append(Section(id: "appearance_settings", headerState: .marginColor(height: SettingsTheme.headerHeight, color: .clear), rows: appearanceRows))
+        let appearanceHeader: ViewState<SectionSeparator> = .cellType(hash: "appearance_header", binder: nil, dynamicHeight: { _ in SettingsTheme.headerHeight })
+        sections.append(Section(id: "appearance_settings", headerState: appearanceHeader, rows: appearanceRows))
 
         var aboutRows = [RowProtocol]()
         aboutRows.append(Row<SettingsCell>(id: "about", hash: "about", height: SettingsTheme.cellHeight, bind: { cell, _ in
@@ -105,10 +107,11 @@ class MainSettingsViewController: UIViewController, SectionsDataSource {
         }, action: { [weak self] _ in
             self?.delegate.didTapAbout()
         }))
-        let infoFooter: ViewState<SettingsInfoFooter> = .cellType(hash: "info_view", binder: { [weak self] view in
+        let infoHeader: ViewState<SectionSeparator> = .cellType(hash: "info_header", binder: nil, dynamicHeight: { _ in SettingsTheme.headerHeight })
+        let infoFooter: ViewState<SettingsInfoFooter> = .cellType(hash: "info_footer", binder: { [weak self] view in
             self?.bindFooter(view: view)
         }, dynamicHeight: { _ in SettingsTheme.infoFooterHeight })
-        sections.append(Section(id: "appearance_settings", headerState: .marginColor(height: SettingsTheme.headerHeight, color: .clear), footerState: infoFooter, rows: aboutRows))
+        sections.append(Section(id: "info_settings", headerState: infoHeader, footerState: infoFooter, rows: aboutRows))
 
 #if DEBUG
         var debugRows = [RowProtocol]()

@@ -4,7 +4,6 @@ import SnapKit
 class BalanceHeaderView: UIView {
 
     let amountLabel = UILabel()
-    let separatorView = UIView()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -17,13 +16,7 @@ class BalanceHeaderView: UIView {
     }
 
     func commonInit() {
-        backgroundColor = .clear
-        let blurEffect = UIBlurEffect(style: AppTheme.blurStyle)
-        let blurView = UIVisualEffectView(effect: blurEffect)
-        addSubview(blurView)
-        blurView.snp.makeConstraints { maker in
-            maker.edges.equalToSuperview()
-        }
+        backgroundColor = AppTheme.navigationBarBackgroundColor
 
         preservesSuperviewLayoutMargins = true
 
@@ -34,13 +27,6 @@ class BalanceHeaderView: UIView {
         amountLabel.snp.makeConstraints { maker in
             maker.leadingMargin.equalToSuperview().inset(self.layoutMargins)
             maker.top.equalToSuperview().offset(BalanceTheme.cellSmallMargin)
-        }
-
-        addSubview(separatorView)
-        separatorView.backgroundColor = BalanceTheme.headerSeparatorBackground
-        separatorView.snp.makeConstraints { maker in
-            maker.leading.trailing.bottom.equalToSuperview()
-            maker.height.equalTo(1 / UIScreen.main.scale)
         }
     }
 

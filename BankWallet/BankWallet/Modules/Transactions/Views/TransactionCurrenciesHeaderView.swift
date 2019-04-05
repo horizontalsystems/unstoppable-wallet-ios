@@ -1,20 +1,19 @@
 import UIKit
 import SnapKit
 
-class TransactionCurrenciesHeaderView: UIVisualEffectView, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
+class TransactionCurrenciesHeaderView: UIView, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
 
     var filters = [Coin?]()
     var collectionView: UICollectionView
     var onSelectCoin: ((Coin?) -> ())?
-
-    let separatorView = UIView()
 
     init() {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         layout.sectionInset = .zero
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        super.init(effect: UIBlurEffect(style: AppTheme.blurStyle))
+        super.init(frame: .zero)
+        backgroundColor = AppTheme.navigationBarBackgroundColor
 
         collectionView.delegate = self
         collectionView.dataSource = self
@@ -25,16 +24,9 @@ class TransactionCurrenciesHeaderView: UIVisualEffectView, UICollectionViewDeleg
 
         collectionView.registerCell(forClass: TransactionsCurrencyCell.self)
 
-        contentView.addSubview(collectionView)
+        addSubview(collectionView)
         collectionView.snp.makeConstraints { maker in
             maker.edges.equalToSuperview()
-        }
-
-        contentView.addSubview(separatorView)
-        separatorView.backgroundColor = TransactionsTheme.headerSeparatorBackground
-        separatorView.snp.makeConstraints { maker in
-            maker.leading.trailing.bottom.equalToSuperview()
-            maker.height.equalTo(1 / UIScreen.main.scale)
         }
     }
 

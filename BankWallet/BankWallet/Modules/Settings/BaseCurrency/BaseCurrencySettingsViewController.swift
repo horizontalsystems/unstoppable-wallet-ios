@@ -1,7 +1,7 @@
 import UIKit
 import SectionsTableViewKit
 
-class BaseCurrencySettingsViewController: UIViewController, SectionsDataSource {
+class BaseCurrencySettingsViewController: WalletViewController, SectionsDataSource {
     private let delegate: IBaseCurrencySettingsViewDelegate
 
     private var items = [CurrencyItem]()
@@ -13,9 +13,10 @@ class BaseCurrencySettingsViewController: UIViewController, SectionsDataSource {
 
         super.init(nibName: nil, bundle: nil)
 
-        tableView.registerCell(forClass: CurrencyCell.self)
+        tableView.registerCell(forClass: DoubleLineCell.self)
+        tableView.registerHeaderFooter(forClass: SectionSeparator.self)
         tableView.sectionDataSource = self
-        tableView.separatorColor = SettingsTheme.cellSelectBackground
+        tableView.separatorColor = .clear
 
         hidesBottomBarWhenPushed = true
     }
@@ -35,17 +36,23 @@ class BaseCurrencySettingsViewController: UIViewController, SectionsDataSource {
             maker.edges.equalToSuperview()
         }
 
-        view.backgroundColor = AppTheme.controllerBackground
-
         delegate.viewDidLoad()
     }
 
     func buildSections() -> [SectionProtocol] {
         var sections = [SectionProtocol]()
 
-        sections.append(Section(id: "currencies", headerState: .margin(height: SettingsTheme.subSettingsHeaderHeight), footerState: .margin(height: SettingsTheme.subSettingsHeaderHeight), rows: items.map { item in
-            Row<CurrencyCell>(id: item.code, height: SettingsTheme.currencyCellHeight, bind: { cell, _ in
-                cell.bind(title: item.code, subtitle: item.symbol, selected: item.selected)
+        let currenciesHeader: ViewState<SectionSeparator> = .cellType(hash: "currencies_header", binder: { view in
+            view.bind(showTopSeparator: false)
+        }, dynamicHeight: { _ in SettingsTheme.subSettingsHeaderHeight })
+        let currenciesFooter: ViewState<SectionSeparator> = .cellType(hash: "currencies_header", binder: { view in
+            view.bind(showBottomSeparator: false)
+        }, dynamicHeight: { _ in SettingsTheme.subSettingsHeaderHeight })
+
+        let itemsCount = items.count
+        sections.append(Section(id: "currencies", headerState: currenciesHeader, footerState: currenciesFooter, rows: items.enumerated().map { (index, item) in
+            Row<DoubleLineCell>(id: item.code, height: SettingsTheme.currencyCellHeight, bind: { cell, _ in
+                cell.bind(title: item.code, subtitle: item.symbol, selected: item.selected, last: index == itemsCount - 1)
             }, action: { [weak self] _ in
                 self?.delegate.didSelect(item: item)
             })

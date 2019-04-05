@@ -1,18 +1,18 @@
 import UIKit
 
 class PinTheme {
-    static var dotsMargin: CGFloat = 12
-    static let infoFontRegular = UIFont.cryptoBody2
+    static var dotsMargin: CGFloat = 10
+    static let infoFontRegular = UIFont.cryptoCaption1
     static let infoColor = UIColor.cryptoGray
-    static let infoHorizontalMargin: CGFloat = 16
-    static let infoVerticalMargin: CGFloat = 16
+    static let infoHorizontalMargin: CGFloat = 44
+    static let infoVerticalMargin: CGFloat = 24
     static let cancelColor = UIColor.cryptoYellow
     static let cancelSelectedColor = UIColor.cryptoYellowPressed
     static let errorColor = UIColor.cryptoRed
 
-    static let keyboardSideMargin: CGFloat = 17
+    static let keyboardSideMargin: CGFloat = 27
     static let keyboardHeight: CGFloat = 209
-    static let keyboardBottomMargin: CGFloat = 32
+    static let keyboardBottomMargin: CGFloat = 16
 
     static var lockoutIconBackground: UIColor { return App.shared.localStorage.lightMode ? .white : .cryptoGray50 }
     static let lockoutIconBackgroundSideSize: CGFloat = 94

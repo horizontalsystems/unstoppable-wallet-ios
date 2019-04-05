@@ -1,7 +1,7 @@
 import UIKit
 
 class SettingsTheme {
-    static let cellIconSize: CGFloat = 29
+    static let cellIconSize: CGFloat = 24
     static let cellBigMargin: CGFloat = 16
     static let toggleRightMargin: CGFloat = 1.6//switch has outer stroke
     static let cellMiddleMargin: CGFloat = 8
@@ -12,7 +12,7 @@ class SettingsTheme {
     static var textColor: UIColor { return .crypto_White_Black }
     static var destructiveTextColor: UIColor = .cryptoRed
     static let switchTintColor = UIColor.cryptoSteel20
-    static let separatorColor = UIColor.clear
+    static var separatorColor: UIColor { return .crypto_Steel40OnDark_Steel20 }
     static let infoTitleTopMargin: CGFloat = 4
     static let rightTextColor = UIColor.cryptoGray
     static let cellSelectBackground = UIColor.cryptoSteel20
@@ -26,8 +26,8 @@ class SettingsTheme {
     static let securityCellHeight: CGFloat = 44
     static let versionFont = UIFont.cryptoCaption3
     static let versionColor = UIColor.cryptoGray
-    static let topHeaderHeight: CGFloat = 32
-    static let subSettingsHeaderHeight: CGFloat = 32
+    static let topHeaderHeight: CGFloat = 16
+    static let subSettingsHeaderHeight: CGFloat = 16
     static let headerHeight: CGFloat = 32
     static let subtitleFont = UIFont.cryptoCaption
     static let subtitleColor = UIColor.cryptoGray

@@ -1,24 +1,29 @@
 import UIKit
 import RxSwift
+import SnapKit
 
-class RestoreViewController: KeyboardObservingViewController {
+class RestoreViewController: WalletViewController {
+    let disposeBag = DisposeBag()
     let delegate: IRestoreViewDelegate
 
-    @IBOutlet weak var wordsCollectionView: UICollectionView?
-    @IBOutlet weak var bottomConstraint: NSLayoutConstraint?
-
     let restoreDescription = "restore.description".localized
-
     var words = [String](repeating: "", count: 12)
 
+    let layout = UICollectionViewFlowLayout()
+    let collectionView: UICollectionView
     var onReturnSubject = PublishSubject<IndexPath>()
 
-    var firstLaunch = true
+    var keyboardFrameDisposable: Disposable?
 
     init(delegate: IRestoreViewDelegate) {
+        layout.scrollDirection = .vertical
+        collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         self.delegate = delegate
 
-        super.init(nibName: String(describing: RestoreViewController.self), bundle: nil)
+        super.init(nibName: nil, bundle: nil)
+
+        collectionView.delegate = self
+        collectionView.dataSource = self
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -27,20 +32,35 @@ class RestoreViewController: KeyboardObservingViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        navigationController?.navigationBar.prefersLargeTitles = false
         title = "restore.title".localized
+
+        subscribeKeyboard()
+
+        view.addSubview(collectionView)
+        collectionView.backgroundColor = .clear
+        layout.minimumInteritemSpacing = RestoreTheme.interItemSpacing
+        layout.minimumLineSpacing = RestoreTheme.lineSpacing
+        collectionView.snp.makeConstraints { maker in
+            maker.leading.equalToSuperview().offset(RestoreTheme.collectionSideMargin)
+            maker.trailing.equalToSuperview().offset(-RestoreTheme.collectionSideMargin)
+            maker.top.bottom.equalToSuperview()
+        }
 
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "restore.cancel".localized, style: .plain, target: self, action: #selector(cancelDidTap))
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "restore.done".localized, style: .plain, target: self, action: #selector(restoreDidTap))
 
-        wordsCollectionView?.registerCell(forClass: RestoreWordCell.self)
-        wordsCollectionView?.registerView(forClass: DescriptionCollectionHeader.self, flowSupplementaryKind: .header)
+        collectionView.registerCell(forClass: RestoreWordCell.self)
+        collectionView.registerView(forClass: DescriptionCollectionHeader.self, flowSupplementaryKind: .header)
 
         delegate.viewDidLoad()
     }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        if keyboardFrameDisposable == nil {
+            subscribeKeyboard()
+        }
         DispatchQueue.main.async  {
             self.becomeResponder(at: IndexPath(item: 0, section: 0))
         }
@@ -59,10 +79,27 @@ class RestoreViewController: KeyboardObservingViewController {
         delegate.restoreDidClick(withWords: words)
     }
 
-    override func updateUI(keyboardHeight: CGFloat, duration: TimeInterval, options: UIViewAnimationOptions, completion: (() -> ())?) {
-        var insets: UIEdgeInsets = wordsCollectionView?.contentInset ?? .zero
+    private func subscribeKeyboard() {
+        keyboardFrameDisposable = NotificationCenter.default.rx.notification(NSNotification.Name.UIKeyboardWillChangeFrame).subscribeDisposableAsync(disposeBag, onNext: { [weak self] notification in
+            self?.onKeyboardFrameChange(notification)
+        })
+    }
+
+    func onKeyboardFrameChange(_ notification: Notification) {
+        let screenKeyboardFrame = (notification.userInfo![UIKeyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
+        let height = view.height + view.y
+        let keyboardHeight = height - screenKeyboardFrame.origin.y
+
+        let duration = (notification.userInfo![UIKeyboardAnimationDurationUserInfoKey] as! NSNumber).doubleValue
+        let curve = (notification.userInfo![UIKeyboardAnimationCurveUserInfoKey] as! NSNumber).uintValue
+
+        updateUI(keyboardHeight: keyboardHeight, duration: duration, options: UIViewAnimationOptions(rawValue: curve << 16))
+    }
+
+    func updateUI(keyboardHeight: CGFloat, duration: TimeInterval, options: UIViewAnimationOptions, completion: (() -> ())? = nil) {
+        var insets: UIEdgeInsets = collectionView.contentInset
         insets.bottom = keyboardHeight + RestoreTheme.listBottomMargin
-        wordsCollectionView?.contentInset = insets
+        collectionView.contentInset = insets
     }
 
 }
@@ -70,7 +107,7 @@ class RestoreViewController: KeyboardObservingViewController {
 extension RestoreViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let width = (wordsCollectionView?.bounds.width ?? view.bounds.width) - RestoreTheme.interItemSpacing
+        let width = collectionView.bounds.width - RestoreTheme.interItemSpacing
         return CGSize(width: width / 2, height: RestoreTheme.itemHeight)
     }
 
@@ -101,7 +138,7 @@ extension RestoreViewController: UICollectionViewDelegateFlowLayout, UICollectio
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        let width = wordsCollectionView?.bounds.width ?? view.bounds.width
+        let width = collectionView.bounds.width
         let height = DescriptionCollectionHeader.height(forContainerWidth: width, text: restoreDescription)
         return CGSize(width: width, height: height)
     }

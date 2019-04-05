@@ -5,14 +5,16 @@ import GrouviHUD
 import SnapKit
 import RxSwift
 
-class FullTransactionInfoViewController: UIViewController, SectionsDataSource {
+class FullTransactionInfoViewController: WalletViewController, SectionsDataSource {
     private let cellName = String(describing: FullTransactionInfoTextCell.self)
     private let closeButtonImage = UIImage(named: "Close Full Transaction Icon")
     private let shareButtonImage = UIImage(named: "Share Full Transaction Icon")
 
     private let delegate: IFullTransactionInfoViewDelegate
 
-    let tableView = SectionsTableView(style: .grouped)
+    let tableView = SectionsTableView(style: .plain)
+    private var headerBackgroundTriggerOffset: CGFloat?
+    private weak var hashHeaderView: FullTransactionHashHeaderView?
 
     private let closeButton = UIButton(frame: .zero)
     private let shareButton = UIButton(frame: .zero)
@@ -38,14 +40,11 @@ class FullTransactionInfoViewController: UIViewController, SectionsDataSource {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        view.backgroundColor = AppTheme.controllerBackground
-
         title = "full_info.title".localized
         navigationItem.backBarButtonItem = UIBarButtonItem(title: title, style: .plain, target: nil, action: nil)
 
         view.addSubview(tableView)
         tableView.backgroundColor = .clear
-
         tableView.snp.makeConstraints { maker in
             maker.edges.equalToSuperview()
         }
@@ -53,32 +52,31 @@ class FullTransactionInfoViewController: UIViewController, SectionsDataSource {
         tableView.registerCell(forClass: FullTransactionInfoTextCell.self)
         tableView.registerCell(forClass: FullTransactionProviderLinkCell.self)
         tableView.registerCell(forClass: SettingsRightLabelCell.self)
-        tableView.registerHeaderFooter(forClass: FullTransactionHeaderView.self)
+        tableView.registerCell(forClass: FullTransactionHeaderCell.self)
+        tableView.registerHeaderFooter(forClass: FullTransactionHashHeaderView.self)
         tableView.sectionDataSource = self
-        tableView.separatorColor = SettingsTheme.separatorColor
+        tableView.separatorColor = .clear
         tableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: FullTransactionInfoTheme.bottomBarHeight))
 
-        let blurEffect = UIBlurEffect(style: AppTheme.blurStyle)
-        let holderView = UIVisualEffectView(effect: blurEffect)
-        holderView.backgroundColor = .clear
+        let holderView = UIView()
+        holderView.backgroundColor = AppTheme.navigationBarBackgroundColor
         view.addSubview(holderView)
-
         holderView.snp.makeConstraints { maker in
             maker.leading.trailing.bottom.equalToSuperview()
         }
-        let separatorView = UIView()
-        separatorView.backgroundColor = FullTransactionInfoTheme.separatorColor
-        holderView.contentView.addSubview(separatorView)
-        separatorView.snp.makeConstraints { maker in
+        let holderSeparator = UIView()
+        holderSeparator.backgroundColor = AppTheme.separatorColor
+        holderView.addSubview(holderSeparator)
+        holderSeparator.snp.makeConstraints { maker in
             maker.leading.top.trailing.equalToSuperview()
             maker.height.equalTo(1 / UIScreen.main.scale)
         }
         let toolbar = UIView(frame: .zero)
-        holderView.contentView.addSubview(toolbar)
+        holderView.addSubview(toolbar)
 
         toolbar.snp.makeConstraints { maker in
             maker.leading.trailing.top.equalToSuperview()
-            maker.bottom.equalTo(holderView.contentView.safeAreaLayoutGuide)
+            maker.bottom.equalTo(holderView.safeAreaLayoutGuide)
             maker.height.equalTo(FullTransactionInfoTheme.bottomBarHeight)
         }
 
@@ -126,62 +124,88 @@ class FullTransactionInfoViewController: UIViewController, SectionsDataSource {
         tableView.deselectCell(withCoordinator: transitionCoordinator, animated: animated)
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        headerBackgroundTriggerOffset = headerBackgroundTriggerOffset == nil ? tableView.contentOffset.y : headerBackgroundTriggerOffset
+    }
+
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return AppTheme.statusBarStyle
     }
 
     func buildSections() -> [SectionProtocol] {
-        var sections = [SectionProtocol]()
+        var rows = [RowProtocol]()
+
+        let hash = delegate.transactionHash
+        let hashHeader: ViewState<FullTransactionHashHeaderView> = .cellType(hash: "section_\(hash)", binder: { [weak self] view in
+            self?.hashHeaderView = view
+            view.bind(value: hash, onTap: {
+                self?.onTapHash()
+            })
+        }, dynamicHeight: { _ in FullTransactionInfoTheme.hashHeaderHeight })
 
         if let providerName = delegate.providerName {
-            sections.append(Section(id: "resource_\(providerName)", headerState: .marginColor(height: FullTransactionInfoTheme.sectionEmptyMargin, color: .clear), rows: [
-                Row<SettingsRightLabelCell>(id: "resource", height: FullTransactionInfoTheme.cellHeight, autoDeselect: true, bind: { cell, _ in
-                    cell.bind(titleIcon: nil, title: "full_info.source.title".localized, rightText: providerName, showDisclosure: true, last: true)
-                    cell.titleLabel.font = FullTransactionInfoTheme.resourceTitleFont
+            rows.append(
+                Row<FullTransactionInfoTextCell>(id: "resource", height: FullTransactionInfoTheme.cellHeight, autoDeselect: true, bind: { cell, _ in
+                    let item = FullTransactionItem(title: "full_info.source.title".localized, value: providerName)
+                    cell.bind(item: item, selectionStyle: .default, showDisclosure: true, last: true, showTopSeparator: true)
                 }, action: { [weak self] cell in
                     self?.onTapChangeResource()
                 })
-            ]))
+            )
         }
 
         for sectionIndex in 0..<delegate.numberOfSections() {
-            var sectionRows = [RowProtocol]()
             guard let section = delegate.section(sectionIndex) else {
                 continue
             }
+            if let title = section.title {
+                rows.append(
+                        Row<FullTransactionHeaderCell>(id: "header_\(title)", height: FullTransactionInfoTheme.sectionHeight, bind: { cell, _ in
+                            cell.bind(title: title)
+                        })
+                )
+            } else {
+                rows.append(Row<FullTransactionHeaderCell>(id: "header_\(sectionIndex)", height: FullTransactionInfoTheme.sectionEmptyMargin))
+            }
             for (rowIndex, item) in section.items.enumerated() {
-                sectionRows.append(Row<FullTransactionInfoTextCell>(id: "section_\(sectionIndex)_row_\(rowIndex)", height: FullTransactionInfoTheme.cellHeight, bind: { [weak self] cell, _ in
-                    cell.separatorView.backgroundColor = FullTransactionInfoTheme.separatorColor
-
+                rows.append(
+                        Row<FullTransactionInfoTextCell>(id: "section_\(sectionIndex)_row_\(rowIndex)", height: FullTransactionInfoTheme.cellHeight, bind: { [weak self] cell, _ in
                     cell.bind(item: item, last: rowIndex == section.items.count - 1, onTap: item.clickable ? {
                         self?.onTap(item: item)
                     } : nil)
                 }))
             }
-            if let title = section.title {
-                let header: ViewState<FullTransactionHeaderView> = .cellType(hash: "section_\(title)", binder: { view in
-                    view.bind(title: title)
-                }, dynamicHeight: { _ in FullTransactionInfoTheme.sectionHeight })
-                sections.append(Section(id: "section_\(sectionIndex)", headerState: header, rows: sectionRows))
-            } else {
-                sections.append(Section(id: "section_\(sectionIndex)", headerState: .marginColor(height: FullTransactionInfoTheme.sectionEmptyMargin, color: .clear), rows: sectionRows))
-            }
         }
 
         if let providerName = delegate.providerName {
-            sections.append(Section(id: "link_provider", headerState: .marginColor(height: FullTransactionInfoTheme.sectionEmptyMargin, color: .clear), footerState: .margin(height: FullTransactionInfoTheme.linkCellBottomMargin), rows: [
-                Row<FullTransactionProviderLinkCell>(id: "link_cell", height: FullTransactionInfoTheme.linkCellHeight, bind: { [weak self] cell, _ in
+            rows.append(Row<FullTransactionHeaderCell>(id: "provider_header", height: FullTransactionInfoTheme.sectionEmptyMargin, bind: { view, _ in
+                view.bind(showBottomSeparator: false)
+            }))
+            rows.append(
+                    Row<FullTransactionProviderLinkCell>(id: "link_cell", height: FullTransactionInfoTheme.linkCellHeight, bind: { [weak self] cell, _ in
                     cell.bind(text: providerName) {
                         self?.onTapProviderLink()
                     }
                 })
-            ]))
+            )
         }
-        return sections
+
+        return [Section(id: "section", headerState: hashHeader, footerState: .marginColor(height: FullTransactionInfoTheme.sectionEmptyMargin, color: .clear), rows: rows)]
+    }
+
+    func didScroll() {
+        if let headerBackgroundTriggerOffset = headerBackgroundTriggerOffset {
+            hashHeaderView?.backgroundView?.backgroundColor = tableView.contentOffset.y > headerBackgroundTriggerOffset ? AppTheme.navigationBarBackgroundColor : .clear
+        }
     }
 
     func onTap(item: FullTransactionItem) {
         delegate.onTap(item: item)
+    }
+
+    func onTapHash() {
+        delegate.onTapHash()
     }
 
     func onTapChangeResource() {
@@ -203,6 +227,7 @@ class FullTransactionInfoViewController: UIViewController, SectionsDataSource {
     @objc func onShare() {
         delegate.onShare()
     }
+
 }
 
 

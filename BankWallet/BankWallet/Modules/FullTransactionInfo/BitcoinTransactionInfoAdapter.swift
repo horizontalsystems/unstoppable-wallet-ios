@@ -18,9 +18,6 @@ class BitcoinTransactionInfoAdapter: IFullTransactionInfoAdapter {
 
         // BLOCK
         var blockItems = [FullTransactionItem]()
-        if let txId = txResponse.txId {
-            blockItems.append(FullTransactionItem(icon: "Hash Icon", title: "", value: txId, clickable: true))
-        }
 
         if let blockTime = txResponse.blockTime, let time = TimeInterval(exactly: blockTime) {
             let blockDate = Date(timeIntervalSince1970: time)
