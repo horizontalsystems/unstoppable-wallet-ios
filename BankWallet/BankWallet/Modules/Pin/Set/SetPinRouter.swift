@@ -23,7 +23,7 @@ extension SetPinRouter {
         let presenter = SetPinPresenter(interactor: interactor, router: router)
         let controller = PinViewController(delegate: presenter)
 
-        let navigationController = UINavigationController(rootViewController: controller)
+        let navigationController = WalletNavigationController(rootViewController: controller)
         navigationController.navigationBar.barStyle = AppTheme.navigationBarStyle
         navigationController.navigationBar.tintColor = AppTheme.navigationBarTintColor
         navigationController.navigationBar.prefersLargeTitles = true

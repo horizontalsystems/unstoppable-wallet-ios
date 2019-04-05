@@ -1,4 +1,5 @@
 import UIKit
+import SnapKit
 
 class MainViewController: UITabBarController {
 
@@ -25,7 +26,18 @@ class MainViewController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        tabBar.barStyle = AppTheme.tabBarStyle
+        tabBar.shadowImage = UIImage()
+        let separator = UIView()
+        separator.backgroundColor = AppTheme.tabBarSeparatorColor
+        tabBar.addSubview(separator)
+        separator.snp.makeConstraints { maker in
+            maker.leading.top.trailing.equalToSuperview()
+            maker.height.equalTo(1 / UIScreen.main.scale)
+        }
+
+        tabBar.barTintColor = .clear
+        tabBar.backgroundImage = UIImage(color: AppTheme.navigationBarBackgroundColor)
+
         tabBar.tintColor = .cryptoYellow
         tabBar.unselectedItemTintColor = .cryptoGray
     }

@@ -1,46 +1,32 @@
 import UIKit
 import SnapKit
 
-class FullTransactionInfoTextCell: UITableViewCell {
-    private let iconImageView = UIImageView()
-    private let titleLabel = UILabel()
+class FullTransactionInfoTextCell: SettingsCell {
     private let descriptionView = TransactionInfoDescriptionView()
-    let separatorView = UIView()
+    let topSeparatorView = UIView()
 
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         backgroundColor = FullTransactionInfoTheme.cellBackground
         contentView.backgroundColor = .clear
-        selectionStyle = .none
 
-        contentView.addSubview(iconImageView)
-        contentView.addSubview(titleLabel)
         titleLabel.font = FullTransactionInfoTheme.font
-        titleLabel.textColor = FullTransactionInfoTheme.titleColor
         titleLabel.setContentHuggingPriority(.defaultLow, for: .horizontal)
         titleLabel.setContentCompressionResistancePriority(.required, for: .horizontal)
 
-        titleLabel.snp.makeConstraints { maker in
-            maker.centerY.equalToSuperview()
-        }
-        iconImageView.setContentHuggingPriority(.required, for: .horizontal)
-        contentView.addSubview(titleLabel)
-        iconImageView.snp.makeConstraints { maker in
-            maker.leading.equalTo(contentView.snp.leadingMargin)
-            maker.trailing.equalTo(titleLabel.snp.leading).offset(-FullTransactionInfoTheme.iconRightMargin)
-            maker.centerY.equalToSuperview()
-        }
+        iconImageView.tintColor = TransactionInfoDescriptionTheme.buttonIconColor
         contentView.addSubview(descriptionView)
         descriptionView.snp.makeConstraints { maker in
             maker.leading.equalTo(self.titleLabel.snp.trailing).offset(FullTransactionInfoTheme.margin)
             maker.centerY.equalToSuperview()
-            maker.trailing.equalTo(contentView.snp.trailingMargin)
+            maker.trailing.equalTo(self.disclosureImageView.snp.leading).offset(-SettingsTheme.cellBigMargin)
         }
 
-        contentView.addSubview(separatorView)
-        separatorView.snp.makeConstraints { maker in
+        topSeparatorView.backgroundColor = AppTheme.separatorColor
+        contentView.addSubview(topSeparatorView)
+        topSeparatorView.snp.makeConstraints { maker in
+            maker.leading.top.trailing.equalToSuperview()
             maker.height.equalTo(1 / UIScreen.main.scale)
-            maker.leading.bottom.trailing.equalToSuperview()
         }
     }
 
@@ -48,26 +34,27 @@ class FullTransactionInfoTextCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func bind(item: FullTransactionItem, last: Bool = false, onTap: (() -> ())? = nil) {
-        if let icon = item.icon {
-            iconImageView.image = UIImage(named: icon)?.tinted(with: TransactionInfoDescriptionTheme.buttonIconColor)
-            iconImageView.snp.remakeConstraints { maker in
-                maker.leading.equalTo(contentView.snp.leadingMargin)
-                maker.trailing.equalTo(titleLabel.snp.leading).offset(-FullTransactionInfoTheme.iconRightMargin)
-                maker.centerY.equalToSuperview()
-            }
-        } else {
-            iconImageView.snp.remakeConstraints { maker in
-                maker.leading.equalTo(contentView.snp.leadingMargin)
-                maker.trailing.equalTo(titleLabel.snp.leading)
-                maker.width.equalTo(0)
-                maker.centerY.equalToSuperview()
+    func bind(item: FullTransactionItem, selectionStyle: SelectionStyle = .none, showDisclosure: Bool = false, last: Bool = false, showTopSeparator: Bool = false, onTap: (() -> ())? = nil) {
+        super.bind(titleIcon: UIImage(named: item.icon ?? ""), title: item.title, titleColor: FullTransactionInfoTheme.titleColor, showDisclosure: showDisclosure, last: last)
+        self.selectionStyle = selectionStyle
+
+        topSeparatorView.isHidden = !showTopSeparator
+
+        descriptionView.snp.remakeConstraints { maker in
+            maker.leading.equalTo(self.titleLabel.snp.trailing).offset(FullTransactionInfoTheme.margin)
+            maker.centerY.equalToSuperview()
+            maker.height.equalTo(FullTransactionInfoTheme.descriptionHeight)
+
+            let descriptionBackgroundOffset = onTap == nil ? TransactionInfoDescriptionTheme.horizontalMargin : 0
+            if showDisclosure {
+                maker.trailing.equalTo(self.disclosureImageView.snp.leading).offset(-FullTransactionInfoTheme.disclosureLeftMargin + descriptionBackgroundOffset)
+            } else {
+                maker.trailing.equalTo(contentView.snp.trailingMargin).offset(descriptionBackgroundOffset)
             }
         }
-        iconImageView.updateConstraintsIfNeeded()
-        titleLabel.text = item.title
-        separatorView.set(hidden: last)
+
         descriptionView.bind(value: item.value, font: FullTransactionInfoTheme.font, color: item.titleColor ?? FullTransactionInfoTheme.descriptionColor, showExtra: item.showExtra, onTap: onTap)
+        descriptionView.isUserInteractionEnabled = onTap != nil
     }
 
 }

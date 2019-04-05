@@ -3,7 +3,6 @@ import Foundation
 protocol IBackupView: class {
     func show(words: [String])
     func showConfirmation(withIndexes indexes: [Int])
-    func hideWords()
     func hideConfirmation()
     func showConfirmationError()
 }
@@ -11,7 +10,6 @@ protocol IBackupView: class {
 protocol IBackupViewDelegate {
     func cancelDidClick()
     func showWordsDidClick()
-    func hideWordsDidClick()
     func showConfirmationDidClick()
     func hideConfirmationDidClick()
     func validateDidClick(confirmationWords: [Int: String])

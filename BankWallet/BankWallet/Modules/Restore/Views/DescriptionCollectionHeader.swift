@@ -16,8 +16,8 @@ class DescriptionCollectionHeader: UICollectionReusableView {
         label.snp.makeConstraints { maker in
             maker.leading.equalToSuperview().offset(RestoreTheme.descriptionHorizontalMargin)
             maker.trailing.equalToSuperview().offset(-RestoreTheme.descriptionHorizontalMargin)
-            maker.top.equalToSuperview().offset(RestoreTheme.descriptionVerticalMargin)
-            maker.bottom.equalToSuperview().offset(-RestoreTheme.descriptionVerticalMargin)
+            maker.top.equalToSuperview().offset(RestoreTheme.descriptionTopMargin)
+            maker.bottom.equalToSuperview().offset(-RestoreTheme.descriptionBottomMargin)
         }
     }
 
@@ -30,7 +30,7 @@ class DescriptionCollectionHeader: UICollectionReusableView {
     }
 
     static func height(forContainerWidth containerWidth: CGFloat, text: String) -> CGFloat {
-        return ceil(text.height(forContainerWidth: containerWidth - 2 * RestoreTheme.descriptionHorizontalMargin, font: RestoreTheme.descriptionFont) + 2 * RestoreTheme.descriptionVerticalMargin)
+        return ceil(text.height(forContainerWidth: containerWidth - 2 * RestoreTheme.descriptionHorizontalMargin, font: RestoreTheme.descriptionFont) + RestoreTheme.descriptionTopMargin + RestoreTheme.descriptionBottomMargin)
     }
 
 }

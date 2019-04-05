@@ -11,11 +11,18 @@ class AppTheme {
     public static let defaultAnimationDuration = 0.3
 
     static var actionSheetBackgroundColor: UIColor { return .crypto_Dark_Bars }
-    static var controllerBackground: UIColor { return .crypto_Dark_LightBackground }
+    static var controllerBackground: UIColor { return .crypto_Dark_Bars }
+    static var controllerBackgroundFromGradient: UIColor { return .crypto_Dark_Bars }
+    static var controllerBackgroundToGradient: UIColor { return .crypto_Dark_LightBackground }
     static var tabBarStyle: UIBarStyle { return App.shared.localStorage.lightMode ? .default : .black }
+    static let tabBarSeparatorColor: UIColor = .cryptoSteel20
     static var navigationBarStyle: UIBarStyle { return App.shared.localStorage.lightMode ? .default : .blackTranslucent}
     static var navigationBarTintColor = UIColor.cryptoYellow
+    static var navigationBarBackgroundColor: UIColor { return .crypto_Dark96_Bars96 }
     static var statusBarStyle: UIStatusBarStyle { return App.shared.localStorage.lightMode ? .default : .lightContent}
+
+    static let separatorColor = UIColor.cryptoSteel20
+    static var darkSeparatorColor: UIColor { return .crypto_Black50_Steel20 }
 
     static var actionSheetConfig: ActionSheetThemeConfig {
         get {

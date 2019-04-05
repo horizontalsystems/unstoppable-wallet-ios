@@ -1,7 +1,7 @@
 import UIKit
 import SectionsTableViewKit
 
-class LanguageSettingsViewController: UIViewController, SectionsDataSource {
+class LanguageSettingsViewController: WalletViewController, SectionsDataSource {
     private let delegate: ILanguageSettingsViewDelegate
 
     private var items = [LanguageItem]()
@@ -13,9 +13,11 @@ class LanguageSettingsViewController: UIViewController, SectionsDataSource {
 
         super.init(nibName: nil, bundle: nil)
 
-        tableView.registerCell(forClass: LanguageCell.self)
+        tableView.registerCell(forClass: DoubleLineCell.self)
+        tableView.registerHeaderFooter(forClass: SectionSeparator.self)
         tableView.sectionDataSource = self
         tableView.separatorColor = SettingsTheme.cellSelectBackground
+        tableView.separatorColor = .clear
 
         hidesBottomBarWhenPushed = true
     }
@@ -32,8 +34,6 @@ class LanguageSettingsViewController: UIViewController, SectionsDataSource {
             maker.edges.equalToSuperview()
         }
 
-        view.backgroundColor = AppTheme.controllerBackground
-
         delegate.viewDidLoad()
         tableView.reload()
     }
@@ -41,9 +41,17 @@ class LanguageSettingsViewController: UIViewController, SectionsDataSource {
     func buildSections() -> [SectionProtocol] {
         var sections = [SectionProtocol]()
 
-        sections.append(Section(id: "languages", headerState: .margin(height: SettingsTheme.subSettingsHeaderHeight), footerState: .margin(height: SettingsTheme.subSettingsHeaderHeight), rows: items.map { item in
-            Row<LanguageCell>(id: item.id, height: SettingsTheme.languageCellHeight, bind: { cell, _ in
-                cell.bind(title: item.title, subtitle: item.subtitle, selected: item.current)
+        let languagesHeader: ViewState<SectionSeparator> = .cellType(hash: "currencies_header", binder: { view in
+            view.bind(showTopSeparator: false)
+        }, dynamicHeight: { _ in SettingsTheme.subSettingsHeaderHeight })
+        let languagesFooter: ViewState<SectionSeparator> = .cellType(hash: "currencies_header", binder: { view in
+            view.bind(showBottomSeparator: false)
+        }, dynamicHeight: { _ in SettingsTheme.subSettingsHeaderHeight })
+
+        let itemsCount = items.count
+        sections.append(Section(id: "languages", headerState: languagesHeader, footerState: languagesFooter, rows: items.enumerated().map { (index, item) in
+            Row<DoubleLineCell>(id: item.id, height: SettingsTheme.languageCellHeight, bind: { cell, _ in
+                cell.bind(title: item.title, subtitle: item.subtitle, selected: item.current, last: index == itemsCount - 1)
             }, action: { [weak self] _ in
                 self?.delegate.didSelect(item: item)
             })

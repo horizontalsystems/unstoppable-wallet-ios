@@ -1,21 +1,22 @@
 import UIKit
 import GrouviActionSheet
+import SnapKit
 
-class BackupConfirmationController: UIViewController {
+class BackupConfirmationController: WalletViewController {
 
     let delegate: IBackupViewDelegate
     let indexes: [Int]
 
-    @IBOutlet weak var firstIndexedInputField: IndexedInputField?
-    @IBOutlet weak var secondIndexedInputField: IndexedInputField?
+    let firstIndexedInputField = IndexedInputField()
+    let secondIndexedInputField = IndexedInputField()
 
-    @IBOutlet weak var descriptionLabel: UILabel?
+    let descriptionLabel = UILabel()
 
     init(indexes: [Int], delegate: IBackupViewDelegate) {
         self.indexes = indexes
         self.delegate = delegate
 
-        super.init(nibName: String(describing: BackupConfirmationController.self), bundle: nil)
+        super.init(nibName: nil, bundle: nil)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -24,30 +25,56 @@ class BackupConfirmationController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        view.backgroundColor = AppTheme.controllerBackground
-
-        title = "backup.confirmation.title".localized
-        descriptionLabel?.text = "backup.confirmation.description".localized
-
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "backup.confirmation.done_button".localized, style: .plain, target: self, action: #selector(doneDidTap))
+        title = "backup.confirmation.title".localized
 
-        firstIndexedInputField?.textField.returnKeyType = .next
-        firstIndexedInputField?.onReturn = { [weak self] in
-            self?.secondIndexedInputField?.textField.becomeFirstResponder()
+        view.addSubview(descriptionLabel)
+        descriptionLabel.text = "backup.confirmation.description".localized
+        descriptionLabel.font = BackupTheme.confirmLabelFont
+        descriptionLabel.textColor = BackupTheme.confirmLabelColor
+        descriptionLabel.snp.makeConstraints { maker in
+            maker.top.equalTo(self.view.snp.topMargin).offset(BackupTheme.confirmLabelTopMargin)
+            maker.leading.equalToSuperview().offset(BackupTheme.confirmSideMargin)
+            maker.trailing.equalToSuperview().offset(-BackupTheme.confirmSideMargin)
         }
-        secondIndexedInputField?.textField.returnKeyType = .done
-        secondIndexedInputField?.onReturn = { [weak self] in
+
+        view.addSubview(firstIndexedInputField)
+        firstIndexedInputField.textField.returnKeyType = .next
+        firstIndexedInputField.onReturn = { [weak self] in
+            self?.secondIndexedInputField.textField.becomeFirstResponder()
+        }
+        firstIndexedInputField.cornerRadius = BackupTheme.buttonCornerRadius
+        firstIndexedInputField.borderColor = BackupTheme.inputBorderColor
+        firstIndexedInputField.borderWidth = 1 / UIScreen.main.scale
+        firstIndexedInputField.snp.makeConstraints { maker in
+            maker.top.equalTo(self.descriptionLabel.snp.bottom).offset(BackupTheme.wordsBottomMargin)
+            maker.leading.equalToSuperview().offset(BackupTheme.confirmSideMargin)
+            maker.trailing.equalToSuperview().offset(-BackupTheme.confirmSideMargin)
+            maker.height.equalTo(BackupTheme.confirmInputHeight)
+        }
+
+        view.addSubview(secondIndexedInputField)
+        secondIndexedInputField.textField.returnKeyType = .done
+        secondIndexedInputField.onReturn = { [weak self] in
             self?.doneDidTap()
         }
+        secondIndexedInputField.cornerRadius = BackupTheme.buttonCornerRadius
+        secondIndexedInputField.borderColor = BackupTheme.inputBorderColor
+        secondIndexedInputField.borderWidth = 1 / UIScreen.main.scale
+        secondIndexedInputField.snp.makeConstraints { maker in
+            maker.top.equalTo(self.firstIndexedInputField.snp.bottom).offset(BackupTheme.wordsBottomMargin)
+            maker.leading.equalToSuperview().offset(BackupTheme.confirmSideMargin)
+            maker.trailing.equalToSuperview().offset(-BackupTheme.confirmSideMargin)
+            maker.height.equalTo(BackupTheme.confirmInputHeight)
+        }
 
-        firstIndexedInputField?.indexLabel.text = "\(indexes[0])."
-        secondIndexedInputField?.indexLabel.text = "\(indexes[1])."
+        firstIndexedInputField.indexLabel.text = "\(indexes[0])."
+        secondIndexedInputField.indexLabel.text = "\(indexes[1])."
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        firstIndexedInputField?.textField.becomeFirstResponder()
+        firstIndexedInputField.textField.becomeFirstResponder()
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -59,7 +86,7 @@ class BackupConfirmationController: UIViewController {
     }
 
     @objc func doneDidTap() {
-        if let firstWord = firstIndexedInputField?.textField.text?.lowercased(), let secondWord = secondIndexedInputField?.textField.text?.lowercased(), !firstWord.isEmpty, !secondWord.isEmpty {
+        if let firstWord = firstIndexedInputField.textField.text?.lowercased(), let secondWord = secondIndexedInputField.textField.text?.lowercased(), !firstWord.isEmpty, !secondWord.isEmpty {
             delegate.validateDidClick(confirmationWords: [indexes[0]: firstWord, indexes[1]: secondWord])
         }
     }

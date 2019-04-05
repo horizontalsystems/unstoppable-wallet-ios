@@ -44,34 +44,28 @@ class TransactionInfoDescriptionView: RespondButton {
         valueLabel.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
         valueLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
 
-        if showExtra == .hash, let value = value {
-            let attributedText = NSMutableAttributedString(string: "# " + value)
-            let fullRange = NSRange(location: 0, length: attributedText.length)
-            attributedText.addAttribute(.font, value: font, range: fullRange)
-            attributedText.addAttribute(.foregroundColor, value: color, range: fullRange)
-            attributedText.addAttribute(.foregroundColor, value: TransactionInfoDescriptionTheme.buttonHashTextColor, range: NSRange(location: 0, length: 1))
+        valueLabel.text = value
+        valueLabel.font = font
+        valueLabel.textColor = color
 
-            valueLabel.attributedText = attributedText
-        } else {
-            valueLabel.text = value
-            valueLabel.font = font
-            valueLabel.textColor = color
+        let showImage = showExtra == .icon || showExtra == .token || showExtra == .hash
+        avatarImageView.isHidden = !showImage
+        let image: UIImage?
+        switch showExtra {
+        case .icon: image = UIImage(named: "Transaction Info Avatar Placeholder")
+        case .hash: image = UIImage(named: "Hash Icon")
+        default: image = UIImage(named: "Transaction Info Token Placeholder")
         }
-
-        let showImage = showExtra == .icon || showExtra == .token
-        avatarImageView.set(hidden: !showImage)
-        let image = showExtra == .icon ? UIImage(named: "Transaction Info Avatar Placeholder") : UIImage(named: "Transaction Info Token Placeholder")
         avatarImageView.image = image?.tinted(with: TransactionInfoDescriptionTheme.buttonIconColor)
 
         avatarImageView.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
         avatarImageView.setContentHuggingPriority(.defaultHigh, for: .horizontal)
 
         avatarImageView.snp.remakeConstraints { maker in
+            maker.width.equalTo(image?.size.width ?? 0)
             if !showImage {
                 maker.width.equalTo(0)
             }
-            maker.top.equalToSuperview().offset(TransactionInfoDescriptionTheme.verticalMargin)
-            maker.bottom.equalToSuperview().offset(-TransactionInfoDescriptionTheme.verticalMargin)
             maker.leadingMargin.equalToSuperview().offset(showImage ? TransactionInfoDescriptionTheme.horizontalMargin : 0)
             maker.centerY.equalToSuperview()
         }

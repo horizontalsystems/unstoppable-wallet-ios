@@ -17,6 +17,7 @@ protocol IFullTransactionInfoViewDelegate {
     func numberOfSections() -> Int
     func numberOfRows(inSection section: Int) -> Int
     func section(_ section: Int) -> FullTransactionSection?
+    var transactionHash: String { get }
 
     func onRetryLoad()
     func onTap(item: FullTransactionItem)
@@ -24,6 +25,7 @@ protocol IFullTransactionInfoViewDelegate {
     func onTapProviderLink()
     func onShare()
     func onClose()
+    func onTapHash()
 }
 
 protocol IFullTransactionInfoState {

@@ -1,7 +1,7 @@
 import UIKit
 import GrouviActionSheet
 
-class BackupNavigationController: UINavigationController {
+class BackupNavigationController: WalletNavigationController {
 
     let viewDelegate: IBackupViewDelegate
 
@@ -10,9 +10,6 @@ class BackupNavigationController: UINavigationController {
 
         super.init(nibName: nil, bundle: nil)
 
-        navigationBar.barStyle = AppTheme.navigationBarStyle
-        navigationBar.tintColor = AppTheme.navigationBarTintColor
-        navigationBar.prefersLargeTitles = true
         viewControllers = [BackupIntroController(delegate: viewDelegate)]
     }
 
@@ -30,10 +27,6 @@ extension BackupNavigationController: IBackupView {
 
     func showConfirmation(withIndexes indexes: [Int]) {
         pushViewController(BackupConfirmationController(indexes: indexes, delegate: viewDelegate), animated: true)
-    }
-
-    func hideWords() {
-        popViewController(animated: true)
     }
 
     func hideConfirmation() {

@@ -1,11 +1,12 @@
 import UIKit
+import SnapKit
 
-class BackupWordsController: UIViewController {
+class BackupWordsController: WalletViewController {
 
     let delegate: IBackupViewDelegate
 
-    @IBOutlet weak var wordsLabel: UILabel?
-    @IBOutlet weak var proceedButton: UIButton?
+    let wordsLabel = UILabel()
+    let proceedButton = UIButton()
 
     let words: [String]
 
@@ -13,7 +14,7 @@ class BackupWordsController: UIViewController {
         self.words = words
         self.delegate = delegate
 
-        super.init(nibName: String(describing: BackupWordsController.self), bundle: nil)
+        super.init(nibName: nil, bundle: nil)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -22,20 +23,39 @@ class BackupWordsController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        view.backgroundColor = AppTheme.controllerBackground
-
-        title = "backup.words.title".localized
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+        title = "backup.words.title".localized
 
-        proceedButton?.setTitle("backup.words.proceed".localized, for: .normal)
+        view.addSubview(wordsLabel)
+        view.addSubview(proceedButton)
+
+        wordsLabel.numberOfLines = 0
+        wordsLabel.snp.makeConstraints { maker in
+            maker.leading.equalToSuperview().offset(BackupTheme.sideMargin)
+            maker.trailing.equalToSuperview().offset(-BackupTheme.sideMargin)
+            maker.top.equalTo(self.view.snp.topMargin).offset(BackupTheme.wordsTopMargin)
+            maker.bottom.lessThanOrEqualTo(self.proceedButton.snp.top).offset(-BackupTheme.wordsBottomMargin)
+        }
+
+        proceedButton.setTitle("backup.words.proceed".localized, for: .normal)
+        proceedButton.addTarget(self, action: #selector(nextDidTap), for: .touchUpInside)
+        proceedButton.setBackgroundColor(color: BackupTheme.backupButtonBackground, forState: .normal)
+        proceedButton.setTitleColor(BackupTheme.buttonTitleColor, for: .normal)
+        proceedButton.titleLabel?.font = BackupTheme.buttonTitleFont
+        proceedButton.cornerRadius = BackupTheme.buttonCornerRadius
+        proceedButton.snp.makeConstraints { maker in
+            maker.leading.equalToSuperview().offset(BackupTheme.sideMargin)
+            maker.trailing.equalToSuperview().offset(-BackupTheme.sideMargin)
+            maker.bottom.equalToSuperview().offset(-BackupTheme.sideMargin)
+            maker.height.equalTo(BackupTheme.buttonHeight)
+        }
+
 
         let joinedWords = words.enumerated().map { "\($0 + 1). \($1)" }.joined(separator: "\n")
-        let attributedText = wordsLabel?.attributedText as? NSMutableAttributedString
-        attributedText?.mutableString.setString(joinedWords)
-        attributedText?.addAttribute(NSAttributedStringKey.font, value: UIFont.cryptoTitle3, range: NSMakeRange(0, joinedWords.count))
-        attributedText?.addAttribute(NSAttributedStringKey.foregroundColor, value: UIColor.crypto_White_Black, range: NSMakeRange(0, joinedWords.count))
-        wordsLabel?.attributedText = attributedText
+        let attributedText = NSMutableAttributedString(string: joinedWords)
+        attributedText.addAttribute(NSAttributedStringKey.font, value: UIFont.cryptoTitle4, range: NSMakeRange(0, joinedWords.count))
+        attributedText.addAttribute(NSAttributedStringKey.foregroundColor, value: UIColor.crypto_White_Black, range: NSMakeRange(0, joinedWords.count))
+        wordsLabel.attributedText = attributedText
 
     }
 
@@ -43,12 +63,8 @@ class BackupWordsController: UIViewController {
         return AppTheme.statusBarStyle
     }
 
-    @IBAction func nextDidTap() {
+    @objc func nextDidTap() {
         delegate.showConfirmationDidClick()
-    }
-
-    @IBAction func backDidTap() {
-        delegate.hideWordsDidClick()
     }
 
 }

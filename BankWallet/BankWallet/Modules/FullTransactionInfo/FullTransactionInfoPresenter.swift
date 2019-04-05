@@ -43,6 +43,10 @@ extension FullTransactionInfoPresenter: IFullTransactionInfoViewDelegate {
         return state.transactionRecord?.sections[section]
     }
 
+    var transactionHash: String {
+        return state.transactionHash
+    }
+
     func onRetryLoad() {
         if state.transactionRecord == nil, interactor.reachableConnection {
             tryLoadInfo()
@@ -82,6 +86,11 @@ extension FullTransactionInfoPresenter: IFullTransactionInfoViewDelegate {
     func onClose() {
         view?.hideLoading()
         router.close()
+    }
+
+    func onTapHash() {
+        interactor.copyToPasteboard(value: state.transactionHash)
+        view?.showCopied()
     }
 
 }

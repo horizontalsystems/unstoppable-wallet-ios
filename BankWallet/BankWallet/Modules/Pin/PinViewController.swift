@@ -1,7 +1,7 @@
 import UIKit
 import SnapKit
 
-class PinViewController: UIViewController {
+class PinViewController: WalletViewController {
     let delegate: IPinViewDelegate
 
     private let holderView = UIScrollView()
@@ -24,7 +24,7 @@ class PinViewController: UIViewController {
     }
 
     override func viewDidLoad() {
-        view.backgroundColor = AppTheme.controllerBackground
+        super.viewDidLoad()
 
         view.addSubview(holderView)
         holderView.isScrollEnabled = false
@@ -51,7 +51,6 @@ class PinViewController: UIViewController {
             maker.edges.equalToSuperview()
         }
 
-        super.viewDidLoad()
         delegate.viewDidLoad()
     }
 

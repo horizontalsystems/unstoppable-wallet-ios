@@ -2,9 +2,11 @@ import UIKit
 import SnapKit
 import GrouviActionSheet
 
-class TransactionsViewController: UITableViewController {
-
+class TransactionsViewController: WalletViewController {
     let delegate: ITransactionsViewDelegate
+
+    let tableView = UITableView(frame: .zero, style: .plain)
+    private var headerBackgroundTriggerOffset: CGFloat?
 
     private let cellName = String(describing: TransactionCell.self)
 
@@ -32,7 +34,14 @@ class TransactionsViewController: UITableViewController {
             self?.delegate.onFilterSelect(coin: coin)
         }
 
-        tableView.backgroundColor = AppTheme.controllerBackground
+        view.addSubview(tableView)
+        tableView.backgroundColor = .clear
+        tableView.snp.makeConstraints { maker in
+            maker.edges.equalToSuperview()
+        }
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.backgroundColor = .clear
         tableView.tableFooterView = UIView(frame: .zero)
 
         tableView.registerCell(forClass: TransactionCell.self)
@@ -62,18 +71,19 @@ class TransactionsViewController: UITableViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         delegate.onViewAppear()
+        headerBackgroundTriggerOffset = headerBackgroundTriggerOffset == nil ? tableView.contentOffset.y : headerBackgroundTriggerOffset
     }
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return AppTheme.statusBarStyle
     }
 
-    func bind(at indexPath: IndexPath) {
-        if let cell = tableView.cellForRow(at: indexPath) as? TransactionCell {
-            let item = delegate.item(forIndex: indexPath.row)
-            cell.bind(item: item)
-        }
-    }
+//    func bind(at indexPath: IndexPath) {
+//        if let cell = tableView.cellForRow(at: indexPath) as? TransactionCell {
+//            let item = delegate.item(forIndex: indexPath.row)
+//            cell.bind(item: item)
+//        }
+//    }
 
 }
 
@@ -130,9 +140,9 @@ extension TransactionsViewController: ITransactionsView {
 
 }
 
-extension TransactionsViewController {
+extension TransactionsViewController: UITableViewDelegate, UITableViewDataSource {
 
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let count = delegate.itemsCount
 
         emptyLabel.isHidden = count > 0
@@ -140,13 +150,13 @@ extension TransactionsViewController {
         return count
     }
 
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         return tableView.dequeueReusableCell(withIdentifier: cellName, for: indexPath)
     }
 
-    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if let cell = cell as? TransactionCell {
-            cell.bind(item: delegate.item(forIndex: indexPath.row))
+            cell.bind(item: delegate.item(forIndex: indexPath.row), first: indexPath.row == 0, last: tableView.numberOfRows(inSection: indexPath.section) == indexPath.row + 1)
         }
 
         if indexPath.row >= self.tableView(tableView, numberOfRowsInSection: 0) - 1 {
@@ -154,21 +164,27 @@ extension TransactionsViewController {
         }
     }
 
-    override public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         delegate.onTransactionItemClick(index: indexPath.row)
     }
 
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return TransactionsTheme.cellHeight
     }
 
-    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return filterHeaderView.filters.isEmpty ? 0 : TransactionsFilterTheme.filterHeaderHeight
     }
 
-    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         return filterHeaderView
+    }
+
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if let headerBackgroundTriggerOffset = headerBackgroundTriggerOffset {
+            filterHeaderView.backgroundColor = scrollView.contentOffset.y > headerBackgroundTriggerOffset ? AppTheme.navigationBarBackgroundColor : .clear
+        }
     }
 
 }

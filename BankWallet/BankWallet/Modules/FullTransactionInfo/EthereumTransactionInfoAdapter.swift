@@ -21,9 +21,6 @@ class EthereumTransactionInfoAdapter: IFullTransactionInfoAdapter {
         // Top Section
 
         var topSectionItems = [FullTransactionItem]()
-        if let txId = txResponse.txId {
-            topSectionItems.append(FullTransactionItem(icon: "Hash Icon", title: "", value: txId, clickable: true))
-        }
         if let blockTime = txResponse.blockTime, let time = TimeInterval(exactly: blockTime) {
             let blockDate = Date(timeIntervalSince1970: time)
             topSectionItems.append(FullTransactionItem(icon: "Date Icon", title: "full_info.time".localized, value: DateHelper.instance.formatTransactionInfoTime(from: blockDate)))

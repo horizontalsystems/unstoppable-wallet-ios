@@ -34,10 +34,7 @@ extension RestoreRouter {
         router.viewController = viewController
         router.agreementDelegate = interactor
 
-        let navigationController = UINavigationController(rootViewController: viewController)
-        navigationController.navigationBar.barStyle = .blackTranslucent
-        navigationController.navigationBar.tintColor = .cryptoYellow
-        return navigationController
+        return WalletNavigationController(rootViewController: viewController)
     }
 
 }

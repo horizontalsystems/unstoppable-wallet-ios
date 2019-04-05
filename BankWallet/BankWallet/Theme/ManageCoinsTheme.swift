@@ -6,11 +6,12 @@ class ManageCoinsTheme {
     static let regularOffset: CGFloat = 16
     static let smallOffset: CGFloat = 8
     static let rowHeight: CGFloat = 60
-    static var cellBackground: UIColor { return .crypto_White_Steel20 }
-    static let separatorColor = UIColor.cryptoSteel20
+    static var cellBackground: UIColor { return .crypto_SteelDark_White }
+    static let topHeaderHeight: CGFloat = 16
     static let headerHeight: CGFloat = 32
     static let coinLabelColor = UIColor.cryptoGray
     static let coinLabelFont = UIFont.cryptoCaption
     static let coinLabelTopMargin: CGFloat = 3
     static let iconRightMargin: CGFloat = 13
+    static let footerHeight: CGFloat = 32
 }
