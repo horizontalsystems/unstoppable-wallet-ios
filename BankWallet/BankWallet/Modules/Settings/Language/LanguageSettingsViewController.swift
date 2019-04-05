@@ -41,15 +41,15 @@ class LanguageSettingsViewController: WalletViewController, SectionsDataSource {
     func buildSections() -> [SectionProtocol] {
         var sections = [SectionProtocol]()
 
-        let currenciesHeader: ViewState<SectionSeparator> = .cellType(hash: "currencies_header", binder: { view in
+        let languagesHeader: ViewState<SectionSeparator> = .cellType(hash: "currencies_header", binder: { view in
             view.bind(showTopSeparator: false)
         }, dynamicHeight: { _ in SettingsTheme.subSettingsHeaderHeight })
-        let currenciesFooter: ViewState<SectionSeparator> = .cellType(hash: "currencies_header", binder: { view in
+        let languagesFooter: ViewState<SectionSeparator> = .cellType(hash: "currencies_header", binder: { view in
             view.bind(showBottomSeparator: false)
         }, dynamicHeight: { _ in SettingsTheme.subSettingsHeaderHeight })
 
         let itemsCount = items.count
-        sections.append(Section(id: "languages", headerState: currenciesHeader, footerState: currenciesFooter, rows: items.enumerated().map { (index, item) in
+        sections.append(Section(id: "languages", headerState: languagesHeader, footerState: languagesFooter, rows: items.enumerated().map { (index, item) in
             Row<DoubleLineCell>(id: item.id, height: SettingsTheme.languageCellHeight, bind: { cell, _ in
                 cell.bind(title: item.title, subtitle: item.subtitle, selected: item.current, last: index == itemsCount - 1)
             }, action: { [weak self] _ in
