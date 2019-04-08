@@ -84,8 +84,8 @@ class TransactionViewItemFactoryTests: XCTestCase {
     }
 
     func testDate() {
-        let date = Date(timeIntervalSince1970: Double(Int(Date().timeIntervalSince1970)))
-        let item = transactionItem(timestamp: date.timeIntervalSince1970)
+        let date = Date()
+        let item = transactionItem(date: date)
 
         let viewItem = factory.viewItem(fromItem: item)
 
@@ -191,7 +191,7 @@ class TransactionViewItemFactoryTests: XCTestCase {
             transactionHash: String = "",
             blockHeight: Int? = nil,
             amount: Decimal = 0,
-            timestamp: Double = 0,
+            date: Date = Date(),
             from: [TransactionAddress] = [],
             to: [TransactionAddress] = []
     ) -> TransactionItem {
@@ -201,7 +201,7 @@ class TransactionViewItemFactoryTests: XCTestCase {
                         transactionHash: transactionHash,
                         blockHeight: blockHeight,
                         amount: amount,
-                        date: Date(timeIntervalSince1970: timestamp),
+                        date: date,
                         from: from,
                         to: to
                 )
