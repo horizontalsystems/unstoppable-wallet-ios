@@ -44,7 +44,7 @@ extension RateManager: IRateManager {
                             continue
                         }
 
-                        let rate = Rate(coinCode: coinCode, currencyCode: currencyCode, value: rateValue, timestamp: latestRateData.timestamp, isLatest: true)
+                        let rate = Rate(coinCode: coinCode, currencyCode: currencyCode, value: rateValue, date: latestRateData.date, isLatest: true)
                         self?.storage.save(latestRate: rate)
                     }
                 })
@@ -52,18 +52,17 @@ extension RateManager: IRateManager {
     }
 
     func timestampRateValueObservable(coinCode: CoinCode, currencyCode: String, timestamp: Double) -> Single<Decimal?> {
-        return storage.timestampRateObservable(coinCode: coinCode, currencyCode: currencyCode, timestamp: timestamp)
+        let date = Date(timeIntervalSince1970: timestamp)
+        return storage.timestampRateObservable(coinCode: coinCode, currencyCode: currencyCode, date: date)
                 .take(1)
                 .flatMap { [unowned self] rate -> Observable<Decimal?> in
                     if let rate = rate {
                         return Observable.just(rate.value)
                     } else {
-                        let date = Date(timeIntervalSince1970: timestamp)
-
                         let networkObservable = self.networkManager.getRate(coinCode: coinCode, currencyCode: currencyCode, date: date)
                                 .do(onNext: { [weak self] value in
                                     if let value = value {
-                                        let rate = Rate(coinCode: coinCode, currencyCode: currencyCode, value: value, timestamp: timestamp, isLatest: false)
+                                        let rate = Rate(coinCode: coinCode, currencyCode: currencyCode, value: value, date: date, isLatest: false)
                                         self?.storage.save(rate: rate)
                                     }
                                 })

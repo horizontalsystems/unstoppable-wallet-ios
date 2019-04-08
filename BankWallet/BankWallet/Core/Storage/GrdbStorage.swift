@@ -23,13 +23,11 @@ class GrdbStorage {
                 t.column(Rate.Columns.coinCode.name, .text).notNull()
                 t.column(Rate.Columns.currencyCode.name, .text).notNull()
                 t.column(Rate.Columns.value.name, .text).notNull()
-                t.column(Rate.Columns.timestamp.name, .double).notNull()
                 t.column(Rate.Columns.isLatest.name, .boolean).notNull()
 
                 t.primaryKey([
                     Rate.Columns.coinCode.name,
                     Rate.Columns.currencyCode.name,
-                    Rate.Columns.timestamp.name,
                     Rate.Columns.isLatest.name
                 ], onConflict: .replace)
             }
@@ -43,6 +41,23 @@ class GrdbStorage {
                 t.column(StorableCoin.Columns.coinOrder.name, .integer)
 
                 t.primaryKey([StorableCoin.Columns.code.name], onConflict: .replace)
+            }
+        }
+        migrator.registerMigration("timestampToDateRates") { db in
+            try db.drop(table: Rate.databaseTableName)
+            try db.create(table: Rate.databaseTableName) { t in
+                t.column(Rate.Columns.coinCode.name, .text).notNull()
+                t.column(Rate.Columns.currencyCode.name, .text).notNull()
+                t.column(Rate.Columns.value.name, .text).notNull()
+                t.column(Rate.Columns.date.name, .double).notNull()
+                t.column(Rate.Columns.isLatest.name, .boolean).notNull()
+
+                t.primaryKey([
+                    Rate.Columns.coinCode.name,
+                    Rate.Columns.currencyCode.name,
+                    Rate.Columns.date.name,
+                    Rate.Columns.isLatest.name
+                ], onConflict: .replace)
             }
         }
 
@@ -69,8 +84,8 @@ extension GrdbStorage: IRateStorage {
                 .flatMap { $0.map(Observable.just) ?? Observable.empty() }
     }
 
-    func timestampRateObservable(coinCode: CoinCode, currencyCode: String, timestamp: Double) -> Observable<Rate?> {
-        let request = Rate.filter(Rate.Columns.coinCode == coinCode && Rate.Columns.currencyCode == currencyCode && Rate.Columns.timestamp == timestamp && Rate.Columns.isLatest == false)
+    func timestampRateObservable(coinCode: CoinCode, currencyCode: String, date: Date) -> Observable<Rate?> {
+        let request = Rate.filter(Rate.Columns.coinCode == coinCode && Rate.Columns.currencyCode == currencyCode && Rate.Columns.date == date && Rate.Columns.isLatest == false)
         return request.rx.fetchOne(in: dbPool)
     }
 
