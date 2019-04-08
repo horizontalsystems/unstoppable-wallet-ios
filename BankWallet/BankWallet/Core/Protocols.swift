@@ -191,12 +191,8 @@ protocol BiometricManagerDelegate: class {
 
 protocol IRateManager {
     func refreshLatestRates(coinCodes: [CoinCode], currencyCode: String)
-    func timestampRateValueObservable(coinCode: CoinCode, currencyCode: String, timestamp: Double) -> Single<Decimal?>
+    func timestampRateValueObservable(coinCode: CoinCode, currencyCode: String, date: Date) -> Single<Decimal?>
     func clear()
-}
-
-protocol IRateSyncerDelegate: class {
-    func didSync(coinCode: String, currencyCode: String, latestRate: LatestRateData)
 }
 
 protocol ISystemInfoManager {
@@ -243,7 +239,7 @@ protocol ITokenNetworkManager {
 protocol IRateStorage {
     func nonExpiredLatestRateValueObservable(forCoinCode coinCode: CoinCode, currencyCode: String) -> Observable<Decimal>
     func latestRateObservable(forCoinCode coinCode: CoinCode, currencyCode: String) -> Observable<Rate>
-    func timestampRateObservable(coinCode: CoinCode, currencyCode: String, timestamp: Double) -> Observable<Rate?>
+    func timestampRateObservable(coinCode: CoinCode, currencyCode: String, date: Date) -> Observable<Rate?>
     func zeroValueTimestampRatesObservable(currencyCode: String) -> Observable<[Rate]>
     func save(latestRate: Rate)
     func save(rate: Rate)

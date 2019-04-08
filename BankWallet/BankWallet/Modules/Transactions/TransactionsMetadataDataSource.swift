@@ -1,7 +1,9 @@
+import Foundation
+
 class TransactionsMetadataDataSource {
     private var lastBlockHeights = [Coin: Int]()
     private var thresholds = [Coin: Int]()
-    private var rates = [Coin: [Double: CurrencyValue]]()
+    private var rates = [Coin: [Date: CurrencyValue]]()
 
     func lastBlockHeight(coin: Coin) -> Int? {
         return lastBlockHeights[coin]
@@ -11,8 +13,8 @@ class TransactionsMetadataDataSource {
         return thresholds[coin]
     }
 
-    func rate(coin: Coin, timestamp: Double) -> CurrencyValue? {
-        return rates[coin]?[timestamp]
+    func rate(coin: Coin, date: Date) -> CurrencyValue? {
+        return rates[coin]?[date]
     }
 
     func set(lastBlockHeight: Int, coin: Coin) {
@@ -23,12 +25,12 @@ class TransactionsMetadataDataSource {
         thresholds[coin] = threshold
     }
 
-    func set(rate: CurrencyValue, coin: Coin, timestamp: Double) {
+    func set(rate: CurrencyValue, coin: Coin, date: Date) {
         if rates[coin] == nil {
-            rates[coin] = [Double: CurrencyValue]()
+            rates[coin] = [Date: CurrencyValue]()
         }
 
-        rates[coin]?[timestamp] = rate
+        rates[coin]?[date] = rate
     }
 
     func clearRates() {

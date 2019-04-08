@@ -4,21 +4,21 @@ class Rate: Record {
     let coinCode: String
     let currencyCode: String
     let value: Decimal
-    let timestamp: Double
+    let date: Date
     let isLatest: Bool
 
-    init(coinCode: String, currencyCode: String, value: Decimal, timestamp: Double, isLatest: Bool) {
+    init(coinCode: String, currencyCode: String, value: Decimal, date: Date, isLatest: Bool) {
         self.coinCode = coinCode
         self.currencyCode = currencyCode
         self.value = value
-        self.timestamp = timestamp
+        self.date = date
         self.isLatest = isLatest
 
         super.init()
     }
 
     var expired: Bool {
-        let diff = Date().timeIntervalSince1970 - timestamp
+        let diff = Date().timeIntervalSince1970 - date.timeIntervalSince1970
         return diff > 60 * 10
     }
 
@@ -27,14 +27,14 @@ class Rate: Record {
     }
 
     enum Columns: String, ColumnExpression {
-        case coinCode, currencyCode, value, timestamp, isLatest
+        case coinCode, currencyCode, value, date, isLatest
     }
 
     required init(row: Row) {
         coinCode = row[Columns.coinCode]
         currencyCode = row[Columns.currencyCode]
         value = row[Columns.value]
-        timestamp = row[Columns.timestamp]
+        date = row[Columns.date]
         isLatest = row[Columns.isLatest]
 
         super.init(row: row)
@@ -44,8 +44,16 @@ class Rate: Record {
         container[Columns.coinCode] = coinCode
         container[Columns.currencyCode] = currencyCode
         container[Columns.value] = value
-        container[Columns.timestamp] = timestamp
+        container[Columns.date] = date
         container[Columns.isLatest] = isLatest
+    }
+
+}
+
+extension Rate: CustomStringConvertible {
+
+    public var description: String {
+        return "Rate [coinCode: \(coinCode); currencyCode: \(currencyCode); value: \(value); date: \(DateHelper.instance.formatDebug(date: date)); isLatest: \(isLatest)]"
     }
 
 }

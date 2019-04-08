@@ -30,7 +30,7 @@ class TransactionViewItemFactory: ITransactionViewItemFactory {
                 from: record.from.first(where: { $0.mine != incoming })?.address,
                 to: record.to.first(where: { $0.mine == incoming })?.address,
                 incoming: incoming,
-                date: Date(timeIntervalSince1970: record.timestamp),
+                date: record.date,
                 status: status
         )
     }

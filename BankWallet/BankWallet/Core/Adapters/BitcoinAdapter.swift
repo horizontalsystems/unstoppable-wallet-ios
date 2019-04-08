@@ -55,7 +55,7 @@ class BitcoinAdapter {
                 transactionHash: transaction.transactionHash,
                 blockHeight: transaction.blockHeight,
                 amount: Decimal(transaction.amount) / coinRate,
-                timestamp: Double(transaction.timestamp),
+                date: Date(timeIntervalSince1970: Double(transaction.timestamp)),
                 from: fromAddresses,
                 to: toAddresses
         )

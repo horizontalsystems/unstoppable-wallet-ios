@@ -75,4 +75,8 @@ public class DateHelper {
         return getFormatter(forFormat: "yyyy MMM d").string(from: date)
     }
 
+    func formatDebug(date: Date) -> String {
+        return getFormatter(forFormat: "yyyy MMM d, HH:mm:ss").string(from: date)
+    }
+
 }

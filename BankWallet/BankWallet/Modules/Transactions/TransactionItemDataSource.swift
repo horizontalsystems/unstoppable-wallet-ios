@@ -1,3 +1,5 @@
+import Foundation
+
 class TransactionItemDataSource {
     private var items = [TransactionItem]()
 
@@ -11,7 +13,7 @@ class TransactionItemDataSource {
 
     func shouldInsert(record: TransactionRecord) -> Bool {
         if let lastItem = items.last {
-            return lastItem.record.timestamp < record.timestamp
+            return lastItem.record.date < record.date
         } else {
             return true
         }
@@ -25,11 +27,11 @@ class TransactionItemDataSource {
         self.items.append(contentsOf: items)
     }
 
-    func itemIndexes(coin: Coin, timestamp: Double) -> [Int] {
+    func itemIndexes(coin: Coin, date: Date) -> [Int] {
         var indexes = [Int]()
 
         for (index, item) in items.enumerated() {
-            if item.coin == coin && item.record.timestamp == timestamp {
+            if item.coin == coin && item.record.date == date {
                 indexes.append(index)
             }
         }
