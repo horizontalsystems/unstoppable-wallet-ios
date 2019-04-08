@@ -13,10 +13,11 @@ class RateManager {
         self.networkManager = networkManager
     }
 
-    private func latestRateFallbackObservable(coinCode: CoinCode, currencyCode: String, timestamp: Double) -> Observable<Decimal?> {
+    private func latestRateFallbackObservable(coinCode: CoinCode, currencyCode: String, date: Date) -> Observable<Decimal?> {
+        let referenceTimestamp = date.timeIntervalSince1970
         let currentTimestamp = Date().timeIntervalSince1970
 
-        guard timestamp > currentTimestamp - 60 * latestRateFallbackThreshold else {
+        guard referenceTimestamp > currentTimestamp - 60 * latestRateFallbackThreshold else {
             return Observable.just(nil)
         }
 
@@ -51,8 +52,7 @@ extension RateManager: IRateManager {
                 .disposed(by: disposeBag)
     }
 
-    func timestampRateValueObservable(coinCode: CoinCode, currencyCode: String, timestamp: Double) -> Single<Decimal?> {
-        let date = Date(timeIntervalSince1970: timestamp)
+    func timestampRateValueObservable(coinCode: CoinCode, currencyCode: String, date: Date) -> Single<Decimal?> {
         return storage.timestampRateObservable(coinCode: coinCode, currencyCode: currencyCode, date: date)
                 .take(1)
                 .flatMap { [unowned self] rate -> Observable<Decimal?> in
@@ -68,7 +68,7 @@ extension RateManager: IRateManager {
                                 })
 
                         return networkObservable.catchError { error in
-                            return self.latestRateFallbackObservable(coinCode: coinCode, currencyCode: currencyCode, timestamp: timestamp)
+                            return self.latestRateFallbackObservable(coinCode: coinCode, currencyCode: currencyCode, date: date)
                         }
                     }
                 }

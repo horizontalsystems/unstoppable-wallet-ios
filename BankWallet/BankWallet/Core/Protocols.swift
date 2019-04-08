@@ -191,7 +191,7 @@ protocol BiometricManagerDelegate: class {
 
 protocol IRateManager {
     func refreshLatestRates(coinCodes: [CoinCode], currencyCode: String)
-    func timestampRateValueObservable(coinCode: CoinCode, currencyCode: String, timestamp: Double) -> Single<Decimal?>
+    func timestampRateValueObservable(coinCode: CoinCode, currencyCode: String, date: Date) -> Single<Decimal?>
     func clear()
 }
 

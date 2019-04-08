@@ -1,3 +1,5 @@
+import Foundation
+
 class TransactionsLoader {
     private let dataSource: TransactionRecordDataSource
 
@@ -21,8 +23,8 @@ class TransactionsLoader {
         return dataSource.allRecordsData
     }
 
-    func itemIndexes(coin: Coin, timestamp: Double) -> [Int] {
-        return dataSource.itemIndexes(coin: coin, timestamp: timestamp)
+    func itemIndexes(coin: Coin, date: Date) -> [Int] {
+        return dataSource.itemIndexes(coin: coin, date: date)
     }
 
     func itemIndexesForPending(coin: Coin, blockHeight: Int) -> [Int] {

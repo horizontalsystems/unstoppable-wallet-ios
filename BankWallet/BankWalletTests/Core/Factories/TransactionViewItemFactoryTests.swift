@@ -201,7 +201,7 @@ class TransactionViewItemFactoryTests: XCTestCase {
                         transactionHash: transactionHash,
                         blockHeight: blockHeight,
                         amount: amount,
-                        timestamp: timestamp,
+                        date: Date(timeIntervalSince1970: timestamp),
                         from: from,
                         to: to
                 )

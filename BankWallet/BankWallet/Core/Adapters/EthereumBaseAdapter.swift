@@ -65,7 +65,7 @@ class EthereumBaseAdapter {
                 transactionHash: transaction.hash,
                 blockHeight: transaction.blockNumber,
                 amount: amount,
-                timestamp: Double(transaction.timestamp),
+                date: Date(timeIntervalSince1970: transaction.timestamp),
                 from: [from],
                 to: [to]
         )

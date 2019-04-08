@@ -60,10 +60,10 @@ extension TransactionsPresenter: ITransactionsViewDelegate {
         let item = loader.item(forIndex: index)
         let lastBlockHeight = dataSource.lastBlockHeight(coin: item.coin)
         let threshold = dataSource.threshold(coin: item.coin)
-        let rate = dataSource.rate(coin: item.coin, timestamp: item.record.timestamp)
+        let rate = dataSource.rate(coin: item.coin, date: item.record.date)
 
         if rate == nil {
-            interactor.fetchRate(coin: item.coin, timestamp: item.record.timestamp)
+            interactor.fetchRate(coin: item.coin, date: item.record.date)
         }
 
         return factory.viewItem(fromItem: loader.item(forIndex: index), lastBlockHeight: lastBlockHeight, threshold: threshold, rate: rate)
@@ -144,10 +144,10 @@ extension TransactionsPresenter: ITransactionsInteractorDelegate {
         loader.didUpdate(records: records, coin: coin)
     }
 
-    func didFetch(rateValue: Decimal, coin: Coin, currency: Currency, timestamp: Double) {
-        dataSource.set(rate: CurrencyValue(currency: currency, value: rateValue), coin: coin, timestamp: timestamp)
+    func didFetch(rateValue: Decimal, coin: Coin, currency: Currency, date: Date) {
+        dataSource.set(rate: CurrencyValue(currency: currency, value: rateValue), coin: coin, date: date)
 
-        let indexes = loader.itemIndexes(coin: coin, timestamp: timestamp)
+        let indexes = loader.itemIndexes(coin: coin, date: date)
 
         if !indexes.isEmpty {
             view?.reload(indexes: indexes)

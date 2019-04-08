@@ -4,7 +4,7 @@ struct TransactionRecord {
     let transactionHash: String
     let blockHeight: Int?
     let amount: Decimal
-    let timestamp: Double
+    let date: Date
 
     let from: [TransactionAddress]
     let to: [TransactionAddress]
@@ -18,7 +18,7 @@ struct TransactionAddress {
 extension TransactionRecord: Comparable {
 
     public static func <(lhs: TransactionRecord, rhs: TransactionRecord) -> Bool {
-        return lhs.timestamp != rhs.timestamp ? lhs.timestamp < rhs.timestamp : lhs.transactionHash < rhs.transactionHash
+        return lhs.date != rhs.date ? lhs.date < rhs.date : lhs.transactionHash < rhs.transactionHash
     }
 
     public static func ==(lhs: TransactionRecord, rhs: TransactionRecord) -> Bool {

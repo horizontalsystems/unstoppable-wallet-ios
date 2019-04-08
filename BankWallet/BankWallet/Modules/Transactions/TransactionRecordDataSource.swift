@@ -1,3 +1,5 @@
+import Foundation
+
 class TransactionRecordDataSource {
     private let poolRepo: TransactionRecordPoolRepo
     private let itemsDataSource: TransactionItemDataSource
@@ -39,8 +41,8 @@ class TransactionRecordDataSource {
         return itemsDataSource.item(forIndex: index)
     }
 
-    func itemIndexes(coin: Coin, timestamp: Double) -> [Int] {
-        return itemsDataSource.itemIndexes(coin: coin, timestamp: timestamp)
+    func itemIndexes(coin: Coin, date: Date) -> [Int] {
+        return itemsDataSource.itemIndexes(coin: coin, date: date)
     }
 
     func itemIndexesForPending(coin: Coin, blockHeight: Int) -> [Int] {
