@@ -72,7 +72,7 @@ extension NetworkManager {
 
         return single(forRequest: request, mapper: mapper)
                 .do(onSubscribe: {
-                    Logger.instance.verbose("API OUT: \(httpMethod.rawValue): \(url.absoluteString)\n\(parameters.map { "\($0 as AnyObject)" } ?? "")")
+                    Logger.instance.verbose("API OUT: \(httpMethod.rawValue) (\(timoutInterval)): \(url.absoluteString)\n\(parameters.map { "\($0 as AnyObject)" } ?? "")")
                 })
     }
 

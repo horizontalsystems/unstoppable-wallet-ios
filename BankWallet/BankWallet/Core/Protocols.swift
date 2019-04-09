@@ -201,10 +201,12 @@ protocol ISystemInfoManager {
 }
 
 protocol IAppConfigProvider {
+    var ipfsId: String { get }
+    var ipfsGateways: [String] { get }
+
     var fiatDecimal: Int { get }
     var maxDecimal: Int { get }
     var reachabilityHost: String { get }
-    var apiUrl: String { get }
     var testMode: Bool { get }
     var infuraKey: String { get }
     var etherscanKey: String { get }

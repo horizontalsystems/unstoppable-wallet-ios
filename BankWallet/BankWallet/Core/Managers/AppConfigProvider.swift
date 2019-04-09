@@ -1,11 +1,16 @@
 import Foundation
 
 class AppConfigProvider: IAppConfigProvider {
+    let ipfsId = "QmXTJZBMMRmBbPun6HFt3tmb3tfYF2usLPxFoacL7G5uMX"
+    let ipfsGateways = [
+        "https://ipfs.io",
+        "https://ipfs-ext.horizontalsystems.xyz"
+    ]
+
     let fiatDecimal: Int = 2
     let maxDecimal: Int = 8
 
     let reachabilityHost = "ipfs.horizontalsystems.xyz"
-    let apiUrl = "https://ipfs.io/ipns/QmXTJZBMMRmBbPun6HFt3tmb3tfYF2usLPxFoacL7G5uMX"
 
     var testMode: Bool {
         return Bundle.main.object(forInfoDictionaryKey: "TestMode") as? String == "true"
