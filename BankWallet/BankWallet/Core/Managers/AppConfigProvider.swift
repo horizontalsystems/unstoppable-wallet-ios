@@ -27,7 +27,6 @@ class AppConfigProvider: IAppConfigProvider {
         return (Bundle.main.object(forInfoDictionaryKey: "EtherscanApiKey") as? String) ?? ""
     }
 
-
     var disablePinLock: Bool {
         return Bundle.main.object(forInfoDictionaryKey: "DisablePinLock") as? String == "true"
     }

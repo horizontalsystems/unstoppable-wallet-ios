@@ -220,20 +220,16 @@ protocol IFullTransactionInfoProvider {
     var providerName: String { get }
     func url(for hash: String) -> String
 
-    func retrieveTransactionInfo(transactionHash: String) -> Observable<FullTransactionRecord?>
+    func retrieveTransactionInfo(transactionHash: String) -> Single<FullTransactionRecord?>
 }
 
 protocol IFullTransactionInfoAdapter {
     func convert(json: [String: Any]) -> FullTransactionRecord?
 }
 
-protocol IRateNetworkManager {
-    func getLatestRateData(currencyCode: String) -> Observable<LatestRateData>
-    func getRate(coinCode: String, currencyCode: String, date: Date) -> Observable<Decimal?>
-}
-
-protocol ITokenNetworkManager {
-    func getTokens() -> Observable<[Coin]>
+protocol IRateApiProvider {
+    func getLatestRateData(currencyCode: String) -> Single<LatestRateData>
+    func getRate(coinCode: String, currencyCode: String, date: Date) -> Single<Decimal?>
 }
 
 protocol IRateStorage {
@@ -252,8 +248,8 @@ protocol ICoinStorage {
     func clearCoins()
 }
 
-protocol IJSONApiManager {
-    func getJSON(url: String, parameters: [String: Any]?) -> Observable<[String: Any]>
+protocol IJsonApiProvider {
+    func getJson(urlString: String, parameters: [String: Any]?) -> Single<[String: Any]>
 }
 
 protocol ITransactionRecordStorage {

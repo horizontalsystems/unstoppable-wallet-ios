@@ -60,14 +60,17 @@ class App {
 
         urlManager = UrlManager(inApp: true)
         pingManager = PingManager()
-        networkManager = NetworkManager(appConfigProvider: appConfigProvider)
+        networkManager = NetworkManager()
         reachabilityManager = ReachabilityManager(appConfigProvider: appConfigProvider)
 
         grdbStorage = GrdbStorage()
 
         pinManager = PinManager(secureStorage: secureStorage)
         coinManager = CoinManager(appConfigProvider: appConfigProvider, storage: grdbStorage)
-        rateManager = RateManager(storage: grdbStorage, networkManager: networkManager)
+
+        let rateApiProvider: IRateApiProvider = RateApiProvider(networkManager: networkManager, appConfigProvider: appConfigProvider)
+        rateManager = RateManager(storage: grdbStorage, apiProvider: rateApiProvider)
+
         currencyManager = CurrencyManager(localStorage: localStorage, appConfigProvider: appConfigProvider)
 
         ethereumKitManager = EthereumKitManager(appConfigProvider: appConfigProvider)
@@ -85,7 +88,9 @@ class App {
         rateSyncer = RateSyncer(rateManager: rateManager, adapterManager: adapterManager, currencyManager: currencyManager, reachabilityManager: reachabilityManager)
 
         dataProviderManager = FullTransactionDataProviderManager(localStorage: localStorage, appConfigProvider: appConfigProvider)
-        fullTransactionInfoProviderFactory = FullTransactionInfoProviderFactory(apiManager: networkManager, dataProviderManager: dataProviderManager)
+
+        let jsonApiProvider: IJsonApiProvider = JsonApiProvider(networkManager: networkManager)
+        fullTransactionInfoProviderFactory = FullTransactionInfoProviderFactory(apiProvider: jsonApiProvider, dataProviderManager: dataProviderManager)
 
         testModeIndicator = TestModeIndicator(appConfigProvider: appConfigProvider)
 

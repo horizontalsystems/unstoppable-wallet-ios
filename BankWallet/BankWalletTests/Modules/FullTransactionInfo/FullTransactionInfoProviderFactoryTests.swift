@@ -42,7 +42,7 @@ class FullTransactionInfoProviderFactoryTests: XCTestCase {
             when(mock.ethereum(for: any())).thenReturn(MockIEthereumForksProvider())
         }
 
-        factory = FullTransactionInfoProviderFactory(apiManager: MockIJSONApiManager(), dataProviderManager: mockProviderManager)
+        factory = FullTransactionInfoProviderFactory(apiProvider: MockIJsonApiProvider(), dataProviderManager: mockProviderManager)
     }
 
     override func tearDown() {
