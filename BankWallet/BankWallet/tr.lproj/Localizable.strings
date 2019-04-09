@@ -26,7 +26,7 @@
 "guest.subtitle" = "Decentralized App";
 "guest.create_wallet" = "Yeni Cüzdan";
 "guest.restore_wallet" = "Cüzdanı Geri Yükle";
-"guest.version" = "version %@";
+"guest.version" = "sürüm %@";
 
 // Restore
 
@@ -93,14 +93,14 @@
 // Transaction Info
 
 "tx_info.title" = "Hesap işlemi";
-"tx_info.historical_rate" = "Historical Rate";
+"tx_info.historical_rate" = "Geçmiş Kur";
 "tx_info.time" = "Tarih";
 "tx_info.status" = "Durum";
 "tx_info.status.pending" = "Devam ediyor";
-"tx_ibnfo.status.confirmed" = "CONFIRMED";
+"tx_ibnfo.status.confirmed" = "ONAYLANDI";
 "tx_info.from_hash" = "Gönderen";
 "tx_info.to_hash" = "Alan";
-"tx_info.button_verify" = "Verify";
+"tx_info.button_verify" = "Doğrula";
 
 // Full Info
 
