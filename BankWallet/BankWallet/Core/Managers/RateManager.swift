@@ -6,19 +6,19 @@ class RateManager {
     private let disposeBag = DisposeBag()
 
     private let storage: IRateStorage
-    private let networkManager: IRateNetworkManager
+    private let apiProvider: IRateApiProvider
 
-    init(storage: IRateStorage, networkManager: IRateNetworkManager) {
+    init(storage: IRateStorage, apiProvider: IRateApiProvider) {
         self.storage = storage
-        self.networkManager = networkManager
+        self.apiProvider = apiProvider
     }
 
-    private func latestRateFallbackObservable(coinCode: CoinCode, currencyCode: String, date: Date) -> Observable<Decimal?> {
+    private func latestRateFallbackSingle(coinCode: CoinCode, currencyCode: String, date: Date) -> Single<Decimal?> {
         let referenceTimestamp = date.timeIntervalSince1970
         let currentTimestamp = Date().timeIntervalSince1970
 
         guard referenceTimestamp > currentTimestamp - 60 * latestRateFallbackThreshold else {
-            return Observable.just(nil)
+            return Single.just(nil)
         }
 
         return storage.latestRateObservable(forCoinCode: coinCode, currencyCode: currencyCode)
@@ -29,6 +29,7 @@ class RateManager {
 
                     return rate.value
                 }
+                .asSingle()
     }
 
 }
@@ -36,10 +37,10 @@ class RateManager {
 extension RateManager: IRateManager {
 
     func refreshLatestRates(coinCodes: [CoinCode], currencyCode: String) {
-        networkManager.getLatestRateData(currencyCode: currencyCode)
+        apiProvider.getLatestRateData(currencyCode: currencyCode)
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
                 .observeOn(ConcurrentDispatchQueueScheduler(qos: .background))
-                .subscribe(onNext: { [weak self] latestRateData in
+                .subscribe(onSuccess: { [weak self] latestRateData in
                     for coinCode in coinCodes {
                         guard let rateValue = latestRateData.values[coinCode] else {
                             continue
@@ -55,24 +56,24 @@ extension RateManager: IRateManager {
     func timestampRateValueObservable(coinCode: CoinCode, currencyCode: String, date: Date) -> Single<Decimal?> {
         return storage.timestampRateObservable(coinCode: coinCode, currencyCode: currencyCode, date: date)
                 .take(1)
-                .flatMap { [unowned self] rate -> Observable<Decimal?> in
+                .asSingle()
+                .flatMap { [unowned self] rate -> Single<Decimal?> in
                     if let rate = rate {
-                        return Observable.just(rate.value)
+                        return Single.just(rate.value)
                     } else {
-                        let networkObservable = self.networkManager.getRate(coinCode: coinCode, currencyCode: currencyCode, date: date)
-                                .do(onNext: { [weak self] value in
+                        let apiSingle = self.apiProvider.getRate(coinCode: coinCode, currencyCode: currencyCode, date: date)
+                                .do(onSuccess: { [weak self] value in
                                     if let value = value {
                                         let rate = Rate(coinCode: coinCode, currencyCode: currencyCode, value: value, date: date, isLatest: false)
                                         self?.storage.save(rate: rate)
                                     }
                                 })
 
-                        return networkObservable.catchError { error in
-                            return self.latestRateFallbackObservable(coinCode: coinCode, currencyCode: currencyCode, date: date)
+                        return apiSingle.catchError { error in
+                            return self.latestRateFallbackSingle(coinCode: coinCode, currencyCode: currencyCode, date: date)
                         }
                     }
                 }
-                .asSingle()
     }
 
     func clear() {

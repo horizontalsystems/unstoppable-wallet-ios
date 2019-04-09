@@ -61,7 +61,7 @@ extension FullTransactionInfoInteractor: IFullTransactionInfoInteractor {
     }
 
     func retrieveTransactionInfo(transactionHash: String) {
-        provider?.retrieveTransactionInfo(transactionHash: transactionHash).subscribe(onNext: { [weak self] record in
+        provider?.retrieveTransactionInfo(transactionHash: transactionHash).subscribe(onSuccess: { [weak self] record in
             if let record = record {
                 self?.delegate?.didReceive(transactionRecord: record)
             } else {

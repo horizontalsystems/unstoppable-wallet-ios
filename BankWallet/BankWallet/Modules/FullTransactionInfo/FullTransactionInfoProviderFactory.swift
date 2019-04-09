@@ -1,10 +1,10 @@
 class FullTransactionInfoProviderFactory {
 
-    private let apiManager: IJSONApiManager
+    private let apiProvider: IJsonApiProvider
     private let dataProviderManager: IFullTransactionDataProviderManager
 
-    init(apiManager: IJSONApiManager, dataProviderManager: IFullTransactionDataProviderManager) {
-        self.apiManager = apiManager
+    init(apiProvider: IJsonApiProvider, dataProviderManager: IFullTransactionDataProviderManager) {
+        self.apiProvider = apiProvider
         self.dataProviderManager = dataProviderManager
     }
 
@@ -31,7 +31,7 @@ extension FullTransactionInfoProviderFactory: IFullTransactionInfoProviderFactor
             provider = ethereumProvider
             adapter = EthereumTransactionInfoAdapter(provider: ethereumProvider, coin: coin)
         }
-        return FullTransactionInfoProvider(apiManager: apiManager, adapter: adapter, provider: provider)
+        return FullTransactionInfoProvider(apiProvider: apiProvider, adapter: adapter, provider: provider)
     }
 
 }

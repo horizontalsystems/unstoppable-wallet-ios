@@ -39,7 +39,7 @@ class FullTransactionInfoInteractorTests: XCTestCase {
         ])
         mockProvider = MockIFullTransactionInfoProvider()
         stub(mockProvider) { mock in
-            when(mock.retrieveTransactionInfo(transactionHash: any())).thenReturn(Observable.just(transactionRecord))
+            when(mock.retrieveTransactionInfo(transactionHash: any())).thenReturn(Single.just(transactionRecord))
             when(mock.url(for: any())).thenReturn("test_url")
             when(mock.providerName.get).thenReturn(providerName)
         }
@@ -130,7 +130,7 @@ class FullTransactionInfoInteractorTests: XCTestCase {
 
     func testRetrieveNil() {
         stub(mockProvider) { mock in
-            when(mock.retrieveTransactionInfo(transactionHash: any())).thenReturn(Observable.just(nil))
+            when(mock.retrieveTransactionInfo(transactionHash: any())).thenReturn(Single.just(nil))
         }
 
         interactor.updateProvider(for: coin)
@@ -149,7 +149,7 @@ class FullTransactionInfoInteractorTests: XCTestCase {
         interactor.updateProvider(for: coin)
 
         stub(mockProvider) { mock in
-            when(mock.retrieveTransactionInfo(transactionHash: any())).thenReturn(Observable.error(error))
+            when(mock.retrieveTransactionInfo(transactionHash: any())).thenReturn(Single.error(error))
         }
 
         interactor.retrieveTransactionInfo(transactionHash: transactionHash)
