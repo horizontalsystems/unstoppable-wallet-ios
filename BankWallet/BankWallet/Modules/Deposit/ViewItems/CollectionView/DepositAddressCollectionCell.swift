@@ -13,31 +13,33 @@ class DepositAddressCollectionCell: UICollectionViewCell {
 
         contentView.addSubview(iconImageView)
         iconImageView.snp.makeConstraints { maker in
-            maker.leading.equalToSuperview().offset(DepositTheme.regularMargin)
-            maker.top.equalToSuperview().offset(DepositTheme.regularMargin)
+            maker.leading.equalToSuperview().offset(DepositTheme.mediumMargin)
+            maker.top.equalToSuperview().offset(DepositTheme.mediumMargin)
         }
 
         titleLabel.font = DepositTheme.titleFont
         titleLabel.textColor = DepositTheme.titleColor
         contentView.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { maker in
-            maker.leading.equalTo(self.iconImageView.snp.trailing).offset(DepositTheme.regularMargin)
+            maker.leading.equalTo(self.iconImageView.snp.trailing).offset(DepositTheme.titleLeadingMargin)
             maker.centerY.equalTo(self.iconImageView.snp.centerY)
         }
 
         separatorView.backgroundColor = .cryptoSteel20
         contentView.addSubview(separatorView)
         separatorView.snp.makeConstraints { maker in
-            maker.top.equalTo(self.iconImageView.snp.bottom).offset(DepositTheme.regularMargin)
+            maker.top.equalTo(self.iconImageView.snp.bottom).offset(DepositTheme.mediumMargin)
             maker.left.right.equalToSuperview()
             maker.height.equalTo(0.5)
         }
 
         contentView.addSubview(qrCodeImageView)
+        qrCodeImageView.clipsToBounds = true
+        qrCodeImageView.layer.cornerRadius = DepositTheme.qrCornerRadius
         qrCodeImageView.snp.makeConstraints { maker in
             maker.centerX.equalToSuperview()
-            maker.top.equalTo(self.separatorView.snp.bottom).offset(DepositTheme.qrCodeTopMargin)
-            maker.size.equalTo(CGSize(width: DepositTheme.qrCodeSideSize, height: DepositTheme.qrCodeSideSize))
+            maker.top.equalTo(self.separatorView.snp.bottom).offset(DepositTheme.regularMargin)
+            maker.size.equalTo(DepositTheme.qrCodeSideSize)
         }
 
         let addressTitleLabel = UILabel()
@@ -47,13 +49,13 @@ class DepositAddressCollectionCell: UICollectionViewCell {
         addressTitleLabel.textAlignment = .center
         contentView.addSubview(addressTitleLabel)
         addressTitleLabel.snp.makeConstraints { maker in
-            maker.top.equalTo(self.qrCodeImageView.snp.bottom).offset(DepositTheme.addressTitleTopMargin)
+            maker.top.equalTo(self.qrCodeImageView.snp.bottom).offset(DepositTheme.mediumMargin)
             maker.leading.trailing.equalToSuperview()
         }
 
         contentView.addSubview(addressButton)
         addressButton.snp.makeConstraints { maker in
-            maker.top.equalTo(addressTitleLabel.snp.bottom).offset(DepositTheme.addressTopMargin)
+            maker.top.equalTo(addressTitleLabel.snp.bottom).offset(DepositTheme.mediumMargin)
             maker.leading.equalToSuperview().offset(DepositTheme.regularMargin).priority(.high)
             maker.trailing.equalToSuperview().offset(-DepositTheme.regularMargin).priority(.high)
             maker.centerX.equalToSuperview()
