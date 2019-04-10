@@ -53,6 +53,7 @@ class TransactionsViewController: WalletViewController {
         emptyView.backgroundColor = .clear
         tableView.backgroundView = emptyView
 
+        view.layoutIfNeeded()
         emptyLabel.text = "transactions.empty_text".localized
         emptyLabel.numberOfLines = 0
         emptyLabel.font = .systemFont(ofSize: 14)

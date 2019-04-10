@@ -82,10 +82,9 @@ class FullTransactionInfoProviderTests: XCTestCase {
         _ = single.subscribe()
 
         jsonSubject.onNext([:])
-        waitForMainQueue()
+        jsonSubject.onCompleted()
 
-        // todo
-//        verify(mockAdapter).convert(json: any())
+        verify(mockAdapter).convert(json: any())
     }
 
     func testUrl() {
