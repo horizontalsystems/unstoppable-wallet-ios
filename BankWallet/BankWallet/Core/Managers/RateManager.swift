@@ -1,7 +1,7 @@
 import RxSwift
 
 class RateManager {
-    private let latestRateFallbackThreshold: Double = 60 // in minutes
+    private let latestRateFallbackThreshold: Double = 10 // in minutes
 
     private let disposeBag = DisposeBag()
 
@@ -22,6 +22,7 @@ class RateManager {
         }
 
         return storage.latestRateObservable(forCoinCode: coinCode, currencyCode: currencyCode)
+                .take(1)
                 .map { rate -> Decimal? in
                     guard !rate.expired else {
                         return nil
