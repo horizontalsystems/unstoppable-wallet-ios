@@ -97,10 +97,11 @@
 "tx_info.time" = "Время";
 "tx_info.status" = "Статус";
 "tx_info.status.pending" = "В процессе";
-"tx_ibnfo.status.confirmed" = "CONFIRMED";
+"tx_info.status.confirmed" = "Confirmed";
 "tx_info.from_hash" = "От";
 "tx_info.to_hash" = "Кому";
 "tx_info.button_verify" = "Проверить";
+"tx_info.rate" = "Historical Rate";
 
 // Full Info
 
