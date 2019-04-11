@@ -14,7 +14,7 @@ class TransactionStatusItem: BaseActionItem {
 
         switch item.status {
         case .pending:
-            icon = UIImage(named: "Transaction Info Pending Icon")
+            icon = UIImage(named: "Transaction Info Pending Icon")?.tinted(with: .cryptoGray)
             statusText = "tx_info.status.pending".localized
             statusColor = TransactionInfoTheme.pendingStatusColor
         case .processing(let progress):

@@ -23,7 +23,7 @@ class TransactionInfoTheme {
     static let coinIconLeftMargin: CGFloat = 12
     static let currencyAmountTopMargin: CGFloat = 12
     static let itemTitleFont: UIFont = .cryptoCaption1
-    static let completeStatusColor: UIColor = .cryptoBars
+    static var completeStatusColor: UIColor { return .crypto_Bars_Dark }
     static let itemTitleColor = UIColor.cryptoGray
     static let itemValueFont: UIFont = .cryptoCaptionMedium
     static var itemValueColor: UIColor { return .crypto_Bars_Dark }
@@ -48,7 +48,7 @@ class TransactionInfoTheme {
     static let statusTextColor: UIColor = .cryptoGray
 
     static let barsProgressBarWidth: CGFloat = 4
-    static let barsProgressHeight: CGFloat = 16
+    static let barsProgressHeight: CGFloat = 20
     static let barsProgressColor: UIColor = .cryptoGreen
     static let barsProgressInactiveColor: UIColor = .cryptoSteel20
 

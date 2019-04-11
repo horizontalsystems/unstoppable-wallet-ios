@@ -35,7 +35,7 @@ class BarsProgressView: UIView {
                 maker.width.equalTo(barWidth)
 
                 if i > 0 {
-                    maker.leading.equalTo(self.bars[i - 1].snp.trailing).offset(barWidth * 1.5)
+                    maker.leading.equalTo(self.bars[i - 1].snp.trailing).offset(barWidth * 0.9)
                 }
             }
         }
