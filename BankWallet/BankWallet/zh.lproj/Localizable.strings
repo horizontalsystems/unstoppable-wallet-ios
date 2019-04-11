@@ -97,10 +97,11 @@
 "tx_info.time" = "时间";
 "tx_info.status" = "状态";
 "tx_info.status.pending" = "在过程中";
-"tx_ibnfo.status.confirmed" = "CONFIRMED";
+"tx_info.status.confirmed" = "Confirmed";
 "tx_info.from_hash" = "发件人";
 "tx_info.to_hash" = "收件人";
 "tx_info.button_verify" = "Verify";
+"tx_info.rate" = "Historical Rate";
 
 // Full Info
 
