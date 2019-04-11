@@ -10,8 +10,9 @@ class TransactionViewItem {
     let incoming: Bool
     let date: Date?
     let status: TransactionStatus
+    let rate: CurrencyValue?
 
-    init(coin: Coin, transactionHash: String, coinValue: CoinValue, currencyValue: CurrencyValue?, from: String?, to: String?, incoming: Bool, date: Date?, status: TransactionStatus) {
+    init(coin: Coin, transactionHash: String, coinValue: CoinValue, currencyValue: CurrencyValue?, from: String?, to: String?, incoming: Bool, date: Date?, status: TransactionStatus, rate: CurrencyValue?) {
         self.coin = coin
         self.transactionHash = transactionHash
         self.coinValue = coinValue
@@ -21,5 +22,6 @@ class TransactionViewItem {
         self.incoming = incoming
         self.date = date
         self.status = status
+        self.rate = rate
     }
 }

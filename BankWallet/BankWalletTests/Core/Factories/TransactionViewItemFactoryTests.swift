@@ -138,6 +138,15 @@ class TransactionViewItemFactoryTests: XCTestCase {
         XCTAssertEqual(viewItem.status, TransactionStatus.processing(progress: 5.0 / Double(threshold)))
     }
 
+    func testRate() {
+        let expectedRate = CurrencyValue(currency: Currency(code: "USD", symbol: "$"), value: 35)
+
+        let item = transactionItem()
+        let viewItem = factory.viewItem(fromItem: item, rate: expectedRate)
+
+        XCTAssertEqual(viewItem.rate, expectedRate)
+    }
+
     func testFrom_incoming() {
         let item = transactionItem(amount: 1, from: [otherAddress1, otherAddress2])
 
@@ -147,23 +156,15 @@ class TransactionViewItemFactoryTests: XCTestCase {
     }
 
     func testFrom_outgoing() {
-        let item = transactionItem(amount: -1, from: [otherAddress1, mineAddress1, mineAddress2])
+        let item = transactionItem(amount: -1, from: [mineAddress1, mineAddress2], to: [otherAddress1])
 
         let viewItem = factory.viewItem(fromItem: item)
 
-        XCTAssertEqual(viewItem.from, mineAddress1.address)
+        XCTAssertNil(viewItem.from)
     }
 
     func testTo_incoming() {
-        let item = transactionItem(amount: 1, to: [otherAddress1, mineAddress1, otherAddress2])
-
-        let viewItem = factory.viewItem(fromItem: item)
-
-        XCTAssertEqual(viewItem.to, mineAddress1.address)
-    }
-
-    func testTo_incoming_noMine() {
-        let item = transactionItem(amount: 1, to: [otherAddress1, otherAddress2])
+        let item = transactionItem(amount: 1, from: [otherAddress1], to: [mineAddress1, otherAddress2])
 
         let viewItem = factory.viewItem(fromItem: item)
 
@@ -171,19 +172,20 @@ class TransactionViewItemFactoryTests: XCTestCase {
     }
 
     func testTo_outgoing() {
-        let item = transactionItem(amount: -1, to: [mineAddress1, otherAddress1, otherAddress2])
+        let item = transactionItem(amount: -1, from: [mineAddress1], to: [otherAddress1, otherAddress2])
 
         let viewItem = factory.viewItem(fromItem: item)
 
         XCTAssertEqual(viewItem.to, otherAddress1.address)
     }
 
-    func testTo_outgoing_noOther() {
-        let item = transactionItem(amount: -1, to: [mineAddress1, mineAddress2])
+    func testFromTo_outgoing_allMine() {
+        let item = transactionItem(amount: -1, from: [mineAddress1], to: [mineAddress2])
 
         let viewItem = factory.viewItem(fromItem: item)
 
-        XCTAssertNil(viewItem.to)
+        XCTAssertEqual(viewItem.to, mineAddress2.address)
+        XCTAssertEqual(viewItem.from, mineAddress1.address)
     }
 
     private func transactionItem(

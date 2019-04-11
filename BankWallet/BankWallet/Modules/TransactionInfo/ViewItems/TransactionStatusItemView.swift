@@ -31,7 +31,6 @@ class TransactionStatusItemView: BaseActionItemView {
         }
 
         statusTextLabel.font = TransactionInfoTheme.statusTextFont
-        statusTextLabel.textColor = TransactionInfoTheme.statusTextColor
         addSubview(statusTextLabel)
         statusTextLabel.snp.makeConstraints { maker in
             maker.centerY.equalToSuperview()
@@ -51,6 +50,7 @@ class TransactionStatusItemView: BaseActionItemView {
 
         titleLabel.text = item?.title
         statusTextLabel.text = item?.statusText
+        statusTextLabel.textColor = item?.statusColor ?? TransactionInfoTheme.statusTextColor
 
         if let icon = item?.icon {
             iconImageView.isHidden = false

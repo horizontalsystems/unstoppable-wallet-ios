@@ -6,6 +6,7 @@ class TransactionAmountItem: BaseActionItem {
     var currencyAmount: String?
     var currencyAmountColor: UIColor
     var amount: String?
+    var coinName: String?
 
     init(item: TransactionViewItem, tag: Int? = nil) {
         if let value = item.currencyValue, let formattedValue = ValueFormatter.instance.format(currencyValue: value) {
@@ -13,6 +14,7 @@ class TransactionAmountItem: BaseActionItem {
         }
         currencyAmountColor = item.incoming ? TransactionInfoTheme.incomingAmountColor : TransactionInfoTheme.outgoingAmountColor
         amount = ValueFormatter.instance.format(coinValue: item.coinValue)
+        coinName = item.coin.title.localized
 
         super.init(cellType: TransactionAmountItemView.self, tag: tag, required: true)
 

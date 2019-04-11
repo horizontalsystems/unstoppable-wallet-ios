@@ -15,6 +15,7 @@ class DepositShareButtonItemView: BaseButtonItemView {
             maker.leading.equalToSuperview().offset(DepositTheme.regularMargin)
             maker.top.equalToSuperview().offset(DepositTheme.regularMargin)
             maker.trailing.equalToSuperview().offset(-DepositTheme.regularMargin)
+            maker.height.equalTo(DepositTheme.shareButtonHeight)
         }
     }
 

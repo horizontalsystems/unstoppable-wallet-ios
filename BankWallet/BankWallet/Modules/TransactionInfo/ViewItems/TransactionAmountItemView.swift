@@ -7,6 +7,7 @@ class TransactionAmountItemView: BaseActionItemView {
 
     var currencyAmountLabel = UILabel()
     var amountLabel = UILabel()
+    var coinNameLabel = UILabel()
 
     override var item: TransactionAmountItem? { return _item as? TransactionAmountItem }
 
@@ -15,19 +16,27 @@ class TransactionAmountItemView: BaseActionItemView {
 
         backgroundColor = TransactionInfoTheme.itemBackground
 
-        currencyAmountLabel.font = TransactionInfoTheme.amountFont
+        currencyAmountLabel.font = TransactionInfoTheme.currencyAmountFont
         addSubview(currencyAmountLabel)
         currencyAmountLabel.snp.makeConstraints { maker in
             maker.centerX.equalToSuperview()
-            maker.top.equalToSuperview().offset(TransactionInfoTheme.regularMargin)
+            maker.top.equalToSuperview().offset(TransactionInfoTheme.currencyAmountTopMargin)
         }
 
-        amountLabel.font = TransactionInfoTheme.fiatAmountFont
-        amountLabel.textColor = TransactionInfoTheme.fiatAmountColor
+        amountLabel.font = TransactionInfoTheme.amountFont
+        amountLabel.textColor = TransactionInfoTheme.amountColor
         addSubview(amountLabel)
         amountLabel.snp.makeConstraints { maker in
             maker.centerX.equalToSuperview()
-            maker.bottom.equalToSuperview().offset(-TransactionInfoTheme.regularMargin)
+            maker.top.equalTo(self.currencyAmountLabel.snp.bottom).offset(TransactionInfoTheme.amountTopMargin)
+        }
+
+        addSubview(coinNameLabel)
+        coinNameLabel.font = TransactionInfoTheme.coinNameFont
+        coinNameLabel.textColor = TransactionInfoTheme.coinNameColor
+        coinNameLabel.snp.makeConstraints { maker in
+            maker.centerX.equalToSuperview()
+            maker.top.equalTo(self.amountLabel.snp.bottom).offset(TransactionInfoTheme.coinNameTopMargin)
         }
     }
 
@@ -38,6 +47,8 @@ class TransactionAmountItemView: BaseActionItemView {
         currencyAmountLabel.textColor = item?.currencyAmountColor
 
         amountLabel.text = item?.amount
+
+        coinNameLabel.text = item?.coinName
     }
 
 }
