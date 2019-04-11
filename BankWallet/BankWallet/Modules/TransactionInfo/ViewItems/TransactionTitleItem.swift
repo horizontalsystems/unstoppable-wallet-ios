@@ -1,12 +1,14 @@
 import GrouviActionSheet
 
 class TransactionTitleItem: BaseActionItem {
-    let transactionId: String
+    let transactionHash: String
+    let coin: Coin
 
     let onIdTap: (() -> ())?
 
     init(item: TransactionViewItem, tag: Int? = nil, onIdTap: (() -> ())? = nil) {
-        transactionId = item.transactionHash
+        transactionHash = item.transactionHash
+        coin = item.coin
         self.onIdTap = onIdTap
 
         super.init(cellType: TransactionTitleItemView.self, tag: tag, required: true)

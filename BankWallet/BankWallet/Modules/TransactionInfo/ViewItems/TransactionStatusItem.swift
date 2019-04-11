@@ -3,6 +3,7 @@ import GrouviActionSheet
 class TransactionStatusItem: BaseActionItem {
     let title: String
     var statusText: String?
+    var statusColor: UIColor?
     var icon: UIImage?
     var progress: Double?
 
@@ -15,10 +16,13 @@ class TransactionStatusItem: BaseActionItem {
         case .pending:
             icon = UIImage(named: "Transaction Info Pending Icon")
             statusText = "tx_info.status.pending".localized
+            statusColor = TransactionInfoTheme.pendingStatusColor
         case .processing(let progress):
             self.progress = progress
         case .completed:
-            icon = UIImage(named: "Transaction Info Completed Icon")
+            icon = UIImage(named: "Transaction Info Completed Icon")?.tinted(with: .cryptoGreen)
+            statusText = "tx_info.status.confirmed".localized
+            statusColor = TransactionInfoTheme.completeStatusColor
         }
 
         height = TransactionInfoTheme.itemHeight

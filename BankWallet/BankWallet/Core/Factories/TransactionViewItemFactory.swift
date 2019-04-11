@@ -21,17 +21,30 @@ class TransactionViewItemFactory: ITransactionViewItemFactory {
         }
 
         let incoming = record.amount > 0
+        var from: String?
+        var to: String?
+        if incoming {
+            from = record.from.first(where: { $0.mine == false })?.address
+        } else {
+            to = record.to.first(where: { $0.mine == false })?.address
+        }
+
+        if from == nil, to == nil {
+            from = record.from.first?.address
+            to = record.to.first?.address
+        }
 
         return TransactionViewItem(
                 coin: item.coin,
                 transactionHash: record.transactionHash,
                 coinValue: CoinValue(coinCode: item.coin.code, value: record.amount),
                 currencyValue: currencyValue,
-                from: record.from.first(where: { $0.mine != incoming })?.address,
-                to: record.to.first(where: { $0.mine == incoming })?.address,
+                from: from,
+                to: to,
                 incoming: incoming,
                 date: record.date,
-                status: status
+                status: status,
+                rate: rate
         )
     }
 
