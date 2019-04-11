@@ -97,10 +97,11 @@
 "tx_info.time" = "زمان";
 "tx_info.status" = "وضيعت";
 "tx_info.status.pending" = "در حالت انتظار";
-"tx_ibnfo.status.confirmed" = "CONFIRMED";
+"tx_info.status.confirmed" = "Confirmed";
 "tx_info.from_hash" = "از";
 "tx_info.to_hash" = "به";
 "tx_info.button_verify" = "Verify";
+"tx_info.rate" = "Historical Rate";
 
 // Full Info
 
