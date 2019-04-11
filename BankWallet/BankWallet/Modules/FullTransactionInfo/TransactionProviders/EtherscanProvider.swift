@@ -3,9 +3,16 @@ import BigInt
 
 class EtherscanEthereumProvider: IEthereumForksProvider {
     let name: String = "Etherscan.io"
+    private let url: String
+    private let apiUrl: String
 
-    func url(for hash: String) -> String { return "https://etherscan.io/tx/" + hash }
-    func apiUrl(for hash: String) -> String { return "https://api.etherscan.io/api?module=proxy&action=eth_getTransactionByHash&txhash=" + hash }
+    func url(for hash: String) -> String { return url + hash }
+    func apiUrl(for hash: String) -> String { return apiUrl + hash }
+
+    init(testMode: Bool) {
+        url = testMode ? "https://ropsten.etherscan.io/tx/" : "https://etherscan.io/tx/"
+        apiUrl = testMode ? "https://api-ropsten.etherscan.io/api?module=proxy&action=eth_getTransactionByHash&txhash=" : "https://api.etherscan.io/api?module=proxy&action=eth_getTransactionByHash&txhash="
+    }
 
     func convert(json: [String: Any]) -> IEthereumResponse? {
         return try? EtherscanEthereumResponse(JSONObject: json)

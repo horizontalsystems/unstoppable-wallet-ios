@@ -46,8 +46,8 @@ class HorSysEthereumProvider: IEthereumForksProvider {
     func apiUrl(for hash: String) -> String { return apiUrl + hash }
 
     init(testMode: Bool) {
-        url = testMode ? "http://eth-testnet.horizontalsystems.xyz/tx/" : "https://eth.horizontalsystems.xyz/tx/"
-        apiUrl = url
+        url = testMode ? "http://eth-ropsten.horizontalsystems.xyz/tx/" : "https://eth.horizontalsystems.xyz/tx/"
+        apiUrl = testMode ? "http://eth-ropsten.horizontalsystems.xyz/api?module=transaction&action=gettxinfo&txhash=" : "https://eth.horizontalsystems.xyz/api?module=transaction&action=gettxinfo&txhash="
     }
 
     func convert(json: [String: Any]) -> IEthereumResponse? {
@@ -125,22 +125,38 @@ class HorSysEthereumResponse: IEthereumResponse, ImmutableMappable {
     var contractAddress: String?
 
     required init(map: Map) throws {
-        txId = try? map.value("tx.hash")
-        blockHeight = try? map.value("tx.blockNumber")
+        txId = try? map.value("result.hash")
 
-        gasLimit = try? map.value("tx.gas")
-        if let priceString: String = try? map.value("tx.gasPrice"), let price = Decimal(string: priceString) {
-            gasPrice = price / gweiRate
+        if let blockTimeString: String = try? map.value("result.timeStamp") {
+            blockTime = Int(blockTimeString)
         }
-        gasUsed = try? map.value("tx.gasUsed")
-
-        if let valueString: String = try? map.value("tx.value"), let value = Decimal(string: valueString) {
-            self.value = value
+        if let blockHeightString: String = try? map.value("result.blockNumber") {
+            blockHeight = Int(blockHeightString)
+        }
+        if let confirmationsString: String = try? map.value("result.confirmations") {
+            confirmations = Int(confirmationsString)
         }
 
-        nonce = try? map.value("tx.nonce")
-        to = try? map.value("tx.to")
-        from = try? map.value("tx.from")
+        if let gasUsedString: String = try? map.value("result.gasUsed") {
+            gasUsed = Decimal(string: gasUsedString)
+        }
+        if let gasLimitString: String = try? map.value("result.gasLimit") {
+            gasLimit = Decimal(string: gasLimitString)
+        }
+
+        let input: String? = try? map.value("result.input")
+        if input == "0x" {
+            if let valueString: String = try? map.value("result.value"), let value = Decimal(string: valueString) {
+                self.value = value
+            }
+            to = try? map.value("result.to")
+        } else if let input = input, let inputData = ERC20InputParser.parse(input: input) {
+            value = inputData.value
+            to = inputData.to
+            contractAddress = try? map.value("result.to")
+        }
+
+        from = try? map.value("result.from")
     }
 
 }
