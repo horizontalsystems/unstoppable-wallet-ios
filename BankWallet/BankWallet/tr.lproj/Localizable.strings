@@ -97,10 +97,11 @@
 "tx_info.time" = "Tarih";
 "tx_info.status" = "Durum";
 "tx_info.status.pending" = "Devam ediyor";
-"tx_ibnfo.status.confirmed" = "ONAYLANDI";
+"tx_info.status.confirmed" = "Confirmed";
 "tx_info.from_hash" = "Gönderen";
 "tx_info.to_hash" = "Alan";
 "tx_info.button_verify" = "Doğrula";
+"tx_info.rate" = "Historical Rate";
 
 // Full Info
 
