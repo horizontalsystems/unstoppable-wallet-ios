@@ -26,7 +26,7 @@
 "guest.subtitle" = "Decentralized app";
 "guest.create_wallet" = "Nouveau porte-monnaie";
 "guest.restore_wallet" = "Restaurer le porte-monnaie";
-"guest.version" = "version %@";
+"guest.version" = "Version %@";
 
 // Restore
 
@@ -50,9 +50,9 @@
 "backup.confirmation.description" = "Entrez les mots de votre clé secrète";
 "backup.confirmation.failure_alert.text" = "Les mots ne correspondent pas";
 "backup.confirmation.done_button" = "Fait";
-"backup.confirmation.secret_key" = "I understand that I am a sole owner of a private 12-word Secret Key which is securely stored on my phone and enables me to control funds on my wallet.";
-"backup.confirmation.delete_app_warn" = "I understand that if this app is ever moved, deleted or malfunctions, the access to my wallet can be only recovered with that Secret Key.";
-"backup.confirmation.disclaimer" = "I understand that developers of this app can not be held responsible for any unintended bugs or issues that may arise while using this app.";
+"backup.confirmation.secret_key" = "Je comprends que je suis propriétaire d'une clé secrète privée de 12 mots, qui est stockée en toute sécurité sur mon téléphone portable et me permet de contrôler les fonds sur mon porte-monnaie.";
+"backup.confirmation.delete_app_warn" = "Je comprends que si cette appli ne fonction plus, est déplacée vers un autre appareil ou supprimée, mon porte-monnaie ne peut être récupéré qu'avec la clé secrète.";
+"backup.confirmation.disclaimer" = "Je comprends que les développeurs de cette application ne peuvent pas être responsables de tout bogue ou problème non désiré qui pourrait apparaître lors de l'utilisation de cette application.";
 
 // Balance
 
@@ -93,15 +93,15 @@
 // Transaction Info
 
 "tx_info.title" = "Transaction";
-"tx_info.historical_rate" = "Historical Rate";
+"tx_info.historical_rate" = "Taux historique";
 "tx_info.time" = "Date";
 "tx_info.status" = "Statut";
 "tx_info.status.pending" = "En attente";
-"tx_info.status.confirmed" = "Confirmed";
+"tx_info.status.confirmed" = "Confirmé";
 "tx_info.from_hash" = "De";
 "tx_info.to_hash" = "À";
-"tx_info.button_verify" = "Verify";
-"tx_info.rate" = "Historical Rate";
+"tx_info.button_verify" = "Vérifiez";
+"tx_info.rate" = "Taux historique";
 
 // Full Info
 
