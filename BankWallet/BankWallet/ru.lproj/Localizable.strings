@@ -26,6 +26,7 @@
 "guest.subtitle" = "Decentralized app";
 "guest.create_wallet" = "Создать Кошелек";
 "guest.restore_wallet" = "Восстановить Кошелек";
+"guest.version" = "версия %@";
 
 // Restore
 
@@ -49,8 +50,9 @@
 "backup.confirmation.description" = "Введите слова из вашего секретного ключа";
 "backup.confirmation.failure_alert.text" = "Слова не совпадают";
 "backup.confirmation.done_button" = "Готово";
-"backup.confirmation.understand" = "Я понимаю, что мой кошелек и токены хранятся только на этом устройстве.";
-"backup.confirmation.delete_app_warn" = "Я понимаю, что если это приложение удаляется или устанавливается на другое устройство, мой кошелек можно восстановить только с помощью секретного ключа.";
+"backup.confirmation.secret_key" = "Я понимаю, что я единственный владелец  Секретного Ключа, который надежно хранится на моем телефоне и позволяет мне контролировать средства в моем кошельке.";
+"backup.confirmation.delete_app_warn" = "Я понимаю, что если это приложение удаляется или устанавливается на другое устройство, мой кошелек можно восстановить только с помощью Секретного Ключа.";
+"backup.confirmation.disclaimer" = "Я понимаю, что разработчики этого приложения не могут нести ответственность за любые непреднамеренные ошибки или проблемы, которые могут возникнуть при использовании этого приложения.";
 
 // Balance
 
@@ -91,13 +93,15 @@
 // Transaction Info
 
 "tx_info.title" = "Транзакция";
+"tx_info.historical_rate" = "Исторический Курс";
 "tx_info.time" = "Время";
 "tx_info.status" = "Статус";
 "tx_info.status.pending" = "В процессе";
+"tx_info.status.confirmed" = "Подтверждено";
 "tx_info.from_hash" = "От";
 "tx_info.to_hash" = "Кому";
-"tx_info.alert_close" = "Закрыть";
-"tx_info.button_more" = "Ещё";
+"tx_info.button_verify" = "Проверить";
+"tx_info.rate" = "Исторический Курс";
 
 // Full Info
 

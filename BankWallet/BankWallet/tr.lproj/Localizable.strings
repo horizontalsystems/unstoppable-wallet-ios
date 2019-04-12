@@ -26,6 +26,7 @@
 "guest.subtitle" = "Decentralized App";
 "guest.create_wallet" = "Yeni Cüzdan";
 "guest.restore_wallet" = "Cüzdanı Geri Yükle";
+"guest.version" = "sürüm %@";
 
 // Restore
 
@@ -49,8 +50,9 @@
 "backup.confirmation.description" = "Gizli Anahtarınızda ki kelimeleri girin";
 "backup.confirmation.failure_alert.text" = "Kelimeler eşleşmiyor";
 "backup.confirmation.done_button" = "Bitti";
-"backup.confirmation.understand" = "Cüzdanımın güvenle, sadece bu cihazda bulunduğunu ve herhangi bir sunucuda olmadığını biliyorum.";
-"backup.confirmation.delete_app_warn" = "Uygulamanın silinmesi, hatalı davranması, taşınması ve benzeri bir durumda hesabıma ulaşamadığımda, hesabımı kurtarmanın tek yolunun Gizli Anahtar oldugunu biliyourum. ";
+"backup.confirmation.secret_key" = "Cüzdanıma erişmemi sağlayan 12 kelimeli Gizli Anahtarın tek sahibinin olduğumu ve bu anahtarın telefonumun güvenli hafızasında tutulduğunu kabul ediyorum.";
+"backup.confirmation.delete_app_warn" = "Uygulamanın silinmesi, hatalı davranması, taşınması ve benzeri bir durumda hesabıma ulaşamadığımda, hesabımı kurtarmanın tek yolunun Gizli Anahtar olduğunu biliyourum.";
+"backup.confirmation.disclaimer" = "Uygulama geliştiricilerinin, istenmeyen herhangi bir hatadan veya bu uygulamayı kullanırken ortaya çıkabilecek sorunlardan sorumlu tutulamayacağını kabul ediyorum.";
 
 // Balance
 
@@ -91,13 +93,15 @@
 // Transaction Info
 
 "tx_info.title" = "Hesap işlemi";
+"tx_info.historical_rate" = "Geçmiş Kur";
 "tx_info.time" = "Tarih";
 "tx_info.status" = "Durum";
 "tx_info.status.pending" = "Devam ediyor";
+"tx_info.status.confirmed" = "Confirmed";
 "tx_info.from_hash" = "Gönderen";
 "tx_info.to_hash" = "Alan";
-"tx_info.alert_close" = "Kapat";
-"tx_info.button_more" = "Daha fazlası";
+"tx_info.button_verify" = "Doğrula";
+"tx_info.rate" = "Historical Rate";
 
 // Full Info
 

@@ -26,6 +26,7 @@
 "guest.subtitle" = "Decentralized App";
 "guest.create_wallet" = "Wallet Erstellen";
 "guest.restore_wallet" = "Wallet Wiederherstellen";
+"guest.version" = "Version %@";
 
 // Restore
 
@@ -49,8 +50,9 @@
 "backup.confirmation.description" = "Gib bitte die Wörter deines Offlineschlüssels ein";
 "backup.confirmation.failure_alert.text" = "Die Wörter stimmen nicht überein";
 "backup.confirmation.done_button" = "Fertig";
-"backup.confirmation.understand" = "Ich  stimme zu, dass mein Wallet und meinen Token nur auf diesem Gerät verfügbar sind.";
+"backup.confirmation.secret_key" = "Ich stimme zu, dass ich allein Inhaber eines privaten 12-Wort Offlineschlüssels bin, der sicher auf meinem Telefon gespeichert wird und mir ermöglicht, Geld auf meinem Wallet zu steuern.";
 "backup.confirmation.delete_app_warn" = "Ich stimme zu, dass bei einer Verschiebung oder Entfernung dieser App, der Zugang zu meinem Walletkonto nur bei Verwendung den Offlineschlüsseln erfolgt werden muss.";
+"backup.confirmation.disclaimer" = "Ich stimme zu, dass Entwickler dieser App nicht für unbeabsichtigte Fehler oder Probleme verantwortlich gemacht werden können, die bei der Verwendung dieser App auftreten können.";
 
 // Balance
 
@@ -91,13 +93,15 @@
 // Transaction Info
 
 "tx_info.title" = "Transaktion";
+"tx_info.historical_rate" = "Historischer Rate";
 "tx_info.time" = "Zeit";
 "tx_info.status" = "Status";
 "tx_info.status.pending" = "Anstehend";
+"tx_info.status.confirmed" = "Bestätigt";
 "tx_info.from_hash" = "Von";
 "tx_info.to_hash" = "An";
-"tx_info.alert_close" = "Schließen";
-"tx_info.button_more" = "Mehr";
+"tx_info.button_verify" = "Prüfen";
+"tx_info.rate" = "Historischer Rate";
 
 // Full Info
 

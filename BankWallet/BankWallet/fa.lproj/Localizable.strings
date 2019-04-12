@@ -26,6 +26,7 @@
 "guest.subtitle" = "Decentralized app";
 "guest.create_wallet" = "کیف پول جدید";
 "guest.restore_wallet" = "بازگرداندن كيف پول";
+"guest.version" = "version %@";
 
 // Restore
 
@@ -49,8 +50,9 @@
 "backup.confirmation.description" = "حرف هاي رمز تات را وارد كنيد";
 "backup.confirmation.failure_alert.text" = "ارقام با هم شباهت ندارند";
 "backup.confirmation.done_button" = "انجام شد";
-"backup.confirmation.understand" = "من فهميدم كي پول كيف من و توكن هاي من همه شان حفظ و امانط است در اين دستگاه و نخير در ديگر سيرفير ها.";
-"backup.confirmation.delete_app_warn" = "I understand that if this app is moved to another device, deleted or malfunctions, my wallet can be only recovered with the Secret Key.";
+"backup.confirmation.secret_key" = "I understand that I am a sole owner of a private 12-word Secret Key which is securely stored on my phone and enables me to control funds on my wallet.";
+"backup.confirmation.delete_app_warn" = "I understand that if this app is ever moved, deleted or malfunctions, the access to my wallet can be only recovered with that Secret Key.";
+"backup.confirmation.disclaimer" = "I understand that developers of this app can not be held responsible for any unintended bugs or issues that may arise while using this app.";
 
 // Balance
 
@@ -91,13 +93,15 @@
 // Transaction Info
 
 "tx_info.title" = "تراکنش";
+"tx_info.historical_rate" = "Historical Rate";
 "tx_info.time" = "زمان";
 "tx_info.status" = "وضيعت";
 "tx_info.status.pending" = "در حالت انتظار";
+"tx_info.status.confirmed" = "Confirmed";
 "tx_info.from_hash" = "از";
 "tx_info.to_hash" = "به";
-"tx_info.alert_close" = "بستن";
-"tx_info.button_more" = "بیشتر";
+"tx_info.button_verify" = "Verify";
+"tx_info.rate" = "Historical Rate";
 
 // Full Info
 

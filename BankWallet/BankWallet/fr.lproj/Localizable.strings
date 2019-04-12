@@ -26,6 +26,7 @@
 "guest.subtitle" = "Decentralized app";
 "guest.create_wallet" = "Nouveau porte-monnaie";
 "guest.restore_wallet" = "Restaurer le porte-monnaie";
+"guest.version" = "Version %@";
 
 // Restore
 
@@ -49,8 +50,9 @@
 "backup.confirmation.description" = "Entrez les mots de votre clé secrète";
 "backup.confirmation.failure_alert.text" = "Les mots ne correspondent pas";
 "backup.confirmation.done_button" = "Fait";
-"backup.confirmation.understand" = "Je comprends que mon porte-monnaie et mes tokens sont en toute sécurité sur cet appareil uniquement et pas sur les autres appareils.";
-"backup.confirmation.delete_app_warn" = "Je comprends que si cette appli est déplacée vers un autre appareil ou supprimée, mon porte-monnaie ne peut être récupéré qu'avec la clé secrète.";
+"backup.confirmation.secret_key" = "Je comprends que je suis propriétaire d'une clé secrète privée de 12 mots, qui est stockée en toute sécurité sur mon téléphone portable et me permet de contrôler les fonds sur mon porte-monnaie.";
+"backup.confirmation.delete_app_warn" = "Je comprends que si cette appli ne fonction plus, est déplacée vers un autre appareil ou supprimée, mon porte-monnaie ne peut être récupéré qu'avec la clé secrète.";
+"backup.confirmation.disclaimer" = "Je comprends que les développeurs de cette application ne peuvent pas être responsables de tout bogue ou problème non désiré qui pourrait apparaître lors de l'utilisation de cette application.";
 
 // Balance
 
@@ -91,13 +93,15 @@
 // Transaction Info
 
 "tx_info.title" = "Transaction";
+"tx_info.historical_rate" = "Taux historique";
 "tx_info.time" = "Date";
 "tx_info.status" = "Statut";
 "tx_info.status.pending" = "En attente";
+"tx_info.status.confirmed" = "Confirmé";
 "tx_info.from_hash" = "De";
 "tx_info.to_hash" = "À";
-"tx_info.alert_close" = "Fermer";
-"tx_info.button_more" = "Plus";
+"tx_info.button_verify" = "Vérifiez";
+"tx_info.rate" = "Taux historique";
 
 // Full Info
 

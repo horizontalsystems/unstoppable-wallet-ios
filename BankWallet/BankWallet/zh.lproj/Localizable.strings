@@ -26,6 +26,7 @@
 "guest.subtitle" = "Decentralized App";
 "guest.create_wallet" = "新的钱包";
 "guest.restore_wallet" = "恢复钱包";
+"guest.version" = "version %@";
 
 // Restore
 
@@ -49,8 +50,9 @@
 "backup.confirmation.description" = "请输入你密钥中的词";
 "backup.confirmation.failure_alert.text" = "单词不匹配";
 "backup.confirmation.done_button" = "完成";
-"backup.confirmation.understand" = "我的钱包和代币仅在这个设备上，而不是在任何服务器上安全地保存着。这个重点我都理解。";
-"backup.confirmation.delete_app_warn" = "我理解, 如果此app被移动到另一个设备、删除或故障，密钥是恢复我钱包的唯一方法。";
+"backup.confirmation.secret_key" = "I understand that I am a sole owner of a private 12-word Secret Key which is securely stored on my phone and enables me to control funds on my wallet.";
+"backup.confirmation.delete_app_warn" = "I understand that if this app is ever moved, deleted or malfunctions, the access to my wallet can be only recovered with that Secret Key.";
+"backup.confirmation.disclaimer" = "I understand that developers of this app can not be held responsible for any unintended bugs or issues that may arise while using this app.";
 
 // Balance
 
@@ -91,13 +93,15 @@
 // Transaction Info
 
 "tx_info.title" = "交易";
+"tx_info.historical_rate" = "Historical Rate";
 "tx_info.time" = "时间";
 "tx_info.status" = "状态";
 "tx_info.status.pending" = "在过程中";
+"tx_info.status.confirmed" = "Confirmed";
 "tx_info.from_hash" = "发件人";
 "tx_info.to_hash" = "收件人";
-"tx_info.alert_close" = "关闭";
-"tx_info.button_more" = "更多";
+"tx_info.button_verify" = "Verify";
+"tx_info.rate" = "Historical Rate";
 
 // Full Info
 
