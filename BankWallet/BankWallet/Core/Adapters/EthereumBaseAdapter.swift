@@ -3,13 +3,12 @@ import HSEthereumKit
 import RxSwift
 
 class EthereumBaseAdapter {
-    private let transactionCompletionThreshold = 12
-
     let coin: Coin
 
     let ethereumKit: EthereumKit
     let decimal: Int
     private let addressParser: IAddressParser
+    let feeRateProvider: IFeeRateProvider
 
     let transactionRecordsSubject = PublishSubject<[TransactionRecord]>()
 
@@ -19,11 +18,12 @@ class EthereumBaseAdapter {
     let lastBlockHeightUpdatedSignal = Signal()
     let stateUpdatedSignal = Signal()
 
-    init(coin: Coin, ethereumKit: EthereumKit, decimal: Int, addressParser: IAddressParser) {
+    init(coin: Coin, ethereumKit: EthereumKit, decimal: Int, addressParser: IAddressParser, feeRateProvider: IFeeRateProvider) {
         self.coin = coin
         self.ethereumKit = ethereumKit
         self.decimal = decimal
         self.addressParser = addressParser
+        self.feeRateProvider = feeRateProvider
     }
 
     func balanceDecimal(balanceString: String?, decimal: Int) -> Decimal {
@@ -37,7 +37,7 @@ class EthereumBaseAdapter {
         return Single.just([])
     }
 
-    func sendSingle(to address: String, amount: String, feeRatePriority: FeeRatePriority) -> Single<Void> {
+    func sendSingle(to address: String, amount: String, gasPrice: Int) -> Single<Void> {
         return Single.just(())
     }
 
@@ -76,16 +76,6 @@ class EthereumBaseAdapter {
             return SendTransactionError.connection
         } else {
             return SendTransactionError.unknown
-        }
-    }
-
-    func kitPriority(from priority: FeeRatePriority) -> FeePriority {
-        switch priority {
-        case .lowest: return .lowest
-        case .low: return .low
-        case .medium: return .medium
-        case .high: return .high
-        case .highest: return .highest
         }
     }
 
@@ -144,7 +134,7 @@ extension EthereumBaseAdapter {
 
         let amountString = String(describing: roundedDecimal)
 
-        return sendSingle(to: address, amount: amountString, feeRatePriority: feeRatePriority)
+        return sendSingle(to: address, amount: amountString, gasPrice: feeRateProvider.ethereumGasPrice(for: feeRatePriority))
     }
 
 }

@@ -371,3 +371,9 @@ protocol ILockoutTimeFrameFactory {
 protocol IAddressParser {
     func parse(paymentAddress: String) -> AddressData
 }
+
+protocol IFeeRateProvider {
+    func ethereumGasPrice(for priority: FeeRatePriority) -> Int
+    func bitcoinFeeRate(for priority: FeeRatePriority) -> Int
+    func bitcoinCashFeeRate(for priority: FeeRatePriority) -> Int
+}

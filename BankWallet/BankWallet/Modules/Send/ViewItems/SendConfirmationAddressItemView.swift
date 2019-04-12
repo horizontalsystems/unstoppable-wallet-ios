@@ -5,7 +5,7 @@ import SnapKit
 
 class SendConfirmationAddressItemView: BaseActionItemView {
     let valueLabel = UILabel()
-    let avatarImageView = UIImageView(image: UIImage(named: "Transaction Info Avatar Placeholder"))
+    let avatarImageView = UIImageView(image: UIImage(named: "Transaction Info Avatar Placeholder")?.tinted(with: AddressButtonTheme.iconColor))
 
     override var item: SendConfirmationAddressItem? { return _item as? SendConfirmationAddressItem }
 
