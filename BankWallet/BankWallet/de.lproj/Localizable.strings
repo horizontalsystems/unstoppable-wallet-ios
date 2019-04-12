@@ -26,7 +26,7 @@
 "guest.subtitle" = "Decentralized App";
 "guest.create_wallet" = "Wallet Erstellen";
 "guest.restore_wallet" = "Wallet Wiederherstellen";
-"guest.version" = "version %@";
+"guest.version" = "Version %@";
 
 // Restore
 
@@ -50,9 +50,9 @@
 "backup.confirmation.description" = "Gib bitte die Wörter deines Offlineschlüssels ein";
 "backup.confirmation.failure_alert.text" = "Die Wörter stimmen nicht überein";
 "backup.confirmation.done_button" = "Fertig";
-"backup.confirmation.secret_key" = "I understand that I am a sole owner of a private 12-word Secret Key which is securely stored on my phone and enables me to control funds on my wallet.";
-"backup.confirmation.delete_app_warn" = "I understand that if this app is ever moved, deleted or malfunctions, the access to my wallet can be only recovered with that Secret Key.";
-"backup.confirmation.disclaimer" = "I understand that developers of this app can not be held responsible for any unintended bugs or issues that may arise while using this app.";
+"backup.confirmation.secret_key" = "Ich stimme zu, dass ich allein Inhaber eines privaten 12-Wort Offlineschlüssels bin, der sicher auf meinem Telefon gespeichert wird und mir ermöglicht, Geld auf meinem Wallet zu steuern.";
+"backup.confirmation.delete_app_warn" = "Ich stimme zu, dass bei einer Verschiebung oder Entfernung dieser App, der Zugang zu meinem Walletkonto nur bei Verwendung den Offlineschlüsseln erfolgt werden muss.";
+"backup.confirmation.disclaimer" = "Ich stimme zu, dass Entwickler dieser App nicht für unbeabsichtigte Fehler oder Probleme verantwortlich gemacht werden können, die bei der Verwendung dieser App auftreten können.";
 
 // Balance
 
@@ -93,15 +93,15 @@
 // Transaction Info
 
 "tx_info.title" = "Transaktion";
-"tx_info.historical_rate" = "Historical Rate";
+"tx_info.historical_rate" = "Historischer Rate";
 "tx_info.time" = "Zeit";
 "tx_info.status" = "Status";
 "tx_info.status.pending" = "Anstehend";
-"tx_info.status.confirmed" = "Confirmed";
+"tx_info.status.confirmed" = "Bestätigt";
 "tx_info.from_hash" = "Von";
 "tx_info.to_hash" = "An";
-"tx_info.button_verify" = "Verify";
-"tx_info.rate" = "Historical Rate";
+"tx_info.button_verify" = "Prüfen";
+"tx_info.rate" = "Historischer Rate";
 
 // Full Info
 
