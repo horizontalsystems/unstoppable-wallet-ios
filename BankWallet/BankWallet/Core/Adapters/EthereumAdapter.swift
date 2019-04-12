@@ -4,8 +4,8 @@ import RxSwift
 class EthereumAdapter: EthereumBaseAdapter {
     static let decimal = 18
 
-    init(coin: Coin, ethereumKit: EthereumKit, addressParser: IAddressParser) {
-        super.init(coin: coin, ethereumKit: ethereumKit, decimal: EthereumAdapter.decimal, addressParser: addressParser)
+    init(coin: Coin, ethereumKit: EthereumKit, addressParser: IAddressParser, feeRateProvider: IFeeRateProvider) {
+        super.init(coin: coin, ethereumKit: ethereumKit, decimal: EthereumAdapter.decimal, addressParser: addressParser, feeRateProvider: feeRateProvider)
 
         ethereumKit.delegate = self
     }
@@ -14,8 +14,8 @@ class EthereumAdapter: EthereumBaseAdapter {
         return ethereumKit.transactionsSingle(fromHash: hashFrom, limit: limit)
     }
 
-    override func sendSingle(to address: String, amount: String, feeRatePriority: FeeRatePriority) -> Single<Void> {
-        return ethereumKit.sendSingle(to: address, amount: amount, priority: kitPriority(from: feeRatePriority))
+    override func sendSingle(to address: String, amount: String, gasPrice: Int) -> Single<Void> {
+        return ethereumKit.sendSingle(to: address, amount: amount, gasPriceInWei: gasPrice)
                 .map { _ in ()}
                 .catchError { [weak self] error in
                     return Single.error(self?.createSendError(from: error) ?? error)
@@ -42,7 +42,7 @@ extension EthereumAdapter: IAdapter {
     }
 
     func fee(for value: Decimal, address: String?, feeRatePriority: FeeRatePriority) -> Decimal {
-        return ethereumKit.fee(priority: kitPriority(from: feeRatePriority)) / pow(10, EthereumAdapter.decimal)
+        return ethereumKit.fee(gasPriceInWei: feeRateProvider.ethereumGasPrice(for: feeRatePriority)) / pow(10, EthereumAdapter.decimal)
     }
 
     func validate(amount: Decimal, address: String?, feeRatePriority: FeeRatePriority) -> [SendStateError] {

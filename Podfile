@@ -7,7 +7,8 @@ project 'BankWallet/BankWallet'
 
 def appPods
   pod 'HSBitcoinKit', git: 'https://github.com/horizontalsystems/bitcoin-kit-ios/', branch: 'production'
-  pod 'HSEthereumKit', git: 'https://github.com/horizontalsystems/ethereum-kit-ios/'
+  pod 'HSEthereumKit', git: 'https://github.com/horizontalsystems/ethereum-kit-ios/', branch: 'production'
+  pod 'HSFeeRateKit', git: 'https://github.com/horizontalsystems/blockchain-fee-rate-kit-ios'
 
   pod 'Alamofire'
   pod 'AlamofireImage'

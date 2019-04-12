@@ -1,11 +1,11 @@
 PODS:
-  - Alamofire (4.8.1)
-  - AlamofireImage (3.5.0):
+  - Alamofire (4.8.2)
+  - AlamofireImage (3.5.2):
     - Alamofire (~> 4.8)
   - BigInt (3.1.0):
     - SipHash (~> 1.2)
   - Cuckoo (0.12.1)
-  - GRDB.swift (3.6.2)
+  - GRDB.swift (3.7.0)
   - GrouviActionSheet (1.3):
     - GrouviExtensions
     - SnapKit (~> 4.0.0)
@@ -27,14 +27,18 @@ PODS:
     - RxSwift (~> 4.0)
   - HSCryptoKit (1.3.0)
   - HSEthereumKit (0.5):
-    - Alamofire (~> 4.8.0)
-    - GRDB.swift (~> 3.6.2)
-    - HSCryptoKit (~> 1.3.0)
-    - HSHDWalletKit (~> 1.0.4)
+    - Alamofire (~> 4.0)
+    - GRDB.swift (~> 3.0)
+    - HSCryptoKit (~> 1.0)
+    - HSHDWalletKit (~> 1.0)
+    - RxSwift (~> 4.0)
+  - HSFeeRateKit (0.1):
+    - Alamofire (~> 4.0)
+    - GRDB.swift (~> 3.0)
     - RxSwift (~> 4.0)
   - HSHDWalletKit (1.0.4):
     - HSCryptoKit (~> 1.3.0)
-  - KeychainAccess (3.1.2)
+  - KeychainAccess (3.2.0)
   - ObjectMapper (3.4.2)
   - Realm (3.11.2):
     - Realm/Headers (= 3.11.2)
@@ -69,7 +73,8 @@ DEPENDENCIES:
   - GrouviExtensions
   - GrouviHUD (from `https://github.com/horizontalsystems/GrouviHUD`)
   - HSBitcoinKit (from `https://github.com/horizontalsystems/bitcoin-kit-ios/`, branch `production`)
-  - HSEthereumKit (from `https://github.com/horizontalsystems/ethereum-kit-ios/`)
+  - HSEthereumKit (from `https://github.com/horizontalsystems/ethereum-kit-ios/`, branch `production`)
+  - HSFeeRateKit (from `https://github.com/horizontalsystems/blockchain-fee-rate-kit-ios`)
   - KeychainAccess
   - ObjectMapper
   - RxCocoa
@@ -109,7 +114,10 @@ EXTERNAL SOURCES:
     :branch: production
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios/
   HSEthereumKit:
+    :branch: production
     :git: https://github.com/horizontalsystems/ethereum-kit-ios/
+  HSFeeRateKit:
+    :git: https://github.com/horizontalsystems/blockchain-fee-rate-kit-ios
 
 CHECKOUT OPTIONS:
   GrouviActionSheet:
@@ -119,26 +127,30 @@ CHECKOUT OPTIONS:
     :commit: af316da9507c6039e5b9cc644d2c2eeea913f3bb
     :git: https://github.com/horizontalsystems/GrouviHUD
   HSBitcoinKit:
-    :commit: 15ca31b146b132427beab1dbf6a27f806fe095c8
+    :commit: 7273f423a5badb44f5e6550327021961027e14b8
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios/
   HSEthereumKit:
-    :commit: dc16f81aa5908124f04df354db2a6b0bebf70619
+    :commit: ae4cb1455ee4fb182874b323fd52ec5ba3b55820
     :git: https://github.com/horizontalsystems/ethereum-kit-ios/
+  HSFeeRateKit:
+    :commit: 397908223abc3ff7bd263bbc782bd8feea652b44
+    :git: https://github.com/horizontalsystems/blockchain-fee-rate-kit-ios
 
 SPEC CHECKSUMS:
-  Alamofire: 16ce2c353fb72865124ddae8a57c5942388f4f11
-  AlamofireImage: 1aea346f4dda2f6c67622fa5a89fcbb80d79cc16
+  Alamofire: ae5c501addb7afdbb13687d7f2f722c78734c2d3
+  AlamofireImage: 63cfe3baf1370be6c498149687cf6db3e3b00999
   BigInt: 76b5dfdfa3e2e478d4ffdf161aeede5502e2742f
   Cuckoo: 2f10364798baa4b0d4aacabfa475249cf29977bc
-  GRDB.swift: e10787d857b6b8135354b9e08fb23b4bb8e2fab7
+  GRDB.swift: 51cc9e57ae8ff7083a9d674c97925aa1de06aac5
   GrouviActionSheet: dd73bd76eaca3d5bb54fa51960f293d4a176e68c
   GrouviExtensions: 025fe6dbdf9df3015a5a2eddd69cd150b451d578
   GrouviHUD: 8ec58da8533d41d78a79766d1108246398d87692
   HSBitcoinKit: 9948f5bddf4f99d17d837247ff4fe23ee755d709
   HSCryptoKit: 564a3888691658cba58aa60f7d037654fd3c6fb0
-  HSEthereumKit: 597be3f9ee83dcc8a81724658d69c2e1299f3252
+  HSEthereumKit: b841eb799d7599ba2619019cddc69ccff0c6a0cc
+  HSFeeRateKit: 8100d2aa366bdb6e0b0f7a9edd4b2943d00bebb4
   HSHDWalletKit: e09162c2bb121c9db9b0cf203bd93b40965aad74
-  KeychainAccess: b3816fddcf28aa29d94b10ec305cd52be14c472b
+  KeychainAccess: 3b1bf8a77eb4c6ea1ce9404c292e48f948954c6b
   ObjectMapper: 0d4402610f4e468903ae64629eec4784531e5c51
   Realm: 864477d028db77f7c5a0cba64a4892ad53db128a
   RealmSwift: 12b8262fc08020b47de4fd88eb3d5c9425b34ec7
@@ -150,6 +162,6 @@ SPEC CHECKSUMS:
   SipHash: fad90a4683e420c52ef28063063dbbce248ea6d4
   SnapKit: 0de968a9fec17499afa29683b05d0c775b6d1c29
 
-PODFILE CHECKSUM: 61003a79c7b834ab1789f7ab100d6496bef99bba
+PODFILE CHECKSUM: 8c380ec5dcd9dfb468e3f4e670938181cf9447fd
 
 COCOAPODS: 1.5.3

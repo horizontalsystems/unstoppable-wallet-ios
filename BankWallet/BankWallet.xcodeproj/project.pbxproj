@@ -324,6 +324,7 @@
 		1A5640387C3C38FC17FCBF47 /* SecuritySettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5647AD931E3B90C974A6CB /* SecuritySettingsViewController.swift */; };
 		1A56404A4E6577B10D66660F /* LanguageSettingsModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5642A5A1B21FE92139766E /* LanguageSettingsModule.swift */; };
 		1A56404FCD341D5A67C30340 /* Production.template.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 1A564370A637B30D34776F2A /* Production.template.xcconfig */; };
+		1A5640713F99BD66FCC826AD /* FeeRateProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564908ABD8BC8BB8713C2E /* FeeRateProvider.swift */; };
 		1A564076F4C5BD7656156603 /* ManageCoinsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56471ECC51CB5E5572DBD8 /* ManageCoinsRouter.swift */; };
 		1A56407B3608988E913C7E1B /* MainSettingsInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56426438831456EF79DC47 /* MainSettingsInteractorTests.swift */; };
 		1A5640845DFE26B0881C97B9 /* SendPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5647EE51941D84607A9493 /* SendPresenter.swift */; };
@@ -332,6 +333,7 @@
 		1A5640B712A4253399F52A3B /* BalanceTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564243436E5185205D0359 /* BalanceTheme.swift */; };
 		1A5640E91AA1D79E1735F5FC /* TransactionStatusItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5646C9024F054AE8115A30 /* TransactionStatusItem.swift */; };
 		1A5640F923BB8EB7F5A75593 /* Production.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 1A5648F3AB070B0ACB98C7EE /* Production.xcconfig */; };
+		1A5640FFF39774DC371F61E7 /* BitcoinCashAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564BF724C69C237E309C07 /* BitcoinCashAdapter.swift */; };
 		1A5641061673702B10D858BF /* TransactionInfoTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5645F926B14580B1644164 /* TransactionInfoTheme.swift */; };
 		1A56410880DEEF4B91B3413A /* UptimeProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564F697ACF24DA968884EA /* UptimeProvider.swift */; };
 		1A56411CFC8D9190B15323A4 /* ConfirmationTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564E77730537D108E31276 /* ConfirmationTheme.swift */; };
@@ -349,6 +351,7 @@
 		1A5642019E9D4A25C650F453 /* UnlockPinInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564083CF8DF7A89314820D /* UnlockPinInteractorTests.swift */; };
 		1A564203C389601DBDF8CDFB /* GuestPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56465843CD9981F548A058 /* GuestPresenterTests.swift */; };
 		1A56421861068166E044D0A9 /* BalanceEditCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564DDACAD5CFB092AE6496 /* BalanceEditCell.swift */; };
+		1A56422B0A34FCAE30798CE0 /* FeeRateProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564908ABD8BC8BB8713C2E /* FeeRateProvider.swift */; };
 		1A56422B4DA1DE0ACD09C4BC /* TransactionInfoModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5643996D67B74F800DFFE4 /* TransactionInfoModule.swift */; };
 		1A5642456ECAEF77788380C5 /* Production.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 1A5648F3AB070B0ACB98C7EE /* Production.xcconfig */; };
 		1A564246FE1459BD6985604B /* ManageCoinsPresenterState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56448A83F040A35FCAE6A7 /* ManageCoinsPresenterState.swift */; };
@@ -384,6 +387,7 @@
 		1A5644221B70078D2AE40AF4 /* UnlockPinRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5644EDACA3F1843C8194F7 /* UnlockPinRouter.swift */; };
 		1A5644359FCA67F99CE339CD /* LockManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5648F910A01D14653C8B21 /* LockManager.swift */; };
 		1A56443A54A6035FC2B7F485 /* SendButtonItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564CFA352D219E2D05D09F /* SendButtonItemView.swift */; };
+		1A56444A986EF10B522AA228 /* FeeRateProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564908ABD8BC8BB8713C2E /* FeeRateProvider.swift */; };
 		1A56444F92E79514DB155658 /* DepositRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564EDCEACE83D95F6AE528 /* DepositRouter.swift */; };
 		1A564462CB4BF369442CE381 /* TransactionOpenFullInfoItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564181733CBC44EECFBBF3 /* TransactionOpenFullInfoItem.swift */; };
 		1A564467771724BAB0A3CD8A /* PinManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5645B289EFBDB3EAB27E3A /* PinManager.swift */; };
@@ -424,6 +428,7 @@
 		1A56472F97825AB4D2686E41 /* Production.template.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 1A564370A637B30D34776F2A /* Production.template.xcconfig */; };
 		1A5647415054A078EF056315 /* UnlockPinPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564FA5E8DDE76BF1257727 /* UnlockPinPresenterTests.swift */; };
 		1A5647481AAB5BF5A86F9829 /* LockoutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564C329BD2549B51F93155 /* LockoutView.swift */; };
+		1A56475828E9121D78E02D67 /* BitcoinCashAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564BF724C69C237E309C07 /* BitcoinCashAdapter.swift */; };
 		1A5647659F46A0512EE6A692 /* LockRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564A6CCF1B907F25255D2E /* LockRouter.swift */; };
 		1A5647709A2B63D16BF5131B /* ManageCoinsPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564F5CDA92DD8EC7EC9B0D /* ManageCoinsPresenterTests.swift */; };
 		1A56477275C643C23A2281E7 /* MainSettingsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5645D25F2DB148CD0C16B5 /* MainSettingsRouter.swift */; };
@@ -451,9 +456,11 @@
 		1A564939A8DCE6124D2141D3 /* SettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564F5FA00D064D9F3F0AF7 /* SettingsCell.swift */; };
 		1A56493EF89D20094D2D0FF3 /* ManageCoinsPresenterState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56448A83F040A35FCAE6A7 /* ManageCoinsPresenterState.swift */; };
 		1A564947E6731A05DF6C19F4 /* FullTransactionInfoTextCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56424F4DB6D8384D8F2489 /* FullTransactionInfoTextCell.swift */; };
+		1A564975B127F4EA2FCF61EB /* BitcoinBaseAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56450DA6DF97C9E1FFE987 /* BitcoinBaseAdapter.swift */; };
 		1A56497B4905D999F96E0461 /* SecuritySettingsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5641B7D1079995F147F7D2 /* SecuritySettingsRouter.swift */; };
 		1A56498EE4AF6DADD0A5939A /* TransactionFromToHashItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564E1F405D2D57FBC9E799 /* TransactionFromToHashItemView.swift */; };
 		1A56499530070968BF68AA2D /* BiometricManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564901BE8CB514936E47AF /* BiometricManager.swift */; };
+		1A56499555CB26F0D24B4F06 /* BitcoinBaseAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56450DA6DF97C9E1FFE987 /* BitcoinBaseAdapter.swift */; };
 		1A5649A1763E1ADB6572ECBC /* UptimeProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564F697ACF24DA968884EA /* UptimeProvider.swift */; };
 		1A5649A92BA5A92EB2791B7F /* SettingsInfoFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56487BA5FFC1BC45D6F25C /* SettingsInfoFooter.swift */; };
 		1A5649B033524339B93F838E /* Development.template.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 1A5641679DC88BE355F0F3A0 /* Development.template.xcconfig */; };
@@ -497,6 +504,7 @@
 		1A564BE00FB2C76EAA44A2E3 /* SettingsRightImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56499AAEEED9EA3CE9E0A7 /* SettingsRightImageCell.swift */; };
 		1A564BF5CEF2800EF05EAAB0 /* BalancePresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5646AB24E23765AD12C83E /* BalancePresenterTests.swift */; };
 		1A564C0371E9F37679565B67 /* WalletViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564DA86E84425C160C76C1 /* WalletViewController.swift */; };
+		1A564C11B7785DCEA2472065 /* BitcoinCashAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564BF724C69C237E309C07 /* BitcoinCashAdapter.swift */; };
 		1A564C1405D8C21185B0D4C1 /* TransactionsCurrencyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5649C888E12C1A0B70EFA8 /* TransactionsCurrencyCell.swift */; };
 		1A564C182AB0AFD47CA76EA5 /* Development.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 1A56433D5D39CCA995F97777 /* Development.xcconfig */; };
 		1A564C31EDF7C4ED60F1A3E5 /* FullTransactionHashHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5648F5499700A46A1515B6 /* FullTransactionHashHeaderView.swift */; };
@@ -510,6 +518,7 @@
 		1A564CFF150F67077C950566 /* MainSettingsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5640528EFD15137E218EA3 /* MainSettingsPresenter.swift */; };
 		1A564D08FE960CC2551A2D7F /* TransactionStatusItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564BD2D59794AD187F28ED /* TransactionStatusItemView.swift */; };
 		1A564D21D1301F442EC55C2D /* LaunchModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56408C8281C80FD365E5BE /* LaunchModule.swift */; };
+		1A564D2917CF5C38C84C031B /* BitcoinBaseAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56450DA6DF97C9E1FFE987 /* BitcoinBaseAdapter.swift */; };
 		1A564D29C715EE06C30C8B2B /* LaunchInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56458C7C29504755A09E00 /* LaunchInteractor.swift */; };
 		1A564D45DD956D909C7B6C16 /* OneTimeTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56468BE2370BCAA8BDA2FC /* OneTimeTimer.swift */; };
 		1A564D5F202F7ED3AA797E20 /* Production.template.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 1A564370A637B30D34776F2A /* Production.template.xcconfig */; };
@@ -1326,6 +1335,7 @@
 		1A5644C4CCD9EBD71BD69D40 /* ManageCoinsInteractorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManageCoinsInteractorTests.swift; sourceTree = "<group>"; };
 		1A5644D3B094D4148F99F8A5 /* LanguageSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LanguageSettingsViewController.swift; sourceTree = "<group>"; };
 		1A5644EDACA3F1843C8194F7 /* UnlockPinRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnlockPinRouter.swift; sourceTree = "<group>"; };
+		1A56450DA6DF97C9E1FFE987 /* BitcoinBaseAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BitcoinBaseAdapter.swift; sourceTree = "<group>"; };
 		1A56452493943328835585AC /* LanguageSettingsPresenterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LanguageSettingsPresenterTests.swift; sourceTree = "<group>"; };
 		1A5645371B2FC499500DCA93 /* DepositPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DepositPresenter.swift; sourceTree = "<group>"; };
 		1A56453E2F6ED44D46D84C49 /* PagingDotsItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PagingDotsItemView.swift; sourceTree = "<group>"; };
@@ -1375,6 +1385,7 @@
 		1A5648F5499700A46A1515B6 /* FullTransactionHashHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FullTransactionHashHeaderView.swift; sourceTree = "<group>"; };
 		1A5648F910A01D14653C8B21 /* LockManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LockManager.swift; sourceTree = "<group>"; };
 		1A564901BE8CB514936E47AF /* BiometricManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BiometricManager.swift; sourceTree = "<group>"; };
+		1A564908ABD8BC8BB8713C2E /* FeeRateProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeeRateProvider.swift; sourceTree = "<group>"; };
 		1A56490AEC0BDFCA98275B49 /* PinModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinModule.swift; sourceTree = "<group>"; };
 		1A5649276CA421D7B080BE56 /* AddressParserTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressParserTests.swift; sourceTree = "<group>"; };
 		1A564939814A9D9F47D41EEB /* InputFieldTheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputFieldTheme.swift; sourceTree = "<group>"; };
@@ -1400,6 +1411,7 @@
 		1A564B746C8A6451D81B27D4 /* BalanceCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BalanceCell.swift; sourceTree = "<group>"; };
 		1A564BB88BF3ED779F8C21DC /* BlurManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlurManager.swift; sourceTree = "<group>"; };
 		1A564BD2D59794AD187F28ED /* TransactionStatusItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionStatusItemView.swift; sourceTree = "<group>"; };
+		1A564BF724C69C237E309C07 /* BitcoinCashAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BitcoinCashAdapter.swift; sourceTree = "<group>"; };
 		1A564C08421D093D6E445D3A /* EditPinRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditPinRouter.swift; sourceTree = "<group>"; };
 		1A564C27C6CDAE6E692C4A14 /* TransactionTitleItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionTitleItem.swift; sourceTree = "<group>"; };
 		1A564C329BD2549B51F93155 /* LockoutView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LockoutView.swift; sourceTree = "<group>"; };
@@ -1770,6 +1782,7 @@
 				58AAA7F8DA30F2F95B9DC758 /* FullTransactionDataProviderManager.swift */,
 				58AAA3CCBFC02D7F6438DE3E /* PingManager.swift */,
 				58AAAC5B00009B199A687EF3 /* EthereumKitManager.swift */,
+				1A564908ABD8BC8BB8713C2E /* FeeRateProvider.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -2016,6 +2029,8 @@
 				11B352D314A298B6B832F309 /* EthereumAdapter.swift */,
 				58AAA312DD0792117182B64E /* Erc20Adapter.swift */,
 				58AAA656A81B2C12F618FB44 /* EthereumBaseAdapter.swift */,
+				1A56450DA6DF97C9E1FFE987 /* BitcoinBaseAdapter.swift */,
+				1A564BF724C69C237E309C07 /* BitcoinCashAdapter.swift */,
 			);
 			path = Adapters;
 			sourceTree = "<group>";
@@ -2892,6 +2907,7 @@
 				"${BUILT_PRODUCTS_DIR}/HSBitcoinKit/HSBitcoinKit.framework",
 				"${BUILT_PRODUCTS_DIR}/HSCryptoKit/HSCryptoKit.framework",
 				"${BUILT_PRODUCTS_DIR}/HSEthereumKit/HSEthereumKit.framework",
+				"${BUILT_PRODUCTS_DIR}/HSFeeRateKit/HSFeeRateKit.framework",
 				"${BUILT_PRODUCTS_DIR}/HSHDWalletKit/HSHDWalletKit.framework",
 				"${BUILT_PRODUCTS_DIR}/KeychainAccess/KeychainAccess.framework",
 				"${BUILT_PRODUCTS_DIR}/ObjectMapper/ObjectMapper.framework",
@@ -2919,6 +2935,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/HSBitcoinKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/HSCryptoKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/HSEthereumKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/HSFeeRateKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/HSHDWalletKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/KeychainAccess.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ObjectMapper.framework",
@@ -2956,6 +2973,7 @@
 				"${BUILT_PRODUCTS_DIR}/HSBitcoinKit/HSBitcoinKit.framework",
 				"${BUILT_PRODUCTS_DIR}/HSCryptoKit/HSCryptoKit.framework",
 				"${BUILT_PRODUCTS_DIR}/HSEthereumKit/HSEthereumKit.framework",
+				"${BUILT_PRODUCTS_DIR}/HSFeeRateKit/HSFeeRateKit.framework",
 				"${BUILT_PRODUCTS_DIR}/HSHDWalletKit/HSHDWalletKit.framework",
 				"${BUILT_PRODUCTS_DIR}/KeychainAccess/KeychainAccess.framework",
 				"${BUILT_PRODUCTS_DIR}/ObjectMapper/ObjectMapper.framework",
@@ -2983,6 +3001,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/HSBitcoinKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/HSCryptoKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/HSEthereumKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/HSFeeRateKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/HSHDWalletKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/KeychainAccess.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ObjectMapper.framework",
@@ -3042,6 +3061,7 @@
 				"${BUILT_PRODUCTS_DIR}/HSBitcoinKit/HSBitcoinKit.framework",
 				"${BUILT_PRODUCTS_DIR}/HSCryptoKit/HSCryptoKit.framework",
 				"${BUILT_PRODUCTS_DIR}/HSEthereumKit/HSEthereumKit.framework",
+				"${BUILT_PRODUCTS_DIR}/HSFeeRateKit/HSFeeRateKit.framework",
 				"${BUILT_PRODUCTS_DIR}/HSHDWalletKit/HSHDWalletKit.framework",
 				"${BUILT_PRODUCTS_DIR}/KeychainAccess/KeychainAccess.framework",
 				"${BUILT_PRODUCTS_DIR}/ObjectMapper/ObjectMapper.framework",
@@ -3069,6 +3089,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/HSBitcoinKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/HSCryptoKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/HSEthereumKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/HSFeeRateKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/HSHDWalletKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/KeychainAccess.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ObjectMapper.framework",
@@ -3547,6 +3568,9 @@
 				11B35F480494F2B42440272B /* Logger.swift in Sources */,
 				11B3518C64517587F75FE8E9 /* RateApiProvider.swift in Sources */,
 				11B35DFC56658DA0F097815C /* JsonApiProvider.swift in Sources */,
+				1A56444A986EF10B522AA228 /* FeeRateProvider.swift in Sources */,
+				1A56499555CB26F0D24B4F06 /* BitcoinBaseAdapter.swift in Sources */,
+				1A5640FFF39774DC371F61E7 /* BitcoinCashAdapter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3936,6 +3960,9 @@
 				11B35818DFE46CB42B3B6F59 /* Logger.swift in Sources */,
 				11B3582F7FC7FA7F7626CBE3 /* RateApiProvider.swift in Sources */,
 				11B3572CC263652049B64F92 /* JsonApiProvider.swift in Sources */,
+				1A56422B0A34FCAE30798CE0 /* FeeRateProvider.swift in Sources */,
+				1A564975B127F4EA2FCF61EB /* BitcoinBaseAdapter.swift in Sources */,
+				1A56475828E9121D78E02D67 /* BitcoinCashAdapter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4275,6 +4302,9 @@
 				11B350555CD222085996B450 /* Logger.swift in Sources */,
 				11B3558BE4EB06B14132439E /* RateApiProvider.swift in Sources */,
 				11B352C17E4BB374BF10327A /* JsonApiProvider.swift in Sources */,
+				1A5640713F99BD66FCC826AD /* FeeRateProvider.swift in Sources */,
+				1A564D2917CF5C38C84C031B /* BitcoinBaseAdapter.swift in Sources */,
+				1A564C11B7785DCEA2472065 /* BitcoinCashAdapter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
