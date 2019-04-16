@@ -1,5 +1,5 @@
 import UIKit
-import SectionsTableViewKit
+import SectionsTableView
 
 class DataProviderSettingsViewController: UIViewController, SectionsDataSource {
     private let delegate: IDataProviderSettingsViewDelegate

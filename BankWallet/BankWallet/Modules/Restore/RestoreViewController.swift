@@ -80,23 +80,27 @@ class RestoreViewController: WalletViewController {
     }
 
     private func subscribeKeyboard() {
-        keyboardFrameDisposable = NotificationCenter.default.rx.notification(NSNotification.Name.UIKeyboardWillChangeFrame).subscribeDisposableAsync(disposeBag, onNext: { [weak self] notification in
-            self?.onKeyboardFrameChange(notification)
-        })
+        keyboardFrameDisposable = NotificationCenter.default.rx.notification(UIResponder.keyboardWillChangeFrameNotification)
+            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
+            .observeOn(MainScheduler.instance)
+            .subscribe(onNext: { [weak self] notification in
+                self?.onKeyboardFrameChange(notification)
+            })
+        keyboardFrameDisposable?.disposed(by: disposeBag)
     }
 
     func onKeyboardFrameChange(_ notification: Notification) {
-        let screenKeyboardFrame = (notification.userInfo![UIKeyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
+        let screenKeyboardFrame = (notification.userInfo![UIResponder.keyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
         let height = view.height + view.y
         let keyboardHeight = height - screenKeyboardFrame.origin.y
 
-        let duration = (notification.userInfo![UIKeyboardAnimationDurationUserInfoKey] as! NSNumber).doubleValue
-        let curve = (notification.userInfo![UIKeyboardAnimationCurveUserInfoKey] as! NSNumber).uintValue
+        let duration = (notification.userInfo![UIResponder.keyboardAnimationDurationUserInfoKey] as! NSNumber).doubleValue
+        let curve = (notification.userInfo![UIResponder.keyboardAnimationCurveUserInfoKey] as! NSNumber).uintValue
 
-        updateUI(keyboardHeight: keyboardHeight, duration: duration, options: UIViewAnimationOptions(rawValue: curve << 16))
+        updateUI(keyboardHeight: keyboardHeight, duration: duration, options: UIView.AnimationOptions(rawValue: curve << 16))
     }
 
-    func updateUI(keyboardHeight: CGFloat, duration: TimeInterval, options: UIViewAnimationOptions, completion: (() -> ())? = nil) {
+    func updateUI(keyboardHeight: CGFloat, duration: TimeInterval, options: UIView.AnimationOptions, completion: (() -> ())? = nil) {
         var insets: UIEdgeInsets = collectionView.contentInset
         insets.bottom = keyboardHeight + RestoreTheme.listBottomMargin
         collectionView.contentInset = insets

@@ -1,5 +1,5 @@
 import UIKit
-import GrouviActionSheet
+import ActionSheet
 
 class SendViewController: ActionSheetController {
     private let delegate: ISendViewDelegate

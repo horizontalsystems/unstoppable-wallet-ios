@@ -62,20 +62,20 @@ class PinView: UIView {
         let style = NSMutableParagraphStyle()
         style.lineSpacing = 2.2
         style.alignment = .center
-        let descriptionAttributes: [NSAttributedStringKey: Any] = [
-            NSAttributedStringKey.foregroundColor: PinTheme.infoColor,
-            NSAttributedStringKey.font: PinTheme.infoFontRegular,
-            NSAttributedStringKey.paragraphStyle: style,
-            NSAttributedStringKey.kern: -0.1
+        let descriptionAttributes: [NSAttributedString.Key: Any] = [
+            NSAttributedString.Key.foregroundColor: PinTheme.infoColor,
+            NSAttributedString.Key.font: PinTheme.infoFontRegular,
+            NSAttributedString.Key.paragraphStyle: style,
+            NSAttributedString.Key.kern: -0.1
         ]
         let description = NSMutableAttributedString(string: page.description?.localized ?? "", attributes: descriptionAttributes)
         descriptionLabel.attributedText = description
 
-        let errorAttributes: [NSAttributedStringKey: Any] = [
-            NSAttributedStringKey.foregroundColor: PinTheme.errorColor,
-            NSAttributedStringKey.font: PinTheme.infoFontRegular,
-            NSAttributedStringKey.paragraphStyle: style,
-            NSAttributedStringKey.kern: -0.1
+        let errorAttributes: [NSAttributedString.Key: Any] = [
+            NSAttributedString.Key.foregroundColor: PinTheme.errorColor,
+            NSAttributedString.Key.font: PinTheme.infoFontRegular,
+            NSAttributedString.Key.paragraphStyle: style,
+            NSAttributedString.Key.kern: -0.1
         ]
         let error = NSMutableAttributedString(string: page.error?.localized ?? "", attributes: errorAttributes)
         errorLabel.attributedText = error

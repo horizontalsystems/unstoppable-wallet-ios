@@ -1,4 +1,4 @@
-platform :ios, '11.0'
+platform :ios, '11'
 use_frameworks!
 
 inhibit_all_warnings!
@@ -18,10 +18,10 @@ def appPods
 
   pod 'BigInt'
 
-  pod 'GrouviExtensions'
-  pod 'GrouviActionSheet', git: 'https://github.com/horizontalsystems/GrouviActoinSheet'
-  pod 'GrouviHUD', git: 'https://github.com/horizontalsystems/GrouviHUD'
-  pod 'SectionsTableViewKit'
+  pod 'UIExtensions.swift', git: 'https://github.com/horizontalsystems/gui-kit'
+  pod 'ActionSheet.swift', git: 'https://github.com/horizontalsystems/gui-kit'
+  pod 'HUD.swift', git: 'https://github.com/horizontalsystems/gui-kit'
+  pod 'SectionsTableView.swift', git: 'https://github.com/horizontalsystems/gui-kit'
 
   pod 'KeychainAccess'
 

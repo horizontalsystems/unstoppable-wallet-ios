@@ -1,5 +1,5 @@
 import Foundation
-import GrouviActionSheet
+import ActionSheet
 
 class TransactionAmountItem: BaseActionItem {
 

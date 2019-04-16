@@ -1,4 +1,4 @@
-import GrouviActionSheet
+import ActionSheet
 
 class TransactionOpenFullInfoItem: BaseButtonItem {
     override var backgroundStyle: RespondButton.Style { return [RespondButton.State.active: TransactionInfoTheme.openFullInfoButtonBackground, RespondButton.State.selected: TransactionInfoTheme.openFullInfoButtonBackground] }

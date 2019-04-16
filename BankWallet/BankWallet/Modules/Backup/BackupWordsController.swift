@@ -53,8 +53,8 @@ class BackupWordsController: WalletViewController {
 
         let joinedWords = words.enumerated().map { "\($0 + 1). \($1)" }.joined(separator: "\n")
         let attributedText = NSMutableAttributedString(string: joinedWords)
-        attributedText.addAttribute(NSAttributedStringKey.font, value: UIFont.cryptoTitle4, range: NSMakeRange(0, joinedWords.count))
-        attributedText.addAttribute(NSAttributedStringKey.foregroundColor, value: UIColor.crypto_White_Black, range: NSMakeRange(0, joinedWords.count))
+        attributedText.addAttribute(NSAttributedString.Key.font, value: UIFont.cryptoTitle4, range: NSMakeRange(0, joinedWords.count))
+        attributedText.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.crypto_White_Black, range: NSMakeRange(0, joinedWords.count))
         wordsLabel.attributedText = attributedText
 
     }

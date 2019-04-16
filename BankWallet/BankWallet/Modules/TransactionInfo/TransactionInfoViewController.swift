@@ -1,5 +1,5 @@
 import UIKit
-import GrouviActionSheet
+import ActionSheet
 
 class TransactionInfoViewController: ActionSheetController {
     private let delegate: ITransactionInfoViewDelegate

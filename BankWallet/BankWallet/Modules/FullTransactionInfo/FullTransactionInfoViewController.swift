@@ -1,7 +1,7 @@
 import UIKit
-import SectionsTableViewKit
-import GrouviExtensions
-import GrouviHUD
+import SectionsTableView
+import UIExtensions
+import HUD
 import SnapKit
 import RxSwift
 

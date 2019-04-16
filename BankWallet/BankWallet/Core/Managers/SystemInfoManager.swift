@@ -23,7 +23,7 @@ class SystemInfoManager: ISystemInfoManager {
             switch localAuthenticationContext.biometryType {
             case .faceID: return .faceId
             case .touchID: return .touchId
-            case .none: return .none
+            default: return .none
             }
         }
 

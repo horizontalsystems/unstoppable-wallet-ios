@@ -1,6 +1,6 @@
 import UIKit
-import GrouviExtensions
-import SectionsTableViewKit
+import UIExtensions
+import SectionsTableView
 import RxSwift
 
 class SecuritySettingsViewController: WalletViewController, SectionsDataSource {

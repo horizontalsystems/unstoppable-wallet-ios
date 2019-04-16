@@ -1,5 +1,5 @@
 import UIKit
-import GrouviActionSheet
+import ActionSheet
 
 class BaseButtonItem: BaseActionItem {
     var backgroundStyle: RespondButton.Style { fatalError("not implemented") }

@@ -1,6 +1,6 @@
 import UIKit
-import GrouviExtensions
-import GrouviHUD
+import UIExtensions
+import HUD
 import RxSwift
 import RxCocoa
 
@@ -27,9 +27,13 @@ class KeyboardObservingViewController: UIViewController {
     private func subscribeKeyboard() {
         updateUI(keyboardHeight: HUDKeyboardHelper.shared.visibleKeyboardHeight)
 
-        keyboardFrameDisposable = NotificationCenter.default.rx.notification(NSNotification.Name.UIKeyboardWillChangeFrame).subscribeDisposableAsync(disposeBag, onNext: { [weak self] notification in
-            self?.onKeyboardFrameChange(notification)
-        })
+        keyboardFrameDisposable = NotificationCenter.default.rx.notification(UIResponder.keyboardWillChangeFrameNotification)
+            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
+            .observeOn(MainScheduler.instance)
+            .subscribe(onNext: { [weak self] notification in
+                self?.onKeyboardFrameChange(notification)
+            })
+        keyboardFrameDisposable?.disposed(by: disposeBag)
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -47,17 +51,17 @@ class KeyboardObservingViewController: UIViewController {
 //Handle keyboard auto open/close
 
     func onKeyboardFrameChange(_ notification: Notification) {
-        let screenKeyboardFrame = (notification.userInfo![UIKeyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
+        let screenKeyboardFrame = (notification.userInfo![UIResponder.keyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
         let height = view.height + view.y
         let keyboardHeight = height - screenKeyboardFrame.origin.y
 
-        let duration = (notification.userInfo![UIKeyboardAnimationDurationUserInfoKey] as! NSNumber).doubleValue
-        let curve = (notification.userInfo![UIKeyboardAnimationCurveUserInfoKey] as! NSNumber).uintValue
+        let duration = (notification.userInfo![UIResponder.keyboardAnimationDurationUserInfoKey] as! NSNumber).doubleValue
+        let curve = (notification.userInfo![UIResponder.keyboardAnimationCurveUserInfoKey] as! NSNumber).uintValue
 
-        updateUI(keyboardHeight: keyboardHeight, duration: duration, options: UIViewAnimationOptions(rawValue: curve << 16))
+        updateUI(keyboardHeight: keyboardHeight, duration: duration, options: UIView.AnimationOptions(rawValue: curve << 16))
     }
 
-    func updateUI(keyboardHeight: CGFloat, duration: TimeInterval = 0.2, options: UIViewAnimationOptions = .curveLinear, completion: (() -> ())? = nil) {
+    func updateUI(keyboardHeight: CGFloat, duration: TimeInterval = 0.2, options: UIView.AnimationOptions = .curveLinear, completion: (() -> ())? = nil) {
     }
 
 }

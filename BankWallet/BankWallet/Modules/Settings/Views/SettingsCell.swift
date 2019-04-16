@@ -1,5 +1,5 @@
 import UIKit
-import GrouviExtensions
+import UIExtensions
 import SnapKit
 
 class SettingsCell: UITableViewCell {
@@ -10,7 +10,7 @@ class SettingsCell: UITableViewCell {
     var selectView = UIView()
     let bottomSeparatorView = UIView()
 
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         backgroundColor = SettingsTheme.cellBackground
         contentView.backgroundColor = .clear

@@ -10,7 +10,7 @@ extension String {
         return (self as NSString).boundingRect(
                 with: CGSize(width: containerWidth, height: .greatestFiniteMagnitude),
                 options: [.usesFontLeading, .usesLineFragmentOrigin],
-                attributes: [NSAttributedStringKey.font: font],
+                attributes: [NSAttributedString.Key.font: font],
                 context: nil).size
     }
 

@@ -1,5 +1,5 @@
 import UIKit
-import GrouviExtensions
+import UIExtensions
 import SnapKit
 
 class DoubleLineCell: UITableViewCell {
@@ -8,7 +8,7 @@ class DoubleLineCell: UITableViewCell {
     var checkmarkImageView = TintImageView(image: UIImage(named: "Transaction Success Icon"), tintColor: SettingsTheme.checkmarkTintColor, selectedTintColor: SettingsTheme.checkmarkTintColor)
     let bottomSeparatorView = UIView()
 
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
         backgroundColor = SettingsTheme.cellBackground

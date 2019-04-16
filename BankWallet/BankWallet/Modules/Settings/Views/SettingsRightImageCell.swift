@@ -1,11 +1,11 @@
 import UIKit
-import GrouviExtensions
+import UIExtensions
 import SnapKit
 
 class SettingsRightImageCell: SettingsCell {
     var rightImageView = TintImageView()
 
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
         contentView.addSubview(rightImageView)

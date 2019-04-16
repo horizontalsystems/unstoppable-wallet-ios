@@ -1,6 +1,6 @@
 import UIKit
-import GrouviExtensions
-import GrouviActionSheet
+import UIExtensions
+import ActionSheet
 import SnapKit
 
 class DepositCollectionItemView: BaseActionItemView {
@@ -13,7 +13,7 @@ class DepositCollectionItemView: BaseActionItemView {
         super.initView()
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
-        
+
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView?.delegate = self
         collectionView?.dataSource = self

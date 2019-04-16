@@ -1,5 +1,5 @@
 import UIKit
-import GrouviExtensions
+import UIExtensions
 import SnapKit
 
 class ManageCoinsViewController: WalletViewController {

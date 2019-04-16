@@ -1,4 +1,4 @@
-import GrouviActionSheet
+import ActionSheet
 
 class SendConfirmationAmounItem: BaseActionItem {
     let primaryAmount: String?

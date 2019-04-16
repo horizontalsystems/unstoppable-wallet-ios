@@ -1,6 +1,6 @@
 import UIKit
-import GrouviExtensions
-import GrouviActionSheet
+import UIExtensions
+import ActionSheet
 import SnapKit
 import RxSwift
 import RxCocoa
@@ -96,7 +96,7 @@ class SendAmountItemView: BaseActionItemView {
         inputField.inputView = UIView()
         inputField.font = SendTheme.amountFont
         inputField.textColor = SendTheme.amountColor
-        inputField.attributedPlaceholder = NSAttributedString(string: "send.amount_placeholder".localized, attributes: [NSAttributedStringKey.foregroundColor: SendTheme.amountPlaceholderColor])
+        inputField.attributedPlaceholder = NSAttributedString(string: "send.amount_placeholder".localized, attributes: [NSAttributedString.Key.foregroundColor: SendTheme.amountPlaceholderColor])
         inputField.keyboardAppearance = AppTheme.keyboardAppearance
         inputField.keyboardType = .decimalPad
         inputField.tintColor = SendTheme.amountInputTintColor
