@@ -5,6 +5,7 @@ class SendTheme {
     static let margin: CGFloat = 16
     static let mediumMargin: CGFloat = 12
     static let smallMargin: CGFloat = 8
+    static let tinyMargin: CGFloat = 5
 
     static var itemBackground: UIColor { return .crypto_Steel20_White }
 
@@ -14,9 +15,10 @@ class SendTheme {
     static let holderBorderColor: UIColor = .cryptoSteel20
     static var holderBackground: UIColor { return .crypto_SteelDark_White }
     static let holderLeadingPadding: CGFloat = 12
-    static let holderTopPadding: CGFloat = 8
+    static let holderTopPadding: CGFloat = 9
 
     static var buttonBackground: RespondButton.Style { return [.active: .crypto_Steel20_LightBackground, .selected: .crypto_Steel40_LightGray, .disabled: UIColor.crypto_Steel20_LightBackground] }
+    static let confirmationValueTitleTopMargin: CGFloat = 11
     static let buttonBorderColor = UIColor.cryptoSteel20
     static let buttonCornerRadius: CGFloat = 4
     static var buttonIconColor: UIColor { return .crypto_White_Black }
@@ -28,11 +30,11 @@ class SendTheme {
     static let errorFont: UIFont = .systemFont(ofSize: 12, weight: .medium)
     static let errorColor: UIColor = .cryptoRed
 
-    static let titleHeight: CGFloat = 49
+    static let titleHeight: CGFloat = 48
     static let titleFont = UIFont.cryptoHeadline
     static var titleColor: UIColor { return .crypto_White_Black }
 
-    static let amountHeight: CGFloat = 71
+    static let amountHeight: CGFloat = 72
     static let amountFont: UIFont = .cryptoBody2
     static var amountColor: UIColor { return .crypto_Bars_Dark }
     static let amountPlaceholderColor: UIColor = .cryptoSteel40
@@ -70,24 +72,24 @@ class SendTheme {
     static let switchRightMargin: CGFloat = 6
     static let pasteRightMargin: CGFloat = 6
 
-    static let sendHeight: CGFloat = 62
+    static let sendHeight: CGFloat = 81
     static let sendButtonHeight: CGFloat = 50
     static let sendButtonCornerRadius: CGFloat = 8
 
     static let keyboardHeight: CGFloat = 209
     static let keyboardTopMargin: CGFloat = 0
-    static let keyboardSideMargin: CGFloat = 7
+    static let keyboardSideMargin: CGFloat = 17
     static let keyboardBottomMargin: CGFloat = 8
 
-    static let confirmationAmountHeight: CGFloat = 78
-    static let confirmationCurrencyAmountFont: UIFont = .cryptoTitle3
+    static let confirmationAmountHeight: CGFloat = 80
+    static let confirmationCurrencyAmountFont: UIFont = .cryptoTitle4
     static let confirmationCurrencyAmountColor: UIColor = .cryptoYellow
     static let confirmationCurrencyAmountTopMargin: CGFloat = 20
-    static let confirmationAmountFont: UIFont = .cryptoCaption1
+    static let confirmationAmountFont: UIFont = .cryptoSectionCaption
     static let confirmationAmountColor: UIColor = .cryptoGray
     static let confirmationAmountTopMargin: CGFloat = 4
 
-    static let confirmationAddressHeight: CGFloat = 60
+    static let confirmationAddressHeight: CGFloat = 44
 
     static var hashBackground: UIColor { return .crypto_Steel20_LightBackground }
     static var hashBackgroundSelected: UIColor { return .crypto_Steel40_LightGray }
@@ -96,7 +98,8 @@ class SendTheme {
     static let hashCornerRadius: CGFloat = 4
     static var hashColor: UIColor { return .crypto_Bars_Dark }
 
-    static let confirmationValueHeight: CGFloat = 27
+    static let confirmationFeeValueHeight: CGFloat = 28
+    static let confirmationTotalValueHeight: CGFloat = 21
     static let valueFont: UIFont = .cryptoCaption1
     static let valueColor: UIColor = .cryptoGray
 

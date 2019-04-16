@@ -15,7 +15,7 @@ class PinView: UIView {
         addSubview(pinDotsView)
         pinDotsView.snp.makeConstraints { maker in
             maker.centerX.equalToSuperview()
-            maker.centerY.equalToSuperview().multipliedBy(0.7)
+            maker.centerY.equalToSuperview()
         }
 
         descriptionLabel.lineBreakMode = .byWordWrapping

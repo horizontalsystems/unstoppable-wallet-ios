@@ -6,8 +6,6 @@ class SendButtonItem: BaseButtonItem {
     override var textStyle: RespondButton.Style { return ButtonTheme.textColorOnWhiteBackgroundDictionary }
     override var title: String { return buttonTitle }
 
-//    var updateButtonBottomConstraint: ((CGFloat) -> ())?
-
     let buttonTitle: String
     var onClicked: (() -> ())?
 
@@ -22,15 +20,5 @@ class SendButtonItem: BaseButtonItem {
         height = SendTheme.sendHeight
         showSeparator = false
     }
-
-//    override func changeHeight(for: CGFloat) -> Bool {
-//        if `for` >= SendTheme.sendButtonItemHeight {
-//            height = SendTheme.sendButtonItemHeight
-//        } else {
-//            height = SendTheme.sendButtonItemHeightShrink
-//        }
-//        updateButtonBottomConstraint?(-SendTheme.sendButtonBottomMarginShrink)
-//        return true
-//    }
 
 }

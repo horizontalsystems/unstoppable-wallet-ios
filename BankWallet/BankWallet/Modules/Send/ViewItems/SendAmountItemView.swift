@@ -101,8 +101,8 @@ class SendAmountItemView: BaseActionItemView {
         inputField.keyboardType = .decimalPad
         inputField.tintColor = SendTheme.amountInputTintColor
         inputField.snp.makeConstraints { maker in
-            maker.centerY.equalTo(amountTypeLabel.snp.centerY)
-            maker.leading.equalTo(amountTypeLabel.snp.trailing).offset(SendTheme.smallMargin)
+            maker.centerY.equalTo(amountTypeLabel.snp.centerY).offset(1 / UIScreen.main.scale)
+            maker.leading.equalTo(amountTypeLabel.snp.trailing).offset(SendTheme.tinyMargin)
             maker.top.equalToSuperview().offset(SendTheme.holderTopPadding)
             maker.trailing.equalTo(lineView)
         }

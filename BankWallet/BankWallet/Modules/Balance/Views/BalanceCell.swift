@@ -44,6 +44,7 @@ class BalanceCell: UITableViewCell {
             maker.leadingMargin.trailingMargin.equalToSuperview().inset(self.layoutMargins)
             maker.bottom.equalToSuperview()
         }
+        roundedBackground.clipsToBounds = true
         roundedBackground.backgroundColor = BalanceTheme.roundedBackgroundColor
         roundedBackground.layer.shadowOpacity = BalanceTheme.roundedBackgroundShadowOpacity
         roundedBackground.layer.cornerRadius = BalanceTheme.roundedBackgroundCornerRadius
