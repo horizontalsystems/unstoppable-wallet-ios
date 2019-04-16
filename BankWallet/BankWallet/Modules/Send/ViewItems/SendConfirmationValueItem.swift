@@ -1,4 +1,4 @@
-import GrouviActionSheet
+import ActionSheet
 
 class SendConfirmationValueItem: BaseActionItem {
     let title: String

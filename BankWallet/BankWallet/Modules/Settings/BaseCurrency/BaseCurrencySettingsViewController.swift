@@ -1,5 +1,5 @@
 import UIKit
-import SectionsTableViewKit
+import SectionsTableView
 
 class BaseCurrencySettingsViewController: WalletViewController, SectionsDataSource {
     private let delegate: IBaseCurrencySettingsViewDelegate

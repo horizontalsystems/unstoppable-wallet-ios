@@ -1,5 +1,5 @@
 import UIKit
 
-extension UIBlurEffectStyle {
-    static var cryptoStyle: UIBlurEffectStyle { return App.shared.localStorage.lightMode ? .extraLight : dark }
+extension UIBlurEffect.Style {
+    static var cryptoStyle: UIBlurEffect.Style { return App.shared.localStorage.lightMode ? .extraLight : dark }
 }

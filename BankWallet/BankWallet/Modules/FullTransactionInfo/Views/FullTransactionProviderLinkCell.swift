@@ -1,11 +1,11 @@
 import UIKit
 import SnapKit
-import GrouviExtensions
+import UIExtensions
 
 class FullTransactionProviderLinkCell: UITableViewCell {
     let linkView = FullTransactionLinkView()
 
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         backgroundColor = .clear
         contentView.backgroundColor = .clear

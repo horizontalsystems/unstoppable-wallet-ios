@@ -24,7 +24,7 @@ class PermissionsHelper {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
 
         let settingsAction = UIAlertAction(title: "access_camera.settings".localized, style: .default, handler: { _ in
-            if let url = URL(string: UIApplicationOpenSettingsURLString) {
+            if let url = URL(string: UIApplication.openSettingsURLString) {
                 UIApplication.shared.open(url)
             }
         })

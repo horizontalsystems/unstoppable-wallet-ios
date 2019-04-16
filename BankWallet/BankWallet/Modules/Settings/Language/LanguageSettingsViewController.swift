@@ -1,5 +1,5 @@
 import UIKit
-import SectionsTableViewKit
+import SectionsTableView
 
 class LanguageSettingsViewController: WalletViewController, SectionsDataSource {
     private let delegate: ILanguageSettingsViewDelegate

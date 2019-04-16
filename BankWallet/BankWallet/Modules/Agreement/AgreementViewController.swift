@@ -1,5 +1,5 @@
 import UIKit
-import GrouviActionSheet
+import ActionSheet
 
 class AgreementViewController: ActionSheetController {
     private let delegate: IAgreementViewDelegate
@@ -26,11 +26,11 @@ class AgreementViewController: ActionSheetController {
 
         let style = NSMutableParagraphStyle()
         style.lineSpacing = 2.2
-        let attributes: [NSAttributedStringKey: Any] = [
-            NSAttributedStringKey.foregroundColor: ConfirmationTheme.textColor,
-            NSAttributedStringKey.font: ConfirmationTheme.regularFont,
-            NSAttributedStringKey.paragraphStyle: style,
-            NSAttributedStringKey.kern: -0.2
+        let attributes: [NSAttributedString.Key: Any] = [
+            NSAttributedString.Key.foregroundColor: ConfirmationTheme.textColor,
+            NSAttributedString.Key.font: ConfirmationTheme.regularFont,
+            NSAttributedString.Key.paragraphStyle: style,
+            NSAttributedString.Key.kern: -0.2
         ]
         texts.append(NSMutableAttributedString(string: "backup.confirmation.secret_key".localized, attributes: attributes))
         texts.append(NSAttributedString(string: "backup.confirmation.delete_app_warn".localized, attributes: attributes))

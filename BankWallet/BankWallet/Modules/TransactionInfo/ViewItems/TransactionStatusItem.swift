@@ -1,4 +1,4 @@
-import GrouviActionSheet
+import ActionSheet
 
 class TransactionStatusItem: BaseActionItem {
     let title: String

@@ -1,5 +1,5 @@
 import UIKit
-import GrouviActionSheet
+import ActionSheet
 
 class AlertButtonItem: BaseButtonItem {
     private let _backgroundStyle: RespondButton.Style

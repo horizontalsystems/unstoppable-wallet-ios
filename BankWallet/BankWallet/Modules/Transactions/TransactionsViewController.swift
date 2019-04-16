@@ -1,6 +1,6 @@
 import UIKit
 import SnapKit
-import GrouviActionSheet
+import ActionSheet
 
 class TransactionsViewController: WalletViewController {
     let delegate: ITransactionsViewDelegate

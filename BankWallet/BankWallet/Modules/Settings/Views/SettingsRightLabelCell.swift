@@ -4,7 +4,7 @@ import SnapKit
 class SettingsRightLabelCell: SettingsCell {
     var rightLabel = UILabel()
 
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
         rightLabel.textColor = SettingsTheme.rightTextColor

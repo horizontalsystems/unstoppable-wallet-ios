@@ -1,5 +1,5 @@
 import UIKit
-import GrouviActionSheet
+import ActionSheet
 
 class DepositShareButtonItem: BaseButtonItem {
     override var backgroundStyle: RespondButton.Style { return ButtonTheme.greenBackgroundOnWhiteBackgroundDictionary }

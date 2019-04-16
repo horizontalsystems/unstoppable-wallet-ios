@@ -1,5 +1,5 @@
 import UIKit
-import GrouviActionSheet
+import ActionSheet
 
 class SendConfirmationViewController: ActionSheetController {
     private let delegate: ISendViewDelegate

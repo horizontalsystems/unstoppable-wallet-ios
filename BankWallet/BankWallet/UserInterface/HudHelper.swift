@@ -1,5 +1,5 @@
 import UIKit
-import GrouviHUD
+import HUD
 
 class HudHelper {
     private enum ImageType { case success, error, attention }

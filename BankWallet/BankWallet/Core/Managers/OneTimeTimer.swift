@@ -20,7 +20,7 @@ extension OneTimeTimer: IOneTimeTimer {
         timer?.invalidate()
 
         timer = Timer(fireAt: date, interval: 0, target: self, selector: #selector(fire), userInfo: nil, repeats: false)
-        RunLoop.main.add(timer!, forMode: .commonModes)
+        RunLoop.main.add(timer!, forMode: .common)
     }
 
 }

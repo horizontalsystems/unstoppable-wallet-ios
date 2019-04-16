@@ -1,5 +1,5 @@
 import UIKit
-import GrouviActionSheet
+import ActionSheet
 
 class SendTheme {
     static let margin: CGFloat = 16

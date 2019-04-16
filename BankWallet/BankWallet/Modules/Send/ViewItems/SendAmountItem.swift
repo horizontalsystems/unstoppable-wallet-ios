@@ -1,4 +1,4 @@
-import GrouviActionSheet
+import ActionSheet
 
 class SendAmountItem: BaseActionItem {
     var onSwitchClicked: (() -> ())?

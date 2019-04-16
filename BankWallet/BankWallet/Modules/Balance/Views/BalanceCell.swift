@@ -1,6 +1,6 @@
 import UIKit
-import GrouviExtensions
-import GrouviHUD
+import UIExtensions
+import HUD
 import RxSwift
 
 class BalanceCell: UITableViewCell {
@@ -31,7 +31,7 @@ class BalanceCell: UITableViewCell {
     private var onPay: (() -> ())?
     private var onReceive: (() -> ())?
 
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
         contentView.backgroundColor = .clear

@@ -1,6 +1,6 @@
 import UIKit
 import SnapKit
-import GrouviExtensions
+import UIExtensions
 
 class FullTransactionLinkView: UIView {
     let linkWrapper = RespondView()

@@ -1,6 +1,6 @@
 import UIKit
-import GrouviExtensions
-import GrouviHUD
+import UIExtensions
+import HUD
 import SnapKit
 
 class DataProviderCell: UITableViewCell {
@@ -9,7 +9,7 @@ class DataProviderCell: UITableViewCell {
     let checkmarkImageView = TintImageView(image: UIImage(named: "Transaction Success Icon"), tintColor: SettingsTheme.checkmarkTintColor, selectedTintColor: SettingsTheme.checkmarkTintColor)
     let spinnerView = HUDProgressView(strokeLineWidth: SettingsTheme.spinnerLineWidth, radius: SettingsTheme.spinnerSideSize / 2 - SettingsTheme.spinnerLineWidth / 2, strokeColor: UIColor.cryptoGray)
 
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         backgroundColor = SettingsTheme.cellBackground
         contentView.backgroundColor = .clear

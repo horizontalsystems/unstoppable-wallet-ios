@@ -1,5 +1,5 @@
 import UIKit
-import GrouviExtensions
+import UIExtensions
 
 class BlurManager {
     private let blurView = CustomIntensityVisualEffectView(effect: UIBlurEffect(style: .light), intensity: 0.4)

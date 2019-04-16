@@ -1,5 +1,5 @@
 import UIKit
-import GrouviActionSheet
+import ActionSheet
 
 class UnlinkViewController: ActionSheetController {
     private let delegate: IUnlinkViewDelegate
@@ -23,7 +23,7 @@ class UnlinkViewController: ActionSheetController {
 
         var texts = [NSAttributedString]()
 
-        let attributes = [NSAttributedStringKey.foregroundColor: ConfirmationTheme.textColor, NSAttributedStringKey.font: ConfirmationTheme.regularFont]
+        let attributes = [NSAttributedString.Key.foregroundColor: ConfirmationTheme.textColor, NSAttributedString.Key.font: ConfirmationTheme.regularFont]
         texts.append(NSAttributedString(string: "settings_security.import_wallet_confirmation_1".localized, attributes: attributes))
         texts.append(NSAttributedString(string: "settings_security.import_wallet_confirmation_2".localized, attributes: attributes))
 

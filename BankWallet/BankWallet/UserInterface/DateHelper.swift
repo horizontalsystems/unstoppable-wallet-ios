@@ -9,7 +9,7 @@ public class DateHelper {
 
     private static let twelveHoursAllowed: [String] = ["en"]
     private static var systemHourFormat: String = {
-        if let dateFormat = DateFormatter.dateFormat(fromTemplate: "j", options: 0, locale: Locale.current), dateFormat.index(of: "a") == nil {
+        if let dateFormat = DateFormatter.dateFormat(fromTemplate: "j", options: 0, locale: Locale.current), dateFormat.firstIndex(of: "a") == nil {
             return "HH"
         }
         return "hh"
