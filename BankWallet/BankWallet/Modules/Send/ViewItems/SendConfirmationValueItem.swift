@@ -4,7 +4,7 @@ class SendConfirmationValueItem: BaseActionItem {
     let title: String
     let value: String?
 
-    init(title: String, amountInfo: AmountInfo, tag: Int) {
+    init(title: String, amountInfo: AmountInfo, isFee: Bool = true, tag: Int) {
         self.title = title
 
         switch amountInfo {
@@ -17,7 +17,11 @@ class SendConfirmationValueItem: BaseActionItem {
         super.init(cellType: SendConfirmationValueItemView.self, tag: tag, required: true)
 
         showSeparator = false
-        height = SendTheme.confirmationValueHeight
+        if isFee {
+            height = SendTheme.confirmationFeeValueHeight
+        } else {
+            height = SendTheme.confirmationTotalValueHeight
+        }
     }
 
 }

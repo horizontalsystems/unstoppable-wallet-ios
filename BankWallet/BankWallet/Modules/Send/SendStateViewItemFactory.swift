@@ -66,9 +66,9 @@ class SendStateViewItemFactory: ISendStateViewItemFactory {
         var stateTotalInfo: AmountInfo?
 
         if state.inputType == .currency, let currencyValue = state.currencyValue {
-            primaryAmountInfo = .currencyValue(currencyValue: currencyValue)
+            primaryAmountInfo = .currencyValue(currencyValue: CurrencyValue(currency: currencyValue.currency, value: -currencyValue.value))
         } else {
-            primaryAmountInfo = .coinValue(coinValue: coinValue)
+            primaryAmountInfo = .coinValue(coinValue: CoinValue(coinCode: coinValue.coinCode, value: -coinValue.value))
         }
 
         if let currencyValue = state.currencyValue, let feeCurrencyValue = state.feeCurrencyValue {

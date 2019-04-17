@@ -20,7 +20,7 @@ class SendConfirmationAmountItemView: BaseActionItemView {
         addSubview(primaryAmountLabel)
         primaryAmountLabel.snp.makeConstraints { maker in
             maker.centerX.equalToSuperview()
-            maker.top.equalToSuperview().offset(SendTheme.confirmationCurrencyAmountTopMargin)
+            maker.top.equalToSuperview().offset(SendTheme.margin)
         }
 
         secondaryAmountLabel.font = SendTheme.confirmationAmountFont
