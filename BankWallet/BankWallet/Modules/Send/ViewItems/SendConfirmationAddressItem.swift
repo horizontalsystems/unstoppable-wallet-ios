@@ -11,6 +11,7 @@ class SendConfirmationAddressItem: BaseActionItem {
         super.init(cellType: SendConfirmationAddressItemView.self, tag: tag, required: true)
 
         height = SendTheme.confirmationAddressHeight
+        showSeparator = false
     }
 
 }

@@ -253,7 +253,8 @@ class SendStateViewItemFactoryTests: XCTestCase {
 
         let viewItem = factory.confirmationViewItem(forState: confirmationState, coin: coin)
 
-        XCTAssertEqual(viewItem?.primaryAmountInfo, AmountInfo.coinValue(coinValue: coinValue))
+        let expectedCoinValue = CoinValue(coinCode: coinValue.coinCode, value: -coinValue.value)
+        XCTAssertEqual(viewItem?.primaryAmountInfo, AmountInfo.coinValue(coinValue: expectedCoinValue))
     }
 
     func testConfirmation_primaryAmountInfo_currencyInputType() {
@@ -262,7 +263,8 @@ class SendStateViewItemFactoryTests: XCTestCase {
 
         let viewItem = factory.confirmationViewItem(forState: confirmationState, coin: coin)
 
-        XCTAssertEqual(viewItem?.primaryAmountInfo, AmountInfo.currencyValue(currencyValue: currencyValue))
+        let expectedCurrencyValue = CurrencyValue(currency: currencyValue.currency, value: -currencyValue.value)
+        XCTAssertEqual(viewItem?.primaryAmountInfo, AmountInfo.currencyValue(currencyValue: expectedCurrencyValue))
     }
 
     func testConfirmation_secondaryAmountInfo_coinInputType() {

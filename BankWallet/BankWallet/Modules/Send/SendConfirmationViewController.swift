@@ -44,7 +44,7 @@ class SendConfirmationViewController: ActionSheetController {
 
         model.addItemView(feeItem)
         if let totalInfo = viewItem.totalInfo {
-            let totalItem = SendConfirmationValueItem(title: "send.total".localized, amountInfo: totalInfo, tag: 4)
+            let totalItem = SendConfirmationValueItem(title: "send.total".localized, amountInfo: totalInfo, isFee: false, tag: 4)
             model.addItemView(totalItem)
         }
 

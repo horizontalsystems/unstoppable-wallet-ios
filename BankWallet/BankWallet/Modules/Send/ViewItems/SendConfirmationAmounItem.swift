@@ -9,7 +9,7 @@ class SendConfirmationAmounItem: BaseActionItem {
         case .coinValue(let coinValue):
             primaryAmount = ValueFormatter.instance.format(coinValue: coinValue)
         case .currencyValue(let currencyValue):
-            primaryAmount = ValueFormatter.instance.format(currencyValue: currencyValue)
+            primaryAmount = ValueFormatter.instance.format(currencyValue: currencyValue, fractionPolicy: .threshold(threshold: 100))
         }
 
         if let secondaryAmountInfo = viewItem.secondaryAmountInfo {
@@ -23,7 +23,7 @@ class SendConfirmationAmounItem: BaseActionItem {
 
         super.init(cellType: SendConfirmationAmountItemView.self, tag: tag, required: true)
 
-        showSeparator = false
+        showSeparator = true
         height = SendTheme.confirmationAmountHeight
     }
 

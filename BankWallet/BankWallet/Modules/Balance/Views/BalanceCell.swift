@@ -7,6 +7,7 @@ class BalanceCell: UITableViewCell {
     private static let minimumProgress = 10
 
     private let roundedBackground = UIView()
+    private let clippingView = UIView()
 
     private let coinIconImageView = CoinIconImageView()
     private let nameLabel = UILabel()
@@ -51,13 +52,21 @@ class BalanceCell: UITableViewCell {
         roundedBackground.layer.shadowRadius = 4
         roundedBackground.layer.shadowOffset = CGSize(width: 0, height: 4)
 
-        roundedBackground.addSubview(coinIconImageView)
+        roundedBackground.addSubview(clippingView)
+        clippingView.backgroundColor = .clear
+        clippingView.clipsToBounds = true
+        clippingView.layer.cornerRadius = BalanceTheme.roundedBackgroundCornerRadius
+        clippingView.snp.makeConstraints { maker in
+            maker.edges.equalToSuperview()
+        }
+
+        clippingView.addSubview(coinIconImageView)
         coinIconImageView.snp.makeConstraints { maker in
             maker.leading.equalToSuperview().offset(BalanceTheme.cellBigMargin)
             maker.top.equalToSuperview().offset(BalanceTheme.cellSmallMargin)
         }
 
-        roundedBackground.addSubview(nameLabel)
+        clippingView.addSubview(nameLabel)
         nameLabel.snp.makeConstraints { maker in
             maker.leading.equalTo(self.coinIconImageView.snp.trailing).offset(BalanceTheme.cellSmallMargin)
             maker.centerY.equalTo(self.coinIconImageView.snp.centerY)
@@ -67,7 +76,7 @@ class BalanceCell: UITableViewCell {
         nameLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         nameLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
 
-        roundedBackground.addSubview(rateLabel)
+        clippingView.addSubview(rateLabel)
         rateLabel.snp.makeConstraints { maker in
             maker.leading.equalToSuperview().offset(BalanceTheme.cellBigMargin)
             maker.top.equalTo(self.nameLabel.snp.bottom).offset(BalanceTheme.rateTopMargin)
@@ -76,7 +85,7 @@ class BalanceCell: UITableViewCell {
         rateLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         rateLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
 
-        roundedBackground.addSubview(coinValueLabel)
+        clippingView.addSubview(coinValueLabel)
         coinValueLabel.snp.makeConstraints { maker in
             maker.leading.equalTo(self.nameLabel.snp.trailing).offset(BalanceTheme.cellSmallMargin)
             maker.trailing.equalToSuperview().offset(-BalanceTheme.cellBigMargin)
@@ -86,7 +95,7 @@ class BalanceCell: UITableViewCell {
         coinValueLabel.textColor = BalanceTheme.coinValueColor
         coinValueLabel.textAlignment = .right
 
-        roundedBackground.addSubview(currencyValueLabel)
+        clippingView.addSubview(currencyValueLabel)
         currencyValueLabel.snp.makeConstraints { maker in
             maker.leading.equalTo(self.rateLabel.snp.trailing).offset(BalanceTheme.cellSmallMargin)
             maker.trailing.equalToSuperview().offset(-BalanceTheme.cellBigMargin)
@@ -97,19 +106,19 @@ class BalanceCell: UITableViewCell {
 
         syncSpinner.backgroundColor = BalanceTheme.spinnerBackgroundColor
         syncSpinner.layer.cornerRadius = BalanceTheme.spinnerSideSize / 2
-        roundedBackground.addSubview(syncSpinner)
+        clippingView.addSubview(syncSpinner)
         syncSpinner.snp.makeConstraints { maker in
             maker.center.equalTo(self.coinIconImageView.snp.center)
             maker.size.equalTo(BalanceTheme.spinnerSideSize)
         }
 
         failedImageView.image = UIImage(named: "Balance Sync Failed Icon")
-        roundedBackground.addSubview(failedImageView)
+        clippingView.addSubview(failedImageView)
         failedImageView.snp.makeConstraints { maker in
             maker.center.equalTo(self.coinIconImageView.snp.center)
         }
 
-        roundedBackground.addSubview(receiveButton)
+        clippingView.addSubview(receiveButton)
         receiveButton.snp.makeConstraints { maker in
             maker.leading.equalToSuperview().offset(BalanceTheme.cellSmallMargin)
             maker.top.equalTo(self.nameLabel.snp.bottom).offset(BalanceTheme.buttonsTopMargin)
@@ -120,7 +129,7 @@ class BalanceCell: UITableViewCell {
         receiveButton.cornerRadius = BalanceTheme.buttonCornerRadius
         receiveButton.titleLabel.text = "balance.deposit".localized
 
-        roundedBackground.addSubview(payButton)
+        clippingView.addSubview(payButton)
         payButton.snp.makeConstraints { maker in
             maker.leading.equalTo(receiveButton.snp.trailing).offset(BalanceTheme.cellSmallMargin)
             maker.top.equalTo(self.nameLabel.snp.bottom).offset(BalanceTheme.buttonsTopMargin)
