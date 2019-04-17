@@ -18,7 +18,7 @@ class SendConfirmationValueItemView: BaseActionItemView {
         titleLabel.setContentCompressionResistancePriority(.required, for: .horizontal)
         addSubview(titleLabel)
         titleLabel.snp.makeConstraints { maker in
-            maker.top.equalToSuperview().offset(SendTheme.smallMargin)
+            maker.bottom.equalToSuperview()
             maker.leading.equalToSuperview().offset(SendTheme.margin)
         }
 
@@ -26,7 +26,7 @@ class SendConfirmationValueItemView: BaseActionItemView {
         valueLabel.textColor = SendTheme.valueColor
         addSubview(valueLabel)
         valueLabel.snp.makeConstraints { maker in
-            maker.centerY.equalTo(self.titleLabel.snp.centerY)
+            maker.bottom.equalToSuperview()
             maker.leading.equalTo(self.titleLabel.snp.trailing).offset(SendTheme.margin)
             maker.trailing.equalToSuperview().offset(-SendTheme.margin)
         }
