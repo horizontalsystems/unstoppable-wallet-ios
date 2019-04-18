@@ -1,22 +1,31 @@
 import UIKit
 import SnapKit
 
-class TransactionInfoDescriptionView: RespondButton {
+class HashView: RespondButton {
     private let avatarImageView = UIImageView()
     private let valueLabel = UILabel()
 
     init() {
         super.init()
 
+        let wrapperView = UIView()
+        wrapperView.backgroundColor = .clear
+        wrapperView.isUserInteractionEnabled = false
+        addSubview(wrapperView)
+        wrapperView.snp.makeConstraints { maker in
+            maker.edges.equalToSuperview()
+            maker.height.equalTo(HashViewTheme.height)
+        }
+
         titleLabel.removeFromSuperview()
-        addSubview(avatarImageView)
+        wrapperView.addSubview(avatarImageView)
         avatarImageView.snp.makeConstraints { maker in
             maker.leading.equalToSuperview().offset(TransactionInfoDescriptionTheme.horizontalMargin)
             maker.centerY.equalToSuperview()
         }
 
         valueLabel.lineBreakMode = .byTruncatingMiddle
-        addSubview(valueLabel)
+        wrapperView.addSubview(valueLabel)
         valueLabel.snp.makeConstraints { maker in
             maker.centerY.equalToSuperview()
             maker.leading.equalTo(self.avatarImageView.snp.trailing).offset(TransactionInfoDescriptionTheme.horizontalMargin)
@@ -28,7 +37,7 @@ class TransactionInfoDescriptionView: RespondButton {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func bind(value: String?, font: UIFont, color: UIColor, showExtra: ShowExtra = .none, onTap: (() -> ())? = nil) {
+    func bind(value: String?, font: UIFont = HashViewTheme.font, color: UIColor = HashViewTheme.color, showExtra: ShowExtra = .none, onTap: (() -> ())? = nil) {
         if let onTap = onTap {
             self.onTap = onTap
             backgrounds = [RespondButton.State.active: TransactionInfoDescriptionTheme.buttonBackground, RespondButton.State.selected: TransactionInfoDescriptionTheme.buttonBackgroundSelected]

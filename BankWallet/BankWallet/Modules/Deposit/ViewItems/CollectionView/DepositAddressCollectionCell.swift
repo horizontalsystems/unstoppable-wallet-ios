@@ -6,7 +6,7 @@ class DepositAddressCollectionCell: UICollectionViewCell {
     var titleLabel = UILabel()
     var separatorView = UIView()
     var qrCodeImageView = UIImageView()
-    var addressButton = AddressButton()
+    var addressButton = HashView()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -70,9 +70,7 @@ class DepositAddressCollectionCell: UICollectionViewCell {
         iconImageView.bind(coin: address.coin)
         titleLabel.text = "deposit.receive_coin".localized(address.coin.title)
         qrCodeImageView.backgroundColor = .lightGray
-        addressButton.bind(value: address.address)
-
-        addressButton.onTap = onCopy
+        addressButton.bind(value: address.address, showExtra: .icon, onTap: onCopy)
 
         qrCodeImageView.image = createQRFromString(address.address, size: CGSize(width: 150, height: 150))
     }

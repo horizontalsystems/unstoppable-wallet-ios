@@ -6,7 +6,7 @@ import SnapKit
 class TransactionFromToHashItemView: BaseActionItemView {
 
     var titleLabel = UILabel()
-    let hashView = TransactionInfoDescriptionView()
+    let hashView = HashView()
 
     override var item: TransactionFromToHashItem? { return _item as? TransactionFromToHashItem
     }
@@ -31,14 +31,13 @@ class TransactionFromToHashItemView: BaseActionItemView {
             maker.leading.equalTo(self.titleLabel.snp.trailing).offset(TransactionInfoTheme.hashViewMargin)
             maker.centerY.equalToSuperview()
             maker.trailing.equalToSuperview().offset(-TransactionInfoTheme.regularMargin)
-            maker.height.equalTo(TransactionInfoTheme.hashButtonHeight)
         }
     }
 
     override func updateView() {
         super.updateView()
         titleLabel.text = item?.title
-        hashView.bind(value: item?.value, font: TransactionInfoTheme.itemValueFont, color: TransactionInfoTheme.itemValueColor, showExtra: .icon, onTap: item?.onHashTap)
+        hashView.bind(value: item?.value, showExtra: .icon, onTap: item?.onHashTap)
     }
 
 }

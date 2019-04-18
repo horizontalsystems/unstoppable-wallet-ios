@@ -3,7 +3,7 @@ import UIExtensions
 import SnapKit
 
 class FullTransactionHashHeaderView: UITableViewHeaderFooterView {
-    private let descriptionView = TransactionInfoDescriptionView()
+    private let descriptionView = HashView()
 
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
@@ -16,7 +16,6 @@ class FullTransactionHashHeaderView: UITableViewHeaderFooterView {
             maker.leading.equalTo(contentView.snp.leadingMargin)
             maker.top.equalToSuperview().offset(FullTransactionInfoTheme.hashTopMargin)
             maker.trailing.equalTo(contentView.snp.trailingMargin)
-            maker.height.equalTo(FullTransactionInfoTheme.descriptionHeight)
         }
     }
 
@@ -25,7 +24,7 @@ class FullTransactionHashHeaderView: UITableViewHeaderFooterView {
     }
 
     func bind(value: String?, color: UIColor = FullTransactionInfoTheme.sectionTitleColor, onTap: (() -> ())?) {
-        descriptionView.bind(value: value, font: FullTransactionInfoTheme.font, color: FullTransactionInfoTheme.descriptionColor, showExtra: .hash, onTap: onTap)
+        descriptionView.bind(value: value, showExtra: .hash, onTap: onTap)
     }
 
 }

@@ -7,7 +7,7 @@ class TransactionTitleItemView: BaseActionItemView {
 
     let iconImageView = CoinIconImageView()
     let titleLabel = UILabel()
-    let hashView = TransactionInfoDescriptionView()
+    let hashView = HashView()
 
     override var item: TransactionTitleItem? { return _item as? TransactionTitleItem }
 
@@ -34,7 +34,6 @@ class TransactionTitleItemView: BaseActionItemView {
             maker.trailing.equalToSuperview().offset(-TransactionInfoTheme.higherMiddleMargin)
             maker.leading.equalTo(self.titleLabel.snp.trailing).offset(TransactionInfoTheme.hashViewMargin)
             maker.centerY.equalToSuperview()
-            maker.height.equalTo(TransactionInfoTheme.hashButtonHeight)
         }
     }
 
@@ -44,7 +43,7 @@ class TransactionTitleItemView: BaseActionItemView {
         if let item = item {
             iconImageView.bind(coin: item.coin)
         }
-        hashView.bind(value: item?.transactionHash, font: TransactionInfoTheme.itemValueFont, color: TransactionInfoTheme.itemValueColor, showExtra: .hash, onTap: { [weak self] in
+        hashView.bind(value: item?.transactionHash, showExtra: .hash, onTap: { [weak self] in
             self?.item?.onIdTap?()
         })
     }

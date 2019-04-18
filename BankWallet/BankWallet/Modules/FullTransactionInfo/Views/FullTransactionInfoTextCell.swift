@@ -2,7 +2,7 @@ import UIKit
 import SnapKit
 
 class FullTransactionInfoTextCell: SettingsCell {
-    private let descriptionView = TransactionInfoDescriptionView()
+    private let descriptionView = HashView()
     let topSeparatorView = UIView()
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -43,7 +43,6 @@ class FullTransactionInfoTextCell: SettingsCell {
         descriptionView.snp.remakeConstraints { maker in
             maker.leading.equalTo(self.titleLabel.snp.trailing).offset(FullTransactionInfoTheme.margin)
             maker.centerY.equalToSuperview()
-            maker.height.equalTo(FullTransactionInfoTheme.descriptionHeight)
 
             let descriptionBackgroundOffset = onTap == nil ? TransactionInfoDescriptionTheme.horizontalMargin : 0
             if showDisclosure {
@@ -53,7 +52,7 @@ class FullTransactionInfoTextCell: SettingsCell {
             }
         }
 
-        descriptionView.bind(value: item.value, font: FullTransactionInfoTheme.font, color: item.titleColor ?? FullTransactionInfoTheme.descriptionColor, showExtra: item.showExtra, onTap: onTap)
+        descriptionView.bind(value: item.value, color: item.titleColor ?? FullTransactionInfoTheme.descriptionColor, showExtra: item.showExtra, onTap: onTap)
         descriptionView.isUserInteractionEnabled = onTap != nil
     }
 
