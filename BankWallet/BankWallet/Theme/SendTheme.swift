@@ -18,12 +18,10 @@ class SendTheme {
     static let holderTopPadding: CGFloat = 9
 
     static var buttonBackground: RespondButton.Style { return [.active: .crypto_Steel20_LightBackground, .selected: .crypto_Steel40_LightGray, .disabled: UIColor.crypto_Steel20_LightBackground] }
-    static let confirmationValueTitleTopMargin: CGFloat = 11
     static let buttonBorderColor = UIColor.cryptoSteel20
     static let buttonCornerRadius: CGFloat = 4
     static var buttonIconColor: UIColor { return .crypto_White_Black }
     static let buttonIconColorDisabled: UIColor = .cryptoSteel20
-    static let buttonTitleHorizontalMargin: CGFloat = 12
     static let buttonSize: CGFloat = 32
     static let scanButtonWidth: CGFloat = 36
     static let buttonFont: UIFont = .systemFont(ofSize: 14, weight: .semibold)
@@ -52,7 +50,6 @@ class SendTheme {
     static var addressColor: UIColor { return .crypto_Bars_Dark }
     static let addressHintColor: UIColor = .cryptoSteel40
     static let addressErrorTopMargin: CGFloat = 2
-    static let addressToLabelTextColor: UIColor = .cryptoGray
 
     static let constantFeeTitleTopMargin: CGFloat = 18
     static let constantFeeHeight: CGFloat = 56
@@ -70,7 +67,6 @@ class SendTheme {
     static let feeSliderHeight: CGFloat = 50
 
     static let switchRightMargin: CGFloat = 6
-    static let pasteRightMargin: CGFloat = 6
 
     static let sendHeight: CGFloat = 81
     static let sendButtonHeight: CGFloat = 50
@@ -84,19 +80,11 @@ class SendTheme {
     static let confirmationAmountHeight: CGFloat = 80
     static let confirmationCurrencyAmountFont: UIFont = .cryptoTitle4
     static let confirmationCurrencyAmountColor: UIColor = .cryptoYellow
-    static let confirmationCurrencyAmountTopMargin: CGFloat = 20
     static let confirmationAmountFont: UIFont = .cryptoSectionCaption
     static let confirmationAmountColor: UIColor = .cryptoGray
     static let confirmationAmountTopMargin: CGFloat = 4
 
     static let confirmationAddressHeight: CGFloat = 44
-
-    static var hashBackground: UIColor { return .crypto_Steel20_LightBackground }
-    static var hashBackgroundSelected: UIColor { return .crypto_Steel40_LightGray }
-    static let hashWrapperBorderColor: UIColor = .cryptoSteel20
-    static let hashBackgroundHeight: CGFloat = 28
-    static let hashCornerRadius: CGFloat = 4
-    static var hashColor: UIColor { return .crypto_Bars_Dark }
 
     static let confirmationFeeValueHeight: CGFloat = 28
     static let confirmationTotalValueHeight: CGFloat = 21

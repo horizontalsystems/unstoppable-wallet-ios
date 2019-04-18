@@ -16,27 +16,35 @@ class TransactionAmountItemView: BaseActionItemView {
 
         backgroundColor = TransactionInfoTheme.itemBackground
 
+        let centerView = UIView()
+        addSubview(centerView)
+        centerView.backgroundColor = .clear
+        centerView.snp.makeConstraints { maker in
+            maker.center.equalToSuperview()
+        }
+
         currencyAmountLabel.font = TransactionInfoTheme.currencyAmountFont
-        addSubview(currencyAmountLabel)
+        centerView.addSubview(currencyAmountLabel)
         currencyAmountLabel.snp.makeConstraints { maker in
             maker.centerX.equalToSuperview()
-            maker.top.equalToSuperview().offset(TransactionInfoTheme.currencyAmountTopMargin)
+            maker.top.equalToSuperview()
         }
 
         amountLabel.font = TransactionInfoTheme.amountFont
         amountLabel.textColor = TransactionInfoTheme.amountColor
-        addSubview(amountLabel)
+        centerView.addSubview(amountLabel)
         amountLabel.snp.makeConstraints { maker in
             maker.centerX.equalToSuperview()
             maker.top.equalTo(self.currencyAmountLabel.snp.bottom).offset(TransactionInfoTheme.amountTopMargin)
         }
 
-        addSubview(coinNameLabel)
+        centerView.addSubview(coinNameLabel)
         coinNameLabel.font = TransactionInfoTheme.coinNameFont
         coinNameLabel.textColor = TransactionInfoTheme.coinNameColor
         coinNameLabel.snp.makeConstraints { maker in
             maker.centerX.equalToSuperview()
             maker.top.equalTo(self.amountLabel.snp.bottom).offset(TransactionInfoTheme.coinNameTopMargin)
+            maker.bottom.equalToSuperview()
         }
     }
 
