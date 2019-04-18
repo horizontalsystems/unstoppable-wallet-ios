@@ -621,7 +621,6 @@
 		58AAA33A40BCBC3279C13367 /* DataProviderSettingsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA68D36E8424BBE757B88 /* DataProviderSettingsPresenter.swift */; };
 		58AAA368D11A7036BBE300B4 /* HorSysProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA976A6B67FD47D5958E8 /* HorSysProvider.swift */; };
 		58AAA387EBA4445D5689478A /* UIBlurEffectStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA9EA36E5D6028A6F6767 /* UIBlurEffectStyle.swift */; };
-		58AAA38D55F9ED6F3FC1C9F9 /* HashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAC9716B68916B4EA0B9B /* HashView.swift */; };
 		58AAA3BE2D0DEF53CE6CEE97 /* EthereumKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAC5B00009B199A687EF3 /* EthereumKitManager.swift */; };
 		58AAA3BEAF334CC8B07FC3E2 /* FullTransactionInfoStateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA2F49CD663006371EF2A /* FullTransactionInfoStateTests.swift */; };
 		58AAA3E5C080A32A6A6B0E6D /* BtcComProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA58097EB8413FEA75EE8 /* BtcComProvider.swift */; };
@@ -713,7 +712,6 @@
 		58AAAF011B2E9CDF8455CA7B /* EthereumBaseAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA656A81B2C12F618FB44 /* EthereumBaseAdapter.swift */; };
 		58AAAF12A0A0C24563DEB542 /* DataProviderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA414888309622A1AAF53 /* DataProviderCell.swift */; };
 		58AAAF2121BD3562E68A5CB4 /* FullTransactionInfoProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAC944A9DCACFAF1DDA15 /* FullTransactionInfoProtocols.swift */; };
-		58AAAF64F252D72D71D6D995 /* HashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAC9716B68916B4EA0B9B /* HashView.swift */; };
 		58AAAF6C6C0F967415083427 /* FullTransactionSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAC0A14CAF88B383C7857 /* FullTransactionSection.swift */; };
 		58AAAF8C7BE350256A86F681 /* TransactionInfoDescriptionTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA98833B2412BBE860CA5 /* TransactionInfoDescriptionTheme.swift */; };
 		58AAAFF746E489C4419778B3 /* DataProviderSettingsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA68D36E8424BBE757B88 /* DataProviderSettingsPresenter.swift */; };
@@ -3891,7 +3889,6 @@
 				58AAA4356D5E31303E6E5A4C /* FullTransactionRecord.swift in Sources */,
 				58AAA6A8CFD4F5363036B823 /* FullTransactionInfoState.swift in Sources */,
 				58AAA5D856195A6F1DE5C4B4 /* FullTransactionHeaderCell.swift in Sources */,
-				58AAAF64F252D72D71D6D995 /* HashView.swift in Sources */,
 				58AAA5A3B8E3D00CB0F5E504 /* TransactionInfoDescriptionTheme.swift in Sources */,
 				58AAACA87940BF3CC5401691 /* FullTransactionInfoProvider.swift in Sources */,
 				58AAA1EE015E354E285FCCD3 /* FullTransactionInfoProviderFactory.swift in Sources */,
@@ -4233,7 +4230,6 @@
 				58AAA7E21743D93ABEB7DBAD /* FullTransactionRecord.swift in Sources */,
 				58AAA8193296B82E01F0B65C /* FullTransactionInfoState.swift in Sources */,
 				58AAA6ECE042DAD0D4137ECA /* FullTransactionHeaderCell.swift in Sources */,
-				58AAA38D55F9ED6F3FC1C9F9 /* HashView.swift in Sources */,
 				58AAA90B0E639B0D044EA653 /* TransactionInfoDescriptionTheme.swift in Sources */,
 				58AAA2B6DE1387076505D7A4 /* FullTransactionInfoProvider.swift in Sources */,
 				58AAA71CA53B53E8FE695DF3 /* FullTransactionInfoProviderFactory.swift in Sources */,
