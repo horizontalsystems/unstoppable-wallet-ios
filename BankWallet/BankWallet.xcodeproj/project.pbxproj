@@ -609,7 +609,6 @@
 		58AAA1A770E5DD3B87EDD1A7 /* EtherscanProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA07E7147F10E59DC1CED /* EtherscanProvider.swift */; };
 		58AAA1AB2FD9FBA7801F830D /* PaymentRequestAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA7A94D25C20240FD75C6 /* PaymentRequestAddress.swift */; };
 		58AAA1EE015E354E285FCCD3 /* FullTransactionInfoProviderFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA72A3BACDB574838A8CC /* FullTransactionInfoProviderFactory.swift */; };
-		58AAA1EEC400E3FE695E6C0B /* HashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAC9716B68916B4EA0B9B /* HashView.swift */; };
 		58AAA2363892ED5743CBF2EB /* EthereumBaseAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA656A81B2C12F618FB44 /* EthereumBaseAdapter.swift */; };
 		58AAA23E15CBC7EBB94086E2 /* FullTransactionDataProviderManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAAC5854D58969ECE57A1 /* FullTransactionDataProviderManagerTests.swift */; };
 		58AAA2761F98B944428578B8 /* DataProviderSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAB2A7397DE3BBC456E96 /* DataProviderSettingsViewController.swift */; };
@@ -3504,7 +3503,6 @@
 				58AAAD4B1F557C9B2BA30681 /* FullTransactionRecord.swift in Sources */,
 				58AAA3ED415F09117EE63646 /* FullTransactionInfoState.swift in Sources */,
 				58AAA320C8EF4841893AC0BA /* FullTransactionHeaderCell.swift in Sources */,
-				58AAA1EEC400E3FE695E6C0B /* HashView.swift in Sources */,
 				58AAAF8C7BE350256A86F681 /* TransactionInfoDescriptionTheme.swift in Sources */,
 				58AAADD4A8BA1090780CEA11 /* FullTransactionInfoProvider.swift in Sources */,
 				58AAABB4991882979199CA1F /* FullTransactionInfoProviderFactory.swift in Sources */,
