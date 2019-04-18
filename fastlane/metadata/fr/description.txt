@@ -1,4 +1,4 @@
-  Control Your Money!
+  Contrôlez votre argent !
 Un portefeuille BANK est un portefeuille crypté sécurisé et entièrement décentralisé prenant en charge des principales crypto-monnaies, notamment les jetons Bitcoin, Ethereum, Bitcoin Cash et ERC 20.  Le nombre de monnaies prises en charge est progressivement ajouté à chaque émission.
 
 Un portefeuille BANK constitue un moyen pratique de commencer à travailler avec des Bitcoins et d’autres crypto-monnaies. Vous n'avez pas besoin de comprendre le travail interne de crypto-monnaie pour pouvoir l'utiliser.
