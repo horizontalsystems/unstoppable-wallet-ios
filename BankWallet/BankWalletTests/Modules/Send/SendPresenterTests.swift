@@ -338,4 +338,25 @@ class SendPresenterTests: XCTestCase {
         XCTAssertEqual(true, presenter.isFeeAdjustable)
     }
 
+    func testOnBecomeActive() {
+        presenter.onBecomeActive()
+
+        verify(mockInteractor).fetchRate()
+    }
+
+    func testDidUpdateRate() {
+        state.inputType = .currency
+
+        presenter.didUpdateRate()
+
+        verify(mockFactory).viewItem(forState: sameInstance(as: state), forceRoundDown: equal(to: false))
+        verify(mockUserInput).inputType.set(equal(to: state.inputType))
+
+        verify(mockView).set(feeInfo: equal(to: feeInfo))
+        verify(mockView).set(hintInfo: equal(to: viewItem.hintInfo))
+        verify(mockView).set(switchButtonEnabled: viewItem.switchButtonEnabled)
+        verify(mockView).set(amountInfo: equal(to: viewItem.amountInfo))
+        verify(mockView).set(decimal: equal(to: decimal))
+    }
+
 }

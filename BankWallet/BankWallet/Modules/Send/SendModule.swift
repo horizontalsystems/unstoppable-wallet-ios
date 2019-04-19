@@ -61,6 +61,7 @@ protocol ISendInteractorDelegate: class {
     func didUpdateRate()
     func didSend()
     func didFailToSend(error: Error)
+    func onBecomeActive()
 }
 
 protocol ISendRouter {

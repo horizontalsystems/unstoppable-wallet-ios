@@ -12,6 +12,7 @@ class SendInteractorTests: XCTestCase {
     private var mockLocalStorage: MockILocalStorage!
     private var mockPasteboardManager: MockIPasteboardManager!
     private var mockAppConfigProvider: MockIAppConfigProvider!
+    private var mockBackgroundManager: BackgroundManager!
 
     private let coinCode = "BTC"
     private let baseCurrency = Currency(code: "USD", symbol: "$")
@@ -38,11 +39,13 @@ class SendInteractorTests: XCTestCase {
         mockLocalStorage = MockILocalStorage()
         mockPasteboardManager = MockIPasteboardManager()
         mockAppConfigProvider = MockIAppConfigProvider()
+        mockBackgroundManager = BackgroundManager()
 
         stub(mockDelegate) { mock in
             when(mock.didUpdateRate()).thenDoNothing()
             when(mock.didSend()).thenDoNothing()
             when(mock.didFailToSend(error: any())).thenDoNothing()
+            when(mock.onBecomeActive()).thenDoNothing()
         }
         stub(mockCurrencyManager) { mock in
             when(mock.baseCurrency.get).thenReturn(baseCurrency)
@@ -67,7 +70,7 @@ class SendInteractorTests: XCTestCase {
         input = SendUserInput()
         input.feeRatePriority = .medium
 
-        interactor = SendInteractor(currencyManager: mockCurrencyManager, rateStorage: mockRateStorage, localStorage: mockLocalStorage, pasteboardManager: mockPasteboardManager, state: interactorState, appConfigProvider: mockAppConfigProvider, async: false)
+        interactor = SendInteractor(currencyManager: mockCurrencyManager, rateStorage: mockRateStorage, localStorage: mockLocalStorage, pasteboardManager: mockPasteboardManager, state: interactorState, appConfigProvider: mockAppConfigProvider, backgroundManager: mockBackgroundManager, async: false)
         interactor.delegate = mockDelegate
     }
 
@@ -78,6 +81,7 @@ class SendInteractorTests: XCTestCase {
         mockLocalStorage = nil
         mockPasteboardManager = nil
         mockAppConfigProvider = nil
+        mockBackgroundManager = nil
 
         mockAdapter = nil
         interactorState = nil
@@ -133,6 +137,7 @@ class SendInteractorTests: XCTestCase {
     }
 
     func testState_numberOfDecimals_fiat() {
+        interactorState.exchangeRate = 2
         input.inputType = .currency
 
         let state = interactor.state(forUserInput: input)
@@ -161,11 +166,35 @@ class SendInteractorTests: XCTestCase {
     }
 
     func testState_InputType_Currency() {
+        interactorState.exchangeRate = 2
         input.inputType = .currency
 
         let state = interactor.state(forUserInput: input)
 
         XCTAssertEqual(state.inputType, SendInputType.currency)
+    }
+
+    func testState_forceCoinInputType_noRate() {
+        interactorState.exchangeRate = nil
+        input.inputType = .currency
+        input.amount = 6
+
+        let state = interactor.state(forUserInput: input)
+
+        XCTAssertEqual(state.inputType, SendInputType.coin)
+    }
+
+    func testState_dropValues_noRate() {
+        interactorState.exchangeRate = nil
+        input.inputType = .currency
+        input.amount = 6
+
+        let state = interactor.state(forUserInput: input)
+
+        XCTAssertNil(state.currencyValue)
+        XCTAssertEqual(state.coinValue?.value, 0)
+        XCTAssertNil(state.feeCurrencyValue)
+        XCTAssertEqual(state.feeCoinValue?.value, 0)
     }
 
     func testState_CoinValue_CoinType() {
@@ -192,14 +221,6 @@ class SendInteractorTests: XCTestCase {
         XCTAssertEqual(state.coinValue, CoinValue(coinCode: coinCode, value: amount / rateValue))
     }
 
-    func testState_CoinValue_CurrencyType_NoRate() {
-        input.inputType = .currency
-
-        let state = interactor.state(forUserInput: input)
-
-        XCTAssertNil(state.coinValue)
-    }
-
     func testState_CurrencyValue_CoinType() {
         let rateValue: Decimal = 987.65
         let amount: Decimal = 123.45
@@ -214,8 +235,9 @@ class SendInteractorTests: XCTestCase {
     }
 
     func testState_CurrencyValue_CurrencyType() {
-        let amount: Decimal = 123.45
+        let amount: Decimal = 6
 
+        interactorState.exchangeRate = 2
         input.inputType = .currency
         input.amount = amount
 
@@ -225,6 +247,7 @@ class SendInteractorTests: XCTestCase {
     }
 
     func testState_CurrencyValue_CoinType_NoRate() {
+        interactorState.exchangeRate = nil
         input.inputType = .coin
 
         let state = interactor.state(forUserInput: input)
@@ -639,6 +662,12 @@ class SendInteractorTests: XCTestCase {
         interactor.send(userInput: input)
 
         verify(mockDelegate).didFailToSend(error: equal(to: error, type: TestError.self))
+    }
+
+    func testOnBecomeActive() {
+        mockBackgroundManager.didBecomeActiveSubject.onNext(())
+
+        verify(mockDelegate).onBecomeActive()
     }
 
 }

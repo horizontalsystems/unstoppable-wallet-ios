@@ -18,7 +18,7 @@ class SendInteractor {
     private let state: SendInteractorState
     private let async: Bool
 
-    init(currencyManager: ICurrencyManager, rateStorage: IRateStorage, localStorage: ILocalStorage, pasteboardManager: IPasteboardManager, state: SendInteractorState, appConfigProvider: IAppConfigProvider, async: Bool = true) {
+    init(currencyManager: ICurrencyManager, rateStorage: IRateStorage, localStorage: ILocalStorage, pasteboardManager: IPasteboardManager, state: SendInteractorState, appConfigProvider: IAppConfigProvider, backgroundManager: BackgroundManager, async: Bool = true) {
         self.currencyManager = currencyManager
         self.rateStorage = rateStorage
         self.localStorage = localStorage
@@ -26,6 +26,10 @@ class SendInteractor {
         self.appConfigProvider = appConfigProvider
         self.state = state
         self.async = async
+
+        backgroundManager.didBecomeActiveSubject.subscribe(onNext: { [weak self] in
+            self?.delegate?.onBecomeActive()
+        }).disposed(by: disposeBag)
     }
 
 }
@@ -66,18 +70,19 @@ extension SendInteractor: ISendInteractor {
         let coinCode = state.adapter.coin.code
         let adapter = state.adapter
         let baseCurrency = currencyManager.baseCurrency
+        let amount: Decimal = state.exchangeRate == nil && input.inputType == .currency ? 0 : input.amount
+        let inputType = state.exchangeRate == nil ? .coin : input.inputType
 
-        let decimal = input.inputType == .coin ? min(adapter.decimal, appConfigProvider.maxDecimal) : appConfigProvider.fiatDecimal
+        let decimal = inputType == .coin ? min(adapter.decimal, appConfigProvider.maxDecimal) : appConfigProvider.fiatDecimal
+        let sendState = SendState(decimal: decimal, inputType: inputType)
 
-        let sendState = SendState(decimal: decimal, inputType: input.inputType)
-
-        switch input.inputType {
+        switch inputType {
         case .coin:
-            sendState.coinValue = CoinValue(coinCode: coinCode, value: input.amount)
-            sendState.currencyValue = state.exchangeRate.map { CurrencyValue(currency: baseCurrency, value: input.amount * $0) }
+            sendState.coinValue = CoinValue(coinCode: coinCode, value: amount)
+            sendState.currencyValue = state.exchangeRate.map { CurrencyValue(currency: baseCurrency, value: amount * $0) }
         case .currency:
-            sendState.coinValue = state.exchangeRate.map { CoinValue(coinCode: coinCode, value: input.amount / $0) }
-            sendState.currencyValue = CurrencyValue(currency: baseCurrency, value: input.amount)
+            sendState.coinValue = state.exchangeRate.map { CoinValue(coinCode: coinCode, value: amount / $0) }
+            sendState.currencyValue = CurrencyValue(currency: baseCurrency, value: amount)
         }
 
         sendState.address = input.address

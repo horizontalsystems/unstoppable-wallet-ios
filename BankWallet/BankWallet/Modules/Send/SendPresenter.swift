@@ -33,8 +33,11 @@ extension SendPresenter: ISendInteractorDelegate {
 
     func didUpdateRate() {
         let state = interactor.state(forUserInput: userInput)
+        userInput.inputType = state.inputType
         let viewItem = factory.viewItem(forState: state, forceRoundDown: false)
 
+        view?.set(decimal: viewItem.decimal)
+        view?.set(amountInfo: viewItem.amountInfo)
         view?.set(switchButtonEnabled: viewItem.switchButtonEnabled)
         view?.set(hintInfo: viewItem.hintInfo)
         view?.set(feeInfo: viewItem.feeInfo)
@@ -46,6 +49,10 @@ extension SendPresenter: ISendInteractorDelegate {
 
     func didFailToSend(error: Error) {
         view?.show(error: error)
+    }
+
+    func onBecomeActive() {
+        interactor.fetchRate()
     }
 
 }
