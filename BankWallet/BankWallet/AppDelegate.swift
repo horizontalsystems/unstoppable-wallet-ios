@@ -17,14 +17,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
+        App.shared.backgroundManager.resignActiveSubject.onNext(())
         App.shared.blurManager.willResignActive()
     }
 
     func applicationDidBecomeActive(_ application: UIApplication) {
+        App.shared.backgroundManager.didBecomeActiveSubject.onNext(())
         App.shared.blurManager.didBecomeActive()
     }
 
     func applicationDidEnterBackground(_ application: UIApplication) {
+        App.shared.backgroundManager.didEnterBackgroundSubject.onNext(())
         App.shared.lockManager.didEnterBackground()
 
         backgroundTask = UIApplication.shared.beginBackgroundTask {

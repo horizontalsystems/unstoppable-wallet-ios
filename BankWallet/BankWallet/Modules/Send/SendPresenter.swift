@@ -27,17 +27,36 @@ class SendPresenter {
         view?.set(sendButtonEnabled: viewItem.sendButtonEnabled)
     }
 
+    private func updateViewItem() {
+        let state = interactor.state(forUserInput: userInput)
+        let viewItem = factory.viewItem(forState: state, forceRoundDown: false)
+
+        view?.set(decimal: viewItem.decimal)
+        view?.set(amountInfo: viewItem.amountInfo)
+        view?.set(switchButtonEnabled: viewItem.switchButtonEnabled)
+        view?.set(hintInfo: viewItem.hintInfo)
+        view?.set(feeInfo: viewItem.feeInfo)
+    }
+
 }
 
 extension SendPresenter: ISendInteractorDelegate {
 
-    func didUpdateRate() {
-        let state = interactor.state(forUserInput: userInput)
-        let viewItem = factory.viewItem(forState: state, forceRoundDown: false)
+    func didRetrieve(rate: Rate?) {
+        if userInput.inputType == .currency && rate == nil {
+            router.dismiss()
+            return
+        }
 
-        view?.set(switchButtonEnabled: viewItem.switchButtonEnabled)
-        view?.set(hintInfo: viewItem.hintInfo)
-        view?.set(feeInfo: viewItem.feeInfo)
+        if interactor.defaultInputType == .currency && userInput.amount == 0 {
+            userInput.inputType = interactor.defaultInputType
+        }
+
+        updateViewItem()
+    }
+
+    func didRetrieveFeeRate() {
+        updateViewItem()
     }
 
     func didSend() {
@@ -46,6 +65,10 @@ extension SendPresenter: ISendInteractorDelegate {
 
     func didFailToSend(error: Error) {
         view?.show(error: error)
+    }
+
+    func onBecomeActive() {
+        interactor.retrieveRate()
     }
 
 }
@@ -57,7 +80,7 @@ extension SendPresenter: ISendViewDelegate {
     }
 
     func onViewDidLoad() {
-        interactor.fetchRate()
+        interactor.retrieveRate()
 
         userInput.inputType = interactor.defaultInputType
 

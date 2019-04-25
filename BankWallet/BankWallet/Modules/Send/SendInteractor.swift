@@ -18,7 +18,7 @@ class SendInteractor {
     private let state: SendInteractorState
     private let async: Bool
 
-    init(currencyManager: ICurrencyManager, rateStorage: IRateStorage, localStorage: ILocalStorage, pasteboardManager: IPasteboardManager, state: SendInteractorState, appConfigProvider: IAppConfigProvider, async: Bool = true) {
+    init(currencyManager: ICurrencyManager, rateStorage: IRateStorage, localStorage: ILocalStorage, pasteboardManager: IPasteboardManager, state: SendInteractorState, appConfigProvider: IAppConfigProvider, backgroundManager: BackgroundManager, async: Bool = true) {
         self.currencyManager = currencyManager
         self.rateStorage = rateStorage
         self.localStorage = localStorage
@@ -26,6 +26,10 @@ class SendInteractor {
         self.appConfigProvider = appConfigProvider
         self.state = state
         self.async = async
+
+        backgroundManager.didBecomeActiveSubject.subscribe(onNext: { [weak self] in
+            self?.delegate?.onBecomeActive()
+        }).disposed(by: disposeBag)
     }
 
 }
@@ -52,7 +56,7 @@ extension SendInteractor: ISendInteractor {
     }
 
     func convertedAmount(forInputType inputType: SendInputType, amount: Decimal) -> Decimal? {
-        guard let rateValue = state.exchangeRate else {
+        guard let rateValue = state.exchangeRate?.value else {
             return nil
         }
 
@@ -66,6 +70,7 @@ extension SendInteractor: ISendInteractor {
         let coinCode = state.adapter.coin.code
         let adapter = state.adapter
         let baseCurrency = currencyManager.baseCurrency
+        let rateValue = state.exchangeRate?.value
 
         let decimal = input.inputType == .coin ? min(adapter.decimal, appConfigProvider.maxDecimal) : appConfigProvider.fiatDecimal
 
@@ -74,9 +79,9 @@ extension SendInteractor: ISendInteractor {
         switch input.inputType {
         case .coin:
             sendState.coinValue = CoinValue(coinCode: coinCode, value: input.amount)
-            sendState.currencyValue = state.exchangeRate.map { CurrencyValue(currency: baseCurrency, value: input.amount * $0) }
+            sendState.currencyValue = rateValue.map { CurrencyValue(currency: baseCurrency, value: input.amount * $0) }
         case .currency:
-            sendState.coinValue = state.exchangeRate.map { CoinValue(coinCode: coinCode, value: input.amount / $0) }
+            sendState.coinValue = rateValue.map { CoinValue(coinCode: coinCode, value: input.amount / $0) }
             sendState.currencyValue = CurrencyValue(currency: baseCurrency, value: input.amount)
         }
 
@@ -101,13 +106,13 @@ extension SendInteractor: ISendInteractor {
             let feeValue = adapter.fee(for: coinValue.value, address: input.address, feeRatePriority: input.feeRatePriority)
             sendState.feeCoinValue = CoinValue(coinCode: state.adapter.feeCoinCode ?? coinCode, value: feeValue)
         }
-        let rateValue: Decimal?
+        let feeRateValue: Decimal?
         if state.adapter.feeCoinCode != nil {
-            rateValue = state.feeExchangeRate
+            feeRateValue = state.feeExchangeRate?.value
         } else {
-            rateValue = state.exchangeRate
+            feeRateValue = rateValue
         }
-        if let rateValue = rateValue, let feeCoinValue = sendState.feeCoinValue {
+        if let rateValue = feeRateValue, let feeCoinValue = sendState.feeCoinValue {
             sendState.feeCurrencyValue = CurrencyValue(currency: baseCurrency, value: rateValue * feeCoinValue.value)
         }
 
@@ -121,7 +126,7 @@ extension SendInteractor: ISendInteractor {
             return .coinValue(coinValue: CoinValue(coinCode: coin.code, value: availableBalance))
         case .currency:
             return state.exchangeRate.map {
-                let currencyBalanceMinusFee = availableBalance * $0
+                let currencyBalanceMinusFee = availableBalance * $0.value
                 return .currencyValue(currencyValue: CurrencyValue(currency: currencyManager.baseCurrency, value: currencyBalanceMinusFee))
             }
         }
@@ -143,7 +148,7 @@ extension SendInteractor: ISendInteractor {
             return availableBalance
         case .currency:
             return state.exchangeRate.map {
-                return availableBalance * $0
+                return availableBalance * $0.value
             } ?? 0
         }
     }
@@ -162,7 +167,7 @@ extension SendInteractor: ISendInteractor {
 
         if userInput.inputType == .coin {
             computedAmount = userInput.amount
-        } else if let rateValue = state.exchangeRate {
+        } else if let rateValue = state.exchangeRate?.value {
             computedAmount = userInput.amount / rateValue
         }
 
@@ -188,21 +193,21 @@ extension SendInteractor: ISendInteractor {
         localStorage.sendInputType = inputType
     }
 
-    func fetchRate() {
-        rateStorage.nonExpiredLatestRateValueObservable(forCoinCode: state.adapter.coin.code, currencyCode: currencyManager.baseCurrency.code)
+    func retrieveRate() {
+        rateStorage.nonExpiredLatestRateObservable(forCoinCode: state.adapter.coin.code, currencyCode: currencyManager.baseCurrency.code)
                 .take(1)
-                .subscribe(onNext: { [weak self] rateValue in
-                    self?.state.exchangeRate = rateValue
-                    self?.delegate?.didUpdateRate()
+                .subscribe(onNext: { [weak self] rate in
+                    self?.state.exchangeRate = rate
+                    self?.delegate?.didRetrieve(rate: rate)
                 })
                 .disposed(by: disposeBag)
 
         if let feeCoinCode = state.adapter.feeCoinCode {
-            rateStorage.nonExpiredLatestRateValueObservable(forCoinCode: feeCoinCode, currencyCode: currencyManager.baseCurrency.code)
+            rateStorage.nonExpiredLatestRateObservable(forCoinCode: feeCoinCode, currencyCode: currencyManager.baseCurrency.code)
                     .take(1)
                     .subscribe(onNext: { [weak self] rateValue in
                         self?.state.feeExchangeRate = rateValue
-                        self?.delegate?.didUpdateRate()
+                        self?.delegate?.didRetrieveFeeRate()
                     })
                     .disposed(by: disposeBag)
         }
