@@ -76,8 +76,9 @@ class SendPresenterTests: XCTestCase {
             when(mock.copy(address: any())).thenDoNothing()
             when(mock.send(userInput: any())).thenDoNothing()
             when(mock.set(inputType: any())).thenDoNothing()
-            when(mock.fetchRate()).thenDoNothing()
+            when(mock.retrieveRate()).thenDoNothing()
             when(mock.totalBalanceMinusFee(forInputType: any(), address: any(), feeRatePriority: any())).thenReturn(0)
+            when(mock.defaultInputType.get).thenReturn(SendInputType.coin)
         }
         stub(mockFactory) { mock in
             when(mock.viewItem(forState: equal(to: state), forceRoundDown: any())).thenReturn(viewItem)
@@ -131,7 +132,7 @@ class SendPresenterTests: XCTestCase {
         verify(mockView).set(feeInfo: equal(to: feeInfo))
         verify(mockView).set(sendButtonEnabled: viewItem.sendButtonEnabled)
 
-        verify(mockInteractor).fetchRate()
+        verify(mockInteractor).retrieveRate()
     }
 
     func testOnSwitchClicked_UpdateView() {
@@ -336,6 +337,26 @@ class SendPresenterTests: XCTestCase {
 
     func testIsFeeAdjustable() {
         XCTAssertEqual(true, presenter.isFeeAdjustable)
+    }
+
+    func testOnBecomeActive() {
+        presenter.onBecomeActive()
+
+        verify(mockInteractor).retrieveRate()
+    }
+
+    func testDidUpdateRate() {
+        state.inputType = .currency
+
+        presenter.didRetrieve(rate: Rate(coinCode: coin.code, currencyCode: "$", value: 1, date: Date(), isLatest: true))
+
+        verify(mockFactory).viewItem(forState: sameInstance(as: state), forceRoundDown: equal(to: false))
+
+        verify(mockView).set(feeInfo: equal(to: feeInfo))
+        verify(mockView).set(hintInfo: equal(to: viewItem.hintInfo))
+        verify(mockView).set(switchButtonEnabled: viewItem.switchButtonEnabled)
+        verify(mockView).set(amountInfo: equal(to: viewItem.amountInfo))
+        verify(mockView).set(decimal: equal(to: decimal))
     }
 
 }

@@ -131,3 +131,9 @@ extension FeeRatePriority {
         }
     }
 }
+
+extension Rate: Equatable {
+    public static func ==(lhs: Rate, rhs: Rate) -> Bool {
+        return lhs.value == rhs.value && lhs.coinCode == rhs.coinCode && lhs.currencyCode == rhs.currencyCode && lhs.date == rhs.date && lhs.isLatest == rhs.isLatest
+    }
+}

@@ -11,6 +11,7 @@ class App {
 
     let appConfigProvider: IAppConfigProvider
     let systemInfoManager: ISystemInfoManager
+    let backgroundManager: BackgroundManager
 
     let localizationManager: LocalizationManager
     let languageManager: ILanguageManager
@@ -56,6 +57,7 @@ class App {
 
         appConfigProvider = AppConfigProvider()
         systemInfoManager = SystemInfoManager()
+        backgroundManager = BackgroundManager()
 
         localizationManager = LocalizationManager()
         languageManager = LanguageManager(localizationManager: localizationManager, localStorage: localStorage, fallbackLanguage: fallbackLanguage)

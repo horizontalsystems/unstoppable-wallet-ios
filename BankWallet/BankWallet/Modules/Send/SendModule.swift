@@ -54,16 +54,19 @@ protocol ISendInteractor {
     func send(userInput: SendUserInput)
 
     func set(inputType: SendInputType)
-    func fetchRate()
+    func retrieveRate()
 }
 
 protocol ISendInteractorDelegate: class {
-    func didUpdateRate()
+    func didRetrieve(rate: Rate?)
+    func didRetrieveFeeRate()
     func didSend()
     func didFailToSend(error: Error)
+    func onBecomeActive()
 }
 
 protocol ISendRouter {
+    func dismiss()
 }
 
 protocol ISendStateViewItemFactory {
@@ -112,8 +115,8 @@ enum FeeError {
 
 class SendInteractorState {
     let adapter: IAdapter
-    var exchangeRate: Decimal?
-    var feeExchangeRate: Decimal?
+    var exchangeRate: Rate?
+    var feeExchangeRate: Rate?
 
     init(adapter: IAdapter) {
         self.adapter = adapter
