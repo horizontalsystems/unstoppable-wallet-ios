@@ -91,6 +91,7 @@ class AppConfigProvider: IAppConfigProvider {
         Coin(title: "STASIS EURS", code: "EURS", type: .erc20(address: "0xdB25f211AB05b1c97D595516F45794528a807ad8", decimal: 2)),
         Coin(title: "Status", code: "SNT", type: .erc20(address: "0x744d70FDBE2Ba4CF95131626614a1763DF805B9E", decimal: 18)),
         Coin(title: "TrueUSD", code: "TUSD", type: .erc20(address: "0x0000000000085d4780B73119b644AE5ecd22b376", decimal: 18)),
+        Coin(title: "Tether USD", code: "USDT", type: .erc20(address: "0xdAC17F958D2ee523a2206206994597C13D831ec7", decimal: 6)),
         Coin(title: "USD Coin", code: "USDC", type: .erc20(address: "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48", decimal: 6)),
         Coin(title: "Walton", code: "WTC", type: .erc20(address: "0xb7cB1C96dB6B22b0D3d9536E0108d062BD488F74", decimal: 18)),
         Coin(title: "Wax Token", code: "WAX", type: .erc20(address: "0x39Bb259F66E1C59d5ABEF88375979b4D20D98022", decimal: 8)),
