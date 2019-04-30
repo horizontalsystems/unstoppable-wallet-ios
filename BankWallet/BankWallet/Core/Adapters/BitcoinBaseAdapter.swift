@@ -42,7 +42,8 @@ class BitcoinBaseAdapter {
 
         return TransactionRecord(
                 transactionHash: transaction.transactionHash,
-                index: 0,
+                transactionIndex: transaction.transactionIndex,
+                interTransactionIndex: 0,
                 blockHeight: transaction.blockHeight,
                 amount: Decimal(transaction.amount) / coinRate,
                 date: Date(timeIntervalSince1970: Double(transaction.timestamp)),
@@ -168,7 +169,7 @@ extension BitcoinBaseAdapter: IAdapter {
         }
     }
 
-    func transactionsSingle(from: (hash: String, index: Int)?, limit: Int) -> Single<[TransactionRecord]> {
+    func transactionsSingle(from: (hash: String, interTransactionIndex: Int)?, limit: Int) -> Single<[TransactionRecord]> {
         return abstractKit.transactions(fromHash: from?.hash, limit: limit)
                 .map { [weak self] transactions -> [TransactionRecord] in
                     return transactions.compactMap {

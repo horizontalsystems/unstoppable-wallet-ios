@@ -109,7 +109,7 @@ protocol IAdapter: class {
     var balanceUpdatedObservable: Observable<Void> { get }
 
     var transactionRecordsObservable: Observable<[TransactionRecord]> { get }
-    func transactionsSingle(from: (hash: String, index: Int)?, limit: Int) -> Single<[TransactionRecord]>
+    func transactionsSingle(from: (hash: String, interTransactionIndex: Int)?, limit: Int) -> Single<[TransactionRecord]>
 
     func sendSingle(to address: String, amount: Decimal, feeRatePriority: FeeRatePriority) -> Single<Void>
 

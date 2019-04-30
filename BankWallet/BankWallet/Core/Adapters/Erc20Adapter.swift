@@ -36,7 +36,8 @@ class Erc20Adapter: EthereumBaseAdapter {
 
         return TransactionRecord(
                 transactionHash: transaction.transactionHash,
-                index: transaction.index,
+                transactionIndex: transaction.transactionIndex ?? 0,
+                interTransactionIndex: transaction.interTransactionIndex,
                 blockHeight: transaction.blockNumber,
                 amount: amount,
                 date: Date(timeIntervalSince1970: transaction.timestamp),
@@ -91,7 +92,7 @@ extension Erc20Adapter: IAdapter {
         }
     }
 
-    func transactionsSingle(from: (hash: String, index: Int)?, limit: Int) -> Single<[TransactionRecord]> {
+    func transactionsSingle(from: (hash: String, interTransactionIndex: Int)?, limit: Int) -> Single<[TransactionRecord]> {
         do {
             return try erc20Kit.transactionsSingle(from: from, limit: limit)
                     .map { [weak self] transactions -> [TransactionRecord] in
