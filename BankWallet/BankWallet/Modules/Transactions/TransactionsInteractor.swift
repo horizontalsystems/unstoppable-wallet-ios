@@ -35,7 +35,7 @@ class TransactionsInteractor {
         transactionRecordsDisposeBag = DisposeBag()
 
         adapterManager.adapters.forEach { adapter in
-            adapter.transactionRecordsSubject
+            adapter.transactionRecordsObservable
                     .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
                     .observeOn(MainScheduler.instance)
                     .subscribe(onNext: { [weak self] records in
@@ -92,7 +92,7 @@ extension TransactionsInteractor: ITransactionsInteractor {
         lastBlockHeightsDisposeBag = DisposeBag()
 
         adapterManager.adapters.forEach { adapter in
-            adapter.lastBlockHeightUpdatedSignal
+            adapter.lastBlockHeightUpdatedObservable
                     .throttle(3, latest: true, scheduler: ConcurrentDispatchQueueScheduler(qos: .background))
                     .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
                     .observeOn(MainScheduler.instance)
@@ -116,7 +116,7 @@ extension TransactionsInteractor: ITransactionsInteractor {
             let single: Single<(Coin, [TransactionRecord])>
 
             if let adapter = adapter {
-                single = adapter.transactionsSingle(hashFrom: fetchData.hashFrom, limit: fetchData.limit)
+                single = adapter.transactionsSingle(from: fetchData.from, limit: fetchData.limit)
                         .map { records -> (Coin, [TransactionRecord]) in
                             (fetchData.coin, records)
                         }

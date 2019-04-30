@@ -1,5 +1,6 @@
 import RxSwift
-import HSEthereumKit
+import EthereumKit
+import Erc20Kit
 
 protocol IEthereumKitManager {
     func ethereumKit(authData: AuthData) throws -> EthereumKit
@@ -19,12 +20,13 @@ class EthereumKitManager: IEthereumKitManager {
             return ethereumKit
         }
 
-        let ethereumKit = try EthereumKit.ethereumKit(
+        let ethereumKit = try EthereumKit.instance(
                 words: authData.words,
+                syncMode: .api(infuraProjectId: appConfigProvider.infuraKey),
+                networkType: appConfigProvider.testMode ? .ropsten : .mainNet,
+                etherscanApiKey: appConfigProvider.etherscanKey,
                 walletId: authData.walletId,
-                testMode: appConfigProvider.testMode,
-                infuraKey: appConfigProvider.infuraKey,
-                etherscanKey: appConfigProvider.etherscanKey
+                minLogLevel: .error
         )
 
         ethereumKit.start()

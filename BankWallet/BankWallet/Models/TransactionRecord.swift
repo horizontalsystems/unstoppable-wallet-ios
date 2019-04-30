@@ -2,6 +2,7 @@ import Foundation
 
 struct TransactionRecord {
     let transactionHash: String
+    let index: Int
     let blockHeight: Int?
     let amount: Decimal
     let date: Date
@@ -18,11 +19,11 @@ struct TransactionAddress {
 extension TransactionRecord: Comparable {
 
     public static func <(lhs: TransactionRecord, rhs: TransactionRecord) -> Bool {
-        return lhs.date != rhs.date ? lhs.date < rhs.date : lhs.transactionHash < rhs.transactionHash
+        return lhs.date != rhs.date ? lhs.date < rhs.date : lhs.index < rhs.index
     }
 
     public static func ==(lhs: TransactionRecord, rhs: TransactionRecord) -> Bool {
-        return lhs.transactionHash == rhs.transactionHash
+        return lhs.transactionHash == rhs.transactionHash && lhs.index == rhs.index
     }
 
 }

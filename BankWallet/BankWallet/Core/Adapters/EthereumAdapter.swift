@@ -1,4 +1,4 @@
-import HSEthereumKit
+import EthereumKit
 import RxSwift
 
 class EthereumAdapter: EthereumBaseAdapter {
@@ -6,16 +6,41 @@ class EthereumAdapter: EthereumBaseAdapter {
 
     init(coin: Coin, ethereumKit: EthereumKit, addressParser: IAddressParser, feeRateProvider: IFeeRateProvider) {
         super.init(coin: coin, ethereumKit: ethereumKit, decimal: EthereumAdapter.decimal, addressParser: addressParser, feeRateProvider: feeRateProvider)
-
-        ethereumKit.delegate = self
     }
 
-    override func transactionsObservable(hashFrom: String?, limit: Int) -> Single<[EthereumTransaction]> {
-        return ethereumKit.transactionsSingle(fromHash: hashFrom, limit: limit)
+    private func transactionRecord(fromTransaction transaction: TransactionInfo) -> TransactionRecord {
+        let mineAddress = ethereumKit.receiveAddress.lowercased()
+
+        let from = TransactionAddress(
+                address: transaction.from,
+                mine: transaction.from.lowercased() == mineAddress
+        )
+
+        let to = TransactionAddress(
+                address: transaction.to,
+                mine: transaction.to.lowercased() == mineAddress
+        )
+
+        var amount: Decimal = 0
+
+        if let significand = Decimal(string: transaction.value) {
+            let sign: FloatingPointSign = from.mine ? .minus : .plus
+            amount = Decimal(sign: sign, exponent: -decimal, significand: significand)
+        }
+
+        return TransactionRecord(
+                transactionHash: transaction.hash,
+                index: 0,
+                blockHeight: transaction.blockNumber,
+                amount: amount,
+                date: Date(timeIntervalSince1970: transaction.timestamp),
+                from: [from],
+                to: [to]
+        )
     }
 
-    override func sendSingle(to address: String, amount: String, gasPrice: Int) -> Single<Void> {
-        return ethereumKit.sendSingle(to: address, amount: amount, gasPriceInWei: gasPrice)
+    override func sendSingle(to address: String, value: String, gasPrice: Int) -> Single<Void> {
+        return ethereumKit.sendSingle(to: address, value: value, gasPrice: gasPrice)
                 .map { _ in ()}
                 .catchError { [weak self] error in
                     return Single.error(self?.createSendError(from: error) ?? error)
@@ -26,15 +51,37 @@ class EthereumAdapter: EthereumBaseAdapter {
 
 extension EthereumAdapter: IAdapter {
 
-    func stop() {
+    var state: AdapterState {
+        switch ethereumKit.syncState {
+        case .synced: return .synced
+        case .notSynced: return .notSynced
+        case .syncing: return .syncing(progress: 50, lastBlockDate: nil)
+        }
+    }
+
+    var stateUpdatedObservable: Observable<Void> {
+        return ethereumKit.syncStateObservable.map { _ in () }
     }
 
     var balance: Decimal {
         return balanceDecimal(balanceString: ethereumKit.balance, decimal: EthereumAdapter.decimal)
     }
 
-    func refresh() {
-        ethereumKit.start()
+    var balanceUpdatedObservable: Observable<Void> {
+        return ethereumKit.balanceObservable.map { _ in () }
+    }
+
+    var transactionRecordsObservable: Observable<[TransactionRecord]> {
+        return ethereumKit.transactionsObservable.map { [weak self] in
+            $0.compactMap { self?.transactionRecord(fromTransaction: $0) }
+        }
+    }
+
+    func transactionsSingle(from: (hash: String, index: Int)?, limit: Int) -> Single<[TransactionRecord]> {
+        return ethereumKit.transactionsSingle(fromHash: from?.hash, limit: limit)
+                .map { [weak self] transactions -> [TransactionRecord] in
+                    return transactions.compactMap { self?.transactionRecord(fromTransaction: $0) }
+                }
     }
 
     func availableBalance(for address: String?, feeRatePriority: FeeRatePriority) -> Decimal {
@@ -42,7 +89,7 @@ extension EthereumAdapter: IAdapter {
     }
 
     func fee(for value: Decimal, address: String?, feeRatePriority: FeeRatePriority) -> Decimal {
-        return ethereumKit.fee(gasPriceInWei: feeRateProvider.ethereumGasPrice(for: feeRatePriority)) / pow(10, EthereumAdapter.decimal)
+        return ethereumKit.fee(gasPrice: feeRateProvider.ethereumGasPrice(for: feeRatePriority)) / pow(10, EthereumAdapter.decimal)
     }
 
     func validate(amount: Decimal, address: String?, feeRatePriority: FeeRatePriority) -> [SendStateError] {
@@ -52,9 +99,5 @@ extension EthereumAdapter: IAdapter {
         }
         return errors
     }
-
-}
-
-extension EthereumAdapter: IEthereumKitDelegate {
 
 }

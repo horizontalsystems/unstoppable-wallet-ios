@@ -28,7 +28,7 @@ class BalanceInteractor {
             onUpdateBalance(adapter: adapter)
             onUpdateState(adapter: adapter)
 
-            adapter.balanceUpdatedSignal
+            adapter.balanceUpdatedObservable
                     .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
                     .observeOn(MainScheduler.instance)
                     .subscribe(onNext: { [weak self] in
@@ -36,7 +36,7 @@ class BalanceInteractor {
                     })
                     .disposed(by: adaptersDisposeBag)
 
-            adapter.stateUpdatedSignal
+            adapter.stateUpdatedObservable
                     .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
                     .observeOn(MainScheduler.instance)
                     .subscribe(onNext: { [weak self] in

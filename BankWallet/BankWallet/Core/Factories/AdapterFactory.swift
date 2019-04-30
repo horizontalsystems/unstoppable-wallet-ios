@@ -1,7 +1,3 @@
-import HSBitcoinKit
-import HSEthereumKit
-import RxSwift
-
 class AdapterFactory: IAdapterFactory {
     private let appConfigProvider: IAppConfigProvider
     private let localStorage: ILocalStorage
@@ -19,10 +15,10 @@ class AdapterFactory: IAdapterFactory {
         switch coin.type {
         case .bitcoin:
             let addressParser = AddressParser(validScheme: "bitcoin", removeScheme: true)
-            return BitcoinAdapter(coin: coin, authData: authData, newWallet: localStorage.isNewWallet, addressParser: addressParser, feeRateProvider: feeRateProvider, testMode: appConfigProvider.testMode)
+            return try? BitcoinAdapter(coin: coin, authData: authData, newWallet: localStorage.isNewWallet, addressParser: addressParser, feeRateProvider: feeRateProvider, testMode: appConfigProvider.testMode)
         case .bitcoinCash:
             let addressParser = AddressParser(validScheme: "bitcoincash", removeScheme: false)
-            return BitcoinCashAdapter(coin: coin, authData: authData, newWallet: localStorage.isNewWallet, addressParser: addressParser, feeRateProvider: feeRateProvider, testMode: appConfigProvider.testMode)
+            return try? BitcoinCashAdapter(coin: coin, authData: authData, newWallet: localStorage.isNewWallet, addressParser: addressParser, feeRateProvider: feeRateProvider, testMode: appConfigProvider.testMode)
         case .ethereum:
             let addressParser = AddressParser(validScheme: "ethereum", removeScheme: true)
             if let ethereumKit = try? ethereumKitManager.ethereumKit(authData: authData) {
@@ -31,7 +27,7 @@ class AdapterFactory: IAdapterFactory {
         case let .erc20(address, decimal):
             let addressParser = AddressParser(validScheme: "ethereum", removeScheme: true)
             if let ethereumKit = try? ethereumKitManager.ethereumKit(authData: authData) {
-                return Erc20Adapter(coin: coin, ethereumKit: ethereumKit, contractAddress: address, decimal: decimal, addressParser: addressParser, feeRateProvider: feeRateProvider)
+                return try? Erc20Adapter(coin: coin, ethereumKit: ethereumKit, contractAddress: address, decimal: decimal, addressParser: addressParser, feeRateProvider: feeRateProvider)
             }
         }
 

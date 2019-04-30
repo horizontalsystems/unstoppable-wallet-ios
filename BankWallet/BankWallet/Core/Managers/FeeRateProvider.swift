@@ -1,4 +1,4 @@
-import HSFeeRateKit
+import FeeRateKit
 
 class FeeRateProvider {
     let feeRateKit = FeeRateKit.instance()

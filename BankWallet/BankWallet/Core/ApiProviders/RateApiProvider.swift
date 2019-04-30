@@ -66,7 +66,8 @@ class RateApiProvider {
             if let rate = rates[minuteString], let decimal = Decimal(string: rate) {
                 return Single.just(decimal)
             }
-
+            return Single.error(ApiError.noValueForHour)
+        }.catchError { _ in
             return daySingle.map { rate -> Decimal? in
                 return Decimal(string: rate)
             }
@@ -94,6 +95,7 @@ extension RateApiProvider: IRateApiProvider {
 extension RateApiProvider {
 
     enum ApiError: Error {
+        case noValueForHour
         case allGatewaysReturnedError
     }
 
