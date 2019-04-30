@@ -1,15 +1,19 @@
-import HSBitcoinKit
+import BitcoinKit
 import RxSwift
 
 class BitcoinAdapter: BitcoinBaseAdapter {
+    private let bitcoinKit: BitcoinKit
     private let feeRateProvider: IFeeRateProvider
 
-    init?(coin: Coin, authData: AuthData, newWallet: Bool, addressParser: IAddressParser, feeRateProvider: IFeeRateProvider, testMode: Bool) {
+    init(coin: Coin, authData: AuthData, newWallet: Bool, addressParser: IAddressParser, feeRateProvider: IFeeRateProvider, testMode: Bool) throws {
         self.feeRateProvider = feeRateProvider
 
-        let network: BitcoinKit.Network = testMode ? .testNet : .mainNet
+        let networkType: BitcoinKit.NetworkType = testMode ? .testNet : .mainNet
+        bitcoinKit = try BitcoinKit(withWords: authData.words, walletId: authData.walletId, newWallet: newWallet, networkType: networkType, minLogLevel: .error)
 
-        super.init(coin: coin, kitCoin: .bitcoin(network: network), authData: authData, newWallet: newWallet, addressParser: addressParser)
+        super.init(coin: coin, abstractKit: bitcoinKit, addressParser: addressParser)
+
+        bitcoinKit.delegate = self
     }
 
     override func feeRate(priority: FeeRatePriority) -> Int {

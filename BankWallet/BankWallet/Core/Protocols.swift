@@ -91,29 +91,25 @@ protocol IAdapter: class {
     var feeCoinCode: CoinCode? { get }
 
     var decimal: Int { get }
-    var balance: Decimal { get }
-    var balanceUpdatedSignal: Signal { get }
-
-    var state: AdapterState { get }
-    var stateUpdatedSignal: Signal { get }
-
-    func transactionsSingle(hashFrom: String?, limit: Int) -> Single<[TransactionRecord]>
-
     var confirmationsThreshold: Int { get }
-
-    var lastBlockHeight: Int? { get }
-    var lastBlockHeightUpdatedSignal: Signal { get }
-
-    var transactionRecordsSubject: PublishSubject<[TransactionRecord]> { get }
-
-    var debugInfo: String { get }
-
     var refreshable: Bool { get }
 
     func start()
     func stop()
     func refresh()
     func clear()
+
+    var lastBlockHeight: Int? { get }
+    var lastBlockHeightUpdatedObservable: Observable<Void> { get }
+
+    var state: AdapterState { get }
+    var stateUpdatedObservable: Observable<Void> { get }
+
+    var balance: Decimal { get }
+    var balanceUpdatedObservable: Observable<Void> { get }
+
+    var transactionRecordsObservable: Observable<[TransactionRecord]> { get }
+    func transactionsSingle(from: (hash: String, index: Int)?, limit: Int) -> Single<[TransactionRecord]>
 
     func sendSingle(to address: String, amount: Decimal, feeRatePriority: FeeRatePriority) -> Single<Void>
 
@@ -124,6 +120,8 @@ protocol IAdapter: class {
     func parse(paymentAddress: String) -> PaymentRequestAddress
 
     var receiveAddress: String { get }
+
+    var debugInfo: String { get }
 }
 
 extension IAdapter {

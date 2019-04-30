@@ -5,30 +5,53 @@ PODS:
   - Alamofire (4.8.2)
   - AlamofireImage (3.5.2):
     - Alamofire (~> 4.8)
-  - BigInt (3.1.0):
-    - SipHash (~> 1.2)
-  - Cuckoo (0.12.1)
-  - GRDB.swift (3.7.0)
-  - HSBitcoinKit (0.4.1):
-    - Alamofire (~> 4.8.0)
-    - BigInt (~> 3.1.0)
-    - HSCryptoKit (~> 1.3.0)
-    - HSHDWalletKit (~> 1.0.4)
-    - ObjectMapper (~> 3.4.0)
-    - RealmSwift (~> 3.11.0)
-    - RxRealm (~> 0.7.0)
-    - RxSwift (~> 4.0)
-  - HSCryptoKit (1.3.0)
-  - HSEthereumKit (0.5):
+  - BigInt (4.0.0)
+  - BitcoinCashKit.swift (0.4.1):
     - Alamofire (~> 4.0)
+    - BigInt (~> 4.0)
+    - BitcoinCore.swift (~> 0.4.1)
+    - GRDB.swift (~> 3.0)
+    - HSCryptoKit (~> 1.0)
+    - HSHDWalletKit (~> 1.0)
+    - ObjectMapper (~> 3.0)
+    - RxSwift (~> 4.0)
+  - BitcoinCore.swift (0.4.1):
+    - Alamofire (~> 4.0)
+    - BigInt (~> 4.0)
+    - GRDB.swift (~> 3.0)
+    - HSCryptoKit (~> 1.0)
+    - HSHDWalletKit (~> 1.0)
+    - ObjectMapper (~> 3.0)
+    - RxSwift (~> 4.0)
+  - BitcoinKit.swift (0.4.1):
+    - Alamofire (~> 4.0)
+    - BigInt (~> 4.0)
+    - BitcoinCore.swift (~> 0.4.1)
+    - GRDB.swift (~> 3.0)
+    - HSCryptoKit (~> 1.0)
+    - HSHDWalletKit (~> 1.0)
+    - ObjectMapper (~> 3.0)
+    - RxSwift (~> 4.0)
+  - Cuckoo (0.12.1)
+  - Erc20Kit.swift (0.1):
+    - BigInt (~> 4.0)
+    - EthereumKit.swift
+    - GRDB.swift (~> 3.0)
+    - HSCryptoKit (~> 1.0)
+    - RxSwift (~> 4.0)
+  - EthereumKit.swift (0.5):
+    - Alamofire (~> 4.0)
+    - BigInt (~> 4.0)
     - GRDB.swift (~> 3.0)
     - HSCryptoKit (~> 1.0)
     - HSHDWalletKit (~> 1.0)
     - RxSwift (~> 4.0)
-  - HSFeeRateKit (0.1):
+  - FeeRateKit.swift (0.1):
     - Alamofire (~> 4.0)
     - GRDB.swift (~> 3.0)
     - RxSwift (~> 4.0)
+  - GRDB.swift (3.7.0)
+  - HSCryptoKit (1.3.0)
   - HSHDWalletKit (1.0.4):
     - HSCryptoKit (~> 1.3.0)
   - HUD.swift (1.0):
@@ -36,11 +59,6 @@ PODS:
     - UIExtensions.swift
   - KeychainAccess (3.2.0)
   - ObjectMapper (3.4.2)
-  - Realm (3.11.2):
-    - Realm/Headers (= 3.11.2)
-  - Realm/Headers (3.11.2)
-  - RealmSwift (3.11.2):
-    - Realm (= 3.11.2)
   - RxCocoa (4.5.0):
     - RxSwift (>= 4.4.2, ~> 4.4)
   - RxGRDB (0.13.0):
@@ -49,14 +67,10 @@ PODS:
   - RxGRDB/default (0.13.0):
     - GRDB.swift (~> 3.5)
     - RxSwift (~> 4.0)
-  - RxRealm (0.7.6):
-    - RealmSwift (~> 3.0)
-    - RxSwift (~> 4.0)
   - RxSwift (4.5.0)
   - SectionsTableView.swift (1.0):
     - SnapKit (~> 4.0)
     - UIExtensions.swift
-  - SipHash (1.2.2)
   - SnapKit (4.2.0)
   - UIExtensions.swift (1.0)
 
@@ -65,11 +79,14 @@ DEPENDENCIES:
   - Alamofire
   - AlamofireImage
   - BigInt
+  - BitcoinCashKit.swift (from `https://github.com/horizontalsystems/bitcoin-kit-ios/`)
+  - BitcoinCore.swift (from `https://github.com/horizontalsystems/bitcoin-kit-ios/`)
+  - BitcoinKit.swift (from `https://github.com/horizontalsystems/bitcoin-kit-ios/`)
   - Cuckoo
+  - Erc20Kit.swift (from `https://github.com/horizontalsystems/ethereum-kit-ios/`)
+  - EthereumKit.swift (from `https://github.com/horizontalsystems/ethereum-kit-ios/`)
+  - FeeRateKit.swift (from `https://github.com/horizontalsystems/blockchain-fee-rate-kit-ios`)
   - GRDB.swift
-  - HSBitcoinKit (from `https://github.com/horizontalsystems/bitcoin-kit-ios/`, branch `production`)
-  - HSEthereumKit (from `https://github.com/horizontalsystems/ethereum-kit-ios/`, branch `production`)
-  - HSFeeRateKit (from `https://github.com/horizontalsystems/blockchain-fee-rate-kit-ios`)
   - HUD.swift (from `https://github.com/horizontalsystems/gui-kit`)
   - KeychainAccess
   - ObjectMapper
@@ -91,25 +108,25 @@ SPEC REPOS:
     - HSHDWalletKit
     - KeychainAccess
     - ObjectMapper
-    - Realm
-    - RealmSwift
     - RxCocoa
     - RxGRDB
-    - RxRealm
     - RxSwift
-    - SipHash
     - SnapKit
 
 EXTERNAL SOURCES:
   ActionSheet.swift:
     :git: https://github.com/horizontalsystems/gui-kit
-  HSBitcoinKit:
-    :branch: production
+  BitcoinCashKit.swift:
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios/
-  HSEthereumKit:
-    :branch: production
+  BitcoinCore.swift:
+    :git: https://github.com/horizontalsystems/bitcoin-kit-ios/
+  BitcoinKit.swift:
+    :git: https://github.com/horizontalsystems/bitcoin-kit-ios/
+  Erc20Kit.swift:
     :git: https://github.com/horizontalsystems/ethereum-kit-ios/
-  HSFeeRateKit:
+  EthereumKit.swift:
+    :git: https://github.com/horizontalsystems/ethereum-kit-ios/
+  FeeRateKit.swift:
     :git: https://github.com/horizontalsystems/blockchain-fee-rate-kit-ios
   HUD.swift:
     :git: https://github.com/horizontalsystems/gui-kit
@@ -122,14 +139,23 @@ CHECKOUT OPTIONS:
   ActionSheet.swift:
     :commit: f5adda01dec2420658b7f0beec461264b62857d3
     :git: https://github.com/horizontalsystems/gui-kit
-  HSBitcoinKit:
-    :commit: 7273f423a5badb44f5e6550327021961027e14b8
+  BitcoinCashKit.swift:
+    :commit: 8d4b6b85559daa88300eaa3b78cda7f05bd533a1
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios/
-  HSEthereumKit:
-    :commit: ae4cb1455ee4fb182874b323fd52ec5ba3b55820
+  BitcoinCore.swift:
+    :commit: 8d4b6b85559daa88300eaa3b78cda7f05bd533a1
+    :git: https://github.com/horizontalsystems/bitcoin-kit-ios/
+  BitcoinKit.swift:
+    :commit: 8d4b6b85559daa88300eaa3b78cda7f05bd533a1
+    :git: https://github.com/horizontalsystems/bitcoin-kit-ios/
+  Erc20Kit.swift:
+    :commit: 9669ac6dbe3ef3de34016de122d1e48997d2fde1
     :git: https://github.com/horizontalsystems/ethereum-kit-ios/
-  HSFeeRateKit:
-    :commit: 397908223abc3ff7bd263bbc782bd8feea652b44
+  EthereumKit.swift:
+    :commit: 9669ac6dbe3ef3de34016de122d1e48997d2fde1
+    :git: https://github.com/horizontalsystems/ethereum-kit-ios/
+  FeeRateKit.swift:
+    :commit: fa1ee9788d55920e99264c947e39ed051e26de58
     :git: https://github.com/horizontalsystems/blockchain-fee-rate-kit-ios
   HUD.swift:
     :commit: f5adda01dec2420658b7f0beec461264b62857d3
@@ -145,28 +171,27 @@ SPEC CHECKSUMS:
   ActionSheet.swift: cd546fdee6e6b4e190396ac76d701c10c6e9d7bd
   Alamofire: ae5c501addb7afdbb13687d7f2f722c78734c2d3
   AlamofireImage: 63cfe3baf1370be6c498149687cf6db3e3b00999
-  BigInt: 76b5dfdfa3e2e478d4ffdf161aeede5502e2742f
+  BigInt: 2aad1a9942dc932ec8b84290d2c564a3d76f97ab
+  BitcoinCashKit.swift: 028905e9f0b6a0745e2ed4ecc8096f689a8a8719
+  BitcoinCore.swift: 4a342d7bf23331a4539961ba26d4a664a69b865e
+  BitcoinKit.swift: 7dd837f9ae565510aab3190b99b85521869ecf2d
   Cuckoo: 2f10364798baa4b0d4aacabfa475249cf29977bc
+  Erc20Kit.swift: 555091e4315c1499329b379102f59814a19e48d4
+  EthereumKit.swift: 5122e794cf39a391513f0cf9f4876f8ae93deae7
+  FeeRateKit.swift: 460d05a768bf314f6aa966be230633a7a3a80213
   GRDB.swift: 51cc9e57ae8ff7083a9d674c97925aa1de06aac5
-  HSBitcoinKit: 9948f5bddf4f99d17d837247ff4fe23ee755d709
   HSCryptoKit: 564a3888691658cba58aa60f7d037654fd3c6fb0
-  HSEthereumKit: b841eb799d7599ba2619019cddc69ccff0c6a0cc
-  HSFeeRateKit: 8100d2aa366bdb6e0b0f7a9edd4b2943d00bebb4
   HSHDWalletKit: e09162c2bb121c9db9b0cf203bd93b40965aad74
   HUD.swift: a35150276914ab7ae1bcb70df944215ba0003c03
   KeychainAccess: 3b1bf8a77eb4c6ea1ce9404c292e48f948954c6b
   ObjectMapper: 0d4402610f4e468903ae64629eec4784531e5c51
-  Realm: 864477d028db77f7c5a0cba64a4892ad53db128a
-  RealmSwift: 12b8262fc08020b47de4fd88eb3d5c9425b34ec7
   RxCocoa: cbf70265dc65a981d4ac982e513c10cf23df24a0
   RxGRDB: 4e2686821ae8f8507c6d6d00d3083ae2df84fea3
-  RxRealm: 5379eddd74f8d617ca7681d1f8d144af25b432b0
   RxSwift: f172070dfd1a93d70a9ab97a5a01166206e1c575
   SectionsTableView.swift: ebc16d2c11467fc7ecc63a5faaed8a41fc1ee9e6
-  SipHash: fad90a4683e420c52ef28063063dbbce248ea6d4
   SnapKit: fe8a619752f3f27075cc9a90244d75c6c3f27e2a
   UIExtensions.swift: 7a290db7b3039e430aa5c8adfd0c8015d06fa044
 
-PODFILE CHECKSUM: 2bfc653952b6b0a8be17a66beeca944a4bac9445
+PODFILE CHECKSUM: d446a227f9c09fd79de3dbb32ef400c793722884
 
 COCOAPODS: 1.5.3

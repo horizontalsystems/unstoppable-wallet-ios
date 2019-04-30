@@ -1,22 +1,14 @@
-import Foundation
-import HSEthereumKit
+import EthereumKit
 import RxSwift
 
 class EthereumBaseAdapter {
-    let coin: Coin
-
     let ethereumKit: EthereumKit
+
+    let coin: Coin
     let decimal: Int
+
     private let addressParser: IAddressParser
     let feeRateProvider: IFeeRateProvider
-
-    let transactionRecordsSubject = PublishSubject<[TransactionRecord]>()
-
-    private(set) var state: AdapterState = .synced
-
-    let balanceUpdatedSignal = Signal()
-    let lastBlockHeightUpdatedSignal = Signal()
-    let stateUpdatedSignal = Signal()
 
     init(coin: Coin, ethereumKit: EthereumKit, decimal: Int, addressParser: IAddressParser, feeRateProvider: IFeeRateProvider) {
         self.coin = coin
@@ -33,50 +25,20 @@ class EthereumBaseAdapter {
         return 0
     }
 
-    func transactionsObservable(hashFrom: String?, limit: Int) -> Single<[EthereumTransaction]> {
-        return Single.just([])
-    }
-
-    func sendSingle(to address: String, amount: String, gasPrice: Int) -> Single<Void> {
-        return Single.just(())
-    }
-
-    func transactionRecord(fromTransaction transaction: EthereumTransaction) -> TransactionRecord {
-        let mineAddress = ethereumKit.receiveAddress.lowercased()
-
-        let from = TransactionAddress(
-                address: transaction.from,
-                mine: transaction.from.lowercased() == mineAddress
-        )
-
-        let to = TransactionAddress(
-                address: transaction.to,
-                mine: transaction.to.lowercased() == mineAddress
-        )
-
-        var amount: Decimal = 0
-
-        if let significand = Decimal(string: transaction.amount) {
-            let sign: FloatingPointSign = from.mine ? .minus : .plus
-            amount = Decimal(sign: sign, exponent: -decimal, significand: significand)
-        }
-
-        return TransactionRecord(
-                transactionHash: transaction.hash,
-                blockHeight: transaction.blockNumber,
-                amount: amount,
-                date: Date(timeIntervalSince1970: transaction.timestamp),
-                from: [from],
-                to: [to]
-        )
+    func sendSingle(to address: String, value: String, gasPrice: Int) -> Single<Void> {
+        fatalError("Method should be overridden in child class")
     }
 
     func createSendError(from error: Error) -> Error {
-        if let error = error as? EthereumKitError.ResponseError, case .connectionError(_) = error {
+        if let error = error as? EthereumKit.NetworkError, case .noConnection = error {
             return SendTransactionError.connection
         } else {
             return SendTransactionError.unknown
         }
+    }
+
+    func stop() {
+        ethereumKit.stop()
     }
 
 }
@@ -87,22 +49,37 @@ extension EthereumBaseAdapter {
         return 12
     }
 
-    var lastBlockHeight: Int? {
-        return ethereumKit.lastBlockHeight
-    }
-
-    var debugInfo: String {
-        return ethereumKit.debugInfo
-    }
-
     var refreshable: Bool {
         return true
     }
 
     func start() {
+        ethereumKit.start()
+    }
+
+    func refresh() {
+        ethereumKit.start()
     }
 
     func clear() {
+    }
+
+    var lastBlockHeight: Int? {
+        return ethereumKit.lastBlockHeight
+    }
+
+    var lastBlockHeightUpdatedObservable: Observable<Void> {
+        return ethereumKit.lastBlockHeightObservable.map { _ in () }
+    }
+
+    func sendSingle(to address: String, amount: Decimal, feeRatePriority: FeeRatePriority) -> Single<Void> {
+        let poweredDecimal = amount * pow(10, decimal)
+        let handler = NSDecimalNumberHandler(roundingMode: .plain, scale: 0, raiseOnExactness: false, raiseOnOverflow: false, raiseOnUnderflow: false, raiseOnDivideByZero: false)
+        let roundedDecimal = NSDecimalNumber(decimal: poweredDecimal).rounding(accordingToBehavior: handler).decimalValue
+
+        let amountString = String(describing: roundedDecimal)
+
+        return sendSingle(to: address, value: amountString, gasPrice: feeRateProvider.ethereumGasPrice(for: feeRatePriority))
     }
 
     func validate(address: String) throws {
@@ -118,53 +95,8 @@ extension EthereumBaseAdapter {
         return ethereumKit.receiveAddress
     }
 
-    func transactionsSingle(hashFrom: String?, limit: Int) -> Single<[TransactionRecord]> {
-        return transactionsObservable(hashFrom: hashFrom, limit: limit)
-                .map { [weak self] transactions -> [TransactionRecord] in
-                    return transactions.compactMap {
-                        self?.transactionRecord(fromTransaction: $0)
-                    }
-                }
-    }
-
-    func sendSingle(to address: String, amount: Decimal, feeRatePriority: FeeRatePriority) -> Single<Void> {
-        let poweredDecimal = amount * pow(10, decimal)
-        let handler = NSDecimalNumberHandler(roundingMode: .plain, scale: 0, raiseOnExactness: false, raiseOnOverflow: false, raiseOnUnderflow: false, raiseOnDivideByZero: false)
-        let roundedDecimal = NSDecimalNumber(decimal: poweredDecimal).rounding(accordingToBehavior: handler).decimalValue
-
-        let amountString = String(describing: roundedDecimal)
-
-        return sendSingle(to: address, amount: amountString, gasPrice: feeRateProvider.ethereumGasPrice(for: feeRatePriority))
-    }
-
-}
-
-extension EthereumBaseAdapter {
-
-    public func onUpdate(transactions: [EthereumTransaction]) {
-        transactionRecordsSubject.onNext(transactions.map { transactionRecord(fromTransaction: $0) })
-    }
-
-    public func onUpdateBalance() {
-        balanceUpdatedSignal.notify()
-    }
-
-    public func onUpdateLastBlockHeight() {
-        lastBlockHeightUpdatedSignal.notify()
-    }
-
-    public func onUpdateSyncState() {
-        switch state {
-        case .synced:
-            self.state = .synced
-            stateUpdatedSignal.notify()
-        case .notSynced:
-            self.state = .notSynced
-            stateUpdatedSignal.notify()
-        case .syncing:
-            self.state = .synced
-            stateUpdatedSignal.notify()
-        }
+    var debugInfo: String {
+        return ethereumKit.debugInfo
     }
 
 }

@@ -1,5 +1,4 @@
-import Foundation
-import HSBitcoinKit
+import BitcoinCore
 import RxSwift
 
 class BitcoinBaseAdapter {
@@ -7,29 +6,25 @@ class BitcoinBaseAdapter {
 
     let coin: Coin
 
-    private let bitcoinKit: BitcoinKit
+    private let abstractKit: AbstractKit
     private let coinRate: Decimal
     private let addressParser: IAddressParser
 
-    let lastBlockHeightUpdatedSignal = Signal()
-    let transactionRecordsSubject = PublishSubject<[TransactionRecord]>()
+    private let lastBlockHeightUpdatedSignal = Signal()
+    private let stateUpdatedSignal = Signal()
+    private let balanceUpdatedSignal = Signal()
+    private let transactionRecordsSubject = PublishSubject<[TransactionRecord]>()
 
     private(set) var state: AdapterState
 
-    let balanceUpdatedSignal = Signal()
-    let stateUpdatedSignal = Signal()
-
-    init?(coin: Coin, kitCoin: BitcoinKit.Coin, authData: AuthData, newWallet: Bool, addressParser: IAddressParser) {
+    init(coin: Coin, abstractKit: AbstractKit, addressParser: IAddressParser) {
         self.coin = coin
+        self.abstractKit = abstractKit
         self.addressParser = addressParser
 
         coinRate = pow(10, decimal)
 
-        bitcoinKit = BitcoinKit(withWords: authData.words, coin: kitCoin, walletId: authData.walletId, newWallet: newWallet, minLogLevel: .error)
-
         state = .syncing(progress: 0, lastBlockDate: nil)
-
-        bitcoinKit.delegate = self
     }
 
     func feeRate(priority: FeeRatePriority) -> Int {
@@ -47,6 +42,7 @@ class BitcoinBaseAdapter {
 
         return TransactionRecord(
                 transactionHash: transaction.transactionHash,
+                index: 0,
                 blockHeight: transaction.blockHeight,
                 amount: Decimal(transaction.amount) / coinRate,
                 date: Date(timeIntervalSince1970: Double(transaction.timestamp)),
@@ -63,8 +59,24 @@ class BitcoinBaseAdapter {
 
 extension BitcoinBaseAdapter: IAdapter {
 
+    var lastBlockHeightUpdatedObservable: Observable<Void> {
+        return lastBlockHeightUpdatedSignal.asObservable()
+    }
+
+    var stateUpdatedObservable: Observable<Void> {
+        return stateUpdatedSignal.asObservable()
+    }
+
+    var balanceUpdatedObservable: Observable<Void> {
+        return balanceUpdatedSignal.asObservable()
+    }
+
+    var transactionRecordsObservable: Observable<[TransactionRecord]> {
+        return transactionRecordsSubject.asObservable()
+    }
+
     var balance: Decimal {
-        return Decimal(bitcoinKit.balance) / coinRate
+        return Decimal(abstractKit.balance) / coinRate
     }
 
     var confirmationsThreshold: Int {
@@ -72,11 +84,11 @@ extension BitcoinBaseAdapter: IAdapter {
     }
 
     var lastBlockHeight: Int? {
-        return bitcoinKit.lastBlockInfo?.height
+        return abstractKit.lastBlockInfo?.height
     }
 
     var debugInfo: String {
-        return bitcoinKit.debugInfo
+        return abstractKit.debugInfo
     }
 
     var refreshable: Bool {
@@ -84,7 +96,7 @@ extension BitcoinBaseAdapter: IAdapter {
     }
 
     func start() {
-        try? bitcoinKit.start()
+        try? abstractKit.start()
     }
 
     func stop() {
@@ -95,7 +107,7 @@ extension BitcoinBaseAdapter: IAdapter {
     }
 
     func clear() {
-        try? bitcoinKit.clear()
+        try? abstractKit.clear()
     }
 
     private func convertToSatoshi(value: Decimal) -> Int {
@@ -104,7 +116,7 @@ extension BitcoinBaseAdapter: IAdapter {
     }
 
     func validate(address: String) throws {
-        try bitcoinKit.validate(address: address)
+        try abstractKit.validate(address: address)
     }
 
     func validate(amount: Decimal, address: String?, feeRatePriority: FeeRatePriority) -> [SendStateError] {
@@ -121,7 +133,7 @@ extension BitcoinBaseAdapter: IAdapter {
     }
 
     var receiveAddress: String {
-        return bitcoinKit.receiveAddress
+        return abstractKit.receiveAddress
     }
 
     func sendSingle(to address: String, amount: Decimal, feeRatePriority: FeeRatePriority) -> Single<Void> {
@@ -130,7 +142,7 @@ extension BitcoinBaseAdapter: IAdapter {
 
         return Single.create { [weak self] observer in
             do {
-                try self?.bitcoinKit.send(to: address, value: satoshiAmount, feeRate: rate)
+                try self?.abstractKit.send(to: address, value: satoshiAmount, feeRate: rate)
                 observer(.success(()))
             } catch {
                 observer(.error(self?.createSendError(from: error) ?? error))
@@ -147,7 +159,7 @@ extension BitcoinBaseAdapter: IAdapter {
     func fee(for value: Decimal, address: String?, feeRatePriority: FeeRatePriority) -> Decimal {
         do {
             let amount = convertToSatoshi(value: value)
-            let fee = try bitcoinKit.fee(for: amount, toAddress: address, senderPay: true, feeRate: feeRate(priority: feeRatePriority))
+            let fee = try abstractKit.fee(for: amount, toAddress: address, senderPay: true, feeRate: feeRate(priority: feeRatePriority))
             return Decimal(fee) / coinRate
         } catch SelectorError.notEnough(let maxFee) {
             return Decimal(maxFee) / coinRate
@@ -156,8 +168,8 @@ extension BitcoinBaseAdapter: IAdapter {
         }
     }
 
-    func transactionsSingle(hashFrom: String?, limit: Int) -> Single<[TransactionRecord]> {
-        return bitcoinKit.transactions(fromHash: hashFrom, limit: limit)
+    func transactionsSingle(from: (hash: String, index: Int)?, limit: Int) -> Single<[TransactionRecord]> {
+        return abstractKit.transactions(fromHash: from?.hash, limit: limit)
                 .map { [weak self] transactions -> [TransactionRecord] in
                     return transactions.compactMap {
                         self?.transactionRecord(fromTransaction: $0)
@@ -167,9 +179,9 @@ extension BitcoinBaseAdapter: IAdapter {
 
 }
 
-extension BitcoinBaseAdapter: BitcoinKitDelegate {
+extension BitcoinBaseAdapter: BitcoinCoreDelegate {
 
-    func transactionsUpdated(bitcoinKit: BitcoinKit, inserted: [TransactionInfo], updated: [TransactionInfo]) {
+    func transactionsUpdated(inserted: [TransactionInfo], updated: [TransactionInfo]) {
         var records = [TransactionRecord]()
 
         for info in inserted {
@@ -185,15 +197,15 @@ extension BitcoinBaseAdapter: BitcoinKitDelegate {
     func transactionsDeleted(hashes: [String]) {
     }
 
-    func balanceUpdated(bitcoinKit: BitcoinKit, balance: Int) {
+    func balanceUpdated(balance: Int) {
         balanceUpdatedSignal.notify()
     }
 
-    func lastBlockInfoUpdated(bitcoinKit: BitcoinKit, lastBlockInfo: BlockInfo) {
+    func lastBlockInfoUpdated(lastBlockInfo: BlockInfo) {
         lastBlockHeightUpdatedSignal.notify()
     }
 
-    public func kitStateUpdated(state: BitcoinKit.KitState) {
+    public func kitStateUpdated(state: BitcoinCore.KitState) {
         switch state {
         case .synced:
             if case .synced = self.state {
@@ -211,7 +223,7 @@ extension BitcoinBaseAdapter: BitcoinKitDelegate {
             stateUpdatedSignal.notify()
         case .syncing(let progress):
             let newProgress = Int(progress * 100)
-            let newDate = bitcoinKit.lastBlockInfo?.timestamp.map { Date(timeIntervalSince1970: Double($0)) }
+            let newDate = abstractKit.lastBlockInfo?.timestamp.map { Date(timeIntervalSince1970: Double($0)) }
 
             if case let .syncing(currentProgress, currentDate) = self.state, newProgress == currentProgress {
                 if let currentDate = currentDate, let newDate = newDate, currentDate.isSameDay(as: newDate) {

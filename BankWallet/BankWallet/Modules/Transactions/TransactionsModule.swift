@@ -78,7 +78,7 @@ protocol ITransactionViewItemFactory {
 
 struct FetchData {
     let coin: Coin
-    let hashFrom: String?
+    let from: (hash: String, index: Int)?
     let limit: Int
 }
 
