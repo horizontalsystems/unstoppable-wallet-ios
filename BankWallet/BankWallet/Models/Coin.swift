@@ -3,11 +3,13 @@ import GRDB
 enum CoinType {
     static let bitcoinKey = "bitcoin_key"
     static let bitcoinCashKey = "bitcoin_cash_key"
+    static let dashKey = "dash_key"
     static let ethereumKey = "ethereum_key"
     static let erc20Key = "erc_20_key"
 
     case bitcoin
     case bitcoinCash
+    case dash
     case ethereum
     case erc20(address: String, decimal: Int)
 }
@@ -18,6 +20,7 @@ extension CoinType: DatabaseValueConvertible {
         switch self {
         case .bitcoin: return CoinType.bitcoinKey.databaseValue
         case .bitcoinCash: return CoinType.bitcoinCashKey.databaseValue
+        case .dash: return CoinType.dashKey.databaseValue
         case .ethereum: return CoinType.ethereumKey.databaseValue
         case .erc20(let address, let decimal): return "\(CoinType.erc20Key);\(address);\(decimal)".databaseValue
         }
@@ -31,6 +34,7 @@ extension CoinType: DatabaseValueConvertible {
         switch rawValue {
         case CoinType.bitcoinKey: return .bitcoin
         case CoinType.bitcoinCashKey: return .bitcoinCash
+        case CoinType.dashKey: return .dash
         case CoinType.ethereumKey: return .ethereum
         case let value where rawValue.contains(CoinType.erc20Key):
             let values = value.split(separator:";")
@@ -117,6 +121,7 @@ extension CoinType: Equatable {
         switch (lhs, rhs) {
         case (.bitcoin, .bitcoin): return true
         case (.bitcoinCash, .bitcoinCash): return true
+        case (.dash, .dash): return true
         case (.ethereum, .ethereum): return true
         case (.erc20(let lhsAddress, let lhsDecimal), .erc20(let rhsAddress, let rhsDecimal)):
             return lhsAddress == rhsAddress && lhsDecimal == rhsDecimal

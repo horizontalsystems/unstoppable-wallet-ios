@@ -58,7 +58,8 @@ class AppConfigProvider: IAppConfigProvider {
         ]
     }
 
-    let erc20Coins = [
+    let coins = [
+        Coin(title: "Dash", code: "DASH", type: .dash),
         Coin(title: "0x",                    code: "ZRX",  type: .erc20(address: "0xE41d2489571d322189246DaFA5ebDe1F4699F498", decimal: 18)),
         Coin(title: "Aelf",                  code: "ELF",  type: .erc20(address: "0xbf2179859fc6D5BEE9Bf9158632Dc51678a4100e", decimal: 18)),
         Coin(title: "Aurora DAO",            code: "AURA", type: .erc20(address: "0xCdCFc0f66c522Fd086A1b725ea3c0Eeb9F9e8814", decimal: 18)),

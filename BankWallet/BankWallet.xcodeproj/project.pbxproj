@@ -18,6 +18,7 @@
 		11B35075ECB2F181418CD3A8 /* NumPadTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35BFD94DA13D66AD6A86D /* NumPadTheme.swift */; };
 		11B3507B0D6688560D248A18 /* AlertButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35CFDC5BD98BA40682DBD /* AlertButtonItem.swift */; };
 		11B3507CAA4C9F760712EB73 /* LanguageManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B356347098BE98619962B4 /* LanguageManagerTests.swift */; };
+		11B3507DDEBA587C023CE898 /* DashAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B358CA18471A93188933B4 /* DashAdapter.swift */; };
 		11B3507E93F1F8FBE21A9245 /* BaseCurrencySettingsModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35C104035EBC5B0B13592 /* BaseCurrencySettingsModule.swift */; };
 		11B3508A010ECAA51CBF980D /* SendFeeItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B357B45FC7216E5D1BA309 /* SendFeeItem.swift */; };
 		11B3508D4D574217447418D5 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B351FFC025462BB9F01184 /* UIColor.swift */; };
@@ -58,6 +59,7 @@
 		11B352C0B06CE48E16B20BE9 /* BalanceItemDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35F79F5274A2603296EFF /* BalanceItemDataSource.swift */; };
 		11B352C17E4BB374BF10327A /* JsonApiProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B355AD0C896DBA7122F3DC /* JsonApiProvider.swift */; };
 		11B352D96575CD8ED6172152 /* SendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3538CA03C579CD6BC49F8 /* SendViewController.swift */; };
+		11B352E00B6E0DF4F6D42486 /* DashAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B358CA18471A93188933B4 /* DashAdapter.swift */; };
 		11B352EEC1F6E90F09CC2C96 /* UnlinkModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3529D276325D741CAEEF5 /* UnlinkModule.swift */; };
 		11B352FF572078C646A92322 /* SendConfirmationAddressItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3522F9D6DB1D04EA92CCE /* SendConfirmationAddressItem.swift */; };
 		11B35303EF169A14070D4AF9 /* RateSyncer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B350C8341DFAF14D974ACC /* RateSyncer.swift */; };
@@ -173,6 +175,7 @@
 		11B358C53045F204FA0D12FB /* TransactionRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B356738853E2305B5CC34B /* TransactionRecord.swift */; };
 		11B358C978B24F3B6E3728C4 /* TransactionValueItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B353A2F8FFE93DC7E58F98 /* TransactionValueItem.swift */; };
 		11B358CB8E47D049CC361084 /* ConfirmationCheckboxItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35EC60329833B8D6CA1E0 /* ConfirmationCheckboxItem.swift */; };
+		11B358D149EE936C82ABE32E /* DashAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B358CA18471A93188933B4 /* DashAdapter.swift */; };
 		11B358EB4EC30EDFFEBFCF29 /* CoinManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35570FD93AFB406434D20 /* CoinManager.swift */; };
 		11B358EF9A56A05015181CA7 /* BalanceHeaderViewItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35D1D60E1D0A206C70490 /* BalanceHeaderViewItem.swift */; };
 		11B35901F6922FADADD0CC87 /* SendAddressItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35F54E966E33C901B1736 /* SendAddressItem.swift */; };
@@ -1221,6 +1224,7 @@
 		11B3589DC1945CAFBEEB1EED /* CurrencyValue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrencyValue.swift; sourceTree = "<group>"; };
 		11B358A2ED820E5741F0701A /* AppConfigProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppConfigProvider.swift; sourceTree = "<group>"; };
 		11B358B344E13290D77605E0 /* Logger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
+		11B358CA18471A93188933B4 /* DashAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashAdapter.swift; sourceTree = "<group>"; };
 		11B3592889642D8823BEDAE2 /* TransactionRecordPoolState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionRecordPoolState.swift; sourceTree = "<group>"; };
 		11B3598F5529D0939EE53A19 /* CurrencyManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrencyManager.swift; sourceTree = "<group>"; };
 		11B359DA37B619C35AF93D2A /* BaseCurrencySettingsPresenterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseCurrencySettingsPresenterTests.swift; sourceTree = "<group>"; };
@@ -2033,6 +2037,7 @@
 				58AAA656A81B2C12F618FB44 /* EthereumBaseAdapter.swift */,
 				1A56450DA6DF97C9E1FFE987 /* BitcoinBaseAdapter.swift */,
 				1A564BF724C69C237E309C07 /* BitcoinCashAdapter.swift */,
+				11B358CA18471A93188933B4 /* DashAdapter.swift */,
 			);
 			path = Adapters;
 			sourceTree = "<group>";
@@ -2907,11 +2912,13 @@
 				"${BUILT_PRODUCTS_DIR}/BitcoinCashKit.swift/BitcoinCashKit.framework",
 				"${BUILT_PRODUCTS_DIR}/BitcoinCore.swift/BitcoinCore.framework",
 				"${BUILT_PRODUCTS_DIR}/BitcoinKit.swift/BitcoinKit.framework",
+				"${BUILT_PRODUCTS_DIR}/DashKit.swift/DashKit.framework",
 				"${BUILT_PRODUCTS_DIR}/Erc20Kit.swift/Erc20Kit.framework",
 				"${BUILT_PRODUCTS_DIR}/EthereumKit.swift/EthereumKit.framework",
 				"${BUILT_PRODUCTS_DIR}/FeeRateKit.swift/FeeRateKit.framework",
 				"${BUILT_PRODUCTS_DIR}/GRDB.swift/GRDB.framework",
 				"${BUILT_PRODUCTS_DIR}/HSCryptoKit/HSCryptoKit.framework",
+				"${BUILT_PRODUCTS_DIR}/HSCryptoX11/HSCryptoX11.framework",
 				"${BUILT_PRODUCTS_DIR}/HSHDWalletKit/HSHDWalletKit.framework",
 				"${BUILT_PRODUCTS_DIR}/HUD.swift/HUD.framework",
 				"${BUILT_PRODUCTS_DIR}/KeychainAccess/KeychainAccess.framework",
@@ -2934,11 +2941,13 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BitcoinCashKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BitcoinCore.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BitcoinKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DashKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Erc20Kit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/EthereumKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FeeRateKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GRDB.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/HSCryptoKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/HSCryptoX11.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/HSHDWalletKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/HUD.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/KeychainAccess.framework",
@@ -2971,11 +2980,13 @@
 				"${BUILT_PRODUCTS_DIR}/BitcoinCashKit.swift/BitcoinCashKit.framework",
 				"${BUILT_PRODUCTS_DIR}/BitcoinCore.swift/BitcoinCore.framework",
 				"${BUILT_PRODUCTS_DIR}/BitcoinKit.swift/BitcoinKit.framework",
+				"${BUILT_PRODUCTS_DIR}/DashKit.swift/DashKit.framework",
 				"${BUILT_PRODUCTS_DIR}/Erc20Kit.swift/Erc20Kit.framework",
 				"${BUILT_PRODUCTS_DIR}/EthereumKit.swift/EthereumKit.framework",
 				"${BUILT_PRODUCTS_DIR}/FeeRateKit.swift/FeeRateKit.framework",
 				"${BUILT_PRODUCTS_DIR}/GRDB.swift/GRDB.framework",
 				"${BUILT_PRODUCTS_DIR}/HSCryptoKit/HSCryptoKit.framework",
+				"${BUILT_PRODUCTS_DIR}/HSCryptoX11/HSCryptoX11.framework",
 				"${BUILT_PRODUCTS_DIR}/HSHDWalletKit/HSHDWalletKit.framework",
 				"${BUILT_PRODUCTS_DIR}/HUD.swift/HUD.framework",
 				"${BUILT_PRODUCTS_DIR}/KeychainAccess/KeychainAccess.framework",
@@ -2998,11 +3009,13 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BitcoinCashKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BitcoinCore.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BitcoinKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DashKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Erc20Kit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/EthereumKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FeeRateKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GRDB.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/HSCryptoKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/HSCryptoX11.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/HSHDWalletKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/HUD.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/KeychainAccess.framework",
@@ -3057,11 +3070,13 @@
 				"${BUILT_PRODUCTS_DIR}/BitcoinCashKit.swift/BitcoinCashKit.framework",
 				"${BUILT_PRODUCTS_DIR}/BitcoinCore.swift/BitcoinCore.framework",
 				"${BUILT_PRODUCTS_DIR}/BitcoinKit.swift/BitcoinKit.framework",
+				"${BUILT_PRODUCTS_DIR}/DashKit.swift/DashKit.framework",
 				"${BUILT_PRODUCTS_DIR}/Erc20Kit.swift/Erc20Kit.framework",
 				"${BUILT_PRODUCTS_DIR}/EthereumKit.swift/EthereumKit.framework",
 				"${BUILT_PRODUCTS_DIR}/FeeRateKit.swift/FeeRateKit.framework",
 				"${BUILT_PRODUCTS_DIR}/GRDB.swift/GRDB.framework",
 				"${BUILT_PRODUCTS_DIR}/HSCryptoKit/HSCryptoKit.framework",
+				"${BUILT_PRODUCTS_DIR}/HSCryptoX11/HSCryptoX11.framework",
 				"${BUILT_PRODUCTS_DIR}/HSHDWalletKit/HSHDWalletKit.framework",
 				"${BUILT_PRODUCTS_DIR}/HUD.swift/HUD.framework",
 				"${BUILT_PRODUCTS_DIR}/KeychainAccess/KeychainAccess.framework",
@@ -3084,11 +3099,13 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BitcoinCashKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BitcoinCore.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BitcoinKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DashKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Erc20Kit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/EthereumKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FeeRateKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GRDB.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/HSCryptoKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/HSCryptoX11.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/HSHDWalletKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/HUD.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/KeychainAccess.framework",
@@ -3568,6 +3585,7 @@
 				1A5647F3635BCCAA32BF37F7 /* HashView.swift in Sources */,
 				1A564FB6F3583480FA4FFA98 /* HashViewTheme.swift in Sources */,
 				1A5649AC4FC1D6DD5F82ABAB /* BackgroundManager.swift in Sources */,
+				11B358D149EE936C82ABE32E /* DashAdapter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3960,6 +3978,7 @@
 				1A5644B7EC23015834F20579 /* HashView.swift in Sources */,
 				1A564689FA088738E660FF91 /* HashViewTheme.swift in Sources */,
 				1A564A0D51FF6BEACA195CB7 /* BackgroundManager.swift in Sources */,
+				11B352E00B6E0DF4F6D42486 /* DashAdapter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4302,6 +4321,7 @@
 				1A5646BCAA7FFC976BFC9E5E /* HashView.swift in Sources */,
 				1A5644F218D6B87BB27D5F8A /* HashViewTheme.swift in Sources */,
 				1A564CB5C802EF80E184DCD4 /* BackgroundManager.swift in Sources */,
+				11B3507DDEBA587C023CE898 /* DashAdapter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -32,7 +32,7 @@ class CoinManager {
 
 extension CoinManager: ICoinManager {
 
-    var allCoins: [Coin] { return appConfigProvider.defaultCoins + appConfigProvider.erc20Coins }
+    var allCoins: [Coin] { return appConfigProvider.defaultCoins + appConfigProvider.coins }
 
     func enableDefaultCoins() {
         storage.save(enabledCoins: appConfigProvider.defaultCoins)
