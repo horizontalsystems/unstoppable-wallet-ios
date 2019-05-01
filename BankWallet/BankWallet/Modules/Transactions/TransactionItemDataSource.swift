@@ -13,7 +13,7 @@ class TransactionItemDataSource {
 
     func shouldInsert(record: TransactionRecord) -> Bool {
         if let lastItem = items.last {
-            return lastItem.record.date < record.date
+            return lastItem.record < record
         } else {
             return true
         }

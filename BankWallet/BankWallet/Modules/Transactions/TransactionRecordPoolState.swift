@@ -22,7 +22,7 @@ class TransactionRecordPoolState {
     }
 
     func insertIndex(ofRecord record: TransactionRecord) -> Int? {
-        return records.firstIndex(where: { $0.date < record.date })
+        return records.firstIndex(where: { $0 < record })
     }
 
     func set(record: TransactionRecord, atIndex index: Int) {
