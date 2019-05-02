@@ -213,7 +213,7 @@ protocol IAppConfigProvider {
     var defaultWords: [String] { get }
     var disablePinLock: Bool { get }
     var defaultCoins: [Coin] { get }
-    var erc20Coins: [Coin] { get }
+    var coins: [Coin] { get }
 }
 
 protocol IFullTransactionInfoProvider {
