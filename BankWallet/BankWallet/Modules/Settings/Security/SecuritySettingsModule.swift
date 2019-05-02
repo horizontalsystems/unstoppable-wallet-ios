@@ -15,13 +15,14 @@ protocol ISecuritySettingsViewDelegate {
 
 protocol ISecuritySettingsInteractor {
     var isBiometricUnlockOn: Bool { get }
-    var biometryType: BiometryType { get }
     var isBackedUp: Bool { get }
+    func getBiometryType()
     func set(biometricUnlockOn: Bool)
 }
 
 protocol ISecuritySettingsInteractorDelegate: class {
     func didBackup()
+    func didGetBiometry(type: BiometryType)
 }
 
 protocol ISecuritySettingsRouter {

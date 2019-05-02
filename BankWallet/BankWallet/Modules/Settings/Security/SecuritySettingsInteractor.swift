@@ -8,11 +8,13 @@ class SecuritySettingsInteractor {
     private let localStorage: ILocalStorage
     private let wordsManager: IWordsManager
     private let systemInfoManager: ISystemInfoManager
+    private let async: Bool
 
-    init(localStorage: ILocalStorage, wordsManager: IWordsManager, systemInfoManager: ISystemInfoManager) {
+    init(localStorage: ILocalStorage, wordsManager: IWordsManager, systemInfoManager: ISystemInfoManager, async: Bool = true) {
         self.localStorage = localStorage
         self.wordsManager = wordsManager
         self.systemInfoManager = systemInfoManager
+        self.async = async
 
         wordsManager.backedUpSignal
                 .subscribe(onNext: { [weak self] in
@@ -35,8 +37,16 @@ extension SecuritySettingsInteractor: ISecuritySettingsInteractor {
         return localStorage.isBiometricOn
     }
 
-    var biometryType: BiometryType {
-        return systemInfoManager.biometryType
+    func getBiometryType() {
+        var single = systemInfoManager.biometryType
+            if async {
+                single = single
+                        .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
+                        .observeOn(MainScheduler.instance)
+            }
+            single.subscribe(onSuccess: { [weak self] type in
+                self?.delegate?.didGetBiometry(type: type)
+            }).disposed(by: disposeBag)
     }
 
     var isBackedUp: Bool {

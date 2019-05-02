@@ -1,5 +1,6 @@
 import XCTest
 import Cuckoo
+import RxSwift
 @testable import Bank_Dev_T
 
 class SecuritySettingsInteractorTests: XCTestCase {
@@ -26,7 +27,7 @@ class SecuritySettingsInteractorTests: XCTestCase {
             when(mock.backedUpSignal.get).thenReturn(backedUpSignal)
         }
 
-        interactor = SecuritySettingsInteractor(localStorage: mockLocalStorage, wordsManager: mockWordsManager, systemInfoManager: mockSystemInfoManager)
+        interactor = SecuritySettingsInteractor(localStorage: mockLocalStorage, wordsManager: mockWordsManager, systemInfoManager: mockSystemInfoManager, async: false)
         interactor.delegate = mockDelegate
     }
 
@@ -62,10 +63,15 @@ class SecuritySettingsInteractorTests: XCTestCase {
         let biometryType: BiometryType = .faceId
 
         stub(mockSystemInfoManager) { mock in
-            when(mock.biometryType.get).thenReturn(biometryType)
+            when(mock.biometryType.get).thenReturn(Single.just(biometryType))
+        }
+        stub(mockDelegate) { mock in
+            when(mock.didGetBiometry(type: any())).thenDoNothing()
         }
 
-        XCTAssertEqual(interactor.biometryType, biometryType)
+        interactor.getBiometryType()
+
+        verify(mockDelegate).didGetBiometry(type: equal(to: biometryType))
     }
 
     func testIsBackedUp() {
