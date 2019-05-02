@@ -29,7 +29,7 @@ class SecuritySettingsPresenterTests: XCTestCase {
         }
         stub(mockInteractor) { mock in
             when(mock.isBiometricUnlockOn.get).thenReturn(true)
-            when(mock.biometryType.get).thenReturn(.faceId)
+            when(mock.getBiometryType()).thenDoNothing()
             when(mock.isBackedUp.get).thenReturn(true)
             when(mock.set(biometricUnlockOn: any())).thenDoNothing()
         }
@@ -70,8 +70,13 @@ class SecuritySettingsPresenterTests: XCTestCase {
         verify(mockView).set(biometricUnlockOn: false)
     }
 
-    func testSetBiometricTypeOnLoad() {
+    func testAskForBiometryTypeOnLoad() {
         presenter.viewDidLoad()
+        verify(mockInteractor).getBiometryType()
+    }
+
+    func testSetBiometryType() {
+        presenter.didGetBiometry(type: .faceId)
         verify(mockView).set(biometryType: equal(to: BiometryType.faceId))
     }
 

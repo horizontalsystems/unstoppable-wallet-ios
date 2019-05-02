@@ -195,7 +195,7 @@ protocol IRateManager {
 
 protocol ISystemInfoManager {
     var appVersion: String { get }
-    var biometryType: BiometryType { get }
+    var biometryType: Single<BiometryType> { get }
 }
 
 protocol IAppConfigProvider {

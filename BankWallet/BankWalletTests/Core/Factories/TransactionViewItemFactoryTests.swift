@@ -201,6 +201,8 @@ class TransactionViewItemFactoryTests: XCTestCase {
                 coin: coin,
                 record: TransactionRecord(
                         transactionHash: transactionHash,
+                        transactionIndex: 0,
+                        interTransactionIndex: 0,
                         blockHeight: blockHeight,
                         amount: amount,
                         date: date,

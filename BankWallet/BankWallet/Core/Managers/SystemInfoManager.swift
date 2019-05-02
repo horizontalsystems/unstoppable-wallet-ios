@@ -1,5 +1,6 @@
 import Foundation
 import LocalAuthentication
+import RxSwift
 
 class SystemInfoManager: ISystemInfoManager {
 
@@ -15,19 +16,25 @@ class SystemInfoManager: ISystemInfoManager {
         return version
     }
 
-    var biometryType: BiometryType {
-        var authError: NSError?
-        let localAuthenticationContext = LAContext()
+    var biometryType: Single<BiometryType> {
+        return Observable<BiometryType>.create { observer in
+            var authError: NSError?
+            let localAuthenticationContext = LAContext()
 
-        if localAuthenticationContext.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &authError) {
-            switch localAuthenticationContext.biometryType {
-            case .faceID: return .faceId
-            case .touchID: return .touchId
-            default: return .none
+            //Some times canEvaluatePolicy responses for too long time leading to stuck in settings controller.
+            //Sending this request to background thread allows to show controller without biometric setting.
+            if localAuthenticationContext.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &authError) {
+                switch localAuthenticationContext.biometryType {
+                case .faceID: observer.onNext(.faceId)
+                case .touchID: observer.onNext(.touchId)
+                default: observer.onNext(.none)
+                }
+            } else {
+                observer.onNext(.none)
             }
-        }
-
-        return .none
+            observer.onCompleted()
+            return Disposables.create()
+        }.asSingle()
     }
 
 }
