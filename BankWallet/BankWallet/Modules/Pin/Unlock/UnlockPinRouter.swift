@@ -21,11 +21,10 @@ extension UnlockPinRouter: IUnlockPinRouter {
         if appStart {
             UIApplication.shared.keyWindow?.set(newRootController: MainRouter.module())
         } else {
-            viewController?.dismiss(animated: true, completion: {
-                if didUnlock {
-                    self.unlockDelegate?.onUnlock()
-                }
-            })
+            if didUnlock {
+                self.unlockDelegate?.onUnlock()
+            }
+            viewController?.dismiss(animated: true)
         }
     }
 
