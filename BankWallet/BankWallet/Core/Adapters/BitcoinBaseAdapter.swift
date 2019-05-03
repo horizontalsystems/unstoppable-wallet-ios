@@ -97,7 +97,7 @@ extension BitcoinBaseAdapter: IAdapter {
     }
 
     func start() {
-        try? abstractKit.start()
+        abstractKit.start()
     }
 
     func stop() {
