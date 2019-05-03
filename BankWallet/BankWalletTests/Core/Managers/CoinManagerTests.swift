@@ -74,7 +74,7 @@ class CoinManagerTests: XCTestCase {
     func testAllCoins() {
         let defaultCoins = self.defaultCoins
         stub(mockAppConfigProvider) { mock in
-            when(mock.erc20Coins.get).thenReturn([])
+            when(mock.coins.get).thenReturn([])
         }
 
         XCTAssertEqual(manager.allCoins, defaultCoins)

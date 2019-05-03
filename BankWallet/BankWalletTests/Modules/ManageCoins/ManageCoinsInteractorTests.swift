@@ -3,7 +3,6 @@ import Cuckoo
 import RxSwift
 @testable import Bank_Dev_T
 
-
 class ManageCoinsInteractorTests: XCTestCase {
     private var mockDelegate: MockIManageCoinsInteractorDelegate!
     private var mockCoinManager: MockICoinManager!
@@ -19,7 +18,7 @@ class ManageCoinsInteractorTests: XCTestCase {
     private var enabledCoins: [Coin]!
     private var disabledCoins: [Coin]!
 
-    private var coinsObservable = PublishSubject<[Coin]>()
+    private var enabledCoinsObservable: BehaviorSubject<[Coin]>!
 
     override func setUp() {
         super.setUp()
@@ -39,25 +38,25 @@ class ManageCoinsInteractorTests: XCTestCase {
             bitcoinCash,
         ]
 
+        enabledCoinsObservable = BehaviorSubject(value: enabledCoins)
 
         mockDelegate = MockIManageCoinsInteractorDelegate()
         mockCoinManager = MockICoinManager()
         mockStorage = MockICoinStorage()
 
         stub(mockDelegate) { mock in
-            when(mock.didLoad(allCoins: any())).thenDoNothing()
-            when(mock.didLoad(enabledCoins: any())).thenDoNothing()
+            when(mock.didLoad(allCoins: any(), enabledCoins: any())).thenDoNothing()
             when(mock.didSaveCoins()).thenDoNothing()
         }
         stub(mockCoinManager) { mock in
             when(mock.allCoins.get).thenReturn(allCoins)
         }
         stub(mockStorage) { mock in
-            when(mock.enabledCoinsObservable()).thenReturn(coinsObservable)
+            when(mock.enabledCoinsObservable()).thenReturn(enabledCoinsObservable)
             when(mock.save(enabledCoins: any())).thenDoNothing()
         }
 
-        interactor = ManageCoinsInteractor(coinManager: mockCoinManager, storage: mockStorage, async: false)
+        interactor = ManageCoinsInteractor(coinManager: mockCoinManager, storage: mockStorage)
         interactor.delegate = mockDelegate
     }
 
@@ -71,18 +70,10 @@ class ManageCoinsInteractorTests: XCTestCase {
         super.tearDown()
     }
 
-    func testLoadAllCoins() {
+    func testLoadCoins() {
         interactor.loadCoins()
 
-        coinsObservable.onNext(allCoins)
-        verify(mockDelegate).didLoad(allCoins: equal(to: allCoins))
-    }
-
-    func testLoadEnabledCoins() {
-        interactor.loadCoins()
-
-        coinsObservable.onNext(enabledCoins)
-        verify(mockDelegate).didLoad(enabledCoins: equal(to: enabledCoins))
+        verify(mockDelegate).didLoad(allCoins: equal(to: allCoins), enabledCoins: equal(to: enabledCoins))
     }
 
     func testSaveCoins() {

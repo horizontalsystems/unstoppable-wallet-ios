@@ -22,8 +22,9 @@ class EthereumKitManager: IEthereumKitManager {
 
         let ethereumKit = try EthereumKit.instance(
                 words: authData.words,
-                syncMode: .api(infuraProjectId: appConfigProvider.infuraKey),
+                syncMode: .api,
                 networkType: appConfigProvider.testMode ? .ropsten : .mainNet,
+                infuraProjectId: appConfigProvider.infuraKey,
                 etherscanApiKey: appConfigProvider.etherscanKey,
                 walletId: authData.walletId,
                 minLogLevel: .error

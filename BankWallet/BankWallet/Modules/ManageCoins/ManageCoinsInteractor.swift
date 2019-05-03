@@ -7,12 +7,10 @@ class ManageCoinsInteractor {
 
     private let coinManager: ICoinManager
     private let storage: ICoinStorage
-    private let async: Bool
 
-    init(coinManager: ICoinManager, storage: ICoinStorage, async: Bool) {
+    init(coinManager: ICoinManager, storage: ICoinStorage) {
         self.coinManager = coinManager
         self.storage = storage
-        self.async = async
     }
 
 }
@@ -20,19 +18,15 @@ class ManageCoinsInteractor {
 extension ManageCoinsInteractor: IManageCoinsInteractor {
 
     func loadCoins() {
-        delegate?.didLoad(allCoins: coinManager.allCoins)
+        var enabledCoins = [Coin]()
 
-        var enabledCoinsObservable = storage.enabledCoinsObservable()
+        storage.enabledCoinsObservable()
+                .subscribe(onNext: {
+                    enabledCoins = $0
+                })
+                .disposed(by: disposeBag)
 
-        if async {
-            enabledCoinsObservable = enabledCoinsObservable
-                    .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
-                    .observeOn(MainScheduler.instance)
-        }
-
-        enabledCoinsObservable.subscribe(onNext: { [weak self] enabledCoins in
-            self?.delegate?.didLoad(enabledCoins: enabledCoins)
-        }).disposed(by: disposeBag)
+        delegate?.didLoad(allCoins: coinManager.allCoins, enabledCoins: enabledCoins)
     }
 
     func save(enabledCoins: [Coin]) {
