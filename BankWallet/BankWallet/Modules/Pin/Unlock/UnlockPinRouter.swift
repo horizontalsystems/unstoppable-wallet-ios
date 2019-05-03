@@ -22,7 +22,7 @@ extension UnlockPinRouter: IUnlockPinRouter {
             UIApplication.shared.keyWindow?.set(newRootController: MainRouter.module())
         } else {
             if didUnlock {
-                self.unlockDelegate?.onUnlock()
+                unlockDelegate?.onUnlock()
             }
             viewController?.dismiss(animated: true)
         }
