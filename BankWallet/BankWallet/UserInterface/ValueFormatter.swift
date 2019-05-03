@@ -76,7 +76,7 @@ class ValueFormatter {
         return result
     }
 
-    func format(currencyValue: CurrencyValue, fractionPolicy: FractionPolicy = .full, smallValueThreshold: Decimal = 0.01, roundingMode: NumberFormatter.RoundingMode = .halfUp) -> String? {
+    func format(currencyValue: CurrencyValue, fractionPolicy: FractionPolicy = .full, smallValueThreshold: Decimal = 0.01, trimmable: Bool = true, roundingMode: NumberFormatter.RoundingMode = .halfUp) -> String? {
         var absoluteValue = abs(currencyValue.value)
 
         let formatter = currencyFormatter
@@ -90,12 +90,13 @@ class ValueFormatter {
             formatter.minimumFractionDigits = 2
         case let .threshold(threshold):
             formatter.maximumFractionDigits = absoluteValue > threshold ? 0 : 2
+            formatter.maximumFractionDigits = !trimmable && absoluteValue < smallValueThreshold ? 4 : formatter.maximumFractionDigits
             formatter.minimumFractionDigits = 0
         }
 
         var showSmallSign = false
 
-        if absoluteValue > 0 && absoluteValue < smallValueThreshold {
+        if absoluteValue > 0 && absoluteValue < smallValueThreshold && trimmable {
             absoluteValue = smallValueThreshold
             showSmallSign = true
         }

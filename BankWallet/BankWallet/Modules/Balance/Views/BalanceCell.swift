@@ -189,7 +189,7 @@ class BalanceCell: UITableViewCell {
                 rateLabel.text = "balance.syncing".localized
             }
             rateLabel.textColor = BalanceTheme.rateColor
-        } else if let value = item.exchangeValue, let formattedValue = ValueFormatter.instance.format(currencyValue: value, fractionPolicy: .threshold(threshold: 1000)) {
+        } else if let value = item.exchangeValue, let formattedValue = ValueFormatter.instance.format(currencyValue: value, fractionPolicy: .threshold(threshold: 1000), smallValueThreshold: 0.1, trimmable: false) {
             rateLabel.text = "balance.rate_per_coin".localized(formattedValue, item.coinValue.coinCode)
             rateLabel.textColor = item.rateExpired ? BalanceTheme.rateExpiredColor : BalanceTheme.rateColor
         } else {
