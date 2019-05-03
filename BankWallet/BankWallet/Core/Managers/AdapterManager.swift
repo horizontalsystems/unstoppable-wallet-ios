@@ -17,7 +17,7 @@ class AdapterManager {
 
         coinManager.coinsUpdatedSignal
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
-                .observeOn(ConcurrentDispatchQueueScheduler(qos: .background))
+                .observeOn(ConcurrentDispatchQueueScheduler(qos: .userInteractive))
                 .subscribe(onNext: { [weak self] in
                     self?.initAdapters()
                 })
