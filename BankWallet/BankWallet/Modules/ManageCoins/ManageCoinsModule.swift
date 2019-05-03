@@ -22,8 +22,7 @@ protocol IManageCoinsInteractor {
 }
 
 protocol IManageCoinsInteractorDelegate: class {
-    func didLoad(allCoins: [Coin])
-    func didLoad(enabledCoins: [Coin])
+    func didLoad(allCoins: [Coin], enabledCoins: [Coin])
     func didSaveCoins()
     func didFailToSaveCoins()
 }

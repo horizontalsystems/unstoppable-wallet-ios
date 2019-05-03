@@ -15,14 +15,9 @@ class ManageCoinsPresenter {
 
 extension ManageCoinsPresenter: IManageCoinsInteractorDelegate {
 
-    func didLoad(allCoins: [Coin]) {
+    func didLoad(allCoins: [Coin], enabledCoins: [Coin]) {
         state.allCoins = allCoins
-        view?.updateUI()
-    }
-
-    func didLoad(enabledCoins: [Coin]) {
         state.enabledCoins = enabledCoins
-        view?.updateUI()
     }
 
     func didSaveCoins() {
