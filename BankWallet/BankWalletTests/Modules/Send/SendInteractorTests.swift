@@ -310,7 +310,7 @@ class SendInteractorTests: XCTestCase {
 
         let feeCoinCode = "ETH"
         let erc20CoinCode = "TNT"
-        let erc20Coin = Coin(title: "trinitrotoluene", code: erc20CoinCode, type: .erc20(address: "some_address", decimal: 3))
+        let erc20Coin = Coin(title: "trinitrotoluene", code: erc20CoinCode, type: .erc20(address: "some_address", decimal: 3, fee: 0))
         let fee = Decimal(string: "0.00004")!
         let expectedFeeError = FeeError.erc20error(erc20CoinCode: erc20CoinCode, fee: CoinValue(coinCode: feeCoinCode, value: fee))
 

@@ -18,7 +18,7 @@ protocol IManageCoinsViewDelegate {
 
 protocol IManageCoinsInteractor {
     func loadCoins()
-    func save(enabledCoins: [Coin])
+    func save(enabledCoins coins: [Coin])
 }
 
 protocol IManageCoinsInteractorDelegate: class {
