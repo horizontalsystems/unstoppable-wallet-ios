@@ -27,10 +27,10 @@ class AdapterFactory: IAdapterFactory {
             if let ethereumKit = try? ethereumKitManager.ethereumKit(authData: authData) {
                 return EthereumAdapter(coin: coin, ethereumKit: ethereumKit, addressParser: addressParser, feeRateProvider: feeRateProvider)
             }
-        case let .erc20(address, decimal):
+        case let .erc20(address, decimal, fee):
             let addressParser = AddressParser(validScheme: "ethereum", removeScheme: true)
             if let ethereumKit = try? ethereumKitManager.ethereumKit(authData: authData) {
-                return try? Erc20Adapter(coin: coin, ethereumKit: ethereumKit, contractAddress: address, decimal: decimal, addressParser: addressParser, feeRateProvider: feeRateProvider)
+                return try? Erc20Adapter(coin: coin, ethereumKit: ethereumKit, contractAddress: address, decimal: decimal, fee: fee, addressParser: addressParser, feeRateProvider: feeRateProvider)
             }
         }
 

@@ -137,3 +137,11 @@ extension Rate: Equatable {
         return lhs.value == rhs.value && lhs.coinCode == rhs.coinCode && lhs.currencyCode == rhs.currencyCode && lhs.date == rhs.date && lhs.isLatest == rhs.isLatest
     }
 }
+
+extension EnabledCoin: Equatable {
+
+    public static func ==(lhs: EnabledCoin, rhs: EnabledCoin) -> Bool {
+        return lhs.coinCode == rhs.coinCode && lhs.order == rhs.order
+    }
+
+}

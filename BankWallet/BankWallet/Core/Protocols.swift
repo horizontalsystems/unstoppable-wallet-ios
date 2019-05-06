@@ -212,7 +212,8 @@ protocol IAppConfigProvider {
 
     var defaultWords: [String] { get }
     var disablePinLock: Bool { get }
-    var defaultCoins: [Coin] { get }
+
+    var defaultCoinCodes: [CoinCode] { get }
     var coins: [Coin] { get }
 }
 
@@ -242,10 +243,10 @@ protocol IRateStorage {
     func clearRates()
 }
 
-protocol ICoinStorage {
-    func enabledCoinsObservable() -> Observable<[Coin]>
-    func save(enabledCoins: [Coin])
-    func clearCoins()
+protocol IEnabledCoinStorage {
+    var enabledCoinsObservable: Observable<[EnabledCoin]> { get }
+    func save(enabledCoins: [EnabledCoin])
+    func clearEnabledCoins()
 }
 
 protocol IJsonApiProvider {

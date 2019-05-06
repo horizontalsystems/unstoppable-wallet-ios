@@ -6,55 +6,20 @@ import RxSwift
 class ManageCoinsInteractorTests: XCTestCase {
     private var mockDelegate: MockIManageCoinsInteractorDelegate!
     private var mockCoinManager: MockICoinManager!
-    private var mockStorage: MockICoinStorage!
+    private var mockStorage: MockIEnabledCoinStorage!
 
     private var interactor: ManageCoinsInteractor!
 
-    private var bitcoin: Coin!
-    private var bitcoinCash: Coin!
-    private var ethereum: Coin!
-
-    private var allCoins: [Coin]!
-    private var enabledCoins: [Coin]!
-    private var disabledCoins: [Coin]!
-
-    private var enabledCoinsObservable: BehaviorSubject<[Coin]>!
+    private let bitcoin = Coin(title: "Bitcoin", code: "BTC", type: .bitcoin)
+    private let bitcoinCash: Coin = Coin(title: "Bitcoin Cash", code: "BCH", type: .bitcoinCash)
+    private let ethereum: Coin = Coin(title: "Ethereum", code: "ETH", type: .ethereum)
 
     override func setUp() {
         super.setUp()
-        bitcoin = Coin(title: "Bitcoin", code: "BTC", type: .bitcoin)
-        bitcoinCash = Coin(title: "Bitcoin Cash", code: "BCH", type: .bitcoinCash)
-        ethereum = Coin(title: "Ethereum", code: "ETH", type: .ethereum)
-        allCoins = [
-            bitcoin,
-            bitcoinCash,
-            ethereum
-        ]
-        enabledCoins = [
-            bitcoin,
-            ethereum
-        ]
-        disabledCoins = [
-            bitcoinCash,
-        ]
-
-        enabledCoinsObservable = BehaviorSubject(value: enabledCoins)
 
         mockDelegate = MockIManageCoinsInteractorDelegate()
         mockCoinManager = MockICoinManager()
-        mockStorage = MockICoinStorage()
-
-        stub(mockDelegate) { mock in
-            when(mock.didLoad(allCoins: any(), enabledCoins: any())).thenDoNothing()
-            when(mock.didSaveCoins()).thenDoNothing()
-        }
-        stub(mockCoinManager) { mock in
-            when(mock.allCoins.get).thenReturn(allCoins)
-        }
-        stub(mockStorage) { mock in
-            when(mock.enabledCoinsObservable()).thenReturn(enabledCoinsObservable)
-            when(mock.save(enabledCoins: any())).thenDoNothing()
-        }
+        mockStorage = MockIEnabledCoinStorage()
 
         interactor = ManageCoinsInteractor(coinManager: mockCoinManager, storage: mockStorage)
         interactor.delegate = mockDelegate
@@ -71,13 +36,43 @@ class ManageCoinsInteractorTests: XCTestCase {
     }
 
     func testLoadCoins() {
+        let allCoins = [bitcoin, bitcoinCash, ethereum]
+        let enabledCoins = [
+            EnabledCoin(coinCode: bitcoin.code, order: 0),
+            EnabledCoin(coinCode: ethereum.code, order: 1)
+        ]
+        let enabledCoinsObservable = BehaviorSubject<[EnabledCoin]>(value: enabledCoins)
+
+        stub(mockCoinManager) { mock in
+            when(mock.allCoins.get).thenReturn(allCoins)
+        }
+        stub(mockStorage) { mock in
+            when(mock.enabledCoinsObservable.get).thenReturn(enabledCoinsObservable)
+        }
+        stub(mockDelegate) { mock in
+            when(mock.didLoad(allCoins: any(), enabledCoins: any())).thenDoNothing()
+        }
+
         interactor.loadCoins()
 
-        verify(mockDelegate).didLoad(allCoins: equal(to: allCoins), enabledCoins: equal(to: enabledCoins))
+        verify(mockDelegate).didLoad(allCoins: equal(to: allCoins), enabledCoins: equal(to: [bitcoin, ethereum]))
     }
 
     func testSaveCoins() {
-        interactor.save(enabledCoins: enabledCoins)
+        let coins = [bitcoinCash, ethereum]
+        let enabledCoins = [
+            EnabledCoin(coinCode: bitcoinCash.code, order: 0),
+            EnabledCoin(coinCode: ethereum.code, order: 1)
+        ]
+
+        stub(mockDelegate) { mock in
+            when(mock.didSaveCoins()).thenDoNothing()
+        }
+        stub(mockStorage) { mock in
+            when(mock.save(enabledCoins: any())).thenDoNothing()
+        }
+
+        interactor.save(enabledCoins: coins)
 
         verify(mockStorage).save(enabledCoins: equal(to: enabledCoins))
         verify(mockDelegate).didSaveCoins()

@@ -4,103 +4,100 @@ import Cuckoo
 @testable import Bank_Dev_T
 
 class CoinManagerTests: XCTestCase {
-    private var mockStorage: MockICoinStorage!
+    private var mockStorage: MockIEnabledCoinStorage!
     private var mockAppConfigProvider: MockIAppConfigProvider!
 
     private var manager: CoinManager!
 
-    private var bitcoin: Coin!
-    private var bitcoinCash: Coin!
-    private var ethereum: Coin!
+    private let bitcoin = Coin(title: "Bitcoin", code: "BTC", type: .bitcoin)
+    private let bitcoinCash: Coin = Coin(title: "Bitcoin Cash", code: "BCH", type: .bitcoinCash)
+    private let ethereum: Coin = Coin(title: "Ethereum", code: "ETH", type: .ethereum)
 
-    private var defaultCoins: [Coin]!
-    private var enabledCoins: [Coin]!
-    private var disabledCoins: [Coin]!
-
-    private var coinsObservable = PublishSubject<[Coin]>()
-
-    private var disposeBag: DisposeBag!
+    private var enabledCoinsObservable = PublishSubject<[EnabledCoin]>()
 
     override func setUp() {
         super.setUp()
-        mockStorage = MockICoinStorage()
+
+        mockStorage = MockIEnabledCoinStorage()
         mockAppConfigProvider = MockIAppConfigProvider()
-        mockStorage = MockICoinStorage()
-        disposeBag = DisposeBag()
 
-        bitcoin = Coin(title: "Bitcoin", code: "BTC", type: .bitcoin)
-        bitcoinCash = Coin(title: "Bitcoin Cash", code: "BCH", type: .bitcoinCash)
-        ethereum = Coin(title: "Ethereum", code: "ETH", type: .ethereum)
-        defaultCoins = [
-            bitcoin,
-            bitcoinCash,
-            ethereum
-        ]
-        enabledCoins = [
-            bitcoin,
-            ethereum
-        ]
-        disabledCoins = [
-            bitcoinCash,
-        ]
-
-        stub(mockAppConfigProvider) { mock in
-            when(mock.defaultCoins.get).thenReturn(defaultCoins)
-        }
         stub(mockStorage) { mock in
-            when(mock.enabledCoinsObservable()).thenReturn(coinsObservable)
-            when(mock.save(enabledCoins: any())).thenDoNothing()
-            when(mock.clearCoins()).thenDoNothing()
+            when(mock.enabledCoinsObservable.get).thenReturn(enabledCoinsObservable)
         }
-        manager = CoinManager(appConfigProvider: mockAppConfigProvider, storage: mockStorage, async: false)
+
+        manager = CoinManager(appConfigProvider: mockAppConfigProvider, storage: mockStorage)
     }
 
     override func tearDown() {
         mockStorage = nil
         mockAppConfigProvider = nil
-        mockStorage = nil
-        disposeBag = nil
 
         manager = nil
 
         super.tearDown()
     }
 
-    func testInitialSetEnabledCoins() {
-        manager.enableDefaultCoins()
-        verify(mockStorage).save(enabledCoins: equal(to: defaultCoins))
-    }
-
     func testAllCoins() {
-        let defaultCoins = self.defaultCoins
+        let allCoins = [bitcoin, bitcoinCash, ethereum]
+
         stub(mockAppConfigProvider) { mock in
-            when(mock.coins.get).thenReturn([])
+            when(mock.coins.get).thenReturn(allCoins)
         }
 
-        XCTAssertEqual(manager.allCoins, defaultCoins)
+        XCTAssertEqual(manager.allCoins, allCoins)
     }
 
-    func testUpdateSignal() {
+    func testInitialSetEnabledCoins() {
+        let defaultCoinCodes = [bitcoin.code, ethereum.code]
+        let enabledCoins = [
+            EnabledCoin(coinCode: bitcoin.code, order: 0),
+            EnabledCoin(coinCode: ethereum.code, order: 1)
+        ]
+
+        stub(mockAppConfigProvider) { mock in
+            when(mock.defaultCoinCodes.get).thenReturn(defaultCoinCodes)
+        }
+        stub(mockStorage) { mock in
+            when(mock.save(enabledCoins: any())).thenDoNothing()
+        }
+
+        manager.enableDefaultCoins()
+
+        verify(mockStorage).save(enabledCoins: equal(to: enabledCoins))
+    }
+
+    func testUpdateEnabledCoins() {
+        let allCoins = [bitcoin, bitcoinCash, ethereum]
+        let enabledCoins = [
+            EnabledCoin(coinCode: bitcoin.code, order: 0),
+            EnabledCoin(coinCode: ethereum.code, order: 1)
+        ]
+
+        stub(mockAppConfigProvider) { mock in
+            when(mock.coins.get).thenReturn(allCoins)
+        }
+
         let expectations = expectation(description: "signal_notify")
-        manager.coinsUpdatedSignal.subscribe(onNext: {
+
+        _ = manager.coinsUpdatedSignal.subscribe(onNext: {
             expectations.fulfill()
-        }).disposed(by: disposeBag)
-        coinsObservable.onNext([])
+        })
+
+        enabledCoinsObservable.onNext(enabledCoins)
+
         waitForExpectations(timeout: 2)
+        XCTAssertEqual(manager.coins, [bitcoin, ethereum])
     }
 
-    func testClear_clearStorage() {
-        manager.clear()
-
-        verify(mockStorage).clearCoins()
-    }
-
-    func testClear_clearCoinsInMemory() {
-        coinsObservable.onNext([bitcoin])
+    func testClear() {
+        stub(mockStorage) { mock in
+            when(mock.clearEnabledCoins()).thenDoNothing()
+        }
 
         manager.clear()
 
         XCTAssertTrue(manager.coins.isEmpty)
+        verify(mockStorage).clearEnabledCoins()
     }
 
 }
