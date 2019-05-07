@@ -16,7 +16,7 @@
 
 // Access Camera
 
-"access_camera.message" = "Unstoppable needs access to your camera to scan QR code.\n\nGo to Settings - > Unstoppable and allow access to Camera.";
+"access_camera.message" = "Unstoppable Cüzdan, QR Kodu okuyabilmek için Kameranıza ihtiyaç duyuyor.\n\nAyarlar - > Unstoppable'a gidip kamera erişimine izin verin.";
 "access_camera.settings" = "Ayarlar";
 "access_camera.cancel" = "İptal";
 
@@ -97,11 +97,11 @@
 "tx_info.time" = "Tarih";
 "tx_info.status" = "Durum";
 "tx_info.status.pending" = "Devam ediyor";
-"tx_info.status.confirmed" = "Confirmed";
+"tx_info.status.confirmed" = "Onaylandı";
 "tx_info.from_hash" = "Gönderen";
 "tx_info.to_hash" = "Alan";
 "tx_info.button_verify" = "Doğrula";
-"tx_info.rate" = "Historical Rate";
+"tx_info.rate" = "Geçmiş Kur";
 
 // Full Info
 
