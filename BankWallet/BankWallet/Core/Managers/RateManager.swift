@@ -62,17 +62,22 @@ extension RateManager: IRateManager {
                     if let rate = rate {
                         return Single.just(rate.value)
                     } else {
-                        let apiSingle = self.apiProvider.getRate(coinCode: coinCode, currencyCode: currencyCode, date: date)
-                                .do(onSuccess: { [weak self] value in
-                                    if let value = value {
-                                        let rate = Rate(coinCode: coinCode, currencyCode: currencyCode, value: value, date: date, isLatest: false)
-                                        self?.storage.save(rate: rate)
-                                    }
-                                })
+                        return self.latestRateFallbackSingle(coinCode: coinCode, currencyCode: currencyCode, date: date)
+                    }
+                }.flatMap { [unowned self] value -> Single<Decimal?> in
+                    let single = self.apiProvider.getRate(coinCode: coinCode, currencyCode: currencyCode, date: date)
+                            .do(onSuccess: { [weak self] value in
+                                if let value = value {
+                                    let rate = Rate(coinCode: coinCode, currencyCode: currencyCode, value: value, date: date, isLatest: false)
+                                    self?.storage.save(rate: rate)
+                                }
+                            })
 
-                        return apiSingle.catchError { error in
-                            return self.latestRateFallbackSingle(coinCode: coinCode, currencyCode: currencyCode, date: date)
-                        }
+                    if let value = value {
+                        single.subscribe().disposed(by: self.disposeBag)
+                        return Single.just(value)
+                    } else {
+                        return single
                     }
                 }
     }
