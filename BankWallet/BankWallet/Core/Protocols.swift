@@ -56,7 +56,6 @@ protocol IAdapterManager: class {
     var adapters: [IAdapter] { get }
     var adaptersUpdatedSignal: Signal { get }
     func initAdapters()
-    func clear()
     func willEnterForeground()
 }
 
@@ -97,7 +96,6 @@ protocol IAdapter: class {
     func start()
     func stop()
     func refresh()
-    func clear()
 
     var lastBlockHeight: Int? { get }
     var lastBlockHeightUpdatedObservable: Observable<Void> { get }
@@ -375,4 +373,5 @@ protocol IFeeRateProvider {
     func ethereumGasPrice(for priority: FeeRatePriority) -> Int
     func bitcoinFeeRate(for priority: FeeRatePriority) -> Int
     func bitcoinCashFeeRate(for priority: FeeRatePriority) -> Int
+    func dashFeeRate(for priority: FeeRatePriority) -> Int
 }

@@ -4,7 +4,6 @@ import Erc20Kit
 
 protocol IEthereumKitManager {
     func ethereumKit(authData: AuthData) throws -> EthereumKit
-    func clear()
 }
 
 class EthereumKitManager: IEthereumKitManager {
@@ -33,11 +32,8 @@ class EthereumKitManager: IEthereumKitManager {
         ethereumKit.start()
 
         self.ethereumKit = ethereumKit
-        return ethereumKit
-    }
 
-    func clear() {
-        ethereumKit?.clear()
+        return ethereumKit
     }
 
 }

@@ -128,3 +128,11 @@ extension Erc20Adapter: IAdapter {
     }
 
 }
+
+extension Erc20Adapter {
+
+    static func clear() throws {
+        try Erc20Kit.clear()
+    }
+
+}
