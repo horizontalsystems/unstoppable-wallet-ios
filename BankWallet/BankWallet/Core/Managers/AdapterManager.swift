@@ -56,15 +56,6 @@ extension AdapterManager: IAdapterManager {
         adaptersUpdatedSignal.notify()
     }
 
-    func clear() {
-        for adapter in adapters {
-            adapter.clear()
-        }
-
-        adapters = []
-        adaptersUpdatedSignal.notify()
-    }
-
     func willEnterForeground() {
         adapters.forEach { adapter in
             if case .notSynced = adapter.state {

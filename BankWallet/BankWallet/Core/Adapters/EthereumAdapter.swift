@@ -102,3 +102,11 @@ extension EthereumAdapter: IAdapter {
     }
 
 }
+
+extension EthereumAdapter {
+
+    static func clear() throws {
+        try EthereumKit.clear()
+    }
+
+}

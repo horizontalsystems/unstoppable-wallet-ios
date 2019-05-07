@@ -13,7 +13,7 @@ class BitcoinBaseAdapter {
     private let lastBlockHeightUpdatedSignal = Signal()
     private let stateUpdatedSignal = Signal()
     private let balanceUpdatedSignal = Signal()
-    private let transactionRecordsSubject = PublishSubject<[TransactionRecord]>()
+    let transactionRecordsSubject = PublishSubject<[TransactionRecord]>()
 
     private(set) var state: AdapterState
 
@@ -31,7 +31,7 @@ class BitcoinBaseAdapter {
         fatalError("Method should be overridden in child class")
     }
 
-    private func transactionRecord(fromTransaction transaction: TransactionInfo) -> TransactionRecord {
+    func transactionRecord(fromTransaction transaction: TransactionInfo) -> TransactionRecord {
         let fromAddresses = transaction.from.map {
             TransactionAddress(address: $0.address, mine: $0.mine)
         }
@@ -106,10 +106,6 @@ extension BitcoinBaseAdapter: IAdapter {
 
     func refresh() {
         // not called
-    }
-
-    func clear() {
-        try? abstractKit.clear()
     }
 
     private func convertToSatoshi(value: Decimal) -> Int {

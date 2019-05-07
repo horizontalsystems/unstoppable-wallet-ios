@@ -32,6 +32,12 @@ extension AuthManager: IAuthManager {
     }
 
     func login(withWords words: [String], newWallet: Bool) throws {
+        try BitcoinAdapter.clear()
+        try BitcoinCashAdapter.clear()
+        try DashAdapter.clear()
+        try EthereumAdapter.clear()
+        try Erc20Adapter.clear()
+
         let authData = AuthData(words: words)
         try secureStorage.set(authData: authData)
         localStorage.isNewWallet = newWallet
@@ -43,8 +49,6 @@ extension AuthManager: IAuthManager {
     }
 
     func logout() throws {
-        adapterManager?.clear()
-        ethereumKitManager.clear()
         try pinManager.clear()
         localStorage.clear()
         coinManager.clear()

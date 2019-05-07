@@ -21,3 +21,11 @@ class BitcoinAdapter: BitcoinBaseAdapter {
     }
 
 }
+
+extension BitcoinAdapter {
+
+    static func clear() throws {
+//        try BitcoinKit.clear()
+    }
+
+}

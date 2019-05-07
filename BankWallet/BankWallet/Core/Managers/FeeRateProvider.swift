@@ -33,4 +33,8 @@ extension FeeRateProvider: IFeeRateProvider {
         return feeRate(from: feeRateKit.bitcoinCash, priority: priority)
     }
 
+    func dashFeeRate(for priority: FeeRatePriority) -> Int {
+        return feeRate(from: feeRateKit.dash, priority: priority)
+    }
+
 }

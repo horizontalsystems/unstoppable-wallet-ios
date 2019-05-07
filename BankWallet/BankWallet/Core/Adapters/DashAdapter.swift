@@ -17,7 +17,32 @@ class DashAdapter: BitcoinBaseAdapter {
     }
 
     override func feeRate(priority: FeeRatePriority) -> Int {
-        return feeRateProvider.bitcoinFeeRate(for: priority)
+        return feeRateProvider.dashFeeRate(for: priority)
+    }
+
+}
+
+extension DashAdapter: DashKitDelegate {
+
+    public func transactionsUpdated(inserted: [DashTransactionInfo], updated: [DashTransactionInfo]) {
+        var records = [TransactionRecord]()
+
+        for info in inserted {
+            records.append(transactionRecord(fromTransaction: info))
+        }
+        for info in updated {
+            records.append(transactionRecord(fromTransaction: info))
+        }
+
+        transactionRecordsSubject.onNext(records)
+    }
+
+}
+
+extension DashAdapter {
+
+    static func clear() throws {
+//        try DashKit.clear()
     }
 
 }
