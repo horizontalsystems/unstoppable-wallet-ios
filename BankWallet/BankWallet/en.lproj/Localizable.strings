@@ -16,15 +16,15 @@
 
 // Access Camera
 
-"access_camera.message" = "Bank needs access to your camera to scan QR code.
+"access_camera.message" = "Unstoppable needs access to your camera to scan QR code.
 
-Go to Settings - > Bank and allow access to Camera.";
+Go to Settings - > Unstoppable and allow access to Camera.";
 "access_camera.settings" = "Settings";
 "access_camera.cancel" = "Cancel";
 
 // Guest Page
 
-"guest.title" = "Bank Wallet";
+"guest.title" = "Unstoppable";
 "guest.subtitle" = "Decentralized App";
 "guest.create_wallet" = "New Wallet";
 "guest.restore_wallet" = "Restore Wallet";
@@ -145,7 +145,7 @@ Go to Settings - > Bank and allow access to Camera.";
 "settings.language" = "Language";
 "settings.about" = "About";
 "settings.light_mode" = "Light Mode";
-"settings.info_title" = "BANK WALLET";
+"settings.info_title" = "UNSTOPPABLE";
 "settings.info_subtitle" = "decentralized app";
 
 // Settings -> Base Currency
