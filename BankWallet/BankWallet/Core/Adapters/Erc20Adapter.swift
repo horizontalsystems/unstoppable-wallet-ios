@@ -7,9 +7,11 @@ class Erc20Adapter: EthereumBaseAdapter {
     let feeCoinCode: CoinCode? = "ETH"
 
     private let erc20Kit: Erc20Kit
+    private let fee: Decimal
 
-    init(coin: Coin, ethereumKit: EthereumKit, contractAddress: String, decimal: Int, addressParser: IAddressParser, feeRateProvider: IFeeRateProvider) throws {
+    init(coin: Coin, ethereumKit: EthereumKit, contractAddress: String, decimal: Int, fee: Decimal, addressParser: IAddressParser, feeRateProvider: IFeeRateProvider) throws {
         self.erc20Kit = try Erc20Kit.instance(ethereumKit: ethereumKit, contractAddress: contractAddress)
+        self.fee = fee
 
         super.init(coin: coin, ethereumKit: ethereumKit, decimal: decimal, addressParser: addressParser, feeRateProvider: feeRateProvider)
     }
@@ -104,7 +106,7 @@ extension Erc20Adapter: IAdapter {
     }
 
     func availableBalance(for address: String?, feeRatePriority: FeeRatePriority) -> Decimal {
-        return balance
+        return max(0, balance - fee)
     }
 
     func fee(for value: Decimal, address: String?, feeRatePriority: FeeRatePriority) -> Decimal {

@@ -33,7 +33,7 @@ class EthereumTransactionInfoAdapter: IFullTransactionInfoAdapter {
         }
         if let weiValue = txResponse.value {
             var value: Decimal = 0
-            if case .erc20(_, let decimal) = coin.type {
+            if case .erc20(_, let decimal, _) = coin.type {
                 value = weiValue / pow(10, decimal)
             } else {
                 value = weiValue / pow(10, 18)

@@ -32,17 +32,16 @@ class GrdbStorage {
                 ], onConflict: .replace)
             }
         }
-        migrator.registerMigration("createCoinsTable") { db in
-            try db.create(table: StorableCoin.databaseTableName) { t in
-                t.column(StorableCoin.Columns.title.name, .text).notNull()
-                t.column(StorableCoin.Columns.code.name, .text).notNull()
-                t.column(StorableCoin.Columns.type.name, .text).notNull()
-                t.column(StorableCoin.Columns.enabled.name, .boolean).notNull()
-                t.column(StorableCoin.Columns.coinOrder.name, .integer)
 
-                t.primaryKey([StorableCoin.Columns.code.name], onConflict: .replace)
+        migrator.registerMigration("createEnabledCoinsTable") { db in
+            try db.create(table: EnabledCoin.databaseTableName) { t in
+                t.column(EnabledCoin.Columns.coinCode.name, .text).notNull()
+                t.column(EnabledCoin.Columns.coinOrder.name, .integer).notNull()
+
+                t.primaryKey([EnabledCoin.Columns.coinCode.name], onConflict: .replace)
             }
         }
+
         migrator.registerMigration("timestampToDateRates") { db in
             try db.drop(table: Rate.databaseTableName)
             try db.create(table: Rate.databaseTableName) { t in
@@ -115,30 +114,26 @@ extension GrdbStorage: IRateStorage {
 
 }
 
-extension GrdbStorage: ICoinStorage {
+extension GrdbStorage: IEnabledCoinStorage {
 
-    func enabledCoinsObservable() -> Observable<[Coin]> {
-        let request = StorableCoin.filter(StorableCoin.Columns.enabled == true).order(StorableCoin.Columns.coinOrder)
+    var enabledCoinsObservable: Observable<[EnabledCoin]> {
+        let request = EnabledCoin.order(EnabledCoin.Columns.coinOrder)
         return request.rx.fetchAll(in: dbPool)
-                .map { $0.map { $0.coin } }
     }
 
-    func save(enabledCoins: [Coin]) {
-        _ = try? dbPool.write { db in
-            let sql = "UPDATE \(StorableCoin.databaseTableName) SET \(StorableCoin.Columns.enabled.name) = :enabled, \(StorableCoin.Columns.coinOrder.name) = :order"
+    func save(enabledCoins: [EnabledCoin]) {
+        _ = try! dbPool.write { db in
+            try EnabledCoin.deleteAll(db)
 
-            try db.execute(sql, arguments: ["enabled": false, "order": nil])
-
-            for (index, coin) in enabledCoins.enumerated() {
-                let storableCoin = StorableCoin(coin: coin, enabled: true, order: index)
-                try storableCoin.insert(db)
+            for enabledCoin in enabledCoins {
+                try enabledCoin.insert(db)
             }
         }
     }
 
-    func clearCoins() {
-        _ = try? dbPool.write { db in
-            try StorableCoin.deleteAll(db)
+    func clearEnabledCoins() {
+        _ = try! dbPool.write { db in
+            try EnabledCoin.deleteAll(db)
         }
     }
 
