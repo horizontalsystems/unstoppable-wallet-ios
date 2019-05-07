@@ -16,7 +16,7 @@
 
 // Access Camera
 
-"access_camera.message" = "Unstoppable needs access to your camera to scan QR code.\n\nGo to Settings - > Unstoppable and allow access to Camera.";
+"access_camera.message" = "Unstoppable Wallet необходим доступ к вашей камере для QR-код.\n\nПерейдите в \"Настройки\", чтобы разрешить доступ к камере.";
 "access_camera.settings" = "Настройки";
 "access_camera.cancel" = "Отменить";
 
