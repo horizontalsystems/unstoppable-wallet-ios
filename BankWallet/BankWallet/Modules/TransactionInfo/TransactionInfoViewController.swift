@@ -29,7 +29,7 @@ class TransactionInfoViewController: ActionSheetController {
         let amountItem = TransactionAmountItem(item: item, tag: 1)
         model.addItemView(amountItem)
 
-        if let value = item.rate, let formattedValue = ValueFormatter.instance.format(currencyValue: value, fractionPolicy: .threshold(threshold: 1000)) {
+        if let value = item.rate, let formattedValue = ValueFormatter.instance.format(currencyValue: value, fractionPolicy: .threshold(high: 1000, low: 0.1), trimmable: false) {
             let rateItem = TransactionValueItem(title: "tx_info.rate".localized, value: "balance.rate_per_coin".localized(formattedValue, item.coinValue.coinCode), tag: 2)
             model.addItemView(rateItem)
         }

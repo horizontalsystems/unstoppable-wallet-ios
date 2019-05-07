@@ -7,7 +7,7 @@ class ValueFormatter {
 
     enum FractionPolicy {
         case full
-        case threshold(threshold: Decimal)
+        case threshold(high: Decimal, low: Decimal)
     }
 
     private let coinFormatter: NumberFormatter = {
@@ -59,8 +59,8 @@ class ValueFormatter {
         switch fractionPolicy {
         case .full:
             formatter.maximumFractionDigits = 8
-        case let .threshold(threshold):
-            formatter.maximumFractionDigits = absoluteValue > threshold ? 4 : 8
+        case let .threshold(high, _):
+            formatter.maximumFractionDigits = absoluteValue > high ? 4 : 8
         }
 
         guard let formattedValue = formatter.string(from: absoluteValue as NSNumber) else {
@@ -76,7 +76,7 @@ class ValueFormatter {
         return result
     }
 
-    func format(currencyValue: CurrencyValue, fractionPolicy: FractionPolicy = .full, smallValueThreshold: Decimal = 0.01, roundingMode: NumberFormatter.RoundingMode = .halfUp) -> String? {
+    func format(currencyValue: CurrencyValue, fractionPolicy: FractionPolicy = .full, trimmable: Bool = true, roundingMode: NumberFormatter.RoundingMode = .halfUp) -> String? {
         var absoluteValue = abs(currencyValue.value)
 
         let formatter = currencyFormatter
@@ -84,20 +84,21 @@ class ValueFormatter {
         formatter.currencyCode = currencyValue.currency.code
         formatter.currencySymbol = currencyValue.currency.symbol
 
+        var showSmallSign = false
+
         switch fractionPolicy {
         case .full:
             formatter.maximumFractionDigits = 2
             formatter.minimumFractionDigits = 2
-        case let .threshold(threshold):
-            formatter.maximumFractionDigits = absoluteValue > threshold ? 0 : 2
+        case let .threshold(high, low):
+            formatter.maximumFractionDigits = absoluteValue > high ? 0 : 2
+            formatter.maximumFractionDigits = !trimmable && absoluteValue < low ? 4 : formatter.maximumFractionDigits
             formatter.minimumFractionDigits = 0
-        }
 
-        var showSmallSign = false
-
-        if absoluteValue > 0 && absoluteValue < smallValueThreshold {
-            absoluteValue = smallValueThreshold
-            showSmallSign = true
+            if absoluteValue > 0 && absoluteValue < low && trimmable {
+                absoluteValue = low
+                showSmallSign = true
+            }
         }
 
         guard var result = formatter.string(from: absoluteValue as NSNumber) else {

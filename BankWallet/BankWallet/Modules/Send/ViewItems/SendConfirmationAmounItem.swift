@@ -9,7 +9,7 @@ class SendConfirmationAmounItem: BaseActionItem {
         case .coinValue(let coinValue):
             primaryAmount = ValueFormatter.instance.format(coinValue: coinValue)
         case .currencyValue(let currencyValue):
-            primaryAmount = ValueFormatter.instance.format(currencyValue: currencyValue, fractionPolicy: .threshold(threshold: 100))
+            primaryAmount = ValueFormatter.instance.format(currencyValue: currencyValue, fractionPolicy: .threshold(high: 100, low: 0.01))
         }
 
         if let secondaryAmountInfo = viewItem.secondaryAmountInfo {
