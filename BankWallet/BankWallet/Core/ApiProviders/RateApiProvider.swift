@@ -51,7 +51,7 @@ class RateApiProvider {
         return networkManager.single(urlString: urlString, httpMethod: .get, timoutInterval: timeoutInterval)
     }
 
-    private func getRate(baseUrlString: String, timeoutInterval: TimeInterval, coinCode: String, currencyCode: String, date: Date) -> Single<Decimal?> {
+    private func getRate(baseUrlString: String, timeoutInterval: TimeInterval, coinCode: String, currencyCode: String, date: Date) -> Single<Decimal> {
         let dayPath = ipfsDayFormatter.string(from: date)
         let hourPath = ipfsHourFormatter.string(from: date)
         let minuteString = ipfsMinuteFormatter.string(from: date)
@@ -62,14 +62,17 @@ class RateApiProvider {
         let hourSingle: Single<[String: String]> = networkManager.single(urlString: hourUrlString, httpMethod: .get, timoutInterval: timeoutInterval)
         let daySingle: Single<String> = networkManager.single(urlString: dayUrlString, httpMethod: .get, timoutInterval: timeoutInterval)
 
-        return hourSingle.flatMap { rates -> Single<Decimal?> in
+        return hourSingle.flatMap { rates -> Single<Decimal> in
             if let rate = rates[minuteString], let decimal = Decimal(string: rate) {
                 return Single.just(decimal)
             }
             return Single.error(ApiError.noValueForHour)
         }.catchError { _ in
-            return daySingle.map { rate -> Decimal? in
-                return Decimal(string: rate)
+            return daySingle.flatMap { rate -> Single<Decimal> in
+                guard let decimal = Decimal(string: rate) else {
+                    return Single.error(ApiError.noValueForDay)
+                }
+                return Single.just(decimal)
             }
         }
     }
@@ -84,7 +87,7 @@ extension RateApiProvider: IRateApiProvider {
         }
     }
 
-    func getRate(coinCode: String, currencyCode: String, date: Date) -> Single<Decimal?> {
+    func getRate(coinCode: String, currencyCode: String, date: Date) -> Single<Decimal> {
         return gatewaysSingle { [unowned self] baseUrlString, timeoutInterval in
             return self.getRate(baseUrlString: baseUrlString, timeoutInterval: timeoutInterval, coinCode: coinCode, currencyCode: currencyCode, date: date)
         }
@@ -96,6 +99,7 @@ extension RateApiProvider {
 
     enum ApiError: Error {
         case noValueForHour
+        case noValueForDay
         case allGatewaysReturnedError
     }
 

@@ -1,6 +1,10 @@
 import RxSwift
 
 class RateManager {
+    enum RateError: Error {
+        case expired
+    }
+
     private let latestRateFallbackThreshold: Double = 10 // in minutes
 
     private let disposeBag = DisposeBag()
@@ -13,23 +17,17 @@ class RateManager {
         self.apiProvider = apiProvider
     }
 
-    private func latestRateFallbackSingle(coinCode: CoinCode, currencyCode: String, date: Date) -> Single<Decimal?> {
+    private func nonExpiredLatestRateSingle(coinCode: CoinCode, currencyCode: String, date: Date) -> Single<Decimal> {
         let referenceTimestamp = date.timeIntervalSince1970
         let currentTimestamp = Date().timeIntervalSince1970
 
         guard referenceTimestamp > currentTimestamp - 60 * latestRateFallbackThreshold else {
-            return Single.just(nil)
+            return Single.error(RateError.expired)
         }
 
         return storage.latestRateObservable(forCoinCode: coinCode, currencyCode: currencyCode)
                 .take(1)
-                .map { rate -> Decimal? in
-                    guard !rate.expired else {
-                        return nil
-                    }
-
-                    return rate.value
-                }
+                .map { $0.value }
                 .asSingle()
     }
 
@@ -54,25 +52,30 @@ extension RateManager: IRateManager {
                 .disposed(by: disposeBag)
     }
 
-    func timestampRateValueObservable(coinCode: CoinCode, currencyCode: String, date: Date) -> Single<Decimal?> {
+    func timestampRateValueObservable(coinCode: CoinCode, currencyCode: String, date: Date) -> Single<Decimal> {
         return storage.timestampRateObservable(coinCode: coinCode, currencyCode: currencyCode, date: date)
                 .take(1)
                 .asSingle()
-                .flatMap { [unowned self] rate -> Single<Decimal?> in
+                .flatMap { [unowned self] rate -> Single<Decimal> in
                     if let rate = rate {
                         return Single.just(rate.value)
                     } else {
                         let apiSingle = self.apiProvider.getRate(coinCode: coinCode, currencyCode: currencyCode, date: date)
                                 .do(onSuccess: { [weak self] value in
-                                    if let value = value {
-                                        let rate = Rate(coinCode: coinCode, currencyCode: currencyCode, value: value, date: date, isLatest: false)
-                                        self?.storage.save(rate: rate)
-                                    }
+                                    let rate = Rate(coinCode: coinCode, currencyCode: currencyCode, value: value, date: date, isLatest: false)
+                                    self?.storage.save(rate: rate)
                                 })
 
-                        return apiSingle.catchError { error in
-                            return self.latestRateFallbackSingle(coinCode: coinCode, currencyCode: currencyCode, date: date)
-                        }
+                        return self.nonExpiredLatestRateSingle(coinCode: coinCode, currencyCode: currencyCode, date: date)
+                                .do(onSuccess: { _ in
+                                    apiSingle
+                                            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
+                                            .subscribe()
+                                            .disposed(by: self.disposeBag)
+                                })
+                                .catchError { _ in
+                                    return apiSingle
+                                }
                     }
                 }
     }

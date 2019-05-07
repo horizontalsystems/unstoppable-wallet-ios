@@ -163,11 +163,9 @@ extension TransactionsInteractor: ITransactionsInteractor {
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
                 .observeOn(MainScheduler.instance)
                 .subscribe(onSuccess: { [weak self] rateValue in
-                    if let rateValue = rateValue {
-                        self?.delegate?.didFetch(rateValue: rateValue, coin: coin, currency: currency, date: date)
-                    } else {
-                        self?.requestedTimestamps.removeAll { $0 == coin && $1 == date }
-                    }
+                    self?.delegate?.didFetch(rateValue: rateValue, coin: coin, currency: currency, date: date)
+                }, onError: { [weak self] _ in
+                    self?.requestedTimestamps.removeAll { $0 == coin && $1 == date }
                 })
                 .disposed(by: ratesDisposeBag)
     }
