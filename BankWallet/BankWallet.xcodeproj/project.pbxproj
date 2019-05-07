@@ -1542,7 +1542,7 @@
 		A79CC9D3E472AD6CDB9E17EC /* Pods-Bank.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bank.debug.xcconfig"; path = "../Pods/Target Support Files/Pods-Bank/Pods-Bank.debug.xcconfig"; sourceTree = "<group>"; };
 		C34C463CE4115A838C13EA33 /* Pods_Bank_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Bank_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D24DBEAA7A654C8075B634B6 /* Pods-Bank Dev.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bank Dev.debug.xcconfig"; path = "../Pods/Target Support Files/Pods-Bank Dev/Pods-Bank Dev.debug.xcconfig"; sourceTree = "<group>"; };
-		D3285F4220BD158E00644076 /* Bank Dev T.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Bank Dev T.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D3285F4220BD158E00644076 /* Unstoppable DT.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Unstoppable DT.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D3285F4520BD158E00644076 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D3285F4C20BD158F00644076 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D3285F5120BD158F00644076 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -1558,8 +1558,8 @@
 		D34E941B21F86C3500AD8E90 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		D34E941C21F86C3500AD8E90 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Localizable.strings; sourceTree = "<group>"; };
 		D35B518821942E7A00504FBA /* AboutSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutSettingsViewController.swift; sourceTree = "<group>"; };
-		D38405CE218317DF007D50AD /* Bank Dev.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Bank Dev.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		D38406BE21831B3D007D50AD /* Bank.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Bank.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D38405CE218317DF007D50AD /* Unstoppable D.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Unstoppable D.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D38406BE21831B3D007D50AD /* Unstoppable.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Unstoppable.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D38406C3218327B1007D50AD /* AppIcon.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = AppIcon.xcassets; sourceTree = "<group>"; };
 		D38406C621832862007D50AD /* AppIconDevT.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = AppIconDevT.xcassets; sourceTree = "<group>"; };
 		D38406C821832968007D50AD /* AppIconDev.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = AppIconDev.xcassets; sourceTree = "<group>"; };
@@ -2629,10 +2629,10 @@
 		D3285F4320BD158E00644076 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				D3285F4220BD158E00644076 /* Bank Dev T.app */,
+				D3285F4220BD158E00644076 /* Unstoppable DT.app */,
 				D3373DBF20C658660082BC4A /* Bank Tests.xctest */,
-				D38405CE218317DF007D50AD /* Bank Dev.app */,
-				D38406BE21831B3D007D50AD /* Bank.app */,
+				D38405CE218317DF007D50AD /* Unstoppable D.app */,
+				D38406BE21831B3D007D50AD /* Unstoppable.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -2706,7 +2706,7 @@
 			);
 			name = "Bank Dev T";
 			productName = Wallet;
-			productReference = D3285F4220BD158E00644076 /* Bank Dev T.app */;
+			productReference = D3285F4220BD158E00644076 /* Unstoppable DT.app */;
 			productType = "com.apple.product-type.application";
 		};
 		D3373DBE20C658660082BC4A /* Bank Tests */ = {
@@ -2746,7 +2746,7 @@
 			);
 			name = "Bank Dev";
 			productName = Wallet;
-			productReference = D38405CE218317DF007D50AD /* Bank Dev.app */;
+			productReference = D38405CE218317DF007D50AD /* Unstoppable D.app */;
 			productType = "com.apple.product-type.application";
 		};
 		D38405D021831B3D007D50AD /* Bank */ = {
@@ -2765,7 +2765,7 @@
 			);
 			name = Bank;
 			productName = Wallet;
-			productReference = D38406BE21831B3D007D50AD /* Bank.app */;
+			productReference = D38406BE21831B3D007D50AD /* Unstoppable.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -4530,7 +4530,8 @@
 			baseConfigurationReference = 5026FFF721C3CA280023EEA2 /* Bank Dev T.debug.xcconfig */;
 			buildSettings = {
 				PRODUCT_BUNDLE_IDENTIFIER = "io.horizontalsystems.bank-wallet.dev.testnet";
-				PRODUCT_NAME = "Bank Dev T";
+				PRODUCT_MODULE_NAME = Bank_Dev_T;
+				PRODUCT_NAME = "Unstoppable DT";
 				PROVISIONING_PROFILE_SPECIFIER = "io.horizontalsystems.bank-wallet.dev.testnet Dev";
 				ShowBuildNumber = true;
 				TestMode = true;
@@ -4542,7 +4543,8 @@
 			baseConfigurationReference = 5026FFF521C3CA280023EEA2 /* Bank Dev T.release.xcconfig */;
 			buildSettings = {
 				PRODUCT_BUNDLE_IDENTIFIER = "io.horizontalsystems.bank-wallet.dev.testnet";
-				PRODUCT_NAME = "Bank Dev T";
+				PRODUCT_MODULE_NAME = Bank_Dev_T;
+				PRODUCT_NAME = "Unstoppable DT";
 				PROVISIONING_PROFILE_SPECIFIER = "io.horizontalsystems.bank-wallet.dev.testnet AdHoc";
 				ShowBuildNumber = true;
 				TestMode = true;
@@ -4598,7 +4600,8 @@
 			baseConfigurationReference = 5026FFF821C3CA280023EEA2 /* Bank Dev.debug.xcconfig */;
 			buildSettings = {
 				PRODUCT_BUNDLE_IDENTIFIER = "io.horizontalsystems.bank-wallet.dev";
-				PRODUCT_NAME = "Bank Dev";
+				PRODUCT_MODULE_NAME = Bank_Dev;
+				PRODUCT_NAME = "Unstoppable D";
 				PROVISIONING_PROFILE_SPECIFIER = "io.horizontalsystems.bank-wallet.dev Dev";
 				ShowBuildNumber = true;
 			};
@@ -4609,7 +4612,8 @@
 			baseConfigurationReference = 5026FFF421C3CA280023EEA2 /* Bank Dev.release.xcconfig */;
 			buildSettings = {
 				PRODUCT_BUNDLE_IDENTIFIER = "io.horizontalsystems.bank-wallet.dev";
-				PRODUCT_NAME = "Bank Dev";
+				PRODUCT_MODULE_NAME = Bank_Dev;
+				PRODUCT_NAME = "Unstoppable D";
 				PROVISIONING_PROFILE_SPECIFIER = "io.horizontalsystems.bank-wallet.dev AdHoc";
 				ShowBuildNumber = true;
 			};
@@ -4620,7 +4624,8 @@
 			baseConfigurationReference = 5026FFF921C3CA280023EEA2 /* Bank.debug.xcconfig */;
 			buildSettings = {
 				PRODUCT_BUNDLE_IDENTIFIER = "io.horizontalsystems.bank-wallet";
-				PRODUCT_NAME = Bank;
+				PRODUCT_MODULE_NAME = Bank;
+				PRODUCT_NAME = Unstoppable;
 				PROVISIONING_PROFILE_SPECIFIER = "io.horizontalsystems.bank-wallet Dev";
 			};
 			name = Debug;
@@ -4630,7 +4635,8 @@
 			baseConfigurationReference = 5026FFF621C3CA280023EEA2 /* Bank.release.xcconfig */;
 			buildSettings = {
 				PRODUCT_BUNDLE_IDENTIFIER = "io.horizontalsystems.bank-wallet";
-				PRODUCT_NAME = Bank;
+				PRODUCT_MODULE_NAME = Bank;
+				PRODUCT_NAME = Unstoppable;
 				PROVISIONING_PROFILE_SPECIFIER = "io.horizontalsystems.bank-wallet AppStore";
 			};
 			name = Release;
