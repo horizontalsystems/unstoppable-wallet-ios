@@ -5,7 +5,7 @@ import Cuckoo
 class FullTransactionDataProviderManagerTests: XCTestCase {
     private let bitcoinProviderNames = ["HorizontalSystems.xyz", "BlockChair.com", "BlockExplorer.com", "Btc.com"]
     private let bitcoinCashProviderNames = ["HorizontalSystems.xyz", "BlockChair.com", "BlockExplorer.com", "Btc.com"]
-    private let ethereumProviderNames = ["Etherscan.io", "HorizontalSystems.xyz", "BlockChair.com"]
+    private let ethereumProviderNames = ["Etherscan.io", "BlockChair.com"]
 
     private var mockLocalStorage: MockILocalStorage!
     private var mockAppConfigProvider: MockIAppConfigProvider!
@@ -13,7 +13,7 @@ class FullTransactionDataProviderManagerTests: XCTestCase {
     private var manager: IFullTransactionDataProviderManager!
 
     private let firstName = "Btc.com"
-    private let secondName = "HorizontalSystems.xyz"
+    private let secondName = "Etherscan.io"
 
     private var firstProvider: MockIProvider!
     private var secondProvider: MockIProvider!
@@ -79,7 +79,7 @@ class FullTransactionDataProviderManagerTests: XCTestCase {
         XCTAssertEqual(providerUrls, ["http://bch-testnet.horizontalsystems.xyz/apg/tx/test"])
 
         providerUrls = manager.providers(for: Coin(title: "", code: "", type: .ethereum)).map { $0.url(for: "test") }
-        XCTAssertEqual(providerUrls, ["http://eth-ropsten.horizontalsystems.xyz/tx/test", "https://ropsten.etherscan.io/tx/test"])
+        XCTAssertEqual(providerUrls, ["https://ropsten.etherscan.io/tx/test"])
     }
 
     func testBaseProvider() {

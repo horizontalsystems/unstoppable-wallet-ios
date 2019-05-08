@@ -31,7 +31,6 @@ class FullTransactionDataProviderManager {
     private var dashProviders: [IBitcoinForksProvider] {
         return appConfigProvider.testMode ? [
             HorSysDashProvider(testMode: true),
-            BlockChairDashProvider()
         ] : [
             HorSysDashProvider(testMode: false),
             BlockChairDashProvider(),
