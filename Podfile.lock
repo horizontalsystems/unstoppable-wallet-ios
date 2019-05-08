@@ -157,22 +157,22 @@ CHECKOUT OPTIONS:
     :commit: c66eb78e98a70ac3e50fa77f9680c5773261a6fd
     :git: https://github.com/horizontalsystems/gui-kit
   BitcoinCashKit.swift:
-    :commit: b03f4a775ae6273f044209df6432ac14b555bfef
+    :commit: 920b4f6269fd39d8084aeaa5d9a55101aaa5f186
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios/
   BitcoinCore.swift:
-    :commit: b03f4a775ae6273f044209df6432ac14b555bfef
+    :commit: 920b4f6269fd39d8084aeaa5d9a55101aaa5f186
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios/
   BitcoinKit.swift:
-    :commit: b03f4a775ae6273f044209df6432ac14b555bfef
+    :commit: 920b4f6269fd39d8084aeaa5d9a55101aaa5f186
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios/
   DashKit.swift:
-    :commit: b03f4a775ae6273f044209df6432ac14b555bfef
+    :commit: 920b4f6269fd39d8084aeaa5d9a55101aaa5f186
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios/
   Erc20Kit.swift:
-    :commit: 3411f7197db3ad8e6c50a0fdf201be90576728fa
+    :commit: 23e1d31fc34631a557a54c01266926ccf216ab91
     :git: https://github.com/horizontalsystems/ethereum-kit-ios/
   EthereumKit.swift:
-    :commit: 3411f7197db3ad8e6c50a0fdf201be90576728fa
+    :commit: 23e1d31fc34631a557a54c01266926ccf216ab91
     :git: https://github.com/horizontalsystems/ethereum-kit-ios/
   FeeRateKit.swift:
     :commit: 060900bc1e515a28e4118b28554aef461c70d302

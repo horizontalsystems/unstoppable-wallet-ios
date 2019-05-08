@@ -42,7 +42,7 @@ extension DashAdapter: DashKitDelegate {
 extension DashAdapter {
 
     static func clear() throws {
-//        try DashKit.clear()
+        try DashKit.clear()
     }
 
 }
