@@ -159,7 +159,7 @@ extension BitcoinBaseAdapter: IAdapter {
             let amount = convertToSatoshi(value: value)
             let fee = try abstractKit.fee(for: amount, toAddress: address, senderPay: true, feeRate: feeRate(priority: feeRatePriority))
             return Decimal(fee) / coinRate
-        } catch SelectorError.notEnough(let maxFee) {
+        } catch BitcoinCoreErrors.UnspentOutputSelection.notEnough(let maxFee) {
             return Decimal(maxFee) / coinRate
         } catch {
             return 0
