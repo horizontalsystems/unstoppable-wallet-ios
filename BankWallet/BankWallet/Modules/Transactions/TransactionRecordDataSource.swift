@@ -69,7 +69,7 @@ class TransactionRecordDataSource {
         var updatedRecords = [TransactionRecord]()
         var insertedRecords = [TransactionRecord]()
 
-        for record in records {
+        for record in records.sorted() {
             switch pool.handleUpdated(record: record) {
             case .updated: updatedRecords.append(record)
             case .inserted: insertedRecords.append(record)
