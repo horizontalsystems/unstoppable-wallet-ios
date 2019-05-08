@@ -9,8 +9,8 @@
 "alert.cancel" = "انصراف";
 "alert.copied" = "کپی انجام شد";
 "alert.confirm" = "تأیید";
-"alert.no_internet" = "No Internet";
-"alert.network_issue" = "Network issues. Try again in a short moment";
+"alert.no_internet" = "انترنت نداريد";
+"alert.network_issue" = "مشكل انترنت. لطفاً چند دقيقه بعد كوشش كنيد";
 
 "biometric_usage_reason" = "باز كردن كيف پول";
 
@@ -22,11 +22,11 @@
 
 // Guest Page
 
-"guest.title" = "کیف پول بانک";
+"guest.title" = "Unstoppable";
 "guest.subtitle" = "Decentralized app";
 "guest.create_wallet" = "کیف پول جدید";
 "guest.restore_wallet" = "بازگرداندن كيف پول";
-"guest.version" = "version %@";
+"guest.version" = "نسخهٔ %@";
 
 // Restore
 
@@ -39,7 +39,7 @@
 // Backup
 
 "backup.intro.title" = "پيشتيباني";
-"backup.intro.subtitle" = "Your secret key is the only way to restore your wallet and funds if your phone is ever lost, stolen, broken, or upgraded.\n\nIt consists of 12 words. Store it safely offline.";
+"backup.intro.subtitle" = "رمز مخيفي شما ميتواند كيف پول شما را دوباره پروگرام كند اگر تيليفون شما گم شود،خراب شود يا دزدي شود پس هميشه رمز مخفي خود را پيش خود داشته باشد و فراموش نكيد. n\n\\ رمز مخفي ١٢ رقم ميخواهد.";
 "backup.intro.later" = "بعداً";
 "backup.intro.backup_now" = "پيشتيباني";
 
@@ -50,9 +50,9 @@
 "backup.confirmation.description" = "حرف هاي رمز تات را وارد كنيد";
 "backup.confirmation.failure_alert.text" = "ارقام با هم شباهت ندارند";
 "backup.confirmation.done_button" = "انجام شد";
-"backup.confirmation.secret_key" = "I understand that I am a sole owner of a private 12-word Secret Key which is securely stored on my phone and enables me to control funds on my wallet.";
-"backup.confirmation.delete_app_warn" = "I understand that if this app is ever moved, deleted or malfunctions, the access to my wallet can be only recovered with that Secret Key.";
-"backup.confirmation.disclaimer" = "I understand that developers of this app can not be held responsible for any unintended bugs or issues that may arise while using this app.";
+"backup.confirmation.secret_key" = "من قبول ميكنم كي تنها من صاحب اين ١٢ عدد مخفي ميباشم كي اين عداد در گوشي همراه من ميباشد و تنها من ميتوانم با اين عداد كيف پول و مقدار پول خود را فعال كنم.";
+"backup.confirmation.delete_app_warn" = "من قبول ميكنم كي اگر اين كاربرد تكان بخورد،حذف شود و يا اشكال در عملكرد به وحود بياد، فقط تنها رمز مخفي ميتواند دوباره بهبوديافت كند.";
+"backup.confirmation.disclaimer" = "من قبول ميكنم كي سازنده اين كاربرد هيچ نوع معصوليت در مقابل ويروس و ادم هاي تقلبي ندارد كي شما به ان متواجه شديد.";
 
 // Balance
 
@@ -61,14 +61,14 @@
 "balance.send" = "ارسال";
 "balance.deposit" = "دريافت";
 "balance.rate_per_coin" = "%@ به ازا %@";
-"balance.synced_through" = "until: %@";
-"balance.syncing" = "Syncing...";
+"balance.synced_through" = "تا: %@";
+"balance.syncing" = "در حال همگام سازی...";
 
 // Deposit
 
 "deposit.receive_coin" = "دریافت %@";
-"deposit.your_address" = "Your Address";
-"deposit.share" = "Forward";
+"deposit.your_address" = "آدرس شما";
+"deposit.share" = "فرستادن به ديگران";
 
 // Send
 
@@ -80,28 +80,28 @@
 "send.amount_placeholder" = "مبلغ";
 "send.fee" = "هزينه";
 "send.total" = "مجموع";
-"send.max_button" = "Max";
-"send_erc.alert" = "Transaction fees for %@ (ERC20) paid in Ethereum. You need %@.";
+"send.max_button" = "حداکثر";
+"send_erc.alert" = "پرداخت هزینه های معامله برای %@ (ERC20) در Ethereum. شما نیاز به %@ ETH.";
 
 // Transactions
 
 "transactions.title" = "معاملات";
 "transactions.tab_bar_item" = "معاملات";
 "transactions.filter_all" = "همه";
-"transactions.empty_text" = "You don't have any pending or past transactions yet";
+"transactions.empty_text" = "شما هيچ گونه معاملات يا قرارداد نداريد تا هنوز";
 
 // Transaction Info
 
 "tx_info.title" = "تراکنش";
-"tx_info.historical_rate" = "Historical Rate";
+"tx_info.historical_rate" = "چارت هاي تاريخي";
 "tx_info.time" = "زمان";
 "tx_info.status" = "وضيعت";
 "tx_info.status.pending" = "در حالت انتظار";
-"tx_info.status.confirmed" = "Confirmed";
+"tx_info.status.confirmed" = "تاييد شد";
 "tx_info.from_hash" = "از";
 "tx_info.to_hash" = "به";
-"tx_info.button_verify" = "Verify";
-"tx_info.rate" = "Historical Rate";
+"tx_info.button_verify" = "تامين كنيد";
+"tx_info.rate" = "چارت هاي تاريخي";
 
 // Full Info
 
@@ -111,28 +111,28 @@
 "full_info.confirmations" = "تاييدات";
 "full_info.size" = "اندازه";
 "full_info.fee" = "هزينه";
-"full_info.rate" = "Rate";
-"full_info.inputs" = "Inputs";
-"full_info.outputs" = "Outputs";
-"full_info.source" = "Source";
-"full_info.contract" = "Contract";
+"full_info.rate" = "امتیاز";
+"full_info.inputs" = "ورودي ها";
+"full_info.outputs" = "خروجي ها";
+"full_info.source" = "منبع";
+"full_info.contract" = "قرارداد";
 "full_info.from" = "از";
 "full_info.to" = "به";
-"full_info.amount" = "Amount";
+"full_info.amount" = "مقدار";
 "full_info.nonce" = "Nonce";
 
 "full_info.gas_limit" = "Gas Limit";
 "full_info.gas_used" = "Gas Used";
 "full_info.gas_price" = "Gas Price";
 
-"full_info.source.title" = "Source";
-"full_info.source.online" = "online";
-"full_info.source.offline" = "offline";
+"full_info.source.title" = "منبع";
+"full_info.source.online" = "آنلاین";
+"full_info.source.offline" = "آفلاین";
 
-"full_info.error.subtitle" = "offline";
-"full_info.error.retry" = "Retry";
-"full_info.error.change_source" = "Change Source";
-"full_info.no_address" = "Empty Address";
+"full_info.error.subtitle" = "آفلاین";
+"full_info.error.retry" = "تلاش دوباره";
+"full_info.error.change_source" = "تغییر منبع";
+"full_info.no_address" = "آدرس خالي است";
 
 // Settings
 
@@ -143,7 +143,7 @@
 "settings.language" = "زبان";
 "settings.about" = "درباره";
 "settings.light_mode" = "حالت روشن";
-"settings.info_title" = "کیف پول بانک";
+"settings.info_title" = "UNSTOPPABLE";
 "settings.info_subtitle" = "decentralized app";
 
 // Settings -> Base Currency
@@ -156,7 +156,7 @@
 
 // Settings -> Manage Wallet
 
-"settings_manage_wallet.title" = "Coin Manager";
+"settings_manage_wallet.title" = "مدريت سكه";
 
 "settings_manage_wallet.remove_button" = "حذف";
 
@@ -172,41 +172,41 @@
 "settings_security.title" = "مركز امنيتي";
 "settings_security.backup_wallet" = "پيشتيبان گيري كيف پول";
 "settings_security.unlink_from_this_device" = "لغو پيوند ازين دست گاه";
-"settings_security.set_pin" = "Passcode";
-"settings_security.change_pin" = "Edit Passcode";
+"settings_security.set_pin" = "رمز عبور";
+"settings_security.change_pin" = "تعغير كد";
 "settings_security.touch_id" = "شناس نامه اثر انگشت";
 "settings_security.face_id" = "شناسنامه صروت";
 "security_settings.unlink_alert_button" = "جدا کردن";
 "settings_security.import_wallet_confirmation_1" = "این اقدام کیف پول نصب شده فعلی را از این دستگاه را حذف می کند.";
-"settings_security.import_wallet_confirmation_2" = "Make sure you have backed up Secret Key or you will not be able to access your funds in the future.";
+"settings_security.import_wallet_confirmation_2" = "مطمعاً باشيد كي رمز مخفي را با خود داريد و گرنه شما در آينده توانايي دسترسي به منابع مالي نداريد.";
 
 // Set PIN
 
-"set_pin.title" = "Passcode";
-"set_pin.info" = "Your passcode will be used to unlock your wallet and send money";
+"set_pin.title" = "رمز عبور";
+"set_pin.info" = "رمز شما استفاده ميشود تا تيليفون همراي شما را باز نمايد و پول ارساد كند";
 "set_pin.confirm.info" = "تاييد";
-"set_pin.wrong_confirmation" = "Passcode did not match. Try again";
+"set_pin.wrong_confirmation" = "رمز شباهت ندارد. دوباره تلاش نماييد";
 
 // Edit PIN
 
-"edit_pin.title" = "Edit Passcode";
-"edit_pin.unlock_info" = "Current Passcode";
-"edit_pin.new_pin_info" = "New Passcode";
+"edit_pin.title" = "تعغير كد";
+"edit_pin.unlock_info" = "رمز عبور فعلي";
+"edit_pin.new_pin_info" = "رمز عبور جديد";
 "edit_pin.confirm_info" = "تاييد";
 
 // Unlock PIN
 
-"unlock_pin.info" = "Passcode";
-"unlock_pin.cant_save_pin" = "Ouch! We cant save your passcode, please contact us asap!";
-"unlock_pin.blocked_until" = "Disabled until: %@";
+"unlock_pin.info" = "رمز عبور";
+"unlock_pin.cant_save_pin" = "Ouch! ما نميتانيم پين شما را ذخيره كنيم, لطفاً با ما به تماس شويد asap!";
+"unlock_pin.blocked_until" = "معلول تا: %@";
 
 //NumPad
 
-"numpad_2" = "A B C";
-"numpad_3" = "D E F";
-"numpad_4" = "G H I";
-"numpad_5" = "J K L";
-"numpad_6" = "M N O";
-"numpad_7" = "P Q R S";
-"numpad_8" = "T U V";
-"numpad_9" = "W X Y Z";
+"numpad_2" = "الف ب ت";
+"numpad_3" = "پ ث ج";
+"numpad_4" = "چ ح خ";
+"numpad_5" = "د ذ ص";
+"numpad_6" = "ض ع غ";
+"numpad_7" = "ف ق ك گ ل";
+"numpad_8" = "ل م ن و";
+"numpad_9" = "م ن و ء ي";

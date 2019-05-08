@@ -16,13 +16,13 @@
 
 // Access Camera
 
-"access_camera.message" = "Необходим доступ к вашей камере для сканирования QR-код.\n\n";
+"access_camera.message" = "Unstoppable Wallet необходим доступ к вашей камере для QR-код.\n\nПерейдите в \"Настройки\", чтобы разрешить доступ к камере.";
 "access_camera.settings" = "Настройки";
 "access_camera.cancel" = "Отменить";
 
 // Guest Page
 
-"guest.title" = "Bank Wallet";
+"guest.title" = "Unstoppable";
 "guest.subtitle" = "Decentralized app";
 "guest.create_wallet" = "Создать Кошелек";
 "guest.restore_wallet" = "Восстановить Кошелек";
@@ -143,7 +143,7 @@
 "settings.language" = "Язык";
 "settings.about" = "О приложении";
 "settings.light_mode" = "Светлый Режим";
-"settings.info_title" = "BANK WALLET";
+"settings.info_title" = "UNSTOPPABLE";
 "settings.info_subtitle" = "decentralized app";
 
 // Settings -> Base Currency
