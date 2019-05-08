@@ -156,6 +156,8 @@ class BalanceCell: UITableViewCell {
     }
 
     func bindView(item: BalanceViewItem, selected: Bool, animated: Bool = false) {
+        var synced = false
+
         coinIconImageView.bind(coin: item.coin)
         nameLabel.text = item.coin.title.localized
 
@@ -163,6 +165,7 @@ class BalanceCell: UITableViewCell {
         payButton.set(hidden: !selected, animated: animated, duration: BalanceTheme.buttonsAnimationDuration)
 
         if case .synced = item.state {
+            synced = true
             coinIconImageView.isHidden = false
         } else {
             coinIconImageView.isHidden = true
@@ -198,7 +201,7 @@ class BalanceCell: UITableViewCell {
 
         if let value = item.currencyValue, value.value != 0 {
             currencyValueLabel.text = ValueFormatter.instance.format(currencyValue: value, fractionPolicy: .threshold(high: 1000, low: 0.01))
-            let nonZeroBalanceTextColor = item.rateExpired ? BalanceTheme.nonZeroBalanceExpiredTextColor : BalanceTheme.nonZeroBalanceTextColor
+            let nonZeroBalanceTextColor = item.rateExpired || !synced ? BalanceTheme.nonZeroBalanceExpiredTextColor : BalanceTheme.nonZeroBalanceTextColor
             currencyValueLabel.textColor = value.value > 0 ? nonZeroBalanceTextColor : BalanceTheme.zeroBalanceTextColor
         } else {
             currencyValueLabel.text = nil
