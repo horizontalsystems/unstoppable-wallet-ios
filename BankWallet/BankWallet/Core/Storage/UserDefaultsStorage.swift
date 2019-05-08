@@ -6,6 +6,7 @@ class UserDefaultsStorage: ILocalStorage {
     private let keyCurrentLanguage = "current_language"
     private let keyBaseCurrencyCode = "base_currency_code"
     private let keyBaseBitcoinProvider = "base_bitcoin_provider"
+    private let keyBaseDashProvider = "base_dash_provider"
     private let keyBaseEthereumProvider = "base_ethereum_provider"
     private let keyLightMode = "light_mode"
     private let agreementAcceptedKey = "i_understand_key"
@@ -50,6 +51,11 @@ class UserDefaultsStorage: ILocalStorage {
     var baseBitcoinProvider: String? {
         get { return getString(keyBaseBitcoinProvider) }
         set { setString(keyBaseBitcoinProvider, value: newValue) }
+    }
+
+    var baseDashProvider: String? {
+        get { return getString(keyBaseDashProvider) }
+        set { setString(keyBaseDashProvider, value: newValue) }
     }
 
     var baseEthereumProvider: String? {

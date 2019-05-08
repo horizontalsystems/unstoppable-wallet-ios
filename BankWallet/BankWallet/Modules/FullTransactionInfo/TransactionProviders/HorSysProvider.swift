@@ -37,6 +37,24 @@ class HorSysBitcoinCashProvider: IBitcoinForksProvider {
 
 }
 
+class HorSysDashProvider: IBitcoinForksProvider {
+    let name = "HorizontalSystems.xyz"
+    private let url: String
+    private let apiUrl: String
+
+    func url(for hash: String) -> String { return url + hash }
+    func apiUrl(for hash: String) -> String { return apiUrl + hash }
+
+    init(testMode: Bool) {
+        url = testMode ? "http://dash-testnet.horizontalsystems.xyz/insight/tx/" : "https://dash.horizontalsystems.xyz/insight/tx/"
+        apiUrl = testMode ? "http://dash-testnet.horizontalsystems.xyz/apg/tx/" : "https://dash.horizontalsystems.xyz/apg/tx/"
+    }
+
+    func convert(json: [String: Any]) -> IBitcoinResponse? {
+        return try? InsightDashResponse(JSONObject: json)
+    }
+}
+
 class HorSysEthereumProvider: IEthereumForksProvider {
     let name: String = "HorizontalSystems.xyz"
     private let url: String
