@@ -28,6 +28,17 @@ class FullTransactionDataProviderManager {
         ]
     }
 
+    private var dashProviders: [IBitcoinForksProvider] {
+        return appConfigProvider.testMode ? [
+            HorSysDashProvider(testMode: true),
+            BlockChairDashProvider()
+        ] : [
+            HorSysDashProvider(testMode: false),
+            BlockChairDashProvider(),
+            InsightDashProvider()
+        ]
+    }
+
     private let localStorage: ILocalStorage
     private let appConfigProvider: IAppConfigProvider
 
@@ -47,6 +58,8 @@ extension FullTransactionDataProviderManager: IFullTransactionDataProviderManage
             return bitcoinProviders
         } else if coin.type == .bitcoinCash {
             return bitcoinCashProviders
+        } else if coin.type == .dash {
+            return dashProviders
         }
         return ethereumProviders
     }
@@ -56,6 +69,10 @@ extension FullTransactionDataProviderManager: IFullTransactionDataProviderManage
             let name = localStorage.baseBitcoinProvider ?? bitcoinProviders[0].name
             return bitcoin(for: name)
         }
+        if coin.type == .dash {
+            let name = localStorage.baseDashProvider ?? dashProviders[0].name
+            return dash(for: name)
+        }
         let name = localStorage.baseEthereumProvider ?? ethereumProviders[0].name
         return ethereum(for: name)
     }
@@ -63,6 +80,8 @@ extension FullTransactionDataProviderManager: IFullTransactionDataProviderManage
     func setBaseProvider(name: String, for coin: Coin) {
         if coin.type == .bitcoin || coin.type == .bitcoinCash {
             localStorage.baseBitcoinProvider = name
+        } else if coin.type == .dash {
+            localStorage.baseDashProvider = name
         } else {
             localStorage.baseEthereumProvider = name
         }
@@ -77,6 +96,11 @@ extension FullTransactionDataProviderManager: IFullTransactionDataProviderManage
 
     func bitcoinCash(for name: String) -> IBitcoinForksProvider {
         let providers = bitcoinCashProviders
+        return providers.first(where: { provider in provider.name == name }) ?? providers[0]
+    }
+
+    func dash(for name: String) -> IBitcoinForksProvider {
+        let providers = dashProviders
         return providers.first(where: { provider in provider.name == name }) ?? providers[0]
     }
 

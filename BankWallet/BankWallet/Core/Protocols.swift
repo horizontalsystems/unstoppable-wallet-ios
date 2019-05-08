@@ -11,6 +11,7 @@ protocol ILocalStorage: class {
     var isBackedUp: Bool { get set }
     var baseCurrencyCode: String? { get set }
     var baseBitcoinProvider: String? { get set }
+    var baseDashProvider: String? { get set }
     var baseEthereumProvider: String? { get set }
     var lightMode: Bool { get set }
     var agreementAccepted: Bool { get set }
@@ -277,6 +278,7 @@ protocol IFullTransactionDataProviderManager {
     func setBaseProvider(name: String, for coin: Coin)
 
     func bitcoin(for name: String) -> IBitcoinForksProvider
+    func dash(for name: String) -> IBitcoinForksProvider
     func bitcoinCash(for name: String) -> IBitcoinForksProvider
     func ethereum(for name: String) -> IEthereumForksProvider
 }

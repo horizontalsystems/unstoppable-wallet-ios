@@ -37,6 +37,24 @@ class HorSysBitcoinCashProvider: IBitcoinForksProvider {
 
 }
 
+class HorSysDashProvider: IBitcoinForksProvider {
+    let name = "HorizontalSystems.xyz"
+    private let url: String
+    private let apiUrl: String
+
+    func url(for hash: String) -> String { return url + hash }
+    func apiUrl(for hash: String) -> String { return apiUrl + hash }
+
+    init(testMode: Bool) {
+        url = testMode ? "http://dash-testnet.horizontalsystems.xyz/insight/tx/" : "https://dash.horizontalsystems.xyz/insight/tx/"
+        apiUrl = testMode ? "http://dash-testnet.horizontalsystems.xyz/apg/tx/" : "https://dash.horizontalsystems.xyz/apg/tx/"
+    }
+
+    func convert(json: [String: Any]) -> IBitcoinResponse? {
+        return try? InsightDashResponse(JSONObject: json)
+    }
+}
+
 class HorSysEthereumProvider: IEthereumForksProvider {
     let name: String = "HorizontalSystems.xyz"
     private let url: String
@@ -97,6 +115,57 @@ class HorSysBitcoinResponse: IBitcoinResponse, ImmutableMappable {
                     let address = output["address"] as? String
 
                     outputs.append((value: Decimal(value) / btcRate, address: address))
+                }
+
+            }
+        }
+    }
+
+}
+
+class InsightDashResponse: IBitcoinResponse, ImmutableMappable {
+    var txId: String?
+    var blockTime: Int?
+    var blockHeight: Int?
+    var confirmations: Int?
+
+    var size: Int?
+    var fee: Decimal?
+    var feePerByte: Decimal?
+
+    var inputs = [(value: Decimal, address: String?)]()
+    var outputs = [(value: Decimal, address: String?)]()
+
+    required init(map: Map) throws {
+        txId = try? map.value("txid")
+        blockTime = try? map.value("time")
+        blockHeight = try? map.value("height")
+        confirmations = try? map.value("confirmations")
+
+        if let fee: Double = try? map.value("fees"), let size: Int = try? map.value("size") {
+            let feePerByte = Decimal(fee) * btcRate / Decimal(size)
+            self.feePerByte = feePerByte
+            self.size = size
+            self.fee = Decimal(fee)
+        }
+        if let vInputs: [[String: Any]] = try? map.value("vin") {
+            vInputs.forEach { input in
+                if let value = input["value"] as? Double {
+                    let address = input["addr"] as? String
+
+                    inputs.append((value: Decimal(value), address: address))
+                }
+
+            }
+        }
+        if let vOutputs: [[String: Any]] = try? map.value("vout") {
+            vOutputs.forEach { output in
+                if let valueString = output["value"] as? String, let value = Decimal(string: valueString) {
+                    var address: String? = nil
+                    if let scriptPubKey = output["scriptPubKey"] as? [String: Any], let addresses = scriptPubKey["addresses"] as? [String] {
+                        address = addresses.first
+                    }
+                    outputs.append((value: value, address: address))
                 }
 
             }

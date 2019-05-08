@@ -25,6 +25,30 @@ class BlockChairBitcoinCashProvider: IBitcoinForksProvider {
 
 }
 
+class BlockChairDashProvider: IBitcoinForksProvider {
+    let name = "BlockChair.com"
+
+    func url(for hash: String) -> String { return "https://blockchair.com/dash/transaction/" + hash }
+    func apiUrl(for hash: String) -> String { return "https://api.blockchair.com/dash/dashboards/transaction/" + hash }
+
+    func convert(json: [String: Any]) -> IBitcoinResponse? {
+        return try? BlockChairBitcoinResponse(JSONObject: json)
+    }
+
+}
+
+class InsightDashProvider: IBitcoinForksProvider {
+    let name = "Insight.dash.org"
+
+    func url(for hash: String) -> String { return "https://insight.dash.org/insight/tx/" + hash }
+    func apiUrl(for hash: String) -> String { return "https://insight.dash.org/insight-api/tx/" + hash }
+
+    func convert(json: [String: Any]) -> IBitcoinResponse? {
+        return try? InsightDashResponse(JSONObject: json)
+    }
+
+}
+
 class BlockChairEthereumProvider: IEthereumForksProvider {
     let name = "BlockChair.com"
 

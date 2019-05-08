@@ -21,11 +21,15 @@ extension FullTransactionInfoProviderFactory: IFullTransactionInfoProviderFactor
         if coin.type == .bitcoin {
             let bitcoinProvider = dataProviderManager.bitcoin(for: providerName)
             provider = bitcoinProvider
-            adapter = BitcoinTransactionInfoAdapter(provider: bitcoinProvider, coin: coin)
+            adapter = BitcoinTransactionInfoAdapter(provider: bitcoinProvider, coin: coin, unitName: "satoshi")
         } else if coin.type == .bitcoinCash {
             let bitcoinCashProvider = dataProviderManager.bitcoinCash(for: providerName)
             provider = bitcoinCashProvider
-            adapter = BitcoinTransactionInfoAdapter(provider: bitcoinCashProvider, coin: coin)
+            adapter = BitcoinTransactionInfoAdapter(provider: bitcoinCashProvider, coin: coin, unitName: "satoshi")
+        } else if coin.type == .dash {
+            let dashProvider = dataProviderManager.dash(for: providerName)
+            provider = dashProvider
+            adapter = BitcoinTransactionInfoAdapter(provider: dashProvider, coin: coin, unitName: "duff")
         } else {
             let ethereumProvider = dataProviderManager.ethereum(for: providerName)
             provider = ethereumProvider

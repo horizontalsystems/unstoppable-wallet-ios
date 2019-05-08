@@ -1,12 +1,14 @@
 import Foundation
 
 class BitcoinTransactionInfoAdapter: IFullTransactionInfoAdapter {
+    private let unitName: String
     private let provider: IBitcoinForksProvider
     private let coin: Coin
 
-    init(provider: IBitcoinForksProvider, coin: Coin) {
+    init(provider: IBitcoinForksProvider, coin: Coin, unitName: String) {
         self.provider = provider
         self.coin = coin
+        self.unitName = unitName
     }
 
     func convert(json: [String: Any]) -> FullTransactionRecord? {
@@ -43,7 +45,7 @@ class BitcoinTransactionInfoAdapter: IFullTransactionInfoAdapter {
             transactionItems.append(FullTransactionItem(title: "full_info.size".localized, titleColor: .cryptoGray, value: "\(size) (bytes)"))
         }
         if let feeRate = txResponse.feePerByte {
-            let feeRateValue = (ValueFormatter.instance.format(twoDigitValue: feeRate) ?? "") + " (satoshi)"
+            let feeRateValue = (ValueFormatter.instance.format(twoDigitValue: feeRate) ?? "") + " (\(unitName))"
             transactionItems.append(FullTransactionItem(title: "full_info.rate".localized, titleColor: .cryptoGray, value: feeRateValue))
         }
         if !transactionItems.isEmpty {
