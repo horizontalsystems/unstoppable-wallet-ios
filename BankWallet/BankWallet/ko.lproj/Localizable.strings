@@ -23,9 +23,10 @@
 // Guest Page
 
 "guest.title" = "Unstoppable";
+"guest.description" = "IN BLOCKCHAIN WE TRUST";
 "guest.subtitle" = "분산하된 어플";
-"guest.create_wallet" = "새 지갑";
-"guest.restore_wallet" = "지갑 복원";
+"guest.create_wallet" = "Create Wallet";
+"guest.restore_wallet" = "Restore";
 "guest.version" = "version %@";
 
 // Restore
