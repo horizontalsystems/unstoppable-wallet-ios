@@ -6,11 +6,9 @@ inhibit_all_warnings!
 project 'BankWallet/BankWallet'
 
 def appPods
-  pod 'BitcoinCore.swift', git: 'https://github.com/horizontalsystems/bitcoin-kit-ios/'
   pod 'BitcoinKit.swift', git: 'https://github.com/horizontalsystems/bitcoin-kit-ios/'
   pod 'BitcoinCashKit.swift', git: 'https://github.com/horizontalsystems/bitcoin-kit-ios/'
   pod 'DashKit.swift', git: 'https://github.com/horizontalsystems/bitcoin-kit-ios/'
-  pod 'HSCryptoX11', git: 'https://github.com/horizontalsystems/crypto-x11-ios'
 
   pod 'EthereumKit.swift', git: 'https://github.com/horizontalsystems/ethereum-kit-ios/'
   pod 'Erc20Kit.swift', git: 'https://github.com/horizontalsystems/ethereum-kit-ios/'
