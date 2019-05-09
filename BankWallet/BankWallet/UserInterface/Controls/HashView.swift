@@ -71,9 +71,10 @@ class HashView: RespondButton {
         avatarImageView.setContentHuggingPriority(.defaultHigh, for: .horizontal)
 
         avatarImageView.snp.remakeConstraints { maker in
-            maker.width.equalTo(image?.size.width ?? 0)
             if !showImage {
                 maker.width.equalTo(0)
+            } else {
+                maker.width.equalTo(image?.size.width ?? 0)
             }
             maker.leadingMargin.equalToSuperview().offset(showImage ? TransactionInfoDescriptionTheme.horizontalMargin : 0)
             maker.centerY.equalToSuperview()
