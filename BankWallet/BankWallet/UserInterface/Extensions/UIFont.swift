@@ -16,6 +16,7 @@ extension UIFont {
     static let cryptoCaption2 = UIFont.systemFont(ofSize: 13, weight: .regular)
     static let cryptoCaption2Medium = UIFont.systemFont(ofSize: 13, weight: .medium)
     static let cryptoCaption3 = UIFont.systemFont(ofSize: 12, weight: .regular)
+    static let cryptoCaption4 = UIFont.systemFont(ofSize: 10, weight: .regular)
 
     func with(traits: UIFontDescriptor.SymbolicTraits) -> UIFont {
         guard let descriptor = self.fontDescriptor.withSymbolicTraits(traits) else {
