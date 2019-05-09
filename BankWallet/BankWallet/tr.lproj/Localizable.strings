@@ -23,9 +23,10 @@
 // Guest Page
 
 "guest.title" = "Unstoppable";
+"guest.description" = "IN BLOCKCHAIN WE TRUST";
 "guest.subtitle" = "Decentralized App";
-"guest.create_wallet" = "Yeni Cüzdan";
-"guest.restore_wallet" = "Cüzdanı Geri Yükle";
+"guest.create_wallet" = "Create Wallet";
+"guest.restore_wallet" = "Restore";
 "guest.version" = "sürüm %@";
 
 // Restore
