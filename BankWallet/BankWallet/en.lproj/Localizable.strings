@@ -25,9 +25,10 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 // Guest Page
 
 "guest.title" = "Unstoppable";
+"guest.description" = "IN BLOCKCHAIN WE TRUST";
 "guest.subtitle" = "Decentralized App";
-"guest.create_wallet" = "New Wallet";
-"guest.restore_wallet" = "Restore Wallet";
+"guest.create_wallet" = "Create Wallet";
+"guest.restore_wallet" = "Restore";
 "guest.version" = "version %@";
 
 // Restore
