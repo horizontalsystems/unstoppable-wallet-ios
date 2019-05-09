@@ -82,15 +82,16 @@ class SendAmountItemView: BaseActionItemView {
         maxButton.textColors = [.active: SendTheme.buttonIconColor, .selected: SendTheme.buttonIconColor]
         maxButton.titleLabel.font = SendTheme.buttonFont
         maxButton.titleLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
-        maxButton.snp.makeConstraints { maker in //constraints need to be set on init
-            maker.leading.equalTo(lineView.snp.trailing).offset(SendTheme.smallMargin)
-            maker.centerY.equalToSuperview()
-            maker.height.equalTo(SendTheme.buttonSize)
-        }
         maxButton.titleLabel.snp.remakeConstraints { maker in
             maker.leading.equalToSuperview().offset(SendTheme.smallMargin)
             maker.top.bottom.equalToSuperview()
             maker.trailing.equalToSuperview().offset(-SendTheme.smallMargin)
+        }
+        maxButton.snp.makeConstraints { maker in //constraints need to be set on init
+            maker.leading.equalTo(lineView.snp.trailing).offset(SendTheme.smallMargin)
+            maker.centerY.equalToSuperview()
+            maker.height.equalTo(SendTheme.buttonSize)
+            maker.trailing.equalTo(switchButton.snp.leading).offset(-SendTheme.smallMargin)
         }
 
         inputField.inputView = UIView()
@@ -114,7 +115,6 @@ class SendAmountItemView: BaseActionItemView {
         switchButton.snp.makeConstraints { maker in
             maker.trailing.equalToSuperview().offset(-SendTheme.switchRightMargin)
             maker.centerY.equalToSuperview()
-            maker.leading.equalTo(maxButton.snp.trailing).offset(SendTheme.smallMargin)
             maker.size.equalTo(SendTheme.buttonSize)
         }
 
@@ -215,6 +215,17 @@ class SendAmountItemView: BaseActionItemView {
                 maker.centerY.equalToSuperview()
                 maker.height.equalTo(SendTheme.buttonSize)
                 maker.width.equalTo(0)
+            }
+            maker.trailing.equalTo(switchButton.snp.leading).offset(-SendTheme.smallMargin)
+
+            maxButton.titleLabel.snp.remakeConstraints { maker in
+                if text.count == 0 {
+                    maker.leading.equalToSuperview().offset(SendTheme.smallMargin)
+                    maker.trailing.equalToSuperview().offset(-SendTheme.smallMargin)
+                } else {
+                    maker.leading.equalToSuperview().offset(0)
+                }
+                maker.top.bottom.equalToSuperview()
             }
         }
     }
