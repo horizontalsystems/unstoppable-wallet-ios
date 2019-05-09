@@ -51,7 +51,7 @@ class AppConfigProvider: IAppConfigProvider {
     ]
 
     var defaultCoinCodes: [CoinCode] {
-        return ["BTC", "BCH", "ETH"]
+        return ["BTC", "ETH", "DASH", "BCH", "USDT", "BNB", "DGX"]
     }
 
     let coins = [
