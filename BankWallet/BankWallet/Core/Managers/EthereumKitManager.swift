@@ -23,7 +23,7 @@ class EthereumKitManager: IEthereumKitManager {
                 words: authData.words,
                 syncMode: .api,
                 networkType: appConfigProvider.testMode ? .ropsten : .mainNet,
-                infuraProjectId: appConfigProvider.infuraKey,
+                infuraCredentials: appConfigProvider.infuraCredentials,
                 etherscanApiKey: appConfigProvider.etherscanKey,
                 walletId: authData.walletId,
                 minLogLevel: .error

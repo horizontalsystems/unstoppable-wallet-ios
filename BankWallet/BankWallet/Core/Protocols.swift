@@ -205,7 +205,7 @@ protocol IAppConfigProvider {
     var maxDecimal: Int { get }
     var reachabilityHost: String { get }
     var testMode: Bool { get }
-    var infuraKey: String { get }
+    var infuraCredentials: (id: String, secret: String?) { get }
     var etherscanKey: String { get }
     var currencies: [Currency] { get }
 

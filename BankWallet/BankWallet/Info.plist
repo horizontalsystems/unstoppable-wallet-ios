@@ -26,8 +26,10 @@
 	<string>${etherscan_api_key}</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
-	<key>InfuraApiKey</key>
-	<string>${infura_api_key}</string>
+	<key>InfuraProjectId</key>
+	<string>${infura_project_id}</string>
+	<key>InfuraProjectSecret</key>
+	<string>${infura_project_secret}</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
