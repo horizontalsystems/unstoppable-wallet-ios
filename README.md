@@ -8,11 +8,15 @@ It is fully peer-to-peer and works without any centrally managed servers. It can
 
 Such approach enables the wallet to operate anywhere and remain censoship-resitant. Only the user is in control of the money.
 
-## Become Unstoppable
+More at [https://unstoppable.money](https://unstoppable.money)
 
-- App Store: [https://itunes.apple.com/us/app/bank-wallet/id1447619907?ls=1&mt=8](https://itunes.apple.com/us/app/bank-wallet/id1447619907?ls=1&mt=8)
-- Website: [https://unstoppable.money](https://unstoppable.money)
-- Source Code: https://github.com/horizontalsystems/bank-wallet-ios-app
+## Download
+
+[https://itunes.apple.com/us/app/bank-wallet/id1447619907?ls=1&mt=8](https://itunes.apple.com/us/app/bank-wallet/id1447619907?ls=1&mt=8)
+
+## Source Code
+
+[https://github.com/horizontalsystems/bank-wallet-ios-app](https://github.com/horizontalsystems/bank-wallet-ios-app)
 
 ## License
 
