@@ -16,7 +16,7 @@ More at [https://unstoppable.money](https://unstoppable.money)
 
 ## Source Code
 
-[https://github.com/horizontalsystems/bank-wallet-ios-app](https://github.com/horizontalsystems/bank-wallet-ios-app)
+[https://github.com/horizontalsystems/unstoppable-wallet-ios](https://github.com/horizontalsystems/unstoppable-wallet-ios)
 
 ## License
 
