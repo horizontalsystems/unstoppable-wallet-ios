@@ -16,4 +16,4 @@ Such approach enables the wallet to operate anywhere and remain censoship-resita
 
 ## License
 
-The BANK wallet is open source and available under the terms of the MIT Lincense.
+This wallet is open source and available under the terms of the MIT Lincense.
