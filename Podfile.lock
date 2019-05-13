@@ -44,13 +44,13 @@ PODS:
     - HSHDWalletKit (~> 1.0)
     - ObjectMapper (~> 3.0)
     - RxSwift (~> 4.0)
-  - Erc20Kit.swift (0.6):
+  - Erc20Kit.swift (0.6.1):
     - BigInt (~> 4.0)
     - EthereumKit.swift (~> 0.6)
     - GRDB.swift (~> 3.0)
     - HSCryptoKit (~> 1.0)
     - RxSwift (~> 4.0)
-  - EthereumKit.swift (0.6):
+  - EthereumKit.swift (0.6.1):
     - Alamofire (~> 4.0)
     - BigInt (~> 4.0)
     - GRDB.swift (~> 3.0)
@@ -162,10 +162,10 @@ CHECKOUT OPTIONS:
     :commit: 5d83ef1cd7ea09ef83a1dca3a64be87616a80283
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios/
   Erc20Kit.swift:
-    :commit: dac6dcf8059874235e29641926a72007b2f42877
+    :commit: 3afcfbfec0fd30b3edd2f8bfbffe9e70e4ffca5e
     :git: https://github.com/horizontalsystems/ethereum-kit-ios/
   EthereumKit.swift:
-    :commit: dac6dcf8059874235e29641926a72007b2f42877
+    :commit: 3afcfbfec0fd30b3edd2f8bfbffe9e70e4ffca5e
     :git: https://github.com/horizontalsystems/ethereum-kit-ios/
   FeeRateKit.swift:
     :commit: 060900bc1e515a28e4118b28554aef461c70d302
@@ -191,8 +191,8 @@ SPEC CHECKSUMS:
   CryptoX11.swift: 59db498ef7934eb3c0a9e84a9c1848996a3c2282
   Cuckoo: 3112ee8b01d84e21bde500a45f9992ac81d80006
   DashKit.swift: 225a327babc6eb9fc0a7ee0a083517d4edd11705
-  Erc20Kit.swift: a907a5d8dd720586b76e669cad6c78ff5c35b491
-  EthereumKit.swift: 3fc278f801f945dc1cdbc11438e1f2c1151c36ab
+  Erc20Kit.swift: 35fd48cba1858e9c49618ca7a9ebe054d5057925
+  EthereumKit.swift: a5f5bdfe7543078bc73b1d9134c3e948ef8d404e
   FeeRateKit.swift: fe32f5a06cc13c9bd7921213050bcd05129c00b2
   GRDB.swift: 51cc9e57ae8ff7083a9d674c97925aa1de06aac5
   HSCryptoKit: 564a3888691658cba58aa60f7d037654fd3c6fb0

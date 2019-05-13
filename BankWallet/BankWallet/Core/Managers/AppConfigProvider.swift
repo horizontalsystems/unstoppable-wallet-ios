@@ -24,8 +24,10 @@ class AppConfigProvider: IAppConfigProvider {
         return wordsString.split(separator: " ", omittingEmptySubsequences: true).map(String.init)
     }
 
-    var infuraKey: String {
-        return (Bundle.main.object(forInfoDictionaryKey: "InfuraApiKey") as? String) ?? ""
+    var infuraCredentials: (id: String, secret: String?) {
+        let id = (Bundle.main.object(forInfoDictionaryKey: "InfuraProjectId") as? String) ?? ""
+        let secret = Bundle.main.object(forInfoDictionaryKey: "InfuraProjectSecret") as? String
+        return (id: id, secret: secret)
     }
 
     var etherscanKey: String {
