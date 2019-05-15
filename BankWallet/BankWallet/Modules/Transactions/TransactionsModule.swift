@@ -1,4 +1,5 @@
 import Foundation
+import DeepDiff
 
 enum TransactionStatus {
     case pending
@@ -23,7 +24,7 @@ protocol ITransactionsView: class {
     func show(filters: [Coin?])
     func reload()
     func reload(indexes: [Int])
-    func reload(with diff: [IndexChange])
+    func reload(with diff: [Change<TransactionItem>])
 }
 
 protocol ITransactionsViewDelegate {
@@ -69,7 +70,7 @@ protocol ITransactionsRouter {
 protocol ITransactionLoaderDelegate: class {
     func fetchRecords(fetchDataList: [FetchData])
     func didChangeData()
-    func reload(with diff: [IndexChange])
+    func reload(with diff: [Change<TransactionItem>])
 }
 
 protocol ITransactionViewItemFactory {
@@ -80,10 +81,4 @@ struct FetchData {
     let coin: Coin
     let from: (hash: String, interTransactionIndex: Int)?
     let limit: Int
-}
-
-enum IndexChange {
-    case insert(index: Int)
-    case update(index: Int)
-    case move(fromIndex: Int, toIndex: Int)
 }

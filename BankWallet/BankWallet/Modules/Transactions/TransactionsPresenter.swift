@@ -1,4 +1,5 @@
 import RxSwift
+import DeepDiff
 
 class TransactionsPresenter {
     private let interactor: ITransactionsInteractor
@@ -31,7 +32,7 @@ extension TransactionsPresenter: ITransactionLoaderDelegate {
         view?.reload()
     }
 
-    func reload(with diff: [IndexChange]) {
+    func reload(with diff: [Change<TransactionItem>]) {
         view?.reload(with: diff)
     }
 
