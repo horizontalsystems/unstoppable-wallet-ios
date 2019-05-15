@@ -6,7 +6,7 @@ PODS:
   - AlamofireImage (3.5.2):
     - Alamofire (~> 4.8)
   - BigInt (4.0.0)
-  - BitcoinCashKit.swift (0.5):
+  - BitcoinCashKit.swift (0.5.1):
     - Alamofire (~> 4.0)
     - BigInt (~> 4.0)
     - BitcoinCore.swift (~> 0.5)
@@ -15,7 +15,7 @@ PODS:
     - HSHDWalletKit (~> 1.0)
     - ObjectMapper (~> 3.0)
     - RxSwift (~> 4.0)
-  - BitcoinCore.swift (0.5):
+  - BitcoinCore.swift (0.5.1):
     - Alamofire (~> 4.0)
     - BigInt (~> 4.0)
     - GRDB.swift (~> 3.0)
@@ -23,7 +23,7 @@ PODS:
     - HSHDWalletKit (~> 1.0)
     - ObjectMapper (~> 3.0)
     - RxSwift (~> 4.0)
-  - BitcoinKit.swift (0.5):
+  - BitcoinKit.swift (0.5.1):
     - Alamofire (~> 4.0)
     - BigInt (~> 4.0)
     - BitcoinCore.swift (~> 0.5)
@@ -34,7 +34,7 @@ PODS:
     - RxSwift (~> 4.0)
   - CryptoX11.swift (1.0)
   - Cuckoo (0.13.0)
-  - DashKit.swift (0.5):
+  - DashKit.swift (0.5.1):
     - Alamofire (~> 4.0)
     - BigInt (~> 4.0)
     - BitcoinCore.swift (~> 0.5)
@@ -156,13 +156,13 @@ CHECKOUT OPTIONS:
     :commit: c66eb78e98a70ac3e50fa77f9680c5773261a6fd
     :git: https://github.com/horizontalsystems/gui-kit
   BitcoinCashKit.swift:
-    :commit: 5d83ef1cd7ea09ef83a1dca3a64be87616a80283
+    :commit: 7342946a60590a8f86c9bd3e4d2b0adce3d592b6
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios/
   BitcoinKit.swift:
-    :commit: 5d83ef1cd7ea09ef83a1dca3a64be87616a80283
+    :commit: 7342946a60590a8f86c9bd3e4d2b0adce3d592b6
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios/
   DashKit.swift:
-    :commit: 5d83ef1cd7ea09ef83a1dca3a64be87616a80283
+    :commit: 7342946a60590a8f86c9bd3e4d2b0adce3d592b6
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios/
   Erc20Kit.swift:
     :commit: 3afcfbfec0fd30b3edd2f8bfbffe9e70e4ffca5e
@@ -188,12 +188,12 @@ SPEC CHECKSUMS:
   Alamofire: ae5c501addb7afdbb13687d7f2f722c78734c2d3
   AlamofireImage: 63cfe3baf1370be6c498149687cf6db3e3b00999
   BigInt: 2aad1a9942dc932ec8b84290d2c564a3d76f97ab
-  BitcoinCashKit.swift: 0467e59623cc856008ccbcf4fb2f8d60515c8a17
-  BitcoinCore.swift: ea3c762884ebdc425b4e3cf6b6614e14b1ede178
-  BitcoinKit.swift: 39fece285d2c44a6d105a7ccaaab3dd0a37bd8c8
+  BitcoinCashKit.swift: d42568870b0dc5494012b93f017a2670ab3163fb
+  BitcoinCore.swift: 86b5f4d416d0f074eb36d96a9a701ad64139a031
+  BitcoinKit.swift: afe6afcb27c31197e25181e271721f96653bf691
   CryptoX11.swift: 59db498ef7934eb3c0a9e84a9c1848996a3c2282
   Cuckoo: 3112ee8b01d84e21bde500a45f9992ac81d80006
-  DashKit.swift: 225a327babc6eb9fc0a7ee0a083517d4edd11705
+  DashKit.swift: ab25cd5a3c60b09b98880dfb77c363a3d4812938
   DeepDiff: e329bc46dd14ca788d8ec08d34420799ba1d77f2
   Erc20Kit.swift: 35fd48cba1858e9c49618ca7a9ebe054d5057925
   EthereumKit.swift: a5f5bdfe7543078bc73b1d9134c3e948ef8d404e
