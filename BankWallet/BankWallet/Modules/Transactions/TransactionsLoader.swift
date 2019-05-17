@@ -48,9 +48,7 @@ class TransactionsLoader {
         guard !dataSource.allShown else {
 //            print("Load Next: all shown")
 
-            if initial {
-                delegate?.didChangeData()
-            }
+            delegate?.reload(with: dataSource.items, animated: !initial)
 
             loading = false
 
@@ -63,7 +61,7 @@ class TransactionsLoader {
 //            print("Load Next: fetch data list is empty")
 
             if dataSource.increasePage() {
-                delegate?.didChangeData()
+                delegate?.reload(with: dataSource.items, animated: true)
             }
 
             loading = false
@@ -75,14 +73,17 @@ class TransactionsLoader {
     }
 
     func didUpdate(records: [TransactionRecord], coin: Coin) {
-        delegate?.reload(with: dataSource.handleUpdated(records: records, coin: coin))
+        if let updatedArray = dataSource.handleUpdated(records: records, coin: coin) {
+            delegate?.reload(with: updatedArray, animated: true)
+        }
     }
 
     func didFetch(recordsData: [Coin: [TransactionRecord]]) {
         dataSource.handleNext(recordsData: recordsData)
 
+        //called after load next
         if dataSource.increasePage() {
-            delegate?.didChangeData()
+            delegate?.reload(with: dataSource.items, animated: false)
         }
 
         loading = false

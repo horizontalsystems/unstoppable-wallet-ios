@@ -1,6 +1,7 @@
 import UIKit
 import SnapKit
 import ActionSheet
+import DeepDiff
 
 class TransactionsViewController: WalletViewController {
     let delegate: ITransactionsViewDelegate
@@ -79,12 +80,18 @@ class TransactionsViewController: WalletViewController {
         return AppTheme.statusBarStyle
     }
 
-//    func bind(at indexPath: IndexPath) {
-//        if let cell = tableView.cellForRow(at: indexPath) as? TransactionCell {
-//            let item = delegate.item(forIndex: indexPath.row)
-//            cell.bind(item: item)
-//        }
-//    }
+    func bind(at indexPath: IndexPath) {
+        if let cell = tableView.cellForRow(at: indexPath) as? TransactionCell {
+            let item = delegate.item(forIndex: indexPath.row)
+            cell.bind(item: item, first: indexPath.row == 0, last: tableView.numberOfRows(inSection: indexPath.section) == indexPath.row + 1)
+        }
+    }
+
+    private func reload(indexPaths: [IndexPath]) {
+        for indexPath in indexPaths {
+            bind(at: indexPath)
+        }
+    }
 
 }
 
@@ -98,45 +105,33 @@ extension TransactionsViewController: ITransactionsView {
         tableView.reloadData()
     }
 
-    func reload(indexes: [Int]) {
-        tableView.reloadData()
-//        for index in indexes {
-//            bind(at: IndexPath(row: index, section: 0))
-//        }
+    func bindVisible() {
+        if let visibleIndexes = (tableView.indexPathsForVisibleRows?.map { return $0.row }) {
+            bind(indexes: visibleIndexes)
+        }
     }
 
-    func reload(with diff: [IndexChange]) {
-        tableView.reloadData()
-//        var updateIndexes = [Int]()
-//        var insertIndexes = [Int]()
-//        var moveIndexes = [(Int, Int)]()
-//        for change in diff {
-//            switch change {
-//            case .update(let index):
-//                updateIndexes.append(index)
-//            case .insert(let index):
-//                insertIndexes.append(index)
-//            case .move(let fromIndex, let toIndex):
-//                updateIndexes.append(toIndex)
-//                moveIndexes.append((fromIndex, toIndex))
-//            }
-//        }
-//
-//        guard !insertIndexes.isEmpty || !moveIndexes.isEmpty else {
-//            reload(indexes: updateIndexes)
-//            return
-//        }
-//
-//        tableView.performBatchUpdates({ [weak self] in
-//            self?.tableView.insertRows(at: insertIndexes.map {
-//                IndexPath(row: $0, section: 0)
-//            }, with: .automatic)
-//            for movedIndex in moveIndexes {
-//                self?.tableView.moveRow(at: IndexPath(row: movedIndex.0, section: 0), to: IndexPath(row: movedIndex.1, section: 0))
-//            }
-//        }, completion: { [weak self] _ in
-//            self?.reload(indexes: updateIndexes)
-//        })
+    func bind(indexes: [Int]) {
+        reload(indexPaths: indexes.map { IndexPath(row: $0, section: 0) })
+    }
+
+    func reload(with diff: [Change<TransactionItem>]) {
+        let changes = IndexPathConverter().convert(changes: diff, section: 0)
+
+        guard !changes.inserts.isEmpty || !changes.moves.isEmpty || !changes.deletes.isEmpty else {
+            reload(indexPaths: changes.replaces)
+            return
+        }
+
+        tableView.performBatchUpdates({ [weak self] in
+            self?.tableView.insertRows(at: changes.inserts, with: .fade)
+            self?.tableView.deleteRows(at: changes.deletes, with: .fade)
+            for movedIndex in changes.moves {
+                self?.tableView.moveRow(at: movedIndex.from, to: movedIndex.to)
+            }
+        }, completion: { [weak self] _ in
+            self?.reload(indexPaths: changes.replaces)
+        })
     }
 
 }

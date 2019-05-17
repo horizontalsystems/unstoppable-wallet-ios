@@ -13,6 +13,10 @@ class TransactionRecordDataSource {
         self.limit = limit
     }
 
+    var items: [TransactionItem] {
+        return itemsDataSource.items
+    }
+
     var itemsCount: Int {
         return itemsDataSource.count
     }
@@ -61,21 +65,17 @@ class TransactionRecordDataSource {
         }
     }
 
-    func handleUpdated(records: [TransactionRecord], coin: Coin) -> [IndexChange] {
+    func handleUpdated(records: [TransactionRecord], coin: Coin) -> [TransactionItem]? {
         guard let pool = poolRepo.pool(byCoin: coin) else {
-            return []
+            return nil
         }
 
-        var updatedRecords = [TransactionRecord]()
-        var insertedRecords = [TransactionRecord]()
-
-        for record in records.sorted() {
+        for record in records {
             switch pool.handleUpdated(record: record) {
-            case .updated: updatedRecords.append(record)
-            case .inserted: insertedRecords.append(record)
+            case .updated: ()
+            case .inserted: ()
             case .newData:
                 if itemsDataSource.shouldInsert(record: record) {
-                    insertedRecords.append(record)
                     pool.increaseFirstUnusedIndex()
                 }
             case .ignored: ()
@@ -83,13 +83,11 @@ class TransactionRecordDataSource {
         }
 
         guard poolRepo.isPoolActive(coin: coin) else {
-            return []
+            return nil
         }
 
-        let updatedItems = updatedRecords.map { factory.create(coin: coin, record: $0) }
-        let insertedItems = insertedRecords.map { factory.create(coin: coin, record: $0) }
-
-        return itemsDataSource.handle(updatedItems: updatedItems, insertedItems: insertedItems)
+        let items = records.map { factory.create(coin: coin, record: $0) }
+        return itemsDataSource.handle(newItems: items)
     }
 
     func increasePage() -> Bool {

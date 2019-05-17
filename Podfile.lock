@@ -44,6 +44,7 @@ PODS:
     - HSHDWalletKit (~> 1.0)
     - ObjectMapper (~> 3.0)
     - RxSwift (~> 4.0)
+  - DeepDiff (2.2.0)
   - Erc20Kit.swift (0.6.1):
     - BigInt (~> 4.0)
     - EthereumKit.swift (~> 0.6)
@@ -94,6 +95,7 @@ DEPENDENCIES:
   - BitcoinKit.swift (from `https://github.com/horizontalsystems/bitcoin-kit-ios/`)
   - Cuckoo
   - DashKit.swift (from `https://github.com/horizontalsystems/bitcoin-kit-ios/`)
+  - DeepDiff
   - Erc20Kit.swift (from `https://github.com/horizontalsystems/ethereum-kit-ios/`)
   - EthereumKit.swift (from `https://github.com/horizontalsystems/ethereum-kit-ios/`)
   - FeeRateKit.swift (from `https://github.com/horizontalsystems/blockchain-fee-rate-kit-ios`)
@@ -116,6 +118,7 @@ SPEC REPOS:
     - BitcoinCore.swift
     - CryptoX11.swift
     - Cuckoo
+    - DeepDiff
     - GRDB.swift
     - HSCryptoKit
     - HSHDWalletKit
@@ -191,6 +194,7 @@ SPEC CHECKSUMS:
   CryptoX11.swift: 59db498ef7934eb3c0a9e84a9c1848996a3c2282
   Cuckoo: 3112ee8b01d84e21bde500a45f9992ac81d80006
   DashKit.swift: ab25cd5a3c60b09b98880dfb77c363a3d4812938
+  DeepDiff: e329bc46dd14ca788d8ec08d34420799ba1d77f2
   Erc20Kit.swift: 35fd48cba1858e9c49618ca7a9ebe054d5057925
   EthereumKit.swift: a5f5bdfe7543078bc73b1d9134c3e948ef8d404e
   FeeRateKit.swift: fe32f5a06cc13c9bd7921213050bcd05129c00b2
@@ -207,6 +211,6 @@ SPEC CHECKSUMS:
   SnapKit: fe8a619752f3f27075cc9a90244d75c6c3f27e2a
   UIExtensions.swift: 7a290db7b3039e430aa5c8adfd0c8015d06fa044
 
-PODFILE CHECKSUM: f3785a7a87462e86f08ab8fb08ed32a48e4352c0
+PODFILE CHECKSUM: 87ac8a83e1a72f95d6f0d542dcc5ba0567809fa9
 
 COCOAPODS: 1.5.3

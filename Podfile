@@ -35,6 +35,8 @@ def appPods
 
   pod 'GRDB.swift'
   pod 'RxGRDB'
+
+  pod 'DeepDiff'
 end
 
 target 'Bank Dev T' do
@@ -50,6 +52,7 @@ target 'Bank' do
 end
 
 target 'Bank Tests' do
+  pod 'DeepDiff'
   pod 'RxSwift'
   pod 'Cuckoo'
 end
