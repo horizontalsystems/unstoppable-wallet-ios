@@ -13,7 +13,7 @@ class TransactionsTheme {
     static let outgoingTextColor = UIColor.cryptoYellow
     static let outgoingTextColor50 = UIColor.cryptoYellow50
     static let cellHeight: CGFloat = 72
-    static var cellBackground: UIColor { return .crypto_Clear_White }
+    static var cellBackground: UIColor { return .crypto_Dark_White }
     static let cellMediumMargin: CGFloat = 12
     static let cellSmallMargin: CGFloat = 8
     static let cellHighlightBackgroundColor = UIColor.cryptoSteel20

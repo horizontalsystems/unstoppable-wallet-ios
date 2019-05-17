@@ -17,10 +17,11 @@ extension TransactionsRouter {
     static func module() -> UIViewController {
         let dataSource = TransactionRecordDataSource(poolRepo: TransactionRecordPoolRepo(), itemsDataSource: TransactionItemDataSource(), factory: TransactionItemFactory())
         let loader = TransactionsLoader(dataSource: dataSource)
+        let transactionsDiffer = TransactionsDiffer()
 
         let router = TransactionsRouter()
         let interactor = TransactionsInteractor(adapterManager: App.shared.adapterManager, currencyManager: App.shared.currencyManager, rateManager: App.shared.rateManager, reachabilityManager: App.shared.reachabilityManager)
-        let presenter = TransactionsPresenter(interactor: interactor, router: router, factory: TransactionViewItemFactory(), loader: loader, dataSource: TransactionsMetadataDataSource())
+        let presenter = TransactionsPresenter(interactor: interactor, router: router, factory: TransactionViewItemFactory(), loader: loader, dataSource: TransactionsMetadataDataSource(), transactionsDiffer: transactionsDiffer)
         let viewController = TransactionsViewController(delegate: presenter)
 
         loader.delegate = presenter

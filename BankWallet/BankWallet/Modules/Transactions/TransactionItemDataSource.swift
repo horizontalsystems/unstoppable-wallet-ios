@@ -2,7 +2,7 @@ import Foundation
 import DeepDiff
 
 class TransactionItemDataSource {
-    private var items = [TransactionItem]()
+    var items = [TransactionItem]()
 
     var count: Int {
         return items.count
@@ -54,9 +54,7 @@ class TransactionItemDataSource {
         return indexes
     }
 
-    func handle(newItems: [TransactionItem]) -> [Change<TransactionItem>] {
-        let oldItems = items
-
+    func handle(newItems: [TransactionItem]) -> [TransactionItem] {
         for item in newItems {
             items.removeAll { $0 == item }
         }
@@ -66,7 +64,7 @@ class TransactionItemDataSource {
         items.sort()
         items.reverse()
 
-        return diff(old: oldItems, new: items)
+        return items
     }
 
 }

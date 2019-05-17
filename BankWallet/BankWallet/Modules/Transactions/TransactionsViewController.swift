@@ -105,20 +105,27 @@ extension TransactionsViewController: ITransactionsView {
         tableView.reloadData()
     }
 
-    func reload(indexes: [Int]) {
+    func bindVisible() {
+        if let visibleIndexes = (tableView.indexPathsForVisibleRows?.map { return $0.row }) {
+            bind(indexes: visibleIndexes)
+        }
+    }
+
+    func bind(indexes: [Int]) {
         reload(indexPaths: indexes.map { IndexPath(row: $0, section: 0) })
     }
 
     func reload(with diff: [Change<TransactionItem>]) {
         let changes = IndexPathConverter().convert(changes: diff, section: 0)
 
-        guard !changes.inserts.isEmpty || !changes.moves.isEmpty else {
+        guard !changes.inserts.isEmpty || !changes.moves.isEmpty || !changes.deletes.isEmpty else {
             reload(indexPaths: changes.replaces)
             return
         }
 
         tableView.performBatchUpdates({ [weak self] in
-            self?.tableView.insertRows(at: changes.inserts, with: .automatic)
+            self?.tableView.insertRows(at: changes.inserts, with: .fade)
+            self?.tableView.deleteRows(at: changes.deletes, with: .fade)
             for movedIndex in changes.moves {
                 self?.tableView.moveRow(at: movedIndex.from, to: movedIndex.to)
             }

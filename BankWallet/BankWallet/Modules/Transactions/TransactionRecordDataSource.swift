@@ -14,6 +14,10 @@ class TransactionRecordDataSource {
         self.limit = limit
     }
 
+    var items: [TransactionItem] {
+        return itemsDataSource.items
+    }
+
     var itemsCount: Int {
         return itemsDataSource.count
     }
@@ -62,9 +66,9 @@ class TransactionRecordDataSource {
         }
     }
 
-    func handleUpdated(records: [TransactionRecord], coin: Coin) -> [Change<TransactionItem>] {
+    func handleUpdated(records: [TransactionRecord], coin: Coin) -> [TransactionItem]? {
         guard let pool = poolRepo.pool(byCoin: coin) else {
-            return []
+            return nil
         }
 
         for record in records {
@@ -80,7 +84,7 @@ class TransactionRecordDataSource {
         }
 
         guard poolRepo.isPoolActive(coin: coin) else {
-            return []
+            return nil
         }
 
         let items = records.map { factory.create(coin: coin, record: $0) }
