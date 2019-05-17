@@ -1,5 +1,4 @@
 import Foundation
-import DeepDiff
 
 class TransactionRecordDataSource {
     private let poolRepo: TransactionRecordPoolRepo
