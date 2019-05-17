@@ -52,6 +52,7 @@ target 'Bank' do
 end
 
 target 'Bank Tests' do
+  pod 'DeepDiff'
   pod 'RxSwift'
   pod 'Cuckoo'
 end
