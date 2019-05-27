@@ -23,9 +23,7 @@ extension TransactionStatus: Equatable {
 protocol ITransactionsView: class {
     func show(filters: [Coin?])
     func reload()
-    func bindVisible()
-    func bind(indexes: [Int])
-    func reload(with diff: [Change<TransactionItem>])
+    func reload(with diff: [Change<TransactionViewItem>])
 }
 
 protocol ITransactionsViewDelegate {
@@ -71,10 +69,26 @@ protocol ITransactionsRouter {
 protocol ITransactionLoaderDelegate: class {
     func fetchRecords(fetchDataList: [FetchData])
     func reload(with newItems: [TransactionItem], animated: Bool)
+    func add(items: [TransactionItem])
+}
+
+protocol ITransactionViewItemDataSourceDelegate: class {
+    func viewItem(for item: TransactionItem) -> TransactionViewItem
+    func reload()
+    func reload(with diff: [Change<TransactionViewItem>])
 }
 
 protocol ITransactionViewItemFactory {
     func viewItem(fromItem item: TransactionItem, lastBlockHeight: Int?, threshold: Int?, rate: CurrencyValue?) -> TransactionViewItem
+}
+
+protocol ITransactionViewItemDataSource {
+    var viewItemsCount: Int { get }
+    func viewItem(at index: Int) -> TransactionViewItem?
+    func reload(with newItems: [TransactionItem], animated: Bool)
+    func reloadAll()
+    func reload(indexes: [Int])
+    func add(items: [TransactionItem])
 }
 
 struct FetchData {

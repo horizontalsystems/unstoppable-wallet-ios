@@ -587,6 +587,9 @@
 		3C7B9BFD8EA7360907306675 /* UrlManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7B94F32F315F4F753D89AD /* UrlManager.swift */; };
 		41A22A9B2FA01C41637B3EB9 /* Pods_Bank_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C34C463CE4115A838C13EA33 /* Pods_Bank_Tests.framework */; };
 		4BBB009736B540C47E50CE37 /* Pods_Bank.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 754FC632F3964D9EF1172D85 /* Pods_Bank.framework */; };
+		5002C0962294165700E88585 /* ThreadSafeness.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5002C0952294165700E88585 /* ThreadSafeness.swift */; };
+		5002C0972294165700E88585 /* ThreadSafeness.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5002C0952294165700E88585 /* ThreadSafeness.swift */; };
+		5002C0982294165700E88585 /* ThreadSafeness.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5002C0952294165700E88585 /* ThreadSafeness.swift */; };
 		5026000021C3CA280023EEA2 /* Bank.release.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 5026FFF621C3CA280023EEA2 /* Bank.release.xcconfig */; };
 		5026000121C3CA280023EEA2 /* Bank.release.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 5026FFF621C3CA280023EEA2 /* Bank.release.xcconfig */; };
 		5026000221C3CA280023EEA2 /* Bank.release.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 5026FFF621C3CA280023EEA2 /* Bank.release.xcconfig */; };
@@ -1477,6 +1480,7 @@
 		3D955ABDB32C63409D8F97FC /* Pods-Bank Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bank Tests.debug.xcconfig"; path = "../Pods/Target Support Files/Pods-Bank Tests/Pods-Bank Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		417B3999AB813D9B5AE50F08 /* Pods-Bank Dev T.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bank Dev T.debug.xcconfig"; path = "../Pods/Target Support Files/Pods-Bank Dev T/Pods-Bank Dev T.debug.xcconfig"; sourceTree = "<group>"; };
 		49A4A4EC5EC2A6D4253FB66D /* Pods-Bank Dev.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bank Dev.release.xcconfig"; path = "../Pods/Target Support Files/Pods-Bank Dev/Pods-Bank Dev.release.xcconfig"; sourceTree = "<group>"; };
+		5002C0952294165700E88585 /* ThreadSafeness.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThreadSafeness.swift; sourceTree = "<group>"; };
 		5026FFF421C3CA280023EEA2 /* Bank Dev.release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Bank Dev.release.xcconfig"; sourceTree = "<group>"; };
 		5026FFF521C3CA280023EEA2 /* Bank Dev T.release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Bank Dev T.release.xcconfig"; sourceTree = "<group>"; };
 		5026FFF621C3CA280023EEA2 /* Bank.release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Bank.release.xcconfig; sourceTree = "<group>"; };
@@ -1885,6 +1889,7 @@
 				1A5649C6FFC694CD18A8B39A /* AddressData.swift */,
 				11B35878592C2E37DA1EBE1E /* CoinType.swift */,
 				11B35BDC2E3F845A52C442AD /* EnabledCoin.swift */,
+				5002C0952294165700E88585 /* ThreadSafeness.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -3324,6 +3329,7 @@
 				1A56460F1BB48D4E82C6E257 /* RestoreWordCell.swift in Sources */,
 				1A564A46D655BA99B1C0DAF7 /* DescriptionCollectionHeader.swift in Sources */,
 				1A564AFE8103BA974943D4E7 /* InputFieldTheme.swift in Sources */,
+				5002C0962294165700E88585 /* ThreadSafeness.swift in Sources */,
 				1A56465CE6EFDADE3365DF98 /* AppTheme.swift in Sources */,
 				1A564FB62EBBA50489895BEF /* BalanceCell.swift in Sources */,
 				1A564AB936D91E4E5FBBAA4C /* BalanceHeaderView.swift in Sources */,
@@ -3721,6 +3727,7 @@
 				D3840510218317DF007D50AD /* DescriptionCollectionHeader.swift in Sources */,
 				D3840511218317DF007D50AD /* InputFieldTheme.swift in Sources */,
 				D3840512218317DF007D50AD /* AppTheme.swift in Sources */,
+				5002C0972294165700E88585 /* ThreadSafeness.swift in Sources */,
 				D3840513218317DF007D50AD /* BalanceCell.swift in Sources */,
 				D3840514218317DF007D50AD /* BalanceHeaderView.swift in Sources */,
 				D3840515218317DF007D50AD /* BalanceTheme.swift in Sources */,
@@ -4068,6 +4075,7 @@
 				D38405FF21831B3D007D50AD /* DescriptionCollectionHeader.swift in Sources */,
 				D384060021831B3D007D50AD /* InputFieldTheme.swift in Sources */,
 				D384060121831B3D007D50AD /* AppTheme.swift in Sources */,
+				5002C0982294165700E88585 /* ThreadSafeness.swift in Sources */,
 				D384060221831B3D007D50AD /* BalanceCell.swift in Sources */,
 				D384060321831B3D007D50AD /* BalanceHeaderView.swift in Sources */,
 				D384060421831B3D007D50AD /* BalanceTheme.swift in Sources */,

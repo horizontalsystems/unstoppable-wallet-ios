@@ -80,16 +80,12 @@ class TransactionsViewController: WalletViewController {
         return AppTheme.statusBarStyle
     }
 
-    func bind(at indexPath: IndexPath) {
-        if let cell = tableView.cellForRow(at: indexPath) as? TransactionCell {
-            let item = delegate.item(forIndex: indexPath.row)
-            cell.bind(item: item, first: indexPath.row == 0, last: tableView.numberOfRows(inSection: indexPath.section) == indexPath.row + 1)
-        }
-    }
-
     private func reload(indexPaths: [IndexPath]) {
         for indexPath in indexPaths {
-            bind(at: indexPath)
+            if let cell = tableView.cellForRow(at: indexPath) as? TransactionCell {
+                let item = delegate.item(forIndex: indexPath.row)
+                cell.bind(item: item, first: indexPath.row == 0, last: tableView.numberOfRows(inSection: indexPath.section) == indexPath.row + 1)
+            }
         }
     }
 
@@ -105,17 +101,7 @@ extension TransactionsViewController: ITransactionsView {
         tableView.reloadData()
     }
 
-    func bindVisible() {
-        if let visibleIndexes = (tableView.indexPathsForVisibleRows?.map { return $0.row }) {
-            bind(indexes: visibleIndexes)
-        }
-    }
-
-    func bind(indexes: [Int]) {
-        reload(indexPaths: indexes.map { IndexPath(row: $0, section: 0) })
-    }
-
-    func reload(with diff: [Change<TransactionItem>]) {
+    func reload(with diff: [Change<TransactionViewItem>]) {
         let changes = IndexPathConverter().convert(changes: diff, section: 0)
 
         guard !changes.inserts.isEmpty || !changes.moves.isEmpty || !changes.deletes.isEmpty else {

@@ -7,11 +7,11 @@ class TransactionsPresenter {
     private let factory: ITransactionViewItemFactory
     private let loader: TransactionsLoader
     private let dataSource: TransactionsMetadataDataSource
-    private let transactionsDiffer: TransactionsDiffer
+    private let transactionsDiffer: ITransactionViewItemDataSource
 
     weak var view: ITransactionsView?
 
-    init(interactor: ITransactionsInteractor, router: ITransactionsRouter, factory: ITransactionViewItemFactory, loader: TransactionsLoader, dataSource: TransactionsMetadataDataSource, transactionsDiffer: TransactionsDiffer) {
+    init(interactor: ITransactionsInteractor, router: ITransactionsRouter, factory: ITransactionViewItemFactory, loader: TransactionsLoader, dataSource: TransactionsMetadataDataSource, transactionsDiffer: ITransactionViewItemDataSource) {
         self.interactor = interactor
         self.router = router
         self.factory = factory
@@ -20,9 +20,28 @@ class TransactionsPresenter {
         self.transactionsDiffer = transactionsDiffer
     }
 
-    private func reload(items: [TransactionItem]) {
-        transactionsDiffer.items = items
+}
+
+extension TransactionsPresenter: ITransactionViewItemDataSourceDelegate {
+
+    func viewItem(for item: TransactionItem) -> TransactionViewItem {
+        let lastBlockHeight = dataSource.lastBlockHeight(coin: item.coin)
+        let threshold = dataSource.threshold(coin: item.coin)
+        let rate = dataSource.rate(coin: item.coin, date: item.record.date)
+
+        if rate == nil {
+            interactor.fetchRate(coin: item.coin, date: item.record.date)
+        }
+
+        return factory.viewItem(fromItem: item, lastBlockHeight: lastBlockHeight, threshold: threshold, rate: rate)
+    }
+
+    func reload() {
         view?.reload()
+    }
+
+    func reload(with diff: [Change<TransactionViewItem>]) {
+        view?.reload(with: diff)
     }
 
 }
@@ -34,11 +53,11 @@ extension TransactionsPresenter: ITransactionLoaderDelegate {
     }
 
     func reload(with newItems: [TransactionItem], animated: Bool) {
-        if !animated || transactionsDiffer.items == nil {
-            reload(items: newItems)
-        } else {
-            view?.reload(with: transactionsDiffer.calculateDiff(for: newItems))
-        }
+        transactionsDiffer.reload(with: newItems, animated: animated)
+    }
+
+    func add(items: [TransactionItem]) {
+        transactionsDiffer.add(items: items)
     }
 
 }
@@ -50,7 +69,7 @@ extension TransactionsPresenter: ITransactionsViewDelegate {
     }
 
     func onViewAppear() {
-        view?.bindVisible()
+        transactionsDiffer.reloadAll()
     }
 
     func onFilterSelect(coin: Coin?) {
@@ -59,20 +78,14 @@ extension TransactionsPresenter: ITransactionsViewDelegate {
     }
 
     var itemsCount: Int {
-        return loader.itemsCount
+        return transactionsDiffer.viewItemsCount
     }
 
     func item(forIndex index: Int) -> TransactionViewItem {
-        let item = loader.item(forIndex: index)
-        let lastBlockHeight = dataSource.lastBlockHeight(coin: item.coin)
-        let threshold = dataSource.threshold(coin: item.coin)
-        let rate = dataSource.rate(coin: item.coin, date: item.record.date)
-
-        if rate == nil {
-            interactor.fetchRate(coin: item.coin, date: item.record.date)
+        guard let viewItem = transactionsDiffer.viewItem(at: index) else {
+            fatalError()
         }
-
-        return factory.viewItem(fromItem: item, lastBlockHeight: lastBlockHeight, threshold: threshold, rate: rate)
+        return viewItem
     }
 
     func onBottomReached() {
@@ -95,7 +108,7 @@ extension TransactionsPresenter: ITransactionsInteractorDelegate {
 //        print("Selected Coin Codes Updated: \(selectedCoins)")
 
         loader.set(coins: selectedCoins)
-        loader.loadNext(initial: false)
+        loader.loadNext(initial: true)
     }
 
     func onUpdate(coinsData: [(Coin, Int, Int?)]) {
@@ -126,7 +139,7 @@ extension TransactionsPresenter: ITransactionsInteractorDelegate {
 //        print("Base Currency Updated")
 
         dataSource.clearRates()
-        view?.bindVisible()
+        transactionsDiffer.reloadAll()
     }
 
     func onUpdate(lastBlockHeight: Int, coin: Coin) {
@@ -139,10 +152,8 @@ extension TransactionsPresenter: ITransactionsInteractorDelegate {
             let indexes = loader.itemIndexesForPending(coin: coin, blockHeight: oldLastBlockHeight - threshold)
 
             if !indexes.isEmpty {
-                view?.bind(indexes: indexes)
+                transactionsDiffer.reload(indexes: indexes)
             }
-        } else {
-            view?.bindVisible()
         }
     }
 
@@ -156,18 +167,18 @@ extension TransactionsPresenter: ITransactionsInteractorDelegate {
         let indexes = loader.itemIndexes(coin: coin, date: date)
 
         if !indexes.isEmpty {
-            view?.bind(indexes: indexes)
+            transactionsDiffer.reload(indexes: indexes)
         }
     }
 
     func didFetch(recordsData: [Coin: [TransactionRecord]]) {
-//        print("Did Fetch Records: \(records.map { key, value -> String in "\(key) - \(value.count)" })")
+//        print("Did Fetch Records: \(recordsData.map { key, value -> String in "\(key) - \(value.count)" })")
 
         loader.didFetch(recordsData: recordsData)
     }
 
     func onConnectionRestore() {
-        view?.bindVisible()
+        transactionsDiffer.reloadAll()
     }
 
 }

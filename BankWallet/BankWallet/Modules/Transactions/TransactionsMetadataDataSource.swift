@@ -1,9 +1,9 @@
 import Foundation
 
 class TransactionsMetadataDataSource {
-    private var lastBlockHeights = [Coin: Int]()
-    private var thresholds = [Coin: Int]()
-    private var rates = [Coin: [Date: CurrencyValue]]()
+    private var lastBlockHeights = SynchronizedDictionary<Coin, Int>()
+    private var thresholds = SynchronizedDictionary<Coin, Int>()
+    private var rates = SynchronizedDictionary<Coin, SynchronizedDictionary<Date, CurrencyValue>>()
 
     func lastBlockHeight(coin: Coin) -> Int? {
         return lastBlockHeights[coin]
@@ -27,14 +27,14 @@ class TransactionsMetadataDataSource {
 
     func set(rate: CurrencyValue, coin: Coin, date: Date) {
         if rates[coin] == nil {
-            rates[coin] = [Date: CurrencyValue]()
+            rates[coin] = SynchronizedDictionary<Date, CurrencyValue>()
         }
 
         rates[coin]?[date] = rate
     }
 
     func clearRates() {
-        rates = [:]
+        rates = SynchronizedDictionary<Coin, SynchronizedDictionary<Date, CurrencyValue>>()
     }
 
 }

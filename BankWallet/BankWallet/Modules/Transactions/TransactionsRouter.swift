@@ -28,6 +28,7 @@ extension TransactionsRouter {
         interactor.delegate = presenter
         presenter.view = viewController
         router.viewController = viewController
+        transactionsDiffer.viewItemDelegate = presenter
 
         return viewController
     }

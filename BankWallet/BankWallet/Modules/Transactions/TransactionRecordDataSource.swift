@@ -90,7 +90,7 @@ class TransactionRecordDataSource {
         return itemsDataSource.handle(newItems: items)
     }
 
-    func increasePage() -> Bool {
+    func increasePage() -> [TransactionItem]? {
         var unusedItems = [TransactionItem]()
 
         poolRepo.activePools.forEach { pool in
@@ -100,7 +100,7 @@ class TransactionRecordDataSource {
         }
 
         guard !unusedItems.isEmpty else {
-            return false
+            return nil
         }
 
         unusedItems.sort()
@@ -114,7 +114,7 @@ class TransactionRecordDataSource {
             poolRepo.pool(byCoin: item.coin)?.increaseFirstUnusedIndex()
         }
 
-        return true
+        return unusedItems
     }
 
     func set(coins: [Coin]) {
