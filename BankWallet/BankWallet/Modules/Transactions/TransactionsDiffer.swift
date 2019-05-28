@@ -37,17 +37,39 @@ extension TransactionsDiffer: ITransactionViewItemDataSource {
 
     func reload(with newItems: [TransactionItem], animated: Bool) {
         queue.sync {
-            let newViewItems = buildViewItems(from: newItems)
-            let changes = diff(old: viewItems ?? [], new: newViewItems)
-
             let needFullReload = !animated || viewItems == nil
+
+            var newViewItems = viewItems ?? []
+            let itemsChanges = IndexPathConverter().convert(changes: diff(old: items, new: newItems), section: 0)
+            for index in itemsChanges.deletes.sorted().reversed() {
+                newViewItems.remove(at: index.row)
+            }
+            for index in itemsChanges.inserts {
+                if let viewItem = viewItemDelegate?.viewItem(for: newItems[index.row]) {
+                    newViewItems.insert(viewItem, at: index.row)
+                }
+            }
+            var updateIndexes = itemsChanges.moves.reduce([Int]()) {
+                var updates = $0
+                updates.append($1.from.row)
+                updates.append($1.to.row)
+                return updates
+            }
+            updateIndexes.append(contentsOf: itemsChanges.replaces.map { $0.row })
+            for updatedIndex in updateIndexes {
+                if let viewItem = viewItemDelegate?.viewItem(for: newItems[updatedIndex]) {
+                    newViewItems[updatedIndex] = viewItem
+                }
+            }
+
+            let viewChanges = diff(old: viewItems ?? [], new: newViewItems)
             items = newItems
             viewItems = newViewItems
             DispatchQueue.main.async { [weak self] in
                 if needFullReload {
                     self?.viewItemDelegate?.reload()
                 } else {
-                    self?.viewItemDelegate?.reload(with: changes)
+                    self?.viewItemDelegate?.reload(with: viewChanges)
                 }
             }
         }
