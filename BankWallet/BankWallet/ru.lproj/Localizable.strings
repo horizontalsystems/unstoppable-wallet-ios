@@ -25,8 +25,8 @@
 "guest.title" = "Unstoppable";
 "guest.description" = "IN BLOCKCHAIN WE TRUST";
 "guest.subtitle" = "Decentralized app";
-"guest.create_wallet" = "Create Wallet";
-"guest.restore_wallet" = "Restore";
+"guest.create_wallet" = "Создать Кошелек";
+"guest.restore_wallet" = "Восстановить";
 "guest.version" = "версия %@";
 
 // Restore
