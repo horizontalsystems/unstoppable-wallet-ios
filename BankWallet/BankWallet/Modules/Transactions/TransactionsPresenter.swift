@@ -24,7 +24,7 @@ class TransactionsPresenter {
 
 extension TransactionsPresenter: ITransactionViewItemDataSourceDelegate {
 
-    func viewItem(for item: TransactionItem) -> TransactionViewItem {
+    func createViewItem(for item: TransactionItem) -> TransactionViewItem {
         let lastBlockHeight = dataSource.lastBlockHeight(coin: item.coin)
         let threshold = dataSource.threshold(coin: item.coin)
         let rate = dataSource.rate(coin: item.coin, date: item.record.date)
@@ -36,12 +36,8 @@ extension TransactionsPresenter: ITransactionViewItemDataSourceDelegate {
         return factory.viewItem(fromItem: item, lastBlockHeight: lastBlockHeight, threshold: threshold, rate: rate)
     }
 
-    func reload() {
-        view?.reload()
-    }
-
-    func reload(with diff: [Change<TransactionViewItem>]) {
-        view?.reload(with: diff)
+    func reload(with diff: [Change<TransactionViewItem>], items: [TransactionViewItem], animated: Bool) {
+        view?.reload(with: diff, items: items, animated: animated)
     }
 
 }
@@ -77,17 +73,6 @@ extension TransactionsPresenter: ITransactionsViewDelegate {
         interactor.set(selectedCoins: coins)
     }
 
-    var itemsCount: Int {
-        return transactionsDiffer.viewItemsCount
-    }
-
-    func item(forIndex index: Int) -> TransactionViewItem {
-        guard let viewItem = transactionsDiffer.viewItem(at: index) else {
-            fatalError()
-        }
-        return viewItem
-    }
-
     func onBottomReached() {
         DispatchQueue.main.async {
 //            print("On Bottom Reached")
@@ -96,8 +81,8 @@ extension TransactionsPresenter: ITransactionsViewDelegate {
         }
     }
 
-    func onTransactionItemClick(index: Int) {
-        router.openTransactionInfo(viewItem: item(forIndex: index))
+    func onTransactionClick(item: TransactionViewItem) {
+        router.openTransactionInfo(viewItem: item)
     }
 
 }

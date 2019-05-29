@@ -26,8 +26,8 @@ extension TransactionItem: DiffAware {
     public static func compareContent(_ a: TransactionItem, _ b: TransactionItem) -> Bool {
         return
                 a.record.date                   == b.record.date &&
-                        a.record.interTransactionIndex  == b.record.interTransactionIndex &&
-                        a.record.blockHeight            == b.record.blockHeight
+                a.record.interTransactionIndex  == b.record.interTransactionIndex &&
+                a.record.blockHeight            == b.record.blockHeight
     }
 
 }

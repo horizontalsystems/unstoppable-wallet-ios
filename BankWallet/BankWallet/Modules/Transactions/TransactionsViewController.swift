@@ -14,6 +14,8 @@ class TransactionsViewController: WalletViewController {
     private let emptyLabel = UILabel()
     private let filterHeaderView = TransactionCurrenciesHeaderView()
 
+    private var items: [TransactionViewItem]?
+
     init(delegate: ITransactionsViewDelegate) {
         self.delegate = delegate
 
@@ -82,8 +84,7 @@ class TransactionsViewController: WalletViewController {
 
     private func reload(indexPaths: [IndexPath]) {
         for indexPath in indexPaths {
-            if let cell = tableView.cellForRow(at: indexPath) as? TransactionCell {
-                let item = delegate.item(forIndex: indexPath.row)
+            if let cell = tableView.cellForRow(at: indexPath) as? TransactionCell, let item = items?[indexPath.row] {
                 cell.bind(item: item, first: indexPath.row == 0, last: tableView.numberOfRows(inSection: indexPath.section) == indexPath.row + 1)
             }
         }
@@ -97,11 +98,14 @@ extension TransactionsViewController: ITransactionsView {
         filterHeaderView.reload(filters: filters)
     }
 
-    func reload() {
-        tableView.reloadData()
-    }
+    func reload(with diff: [Change<TransactionViewItem>], items: [TransactionViewItem], animated: Bool) {
+        if self.items == nil {
+            self.items = items
+            tableView.reloadData()
+            return
+        }
 
-    func reload(with diff: [Change<TransactionViewItem>]) {
+        self.items = items
         let changes = IndexPathConverter().convert(changes: diff, section: 0)
 
         guard !changes.inserts.isEmpty || !changes.moves.isEmpty || !changes.deletes.isEmpty else {
@@ -110,8 +114,8 @@ extension TransactionsViewController: ITransactionsView {
         }
 
         tableView.performBatchUpdates({ [weak self] in
-            self?.tableView.insertRows(at: changes.inserts, with: .fade)
-            self?.tableView.deleteRows(at: changes.deletes, with: .fade)
+            self?.tableView.deleteRows(at: changes.deletes, with: animated ? .fade : .none)
+            self?.tableView.insertRows(at: changes.inserts, with: animated ? .fade : .none)
             for movedIndex in changes.moves {
                 self?.tableView.moveRow(at: movedIndex.from, to: movedIndex.to)
             }
@@ -125,7 +129,7 @@ extension TransactionsViewController: ITransactionsView {
 extension TransactionsViewController: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let count = delegate.itemsCount
+        let count = items?.count ?? 0
 
         emptyLabel.isHidden = count > 0
 
@@ -137,8 +141,8 @@ extension TransactionsViewController: UITableViewDelegate, UITableViewDataSource
     }
 
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if let cell = cell as? TransactionCell {
-            cell.bind(item: delegate.item(forIndex: indexPath.row), first: indexPath.row == 0, last: tableView.numberOfRows(inSection: indexPath.section) == indexPath.row + 1)
+        if let cell = cell as? TransactionCell, let item = items?[indexPath.row] {
+            cell.bind(item: item, first: indexPath.row == 0, last: tableView.numberOfRows(inSection: indexPath.section) == indexPath.row + 1)
         }
 
         if indexPath.row >= self.tableView(tableView, numberOfRowsInSection: 0) - 1 {
@@ -148,7 +152,9 @@ extension TransactionsViewController: UITableViewDelegate, UITableViewDataSource
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        delegate.onTransactionItemClick(index: indexPath.row)
+        if let item = items?[indexPath.row] {
+            delegate.onTransactionClick(item: item)
+        }
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

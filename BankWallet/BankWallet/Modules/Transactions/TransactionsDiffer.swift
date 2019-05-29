@@ -1,51 +1,30 @@
 import DeepDiff
 
 class TransactionsDiffer {
-    let queue = DispatchQueue.global(qos: .userInteractive)
+    let queue: DispatchQueue
+    let state: TransactionsDifferState
 
     weak var viewItemDelegate: ITransactionViewItemDataSourceDelegate?
-    var async: Bool
 
-    private var items = [TransactionItem]()
-    private var viewItems: [TransactionViewItem]?
-
-    init(async: Bool = true) {
-        self.async = async
-    }
-
-    private func buildViewItems(from items: [TransactionItem]) -> [TransactionViewItem] {
-        var viewItems = [TransactionViewItem]()
-        for item in items {
-            if let viewItem = viewItemDelegate?.viewItem(for: item) {
-                viewItems.append(viewItem)
-            }
-        }
-        return viewItems
+    init(state: TransactionsDifferState, async: Bool = true) {
+        self.state = state
+        queue = async ? DispatchQueue.global(qos: .userInteractive) : DispatchQueue.main
     }
 
 }
 
 extension TransactionsDiffer: ITransactionViewItemDataSource {
 
-    var viewItemsCount: Int {
-        return viewItems?.count ?? 0
-    }
-
-    func viewItem(at index: Int) -> TransactionViewItem? {
-        return viewItems?[index]
-    }
-
     func reload(with newItems: [TransactionItem], animated: Bool) {
         queue.sync {
-            let needFullReload = !animated || viewItems == nil
+            var newViewItems = state.viewItems ?? []
+            let itemsChanges = IndexPathConverter().convert(changes: diff(old: state.items, new: newItems), section: 0)
 
-            var newViewItems = viewItems ?? []
-            let itemsChanges = IndexPathConverter().convert(changes: diff(old: items, new: newItems), section: 0)
             for index in itemsChanges.deletes.sorted().reversed() {
                 newViewItems.remove(at: index.row)
             }
             for index in itemsChanges.inserts {
-                if let viewItem = viewItemDelegate?.viewItem(for: newItems[index.row]) {
+                if let viewItem = viewItemDelegate?.createViewItem(for: newItems[index.row]) {
                     newViewItems.insert(viewItem, at: index.row)
                 }
             }
@@ -57,59 +36,59 @@ extension TransactionsDiffer: ITransactionViewItemDataSource {
             }
             updateIndexes.append(contentsOf: itemsChanges.replaces.map { $0.row })
             for updatedIndex in updateIndexes {
-                if let viewItem = viewItemDelegate?.viewItem(for: newItems[updatedIndex]) {
+                if let viewItem = viewItemDelegate?.createViewItem(for: newItems[updatedIndex]) {
                     newViewItems[updatedIndex] = viewItem
                 }
             }
 
-            let viewChanges = diff(old: viewItems ?? [], new: newViewItems)
-            items = newItems
-            viewItems = newViewItems
+            let viewChanges = diff(old: state.viewItems ?? [], new: newViewItems)
+            state.items = newItems
+            state.viewItems = newViewItems
             DispatchQueue.main.async { [weak self] in
-                if needFullReload {
-                    self?.viewItemDelegate?.reload()
-                } else {
-                    self?.viewItemDelegate?.reload(with: viewChanges)
-                }
+                self?.viewItemDelegate?.reload(with: viewChanges, items: newViewItems, animated: animated)
             }
         }
     }
 
     func reloadAll() {
-        reload(with: items, animated: false)
+        queue.sync {
+            var newViewItems = [TransactionViewItem]()
+            for item in state.items {
+                if let viewItem = viewItemDelegate?.createViewItem(for: item) {
+                    newViewItems.append(viewItem)
+                }
+            }
+            let viewChanges = diff(old: state.viewItems ?? [], new: newViewItems)
+            state.viewItems = newViewItems
+            DispatchQueue.main.async { [weak self] in
+                self?.viewItemDelegate?.reload(with: viewChanges, items: newViewItems, animated: false)
+            }
+        }
     }
 
     func reload(indexes: [Int]) {
-        var updatedViewItems = viewItems ?? []
-        let oldViewItems = viewItems ?? []
+        var updatedViewItems = state.viewItems ?? []
+        let oldViewItems = state.viewItems ?? []
 
         queue.sync {
-            for (index, item) in items.enumerated() {
-                if indexes.contains(index), let viewItem = viewItemDelegate?.viewItem(for: item) {
+            for (index, item) in state.items.enumerated() {
+                if indexes.contains(index), let viewItem = viewItemDelegate?.createViewItem(for: item) {
                     updatedViewItems[index] = viewItem
                 }
             }
 
             let changes = diff(old: oldViewItems, new: updatedViewItems)
-            viewItems = updatedViewItems
+            state.viewItems = updatedViewItems
             DispatchQueue.main.async { [weak self] in
-                self?.viewItemDelegate?.reload(with: changes)
+                self?.viewItemDelegate?.reload(with: changes, items: updatedViewItems, animated: true)
             }
         }
     }
 
     func add(items: [TransactionItem]) {
-        viewItems = viewItems == nil ? [] : viewItems
-
-        queue.sync {
-            let newViewItems = buildViewItems(from: items)
-
-            self.items.append(contentsOf: items)
-            viewItems?.append(contentsOf: newViewItems)
-            DispatchQueue.main.async { [weak self] in
-                self?.viewItemDelegate?.reload()
-            }
-        }
+        var oldItems = state.items
+        oldItems.append(contentsOf: items)
+        reload(with: oldItems, animated: false)
     }
 
 }

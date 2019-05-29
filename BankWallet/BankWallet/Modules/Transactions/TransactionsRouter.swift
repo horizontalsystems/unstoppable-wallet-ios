@@ -17,7 +17,7 @@ extension TransactionsRouter {
     static func module() -> UIViewController {
         let dataSource = TransactionRecordDataSource(poolRepo: TransactionRecordPoolRepo(), itemsDataSource: TransactionItemDataSource(), factory: TransactionItemFactory())
         let loader = TransactionsLoader(dataSource: dataSource)
-        let transactionsDiffer = TransactionsDiffer()
+        let transactionsDiffer = TransactionsDiffer(state: TransactionsDifferState())
 
         let router = TransactionsRouter()
         let interactor = TransactionsInteractor(adapterManager: App.shared.adapterManager, currencyManager: App.shared.currencyManager, rateManager: App.shared.rateManager, reachabilityManager: App.shared.reachabilityManager)
