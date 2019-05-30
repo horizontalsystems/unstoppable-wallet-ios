@@ -28,11 +28,6 @@ extension TransactionsPresenter: ITransactionViewItemDataSourceDelegate {
         let lastBlockHeight = dataSource.lastBlockHeight(coin: item.coin)
         let threshold = dataSource.threshold(coin: item.coin)
         let rate = dataSource.rate(coin: item.coin, date: item.record.date)
-
-        if rate == nil {
-            interactor.fetchRate(coin: item.coin, date: item.record.date)
-        }
-
         return factory.viewItem(fromItem: item, lastBlockHeight: lastBlockHeight, threshold: threshold, rate: rate)
     }
 
@@ -83,6 +78,12 @@ extension TransactionsPresenter: ITransactionsViewDelegate {
 
     func onTransactionClick(item: TransactionViewItem) {
         router.openTransactionInfo(viewItem: item)
+    }
+
+    func willShow(item: TransactionViewItem) {
+        if item.rate == nil {
+            interactor.fetchRate(coin: item.coin, date: item.date)
+        }
     }
 
 }

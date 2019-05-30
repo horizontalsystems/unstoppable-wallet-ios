@@ -142,6 +142,7 @@ extension TransactionsViewController: UITableViewDelegate, UITableViewDataSource
 
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if let cell = cell as? TransactionCell, let item = items?[indexPath.row] {
+            delegate.willShow(item: item)
             cell.bind(item: item, first: indexPath.row == 0, last: tableView.numberOfRows(inSection: indexPath.section) == indexPath.row + 1)
         }
 

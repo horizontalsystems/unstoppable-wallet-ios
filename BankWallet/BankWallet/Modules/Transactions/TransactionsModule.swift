@@ -33,6 +33,7 @@ protocol ITransactionsViewDelegate {
     func onBottomReached()
 
     func onTransactionClick(item: TransactionViewItem)
+    func willShow(item: TransactionViewItem)
 }
 
 protocol ITransactionsInteractor {
