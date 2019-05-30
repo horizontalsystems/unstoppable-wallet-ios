@@ -114,7 +114,7 @@ class TransactionRecordDataSource {
             poolRepo.pool(byCoin: item.coin)?.increaseFirstUnusedIndex()
         }
 
-        return unusedItems
+        return usedItems
     }
 
     func set(coins: [Coin]) {
