@@ -48,7 +48,10 @@ class TransactionsLoader {
         guard !dataSource.allShown else {
 //            print("Load Next: all shown")
 
-            delegate?.reload(with: dataSource.items, animated: !initial)
+            if initial {
+                //clear list on switch coins when data source has only one page
+                delegate?.reload(with: dataSource.items, animated: true)
+            }
 
             loading = false
 
@@ -60,8 +63,12 @@ class TransactionsLoader {
         if fetchDataList.isEmpty {
 //            print("Load Next: fetch data list is empty")
 
-            if dataSource.increasePage() {
+            let newItems = dataSource.increasePage()
+
+            if initial, newItems != nil {
                 delegate?.reload(with: dataSource.items, animated: true)
+            } else if let newItems = newItems {
+                delegate?.add(items: newItems)
             }
 
             loading = false
@@ -82,8 +89,8 @@ class TransactionsLoader {
         dataSource.handleNext(recordsData: recordsData)
 
         //called after load next
-        if dataSource.increasePage() {
-            delegate?.reload(with: dataSource.items, animated: false)
+        if let items = dataSource.increasePage() {
+            delegate?.add(items: items)
         }
 
         loading = false

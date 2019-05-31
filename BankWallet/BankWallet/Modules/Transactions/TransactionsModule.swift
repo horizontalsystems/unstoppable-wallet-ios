@@ -22,10 +22,7 @@ extension TransactionStatus: Equatable {
 
 protocol ITransactionsView: class {
     func show(filters: [Coin?])
-    func reload()
-    func bindVisible()
-    func bind(indexes: [Int])
-    func reload(with diff: [Change<TransactionItem>])
+    func reload(with diff: [Change<TransactionViewItem>], items: [TransactionViewItem], animated: Bool)
 }
 
 protocol ITransactionsViewDelegate {
@@ -33,11 +30,10 @@ protocol ITransactionsViewDelegate {
     func onViewAppear()
     func onFilterSelect(coin: Coin?)
 
-    var itemsCount: Int { get }
-    func item(forIndex index: Int) -> TransactionViewItem
     func onBottomReached()
 
-    func onTransactionItemClick(index: Int)
+    func onTransactionClick(item: TransactionViewItem)
+    func willShow(item: TransactionViewItem)
 }
 
 protocol ITransactionsInteractor {
@@ -71,10 +67,27 @@ protocol ITransactionsRouter {
 protocol ITransactionLoaderDelegate: class {
     func fetchRecords(fetchDataList: [FetchData])
     func reload(with newItems: [TransactionItem], animated: Bool)
+    func add(items: [TransactionItem])
 }
 
 protocol ITransactionViewItemFactory {
     func viewItem(fromItem item: TransactionItem, lastBlockHeight: Int?, threshold: Int?, rate: CurrencyValue?) -> TransactionViewItem
+}
+
+protocol ITransactionViewItemLoader {
+    func reload(with newItems: [TransactionItem], animated: Bool)
+    func reloadAll()
+    func reload(indexes: [Int])
+    func add(items: [TransactionItem])
+}
+
+protocol ITransactionViewItemLoaderDelegate: class {
+    func createViewItem(for item: TransactionItem) -> TransactionViewItem
+    func reload(with diff: [Change<TransactionViewItem>], items: [TransactionViewItem], animated: Bool)
+}
+
+protocol IDiffer {
+    func changes<T: DiffAware>(old: [T], new: [T]) -> [Change<T>]
 }
 
 struct FetchData {

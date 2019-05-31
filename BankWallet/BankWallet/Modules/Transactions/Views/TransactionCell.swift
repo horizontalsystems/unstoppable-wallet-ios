@@ -111,8 +111,8 @@ class TransactionCell: UITableViewCell {
         currencyAmountLabel.textColor = item.incoming ? incomingTextColor : outgoingTextColor
         amountLabel.textColor = item.status == .pending ? TransactionsTheme.fiatAmountLabelColor50 : TransactionsTheme.fiatAmountLabelColor
 
-        dateLabel.text = (item.date.map { DateHelper.instance.formatTransactionDate(from: $0) })?.uppercased()
-        timeLabel.text = item.date.map { DateHelper.instance.formatTransactionTime(from: $0) }
+        dateLabel.text = DateHelper.instance.formatTransactionDate(from: item.date).uppercased()
+        timeLabel.text = DateHelper.instance.formatTransactionTime(from: item.date)
 
         amountLabel.text = ValueFormatter.instance.format(coinValue: item.coinValue, fractionPolicy: .threshold(high: 0.01, low: 0))
 

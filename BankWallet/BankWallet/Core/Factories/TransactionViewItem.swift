@@ -1,4 +1,5 @@
 import Foundation
+import DeepDiff
 
 class TransactionViewItem {
     let coin: Coin
@@ -8,11 +9,11 @@ class TransactionViewItem {
     let from: String?
     let to: String?
     let incoming: Bool
-    let date: Date?
+    let date: Date
     let status: TransactionStatus
     let rate: CurrencyValue?
 
-    init(coin: Coin, transactionHash: String, coinValue: CoinValue, currencyValue: CurrencyValue?, from: String?, to: String?, incoming: Bool, date: Date?, status: TransactionStatus, rate: CurrencyValue?) {
+    init(coin: Coin, transactionHash: String, coinValue: CoinValue, currencyValue: CurrencyValue?, from: String?, to: String?, incoming: Bool, date: Date, status: TransactionStatus, rate: CurrencyValue?) {
         self.coin = coin
         self.transactionHash = transactionHash
         self.coinValue = coinValue
@@ -24,4 +25,20 @@ class TransactionViewItem {
         self.status = status
         self.rate = rate
     }
+}
+
+extension TransactionViewItem: DiffAware {
+
+    public var diffId: String {
+        return transactionHash
+    }
+
+    public static func compareContent(_ a: TransactionViewItem, _ b: TransactionViewItem) -> Bool {
+        return
+                a.date == b.date &&
+                a.currencyValue == b.currencyValue &&
+                a.rate == b.rate &&
+                a.status == b.status
+    }
+
 }
