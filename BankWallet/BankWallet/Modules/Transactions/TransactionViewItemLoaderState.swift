@@ -1,6 +1,6 @@
 import Foundation
 
-class TransactionsDifferState {
+class TransactionViewItemLoaderState {
     var items = [TransactionItem]()
     var viewItems: [TransactionViewItem]?
 }

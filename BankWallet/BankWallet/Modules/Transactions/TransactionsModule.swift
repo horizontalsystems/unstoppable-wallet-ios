@@ -70,20 +70,24 @@ protocol ITransactionLoaderDelegate: class {
     func add(items: [TransactionItem])
 }
 
-protocol ITransactionViewItemDataSourceDelegate: class {
-    func createViewItem(for item: TransactionItem) -> TransactionViewItem
-    func reload(with diff: [Change<TransactionViewItem>], items: [TransactionViewItem], animated: Bool)
-}
-
 protocol ITransactionViewItemFactory {
     func viewItem(fromItem item: TransactionItem, lastBlockHeight: Int?, threshold: Int?, rate: CurrencyValue?) -> TransactionViewItem
 }
 
-protocol ITransactionViewItemDataSource {
+protocol ITransactionViewItemLoader {
     func reload(with newItems: [TransactionItem], animated: Bool)
     func reloadAll()
     func reload(indexes: [Int])
     func add(items: [TransactionItem])
+}
+
+protocol ITransactionViewItemLoaderDelegate: class {
+    func createViewItem(for item: TransactionItem) -> TransactionViewItem
+    func reload(with diff: [Change<TransactionViewItem>], items: [TransactionViewItem], animated: Bool)
+}
+
+protocol IDiffer {
+    func changes<T: DiffAware>(old: [T], new: [T]) -> [Change<T>]
 }
 
 struct FetchData {
