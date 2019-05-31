@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -78,7 +78,6 @@
 		11B353A7F530336B1E15015E /* DepositViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35ED7203AD00030A8BA23 /* DepositViewController.swift */; };
 		11B353C550551A71D5AD3AAF /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3535DD03F9264351E13A9 /* NetworkManager.swift */; };
 		11B353CE3525B4AE83F0B993 /* DateHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35492B1162F69CA7A0597 /* DateHelper.swift */; };
-		11B353E207319F28085F752C /* OptionalSubject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35DC131F98F9EEC864BCA /* OptionalSubject.swift */; };
 		11B353E8DDA6FE062E6E07C9 /* AgreementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B356F9CD8A90874F17F0D5 /* AgreementViewController.swift */; };
 		11B353FA170E276850F994F1 /* BaseCurrencySettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35E4481DCD98BF2074797 /* BaseCurrencySettingsViewController.swift */; };
 		11B35406710372339144C92D /* AuthData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B352D70D3A3A2851CCEDA3 /* AuthData.swift */; };
@@ -225,7 +224,6 @@
 		11B35B3F32BFA82A66C4F797 /* SendStateViewItemFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35072A029200FB9F86BCB /* SendStateViewItemFactory.swift */; };
 		11B35B47A6EFD7A6A3576206 /* SendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3538CA03C579CD6BC49F8 /* SendViewController.swift */; };
 		11B35B550F8ACB190AFBA55C /* ConfirmationCheckboxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B350AD0C5D210E06600D3F /* ConfirmationCheckboxView.swift */; };
-		11B35B58953E9F4AE4EE7DBA /* OptionalSubject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35DC131F98F9EEC864BCA /* OptionalSubject.swift */; };
 		11B35B63066CCED71B06002F /* AgreementRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3555B8A1BB021B722B1D6 /* AgreementRouter.swift */; };
 		11B35B670584B514DD0CFF35 /* CoinType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35878592C2E37DA1EBE1E /* CoinType.swift */; };
 		11B35B69063AB2169EE50580 /* MainPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B359E7A75E6B92D1305F40 /* MainPresenter.swift */; };
@@ -284,7 +282,6 @@
 		11B35E0A834CFBCB0AB1D5E1 /* ConfirmationCheckboxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B350AD0C5D210E06600D3F /* ConfirmationCheckboxView.swift */; };
 		11B35E0BEC5BE604ACE59BC2 /* PasteboardManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35CEBC4B32E57AA2469AA /* PasteboardManager.swift */; };
 		11B35E433FEF9A8936784BAC /* TransactionRecordPoolState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3592889642D8823BEDAE2 /* TransactionRecordPoolState.swift */; };
-		11B35E44E1276144F1EA4AAF /* OptionalSubject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35DC131F98F9EEC864BCA /* OptionalSubject.swift */; };
 		11B35E4D93574CAF730B47D9 /* EthereumAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B352D314A298B6B832F309 /* EthereumAdapter.swift */; };
 		11B35E601055B8D8B8EE2039 /* UITableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B351D55B31D37B7194DE55 /* UITableView.swift */; };
 		11B35E63A1AA24A27A21C0C9 /* ReachabilityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35788190D05AF5DBB9072 /* ReachabilityManager.swift */; };
@@ -326,7 +323,6 @@
 		1A564028EB37109A77F6272B /* WalletNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564358AD3DC4FADBA19214 /* WalletNavigationController.swift */; };
 		1A5640387C3C38FC17FCBF47 /* SecuritySettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5647AD931E3B90C974A6CB /* SecuritySettingsViewController.swift */; };
 		1A56404A4E6577B10D66660F /* LanguageSettingsModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5642A5A1B21FE92139766E /* LanguageSettingsModule.swift */; };
-		1A56404FCD341D5A67C30340 /* Production.template.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 1A564370A637B30D34776F2A /* Production.template.xcconfig */; };
 		1A5640707F586C7376213F9E /* TransactionViewItemLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5640AC869ADF30D3BCCAE0 /* TransactionViewItemLoader.swift */; };
 		1A5640713F99BD66FCC826AD /* FeeRateProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564908ABD8BC8BB8713C2E /* FeeRateProvider.swift */; };
 		1A564076F4C5BD7656156603 /* ManageCoinsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56471ECC51CB5E5572DBD8 /* ManageCoinsRouter.swift */; };
@@ -336,7 +332,6 @@
 		1A564099643E74B6D1E45CD6 /* LockoutState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56488B2051E9529CE8742E /* LockoutState.swift */; };
 		1A5640B712A4253399F52A3B /* BalanceTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564243436E5185205D0359 /* BalanceTheme.swift */; };
 		1A5640E91AA1D79E1735F5FC /* TransactionStatusItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5646C9024F054AE8115A30 /* TransactionStatusItem.swift */; };
-		1A5640F923BB8EB7F5A75593 /* Production.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 1A5648F3AB070B0ACB98C7EE /* Production.xcconfig */; };
 		1A5640FFF39774DC371F61E7 /* BitcoinCashAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564BF724C69C237E309C07 /* BitcoinCashAdapter.swift */; };
 		1A5641061673702B10D858BF /* TransactionInfoTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5645F926B14580B1644164 /* TransactionInfoTheme.swift */; };
 		1A56410880DEEF4B91B3413A /* UptimeProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564F697ACF24DA968884EA /* UptimeProvider.swift */; };
@@ -357,7 +352,6 @@
 		1A56421861068166E044D0A9 /* BalanceEditCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564DDACAD5CFB092AE6496 /* BalanceEditCell.swift */; };
 		1A56422B0A34FCAE30798CE0 /* FeeRateProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564908ABD8BC8BB8713C2E /* FeeRateProvider.swift */; };
 		1A56422B4DA1DE0ACD09C4BC /* TransactionInfoModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5643996D67B74F800DFFE4 /* TransactionInfoModule.swift */; };
-		1A5642456ECAEF77788380C5 /* Production.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 1A5648F3AB070B0ACB98C7EE /* Production.xcconfig */; };
 		1A564246FE1459BD6985604B /* ManageCoinsPresenterState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56448A83F040A35FCAE6A7 /* ManageCoinsPresenterState.swift */; };
 		1A564248C8C1FAD98F488508 /* LockoutManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564A19508B4730BC016037 /* LockoutManagerTests.swift */; };
 		1A56424C8E4017689EFF5D6D /* CurrentDateProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564FC3433E72C8A63AC5F5 /* CurrentDateProvider.swift */; };
@@ -419,7 +413,6 @@
 		1A5645DC23C3FA0CF7A0FA9E /* SettingsRightLabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56464E8EDBFB0B67DB593F /* SettingsRightLabelCell.swift */; };
 		1A5645DFFB1EC95815289D1F /* CurrentDateProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564FC3433E72C8A63AC5F5 /* CurrentDateProvider.swift */; };
 		1A5645EDCB2C77F13BFEB1E2 /* LockoutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564C329BD2549B51F93155 /* LockoutView.swift */; };
-		1A56460D9796492663E738D4 /* Development.template.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 1A5641679DC88BE355F0F3A0 /* Development.template.xcconfig */; };
 		1A56460F1BB48D4E82C6E257 /* RestoreWordCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5648D3CF09FF5EBE8321EC /* RestoreWordCell.swift */; };
 		1A56462F0253A6C28ED4D610 /* LanguageSettingsInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564C62CB1A633191738174 /* LanguageSettingsInteractorTests.swift */; };
 		1A56464325366A495BD81C88 /* TransactionCurrenciesHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564FE8D247C36C2478C6B5 /* TransactionCurrenciesHeaderView.swift */; };
@@ -429,14 +422,12 @@
 		1A564685DDF41780A93B92E9 /* BlurManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564BB88BF3ED779F8C21DC /* BlurManager.swift */; };
 		1A564689FA088738E660FF91 /* HashViewTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564E8DEA08C33EB8F9422B /* HashViewTheme.swift */; };
 		1A56468D166D58664EE1F06D /* FullTransactionHashHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5648F5499700A46A1515B6 /* FullTransactionHashHeaderView.swift */; };
-		1A56468E848DE3A44DD8DF29 /* Production.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 1A5648F3AB070B0ACB98C7EE /* Production.xcconfig */; };
 		1A5646AFB583A44B13558403 /* ManageCoinsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5642992929CF74471FE0B4 /* ManageCoinsViewController.swift */; };
 		1A5646BCAA7FFC976BFC9E5E /* HashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56445B8B1F1C78E1DFC9F8 /* HashView.swift */; };
 		1A5646C180C5050C1F7A4734 /* ManageCoinCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56478E08D96F36DD17D8C8 /* ManageCoinCell.swift */; };
 		1A5646C35E5492F629F1C025 /* PinModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56490AEC0BDFCA98275B49 /* PinModule.swift */; };
 		1A5646F6ED19CA9AA8F52C7F /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5646D49060C3EFF06D0479 /* App.swift */; };
 		1A5647219D7DE64CE22C2B87 /* SetPinPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5648311E0EA947B1446649 /* SetPinPresenter.swift */; };
-		1A56472F97825AB4D2686E41 /* Production.template.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 1A564370A637B30D34776F2A /* Production.template.xcconfig */; };
 		1A5647415054A078EF056315 /* UnlockPinPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564FA5E8DDE76BF1257727 /* UnlockPinPresenterTests.swift */; };
 		1A5647481AAB5BF5A86F9829 /* LockoutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564C329BD2549B51F93155 /* LockoutView.swift */; };
 		1A56475828E9121D78E02D67 /* BitcoinCashAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564BF724C69C237E309C07 /* BitcoinCashAdapter.swift */; };
@@ -455,7 +446,6 @@
 		1A56482C80D7B85CAE06C689 /* TransactionViewItemLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5640AC869ADF30D3BCCAE0 /* TransactionViewItemLoader.swift */; };
 		1A56483342FF07B40E53AD20 /* SetPinModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56421310FCB8A4E19BDDB3 /* SetPinModule.swift */; };
 		1A56483A6675677AA621FF79 /* PagingDotsItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56453E2F6ED44D46D84C49 /* PagingDotsItemView.swift */; };
-		1A56483FBF4BB4255404CDCA /* Development.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 1A56433D5D39CCA995F97777 /* Development.xcconfig */; };
 		1A564891B0D0EABB5502C123 /* DepositAddressCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5647F6F29405E571D70592 /* DepositAddressCollectionCell.swift */; };
 		1A5648CC60D79AAC561BBCB0 /* LanguageSettingsPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56452493943328835585AC /* LanguageSettingsPresenterTests.swift */; };
 		1A5648D075682B17EFE9CBB6 /* AddressData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5649C6FFC694CD18A8B39A /* AddressData.swift */; };
@@ -477,8 +467,6 @@
 		1A5649A1763E1ADB6572ECBC /* UptimeProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564F697ACF24DA968884EA /* UptimeProvider.swift */; };
 		1A5649A92BA5A92EB2791B7F /* SettingsInfoFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56487BA5FFC1BC45D6F25C /* SettingsInfoFooter.swift */; };
 		1A5649AC4FC1D6DD5F82ABAB /* BackgroundManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564C2194BB0FA7D298FAB5 /* BackgroundManager.swift */; };
-		1A5649B033524339B93F838E /* Development.template.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 1A5641679DC88BE355F0F3A0 /* Development.template.xcconfig */; };
-		1A5649BB2D3C58F17A04F7EA /* Development.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 1A56433D5D39CCA995F97777 /* Development.xcconfig */; };
 		1A5649C5CA36C74FD2EF4BE9 /* ManageCoinsPresenterStateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5640FA19AF1EC2B9C0F407 /* ManageCoinsPresenterStateTests.swift */; };
 		1A5649F47F8DF39537BB470B /* GuestInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564DB006512443F06D8004 /* GuestInteractorTests.swift */; };
 		1A564A0D51FF6BEACA195CB7 /* BackgroundManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564C2194BB0FA7D298FAB5 /* BackgroundManager.swift */; };
@@ -522,7 +510,6 @@
 		1A564C0371E9F37679565B67 /* WalletViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564DA86E84425C160C76C1 /* WalletViewController.swift */; };
 		1A564C11B7785DCEA2472065 /* BitcoinCashAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564BF724C69C237E309C07 /* BitcoinCashAdapter.swift */; };
 		1A564C1405D8C21185B0D4C1 /* TransactionsCurrencyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5649C888E12C1A0B70EFA8 /* TransactionsCurrencyCell.swift */; };
-		1A564C182AB0AFD47CA76EA5 /* Development.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 1A56433D5D39CCA995F97777 /* Development.xcconfig */; };
 		1A564C252F02B3CD2DD4E7A7 /* Differ.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5648F4CBE5575C4D6C40BA /* Differ.swift */; };
 		1A564C31EDF7C4ED60F1A3E5 /* FullTransactionHashHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5648F5499700A46A1515B6 /* FullTransactionHashHeaderView.swift */; };
 		1A564C39E18A49AA791E15EC /* AddressParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5649276CA421D7B080BE56 /* AddressParserTests.swift */; };
@@ -540,12 +527,10 @@
 		1A564D29C715EE06C30C8B2B /* LaunchInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56458C7C29504755A09E00 /* LaunchInteractor.swift */; };
 		1A564D45DD956D909C7B6C16 /* OneTimeTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56468BE2370BCAA8BDA2FC /* OneTimeTimer.swift */; };
 		1A564D54DEE633D236F6AE38 /* TransactionViewItemLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5640AC869ADF30D3BCCAE0 /* TransactionViewItemLoader.swift */; };
-		1A564D5F202F7ED3AA797E20 /* Production.template.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 1A564370A637B30D34776F2A /* Production.template.xcconfig */; };
 		1A564D60DD2935CBD2B23EF3 /* GuestTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564429BCB7A2DCFFE4104F /* GuestTheme.swift */; };
 		1A564D6E1FB65C20AAD6C54B /* DepositTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56481E8D97841B12893D00 /* DepositTheme.swift */; };
 		1A564D837A9AB8A7EA5EB71A /* LatestRateData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5640AA47846498D56A36E6 /* LatestRateData.swift */; };
 		1A564D9038D65D88CF97329C /* TransactionTitleItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56469DF9D0C335228E88EE /* TransactionTitleItemView.swift */; };
-		1A564DCD5D3D7A6FB741DF3B /* Development.template.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 1A5641679DC88BE355F0F3A0 /* Development.template.xcconfig */; };
 		1A564DEAF0A6DF97F029594E /* LockoutManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5645447A24FE94F0D87BFF /* LockoutManager.swift */; };
 		1A564DF36A4269C9FB869778 /* LockoutManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5645447A24FE94F0D87BFF /* LockoutManager.swift */; };
 		1A564DFE6A07FCDA016A8ACE /* LockoutUntilDateFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5641ABEF9064B6FCC8DF87 /* LockoutUntilDateFactory.swift */; };
@@ -597,24 +582,6 @@
 		5002C0962294165700E88585 /* ThreadSafeness.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5002C0952294165700E88585 /* ThreadSafeness.swift */; };
 		5002C0972294165700E88585 /* ThreadSafeness.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5002C0952294165700E88585 /* ThreadSafeness.swift */; };
 		5002C0982294165700E88585 /* ThreadSafeness.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5002C0952294165700E88585 /* ThreadSafeness.swift */; };
-		5026000021C3CA280023EEA2 /* Bank.release.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 5026FFF621C3CA280023EEA2 /* Bank.release.xcconfig */; };
-		5026000121C3CA280023EEA2 /* Bank.release.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 5026FFF621C3CA280023EEA2 /* Bank.release.xcconfig */; };
-		5026000221C3CA280023EEA2 /* Bank.release.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 5026FFF621C3CA280023EEA2 /* Bank.release.xcconfig */; };
-		5026000321C3CA280023EEA2 /* Bank Dev T.debug.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 5026FFF721C3CA280023EEA2 /* Bank Dev T.debug.xcconfig */; };
-		5026000421C3CA280023EEA2 /* Bank Dev T.debug.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 5026FFF721C3CA280023EEA2 /* Bank Dev T.debug.xcconfig */; };
-		5026000521C3CA280023EEA2 /* Bank Dev T.debug.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 5026FFF721C3CA280023EEA2 /* Bank Dev T.debug.xcconfig */; };
-		5026000621C3CA280023EEA2 /* Bank Dev.debug.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 5026FFF821C3CA280023EEA2 /* Bank Dev.debug.xcconfig */; };
-		5026000721C3CA280023EEA2 /* Bank Dev.debug.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 5026FFF821C3CA280023EEA2 /* Bank Dev.debug.xcconfig */; };
-		5026000821C3CA280023EEA2 /* Bank Dev.debug.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 5026FFF821C3CA280023EEA2 /* Bank Dev.debug.xcconfig */; };
-		5026000921C3CA280023EEA2 /* Bank.debug.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 5026FFF921C3CA280023EEA2 /* Bank.debug.xcconfig */; };
-		5026000A21C3CA280023EEA2 /* Bank.debug.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 5026FFF921C3CA280023EEA2 /* Bank.debug.xcconfig */; };
-		5026000B21C3CA280023EEA2 /* Bank.debug.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 5026FFF921C3CA280023EEA2 /* Bank.debug.xcconfig */; };
-		5026FFFA21C3CA280023EEA2 /* Bank Dev.release.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 5026FFF421C3CA280023EEA2 /* Bank Dev.release.xcconfig */; };
-		5026FFFB21C3CA280023EEA2 /* Bank Dev.release.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 5026FFF421C3CA280023EEA2 /* Bank Dev.release.xcconfig */; };
-		5026FFFC21C3CA280023EEA2 /* Bank Dev.release.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 5026FFF421C3CA280023EEA2 /* Bank Dev.release.xcconfig */; };
-		5026FFFD21C3CA280023EEA2 /* Bank Dev T.release.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 5026FFF521C3CA280023EEA2 /* Bank Dev T.release.xcconfig */; };
-		5026FFFE21C3CA280023EEA2 /* Bank Dev T.release.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 5026FFF521C3CA280023EEA2 /* Bank Dev T.release.xcconfig */; };
-		5026FFFF21C3CA280023EEA2 /* Bank Dev T.release.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 5026FFF521C3CA280023EEA2 /* Bank Dev T.release.xcconfig */; };
 		503320AB214679EB00F64AAA /* PinTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 503320AA214679EB00F64AAA /* PinTheme.swift */; };
 		509E3D2420E398610095452C /* RestoreTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 509E3D2320E398610095452C /* RestoreTheme.swift */; };
 		50AB06AE2158E2EE00A01E4A /* LocalAuthentication.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50AB06AD2158E2EE00A01E4A /* LocalAuthentication.framework */; };
@@ -1292,7 +1259,6 @@
 		11B35D66E95B16C32E3796E8 /* BackupRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackupRouter.swift; sourceTree = "<group>"; };
 		11B35D7125090E2FF868F924 /* BalanceViewItemFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BalanceViewItemFactory.swift; sourceTree = "<group>"; };
 		11B35D8D844E5AE5C73A6EB8 /* CoinIconImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoinIconImageView.swift; sourceTree = "<group>"; };
-		11B35DC131F98F9EEC864BCA /* OptionalSubject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OptionalSubject.swift; sourceTree = "<group>"; };
 		11B35DC5A4019EA28C92B1E7 /* BalanceModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BalanceModule.swift; sourceTree = "<group>"; };
 		11B35DC75FCA42F7A5FB1E65 /* SendPresenterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendPresenterTests.swift; sourceTree = "<group>"; };
 		11B35DDABED90E97417092F5 /* BalanceRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BalanceRouter.swift; sourceTree = "<group>"; };
@@ -1780,7 +1746,6 @@
 				1A5646D49060C3EFF06D0479 /* App.swift */,
 				11B35A5DE20DD6DD486FAFC0 /* Protocols.swift */,
 				11B35C182B944A7CD13EA163 /* BiometryType.swift */,
-				11B35DC131F98F9EEC864BCA /* OptionalSubject.swift */,
 				11B35FD3263E331D704EA771 /* Signal.swift */,
 				11B358B344E13290D77605E0 /* Logger.swift */,
 			);
@@ -2811,7 +2776,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0930;
-				LastUpgradeCheck = 0930;
+				LastUpgradeCheck = 1020;
 				ORGANIZATIONNAME = Grouvi;
 				TargetAttributes = {
 					D3285F4120BD158E00644076 = {
@@ -2860,23 +2825,13 @@
 			files = (
 				D3373DB220C52F640082BC4A /* LaunchScreen.xib in Resources */,
 				50AB06B7215A269200A01E4A /* InfoPlist.strings in Resources */,
-				5026000921C3CA280023EEA2 /* Bank.debug.xcconfig in Resources */,
-				5026FFFA21C3CA280023EEA2 /* Bank Dev.release.xcconfig in Resources */,
-				5026000021C3CA280023EEA2 /* Bank.release.xcconfig in Resources */,
-				5026FFFD21C3CA280023EEA2 /* Bank Dev T.release.xcconfig in Resources */,
 				D38406C021832751007D50AD /* Assets.xcassets in Resources */,
 				D38406C721832862007D50AD /* AppIconDevT.xcassets in Resources */,
 				D3B62A9E20CA88BF005A9F80 /* DarkTheme.xcassets in Resources */,
 				D3B62A8B20CA40DC005A9F80 /* MainViewController.xib in Resources */,
 				D3A6D6BE219430BA00D11AFE /* AboutCell.xib in Resources */,
 				D3B62A9A20CA73A0005A9F80 /* Localizable.strings in Resources */,
-				5026000321C3CA280023EEA2 /* Bank Dev T.debug.xcconfig in Resources */,
-				5026000621C3CA280023EEA2 /* Bank Dev.debug.xcconfig in Resources */,
 				11B35ADC6467645C9545C89E /* BaseTwinItemView.xib in Resources */,
-				1A56472F97825AB4D2686E41 /* Production.template.xcconfig in Resources */,
-				1A564DCD5D3D7A6FB741DF3B /* Development.template.xcconfig in Resources */,
-				1A5640F923BB8EB7F5A75593 /* Production.xcconfig in Resources */,
-				1A56483FBF4BB4255404CDCA /* Development.xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2893,23 +2848,13 @@
 			files = (
 				D38405BC218317DF007D50AD /* LaunchScreen.xib in Resources */,
 				D38405BD218317DF007D50AD /* InfoPlist.strings in Resources */,
-				5026000A21C3CA280023EEA2 /* Bank.debug.xcconfig in Resources */,
-				5026FFFB21C3CA280023EEA2 /* Bank Dev.release.xcconfig in Resources */,
-				5026000121C3CA280023EEA2 /* Bank.release.xcconfig in Resources */,
-				5026FFFE21C3CA280023EEA2 /* Bank Dev T.release.xcconfig in Resources */,
 				D38406C221832757007D50AD /* Assets.xcassets in Resources */,
 				D38405C0218317DF007D50AD /* DarkTheme.xcassets in Resources */,
 				D38405C1218317DF007D50AD /* MainViewController.xib in Resources */,
 				D38405C3218317DF007D50AD /* Localizable.strings in Resources */,
 				D3A6D6BF219430BA00D11AFE /* AboutCell.xib in Resources */,
-				5026000421C3CA280023EEA2 /* Bank Dev T.debug.xcconfig in Resources */,
 				D38406C921832968007D50AD /* AppIconDev.xcassets in Resources */,
-				5026000721C3CA280023EEA2 /* Bank Dev.debug.xcconfig in Resources */,
 				D38405C9218317DF007D50AD /* BaseTwinItemView.xib in Resources */,
-				1A564D5F202F7ED3AA797E20 /* Production.template.xcconfig in Resources */,
-				1A5649B033524339B93F838E /* Development.template.xcconfig in Resources */,
-				1A5642456ECAEF77788380C5 /* Production.xcconfig in Resources */,
-				1A564C182AB0AFD47CA76EA5 /* Development.xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2919,23 +2864,13 @@
 			files = (
 				D38406AC21831B3D007D50AD /* LaunchScreen.xib in Resources */,
 				D38406AD21831B3D007D50AD /* InfoPlist.strings in Resources */,
-				5026000B21C3CA280023EEA2 /* Bank.debug.xcconfig in Resources */,
-				5026FFFC21C3CA280023EEA2 /* Bank Dev.release.xcconfig in Resources */,
-				5026000221C3CA280023EEA2 /* Bank.release.xcconfig in Resources */,
-				5026FFFF21C3CA280023EEA2 /* Bank Dev T.release.xcconfig in Resources */,
 				D38406B021831B3D007D50AD /* DarkTheme.xcassets in Resources */,
 				D38406C5218327E3007D50AD /* AppIcon.xcassets in Resources */,
 				D38406B121831B3D007D50AD /* MainViewController.xib in Resources */,
 				D38406B321831B3D007D50AD /* Localizable.strings in Resources */,
 				D3A6D6C0219430BA00D11AFE /* AboutCell.xib in Resources */,
 				D38406B521831B3D007D50AD /* Assets.xcassets in Resources */,
-				5026000521C3CA280023EEA2 /* Bank Dev T.debug.xcconfig in Resources */,
-				5026000821C3CA280023EEA2 /* Bank Dev.debug.xcconfig in Resources */,
 				D38406B921831B3D007D50AD /* BaseTwinItemView.xib in Resources */,
-				1A56404FCD341D5A67C30340 /* Production.template.xcconfig in Resources */,
-				1A56460D9796492663E738D4 /* Development.template.xcconfig in Resources */,
-				1A56468E848DE3A44DD8DF29 /* Production.xcconfig in Resources */,
-				1A5649BB2D3C58F17A04F7EA /* Development.xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2948,68 +2883,15 @@
 			files = (
 			);
 			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${SRCROOT}/../Pods/Target Support Files/Pods-Bank Dev/Pods-Bank Dev-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/ActionSheet.swift/ActionSheet.framework",
-				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
-				"${BUILT_PRODUCTS_DIR}/AlamofireImage/AlamofireImage.framework",
-				"${BUILT_PRODUCTS_DIR}/BigInt/BigInt.framework",
-				"${BUILT_PRODUCTS_DIR}/BitcoinCashKit.swift/BitcoinCashKit.framework",
-				"${BUILT_PRODUCTS_DIR}/BitcoinCore.swift/BitcoinCore.framework",
-				"${BUILT_PRODUCTS_DIR}/BitcoinKit.swift/BitcoinKit.framework",
-				"${BUILT_PRODUCTS_DIR}/CryptoX11.swift/HSCryptoX11.framework",
-				"${BUILT_PRODUCTS_DIR}/DashKit.swift/DashKit.framework",
-				"${BUILT_PRODUCTS_DIR}/DeepDiff/DeepDiff.framework",
-				"${BUILT_PRODUCTS_DIR}/Erc20Kit.swift/Erc20Kit.framework",
-				"${BUILT_PRODUCTS_DIR}/EthereumKit.swift/EthereumKit.framework",
-				"${BUILT_PRODUCTS_DIR}/FeeRateKit.swift/FeeRateKit.framework",
-				"${BUILT_PRODUCTS_DIR}/GRDB.swift/GRDB.framework",
-				"${BUILT_PRODUCTS_DIR}/HSCryptoKit/HSCryptoKit.framework",
-				"${BUILT_PRODUCTS_DIR}/HSHDWalletKit/HSHDWalletKit.framework",
-				"${BUILT_PRODUCTS_DIR}/HUD.swift/HUD.framework",
-				"${BUILT_PRODUCTS_DIR}/KeychainAccess/KeychainAccess.framework",
-				"${BUILT_PRODUCTS_DIR}/ObjectMapper/ObjectMapper.framework",
-				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
-				"${BUILT_PRODUCTS_DIR}/RxGRDB/RxGRDB.framework",
-				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
-				"${BUILT_PRODUCTS_DIR}/SectionsTableView.swift/SectionsTableView.framework",
-				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
-				"${BUILT_PRODUCTS_DIR}/UIExtensions.swift/UIExtensions.framework",
+				"${PODS_ROOT}/Target Support Files/Pods-Bank Dev/Pods-Bank Dev-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-			);
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ActionSheet.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AlamofireImage.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BigInt.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BitcoinCashKit.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BitcoinCore.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BitcoinKit.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/HSCryptoX11.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DashKit.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DeepDiff.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Erc20Kit.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/EthereumKit.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FeeRateKit.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GRDB.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/HSCryptoKit.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/HSHDWalletKit.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/HUD.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/KeychainAccess.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ObjectMapper.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxGRDB.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SectionsTableView.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/UIExtensions.framework",
+				"${PODS_ROOT}/Target Support Files/Pods-Bank Dev/Pods-Bank Dev-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/../Pods/Target Support Files/Pods-Bank Dev/Pods-Bank Dev-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Bank Dev/Pods-Bank Dev-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		3ACF832FB23D8AD8E42304DA /* [CP] Embed Pods Frameworks */ = {
@@ -3018,68 +2900,15 @@
 			files = (
 			);
 			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${SRCROOT}/../Pods/Target Support Files/Pods-Bank Dev T/Pods-Bank Dev T-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/ActionSheet.swift/ActionSheet.framework",
-				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
-				"${BUILT_PRODUCTS_DIR}/AlamofireImage/AlamofireImage.framework",
-				"${BUILT_PRODUCTS_DIR}/BigInt/BigInt.framework",
-				"${BUILT_PRODUCTS_DIR}/BitcoinCashKit.swift/BitcoinCashKit.framework",
-				"${BUILT_PRODUCTS_DIR}/BitcoinCore.swift/BitcoinCore.framework",
-				"${BUILT_PRODUCTS_DIR}/BitcoinKit.swift/BitcoinKit.framework",
-				"${BUILT_PRODUCTS_DIR}/CryptoX11.swift/HSCryptoX11.framework",
-				"${BUILT_PRODUCTS_DIR}/DashKit.swift/DashKit.framework",
-				"${BUILT_PRODUCTS_DIR}/DeepDiff/DeepDiff.framework",
-				"${BUILT_PRODUCTS_DIR}/Erc20Kit.swift/Erc20Kit.framework",
-				"${BUILT_PRODUCTS_DIR}/EthereumKit.swift/EthereumKit.framework",
-				"${BUILT_PRODUCTS_DIR}/FeeRateKit.swift/FeeRateKit.framework",
-				"${BUILT_PRODUCTS_DIR}/GRDB.swift/GRDB.framework",
-				"${BUILT_PRODUCTS_DIR}/HSCryptoKit/HSCryptoKit.framework",
-				"${BUILT_PRODUCTS_DIR}/HSHDWalletKit/HSHDWalletKit.framework",
-				"${BUILT_PRODUCTS_DIR}/HUD.swift/HUD.framework",
-				"${BUILT_PRODUCTS_DIR}/KeychainAccess/KeychainAccess.framework",
-				"${BUILT_PRODUCTS_DIR}/ObjectMapper/ObjectMapper.framework",
-				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
-				"${BUILT_PRODUCTS_DIR}/RxGRDB/RxGRDB.framework",
-				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
-				"${BUILT_PRODUCTS_DIR}/SectionsTableView.swift/SectionsTableView.framework",
-				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
-				"${BUILT_PRODUCTS_DIR}/UIExtensions.swift/UIExtensions.framework",
+				"${PODS_ROOT}/Target Support Files/Pods-Bank Dev T/Pods-Bank Dev T-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-			);
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ActionSheet.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AlamofireImage.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BigInt.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BitcoinCashKit.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BitcoinCore.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BitcoinKit.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/HSCryptoX11.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DashKit.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DeepDiff.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Erc20Kit.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/EthereumKit.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FeeRateKit.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GRDB.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/HSCryptoKit.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/HSHDWalletKit.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/HUD.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/KeychainAccess.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ObjectMapper.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxGRDB.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SectionsTableView.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/UIExtensions.framework",
+				"${PODS_ROOT}/Target Support Files/Pods-Bank Dev T/Pods-Bank Dev T-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/../Pods/Target Support Files/Pods-Bank Dev T/Pods-Bank Dev T-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Bank Dev T/Pods-Bank Dev T-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		4A67E4F81F8124712A76FB49 /* [CP] Check Pods Manifest.lock */ = {
@@ -3110,68 +2939,15 @@
 			files = (
 			);
 			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${SRCROOT}/../Pods/Target Support Files/Pods-Bank/Pods-Bank-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/ActionSheet.swift/ActionSheet.framework",
-				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
-				"${BUILT_PRODUCTS_DIR}/AlamofireImage/AlamofireImage.framework",
-				"${BUILT_PRODUCTS_DIR}/BigInt/BigInt.framework",
-				"${BUILT_PRODUCTS_DIR}/BitcoinCashKit.swift/BitcoinCashKit.framework",
-				"${BUILT_PRODUCTS_DIR}/BitcoinCore.swift/BitcoinCore.framework",
-				"${BUILT_PRODUCTS_DIR}/BitcoinKit.swift/BitcoinKit.framework",
-				"${BUILT_PRODUCTS_DIR}/CryptoX11.swift/HSCryptoX11.framework",
-				"${BUILT_PRODUCTS_DIR}/DashKit.swift/DashKit.framework",
-				"${BUILT_PRODUCTS_DIR}/DeepDiff/DeepDiff.framework",
-				"${BUILT_PRODUCTS_DIR}/Erc20Kit.swift/Erc20Kit.framework",
-				"${BUILT_PRODUCTS_DIR}/EthereumKit.swift/EthereumKit.framework",
-				"${BUILT_PRODUCTS_DIR}/FeeRateKit.swift/FeeRateKit.framework",
-				"${BUILT_PRODUCTS_DIR}/GRDB.swift/GRDB.framework",
-				"${BUILT_PRODUCTS_DIR}/HSCryptoKit/HSCryptoKit.framework",
-				"${BUILT_PRODUCTS_DIR}/HSHDWalletKit/HSHDWalletKit.framework",
-				"${BUILT_PRODUCTS_DIR}/HUD.swift/HUD.framework",
-				"${BUILT_PRODUCTS_DIR}/KeychainAccess/KeychainAccess.framework",
-				"${BUILT_PRODUCTS_DIR}/ObjectMapper/ObjectMapper.framework",
-				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
-				"${BUILT_PRODUCTS_DIR}/RxGRDB/RxGRDB.framework",
-				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
-				"${BUILT_PRODUCTS_DIR}/SectionsTableView.swift/SectionsTableView.framework",
-				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
-				"${BUILT_PRODUCTS_DIR}/UIExtensions.swift/UIExtensions.framework",
+				"${PODS_ROOT}/Target Support Files/Pods-Bank/Pods-Bank-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-			);
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ActionSheet.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AlamofireImage.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BigInt.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BitcoinCashKit.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BitcoinCore.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BitcoinKit.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/HSCryptoX11.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DashKit.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DeepDiff.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Erc20Kit.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/EthereumKit.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FeeRateKit.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GRDB.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/HSCryptoKit.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/HSHDWalletKit.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/HUD.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/KeychainAccess.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ObjectMapper.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxGRDB.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SectionsTableView.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/UIExtensions.framework",
+				"${PODS_ROOT}/Target Support Files/Pods-Bank/Pods-Bank-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/../Pods/Target Support Files/Pods-Bank/Pods-Bank-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Bank/Pods-Bank-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		79C3EDBC6313C06571C6504B /* [CP] Check Pods Manifest.lock */ = {
@@ -3224,24 +3000,15 @@
 			files = (
 			);
 			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${SRCROOT}/../Pods/Target Support Files/Pods-Bank Tests/Pods-Bank Tests-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/DeepDiff/DeepDiff.framework",
-				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
-				"${BUILT_PRODUCTS_DIR}/Cuckoo/Cuckoo.framework",
+				"${PODS_ROOT}/Target Support Files/Pods-Bank Tests/Pods-Bank Tests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-			);
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DeepDiff.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Cuckoo.framework",
+				"${PODS_ROOT}/Target Support Files/Pods-Bank Tests/Pods-Bank Tests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/../Pods/Target Support Files/Pods-Bank Tests/Pods-Bank Tests-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Bank Tests/Pods-Bank Tests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		C83CCEFF6AFC3F0F097853DF /* [CP] Check Pods Manifest.lock */ = {
@@ -3557,7 +3324,6 @@
 				11B358EF9A56A05015181CA7 /* BalanceHeaderViewItem.swift in Sources */,
 				11B35267BB7BFACBBF5C030F /* GrdbStorage.swift in Sources */,
 				11B35542BB8470BFD140E73D /* AuthData.swift in Sources */,
-				11B35E44E1276144F1EA4AAF /* OptionalSubject.swift in Sources */,
 				11B35DDA0A9C1FA06BC006DF /* Signal.swift in Sources */,
 				11B355276E4ACF6FE28AB581 /* AuthManager.swift in Sources */,
 				1A564B090F808B3A21F4AC8D /* SendKeyboardItem.swift in Sources */,
@@ -3955,7 +3721,6 @@
 				11B355E83695167DDDC39CE1 /* BalanceHeaderViewItem.swift in Sources */,
 				11B357FE4C2E1EC8E26ED68F /* GrdbStorage.swift in Sources */,
 				11B35406710372339144C92D /* AuthData.swift in Sources */,
-				11B35B58953E9F4AE4EE7DBA /* OptionalSubject.swift in Sources */,
 				11B35B79EDF41D1B2178AADD /* Signal.swift in Sources */,
 				11B3532113CCB65C304DDBE4 /* AuthManager.swift in Sources */,
 				1A56431AEB0FC654F322D3BE /* SendKeyboardItem.swift in Sources */,
@@ -4305,7 +4070,6 @@
 				11B359BBF55CD772D0815833 /* BalanceHeaderViewItem.swift in Sources */,
 				11B35133B5C8937A33A0208C /* GrdbStorage.swift in Sources */,
 				11B35A3495FF00B1A3FF4197 /* AuthData.swift in Sources */,
-				11B353E207319F28085F752C /* OptionalSubject.swift in Sources */,
 				11B35D7FBD8CBF3D92A03EFF /* Signal.swift in Sources */,
 				11B356508E7D24EDCEA1CB75 /* AuthManager.swift in Sources */,
 				1A564A6514A70E8F853E2FCB /* SendKeyboardItem.swift in Sources */,
@@ -4513,7 +4277,7 @@
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -4579,7 +4343,7 @@
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
 			};

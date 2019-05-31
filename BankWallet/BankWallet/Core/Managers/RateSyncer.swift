@@ -1,7 +1,7 @@
 import RxSwift
 
 class RateSyncer {
-    private let refreshIntervalInMinutes: Double = 3
+    private let refreshIntervalInMinutes = 3
 
     private let disposeBag = DisposeBag()
 
@@ -17,7 +17,7 @@ class RateSyncer {
         self.reachabilityManager = reachabilityManager
 
         let scheduler = ConcurrentDispatchQueueScheduler(qos: .background)
-        let timer = Observable<Int>.timer(0, period: refreshIntervalInMinutes * 60, scheduler: scheduler).map { _ in () }
+        let timer = Observable<Int>.timer(.seconds(0), period: .seconds(refreshIntervalInMinutes * 60), scheduler: scheduler).map { _ in () }
 
         Observable.merge(adapterManager.adaptersUpdatedSignal, currencyManager.baseCurrencyUpdatedSignal, reachabilityManager.reachabilitySignal, timer)
                 .subscribeOn(scheduler)
