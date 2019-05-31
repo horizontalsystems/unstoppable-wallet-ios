@@ -93,7 +93,7 @@ extension TransactionsInteractor: ITransactionsInteractor {
 
         adapterManager.adapters.forEach { adapter in
             adapter.lastBlockHeightUpdatedObservable
-                    .throttle(3, latest: true, scheduler: ConcurrentDispatchQueueScheduler(qos: .background))
+                    .throttle(.seconds(3), latest: true, scheduler: ConcurrentDispatchQueueScheduler(qos: .background))
                     .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
                     .observeOn(MainScheduler.instance)
                     .subscribe(onNext: { [weak self] in
