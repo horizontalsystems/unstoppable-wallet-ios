@@ -67,7 +67,7 @@ PODS:
   - GRDB.swift (4.0.1):
     - GRDB.swift/standard (= 4.0.1)
   - GRDB.swift/standard (4.0.1)
-  - HSCryptoKit (1.4.1)
+  - HSCryptoKit (1.4.2)
   - HSHDWalletKit (1.1):
     - HSCryptoKit (~> 1.4)
   - HUD.swift (1.0):
@@ -167,16 +167,16 @@ CHECKOUT OPTIONS:
     :commit: e73dc5b886d25065a5887b90a1464e31daf5db4c
     :git: https://github.com/horizontalsystems/gui-kit
   BitcoinCashKit.swift:
-    :commit: f39cf75152d7a7b28dc22beead91643639882bb2
+    :commit: 7a4ce4b87b78b56f44aa631028fdf53149182ec5
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios/
   BitcoinCore.swift:
-    :commit: f39cf75152d7a7b28dc22beead91643639882bb2
+    :commit: 7a4ce4b87b78b56f44aa631028fdf53149182ec5
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios/
   BitcoinKit.swift:
-    :commit: f39cf75152d7a7b28dc22beead91643639882bb2
+    :commit: 7a4ce4b87b78b56f44aa631028fdf53149182ec5
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios/
   DashKit.swift:
-    :commit: f39cf75152d7a7b28dc22beead91643639882bb2
+    :commit: 7a4ce4b87b78b56f44aa631028fdf53149182ec5
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios/
   Erc20Kit.swift:
     :commit: 48c8318696d99ad5bb0cbbbf2d029ed7290e8ddf
@@ -214,7 +214,7 @@ SPEC CHECKSUMS:
   EthereumKit.swift: d1b217ff98a39ad57c804d34f69d00110fcff811
   FeeRateKit.swift: dd6bdac1ca89e7d4944f25f34a74046e176a6653
   GRDB.swift: 106a830decf1d92a3fc63c6d6a2f6586f6187297
-  HSCryptoKit: 639ab56381fa4c4b9da520e286c9f993b5b8b028
+  HSCryptoKit: 4dcb2506b5d8d85c4a31ab57734df3d1f7ea17f9
   HSHDWalletKit: 1d946bd24bd307cc494141f4e518d25db814f050
   HUD.swift: 006cc6e105bce8050c3c3f44d9111474c5c26c35
   KeychainAccess: 3b1bf8a77eb4c6ea1ce9404c292e48f948954c6b

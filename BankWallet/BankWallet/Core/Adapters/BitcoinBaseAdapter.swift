@@ -17,6 +17,10 @@ class BitcoinBaseAdapter {
 
     private(set) var state: AdapterState
 
+    var receiveAddress: String {
+        return abstractKit.receiveAddress(for: .p2pkh)
+    }
+
     init(coin: Coin, abstractKit: AbstractKit, addressParser: IAddressParser) {
         self.coin = coin
         self.abstractKit = abstractKit
@@ -128,10 +132,6 @@ extension BitcoinBaseAdapter: IAdapter {
     func parse(paymentAddress: String) -> PaymentRequestAddress {
         let paymentData = addressParser.parse(paymentAddress: paymentAddress)
         return PaymentRequestAddress(address: paymentData.address, amount: paymentData.amount.map { Decimal($0) })
-    }
-
-    var receiveAddress: String {
-        return abstractKit.receiveAddress
     }
 
     func sendSingle(to address: String, amount: Decimal, feeRatePriority: FeeRatePriority) -> Single<Void> {

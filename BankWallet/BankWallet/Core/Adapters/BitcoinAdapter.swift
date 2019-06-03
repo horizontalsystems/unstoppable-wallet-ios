@@ -20,6 +20,10 @@ class BitcoinAdapter: BitcoinBaseAdapter {
         return feeRateProvider.bitcoinFeeRate(for: priority)
     }
 
+    override var receiveAddress: String {
+        return bitcoinKit.receiveAddress(for: .p2wpkhSh)
+    }
+
 }
 
 extension BitcoinAdapter {
