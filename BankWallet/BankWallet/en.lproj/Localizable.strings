@@ -47,7 +47,7 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 "coin_sync.recommended" = "Recommended";
 "coin_sync.more_private" = "More Private";
 "coin_sync.disable" = "Disable Coin";
-"coin_sync.alert.header" = "Attetion";
+"coin_sync.alert.header" = "Attention";
 "coin_sync.alert.text" = "This action will reset existing %@ balance on the wallet and force it to resync itself with %@ blockchain. Your funds are safe BUT it may take a really long time... Don't do it if you're not sure what that is.";
 "coin_sync.erc20" = "Sync mode same as Ethereum";
 
