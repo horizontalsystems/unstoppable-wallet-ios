@@ -80,6 +80,7 @@ class AppConfigProvider: IAppConfigProvider {
         Coin(title: "Holo",                  code: "HOT",  type: .erc20(address: "0x6c6EE5e31d828De241282B9606C8e98Ea48526E2", decimal: 18, fee: 0)),
         Coin(title: "Huobi Token",           code: "HT",   type: .erc20(address: "0x6f259637dcD74C767781E37Bc6133cd6A68aa161", decimal: 18, fee: 0)),
         Coin(title: "IDEX Membership",       code: "IDXM", type: .erc20(address: "0xCc13Fc627EFfd6E35D2D2706Ea3C4D7396c610ea", decimal: 8,  fee: 0)),
+        Coin(title: "IDEX Token",            code: "IDEX", type: .erc20(address: "0xB705268213D593B8FD88d3FDEFF93AFF5CbDcfAE", decimal: 18, fee: 0)),
         Coin(title: "KuCoin Shares",         code: "KCS",  type: .erc20(address: "0x039B5649A59967e3e936D7471f9c3700100Ee1ab", decimal: 6,  fee: 0)),
         Coin(title: "Kyber Network",         code: "KNC",  type: .erc20(address: "0xdd974D5C2e2928deA5F71b9825b8b646686BD200", decimal: 18, fee: 0)),
         Coin(title: "Loom",                  code: "LOOM", type: .erc20(address: "0xA4e8C3Ec456107eA67d3075bF9e3DF3A75823DB0", decimal: 18, fee: 0)),
