@@ -9,7 +9,7 @@ class DashAdapter: BitcoinBaseAdapter {
         self.feeRateProvider = feeRateProvider
 
         let networkType: DashKit.NetworkType = testMode ? .testNet : .mainNet
-        dashKit = try DashKit(withWords: authData.words, walletId: authData.walletId, newWallet: newWallet, networkType: networkType, minLogLevel: .error)
+        dashKit = try DashKit(withWords: authData.words, walletId: authData.walletId, syncMode: newWallet ? .newWallet : .api, networkType: networkType, minLogLevel: .error)
 
         super.init(coin: coin, abstractKit: dashKit, addressParser: addressParser)
 
