@@ -179,7 +179,7 @@ extension MainSettingsViewController: IMainSettingsView {
     }
 
     func setTabItemBadge(count: Int) {
-        navigationController?.tabBarItem.badgeValue = count == 0 ? nil : "\(count)"
+        navigationController?.tabBarItem.badgeValue = count == 0 ? nil : "!"
     }
 
 }
