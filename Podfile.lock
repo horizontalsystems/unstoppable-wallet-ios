@@ -53,7 +53,7 @@ PODS:
     - GRDB.swift (~> 4.0)
     - HSCryptoKit (~> 1.4)
     - RxSwift (~> 5.0)
-  - EthereumKit.swift (0.6.2):
+  - EthereumKit.swift (0.6.3):
     - Alamofire (~> 4.0)
     - BigInt (~> 4.0)
     - GRDB.swift (~> 4.0)
@@ -167,22 +167,22 @@ CHECKOUT OPTIONS:
     :commit: e73dc5b886d25065a5887b90a1464e31daf5db4c
     :git: https://github.com/horizontalsystems/gui-kit
   BitcoinCashKit.swift:
-    :commit: 7a4ce4b87b78b56f44aa631028fdf53149182ec5
+    :commit: 16d2315820e1f6a98b49baea3a3b31ad52cb9a70
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios/
   BitcoinCore.swift:
-    :commit: 7a4ce4b87b78b56f44aa631028fdf53149182ec5
+    :commit: 16d2315820e1f6a98b49baea3a3b31ad52cb9a70
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios/
   BitcoinKit.swift:
-    :commit: 7a4ce4b87b78b56f44aa631028fdf53149182ec5
+    :commit: 16d2315820e1f6a98b49baea3a3b31ad52cb9a70
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios/
   DashKit.swift:
-    :commit: 7a4ce4b87b78b56f44aa631028fdf53149182ec5
+    :commit: 16d2315820e1f6a98b49baea3a3b31ad52cb9a70
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios/
   Erc20Kit.swift:
-    :commit: 48c8318696d99ad5bb0cbbbf2d029ed7290e8ddf
+    :commit: 9bff3497cebe525d42925eca044e29a5dc1c0004
     :git: https://github.com/horizontalsystems/ethereum-kit-ios/
   EthereumKit.swift:
-    :commit: 48c8318696d99ad5bb0cbbbf2d029ed7290e8ddf
+    :commit: 9bff3497cebe525d42925eca044e29a5dc1c0004
     :git: https://github.com/horizontalsystems/ethereum-kit-ios/
   FeeRateKit.swift:
     :commit: f454bca521d4081bdb9645dcdc91efe9076fe010
@@ -211,7 +211,7 @@ SPEC CHECKSUMS:
   DashKit.swift: b84489f29dda3d3315dd9165a15274bbbd06696b
   DeepDiff: e329bc46dd14ca788d8ec08d34420799ba1d77f2
   Erc20Kit.swift: 80579e56957c3bca4ff04060cfd88a4ee74454b3
-  EthereumKit.swift: d1b217ff98a39ad57c804d34f69d00110fcff811
+  EthereumKit.swift: 70ef9cbd4795a2f1c11b2767093a3365d55189b0
   FeeRateKit.swift: dd6bdac1ca89e7d4944f25f34a74046e176a6653
   GRDB.swift: 106a830decf1d92a3fc63c6d6a2f6586f6187297
   HSCryptoKit: 4dcb2506b5d8d85c4a31ab57734df3d1f7ea17f9
