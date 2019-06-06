@@ -42,15 +42,13 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 //Coin Sync Modes
 
 "coin_sync.header" = "Syncing with blockchain";
-"coin_sync.fast" = "Fast";
-"coin_sync.slow" = "Slow";
-"coin_sync.recommended" = "Recommended";
-"coin_sync.more_private" = "More Private";
 "coin_sync.disable" = "Disable Coin";
 "coin_sync.alert.header" = "Attention";
-"coin_sync.alert.text" = "This action will reset existing %@ balance on the wallet and force it to resync itself with %@ blockchain. Your funds are safe BUT it may take a really long time... Don't do it if you're not sure what that is.";
+"coin_sync.alert.text" = "This action will resync your wallet balance for each blockchain. It may take several hours to complete.";
 "coin_sync.erc20" = "Sync mode same as Ethereum";
 "coin_sync.button.sync" = "Sync";
+"coin_sync.button.save" = "Save";
+
 
 // Backup
 
@@ -155,6 +153,7 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 "settings.title" = "Settings";
 "settings.tab_bar_item" = "Settings";
 "settings.security_center" = "Security Center";
+"settings.advanced" = "Advanced Settings";
 "settings.base_currency" = "Base Currency";
 "settings.language" = "Language";
 "settings.about" = "About";
@@ -165,6 +164,16 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 // Settings -> Base Currency
 
 "settings_base_currency.title" = "Base Currency";
+
+// Settings -> Advanced Settings
+
+"settings_advanced.title" = "Restore Options";
+"settings_advanced.fast" = "Fast";
+"settings_advanced.recommended" = "0-2 hours (Recommended)";
+"settings_advanced.fast.text" = "Restores your past transactions via secure third party server. For users with a long history of transactions involving very large sums this method may pose privacy risks.";
+"settings_advanced.slow" = "Slow";
+"settings_advanced.more_private" = "1-12 hours (More Private)";
+"settings_advanced.slow.text" = "Restores your past transactions directly from the network. Significantly more private but very slow. The more coins you restore the longer it takes.";
 
 // Settings -> Language
 
