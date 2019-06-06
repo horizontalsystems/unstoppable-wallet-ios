@@ -24,8 +24,8 @@ class ManageCoinsViewController: WalletViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "settings_manage_wallet.title".localized
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "alert.cancel".localized, style: .plain, target: self, action: #selector(close))
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "restore.done".localized, style: .done, target: self, action: #selector(done))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "button.cancel".localized, style: .plain, target: self, action: #selector(close))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.done".localized, style: .done, target: self, action: #selector(done))
 
         tableView.delegate = self
         tableView.dataSource = self
@@ -169,7 +169,7 @@ extension ManageCoinsViewController: UITableViewDataSource, UITableViewDelegate 
     }
 
     func tableView(_ tableView: UITableView, titleForDeleteConfirmationButtonForRowAt indexPath: IndexPath) -> String? {
-        return "settings_manage_wallet.remove_button".localized
+        return "button.remove".localized
     }
 
 }

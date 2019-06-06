@@ -44,7 +44,7 @@ class PinView: UIView {
             maker.leading.bottom.trailing.equalToSuperview()
         }
 
-        cancelButton.setTitle("alert.cancel".localized, for: .normal)
+        cancelButton.setTitle("button.cancel".localized, for: .normal)
         cancelButton.setTitleColor(PinTheme.cancelColor, for: .normal)
         cancelButton.setTitleColor(PinTheme.cancelSelectedColor, for: .highlighted)
         cancelButton.isHidden = true
