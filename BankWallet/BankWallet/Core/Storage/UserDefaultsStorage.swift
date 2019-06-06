@@ -1,7 +1,7 @@
 import Foundation
 
 class UserDefaultsStorage: ILocalStorage {
-    private let keyIsNewWallet = "is_new_wallet"
+    private let keySyncMode = "sync_mode_key"
     private let keyIsBackedUp = "is_backed_up"
     private let keyCurrentLanguage = "current_language"
     private let keyBaseCurrencyCode = "base_currency_code"
@@ -15,9 +15,14 @@ class UserDefaultsStorage: ILocalStorage {
     private let didLaunchOnceKey = "did_launch_once_key"
     private let keySendInputType = "send_input_type_key"
 
-    var isNewWallet: Bool {
-        get { return bool(for: keyIsNewWallet) ?? false }
-        set { set(newValue, for: keyIsNewWallet) }
+    var syncMode: SyncMode? {
+        get {
+            guard let stringMode = getString(keySyncMode) else {
+                return nil
+            }
+            return SyncMode(rawValue: stringMode)
+        }
+        set { setString(keySyncMode, value: newValue?.rawValue) }
     }
 
     var isBackedUp: Bool {
@@ -91,7 +96,7 @@ class UserDefaultsStorage: ILocalStorage {
     }
 
     func clear() {
-        isNewWallet = false
+        syncMode = .fast
         isBackedUp = false
         lightMode = false
         agreementAccepted = false

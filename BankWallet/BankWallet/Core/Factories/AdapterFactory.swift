@@ -15,13 +15,13 @@ class AdapterFactory: IAdapterFactory {
         switch coin.type {
         case .bitcoin:
             let addressParser = AddressParser(validScheme: "bitcoin", removeScheme: true)
-            return try? BitcoinAdapter(coin: coin, authData: authData, newWallet: localStorage.isNewWallet, addressParser: addressParser, feeRateProvider: feeRateProvider, testMode: appConfigProvider.testMode)
+            return try? BitcoinAdapter(coin: coin, authData: authData, syncMode: localStorage.syncMode ?? .fast, addressParser: addressParser, feeRateProvider: feeRateProvider, testMode: appConfigProvider.testMode)
         case .bitcoinCash:
             let addressParser = AddressParser(validScheme: "bitcoincash", removeScheme: false)
-            return try? BitcoinCashAdapter(coin: coin, authData: authData, newWallet: localStorage.isNewWallet, addressParser: addressParser, feeRateProvider: feeRateProvider, testMode: appConfigProvider.testMode)
+            return try? BitcoinCashAdapter(coin: coin, authData: authData, syncMode: localStorage.syncMode ?? .fast, addressParser: addressParser, feeRateProvider: feeRateProvider, testMode: appConfigProvider.testMode)
         case .dash:
             let addressParser = AddressParser(validScheme: "dash", removeScheme: true)
-            return try? DashAdapter(coin: coin, authData: authData, newWallet: localStorage.isNewWallet, addressParser: addressParser, feeRateProvider: feeRateProvider, testMode: appConfigProvider.testMode)
+            return try? DashAdapter(coin: coin, authData: authData, syncMode: localStorage.syncMode ?? .fast, addressParser: addressParser, feeRateProvider: feeRateProvider, testMode: appConfigProvider.testMode)
         case .ethereum:
             let addressParser = AddressParser(validScheme: "ethereum", removeScheme: true)
             if let ethereumKit = try? ethereumKitManager.ethereumKit(authData: authData) {

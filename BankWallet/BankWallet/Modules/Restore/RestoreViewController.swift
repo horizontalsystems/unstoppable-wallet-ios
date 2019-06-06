@@ -32,7 +32,6 @@ class RestoreViewController: WalletViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationController?.navigationBar.prefersLargeTitles = false
         title = "restore.title".localized
 
         subscribeKeyboard()
@@ -48,7 +47,7 @@ class RestoreViewController: WalletViewController {
         }
 
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "button.cancel".localized, style: .plain, target: self, action: #selector(cancelDidTap))
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.done".localized, style: .plain, target: self, action: #selector(restoreDidTap))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.next".localized, style: .plain, target: self, action: #selector(restoreDidTap))
 
         collectionView.registerCell(forClass: RestoreWordCell.self)
         collectionView.registerView(forClass: DescriptionCollectionHeader.self, flowSupplementaryKind: .header)

@@ -2,17 +2,12 @@ import UIKit
 
 class RestoreRouter {
     weak var viewController: UIViewController?
-    weak var agreementDelegate: IAgreementDelegate?
 }
 
 extension RestoreRouter: IRestoreRouter {
 
-    func showAgreement() {
-        viewController?.present(AgreementRouter.module(agreementDelegate: agreementDelegate), animated: true)
-    }
-
-    func navigateToSetPin() {
-        viewController?.present(SetPinRouter.module(), animated: true)
+    func openSyncMode(with words: [String]) {
+        viewController?.navigationController?.pushViewController(SyncModeRouter.module(mode: .initial(words: words)), animated: true)
     }
 
     func close() {
@@ -25,14 +20,13 @@ extension RestoreRouter {
 
     static func module() -> UIViewController {
         let router = RestoreRouter()
-        let interactor = RestoreInteractor(authManager: App.shared.authManager, wordsManager: App.shared.wordsManager, appConfigProvider: App.shared.appConfigProvider)
+        let interactor = RestoreInteractor(wordsManager: App.shared.wordsManager, appConfigProvider: App.shared.appConfigProvider)
         let presenter = RestorePresenter(interactor: interactor, router: router)
         let viewController = RestoreViewController(delegate: presenter)
 
         interactor.delegate = presenter
         presenter.view = viewController
         router.viewController = viewController
-        router.agreementDelegate = interactor
 
         return WalletNavigationController(rootViewController: viewController)
     }

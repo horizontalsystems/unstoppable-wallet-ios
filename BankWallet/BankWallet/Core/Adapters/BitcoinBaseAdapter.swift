@@ -60,6 +60,14 @@ class BitcoinBaseAdapter {
         return SendTransactionError.connection
     }
 
+    class func kitMode(from syncMode: SyncMode) -> BitcoinCore.SyncMode {
+        switch syncMode {
+        case .fast: return .api
+        case .slow: return .full
+        case .new: return .newWallet
+        }
+    }
+
 }
 
 extension BitcoinBaseAdapter: IAdapter {
