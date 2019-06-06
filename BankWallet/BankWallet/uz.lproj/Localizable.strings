@@ -5,10 +5,17 @@
 "coin.BCHt" = "Bitcoin Cash T";
 "coin.ETHt" = "Ethereum T";
 
-"alert.ok" = "OK";
-"alert.cancel" = "Cancel";
+"button.ok" = "OK";
+"button.cancel" = "Cancel";
+"button.confirm" = "Confirm";
+"button.done" = "Done";
+"button.next" = "Next";
+"button.remove" = "Remove";
+"button.forward" = "Forward";
+"button.save" = "Save";
+"button.sync" = "Sync";
+
 "alert.copied" = "Copied";
-"alert.confirm" = "Confirm";
 "alert.no_internet" = "No Internet";
 "alert.network_issue" = "Network issues. Try again in a short moment";
 
@@ -18,7 +25,6 @@
 
 "access_camera.message" = "Unstoppable needs access to your camera to scan QR code.\n\nGo to Settings - > Unstoppable and allow access to Camera.";
 "access_camera.settings" = "Settings";
-"access_camera.cancel" = "Cancel";
 
 // Guest Page
 
@@ -32,23 +38,22 @@
 // Restore
 
 "restore.title" = "Restore";
-"restore.description" = "Enter Secret Key  ";
-"restore.done" = "Done";
-"restore.cancel" = "Cancel";
+"restore.description" = "Enter Secret Key";
 "restore.validation_failed" = "Incorrect Secret Key";
 
 //Coin Sync Modes
-
+"coin_sync.title" = "Restore Options";
 "coin_sync.header" = "Syncing with blockchain";
 "coin_sync.fast" = "Fast";
+"coin_sync.recommended" = "0-2 hours (Recommended)";
+"coin_sync.fast.text" = "Restores your past transactions via secure third party server. For users with a long history of transactions involving very large sums this method may pose privacy risks.";
 "coin_sync.slow" = "Slow";
-"coin_sync.recommended" = "Recommended";
-"coin_sync.more_private" = "More Private";
+"coin_sync.more_private" = "1-12 hours (More Private)";
+"coin_sync.slow.text" = "Restores your past transactions directly from the network. Significantly more private but very slow. The more coins you restore the longer it takes. If the restore takes way too much time go to Security section in Settings tab and select “Unlink This Device” option.";
 "coin_sync.disable" = "Disable Coin";
 "coin_sync.alert.header" = "Attention";
-"coin_sync.alert.text" = "This action will reset existing %@ balance on the wallet and force it to resync itself with %@ blockchain. Your funds are safe BUT it may take a really long time... Don't do it if you're not sure what that is.";
+"coin_sync.alert.text" = "This action will resync your wallet balance for each blockchain. It may take several hours to complete.";
 "coin_sync.erc20" = "Sync mode same as Ethereum";
-"coin_sync.button.sync" = "Sync";
 
 // Backup
 
@@ -56,14 +61,11 @@
 "backup.intro.subtitle" = "Your secret key is the only way to restore your wallet and funds if your phone is ever lost, stolen, broken, or upgraded.\n\nIt consists of 12 words. Store it safely offline.";
 "backup.intro.later" = "Later";
 "backup.intro.backup_now" = "Backup";
-
 "backup.words.title" = "Secret Key";
-"backup.words.proceed" = "Next";
 
 "backup.confirmation.title" = "Check ...";
 "backup.confirmation.description" = "Enter words from your secret key";
 "backup.confirmation.failure_alert.text" = "Words do not match";
-"backup.confirmation.done_button" = "Done";
 "backup.confirmation.secret_key" = "I understand that I am a sole owner of a private 12-word Secret Key which is securely stored on my phone and enables me to control funds on my wallet.";
 "backup.confirmation.delete_app_warn" = "I understand that if this app is ever moved, deleted or malfunctions, the access to my wallet can be only recovered with that Secret Key.";
 "backup.confirmation.disclaimer" = "I understand that developers of this app can not be held responsible for any unintended bugs or issues that may arise while using this app.";
@@ -82,7 +84,6 @@
 
 "deposit.receive_coin" = "Receive %@";
 "deposit.your_address" = "Your Address";
-"deposit.share" = "Forward";
 
 // Send
 
@@ -153,6 +154,7 @@
 "settings.title" = "Settings";
 "settings.tab_bar_item" = "Settings";
 "settings.security_center" = "Security Center";
+"settings.advanced" = "Advanced Settings";
 "settings.base_currency" = "Base Currency";
 "settings.language" = "Language";
 "settings.about" = "About";
@@ -171,9 +173,6 @@
 // Settings -> Manage Wallet
 
 "settings_manage_wallet.title" = "Coin Manager";
-
-"settings_manage_wallet.remove_button" = "Remove";
-
 
 // Settings -> About
 
@@ -206,7 +205,6 @@
 "edit_pin.title" = "Edit Passcode";
 "edit_pin.unlock_info" = "Current Passcode";
 "edit_pin.new_pin_info" = "New Passcode";
-"edit_pin.confirm_info" = "Confirm";
 
 // Unlock PIN
 
