@@ -32,7 +32,6 @@ class RestoreViewController: WalletViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationController?.navigationBar.prefersLargeTitles = false
         title = "restore.title".localized
 
         subscribeKeyboard()

@@ -1,7 +1,10 @@
 import UIKit
+import SectionsTableView
 
-class SyncModeViewController: WalletViewController {
+class SyncModeViewController: WalletViewController, SectionsDataSource {
     private let delegate: ISyncModeViewDelegate
+
+    let tableView = SectionsTableView(style: .grouped)
 
     private var isFast = true
 
@@ -17,28 +20,68 @@ class SyncModeViewController: WalletViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let button = UIButton()
-        button.setTitle("fast", for: .normal)
-        button.frame = CGRect(x: 50, y: 50, width: 100, height: 50)
-        view.addSubview(button)
-        button.addTarget(self, action: #selector(onTapFastSync), for: .touchUpInside)
+        title = "coin_sync.title".localized
 
-        let button2 = UIButton()
-        button2.setTitle("slow", for: .normal)
-        button2.frame = CGRect(x: 50, y: 150, width: 100, height: 50)
-        view.addSubview(button2)
-        button2.addTarget(self, action: #selector(onTapSlowSync), for: .touchUpInside)
+        tableView.registerCell(forClass: SyncModeCell.self)
+        tableView.registerHeaderFooter(forClass: SyncModeSectionSeparator.self)
+        tableView.sectionDataSource = self
+        tableView.separatorColor = .clear
+        tableView.backgroundColor = .clear
+        view.addSubview(tableView)
+        tableView.snp.makeConstraints { maker in
+            maker.edges.equalToSuperview()
+        }
+        tableView.reload()
 
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.done".localized, style: .plain, target: self, action: #selector(onTapDone))
     }
 
-    @objc func onTapFastSync() {
+    func onTapFastSync() {
+        isFast = true
         delegate.onSelectFast()
+        tableView.reload()
+    }
+
+    func onTapSlowSync() {
+        isFast = false
+        delegate.onSelectSlow()
+        tableView.reload()
+    }
+
+    @objc func onTapDone() {
         delegate.onDone()
     }
 
-    @objc func onTapSlowSync() {
-        delegate.onSelectSlow()
-        delegate.onDone()
+    func buildSections() -> [SectionProtocol] {
+        let width = view.bounds.size.width
+
+        var sections = [SectionProtocol]()
+
+        let fastRow = Row<SyncModeCell>(id: "fast_row", hash: "fast", height: SyncModeTheme.cellHeight, bind: { [weak self] cell, _ in
+            cell.bind(title: "coin_sync.fast".localized, description: "coin_sync.recommended".localized, selected: self?.isFast ?? true, first: true, last: true)
+        }, action: { [weak self] _ in
+            self?.onTapFastSync()
+        })
+        let fastFooter: ViewState<SyncModeSectionSeparator> = .cellType(hash: "sync_fast_footer", binder: { view in
+            view.bind(description: "coin_sync.fast.text".localized, showTopSeparator: false, showBottomSeparator: false)
+        }, dynamicHeight: { _ in
+            SyncModeSectionSeparator.height(for: "coin_sync.fast.text".localized, containerWidth: width)
+        })
+        sections.append(Section(id: "fast", footerState: fastFooter, rows: [fastRow]))
+
+        let slowRow = Row<SyncModeCell>(id: "slow_row", hash: "slow", height: SyncModeTheme.cellHeight, bind: { [weak self] cell, _ in
+            cell.bind(title: "coin_sync.slow".localized, description: "coin_sync.more_private".localized, selected: !(self?.isFast ?? true), first: true, last: true)
+        }, action: { [weak self] _ in
+            self?.onTapSlowSync()
+        })
+        let slowFooter: ViewState<SyncModeSectionSeparator> = .cellType(hash: "sync_slow_footer", binder: { view in
+            view.bind(description: "coin_sync.slow.text".localized, showTopSeparator: false, showBottomSeparator: false)
+        }, dynamicHeight: { _ in
+            SyncModeSectionSeparator.height(for: "coin_sync.slow.text".localized, containerWidth: width) 
+        })
+        sections.append(Section(id: "fast", footerState: slowFooter, rows: [slowRow]))
+
+        return sections
     }
 
 }
