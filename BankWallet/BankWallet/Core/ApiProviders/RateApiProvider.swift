@@ -1,7 +1,7 @@
 import RxSwift
 
 class RateApiProvider {
-    private let timeoutInterval: TimeInterval = 5
+    private let timeoutInterval: TimeInterval = 10
     private let lastTimeoutInterval: TimeInterval = 60
 
     private let networkManager: NetworkManager
