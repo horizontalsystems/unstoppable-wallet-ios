@@ -5,10 +5,17 @@
 "coin.BCHt" = "Bitcoin Cash T";
 "coin.ETHt" = "Ethereum T";
 
-"alert.ok" = "はい";
-"alert.cancel" = "キャンセル";
+"button.ok" = "OK";
+"button.cancel" = "Cancel";
+"button.confirm" = "Confirm";
+"button.done" = "Done";
+"button.next" = "Next";
+"button.remove" = "Remove";
+"button.forward" = "Forward";
+"button.save" = "Save";
+"button.sync" = "Sync";
+
 "alert.copied" = "コピー完了";
-"alert.confirm" = "確定する";
 "alert.no_internet" = "No Internet";
 "alert.network_issue" = "Network issues. Try again in a short moment";
 
@@ -18,7 +25,6 @@
 
 "access_camera.message" = "Unstoppable needs access to your camera to scan QR code.\n\nGo to Settings - > Unstoppable and allow access to Camera.";
 "access_camera.settings" = "設定";
-"access_camera.cancel" = "キャンセル";
 
 // Guest Page
 
@@ -32,23 +38,22 @@
 // Restore
 
 "restore.title" = "Restore";
-"restore.description" = "秘密キーを入力する  ";
-"restore.done" = "Done";
-"restore.cancel" = "キャンセル";
+"restore.description" = "Enter Secret Key";
 "restore.validation_failed" = "正しくない秘密鍵";
 
 //Coin Sync Modes
-
+"coin_sync.title" = "Restore Options";
 "coin_sync.header" = "Syncing with blockchain";
 "coin_sync.fast" = "Fast";
+"coin_sync.recommended" = "0-2 hours (Recommended)";
+"coin_sync.fast.text" = "Restores your past transactions via secure third party server. For users with a long history of transactions involving very large sums this method may pose privacy risks.";
 "coin_sync.slow" = "Slow";
-"coin_sync.recommended" = "Recommended";
-"coin_sync.more_private" = "More Private";
+"coin_sync.more_private" = "1-12 hours (More Private)";
+"coin_sync.slow.text" = "Restores your past transactions directly from the network. Significantly more private but very slow. The more coins you restore the longer it takes. If the restore takes way too much time go to Security section in Settings tab and select “Unlink This Device” option.";
 "coin_sync.disable" = "Disable Coin";
 "coin_sync.alert.header" = "Attention";
-"coin_sync.alert.text" = "This action will reset existing %@ balance on the wallet and force it to resync itself with %@ blockchain. Your funds are safe BUT it may take a really long time... Don't do it if you're not sure what that is.";
+"coin_sync.alert.text" = "This action will resync your wallet balance for each blockchain. It may take several hours to complete.";
 "coin_sync.erc20" = "Sync mode same as Ethereum";
-"coin_sync.button.sync" = "Sync";
 
 // Backup
 
@@ -56,14 +61,11 @@
 "backup.intro.subtitle" = "あなたの電話は今まで紛失、盗難、破損、またはアップグレードする場合、あなたの秘密鍵は、あなたの財布と資金を復元する唯一の方法です。\n\n それは 12 の単語で構成されています。オフラインに安全に保管してください。";
 "backup.intro.later" = "後で";
 "backup.intro.backup_now" = "バックアップ";
-
 "backup.words.title" = "秘密鍵";
-"backup.words.proceed" = "次";
 
 "backup.confirmation.title" = "Check ...";
 "backup.confirmation.description" = "あなたの秘密鍵の単語を入力してください。";
 "backup.confirmation.failure_alert.text" = "言葉が一致しません";
-"backup.confirmation.done_button" = "Done";
 "backup.confirmation.secret_key" = "I understand that I am a sole owner of a private 12-word Secret Key which is securely stored on my phone and enables me to control funds on my wallet.";
 "backup.confirmation.delete_app_warn" = "I understand that if this app is ever moved, deleted or malfunctions, the access to my wallet can be only recovered with that Secret Key.";
 "backup.confirmation.disclaimer" = "I understand that developers of this app can not be held responsible for any unintended bugs or issues that may arise while using this app.";
@@ -82,7 +84,6 @@
 
 "deposit.receive_coin" = "受取 %@";
 "deposit.your_address" = "お客様のアドレス";
-"deposit.share" = "転送";
 
 // Send
 
@@ -153,6 +154,7 @@
 "settings.title" = "設定";
 "settings.tab_bar_item" = "設定";
 "settings.security_center" = "セキュリティ センター";
+"settings.advanced" = "Advanced Settings";
 "settings.base_currency" = "基本通貨";
 "settings.language" = "言語";
 "settings.about" = "について";
@@ -171,9 +173,6 @@
 // Settings -> Manage Wallet
 
 "settings_manage_wallet.title" = "Coin Manager";
-
-"settings_manage_wallet.remove_button" = "Remove";
-
 
 // Settings -> About
 
@@ -206,7 +205,6 @@
 "edit_pin.title" = "パスコードを編集";
 "edit_pin.unlock_info" = "現在のパスコード";
 "edit_pin.new_pin_info" = "新しいパスコード";
-"edit_pin.confirm_info" = "確定する";
 
 // Unlock PIN
 
