@@ -208,6 +208,7 @@ class BalanceCell: UITableViewCell {
         }
 
         coinValueLabel.text = ValueFormatter.instance.format(coinValue: item.coinValue, fractionPolicy: .threshold(high: 0.01, low: 0))
+        coinValueLabel.alpha = synced ? 1 : 0.3
 
         if case .notSynced = item.state {
             failedImageView.isHidden = false
