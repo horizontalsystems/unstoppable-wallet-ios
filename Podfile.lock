@@ -74,7 +74,7 @@ PODS:
     - SnapKit (~> 5.0)
     - UIExtensions.swift
   - KeychainAccess (3.2.0)
-  - ObjectMapper (3.4.2)
+  - ObjectMapper (3.5.0)
   - RxCocoa (5.0.0):
     - RxRelay (~> 5)
     - RxSwift (~> 5)
@@ -167,16 +167,16 @@ CHECKOUT OPTIONS:
     :commit: e73dc5b886d25065a5887b90a1464e31daf5db4c
     :git: https://github.com/horizontalsystems/gui-kit
   BitcoinCashKit.swift:
-    :commit: 2eaf60bdc9c94f8d1c03afba09504f2b10ad04ed
+    :commit: 0727a7d3ecf8d039519ae69e8eb2bda22deee3f5
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios/
   BitcoinCore.swift:
-    :commit: 2eaf60bdc9c94f8d1c03afba09504f2b10ad04ed
+    :commit: 0727a7d3ecf8d039519ae69e8eb2bda22deee3f5
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios/
   BitcoinKit.swift:
-    :commit: 2eaf60bdc9c94f8d1c03afba09504f2b10ad04ed
+    :commit: 0727a7d3ecf8d039519ae69e8eb2bda22deee3f5
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios/
   DashKit.swift:
-    :commit: 2eaf60bdc9c94f8d1c03afba09504f2b10ad04ed
+    :commit: 0727a7d3ecf8d039519ae69e8eb2bda22deee3f5
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios/
   Erc20Kit.swift:
     :commit: 9bff3497cebe525d42925eca044e29a5dc1c0004
@@ -218,7 +218,7 @@ SPEC CHECKSUMS:
   HSHDWalletKit: 1d946bd24bd307cc494141f4e518d25db814f050
   HUD.swift: 006cc6e105bce8050c3c3f44d9111474c5c26c35
   KeychainAccess: 3b1bf8a77eb4c6ea1ce9404c292e48f948954c6b
-  ObjectMapper: 0d4402610f4e468903ae64629eec4784531e5c51
+  ObjectMapper: 078b564ed25c6578b62588e306bf1da3924636d4
   RxCocoa: fcf32050ac00d801f34a7f71d5e8e7f23026dcd8
   RxGRDB: ccdb0d6e85635a1b505967d1353cf736628496e0
   RxRelay: 4f7409406a51a55cd88483f21ed898c234d60f18
