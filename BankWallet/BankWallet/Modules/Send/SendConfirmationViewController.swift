@@ -19,7 +19,7 @@ class SendConfirmationViewController: ActionSheetController {
         amountItem = SendConfirmationAmounItem(viewItem: viewItem, tag: 1)
         addressItem = SendConfirmationAddressItem(address: viewItem.address, tag: 2)
         feeItem = SendConfirmationValueItem(title: "send.fee".localized, amountInfo: viewItem.feeInfo, tag: 3)
-        sendButtonItem = SendButtonItem(buttonTitle: "alert.confirm".localized, tag: 5)
+        sendButtonItem = SendButtonItem(buttonTitle: "button.confirm".localized, tag: 5)
 
         super.init(withModel: BaseAlertModel(), actionSheetThemeConfig: SendTheme.confirmationSheetConfig)
     }

@@ -66,7 +66,7 @@ class EditPinPresenterTests: XCTestCase {
         presenter.viewDidLoad()
         verify(mockView).addPage(withDescription: "edit_pin.unlock_info")
         verify(mockView).addPage(withDescription: "edit_pin.new_pin_info")
-        verify(mockView).addPage(withDescription: "edit_pin.confirm_info")
+        verify(mockView).addPage(withDescription: "button.confirm")
     }
 
     func testShowEnterOnUnlock() {

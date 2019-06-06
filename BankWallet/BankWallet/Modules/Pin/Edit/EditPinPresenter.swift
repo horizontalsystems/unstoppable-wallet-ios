@@ -16,7 +16,7 @@ class EditPinPresenter: ManagePinPresenter {
             switch page {
             case .unlock: view?.addPage(withDescription: "edit_pin.unlock_info")
             case .enter: view?.addPage(withDescription: "edit_pin.new_pin_info")
-            case .confirm: view?.addPage(withDescription: "edit_pin.confirm_info")
+            case .confirm: view?.addPage(withDescription: "button.confirm")
             }
         }
 

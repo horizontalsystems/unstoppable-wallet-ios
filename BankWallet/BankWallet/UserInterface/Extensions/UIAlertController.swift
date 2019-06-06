@@ -5,7 +5,7 @@ extension UIAlertController {
     public static func showSimpleAlert(fromController: UIViewController? = nil, title: String? = nil, message: String? = nil) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
 
-        let ok = UIAlertAction(title: "alert.ok".localized, style: .cancel, handler:nil)
+        let ok = UIAlertAction(title: "button.ok".localized, style: .cancel, handler:nil)
         alert.addAction(ok)
 
         alert.show(forView: nil, barButtonItem: nil, fromController: fromController, sourceRect: nil)
