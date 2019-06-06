@@ -3,8 +3,8 @@ import Foundation
 class AppConfigProvider: IAppConfigProvider {
     let ipfsId = "QmXTJZBMMRmBbPun6HFt3tmb3tfYF2usLPxFoacL7G5uMX"
     let ipfsGateways = [
-        "https://ipfs.io",
-        "https://ipfs-ext.horizontalsystems.xyz"
+        "https://ipfs-ext.horizontalsystems.xyz",
+        "https://ipfs.io"
     ]
 
     let fiatDecimal: Int = 2
