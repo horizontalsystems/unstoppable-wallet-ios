@@ -3,7 +3,7 @@ import UIKit
 class SyncModeTheme {
     static let cellSmallMargin: CGFloat = 3
     static let cellMediumMargin: CGFloat = 8
-    static let cellBigMargin: CGFloat = 18
+    static let cellBigMargin: CGFloat = 16
 
     static let selectedColor: UIColor = .cryptoYellow
     static var cellBackground: UIColor { return .crypto_SteelDark_White }
@@ -15,7 +15,7 @@ class SyncModeTheme {
 
     static let separatorDescriptionColor: UIColor = .cryptoGray
     static let separatorDescriptionFont: UIFont = .cryptoCaption1
-    static let separatorBottomMargin: CGFloat = 16
+    static let separatorBottomMargin: CGFloat = 32
 
     static let cellHeight: CGFloat = 60
 }

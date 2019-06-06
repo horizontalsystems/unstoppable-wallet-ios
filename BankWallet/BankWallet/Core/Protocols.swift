@@ -8,7 +8,7 @@ protocol IRandomManager {
 }
 
 protocol ILocalStorage: class {
-    var syncMode: SyncMode { get set }
+    var syncMode: SyncMode? { get set }
     var isBackedUp: Bool { get set }
     var baseCurrencyCode: String? { get set }
     var baseBitcoinProvider: String? { get set }
@@ -83,14 +83,6 @@ enum SyncMode: String {
     case fast = "fast"
     case slow = "slow"
     case new = "new"
-
-    func kitMode() -> BitcoinCore.SyncMode {
-        switch self {
-        case .fast: return .api
-        case .slow: return .full
-        case .new: return .newWallet
-        }
-    }
 }
 
 enum FeeRatePriority: Int {

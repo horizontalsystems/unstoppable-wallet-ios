@@ -15,9 +15,14 @@ class UserDefaultsStorage: ILocalStorage {
     private let didLaunchOnceKey = "did_launch_once_key"
     private let keySendInputType = "send_input_type_key"
 
-    var syncMode: SyncMode {
-        get { return SyncMode(rawValue: getString(keySyncMode) ?? "new") ?? .new }
-        set { setString(keySyncMode, value: newValue.rawValue) }
+    var syncMode: SyncMode? {
+        get {
+            guard let stringMode = getString(keySyncMode) else {
+                return nil
+            }
+            return SyncMode(rawValue: stringMode)
+        }
+        set { setString(keySyncMode, value: newValue?.rawValue) }
     }
 
     var isBackedUp: Bool {

@@ -29,14 +29,14 @@ class SyncModeCell: UITableViewCell {
         titleLabel.textColor = SyncModeTheme.titleColor
         contentView.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { maker in
-            maker.leading.equalTo(contentView.snp.leadingMargin)//.offset(SyncModeTheme.leftAdditionalMargin)
+            maker.leading.equalToSuperview().offset(SyncModeTheme.cellBigMargin)
             maker.top.equalToSuperview().offset(SyncModeTheme.cellMediumMargin)
         }
         descriptionLabel.font = SyncModeTheme.descriptionFont
         descriptionLabel.textColor = SyncModeTheme.descriptionColor
         contentView.addSubview(descriptionLabel)
         descriptionLabel.snp.makeConstraints { maker in
-            maker.leading.equalTo(contentView.snp.leadingMargin)//.offset(SyncModeTheme.leftAdditionalMargin)
+            maker.leading.equalToSuperview().offset(SyncModeTheme.cellBigMargin)
             maker.top.equalTo(titleLabel.snp.bottom).offset(SyncModeTheme.cellSmallMargin)
         }
 
