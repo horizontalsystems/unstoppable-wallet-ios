@@ -31,7 +31,7 @@ extension AuthManager: IAuthManager {
         return authData != nil
     }
 
-    func login(withWords words: [String], newWallet: Bool) throws {
+    func login(withWords words: [String], syncMode: SyncMode) throws {
         try BitcoinAdapter.clear()
         try BitcoinCashAdapter.clear()
         try DashAdapter.clear()
@@ -40,7 +40,7 @@ extension AuthManager: IAuthManager {
 
         let authData = AuthData(words: words)
         try secureStorage.set(authData: authData)
-        localStorage.isNewWallet = newWallet
+        localStorage.syncMode = syncMode
 
         self.authData = authData
 

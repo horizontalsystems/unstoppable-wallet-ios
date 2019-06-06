@@ -3,11 +3,11 @@ import UIExtensions
 import ActionSheet
 import SnapKit
 
-class SendTitleItemView: BaseActionItemView {
+class ActionTitleItemView: BaseActionItemView {
     private let iconImageView = CoinIconImageView()
     private let titleLabel = UILabel()
 
-    override var item: SendTitleItem? { return _item as? SendTitleItem }
+    override var item: ActionTitleItem? { return _item as? ActionTitleItem }
 
     override func initView() {
         super.initView()
@@ -25,9 +25,9 @@ class SendTitleItemView: BaseActionItemView {
             maker.centerY.equalTo(self.iconImageView.snp.centerY)
         }
 
-        item?.bindCoin = { [weak self] coin in
+        item?.bindTitle = { [weak self] title, coin in
             self?.iconImageView.bind(coin: coin)
-            self?.titleLabel.text = "send.title".localized(coin.title)
+            self?.titleLabel.text = title
         }
     }
 

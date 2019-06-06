@@ -5,11 +5,11 @@ class DashAdapter: BitcoinBaseAdapter {
     private let dashKit: DashKit
     private let feeRateProvider: IFeeRateProvider
 
-    init(coin: Coin, authData: AuthData, newWallet: Bool, addressParser: IAddressParser, feeRateProvider: IFeeRateProvider, testMode: Bool) throws {
+    init(coin: Coin, authData: AuthData, syncMode: SyncMode, addressParser: IAddressParser, feeRateProvider: IFeeRateProvider, testMode: Bool) throws {
         self.feeRateProvider = feeRateProvider
 
         let networkType: DashKit.NetworkType = testMode ? .testNet : .mainNet
-        dashKit = try DashKit(withWords: authData.words, walletId: authData.walletId, syncMode: newWallet ? .newWallet : .api, networkType: networkType, minLogLevel: .error)
+        dashKit = try DashKit(withWords: authData.words, walletId: authData.walletId, syncMode: syncMode.kitMode(), networkType: networkType, minLogLevel: .error)
 
         super.init(coin: coin, abstractKit: dashKit, addressParser: addressParser)
 

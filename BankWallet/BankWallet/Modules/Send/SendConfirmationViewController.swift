@@ -5,7 +5,7 @@ class SendConfirmationViewController: ActionSheetController {
     private let delegate: ISendViewDelegate
     private let viewItem: SendConfirmationViewItem
 
-    private let titleItem: SendTitleItem
+    private let titleItem: ActionTitleItem
     private let amountItem: SendConfirmationAmounItem
     private let addressItem: SendConfirmationAddressItem
     private let feeItem: SendConfirmationValueItem
@@ -15,7 +15,7 @@ class SendConfirmationViewController: ActionSheetController {
         self.delegate = delegate
         self.viewItem = viewItem
 
-        titleItem = SendTitleItem(tag: 0)
+        titleItem = ActionTitleItem(tag: 0)
         amountItem = SendConfirmationAmounItem(viewItem: viewItem, tag: 1)
         addressItem = SendConfirmationAddressItem(address: viewItem.address, tag: 2)
         feeItem = SendConfirmationValueItem(title: "send.fee".localized, amountInfo: viewItem.feeInfo, tag: 3)
@@ -57,7 +57,7 @@ class SendConfirmationViewController: ActionSheetController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-        titleItem.bindCoin?(viewItem.coin)
+        titleItem.bindTitle?("send.title".localized(viewItem.coin.title), viewItem.coin)
     }
 
 }

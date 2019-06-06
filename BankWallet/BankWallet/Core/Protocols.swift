@@ -1,4 +1,5 @@
 import RxSwift
+import BitcoinCore
 
 typealias CoinCode = String
 
@@ -7,7 +8,7 @@ protocol IRandomManager {
 }
 
 protocol ILocalStorage: class {
-    var isNewWallet: Bool { get set }
+    var syncMode: SyncMode { get set }
     var isBackedUp: Bool { get set }
     var baseCurrencyCode: String? { get set }
     var baseBitcoinProvider: String? { get set }
@@ -76,6 +77,20 @@ enum AdapterState {
     case synced
     case syncing(progress: Int, lastBlockDate: Date?)
     case notSynced
+}
+
+enum SyncMode: String {
+    case fast = "fast"
+    case slow = "slow"
+    case new = "new"
+
+    func kitMode() -> BitcoinCore.SyncMode {
+        switch self {
+        case .fast: return .api
+        case .slow: return .full
+        case .new: return .newWallet
+        }
+    }
 }
 
 enum FeeRatePriority: Int {
@@ -150,7 +165,7 @@ protocol IWordsManager {
 protocol IAuthManager {
     var authData: AuthData? { get }
     var isLoggedIn: Bool { get }
-    func login(withWords words: [String], newWallet: Bool) throws
+    func login(withWords words: [String], syncMode: SyncMode) throws
     func logout() throws
 }
 

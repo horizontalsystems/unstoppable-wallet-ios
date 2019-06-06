@@ -14,25 +14,13 @@ class RestorePresenter {
 
 extension RestorePresenter: IRestoreInteractorDelegate {
 
-    func didRestore() {
-        router.navigateToSetPin()
-    }
-
-    func didFailToRestore(withError error: Error) {
-        view?.showInvalidWordsError()
-    }
-
     func didValidate(words: [String]) {
         self.words = words
-        router.showAgreement()
+        router.openSyncMode(with: words)
     }
 
     func didFailToValidate(withError error: Error) {
         view?.showInvalidWordsError()
-    }
-
-    func didConfirmAgreement() {
-        interactor.restore(withWords: words)
     }
 
 }

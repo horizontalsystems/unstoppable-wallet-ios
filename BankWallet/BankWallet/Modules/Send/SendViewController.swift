@@ -4,7 +4,7 @@ import ActionSheet
 class SendViewController: ActionSheetController {
     private let delegate: ISendViewDelegate
 
-    private let titleItem = SendTitleItem(tag: 0)
+    private let titleItem = ActionTitleItem(tag: 0)
     private let amountItem = SendAmountItem(tag: 1)
     private let addressItem = SendAddressItem(tag: 2)
     private let feeItem: SendFeeItem
@@ -131,7 +131,7 @@ class SendViewController: ActionSheetController {
 extension SendViewController: ISendView {
 
     func set(coin: Coin) {
-        titleItem.bindCoin?(coin)
+        titleItem.bindTitle?("send.title".localized(coin.title), coin)
     }
 
     func set(amountInfo: AmountInfo?) {

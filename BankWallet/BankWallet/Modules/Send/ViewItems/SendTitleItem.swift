@@ -1,11 +1,11 @@
 import ActionSheet
 
-class SendTitleItem: BaseActionItem {
+class ActionTitleItem: BaseActionItem {
 
-    var bindCoin: ((Coin) -> ())?
+    var bindTitle: ((_ title: String, _ coin: Coin) -> ())?
 
     init(tag: Int) {
-        super.init(cellType: SendTitleItemView.self, tag: tag, required: true)
+        super.init(cellType: ActionTitleItemView.self, tag: tag, required: true)
 
         height = SendTheme.titleHeight
     }

@@ -48,7 +48,7 @@ class RestoreViewController: WalletViewController {
         }
 
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "restore.cancel".localized, style: .plain, target: self, action: #selector(cancelDidTap))
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "restore.done".localized, style: .plain, target: self, action: #selector(restoreDidTap))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "backup.words.proceed".localized, style: .plain, target: self, action: #selector(restoreDidTap))
 
         collectionView.registerCell(forClass: RestoreWordCell.self)
         collectionView.registerView(forClass: DescriptionCollectionHeader.self, flowSupplementaryKind: .header)
