@@ -21,7 +21,7 @@ class ScanQRController: UIViewController {
         view.layer.addSublayer(previewLayer)
 
         let closeButton = UIButton()
-        closeButton.setTitle("alert.cancel".localized, for: .normal)
+        closeButton.setTitle("button.cancel".localized, for: .normal)
         closeButton.addTarget(self, action: #selector(close), for: .touchUpInside)
 
         let safeButt = UIApplication.shared.keyWindow?.safeAreaInsets.bottom ?? 0

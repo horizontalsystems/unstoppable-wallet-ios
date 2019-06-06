@@ -25,7 +25,7 @@ class BackupConfirmationController: WalletViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "backup.confirmation.done_button".localized, style: .plain, target: self, action: #selector(doneDidTap))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.done".localized, style: .plain, target: self, action: #selector(doneDidTap))
         title = "backup.confirmation.title".localized
 
         view.addSubview(descriptionLabel)

@@ -30,7 +30,7 @@ class PermissionsHelper {
         })
 
         alertController.addAction(settingsAction)
-        alertController.addAction(UIAlertAction(title: "access_camera.cancel".localized, style: .cancel))
+        alertController.addAction(UIAlertAction(title: "button.cancel".localized, style: .cancel))
         alertController.preferredAction = settingsAction
 
         alertController.show(fromController: fromController)

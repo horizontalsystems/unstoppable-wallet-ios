@@ -144,7 +144,7 @@ extension PinViewController: IPinView {
         if navigationController?.isNavigationBarHidden ?? true {
             pinViews[currentPage].showCancelButton(target: self, action: #selector(onCancelTap))
         } else {
-            navigationItem.rightBarButtonItem = UIBarButtonItem(title: "alert.cancel".localized, style: .plain, target: self, action: #selector(onCancelTap))
+            navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.cancel".localized, style: .plain, target: self, action: #selector(onCancelTap))
         }
     }
 
