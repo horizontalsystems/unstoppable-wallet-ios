@@ -5,14 +5,14 @@
 "coin.BCHt" = "Bitcoin Cash T";
 "coin.ETHt" = "Ethereum T";
 
-"button.ok" = "OK";
-"button.cancel" = "Cancel";
-"button.confirm" = "Confirm";
-"button.done" = "Done";
-"button.next" = "Next";
-"button.remove" = "Remove";
-"button.forward" = "Forward";
-"button.save" = "Save";
+"button.ok" = "Aceptar";
+"button.cancel" = "Cancelar";
+"button.confirm" = "Confirmar";
+"button.done" = "Listo";
+"button.next" = "Siguiente";
+"button.remove" = "Eliminar";
+"button.forward" = "Reenviar";
+"button.save" = "Guardar";
 "button.sync" = "Sync";
 
 "alert.copied" = "Copiado";
@@ -32,13 +32,13 @@
 "guest.description" = "IN BLOCKCHAIN WE TRUST";
 "guest.subtitle" = "Decentralized app";
 "guest.create_wallet" = "Create Wallet";
-"guest.restore_wallet" = "Restore";
+"guest.restore_wallet" = "Restaurar";
 "guest.version" = "Versión %@";
 
 // Restore
 
 "restore.title" = "Restaurar";
-"restore.description" = "Enter Secret Key";
+"restore.description" = "Ingresar clave secreta";
 "restore.validation_failed" = "Clave secreta incorrecta";
 
 //Coin Sync Modes
