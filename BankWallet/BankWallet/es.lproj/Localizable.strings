@@ -13,7 +13,7 @@
 "button.remove" = "Eliminar";
 "button.forward" = "Reenviar";
 "button.save" = "Guardar";
-"button.sync" = "Sync";
+"button.sync" = "Sincronizar";
 
 "alert.copied" = "Copiado";
 "alert.no_internet" = "Sin conexión a Internet";
@@ -31,7 +31,7 @@
 "guest.title" = "Unstoppable";
 "guest.description" = "IN BLOCKCHAIN WE TRUST";
 "guest.subtitle" = "Decentralized app";
-"guest.create_wallet" = "Create Wallet";
+"guest.create_wallet" = "Crear cartera";
 "guest.restore_wallet" = "Restaurar";
 "guest.version" = "Versión %@";
 
@@ -42,10 +42,10 @@
 "restore.validation_failed" = "Clave secreta incorrecta";
 
 //Coin Sync Modes
-"coin_sync.title" = "Restore Options";
-"coin_sync.header" = "Syncing with blockchain";
-"coin_sync.fast" = "Fast";
-"coin_sync.recommended" = "0-2 hours (Recommended)";
+"coin_sync.title" = "Restaurar opciones";
+"coin_sync.header" = "Sincronizando la cadena de bloques";
+"coin_sync.fast" = "Rápido";
+"coin_sync.recommended" = "0-2 horas (Recomendado)";
 "coin_sync.fast.text" = "Restores your past transactions via secure third party server. For users with a long history of transactions involving very large sums this method may pose privacy risks.";
 "coin_sync.slow" = "Slow";
 "coin_sync.more_private" = "1-12 hours (More Private)";
