@@ -29,26 +29,26 @@
 // Guest Page
 
 "guest.title" = "Unstoppable";
-"guest.description" = "IN BLOCKCHAIN WE TRUST";
+"guest.description" = "BLOCKCHAIN'E EMANET";
 "guest.subtitle" = "Decentralized App";
-"guest.create_wallet" = "Create Wallet";
-"guest.restore_wallet" = "Restore";
+"guest.create_wallet" = "Cüzdan Oluştur";
+"guest.restore_wallet" = "Geri Yükle";
 "guest.version" = "sürüm %@";
 
 // Restore
 
 "restore.title" = "Geri Yükle";
-"restore.description" = "Enter Secret Key";
+"restore.description" = "Gizli Anahtarı Girin";
 "restore.validation_failed" = "Hatalı Gizli anahtar";
 
 //Coin Sync Modes
-"coin_sync.title" = "Restore Options";
-"coin_sync.header" = "Syncing with blockchain";
-"coin_sync.fast" = "Fast";
-"coin_sync.recommended" = "0-2 hours (Recommended)";
-"coin_sync.fast.text" = "Restores your past transactions via secure third party server. For users with a long history of transactions involving very large sums this method may pose privacy risks.";
-"coin_sync.slow" = "Slow";
-"coin_sync.more_private" = "1-12 hours (More Private)";
+"coin_sync.title" = "Geri yükleme seçenekleri";
+"coin_sync.header" = "Blockchain ile eşitleniyor";
+"coin_sync.fast" = "Hızlı";
+"coin_sync.recommended" = "0-2 saat (Tavsiye edilen)";
+"coin_sync.fast.text" = "Geçmiş işlemlerinizi güvenilir üçüncü şahıs sunucularıyla geri yükleyin. Uzun işlem geçmişi olan ve büyük miktarda para işlemleri yapan kullanıcılar için bu yöntem güvenlik riski oluşturabilir.";
+"coin_sync.slow" = "Yavaş";
+"coin_sync.more_private" = "1-12 saat (Daha Gizli)";
 "coin_sync.slow.text" = "Restores your past transactions directly from the network. Significantly more private but very slow. The more coins you restore the longer it takes. If the restore takes way too much time go to Security section in Settings tab and select “Unlink This Device” option.";
 "coin_sync.disable" = "Disable Coin";
 "coin_sync.alert.header" = "Attention";
