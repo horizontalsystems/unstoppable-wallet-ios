@@ -6,13 +6,13 @@
 "coin.ETHt" = "Ethereum T";
 
 "button.ok" = "OK";
-"button.cancel" = "Cancel";
-"button.confirm" = "Confirm";
-"button.done" = "Done";
-"button.next" = "Next";
-"button.remove" = "Remove";
-"button.forward" = "Forward";
-"button.save" = "Save";
+"button.cancel" = "Annuler";
+"button.confirm" = "Confirmer";
+"button.done" = "Fait";
+"button.next" = "Suivant";
+"button.remove" = "Supprimer";
+"button.forward" = "Transférer";
+"button.save" = "Sauvegarder";
 "button.sync" = "Sync";
 
 "alert.copied" = "Copié";
@@ -32,13 +32,13 @@
 "guest.description" = "IN BLOCKCHAIN WE TRUST";
 "guest.subtitle" = "Decentralized app";
 "guest.create_wallet" = "Create Wallet";
-"guest.restore_wallet" = "Restore";
+"guest.restore_wallet" = "Restaurer";
 "guest.version" = "Version %@";
 
 // Restore
 
 "restore.title" = "Restaurer";
-"restore.description" = "Enter Secret Key";
+"restore.description" = "Entrez la clé secrete";
 "restore.validation_failed" = "Clé secrète incorrecte";
 
 //Coin Sync Modes
