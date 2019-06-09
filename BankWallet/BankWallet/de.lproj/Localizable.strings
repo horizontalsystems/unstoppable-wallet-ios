@@ -6,13 +6,13 @@
 "coin.ETHt" = "Ethereum T";
 
 "button.ok" = "OK";
-"button.cancel" = "Cancel";
-"button.confirm" = "Confirm";
-"button.done" = "Done";
-"button.next" = "Next";
-"button.remove" = "Remove";
-"button.forward" = "Forward";
-"button.save" = "Save";
+"button.cancel" = "Abbrechen";
+"button.confirm" = "Bestätigen";
+"button.done" = "Fertig";
+"button.next" = "Weiter";
+"button.remove" = "Entfernen";
+"button.forward" = "Teilen";
+"button.save" = "Speichern";
 "button.sync" = "Sync";
 
 "alert.copied" = "Kopiert";
@@ -31,27 +31,27 @@
 "guest.title" = "Unstoppable";
 "guest.description" = "IN BLOCKCHAIN WE TRUST";
 "guest.subtitle" = "Decentralized App";
-"guest.create_wallet" = "Create Wallet";
-"guest.restore_wallet" = "Restore";
+"guest.create_wallet" = "Wallet Erstellen";
+"guest.restore_wallet" = "Wiederherstellen";
 "guest.version" = "Version %@";
 
 // Restore
 
 "restore.title" = "Wiederherstellen";
-"restore.description" = "Enter Secret Key";
+"restore.description" = "Offlineschlüssel eingeben";
 "restore.validation_failed" = "Falscher Offlineschlüssel";
 
 //Coin Sync Modes
 "coin_sync.title" = "Restore Options";
-"coin_sync.header" = "Syncing with blockchain";
-"coin_sync.fast" = "Fast";
-"coin_sync.recommended" = "0-2 hours (Recommended)";
+"coin_sync.header" = "Synchronisierung mit der Blockchain";
+"coin_sync.fast" = "Schnell";
+"coin_sync.recommended" = "0-2 Stunden (empfohlen)";
 "coin_sync.fast.text" = "Restores your past transactions via secure third party server. For users with a long history of transactions involving very large sums this method may pose privacy risks.";
-"coin_sync.slow" = "Slow";
-"coin_sync.more_private" = "1-12 hours (More Private)";
+"coin_sync.slow" = "Langsam";
+"coin_sync.more_private" = "1-12 Stunden (mehr privat)";
 "coin_sync.slow.text" = "Restores your past transactions directly from the network. Significantly more private but very slow. The more coins you restore the longer it takes. If the restore takes way too much time go to Security section in Settings tab and select “Unlink This Device” option.";
-"coin_sync.disable" = "Disable Coin";
-"coin_sync.alert.header" = "Attention";
+"coin_sync.disable" = "Coin deaktivieren";
+"coin_sync.alert.header" = "Achtung";
 "coin_sync.alert.text" = "This action will resync your wallet balance for each blockchain. It may take several hours to complete.";
 "coin_sync.erc20" = "Sync mode same as Ethereum";
 
@@ -154,7 +154,7 @@
 "settings.title" = "Einstellungen";
 "settings.tab_bar_item" = "Einstellungen";
 "settings.security_center" = "Sicherheit";
-"settings.advanced" = "Advanced Settings";
+"settings.advanced" = "Erweiterte Einstellungen";
 "settings.base_currency" = "Währung";
 "settings.language" = "Sprache";
 "settings.about" = "Info";
