@@ -38,7 +38,7 @@
 // Restore
 
 "restore.title" = "恢复";
-"restore.description" = "Enter Secret Key";
+"restore.description" = "输入密钥";
 "restore.validation_failed" = "密钥不正确";
 
 //Coin Sync Modes
