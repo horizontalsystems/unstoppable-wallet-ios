@@ -13,7 +13,7 @@
 "button.remove" = "Откл.";
 "button.forward" = "Переслать";
 "button.save" = "Сохранить";
-"button.sync" = "Sync";
+"button.sync" = "Синхр.";
 
 "alert.copied" = "Скопировано";
 "alert.no_internet" = "Нет интернета";
@@ -38,20 +38,20 @@
 // Restore
 
 "restore.title" = "Восстановить";
-"restore.description" = "Enter Secret Key";
+"restore.description" = "Введите Секретный Ключ";
 "restore.validation_failed" = "Неверный Секретный Ключ";
 
 //Coin Sync Modes
 "coin_sync.title" = "Restore Options";
-"coin_sync.header" = "Syncing with blockchain";
-"coin_sync.fast" = "Fast";
-"coin_sync.recommended" = "0-2 hours (Recommended)";
+"coin_sync.header" = "Синхронизация с блокчейном";
+"coin_sync.fast" = "Быстро";
+"coin_sync.recommended" = "0-2 часа (Рекомендуется)";
 "coin_sync.fast.text" = "Restores your past transactions via secure third party server. For users with a long history of transactions involving very large sums this method may pose privacy risks.";
-"coin_sync.slow" = "Slow";
-"coin_sync.more_private" = "1-12 hours (More Private)";
+"coin_sync.slow" = "Медленно";
+"coin_sync.more_private" = "1-12 часов (Более Приватно)";
 "coin_sync.slow.text" = "Restores your past transactions directly from the network. Significantly more private but very slow. The more coins you restore the longer it takes. If the restore takes way too much time go to Security section in Settings tab and select “Unlink This Device” option.";
 "coin_sync.disable" = "Disable Coin";
-"coin_sync.alert.header" = "Attention";
+"coin_sync.alert.header" = "Внимание";
 "coin_sync.alert.text" = "This action will resync your wallet balance for each blockchain. It may take several hours to complete.";
 "coin_sync.erc20" = "Sync mode same as Ethereum";
 
@@ -154,7 +154,7 @@
 "settings.title" = "Настройки";
 "settings.tab_bar_item" = "Настройки";
 "settings.security_center" = "Центр Безопасности";
-"settings.advanced" = "Advanced Settings";
+"settings.advanced" = "Дополнительные настройки";
 "settings.base_currency" = "Базовая Валюта";
 "settings.language" = "Язык";
 "settings.about" = "О приложении";
