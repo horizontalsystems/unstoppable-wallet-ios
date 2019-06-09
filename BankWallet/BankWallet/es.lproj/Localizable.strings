@@ -29,7 +29,7 @@
 // Guest Page
 
 "guest.title" = "Unstoppable";
-"guest.description" = "IN BLOCKCHAIN WE TRUST";
+"guest.description" = "CONFIAMOS EN LA CADENA DE BLOQUES";
 "guest.subtitle" = "Decentralized app";
 "guest.create_wallet" = "Crear cartera";
 "guest.restore_wallet" = "Restaurar";
