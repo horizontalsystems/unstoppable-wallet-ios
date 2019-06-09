@@ -5,14 +5,14 @@
 "coin.BCHt" = "Bitcoin Cash T";
 "coin.ETHt" = "Ethereum T";
 
-"button.ok" = "OK";
-"button.cancel" = "Cancel";
-"button.confirm" = "Confirm";
-"button.done" = "Done";
-"button.next" = "Next";
-"button.remove" = "Remove";
-"button.forward" = "Forward";
-"button.save" = "Save";
+"button.ok" = "确定";
+"button.cancel" = "取消";
+"button.confirm" = "确认";
+"button.done" = "完成";
+"button.next" = "继续";
+"button.remove" = "移除";
+"button.forward" = "转发";
+"button.save" = "保存";
 "button.sync" = "Sync";
 
 "alert.copied" = "复制成功";
