@@ -6,13 +6,13 @@
 "coin.ETHt" = "Ethereum Т";
 
 "button.ok" = "OK";
-"button.cancel" = "Cancel";
-"button.confirm" = "Confirm";
-"button.done" = "Done";
-"button.next" = "Next";
-"button.remove" = "Remove";
-"button.forward" = "Forward";
-"button.save" = "Save";
+"button.cancel" = "Отмена";
+"button.confirm" = "Подтвердить";
+"button.done" = "Готово";
+"button.next" = "Далее";
+"button.remove" = "Откл.";
+"button.forward" = "Переслать";
+"button.save" = "Сохранить";
 "button.sync" = "Sync";
 
 "alert.copied" = "Скопировано";
