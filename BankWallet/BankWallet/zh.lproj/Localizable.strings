@@ -31,8 +31,8 @@
 "guest.title" = "Unstoppable";
 "guest.description" = "IN BLOCKCHAIN WE TRUST";
 "guest.subtitle" = "Decentralized App";
-"guest.create_wallet" = "Create Wallet";
-"guest.restore_wallet" = "Restore";
+"guest.create_wallet" = "创建钱包";
+"guest.restore_wallet" = "恢复";
 "guest.version" = "version %@";
 
 // Restore
@@ -42,14 +42,14 @@
 "restore.validation_failed" = "密钥不正确";
 
 //Coin Sync Modes
-"coin_sync.title" = "Restore Options";
+"coin_sync.title" = "恢复选项";
 "coin_sync.header" = "Syncing with blockchain";
-"coin_sync.fast" = "Fast";
-"coin_sync.recommended" = "0-2 hours (Recommended)";
-"coin_sync.fast.text" = "Restores your past transactions via secure third party server. For users with a long history of transactions involving very large sums this method may pose privacy risks.";
-"coin_sync.slow" = "Slow";
-"coin_sync.more_private" = "1-12 hours (More Private)";
-"coin_sync.slow.text" = "Restores your past transactions directly from the network. Significantly more private but very slow. If the restore takes way too much time go to Security section in Settings tab and select “Unlink This Device” option.";
+"coin_sync.fast" = "过程最快";
+"coin_sync.recommended" = "0 小时 (推荐)";
+"coin_sync.fast.text" = "通过安全的第三方服务器可以恢复以前的事务。对于拥有大量交易历史的用户来说，这种方法可能会带来隐私风险。\n";
+"coin_sync.slow" = "缓慢";
+"coin_sync.more_private" = "1 小时(更多隐私)";
+"coin_sync.slow.text" = "直接从网络可以恢复以前的事务。明显更私密，但速度很慢。如果恢复时间过长，请转到“设置”选项卡中的“安全”部分，然后选择“取消此设备的链接”选项。\n";
 "coin_sync.disable" = "Disable Coin";
 "coin_sync.alert.header" = "Attention";
 "coin_sync.alert.text" = "This action will resync your wallet balance for each blockchain. It may take several hours to complete.";
@@ -66,9 +66,9 @@
 "backup.confirmation.title" = "正在检查...";
 "backup.confirmation.description" = "请输入你密钥中的词";
 "backup.confirmation.failure_alert.text" = "单词不匹配";
-"backup.confirmation.secret_key" = "I understand that I am a sole owner of a private 12-word Secret Key which is securely stored on my phone and enables me to control funds on my wallet.";
-"backup.confirmation.delete_app_warn" = "I understand that if this app is ever moved, deleted or malfunctions, the access to my wallet can be only recovered with that Secret Key.";
-"backup.confirmation.disclaimer" = "I understand that developers of this app can not be held responsible for any unintended bugs or issues that may arise while using this app.";
+"backup.confirmation.secret_key" = "我知道, 我是一个12个字的私人密钥的唯一拥有者，该密钥安全地存储在我的手机上，使我能够控制我钱包上的资金。";
+"backup.confirmation.delete_app_warn" = "我知道如果此APP被移动、删除或出现故障，只有用密钥才能恢复对我钱包的访问。";
+"backup.confirmation.disclaimer" = "我理解这个应用程序的开发人员对使用这个应用程序时可能出现的任何意外的错误或问题不负责任。\n";
 
 // Balance
 
@@ -108,15 +108,15 @@
 // Transaction Info
 
 "tx_info.title" = "交易";
-"tx_info.historical_rate" = "Historical Rate";
+"tx_info.historical_rate" = "历史汇率";
 "tx_info.time" = "时间";
 "tx_info.status" = "状态";
 "tx_info.status.pending" = "在过程中";
-"tx_info.status.confirmed" = "Confirmed";
+"tx_info.status.confirmed" = "已确认";
 "tx_info.from_hash" = "发件人";
 "tx_info.to_hash" = "收件人";
-"tx_info.button_verify" = "Verify";
-"tx_info.rate" = "Historical Rate";
+"tx_info.button_verify" = "验证";
+"tx_info.rate" = "历史汇率";
 
 // Full Info
 
