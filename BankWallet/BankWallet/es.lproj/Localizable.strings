@@ -49,7 +49,7 @@
 "coin_sync.fast.text" = "Restaura tus transacciones pasadas vía un tercer servidor seguro. Para usuarios con una larga historia de transacciones con grandes cantidades, éste método puede tener riesgos de privacidad.";
 "coin_sync.slow" = "Lento";
 "coin_sync.more_private" = "1-12 horas (Más Privado)";
-"coin_sync.slow.text" = "Restores your past transactions directly from the network. Significantly more private but very slow. If the restore takes way too much time go to Security section in Settings tab and select “Unlink This Device” option.";
+"coin_sync.slow.text" = "Restaura tus transacciones pasadas directamente de la red. Significativamente mayor privacidad pero muy lento. Si la restauración tarda demasiado ve a la sección de Seguridad en la pestaña de Ajustes y selecciona la opción “Desconectar este dispositivo” ";
 "coin_sync.disable" = "Desactivar Moneda";
 "coin_sync.alert.header" = "Atención";
 "coin_sync.alert.text" = "Esta acción se actualizará el saldo de su cartera para cada cadena de bloques. Puede tardar varias horas en completarse.";
