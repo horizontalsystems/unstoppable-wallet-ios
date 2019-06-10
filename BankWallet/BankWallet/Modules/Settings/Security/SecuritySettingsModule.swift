@@ -23,10 +23,17 @@ protocol ISecuritySettingsInteractor {
 protocol ISecuritySettingsInteractorDelegate: class {
     func didBackup()
     func didGetBiometry(type: BiometryType)
+    func onUnlock()
+    func onCancelUnlock()
 }
 
 protocol ISecuritySettingsRouter {
     func showEditPin()
+    func showUnlock()
     func showSecretKey()
     func showUnlink()
+}
+
+enum SecuritySettingsUnlockType {
+    case biometry(isOn: Bool)
 }

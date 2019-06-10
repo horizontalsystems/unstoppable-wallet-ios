@@ -133,4 +133,24 @@ class SecuritySettingsInteractorTests: XCTestCase {
         verify(mockDelegate, never()).didBackup()
     }
 
+    func testOnUnlock() {
+        stub(mockDelegate) { mock in
+            when(mock.onUnlock()).thenDoNothing()
+        }
+
+        interactor.onUnlock()
+
+        verify(mockDelegate).onUnlock()
+    }
+
+    func testOnCancelUnlock() {
+        stub(mockDelegate) { mock in
+            when(mock.onCancelUnlock()).thenDoNothing()
+        }
+
+        interactor.onCancelUnlock()
+
+        verify(mockDelegate).onCancelUnlock()
+    }
+
 }

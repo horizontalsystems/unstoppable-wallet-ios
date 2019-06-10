@@ -66,6 +66,9 @@ extension BackupInteractor: IUnlockDelegate {
         fetchWords()
     }
 
+    func onCancelUnlock() {
+    }
+
 }
 
 extension BackupInteractor: IAgreementDelegate {

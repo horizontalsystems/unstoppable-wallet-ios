@@ -10,7 +10,7 @@ class UnlockPinPresenter {
 
     private let configuration: UnlockPresenterConfiguration
 
-    init(interactor: IUnlockPinInteractor, router: IUnlockPinRouter, configuration: UnlockPresenterConfiguration = .init(cancellable: false)) {
+    init(interactor: IUnlockPinInteractor, router: IUnlockPinRouter, configuration: UnlockPresenterConfiguration = .init(cancellable: false, enableBiometry: true)) {
         self.interactor = interactor
         self.router = router
         self.configuration = configuration
@@ -23,7 +23,7 @@ extension UnlockPinPresenter: IPinViewDelegate {
     func viewDidLoad() {
         view?.addPage(withDescription: "unlock_pin.info")
 
-        if interactor.failedAttempts == 0 {
+        if interactor.failedAttempts == 0, configuration.enableBiometry {
             interactor.biometricUnlock()
         }
 

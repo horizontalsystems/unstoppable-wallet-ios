@@ -2,6 +2,7 @@ import UIKit
 
 protocol IUnlockDelegate: class {
     func onUnlock()
+    func onCancelUnlock()
 }
 
 class UnlockPinRouter {
@@ -23,8 +24,10 @@ extension UnlockPinRouter: IUnlockPinRouter {
         } else {
             if didUnlock {
                 unlockDelegate?.onUnlock()
+            } else {
+                unlockDelegate?.onCancelUnlock()
             }
-            viewController?.dismiss(animated: true)
+            viewController?.dismiss(animated: false)
         }
     }
 
@@ -32,7 +35,7 @@ extension UnlockPinRouter: IUnlockPinRouter {
 
 extension UnlockPinRouter {
 
-    static func module(unlockDelegate: IUnlockDelegate? = nil, appStart: Bool = false, cancelable: Bool = false) -> UIViewController {
+    static func module(unlockDelegate: IUnlockDelegate? = nil, enableBiometry: Bool = true, appStart: Bool = false, cancelable: Bool = false) -> UIViewController {
         let biometricManager = BiometricManager()
         let lockoutUntilDateFactory = LockoutUntilDateFactory(currentDateProvider: CurrentDateProvider())
         let uptimeProvider = UptimeProvider()
@@ -41,7 +44,7 @@ extension UnlockPinRouter {
 
         let router = UnlockPinRouter(appStart: appStart)
         let interactor = UnlockPinInteractor(pinManager: App.shared.pinManager, biometricManager: biometricManager, localStorage: App.shared.localStorage, lockoutManager: lockoutManager, timer: timer, secureStorage: App.shared.secureStorage)
-        let presenter = UnlockPinPresenter(interactor: interactor, router: router, configuration: .init(cancellable: cancelable))
+        let presenter = UnlockPinPresenter(interactor: interactor, router: router, configuration: .init(cancellable: cancelable, enableBiometry: enableBiometry))
         let viewController = PinViewController(delegate: presenter)
 
         biometricManager.delegate = interactor

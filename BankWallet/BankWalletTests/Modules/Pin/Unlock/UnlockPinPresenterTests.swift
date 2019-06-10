@@ -19,7 +19,7 @@ class UnlockPinPresenterTests: XCTestCase {
         mockView = MockIPinView()
         mockInteractor = MockIUnlockPinInteractor()
         mockRouter = MockIUnlockPinRouter()
-        mockConfiguration = MockUnlockPresenterConfiguration(cancellable: false)
+        mockConfiguration = MockUnlockPresenterConfiguration(cancellable: false, enableBiometry: true)
         presenter = UnlockPinPresenter(interactor: mockInteractor, router: mockRouter, configuration: mockConfiguration)
         presenter.view = mockView
 
@@ -41,6 +41,7 @@ class UnlockPinPresenterTests: XCTestCase {
         }
         stub(mockConfiguration) { mock in
             when(mock.cancellable.get).thenReturn(false)
+            when(mock.enableBiometry.get).thenReturn(true)
         }
     }
 
@@ -56,6 +57,28 @@ class UnlockPinPresenterTests: XCTestCase {
     func testDontShowCancel() {
         presenter.viewDidLoad()
         verify(mockView, never()).showCancel()
+    }
+
+    func testBiometryUnlockShow() {
+        stub(mockConfiguration) { mock in
+            when(mock.cancellable.get).thenReturn(false)
+            when(mock.enableBiometry.get).thenReturn(true)
+        }
+
+        presenter.viewDidLoad()
+
+        verify(mockInteractor).biometricUnlock()
+    }
+
+    func testBiometryUnlockDontShow() {
+        stub(mockConfiguration) { mock in
+            when(mock.cancellable.get).thenReturn(false)
+            when(mock.enableBiometry.get).thenReturn(false)
+        }
+
+        presenter.viewDidLoad()
+
+        verify(mockInteractor, never()).biometricUnlock()
     }
 
     func testShowCancel() {

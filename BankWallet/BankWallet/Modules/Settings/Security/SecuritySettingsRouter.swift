@@ -2,12 +2,17 @@ import UIKit
 
 class SecuritySettingsRouter {
     weak var viewController: UIViewController?
+    weak var unlockDelegate: IUnlockDelegate?
 }
 
 extension SecuritySettingsRouter: ISecuritySettingsRouter {
 
     func showEditPin() {
         viewController?.present(EditPinRouter.module(), animated: true)
+    }
+
+    func showUnlock() {
+        viewController?.present(UnlockPinRouter.module(unlockDelegate: unlockDelegate, enableBiometry: false, cancelable: true), animated: true)
     }
 
     func showSecretKey() {
@@ -25,12 +30,13 @@ extension SecuritySettingsRouter {
     static func module() -> UIViewController {
         let router = SecuritySettingsRouter()
         let interactor = SecuritySettingsInteractor(localStorage: App.shared.localStorage, wordsManager: App.shared.wordsManager, systemInfoManager: App.shared.systemInfoManager)
-        let presenter = SecuritySettingsPresenter(router: router, interactor: interactor)
+        let presenter = SecuritySettingsPresenter(router: router, interactor: interactor, state: SecuritySettingsState())
         let view = SecuritySettingsViewController(delegate: presenter)
 
         interactor.delegate = presenter
         presenter.view = view
         router.viewController = view
+        router.unlockDelegate = interactor
 
         return view
     }

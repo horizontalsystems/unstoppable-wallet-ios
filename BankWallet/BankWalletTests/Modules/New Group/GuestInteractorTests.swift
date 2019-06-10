@@ -23,7 +23,7 @@ class GuestInteractorTests: XCTestCase {
             when(mock.didCreateWallet()).thenDoNothing()
         }
         stub(mockAuthManager) { mock in
-            when(mock.login(withWords: any(), newWallet: any())).thenDoNothing()
+            when(mock.login(withWords: any(), syncMode: any())).thenDoNothing()
         }
         stub(mockWordsManager) { mock in
             when(mock.generateWords()).thenReturn([])
@@ -53,7 +53,7 @@ class GuestInteractorTests: XCTestCase {
 
         interactor.createWallet()
 
-        verify(mockAuthManager).login(withWords: equal(to: expectedWords), newWallet: true)
+        verify(mockAuthManager).login(withWords: equal(to: expectedWords), syncMode: equal(to: SyncMode.new))
         verify(mockDelegate).didCreateWallet()
     }
 

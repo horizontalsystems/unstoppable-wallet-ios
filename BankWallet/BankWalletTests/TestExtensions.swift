@@ -133,3 +133,11 @@ extension EnabledCoin: Equatable {
     }
 
 }
+
+extension SecuritySettingsUnlockType: Equatable {
+    public static func ==(lhs: SecuritySettingsUnlockType, rhs: SecuritySettingsUnlockType) -> Bool {
+        switch (lhs, rhs) {
+        case (.biometry(let lIsOn), .biometry(let rIsOn)): return lIsOn == rIsOn
+        }
+    }
+}
