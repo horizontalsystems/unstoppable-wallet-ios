@@ -42,18 +42,18 @@
 "restore.validation_failed" = "Неверный Секретный Ключ";
 
 //Coin Sync Modes
-"coin_sync.title" = "Restore Options";
+"coin_sync.title" = "Опции Восстановления";
 "coin_sync.header" = "Синхронизация с блокчейном";
 "coin_sync.fast" = "Быстро";
 "coin_sync.recommended" = "0-2 часа (Рекомендуется)";
-"coin_sync.fast.text" = "Restores your past transactions via secure third party server. For users with a long history of transactions involving very large sums this method may pose privacy risks.";
+"coin_sync.fast.text" = "Восстановление ваших предыдущих транзакций через сторонний защищенный сервер. Для пользователей с длинной историей транзакций и с очень большим суммами этот метод может представлять риски для конфиденциальности.";
 "coin_sync.slow" = "Медленно";
 "coin_sync.more_private" = "1-12 часов (Более Приватно)";
-"coin_sync.slow.text" = "Restores your past transactions directly from the network. Significantly more private but very slow. The more coins you restore the longer it takes. If the restore takes way too much time go to Security section in Settings tab and select “Unlink This Device” option.";
-"coin_sync.disable" = "Disable Coin";
+"coin_sync.slow.text" = "Восстановление ваших предыдущих транзакций будет непосредственно из сети. Это значительно более приватно, но очень медленно. Чем больше монет вы восстанавливаете, тем больше времени требуется. Если восстановление занимает слишком много времени, перейдите в раздел \"Безопасность\" в Настройках и выберите опцию «Отключить это устройство».";
+"coin_sync.disable" = "Откл. монету";
 "coin_sync.alert.header" = "Внимание";
-"coin_sync.alert.text" = "This action will resync your wallet balance for each blockchain. It may take several hours to complete.";
-"coin_sync.erc20" = "Sync mode same as Ethereum";
+"coin_sync.alert.text" = "Это действие синхронизирует баланс вашего кошелька для каждого блокчейна. Может потребоваться несколько часов.";
+"coin_sync.erc20" = "Режим синхронизации, подобно Ethereum";
 
 // Backup
 
