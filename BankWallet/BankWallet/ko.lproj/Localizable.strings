@@ -5,14 +5,14 @@
 "coin.BCHt" = "Bitcoin Cash T";
 "coin.ETHt" = "Ethereum T";
 
-"button.ok" = "OK";
-"button.cancel" = "Cancel";
-"button.confirm" = "Confirm";
-"button.done" = "Done";
-"button.next" = "Next";
-"button.remove" = "Remove";
+"button.ok" = "확인";
+"button.cancel" = "취소";
+"button.confirm" = "확인";
+"button.done" = "완료";
+"button.next" = "다음";
+"button.remove" = "삭제";
 "button.forward" = "Forward";
-"button.save" = "Save";
+"button.save" = "저장";
 "button.sync" = "Sync";
 
 "alert.copied" = "복사됨";
@@ -32,13 +32,13 @@
 "guest.description" = "IN BLOCKCHAIN WE TRUST";
 "guest.subtitle" = "분산하된 어플";
 "guest.create_wallet" = "Create Wallet";
-"guest.restore_wallet" = "Restore";
+"guest.restore_wallet" = "복구";
 "guest.version" = "version %@";
 
 // Restore
 
 "restore.title" = "복구";
-"restore.description" = "Enter Secret Key";
+"restore.description" = "비밀 키를 입력";
 "restore.validation_failed" = "잘못된 비밀 키";
 
 //Coin Sync Modes
