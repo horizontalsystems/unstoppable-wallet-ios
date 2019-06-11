@@ -23,7 +23,7 @@
 
 // Access Camera
 
-"access_camera.message" = "Unstoppable needs access to your camera to scan QR code.\n\nGo to Settings - > Unstoppable and allow access to Camera.";
+"access_camera.message" = "钱包需要接入照相机扫描二维码\n\n请在”设置”-“Unstoppable”中打开";
 "access_camera.settings" = "设置";
 
 // Guest Page
@@ -33,7 +33,7 @@
 "guest.subtitle" = "Decentralized App";
 "guest.create_wallet" = "创建钱包";
 "guest.restore_wallet" = "恢复";
-"guest.version" = "version %@";
+"guest.version" = "Version %@";
 
 // Restore
 
