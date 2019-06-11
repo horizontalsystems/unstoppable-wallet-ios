@@ -5,10 +5,17 @@
 "coin.BCHt" = "Bitcoin Cash T";
 "coin.ETHt" = "Ethereum T";
 
-"alert.ok" = "Aceptar";
-"alert.cancel" = "Cancelar";
+"button.ok" = "Aceptar";
+"button.cancel" = "Cancelar";
+"button.confirm" = "Confirmar";
+"button.done" = "Listo";
+"button.next" = "Siguiente";
+"button.remove" = "Eliminar";
+"button.forward" = "Reenviar";
+"button.save" = "Guardar";
+"button.sync" = "Sincronizar";
+
 "alert.copied" = "Copiado";
-"alert.confirm" = "Confirmar";
 "alert.no_internet" = "Sin conexión a Internet";
 "alert.network_issue" = "Problemas de red. Inténtelo de nuevo";
 
@@ -18,23 +25,35 @@
 
 "access_camera.message" = "Unstoppable cartera necesita acceder a su cámara para escanear el código QR";
 "access_camera.settings" = "Configuración";
-"access_camera.cancel" = "Cancelar";
 
 // Guest Page
 
 "guest.title" = "Unstoppable";
+"guest.description" = "CONFIAMOS EN LA CADENA DE BLOQUES";
 "guest.subtitle" = "Decentralized app";
-"guest.create_wallet" = "Nueva cartera";
-"guest.restore_wallet" = "Restaurar cartera";
+"guest.create_wallet" = "Crear cartera";
+"guest.restore_wallet" = "Restaurar";
 "guest.version" = "Versión %@";
 
 // Restore
 
 "restore.title" = "Restaurar";
-"restore.description" = "Ingresar clave secreta  ";
-"restore.done" = "Listo";
-"restore.cancel" = "Cancelar";
+"restore.description" = "Ingresar clave secreta";
 "restore.validation_failed" = "Clave secreta incorrecta";
+
+//Coin Sync Modes
+"coin_sync.title" = "Restaurar opciones";
+"coin_sync.header" = "Sincronizando la cadena de bloques";
+"coin_sync.fast" = "Rápido";
+"coin_sync.recommended" = "0-2 horas (Recomendado)";
+"coin_sync.fast.text" = "Restaura tus transacciones pasadas vía un tercer servidor seguro. Para usuarios con una larga historia de transacciones con grandes cantidades, éste método puede tener riesgos de privacidad.";
+"coin_sync.slow" = "Lento";
+"coin_sync.more_private" = "1-12 horas (Más Privado)";
+"coin_sync.slow.text" = "Restaura tus transacciones pasadas directamente de la red. Significativamente mayor privacidad pero muy lento. Si la restauración tarda demasiado ve a la sección de Seguridad en la pestaña de Ajustes y selecciona la opción “Desconectar este dispositivo” ";
+"coin_sync.disable" = "Desactivar Moneda";
+"coin_sync.alert.header" = "Atención";
+"coin_sync.alert.text" = "Esta acción se actualizará el saldo de su cartera para cada cadena de bloques. Puede tardar varias horas en completarse.";
+"coin_sync.erc20" = "Sincronizar el modo igual que Ethereum";
 
 // Backup
 
@@ -42,14 +61,11 @@
 "backup.intro.subtitle" = "Su clave secreta es la única manera de recuperar su cartera y otros fondos si su teléfono alguna vez se pierde, se rompe, es sustraído o se actualiza a otra versión.\n\nConsiste de 12 palabras. Almacen esta desconectado sin peligro.";
 "backup.intro.later" = "Posterior";
 "backup.intro.backup_now" = "Copia de seguridad";
-
 "backup.words.title" = "Clave secreta";
-"backup.words.proceed" = "Siguiente";
 
 "backup.confirmation.title" = "Comprobar";
 "backup.confirmation.description" = "Insertar palabras de su clave secreta";
 "backup.confirmation.failure_alert.text" = "Las contraseñas no coinciden";
-"backup.confirmation.done_button" = "Listo";
 "backup.confirmation.secret_key" = "Entiendo que soy un único propietario de una clave secreta privada de 12 palabras que se almacena de forma segura en mi teléfono y me permite controlar los fondos en mi cartera.";
 "backup.confirmation.delete_app_warn" = "Entiendo que si esta aplicación se elimina o deja de funcionar por alguna razón, mi monedero sólo puede ser recuperado utilizando mi clave secreta.";
 "backup.confirmation.disclaimer" = "Entiendo que los desarrolladores de esta aplicación no pueden ser responsables de ningún error o problemas no intencionados que puedan surgir mientras se usa esta aplicación.";
@@ -68,7 +84,6 @@
 
 "deposit.receive_coin" = "Recibir %@";
 "deposit.your_address" = "Su dirección";
-"deposit.share" = "Reenviar";
 
 // Send
 
@@ -139,6 +154,7 @@
 "settings.title" = "Configuración";
 "settings.tab_bar_item" = "Configuraciones";
 "settings.security_center" = "Centro de Seguridad";
+"settings.advanced" = "Configuración avanzada";
 "settings.base_currency" = "Divisa principal";
 "settings.language" = "Idioma";
 "settings.about" = "Acerca de";
@@ -157,9 +173,6 @@
 // Settings -> Manage Wallet
 
 "settings_manage_wallet.title" = "Monederos";
-
-"settings_manage_wallet.remove_button" = "Eliminar";
-
 
 // Settings -> About
 
@@ -192,7 +205,6 @@
 "edit_pin.title" = "Editar el código ";
 "edit_pin.unlock_info" = "Código Actual";
 "edit_pin.new_pin_info" = "Código Nuevo";
-"edit_pin.confirm_info" = "Confirmar";
 
 // Unlock PIN
 

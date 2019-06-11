@@ -5,10 +5,17 @@
 "coin.BCHt" = "Bitcoin Cash Т";
 "coin.ETHt" = "Ethereum Т";
 
-"alert.ok" = "OK";
-"alert.cancel" = "Отменить";
+"button.ok" = "OK";
+"button.cancel" = "Отмена";
+"button.confirm" = "Подтвердить";
+"button.done" = "Готово";
+"button.next" = "Далее";
+"button.remove" = "Откл.";
+"button.forward" = "Переслать";
+"button.save" = "Сохранить";
+"button.sync" = "Синхр.";
+
 "alert.copied" = "Скопировано";
-"alert.confirm" = "Подтвердить";
 "alert.no_internet" = "Нет интернета";
 "alert.network_issue" = "Проблемы с сетью. Попробуйте еще раз ";
 
@@ -18,23 +25,35 @@
 
 "access_camera.message" = "Unstoppable Wallet необходим доступ к вашей камере для QR-код.\n\nПерейдите в \"Настройки\", чтобы разрешить доступ к камере.";
 "access_camera.settings" = "Настройки";
-"access_camera.cancel" = "Отменить";
 
 // Guest Page
 
 "guest.title" = "Unstoppable";
+"guest.description" = "IN BLOCKCHAIN WE TRUST";
 "guest.subtitle" = "Decentralized app";
 "guest.create_wallet" = "Создать Кошелек";
-"guest.restore_wallet" = "Восстановить Кошелек";
+"guest.restore_wallet" = "Восстановить";
 "guest.version" = "версия %@";
 
 // Restore
 
 "restore.title" = "Восстановить";
-"restore.description" = "Введите Секретный Ключ  ";
-"restore.done" = "Готово";
-"restore.cancel" = "Отменить";
+"restore.description" = "Введите Секретный Ключ";
 "restore.validation_failed" = "Неверный Секретный Ключ";
+
+//Coin Sync Modes
+"coin_sync.title" = "Параметры Восстановления";
+"coin_sync.header" = "Синхронизация с блокчейном";
+"coin_sync.fast" = "Быстро";
+"coin_sync.recommended" = "0-2 часа (Рекомендуется)";
+"coin_sync.fast.text" = "Восстановление ваших предыдущих транзакций через сторонний защищенный сервер. Для пользователей с длинной историей транзакций и с очень большим суммами этот метод может представлять риски для конфиденциальности.";
+"coin_sync.slow" = "Медленно";
+"coin_sync.more_private" = "1-12 часов (Более Приватно)";
+"coin_sync.slow.text" = "Восстановление ваших предыдущих транзакций будет непосредственно из сети. Это более приватно, но очень медленно. Чем больше монет вы восстанавливаете, тем больше времени потребуется. Если восстановление занимает слишком много времени, перейдите в раздел \"Безопасность\" в Настройках и выберите опцию «Отключить это устройство».";
+"coin_sync.disable" = "Откл. монету";
+"coin_sync.alert.header" = "Внимание";
+"coin_sync.alert.text" = "Это действие синхронизирует баланс вашего кошелька для каждого блокчейна. Может потребоваться несколько часов.";
+"coin_sync.erc20" = "Режим синхронизации, подобно Ethereum";
 
 // Backup
 
@@ -42,14 +61,11 @@
 "backup.intro.subtitle" = "Ваш секретный ключ является единственным способом для восстановления вашего кошелька.\n\nОн состоит из 12 слов. Храните его в безопасном месте.";
 "backup.intro.later" = "Позже";
 "backup.intro.backup_now" = "Резервная копия";
-
 "backup.words.title" = "Секретный Ключ";
-"backup.words.proceed" = "Далее";
 
 "backup.confirmation.title" = "Проверка...";
 "backup.confirmation.description" = "Введите слова из вашего секретного ключа";
 "backup.confirmation.failure_alert.text" = "Слова не совпадают";
-"backup.confirmation.done_button" = "Готово";
 "backup.confirmation.secret_key" = "Я понимаю, что я единственный владелец  Секретного Ключа, который надежно хранится на моем телефоне и позволяет мне контролировать средства в моем кошельке.";
 "backup.confirmation.delete_app_warn" = "Я понимаю, что если это приложение удаляется или устанавливается на другое устройство, мой кошелек можно восстановить только с помощью Секретного Ключа.";
 "backup.confirmation.disclaimer" = "Я понимаю, что разработчики этого приложения не могут нести ответственность за любые непреднамеренные ошибки или проблемы, которые могут возникнуть при использовании этого приложения.";
@@ -68,7 +84,6 @@
 
 "deposit.receive_coin" = "Получить %@";
 "deposit.your_address" = "Ваш Адрес";
-"deposit.share" = "Переслать";
 
 // Send
 
@@ -139,6 +154,7 @@
 "settings.title" = "Настройки";
 "settings.tab_bar_item" = "Настройки";
 "settings.security_center" = "Центр Безопасности";
+"settings.advanced" = "Дополнительные настройки";
 "settings.base_currency" = "Базовая Валюта";
 "settings.language" = "Язык";
 "settings.about" = "О приложении";
@@ -157,9 +173,6 @@
 // Settings -> Manage Wallet
 
 "settings_manage_wallet.title" = "Кошельки";
-
-"settings_manage_wallet.remove_button" = "Откл.";
-
 
 // Settings -> About
 
@@ -192,7 +205,6 @@
 "edit_pin.title" = "Код Доступа";
 "edit_pin.unlock_info" = "Текущий Код";
 "edit_pin.new_pin_info" = "Новый Код";
-"edit_pin.confirm_info" = "Подтвердить";
 
 // Unlock PIN
 

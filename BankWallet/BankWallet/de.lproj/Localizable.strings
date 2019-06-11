@@ -5,10 +5,17 @@
 "coin.BCHt" = "Bitcoin Cash T";
 "coin.ETHt" = "Ethereum T";
 
-"alert.ok" = "OK";
-"alert.cancel" = "Abbrechen";
+"button.ok" = "OK";
+"button.cancel" = "Abbrechen";
+"button.confirm" = "Bestätigen";
+"button.done" = "Fertig";
+"button.next" = "Weiter";
+"button.remove" = "Entfernen";
+"button.forward" = "Teilen";
+"button.save" = "Speichern";
+"button.sync" = "Sync";
+
 "alert.copied" = "Kopiert";
-"alert.confirm" = "Bestätigen";
 "alert.no_internet" = "Kein Internet";
 "alert.network_issue" = "Netzwerkprobleme. Bitte noch einmal versuchen.";
 
@@ -18,23 +25,35 @@
 
 "access_camera.message" = "Wir brauchen Zugriff auf deine Kamera um QR-code scannen.\nRufe die Einstellungen auf, um den Zugriff auf die Kamera zu erlauben";
 "access_camera.settings" = "Einstellungen";
-"access_camera.cancel" = "Abbrechen";
 
 // Guest Page
 
 "guest.title" = "Unstoppable";
+"guest.description" = "IN BLOCKCHAIN WE TRUST";
 "guest.subtitle" = "Decentralized App";
 "guest.create_wallet" = "Wallet Erstellen";
-"guest.restore_wallet" = "Wallet Wiederherstellen";
+"guest.restore_wallet" = "Wiederherstellen";
 "guest.version" = "Version %@";
 
 // Restore
 
 "restore.title" = "Wiederherstellen";
-"restore.description" = " Offlineschlüssel eingeben";
-"restore.done" = "Fertig";
-"restore.cancel" = "Abbrechen";
+"restore.description" = "Offlineschlüssel eingeben";
 "restore.validation_failed" = "Falscher Offlineschlüssel";
+
+//Coin Sync Modes
+"coin_sync.title" = "Optionen Wiederherstellen";
+"coin_sync.header" = "Synchronisierung mit der Blockchain";
+"coin_sync.fast" = "Schnell";
+"coin_sync.recommended" = "0-2 Stunden (empfohlen)";
+"coin_sync.fast.text" = "Stellt deine bisherigen Transaktionen über sicheren Drittanbieter-Server wieder her. Für Benutzer mit einer langen Geschichte von Transaktionen mit sehr großen Summen kann diese Methode die Privatsphäre-Risiken darstellen.";
+"coin_sync.slow" = "Langsam";
+"coin_sync.more_private" = "1-12 Stunden (mehr privat)";
+"coin_sync.slow.text" = "Stellt deine bisherigen Transaktionen direkt aus dem Netzwerk her. Signifiziert mehr privat, aber sehr langsam. Wenn die Wiederherstellung zu viel Zeit in den Bereich Sicherheit in Einstellungen geht und wähle die Option „Dieses Gerät trennen“ aus.";
+"coin_sync.disable" = "Coin deaktivieren";
+"coin_sync.alert.header" = "Achtung";
+"coin_sync.alert.text" = "Diese Aktion wird dein Wallet-Konto für jede Blockchain neu synchronisieren. Es kann mehrere Stunden dauern, um ihn abzuschließen.";
+"coin_sync.erc20" = "Sync-Modus wie Ethereum";
 
 // Backup
 
@@ -42,14 +61,11 @@
 "backup.intro.subtitle" = "Dein Offlineschlüssel ist die einzige Möglichkeit, dein Wallet wiederherzustellen, falls du dein Smartphone verlierst, austauscht, es gestohlen wird oder kaputtgeht. \n\nEs besteht aus 12 Wörtern. Speich es sicher offline.\n";
 "backup.intro.later" = "Später";
 "backup.intro.backup_now" = "Backup";
-
 "backup.words.title" = "Offlineschlüssel";
-"backup.words.proceed" = "Weiter";
 
 "backup.confirmation.title" = "Prüfen …";
 "backup.confirmation.description" = "Gib bitte die Wörter deines Offlineschlüssels ein";
 "backup.confirmation.failure_alert.text" = "Die Wörter stimmen nicht überein";
-"backup.confirmation.done_button" = "Fertig";
 "backup.confirmation.secret_key" = "Ich stimme zu, dass ich allein Inhaber eines privaten 12-Wort Offlineschlüssels bin, der sicher auf meinem Telefon gespeichert wird und mir ermöglicht, Geld auf meinem Wallet zu steuern.";
 "backup.confirmation.delete_app_warn" = "Ich stimme zu, dass bei einer Verschiebung oder Entfernung dieser App, der Zugang zu meinem Walletkonto nur bei Verwendung den Offlineschlüsseln erfolgt werden muss.";
 "backup.confirmation.disclaimer" = "Ich stimme zu, dass Entwickler dieser App nicht für unbeabsichtigte Fehler oder Probleme verantwortlich gemacht werden können, die bei der Verwendung dieser App auftreten können.";
@@ -68,7 +84,6 @@
 
 "deposit.receive_coin" = "%@ Anfordern ";
 "deposit.your_address" = "Deine Adresse";
-"deposit.share" = "Weiterleiten";
 
 // Send
 
@@ -139,6 +154,7 @@
 "settings.title" = "Einstellungen";
 "settings.tab_bar_item" = "Einstellungen";
 "settings.security_center" = "Sicherheit";
+"settings.advanced" = "Erweiterte Einstellungen";
 "settings.base_currency" = "Währung";
 "settings.language" = "Sprache";
 "settings.about" = "Info";
@@ -157,9 +173,6 @@
 // Settings -> Manage Wallet
 
 "settings_manage_wallet.title" = "Wallets";
-
-"settings_manage_wallet.remove_button" = "Entfernen";
-
 
 // Settings -> About
 
@@ -192,7 +205,6 @@
 "edit_pin.title" = "Code bearbeiten";
 "edit_pin.unlock_info" = "Aktuelle Code ";
 "edit_pin.new_pin_info" = "Neue Code";
-"edit_pin.confirm_info" = "Bestätigen";
 
 // Unlock PIN
 

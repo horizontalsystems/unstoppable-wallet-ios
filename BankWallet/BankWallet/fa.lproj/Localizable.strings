@@ -5,10 +5,17 @@
 "coin.BCHt" = "Bitcoin Cash T";
 "coin.ETHt" = "Ethereum T";
 
-"alert.ok" = "تأیید";
-"alert.cancel" = "انصراف";
+"button.ok" = "OK";
+"button.cancel" = "Cancel";
+"button.confirm" = "Confirm";
+"button.done" = "Done";
+"button.next" = "Next";
+"button.remove" = "Remove";
+"button.forward" = "Forward";
+"button.save" = "Save";
+"button.sync" = "Sync";
+
 "alert.copied" = "کپی انجام شد";
-"alert.confirm" = "تأیید";
 "alert.no_internet" = "انترنت نداريد";
 "alert.network_issue" = "مشكل انترنت. لطفاً چند دقيقه بعد كوشش كنيد";
 
@@ -18,23 +25,35 @@
 
 "access_camera.message" = "بانك ضرورت دسترسي به دوربين دارد بخاطر اسكن كردن QR كد.\nبرويد به تنظيمات -> اجازه دهيد تا بانك دسترسي به دوربين داشته باشد.";
 "access_camera.settings" = "تنظيمات";
-"access_camera.cancel" = "انصراف";
 
 // Guest Page
 
 "guest.title" = "Unstoppable";
+"guest.description" = "IN BLOCKCHAIN WE TRUST";
 "guest.subtitle" = "Decentralized app";
-"guest.create_wallet" = "کیف پول جدید";
-"guest.restore_wallet" = "بازگرداندن كيف پول";
+"guest.create_wallet" = "Create Wallet";
+"guest.restore_wallet" = "Restore";
 "guest.version" = "نسخهٔ %@";
 
 // Restore
 
 "restore.title" = "بازیابی";
-"restore.description" = "کلید مخفی را وارد کنید  ";
-"restore.done" = "انجام شد";
-"restore.cancel" = "انصراف";
+"restore.description" = "Enter Secret Key";
 "restore.validation_failed" = "کلید مخفی نادرست";
+
+//Coin Sync Modes
+"coin_sync.title" = "Restore Options";
+"coin_sync.header" = "Syncing with blockchain";
+"coin_sync.fast" = "Fast";
+"coin_sync.recommended" = "0-2 hours (Recommended)";
+"coin_sync.fast.text" = "Restores your past transactions via secure third party server. For users with a long history of transactions involving very large sums this method may pose privacy risks.";
+"coin_sync.slow" = "Slow";
+"coin_sync.more_private" = "1-12 hours (More Private)";
+"coin_sync.slow.text" = "Restores your past transactions directly from the network. Significantly more private but very slow. If the restore takes way too much time go to Security section in Settings tab and select “Unlink This Device” option.";
+"coin_sync.disable" = "Disable Coin";
+"coin_sync.alert.header" = "Attention";
+"coin_sync.alert.text" = "This action will resync your wallet balance for each blockchain. It may take several hours to complete.";
+"coin_sync.erc20" = "Sync mode same as Ethereum";
 
 // Backup
 
@@ -42,14 +61,11 @@
 "backup.intro.subtitle" = "رمز مخيفي شما ميتواند كيف پول شما را دوباره پروگرام كند اگر تيليفون شما گم شود،خراب شود يا دزدي شود پس هميشه رمز مخفي خود را پيش خود داشته باشد و فراموش نكيد. n\n\\ رمز مخفي ١٢ رقم ميخواهد.";
 "backup.intro.later" = "بعداً";
 "backup.intro.backup_now" = "پيشتيباني";
-
 "backup.words.title" = "رقم مخفی";
-"backup.words.proceed" = "بعدي";
 
 "backup.confirmation.title" = "برسي...";
 "backup.confirmation.description" = "حرف هاي رمز تات را وارد كنيد";
 "backup.confirmation.failure_alert.text" = "ارقام با هم شباهت ندارند";
-"backup.confirmation.done_button" = "انجام شد";
 "backup.confirmation.secret_key" = "من قبول ميكنم كي تنها من صاحب اين ١٢ عدد مخفي ميباشم كي اين عداد در گوشي همراه من ميباشد و تنها من ميتوانم با اين عداد كيف پول و مقدار پول خود را فعال كنم.";
 "backup.confirmation.delete_app_warn" = "من قبول ميكنم كي اگر اين كاربرد تكان بخورد،حذف شود و يا اشكال در عملكرد به وحود بياد، فقط تنها رمز مخفي ميتواند دوباره بهبوديافت كند.";
 "backup.confirmation.disclaimer" = "من قبول ميكنم كي سازنده اين كاربرد هيچ نوع معصوليت در مقابل ويروس و ادم هاي تقلبي ندارد كي شما به ان متواجه شديد.";
@@ -68,7 +84,6 @@
 
 "deposit.receive_coin" = "دریافت %@";
 "deposit.your_address" = "آدرس شما";
-"deposit.share" = "فرستادن به ديگران";
 
 // Send
 
@@ -139,6 +154,7 @@
 "settings.title" = "تنظيمات";
 "settings.tab_bar_item" = "تنظيمات";
 "settings.security_center" = "مرکز امنیت";
+"settings.advanced" = "Advanced Settings";
 "settings.base_currency" = "ارز مرجع";
 "settings.language" = "زبان";
 "settings.about" = "درباره";
@@ -157,9 +173,6 @@
 // Settings -> Manage Wallet
 
 "settings_manage_wallet.title" = "مدريت سكه";
-
-"settings_manage_wallet.remove_button" = "حذف";
-
 
 // Settings -> About
 
@@ -192,7 +205,6 @@
 "edit_pin.title" = "تعغير كد";
 "edit_pin.unlock_info" = "رمز عبور فعلي";
 "edit_pin.new_pin_info" = "رمز عبور جديد";
-"edit_pin.confirm_info" = "تاييد";
 
 // Unlock PIN
 

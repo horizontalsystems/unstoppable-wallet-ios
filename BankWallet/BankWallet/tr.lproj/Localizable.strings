@@ -5,10 +5,17 @@
 "coin.BCHt" = "Bitcoin Cash T";
 "coin.ETHt" = "Ethereum T";
 
-"alert.ok" = "Tamam";
-"alert.cancel" = "İptal";
+"button.ok" = "Tamam";
+"button.cancel" = "İptal";
+"button.confirm" = "Onayla";
+"button.done" = "Bitti";
+"button.next" = "İleri";
+"button.remove" = "Kaldır";
+"button.forward" = "İlet";
+"button.save" = "Kaydet";
+"button.sync" = "Eşitle";
+
 "alert.copied" = "Kopyalandı";
-"alert.confirm" = "Onayla";
 "alert.no_internet" = "Internet Bağlantısı Yok";
 "alert.network_issue" = "Ağ sorunu. Tekrar deneyin.";
 
@@ -18,23 +25,35 @@
 
 "access_camera.message" = "Unstoppable Cüzdan, QR Kodu okuyabilmek için Kameranıza ihtiyaç duyuyor.\n\nAyarlar - > Unstoppable'a gidip kamera erişimine izin verin.";
 "access_camera.settings" = "Ayarlar";
-"access_camera.cancel" = "İptal";
 
 // Guest Page
 
 "guest.title" = "Unstoppable";
+"guest.description" = "BLOCKCHAIN'E EMANET";
 "guest.subtitle" = "Decentralized App";
-"guest.create_wallet" = "Yeni Cüzdan";
-"guest.restore_wallet" = "Cüzdanı Geri Yükle";
+"guest.create_wallet" = "Cüzdan Oluştur";
+"guest.restore_wallet" = "Geri Yükle";
 "guest.version" = "sürüm %@";
 
 // Restore
 
 "restore.title" = "Geri Yükle";
-"restore.description" = "Gizli Anahtarı girin  ";
-"restore.done" = "Bitti";
-"restore.cancel" = "İptal";
+"restore.description" = "Gizli Anahtarı Girin";
 "restore.validation_failed" = "Hatalı Gizli anahtar";
+
+//Coin Sync Modes
+"coin_sync.title" = "Geri yükleme seçenekleri";
+"coin_sync.header" = "Blockchain ile eşitleniyor";
+"coin_sync.fast" = "Hızlı";
+"coin_sync.recommended" = "0-2 saat (Tavsiye edilen)";
+"coin_sync.fast.text" = "Geçmiş işlemlerinizi güvenilir üçüncü şahıs sunucularıyla geri yükleyin. Uzun işlem geçmişi olan ve büyük miktarda para işlemleri yapan kullanıcılar için bu yöntem güvenlik riski oluşturabilir.";
+"coin_sync.slow" = "Yavaş";
+"coin_sync.more_private" = "1-12 saat (Daha Gizli)";
+"coin_sync.slow.text" = "İşlem geçmişinizi ağdan geri yükleyin. Çok daha güvenli ancak daha yavaş. Eğer gereğinden daha uzun sürerse, Ayarlardaki Güvenlik bölümünden \"Bu cihazla bağı kes\"i seçin.";
+"coin_sync.disable" = "Kuru Etkisizleştir";
+"coin_sync.alert.header" = "Dikkat";
+"coin_sync.alert.text" = "Bu eylem cüzdanınızı her blockchain ile tekrar eşliyecek. Tamamlanması birkaç saat sürebilir.";
+"coin_sync.erc20" = "Ethereum için geri yükle";
 
 // Backup
 
@@ -42,14 +61,11 @@
 "backup.intro.subtitle" = "Gizli Anahtar, telefonunuzun kaybolması, bozulması, çalınması ve güncelleme gibi herhangi bir sebepten dolayı hesabınıza ulaşamadığınızda hesabınıza tekrar erişim sağlamanın tek yoludur.\n\n 12 kelimeden oluşur. Internet ve telefon haricinde güvenli bir yerde saklayınız (misal: Çelik kasa).";
 "backup.intro.later" = "Sonra";
 "backup.intro.backup_now" = "Yedekle";
-
 "backup.words.title" = "Gizli Anahtar";
-"backup.words.proceed" = "İleri";
 
 "backup.confirmation.title" = "Kontrol etme ...";
 "backup.confirmation.description" = "Gizli Anahtarınızda ki kelimeleri girin";
 "backup.confirmation.failure_alert.text" = "Kelimeler eşleşmiyor";
-"backup.confirmation.done_button" = "Bitti";
 "backup.confirmation.secret_key" = "Cüzdanıma erişmemi sağlayan 12 kelimeli Gizli Anahtarın tek sahibinin olduğumu ve bu anahtarın telefonumun güvenli hafızasında tutulduğunu kabul ediyorum.";
 "backup.confirmation.delete_app_warn" = "Uygulamanın silinmesi, hatalı davranması, taşınması ve benzeri bir durumda hesabıma ulaşamadığımda, hesabımı kurtarmanın tek yolunun Gizli Anahtar olduğunu biliyourum.";
 "backup.confirmation.disclaimer" = "Uygulama geliştiricilerinin, istenmeyen herhangi bir hatadan veya bu uygulamayı kullanırken ortaya çıkabilecek sorunlardan sorumlu tutulamayacağını kabul ediyorum.";
@@ -68,7 +84,6 @@
 
 "deposit.receive_coin" = "%@ al";
 "deposit.your_address" = "Adresiniz";
-"deposit.share" = "İlet";
 
 // Send
 
@@ -139,6 +154,7 @@
 "settings.title" = "Ayarlar";
 "settings.tab_bar_item" = "Ayarlar";
 "settings.security_center" = "Güvenlik Merkezi";
+"settings.advanced" = "Gelişmiş Ayarlar";
 "settings.base_currency" = "Para birimi";
 "settings.language" = "Dil";
 "settings.about" = "Hakkında";
@@ -158,9 +174,6 @@
 
 "settings_manage_wallet.title" = "Cüzdanlar";
 
-"settings_manage_wallet.remove_button" = "Kaldır";
-
-
 // Settings -> About
 
 "settings_about.title" = "Hakkında";
@@ -171,7 +184,7 @@
 
 "settings_security.title" = "Güvenlik Merkezi";
 "settings_security.backup_wallet" = "Cüzdanı yedekle";
-"settings_security.unlink_from_this_device" = "Bu cihazla bağlantıyı kes";
+"settings_security.unlink_from_this_device" = "Bu cihazla bağı kes";
 "settings_security.set_pin" = "Kod";
 "settings_security.change_pin" = "Şifreyi Değiştir";
 "settings_security.touch_id" = "Touch ID";
@@ -192,7 +205,6 @@
 "edit_pin.title" = "Şifreyi Değiştir";
 "edit_pin.unlock_info" = "Şimdi ki Şifre";
 "edit_pin.new_pin_info" = "Yeni Kod";
-"edit_pin.confirm_info" = "Onayla";
 
 // Unlock PIN
 

@@ -5,10 +5,17 @@
 "coin.BCHt" = "Bitcoin Cash T";
 "coin.ETHt" = "Ethereum T";
 
-"alert.ok" = "确定";
-"alert.cancel" = "取消";
+"button.ok" = "确定";
+"button.cancel" = "取消";
+"button.confirm" = "确认";
+"button.done" = "完成";
+"button.next" = "继续";
+"button.remove" = "移除";
+"button.forward" = "转发";
+"button.save" = "保存";
+"button.sync" = "Sync";
+
 "alert.copied" = "复制成功";
-"alert.confirm" = "确认";
 "alert.no_internet" = "没有网络连接";
 "alert.network_issue" = "网络问题。请再试一次。";
 
@@ -16,25 +23,37 @@
 
 // Access Camera
 
-"access_camera.message" = "Unstoppable needs access to your camera to scan QR code.\n\nGo to Settings - > Unstoppable and allow access to Camera.";
+"access_camera.message" = "钱包需要接入照相机扫描二维码\n\n请在”设置”-“Unstoppable”中打开";
 "access_camera.settings" = "设置";
-"access_camera.cancel" = "取消";
 
 // Guest Page
 
 "guest.title" = "Unstoppable";
+"guest.description" = "IN BLOCKCHAIN WE TRUST";
 "guest.subtitle" = "Decentralized App";
-"guest.create_wallet" = "新的钱包";
-"guest.restore_wallet" = "恢复钱包";
-"guest.version" = "version %@";
+"guest.create_wallet" = "创建钱包";
+"guest.restore_wallet" = "恢复";
+"guest.version" = "Version %@";
 
 // Restore
 
 "restore.title" = "恢复";
-"restore.description" = "输入密钥  ";
-"restore.done" = "完成";
-"restore.cancel" = "取消";
+"restore.description" = "输入密钥";
 "restore.validation_failed" = "密钥不正确";
+
+//Coin Sync Modes
+"coin_sync.title" = "恢复选项";
+"coin_sync.header" = "Syncing with blockchain";
+"coin_sync.fast" = "过程最快";
+"coin_sync.recommended" = "0 小时 (推荐)";
+"coin_sync.fast.text" = "通过安全的第三方服务器可以恢复以前的事务。对于拥有大量交易历史的用户来说，这种方法可能会带来隐私风险。\n";
+"coin_sync.slow" = "缓慢";
+"coin_sync.more_private" = "1 小时(更多隐私)";
+"coin_sync.slow.text" = "直接从网络可以恢复以前的事务。明显更私密，但速度很慢。如果恢复时间过长，请转到“设置”选项卡中的“安全”部分，然后选择“取消此设备的链接”选项。\n";
+"coin_sync.disable" = "Disable Coin";
+"coin_sync.alert.header" = "Attention";
+"coin_sync.alert.text" = "This action will resync your wallet balance for each blockchain. It may take several hours to complete.";
+"coin_sync.erc20" = "Sync mode same as Ethereum";
 
 // Backup
 
@@ -42,17 +61,14 @@
 "backup.intro.subtitle" = "如果您的手机被丢失、被盗、损坏、或更新，您的密钥是恢复钱包和资金的唯一方法。\n\n密钥由12个单词组成。必须要把自己的密钥保管好。";
 "backup.intro.later" = "稍后";
 "backup.intro.backup_now" = "备份";
-
 "backup.words.title" = "密钥";
-"backup.words.proceed" = "继续";
 
 "backup.confirmation.title" = "正在检查...";
 "backup.confirmation.description" = "请输入你密钥中的词";
 "backup.confirmation.failure_alert.text" = "单词不匹配";
-"backup.confirmation.done_button" = "完成";
-"backup.confirmation.secret_key" = "I understand that I am a sole owner of a private 12-word Secret Key which is securely stored on my phone and enables me to control funds on my wallet.";
-"backup.confirmation.delete_app_warn" = "I understand that if this app is ever moved, deleted or malfunctions, the access to my wallet can be only recovered with that Secret Key.";
-"backup.confirmation.disclaimer" = "I understand that developers of this app can not be held responsible for any unintended bugs or issues that may arise while using this app.";
+"backup.confirmation.secret_key" = "我知道, 我是一个12个字的私人密钥的唯一拥有者，该密钥安全地存储在我的手机上，使我能够控制我钱包上的资金。";
+"backup.confirmation.delete_app_warn" = "我知道如果此APP被移动、删除或出现故障，只有用密钥才能恢复对我钱包的访问。";
+"backup.confirmation.disclaimer" = "我理解这个应用程序的开发人员对使用这个应用程序时可能出现的任何意外的错误或问题不负责任。\n";
 
 // Balance
 
@@ -68,7 +84,6 @@
 
 "deposit.receive_coin" = "收到%@";
 "deposit.your_address" = "您的地址";
-"deposit.share" = "转发";
 
 // Send
 
@@ -93,15 +108,15 @@
 // Transaction Info
 
 "tx_info.title" = "交易";
-"tx_info.historical_rate" = "Historical Rate";
+"tx_info.historical_rate" = "历史汇率";
 "tx_info.time" = "时间";
 "tx_info.status" = "状态";
 "tx_info.status.pending" = "在过程中";
-"tx_info.status.confirmed" = "Confirmed";
+"tx_info.status.confirmed" = "已确认";
 "tx_info.from_hash" = "发件人";
 "tx_info.to_hash" = "收件人";
-"tx_info.button_verify" = "Verify";
-"tx_info.rate" = "Historical Rate";
+"tx_info.button_verify" = "验证";
+"tx_info.rate" = "历史汇率";
 
 // Full Info
 
@@ -139,6 +154,7 @@
 "settings.title" = "设置";
 "settings.tab_bar_item" = "设置";
 "settings.security_center" = "安全中心";
+"settings.advanced" = "Advanced Settings";
 "settings.base_currency" = "基本货币";
 "settings.language" = "语言";
 "settings.about" = "更多";
@@ -157,9 +173,6 @@
 // Settings -> Manage Wallet
 
 "settings_manage_wallet.title" = "钱包";
-
-"settings_manage_wallet.remove_button" = "移除";
-
 
 // Settings -> About
 
@@ -192,7 +205,6 @@
 "edit_pin.title" = "修改密码";
 "edit_pin.unlock_info" = "当前密码";
 "edit_pin.new_pin_info" = "新密碼";
-"edit_pin.confirm_info" = "确认";
 
 // Unlock PIN
 
