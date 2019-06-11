@@ -3,12 +3,14 @@ import Foundation
 class SecuritySettingsPresenter {
     private let router: ISecuritySettingsRouter
     private let interactor: ISecuritySettingsInteractor
+    private var state: SecuritySettingsState
 
     weak var view: ISecuritySettingsView?
 
-    init(router: ISecuritySettingsRouter, interactor: ISecuritySettingsInteractor) {
+    init(router: ISecuritySettingsRouter, interactor: ISecuritySettingsInteractor, state: SecuritySettingsState) {
         self.router = router
         self.interactor = interactor
+        self.state = state
     }
 
 }
@@ -25,7 +27,8 @@ extension SecuritySettingsPresenter: ISecuritySettingsViewDelegate {
     }
 
     func didSwitch(biometricUnlockOn: Bool) {
-        interactor.set(biometricUnlockOn: biometricUnlockOn)
+        state.unlockType = .biometry(isOn: biometricUnlockOn)
+        router.showUnlock()
     }
 
     func didTapEditPin() {
@@ -50,6 +53,21 @@ extension SecuritySettingsPresenter: ISecuritySettingsInteractorDelegate {
 
     func didGetBiometry(type: BiometryType) {
         view?.set(biometryType: type)
+    }
+
+    func onUnlock() {
+        if let unlockType = state.unlockType {
+            switch unlockType {
+            case .biometry(let isOn):
+                interactor.set(biometricUnlockOn: isOn)
+            }
+        }
+        state.unlockType = nil
+    }
+
+    func onCancelUnlock() {
+        view?.set(biometricUnlockOn: interactor.isBiometricUnlockOn)
+        state.unlockType = nil
     }
 
 }

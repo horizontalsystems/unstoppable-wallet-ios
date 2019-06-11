@@ -58,3 +58,15 @@ extension SecuritySettingsInteractor: ISecuritySettingsInteractor {
     }
 
 }
+
+extension SecuritySettingsInteractor: IUnlockDelegate {
+
+    func onUnlock() {
+        delegate?.onUnlock()
+    }
+
+    func onCancelUnlock() {
+        delegate?.onCancelUnlock()
+    }
+
+}

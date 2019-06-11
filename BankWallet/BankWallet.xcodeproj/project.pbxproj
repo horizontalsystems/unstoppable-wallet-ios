@@ -462,6 +462,7 @@
 		1A56482C80D7B85CAE06C689 /* TransactionViewItemLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5640AC869ADF30D3BCCAE0 /* TransactionViewItemLoader.swift */; };
 		1A56483342FF07B40E53AD20 /* SetPinModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56421310FCB8A4E19BDDB3 /* SetPinModule.swift */; };
 		1A56483A6675677AA621FF79 /* PagingDotsItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56453E2F6ED44D46D84C49 /* PagingDotsItemView.swift */; };
+		1A564860D1BFB8032BFDC600 /* SecuritySettingsState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564D2359F55A73882AE637 /* SecuritySettingsState.swift */; };
 		1A564891B0D0EABB5502C123 /* DepositAddressCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5647F6F29405E571D70592 /* DepositAddressCollectionCell.swift */; };
 		1A5648CC60D79AAC561BBCB0 /* LanguageSettingsPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56452493943328835585AC /* LanguageSettingsPresenterTests.swift */; };
 		1A5648D075682B17EFE9CBB6 /* AddressData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5649C6FFC694CD18A8B39A /* AddressData.swift */; };
@@ -549,6 +550,7 @@
 		1A564D2917CF5C38C84C031B /* BitcoinBaseAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56450DA6DF97C9E1FFE987 /* BitcoinBaseAdapter.swift */; };
 		1A564D29C715EE06C30C8B2B /* LaunchInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56458C7C29504755A09E00 /* LaunchInteractor.swift */; };
 		1A564D45DD956D909C7B6C16 /* OneTimeTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56468BE2370BCAA8BDA2FC /* OneTimeTimer.swift */; };
+		1A564D46D9ED32732BFE1C5A /* SecuritySettingsState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564D2359F55A73882AE637 /* SecuritySettingsState.swift */; };
 		1A564D54DEE633D236F6AE38 /* TransactionViewItemLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5640AC869ADF30D3BCCAE0 /* TransactionViewItemLoader.swift */; };
 		1A564D60DD2935CBD2B23EF3 /* GuestTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564429BCB7A2DCFFE4104F /* GuestTheme.swift */; };
 		1A564D6E1FB65C20AAD6C54B /* DepositTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56481E8D97841B12893D00 /* DepositTheme.swift */; };
@@ -586,6 +588,7 @@
 		1A564F4AA83DC47DC9840A69 /* SettingsTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564F747A4D0B78E5DF6F1B /* SettingsTheme.swift */; };
 		1A564F614653FD09B495400A /* ManageCoinCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56478E08D96F36DD17D8C8 /* ManageCoinCell.swift */; };
 		1A564F7495AF0D825DDAA0A2 /* SyncModeInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5640E15376DD2F06DFCBF2 /* SyncModeInteractor.swift */; };
+		1A564F7A37FCE8775659F77A /* SecuritySettingsState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564D2359F55A73882AE637 /* SecuritySettingsState.swift */; };
 		1A564F7BEC80AEC94726090A /* SyncModeState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56439DBEB4C2928B4DC7A0 /* SyncModeState.swift */; };
 		1A564FAB22A9E25646FC542A /* BackupTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5645D738FD93B79628E5E5 /* BackupTheme.swift */; };
 		1A564FB62EBBA50489895BEF /* BalanceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564B746C8A6451D81B27D4 /* BalanceCell.swift */; };
@@ -1453,6 +1456,7 @@
 		1A564CF82858F8E7F80E1835 /* RateManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RateManager.swift; sourceTree = "<group>"; };
 		1A564CFA352D219E2D05D09F /* SendButtonItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendButtonItemView.swift; sourceTree = "<group>"; };
 		1A564D0BE1310BFCC7D8D774 /* EditPinModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditPinModule.swift; sourceTree = "<group>"; };
+		1A564D2359F55A73882AE637 /* SecuritySettingsState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecuritySettingsState.swift; sourceTree = "<group>"; };
 		1A564D5E55767404ED6C88E0 /* Decimal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Decimal.swift; sourceTree = "<group>"; };
 		1A564D73251DBFA0CFE34D12 /* MainSettingsInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainSettingsInteractor.swift; sourceTree = "<group>"; };
 		1A564D7FA287326CBE96353A /* ButtonTheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonTheme.swift; sourceTree = "<group>"; };
@@ -2301,6 +2305,7 @@
 				1A564082B28C17265B23D88A /* SecuritySettingsInteractor.swift */,
 				1A56446DB62F52AC4C3C2C30 /* SecuritySettingsPresenter.swift */,
 				1A5647AD931E3B90C974A6CB /* SecuritySettingsViewController.swift */,
+				1A564D2359F55A73882AE637 /* SecuritySettingsState.swift */,
 			);
 			path = Security;
 			sourceTree = "<group>";
@@ -3475,6 +3480,7 @@
 				1A5645E37330A25155134B58 /* SyncModeCell.swift in Sources */,
 				1A5644AEFBA71E106BA6A1AF /* SyncModeTheme.swift in Sources */,
 				1A564C4C3A445A00AC5F7810 /* SyncModeSectionSeparator.swift in Sources */,
+				1A564F7A37FCE8775659F77A /* SecuritySettingsState.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3884,6 +3890,7 @@
 				1A56480277B0C3D6429E94EC /* SyncModeCell.swift in Sources */,
 				1A564521A9AD0C4926C52341 /* SyncModeTheme.swift in Sources */,
 				1A564A16085370FCAF6657B2 /* SyncModeSectionSeparator.swift in Sources */,
+				1A564D46D9ED32732BFE1C5A /* SecuritySettingsState.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4242,6 +4249,7 @@
 				1A564588DF7EA1B6F9BB06AB /* SyncModeCell.swift in Sources */,
 				1A5645B889D5590A572E139A /* SyncModeTheme.swift in Sources */,
 				1A56417502CB34D371D89ED4 /* SyncModeSectionSeparator.swift in Sources */,
+				1A564860D1BFB8032BFDC600 /* SecuritySettingsState.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

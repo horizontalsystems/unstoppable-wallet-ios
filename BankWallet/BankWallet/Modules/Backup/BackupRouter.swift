@@ -21,7 +21,7 @@ extension BackupRouter: IBackupRouter {
     }
 
     func showUnlock() {
-        viewController?.present(UnlockPinRouter.module(unlockDelegate: unlockDelegate, cancelable: true), animated: true)
+        viewController?.present(UnlockPinRouter.module(unlockDelegate: unlockDelegate, enableBiometry: false, cancelable: true), animated: true)
     }
 
 }

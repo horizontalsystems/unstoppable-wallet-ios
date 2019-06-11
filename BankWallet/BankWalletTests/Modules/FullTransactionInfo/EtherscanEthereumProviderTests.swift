@@ -28,7 +28,7 @@ class ERC20InputParserTests: XCTestCase {
 
     private func json(from string: String) -> [String: Any] {
         let jsonData = string.data(using: .utf8)!
-        return (try? JSONSerialization.jsonObject(with: jsonData, options: []) as! [String: Any])!
+        return (try? JSONSerialization.jsonObject(with: jsonData, options: []) as? [String: Any])!
     }
 
 }

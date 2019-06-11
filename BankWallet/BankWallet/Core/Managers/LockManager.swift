@@ -66,4 +66,7 @@ extension LockManager: IUnlockDelegate {
         isLocked = false
     }
 
+    func onCancelUnlock() {
+    }
+
 }

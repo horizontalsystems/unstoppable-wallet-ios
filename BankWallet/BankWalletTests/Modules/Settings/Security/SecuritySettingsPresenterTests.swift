@@ -7,6 +7,8 @@ class SecuritySettingsPresenterTests: XCTestCase {
     private var mockInteractor: MockISecuritySettingsInteractor!
     private var mockView: MockISecuritySettingsView!
 
+    private var state: SecuritySettingsState!
+
     private var presenter: SecuritySettingsPresenter!
 
     override func setUp() {
@@ -15,6 +17,8 @@ class SecuritySettingsPresenterTests: XCTestCase {
         mockRouter = MockISecuritySettingsRouter()
         mockInteractor = MockISecuritySettingsInteractor()
         mockView = MockISecuritySettingsView()
+
+        state = SecuritySettingsState()
 
         stub(mockView) { mock in
             when(mock.set(title: any())).thenDoNothing()
@@ -26,6 +30,7 @@ class SecuritySettingsPresenterTests: XCTestCase {
             when(mock.showEditPin()).thenDoNothing()
             when(mock.showSecretKey()).thenDoNothing()
             when(mock.showUnlink()).thenDoNothing()
+            when(mock.showUnlock()).thenDoNothing()
         }
         stub(mockInteractor) { mock in
             when(mock.isBiometricUnlockOn.get).thenReturn(true)
@@ -34,7 +39,7 @@ class SecuritySettingsPresenterTests: XCTestCase {
             when(mock.set(biometricUnlockOn: any())).thenDoNothing()
         }
 
-        presenter = SecuritySettingsPresenter(router: mockRouter, interactor: mockInteractor)
+        presenter = SecuritySettingsPresenter(router: mockRouter, interactor: mockInteractor, state: state)
         presenter.view = mockView
     }
 
@@ -42,6 +47,7 @@ class SecuritySettingsPresenterTests: XCTestCase {
         mockRouter = nil
         mockInteractor = nil
         mockView = nil
+        state = nil
 
         presenter = nil
 
@@ -99,13 +105,15 @@ class SecuritySettingsPresenterTests: XCTestCase {
     func testDidSwitchBiometricUnlockOn() {
         presenter.didSwitch(biometricUnlockOn: true)
 
-        verify(mockInteractor).set(biometricUnlockOn: true)
+        verify(mockRouter).showUnlock()
+        XCTAssertEqual(state.unlockType!, SecuritySettingsUnlockType.biometry(isOn: true))
     }
 
     func testDidSwitchBiometricUnlockOff() {
         presenter.didSwitch(biometricUnlockOn: false)
 
-        verify(mockInteractor).set(biometricUnlockOn: false)
+        verify(mockRouter).showUnlock()
+        XCTAssertEqual(state.unlockType!, SecuritySettingsUnlockType.biometry(isOn: false))
     }
 
     func testDidTapEditPin() {
@@ -128,6 +136,35 @@ class SecuritySettingsPresenterTests: XCTestCase {
     func testDidBackup() {
         presenter.didBackup()
         verify(mockView).set(backedUp: true)
+    }
+
+    func testOnUnlockBiometryTypeOn() {
+        state.unlockType = .biometry(isOn: true)
+
+        presenter.onUnlock()
+
+        verify(mockInteractor).set(biometricUnlockOn: true)
+        XCTAssertEqual(state.unlockType, nil)
+    }
+
+    func testOnUnlockBiometryTypeOff() {
+        state.unlockType = .biometry(isOn: false)
+
+        presenter.onUnlock()
+
+        verify(mockInteractor).set(biometricUnlockOn: false)
+        XCTAssertEqual(state.unlockType, nil)
+    }
+
+    func testOnCancelUnlock() {
+        stub(mockInteractor) { mock in
+            when(mock.isBiometricUnlockOn.get).thenReturn(false)
+        }
+
+        presenter.onCancelUnlock()
+
+        verify(mockView).set(biometricUnlockOn: false)
+        XCTAssertEqual(state.unlockType, nil)
     }
 
 }
