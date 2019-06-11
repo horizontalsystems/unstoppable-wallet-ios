@@ -49,7 +49,7 @@
 "coin_sync.fast.text" = "Geçmiş işlemlerinizi güvenilir üçüncü şahıs sunucularıyla geri yükleyin. Uzun işlem geçmişi olan ve büyük miktarda para işlemleri yapan kullanıcılar için bu yöntem güvenlik riski oluşturabilir.";
 "coin_sync.slow" = "Yavaş";
 "coin_sync.more_private" = "1-12 saat (Daha Gizli)";
-"coin_sync.slow.text" = "Restores your past transactions directly from the network. Significantly more private but very slow. If the restore takes way too much time go to Security section in Settings tab and select “Unlink This Device” option.";
+"coin_sync.slow.text" = "İşlem geçmişinizi ağdan geri yükleyin. Çok daha güvenli ancak daha yavaş. Eğer gereğinden daha uzun sürerse, Ayarlardaki Güvenlik bölümünden \"Bu cihazla bağı kes\"i seçin.";
 "coin_sync.disable" = "Kuru Etkisizleştir";
 "coin_sync.alert.header" = "Dikkat";
 "coin_sync.alert.text" = "Bu eylem cüzdanınızı her blockchain ile tekrar eşliyecek. Tamamlanması birkaç saat sürebilir.";
