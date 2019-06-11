@@ -31,7 +31,7 @@
 "guest.title" = "Unstoppable";
 "guest.description" = "IN BLOCKCHAIN WE TRUST";
 "guest.subtitle" = "Decentralized app";
-"guest.create_wallet" = "Create Wallet";
+"guest.create_wallet" = "Nouveu Porte-Monnaie";
 "guest.restore_wallet" = "Restaurer";
 "guest.version" = "Version %@";
 
@@ -46,10 +46,10 @@
 "coin_sync.header" = "Syncing with blockchain";
 "coin_sync.fast" = "Rapide";
 "coin_sync.recommended" = "0-2 heures (Recommandé)";
-"coin_sync.fast.text" = "Restores your past transactions via secure third party server. For users with a long history of transactions involving very large sums this method may pose privacy risks.";
+"coin_sync.fast.text" = "Restaure vos transactions passées via un serveur tiers sécurisé. Pour les utilisateurs ayant une longue histoire de transactions impliquant des sommes très importantes, cette méthode peut poser des risques de confidentialité.";
 "coin_sync.slow" = "Lente";
 "coin_sync.more_private" = "1-12 heures (Plus Privé)";
-"coin_sync.slow.text" = "Restores your past transactions directly from the network. Significantly more private but very slow. If the restore takes way too much time go to Security section in Settings tab and select “Unlink This Device” option.";
+"coin_sync.slow.text" = "Restaure vos transactions passées directement depuis le réseau. Significablement plus privées mais très lentes. Si la restauration prend beaucoup de temps, allez dans la section Sécurité dans l'onglet Paramètres et sélectionnez l'option «Supprimer le lien de cet appareil».";
 "coin_sync.disable" = "Désactiver Coin";
 "coin_sync.alert.header" = "Attention";
 "coin_sync.alert.text" = "Cette action va rééquilibrer votre solde de porte-monnaie pour chaque de blockchain. Elle peut prendre plusieurs heures pour terminer.";
