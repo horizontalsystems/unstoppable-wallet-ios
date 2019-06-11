@@ -52,8 +52,8 @@
 "coin_sync.slow.text" = "Restores your past transactions directly from the network. Significantly more private but very slow. If the restore takes way too much time go to Security section in Settings tab and select “Unlink This Device” option.";
 "coin_sync.disable" = "Coin deaktivieren";
 "coin_sync.alert.header" = "Achtung";
-"coin_sync.alert.text" = "This action will resync your wallet balance for each blockchain. It may take several hours to complete.";
-"coin_sync.erc20" = "Sync mode same as Ethereum";
+"coin_sync.alert.text" = "Diese Aktion wird dein Wallet-Konto für jede Blockchain neu synchronisieren. Es kann mehrere Stunden dauern, um ihn abzuschließen.";
+"coin_sync.erc20" = "Sync-Modus wie Ethereum";
 
 // Backup
 
