@@ -4,7 +4,7 @@ import Cuckoo
 
 class FullTransactionDataProviderManagerTests: XCTestCase {
     private let bitcoinProviderNames = ["HorizontalSystems.xyz", "BlockChair.com", "BlockExplorer.com", "Btc.com"]
-    private let bitcoinCashProviderNames = ["HorizontalSystems.xyz", "BlockChair.com", "BlockExplorer.com", "Btc.com"]
+    private let bitcoinCashProviderNames = ["Blockdozer.com", "BlockChair.com", "BlockExplorer.com", "Btc.com"]
     private let ethereumProviderNames = ["Etherscan.io", "BlockChair.com"]
 
     private var mockLocalStorage: MockILocalStorage!
@@ -73,10 +73,10 @@ class FullTransactionDataProviderManagerTests: XCTestCase {
             when(mock.testMode.get).thenReturn(true)
         }
         var providerUrls = manager.providers(for: Coin(title: "", code: "", type: .bitcoin)).map { $0.url(for: "test") }
-        XCTAssertEqual(providerUrls, ["http://btc-testnet.horizontalsystems.xyz/apg/tx/test"])
+        XCTAssertEqual(providerUrls, ["http://btc-testnet.horizontalsystems.xyz/tx/test"])
 
         providerUrls = manager.providers(for: Coin(title: "", code: "", type: .bitcoinCash)).map { $0.url(for: "test") }
-        XCTAssertEqual(providerUrls, ["http://bch-testnet.horizontalsystems.xyz/apg/tx/test"])
+        XCTAssertEqual(providerUrls, ["https://tbch.blockdozer.com/tx/test"])
 
         providerUrls = manager.providers(for: Coin(title: "", code: "", type: .ethereum)).map { $0.url(for: "test") }
         XCTAssertEqual(providerUrls, ["https://ropsten.etherscan.io/tx/test"])

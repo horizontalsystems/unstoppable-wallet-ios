@@ -7,12 +7,12 @@ class InsightDashProvider: IBitcoinForksProvider {
     func apiUrl(for hash: String) -> String { return "https://insight.dash.org/insight-api/tx/" + hash }
 
     func convert(json: [String: Any]) -> IBitcoinResponse? {
-        return try? InsightDashResponse(JSONObject: json)
+        return try? InsightResponse(JSONObject: json)
     }
 
 }
 
-class InsightDashResponse: IBitcoinResponse, ImmutableMappable {
+class InsightResponse: IBitcoinResponse, ImmutableMappable {
     var txId: String?
     var blockTime: Int?
     var blockHeight: Int?

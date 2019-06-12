@@ -9,8 +9,8 @@ class HorSysBitcoinProvider: IBitcoinForksProvider {
     func apiUrl(for hash: String) -> String { return apiUrl + hash }
 
     init(testMode: Bool) {
-        url = testMode ? "http://btc-testnet.horizontalsystems.xyz/apg/tx/" : "https://btc.horizontalsystems.xyz/apg/tx/"
-        apiUrl = url
+        url = testMode ? "http://btc-testnet.horizontalsystems.xyz/tx/" : "https://btc.horizontalsystems.xyz/tx/"
+        apiUrl = testMode ? "http://btc-testnet.horizontalsystems.xyz/apg/tx/" : "https://btc.horizontalsystems.xyz/apg/tx/"
     }
 
     func convert(json: [String: Any]) -> IBitcoinResponse? {
@@ -51,7 +51,7 @@ class HorSysDashProvider: IBitcoinForksProvider {
     }
 
     func convert(json: [String: Any]) -> IBitcoinResponse? {
-        return try? InsightDashResponse(JSONObject: json)
+        return try? InsightResponse(JSONObject: json)
     }
 }
 
