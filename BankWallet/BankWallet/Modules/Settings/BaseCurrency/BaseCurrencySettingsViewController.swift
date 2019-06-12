@@ -52,7 +52,7 @@ class BaseCurrencySettingsViewController: WalletViewController, SectionsDataSour
         let itemsCount = items.count
         sections.append(Section(id: "currencies", headerState: currenciesHeader, footerState: currenciesFooter, rows: items.enumerated().map { (index, item) in
             Row<DoubleLineCell>(id: item.code, height: SettingsTheme.currencyCellHeight, bind: { cell, _ in
-                cell.bind(title: item.code, subtitle: item.symbol, selected: item.selected, last: index == itemsCount - 1)
+                cell.bind(flagImage: UIImage(named: item.code), title: item.code, subtitle: item.symbol, selected: item.selected, last: index == itemsCount - 1)
             }, action: { [weak self] _ in
                 self?.delegate.didSelect(item: item)
             })

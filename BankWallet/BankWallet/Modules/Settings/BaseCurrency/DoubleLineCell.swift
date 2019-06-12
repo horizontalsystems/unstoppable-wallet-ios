@@ -5,6 +5,7 @@ import SnapKit
 class DoubleLineCell: UITableViewCell {
     var titleLabel = UILabel()
     var subtitleLabel = UILabel()
+    var flagImageView = UIImageView()
     var checkmarkImageView = TintImageView(image: UIImage(named: "Transaction Success Icon"), tintColor: SettingsTheme.checkmarkTintColor, selectedTintColor: SettingsTheme.checkmarkTintColor)
     let bottomSeparatorView = UIView()
 
@@ -18,18 +19,23 @@ class DoubleLineCell: UITableViewCell {
         backgroundView.backgroundColor = SettingsTheme.cellSelectBackground
         selectedBackgroundView = backgroundView
 
+        contentView.addSubview(flagImageView)
+        flagImageView.snp.makeConstraints { maker in
+            maker.centerY.equalToSuperview()
+            maker.leading.equalTo(contentView.snp.leadingMargin)
+        }
         titleLabel.font = SettingsTheme.titleFont
         titleLabel.textColor = SettingsTheme.titleColor
         contentView.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { maker in
-            maker.leading.equalTo(contentView.snp.leadingMargin)
+            maker.leading.equalTo(flagImageView.snp.trailing).offset(SettingsTheme.cellBigMargin)
             maker.top.equalToSuperview().offset(SettingsTheme.cellMiddleMargin)
         }
         subtitleLabel.font = SettingsTheme.subtitleFont
         subtitleLabel.textColor = SettingsTheme.subtitleColor
         contentView.addSubview(subtitleLabel)
         subtitleLabel.snp.makeConstraints { maker in
-            maker.leading.equalTo(contentView.snp.leadingMargin)
+            maker.leading.equalTo(flagImageView.snp.trailing).offset(SettingsTheme.cellBigMargin)
             maker.top.equalTo(self.titleLabel.snp.bottom).offset(SettingsTheme.subtitleTopMargin)
         }
 
@@ -51,7 +57,8 @@ class DoubleLineCell: UITableViewCell {
         fatalError()
     }
 
-    func bind(title: String, subtitle: String, selected: Bool, last: Bool = false) {
+    func bind(flagImage: UIImage?, title: String, subtitle: String, selected: Bool, last: Bool = false) {
+        flagImageView.image = flagImage
         titleLabel.text = title
         subtitleLabel.text = subtitle
 
