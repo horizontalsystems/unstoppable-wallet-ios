@@ -10,8 +10,8 @@ class FullTransactionDataProviderManager {
         ]
     }
     private var bitcoinCashProviders: [IBitcoinForksProvider] {
-        return appConfigProvider.testMode ? [HorSysBitcoinCashProvider(testMode: true)] : [
-            HorSysBitcoinCashProvider(testMode: false),
+        return appConfigProvider.testMode ? [BlockdozerBitcoinCashProvider(testMode: true)] : [
+            BlockdozerBitcoinCashProvider(testMode: false),
             BlockChairBitcoinCashProvider(),
             BlockExplorerBitcoinCashProvider(),
             BtcComBitcoinCashProvider()
