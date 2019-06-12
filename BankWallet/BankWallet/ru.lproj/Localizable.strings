@@ -42,7 +42,7 @@
 "restore.validation_failed" = "Неверный Секретный Ключ";
 
 //Coin Sync Modes
-"coin_sync.title" = "Параметры Восстановления";
+"coin_sync.title" = "Опции";
 "coin_sync.header" = "Синхронизация с блокчейном";
 "coin_sync.fast" = "Быстро";
 "coin_sync.recommended" = "0-2 часа (Рекомендуется)";
