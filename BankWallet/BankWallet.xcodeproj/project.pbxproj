@@ -1745,13 +1745,13 @@
 				11B35C84DC7991111CB6AF2F /* Controls */,
 				11B353F2C2D228FDCCDE913F /* Controllers */,
 				11B352926E3B01F819D344DF /* Extensions */,
+				1A564E38A79F3308EC1B437A /* AddressParser.swift */,
+				11B35D8D844E5AE5C73A6EB8 /* CoinIconImageView.swift */,
 				11B35C181EB4CA85BD80228C /* HudHelper.swift */,
 				11B35492B1162F69CA7A0597 /* DateHelper.swift */,
 				11B354B43B5120F594318FDA /* PermissionsHelper.swift */,
 				11B35EFB45ECC2D403CA6C89 /* ValueFormatter.swift */,
-				11B35D8D844E5AE5C73A6EB8 /* CoinIconImageView.swift */,
 				11B353F97FB72582499D6663 /* TestModeIndicator.swift */,
-				1A564E38A79F3308EC1B437A /* AddressParser.swift */,
 			);
 			path = UserInterface;
 			sourceTree = "<group>";
