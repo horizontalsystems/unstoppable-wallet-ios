@@ -44,6 +44,10 @@ class RestoreWordCell: UICollectionViewCell {
         inputField.indexLabel.text = "\(index)."
         inputField.onReturn = onReturn
         inputField.onTextChange = onTextChange
+        inputField.onSpaceKey = {
+            onReturn()
+            return false
+        }
         inputField.textField.text = word
 
         inputField.textField.returnKeyType = returnKeyType
