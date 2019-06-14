@@ -79,6 +79,7 @@
 "balance.rate_per_coin" = "%@ por %@";
 "balance.synced_through" = "hasta: %@";
 "balance.syncing" = "Sincronizando...";
+"balance.add_coins" = "Add Coins";
 
 // Deposit
 
