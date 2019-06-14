@@ -79,6 +79,7 @@
 "balance.rate_per_coin" = "%@ به ازا %@";
 "balance.synced_through" = "تا: %@";
 "balance.syncing" = "در حال همگام سازی...";
+"balance.add_coins" = "Add Coins";
 
 // Deposit
 
