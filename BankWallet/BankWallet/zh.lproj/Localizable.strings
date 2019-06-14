@@ -79,6 +79,7 @@
 "balance.rate_per_coin" = "%@ 每 %@";
 "balance.synced_through" = "直到 %@";
 "balance.syncing" = "正在同步...";
+"balance.add_coins" = "Add Coins";
 
 // Deposit
 
