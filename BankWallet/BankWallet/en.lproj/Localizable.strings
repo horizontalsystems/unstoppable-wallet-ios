@@ -81,6 +81,7 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 "balance.rate_per_coin" = "%@ per %@";
 "balance.synced_through" = "until: %@";
 "balance.syncing" = "Syncing...";
+"balance.add_coins" = "Add Coins";
 
 // Deposit
 
