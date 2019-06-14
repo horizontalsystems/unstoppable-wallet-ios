@@ -79,6 +79,7 @@
 "balance.rate_per_coin" = "%@ için %@";
 "balance.synced_through" = "%@ kadar";
 "balance.syncing" = "Eşitleniyor...";
+"balance.add_coins" = "Add Coins";
 
 // Deposit
 
