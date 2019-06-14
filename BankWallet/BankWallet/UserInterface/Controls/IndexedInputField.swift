@@ -62,6 +62,7 @@ class IndexedInputField: UIView, UITextFieldDelegate {
 //    }
 
     var onReturn: (() -> ())?
+    var onSpaceKey: (() -> Bool)?
     var onTextChange: ((String?) -> ())?
 
     override init(frame: CGRect) {
@@ -156,5 +157,12 @@ class IndexedInputField: UIView, UITextFieldDelegate {
         clearWrapperView.isHidden = true
     }
 
-
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        switch string {
+        case " ":
+            return onSpaceKey?() ?? true
+        default:
+            return true
+        }
+    }
 }
