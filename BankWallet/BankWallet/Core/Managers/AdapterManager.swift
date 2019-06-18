@@ -4,14 +4,16 @@ class AdapterManager {
     private let disposeBag = DisposeBag()
 
     private let adapterFactory: IAdapterFactory
+    private let ethereumKitManager: IEthereumKitManager
     private let authManager: IAuthManager
     private let coinManager: ICoinManager
 
     private(set) var adapters: [IAdapter] = []
     let adaptersUpdatedSignal = Signal()
 
-    init(adapterFactory: IAdapterFactory, authManager: IAuthManager, coinManager: ICoinManager) {
+    init(adapterFactory: IAdapterFactory, ethereumKitManager: IEthereumKitManager, authManager: IAuthManager, coinManager: ICoinManager) {
         self.adapterFactory = adapterFactory
+        self.ethereumKitManager = ethereumKitManager
         self.authManager = authManager
         self.coinManager = coinManager
 
@@ -56,12 +58,12 @@ extension AdapterManager: IAdapterManager {
         adaptersUpdatedSignal.notify()
     }
 
-    func willEnterForeground() {
+    func refresh() {
         adapters.forEach { adapter in
-            if case .notSynced = adapter.state {
-                adapter.refresh()
-            }
+            adapter.refresh()
         }
+
+        ethereumKitManager.ethereumKit?.refresh()
     }
 
 }

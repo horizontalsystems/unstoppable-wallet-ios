@@ -98,10 +98,7 @@ extension BalanceInteractor: IBalanceInteractor {
     }
 
     func refresh() {
-        adapterManager.adapters
-                .forEach { adapter in
-                    adapter.refresh()
-                }
+        adapterManager.refresh()
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             self.delegate?.didRefresh()
