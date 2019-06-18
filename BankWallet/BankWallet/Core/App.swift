@@ -85,7 +85,7 @@ class App {
         feeRateProvider = FeeRateProvider()
 
         adapterFactory = AdapterFactory(appConfigProvider: appConfigProvider, localStorage: localStorage, ethereumKitManager: ethereumKitManager, feeRateProvider: feeRateProvider)
-        adapterManager = AdapterManager(adapterFactory: adapterFactory, authManager: authManager, coinManager: coinManager)
+        adapterManager = AdapterManager(adapterFactory: adapterFactory, ethereumKitManager: ethereumKitManager, authManager: authManager, coinManager: coinManager)
 
         lockRouter = LockRouter()
         lockManager = LockManager(localStorage: localStorage, authManager: authManager, appConfigProvider: appConfigProvider, lockRouter: lockRouter)

@@ -38,7 +38,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationWillEnterForeground(_ application: UIApplication) {
         App.shared.lockManager.willEnterForeground()
-        App.shared.adapterManager.willEnterForeground()
+        App.shared.adapterManager.refresh()
 
         if backgroundTask != UIBackgroundTaskIdentifier.invalid {
             UIApplication.shared.endBackgroundTask(backgroundTask)

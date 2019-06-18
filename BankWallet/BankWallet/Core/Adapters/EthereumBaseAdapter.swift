@@ -37,10 +37,6 @@ class EthereumBaseAdapter {
         }
     }
 
-    func stop() {
-        ethereumKit.stop()
-    }
-
 }
 
 extension EthereumBaseAdapter {
@@ -54,14 +50,15 @@ extension EthereumBaseAdapter {
     }
 
     func start() {
-        ethereumKit.start()
+        // started via EthereumKitManager
+    }
+
+    func stop() {
+        // stopped via EthereumKitManager
     }
 
     func refresh() {
-        ethereumKit.start()
-    }
-
-    func clear() {
+        // refreshed via EthereumKitManager
     }
 
     var lastBlockHeight: Int? {
