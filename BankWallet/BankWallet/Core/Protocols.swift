@@ -58,7 +58,7 @@ protocol IAdapterManager: class {
     var adapters: [IAdapter] { get }
     var adaptersUpdatedSignal: Signal { get }
     func initAdapters()
-    func willEnterForeground()
+    func refresh()
 }
 
 protocol IAdapterFactory {
