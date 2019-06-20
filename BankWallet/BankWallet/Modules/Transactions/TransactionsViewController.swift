@@ -16,8 +16,6 @@ class TransactionsViewController: WalletViewController {
 
     private var items: [TransactionViewItem]?
 
-    private var reloadInProgress = 0
-
     init(delegate: ITransactionsViewDelegate) {
         self.delegate = delegate
 
@@ -76,9 +74,6 @@ class TransactionsViewController: WalletViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        if reloadInProgress == 0 {
-            tableView.reloadData()
-        }
         headerBackgroundTriggerOffset = headerBackgroundTriggerOffset == nil ? tableView.contentOffset.y : headerBackgroundTriggerOffset
     }
 
@@ -118,7 +113,6 @@ extension TransactionsViewController: ITransactionsView {
             return
         }
 
-        reloadInProgress += 1
         tableView.performBatchUpdates({ [weak self] in
             self?.tableView.deleteRows(at: changes.deletes, with: animated ? .fade : .none)
             self?.tableView.insertRows(at: changes.inserts, with: animated ? .fade : .none)
@@ -127,7 +121,6 @@ extension TransactionsViewController: ITransactionsView {
             }
         }, completion: { [weak self] _ in
             self?.reload(indexPaths: changes.replaces)
-            self?.reloadInProgress -= 1
         })
     }
 
