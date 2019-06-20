@@ -27,7 +27,6 @@ protocol ITransactionsView: class {
 
 protocol ITransactionsViewDelegate {
     func viewDidLoad()
-    func onViewAppear()
     func onFilterSelect(coin: Coin?)
 
     func onBottomReached()

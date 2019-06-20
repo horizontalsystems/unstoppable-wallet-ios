@@ -16,6 +16,8 @@ class TransactionsViewController: WalletViewController {
 
     private var items: [TransactionViewItem]?
 
+    private var reloadInProgress = 0
+
     init(delegate: ITransactionsViewDelegate) {
         self.delegate = delegate
 
@@ -74,7 +76,9 @@ class TransactionsViewController: WalletViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        delegate.onViewAppear()
+        if reloadInProgress == 0 {
+            tableView.reloadData()
+        }
         headerBackgroundTriggerOffset = headerBackgroundTriggerOffset == nil ? tableView.contentOffset.y : headerBackgroundTriggerOffset
     }
 
@@ -85,6 +89,7 @@ class TransactionsViewController: WalletViewController {
     private func reload(indexPaths: [IndexPath]) {
         for indexPath in indexPaths {
             if let cell = tableView.cellForRow(at: indexPath) as? TransactionCell, let item = items?[indexPath.row] {
+                delegate.willShow(item: item)
                 cell.bind(item: item, first: indexPath.row == 0, last: tableView.numberOfRows(inSection: indexPath.section) == indexPath.row + 1)
             }
         }
@@ -113,6 +118,7 @@ extension TransactionsViewController: ITransactionsView {
             return
         }
 
+        reloadInProgress += 1
         tableView.performBatchUpdates({ [weak self] in
             self?.tableView.deleteRows(at: changes.deletes, with: animated ? .fade : .none)
             self?.tableView.insertRows(at: changes.inserts, with: animated ? .fade : .none)
@@ -121,6 +127,7 @@ extension TransactionsViewController: ITransactionsView {
             }
         }, completion: { [weak self] _ in
             self?.reload(indexPaths: changes.replaces)
+            self?.reloadInProgress -= 1
         })
     }
 
