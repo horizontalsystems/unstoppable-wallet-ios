@@ -5,6 +5,8 @@ protocol IBalanceView: class {
     func updateItem(at index: Int)
     func updateHeader()
     func didRefresh()
+    func setSortLabel(key: String)
+    func setSortDirection(desc: Bool)
 }
 
 protocol IBalanceViewDelegate {
@@ -20,6 +22,9 @@ protocol IBalanceViewDelegate {
     func onPay(index: Int)
 
     func onOpenManageCoins()
+
+    func onSortDirectionChange()
+    func onSortTypeChange()
 }
 
 protocol IBalanceInteractor {
@@ -43,4 +48,5 @@ protocol IBalanceRouter {
     func openReceive(for coin: Coin)
     func openSend(for coinCode: CoinCode)
     func openManageCoins()
+    func openSortType(selected sort: BalanceSortType)
 }

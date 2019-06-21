@@ -2,6 +2,7 @@ import UIKit
 
 class BalanceRouter {
     weak var viewController: UIViewController?
+    weak var sortTypeDelegate: ISortTypeDelegate?
 }
 
 extension BalanceRouter: IBalanceRouter {
@@ -20,6 +21,10 @@ extension BalanceRouter: IBalanceRouter {
         viewController?.present(ManageCoinsRouter.module(), animated: true)
     }
 
+    func openSortType(selected sort: BalanceSortType) {
+        viewController?.present(SortTypeRouter.module(sortTypeDelegate: sortTypeDelegate, sort: sort), animated: true)
+    }
+
 }
 
 extension BalanceRouter {
@@ -27,12 +32,13 @@ extension BalanceRouter {
     static func module() -> UIViewController {
         let router = BalanceRouter()
         let interactor = BalanceInteractor(adapterManager: App.shared.adapterManager, rateStorage: App.shared.grdbStorage, currencyManager: App.shared.currencyManager)
-        let presenter = BalancePresenter(interactor: interactor, router: router, dataSource: BalanceItemDataSource(), factory: BalanceViewItemFactory())
+        let presenter = BalancePresenter(interactor: interactor, router: router, state: .init(), dataSource: BalanceItemDataSource(), factory: BalanceViewItemFactory())
         let viewController = BalanceViewController(viewDelegate: presenter)
 
         interactor.delegate = presenter
         presenter.view = viewController
         router.viewController = viewController
+        router.sortTypeDelegate = presenter
 
         return viewController
     }
