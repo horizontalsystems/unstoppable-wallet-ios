@@ -75,6 +75,7 @@ class RestoreViewController: WalletViewController {
     }
 
     @objc func restoreDidTap() {
+        view.endEditing(true)
         delegate.restoreDidClick(withWords: words)
     }
 
@@ -156,7 +157,7 @@ extension RestoreViewController: UICollectionViewDelegateFlowLayout, UICollectio
     }
 
     func onTextChange(word: String?, at indexPath: IndexPath) {
-        words[indexPath.item] = word?.trimmingCharacters(in: .whitespaces) ?? ""
+        words[indexPath.item] = word?.lowercased().trimmingCharacters(in: .whitespaces) ?? ""
     }
 
 }

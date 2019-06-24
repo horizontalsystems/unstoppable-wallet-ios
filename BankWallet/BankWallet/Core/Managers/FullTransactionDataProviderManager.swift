@@ -5,7 +5,7 @@ class FullTransactionDataProviderManager {
         return appConfigProvider.testMode ? [HorSysBitcoinProvider(testMode: true)] : [
             HorSysBitcoinProvider(testMode: false),
             BlockChairBitcoinProvider(),
-            BlockExplorerBitcoinProvider(),
+//            BlockExplorerBitcoinProvider(),
             BtcComBitcoinProvider()
         ]
     }
@@ -13,7 +13,7 @@ class FullTransactionDataProviderManager {
         return appConfigProvider.testMode ? [BlockdozerBitcoinCashProvider(testMode: true)] : [
             BlockdozerBitcoinCashProvider(testMode: false),
             BlockChairBitcoinCashProvider(),
-            BlockExplorerBitcoinCashProvider(),
+//            BlockExplorerBitcoinCashProvider(),
             BtcComBitcoinCashProvider()
         ]
     }

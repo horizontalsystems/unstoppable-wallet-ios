@@ -74,7 +74,6 @@ class TransactionsViewController: WalletViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        delegate.onViewAppear()
         headerBackgroundTriggerOffset = headerBackgroundTriggerOffset == nil ? tableView.contentOffset.y : headerBackgroundTriggerOffset
     }
 
@@ -85,6 +84,7 @@ class TransactionsViewController: WalletViewController {
     private func reload(indexPaths: [IndexPath]) {
         for indexPath in indexPaths {
             if let cell = tableView.cellForRow(at: indexPath) as? TransactionCell, let item = items?[indexPath.row] {
+                delegate.willShow(item: item)
                 cell.bind(item: item, first: indexPath.row == 0, last: tableView.numberOfRows(inSection: indexPath.section) == indexPath.row + 1)
             }
         }

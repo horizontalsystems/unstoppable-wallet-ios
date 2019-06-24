@@ -173,7 +173,7 @@ CHECKOUT OPTIONS:
     :commit: e4c4d22e3e31381c62ff9c1e74b59257ce513f33
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios/
   BitcoinKit.swift:
-    :commit: e4c4d22e3e31381c62ff9c1e74b59257ce513f33
+    :commit: 67f6004203c873a74d5709a72e2611fb30b70c6a
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios/
   DashKit.swift:
     :commit: e4c4d22e3e31381c62ff9c1e74b59257ce513f33
