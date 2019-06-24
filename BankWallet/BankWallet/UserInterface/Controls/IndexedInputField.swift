@@ -141,7 +141,6 @@ class IndexedInputField: UIView, UITextFieldDelegate {
 
     @objc func textChange(textField: UITextField) {
         clearWrapperView.isHidden = _clearButtonIsHidden || (textField.text?.isEmpty ?? true)
-        onTextChange?(textField.text)
     }
 
     func textFieldDidBeginEditing(_ textField: UITextField) {
@@ -154,6 +153,7 @@ class IndexedInputField: UIView, UITextFieldDelegate {
     }
 
     func textFieldDidEndEditing(_ textField: UITextField) {
+        onTextChange?(textField.text)
         clearWrapperView.isHidden = true
     }
 

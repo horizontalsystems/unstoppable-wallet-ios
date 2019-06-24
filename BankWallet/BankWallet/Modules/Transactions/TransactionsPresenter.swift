@@ -59,10 +59,6 @@ extension TransactionsPresenter: ITransactionsViewDelegate {
         interactor.initialFetch()
     }
 
-    func onViewAppear() {
-        viewItemLoader.reloadAll()
-    }
-
     func onFilterSelect(coin: Coin?) {
         let coins = coin.map { [$0] } ?? []
         interactor.set(selectedCoins: coins)
