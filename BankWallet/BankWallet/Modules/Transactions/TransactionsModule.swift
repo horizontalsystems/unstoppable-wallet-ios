@@ -40,7 +40,7 @@ protocol ITransactionsInteractor {
     func initialFetch()
     func fetchLastBlockHeights()
 
-    func fetchRecords(fetchDataList: [FetchData])
+    func fetchRecords(fetchDataList: [FetchData], initial: Bool)
     func set(selectedCoins: [Coin])
 
     func fetchRate(coin: Coin, date: Date)
@@ -56,7 +56,7 @@ protocol ITransactionsInteractorDelegate: class {
     func didUpdate(records: [TransactionRecord], coin: Coin)
 
     func didFetch(rateValue: Decimal, coin: Coin, currency: Currency, date: Date)
-    func didFetch(recordsData: [Coin: [TransactionRecord]])
+    func didFetch(recordsData: [Coin: [TransactionRecord]], initial: Bool)
     func onConnectionRestore()
 }
 
@@ -65,7 +65,7 @@ protocol ITransactionsRouter {
 }
 
 protocol ITransactionLoaderDelegate: class {
-    func fetchRecords(fetchDataList: [FetchData])
+    func fetchRecords(fetchDataList: [FetchData], initial: Bool)
     func reload(with newItems: [TransactionItem], animated: Bool)
     func add(items: [TransactionItem])
 }
