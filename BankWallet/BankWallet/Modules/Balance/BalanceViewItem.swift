@@ -5,5 +5,4 @@ struct BalanceViewItem {
     let currencyValue: CurrencyValue?
     let state: AdapterState
     let rateExpired: Bool
-    let refreshVisible: Bool
 }

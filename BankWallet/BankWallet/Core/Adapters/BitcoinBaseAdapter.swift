@@ -104,10 +104,6 @@ extension BitcoinBaseAdapter: IAdapter {
         return abstractKit.debugInfo
     }
 
-    var refreshable: Bool {
-        return false
-    }
-
     func start() {
         abstractKit.start()
     }

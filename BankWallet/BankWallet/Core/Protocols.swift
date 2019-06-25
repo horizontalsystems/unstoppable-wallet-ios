@@ -99,7 +99,6 @@ protocol IAdapter: class {
 
     var decimal: Int { get }
     var confirmationsThreshold: Int { get }
-    var refreshable: Bool { get }
 
     func start()
     func stop()
