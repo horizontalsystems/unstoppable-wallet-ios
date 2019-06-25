@@ -17,8 +17,7 @@ class BalanceViewItemFactory {
                 exchangeValue: exchangeValue,
                 currencyValue: currencyValue,
                 state: item.state,
-                rateExpired: item.rate?.expired ?? false,
-                refreshVisible: item.refreshable
+                rateExpired: item.rate?.expired ?? false
         )
     }
 

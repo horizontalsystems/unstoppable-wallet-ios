@@ -21,7 +21,7 @@ extension BalancePresenter: IBalanceInteractorDelegate {
 
     func didUpdate(adapters: [IAdapter]) {
         dataSource.items = adapters.map { adapter in
-            BalanceItem(coin: adapter.coin, refreshable: adapter.refreshable)
+            BalanceItem(coin: adapter.coin)
         }
 
         if let currency = dataSource.currency {
