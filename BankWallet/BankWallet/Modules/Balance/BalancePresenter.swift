@@ -3,16 +3,20 @@ import RxSwift
 class BalancePresenter {
     private let interactor: IBalanceInteractor
     private let router: IBalanceRouter
-    private let dataSource: BalanceItemDataSource
-    private let factory: BalanceViewItemFactory
+    private var state: BalancePresenterState
+    private var dataSource: IBalanceItemDataSource
+    private let factory: IBalanceViewItemFactory
+    private let sortingOnThreshold: Int
 
     weak var view: IBalanceView?
 
-    init(interactor: IBalanceInteractor, router: IBalanceRouter, dataSource: BalanceItemDataSource, factory: BalanceViewItemFactory) {
+    init(interactor: IBalanceInteractor, router: IBalanceRouter, state: BalancePresenterState, dataSource: IBalanceItemDataSource, factory: IBalanceViewItemFactory, sortingOnThreshold: Int) {
         self.interactor = interactor
         self.router = router
+        self.state = state
         self.dataSource = dataSource
         self.factory = factory
+        self.sortingOnThreshold = sortingOnThreshold
     }
 
 }
@@ -20,14 +24,16 @@ class BalancePresenter {
 extension BalancePresenter: IBalanceInteractorDelegate {
 
     func didUpdate(adapters: [IAdapter]) {
-        dataSource.items = adapters.map { adapter in
+        let items = adapters.map { adapter in
             BalanceItem(coin: adapter.coin)
         }
+        dataSource.set(items: items, sort: state.sort, desc: state.desc)
 
         if let currency = dataSource.currency {
             interactor.fetchRates(currencyCode: currency.code, coinCodes: dataSource.coinCodes)
         }
 
+        view?.setSort(isOn: dataSource.items.count > sortingOnThreshold)
         view?.reload()
     }
 
@@ -76,11 +82,16 @@ extension BalancePresenter: IBalanceInteractorDelegate {
 extension BalancePresenter: IBalanceViewDelegate {
 
     func viewDidLoad() {
+        view?.setSort(isOn: false)
+
         interactor.initAdapters()
+
+        view?.setSortDirection(desc: state.desc)
+        view?.setSortLabel(key: state.sort.rawValue)
     }
 
     var itemsCount: Int {
-        return dataSource.count
+        return dataSource.items.count
     }
 
     func viewItem(at index: Int) -> BalanceViewItem {
@@ -105,6 +116,28 @@ extension BalancePresenter: IBalanceViewDelegate {
 
     func onOpenManageCoins() {
         router.openManageCoins()
+    }
+
+    func onSortDirectionChange() {
+        state.desc = !state.desc
+        view?.setSortDirection(desc: state.desc)
+        dataSource.sort(type: state.sort, desc: state.desc)
+        view?.reload()
+    }
+
+    func onSortTypeChange() {
+        router.openSortType(selected: state.sort)
+    }
+
+}
+
+extension BalancePresenter: ISortTypeDelegate {
+
+    func onSelect(sort: BalanceSortType) {
+        state.sort = sort
+        view?.setSortLabel(key: state.sort.rawValue)
+        dataSource.sort(type: state.sort, desc: state.desc)
+        view?.reload()
     }
 
 }

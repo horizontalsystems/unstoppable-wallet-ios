@@ -1,6 +1,6 @@
 import Foundation
 
-struct BalanceItem {
+class BalanceItem {
     let coin: Coin
 
     var balance: Decimal = 0

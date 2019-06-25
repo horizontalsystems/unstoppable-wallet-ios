@@ -1,6 +1,6 @@
 import Foundation
 
-class BalanceViewItemFactory {
+class BalanceViewItemFactory: IBalanceViewItemFactory {
 
     func viewItem(from item: BalanceItem, currency: Currency?) -> BalanceViewItem {
         var exchangeValue: CurrencyValue?
