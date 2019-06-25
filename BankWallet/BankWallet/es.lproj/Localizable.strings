@@ -80,6 +80,9 @@
 "balance.synced_through" = "hasta: %@";
 "balance.syncing" = "Sincronizando...";
 "balance.add_coins" = "Add Coins";
+"balance.sort.value" = "Value";
+"balance.sort.az" = "A-Z";
+"balance.sort.manual" = "Manual";
 
 // Deposit
 
