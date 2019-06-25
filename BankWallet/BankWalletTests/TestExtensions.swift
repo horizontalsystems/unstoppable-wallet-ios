@@ -141,3 +141,38 @@ extension SecuritySettingsUnlockType: Equatable {
         }
     }
 }
+
+extension BalanceHeaderViewItem: Equatable {
+    public static func ==(lhs: BalanceHeaderViewItem, rhs: BalanceHeaderViewItem) -> Bool {
+        return lhs.currencyValue == rhs.currencyValue && lhs.upToDate == rhs.upToDate
+    }
+}
+
+extension BalanceItem: Equatable {
+    public static func ==(lhs: BalanceItem, rhs: BalanceItem) -> Bool {
+        return lhs.state == rhs.state && lhs.balance == rhs.balance
+    }
+}
+
+extension AdapterState {
+    public static func ==(lhs: AdapterState, rhs: AdapterState) -> Bool {
+        switch (lhs, rhs) {
+        case (.synced, .synced): return true
+        case (.syncing(let lProgress, let lLastBlockDate), .syncing(let rProgress, let rLastBlockDate)): return lProgress == rProgress && lLastBlockDate == rLastBlockDate
+        case (.notSynced, .notSynced): return true
+        default: return false
+        }
+    }
+}
+
+extension BalanceSortType: Equatable {
+    public static func ==(lhs: BalanceSortType, rhs: BalanceSortType) -> Bool {
+        switch (lhs, rhs) {
+        case (.value, .value): return true
+        case (.az, .az): return true
+        case (.manual, .manual): return true
+        default: return false
+        }
+    }
+}
+
