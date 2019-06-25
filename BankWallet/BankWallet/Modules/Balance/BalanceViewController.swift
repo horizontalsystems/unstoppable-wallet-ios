@@ -204,6 +204,10 @@ extension BalanceViewController: IBalanceView {
         refreshControl.endRefreshing()
     }
 
+    func setSort(isOn: Bool) {
+        headerView.sortView.isHidden = !isOn
+    }
+
     func setSortLabel(key: String) {
         headerView.sortLabelButton.setTitle("balance.sort.\(key)".localized, for: .normal)
     }

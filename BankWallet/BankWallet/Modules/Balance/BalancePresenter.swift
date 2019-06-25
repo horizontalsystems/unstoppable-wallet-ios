@@ -4,17 +4,19 @@ class BalancePresenter {
     private let interactor: IBalanceInteractor
     private let router: IBalanceRouter
     private var state: BalancePresenterState
-    private let dataSource: BalanceItemDataSource
-    private let factory: BalanceViewItemFactory
+    private var dataSource: IBalanceItemDataSource
+    private let factory: IBalanceViewItemFactory
+    private let sortingOnThreshold: Int
 
     weak var view: IBalanceView?
 
-    init(interactor: IBalanceInteractor, router: IBalanceRouter, state: BalancePresenterState, dataSource: BalanceItemDataSource, factory: BalanceViewItemFactory) {
+    init(interactor: IBalanceInteractor, router: IBalanceRouter, state: BalancePresenterState, dataSource: IBalanceItemDataSource, factory: IBalanceViewItemFactory, sortingOnThreshold: Int) {
         self.interactor = interactor
         self.router = router
         self.state = state
         self.dataSource = dataSource
         self.factory = factory
+        self.sortingOnThreshold = sortingOnThreshold
     }
 
 }
@@ -31,6 +33,7 @@ extension BalancePresenter: IBalanceInteractorDelegate {
             interactor.fetchRates(currencyCode: currency.code, coinCodes: dataSource.coinCodes)
         }
 
+        view?.setSort(isOn: dataSource.items.count > sortingOnThreshold)
         view?.reload()
     }
 
@@ -79,6 +82,8 @@ extension BalancePresenter: IBalanceInteractorDelegate {
 extension BalancePresenter: IBalanceViewDelegate {
 
     func viewDidLoad() {
+        view?.setSort(isOn: false)
+
         interactor.initAdapters()
 
         view?.setSortDirection(desc: state.desc)
@@ -86,7 +91,7 @@ extension BalancePresenter: IBalanceViewDelegate {
     }
 
     var itemsCount: Int {
-        return dataSource.count
+        return dataSource.items.count
     }
 
     func viewItem(at index: Int) -> BalanceViewItem {

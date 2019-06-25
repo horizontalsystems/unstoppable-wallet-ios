@@ -1,9 +1,5 @@
 import Foundation
 
-protocol IBalanceItemDataSource {
-    var items: [BalanceItem] { get }
-}
-
 class BalanceItemDataSource: IBalanceItemDataSource {
     private var originalItems = [BalanceItem]()
     var items: [BalanceItem]
@@ -11,10 +7,6 @@ class BalanceItemDataSource: IBalanceItemDataSource {
 
     init() {
         items = [BalanceItem]()
-    }
-
-    var count: Int {
-        return items.count
     }
 
     var coinCodes: [CoinCode] {

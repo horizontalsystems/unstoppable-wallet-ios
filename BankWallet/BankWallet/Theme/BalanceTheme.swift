@@ -2,6 +2,8 @@ import UIKit
 import ActionSheet
 
 class BalanceTheme {
+    static let sortingOnThreshold: Int = 5
+
     static let headerHeight: CGFloat = 44
     static var headerSeparatorBackground: UIColor { return .cryptoSteel20 }
     static var headerSortBackground: UIColor { return .crypto_Steel20_LightBackground }
