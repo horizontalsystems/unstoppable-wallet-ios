@@ -80,6 +80,9 @@
 "balance.synced_through" = "直到 %@";
 "balance.syncing" = "正在同步...";
 "balance.add_coins" = "Add Coins";
+"balance.sort.value" = "Value";
+"balance.sort.az" = "A-Z";
+"balance.sort.manual" = "Manual";
 
 // Deposit
 
