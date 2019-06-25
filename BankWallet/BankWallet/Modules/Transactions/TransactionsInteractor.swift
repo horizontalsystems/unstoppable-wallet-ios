@@ -103,9 +103,9 @@ extension TransactionsInteractor: ITransactionsInteractor {
         }
     }
 
-    func fetchRecords(fetchDataList: [FetchData]) {
+    func fetchRecords(fetchDataList: [FetchData], initial: Bool) {
         guard !fetchDataList.isEmpty else {
-            delegate?.didFetch(recordsData: [:])
+            delegate?.didFetch(recordsData: [:], initial: initial)
             return
         }
 
@@ -140,7 +140,7 @@ extension TransactionsInteractor: ITransactionsInteractor {
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
                 .observeOn(MainScheduler.instance)
                 .subscribe(onSuccess: { [weak self] recordsData in
-                    self?.delegate?.didFetch(recordsData: recordsData)
+                    self?.delegate?.didFetch(recordsData: recordsData, initial: initial)
                 })
                 .disposed(by: disposeBag)
     }

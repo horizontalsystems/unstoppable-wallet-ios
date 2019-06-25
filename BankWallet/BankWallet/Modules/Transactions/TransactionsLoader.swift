@@ -75,7 +75,7 @@ class TransactionsLoader {
         } else {
 //            print("Load Next: fetch: \(fetchDataList.map { data -> String in "\(data.coin) -- \(data.limit) -- \(data.hashFrom ?? "nil")" })")
 
-            delegate?.fetchRecords(fetchDataList: fetchDataList)
+            delegate?.fetchRecords(fetchDataList: fetchDataList, initial: initial)
         }
     }
 
@@ -85,12 +85,16 @@ class TransactionsLoader {
         }
     }
 
-    func didFetch(recordsData: [Coin: [TransactionRecord]]) {
+    func didFetch(recordsData: [Coin: [TransactionRecord]], initial: Bool) {
         dataSource.handleNext(recordsData: recordsData)
 
-        //called after load next
+        // called after load next or when pool has not enough items
         if let items = dataSource.increasePage() {
-            delegate?.add(items: items)
+            if initial {
+                delegate?.reload(with: items, animated: true)
+            } else {
+                delegate?.add(items: items)
+            }
         }
 
         loading = false
