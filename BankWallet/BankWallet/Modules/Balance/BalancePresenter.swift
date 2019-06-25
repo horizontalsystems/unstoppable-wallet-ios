@@ -25,7 +25,7 @@ extension BalancePresenter: IBalanceInteractorDelegate {
 
     func didUpdate(adapters: [IAdapter]) {
         let items = adapters.map { adapter in
-            BalanceItem(coin: adapter.coin, refreshable: adapter.refreshable)
+            BalanceItem(coin: adapter.coin)
         }
         dataSource.set(items: items, sort: state.sort, desc: state.desc)
 

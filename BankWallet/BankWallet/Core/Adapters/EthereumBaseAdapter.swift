@@ -45,10 +45,6 @@ extension EthereumBaseAdapter {
         return 12
     }
 
-    var refreshable: Bool {
-        return true
-    }
-
     func start() {
         // started via EthereumKitManager
     }

@@ -3,8 +3,8 @@ import Cuckoo
 @testable import Bank_Dev_T
 
 class FullTransactionDataProviderManagerTests: XCTestCase {
-    private let bitcoinProviderNames = ["HorizontalSystems.xyz", "BlockChair.com", "BlockExplorer.com", "Btc.com"]
-    private let bitcoinCashProviderNames = ["Blockdozer.com", "BlockChair.com", "BlockExplorer.com", "Btc.com"]
+    private let bitcoinProviderNames = ["HorizontalSystems.xyz", "BlockChair.com", "Btc.com"]
+    private let bitcoinCashProviderNames = ["Blockdozer.com", "BlockChair.com", "Btc.com"]
     private let ethereumProviderNames = ["Etherscan.io", "BlockChair.com"]
 
     private var mockLocalStorage: MockILocalStorage!
