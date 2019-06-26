@@ -5,11 +5,6 @@ class UnlinkRouter {
 }
 
 extension UnlinkRouter: IUnlinkRouter {
-
-    func showGuestModule() {
-        UIApplication.shared.keyWindow?.set(newRootController: GuestRouter.module())
-    }
-
 }
 
 extension UnlinkRouter {

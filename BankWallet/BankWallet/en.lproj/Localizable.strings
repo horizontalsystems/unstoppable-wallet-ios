@@ -28,15 +28,6 @@
 Go to Settings - > Unstoppable and allow access to Camera.";
 "access_camera.settings" = "Settings";
 
-// Guest Page
-
-"guest.title" = "Unstoppable";
-"guest.description" = "IN BLOCKCHAIN WE TRUST";
-"guest.subtitle" = "Decentralized App";
-"guest.create_wallet" = "Create Wallet";
-"guest.restore_wallet" = "Restore";
-"guest.version" = "version %@";
-
 // Restore
 
 "restore.title" = "Restore";
@@ -183,6 +174,8 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 // Settings -> About
 
 "settings_about.title" = "About";
+"settings_about.app_title" = "Unstoppable";
+"settings_about.app_subtitle" = "Decentralized App";
 "settings_about.terms_privacy_subtitle" = "Terms & Privacy:";
 "settings_about.terms_privacy_text" = "This app is peer-to-peer. It does not depend on any web server or tech support personnel to function.
 \nIt works everywhere as long as there is internet. No entity can block this app from working or to block someone from using it.

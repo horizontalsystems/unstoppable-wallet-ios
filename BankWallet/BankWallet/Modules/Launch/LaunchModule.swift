@@ -1,23 +1,17 @@
-import Foundation
-
 protocol ILaunchInteractor {
     func showLaunchModule()
 }
 
 protocol ILaunchInteractorDelegate: class {
-    func showUnlockModule()
-    func showMainModule()
-    func showGuestModule()
     func showSetPinModule()
-    func showBackupModule()
+    func showMainModule()
+    func showUnlockModule()
 }
 
 protocol ILaunchRouter {
-    func showUnlockModule()
-    func showMainModule()
-    func showGuestModule()
     func showSetPinModule()
-    func showBackupModule()
+    func showMainModule()
+    func showUnlockModule()
 }
 
 protocol ILaunchPresenter {

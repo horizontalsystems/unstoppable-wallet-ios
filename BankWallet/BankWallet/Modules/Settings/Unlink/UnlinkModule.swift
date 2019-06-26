@@ -14,5 +14,4 @@ protocol IUnlinkInteractorDelegate: class {
 }
 
 protocol IUnlinkRouter {
-    func showGuestModule()
 }

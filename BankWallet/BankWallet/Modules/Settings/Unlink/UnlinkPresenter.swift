@@ -22,7 +22,7 @@ extension UnlinkPresenter: IUnlinkViewDelegate {
 extension UnlinkPresenter: IUnlinkInteractorDelegate {
 
     func didUnlink() {
-        router.showGuestModule()
+        // todo
     }
 
 }
