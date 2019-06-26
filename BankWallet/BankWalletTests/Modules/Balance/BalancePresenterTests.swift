@@ -53,16 +53,15 @@ class BalancePresenterTests: XCTestCase {
         bitcoinAdapterState = AdapterState.synced
         etherAdapterState = AdapterState.synced
 
-        expectedBitcoinItem = BalanceItem(coin: bitcoin, refreshable: false)
-        expectedEtherItem = BalanceItem(coin: ether, refreshable: true)
+        expectedBitcoinItem = BalanceItem(coin: bitcoin)
+        expectedEtherItem = BalanceItem(coin: ether)
         expectedBitcoinViewItem = BalanceViewItem(
                 coin: bitcoin,
                 coinValue: CoinValue(coinCode: bitcoin.code, value: 10),
                 exchangeValue: CurrencyValue(currency: currency, value: 3),
                 currencyValue: CurrencyValue(currency: currency, value: 30),
                 state: .synced,
-                rateExpired: false,
-                refreshVisible: false)
+                rateExpired: false)
         expectedHeaderViewItem = BalanceHeaderViewItem(currencyValue: CurrencyValue(currency: currency, value: 130), upToDate: true)
 //        expectedEtherItem = BalanceViewItem(
 //                coinValue: etherValue,
@@ -107,12 +106,10 @@ class BalancePresenterTests: XCTestCase {
         stub(mockBitcoinAdapter) { mock in
             when(mock.balance.get).thenReturn(bitcoinValue.value)
             when(mock.state.get).thenReturn(bitcoinAdapterState)
-            when(mock.refreshable.get).thenReturn(false)
         }
         stub(mockEtherAdapter) { mock in
             when(mock.balance.get).thenReturn(etherValue.value)
             when(mock.state.get).thenReturn(etherAdapterState)
-            when(mock.refreshable.get).thenReturn(true)
         }
 
 
@@ -185,7 +182,7 @@ class BalancePresenterTests: XCTestCase {
 
     func testDidUpdateAdapters() {
         let adapters = [mockBitcoinAdapter!]
-        let expectedItem = BalanceItem(coin: bitcoin, refreshable: false)
+        let expectedItem = BalanceItem(coin: bitcoin)
 
         stub(mockBitcoinAdapter) { mock in
             when(mock.coin.get).thenReturn(bitcoin)

@@ -164,15 +164,3 @@ extension AdapterState {
         }
     }
 }
-
-extension BalanceSortType: Equatable {
-    public static func ==(lhs: BalanceSortType, rhs: BalanceSortType) -> Bool {
-        switch (lhs, rhs) {
-        case (.value, .value): return true
-        case (.az, .az): return true
-        case (.manual, .manual): return true
-        default: return false
-        }
-    }
-}
-
