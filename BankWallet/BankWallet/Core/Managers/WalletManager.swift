@@ -39,7 +39,7 @@ class WalletManager {
                 return nil
             }
 
-            return Wallet(coin: coin, account: account)
+            return Wallet(coin: coin, account: account, syncMode: enabledWallet.syncMode)
         }
     }
 

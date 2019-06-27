@@ -1,6 +1,7 @@
 struct Wallet {
     let coin: Coin
     let account: Account
+    let syncMode: SyncMode
 }
 
 extension Wallet: Equatable {

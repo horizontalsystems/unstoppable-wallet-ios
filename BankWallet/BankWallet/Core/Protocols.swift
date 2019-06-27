@@ -385,3 +385,7 @@ protocol IFeeRateProvider {
     func bitcoinCashFeeRate(for priority: FeeRatePriority) -> Int
     func dashFeeRate(for priority: FeeRatePriority) -> Int
 }
+
+enum AdapterError: Error {
+    case unsupportedAccount
+}

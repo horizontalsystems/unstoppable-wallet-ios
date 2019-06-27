@@ -5,11 +5,15 @@ class BitcoinCashAdapter: BitcoinBaseAdapter {
     private let bitcoinCashKit: BitcoinCashKit
     private let feeRateProvider: IFeeRateProvider
 
-    init(wallet: Wallet, authData: AuthData, syncMode: SyncMode, addressParser: IAddressParser, feeRateProvider: IFeeRateProvider, testMode: Bool) throws {
+    init(wallet: Wallet, addressParser: IAddressParser, feeRateProvider: IFeeRateProvider, testMode: Bool) throws {
+        guard case let .mnemonic(words, _, _) = wallet.account.type else {
+            throw AdapterError.unsupportedAccount
+        }
+
         self.feeRateProvider = feeRateProvider
 
         let networkType: BitcoinCashKit.NetworkType = testMode ? .testNet : .mainNet
-        bitcoinCashKit = try BitcoinCashKit(withWords: authData.words, walletId: authData.walletId, syncMode: BitcoinBaseAdapter.kitMode(from: syncMode), networkType: networkType, minLogLevel: .error)
+        bitcoinCashKit = try BitcoinCashKit(withWords: words, walletId: wallet.account.uniqueId, syncMode: BitcoinBaseAdapter.kitMode(from: wallet.syncMode), networkType: networkType, minLogLevel: .error)
 
         super.init(wallet: wallet, abstractKit: bitcoinCashKit, addressParser: addressParser)
 

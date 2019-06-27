@@ -12,7 +12,7 @@ class GrdbStorage {
 
         dbPool = try! DatabasePool(path: databaseURL.path)
 
-        try? migrator.migrate(dbPool)
+        try! migrator.migrate(dbPool)
     }
 
     var migrator: DatabaseMigrator {
@@ -37,6 +37,7 @@ class GrdbStorage {
             try db.create(table: EnabledWallet.databaseTableName) { t in
                 t.column(EnabledWallet.Columns.coinCode.name, .text).notNull()
                 t.column(EnabledWallet.Columns.accountName.name, .text).notNull()
+                t.column(EnabledWallet.Columns.syncMode.name, .text).notNull()
                 t.column(EnabledWallet.Columns.walletOrder.name, .integer).notNull()
 
                 t.primaryKey([EnabledWallet.Columns.coinCode.name, EnabledWallet.Columns.accountName.name], onConflict: .replace)
@@ -44,10 +45,15 @@ class GrdbStorage {
 
             // transfer data from old "enabled_coins" table
 
+            guard try db.tableExists("enabled_coins") else {
+                return
+            }
+
             let defaultAccountName = "Mnemonic"
+            let syncMode = (UserDefaults.standard.value(forKey: "sync_mode_key") as? String) ?? "fast"
             try db.execute(sql: """
-                                INSERT INTO \(EnabledWallet.databaseTableName)(`\(EnabledWallet.Columns.coinCode.name)`, `\(EnabledWallet.Columns.accountName.name)`, `\(EnabledWallet.Columns.walletOrder.name)`) 
-                                SELECT `coinCode`, '\(defaultAccountName)', `coinOrder` FROM enabled_coins
+                                INSERT INTO \(EnabledWallet.databaseTableName)(`\(EnabledWallet.Columns.coinCode.name)`, `\(EnabledWallet.Columns.accountName.name)`, `\(EnabledWallet.Columns.syncMode.name)`, `\(EnabledWallet.Columns.walletOrder.name)`) 
+                                SELECT `coinCode`, '\(defaultAccountName)', '\(syncMode)', `coinOrder` FROM enabled_coins
                                 """)
             try db.drop(table: "enabled_coins")
         }

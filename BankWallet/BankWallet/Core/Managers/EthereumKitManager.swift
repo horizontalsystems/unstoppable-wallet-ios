@@ -4,7 +4,7 @@ import Erc20Kit
 
 protocol IEthereumKitManager {
     var ethereumKit: EthereumKit? { get }
-    func ethereumKit(authData: AuthData) throws -> EthereumKit
+    func ethereumKit(wallet: Wallet) throws -> EthereumKit
 }
 
 class EthereumKitManager: IEthereumKitManager {
@@ -15,18 +15,22 @@ class EthereumKitManager: IEthereumKitManager {
         self.appConfigProvider = appConfigProvider
     }
 
-    func ethereumKit(authData: AuthData) throws -> EthereumKit {
+    func ethereumKit(wallet: Wallet) throws -> EthereumKit {
         if let ethereumKit = self.ethereumKit {
             return ethereumKit
         }
 
+        guard case let .mnemonic(words, _, _) = wallet.account.type else {
+            throw AdapterError.unsupportedAccount
+        }
+
         let ethereumKit = try EthereumKit.instance(
-                words: authData.words,
+                words: words,
                 syncMode: .api,
                 networkType: appConfigProvider.testMode ? .ropsten : .mainNet,
                 infuraCredentials: appConfigProvider.infuraCredentials,
                 etherscanApiKey: appConfigProvider.etherscanKey,
-                walletId: authData.walletId,
+                walletId: wallet.account.uniqueId,
                 minLogLevel: .error
         )
 
