@@ -7,13 +7,13 @@ class CoinManagerTests: XCTestCase {
     private var mockStorage: MockIEnabledCoinStorage!
     private var mockAppConfigProvider: MockIAppConfigProvider!
 
-    private var manager: CoinManager!
+    private var manager: WalletManager!
 
     private let bitcoin = Coin(title: "Bitcoin", code: "BTC", type: .bitcoin)
     private let bitcoinCash: Coin = Coin(title: "Bitcoin Cash", code: "BCH", type: .bitcoinCash)
     private let ethereum: Coin = Coin(title: "Ethereum", code: "ETH", type: .ethereum)
 
-    private var enabledCoinsObservable = PublishSubject<[EnabledCoin]>()
+    private var enabledCoinsObservable = PublishSubject<[EnabledWallet]>()
 
     override func setUp() {
         super.setUp()
@@ -25,7 +25,7 @@ class CoinManagerTests: XCTestCase {
             when(mock.enabledCoinsObservable.get).thenReturn(enabledCoinsObservable)
         }
 
-        manager = CoinManager(appConfigProvider: mockAppConfigProvider, storage: mockStorage)
+        manager = WalletManager(appConfigProvider: mockAppConfigProvider, storage: mockStorage)
     }
 
     override func tearDown() {
@@ -61,7 +61,7 @@ class CoinManagerTests: XCTestCase {
             when(mock.save(enabledCoins: any())).thenDoNothing()
         }
 
-        manager.enableDefaultCoins()
+        manager.enableDefaultWallets()
 
         verify(mockStorage).save(enabledCoins: equal(to: enabledCoins))
     }
@@ -79,14 +79,14 @@ class CoinManagerTests: XCTestCase {
 
         let expectations = expectation(description: "signal_notify")
 
-        _ = manager.coinsUpdatedSignal.subscribe(onNext: {
+        _ = manager.walletsUpdatedSignal.subscribe(onNext: {
             expectations.fulfill()
         })
 
         enabledCoinsObservable.onNext(enabledCoins)
 
         waitForExpectations(timeout: 2)
-        XCTAssertEqual(manager.coins, [bitcoin, ethereum])
+        XCTAssertEqual(manager.wallets, [bitcoin, ethereum])
     }
 
     func testClear() {
@@ -96,7 +96,7 @@ class CoinManagerTests: XCTestCase {
 
         manager.clear()
 
-        XCTAssertTrue(manager.coins.isEmpty)
+        XCTAssertTrue(manager.wallets.isEmpty)
         verify(mockStorage).clearEnabledCoins()
     }
 

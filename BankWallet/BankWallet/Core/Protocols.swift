@@ -62,14 +62,13 @@ protocol IAdapterManager: class {
 }
 
 protocol IAdapterFactory {
-    func adapter(forCoin coin: Coin, authData: AuthData) -> IAdapter?
+    func adapter(wallet: Wallet) -> IAdapter?
 }
 
-protocol ICoinManager: class {
-    func enableDefaultCoins()
-    var coinsUpdatedSignal: Signal { get }
-    var coins: [Coin] { get }
-    var allCoins: [Coin] { get }
+protocol IWalletManager: class {
+    var wallets: [Wallet] { get }
+    var walletsUpdatedSignal: Signal { get }
+    func enableDefaultWallets()
     func clear()
 }
 
@@ -94,7 +93,7 @@ enum FeeRatePriority: Int {
 }
 
 protocol IAdapter: class {
-    var coin: Coin { get }
+    var wallet: Wallet { get }
     var feeCoinCode: CoinCode? { get }
 
     var decimal: Int { get }
@@ -247,10 +246,10 @@ protocol IRateStorage {
     func clearRates()
 }
 
-protocol IEnabledCoinStorage {
-    var enabledCoinsObservable: Observable<[EnabledCoin]> { get }
-    func save(enabledCoins: [EnabledCoin])
-    func clearEnabledCoins()
+protocol IEnabledWalletStorage {
+    var enabledWalletsObservable: Observable<[EnabledWallet]> { get }
+    func save(enabledWallets: [EnabledWallet])
+    func clearEnabledWallets()
 }
 
 protocol IJsonApiProvider {

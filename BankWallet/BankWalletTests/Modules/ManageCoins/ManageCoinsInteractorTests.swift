@@ -41,7 +41,7 @@ class ManageCoinsInteractorTests: XCTestCase {
             EnabledCoin(coinCode: bitcoin.code, order: 0),
             EnabledCoin(coinCode: ethereum.code, order: 1)
         ]
-        let enabledCoinsObservable = BehaviorSubject<[EnabledCoin]>(value: enabledCoins)
+        let enabledCoinsObservable = BehaviorSubject<[EnabledWallet]>(value: enabledCoins)
 
         stub(mockCoinManager) { mock in
             when(mock.allCoins.get).thenReturn(allCoins)

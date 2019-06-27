@@ -24,7 +24,7 @@ class App {
     let grdbStorage: GrdbStorage
 
     let pinManager: IPinManager
-    let coinManager: ICoinManager
+    let coinManager: IWalletManager
     let rateManager: RateManager
     let currencyManager: ICurrencyManager
 
@@ -70,7 +70,7 @@ class App {
         grdbStorage = GrdbStorage()
 
         pinManager = PinManager(secureStorage: secureStorage)
-        coinManager = CoinManager(appConfigProvider: appConfigProvider, storage: grdbStorage)
+        coinManager = WalletManager(appConfigProvider: appConfigProvider, storage: grdbStorage)
 
         let rateApiProvider: IRateApiProvider = RateApiProvider(networkManager: networkManager, appConfigProvider: appConfigProvider)
         rateManager = RateManager(storage: grdbStorage, apiProvider: rateApiProvider)
@@ -85,7 +85,7 @@ class App {
         feeRateProvider = FeeRateProvider()
 
         adapterFactory = AdapterFactory(appConfigProvider: appConfigProvider, localStorage: localStorage, ethereumKitManager: ethereumKitManager, feeRateProvider: feeRateProvider)
-        adapterManager = AdapterManager(adapterFactory: adapterFactory, ethereumKitManager: ethereumKitManager, authManager: authManager, coinManager: coinManager)
+        adapterManager = AdapterManager(adapterFactory: adapterFactory, ethereumKitManager: ethereumKitManager, authManager: authManager, walletManager: coinManager)
 
         lockRouter = LockRouter()
         lockManager = LockManager(localStorage: localStorage, authManager: authManager, appConfigProvider: appConfigProvider, lockRouter: lockRouter)

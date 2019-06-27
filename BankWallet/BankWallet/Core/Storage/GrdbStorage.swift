@@ -33,13 +33,23 @@ class GrdbStorage {
             }
         }
 
-        migrator.registerMigration("createEnabledCoinsTable") { db in
-            try db.create(table: EnabledCoin.databaseTableName) { t in
-                t.column(EnabledCoin.Columns.coinCode.name, .text).notNull()
-                t.column(EnabledCoin.Columns.coinOrder.name, .integer).notNull()
+        migrator.registerMigration("createEnabledWalletsTable") { db in
+            try db.create(table: EnabledWallet.databaseTableName) { t in
+                t.column(EnabledWallet.Columns.coinCode.name, .text).notNull()
+                t.column(EnabledWallet.Columns.accountName.name, .text).notNull()
+                t.column(EnabledWallet.Columns.walletOrder.name, .integer).notNull()
 
-                t.primaryKey([EnabledCoin.Columns.coinCode.name], onConflict: .replace)
+                t.primaryKey([EnabledWallet.Columns.coinCode.name, EnabledWallet.Columns.accountName.name], onConflict: .replace)
             }
+
+            // transfer data from old "enabled_coins" table
+
+            let defaultAccountName = "Mnemonic"
+            try db.execute(sql: """
+                                INSERT INTO \(EnabledWallet.databaseTableName)(`\(EnabledWallet.Columns.coinCode.name)`, `\(EnabledWallet.Columns.accountName.name)`, `\(EnabledWallet.Columns.walletOrder.name)`) 
+                                SELECT `coinCode`, '\(defaultAccountName)', `coinOrder` FROM enabled_coins
+                                """)
+            try db.drop(table: "enabled_coins")
         }
 
         migrator.registerMigration("timestampToDateRates") { db in
@@ -114,26 +124,26 @@ extension GrdbStorage: IRateStorage {
 
 }
 
-extension GrdbStorage: IEnabledCoinStorage {
+extension GrdbStorage: IEnabledWalletStorage {
 
-    var enabledCoinsObservable: Observable<[EnabledCoin]> {
-        let request = EnabledCoin.order(EnabledCoin.Columns.coinOrder)
+    var enabledWalletsObservable: Observable<[EnabledWallet]> {
+        let request = EnabledWallet.order(EnabledWallet.Columns.walletOrder)
         return request.rx.fetchAll(in: dbPool)
     }
 
-    func save(enabledCoins: [EnabledCoin]) {
+    func save(enabledWallets: [EnabledWallet]) {
         _ = try! dbPool.write { db in
-            try EnabledCoin.deleteAll(db)
+            try EnabledWallet.deleteAll(db)
 
-            for enabledCoin in enabledCoins {
-                try enabledCoin.insert(db)
+            for enabledWallet in enabledWallets {
+                try enabledWallet.insert(db)
             }
         }
     }
 
-    func clearEnabledCoins() {
+    func clearEnabledWallets() {
         _ = try! dbPool.write { db in
-            try EnabledCoin.deleteAll(db)
+            try EnabledWallet.deleteAll(db)
         }
     }
 

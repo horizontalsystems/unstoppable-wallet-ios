@@ -5,13 +5,13 @@ class BitcoinAdapter: BitcoinBaseAdapter {
     private let bitcoinKit: BitcoinKit
     private let feeRateProvider: IFeeRateProvider
 
-    init(coin: Coin, authData: AuthData, syncMode: SyncMode, addressParser: IAddressParser, feeRateProvider: IFeeRateProvider, testMode: Bool) throws {
+    init(wallet: Wallet, authData: AuthData, syncMode: SyncMode, addressParser: IAddressParser, feeRateProvider: IFeeRateProvider, testMode: Bool) throws {
         self.feeRateProvider = feeRateProvider
 
         let networkType: BitcoinKit.NetworkType = testMode ? .testNet : .mainNet
         bitcoinKit = try BitcoinKit(withWords: authData.words, walletId: authData.walletId, syncMode: BitcoinBaseAdapter.kitMode(from: syncMode), networkType: networkType, minLogLevel: .error)
 
-        super.init(coin: coin, abstractKit: bitcoinKit, addressParser: addressParser)
+        super.init(wallet: wallet, abstractKit: bitcoinKit, addressParser: addressParser)
 
         bitcoinKit.delegate = self
     }

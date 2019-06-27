@@ -142,7 +142,7 @@ class MainSettingsViewController: WalletViewController, SectionsDataSource {
 
     private func showRealmInfo() {
         for adapter in App.shared.adapterManager.adapters {
-            print("\nINFO FOR \(adapter.coin.code):\n\(adapter.debugInfo)")
+            print("\nINFO FOR \(adapter.wallet.coin.code):\n\(adapter.debugInfo)")
         }
     }
 

@@ -4,7 +4,7 @@ import RxSwift
 class BitcoinBaseAdapter {
     let decimal = 8
 
-    let coin: Coin
+    let wallet: Wallet
 
     private let abstractKit: AbstractKit
     private let coinRate: Decimal
@@ -21,8 +21,8 @@ class BitcoinBaseAdapter {
         return abstractKit.receiveAddress(for: .p2pkh)
     }
 
-    init(coin: Coin, abstractKit: AbstractKit, addressParser: IAddressParser) {
-        self.coin = coin
+    init(wallet: Wallet, abstractKit: AbstractKit, addressParser: IAddressParser) {
+        self.wallet = wallet
         self.abstractKit = abstractKit
         self.addressParser = addressParser
 

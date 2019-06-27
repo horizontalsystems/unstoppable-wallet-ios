@@ -5,11 +5,11 @@ class ManageCoinsInteractor {
 
     private let disposeBag = DisposeBag()
 
-    private let coinManager: ICoinManager
-    private let storage: IEnabledCoinStorage
+    private let appConfigProvider: IAppConfigProvider
+    private let storage: IEnabledWalletStorage
 
-    init(coinManager: ICoinManager, storage: IEnabledCoinStorage) {
-        self.coinManager = coinManager
+    init(appConfigProvider: IAppConfigProvider, storage: IEnabledWalletStorage) {
+        self.appConfigProvider = appConfigProvider
         self.storage = storage
     }
 
@@ -18,10 +18,10 @@ class ManageCoinsInteractor {
 extension ManageCoinsInteractor: IManageCoinsInteractor {
 
     func loadCoins() {
-        let allCoins = coinManager.allCoins
+        let allCoins = appConfigProvider.coins
         var enabledCoins = [Coin]()
 
-        storage.enabledCoinsObservable
+        storage.enabledWalletsObservable
                 .subscribe(onNext: {
                     enabledCoins = $0.compactMap { enabledCoin in
                         allCoins.first { coin in
@@ -35,13 +35,13 @@ extension ManageCoinsInteractor: IManageCoinsInteractor {
     }
 
     func save(enabledCoins coins: [Coin]) {
-        var enabledCoins = [EnabledCoin]()
+        var enabledCoins = [EnabledWallet]()
 
-        for (order, coin) in coins.enumerated() {
-            enabledCoins.append(EnabledCoin(coinCode: coin.code, order: order))
-        }
-
-        storage.save(enabledCoins: enabledCoins)
+//        for (order, coin) in coins.enumerated() {
+//            enabledCoins.append(EnabledCoin(coinCode: coin.code, order: order))
+//        }
+//
+//        storage.save(enabledWallets: enabledCoins)
         delegate?.didSaveCoins()
     }
 

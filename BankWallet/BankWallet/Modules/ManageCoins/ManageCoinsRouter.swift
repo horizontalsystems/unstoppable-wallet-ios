@@ -16,7 +16,7 @@ extension ManageCoinsRouter {
 
     static func module() -> UIViewController {
         let router = ManageCoinsRouter()
-        let interactor = ManageCoinsInteractor(coinManager: App.shared.coinManager, storage: App.shared.grdbStorage)
+        let interactor = ManageCoinsInteractor(appConfigProvider: App.shared.appConfigProvider, storage: App.shared.grdbStorage)
         let presenter = ManageCoinsPresenter(interactor: interactor, router: router, state: ManageCoinsPresenterState())
         let viewController = ManageCoinsViewController(delegate: presenter)
 

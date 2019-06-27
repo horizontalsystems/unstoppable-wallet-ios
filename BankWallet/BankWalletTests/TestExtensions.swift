@@ -126,9 +126,9 @@ extension Rate: Equatable {
     }
 }
 
-extension EnabledCoin: Equatable {
+extension EnabledWallet: Equatable {
 
-    public static func ==(lhs: EnabledCoin, rhs: EnabledCoin) -> Bool {
+    public static func ==(lhs: EnabledWallet, rhs: EnabledWallet) -> Bool {
         return lhs.coinCode == rhs.coinCode && lhs.order == rhs.order
     }
 
