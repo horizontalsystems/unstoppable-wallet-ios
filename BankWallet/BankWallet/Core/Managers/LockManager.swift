@@ -6,7 +6,7 @@ class LockManager {
     private let appConfigProvider: IAppConfigProvider
     private let lockRouter: ILockRouter
 
-    private let lockTimeout: Double = 60
+    private let lockTimeout: Double = 3
     private(set) var isLocked: Bool = false
 
     init(localStorage: ILocalStorage, authManager: IAuthManager, appConfigProvider: IAppConfigProvider, lockRouter: ILockRouter) {
@@ -21,9 +21,6 @@ class LockManager {
 extension LockManager: ILockManager {
 
     func didEnterBackground() {
-        guard authManager.isLoggedIn else {
-            return
-        }
         guard !isLocked else {
             return
         }
@@ -32,9 +29,6 @@ extension LockManager: ILockManager {
     }
 
     func willEnterForeground() {
-        guard authManager.isLoggedIn else {
-            return
-        }
         guard !isLocked else {
             return
         }

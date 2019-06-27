@@ -155,7 +155,6 @@ protocol IWordsManager {
 
 protocol IAuthManager {
     var authData: AuthData? { get }
-    var isLoggedIn: Bool { get }
     func login(withWords words: [String], syncMode: SyncMode) throws
     func logout() throws
 }

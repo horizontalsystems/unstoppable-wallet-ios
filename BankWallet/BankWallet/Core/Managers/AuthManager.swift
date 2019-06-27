@@ -27,10 +27,6 @@ class AuthManager {
 
 extension AuthManager: IAuthManager {
 
-    var isLoggedIn: Bool {
-        return authData != nil
-    }
-
     func login(withWords words: [String], syncMode: SyncMode) throws {
         try BitcoinAdapter.clear()
         try BitcoinCashAdapter.clear()
