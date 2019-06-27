@@ -24,7 +24,9 @@ class App {
     let grdbStorage: GrdbStorage
 
     let pinManager: IPinManager
-    let coinManager: IWalletManager
+    let accountManager: IAccountManager
+    let walletManager: IWalletManager
+
     let rateManager: RateManager
     let currencyManager: ICurrencyManager
 
@@ -70,22 +72,22 @@ class App {
         grdbStorage = GrdbStorage()
 
         pinManager = PinManager(secureStorage: secureStorage)
-        coinManager = WalletManager(appConfigProvider: appConfigProvider, storage: grdbStorage)
+        accountManager = AccountManager(secureStorage: secureStorage)
+        walletManager = WalletManager(appConfigProvider: appConfigProvider, accountManager: accountManager, storage: grdbStorage)
 
         let rateApiProvider: IRateApiProvider = RateApiProvider(networkManager: networkManager, appConfigProvider: appConfigProvider)
         rateManager = RateManager(storage: grdbStorage, apiProvider: rateApiProvider)
-
         currencyManager = CurrencyManager(localStorage: localStorage, appConfigProvider: appConfigProvider)
 
         ethereumKitManager = EthereumKitManager(appConfigProvider: appConfigProvider)
 
-        authManager = AuthManager(secureStorage: secureStorage, localStorage: localStorage, pinManager: pinManager, coinManager: coinManager, rateManager: rateManager, ethereumKitManager: ethereumKitManager)
+        authManager = AuthManager(secureStorage: secureStorage, localStorage: localStorage, pinManager: pinManager, coinManager: walletManager, rateManager: rateManager, ethereumKitManager: ethereumKitManager)
         wordsManager = WordsManager(localStorage: localStorage)
 
         feeRateProvider = FeeRateProvider()
 
         adapterFactory = AdapterFactory(appConfigProvider: appConfigProvider, localStorage: localStorage, ethereumKitManager: ethereumKitManager, feeRateProvider: feeRateProvider)
-        adapterManager = AdapterManager(adapterFactory: adapterFactory, ethereumKitManager: ethereumKitManager, authManager: authManager, walletManager: coinManager)
+        adapterManager = AdapterManager(adapterFactory: adapterFactory, ethereumKitManager: ethereumKitManager, authManager: authManager, walletManager: walletManager)
 
         lockRouter = LockRouter()
         lockManager = LockManager(localStorage: localStorage, authManager: authManager, appConfigProvider: appConfigProvider, lockRouter: lockRouter)

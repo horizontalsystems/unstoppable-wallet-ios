@@ -35,8 +35,8 @@ extension ManageCoinsInteractor: IManageCoinsInteractor {
     }
 
     func save(enabledCoins coins: [Coin]) {
-        var enabledCoins = [EnabledWallet]()
-
+//        var enabledCoins = [EnabledWallet]()
+//
 //        for (order, coin) in coins.enumerated() {
 //            enabledCoins.append(EnabledCoin(coinCode: coin.code, order: order))
 //        }

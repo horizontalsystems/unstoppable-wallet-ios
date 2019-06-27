@@ -2,6 +2,7 @@ import RxSwift
 
 class WalletManager {
     private let appConfigProvider: IAppConfigProvider
+    private let accountManager: IAccountManager
     private let storage: IEnabledWalletStorage
 
     private let disposeBag = DisposeBag()
@@ -14,8 +15,9 @@ class WalletManager {
 
     let walletsUpdatedSignal = Signal()
 
-    init(appConfigProvider: IAppConfigProvider, storage: IEnabledWalletStorage) {
+    init(appConfigProvider: IAppConfigProvider, accountManager: IAccountManager, storage: IEnabledWalletStorage) {
         self.appConfigProvider = appConfigProvider
+        self.accountManager = accountManager
         self.storage = storage
 
         storage.enabledWalletsObservable
@@ -26,8 +28,7 @@ class WalletManager {
     }
 
     private func handle(enabledWallets: [EnabledWallet]) {
-        // todo: fetch accounts from secure storage
-        let accounts = [Account]()
+        let accounts = accountManager.accounts
 
         wallets = enabledWallets.compactMap { enabledWallet in
             guard let coin = appConfigProvider.coins.first(where: { $0.code == enabledWallet.coinCode }) else {

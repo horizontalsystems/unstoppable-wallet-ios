@@ -158,6 +158,10 @@ protocol IAuthManager {
     func logout() throws
 }
 
+protocol IAccountManager {
+    var accounts: [Account] { get }
+}
+
 protocol ILockManager {
     var isLocked: Bool { get }
     func lock()
