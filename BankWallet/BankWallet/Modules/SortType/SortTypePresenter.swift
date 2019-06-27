@@ -12,14 +12,6 @@ class SortTypePresenter {
         self.sort = sort
     }
 
-    private func convert(index: Int) -> BalanceSortType {
-        return BalanceSortType(rawValue: index) ?? .manual
-    }
-
-    private func convert(type: BalanceSortType) -> Int {
-        return type.rawValue
-    }
-
 }
 
 extension SortTypePresenter: IAlertViewDelegate {
@@ -29,20 +21,18 @@ extension SortTypePresenter: IAlertViewDelegate {
 
         view?.addHeader(title: "balance.sort.header")
         view?.addRow(title: "balance.sort.valueHighToLow")
-//        view?.addRow(title: "balance.sort.valueLowToHigh")
         view?.addRow(title: "balance.sort.az")
-//        view?.addRow(title: "balance.sort.za")
         view?.addRow(title: "balance.sort.manual")
     }
 
     func onWillAppear() {
-        view?.setSelected(index: convert(type: sort))
+        view?.setSelected(index: sort.rawValue)
     }
 
     func onSelect(index: Int) {
         view?.setSelected(index: index)
 
-        let selectedSort = convert(index: index)
+        let selectedSort = BalanceSortType(rawValue: index) ?? .manual
         interactor.set(sort: selectedSort)
         router.dismiss(with: selectedSort)
     }
