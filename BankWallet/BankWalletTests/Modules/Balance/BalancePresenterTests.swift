@@ -136,16 +136,12 @@ class BalancePresenterTests: XCTestCase {
         }
         stub(mockView) { mock in
             when(mock.setSort(isOn: equal(to: false))).thenDoNothing()
-            when(mock.setSortDirection(desc: equal(to: state.desc))).thenDoNothing()
-            when(mock.setSortLabel(key: equal(to: state.sort.rawValue))).thenDoNothing()
         }
 
         presenter.viewDidLoad()
 
         verify(mockView).setSort(isOn: equal(to: false))
         verify(mockInteractor).initAdapters()
-        verify(mockView).setSortDirection(desc: equal(to: state.desc))
-        verify(mockView).setSortLabel(key: equal(to: state.sort.rawValue))
     }
 
     func testItemsCount() {
@@ -188,7 +184,7 @@ class BalancePresenterTests: XCTestCase {
             when(mock.coin.get).thenReturn(bitcoin)
         }
         stub(mockDataSource) { mock in
-            when(mock.set(items: any(), sort: any(), desc: any())).thenDoNothing()
+            when(mock.set(items: any(), sort: any())).thenDoNothing()
             when(mock.currency.get).thenReturn(currency)
             when(mock.coinCodes.get).thenReturn([bitcoin.code])
             when(mock.items.get).thenReturn([expectedItem])
@@ -204,7 +200,7 @@ class BalancePresenterTests: XCTestCase {
 
         presenter.didUpdate(adapters: adapters)
 
-        verify(mockDataSource).set(items: equal(to: [expectedItem]), sort: equal(to: state.sort), desc: equal(to: state.desc))
+        verify(mockDataSource).set(items: equal(to: [expectedItem]), sort: equal(to: state.sort))
     }
 
 

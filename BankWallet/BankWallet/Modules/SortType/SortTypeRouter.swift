@@ -26,11 +26,9 @@ extension SortTypeRouter {
         let router = SortTypeRouter()
         let interactor = SortTypeInteractor(localStorage: App.shared.localStorage)
         let presenter = SortTypePresenter(router: router, interactor: interactor, sort: sort)
-        let viewController = SortTypeViewController(delegate: presenter)
+        let viewController = AlertViewController(delegate: presenter)
 
         interactor.delegate = presenter
-        presenter.view = viewController
-        presenter.onDidLoad()
 
         router.viewController = viewController
         router.sortTypeDelegate = sortTypeDelegate

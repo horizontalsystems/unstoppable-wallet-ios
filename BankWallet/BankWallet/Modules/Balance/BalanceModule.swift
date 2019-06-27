@@ -6,8 +6,6 @@ protocol IBalanceView: class {
     func updateHeader()
     func didRefresh()
     func setSort(isOn: Bool)
-    func setSortLabel(key: String)
-    func setSortDirection(desc: Bool)
 }
 
 protocol IBalanceViewDelegate {
@@ -24,7 +22,6 @@ protocol IBalanceViewDelegate {
 
     func onOpenManageCoins()
 
-    func onSortDirectionChange()
     func onSortTypeChange()
 }
 
@@ -62,11 +59,17 @@ protocol IBalanceItemDataSource {
     func set(state: AdapterState, index: Int)
     func set(rate: Rate, index: Int)
     func clearRates()
-    func set(items: [BalanceItem], sort: BalanceSortType, desc: Bool)
-    func sort(type: BalanceSortType, desc: Bool)
+    func set(items: [BalanceItem], sort: BalanceSortType)
+    func sort(type: BalanceSortType)
 }
 
 protocol IBalanceViewItemFactory {
     func viewItem(from item: BalanceItem, currency: Currency?) -> BalanceViewItem
     func headerViewItem(from items: [BalanceItem], currency: Currency?) -> BalanceHeaderViewItem
+}
+
+enum BalanceSortType: Int {
+    case value
+    case name
+    case manual
 }

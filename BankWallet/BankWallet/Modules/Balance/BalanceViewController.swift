@@ -50,9 +50,6 @@ class BalanceViewController: WalletViewController {
         refreshControl.addTarget(self, action: #selector(onRefresh), for: .valueChanged)
         tableView.refreshControl = refreshControl
 
-        headerView.onSortDirectionChange = { [weak self] in
-            self?.delegate.onSortDirectionChange()
-        }
         headerView.onSortTypeChange = { [weak self] in
             self?.delegate.onSortTypeChange()
         }
@@ -205,15 +202,7 @@ extension BalanceViewController: IBalanceView {
     }
 
     func setSort(isOn: Bool) {
-        headerView.sortView.isHidden = !isOn
-    }
-
-    func setSortLabel(key: String) {
-        headerView.sortLabelButton.setTitle("balance.sort.\(key)".localized, for: .normal)
-    }
-
-    func setSortDirection(desc: Bool) {
-        headerView.sortDirectionButton.setImage(desc ? UIImage(named: "Sort Direction Down") : UIImage(named: "Sort Direction Up"), for: .normal)
+        headerView.sortButton.isHidden = !isOn
     }
 
 }

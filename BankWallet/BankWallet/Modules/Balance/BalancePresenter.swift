@@ -27,7 +27,7 @@ extension BalancePresenter: IBalanceInteractorDelegate {
         let items = adapters.map { adapter in
             BalanceItem(coin: adapter.coin)
         }
-        dataSource.set(items: items, sort: state.sort, desc: state.desc)
+        dataSource.set(items: items, sort: state.sort)
 
         if let currency = dataSource.currency {
             interactor.fetchRates(currencyCode: currency.code, coinCodes: dataSource.coinCodes)
@@ -85,9 +85,6 @@ extension BalancePresenter: IBalanceViewDelegate {
         view?.setSort(isOn: false)
 
         interactor.initAdapters()
-
-        view?.setSortDirection(desc: state.desc)
-        view?.setSortLabel(key: state.sort.rawValue)
     }
 
     var itemsCount: Int {
@@ -118,13 +115,6 @@ extension BalancePresenter: IBalanceViewDelegate {
         router.openManageCoins()
     }
 
-    func onSortDirectionChange() {
-        state.desc = !state.desc
-        view?.setSortDirection(desc: state.desc)
-        dataSource.sort(type: state.sort, desc: state.desc)
-        view?.reload()
-    }
-
     func onSortTypeChange() {
         router.openSortType(selected: state.sort)
     }
@@ -135,8 +125,7 @@ extension BalancePresenter: ISortTypeDelegate {
 
     func onSelect(sort: BalanceSortType) {
         state.sort = sort
-        view?.setSortLabel(key: state.sort.rawValue)
-        dataSource.sort(type: state.sort, desc: state.desc)
+        dataSource.sort(type: state.sort)
         view?.reload()
     }
 

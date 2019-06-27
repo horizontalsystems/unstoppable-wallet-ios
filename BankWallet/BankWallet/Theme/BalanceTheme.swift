@@ -13,6 +13,8 @@ class BalanceTheme {
     static let headerSortHeight: CGFloat = 28
     static let sortLabelFont: UIFont = .cryptoCaption3
     static let sortLabelTextColor: UIColor = .cryptoGray
+    static let headerTintColor: UIColor = .cryptoYellow
+    static let headerTintColorSelected: UIColor = .cryptoYellowPressed
     static let sortLabelSelectedTextColor: UIColor = .cryptoGray50
     static let headerTinyMargin: CGFloat = 4
     static let headerHugeMargin: CGFloat = 16
@@ -73,13 +75,4 @@ class BalanceTheme {
     static let editTitleColor = UIColor.cryptoGray
     static var editTitleSelectedColor: UIColor { return UIColor.crypto_Steel40_LightGray }
 
-    static var sortTypeSheetConfig: ActionSheetThemeConfig {
-        return ActionSheetThemeConfig(
-                actionStyle: .alert,
-                sideMargin: 61,
-                cornerRadius: 16,
-                separatorColor: UIColor.cryptoBlack20,
-                backgroundStyle: .blur(intensity: 0.55, style: AppTheme.actionSheetBlurStyle)
-        )
-    }
 }

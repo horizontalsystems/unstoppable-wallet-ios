@@ -1,0 +1,46 @@
+import XCTest
+import RxSwift
+import Cuckoo
+@testable import Bank_Dev_T
+
+class BalanceDataSourceTests: XCTestCase {
+    private var dataSource: BalanceItemDataSource!
+
+    private var bitcoinItem: BalanceItem!
+    private var ethereumItem: BalanceItem!
+    private var cashItem: BalanceItem!
+
+    override func setUp() {
+        super.setUp()
+
+        let bitcoin = Coin(title: "Bitcoin", code: "BTC", type: .bitcoin)
+        bitcoinItem = BalanceItem(coin: bitcoin)
+        bitcoinItem.rate = Rate(coinCode: bitcoin.code, currencyCode: "USD", value: 10, date: Date(), isLatest: true)
+        bitcoinItem.balance = Decimal(string: "10")!
+
+        ethereumItem = BalanceItem(coin: Coin(title: "Ethereum", code: "ETH", type: .ethereum))
+        ethereumItem.rate = Rate(coinCode: bitcoin.code, currencyCode: "USD", value: 10, date: Date(), isLatest: true)
+        ethereumItem.balance = Decimal(string: "0.0012")!
+
+        cashItem = BalanceItem(coin: Coin(title: "Bitcoin Cash", code: "BCH", type: .bitcoinCash))
+        cashItem.rate = nil
+        cashItem.balance = Decimal(string: "112")!
+
+        dataSource = BalanceItemDataSource()
+    }
+
+    override func tearDown() {
+        dataSource = nil
+
+        super.tearDown()
+    }
+
+    func testSort_Value() {
+        dataSource.set(items: [cashItem, ethereumItem, bitcoinItem], sort: .manual)
+
+        dataSource.sort(type: .value)
+
+        XCTAssertEqual([bitcoinItem, ethereumItem, cashItem], dataSource.items)
+    }
+
+}
