@@ -17,8 +17,8 @@ extension BalanceRouter: IBalanceRouter {
         }
     }
 
-    func openManageCoins() {
-        viewController?.present(ManageCoinsRouter.module(), animated: true)
+    func openManageWallets() {
+        viewController?.present(ManageWalletsRouter.module(), animated: true)
     }
 
     func openSortType(selected sort: BalanceSortType) {

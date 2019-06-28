@@ -114,8 +114,8 @@ extension BalancePresenter: IBalanceViewDelegate {
         router.openSend(for: dataSource.item(at: index).coin.code)
     }
 
-    func onOpenManageCoins() {
-        router.openManageCoins()
+    func onOpenManageWallets() {
+        router.openManageWallets()
     }
 
     func onSortDirectionChange() {

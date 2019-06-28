@@ -164,3 +164,27 @@ extension AdapterState {
         }
     }
 }
+
+extension Wallet {
+
+    static func mock(coin: Coin = Coin.mock(), account: Account = Account.mock(), syncMode: SyncMode = .fast) -> Wallet {
+        return Wallet(coin: coin, account: account, syncMode: syncMode)
+    }
+
+}
+
+extension Coin {
+
+    static func mock(title: String = "Bitcoin", code: CoinCode = "BTC", type: CoinType = .bitcoin) -> Coin {
+        return Coin(title: title, code: code, type: type)
+    }
+
+}
+
+extension Account {
+
+    static func mock(testName: String = "Mnemonic", type: AccountType = .mnemonic(words: [], derivation: .bip44, salt: nil), uniqueId: String = "uniqueId", defaultSyncMode: SyncMode = .fast) -> Account {
+        return Account(name: testName, type: type, uniqueId: uniqueId, defaultSyncMode: defaultSyncMode)
+    }
+
+}

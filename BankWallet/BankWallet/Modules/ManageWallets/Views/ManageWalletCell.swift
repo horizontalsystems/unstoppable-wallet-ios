@@ -1,7 +1,7 @@
 import UIKit
 import SnapKit
 
-class ManageCoinCell: UITableViewCell {
+class ManageWalletCell: UITableViewCell {
     let titleLabel = UILabel()
     let coinLabel = UILabel()
     let coinImageView = CoinIconImageView()
@@ -11,28 +11,28 @@ class ManageCoinCell: UITableViewCell {
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        backgroundColor = ManageCoinsTheme.cellBackground
+        backgroundColor = ManageWalletsTheme.cellBackground
 
-        titleLabel.textColor = ManageCoinsTheme.titleColor
-        titleLabel.font = ManageCoinsTheme.titleFont
+        titleLabel.textColor = ManageWalletsTheme.titleColor
+        titleLabel.font = ManageWalletsTheme.titleFont
         contentView.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { maker in
-            maker.leading.equalToSuperview().offset(ManageCoinsTheme.regularOffset)
-            maker.top.equalToSuperview().offset(ManageCoinsTheme.smallOffset)
+            maker.leading.equalToSuperview().offset(ManageWalletsTheme.regularOffset)
+            maker.top.equalToSuperview().offset(ManageWalletsTheme.smallOffset)
         }
 
-        coinLabel.textColor = ManageCoinsTheme.coinLabelColor
-        coinLabel.font = ManageCoinsTheme.coinLabelFont
+        coinLabel.textColor = ManageWalletsTheme.coinLabelColor
+        coinLabel.font = ManageWalletsTheme.coinLabelFont
         contentView.addSubview(coinLabel)
         coinLabel.snp.makeConstraints { maker in
             maker.leading.equalTo(self.titleLabel)
-            maker.top.equalTo(self.titleLabel.snp.bottom).offset(ManageCoinsTheme.coinLabelTopMargin)
+            maker.top.equalTo(self.titleLabel.snp.bottom).offset(ManageWalletsTheme.coinLabelTopMargin)
         }
 
         contentView.addSubview(coinImageView)
         coinImageView.snp.makeConstraints { maker in
             maker.centerY.equalToSuperview()
-            maker.trailing.equalToSuperview().offset(-ManageCoinsTheme.iconRightMargin)
+            maker.trailing.equalToSuperview().offset(-ManageWalletsTheme.iconRightMargin)
         }
 
         topSeparatorView.backgroundColor = AppTheme.separatorColor

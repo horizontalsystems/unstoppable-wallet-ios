@@ -1,6 +1,6 @@
 import UIKit
 
-class ManageCoinsTheme {
+class ManageWalletsTheme {
     static var titleColor: UIColor { return .crypto_White_Black }
     static let titleFont = UIFont.cryptoBody2
     static let regularOffset: CGFloat = 16

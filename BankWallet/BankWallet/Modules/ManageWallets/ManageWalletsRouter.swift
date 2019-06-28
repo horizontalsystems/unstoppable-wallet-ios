@@ -1,10 +1,10 @@
 import UIKit
 
-class ManageCoinsRouter {
+class ManageWalletsRouter {
     weak var viewController: UIViewController?
 }
 
-extension ManageCoinsRouter: IManageCoinsRouter {
+extension ManageWalletsRouter: IManageWalletsRouter {
 
     func close() {
         viewController?.dismiss(animated: true)
@@ -12,13 +12,13 @@ extension ManageCoinsRouter: IManageCoinsRouter {
 
 }
 
-extension ManageCoinsRouter {
+extension ManageWalletsRouter {
 
     static func module() -> UIViewController {
-        let router = ManageCoinsRouter()
-        let interactor = ManageCoinsInteractor(appConfigProvider: App.shared.appConfigProvider, storage: App.shared.grdbStorage)
-        let presenter = ManageCoinsPresenter(interactor: interactor, router: router, state: ManageCoinsPresenterState())
-        let viewController = ManageCoinsViewController(delegate: presenter)
+        let router = ManageWalletsRouter()
+        let interactor = ManageWalletsInteractor(appConfigProvider: App.shared.appConfigProvider, walletManager: App.shared.walletManager, accountManager: App.shared.accountManager, storage: App.shared.grdbStorage)
+        let presenter = ManageWalletsPresenter(interactor: interactor, router: router, state: ManageWalletsPresenterState())
+        let viewController = ManageWalletsViewController(delegate: presenter)
 
         interactor.delegate = presenter
         presenter.view = viewController

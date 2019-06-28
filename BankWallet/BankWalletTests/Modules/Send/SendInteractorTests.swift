@@ -57,7 +57,7 @@ class SendInteractorTests: XCTestCase {
         }
         stub(mockAdapter) { mock in
             when(mock.feeCoinCode.get).thenReturn(nil)
-            when(mock.coin.get).thenReturn(Coin(title: "some", code: coinCode, type: .bitcoin))
+            when(mock.wallet.get).thenReturn(Wallet.mock(coin: Coin.mock(code: coinCode)))
             when(mock.decimal.get).thenReturn(0)
             when(mock.balance.get).thenReturn(balance)
             when(mock.validate(address: any())).thenDoNothing()
@@ -316,7 +316,7 @@ class SendInteractorTests: XCTestCase {
 
         stub(mockAdapter) { mock in
             when(mock.fee(for: equal(to: amount), address: equal(to: address), feeRatePriority: equal(to: input.feeRatePriority))).thenReturn(fee)
-            when(mock.coin.get).thenReturn(erc20Coin)
+            when(mock.wallet.get).thenReturn(Wallet.mock(coin: erc20Coin))
             when(mock.feeCoinCode.get).thenReturn(feeCoinCode)
             when(mock.validate(amount: equal(to: amount), address: equal(to: address), feeRatePriority: equal(to: input.feeRatePriority))).thenReturn([SendStateError.insufficientFeeBalance])
         }

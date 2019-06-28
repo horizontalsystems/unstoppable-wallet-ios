@@ -1,12 +1,10 @@
 class AdapterFactory: IAdapterFactory {
     private let appConfigProvider: IAppConfigProvider
-    private let localStorage: ILocalStorage
     private let ethereumKitManager: IEthereumKitManager
     private let feeRateProvider: IFeeRateProvider
 
-    init(appConfigProvider: IAppConfigProvider, localStorage: ILocalStorage, ethereumKitManager: IEthereumKitManager, feeRateProvider: IFeeRateProvider) {
+    init(appConfigProvider: IAppConfigProvider, ethereumKitManager: IEthereumKitManager, feeRateProvider: IFeeRateProvider) {
         self.appConfigProvider = appConfigProvider
-        self.localStorage = localStorage
         self.ethereumKitManager = ethereumKitManager
         self.feeRateProvider = feeRateProvider
     }
@@ -32,6 +30,8 @@ class AdapterFactory: IAdapterFactory {
             if let ethereumKit = try? ethereumKitManager.ethereumKit(wallet: wallet) {
                 return try? Erc20Adapter(wallet: wallet, ethereumKit: ethereumKit, contractAddress: address, decimal: decimal, fee: fee, addressParser: addressParser, feeRateProvider: feeRateProvider)
             }
+        case .eos:
+            return nil
         }
 
         return nil
