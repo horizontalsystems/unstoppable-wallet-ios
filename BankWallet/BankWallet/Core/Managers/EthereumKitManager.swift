@@ -30,7 +30,7 @@ class EthereumKitManager: IEthereumKitManager {
                 networkType: appConfigProvider.testMode ? .ropsten : .mainNet,
                 infuraCredentials: appConfigProvider.infuraCredentials,
                 etherscanApiKey: appConfigProvider.etherscanKey,
-                walletId: wallet.account.uniqueId,
+                walletId: wallet.account.id,
                 minLogLevel: .error
         )
 

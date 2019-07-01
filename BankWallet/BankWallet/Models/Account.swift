@@ -1,14 +1,15 @@
 struct Account {
+    let id: String
     let name: String
     let type: AccountType
-    let uniqueId: String
+    var backedUp: Bool
     let defaultSyncMode: SyncMode
 }
 
 extension Account: Equatable {
 
     public static func ==(lhs: Account, rhs: Account) -> Bool {
-        return lhs.name == rhs.name && lhs.uniqueId == rhs.uniqueId
+        return lhs.id == rhs.id
     }
 
 }

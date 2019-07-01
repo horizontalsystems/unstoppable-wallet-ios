@@ -160,6 +160,11 @@ protocol IAuthManager {
 
 protocol IAccountManager {
     var accounts: [Account] { get }
+    var accountsObservable: Observable<[Account]> { get }
+
+    func save(account: Account)
+    func deleteAccount(id: String)
+    func setAccountBackedUp(id: String)
 }
 
 protocol ILockManager {

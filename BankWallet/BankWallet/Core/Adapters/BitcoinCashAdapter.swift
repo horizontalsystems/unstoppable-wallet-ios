@@ -13,7 +13,7 @@ class BitcoinCashAdapter: BitcoinBaseAdapter {
         self.feeRateProvider = feeRateProvider
 
         let networkType: BitcoinCashKit.NetworkType = testMode ? .testNet : .mainNet
-        bitcoinCashKit = try BitcoinCashKit(withWords: words, walletId: wallet.account.uniqueId, syncMode: BitcoinBaseAdapter.kitMode(from: wallet.syncMode), networkType: networkType, minLogLevel: .error)
+        bitcoinCashKit = try BitcoinCashKit(withWords: words, walletId: wallet.account.id, syncMode: BitcoinBaseAdapter.kitMode(from: wallet.syncMode), networkType: networkType, minLogLevel: .error)
 
         super.init(wallet: wallet, abstractKit: bitcoinCashKit, addressParser: addressParser)
 
