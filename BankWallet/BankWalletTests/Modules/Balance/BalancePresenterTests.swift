@@ -130,14 +130,19 @@ class BalancePresenterTests: XCTestCase {
     func testDidLoad() {
         stub(mockInteractor) { mock in
             when(mock.initAdapters()).thenDoNothing()
+            when(mock.sortType.get).thenReturn(BalanceSortType.manual)
         }
         stub(mockView) { mock in
             when(mock.setSort(isOn: equal(to: false))).thenDoNothing()
+        }
+        stub(mockDataSource) { mock in
+            when(mock.sortType.set(any())).thenDoNothing()
         }
 
         presenter.viewDidLoad()
 
         verify(mockView).setSort(isOn: equal(to: false))
+        verify(mockDataSource).sortType.set(equal(to: BalanceSortType.manual))
         verify(mockInteractor).initAdapters()
     }
 
@@ -184,6 +189,7 @@ class BalancePresenterTests: XCTestCase {
             when(mock.currency.get).thenReturn(currency)
             when(mock.coinCodes.get).thenReturn([bitcoin.code])
             when(mock.items.get).thenReturn([expectedItem])
+            when(mock.set(items: any())).thenDoNothing()
         }
         stub(mockInteractor) { mock in
             when(mock.fetchRates(currencyCode: any(), coinCodes: any())).thenDoNothing()
