@@ -5,6 +5,7 @@ class ManageAccountCell: UITableViewCell {
     private let roundedBackground = UIView()
     private let clippingView = UIView()
 
+    private let backedUpIcon = UIImageView()
     private let nameLabel = UILabel()
     private let coinsLabel = UILabel()
 
@@ -41,6 +42,13 @@ class ManageAccountCell: UITableViewCell {
         clippingView.snp.makeConstraints { maker in
             maker.edges.equalToSuperview()
         }
+
+        clippingView.addSubview(backedUpIcon)
+        backedUpIcon.snp.makeConstraints { maker in
+            maker.trailing.equalToSuperview().offset(-ManageAccountsTheme.cellBigPadding)
+            maker.top.equalToSuperview().offset(ManageAccountsTheme.cellBigPadding)
+        }
+        backedUpIcon.image = UIImage(named: "Attention Icon")
 
         clippingView.addSubview(nameLabel)
         nameLabel.snp.makeConstraints { maker in
@@ -96,6 +104,8 @@ class ManageAccountCell: UITableViewCell {
     }
 
     func bind(account: Account) {
+        backedUpIcon.isHidden = account.backedUp
+
         var title = account.name
         var coinCodes = ""
 
