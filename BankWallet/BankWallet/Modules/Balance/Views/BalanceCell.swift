@@ -112,7 +112,7 @@ class BalanceCell: UITableViewCell {
             maker.size.equalTo(BalanceTheme.spinnerSideSize)
         }
 
-        failedImageView.image = UIImage(named: "Balance Sync Failed Icon")
+        failedImageView.image = UIImage(named: "Attention Icon")
         clippingView.addSubview(failedImageView)
         failedImageView.snp.makeConstraints { maker in
             maker.center.equalTo(self.coinIconImageView.snp.center)
