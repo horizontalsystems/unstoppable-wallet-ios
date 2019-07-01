@@ -69,8 +69,8 @@ protocol IAdapterFactory {
 protocol IWalletManager: class {
     var wallets: [Wallet] { get }
     var walletsUpdatedSignal: Signal { get }
+    func enable(wallets: [Wallet])
     func enableDefaultWallets()
-    func clear()
 }
 
 enum AdapterState {
@@ -257,9 +257,8 @@ protocol IRateStorage {
 }
 
 protocol IEnabledWalletStorage {
-    var enabledWalletsObservable: Observable<[EnabledWallet]> { get }
+    var enabledWallets: [EnabledWallet] { get }
     func save(enabledWallets: [EnabledWallet])
-    func clearEnabledWallets()
 }
 
 protocol IJsonApiProvider {

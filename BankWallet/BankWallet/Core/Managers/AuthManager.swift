@@ -47,7 +47,6 @@ extension AuthManager: IAuthManager {
     func logout() throws {
         try pinManager.clear()
         localStorage.clear()
-        coinManager.clear()
         rateManager.clear()
 
         try secureStorage.set(authData: nil)

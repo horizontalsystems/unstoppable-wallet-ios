@@ -132,9 +132,10 @@ extension GrdbStorage: IRateStorage {
 
 extension GrdbStorage: IEnabledWalletStorage {
 
-    var enabledWalletsObservable: Observable<[EnabledWallet]> {
-        let request = EnabledWallet.order(EnabledWallet.Columns.walletOrder)
-        return request.rx.fetchAll(in: dbPool)
+    var enabledWallets: [EnabledWallet] {
+        return try! dbPool.read { db in
+            return try EnabledWallet.order(EnabledWallet.Columns.walletOrder).fetchAll(db)
+        }
     }
 
     func save(enabledWallets: [EnabledWallet]) {

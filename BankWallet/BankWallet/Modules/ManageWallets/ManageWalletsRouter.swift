@@ -16,7 +16,7 @@ extension ManageWalletsRouter {
 
     static func module() -> UIViewController {
         let router = ManageWalletsRouter()
-        let interactor = ManageWalletsInteractor(appConfigProvider: App.shared.appConfigProvider, walletManager: App.shared.walletManager, accountManager: App.shared.accountManager, storage: App.shared.grdbStorage)
+        let interactor = ManageWalletsInteractor(appConfigProvider: App.shared.appConfigProvider, walletManager: App.shared.walletManager, accountManager: App.shared.accountManager)
         let presenter = ManageWalletsPresenter(interactor: interactor, router: router, state: ManageWalletsPresenterState())
         let viewController = ManageWalletsViewController(delegate: presenter)
 

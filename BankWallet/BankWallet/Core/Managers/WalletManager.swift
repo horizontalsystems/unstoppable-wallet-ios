@@ -7,12 +7,7 @@ class WalletManager {
 
     private let disposeBag = DisposeBag()
 
-    var wallets = [Wallet]() {
-        didSet {
-            walletsUpdatedSignal.notify()
-        }
-    }
-
+    var wallets = [Wallet]()
     let walletsUpdatedSignal = Signal()
 
     init(appConfigProvider: IAppConfigProvider, accountManager: IAccountManager, storage: IEnabledWalletStorage) {
@@ -20,17 +15,22 @@ class WalletManager {
         self.accountManager = accountManager
         self.storage = storage
 
-        storage.enabledWalletsObservable
-                .subscribe(onNext: { [weak self] enabledCoins in
-                    self?.handle(enabledWallets: enabledCoins)
+        accountManager.accountsObservable
+                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
+                .subscribe(onNext: { [weak self] accounts in
+                    self?.handle(accounts: accounts)
                 })
                 .disposed(by: disposeBag)
+
+        wallets = wallets(enabledWallets: storage.enabledWallets, accounts: accountManager.accounts)
     }
 
-    private func handle(enabledWallets: [EnabledWallet]) {
-        let accounts = accountManager.accounts
+    private func handle(accounts: [Account]) {
+        enable(wallets: wallets.filter { accounts.contains($0.account) })
+    }
 
-        wallets = enabledWallets.compactMap { enabledWallet in
+    private func wallets(enabledWallets: [EnabledWallet], accounts: [Account]) -> [Wallet] {
+        return enabledWallets.compactMap { enabledWallet in
             guard let coin = appConfigProvider.coins.first(where: { $0.code == enabledWallet.coinCode }) else {
                 return nil
             }
@@ -47,6 +47,19 @@ class WalletManager {
 
 extension WalletManager: IWalletManager {
 
+    func enable(wallets: [Wallet]) {
+        var enabledWallets = [EnabledWallet]()
+
+        for (order, wallet) in wallets.enumerated() {
+            enabledWallets.append(EnabledWallet(coinCode: wallet.coin.code, accountName: wallet.account.name, syncMode: wallet.syncMode, order: order))
+        }
+
+        storage.save(enabledWallets: enabledWallets)
+
+        self.wallets = wallets
+        walletsUpdatedSignal.notify()
+    }
+
     func enableDefaultWallets() {
         // todo: implement this
 
@@ -57,11 +70,6 @@ extension WalletManager: IWalletManager {
 //        }
 //
 //        storage.save(enabledWallets: enabledWallets)
-    }
-
-    func clear() {
-        wallets = []
-        storage.clearEnabledWallets()
     }
 
 }
