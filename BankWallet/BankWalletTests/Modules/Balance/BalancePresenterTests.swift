@@ -6,7 +6,6 @@ import Cuckoo
 class BalancePresenterTests: XCTestCase {
     private var mockRouter: MockIBalanceRouter!
     private var mockInteractor: MockIBalanceInteractor!
-    private var state: BalancePresenterState!
     private var mockDataSource: MockIBalanceItemDataSource!
     private var mockFactory: MockIBalanceViewItemFactory!
     private var mockView: MockIBalanceView!
@@ -79,7 +78,6 @@ class BalancePresenterTests: XCTestCase {
 
         mockRouter = MockIBalanceRouter()
         mockInteractor = MockIBalanceInteractor()
-        state = BalancePresenterState()
         mockDataSource = MockIBalanceItemDataSource()
         mockFactory = MockIBalanceViewItemFactory()
         mockView = MockIBalanceView()
@@ -113,14 +111,13 @@ class BalancePresenterTests: XCTestCase {
         }
 
 
-        presenter = BalancePresenter(interactor: mockInteractor, router: mockRouter, state: state, dataSource: mockDataSource, factory: mockFactory, sortingOnThreshold: sortingOnThreshold)
+        presenter = BalancePresenter(interactor: mockInteractor, router: mockRouter, dataSource: mockDataSource, factory: mockFactory, sortingOnThreshold: sortingOnThreshold)
         presenter.view = mockView
     }
 
     override func tearDown() {
         mockRouter = nil
         mockInteractor = nil
-        state = nil
         mockDataSource = nil
         mockFactory = nil
         mockView = nil
@@ -184,7 +181,6 @@ class BalancePresenterTests: XCTestCase {
             when(mock.coin.get).thenReturn(bitcoin)
         }
         stub(mockDataSource) { mock in
-            when(mock.set(items: any(), sort: any())).thenDoNothing()
             when(mock.currency.get).thenReturn(currency)
             when(mock.coinCodes.get).thenReturn([bitcoin.code])
             when(mock.items.get).thenReturn([expectedItem])
@@ -200,7 +196,7 @@ class BalancePresenterTests: XCTestCase {
 
         presenter.didUpdate(adapters: adapters)
 
-        verify(mockDataSource).set(items: equal(to: [expectedItem]), sort: equal(to: state.sort))
+        verify(mockDataSource).set(items: equal(to: [expectedItem]))
     }
 
 

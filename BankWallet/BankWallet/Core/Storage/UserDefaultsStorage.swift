@@ -10,6 +10,7 @@ class UserDefaultsStorage: ILocalStorage {
     private let keyBaseEthereumProvider = "base_ethereum_provider"
     private let keyLightMode = "light_mode"
     private let agreementAcceptedKey = "i_understand_key"
+    private let balanceSortKey = "balance_sort_key"
     private let biometricOnKey = "biometric_on_key"
     private let lastExitDateKey = "last_exit_date_key"
     private let didLaunchOnceKey = "did_launch_once_key"
@@ -76,6 +77,22 @@ class UserDefaultsStorage: ILocalStorage {
     var agreementAccepted: Bool {
         get { return bool(for: agreementAcceptedKey) ?? false }
         set { set(newValue, for: agreementAcceptedKey) }
+    }
+
+    var balanceSortType: BalanceSortType? {
+        get {
+            guard let stringSort = getString(balanceSortKey), let intSort = Int(stringSort) else {
+                return nil
+            }
+            return BalanceSortType(rawValue: intSort)
+        }
+        set {
+            if let newValue = newValue?.rawValue {
+                setString(balanceSortKey, value: "\(newValue)")
+            } else {
+                setString(balanceSortKey, value: nil)
+            }
+        }
     }
 
     var isBiometricOn: Bool {

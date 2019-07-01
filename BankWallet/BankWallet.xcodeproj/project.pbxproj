@@ -347,7 +347,7 @@
 		1A5641BD2DA1FB1803D3B044 /* DepositInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5648DA32EA5FC27E4CEF64 /* DepositInteractor.swift */; };
 		1A5641C3B8E88DA8E54FEFEB /* PinDotsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564326AB442FFB65E1CA29 /* PinDotsView.swift */; };
 		1A5641D57A7D6928C9D0984D /* TransactionRecordDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56425A421C1C9FB383DCDA /* TransactionRecordDataSource.swift */; };
-		1A5641E01440CD25473A74E5 /* BalancePresenterState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564E05E44080A7B136469E /* BalancePresenterState.swift */; };
+		1A5641D8E63CDBE210E30105 /* BalanceSorter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564571110872DF0D85F0B4 /* BalanceSorter.swift */; };
 		1A5641E8642AA6004640F15C /* SendButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56425E1873BC8574539D2B /* SendButtonItem.swift */; };
 		1A5641EFE66E67F1FCFAABCF /* LatestRateData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5640AA47846498D56A36E6 /* LatestRateData.swift */; };
 		1A5642019E9D4A25C650F453 /* UnlockPinInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564083CF8DF7A89314820D /* UnlockPinInteractorTests.swift */; };
@@ -362,6 +362,7 @@
 		1A56424C8E4017689EFF5D6D /* CurrentDateProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564FC3433E72C8A63AC5F5 /* CurrentDateProvider.swift */; };
 		1A56425BED68BBDDE3CFD428 /* SectionSeparator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564A5CACB021B00AB026A1 /* SectionSeparator.swift */; };
 		1A564274EEC6A31D6B287B09 /* TransactionFromToHashItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564C4C8EFE1B1BBE03C9E6 /* TransactionFromToHashItem.swift */; };
+		1A564277ED9E400D245B0AA1 /* BalanceSorterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564F9B9F89F533BC520074 /* BalanceSorterTests.swift */; };
 		1A56427D41F16B2D9C7B5F88 /* SendModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5641C2FAD616C358A319A0 /* SendModule.swift */; };
 		1A564286AA113202C5EBC448 /* SortTypeModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564162B152DDF4F51A713B /* SortTypeModule.swift */; };
 		1A56429346081B64A56608FA /* SecuritySettingsInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564082B28C17265B23D88A /* SecuritySettingsInteractor.swift */; };
@@ -389,6 +390,7 @@
 		1A56438249B462DB9B522C7A /* CurrencyHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564679937963085A8530F4 /* CurrencyHelper.swift */; };
 		1A5643912F83A169A2BF9147 /* SendKeyboardItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564827E061EB8B6802012F /* SendKeyboardItemView.swift */; };
 		1A56439242405A16711956B3 /* PagingDotsItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5640FFFD5B065D745208F1 /* PagingDotsItem.swift */; };
+		1A564395C3083722D347FA5F /* BalanceSorter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564571110872DF0D85F0B4 /* BalanceSorter.swift */; };
 		1A5643ADCB28C06E47E8C2FE /* SyncModeRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564A602609EF9DC0976C90 /* SyncModeRouter.swift */; };
 		1A5643E6840438AB993854E1 /* ERC20InputParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56475812F17EAE44BF6D34 /* ERC20InputParser.swift */; };
 		1A5643EBCA934158AD7B4C4B /* DepositPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5645371B2FC499500DCA93 /* DepositPresenter.swift */; };
@@ -462,7 +464,6 @@
 		1A5647C94C737A83D85C6934 /* ManageCoinsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564B45A6BB5D38CE45C009 /* ManageCoinsPresenter.swift */; };
 		1A5647CE2220F4E29CA539C7 /* ManageCoinsTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564A860AD2DA3CFBF9C04A /* ManageCoinsTheme.swift */; };
 		1A5647E0E662CA7D27E931A6 /* TextSelectItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5648E17213DF77DCA2EE42 /* TextSelectItemView.swift */; };
-		1A5647E0F451A4257E6F694B /* BalancePresenterState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564E05E44080A7B136469E /* BalancePresenterState.swift */; };
 		1A5647F12B2261927CBF5F44 /* SyncModeState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56439DBEB4C2928B4DC7A0 /* SyncModeState.swift */; };
 		1A5647F3635BCCAA32BF37F7 /* HashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56445B8B1F1C78E1DFC9F8 /* HashView.swift */; };
 		1A56480277B0C3D6429E94EC /* SyncModeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564C4771D7403A0D9E1F04 /* SyncModeCell.swift */; };
@@ -540,7 +541,6 @@
 		1A564B49C052D4BF6C53DE7F /* BalanceInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564EA89D7182D3D3F669C3 /* BalanceInteractorTests.swift */; };
 		1A564B6A34A79B08BA9F9DE9 /* SyncModeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56496D338D5999E9DC2FFE /* SyncModeViewController.swift */; };
 		1A564B6E513269FED43EA6F2 /* ManageCoinsModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564FD2BE42EF4AADB0372C /* ManageCoinsModule.swift */; };
-		1A564B8020A7FC92562E3CC9 /* BalancePresenterState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564E05E44080A7B136469E /* BalancePresenterState.swift */; };
 		1A564B8F25AB6515F509B10D /* BackupTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5645D738FD93B79628E5E5 /* BackupTheme.swift */; };
 		1A564B955AE4E27AD7B232CC /* TransactionTitleItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564C27C6CDAE6E692C4A14 /* TransactionTitleItem.swift */; };
 		1A564BAAAD199DDF96A84006 /* SecuritySettingsInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564258FC24334581197AC1 /* SecuritySettingsInteractorTests.swift */; };
@@ -579,6 +579,7 @@
 		1A564D837A9AB8A7EA5EB71A /* LatestRateData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5640AA47846498D56A36E6 /* LatestRateData.swift */; };
 		1A564D9038D65D88CF97329C /* TransactionTitleItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56469DF9D0C335228E88EE /* TransactionTitleItemView.swift */; };
 		1A564DCD110E8850C49979D3 /* TextSelectItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5646B61624B1237B877D54 /* TextSelectItem.swift */; };
+		1A564DD139A96047A30BD78D /* BalanceSorter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564571110872DF0D85F0B4 /* BalanceSorter.swift */; };
 		1A564DEAF0A6DF97F029594E /* LockoutManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5645447A24FE94F0D87BFF /* LockoutManager.swift */; };
 		1A564DEFE16F401AA676866E /* AlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5642D6188D2E01E0EEC41C /* AlertViewController.swift */; };
 		1A564DF36A4269C9FB869778 /* LockoutManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5645447A24FE94F0D87BFF /* LockoutManager.swift */; };
@@ -1398,6 +1399,7 @@
 		1A5645371B2FC499500DCA93 /* DepositPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DepositPresenter.swift; sourceTree = "<group>"; };
 		1A56453E2F6ED44D46D84C49 /* PagingDotsItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PagingDotsItemView.swift; sourceTree = "<group>"; };
 		1A5645447A24FE94F0D87BFF /* LockoutManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LockoutManager.swift; sourceTree = "<group>"; };
+		1A564571110872DF0D85F0B4 /* BalanceSorter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BalanceSorter.swift; sourceTree = "<group>"; };
 		1A56458C7C29504755A09E00 /* LaunchInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LaunchInteractor.swift; sourceTree = "<group>"; };
 		1A5645B289EFBDB3EAB27E3A /* PinManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinManager.swift; sourceTree = "<group>"; };
 		1A5645BE7DACEC78A2FAEFB5 /* DepositCollectionItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DepositCollectionItem.swift; sourceTree = "<group>"; };
@@ -1503,7 +1505,6 @@
 		1A564DB37A289E1AEA981458 /* LanguageSettingsInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LanguageSettingsInteractor.swift; sourceTree = "<group>"; };
 		1A564DDACAD5CFB092AE6496 /* BalanceEditCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BalanceEditCell.swift; sourceTree = "<group>"; };
 		1A564E017B299CF4BA6F337C /* UnlockPinModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnlockPinModule.swift; sourceTree = "<group>"; };
-		1A564E05E44080A7B136469E /* BalancePresenterState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BalancePresenterState.swift; sourceTree = "<group>"; };
 		1A564E1F405D2D57FBC9E799 /* TransactionFromToHashItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionFromToHashItemView.swift; sourceTree = "<group>"; };
 		1A564E1FBBCCA45BCDA557F4 /* DepositModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DepositModule.swift; sourceTree = "<group>"; };
 		1A564E32F66415F9A0586626 /* PinView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinView.swift; sourceTree = "<group>"; };
@@ -1523,6 +1524,7 @@
 		1A564F697ACF24DA968884EA /* UptimeProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UptimeProvider.swift; sourceTree = "<group>"; };
 		1A564F747A4D0B78E5DF6F1B /* SettingsTheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsTheme.swift; sourceTree = "<group>"; };
 		1A564F7564667D6BC7CEF6D3 /* TransactionViewItemLoaderState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionViewItemLoaderState.swift; sourceTree = "<group>"; };
+		1A564F9B9F89F533BC520074 /* BalanceSorterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BalanceSorterTests.swift; sourceTree = "<group>"; };
 		1A564FA5E8DDE76BF1257727 /* UnlockPinPresenterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnlockPinPresenterTests.swift; sourceTree = "<group>"; };
 		1A564FC3433E72C8A63AC5F5 /* CurrentDateProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrentDateProvider.swift; sourceTree = "<group>"; };
 		1A564FD2BE42EF4AADB0372C /* ManageCoinsModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManageCoinsModule.swift; sourceTree = "<group>"; };
@@ -1714,7 +1716,7 @@
 				11B35D7125090E2FF868F924 /* BalanceViewItemFactory.swift */,
 				11B35A0A1E69943CD3203FF9 /* BalanceItem.swift */,
 				11B35D1D60E1D0A206C70490 /* BalanceHeaderViewItem.swift */,
-				1A564E05E44080A7B136469E /* BalancePresenterState.swift */,
+				1A564571110872DF0D85F0B4 /* BalanceSorter.swift */,
 			);
 			path = Balance;
 			sourceTree = "<group>";
@@ -2468,6 +2470,7 @@
 				1A5646AB24E23765AD12C83E /* BalancePresenterTests.swift */,
 				1A564EA89D7182D3D3F669C3 /* BalanceInteractorTests.swift */,
 				1A56468820A5F894EC599A44 /* BalanceDataSourceTests.swift */,
+				1A564F9B9F89F533BC520074 /* BalanceSorterTests.swift */,
 			);
 			path = Balance;
 			sourceTree = "<group>";
@@ -3538,7 +3541,6 @@
 				1A564C4C3A445A00AC5F7810 /* SyncModeSectionSeparator.swift in Sources */,
 				1A564F7A37FCE8775659F77A /* SecuritySettingsState.swift in Sources */,
 				2FA5D4562E12175B6044FDFD /* BlockdozerProvider.swift in Sources */,
-				1A5641E01440CD25473A74E5 /* BalancePresenterState.swift in Sources */,
 				1A5649536DACD15C3B6EA457 /* SortTypeInteractor.swift in Sources */,
 				1A564C152F6A439151E158C9 /* SortTypePresenter.swift in Sources */,
 				1A56454B3D9E1E2865413319 /* SortTypeModule.swift in Sources */,
@@ -3546,6 +3548,7 @@
 				1A5647E0E662CA7D27E931A6 /* TextSelectItemView.swift in Sources */,
 				1A56460A30025D05CEB7EBE9 /* TextSelectItem.swift in Sources */,
 				1A564DEFE16F401AA676866E /* AlertViewController.swift in Sources */,
+				1A5641D8E63CDBE210E30105 /* BalanceSorter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3598,6 +3601,7 @@
 				1A564C39E18A49AA791E15EC /* AddressParserTests.swift in Sources */,
 				1A564EC83C89E2261445AEE1 /* TransactionViewItemDataSourceTests.swift in Sources */,
 				1A5642DF56DD6DFE1C8A6D7B /* BalanceDataSourceTests.swift in Sources */,
+				1A564277ED9E400D245B0AA1 /* BalanceSorterTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3958,7 +3962,6 @@
 				1A564A16085370FCAF6657B2 /* SyncModeSectionSeparator.swift in Sources */,
 				1A564D46D9ED32732BFE1C5A /* SecuritySettingsState.swift in Sources */,
 				2FA5DBAF03EAA20DC88BADE5 /* BlockdozerProvider.swift in Sources */,
-				1A5647E0F451A4257E6F694B /* BalancePresenterState.swift in Sources */,
 				1A564EA65F20F1BA976681AC /* SortTypeInteractor.swift in Sources */,
 				1A56482620A4ABBC3F8F9195 /* SortTypePresenter.swift in Sources */,
 				1A564286AA113202C5EBC448 /* SortTypeModule.swift in Sources */,
@@ -3966,6 +3969,7 @@
 				1A56490427A77496C63E08A7 /* TextSelectItemView.swift in Sources */,
 				1A564DCD110E8850C49979D3 /* TextSelectItem.swift in Sources */,
 				1A564CD685B7DE30A959A6D5 /* AlertViewController.swift in Sources */,
+				1A564DD139A96047A30BD78D /* BalanceSorter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4326,7 +4330,6 @@
 				1A56417502CB34D371D89ED4 /* SyncModeSectionSeparator.swift in Sources */,
 				1A564860D1BFB8032BFDC600 /* SecuritySettingsState.swift in Sources */,
 				2FA5DA090638C6810DAE40F3 /* BlockdozerProvider.swift in Sources */,
-				1A564B8020A7FC92562E3CC9 /* BalancePresenterState.swift in Sources */,
 				1A5645FBC36E2A73E24E3D2A /* SortTypeInteractor.swift in Sources */,
 				1A5648A0A2CDE52F01E31538 /* SortTypePresenter.swift in Sources */,
 				1A564D5E4677AD5DC06ED542 /* SortTypeModule.swift in Sources */,
@@ -4334,6 +4337,7 @@
 				1A564AB07F3C5D0534D0D8A3 /* TextSelectItemView.swift in Sources */,
 				1A5649D8F43E49F4EB5157F4 /* TextSelectItem.swift in Sources */,
 				1A564929F1CECAA67987CBC4 /* AlertViewController.swift in Sources */,
+				1A564395C3083722D347FA5F /* BalanceSorter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

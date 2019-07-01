@@ -12,7 +12,7 @@ class SortTypeInteractor {
 extension SortTypeInteractor: ISortTypeInteractor {
 
     func set(sort: BalanceSortType) {
-//        localStorage.agreementAccepted = true
+        localStorage.balanceSortType = sort
     }
 
 }

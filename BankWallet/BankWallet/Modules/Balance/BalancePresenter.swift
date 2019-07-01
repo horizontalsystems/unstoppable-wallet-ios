@@ -3,17 +3,15 @@ import RxSwift
 class BalancePresenter {
     private let interactor: IBalanceInteractor
     private let router: IBalanceRouter
-    private var state: BalancePresenterState
     private var dataSource: IBalanceItemDataSource
     private let factory: IBalanceViewItemFactory
     private let sortingOnThreshold: Int
 
     weak var view: IBalanceView?
 
-    init(interactor: IBalanceInteractor, router: IBalanceRouter, state: BalancePresenterState, dataSource: IBalanceItemDataSource, factory: IBalanceViewItemFactory, sortingOnThreshold: Int) {
+    init(interactor: IBalanceInteractor, router: IBalanceRouter, dataSource: IBalanceItemDataSource, factory: IBalanceViewItemFactory, sortingOnThreshold: Int) {
         self.interactor = interactor
         self.router = router
-        self.state = state
         self.dataSource = dataSource
         self.factory = factory
         self.sortingOnThreshold = sortingOnThreshold
@@ -27,7 +25,7 @@ extension BalancePresenter: IBalanceInteractorDelegate {
         let items = adapters.map { adapter in
             BalanceItem(coin: adapter.coin)
         }
-        dataSource.set(items: items, sort: state.sort)
+        dataSource.set(items: items)
 
         if let currency = dataSource.currency {
             interactor.fetchRates(currencyCode: currency.code, coinCodes: dataSource.coinCodes)
@@ -82,6 +80,7 @@ extension BalancePresenter: IBalanceInteractorDelegate {
 extension BalancePresenter: IBalanceViewDelegate {
 
     func viewDidLoad() {
+        dataSource.sortType = interactor.sortType
         view?.setSort(isOn: false)
 
         interactor.initAdapters()
@@ -116,7 +115,7 @@ extension BalancePresenter: IBalanceViewDelegate {
     }
 
     func onSortTypeChange() {
-        router.openSortType(selected: state.sort)
+        router.openSortType(selected: dataSource.sortType)
     }
 
 }
@@ -124,8 +123,7 @@ extension BalancePresenter: IBalanceViewDelegate {
 extension BalancePresenter: ISortTypeDelegate {
 
     func onSelect(sort: BalanceSortType) {
-        state.sort = sort
-        dataSource.sort(type: state.sort)
+        dataSource.sortType = sort
         view?.reload()
     }
 

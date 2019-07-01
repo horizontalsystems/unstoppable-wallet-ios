@@ -4,6 +4,8 @@ import Cuckoo
 @testable import Bank_Dev_T
 
 class BalanceDataSourceTests: XCTestCase {
+    private var mockSorter: MockIBalanceSorter!
+
     private var dataSource: BalanceItemDataSource!
 
     private var bitcoinItem: BalanceItem!
@@ -26,21 +28,17 @@ class BalanceDataSourceTests: XCTestCase {
         cashItem.rate = nil
         cashItem.balance = Decimal(string: "112")!
 
-        dataSource = BalanceItemDataSource()
+        mockSorter = MockIBalanceSorter()
+
+        dataSource = BalanceItemDataSource(sorter: mockSorter)
     }
 
     override func tearDown() {
+        mockSorter = nil
+
         dataSource = nil
 
         super.tearDown()
-    }
-
-    func testSort_Value() {
-        dataSource.set(items: [cashItem, ethereumItem, bitcoinItem], sort: .manual)
-
-        dataSource.sort(type: .value)
-
-        XCTAssertEqual([bitcoinItem, ethereumItem, cashItem], dataSource.items)
     }
 
 }

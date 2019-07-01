@@ -10,11 +10,13 @@ class BalanceInteractor {
     private let adapterManager: IAdapterManager
     private let rateStorage: IRateStorage
     private let currencyManager: ICurrencyManager
+    private let localStorage: ILocalStorage
 
-    init(adapterManager: IAdapterManager, rateStorage: IRateStorage, currencyManager: ICurrencyManager) {
+    init(adapterManager: IAdapterManager, rateStorage: IRateStorage, currencyManager: ICurrencyManager, localStorage: ILocalStorage) {
         self.adapterManager = adapterManager
         self.rateStorage = rateStorage
         self.currencyManager = currencyManager
+        self.localStorage = localStorage
     }
 
     private func onUpdateAdapters() {
@@ -61,6 +63,10 @@ class BalanceInteractor {
 }
 
 extension BalanceInteractor: IBalanceInteractor {
+
+    var sortType: BalanceSortType {
+        return localStorage.balanceSortType ?? .manual
+    }
 
     func initAdapters() {
         onUpdateAdapters()
