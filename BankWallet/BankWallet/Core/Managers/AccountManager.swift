@@ -1,3 +1,6 @@
+import Foundation
+import RxSwift
+
 class AccountManager {
     private let secureStorage: ISecureStorage
 
