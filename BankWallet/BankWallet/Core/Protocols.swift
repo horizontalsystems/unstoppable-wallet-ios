@@ -16,6 +16,7 @@ protocol ILocalStorage: class {
     var baseEthereumProvider: String? { get set }
     var lightMode: Bool { get set }
     var agreementAccepted: Bool { get set }
+    var balanceSortType: BalanceSortType? { get set }
     var isBiometricOn: Bool { get set }
     var currentLanguage: String? { get set }
     var lastExitDate: Double { get set }

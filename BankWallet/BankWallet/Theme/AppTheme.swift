@@ -33,10 +33,23 @@ class AppTheme {
                     backgroundStyle: .blur(intensity: 0.55, style: AppTheme.actionSheetBlurStyle))
         }
     }
-    static let actionSheetTextSelectHeight: CGFloat = 53
-    static let actionSheetTextSelectFont: UIFont = .cryptoHeadline
-    static var actionSheetTextSelectHighlightColor: UIColor = .cryptoYellow
-    static var actionSheetTextSelectDefaultColor: UIColor { return .crypto_Bars_Dark }
+    static var alertBackgroundColor: UIColor { return .crypto_SteelDark_Bars }
+    static let alertHeaderHeight: CGFloat = 40
+    static let alertHeaderFont: UIFont = .cryptoSectionCaption
+    static let alertHeaderColor: UIColor = .cryptoGray
+    static let alertCellHeight: CGFloat = 53
+    static let alertCellFont: UIFont = .cryptoHeadline
+    static var alertCellHighlightColor: UIColor = .cryptoYellow
+    static var alertCellDefaultColor: UIColor { return .crypto_Bars_Dark }
+    static var alertConfig: ActionSheetThemeConfig {
+        return ActionSheetThemeConfig(
+                actionStyle: .alert,
+                sideMargin: 61,
+                cornerRadius: 16,
+                separatorColor: UIColor.cryptoBlack20,
+                backgroundStyle: .color(color: .cryptoBlack50)
+        )
+    }
 
     static let coinIconColor: UIColor = .cryptoGray
     static let coinIconSize: CGFloat = 24

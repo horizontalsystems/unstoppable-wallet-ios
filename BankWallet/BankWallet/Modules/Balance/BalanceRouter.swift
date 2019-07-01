@@ -31,8 +31,9 @@ extension BalanceRouter {
 
     static func module() -> UIViewController {
         let router = BalanceRouter()
-        let interactor = BalanceInteractor(adapterManager: App.shared.adapterManager, rateStorage: App.shared.grdbStorage, currencyManager: App.shared.currencyManager)
-        let presenter = BalancePresenter(interactor: interactor, router: router, state: .init(), dataSource: BalanceItemDataSource(), factory: BalanceViewItemFactory(), sortingOnThreshold: BalanceTheme.sortingOnThreshold)
+        let interactor = BalanceInteractor(adapterManager: App.shared.adapterManager, rateStorage: App.shared.grdbStorage, currencyManager: App.shared.currencyManager, localStorage: App.shared.localStorage)
+        let dataSource = BalanceItemDataSource(sorter: BalanceSorter())
+        let presenter = BalancePresenter(interactor: interactor, router: router, dataSource: dataSource, factory: BalanceViewItemFactory(), sortingOnThreshold: BalanceTheme.sortingOnThreshold)
         let viewController = BalanceViewController(viewDelegate: presenter)
 
         interactor.delegate = presenter
