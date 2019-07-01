@@ -6,6 +6,10 @@ class ManageAccountsRouter {
 
 extension ManageAccountsRouter: IManageAccountsRouter {
 
+    func showUnlink(accountId: String) {
+        viewController?.present(UnlinkRouter.module(accountId: accountId), animated: true)
+    }
+
 }
 
 extension ManageAccountsRouter {

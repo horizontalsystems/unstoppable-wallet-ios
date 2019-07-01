@@ -103,7 +103,7 @@ class ManageAccountCell: UITableViewCell {
         super.init(coder: aDecoder)
     }
 
-    func bind(account: Account) {
+    func bind(account: Account, onUnlink: @escaping () -> (), onBackup: @escaping () -> ()) {
         backedUpIcon.isHidden = account.backedUp
 
         var title = account.name
@@ -126,6 +126,9 @@ class ManageAccountCell: UITableViewCell {
 
         nameLabel.text = title.localized
         coinsLabel.text = coinCodes
+
+        self.onUnlink = onUnlink
+        self.onBackup = onBackup
     }
 
 }

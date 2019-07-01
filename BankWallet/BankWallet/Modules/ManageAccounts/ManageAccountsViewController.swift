@@ -7,8 +7,6 @@ class ManageAccountsViewController: WalletViewController {
 
     private let tableView = UITableView(frame: .zero, style: .grouped)
 
-    private var accounts = [Account]()
-
     init(delegate: IManageAccountsViewDelegate) {
         self.delegate = delegate
 
@@ -48,8 +46,7 @@ class ManageAccountsViewController: WalletViewController {
 
 extension ManageAccountsViewController: IManageAccountsView {
 
-    func show(accounts: [Account]) {
-        self.accounts = accounts
+    func reload() {
         tableView.reloadData()
     }
 
@@ -62,7 +59,7 @@ extension ManageAccountsViewController: UITableViewDataSource, UITableViewDelega
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return accounts.count
+        return delegate.itemsCount
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -71,7 +68,11 @@ extension ManageAccountsViewController: UITableViewDataSource, UITableViewDelega
 
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if let cell = cell as? ManageAccountCell {
-            cell.bind(account: accounts[indexPath.row])
+            cell.bind(account: delegate.item(index: indexPath.row), onUnlink: { [weak self] in
+                self?.delegate.didTapUnlink(index: indexPath.row)
+            }, onBackup: { [weak self] in
+                self?.delegate.didTapBackup(index: indexPath.row)
+            })
         }
     }
 
