@@ -1,13 +1,26 @@
 import Foundation
 
-class BalanceItemDataSource: IBalanceItemDataSource {
+class BalanceItemDataSource {
+    private let sorter: IBalanceSorter
+
     private var originalItems = [BalanceItem]()
+
+    var sortType: BalanceSortType {
+        didSet { items = sorter.sort(items: originalItems, sort: sortType) }
+    }
     var items: [BalanceItem]
     var currency: Currency?
 
-    init() {
+    init(sorter: IBalanceSorter) {
+        self.sorter = sorter
+
         items = [BalanceItem]()
+        sortType = .manual
     }
+
+}
+
+extension BalanceItemDataSource: IBalanceItemDataSource {
 
     var coinCodes: [CoinCode] {
         return items.map { $0.coin.code }
@@ -18,51 +31,34 @@ class BalanceItemDataSource: IBalanceItemDataSource {
     }
 
     func index(for coinCode: CoinCode) -> Int? {
-        return items.firstIndex(where: { $0.coin.code == coinCode })
+        return originalItems.firstIndex(where: { $0.coin.code == coinCode })
     }
 
     func set(balance: Decimal, index: Int) {
-        items[index].balance = balance
+        originalItems[index].balance = balance
+        items = sorter.sort(items: originalItems, sort: sortType)
     }
 
     func set(state: AdapterState, index: Int) {
-        items[index].state = state
+        originalItems[index].state = state
+        items = sorter.sort(items: originalItems, sort: sortType)
     }
 
     func set(rate: Rate, index: Int) {
-        items[index].rate = rate
+        originalItems[index].rate = rate
+        items = sorter.sort(items: originalItems, sort: sortType)
     }
 
     func clearRates() {
-        for i in 0..<items.count {
-            items[i].rate = nil
+        for i in 0..<originalItems.count {
+            originalItems[i].rate = nil
         }
+        items = sorter.sort(items: originalItems, sort: sortType)
     }
 
-    func set(items: [BalanceItem], sort: BalanceSortType, desc: Bool) {
+    func set(items: [BalanceItem]) {
         self.originalItems = items
-        self.sort(type: sort, desc: desc)
-    }
-
-    func sort(type: BalanceSortType, desc: Bool) {
-        switch type {
-        case .value:
-            items = originalItems.sorted { item, item2 in
-                if let rate = item.rate, let rate2 = item2.rate {
-                    return item.balance * rate.value > item2.balance * rate2.value
-                }
-                return item.balance > item2.balance
-            }
-        case .az:
-            items = originalItems.sorted { item, item2 in
-                return item.coin.title.caseInsensitiveCompare(item2.coin.title) == .orderedAscending
-            }
-        case .manual:
-            items = originalItems
-        }
-        if desc {
-            items.reverse()
-        }
+        self.items = sorter.sort(items: originalItems, sort: sortType)
     }
 
 }

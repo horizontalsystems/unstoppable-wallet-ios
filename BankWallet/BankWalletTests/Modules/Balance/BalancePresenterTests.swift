@@ -6,7 +6,6 @@ import Cuckoo
 class BalancePresenterTests: XCTestCase {
     private var mockRouter: MockIBalanceRouter!
     private var mockInteractor: MockIBalanceInteractor!
-    private var state: BalancePresenterState!
     private var mockDataSource: MockIBalanceItemDataSource!
     private var mockFactory: MockIBalanceViewItemFactory!
     private var mockView: MockIBalanceView!
@@ -79,7 +78,6 @@ class BalancePresenterTests: XCTestCase {
 
         mockRouter = MockIBalanceRouter()
         mockInteractor = MockIBalanceInteractor()
-        state = BalancePresenterState()
         mockDataSource = MockIBalanceItemDataSource()
         mockFactory = MockIBalanceViewItemFactory()
         mockView = MockIBalanceView()
@@ -113,14 +111,13 @@ class BalancePresenterTests: XCTestCase {
         }
 
 
-        presenter = BalancePresenter(interactor: mockInteractor, router: mockRouter, state: state, dataSource: mockDataSource, factory: mockFactory, sortingOnThreshold: sortingOnThreshold)
+        presenter = BalancePresenter(interactor: mockInteractor, router: mockRouter, dataSource: mockDataSource, factory: mockFactory, sortingOnThreshold: sortingOnThreshold)
         presenter.view = mockView
     }
 
     override func tearDown() {
         mockRouter = nil
         mockInteractor = nil
-        state = nil
         mockDataSource = nil
         mockFactory = nil
         mockView = nil
@@ -133,19 +130,20 @@ class BalancePresenterTests: XCTestCase {
     func testDidLoad() {
         stub(mockInteractor) { mock in
             when(mock.initAdapters()).thenDoNothing()
+            when(mock.sortType.get).thenReturn(BalanceSortType.manual)
         }
         stub(mockView) { mock in
             when(mock.setSort(isOn: equal(to: false))).thenDoNothing()
-            when(mock.setSortDirection(desc: equal(to: state.desc))).thenDoNothing()
-            when(mock.setSortLabel(key: equal(to: state.sort.rawValue))).thenDoNothing()
+        }
+        stub(mockDataSource) { mock in
+            when(mock.sortType.set(any())).thenDoNothing()
         }
 
         presenter.viewDidLoad()
 
         verify(mockView).setSort(isOn: equal(to: false))
+        verify(mockDataSource).sortType.set(equal(to: BalanceSortType.manual))
         verify(mockInteractor).initAdapters()
-        verify(mockView).setSortDirection(desc: equal(to: state.desc))
-        verify(mockView).setSortLabel(key: equal(to: state.sort.rawValue))
     }
 
     func testItemsCount() {
@@ -188,10 +186,10 @@ class BalancePresenterTests: XCTestCase {
             when(mock.wallet.get).thenReturn(Wallet.mock(coin: bitcoin))
         }
         stub(mockDataSource) { mock in
-            when(mock.set(items: any(), sort: any(), desc: any())).thenDoNothing()
             when(mock.currency.get).thenReturn(currency)
             when(mock.coinCodes.get).thenReturn([bitcoin.code])
             when(mock.items.get).thenReturn([expectedItem])
+            when(mock.set(items: any())).thenDoNothing()
         }
         stub(mockInteractor) { mock in
             when(mock.fetchRates(currencyCode: any(), coinCodes: any())).thenDoNothing()
@@ -204,7 +202,7 @@ class BalancePresenterTests: XCTestCase {
 
         presenter.didUpdate(adapters: adapters)
 
-        verify(mockDataSource).set(items: equal(to: [expectedItem]), sort: equal(to: state.sort), desc: equal(to: state.desc))
+        verify(mockDataSource).set(items: equal(to: [expectedItem]))
     }
 
 
