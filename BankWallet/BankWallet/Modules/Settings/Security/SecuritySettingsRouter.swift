@@ -7,20 +7,16 @@ class SecuritySettingsRouter {
 
 extension SecuritySettingsRouter: ISecuritySettingsRouter {
 
+    func showManageAccounts() {
+        viewController?.navigationController?.pushViewController(ManageAccountsRouter.module(), animated: true)
+    }
+
     func showEditPin() {
         viewController?.present(EditPinRouter.module(), animated: true)
     }
 
     func showUnlock() {
         viewController?.present(UnlockPinRouter.module(unlockDelegate: unlockDelegate, enableBiometry: false, cancelable: true), animated: true)
-    }
-
-    func showSecretKey() {
-        viewController?.present(BackupRouter.module(mode: .regular), animated: true)
-    }
-
-    func showUnlink() {
-        viewController?.present(UnlinkRouter.module(), animated: true)
     }
 
 }

@@ -26,6 +26,10 @@ extension SecuritySettingsPresenter: ISecuritySettingsViewDelegate {
         interactor.getBiometryType()
     }
 
+    func didTapManageAccounts() {
+        router.showManageAccounts()
+    }
+
     func didSwitch(biometricUnlockOn: Bool) {
         state.unlockType = .biometry(isOn: biometricUnlockOn)
         router.showUnlock()
@@ -33,14 +37,6 @@ extension SecuritySettingsPresenter: ISecuritySettingsViewDelegate {
 
     func didTapEditPin() {
         router.showEditPin()
-    }
-
-    func didTapBackupWallet() {
-        router.showSecretKey()
-    }
-
-    func didTapUnlink() {
-        router.showUnlink()
     }
 
 }

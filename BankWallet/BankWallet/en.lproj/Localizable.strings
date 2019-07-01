@@ -151,6 +151,7 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 "settings.title" = "Settings";
 "settings.tab_bar_item" = "Settings";
 "settings.security_center" = "Security Center";
+"settings.restore_wallet" = "Restore Wallet";
 "settings.advanced" = "Advanced Settings";
 "settings.base_currency" = "Base Currency";
 "settings.language" = "Language";
@@ -188,6 +189,7 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 // Settings -> Security
 
 "settings_security.title" = "Security Center";
+"settings_security.manage_accounts" = "Manage Keys";
 "settings_security.backup_wallet" = "Backup Wallet";
 "settings_security.unlink_from_this_device" = "Unlink From This Device";
 "settings_security.set_pin" = "Passcode";
@@ -197,6 +199,12 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 "security_settings.unlink_alert_button" = "Unlink";
 "settings_security.import_wallet_confirmation_1" = "This action will remove the currently installed wallet from this device.";
 "settings_security.import_wallet_confirmation_2" = "Make sure you have backed up Secret Key or you will not be able to access your funds in the future.";
+
+// Manage Accounts
+
+"settings_manage_accounts.title" = "Manage Keys";
+"settings_manage_accounts.unlink" = "Unlink";
+"settings_manage_accounts.backup" = "Backup";
 
 // Set PIN
 
@@ -227,3 +235,9 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 "numpad_7" = "P Q R S";
 "numpad_8" = "T U V";
 "numpad_9" = "W X Y Z";
+
+// Key Types
+
+"key_type.12_words" = "12 Words Key";
+"key_type.eos" = "EOS Account";
+"key_type.24_words" = "24 Words Key";

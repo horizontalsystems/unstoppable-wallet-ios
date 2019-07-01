@@ -28,8 +28,6 @@ class SecuritySettingsPresenterTests: XCTestCase {
         }
         stub(mockRouter) { mock in
             when(mock.showEditPin()).thenDoNothing()
-            when(mock.showSecretKey()).thenDoNothing()
-            when(mock.showUnlink()).thenDoNothing()
             when(mock.showUnlock()).thenDoNothing()
         }
         stub(mockInteractor) { mock in
@@ -120,17 +118,6 @@ class SecuritySettingsPresenterTests: XCTestCase {
         presenter.didTapEditPin()
 
         verify(mockRouter).showEditPin()
-    }
-
-    func testDidTapSecretKey() {
-        presenter.didTapBackupWallet()
-
-        verify(mockRouter).showSecretKey()
-    }
-
-    func testDidTapUnlink() {
-        presenter.didTapUnlink()
-        verify(mockRouter).showUnlink()
     }
 
     func testDidBackup() {
