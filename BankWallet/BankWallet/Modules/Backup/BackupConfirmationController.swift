@@ -86,13 +86,13 @@ class BackupConfirmationController: WalletViewController {
     }
 
     @objc func doneDidTap() {
-        if let firstWord = firstIndexedInputField.textField.text?.lowercased(), let secondWord = secondIndexedInputField.textField.text?.lowercased(), !firstWord.isEmpty, !secondWord.isEmpty {
+        if let firstWord = firstIndexedInputField.textField.text?.lowercased(), let secondWord = secondIndexedInputField.textField.text?.lowercased() {
             delegate.validateDidClick(confirmationWords: [indexes[0]: firstWord, indexes[1]: secondWord])
         }
     }
 
-    func showValidationFailure() {
-        HudHelper.instance.showError(title: "backup.confirmation.failure_alert.text".localized)
+    func showValidation(error: Error) {
+        HudHelper.instance.showError(title: error.localizedDescription)
     }
 
 }

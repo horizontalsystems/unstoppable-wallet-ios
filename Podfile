@@ -56,6 +56,8 @@ target 'Bank Tests' do
   pod 'DeepDiff'
   pod 'RxSwift'
   pod 'Cuckoo'
+  pod 'Quick'
+  pod 'Nimble'
 end
 
 post_install do |installer|

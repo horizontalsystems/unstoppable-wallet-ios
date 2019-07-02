@@ -68,7 +68,7 @@ class BackupIntroController: WalletViewController {
     }
 
     @objc func backupDidTap() {
-        delegate.showWordsDidClick()
+        delegate.backupDidTap()
     }
 
     @objc func cancelDidTap() {

@@ -64,7 +64,7 @@ class BackupWordsController: WalletViewController {
     }
 
     @objc func nextDidTap() {
-        delegate.showConfirmationDidClick()
+        delegate.showConfirmationDidTap()
     }
 
 }

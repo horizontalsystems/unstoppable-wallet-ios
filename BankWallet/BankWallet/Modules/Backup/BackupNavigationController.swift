@@ -25,17 +25,13 @@ extension BackupNavigationController: IBackupView {
         pushViewController(BackupWordsController(words: words, delegate: viewDelegate), animated: true)
     }
 
-    func showConfirmation(withIndexes indexes: [Int]) {
+    func showWordsConfirmation(withIndexes indexes: [Int]) {
         pushViewController(BackupConfirmationController(indexes: indexes, delegate: viewDelegate), animated: true)
     }
 
-    func hideConfirmation() {
-        popViewController(animated: true)
-    }
-
-    func showConfirmationError() {
+    func showWordsConfirmation(error: Error) {
         if let confirmationController = topViewController as? BackupConfirmationController {
-            confirmationController.showValidationFailure()
+            confirmationController.showValidation(error: error)
         }
     }
 

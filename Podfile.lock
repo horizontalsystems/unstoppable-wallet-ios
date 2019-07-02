@@ -74,7 +74,9 @@ PODS:
     - SnapKit (~> 5.0)
     - UIExtensions.swift
   - KeychainAccess (3.2.0)
+  - Nimble (8.0.2)
   - ObjectMapper (3.5.0)
+  - Quick (2.1.0)
   - RxCocoa (5.0.0):
     - RxRelay (~> 5)
     - RxSwift (~> 5)
@@ -110,7 +112,9 @@ DEPENDENCIES:
   - GRDB.swift
   - HUD.swift (from `https://github.com/horizontalsystems/gui-kit`)
   - KeychainAccess
+  - Nimble
   - ObjectMapper
+  - Quick
   - RxCocoa
   - RxGRDB
   - RxSwift
@@ -131,7 +135,9 @@ SPEC REPOS:
     - HSCryptoKit
     - HSHDWalletKit
     - KeychainAccess
+    - Nimble
     - ObjectMapper
+    - Quick
     - RxCocoa
     - RxGRDB
     - RxRelay
@@ -218,7 +224,9 @@ SPEC CHECKSUMS:
   HSHDWalletKit: 1d946bd24bd307cc494141f4e518d25db814f050
   HUD.swift: 006cc6e105bce8050c3c3f44d9111474c5c26c35
   KeychainAccess: 3b1bf8a77eb4c6ea1ce9404c292e48f948954c6b
+  Nimble: 622629381bda1dd5678162f21f1368cec7cbba60
   ObjectMapper: 078b564ed25c6578b62588e306bf1da3924636d4
+  Quick: 4be43f6634acfa727dd106bdf3929ce125ffa79d
   RxCocoa: fcf32050ac00d801f34a7f71d5e8e7f23026dcd8
   RxGRDB: ccdb0d6e85635a1b505967d1353cf736628496e0
   RxRelay: 4f7409406a51a55cd88483f21ed898c234d60f18
@@ -227,6 +235,6 @@ SPEC CHECKSUMS:
   SnapKit: fd22d10eb9aff484d79a8724eab922c1ddf89bcf
   UIExtensions.swift: 9f5a209e4e30f1ccfbf3eab01f02ffd8a20365d0
 
-PODFILE CHECKSUM: bd98b5898844b5cb0f9e2dbae4e5f98eeae6d120
+PODFILE CHECKSUM: ee64ccca844a6aa5cc7c4cc72ccfd3f5e6dac2aa
 
 COCOAPODS: 1.7.1

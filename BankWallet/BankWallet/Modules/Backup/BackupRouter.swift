@@ -3,35 +3,34 @@ import UIKit
 class BackupRouter {
     weak var viewController: UIViewController?
     weak var unlockDelegate: IUnlockDelegate?
-    weak var agreementDelegate: IAgreementDelegate?
 }
 
 extension BackupRouter: IBackupRouter {
 
-    func showAgreement() {
-        viewController?.present(AgreementRouter.module(agreementDelegate: agreementDelegate), animated: true)
+    func showUnlock() {
+        viewController?.present(UnlockPinRouter.module(unlockDelegate: unlockDelegate, enableBiometry: false, cancelable: true), animated: true)
     }
 
     func close() {
         viewController?.dismiss(animated: true)
     }
 
-    func navigateToSetPin() {
-        viewController?.present(SetPinRouter.module(), animated: true)
-    }
-
-    func showUnlock() {
-        viewController?.present(UnlockPinRouter.module(unlockDelegate: unlockDelegate, enableBiometry: false, cancelable: true), animated: true)
-    }
-
 }
 
 extension BackupRouter {
 
-    static func module(mode: BackupPresenter.Mode) -> UIViewController {
+    static func module(account: Account) -> UIViewController? {
         let router = BackupRouter()
-        let interactor = BackupInteractor(authManager: App.shared.authManager, wordsManager: App.shared.wordsManager, pinManager: App.shared.pinManager, randomManager: App.shared.randomManager)
-        let presenter = BackupPresenter(interactor: interactor, router: router, mode: mode)
+        let interactor = BackupInteractor(accountId: account.id, accountManager: App.shared.accountManager, randomManager: App.shared.randomManager)
+
+        let presenter: IBackupPresenter
+
+        if case let .mnemonic(words, _, _) = account.type {
+            presenter = BackupWordsPresenter(interactor: interactor, router: router, words: words, confirmationWordsCount: 2)
+        } else {
+            return nil
+        }
+
         let viewController = BackupNavigationController(viewDelegate: presenter)
 
         interactor.delegate = presenter
@@ -39,7 +38,6 @@ extension BackupRouter {
 
         router.viewController = viewController
         router.unlockDelegate = interactor
-        router.agreementDelegate = interactor
 
         return viewController
     }

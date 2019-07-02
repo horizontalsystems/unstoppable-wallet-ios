@@ -28,11 +28,11 @@ extension ManageAccountsPresenter: IManageAccountsViewDelegate {
     }
 
     func didTapUnlink(index: Int) {
-        let account = accounts[index]
-        router.showUnlink(accountId: account.id)
+        router.showUnlink(accountId: accounts[index].id)
     }
 
     func didTapBackup(index: Int) {
+        router.showBackup(account: accounts[index])
     }
 
 }

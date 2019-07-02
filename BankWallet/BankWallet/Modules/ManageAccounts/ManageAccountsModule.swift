@@ -21,6 +21,7 @@ protocol IManageAccountsInteractorDelegate: class {
 
 protocol IManageAccountsRouter {
     func showUnlink(accountId: String)
+    func showBackup(account: Account)
 }
 
 //struct AccountViewItem {

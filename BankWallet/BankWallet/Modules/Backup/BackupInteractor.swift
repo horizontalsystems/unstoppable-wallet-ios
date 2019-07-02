@@ -1,23 +1,14 @@
 class BackupInteractor {
-
     weak var delegate: IBackupInteractorDelegate?
 
-    private var authManager: IAuthManager
-    private var wordsManager: IWordsManager
-    private let pinManager: IPinManager
-    private var randomManager: IRandomManager
+    private let accountId: String
+    private let accountManager: IAccountManager
+    private let randomManager: IRandomManager
 
-    init(authManager: IAuthManager, wordsManager: IWordsManager, pinManager: IPinManager, randomManager: IRandomManager) {
-        self.authManager = authManager
-        self.wordsManager = wordsManager
-        self.pinManager = pinManager
+    init(accountId: String, accountManager: IAccountManager, randomManager: IRandomManager) {
+        self.accountId = accountId
+        self.accountManager = accountManager
         self.randomManager = randomManager
-    }
-
-    private func fetchWords() {
-        if let authData = authManager.authData {
-            delegate?.didFetch(words: authData.words)
-        }
     }
 
 }
@@ -25,37 +16,11 @@ class BackupInteractor {
 extension BackupInteractor: IBackupInteractor {
 
     func setBackedUp() {
-        wordsManager.isBackedUp = true
+        accountManager.setAccountBackedUp(id: accountId)
     }
 
-    func fetchConfirmationIndexes() {
-        delegate?.didFetch(confirmationIndexes: randomManager.getRandomIndexes(count: 2))
-    }
-
-    func validate(confirmationWords: [Int: String]) {
-        guard let authData = authManager.authData else {
-            delegate?.didValidateFailure()
-            return
-        }
-
-        let words = authData.words
-
-        for (index, word) in confirmationWords {
-            if words[index - 1] != word.trimmingCharacters(in: .whitespaces) {
-                delegate?.didValidateFailure()
-                return
-            }
-        }
-
-        delegate?.didValidateSuccess()
-    }
-
-    func lockIfRequired() {
-        if pinManager.isPinSet {
-            delegate?.showUnlock()
-        } else {
-            fetchWords()
-        }
+    func fetchConfirmationIndexes(max: Int, count: Int) -> [Int] {
+        return randomManager.getRandomIndexes(max: max, count: count)
     }
 
 }
@@ -63,18 +28,10 @@ extension BackupInteractor: IBackupInteractor {
 extension BackupInteractor: IUnlockDelegate {
 
     func onUnlock() {
-        fetchWords()
+        delegate?.didUnlock()
     }
 
     func onCancelUnlock() {
-    }
-
-}
-
-extension BackupInteractor: IAgreementDelegate {
-
-    func onConfirmAgreement() {
-        delegate?.onConfirmAgreement()
     }
 
 }

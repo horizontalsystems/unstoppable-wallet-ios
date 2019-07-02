@@ -4,7 +4,7 @@ import BitcoinCore
 typealias CoinCode = String
 
 protocol IRandomManager {
-    func getRandomIndexes(count: Int) -> [Int]
+    func getRandomIndexes(max: Int, count: Int) -> [Int]
 }
 
 protocol ILocalStorage: class {
