@@ -6,9 +6,15 @@ class AccountManager {
 
     var accounts: [Account] = []
     private var accountsSubject = PublishSubject<[Account]>()
+    private var nonBackedUpCountSubject = PublishSubject<Int>()
 
     init(secureStorage: ISecureStorage) {
         self.secureStorage = secureStorage
+    }
+
+    private func notifyAccountsChanged() {
+        accountsSubject.onNext(accounts)
+        nonBackedUpCountSubject.onNext(nonBackedUpCount)
     }
 
 }
@@ -19,15 +25,25 @@ extension AccountManager: IAccountManager {
         return accountsSubject.asObservable()
     }
 
+    var nonBackedUpCount: Int {
+        return accounts.filter { !$0.backedUp }.count
+    }
+
+    var nonBackedUpCountObservable: Observable<Int> {
+        return nonBackedUpCountSubject.asObservable()
+    }
+
     func save(account: Account) {
         accounts.removeAll { $0.id == account.id }
         accounts.append(account)
-        accountsSubject.onNext(accounts)
+
+        notifyAccountsChanged()
     }
 
     func deleteAccount(id: String) {
         accounts.removeAll { $0.id == id }
-        accountsSubject.onNext(accounts)
+
+        notifyAccountsChanged()
     }
 
     func setAccountBackedUp(id: String) {
@@ -35,7 +51,8 @@ extension AccountManager: IAccountManager {
             account.backedUp = true
             save(account: account)
         }
-        accountsSubject.onNext(accounts)
+
+        notifyAccountsChanged()
     }
 
 }

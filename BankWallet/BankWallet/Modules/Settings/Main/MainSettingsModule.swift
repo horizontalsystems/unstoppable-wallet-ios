@@ -21,7 +21,7 @@ protocol IMainSettingsViewDelegate {
 }
 
 protocol IMainSettingsInteractor {
-    var isBackedUp: Bool { get }
+    var nonBackedUpCount: Int { get }
     var currentLanguage: String { get }
     var baseCurrency: String { get }
     var lightMode: Bool { get }
@@ -30,7 +30,7 @@ protocol IMainSettingsInteractor {
 }
 
 protocol IMainSettingsInteractorDelegate: class {
-    func didBackup()
+    func didUpdateNonBackedUp(count: Int)
     func didUpdateBaseCurrency()
     func didUpdateLightMode()
 }

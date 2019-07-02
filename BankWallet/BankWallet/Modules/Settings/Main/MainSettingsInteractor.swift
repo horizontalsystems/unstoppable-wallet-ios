@@ -6,23 +6,23 @@ class MainSettingsInteractor {
     weak var delegate: IMainSettingsInteractorDelegate?
 
     private let localStorage: ILocalStorage
-    private let wordsManager: IWordsManager
+    private let accountManager: IAccountManager
     private let languageManager: ILanguageManager
     private let systemInfoManager: ISystemInfoManager
     private let currencyManager: ICurrencyManager
 
-    init(localStorage: ILocalStorage, wordsManager: IWordsManager, languageManager: ILanguageManager, systemInfoManager: ISystemInfoManager, currencyManager: ICurrencyManager, async: Bool = true) {
+    init(localStorage: ILocalStorage, accountManager: IAccountManager, languageManager: ILanguageManager, systemInfoManager: ISystemInfoManager, currencyManager: ICurrencyManager, async: Bool = true) {
         self.localStorage = localStorage
-        self.wordsManager = wordsManager
+        self.accountManager = accountManager
         self.languageManager = languageManager
         self.systemInfoManager = systemInfoManager
         self.currencyManager = currencyManager
 
-        var backedUpSignal: Observable<Void> = wordsManager.backedUpSignal
+        var nonBackedUpCountObservable = accountManager.nonBackedUpCountObservable
         var baseCurrencyUpdatedSignal: Observable<Void> = currencyManager.baseCurrencyUpdatedSignal
 
         if async {
-            backedUpSignal = backedUpSignal
+            nonBackedUpCountObservable = nonBackedUpCountObservable
                     .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
                     .observeOn(MainScheduler.instance)
             baseCurrencyUpdatedSignal = baseCurrencyUpdatedSignal
@@ -30,9 +30,9 @@ class MainSettingsInteractor {
                     .observeOn(MainScheduler.instance)
         }
 
-        backedUpSignal
-                .subscribe(onNext: { [weak self] in
-                    self?.onUpdateBackedUp()
+        nonBackedUpCountObservable
+                .subscribe(onNext: { [weak self] count in
+                    self?.delegate?.didUpdateNonBackedUp(count: count)
                 })
                 .disposed(by: disposeBag)
 
@@ -43,18 +43,12 @@ class MainSettingsInteractor {
                 .disposed(by: disposeBag)
     }
 
-    private func onUpdateBackedUp() {
-        if wordsManager.isBackedUp {
-            delegate?.didBackup()
-        }
-    }
-
 }
 
 extension MainSettingsInteractor: IMainSettingsInteractor {
 
-    var isBackedUp: Bool {
-        return wordsManager.isBackedUp
+    var nonBackedUpCount: Int {
+        return accountManager.nonBackedUpCount
     }
 
     var currentLanguage: String {

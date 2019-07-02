@@ -163,6 +163,9 @@ protocol IAccountManager {
     var accounts: [Account] { get }
     var accountsObservable: Observable<[Account]> { get }
 
+    var nonBackedUpCount: Int { get }
+    var nonBackedUpCountObservable: Observable<Int> { get }
+
     func save(account: Account)
     func deleteAccount(id: String)
     func setAccountBackedUp(id: String)
