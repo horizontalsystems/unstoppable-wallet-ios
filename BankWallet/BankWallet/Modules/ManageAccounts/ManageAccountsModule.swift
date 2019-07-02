@@ -23,7 +23,7 @@ protocol IManageAccountsRouter {
     func showUnlink(accountId: String)
 }
 
-struct AccountViewItem {
-    let title: String
-    let coinCodes: String
-}
+//struct AccountViewItem {
+//    let title: String
+//    let coinCodes: String
+//}

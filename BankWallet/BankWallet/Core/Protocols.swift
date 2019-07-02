@@ -171,6 +171,10 @@ protocol IAccountManager {
     func setAccountBackedUp(id: String)
 }
 
+protocol IRestoreAccountDataSource {
+    var restoreAccounts: [Account] { get }
+}
+
 protocol ILockManager {
     var isLocked: Bool { get }
     func lock()
