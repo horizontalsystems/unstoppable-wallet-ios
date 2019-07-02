@@ -58,7 +58,7 @@ class SecuritySettingsViewController: WalletViewController, SectionsDataSource {
         var manageAccountsRows = [RowProtocol]()
         let securityAttentionImage = backedUp ? nil : UIImage(named: "Attention Icon")
         manageAccountsRows.append(Row<SettingsRightImageCell>(id: "manage_accounts", height: SettingsTheme.securityCellHeight, autoDeselect: true, bind: { cell, _ in
-            cell.bind(titleIcon: nil, title: "settings_security.manage_accounts".localized, rightImage: securityAttentionImage, rightImageTintColor: SettingsTheme.attentionIconTint, showDisclosure: true, last: true)
+            cell.bind(titleIcon: UIImage(named: "Key Icon"), title: "settings_security.manage_accounts".localized, rightImage: securityAttentionImage, rightImageTintColor: SettingsTheme.attentionIconTint, showDisclosure: true, last: true)
         }, action: { [weak self] _ in
             self?.delegate.didTapManageAccounts()
         }))
@@ -71,7 +71,7 @@ class SecuritySettingsViewController: WalletViewController, SectionsDataSource {
 
         let createCell: ((String) -> ()) = { title in
             pinTouchFaceRows.append(Row<SettingsToggleCell>(id: "biometrics_id", height: SettingsTheme.securityCellHeight, bind: { [weak self] cell, _ in
-                cell.bind(titleIcon: nil, title: title.localized, isOn: App.shared.localStorage.isBiometricOn, showDisclosure: false, onToggle: { isOn in
+                cell.bind(titleIcon: UIImage(named: "Face Id Icon"), title: title.localized, isOn: App.shared.localStorage.isBiometricOn, showDisclosure: false, onToggle: { isOn in
                     self?.delegate.didSwitch(biometricUnlockOn: isOn)
                 })
             }))
@@ -85,7 +85,7 @@ class SecuritySettingsViewController: WalletViewController, SectionsDataSource {
 
         let setOrChangePinTitle = App.shared.pinManager.isPinSet ? "settings_security.change_pin".localized : "settings_security.set_pin".localized
         pinTouchFaceRows.append(Row<SettingsCell>(id: "set_pin", hash: "pinned_\(App.shared.pinManager.isPinSet)", height: SettingsTheme.securityCellHeight, bind: { cell, _ in
-            cell.bind(titleIcon: nil, title: setOrChangePinTitle, showDisclosure: true, last: true)
+            cell.bind(titleIcon: UIImage(named: "Passcode Icon"), title: setOrChangePinTitle, showDisclosure: true, last: true)
         }, action: { [weak self] _ in
             DispatchQueue.main.async {
                 self?.delegate.didTapEditPin()
