@@ -4,7 +4,7 @@ class RestorePresenter {
     private let interactor: IRestoreInteractor
     private let router: IRestoreRouter
 
-    private var words = [String]()
+    private var accountType: AccountType?
 
     init(interactor: IRestoreInteractor, router: IRestoreRouter) {
         self.interactor = interactor
@@ -31,10 +31,13 @@ extension RestorePresenter: IRestoreViewDelegate {
         }
     }
 
-    func didTapRestore(words: [String]) {
+    func didTapRestore(accountType: AccountType) {
         do {
-            try interactor.validate(words: words)
-            self.words = words
+            if case let .mnemonic(words, _, _) = accountType {
+                try interactor.validate(words: words)
+            }
+
+            self.accountType = accountType
 
             view?.showSyncMode()
         } catch {
@@ -43,7 +46,14 @@ extension RestorePresenter: IRestoreViewDelegate {
     }
 
     func didSelectSyncMode(isFast: Bool) {
-        print("RESTORE: \(words) \(isFast)")
+        guard let accountType = accountType else {
+            return
+        }
+
+        let syncMode: SyncMode = isFast ? .fast : .slow
+        interactor.save(accountType: accountType, syncMode: syncMode)
+
+        router.close()
     }
 
     func didTapCancel() {

@@ -8,7 +8,7 @@ protocol IRestoreView: class {
 protocol IRestoreViewDelegate {
     func viewDidLoad()
     func didSelect(type: PredefinedAccountType)
-    func didTapRestore(words: [String])
+    func didTapRestore(accountType: AccountType)
     func didSelectSyncMode(isFast: Bool)
     func didTapCancel()
 }
@@ -16,6 +16,7 @@ protocol IRestoreViewDelegate {
 protocol IRestoreInteractor {
     var defaultWords: [String] { get }
     func validate(words: [String]) throws
+    func save(accountType: AccountType, syncMode: SyncMode?)
 }
 
 protocol IRestoreInteractorDelegate: class {

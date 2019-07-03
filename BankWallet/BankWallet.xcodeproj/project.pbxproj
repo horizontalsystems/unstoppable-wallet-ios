@@ -58,7 +58,7 @@
 		11B35230FA3958ED9CA0DB86 /* Wallet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35EB6A09E7FBB70B8966B /* Wallet.swift */; };
 		11B35236766B5CEA73043FE5 /* DoubleLineCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35B0378C5EA6E02CB2E37 /* DoubleLineCell.swift */; };
 		11B3524733E10970C85BE0B1 /* SendAmountItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B359DEE539B7406C382B80 /* SendAmountItem.swift */; };
-		11B35249D1E7F30208619205 /* AccountCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35C4D6F474C2EB3687EB4 /* AccountCreator.swift */; };
+		11B35249D1E7F30208619205 /* AccountFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35C4D6F474C2EB3687EB4 /* AccountFactory.swift */; };
 		11B3524BEC247F4FECE86A95 /* ManageAccountsTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B357C7F62B53F2AD89FBC6 /* ManageAccountsTheme.swift */; };
 		11B3524C9BD6FDCE5D72CB81 /* TestModeIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B353F97FB72582499D6663 /* TestModeIndicator.swift */; };
 		11B3524D24D3AE736839690A /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35F4AF52970B217AD4DC6 /* String.swift */; };
@@ -87,7 +87,7 @@
 		11B3538EE12AC16D563701DD /* BitcoinAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B352D114BED753EEBA8B8D /* BitcoinAdapter.swift */; };
 		11B3538F8C8354B93C9EF6E8 /* ManageAccountsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B358B4DFC88B488F3BC039 /* ManageAccountsViewController.swift */; };
 		11B353A7F530336B1E15015E /* DepositViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35ED7203AD00030A8BA23 /* DepositViewController.swift */; };
-		11B353AA4AFFB020A68E09B6 /* AccountCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35C4D6F474C2EB3687EB4 /* AccountCreator.swift */; };
+		11B353AA4AFFB020A68E09B6 /* AccountFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35C4D6F474C2EB3687EB4 /* AccountFactory.swift */; };
 		11B353C550551A71D5AD3AAF /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3535DD03F9264351E13A9 /* NetworkManager.swift */; };
 		11B353CE3525B4AE83F0B993 /* DateHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35492B1162F69CA7A0597 /* DateHelper.swift */; };
 		11B353D4ECDC6398228A2270 /* RestoreSelectTypeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35BA0167A8A6B5AFEABAE /* RestoreSelectTypeViewController.swift */; };
@@ -305,7 +305,7 @@
 		11B35C5BE4DC9460184DCBF1 /* CreateAccountPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B352027F5E21C65BFEB3CB /* CreateAccountPresenter.swift */; };
 		11B35C5E60CCDBBDD5A0C33C /* ManageAccountCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35D815F45FCFCE500E706 /* ManageAccountCell.swift */; };
 		11B35C7BC60C11F683675793 /* UnlinkInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B351A464627DCBABD1AC17 /* UnlinkInteractor.swift */; };
-		11B35C8621E221DA1F157A5B /* AccountCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35C4D6F474C2EB3687EB4 /* AccountCreator.swift */; };
+		11B35C8621E221DA1F157A5B /* AccountFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35C4D6F474C2EB3687EB4 /* AccountFactory.swift */; };
 		11B35C9177E1FE3794E4F5A4 /* BaseCurrencySettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35E4481DCD98BF2074797 /* BaseCurrencySettingsViewController.swift */; };
 		11B35C949E9A9ECE0CA5ADF6 /* SendFeeItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3550B7B94CDF3DA89DBF1 /* SendFeeItemView.swift */; };
 		11B35C9618C04EE49DD0D1B3 /* SendConfirmationAddressItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3543C6E6212154344AD63 /* SendConfirmationAddressItemView.swift */; };
@@ -1368,7 +1368,7 @@
 		11B35C181EB4CA85BD80228C /* HudHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HudHelper.swift; sourceTree = "<group>"; };
 		11B35C182B944A7CD13EA163 /* BiometryType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BiometryType.swift; sourceTree = "<group>"; };
 		11B35C4C7270412EDF1E5B13 /* WordsValidator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WordsValidator.swift; sourceTree = "<group>"; };
-		11B35C4D6F474C2EB3687EB4 /* AccountCreator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountCreator.swift; sourceTree = "<group>"; };
+		11B35C4D6F474C2EB3687EB4 /* AccountFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountFactory.swift; sourceTree = "<group>"; };
 		11B35C4FFB99D10A8F343E9C /* LanguageManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LanguageManager.swift; sourceTree = "<group>"; };
 		11B35C5905B63102828DB4C1 /* SendConfirmationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendConfirmationViewController.swift; sourceTree = "<group>"; };
 		11B35C7DCF9B7894F7600623 /* LaunchRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LaunchRouter.swift; sourceTree = "<group>"; };
@@ -2065,7 +2065,7 @@
 				1A5641ABEF9064B6FCC8DF87 /* LockoutUntilDateFactory.swift */,
 				1A564F697ACF24DA968884EA /* UptimeProvider.swift */,
 				1A564FC3433E72C8A63AC5F5 /* CurrentDateProvider.swift */,
-				11B35C4D6F474C2EB3687EB4 /* AccountCreator.swift */,
+				11B35C4D6F474C2EB3687EB4 /* AccountFactory.swift */,
 			);
 			path = Factories;
 			sourceTree = "<group>";
@@ -3647,7 +3647,7 @@
 				11B359F4890324DE7FAE613D /* CreateAccountViewController.swift in Sources */,
 				11B35622EC04A17ACA90BDB4 /* CreateAccountRouter.swift in Sources */,
 				11B355A0DB57B43DEFD4FAB9 /* CreateAccountInteractor.swift in Sources */,
-				11B35249D1E7F30208619205 /* AccountCreator.swift in Sources */,
+				11B35249D1E7F30208619205 /* AccountFactory.swift in Sources */,
 				11B359CD944C16EB8C6CB291 /* PredefinedAccountType.swift in Sources */,
 				11B3582300666F36267F2CD2 /* RestoreNavigationController.swift in Sources */,
 				11B359F814188F0A377F33A2 /* RestoreSelectTypeViewController.swift in Sources */,
@@ -4082,7 +4082,7 @@
 				11B35560F891660C8F0B64E4 /* CreateAccountViewController.swift in Sources */,
 				11B35AC3639A359D7DEB688E /* CreateAccountRouter.swift in Sources */,
 				11B35CC55D0078B593DABC61 /* CreateAccountInteractor.swift in Sources */,
-				11B353AA4AFFB020A68E09B6 /* AccountCreator.swift in Sources */,
+				11B353AA4AFFB020A68E09B6 /* AccountFactory.swift in Sources */,
 				11B3588AB15B6A2C017F4ACB /* PredefinedAccountType.swift in Sources */,
 				11B35B06E11C19020813A6AC /* RestoreNavigationController.swift in Sources */,
 				11B35E23B09513FF84EA8F67 /* RestoreSelectTypeViewController.swift in Sources */,
@@ -4466,7 +4466,7 @@
 				11B354CF99C4BCD3C2B23EBE /* CreateAccountViewController.swift in Sources */,
 				11B359D4A27EEC359BDEA312 /* CreateAccountRouter.swift in Sources */,
 				11B355129099179DF620BFEA /* CreateAccountInteractor.swift in Sources */,
-				11B35C8621E221DA1F157A5B /* AccountCreator.swift in Sources */,
+				11B35C8621E221DA1F157A5B /* AccountFactory.swift in Sources */,
 				11B35282650F12C5BE19507C /* PredefinedAccountType.swift in Sources */,
 				11B3576CDA067D2397C3F1E8 /* RestoreNavigationController.swift in Sources */,
 				11B353D4ECDC6398228A2270 /* RestoreSelectTypeViewController.swift in Sources */,
