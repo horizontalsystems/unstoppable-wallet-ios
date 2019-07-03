@@ -2,6 +2,7 @@ protocol ICreateAccountView: class {
 }
 
 protocol ICreateAccountViewDelegate {
+    var showNew: Bool { get }
     func didTapNew()
     func didTapRestore()
 }

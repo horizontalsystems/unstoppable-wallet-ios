@@ -19,15 +19,19 @@ class CreateAccountViewController: ActionSheetController {
         backgroundColor = AppTheme.actionSheetBackgroundColor
         contentBackgroundColor = .white
 
-        let newItem = AlertButtonItem(
-                tag: 0,
-                title: "New",
-                textStyle: ButtonTheme.textColorOnWhiteBackgroundDictionary,
-                backgroundStyle: ButtonTheme.yellowBackgroundOnWhiteBackgroundDictionary
-        ) { [weak self] in
-            self?.delegate.didTapNew()
+        if delegate.showNew {
+            let newItem = AlertButtonItem(
+                    tag: 0,
+                    title: "New",
+                    textStyle: ButtonTheme.textColorOnWhiteBackgroundDictionary,
+                    backgroundStyle: ButtonTheme.yellowBackgroundOnWhiteBackgroundDictionary
+            ) { [weak self] in
+                self?.delegate.didTapNew()
+            }
+            newItem.isActive = true
+
+            model.addItemView(newItem)
         }
-        newItem.isActive = true
 
         let restoreItem = AlertButtonItem(
                 tag: 0,
@@ -39,7 +43,6 @@ class CreateAccountViewController: ActionSheetController {
         }
         restoreItem.isActive = true
 
-        model.addItemView(newItem)
         model.addItemView(restoreItem)
     }
 

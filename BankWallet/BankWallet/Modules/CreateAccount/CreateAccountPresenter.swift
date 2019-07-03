@@ -16,6 +16,10 @@ class CreateAccountPresenter {
 
 extension CreateAccountPresenter: ICreateAccountViewDelegate {
 
+    var showNew: Bool {
+        return coin.type.canCreateAccount
+    }
+
     func didTapNew() {
         if let account = interactor.createAccount(coin: coin) {
             router.dismiss(account: account, coin: coin)

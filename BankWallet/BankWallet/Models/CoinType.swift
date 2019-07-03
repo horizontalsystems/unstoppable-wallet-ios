@@ -19,6 +19,15 @@ enum CoinType {
         }
     }
 
+    var canCreateAccount: Bool {
+        switch self {
+        case .bitcoin, .bitcoinCash, .dash, .ethereum, .erc20:
+            return true
+        case .eos:
+            return false
+        }
+    }
+
 }
 
 extension CoinType: Equatable {
