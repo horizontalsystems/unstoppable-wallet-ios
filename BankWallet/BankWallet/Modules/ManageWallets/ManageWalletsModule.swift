@@ -17,15 +17,13 @@ protocol IManageWalletsViewDelegate {
 }
 
 protocol IManageWalletsInteractor {
-    func load()
+    var wallets: [Wallet] { get }
+    var coins: [Coin] { get }
+    var accounts: [Account] { get }
     func save(wallets: [Wallet])
-    func accounts(coinType: CoinType) -> [Account]
 }
 
 protocol IManageWalletsInteractorDelegate: class {
-    func didLoad(coins: [Coin], wallets: [Wallet])
-    func didSaveWallets()
-    func didFailToSaveWallets()
 }
 
 protocol IManageWalletsRouter {

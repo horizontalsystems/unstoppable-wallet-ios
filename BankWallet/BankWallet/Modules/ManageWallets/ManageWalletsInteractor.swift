@@ -19,19 +19,21 @@ class ManageWalletsInteractor {
 
 extension ManageWalletsInteractor: IManageWalletsInteractor {
 
-    func load() {
-        delegate?.didLoad(coins: appConfigProvider.coins, wallets: walletManager.wallets)
+    var coins: [Coin] {
+        return appConfigProvider.coins
+    }
+
+    var wallets: [Wallet] {
+        return walletManager.wallets
+    }
+
+    var accounts: [Account] {
+        return accountManager.accounts
     }
 
     func save(wallets: [Wallet]) {
         walletManager.enable(wallets: wallets)
-        delegate?.didSaveWallets()
     }
 
-    func accounts(coinType: CoinType) -> [Account] {
-        return accountManager.accounts.filter { account in
-            return coinType.canSupport(accountType: account.type)
-        }
-    }
 
 }
