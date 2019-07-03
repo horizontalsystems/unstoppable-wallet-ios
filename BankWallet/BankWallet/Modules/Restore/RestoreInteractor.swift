@@ -17,13 +17,8 @@ extension RestoreInteractor: IRestoreInteractor {
         return appConfigProvider.defaultWords
     }
 
-    func validate(words: [String]) {
-        do {
-            try wordsManager.validate(words: words)
-            delegate?.didValidate(words: words)
-        } catch {
-            delegate?.didFailToValidate(withError: error)
-        }
+    func validate(words: [String]) throws {
+        try wordsManager.validate(words: words)
     }
 
 }

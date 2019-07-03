@@ -1,25 +1,26 @@
 protocol IRestoreView: class {
-    func set(defaultWords: [String])
-    func showInvalidWordsError()
+    func showSelectType(types: [PredefinedAccountType])
+    func showWords(defaultWords: [String])
+    func showSyncMode()
+    func show(error: Error)
 }
 
 protocol IRestoreViewDelegate {
     func viewDidLoad()
-    func restoreDidClick(withWords words: [String])
-    func cancelDidClick()
+    func didSelect(type: PredefinedAccountType)
+    func didTapRestore(words: [String])
+    func didSelectSyncMode(isFast: Bool)
+    func didTapCancel()
 }
 
 protocol IRestoreInteractor {
     var defaultWords: [String] { get }
-    func validate(words: [String])
+    func validate(words: [String]) throws
 }
 
 protocol IRestoreInteractorDelegate: class {
-    func didValidate(words: [String])
-    func didFailToValidate(withError error: Error)
 }
 
 protocol IRestoreRouter {
-    func openSyncMode(with words: [String])
     func close()
 }

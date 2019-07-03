@@ -11,7 +11,7 @@ extension MainSettingsRouter: IMainSettingsRouter {
     }
 
     func showRestore() {
-        viewController?.navigationController?.pushViewController(RestoreAccountsRouter.module(), animated: true)
+        viewController?.present(RestoreRouter.module(), animated: true)
     }
 
     func showBaseCurrencySettings() {

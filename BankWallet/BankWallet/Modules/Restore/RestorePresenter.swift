@@ -1,7 +1,8 @@
 class RestorePresenter {
+    weak var view: IRestoreView?
+
     private let interactor: IRestoreInteractor
     private let router: IRestoreRouter
-    weak var view: IRestoreView?
 
     private var words = [String]()
 
@@ -13,29 +14,39 @@ class RestorePresenter {
 }
 
 extension RestorePresenter: IRestoreInteractorDelegate {
-
-    func didValidate(words: [String]) {
-        self.words = words
-        router.openSyncMode(with: words)
-    }
-
-    func didFailToValidate(withError error: Error) {
-        view?.showInvalidWordsError()
-    }
-
 }
 
 extension RestorePresenter: IRestoreViewDelegate {
 
     func viewDidLoad() {
-        view?.set(defaultWords: interactor.defaultWords)
+        view?.showSelectType(types: PredefinedAccountType.allCases)
     }
 
-    func restoreDidClick(withWords words: [String]) {
-        interactor.validate(words: words)
+    func didSelect(type: PredefinedAccountType) {
+        switch type {
+        case .mnemonic:
+            view?.showWords(defaultWords: interactor.defaultWords)
+        case .eos: ()
+        case .binance: ()
+        }
     }
 
-    func cancelDidClick() {
+    func didTapRestore(words: [String]) {
+        do {
+            try interactor.validate(words: words)
+            self.words = words
+
+            view?.showSyncMode()
+        } catch {
+            view?.show(error: error)
+        }
+    }
+
+    func didSelectSyncMode(isFast: Bool) {
+        print("RESTORE: \(words) \(isFast)")
+    }
+
+    func didTapCancel() {
         router.close()
     }
 

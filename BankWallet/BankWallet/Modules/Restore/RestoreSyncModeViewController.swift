@@ -1,14 +1,14 @@
 import UIKit
 import SectionsTableView
 
-class SyncModeViewController: WalletViewController, SectionsDataSource {
-    private let delegate: ISyncModeViewDelegate
+class RestoreSyncModeViewController: WalletViewController, SectionsDataSource {
+    private let delegate: IRestoreViewDelegate
 
     let tableView = SectionsTableView(style: .grouped)
 
     private var isFast = true
 
-    init(delegate: ISyncModeViewDelegate) {
+    init(delegate: IRestoreViewDelegate) {
         self.delegate = delegate
         super.init(nibName: nil, bundle: nil)
     }
@@ -38,18 +38,16 @@ class SyncModeViewController: WalletViewController, SectionsDataSource {
 
     func onTapFastSync() {
         isFast = true
-        delegate.onSelectFast()
         tableView.reload()
     }
 
     func onTapSlowSync() {
         isFast = false
-        delegate.onSelectSlow()
         tableView.reload()
     }
 
     @objc func onTapDone() {
-        delegate.onDone()
+        delegate.didSelectSyncMode(isFast: isFast)
     }
 
     func buildSections() -> [SectionProtocol] {
@@ -82,14 +80,6 @@ class SyncModeViewController: WalletViewController, SectionsDataSource {
         sections.append(Section(id: "fast", footerState: slowFooter, rows: [slowRow]))
 
         return sections
-    }
-
-}
-
-extension SyncModeViewController: ISyncModeView {
-
-    func showInvalidWordsError() {
-        HudHelper.instance.showError(title: "restore.validation_failed".localized)
     }
 
 }

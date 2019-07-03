@@ -2,7 +2,7 @@ import UIKit
 import RxSwift
 import SnapKit
 
-class RestoreViewController: WalletViewController {
+class RestoreWordsViewController: WalletViewController {
     let disposeBag = DisposeBag()
     let delegate: IRestoreViewDelegate
 
@@ -15,7 +15,7 @@ class RestoreViewController: WalletViewController {
 
     var keyboardFrameDisposable: Disposable?
 
-    init(delegate: IRestoreViewDelegate) {
+    init(delegate: IRestoreViewDelegate, defaultWords: [String]) {
         layout.scrollDirection = .vertical
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         self.delegate = delegate
@@ -24,6 +24,12 @@ class RestoreViewController: WalletViewController {
 
         collectionView.delegate = self
         collectionView.dataSource = self
+
+        for (index, defaultWord) in defaultWords.enumerated() {
+            if index < words.count {
+                words[index] = defaultWord
+            }
+        }
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -46,13 +52,12 @@ class RestoreViewController: WalletViewController {
             maker.top.bottom.equalToSuperview()
         }
 
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "button.cancel".localized, style: .plain, target: self, action: #selector(cancelDidTap))
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.next".localized, style: .plain, target: self, action: #selector(restoreDidTap))
 
         collectionView.registerCell(forClass: RestoreWordCell.self)
         collectionView.registerView(forClass: DescriptionCollectionHeader.self, flowSupplementaryKind: .header)
 
-        delegate.viewDidLoad()
+//        delegate.viewDidLoad()
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -69,14 +74,9 @@ class RestoreViewController: WalletViewController {
         return AppTheme.statusBarStyle
     }
 
-    @objc func cancelDidTap() {
-        view.endEditing(true)
-        delegate.cancelDidClick()
-    }
-
     @objc func restoreDidTap() {
         view.endEditing(true)
-        delegate.restoreDidClick(withWords: words)
+        delegate.didTapRestore(words: words)
     }
 
     private func subscribeKeyboard() {
@@ -108,7 +108,7 @@ class RestoreViewController: WalletViewController {
 
 }
 
-extension RestoreViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
+extension RestoreWordsViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = collectionView.bounds.width - RestoreTheme.interItemSpacing
@@ -158,22 +158,6 @@ extension RestoreViewController: UICollectionViewDelegateFlowLayout, UICollectio
 
     func onTextChange(word: String?, at indexPath: IndexPath) {
         words[indexPath.item] = word?.lowercased().trimmingCharacters(in: .whitespaces) ?? ""
-    }
-
-}
-
-extension RestoreViewController: IRestoreView {
-
-    func set(defaultWords: [String]) {
-        for (index, defaultWord) in defaultWords.enumerated() {
-            if index < words.count {
-                words[index] = defaultWord
-            }
-        }
-    }
-
-    func showInvalidWordsError() {
-        HudHelper.instance.showError(title: "restore.validation_failed".localized)
     }
 
 }

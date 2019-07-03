@@ -6,10 +6,6 @@ class RestoreRouter {
 
 extension RestoreRouter: IRestoreRouter {
 
-    func openSyncMode(with words: [String]) {
-        viewController?.navigationController?.pushViewController(SyncModeRouter.module(mode: .initial(words: words)), animated: true)
-    }
-
     func close() {
         viewController?.dismiss(animated: true)
     }
@@ -22,13 +18,13 @@ extension RestoreRouter {
         let router = RestoreRouter()
         let interactor = RestoreInteractor(wordsManager: App.shared.wordsManager, appConfigProvider: App.shared.appConfigProvider)
         let presenter = RestorePresenter(interactor: interactor, router: router)
-        let viewController = RestoreViewController(delegate: presenter)
+        let viewController = RestoreNavigationController(viewDelegate: presenter)
 
         interactor.delegate = presenter
         presenter.view = viewController
         router.viewController = viewController
 
-        return WalletNavigationController(rootViewController: viewController)
+        return viewController
     }
 
 }

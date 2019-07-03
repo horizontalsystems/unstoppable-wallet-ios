@@ -2,13 +2,16 @@ import UIKit
 import UIExtensions
 import SnapKit
 
-class RestoreAccountsViewController: WalletViewController {
-    private let delegate: IRestoreAccountsViewDelegate
+class RestoreSelectTypeViewController: WalletViewController {
+    private let delegate: IRestoreViewDelegate
 
     private let tableView = UITableView(frame: .zero, style: .grouped)
 
-    init(delegate: IRestoreAccountsViewDelegate) {
+    private let types: [PredefinedAccountType]
+
+    init(delegate: IRestoreViewDelegate, types: [PredefinedAccountType]) {
         self.delegate = delegate
+        self.types = types
 
         super.init(nibName: nil, bundle: nil)
 
@@ -23,6 +26,8 @@ class RestoreAccountsViewController: WalletViewController {
         super.viewDidLoad()
 
         title = "restore.title".localized
+
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "button.cancel".localized, style: .plain, target: self, action: #selector(cancelDidTap))
 
         tableView.delegate = self
         tableView.dataSource = self
@@ -42,16 +47,20 @@ class RestoreAccountsViewController: WalletViewController {
         return AppTheme.statusBarStyle
     }
 
+    @objc func cancelDidTap() {
+        delegate.didTapCancel()
+    }
+
 }
 
-extension RestoreAccountsViewController: UITableViewDataSource, UITableViewDelegate {
+extension RestoreSelectTypeViewController: UITableViewDataSource, UITableViewDelegate {
 
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return delegate.itemsCount
+        return types.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -60,14 +69,14 @@ extension RestoreAccountsViewController: UITableViewDataSource, UITableViewDeleg
 
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if let cell = cell as? RestoreAccountCell {
-            cell.bind(accountType: delegate.item(index: indexPath.row))
+            cell.bind(accountType: types[indexPath.row])
         }
     }
 
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
 
-        delegate.didTapRestore(index: indexPath.row)
+        delegate.didSelect(type: types[indexPath.row])
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
