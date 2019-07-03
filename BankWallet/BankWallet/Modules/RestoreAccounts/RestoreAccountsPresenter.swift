@@ -1,7 +1,7 @@
 class RestoreAccountsPresenter {
     private let router: IRestoreAccountsRouter
 
-    private let accounts = RestoreType.allCases.map { RestoreAccountViewItem(title: $0.title, coinCodes: $0.coinCodes) }
+    private let accountTypes = PredefinedAccountType.allCases
 
     init(router: IRestoreAccountsRouter) {
         self.router = router
@@ -12,16 +12,15 @@ class RestoreAccountsPresenter {
 extension RestoreAccountsPresenter: IRestoreAccountsViewDelegate {
 
     var itemsCount: Int {
-        return accounts.count
+        return accountTypes.count
     }
 
-    func item(index: Int) -> RestoreAccountViewItem {
-        return accounts[index]
+    func item(index: Int) -> PredefinedAccountType {
+        return accountTypes[index]
     }
 
     func didTapRestore(index: Int) {
-        let type = RestoreType(rawValue: index) ?? RestoreType.words12
-        router.showRestore(type: type)
+        router.showRestore(type: accountTypes[index])
     }
 
 }

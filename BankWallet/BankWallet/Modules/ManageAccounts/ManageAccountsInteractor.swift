@@ -13,9 +13,19 @@ class ManageAccountsInteractor {
         accountManager.accountsObservable
                 .subscribeOn(MainScheduler.instance)
                 .subscribe(onNext: { [weak self] accounts in
-                    self?.delegate?.didUpdate(accounts: accounts)
+                    self?.handleUpdated(accounts: accounts)
                 })
                 .disposed(by: disposeBag)
+    }
+
+    private func handleUpdated(accounts: [Account]) {
+        delegate?.didUpdate(accounts: predefinedAccounts(accounts: accounts))
+    }
+
+    private func predefinedAccounts(accounts: [Account]) -> [Account] {
+        return PredefinedAccountType.allCases.compactMap { type in
+            return accounts.first { $0.type.predefinedAccountType == type }
+        }
     }
 
 }
@@ -23,7 +33,7 @@ class ManageAccountsInteractor {
 extension ManageAccountsInteractor: IManageAccountsInteractor {
 
     var accounts: [Account] {
-        return accountManager.accounts
+        return predefinedAccounts(accounts: accountManager.accounts)
     }
 
 }

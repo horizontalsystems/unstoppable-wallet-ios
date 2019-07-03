@@ -18,6 +18,7 @@ enum CoinType {
             return false
         }
     }
+
 }
 
 extension CoinType: Equatable {

@@ -106,26 +106,10 @@ class ManageAccountCell: UITableViewCell {
     func bind(account: Account, onUnlink: @escaping () -> (), onBackup: @escaping () -> ()) {
         backedUpIcon.isHidden = account.backedUp
 
-        var title = account.name
-        var coinCodes = ""
+        let predefinedAccountType = account.type.predefinedAccountType
 
-        switch account.type {
-        case let .mnemonic(words, _, _):
-            if words.count == 12 {
-                title = "key_type.12_words"
-                coinCodes = "BTC, BCH, DASH, ETH, ERC-20"
-            } else if words.count == 24 {
-                title = "key_type.24_words"
-                coinCodes = "BNB"
-            }
-        case .eos:
-            title = "key_type.eos"
-            coinCodes = "EOS"
-        default: ()
-        }
-
-        nameLabel.text = title.localized
-        coinsLabel.text = coinCodes
+        nameLabel.text = predefinedAccountType?.title.localized
+        coinsLabel.text = predefinedAccountType?.coinCodes
 
         self.onUnlink = onUnlink
         self.onBackup = onBackup

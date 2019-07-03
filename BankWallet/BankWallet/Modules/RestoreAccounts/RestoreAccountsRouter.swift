@@ -6,8 +6,7 @@ class RestoreAccountsRouter {
 
 extension RestoreAccountsRouter: IRestoreAccountsRouter {
 
-    func showRestore(type: RestoreType) {
-//         viewController?.present(UnlinkRouter.module(accountId: accountId), animated: true)
+    func showRestore(type: PredefinedAccountType) {
     }
 
 }

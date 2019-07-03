@@ -11,6 +11,8 @@ class RestoreAccountsViewController: WalletViewController {
         self.delegate = delegate
 
         super.init(nibName: nil, bundle: nil)
+
+        hidesBottomBarWhenPushed = true
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -58,8 +60,7 @@ extension RestoreAccountsViewController: UITableViewDataSource, UITableViewDeleg
 
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if let cell = cell as? RestoreAccountCell {
-            let item = delegate.item(index: indexPath.row)
-            cell.bind(title: item.title, coinCodes: item.coinCodes)
+            cell.bind(accountType: delegate.item(index: indexPath.row))
         }
     }
 
