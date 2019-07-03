@@ -35,7 +35,7 @@ class WalletManager {
                 return nil
             }
 
-            guard let account = accounts.first(where: { $0.name == enabledWallet.accountName }) else {
+            guard let account = accounts.first(where: { $0.name == enabledWallet.accountId }) else {
                 return nil
             }
 
@@ -51,7 +51,7 @@ extension WalletManager: IWalletManager {
         var enabledWallets = [EnabledWallet]()
 
         for (order, wallet) in wallets.enumerated() {
-            enabledWallets.append(EnabledWallet(coinCode: wallet.coin.code, accountName: wallet.account.name, syncMode: wallet.syncMode, order: order))
+            enabledWallets.append(EnabledWallet(coinCode: wallet.coin.code, accountId: wallet.account.id, syncMode: wallet.syncMode, order: order))
         }
 
         storage.save(enabledWallets: enabledWallets)

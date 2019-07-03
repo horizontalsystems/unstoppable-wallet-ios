@@ -36,11 +36,11 @@ class GrdbStorage {
         migrator.registerMigration("createEnabledWalletsTable") { db in
             try db.create(table: EnabledWallet.databaseTableName) { t in
                 t.column(EnabledWallet.Columns.coinCode.name, .text).notNull()
-                t.column(EnabledWallet.Columns.accountName.name, .text).notNull()
-                t.column(EnabledWallet.Columns.syncMode.name, .text).notNull()
+                t.column(EnabledWallet.Columns.accountId.name, .text).notNull()
+                t.column(EnabledWallet.Columns.syncMode.name, .text)
                 t.column(EnabledWallet.Columns.walletOrder.name, .integer).notNull()
 
-                t.primaryKey([EnabledWallet.Columns.coinCode.name, EnabledWallet.Columns.accountName.name], onConflict: .replace)
+                t.primaryKey([EnabledWallet.Columns.coinCode.name, EnabledWallet.Columns.accountId.name], onConflict: .replace)
             }
 
             // transfer data from old "enabled_coins" table
@@ -49,11 +49,11 @@ class GrdbStorage {
                 return
             }
 
-            let defaultAccountName = "Mnemonic"
+            let accountId = "" // todo
             let syncMode = (UserDefaults.standard.value(forKey: "sync_mode_key") as? String) ?? "fast"
             try db.execute(sql: """
-                                INSERT INTO \(EnabledWallet.databaseTableName)(`\(EnabledWallet.Columns.coinCode.name)`, `\(EnabledWallet.Columns.accountName.name)`, `\(EnabledWallet.Columns.syncMode.name)`, `\(EnabledWallet.Columns.walletOrder.name)`) 
-                                SELECT `coinCode`, '\(defaultAccountName)', '\(syncMode)', `coinOrder` FROM enabled_coins
+                                INSERT INTO \(EnabledWallet.databaseTableName)(`\(EnabledWallet.Columns.coinCode.name)`, `\(EnabledWallet.Columns.accountId.name)`, `\(EnabledWallet.Columns.syncMode.name)`, `\(EnabledWallet.Columns.walletOrder.name)`) 
+                                SELECT `coinCode`, '\(accountId)', '\(syncMode)', `coinOrder` FROM enabled_coins
                                 """)
             try db.drop(table: "enabled_coins")
         }

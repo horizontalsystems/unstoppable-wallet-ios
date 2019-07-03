@@ -3,7 +3,7 @@ struct Account {
     let name: String
     let type: AccountType
     var backedUp: Bool
-    let defaultSyncMode: SyncMode
+    var defaultSyncMode: SyncMode?
 }
 
 extension Account: Equatable {
