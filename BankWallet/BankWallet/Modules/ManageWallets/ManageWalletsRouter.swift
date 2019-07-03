@@ -2,9 +2,14 @@ import UIKit
 
 class ManageWalletsRouter {
     weak var viewController: UIViewController?
+    weak var createAccountDelegate: ICreateAccountDelegate?
 }
 
 extension ManageWalletsRouter: IManageWalletsRouter {
+
+    func showCreateAccount(coin: Coin) {
+        viewController?.present(CreateAccountRouter.module(coin: coin, delegate: createAccountDelegate), animated: true)
+    }
 
     func close() {
         viewController?.dismiss(animated: true)
@@ -22,7 +27,9 @@ extension ManageWalletsRouter {
 
         interactor.delegate = presenter
         presenter.view = viewController
+
         router.viewController = viewController
+        router.createAccountDelegate = interactor
 
         let navigationController = WalletNavigationController(rootViewController: viewController)
         navigationController.navigationBar.barStyle = AppTheme.navigationBarStyle

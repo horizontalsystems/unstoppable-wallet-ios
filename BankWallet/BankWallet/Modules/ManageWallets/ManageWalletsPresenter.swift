@@ -4,7 +4,6 @@ class ManageWalletsPresenter {
     private let interactor: IManageWalletsInteractor
     private let router: IManageWalletsRouter
     private let stateHandler = ManageWalletsStateHandler()
-    private let walletFactory = ManageWalletsWalletFactory()
 
     private var wallets: [Wallet] = [] {
         didSet {
@@ -21,6 +20,12 @@ class ManageWalletsPresenter {
 }
 
 extension ManageWalletsPresenter: IManageWalletsInteractorDelegate {
+
+    func enable(wallet: Wallet) {
+        wallets.append(wallet)
+        view?.updateUI()
+    }
+
 }
 
 extension ManageWalletsPresenter: IManageWalletsViewDelegate {
@@ -30,9 +35,12 @@ extension ManageWalletsPresenter: IManageWalletsViewDelegate {
     }
 
     func enableCoin(atIndex index: Int) {
-        if let wallet = walletFactory.wallet(coin: coins[index], accounts: interactor.accounts) {
-            wallets.append(wallet)
-            view?.updateUI()
+        let coin = coins[index]
+
+        if let wallet = interactor.wallet(coin: coin) {
+            enable(wallet: wallet)
+        } else {
+            router.showCreateAccount(coin: coin)
         }
     }
 

@@ -8,6 +8,7 @@ class ManageWalletsInteractor {
     private let appConfigProvider: IAppConfigProvider
     private let walletManager: IWalletManager
     private let accountManager: IAccountManager
+    private let walletFactory = ManageWalletsWalletFactory()
 
     init(appConfigProvider: IAppConfigProvider, walletManager: IWalletManager, accountManager: IAccountManager) {
         self.appConfigProvider = appConfigProvider
@@ -35,5 +36,16 @@ extension ManageWalletsInteractor: IManageWalletsInteractor {
         walletManager.enable(wallets: wallets)
     }
 
+    func wallet(coin: Coin) -> Wallet? {
+        return walletFactory.wallet(coin: coin, accounts: accountManager.accounts)
+    }
+
+}
+
+extension ManageWalletsInteractor: ICreateAccountDelegate {
+
+    func onCreate(account: Account, coin: Coin) {
+        delegate?.enable(wallet: walletFactory.wallet(coin: coin, account: account))
+    }
 
 }
