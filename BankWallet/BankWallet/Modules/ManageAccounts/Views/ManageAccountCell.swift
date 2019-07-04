@@ -81,7 +81,7 @@ class ManageAccountCell: UITableViewCell {
             maker.height.equalTo(ManageAccountsTheme.buttonsHeight)
         }
         unlinkButton.onTap = { [weak self] in self?.onUnlink?() }
-        unlinkButton.backgrounds = ButtonTheme.redBackgroundOnWhiteBackgroundDictionary
+        unlinkButton.backgrounds = ButtonTheme.redBackgroundDictionary
         unlinkButton.cornerRadius = ManageAccountsTheme.buttonCornerRadius
         unlinkButton.titleLabel.text = "settings_manage_accounts.unlink".localized
 
@@ -94,7 +94,7 @@ class ManageAccountCell: UITableViewCell {
             maker.width.equalTo(unlinkButton)
         }
         backupButton.onTap = { [weak self] in self?.onBackup?() }
-        backupButton.backgrounds = ButtonTheme.yellowBackgroundOnDarkBackgroundDictionary
+        backupButton.backgrounds = ButtonTheme.yellowBackgroundDictionary
         backupButton.cornerRadius = ManageAccountsTheme.buttonCornerRadius
         backupButton.titleLabel.text = "settings_manage_accounts.backup".localized
     }

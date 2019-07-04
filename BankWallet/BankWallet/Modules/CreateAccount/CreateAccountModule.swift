@@ -1,8 +1,11 @@
 protocol ICreateAccountView: class {
+    func setTitle(for coin: Coin)
 }
 
 protocol ICreateAccountViewDelegate {
     var showNew: Bool { get }
+
+    func viewDidLoad()
     func didTapNew()
     func didTapRestore()
 }
