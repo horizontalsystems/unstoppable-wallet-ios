@@ -10,18 +10,15 @@ class DepositViewController: ActionSheetController {
     init(delegate: IDepositViewDelegate) {
         self.delegate = delegate
         super.init(withModel: BaseAlertModel(), actionSheetThemeConfig: AppTheme.actionSheetConfig)
+
+        initItems()
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        backgroundColor = .crypto_Dark_Bars
-        model.hideInBackground = false
-
+    func initItems() {
         let items = delegate.addressItems
 
         let depositItem = DepositCollectionItem(addresses: items, tag: 0, onPageChange: { [weak self] index in
@@ -43,6 +40,13 @@ class DepositViewController: ActionSheetController {
             self?.onShare()
         })
         model.addItemView(shareItem)
+    }
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        backgroundColor = .crypto_Dark_Bars
+        model.hideInBackground = false
     }
 
     private func onCopy() {

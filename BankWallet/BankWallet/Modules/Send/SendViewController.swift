@@ -15,17 +15,11 @@ class SendViewController: ActionSheetController {
         self.delegate = delegate
         feeItem = SendFeeItem(tag: 3, isFeeAdjustable: delegate.isFeeAdjustable)
         super.init(withModel: BaseAlertModel(), actionSheetThemeConfig: AppTheme.actionSheetConfig)
+
+        initItems()
     }
 
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        backgroundColor = .crypto_Dark_Bars
-
+    func initItems() {
         model.hideInBackground = false
 
         model.addItemView(titleItem)
@@ -71,13 +65,23 @@ class SendViewController: ActionSheetController {
         feeItem.onFeePriorityChange = { [weak self] value in
             self?.delegate.onFeePriorityChange(value: value)
         }
-//        delegate.onViewDidLoad()
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        backgroundColor = .crypto_Dark_Bars
+
+        delegate.onViewDidLoad()
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-        delegate.onViewDidLoad()
         amountItem.showKeyboard?()
     }
 
