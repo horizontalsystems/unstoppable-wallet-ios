@@ -7,18 +7,15 @@ class TransactionInfoViewController: ActionSheetController {
     init(delegate: ITransactionInfoViewDelegate) {
         self.delegate = delegate
         super.init(withModel: BaseAlertModel(), actionSheetThemeConfig: AppTheme.actionSheetConfig)
+
+        initItems()
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        backgroundColor = .crypto_Dark_Bars
-        model.hideInBackground = false
-
+    func initItems() {
         let item = delegate.viewItem
 
         let titleItem = TransactionTitleItem(item: item, tag: 0, onIdTap: { [weak self] in
@@ -56,6 +53,13 @@ class TransactionInfoViewController: ActionSheetController {
             self?.delegate.openFullInfo()
         })
         model.addItemView(openFullInfoItem)
+    }
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        backgroundColor = .crypto_Dark_Bars
+        model.hideInBackground = false
     }
 
 }
