@@ -1,6 +1,8 @@
 import Foundation
 
 class UserDefaultsStorage: ILocalStorage {
+    static let shared = UserDefaultsStorage()
+
     private let keySyncMode = "sync_mode_key"
     private let keyIsBackedUp = "is_backed_up"
     private let keyCurrentLanguage = "current_language"

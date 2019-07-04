@@ -23,7 +23,7 @@ extension AgreementRouter {
 
     static func module(agreementDelegate: IAgreementDelegate?) -> UIViewController {
         let router = AgreementRouter()
-        let interactor = AgreementInteractor(localStorage: App.shared.localStorage)
+        let interactor = AgreementInteractor(localStorage: UserDefaultsStorage.shared)
         let presenter = AgreementPresenter(router: router, interactor: interactor)
         let viewController = AgreementViewController(delegate: presenter)
 

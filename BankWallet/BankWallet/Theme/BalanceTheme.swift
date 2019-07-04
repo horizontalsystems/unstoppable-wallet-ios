@@ -36,7 +36,7 @@ class BalanceTheme {
     static var roundedBackgroundColor: UIColor { return .crypto_SteelDark_White }
     static let roundedBackgroundCornerRadius: CGFloat = 15
     static var roundedBackgroundShadowColor: UIColor { return .crypto_Black20_Steel20 }
-    static var roundedBackgroundShadowOpacity: Float { return App.shared.localStorage.lightMode ? 0.8 : 1 }
+    static var roundedBackgroundShadowOpacity: Float { return UserDefaultsStorage.shared.lightMode ? 0.8 : 1 }
 
     static let cellTitleFont = UIFont.cryptoHeadline
     static var cellTitleColor: UIColor { return .crypto_White_Black }
@@ -51,7 +51,7 @@ class BalanceTheme {
     static let spinnerDonutRadius: CGFloat = 8
     static let spinnerBackgroundColor: UIColor = .cryptoGray
     static var spinnerLineColor: UIColor { return .crypto_Dark_Bars }
-    static var spinnerDonutColor: UIColor { return App.shared.localStorage.lightMode ? UIColor(white: 1, alpha: 0.2) : UIColor(white: 0, alpha: 0.15) }
+    static var spinnerDonutColor: UIColor { return UserDefaultsStorage.shared.lightMode ? UIColor(white: 1, alpha: 0.2) : UIColor(white: 0, alpha: 0.15) }
 
     static let refreshButtonSize: CGFloat = 32
     static let refreshButtonColor: UIColor = .cryptoGray

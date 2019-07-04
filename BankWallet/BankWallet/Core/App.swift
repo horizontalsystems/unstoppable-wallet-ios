@@ -6,9 +6,6 @@ class App {
     let pasteboardManager: IPasteboardManager
     let randomManager: IRandomManager
 
-    let localStorage: ILocalStorage
-    let secureStorage: ISecureStorage
-
     let appConfigProvider: IAppConfigProvider
     let systemInfoManager: ISystemInfoManager
     let backgroundManager: BackgroundManager
@@ -54,15 +51,12 @@ class App {
         pasteboardManager = PasteboardManager()
         randomManager = RandomManager()
 
-        localStorage = UserDefaultsStorage()
-        secureStorage = KeychainStorage(localStorage: localStorage)
-
         appConfigProvider = AppConfigProvider()
         systemInfoManager = SystemInfoManager()
         backgroundManager = BackgroundManager()
 
         localizationManager = LocalizationManager()
-        languageManager = LanguageManager(localizationManager: localizationManager, localStorage: localStorage, fallbackLanguage: fallbackLanguage)
+        languageManager = LanguageManager(localizationManager: localizationManager, localStorage: UserDefaultsStorage.shared, fallbackLanguage: fallbackLanguage)
 
         urlManager = UrlManager(inApp: true)
         pingManager = PingManager()
@@ -71,18 +65,18 @@ class App {
 
         grdbStorage = GrdbStorage()
 
-        pinManager = PinManager(secureStorage: secureStorage)
-        accountManager = AccountManager(secureStorage: secureStorage)
+        pinManager = PinManager(secureStorage: KeychainStorage.shared)
+        accountManager = AccountManager(storage: grdbStorage)
         walletManager = WalletManager(appConfigProvider: appConfigProvider, accountManager: accountManager, storage: grdbStorage)
 
         let rateApiProvider: IRateApiProvider = RateApiProvider(networkManager: networkManager, appConfigProvider: appConfigProvider)
         rateManager = RateManager(storage: grdbStorage, apiProvider: rateApiProvider)
-        currencyManager = CurrencyManager(localStorage: localStorage, appConfigProvider: appConfigProvider)
+        currencyManager = CurrencyManager(localStorage: UserDefaultsStorage.shared, appConfigProvider: appConfigProvider)
 
         ethereumKitManager = EthereumKitManager(appConfigProvider: appConfigProvider)
 
-        authManager = AuthManager(secureStorage: secureStorage, localStorage: localStorage, pinManager: pinManager, coinManager: walletManager, rateManager: rateManager, ethereumKitManager: ethereumKitManager)
-        wordsManager = WordsManager(localStorage: localStorage)
+        authManager = AuthManager(secureStorage: KeychainStorage.shared, localStorage: UserDefaultsStorage.shared, pinManager: pinManager, coinManager: walletManager, rateManager: rateManager, ethereumKitManager: ethereumKitManager)
+        wordsManager = WordsManager(localStorage: UserDefaultsStorage.shared)
 
         feeRateProvider = FeeRateProvider()
 
@@ -90,12 +84,12 @@ class App {
         adapterManager = AdapterManager(adapterFactory: adapterFactory, ethereumKitManager: ethereumKitManager, authManager: authManager, walletManager: walletManager)
 
         lockRouter = LockRouter()
-        lockManager = LockManager(localStorage: localStorage, authManager: authManager, appConfigProvider: appConfigProvider, lockRouter: lockRouter)
+        lockManager = LockManager(localStorage: UserDefaultsStorage.shared, authManager: authManager, appConfigProvider: appConfigProvider, lockRouter: lockRouter)
         blurManager = BlurManager(lockManager: lockManager)
 
         rateSyncer = RateSyncer(rateManager: rateManager, adapterManager: adapterManager, currencyManager: currencyManager, reachabilityManager: reachabilityManager)
 
-        dataProviderManager = FullTransactionDataProviderManager(localStorage: localStorage, appConfigProvider: appConfigProvider)
+        dataProviderManager = FullTransactionDataProviderManager(localStorage: UserDefaultsStorage.shared, appConfigProvider: appConfigProvider)
 
         let jsonApiProvider: IJsonApiProvider = JsonApiProvider(networkManager: networkManager)
         fullTransactionInfoProviderFactory = FullTransactionInfoProviderFactory(apiProvider: jsonApiProvider, dataProviderManager: dataProviderManager)

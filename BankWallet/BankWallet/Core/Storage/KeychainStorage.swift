@@ -2,8 +2,13 @@ import Foundation
 import KeychainAccess
 
 class KeychainStorage {
+    static let shared = KeychainStorage(localStorage: UserDefaultsStorage.shared)
+
     let keychain: Keychain
 
+    private let encryptionPasswordKey = "encryption_password_key"
+    private let encryptionSaltKey = "encryption_salt_key"
+    private let encryptionIvKey = "encryption_iv_key"
     private let pinKey = "pin_keychain_key"
     private let authDataKey = "auth_data_keychain_key"
     private let unlockAttemptsKey = "unlock_attempts_keychain_key"
@@ -73,6 +78,18 @@ class KeychainStorage {
         try keychain.set("\(value)", key: key)
     }
 
+    func getData(forKey key: String) -> Data? {
+        return try? keychain.getData(key)
+    }
+
+    func set(value: Data?, forKey key: String) throws {
+        guard let value = value else {
+            try keychain.remove(key)
+            return
+        }
+        try keychain.set(value, key: key)
+    }
+
     private func get<T: NSCoding>(forKey key: String) -> T? {
         if let keychainData = try? keychain.getData(key) {
             return NSKeyedUnarchiver.unarchiveObject(with: keychainData) as? T
@@ -93,6 +110,30 @@ class KeychainStorage {
 }
 
 extension KeychainStorage: ISecureStorage {
+
+    var encryptionPassword: String? {
+        return getString(forKey: encryptionPasswordKey)
+    }
+
+    func set(encryptionPassword: String) throws {
+        try set(value: encryptionPassword, forKey: encryptionPasswordKey)
+    }
+
+    var encryptionSalt: Data? {
+        return getData(forKey: encryptionSaltKey)
+    }
+
+    func set(encryptionSalt: Data) throws {
+        try set(value: encryptionSalt, forKey: encryptionSaltKey)
+    }
+
+    var encryptionIv: Data? {
+        return getData(forKey: encryptionIvKey)
+    }
+
+    func set(encryptionIv: Data) throws {
+        try set(value: encryptionIv, forKey: encryptionIvKey)
+    }
 
     var authData: AuthData? {
         return get(forKey: authDataKey)

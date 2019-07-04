@@ -1,5 +1,6 @@
 import RxSwift
 import BitcoinCore
+import GRDB
 
 typealias CoinCode = String
 
@@ -26,6 +27,12 @@ protocol ILocalStorage: class {
 }
 
 protocol ISecureStorage: class {
+    var encryptionPassword: String? { get }
+    func set(encryptionPassword: String) throws
+    var encryptionSalt: Data? { get }
+    func set(encryptionSalt: Data) throws
+    var encryptionIv: Data? { get }
+    func set(encryptionIv: Data) throws
     var authData: AuthData? { get }
     func set(authData: AuthData?) throws
     var pin: String? { get }
@@ -79,10 +86,23 @@ enum AdapterState {
     case notSynced
 }
 
-enum SyncMode: String {
+enum SyncMode: String, DatabaseValueConvertible  {
+
     case fast = "fast"
     case slow = "slow"
     case new = "new"
+
+    public var databaseValue: DatabaseValue {
+        return rawValue.databaseValue
+    }
+
+    public static func fromDatabaseValue(_ dbValue: DatabaseValue) -> SyncMode? {
+        guard case .string(let rawValue) = dbValue.storage else {
+            return nil
+        }
+        return SyncMode(rawValue: rawValue)
+    }
+
 }
 
 enum FeeRatePriority: Int {
@@ -268,6 +288,13 @@ protocol IEnabledWalletStorage {
     func save(enabledWallets: [EnabledWallet])
 }
 
+protocol IAccountStorage {
+    var all: [Account] { get }
+    func save(account: Account)
+    func delete(id: String)
+    func setIsBackedUp(id: String)
+}
+
 protocol IJsonApiProvider {
     func getJson(urlString: String, parameters: [String: Any]?) -> Single<[String: Any]>
 }
@@ -400,4 +427,13 @@ protocol IFeeRateProvider {
 
 enum AdapterError: Error {
     case unsupportedAccount
+}
+
+protocol IEncryptionManager {
+    func encrypt(data: Data) throws -> Data
+    func decrypt(data: Data) throws -> Data
+}
+
+protocol IUUIDProvider {
+    func generate() -> String
 }

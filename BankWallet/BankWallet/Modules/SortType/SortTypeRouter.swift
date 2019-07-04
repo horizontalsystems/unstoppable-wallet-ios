@@ -24,7 +24,7 @@ extension SortTypeRouter {
 
     static func module(sortTypeDelegate: ISortTypeDelegate?, sort: BalanceSortType) -> UIViewController {
         let router = SortTypeRouter()
-        let interactor = SortTypeInteractor(localStorage: App.shared.localStorage)
+        let interactor = SortTypeInteractor(localStorage: UserDefaultsStorage.shared)
         let presenter = SortTypePresenter(router: router, interactor: interactor, sort: sort)
         let viewController = AlertViewController(delegate: presenter)
 

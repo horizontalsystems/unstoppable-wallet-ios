@@ -25,7 +25,7 @@ extension SendRouter {
         let userInput = SendUserInput()
 
         let router = SendRouter()
-        let interactor = SendInteractor(currencyManager: App.shared.currencyManager, rateStorage: App.shared.grdbStorage, localStorage: App.shared.localStorage, pasteboardManager: App.shared.pasteboardManager, state: interactorState, appConfigProvider: App.shared.appConfigProvider, backgroundManager: App.shared.backgroundManager)
+        let interactor = SendInteractor(currencyManager: App.shared.currencyManager, rateStorage: App.shared.grdbStorage, localStorage: UserDefaultsStorage.shared, pasteboardManager: App.shared.pasteboardManager, state: interactorState, appConfigProvider: App.shared.appConfigProvider, backgroundManager: App.shared.backgroundManager)
         let presenter = SendPresenter(interactor: interactor, router: router, factory: factory, userInput: userInput)
         let viewController = SendViewController(delegate: presenter)
 
