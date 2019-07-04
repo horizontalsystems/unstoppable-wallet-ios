@@ -164,7 +164,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   ActionSheet.swift:
-    :commit: 826c45aeee91727c5f7c2dd5a96ef73c188c21c5
+    :commit: cbfb151a3c6a68a527c9f1060caa02f6534c602e
     :git: https://github.com/horizontalsystems/gui-kit
   BitcoinCashKit.swift:
     :commit: e4c4d22e3e31381c62ff9c1e74b59257ce513f33
