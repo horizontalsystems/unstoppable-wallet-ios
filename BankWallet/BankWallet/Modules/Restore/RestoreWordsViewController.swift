@@ -56,8 +56,6 @@ class RestoreWordsViewController: WalletViewController {
 
         collectionView.registerCell(forClass: RestoreWordCell.self)
         collectionView.registerView(forClass: DescriptionCollectionHeader.self, flowSupplementaryKind: .header)
-
-//        delegate.viewDidLoad()
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -76,7 +74,7 @@ class RestoreWordsViewController: WalletViewController {
 
     @objc func restoreDidTap() {
         view.endEditing(true)
-        delegate.didTapRestore(words: words)
+        delegate.didTapRestore(accountType: .mnemonic(words: words, derivation: .bip44, salt: nil))
     }
 
     private func subscribeKeyboard() {
