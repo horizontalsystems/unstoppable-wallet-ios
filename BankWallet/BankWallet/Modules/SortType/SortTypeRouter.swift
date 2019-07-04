@@ -29,6 +29,7 @@ extension SortTypeRouter {
         let viewController = AlertViewController(delegate: presenter)
 
         interactor.delegate = presenter
+        presenter.view = viewController
 
         router.viewController = viewController
         router.sortTypeDelegate = sortTypeDelegate

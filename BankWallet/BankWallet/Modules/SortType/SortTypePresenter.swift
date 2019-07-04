@@ -15,17 +15,16 @@ class SortTypePresenter {
 }
 
 extension SortTypePresenter: IAlertViewDelegate {
-
-    func onDidLoad(_ delegate: IAlertView) {
-        view = delegate
-
-        view?.addHeader(title: "balance.sort.header")
-        view?.addRow(title: "balance.sort.valueHighToLow")
-        view?.addRow(title: "balance.sort.az")
-        view?.addRow(title: "balance.sort.manual")
+    var items: [AlertItem] {
+        return [
+            .header("balance.sort.header"),
+            .row("balance.sort.valueHighToLow"),
+            .row("balance.sort.az"),
+            .row("balance.sort.manual"),
+        ]
     }
 
-    func onWillAppear() {
+    func onDidLoad() {
         view?.setSelected(index: sort.rawValue)
     }
 

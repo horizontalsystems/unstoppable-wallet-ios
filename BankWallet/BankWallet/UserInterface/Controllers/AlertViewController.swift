@@ -1,15 +1,16 @@
 import UIKit
 import ActionSheet
 
+enum AlertItem { case header(String), row(String) }
+
 protocol IAlertView: class {
-    func addHeader(title: String)
-    func addRow(title: String)
     func setSelected(index: Int)
 }
 
 protocol IAlertViewDelegate {
-    func onDidLoad(_ delegate: IAlertView)
-    func onWillAppear()
+    var items: [AlertItem] { get }
+
+    func onDidLoad()
     func onSelect(index: Int)
 }
 
@@ -21,35 +22,24 @@ class AlertViewController: ActionSheetController {
     init(delegate: IAlertViewDelegate) {
         self.delegate = delegate
         super.init(withModel: BaseAlertModel(), actionSheetThemeConfig: AppTheme.alertConfig)
+
+        initItems()
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        backgroundColor = AppTheme.alertBackgroundColor
-        contentBackgroundColor = .white
-
-        delegate.onDidLoad(self)
+    private func initItems() {
+        delegate.items.forEach {
+            switch $0 {
+            case .header(let title): addHeader(title: title)
+            case .row(let title): addRow(title: title)
+            }
+        }
     }
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        delegate.onWillAppear()
-    }
-
-    private func handleToggle(index: Int) {
-        delegate.onSelect(index: index)
-    }
-
-}
-
-extension AlertViewController: IAlertView {
-
-    func addHeader(title: String) {
+    private func addHeader(title: String) {
         let item = TextSelectItem(
                 text: title.localized,
                 font: AppTheme.alertHeaderFont,
@@ -59,7 +49,7 @@ extension AlertViewController: IAlertView {
         model.addItemView(item)
     }
 
-    func addRow(title: String) {
+    private func addRow(title: String) {
         let index = items.count
         let item = TextSelectItem(text: title.localized, font: AppTheme.alertCellFont, color: AppTheme.alertCellDefaultColor, height: AppTheme.alertCellHeight, tag: index) { [weak self] view in
             self?.handleToggle(index: index)
@@ -68,6 +58,24 @@ extension AlertViewController: IAlertView {
         model.addItemView(item)
         items.append(item)
     }
+
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        backgroundColor = AppTheme.alertBackgroundColor
+        contentBackgroundColor = .white
+
+        delegate.onDidLoad()
+    }
+
+    private func handleToggle(index: Int) {
+        delegate.onSelect(index: index)
+    }
+
+}
+
+extension AlertViewController: IAlertView {
 
     func setSelected(index: Int) {
         items.forEach { $0.selected = false }

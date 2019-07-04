@@ -9,19 +9,12 @@ class AgreementViewController: ActionSheetController {
 
     init(delegate: IAgreementViewDelegate) {
         self.delegate = delegate
+
         super.init(withModel: BaseAlertModel(), actionSheetThemeConfig: AppTheme.actionSheetConfig)
+        initItems()
     }
 
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        backgroundColor = AppTheme.actionSheetBackgroundColor
-        contentBackgroundColor = .white
-
+    func initItems() {
         var texts = [NSAttributedString]()
 
         let style = NSMutableParagraphStyle()
@@ -56,6 +49,17 @@ class AgreementViewController: ActionSheetController {
 
         model.addItemView(buttonItem)
         self.buttonItem = buttonItem
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        backgroundColor = AppTheme.actionSheetBackgroundColor
+        contentBackgroundColor = .white
     }
 
     private func handleToggle(index: Int) {
