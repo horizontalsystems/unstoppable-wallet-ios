@@ -41,8 +41,8 @@ class AgreementViewController: ActionSheetController {
         let buttonItem = AlertButtonItem(
                 tag: texts.count,
                 title: "button.confirm".localized,
-                textStyle: ButtonTheme.textColorOnWhiteBackgroundDictionary,
-                backgroundStyle: ButtonTheme.yellowBackgroundOnWhiteBackgroundDictionary
+                textStyle: ButtonTheme.textColorDictionary,
+                backgroundStyle: ButtonTheme.yellowBackgroundDictionary
         ) { [weak self] in
             self?.delegate.didTapConfirm()
         }

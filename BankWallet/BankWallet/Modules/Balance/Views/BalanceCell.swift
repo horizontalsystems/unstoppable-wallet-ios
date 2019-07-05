@@ -125,7 +125,7 @@ class BalanceCell: UITableViewCell {
             maker.height.equalTo(BalanceTheme.buttonsHeight)
         }
         receiveButton.onTap = { [weak self] in self?.receive() }
-        receiveButton.backgrounds = ButtonTheme.greenBackgroundOnDarkBackgroundDictionary
+        receiveButton.backgrounds = ButtonTheme.greenBackgroundDictionary
         receiveButton.cornerRadius = BalanceTheme.buttonCornerRadius
         receiveButton.titleLabel.text = "balance.deposit".localized
 
@@ -138,8 +138,8 @@ class BalanceCell: UITableViewCell {
             maker.width.equalTo(receiveButton)
         }
         payButton.onTap = { [weak self] in self?.pay() }
-        payButton.backgrounds = ButtonTheme.yellowBackgroundOnDarkBackgroundDictionary
-        payButton.textColors = ButtonTheme.textColorOnWhiteBackgroundDictionary
+        payButton.backgrounds = ButtonTheme.yellowBackgroundDictionary
+        payButton.textColors = ButtonTheme.textColorDictionary
         payButton.cornerRadius = BalanceTheme.buttonCornerRadius
         payButton.titleLabel.text = "balance.send".localized
     }

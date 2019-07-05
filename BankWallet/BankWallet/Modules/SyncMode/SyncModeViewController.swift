@@ -1,14 +1,14 @@
 import UIKit
 import SectionsTableView
 
-class RestoreSyncModeViewController: WalletViewController, SectionsDataSource {
-    private let delegate: IRestoreViewDelegate
+class SyncModeViewController: WalletViewController, SectionsDataSource {
+    private let delegate: ISyncModeViewDelegate
 
-    let tableView = SectionsTableView(style: .grouped)
+    private let tableView = SectionsTableView(style: .grouped)
 
     private var isFast = true
 
-    init(delegate: IRestoreViewDelegate) {
+    init(delegate: ISyncModeViewDelegate) {
         self.delegate = delegate
         super.init(nibName: nil, bundle: nil)
     }
@@ -36,12 +36,12 @@ class RestoreSyncModeViewController: WalletViewController, SectionsDataSource {
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.done".localized, style: .plain, target: self, action: #selector(onTapDone))
     }
 
-    func onTapFastSync() {
+    private func onTapFastSync() {
         isFast = true
         tableView.reload()
     }
 
-    func onTapSlowSync() {
+    private func onTapSlowSync() {
         isFast = false
         tableView.reload()
     }
@@ -75,11 +75,14 @@ class RestoreSyncModeViewController: WalletViewController, SectionsDataSource {
         let slowFooter: ViewState<SyncModeSectionSeparator> = .cellType(hash: "sync_slow_footer", binder: { view in
             view.bind(description: "coin_sync.slow.text".localized, showTopSeparator: false, showBottomSeparator: false)
         }, dynamicHeight: { _ in
-            SyncModeSectionSeparator.height(for: "coin_sync.slow.text".localized, containerWidth: width) 
+            SyncModeSectionSeparator.height(for: "coin_sync.slow.text".localized, containerWidth: width)
         })
         sections.append(Section(id: "fast", footerState: slowFooter, rows: [slowRow]))
 
         return sections
     }
 
+}
+
+extension SyncModeViewController: ISyncModeView {
 }

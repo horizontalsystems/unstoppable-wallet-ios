@@ -4,7 +4,7 @@ class RestorePresenter {
     private let interactor: IRestoreInteractor
     private let router: IRestoreRouter
 
-    private var accountType: AccountType?
+    private var types = [PredefinedAccountType]()
 
     init(interactor: IRestoreInteractor, router: IRestoreRouter) {
         self.interactor = interactor
@@ -14,46 +14,33 @@ class RestorePresenter {
 }
 
 extension RestorePresenter: IRestoreInteractorDelegate {
+
+    func didRestore() {
+        router.close()
+    }
+
 }
 
 extension RestorePresenter: IRestoreViewDelegate {
 
     func viewDidLoad() {
-        view?.showSelectType(types: PredefinedAccountType.allCases)
+        types = interactor.allTypes
     }
 
-    func didSelect(type: PredefinedAccountType) {
-        switch type {
-        case .mnemonic:
-            view?.showWords(defaultWords: interactor.defaultWords)
+    var typesCount: Int {
+        return types.count
+    }
+
+    func type(index: Int) -> PredefinedAccountType {
+        return types[index]
+    }
+
+    func didSelect(index: Int) {
+        switch types[index] {
+        case .mnemonic: router.showRestoreWords()
         case .eos: ()
         case .binance: ()
         }
-    }
-
-    func didTapRestore(accountType: AccountType) {
-        do {
-            if case let .mnemonic(words, _, _) = accountType {
-                try interactor.validate(words: words)
-            }
-
-            self.accountType = accountType
-
-            view?.showSyncMode()
-        } catch {
-            view?.show(error: error)
-        }
-    }
-
-    func didSelectSyncMode(isFast: Bool) {
-        guard let accountType = accountType else {
-            return
-        }
-
-        let syncMode: SyncMode = isFast ? .fast : .slow
-        interactor.save(accountType: accountType, syncMode: syncMode)
-
-        router.close()
     }
 
     func didTapCancel() {

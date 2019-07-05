@@ -1,38 +1,32 @@
-//import UIKit
-//import ActionSheet
-//
-//class SyncModeRouter {
-//    weak var viewController: UIViewController?
-//    weak var agreementDelegate: IAgreementDelegate?
-//}
-//
-//extension SyncModeRouter: ISyncModeRouter {
-//
-//    func showAgreement() {
-//        viewController?.present(AgreementRouter.module(agreementDelegate: agreementDelegate), animated: true)
-//    }
-//
-//    func navigateToSetPin() {
-//        viewController?.present(SetPinRouter.module(), animated: true)
-//    }
-//
-//}
-//
-//extension SyncModeRouter {
-//
-//    static func module(mode: SyncModuleStartMode) -> UIViewController {
-//        let router = SyncModeRouter()
-//
-//        let interactor = SyncModeInteractor(authManager: App.shared.authManager, wordsManager: App.shared.wordsManager)
-//        let presenter = SyncModePresenter(interactor: interactor, router: router, state: SyncModeState(), mode: mode)
-//        let viewController = RestoreSyncModeViewController(delegate: presenter)
-//
-//        interactor.delegate = presenter
-//        presenter.view = viewController
-//        router.viewController = viewController
-//        router.agreementDelegate = interactor
-//
-//        return viewController
-//    }
-//
-//}
+import UIKit
+
+class SyncModeRouter {
+    weak var viewController: UIViewController?
+    weak var delegate: ISyncModeDelegate?
+}
+
+extension SyncModeRouter: ISyncModeRouter {
+
+    func notifyDelegate(isFast: Bool) {
+        delegate?.onSelectSyncMode(isFast: isFast)
+    }
+
+}
+
+extension SyncModeRouter {
+
+    static func module(delegate: ISyncModeDelegate?) -> UIViewController {
+        let router = SyncModeRouter()
+        let interactor = SyncModeInteractor()
+        let presenter = SyncModePresenter(interactor: interactor, router: router)
+        let viewController = SyncModeViewController(delegate: presenter)
+
+        interactor.delegate = presenter
+        presenter.view = viewController
+        router.viewController = viewController
+        router.delegate = delegate
+
+        return viewController
+    }
+
+}

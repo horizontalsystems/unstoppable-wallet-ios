@@ -4,7 +4,7 @@ import SnapKit
 
 class RestoreWordsViewController: WalletViewController {
     let disposeBag = DisposeBag()
-    let delegate: IRestoreViewDelegate
+    let delegate: IRestoreWordsViewDelegate
 
     let restoreDescription = "restore.description".localized
     var words = [String](repeating: "", count: 12)
@@ -15,7 +15,7 @@ class RestoreWordsViewController: WalletViewController {
 
     var keyboardFrameDisposable: Disposable?
 
-    init(delegate: IRestoreViewDelegate, defaultWords: [String]) {
+    init(delegate: IRestoreWordsViewDelegate) {
         layout.scrollDirection = .vertical
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         self.delegate = delegate
@@ -24,12 +24,6 @@ class RestoreWordsViewController: WalletViewController {
 
         collectionView.delegate = self
         collectionView.dataSource = self
-
-        for (index, defaultWord) in defaultWords.enumerated() {
-            if index < words.count {
-                words[index] = defaultWord
-            }
-        }
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -38,7 +32,6 @@ class RestoreWordsViewController: WalletViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "restore.title".localized
 
         subscribeKeyboard()
 
@@ -56,6 +49,8 @@ class RestoreWordsViewController: WalletViewController {
 
         collectionView.registerCell(forClass: RestoreWordCell.self)
         collectionView.registerView(forClass: DescriptionCollectionHeader.self, flowSupplementaryKind: .header)
+
+        delegate.viewDidLoad()
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -74,7 +69,8 @@ class RestoreWordsViewController: WalletViewController {
 
     @objc func restoreDidTap() {
         view.endEditing(true)
-        delegate.didTapRestore(accountType: .mnemonic(words: words, derivation: .bip44, salt: nil))
+
+        delegate.didTapRestore(words: words)
     }
 
     private func subscribeKeyboard() {
@@ -87,7 +83,7 @@ class RestoreWordsViewController: WalletViewController {
         keyboardFrameDisposable?.disposed(by: disposeBag)
     }
 
-    func onKeyboardFrameChange(_ notification: Notification) {
+    private func onKeyboardFrameChange(_ notification: Notification) {
         let screenKeyboardFrame = (notification.userInfo![UIResponder.keyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
         let height = view.height + view.y
         let keyboardHeight = height - screenKeyboardFrame.origin.y
@@ -98,10 +94,39 @@ class RestoreWordsViewController: WalletViewController {
         updateUI(keyboardHeight: keyboardHeight, duration: duration, options: UIView.AnimationOptions(rawValue: curve << 16))
     }
 
-    func updateUI(keyboardHeight: CGFloat, duration: TimeInterval, options: UIView.AnimationOptions, completion: (() -> ())? = nil) {
+    private func updateUI(keyboardHeight: CGFloat, duration: TimeInterval, options: UIView.AnimationOptions, completion: (() -> ())? = nil) {
         var insets: UIEdgeInsets = collectionView.contentInset
         insets.bottom = keyboardHeight + RestoreTheme.listBottomMargin
         collectionView.contentInset = insets
+    }
+
+    private func becomeResponder(at indexPath: IndexPath) {
+        guard indexPath.row < words.count else {
+            restoreDidTap()
+            return
+        }
+
+        onReturnSubject.onNext(indexPath)
+    }
+
+    private func onTextChange(word: String?, at indexPath: IndexPath) {
+        words[indexPath.item] = word?.lowercased().trimmingCharacters(in: .whitespaces) ?? ""
+    }
+
+}
+
+extension RestoreWordsViewController: IRestoreWordsView {
+
+    func show(defaultWords: [String]) {
+        for (index, defaultWord) in defaultWords.enumerated() {
+            if index < words.count {
+                words[index] = defaultWord
+            }
+        }
+    }
+
+    func show(error: Error) {
+        HudHelper.instance.showError(title: error.localizedDescription)
     }
 
 }
@@ -143,19 +168,6 @@ extension RestoreWordsViewController: UICollectionViewDelegateFlowLayout, UIColl
         let width = collectionView.bounds.width
         let height = DescriptionCollectionHeader.height(forContainerWidth: width, text: restoreDescription)
         return CGSize(width: width, height: height)
-    }
-
-    func becomeResponder(at indexPath: IndexPath) {
-        guard indexPath.row < words.count else {
-            restoreDidTap()
-            return
-        }
-
-        onReturnSubject.onNext(indexPath)
-    }
-
-    func onTextChange(word: String?, at indexPath: IndexPath) {
-        words[indexPath.item] = word?.lowercased().trimmingCharacters(in: .whitespaces) ?? ""
     }
 
 }
