@@ -10,7 +10,7 @@ protocol IRestoreViewDelegate {
 }
 
 protocol IRestoreRouter {
-    func showRestoreWords(delegate: IRestoreDelegate)
+    func showRestore(type: PredefinedAccountType, delegate: IRestoreDelegate)
     func close()
 }
 

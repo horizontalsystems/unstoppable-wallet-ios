@@ -1,6 +1,7 @@
 protocol IManageWalletsView: class {
     func updateUI()
-    func show(error: String)
+    func showCreateAccount(coin: Coin, showNew: Bool)
+    func show(error: Error)
 }
 
 protocol IManageWalletsViewDelegate {
@@ -14,10 +15,12 @@ protocol IManageWalletsViewDelegate {
     func moveWallet(from fromIndex: Int, to toIndex: Int)
     func saveChanges()
     func onClose()
+    func didSelectNew()
+    func didSelectRestore()
 }
 
 protocol IManageWalletsRouter {
-    func showCreateAccount(coin: Coin, delegate: ICreateAccountDelegate)
+    func showRestore(type: PredefinedAccountType, delegate: IRestoreDelegate)
     func close()
 }
 

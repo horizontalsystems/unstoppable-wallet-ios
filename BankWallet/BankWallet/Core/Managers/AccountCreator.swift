@@ -23,7 +23,7 @@ class AccountCreator {
 
 extension AccountCreator: IAccountCreator {
 
-    func createRestoredAccount(accountType: AccountType, syncMode: SyncMode?) {
+    func createRestoredAccount(accountType: AccountType, syncMode: SyncMode?) -> Account {
         let account = accountFactory.account(
                 type: accountType,
                 backedUp: true,
@@ -31,6 +31,8 @@ extension AccountCreator: IAccountCreator {
         )
 
         accountManager.save(account: account)
+
+        return account
     }
 
     func createNewAccount(type: PredefinedAccountType) throws -> Account {
