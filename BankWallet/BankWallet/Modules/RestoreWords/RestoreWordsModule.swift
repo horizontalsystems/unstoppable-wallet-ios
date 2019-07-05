@@ -14,10 +14,9 @@ protocol IRestoreWordsInteractor {
 }
 
 protocol IRestoreWordsInteractorDelegate: class {
-    func didSelectSyncMode(isFast: Bool)
 }
 
 protocol IRestoreWordsRouter {
-    func showSyncMode()
+    func showSyncMode(delegate: ISyncModeDelegate)
     func notifyRestored(accountType: AccountType, syncMode: SyncMode)
 }

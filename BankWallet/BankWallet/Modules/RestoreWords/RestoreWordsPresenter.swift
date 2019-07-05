@@ -22,10 +22,8 @@ extension RestoreWordsPresenter: IRestoreWordsViewDelegate {
     func didTapRestore(words: [String]) {
         do {
             try interactor.validate(words: words)
-
             self.words = words
-
-            router.showSyncMode()
+            router.showSyncMode(delegate: self)
         } catch {
             view?.show(error: error)
         }
@@ -34,15 +32,17 @@ extension RestoreWordsPresenter: IRestoreWordsViewDelegate {
 }
 
 extension RestoreWordsPresenter: IRestoreWordsInteractorDelegate {
+}
 
-    func didSelectSyncMode(isFast: Bool) {
-        guard let words = words else {
-            return
-        }
+extension RestoreWordsPresenter: ISyncModeDelegate {
+
+    func onSelectSyncMode(isFast: Bool) {
+        guard let words = words else { return }
 
         let accountType: AccountType = .mnemonic(words: words, derivation: .bip44, salt: nil)
+        let syncMode: SyncMode = isFast ? .fast : .slow
 
-        router.notifyRestored(accountType: accountType, syncMode: isFast ? .fast : .slow)
+        router.notifyRestored(accountType: accountType, syncMode: syncMode)
     }
 
 }

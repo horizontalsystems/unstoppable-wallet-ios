@@ -1,11 +1,10 @@
 class RestoreInteractor {
     weak var delegate: IRestoreInteractorDelegate?
 
-    private let accountManager: IAccountManager
-    private let accountFactory = AccountFactory()
+    private let accountCreator: IAccountCreator
 
-    init(accountManager: IAccountManager) {
-        self.accountManager = accountManager
+    init(accountCreator: IAccountCreator) {
+        self.accountCreator = accountCreator
     }
 }
 
@@ -15,20 +14,8 @@ extension RestoreInteractor: IRestoreInteractor {
         return PredefinedAccountType.allCases
     }
 
-}
-
-extension RestoreInteractor: IRestoreDelegate {
-
-    func didRestore(accountType: AccountType, syncMode: SyncMode?) {
-        let account = accountFactory.account(
-                type: accountType,
-                backedUp: true,
-                defaultSyncMode: syncMode
-        )
-
-        accountManager.save(account: account)
-
-        delegate?.didRestore()
+    func createAccount(accountType: AccountType, syncMode: SyncMode?) {
+        accountCreator.createRestoredAccount(accountType: accountType, syncMode: syncMode)
     }
 
 }
