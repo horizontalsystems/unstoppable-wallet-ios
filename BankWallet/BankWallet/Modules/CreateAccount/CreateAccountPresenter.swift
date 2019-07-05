@@ -2,14 +2,14 @@ class CreateAccountPresenter {
     weak var view: ICreateAccountView?
 
     private let router: ICreateAccountRouter
-    private let interactor: ICreateAccountInteractor
+    private let accountCreator: IAccountCreator
 
     private let coin: Coin
 
-    init(router: ICreateAccountRouter, interactor: ICreateAccountInteractor, coin: Coin) {
-        self.router = router
-        self.interactor = interactor
+    init(coin: Coin, router: ICreateAccountRouter, accountCreator: IAccountCreator) {
         self.coin = coin
+        self.router = router
+        self.accountCreator = accountCreator
     }
 
 }
@@ -26,7 +26,7 @@ extension CreateAccountPresenter: ICreateAccountViewDelegate {
 
     func didTapNew() {
         do {
-            let account = try interactor.createAccount(type: coin.type.predefinedAccountType)
+            let account = try accountCreator.createNewAccount(type: coin.type.predefinedAccountType)
             router.dismiss(account: account, coin: coin)
         } catch {
             view?.show(error: error)
@@ -37,7 +37,4 @@ extension CreateAccountPresenter: ICreateAccountViewDelegate {
         print("Restore")
     }
 
-}
-
-extension CreateAccountPresenter: ICreateAccountInteractorDelegate {
 }

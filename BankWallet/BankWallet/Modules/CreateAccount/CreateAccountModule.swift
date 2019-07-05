@@ -11,13 +11,6 @@ protocol ICreateAccountViewDelegate {
     func didTapRestore()
 }
 
-protocol ICreateAccountInteractor {
-    func createAccount(type: PredefinedAccountType) throws -> Account
-}
-
-protocol ICreateAccountInteractorDelegate: class {
-}
-
 protocol ICreateAccountRouter {
     func dismiss(account: Account, coin: Coin)
 

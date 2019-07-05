@@ -40,12 +40,8 @@ extension ManageWalletsInteractor: IManageWalletsInteractor {
         return walletFactory.wallet(coin: coin, accounts: accountManager.accounts)
     }
 
-}
-
-extension ManageWalletsInteractor: ICreateAccountDelegate {
-
-    func onCreate(account: Account, coin: Coin) {
-        delegate?.enable(wallet: walletFactory.wallet(coin: coin, account: account))
+    func wallet(coin: Coin, account: Account) -> Wallet {
+        return walletFactory.wallet(coin: coin, account: account)
     }
 
 }

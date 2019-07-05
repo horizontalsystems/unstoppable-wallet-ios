@@ -20,12 +20,6 @@ class ManageWalletsPresenter {
 }
 
 extension ManageWalletsPresenter: IManageWalletsInteractorDelegate {
-
-    func enable(wallet: Wallet) {
-        wallets.append(wallet)
-        view?.updateUI()
-    }
-
 }
 
 extension ManageWalletsPresenter: IManageWalletsViewDelegate {
@@ -38,9 +32,10 @@ extension ManageWalletsPresenter: IManageWalletsViewDelegate {
         let coin = coins[index]
 
         if let wallet = interactor.wallet(coin: coin) {
-            enable(wallet: wallet)
+            wallets.append(wallet)
+            view?.updateUI()
         } else {
-            router.showCreateAccount(coin: coin)
+            router.showCreateAccount(coin: coin, delegate: self)
         }
     }
 
@@ -77,6 +72,16 @@ extension ManageWalletsPresenter: IManageWalletsViewDelegate {
 
     func onClose() {
         router.close()
+    }
+
+}
+
+extension ManageWalletsPresenter: ICreateAccountDelegate {
+
+    func onCreate(account: Account, coin: Coin) {
+        let wallet = interactor.wallet(coin: coin, account: account)
+        wallets.append(wallet)
+        view?.updateUI()
     }
 
 }

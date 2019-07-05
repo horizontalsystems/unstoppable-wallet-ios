@@ -23,11 +23,9 @@ extension SyncModeRouter {
 
     static func module(delegate: ISyncModeDelegate) -> UIViewController {
         let router = SyncModeRouter(delegate: delegate)
-        let interactor = SyncModeInteractor()
-        let presenter = SyncModePresenter(interactor: interactor, router: router)
+        let presenter = SyncModePresenter(router: router)
         let viewController = SyncModeViewController(delegate: presenter)
 
-        interactor.delegate = presenter
         presenter.view = viewController
         router.viewController = viewController
 
