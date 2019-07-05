@@ -22,6 +22,7 @@ class ActionTitleItemView: BaseActionItemView {
         addSubview(titleLabel)
         titleLabel.snp.makeConstraints { maker in
             maker.leading.equalTo(self.iconImageView.snp.trailing).offset(SendTheme.smallMargin)
+            maker.trailing.equalToSuperview().offset(-SendTheme.mediumMargin)
             maker.centerY.equalTo(self.iconImageView.snp.centerY)
         }
 
