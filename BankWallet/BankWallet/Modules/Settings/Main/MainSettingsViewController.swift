@@ -78,7 +78,9 @@ class MainSettingsViewController: WalletViewController, SectionsDataSource {
             cell.selectionStyle = .default
             cell.bind(titleIcon: UIImage(named: "Restore Icon"), title: "settings.restore_wallet".localized, showDisclosure: true, last: true)
         }, action: { [weak self] _ in
-            self?.delegate.didTapRestore()
+            DispatchQueue.main.async {
+                self?.delegate.didTapRestore()
+            }
         }))
         let settingsHeader: ViewState<SectionSeparator> = .cellType(hash: "settings_header", binder: { view in
             view.bind(showTopSeparator: false)
