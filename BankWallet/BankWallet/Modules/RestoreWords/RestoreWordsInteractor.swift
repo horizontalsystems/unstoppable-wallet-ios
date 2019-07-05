@@ -22,11 +22,3 @@ extension RestoreWordsInteractor: IRestoreWordsInteractor {
     }
 
 }
-
-extension RestoreWordsInteractor: ISyncModeDelegate {
-
-    func onSelectSyncMode(isFast: Bool) {
-        delegate?.didSelectSyncMode(isFast: isFast)
-    }
-
-}

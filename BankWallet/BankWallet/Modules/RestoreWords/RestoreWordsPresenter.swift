@@ -25,7 +25,7 @@ extension RestoreWordsPresenter: IRestoreWordsViewDelegate {
 
             self.words = words
 
-            router.showSyncMode()
+            router.showSyncMode(delegate: self)
         } catch {
             view?.show(error: error)
         }
@@ -34,8 +34,11 @@ extension RestoreWordsPresenter: IRestoreWordsViewDelegate {
 }
 
 extension RestoreWordsPresenter: IRestoreWordsInteractorDelegate {
+}
 
-    func didSelectSyncMode(isFast: Bool) {
+extension RestoreWordsPresenter: ISyncModeDelegate {
+
+    func onSelectSyncMode(isFast: Bool) {
         guard let words = words else {
             return
         }

@@ -15,11 +15,7 @@ extension RestoreInteractor: IRestoreInteractor {
         return PredefinedAccountType.allCases
     }
 
-}
-
-extension RestoreInteractor: IRestoreDelegate {
-
-    func didRestore(accountType: AccountType, syncMode: SyncMode?) {
+    func createAccount(accountType: AccountType, syncMode: SyncMode?) {
         let account = accountFactory.account(
                 type: accountType,
                 backedUp: true,
@@ -27,8 +23,6 @@ extension RestoreInteractor: IRestoreDelegate {
         )
 
         accountManager.save(account: account)
-
-        delegate?.didRestore()
     }
 
 }

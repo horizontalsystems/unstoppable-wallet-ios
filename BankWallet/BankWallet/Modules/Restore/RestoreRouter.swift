@@ -2,13 +2,12 @@ import UIKit
 
 class RestoreRouter {
     weak var viewController: UIViewController?
-    weak var restoreDelegate: IRestoreDelegate?
 }
 
 extension RestoreRouter: IRestoreRouter {
 
-    func showRestoreWords() {
-        viewController?.navigationController?.pushViewController(RestoreWordsRouter.module(delegate: restoreDelegate), animated: true)
+    func showRestoreWords(delegate: IRestoreDelegate) {
+        viewController?.navigationController?.pushViewController(RestoreWordsRouter.module(delegate: delegate), animated: true)
     }
 
     func close() {
@@ -28,7 +27,6 @@ extension RestoreRouter {
         interactor.delegate = presenter
         presenter.view = viewController
         router.viewController = viewController
-        router.restoreDelegate = interactor
 
         return WalletNavigationController(rootViewController: viewController)
     }
