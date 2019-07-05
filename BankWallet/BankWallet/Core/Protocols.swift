@@ -180,6 +180,15 @@ protocol IAccountFactory {
     func account(type: AccountType, backedUp: Bool, defaultSyncMode: SyncMode?) -> Account
 }
 
+protocol IWalletFactory {
+    func wallet(coin: Coin, account: Account) -> Wallet
+}
+
+protocol IWalletCreator {
+    func wallet(coin: Coin) -> Wallet?
+    func wallet(coin: Coin, account: Account) -> Wallet
+}
+
 protocol IRestoreAccountDataSource {
     var restoreAccounts: [Account] { get }
 }
