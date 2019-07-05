@@ -51,7 +51,7 @@ extension AccountManager: IAccountManager {
     }
 
     func setAccountBackedUp(id: String) {
-        if let account = accounts.first(where: { $0.id == id }) {
+        if var account = accounts.first(where: { $0.id == id }) {
             account.backedUp = true
             save(account: account)
         }
