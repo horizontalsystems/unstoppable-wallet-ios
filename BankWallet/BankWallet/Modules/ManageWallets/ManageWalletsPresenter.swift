@@ -1,29 +1,24 @@
 class ManageWalletsPresenter {
     weak var view: IManageWalletsView?
 
-    private let interactor: IManageWalletsInteractor
     private let router: IManageWalletsRouter
+    private let appConfigProvider: IAppConfigProvider
+    private let walletManager: IWalletManager
+    private let walletCreator: IWalletCreator
     private let stateHandler = ManageWalletsStateHandler()
 
     private var wallets: [Wallet] = [] {
         didSet {
-            coins = stateHandler.remainingCoins(allCoins: interactor.coins, wallets: wallets)
+            coins = stateHandler.remainingCoins(allCoins: appConfigProvider.coins, wallets: wallets)
         }
     }
     private var coins: [Coin] = []
 
-    init(interactor: IManageWalletsInteractor, router: IManageWalletsRouter) {
-        self.interactor = interactor
+    init(router: IManageWalletsRouter, appConfigProvider: IAppConfigProvider, walletManager: IWalletManager, walletCreator: IWalletCreator) {
         self.router = router
-    }
-
-}
-
-extension ManageWalletsPresenter: IManageWalletsInteractorDelegate {
-
-    func enable(wallet: Wallet) {
-        wallets.append(wallet)
-        view?.updateUI()
+        self.appConfigProvider = appConfigProvider
+        self.walletManager = walletManager
+        self.walletCreator = walletCreator
     }
 
 }
@@ -31,16 +26,17 @@ extension ManageWalletsPresenter: IManageWalletsInteractorDelegate {
 extension ManageWalletsPresenter: IManageWalletsViewDelegate {
 
     func viewDidLoad() {
-        wallets = interactor.wallets
+        wallets = walletManager.wallets
     }
 
     func enableCoin(atIndex index: Int) {
         let coin = coins[index]
 
-        if let wallet = interactor.wallet(coin: coin) {
-            enable(wallet: wallet)
+        if let wallet = walletCreator.wallet(coin: coin) {
+            wallets.append(wallet)
+            view?.updateUI()
         } else {
-            router.showCreateAccount(coin: coin)
+            router.showCreateAccount(coin: coin, delegate: self)
         }
     }
 
@@ -55,7 +51,7 @@ extension ManageWalletsPresenter: IManageWalletsViewDelegate {
     }
 
     func saveChanges() {
-        interactor.save(wallets: wallets)
+        walletManager.enable(wallets: wallets)
         router.close()
     }
 
@@ -77,6 +73,15 @@ extension ManageWalletsPresenter: IManageWalletsViewDelegate {
 
     func onClose() {
         router.close()
+    }
+
+}
+
+extension ManageWalletsPresenter: ICreateAccountDelegate {
+
+    func onCreate(account: Account, coin: Coin) {
+        wallets.append(walletCreator.wallet(coin: coin, account: account))
+        view?.updateUI()
     }
 
 }

@@ -27,6 +27,7 @@ class App {
     let accountCreator: IAccountCreator
 
     let walletManager: IWalletManager
+    let walletCreator: IWalletCreator
 
     let rateManager: RateManager
     let currencyManager: ICurrencyManager
@@ -75,6 +76,7 @@ class App {
         accountCreator = AccountCreator(accountManager: accountManager, accountFactory: AccountFactory(), wordsManager: wordsManager)
 
         walletManager = WalletManager(appConfigProvider: appConfigProvider, accountManager: accountManager, storage: grdbStorage)
+        walletCreator = WalletCreator(accountManager: accountManager, walletFactory: WalletFactory())
 
         let rateApiProvider: IRateApiProvider = RateApiProvider(networkManager: networkManager, appConfigProvider: appConfigProvider)
         rateManager = RateManager(storage: grdbStorage, apiProvider: rateApiProvider)

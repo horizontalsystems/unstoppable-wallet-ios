@@ -16,20 +16,8 @@ protocol IManageWalletsViewDelegate {
     func onClose()
 }
 
-protocol IManageWalletsInteractor {
-    var wallets: [Wallet] { get }
-    var coins: [Coin] { get }
-    var accounts: [Account] { get }
-    func save(wallets: [Wallet])
-    func wallet(coin: Coin) -> Wallet?
-}
-
-protocol IManageWalletsInteractorDelegate: class {
-    func enable(wallet: Wallet)
-}
-
 protocol IManageWalletsRouter {
-    func showCreateAccount(coin: Coin)
+    func showCreateAccount(coin: Coin, delegate: ICreateAccountDelegate)
     func close()
 }
 

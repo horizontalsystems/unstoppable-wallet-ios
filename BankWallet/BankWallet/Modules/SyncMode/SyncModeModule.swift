@@ -5,12 +5,6 @@ protocol ISyncModeViewDelegate {
     func didSelectSyncMode(isFast: Bool)
 }
 
-protocol ISyncModeInteractor {
-}
-
-protocol ISyncModeInteractorDelegate: class {
-}
-
 protocol ISyncModeRouter {
     func notifyDelegate(isFast: Bool)
 }

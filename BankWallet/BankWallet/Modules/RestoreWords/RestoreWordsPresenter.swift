@@ -1,14 +1,16 @@
 class RestoreWordsPresenter {
     weak var view: IRestoreWordsView?
 
-    private let interactor: IRestoreWordsInteractor
     private let router: IRestoreWordsRouter
+    private var wordsManager: IWordsManager
+    private let appConfigProvider: IAppConfigProvider
 
     private var words: [String]?
 
-    init(interactor: IRestoreWordsInteractor, router: IRestoreWordsRouter) {
-        self.interactor = interactor
+    init(router: IRestoreWordsRouter, wordsManager: IWordsManager, appConfigProvider: IAppConfigProvider) {
         self.router = router
+        self.wordsManager = wordsManager
+        self.appConfigProvider = appConfigProvider
     }
 
 }
@@ -16,12 +18,12 @@ class RestoreWordsPresenter {
 extension RestoreWordsPresenter: IRestoreWordsViewDelegate {
 
     func viewDidLoad() {
-        view?.show(defaultWords: interactor.defaultWords)
+        view?.show(defaultWords: appConfigProvider.defaultWords)
     }
 
     func didTapRestore(words: [String]) {
         do {
-            try interactor.validate(words: words)
+            try wordsManager.validate(words: words)
             self.words = words
             router.showSyncMode(delegate: self)
         } catch {
@@ -29,9 +31,6 @@ extension RestoreWordsPresenter: IRestoreWordsViewDelegate {
         }
     }
 
-}
-
-extension RestoreWordsPresenter: IRestoreWordsInteractorDelegate {
 }
 
 extension RestoreWordsPresenter: ISyncModeDelegate {

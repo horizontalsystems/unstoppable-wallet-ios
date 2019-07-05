@@ -9,14 +9,6 @@ protocol IRestoreViewDelegate {
     func didTapCancel()
 }
 
-protocol IRestoreInteractor {
-    var allTypes: [PredefinedAccountType] { get }
-    func createAccount(accountType: AccountType, syncMode: SyncMode?)
-}
-
-protocol IRestoreInteractorDelegate: class {
-}
-
 protocol IRestoreRouter {
     func showRestoreWords(delegate: IRestoreDelegate)
     func close()

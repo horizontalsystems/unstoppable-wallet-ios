@@ -27,11 +27,9 @@ extension RestoreWordsRouter {
 
     static func module(delegate: IRestoreDelegate) -> UIViewController {
         let router = RestoreWordsRouter(delegate: delegate)
-        let interactor = RestoreWordsInteractor(wordsManager: App.shared.wordsManager, appConfigProvider: App.shared.appConfigProvider)
-        let presenter = RestoreWordsPresenter(interactor: interactor, router: router)
+        let presenter = RestoreWordsPresenter(router: router, wordsManager: App.shared.wordsManager, appConfigProvider: App.shared.appConfigProvider)
         let viewController = RestoreWordsViewController(delegate: presenter)
 
-        interactor.delegate = presenter
         presenter.view = viewController
         router.viewController = viewController
 

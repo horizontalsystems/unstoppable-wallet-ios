@@ -1,25 +1,22 @@
 class RestorePresenter {
     weak var view: IRestoreView?
 
-    private let interactor: IRestoreInteractor
     private let router: IRestoreRouter
+    private let accountCreator: IAccountCreator
 
     private var types = [PredefinedAccountType]()
 
-    init(interactor: IRestoreInteractor, router: IRestoreRouter) {
-        self.interactor = interactor
+    init(router: IRestoreRouter, accountCreator: IAccountCreator) {
         self.router = router
+        self.accountCreator = accountCreator
     }
 
-}
-
-extension RestorePresenter: IRestoreInteractorDelegate {
 }
 
 extension RestorePresenter: IRestoreViewDelegate {
 
     func viewDidLoad() {
-        types = interactor.allTypes
+        types = PredefinedAccountType.allCases
     }
 
     var typesCount: Int {
@@ -47,7 +44,7 @@ extension RestorePresenter: IRestoreViewDelegate {
 extension RestorePresenter: IRestoreDelegate {
 
     func didRestore(accountType: AccountType, syncMode: SyncMode?) {
-        interactor.createAccount(accountType: accountType, syncMode: syncMode)
+        accountCreator.createRestoredAccount(accountType: accountType, syncMode: syncMode)
         router.close()
     }
 
