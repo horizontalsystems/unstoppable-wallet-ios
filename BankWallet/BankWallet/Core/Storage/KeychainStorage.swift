@@ -6,9 +6,6 @@ class KeychainStorage {
 
     let keychain: Keychain
 
-    private let encryptionPasswordKey = "encryption_password_key"
-    private let encryptionSaltKey = "encryption_salt_key"
-    private let encryptionIvKey = "encryption_iv_key"
     private let pinKey = "pin_keychain_key"
     private let authDataKey = "auth_data_keychain_key"
     private let unlockAttemptsKey = "unlock_attempts_keychain_key"
@@ -110,30 +107,6 @@ class KeychainStorage {
 }
 
 extension KeychainStorage: ISecureStorage {
-
-    var encryptionPassword: String? {
-        return getString(forKey: encryptionPasswordKey)
-    }
-
-    func set(encryptionPassword: String) throws {
-        try set(value: encryptionPassword, forKey: encryptionPasswordKey)
-    }
-
-    var encryptionSalt: Data? {
-        return getData(forKey: encryptionSaltKey)
-    }
-
-    func set(encryptionSalt: Data) throws {
-        try set(value: encryptionSalt, forKey: encryptionSaltKey)
-    }
-
-    var encryptionIv: Data? {
-        return getData(forKey: encryptionIvKey)
-    }
-
-    func set(encryptionIv: Data) throws {
-        try set(value: encryptionIv, forKey: encryptionIvKey)
-    }
 
     var authData: AuthData? {
         return get(forKey: authDataKey)

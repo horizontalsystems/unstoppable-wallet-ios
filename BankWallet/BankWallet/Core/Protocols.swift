@@ -27,12 +27,6 @@ protocol ILocalStorage: class {
 }
 
 protocol ISecureStorage: class {
-    var encryptionPassword: String? { get }
-    func set(encryptionPassword: String) throws
-    var encryptionSalt: Data? { get }
-    func set(encryptionSalt: Data) throws
-    var encryptionIv: Data? { get }
-    func set(encryptionIv: Data) throws
     var authData: AuthData? { get }
     func set(authData: AuthData?) throws
     var pin: String? { get }
