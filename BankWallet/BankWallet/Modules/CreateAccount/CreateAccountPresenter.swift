@@ -25,8 +25,11 @@ extension CreateAccountPresenter: ICreateAccountViewDelegate {
     }
 
     func didTapNew() {
-        if let account = interactor.createAccount(coin: coin) {
+        do {
+            let account = try interactor.createAccount(type: coin.type.predefinedAccountType)
             router.dismiss(account: account, coin: coin)
+        } catch {
+            view?.show(error: error)
         }
     }
 

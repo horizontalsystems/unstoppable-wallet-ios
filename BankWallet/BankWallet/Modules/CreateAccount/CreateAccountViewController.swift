@@ -65,4 +65,8 @@ extension CreateAccountViewController: ICreateAccountView {
         titleItem.bindTitle?("Add \(coin.title.localized) Coin", coin)
     }
 
+    func show(error: Error) {
+        HudHelper.instance.showError(title: error.localizedDescription)
+    }
+
 }

@@ -163,7 +163,7 @@ enum SendTransactionError: LocalizedError {
 protocol IWordsManager {
     var isBackedUp: Bool { get set }
     var backedUpSignal: Signal { get }
-    func generateWords() throws -> [String]
+    func generateWords(count: Int) throws -> [String]
     func validate(words: [String]) throws
 }
 
@@ -187,6 +187,7 @@ protocol IAccountManager {
 
 protocol IAccountCreator {
     func createRestoredAccount(accountType: AccountType, syncMode: SyncMode?)
+    func createNewAccount(type: PredefinedAccountType) throws -> Account
 }
 
 protocol IAccountFactory {

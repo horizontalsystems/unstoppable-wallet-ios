@@ -2164,10 +2164,10 @@
 			isa = PBXGroup;
 			children = (
 				11B359B7DC29BEE855878EC8 /* CreateAccountModule.swift */,
-				11B352027F5E21C65BFEB3CB /* CreateAccountPresenter.swift */,
-				11B35DFF10AD831E95C8F8EA /* CreateAccountViewController.swift */,
 				11B355B2FB0AF04921A4949B /* CreateAccountRouter.swift */,
 				11B351C153146E1EF4F795B4 /* CreateAccountInteractor.swift */,
+				11B352027F5E21C65BFEB3CB /* CreateAccountPresenter.swift */,
+				11B35DFF10AD831E95C8F8EA /* CreateAccountViewController.swift */,
 			);
 			path = CreateAccount;
 			sourceTree = "<group>";

@@ -21,6 +21,7 @@ class App {
     let grdbStorage: GrdbStorage
 
     let pinManager: IPinManager
+    let wordsManager: IWordsManager
 
     let accountManager: IAccountManager
     let accountCreator: IAccountCreator
@@ -31,7 +32,6 @@ class App {
     let currencyManager: ICurrencyManager
 
     let authManager: AuthManager
-    let wordsManager: IWordsManager
 
     let feeRateProvider: IFeeRateProvider
 
@@ -69,9 +69,10 @@ class App {
         grdbStorage = GrdbStorage()
 
         pinManager = PinManager(secureStorage: KeychainStorage.shared)
+        wordsManager = WordsManager(localStorage: UserDefaultsStorage.shared)
 
         accountManager = AccountManager(storage: grdbStorage)
-        accountCreator = AccountCreator(accountManager: accountManager, accountFactory: AccountFactory())
+        accountCreator = AccountCreator(accountManager: accountManager, accountFactory: AccountFactory(), wordsManager: wordsManager)
 
         walletManager = WalletManager(appConfigProvider: appConfigProvider, accountManager: accountManager, storage: grdbStorage)
 
@@ -82,7 +83,6 @@ class App {
         ethereumKitManager = EthereumKitManager(appConfigProvider: appConfigProvider)
 
         authManager = AuthManager(secureStorage: KeychainStorage.shared, localStorage: UserDefaultsStorage.shared, pinManager: pinManager, coinManager: walletManager, rateManager: rateManager, ethereumKitManager: ethereumKitManager)
-        wordsManager = WordsManager(localStorage: UserDefaultsStorage.shared)
 
         feeRateProvider = FeeRateProvider()
 
