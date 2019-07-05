@@ -1,27 +1,27 @@
 protocol IRestoreView: class {
-    func showSelectType(types: [PredefinedAccountType])
-    func showWords(defaultWords: [String])
-    func showSyncMode()
-    func show(error: Error)
 }
 
 protocol IRestoreViewDelegate {
     func viewDidLoad()
-    func didSelect(type: PredefinedAccountType)
-    func didTapRestore(accountType: AccountType)
-    func didSelectSyncMode(isFast: Bool)
+    var typesCount: Int { get }
+    func type(index: Int) -> PredefinedAccountType
+    func didSelect(index: Int)
     func didTapCancel()
 }
 
 protocol IRestoreInteractor {
-    var defaultWords: [String] { get }
-    func validate(words: [String]) throws
-    func save(accountType: AccountType, syncMode: SyncMode?)
+    var allTypes: [PredefinedAccountType] { get }
 }
 
 protocol IRestoreInteractorDelegate: class {
+    func didRestore()
 }
 
 protocol IRestoreRouter {
+    func showRestoreWords()
     func close()
+}
+
+protocol IRestoreDelegate: AnyObject {
+    func didRestore(accountType: AccountType, syncMode: SyncMode?)
 }

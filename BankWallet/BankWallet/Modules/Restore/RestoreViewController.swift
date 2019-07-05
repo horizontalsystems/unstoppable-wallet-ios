@@ -2,20 +2,15 @@ import UIKit
 import UIExtensions
 import SnapKit
 
-class RestoreSelectTypeViewController: WalletViewController {
+class RestoreViewController: WalletViewController {
     private let delegate: IRestoreViewDelegate
 
     private let tableView = UITableView(frame: .zero, style: .grouped)
 
-    private let types: [PredefinedAccountType]
-
-    init(delegate: IRestoreViewDelegate, types: [PredefinedAccountType]) {
+    init(delegate: IRestoreViewDelegate) {
         self.delegate = delegate
-        self.types = types
 
         super.init(nibName: nil, bundle: nil)
-
-        hidesBottomBarWhenPushed = true
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -41,6 +36,8 @@ class RestoreSelectTypeViewController: WalletViewController {
         }
 
         tableView.registerCell(forClass: RestoreAccountCell.self)
+
+        delegate.viewDidLoad()
     }
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -53,14 +50,17 @@ class RestoreSelectTypeViewController: WalletViewController {
 
 }
 
-extension RestoreSelectTypeViewController: UITableViewDataSource, UITableViewDelegate {
+extension RestoreViewController: IRestoreView {
+}
+
+extension RestoreViewController: UITableViewDataSource, UITableViewDelegate {
 
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return types.count
+        return delegate.typesCount
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -69,14 +69,14 @@ extension RestoreSelectTypeViewController: UITableViewDataSource, UITableViewDel
 
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if let cell = cell as? RestoreAccountCell {
-            cell.bind(accountType: types[indexPath.row])
+            cell.bind(accountType: delegate.type(index: indexPath.row))
         }
     }
 
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
 
-        delegate.didSelect(type: types[indexPath.row])
+        delegate.didSelect(index: indexPath.row)
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
