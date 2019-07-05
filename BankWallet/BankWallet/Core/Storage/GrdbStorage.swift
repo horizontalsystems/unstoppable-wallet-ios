@@ -194,6 +194,12 @@ extension GrdbStorage: IAccountStorage {
     }
 
     func delete(id: String) {
+        let accountRecord = try? dbPool.read { db in
+            try AccountRecord.filter(AccountRecord.Columns.id == id).fetchOne(db)
+        }
+        [accountRecord?.words?.key, accountRecord?.salt?.key, accountRecord?.data?.key, accountRecord?.eosAccount?.key].compactMap { $0 }.forEach {
+            try? KeychainStorage.shared.remove(for: $0)
+        }
         _ = try? dbPool.write { db in
             try AccountRecord.filter(AccountRecord.Columns.id == id).deleteAll(db)
         }

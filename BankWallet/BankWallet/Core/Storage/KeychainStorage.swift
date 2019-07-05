@@ -104,6 +104,10 @@ class KeychainStorage {
         }
     }
 
+    func remove(for key: String) throws {
+        try keychain.remove(key)
+    }
+
 }
 
 extension KeychainStorage: ISecureStorage {

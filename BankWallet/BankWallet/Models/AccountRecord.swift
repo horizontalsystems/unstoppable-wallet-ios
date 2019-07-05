@@ -10,11 +10,11 @@ class AccountRecord: Record {
     private var defaultSyncMode: SyncMode?
 
     private var type: TypeNames
-    private var words: EncryptedStringArray?
+    var words: EncryptedStringArray?
     private var derivation: MnemonicDerivation?
-    private var salt: EncryptedString?
-    private var data: EncryptedData?
-    private var eosAccount: EncryptedString?
+    var salt: EncryptedString?
+    var data: EncryptedData?
+    var eosAccount: EncryptedString?
 
     init(account: Account) {
         self.id = account.id
@@ -24,20 +24,20 @@ class AccountRecord: Record {
         switch account.type {
         case .mnemonic(let words, let derivation, let salt):
             self.type = .mnemonic
-            self.words = EncryptedStringArray(array: words)
+            self.words = EncryptedStringArray(array: words, key: self.type.keyDBKeychain(id: id, fieldName: "words"))
             self.derivation = derivation
-            self.salt = EncryptedString(string: salt)
+            self.salt = EncryptedString(string: salt, key: self.type.keyDBKeychain(id: id, fieldName: "salt"))
         case .privateKey(let data):
             self.type = .privateKey
-            self.data = EncryptedData(data: data)
+            self.data = EncryptedData(data: data, key: self.type.keyDBKeychain(id: id, fieldName: "data"))
         case .hdMasterKey(let data, let derivation):
             self.type = TypeNames.hdMasterKey
-            self.data = EncryptedData(data: data)
+            self.data = EncryptedData(data: data, key: self.type.keyDBKeychain(id: id, fieldName: "data"))
             self.derivation = derivation
         case .eos(let account, let activePrivateKey):
             self.type = TypeNames.eos
-            self.eosAccount = EncryptedString(string: account)
-            self.data = EncryptedData(data: activePrivateKey)
+            self.eosAccount = EncryptedString(string: account, key: self.type.keyDBKeychain(id: id, fieldName: "eosAccount"))
+            self.data = EncryptedData(data: activePrivateKey, key: self.type.keyDBKeychain(id: id, fieldName: "data"))
         }
 
         super.init()
@@ -97,7 +97,7 @@ class AccountRecord: Record {
         return "account"
     }
 
-    private enum TypeNames: Int, DatabaseValueConvertible {
+    enum TypeNames: Int, DatabaseValueConvertible {
         case mnemonic
         case privateKey
         case hdMasterKey
@@ -112,6 +112,10 @@ class AccountRecord: Record {
                 return nil
             }
             return TypeNames(rawValue: Int(rawValue))
+        }
+
+        public func keyDBKeychain(id: String, fieldName: String) -> String {
+            return "\(rawValue)_\(id)_\(fieldName)"
         }
 
     }
@@ -169,79 +173,82 @@ class AccountRecord: Record {
 }
 
 final class EncryptedStringArray: DatabaseValueConvertible {
-    var uuid: String?
+    var key: String
     var array: [String]
 
-    init?(array: [String]?) {
+    init?(array: [String]?, key: String) {
         guard let array = array else {
             return nil
         }
         self.array = array
+        self.key = key
     }
 
     public var databaseValue: DatabaseValue {
-        let uuidInTable = uuid ?? UUIDProvider.shared.generate()
-        try? KeychainStorage.shared.set(value: array.joined(separator: ","), forKey: uuidInTable)
-        return uuidInTable.databaseValue
+        let keyInTable = key
+        try? KeychainStorage.shared.set(value: array.joined(separator: ","), forKey: keyInTable)
+        return keyInTable.databaseValue
     }
 
     public static func fromDatabaseValue(_ dbValue: DatabaseValue) -> EncryptedStringArray? {
-        guard case .string(let uuidFromTable) = dbValue.storage else {
+        guard case .string(let keyFromTable) = dbValue.storage else {
             return nil
         }
-        return EncryptedStringArray(array: KeychainStorage.shared.getString(forKey: uuidFromTable)?.split(separator: ",").map { String($0) } )
+        return EncryptedStringArray(array: KeychainStorage.shared.getString(forKey: keyFromTable)?.split(separator: ",").map { String($0) }, key: keyFromTable)
     }
 
 }
 
 final class EncryptedString: DatabaseValueConvertible {
-    var uuid: String?
+    var key: String
     var string: String
 
-    init?(string: String?) {
+    init?(string: String?, key: String) {
         guard let string = string else {
             return nil
         }
         self.string = string
+        self.key = key
     }
 
     public var databaseValue: DatabaseValue {
-        let uuidInTable = uuid ?? UUIDProvider.shared.generate()
-        try? KeychainStorage.shared.set(value: string, forKey: uuidInTable)
-        return uuidInTable.databaseValue
+        let keyInTable = key
+        try? KeychainStorage.shared.set(value: string, forKey: keyInTable)
+        return keyInTable.databaseValue
     }
 
     public static func fromDatabaseValue(_ dbValue: DatabaseValue) -> EncryptedString? {
-        guard case .string(let uuidFromTable) = dbValue.storage else {
+        guard case .string(let keyFromTable) = dbValue.storage else {
             return nil
         }
-        return EncryptedString(string: KeychainStorage.shared.getString(forKey: uuidFromTable))
+        return EncryptedString(string: KeychainStorage.shared.getString(forKey: keyFromTable), key: keyFromTable)
     }
 
 }
 
 final class EncryptedData: DatabaseValueConvertible {
-    var uuid: String?
+    var key: String
     var data: Data
 
-    init?(data: Data?) {
+    init?(data: Data?, key: String) {
         guard let data = data else {
             return nil
         }
         self.data = data
+        self.key = key
     }
 
     public var databaseValue: DatabaseValue {
-        let uuidInTable = uuid ?? UUIDProvider.shared.generate()
-        try? KeychainStorage.shared.set(value: data, forKey: uuidInTable)
-        return uuidInTable.databaseValue
+        let keyInTable = key
+        try? KeychainStorage.shared.set(value: data, forKey: keyInTable)
+        return keyInTable.databaseValue
     }
 
     public static func fromDatabaseValue(_ dbValue: DatabaseValue) -> EncryptedData? {
-        guard case .string(let uuidFromTable) = dbValue.storage else {
+        guard case .string(let keyFromTable) = dbValue.storage else {
             return nil
         }
-        return EncryptedData(data: KeychainStorage.shared.getData(forKey: uuidFromTable))
+        return EncryptedData(data: KeychainStorage.shared.getData(forKey: keyFromTable), key: keyFromTable)
     }
 
 }
