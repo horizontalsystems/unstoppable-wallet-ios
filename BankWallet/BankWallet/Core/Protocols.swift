@@ -171,6 +171,14 @@ protocol IAccountManager {
     func setAccountBackedUp(id: String)
 }
 
+protocol IAccountCreator {
+    func createRestoredAccount(accountType: AccountType, syncMode: SyncMode?)
+}
+
+protocol IAccountFactory {
+    func account(type: AccountType, backedUp: Bool, defaultSyncMode: SyncMode?) -> Account
+}
+
 protocol IRestoreAccountDataSource {
     var restoreAccounts: [Account] { get }
 }

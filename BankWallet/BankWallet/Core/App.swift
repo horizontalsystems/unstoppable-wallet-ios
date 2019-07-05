@@ -24,7 +24,10 @@ class App {
     let grdbStorage: GrdbStorage
 
     let pinManager: IPinManager
+
     let accountManager: IAccountManager
+    let accountCreator: IAccountCreator
+
     let walletManager: IWalletManager
 
     let rateManager: RateManager
@@ -72,7 +75,10 @@ class App {
         grdbStorage = GrdbStorage()
 
         pinManager = PinManager(secureStorage: secureStorage)
+
         accountManager = AccountManager(secureStorage: secureStorage)
+        accountCreator = AccountCreator(accountManager: accountManager, accountFactory: AccountFactory())
+
         walletManager = WalletManager(appConfigProvider: appConfigProvider, accountManager: accountManager, storage: grdbStorage)
 
         let rateApiProvider: IRateApiProvider = RateApiProvider(networkManager: networkManager, appConfigProvider: appConfigProvider)
