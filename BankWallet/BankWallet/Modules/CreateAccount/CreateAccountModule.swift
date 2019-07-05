@@ -1,5 +1,6 @@
 protocol ICreateAccountView: class {
     func setTitle(for coin: Coin)
+    func show(error: Error)
 }
 
 protocol ICreateAccountViewDelegate {
@@ -11,7 +12,7 @@ protocol ICreateAccountViewDelegate {
 }
 
 protocol ICreateAccountInteractor {
-    func createAccount(coin: Coin) -> Account?
+    func createAccount(type: PredefinedAccountType) throws -> Account
 }
 
 protocol ICreateAccountInteractorDelegate: class {

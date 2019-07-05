@@ -19,7 +19,7 @@ extension CreateAccountRouter {
 
     static func module(coin: Coin, delegate: ICreateAccountDelegate?) -> UIViewController {
         let router = CreateAccountRouter()
-        let interactor = CreateAccountInteractor(accountManager: App.shared.accountManager, wordsManager: App.shared.wordsManager)
+        let interactor = CreateAccountInteractor(accountCreator: App.shared.accountCreator)
         let presenter = CreateAccountPresenter(router: router, interactor: interactor, coin: coin)
         let viewController = CreateAccountViewController(delegate: presenter)
 
