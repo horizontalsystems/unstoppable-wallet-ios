@@ -26,15 +26,6 @@
 "access_camera.message" = "Unstoppable Wallet необходим доступ к вашей камере для QR-код.\n\nПерейдите в \"Настройки\", чтобы разрешить доступ к камере.";
 "access_camera.settings" = "Настройки";
 
-// Guest Page
-
-"guest.title" = "Unstoppable";
-"guest.description" = "IN BLOCKCHAIN WE TRUST";
-"guest.subtitle" = "Decentralized app";
-"guest.create_wallet" = "Создать Кошелек";
-"guest.restore_wallet" = "Восстановить";
-"guest.version" = "версия %@";
-
 // Restore
 
 "restore.title" = "Восстановить";
@@ -65,10 +56,12 @@
 
 "backup.confirmation.title" = "Проверка...";
 "backup.confirmation.description" = "Введите слова из вашего секретного ключа";
-"backup.confirmation.failure_alert.text" = "Слова не совпадают";
 "backup.confirmation.secret_key" = "Я понимаю, что я единственный владелец  Секретного Ключа, который надежно хранится на моем телефоне и позволяет мне контролировать средства в моем кошельке.";
 "backup.confirmation.delete_app_warn" = "Я понимаю, что если это приложение удаляется или устанавливается на другое устройство, мой кошелек можно восстановить только с помощью Секретного Ключа.";
 "backup.confirmation.disclaimer" = "Я понимаю, что разработчики этого приложения не могут нести ответственность за любые непреднамеренные ошибки или проблемы, которые могут возникнуть при использовании этого приложения.";
+
+"words_validator.empty_words" = "Not all words are entered";
+"words_validator.invalid_confirmation" = "Words do not match";
 
 // Balance
 
@@ -161,6 +154,7 @@
 "settings.title" = "Настройки";
 "settings.tab_bar_item" = "Настройки";
 "settings.security_center" = "Центр Безопасности";
+"settings.restore_wallet" = "Restore Wallet";
 "settings.advanced" = "Дополнительные настройки";
 "settings.base_currency" = "Базовая Валюта";
 "settings.language" = "Язык";
@@ -184,12 +178,15 @@
 // Settings -> About
 
 "settings_about.title" = "О приложении";
+"settings_about.app_title" = "Unstoppable";
+"settings_about.app_subtitle" = "Decentralized App";
 "settings_about.terms_privacy_subtitle" = "Условия & Политика Конфиденциальности:";
 "settings_about.terms_privacy_text" = "Это приложение полностью децентрализовано. Работоспособность этого приложения не зависит от сторонних серверов или какой-либо команды тех. поддержки.\n\nПриложение работает везде, пока есть интернет. Этот кошелек или его пользователи не могут быть заблокированы кем-либо.\n\nВаши средства хранятся только на вашем телефоне.\n\nВы несëте полную ответственность за безопасное хранение секретного ключа. Никогда никому не показывайте ваш секретный ключ. Если ключ будет утерян, украден или забыт то контроль над вашими средствами попадет к тому у кого окажется ваш секретный ключ.\n\nНе взламывайте ваш телефон, не устанавливайте приложения из неофициальных источников и никогда не предоставляйте ваше устройство другим лицам. Безопасность вашего кошелька напрямую зависит от этого.\n\nВесь программный код этого приложения является бесплатным и открытым для общественности. Мы старались сделать самый безопасный и в то же время децентрализованный кошелек, но нет гарантий, что в коде приложения не имеется ошибок. Тем не менее, мы верим что по уровню безопасности этот кошелек значительно превосходит почти все доступные мобильные криптокошельки на сегодня.\n\nНекоторые публичные данные используемые приложением такие, как обменные курсы валют хранятся в децентрализованном хранилище (IPFS).";
 
 // Settings -> Security
 
 "settings_security.title" = "Безопасность";
+"settings_security.manage_accounts" = "Manage Keys";
 "settings_security.backup_wallet" = "Резервная копия";
 "settings_security.unlink_from_this_device" = "Отсоединить это устройство";
 "settings_security.set_pin" = "Код Доступа";
@@ -199,6 +196,12 @@
 "security_settings.unlink_alert_button" = "Отсоединить";
 "settings_security.import_wallet_confirmation_1" = "Это действие удалит ваш кошелёк с этого устройства.";
 "settings_security.import_wallet_confirmation_2" = "Убедитесь, что у вас есть свой Секретный Ключ, иначе вы не сможете получить доступ к денежным средствам.";
+
+// Manage Accounts
+
+"settings_manage_accounts.title" = "Manage Keys";
+"settings_manage_accounts.unlink" = "Unlink";
+"settings_manage_accounts.backup" = "Backup";
 
 // Set PIN
 
@@ -229,3 +232,9 @@
 "numpad_7" = "Ф Х Ц Ч";
 "numpad_8" = "Ш Щ Ъ Ы";
 "numpad_9" = "Ь Э Ю Я";
+
+// Key Types
+
+"key_type.12_words" = "12 Words Key";
+"key_type.eos" = "EOS Account";
+"key_type.24_words" = "24 Words Key";
