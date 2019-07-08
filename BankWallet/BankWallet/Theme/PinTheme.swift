@@ -14,7 +14,7 @@ class PinTheme {
     static let keyboardHeight: CGFloat = 209
     static let keyboardBottomMargin: CGFloat = 16
 
-    static var lockoutIconBackground: UIColor { return UserDefaultsStorage.shared.lightMode ? .white : .cryptoGray50 }
+    static var lockoutIconBackground: UIColor { return App.shared.localStorage.lightMode ? .white : .cryptoGray50 }
     static let lockoutIconBackgroundSideSize: CGFloat = 94
     static let lockoutLabelTopMargin: CGFloat = 24
     static let lockoutLabelFont = UIFont.cryptoBody2

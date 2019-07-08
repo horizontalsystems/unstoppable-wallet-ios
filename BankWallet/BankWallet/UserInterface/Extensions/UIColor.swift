@@ -1,32 +1,32 @@
 import UIKit
 
 extension UIColor {
-    static var crypto_Dark_LightBackground: UIColor { return UserDefaultsStorage.shared.lightMode ? .cryptoLightBackground : .cryptoDark }
-    static var crypto_Dark_Bars: UIColor { return UserDefaultsStorage.shared.lightMode ? .cryptoBars : .cryptoDark }
-    static var crypto_Bars_Dark: UIColor { return UserDefaultsStorage.shared.lightMode ? .cryptoDark : .cryptoBars }
-    static var crypto_Dark96_Bars96: UIColor { return UserDefaultsStorage.shared.lightMode ? .cryptoBars96 : .cryptoDark96 }
-    static var crypto_Steel20_White: UIColor { return UserDefaultsStorage.shared.lightMode ? .white : .cryptoSteel20 }
-    static var crypto_Steel40OnDark_Steel20: UIColor { return UserDefaultsStorage.shared.lightMode ? .cryptoSteel20 : .cryptoSteel40OnDark }
-    static var crypto_Steel20_Steel40: UIColor { return UserDefaultsStorage.shared.lightMode ? .cryptoSteel20 : .cryptoSteel40 }
-    static var crypto_Steel20_Clear: UIColor { return UserDefaultsStorage.shared.lightMode ? .cryptoSteel20 : .clear }
-    static var crypto_White_Black: UIColor { return UserDefaultsStorage.shared.lightMode ? .black : white }
-    static var crypto_Bars_Black: UIColor { return UserDefaultsStorage.shared.lightMode ? .black : cryptoBars }
-    static var crypto_Black_Bars: UIColor { return UserDefaultsStorage.shared.lightMode ? .cryptoBars : black }
-    static var crypto_White_Steel20: UIColor { return UserDefaultsStorage.shared.lightMode ? .white : cryptoSteel20 }
-    static var crypto_Clear_White: UIColor { return UserDefaultsStorage.shared.lightMode ? .white : .clear }
-    static var crypto_Silver_Black: UIColor { return UserDefaultsStorage.shared.lightMode ? .black : .cryptoSilver }
-    static var crypto_Steel20_LightBackground: UIColor { return UserDefaultsStorage.shared.lightMode ? .cryptoLightBackground : .cryptoSteel20 }
-    static var crypto_Steel40_LightGray: UIColor { return UserDefaultsStorage.shared.lightMode ? .cryptoLightGray : .cryptoSteel40 }
-    static var crypto_White_Gray: UIColor { return UserDefaultsStorage.shared.lightMode ? .white : .cryptoGray }
-    static var crypto_Dark_White: UIColor { return UserDefaultsStorage.shared.lightMode ? .white: .cryptoDark }
-    static var crypto_Dark50_White50: UIColor { return UserDefaultsStorage.shared.lightMode ? .cryptoWhite50: .cryptoDark50 }
-    static var crypto_SteelDark_White: UIColor { return UserDefaultsStorage.shared.lightMode ? .white: .cryptoSteelDark }
-    static var crypto_SteelDark_Bars: UIColor { return UserDefaultsStorage.shared.lightMode ? .cryptoBars: .cryptoSteelDark }
-    static var crypto_LightGray_SteelDark: UIColor { return UserDefaultsStorage.shared.lightMode ? .cryptoLightGray: .cryptoSteelDark }
-    static var crypto_Black20_Steel20: UIColor { return UserDefaultsStorage.shared.lightMode ? .cryptoSteel20: .cryptoBlack20 }
-    static var crypto_Black50_Steel20: UIColor { return UserDefaultsStorage.shared.lightMode ? .cryptoSteel20: .cryptoBlack50 }
+    static var crypto_Dark_LightBackground: UIColor { return App.shared.localStorage.lightMode ? .cryptoLightBackground : .cryptoDark }
+    static var crypto_Dark_Bars: UIColor { return App.shared.localStorage.lightMode ? .cryptoBars : .cryptoDark }
+    static var crypto_Bars_Dark: UIColor { return App.shared.localStorage.lightMode ? .cryptoDark : .cryptoBars }
+    static var crypto_Dark96_Bars96: UIColor { return App.shared.localStorage.lightMode ? .cryptoBars96 : .cryptoDark96 }
+    static var crypto_Steel20_White: UIColor { return App.shared.localStorage.lightMode ? .white : .cryptoSteel20 }
+    static var crypto_Steel40OnDark_Steel20: UIColor { return App.shared.localStorage.lightMode ? .cryptoSteel20 : .cryptoSteel40OnDark }
+    static var crypto_Steel20_Steel40: UIColor { return App.shared.localStorage.lightMode ? .cryptoSteel20 : .cryptoSteel40 }
+    static var crypto_Steel20_Clear: UIColor { return App.shared.localStorage.lightMode ? .cryptoSteel20 : .clear }
+    static var crypto_White_Black: UIColor { return App.shared.localStorage.lightMode ? .black : white }
+    static var crypto_Bars_Black: UIColor { return App.shared.localStorage.lightMode ? .black : cryptoBars }
+    static var crypto_Black_Bars: UIColor { return App.shared.localStorage.lightMode ? .cryptoBars : black }
+    static var crypto_White_Steel20: UIColor { return App.shared.localStorage.lightMode ? .white : cryptoSteel20 }
+    static var crypto_Clear_White: UIColor { return App.shared.localStorage.lightMode ? .white : .clear }
+    static var crypto_Silver_Black: UIColor { return App.shared.localStorage.lightMode ? .black : .cryptoSilver }
+    static var crypto_Steel20_LightBackground: UIColor { return App.shared.localStorage.lightMode ? .cryptoLightBackground : .cryptoSteel20 }
+    static var crypto_Steel40_LightGray: UIColor { return App.shared.localStorage.lightMode ? .cryptoLightGray : .cryptoSteel40 }
+    static var crypto_White_Gray: UIColor { return App.shared.localStorage.lightMode ? .white : .cryptoGray }
+    static var crypto_Dark_White: UIColor { return App.shared.localStorage.lightMode ? .white: .cryptoDark }
+    static var crypto_Dark50_White50: UIColor { return App.shared.localStorage.lightMode ? .cryptoWhite50: .cryptoDark50 }
+    static var crypto_SteelDark_White: UIColor { return App.shared.localStorage.lightMode ? .white: .cryptoSteelDark }
+    static var crypto_SteelDark_Bars: UIColor { return App.shared.localStorage.lightMode ? .cryptoBars: .cryptoSteelDark }
+    static var crypto_LightGray_SteelDark: UIColor { return App.shared.localStorage.lightMode ? .cryptoLightGray: .cryptoSteelDark }
+    static var crypto_Black20_Steel20: UIColor { return App.shared.localStorage.lightMode ? .cryptoSteel20: .cryptoBlack20 }
+    static var crypto_Black50_Steel20: UIColor { return App.shared.localStorage.lightMode ? .cryptoSteel20: .cryptoBlack50 }
 
-    static var crypto_Silver_Dark50: UIColor { return UserDefaultsStorage.shared.lightMode ? .cryptoDark50 : .cryptoSilver50 }
+    static var crypto_Silver_Dark50: UIColor { return App.shared.localStorage.lightMode ? .cryptoDark50 : .cryptoSilver50 }
 
     static var cryptoBars: UIColor = UIColor(named: "Bars") ?? .black
     static var cryptoBars96: UIColor = UIColor(named: "Bars96") ?? .black

@@ -71,7 +71,7 @@ class SecuritySettingsViewController: WalletViewController, SectionsDataSource {
 
         let createCell: ((String) -> ()) = { title in
             pinTouchFaceRows.append(Row<SettingsToggleCell>(id: "biometrics_id", height: SettingsTheme.securityCellHeight, bind: { [weak self] cell, _ in
-                cell.bind(titleIcon: UIImage(named: "Face Id Icon"), title: title.localized, isOn: UserDefaultsStorage.shared.isBiometricOn, showDisclosure: false, onToggle: { isOn in
+                cell.bind(titleIcon: UIImage(named: "Face Id Icon"), title: title.localized, isOn: App.shared.localStorage.isBiometricOn, showDisclosure: false, onToggle: { isOn in
                     self?.delegate.didSwitch(biometricUnlockOn: isOn)
                 })
             }))

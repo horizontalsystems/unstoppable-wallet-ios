@@ -133,7 +133,7 @@ class MainSettingsViewController: WalletViewController, SectionsDataSource {
 //            cell.selectionStyle = .default
 //            cell.bind(titleIcon: UIImage(named: "Bug Icon"), title: "Drop Keychain", showDisclosure: false)
 //        }, action: { _ in
-//            UserDefaultsStorage.shared.isBackedUp = false
+//            App.shared.localStorage.isBackedUp = false
 //            try? App.shared.pinManager.store(pin: nil)
 //        }))
         sections.append(Section(id: "debug_section", headerState: .marginColor(height: 50, color: .clear), footerState: .marginColor(height: 20, color: .clear), rows: debugRows))

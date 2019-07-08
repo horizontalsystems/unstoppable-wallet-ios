@@ -6,6 +6,8 @@ class App {
     let pasteboardManager: IPasteboardManager
     let randomManager: IRandomManager
 
+    let localStorage: ILocalStorage
+
     let appConfigProvider: IAppConfigProvider
     let systemInfoManager: ISystemInfoManager
     let backgroundManager: BackgroundManager
@@ -55,12 +57,14 @@ class App {
         pasteboardManager = PasteboardManager()
         randomManager = RandomManager()
 
+        localStorage = UserDefaultsStorage()
+
         appConfigProvider = AppConfigProvider()
         systemInfoManager = SystemInfoManager()
         backgroundManager = BackgroundManager()
 
         localizationManager = LocalizationManager()
-        languageManager = LanguageManager(localizationManager: localizationManager, localStorage: UserDefaultsStorage.shared, fallbackLanguage: fallbackLanguage)
+        languageManager = LanguageManager(localizationManager: localizationManager, localStorage: localStorage, fallbackLanguage: fallbackLanguage)
 
         urlManager = UrlManager(inApp: true)
         pingManager = PingManager()
@@ -70,7 +74,7 @@ class App {
         grdbStorage = GrdbStorage()
 
         pinManager = PinManager(secureStorage: KeychainStorage.shared)
-        wordsManager = WordsManager(localStorage: UserDefaultsStorage.shared)
+        wordsManager = WordsManager(localStorage: localStorage)
 
         accountManager = AccountManager(storage: grdbStorage)
         accountCreator = AccountCreator(accountManager: accountManager, accountFactory: AccountFactory(), wordsManager: wordsManager)
@@ -80,11 +84,11 @@ class App {
 
         let rateApiProvider: IRateApiProvider = RateApiProvider(networkManager: networkManager, appConfigProvider: appConfigProvider)
         rateManager = RateManager(storage: grdbStorage, apiProvider: rateApiProvider)
-        currencyManager = CurrencyManager(localStorage: UserDefaultsStorage.shared, appConfigProvider: appConfigProvider)
+        currencyManager = CurrencyManager(localStorage: localStorage, appConfigProvider: appConfigProvider)
 
         ethereumKitManager = EthereumKitManager(appConfigProvider: appConfigProvider)
 
-        authManager = AuthManager(secureStorage: KeychainStorage.shared, localStorage: UserDefaultsStorage.shared, pinManager: pinManager, coinManager: walletManager, rateManager: rateManager, ethereumKitManager: ethereumKitManager)
+        authManager = AuthManager(secureStorage: KeychainStorage.shared, localStorage: localStorage, pinManager: pinManager, coinManager: walletManager, rateManager: rateManager, ethereumKitManager: ethereumKitManager)
 
         feeRateProvider = FeeRateProvider()
 
@@ -92,12 +96,12 @@ class App {
         adapterManager = AdapterManager(adapterFactory: adapterFactory, ethereumKitManager: ethereumKitManager, authManager: authManager, walletManager: walletManager)
 
         lockRouter = LockRouter()
-        lockManager = LockManager(localStorage: UserDefaultsStorage.shared, authManager: authManager, appConfigProvider: appConfigProvider, lockRouter: lockRouter)
+        lockManager = LockManager(localStorage: localStorage, authManager: authManager, appConfigProvider: appConfigProvider, lockRouter: lockRouter)
         blurManager = BlurManager(lockManager: lockManager)
 
         rateSyncer = RateSyncer(rateManager: rateManager, adapterManager: adapterManager, currencyManager: currencyManager, reachabilityManager: reachabilityManager)
 
-        dataProviderManager = FullTransactionDataProviderManager(localStorage: UserDefaultsStorage.shared, appConfigProvider: appConfigProvider)
+        dataProviderManager = FullTransactionDataProviderManager(localStorage: localStorage, appConfigProvider: appConfigProvider)
 
         let jsonApiProvider: IJsonApiProvider = JsonApiProvider(networkManager: networkManager)
         fullTransactionInfoProviderFactory = FullTransactionInfoProviderFactory(apiProvider: jsonApiProvider, dataProviderManager: dataProviderManager)

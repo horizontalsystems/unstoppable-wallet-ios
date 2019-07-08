@@ -2,10 +2,10 @@ import UIKit
 import ActionSheet
 
 class AppTheme {
-    static var blurStyle: UIBlurEffect.Style { return UserDefaultsStorage.shared.lightMode ? .prominent : .dark }
-    static var actionSheetBlurStyle: UIBlurEffect.Style { return UserDefaultsStorage.shared.lightMode ? .dark : .light }
+    static var blurStyle: UIBlurEffect.Style { return App.shared.localStorage.lightMode ? .prominent : .dark }
+    static var actionSheetBlurStyle: UIBlurEffect.Style { return App.shared.localStorage.lightMode ? .dark : .light }
 
-    static var keyboardAppearance: UIKeyboardAppearance { return UserDefaultsStorage.shared.lightMode ? .default : .dark }
+    static var keyboardAppearance: UIKeyboardAppearance { return App.shared.localStorage.lightMode ? .default : .dark }
     static var textFieldTintColor: UIColor { return .crypto_White_Black }
 
     public static let defaultAnimationDuration = 0.3
@@ -15,10 +15,10 @@ class AppTheme {
     static var controllerBackgroundFromGradient: UIColor { return .crypto_Dark_Bars }
     static var controllerBackgroundToGradient: UIColor { return .crypto_Dark_LightBackground }
     static let tabBarSeparatorColor: UIColor = .cryptoSteel20
-    static var navigationBarStyle: UIBarStyle { return UserDefaultsStorage.shared.lightMode ? .default : .blackTranslucent}
+    static var navigationBarStyle: UIBarStyle { return App.shared.localStorage.lightMode ? .default : .blackTranslucent}
     static var navigationBarTintColor = UIColor.cryptoYellow
     static var navigationBarBackgroundColor: UIColor { return .crypto_Dark96_Bars96 }
-    static var statusBarStyle: UIStatusBarStyle { return UserDefaultsStorage.shared.lightMode ? .default : .lightContent}
+    static var statusBarStyle: UIStatusBarStyle { return App.shared.localStorage.lightMode ? .default : .lightContent}
 
     static let separatorColor = UIColor.cryptoSteel20
     static var darkSeparatorColor: UIColor { return .crypto_Black50_Steel20 }
