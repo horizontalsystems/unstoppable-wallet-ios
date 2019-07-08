@@ -11,35 +11,34 @@ extension BackupRouter: IBackupRouter {
         viewController?.present(UnlockPinRouter.module(unlockDelegate: unlockDelegate, enableBiometry: false, cancelable: true), animated: true)
     }
 
+    func show(words: [String], delegate: IBackupDelegate) {
+        viewController?.navigationController?.pushViewController(BackupWordsRouter.module(delegate: delegate, words: words), animated: true)
+    }
+
+    func showEOS(account: Account, delegate: IBackupDelegate) {
+        print("eos account!")
+    }
+
     func close() {
-        viewController?.dismiss(animated: true)
+        viewController?.navigationController?.dismiss(animated: true)
     }
 
 }
 
 extension BackupRouter {
 
-    static func module(account: Account) -> UIViewController? {
+    static func module(account: Account) -> UIViewController {
         let router = BackupRouter()
-        let interactor = BackupInteractor(accountId: account.id, accountManager: App.shared.accountManager, randomManager: App.shared.randomManager)
+        let interactor = BackupInteractor(accountId: account.id, accountManager: App.shared.accountManager)
+        let presenter = BackupPresenter(interactor: interactor, router: router, account: account)
 
-        let presenter: IBackupPresenter
-
-        if case let .mnemonic(words, _, _) = account.type {
-            presenter = BackupWordsPresenter(interactor: interactor, router: router, words: words, confirmationWordsCount: 2)
-        } else {
-            return nil
-        }
-
-        let viewController = BackupNavigationController(viewDelegate: presenter)
-
-        interactor.delegate = presenter
-        presenter.view = viewController
+        let viewController = BackupController(delegate: presenter)
+        let navigationViewController = WalletNavigationController(rootViewController: viewController)
 
         router.viewController = viewController
-        router.unlockDelegate = interactor
+        router.unlockDelegate = presenter
 
-        return viewController
+        return navigationViewController
     }
 
 }

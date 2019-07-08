@@ -11,10 +11,7 @@ extension ManageAccountsRouter: IManageAccountsRouter {
     }
 
     func showBackup(account: Account) {
-        guard let module = BackupRouter.module(account: account) else {
-            return
-        }
-
+        let module = BackupRouter.module(account: account)
         viewController?.present(module, animated: true)
     }
 

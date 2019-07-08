@@ -1,7 +1,7 @@
 import UIKit
 import SnapKit
 
-class BackupIntroController: WalletViewController {
+class BackupController: WalletViewController {
 
     let delegate: IBackupViewDelegate
 
