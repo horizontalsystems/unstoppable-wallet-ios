@@ -6,18 +6,18 @@ class AdapterManager {
     private let adapterFactory: IAdapterFactory
     private let ethereumKitManager: IEthereumKitManager
     private let authManager: IAuthManager
-    private let coinManager: ICoinManager
+    private let walletManager: IWalletManager
 
     private(set) var adapters: [IAdapter] = []
     let adaptersUpdatedSignal = Signal()
 
-    init(adapterFactory: IAdapterFactory, ethereumKitManager: IEthereumKitManager, authManager: IAuthManager, coinManager: ICoinManager) {
+    init(adapterFactory: IAdapterFactory, ethereumKitManager: IEthereumKitManager, authManager: IAuthManager, walletManager: IWalletManager) {
         self.adapterFactory = adapterFactory
         self.ethereumKitManager = ethereumKitManager
         self.authManager = authManager
-        self.coinManager = coinManager
+        self.walletManager = walletManager
 
-        coinManager.coinsUpdatedSignal
+        walletManager.walletsUpdatedSignal
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
                 .observeOn(ConcurrentDispatchQueueScheduler(qos: .userInteractive))
                 .subscribe(onNext: { [weak self] in
@@ -33,24 +33,20 @@ class AdapterManager {
 extension AdapterManager: IAdapterManager {
 
     func initAdapters() {
-        guard let authData = authManager.authData else {
-            return
-        }
-
         let oldAdapters = adapters
 
-        adapters = coinManager.coins.compactMap { coin in
-            if let adapter = adapters.first(where: { $0.coin == coin }) {
+        adapters = walletManager.wallets.compactMap { wallet in
+            if let adapter = adapters.first(where: { $0.wallet == wallet }) {
                 return adapter
             }
 
-            let adapter = adapterFactory.adapter(forCoin: coin, authData: authData)
+            let adapter = adapterFactory.adapter(wallet: wallet)
             adapter?.start()
             return adapter
         }
 
         for oldAdapter in oldAdapters {
-            if !adapters.contains(where: { $0.coin == oldAdapter.coin }) {
+            if !adapters.contains(where: { $0.wallet == oldAdapter.wallet }) {
                 oldAdapter.stop()
             }
         }

@@ -23,7 +23,7 @@ extension BalancePresenter: IBalanceInteractorDelegate {
 
     func didUpdate(adapters: [IAdapter]) {
         let items = adapters.map { adapter in
-            BalanceItem(coin: adapter.coin)
+            BalanceItem(coin: adapter.wallet.coin)
         }
         dataSource.set(items: items)
 
@@ -110,8 +110,8 @@ extension BalancePresenter: IBalanceViewDelegate {
         router.openSend(for: dataSource.item(at: index).coin.code)
     }
 
-    func onOpenManageCoins() {
-        router.openManageCoins()
+    func onOpenManageWallets() {
+        router.openManageWallets()
     }
 
     func onSortTypeChange() {

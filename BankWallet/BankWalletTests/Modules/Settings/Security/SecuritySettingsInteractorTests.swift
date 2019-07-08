@@ -7,12 +7,12 @@ class SecuritySettingsInteractorTests: XCTestCase {
     private var mockDelegate: MockISecuritySettingsInteractorDelegate!
 
     private var mockLocalStorage: MockILocalStorage!
-    private var mockWordsManager: MockIWordsManager!
+    private var mockAccountManager: MockIAccountManager!
     private var mockSystemInfoManager: MockISystemInfoManager!
 
     private var interactor: SecuritySettingsInteractor!
 
-    private let backedUpSignal = Signal()
+    private let nonBackedUpCountSubject = PublishSubject<Int>()
 
     override func setUp() {
         super.setUp()
@@ -20,14 +20,14 @@ class SecuritySettingsInteractorTests: XCTestCase {
         mockDelegate = MockISecuritySettingsInteractorDelegate()
 
         mockLocalStorage = MockILocalStorage()
-        mockWordsManager = MockIWordsManager()
+        mockAccountManager = MockIAccountManager()
         mockSystemInfoManager = MockISystemInfoManager()
 
-        stub(mockWordsManager) { mock in
-            when(mock.backedUpSignal.get).thenReturn(backedUpSignal)
+        stub(mockAccountManager) { mock in
+            when(mock.nonBackedUpCountObservable.get).thenReturn(nonBackedUpCountSubject.asObservable())
         }
 
-        interactor = SecuritySettingsInteractor(localStorage: mockLocalStorage, wordsManager: mockWordsManager, systemInfoManager: mockSystemInfoManager, async: false)
+        interactor = SecuritySettingsInteractor(localStorage: mockLocalStorage, accountManager: mockAccountManager, systemInfoManager: mockSystemInfoManager, async: false)
         interactor.delegate = mockDelegate
     }
 
@@ -35,12 +35,22 @@ class SecuritySettingsInteractorTests: XCTestCase {
         mockDelegate = nil
 
         mockLocalStorage = nil
-        mockWordsManager = nil
+        mockAccountManager = nil
         mockSystemInfoManager = nil
 
         interactor = nil
 
         super.tearDown()
+    }
+
+    func testNonBackedUpCount() {
+        let count = 2
+
+        stub(mockAccountManager) { mock in
+            when(mock.nonBackedUpCount.get).thenReturn(count)
+        }
+
+        XCTAssertEqual(interactor.nonBackedUpCount, count)
     }
 
     func testIsBiometricUnlockOn() {
@@ -74,22 +84,6 @@ class SecuritySettingsInteractorTests: XCTestCase {
         verify(mockDelegate).didGetBiometry(type: equal(to: biometryType))
     }
 
-    func testIsBackedUp() {
-        stub(mockWordsManager) { mock in
-            when(mock.isBackedUp.get).thenReturn(true)
-        }
-
-        XCTAssertTrue(interactor.isBackedUp)
-    }
-
-    func testIsBackedUp_false() {
-        stub(mockWordsManager) { mock in
-            when(mock.isBackedUp.get).thenReturn(false)
-        }
-
-        XCTAssertFalse(interactor.isBackedUp)
-    }
-
     func testSetBiometricUnlockOn() {
         stub(mockLocalStorage) { mock in
             when(mock.isBiometricOn.set(any())).thenDoNothing()
@@ -110,27 +104,16 @@ class SecuritySettingsInteractorTests: XCTestCase {
         verify(mockLocalStorage).isBiometricOn.set(false)
     }
 
-    func testBackedUpSignal_true() {
-        stub(mockWordsManager) { mock in
-            when(mock.isBackedUp.get).thenReturn(true)
-        }
+    func testNonBackedUpCountObservable() {
+        let count = 3
+
         stub(mockDelegate) { mock in
-            when(mock.didBackup()).thenDoNothing()
+            when(mock.didUpdateNonBackedUp(count: any())).thenDoNothing()
         }
 
-        backedUpSignal.notify()
+        nonBackedUpCountSubject.onNext(count)
 
-        verify(mockDelegate).didBackup()
-    }
-
-    func testBackedUpSignal_false() {
-        stub(mockWordsManager) { mock in
-            when(mock.isBackedUp.get).thenReturn(false)
-        }
-
-        backedUpSignal.notify()
-
-        verify(mockDelegate, never()).didBackup()
+        verify(mockDelegate).didUpdateNonBackedUp(count: count)
     }
 
     func testOnUnlock() {

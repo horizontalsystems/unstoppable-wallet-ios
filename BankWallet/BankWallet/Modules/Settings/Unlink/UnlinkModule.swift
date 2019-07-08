@@ -6,7 +6,7 @@ protocol IUnlinkViewDelegate {
 }
 
 protocol IUnlinkInteractor {
-    func unlink()
+    func unlink(accountId: String)
 }
 
 protocol IUnlinkInteractorDelegate: class {
@@ -14,5 +14,5 @@ protocol IUnlinkInteractorDelegate: class {
 }
 
 protocol IUnlinkRouter {
-    func showGuestModule()
+    func dismiss()
 }

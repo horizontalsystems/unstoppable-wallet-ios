@@ -114,7 +114,7 @@ extension BalanceViewController: UITableViewDelegate, UITableViewDataSource {
             })
         } else if let cell = cell as? BalanceEditCell {
             cell.onTap = { [weak self] in
-                self?.delegate.onOpenManageCoins()
+                self?.delegate.onOpenManageWallets()
             }
         }
     }

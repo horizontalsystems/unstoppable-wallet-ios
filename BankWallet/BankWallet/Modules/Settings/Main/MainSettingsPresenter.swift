@@ -16,17 +16,21 @@ class MainSettingsPresenter {
 extension MainSettingsPresenter: IMainSettingsViewDelegate {
 
     func viewDidLoad() {
-        view?.set(backedUp: interactor.isBackedUp)
+        view?.set(backedUp: interactor.nonBackedUpCount == 0)
         view?.set(baseCurrency: interactor.baseCurrency)
         view?.set(language: interactor.currentLanguage)
         view?.set(lightMode: interactor.lightMode)
         view?.set(appVersion: interactor.appVersion)
 
-        view?.setTabItemBadge(count: interactor.isBackedUp ? 0 : 1)
+        view?.setTabItemBadge(count: interactor.nonBackedUpCount)
     }
 
     func didTapSecurity() {
         router.showSecuritySettings()
+    }
+
+    func didTapRestore() {
+        router.showRestore()
     }
 
     func didTapBaseCurrency() {
@@ -53,9 +57,9 @@ extension MainSettingsPresenter: IMainSettingsViewDelegate {
 
 extension MainSettingsPresenter: IMainSettingsInteractorDelegate {
 
-    func didBackup() {
-        view?.set(backedUp: true)
-        view?.setTabItemBadge(count: 0)
+    func didUpdateNonBackedUp(count: Int) {
+        view?.set(backedUp: count == 0)
+        view?.setTabItemBadge(count: count)
     }
 
     func didUpdateBaseCurrency() {

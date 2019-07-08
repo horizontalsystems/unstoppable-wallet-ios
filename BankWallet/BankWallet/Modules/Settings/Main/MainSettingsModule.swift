@@ -12,6 +12,7 @@ protocol IMainSettingsView: class {
 protocol IMainSettingsViewDelegate {
     func viewDidLoad()
     func didTapSecurity()
+    func didTapRestore()
     func didTapBaseCurrency()
     func didTapLanguage()
     func didSwitch(lightMode: Bool)
@@ -20,7 +21,7 @@ protocol IMainSettingsViewDelegate {
 }
 
 protocol IMainSettingsInteractor {
-    var isBackedUp: Bool { get }
+    var nonBackedUpCount: Int { get }
     var currentLanguage: String { get }
     var baseCurrency: String { get }
     var lightMode: Bool { get }
@@ -29,13 +30,14 @@ protocol IMainSettingsInteractor {
 }
 
 protocol IMainSettingsInteractorDelegate: class {
-    func didBackup()
+    func didUpdateNonBackedUp(count: Int)
     func didUpdateBaseCurrency()
     func didUpdateLightMode()
 }
 
 protocol IMainSettingsRouter {
     func showSecuritySettings()
+    func showRestore()
     func showBaseCurrencySettings()
     func showLanguageSettings()
     func showAbout()

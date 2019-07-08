@@ -1,5 +1,3 @@
-import Foundation
-
 class SecuritySettingsPresenter {
     private let router: ISecuritySettingsRouter
     private let interactor: ISecuritySettingsInteractor
@@ -21,9 +19,13 @@ extension SecuritySettingsPresenter: ISecuritySettingsViewDelegate {
         view?.set(title: "settings_security.title")
 
         view?.set(biometricUnlockOn: interactor.isBiometricUnlockOn)
-        view?.set(backedUp: interactor.isBackedUp)
+        view?.set(backedUp: interactor.nonBackedUpCount == 0)
 
         interactor.getBiometryType()
+    }
+
+    func didTapManageAccounts() {
+        router.showManageAccounts()
     }
 
     func didSwitch(biometricUnlockOn: Bool) {
@@ -35,20 +37,12 @@ extension SecuritySettingsPresenter: ISecuritySettingsViewDelegate {
         router.showEditPin()
     }
 
-    func didTapBackupWallet() {
-        router.showSecretKey()
-    }
-
-    func didTapUnlink() {
-        router.showUnlink()
-    }
-
 }
 
 extension SecuritySettingsPresenter: ISecuritySettingsInteractorDelegate {
 
-    func didBackup() {
-        view?.set(backedUp: true)
+    func didUpdateNonBackedUp(count: Int) {
+        view?.set(backedUp: count == 0)
     }
 
     func didGetBiometry(type: BiometryType) {

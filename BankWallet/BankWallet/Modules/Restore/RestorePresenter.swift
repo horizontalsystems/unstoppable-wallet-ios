@@ -1,26 +1,14 @@
 class RestorePresenter {
-    private let interactor: IRestoreInteractor
-    private let router: IRestoreRouter
     weak var view: IRestoreView?
 
-    private var words = [String]()
+    private let router: IRestoreRouter
+    private let accountCreator: IAccountCreator
 
-    init(interactor: IRestoreInteractor, router: IRestoreRouter) {
-        self.interactor = interactor
+    private var types = [PredefinedAccountType]()
+
+    init(router: IRestoreRouter, accountCreator: IAccountCreator) {
         self.router = router
-    }
-
-}
-
-extension RestorePresenter: IRestoreInteractorDelegate {
-
-    func didValidate(words: [String]) {
-        self.words = words
-        router.openSyncMode(with: words)
-    }
-
-    func didFailToValidate(withError error: Error) {
-        view?.showInvalidWordsError()
+        self.accountCreator = accountCreator
     }
 
 }
@@ -28,14 +16,31 @@ extension RestorePresenter: IRestoreInteractorDelegate {
 extension RestorePresenter: IRestoreViewDelegate {
 
     func viewDidLoad() {
-        view?.set(defaultWords: interactor.defaultWords)
+        types = PredefinedAccountType.allCases
     }
 
-    func restoreDidClick(withWords words: [String]) {
-        interactor.validate(words: words)
+    var typesCount: Int {
+        return types.count
     }
 
-    func cancelDidClick() {
+    func type(index: Int) -> PredefinedAccountType {
+        return types[index]
+    }
+
+    func didSelect(index: Int) {
+        router.showRestore(type: types[index], delegate: self)
+    }
+
+    func didTapCancel() {
+        router.close()
+    }
+
+}
+
+extension RestorePresenter: IRestoreDelegate {
+
+    func didRestore(accountType: AccountType, syncMode: SyncMode?) {
+        _ = accountCreator.createRestoredAccount(accountType: accountType, syncMode: syncMode)
         router.close()
     }
 

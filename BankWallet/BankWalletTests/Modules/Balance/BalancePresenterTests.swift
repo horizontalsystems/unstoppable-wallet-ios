@@ -90,7 +90,7 @@ class BalancePresenterTests: XCTestCase {
         stub(mockRouter) { mock in
             when(mock.openReceive(for: any())).thenDoNothing()
             when(mock.openSend(for: any())).thenDoNothing()
-            when(mock.openManageCoins()).thenDoNothing()
+            when(mock.openManageWallets()).thenDoNothing()
         }
         stub(mockInteractor) { mock in
 //            when(mock.baseCurrency.get).thenReturn(currency)
@@ -183,7 +183,7 @@ class BalancePresenterTests: XCTestCase {
         let expectedItem = BalanceItem(coin: bitcoin)
 
         stub(mockBitcoinAdapter) { mock in
-            when(mock.coin.get).thenReturn(bitcoin)
+            when(mock.wallet.get).thenReturn(Wallet.mock(coin: bitcoin))
         }
         stub(mockDataSource) { mock in
             when(mock.currency.get).thenReturn(currency)

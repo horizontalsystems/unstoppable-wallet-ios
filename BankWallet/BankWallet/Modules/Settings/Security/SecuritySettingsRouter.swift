@@ -7,6 +7,10 @@ class SecuritySettingsRouter {
 
 extension SecuritySettingsRouter: ISecuritySettingsRouter {
 
+    func showManageAccounts() {
+        viewController?.navigationController?.pushViewController(ManageAccountsRouter.module(), animated: true)
+    }
+
     func showEditPin() {
         viewController?.present(EditPinRouter.module(), animated: true)
     }
@@ -15,21 +19,13 @@ extension SecuritySettingsRouter: ISecuritySettingsRouter {
         viewController?.present(UnlockPinRouter.module(unlockDelegate: unlockDelegate, enableBiometry: false, cancelable: true), animated: true)
     }
 
-    func showSecretKey() {
-        viewController?.present(BackupRouter.module(mode: .regular), animated: true)
-    }
-
-    func showUnlink() {
-        viewController?.present(UnlinkRouter.module(), animated: true)
-    }
-
 }
 
 extension SecuritySettingsRouter {
 
     static func module() -> UIViewController {
         let router = SecuritySettingsRouter()
-        let interactor = SecuritySettingsInteractor(localStorage: App.shared.localStorage, wordsManager: App.shared.wordsManager, systemInfoManager: App.shared.systemInfoManager)
+        let interactor = SecuritySettingsInteractor(localStorage: App.shared.localStorage, accountManager: App.shared.accountManager, systemInfoManager: App.shared.systemInfoManager)
         let presenter = SecuritySettingsPresenter(router: router, interactor: interactor, state: SecuritySettingsState())
         let view = SecuritySettingsViewController(delegate: presenter)
 

@@ -53,11 +53,11 @@ class BalanceInteractor {
     }
 
     private func onUpdateBalance(adapter: IAdapter) {
-        delegate?.didUpdate(balance: adapter.balance, coinCode: adapter.coin.code)
+        delegate?.didUpdate(balance: adapter.balance, coinCode: adapter.wallet.coin.code)
     }
 
     private func onUpdateState(adapter: IAdapter) {
-        delegate?.didUpdate(state: adapter.state, coinCode: adapter.coin.code)
+        delegate?.didUpdate(state: adapter.state, coinCode: adapter.wallet.coin.code)
     }
 
 }

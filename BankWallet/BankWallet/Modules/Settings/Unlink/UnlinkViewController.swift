@@ -36,8 +36,8 @@ class UnlinkViewController: ActionSheetController {
         let buttonItem = AlertButtonItem(
                 tag: texts.count,
                 title: "security_settings.unlink_alert_button".localized,
-                textStyle: ButtonTheme.whiteTextColorOnDarkBackgroundDictionary,
-                backgroundStyle: ButtonTheme.redBackgroundOnWhiteBackgroundDictionary
+                textStyle: ButtonTheme.whiteTextColorDictionary,
+                backgroundStyle: ButtonTheme.redBackgroundDictionary
         ) { [weak self] in
             self?.delegate.didTapUnlink()
         }

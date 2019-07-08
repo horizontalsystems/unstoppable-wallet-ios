@@ -4,7 +4,7 @@ class AuthManager {
     private let secureStorage: ISecureStorage
     private let localStorage: ILocalStorage
     private let pinManager: IPinManager
-    private let coinManager: ICoinManager
+    private let coinManager: IWalletManager
     private let rateManager: IRateManager
     private let ethereumKitManager: IEthereumKitManager
 
@@ -12,7 +12,7 @@ class AuthManager {
 
     private(set) var authData: AuthData?
 
-    init(secureStorage: ISecureStorage, localStorage: ILocalStorage, pinManager: IPinManager, coinManager: ICoinManager, rateManager: IRateManager, ethereumKitManager: IEthereumKitManager) {
+    init(secureStorage: ISecureStorage, localStorage: ILocalStorage, pinManager: IPinManager, coinManager: IWalletManager, rateManager: IRateManager, ethereumKitManager: IEthereumKitManager) {
         self.secureStorage = secureStorage
         self.localStorage = localStorage
         self.pinManager = pinManager
@@ -27,10 +27,6 @@ class AuthManager {
 
 extension AuthManager: IAuthManager {
 
-    var isLoggedIn: Bool {
-        return authData != nil
-    }
-
     func login(withWords words: [String], syncMode: SyncMode) throws {
         try BitcoinAdapter.clear()
         try BitcoinCashAdapter.clear()
@@ -44,14 +40,13 @@ extension AuthManager: IAuthManager {
 
         self.authData = authData
 
-        coinManager.enableDefaultCoins()
+        coinManager.enableDefaultWallets()
         adapterManager?.initAdapters()
     }
 
     func logout() throws {
         try pinManager.clear()
         localStorage.clear()
-        coinManager.clear()
         rateManager.clear()
 
         try secureStorage.set(authData: nil)

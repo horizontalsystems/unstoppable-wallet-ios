@@ -1,5 +1,3 @@
-import Foundation
-
 class LaunchPresenter {
     private let interactor: ILaunchInteractor
     private let router: ILaunchRouter
@@ -21,24 +19,16 @@ extension LaunchPresenter: ILaunchPresenter {
 
 extension LaunchPresenter: ILaunchInteractorDelegate {
 
-    func showUnlockModule() {
-        router.showUnlockModule()
+    func showSetPinModule() {
+        router.showSetPinModule()
     }
 
     func showMainModule() {
         router.showMainModule()
     }
 
-    func showGuestModule() {
-        router.showGuestModule()
-    }
-
-    func showSetPinModule() {
-        router.showSetPinModule()
-    }
-
-    func showBackupModule() {
-        router.showBackupModule()
+    func showUnlockModule() {
+        router.showUnlockModule()
     }
 
 }

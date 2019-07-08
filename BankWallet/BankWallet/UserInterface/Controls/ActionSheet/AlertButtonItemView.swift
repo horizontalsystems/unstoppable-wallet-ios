@@ -9,9 +9,9 @@ class AlertButtonItemView: BaseButtonItemView {
 
         button.cornerRadius = ConfirmationTheme.cornerRadius
         button.snp.makeConstraints { maker in
-            maker.leading.equalToSuperview().offset(ConfirmationTheme.smallMargin)
-            maker.top.equalToSuperview().offset(ConfirmationTheme.buttonTopMargin)
-            maker.trailing.equalToSuperview().offset(-ConfirmationTheme.smallMargin)
+            maker.leading.equalToSuperview().offset(item?.insets.left ?? ConfirmationTheme.smallMargin)
+            maker.top.equalToSuperview().offset(item?.insets.top ?? ConfirmationTheme.buttonTopMargin)
+            maker.trailing.equalToSuperview().offset(-(item?.insets.right ?? ConfirmationTheme.smallMargin))
             maker.height.equalTo(ConfirmationTheme.buttonHeight)
         }
     }

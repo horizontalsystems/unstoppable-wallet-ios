@@ -44,7 +44,7 @@ extension SendInteractor: ISendInteractor {
     }
 
     var coin: Coin {
-        return state.adapter.coin
+        return state.adapter.wallet.coin
     }
 
     var valueFromPasteboard: String? {
@@ -67,7 +67,7 @@ extension SendInteractor: ISendInteractor {
     }
 
     func state(forUserInput input: SendUserInput) -> SendState {
-        let coinCode = state.adapter.coin.code
+        let coinCode = state.adapter.wallet.coin.code
         let adapter = state.adapter
         let baseCurrency = currencyManager.baseCurrency
         let rateValue = state.exchangeRate?.value
@@ -138,7 +138,7 @@ extension SendInteractor: ISendInteractor {
         }
         let fee = state.adapter.fee(for: amount, address: input.address, feeRatePriority: feeRatePriority)
         let feeValue = CoinValue(coinCode: code, value: fee)
-        return .erc20error(erc20CoinCode: state.adapter.coin.code, fee: feeValue)
+        return .erc20error(erc20CoinCode: state.adapter.wallet.coin.code, fee: feeValue)
     }
 
     func totalBalanceMinusFee(forInputType input: SendInputType, address: String?, feeRatePriority: FeeRatePriority) -> Decimal {
@@ -194,7 +194,7 @@ extension SendInteractor: ISendInteractor {
     }
 
     func retrieveRate() {
-        rateStorage.nonExpiredLatestRateObservable(forCoinCode: state.adapter.coin.code, currencyCode: currencyManager.baseCurrency.code)
+        rateStorage.nonExpiredLatestRateObservable(forCoinCode: state.adapter.wallet.coin.code, currencyCode: currencyManager.baseCurrency.code)
                 .take(1)
                 .subscribe(onNext: { [weak self] rate in
                     self?.state.exchangeRate = rate

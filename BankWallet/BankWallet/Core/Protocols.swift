@@ -1,10 +1,11 @@
 import RxSwift
 import BitcoinCore
+import GRDB
 
 typealias CoinCode = String
 
 protocol IRandomManager {
-    func getRandomIndexes(count: Int) -> [Int]
+    func getRandomIndexes(max: Int, count: Int) -> [Int]
 }
 
 protocol ILocalStorage: class {
@@ -63,15 +64,14 @@ protocol IAdapterManager: class {
 }
 
 protocol IAdapterFactory {
-    func adapter(forCoin coin: Coin, authData: AuthData) -> IAdapter?
+    func adapter(wallet: Wallet) -> IAdapter?
 }
 
-protocol ICoinManager: class {
-    func enableDefaultCoins()
-    var coinsUpdatedSignal: Signal { get }
-    var coins: [Coin] { get }
-    var allCoins: [Coin] { get }
-    func clear()
+protocol IWalletManager: class {
+    var wallets: [Wallet] { get }
+    var walletsUpdatedSignal: Signal { get }
+    func enable(wallets: [Wallet])
+    func enableDefaultWallets()
 }
 
 enum AdapterState {
@@ -80,10 +80,23 @@ enum AdapterState {
     case notSynced
 }
 
-enum SyncMode: String {
+enum SyncMode: String, DatabaseValueConvertible  {
+
     case fast = "fast"
     case slow = "slow"
     case new = "new"
+
+    public var databaseValue: DatabaseValue {
+        return rawValue.databaseValue
+    }
+
+    public static func fromDatabaseValue(_ dbValue: DatabaseValue) -> SyncMode? {
+        guard case .string(let rawValue) = dbValue.storage else {
+            return nil
+        }
+        return SyncMode(rawValue: rawValue)
+    }
+
 }
 
 enum FeeRatePriority: Int {
@@ -95,7 +108,7 @@ enum FeeRatePriority: Int {
 }
 
 protocol IAdapter: class {
-    var coin: Coin { get }
+    var wallet: Wallet { get }
     var feeCoinCode: CoinCode? { get }
 
     var decimal: Int { get }
@@ -150,15 +163,48 @@ enum SendTransactionError: LocalizedError {
 protocol IWordsManager {
     var isBackedUp: Bool { get set }
     var backedUpSignal: Signal { get }
-    func generateWords() throws -> [String]
+    func generateWords(count: Int) throws -> [String]
     func validate(words: [String]) throws
 }
 
 protocol IAuthManager {
     var authData: AuthData? { get }
-    var isLoggedIn: Bool { get }
     func login(withWords words: [String], syncMode: SyncMode) throws
     func logout() throws
+}
+
+protocol IAccountManager {
+    var accounts: [Account] { get }
+    var accountsObservable: Observable<[Account]> { get }
+
+    var nonBackedUpCount: Int { get }
+    var nonBackedUpCountObservable: Observable<Int> { get }
+
+    func save(account: Account)
+    func deleteAccount(id: String)
+    func setAccountBackedUp(id: String)
+}
+
+protocol IAccountCreator {
+    func createRestoredAccount(accountType: AccountType, syncMode: SyncMode?) -> Account
+    func createNewAccount(type: PredefinedAccountType) throws -> Account
+}
+
+protocol IAccountFactory {
+    func account(type: AccountType, backedUp: Bool, defaultSyncMode: SyncMode?) -> Account
+}
+
+protocol IWalletFactory {
+    func wallet(coin: Coin, account: Account) -> Wallet
+}
+
+protocol IWalletCreator {
+    func wallet(coin: Coin) -> Wallet?
+    func wallet(coin: Coin, account: Account) -> Wallet
+}
+
+protocol IRestoreAccountDataSource {
+    var restoreAccounts: [Account] { get }
 }
 
 protocol ILockManager {
@@ -249,10 +295,16 @@ protocol IRateStorage {
     func clearRates()
 }
 
-protocol IEnabledCoinStorage {
-    var enabledCoinsObservable: Observable<[EnabledCoin]> { get }
-    func save(enabledCoins: [EnabledCoin])
-    func clearEnabledCoins()
+protocol IEnabledWalletStorage {
+    var enabledWallets: [EnabledWallet] { get }
+    func save(enabledWallets: [EnabledWallet])
+}
+
+protocol IAccountStorage {
+    var allAccounts: [Account] { get }
+    func save(account: Account)
+    func deleteAccount(by id: String)
+    func setAccountIsBackedUp(by id: String)
 }
 
 protocol IJsonApiProvider {
@@ -383,4 +435,17 @@ protocol IFeeRateProvider {
     func bitcoinFeeRate(for priority: FeeRatePriority) -> Int
     func bitcoinCashFeeRate(for priority: FeeRatePriority) -> Int
     func dashFeeRate(for priority: FeeRatePriority) -> Int
+}
+
+enum AdapterError: Error {
+    case unsupportedAccount
+}
+
+protocol IEncryptionManager {
+    func encrypt(data: Data) throws -> Data
+    func decrypt(data: Data) throws -> Data
+}
+
+protocol IUUIDProvider {
+    func generate() -> String
 }

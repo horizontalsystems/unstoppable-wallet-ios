@@ -7,7 +7,6 @@ class App {
     let randomManager: IRandomManager
 
     let localStorage: ILocalStorage
-    let secureStorage: ISecureStorage
 
     let appConfigProvider: IAppConfigProvider
     let systemInfoManager: ISystemInfoManager
@@ -24,12 +23,18 @@ class App {
     let grdbStorage: GrdbStorage
 
     let pinManager: IPinManager
-    let coinManager: ICoinManager
+    let wordsManager: IWordsManager
+
+    let accountManager: IAccountManager
+    let accountCreator: IAccountCreator
+
+    let walletManager: IWalletManager
+    let walletCreator: IWalletCreator
+
     let rateManager: RateManager
     let currencyManager: ICurrencyManager
 
     let authManager: AuthManager
-    let wordsManager: IWordsManager
 
     let feeRateProvider: IFeeRateProvider
 
@@ -53,7 +58,6 @@ class App {
         randomManager = RandomManager()
 
         localStorage = UserDefaultsStorage()
-        secureStorage = KeychainStorage(localStorage: localStorage)
 
         appConfigProvider = AppConfigProvider()
         systemInfoManager = SystemInfoManager()
@@ -69,23 +73,27 @@ class App {
 
         grdbStorage = GrdbStorage()
 
-        pinManager = PinManager(secureStorage: secureStorage)
-        coinManager = CoinManager(appConfigProvider: appConfigProvider, storage: grdbStorage)
+        pinManager = PinManager(secureStorage: KeychainStorage.shared)
+        wordsManager = WordsManager(localStorage: localStorage)
+
+        accountManager = AccountManager(storage: grdbStorage)
+        accountCreator = AccountCreator(accountManager: accountManager, accountFactory: AccountFactory(), wordsManager: wordsManager)
+
+        walletManager = WalletManager(appConfigProvider: appConfigProvider, accountManager: accountManager, storage: grdbStorage)
+        walletCreator = WalletCreator(accountManager: accountManager, walletFactory: WalletFactory())
 
         let rateApiProvider: IRateApiProvider = RateApiProvider(networkManager: networkManager, appConfigProvider: appConfigProvider)
         rateManager = RateManager(storage: grdbStorage, apiProvider: rateApiProvider)
-
         currencyManager = CurrencyManager(localStorage: localStorage, appConfigProvider: appConfigProvider)
 
         ethereumKitManager = EthereumKitManager(appConfigProvider: appConfigProvider)
 
-        authManager = AuthManager(secureStorage: secureStorage, localStorage: localStorage, pinManager: pinManager, coinManager: coinManager, rateManager: rateManager, ethereumKitManager: ethereumKitManager)
-        wordsManager = WordsManager(localStorage: localStorage)
+        authManager = AuthManager(secureStorage: KeychainStorage.shared, localStorage: localStorage, pinManager: pinManager, coinManager: walletManager, rateManager: rateManager, ethereumKitManager: ethereumKitManager)
 
         feeRateProvider = FeeRateProvider()
 
-        adapterFactory = AdapterFactory(appConfigProvider: appConfigProvider, localStorage: localStorage, ethereumKitManager: ethereumKitManager, feeRateProvider: feeRateProvider)
-        adapterManager = AdapterManager(adapterFactory: adapterFactory, ethereumKitManager: ethereumKitManager, authManager: authManager, coinManager: coinManager)
+        adapterFactory = AdapterFactory(appConfigProvider: appConfigProvider, ethereumKitManager: ethereumKitManager, feeRateProvider: feeRateProvider)
+        adapterManager = AdapterManager(adapterFactory: adapterFactory, ethereumKitManager: ethereumKitManager, authManager: authManager, walletManager: walletManager)
 
         lockRouter = LockRouter()
         lockManager = LockManager(localStorage: localStorage, authManager: authManager, appConfigProvider: appConfigProvider, lockRouter: lockRouter)

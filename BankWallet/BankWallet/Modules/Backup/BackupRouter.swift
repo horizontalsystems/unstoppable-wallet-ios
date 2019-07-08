@@ -3,45 +3,42 @@ import UIKit
 class BackupRouter {
     weak var viewController: UIViewController?
     weak var unlockDelegate: IUnlockDelegate?
-    weak var agreementDelegate: IAgreementDelegate?
 }
 
 extension BackupRouter: IBackupRouter {
 
-    func showAgreement() {
-        viewController?.present(AgreementRouter.module(agreementDelegate: agreementDelegate), animated: true)
+    func showUnlock() {
+        viewController?.present(UnlockPinRouter.module(unlockDelegate: unlockDelegate, enableBiometry: false, cancelable: true), animated: true)
+    }
+
+    func show(words: [String], delegate: IBackupDelegate) {
+        viewController?.navigationController?.pushViewController(BackupWordsRouter.module(delegate: delegate, words: words), animated: true)
+    }
+
+    func showEOS(account: Account, delegate: IBackupDelegate) {
+        print("eos account!")
     }
 
     func close() {
-        viewController?.dismiss(animated: true)
-    }
-
-    func navigateToSetPin() {
-        viewController?.present(SetPinRouter.module(), animated: true)
-    }
-
-    func showUnlock() {
-        viewController?.present(UnlockPinRouter.module(unlockDelegate: unlockDelegate, enableBiometry: false, cancelable: true), animated: true)
+        viewController?.navigationController?.dismiss(animated: true)
     }
 
 }
 
 extension BackupRouter {
 
-    static func module(mode: BackupPresenter.Mode) -> UIViewController {
+    static func module(account: Account) -> UIViewController {
         let router = BackupRouter()
-        let interactor = BackupInteractor(authManager: App.shared.authManager, wordsManager: App.shared.wordsManager, pinManager: App.shared.pinManager, randomManager: App.shared.randomManager)
-        let presenter = BackupPresenter(interactor: interactor, router: router, mode: mode)
-        let viewController = BackupNavigationController(viewDelegate: presenter)
+        let interactor = BackupInteractor(accountManager: App.shared.accountManager)
+        let presenter = BackupPresenter(interactor: interactor, router: router, account: account)
 
-        interactor.delegate = presenter
-        presenter.view = viewController
+        let viewController = BackupController(delegate: presenter)
+        let navigationViewController = WalletNavigationController(rootViewController: viewController)
 
         router.viewController = viewController
-        router.unlockDelegate = interactor
-        router.agreementDelegate = interactor
+        router.unlockDelegate = presenter
 
-        return viewController
+        return navigationViewController
     }
 
 }

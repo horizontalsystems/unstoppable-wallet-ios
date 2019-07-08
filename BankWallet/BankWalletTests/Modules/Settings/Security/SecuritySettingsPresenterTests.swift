@@ -28,14 +28,12 @@ class SecuritySettingsPresenterTests: XCTestCase {
         }
         stub(mockRouter) { mock in
             when(mock.showEditPin()).thenDoNothing()
-            when(mock.showSecretKey()).thenDoNothing()
-            when(mock.showUnlink()).thenDoNothing()
             when(mock.showUnlock()).thenDoNothing()
         }
         stub(mockInteractor) { mock in
+            when(mock.nonBackedUpCount.get).thenReturn(0)
             when(mock.isBiometricUnlockOn.get).thenReturn(true)
             when(mock.getBiometryType()).thenDoNothing()
-            when(mock.isBackedUp.get).thenReturn(true)
             when(mock.set(biometricUnlockOn: any())).thenDoNothing()
         }
 
@@ -86,15 +84,21 @@ class SecuritySettingsPresenterTests: XCTestCase {
         verify(mockView).set(biometryType: equal(to: BiometryType.faceId))
     }
 
-    func testBackedUpOnLoad() {
+    func testNotBackedUpCountOnLoad_Zero() {
+        stub(mockInteractor) { mock in
+            when(mock.nonBackedUpCount.get).thenReturn(0)
+        }
+
         presenter.viewDidLoad()
 
         verify(mockView).set(backedUp: true)
     }
 
-    func testNotBackedUpOnLoad() {
+    func testNotBackedUpCountOnLoad_NonZero() {
+        let count = 2
+
         stub(mockInteractor) { mock in
-            when(mock.isBackedUp.get).thenReturn(false)
+            when(mock.nonBackedUpCount.get).thenReturn(count)
         }
 
         presenter.viewDidLoad()
@@ -122,20 +126,18 @@ class SecuritySettingsPresenterTests: XCTestCase {
         verify(mockRouter).showEditPin()
     }
 
-    func testDidTapSecretKey() {
-        presenter.didTapBackupWallet()
+    func testDidUpdateNonBackedUp_Zero() {
+        presenter.didUpdateNonBackedUp(count: 0)
 
-        verify(mockRouter).showSecretKey()
-    }
-
-    func testDidTapUnlink() {
-        presenter.didTapUnlink()
-        verify(mockRouter).showUnlink()
-    }
-
-    func testDidBackup() {
-        presenter.didBackup()
         verify(mockView).set(backedUp: true)
+    }
+
+    func testDidUpdateNonBackedUp_NonZero() {
+        let count = 3
+
+        presenter.didUpdateNonBackedUp(count: count)
+
+        verify(mockView).set(backedUp: false)
     }
 
     func testOnUnlockBiometryTypeOn() {

@@ -20,7 +20,7 @@ protocol IBalanceViewDelegate {
     func onReceive(index: Int)
     func onPay(index: Int)
 
-    func onOpenManageCoins()
+    func onOpenManageWallets()
 
     func onSortTypeChange()
 }
@@ -46,7 +46,7 @@ protocol IBalanceInteractorDelegate: class {
 protocol IBalanceRouter {
     func openReceive(for coin: Coin)
     func openSend(for coinCode: CoinCode)
-    func openManageCoins()
+    func openManageWallets()
     func openSortType(selected sort: BalanceSortType)
 }
 

@@ -21,9 +21,6 @@ class LockManager {
 extension LockManager: ILockManager {
 
     func didEnterBackground() {
-        guard authManager.isLoggedIn else {
-            return
-        }
         guard !isLocked else {
             return
         }
@@ -32,9 +29,6 @@ extension LockManager: ILockManager {
     }
 
     func willEnterForeground() {
-        guard authManager.isLoggedIn else {
-            return
-        }
         guard !isLocked else {
             return
         }

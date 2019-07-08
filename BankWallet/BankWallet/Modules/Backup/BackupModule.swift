@@ -1,39 +1,22 @@
-import Foundation
-
-protocol IBackupView: class {
-    func show(words: [String])
-    func showConfirmation(withIndexes indexes: [Int])
-    func hideConfirmation()
-    func showConfirmationError()
-}
-
 protocol IBackupViewDelegate {
     func cancelDidClick()
-    func showWordsDidClick()
-    func showConfirmationDidClick()
-    func hideConfirmationDidClick()
-    func validateDidClick(confirmationWords: [Int: String])
-}
-
-protocol IBackupInteractor {
-    func setBackedUp()
-    func fetchConfirmationIndexes()
-    func validate(confirmationWords: [Int: String])
-    func lockIfRequired()
-}
-
-protocol IBackupInteractorDelegate: class {
-    func didFetch(words: [String])
-    func didFetch(confirmationIndexes indexes: [Int])
-    func didValidateSuccess()
-    func didValidateFailure()
-    func showUnlock()
-    func onConfirmAgreement()
+    func backupDidTap()
 }
 
 protocol IBackupRouter {
-    func showAgreement()
-    func navigateToSetPin()
-    func close()
     func showUnlock()
+    func show(words: [String], delegate: IBackupDelegate)
+    func showEOS(account: Account, delegate: IBackupDelegate)
+    func close()
+}
+
+protocol IBackupPresenter: IBackupViewDelegate {
+}
+
+protocol IBackupDelegate {
+    func didBackUp()
+}
+
+protocol IBackupInteractor {
+    func setBackedUp(accountId: String)
 }

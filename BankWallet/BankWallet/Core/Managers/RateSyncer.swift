@@ -32,7 +32,7 @@ class RateSyncer {
         if reachabilityManager.isReachable {
             var coinCodes = Set<CoinCode>()
             for adapter in adapterManager.adapters {
-                coinCodes.insert(adapter.coin.code)
+                coinCodes.insert(adapter.wallet.coin.code)
                 if let feeCoinCode = adapter.feeCoinCode {
                     coinCodes.insert(feeCoinCode)
                 }

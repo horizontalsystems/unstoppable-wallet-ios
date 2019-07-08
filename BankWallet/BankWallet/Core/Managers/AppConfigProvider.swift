@@ -57,6 +57,7 @@ class AppConfigProvider: IAppConfigProvider {
     }
 
     let coins = [
+        Coin(title: "EOS",                   code: "EOS",  type: .eos(token: "eosio.token", symbol: "EOS")),
         Coin(title: "Bitcoin",               code: "BTC",  type: .bitcoin),
         Coin(title: "Bitcoin Cash",          code: "BCH",  type: .bitcoinCash),
         Coin(title: "Ethereum",              code: "ETH",  type: .ethereum),

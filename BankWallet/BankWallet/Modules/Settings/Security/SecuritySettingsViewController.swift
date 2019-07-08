@@ -55,11 +55,23 @@ class SecuritySettingsViewController: WalletViewController, SectionsDataSource {
     func buildSections() -> [SectionProtocol] {
         var sections = [SectionProtocol]()
 
+        var manageAccountsRows = [RowProtocol]()
+        let securityAttentionImage = backedUp ? nil : UIImage(named: "Attention Icon")
+        manageAccountsRows.append(Row<SettingsRightImageCell>(id: "manage_accounts", height: SettingsTheme.securityCellHeight, autoDeselect: true, bind: { cell, _ in
+            cell.bind(titleIcon: UIImage(named: "Key Icon"), title: "settings_security.manage_accounts".localized, rightImage: securityAttentionImage, rightImageTintColor: SettingsTheme.attentionIconTint, showDisclosure: true, last: true)
+        }, action: { [weak self] _ in
+            self?.delegate.didTapManageAccounts()
+        }))
+        let manageAccountsHeader: ViewState<SectionSeparator> = .cellType(hash: "manage_accounts_header", binder: { view in
+            view.bind(showTopSeparator: false)
+        }, dynamicHeight: { _ in SettingsTheme.subSettingsHeaderHeight })
+        sections.append(Section(id: "manage_accounts", headerState: manageAccountsHeader, rows: manageAccountsRows))
+
         var pinTouchFaceRows = [RowProtocol]()
 
         let createCell: ((String) -> ()) = { title in
             pinTouchFaceRows.append(Row<SettingsToggleCell>(id: "biometrics_id", height: SettingsTheme.securityCellHeight, bind: { [weak self] cell, _ in
-                cell.bind(titleIcon: nil, title: title.localized, isOn: App.shared.localStorage.isBiometricOn, showDisclosure: false, onToggle: { isOn in
+                cell.bind(titleIcon: UIImage(named: "Face Id Icon"), title: title.localized, isOn: App.shared.localStorage.isBiometricOn, showDisclosure: false, onToggle: { isOn in
                     self?.delegate.didSwitch(biometricUnlockOn: isOn)
                 })
             }))
@@ -73,38 +85,19 @@ class SecuritySettingsViewController: WalletViewController, SectionsDataSource {
 
         let setOrChangePinTitle = App.shared.pinManager.isPinSet ? "settings_security.change_pin".localized : "settings_security.set_pin".localized
         pinTouchFaceRows.append(Row<SettingsCell>(id: "set_pin", hash: "pinned_\(App.shared.pinManager.isPinSet)", height: SettingsTheme.securityCellHeight, bind: { cell, _ in
-            cell.bind(titleIcon: nil, title: setOrChangePinTitle, showDisclosure: true, last: true)
+            cell.bind(titleIcon: UIImage(named: "Passcode Icon"), title: setOrChangePinTitle, showDisclosure: true, last: true)
         }, action: { [weak self] _ in
             DispatchQueue.main.async {
                 self?.delegate.didTapEditPin()
             }
         }))
         let faceHeader: ViewState<SectionSeparator> = .cellType(hash: "face_header", binder: { view in
-            view.bind(showTopSeparator: false)
-        }, dynamicHeight: { _ in SettingsTheme.subSettingsHeaderHeight })
-        sections.append(Section(id: "face_id", headerState: faceHeader, rows: pinTouchFaceRows))
-
-        var backupRows = [RowProtocol]()
-        let securityAttentionImage = backedUp ? nil : UIImage(named: "Attention Icon")
-        backupRows.append(Row<SettingsRightImageCell>(id: "backup_wallet", height: SettingsTheme.securityCellHeight, autoDeselect: true, bind: { cell, _ in
-            cell.bind(titleIcon: nil, title: "settings_security.backup_wallet".localized, rightImage: securityAttentionImage, rightImageTintColor: SettingsTheme.attentionIconTint, showDisclosure: true, last: true)
-        }, action: { [weak self] _ in
-            self?.delegate.didTapBackupWallet()
-        }))
-        let backupHeader: ViewState<SectionSeparator> = .cellType(hash: "appearance_header", binder: nil, dynamicHeight: { _ in SettingsTheme.headerHeight })
-        sections.append(Section(id: "backup", headerState: backupHeader, rows: backupRows))
-
-        var unlinkRows = [RowProtocol]()
-        unlinkRows.append(Row<SettingsCell>(id: "unlink", hash: "unlink", height: SettingsTheme.cellHeight, autoDeselect: true, bind: { cell, _ in
-            cell.bind(titleIcon: nil, title: "settings_security.unlink_from_this_device".localized, titleColor: SettingsTheme.destructiveTextColor, showDisclosure: true, last: true)
-        }, action: { [weak self] _ in
-            self?.delegate.didTapUnlink()
-        }))
-        let unlinkHeader: ViewState<SectionSeparator> = .cellType(hash: "unlink_header", binder: nil, dynamicHeight: { _ in SettingsTheme.headerHeight })
-        let unlinkFooter: ViewState<SectionSeparator> = .cellType(hash: "unlink_header", binder: { view in
+            view.bind()
+        }, dynamicHeight: { _ in SettingsTheme.headerHeight })
+        let faceFooter: ViewState<SectionSeparator> = .cellType(hash: "face_header", binder: { view in
             view.bind(showBottomSeparator: false)
-        }, dynamicHeight: { _ in 1 })
-        sections.append(Section(id: "unlink", headerState: unlinkHeader, footerState: unlinkFooter, rows: unlinkRows))
+        }, dynamicHeight: { _ in SettingsTheme.headerHeight })
+        sections.append(Section(id: "face_id", headerState: faceHeader, footerState: faceFooter, rows: pinTouchFaceRows))
 
         return sections
     }

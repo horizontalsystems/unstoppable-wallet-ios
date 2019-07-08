@@ -6,32 +6,30 @@ class SecuritySettingsInteractor {
     weak var delegate: ISecuritySettingsInteractorDelegate?
 
     private let localStorage: ILocalStorage
-    private let wordsManager: IWordsManager
+    private let accountManager: IAccountManager
     private let systemInfoManager: ISystemInfoManager
     private let async: Bool
 
-    init(localStorage: ILocalStorage, wordsManager: IWordsManager, systemInfoManager: ISystemInfoManager, async: Bool = true) {
+    init(localStorage: ILocalStorage, accountManager: IAccountManager, systemInfoManager: ISystemInfoManager, async: Bool = true) {
         self.localStorage = localStorage
-        self.wordsManager = wordsManager
+        self.accountManager = accountManager
         self.systemInfoManager = systemInfoManager
         self.async = async
 
-        wordsManager.backedUpSignal
-                .subscribe(onNext: { [weak self] in
-                    self?.onUpdateBackedUp()
+        accountManager.nonBackedUpCountObservable
+                .subscribe(onNext: { [weak self] count in
+                    self?.delegate?.didUpdateNonBackedUp(count: count)
                 })
                 .disposed(by: disposeBag)
-    }
-
-    private func onUpdateBackedUp() {
-        if wordsManager.isBackedUp {
-            delegate?.didBackup()
-        }
     }
 
 }
 
 extension SecuritySettingsInteractor: ISecuritySettingsInteractor {
+
+    var nonBackedUpCount: Int {
+        return accountManager.nonBackedUpCount
+    }
 
     var isBiometricUnlockOn: Bool {
         return localStorage.isBiometricOn
@@ -47,10 +45,6 @@ extension SecuritySettingsInteractor: ISecuritySettingsInteractor {
             single.subscribe(onSuccess: { [weak self] type in
                 self?.delegate?.didGetBiometry(type: type)
             }).disposed(by: disposeBag)
-    }
-
-    var isBackedUp: Bool {
-        return wordsManager.isBackedUp
     }
 
     func set(biometricUnlockOn: Bool) {

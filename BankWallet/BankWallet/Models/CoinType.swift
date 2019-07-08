@@ -6,6 +6,28 @@ enum CoinType {
     case dash
     case ethereum
     case erc20(address: String, decimal: Int, fee: Decimal)
+    case eos(token: String, symbol: String)
+
+    func canSupport(accountType: AccountType) -> Bool {
+        switch self {
+        case .bitcoin, .bitcoinCash, .dash, .ethereum, .erc20:
+            if case let .mnemonic(words, derivation, salt) = accountType, words.count == 12, derivation == .bip44, salt == nil { return true }
+            return false
+        case .eos:
+            if case .eos = accountType { return true }
+            return false
+        }
+    }
+
+    var canCreateAccount: Bool {
+        switch self {
+        case .bitcoin, .bitcoinCash, .dash, .ethereum, .erc20:
+            return true
+        case .eos:
+            return false
+        }
+    }
+
 }
 
 extension CoinType: Equatable {
@@ -18,6 +40,8 @@ extension CoinType: Equatable {
         case (.ethereum, .ethereum): return true
         case (.erc20(let lhsAddress, let lhsDecimal, let lhsFee), .erc20(let rhsAddress, let rhsDecimal, let rhsFee)):
             return lhsAddress == rhsAddress && lhsDecimal == rhsDecimal && lhsFee == rhsFee
+        case (.eos(let lhsToken, let lhsSymbol), .eos(let rhsToken, let rhsSymbol)):
+            return lhsToken == rhsToken && lhsSymbol == rhsSymbol
         default: return false
         }
     }

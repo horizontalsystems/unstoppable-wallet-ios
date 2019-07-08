@@ -126,9 +126,9 @@ extension Rate: Equatable {
     }
 }
 
-extension EnabledCoin: Equatable {
+extension EnabledWallet: Equatable {
 
-    public static func ==(lhs: EnabledCoin, rhs: EnabledCoin) -> Bool {
+    public static func ==(lhs: EnabledWallet, rhs: EnabledWallet) -> Bool {
         return lhs.coinCode == rhs.coinCode && lhs.order == rhs.order
     }
 
@@ -163,4 +163,28 @@ extension AdapterState {
         default: return false
         }
     }
+}
+
+extension Wallet {
+
+    static func mock(coin: Coin = Coin.mock(), account: Account = Account.mock(), syncMode: SyncMode? = nil) -> Wallet {
+        return Wallet(coin: coin, account: account, syncMode: syncMode)
+    }
+
+}
+
+extension Coin {
+
+    static func mock(title: String = "Bitcoin", code: CoinCode = "BTC", type: CoinType = .bitcoin) -> Coin {
+        return Coin(title: title, code: code, type: type)
+    }
+
+}
+
+extension Account {
+
+    static func mock(id: String = "uniqueId", name: String = "Mnemonic", type: AccountType = .mnemonic(words: [], derivation: .bip44, salt: nil), backedUp: Bool = true, defaultSyncMode: SyncMode? = nil) -> Account {
+        return Account(id: id, name: name, type: type, backedUp: backedUp, defaultSyncMode: defaultSyncMode)
+    }
+
 }

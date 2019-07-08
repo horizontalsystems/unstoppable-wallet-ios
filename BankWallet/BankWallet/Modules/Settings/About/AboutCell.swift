@@ -12,9 +12,9 @@ class AboutCell: UITableViewCell {
         super.awakeFromNib()
 
         separatorView?.backgroundColor = .cryptoSteel20
-        titleLabel?.text = "guest.title".localized
+        titleLabel?.text = "settings_about.app_title".localized
         titleLabel?.textColor = .crypto_White_Black
-        subtitleLabel?.text = "guest.subtitle".localized
+        subtitleLabel?.text = "settings_about.app_subtitle".localized
 
         termsHeaderLabel?.text = "settings_about.terms_privacy_subtitle".localized
         termsLabel?.text = "settings_about.terms_privacy_text".localized

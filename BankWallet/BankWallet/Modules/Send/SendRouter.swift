@@ -16,7 +16,7 @@ extension SendRouter: ISendRouter {
 extension SendRouter {
 
     static func module(coinCode: CoinCode) -> ActionSheetController? {
-        guard let adapter = App.shared.adapterManager.adapters.first(where: { $0.coin.code == coinCode }) else {
+        guard let adapter = App.shared.adapterManager.adapters.first(where: { $0.wallet.coin.code == coinCode }) else {
             return nil
         }
 
