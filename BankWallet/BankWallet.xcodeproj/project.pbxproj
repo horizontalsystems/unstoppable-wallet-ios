@@ -567,7 +567,6 @@
 		1A564939A8DCE6124D2141D3 /* SettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564F5FA00D064D9F3F0AF7 /* SettingsCell.swift */; };
 		1A564947E6731A05DF6C19F4 /* FullTransactionInfoTextCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56424F4DB6D8384D8F2489 /* FullTransactionInfoTextCell.swift */; };
 		1A5649536DACD15C3B6EA457 /* SortTypeInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56468265EF90736E6BAEC6 /* SortTypeInteractor.swift */; };
-		1A56495DBE9FB3DCDB561431 /* AccountRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5643EC4110C2F1C6E9E708 /* AccountRecord.swift */; };
 		1A564975B127F4EA2FCF61EB /* BitcoinBaseAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56450DA6DF97C9E1FFE987 /* BitcoinBaseAdapter.swift */; };
 		1A56497B4905D999F96E0461 /* SecuritySettingsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5641B7D1079995F147F7D2 /* SecuritySettingsRouter.swift */; };
 		1A56498EE4AF6DADD0A5939A /* TransactionFromToHashItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564E1F405D2D57FBC9E799 /* TransactionFromToHashItemView.swift */; };
@@ -610,7 +609,6 @@
 		1A564B090F808B3A21F4AC8D /* SendKeyboardItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5641B26CAF24757772C08C /* SendKeyboardItem.swift */; };
 		1A564B096FFE228DF453A66D /* TransactionInfoPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564091A9C12F224A18B740 /* TransactionInfoPresenter.swift */; };
 		1A564B148862CA99776CE235 /* Differ.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5648F4CBE5575C4D6C40BA /* Differ.swift */; };
-		1A564B154CC5C8856543B79C /* AccountRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5643EC4110C2F1C6E9E708 /* AccountRecord.swift */; };
 		1A564B49C052D4BF6C53DE7F /* BalanceInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564EA89D7182D3D3F669C3 /* BalanceInteractorTests.swift */; };
 		1A564B6E513269FED43EA6F2 /* ManageWalletsModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564FD2BE42EF4AADB0372C /* ManageWalletsModule.swift */; };
 		1A564B8F25AB6515F509B10D /* BackupTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5645D738FD93B79628E5E5 /* BackupTheme.swift */; };
@@ -690,7 +688,6 @@
 		1A564FD718DF1DD5F82D7B1E /* ManageWalletsModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564FD2BE42EF4AADB0372C /* ManageWalletsModule.swift */; };
 		1A564FEE11A00F6D86B5616D /* ManageWalletsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56471ECC51CB5E5572DBD8 /* ManageWalletsRouter.swift */; };
 		1A564FF3653D4DF42A180896 /* ManageWalletsTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564A860AD2DA3CFBF9C04A /* ManageWalletsTheme.swift */; };
-		1A564FF81DD8CBDCF350A2FA /* AccountRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5643EC4110C2F1C6E9E708 /* AccountRecord.swift */; };
 		2FA5D4562E12175B6044FDFD /* BlockdozerProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D82E6E66E2BB85636BD0 /* BlockdozerProvider.swift */; };
 		2FA5DA090638C6810DAE40F3 /* BlockdozerProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D82E6E66E2BB85636BD0 /* BlockdozerProvider.swift */; };
 		2FA5DBAF03EAA20DC88BADE5 /* BlockdozerProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D82E6E66E2BB85636BD0 /* BlockdozerProvider.swift */; };
@@ -1464,7 +1461,6 @@
 		1A5643AAE35C8D8C5DA5924C /* TransactionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionCell.swift; sourceTree = "<group>"; };
 		1A5643D429A9AF82758F1FB4 /* SortTypePresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SortTypePresenter.swift; sourceTree = "<group>"; };
 		1A5643D89AD02523247F6A81 /* SyncModeSectionSeparator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SyncModeSectionSeparator.swift; sourceTree = "<group>"; };
-		1A5643EC4110C2F1C6E9E708 /* AccountRecord.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountRecord.swift; sourceTree = "<group>"; };
 		1A564447850F619EDD37CBC3 /* SetPinRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetPinRouter.swift; sourceTree = "<group>"; };
 		1A56444A8B170E65EE00C33F /* SecuritySettingsPresenterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecuritySettingsPresenterTests.swift; sourceTree = "<group>"; };
 		1A56445B53883A652362E9D6 /* MainSettingsPresenterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainSettingsPresenterTests.swift; sourceTree = "<group>"; };
@@ -2056,7 +2052,6 @@
 				11B35EB6A09E7FBB70B8966B /* Wallet.swift */,
 				11B35542A7D7FE1BDC2E73E2 /* AccountType.swift */,
 				11B355B120EEFB9BE98B3C09 /* PredefinedAccountType.swift */,
-				1A5643EC4110C2F1C6E9E708 /* AccountRecord.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -3678,7 +3673,6 @@
 				11B35BCC684750CBA3C50709 /* AccountCreator.swift in Sources */,
 				11B35BCE106E336CFA7C7CCF /* WalletCreator.swift in Sources */,
 				11B35AB76F57933E0EC2831B /* WalletFactory.swift in Sources */,
-				1A564B154CC5C8856543B79C /* AccountRecord.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4116,7 +4110,6 @@
 				11B3586B8B2C99BCFDF2C40B /* AccountCreator.swift in Sources */,
 				11B355CD1B5125A81AC0D3A6 /* WalletCreator.swift in Sources */,
 				11B351B76E70E4D03CB0615D /* WalletFactory.swift in Sources */,
-				1A56495DBE9FB3DCDB561431 /* AccountRecord.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4503,7 +4496,6 @@
 				11B35C3000332017B1CED810 /* AccountCreator.swift in Sources */,
 				11B352F3B62EF5C03F5AE2B5 /* WalletCreator.swift in Sources */,
 				11B35A5B491C935030FCD1C5 /* WalletFactory.swift in Sources */,
-				1A564FF81DD8CBDCF350A2FA /* AccountRecord.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

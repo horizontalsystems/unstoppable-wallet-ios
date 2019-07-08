@@ -77,20 +77,20 @@ class GrdbStorage {
         }
 
         migrator.registerMigration("createAccountsTable") { db in
-            try db.create(table: AccountRecord.databaseTableName) { t in
-                t.column(AccountRecord.Columns.id.name, .text).notNull()
-                t.column(AccountRecord.Columns.name.name, .text).notNull()
-                t.column(AccountRecord.Columns.type.name, .integer).notNull()
-                t.column(AccountRecord.Columns.backedUp.name, .boolean).notNull()
-                t.column(AccountRecord.Columns.defaultSyncMode.name, .text)
-                t.column(AccountRecord.Columns.words.name, .blob)
-                t.column(AccountRecord.Columns.derivation.name, .integer)
-                t.column(AccountRecord.Columns.salt.name, .blob)
-                t.column(AccountRecord.Columns.data.name, .blob)
-                t.column(AccountRecord.Columns.eosAccount.name, .blob)
+            try db.create(table: Account.databaseTableName) { t in
+                t.column(Account.Columns.id.name, .text).notNull()
+                t.column(Account.Columns.name.name, .text).notNull()
+                t.column(Account.Columns.type.name, .integer).notNull()
+                t.column(Account.Columns.backedUp.name, .boolean).notNull()
+                t.column(Account.Columns.defaultSyncMode.name, .text)
+                t.column(Account.Columns.words.name, .blob)
+                t.column(Account.Columns.derivation.name, .integer)
+                t.column(Account.Columns.salt.name, .blob)
+                t.column(Account.Columns.data.name, .blob)
+                t.column(Account.Columns.eosAccount.name, .blob)
 
                 t.primaryKey([
-                    AccountRecord.Columns.id.name
+                    Account.Columns.id.name
                 ], onConflict: .replace)
             }
         }
@@ -179,37 +179,31 @@ extension GrdbStorage: IAccountStorage {
 
     var all: [Account] {
         return try! dbPool.read { db in
-            try AccountRecord.fetchAll(db).map { try $0.getAccount() }
+            try Account.fetchAll(db)
         }
     }
 
     func save(account: Account) {
-        let accountRecord = try? dbPool.read { db in
-            try AccountRecord.filter(AccountRecord.Columns.id == account.id).fetchOne(db)
-        }
-        accountRecord?.update(with: account)
-        _ = try? dbPool.write { db in
-            try (accountRecord ?? AccountRecord(account: account)).insert(db)
+        _ = try! dbPool.write { db in
+            try account.insert(db)
         }
     }
 
     func delete(id: String) {
-        let accountRecord = try? dbPool.read { db in
-            try AccountRecord.filter(AccountRecord.Columns.id == id).fetchOne(db)
-        }
-        [accountRecord?.words?.key, accountRecord?.salt?.key, accountRecord?.data?.key, accountRecord?.eosAccount?.key].compactMap { $0 }.forEach {
-            try? KeychainStorage.shared.remove(for: $0)
-        }
-        _ = try? dbPool.write { db in
-            try AccountRecord.filter(AccountRecord.Columns.id == id).deleteAll(db)
+        _ = try! dbPool.write { db in
+            let account = try Account.filter(Account.Columns.id == id).fetchOne(db)
+            account?.clearKeychain()
+
+            try account?.delete(db)
         }
     }
 
     func setIsBackedUp(id: String) {
-        _ = try? dbPool.write { db in
-            let account = try AccountRecord.filter(AccountRecord.Columns.id == id).fetchOne(db)
-            account?.backedUp = true
-            try account?.insert(db)
+        _ = try! dbPool.write { db in
+            if let account = try Account.filter(Account.Columns.id == id).fetchOne(db) {
+                account.backedUp = true
+                try account.insert(db)
+            }
         }
     }
 
