@@ -2,12 +2,14 @@ import UIKit
 import ActionSheet
 
 class CreateAccountViewController: ActionSheetController {
+    private let titleItem = ActionTitleItem(tag: 0)
+    private let coin: Coin
 
     init(coin: Coin, onSelectRestore: @escaping () -> (), onSelectNew: (() -> ())?) {
+        self.coin = coin
+
         super.init(withModel: BaseAlertModel(), actionSheetThemeConfig: AppTheme.actionSheetConfig)
 
-        let titleItem = ActionTitleItem(tag: 0)
-        titleItem.bindTitle?("Add \(coin.title.localized) Coin", coin)
         model.addItemView(titleItem)
 
         if let onSelectNew = onSelectNew {
@@ -52,6 +54,8 @@ class CreateAccountViewController: ActionSheetController {
 
         backgroundColor = AppTheme.actionSheetBackgroundColor
         contentBackgroundColor = .white
+
+        titleItem.bindTitle?("Add \(coin.title.localized) Coin", coin)
     }
 
 }

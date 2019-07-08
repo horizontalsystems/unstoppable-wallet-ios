@@ -7,7 +7,7 @@ class ManageWalletsRouter {
 extension ManageWalletsRouter: IManageWalletsRouter {
 
     func showRestore(type: PredefinedAccountType, delegate: IRestoreDelegate) {
-        guard let module = RestoreRouter.module(type: type, delegate: delegate) else {
+        guard let module = RestoreRouter.module(type: type, mode: .presented, delegate: delegate) else {
             return
         }
 
