@@ -26,15 +26,6 @@
 "access_camera.message" = "Unstoppable needs access to your camera to scan QR code.\n\nGo to Settings - > Unstoppable and allow access to Camera.";
 "access_camera.settings" = "設定";
 
-// Guest Page
-
-"guest.title" = "Unstoppable";
-"guest.description" = "IN BLOCKCHAIN WE TRUST";
-"guest.subtitle" = "Decentralized App";
-"guest.create_wallet" = "Create Wallet";
-"guest.restore_wallet" = "Restore";
-"guest.version" = "version %@";
-
 // Restore
 
 "restore.title" = "Restore";
@@ -65,10 +56,12 @@
 
 "backup.confirmation.title" = "Check ...";
 "backup.confirmation.description" = "あなたの秘密鍵の単語を入力してください。";
-"backup.confirmation.failure_alert.text" = "言葉が一致しません";
 "backup.confirmation.secret_key" = "I understand that I am a sole owner of a private 12-word Secret Key which is securely stored on my phone and enables me to control funds on my wallet.";
 "backup.confirmation.delete_app_warn" = "I understand that if this app is ever moved, deleted or malfunctions, the access to my wallet can be only recovered with that Secret Key.";
 "backup.confirmation.disclaimer" = "I understand that developers of this app can not be held responsible for any unintended bugs or issues that may arise while using this app.";
+
+"words_validator.empty_words" = "Not all words are entered";
+"words_validator.invalid_confirmation" = "Words do not match";
 
 // Balance
 
@@ -161,6 +154,7 @@
 "settings.title" = "設定";
 "settings.tab_bar_item" = "設定";
 "settings.security_center" = "セキュリティ センター";
+"settings.restore_wallet" = "Restore Wallet";
 "settings.advanced" = "Advanced Settings";
 "settings.base_currency" = "基本通貨";
 "settings.language" = "言語";
@@ -184,12 +178,15 @@
 // Settings -> About
 
 "settings_about.title" = "について";
+"settings_about.app_title" = "Unstoppable";
+"settings_about.app_subtitle" = "Decentralized App";
 "settings_about.terms_privacy_subtitle" = "Terms & Privacy:";
 "settings_about.terms_privacy_text" = "このアプリはピアツーピアです。 Webサーバーや技術サポート担当者の機能に依存しません。\n\nインターネットがある限りどこでも動作します。このアプリの動作をブロックしたり、他のユーザーによる使用をブロックしたりすることはできません。\n\nあなたの資金は安全な場所に保管されています。\n\nあなたの秘密鍵をバックアップし秘密にしておくのはあなたの責任です。絶対に他人に見せないでください。それが紛失、忘れられ、または盗まれた場合、あなたの資金はあなたの秘密鍵を持っている人が使うことができます。\n\nあなたの電話を脱獄したり、未知の（信頼できない）ソースからアプリをインストールしたり、あなたのデバイスを信頼できない人に与えたりしないでください。そしてあなたの電話のオペレーティングシステムを常にアップグレードしてください。あなたの財布の安全はこれらにかかっています。\n\nこのアプリの原動力となっているコード全体は、最初から世間に公開しています。私たちは、可能な限り最も安全な財布を構築しようとしましたが、予期しないソフトウェアの問題がないという保証はできません。とは言っても、この財布は他のスマートフォンの財布アプリよりもはるかに安全である可能性があります。\n\n為替レートなどの一般的な非公開でないアプリデータは、分散ストレージ（IPFS）に保存されています。";
 
 // Settings -> Security
 
 "settings_security.title" = "セキュリティ センター";
+"settings_security.manage_accounts" = "Manage Keys";
 "settings_security.backup_wallet" = "ウォレットをバックアップ";
 "settings_security.unlink_from_this_device" = "このデバイスからアンリンク";
 "settings_security.set_pin" = "パスコード";
@@ -199,6 +196,12 @@
 "security_settings.unlink_alert_button" = "Unlink";
 "settings_security.import_wallet_confirmation_1" = "この操作は、現在インストールされている財布をこのデバイスから削除されます。";
 "settings_security.import_wallet_confirmation_2" = "秘密キーを確実にバックアップしないと、将来的にあなたの資金にアクセスすることができなくなります。";
+
+// Manage Accounts
+
+"settings_manage_accounts.title" = "Manage Keys";
+"settings_manage_accounts.unlink" = "Unlink";
+"settings_manage_accounts.backup" = "Backup";
 
 // Set PIN
 
@@ -229,3 +232,9 @@
 "numpad_7" = "P Q R S";
 "numpad_8" = "T U V";
 "numpad_9" = "W X Y Z";
+
+// Key Types
+
+"key_type.12_words" = "12 Words Key";
+"key_type.eos" = "EOS Account";
+"key_type.24_words" = "24 Words Key";
