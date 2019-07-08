@@ -26,15 +26,6 @@
 "access_camera.message" = "钱包需要接入照相机扫描二维码\n\n请在”设置”-“Unstoppable”中打开";
 "access_camera.settings" = "设置";
 
-// Guest Page
-
-"guest.title" = "Unstoppable";
-"guest.description" = "IN BLOCKCHAIN WE TRUST";
-"guest.subtitle" = "Decentralized App";
-"guest.create_wallet" = "创建钱包";
-"guest.restore_wallet" = "恢复";
-"guest.version" = "Version %@";
-
 // Restore
 
 "restore.title" = "恢复";
@@ -65,10 +56,12 @@
 
 "backup.confirmation.title" = "正在检查...";
 "backup.confirmation.description" = "请输入你密钥中的词";
-"backup.confirmation.failure_alert.text" = "单词不匹配";
 "backup.confirmation.secret_key" = "我知道, 我是一个12个字的私人密钥的唯一拥有者，该密钥安全地存储在我的手机上，使我能够控制我钱包上的资金。";
 "backup.confirmation.delete_app_warn" = "我知道如果此APP被移动、删除或出现故障，只有用密钥才能恢复对我钱包的访问。";
 "backup.confirmation.disclaimer" = "我理解这个应用程序的开发人员对使用这个应用程序时可能出现的任何意外的错误或问题不负责任。\n";
+
+"words_validator.empty_words" = "Not all words are entered";
+"words_validator.invalid_confirmation" = "Words do not match";
 
 // Balance
 
@@ -161,6 +154,7 @@
 "settings.title" = "设置";
 "settings.tab_bar_item" = "设置";
 "settings.security_center" = "安全中心";
+"settings.restore_wallet" = "Restore Wallet";
 "settings.advanced" = "Advanced Settings";
 "settings.base_currency" = "基本货币";
 "settings.language" = "语言";
@@ -184,12 +178,15 @@
 // Settings -> About
 
 "settings_about.title" = "更多";
+"settings_about.app_title" = "Unstoppable";
+"settings_about.app_subtitle" = "Decentralized App";
 "settings_about.terms_privacy_subtitle" = "服务条款和隐私策略";
 "settings_about.terms_privacy_text" = "此应用程序是对等的。它不依赖于任何 web 服务器或支持人员来运行的技术。只要有互联网, 它就可以被使用。任何实体都不能阻止此应用程序工作或阻止某人使用它。\n\n您的资金安全地存储在手机上, 而不是在其他任何地方。\n\n你有责任备份您的密钥, 并保持密钥的隐私。千万不要把它给任何人看。如果它被丢失, 遗忘或被偷, 您的资金都可用于持有您密钥的人。\n\n不要越狱您的手机, 不要安装来自未知 (不受信任) 来源的应用程序, 不要将您的设备交给不受信任的人, 并使您的手机上的系统保持最新。这是你的钱包安全的重点。\n\n从一开始，为该应用程序提供动力的整个代码就向公众开放。我们试图建立最安全和分散的钱包, 我们可以, 但没有保证没有意外的软件问题。也就是说, 这个钱包可能比任何智能手机钱包应用都要安全得多。\n\n一些通用的非私有应用程序数据 (如货币汇率) 存储在分散存储 (ipfs) 中。 ";
 
 // Settings -> Security
 
 "settings_security.title" = "安全中心";
+"settings_security.manage_accounts" = "Manage Keys";
 "settings_security.backup_wallet" = "备份钱包";
 "settings_security.unlink_from_this_device" = "与此设备断开连接";
 "settings_security.set_pin" = "密码";
@@ -199,6 +196,12 @@
 "security_settings.unlink_alert_button" = "取消链接";
 "settings_security.import_wallet_confirmation_1" = "此操作从此设备中将删除当前安装的钱包";
 "settings_security.import_wallet_confirmation_2" = "确保你已备份钱包的密钥，否则您将无法访问资金。";
+
+// Manage Accounts
+
+"settings_manage_accounts.title" = "Manage Keys";
+"settings_manage_accounts.unlink" = "Unlink";
+"settings_manage_accounts.backup" = "Backup";
 
 // Set PIN
 
@@ -229,3 +232,9 @@
 "numpad_7" = "P Q R S";
 "numpad_8" = "T U V";
 "numpad_9" = "W X Y Z";
+
+// Key Types
+
+"key_type.12_words" = "12 Words Key";
+"key_type.eos" = "EOS Account";
+"key_type.24_words" = "24 Words Key";
