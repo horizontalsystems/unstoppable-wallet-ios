@@ -20,8 +20,7 @@ extension BackupConfirmationRouter {
 
     static func module(delegate: IBackupConfirmationDelegate, words: [String]) -> UIViewController {
         let router = BackupConfirmationRouter(delegate: delegate)
-        let interactor = BackupConfirmationInteractor(randomManager: App.shared.randomManager)
-        let presenter = BackupConfirmationPresenter(interactor: interactor, router: router, words: words)
+        let presenter = BackupConfirmationPresenter(router: router, randomManager: App.shared.randomManager, words: words)
 
         let viewController = BackupConfirmationController(delegate: presenter)
 

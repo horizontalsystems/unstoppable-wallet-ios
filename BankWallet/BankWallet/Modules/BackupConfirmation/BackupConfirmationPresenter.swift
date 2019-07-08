@@ -3,20 +3,20 @@ class BackupConfirmationPresenter: IBackupConfirmationPresenter {
 
     weak var view: IBackupConfirmationView?
 
-    private let interactor: IBackupConfirmationInteractor
     private let router: IBackupConfirmationRouter
+    private let randomManager: IRandomManager
     private let wordsValidator: WordsValidator
 
     private let words: [String]
 
     private(set) var indexes: [Int]
 
-    init(interactor: IBackupConfirmationInteractor, router: IBackupConfirmationRouter, words: [String]) {
-        self.interactor = interactor
+    init(router: IBackupConfirmationRouter, randomManager: IRandomManager, words: [String]) {
         self.router = router
+        self.randomManager = randomManager
         self.words = words
 
-        indexes = interactor.fetchConfirmationIndexes(max: words.count, count: BackupConfirmationPresenter.confirmationWordsCount)
+        indexes = randomManager.getRandomIndexes(max: words.count, count: BackupConfirmationPresenter.confirmationWordsCount)
         wordsValidator = WordsValidator(words: words)
     }
 
