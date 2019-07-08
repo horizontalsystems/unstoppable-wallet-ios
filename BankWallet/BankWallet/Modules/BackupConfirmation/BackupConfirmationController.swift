@@ -65,14 +65,12 @@ class BackupConfirmationController: WalletViewController {
             maker.trailing.equalToSuperview().offset(-BackupTheme.confirmSideMargin)
             maker.height.equalTo(BackupTheme.confirmInputHeight)
         }
-
-        firstIndexedInputField.indexLabel.text = "\(delegate.indexes[0])."
-        secondIndexedInputField.indexLabel.text = "\(delegate.indexes[1])."
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        firstIndexedInputField.textField.becomeFirstResponder()
+
+        updateInputFields()
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -81,6 +79,15 @@ class BackupConfirmationController: WalletViewController {
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return AppTheme.statusBarStyle
+    }
+
+    private func updateInputFields() {
+        delegate.generateNewIndexes()
+
+        firstIndexedInputField.indexLabel.text = "\(delegate.indexes[0])."
+        secondIndexedInputField.indexLabel.text = "\(delegate.indexes[1])."
+
+        firstIndexedInputField.textField.becomeFirstResponder()
     }
 
     @objc func doneDidTap() {
@@ -95,6 +102,10 @@ extension BackupConfirmationController: IBackupConfirmationView {
 
     func showValidation(error: Error) {
         HudHelper.instance.showError(title: error.localizedDescription)
+    }
+
+    func onBecomeActive() {
+        updateInputFields()
     }
 
 }

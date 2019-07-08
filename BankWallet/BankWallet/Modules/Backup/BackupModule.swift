@@ -18,5 +18,5 @@ protocol IBackupDelegate {
 }
 
 protocol IBackupInteractor {
-    func setBackedUp()
+    func setBackedUp(accountId: String)
 }

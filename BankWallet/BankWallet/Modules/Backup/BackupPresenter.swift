@@ -2,11 +2,11 @@ class BackupPresenter: IBackupPresenter {
     weak var view: IBackupWordsView? = nil
 
     private let router: IBackupRouter
-    private let accountManager: IAccountManager
+    private let interactor: IBackupInteractor
     private let account: Account
 
-    init(router: IBackupRouter, accountManager: IAccountManager, account: Account) {
-        self.accountManager = accountManager
+    init(interactor: IBackupInteractor, router: IBackupRouter, account: Account) {
+        self.interactor = interactor
         self.router = router
         self.account = account
     }
@@ -44,7 +44,7 @@ extension BackupPresenter: IUnlockDelegate {
 extension BackupPresenter: IBackupDelegate {
 
     func didBackUp() {
-        accountManager.setAccountBackedUp(id: account.id)
+        interactor.setBackedUp(accountId: account.id)
         router.close()
     }
 

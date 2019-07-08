@@ -29,7 +29,8 @@ extension BackupRouter {
 
     static func module(account: Account) -> UIViewController {
         let router = BackupRouter()
-        let presenter = BackupPresenter(router: router, accountManager: App.shared.accountManager, account: account)
+        let interactor = BackupInteractor(accountManager: App.shared.accountManager)
+        let presenter = BackupPresenter(interactor: interactor, router: router, account: account)
 
         let viewController = BackupController(delegate: presenter)
         let navigationViewController = WalletNavigationController(rootViewController: viewController)
