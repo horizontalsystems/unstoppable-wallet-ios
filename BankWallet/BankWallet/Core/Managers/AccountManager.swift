@@ -11,7 +11,7 @@ class AccountManager {
     init(storage: IAccountStorage) {
         self.storage = storage
 
-        accounts = storage.all
+        accounts = storage.allAccounts
     }
 
     private func notifyAccountsChanged() {
@@ -46,7 +46,7 @@ extension AccountManager: IAccountManager {
     func deleteAccount(id: String) {
         accounts.removeAll { $0.id == id }
 
-        storage.delete(id: id)
+        storage.deleteAccount(by: id)
         notifyAccountsChanged()
     }
 
@@ -56,7 +56,7 @@ extension AccountManager: IAccountManager {
             save(account: account)
         }
 
-        storage.setIsBackedUp(id: id)
+        storage.setAccountIsBackedUp(by: id)
         notifyAccountsChanged()
     }
 

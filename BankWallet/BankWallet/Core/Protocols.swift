@@ -301,10 +301,10 @@ protocol IEnabledWalletStorage {
 }
 
 protocol IAccountStorage {
-    var all: [Account] { get }
+    var allAccounts: [Account] { get }
     func save(account: Account)
-    func delete(id: String)
-    func setIsBackedUp(id: String)
+    func deleteAccount(by id: String)
+    func setAccountIsBackedUp(by id: String)
 }
 
 protocol IJsonApiProvider {

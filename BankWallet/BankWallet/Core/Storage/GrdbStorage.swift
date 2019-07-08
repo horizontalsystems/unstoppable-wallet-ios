@@ -177,7 +177,7 @@ extension GrdbStorage: IEnabledWalletStorage {
 
 extension GrdbStorage: IAccountStorage {
 
-    var all: [Account] {
+    var allAccounts: [Account] {
         return try! dbPool.read { db in
             try Account.fetchAll(db)
         }
@@ -189,7 +189,7 @@ extension GrdbStorage: IAccountStorage {
         }
     }
 
-    func delete(id: String) {
+    func deleteAccount(by id: String) {
         _ = try! dbPool.write { db in
             let account = try Account.filter(Account.Columns.id == id).fetchOne(db)
             account?.clearKeychain()
@@ -198,7 +198,7 @@ extension GrdbStorage: IAccountStorage {
         }
     }
 
-    func setIsBackedUp(id: String) {
+    func setAccountIsBackedUp(by id: String) {
         _ = try! dbPool.write { db in
             if let account = try Account.filter(Account.Columns.id == id).fetchOne(db) {
                 account.backedUp = true

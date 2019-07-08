@@ -18,10 +18,10 @@ class Account: Record {
     }
 
     override class var databaseTableName: String {
-        return "account"
+        return "accounts"
     }
 
-    enum TypeNames: Int, DatabaseValueConvertible {
+    enum TypeNames: String, DatabaseValueConvertible {
         case mnemonic
         case privateKey
         case hdMasterKey
@@ -32,10 +32,10 @@ class Account: Record {
         }
 
         public static func fromDatabaseValue(_ dbValue: DatabaseValue) -> TypeNames? {
-            guard case .int64(let rawValue) = dbValue.storage else {
+            guard case .string(let rawValue) = dbValue.storage else {
                 return nil
             }
-            return TypeNames(rawValue: Int(rawValue))
+            return TypeNames(rawValue: rawValue)
         }
 
         public func keyDBKeychain(id: String, fieldName: String) -> String {

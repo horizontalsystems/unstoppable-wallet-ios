@@ -26,7 +26,7 @@ extension AccountType: Equatable {
 
 }
 
-enum MnemonicDerivation: Int, DatabaseValueConvertible {
+enum MnemonicDerivation: String, DatabaseValueConvertible {
 
     case bip44
     case bip39
@@ -36,10 +36,10 @@ enum MnemonicDerivation: Int, DatabaseValueConvertible {
     }
 
     public static func fromDatabaseValue(_ dbValue: DatabaseValue) -> MnemonicDerivation? {
-        guard case .int64(let rawValue) = dbValue.storage else {
+        guard case .string(let rawValue) = dbValue.storage else {
             return nil
         }
-        return MnemonicDerivation(rawValue: Int(rawValue))
+        return MnemonicDerivation(rawValue: rawValue)
     }
 
 }
