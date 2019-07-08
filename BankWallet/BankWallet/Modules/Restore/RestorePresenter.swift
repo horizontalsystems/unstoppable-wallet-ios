@@ -28,11 +28,7 @@ extension RestorePresenter: IRestoreViewDelegate {
     }
 
     func didSelect(index: Int) {
-        switch types[index] {
-        case .mnemonic: router.showRestoreWords(delegate: self)
-        case .eos: ()
-        case .binance: ()
-        }
+        router.showRestore(type: types[index], delegate: self)
     }
 
     func didTapCancel() {
@@ -44,7 +40,7 @@ extension RestorePresenter: IRestoreViewDelegate {
 extension RestorePresenter: IRestoreDelegate {
 
     func didRestore(accountType: AccountType, syncMode: SyncMode?) {
-        accountCreator.createRestoredAccount(accountType: accountType, syncMode: syncMode)
+        _ = accountCreator.createRestoredAccount(accountType: accountType, syncMode: syncMode)
         router.close()
     }
 

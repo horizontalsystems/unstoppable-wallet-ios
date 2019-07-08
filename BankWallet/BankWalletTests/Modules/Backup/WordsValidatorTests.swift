@@ -9,47 +9,56 @@ class WordsValidatorTests: QuickSpec {
     override func spec() {
         let validator = WordsValidator(words: ["bmw", "audi", "toyota", "mazda"])
 
+        describe("not equal indexes and words count") {
+            let confirmationWords = ["bmw"]
+
+            it("throws invalidConfirmation error") {
+                expect {
+                    try validator.validate(confirmationIndexes: [1, 2], words: confirmationWords)
+                }.to(throwError(WordsValidator.ValidationError.invalidConfirmation))
+            }
+        }
         describe("empty words") {
             context("without whitespaces") {
-                let confirmationWords = [1: "bmw", 2: ""]
+                let confirmationWords = ["bmw", ""]
 
                 it("throws emptyWords error") {
-                    expect { try validator.validate(confirmationWords: confirmationWords) }.to(throwError(WordsValidator.ValidationError.emptyWords))
+                    expect { try validator.validate(confirmationIndexes: [1, 2], words: confirmationWords) }.to(throwError(WordsValidator.ValidationError.emptyWords))
                 }
             }
 
             context("with whitespaces") {
-                let confirmationWords = [1: "bmw", 2: "  "]
+                let confirmationWords = ["bmw", "  "]
 
                 it("throws emptyWords error") {
-                    expect { try validator.validate(confirmationWords: confirmationWords) }.to(throwError(WordsValidator.ValidationError.emptyWords))
+                    expect { try validator.validate(confirmationIndexes: [1, 2], words: confirmationWords) }.to(throwError(WordsValidator.ValidationError.emptyWords))
                 }
             }
         }
 
         describe("invalid words") {
             context("invalid word") {
-                let confirmationWords = [1: "renault", 2: "audi"]
+                let confirmationWords = ["renault", "audi"]
 
                 it("throws invalidConfirmation error") {
-                    expect { try validator.validate(confirmationWords: confirmationWords) }.to(throwError(WordsValidator.ValidationError.invalidConfirmation))
+                    expect { try validator.validate(confirmationIndexes: [1, 2], words: confirmationWords) }.to(throwError(WordsValidator.ValidationError.invalidConfirmation))
                 }
             }
 
             context("invalid order") {
-                let confirmationWords = [1: "audi", 2: "bmw"]
+                let confirmationWords = ["audi", "bmw"]
 
                 it("throws invalidConfirmation error") {
-                    expect { try validator.validate(confirmationWords: confirmationWords) }.to(throwError(WordsValidator.ValidationError.invalidConfirmation))
+                    expect { try validator.validate(confirmationIndexes: [1, 2], words: confirmationWords) }.to(throwError(WordsValidator.ValidationError.invalidConfirmation))
                 }
             }
         }
 
         describe("valid words") {
-            let confirmationWords = [1: "bmw", 2: "audi"]
+            let confirmationWords = ["bmw", "audi"]
 
             it("does not throw any errors") {
-                expect { try validator.validate(confirmationWords: confirmationWords) }.notTo(throwError())
+                expect { try validator.validate(confirmationIndexes: [1, 2], words: confirmationWords) }.notTo(throwError())
             }
         }
 

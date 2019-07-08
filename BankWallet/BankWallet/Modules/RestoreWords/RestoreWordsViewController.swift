@@ -113,9 +113,17 @@ class RestoreWordsViewController: WalletViewController {
         words[indexPath.item] = word?.lowercased().trimmingCharacters(in: .whitespaces) ?? ""
     }
 
+    @objc func cancelDidTap() {
+        delegate.didTapCancel()
+    }
+
 }
 
 extension RestoreWordsViewController: IRestoreWordsView {
+
+    func showCancelButton() {
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "button.cancel".localized, style: .plain, target: self, action: #selector(cancelDidTap))
+    }
 
     func show(defaultWords: [String]) {
         for (index, defaultWord) in defaultWords.enumerated() {

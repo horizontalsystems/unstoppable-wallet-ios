@@ -7,15 +7,19 @@ class WordsValidator {
         self.words = words
     }
 
-    func validate(confirmationWords: [Int: String]) throws {
-        for (index, word) in confirmationWords {
-            let trimmedWord = word.trimmingCharacters(in: .whitespaces)
+    func validate(confirmationIndexes: [Int], words: [String]) throws {
+        guard confirmationIndexes.count == words.count else {
+            throw ValidationError.invalidConfirmation
+        }
+
+        for (index, word) in words.enumerated() {
+            let trimmedWord = word.lowercased().trimmingCharacters(in: .whitespaces)
 
             guard !trimmedWord.isEmpty else {
                 throw ValidationError.emptyWords
             }
 
-            guard words[index - 1] == trimmedWord else {
+            guard self.words[confirmationIndexes[index] - 1] == trimmedWord else {
                 throw ValidationError.invalidConfirmation
             }
         }

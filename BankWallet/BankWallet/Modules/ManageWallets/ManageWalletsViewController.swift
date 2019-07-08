@@ -62,8 +62,21 @@ extension ManageWalletsViewController: IManageWalletsView {
         tableView.reloadData()
     }
 
-    func show(error: String) {
-        HudHelper.instance.showError(title: error.localized)
+    func showCreateAccount(coin: Coin, showNew: Bool) {
+        let onSelectNew: (() -> ())? = showNew ? { [weak self] in
+            self?.delegate.didSelectNew()
+        } : nil
+
+        let onSelectRestore: () -> () = { [weak self] in
+            self?.delegate.didSelectRestore()
+        }
+
+        let controller = CreateAccountViewController(coin: coin, onSelectRestore: onSelectRestore, onSelectNew: onSelectNew)
+        present(controller, animated: true)
+    }
+
+    func show(error: Error) {
+        HudHelper.instance.showError(title: error.localizedDescription)
     }
 
 }

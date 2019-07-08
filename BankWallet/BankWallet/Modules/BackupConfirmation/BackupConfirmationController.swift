@@ -4,16 +4,14 @@ import SnapKit
 
 class BackupConfirmationController: WalletViewController {
 
-    let delegate: IBackupViewDelegate
-    let indexes: [Int]
+    let delegate: IBackupConfirmationViewDelegate
 
     let firstIndexedInputField = IndexedInputField()
     let secondIndexedInputField = IndexedInputField()
 
     let descriptionLabel = UILabel()
 
-    init(indexes: [Int], delegate: IBackupViewDelegate) {
-        self.indexes = indexes
+    init(delegate: IBackupConfirmationViewDelegate) {
         self.delegate = delegate
 
         super.init(nibName: nil, bundle: nil)
@@ -68,8 +66,8 @@ class BackupConfirmationController: WalletViewController {
             maker.height.equalTo(BackupTheme.confirmInputHeight)
         }
 
-        firstIndexedInputField.indexLabel.text = "\(indexes[0])."
-        secondIndexedInputField.indexLabel.text = "\(indexes[1])."
+        firstIndexedInputField.indexLabel.text = "\(delegate.indexes[0])."
+        secondIndexedInputField.indexLabel.text = "\(delegate.indexes[1])."
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -87,9 +85,13 @@ class BackupConfirmationController: WalletViewController {
 
     @objc func doneDidTap() {
         if let firstWord = firstIndexedInputField.textField.text?.lowercased(), let secondWord = secondIndexedInputField.textField.text?.lowercased() {
-            delegate.validateDidClick(confirmationWords: [indexes[0]: firstWord, indexes[1]: secondWord])
+            delegate.validateDidClick(confirmationWords: [firstWord, secondWord])
         }
     }
+
+}
+
+extension BackupConfirmationController: IBackupConfirmationView {
 
     func showValidation(error: Error) {
         HudHelper.instance.showError(title: error.localizedDescription)

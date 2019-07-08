@@ -3,15 +3,12 @@ import SnapKit
 
 class BackupWordsController: WalletViewController {
 
-    let delegate: IBackupViewDelegate
+    let delegate: IBackupWordsViewDelegate
 
     let wordsLabel = UILabel()
     let proceedButton = UIButton()
 
-    let words: [String]
-
-    init(words: [String], delegate: IBackupViewDelegate) {
-        self.words = words
+    init(delegate: IBackupWordsViewDelegate) {
         self.delegate = delegate
 
         super.init(nibName: nil, bundle: nil)
@@ -51,7 +48,7 @@ class BackupWordsController: WalletViewController {
         }
 
 
-        let joinedWords = words.enumerated().map { "\($0 + 1). \($1)" }.joined(separator: "\n")
+        let joinedWords = delegate.words.enumerated().map { "\($0 + 1). \($1)" }.joined(separator: "\n")
         let attributedText = NSMutableAttributedString(string: joinedWords)
         attributedText.addAttribute(NSAttributedString.Key.font, value: UIFont.cryptoTitle4, range: NSMakeRange(0, joinedWords.count))
         attributedText.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.crypto_White_Black, range: NSMakeRange(0, joinedWords.count))

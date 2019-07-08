@@ -5,7 +5,10 @@ class ManageWalletsPresenter {
     private let appConfigProvider: IAppConfigProvider
     private let walletManager: IWalletManager
     private let walletCreator: IWalletCreator
+    private let accountCreator: IAccountCreator
     private let stateHandler = ManageWalletsStateHandler()
+
+    private var selectedCoin: Coin?
 
     private var wallets: [Wallet] = [] {
         didSet {
@@ -14,11 +17,12 @@ class ManageWalletsPresenter {
     }
     private var coins: [Coin] = []
 
-    init(router: IManageWalletsRouter, appConfigProvider: IAppConfigProvider, walletManager: IWalletManager, walletCreator: IWalletCreator) {
+    init(router: IManageWalletsRouter, appConfigProvider: IAppConfigProvider, walletManager: IWalletManager, walletCreator: IWalletCreator, accountCreator: IAccountCreator) {
         self.router = router
         self.appConfigProvider = appConfigProvider
         self.walletManager = walletManager
         self.walletCreator = walletCreator
+        self.accountCreator = accountCreator
     }
 
 }
@@ -36,7 +40,8 @@ extension ManageWalletsPresenter: IManageWalletsViewDelegate {
             wallets.append(wallet)
             view?.updateUI()
         } else {
-            router.showCreateAccount(coin: coin, delegate: self)
+            selectedCoin = coin
+            view?.showCreateAccount(coin: coin, showNew: coin.type.canCreateAccount)
         }
     }
 
@@ -75,11 +80,34 @@ extension ManageWalletsPresenter: IManageWalletsViewDelegate {
         router.close()
     }
 
+    func didSelectNew() {
+        guard let coin = selectedCoin else { return }
+
+        do {
+            let account = try accountCreator.createNewAccount(type: coin.type.predefinedAccountType)
+
+            wallets.append(walletCreator.wallet(coin: coin, account: account))
+            view?.updateUI()
+        } catch {
+            view?.show(error: error)
+        }
+    }
+
+    func didSelectRestore() {
+        guard let coin = selectedCoin else { return }
+
+        router.showRestore(type: coin.type.predefinedAccountType, delegate: self)
+    }
+
 }
 
-extension ManageWalletsPresenter: ICreateAccountDelegate {
+extension ManageWalletsPresenter: IRestoreDelegate {
 
-    func onCreate(account: Account, coin: Coin) {
+    func didRestore(accountType: AccountType, syncMode: SyncMode?) {
+        guard let coin = selectedCoin else { return }
+
+        let account = accountCreator.createRestoredAccount(accountType: accountType, syncMode: syncMode)
+
         wallets.append(walletCreator.wallet(coin: coin, account: account))
         view?.updateUI()
     }

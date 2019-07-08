@@ -2,20 +2,17 @@ import UIKit
 import ActionSheet
 
 class CreateAccountViewController: ActionSheetController {
-    private let delegate: ICreateAccountViewDelegate
     private let titleItem = ActionTitleItem(tag: 0)
+    private let coin: Coin
 
-    init(delegate: ICreateAccountViewDelegate) {
-        self.delegate = delegate
+    init(coin: Coin, onSelectRestore: @escaping () -> (), onSelectNew: (() -> ())?) {
+        self.coin = coin
+
         super.init(withModel: BaseAlertModel(), actionSheetThemeConfig: AppTheme.actionSheetConfig)
 
-        initItems()
-    }
-
-    func initItems() {
         model.addItemView(titleItem)
 
-        if delegate.showNew {
+        if let onSelectNew = onSelectNew {
             let newItem = AlertButtonItem(
                     tag: 1,
                     title: "New",
@@ -23,7 +20,9 @@ class CreateAccountViewController: ActionSheetController {
                     backgroundStyle: ButtonTheme.yellowBackgroundDictionary,
                     insets: UIEdgeInsets(top: ButtonTheme.verticalMargin, left: ButtonTheme.margin, bottom: ButtonTheme.insideMargin, right: ButtonTheme.margin)
             ) { [weak self] in
-                self?.delegate.didTapNew()
+                self?.dismiss(animated: true) {
+                    onSelectNew()
+                }
             }
             newItem.isActive = true
 
@@ -35,9 +34,11 @@ class CreateAccountViewController: ActionSheetController {
                 title: "Restore",
                 textStyle: ButtonTheme.textColorDictionary,
                 backgroundStyle: ButtonTheme.grayBackgroundDictionary,
-                insets: UIEdgeInsets(top: delegate.showNew ? ButtonTheme.insideMargin : ButtonTheme.verticalMargin, left: ButtonTheme.margin, bottom: ButtonTheme.verticalMargin, right: ButtonTheme.margin)
+                insets: UIEdgeInsets(top: onSelectNew != nil ? ButtonTheme.insideMargin : ButtonTheme.verticalMargin, left: ButtonTheme.margin, bottom: ButtonTheme.verticalMargin, right: ButtonTheme.margin)
         ) { [weak self] in
-            self?.delegate.didTapRestore()
+            self?.dismiss(animated: true) {
+                onSelectRestore()
+            }
         }
         restoreItem.isActive = true
 
@@ -54,19 +55,7 @@ class CreateAccountViewController: ActionSheetController {
         backgroundColor = AppTheme.actionSheetBackgroundColor
         contentBackgroundColor = .white
 
-        delegate.viewDidLoad()
-    }
-
-}
-
-extension CreateAccountViewController: ICreateAccountView {
-
-    func setTitle(for coin: Coin) {
         titleItem.bindTitle?("Add \(coin.title.localized) Coin", coin)
-    }
-
-    func show(error: Error) {
-        HudHelper.instance.showError(title: error.localizedDescription)
     }
 
 }
