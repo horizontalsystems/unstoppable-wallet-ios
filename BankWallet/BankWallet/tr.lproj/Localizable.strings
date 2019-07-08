@@ -26,15 +26,6 @@
 "access_camera.message" = "Unstoppable Cüzdan, QR Kodu okuyabilmek için Kameranıza ihtiyaç duyuyor.\n\nAyarlar - > Unstoppable'a gidip kamera erişimine izin verin.";
 "access_camera.settings" = "Ayarlar";
 
-// Guest Page
-
-"guest.title" = "Unstoppable";
-"guest.description" = "BLOCKCHAIN'E EMANET";
-"guest.subtitle" = "Decentralized App";
-"guest.create_wallet" = "Cüzdan Oluştur";
-"guest.restore_wallet" = "Geri Yükle";
-"guest.version" = "sürüm %@";
-
 // Restore
 
 "restore.title" = "Geri Yükle";
@@ -65,10 +56,12 @@
 
 "backup.confirmation.title" = "Kontrol etme ...";
 "backup.confirmation.description" = "Gizli Anahtarınızda ki kelimeleri girin";
-"backup.confirmation.failure_alert.text" = "Kelimeler eşleşmiyor";
 "backup.confirmation.secret_key" = "Cüzdanıma erişmemi sağlayan 12 kelimeli Gizli Anahtarın tek sahibinin olduğumu ve bu anahtarın telefonumun güvenli hafızasında tutulduğunu kabul ediyorum.";
 "backup.confirmation.delete_app_warn" = "Uygulamanın silinmesi, hatalı davranması, taşınması ve benzeri bir durumda hesabıma ulaşamadığımda, hesabımı kurtarmanın tek yolunun Gizli Anahtar olduğunu biliyourum.";
 "backup.confirmation.disclaimer" = "Uygulama geliştiricilerinin, istenmeyen herhangi bir hatadan veya bu uygulamayı kullanırken ortaya çıkabilecek sorunlardan sorumlu tutulamayacağını kabul ediyorum.";
+
+"words_validator.empty_words" = "Not all words are entered";
+"words_validator.invalid_confirmation" = "Words do not match";
 
 // Balance
 
@@ -161,6 +154,7 @@
 "settings.title" = "Ayarlar";
 "settings.tab_bar_item" = "Ayarlar";
 "settings.security_center" = "Güvenlik Merkezi";
+"settings.restore_wallet" = "Restore Wallet";
 "settings.advanced" = "Gelişmiş Ayarlar";
 "settings.base_currency" = "Para birimi";
 "settings.language" = "Dil";
@@ -184,12 +178,15 @@
 // Settings -> About
 
 "settings_about.title" = "Hakkında";
+"settings_about.app_title" = "Unstoppable";
+"settings_about.app_subtitle" = "Decentralized App";
 "settings_about.terms_privacy_subtitle" = "Şartlar & Gizlilik Politikası:";
 "settings_about.terms_privacy_text" = "Bu uygulama uçtan uca bir ağdır. Herhangi bir web sunucusuna veya teknik destek personeline bağlı değildir. \n\nİnternet olduğu sürece her yerde çalışır. Hiç kimse bu uygulamanın çalışmasını veya birisinin programı kullanmasını engelleyemez. \n\nFonlarınız kendiliğinden telefonda güvenli bir şekilde saklanır, başka bir yerde değil. \n\nGizli Anahtarınızı yedeklemek ve gizli tutmak sizin sorumluluğunuzdadır. Asla kimseye göstermeyin. Kaybolursa, unutursanız veya çalınırsa fonlarınız Gizli Anahtarınıza sahip olan kişi tarafından kullanılabilir.\n\nTelefonunuzun yazılımını kırmayın, bilinmeyen (güvenilmeyen) kaynaklardan uygulamalar yüklemeyin, cihazınızı güvenilmeyen kişilere vermeyin ve İşletim Sistemini telefonunuzda güncel tutun. Cüzdanınızın güvenliği buna bağlı. \n\nBu uygulamayı destekleyen kodun tamamı, başından beri kamu denetimine açıktı. Yapabileceğimiz en güvenilir ve merkezi olmayan cüzdanı oluşturmaya çalıştık, yine de istenmeyen yazılım sorunu olmadığının garantisi yoktur. Bununla birlikte, bu cüzdanın herhangi bir akıllı telefon cüzdan uygulamasından çok daha güvenli olacağı muhtemel. \n\nDöviz kurları gibi bazı 	jenerik resmi olmayan uygulama verileri merkezi olmayan IPFS sisteminde depolanır.";
 
 // Settings -> Security
 
 "settings_security.title" = "Güvenlik Merkezi";
+"settings_security.manage_accounts" = "Manage Keys";
 "settings_security.backup_wallet" = "Cüzdanı yedekle";
 "settings_security.unlink_from_this_device" = "Bu cihazla bağı kes";
 "settings_security.set_pin" = "Kod";
@@ -199,6 +196,12 @@
 "security_settings.unlink_alert_button" = "Ayır";
 "settings_security.import_wallet_confirmation_1" = "Bu işlemle, cüzdan cihazdan kaldırılacak.";
 "settings_security.import_wallet_confirmation_2" = "Gizli Anahtarı yedeklediğinizden emin olun. Yoksa, gelecekte hesabınıza ulaşamayabilirsiniz.";
+
+// Manage Accounts
+
+"settings_manage_accounts.title" = "Manage Keys";
+"settings_manage_accounts.unlink" = "Unlink";
+"settings_manage_accounts.backup" = "Backup";
 
 // Set PIN
 
@@ -229,3 +232,9 @@
 "numpad_7" = "P Q R S";
 "numpad_8" = "T U V";
 "numpad_9" = "W X Y Z";
+
+// Key Types
+
+"key_type.12_words" = "12 Words Key";
+"key_type.eos" = "EOS Account";
+"key_type.24_words" = "24 Words Key";
