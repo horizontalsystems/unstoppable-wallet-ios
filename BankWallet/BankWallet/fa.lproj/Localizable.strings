@@ -26,15 +26,6 @@
 "access_camera.message" = "بانك ضرورت دسترسي به دوربين دارد بخاطر اسكن كردن QR كد.\nبرويد به تنظيمات -> اجازه دهيد تا بانك دسترسي به دوربين داشته باشد.";
 "access_camera.settings" = "تنظيمات";
 
-// Guest Page
-
-"guest.title" = "Unstoppable";
-"guest.description" = "IN BLOCKCHAIN WE TRUST";
-"guest.subtitle" = "Decentralized app";
-"guest.create_wallet" = "Create Wallet";
-"guest.restore_wallet" = "Restore";
-"guest.version" = "نسخهٔ %@";
-
 // Restore
 
 "restore.title" = "بازیابی";
@@ -65,10 +56,12 @@
 
 "backup.confirmation.title" = "برسي...";
 "backup.confirmation.description" = "حرف هاي رمز تات را وارد كنيد";
-"backup.confirmation.failure_alert.text" = "ارقام با هم شباهت ندارند";
 "backup.confirmation.secret_key" = "من قبول ميكنم كي تنها من صاحب اين ١٢ عدد مخفي ميباشم كي اين عداد در گوشي همراه من ميباشد و تنها من ميتوانم با اين عداد كيف پول و مقدار پول خود را فعال كنم.";
 "backup.confirmation.delete_app_warn" = "من قبول ميكنم كي اگر اين كاربرد تكان بخورد،حذف شود و يا اشكال در عملكرد به وحود بياد، فقط تنها رمز مخفي ميتواند دوباره بهبوديافت كند.";
 "backup.confirmation.disclaimer" = "من قبول ميكنم كي سازنده اين كاربرد هيچ نوع معصوليت در مقابل ويروس و ادم هاي تقلبي ندارد كي شما به ان متواجه شديد.";
+
+"words_validator.empty_words" = "Not all words are entered";
+"words_validator.invalid_confirmation" = "Words do not match";
 
 // Balance
 
@@ -161,6 +154,7 @@
 "settings.title" = "تنظيمات";
 "settings.tab_bar_item" = "تنظيمات";
 "settings.security_center" = "مرکز امنیت";
+"settings.restore_wallet" = "Restore Wallet";
 "settings.advanced" = "Advanced Settings";
 "settings.base_currency" = "ارز مرجع";
 "settings.language" = "زبان";
@@ -184,12 +178,15 @@
 // Settings -> About
 
 "settings_about.title" = "درباره";
+"settings_about.app_title" = "Unstoppable";
+"settings_about.app_subtitle" = "Decentralized App";
 "settings_about.terms_privacy_subtitle" = "شرايط وحريم خصوصي:";
 "settings_about.terms_privacy_text" = "Your funds are securely stored on your device. Not on any external servers.\n\nThe app does not depend on any server or person to function.\n\nSome generic app data like exchange rates are stored on decentralized storage (IPFS).\n\nThe app works everywhere as long as there is an internet connection.\n\nIt is impossible for a third party to block this app from working.\n\nThe entire code powering this app is free and open to the public.\n\nThere may be bugs in the code. And while we tried to provide the most secure wallet we still can not guarantee the security of your funds. No one can.\n\nMake sure you backup a Secret Key for your wallet! Never show your secret key to anyone.\n\nDo not jailbreak your phone or install apps from unknown (untrusted) sources.\n\nDo not give your device to untrusted parties.\n\nYou are solely responsible for keeping your Secret Key and your device secure.";
 
 // Settings -> Security
 
 "settings_security.title" = "مركز امنيتي";
+"settings_security.manage_accounts" = "Manage Keys";
 "settings_security.backup_wallet" = "پيشتيبان گيري كيف پول";
 "settings_security.unlink_from_this_device" = "لغو پيوند ازين دست گاه";
 "settings_security.set_pin" = "رمز عبور";
@@ -199,6 +196,12 @@
 "security_settings.unlink_alert_button" = "جدا کردن";
 "settings_security.import_wallet_confirmation_1" = "این اقدام کیف پول نصب شده فعلی را از این دستگاه را حذف می کند.";
 "settings_security.import_wallet_confirmation_2" = "مطمعاً باشيد كي رمز مخفي را با خود داريد و گرنه شما در آينده توانايي دسترسي به منابع مالي نداريد.";
+
+// Manage Accounts
+
+"settings_manage_accounts.title" = "Manage Keys";
+"settings_manage_accounts.unlink" = "Unlink";
+"settings_manage_accounts.backup" = "Backup";
 
 // Set PIN
 
@@ -229,3 +232,9 @@
 "numpad_7" = "ف ق ك گ ل";
 "numpad_8" = "ل م ن و";
 "numpad_9" = "م ن و ء ي";
+
+// Key Types
+
+"key_type.12_words" = "12 Words Key";
+"key_type.eos" = "EOS Account";
+"key_type.24_words" = "24 Words Key";
