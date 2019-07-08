@@ -26,15 +26,6 @@
 "access_camera.message" = "Wir brauchen Zugriff auf deine Kamera um QR-code scannen.\nRufe die Einstellungen auf, um den Zugriff auf die Kamera zu erlauben";
 "access_camera.settings" = "Einstellungen";
 
-// Guest Page
-
-"guest.title" = "Unstoppable";
-"guest.description" = "IN BLOCKCHAIN WE TRUST";
-"guest.subtitle" = "Decentralized App";
-"guest.create_wallet" = "Wallet Erstellen";
-"guest.restore_wallet" = "Wiederherstellen";
-"guest.version" = "Version %@";
-
 // Restore
 
 "restore.title" = "Wiederherstellen";
@@ -65,10 +56,12 @@
 
 "backup.confirmation.title" = "Prüfen …";
 "backup.confirmation.description" = "Gib bitte die Wörter deines Offlineschlüssels ein";
-"backup.confirmation.failure_alert.text" = "Die Wörter stimmen nicht überein";
 "backup.confirmation.secret_key" = "Ich stimme zu, dass ich allein Inhaber eines privaten 12-Wort Offlineschlüssels bin, der sicher auf meinem Telefon gespeichert wird und mir ermöglicht, Geld auf meinem Wallet zu steuern.";
 "backup.confirmation.delete_app_warn" = "Ich stimme zu, dass bei einer Verschiebung oder Entfernung dieser App, der Zugang zu meinem Walletkonto nur bei Verwendung den Offlineschlüsseln erfolgt werden muss.";
 "backup.confirmation.disclaimer" = "Ich stimme zu, dass Entwickler dieser App nicht für unbeabsichtigte Fehler oder Probleme verantwortlich gemacht werden können, die bei der Verwendung dieser App auftreten können.";
+
+"words_validator.empty_words" = "Not all words are entered";
+"words_validator.invalid_confirmation" = "Words do not match";
 
 // Balance
 
@@ -161,6 +154,7 @@
 "settings.title" = "Einstellungen";
 "settings.tab_bar_item" = "Einstellungen";
 "settings.security_center" = "Sicherheit";
+"settings.restore_wallet" = "Restore Wallet";
 "settings.advanced" = "Erweiterte Einstellungen";
 "settings.base_currency" = "Währung";
 "settings.language" = "Sprache";
@@ -184,12 +178,15 @@
 // Settings -> About
 
 "settings_about.title" = "Info";
+"settings_about.app_title" = "Unstoppable";
+"settings_about.app_subtitle" = "Decentralized App";
 "settings_about.terms_privacy_subtitle" = "ANB & Datenschutz:";
 "settings_about.terms_privacy_text" = "Diese Anwendung ist vollständig dezentralisiert\n\nDie Leistung dieser Anwendung hängt nicht von Servern von Drittanbietern oder einem technischen Supportteam ab.\n\nDie Anwendung funktioniert überall, solange es Internet gibt. Dieser Wallet oder deren Benutzer können von niemandem blockiert werden.\n\nDein Geld wird nur auf Ihrem Telefon gespeichert.\n\nDu bist allein für die sichere Aufbewahrung des Offlineschlüssels verantwortlich. Teil deinen Offlineschlüssel nie mit jemandem. Wenn der Offlineschlüssel verloren geht, gestohlen oder vergessen wird, erhält derjenige, der über deinen Offlineschlüssel verfügt, die Kontrolle über dein Geld.\nHack dein Telefon nicht, installier keine Anwendungen von inoffiziellen Quellen und gib dein Telefon niemals den anderen. Die Sicherheit  deiner Wallet hängt direkt davon ab.\n\nDer gesamte Programmcode dieser Anwendung ist kostenlos und für die Öffentlichkeit zugänglich. Wir haben versucht, die sicherste und gleichzeitig dezentralisierte Wallet zu schaffen, aber es gibt keine Garantie dafür, dass der Anwendungscode fehlerfrei ist. Wir glauben jedoch, dass dieser Wallet in Bezug auf die Sicherheit fast alle heute verfügbare mobile Kryptobörsen deutlich übertrifft.\n\nEinige von der Anwendung verwendete öffentliche Daten, wie z. B. Wechselkurse, werden im dezentralen Repository (IPFS) gespeichert";
 
 // Settings -> Security
 
 "settings_security.title" = "Sicherheit";
+"settings_security.manage_accounts" = "Manage Keys";
 "settings_security.backup_wallet" = "Wallet sichern";
 "settings_security.unlink_from_this_device" = "Verknüpfung mit diesem Gerät aufheben";
 "settings_security.set_pin" = "Code";
@@ -199,6 +196,12 @@
 "security_settings.unlink_alert_button" = "Verknüpfung trennen";
 "settings_security.import_wallet_confirmation_1" = "Diese Aktion entfernt dein Wallet von diesem Gerät.";
 "settings_security.import_wallet_confirmation_2" = "Stell sicher, du hast deine geheimen Offlineschlüssel oder du wirst nicht in der Lage, den Zugang zu Mitteln darauf in Zukunft.";
+
+// Manage Accounts
+
+"settings_manage_accounts.title" = "Manage Keys";
+"settings_manage_accounts.unlink" = "Unlink";
+"settings_manage_accounts.backup" = "Backup";
 
 // Set PIN
 
@@ -229,3 +232,9 @@
 "numpad_7" = "P Q R S";
 "numpad_8" = "T U V";
 "numpad_9" = "W X Y Z";
+
+// Key Types
+
+"key_type.12_words" = "12 Words Key";
+"key_type.eos" = "EOS Account";
+"key_type.24_words" = "24 Words Key";
