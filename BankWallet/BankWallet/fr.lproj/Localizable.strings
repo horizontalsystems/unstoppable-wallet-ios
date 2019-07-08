@@ -26,15 +26,6 @@
 "access_camera.message" = "Unstoppable  porte-monnaie a besoin d’accéder à votre camerà pour scanner le code QR.\n\nAllez dans Paramètres - >  et permettez d’accéder à la caméra.";
 "access_camera.settings" = "Paramètres";
 
-// Guest Page
-
-"guest.title" = "Unstoppable";
-"guest.description" = "IN BLOCKCHAIN WE TRUST";
-"guest.subtitle" = "Decentralized app";
-"guest.create_wallet" = "Nouveu Porte-Monnaie";
-"guest.restore_wallet" = "Restaurer";
-"guest.version" = "Version %@";
-
 // Restore
 
 "restore.title" = "Restaurer";
@@ -65,10 +56,12 @@
 
 "backup.confirmation.title" = "Vérification...";
 "backup.confirmation.description" = "Entrez les mots de votre clé secrète";
-"backup.confirmation.failure_alert.text" = "Les mots ne correspondent pas";
 "backup.confirmation.secret_key" = "Je comprends que je suis propriétaire d'une clé secrète privée de 12 mots, qui est stockée en toute sécurité sur mon téléphone portable et me permet de contrôler les fonds sur mon porte-monnaie.";
 "backup.confirmation.delete_app_warn" = "Je comprends que si cette appli ne fonction plus, est déplacée vers un autre appareil ou supprimée, mon porte-monnaie ne peut être récupéré qu'avec la clé secrète.";
 "backup.confirmation.disclaimer" = "Je comprends que les développeurs de cette application ne peuvent pas être responsables de tout bogue ou problème non désiré qui pourrait apparaître lors de l'utilisation de cette application.";
+
+"words_validator.empty_words" = "Not all words are entered";
+"words_validator.invalid_confirmation" = "Words do not match";
 
 // Balance
 
@@ -161,6 +154,7 @@
 "settings.title" = "Paramètres";
 "settings.tab_bar_item" = "Paramètres";
 "settings.security_center" = "Centre de Sécurité";
+"settings.restore_wallet" = "Restore Wallet";
 "settings.advanced" = "Advanced Settings";
 "settings.base_currency" = "Devise de Base";
 "settings.language" = "Langue";
@@ -184,12 +178,15 @@
 // Settings -> About
 
 "settings_about.title" = "À propos de";
+"settings_about.app_title" = "Unstoppable";
+"settings_about.app_subtitle" = "Decentralized App";
 "settings_about.terms_privacy_subtitle" = "Terms & Confidentialité:";
 "settings_about.terms_privacy_text" = "Cette application est décentralisé. Cela ne dépend pas du personnel du service d'assistance Web.\n\nCela fonctionne partout tant qu'il y a internet. Aucune entité ne peut empêcher cette application de fonctionner ou d'empêcher quelqu'un de l'utiliser.\n\nVos fonds stockés en sécurité sur votre portable, pas sur autres.\n\nIl est de votre responsabilité de sauvegarder votre clé secrète et de la garder privée. Ne le montre jamais à personne. En cas de perte, d’oubli ou de vol, vos fonds peuvent être utilisés par la personne qui détient votre clé secrète.\n\nNe piratez pas votre portable, n'installez pas d'applications de sources inconnues (non fiables), ne confiez pas votre appareil à des personnes non fiables et maintenez le système d'exploitation à jour. La sécurité de votre porte-monnaie dépend de tout cela.\n\nLe code alimentant cette application a été ouvert au public depuis le début. Nous avons essayé de créer le porte-monnaie le plus sécurisé et le plus décentralisé possible, mais rien ne garantit qu’il n’y ait pas de problèmes logiciels inattendus. Cela dit, ce porte-monnaie sera probablement beaucoup plus sécurisé que n'importe quelle application de porte-monnaie pour portable.\n\nCertaines données d'applications génériques non privées, telles que les taux de change, sont stockées dans un stockage décentralisé (IPFS). ";
 
 // Settings -> Security
 
 "settings_security.title" = "Centre de Sécurité";
+"settings_security.manage_accounts" = "Manage Keys";
 "settings_security.backup_wallet" = "Porte-monnaie de Sauvegarde";
 "settings_security.unlink_from_this_device" = "Supprimer le lien de cet appareil";
 "settings_security.set_pin" = "Code";
@@ -199,6 +196,12 @@
 "security_settings.unlink_alert_button" = "Délier";
 "settings_security.import_wallet_confirmation_1" = "Cette action supprimera le porte-monnaie actuellement installé sur cet appareil.";
 "settings_security.import_wallet_confirmation_2" = "Assurez-vous de disposer de la clé secrète, sinon vous ne pourrez plus accéder aux fonds.";
+
+// Manage Accounts
+
+"settings_manage_accounts.title" = "Manage Keys";
+"settings_manage_accounts.unlink" = "Unlink";
+"settings_manage_accounts.backup" = "Backup";
 
 // Set PIN
 
@@ -229,3 +232,9 @@
 "numpad_7" = "P Q R S";
 "numpad_8" = "T U V";
 "numpad_9" = "W X Y Z";
+
+// Key Types
+
+"key_type.12_words" = "12 Words Key";
+"key_type.eos" = "EOS Account";
+"key_type.24_words" = "24 Words Key";
