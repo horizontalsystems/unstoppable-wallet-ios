@@ -7,7 +7,6 @@ class App {
     let randomManager: IRandomManager
 
     let localStorage: ILocalStorage
-    let secureStorage: ISecureStorage
 
     let appConfigProvider: IAppConfigProvider
     let systemInfoManager: ISystemInfoManager
@@ -59,7 +58,6 @@ class App {
         randomManager = RandomManager()
 
         localStorage = UserDefaultsStorage()
-        secureStorage = KeychainStorage(localStorage: localStorage)
 
         appConfigProvider = AppConfigProvider()
         systemInfoManager = SystemInfoManager()
@@ -75,10 +73,10 @@ class App {
 
         grdbStorage = GrdbStorage()
 
-        pinManager = PinManager(secureStorage: secureStorage)
+        pinManager = PinManager(secureStorage: KeychainStorage.shared)
         wordsManager = WordsManager(localStorage: localStorage)
 
-        accountManager = AccountManager(secureStorage: secureStorage)
+        accountManager = AccountManager(storage: grdbStorage)
         accountCreator = AccountCreator(accountManager: accountManager, accountFactory: AccountFactory(), wordsManager: wordsManager)
 
         walletManager = WalletManager(appConfigProvider: appConfigProvider, accountManager: accountManager, storage: grdbStorage)
@@ -90,7 +88,7 @@ class App {
 
         ethereumKitManager = EthereumKitManager(appConfigProvider: appConfigProvider)
 
-        authManager = AuthManager(secureStorage: secureStorage, localStorage: localStorage, pinManager: pinManager, coinManager: walletManager, rateManager: rateManager, ethereumKitManager: ethereumKitManager)
+        authManager = AuthManager(secureStorage: KeychainStorage.shared, localStorage: localStorage, pinManager: pinManager, coinManager: walletManager, rateManager: rateManager, ethereumKitManager: ethereumKitManager)
 
         feeRateProvider = FeeRateProvider()
 

@@ -2,14 +2,16 @@ import Foundation
 import RxSwift
 
 class AccountManager {
-    private let secureStorage: ISecureStorage
+    private let storage: IAccountStorage
 
     var accounts: [Account] = []
     private var accountsSubject = PublishSubject<[Account]>()
     private var nonBackedUpCountSubject = PublishSubject<Int>()
 
-    init(secureStorage: ISecureStorage) {
-        self.secureStorage = secureStorage
+    init(storage: IAccountStorage) {
+        self.storage = storage
+
+        accounts = storage.allAccounts
     }
 
     private func notifyAccountsChanged() {
@@ -37,21 +39,24 @@ extension AccountManager: IAccountManager {
         accounts.removeAll { $0.id == account.id }
         accounts.append(account)
 
+        storage.save(account: account)
         notifyAccountsChanged()
     }
 
     func deleteAccount(id: String) {
         accounts.removeAll { $0.id == id }
 
+        storage.deleteAccount(by: id)
         notifyAccountsChanged()
     }
 
     func setAccountBackedUp(id: String) {
-        if var account = accounts.first(where: { $0.id == id }) {
+        if let account = accounts.first(where: { $0.id == id }) {
             account.backedUp = true
             save(account: account)
         }
 
+        storage.setAccountIsBackedUp(by: id)
         notifyAccountsChanged()
     }
 

@@ -76,6 +76,25 @@ class GrdbStorage {
             }
         }
 
+        migrator.registerMigration("createAccountsTable") { db in
+            try db.create(table: Account.databaseTableName) { t in
+                t.column(Account.Columns.id.name, .text).notNull()
+                t.column(Account.Columns.name.name, .text).notNull()
+                t.column(Account.Columns.type.name, .integer).notNull()
+                t.column(Account.Columns.backedUp.name, .boolean).notNull()
+                t.column(Account.Columns.defaultSyncMode.name, .text)
+                t.column(Account.Columns.words.name, .blob)
+                t.column(Account.Columns.derivation.name, .integer)
+                t.column(Account.Columns.salt.name, .blob)
+                t.column(Account.Columns.data.name, .blob)
+                t.column(Account.Columns.eosAccount.name, .blob)
+
+                t.primaryKey([
+                    Account.Columns.id.name
+                ], onConflict: .replace)
+            }
+        }
+
         return migrator
     }
 
@@ -134,7 +153,7 @@ extension GrdbStorage: IEnabledWalletStorage {
 
     var enabledWallets: [EnabledWallet] {
         return try! dbPool.read { db in
-            return try EnabledWallet.order(EnabledWallet.Columns.walletOrder).fetchAll(db)
+            try EnabledWallet.order(EnabledWallet.Columns.walletOrder).fetchAll(db)
         }
     }
 
@@ -151,6 +170,40 @@ extension GrdbStorage: IEnabledWalletStorage {
     func clearEnabledWallets() {
         _ = try! dbPool.write { db in
             try EnabledWallet.deleteAll(db)
+        }
+    }
+
+}
+
+extension GrdbStorage: IAccountStorage {
+
+    var allAccounts: [Account] {
+        return try! dbPool.read { db in
+            try Account.fetchAll(db)
+        }
+    }
+
+    func save(account: Account) {
+        _ = try! dbPool.write { db in
+            try account.insert(db)
+        }
+    }
+
+    func deleteAccount(by id: String) {
+        _ = try! dbPool.write { db in
+            let account = try Account.filter(Account.Columns.id == id).fetchOne(db)
+            account?.clearKeychain()
+
+            try account?.delete(db)
+        }
+    }
+
+    func setAccountIsBackedUp(by id: String) {
+        _ = try! dbPool.write { db in
+            if let account = try Account.filter(Account.Columns.id == id).fetchOne(db) {
+                account.backedUp = true
+                try account.insert(db)
+            }
         }
     }
 

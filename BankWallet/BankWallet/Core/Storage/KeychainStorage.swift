@@ -2,6 +2,8 @@ import Foundation
 import KeychainAccess
 
 class KeychainStorage {
+    static let shared = KeychainStorage(localStorage: UserDefaultsStorage.shared)
+
     let keychain: Keychain
 
     private let pinKey = "pin_keychain_key"
@@ -73,6 +75,18 @@ class KeychainStorage {
         try keychain.set("\(value)", key: key)
     }
 
+    func getData(forKey key: String) -> Data? {
+        return try? keychain.getData(key)
+    }
+
+    func set(value: Data?, forKey key: String) throws {
+        guard let value = value else {
+            try keychain.remove(key)
+            return
+        }
+        try keychain.set(value, key: key)
+    }
+
     private func get<T: NSCoding>(forKey key: String) -> T? {
         if let keychainData = try? keychain.getData(key) {
             return NSKeyedUnarchiver.unarchiveObject(with: keychainData) as? T
@@ -88,6 +102,10 @@ class KeychainStorage {
         } else {
             try keychain.remove(key)
         }
+    }
+
+    func remove(for key: String) throws {
+        try keychain.remove(key)
     }
 
 }
