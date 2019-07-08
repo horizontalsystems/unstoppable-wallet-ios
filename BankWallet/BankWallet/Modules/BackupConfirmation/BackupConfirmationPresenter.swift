@@ -3,34 +3,42 @@ class BackupConfirmationPresenter: IBackupConfirmationPresenter {
 
     weak var view: IBackupConfirmationView?
 
+    private let interactor: IBackupConfirmationInteractor
     private let router: IBackupConfirmationRouter
-    private let randomManager: IRandomManager
-    private let wordsValidator: WordsValidator
 
     private let words: [String]
 
-    private(set) var indexes: [Int]
+    private(set) var indexes = [Int]()
 
-    init(router: IBackupConfirmationRouter, randomManager: IRandomManager, words: [String]) {
+    init(interactor: IBackupConfirmationInteractor, router: IBackupConfirmationRouter, words: [String]) {
+        self.interactor = interactor
         self.router = router
-        self.randomManager = randomManager
         self.words = words
-
-        indexes = randomManager.getRandomIndexes(max: words.count, count: BackupConfirmationPresenter.confirmationWordsCount)
-        wordsValidator = WordsValidator(words: words)
     }
 
 }
 
 extension BackupConfirmationPresenter: IBackupConfirmationViewDelegate {
 
+    func generateNewIndexes() {
+        indexes = interactor.fetchConfirmationIndexes(max: words.count, count: BackupConfirmationPresenter.confirmationWordsCount)
+    }
+
     func validateDidClick(confirmationWords: [String]) {
         do {
-            try wordsValidator.validate(confirmationIndexes: indexes, words: confirmationWords)
+            try interactor.validate(words: words, confirmationIndexes: indexes, confirmationWords: confirmationWords)
             router.notifyDidValidate()
         } catch {
             view?.showValidation(error: error)
         }
+    }
+
+}
+
+extension BackupConfirmationPresenter: IBackupConfirmationInteractorDelegate {
+
+    func onBecomeActive() {
+        view?.onBecomeActive()
     }
 
 }

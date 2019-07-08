@@ -281,7 +281,6 @@
 		11B35B99C84075296D6F26DE /* UnlinkPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35419B0C846238DDC50F3 /* UnlinkPresenter.swift */; };
 		11B35B99F2CB665E76E66A91 /* TransactionsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3520E9F70FFB8CC2D25A3 /* TransactionsRouter.swift */; };
 		11B35BA21EAB383C3DE6FA5A /* BalanceRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35DDABED90E97417092F5 /* BalanceRouter.swift */; };
-		11B35BCBBF60CA8A041E97B0 /* BackupRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35D66E95B16C32E3796E8 /* BackupRouter.swift */; };
 		11B35BCC684750CBA3C50709 /* AccountCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35F26989959D83D337249 /* AccountCreator.swift */; };
 		11B35BCC6C00E857CE562F16 /* EthereumAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B352D314A298B6B832F309 /* EthereumAdapter.swift */; };
 		11B35BCE106E336CFA7C7CCF /* WalletCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35722A3FD3A86D0ABA706 /* WalletCreator.swift */; };
@@ -676,10 +675,16 @@
 		3A472DAF220804AC0067B288 /* UIWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B358407DC8E2314E66124E /* UIWindow.swift */; };
 		3A472DB02208050D0067B288 /* UIWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B358407DC8E2314E66124E /* UIWindow.swift */; };
 		3A472DB1220805230067B288 /* UIWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B358407DC8E2314E66124E /* UIWindow.swift */; };
+		3A6E283C22D33B4500211177 /* BackupRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A6E283B22D33B4500211177 /* BackupRouter.swift */; };
+		3A6E283D22D33B6D00211177 /* BackupRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35D66E95B16C32E3796E8 /* BackupRouter.swift */; };
+		3A6E283E22D33B7A00211177 /* BackupRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35D66E95B16C32E3796E8 /* BackupRouter.swift */; };
 		3AF4739D21D38F380005A458 /* FullTransactionInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF4739C21D38F380005A458 /* FullTransactionInfoViewController.swift */; };
 		3AF4739E21D38F380005A458 /* FullTransactionInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF4739C21D38F380005A458 /* FullTransactionInfoViewController.swift */; };
 		3AF4739F21D38F380005A458 /* FullTransactionInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF4739C21D38F380005A458 /* FullTransactionInfoViewController.swift */; };
+		3C7B908FFAF30C34C67B7142 /* BackupConfirmationInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7B94C6548A52D8576B8138 /* BackupConfirmationInteractor.swift */; };
+		3C7B914B741D51C85FDDD3D8 /* BackupConfirmationInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7B94C6548A52D8576B8138 /* BackupConfirmationInteractor.swift */; };
 		3C7B936067D1C0A7CDC2635D /* UrlManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7B94F32F315F4F753D89AD /* UrlManager.swift */; };
+		3C7B95CD8DC991FF890AC487 /* BackupConfirmationInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7B94C6548A52D8576B8138 /* BackupConfirmationInteractor.swift */; };
 		3C7B99D3D6AE0B1C0D8E5F09 /* UrlManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7B94F32F315F4F753D89AD /* UrlManager.swift */; };
 		3C7B9BFD8EA7360907306675 /* UrlManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7B94F32F315F4F753D89AD /* UrlManager.swift */; };
 		41A22A9B2FA01C41637B3EB9 /* Pods_Bank_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C34C463CE4115A838C13EA33 /* Pods_Bank_Tests.framework */; };
@@ -733,6 +738,7 @@
 		58AAA3E5C080A32A6A6B0E6D /* BtcComProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA58097EB8413FEA75EE8 /* BtcComProvider.swift */; };
 		58AAA3ED415F09117EE63646 /* FullTransactionInfoState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA90F7BDC0FD487A0C495 /* FullTransactionInfoState.swift */; };
 		58AAA3FE527C904C4C777DAB /* FullTransactionInfoPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA823D090E4B3E0D03A91 /* FullTransactionInfoPresenter.swift */; };
+		58AAA410CEF17E930102D036 /* BackupInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA04194E7E2B466F92828 /* BackupInteractor.swift */; };
 		58AAA42E94F5567EF3F4690C /* BlockExplorerProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAEB2610B22FF5C9E9A41 /* BlockExplorerProvider.swift */; };
 		58AAA4348367DA9D69579C2D /* BackupWordsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA39FF58FB74DC374C5C1 /* BackupWordsPresenter.swift */; };
 		58AAA4356D5E31303E6E5A4C /* FullTransactionRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAADF00D642CB746C44C51 /* FullTransactionRecord.swift */; };
@@ -782,6 +788,7 @@
 		58AAA73C535D82C9DD991417 /* FullTransactionInfoInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA12F81B0D2587DB52D94 /* FullTransactionInfoInteractorTests.swift */; };
 		58AAA745D76A13D06800BDD1 /* EthereumKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAC5B00009B199A687EF3 /* EthereumKitManager.swift */; };
 		58AAA7539516E70428514119 /* FullTransactionInfoRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA842D6734B75D88E578C /* FullTransactionInfoRouter.swift */; };
+		58AAA75A994A2F0EC891D68B /* BackupInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA04194E7E2B466F92828 /* BackupInteractor.swift */; };
 		58AAA7BF63EEB776A0256C61 /* BackupModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA88D3ED8D5570474B589 /* BackupModule.swift */; };
 		58AAA7E21743D93ABEB7DBAD /* FullTransactionRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAADF00D642CB746C44C51 /* FullTransactionRecord.swift */; };
 		58AAA8124398E5905A425453 /* BlockChairProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA839E98781BFF8AEB2B3 /* BlockChairProvider.swift */; };
@@ -841,6 +848,7 @@
 		58AAAE2E0615EBEF98E58BE8 /* BitcoinTransactionInfoAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA1C151E737B0B32208B4 /* BitcoinTransactionInfoAdapter.swift */; };
 		58AAAE30782CBD903A650F1B /* BackupConfirmationModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA2833E26BB948D3E06D2 /* BackupConfirmationModule.swift */; };
 		58AAAE86C076E1C7418874D3 /* BackupConfirmationRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA2D3E1840EA8931E12D0 /* BackupConfirmationRouter.swift */; };
+		58AAAE8D8A77DE3EC9BF448E /* BackupInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA04194E7E2B466F92828 /* BackupInteractor.swift */; };
 		58AAAEC99ED42E2561A00A02 /* DataProviderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA414888309622A1AAF53 /* DataProviderCell.swift */; };
 		58AAAED1B87203C859CA2E15 /* DataProviderSettingsInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA4B3E970540EE2F76C6E /* DataProviderSettingsInteractor.swift */; };
 		58AAAED1D46438A1C3FDECCB /* BackupWordsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA18351C448F8AF3ED17C /* BackupWordsRouter.swift */; };
@@ -864,7 +872,6 @@
 		D38404E8218317DF007D50AD /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3B62A8820CA40DC005A9F80 /* MainViewController.swift */; };
 		D38404E9218317DF007D50AD /* BalanceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3B62A8C20CA436F005A9F80 /* BalanceViewController.swift */; };
 		D38404EE218317DF007D50AD /* RestoreTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 509E3D2320E398610095452C /* RestoreTheme.swift */; };
-		D38404F1218317DF007D50AD /* BackupRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35D66E95B16C32E3796E8 /* BackupRouter.swift */; };
 		D38404F4218317DF007D50AD /* RestoreRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35142DB758C8B2397D115 /* RestoreRouter.swift */; };
 		D38404F5218317DF007D50AD /* RestorePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35BAEE22C144B33661819 /* RestorePresenter.swift */; };
 		D38404F8218317DF007D50AD /* RestoreModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B358586003E20B167B1442 /* RestoreModule.swift */; };
@@ -1036,7 +1043,6 @@
 		D38405D721831B3D007D50AD /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3B62A8820CA40DC005A9F80 /* MainViewController.swift */; };
 		D38405D821831B3D007D50AD /* BalanceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3B62A8C20CA436F005A9F80 /* BalanceViewController.swift */; };
 		D38405DD21831B3D007D50AD /* RestoreTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 509E3D2320E398610095452C /* RestoreTheme.swift */; };
-		D38405E021831B3D007D50AD /* BackupRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35D66E95B16C32E3796E8 /* BackupRouter.swift */; };
 		D38405E321831B3D007D50AD /* RestoreRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35142DB758C8B2397D115 /* RestoreRouter.swift */; };
 		D38405E421831B3D007D50AD /* RestorePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35BAEE22C144B33661819 /* RestorePresenter.swift */; };
 		D38405E721831B3D007D50AD /* RestoreModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B358586003E20B167B1442 /* RestoreModule.swift */; };
@@ -1591,7 +1597,9 @@
 		1A564FE8D247C36C2478C6B5 /* TransactionCurrenciesHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionCurrenciesHeaderView.swift; sourceTree = "<group>"; };
 		2CDA251F7039B6388B930003 /* Pods_Bank_Dev.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Bank_Dev.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2FA5D82E6E66E2BB85636BD0 /* BlockdozerProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockdozerProvider.swift; sourceTree = "<group>"; };
+		3A6E283B22D33B4500211177 /* BackupRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = BackupRouter.swift; path = BankWallet/Modules/Backup/BackupRouter.swift; sourceTree = "<group>"; };
 		3AF4739C21D38F380005A458 /* FullTransactionInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FullTransactionInfoViewController.swift; sourceTree = "<group>"; };
+		3C7B94C6548A52D8576B8138 /* BackupConfirmationInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackupConfirmationInteractor.swift; sourceTree = "<group>"; };
 		3C7B94F32F315F4F753D89AD /* UrlManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UrlManager.swift; sourceTree = "<group>"; };
 		3D955ABDB32C63409D8F97FC /* Pods-Bank Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bank Tests.debug.xcconfig"; path = "../Pods/Target Support Files/Pods-Bank Tests/Pods-Bank Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		417B3999AB813D9B5AE50F08 /* Pods-Bank Dev T.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bank Dev T.debug.xcconfig"; path = "../Pods/Target Support Files/Pods-Bank Dev T/Pods-Bank Dev T.debug.xcconfig"; sourceTree = "<group>"; };
@@ -1618,6 +1626,7 @@
 		50EED192218822FA00E200AD /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		57643D7C83C0E8939C422D13 /* Pods_Bank_Dev_T.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Bank_Dev_T.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		58AAA01DEF6280C1A0F1DA2D /* EthereumTransactionInfoAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EthereumTransactionInfoAdapter.swift; sourceTree = "<group>"; };
+		58AAA04194E7E2B466F92828 /* BackupInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackupInteractor.swift; sourceTree = "<group>"; };
 		58AAA07E7147F10E59DC1CED /* EtherscanProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EtherscanProvider.swift; sourceTree = "<group>"; };
 		58AAA12F81B0D2587DB52D94 /* FullTransactionInfoInteractorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FullTransactionInfoInteractorTests.swift; sourceTree = "<group>"; };
 		58AAA168658F739D4AF36B7D /* InsightProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InsightProvider.swift; sourceTree = "<group>"; };
@@ -1818,6 +1827,7 @@
 			children = (
 				58AAA88D3ED8D5570474B589 /* BackupModule.swift */,
 				11B35D66E95B16C32E3796E8 /* BackupRouter.swift */,
+				58AAA04194E7E2B466F92828 /* BackupInteractor.swift */,
 				58AAA5F63E9C788A68C8AF5A /* BackupPresenter.swift */,
 				D348A77020C7C58900803B9E /* BackupController.swift */,
 			);
@@ -2821,6 +2831,7 @@
 			children = (
 				58AAA2833E26BB948D3E06D2 /* BackupConfirmationModule.swift */,
 				58AAA2D3E1840EA8931E12D0 /* BackupConfirmationRouter.swift */,
+				3C7B94C6548A52D8576B8138 /* BackupConfirmationInteractor.swift */,
 				58AAAE75A33F6C7304A3F8EE /* BackupConfirmationPresenter.swift */,
 				58AAA46DB06FFD38AD574E4E /* BackupConfirmationController.swift */,
 				58AAA901FEA7E5AFB0519C5C /* WordsValidator.swift */,
@@ -2868,6 +2879,7 @@
 		D3285F3920BD158E00644076 = {
 			isa = PBXGroup;
 			children = (
+				3A6E283B22D33B4500211177 /* BackupRouter.swift */,
 				D3285F4420BD158E00644076 /* BankWallet */,
 				D3373DC020C658660082BC4A /* BankWalletTests */,
 				D3285F4320BD158E00644076 /* Products */,
@@ -3328,8 +3340,6 @@
 				D3B62A8E20CA436F005A9F80 /* BalanceViewController.swift in Sources */,
 				D3B491EF21F1ECC600DAE203 /* TransactionsMetadataDataSource.swift in Sources */,
 				509E3D2420E398610095452C /* RestoreTheme.swift in Sources */,
-				11B35BCBBF60CA8A041E97B0 /* BackupRouter.swift in Sources */,
-				11B35BCBBF60CA8A041E97B0 /* BackupRouter.swift in Sources */,
 				11B35BCEC18400181DF64491 /* RestoreRouter.swift in Sources */,
 				11B3546128004E2E5F3CD23A /* RestorePresenter.swift in Sources */,
 				11B35BFADC930EF5007A177F /* RestoreModule.swift in Sources */,
@@ -3700,6 +3710,9 @@
 				58AAA5E52B1488746245BF0A /* BackupConfirmationPresenter.swift in Sources */,
 				58AAA48E889FFE50E68DF8C7 /* BackupConfirmationModule.swift in Sources */,
 				58AAAC707562CFA08ABC2095 /* WordsValidator.swift in Sources */,
+				58AAA75A994A2F0EC891D68B /* BackupInteractor.swift in Sources */,
+				3A6E283D22D33B6D00211177 /* BackupRouter.swift in Sources */,
+				3C7B908FFAF30C34C67B7142 /* BackupConfirmationInteractor.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3758,6 +3771,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3A6E283C22D33B4500211177 /* BackupRouter.swift in Sources */,
 				3A472DB02208050D0067B288 /* UIWindow.swift in Sources */,
 				D38404E4218317DF007D50AD /* AppDelegate.swift in Sources */,
 				D38404E5218317DF007D50AD /* BackupController.swift in Sources */,
@@ -3765,8 +3779,6 @@
 				D38404E8218317DF007D50AD /* MainViewController.swift in Sources */,
 				D38404E9218317DF007D50AD /* BalanceViewController.swift in Sources */,
 				D38404EE218317DF007D50AD /* RestoreTheme.swift in Sources */,
-				D38404F1218317DF007D50AD /* BackupRouter.swift in Sources */,
-				D38404F1218317DF007D50AD /* BackupRouter.swift in Sources */,
 				D38404F4218317DF007D50AD /* RestoreRouter.swift in Sources */,
 				D38404F5218317DF007D50AD /* RestorePresenter.swift in Sources */,
 				D38404F8218317DF007D50AD /* RestoreModule.swift in Sources */,
@@ -4138,6 +4150,8 @@
 				58AAA45B492078E0E731FD91 /* BackupConfirmationPresenter.swift in Sources */,
 				58AAA561DCDEB0F846BD5D44 /* BackupConfirmationModule.swift in Sources */,
 				58AAA8B423DC3F7D2FC9A98B /* WordsValidator.swift in Sources */,
+				58AAAE8D8A77DE3EC9BF448E /* BackupInteractor.swift in Sources */,
+				3C7B914B741D51C85FDDD3D8 /* BackupConfirmationInteractor.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4152,8 +4166,6 @@
 				D38405D721831B3D007D50AD /* MainViewController.swift in Sources */,
 				D38405D821831B3D007D50AD /* BalanceViewController.swift in Sources */,
 				D38405DD21831B3D007D50AD /* RestoreTheme.swift in Sources */,
-				D38405E021831B3D007D50AD /* BackupRouter.swift in Sources */,
-				D38405E021831B3D007D50AD /* BackupRouter.swift in Sources */,
 				D38405E321831B3D007D50AD /* RestoreRouter.swift in Sources */,
 				D38405E421831B3D007D50AD /* RestorePresenter.swift in Sources */,
 				D38405E721831B3D007D50AD /* RestoreModule.swift in Sources */,
@@ -4525,6 +4537,9 @@
 				58AAAD265215F49A17256435 /* BackupConfirmationPresenter.swift in Sources */,
 				58AAAE30782CBD903A650F1B /* BackupConfirmationModule.swift in Sources */,
 				58AAA1EF416629D78B67B7C6 /* WordsValidator.swift in Sources */,
+				58AAA410CEF17E930102D036 /* BackupInteractor.swift in Sources */,
+				3A6E283E22D33B7A00211177 /* BackupRouter.swift in Sources */,
+				3C7B95CD8DC991FF890AC487 /* BackupConfirmationInteractor.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

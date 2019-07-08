@@ -1,25 +1,20 @@
 import Foundation
 
 class WordsValidator {
-    private let words: [String]
 
-    init(words: [String]) {
-        self.words = words
-    }
-
-    func validate(confirmationIndexes: [Int], words: [String]) throws {
-        guard confirmationIndexes.count == words.count else {
+    func validate(words: [String], confirmationIndexes: [Int], confirmationWords: [String]) throws {
+        guard confirmationIndexes.count == confirmationWords.count else {
             throw ValidationError.invalidConfirmation
         }
 
-        for (index, word) in words.enumerated() {
+        for (index, word) in confirmationWords.enumerated() {
             let trimmedWord = word.lowercased().trimmingCharacters(in: .whitespaces)
 
             guard !trimmedWord.isEmpty else {
                 throw ValidationError.emptyWords
             }
 
-            guard self.words[confirmationIndexes[index] - 1] == trimmedWord else {
+            guard words[confirmationIndexes[index] - 1] == trimmedWord else {
                 throw ValidationError.invalidConfirmation
             }
         }
