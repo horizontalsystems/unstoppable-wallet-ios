@@ -104,8 +104,6 @@ extension ManageWalletsPresenter: IManageWalletsViewDelegate {
 extension ManageWalletsPresenter: IRestoreDelegate {
 
     func didRestore(accountType: AccountType, syncMode: SyncMode?) {
-        router.close()
-
         guard let coin = selectedCoin else { return }
 
         let account = accountCreator.createRestoredAccount(accountType: accountType, syncMode: syncMode)

@@ -7,7 +7,7 @@ class RestoreRouter {
 extension RestoreRouter: IRestoreRouter {
 
     func showRestore(type: PredefinedAccountType, delegate: IRestoreDelegate) {
-        guard let module = RestoreRouter.module(type: type, delegate: delegate) else {
+        guard let module = RestoreRouter.module(type: type, mode: .pushed, delegate: delegate) else {
             return
         }
 
@@ -33,12 +33,17 @@ extension RestoreRouter {
         return WalletNavigationController(rootViewController: viewController)
     }
 
-    static func module(type: PredefinedAccountType, delegate: IRestoreDelegate) -> UIViewController? {
+    static func module(type: PredefinedAccountType, mode: PresentationMode, delegate: IRestoreDelegate) -> UIViewController? {
         switch type {
-        case .mnemonic: return RestoreWordsRouter.module(delegate: delegate)
+        case .mnemonic: return RestoreWordsRouter.module(mode: mode, delegate: delegate)
         case .eos: return nil
         case .binance: return nil
         }
+    }
+
+    enum PresentationMode {
+        case pushed
+        case presented
     }
 
 }
