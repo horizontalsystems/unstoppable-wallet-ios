@@ -30,12 +30,7 @@ extension ManageWalletsRouter {
         presenter.view = viewController
         router.viewController = viewController
 
-        let navigationController = WalletNavigationController(rootViewController: viewController)
-        navigationController.navigationBar.barStyle = AppTheme.navigationBarStyle
-        navigationController.navigationBar.tintColor = AppTheme.navigationBarTintColor
-        navigationController.navigationBar.prefersLargeTitles = true
-
-        return navigationController
+        return WalletNavigationController(rootViewController: viewController)
     }
 
 }
