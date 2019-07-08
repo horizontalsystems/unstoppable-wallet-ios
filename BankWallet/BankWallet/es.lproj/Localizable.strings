@@ -26,15 +26,6 @@
 "access_camera.message" = "Unstoppable cartera necesita acceder a su cámara para escanear el código QR";
 "access_camera.settings" = "Configuración";
 
-// Guest Page
-
-"guest.title" = "Unstoppable";
-"guest.description" = "CONFIAMOS EN LA CADENA DE BLOQUES";
-"guest.subtitle" = "Decentralized app";
-"guest.create_wallet" = "Crear cartera";
-"guest.restore_wallet" = "Restaurar";
-"guest.version" = "Versión %@";
-
 // Restore
 
 "restore.title" = "Restaurar";
@@ -65,10 +56,12 @@
 
 "backup.confirmation.title" = "Comprobar";
 "backup.confirmation.description" = "Insertar palabras de su clave secreta";
-"backup.confirmation.failure_alert.text" = "Las contraseñas no coinciden";
 "backup.confirmation.secret_key" = "Entiendo que soy un único propietario de una clave secreta privada de 12 palabras que se almacena de forma segura en mi teléfono y me permite controlar los fondos en mi cartera.";
 "backup.confirmation.delete_app_warn" = "Entiendo que si esta aplicación se elimina o deja de funcionar por alguna razón, mi monedero sólo puede ser recuperado utilizando mi clave secreta.";
 "backup.confirmation.disclaimer" = "Entiendo que los desarrolladores de esta aplicación no pueden ser responsables de ningún error o problemas no intencionados que puedan surgir mientras se usa esta aplicación.";
+
+"words_validator.empty_words" = "Not all words are entered";
+"words_validator.invalid_confirmation" = "Words do not match";
 
 // Balance
 
@@ -161,6 +154,7 @@
 "settings.title" = "Configuración";
 "settings.tab_bar_item" = "Configuraciones";
 "settings.security_center" = "Centro de Seguridad";
+"settings.restore_wallet" = "Restore Wallet";
 "settings.advanced" = "Configuración avanzada";
 "settings.base_currency" = "Divisa principal";
 "settings.language" = "Idioma";
@@ -184,12 +178,15 @@
 // Settings -> About
 
 "settings_about.title" = "Acerca de";
+"settings_about.app_title" = "Unstoppable";
+"settings_about.app_subtitle" = "Decentralized App";
 "settings_about.terms_privacy_subtitle" = "Términos y privacidad:";
 "settings_about.terms_privacy_text" = "Esta aplicación es de servidor a servidor. No depende de ninguna web o tecnología personal de apoyo a la función.\n\nFunciona en cualquier lugar siempre que haya conexión a internet. Ninguna entidad puede bloquear el funcionamiento de esta aplicación o impedir el acceso de un usuario.\n\nSus fondos son almacenados de forma segura únicamente en el teléfono, en ningún otro lugar.\n\nEs su responsabilidad recordar su clave secreta y mantenerla en privado. Nunca la muestre a nadie. Si la pierde, la olvida o es sustraída, sus fondos pueden ser utilizados por la persona que tiene su clave secreta.\n\nNo modifique la seguridad del software de su teléfono, no instale aplicaciones de orígenes desconocidos , no entregue su dispositivo a desconocidos y mantenga actualizado el sistema operativo de tu teléfono. La seguridad de su cartera depende de ello.\n\nLa totalidad del código que soporta esta aplicación está abierta al escrutinio público desde el inicio de la aplicación. Hemos intentado construir la cartera más segura y descentralizada posible; sin embargo, hay ninguna garantía de que no se produzca algún problema de software no deseado. Dicho esto, esta carpeta es probable que sea significativamente más segura que cualquier aplicación de gestión de cartera de smartphone del mercado\n\nAlgunos datos genéricos de carácter público de esta app se guardan en centros de almacenamiento descentralizado (IPFS).\n";
 
 // Settings -> Security
 
 "settings_security.title" = "Centro de Seguridad";
+"settings_security.manage_accounts" = "Manage Keys";
 "settings_security.backup_wallet" = "Copia de Seguridad de Cartera";
 "settings_security.unlink_from_this_device" = "Desvincular de este dispositivo";
 "settings_security.set_pin" = "Código";
@@ -199,6 +196,12 @@
 "security_settings.unlink_alert_button" = "Desvincular";
 "settings_security.import_wallet_confirmation_1" = "Esta acción eliminará de este dispositivo la carpeta instalada actualmente ";
 "settings_security.import_wallet_confirmation_2" = "Asegúrese de que usted tiene su clave secreta o no podrá acceder a los fondos en el futuro.";
+
+// Manage Accounts
+
+"settings_manage_accounts.title" = "Manage Keys";
+"settings_manage_accounts.unlink" = "Unlink";
+"settings_manage_accounts.backup" = "Backup";
 
 // Set PIN
 
@@ -229,3 +232,9 @@
 "numpad_7" = "P Q R S";
 "numpad_8" = "T U V";
 "numpad_9" = "W X Y Z";
+
+// Key Types
+
+"key_type.12_words" = "12 Words Key";
+"key_type.eos" = "EOS Account";
+"key_type.24_words" = "24 Words Key";
