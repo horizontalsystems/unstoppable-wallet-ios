@@ -10,10 +10,14 @@ protocol IRestoreViewDelegate {
 }
 
 protocol IRestoreRouter {
-    func showRestore(type: PredefinedAccountType, delegate: IRestoreDelegate)
+    func showRestore(type: PredefinedAccountType, delegate: IRestoreAccountTypeDelegate)
     func close()
 }
 
 protocol IRestoreDelegate: AnyObject {
+    func didRestore(account: Account, syncMode: SyncMode?)
+}
+
+protocol IRestoreAccountTypeDelegate: AnyObject {
     func didRestore(accountType: AccountType, syncMode: SyncMode?)
 }

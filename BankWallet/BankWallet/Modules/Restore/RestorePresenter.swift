@@ -39,12 +39,12 @@ extension RestorePresenter: IRestoreViewDelegate {
 
 }
 
-extension RestorePresenter: IRestoreDelegate {
+extension RestorePresenter: IRestoreAccountTypeDelegate {
 
     func didRestore(accountType: AccountType, syncMode: SyncMode?) {
-        _ = accountCreator.createRestoredAccount(accountType: accountType, syncMode: syncMode)
+        let account = accountCreator.createRestoredAccount(accountType: accountType, syncMode: syncMode)
 
-        restoreDelegate?.didRestore(accountType: accountType, syncMode: syncMode)
+        restoreDelegate?.didRestore(account: account, syncMode: syncMode)
         router.close()
     }
 

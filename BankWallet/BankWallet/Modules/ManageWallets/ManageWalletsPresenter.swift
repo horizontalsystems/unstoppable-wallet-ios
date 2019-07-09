@@ -101,7 +101,7 @@ extension ManageWalletsPresenter: IManageWalletsViewDelegate {
 
 }
 
-extension ManageWalletsPresenter: IRestoreDelegate {
+extension ManageWalletsPresenter: IRestoreAccountTypeDelegate {
 
     func didRestore(accountType: AccountType, syncMode: SyncMode?) {
         guard let coin = selectedCoin else { return }

@@ -12,6 +12,7 @@ class WelcomeScreenInteractor {
 }
 
 extension WelcomeScreenInteractor: IWelcomeScreenInteractor {
+
     var appVersion: String {
         return systemInfoManager.appVersion
     }

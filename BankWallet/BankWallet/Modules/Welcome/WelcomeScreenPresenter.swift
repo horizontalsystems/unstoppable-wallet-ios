@@ -41,7 +41,7 @@ extension WelcomeScreenPresenter: IWelcomeScreenInteractorDelegate {
 
 extension WelcomeScreenPresenter: IRestoreDelegate {
 
-    func didRestore(accountType: AccountType, syncMode: SyncMode?) {
+    func didRestore(account: Account, syncMode: SyncMode?) {
         router.showMain()
     }
 
