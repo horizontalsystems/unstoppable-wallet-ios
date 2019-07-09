@@ -83,7 +83,7 @@ class ManageAccountCell: UITableViewCell {
         unlinkButton.onTap = { [weak self] in self?.onUnlink?() }
         unlinkButton.backgrounds = ButtonTheme.redBackgroundDictionary
         unlinkButton.cornerRadius = ManageAccountsTheme.buttonCornerRadius
-        unlinkButton.titleLabel.text = "settings_manage_accounts.unlink".localized
+        unlinkButton.titleLabel.text = "settings_manage_keys.unlink".localized
 
         clippingView.addSubview(backupButton)
         backupButton.snp.makeConstraints { maker in
@@ -96,7 +96,7 @@ class ManageAccountCell: UITableViewCell {
         backupButton.onTap = { [weak self] in self?.onBackup?() }
         backupButton.backgrounds = ButtonTheme.yellowBackgroundDictionary
         backupButton.cornerRadius = ManageAccountsTheme.buttonCornerRadius
-        backupButton.titleLabel.text = "settings_manage_accounts.backup".localized
+        backupButton.titleLabel.text = "settings_manage_keys.backup".localized
     }
 
     required init?(coder aDecoder: NSCoder) {

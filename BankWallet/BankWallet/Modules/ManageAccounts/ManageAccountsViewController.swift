@@ -20,7 +20,7 @@ class ManageAccountsViewController: WalletViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        title = "settings_manage_accounts.title".localized
+        title = "settings_manage_keys.title".localized
 
         tableView.delegate = self
         tableView.dataSource = self
