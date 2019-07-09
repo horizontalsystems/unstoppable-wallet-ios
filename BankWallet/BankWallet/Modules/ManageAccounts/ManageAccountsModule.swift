@@ -1,4 +1,5 @@
 protocol IManageAccountsView: class {
+    func showDoneButton()
     func reload()
 }
 
@@ -12,6 +13,8 @@ protocol IManageAccountsViewDelegate {
     func didTapShowKey(index: Int)
     func didTapCreate(index: Int)
     func didTapRestore(index: Int)
+
+    func didTapDone()
 }
 
 protocol IManageAccountsInteractor {
@@ -26,6 +29,7 @@ protocol IManageAccountsInteractorDelegate: class {
 protocol IManageAccountsRouter {
     func showUnlink(accountId: String)
     func showBackup(account: Account)
+    func close()
 }
 
 struct ManageAccountItem {

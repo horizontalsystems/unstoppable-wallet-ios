@@ -1,6 +1,7 @@
 class ManageAccountsPresenter {
     weak var view: IManageAccountsView?
 
+    private let mode: ManageAccountsRouter.PresentationMode
     private let interactor: IManageAccountsInteractor
     private let router: IManageAccountsRouter
 
@@ -8,7 +9,8 @@ class ManageAccountsPresenter {
 
     private var items = [ManageAccountItem]()
 
-    init(interactor: IManageAccountsInteractor, router: IManageAccountsRouter) {
+    init(mode: ManageAccountsRouter.PresentationMode, interactor: IManageAccountsInteractor, router: IManageAccountsRouter) {
+        self.mode = mode
         self.interactor = interactor
         self.router = router
     }
@@ -24,6 +26,10 @@ class ManageAccountsPresenter {
 extension ManageAccountsPresenter: IManageAccountsViewDelegate {
 
     func viewDidLoad() {
+        if mode == .presented {
+            view?.showDoneButton()
+        }
+
         buildItems()
     }
 
@@ -51,6 +57,10 @@ extension ManageAccountsPresenter: IManageAccountsViewDelegate {
     }
 
     func didTapRestore(index: Int) {
+    }
+
+    func didTapDone() {
+        router.close()
     }
 
 }

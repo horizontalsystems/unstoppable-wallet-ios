@@ -8,7 +8,7 @@ class SecuritySettingsRouter {
 extension SecuritySettingsRouter: ISecuritySettingsRouter {
 
     func showManageAccounts() {
-        viewController?.navigationController?.pushViewController(ManageAccountsRouter.module(), animated: true)
+        viewController?.navigationController?.pushViewController(ManageAccountsRouter.module(mode: .pushed), animated: true)
     }
 
     func showEditPin() {

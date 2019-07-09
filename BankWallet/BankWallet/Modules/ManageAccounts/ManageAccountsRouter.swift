@@ -15,14 +15,18 @@ extension ManageAccountsRouter: IManageAccountsRouter {
         viewController?.present(module, animated: true)
     }
 
+    func close() {
+        viewController?.dismiss(animated: true)
+    }
+
 }
 
 extension ManageAccountsRouter {
 
-    static func module() -> UIViewController {
+    static func module(mode: PresentationMode) -> UIViewController {
         let router = ManageAccountsRouter()
         let interactor = ManageAccountsInteractor(predefinedAccountTypeManager: App.shared.predefinedAccountTypeManager, accountManager: App.shared.accountManager)
-        let presenter = ManageAccountsPresenter(interactor: interactor, router: router)
+        let presenter = ManageAccountsPresenter(mode: mode, interactor: interactor, router: router)
         let viewController = ManageAccountsViewController(delegate: presenter)
 
         interactor.delegate = presenter
@@ -30,6 +34,11 @@ extension ManageAccountsRouter {
         router.viewController = viewController
 
         return viewController
+    }
+
+    enum PresentationMode {
+        case pushed
+        case presented
     }
 
 }

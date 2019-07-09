@@ -42,9 +42,17 @@ class ManageAccountsViewController: WalletViewController {
         return AppTheme.statusBarStyle
     }
 
+    @objc func doneDidTap() {
+        delegate.didTapDone()
+    }
+
 }
 
 extension ManageAccountsViewController: IManageAccountsView {
+
+    func showDoneButton() {
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.done".localized, style: .plain, target: self, action: #selector(doneDidTap))
+    }
 
     func reload() {
         tableView.reloadData()
