@@ -67,7 +67,6 @@
 		11B3524E90ADBAEB02E77B77 /* SyncModeModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B350A04B4D9122C9828EC6 /* SyncModeModule.swift */; };
 		11B35267BB7BFACBBF5C030F /* GrdbStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35A1AE56A94BEB52AC4D1 /* GrdbStorage.swift */; };
 		11B352783ABAB4B503FE6DC7 /* RateSyncer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B350C8341DFAF14D974ACC /* RateSyncer.swift */; };
-		11B35282650F12C5BE19507C /* PredefinedAccountType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B355B120EEFB9BE98B3C09 /* PredefinedAccountType.swift */; };
 		11B352A99B39974BC9BDC839 /* Words24AccountType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35473B5D087C8C234D390 /* Words24AccountType.swift */; };
 		11B352C0B06CE48E16B20BE9 /* BalanceItemDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35F79F5274A2603296EFF /* BalanceItemDataSource.swift */; };
 		11B352C17E4BB374BF10327A /* JsonApiProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B355AD0C896DBA7122F3DC /* JsonApiProvider.swift */; };
@@ -212,7 +211,6 @@
 		11B3586B8B2C99BCFDF2C40B /* AccountCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35F26989959D83D337249 /* AccountCreator.swift */; };
 		11B35877FB8483FFA1037F98 /* TransactionItemDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B350DFDC2CC98086520BFA /* TransactionItemDataSource.swift */; };
 		11B3587CBC5FD74C216E4768 /* Words24AccountType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35473B5D087C8C234D390 /* Words24AccountType.swift */; };
-		11B3588AB15B6A2C017F4ACB /* PredefinedAccountType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B355B120EEFB9BE98B3C09 /* PredefinedAccountType.swift */; };
 		11B3588E8DA44A45661351D7 /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35614C6E244926AF48701 /* Account.swift */; };
 		11B35891D2B5448227630380 /* SendInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35FAF942FA80752EDBFA7 /* SendInteractorTests.swift */; };
 		11B35895DA5403AE180E8A6B /* SystemInfoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B357BA1A6AC79F07B54FB5 /* SystemInfoManager.swift */; };
@@ -243,7 +241,6 @@
 		11B3598C180AD4BD9F75EDE7 /* TransactionItemDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B350DFDC2CC98086520BFA /* TransactionItemDataSource.swift */; };
 		11B359A5EBE5F7BA65F36D0F /* BaseCurrencySettingsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35B7A44754508AEFDA9FD /* BaseCurrencySettingsPresenter.swift */; };
 		11B359BBF55CD772D0815833 /* BalanceHeaderViewItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35D1D60E1D0A206C70490 /* BalanceHeaderViewItem.swift */; };
-		11B359CD944C16EB8C6CB291 /* PredefinedAccountType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B355B120EEFB9BE98B3C09 /* PredefinedAccountType.swift */; };
 		11B359E31258E14C2D0B3FC1 /* ReachabilityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35788190D05AF5DBB9072 /* ReachabilityManager.swift */; };
 		11B359F074038D1507C23747 /* EnabledWallet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35BDC2E3F845A52C442AD /* EnabledWallet.swift */; };
 		11B359F4890324DE7FAE613D /* CreateAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35DFF10AD831E95C8F8EA /* CreateAccountViewController.swift */; };
@@ -1334,7 +1331,6 @@
 		11B35570FD93AFB406434D20 /* WalletManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletManager.swift; sourceTree = "<group>"; };
 		11B355ABE89C2793563829BD /* Date.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
 		11B355AD0C896DBA7122F3DC /* JsonApiProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JsonApiProvider.swift; sourceTree = "<group>"; };
-		11B355B120EEFB9BE98B3C09 /* PredefinedAccountType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PredefinedAccountType.swift; sourceTree = "<group>"; };
 		11B35614C6E244926AF48701 /* Account.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Account.swift; sourceTree = "<group>"; };
 		11B356347098BE98619962B4 /* LanguageManagerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LanguageManagerTests.swift; sourceTree = "<group>"; };
 		11B3564E0721887CEBDE39F2 /* BaseButtonItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseButtonItemView.swift; sourceTree = "<group>"; };
@@ -2108,7 +2104,6 @@
 				11B35614C6E244926AF48701 /* Account.swift */,
 				11B35EB6A09E7FBB70B8966B /* Wallet.swift */,
 				11B35542A7D7FE1BDC2E73E2 /* AccountType.swift */,
-				11B355B120EEFB9BE98B3C09 /* PredefinedAccountType.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -3766,7 +3761,6 @@
 				11B3517CCD5ED035CF135C6E /* ManageWalletsStateHandler.swift in Sources */,
 				11B359F4890324DE7FAE613D /* CreateAccountViewController.swift in Sources */,
 				11B35249D1E7F30208619205 /* AccountFactory.swift in Sources */,
-				11B359CD944C16EB8C6CB291 /* PredefinedAccountType.swift in Sources */,
 				11B359F814188F0A377F33A2 /* RestoreViewController.swift in Sources */,
 				11B35654DC11845932FDBDA0 /* RestoreAccountCell.swift in Sources */,
 				11B35230E3C4799ED6883CFC /* RestoreWordsModule.swift in Sources */,
@@ -4217,7 +4211,6 @@
 				11B35D107808A9CDBC45B559 /* ManageWalletsStateHandler.swift in Sources */,
 				11B35560F891660C8F0B64E4 /* CreateAccountViewController.swift in Sources */,
 				11B353AA4AFFB020A68E09B6 /* AccountFactory.swift in Sources */,
-				11B3588AB15B6A2C017F4ACB /* PredefinedAccountType.swift in Sources */,
 				11B35E23B09513FF84EA8F67 /* RestoreViewController.swift in Sources */,
 				11B35C0C67F1E80EF584297E /* RestoreAccountCell.swift in Sources */,
 				11B35FB77851C78206B321F1 /* RestoreWordsModule.swift in Sources */,
@@ -4616,7 +4609,6 @@
 				11B35E02CEC81F216A0BF206 /* ManageWalletsStateHandler.swift in Sources */,
 				11B354CF99C4BCD3C2B23EBE /* CreateAccountViewController.swift in Sources */,
 				11B35C8621E221DA1F157A5B /* AccountFactory.swift in Sources */,
-				11B35282650F12C5BE19507C /* PredefinedAccountType.swift in Sources */,
 				11B353D4ECDC6398228A2270 /* RestoreViewController.swift in Sources */,
 				11B357F34823B8C97A9862A9 /* RestoreAccountCell.swift in Sources */,
 				11B35BE347510107DB4ED24B /* RestoreWordsModule.swift in Sources */,

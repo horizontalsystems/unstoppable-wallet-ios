@@ -20,7 +20,7 @@ extension WelcomeScreenRouter {
 
     static func module() -> UIViewController {
         let router = WelcomeScreenRouter()
-        let interactor = WelcomeScreenInteractor(accountCreator: App.shared.accountCreator, systemInfoManager: App.shared.systemInfoManager)
+        let interactor = WelcomeScreenInteractor(accountCreator: App.shared.accountCreator, systemInfoManager: App.shared.systemInfoManager, predefinedAccountTypeManager: App.shared.predefinedAccountTypeManager)
         let presenter = WelcomeScreenPresenter(interactor: interactor, router: router)
         let viewController = WelcomeScreenViewController(delegate: presenter)
 

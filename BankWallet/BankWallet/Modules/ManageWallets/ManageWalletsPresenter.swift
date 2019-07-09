@@ -81,22 +81,22 @@ extension ManageWalletsPresenter: IManageWalletsViewDelegate {
     }
 
     func didSelectNew() {
-        guard let coin = selectedCoin else { return }
-
-        do {
-            let account = try accountCreator.createNewAccount(type: coin.type.predefinedAccountType)
-
-            wallets.append(walletCreator.wallet(coin: coin, account: account))
-            view?.updateUI()
-        } catch {
-            view?.show(error: error)
-        }
+//        guard let coin = selectedCoin else { return }
+//
+//        do {
+//            let account = try accountCreator.createNewAccount(type: coin.type.predefinedAccountType)
+//
+//            wallets.append(walletCreator.wallet(coin: coin, account: account))
+//            view?.updateUI()
+//        } catch {
+//            view?.show(error: error)
+//        }
     }
 
     func didSelectRestore() {
-        guard let coin = selectedCoin else { return }
-
-        router.showRestore(type: coin.type.predefinedAccountType, delegate: self)
+//        guard let coin = selectedCoin else { return }
+//
+//        router.showRestore(type: coin.type.predefinedAccountType, delegate: self)
     }
 
 }

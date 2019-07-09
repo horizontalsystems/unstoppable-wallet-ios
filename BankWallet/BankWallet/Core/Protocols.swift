@@ -189,7 +189,7 @@ protocol IAccountManager {
 
 protocol IAccountCreator {
     func createRestoredAccount(accountType: AccountType, syncMode: SyncMode?) -> Account
-    func createNewAccount(type: PredefinedAccountType) throws -> Account
+    func createNewAccount(defaultAccountType: DefaultAccountType) throws -> Account
 }
 
 protocol IAccountFactory {
