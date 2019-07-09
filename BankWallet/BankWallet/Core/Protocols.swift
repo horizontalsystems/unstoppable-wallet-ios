@@ -177,6 +177,8 @@ protocol IAccountManager {
     var accounts: [Account] { get }
     var accountsObservable: Observable<[Account]> { get }
 
+    func account(predefinedAccountType: IPredefinedAccountType) -> Account?
+
     var nonBackedUpCount: Int { get }
     var nonBackedUpCountObservable: Observable<Int> { get }
 
@@ -454,13 +456,13 @@ protocol IUUIDProvider {
 
 protocol IPredefinedAccountTypeManager {
     var allTypes: [IPredefinedAccountType] { get }
-    func account(predefinedAccountType: IPredefinedAccountType) -> Account?
 }
 
 protocol IPredefinedAccountType {
     var title: String { get }
     var coinCodes: String { get }
     var defaultAccountType: DefaultAccountType? { get }
+    func supports(accountType: AccountType) -> Bool
 }
 
 enum DefaultAccountType {

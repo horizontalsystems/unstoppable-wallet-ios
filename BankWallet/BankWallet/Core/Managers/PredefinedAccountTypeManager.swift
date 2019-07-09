@@ -15,8 +15,4 @@ extension PredefinedAccountTypeManager: IPredefinedAccountTypeManager {
         return appConfigProvider.predefinedAccountTypes
     }
 
-    func account(predefinedAccountType: IPredefinedAccountType) -> Account? {
-        return nil
-    }
-
 }

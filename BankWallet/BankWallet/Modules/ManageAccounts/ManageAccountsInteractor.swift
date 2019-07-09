@@ -29,7 +29,7 @@ extension ManageAccountsInteractor: IManageAccountsInteractor {
     }
 
     func account(predefinedAccountType: IPredefinedAccountType) -> Account? {
-        return predefinedAccountTypeManager.account(predefinedAccountType: predefinedAccountType)
+        return accountManager.account(predefinedAccountType: predefinedAccountType)
     }
 
 }

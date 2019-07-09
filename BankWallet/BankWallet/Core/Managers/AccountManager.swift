@@ -27,6 +27,10 @@ extension AccountManager: IAccountManager {
         return accountsSubject.asObservable()
     }
 
+    func account(predefinedAccountType: IPredefinedAccountType) -> Account? {
+        return accounts.first { predefinedAccountType.supports(accountType: $0.type) }
+    }
+
     var nonBackedUpCount: Int {
         return accounts.filter { !$0.backedUp }.count
     }

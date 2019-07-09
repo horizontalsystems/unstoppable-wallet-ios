@@ -6,4 +6,12 @@ class EosAccountType: IPredefinedAccountType {
         return nil // creating EOS account is not supported yet
     }
 
+    func supports(accountType: AccountType) -> Bool {
+        if case .eos = accountType {
+            return true
+        }
+
+        return false
+    }
+
 }

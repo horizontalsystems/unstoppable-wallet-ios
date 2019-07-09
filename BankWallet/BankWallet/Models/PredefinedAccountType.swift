@@ -21,26 +21,6 @@ enum PredefinedAccountType: CaseIterable {
 
 }
 
-extension AccountType {
-
-    var predefinedAccountType: PredefinedAccountType? {
-        switch self {
-        case let .mnemonic(words, _, _):
-            if words.count == 12 {
-                return .mnemonic
-            } else if words.count == 24 {
-                return .binance
-            }
-        case .eos:
-            return .eos
-        default: ()
-        }
-
-        return nil
-    }
-
-}
-
 extension CoinType {
 
     var predefinedAccountType: PredefinedAccountType {
