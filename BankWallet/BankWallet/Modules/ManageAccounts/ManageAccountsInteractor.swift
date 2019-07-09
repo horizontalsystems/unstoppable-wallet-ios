@@ -7,10 +7,12 @@ class ManageAccountsInteractor {
 
     private let predefinedAccountTypeManager: IPredefinedAccountTypeManager
     private let accountManager: IAccountManager
+    private let accountCreator: IAccountCreator
 
-    init(predefinedAccountTypeManager: IPredefinedAccountTypeManager, accountManager: IAccountManager) {
+    init(predefinedAccountTypeManager: IPredefinedAccountTypeManager, accountManager: IAccountManager, accountCreator: IAccountCreator) {
         self.predefinedAccountTypeManager = predefinedAccountTypeManager
         self.accountManager = accountManager
+        self.accountCreator = accountCreator
 
         accountManager.accountsObservable
                 .subscribeOn(MainScheduler.instance)
@@ -30,6 +32,14 @@ extension ManageAccountsInteractor: IManageAccountsInteractor {
 
     func account(predefinedAccountType: IPredefinedAccountType) -> Account? {
         return accountManager.account(predefinedAccountType: predefinedAccountType)
+    }
+
+    func createAccount(defaultAccountType: DefaultAccountType) throws {
+        _ = try accountCreator.createNewAccount(defaultAccountType: defaultAccountType)
+    }
+
+    func restoreAccount(accountType: AccountType, syncMode: SyncMode?) {
+        _ = accountCreator.createRestoredAccount(accountType: accountType, syncMode: syncMode)
     }
 
 }

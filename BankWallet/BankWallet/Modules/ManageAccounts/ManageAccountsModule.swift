@@ -1,5 +1,6 @@
 protocol IManageAccountsView: class {
     func showDoneButton()
+    func show(error: Error)
     func reload()
 }
 
@@ -20,6 +21,8 @@ protocol IManageAccountsViewDelegate {
 protocol IManageAccountsInteractor {
     var predefinedAccountTypes: [IPredefinedAccountType] { get }
     func account(predefinedAccountType: IPredefinedAccountType) -> Account?
+    func createAccount(defaultAccountType: DefaultAccountType) throws
+    func restoreAccount(accountType: AccountType, syncMode: SyncMode?)
 }
 
 protocol IManageAccountsInteractorDelegate: class {
@@ -29,6 +32,8 @@ protocol IManageAccountsInteractorDelegate: class {
 protocol IManageAccountsRouter {
     func showUnlink(accountId: String)
     func showBackup(account: Account)
+    func showKey(account: Account)
+    func showRestore(predefinedAccountType: IPredefinedAccountType, delegate: IRestoreAccountTypeDelegate)
     func close()
 }
 

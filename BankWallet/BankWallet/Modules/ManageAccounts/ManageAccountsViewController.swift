@@ -54,6 +54,10 @@ extension ManageAccountsViewController: IManageAccountsView {
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.done".localized, style: .plain, target: self, action: #selector(doneDidTap))
     }
 
+    func show(error: Error) {
+        HudHelper.instance.showError(title: error.localizedDescription)
+    }
+
     func reload() {
         tableView.reloadData()
     }

@@ -42,21 +42,43 @@ extension ManageAccountsPresenter: IManageAccountsViewDelegate {
     }
 
     func didTapUnlink(index: Int) {
-//        router.showUnlink(accountId: accounts[index].id)
+        guard let account = items[index].account else {
+            return
+        }
+
+        router.showUnlink(accountId: account.id)
     }
 
     func didTapBackup(index: Int) {
-//        router.showBackup(account: accounts[index])
+        guard let account = items[index].account else {
+            return
+        }
+
+        router.showBackup(account: account)
     }
 
     func didTapShowKey(index: Int) {
+        guard let account = items[index].account else {
+            return
+        }
 
+        router.showKey(account: account)
     }
 
     func didTapCreate(index: Int) {
+        guard let defaultAccountType = items[index].predefinedAccountType.defaultAccountType else {
+            return
+        }
+
+        do {
+            try interactor.createAccount(defaultAccountType: defaultAccountType)
+        } catch {
+            view?.show(error: error)
+        }
     }
 
     func didTapRestore(index: Int) {
+        router.showRestore(predefinedAccountType: items[index].predefinedAccountType, delegate: self)
     }
 
     func didTapDone() {
@@ -70,6 +92,14 @@ extension ManageAccountsPresenter: IManageAccountsInteractorDelegate {
     func didUpdateAccounts() {
         buildItems()
         view?.reload()
+    }
+
+}
+
+extension ManageAccountsPresenter: IRestoreAccountTypeDelegate {
+
+    func didRestore(accountType: AccountType, syncMode: SyncMode?) {
+        interactor.restoreAccount(accountType: accountType, syncMode: syncMode)
     }
 
 }

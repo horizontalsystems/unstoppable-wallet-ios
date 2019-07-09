@@ -80,7 +80,6 @@
 		11B3530B19A8D80E40AD75EE /* BalanceItemDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35F79F5274A2603296EFF /* BalanceItemDataSource.swift */; };
 		11B3532113CCB65C304DDBE4 /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35199A163073996FDE426 /* AuthManager.swift */; };
 		11B35327F187159E57BA638C /* AgreementRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3555B8A1BB021B722B1D6 /* AgreementRouter.swift */; };
-		11B35339A2A39DE04C5B37D9 /* BackupRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35D66E95B16C32E3796E8 /* BackupRouter.swift */; };
 		11B353495D45DFC2235A1BF0 /* ConfirmationCheckboxItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35EC60329833B8D6CA1E0 /* ConfirmationCheckboxItem.swift */; };
 		11B35350937E99F55B6CE037 /* RestoreWordsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35E81D848256AED44AFF3 /* RestoreWordsRouter.swift */; };
 		11B35356482DC7860F552715 /* NumPad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35F53002A95B923B397AE /* NumPad.swift */; };
@@ -101,6 +100,7 @@
 		11B35406710372339144C92D /* AuthData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B352D70D3A3A2851CCEDA3 /* AuthData.swift */; };
 		11B35418EC59877BB05558B3 /* TransactionRecordPoolRepo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35B93B5B43FF00B24528B /* TransactionRecordPoolRepo.swift */; };
 		11B3541F6B5316F3B373D1EA /* ValueFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35EFB45ECC2D403CA6C89 /* ValueFormatter.swift */; };
+		11B3542A04FE7857E5B6772D /* BackupRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35D66E95B16C32E3796E8 /* BackupRouter.swift */; };
 		11B3542C6A82191F2384F5B9 /* AlertButtonItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3566164D1D7C7898132E2 /* AlertButtonItemView.swift */; };
 		11B35433045DD100592EF633 /* TransactionValueItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B353A2F8FFE93DC7E58F98 /* TransactionValueItem.swift */; };
 		11B3544601D94D63EC87FE26 /* Currency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B356DF243F6B9248E6AD42 /* Currency.swift */; };
@@ -728,7 +728,6 @@
 		58AAA02397C84890BC39E3CC /* DataProviderSettingsInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA4B3E970540EE2F76C6E /* DataProviderSettingsInteractor.swift */; };
 		58AAA02574729FFCA9E8145F /* BackupWordsModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA8FCF190F71C5494E5C5 /* BackupWordsModule.swift */; };
 		58AAA0413061DD475F50E0B7 /* BackupPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA5F63E9C788A68C8AF5A /* BackupPresenter.swift */; };
-		58AAA050E5E95A37CC3B0051 /* BackupRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35D66E95B16C32E3796E8 /* BackupRouter.swift */; };
 		58AAA05AF7F58059E50F601A /* DataProviderSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAB2A7397DE3BBC456E96 /* DataProviderSettingsViewController.swift */; };
 		58AAA087BFA7A2609522E861 /* DataProviderSettingsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA56AA98F7B0DB2E97971 /* DataProviderSettingsRouter.swift */; };
 		58AAA09CAEB6AF43CA020636 /* FullTransactionInfoPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA823D090E4B3E0D03A91 /* FullTransactionInfoPresenter.swift */; };
@@ -4236,12 +4235,11 @@
 				3C7B9F0AC922D7433A5F4058 /* WelcomeScreenModule.swift in Sources */,
 				3C7B90BA0514E3C7298B1B86 /* WelcomeScreenRouter.swift in Sources */,
 				58AAAAA1B0403F6686162485 /* WelcomeTheme.swift in Sources */,
-				11B35339A2A39DE04C5B37D9 /* BackupRouter.swift in Sources */,
 				11B35F2057CF53136F954423 /* Words12AccountType.swift in Sources */,
 				11B357A347EB214609BCA298 /* Words24AccountType.swift in Sources */,
 				11B35844D6AE256B323382DB /* EosAccountType.swift in Sources */,
 				11B353FB9EFB313EFE486EAC /* ManageWalletsNoAccountViewController.swift in Sources */,
-				58AAA050E5E95A37CC3B0051 /* BackupRouter.swift in Sources */,
+				11B3542A04FE7857E5B6772D /* BackupRouter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
