@@ -267,6 +267,8 @@ protocol IAppConfigProvider {
 
     var defaultCoinCodes: [CoinCode] { get }
     var coins: [Coin] { get }
+
+    var predefinedAccountTypes: [IPredefinedAccountType] { get }
 }
 
 protocol IFullTransactionInfoProvider {

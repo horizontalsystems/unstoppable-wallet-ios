@@ -79,7 +79,7 @@ class App {
 
         accountManager = AccountManager(storage: grdbStorage)
         accountCreator = AccountCreator(accountManager: accountManager, accountFactory: AccountFactory(), wordsManager: wordsManager)
-        predefinedAccountTypeManager = PredefinedAccountTypeManager(accountManager: accountManager)
+        predefinedAccountTypeManager = PredefinedAccountTypeManager(appConfigProvider: appConfigProvider, accountManager: accountManager)
 
         walletManager = WalletManager(appConfigProvider: appConfigProvider, accountManager: accountManager, storage: grdbStorage)
         walletCreator = WalletCreator(accountManager: accountManager, walletFactory: WalletFactory())

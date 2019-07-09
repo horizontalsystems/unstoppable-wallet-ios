@@ -1,11 +1,9 @@
 class PredefinedAccountTypeManager {
+    private let appConfigProvider: IAppConfigProvider
     private let accountManager: IAccountManager
 
-    private let types: [IPredefinedAccountType] = [
-        Words12AccountType()
-    ]
-
-    init(accountManager: IAccountManager) {
+    init(appConfigProvider: IAppConfigProvider, accountManager: IAccountManager) {
+        self.appConfigProvider = appConfigProvider
         self.accountManager = accountManager
     }
 
@@ -14,7 +12,7 @@ class PredefinedAccountTypeManager {
 extension PredefinedAccountTypeManager: IPredefinedAccountTypeManager {
 
     var allTypes: [IPredefinedAccountType] {
-        return types
+        return appConfigProvider.predefinedAccountTypes
     }
 
     func account(predefinedAccountType: IPredefinedAccountType) -> Account? {
