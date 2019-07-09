@@ -36,10 +36,10 @@ struct ManageAccountItem {
 struct ManageAccountViewItem {
     let title: String
     let coinCodes: String
-    let state: ManageAccountState
+    let state: ManageAccountViewItemState
 }
 
-enum ManageAccountState {
+enum ManageAccountViewItemState {
     case linked(backedUp: Bool)
     case notLinked(canCreate: Bool)
 }
