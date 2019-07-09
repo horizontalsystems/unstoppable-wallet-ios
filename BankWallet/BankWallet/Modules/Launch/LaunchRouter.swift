@@ -10,6 +10,10 @@ class LaunchRouter {
 
 extension LaunchRouter: ILaunchRouter {
 
+    func showWelcomeModule() {
+        show(viewController: WelcomeScreenRouter.module())
+    }
+
     func showSetPinModule() {
         show(viewController: SetPinRouter.module())
     }
@@ -28,7 +32,7 @@ extension LaunchRouter {
 
     static func presenter(window: UIWindow?) -> ILaunchPresenter {
         let router = LaunchRouter()
-        let interactor = LaunchInteractor(pinManager: App.shared.pinManager, appConfigProvider: App.shared.appConfigProvider)
+        let interactor = LaunchInteractor(accountManager: App.shared.accountManager, pinManager: App.shared.pinManager, appConfigProvider: App.shared.appConfigProvider)
         let presenter = LaunchPresenter(interactor: interactor, router: router)
 
         interactor.delegate = presenter

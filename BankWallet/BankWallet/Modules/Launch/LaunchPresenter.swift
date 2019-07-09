@@ -19,6 +19,10 @@ extension LaunchPresenter: ILaunchPresenter {
 
 extension LaunchPresenter: ILaunchInteractorDelegate {
 
+    func showWelcomeModule() {
+        router.showWelcomeModule()
+    }
+
     func showSetPinModule() {
         router.showSetPinModule()
     }
