@@ -15,7 +15,7 @@ protocol IRestoreRouter {
 }
 
 protocol IRestoreDelegate: AnyObject {
-    func didRestore(account: Account, syncMode: SyncMode?)
+    func didRestore(account: Account)
 }
 
 protocol IRestoreAccountTypeDelegate: AnyObject {
