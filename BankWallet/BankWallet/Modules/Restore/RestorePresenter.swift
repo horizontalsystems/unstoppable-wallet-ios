@@ -1,14 +1,16 @@
 class RestorePresenter {
     weak var view: IRestoreView?
+    weak var restoreDelegate: IRestoreDelegate?
 
     private let router: IRestoreRouter
     private let accountCreator: IAccountCreator
 
     private var types = [PredefinedAccountType]()
 
-    init(router: IRestoreRouter, accountCreator: IAccountCreator) {
+    init(router: IRestoreRouter, accountCreator: IAccountCreator, delegate: IRestoreDelegate? = nil) {
         self.router = router
         self.accountCreator = accountCreator
+        self.restoreDelegate = delegate
     }
 
 }
@@ -37,10 +39,12 @@ extension RestorePresenter: IRestoreViewDelegate {
 
 }
 
-extension RestorePresenter: IRestoreDelegate {
+extension RestorePresenter: IRestoreAccountTypeDelegate {
 
     func didRestore(accountType: AccountType, syncMode: SyncMode?) {
-        _ = accountCreator.createRestoredAccount(accountType: accountType, syncMode: syncMode)
+        let account = accountCreator.createRestoredAccount(accountType: accountType, syncMode: syncMode)
+
+        restoreDelegate?.didRestore(account: account)
         router.close()
     }
 

@@ -3,9 +3,9 @@ import UIKit
 class RestoreWordsRouter {
     weak var viewController: UIViewController?
 
-    private let delegate: IRestoreDelegate
+    private let delegate: IRestoreAccountTypeDelegate
 
-    init(delegate: IRestoreDelegate) {
+    init(delegate: IRestoreAccountTypeDelegate) {
         self.delegate = delegate
     }
 
@@ -35,7 +35,7 @@ extension RestoreWordsRouter: IRestoreWordsRouter {
 
 extension RestoreWordsRouter {
 
-    static func module(mode: RestoreRouter.PresentationMode, delegate: IRestoreDelegate) -> UIViewController {
+    static func module(mode: RestoreRouter.PresentationMode, delegate: IRestoreAccountTypeDelegate) -> UIViewController {
         let router = RestoreWordsRouter(delegate: delegate)
         let presenter = RestoreWordsPresenter(mode: mode, router: router, wordsManager: App.shared.wordsManager, appConfigProvider: App.shared.appConfigProvider)
         let viewController = RestoreWordsViewController(delegate: presenter)

@@ -20,7 +20,7 @@ protocol IManageWalletsViewDelegate {
 }
 
 protocol IManageWalletsRouter {
-    func showRestore(type: PredefinedAccountType, delegate: IRestoreDelegate)
+    func showRestore(type: PredefinedAccountType, delegate: IRestoreAccountTypeDelegate)
     func close()
 }
 

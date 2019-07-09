@@ -6,7 +6,7 @@ class RestoreRouter {
 
 extension RestoreRouter: IRestoreRouter {
 
-    func showRestore(type: PredefinedAccountType, delegate: IRestoreDelegate) {
+    func showRestore(type: PredefinedAccountType, delegate: IRestoreAccountTypeDelegate) {
         guard let module = RestoreRouter.module(type: type, mode: .pushed, delegate: delegate) else {
             return
         }
@@ -22,9 +22,9 @@ extension RestoreRouter: IRestoreRouter {
 
 extension RestoreRouter {
 
-    static func module() -> UIViewController {
+    static func module(delegate: IRestoreDelegate? = nil) -> UIViewController {
         let router = RestoreRouter()
-        let presenter = RestorePresenter(router: router, accountCreator: App.shared.accountCreator)
+        let presenter = RestorePresenter(router: router, accountCreator: App.shared.accountCreator, delegate: delegate)
         let viewController = RestoreViewController(delegate: presenter)
 
         presenter.view = viewController
@@ -33,7 +33,7 @@ extension RestoreRouter {
         return WalletNavigationController(rootViewController: viewController)
     }
 
-    static func module(type: PredefinedAccountType, mode: PresentationMode, delegate: IRestoreDelegate) -> UIViewController? {
+    static func module(type: PredefinedAccountType, mode: PresentationMode, delegate: IRestoreAccountTypeDelegate) -> UIViewController? {
         switch type {
         case .mnemonic: return RestoreWordsRouter.module(mode: mode, delegate: delegate)
         case .eos: return nil

@@ -675,18 +675,32 @@
 		3A472DAF220804AC0067B288 /* UIWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B358407DC8E2314E66124E /* UIWindow.swift */; };
 		3A472DB02208050D0067B288 /* UIWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B358407DC8E2314E66124E /* UIWindow.swift */; };
 		3A472DB1220805230067B288 /* UIWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B358407DC8E2314E66124E /* UIWindow.swift */; };
-		3A6E283C22D33B4500211177 /* BackupRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A6E283B22D33B4500211177 /* BackupRouter.swift */; };
 		3A6E283D22D33B6D00211177 /* BackupRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35D66E95B16C32E3796E8 /* BackupRouter.swift */; };
 		3A6E283E22D33B7A00211177 /* BackupRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35D66E95B16C32E3796E8 /* BackupRouter.swift */; };
 		3AF4739D21D38F380005A458 /* FullTransactionInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF4739C21D38F380005A458 /* FullTransactionInfoViewController.swift */; };
 		3AF4739E21D38F380005A458 /* FullTransactionInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF4739C21D38F380005A458 /* FullTransactionInfoViewController.swift */; };
 		3AF4739F21D38F380005A458 /* FullTransactionInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF4739C21D38F380005A458 /* FullTransactionInfoViewController.swift */; };
 		3C7B908FFAF30C34C67B7142 /* BackupConfirmationInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7B94C6548A52D8576B8138 /* BackupConfirmationInteractor.swift */; };
+		3C7B90996EF221A34CC4E5E0 /* WelcomeScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7B956E27165EB2D682C2D7 /* WelcomeScreenViewController.swift */; };
+		3C7B90BA0514E3C7298B1B86 /* WelcomeScreenRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7B95EF8087307F8266483C /* WelcomeScreenRouter.swift */; };
+		3C7B90F1C99BDDC2D5EAA440 /* WelcomeScreenPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7B9537271B4937DF028FEC /* WelcomeScreenPresenter.swift */; };
 		3C7B914B741D51C85FDDD3D8 /* BackupConfirmationInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7B94C6548A52D8576B8138 /* BackupConfirmationInteractor.swift */; };
+		3C7B9238F4E71EB3A358C961 /* WelcomeScreenInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7B99396FD9BBA3E8E3715F /* WelcomeScreenInteractor.swift */; };
+		3C7B9332423F320A74F69354 /* WelcomeScreenModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7B92FD9F4CEC1CBB31B5A7 /* WelcomeScreenModule.swift */; };
 		3C7B936067D1C0A7CDC2635D /* UrlManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7B94F32F315F4F753D89AD /* UrlManager.swift */; };
+		3C7B9469B45EA1720D7FA071 /* WelcomeScreenRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7B95EF8087307F8266483C /* WelcomeScreenRouter.swift */; };
+		3C7B94B65E1C445819714F84 /* WelcomeScreenPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7B9537271B4937DF028FEC /* WelcomeScreenPresenter.swift */; };
 		3C7B95CD8DC991FF890AC487 /* BackupConfirmationInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7B94C6548A52D8576B8138 /* BackupConfirmationInteractor.swift */; };
+		3C7B9663B3AF4B2A8D7E8A46 /* WelcomeScreenRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7B95EF8087307F8266483C /* WelcomeScreenRouter.swift */; };
+		3C7B989E186C799AC2FD49F1 /* WelcomeScreenPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7B9537271B4937DF028FEC /* WelcomeScreenPresenter.swift */; };
 		3C7B99D3D6AE0B1C0D8E5F09 /* UrlManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7B94F32F315F4F753D89AD /* UrlManager.swift */; };
+		3C7B9AA3A29613BEBC00F6B2 /* WelcomeScreenModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7B92FD9F4CEC1CBB31B5A7 /* WelcomeScreenModule.swift */; };
+		3C7B9BAF807355796DCA80C4 /* WelcomeScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7B956E27165EB2D682C2D7 /* WelcomeScreenViewController.swift */; };
 		3C7B9BFD8EA7360907306675 /* UrlManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7B94F32F315F4F753D89AD /* UrlManager.swift */; };
+		3C7B9E4617897C61295C6308 /* WelcomeScreenInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7B99396FD9BBA3E8E3715F /* WelcomeScreenInteractor.swift */; };
+		3C7B9F0AC922D7433A5F4058 /* WelcomeScreenModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7B92FD9F4CEC1CBB31B5A7 /* WelcomeScreenModule.swift */; };
+		3C7B9F2A51BC2B8872C41DD8 /* WelcomeScreenInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7B99396FD9BBA3E8E3715F /* WelcomeScreenInteractor.swift */; };
+		3C7B9F51D15FBB02710E5EEB /* WelcomeScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7B956E27165EB2D682C2D7 /* WelcomeScreenViewController.swift */; };
 		41A22A9B2FA01C41637B3EB9 /* Pods_Bank_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C34C463CE4115A838C13EA33 /* Pods_Bank_Tests.framework */; };
 		4BBB009736B540C47E50CE37 /* Pods_Bank.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 754FC632F3964D9EF1172D85 /* Pods_Bank.framework */; };
 		5002C0962294165700E88585 /* ThreadSafeness.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5002C0952294165700E88585 /* ThreadSafeness.swift */; };
@@ -803,6 +817,7 @@
 		58AAA90B0E639B0D044EA653 /* TransactionInfoDescriptionTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA98833B2412BBE860CA5 /* TransactionInfoDescriptionTheme.swift */; };
 		58AAA95B6E8306B9D83429D7 /* RequestErrorTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA452B368DF573BDB2E41 /* RequestErrorTheme.swift */; };
 		58AAA96EE54FCE113749FE93 /* BlockExplorerProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAEB2610B22FF5C9E9A41 /* BlockExplorerProvider.swift */; };
+		58AAA986E5304F29976B1C63 /* WelcomeTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA78092F9EBED7192F8B3 /* WelcomeTheme.swift */; };
 		58AAA9A1D3C6F146F4F9C2C3 /* DataProviderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA414888309622A1AAF53 /* DataProviderCell.swift */; };
 		58AAA9AF060939EC0D36E2E9 /* BackupWordsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA18351C448F8AF3ED17C /* BackupWordsRouter.swift */; };
 		58AAA9B0D99E48C2BC2FB9E6 /* FullTransactionDataProviderManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA7F8DA30F2F95B9DC758 /* FullTransactionDataProviderManager.swift */; };
@@ -810,6 +825,7 @@
 		58AAA9EFD7F9CB98975F26E7 /* HorSysProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA976A6B67FD47D5958E8 /* HorSysProvider.swift */; };
 		58AAAA2E5B50D77CF62FA49A /* BackupWordsModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA8FCF190F71C5494E5C5 /* BackupWordsModule.swift */; };
 		58AAAA91EA503CFDDE7CB43F /* BtcComProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA58097EB8413FEA75EE8 /* BtcComProvider.swift */; };
+		58AAAAA1B0403F6686162485 /* WelcomeTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA78092F9EBED7192F8B3 /* WelcomeTheme.swift */; };
 		58AAAAAE312B4839ECDB4C87 /* RequestErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAF286BB3532AF94E4EB8 /* RequestErrorView.swift */; };
 		58AAAAC587B54002789A555A /* BackupModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA88D3ED8D5570474B589 /* BackupModule.swift */; };
 		58AAAAEB64E554EFE622B1DE /* BitcoinTransactionInfoAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA1C151E737B0B32208B4 /* BitcoinTransactionInfoAdapter.swift */; };
@@ -845,6 +861,7 @@
 		58AAAE017EAE7ED3D0019E7E /* FullTransactionInfoRouterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA36F24D9B30298D67BCB /* FullTransactionInfoRouterTests.swift */; };
 		58AAAE044A7692E5282B9FBD /* FullTransactionProviderLinkCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA330AD0FF6644BD4510C /* FullTransactionProviderLinkCell.swift */; };
 		58AAAE0F7496AC800D08499F /* DataProviderSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAB2A7397DE3BBC456E96 /* DataProviderSettingsViewController.swift */; };
+		58AAAE280968278A7F1DE65B /* WelcomeTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA78092F9EBED7192F8B3 /* WelcomeTheme.swift */; };
 		58AAAE2E0615EBEF98E58BE8 /* BitcoinTransactionInfoAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA1C151E737B0B32208B4 /* BitcoinTransactionInfoAdapter.swift */; };
 		58AAAE30782CBD903A650F1B /* BackupConfirmationModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA2833E26BB948D3E06D2 /* BackupConfirmationModule.swift */; };
 		58AAAE86C076E1C7418874D3 /* BackupConfirmationRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA2D3E1840EA8931E12D0 /* BackupConfirmationRouter.swift */; };
@@ -1597,10 +1614,14 @@
 		1A564FE8D247C36C2478C6B5 /* TransactionCurrenciesHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionCurrenciesHeaderView.swift; sourceTree = "<group>"; };
 		2CDA251F7039B6388B930003 /* Pods_Bank_Dev.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Bank_Dev.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2FA5D82E6E66E2BB85636BD0 /* BlockdozerProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockdozerProvider.swift; sourceTree = "<group>"; };
-		3A6E283B22D33B4500211177 /* BackupRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = BackupRouter.swift; path = BankWallet/Modules/Backup/BackupRouter.swift; sourceTree = "<group>"; };
 		3AF4739C21D38F380005A458 /* FullTransactionInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FullTransactionInfoViewController.swift; sourceTree = "<group>"; };
+		3C7B92FD9F4CEC1CBB31B5A7 /* WelcomeScreenModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WelcomeScreenModule.swift; sourceTree = "<group>"; };
 		3C7B94C6548A52D8576B8138 /* BackupConfirmationInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackupConfirmationInteractor.swift; sourceTree = "<group>"; };
 		3C7B94F32F315F4F753D89AD /* UrlManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UrlManager.swift; sourceTree = "<group>"; };
+		3C7B9537271B4937DF028FEC /* WelcomeScreenPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WelcomeScreenPresenter.swift; sourceTree = "<group>"; };
+		3C7B956E27165EB2D682C2D7 /* WelcomeScreenViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WelcomeScreenViewController.swift; sourceTree = "<group>"; };
+		3C7B95EF8087307F8266483C /* WelcomeScreenRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WelcomeScreenRouter.swift; sourceTree = "<group>"; };
+		3C7B99396FD9BBA3E8E3715F /* WelcomeScreenInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WelcomeScreenInteractor.swift; sourceTree = "<group>"; };
 		3D955ABDB32C63409D8F97FC /* Pods-Bank Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bank Tests.debug.xcconfig"; path = "../Pods/Target Support Files/Pods-Bank Tests/Pods-Bank Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		417B3999AB813D9B5AE50F08 /* Pods-Bank Dev T.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bank Dev T.debug.xcconfig"; path = "../Pods/Target Support Files/Pods-Bank Dev T/Pods-Bank Dev T.debug.xcconfig"; sourceTree = "<group>"; };
 		49A4A4EC5EC2A6D4253FB66D /* Pods-Bank Dev.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bank Dev.release.xcconfig"; path = "../Pods/Target Support Files/Pods-Bank Dev/Pods-Bank Dev.release.xcconfig"; sourceTree = "<group>"; };
@@ -1657,6 +1678,7 @@
 		58AAA687FC0253AD175BA756 /* FullTransactionInfoInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FullTransactionInfoInteractor.swift; sourceTree = "<group>"; };
 		58AAA68D36E8424BBE757B88 /* DataProviderSettingsPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataProviderSettingsPresenter.swift; sourceTree = "<group>"; };
 		58AAA72A3BACDB574838A8CC /* FullTransactionInfoProviderFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FullTransactionInfoProviderFactory.swift; sourceTree = "<group>"; };
+		58AAA78092F9EBED7192F8B3 /* WelcomeTheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WelcomeTheme.swift; sourceTree = "<group>"; };
 		58AAA79D129F7B3E64598E5F /* FullTransactionInfoModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FullTransactionInfoModule.swift; sourceTree = "<group>"; };
 		58AAA7A94D25C20240FD75C6 /* PaymentRequestAddress.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentRequestAddress.swift; sourceTree = "<group>"; };
 		58AAA7F8DA30F2F95B9DC758 /* FullTransactionDataProviderManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FullTransactionDataProviderManager.swift; sourceTree = "<group>"; };
@@ -1995,6 +2017,7 @@
 				1A56483301946F4DF022E125 /* SyncMode */,
 				11B352FAC4377E8D23D66635 /* ManageAccounts */,
 				11B35A083CD87166D9283315 /* CreateAccount */,
+				3C7B9BF3170D4C25D5293D33 /* Welcome */,
 			);
 			path = Modules;
 			sourceTree = "<group>";
@@ -2383,6 +2406,7 @@
 				1A564B3A9FB49DA8AA184B46 /* SyncModeTheme.swift */,
 				11B357C7F62B53F2AD89FBC6 /* ManageAccountsTheme.swift */,
 				58AAAEFCF9B0CF6C069E826E /* RestoreAccountsTheme.swift */,
+				58AAA78092F9EBED7192F8B3 /* WelcomeTheme.swift */,
 			);
 			path = Theme;
 			sourceTree = "<group>";
@@ -2761,6 +2785,18 @@
 			name = "Recovered References";
 			sourceTree = "<group>";
 		};
+		3C7B9BF3170D4C25D5293D33 /* Welcome */ = {
+			isa = PBXGroup;
+			children = (
+				3C7B92FD9F4CEC1CBB31B5A7 /* WelcomeScreenModule.swift */,
+				3C7B95EF8087307F8266483C /* WelcomeScreenRouter.swift */,
+				3C7B99396FD9BBA3E8E3715F /* WelcomeScreenInteractor.swift */,
+				3C7B9537271B4937DF028FEC /* WelcomeScreenPresenter.swift */,
+				3C7B956E27165EB2D682C2D7 /* WelcomeScreenViewController.swift */,
+			);
+			path = Welcome;
+			sourceTree = "<group>";
+		};
 		5026FFF321C3CA280023EEA2 /* Configuration */ = {
 			isa = PBXGroup;
 			children = (
@@ -2879,7 +2915,6 @@
 		D3285F3920BD158E00644076 = {
 			isa = PBXGroup;
 			children = (
-				3A6E283B22D33B4500211177 /* BackupRouter.swift */,
 				D3285F4420BD158E00644076 /* BankWallet */,
 				D3373DC020C658660082BC4A /* BankWalletTests */,
 				D3285F4320BD158E00644076 /* Products */,
@@ -3713,6 +3748,12 @@
 				58AAA75A994A2F0EC891D68B /* BackupInteractor.swift in Sources */,
 				3A6E283D22D33B6D00211177 /* BackupRouter.swift in Sources */,
 				3C7B908FFAF30C34C67B7142 /* BackupConfirmationInteractor.swift in Sources */,
+				3C7B90F1C99BDDC2D5EAA440 /* WelcomeScreenPresenter.swift in Sources */,
+				3C7B90996EF221A34CC4E5E0 /* WelcomeScreenViewController.swift in Sources */,
+				3C7B9F2A51BC2B8872C41DD8 /* WelcomeScreenInteractor.swift in Sources */,
+				3C7B9AA3A29613BEBC00F6B2 /* WelcomeScreenModule.swift in Sources */,
+				3C7B9469B45EA1720D7FA071 /* WelcomeScreenRouter.swift in Sources */,
+				58AAA986E5304F29976B1C63 /* WelcomeTheme.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3771,7 +3812,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3A6E283C22D33B4500211177 /* BackupRouter.swift in Sources */,
 				3A472DB02208050D0067B288 /* UIWindow.swift in Sources */,
 				D38404E4218317DF007D50AD /* AppDelegate.swift in Sources */,
 				D38404E5218317DF007D50AD /* BackupController.swift in Sources */,
@@ -4152,6 +4192,12 @@
 				58AAA8B423DC3F7D2FC9A98B /* WordsValidator.swift in Sources */,
 				58AAAE8D8A77DE3EC9BF448E /* BackupInteractor.swift in Sources */,
 				3C7B914B741D51C85FDDD3D8 /* BackupConfirmationInteractor.swift in Sources */,
+				3C7B989E186C799AC2FD49F1 /* WelcomeScreenPresenter.swift in Sources */,
+				3C7B9BAF807355796DCA80C4 /* WelcomeScreenViewController.swift in Sources */,
+				3C7B9238F4E71EB3A358C961 /* WelcomeScreenInteractor.swift in Sources */,
+				3C7B9F0AC922D7433A5F4058 /* WelcomeScreenModule.swift in Sources */,
+				3C7B90BA0514E3C7298B1B86 /* WelcomeScreenRouter.swift in Sources */,
+				58AAAAA1B0403F6686162485 /* WelcomeTheme.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4540,6 +4586,12 @@
 				58AAA410CEF17E930102D036 /* BackupInteractor.swift in Sources */,
 				3A6E283E22D33B7A00211177 /* BackupRouter.swift in Sources */,
 				3C7B95CD8DC991FF890AC487 /* BackupConfirmationInteractor.swift in Sources */,
+				3C7B94B65E1C445819714F84 /* WelcomeScreenPresenter.swift in Sources */,
+				3C7B9F51D15FBB02710E5EEB /* WelcomeScreenViewController.swift in Sources */,
+				3C7B9E4617897C61295C6308 /* WelcomeScreenInteractor.swift in Sources */,
+				3C7B9332423F320A74F69354 /* WelcomeScreenModule.swift in Sources */,
+				3C7B9663B3AF4B2A8D7E8A46 /* WelcomeScreenRouter.swift in Sources */,
+				58AAAE280968278A7F1DE65B /* WelcomeTheme.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
