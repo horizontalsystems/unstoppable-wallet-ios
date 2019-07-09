@@ -7,14 +7,15 @@ import Cuckoo
 class WordsValidatorTests: QuickSpec {
 
     override func spec() {
-        let validator = WordsValidator(words: ["bmw", "audi", "toyota", "mazda"])
+        let words = ["bmw", "audi", "toyota", "mazda"]
+        let validator = WordsValidator()
 
         describe("not equal indexes and words count") {
             let confirmationWords = ["bmw"]
 
             it("throws invalidConfirmation error") {
                 expect {
-                    try validator.validate(confirmationIndexes: [1, 2], words: confirmationWords)
+                    try validator.validate(words: words, confirmationIndexes: [1, 2], confirmationWords: confirmationWords)
                 }.to(throwError(WordsValidator.ValidationError.invalidConfirmation))
             }
         }
@@ -23,7 +24,7 @@ class WordsValidatorTests: QuickSpec {
                 let confirmationWords = ["bmw", ""]
 
                 it("throws emptyWords error") {
-                    expect { try validator.validate(confirmationIndexes: [1, 2], words: confirmationWords) }.to(throwError(WordsValidator.ValidationError.emptyWords))
+                    expect { try validator.validate(words: words, confirmationIndexes: [1, 2], confirmationWords: confirmationWords) }.to(throwError(WordsValidator.ValidationError.emptyWords))
                 }
             }
 
@@ -31,7 +32,7 @@ class WordsValidatorTests: QuickSpec {
                 let confirmationWords = ["bmw", "  "]
 
                 it("throws emptyWords error") {
-                    expect { try validator.validate(confirmationIndexes: [1, 2], words: confirmationWords) }.to(throwError(WordsValidator.ValidationError.emptyWords))
+                    expect { try validator.validate(words: words, confirmationIndexes: [1, 2], confirmationWords: confirmationWords) }.to(throwError(WordsValidator.ValidationError.emptyWords))
                 }
             }
         }
@@ -41,7 +42,7 @@ class WordsValidatorTests: QuickSpec {
                 let confirmationWords = ["renault", "audi"]
 
                 it("throws invalidConfirmation error") {
-                    expect { try validator.validate(confirmationIndexes: [1, 2], words: confirmationWords) }.to(throwError(WordsValidator.ValidationError.invalidConfirmation))
+                    expect { try validator.validate(words: words, confirmationIndexes: [1, 2], confirmationWords: confirmationWords) }.to(throwError(WordsValidator.ValidationError.invalidConfirmation))
                 }
             }
 
@@ -49,7 +50,7 @@ class WordsValidatorTests: QuickSpec {
                 let confirmationWords = ["audi", "bmw"]
 
                 it("throws invalidConfirmation error") {
-                    expect { try validator.validate(confirmationIndexes: [1, 2], words: confirmationWords) }.to(throwError(WordsValidator.ValidationError.invalidConfirmation))
+                    expect { try validator.validate(words: words, confirmationIndexes: [1, 2], confirmationWords: confirmationWords) }.to(throwError(WordsValidator.ValidationError.invalidConfirmation))
                 }
             }
         }
@@ -58,7 +59,7 @@ class WordsValidatorTests: QuickSpec {
             let confirmationWords = ["bmw", "audi"]
 
             it("does not throw any errors") {
-                expect { try validator.validate(confirmationIndexes: [1, 2], words: confirmationWords) }.notTo(throwError())
+                expect { try validator.validate(words: words, confirmationIndexes: [1, 2], confirmationWords: confirmationWords) }.notTo(throwError())
             }
         }
 
