@@ -54,10 +54,6 @@ extension ManageAccountsViewController: IManageAccountsView {
 
 extension ManageAccountsViewController: UITableViewDataSource, UITableViewDelegate {
 
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
-
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return delegate.itemsCount
     }
@@ -67,13 +63,15 @@ extension ManageAccountsViewController: UITableViewDataSource, UITableViewDelega
     }
 
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if let cell = cell as? ManageAccountCell {
-            cell.bind(account: delegate.item(index: indexPath.row), onUnlink: { [weak self] in
-                self?.delegate.didTapUnlink(index: indexPath.row)
-            }, onBackup: { [weak self] in
-                self?.delegate.didTapBackup(index: indexPath.row)
-            })
+        guard let cell = cell as? ManageAccountCell else {
+            return
         }
+
+        cell.bind(viewItem: delegate.item(index: indexPath.row), onUnlink: { [weak self] in
+            self?.delegate.didTapUnlink(index: indexPath.row)
+        }, onBackup: { [weak self] in
+            self?.delegate.didTapBackup(index: indexPath.row)
+        })
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

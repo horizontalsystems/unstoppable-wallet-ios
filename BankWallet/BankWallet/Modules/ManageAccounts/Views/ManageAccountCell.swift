@@ -103,13 +103,15 @@ class ManageAccountCell: UITableViewCell {
         super.init(coder: aDecoder)
     }
 
-    func bind(account: Account, onUnlink: @escaping () -> (), onBackup: @escaping () -> ()) {
-        backedUpIcon.isHidden = account.backedUp
+    func bind(viewItem: ManageAccountViewItem, onUnlink: @escaping () -> (), onBackup: @escaping () -> ()) {
+        if case let .linked(backedUp) = viewItem.state, !backedUp {
+            backedUpIcon.isHidden = false
+        } else {
+            backedUpIcon.isHidden = true
+        }
 
-        let predefinedAccountType = account.type.predefinedAccountType
-
-        nameLabel.text = predefinedAccountType?.title.localized
-        coinsLabel.text = predefinedAccountType?.coinCodes
+        nameLabel.text = viewItem.title.localized
+        coinsLabel.text = viewItem.coinCodes
 
         self.onUnlink = onUnlink
         self.onBackup = onBackup

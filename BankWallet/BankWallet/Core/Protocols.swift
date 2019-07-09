@@ -449,3 +449,18 @@ protocol IEncryptionManager {
 protocol IUUIDProvider {
     func generate() -> String
 }
+
+protocol IPredefinedAccountTypeManager {
+    var allTypes: [IPredefinedAccountType] { get }
+    func account(predefinedAccountType: IPredefinedAccountType) -> Account?
+}
+
+protocol IPredefinedAccountType {
+    var title: String { get }
+    var coinCodes: String { get }
+    var defaultAccountType: DefaultAccountType? { get }
+}
+
+enum DefaultAccountType {
+    case mnemonic(wordsCount: Int)
+}

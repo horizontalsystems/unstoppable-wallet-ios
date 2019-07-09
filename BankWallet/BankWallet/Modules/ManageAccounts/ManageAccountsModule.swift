@@ -5,18 +5,22 @@ protocol IManageAccountsView: class {
 protocol IManageAccountsViewDelegate {
     func viewDidLoad()
     var itemsCount: Int { get }
-    func item(index: Int) -> Account
+    func item(index: Int) -> ManageAccountViewItem
 
     func didTapUnlink(index: Int)
     func didTapBackup(index: Int)
+    func didTapShowKey(index: Int)
+    func didTapCreate(index: Int)
+    func didTapRestore(index: Int)
 }
 
 protocol IManageAccountsInteractor {
-    var accounts: [Account] { get }
+    var predefinedAccountTypes: [IPredefinedAccountType] { get }
+    func account(predefinedAccountType: IPredefinedAccountType) -> Account?
 }
 
 protocol IManageAccountsInteractorDelegate: class {
-    func didUpdate(accounts: [Account])
+    func didUpdateAccounts()
 }
 
 protocol IManageAccountsRouter {
@@ -24,7 +28,18 @@ protocol IManageAccountsRouter {
     func showBackup(account: Account)
 }
 
-//struct AccountViewItem {
-//    let title: String
-//    let coinCodes: String
-//}
+struct ManageAccountItem {
+    let predefinedAccountType: IPredefinedAccountType
+    let account: Account?
+}
+
+struct ManageAccountViewItem {
+    let title: String
+    let coinCodes: String
+    let state: ManageAccountState
+}
+
+enum ManageAccountState {
+    case linked(backedUp: Bool)
+    case notLinked(canCreate: Bool)
+}
