@@ -52,7 +52,7 @@ class RespondButton: UIView, RespondViewDelegate {
         titleLabel.font = ButtonTheme.font
         view.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { maker in
-            maker.edges.equalToSuperview().inset(UIEdgeInsets(top: ButtonTheme.margin, left: ButtonTheme.margin, bottom: ButtonTheme.margin, right: ButtonTheme.margin))
+            maker.edges.equalToSuperview().inset(UIEdgeInsets(top: 0, left: ButtonTheme.margin, bottom: 0, right: ButtonTheme.margin))
         }
     }
 

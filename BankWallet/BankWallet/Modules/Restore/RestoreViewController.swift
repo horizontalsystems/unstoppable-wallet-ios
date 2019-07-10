@@ -69,7 +69,7 @@ extension RestoreViewController: UITableViewDataSource, UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if let cell = cell as? RestoreAccountCell {
-            cell.bind(accountType: delegate.type(index: indexPath.row))
+            cell.bind(predefinedAccountType: delegate.type(index: indexPath.row))
         }
     }
 

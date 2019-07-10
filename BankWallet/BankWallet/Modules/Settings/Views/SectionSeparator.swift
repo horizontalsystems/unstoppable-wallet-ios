@@ -11,6 +11,7 @@ class SectionSeparator: UITableViewHeaderFooterView {
         backgroundView = UIView()
         backgroundView?.backgroundColor = .clear
         contentView.backgroundColor = .clear
+        contentView.frame = CGRect(x: 0, y: 0, width: 1000, height: 1000) // fix breaking constraints. When header has label with constraints it overlaps with autoresizing mask on init
 
         topSeparatorView.backgroundColor = AppTheme.darkSeparatorColor
         contentView.addSubview(topSeparatorView)

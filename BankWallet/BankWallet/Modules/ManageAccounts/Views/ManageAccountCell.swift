@@ -9,11 +9,11 @@ class ManageAccountCell: UITableViewCell {
     private let nameLabel = UILabel()
     private let coinsLabel = UILabel()
 
-    private let unlinkButton = RespondButton()
-    private let backupButton = RespondButton()
+    private let leftButton = RespondButton()
+    private let rightButton = RespondButton()
 
-    private var onUnlink: (() -> ())?
-    private var onBackup: (() -> ())?
+    private var onTapLeft: (() -> ())?
+    private var onTapRight: (() -> ())?
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -28,7 +28,7 @@ class ManageAccountCell: UITableViewCell {
             maker.leadingMargin.trailingMargin.equalToSuperview().inset(self.layoutMargins)
             maker.bottom.equalToSuperview().offset(-ManageAccountsTheme.cellBottomMargin)
         }
-        roundedBackground.backgroundColor = ManageAccountsTheme.roundedBackgroundColor
+
         roundedBackground.layer.shadowOpacity = ManageAccountsTheme.roundedBackgroundShadowOpacity
         roundedBackground.layer.cornerRadius = ManageAccountsTheme.roundedBackgroundCornerRadius
         roundedBackground.layer.shadowColor = ManageAccountsTheme.roundedBackgroundShadowColor.cgColor
@@ -74,45 +74,84 @@ class ManageAccountCell: UITableViewCell {
         coinsLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         coinsLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
 
-        clippingView.addSubview(unlinkButton)
-        unlinkButton.snp.makeConstraints { maker in
+        clippingView.addSubview(leftButton)
+        leftButton.snp.makeConstraints { maker in
             maker.leading.equalToSuperview().offset(ManageAccountsTheme.cellSmallPadding)
             maker.top.equalTo(self.coinsLabel.snp.bottom).offset(ManageAccountsTheme.buttonsTopMargin)
             maker.height.equalTo(ManageAccountsTheme.buttonsHeight)
         }
-        unlinkButton.onTap = { [weak self] in self?.onUnlink?() }
-        unlinkButton.backgrounds = ButtonTheme.redBackgroundDictionary
-        unlinkButton.cornerRadius = ManageAccountsTheme.buttonCornerRadius
-        unlinkButton.titleLabel.text = "settings_manage_accounts.unlink".localized
+        leftButton.onTap = { [weak self] in self?.onTapLeft?() }
+        leftButton.backgrounds = ButtonTheme.redBackgroundDictionary
+        leftButton.cornerRadius = ManageAccountsTheme.buttonCornerRadius
 
-        clippingView.addSubview(backupButton)
-        backupButton.snp.makeConstraints { maker in
-            maker.leading.equalTo(unlinkButton.snp.trailing).offset(ManageAccountsTheme.cellSmallPadding)
+        clippingView.addSubview(rightButton)
+        rightButton.snp.makeConstraints { maker in
+            maker.leading.equalTo(leftButton.snp.trailing).offset(ManageAccountsTheme.cellSmallPadding)
             maker.top.equalTo(self.coinsLabel.snp.bottom).offset(ManageAccountsTheme.buttonsTopMargin)
             maker.trailing.equalToSuperview().offset(-ManageAccountsTheme.cellSmallPadding)
             maker.height.equalTo(ManageAccountsTheme.buttonsHeight)
-            maker.width.equalTo(unlinkButton)
+            maker.width.equalTo(leftButton)
         }
-        backupButton.onTap = { [weak self] in self?.onBackup?() }
-        backupButton.backgrounds = ButtonTheme.yellowBackgroundDictionary
-        backupButton.cornerRadius = ManageAccountsTheme.buttonCornerRadius
-        backupButton.titleLabel.text = "settings_manage_accounts.backup".localized
+        rightButton.onTap = { [weak self] in self?.onTapRight?() }
+        rightButton.backgrounds = ButtonTheme.yellowBackgroundDictionary
+        rightButton.cornerRadius = ManageAccountsTheme.buttonCornerRadius
     }
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
 
-    func bind(account: Account, onUnlink: @escaping () -> (), onBackup: @escaping () -> ()) {
-        backedUpIcon.isHidden = account.backedUp
+    func bind(viewItem: ManageAccountViewItem, onTapLeft: @escaping () -> (), onTapRight: @escaping () -> ()) {
+        switch viewItem.state {
+        case .linked(let backedUp):
+            roundedBackground.backgroundColor = ManageAccountsTheme.linkedRoundedBackgroundColor
+            backedUpIcon.isHidden = backedUp
+            leftButton.titleLabel.text = "settings_manage_accounts.unlink".localized
+            rightButton.titleLabel.text = "settings_manage_accounts.backup".localized
+            configButtonConstraints(both: true)
+        case .notLinked(let canCreate):
+            roundedBackground.backgroundColor = ManageAccountsTheme.notLinkedRoundedBackgroundColor
+            backedUpIcon.isHidden = true
+            leftButton.titleLabel.text = "New".localized
+            rightButton.titleLabel.text = "Import".localized
+            configButtonConstraints(both: canCreate)
+        }
 
-        let predefinedAccountType = account.type.predefinedAccountType
+        nameLabel.text = viewItem.title.localized
+        coinsLabel.text = viewItem.coinCodes
 
-        nameLabel.text = predefinedAccountType?.title.localized
-        coinsLabel.text = predefinedAccountType?.coinCodes
+        self.onTapLeft = onTapLeft
+        self.onTapRight = onTapRight
+    }
 
-        self.onUnlink = onUnlink
-        self.onBackup = onBackup
+    private func configButtonConstraints(both: Bool) {
+        if both {
+            leftButton.snp.remakeConstraints { maker in
+                maker.leading.equalToSuperview().offset(ManageAccountsTheme.cellSmallPadding)
+                maker.top.equalTo(self.coinsLabel.snp.bottom).offset(ManageAccountsTheme.buttonsTopMargin)
+                maker.height.equalTo(ManageAccountsTheme.buttonsHeight)
+            }
+            rightButton.snp.remakeConstraints { maker in
+                maker.leading.equalTo(leftButton.snp.trailing).offset(ManageAccountsTheme.cellSmallPadding)
+                maker.top.equalTo(self.coinsLabel.snp.bottom).offset(ManageAccountsTheme.buttonsTopMargin)
+                maker.trailing.equalToSuperview().offset(-ManageAccountsTheme.cellSmallPadding)
+                maker.height.equalTo(ManageAccountsTheme.buttonsHeight)
+                maker.width.equalTo(leftButton)
+            }
+        } else {
+            leftButton.snp.remakeConstraints { maker in
+                maker.leading.equalToSuperview().offset(ManageAccountsTheme.cellSmallPadding)
+                maker.width.equalTo(0)
+                maker.top.equalTo(self.coinsLabel.snp.bottom).offset(ManageAccountsTheme.buttonsTopMargin)
+                maker.height.equalTo(ManageAccountsTheme.buttonsHeight)
+            }
+            rightButton.snp.remakeConstraints { maker in
+                maker.leading.equalTo(leftButton.snp.trailing)
+                maker.top.equalTo(self.coinsLabel.snp.bottom).offset(ManageAccountsTheme.buttonsTopMargin)
+                maker.trailing.equalToSuperview().offset(-ManageAccountsTheme.cellSmallPadding)
+                maker.height.equalTo(ManageAccountsTheme.buttonsHeight)
+            }
+        }
     }
 
 }

@@ -42,9 +42,21 @@ class ManageAccountsViewController: WalletViewController {
         return AppTheme.statusBarStyle
     }
 
+    @objc func doneDidTap() {
+        delegate.didTapDone()
+    }
+
 }
 
 extension ManageAccountsViewController: IManageAccountsView {
+
+    func showDoneButton() {
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.done".localized, style: .plain, target: self, action: #selector(doneDidTap))
+    }
+
+    func show(error: Error) {
+        HudHelper.instance.showError(title: error.localizedDescription)
+    }
 
     func reload() {
         tableView.reloadData()
@@ -53,10 +65,6 @@ extension ManageAccountsViewController: IManageAccountsView {
 }
 
 extension ManageAccountsViewController: UITableViewDataSource, UITableViewDelegate {
-
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return delegate.itemsCount
@@ -67,11 +75,23 @@ extension ManageAccountsViewController: UITableViewDataSource, UITableViewDelega
     }
 
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if let cell = cell as? ManageAccountCell {
-            cell.bind(account: delegate.item(index: indexPath.row), onUnlink: { [weak self] in
+        guard let cell = cell as? ManageAccountCell else {
+            return
+        }
+
+        let item = delegate.item(index: indexPath.row)
+        switch item.state {
+        case .linked:
+            cell.bind(viewItem: item, onTapLeft: { [weak self] in
                 self?.delegate.didTapUnlink(index: indexPath.row)
-            }, onBackup: { [weak self] in
+            }, onTapRight: { [weak self] in
                 self?.delegate.didTapBackup(index: indexPath.row)
+            })
+        case .notLinked:
+            cell.bind(viewItem: item, onTapLeft: { [weak self] in
+                self?.delegate.didTapCreate(index: indexPath.row)
+            }, onTapRight: { [weak self] in
+                self?.delegate.didTapRestore(index: indexPath.row)
             })
         }
     }

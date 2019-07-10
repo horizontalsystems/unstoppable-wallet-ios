@@ -3,12 +3,14 @@ class RestorePresenter {
 
     private let router: IRestoreRouter
     private let accountCreator: IAccountCreator
+    private let predefinedAccountTypeManager: IPredefinedAccountTypeManager
 
-    private var types = [PredefinedAccountType]()
+    private var predefinedAccountTypes = [IPredefinedAccountType]()
 
-    init(router: IRestoreRouter, accountCreator: IAccountCreator) {
+    init(router: IRestoreRouter, accountCreator: IAccountCreator, predefinedAccountTypeManager: IPredefinedAccountTypeManager) {
         self.router = router
         self.accountCreator = accountCreator
+        self.predefinedAccountTypeManager = predefinedAccountTypeManager
     }
 
 }
@@ -16,19 +18,19 @@ class RestorePresenter {
 extension RestorePresenter: IRestoreViewDelegate {
 
     func viewDidLoad() {
-        types = PredefinedAccountType.allCases
+        predefinedAccountTypes = predefinedAccountTypeManager.allTypes
     }
 
     var typesCount: Int {
-        return types.count
+        return predefinedAccountTypes.count
     }
 
-    func type(index: Int) -> PredefinedAccountType {
-        return types[index]
+    func type(index: Int) -> IPredefinedAccountType {
+        return predefinedAccountTypes[index]
     }
 
     func didSelect(index: Int) {
-        router.showRestore(type: types[index], delegate: self)
+        router.showRestore(predefinedAccountType: predefinedAccountTypes[index], delegate: self)
     }
 
     func didTapCancel() {
@@ -37,10 +39,12 @@ extension RestorePresenter: IRestoreViewDelegate {
 
 }
 
-extension RestorePresenter: IRestoreDelegate {
+extension RestorePresenter: IRestoreAccountTypeDelegate {
 
     func didRestore(accountType: AccountType, syncMode: SyncMode?) {
-        _ = accountCreator.createRestoredAccount(accountType: accountType, syncMode: syncMode)
+        let account = accountCreator.createRestoredAccount(accountType: accountType, syncMode: syncMode)
+
+        router.notifyRestored(account: account)
         router.close()
     }
 

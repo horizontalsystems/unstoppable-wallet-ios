@@ -177,6 +177,8 @@ protocol IAccountManager {
     var accounts: [Account] { get }
     var accountsObservable: Observable<[Account]> { get }
 
+    func account(predefinedAccountType: IPredefinedAccountType) -> Account?
+
     var nonBackedUpCount: Int { get }
     var nonBackedUpCountObservable: Observable<Int> { get }
 
@@ -187,7 +189,7 @@ protocol IAccountManager {
 
 protocol IAccountCreator {
     func createRestoredAccount(accountType: AccountType, syncMode: SyncMode?) -> Account
-    func createNewAccount(type: PredefinedAccountType) throws -> Account
+    func createNewAccount(defaultAccountType: DefaultAccountType) throws -> Account
 }
 
 protocol IAccountFactory {
@@ -267,6 +269,8 @@ protocol IAppConfigProvider {
 
     var defaultCoinCodes: [CoinCode] { get }
     var coins: [Coin] { get }
+
+    var predefinedAccountTypes: [IPredefinedAccountType] { get }
 }
 
 protocol IFullTransactionInfoProvider {
@@ -448,4 +452,19 @@ protocol IEncryptionManager {
 
 protocol IUUIDProvider {
     func generate() -> String
+}
+
+protocol IPredefinedAccountTypeManager {
+    var allTypes: [IPredefinedAccountType] { get }
+}
+
+protocol IPredefinedAccountType {
+    var title: String { get }
+    var coinCodes: String { get }
+    var defaultAccountType: DefaultAccountType? { get }
+    func supports(accountType: AccountType) -> Bool
+}
+
+enum DefaultAccountType {
+    case mnemonic(wordsCount: Int)
 }

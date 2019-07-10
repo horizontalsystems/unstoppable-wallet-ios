@@ -62,16 +62,10 @@ extension ManageWalletsViewController: IManageWalletsView {
         tableView.reloadData()
     }
 
-    func showCreateAccount(coin: Coin, showNew: Bool) {
-        let onSelectNew: (() -> ())? = showNew ? { [weak self] in
-            self?.delegate.didSelectNew()
-        } : nil
-
-        let onSelectRestore: () -> () = { [weak self] in
-            self?.delegate.didSelectRestore()
+    func showNoAccount(coin: Coin) {
+        let controller = ManageWalletsNoAccountViewController(coin: coin) { [weak self] in
+            self?.delegate.didTapManageKeys()
         }
-
-        let controller = CreateAccountViewController(coin: coin, onSelectRestore: onSelectRestore, onSelectNew: onSelectNew)
         present(controller, animated: true)
     }
 
