@@ -28,15 +28,10 @@ extension BackupPresenter: IBackupViewDelegate {
 extension BackupPresenter: IUnlockDelegate {
 
     func onUnlock() {
-        switch account.type {
-        case .mnemonic(let words, _, _): router.show(words: words, delegate: self)
-        case .eos: router.showEOS(account: account, delegate: self)
-        default: ()
-        }
+        router.showBackup(accountType: account.type, delegate: self)
     }
 
     func onCancelUnlock() {
-
     }
 
 }
