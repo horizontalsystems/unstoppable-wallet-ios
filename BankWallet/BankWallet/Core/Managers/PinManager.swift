@@ -17,7 +17,7 @@ extension PinManager: IPinManager {
         return secureStorage.pin != nil
     }
 
-    func store(pin: String?) throws {
+    func store(pin: String) throws {
         try secureStorage.set(pin: pin)
         isPinSetSubject.onNext(true)
     }

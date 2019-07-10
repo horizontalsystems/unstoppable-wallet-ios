@@ -7,13 +7,13 @@ class SecuritySettingsInteractor {
 
     private let localStorage: ILocalStorage
     private let accountManager: IAccountManager
-    private let systemInfoManager: ISystemInfoManager
+    private let biometryManager: IBiometryManager
     private let pinManager: IPinManager
 
-    init(localStorage: ILocalStorage, accountManager: IAccountManager, systemInfoManager: ISystemInfoManager, pinManager: IPinManager) {
+    init(localStorage: ILocalStorage, accountManager: IAccountManager, biometryManager: IBiometryManager, pinManager: IPinManager) {
         self.localStorage = localStorage
         self.accountManager = accountManager
-        self.systemInfoManager = systemInfoManager
+        self.biometryManager = biometryManager
         self.pinManager = pinManager
 
         accountManager.nonBackedUpCountObservable
@@ -39,38 +39,24 @@ extension SecuritySettingsInteractor: ISecuritySettingsInteractor {
         return accountManager.nonBackedUpCount
     }
 
-    var isBiometricUnlockOn: Bool {
-        return localStorage.isBiometricOn
+    var biometryType: BiometryType {
+        return biometryManager.biometryType
     }
 
     var isPinSet: Bool {
         return pinManager.isPinSet
     }
 
-    func getBiometryType() {
-        systemInfoManager.biometryType
-                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
-                .observeOn(MainScheduler.instance)
-                .subscribe(onSuccess: { [weak self] type in
-                    self?.delegate?.didGetBiometry(type: type)
-                })
-                .disposed(by: disposeBag)
+    var isBiometricUnlockOn: Bool {
+        return localStorage.isBiometricOn
+    }
+
+    func disablePin() throws {
+        try pinManager.clear()
     }
 
     func set(biometricUnlockOn: Bool) {
         localStorage.isBiometricOn = biometricUnlockOn
-    }
-
-}
-
-extension SecuritySettingsInteractor: IUnlockDelegate {
-
-    func onUnlock() {
-        delegate?.onUnlock()
-    }
-
-    func onCancelUnlock() {
-        delegate?.onCancelUnlock()
     }
 
 }

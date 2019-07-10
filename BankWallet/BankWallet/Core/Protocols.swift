@@ -223,7 +223,7 @@ protocol IBlurManager {
 
 protocol IPinManager: class {
     var isPinSet: Bool { get }
-    func store(pin: String?) throws
+    func store(pin: String) throws
     func validate(pin: String) -> Bool
     func clear() throws
 
@@ -252,6 +252,10 @@ protocol IRateManager {
 protocol ISystemInfoManager {
     var appVersion: String { get }
     var biometryType: Single<BiometryType> { get }
+}
+
+protocol IBiometryManager {
+    var biometryType: BiometryType { get }
 }
 
 protocol IAppConfigProvider {

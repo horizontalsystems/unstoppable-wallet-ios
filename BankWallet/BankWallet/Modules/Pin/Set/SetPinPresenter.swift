@@ -17,9 +17,13 @@ class SetPinPresenter: ManagePinPresenter {
             default: ()
             }
         }
+
+        view?.showCancel()
     }
 
     override func onCancel() {
+        router.notifyCancelled()
+        router.close()
     }
 
     override func didSavePin() {

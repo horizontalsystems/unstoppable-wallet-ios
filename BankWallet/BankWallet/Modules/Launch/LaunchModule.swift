@@ -4,14 +4,12 @@ protocol ILaunchInteractor {
 
 protocol ILaunchInteractorDelegate: class {
     func showWelcomeModule()
-    func showSetPinModule()
     func showMainModule()
     func showUnlockModule()
 }
 
 protocol ILaunchRouter {
     func showWelcomeModule()
-    func showSetPinModule()
     func showMainModule()
     func showUnlockModule()
 }
