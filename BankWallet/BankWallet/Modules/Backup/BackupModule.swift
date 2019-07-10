@@ -17,5 +17,6 @@ protocol IBackupDelegate {
 }
 
 protocol IBackupInteractor {
+    var isPinSet: Bool { get }
     func setBackedUp(accountId: String)
 }

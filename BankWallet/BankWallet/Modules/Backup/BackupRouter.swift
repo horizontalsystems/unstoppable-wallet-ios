@@ -29,7 +29,7 @@ extension BackupRouter {
 
     static func module(account: Account) -> UIViewController {
         let router = BackupRouter()
-        let interactor = BackupInteractor(accountManager: App.shared.accountManager)
+        let interactor = BackupInteractor(accountManager: App.shared.accountManager, pinManager: App.shared.pinManager)
         let presenter = BackupPresenter(interactor: interactor, router: router, account: account)
 
         let viewController = BackupController(delegate: presenter)
