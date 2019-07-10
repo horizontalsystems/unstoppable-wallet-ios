@@ -122,7 +122,7 @@ class UserDefaultsStorage: ILocalStorage {
         isBiometricOn = false
     }
 
-    private func getString(_ name: String) -> String? {
+    func getString(_ name: String) -> String? {
         return UserDefaults.standard.value(forKey: name) as? String
     }
 
@@ -135,7 +135,7 @@ class UserDefaultsStorage: ILocalStorage {
         UserDefaults.standard.synchronize()
     }
 
-    private func bool(for key: String) -> Bool? {
+    func bool(for key: String) -> Bool? {
         return UserDefaults.standard.value(forKey: key) as? Bool
     }
 
