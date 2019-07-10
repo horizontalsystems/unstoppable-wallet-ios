@@ -75,9 +75,7 @@
 "balance.add_coins" = "Add Coins";
 "balance.sort.header" = "Sort by";
 "balance.sort.valueHighToLow" = "Balance";
-"balance.sort.valueLowToHigh" = "Balance Low to High";
 "balance.sort.az" = "Name";
-"balance.sort.za" = "Z-A";
 "balance.sort.manual" = "Default";
 
 // Deposit
@@ -155,7 +153,6 @@
 "settings.tab_bar_item" = "设置";
 "settings.security_center" = "安全中心";
 "settings.restore_wallet" = "Restore Wallet";
-"settings.advanced" = "Advanced Settings";
 "settings.base_currency" = "基本货币";
 "settings.language" = "语言";
 "settings.about" = "更多";
@@ -187,8 +184,6 @@
 
 "settings_security.title" = "安全中心";
 "settings_security.manage_accounts" = "Manage Keys";
-"settings_security.backup_wallet" = "备份钱包";
-"settings_security.unlink_from_this_device" = "与此设备断开连接";
 "settings_security.set_pin" = "密码";
 "settings_security.change_pin" = "修改密码";
 "settings_security.touch_id" = "Touch ID指纹识别";
@@ -197,11 +192,14 @@
 "settings_security.import_wallet_confirmation_1" = "此操作从此设备中将删除当前安装的钱包";
 "settings_security.import_wallet_confirmation_2" = "确保你已备份钱包的密钥，否则您将无法访问资金。";
 
-// Manage Accounts
+// Manage Keys
 
-"settings_manage_accounts.title" = "Manage Keys";
-"settings_manage_accounts.unlink" = "Unlink";
-"settings_manage_accounts.backup" = "Backup";
+"settings_manage_keys.title" = "Keys";
+"settings_manage_keys.unlink" = "Unlink";
+"settings_manage_keys.backup" = "Backup";
+"settings_manage_keys.show" = "Show";
+"settings_manage_keys.new" = "New";
+"settings_manage_keys.import" = "Import";
 
 // Set PIN
 
@@ -235,6 +233,9 @@
 
 // Key Types
 
-"key_type.12_words" = "12 Words Key";
-"key_type.eos" = "EOS Account";
-"key_type.24_words" = "24 Words Key";
+"key_type.12_words" = "12-words Key";
+"key_type.12_words.text" = "BTC, BCH, DASH, ETH, ERC-20";
+"key_type.eos" = "EOS Blockchain Key";
+"key_type.eos.text" = "EOS";
+"key_type.binance" = "Binance Chain Key";
+"key_type.binance.text" = "BNB, BEP-2";
