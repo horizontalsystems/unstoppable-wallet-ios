@@ -35,29 +35,17 @@ extension AccountCreator: IAccountCreator {
         return account
     }
 
-    func createNewAccount(type: PredefinedAccountType) throws -> Account {
+    func createNewAccount(defaultAccountType: DefaultAccountType) throws -> Account {
         let account: Account
 
-        switch type {
-        case .mnemonic:
-            account = try createMnemonicAccount(wordsCount: 12)
-        case .eos:
-            throw CreateError.eosAccountCreationNotSupported
-        case .binance:
-            account = try createMnemonicAccount(wordsCount: 24)
+        switch defaultAccountType {
+        case let .mnemonic(wordsCount):
+            account = try createMnemonicAccount(wordsCount: wordsCount)
         }
 
         accountManager.save(account: account)
 
         return account
-    }
-
-}
-
-extension AccountCreator {
-
-    enum CreateError: Error {
-        case eosAccountCreationNotSupported
     }
 
 }

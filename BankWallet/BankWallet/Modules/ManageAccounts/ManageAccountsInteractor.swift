@@ -5,35 +5,41 @@ class ManageAccountsInteractor {
 
     private let disposeBag = DisposeBag()
 
+    private let predefinedAccountTypeManager: IPredefinedAccountTypeManager
     private let accountManager: IAccountManager
+    private let accountCreator: IAccountCreator
 
-    init(accountManager: IAccountManager) {
+    init(predefinedAccountTypeManager: IPredefinedAccountTypeManager, accountManager: IAccountManager, accountCreator: IAccountCreator) {
+        self.predefinedAccountTypeManager = predefinedAccountTypeManager
         self.accountManager = accountManager
+        self.accountCreator = accountCreator
 
         accountManager.accountsObservable
                 .subscribeOn(MainScheduler.instance)
                 .subscribe(onNext: { [weak self] accounts in
-                    self?.handleUpdated(accounts: accounts)
+                    self?.delegate?.didUpdateAccounts()
                 })
                 .disposed(by: disposeBag)
-    }
-
-    private func handleUpdated(accounts: [Account]) {
-        delegate?.didUpdate(accounts: predefinedAccounts(accounts: accounts))
-    }
-
-    private func predefinedAccounts(accounts: [Account]) -> [Account] {
-        return PredefinedAccountType.allCases.compactMap { type in
-            return accounts.first { $0.type.predefinedAccountType == type }
-        }
     }
 
 }
 
 extension ManageAccountsInteractor: IManageAccountsInteractor {
 
-    var accounts: [Account] {
-        return predefinedAccounts(accounts: accountManager.accounts)
+    var predefinedAccountTypes: [IPredefinedAccountType] {
+        return predefinedAccountTypeManager.allTypes
+    }
+
+    func account(predefinedAccountType: IPredefinedAccountType) -> Account? {
+        return accountManager.account(predefinedAccountType: predefinedAccountType)
+    }
+
+    func createAccount(defaultAccountType: DefaultAccountType) throws {
+        _ = try accountCreator.createNewAccount(defaultAccountType: defaultAccountType)
+    }
+
+    func restoreAccount(accountType: AccountType, syncMode: SyncMode?) {
+        _ = accountCreator.createRestoredAccount(accountType: accountType, syncMode: syncMode)
     }
 
 }

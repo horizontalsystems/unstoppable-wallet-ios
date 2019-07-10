@@ -188,3 +188,15 @@ extension Account {
     }
 
 }
+
+extension ManageAccountViewItemState: Equatable {
+
+    public static func ==(lhs: ManageAccountViewItemState, rhs: ManageAccountViewItemState) -> Bool {
+        switch (lhs, rhs) {
+        case (.linked(let lhsBackedUp), .linked(let rhsBackedUp)): return lhsBackedUp == rhsBackedUp
+        case (.notLinked(let lhsCanCreate), .notLinked(let rhsCanCreate)): return lhsCanCreate == rhsCanCreate
+        default: return false
+        }
+    }
+
+}

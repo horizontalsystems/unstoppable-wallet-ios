@@ -242,9 +242,9 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 // Key Types
 
 "key_type.12_words" = "12-words Key";
-"key_type.12_words.text" = "BTC,BCH,DASH,ETH,ERC-20";
+"key_type.12_words.text" = "BTC, BCH, DASH, ETH, ERC-20";
 "key_type.eos" = "EOS Blockchain Key";
 "key_type.eos.text" = "EOS";
 "key_type.binance" = "Binance Chain Key";
-"key_type.binance.text" = "BNB,BEP-2";
+"key_type.binance.text" = "BNB, BEP-2";
 
