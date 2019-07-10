@@ -1,6 +1,7 @@
 import RxSwift
 import GRDB
 import RxGRDB
+import KeychainAccess
 
 class GrdbStorage {
     private let dbPool: DatabasePool
@@ -64,13 +65,14 @@ class GrdbStorage {
         }
 
         migrator.registerMigration("migrateAuthData") { db in
-            guard let authData: AuthData = KeychainStorage.shared.get(forKey: "auth_data_keychain_key") else {
+            let keychain = Keychain(service: "io.horizontalsystems.bank.dev")
+            guard let data = try? keychain.getData("auth_data_keychain_key"), let authData = NSKeyedUnarchiver.unarchiveObject(with: data) as? AuthData else {
                 return
             }
             let uuid = authData.walletId
-            let isBackedUp = UserDefaultsStorage.shared.bool(for: "is_backed_up") ?? false
+            let isBackedUp = UserDefaults.standard.bool(forKey: "is_backed_up")
             let syncMode: SyncMode
-            switch UserDefaultsStorage.shared.getString("sync_mode_key") ?? "" {
+            switch UserDefaults.standard.string(forKey: "sync_mode_key") ?? "" {
             case "fast": syncMode = .fast
             case "slow": syncMode = .slow
             case "new": syncMode = .new
@@ -78,7 +80,7 @@ class GrdbStorage {
             }
 
             let account = Account(id: uuid, name: uuid, type: .mnemonic(words: authData.words, derivation: .bip44, salt: nil), backedUp: isBackedUp, defaultSyncMode: syncMode)
-            try? account.insert(db)
+            try account.insert(db)
 
             guard try db.tableExists("enabled_coins") else {
                 return
@@ -86,7 +88,7 @@ class GrdbStorage {
 
             let accountId = account.id
             try db.execute(sql: """
-                                INSERT INTO \(EnabledWallet.databaseTableName)(`\(EnabledWallet.Columns.coinCode.name)`, `\(EnabledWallet.Columns.accountId.name)`, `\(EnabledWallet.Columns.syncMode.name)`, `\(EnabledWallet.Columns.walletOrder.name)`) 
+                                INSERT INTO \(EnabledWallet.databaseTableName)(`\(EnabledWallet.Columns.coinCode.name)`, `\(EnabledWallet.Columns.accountId.name)`, `\(EnabledWallet.Columns.syncMode.name)`, `\(EnabledWallet.Columns.walletOrder.name)`)
                                 SELECT `coinCode`, '\(accountId)', '\(syncMode)', `coinOrder` FROM enabled_coins
                                 """)
             try db.drop(table: "enabled_coins")

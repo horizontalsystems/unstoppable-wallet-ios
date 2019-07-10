@@ -87,7 +87,7 @@ class KeychainStorage {
         try keychain.set(value, key: key)
     }
 
-    func get<T: NSCoding>(forKey key: String) -> T? {
+    private func get<T: NSCoding>(forKey key: String) -> T? {
         if let keychainData = try? keychain.getData(key) {
             return NSKeyedUnarchiver.unarchiveObject(with: keychainData) as? T
         } else {
