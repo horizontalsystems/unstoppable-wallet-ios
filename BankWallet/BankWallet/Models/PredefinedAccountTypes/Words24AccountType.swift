@@ -1,6 +1,6 @@
 class Words24AccountType: IPredefinedAccountType {
-    let title = "key_type.24_words"
-    let coinCodes = "BNB"
+    let title = "key_type.binance"
+    let coinCodes = "key_type.binance.text"
 
     var defaultAccountType: DefaultAccountType? {
         return .mnemonic(wordsCount: 24)

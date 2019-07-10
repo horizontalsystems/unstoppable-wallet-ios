@@ -106,19 +106,19 @@ class ManageAccountCell: UITableViewCell {
         case .linked(let backedUp):
             roundedBackground.backgroundColor = ManageAccountsTheme.linkedRoundedBackgroundColor
             backedUpIcon.isHidden = backedUp
-            leftButton.titleLabel.text = "settings_manage_accounts.unlink".localized
-            rightButton.titleLabel.text = "settings_manage_accounts.backup".localized
+            leftButton.titleLabel.text = "settings_manage_keys.unlink".localized
+            rightButton.titleLabel.text = "settings_manage_keys.backup".localized
             configButtonConstraints(both: true)
         case .notLinked(let canCreate):
             roundedBackground.backgroundColor = ManageAccountsTheme.notLinkedRoundedBackgroundColor
             backedUpIcon.isHidden = true
-            leftButton.titleLabel.text = "New".localized
-            rightButton.titleLabel.text = "Import".localized
+            leftButton.titleLabel.text = "settings_manage_keys.new".localized
+            rightButton.titleLabel.text = "settings_manage_keys.import".localized
             configButtonConstraints(both: canCreate)
         }
 
         nameLabel.text = viewItem.title.localized
-        coinsLabel.text = viewItem.coinCodes
+        coinsLabel.text = viewItem.coinCodes.localized
 
         self.onTapLeft = onTapLeft
         self.onTapRight = onTapRight
