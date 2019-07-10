@@ -7,7 +7,8 @@ class ManageAccountsTheme {
     static let cellSmallPadding: CGFloat = 8
     static let cellBottomMargin: CGFloat = 8
 
-    static var roundedBackgroundColor: UIColor { return .crypto_SteelDark_White }
+    static var linkedRoundedBackgroundColor: UIColor { return .crypto_White_Steel20 }
+    static var notLinkedRoundedBackgroundColor: UIColor { return .crypto_White60_Steel40 }
     static let roundedBackgroundCornerRadius: CGFloat = 15
     static var roundedBackgroundShadowColor: UIColor { return .crypto_Black20_Steel20 }
     static var roundedBackgroundShadowOpacity: Float { return App.shared.localStorage.lightMode ? 0.8 : 1 }

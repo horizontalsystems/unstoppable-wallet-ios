@@ -25,7 +25,7 @@ extension WordsManager: IWordsManager {
     }
 
     func generateWords(count: Int) throws -> [String] {
-        return try Mnemonic.generate()
+        return try Mnemonic.generate(strength: count == 24 ? .veryHigh : .default)
     }
 
     func validate(words: [String]) throws {

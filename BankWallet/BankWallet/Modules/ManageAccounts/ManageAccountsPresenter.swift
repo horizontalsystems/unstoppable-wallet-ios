@@ -1,14 +1,24 @@
 class ManageAccountsPresenter {
+    weak var view: IManageAccountsView?
+
+    private let mode: ManageAccountsRouter.PresentationMode
     private let interactor: IManageAccountsInteractor
     private let router: IManageAccountsRouter
 
-    weak var view: IManageAccountsView?
+    private var viewItemFactory = ManageAccountsViewItemFactory()
 
-    private var accounts: [Account] = []
+    private var items = [ManageAccountItem]()
 
-    init(interactor: IManageAccountsInteractor, router: IManageAccountsRouter) {
+    init(mode: ManageAccountsRouter.PresentationMode, interactor: IManageAccountsInteractor, router: IManageAccountsRouter) {
+        self.mode = mode
         self.interactor = interactor
         self.router = router
+    }
+
+    private func buildItems() {
+        items = interactor.predefinedAccountTypes.map {
+            ManageAccountItem(predefinedAccountType: $0, account: interactor.account(predefinedAccountType: $0))
+        }
     }
 
 }
@@ -16,32 +26,80 @@ class ManageAccountsPresenter {
 extension ManageAccountsPresenter: IManageAccountsViewDelegate {
 
     func viewDidLoad() {
-        self.accounts = interactor.accounts
+        if mode == .presented {
+            view?.showDoneButton()
+        }
+
+        buildItems()
     }
 
     var itemsCount: Int {
-        return accounts.count
+        return items.count
     }
 
-    func item(index: Int) -> Account {
-        return accounts[index]
+    func item(index: Int) -> ManageAccountViewItem {
+        return viewItemFactory.viewItem(item: items[index])
     }
 
     func didTapUnlink(index: Int) {
-        router.showUnlink(accountId: accounts[index].id)
+        guard let account = items[index].account else {
+            return
+        }
+
+        router.showUnlink(accountId: account.id)
     }
 
     func didTapBackup(index: Int) {
-        router.showBackup(account: accounts[index])
+        guard let account = items[index].account else {
+            return
+        }
+
+        router.showBackup(account: account)
+    }
+
+    func didTapShowKey(index: Int) {
+        guard let account = items[index].account else {
+            return
+        }
+
+        router.showKey(account: account)
+    }
+
+    func didTapCreate(index: Int) {
+        guard let defaultAccountType = items[index].predefinedAccountType.defaultAccountType else {
+            return
+        }
+
+        do {
+            try interactor.createAccount(defaultAccountType: defaultAccountType)
+        } catch {
+            view?.show(error: error)
+        }
+    }
+
+    func didTapRestore(index: Int) {
+        router.showRestore(predefinedAccountType: items[index].predefinedAccountType, delegate: self)
+    }
+
+    func didTapDone() {
+        router.close()
     }
 
 }
 
 extension ManageAccountsPresenter: IManageAccountsInteractorDelegate {
 
-    func didUpdate(accounts: [Account]) {
-        self.accounts = accounts
+    func didUpdateAccounts() {
+        buildItems()
         view?.reload()
+    }
+
+}
+
+extension ManageAccountsPresenter: IRestoreAccountTypeDelegate {
+
+    func didRestore(accountType: AccountType, syncMode: SyncMode?) {
+        interactor.restoreAccount(accountType: accountType, syncMode: syncMode)
     }
 
 }

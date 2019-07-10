@@ -6,12 +6,8 @@ class ManageWalletsRouter {
 
 extension ManageWalletsRouter: IManageWalletsRouter {
 
-    func showRestore(type: PredefinedAccountType, delegate: IRestoreAccountTypeDelegate) {
-        guard let module = RestoreRouter.module(type: type, mode: .presented, delegate: delegate) else {
-            return
-        }
-
-        viewController?.present(WalletNavigationController(rootViewController: module), animated: true)
+    func showManageKeys() {
+        viewController?.present(WalletNavigationController(rootViewController: ManageAccountsRouter.module(mode: .presented)), animated: true)
     }
 
     func close() {
