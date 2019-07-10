@@ -79,11 +79,21 @@ extension ManageAccountsViewController: UITableViewDataSource, UITableViewDelega
             return
         }
 
-        cell.bind(viewItem: delegate.item(index: indexPath.row), onUnlink: { [weak self] in
-            self?.delegate.didTapUnlink(index: indexPath.row)
-        }, onBackup: { [weak self] in
-            self?.delegate.didTapBackup(index: indexPath.row)
-        })
+        let item = delegate.item(index: indexPath.row)
+        switch item.state {
+        case .linked:
+            cell.bind(viewItem: item, onTapLeft: { [weak self] in
+                self?.delegate.didTapUnlink(index: indexPath.row)
+            }, onTapRight: { [weak self] in
+                self?.delegate.didTapBackup(index: indexPath.row)
+            })
+        case .notLinked:
+            cell.bind(viewItem: item, onTapLeft: { [weak self] in
+                self?.delegate.didTapCreate(index: indexPath.row)
+            }, onTapRight: { [weak self] in
+                self?.delegate.didTapRestore(index: indexPath.row)
+            })
+        }
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
