@@ -203,12 +203,6 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 // Manage Keys
 
 "settings_manage_keys.title" = "Keys";
-"settings_manage_keys.words_keys.title" = "12-words Key";
-"settings_manage_keys.words_keys.subtitle" = "BTC, BCH, DASH, ETH, ERC20";
-"settings_manage_keys.eos.title" = "EOS Blockchain Key";
-"settings_manage_keys.eos.subtitle" = "EOS";
-"settings_manage_keys.binance.title" = "Binance Chain Key";
-"settings_manage_keys.binance.subtitle" = "BNB, BEP2";
 "settings_manage_keys.unlink" = "Unlink";
 "settings_manage_keys.backup" = "Backup";
 "settings_manage_keys.show" = "Show";
@@ -247,6 +241,10 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 
 // Key Types
 
-"key_type.12_words" = "12 Words Key";
-"key_type.eos" = "EOS Account";
-"key_type.24_words" = "24 Words Key";
+"key_type.12_words" = "12-words Key";
+"key_type.12_words.text" = "BTC,BCH,DASH,ETH,ERC-20";
+"key_type.eos" = "EOS Blockchain Key";
+"key_type.eos.text" = "EOS";
+"key_type.binance" = "Binance Chain Key";
+"key_type.binance.text" = "BNB,BEP-2";
+

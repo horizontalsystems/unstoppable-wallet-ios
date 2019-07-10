@@ -7,7 +7,7 @@ enum PredefinedAccountType: CaseIterable {
         switch self {
         case .mnemonic: return "key_type.12_words"
         case .eos: return "key_type.eos"
-        case .binance: return "key_type.24_words"
+        case .binance: return "key_type.binance"
         }
     }
 
