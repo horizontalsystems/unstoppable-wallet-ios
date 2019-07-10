@@ -226,6 +226,8 @@ protocol IPinManager: class {
     func store(pin: String?) throws
     func validate(pin: String) -> Bool
     func clear() throws
+
+    var isPinSetObservable: Observable<Bool> { get }
 }
 
 protocol ILockRouter {

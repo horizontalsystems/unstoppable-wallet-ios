@@ -1,5 +1,3 @@
-import Foundation
-
 protocol ISetPinRouter {
-    func navigateToMain()
+    func close()
 }

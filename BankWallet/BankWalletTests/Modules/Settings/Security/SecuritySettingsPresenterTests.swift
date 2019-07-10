@@ -25,6 +25,7 @@ class SecuritySettingsPresenterTests: XCTestCase {
             when(mock.set(biometricUnlockOn: any())).thenDoNothing()
             when(mock.set(biometryType: any())).thenDoNothing()
             when(mock.set(backedUp: any())).thenDoNothing()
+            when(mock.set(isPinSet: any())).thenDoNothing()
         }
         stub(mockRouter) { mock in
             when(mock.showEditPin()).thenDoNothing()
@@ -33,6 +34,7 @@ class SecuritySettingsPresenterTests: XCTestCase {
         stub(mockInteractor) { mock in
             when(mock.nonBackedUpCount.get).thenReturn(0)
             when(mock.isBiometricUnlockOn.get).thenReturn(true)
+            when(mock.isPinSet.get).thenReturn(false)
             when(mock.getBiometryType()).thenDoNothing()
             when(mock.set(biometricUnlockOn: any())).thenDoNothing()
         }

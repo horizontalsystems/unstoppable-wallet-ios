@@ -1,5 +1,3 @@
-import Foundation
-
 class SetPinPresenter: ManagePinPresenter {
 
     private let router: ISetPinRouter
@@ -25,7 +23,7 @@ class SetPinPresenter: ManagePinPresenter {
     }
 
     override func didSavePin() {
-        router.navigateToMain()
+        router.close()
     }
 
 }

@@ -20,6 +20,7 @@ extension SecuritySettingsPresenter: ISecuritySettingsViewDelegate {
 
         view?.set(biometricUnlockOn: interactor.isBiometricUnlockOn)
         view?.set(backedUp: interactor.nonBackedUpCount == 0)
+        view?.set(isPinSet: interactor.isPinSet)
 
         interactor.getBiometryType()
     }
@@ -37,12 +38,20 @@ extension SecuritySettingsPresenter: ISecuritySettingsViewDelegate {
         router.showEditPin()
     }
 
+    func didTapSetPin() {
+        router.showSetPin()
+    }
+
 }
 
 extension SecuritySettingsPresenter: ISecuritySettingsInteractorDelegate {
 
     func didUpdateNonBackedUp(count: Int) {
         view?.set(backedUp: count == 0)
+    }
+
+    func didUpdate(isPinSet: Bool) {
+        view?.set(isPinSet: isPinSet)
     }
 
     func didGetBiometry(type: BiometryType) {

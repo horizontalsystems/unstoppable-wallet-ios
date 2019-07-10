@@ -98,7 +98,7 @@ class App {
         adapterManager = AdapterManager(adapterFactory: adapterFactory, ethereumKitManager: ethereumKitManager, authManager: authManager, walletManager: walletManager)
 
         lockRouter = LockRouter()
-        lockManager = LockManager(localStorage: localStorage, authManager: authManager, appConfigProvider: appConfigProvider, lockRouter: lockRouter)
+        lockManager = LockManager(pinManager: pinManager, localStorage: localStorage, lockRouter: lockRouter)
         blurManager = BlurManager(lockManager: lockManager)
 
         rateSyncer = RateSyncer(rateManager: rateManager, adapterManager: adapterManager, currencyManager: currencyManager, reachabilityManager: reachabilityManager)

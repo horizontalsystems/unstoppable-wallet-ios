@@ -34,7 +34,7 @@ class SetPinPresenterTests: XCTestCase {
             when(mock.set(pin: any())).thenDoNothing()
         }
         stub(mockRouter) { mock in
-            when(mock.navigateToMain()).thenDoNothing()
+            when(mock.close()).thenDoNothing()
         }
     }
 
@@ -87,7 +87,7 @@ class SetPinPresenterTests: XCTestCase {
     func testDismissAfterSavePin() {
         presenter.didSavePin()
 
-        verify(mockRouter).navigateToMain()
+        verify(mockRouter).close()
     }
 
     func testInvalidConfirmPin() {
@@ -115,7 +115,7 @@ class SetPinPresenterTests: XCTestCase {
     func testNeverDismiss() {
         presenter.onCancel()
 
-        verify(mockRouter, never()).navigateToMain()
+        verify(mockRouter, never()).close()
 
     }
 

@@ -9,6 +9,7 @@ class SecuritySettingsViewController: WalletViewController, SectionsDataSource {
     var backedUp = false
     var biometricUnlockOn = false
     var biometryType: BiometryType = .none
+    var isPinSet = false
 
     var didLoad = false
 
@@ -83,14 +84,24 @@ class SecuritySettingsViewController: WalletViewController, SectionsDataSource {
         default: ()
         }
 
-        let setOrChangePinTitle = App.shared.pinManager.isPinSet ? "settings_security.change_pin".localized : "settings_security.set_pin".localized
-        pinTouchFaceRows.append(Row<SettingsCell>(id: "set_pin", hash: "pinned_\(App.shared.pinManager.isPinSet)", height: SettingsTheme.securityCellHeight, bind: { cell, _ in
-            cell.bind(titleIcon: UIImage(named: "Passcode Icon"), title: setOrChangePinTitle, showDisclosure: true, last: true)
-        }, action: { [weak self] _ in
-            DispatchQueue.main.async {
-                self?.delegate.didTapEditPin()
-            }
-        }))
+        if isPinSet {
+            pinTouchFaceRows.append(Row<SettingsCell>(id: "edit_pin", height: SettingsTheme.securityCellHeight, bind: { cell, _ in
+                cell.bind(titleIcon: UIImage(named: "Passcode Icon"), title: "settings_security.change_pin".localized, showDisclosure: true, last: true)
+            }, action: { [weak self] _ in
+                DispatchQueue.main.async {
+                    self?.delegate.didTapEditPin()
+                }
+            }))
+        } else {
+            pinTouchFaceRows.append(Row<SettingsCell>(id: "set_pin", height: SettingsTheme.securityCellHeight, bind: { cell, _ in
+                cell.bind(titleIcon: UIImage(named: "Passcode Icon"), title: "settings_security.set_pin".localized, showDisclosure: true, last: true)
+            }, action: { [weak self] _ in
+                DispatchQueue.main.async {
+                    self?.delegate.didTapSetPin()
+                }
+            }))
+        }
+
         let faceHeader: ViewState<SectionSeparator> = .cellType(hash: "face_header", binder: { view in
             view.bind()
         }, dynamicHeight: { _ in SettingsTheme.headerHeight })
@@ -127,6 +138,11 @@ extension SecuritySettingsViewController: ISecuritySettingsView {
 
     func set(backedUp: Bool) {
         self.backedUp = backedUp
+        reloadIfNeeded()
+    }
+
+    func set(isPinSet: Bool) {
+        self.isPinSet = isPinSet
         reloadIfNeeded()
     }
 
