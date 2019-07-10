@@ -1,6 +1,7 @@
 import RxSwift
 import GRDB
 import RxGRDB
+import KeychainAccess
 
 class GrdbStorage {
     private let dbPool: DatabasePool
@@ -33,6 +34,25 @@ class GrdbStorage {
             }
         }
 
+        migrator.registerMigration("createAccountsTable") { db in
+            try db.create(table: Account.databaseTableName) { t in
+                t.column(Account.Columns.id.name, .text).notNull()
+                t.column(Account.Columns.name.name, .text).notNull()
+                t.column(Account.Columns.type.name, .integer).notNull()
+                t.column(Account.Columns.backedUp.name, .boolean).notNull()
+                t.column(Account.Columns.defaultSyncMode.name, .text)
+                t.column(Account.Columns.words.name, .blob)
+                t.column(Account.Columns.derivation.name, .integer)
+                t.column(Account.Columns.salt.name, .blob)
+                t.column(Account.Columns.data.name, .blob)
+                t.column(Account.Columns.eosAccount.name, .blob)
+
+                t.primaryKey([
+                    Account.Columns.id.name
+                ], onConflict: .replace)
+            }
+        }
+
         migrator.registerMigration("createEnabledWalletsTable") { db in
             try db.create(table: EnabledWallet.databaseTableName) { t in
                 t.column(EnabledWallet.Columns.coinCode.name, .text).notNull()
@@ -42,17 +62,33 @@ class GrdbStorage {
 
                 t.primaryKey([EnabledWallet.Columns.coinCode.name, EnabledWallet.Columns.accountId.name], onConflict: .replace)
             }
+        }
 
-            // transfer data from old "enabled_coins" table
+        migrator.registerMigration("migrateAuthData") { db in
+            let keychain = Keychain(service: "io.horizontalsystems.bank.dev")
+            guard let data = try? keychain.getData("auth_data_keychain_key"), let authData = NSKeyedUnarchiver.unarchiveObject(with: data) as? AuthData else {
+                return
+            }
+            let uuid = authData.walletId
+            let isBackedUp = UserDefaults.standard.bool(forKey: "is_backed_up")
+            let syncMode: SyncMode
+            switch UserDefaults.standard.string(forKey: "sync_mode_key") ?? "" {
+            case "fast": syncMode = .fast
+            case "slow": syncMode = .slow
+            case "new": syncMode = .new
+            default: syncMode = .fast
+            }
+
+            let account = Account(id: uuid, name: uuid, type: .mnemonic(words: authData.words, derivation: .bip44, salt: nil), backedUp: isBackedUp, defaultSyncMode: syncMode)
+            try account.insert(db)
 
             guard try db.tableExists("enabled_coins") else {
                 return
             }
 
-            let accountId = "" // todo
-            let syncMode = (UserDefaults.standard.value(forKey: "sync_mode_key") as? String) ?? "fast"
+            let accountId = account.id
             try db.execute(sql: """
-                                INSERT INTO \(EnabledWallet.databaseTableName)(`\(EnabledWallet.Columns.coinCode.name)`, `\(EnabledWallet.Columns.accountId.name)`, `\(EnabledWallet.Columns.syncMode.name)`, `\(EnabledWallet.Columns.walletOrder.name)`) 
+                                INSERT INTO \(EnabledWallet.databaseTableName)(`\(EnabledWallet.Columns.coinCode.name)`, `\(EnabledWallet.Columns.accountId.name)`, `\(EnabledWallet.Columns.syncMode.name)`, `\(EnabledWallet.Columns.walletOrder.name)`)
                                 SELECT `coinCode`, '\(accountId)', '\(syncMode)', `coinOrder` FROM enabled_coins
                                 """)
             try db.drop(table: "enabled_coins")
@@ -72,25 +108,6 @@ class GrdbStorage {
                     Rate.Columns.currencyCode.name,
                     Rate.Columns.date.name,
                     Rate.Columns.isLatest.name
-                ], onConflict: .replace)
-            }
-        }
-
-        migrator.registerMigration("createAccountsTable") { db in
-            try db.create(table: Account.databaseTableName) { t in
-                t.column(Account.Columns.id.name, .text).notNull()
-                t.column(Account.Columns.name.name, .text).notNull()
-                t.column(Account.Columns.type.name, .integer).notNull()
-                t.column(Account.Columns.backedUp.name, .boolean).notNull()
-                t.column(Account.Columns.defaultSyncMode.name, .text)
-                t.column(Account.Columns.words.name, .blob)
-                t.column(Account.Columns.derivation.name, .integer)
-                t.column(Account.Columns.salt.name, .blob)
-                t.column(Account.Columns.data.name, .blob)
-                t.column(Account.Columns.eosAccount.name, .blob)
-
-                t.primaryKey([
-                    Account.Columns.id.name
                 ], onConflict: .replace)
             }
         }
