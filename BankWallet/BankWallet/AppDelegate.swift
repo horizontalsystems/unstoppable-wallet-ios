@@ -13,6 +13,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         LaunchRouter.presenter(window: window).launch()
 
+        App.shared.biometryManager.refresh()
+
         return true
     }
 
@@ -39,6 +41,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillEnterForeground(_ application: UIApplication) {
         App.shared.lockManager.willEnterForeground()
         App.shared.adapterManager.refresh()
+        App.shared.biometryManager.refresh()
 
         if backgroundTask != UIBackgroundTaskIdentifier.invalid {
             UIApplication.shared.endBackgroundTask(backgroundTask)

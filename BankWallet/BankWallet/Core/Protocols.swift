@@ -256,6 +256,8 @@ protocol ISystemInfoManager {
 
 protocol IBiometryManager {
     var biometryType: BiometryType { get }
+    var biometryTypeObservable: Observable<BiometryType> { get }
+    func refresh()
 }
 
 protocol IAppConfigProvider {

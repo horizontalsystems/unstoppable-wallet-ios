@@ -83,7 +83,7 @@ class SecuritySettingsViewController: WalletViewController, SectionsDataSource {
 
         if isPinSet {
             pinRows.append(Row<SettingsCell>(id: "change_pin", height: SettingsTheme.securityCellHeight, bind: { cell, _ in
-                cell.bind(titleIcon: UIImage(named: "Passcode Icon"), title: "settings_security.change_pin".localized, showDisclosure: true, last: true)
+                cell.bind(titleIcon: nil, title: "settings_security.change_pin".localized, showDisclosure: true, last: true)
             }, action: { [weak self] _ in
                 DispatchQueue.main.async {
                     self?.delegate.didTapEditPin()
@@ -146,6 +146,7 @@ extension SecuritySettingsViewController: ISecuritySettingsView {
 
     func set(biometryType: BiometryType) {
         self.biometryType = biometryType
+        reloadIfNeeded()
     }
 
     func set(backedUp: Bool) {

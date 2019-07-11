@@ -54,6 +54,10 @@ extension SecuritySettingsPresenter: ISecuritySettingsInteractorDelegate {
         view?.set(isPinSet: isPinSet)
     }
 
+    func didUpdate(biometryType: BiometryType) {
+        view?.set(biometryType: biometryType)
+    }
+
 }
 
 extension SecuritySettingsPresenter: ISetPinDelegate {

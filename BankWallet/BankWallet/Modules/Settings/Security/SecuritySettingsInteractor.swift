@@ -29,6 +29,13 @@ class SecuritySettingsInteractor {
                     self?.delegate?.didUpdate(isPinSet: isPinSet)
                 })
                 .disposed(by: disposeBag)
+
+        biometryManager.biometryTypeObservable
+                .observeOn(MainScheduler.instance)
+                .subscribe(onNext: { [weak self] biometryType in
+                    self?.delegate?.didUpdate(biometryType: biometryType)
+                })
+                .disposed(by: disposeBag)
     }
 
 }

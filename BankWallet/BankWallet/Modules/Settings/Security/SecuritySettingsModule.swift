@@ -27,6 +27,7 @@ protocol ISecuritySettingsInteractor {
 protocol ISecuritySettingsInteractorDelegate: class {
     func didUpdateNonBackedUp(count: Int)
     func didUpdate(isPinSet: Bool)
+    func didUpdate(biometryType: BiometryType)
 }
 
 protocol ISecuritySettingsRouter {
