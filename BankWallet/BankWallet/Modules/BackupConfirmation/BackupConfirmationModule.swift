@@ -1,7 +1,7 @@
 protocol IBackupConfirmationView: class {
     func onBecomeActive()
 
-    func showValidation(error: Error)
+    func show(error: Error)
 }
 
 protocol IBackupConfirmationViewDelegate {
