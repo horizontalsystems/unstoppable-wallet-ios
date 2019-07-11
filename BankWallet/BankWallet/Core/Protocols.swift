@@ -223,9 +223,11 @@ protocol IBlurManager {
 
 protocol IPinManager: class {
     var isPinSet: Bool { get }
-    func store(pin: String?) throws
+    func store(pin: String) throws
     func validate(pin: String) -> Bool
     func clear() throws
+
+    var isPinSetObservable: Observable<Bool> { get }
 }
 
 protocol ILockRouter {
@@ -250,6 +252,12 @@ protocol IRateManager {
 protocol ISystemInfoManager {
     var appVersion: String { get }
     var biometryType: Single<BiometryType> { get }
+}
+
+protocol IBiometryManager {
+    var biometryType: BiometryType { get }
+    var biometryTypeObservable: Observable<BiometryType> { get }
+    func refresh()
 }
 
 protocol IAppConfigProvider {

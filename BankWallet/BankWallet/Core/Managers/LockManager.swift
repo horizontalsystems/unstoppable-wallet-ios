@@ -1,18 +1,16 @@
 import Foundation
 
 class LockManager {
+    private let pinManager: IPinManager
     private let localStorage: ILocalStorage
-    private let authManager: IAuthManager
-    private let appConfigProvider: IAppConfigProvider
     private let lockRouter: ILockRouter
 
     private let lockTimeout: Double = 60
     private(set) var isLocked: Bool = false
 
-    init(localStorage: ILocalStorage, authManager: IAuthManager, appConfigProvider: IAppConfigProvider, lockRouter: ILockRouter) {
+    init(pinManager: IPinManager, localStorage: ILocalStorage, lockRouter: ILockRouter) {
+        self.pinManager = pinManager
         self.localStorage = localStorage
-        self.authManager = authManager
-        self.appConfigProvider = appConfigProvider
         self.lockRouter = lockRouter
     }
 
@@ -44,7 +42,7 @@ extension LockManager: ILockManager {
     }
 
     func lock() {
-        guard !appConfigProvider.disablePinLock else {
+        guard pinManager.isPinSet else {
             return
         }
 

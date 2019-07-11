@@ -11,6 +11,7 @@ class App {
     let appConfigProvider: IAppConfigProvider
     let systemInfoManager: ISystemInfoManager
     let backgroundManager: BackgroundManager
+    let biometryManager: IBiometryManager
 
     let localizationManager: LocalizationManager
     let languageManager: ILanguageManager
@@ -63,6 +64,7 @@ class App {
         appConfigProvider = AppConfigProvider()
         systemInfoManager = SystemInfoManager()
         backgroundManager = BackgroundManager()
+        biometryManager = BiometryManager(systemInfoManager: systemInfoManager)
 
         localizationManager = LocalizationManager()
         languageManager = LanguageManager(localizationManager: localizationManager, localStorage: localStorage, fallbackLanguage: fallbackLanguage)
@@ -98,7 +100,7 @@ class App {
         adapterManager = AdapterManager(adapterFactory: adapterFactory, ethereumKitManager: ethereumKitManager, authManager: authManager, walletManager: walletManager)
 
         lockRouter = LockRouter()
-        lockManager = LockManager(localStorage: localStorage, authManager: authManager, appConfigProvider: appConfigProvider, lockRouter: lockRouter)
+        lockManager = LockManager(pinManager: pinManager, localStorage: localStorage, lockRouter: lockRouter)
         blurManager = BlurManager(lockManager: lockManager)
 
         rateSyncer = RateSyncer(rateManager: rateManager, adapterManager: adapterManager, currencyManager: currencyManager, reachabilityManager: reachabilityManager)

@@ -1,5 +1,8 @@
-import Foundation
-
 protocol ISetPinRouter {
-    func navigateToMain()
+    func notifyCancelled()
+    func close()
+}
+
+protocol ISetPinDelegate {
+    func didCancelSetPin()
 }

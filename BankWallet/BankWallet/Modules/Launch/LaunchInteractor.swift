@@ -16,12 +16,14 @@ class LaunchInteractor {
 extension LaunchInteractor: ILaunchInteractor {
 
     func showLaunchModule() {
-        if accountManager.accounts.isEmpty {
+        let isPinSet = pinManager.isPinSet
+
+        if accountManager.accounts.isEmpty && !isPinSet {
             delegate?.showWelcomeModule()
-        } else if !pinManager.isPinSet {
-            delegate?.showMainModule()
-        } else {
+        } else if isPinSet {
             delegate?.showUnlockModule()
+        } else {
+            delegate?.showMainModule()
         }
     }
 

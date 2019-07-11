@@ -1,37 +1,41 @@
 import UIKit
 
-protocol SetPinDelegate: class {
-    func onSetPin()
-}
-
 class SetPinRouter {
+    weak var viewController: UIViewController?
+
+    private let delegate: ISetPinDelegate
+
+    init(delegate: ISetPinDelegate) {
+        self.delegate = delegate
+    }
+
 }
 
 extension SetPinRouter: ISetPinRouter {
 
-    func navigateToMain() {
-        UIApplication.shared.keyWindow?.set(newRootController: MainRouter.module())
+    func notifyCancelled() {
+        delegate.didCancelSetPin()
+    }
+
+    func close() {
+        viewController?.dismiss(animated: true)
     }
 
 }
 
 extension SetPinRouter {
 
-    static func module() -> UIViewController {
-        let router = SetPinRouter()
+    static func module(delegate: ISetPinDelegate) -> UIViewController {
+        let router = SetPinRouter(delegate: delegate)
         let interactor = PinInteractor(pinManager: App.shared.pinManager)
         let presenter = SetPinPresenter(interactor: interactor, router: router)
-        let controller = PinViewController(delegate: presenter)
-
-        let navigationController = WalletNavigationController(rootViewController: controller)
-        navigationController.navigationBar.barStyle = AppTheme.navigationBarStyle
-        navigationController.navigationBar.tintColor = AppTheme.navigationBarTintColor
-        navigationController.navigationBar.prefersLargeTitles = true
+        let viewController = PinViewController(delegate: presenter)
 
         interactor.delegate = presenter
-        presenter.view = controller
+        presenter.view = viewController
+        router.viewController = viewController
 
-        return navigationController
+        return WalletNavigationController(rootViewController: viewController)
     }
 
 }

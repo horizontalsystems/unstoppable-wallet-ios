@@ -20,7 +20,11 @@ extension BackupPresenter: IBackupViewDelegate {
     }
 
     func backupDidTap() {
-        router.showUnlock()
+        if interactor.isPinSet {
+            router.showUnlock()
+        } else {
+            router.showBackup(accountType: account.type, delegate: self)
+        }
     }
 
 }
@@ -28,15 +32,10 @@ extension BackupPresenter: IBackupViewDelegate {
 extension BackupPresenter: IUnlockDelegate {
 
     func onUnlock() {
-        switch account.type {
-        case .mnemonic(let words, _, _): router.show(words: words, delegate: self)
-        case .eos: router.showEOS(account: account, delegate: self)
-        default: ()
-        }
+        router.showBackup(accountType: account.type, delegate: self)
     }
 
     func onCancelUnlock() {
-
     }
 
 }

@@ -1,35 +1,40 @@
 protocol ISecuritySettingsView: class {
     func set(title: String)
-    func set(biometricUnlockOn: Bool)
     func set(biometryType: BiometryType)
     func set(backedUp: Bool)
+    func set(isPinSet: Bool)
+    func set(biometricUnlockOn: Bool)
+    func show(error: Error)
 }
 
 protocol ISecuritySettingsViewDelegate {
     func viewDidLoad()
-    func didSwitch(biometricUnlockOn: Bool)
-    func didTapEditPin()
     func didTapManageAccounts()
+    func didSwitch(isPinSet: Bool)
+    func didTapEditPin()
+    func didSwitch(biometricUnlockOn: Bool)
 }
 
 protocol ISecuritySettingsInteractor {
     var nonBackedUpCount: Int { get }
+    var biometryType: BiometryType { get }
+    var isPinSet: Bool { get }
     var isBiometricUnlockOn: Bool { get }
-    func getBiometryType()
+    func disablePin() throws
     func set(biometricUnlockOn: Bool)
 }
 
 protocol ISecuritySettingsInteractorDelegate: class {
     func didUpdateNonBackedUp(count: Int)
-    func didGetBiometry(type: BiometryType)
-    func onUnlock()
-    func onCancelUnlock()
+    func didUpdate(isPinSet: Bool)
+    func didUpdate(biometryType: BiometryType)
 }
 
 protocol ISecuritySettingsRouter {
     func showManageAccounts()
+    func showSetPin(delegate: ISetPinDelegate)
     func showEditPin()
-    func showUnlock()
+    func showUnlock(delegate: IUnlockDelegate)
 }
 
 enum SecuritySettingsUnlockType {

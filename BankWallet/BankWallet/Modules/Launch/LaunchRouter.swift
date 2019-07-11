@@ -14,10 +14,6 @@ extension LaunchRouter: ILaunchRouter {
         show(viewController: WelcomeScreenRouter.module())
     }
 
-    func showSetPinModule() {
-        show(viewController: SetPinRouter.module())
-    }
-
     func showMainModule() {
         show(viewController: MainRouter.module())
     }
