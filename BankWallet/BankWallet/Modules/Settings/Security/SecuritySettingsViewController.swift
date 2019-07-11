@@ -103,7 +103,7 @@ class SecuritySettingsViewController: WalletViewController, SectionsDataSource {
             var biometryRow: RowProtocol?
 
             switch biometryType {
-            case .touchId: biometryRow = createBiometryRow(title: "settings_security.touch_id", icon: "Face Id Icon", isOn: biometricUnlockOn) 
+            case .touchId: biometryRow = createBiometryRow(title: "settings_security.touch_id", icon: "Touch Id Icon", isOn: biometricUnlockOn) 
             case .faceId: biometryRow = createBiometryRow(title: "settings_security.face_id", icon: "Face Id Icon", isOn: biometricUnlockOn)
             default: ()
             }
