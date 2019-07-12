@@ -34,14 +34,12 @@
 
 //Coin Sync Modes
 "coin_sync.title" = "Restore Options";
-"coin_sync.header" = "Syncing with blockchain";
 "coin_sync.fast" = "Fast";
 "coin_sync.recommended" = "0-2 hours (Recommended)";
 "coin_sync.fast.text" = "Restores your past transactions via secure third party server. For users with a long history of transactions involving very large sums this method may pose privacy risks.";
 "coin_sync.slow" = "Slow";
 "coin_sync.more_private" = "1-12 hours (More Private)";
 "coin_sync.slow.text" = "Restores your past transactions directly from the network. Significantly more private but very slow. If the restore takes way too much time go to Security section in Settings tab and select “Unlink This Device” option.";
-"coin_sync.disable" = "Disable Coin";
 "coin_sync.alert.header" = "Attention";
 "coin_sync.alert.text" = "This action will resync your wallet balance for each blockchain. It may take several hours to complete.";
 "coin_sync.erc20" = "Sync mode same as Ethereum";
@@ -106,7 +104,6 @@
 // Transaction Info
 
 "tx_info.title" = "تراکنش";
-"tx_info.historical_rate" = "چارت هاي تاريخي";
 "tx_info.time" = "زمان";
 "tx_info.status" = "وضيعت";
 "tx_info.status.pending" = "در حالت انتظار";
@@ -156,6 +153,7 @@
 "settings.base_currency" = "ارز مرجع";
 "settings.language" = "زبان";
 "settings.about" = "درباره";
+"settings.tell_friends" = "Tell Friends";
 "settings.light_mode" = "حالت روشن";
 "settings.info_title" = "UNSTOPPABLE";
 "settings.info_subtitle" = "decentralized app";
@@ -179,6 +177,10 @@
 "settings_about.app_subtitle" = "Decentralized App";
 "settings_about.terms_privacy_subtitle" = "شرايط وحريم خصوصي:";
 "settings_about.terms_privacy_text" = "Your funds are securely stored on your device. Not on any external servers.\n\nThe app does not depend on any server or person to function.\n\nSome generic app data like exchange rates are stored on decentralized storage (IPFS).\n\nThe app works everywhere as long as there is an internet connection.\n\nIt is impossible for a third party to block this app from working.\n\nThe entire code powering this app is free and open to the public.\n\nThere may be bugs in the code. And while we tried to provide the most secure wallet we still can not guarantee the security of your funds. No one can.\n\nMake sure you backup a Secret Key for your wallet! Never show your secret key to anyone.\n\nDo not jailbreak your phone or install apps from unknown (untrusted) sources.\n\nDo not give your device to untrusted parties.\n\nYou are solely responsible for keeping your Secret Key and your device secure.";
+
+// Settings -> Tell Friends
+
+"settings_tell_friends.text" = "Be Free! Be Unstoppable! https://apps.apple.com/us/app/unstoppable-bitcoin-wallet/id1447619907?ls=1";
 
 // Settings -> Security
 
