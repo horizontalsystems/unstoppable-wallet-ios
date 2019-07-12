@@ -34,14 +34,12 @@
 
 //Coin Sync Modes
 "coin_sync.title" = "Restaurar opciones";
-"coin_sync.header" = "Sincronizando la cadena de bloques";
 "coin_sync.fast" = "Rápido";
 "coin_sync.recommended" = "0-2 horas (Recomendado)";
 "coin_sync.fast.text" = "Restaura tus transacciones pasadas vía un tercer servidor seguro. Para usuarios con una larga historia de transacciones con grandes cantidades, éste método puede tener riesgos de privacidad.";
 "coin_sync.slow" = "Lento";
 "coin_sync.more_private" = "1-12 horas (Más Privado)";
 "coin_sync.slow.text" = "Restaura tus transacciones pasadas directamente de la red. Significativamente mayor privacidad pero muy lento. Si la restauración tarda demasiado ve a la sección de Seguridad en la pestaña de Ajustes y selecciona la opción “Desconectar este dispositivo” ";
-"coin_sync.disable" = "Desactivar Moneda";
 "coin_sync.alert.header" = "Atención";
 "coin_sync.alert.text" = "Esta acción se actualizará el saldo de su cartera para cada cadena de bloques. Puede tardar varias horas en completarse.";
 "coin_sync.erc20" = "Sincronizar el modo igual que Ethereum";
@@ -106,7 +104,6 @@
 // Transaction Info
 
 "tx_info.title" = "Transacción";
-"tx_info.historical_rate" = "Estado histórico";
 "tx_info.time" = "Hora";
 "tx_info.status" = "Estado";
 "tx_info.status.pending" = "Pendiente";
@@ -156,6 +153,7 @@
 "settings.base_currency" = "Divisa principal";
 "settings.language" = "Idioma";
 "settings.about" = "Acerca de";
+"settings.tell_friends" = "Tell Friends";
 "settings.light_mode" = "Modo de brillo";
 "settings.info_title" = "UNSTOPPABLE";
 "settings.info_subtitle" = "decentralized app";
@@ -179,6 +177,10 @@
 "settings_about.app_subtitle" = "Decentralized App";
 "settings_about.terms_privacy_subtitle" = "Términos y privacidad:";
 "settings_about.terms_privacy_text" = "Esta aplicación es de servidor a servidor. No depende de ninguna web o tecnología personal de apoyo a la función.\n\nFunciona en cualquier lugar siempre que haya conexión a internet. Ninguna entidad puede bloquear el funcionamiento de esta aplicación o impedir el acceso de un usuario.\n\nSus fondos son almacenados de forma segura únicamente en el teléfono, en ningún otro lugar.\n\nEs su responsabilidad recordar su clave secreta y mantenerla en privado. Nunca la muestre a nadie. Si la pierde, la olvida o es sustraída, sus fondos pueden ser utilizados por la persona que tiene su clave secreta.\n\nNo modifique la seguridad del software de su teléfono, no instale aplicaciones de orígenes desconocidos , no entregue su dispositivo a desconocidos y mantenga actualizado el sistema operativo de tu teléfono. La seguridad de su cartera depende de ello.\n\nLa totalidad del código que soporta esta aplicación está abierta al escrutinio público desde el inicio de la aplicación. Hemos intentado construir la cartera más segura y descentralizada posible; sin embargo, hay ninguna garantía de que no se produzca algún problema de software no deseado. Dicho esto, esta carpeta es probable que sea significativamente más segura que cualquier aplicación de gestión de cartera de smartphone del mercado\n\nAlgunos datos genéricos de carácter público de esta app se guardan en centros de almacenamiento descentralizado (IPFS).\n";
+
+// Settings -> Tell Friends
+
+"settings_tell_friends.text" = "Be Free! Be Unstoppable! https://apps.apple.com/us/app/unstoppable-bitcoin-wallet/id1447619907?ls=1";
 
 // Settings -> Security
 
