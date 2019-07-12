@@ -34,14 +34,12 @@
 
 //Coin Sync Modes
 "coin_sync.title" = "Restaurer les options";
-"coin_sync.header" = "Syncing with blockchain";
 "coin_sync.fast" = "Rapide";
 "coin_sync.recommended" = "0-2 heures (Recommandé)";
 "coin_sync.fast.text" = "Restaure vos transactions passées via un serveur tiers sécurisé. Pour les utilisateurs ayant une longue histoire de transactions impliquant des sommes très importantes, cette méthode peut poser des risques de confidentialité.";
 "coin_sync.slow" = "Lente";
 "coin_sync.more_private" = "1-12 heures (Plus Privé)";
 "coin_sync.slow.text" = "Restaure vos transactions passées directement depuis le réseau. Significablement plus privées mais très lentes. Si la restauration prend beaucoup de temps, allez dans la section Sécurité dans l'onglet Paramètres et sélectionnez l'option « Détacher cet appareil ».";
-"coin_sync.disable" = "Désactiver Coin";
 "coin_sync.alert.header" = "Attention";
 "coin_sync.alert.text" = "Cette action va rééquilibrer votre solde de porte-monnaie pour chaque de blockchain. Elle peut prendre plusieurs heures pour terminer.";
 "coin_sync.erc20" = "Sync mode same as Ethereum";
@@ -106,7 +104,6 @@
 // Transaction Info
 
 "tx_info.title" = "Transaction";
-"tx_info.historical_rate" = "Taux historique";
 "tx_info.time" = "Date";
 "tx_info.status" = "Statut";
 "tx_info.status.pending" = "En attente";
@@ -156,6 +153,7 @@
 "settings.base_currency" = "Devise de Base";
 "settings.language" = "Langue";
 "settings.about" = "À propos de";
+"settings.tell_friends" = "Tell Friends";
 "settings.light_mode" = "Mode lumineux";
 "settings.info_title" = "UNSTOPPABLE";
 "settings.info_subtitle" = "decentralized app";
@@ -179,6 +177,10 @@
 "settings_about.app_subtitle" = "Decentralized App";
 "settings_about.terms_privacy_subtitle" = "Terms & Confidentialité:";
 "settings_about.terms_privacy_text" = "Cette application est décentralisé. Cela ne dépend pas du personnel du service d'assistance Web.\n\nCela fonctionne partout tant qu'il y a internet. Aucune entité ne peut empêcher cette application de fonctionner ou d'empêcher quelqu'un de l'utiliser.\n\nVos fonds stockés en sécurité sur votre portable, pas sur autres.\n\nIl est de votre responsabilité de sauvegarder votre clé secrète et de la garder privée. Ne le montre jamais à personne. En cas de perte, d’oubli ou de vol, vos fonds peuvent être utilisés par la personne qui détient votre clé secrète.\n\nNe piratez pas votre portable, n'installez pas d'applications de sources inconnues (non fiables), ne confiez pas votre appareil à des personnes non fiables et maintenez le système d'exploitation à jour. La sécurité de votre porte-monnaie dépend de tout cela.\n\nLe code alimentant cette application a été ouvert au public depuis le début. Nous avons essayé de créer le porte-monnaie le plus sécurisé et le plus décentralisé possible, mais rien ne garantit qu’il n’y ait pas de problèmes logiciels inattendus. Cela dit, ce porte-monnaie sera probablement beaucoup plus sécurisé que n'importe quelle application de porte-monnaie pour portable.\n\nCertaines données d'applications génériques non privées, telles que les taux de change, sont stockées dans un stockage décentralisé (IPFS). ";
+
+// Settings -> Tell Friends
+
+"settings_tell_friends.text" = "Be Free! Be Unstoppable! https://apps.apple.com/us/app/unstoppable-bitcoin-wallet/id1447619907?ls=1";
 
 // Settings -> Security
 
