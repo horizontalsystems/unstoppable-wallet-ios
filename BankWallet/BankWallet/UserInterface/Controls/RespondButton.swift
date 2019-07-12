@@ -12,7 +12,16 @@ class RespondButton: UIView, RespondViewDelegate {
     var touchTransparent: Bool { return false }
 
     private let view = RespondView()
+    private let wrapperView = UIView()
+
     public let titleLabel = UILabel()
+    public let imageView = UIImageView()
+
+    public var image: UIImage? {
+        didSet {
+            updateContent()
+        }
+    }
 
     var state = State.active {
         didSet {
@@ -48,11 +57,19 @@ class RespondButton: UIView, RespondViewDelegate {
         view.snp.makeConstraints { maker in
             maker.edges.equalToSuperview()
         }
+        view.addSubview(wrapperView)
+        wrapperView.snp.makeConstraints { maker in
+            maker.center.equalToSuperview()
+            maker.trailing.lessThanOrEqualToSuperview().offset(-ButtonTheme.margin)
+            maker.leading.greaterThanOrEqualToSuperview().offset(ButtonTheme.margin)
+        }
+        wrapperView.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+
         titleLabel.textAlignment = .center
         titleLabel.font = ButtonTheme.font
-        view.addSubview(titleLabel)
+        wrapperView.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { maker in
-            maker.edges.equalToSuperview().inset(UIEdgeInsets(top: 0, left: ButtonTheme.margin, bottom: 0, right: ButtonTheme.margin))
+            maker.edges.equalToSuperview()
         }
     }
 
@@ -82,6 +99,28 @@ class RespondButton: UIView, RespondViewDelegate {
     private func updateUI() {
         titleLabel.textColor = textColors[state] ?? .black
         view.backgroundColor = backgrounds[state] ?? .clear
+    }
+
+    private func updateContent() {
+        imageView.image = image
+        if image != nil {
+            wrapperView.addSubview(imageView)
+            imageView.snp.makeConstraints { maker in
+                maker.leading.equalToSuperview()
+                maker.centerY.equalToSuperview()
+            }
+            titleLabel.snp.remakeConstraints { maker in
+                maker.leading.equalTo(imageView.snp.trailing).offset(ButtonTheme.insideMargin)
+                maker.top.bottom.equalToSuperview()
+                maker.trailing.equalToSuperview()
+            }
+        } else {
+            titleLabel.snp.remakeConstraints { maker in
+                maker.edges.equalToSuperview().inset(UIEdgeInsets(top: 0, left: ButtonTheme.margin, bottom: 0, right: ButtonTheme.margin))
+            }
+            imageView.removeFromSuperview()
+        }
+        layoutIfNeeded()
     }
 
 }
