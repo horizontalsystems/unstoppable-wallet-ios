@@ -34,14 +34,12 @@
 
 //Coin Sync Modes
 "coin_sync.title" = "Optionen Wiederherstellen";
-"coin_sync.header" = "Synchronisierung mit der Blockchain";
 "coin_sync.fast" = "Schnell";
 "coin_sync.recommended" = "0-2 Stunden (empfohlen)";
 "coin_sync.fast.text" = "Stellt deine bisherigen Transaktionen über sicheren Drittanbieter-Server wieder her. Für Benutzer mit einer langen Geschichte von Transaktionen mit sehr großen Summen kann diese Methode die Privatsphäre-Risiken darstellen.";
 "coin_sync.slow" = "Langsam";
 "coin_sync.more_private" = "1-12 Stunden (mehr privat)";
 "coin_sync.slow.text" = "Stellt deine bisherigen Transaktionen direkt aus dem Netzwerk her. Signifiziert mehr privat, aber sehr langsam. Wenn die Wiederherstellung zu viel Zeit in den Bereich Sicherheit in Einstellungen geht und wähle die Option „Dieses Gerät trennen“ aus.";
-"coin_sync.disable" = "Coin deaktivieren";
 "coin_sync.alert.header" = "Achtung";
 "coin_sync.alert.text" = "Diese Aktion wird dein Wallet-Konto für jede Blockchain neu synchronisieren. Es kann mehrere Stunden dauern, um ihn abzuschließen.";
 "coin_sync.erc20" = "Sync-Modus wie Ethereum";
@@ -106,7 +104,6 @@
 // Transaction Info
 
 "tx_info.title" = "Transaktion";
-"tx_info.historical_rate" = "Historischer Rate";
 "tx_info.time" = "Zeit";
 "tx_info.status" = "Status";
 "tx_info.status.pending" = "Anstehend";
@@ -156,6 +153,7 @@
 "settings.base_currency" = "Währung";
 "settings.language" = "Sprache";
 "settings.about" = "Info";
+"settings.tell_friends" = "Tell Friends";
 "settings.light_mode" = "Licht Modus";
 "settings.info_title" = "UNSTOPPABLE";
 "settings.info_subtitle" = "decentralized app";
@@ -179,6 +177,10 @@
 "settings_about.app_subtitle" = "Decentralized App";
 "settings_about.terms_privacy_subtitle" = "ANB & Datenschutz:";
 "settings_about.terms_privacy_text" = "Diese Anwendung ist vollständig dezentralisiert\n\nDie Leistung dieser Anwendung hängt nicht von Servern von Drittanbietern oder einem technischen Supportteam ab.\n\nDie Anwendung funktioniert überall, solange es Internet gibt. Dieser Wallet oder deren Benutzer können von niemandem blockiert werden.\n\nDein Geld wird nur auf Ihrem Telefon gespeichert.\n\nDu bist allein für die sichere Aufbewahrung des Offlineschlüssels verantwortlich. Teil deinen Offlineschlüssel nie mit jemandem. Wenn der Offlineschlüssel verloren geht, gestohlen oder vergessen wird, erhält derjenige, der über deinen Offlineschlüssel verfügt, die Kontrolle über dein Geld.\nHack dein Telefon nicht, installier keine Anwendungen von inoffiziellen Quellen und gib dein Telefon niemals den anderen. Die Sicherheit  deiner Wallet hängt direkt davon ab.\n\nDer gesamte Programmcode dieser Anwendung ist kostenlos und für die Öffentlichkeit zugänglich. Wir haben versucht, die sicherste und gleichzeitig dezentralisierte Wallet zu schaffen, aber es gibt keine Garantie dafür, dass der Anwendungscode fehlerfrei ist. Wir glauben jedoch, dass dieser Wallet in Bezug auf die Sicherheit fast alle heute verfügbare mobile Kryptobörsen deutlich übertrifft.\n\nEinige von der Anwendung verwendete öffentliche Daten, wie z. B. Wechselkurse, werden im dezentralen Repository (IPFS) gespeichert";
+
+// Settings -> Tell Friends
+
+"settings_tell_friends.text" = "Be Free! Be Unstoppable! https://apps.apple.com/us/app/unstoppable-bitcoin-wallet/id1447619907?ls=1";
 
 // Settings -> Security
 
