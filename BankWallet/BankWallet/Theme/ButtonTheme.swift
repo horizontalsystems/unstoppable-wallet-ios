@@ -24,6 +24,7 @@ class ButtonTheme {
 
     static let font = UIFont.cryptoHeadline
     static let margin: CGFloat = 16
+    static let imageMargin: CGFloat = 8
 
     static let verticalMargin: CGFloat = 16
     static let insideMargin: CGFloat = 6
