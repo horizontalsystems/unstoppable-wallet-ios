@@ -34,14 +34,12 @@
 
 //Coin Sync Modes
 "coin_sync.title" = "Restore Options";
-"coin_sync.header" = "Syncing with blockchain";
 "coin_sync.fast" = "Fast";
 "coin_sync.recommended" = "0-2 hours (Recommended)";
 "coin_sync.fast.text" = "Restores your past transactions via secure third party server. For users with a long history of transactions involving very large sums this method may pose privacy risks.";
 "coin_sync.slow" = "Slow";
 "coin_sync.more_private" = "1-12 hours (More Private)";
 "coin_sync.slow.text" = "Restores your past transactions directly from the network. Significantly more private but very slow. If the restore takes way too much time go to Security section in Settings tab and select “Unlink This Device” option.";
-"coin_sync.disable" = "Disable Coin";
 "coin_sync.alert.header" = "Attention";
 "coin_sync.alert.text" = "This action will resync your wallet balance for each blockchain. It may take several hours to complete.";
 "coin_sync.erc20" = "Sync mode same as Ethereum";
@@ -106,7 +104,6 @@
 // Transaction Info
 
 "tx_info.title" = "トランザクション";
-"tx_info.historical_rate" = "Historical Rate";
 "tx_info.time" = "時間";
 "tx_info.status" = "状況";
 "tx_info.status.pending" = "ペンディング";
@@ -156,6 +153,7 @@
 "settings.base_currency" = "基本通貨";
 "settings.language" = "言語";
 "settings.about" = "について";
+"settings.tell_friends" = "Tell Friends";
 "settings.light_mode" = "ライトモード";
 "settings.info_title" = "UNSTOPPABLE";
 "settings.info_subtitle" = "decentralized app";
@@ -179,6 +177,10 @@
 "settings_about.app_subtitle" = "Decentralized App";
 "settings_about.terms_privacy_subtitle" = "Terms & Privacy:";
 "settings_about.terms_privacy_text" = "このアプリはピアツーピアです。 Webサーバーや技術サポート担当者の機能に依存しません。\n\nインターネットがある限りどこでも動作します。このアプリの動作をブロックしたり、他のユーザーによる使用をブロックしたりすることはできません。\n\nあなたの資金は安全な場所に保管されています。\n\nあなたの秘密鍵をバックアップし秘密にしておくのはあなたの責任です。絶対に他人に見せないでください。それが紛失、忘れられ、または盗まれた場合、あなたの資金はあなたの秘密鍵を持っている人が使うことができます。\n\nあなたの電話を脱獄したり、未知の（信頼できない）ソースからアプリをインストールしたり、あなたのデバイスを信頼できない人に与えたりしないでください。そしてあなたの電話のオペレーティングシステムを常にアップグレードしてください。あなたの財布の安全はこれらにかかっています。\n\nこのアプリの原動力となっているコード全体は、最初から世間に公開しています。私たちは、可能な限り最も安全な財布を構築しようとしましたが、予期しないソフトウェアの問題がないという保証はできません。とは言っても、この財布は他のスマートフォンの財布アプリよりもはるかに安全である可能性があります。\n\n為替レートなどの一般的な非公開でないアプリデータは、分散ストレージ（IPFS）に保存されています。";
+
+// Settings -> Tell Friends
+
+"settings_tell_friends.text" = "Be Free! Be Unstoppable! https://apps.apple.com/us/app/unstoppable-bitcoin-wallet/id1447619907?ls=1";
 
 // Settings -> Security
 
