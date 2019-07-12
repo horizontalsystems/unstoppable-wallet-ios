@@ -34,14 +34,12 @@
 
 //Coin Sync Modes
 "coin_sync.title" = "Geri yükleme seçenekleri";
-"coin_sync.header" = "Blockchain ile eşitleniyor";
 "coin_sync.fast" = "Hızlı";
 "coin_sync.recommended" = "0-2 saat (Tavsiye edilen)";
 "coin_sync.fast.text" = "Geçmiş işlemlerinizi güvenilir üçüncü şahıs sunucularıyla geri yükleyin. Uzun işlem geçmişi olan ve büyük miktarda para işlemleri yapan kullanıcılar için bu yöntem güvenlik riski oluşturabilir.";
 "coin_sync.slow" = "Yavaş";
 "coin_sync.more_private" = "1-12 saat (Daha Gizli)";
 "coin_sync.slow.text" = "İşlem geçmişinizi ağdan geri yükleyin. Çok daha güvenli ancak daha yavaş. Eğer gereğinden daha uzun sürerse, Ayarlardaki Güvenlik bölümünden \"Bu cihazla bağı kes\"i seçin.";
-"coin_sync.disable" = "Kuru Etkisizleştir";
 "coin_sync.alert.header" = "Dikkat";
 "coin_sync.alert.text" = "Bu eylem cüzdanınızı her blockchain ile tekrar eşliyecek. Tamamlanması birkaç saat sürebilir.";
 "coin_sync.erc20" = "Ethereum için geri yükle";
@@ -106,7 +104,6 @@
 // Transaction Info
 
 "tx_info.title" = "Hesap işlemi";
-"tx_info.historical_rate" = "Geçmiş Kur";
 "tx_info.time" = "Tarih";
 "tx_info.status" = "Durum";
 "tx_info.status.pending" = "Devam ediyor";
@@ -156,6 +153,7 @@
 "settings.base_currency" = "Para birimi";
 "settings.language" = "Dil";
 "settings.about" = "Hakkında";
+"settings.tell_friends" = "Tell Friends";
 "settings.light_mode" = "Aydınlık mod";
 "settings.info_title" = "UNSTOPPABLE";
 "settings.info_subtitle" = "decentralized App";
@@ -179,6 +177,10 @@
 "settings_about.app_subtitle" = "Decentralized App";
 "settings_about.terms_privacy_subtitle" = "Şartlar & Gizlilik Politikası:";
 "settings_about.terms_privacy_text" = "Bu uygulama uçtan uca bir ağdır. Herhangi bir web sunucusuna veya teknik destek personeline bağlı değildir. \n\nİnternet olduğu sürece her yerde çalışır. Hiç kimse bu uygulamanın çalışmasını veya birisinin programı kullanmasını engelleyemez. \n\nFonlarınız kendiliğinden telefonda güvenli bir şekilde saklanır, başka bir yerde değil. \n\nGizli Anahtarınızı yedeklemek ve gizli tutmak sizin sorumluluğunuzdadır. Asla kimseye göstermeyin. Kaybolursa, unutursanız veya çalınırsa fonlarınız Gizli Anahtarınıza sahip olan kişi tarafından kullanılabilir.\n\nTelefonunuzun yazılımını kırmayın, bilinmeyen (güvenilmeyen) kaynaklardan uygulamalar yüklemeyin, cihazınızı güvenilmeyen kişilere vermeyin ve İşletim Sistemini telefonunuzda güncel tutun. Cüzdanınızın güvenliği buna bağlı. \n\nBu uygulamayı destekleyen kodun tamamı, başından beri kamu denetimine açıktı. Yapabileceğimiz en güvenilir ve merkezi olmayan cüzdanı oluşturmaya çalıştık, yine de istenmeyen yazılım sorunu olmadığının garantisi yoktur. Bununla birlikte, bu cüzdanın herhangi bir akıllı telefon cüzdan uygulamasından çok daha güvenli olacağı muhtemel. \n\nDöviz kurları gibi bazı 	jenerik resmi olmayan uygulama verileri merkezi olmayan IPFS sisteminde depolanır.";
+
+// Settings -> Tell Friends
+
+"settings_tell_friends.text" = "Be Free! Be Unstoppable! https://apps.apple.com/us/app/unstoppable-bitcoin-wallet/id1447619907?ls=1";
 
 // Settings -> Security
 
