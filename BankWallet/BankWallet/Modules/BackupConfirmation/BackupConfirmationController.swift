@@ -100,8 +100,19 @@ class BackupConfirmationController: WalletViewController {
 
 extension BackupConfirmationController: IBackupConfirmationView {
 
-    func showValidation(error: Error) {
-        HudHelper.instance.showError(title: error.localizedDescription)
+    func show(error: Error) {
+        let errorString: String = {
+            switch error {
+            case WordsValidator.ValidationError.emptyWords:
+                return "words_validator.empty_words".localized
+            case WordsValidator.ValidationError.invalidConfirmation:
+                return "words_validator.invalid_confirmation".localized
+            default:
+                return error.localizedDescription
+            }
+        }()
+
+        HudHelper.instance.showError(title: errorString)
     }
 
     func onBecomeActive() {

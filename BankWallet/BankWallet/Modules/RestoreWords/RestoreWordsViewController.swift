@@ -1,6 +1,7 @@
 import UIKit
 import RxSwift
 import SnapKit
+import HSHDWalletKit
 
 class RestoreWordsViewController: WalletViewController {
     let disposeBag = DisposeBag()
@@ -134,7 +135,16 @@ extension RestoreWordsViewController: IRestoreWordsView {
     }
 
     func show(error: Error) {
-        HudHelper.instance.showError(title: error.localizedDescription)
+        let errorString: String = {
+            switch error {
+            case is Mnemonic.ValidationError:
+                return "restore.validation_failed".localized
+            default:
+                return error.localizedDescription
+            }
+        }()
+
+        HudHelper.instance.showError(title: errorString)
     }
 
 }

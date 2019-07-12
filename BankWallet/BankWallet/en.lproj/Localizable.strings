@@ -37,14 +37,12 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 
 //Coin Sync Modes
 "coin_sync.title" = "Restore Options";
-"coin_sync.header" = "Syncing with blockchain";
 "coin_sync.fast" = "Fast";
 "coin_sync.recommended" = "0-2 hours (Recommended)";
 "coin_sync.fast.text" = "Restores your past transactions via secure third party server. For users with a long history of transactions involving very large sums this method may pose privacy risks.";
 "coin_sync.slow" = "Slow";
 "coin_sync.more_private" = "1-12 hours (More Private)";
 "coin_sync.slow.text" = "Restores your past transactions directly from the network. Significantly more private but very slow. If the restore takes way too much time go to Security section in Settings tab and select “Unlink This Device” option.";
-"coin_sync.disable" = "Disable Coin";
 "coin_sync.alert.header" = "Attention";
 "coin_sync.alert.text" = "This action will resync your wallet balance for each blockchain. It may take several hours to complete.";
 "coin_sync.erc20" = "Sync mode same as Ethereum";
@@ -108,7 +106,6 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 // Transaction Info
 
 "tx_info.title" = "Transaction";
-"tx_info.historical_rate" = "Historical Rate";
 "tx_info.time" = "Time";
 "tx_info.status" = "Status";
 "tx_info.status.pending" = "Pending";
@@ -158,6 +155,7 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 "settings.base_currency" = "Base Currency";
 "settings.language" = "Language";
 "settings.about" = "About";
+"settings.tell_friends" = "Tell Friends";
 "settings.light_mode" = "Light Mode";
 "settings.info_title" = "UNSTOPPABLE";
 "settings.info_subtitle" = "decentralized app";
@@ -187,6 +185,10 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 \nDo not jailbreak your phone, do not install apps from unknown (untrusted) sources, do not give your device to untrusted people, and keep the Operating System on your phone up to date. The security of your wallet depends on this.
 \nThe entire code powering this app been open to the public scrutiny since the beginning. We tried to build the most secure and decentralized wallet we could, however there are no guarantees that there are no unintended software issues. That said, this wallet is likely to be significantly more secure than any smartphone wallet app out there.
 \nSome generic non-private app data like currency exchange rates are stored on decentralized storage (IPFS). ";
+
+// Settings -> Tell Friends
+
+"settings_tell_friends.text" = "Be Free! Be Unstoppable! https://apps.apple.com/us/app/unstoppable-bitcoin-wallet/id1447619907?ls=1";
 
 // Settings -> Security
 
@@ -247,4 +249,3 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 "key_type.eos.text" = "EOS";
 "key_type.binance" = "Binance Chain Key";
 "key_type.binance.text" = "BNB, BEP-2";
-
