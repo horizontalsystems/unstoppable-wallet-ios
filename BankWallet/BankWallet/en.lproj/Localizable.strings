@@ -14,6 +14,7 @@
 "button.forward" = "Forward";
 "button.save" = "Save";
 "button.sync" = "Sync";
+"button.paste" = "Paste";
 
 "alert.copied" = "Copied";
 "alert.no_internet" = "No Internet";
@@ -91,7 +92,6 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 "send.address_placeholder" = "Address";
 "send.amount_error.balance" = "Balance %@";
 "send.send_button" = "Send";
-"send.paste_button" = "Paste";
 "send.amount_placeholder" = "Amount";
 "send.fee" = "Fee";
 "send.total" = "Total";

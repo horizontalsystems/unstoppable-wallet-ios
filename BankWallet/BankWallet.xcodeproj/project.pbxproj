@@ -542,6 +542,7 @@
 		1A5647E0E662CA7D27E931A6 /* TextSelectItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5648E17213DF77DCA2EE42 /* TextSelectItemView.swift */; };
 		1A5647F3635BCCAA32BF37F7 /* HashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56445B8B1F1C78E1DFC9F8 /* HashView.swift */; };
 		1A56480277B0C3D6429E94EC /* SyncModeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564C4771D7403A0D9E1F04 /* SyncModeCell.swift */; };
+		1A56481E9149AC144C3003C8 /* AddressInputField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5647755D9C148EACC988CB /* AddressInputField.swift */; };
 		1A564822346BD715C453E612 /* SendRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56474B516F0AFBAAFB3AE2 /* SendRouter.swift */; };
 		1A5648233C26CDC8F95CAC56 /* MainSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564879AD72301AAB78F8F5 /* MainSettingsViewController.swift */; };
 		1A56482620A4ABBC3F8F9195 /* SortTypePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5643D429A9AF82758F1FB4 /* SortTypePresenter.swift */; };
@@ -625,6 +626,7 @@
 		1A564C4C3A445A00AC5F7810 /* SyncModeSectionSeparator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5643D89AD02523247F6A81 /* SyncModeSectionSeparator.swift */; };
 		1A564C64FFC9185F049BB475 /* FeeSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5646997429F7E84F01AC9D /* FeeSlider.swift */; };
 		1A564C84E08DE681615528E3 /* ActionTitleItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5649BED7237B075AE7F8B8 /* ActionTitleItemView.swift */; };
+		1A564CA81DACF03EC41899A4 /* AddressInputField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5647755D9C148EACC988CB /* AddressInputField.swift */; };
 		1A564CB5C802EF80E184DCD4 /* BackgroundManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564C2194BB0FA7D298FAB5 /* BackgroundManager.swift */; };
 		1A564CC0C92C44E29FEA6642 /* SetPinPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564E534927A26ACA3B1D83 /* SetPinPresenterTests.swift */; };
 		1A564CD685B7DE30A959A6D5 /* AlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5642D6188D2E01E0EEC41C /* AlertViewController.swift */; };
@@ -661,6 +663,7 @@
 		1A564E60E4500D62863F4353 /* PinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564948450C4AADB2679AC0 /* PinViewController.swift */; };
 		1A564E61E0EBDDA6006279F2 /* PinInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564AA8BF74E16E91DC46D5 /* PinInteractorTests.swift */; };
 		1A564E6C310440B416EA862F /* SectionSeparator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564A5CACB021B00AB026A1 /* SectionSeparator.swift */; };
+		1A564E71A18B471183E24F7A /* AddressInputField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5647755D9C148EACC988CB /* AddressInputField.swift */; };
 		1A564E8851EFFDA127C08306 /* ERC20InputParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56475812F17EAE44BF6D34 /* ERC20InputParser.swift */; };
 		1A564E98E286D37F88D34F28 /* ManagePinPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564A3E6B23CF04ECEB40DC /* ManagePinPresenter.swift */; };
 		1A564EA01F3260DE1FB535EC /* EditPinModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564D0BE1310BFCC7D8D774 /* EditPinModule.swift */; };
@@ -1532,6 +1535,7 @@
 		1A56471ECC51CB5E5572DBD8 /* ManageWalletsRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManageWalletsRouter.swift; sourceTree = "<group>"; };
 		1A56474B516F0AFBAAFB3AE2 /* SendRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendRouter.swift; sourceTree = "<group>"; };
 		1A56475812F17EAE44BF6D34 /* ERC20InputParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ERC20InputParser.swift; sourceTree = "<group>"; };
+		1A5647755D9C148EACC988CB /* AddressInputField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressInputField.swift; sourceTree = "<group>"; };
 		1A56478E08D96F36DD17D8C8 /* ManageWalletCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManageWalletCell.swift; sourceTree = "<group>"; };
 		1A5647AD7481B36F20D4DDF9 /* MainSettingsModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainSettingsModule.swift; sourceTree = "<group>"; };
 		1A5647AD931E3B90C974A6CB /* SecuritySettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecuritySettingsViewController.swift; sourceTree = "<group>"; };
@@ -2268,6 +2272,7 @@
 				11B35A686DD5BA335FEB6BEB /* BarsProgressView.swift */,
 				1A5646997429F7E84F01AC9D /* FeeSlider.swift */,
 				1A56445B8B1F1C78E1DFC9F8 /* HashView.swift */,
+				1A5647755D9C148EACC988CB /* AddressInputField.swift */,
 			);
 			path = Controls;
 			sourceTree = "<group>";
@@ -3787,6 +3792,7 @@
 				11B35549AB28CE77E5C01E6B /* EosAccountType.swift in Sources */,
 				11B35F8F125FA95DDBA1E7DF /* ManageWalletsNoAccountViewController.swift in Sources */,
 				11B352DCCAD3FF8EC3585E6D /* BiometryManager.swift in Sources */,
+				1A564E71A18B471183E24F7A /* AddressInputField.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4236,6 +4242,7 @@
 				11B353FB9EFB313EFE486EAC /* ManageWalletsNoAccountViewController.swift in Sources */,
 				11B3542A04FE7857E5B6772D /* BackupRouter.swift in Sources */,
 				11B35606F2112D904B454E73 /* BiometryManager.swift in Sources */,
+				1A56481E9149AC144C3003C8 /* AddressInputField.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4634,6 +4641,7 @@
 				11B35E763604B66B7A134205 /* EosAccountType.swift in Sources */,
 				11B3546D5C5D0A67B6627DA0 /* ManageWalletsNoAccountViewController.swift in Sources */,
 				11B3538B8D39A0E918A9AB44 /* BiometryManager.swift in Sources */,
+				1A564CA81DACF03EC41899A4 /* AddressInputField.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
