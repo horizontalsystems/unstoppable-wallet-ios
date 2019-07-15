@@ -7,7 +7,7 @@ class MainSettingsInteractorTests: XCTestCase {
     private var mockDelegate: MockIMainSettingsInteractorDelegate!
 
     private var mockLocalStorage: MockILocalStorage!
-    private var mockAccountManager: MockIAccountManager!
+    private var mockBackupManager: MockIBackupManager!
     private var mockLanguageManager: MockILanguageManager!
     private var mockSystemInfoManager: MockISystemInfoManager!
     private var mockCurrencyManager: MockICurrencyManager!
@@ -23,19 +23,19 @@ class MainSettingsInteractorTests: XCTestCase {
         mockDelegate = MockIMainSettingsInteractorDelegate()
 
         mockLocalStorage = MockILocalStorage()
-        mockAccountManager = MockIAccountManager()
+        mockBackupManager = MockIBackupManager()
         mockLanguageManager = MockILanguageManager()
         mockSystemInfoManager = MockISystemInfoManager()
         mockCurrencyManager = MockICurrencyManager()
 
-        stub(mockAccountManager) { mock in
+        stub(mockBackupManager) { mock in
             when(mock.nonBackedUpCountObservable.get).thenReturn(nonBackedUpCountSubject.asObservable())
         }
         stub(mockCurrencyManager) { mock in
             when(mock.baseCurrencyUpdatedSignal.get).thenReturn(baseCurrencyUpdatedSignal)
         }
 
-        interactor = MainSettingsInteractor(localStorage: mockLocalStorage, accountManager: mockAccountManager, languageManager: mockLanguageManager, systemInfoManager: mockSystemInfoManager, currencyManager: mockCurrencyManager, async: false)
+        interactor = MainSettingsInteractor(localStorage: mockLocalStorage, backupManager: mockBackupManager, languageManager: mockLanguageManager, systemInfoManager: mockSystemInfoManager, currencyManager: mockCurrencyManager, async: false)
         interactor.delegate = mockDelegate
     }
 
@@ -43,7 +43,7 @@ class MainSettingsInteractorTests: XCTestCase {
         mockDelegate = nil
 
         mockLocalStorage = nil
-        mockAccountManager = nil
+        mockBackupManager = nil
         mockLanguageManager = nil
         mockSystemInfoManager = nil
         mockCurrencyManager = nil
@@ -56,7 +56,7 @@ class MainSettingsInteractorTests: XCTestCase {
     func testNonBackedUpCount() {
         let count = 2
 
-        stub(mockAccountManager) { mock in
+        stub(mockBackupManager) { mock in
             when(mock.nonBackedUpCount.get).thenReturn(count)
         }
 

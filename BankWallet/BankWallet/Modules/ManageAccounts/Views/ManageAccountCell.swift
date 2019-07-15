@@ -4,13 +4,15 @@ import SnapKit
 class ManageAccountCell: UITableViewCell {
     private let roundedBackground = UIView()
     private let clippingView = UIView()
+    private var gradientLayer = CAGradientLayer()
 
-    private let backedUpIcon = UIImageView()
+    private let activeKeyIcon = UIImageView()
     private let nameLabel = UILabel()
     private let coinsLabel = UILabel()
 
     private let leftButton = RespondButton()
     private let rightButton = RespondButton()
+    private let aloneRightButton = RespondButton()
 
     private var onTapLeft: (() -> ())?
     private var onTapRight: (() -> ())?
@@ -29,7 +31,7 @@ class ManageAccountCell: UITableViewCell {
             maker.bottom.equalToSuperview().offset(-ManageAccountsTheme.cellBottomMargin)
         }
 
-        roundedBackground.layer.shadowOpacity = ManageAccountsTheme.roundedBackgroundShadowOpacity
+        roundedBackground.backgroundColor = ManageAccountsTheme.roundedBackgroundColor
         roundedBackground.layer.cornerRadius = ManageAccountsTheme.roundedBackgroundCornerRadius
         roundedBackground.layer.shadowColor = ManageAccountsTheme.roundedBackgroundShadowColor.cgColor
         roundedBackground.layer.shadowRadius = 4
@@ -43,58 +45,84 @@ class ManageAccountCell: UITableViewCell {
             maker.edges.equalToSuperview()
         }
 
-        clippingView.addSubview(backedUpIcon)
-        backedUpIcon.snp.makeConstraints { maker in
-            maker.trailing.equalToSuperview().offset(-ManageAccountsTheme.cellBigPadding)
-            maker.top.equalToSuperview().offset(ManageAccountsTheme.cellBigPadding)
+        clippingView.addSubview(activeKeyIcon)
+        clippingView.layer.shouldRasterize = true
+        clippingView.layer.rasterizationScale = UIScreen.main.scale
+
+        gradientLayer.locations = [0.0, 1.0]
+        clippingView.layer.addSublayer(gradientLayer)
+
+        activeKeyIcon.snp.makeConstraints { maker in
+            maker.leading.equalToSuperview().offset(ManageAccountsTheme.cellSmallPadding)
+            maker.top.equalToSuperview().offset(ManageAccountsTheme.cellSmallPadding)
         }
-        backedUpIcon.image = UIImage(named: "Attention Icon")
+        activeKeyIcon.image = UIImage(named: "Key Icon")?.withRenderingMode(.alwaysTemplate)
+        activeKeyIcon.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+        nameLabel.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
 
         clippingView.addSubview(nameLabel)
         nameLabel.snp.makeConstraints { maker in
-            maker.leading.equalToSuperview().offset(ManageAccountsTheme.cellBigPadding)
-            maker.trailing.equalToSuperview().offset(-ManageAccountsTheme.cellBigPadding)
-            maker.top.equalToSuperview().offset(ManageAccountsTheme.cellBigPadding)
+            maker.leading.equalTo(activeKeyIcon.snp.trailing).offset(ManageAccountsTheme.cellSmallPadding)
+            maker.trailing.equalToSuperview().offset(-ManageAccountsTheme.cellSmallPadding)
+            maker.top.equalToSuperview().offset(ManageAccountsTheme.cellSmallPadding)
         }
-        nameLabel.textAlignment = .center
         nameLabel.font = ManageAccountsTheme.cellTitleFont
-        nameLabel.textColor = ManageAccountsTheme.cellTitleColor
-        nameLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
-        nameLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
 
         clippingView.addSubview(coinsLabel)
         coinsLabel.snp.makeConstraints { maker in
-            maker.leading.equalToSuperview().offset(ManageAccountsTheme.cellBigPadding)
-            maker.trailing.equalToSuperview().offset(-ManageAccountsTheme.cellBigPadding)
+            maker.leading.equalTo(activeKeyIcon.snp.trailing).offset(ManageAccountsTheme.cellSmallPadding)
+            maker.trailing.equalToSuperview().offset(-ManageAccountsTheme.cellSmallPadding)
             maker.top.equalTo(self.nameLabel.snp.bottom).offset(ManageAccountsTheme.cellSmallPadding)
         }
-        coinsLabel.textAlignment = .center
         coinsLabel.font = ManageAccountsTheme.coinsFont
         coinsLabel.textColor = ManageAccountsTheme.coinsColor
-        coinsLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
-        coinsLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
 
         clippingView.addSubview(leftButton)
         leftButton.snp.makeConstraints { maker in
-            maker.leading.equalToSuperview().offset(ManageAccountsTheme.cellSmallPadding)
+            maker.leading.equalToSuperview().offset(ManageAccountsTheme.buttonsMargin)
             maker.top.equalTo(self.coinsLabel.snp.bottom).offset(ManageAccountsTheme.buttonsTopMargin)
             maker.height.equalTo(ManageAccountsTheme.buttonsHeight)
         }
         leftButton.onTap = { [weak self] in self?.onTapLeft?() }
-        leftButton.backgrounds = ButtonTheme.redBackgroundDictionary
+        leftButton.borderWidth = 1 / UIScreen.main.scale
+        leftButton.borderColor = ManageAccountsTheme.buttonsBorderColor
+        leftButton.borderColor  = ManageAccountsTheme.buttonsBorderColor
+        leftButton.backgrounds = ManageAccountsTheme.buttonsBackgroundColorDictionary
+        leftButton.textColors = ManageAccountsTheme.buttonsTextColorDictionary
+        leftButton.titleLabel.font = ManageAccountsTheme.buttonsFont
         leftButton.cornerRadius = ManageAccountsTheme.buttonCornerRadius
 
         clippingView.addSubview(rightButton)
         rightButton.snp.makeConstraints { maker in
             maker.leading.equalTo(leftButton.snp.trailing).offset(ManageAccountsTheme.cellSmallPadding)
             maker.top.equalTo(self.coinsLabel.snp.bottom).offset(ManageAccountsTheme.buttonsTopMargin)
-            maker.trailing.equalToSuperview().offset(-ManageAccountsTheme.cellSmallPadding)
+            maker.trailing.equalToSuperview().offset(-ManageAccountsTheme.buttonsMargin)
             maker.height.equalTo(ManageAccountsTheme.buttonsHeight)
             maker.width.equalTo(leftButton)
         }
         rightButton.onTap = { [weak self] in self?.onTapRight?() }
-        rightButton.backgrounds = ButtonTheme.yellowBackgroundDictionary
+        rightButton.borderWidth = 1 / UIScreen.main.scale
+        rightButton.borderColor = ManageAccountsTheme.buttonsBorderColor
+        rightButton.backgrounds = ManageAccountsTheme.buttonsBackgroundColorDictionary
+        rightButton.textColors = ManageAccountsTheme.buttonsTextColorDictionary
+        rightButton.titleLabel.font = ManageAccountsTheme.buttonsFont
         rightButton.cornerRadius = ManageAccountsTheme.buttonCornerRadius
+
+        clippingView.addSubview(aloneRightButton)
+        aloneRightButton.snp.makeConstraints { maker in
+            maker.leading.equalToSuperview().offset(ManageAccountsTheme.buttonsMargin)
+            maker.top.equalTo(self.coinsLabel.snp.bottom).offset(ManageAccountsTheme.buttonsTopMargin)
+            maker.trailing.equalToSuperview().offset(-ManageAccountsTheme.buttonsMargin)
+            maker.height.equalTo(ManageAccountsTheme.buttonsHeight)
+        }
+        aloneRightButton.titleLabel.text = "settings_manage_keys.import".localized
+        aloneRightButton.onTap = { [weak self] in self?.onTapRight?() }
+        aloneRightButton.borderWidth = 1 / UIScreen.main.scale
+        aloneRightButton.borderColor = ManageAccountsTheme.buttonsBorderColor
+        aloneRightButton.backgrounds = ManageAccountsTheme.buttonsBackgroundColorDictionary
+        aloneRightButton.textColors = ManageAccountsTheme.buttonsTextColorDictionary
+        aloneRightButton.titleLabel.font = ManageAccountsTheme.buttonsFont
+        aloneRightButton.cornerRadius = ManageAccountsTheme.buttonCornerRadius
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -102,20 +130,43 @@ class ManageAccountCell: UITableViewCell {
     }
 
     func bind(viewItem: ManageAccountViewItem, onTapLeft: @escaping () -> (), onTapRight: @escaping () -> ()) {
+        let gradientColor: UIColor
         switch viewItem.state {
         case .linked(let backedUp):
-            roundedBackground.backgroundColor = ManageAccountsTheme.linkedRoundedBackgroundColor
-            backedUpIcon.isHidden = backedUp
+            roundedBackground.layer.shadowOpacity = ManageAccountsTheme.roundedBackgroundShadowOpacity
+
             leftButton.titleLabel.text = "settings_manage_keys.unlink".localized
             rightButton.titleLabel.text = "settings_manage_keys.backup".localized
-            configButtonConstraints(both: true)
+            rightButton.image = backedUp ? nil : UIImage(named: "Attention Icon Small")?.tinted(with: ManageAccountsTheme.attentionColor)
+
+            aloneRightButton.set(hidden: true)
+            leftButton.set(hidden: false)
+            rightButton.set(hidden: false)
+
+            activeKeyIcon.tintColor = ManageAccountsTheme.keyImageColor
+            nameLabel.textColor = ManageAccountsTheme.cellTitleColor
+            coinsLabel.textColor = ManageAccountsTheme.coinsColor
+
+            gradientColor = ManageAccountsTheme.gradientRoundedBackgroundColor ?? UIColor.clear
         case .notLinked(let canCreate):
-            roundedBackground.backgroundColor = ManageAccountsTheme.notLinkedRoundedBackgroundColor
-            backedUpIcon.isHidden = true
+            roundedBackground.layer.shadowOpacity = 0
+
             leftButton.titleLabel.text = "settings_manage_keys.new".localized
             rightButton.titleLabel.text = "settings_manage_keys.import".localized
-            configButtonConstraints(both: canCreate)
+            rightButton.image = nil
+
+            aloneRightButton.set(hidden: canCreate)
+            leftButton.set(hidden: !canCreate)
+            rightButton.set(hidden: !canCreate)
+
+            activeKeyIcon.tintColor = ManageAccountsTheme.nonActiveKeyImageColor
+            nameLabel.textColor = ManageAccountsTheme.nonActiveCellColor
+            coinsLabel.textColor = ManageAccountsTheme.nonActiveCellColor
+
+            gradientColor = .clear
         }
+
+        gradientLayer.colors = [gradientColor.cgColor, UIColor.clear.cgColor]
 
         nameLabel.text = viewItem.title.localized
         coinsLabel.text = viewItem.coinCodes.localized
@@ -124,34 +175,10 @@ class ManageAccountCell: UITableViewCell {
         self.onTapRight = onTapRight
     }
 
-    private func configButtonConstraints(both: Bool) {
-        if both {
-            leftButton.snp.remakeConstraints { maker in
-                maker.leading.equalToSuperview().offset(ManageAccountsTheme.cellSmallPadding)
-                maker.top.equalTo(self.coinsLabel.snp.bottom).offset(ManageAccountsTheme.buttonsTopMargin)
-                maker.height.equalTo(ManageAccountsTheme.buttonsHeight)
-            }
-            rightButton.snp.remakeConstraints { maker in
-                maker.leading.equalTo(leftButton.snp.trailing).offset(ManageAccountsTheme.cellSmallPadding)
-                maker.top.equalTo(self.coinsLabel.snp.bottom).offset(ManageAccountsTheme.buttonsTopMargin)
-                maker.trailing.equalToSuperview().offset(-ManageAccountsTheme.cellSmallPadding)
-                maker.height.equalTo(ManageAccountsTheme.buttonsHeight)
-                maker.width.equalTo(leftButton)
-            }
-        } else {
-            leftButton.snp.remakeConstraints { maker in
-                maker.leading.equalToSuperview().offset(ManageAccountsTheme.cellSmallPadding)
-                maker.width.equalTo(0)
-                maker.top.equalTo(self.coinsLabel.snp.bottom).offset(ManageAccountsTheme.buttonsTopMargin)
-                maker.height.equalTo(ManageAccountsTheme.buttonsHeight)
-            }
-            rightButton.snp.remakeConstraints { maker in
-                maker.leading.equalTo(leftButton.snp.trailing)
-                maker.top.equalTo(self.coinsLabel.snp.bottom).offset(ManageAccountsTheme.buttonsTopMargin)
-                maker.trailing.equalToSuperview().offset(-ManageAccountsTheme.cellSmallPadding)
-                maker.height.equalTo(ManageAccountsTheme.buttonsHeight)
-            }
-        }
+    override func layoutSubviews() {
+        super.layoutSubviews()
+
+        gradientLayer.frame = bounds
     }
 
 }

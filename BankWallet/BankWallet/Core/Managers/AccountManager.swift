@@ -1,67 +1,71 @@
-import Foundation
 import RxSwift
 
 class AccountManager {
     private let storage: IAccountStorage
+    private let cache: AccountsCache = AccountsCache()
 
-    var accounts: [Account] = []
-    private var accountsSubject = PublishSubject<[Account]>()
-    private var nonBackedUpCountSubject = PublishSubject<Int>()
+    private let accountsSubject = PublishSubject<[Account]>()
 
     init(storage: IAccountStorage) {
         self.storage = storage
-
-        accounts = storage.allAccounts
-    }
-
-    private func notifyAccountsChanged() {
-        accountsSubject.onNext(accounts)
-        nonBackedUpCountSubject.onNext(nonBackedUpCount)
     }
 
 }
 
 extension AccountManager: IAccountManager {
 
+    var accounts: [Account] {
+        return cache.accounts
+    }
+
     var accountsObservable: Observable<[Account]> {
         return accountsSubject.asObservable()
     }
 
-    func account(predefinedAccountType: IPredefinedAccountType) -> Account? {
-        return accounts.first { predefinedAccountType.supports(accountType: $0.type) }
-    }
-
-    var nonBackedUpCount: Int {
-        return accounts.filter { !$0.backedUp }.count
-    }
-
-    var nonBackedUpCountObservable: Observable<Int> {
-        return nonBackedUpCountSubject.asObservable()
+    func preloadAccounts() {
+        cache.set(accounts: storage.allAccounts)
     }
 
     func save(account: Account) {
-        accounts.removeAll { $0.id == account.id }
-        accounts.append(account)
-
         storage.save(account: account)
-        notifyAccountsChanged()
+        cache.insert(account: account)
+
+        accountsSubject.onNext(accounts)
     }
 
     func deleteAccount(id: String) {
-        accounts.removeAll { $0.id == id }
-
         storage.deleteAccount(by: id)
-        notifyAccountsChanged()
+        cache.removeAccount(id: id)
+
+        accountsSubject.onNext(accounts)
     }
 
-    func setAccountBackedUp(id: String) {
-        if let account = accounts.first(where: { $0.id == id }) {
-            account.backedUp = true
-            save(account: account)
+}
+
+extension AccountManager {
+
+    class AccountsCache {
+        private var array = [Account]()
+
+        var accounts: [Account] {
+            return array
         }
 
-        storage.setAccountIsBackedUp(by: id)
-        notifyAccountsChanged()
+        func set(accounts: [Account]) {
+            array = accounts
+        }
+
+        func insert(account: Account) {
+            if let index = array.firstIndex(of: account) {
+                array[index] = account
+            } else {
+                array.append(account)
+            }
+        }
+
+        func removeAccount(id: String) {
+            array.removeAll { $0.id == id }
+        }
     }
 
 }

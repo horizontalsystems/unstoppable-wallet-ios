@@ -6,12 +6,10 @@ class ManageAccountsInteractor {
     private let disposeBag = DisposeBag()
 
     private let predefinedAccountTypeManager: IPredefinedAccountTypeManager
-    private let accountManager: IAccountManager
     private let accountCreator: IAccountCreator
 
     init(predefinedAccountTypeManager: IPredefinedAccountTypeManager, accountManager: IAccountManager, accountCreator: IAccountCreator) {
         self.predefinedAccountTypeManager = predefinedAccountTypeManager
-        self.accountManager = accountManager
         self.accountCreator = accountCreator
 
         accountManager.accountsObservable
@@ -31,7 +29,7 @@ extension ManageAccountsInteractor: IManageAccountsInteractor {
     }
 
     func account(predefinedAccountType: IPredefinedAccountType) -> Account? {
-        return accountManager.account(predefinedAccountType: predefinedAccountType)
+        return predefinedAccountTypeManager.account(predefinedAccountType: predefinedAccountType)
     }
 
     func createAccount(defaultAccountType: DefaultAccountType) throws {

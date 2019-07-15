@@ -30,6 +30,8 @@ class App {
     let accountCreator: IAccountCreator
     let predefinedAccountTypeManager: IPredefinedAccountTypeManager
 
+    let backupManager: IBackupManager
+
     let walletManager: IWalletManager
     let walletCreator: IWalletCreator
 
@@ -54,6 +56,8 @@ class App {
     let fullTransactionInfoProviderFactory: IFullTransactionInfoProviderFactory
 
     private let testModeIndicator: TestModeIndicator
+
+    let appManager: IAppManager
 
     init() {
         pasteboardManager = PasteboardManager()
@@ -82,6 +86,8 @@ class App {
         accountManager = AccountManager(storage: grdbStorage)
         accountCreator = AccountCreator(accountManager: accountManager, accountFactory: AccountFactory(), wordsManager: wordsManager)
         predefinedAccountTypeManager = PredefinedAccountTypeManager(appConfigProvider: appConfigProvider, accountManager: accountManager)
+
+        backupManager = BackupManager(accountManager: accountManager)
 
         walletManager = WalletManager(appConfigProvider: appConfigProvider, accountManager: accountManager, storage: grdbStorage)
         walletCreator = WalletCreator(accountManager: accountManager, walletFactory: WalletFactory())
@@ -113,6 +119,8 @@ class App {
         testModeIndicator = TestModeIndicator(appConfigProvider: appConfigProvider)
 
         authManager.adapterManager = adapterManager
+
+        appManager = AppManager(accountManager: accountManager, adapterManager: adapterManager, lockManager: lockManager, biometryManager: biometryManager, blurManager: blurManager)
     }
 
 }

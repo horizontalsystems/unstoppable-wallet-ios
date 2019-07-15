@@ -6,19 +6,19 @@ class MainSettingsInteractor {
     weak var delegate: IMainSettingsInteractorDelegate?
 
     private let localStorage: ILocalStorage
-    private let accountManager: IAccountManager
+    private let backupManager: IBackupManager
     private let languageManager: ILanguageManager
     private let systemInfoManager: ISystemInfoManager
     private let currencyManager: ICurrencyManager
 
-    init(localStorage: ILocalStorage, accountManager: IAccountManager, languageManager: ILanguageManager, systemInfoManager: ISystemInfoManager, currencyManager: ICurrencyManager, async: Bool = true) {
+    init(localStorage: ILocalStorage, backupManager: IBackupManager, languageManager: ILanguageManager, systemInfoManager: ISystemInfoManager, currencyManager: ICurrencyManager, async: Bool = true) {
         self.localStorage = localStorage
-        self.accountManager = accountManager
+        self.backupManager = backupManager
         self.languageManager = languageManager
         self.systemInfoManager = systemInfoManager
         self.currencyManager = currencyManager
 
-        var nonBackedUpCountObservable = accountManager.nonBackedUpCountObservable
+        var nonBackedUpCountObservable = backupManager.nonBackedUpCountObservable
         var baseCurrencyUpdatedSignal: Observable<Void> = currencyManager.baseCurrencyUpdatedSignal
 
         if async {
@@ -48,7 +48,7 @@ class MainSettingsInteractor {
 extension MainSettingsInteractor: IMainSettingsInteractor {
 
     var nonBackedUpCount: Int {
-        return accountManager.nonBackedUpCount
+        return backupManager.nonBackedUpCount
     }
 
     var currentLanguage: String {

@@ -11,26 +11,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.makeKeyAndVisible()
         window?.backgroundColor = AppTheme.controllerBackground
 
-        LaunchRouter.presenter(window: window).launch()
+        App.shared.appManager.onStart()
 
-        App.shared.biometryManager.refresh()
+        LaunchRouter.presenter(window: window).launch()
 
         return true
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
-        App.shared.backgroundManager.resignActiveSubject.onNext(())
-        App.shared.blurManager.willResignActive()
+        App.shared.appManager.onResignActive()
     }
 
     func applicationDidBecomeActive(_ application: UIApplication) {
-        App.shared.backgroundManager.didBecomeActiveSubject.onNext(())
-        App.shared.blurManager.didBecomeActive()
+        App.shared.appManager.onBecomeActive()
     }
 
     func applicationDidEnterBackground(_ application: UIApplication) {
-        App.shared.backgroundManager.didEnterBackgroundSubject.onNext(())
-        App.shared.lockManager.didEnterBackground()
+        App.shared.appManager.onEnterBackground()
 
         backgroundTask = UIApplication.shared.beginBackgroundTask {
             UIApplication.shared.endBackgroundTask(self.backgroundTask)
@@ -39,9 +36,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationWillEnterForeground(_ application: UIApplication) {
-        App.shared.lockManager.willEnterForeground()
-        App.shared.adapterManager.refresh()
-        App.shared.biometryManager.refresh()
+        App.shared.appManager.onEnterForeground()
 
         if backgroundTask != UIBackgroundTaskIdentifier.invalid {
             UIApplication.shared.endBackgroundTask(backgroundTask)
