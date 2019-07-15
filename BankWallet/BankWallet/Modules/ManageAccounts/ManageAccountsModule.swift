@@ -21,7 +21,7 @@ protocol IManageAccountsViewDelegate {
 protocol IManageAccountsInteractor {
     var predefinedAccountTypes: [IPredefinedAccountType] { get }
     func account(predefinedAccountType: IPredefinedAccountType) -> Account?
-    func createAccount(defaultAccountType: DefaultAccountType) throws
+    func createAccount(predefinedAccountType: IPredefinedAccountType) throws
     func restoreAccount(accountType: AccountType, syncMode: SyncMode?)
 }
 

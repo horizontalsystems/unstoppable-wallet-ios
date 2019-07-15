@@ -66,12 +66,8 @@ extension ManageAccountsPresenter: IManageAccountsViewDelegate {
     }
 
     func didTapCreate(index: Int) {
-        guard let defaultAccountType = items[index].predefinedAccountType.defaultAccountType else {
-            return
-        }
-
         do {
-            try interactor.createAccount(defaultAccountType: defaultAccountType)
+            try interactor.createAccount(predefinedAccountType: items[index].predefinedAccountType)
         } catch {
             view?.show(error: error)
         }
