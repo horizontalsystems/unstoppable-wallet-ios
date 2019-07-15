@@ -17,25 +17,19 @@ class AdapterManager {
         self.authManager = authManager
         self.walletManager = walletManager
 
-        walletManager.walletsUpdatedSignal
+        walletManager.walletsObservable
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
                 .observeOn(ConcurrentDispatchQueueScheduler(qos: .userInteractive))
-                .subscribe(onNext: { [weak self] in
-                    self?.initAdapters()
+                .subscribe(onNext: { [weak self] wallets in
+                    self?.initAdapters(wallets: wallets)
                 })
                 .disposed(by: disposeBag)
-
-        initAdapters()
     }
 
-}
-
-extension AdapterManager: IAdapterManager {
-
-    func initAdapters() {
+    private func initAdapters(wallets: [Wallet]) {
         let oldAdapters = adapters
 
-        adapters = walletManager.wallets.compactMap { wallet in
+        adapters = wallets.compactMap { wallet in
             if let adapter = adapters.first(where: { $0.wallet == wallet }) {
                 return adapter
             }
@@ -52,6 +46,14 @@ extension AdapterManager: IAdapterManager {
         }
 
         adaptersUpdatedSignal.notify()
+    }
+
+}
+
+extension AdapterManager: IAdapterManager {
+
+    func preloadAdapters() {
+        initAdapters(wallets: walletManager.wallets)
     }
 
     func refresh() {

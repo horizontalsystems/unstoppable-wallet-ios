@@ -31,7 +31,7 @@ extension BackupManager: IBackupManager {
         }
 
         account.backedUp = true
-        accountManager.save(account: account)
+        accountManager.update(account: account)
     }
 
 }

@@ -32,8 +32,11 @@ class App {
 
     let backupManager: IBackupManager
 
+    let walletFactory: IWalletFactory
+    let walletStorage: IWalletStorage
     let walletManager: IWalletManager
-    let walletCreator: IWalletCreator
+    let defaultWalletCreator: DefaultWalletCreator
+    let walletRemover: WalletRemover
 
     let rateManager: RateManager
     let currencyManager: ICurrencyManager
@@ -89,8 +92,11 @@ class App {
 
         backupManager = BackupManager(accountManager: accountManager)
 
-        walletManager = WalletManager(appConfigProvider: appConfigProvider, accountManager: accountManager, storage: grdbStorage)
-        walletCreator = WalletCreator(accountManager: accountManager, walletFactory: WalletFactory())
+        walletFactory = WalletFactory()
+        walletStorage = WalletStorage(appConfigProvider: appConfigProvider, walletFactory: walletFactory, storage: grdbStorage)
+        walletManager = WalletManager(accountManager: accountManager, walletFactory: walletFactory, storage: walletStorage)
+        defaultWalletCreator = DefaultWalletCreator(accountManager: accountManager, walletManager: walletManager, appConfigProvider: appConfigProvider, walletFactory: walletFactory)
+        walletRemover = WalletRemover(accountManager: accountManager, walletManager: walletManager)
 
         let rateApiProvider: IRateApiProvider = RateApiProvider(networkManager: networkManager, appConfigProvider: appConfigProvider)
         rateManager = RateManager(storage: grdbStorage, apiProvider: rateApiProvider)
@@ -120,7 +126,14 @@ class App {
 
         authManager.adapterManager = adapterManager
 
-        appManager = AppManager(accountManager: accountManager, adapterManager: adapterManager, lockManager: lockManager, biometryManager: biometryManager, blurManager: blurManager)
+        appManager = AppManager(
+                accountManager: accountManager,
+                walletManager: walletManager,
+                adapterManager: adapterManager,
+                lockManager: lockManager,
+                biometryManager: biometryManager,
+                blurManager: blurManager
+        )
     }
 
 }
