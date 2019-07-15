@@ -6,17 +6,17 @@ class SecuritySettingsInteractor {
     weak var delegate: ISecuritySettingsInteractorDelegate?
 
     private let localStorage: ILocalStorage
-    private let accountManager: IAccountManager
+    private let backupManager: IBackupManager
     private let biometryManager: IBiometryManager
     private let pinManager: IPinManager
 
-    init(localStorage: ILocalStorage, accountManager: IAccountManager, biometryManager: IBiometryManager, pinManager: IPinManager) {
+    init(localStorage: ILocalStorage, backupManager: IBackupManager, biometryManager: IBiometryManager, pinManager: IPinManager) {
         self.localStorage = localStorage
-        self.accountManager = accountManager
+        self.backupManager = backupManager
         self.biometryManager = biometryManager
         self.pinManager = pinManager
 
-        accountManager.nonBackedUpCountObservable
+        backupManager.nonBackedUpCountObservable
                 .observeOn(MainScheduler.instance)
                 .subscribe(onNext: { [weak self] count in
                     self?.delegate?.didUpdateNonBackedUp(count: count)
@@ -43,7 +43,7 @@ class SecuritySettingsInteractor {
 extension SecuritySettingsInteractor: ISecuritySettingsInteractor {
 
     var nonBackedUpCount: Int {
-        return accountManager.nonBackedUpCount
+        return backupManager.nonBackedUpCount
     }
 
     var biometryType: BiometryType {

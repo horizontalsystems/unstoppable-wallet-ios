@@ -1,9 +1,9 @@
 class BackupInteractor {
-    private let accountManager: IAccountManager
+    private let backupManager: IBackupManager
     private let pinManager: IPinManager
 
-    init(accountManager: IAccountManager, pinManager: IPinManager) {
-        self.accountManager = accountManager
+    init(backupManager: IBackupManager, pinManager: IPinManager) {
+        self.backupManager = backupManager
         self.pinManager = pinManager
     }
 
@@ -16,7 +16,7 @@ extension BackupInteractor: IBackupInteractor {
     }
 
     func setBackedUp(accountId: String) {
-        accountManager.setAccountBackedUp(id: accountId)
+        backupManager.setAccountBackedUp(id: accountId)
     }
 
 }
