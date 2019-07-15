@@ -87,10 +87,14 @@ extension ManageAccountsViewController: UITableViewDataSource, UITableViewDelega
             }, onTapRight: { [weak self] in
                 self?.delegate.didTapBackup(index: indexPath.row)
             })
-        case .notLinked:
-            cell.bind(viewItem: item, onTapLeft: { [weak self] in
+        case .notLinked(let canCreate):
+            let tapLeft: (() -> ()) = canCreate ? { [weak self] in
                 self?.delegate.didTapCreate(index: indexPath.row)
-            }, onTapRight: { [weak self] in
+            } : {
+                HudHelper.instance.showError(title: "settings_manage_keys.cant_create".localized)
+            }
+
+            cell.bind(viewItem: item, onTapLeft: tapLeft, onTapRight: { [weak self] in
                 self?.delegate.didTapRestore(index: indexPath.row)
             })
         }
