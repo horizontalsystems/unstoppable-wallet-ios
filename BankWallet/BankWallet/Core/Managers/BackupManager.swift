@@ -2,10 +2,13 @@ import RxSwift
 
 class BackupManager {
     private let accountManager: IAccountManager
-    private let nonBackedUpCountSubject = PublishSubject<Int>()
 
     init(accountManager: IAccountManager) {
         self.accountManager = accountManager
+    }
+
+    private func getCount(accounts: [Account]) -> Int {
+        return accounts.filter { !$0.backedUp }.count
     }
 
 }
@@ -13,11 +16,13 @@ class BackupManager {
 extension BackupManager: IBackupManager {
 
     var nonBackedUpCount: Int {
-        return accountManager.accounts.filter { !$0.backedUp }.count
+        return getCount(accounts: accountManager.accounts)
     }
 
     var nonBackedUpCountObservable: Observable<Int> {
-        return nonBackedUpCountSubject.asObservable()
+        return accountManager.accountsObservable.map { [unowned self] accounts in
+            return self.getCount(accounts: accounts)
+        }
     }
 
     func setAccountBackedUp(id: String) {
@@ -27,8 +32,6 @@ extension BackupManager: IBackupManager {
 
         account.backedUp = true
         accountManager.save(account: account)
-
-        nonBackedUpCountSubject.onNext(nonBackedUpCount)
     }
 
 }
