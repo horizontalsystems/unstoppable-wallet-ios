@@ -2,6 +2,7 @@ import RxSwift
 
 class AppManager {
     private let accountManager: IAccountManager
+    private let walletManager: IWalletManager
     private let adapterManager: IAdapterManager
     private let lockManager: ILockManager
     private let biometryManager: IBiometryManager
@@ -11,8 +12,9 @@ class AppManager {
     private let becomeActiveSubject = PublishSubject<()>()
     private let enterBackgroundSubject = PublishSubject<()>()
 
-    init(accountManager: IAccountManager, adapterManager: IAdapterManager, lockManager: ILockManager, biometryManager: IBiometryManager, blurManager: IBlurManager) {
+    init(accountManager: IAccountManager, walletManager: IWalletManager, adapterManager: IAdapterManager, lockManager: ILockManager, biometryManager: IBiometryManager, blurManager: IBlurManager) {
         self.accountManager = accountManager
+        self.walletManager = walletManager
         self.adapterManager = adapterManager
         self.lockManager = lockManager
         self.biometryManager = biometryManager
@@ -25,6 +27,8 @@ extension AppManager: IAppManager {
 
     func onStart() {
         accountManager.preloadAccounts()
+        walletManager.preloadWallets()
+        adapterManager.preloadAdapters()
         biometryManager.refresh()
     }
 

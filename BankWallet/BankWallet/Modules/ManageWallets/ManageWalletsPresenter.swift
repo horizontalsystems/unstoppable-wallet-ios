@@ -4,7 +4,6 @@ class ManageWalletsPresenter {
     private let router: IManageWalletsRouter
     private let appConfigProvider: IAppConfigProvider
     private let walletManager: IWalletManager
-    private let walletCreator: IWalletCreator
     private let accountCreator: IAccountCreator
     private let stateHandler = ManageWalletsStateHandler()
 
@@ -15,11 +14,10 @@ class ManageWalletsPresenter {
     }
     private var coins: [Coin] = []
 
-    init(router: IManageWalletsRouter, appConfigProvider: IAppConfigProvider, walletManager: IWalletManager, walletCreator: IWalletCreator, accountCreator: IAccountCreator) {
+    init(router: IManageWalletsRouter, appConfigProvider: IAppConfigProvider, walletManager: IWalletManager, accountCreator: IAccountCreator) {
         self.router = router
         self.appConfigProvider = appConfigProvider
         self.walletManager = walletManager
-        self.walletCreator = walletCreator
         self.accountCreator = accountCreator
     }
 
@@ -34,7 +32,7 @@ extension ManageWalletsPresenter: IManageWalletsViewDelegate {
     func enableCoin(atIndex index: Int) {
         let coin = coins[index]
 
-        if let wallet = walletCreator.wallet(coin: coin) {
+        if let wallet = walletManager.wallet(coin: coin) {
             wallets.append(wallet)
             view?.updateUI()
         } else {

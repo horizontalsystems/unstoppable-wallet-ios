@@ -1,7 +1,7 @@
 class WalletFactory: IWalletFactory {
 
-    func wallet(coin: Coin, account: Account) -> Wallet {
-        return Wallet(coin: coin, account: account, syncMode: account.defaultSyncMode)
+    func wallet(coin: Coin, account: Account, syncMode: SyncMode?) -> Wallet {
+        return Wallet(coin: coin, account: account, syncMode: syncMode)
     }
 
 }
