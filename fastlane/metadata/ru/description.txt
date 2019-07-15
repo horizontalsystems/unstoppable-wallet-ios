@@ -29,23 +29,24 @@ It's easy to migrate to/from
 
 Будьте действительно приватным, никакого сбора персональных данных. Никаких подтверждений личности, учетных записей, электронных писем, номеров телефонов и сторонних серверов.
 
-Unlike most wallets in the market the Unstoppable wallet connects users directly to decentralized blockchains without any restrictions or intermediaries.
+В отличие от большинства кошельком, Unstoppable Wallet соединяет пользователей непосредственно с децентрализованными блокчейнами без каких-либо ограничений или посредников.
 
 (3) HIGHLY SECURE
 
-  Keep your crypto assets safe on your phone using safe storage mechanisms provided by phone's operating system. Your secret keys never leaves your device the device.
+Держите ваши средства в безопасности на вашем устройстве с помощью безопасных механизмов хранения, предоставляемых операционной системой телефона. Ваши секретные ключи никогда не покинут ваше устройство.
 
-  In case of a device loss or replacement you may easily restore your wallet using Secret Key. Unstoppable makes it really easy to switch to another wallet or migrate funds from another wallet.
 
- (4) ALWAYS ONLINE
+В случае утери устройства или замены, вы можете легко восстановить ваш кошелек с помощью Секретного ключа. Unstoppable Wallet дает возможность переключаться на другой кошелек или переместить средства из другого кошелька.
 
-Access your funds from anywhere at any time.   Unstoppable wallet was engineered to remain online and functional independent of any third party servers.   
+ВСЕГДА ОНЛАЙН
 
-No single entity can take the wallet down and cause it's main features to malfunction. Not even the Horizontal Systems team able to interfere with it.
+Доступ к средствам всегда и везде Unstoppable Wallet был разработан для того чтобы оставаться онлайн и функционально независимым от любых сторонних серверов.   
+
+Никто не может взломать ваш кошелек или вызвать неисправность основных функций. Даже команда Horizontal Systems не может вмешиваться в это.
 
 (5) ADVANCED & AHEAD
 
-Use the most technologically advanced and decentralized wallet ever built.   It’s the only mobile wallet that implements all major blockchains in a fully decentralized manner.
+Используйте самый технологичный и децентрализованный кошелек. Это единственный мобильный кошелек, который реализует все основные блокчейны полностью децентрализованно.
 
 Over 2500 engineering hours being put into this wallet every month. This wallet is being constantly improved further and continuously integrates latest enhancements in all blockchains such as segwit or real-time transaction fee estimator.
 
