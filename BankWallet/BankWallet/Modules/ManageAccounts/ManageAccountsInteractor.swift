@@ -32,8 +32,8 @@ extension ManageAccountsInteractor: IManageAccountsInteractor {
         return predefinedAccountTypeManager.account(predefinedAccountType: predefinedAccountType)
     }
 
-    func createAccount(defaultAccountType: DefaultAccountType) throws {
-        _ = try accountCreator.createNewAccount(defaultAccountType: defaultAccountType)
+    func createAccount(predefinedAccountType: IPredefinedAccountType) throws {
+        _ = try predefinedAccountTypeManager.createAccount(predefinedAccountType: predefinedAccountType)
     }
 
     func restoreAccount(accountType: AccountType, syncMode: SyncMode?) {

@@ -84,8 +84,8 @@ class App {
         wordsManager = WordsManager(localStorage: localStorage)
 
         accountManager = AccountManager(storage: grdbStorage)
-        accountCreator = AccountCreator(accountManager: accountManager, accountFactory: AccountFactory(), wordsManager: wordsManager)
-        predefinedAccountTypeManager = PredefinedAccountTypeManager(appConfigProvider: appConfigProvider, accountManager: accountManager)
+        accountCreator = AccountCreator(accountManager: accountManager, accountFactory: AccountFactory())
+        predefinedAccountTypeManager = PredefinedAccountTypeManager(appConfigProvider: appConfigProvider, accountManager: accountManager, accountCreator: accountCreator, wordsManager: wordsManager)
 
         backupManager = BackupManager(accountManager: accountManager)
 

@@ -200,7 +200,7 @@ CHECKOUT OPTIONS:
     :commit: e73dc5b886d25065a5887b90a1464e31daf5db4c
     :git: https://github.com/horizontalsystems/gui-kit
   UIExtensions.swift:
-    :commit: a2ffdce69304787ba71992a5b03504c9a3ef0b6c
+    :commit: 22d90aa409044e4ee82e4fcc3ec5a89e7066bf93
     :git: https://github.com/horizontalsystems/gui-kit
 
 SPEC CHECKSUMS:

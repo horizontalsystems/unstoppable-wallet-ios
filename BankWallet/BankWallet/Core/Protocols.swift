@@ -189,8 +189,8 @@ protocol IBackupManager {
 }
 
 protocol IAccountCreator {
+    func createNewAccount(accountType: AccountType) -> Account
     func createRestoredAccount(accountType: AccountType, syncMode: SyncMode?) -> Account
-    func createNewAccount(defaultAccountType: DefaultAccountType) throws -> Account
 }
 
 protocol IAccountFactory {
@@ -466,6 +466,8 @@ protocol IUUIDProvider {
 protocol IPredefinedAccountTypeManager {
     var allTypes: [IPredefinedAccountType] { get }
     func account(predefinedAccountType: IPredefinedAccountType) -> Account?
+    func createAccount(predefinedAccountType: IPredefinedAccountType) throws -> Account?
+    func createAllAccounts() throws
 }
 
 protocol IPredefinedAccountType {

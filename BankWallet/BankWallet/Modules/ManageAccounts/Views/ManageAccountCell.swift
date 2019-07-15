@@ -12,7 +12,6 @@ class ManageAccountCell: UITableViewCell {
 
     private let leftButton = RespondButton()
     private let rightButton = RespondButton()
-    private let aloneRightButton = RespondButton()
 
     private var onTapLeft: (() -> ())?
     private var onTapRight: (() -> ())?
@@ -48,6 +47,7 @@ class ManageAccountCell: UITableViewCell {
         clippingView.addSubview(activeKeyIcon)
         clippingView.layer.shouldRasterize = true
         clippingView.layer.rasterizationScale = UIScreen.main.scale
+        clippingView.borderColor = ManageAccountsTheme.keyImageColor
 
         gradientLayer.locations = [0.0, 1.0]
         clippingView.layer.addSublayer(gradientLayer)
@@ -108,21 +108,6 @@ class ManageAccountCell: UITableViewCell {
         rightButton.titleLabel.font = ManageAccountsTheme.buttonsFont
         rightButton.cornerRadius = ManageAccountsTheme.buttonCornerRadius
 
-        clippingView.addSubview(aloneRightButton)
-        aloneRightButton.snp.makeConstraints { maker in
-            maker.leading.equalToSuperview().offset(ManageAccountsTheme.buttonsMargin)
-            maker.top.equalTo(self.coinsLabel.snp.bottom).offset(ManageAccountsTheme.buttonsTopMargin)
-            maker.trailing.equalToSuperview().offset(-ManageAccountsTheme.buttonsMargin)
-            maker.height.equalTo(ManageAccountsTheme.buttonsHeight)
-        }
-        aloneRightButton.titleLabel.text = "settings_manage_keys.import".localized
-        aloneRightButton.onTap = { [weak self] in self?.onTapRight?() }
-        aloneRightButton.borderWidth = 1 / UIScreen.main.scale
-        aloneRightButton.borderColor = ManageAccountsTheme.buttonsBorderColor
-        aloneRightButton.backgrounds = ManageAccountsTheme.buttonsBackgroundColorDictionary
-        aloneRightButton.textColors = ManageAccountsTheme.buttonsTextColorDictionary
-        aloneRightButton.titleLabel.font = ManageAccountsTheme.buttonsFont
-        aloneRightButton.cornerRadius = ManageAccountsTheme.buttonCornerRadius
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -134,12 +119,12 @@ class ManageAccountCell: UITableViewCell {
         switch viewItem.state {
         case .linked(let backedUp):
             roundedBackground.layer.shadowOpacity = ManageAccountsTheme.roundedBackgroundShadowOpacity
+            clippingView.borderWidth = 2 / UIScreen.main.scale
 
             leftButton.titleLabel.text = "settings_manage_keys.unlink".localized
             rightButton.titleLabel.text = "settings_manage_keys.backup".localized
             rightButton.image = backedUp ? nil : UIImage(named: "Attention Icon Small")?.tinted(with: ManageAccountsTheme.attentionColor)
 
-            aloneRightButton.set(hidden: true)
             leftButton.set(hidden: false)
             rightButton.set(hidden: false)
 
@@ -148,16 +133,13 @@ class ManageAccountCell: UITableViewCell {
             coinsLabel.textColor = ManageAccountsTheme.coinsColor
 
             gradientColor = ManageAccountsTheme.gradientRoundedBackgroundColor ?? UIColor.clear
-        case .notLinked(let canCreate):
+        case .notLinked:
             roundedBackground.layer.shadowOpacity = 0
+            clippingView.borderWidth = 0
 
             leftButton.titleLabel.text = "settings_manage_keys.new".localized
             rightButton.titleLabel.text = "settings_manage_keys.import".localized
             rightButton.image = nil
-
-            aloneRightButton.set(hidden: canCreate)
-            leftButton.set(hidden: !canCreate)
-            rightButton.set(hidden: !canCreate)
 
             activeKeyIcon.tintColor = ManageAccountsTheme.nonActiveKeyImageColor
             nameLabel.textColor = ManageAccountsTheme.nonActiveCellColor
