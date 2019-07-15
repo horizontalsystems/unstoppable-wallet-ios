@@ -59,7 +59,7 @@ protocol ILocalizationManager {
 protocol IAdapterManager: class {
     var adapters: [IAdapter] { get }
     var adaptersUpdatedSignal: Signal { get }
-    func initAdapters()
+    func preloadAdapters()
     func refresh()
 }
 
@@ -69,9 +69,11 @@ protocol IAdapterFactory {
 
 protocol IWalletManager: class {
     var wallets: [Wallet] { get }
-    var walletsUpdatedSignal: Signal { get }
+    var walletsObservable: Observable<[Wallet]> { get }
+    func wallet(coin: Coin) -> Wallet?
+
+    func preloadWallets()
     func enable(wallets: [Wallet])
-    func enableDefaultWallets()
 }
 
 enum AdapterState {
@@ -175,10 +177,15 @@ protocol IAuthManager {
 
 protocol IAccountManager {
     var accounts: [Account] { get }
+    func account(coinType: CoinType) -> Account?
+
     var accountsObservable: Observable<[Account]> { get }
+    var createAccountObservable: Observable<Account> { get }
+    var deleteAccountObservable: Observable<String> { get }
 
     func preloadAccounts()
-    func save(account: Account)
+    func update(account: Account)
+    func create(account: Account)
     func deleteAccount(id: String)
 }
 
@@ -198,12 +205,7 @@ protocol IAccountFactory {
 }
 
 protocol IWalletFactory {
-    func wallet(coin: Coin, account: Account) -> Wallet
-}
-
-protocol IWalletCreator {
-    func wallet(coin: Coin) -> Wallet?
-    func wallet(coin: Coin, account: Account) -> Wallet
+    func wallet(coin: Coin, account: Account, syncMode: SyncMode?) -> Wallet
 }
 
 protocol IRestoreAccountDataSource {
@@ -491,4 +493,9 @@ protocol IAppManager {
     var resignActiveObservable: Observable<()> { get }
     var becomeActiveObservable: Observable<()> { get }
     var enterBackgroundObservable: Observable<()> { get }
+}
+
+protocol IWalletStorage {
+    func wallets(accounts: [Account]) -> [Wallet]
+    func save(wallets: [Wallet])
 }

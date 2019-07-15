@@ -40,8 +40,8 @@ extension AuthManager: IAuthManager {
 
         self.authData = authData
 
-        coinManager.enableDefaultWallets()
-        adapterManager?.initAdapters()
+//        coinManager.enableDefaultWallets()
+//        adapterManager?.initAdapters()
     }
 
     func logout() throws {

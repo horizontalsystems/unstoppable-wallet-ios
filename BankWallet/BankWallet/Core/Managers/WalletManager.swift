@@ -1,75 +1,64 @@
 import RxSwift
 
 class WalletManager {
-    private let appConfigProvider: IAppConfigProvider
     private let accountManager: IAccountManager
-    private let storage: IEnabledWalletStorage
+    private let walletFactory: IWalletFactory
+    private let storage: IWalletStorage
+    private let cache: WalletsCache = WalletsCache()
 
     private let disposeBag = DisposeBag()
+    private let walletsSubject = PublishSubject<[Wallet]>()
 
-    var wallets = [Wallet]()
-    let walletsUpdatedSignal = Signal()
-
-    init(appConfigProvider: IAppConfigProvider, accountManager: IAccountManager, storage: IEnabledWalletStorage) {
-        self.appConfigProvider = appConfigProvider
+    init(accountManager: IAccountManager, walletFactory: IWalletFactory, storage: IWalletStorage) {
         self.accountManager = accountManager
+        self.walletFactory = walletFactory
         self.storage = storage
-
-        accountManager.accountsObservable
-                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
-                .subscribe(onNext: { [weak self] accounts in
-                    self?.handle(accounts: accounts)
-                })
-                .disposed(by: disposeBag)
-
-        wallets = wallets(enabledWallets: storage.enabledWallets, accounts: accountManager.accounts)
-    }
-
-    private func handle(accounts: [Account]) {
-        enable(wallets: wallets.filter { accounts.contains($0.account) })
-    }
-
-    private func wallets(enabledWallets: [EnabledWallet], accounts: [Account]) -> [Wallet] {
-        return enabledWallets.compactMap { enabledWallet in
-            guard let coin = appConfigProvider.coins.first(where: { $0.code == enabledWallet.coinCode }) else {
-                return nil
-            }
-
-            guard let account = accounts.first(where: { $0.name == enabledWallet.accountId }) else {
-                return nil
-            }
-
-            return Wallet(coin: coin, account: account, syncMode: enabledWallet.syncMode)
-        }
     }
 
 }
 
 extension WalletManager: IWalletManager {
 
-    func enable(wallets: [Wallet]) {
-        var enabledWallets = [EnabledWallet]()
-
-        for (order, wallet) in wallets.enumerated() {
-            enabledWallets.append(EnabledWallet(coinCode: wallet.coin.code, accountId: wallet.account.id, syncMode: wallet.syncMode, order: order))
-        }
-
-        storage.save(enabledWallets: enabledWallets)
-
-        self.wallets = wallets
-        walletsUpdatedSignal.notify()
+    var wallets: [Wallet] {
+        return cache.wallets
     }
 
-    func enableDefaultWallets() {
-        // todo: implement this
+    var walletsObservable: Observable<[Wallet]> {
+        return walletsSubject.asObservable()
+    }
 
-//        var enabledWallets = [EnabledWallet]()
-//
-//        for (order, coinCode) in appConfigProvider.defaultCoinCodes.enumerated() {
-//            enabledWallets.append(EnabledCoin(coinCode: coinCode, order: order))
-//        }
-//
-//        storage.save(enabledWallets: enabledWallets)
+    func wallet(coin: Coin) -> Wallet? {
+        guard let account = accountManager.account(coinType: coin.type) else {
+            return nil
+        }
+
+        return walletFactory.wallet(coin: coin, account: account, syncMode: account.defaultSyncMode)
+    }
+
+    func preloadWallets() {
+        cache.set(wallets: storage.wallets(accounts: accountManager.accounts))
+    }
+
+    func enable(wallets: [Wallet]) {
+        storage.save(wallets: wallets)
+        cache.set(wallets: wallets)
+        walletsSubject.onNext(wallets)
+    }
+
+}
+
+extension WalletManager {
+
+    private class WalletsCache {
+        private var array = [Wallet]()
+
+        var wallets: [Wallet] {
+            return array
+        }
+
+        func set(wallets: [Wallet]) {
+            array = wallets
+        }
     }
 
 }

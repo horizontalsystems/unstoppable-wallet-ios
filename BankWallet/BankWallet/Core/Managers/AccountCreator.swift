@@ -14,7 +14,7 @@ class AccountCreator {
                 defaultSyncMode: defaultSyncMode
         )
 
-        accountManager.save(account: account)
+        accountManager.create(account: account)
 
         return account
     }
