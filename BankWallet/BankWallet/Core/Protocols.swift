@@ -177,13 +177,14 @@ protocol IAccountManager {
     var accounts: [Account] { get }
     var accountsObservable: Observable<[Account]> { get }
 
-    func account(predefinedAccountType: IPredefinedAccountType) -> Account?
-
-    var nonBackedUpCount: Int { get }
-    var nonBackedUpCountObservable: Observable<Int> { get }
-
+    func preloadAccounts()
     func save(account: Account)
     func deleteAccount(id: String)
+}
+
+protocol IBackupManager {
+    var nonBackedUpCount: Int { get }
+    var nonBackedUpCountObservable: Observable<Int> { get }
     func setAccountBackedUp(id: String)
 }
 
@@ -464,6 +465,7 @@ protocol IUUIDProvider {
 
 protocol IPredefinedAccountTypeManager {
     var allTypes: [IPredefinedAccountType] { get }
+    func account(predefinedAccountType: IPredefinedAccountType) -> Account?
 }
 
 protocol IPredefinedAccountType {
@@ -475,4 +477,16 @@ protocol IPredefinedAccountType {
 
 enum DefaultAccountType {
     case mnemonic(wordsCount: Int)
+}
+
+protocol IAppManager {
+    func onStart()
+    func onResignActive()
+    func onBecomeActive()
+    func onEnterBackground()
+    func onEnterForeground()
+
+    var resignActiveObservable: Observable<()> { get }
+    var becomeActiveObservable: Observable<()> { get }
+    var enterBackgroundObservable: Observable<()> { get }
 }

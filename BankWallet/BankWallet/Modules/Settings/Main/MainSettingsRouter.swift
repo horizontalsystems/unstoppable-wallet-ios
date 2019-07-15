@@ -38,7 +38,7 @@ extension MainSettingsRouter {
 
     static func module() -> UIViewController {
         let router = MainSettingsRouter()
-        let interactor = MainSettingsInteractor(localStorage: App.shared.localStorage, accountManager: App.shared.accountManager, languageManager: App.shared.languageManager, systemInfoManager: App.shared.systemInfoManager, currencyManager: App.shared.currencyManager)
+        let interactor = MainSettingsInteractor(localStorage: App.shared.localStorage, backupManager: App.shared.backupManager, languageManager: App.shared.languageManager, systemInfoManager: App.shared.systemInfoManager, currencyManager: App.shared.currencyManager)
         let presenter = MainSettingsPresenter(router: router, interactor: interactor)
         let view = MainSettingsViewController(delegate: presenter)
 

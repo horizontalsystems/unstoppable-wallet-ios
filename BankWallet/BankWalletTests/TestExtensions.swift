@@ -183,8 +183,9 @@ extension Coin {
 
 extension Account {
 
-    static func mock(id: String = "uniqueId", name: String = "Mnemonic", type: AccountType = .mnemonic(words: [], derivation: .bip44, salt: nil), backedUp: Bool = true, defaultSyncMode: SyncMode? = nil) -> Account {
-        return Account(id: id, name: name, type: type, backedUp: backedUp, defaultSyncMode: defaultSyncMode)
+    static func mock(id: String? = nil, name: String? = nil, type: AccountType = .mnemonic(words: [], derivation: .bip44, salt: nil), backedUp: Bool = true, defaultSyncMode: SyncMode? = nil) -> Account {
+        let uuid = UUID().uuidString
+        return Account(id: id ?? uuid, name: name ?? uuid, type: type, backedUp: backedUp, defaultSyncMode: defaultSyncMode)
     }
 
 }
