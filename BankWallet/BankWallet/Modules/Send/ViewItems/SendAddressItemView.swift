@@ -4,7 +4,7 @@ import ActionSheet
 import SnapKit
 
 class SendAddressItemView: BaseActionItemView {
-    let addressInputField = AddressInputField(frame: .zero)
+    let addressInputField = AddressInputField(frame: .zero, placeholder: "send.address_placeholder".localized, showQrButton: false, canEdit: false)
 
     override var item: SendAddressItem? { return _item as? SendAddressItem }
 

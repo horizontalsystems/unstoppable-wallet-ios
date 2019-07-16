@@ -3,19 +3,31 @@ import SnapKit
 
 class AddressInputField: UIView {
     private let addressWrapperView = UIView()
-    private let addressLabel = UILabel()
+    private let addressField = UITextView()
+    private let placeholderLabel = UILabel()
     private let errorLabel = UILabel()
     private let scanButton = RespondButton()
     private let scanButtonIcon = UIImageView()
     private let deleteButton = RespondButton()
     private let deleteButtonIcon = UIImageView()
     private let pasteButton = RespondButton()
+    private let textViewCenterFixOffset: CGFloat = 1
 
-    override init(frame: CGRect) {
+    private let placeholder: String?
+    private let numberOfLines: Int
+    private let showQrButton: Bool
+    private let canEdit: Bool
+
+    init(frame: CGRect, placeholder: String?, numberOfLines: Int = 1, showQrButton: Bool, canEdit: Bool) {
+        self.placeholder = placeholder
+        self.numberOfLines = numberOfLines
+        self.showQrButton = showQrButton
+        self.canEdit = canEdit
         super.init(frame: frame)
 
         addSubview(addressWrapperView)
-        addressWrapperView.addSubview(addressLabel)
+        addressWrapperView.addSubview(addressField)
+        addressField.addSubview(placeholderLabel)
         addressWrapperView.addSubview(errorLabel)
         addSubview(scanButton)
         scanButton.addSubview(scanButtonIcon)
@@ -28,8 +40,19 @@ class AddressInputField: UIView {
         layer.borderColor = SendTheme.holderBorderColor.cgColor
         backgroundColor = SendTheme.holderBackground
 
-        addressLabel.font = SendTheme.addressFont
-        addressLabel.lineBreakMode = .byTruncatingMiddle
+        addressField.isUserInteractionEnabled = canEdit
+        addressField.textContainer.maximumNumberOfLines = numberOfLines
+        addressField.textColor = SendTheme.addressColor
+        addressField.font = SendTheme.addressFont
+        addressField.textContainer.lineBreakMode = .byTruncatingMiddle
+        addressField.textContainer.lineFragmentPadding = 0
+        addressField.textContainerInset = .zero
+        addressField.backgroundColor = .clear
+        placeholderLabel.textColor = SendTheme.addressHintColor
+        placeholderLabel.snp.makeConstraints { maker in
+            maker.edges.equalToSuperview()
+        }
+        placeholderLabel.text = placeholder
 
         errorLabel.font = SendTheme.errorFont
         errorLabel.textColor = SendTheme.errorColor
@@ -47,12 +70,13 @@ class AddressInputField: UIView {
             maker.centerY.equalToSuperview()
             maker.height.equalTo(SendTheme.buttonSize)
         }
-        pasteButton.titleLabel.snp.remakeConstraints { maker in
+        pasteButton.wrapperView.snp.remakeConstraints { maker in
             maker.leading.equalToSuperview().offset(SendTheme.smallMargin)
             maker.top.bottom.equalToSuperview()
             maker.trailing.equalToSuperview().offset(-SendTheme.smallMargin)
         }
 
+        scanButton.isHidden = !showQrButton
         scanButton.borderWidth = 1 / UIScreen.main.scale
         scanButton.borderColor = SendTheme.buttonBorderColor
         scanButton.cornerRadius = SendTheme.buttonCornerRadius
@@ -107,30 +131,34 @@ class AddressInputField: UIView {
 
     func bind(address: String?, error: String?) {
         if let address = address {
-            addressLabel.text = address
-            addressLabel.textColor = SendTheme.addressColor
+            placeholderLabel.isHidden = true
+            addressField.text = address
             pasteButton.isHidden = true
             scanButton.isHidden = true
             deleteButton.isHidden = false
 
             addressWrapperView.snp.remakeConstraints { maker in
                 maker.leading.equalToSuperview().offset(SendTheme.mediumMargin)
-                maker.centerY.equalTo(deleteButton.snp.centerY)
+                maker.centerY.equalTo(deleteButton.snp.centerY).offset(textViewCenterFixOffset)
 
                 maker.trailing.equalTo(deleteButton.snp.leading).offset(-SendTheme.mediumMargin)
             }
         } else {
-            addressLabel.text = "send.address_placeholder".localized
-            addressLabel.textColor = SendTheme.addressHintColor
+            placeholderLabel.isHidden = false
+            addressField.text = nil
             pasteButton.isHidden = false
-            scanButton.isHidden = false
+            scanButton.isHidden = false || !showQrButton
             deleteButton.isHidden = true
 
             addressWrapperView.snp.remakeConstraints { maker in
                 maker.leading.equalToSuperview().offset(SendTheme.mediumMargin)
-                maker.centerY.equalTo(pasteButton.snp.centerY)
+                maker.centerY.equalTo(pasteButton.snp.centerY).offset(textViewCenterFixOffset)
 
-                maker.trailing.equalTo(pasteButton.snp.leading).offset(-SendTheme.mediumMargin)
+                if showQrButton {
+                    maker.trailing.equalTo(scanButton.snp.leading).offset(-SendTheme.mediumMargin)
+                } else {
+                    maker.trailing.equalTo(pasteButton.snp.leading).offset(-SendTheme.mediumMargin)
+                }
             }
         }
 
@@ -138,17 +166,19 @@ class AddressInputField: UIView {
             errorLabel.isHidden = false
             errorLabel.text = error
 
-            addressLabel.snp.remakeConstraints { maker in
+            addressField.snp.remakeConstraints { maker in
                 maker.leading.top.trailing.equalToSuperview()
+                maker.height.equalTo(22 * numberOfLines)
             }
             errorLabel.snp.remakeConstraints { maker in
                 maker.leading.bottom.trailing.equalToSuperview()
-                maker.top.equalTo(addressLabel.snp.bottom).offset(SendTheme.addressErrorTopMargin)
+                maker.top.equalTo(addressField.snp.bottom).offset(SendTheme.addressErrorTopMargin)
             }
         } else {
             errorLabel.isHidden = true
-            addressLabel.snp.remakeConstraints { maker in
+            addressField.snp.remakeConstraints { maker in
                 maker.leading.top.bottom.trailing.equalToSuperview()
+                maker.height.equalTo(22 * numberOfLines)
             }
         }
 
