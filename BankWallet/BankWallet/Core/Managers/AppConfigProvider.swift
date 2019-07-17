@@ -57,11 +57,11 @@ class AppConfigProvider: IAppConfigProvider {
     }
 
     let coins = [
-        Coin(title: "EOS",                   code: "EOS",  type: .eos(token: "eosio.token", symbol: "EOS")),
         Coin(title: "Bitcoin",               code: "BTC",  type: .bitcoin),
         Coin(title: "Bitcoin Cash",          code: "BCH",  type: .bitcoinCash),
         Coin(title: "Ethereum",              code: "ETH",  type: .ethereum),
         Coin(title: "Dash",                  code: "DASH", type: .dash),
+        Coin(title: "EOS",                   code: "EOS",  type: .eos(token: "eosio.token", symbol: "EOS")),
         Coin(title: "0x",                    code: "ZRX",  type: .erc20(address: "0xE41d2489571d322189246DaFA5ebDe1F4699F498", decimal: 18, fee: 0)),
         Coin(title: "Aelf",                  code: "ELF",  type: .erc20(address: "0xbf2179859fc6D5BEE9Bf9158632Dc51678a4100e", decimal: 18, fee: 0)),
         Coin(title: "Aurora DAO",            code: "AURA", type: .erc20(address: "0xCdCFc0f66c522Fd086A1b725ea3c0Eeb9F9e8814", decimal: 18, fee: 0)),

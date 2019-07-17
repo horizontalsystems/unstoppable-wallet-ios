@@ -19,8 +19,8 @@ extension ManageAccountsRouter: IManageAccountsRouter {
 
     }
 
-    func showRestore(predefinedAccountType: IPredefinedAccountType, delegate: IRestoreAccountTypeDelegate) {
-        guard let module = RestoreRouter.module(predefinedAccountType: predefinedAccountType, mode: .presented, delegate: delegate) else {
+    func showRestore(defaultAccountType: DefaultAccountType, delegate: IRestoreAccountTypeDelegate) {
+        guard let module = RestoreRouter.module(defaultAccountType: defaultAccountType, mode: .presented, delegate: delegate) else {
             return
         }
 

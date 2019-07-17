@@ -16,7 +16,6 @@ protocol IWelcomeScreenInteractor {
 
 protocol IWelcomeScreenInteractorDelegate: class {
     func didCreateWallet()
-    func didFailToCreateWallet(withError error: Error)
 }
 
 protocol IWelcomeScreenRouter {

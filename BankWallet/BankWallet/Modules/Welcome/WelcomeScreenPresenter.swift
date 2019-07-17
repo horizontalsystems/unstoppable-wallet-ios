@@ -32,11 +32,6 @@ extension WelcomeScreenPresenter: IWelcomeScreenInteractorDelegate {
         router.showMain()
     }
 
-    func didFailToCreateWallet(withError error: Error) {
-        print("Login Error: \(error)")
-        // TODO: show error in GUI
-    }
-
 }
 
 extension WelcomeScreenPresenter: IRestoreDelegate {

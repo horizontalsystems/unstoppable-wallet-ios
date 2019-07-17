@@ -28,6 +28,7 @@ extension RestoreWordsRouter: IRestoreWordsRouter {
     }
 
     func dismiss() {
+        delegate.didCancelRestore()
         viewController?.dismiss(animated: true)
     }
 

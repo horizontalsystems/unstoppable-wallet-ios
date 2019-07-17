@@ -33,7 +33,7 @@ protocol IManageAccountsRouter {
     func showUnlink(accountId: String)
     func showBackup(account: Account)
     func showKey(account: Account)
-    func showRestore(predefinedAccountType: IPredefinedAccountType, delegate: IRestoreAccountTypeDelegate)
+    func showRestore(defaultAccountType: DefaultAccountType, delegate: IRestoreAccountTypeDelegate)
     func close()
 }
 

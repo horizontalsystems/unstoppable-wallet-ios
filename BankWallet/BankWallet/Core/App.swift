@@ -27,16 +27,16 @@ class App {
     let wordsManager: IWordsManager
 
     let accountManager: IAccountManager
-    let accountCreator: IAccountCreator
-    let predefinedAccountTypeManager: IPredefinedAccountTypeManager
-
     let backupManager: IBackupManager
 
     let walletFactory: IWalletFactory
     let walletStorage: IWalletStorage
     let walletManager: IWalletManager
-    let defaultWalletCreator: DefaultWalletCreator
+    let defaultWalletCreator: IDefaultWalletCreator
     let walletRemover: WalletRemover
+
+    let accountCreator: IAccountCreator
+    let predefinedAccountTypeManager: IPredefinedAccountTypeManager
 
     let rateManager: RateManager
     let currencyManager: ICurrencyManager
@@ -87,16 +87,16 @@ class App {
         wordsManager = WordsManager(localStorage: localStorage)
 
         accountManager = AccountManager(storage: grdbStorage)
-        accountCreator = AccountCreator(accountManager: accountManager, accountFactory: AccountFactory())
-        predefinedAccountTypeManager = PredefinedAccountTypeManager(appConfigProvider: appConfigProvider, accountManager: accountManager, accountCreator: accountCreator, wordsManager: wordsManager)
-
         backupManager = BackupManager(accountManager: accountManager)
 
         walletFactory = WalletFactory()
         walletStorage = WalletStorage(appConfigProvider: appConfigProvider, walletFactory: walletFactory, storage: grdbStorage)
         walletManager = WalletManager(accountManager: accountManager, walletFactory: walletFactory, storage: walletStorage)
-        defaultWalletCreator = DefaultWalletCreator(accountManager: accountManager, walletManager: walletManager, appConfigProvider: appConfigProvider, walletFactory: walletFactory)
+        defaultWalletCreator = DefaultWalletCreator(walletManager: walletManager, appConfigProvider: appConfigProvider, walletFactory: walletFactory)
         walletRemover = WalletRemover(accountManager: accountManager, walletManager: walletManager)
+
+        accountCreator = AccountCreator(accountManager: accountManager, accountFactory: AccountFactory(), wordsManager: wordsManager, defaultWalletCreator: defaultWalletCreator)
+        predefinedAccountTypeManager = PredefinedAccountTypeManager(appConfigProvider: appConfigProvider, accountManager: accountManager, accountCreator: accountCreator)
 
         let rateApiProvider: IRateApiProvider = RateApiProvider(networkManager: networkManager, appConfigProvider: appConfigProvider)
         rateManager = RateManager(storage: grdbStorage, apiProvider: rateApiProvider)
