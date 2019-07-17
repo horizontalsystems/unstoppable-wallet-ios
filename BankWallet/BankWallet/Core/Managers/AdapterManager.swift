@@ -18,8 +18,8 @@ class AdapterManager {
         self.walletManager = walletManager
 
         walletManager.walletsObservable
-                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
-                .observeOn(ConcurrentDispatchQueueScheduler(qos: .userInteractive))
+                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+                .observeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
                 .subscribe(onNext: { [weak self] wallets in
                     self?.initAdapters(wallets: wallets)
                 })

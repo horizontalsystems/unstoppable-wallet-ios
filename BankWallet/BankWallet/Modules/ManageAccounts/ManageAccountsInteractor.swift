@@ -33,11 +33,11 @@ extension ManageAccountsInteractor: IManageAccountsInteractor {
     }
 
     func createAccount(predefinedAccountType: IPredefinedAccountType) throws {
-        _ = try predefinedAccountTypeManager.createAccount(predefinedAccountType: predefinedAccountType)
+        try predefinedAccountTypeManager.createAccount(predefinedAccountType: predefinedAccountType)
     }
 
     func restoreAccount(accountType: AccountType, syncMode: SyncMode?) {
-        _ = accountCreator.createRestoredAccount(accountType: accountType, syncMode: syncMode)
+        _ = accountCreator.createRestoredAccount(accountType: accountType, defaultSyncMode: syncMode, createDefaultWallets: true)
     }
 
 }

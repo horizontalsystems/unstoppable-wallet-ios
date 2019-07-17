@@ -2,7 +2,7 @@ class Words12AccountType: IPredefinedAccountType {
     let title = "key_type.12_words"
     let coinCodes = "key_type.12_words.text"
 
-    var defaultAccountType: DefaultAccountType? {
+    var defaultAccountType: DefaultAccountType {
         return .mnemonic(wordsCount: 12)
     }
 

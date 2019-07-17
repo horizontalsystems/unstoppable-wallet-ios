@@ -1,24 +1,32 @@
 class ManageWalletsPresenter {
+    private let popularCoinCodes = ["BTC", "BCH", "ETH", "DASH", "EOS"]
+
     weak var view: IManageWalletsView?
 
+    private let interactor: IManageWalletsInteractor
     private let router: IManageWalletsRouter
-    private let appConfigProvider: IAppConfigProvider
-    private let walletManager: IWalletManager
-    private let accountCreator: IAccountCreator
-    private let stateHandler = ManageWalletsStateHandler()
 
-    private var wallets: [Wallet] = [] {
-        didSet {
-            coins = stateHandler.remainingCoins(allCoins: appConfigProvider.coins, wallets: wallets)
-        }
-    }
-    private var coins: [Coin] = []
+    private var popularItems = [ManageWalletItem]()
+    private var items = [ManageWalletItem]()
 
-    init(router: IManageWalletsRouter, appConfigProvider: IAppConfigProvider, walletManager: IWalletManager, accountCreator: IAccountCreator) {
+    private var currentItem: ManageWalletItem?
+
+    init(interactor: IManageWalletsInteractor, router: IManageWalletsRouter) {
+        self.interactor = interactor
         self.router = router
-        self.appConfigProvider = appConfigProvider
-        self.walletManager = walletManager
-        self.accountCreator = accountCreator
+    }
+
+    private func viewItem(item: ManageWalletItem) -> ManageWalletViewItem {
+        return ManageWalletViewItem(coin: item.coin, enabled: item.wallet != nil)
+    }
+
+    private func enable(item: ManageWalletItem) {
+        if let wallet = interactor.wallet(coin: item.coin) {
+            item.wallet = wallet
+        } else {
+            currentItem = item
+            view?.showNoAccount(coin: item.coin)
+        }
     }
 
 }
@@ -26,57 +34,106 @@ class ManageWalletsPresenter {
 extension ManageWalletsPresenter: IManageWalletsViewDelegate {
 
     func viewDidLoad() {
-        wallets = walletManager.wallets
-    }
+        let wallets = interactor.wallets
 
-    func enableCoin(atIndex index: Int) {
-        let coin = coins[index]
+        let popularCoins = interactor.coins.filter { popularCoinCodes.contains($0.code) }
+        let coins = interactor.coins.filter { !popularCoinCodes.contains($0.code) }
 
-        if let wallet = walletManager.wallet(coin: coin) {
-            wallets.append(wallet)
-            view?.updateUI()
-        } else {
-            view?.showNoAccount(coin: coin)
+        popularItems = popularCoins.map { coin in
+            ManageWalletItem(coin: coin, wallet: wallets.first(where: { $0.coin == coin }))
+        }
+
+        items = coins.map { coin in
+            ManageWalletItem(coin: coin, wallet: wallets.first(where: { $0.coin == coin }))
         }
     }
 
-    func disableWallet(atIndex index: Int) {
-        wallets.remove(at: index)
-        view?.updateUI()
+    var popularItemsCount: Int {
+        return popularItems.count
     }
 
-    func moveWallet(from fromIndex: Int, to toIndex: Int) {
-        wallets.insert(wallets.remove(at: fromIndex), at: toIndex)
-        view?.updateUI()
+    func popularItem(index: Int) -> ManageWalletViewItem {
+        return viewItem(item: popularItems[index])
+    }
+
+    var itemsCount: Int {
+        return items.count
+    }
+
+    func item(index: Int) -> ManageWalletViewItem {
+        return viewItem(item: items[index])
+    }
+
+    func enablePopularItem(index: Int) {
+        enable(item: popularItems[index])
+    }
+
+    func disablePopularItem(index: Int) {
+        popularItems[index].wallet = nil
+    }
+
+    func enableItem(index: Int) {
+        enable(item: items[index])
+    }
+
+    func disableItem(index: Int) {
+        items[index].wallet = nil
     }
 
     func saveChanges() {
-        walletManager.enable(wallets: wallets)
+        let wallets = (popularItems + items).compactMap { $0.wallet }
+        interactor.enable(wallets: wallets)
         router.close()
     }
 
-    var walletsCount: Int {
-        return wallets.count
-    }
-
-    var coinsCount: Int {
-        return coins.count
-    }
-
-    func wallet(forIndex index: Int) -> Wallet {
-        return wallets[index]
-    }
-
-    func coin(forIndex index: Int) -> Coin {
-        return coins[index]
-    }
-
-    func onClose() {
+    func close() {
         router.close()
     }
 
-    func didTapManageKeys() {
-        router.showManageKeys()
+    func didTapNew() {
+        guard let currentItem = currentItem else {
+            return
+        }
+
+        do {
+            let account = try interactor.createAccount(defaultAccountType: currentItem.coin.type.defaultAccountType)
+            currentItem.wallet = interactor.createWallet(coin: currentItem.coin, account: account)
+        } catch {
+            view?.updateUI()
+            view?.show(error: error)
+        }
+    }
+
+    func didTapRestore() {
+        guard let currentItem = currentItem else {
+            return
+        }
+
+        router.showRestore(defaultAccountType: currentItem.coin.type.defaultAccountType, delegate: self)
+    }
+
+    func didCancelCreate() {
+        view?.updateUI()
+    }
+
+}
+
+extension ManageWalletsPresenter: IManageWalletsInteractorDelegate {
+}
+
+extension ManageWalletsPresenter: IRestoreAccountTypeDelegate {
+
+    func didRestore(accountType: AccountType, syncMode: SyncMode?) {
+        guard let currentItem = currentItem else {
+            return
+        }
+
+        let account = interactor.createRestoredAccount(accountType: accountType, defaultSyncMode: syncMode)
+        currentItem.wallet = interactor.createWallet(coin: currentItem.coin, account: account)
+    }
+
+    func didCancelRestore() {
+        view?.updateUI()
     }
 
 }

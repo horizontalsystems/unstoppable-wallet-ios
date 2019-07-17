@@ -5,7 +5,6 @@ class AccountManager {
     private let cache: AccountsCache = AccountsCache()
 
     private let accountsSubject = PublishSubject<[Account]>()
-    private let createAccountSubject = PublishSubject<Account>()
     private let deleteAccountSubject = PublishSubject<String>()
 
     init(storage: IAccountStorage) {
@@ -30,10 +29,6 @@ extension AccountManager: IAccountManager {
         return accountsSubject.asObservable()
     }
 
-    var createAccountObservable: Observable<Account> {
-        return createAccountSubject.asObservable()
-    }
-
     var deleteAccountObservable: Observable<String> {
         return deleteAccountSubject.asObservable()
     }
@@ -54,7 +49,6 @@ extension AccountManager: IAccountManager {
         cache.insert(account: account)
 
         accountsSubject.onNext(accounts)
-        createAccountSubject.onNext(account)
     }
 
     func deleteAccount(id: String) {
@@ -69,7 +63,7 @@ extension AccountManager: IAccountManager {
 
 extension AccountManager {
 
-    class AccountsCache {
+    private class AccountsCache {
         private var array = [Account]()
 
         var accounts: [Account] {

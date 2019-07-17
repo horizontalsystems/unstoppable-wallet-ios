@@ -13,8 +13,8 @@ class RestoreRouter {
 
 extension RestoreRouter: IRestoreRouter {
 
-    func showRestore(predefinedAccountType: IPredefinedAccountType, delegate: IRestoreAccountTypeDelegate) {
-        guard let module = RestoreRouter.module(predefinedAccountType: predefinedAccountType, mode: .pushed, delegate: delegate) else {
+    func showRestore(defaultAccountType: DefaultAccountType, delegate: IRestoreAccountTypeDelegate) {
+        guard let module = RestoreRouter.module(defaultAccountType: defaultAccountType, mode: .pushed, delegate: delegate) else {
             return
         }
 
@@ -44,9 +44,9 @@ extension RestoreRouter {
         return WalletNavigationController(rootViewController: viewController)
     }
 
-    static func module(predefinedAccountType: IPredefinedAccountType, mode: PresentationMode, delegate: IRestoreAccountTypeDelegate) -> UIViewController? {
-        switch predefinedAccountType {
-        case is Words12AccountType: return RestoreWordsRouter.module(mode: mode, delegate: delegate)
+    static func module(defaultAccountType: DefaultAccountType, mode: PresentationMode, delegate: IRestoreAccountTypeDelegate) -> UIViewController? {
+        switch defaultAccountType {
+        case .mnemonic: return RestoreWordsRouter.module(mode: mode, delegate: delegate)
         default: return nil
         }
     }

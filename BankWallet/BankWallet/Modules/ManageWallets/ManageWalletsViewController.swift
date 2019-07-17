@@ -4,8 +4,8 @@ import SnapKit
 
 class ManageWalletsViewController: WalletViewController {
     private let numberOfSections = 2
-    private let walletsSection = 0
-    private let coinsSection = 1
+    private let popularItemsSection = 0
+    private let itemsSection = 1
 
     private let delegate: IManageWalletsViewDelegate
 
@@ -30,10 +30,11 @@ class ManageWalletsViewController: WalletViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.registerCell(forClass: ManageWalletCell.self)
+        tableView.allowsSelection = false
         tableView.separatorColor = .clear
-        tableView.setEditing(true, animated: false)
         tableView.tableFooterView = UIView()
         tableView.backgroundColor = .clear
+
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in
             maker.edges.equalToSuperview()
@@ -47,7 +48,7 @@ class ManageWalletsViewController: WalletViewController {
     }
 
     @objc func close() {
-        delegate.onClose()
+        delegate.close()
     }
 
     @objc func done() {
@@ -63,9 +64,16 @@ extension ManageWalletsViewController: IManageWalletsView {
     }
 
     func showNoAccount(coin: Coin) {
-        let controller = ManageWalletsNoAccountViewController(coin: coin) { [weak self] in
-            self?.delegate.didTapManageKeys()
+        let controller = ManageWalletsNoAccountViewController(coin: coin, onSelectNew: { [weak self] in
+            self?.delegate.didTapNew()
+        }, onSelectRestore: { [weak self] in
+            self?.delegate.didTapRestore()
+        })
+
+        controller.onDismiss = { [weak self] _ in
+            self?.delegate.didCancelCreate()
         }
+
         present(controller, animated: true)
     }
 
@@ -86,10 +94,10 @@ extension ManageWalletsViewController: UITableViewDataSource, UITableViewDelegat
     }
 
     func numberOfRows(in section: Int) -> Int {
-        if section == walletsSection {
-            return delegate.walletsCount
-        } else if section == coinsSection {
-            return delegate.coinsCount
+        if section == popularItemsSection {
+            return delegate.popularItemsCount
+        } else if section == itemsSection {
+            return delegate.itemsCount
         }
         return 0
     }
@@ -99,40 +107,29 @@ extension ManageWalletsViewController: UITableViewDataSource, UITableViewDelegat
     }
 
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if let cell = cell as? ManageWalletCell {
-            let coin = indexPath.section == walletsSection ? delegate.wallet(forIndex: indexPath.row).coin : delegate.coin(forIndex: indexPath.row)
-            cell.bind(coin: coin, first: indexPath.row == 0, last: numberOfRows(in: indexPath.section) == indexPath.row + 1)
+        guard let cell = cell as? ManageWalletCell else {
+            return
         }
-    }
 
-    func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        return indexPath.section == walletsSection
-    }
+        let first = indexPath.row == 0
+        let last = numberOfRows(in: indexPath.section) == indexPath.row + 1
 
-    func tableView(_ tableView: UITableView, targetIndexPathForMoveFromRowAt sourceIndexPath: IndexPath, toProposedIndexPath proposedDestinationIndexPath: IndexPath) -> IndexPath {
-        if proposedDestinationIndexPath.section != walletsSection {
-            return IndexPath(row: tableView.numberOfRows(inSection: walletsSection) - 1, section: walletsSection)
-        }
-        return proposedDestinationIndexPath
-    }
-
-    func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-        delegate.moveWallet(from: sourceIndexPath.row, to: destinationIndexPath.row)
-    }
-
-    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        return true
-    }
-
-    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
-        return indexPath.section == walletsSection ? .delete : .insert
-    }
-
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            delegate.disableWallet(atIndex: indexPath.row)
-        } else if editingStyle == .insert {
-            delegate.enableCoin(atIndex: indexPath.row)
+        if indexPath.section == popularItemsSection {
+            cell.bind(item: delegate.popularItem(index: indexPath.row), first: first, last: last) { [weak self] isOn in
+                if isOn {
+                    self?.delegate.enablePopularItem(index: indexPath.row)
+                } else {
+                    self?.delegate.disablePopularItem(index: indexPath.row)
+                }
+            }
+        } else if indexPath.section == itemsSection {
+            cell.bind(item: delegate.item(index: indexPath.row), first: first, last: last) { [weak self] isOn in
+                if isOn {
+                    self?.delegate.enableItem(index: indexPath.row)
+                } else {
+                    self?.delegate.disableItem(index: indexPath.row)
+                }
+            }
         }
     }
 
@@ -149,34 +146,19 @@ extension ManageWalletsViewController: UITableViewDataSource, UITableViewDelegat
     }
 
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        var headerHeight: CGFloat = 0
-
-        if section == walletsSection {
-            if delegate.walletsCount > 0 {
-                headerHeight = ManageWalletsTheme.topHeaderHeight
-            } else {
-                headerHeight = 0
-            }
-        }
-        if section == coinsSection {
-            if delegate.walletsCount > 0 {
-                headerHeight = ManageWalletsTheme.headerHeight
-            } else {
-                headerHeight = ManageWalletsTheme.topHeaderHeight
-            }
-        }
-        return headerHeight
-    }
-
-    public func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        if section == coinsSection, delegate.coinsCount > 0 {
-            return ManageWalletsTheme.footerHeight
+        if section == popularItemsSection {
+            return ManageWalletsTheme.topHeaderHeight
+        } else if section == itemsSection {
+            return ManageWalletsTheme.headerHeight
         }
         return 0
     }
 
-    func tableView(_ tableView: UITableView, titleForDeleteConfirmationButtonForRowAt indexPath: IndexPath) -> String? {
-        return "button.remove".localized
+    public func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        if section == itemsSection {
+            return ManageWalletsTheme.footerHeight
+        }
+        return 0
     }
 
 }

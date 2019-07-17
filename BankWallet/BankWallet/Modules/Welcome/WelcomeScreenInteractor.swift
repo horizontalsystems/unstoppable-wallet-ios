@@ -18,12 +18,8 @@ extension WelcomeScreenInteractor: IWelcomeScreenInteractor {
     }
 
     func createWallet() {
-        do {
-            try predefinedAccountTypeManager.createAllAccounts()
-            delegate?.didCreateWallet()
-        } catch {
-            delegate?.didFailToCreateWallet(withError: error)
-        }
+        predefinedAccountTypeManager.createAllAccounts()
+        delegate?.didCreateWallet()
     }
 
 }

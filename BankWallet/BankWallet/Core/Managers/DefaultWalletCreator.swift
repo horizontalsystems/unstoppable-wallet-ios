@@ -7,31 +7,10 @@ class DefaultWalletCreator {
 
     private let disposeBag = DisposeBag()
 
-    init(accountManager: IAccountManager, walletManager: IWalletManager, appConfigProvider: IAppConfigProvider, walletFactory: IWalletFactory) {
+    init(walletManager: IWalletManager, appConfigProvider: IAppConfigProvider, walletFactory: IWalletFactory) {
         self.walletManager = walletManager
         self.appConfigProvider = appConfigProvider
         self.walletFactory = walletFactory
-
-        accountManager.createAccountObservable
-                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-                .subscribe(onNext: { [weak self] account in
-                    self?.handleCreate(account: account)
-                })
-                .disposed(by: disposeBag)
-    }
-
-    private func handleCreate(account: Account) {
-        var wallets = walletManager.wallets
-
-        for defaultWallet in defaultWallets(account: account) {
-            guard !wallets.contains(defaultWallet) else {
-                continue
-            }
-
-            wallets.append(defaultWallet)
-        }
-
-        walletManager.enable(wallets: wallets)
     }
 
     private func defaultWallets(account: Account) -> [Wallet] {
@@ -61,6 +40,24 @@ class DefaultWalletCreator {
         }
 
         return []
+    }
+
+}
+
+extension DefaultWalletCreator: IDefaultWalletCreator {
+
+    func createWallets(account: Account) {
+        var wallets = walletManager.wallets
+
+        for defaultWallet in defaultWallets(account: account) {
+            guard !wallets.contains(defaultWallet) else {
+                continue
+            }
+
+            wallets.append(defaultWallet)
+        }
+
+        walletManager.enable(wallets: wallets)
     }
 
 }

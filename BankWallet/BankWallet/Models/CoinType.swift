@@ -19,12 +19,12 @@ enum CoinType {
         }
     }
 
-    var canCreateAccount: Bool {
+    var defaultAccountType: DefaultAccountType {
         switch self {
         case .bitcoin, .bitcoinCash, .dash, .ethereum, .erc20:
-            return true
+            return .mnemonic(wordsCount: 12)
         case .eos:
-            return false
+            return .eos
         }
     }
 

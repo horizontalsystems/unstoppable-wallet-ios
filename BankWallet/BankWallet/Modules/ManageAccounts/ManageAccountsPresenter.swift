@@ -74,7 +74,7 @@ extension ManageAccountsPresenter: IManageAccountsViewDelegate {
     }
 
     func didTapRestore(index: Int) {
-        router.showRestore(predefinedAccountType: items[index].predefinedAccountType, delegate: self)
+        router.showRestore(defaultAccountType: items[index].predefinedAccountType.defaultAccountType, delegate: self)
     }
 
     func didTapDone() {

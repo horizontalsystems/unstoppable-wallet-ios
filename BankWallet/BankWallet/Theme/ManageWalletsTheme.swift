@@ -12,6 +12,5 @@ class ManageWalletsTheme {
     static let coinLabelColor = UIColor.cryptoGray
     static let coinLabelFont = UIFont.cryptoCaption
     static let coinLabelTopMargin: CGFloat = 3
-    static let iconRightMargin: CGFloat = 13
     static let footerHeight: CGFloat = 32
 }

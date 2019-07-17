@@ -2,8 +2,8 @@ class EosAccountType: IPredefinedAccountType {
     let title = "key_type.eos"
     let coinCodes = "key_type.eos.text"
 
-    var defaultAccountType: DefaultAccountType? {
-        return nil // creating EOS account is not supported yet
+    var defaultAccountType: DefaultAccountType {
+        return .eos
     }
 
     func supports(accountType: AccountType) -> Bool {

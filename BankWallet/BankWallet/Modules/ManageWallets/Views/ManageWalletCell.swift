@@ -2,22 +2,32 @@ import UIKit
 import SnapKit
 
 class ManageWalletCell: UITableViewCell {
-    let titleLabel = UILabel()
-    let coinLabel = UILabel()
-    let coinImageView = CoinIconImageView()
+    private let coinImageView = CoinIconImageView()
+    private let titleLabel = UILabel()
+    private let coinLabel = UILabel()
+    private let toggleView = UISwitch()
 
-    let topSeparatorView = UIView()
-    let bottomSeparatorView = UIView()
+    private let topSeparatorView = UIView()
+    private let bottomSeparatorView = UIView()
+
+    private var onToggle: ((Bool) -> ())?
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+
         backgroundColor = ManageWalletsTheme.cellBackground
+
+        contentView.addSubview(coinImageView)
+        coinImageView.snp.makeConstraints { maker in
+            maker.centerY.equalToSuperview()
+            maker.leading.equalToSuperview().offset(ManageWalletsTheme.regularOffset)
+        }
 
         titleLabel.textColor = ManageWalletsTheme.titleColor
         titleLabel.font = ManageWalletsTheme.titleFont
         contentView.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { maker in
-            maker.leading.equalToSuperview().offset(ManageWalletsTheme.regularOffset)
+            maker.leading.equalTo(self.coinImageView.snp.trailing).offset(ManageWalletsTheme.regularOffset)
             maker.top.equalToSuperview().offset(ManageWalletsTheme.smallOffset)
         }
 
@@ -29,10 +39,12 @@ class ManageWalletCell: UITableViewCell {
             maker.top.equalTo(self.titleLabel.snp.bottom).offset(ManageWalletsTheme.coinLabelTopMargin)
         }
 
-        contentView.addSubview(coinImageView)
-        coinImageView.snp.makeConstraints { maker in
+        toggleView.tintColor = SettingsTheme.switchTintColor
+        toggleView.addTarget(self, action: #selector(switchChanged), for: .valueChanged)
+        contentView.addSubview(toggleView)
+        toggleView.snp.makeConstraints { maker in
+            maker.trailing.equalToSuperview().offset(-ManageWalletsTheme.regularOffset)
             maker.centerY.equalToSuperview()
-            maker.trailing.equalToSuperview().offset(-ManageWalletsTheme.iconRightMargin)
         }
 
         topSeparatorView.backgroundColor = AppTheme.separatorColor
@@ -48,17 +60,26 @@ class ManageWalletCell: UITableViewCell {
         }
     }
 
+    @objc func switchChanged() {
+        onToggle?(toggleView.isOn)
+    }
+
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
 
-    func bind(coin: Coin, first: Bool, last: Bool) {
+    func bind(item: ManageWalletViewItem, first: Bool, last: Bool, onToggle: @escaping (Bool) -> ()) {
+        let coin = item.coin
+
         titleLabel.text = coin.title
         coinLabel.text = coin.code
         coinImageView.bind(coin: coin)
+        toggleView.setOn(item.enabled, animated: true)
 
         topSeparatorView.isHidden = !first
         bottomSeparatorView.backgroundColor = last ? AppTheme.darkSeparatorColor : AppTheme.separatorColor
+
+        self.onToggle = onToggle
     }
 
 }

@@ -180,7 +180,6 @@ protocol IAccountManager {
     func account(coinType: CoinType) -> Account?
 
     var accountsObservable: Observable<[Account]> { get }
-    var createAccountObservable: Observable<Account> { get }
     var deleteAccountObservable: Observable<String> { get }
 
     func preloadAccounts()
@@ -196,8 +195,8 @@ protocol IBackupManager {
 }
 
 protocol IAccountCreator {
-    func createNewAccount(accountType: AccountType) -> Account
-    func createRestoredAccount(accountType: AccountType, syncMode: SyncMode?) -> Account
+    func createNewAccount(defaultAccountType: DefaultAccountType, createDefaultWallets: Bool) throws -> Account
+    func createRestoredAccount(accountType: AccountType, defaultSyncMode: SyncMode?, createDefaultWallets: Bool) -> Account
 }
 
 protocol IAccountFactory {
@@ -468,19 +467,20 @@ protocol IUUIDProvider {
 protocol IPredefinedAccountTypeManager {
     var allTypes: [IPredefinedAccountType] { get }
     func account(predefinedAccountType: IPredefinedAccountType) -> Account?
-    func createAccount(predefinedAccountType: IPredefinedAccountType) throws -> Account?
-    func createAllAccounts() throws
+    func createAccount(predefinedAccountType: IPredefinedAccountType) throws
+    func createAllAccounts()
 }
 
 protocol IPredefinedAccountType {
     var title: String { get }
     var coinCodes: String { get }
-    var defaultAccountType: DefaultAccountType? { get }
+    var defaultAccountType: DefaultAccountType { get }
     func supports(accountType: AccountType) -> Bool
 }
 
 enum DefaultAccountType {
     case mnemonic(wordsCount: Int)
+    case eos
 }
 
 protocol IAppManager {
@@ -498,4 +498,8 @@ protocol IAppManager {
 protocol IWalletStorage {
     func wallets(accounts: [Account]) -> [Wallet]
     func save(wallets: [Wallet])
+}
+
+protocol IDefaultWalletCreator {
+    func createWallets(account: Account)
 }

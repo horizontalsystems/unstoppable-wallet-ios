@@ -131,18 +131,18 @@ extension GrdbStorage: IRateStorage {
 
     func latestRateObservable(forCoinCode coinCode: CoinCode, currencyCode: String) -> Observable<Rate> {
         let request = Rate.filter(Rate.Columns.coinCode == coinCode && Rate.Columns.currencyCode == currencyCode && Rate.Columns.isLatest == true)
-        return request.rx.fetchOne(in: dbPool)
+        return request.rx.observeFirst(in: dbPool)
                 .flatMap { $0.map(Observable.just) ?? Observable.empty() }
     }
 
     func timestampRateObservable(coinCode: CoinCode, currencyCode: String, date: Date) -> Observable<Rate?> {
         let request = Rate.filter(Rate.Columns.coinCode == coinCode && Rate.Columns.currencyCode == currencyCode && Rate.Columns.date == date && Rate.Columns.isLatest == false)
-        return request.rx.fetchOne(in: dbPool)
+        return request.rx.observeFirst(in: dbPool)
     }
 
     func zeroValueTimestampRatesObservable(currencyCode: String) -> Observable<[Rate]> {
         let request = Rate.filter(Rate.Columns.currencyCode == currencyCode && Rate.Columns.value == 0 && Rate.Columns.isLatest == false)
-        return request.rx.fetchAll(in: dbPool)
+        return request.rx.observeAll(in: dbPool)
     }
 
     func save(latestRate: Rate) {
