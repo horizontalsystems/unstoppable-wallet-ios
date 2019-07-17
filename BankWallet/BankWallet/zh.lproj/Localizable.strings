@@ -14,6 +14,7 @@
 "button.forward" = "转发";
 "button.save" = "保存";
 "button.sync" = "Sync";
+"button.paste" = "Paste";
 
 "alert.copied" = "复制成功";
 "alert.no_internet" = "没有网络连接";
@@ -87,7 +88,6 @@
 "send.address_placeholder" = "地址";
 "send.amount_error.balance" = "余额%@";
 "send.send_button" = "发送​​";
-"send.paste_button" = "粘帖";
 "send.amount_placeholder" = "金额";
 "send.fee" = "费用";
 "send.total" = "总额";
