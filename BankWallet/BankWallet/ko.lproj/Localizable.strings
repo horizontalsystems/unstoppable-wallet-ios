@@ -14,6 +14,7 @@
 "button.forward" = "Forward";
 "button.save" = "저장";
 "button.sync" = "Sync";
+"button.paste" = "Paste";
 
 "alert.copied" = "복사됨";
 "alert.no_internet" = "인터넷에 연결되지 않음";
@@ -87,7 +88,6 @@
 "send.address_placeholder" = "주소";
 "send.amount_error.balance" = "잔액%@";
 "send.send_button" = "전송";
-"send.paste_button" = "붙여넣기";
 "send.amount_placeholder" = "양";
 "send.fee" = "수수료";
 "send.total" = "합계";
