@@ -14,6 +14,7 @@
 "button.forward" = "Переслать";
 "button.save" = "Сохранить";
 "button.sync" = "Синхр.";
+"button.paste" = "Paste";
 
 "alert.copied" = "Скопировано";
 "alert.no_internet" = "Нет интернета";
@@ -87,7 +88,6 @@
 "send.address_placeholder" = "Адрес";
 "send.amount_error.balance" = "Баланс %@";
 "send.send_button" = "Отправить";
-"send.paste_button" = "Вставить";
 "send.amount_placeholder" = "Сумма";
 "send.fee" = "Комиссия";
 "send.total" = "Итого";
