@@ -14,6 +14,7 @@
 "button.forward" = "İlet";
 "button.save" = "Kaydet";
 "button.sync" = "Eşitle";
+"button.paste" = "Paste";
 
 "alert.copied" = "Kopyalandı";
 "alert.no_internet" = "Internet Bağlantısı Yok";
@@ -87,7 +88,6 @@
 "send.address_placeholder" = "Adres";
 "send.amount_error.balance" = "%@ bakiye";
 "send.send_button" = "Gönder";
-"send.paste_button" = "Yapıştır";
 "send.amount_placeholder" = "Tutar";
 "send.fee" = "Masraf";
 "send.total" = "Toplam";
