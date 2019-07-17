@@ -14,6 +14,7 @@
 "button.forward" = "Transférer";
 "button.save" = "Sauvegarder";
 "button.sync" = "Sync";
+"button.paste" = "Paste";
 
 "alert.copied" = "Copié";
 "alert.no_internet" = "Aucune connexion Internet";
@@ -87,7 +88,6 @@
 "send.address_placeholder" = "Adresse";
 "send.amount_error.balance" = "Balance %@";
 "send.send_button" = "Envoyer";
-"send.paste_button" = "Coller";
 "send.amount_placeholder" = "Montant";
 "send.fee" = "Frais";
 "send.total" = "Total";
