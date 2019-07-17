@@ -1,0 +1,187 @@
+import UIKit
+import SnapKit
+
+class AddressInputField: UIView {
+    private let addressWrapperView = UIView()
+    private let addressField = UITextView()
+    private let placeholderLabel = UILabel()
+    private let errorLabel = UILabel()
+    private let scanButton = RespondButton()
+    private let scanButtonIcon = UIImageView()
+    private let deleteButton = RespondButton()
+    private let deleteButtonIcon = UIImageView()
+    private let pasteButton = RespondButton()
+    private let textViewCenterFixOffset: CGFloat = 1
+
+    private let placeholder: String?
+    private let numberOfLines: Int
+    private let showQrButton: Bool
+    private let canEdit: Bool
+
+    init(frame: CGRect, placeholder: String?, numberOfLines: Int = 1, showQrButton: Bool, canEdit: Bool) {
+        self.placeholder = placeholder
+        self.numberOfLines = numberOfLines
+        self.showQrButton = showQrButton
+        self.canEdit = canEdit
+        super.init(frame: frame)
+
+        addSubview(addressWrapperView)
+        addressWrapperView.addSubview(addressField)
+        addressField.addSubview(placeholderLabel)
+        addressWrapperView.addSubview(errorLabel)
+        addSubview(scanButton)
+        scanButton.addSubview(scanButtonIcon)
+        addSubview(deleteButton)
+        deleteButton.addSubview(deleteButtonIcon)
+        addSubview(pasteButton)
+
+        layer.cornerRadius = SendTheme.holderCornerRadius
+        layer.borderWidth = SendTheme.holderBorderWidth
+        layer.borderColor = SendTheme.holderBorderColor.cgColor
+        backgroundColor = SendTheme.holderBackground
+
+        addressField.isUserInteractionEnabled = canEdit
+        addressField.textContainer.maximumNumberOfLines = numberOfLines
+        addressField.textColor = SendTheme.addressColor
+        addressField.font = SendTheme.addressFont
+        addressField.textContainer.lineBreakMode = .byTruncatingMiddle
+        addressField.textContainer.lineFragmentPadding = 0
+        addressField.textContainerInset = .zero
+        addressField.backgroundColor = .clear
+        placeholderLabel.textColor = SendTheme.addressHintColor
+        placeholderLabel.snp.makeConstraints { maker in
+            maker.edges.equalToSuperview()
+        }
+        placeholderLabel.text = placeholder
+
+        errorLabel.font = SendTheme.errorFont
+        errorLabel.textColor = SendTheme.errorColor
+
+        pasteButton.borderWidth = 1 / UIScreen.main.scale
+        pasteButton.borderColor = SendTheme.buttonBorderColor
+        pasteButton.cornerRadius = SendTheme.buttonCornerRadius
+        pasteButton.backgrounds = SendTheme.buttonBackground
+        pasteButton.textColors = [.active: SendTheme.buttonIconColor, .selected: SendTheme.buttonIconColor]
+        pasteButton.titleLabel.text = "button.paste".localized
+        pasteButton.titleLabel.font = SendTheme.buttonFont
+        pasteButton.titleLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+        pasteButton.snp.makeConstraints { maker in
+            maker.trailing.equalToSuperview().offset(-SendTheme.switchRightMargin)
+            maker.centerY.equalToSuperview()
+            maker.height.equalTo(SendTheme.buttonSize)
+        }
+        pasteButton.wrapperView.snp.remakeConstraints { maker in
+            maker.leading.equalToSuperview().offset(SendTheme.smallMargin)
+            maker.top.bottom.equalToSuperview()
+            maker.trailing.equalToSuperview().offset(-SendTheme.smallMargin)
+        }
+
+        scanButton.isHidden = !showQrButton
+        scanButton.borderWidth = 1 / UIScreen.main.scale
+        scanButton.borderColor = SendTheme.buttonBorderColor
+        scanButton.cornerRadius = SendTheme.buttonCornerRadius
+        scanButton.backgrounds = SendTheme.buttonBackground
+        scanButton.snp.makeConstraints { maker in
+            maker.trailing.equalTo(pasteButton.snp.leading).offset(-SendTheme.smallMargin)
+            maker.centerY.equalTo(pasteButton.snp.centerY)
+            maker.height.equalTo(SendTheme.buttonSize)
+            maker.width.equalTo(SendTheme.scanButtonWidth)
+        }
+
+        scanButtonIcon.image = UIImage(named: "Send Scan Icon")?.tinted(with: SendTheme.buttonIconColor)
+        scanButtonIcon.snp.makeConstraints { maker in
+            maker.center.equalToSuperview()
+        }
+
+        deleteButton.borderWidth = 1 / UIScreen.main.scale
+        deleteButton.borderColor = SendTheme.buttonBorderColor
+        deleteButton.cornerRadius = SendTheme.buttonCornerRadius
+        deleteButton.backgrounds = SendTheme.buttonBackground
+        deleteButton.snp.makeConstraints { maker in
+            maker.trailing.equalTo(self.pasteButton)
+            maker.centerY.equalTo(pasteButton.snp.centerY)
+            maker.size.equalTo(SendTheme.buttonSize)
+        }
+
+        deleteButtonIcon.image = UIImage(named: "Send Delete Icon")?.tinted(with: SendTheme.buttonIconColor)
+        deleteButtonIcon.snp.makeConstraints { maker in
+            maker.center.equalToSuperview()
+        }
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    var onPaste: (() -> ())? {
+        didSet {
+            pasteButton.onTap = onPaste
+        }
+    }
+    var onScan: (() -> ())? {
+        didSet {
+            scanButton.onTap = onScan
+        }
+    }
+    var onDelete: (() -> ())? {
+        didSet {
+            deleteButton.onTap = onDelete
+        }
+    }
+
+    func bind(address: String?, error: String?) {
+        if let address = address {
+            placeholderLabel.isHidden = true
+            addressField.text = address
+            pasteButton.isHidden = true
+            scanButton.isHidden = true
+            deleteButton.isHidden = false
+
+            addressWrapperView.snp.remakeConstraints { maker in
+                maker.leading.equalToSuperview().offset(SendTheme.mediumMargin)
+                maker.centerY.equalTo(deleteButton.snp.centerY).offset(textViewCenterFixOffset)
+
+                maker.trailing.equalTo(deleteButton.snp.leading).offset(-SendTheme.mediumMargin)
+            }
+        } else {
+            placeholderLabel.isHidden = false
+            addressField.text = nil
+            pasteButton.isHidden = false
+            scanButton.isHidden = false || !showQrButton
+            deleteButton.isHidden = true
+
+            addressWrapperView.snp.remakeConstraints { maker in
+                maker.leading.equalToSuperview().offset(SendTheme.mediumMargin)
+                maker.centerY.equalTo(pasteButton.snp.centerY).offset(textViewCenterFixOffset)
+
+                if showQrButton {
+                    maker.trailing.equalTo(scanButton.snp.leading).offset(-SendTheme.mediumMargin)
+                } else {
+                    maker.trailing.equalTo(pasteButton.snp.leading).offset(-SendTheme.mediumMargin)
+                }
+            }
+        }
+
+        if let error = error {
+            errorLabel.isHidden = false
+            errorLabel.text = error
+
+            addressField.snp.remakeConstraints { maker in
+                maker.leading.top.trailing.equalToSuperview()
+                maker.height.equalTo(22 * numberOfLines)
+            }
+            errorLabel.snp.remakeConstraints { maker in
+                maker.leading.bottom.trailing.equalToSuperview()
+                maker.top.equalTo(addressField.snp.bottom).offset(SendTheme.addressErrorTopMargin)
+            }
+        } else {
+            errorLabel.isHidden = true
+            addressField.snp.remakeConstraints { maker in
+                maker.leading.top.bottom.trailing.equalToSuperview()
+                maker.height.equalTo(22 * numberOfLines)
+            }
+        }
+
+    }
+
+}

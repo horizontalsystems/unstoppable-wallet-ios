@@ -82,7 +82,7 @@ class SendAmountItemView: BaseActionItemView {
         maxButton.textColors = [.active: SendTheme.buttonIconColor, .selected: SendTheme.buttonIconColor]
         maxButton.titleLabel.font = SendTheme.buttonFont
         maxButton.titleLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
-        maxButton.titleLabel.snp.remakeConstraints { maker in
+        maxButton.wrapperView.snp.remakeConstraints { maker in
             maker.leading.equalToSuperview().offset(SendTheme.smallMargin)
             maker.top.bottom.equalToSuperview()
             maker.trailing.equalToSuperview().offset(-SendTheme.smallMargin)
@@ -218,7 +218,7 @@ class SendAmountItemView: BaseActionItemView {
             }
             maker.trailing.equalTo(switchButton.snp.leading).offset(-SendTheme.smallMargin)
 
-            maxButton.titleLabel.snp.remakeConstraints { maker in
+            maxButton.wrapperView.snp.remakeConstraints { maker in
                 if text.count == 0 {
                     maker.leading.equalToSuperview().offset(SendTheme.smallMargin)
                     maker.trailing.equalToSuperview().offset(-SendTheme.smallMargin)

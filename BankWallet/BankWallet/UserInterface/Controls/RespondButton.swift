@@ -12,7 +12,7 @@ class RespondButton: UIView, RespondViewDelegate {
     var touchTransparent: Bool { return false }
 
     private let view = RespondView()
-    private let wrapperView = UIView()
+    public let wrapperView = UIView()
 
     public let titleLabel = UILabel()
     public let imageView = UIImageView()
