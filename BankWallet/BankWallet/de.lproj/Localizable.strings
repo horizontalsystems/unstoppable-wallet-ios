@@ -14,6 +14,7 @@
 "button.forward" = "Teilen";
 "button.save" = "Speichern";
 "button.sync" = "Sync";
+"button.paste" = "Paste";
 
 "alert.copied" = "Kopiert";
 "alert.no_internet" = "Kein Internet";
@@ -87,7 +88,6 @@
 "send.address_placeholder" = "Adresse";
 "send.amount_error.balance" = "Guthaben %@";
 "send.send_button" = "Senden";
-"send.paste_button" = "Einfügen";
 "send.amount_placeholder" = "Betrag";
 "send.fee" = "Gebühr";
 "send.total" = "Insgesamt";
