@@ -14,6 +14,7 @@
 "button.forward" = "Forward";
 "button.save" = "Save";
 "button.sync" = "Sync";
+"button.paste" = "Paste";
 
 "alert.copied" = "コピー完了";
 "alert.no_internet" = "No Internet";
@@ -87,7 +88,6 @@
 "send.address_placeholder" = "住所";
 "send.amount_error.balance" = "残高 %@";
 "send.send_button" = "送る";
-"send.paste_button" = "貼付け";
 "send.amount_placeholder" = "量";
 "send.fee" = "料金";
 "send.total" = "合計";
