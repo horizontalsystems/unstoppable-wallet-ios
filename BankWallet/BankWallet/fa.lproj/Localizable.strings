@@ -14,6 +14,7 @@
 "button.forward" = "Forward";
 "button.save" = "Save";
 "button.sync" = "Sync";
+"button.paste" = "Paste";
 
 "alert.copied" = "کپی انجام شد";
 "alert.no_internet" = "انترنت نداريد";
@@ -87,7 +88,6 @@
 "send.address_placeholder" = "آدرس";
 "send.amount_error.balance" = "مانده حساب %@";
 "send.send_button" = "ارسال";
-"send.paste_button" = "جای‌گذاری";
 "send.amount_placeholder" = "مبلغ";
 "send.fee" = "هزينه";
 "send.total" = "مجموع";
