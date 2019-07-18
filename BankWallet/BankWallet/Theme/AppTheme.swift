@@ -6,7 +6,7 @@ class AppTheme {
     static var actionSheetBlurStyle: UIBlurEffect.Style { return App.shared.localStorage.lightMode ? .dark : .light }
 
     static var keyboardAppearance: UIKeyboardAppearance { return App.shared.localStorage.lightMode ? .default : .dark }
-    static var textFieldTintColor: UIColor { return .crypto_White_Black }
+    static var textFieldTintColor: UIColor { return .cryptoYellow }
 
     public static let defaultAnimationDuration = 0.3
 
