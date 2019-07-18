@@ -5,16 +5,14 @@ class AdapterManager {
 
     private let adapterFactory: IAdapterFactory
     private let ethereumKitManager: IEthereumKitManager
-    private let authManager: IAuthManager
     private let walletManager: IWalletManager
 
     private(set) var adapters: [IAdapter] = []
     let adaptersUpdatedSignal = Signal()
 
-    init(adapterFactory: IAdapterFactory, ethereumKitManager: IEthereumKitManager, authManager: IAuthManager, walletManager: IWalletManager) {
+    init(adapterFactory: IAdapterFactory, ethereumKitManager: IEthereumKitManager, walletManager: IWalletManager) {
         self.adapterFactory = adapterFactory
         self.ethereumKitManager = ethereumKitManager
-        self.authManager = authManager
         self.walletManager = walletManager
 
         walletManager.walletsObservable

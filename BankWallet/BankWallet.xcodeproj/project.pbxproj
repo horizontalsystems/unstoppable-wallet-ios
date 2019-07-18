@@ -78,7 +78,6 @@
 		11B352FF572078C646A92322 /* SendConfirmationAddressItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3522F9D6DB1D04EA92CCE /* SendConfirmationAddressItem.swift */; };
 		11B35303EF169A14070D4AF9 /* RateSyncer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B350C8341DFAF14D974ACC /* RateSyncer.swift */; };
 		11B3530B19A8D80E40AD75EE /* BalanceItemDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35F79F5274A2603296EFF /* BalanceItemDataSource.swift */; };
-		11B3532113CCB65C304DDBE4 /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35199A163073996FDE426 /* AuthManager.swift */; };
 		11B35327F187159E57BA638C /* AgreementRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3555B8A1BB021B722B1D6 /* AgreementRouter.swift */; };
 		11B3532B02B5680ABD96CED9 /* WalletStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35133152C3ED8DEC7F075 /* WalletStorage.swift */; };
 		11B353495D45DFC2235A1BF0 /* ConfirmationCheckboxItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35EC60329833B8D6CA1E0 /* ConfirmationCheckboxItem.swift */; };
@@ -130,7 +129,6 @@
 		11B354FEF278D18C3EBCE1C0 /* ManageAccountsInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B355330C2EB2870BD7087A /* ManageAccountsInteractor.swift */; };
 		11B355233D330DC1343DC847 /* ManageAccountsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35283DEB96027246DFFFE /* ManageAccountsRouter.swift */; };
 		11B35526BED48D17B07C3C46 /* ValueFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35EFB45ECC2D403CA6C89 /* ValueFormatter.swift */; };
-		11B355276E4ACF6FE28AB581 /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35199A163073996FDE426 /* AuthManager.swift */; };
 		11B35530C3166434FDD263FF /* SendConfirmationValueItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3572D1DA38AAD1A4429EB /* SendConfirmationValueItem.swift */; };
 		11B355331BBF243C9F63B407 /* ManageAccountsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35CDAE70C1D4C434FE954 /* ManageAccountsPresenter.swift */; };
 		11B3553D8942EEE330AFCDF1 /* Wallet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35EB6A09E7FBB70B8966B /* Wallet.swift */; };
@@ -169,7 +167,6 @@
 		11B3562F64946DE3E95788EE /* BaseCurrencySettingsInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3581BC59DE52C60AED5F5 /* BaseCurrencySettingsInteractorTests.swift */; };
 		11B356316D927892C828FC5A /* TransactionItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3B491E821F1ECC600DAE203 /* TransactionItem.swift */; };
 		11B356317DD349AF86F54EC0 /* ManageAccountsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B358B4DFC88B488F3BC039 /* ManageAccountsViewController.swift */; };
-		11B356508E7D24EDCEA1CB75 /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35199A163073996FDE426 /* AuthManager.swift */; };
 		11B35654DC11845932FDBDA0 /* RestoreAccountCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35C0C1945B0A9BFBF0AF9 /* RestoreAccountCell.swift */; };
 		11B35669B7CAC5A76825BD9C /* NumPadTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35BFD94DA13D66AD6A86D /* NumPadTheme.swift */; };
 		11B356790A19174A2B516983 /* BaseTwinItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3513A0023455D438BAC4C /* BaseTwinItemView.swift */; };
@@ -1302,7 +1299,6 @@
 		11B35133152C3ED8DEC7F075 /* WalletStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletStorage.swift; sourceTree = "<group>"; };
 		11B3513A0023455D438BAC4C /* BaseTwinItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseTwinItemView.swift; sourceTree = "<group>"; };
 		11B35142DB758C8B2397D115 /* RestoreRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestoreRouter.swift; sourceTree = "<group>"; };
-		11B35199A163073996FDE426 /* AuthManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
 		11B351A464627DCBABD1AC17 /* UnlinkInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnlinkInteractor.swift; sourceTree = "<group>"; };
 		11B351C72700B40AB457AFA8 /* TestExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestExtensions.swift; sourceTree = "<group>"; };
 		11B351D1EA6877358DABA00F /* DepositInteractorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DepositInteractorTests.swift; sourceTree = "<group>"; };
@@ -2017,7 +2013,6 @@
 				11B35788190D05AF5DBB9072 /* ReachabilityManager.swift */,
 				11B35CEBC4B32E57AA2469AA /* PasteboardManager.swift */,
 				1A5645447A24FE94F0D87BFF /* LockoutManager.swift */,
-				11B35199A163073996FDE426 /* AuthManager.swift */,
 				3C7B94F32F315F4F753D89AD /* UrlManager.swift */,
 				58AAA7F8DA30F2F95B9DC758 /* FullTransactionDataProviderManager.swift */,
 				58AAA3CCBFC02D7F6438DE3E /* PingManager.swift */,
@@ -3659,7 +3654,6 @@
 				11B35267BB7BFACBBF5C030F /* GrdbStorage.swift in Sources */,
 				11B35542BB8470BFD140E73D /* AuthData.swift in Sources */,
 				11B35DDA0A9C1FA06BC006DF /* Signal.swift in Sources */,
-				11B355276E4ACF6FE28AB581 /* AuthManager.swift in Sources */,
 				1A564B090F808B3A21F4AC8D /* SendKeyboardItem.swift in Sources */,
 				1A564A69DF3D62996F5F4C94 /* SendKeyboardItemView.swift in Sources */,
 				1A564F47697F6E6CFEE3975E /* BackupTheme.swift in Sources */,
@@ -4110,7 +4104,6 @@
 				11B357FE4C2E1EC8E26ED68F /* GrdbStorage.swift in Sources */,
 				11B35406710372339144C92D /* AuthData.swift in Sources */,
 				11B35B79EDF41D1B2178AADD /* Signal.swift in Sources */,
-				11B3532113CCB65C304DDBE4 /* AuthManager.swift in Sources */,
 				1A56431AEB0FC654F322D3BE /* SendKeyboardItem.swift in Sources */,
 				1A56477E5F205C926AA3596B /* SendKeyboardItemView.swift in Sources */,
 				1A564B8F25AB6515F509B10D /* BackupTheme.swift in Sources */,
@@ -4513,7 +4506,6 @@
 				11B35133B5C8937A33A0208C /* GrdbStorage.swift in Sources */,
 				11B35A3495FF00B1A3FF4197 /* AuthData.swift in Sources */,
 				11B35D7FBD8CBF3D92A03EFF /* Signal.swift in Sources */,
-				11B356508E7D24EDCEA1CB75 /* AuthManager.swift in Sources */,
 				1A564A6514A70E8F853E2FCB /* SendKeyboardItem.swift in Sources */,
 				1A5643912F83A169A2BF9147 /* SendKeyboardItemView.swift in Sources */,
 				1A564FAB22A9E25646FC542A /* BackupTheme.swift in Sources */,

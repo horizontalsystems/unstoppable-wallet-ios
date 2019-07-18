@@ -12,7 +12,7 @@ class SettingsToggleCell: SettingsCell {
         selectionStyle = .none
 
         toggleView.tintColor = SettingsTheme.switchTintColor
-        toggleView.addTarget(self, action: #selector(_onToggle), for: .touchUpInside)
+        toggleView.addTarget(self, action: #selector(switchChanged), for: .valueChanged)
         contentView.addSubview(toggleView)
         toggleView.snp.makeConstraints { maker in
             maker.trailing.equalTo(self.disclosureImageView.snp.leading).offset(-SettingsTheme.toggleRightMargin)
@@ -30,7 +30,7 @@ class SettingsToggleCell: SettingsCell {
         toggleView.isOn = isOn
     }
 
-    @objc func _onToggle() {
+    @objc func switchChanged() {
         onToggle?(toggleView.isOn)
     }
 

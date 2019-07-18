@@ -1,10 +1,8 @@
 import Foundation
 
-class UserDefaultsStorage: ILocalStorage {
-    static let shared = UserDefaultsStorage()
+class UserDefaultsStorage {
+    static let shared: ILocalStorage = UserDefaultsStorage()
 
-    private let keySyncMode = "sync_mode_key"
-    private let keyIsBackedUp = "is_backed_up"
     private let keyCurrentLanguage = "current_language"
     private let keyBaseCurrencyCode = "base_currency_code"
     private let keyBaseBitcoinProvider = "base_bitcoin_provider"
@@ -18,20 +16,43 @@ class UserDefaultsStorage: ILocalStorage {
     private let didLaunchOnceKey = "did_launch_once_key"
     private let keySendInputType = "send_input_type_key"
 
-    var syncMode: SyncMode? {
-        get {
-            guard let stringMode = getString(keySyncMode) else {
-                return nil
-            }
-            return SyncMode(rawValue: stringMode)
-        }
-        set { setString(keySyncMode, value: newValue?.rawValue) }
+    private func getString(_ name: String) -> String? {
+        return UserDefaults.standard.value(forKey: name) as? String
     }
 
-    var isBackedUp: Bool {
-        get { return bool(for: keyIsBackedUp) ?? false }
-        set { set(newValue, for: keyIsBackedUp) }
+    private func setString(_ name: String, value: String?) {
+        if let value = value {
+            UserDefaults.standard.set(value, forKey: name)
+        } else  {
+            UserDefaults.standard.removeObject(forKey: name)
+        }
+        UserDefaults.standard.synchronize()
     }
+
+    private func bool(for key: String) -> Bool? {
+        return UserDefaults.standard.value(forKey: key) as? Bool
+    }
+
+    private func set(_ value: Bool, for key: String) {
+        UserDefaults.standard.set(value, forKey: key)
+        UserDefaults.standard.synchronize()
+    }
+
+    private func set(_ value: Double?, for key: String) {
+        if let value = value {
+            UserDefaults.standard.set(value, forKey: key)
+        } else {
+            UserDefaults.standard.removeObject(forKey: key)
+        }
+    }
+
+    private func double(for key: String) -> Double {
+        return UserDefaults.standard.double(forKey: key)
+    }
+
+}
+
+extension UserDefaultsStorage: ILocalStorage {
 
     var currentLanguage: String? {
         get { return getString(keyCurrentLanguage) }
@@ -44,11 +65,8 @@ class UserDefaultsStorage: ILocalStorage {
     }
 
     var didLaunchOnce: Bool {
-        if bool(for: didLaunchOnceKey) ?? false {
-            return true
-        }
-        set(true, for: didLaunchOnceKey)
-        return false
+        get { return bool(for: didLaunchOnceKey) ?? false }
+        set { set(newValue, for: didLaunchOnceKey) }
     }
 
     var baseCurrencyCode: String? {
@@ -112,48 +130,6 @@ class UserDefaultsStorage: ILocalStorage {
         set {
             setString(keySendInputType, value: newValue?.rawValue)
         }
-    }
-
-    func clear() {
-        syncMode = .fast
-        isBackedUp = false
-        lightMode = false
-        agreementAccepted = false
-        isBiometricOn = false
-    }
-
-    private func getString(_ name: String) -> String? {
-        return UserDefaults.standard.value(forKey: name) as? String
-    }
-
-    private func setString(_ name: String, value: String?) {
-        if let value = value {
-            UserDefaults.standard.set(value, forKey: name)
-        } else  {
-            UserDefaults.standard.removeObject(forKey: name)
-        }
-        UserDefaults.standard.synchronize()
-    }
-
-    private func bool(for key: String) -> Bool? {
-        return UserDefaults.standard.value(forKey: key) as? Bool
-    }
-
-    private func set(_ value: Bool, for key: String) {
-        UserDefaults.standard.set(value, forKey: key)
-        UserDefaults.standard.synchronize()
-    }
-
-    private func set(_ value: Double?, for key: String) {
-        if let value = value {
-            UserDefaults.standard.set(value, forKey: key)
-        } else {
-            UserDefaults.standard.removeObject(forKey: key)
-        }
-    }
-
-    private func double(for key: String) -> Double {
-        return UserDefaults.standard.double(forKey: key)
     }
 
 }

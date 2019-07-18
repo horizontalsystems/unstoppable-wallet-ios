@@ -41,8 +41,6 @@ class App {
     let rateManager: RateManager
     let currencyManager: ICurrencyManager
 
-    let authManager: AuthManager
-
     let feeRateProvider: IFeeRateProvider
 
     let ethereumKitManager: IEthereumKitManager
@@ -104,12 +102,10 @@ class App {
 
         ethereumKitManager = EthereumKitManager(appConfigProvider: appConfigProvider)
 
-        authManager = AuthManager(secureStorage: KeychainStorage.shared, localStorage: localStorage, pinManager: pinManager, coinManager: walletManager, rateManager: rateManager, ethereumKitManager: ethereumKitManager)
-
         feeRateProvider = FeeRateProvider()
 
         adapterFactory = AdapterFactory(appConfigProvider: appConfigProvider, ethereumKitManager: ethereumKitManager, feeRateProvider: feeRateProvider)
-        adapterManager = AdapterManager(adapterFactory: adapterFactory, ethereumKitManager: ethereumKitManager, authManager: authManager, walletManager: walletManager)
+        adapterManager = AdapterManager(adapterFactory: adapterFactory, ethereumKitManager: ethereumKitManager, walletManager: walletManager)
 
         lockRouter = LockRouter()
         lockManager = LockManager(pinManager: pinManager, localStorage: localStorage, lockRouter: lockRouter)
@@ -123,8 +119,6 @@ class App {
         fullTransactionInfoProviderFactory = FullTransactionInfoProviderFactory(apiProvider: jsonApiProvider, dataProviderManager: dataProviderManager)
 
         testModeIndicator = TestModeIndicator(appConfigProvider: appConfigProvider)
-
-        authManager.adapterManager = adapterManager
 
         appManager = AppManager(
                 accountManager: accountManager,
