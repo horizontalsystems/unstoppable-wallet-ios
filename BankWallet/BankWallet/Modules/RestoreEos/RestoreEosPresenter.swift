@@ -69,11 +69,11 @@ extension RestoreEosPresenter: IRestoreEosViewDelegate {
     }
 
     func didTapDone() {
-        guard let account = state.account, let privateKeyString = state.privateKey else {
+        guard let account = state.account, let privateKey = state.privateKey else {
             return
         }
 
-        let accountType: AccountType = .eos(account: account, activePrivateKey: Data(repeating: 10, count: 10))
+        let accountType: AccountType = .eos(account: account, activePrivateKey: privateKey)
 
         switch mode {
         case .pushed: router.notifyRestored(accountType: accountType)
