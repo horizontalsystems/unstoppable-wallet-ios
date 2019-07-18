@@ -11,8 +11,8 @@ class UnlinkInteractor {
 
 extension UnlinkInteractor: IUnlinkInteractor {
 
-    func unlink(accountId: String) {
-        accountManager.deleteAccount(id: accountId)
+    func unlink(account: Account) {
+        accountManager.delete(account: account)
         delegate?.didUnlink()
     }
 

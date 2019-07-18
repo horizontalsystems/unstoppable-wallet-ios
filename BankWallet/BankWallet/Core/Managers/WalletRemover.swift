@@ -10,15 +10,15 @@ class WalletRemover {
 
         accountManager.deleteAccountObservable
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-                .subscribe(onNext: { [weak self] id in
-                    self?.handleDelete(accountId: id)
+                .subscribe(onNext: { [weak self] account in
+                    self?.handleDelete(account: account)
                 })
                 .disposed(by: disposeBag)
 
     }
 
-    private func handleDelete(accountId: String) {
-        let remainingWallets = walletManager.wallets.filter { $0.account.id != accountId }
+    private func handleDelete(account: Account) {
+        let remainingWallets = walletManager.wallets.filter { $0.account != account }
         walletManager.enable(wallets: remainingWallets)
     }
 

@@ -35,6 +35,7 @@
 		11B35102A48D27150867BDD8 /* RestoreWordsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35E81D848256AED44AFF3 /* RestoreWordsRouter.swift */; };
 		11B351147B9FA7CFB61D6F31 /* TransactionViewItemFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35461B70501F290DFC166 /* TransactionViewItemFactoryTests.swift */; };
 		11B35133B5C8937A33A0208C /* GrdbStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35A1AE56A94BEB52AC4D1 /* GrdbStorage.swift */; };
+		11B3513C8E7B2C3651F00F8F /* AccountStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35E87C15A3AE82F471007 /* AccountStorage.swift */; };
 		11B3513D7F63AF4688AF336E /* ManageAccountsViewItemFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35987C48604FA6CB81C92 /* ManageAccountsViewItemFactory.swift */; };
 		11B351409751CBF5D7C55E05 /* BaseCurrencySettingsModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35C104035EBC5B0B13592 /* BaseCurrencySettingsModule.swift */; };
 		11B3515869AD00251DF53B57 /* AlertButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35CFDC5BD98BA40682DBD /* AlertButtonItem.swift */; };
@@ -65,6 +66,7 @@
 		11B3524C9BD6FDCE5D72CB81 /* TestModeIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B353F97FB72582499D6663 /* TestModeIndicator.swift */; };
 		11B3524D24D3AE736839690A /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35F4AF52970B217AD4DC6 /* String.swift */; };
 		11B3524E90ADBAEB02E77B77 /* SyncModeModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B350A04B4D9122C9828EC6 /* SyncModeModule.swift */; };
+		11B35262A6D3AB8C41E2E245 /* AccountStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35E87C15A3AE82F471007 /* AccountStorage.swift */; };
 		11B35267BB7BFACBBF5C030F /* GrdbStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35A1AE56A94BEB52AC4D1 /* GrdbStorage.swift */; };
 		11B352783ABAB4B503FE6DC7 /* RateSyncer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B350C8341DFAF14D974ACC /* RateSyncer.swift */; };
 		11B352A99B39974BC9BDC839 /* Words24AccountType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35473B5D087C8C234D390 /* Words24AccountType.swift */; };
@@ -169,6 +171,7 @@
 		11B356317DD349AF86F54EC0 /* ManageAccountsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B358B4DFC88B488F3BC039 /* ManageAccountsViewController.swift */; };
 		11B35654DC11845932FDBDA0 /* RestoreAccountCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35C0C1945B0A9BFBF0AF9 /* RestoreAccountCell.swift */; };
 		11B35669B7CAC5A76825BD9C /* NumPadTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35BFD94DA13D66AD6A86D /* NumPadTheme.swift */; };
+		11B3566FA2A855E903F5A746 /* AccountRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35E9B9C7A88B7584507DF /* AccountRecord.swift */; };
 		11B356790A19174A2B516983 /* BaseTwinItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3513A0023455D438BAC4C /* BaseTwinItemView.swift */; };
 		11B3567E18C314FB5793BBE5 /* ConfirmationCheckboxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B350AD0C5D210E06600D3F /* ConfirmationCheckboxView.swift */; };
 		11B3567FCB0A136C731C9F6F /* TransactionsMetadataDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3B491E721F1ECC600DAE203 /* TransactionsMetadataDataSource.swift */; };
@@ -178,6 +181,7 @@
 		11B356ACDE9648AB1D98B466 /* BaseCurrencySettingsInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3550630A9EC44B7157E6F /* BaseCurrencySettingsInteractor.swift */; };
 		11B356ACF29311C0C85E1841 /* UIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B351E743E45282859B08D3 /* UIButton.swift */; };
 		11B356B01A92AFE22DDB8754 /* SendConfirmationAmounItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B350EB27AD6B432BD7DCD1 /* SendConfirmationAmounItem.swift */; };
+		11B356C6FEEFD7A1B854FB46 /* AccountRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35E9B9C7A88B7584507DF /* AccountRecord.swift */; };
 		11B356CA54463B4740A9E3AA /* BaseCurrencySettingsInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3550630A9EC44B7157E6F /* BaseCurrencySettingsInteractor.swift */; };
 		11B356D2F4655ACA22659DA2 /* SendConfirmationAmountItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B356AA9A3DDA541D5EBEAC /* SendConfirmationAmountItemView.swift */; };
 		11B356D8E38D7060C1945A98 /* SendConfirmationAddressItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3543C6E6212154344AD63 /* SendConfirmationAddressItemView.swift */; };
@@ -247,6 +251,7 @@
 		11B3595470C1BCEB5B77EBB4 /* BiometryType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35C182B944A7CD13EA163 /* BiometryType.swift */; };
 		11B35965E596BF6F3D86A85B /* TransactionInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35EA7951903DA3790E945 /* TransactionInfoViewController.swift */; };
 		11B359733B304A1FB21E88AC /* AdapterFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3576492DE68F2507BB711 /* AdapterFactory.swift */; };
+		11B3597622438E522E0F7AE1 /* AccountRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35E9B9C7A88B7584507DF /* AccountRecord.swift */; };
 		11B3597B6DDA3239655628E8 /* SyncModePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35A086AF66CE950E488D3 /* SyncModePresenter.swift */; };
 		11B3598C180AD4BD9F75EDE7 /* TransactionItemDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B350DFDC2CC98086520BFA /* TransactionItemDataSource.swift */; };
 		11B359A5EBE5F7BA65F36D0F /* BaseCurrencySettingsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35B7A44754508AEFDA9FD /* BaseCurrencySettingsPresenter.swift */; };
@@ -414,6 +419,7 @@
 		11B35FE41FA9977CC36989D3 /* MainInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35B88A2D6C85E1600F3AF /* MainInteractor.swift */; };
 		11B35FE4D04DCA277273F435 /* TransactionRecordPoolRepo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35B93B5B43FF00B24528B /* TransactionRecordPoolRepo.swift */; };
 		11B35FE629E6F7149CB03660 /* RestoreWordsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3592FF2DF3AF0C93D8896 /* RestoreWordsViewController.swift */; };
+		11B35FEB7788281AB6F42937 /* AccountStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35E87C15A3AE82F471007 /* AccountStorage.swift */; };
 		11B35FFC64667ECB79CF893D /* Words12AccountType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35F3A33D60A4A014DC920 /* Words12AccountType.swift */; };
 		1A56400E8DE9EF93F85C7F08 /* UnlockPinInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5647E28DF774B3CE01D2C4 /* UnlockPinInteractor.swift */; };
 		1A564016B4F3ACEBCBCF8194 /* LaunchPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564F627224BDD3E99C582B /* LaunchPresenter.swift */; };
@@ -1465,6 +1471,8 @@
 		11B35E0A329C9A81552697DF /* SyncModeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SyncModeViewController.swift; sourceTree = "<group>"; };
 		11B35E4481DCD98BF2074797 /* BaseCurrencySettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseCurrencySettingsViewController.swift; sourceTree = "<group>"; };
 		11B35E81D848256AED44AFF3 /* RestoreWordsRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestoreWordsRouter.swift; sourceTree = "<group>"; };
+		11B35E87C15A3AE82F471007 /* AccountStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountStorage.swift; sourceTree = "<group>"; };
+		11B35E9B9C7A88B7584507DF /* AccountRecord.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountRecord.swift; sourceTree = "<group>"; };
 		11B35EA7951903DA3790E945 /* TransactionInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionInfoViewController.swift; sourceTree = "<group>"; };
 		11B35EB6A09E7FBB70B8966B /* Wallet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Wallet.swift; sourceTree = "<group>"; };
 		11B35EC60329833B8D6CA1E0 /* ConfirmationCheckboxItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfirmationCheckboxItem.swift; sourceTree = "<group>"; };
@@ -2146,6 +2154,7 @@
 				11B35614C6E244926AF48701 /* Account.swift */,
 				11B35EB6A09E7FBB70B8966B /* Wallet.swift */,
 				11B35542A7D7FE1BDC2E73E2 /* AccountType.swift */,
+				11B35E9B9C7A88B7584507DF /* AccountRecord.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -2189,6 +2198,7 @@
 				11B352044BCE494491257933 /* UserDefaultsStorage.swift */,
 				11B3584E1C6B6FA22B89D82C /* KeychainStorage.swift */,
 				11B35A1AE56A94BEB52AC4D1 /* GrdbStorage.swift */,
+				11B35E87C15A3AE82F471007 /* AccountStorage.swift */,
 			);
 			path = Storage;
 			sourceTree = "<group>";
@@ -3855,6 +3865,8 @@
 				1A5643DC7E7AFC0CE5285AD9 /* RestoreEosPresenter.swift in Sources */,
 				1A5644C9A74B5245C8412C65 /* RestoreEosInteractor.swift in Sources */,
 				1A564F505E9F7C2F783D43E0 /* RestoreEosPresenterState.swift in Sources */,
+				11B3566FA2A855E903F5A746 /* AccountRecord.swift in Sources */,
+				11B35FEB7788281AB6F42937 /* AccountStorage.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4314,6 +4326,8 @@
 				1A5643907B4AFF75A0FBFCC4 /* RestoreEosPresenter.swift in Sources */,
 				1A564BEBE06DB3041F6B258B /* RestoreEosInteractor.swift in Sources */,
 				1A5648CD61AB6376055FF683 /* RestoreEosPresenterState.swift in Sources */,
+				11B356C6FEEFD7A1B854FB46 /* AccountRecord.swift in Sources */,
+				11B3513C8E7B2C3651F00F8F /* AccountStorage.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4722,6 +4736,8 @@
 				1A564E376AF3824614AF97EB /* RestoreEosPresenter.swift in Sources */,
 				1A564B3340086D250666A933 /* RestoreEosInteractor.swift in Sources */,
 				1A564749AB164D88DF4FB266 /* RestoreEosPresenterState.swift in Sources */,
+				11B3597622438E522E0F7AE1 /* AccountRecord.swift in Sources */,
+				11B35262A6D3AB8C41E2E245 /* AccountStorage.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

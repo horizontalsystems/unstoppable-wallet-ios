@@ -34,21 +34,21 @@ class GrdbStorage {
             }
         }
 
-        migrator.registerMigration("createAccountsTable") { db in
-            try db.create(table: Account.databaseTableName) { t in
-                t.column(Account.Columns.id.name, .text).notNull()
-                t.column(Account.Columns.name.name, .text).notNull()
-                t.column(Account.Columns.type.name, .integer).notNull()
-                t.column(Account.Columns.backedUp.name, .boolean).notNull()
-                t.column(Account.Columns.defaultSyncMode.name, .text)
-                t.column(Account.Columns.words.name, .blob)
-                t.column(Account.Columns.derivation.name, .integer)
-                t.column(Account.Columns.salt.name, .blob)
-                t.column(Account.Columns.data.name, .blob)
-                t.column(Account.Columns.eosAccount.name, .blob)
+        migrator.registerMigration("createAccountRecordsTable") { db in
+            try db.create(table: AccountRecord.databaseTableName) { t in
+                t.column(AccountRecord.Columns.id.name, .text).notNull()
+                t.column(AccountRecord.Columns.name.name, .text).notNull()
+                t.column(AccountRecord.Columns.type.name, .integer).notNull()
+                t.column(AccountRecord.Columns.backedUp.name, .boolean).notNull()
+                t.column(AccountRecord.Columns.defaultSyncMode.name, .text)
+                t.column(AccountRecord.Columns.wordsKey.name, .text)
+                t.column(AccountRecord.Columns.derivation.name, .integer)
+                t.column(AccountRecord.Columns.saltKey.name, .text)
+                t.column(AccountRecord.Columns.dataKey.name, .text)
+                t.column(AccountRecord.Columns.eosAccount.name, .text)
 
                 t.primaryKey([
-                    Account.Columns.id.name
+                    AccountRecord.Columns.id.name
                 ], onConflict: .replace)
             }
         }
@@ -69,6 +69,8 @@ class GrdbStorage {
             guard let data = try? keychain.getData("auth_data_keychain_key"), let authData = NSKeyedUnarchiver.unarchiveObject(with: data) as? AuthData else {
                 return
             }
+            try? keychain.remove("auth_data_keychain_key")
+
             let uuid = authData.walletId
             let isBackedUp = UserDefaults.standard.bool(forKey: "is_backed_up")
             let syncMode: SyncMode
@@ -79,14 +81,17 @@ class GrdbStorage {
             default: syncMode = .fast
             }
 
-            let account = Account(id: uuid, name: uuid, type: .mnemonic(words: authData.words, derivation: .bip44, salt: nil), backedUp: isBackedUp, defaultSyncMode: syncMode)
-            try account.insert(db)
+            let wordsKey = "mnemonic_\(uuid)_words"
+            let accountRecord = AccountRecord(id: uuid, name: uuid, type: "mnemonic", backedUp: isBackedUp, defaultSyncMode: syncMode.rawValue, wordsKey: wordsKey, derivation: "bip44", saltKey: nil, dataKey: nil, eosAccount: nil)
+            try accountRecord.insert(db)
+
+            try? keychain.set(authData.words.joined(separator: ","), key: wordsKey)
 
             guard try db.tableExists("enabled_coins") else {
                 return
             }
 
-            let accountId = account.id
+            let accountId = accountRecord.id
             try db.execute(sql: """
                                 INSERT INTO \(EnabledWallet.databaseTableName)(`\(EnabledWallet.Columns.coinCode.name)`, `\(EnabledWallet.Columns.accountId.name)`, `\(EnabledWallet.Columns.syncMode.name)`, `\(EnabledWallet.Columns.walletOrder.name)`)
                                 SELECT `coinCode`, '\(accountId)', '\(syncMode)', `coinOrder` FROM enabled_coins
@@ -192,35 +197,23 @@ extension GrdbStorage: IEnabledWalletStorage {
 
 }
 
-extension GrdbStorage: IAccountStorage {
+extension GrdbStorage: IAccountRecordStorage {
 
-    var allAccounts: [Account] {
+    var allAccountRecords: [AccountRecord] {
         return try! dbPool.read { db in
-            try Account.fetchAll(db)
+            try AccountRecord.fetchAll(db)
         }
     }
 
-    func save(account: Account) {
+    func save(accountRecord: AccountRecord) {
         _ = try! dbPool.write { db in
-            try account.insert(db)
+            try accountRecord.insert(db)
         }
     }
 
-    func deleteAccount(by id: String) {
+    func deleteAccountRecord(by id: String) {
         _ = try! dbPool.write { db in
-            let account = try Account.filter(Account.Columns.id == id).fetchOne(db)
-            account?.clearKeychain()
-
-            try account?.delete(db)
-        }
-    }
-
-    func setAccountIsBackedUp(by id: String) {
-        _ = try! dbPool.write { db in
-            if let account = try Account.filter(Account.Columns.id == id).fetchOne(db) {
-                account.backedUp = true
-                try account.insert(db)
-            }
+            try AccountRecord.filter(AccountRecord.Columns.id == id).deleteAll(db)
         }
     }
 
