@@ -32,6 +32,8 @@
 "restore.title" = "Восстановить";
 "restore.description" = "Введите Секретный Ключ";
 "restore.validation_failed" = "Неверный Секретный Ключ";
+"restore.placeholder.account_name" = "Account Name";
+"restore.placeholder.private_key" = "Active Private Key";
 
 //Coin Sync Modes
 "coin_sync.title" = "Опции";
