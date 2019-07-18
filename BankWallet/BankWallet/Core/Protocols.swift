@@ -9,8 +9,6 @@ protocol IRandomManager {
 }
 
 protocol ILocalStorage: class {
-    var syncMode: SyncMode? { get set }
-    var isBackedUp: Bool { get set }
     var baseCurrencyCode: String? { get set }
     var baseBitcoinProvider: String? { get set }
     var baseDashProvider: String? { get set }
@@ -21,21 +19,23 @@ protocol ILocalStorage: class {
     var isBiometricOn: Bool { get set }
     var currentLanguage: String? { get set }
     var lastExitDate: Double { get set }
-    var didLaunchOnce: Bool { get }
+    var didLaunchOnce: Bool { get set }
     var sendInputType: SendInputType? { get set }
-    func clear()
 }
 
 protocol ISecureStorage: class {
-    var authData: AuthData? { get }
-    func set(authData: AuthData?) throws
     var pin: String? { get }
     func set(pin: String?) throws
     var unlockAttempts: Int? { get }
     func set(unlockAttempts: Int?) throws
     var lockoutTimestamp: TimeInterval? { get }
     func set(lockoutTimestamp: TimeInterval?) throws
-    func clear()
+
+    func getString(forKey key: String) -> String?
+    func set(value: String?, forKey key: String) throws
+    func getData(forKey key: String) -> Data?
+    func set(value: Data?, forKey key: String) throws
+    func remove(for key: String) throws
 }
 
 protocol ILanguageManager {
@@ -163,14 +163,11 @@ enum SendTransactionError: LocalizedError {
 }
 
 protocol IWordsManager {
-    var isBackedUp: Bool { get set }
-    var backedUpSignal: Signal { get }
     func generateWords(count: Int) throws -> [String]
     func validate(words: [String]) throws
 }
 
 protocol IAuthManager {
-    var authData: AuthData? { get }
     func login(withWords words: [String], syncMode: SyncMode) throws
     func logout() throws
 }
