@@ -47,7 +47,7 @@ class AccountStorage {
             guard let eosAccount = record.eosAccount else {
                 return nil
             }
-            guard let activePrivateKey = recoverData(id: id, typeName: typeName, keyName: .data) else {
+            guard let activePrivateKey = recoverString(id: id, typeName: typeName, keyName: .privateKey) else {
                 return nil
             }
 
@@ -89,7 +89,7 @@ class AccountStorage {
         case .eos(let account, let activePrivateKey):
             typeName = .eos
             eosAccount = account
-            dataKey = try store(data: activePrivateKey, id: id, typeName: typeName, keyName: .data)
+            dataKey = try store(string: activePrivateKey, id: id, typeName: typeName, keyName: .privateKey)
         }
 
         return AccountRecord(
@@ -118,7 +118,7 @@ class AccountStorage {
         case .hdMasterKey:
             try secureStorage.remove(for: secureKey(id: id, typeName: .hdMasterKey, keyName: .data))
         case .eos:
-            try secureStorage.remove(for: secureKey(id: id, typeName: .eos, keyName: .data))
+            try secureStorage.remove(for: secureKey(id: id, typeName: .eos, keyName: .privateKey))
         }
     }
 
@@ -190,6 +190,7 @@ extension AccountStorage {
         case words
         case salt
         case data
+        case privateKey
     }
 
 }
