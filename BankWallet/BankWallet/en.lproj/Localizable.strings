@@ -34,6 +34,8 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 "restore.title" = "Restore";
 "restore.description" = "Enter Secret Key";
 "restore.validation_failed" = "Incorrect Secret Key";
+"restore.placeholder.account_name" = "Account Name";
+"restore.placeholder.private_key" = "Active Private Key";
 
 //Coin Sync Modes
 "coin_sync.title" = "Restore Options";

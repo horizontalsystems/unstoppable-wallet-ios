@@ -18,7 +18,7 @@ class AddressInputField: UIView {
     private let showQrButton: Bool
     private let canEdit: Bool
 
-    init(frame: CGRect, placeholder: String?, numberOfLines: Int = 1, showQrButton: Bool, canEdit: Bool) {
+    init(frame: CGRect, placeholder: String?, numberOfLines: Int = 1, showQrButton: Bool, canEdit: Bool, lineBreakMode: NSLineBreakMode) {
         self.placeholder = placeholder
         self.numberOfLines = numberOfLines
         self.showQrButton = showQrButton
@@ -40,17 +40,22 @@ class AddressInputField: UIView {
         layer.borderColor = SendTheme.holderBorderColor.cgColor
         backgroundColor = SendTheme.holderBackground
 
+        addressField.delegate = self
+        addressField.tintColor = AppTheme.textFieldTintColor
+        addressField.keyboardAppearance = AppTheme.keyboardAppearance
+        addressField.autocapitalizationType = .none
         addressField.isUserInteractionEnabled = canEdit
         addressField.textContainer.maximumNumberOfLines = numberOfLines
         addressField.textColor = SendTheme.addressColor
         addressField.font = SendTheme.addressFont
-        addressField.textContainer.lineBreakMode = .byTruncatingMiddle
+        addressField.textContainer.lineBreakMode = lineBreakMode
         addressField.textContainer.lineFragmentPadding = 0
         addressField.textContainerInset = .zero
         addressField.backgroundColor = .clear
         placeholderLabel.textColor = SendTheme.addressHintColor
         placeholderLabel.snp.makeConstraints { maker in
-            maker.edges.equalToSuperview()
+            maker.leading.equalToSuperview()
+            maker.centerY.equalToSuperview()
         }
         placeholderLabel.text = placeholder
 
@@ -107,6 +112,8 @@ class AddressInputField: UIView {
         deleteButtonIcon.snp.makeConstraints { maker in
             maker.center.equalToSuperview()
         }
+
+        bind(address: nil, error: nil)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -128,9 +135,10 @@ class AddressInputField: UIView {
             deleteButton.onTap = onDelete
         }
     }
+    var onTextChange: ((String?) -> ())?
 
     func bind(address: String?, error: String?) {
-        if let address = address {
+        if let address = address, !address.isEmpty {
             placeholderLabel.isHidden = true
             addressField.text = address
             pasteButton.isHidden = true
@@ -182,6 +190,18 @@ class AddressInputField: UIView {
             }
         }
 
+    }
+
+    override func becomeFirstResponder() -> Bool {
+        return addressField.becomeFirstResponder()
+    }
+
+}
+
+extension AddressInputField: UITextViewDelegate {
+
+    public func textViewDidChange(_ textView: UITextView) {
+        onTextChange?(textView.text)
     }
 
 }
