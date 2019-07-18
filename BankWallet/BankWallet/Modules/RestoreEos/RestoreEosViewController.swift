@@ -55,7 +55,7 @@ class RestoreEosViewController: WalletViewController {
             self?.delegate.onDeleteKey()
         }
 
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.done".localized, style: .plain, target: self, action: #selector(doneDidTap))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.done".localized, style: .done, target: self, action: #selector(doneDidTap))
 
         delegate.viewDidLoad()
     }
