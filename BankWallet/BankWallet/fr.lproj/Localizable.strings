@@ -32,6 +32,8 @@
 "restore.title" = "Restaurer";
 "restore.description" = "Entrez la clé secrete";
 "restore.validation_failed" = "Clé secrète incorrecte";
+"restore.placeholder.account_name" = "Account Name";
+"restore.placeholder.private_key" = "Active Private Key";
 
 //Coin Sync Modes
 "coin_sync.title" = "Restaurer les options";
