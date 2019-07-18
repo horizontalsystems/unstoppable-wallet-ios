@@ -32,6 +32,8 @@
 "restore.title" = "Geri Yükle";
 "restore.description" = "Gizli Anahtarı Girin";
 "restore.validation_failed" = "Hatalı Gizli anahtar";
+"restore.placeholder.account_name" = "Account Name";
+"restore.placeholder.private_key" = "Active Private Key";
 
 //Coin Sync Modes
 "coin_sync.title" = "Geri yükleme seçenekleri";
