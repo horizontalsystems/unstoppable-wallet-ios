@@ -32,6 +32,8 @@
 "restore.title" = "복구";
 "restore.description" = "비밀 키를 입력";
 "restore.validation_failed" = "잘못된 비밀 키";
+"restore.placeholder.account_name" = "Account Name";
+"restore.placeholder.private_key" = "Active Private Key";
 
 //Coin Sync Modes
 "coin_sync.title" = "Restore Options";
