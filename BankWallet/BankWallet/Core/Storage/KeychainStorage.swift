@@ -2,8 +2,6 @@ import Foundation
 import KeychainAccess
 
 class KeychainStorage {
-    static let shared: ISecureStorage = KeychainStorage(localStorage: UserDefaultsStorage.shared)
-
     private let keychain: Keychain
 
     private let pinKey = "pin_keychain_key"
@@ -11,13 +9,8 @@ class KeychainStorage {
     private let unlockAttemptsKey = "unlock_attempts_keychain_key"
     private let lockTimestampKey = "lock_timestamp_keychain_key"
 
-    init(localStorage: ILocalStorage) {
-        keychain = Keychain(service: "io.horizontalsystems.bank.dev")
-
-        if !localStorage.didLaunchOnce {
-            try? keychain.removeAll()
-            localStorage.didLaunchOnce = true
-        }
+    init() {
+        keychain = Keychain(service: "io.horizontalsystems.bank.dev").accessibility(.whenPasscodeSetThisDeviceOnly)
     }
 
     private func getBool(forKey key: String) -> Bool? {
@@ -114,14 +107,6 @@ class KeychainStorage {
 
 extension KeychainStorage: ISecureStorage {
 
-    var authData: AuthData? {
-        return get(forKey: authDataKey)
-    }
-
-    func set(authData: AuthData?) throws {
-        try set(value: authData, forKey: authDataKey)
-    }
-
     var pin: String? {
         return getString(forKey: pinKey)
     }
@@ -147,6 +132,10 @@ extension KeychainStorage: ISecureStorage {
 
     func set(lockoutTimestamp: Double?) throws {
         try set(value: lockoutTimestamp, forKey: lockTimestampKey)
+    }
+
+    func clear() throws {
+        try keychain.removeAll()
     }
 
 }

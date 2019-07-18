@@ -1,14 +1,14 @@
 class UnlinkPresenter {
     private let router: IUnlinkRouter
     private let interactor: IUnlinkInteractor
-    private let accountId: String
+    private let account: Account
 
     weak var view: IUnlinkView?
 
-    init(router: IUnlinkRouter, interactor: IUnlinkInteractor, accountId: String) {
+    init(router: IUnlinkRouter, interactor: IUnlinkInteractor, account: Account) {
         self.router = router
         self.interactor = interactor
-        self.accountId = accountId
+        self.account = account
     }
 
 }
@@ -16,7 +16,7 @@ class UnlinkPresenter {
 extension UnlinkPresenter: IUnlinkViewDelegate {
 
     func didTapUnlink() {
-        interactor.unlink(accountId: accountId)
+        interactor.unlink(account: account)
     }
 
 }

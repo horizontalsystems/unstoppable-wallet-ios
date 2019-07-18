@@ -1,5 +1,4 @@
 import Foundation
-import GRDB
 
 enum AccountType {
     case mnemonic(words: [String], derivation: MnemonicDerivation, salt: String?)
@@ -26,21 +25,7 @@ extension AccountType: Equatable {
 
 }
 
-enum MnemonicDerivation: String, DatabaseValueConvertible {
-
+enum MnemonicDerivation: String {
     case bip44
     case bip39
-
-    public var databaseValue: DatabaseValue {
-        return rawValue.databaseValue
-    }
-
-    public static func fromDatabaseValue(_ dbValue: DatabaseValue) -> MnemonicDerivation? {
-        guard case .string(let rawValue) = dbValue.storage else {
-            return nil
-        }
-        return MnemonicDerivation(rawValue: rawValue)
-    }
-
 }
-
