@@ -46,7 +46,7 @@ extension ManageAccountsPresenter: IManageAccountsViewDelegate {
             return
         }
 
-        router.showUnlink(accountId: account.id)
+        router.showUnlink(account: account)
     }
 
     func didTapBackup(index: Int) {

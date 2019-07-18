@@ -37,4 +37,8 @@ class SystemInfoManager: ISystemInfoManager {
         }
     }
 
+    var passcodeSet: Bool {
+        return LAContext().canEvaluatePolicy(.deviceOwnerAuthentication, error: nil)
+    }
+
 }

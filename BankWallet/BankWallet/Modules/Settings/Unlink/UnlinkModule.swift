@@ -6,7 +6,7 @@ protocol IUnlinkViewDelegate {
 }
 
 protocol IUnlinkInteractor {
-    func unlink(accountId: String)
+    func unlink(account: Account)
 }
 
 protocol IUnlinkInteractorDelegate: class {

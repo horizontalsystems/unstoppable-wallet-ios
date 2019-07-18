@@ -1,8 +1,6 @@
 import Foundation
 
 class UserDefaultsStorage {
-    static let shared: ILocalStorage = UserDefaultsStorage()
-
     private let keyCurrentLanguage = "current_language"
     private let keyBaseCurrencyCode = "base_currency_code"
     private let keyBaseBitcoinProvider = "base_bitcoin_provider"

@@ -5,7 +5,7 @@ class AccountManager {
     private let cache: AccountsCache = AccountsCache()
 
     private let accountsSubject = PublishSubject<[Account]>()
-    private let deleteAccountSubject = PublishSubject<String>()
+    private let deleteAccountSubject = PublishSubject<Account>()
 
     init(storage: IAccountStorage) {
         self.storage = storage
@@ -29,7 +29,7 @@ extension AccountManager: IAccountManager {
         return accountsSubject.asObservable()
     }
 
-    var deleteAccountObservable: Observable<String> {
+    var deleteAccountObservable: Observable<Account> {
         return deleteAccountSubject.asObservable()
     }
 
@@ -51,12 +51,12 @@ extension AccountManager: IAccountManager {
         accountsSubject.onNext(accounts)
     }
 
-    func deleteAccount(id: String) {
-        storage.deleteAccount(by: id)
-        cache.removeAccount(id: id)
+    func delete(account: Account) {
+        storage.delete(account: account)
+        cache.remove(account: account)
 
         accountsSubject.onNext(accounts)
-        deleteAccountSubject.onNext(id)
+        deleteAccountSubject.onNext(account)
     }
 
 }
@@ -84,8 +84,8 @@ extension AccountManager {
             }
         }
 
-        func removeAccount(id: String) {
-            array.removeAll { $0.id == id }
+        func remove(account: Account) {
+            array.removeAll { $0 == account }
         }
     }
 

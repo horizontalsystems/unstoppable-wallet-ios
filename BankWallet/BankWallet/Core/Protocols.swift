@@ -36,6 +36,8 @@ protocol ISecureStorage: class {
     func getData(forKey key: String) -> Data?
     func set(value: Data?, forKey key: String) throws
     func remove(for key: String) throws
+
+    func clear() throws
 }
 
 protocol ILanguageManager {
@@ -82,23 +84,10 @@ enum AdapterState {
     case notSynced
 }
 
-enum SyncMode: String, DatabaseValueConvertible  {
-
+enum SyncMode: String {
     case fast = "fast"
     case slow = "slow"
     case new = "new"
-
-    public var databaseValue: DatabaseValue {
-        return rawValue.databaseValue
-    }
-
-    public static func fromDatabaseValue(_ dbValue: DatabaseValue) -> SyncMode? {
-        guard case .string(let rawValue) = dbValue.storage else {
-            return nil
-        }
-        return SyncMode(rawValue: rawValue)
-    }
-
 }
 
 enum FeeRatePriority: Int {
@@ -177,12 +166,12 @@ protocol IAccountManager {
     func account(coinType: CoinType) -> Account?
 
     var accountsObservable: Observable<[Account]> { get }
-    var deleteAccountObservable: Observable<String> { get }
+    var deleteAccountObservable: Observable<Account> { get }
 
     func preloadAccounts()
     func update(account: Account)
     func create(account: Account)
-    func deleteAccount(id: String)
+    func delete(account: Account)
 }
 
 protocol IBackupManager {
@@ -251,6 +240,7 @@ protocol IRateManager {
 protocol ISystemInfoManager {
     var appVersion: String { get }
     var biometryType: Single<BiometryType> { get }
+    var passcodeSet: Bool { get }
 }
 
 protocol IBiometryManager {
@@ -314,8 +304,13 @@ protocol IEnabledWalletStorage {
 protocol IAccountStorage {
     var allAccounts: [Account] { get }
     func save(account: Account)
-    func deleteAccount(by id: String)
-    func setAccountIsBackedUp(by id: String)
+    func delete(account: Account)
+}
+
+protocol IAccountRecordStorage {
+    var allAccountRecords: [AccountRecord] { get }
+    func save(accountRecord: AccountRecord)
+    func deleteAccountRecord(by id: String)
 }
 
 protocol IJsonApiProvider {

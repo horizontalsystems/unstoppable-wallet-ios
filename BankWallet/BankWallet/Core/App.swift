@@ -7,6 +7,7 @@ class App {
     let randomManager: IRandomManager
 
     let localStorage: ILocalStorage
+    let secureStorage: ISecureStorage
 
     let appConfigProvider: IAppConfigProvider
     let systemInfoManager: ISystemInfoManager
@@ -22,6 +23,7 @@ class App {
     let reachabilityManager: IReachabilityManager
 
     let grdbStorage: GrdbStorage
+    let accountStorage: IAccountStorage
 
     let pinManager: IPinManager
     let wordsManager: IWordsManager
@@ -65,6 +67,7 @@ class App {
         randomManager = RandomManager()
 
         localStorage = UserDefaultsStorage()
+        secureStorage = KeychainStorage()
 
         appConfigProvider = AppConfigProvider()
         systemInfoManager = SystemInfoManager()
@@ -80,11 +83,12 @@ class App {
         reachabilityManager = ReachabilityManager(appConfigProvider: appConfigProvider)
 
         grdbStorage = GrdbStorage()
+        accountStorage = AccountStorage(secureStorage: secureStorage, storage: grdbStorage)
 
-        pinManager = PinManager(secureStorage: KeychainStorage.shared)
+        pinManager = PinManager(secureStorage: secureStorage)
         wordsManager = WordsManager(localStorage: localStorage)
 
-        accountManager = AccountManager(storage: grdbStorage)
+        accountManager = AccountManager(storage: accountStorage)
         backupManager = BackupManager(accountManager: accountManager)
 
         walletFactory = WalletFactory()
@@ -126,7 +130,9 @@ class App {
                 adapterManager: adapterManager,
                 lockManager: lockManager,
                 biometryManager: biometryManager,
-                blurManager: blurManager
+                blurManager: blurManager,
+                localStorage: localStorage,
+                secureStorage: secureStorage
         )
     }
 
