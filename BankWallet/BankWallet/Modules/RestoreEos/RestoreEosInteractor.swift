@@ -1,5 +1,3 @@
-import Foundation
-
 class RestoreEosInteractor {
     private let pasteboardManager: IPasteboardManager
 

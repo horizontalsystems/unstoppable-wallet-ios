@@ -1,5 +1,3 @@
-import Foundation
-
 class RestoreEosPresenter {
     weak var view: IRestoreEosView?
 

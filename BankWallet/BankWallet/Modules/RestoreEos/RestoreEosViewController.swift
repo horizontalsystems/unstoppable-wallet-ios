@@ -2,10 +2,10 @@ import UIKit
 import SnapKit
 
 class RestoreEosViewController: WalletViewController {
-    let delegate: IRestoreEosViewDelegate
+    private let delegate: IRestoreEosViewDelegate
 
-    let accountNameField = AddressInputField(frame: .zero, placeholder: "restore.placeholder.account_name".localized, showQrButton: false, canEdit: true, lineBreakMode: .byWordWrapping)
-    let accountPrivateKeyField = AddressInputField(frame: .zero, placeholder: "restore.placeholder.private_key".localized, numberOfLines: 2, showQrButton: true, canEdit: false, lineBreakMode: .byWordWrapping)
+    private let accountNameField = AddressInputField(frame: .zero, placeholder: "restore.placeholder.account_name".localized, showQrButton: false, canEdit: true, lineBreakMode: .byWordWrapping)
+    private let accountPrivateKeyField = AddressInputField(frame: .zero, placeholder: "restore.placeholder.private_key".localized, numberOfLines: 2, showQrButton: true, canEdit: false, lineBreakMode: .byWordWrapping)
 
     init(delegate: IRestoreEosViewDelegate) {
         self.delegate = delegate
