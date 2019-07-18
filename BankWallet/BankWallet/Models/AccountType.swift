@@ -4,7 +4,7 @@ enum AccountType {
     case mnemonic(words: [String], derivation: MnemonicDerivation, salt: String?)
     case privateKey(data: Data)
     case hdMasterKey(data: Data, derivation: MnemonicDerivation)
-    case eos(account: String, activePrivateKey: Data)
+    case eos(account: String, activePrivateKey: String)
 }
 
 extension AccountType: Equatable {
