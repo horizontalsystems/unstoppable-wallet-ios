@@ -18,6 +18,8 @@ protocol IRestoreEosViewDelegate {
 }
 
 protocol IRestoreEosRouter {
+    func notifyRestored(accountType: AccountType)
+    func dismissAndNotify(accountType: AccountType)
     func dismiss()
 }
 

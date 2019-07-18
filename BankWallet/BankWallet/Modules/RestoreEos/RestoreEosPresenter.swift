@@ -1,3 +1,5 @@
+import Foundation
+
 class RestoreEosPresenter {
     weak var view: IRestoreEosView?
 
@@ -67,7 +69,16 @@ extension RestoreEosPresenter: IRestoreEosViewDelegate {
     }
 
     func didTapDone() {
+        guard let account = state.account, let privateKeyString = state.privateKey else {
+            return
+        }
 
+        let accountType: AccountType = .eos(account: account, activePrivateKey: Data(repeating: 10, count: 10))
+
+        switch mode {
+        case .pushed: router.notifyRestored(accountType: accountType)
+        case .presented: router.dismissAndNotify(accountType: accountType)
+        }
     }
 
 }
