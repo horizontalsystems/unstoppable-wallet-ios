@@ -58,6 +58,8 @@ class RestoreEosViewController: WalletViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.done".localized, style: .done, target: self, action: #selector(doneDidTap))
 
         delegate.viewDidLoad()
+
+        _ = accountNameField.becomeFirstResponder()
     }
 
     @objc func doneDidTap() {

@@ -192,6 +192,10 @@ class AddressInputField: UIView {
 
     }
 
+    override func becomeFirstResponder() -> Bool {
+        return addressField.becomeFirstResponder()
+    }
+
 }
 
 extension AddressInputField: UITextViewDelegate {
