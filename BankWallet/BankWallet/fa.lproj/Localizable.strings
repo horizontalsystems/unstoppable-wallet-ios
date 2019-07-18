@@ -32,6 +32,8 @@
 "restore.title" = "بازیابی";
 "restore.description" = "Enter Secret Key";
 "restore.validation_failed" = "کلید مخفی نادرست";
+"restore.placeholder.account_name" = "Account Name";
+"restore.placeholder.private_key" = "Active Private Key";
 
 //Coin Sync Modes
 "coin_sync.title" = "Restore Options";
