@@ -32,6 +32,8 @@
 "restore.title" = "恢复";
 "restore.description" = "输入密钥";
 "restore.validation_failed" = "密钥不正确";
+"restore.placeholder.account_name" = "Account Name";
+"restore.placeholder.private_key" = "Active Private Key";
 
 //Coin Sync Modes
 "coin_sync.title" = "恢复选项";
