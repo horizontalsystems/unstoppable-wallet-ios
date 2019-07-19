@@ -59,6 +59,13 @@ extension AccountManager: IAccountManager {
         deleteAccountSubject.onNext(account)
     }
 
+    func clear() {
+        storage.clear()
+        cache.set(accounts: [])
+
+        accountsSubject.onNext(accounts)
+    }
+
 }
 
 extension AccountManager {

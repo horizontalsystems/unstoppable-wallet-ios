@@ -21,7 +21,6 @@ class WelcomeScreenViewController: WalletViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        super.viewDidLoad()
 
         view.addSubview(backgroundImageView)
         backgroundImageView.snp.makeConstraints { maker in
