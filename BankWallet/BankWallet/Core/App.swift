@@ -53,6 +53,9 @@ class App {
     let lockManager: ILockManager
     let blurManager: IBlurManager
 
+    let passcodeLockRouter: IPasscodeLockRouter
+    let passcodeLockManager: IPasscodeLockManager
+
     let rateSyncer: RateSyncer
 
     let dataProviderManager: IFullTransactionDataProviderManager
@@ -115,6 +118,9 @@ class App {
         lockManager = LockManager(pinManager: pinManager, localStorage: localStorage, lockRouter: lockRouter)
         blurManager = BlurManager(lockManager: lockManager)
 
+        passcodeLockRouter = PasscodeLockRouter()
+        passcodeLockManager = PasscodeLockManager(systemInfoManager: systemInfoManager, accountManager: accountManager, walletManager: walletManager, router: passcodeLockRouter)
+
         rateSyncer = RateSyncer(rateManager: rateManager, adapterManager: adapterManager, currencyManager: currencyManager, reachabilityManager: reachabilityManager)
 
         dataProviderManager = FullTransactionDataProviderManager(localStorage: localStorage, appConfigProvider: appConfigProvider)
@@ -129,6 +135,7 @@ class App {
                 walletManager: walletManager,
                 adapterManager: adapterManager,
                 lockManager: lockManager,
+                passcodeLockManager: passcodeLockManager,
                 biometryManager: biometryManager,
                 blurManager: blurManager,
                 localStorage: localStorage,
