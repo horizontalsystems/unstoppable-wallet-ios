@@ -224,6 +224,10 @@
 "unlock_pin.cant_save_pin" = "¡Ups! No podemos guardar su código, póngase en contacto con nosotros lo antes posible";
 "unlock_pin.blocked_until" = "Inhabilitado hasta: %@";
 
+// No Passcode
+
+"no_passcode.info_text" = "The security mechanisms in this app require that device OS has the passcode enabled.\nYou need to enable it in iOS settings before you can use the app.";
+
 //NumPad
 
 "numpad_2" = "A B C";
