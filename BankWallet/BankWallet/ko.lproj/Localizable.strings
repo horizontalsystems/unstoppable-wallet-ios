@@ -224,6 +224,10 @@
 "unlock_pin.cant_save_pin" = "아야! 우리는 당신의 암호를 저장할 수 없습니다 저희에 게 가능한 빨리 연락 하시기 바랍니다!";
 "unlock_pin.blocked_until" = "~때까지 사용 안 함: %@";
 
+// No Passcode
+
+"no_passcode.info_text" = "The security mechanisms in this app require that device OS has the passcode enabled.\nYou need to enable it in iOS settings before you can use the app.";
+
 //NumPad
 
 "numpad_2" = "A B C";
