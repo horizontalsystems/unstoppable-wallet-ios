@@ -10,13 +10,15 @@ class MainSettingsInteractor {
     private let languageManager: ILanguageManager
     private let systemInfoManager: ISystemInfoManager
     private let currencyManager: ICurrencyManager
+    private let appConfigProvider: IAppConfigProvider
 
-    init(localStorage: ILocalStorage, backupManager: IBackupManager, languageManager: ILanguageManager, systemInfoManager: ISystemInfoManager, currencyManager: ICurrencyManager, async: Bool = true) {
+    init(localStorage: ILocalStorage, backupManager: IBackupManager, languageManager: ILanguageManager, systemInfoManager: ISystemInfoManager, currencyManager: ICurrencyManager, appConfigProvider: IAppConfigProvider, async: Bool = true) {
         self.localStorage = localStorage
         self.backupManager = backupManager
         self.languageManager = languageManager
         self.systemInfoManager = systemInfoManager
         self.currencyManager = currencyManager
+        self.appConfigProvider = appConfigProvider
 
         var nonBackedUpCountObservable = backupManager.nonBackedUpCountObservable
         var baseCurrencyUpdatedSignal: Observable<Void> = currencyManager.baseCurrencyUpdatedSignal
@@ -46,6 +48,10 @@ class MainSettingsInteractor {
 }
 
 extension MainSettingsInteractor: IMainSettingsInteractor {
+
+    var appWebPageLink: String {
+        return appConfigProvider.appWebPageLink
+    }
 
     var nonBackedUpCount: Int {
         return backupManager.nonBackedUpCount
