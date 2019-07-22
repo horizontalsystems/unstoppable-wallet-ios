@@ -1,19 +1,18 @@
+import UIKit
+
 protocol ILaunchInteractor {
-    func showLaunchModule()
-}
-
-protocol ILaunchInteractorDelegate: class {
-    func showWelcomeModule()
-    func showMainModule()
-    func showUnlockModule()
-}
-
-protocol ILaunchRouter {
-    func showWelcomeModule()
-    func showMainModule()
-    func showUnlockModule()
+    var passcodeLocked: Bool { get }
+    var hasAccounts: Bool { get }
+    var isPinSet: Bool { get }
 }
 
 protocol ILaunchPresenter {
-    func launch()
+    var launchMode: LaunchMode { get }
+}
+
+enum LaunchMode {
+    case noPasscode
+    case welcome
+    case unlock
+    case main
 }

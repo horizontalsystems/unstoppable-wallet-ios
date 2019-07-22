@@ -217,4 +217,10 @@ extension GrdbStorage: IAccountRecordStorage {
         }
     }
 
+    func deleteAllAccountRecords() {
+        _ = try! dbPool.write { db in
+            try AccountRecord.deleteAll(db)
+        }
+    }
+
 }

@@ -1,30 +1,28 @@
 class LaunchInteractor {
     private let accountManager: IAccountManager
     private let pinManager: IPinManager
-    private let appConfigProvider: IAppConfigProvider
+    private let passcodeLockManager: IPasscodeLockManager
 
-    weak var delegate: ILaunchInteractorDelegate?
-
-    init(accountManager: IAccountManager, pinManager: IPinManager, appConfigProvider: IAppConfigProvider) {
+    init(accountManager: IAccountManager, pinManager: IPinManager, passcodeLockManager: IPasscodeLockManager) {
         self.accountManager = accountManager
         self.pinManager = pinManager
-        self.appConfigProvider = appConfigProvider
+        self.passcodeLockManager = passcodeLockManager
     }
 
 }
 
 extension LaunchInteractor: ILaunchInteractor {
 
-    func showLaunchModule() {
-        let isPinSet = pinManager.isPinSet
+    var passcodeLocked: Bool {
+        return passcodeLockManager.locked
+    }
 
-        if accountManager.accounts.isEmpty && !isPinSet {
-            delegate?.showWelcomeModule()
-        } else if isPinSet {
-            delegate?.showUnlockModule()
-        } else {
-            delegate?.showMainModule()
-        }
+    var hasAccounts: Bool {
+        return !accountManager.accounts.isEmpty
+    }
+
+    var isPinSet: Bool {
+        return pinManager.isPinSet
     }
 
 }

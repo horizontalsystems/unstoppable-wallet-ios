@@ -1,34 +1,27 @@
 class LaunchPresenter {
     private let interactor: ILaunchInteractor
-    private let router: ILaunchRouter
 
-    init(interactor: ILaunchInteractor, router: ILaunchRouter) {
+    init(interactor: ILaunchInteractor) {
         self.interactor = interactor
-        self.router = router
     }
 
 }
 
 extension LaunchPresenter: ILaunchPresenter {
 
-    func launch() {
-        interactor.showLaunchModule()
-    }
+    var launchMode: LaunchMode {
+        let isPinSet = interactor.isPinSet
 
-}
+        if interactor.passcodeLocked {
+            return .noPasscode
+        } else if !interactor.hasAccounts && !isPinSet {
+            return  .welcome
+        } else if isPinSet {
+            return .unlock
+        } else {
+            return .main
+        }
 
-extension LaunchPresenter: ILaunchInteractorDelegate {
-
-    func showWelcomeModule() {
-        router.showWelcomeModule()
-    }
-
-    func showMainModule() {
-        router.showMainModule()
-    }
-
-    func showUnlockModule() {
-        router.showUnlockModule()
     }
 
 }

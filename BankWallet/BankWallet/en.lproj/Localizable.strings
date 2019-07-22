@@ -233,6 +233,10 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 "unlock_pin.cant_save_pin" = "Ouch! We cant save your passcode, please contact us asap!";
 "unlock_pin.blocked_until" = "Disabled until: %@";
 
+// No Passcode
+
+"no_passcode.info_text" = "The security mechanisms in this app require that device OS has the passcode enabled.\nYou need to enable it in iOS settings before you can use the app.";
+
 //NumPad
 
 "numpad_2" = "A B C";

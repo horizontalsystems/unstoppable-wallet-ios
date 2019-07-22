@@ -175,6 +175,10 @@ extension AccountStorage: IAccountStorage {
         try? clearSecureStorage(account: account)
     }
 
+    func clear() {
+        storage.deleteAllAccountRecords()
+    }
+
 }
 
 extension AccountStorage {

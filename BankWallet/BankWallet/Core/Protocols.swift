@@ -172,6 +172,7 @@ protocol IAccountManager {
     func update(account: Account)
     func create(account: Account)
     func delete(account: Account)
+    func clear()
 }
 
 protocol IBackupManager {
@@ -204,6 +205,12 @@ protocol ILockManager {
     func willEnterForeground()
 }
 
+protocol IPasscodeLockManager {
+    var locked: Bool { get }
+    func didFinishLaunching()
+    func willEnterForeground()
+}
+
 protocol IBlurManager {
     func willResignActive()
     func didBecomeActive()
@@ -220,6 +227,11 @@ protocol IPinManager: class {
 
 protocol ILockRouter {
     func showUnlock(delegate: IUnlockDelegate?)
+}
+
+protocol IPasscodeLockRouter {
+    func showNoPasscode()
+    func showLaunch()
 }
 
 protocol IBiometricManager {
@@ -305,12 +317,14 @@ protocol IAccountStorage {
     var allAccounts: [Account] { get }
     func save(account: Account)
     func delete(account: Account)
+    func clear()
 }
 
 protocol IAccountRecordStorage {
     var allAccountRecords: [AccountRecord] { get }
     func save(accountRecord: AccountRecord)
     func deleteAccountRecord(by id: String)
+    func deleteAllAccountRecords()
 }
 
 protocol IJsonApiProvider {
@@ -476,15 +490,11 @@ enum DefaultAccountType {
 }
 
 protocol IAppManager {
-    func onStart()
-    func onResignActive()
-    func onBecomeActive()
-    func onEnterBackground()
-    func onEnterForeground()
-
-    var resignActiveObservable: Observable<()> { get }
-    var becomeActiveObservable: Observable<()> { get }
-    var enterBackgroundObservable: Observable<()> { get }
+    func didFinishLaunching()
+    func willResignActive()
+    func didBecomeActive()
+    func didEnterBackground()
+    func willEnterForeground()
 }
 
 protocol IWalletStorage {
