@@ -29,6 +29,10 @@ extension MainSettingsPresenter: IMainSettingsViewDelegate {
         router.showSecuritySettings()
     }
 
+    func didTapManageCoins() {
+        router.showManageCoins()
+    }
+
     func didTapBaseCurrency() {
         router.showBaseCurrencySettings()
     }

@@ -70,9 +70,17 @@ class MainSettingsViewController: WalletViewController, SectionsDataSource {
         let securityAttentionImage = backedUp ? nil : UIImage(named: "Attention Icon")
         securitySettingsRows.append(Row<SettingsRightImageCell>(id: "security_center", hash: "security_center.\(backedUp)", height: SettingsTheme.cellHeight, bind: { cell, _ in
             cell.selectionStyle = .default
-            cell.bind(titleIcon: UIImage(named: "Security Icon"), title: "settings.security_center".localized, rightImage: securityAttentionImage, rightImageTintColor: SettingsTheme.attentionIconTint, showDisclosure: true, last: true)
+            cell.bind(titleIcon: UIImage(named: "Security Icon"), title: "settings.security_center".localized, rightImage: securityAttentionImage, rightImageTintColor: SettingsTheme.attentionIconTint, showDisclosure: true)
         }, action: { [weak self] _ in
             self?.delegate.didTapSecurity()
+        }))
+        securitySettingsRows.append(Row<SettingsRightImageCell>(id: "manage_coins", hash: "manage_coins", height: SettingsTheme.cellHeight, bind: { cell, _ in
+            cell.selectionStyle = .default
+            cell.bind(titleIcon: UIImage(named: "Manage Coins Icon"), title: "settings.manage_coins".localized, showDisclosure: true, last: true)
+        }, action: { [weak self] _ in
+            DispatchQueue.main.async {
+                self?.delegate.didTapManageCoins()
+            }
         }))
         let settingsHeader: ViewState<SectionSeparator> = .cellType(hash: "settings_header", binder: { view in
             view.bind(showTopSeparator: false)
