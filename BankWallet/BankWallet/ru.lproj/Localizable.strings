@@ -151,6 +151,7 @@
 "settings.title" = "Настройки";
 "settings.tab_bar_item" = "Настройки";
 "settings.security_center" = "Центр Безопасности";
+"settings.manage_coins" = "Manage Coins";
 "settings.restore_wallet" = "Восстановить Кошелек";
 "settings.base_currency" = "Базовая Валюта";
 "settings.language" = "Язык";
