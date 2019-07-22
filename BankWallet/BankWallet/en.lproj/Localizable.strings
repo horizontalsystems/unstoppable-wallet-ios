@@ -207,6 +207,7 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 // Manage Keys
 
 "settings_manage_keys.title" = "Keys";
+"settings_manage_keys.description" = "Anyone with access to your Keys can steal your wallet funds. Store them safely and never show them to anyone.\n\nBackup each key to be able to restore funds if you loose or break your phone, or simply the wallet app gets deleted.";
 "settings_manage_keys.unlink" = "Unlink";
 "settings_manage_keys.backup" = "Backup";
 "settings_manage_keys.show" = "Show";

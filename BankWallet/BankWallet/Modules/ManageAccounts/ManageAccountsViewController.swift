@@ -3,6 +3,8 @@ import UIExtensions
 import SnapKit
 
 class ManageAccountsViewController: WalletViewController {
+    private let descriptionSectionIndex = 0
+
     private let delegate: IManageAccountsViewDelegate
 
     private let tableView = UITableView(frame: .zero, style: .grouped)
@@ -34,8 +36,10 @@ class ManageAccountsViewController: WalletViewController {
         }
 
         tableView.registerCell(forClass: ManageAccountCell.self)
+        tableView.registerCell(forClass: ManageAccountDescriptionCell.self)
 
         delegate.viewDidLoad()
+
     }
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -66,11 +70,21 @@ extension ManageAccountsViewController: IManageAccountsView {
 
 extension ManageAccountsViewController: UITableViewDataSource, UITableViewDelegate {
 
+    public func numberOfSections(in tableView: UITableView) -> Int {
+        return 2
+    }
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if section == descriptionSectionIndex {
+            return 1
+        }
         return delegate.itemsCount
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if indexPath.section == descriptionSectionIndex {
+            return tableView.dequeueReusableCell(withIdentifier: String(describing: ManageAccountDescriptionCell.self), for: indexPath)
+        }
         return tableView.dequeueReusableCell(withIdentifier: String(describing: ManageAccountCell.self), for: indexPath)
     }
 
@@ -101,7 +115,22 @@ extension ManageAccountsViewController: UITableViewDataSource, UITableViewDelega
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if indexPath.section == descriptionSectionIndex {
+            return ManageAccountDescriptionCell.height(forContainerWidth: tableView.bounds.width)
+        }
         return ManageAccountsTheme.rowHeight
+    }
+
+    public func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        return UIView()
+    }
+
+    public func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 0
+    }
+
+    public func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return 1
     }
 
 }

@@ -34,4 +34,7 @@ class ManageAccountsTheme {
     static let buttonsHeight: CGFloat = 32
     static let buttonsBorderColor: UIColor = .cryptoSteel20
     static let buttonCornerRadius: CGFloat = 8
+
+    static let descriptionColor: UIColor = .cryptoGray
+    static let descriptionFont: UIFont = .cryptoCaptionMedium
 }
