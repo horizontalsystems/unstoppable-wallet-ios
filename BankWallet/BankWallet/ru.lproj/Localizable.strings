@@ -14,7 +14,7 @@
 "button.forward" = "Переслать";
 "button.save" = "Сохранить";
 "button.sync" = "Синхр.";
-"button.paste" = "Paste";
+"button.paste" = "Вставить";
 
 "alert.copied" = "Скопировано";
 "alert.no_internet" = "Нет интернета";
@@ -33,7 +33,7 @@
 "restore.description" = "Введите Секретный Ключ";
 "restore.validation_failed" = "Неверный Секретный Ключ";
 "restore.placeholder.account_name" = "Account Name";
-"restore.placeholder.private_key" = "Active Private Key";
+"restore.placeholder.private_key" = "Активировать приватный ключ";
 
 //Coin Sync Modes
 "coin_sync.title" = "Опции";
@@ -61,8 +61,8 @@
 "backup.confirmation.delete_app_warn" = "Я понимаю, что если это приложение удаляется или устанавливается на другое устройство, мой кошелек можно восстановить только с помощью Секретного Ключа.";
 "backup.confirmation.disclaimer" = "Я понимаю, что разработчики этого приложения не могут нести ответственность за любые непреднамеренные ошибки или проблемы, которые могут возникнуть при использовании этого приложения.";
 
-"words_validator.empty_words" = "Not all words are entered";
-"words_validator.invalid_confirmation" = "Words do not match";
+"words_validator.empty_words" = "Не все слова введены";
+"words_validator.invalid_confirmation" = "Введенные слова не совпадают";
 
 // Balance
 
@@ -74,10 +74,10 @@
 "balance.synced_through" = "до: %@";
 "balance.syncing" = "Синхронизация...";
 "balance.add_coins" = "Add Coins";
-"balance.sort.header" = "Sort by";
-"balance.sort.valueHighToLow" = "Balance";
-"balance.sort.az" = "Name";
-"balance.sort.manual" = "Default";
+"balance.sort.header" = "Сортировать по";
+"balance.sort.valueHighToLow" = "Баланс";
+"balance.sort.az" = "Название";
+"balance.sort.manual" = "По умолчанию";
 
 // Deposit
 
@@ -151,11 +151,11 @@
 "settings.title" = "Настройки";
 "settings.tab_bar_item" = "Настройки";
 "settings.security_center" = "Центр Безопасности";
-"settings.restore_wallet" = "Restore Wallet";
+"settings.restore_wallet" = "Восстановить Кошелек";
 "settings.base_currency" = "Базовая Валюта";
 "settings.language" = "Язык";
 "settings.about" = "О приложении";
-"settings.tell_friends" = "Tell Friends";
+"settings.tell_friends" = "Рассказать Друзьям";
 "settings.light_mode" = "Светлый Режим";
 "settings.info_title" = "UNSTOPPABLE";
 "settings.info_subtitle" = "decentralized app";
