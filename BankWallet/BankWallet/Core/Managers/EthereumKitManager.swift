@@ -2,12 +2,7 @@ import RxSwift
 import EthereumKit
 import Erc20Kit
 
-protocol IEthereumKitManager {
-    var ethereumKit: EthereumKit? { get }
-    func ethereumKit(wallet: Wallet) throws -> EthereumKit
-}
-
-class EthereumKitManager: IEthereumKitManager {
+class EthereumKitManager {
     private let appConfigProvider: IAppConfigProvider
     weak var ethereumKit: EthereumKit?
 
@@ -15,12 +10,12 @@ class EthereumKitManager: IEthereumKitManager {
         self.appConfigProvider = appConfigProvider
     }
 
-    func ethereumKit(wallet: Wallet) throws -> EthereumKit {
+    func ethereumKit(account: Account) throws -> EthereumKit {
         if let ethereumKit = self.ethereumKit {
             return ethereumKit
         }
 
-        guard case let .mnemonic(words, _, _) = wallet.account.type else {
+        guard case let .mnemonic(words, _, _) = account.type else {
             throw AdapterError.unsupportedAccount
         }
 
@@ -30,7 +25,7 @@ class EthereumKitManager: IEthereumKitManager {
                 networkType: appConfigProvider.testMode ? .ropsten : .mainNet,
                 infuraCredentials: appConfigProvider.infuraCredentials,
                 etherscanApiKey: appConfigProvider.etherscanKey,
-                walletId: wallet.account.id,
+                walletId: account.id,
                 minLogLevel: .error
         )
 
