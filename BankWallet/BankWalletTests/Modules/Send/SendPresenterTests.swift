@@ -237,7 +237,7 @@ class SendPresenterTests: XCTestCase {
     }
 
     func testOnDeleteClicked() {
-        presenter.onDeleteClicked()
+        presenter.onAddressDeleteClicked()
 
         verify(mockUserInput).address.set(equal(to: nil))
 

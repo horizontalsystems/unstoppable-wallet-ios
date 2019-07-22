@@ -13,7 +13,7 @@ extension BalanceRouter: IBalanceRouter {
 
     func openSend(for coinCode: CoinCode) {
         if let module = SendRouter.module(coinCode: coinCode) {
-            module.show(fromController: viewController)
+            viewController?.present(module, animated: true)
         }
     }
 

@@ -3,36 +3,26 @@ import Foundation
 protocol ISendView: class {
     func set(coin: Coin)
 
-    func set(amountInfo: AmountInfo?)
-    func set(switchButtonEnabled: Bool)
-    func set(hintInfo: HintInfo?)
-
-    func set(addressInfo: AddressInfo?)
-
-    func set(feeInfo: FeeInfo?)
-
-    func set(sendButtonEnabled: Bool)
-
     func showConfirmation(viewItem: SendConfirmationViewItem)
     func showCopied()
     func show(error: Error)
     func showProgress()
     func dismissWithSuccess()
-    func set(decimal: Int)
 }
 
 protocol ISendViewDelegate {
+    func showKeyboard()
+
     var isFeeAdjustable: Bool { get }
+
+    var sendItems: [SendItem] { get }
+
     func onViewDidLoad()
+    func onClose()
 
     func onAmountChanged(amount: Decimal)
     func onSwitchClicked()
 
-    func onPasteAddressClicked()
-    func onScan(address: String)
-    func onDeleteClicked()
-
-    func onSendClicked()
     func onConfirmClicked()
 
     func onCopyAddress()
@@ -66,12 +56,39 @@ protocol ISendInteractorDelegate: class {
 }
 
 protocol ISendRouter {
+    func scanQrCode(onCodeParse: ((String) -> ())?)
     func dismiss()
 }
 
 protocol ISendStateViewItemFactory {
     func viewItem(forState state: SendState, forceRoundDown: Bool) -> SendStateViewItem
     func confirmationViewItem(forState state: SendState, coin: Coin) -> SendConfirmationViewItem?
+}
+
+protocol ISendAmountDelegate: class {
+    func onSwitchClicked()
+    func onChanged(amount: Decimal)
+    func onMaxClicked()
+
+    func onPasteClicked()
+}
+
+protocol ISendAmountListener: class {
+    func showKeyboard()
+}
+
+protocol ISendAddressDelegate: class {
+    func onAddressScanClicked()
+    func onAddressPasteClicked()
+    func onAddressDeleteClicked()
+}
+
+protocol ISendButtonDelegate: class {
+    func onSendClicked()
+}
+
+protocol ISendFeeDelegate: class {
+    func onFeePriorityChange(value: Int)
 }
 
 enum SendInputType: String {

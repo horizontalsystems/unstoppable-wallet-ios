@@ -29,31 +29,18 @@ class SendViewController: ActionSheetController {
         model.addItemView(sendButtonItem)
         model.addItemView(keyboardItem)
 
-        amountItem.onAmountChanged = { [weak self] in
-            self?.delegate.onAmountChanged(amount: $0)
-        }
-        amountItem.onSwitchClicked = { [weak self] in
-            self?.delegate.onSwitchClicked()
-        }
-        amountItem.onMaxClicked = { [weak self] in
-            self?.delegate.onMaxClicked()
-        }
-        amountItem.onPasteClicked = { [weak self] in
-            self?.delegate.onPasteAmountClicked()
-        }
-
         addressItem.onPasteClicked = { [weak self] in
-            self?.delegate.onPasteAddressClicked()
+//            self?.delegate.onPasteAddressClicked()
         }
         addressItem.onScanClicked = { [weak self] in
             self?.onScanQrCode()
         }
         addressItem.onDeleteClicked = { [weak self] in
-            self?.delegate.onDeleteClicked()
+//            self?.delegate.onDeleteClicked()
         }
 
         sendButtonItem.onClicked = { [weak self] in
-            self?.delegate.onSendClicked()
+//            self?.delegate.onSendClicked()
         }
         keyboardItem.addLetter = { [weak self] text in
             self?.amountItem.addLetter?(text)
@@ -88,7 +75,7 @@ class SendViewController: ActionSheetController {
     private func onScanQrCode() {
         let scanController = ScanQRController()
         scanController.onCodeParse = { [weak self] address in
-            self?.delegate.onScan(address: address)
+//            self?.delegate.onScan(address: address)
         }
         present(scanController, animated: true)
     }

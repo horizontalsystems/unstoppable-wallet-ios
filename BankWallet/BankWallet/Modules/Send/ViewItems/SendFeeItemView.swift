@@ -2,7 +2,6 @@ import UIKit
 import UIExtensions
 import ActionSheet
 import SnapKit
-import AudioToolbox
 
 class SendFeeItemView: BaseActionItemView {
     private let feeLabel = UILabel()
