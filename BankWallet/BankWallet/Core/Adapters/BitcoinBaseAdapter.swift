@@ -144,7 +144,7 @@ extension BitcoinBaseAdapter: IAdapter {
 
         return Single.create { [weak self] observer in
             do {
-                try self?.abstractKit.send(to: address, value: satoshiAmount, feeRate: rate)
+                _ = try self?.abstractKit.send(to: address, value: satoshiAmount, feeRate: rate)
                 observer(.success(()))
             } catch {
                 observer(.error(self?.createSendError(from: error) ?? error))
