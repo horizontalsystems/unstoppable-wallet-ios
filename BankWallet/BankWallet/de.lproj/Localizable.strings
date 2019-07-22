@@ -151,6 +151,7 @@
 "settings.title" = "Einstellungen";
 "settings.tab_bar_item" = "Einstellungen";
 "settings.security_center" = "Sicherheit";
+"settings.manage_coins" = "Manage Coins";
 "settings.restore_wallet" = "Restore Wallet";
 "settings.base_currency" = "Währung";
 "settings.language" = "Sprache";
