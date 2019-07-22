@@ -182,12 +182,12 @@
 
 // Settings -> Tell Friends
 
-"settings_tell_friends.text" = "Be Free! Be Unstoppable! https://apps.apple.com/us/app/unstoppable-bitcoin-wallet/id1447619907?ls=1";
+"settings_tell_friends.text" = "Будь Свободным! Будь Неудержимым!";
 
 // Settings -> Security
 
 "settings_security.title" = "Безопасность";
-"settings_security.manage_accounts" = "Manage Keys";
+"settings_security.manage_accounts" = "Управление Ключами";
 "settings_security.set_pin" = "Код Доступа";
 "settings_security.change_pin" = "Изменить Код";
 "settings_security.touch_id" = "Touch ID";
@@ -198,12 +198,12 @@
 
 // Manage Keys
 
-"settings_manage_keys.title" = "Keys";
-"settings_manage_keys.unlink" = "Unlink";
-"settings_manage_keys.backup" = "Backup";
-"settings_manage_keys.show" = "Show";
-"settings_manage_keys.new" = "New";
-"settings_manage_keys.import" = "Import";
+"settings_manage_keys.title" = "Ключи";
+"settings_manage_keys.unlink" = "Отсоединить";
+"settings_manage_keys.backup" = "Резервная копия";
+"settings_manage_keys.show" = "Показать";
+"settings_manage_keys.new" = "Новый";
+"settings_manage_keys.import" = "Импорт";
 
 // Set PIN
 
@@ -226,7 +226,7 @@
 
 // No Passcode
 
-"no_passcode.info_text" = "The security mechanisms in this app require that device OS has the passcode enabled.\nYou need to enable it in iOS settings before you can use the app.";
+"no_passcode.info_text" = "Механизмы безопасности в этом приложении требуют, чтобы ОС устройства включила пароль.\nВам необходимо включить его в настройках iOS прежде, чем вы начнете использовать приложение.";
 
 //NumPad
 
