@@ -16,10 +16,12 @@ protocol IMainSettingsViewDelegate {
     func didTapLanguage()
     func didSwitch(lightMode: Bool)
     func didTapAbout()
+    func didTapTellFriends()
     func didTapAppLink()
 }
 
 protocol IMainSettingsInteractor {
+    var appWebPageLink: String { get }
     var nonBackedUpCount: Int { get }
     var currentLanguage: String { get }
     var baseCurrency: String { get }
@@ -39,6 +41,7 @@ protocol IMainSettingsRouter {
     func showBaseCurrencySettings()
     func showLanguageSettings()
     func showAbout()
+    func showShare(text: String)
     func openAppLink()
     func reloadAppInterface()
 }

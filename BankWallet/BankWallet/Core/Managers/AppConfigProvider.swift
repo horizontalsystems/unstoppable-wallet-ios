@@ -7,6 +7,8 @@ class AppConfigProvider: IAppConfigProvider {
         "https://ipfs.io"
     ]
 
+    let appWebPageLink: String = "https://unstoppable.money"
+
     let fiatDecimal: Int = 2
     let maxDecimal: Int = 8
 
