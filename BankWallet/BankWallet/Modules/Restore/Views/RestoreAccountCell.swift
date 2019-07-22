@@ -67,7 +67,7 @@ class RestoreAccountCell: UITableViewCell {
 
     func bind(predefinedAccountType: IPredefinedAccountType) {
         nameLabel.text = predefinedAccountType.title.localized
-        coinsLabel.text = predefinedAccountType.coinCodes
+        coinsLabel.text = predefinedAccountType.coinCodes.localized
     }
 
     override func setHighlighted(_ highlighted: Bool, animated: Bool) {

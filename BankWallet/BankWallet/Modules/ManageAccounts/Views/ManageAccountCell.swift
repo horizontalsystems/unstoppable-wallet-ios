@@ -125,15 +125,14 @@ class ManageAccountCell: UITableViewCell {
             rightButton.titleLabel.text = "settings_manage_keys.backup".localized
             rightButton.image = backedUp ? nil : UIImage(named: "Attention Icon Small")?.tinted(with: ManageAccountsTheme.attentionColor)
 
-            leftButton.set(hidden: false)
-            rightButton.set(hidden: false)
-
             activeKeyIcon.tintColor = ManageAccountsTheme.keyImageColor
             nameLabel.textColor = ManageAccountsTheme.cellTitleColor
             coinsLabel.textColor = ManageAccountsTheme.coinsColor
 
             gradientColor = ManageAccountsTheme.gradientRoundedBackgroundColor ?? UIColor.clear
-        case .notLinked:
+        case .notLinked(let canCreate):
+            leftButton.state = canCreate ? .active : .disabled
+
             roundedBackground.layer.shadowOpacity = 0
             clippingView.borderWidth = 0
 

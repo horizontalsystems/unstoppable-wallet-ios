@@ -25,7 +25,7 @@ class ManageAccountsTheme {
     static let coinsFont = UIFont.cryptoCaption1
     static let coinsColor = UIColor.cryptoGray
 
-    static var buttonsBackgroundColorDictionary: RespondButton.Style  { return [.active: .crypto_Steel20_LightBackground, .selected: .crypto_Steel40_LightGray, .disabled: UIColor.cryptoLightBackground] }
+    static var buttonsBackgroundColorDictionary: RespondButton.Style  { return [.active: .crypto_Steel20_LightBackground, .selected: .crypto_Steel40_LightGray, .disabled: .crypto_Steel20_LightBackground] }
     static var buttonsTextColorDictionary: RespondButton.Style { return [.active: .crypto_Bars_Dark, .selected: .crypto_Bars_Dark, .disabled: UIColor.cryptoGray50] }
 
     static let buttonsFont = UIFont.cryptoSectionCaption
