@@ -200,11 +200,13 @@
 // Manage Keys
 
 "settings_manage_keys.title" = "Ключи";
+"settings_manage_keys.description" = "Anyone with access to your Keys can steal your wallet funds. Store them safely and never show them to anyone.\n\nBackup each key to be able to restore funds if you loose or break your phone, or simply the wallet app gets deleted.";
 "settings_manage_keys.unlink" = "Отсоединить";
 "settings_manage_keys.backup" = "Резервная копия";
 "settings_manage_keys.show" = "Показать";
-"settings_manage_keys.new" = "Новый";
-"settings_manage_keys.import" = "Импорт";
+"settings_manage_keys.new" = "Create";
+"settings_manage_keys.import" = "Restore";
+"error.cant_create_eos" = "At this point, the wallet is not able to create new EOS wallet accounts. You're only able to restore the existing one.";
 
 // Set PIN
 
