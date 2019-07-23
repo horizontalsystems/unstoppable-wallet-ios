@@ -2,7 +2,7 @@ import UIKit
 
 class SendAddressCell: UITableViewCell {
 
-    let addressInputField = AddressInputField(frame: .zero, placeholder: "send.address_placeholder".localized, showQrButton: true, canEdit: false)
+    let addressInputField = AddressInputField(frame: .zero, placeholder: "send.address_placeholder".localized, showQrButton: true, canEdit: false, lineBreakMode: .byTruncatingMiddle)
 
     private var item: SAddressItem?
 

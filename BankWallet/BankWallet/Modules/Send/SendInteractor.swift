@@ -66,9 +66,13 @@ extension SendInteractor: ISendInteractor {
         }
     }
 
-    func state(forUserInput input: SendUserInput) -> SendState {
-        let coinCode = state.adapter.wallet.coin.code
+    func decimal(forInputType inputType: SendInputType) -> Int {
+        return inputType == .coin ? min(state.adapter.decimal, appConfigProvider.maxDecimal) : appConfigProvider.fiatDecimal
+    }
+
+    func state(forUserInput input: SendUserInput) throws -> SendState {
         let adapter = state.adapter
+        let coinCode = adapter.wallet.coin.code
         let baseCurrency = currencyManager.baseCurrency
         let rateValue = state.exchangeRate?.value
 
@@ -95,15 +99,20 @@ extension SendInteractor: ISendInteractor {
             }
         }
 
-        let errors = adapter.validate(amount: sendState.coinValue?.value ?? 0, address: input.address, feeRatePriority: input.feeRatePriority)
-        errors.forEach {
+        var params = [String: Any]()
+        params[AdapterFields.amount.rawValue] = sendState.coinValue?.value ?? 0
+        params[AdapterFields.address.rawValue] = input.address
+        params[AdapterFields.feeRateRriority.rawValue] = input.feeRatePriority
+        let errors = try adapter.validate(params: params)
+        try errors.forEach {
             switch($0) {
-            case .insufficientAmount: sendState.amountError = createAmountError(forInput: input, feeRatePriority: input.feeRatePriority)
-            case .insufficientFeeBalance: sendState.feeError = createFeeError(forInput: input, amount: sendState.coinValue?.value ?? 0, feeRatePriority: input.feeRatePriority)
+            case .insufficientAmount: sendState.amountError = try createAmountError(forInput: input, feeRatePriority: input.feeRatePriority)
+            case .insufficientFeeBalance: sendState.feeError = try createFeeError(forInput: input, amount: sendState.coinValue?.value ?? 0, feeRatePriority: input.feeRatePriority)
             }
         }
         if let coinValue = sendState.coinValue {
-            let feeValue = adapter.fee(for: coinValue.value, address: input.address, feeRatePriority: input.feeRatePriority)
+            params[AdapterFields.amount.rawValue] = coinValue.value
+            let feeValue = try adapter.fee(params: params)
             sendState.feeCoinValue = CoinValue(coinCode: state.adapter.feeCoinCode ?? coinCode, value: feeValue)
         }
         let feeRateValue: Decimal?
@@ -119,8 +128,12 @@ extension SendInteractor: ISendInteractor {
         return sendState
     }
 
-    private func createAmountError(forInput input: SendUserInput, feeRatePriority: FeeRatePriority) -> AmountInfo? {
-        let availableBalance = state.adapter.availableBalance(for: input.address, feeRatePriority: feeRatePriority)
+    private func createAmountError(forInput input: SendUserInput, feeRatePriority: FeeRatePriority) throws -> AmountInfo? {
+        var params = [String: Any]()
+        params[AdapterFields.address.rawValue] = input.address
+        params[AdapterFields.feeRateRriority.rawValue] = input.feeRatePriority
+
+        let availableBalance = try state.adapter.availableBalance(params: params)
         switch input.inputType {
         case .coin:
             return .coinValue(coinValue: CoinValue(coinCode: coin.code, value: availableBalance))
@@ -132,17 +145,26 @@ extension SendInteractor: ISendInteractor {
         }
     }
 
-    private func createFeeError(forInput input: SendUserInput, amount: Decimal, feeRatePriority: FeeRatePriority) -> FeeError? {
+    private func createFeeError(forInput input: SendUserInput, amount: Decimal, feeRatePriority: FeeRatePriority) throws -> FeeError? {
         guard let code = state.adapter.feeCoinCode else {
             return nil
         }
-        let fee = state.adapter.fee(for: amount, address: input.address, feeRatePriority: feeRatePriority)
+        var params = [String: Any]()
+        params[AdapterFields.amount.rawValue] = amount
+        params[AdapterFields.address.rawValue] = input.address
+        params[AdapterFields.feeRateRriority.rawValue] = input.feeRatePriority
+
+        let fee = try state.adapter.fee(params: params)
         let feeValue = CoinValue(coinCode: code, value: fee)
         return .erc20error(erc20CoinCode: state.adapter.wallet.coin.code, fee: feeValue)
     }
 
-    func totalBalanceMinusFee(forInputType input: SendInputType, address: String?, feeRatePriority: FeeRatePriority) -> Decimal {
-        let availableBalance =  state.adapter.availableBalance(for: address, feeRatePriority: feeRatePriority)
+    func totalBalanceMinusFee(forInputType input: SendInputType, address: String?, feeRatePriority: FeeRatePriority) throws -> Decimal {
+        var params = [String: Any]()
+        params[AdapterFields.address.rawValue] = address
+        params[AdapterFields.feeRateRriority.rawValue] = feeRatePriority
+
+        let availableBalance = try state.adapter.availableBalance(params: params)
         switch input {
         case .coin:
             return availableBalance
@@ -176,7 +198,12 @@ extension SendInteractor: ISendInteractor {
             return
         }
 
-        var single = state.adapter.sendSingle(to: address, amount: amount, feeRatePriority: userInput.feeRatePriority)
+        var params = [String: Any]()
+        params[AdapterFields.amount.rawValue] = amount
+        params[AdapterFields.address.rawValue] = userInput.address
+        params[AdapterFields.feeRateRriority.rawValue] = userInput.feeRatePriority
+
+        var single = state.adapter.sendSingle(params: params)
         if async {
             single = single.subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
                     .observeOn(MainScheduler.instance)

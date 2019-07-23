@@ -9,7 +9,7 @@ extension SendRouter: ISendRouter {
 
     func showConfirmation(viewItem: SendConfirmationViewItem, delegate: ISendViewDelegate) {
         let confirmationController = SendConfirmationViewController(delegate: delegate, viewItem: viewItem)
-        present(confirmationController, animated: true)
+        viewController?.present(confirmationController, animated: true)
     }
 
     func scanQrCode(onCodeParse: ((String) -> ())?) {

@@ -38,8 +38,8 @@ protocol ISendInteractor {
     var valueFromPasteboard: String? { get }
     func parse(paymentAddress: String) -> PaymentRequestAddress
     func convertedAmount(forInputType inputType: SendInputType, amount: Decimal) -> Decimal?
-    func state(forUserInput input: SendUserInput) -> SendState
-    func totalBalanceMinusFee(forInputType input: SendInputType, address: String?, feeRatePriority: FeeRatePriority) -> Decimal
+    func state(forUserInput input: SendUserInput) throws -> SendState
+    func totalBalanceMinusFee(forInputType input: SendInputType, address: String?, feeRatePriority: FeeRatePriority) throws -> Decimal
     func copy(address: String)
     func send(userInput: SendUserInput)
 
@@ -145,6 +145,10 @@ class SendUserInput {
     var amount: Decimal = 0
     var address: String?
     var feeRatePriority: FeeRatePriority = .medium
+}
+
+class EOSSendUserInput: SendUserInput {
+    var memo: String?
 }
 
 class SendState {

@@ -98,6 +98,13 @@ enum FeeRatePriority: Int {
     case highest
 }
 
+enum AdapterFields: String {
+    case amount = "amount"
+    case address = "address"
+    case feeRateRriority = "fee_rate_priority"
+    case memo = "memo"
+}
+
 protocol IAdapter: class {
     var wallet: Wallet { get }
     var feeCoinCode: CoinCode? { get }
@@ -121,12 +128,13 @@ protocol IAdapter: class {
     var transactionRecordsObservable: Observable<[TransactionRecord]> { get }
     func transactionsSingle(from: (hash: String, interTransactionIndex: Int)?, limit: Int) -> Single<[TransactionRecord]>
 
-    func sendSingle(to address: String, amount: Decimal, feeRatePriority: FeeRatePriority) -> Single<Void>
+    func sendSingle(params: [String : Any]) -> Single<Void>
 
-    func availableBalance(for address: String?, feeRatePriority: FeeRatePriority) -> Decimal
-    func fee(for value: Decimal, address: String?, feeRatePriority: FeeRatePriority) -> Decimal
+    func availableBalance(params: [String : Any]) throws -> Decimal
+    func fee(params: [String : Any]) throws -> Decimal
+    func validate(params: [String : Any]) throws -> [SendStateError]
+
     func validate(address: String) throws
-    func validate(amount: Decimal, address: String?, feeRatePriority: FeeRatePriority) -> [SendStateError]
     func parse(paymentAddress: String) -> PaymentRequestAddress
 
     var receiveAddress: String { get }
@@ -458,6 +466,7 @@ protocol IFeeRateProvider {
 }
 
 enum AdapterError: Error {
+    case wrongParameters
     case unsupportedAccount
 }
 

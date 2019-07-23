@@ -105,23 +105,31 @@ extension Erc20Adapter: IAdapter {
         }
     }
 
-    func availableBalance(for address: String?, feeRatePriority: FeeRatePriority) -> Decimal {
+    func availableBalance(params: [String : Any]) -> Decimal {
         return max(0, balance - fee)
     }
 
-    func fee(for value: Decimal, address: String?, feeRatePriority: FeeRatePriority) -> Decimal {
+    func fee(params: [String : Any]) -> Decimal {
+        guard let feeRatePriority: FeeRatePriority = params[AdapterFields.feeRateRriority.rawValue] as? FeeRatePriority else {
+            return 0
+        }
+
         return erc20Kit.fee(gasPrice: feeRateProvider.ethereumGasPrice(for: feeRatePriority)) / pow(10, EthereumAdapter.decimal)
     }
 
-    func validate(amount: Decimal, address: String?, feeRatePriority: FeeRatePriority) -> [SendStateError] {
+    func validate(params: [String : Any]) throws -> [SendStateError] {
+        guard let amount: Decimal = params[AdapterFields.amount.rawValue] as? Decimal else {
+            throw AdapterError.wrongParameters
+        }
+
         var errors = [SendStateError]()
-        if amount > availableBalance(for: address, feeRatePriority: feeRatePriority) {
+        if amount > availableBalance(params: params) {
             errors.append(.insufficientAmount)
         }
 
         let ethereumBalance = balanceDecimal(balanceString: ethereumKit.balance, decimal: EthereumAdapter.decimal)
 
-        if ethereumBalance < fee(for: amount, address: address, feeRatePriority: feeRatePriority) {
+        if ethereumBalance < fee(params: params) {
             errors.append(.insufficientFeeBalance)
         }
         return errors

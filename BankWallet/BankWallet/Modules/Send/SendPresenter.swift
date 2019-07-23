@@ -23,7 +23,9 @@ class SendPresenter {
     private func onChange(address: String?) {
         userInput.address = address
 
-        let state = interactor.state(forUserInput: userInput)
+        guard let state = try? interactor.state(forUserInput: userInput) else {
+            return
+        }
         let viewItem = factory.viewItem(forState: state, forceRoundDown: false)
 
         addressItem.addressInfo = viewItem.addressInfo
@@ -39,7 +41,9 @@ class SendPresenter {
     }
 
     private func updateViewItem() {
-        let state = interactor.state(forUserInput: userInput)
+        guard let state = try? interactor.state(forUserInput: userInput) else {
+            return
+        }
         let viewItem = factory.viewItem(forState: state, forceRoundDown: false)
 
         amountItem.decimal = viewItem.decimal
@@ -110,7 +114,9 @@ extension SendPresenter: ISendViewDelegate {
 
         userInput.inputType = interactor.defaultInputType
 
-        let state = interactor.state(forUserInput: userInput)
+        guard let state = try? interactor.state(forUserInput: userInput) else {
+            return
+        }
         let viewItem = factory.viewItem(forState: state, forceRoundDown: false)
 
         view?.set(coin: interactor.coin)
@@ -143,7 +149,9 @@ extension SendPresenter: ISendViewDelegate {
         userInput.amount = convertedAmount
         userInput.inputType = newInputType
 
-        let state = interactor.state(forUserInput: userInput)
+        guard let state = try? interactor.state(forUserInput: userInput) else {
+            return
+        }
         let viewItem = factory.viewItem(forState: state, forceRoundDown: false)
 
         amountItem.decimal = viewItem.decimal
@@ -187,10 +195,14 @@ extension SendPresenter: ISendViewDelegate {
     }
 
     func onMaxClicked() {
-        let totalBalanceMinusFee = interactor.totalBalanceMinusFee(forInputType: userInput.inputType, address: userInput.address, feeRatePriority: userInput.feeRatePriority)
+        guard let totalBalanceMinusFee = try? interactor.totalBalanceMinusFee(forInputType: userInput.inputType, address: userInput.address, feeRatePriority: userInput.feeRatePriority) else {
+            return
+        }
         userInput.amount = totalBalanceMinusFee
 
-        let state = interactor.state(forUserInput: userInput)
+        guard let state = try? interactor.state(forUserInput: userInput) else {
+            return
+        }
         let viewItem = factory.viewItem(forState: state, forceRoundDown: true)
 
         amountItem.amountInfo = viewItem.amountInfo
@@ -211,7 +223,9 @@ extension SendPresenter: ISendAmountDelegate {
     func onChanged(amount: Decimal) {
         userInput.amount = amount
 
-        let state = interactor.state(forUserInput: userInput)
+        guard let state = try? interactor.state(forUserInput: userInput) else {
+            return
+        }
         let viewItem = factory.viewItem(forState: state, forceRoundDown: false)
 
         amountItem.hintInfo = viewItem.hintInfo
@@ -228,7 +242,9 @@ extension SendPresenter: ISendAmountDelegate {
         if let value = ValueFormatter.instance.parseAnyDecimal(from: interactor.valueFromPasteboard) {
             userInput.amount = value
 
-            let state = interactor.state(forUserInput: userInput)
+            guard let state = try? interactor.state(forUserInput: userInput) else {
+                return
+            }
             let viewItem = factory.viewItem(forState: state, forceRoundDown: false)
 
             amountItem.amountInfo = viewItem.amountInfo
@@ -263,7 +279,9 @@ extension SendPresenter: ISendFeeDelegate {
     func onFeePriorityChange(value: Int) {
         userInput.feeRatePriority = FeeRatePriority(rawValue: value) ?? .medium
 
-        let state = interactor.state(forUserInput: userInput)
+        guard let state = try? interactor.state(forUserInput: userInput) else {
+            return
+        }
         let viewItem = factory.viewItem(forState: state, forceRoundDown: false)
 
         amountItem.hintInfo = viewItem.hintInfo
@@ -281,7 +299,9 @@ extension SendPresenter: ISendFeeDelegate {
 extension SendPresenter: ISendButtonDelegate {
 
     func onSendClicked() {
-        let state = interactor.state(forUserInput: userInput)
+        guard let state = try? interactor.state(forUserInput: userInput) else {
+            return
+        }
 
         guard let viewItem = factory.confirmationViewItem(forState: state, coin: interactor.coin) else {
             return
