@@ -39,7 +39,6 @@ class ManageAccountsViewController: WalletViewController {
         tableView.registerCell(forClass: ManageAccountDescriptionCell.self)
 
         delegate.viewDidLoad()
-
     }
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -101,14 +100,10 @@ extension ManageAccountsViewController: UITableViewDataSource, UITableViewDelega
             }, onTapRight: { [weak self] in
                 self?.delegate.didTapBackup(index: indexPath.row)
             })
-        case .notLinked(let canCreate):
-            let tapLeft: (() -> ()) = canCreate ? { [weak self] in
+        case .notLinked:
+            cell.bind(viewItem: item, onTapLeft: { [weak self] in
                 self?.delegate.didTapCreate(index: indexPath.row)
-            } : {
-                HudHelper.instance.showError(title: "settings_manage_keys.cant_create".localized)
-            }
-
-            cell.bind(viewItem: item, onTapLeft: tapLeft, onTapRight: { [weak self] in
+            }, onTapRight: { [weak self] in
                 self?.delegate.didTapRestore(index: indexPath.row)
             })
         }

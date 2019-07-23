@@ -50,5 +50,5 @@ struct ManageAccountViewItem {
 
 enum ManageAccountViewItemState {
     case linked(backedUp: Bool)
-    case notLinked(canCreate: Bool)
+    case notLinked
 }

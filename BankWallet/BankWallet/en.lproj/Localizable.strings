@@ -213,6 +213,7 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 "settings_manage_keys.show" = "Show";
 "settings_manage_keys.new" = "Create";
 "settings_manage_keys.import" = "Restore";
+"error.cant_create_eos" = "At this point, the wallet is not able to create new EOS wallet accounts. You're only able to restore the existing one.";
 
 // Set PIN
 
@@ -250,9 +251,9 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 
 // Key Types
 
-"key_type.12_words" = "12-words";
+"key_type.12_words" = "12-words Key";
 "key_type.12_words.text" = "BTC, BCH, DASH, ETH, ERC-20";
-"key_type.eos" = "EOS Blockchain";
+"key_type.eos" = "EOS Blockchain Key";
 "key_type.eos.text" = "EOS";
-"key_type.binance" = "Binance Chain";
+"key_type.binance" = "Binance Chain Key";
 "key_type.binance.text" = "BNB, BEP-2";

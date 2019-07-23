@@ -130,9 +130,7 @@ class ManageAccountCell: UITableViewCell {
             coinsLabel.textColor = ManageAccountsTheme.coinsColor
 
             gradientColor = ManageAccountsTheme.gradientRoundedBackgroundColor ?? UIColor.clear
-        case .notLinked(let canCreate):
-            leftButton.state = canCreate ? .active : .disabled
-
+        case .notLinked:
             roundedBackground.layer.shadowOpacity = 0
             clippingView.borderWidth = 0
 

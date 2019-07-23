@@ -1,3 +1,5 @@
+import Foundation
+
 class AccountCreator {
     private let accountManager: IAccountManager
     private let accountFactory: IAccountFactory
@@ -58,8 +60,13 @@ extension AccountCreator: IAccountCreator {
 
 extension AccountCreator {
 
-    enum CreateError: Error {
+    enum CreateError: LocalizedError {
         case eosNotSupported
+
+        public var errorDescription: String? {
+            return "error.cant_create_eos".localized
+        }
+
     }
 
 }

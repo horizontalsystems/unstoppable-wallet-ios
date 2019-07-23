@@ -489,16 +489,6 @@ enum DefaultAccountType {
     case eos
 }
 
-extension DefaultAccountType: Equatable {
-    public static func ==(lhs: DefaultAccountType, rhs: DefaultAccountType) -> Bool {
-        switch (lhs, rhs) {
-        case (.mnemonic(let lhsWordsCount), .mnemonic(let rhsWordsCount)): return lhsWordsCount == rhsWordsCount
-        case (.eos, .eos): return true
-        default: return false
-        }
-    }
-}
-
 protocol IAppManager {
     func didFinishLaunching()
     func willResignActive()
