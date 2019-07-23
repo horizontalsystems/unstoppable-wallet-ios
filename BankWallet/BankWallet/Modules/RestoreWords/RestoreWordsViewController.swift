@@ -135,16 +135,7 @@ extension RestoreWordsViewController: IRestoreWordsView {
     }
 
     func show(error: Error) {
-        let errorString: String = {
-            switch error {
-            case is Mnemonic.ValidationError:
-                return "restore.validation_failed".localized
-            default:
-                return error.localizedDescription
-            }
-        }()
-
-        HudHelper.instance.showError(title: errorString)
+        HudHelper.instance.showError(title: error.localizedDescription)
     }
 
 }
