@@ -2,6 +2,8 @@ import UIKit
 import SnapKit
 
 class ManageAccountDescriptionCell: UITableViewCell {
+    static let descriptionLocalizationKey = "settings_manage_keys.description"
+
     private let label = UILabel()
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -14,9 +16,9 @@ class ManageAccountDescriptionCell: UITableViewCell {
         label.textColor = ManageAccountsTheme.descriptionColor
         label.font = ManageAccountsTheme.descriptionFont
         label.numberOfLines = 0
-        label.text = "settings_manage_keys.description".localized
+        label.text = ManageAccountDescriptionCell.descriptionLocalizationKey.localized
         label.snp.makeConstraints { maker in
-            maker.top.equalToSuperview()//.offset(ManageAccountsTheme.cellBigPadding)
+            maker.top.equalToSuperview()
             maker.leadingMargin.trailingMargin.equalToSuperview().inset(self.layoutMargins)
             maker.bottom.equalToSuperview().offset(-ManageAccountsTheme.cellBottomMargin)
         }
@@ -24,7 +26,7 @@ class ManageAccountDescriptionCell: UITableViewCell {
 
     static func height(forContainerWidth containerWidth: CGFloat) -> CGFloat {
         let view = UIView()
-        return ceil("settings_manage_keys.description".localized.height(forContainerWidth: containerWidth - 2 * view.layoutMargins.left, font: ManageAccountsTheme.descriptionFont) + ManageAccountsTheme.cellBottomMargin)
+        return ceil(ManageAccountDescriptionCell.descriptionLocalizationKey.localized.height(forContainerWidth: containerWidth - 2 * view.layoutMargins.left, font: ManageAccountsTheme.descriptionFont) + ManageAccountsTheme.cellBottomMargin)
     }
 
     required init?(coder aDecoder: NSCoder) {

@@ -14,12 +14,18 @@ extension WordsValidator.ValidationError: LocalizedError {
 
 extension Mnemonic.ValidationError: LocalizedError {
     public var errorDescription: String? {
-        return "restore.validation_failed".localized
+        switch self {
+        case .invalidWordsCount, .invalidWords:
+            return "restore.validation_failed".localized
+        }
     }
 }
 
 extension AccountCreator.CreateError: LocalizedError {
     public var errorDescription: String? {
-        return "error.cant_create_eos".localized
+        switch self {
+        case .eosNotSupported:
+            return "error.cant_create_eos".localized
+        }
     }
 }
