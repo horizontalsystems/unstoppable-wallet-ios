@@ -6,7 +6,7 @@ class ManageAccountsViewItemFactory {
         if let account = item.account {
             state = .linked(backedUp: account.backedUp)
         } else {
-            state = .notLinked(canCreate: true)
+            state = .notLinked
         }
 
         return ManageAccountViewItem(
