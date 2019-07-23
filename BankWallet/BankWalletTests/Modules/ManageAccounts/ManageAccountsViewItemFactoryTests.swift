@@ -18,7 +18,7 @@ class ManageAccountsViewItemFactoryTests: QuickSpec {
             stub(mockType) { mock in
                 when(mock.title.get).thenReturn(title)
                 when(mock.coinCodes.get).thenReturn(coinCodes)
-                when(mock.defaultAccountType.get).thenReturn(nil)
+                when(mock.defaultAccountType.get).thenReturn(DefaultAccountType.mnemonic(wordsCount: 12))
             }
         }
 
@@ -44,34 +44,10 @@ class ManageAccountsViewItemFactoryTests: QuickSpec {
                 context("when account does not exist") {
                     let item = ManageAccountItem(predefinedAccountType: mockType, account: nil)
 
-                    context("if PredefinedAccountType has no DefaultAccountType") {
+                    it("sets .notLinked") {
+                        let viewItem = factory.viewItem(item: item)
 
-                        beforeEach {
-                            stub(mockType) { mock in
-                                when(mock.defaultAccountType.get).thenReturn(nil)
-                            }
-                        }
-
-                        it("sets .notLinked with canCreateAccount to be false") {
-                            let viewItem = factory.viewItem(item: item)
-
-                            expect(viewItem.state).to(equal(ManageAccountViewItemState.notLinked(canCreate: false)))
-                        }
-                    }
-
-                    context("if PredefinedAccountType has DefaultAccountType") {
-
-                        beforeEach {
-                            stub(mockType) { mock in
-                                when(mock.defaultAccountType.get).thenReturn(DefaultAccountType.mnemonic(wordsCount: 12))
-                            }
-                        }
-
-                        it("sets .notLinked with canCreateAccount to be true") {
-                            let viewItem = factory.viewItem(item: item)
-
-                            expect(viewItem.state).to(equal(ManageAccountViewItemState.notLinked(canCreate: true)))
-                        }
+                        expect(viewItem.state).to(equal(ManageAccountViewItemState.notLinked))
                     }
                 }
 
