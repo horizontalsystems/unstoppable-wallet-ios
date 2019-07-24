@@ -134,8 +134,8 @@ class ManageAccountCell: UITableViewCell {
             roundedBackground.layer.shadowOpacity = 0
             clippingView.borderWidth = 0
 
-            leftButton.titleLabel.text = "settings_manage_keys.new".localized
-            rightButton.titleLabel.text = "settings_manage_keys.import".localized
+            leftButton.titleLabel.text = "settings_manage_keys.create".localized
+            rightButton.titleLabel.text = "settings_manage_keys.restore".localized
             rightButton.image = nil
 
             activeKeyIcon.tintColor = ManageAccountsTheme.nonActiveKeyImageColor
