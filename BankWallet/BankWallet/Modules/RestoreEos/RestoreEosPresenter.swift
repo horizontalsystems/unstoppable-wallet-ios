@@ -76,16 +76,15 @@ extension RestoreEosPresenter: IRestoreEosViewDelegate {
         }
         do {
             try interactor.validate(privateKey: privateKey)
+
+            let accountType: AccountType = .eos(account: account, activePrivateKey: privateKey)
+
+            switch mode {
+            case .pushed: router.notifyRestored(accountType: accountType)
+            case .presented: router.dismissAndNotify(accountType: accountType)
+            }
         } catch {
             view?.show(error: error)
-            return
-        }
-
-        let accountType: AccountType = .eos(account: account, activePrivateKey: privateKey)
-
-        switch mode {
-        case .pushed: router.notifyRestored(accountType: accountType)
-        case .presented: router.dismissAndNotify(accountType: accountType)
         }
     }
 

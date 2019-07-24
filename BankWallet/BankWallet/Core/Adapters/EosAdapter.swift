@@ -40,12 +40,8 @@ class EosAdapter {
         )
     }
 
-    static public func validate(privateKey: String) throws {
-        do {
-            _ = try EosKit.validate(privateKey: privateKey)
-        } catch {
-            throw error
-        }
+    static func validate(privateKey: String) throws {
+        try EosKit.validate(privateKey: privateKey)
     }
 
 }
