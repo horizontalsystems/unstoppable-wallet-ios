@@ -30,8 +30,8 @@
 // Restore
 
 "restore.title" = "복구";
-"restore.description" = "비밀 키를 입력";
-"restore.validation_failed" = "잘못된 비밀 키";
+"restore.description" = "Enter Key";
+"restore.validation_failed" = "Incorrect Key";
 "restore.placeholder.account_name" = "Account Name";
 "restore.placeholder.private_key" = "Active Private Key";
 
@@ -50,7 +50,7 @@
 // Backup
 
 "backup.intro.title" = "백업";
-"backup.intro.subtitle" = "비밀 키는 귀하의 휴대 전화를 분실, 도난, 고장, 또는 업그레이드 하는 경우 당신의 지갑과 자금을 복원 하는 유일한 방법입니다.\n\n12개의 단어로 구성 됩니다. 안전하게 오프라인으로 저장하세요.";
+"backup.intro.subtitle" = "The key that will be shown next is the only way to restore your funds, if your phone is ever lost, stolen, broken etc. Make sure that no one is watching your screen. \n The coins controlled by this key: %@ ";
 "backup.intro.later" = "나중에";
 "backup.intro.backup_now" = "백업";
 "backup.words.title" = "비밀 키";
@@ -189,7 +189,7 @@
 
 "settings_security.title" = "보안 센터";
 "settings_security.manage_accounts" = "Manage Keys";
-"settings_security.set_pin" = "비밀번호";
+"settings_security.passcode" = "Passcode";
 "settings_security.change_pin" = "비밀번호 변경";
 "settings_security.touch_id" = "터치 아이디";
 "settings_security.face_id" = "얼굴인식 아이디";
@@ -202,13 +202,15 @@
 "settings_manage_keys.unlink" = "Unlink";
 "settings_manage_keys.backup" = "Backup";
 "settings_manage_keys.show" = "Show";
-"settings_manage_keys.new" = "Create";
-"settings_manage_keys.import" = "Restore";
+"settings_manage_keys.create" = "Create";
+"settings_manage_keys.restore" = "Restore";
 "settings_manage_keys.unlink.confirmation_remove" = "This action will remove the %@ key (wallet) from this device.";
 "settings_manage_keys.unlink.confirmation_disable" = "Coins that will be disabled: %@";
 "settings_manage_keys.unlink.confirmation_loose" = "If you don't have a backup of this key you will loose the respective funds.";
 "error.cant_create_eos" = "At this point, the wallet is not able to create new EOS wallet accounts. You're only able to restore the existing one.";
 "error.cant_unlink" = "You need to backup this key before you may unlink it.";
+"settings_manage_keys.create.title" = " %@ Blockchain";
+"settings_manage_keys.create.text" = "This action will generate a key(wallet) for the following coins: %@";
 
 // Set PIN
 
@@ -231,7 +233,7 @@
 
 // No Passcode
 
-"no_passcode.info_text" = "The security mechanisms in this app require that device OS has the passcode enabled.\nYou need to enable it in iOS settings before you can use the app.";
+"no_passcode.info_text" = "This app requires that phone has the passcode (screen lock) enabled.\nYou may enable it in iOS settings.";
 
 //NumPad
 
