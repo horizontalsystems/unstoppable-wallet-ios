@@ -1,9 +1,18 @@
 import UIKit
 import SnapKit
 
+class AddressTextView: UITextView {
+    var onPaste: (() -> ())?
+
+    override func paste(_ sender: Any?) {
+        onPaste?()
+    }
+
+}
+
 class AddressInputField: UIView {
     private let addressWrapperView = UIView()
-    private let addressField = UITextView()
+    private let addressField = AddressTextView()
     private let placeholderLabel = UILabel()
     private let errorLabel = UILabel()
     private let scanButton = RespondButton()
@@ -52,6 +61,9 @@ class AddressInputField: UIView {
         addressField.textContainer.lineFragmentPadding = 0
         addressField.textContainerInset = .zero
         addressField.backgroundColor = .clear
+        addressField.onPaste = { [weak self] in
+            self?.onPaste?()
+        }
         placeholderLabel.textColor = SendTheme.addressHintColor
         placeholderLabel.snp.makeConstraints { maker in
             maker.leading.equalToSuperview()
@@ -202,6 +214,13 @@ extension AddressInputField: UITextViewDelegate {
 
     public func textViewDidChange(_ textView: UITextView) {
         onTextChange?(textView.text)
+    }
+
+    public func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        if text.contains(words: "\n") {
+            return false
+        }
+        return true
     }
 
 }

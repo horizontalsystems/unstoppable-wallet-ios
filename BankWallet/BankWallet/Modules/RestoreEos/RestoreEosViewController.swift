@@ -94,4 +94,8 @@ extension RestoreEosViewController: IRestoreEosView {
         accountPrivateKeyField.bind(address: key, error: nil)
     }
 
+    func show(error: Error) {
+        HudHelper.instance.showError(title: error.localizedDescription)
+    }
+
 }

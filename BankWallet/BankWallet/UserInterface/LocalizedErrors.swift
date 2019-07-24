@@ -1,5 +1,6 @@
 import Foundation
 import HSHDWalletKit
+import EosKit
 
 extension WordsValidator.ValidationError: LocalizedError {
     public var errorDescription: String? {
@@ -26,6 +27,15 @@ extension AccountCreator.CreateError: LocalizedError {
         switch self {
         case .eosNotSupported:
             return "error.cant_create_eos".localized
+        }
+    }
+}
+
+extension EosKit.ValidationError: LocalizedError {
+    public var errorDescription: String? {
+        switch self {
+        case .invalidPrivateKey:
+            return "error.invalid_eos_key".localized
         }
     }
 }

@@ -24,6 +24,10 @@ class RestoreEosPresenter {
         view?.set(key: key)
     }
 
+    private func omitReturns(string: String) -> String {
+        return string.replacingOccurrences(of: "\n", with: " ")
+    }
+
 }
 
 extension RestoreEosPresenter: IRestoreEosViewDelegate {
@@ -36,7 +40,7 @@ extension RestoreEosPresenter: IRestoreEosViewDelegate {
 
     func onPasteAccountClicked() {
         if let account = interactor.valueFromPasteboard {
-            onEnter(account: account)
+            onEnter(account: omitReturns(string: account))
         }
     }
 
@@ -50,7 +54,7 @@ extension RestoreEosPresenter: IRestoreEosViewDelegate {
 
     func onPasteKeyClicked() {
         if let key = interactor.valueFromPasteboard {
-            onEnter(key: key)
+            onEnter(key: omitReturns(string: key))
         }
     }
 
@@ -67,15 +71,20 @@ extension RestoreEosPresenter: IRestoreEosViewDelegate {
     }
 
     func didTapDone() {
-        guard let account = state.account, let privateKey = state.privateKey else {
+        guard let account = state.account?.trimmingCharacters(in: .whitespaces), let privateKey = state.privateKey?.trimmingCharacters(in: .whitespaces) else {
             return
         }
+        do {
+            try interactor.validate(privateKey: privateKey)
 
-        let accountType: AccountType = .eos(account: account, activePrivateKey: privateKey)
+            let accountType: AccountType = .eos(account: account, activePrivateKey: privateKey)
 
-        switch mode {
-        case .pushed: router.notifyRestored(accountType: accountType)
-        case .presented: router.dismissAndNotify(accountType: accountType)
+            switch mode {
+            case .pushed: router.notifyRestored(accountType: accountType)
+            case .presented: router.dismissAndNotify(accountType: accountType)
+            }
+        } catch {
+            view?.show(error: error)
         }
     }
 
