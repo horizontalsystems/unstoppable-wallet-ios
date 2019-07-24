@@ -17,6 +17,7 @@ class ManageAccountsTheme {
     static let attentionColor = UIColor.cryptoRed
     static let keyImageColor = UIColor.cryptoYellow
     static let nonActiveKeyImageColor = UIColor.cryptoGray50
+    static let alertKeyImageColor = UIColor.cryptoGray
 
     static let cellTitleFont = UIFont.cryptoHeadline
     static var cellTitleColor: UIColor { return .crypto_White_Black }
