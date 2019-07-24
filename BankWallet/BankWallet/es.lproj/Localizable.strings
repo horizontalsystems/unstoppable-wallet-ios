@@ -194,8 +194,6 @@
 "settings_security.touch_id" = "Touch ID";
 "settings_security.face_id" = "Face ID";
 "security_settings.unlink_alert_button" = "Desvincular";
-"settings_security.import_wallet_confirmation_1" = "Esta acción eliminará de este dispositivo la carpeta instalada actualmente ";
-"settings_security.import_wallet_confirmation_2" = "Asegúrese de que usted tiene su clave secreta o no podrá acceder a los fondos en el futuro.";
 
 // Manage Keys
 
@@ -206,7 +204,11 @@
 "settings_manage_keys.show" = "Show";
 "settings_manage_keys.new" = "Create";
 "settings_manage_keys.import" = "Restore";
+"settings_manage_keys.unlink.confirmation_remove" = "This action will remove the %@ key (wallet) from this device.";
+"settings_manage_keys.unlink.confirmation_disable" = "Coins that will be disabled: %@";
+"settings_manage_keys.unlink.confirmation_loose" = "If you don't have a backup of this key you will loose the respective funds.";
 "error.cant_create_eos" = "At this point, the wallet is not able to create new EOS wallet accounts. You're only able to restore the existing one.";
+"error.cant_unlink" = "You need to backup this key before you may unlink it.";
 
 // Set PIN
 
