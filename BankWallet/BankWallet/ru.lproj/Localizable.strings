@@ -189,7 +189,7 @@
 
 "settings_security.title" = "Безопасность";
 "settings_security.manage_accounts" = "Управление Ключами";
-"settings_security.passcode" = "Passcode";
+"settings_security.passcode" = "Код Доступа";
 "settings_security.change_pin" = "Изменить Код";
 "settings_security.touch_id" = "Touch ID";
 "settings_security.face_id" = "Face ID";
@@ -202,15 +202,14 @@
 "settings_manage_keys.unlink" = "Отсоединить";
 "settings_manage_keys.backup" = "Резервная копия";
 "settings_manage_keys.show" = "Показать";
-"settings_manage_keys.create" = "Create";
-"settings_manage_keys.restore" = "Restore";
+"settings_manage_keys.create" = "Создать";
+"settings_manage_keys.restore" = "Восстановить";
 "settings_manage_keys.unlink.confirmation_remove" = "This action will remove the %@ key (wallet) from this device.";
 "settings_manage_keys.unlink.confirmation_disable" = "Coins that will be disabled: %@";
 "settings_manage_keys.unlink.confirmation_loose" = "If you don't have a backup of this key you will loose the respective funds.";
-"error.cant_create_eos" = "At this point, the wallet is not able to create new EOS wallet accounts. You're only able to restore the existing one.";
+"error.cant_create_eos" = "В данный момент кошелек не может создать новые учетные записи EOS. Вы можете восстановить существующий.";
 "error.cant_unlink" = "You need to backup this key before you may unlink it.";
-"settings_manage_keys.create.title" = " %@ Blockchain";
-"settings_manage_keys.create.text" = "This action will generate a key(wallet) for the following coins: %@";
+"settings_manage_keys.create.text" = "This action will generate a key(wallet) for the following coins:\n\n%@";
 
 // Set PIN
 
