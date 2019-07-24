@@ -2,6 +2,7 @@ protocol IManageWalletsView: class {
     func updateUI()
     func showNoAccount(coin: Coin)
     func show(error: Error)
+    func showSuccess()
 }
 
 protocol IManageWalletsViewDelegate {

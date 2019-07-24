@@ -2,13 +2,10 @@ import UIKit
 import ActionSheet
 
 class ManageAccountsCreateAccountViewController: ActionSheetController {
-    private let predefinedAccountType: IPredefinedAccountType
     private let titleItem: AlertTitleItem
     private let textItem: AlertTextItem
 
     init(predefinedAccountType: IPredefinedAccountType, onCreate: @escaping () -> ()) {
-        self.predefinedAccountType = predefinedAccountType
-
         titleItem = AlertTitleItem(
                 title: predefinedAccountType.title.localized,
                 icon: UIImage(named: "Key Icon")?.withRenderingMode(.alwaysTemplate),
