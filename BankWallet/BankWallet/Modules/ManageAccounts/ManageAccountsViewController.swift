@@ -65,6 +65,18 @@ extension ManageAccountsViewController: IManageAccountsView {
         tableView.reloadData()
     }
 
+    func showCreateConfirmation(predefinedAccountType: IPredefinedAccountType) {
+        let controller = ManageAccountsCreateAccountViewController(predefinedAccountType: predefinedAccountType, onCreate: { [weak self] in
+            self?.delegate.didConfirmCreate(predefinedAccountType: predefinedAccountType)
+        })
+
+        present(controller, animated: true)
+    }
+
+    func showSuccess() {
+        HudHelper.instance.showSuccess()
+    }
+
 }
 
 extension ManageAccountsViewController: UITableViewDataSource, UITableViewDelegate {

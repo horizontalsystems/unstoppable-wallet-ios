@@ -33,10 +33,22 @@ class AppTheme {
                     backgroundStyle: .blur(intensity: 0.55, style: AppTheme.actionSheetBlurStyle))
         }
     }
+    static let alertSmallMargin: CGFloat = 8
+    static let alertMediumMargin: CGFloat = 12
+
     static var alertBackgroundColor: UIColor { return .crypto_SteelDark_Bars }
     static let alertHeaderHeight: CGFloat = 40
     static let alertHeaderFont: UIFont = .cryptoSectionCaption
     static let alertHeaderColor: UIColor = .cryptoGray
+
+    static let alertTitleHeight: CGFloat = 48
+    static let alertTitleFont: UIFont = .cryptoHeadline
+    static var alertTitleColor: UIColor { return .crypto_White_Black }
+
+    static let alertTextMargin: CGFloat = 16
+    static let alertTextFont: UIFont = .cryptoCaptionMedium
+    static var alertTextColor: UIColor = .cryptoGray
+
     static let alertCellHeight: CGFloat = 53
     static let alertCellFont: UIFont = .cryptoHeadline
     static var alertCellHighlightColor: UIColor = .cryptoYellow

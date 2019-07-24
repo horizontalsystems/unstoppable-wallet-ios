@@ -2,6 +2,8 @@ protocol IManageAccountsView: class {
     func showDoneButton()
     func show(error: Error)
     func reload()
+    func showCreateConfirmation(predefinedAccountType: IPredefinedAccountType)
+    func showSuccess()
 }
 
 protocol IManageAccountsViewDelegate {
@@ -14,6 +16,8 @@ protocol IManageAccountsViewDelegate {
     func didTapShowKey(index: Int)
     func didTapCreate(index: Int)
     func didTapRestore(index: Int)
+
+    func didConfirmCreate(predefinedAccountType: IPredefinedAccountType)
 
     func didTapDone()
 }

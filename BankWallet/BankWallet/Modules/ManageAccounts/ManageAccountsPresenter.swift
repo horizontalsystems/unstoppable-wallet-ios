@@ -66,15 +66,20 @@ extension ManageAccountsPresenter: IManageAccountsViewDelegate {
     }
 
     func didTapCreate(index: Int) {
-        do {
-            try interactor.createAccount(predefinedAccountType: items[index].predefinedAccountType)
-        } catch {
-            view?.show(error: error)
-        }
+        view?.showCreateConfirmation(predefinedAccountType: items[index].predefinedAccountType)
     }
 
     func didTapRestore(index: Int) {
         router.showRestore(defaultAccountType: items[index].predefinedAccountType.defaultAccountType, delegate: self)
+    }
+
+    func didConfirmCreate(predefinedAccountType: IPredefinedAccountType) {
+        do {
+            try interactor.createAccount(predefinedAccountType: predefinedAccountType)
+            view?.showSuccess()
+        } catch {
+            view?.show(error: error)
+        }
     }
 
     func didTapDone() {

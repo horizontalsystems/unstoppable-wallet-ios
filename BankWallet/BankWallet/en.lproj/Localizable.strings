@@ -217,8 +217,7 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 "settings_manage_keys.unlink.confirmation_loose" = "If you don't have a backup of this key you will loose the respective funds.";
 "error.cant_create_eos" = "At this point, the wallet is not able to create new EOS wallet accounts. You're only able to restore the existing one.";
 "error.cant_unlink" = "You need to backup this key before you may unlink it.";
-"settings_manage_keys.create.title" = " %@ Blockchain";
-"settings_manage_keys.create.text" = "This action will generate a key(wallet) for the following coins: %@";
+"settings_manage_keys.create.text" = "This action will generate a key(wallet) for the following coins:\n\n%@";
 "error.invalid_eos_key" = "Invalid key";
 
 // Set PIN
