@@ -40,6 +40,14 @@ class EosAdapter {
         )
     }
 
+    static public func validate(privateKey: String) throws {
+        do {
+            _ = try EosKit.validate(privateKey: privateKey)
+        } catch {
+            throw error
+        }
+    }
+
 }
 
 extension EosAdapter: IAdapter {
