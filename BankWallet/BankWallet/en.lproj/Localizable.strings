@@ -241,7 +241,7 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 
 // No Passcode
 
-"no_passcode.info_text" = "This app requires that phone has the passcode (screen lock) enabled./nYou may enable it in iOS settings.";
+"no_passcode.info_text" = "This app requires that phone has the passcode (screen lock) enabled.\nYou may enable it in iOS settings.";
 
 //NumPad
 
