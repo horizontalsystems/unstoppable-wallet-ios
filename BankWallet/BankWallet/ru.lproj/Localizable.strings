@@ -30,8 +30,8 @@
 // Restore
 
 "restore.title" = "Восстановить";
-"restore.description" = "Введите Секретный Ключ";
-"restore.validation_failed" = "Неверный Секретный Ключ";
+"restore.description" = "Enter Key";
+"restore.validation_failed" = "Incorrect Key";
 "restore.placeholder.account_name" = "Account Name";
 "restore.placeholder.private_key" = "Активировать приватный ключ";
 
@@ -50,7 +50,7 @@
 // Backup
 
 "backup.intro.title" = "Резервная копия";
-"backup.intro.subtitle" = "Ваш секретный ключ является единственным способом для восстановления вашего кошелька.\n\nОн состоит из 12 слов. Храните его в безопасном месте.";
+"backup.intro.subtitle" = "The key that will be shown next is the only way to restore your funds, if your phone is ever lost, stolen, broken etc. Make sure that no one is watching your screen. \n The coins controlled by this key: %@ ";
 "backup.intro.later" = "Позже";
 "backup.intro.backup_now" = "Резервная копия";
 "backup.words.title" = "Секретный Ключ";
@@ -189,7 +189,7 @@
 
 "settings_security.title" = "Безопасность";
 "settings_security.manage_accounts" = "Управление Ключами";
-"settings_security.set_pin" = "Код Доступа";
+"settings_security.passcode" = "Passcode";
 "settings_security.change_pin" = "Изменить Код";
 "settings_security.touch_id" = "Touch ID";
 "settings_security.face_id" = "Face ID";
@@ -202,13 +202,15 @@
 "settings_manage_keys.unlink" = "Отсоединить";
 "settings_manage_keys.backup" = "Резервная копия";
 "settings_manage_keys.show" = "Показать";
-"settings_manage_keys.new" = "Create";
-"settings_manage_keys.import" = "Restore";
+"settings_manage_keys.create" = "Create";
+"settings_manage_keys.restore" = "Restore";
 "settings_manage_keys.unlink.confirmation_remove" = "This action will remove the %@ key (wallet) from this device.";
 "settings_manage_keys.unlink.confirmation_disable" = "Coins that will be disabled: %@";
 "settings_manage_keys.unlink.confirmation_loose" = "If you don't have a backup of this key you will loose the respective funds.";
 "error.cant_create_eos" = "At this point, the wallet is not able to create new EOS wallet accounts. You're only able to restore the existing one.";
 "error.cant_unlink" = "You need to backup this key before you may unlink it.";
+"settings_manage_keys.create.title" = " %@ Blockchain";
+"settings_manage_keys.create.text" = "This action will generate a key(wallet) for the following coins: %@";
 
 // Set PIN
 
@@ -231,7 +233,7 @@
 
 // No Passcode
 
-"no_passcode.info_text" = "Механизмы безопасности в этом приложении требуют, чтобы ОС устройства включила пароль.\nВам необходимо включить его в настройках iOS прежде, чем вы начнете использовать приложение.";
+"no_passcode.info_text" = "This app requires that phone has the passcode (screen lock) enabled.\nYou may enable it in iOS settings.";
 
 //NumPad
 
