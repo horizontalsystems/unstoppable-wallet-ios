@@ -58,11 +58,13 @@ extension ManageAccountsPresenter: IManageAccountsViewDelegate {
     }
 
     func didTapBackup(index: Int) {
-        guard let account = items[index].account else {
+        let item = items[index]
+
+        guard let account = item.account else {
             return
         }
 
-        router.showBackup(account: account)
+        router.showBackup(account: account, predefinedAccountType: item.predefinedAccountType)
     }
 
     func didTapShowKey(index: Int) {
@@ -105,7 +107,7 @@ extension ManageAccountsPresenter: IManageAccountsViewDelegate {
             return
         }
 
-        router.showBackup(account: account)
+        router.showBackup(account: account, predefinedAccountType: item.predefinedAccountType)
     }
 
 }

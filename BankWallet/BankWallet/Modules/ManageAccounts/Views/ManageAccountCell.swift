@@ -122,7 +122,7 @@ class ManageAccountCell: UITableViewCell {
             clippingView.borderWidth = 2 / UIScreen.main.scale
 
             leftButton.titleLabel.text = "settings_manage_keys.unlink".localized
-            rightButton.titleLabel.text = "settings_manage_keys.backup".localized
+            rightButton.titleLabel.text = backedUp ? "settings_manage_keys.show".localized : "settings_manage_keys.backup".localized
             rightButton.image = backedUp ? nil : UIImage(named: "Attention Icon Small")?.tinted(with: ManageAccountsTheme.attentionColor)
 
             activeKeyIcon.tintColor = ManageAccountsTheme.keyImageColor
