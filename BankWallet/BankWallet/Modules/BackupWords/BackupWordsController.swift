@@ -2,11 +2,11 @@ import UIKit
 import SnapKit
 
 class BackupWordsController: WalletViewController {
+    private let delegate: IBackupWordsViewDelegate
 
-    let delegate: IBackupWordsViewDelegate
-
-    let wordsLabel = UILabel()
-    let proceedButton = UIButton()
+    private let scrollView = UIScrollView()
+    private let wordsLabel = UILabel()
+    private let proceedButton = UIButton()
 
     init(delegate: IBackupWordsViewDelegate) {
         self.delegate = delegate
@@ -23,18 +23,24 @@ class BackupWordsController: WalletViewController {
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         title = "backup.words.title".localized
 
-        view.addSubview(wordsLabel)
+        view.addSubview(scrollView)
         view.addSubview(proceedButton)
+        scrollView.addSubview(wordsLabel)
 
-        wordsLabel.numberOfLines = 0
-        wordsLabel.snp.makeConstraints { maker in
+        scrollView.showsVerticalScrollIndicator = false
+        scrollView.snp.makeConstraints { maker in
             maker.leading.equalToSuperview().offset(BackupTheme.sideMargin)
             maker.trailing.equalToSuperview().offset(-BackupTheme.sideMargin)
             maker.top.equalTo(self.view.snp.topMargin).offset(BackupTheme.wordsTopMargin)
-            maker.bottom.lessThanOrEqualTo(self.proceedButton.snp.top).offset(-BackupTheme.wordsBottomMargin)
+            maker.bottom.equalTo(self.proceedButton.snp.top).offset(-BackupTheme.wordsBottomMargin)
         }
 
-        proceedButton.setTitle("button.next".localized, for: .normal)
+        wordsLabel.numberOfLines = 0
+        wordsLabel.snp.makeConstraints { maker in
+            maker.edges.equalTo(self.scrollView.snp.edges)
+        }
+
+        proceedButton.setTitle(delegate.isBackedUp ? "backup.close".localized : "button.next".localized, for: .normal)
         proceedButton.addTarget(self, action: #selector(nextDidTap), for: .touchUpInside)
         proceedButton.setBackgroundColor(color: BackupTheme.backupButtonBackground, forState: .normal)
         proceedButton.setTitleColor(BackupTheme.buttonTitleColor, for: .normal)
@@ -61,7 +67,7 @@ class BackupWordsController: WalletViewController {
     }
 
     @objc func nextDidTap() {
-        delegate.showConfirmationDidTap()
+        delegate.didTapProceed()
     }
 
 }

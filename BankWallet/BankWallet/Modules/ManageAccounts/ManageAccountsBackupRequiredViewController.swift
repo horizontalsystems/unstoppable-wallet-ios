@@ -1,11 +1,11 @@
 import UIKit
 import ActionSheet
 
-class ManageAccountsCreateAccountViewController: ActionSheetController {
+class ManageAccountsBackupRequiredViewController: ActionSheetController {
     private let titleItem: AlertTitleItem
     private let textItem: AlertTextItem
 
-    init(title: String, coinCodes: String, onCreate: @escaping () -> ()) {
+    init(title: String, onBackup: @escaping () -> ()) {
         titleItem = AlertTitleItem(
                 title: title.localized,
                 icon: UIImage(named: "Key Icon")?.withRenderingMode(.alwaysTemplate),
@@ -13,27 +13,27 @@ class ManageAccountsCreateAccountViewController: ActionSheetController {
                 tag: 0
         )
 
-        textItem = AlertTextItem(text: "settings_manage_keys.create.text".localized(coinCodes.localized), tag: 1)
+        textItem = AlertTextItem(text: "settings_manage_keys.unlink.cant_unlink".localized, tag: 1)
 
         super.init(withModel: BaseAlertModel(), actionSheetThemeConfig: AppTheme.actionSheetConfig)
 
         model.addItemView(titleItem)
         model.addItemView(textItem)
 
-        let createItem = AlertButtonItem(
+        let backupItem = AlertButtonItem(
                 tag: 2,
-                title: "settings_manage_keys.create".localized,
+                title: "settings_manage_keys.backup".localized,
                 textStyle: ButtonTheme.textColorDictionary,
                 backgroundStyle: ButtonTheme.yellowBackgroundDictionary,
                 insets: UIEdgeInsets(top: ButtonTheme.verticalMargin, left: ButtonTheme.margin, bottom: ButtonTheme.verticalMargin, right: ButtonTheme.margin)
         ) { [weak self] in
             self?.dismiss(animated: true) {
-                onCreate()
+                onBackup()
             }
         }
 
-        createItem.isActive = true
-        model.addItemView(createItem)
+        backupItem.isActive = true
+        model.addItemView(backupItem)
     }
 
     required init?(coder aDecoder: NSCoder) {

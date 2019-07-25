@@ -1,11 +1,13 @@
 protocol IBackupViewDelegate {
+    var isBackedUp: Bool { get }
+    var coinCodes: String { get }
     func cancelDidClick()
-    func backupDidTap()
+    func proceedDidTap()
 }
 
 protocol IBackupRouter {
     func showUnlock()
-    func showBackup(accountType: AccountType, delegate: IBackupDelegate)
+    func showBackup(account: Account, delegate: IBackupDelegate)
     func close()
 }
 
@@ -14,6 +16,7 @@ protocol IBackupPresenter: IBackupViewDelegate {
 
 protocol IBackupDelegate {
     func didBackUp()
+    func didClose()
 }
 
 protocol IBackupInteractor {

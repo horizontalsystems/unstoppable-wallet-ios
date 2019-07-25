@@ -13,7 +13,6 @@ extension UnlinkInteractor: IUnlinkInteractor {
 
     func unlink(account: Account) {
         accountManager.delete(account: account)
-        delegate?.didUnlink()
     }
 
 }

@@ -2,8 +2,9 @@ protocol IManageAccountsView: class {
     func showDoneButton()
     func show(error: Error)
     func reload()
-    func showCreateConfirmation(predefinedAccountType: IPredefinedAccountType)
+    func showCreateConfirmation(title: String, coinCodes: String)
     func showSuccess()
+    func showBackupRequired(title: String)
 }
 
 protocol IManageAccountsViewDelegate {
@@ -17,7 +18,8 @@ protocol IManageAccountsViewDelegate {
     func didTapCreate(index: Int)
     func didTapRestore(index: Int)
 
-    func didConfirmCreate(predefinedAccountType: IPredefinedAccountType)
+    func didConfirmCreate()
+    func didRequestBackup()
 
     func didTapDone()
 }
@@ -34,8 +36,8 @@ protocol IManageAccountsInteractorDelegate: class {
 }
 
 protocol IManageAccountsRouter {
-    func showUnlink(account: Account)
-    func showBackup(account: Account)
+    func showUnlink(account: Account, predefinedAccountType: IPredefinedAccountType)
+    func showBackup(account: Account, predefinedAccountType: IPredefinedAccountType)
     func showKey(account: Account)
     func showRestore(defaultAccountType: DefaultAccountType, delegate: IRestoreAccountTypeDelegate)
     func close()

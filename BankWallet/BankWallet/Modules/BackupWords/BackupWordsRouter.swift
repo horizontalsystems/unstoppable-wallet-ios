@@ -19,14 +19,17 @@ extension BackupWordsRouter: IBackupWordsRouter {
         delegate.didBackUp()
     }
 
+    func notifyClosed() {
+        delegate.didClose()
+    }
+
 }
 
 extension BackupWordsRouter {
 
-    static func module(delegate: IBackupDelegate, words: [String]) -> UIViewController {
-
+    static func module(delegate: IBackupDelegate, words: [String], isBackedUp: Bool) -> UIViewController {
         let router = BackupWordsRouter(delegate: delegate)
-        let presenter = BackupWordsPresenter(router: router, words: words)
+        let presenter = BackupWordsPresenter(router: router, words: words, isBackedUp: isBackedUp)
 
         let viewController = BackupWordsController(delegate: presenter)
 

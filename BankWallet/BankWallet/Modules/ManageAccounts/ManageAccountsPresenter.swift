@@ -8,6 +8,7 @@ class ManageAccountsPresenter {
     private var viewItemFactory = ManageAccountsViewItemFactory()
 
     private var items = [ManageAccountItem]()
+    private var currentItem: ManageAccountItem?
 
     init(mode: ManageAccountsRouter.PresentationMode, interactor: IManageAccountsInteractor, router: IManageAccountsRouter) {
         self.mode = mode
@@ -42,19 +43,28 @@ extension ManageAccountsPresenter: IManageAccountsViewDelegate {
     }
 
     func didTapUnlink(index: Int) {
-        guard let account = items[index].account else {
+        let item = items[index]
+
+        guard let account = item.account else {
             return
         }
 
-        router.showUnlink(account: account)
+        if account.backedUp {
+            router.showUnlink(account: account, predefinedAccountType: item.predefinedAccountType)
+        } else {
+            currentItem = item
+            view?.showBackupRequired(title: item.predefinedAccountType.title)
+        }
     }
 
     func didTapBackup(index: Int) {
-        guard let account = items[index].account else {
+        let item = items[index]
+
+        guard let account = item.account else {
             return
         }
 
-        router.showBackup(account: account)
+        router.showBackup(account: account, predefinedAccountType: item.predefinedAccountType)
     }
 
     func didTapShowKey(index: Int) {
@@ -66,16 +76,22 @@ extension ManageAccountsPresenter: IManageAccountsViewDelegate {
     }
 
     func didTapCreate(index: Int) {
-        view?.showCreateConfirmation(predefinedAccountType: items[index].predefinedAccountType)
+        let item = items[index]
+        currentItem = item
+        view?.showCreateConfirmation(title: item.predefinedAccountType.title, coinCodes: item.predefinedAccountType.coinCodes)
     }
 
     func didTapRestore(index: Int) {
         router.showRestore(defaultAccountType: items[index].predefinedAccountType.defaultAccountType, delegate: self)
     }
 
-    func didConfirmCreate(predefinedAccountType: IPredefinedAccountType) {
+    func didConfirmCreate() {
+        guard let item = currentItem else {
+            return
+        }
+
         do {
-            try interactor.createAccount(predefinedAccountType: predefinedAccountType)
+            try interactor.createAccount(predefinedAccountType: item.predefinedAccountType)
             view?.showSuccess()
         } catch {
             view?.show(error: error)
@@ -84,6 +100,14 @@ extension ManageAccountsPresenter: IManageAccountsViewDelegate {
 
     func didTapDone() {
         router.close()
+    }
+
+    func didRequestBackup() {
+        guard let item = currentItem, let account = item.account else {
+            return
+        }
+
+        router.showBackup(account: account, predefinedAccountType: item.predefinedAccountType)
     }
 
 }

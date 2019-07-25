@@ -65,9 +65,9 @@ extension ManageAccountsViewController: IManageAccountsView {
         tableView.reloadData()
     }
 
-    func showCreateConfirmation(predefinedAccountType: IPredefinedAccountType) {
-        let controller = ManageAccountsCreateAccountViewController(predefinedAccountType: predefinedAccountType, onCreate: { [weak self] in
-            self?.delegate.didConfirmCreate(predefinedAccountType: predefinedAccountType)
+    func showCreateConfirmation(title: String, coinCodes: String) {
+        let controller = ManageAccountsCreateAccountViewController(title: title, coinCodes: coinCodes, onCreate: { [weak self] in
+            self?.delegate.didConfirmCreate()
         })
 
         present(controller, animated: true)
@@ -75,6 +75,14 @@ extension ManageAccountsViewController: IManageAccountsView {
 
     func showSuccess() {
         HudHelper.instance.showSuccess()
+    }
+
+    func showBackupRequired(title: String) {
+        let controller = ManageAccountsBackupRequiredViewController(title: title, onBackup: { [weak self] in
+            self?.delegate.didRequestBackup()
+        })
+
+        present(controller, animated: true)
     }
 
 }
