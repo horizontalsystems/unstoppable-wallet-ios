@@ -1,5 +1,6 @@
 import UIKit
 import SnapKit
+import DeepDiff
 
 class BalanceViewController: WalletViewController {
     private let numberOfSections = 2
@@ -187,8 +188,25 @@ extension BalanceViewController: IBalanceView {
         updateHeader()
     }
 
-    func updateItem(at index: Int) {
-        bind(at: IndexPath(row: index, section: balanceSection))
+    func reload(with diff: [DeepDiff.Change<BalanceItem>]) {
+        let changes = IndexPathConverter().convert(changes: diff, section: 0)
+
+        guard changes.deletes.isEmpty || changes.inserts.isEmpty else {
+            tableView.reloadData()
+            return
+        }
+
+        var updateIndexes = changes.moves.reduce([Int]()) {
+            var updates = $0
+            updates.append($1.from.row)
+            updates.append($1.to.row)
+            return updates
+        }
+        updateIndexes.append(contentsOf: changes.replaces.map { $0.row })
+
+        updateIndexes.forEach {
+            bind(at: IndexPath(row: $0, section: balanceSection))
+        }
     }
 
     func updateHeader() {

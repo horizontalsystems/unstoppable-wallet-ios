@@ -33,7 +33,7 @@ extension BalanceRouter {
         let router = BalanceRouter()
         let interactor = BalanceInteractor(adapterManager: App.shared.adapterManager, rateStorage: App.shared.grdbStorage, currencyManager: App.shared.currencyManager, localStorage: App.shared.localStorage)
         let dataSource = BalanceItemDataSource(sorter: BalanceSorter())
-        let presenter = BalancePresenter(interactor: interactor, router: router, dataSource: dataSource, factory: BalanceViewItemFactory(), sortingOnThreshold: BalanceTheme.sortingOnThreshold)
+        let presenter = BalancePresenter(interactor: interactor, router: router, dataSource: dataSource, factory: BalanceViewItemFactory(), differ: Differ(), sortingOnThreshold: BalanceTheme.sortingOnThreshold)
         let viewController = BalanceViewController(viewDelegate: presenter)
 
         interactor.delegate = presenter
