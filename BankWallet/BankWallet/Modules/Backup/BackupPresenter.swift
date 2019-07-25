@@ -33,7 +33,7 @@ extension BackupPresenter: IBackupViewDelegate {
         if interactor.isPinSet {
             router.showUnlock()
         } else {
-            router.showBackup(accountType: account.type, delegate: self)
+            router.showBackup(account: account, delegate: self)
         }
     }
 
@@ -42,7 +42,7 @@ extension BackupPresenter: IBackupViewDelegate {
 extension BackupPresenter: IUnlockDelegate {
 
     func onUnlock() {
-        router.showBackup(accountType: account.type, delegate: self)
+        router.showBackup(account: account, delegate: self)
     }
 
     func onCancelUnlock() {
@@ -54,6 +54,10 @@ extension BackupPresenter: IBackupDelegate {
 
     func didBackUp() {
         interactor.setBackedUp(accountId: account.id)
+        router.close()
+    }
+
+    func didClose() {
         router.close()
     }
 

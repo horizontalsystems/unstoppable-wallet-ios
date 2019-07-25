@@ -37,7 +37,7 @@ class BackupController: WalletViewController {
         }
 
         view.addSubview(cancelButton)
-        cancelButton.setTitle(delegate.isBackedUp ? "backup.intro.close".localized : "backup.intro.later".localized, for: .normal)
+        cancelButton.setTitle(delegate.isBackedUp ? "backup.close".localized : "backup.intro.later".localized, for: .normal)
         cancelButton.cornerRadius = BackupTheme.buttonCornerRadius
         cancelButton.setBackgroundColor(color: BackupTheme.laterButtonBackground, forState: .normal)
         cancelButton.addTarget(self, action: #selector(cancelDidTap), for: .touchUpInside)

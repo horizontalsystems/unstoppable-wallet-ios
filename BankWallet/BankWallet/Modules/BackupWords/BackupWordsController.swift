@@ -34,7 +34,7 @@ class BackupWordsController: WalletViewController {
             maker.bottom.lessThanOrEqualTo(self.proceedButton.snp.top).offset(-BackupTheme.wordsBottomMargin)
         }
 
-        proceedButton.setTitle("button.next".localized, for: .normal)
+        proceedButton.setTitle(delegate.isBackedUp ? "backup.close".localized : "button.next".localized, for: .normal)
         proceedButton.addTarget(self, action: #selector(nextDidTap), for: .touchUpInside)
         proceedButton.setBackgroundColor(color: BackupTheme.backupButtonBackground, forState: .normal)
         proceedButton.setTitleColor(BackupTheme.buttonTitleColor, for: .normal)
@@ -61,7 +61,7 @@ class BackupWordsController: WalletViewController {
     }
 
     @objc func nextDidTap() {
-        delegate.showConfirmationDidTap()
+        delegate.didTapProceed()
     }
 
 }
