@@ -98,6 +98,7 @@ extension ManageWalletsPresenter: IManageWalletsViewDelegate {
         do {
             let account = try interactor.createAccount(defaultAccountType: currentItem.coin.type.defaultAccountType)
             currentItem.wallet = interactor.createWallet(coin: currentItem.coin, account: account)
+            view?.showSuccess()
         } catch {
             view?.updateUI()
             view?.show(error: error)
