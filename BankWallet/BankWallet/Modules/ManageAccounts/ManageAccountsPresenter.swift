@@ -50,7 +50,7 @@ extension ManageAccountsPresenter: IManageAccountsViewDelegate {
         }
 
         if account.backedUp {
-            router.showUnlink(account: account)
+            router.showUnlink(account: account, predefinedAccountType: item.predefinedAccountType)
         } else {
             currentItem = item
             view?.showBackupRequired(title: item.predefinedAccountType.title)
