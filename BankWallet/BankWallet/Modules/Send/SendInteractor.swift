@@ -36,6 +36,10 @@ class SendInteractor {
 
 extension SendInteractor: ISendInteractor {
 
+    func availableBalance(params: [String: Any]) throws -> Decimal {
+        return try state.adapter.availableBalance(params: params)
+    }
+
     var defaultInputType: SendInputType {
         if state.exchangeRate == nil {
             return .coin
@@ -221,23 +225,23 @@ extension SendInteractor: ISendInteractor {
     }
 
     func retrieveRate() {
-        rateStorage.nonExpiredLatestRateObservable(forCoinCode: state.adapter.wallet.coin.code, currencyCode: currencyManager.baseCurrency.code)
-                .take(1)
-                .subscribe(onNext: { [weak self] rate in
-                    self?.state.exchangeRate = rate
-                    self?.delegate?.didRetrieve(rate: rate)
-                })
-                .disposed(by: disposeBag)
-
-        if let feeCoinCode = state.adapter.feeCoinCode {
-            rateStorage.nonExpiredLatestRateObservable(forCoinCode: feeCoinCode, currencyCode: currencyManager.baseCurrency.code)
-                    .take(1)
-                    .subscribe(onNext: { [weak self] rateValue in
-                        self?.state.feeExchangeRate = rateValue
-                        self?.delegate?.didRetrieveFeeRate()
-                    })
-                    .disposed(by: disposeBag)
-        }
+//        rateStorage.nonExpiredLatestRateObservable(forCoinCode: state.adapter.wallet.coin.code, currencyCode: currencyManager.baseCurrency.code)
+//                .take(1)
+//                .subscribe(onNext: { [weak self] rate in
+//                    self?.state.exchangeRate = rate
+//                    self?.delegate?.didRetrieve(rate: rate)
+//                })
+//                .disposed(by: disposeBag)
+//
+//        if let feeCoinCode = state.adapter.feeCoinCode {
+//            rateStorage.nonExpiredLatestRateObservable(forCoinCode: feeCoinCode, currencyCode: currencyManager.baseCurrency.code)
+//                    .take(1)
+//                    .subscribe(onNext: { [weak self] rateValue in
+//                        self?.state.feeExchangeRate = rateValue
+//                        self?.delegate?.didRetrieveFeeRate()
+//                    })
+//                    .disposed(by: disposeBag)
+//        }
     }
 
 }

@@ -121,6 +121,10 @@ class SendViewController: ActionSheetController {
 
 extension SendViewController: ISendView {
 
+    func build(modules: [ISendModule]) {
+
+    }
+
     func set(coin: Coin) {
         titleItem.bindTitle?("send.title".localized(coin.title), coin)
     }

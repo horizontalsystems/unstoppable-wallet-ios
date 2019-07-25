@@ -13,6 +13,13 @@ class SendPresenter {
     private let feeItem = SFeeItem(isFeeAdjustable: true)
     private let sendButtonItem = SButtonItem()
 
+    private var amount: Decimal = 0
+    private var address: String?
+    private var feeRatePriority: FeeRatePriority = .medium
+
+    var amountModule: ISendAmountModule!
+    var addressModule: SendAddressModule!
+
     init(interactor: ISendInteractor, router: ISendRouter, factory: ISendStateViewItemFactory, userInput: SendUserInput) {
         self.interactor = interactor
         self.router = router
@@ -94,7 +101,7 @@ extension SendPresenter: ISendInteractorDelegate {
 extension SendPresenter: ISendViewDelegate {
 
     func showKeyboard() {
-        amountItem.showKeyboard?()
+        amountModule.showKeyboard()
     }
 
     var isFeeAdjustable: Bool {
@@ -105,12 +112,7 @@ extension SendPresenter: ISendViewDelegate {
     }
 
     func onViewDidLoad() {
-        amountItem.delegate = self
-        addressItem.delegate = self
-        feeItem.delegate = self
-        sendButtonItem.delegate = self
-
-        interactor.retrieveRate()
+        view?.build(modules: [amountModule, addressModule])
 
         userInput.inputType = interactor.defaultInputType
 
@@ -220,24 +222,6 @@ extension SendPresenter: ISendViewDelegate {
 
 extension SendPresenter: ISendAmountDelegate {
 
-    func onChanged(amount: Decimal) {
-        userInput.amount = amount
-
-        guard let state = try? interactor.state(forUserInput: userInput) else {
-            return
-        }
-        let viewItem = factory.viewItem(forState: state, forceRoundDown: false)
-
-        amountItem.hintInfo = viewItem.hintInfo
-        amountItem.bindHint?()
-
-        feeItem.feeInfo = viewItem.feeInfo
-        feeItem.bind?()
-
-        sendButtonItem.sendButtonEnabled = viewItem.sendButtonEnabled
-        sendButtonItem.bind?()
-    }
-
     func onPasteClicked() {
         if let value = ValueFormatter.instance.parseAnyDecimal(from: interactor.valueFromPasteboard) {
             userInput.amount = value
@@ -308,6 +292,39 @@ extension SendPresenter: ISendButtonDelegate {
         }
 
         view?.showConfirmation(viewItem: viewItem)
+    }
+
+}
+
+extension SendPresenter: ISendAmountPresenterDelegate {
+
+    var availableBalance: Decimal {
+        var params = [String: Any]()
+        params[AdapterFields.address.rawValue] = address
+        params[AdapterFields.feeRateRriority.rawValue] = feeRatePriority
+        do {
+            return try interactor.availableBalance(params: params)
+        } catch {
+            //
+        }
+        return 0
+    }
+
+    func onChanged(amount: Decimal?) {
+        print("on Change amount \(amount ?? -1)")
+    }
+
+}
+
+extension SendPresenter: ISendAddressPresenterDelegate {
+
+    func onAddressUpdate(address: String?) {
+        self.address = address
+        print("Presenter receive address update \(address)")
+    }
+
+    func onAmountUpdate(amount: Decimal) {
+        print("Presenter receive amount update \(amount)")
     }
 
 }

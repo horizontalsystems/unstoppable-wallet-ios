@@ -1,16 +1,9 @@
 import UIKit
 import RxSwift
 
-//class AmountTextField: UITextField {
-//    var onPaste: (() -> ())?
-//
-//    override func paste(_ sender: Any?) {
-//        onPaste?()
-//    }
-//
-//}
+class SendAmountView: UIView {
+    private let delegate: ISendAmountViewDelegate
 
-class SendAmountCell: UITableViewCell {
     private var disposeBag = DisposeBag()
 
     private let holderView = UIView()
@@ -24,12 +17,12 @@ class SendAmountCell: UITableViewCell {
     private let switchButton = RespondButton()
     private let switchButtonIcon = UIImageView()
 
-    private var item: AmountItem?
+    public init(delegate: ISendAmountViewDelegate) {
+        self.delegate = delegate
+        super.init(frame: .zero)
 
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
         backgroundColor = .clear
-        selectionStyle = .none
+
 
         addSubview(holderView)
 
@@ -132,24 +125,17 @@ class SendAmountCell: UITableViewCell {
             maker.trailing.equalTo(lineView)
         }
 
-//        inputField.onPaste = { [weak self] in
-//            self?.item?.delegate?.onPasteClicked()
-//        }
-
         inputField.rx.controlEvent(.editingChanged)
                 .subscribe(onNext: { [weak self] _ in
-                    self?.updateUI()
-
-                    let amount: Decimal = ValueFormatter.instance.parseAnyDecimal(from: self?.inputField.text) ?? 0
-//                    self?.item?.delegate?.onChanged(amount: amount)
+                    self?.delegate.onChanged(amountText: self?.inputField.text)
                 })
                 .disposed(by: disposeBag)
 
         switchButton.onTap = { [weak self] in
-            self?.item?.delegate?.onSwitchClicked()
+            self?.delegate.onSwitchClicked()
         }
         maxButton.onTap = { [weak self] in
-            self?.item?.delegate?.onMaxClicked()
+            self?.delegate.onMaxClicked()
         }
     }
 
@@ -157,32 +143,28 @@ class SendAmountCell: UITableViewCell {
         fatalError("not implemented")
     }
 
+}
 
-    func bind(item: AmountItem) {
-        self.item = item
-        item.bind = { [weak self] in
-            self?.bind()
-        }
-        item.bindHint = { [weak self] in
-            self?.set(hintInfo: self?.item?.hintInfo)
-        }
-        item.bindAmount = { [weak self] in
-            self?.set(amountInfo: self?.item?.amountInfo)
-        }
-        item.bindSwitchButtonEnabled = { [weak self] in
-            self?.set(switchButtonEnabled: self?.item?.switchButtonEnabled ?? false)
-        }
-        item.showKeyboard = { [weak self] in
-            self?.showKeyboard()
-        }
+extension SendAmountView: ISendAmountView {
 
-        bind()
+    func set(hint: String?, error: String?) {
+        hintLabel.text = hint
+        errorLabel.text = error
     }
 
-    private func updateUI() {
-        let text = inputField.text ?? ""
+    func set(type: String?, amount: String?) {
+        amountTypeLabel.text = type
+        inputField.text = amount
+    }
+
+    func set(switchButtonEnabled: Bool) {
+        switchButton.state = switchButtonEnabled ? .active : .disabled
+        switchButtonIcon.tintColor = switchButtonEnabled ? SendTheme.buttonIconColor : SendTheme.buttonIconColorDisabled
+    }
+
+    func maxButton(show: Bool) {
         maxButton.snp.remakeConstraints { maker in
-            if text.count == 0 {
+            if show {
                 maker.leading.equalTo(lineView.snp.trailing).offset(SendTheme.smallMargin)
                 maker.centerY.equalToSuperview()
                 maker.height.equalTo(SendTheme.buttonSize)
@@ -195,7 +177,7 @@ class SendAmountCell: UITableViewCell {
             maker.trailing.equalTo(switchButton.snp.leading).offset(-SendTheme.smallMargin)
 
             maxButton.wrapperView.snp.remakeConstraints { maker in
-                if text.count == 0 {
+                if show {
                     maker.leading.equalToSuperview().offset(SendTheme.smallMargin)
                     maker.trailing.equalToSuperview().offset(-SendTheme.smallMargin)
                 } else {
@@ -204,73 +186,21 @@ class SendAmountCell: UITableViewCell {
                 maker.top.bottom.equalToSuperview()
             }
         }
+
     }
 
-    private func bind(amount: Decimal?) {
-        let amount = amount ?? 0
-        let formattedAmount = ValueFormatter.instance.format(amount: amount)
-        inputField.text = amount == 0 ? nil : formattedAmount
-//        inputField.sendActions(for: .editingChanged)
-    }
-
-    private func set(hintInfo: HintInfo?) {
-        hintLabel.text = nil
-        errorLabel.text = nil
-
-        if let hintInfo = hintInfo {
-            switch hintInfo {
-            case .amount(let amountInfo):
-                switch amountInfo {
-                case .coinValue(let coinValue):
-                    hintLabel.text = ValueFormatter.instance.format(coinValue: coinValue)
-                case .currencyValue(let currencyValue):
-                    hintLabel.text = ValueFormatter.instance.format(currencyValue: currencyValue)
-                }
-            case .error(let error):
-                switch error {
-                case .coinValue(let coinValue):
-                    errorLabel.text = "send.amount_error.balance".localized(ValueFormatter.instance.format(coinValue: coinValue) ?? "")
-                case .currencyValue(let currencyValue):
-                    errorLabel.text = "send.amount_error.balance".localized(ValueFormatter.instance.format(currencyValue: currencyValue) ?? "")
-                }
-            }
+    func showKeyboard() {
+        DispatchQueue.main.async {
+            self.inputField.becomeFirstResponder()
         }
-    }
-
-    private func set(amountInfo: AmountInfo?) {
-        guard let amountInfo = amountInfo else {
-            amountTypeLabel.text = nil
-            bind(amount: nil)
-            return
-        }
-
-        switch amountInfo {
-        case .coinValue(let coinValue):
-            amountTypeLabel.text = coinValue.coinCode
-            bind(amount: coinValue.value)
-        case .currencyValue(let currencyValue):
-            amountTypeLabel.text = currencyValue.currency.symbol
-            bind(amount: currencyValue.value)
-        }
-    }
-
-    private func set(switchButtonEnabled: Bool) {
-        switchButton.state = switchButtonEnabled ? .active : .disabled
-        switchButtonIcon.tintColor = switchButtonEnabled ? SendTheme.buttonIconColor : SendTheme.buttonIconColorDisabled
-    }
-
-    private func bind() {
-        set(amountInfo: item?.amountInfo)
-        set(switchButtonEnabled: item?.switchButtonEnabled ?? false)
-        set(hintInfo: item?.hintInfo)
     }
 
 }
 
-extension SendAmountCell: UITextFieldDelegate {
+extension SendAmountView: UITextFieldDelegate {
 
     private func validate(text: String) -> Bool {
-        if let value = ValueFormatter.instance.parseAnyDecimal(from: text), value.decimalCount <= (item?.decimal ?? 0) {
+        if delegate.validateInputText(text: text) {
             return true
         } else {
             inputField.shakeView()
@@ -287,17 +217,6 @@ extension SendAmountCell: UITextFieldDelegate {
             return validate(text: text)
         }
         return validate(text: string)
-    }
-
-}
-
-extension SendAmountCell: ISendAmountListener {
-
-
-    func showKeyboard() {
-        DispatchQueue.main.async {
-            self.inputField.becomeFirstResponder()
-        }
     }
 
 }

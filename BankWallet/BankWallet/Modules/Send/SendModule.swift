@@ -1,6 +1,7 @@
 import Foundation
 
 protocol ISendView: class {
+    func build(modules: [ISendModule])
     func set(coin: Coin)
 
     func showConfirmation(viewItem: SendConfirmationViewItem)
@@ -43,6 +44,8 @@ protocol ISendInteractor {
     func copy(address: String)
     func send(userInput: SendUserInput)
 
+    func availableBalance(params: [String: Any]) throws -> Decimal
+
     func set(inputType: SendInputType)
     func retrieveRate()
 }
@@ -67,7 +70,7 @@ protocol ISendStateViewItemFactory {
 
 protocol ISendAmountDelegate: class {
     func onSwitchClicked()
-    func onChanged(amount: Decimal)
+//    func onChanged(amount: Decimal)
     func onMaxClicked()
 
     func onPasteClicked()
@@ -94,6 +97,8 @@ protocol ISendFeeDelegate: class {
 enum SendInputType: String {
     case coin = "coin"
     case currency = "currency"
+
+    var reversed: SendInputType { return self == .coin ? .currency : .coin }
 }
 
 enum SendStateError {
