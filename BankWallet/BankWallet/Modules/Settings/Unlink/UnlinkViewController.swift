@@ -21,8 +21,9 @@ class UnlinkViewController: ActionSheetController {
         var texts = [NSAttributedString]()
 
         let attributes = [NSAttributedString.Key.foregroundColor: ConfirmationTheme.textColor, NSAttributedString.Key.font: ConfirmationTheme.regularFont]
-        texts.append(NSAttributedString(string: "settings_manage_keys.unlink.confirmation_remove".localized, attributes: attributes))
-        texts.append(NSAttributedString(string: "settings_manage_keys.unlink.confirmation_disable".localized, attributes: attributes))
+        texts.append(NSAttributedString(string: "settings_manage_keys.unlink.confirmation_remove".localized(delegate.title.localized), attributes: attributes))
+        texts.append(NSAttributedString(string: "settings_manage_keys.unlink.confirmation_disable".localized(delegate.coinCodes.localized), attributes: attributes))
+        texts.append(NSAttributedString(string: "settings_manage_keys.unlink.confirmation_loose".localized, attributes: attributes))
 
         for (index, text) in texts.enumerated() {
             let item = ConfirmationCheckboxItem(descriptionText: text, tag: index) { [weak self] view in
@@ -62,4 +63,9 @@ class UnlinkViewController: ActionSheetController {
 }
 
 extension UnlinkViewController: IUnlinkView {
+
+    func showSuccess() {
+        HudHelper.instance.showSuccess()
+    }
+
 }

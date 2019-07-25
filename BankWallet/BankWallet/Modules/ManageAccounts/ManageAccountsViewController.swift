@@ -77,6 +77,14 @@ extension ManageAccountsViewController: IManageAccountsView {
         HudHelper.instance.showSuccess()
     }
 
+    func showBackupRequired(title: String) {
+        let controller = ManageAccountsBackupRequiredViewController(title: title, onBackup: { [weak self] in
+            self?.delegate.didRequestBackup()
+        })
+
+        present(controller, animated: true)
+    }
+
 }
 
 extension ManageAccountsViewController: UITableViewDataSource, UITableViewDelegate {
