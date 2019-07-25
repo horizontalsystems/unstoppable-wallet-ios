@@ -37,7 +37,7 @@ protocol IManageAccountsInteractorDelegate: class {
 
 protocol IManageAccountsRouter {
     func showUnlink(account: Account, predefinedAccountType: IPredefinedAccountType)
-    func showBackup(account: Account)
+    func showBackup(account: Account, predefinedAccountType: IPredefinedAccountType)
     func showKey(account: Account)
     func showRestore(defaultAccountType: DefaultAccountType, delegate: IRestoreAccountTypeDelegate)
     func close()

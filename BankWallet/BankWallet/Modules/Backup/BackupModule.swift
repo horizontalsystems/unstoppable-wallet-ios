@@ -1,6 +1,7 @@
 protocol IBackupViewDelegate {
+    var coinCodes: String { get }
     func cancelDidClick()
-    func backupDidTap()
+    func proceedDidTap()
 }
 
 protocol IBackupRouter {

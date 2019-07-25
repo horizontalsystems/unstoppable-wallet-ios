@@ -4,22 +4,28 @@ class BackupPresenter: IBackupPresenter {
     private let router: IBackupRouter
     private let interactor: IBackupInteractor
     private let account: Account
+    private let predefinedAccountType: IPredefinedAccountType
 
-    init(interactor: IBackupInteractor, router: IBackupRouter, account: Account) {
+    init(interactor: IBackupInteractor, router: IBackupRouter, account: Account, predefinedAccountType: IPredefinedAccountType) {
         self.interactor = interactor
         self.router = router
         self.account = account
+        self.predefinedAccountType = predefinedAccountType
     }
 
 }
 
 extension BackupPresenter: IBackupViewDelegate {
 
+    var coinCodes: String {
+        return predefinedAccountType.coinCodes
+    }
+
     func cancelDidClick() {
         router.close()
     }
 
-    func backupDidTap() {
+    func proceedDidTap() {
         if interactor.isPinSet {
             router.showUnlock()
         } else {

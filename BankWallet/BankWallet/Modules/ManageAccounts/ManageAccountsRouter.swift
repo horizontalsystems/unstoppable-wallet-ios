@@ -10,8 +10,8 @@ extension ManageAccountsRouter: IManageAccountsRouter {
         viewController?.present(UnlinkRouter.module(account: account, predefinedAccountType: predefinedAccountType), animated: true)
     }
 
-    func showBackup(account: Account) {
-        let module = BackupRouter.module(account: account)
+    func showBackup(account: Account, predefinedAccountType: IPredefinedAccountType) {
+        let module = BackupRouter.module(account: account, predefinedAccountType: predefinedAccountType)
         viewController?.present(module, animated: true)
     }
 
