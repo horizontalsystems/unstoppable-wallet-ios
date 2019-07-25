@@ -5,15 +5,15 @@ class ManageAccountsCreateAccountViewController: ActionSheetController {
     private let titleItem: AlertTitleItem
     private let textItem: AlertTextItem
 
-    init(predefinedAccountType: IPredefinedAccountType, onCreate: @escaping () -> ()) {
+    init(title: String, coinCodes: String, onCreate: @escaping () -> ()) {
         titleItem = AlertTitleItem(
-                title: predefinedAccountType.title.localized,
+                title: title.localized,
                 icon: UIImage(named: "Key Icon")?.withRenderingMode(.alwaysTemplate),
                 iconTintColor: ManageAccountsTheme.alertKeyImageColor,
                 tag: 0
         )
 
-        textItem = AlertTextItem(text: "settings_manage_keys.create.text".localized(predefinedAccountType.coinCodes.localized), tag: 1)
+        textItem = AlertTextItem(text: "settings_manage_keys.create.text".localized(coinCodes.localized), tag: 1)
 
         super.init(withModel: BaseAlertModel(), actionSheetThemeConfig: AppTheme.actionSheetConfig)
 

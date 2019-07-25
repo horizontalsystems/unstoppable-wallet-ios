@@ -8,6 +8,7 @@ class ManageAccountsPresenter {
     private var viewItemFactory = ManageAccountsViewItemFactory()
 
     private var items = [ManageAccountItem]()
+    private var currentItem: ManageAccountItem?
 
     init(mode: ManageAccountsRouter.PresentationMode, interactor: IManageAccountsInteractor, router: IManageAccountsRouter) {
         self.mode = mode
@@ -66,16 +67,22 @@ extension ManageAccountsPresenter: IManageAccountsViewDelegate {
     }
 
     func didTapCreate(index: Int) {
-        view?.showCreateConfirmation(predefinedAccountType: items[index].predefinedAccountType)
+        let item = items[index]
+        currentItem = item
+        view?.showCreateConfirmation(title: item.predefinedAccountType.title, coinCodes: item.predefinedAccountType.coinCodes)
     }
 
     func didTapRestore(index: Int) {
         router.showRestore(defaultAccountType: items[index].predefinedAccountType.defaultAccountType, delegate: self)
     }
 
-    func didConfirmCreate(predefinedAccountType: IPredefinedAccountType) {
+    func didConfirmCreate() {
+        guard let item = currentItem else {
+            return
+        }
+
         do {
-            try interactor.createAccount(predefinedAccountType: predefinedAccountType)
+            try interactor.createAccount(predefinedAccountType: item.predefinedAccountType)
             view?.showSuccess()
         } catch {
             view?.show(error: error)

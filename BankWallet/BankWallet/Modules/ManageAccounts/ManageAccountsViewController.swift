@@ -65,9 +65,9 @@ extension ManageAccountsViewController: IManageAccountsView {
         tableView.reloadData()
     }
 
-    func showCreateConfirmation(predefinedAccountType: IPredefinedAccountType) {
-        let controller = ManageAccountsCreateAccountViewController(predefinedAccountType: predefinedAccountType, onCreate: { [weak self] in
-            self?.delegate.didConfirmCreate(predefinedAccountType: predefinedAccountType)
+    func showCreateConfirmation(title: String, coinCodes: String) {
+        let controller = ManageAccountsCreateAccountViewController(title: title, coinCodes: coinCodes, onCreate: { [weak self] in
+            self?.delegate.didConfirmCreate()
         })
 
         present(controller, animated: true)
