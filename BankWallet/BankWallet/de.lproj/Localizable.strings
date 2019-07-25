@@ -49,10 +49,14 @@
 
 // Backup
 
-"backup.intro.title" = "Sicherung";
-"backup.intro.subtitle" = "The key that will be shown next is the only way to restore your funds, if your phone is ever lost, stolen, broken etc. Make sure that no one is watching your screen. \n The coins controlled by this key: %@ ";
+"backup.close" = "Close";
+
+"backup.intro.title_backup" = "Backup";
+"backup.intro.title_show" = "Show Key";
+"backup.intro.subtitle" = "The key that will be shown next is the only way to restore your funds, if your phone is ever lost, stolen, broken etc. Make sure that no one is watching your screen.\n\nThe coins controlled by this key: %@";
 "backup.intro.later" = "Später";
 "backup.intro.backup_now" = "Backup";
+"backup.intro.show_key" = "Show Key";
 "backup.words.title" = "Offlineschlüssel";
 
 "backup.confirmation.title" = "Prüfen …";
