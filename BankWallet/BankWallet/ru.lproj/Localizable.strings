@@ -208,11 +208,11 @@
 "settings_manage_keys.show" = "Показать";
 "settings_manage_keys.create" = "Создать";
 "settings_manage_keys.restore" = "Восстановить";
+"settings_manage_keys.unlink.cant_unlink" = "You need to backup this key before you may unlink it.";
 "settings_manage_keys.unlink.confirmation_remove" = "This action will remove the %@ key (wallet) from this device.";
 "settings_manage_keys.unlink.confirmation_disable" = "Coins that will be disabled: %@";
 "settings_manage_keys.unlink.confirmation_loose" = "If you don't have a backup of this key you will loose the respective funds.";
 "error.cant_create_eos" = "В данный момент кошелек не может создать новые учетные записи EOS. Вы можете восстановить существующий.";
-"error.cant_unlink" = "You need to backup this key before you may unlink it.";
 "settings_manage_keys.create.text" = "This action will generate a key(wallet) for the following coins:\n\n%@";
 "error.invalid_eos_key" = "Invalid key";
 
