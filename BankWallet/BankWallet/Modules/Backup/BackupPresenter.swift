@@ -17,6 +17,10 @@ class BackupPresenter: IBackupPresenter {
 
 extension BackupPresenter: IBackupViewDelegate {
 
+    var isBackedUp: Bool {
+        return account.backedUp
+    }
+
     var coinCodes: String {
         return predefinedAccountType.coinCodes
     }

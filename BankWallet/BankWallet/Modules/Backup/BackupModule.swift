@@ -1,4 +1,5 @@
 protocol IBackupViewDelegate {
+    var isBackedUp: Bool { get }
     var coinCodes: String { get }
     func cancelDidClick()
     func proceedDidTap()

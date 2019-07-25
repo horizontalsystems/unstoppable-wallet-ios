@@ -21,7 +21,7 @@ class BackupController: WalletViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        title = "backup.intro.title".localized
+        title = delegate.isBackedUp ? "backup.intro.title_show".localized : "backup.intro.title_backup".localized
 
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
 
@@ -37,7 +37,7 @@ class BackupController: WalletViewController {
         }
 
         view.addSubview(cancelButton)
-        cancelButton.setTitle("backup.intro.later".localized, for: .normal)
+        cancelButton.setTitle(delegate.isBackedUp ? "backup.intro.close".localized : "backup.intro.later".localized, for: .normal)
         cancelButton.cornerRadius = BackupTheme.buttonCornerRadius
         cancelButton.setBackgroundColor(color: BackupTheme.laterButtonBackground, forState: .normal)
         cancelButton.addTarget(self, action: #selector(cancelDidTap), for: .touchUpInside)
@@ -50,7 +50,7 @@ class BackupController: WalletViewController {
         }
 
         view.addSubview(proceedButton)
-        proceedButton.setTitle("backup.intro.backup_now".localized, for: .normal)
+        proceedButton.setTitle(delegate.isBackedUp ? "backup.intro.show_key".localized : "backup.intro.backup_now".localized, for: .normal)
         proceedButton.cornerRadius = BackupTheme.buttonCornerRadius
         proceedButton.setBackgroundColor(color: BackupTheme.backupButtonBackground, forState: .normal)
         proceedButton.addTarget(self, action: #selector(proceedDidTap), for: .touchUpInside)

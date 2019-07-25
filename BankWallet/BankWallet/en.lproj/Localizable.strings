@@ -51,10 +51,13 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 
 // Backup
 
-"backup.intro.title" = "Backup";
+"backup.intro.title_backup" = "Backup";
+"backup.intro.title_show" = "Show Key";
 "backup.intro.subtitle" = "The key that will be shown next is the only way to restore your funds, if your phone is ever lost, stolen, broken etc. Make sure that no one is watching your screen.\n\nThe coins controlled by this key: %@";
 "backup.intro.later" = "Later";
 "backup.intro.backup_now" = "Backup";
+"backup.intro.close" = "Close";
+"backup.intro.show_key" = "Show Key";
 "backup.words.title" = "Secret Key";
 
 "backup.confirmation.title" = "Check ...";
