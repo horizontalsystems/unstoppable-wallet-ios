@@ -43,11 +43,18 @@ extension ManageAccountsPresenter: IManageAccountsViewDelegate {
     }
 
     func didTapUnlink(index: Int) {
-        guard let account = items[index].account else {
+        let item = items[index]
+
+        guard let account = item.account else {
             return
         }
 
-        router.showUnlink(account: account)
+        if account.backedUp {
+            router.showUnlink(account: account)
+        } else {
+            currentItem = item
+            view?.showBackupRequired(title: item.predefinedAccountType.title)
+        }
     }
 
     func didTapBackup(index: Int) {
@@ -91,6 +98,14 @@ extension ManageAccountsPresenter: IManageAccountsViewDelegate {
 
     func didTapDone() {
         router.close()
+    }
+
+    func didRequestBackup() {
+        guard let item = currentItem, let account = item.account else {
+            return
+        }
+
+        router.showBackup(account: account)
     }
 
 }

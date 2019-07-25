@@ -4,6 +4,7 @@ protocol IManageAccountsView: class {
     func reload()
     func showCreateConfirmation(title: String, coinCodes: String)
     func showSuccess()
+    func showBackupRequired(title: String)
 }
 
 protocol IManageAccountsViewDelegate {
@@ -18,6 +19,7 @@ protocol IManageAccountsViewDelegate {
     func didTapRestore(index: Int)
 
     func didConfirmCreate()
+    func didRequestBackup()
 
     func didTapDone()
 }
