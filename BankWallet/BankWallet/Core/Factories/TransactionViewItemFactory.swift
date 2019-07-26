@@ -29,11 +29,6 @@ class TransactionViewItemFactory: ITransactionViewItemFactory {
             to = record.to.first(where: { $0.mine == false })?.address
         }
 
-        if from == nil, to == nil {
-            from = record.from.first?.address
-            to = record.to.first?.address
-        }
-
         return TransactionViewItem(
                 coin: item.coin,
                 transactionHash: record.transactionHash,
