@@ -36,9 +36,9 @@ extension RestoreWordsRouter: IRestoreWordsRouter {
 
 extension RestoreWordsRouter {
 
-    static func module(mode: RestoreRouter.PresentationMode, delegate: IRestoreAccountTypeDelegate) -> UIViewController {
+    static func module(mode: RestoreRouter.PresentationMode, wordsCount: Int, delegate: IRestoreAccountTypeDelegate) -> UIViewController {
         let router = RestoreWordsRouter(delegate: delegate)
-        let presenter = RestoreWordsPresenter(mode: mode, router: router, wordsManager: App.shared.wordsManager, appConfigProvider: App.shared.appConfigProvider)
+        let presenter = RestoreWordsPresenter(mode: mode, router: router, wordsCount: wordsCount, wordsManager: App.shared.wordsManager, appConfigProvider: App.shared.appConfigProvider)
         let viewController = RestoreWordsViewController(delegate: presenter)
 
         presenter.view = viewController

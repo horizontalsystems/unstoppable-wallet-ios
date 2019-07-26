@@ -7,10 +7,12 @@ class RestoreWordsPresenter {
     private let appConfigProvider: IAppConfigProvider
 
     private var words: [String]?
+    var wordsCount: Int
 
-    init(mode: RestoreRouter.PresentationMode, router: IRestoreWordsRouter, wordsManager: IWordsManager, appConfigProvider: IAppConfigProvider) {
+    init(mode: RestoreRouter.PresentationMode, router: IRestoreWordsRouter, wordsCount: Int, wordsManager: IWordsManager, appConfigProvider: IAppConfigProvider) {
         self.mode = mode
         self.router = router
+        self.wordsCount = wordsCount
         self.wordsManager = wordsManager
         self.appConfigProvider = appConfigProvider
     }

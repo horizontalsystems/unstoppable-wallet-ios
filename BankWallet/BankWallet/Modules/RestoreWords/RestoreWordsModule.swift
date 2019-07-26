@@ -5,6 +5,7 @@ protocol IRestoreWordsView: class {
 }
 
 protocol IRestoreWordsViewDelegate {
+    var wordsCount: Int { get }
     func viewDidLoad()
     func didTapRestore(words: [String])
     func didTapCancel()
