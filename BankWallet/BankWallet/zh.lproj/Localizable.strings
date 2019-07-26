@@ -57,7 +57,13 @@
 "backup.intro.later" = "稍后";
 "backup.intro.backup_now" = "备份";
 "backup.intro.show_key" = "Show Key";
+
 "backup.words.title" = "密钥";
+
+"backup.eos.title" = "EOS Key";
+"backup.eos.account_name" = "Account Name";
+"backup.eos.active_private_key" = "Active Private Key";
+"backup.eos.hint" = "Copying your key using “copy” action poses some risks if you use any clipboard management apps or some other apps that may access to clipboard data.";
 
 "backup.confirmation.title" = "正在检查...";
 "backup.confirmation.description" = "请输入你密钥中的词";
