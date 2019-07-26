@@ -2,7 +2,8 @@ import UIKit
 
 protocol ISendAmountView: class {
     func set(type: String?, amount: String?)
-    func set(hint: String?, error: String?)
+    func set(hint: String?)
+    func set(error: String?)
     func set(switchButtonEnabled: Bool)
 
     func maxButton(show: Bool)
@@ -20,8 +21,6 @@ protocol ISendAmountViewDelegate {
 protocol ISendAmountPresenterDelegate: class {
     var availableBalance: Decimal { get }
     func onChanged(amount: Decimal?)
-//    var availableBalanceParams: [String: Any] { get }
-
 }
 
 protocol ISendAmountInteractor {
@@ -44,12 +43,17 @@ protocol ISendModule {
 }
 
 protocol ISendAmountModule: ISendModule {
+    var coinAmount: Decimal? { get }
+
     func showKeyboard()
+
+    func onValidation(error: SendStateError)
+    func onValidationSuccess()
 }
 
 class SendAmountModule {
     private let sendView: SendAmountView
-    private let presenter: SendAmountPresenter
+    let presenter: SendAmountPresenter
 
 
     init(adapter: IAdapter, appConfigProvider: IAppConfigProvider, localStorage: ILocalStorage, rateStorage: IRateStorage, currencyManager: ICurrencyManager, delegate: ISendAmountPresenterDelegate) {
@@ -86,8 +90,20 @@ extension SendAmountModule: ISendModule {
 
 extension SendAmountModule: ISendAmountModule {
 
+    var coinAmount: Decimal? {
+        return presenter.coinAmount
+    }
+
     func showKeyboard() {
         presenter.showKeyboard()
+    }
+
+    func onValidation(error: SendStateError) {
+        presenter.onValidation(error: error)
+    }
+
+    func onValidationSuccess() {
+        presenter.onValidationSuccess()
     }
 
 }

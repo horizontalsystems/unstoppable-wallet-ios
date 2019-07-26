@@ -42,7 +42,8 @@ extension SendRouter {
         let viewController = SendNewViewController(delegate: presenter)
 
         presenter.amountModule = SendAmountModule(adapter: adapter, appConfigProvider: App.shared.appConfigProvider, localStorage: App.shared.localStorage, rateStorage: App.shared.grdbStorage, currencyManager: App.shared.currencyManager, delegate: presenter)
-        presenter.addressModule = SendAddressModule(viewController: viewController, adapter: adapter, delegate: presenter)
+        presenter.addressModule = SendAddressModule(viewController: viewController, delegate: presenter)
+        presenter.feeModule = SendFeeModule(adapter: adapter, rateStorage: App.shared.grdbStorage, delegate: presenter)
 
         interactor.delegate = presenter
         presenter.view = viewController

@@ -7,24 +7,26 @@ class SendAddressPresenter {
     weak var view: ISendAddressView?
     weak var presenterDelegate: ISendAddressPresenterDelegate?
 
+    var address: String?
+
     init(interactor: ISendAddressInteractor, router: ISendAddressRouter) {
         self.interactor = interactor
         self.router = router
     }
 
     private func onAddressEnter(address: String) {
-        let paymentAddress = interactor.parse(paymentAddress: address)
-        do {
-            try interactor.validate(address: paymentAddress.address)
-            view?.set(address: paymentAddress.address, error: nil)
+        let paymentAddress = presenterDelegate?.parse(paymentAddress: address)
+        if paymentAddress?.error != nil {
+            view?.set(address: paymentAddress?.address, error: "Invalid address".localized)
+            presenterDelegate?.onAddressUpdate(address: nil)
+        } else {
+            view?.set(address: paymentAddress?.address, error: nil)
+            self.address = address
 
-            presenterDelegate?.onAddressUpdate(address: paymentAddress.address)
-            if let amount = paymentAddress.amount {
+            presenterDelegate?.onAddressUpdate(address: paymentAddress?.address)
+            if let amount = paymentAddress?.amount {
                 presenterDelegate?.onAmountUpdate(amount: amount)
             }
-        } catch {
-            view?.set(address: paymentAddress.address, error: "Invalid address".localized)
-            presenterDelegate?.onAddressUpdate(address: nil)
         }
     }
 
@@ -46,6 +48,7 @@ extension SendAddressPresenter: ISendAddressViewDelegate {
 
     func onAddressDeleteClicked() {
         view?.set(address: nil, error: nil)
+        address = nil
 
         presenterDelegate?.onAddressUpdate(address: nil)
     }

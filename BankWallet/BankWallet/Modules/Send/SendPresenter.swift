@@ -13,12 +13,11 @@ class SendPresenter {
     private let feeItem = SFeeItem(isFeeAdjustable: true)
     private let sendButtonItem = SButtonItem()
 
-    private var amount: Decimal = 0
-    private var address: String?
     private var feeRatePriority: FeeRatePriority = .medium
 
     var amountModule: ISendAmountModule!
-    var addressModule: SendAddressModule!
+    var addressModule: ISendAddressModule!
+    var feeModule: ISendFeeModule!
 
     init(interactor: ISendInteractor, router: ISendRouter, factory: ISendStateViewItemFactory, userInput: SendUserInput) {
         self.interactor = interactor
@@ -63,6 +62,15 @@ class SendPresenter {
         feeItem.bind?()
     }
 
+    private func updateFee(params: [String: Any]) {
+        do {
+            let fee = try interactor.fee(params: params)
+            feeModule.update(fee: fee)
+        } catch {
+
+        }
+    }
+
 }
 
 extension SendPresenter: ISendInteractorDelegate {
@@ -97,12 +105,19 @@ extension SendPresenter: ISendInteractorDelegate {
     }
 
     func didValidate(with errors: [SendStateError]) {
-//        errors.forEach {
-//            switch($0) {
-//            case .insufficientAmount: amountModule.onValidation(error: $0)
-//            case .insufficientFeeBalance: feeModule.onValidation(error: $0)
-//            }
-//        }
+        print("Did valiDate! with \(errors.count)")
+        var amountValidationSuccess = true
+        errors.forEach {
+            switch($0) {
+            case .insufficientAmount:
+                amountValidationSuccess = false
+                amountModule.onValidation(error: $0)
+            case .insufficientFeeBalance: ()//feeModule.onValidation(error: $0)
+            }
+        }
+        if amountValidationSuccess {
+            amountModule.onValidationSuccess()
+        }
     }
 
 }
@@ -116,12 +131,13 @@ extension SendPresenter: ISendViewDelegate {
     var isFeeAdjustable: Bool {
         return true
     }
+
     var sendItems: [SendItem] {
         return [amountItem, addressItem, feeItem, sendButtonItem]
     }
 
     func onViewDidLoad() {
-        view?.build(modules: [amountModule, addressModule])
+        view?.build(modules: [amountModule, addressModule, feeModule])
 
         userInput.inputType = interactor.defaultInputType
 
@@ -309,7 +325,7 @@ extension SendPresenter: ISendAmountPresenterDelegate {
 
     var availableBalance: Decimal {
         var params = [String: Any]()
-        params[AdapterFields.address.rawValue] = address
+        params[AdapterFields.address.rawValue] = addressModule.address
         params[AdapterFields.feeRateRriority.rawValue] = feeRatePriority
         do {
             return try interactor.availableBalance(params: params)
@@ -321,12 +337,12 @@ extension SendPresenter: ISendAmountPresenterDelegate {
 
     func onChanged(amount: Decimal?) {
         guard let amount = amount else {
-            // amount is empty. Reset error and Just set 0 for all
+            // todo: amount is empty. Reset error and Just set 0 for all
             return
         }
         var params = [String: Any]()
         params[AdapterFields.amount.rawValue] = amount
-        params[AdapterFields.address.rawValue] = address
+        params[AdapterFields.address.rawValue] = addressModule.address
         params[AdapterFields.feeRateRriority.rawValue] = feeRatePriority
 
         interactor.validate(params: params)
@@ -336,13 +352,43 @@ extension SendPresenter: ISendAmountPresenterDelegate {
 
 extension SendPresenter: ISendAddressPresenterDelegate {
 
+    func parse(paymentAddress: String) -> PaymentRequestAddress {
+        return interactor.parse(paymentAddress: paymentAddress)
+    }
+
     func onAddressUpdate(address: String?) {
-        self.address = address
+        // todo: Check if we don't need parse amount?
+        if let amount = amountModule.coinAmount {
+            var params = [String: Any]()
+            params[AdapterFields.amount.rawValue] = amount
+            params[AdapterFields.address.rawValue] = addressModule.address
+            params[AdapterFields.feeRateRriority.rawValue] = feeRatePriority
+
+            interactor.validate(params: params)
+        }
         print("Presenter receive address update \(address)")
     }
 
     func onAmountUpdate(amount: Decimal) {
         print("Presenter receive amount update \(amount)")
+    }
+
+}
+
+extension SendPresenter: ISendFeePresenterDelegate {
+
+    var fee: Decimal {
+        do {
+            var params = [String: Any]()
+            params[AdapterFields.amount.rawValue] = amountModule.coinAmount
+            params[AdapterFields.address.rawValue] = addressModule.address
+            params[AdapterFields.feeRateRriority.rawValue] = feeRatePriority
+
+            return try interactor.fee(params: params)
+        } catch {
+            //
+        }
+        return 0
     }
 
 }

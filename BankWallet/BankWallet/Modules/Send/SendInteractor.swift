@@ -174,11 +174,14 @@ extension SendInteractor: ISendInteractor {
         case .coin:
             return availableBalance
         case .currency:
-            return state.exchangeRate.map {
-                return availableBalance * $0.value
-            } ?? 0
+            return state.exchangeRate.map { availableBalance * $0.value } ?? 0
         }
     }
+
+    func fee(params: [String: Any]) throws -> Decimal {
+        return try state.adapter.fee(params: params)
+    }
+
 
     func validate(params: [String: Any]) {
         validateDisposable?.dispose()

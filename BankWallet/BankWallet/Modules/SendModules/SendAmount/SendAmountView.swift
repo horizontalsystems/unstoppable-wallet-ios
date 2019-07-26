@@ -119,6 +119,7 @@ class SendAmountView: UIView {
 
         errorLabel.font = SendTheme.errorFont
         errorLabel.textColor = SendTheme.errorColor
+        errorLabel.backgroundColor = SendTheme.holderBackground
         errorLabel.snp.makeConstraints { maker in
             maker.leading.equalToSuperview().offset(SendTheme.holderLeadingPadding)
             maker.top.equalTo(lineView).offset(SendTheme.amountErrorLabelTopMargin)
@@ -147,8 +148,12 @@ class SendAmountView: UIView {
 
 extension SendAmountView: ISendAmountView {
 
-    func set(hint: String?, error: String?) {
+    func set(hint: String?) {
         hintLabel.text = hint
+    }
+
+    func set(error: String?) {
+        errorLabel.isHidden = error == nil
         errorLabel.text = error
     }
 

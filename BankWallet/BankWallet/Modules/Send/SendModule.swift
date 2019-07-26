@@ -46,6 +46,7 @@ protocol ISendInteractor {
 
     func availableBalance(params: [String: Any]) throws -> Decimal
     func validate(params: [String: Any])
+    func fee(params: [String: Any]) throws -> Decimal
 
     func set(inputType: SendInputType)
     func retrieveRate()
@@ -107,6 +108,18 @@ enum SendInputType: String {
 enum SendStateError {
     case insufficientAmount(availableBalance: Decimal)
     case insufficientFeeBalance(fee: Decimal)
+}
+
+extension SendStateError: Equatable {
+
+    public static func ==(lhs: SendStateError, rhs: SendStateError) -> Bool {
+        switch (lhs, rhs) {
+        case (let .insufficientAmount(lhsBalance), let .insufficientAmount(rhsBalance)): return lhsBalance == rhsBalance
+        case (let .insufficientFeeBalance(lhsFee), let .insufficientFeeBalance(rhsFee)): return lhsFee == rhsFee
+        default: return false
+        }
+    }
+
 }
 
 enum AddressError: Error {

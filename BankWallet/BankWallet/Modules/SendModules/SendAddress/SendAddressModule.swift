@@ -11,14 +11,14 @@ protocol ISendAddressViewDelegate {
 }
 
 protocol ISendAddressPresenterDelegate: class {
+    func parse(paymentAddress: String) -> PaymentRequestAddress
+
     func onAddressUpdate(address: String?)
     func onAmountUpdate(amount: Decimal)
 }
 
 protocol ISendAddressInteractor {
     var valueFromPasteboard: String? { get }
-    func parse(paymentAddress: String) -> PaymentRequestAddress
-    func validate(address: String) throws
 }
 
 protocol ISendAddressInteractorDelegate: class {
@@ -29,6 +29,7 @@ protocol ISendAddressRouter {
 }
 
 protocol ISendAddressModule: ISendModule {
+    var address: String? { get }
 }
 
 class SendAddressModule {
@@ -36,10 +37,10 @@ class SendAddressModule {
     private let presenter: SendAddressPresenter
 
 
-    init(viewController: UIViewController, adapter: IAdapter, delegate: ISendAddressPresenterDelegate) {
+    init(viewController: UIViewController, delegate: ISendAddressPresenterDelegate) {
         let router = SendAddressRouter()
 
-        let interactor = SendAddressInteractor(pasteboardManager: App.shared.pasteboardManager, adapter: adapter)
+        let interactor = SendAddressInteractor(pasteboardManager: App.shared.pasteboardManager)
 
         presenter = SendAddressPresenter(interactor: interactor, router: router)
         sendView = SendAddressView(delegate: presenter)
@@ -67,6 +68,10 @@ extension SendAddressModule: ISendModule {
 
 }
 
-extension SendAmountModule: ISendAddressModule {
+extension SendAddressModule: ISendAddressModule {
+
+    var address: String? {
+        return presenter.address
+    }
 
 }

@@ -1,6 +1,6 @@
 import Foundation
 
-class SendAmountPresenterHelper {
+class SendFeePresenterHelper {
     let coinCode: CoinCode
     let coinDecimal: Int = 8
     let currency: Currency
@@ -9,16 +9,6 @@ class SendAmountPresenterHelper {
     init(coinCode: CoinCode, currency: Currency) {
         self.coinCode = coinCode
         self.currency = currency
-    }
-
-    func prefix(inputType: SendInputType, rate: Rate?) -> String? {
-        if inputType == .coin {
-            return coinCode
-        }
-        guard rate != nil else {
-            return nil
-        }
-        return currency.symbol
     }
 
     func mainValue(coinAmount: Decimal?, inputType: SendInputType, rate: Rate?) -> String? {

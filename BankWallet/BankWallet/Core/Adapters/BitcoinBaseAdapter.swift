@@ -140,7 +140,13 @@ extension BitcoinBaseAdapter: IAdapter {
 
     func parse(paymentAddress: String) -> PaymentRequestAddress {
         let paymentData = addressParser.parse(paymentAddress: paymentAddress)
-        return PaymentRequestAddress(address: paymentData.address, amount: paymentData.amount.map { Decimal($0) })
+        var validationError: Error?
+        do {
+            try validate(address: paymentData.address)
+        } catch {
+            validationError = error
+        }
+        return PaymentRequestAddress(address: paymentData.address, amount: paymentData.amount.map { Decimal($0) }, error: validationError)
     }
 
     func sendSingle(params: [String : Any]) -> Single<Void> {

@@ -4,17 +4,18 @@ class SendAmountPresenter {
     private let interactor: ISendAmountInteractor
     private let sendAmountPresenterHelper: SendAmountPresenterHelper
 
+    private let coinCode: CoinCode
+    private let coinDecimal: Int
+    private let currencyCode: String
+
     weak var view: ISendAmountView?
     weak var presenterDelegate: ISendAmountPresenterDelegate?
 
-    var sendInputType: SendInputType = .coin
+    private var sendInputType: SendInputType = .coin
     var coinAmount: Decimal?
-    var switchButtonEnabled: Bool = false
-
-    var rate: Rate?
-    let coinCode: CoinCode
-    let coinDecimal: Int
-    let currencyCode: String
+    private var switchButtonEnabled: Bool = false
+    private var rate: Rate?
+    private var error: SendStateError?
 
     init(interactor: ISendAmountInteractor, sendAmountPresenterHelper: SendAmountPresenterHelper, coinCode: CoinCode, coinDecimal: Int, currencyCode: String) {
         self.interactor = interactor
@@ -33,7 +34,16 @@ class SendAmountPresenter {
         view?.set(type: prefix,
                 amount: mainValue)
 
-        view?.set(hint: subValue, error: nil)
+        view?.set(hint: subValue)
+    }
+
+    private func updateError(error: SendStateError?) {
+        if let error = error, case let .insufficientAmount(availableBalance) = error {
+            self.error = error
+
+            let errorText = sendAmountPresenterHelper.errorValue(availableBalance: availableBalance, inputType: sendInputType, rate: rate)
+            view?.set(error: errorText)
+        }
     }
 
 }
@@ -54,6 +64,20 @@ extension SendAmountPresenter {
         view?.showKeyboard()
     }
 
+    func onValidation(error: SendStateError) {
+        guard self.error != error else {
+            // already show this error
+            return
+        } 
+
+        updateError(error: error)
+    }
+
+    func onValidationSuccess() {
+        error = nil
+        view?.set(error: nil)
+    }
+
 }
 
 extension SendAmountPresenter: ISendAmountViewDelegate {
@@ -62,7 +86,9 @@ extension SendAmountPresenter: ISendAmountViewDelegate {
         sendInputType = sendInputType.reversed
 
         update(coinAmount: coinAmount)
-        print("switch clicked")
+
+        // if has error, must update it
+        updateError(error: error)
     }
 
     func onChanged(amountText: String?) {
@@ -83,7 +109,7 @@ extension SendAmountPresenter: ISendAmountViewDelegate {
         self.coinAmount = coinAmount
         presenterDelegate?.onChanged(amount: coinAmount)
 
-        view?.set(hint: sendAmountPresenterHelper.subValue(coinAmount: coinAmount ?? 0, inputType: sendInputType, rate: rate), error: nil)
+        view?.set(hint: sendAmountPresenterHelper.subValue(coinAmount: coinAmount ?? 0, inputType: sendInputType, rate: rate))
     }
 
     func onMaxClicked() {
