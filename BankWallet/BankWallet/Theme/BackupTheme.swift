@@ -22,4 +22,13 @@ class BackupTheme {
     static let confirmLabelColor: UIColor = .cryptoGray
     static let confirmInputHeight: CGFloat = 44
     static let inputBorderColor: UIColor = .cryptoSteel20
+
+    static let eosQrCodeTopMargin: CGFloat = 16
+    static let eosQrCodeSize: CGFloat = 120
+    static let eosQrCodeCornerRadius: CGFloat = 4
+    static let eosRegularMargin: CGFloat = 24
+    static let eosSmallMargin: CGFloat = 8
+    static let eosSubtitleHorizontalMargin: CGFloat = 16
+    static let eosTextFont: UIFont = .cryptoCaptionMedium
+    static let eosTextColor: UIColor = .cryptoGray
 }
