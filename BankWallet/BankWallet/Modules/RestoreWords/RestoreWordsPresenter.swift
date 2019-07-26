@@ -3,16 +3,16 @@ class RestoreWordsPresenter {
 
     private let mode: RestoreRouter.PresentationMode
     private let router: IRestoreWordsRouter
-    private let defaultAccountType: DefaultAccountType
     private var wordsManager: IWordsManager
     private let appConfigProvider: IAppConfigProvider
 
     private var words: [String]?
+    var wordsCount: Int
 
-    init(mode: RestoreRouter.PresentationMode, router: IRestoreWordsRouter, defaultAccountType: DefaultAccountType, wordsManager: IWordsManager, appConfigProvider: IAppConfigProvider) {
+    init(mode: RestoreRouter.PresentationMode, router: IRestoreWordsRouter, wordsCount: Int, wordsManager: IWordsManager, appConfigProvider: IAppConfigProvider) {
         self.mode = mode
         self.router = router
-        self.defaultAccountType = defaultAccountType
+        self.wordsCount = wordsCount
         self.wordsManager = wordsManager
         self.appConfigProvider = appConfigProvider
     }
@@ -20,13 +20,6 @@ class RestoreWordsPresenter {
 }
 
 extension RestoreWordsPresenter: IRestoreWordsViewDelegate {
-
-    var wordsCount: Int {
-        if case let .mnemonic(count) = defaultAccountType {
-            return count
-        }
-        return 12
-    }
 
     func viewDidLoad() {
         if mode == .presented {
