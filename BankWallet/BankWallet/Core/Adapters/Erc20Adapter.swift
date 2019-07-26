@@ -123,14 +123,16 @@ extension Erc20Adapter: IAdapter {
         }
 
         var errors = [SendStateError]()
-        if amount > availableBalance(params: params) {
-            errors.append(.insufficientAmount)
+        let balance = availableBalance(params: params)
+        if amount > balance {
+            errors.append(.insufficientAmount(availableBalance: balance))
         }
 
         let ethereumBalance = balanceDecimal(balanceString: ethereumKit.balance, decimal: EthereumAdapter.decimal)
 
-        if ethereumBalance < fee(params: params) {
-            errors.append(.insufficientFeeBalance)
+        let expectedFee = fee(params: params)
+        if ethereumBalance < fee {
+            errors.append(.insufficientFeeBalance(fee: expectedFee))
         }
         return errors
     }

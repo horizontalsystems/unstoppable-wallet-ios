@@ -96,6 +96,15 @@ extension SendPresenter: ISendInteractorDelegate {
         interactor.retrieveRate()
     }
 
+    func didValidate(with errors: [SendStateError]) {
+//        errors.forEach {
+//            switch($0) {
+//            case .insufficientAmount: amountModule.onValidation(error: $0)
+//            case .insufficientFeeBalance: feeModule.onValidation(error: $0)
+//            }
+//        }
+    }
+
 }
 
 extension SendPresenter: ISendViewDelegate {
@@ -311,7 +320,16 @@ extension SendPresenter: ISendAmountPresenterDelegate {
     }
 
     func onChanged(amount: Decimal?) {
-        print("on Change amount \(amount ?? -1)")
+        guard let amount = amount else {
+            // amount is empty. Reset error and Just set 0 for all
+            return
+        }
+        var params = [String: Any]()
+        params[AdapterFields.amount.rawValue] = amount
+        params[AdapterFields.address.rawValue] = address
+        params[AdapterFields.feeRateRriority.rawValue] = feeRatePriority
+
+        interactor.validate(params: params)
     }
 
 }

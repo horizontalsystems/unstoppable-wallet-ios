@@ -133,7 +133,7 @@ extension BitcoinBaseAdapter: IAdapter {
         let balance = try availableBalance(params: params)
         var errors = [SendStateError]()
         if amount > balance {
-            errors.append(.insufficientAmount)
+            errors.append(.insufficientAmount(availableBalance: balance))
         }
         return errors
     }

@@ -7,6 +7,7 @@ class SendInteractor {
     }
 
     private let disposeBag = DisposeBag()
+    private var validateDisposable: Disposable?
 
     weak var delegate: ISendInteractorDelegate?
 
@@ -177,6 +178,27 @@ extension SendInteractor: ISendInteractor {
                 return availableBalance * $0.value
             } ?? 0
         }
+    }
+
+    func validate(params: [String: Any]) {
+        validateDisposable?.dispose()
+
+        var single = Single<[SendStateError]>.create { observer in
+            do {
+                let errors = try self.state.adapter.validate(params: params)
+                observer(.success(errors))
+            } catch {
+                observer(.error(error))
+            }
+            return Disposables.create()
+        }
+        if async {
+            single = single.subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+                    .observeOn(MainScheduler.instance)
+        }
+        validateDisposable = single.subscribe(onSuccess: { [weak self] errors in
+            self?.delegate?.didValidate(with: errors)
+        })
     }
 
     func copy(address: String) {

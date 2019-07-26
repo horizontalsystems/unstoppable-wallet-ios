@@ -106,7 +106,7 @@ extension EthereumAdapter: IAdapter {
         var errors = [SendStateError]()
         let balance = try availableBalance(params: params)
         if amount > balance {
-            errors.append(.insufficientAmount)
+            errors.append(.insufficientAmount(availableBalance: balance))
         }
         return errors
     }

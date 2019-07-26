@@ -45,6 +45,7 @@ protocol ISendInteractor {
     func send(userInput: SendUserInput)
 
     func availableBalance(params: [String: Any]) throws -> Decimal
+    func validate(params: [String: Any])
 
     func set(inputType: SendInputType)
     func retrieveRate()
@@ -56,6 +57,8 @@ protocol ISendInteractorDelegate: class {
     func didSend()
     func didFailToSend(error: Error)
     func onBecomeActive()
+
+    func didValidate(with errors: [SendStateError])
 }
 
 protocol ISendRouter {
@@ -102,8 +105,8 @@ enum SendInputType: String {
 }
 
 enum SendStateError {
-    case insufficientAmount
-    case insufficientFeeBalance
+    case insufficientAmount(availableBalance: Decimal)
+    case insufficientFeeBalance(fee: Decimal)
 }
 
 enum AddressError: Error {
