@@ -29,6 +29,10 @@ extension MainSettingsPresenter: IMainSettingsViewDelegate {
         router.showSecuritySettings()
     }
 
+    func didTapManageCoins() {
+        router.showManageCoins()
+    }
+
     func didTapBaseCurrency() {
         router.showBaseCurrencySettings()
     }
@@ -43,6 +47,10 @@ extension MainSettingsPresenter: IMainSettingsViewDelegate {
 
     func didTapAbout() {
         router.showAbout()
+    }
+
+    func didTapTellFriends() {
+        router.showShare(text: "settings_tell_friends.text".localized + "\n" + interactor.appWebPageLink)
     }
 
     func didTapAppLink() {

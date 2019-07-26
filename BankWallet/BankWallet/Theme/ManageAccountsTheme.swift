@@ -17,6 +17,7 @@ class ManageAccountsTheme {
     static let attentionColor = UIColor.cryptoRed
     static let keyImageColor = UIColor.cryptoYellow
     static let nonActiveKeyImageColor = UIColor.cryptoGray50
+    static let alertKeyImageColor = UIColor.cryptoGray
 
     static let cellTitleFont = UIFont.cryptoHeadline
     static var cellTitleColor: UIColor { return .crypto_White_Black }
@@ -25,7 +26,7 @@ class ManageAccountsTheme {
     static let coinsFont = UIFont.cryptoCaption1
     static let coinsColor = UIColor.cryptoGray
 
-    static var buttonsBackgroundColorDictionary: RespondButton.Style  { return [.active: .crypto_Steel20_LightBackground, .selected: .crypto_Steel40_LightGray, .disabled: UIColor.cryptoLightBackground] }
+    static var buttonsBackgroundColorDictionary: RespondButton.Style  { return [.active: .crypto_Steel20_LightBackground, .selected: .crypto_Steel40_LightGray, .disabled: .crypto_Steel20_LightBackground] }
     static var buttonsTextColorDictionary: RespondButton.Style { return [.active: .crypto_Bars_Dark, .selected: .crypto_Bars_Dark, .disabled: UIColor.cryptoGray50] }
 
     static let buttonsFont = UIFont.cryptoSectionCaption
@@ -34,4 +35,7 @@ class ManageAccountsTheme {
     static let buttonsHeight: CGFloat = 32
     static let buttonsBorderColor: UIColor = .cryptoSteel20
     static let buttonCornerRadius: CGFloat = 8
+
+    static let descriptionColor: UIColor = .cryptoGray
+    static let descriptionFont: UIFont = .cryptoCaptionMedium
 }

@@ -3,8 +3,9 @@ protocol IBackupWordsView: class {
 }
 
 protocol IBackupWordsViewDelegate {
+    var isBackedUp: Bool { get }
     var words: [String] { get }
-    func showConfirmationDidTap()
+    func didTapProceed()
 }
 
 protocol IBackupWordsPresenter {
@@ -13,4 +14,5 @@ protocol IBackupWordsPresenter {
 protocol IBackupWordsRouter {
     func showConfirmation(delegate: IBackupConfirmationDelegate, words: [String])
     func notifyBackedUp()
+    func notifyClosed()
 }

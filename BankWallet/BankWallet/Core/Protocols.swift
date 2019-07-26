@@ -273,6 +273,8 @@ protocol IAppConfigProvider {
     var ipfsId: String { get }
     var ipfsGateways: [String] { get }
 
+    var appWebPageLink: String { get }
+
     var fiatDecimal: Int { get }
     var maxDecimal: Int { get }
     var reachabilityHost: String { get }

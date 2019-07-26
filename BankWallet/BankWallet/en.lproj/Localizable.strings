@@ -32,8 +32,8 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 // Restore
 
 "restore.title" = "Restore";
-"restore.description" = "Enter Secret Key";
-"restore.validation_failed" = "Incorrect Secret Key";
+"restore.description" = "Enter Key";
+"restore.validation_failed" = "Incorrect Key";
 "restore.placeholder.account_name" = "Account Name";
 "restore.placeholder.private_key" = "Active Private Key";
 
@@ -51,10 +51,14 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 
 // Backup
 
-"backup.intro.title" = "Backup";
-"backup.intro.subtitle" = "Your secret key is the only way to restore your wallet and funds if your phone is ever lost, stolen, broken, or upgraded.\n\nIt consists of 12 words. Store it safely offline.";
+"backup.close" = "Close";
+
+"backup.intro.title_backup" = "Backup";
+"backup.intro.title_show" = "Show Key";
+"backup.intro.subtitle" = "The key that will be shown next is the only way to restore your funds, if your phone is ever lost, stolen, broken etc. Make sure that no one is watching your screen.\n\nThe coins controlled by this key: %@";
 "backup.intro.later" = "Later";
 "backup.intro.backup_now" = "Backup";
+"backup.intro.show_key" = "Show Key";
 "backup.words.title" = "Secret Key";
 
 "backup.confirmation.title" = "Check ...";
@@ -153,6 +157,7 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 "settings.title" = "Settings";
 "settings.tab_bar_item" = "Settings";
 "settings.security_center" = "Security Center";
+"settings.manage_coins" = "Manage Coins";
 "settings.restore_wallet" = "Restore Wallet";
 "settings.base_currency" = "Base Currency";
 "settings.language" = "Language";
@@ -172,7 +177,11 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 
 // Settings -> Manage Wallet
 
-"settings_manage_wallet.title" = "Coin Manager";
+"manage_coins.title" = "Coin Manager";
+"manage_coins.add_coin.title" = "Add Key for %@ Coin";
+"manage_coins.add_coin.text" = "You don't have active key for use with %@. Use Create button below to generate a new key (wallet).\n\nYou may also use the existing key for the %@ if you already have it.";
+"manage_coins.add_coin.create" = "Create New";
+"manage_coins.add_coin.restore" = "I Already Have";
 
 // Settings -> About
 
@@ -190,28 +199,34 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 
 // Settings -> Tell Friends
 
-"settings_tell_friends.text" = "Be Free! Be Unstoppable! https://apps.apple.com/us/app/unstoppable-bitcoin-wallet/id1447619907?ls=1";
+"settings_tell_friends.text" = "Be Free! Be Unstoppable!";
 
 // Settings -> Security
 
 "settings_security.title" = "Security Center";
 "settings_security.manage_accounts" = "Manage Keys";
-"settings_security.set_pin" = "Passcode";
+"settings_security.passcode" = "Passcode";
 "settings_security.change_pin" = "Edit Passcode";
 "settings_security.touch_id" = "Touch ID";
 "settings_security.face_id" = "Face ID";
 "security_settings.unlink_alert_button" = "Unlink";
-"settings_security.import_wallet_confirmation_1" = "This action will remove the currently installed wallet from this device.";
-"settings_security.import_wallet_confirmation_2" = "Make sure you have backed up Secret Key or you will not be able to access your funds in the future.";
 
 // Manage Keys
 
 "settings_manage_keys.title" = "Keys";
+"settings_manage_keys.description" = "Anyone with access to your Keys can steal your wallet funds. Store them safely and never show them to anyone.\n\nBackup each key to be able to restore funds if you loose or break your phone, or simply the wallet app gets deleted.";
 "settings_manage_keys.unlink" = "Unlink";
 "settings_manage_keys.backup" = "Backup";
 "settings_manage_keys.show" = "Show";
-"settings_manage_keys.new" = "New";
-"settings_manage_keys.import" = "Import";
+"settings_manage_keys.create" = "Create";
+"settings_manage_keys.restore" = "Restore";
+"settings_manage_keys.unlink.cant_unlink" = "You need to backup this key before you may unlink it.";
+"settings_manage_keys.unlink.confirmation_remove" = "This action will remove the %@ key (wallet) from this device.";
+"settings_manage_keys.unlink.confirmation_disable" = "Coins that will be disabled: %@";
+"settings_manage_keys.unlink.confirmation_loose" = "If you don't have a backup of this key you will loose the respective funds.";
+"error.cant_create_eos" = "At this point, the wallet is not able to create new EOS wallet accounts. You're only able to restore the existing one.";
+"settings_manage_keys.create.text" = "This action will generate a key(wallet) for the following coins:\n\n%@";
+"error.invalid_eos_key" = "Invalid key";
 
 // Set PIN
 
@@ -234,7 +249,7 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 
 // No Passcode
 
-"no_passcode.info_text" = "The security mechanisms in this app require that device OS has the passcode enabled.\nYou need to enable it in iOS settings before you can use the app.";
+"no_passcode.info_text" = "This app requires that phone has the passcode (screen lock) enabled.\nYou may enable it in iOS settings.";
 
 //NumPad
 
@@ -249,9 +264,9 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 
 // Key Types
 
-"key_type.12_words" = "12-words Key";
+"key_type.12_words" = "12-words";
 "key_type.12_words.text" = "BTC, BCH, DASH, ETH, ERC-20";
-"key_type.eos" = "EOS Blockchain Key";
+"key_type.eos" = "EOS Blockchain";
 "key_type.eos.text" = "EOS";
-"key_type.binance" = "Binance Chain Key";
+"key_type.binance" = "Binance Chain";
 "key_type.binance.text" = "BNB, BEP-2";

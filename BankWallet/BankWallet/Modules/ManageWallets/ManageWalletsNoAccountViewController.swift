@@ -3,18 +3,22 @@ import ActionSheet
 
 class ManageWalletsNoAccountViewController: ActionSheetController {
     private let titleItem = ActionTitleItem(tag: 0)
+    private let textItem: AlertTextItem
     private let coin: Coin
 
     init(coin: Coin, onSelectNew: @escaping () -> (), onSelectRestore: @escaping () -> ()) {
         self.coin = coin
 
+        textItem = AlertTextItem(text: "manage_coins.add_coin.text".localized(coin.title, coin.title), tag: 1)
+
         super.init(withModel: BaseAlertModel(), actionSheetThemeConfig: AppTheme.actionSheetConfig)
 
         model.addItemView(titleItem)
+        model.addItemView(textItem)
 
         let newItem = AlertButtonItem(
-                tag: 1,
-                title: "New",
+                tag: 2,
+                title: "manage_coins.add_coin.create".localized,
                 textStyle: ButtonTheme.textColorDictionary,
                 backgroundStyle: ButtonTheme.yellowBackgroundDictionary,
                 insets: UIEdgeInsets(top: ButtonTheme.verticalMargin, left: ButtonTheme.margin, bottom: ButtonTheme.insideMargin, right: ButtonTheme.margin)
@@ -28,8 +32,8 @@ class ManageWalletsNoAccountViewController: ActionSheetController {
         model.addItemView(newItem)
 
         let restoreItem = AlertButtonItem(
-                tag: 2,
-                title: "Restore",
+                tag: 3,
+                title: "manage_coins.add_coin.restore".localized,
                 textStyle: ButtonTheme.textColorDictionary,
                 backgroundStyle: ButtonTheme.grayBackgroundDictionary,
                 insets: UIEdgeInsets(top: ButtonTheme.insideMargin, left: ButtonTheme.margin, bottom: ButtonTheme.verticalMargin, right: ButtonTheme.margin)
@@ -53,7 +57,7 @@ class ManageWalletsNoAccountViewController: ActionSheetController {
         backgroundColor = AppTheme.actionSheetBackgroundColor
         contentBackgroundColor = .white
 
-        titleItem.bindTitle?("Add \(coin.title.localized) Coin", coin)
+        titleItem.bindTitle?("manage_coins.add_coin.title".localized(coin.title), coin)
     }
 
 }

@@ -3,6 +3,8 @@ import UIExtensions
 import SnapKit
 
 class ManageAccountsViewController: WalletViewController {
+    private let descriptionSectionIndex = 0
+
     private let delegate: IManageAccountsViewDelegate
 
     private let tableView = UITableView(frame: .zero, style: .grouped)
@@ -34,6 +36,7 @@ class ManageAccountsViewController: WalletViewController {
         }
 
         tableView.registerCell(forClass: ManageAccountCell.self)
+        tableView.registerCell(forClass: ManageAccountDescriptionCell.self)
 
         delegate.viewDidLoad()
     }
@@ -62,15 +65,45 @@ extension ManageAccountsViewController: IManageAccountsView {
         tableView.reloadData()
     }
 
+    func showCreateConfirmation(title: String, coinCodes: String) {
+        let controller = ManageAccountsCreateAccountViewController(title: title, coinCodes: coinCodes, onCreate: { [weak self] in
+            self?.delegate.didConfirmCreate()
+        })
+
+        present(controller, animated: true)
+    }
+
+    func showSuccess() {
+        HudHelper.instance.showSuccess()
+    }
+
+    func showBackupRequired(title: String) {
+        let controller = ManageAccountsBackupRequiredViewController(title: title, onBackup: { [weak self] in
+            self?.delegate.didRequestBackup()
+        })
+
+        present(controller, animated: true)
+    }
+
 }
 
 extension ManageAccountsViewController: UITableViewDataSource, UITableViewDelegate {
 
+    public func numberOfSections(in tableView: UITableView) -> Int {
+        return 2
+    }
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if section == descriptionSectionIndex {
+            return 1
+        }
         return delegate.itemsCount
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if indexPath.section == descriptionSectionIndex {
+            return tableView.dequeueReusableCell(withIdentifier: String(describing: ManageAccountDescriptionCell.self), for: indexPath)
+        }
         return tableView.dequeueReusableCell(withIdentifier: String(describing: ManageAccountCell.self), for: indexPath)
     }
 
@@ -87,21 +120,32 @@ extension ManageAccountsViewController: UITableViewDataSource, UITableViewDelega
             }, onTapRight: { [weak self] in
                 self?.delegate.didTapBackup(index: indexPath.row)
             })
-        case .notLinked(let canCreate):
-            let tapLeft: (() -> ()) = canCreate ? { [weak self] in
+        case .notLinked:
+            cell.bind(viewItem: item, onTapLeft: { [weak self] in
                 self?.delegate.didTapCreate(index: indexPath.row)
-            } : {
-                HudHelper.instance.showError(title: "settings_manage_keys.cant_create".localized)
-            }
-
-            cell.bind(viewItem: item, onTapLeft: tapLeft, onTapRight: { [weak self] in
+            }, onTapRight: { [weak self] in
                 self?.delegate.didTapRestore(index: indexPath.row)
             })
         }
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if indexPath.section == descriptionSectionIndex {
+            return ManageAccountDescriptionCell.height(forContainerWidth: tableView.bounds.width)
+        }
         return ManageAccountsTheme.rowHeight
+    }
+
+    public func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        return UIView()
+    }
+
+    public func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 0
+    }
+
+    public func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return 1
     }
 
 }

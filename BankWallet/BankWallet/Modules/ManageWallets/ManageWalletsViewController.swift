@@ -23,7 +23,9 @@ class ManageWalletsViewController: WalletViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "settings_manage_wallet.title".localized
+
+        title = "manage_coins.title".localized
+
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "button.cancel".localized, style: .plain, target: self, action: #selector(close))
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.done".localized, style: .done, target: self, action: #selector(done))
 
@@ -79,6 +81,10 @@ extension ManageWalletsViewController: IManageWalletsView {
 
     func show(error: Error) {
         HudHelper.instance.showError(title: error.localizedDescription)
+    }
+
+    func showSuccess() {
+        HudHelper.instance.showSuccess()
     }
 
 }

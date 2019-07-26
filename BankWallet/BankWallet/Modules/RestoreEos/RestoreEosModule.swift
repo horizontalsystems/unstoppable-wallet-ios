@@ -2,6 +2,7 @@ protocol IRestoreEosView: class {
     func showCancelButton()
     func set(account: String?)
     func set(key: String?)
+    func show(error: Error)
 }
 
 protocol IRestoreEosViewDelegate {
@@ -25,6 +26,7 @@ protocol IRestoreEosRouter {
 
 protocol IRestoreEosInteractor {
     var valueFromPasteboard: String? { get }
+    func validate(privateKey: String) throws
 }
 
 protocol IRestoreEosInteractorDelegate: class {

@@ -36,7 +36,7 @@ class WelcomeScreenViewController: WalletViewController {
         createButton.onTap = { [weak self] in self?.didTapCreate() }
         createButton.backgrounds = ButtonTheme.greenBackgroundDictionary
         createButton.textColors = ButtonTheme.textColorDictionary
-        createButton.titleLabel.text = "guest.create_wallet".localized
+        createButton.titleLabel.text = "welcome.create_wallet".localized
         createButton.cornerRadius = WelcomeTheme.buttonCornerRadius
 
         createButton.snp.makeConstraints { maker in
@@ -50,7 +50,7 @@ class WelcomeScreenViewController: WalletViewController {
         restoreButton.onTap = { [weak self] in self?.didTapRestore() }
         restoreButton.backgrounds = ButtonTheme.yellowBackgroundDictionary
         restoreButton.textColors = ButtonTheme.textColorDictionary
-        restoreButton.titleLabel.text = "guest.restore_wallet".localized
+        restoreButton.titleLabel.text = "welcome.restore_wallet".localized
         restoreButton.cornerRadius = WelcomeTheme.buttonCornerRadius
 
         restoreButton.snp.makeConstraints { maker in
