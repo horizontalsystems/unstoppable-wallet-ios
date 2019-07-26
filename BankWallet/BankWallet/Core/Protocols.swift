@@ -1,5 +1,4 @@
 import RxSwift
-import BitcoinCore
 import GRDB
 
 typealias CoinCode = String
@@ -78,37 +77,6 @@ protocol IWalletManager: class {
     func enable(wallets: [Wallet])
 }
 
-enum AdapterState {
-    case synced
-    case syncing(progress: Int, lastBlockDate: Date?)
-    case notSynced
-}
-
-extension AdapterState: Equatable {
-    public static func ==(lhs: AdapterState, rhs: AdapterState) -> Bool {
-        switch (lhs, rhs) {
-        case (.synced, .synced): return true
-        case (.syncing(let lProgress, let lLastBlockDate), .syncing(let rProgress, let rLastBlockDate)): return lProgress == rProgress && lLastBlockDate == rLastBlockDate
-        case (.notSynced, .notSynced): return true
-        default: return false
-        }
-    }
-}
-
-enum SyncMode: String {
-    case fast = "fast"
-    case slow = "slow"
-    case new = "new"
-}
-
-enum FeeRatePriority: Int {
-    case lowest
-    case low
-    case medium
-    case high
-    case highest
-}
-
 protocol IAdapter: class {
     var wallet: Wallet { get }
     var feeCoinCode: CoinCode? { get }
@@ -147,19 +115,6 @@ protocol IAdapter: class {
 
 extension IAdapter {
     var feeCoinCode: CoinCode? { return nil }
-}
-
-enum SendTransactionError: LocalizedError {
-    case connection
-    case unknown
-
-    public var errorDescription: String? {
-        switch self {
-        case .connection: return "alert.no_internet".localized
-        case .unknown: return "alert.network_issue".localized
-        }
-    }
-
 }
 
 protocol IWordsManager {
@@ -470,10 +425,6 @@ protocol IFeeRateProvider {
     func dashFeeRate(for priority: FeeRatePriority) -> Int
 }
 
-enum AdapterError: Error {
-    case unsupportedAccount
-}
-
 protocol IEncryptionManager {
     func encrypt(data: Data) throws -> Data
     func decrypt(data: Data) throws -> Data
@@ -495,11 +446,6 @@ protocol IPredefinedAccountType {
     var coinCodes: String { get }
     var defaultAccountType: DefaultAccountType { get }
     func supports(accountType: AccountType) -> Bool
-}
-
-enum DefaultAccountType {
-    case mnemonic(wordsCount: Int)
-    case eos
 }
 
 protocol IAppManager {
