@@ -36,9 +36,8 @@ class BitcoinBaseAdapter {
     }
 
     func transactionRecord(fromTransaction transaction: TransactionInfo) -> TransactionRecord {
-        let fromAddresses = transaction.from.map {
-            TransactionAddress(address: $0.address, mine: $0.mine)
-        }
+        // for Bitcoin based adapters "from" addresses should be hidden
+        let fromAddresses: [TransactionAddress] = []
 
         let toAddresses = transaction.to.map {
             TransactionAddress(address: $0.address, mine: $0.mine)
