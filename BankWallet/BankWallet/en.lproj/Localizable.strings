@@ -255,7 +255,7 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 
 // No Passcode
 
-"no_passcode.info_text" = "This app requires that phone has the passcode (screen lock) enabled.\nYou may enable it in iOS settings.";
+"no_passcode.info_text" = "This app requires that phone has the passcode (screen lock) enabled.\n\nYou may enable it in iOS settings.\n\nPlease note that when you disabled the PIN on the OS level the security measures in safe storage of your phonе made the previously stored data invalid. You will need to Restore your wallet keys to get back to your wallet.";
 
 //NumPad
 
