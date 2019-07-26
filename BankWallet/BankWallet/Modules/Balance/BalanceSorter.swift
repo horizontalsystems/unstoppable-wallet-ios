@@ -14,7 +14,7 @@ class BalanceSorter: IBalanceSorter {
             }
         case .name:
             return items.sorted { item, item2 in
-                return item.coin.title.caseInsensitiveCompare(item2.coin.title) == .orderedAscending
+                item.coin.title.caseInsensitiveCompare(item2.coin.title) == .orderedAscending
             }
         case .manual:
             return items

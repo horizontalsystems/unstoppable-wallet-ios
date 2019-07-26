@@ -5,15 +5,17 @@ class BalancePresenter {
     private let router: IBalanceRouter
     private var dataSource: IBalanceItemDataSource
     private let factory: IBalanceViewItemFactory
+    private let differ: IDiffer
     private let sortingOnThreshold: Int
 
     weak var view: IBalanceView?
 
-    init(interactor: IBalanceInteractor, router: IBalanceRouter, dataSource: IBalanceItemDataSource, factory: IBalanceViewItemFactory, sortingOnThreshold: Int) {
+    init(interactor: IBalanceInteractor, router: IBalanceRouter, dataSource: IBalanceItemDataSource, factory: IBalanceViewItemFactory, differ: IDiffer, sortingOnThreshold: Int) {
         self.interactor = interactor
         self.router = router
         self.dataSource = dataSource
         self.factory = factory
+        self.differ = differ
         self.sortingOnThreshold = sortingOnThreshold
     }
 
@@ -37,18 +39,20 @@ extension BalancePresenter: IBalanceInteractorDelegate {
 
     func didUpdate(balance: Decimal, coinCode: CoinCode) {
         if let index = dataSource.index(for: coinCode) {
+            let oldItems = dataSource.items
             dataSource.set(balance: balance, index: index)
 
-            view?.updateItem(at: index)
+            view?.reload(with: differ.changes(old: oldItems, new: dataSource.items))
             view?.updateHeader()
         }
     }
 
     func didUpdate(state: AdapterState, coinCode: CoinCode) {
         if let index = dataSource.index(for: coinCode) {
+            let oldItems = dataSource.items
             dataSource.set(state: state, index: index)
 
-            view?.updateItem(at: index)
+            view?.reload(with: differ.changes(old: oldItems, new: dataSource.items))
             view?.updateHeader()
         }
     }
@@ -64,9 +68,10 @@ extension BalancePresenter: IBalanceInteractorDelegate {
 
     func didUpdate(rate: Rate) {
         if let index = dataSource.index(for: rate.coinCode) {
+            let oldItems = dataSource.items
             dataSource.set(rate: rate, index: index)
 
-            view?.updateItem(at: index)
+            view?.reload(with: differ.changes(old: oldItems, new: dataSource.items))
             view?.updateHeader()
         }
     }

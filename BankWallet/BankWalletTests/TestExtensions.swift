@@ -120,12 +120,6 @@ extension FeeRatePriority {
     }
 }
 
-extension Rate: Equatable {
-    public static func ==(lhs: Rate, rhs: Rate) -> Bool {
-        return lhs.value == rhs.value && lhs.coinCode == rhs.coinCode && lhs.currencyCode == rhs.currencyCode && lhs.date == rhs.date && lhs.isLatest == rhs.isLatest
-    }
-}
-
 extension EnabledWallet: Equatable {
 
     public static func ==(lhs: EnabledWallet, rhs: EnabledWallet) -> Bool {
@@ -151,17 +145,6 @@ extension BalanceHeaderViewItem: Equatable {
 extension BalanceItem: Equatable {
     public static func ==(lhs: BalanceItem, rhs: BalanceItem) -> Bool {
         return lhs.state == rhs.state && lhs.balance == rhs.balance
-    }
-}
-
-extension AdapterState {
-    public static func ==(lhs: AdapterState, rhs: AdapterState) -> Bool {
-        switch (lhs, rhs) {
-        case (.synced, .synced): return true
-        case (.syncing(let lProgress, let lLastBlockDate), .syncing(let rProgress, let rLastBlockDate)): return lProgress == rProgress && lLastBlockDate == rLastBlockDate
-        case (.notSynced, .notSynced): return true
-        default: return false
-        }
     }
 }
 
