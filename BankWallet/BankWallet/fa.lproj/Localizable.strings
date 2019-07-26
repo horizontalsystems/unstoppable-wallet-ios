@@ -57,7 +57,13 @@
 "backup.intro.later" = "بعداً";
 "backup.intro.backup_now" = "پيشتيباني";
 "backup.intro.show_key" = "Show Key";
+
 "backup.words.title" = "رقم مخفی";
+
+"backup.eos.title" = "EOS Key";
+"backup.eos.account_name" = "Account Name";
+"backup.eos.active_private_key" = "Active Private Key";
+"backup.eos.hint" = "Copying your key using “copy” action poses some risks if you use any clipboard management apps or some other apps that may access to clipboard data.";
 
 "backup.confirmation.title" = "برسي...";
 "backup.confirmation.description" = "حرف هاي رمز تات را وارد كنيد";
