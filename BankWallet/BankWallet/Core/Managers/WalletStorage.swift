@@ -23,7 +23,7 @@ extension WalletStorage: IWalletStorage {
                 return nil
             }
 
-            guard let account = accounts.first(where: { $0.name == enabledWallet.accountId }) else {
+            guard let account = accounts.first(where: { $0.id == enabledWallet.accountId }) else {
                 return nil
             }
 
