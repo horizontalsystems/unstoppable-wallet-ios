@@ -146,7 +146,11 @@ extension SendFeeView: ISendFeeView {
     func set(error: String?) {
         errorLabel.text = error
 
-        feeSlider.isHidden = !feeAdjustable || error != nil
+        let hide = error != nil
+
+        feeLabel.isHidden = hide
+        convertedFeeLabel.isHidden = hide
+        feeSlider.isHidden = !feeAdjustable || hide
     }
 
 }

@@ -2,13 +2,15 @@ import Foundation
 
 class SendFeePresenterHelper {
     let coinCode: CoinCode
-    let coinDecimal: Int = 8
+    let coinDecimal: Int
     let currency: Currency
-    let currencyDecimal: Int = 2
+    let currencyDecimal: Int
 
-    init(coinCode: CoinCode, currency: Currency) {
+    init(coinCode: CoinCode, coinDecimal: Int, currency: Currency, currencyDecimal: Int) {
         self.coinCode = coinCode
+        self.coinDecimal = coinDecimal
         self.currency = currency
+        self.currencyDecimal = currencyDecimal
     }
 
     func mainValue(coinAmount: Decimal?, inputType: SendInputType, rate: Rate?) -> String? {

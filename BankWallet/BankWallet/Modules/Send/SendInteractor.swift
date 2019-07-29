@@ -8,6 +8,7 @@ class SendInteractor {
 
     private let disposeBag = DisposeBag()
     private var validateDisposable: Disposable?
+    private var feeDisposable: Disposable?
 
     weak var delegate: ISendInteractorDelegate?
 
@@ -41,147 +42,36 @@ extension SendInteractor: ISendInteractor {
         return try state.adapter.availableBalance(params: params)
     }
 
-    var defaultInputType: SendInputType {
-        if state.exchangeRate == nil {
-            return .coin
-        }
-        return localStorage.sendInputType ?? .coin
-    }
-
     var coin: Coin {
         return state.adapter.wallet.coin
-    }
-
-    var valueFromPasteboard: String? {
-        return pasteboardManager.value
     }
 
     func parse(paymentAddress: String) -> PaymentRequestAddress {
         return state.adapter.parse(paymentAddress: paymentAddress)
     }
 
-    func convertedAmount(forInputType inputType: SendInputType, amount: Decimal) -> Decimal? {
-        guard let rateValue = state.exchangeRate?.value else {
-            return nil
-        }
+    func updateFee(params: [String: Any]) {
+        feeDisposable?.dispose()
 
-        switch inputType {
-        case .coin: return amount * rateValue
-        case .currency: return amount / rateValue
-        }
-    }
-
-    func decimal(forInputType inputType: SendInputType) -> Int {
-        return inputType == .coin ? min(state.adapter.decimal, appConfigProvider.maxDecimal) : appConfigProvider.fiatDecimal
-    }
-
-    func state(forUserInput input: SendUserInput) throws -> SendState {
-        let adapter = state.adapter
-        let coinCode = adapter.wallet.coin.code
-        let baseCurrency = currencyManager.baseCurrency
-        let rateValue = state.exchangeRate?.value
-
-        let decimal = input.inputType == .coin ? min(adapter.decimal, appConfigProvider.maxDecimal) : appConfigProvider.fiatDecimal
-
-        let sendState = SendState(decimal: decimal, inputType: input.inputType)
-
-        switch input.inputType {
-        case .coin:
-            sendState.coinValue = CoinValue(coinCode: coinCode, value: input.amount)
-            sendState.currencyValue = rateValue.map { CurrencyValue(currency: baseCurrency, value: input.amount * $0) }
-        case .currency:
-            sendState.coinValue = rateValue.map { CoinValue(coinCode: coinCode, value: input.amount / $0) }
-            sendState.currencyValue = CurrencyValue(currency: baseCurrency, value: input.amount)
-        }
-
-        sendState.address = input.address
-
-        if let address = input.address {
+        var single = Single<Decimal>.create { observer in
             do {
-                try adapter.validate(address: address)
+                let fee = try self.state.adapter.fee(params: params)
+                observer(.success(fee))
             } catch {
-                sendState.addressError = .invalidAddress
+                observer(.error(error))
             }
+            return Disposables.create()
         }
-
-        var params = [String: Any]()
-        params[AdapterFields.amount.rawValue] = sendState.coinValue?.value ?? 0
-        params[AdapterFields.address.rawValue] = input.address
-        params[AdapterFields.feeRateRriority.rawValue] = input.feeRatePriority
-        let errors = try adapter.validate(params: params)
-        try errors.forEach {
-            switch($0) {
-            case .insufficientAmount: sendState.amountError = try createAmountError(forInput: input, feeRatePriority: input.feeRatePriority)
-            case .insufficientFeeBalance: sendState.feeError = try createFeeError(forInput: input, amount: sendState.coinValue?.value ?? 0, feeRatePriority: input.feeRatePriority)
-            }
+        if async {
+            single = single.subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+                    .observeOn(MainScheduler.instance)
         }
-        if let coinValue = sendState.coinValue {
-            params[AdapterFields.amount.rawValue] = coinValue.value
-            let feeValue = try adapter.fee(params: params)
-            sendState.feeCoinValue = CoinValue(coinCode: state.adapter.feeCoinCode ?? coinCode, value: feeValue)
-        }
-        let feeRateValue: Decimal?
-        if state.adapter.feeCoinCode != nil {
-            feeRateValue = state.feeExchangeRate?.value
-        } else {
-            feeRateValue = rateValue
-        }
-        if let rateValue = feeRateValue, let feeCoinValue = sendState.feeCoinValue {
-            sendState.feeCurrencyValue = CurrencyValue(currency: baseCurrency, value: rateValue * feeCoinValue.value)
-        }
-
-        return sendState
+        feeDisposable = single.subscribe(onSuccess: { [weak self] fee in
+            self?.delegate?.didUpdate(fee: fee)
+        }, onError: { error in
+            // request with wrong parameters!
+        })
     }
-
-    private func createAmountError(forInput input: SendUserInput, feeRatePriority: FeeRatePriority) throws -> AmountInfo? {
-        var params = [String: Any]()
-        params[AdapterFields.address.rawValue] = input.address
-        params[AdapterFields.feeRateRriority.rawValue] = input.feeRatePriority
-
-        let availableBalance = try state.adapter.availableBalance(params: params)
-        switch input.inputType {
-        case .coin:
-            return .coinValue(coinValue: CoinValue(coinCode: coin.code, value: availableBalance))
-        case .currency:
-            return state.exchangeRate.map {
-                let currencyBalanceMinusFee = availableBalance * $0.value
-                return .currencyValue(currencyValue: CurrencyValue(currency: currencyManager.baseCurrency, value: currencyBalanceMinusFee))
-            }
-        }
-    }
-
-    private func createFeeError(forInput input: SendUserInput, amount: Decimal, feeRatePriority: FeeRatePriority) throws -> FeeError? {
-        guard let code = state.adapter.feeCoinCode else {
-            return nil
-        }
-        var params = [String: Any]()
-        params[AdapterFields.amount.rawValue] = amount
-        params[AdapterFields.address.rawValue] = input.address
-        params[AdapterFields.feeRateRriority.rawValue] = input.feeRatePriority
-
-        let fee = try state.adapter.fee(params: params)
-        let feeValue = CoinValue(coinCode: code, value: fee)
-        return .erc20error(erc20CoinCode: state.adapter.wallet.coin.code, fee: feeValue)
-    }
-
-    func totalBalanceMinusFee(forInputType input: SendInputType, address: String?, feeRatePriority: FeeRatePriority) throws -> Decimal {
-        var params = [String: Any]()
-        params[AdapterFields.address.rawValue] = address
-        params[AdapterFields.feeRateRriority.rawValue] = feeRatePriority
-
-        let availableBalance = try state.adapter.availableBalance(params: params)
-        switch input {
-        case .coin:
-            return availableBalance
-        case .currency:
-            return state.exchangeRate.map { availableBalance * $0.value } ?? 0
-        }
-    }
-
-    func fee(params: [String: Any]) throws -> Decimal {
-        return try state.adapter.fee(params: params)
-    }
-
 
     func validate(params: [String: Any]) {
         validateDisposable?.dispose()
@@ -201,6 +91,8 @@ extension SendInteractor: ISendInteractor {
         }
         validateDisposable = single.subscribe(onSuccess: { [weak self] errors in
             self?.delegate?.didValidate(with: errors)
+        }, onError: { error in
+            // request with wrong parameters!
         })
     }
 
@@ -243,30 +135,6 @@ extension SendInteractor: ISendInteractor {
                     self?.delegate?.didFailToSend(error: error)
                 })
                 .disposed(by: disposeBag)
-    }
-
-    func set(inputType: SendInputType) {
-        localStorage.sendInputType = inputType
-    }
-
-    func retrieveRate() {
-//        rateStorage.nonExpiredLatestRateObservable(forCoinCode: state.adapter.wallet.coin.code, currencyCode: currencyManager.baseCurrency.code)
-//                .take(1)
-//                .subscribe(onNext: { [weak self] rate in
-//                    self?.state.exchangeRate = rate
-//                    self?.delegate?.didRetrieve(rate: rate)
-//                })
-//                .disposed(by: disposeBag)
-//
-//        if let feeCoinCode = state.adapter.feeCoinCode {
-//            rateStorage.nonExpiredLatestRateObservable(forCoinCode: feeCoinCode, currencyCode: currencyManager.baseCurrency.code)
-//                    .take(1)
-//                    .subscribe(onNext: { [weak self] rateValue in
-//                        self?.state.feeExchangeRate = rateValue
-//                        self?.delegate?.didRetrieveFeeRate()
-//                    })
-//                    .disposed(by: disposeBag)
-//        }
     }
 
 }

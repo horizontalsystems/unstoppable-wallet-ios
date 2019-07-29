@@ -12,6 +12,7 @@ class SendAmountPresenter {
     weak var presenterDelegate: ISendAmountPresenterDelegate?
 
     private var sendInputType: SendInputType = .coin
+
     var coinAmount: Decimal?
     private var switchButtonEnabled: Bool = false
     private var rate: Rate?
@@ -28,8 +29,12 @@ class SendAmountPresenter {
 
     private func update(coinAmount: Decimal?) {
         let prefix = sendAmountPresenterHelper.prefix(inputType: sendInputType, rate: rate)
-        let mainValue = sendAmountPresenterHelper.mainValue(coinAmount: coinAmount, inputType: sendInputType, rate: rate)
-        let subValue = sendAmountPresenterHelper.subValue(coinAmount: coinAmount ?? 0, inputType: sendInputType, rate: rate)
+
+        var mainValue: String? = nil
+        if let coinAmount = coinAmount {
+            mainValue = sendAmountPresenterHelper.formatted(value: coinAmount, inputType: sendInputType, rate: rate)
+        }
+        let subValue = sendAmountPresenterHelper.formattedWithCode(value: coinAmount ?? 0, inputType: sendInputType.reversed, rate: rate)
 
         view?.set(type: prefix,
                 amount: mainValue)
@@ -54,6 +59,7 @@ extension SendAmountPresenter {
         rate = interactor.rate(coinCode: coinCode, currencyCode: currencyCode)
         if rate != nil {
             sendInputType = interactor.defaultInputType
+            presenterDelegate?.onChanged(sendInputType: sendInputType)
         }
 
         view?.set(switchButtonEnabled: rate != nil)
@@ -84,6 +90,8 @@ extension SendAmountPresenter: ISendAmountViewDelegate {
 
     func onSwitchClicked() {
         sendInputType = sendInputType.reversed
+        interactor.set(inputType: sendInputType)
+        presenterDelegate?.onChanged(sendInputType: sendInputType)
 
         update(coinAmount: coinAmount)
 
@@ -107,9 +115,11 @@ extension SendAmountPresenter: ISendAmountViewDelegate {
             return
         }
         self.coinAmount = coinAmount
-        presenterDelegate?.onChanged(amount: coinAmount)
 
-        view?.set(hint: sendAmountPresenterHelper.subValue(coinAmount: coinAmount ?? 0, inputType: sendInputType, rate: rate))
+        // send to delegate 0 to validate and change fee values
+        presenterDelegate?.onChanged()
+
+        view?.set(hint: sendAmountPresenterHelper.formattedWithCode(value: coinAmount ?? 0, inputType: sendInputType.reversed, rate: rate))
     }
 
     func onMaxClicked() {
@@ -119,7 +129,7 @@ extension SendAmountPresenter: ISendAmountViewDelegate {
         }
         // Update baseCoin value, UI and hide maxButton
         self.coinAmount = availableBalance
-        presenterDelegate?.onChanged(amount: coinAmount)
+        presenterDelegate?.onChanged()
 
         update(coinAmount: availableBalance)
         view?.maxButton(show: false)

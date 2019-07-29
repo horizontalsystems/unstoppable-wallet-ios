@@ -2,13 +2,15 @@ import Foundation
 
 class SendAmountPresenterHelper {
     let coinCode: CoinCode
-    let coinDecimal: Int = 8
+    let coinDecimal: Int
     let currency: Currency
-    let currencyDecimal: Int = 2
+    let currencyDecimal: Int
 
-    init(coinCode: CoinCode, currency: Currency) {
+    init(coinCode: CoinCode, coinDecimal: Int, currency: Currency, currencyDecimal: Int) {
         self.coinCode = coinCode
+        self.coinDecimal = coinDecimal
         self.currency = currency
+        self.currencyDecimal = currencyDecimal
     }
 
     func prefix(inputType: SendInputType, rate: Rate?) -> String? {
@@ -21,29 +23,31 @@ class SendAmountPresenterHelper {
         return currency.symbol
     }
 
-    func mainValue(coinAmount: Decimal?, inputType: SendInputType, rate: Rate?) -> String? {
-        guard let amount = coinAmount else {
-            return nil
-        }
+
+    func formatted(value: Decimal, inputType: SendInputType, rate: Rate?) -> String? {
+        var value = value
+        let scale: Int
         if inputType == .currency {
-            guard let value = rate.map({ amount * $0.value }) else {
+            guard let currencyValue = rate.map({ value * $0.value }) else {
                 return nil
             }
-            let rounded = ValueFormatter.instance.round(value: value, scale: currencyDecimal, roundingMode: .down)
-            return ValueFormatter.instance.format(amount: rounded)
+            value = currencyValue
+            scale = currencyDecimal
+        } else {
+            scale = coinDecimal
         }
-        let rounded = ValueFormatter.instance.round(value: amount, scale: coinDecimal, roundingMode: .down)
+        let rounded = ValueFormatter.instance.round(value: value, scale: scale, roundingMode: .down)
         return ValueFormatter.instance.format(amount: rounded)
     }
 
-    func subValue(coinAmount: Decimal, inputType: SendInputType, rate: Rate?) -> String? {
-        if inputType == .coin {
-            guard let value = rate.map({ coinAmount * $0.value }) else {
+    func formattedWithCode(value: Decimal, inputType: SendInputType, rate: Rate?) -> String? {
+        if inputType == .currency {
+            guard let value = rate.map({ value * $0.value }) else {
                 return nil
             }
             return ValueFormatter.instance.format(currencyValue: CurrencyValue(currency: currency, value: value))
         }
-        return ValueFormatter.instance.format(coinValue: CoinValue(coinCode: coinCode, value: coinAmount))
+        return ValueFormatter.instance.format(coinValue: CoinValue(coinCode: coinCode, value: value))
     }
 
     func errorValue(availableBalance: Decimal, inputType: SendInputType, rate: Rate?) -> String? {

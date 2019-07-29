@@ -118,20 +118,19 @@ extension Erc20Adapter: IAdapter {
     }
 
     func validate(params: [String : Any]) throws -> [SendStateError] {
-        guard let amount: Decimal = params[AdapterFields.amount.rawValue] as? Decimal else {
-            throw AdapterError.wrongParameters
-        }
-
         var errors = [SendStateError]()
-        let balance = availableBalance(params: params)
-        if amount > balance {
-            errors.append(.insufficientAmount(availableBalance: balance))
+
+        if let amount: Decimal = params[AdapterFields.amount.rawValue] as? Decimal {
+            let balance = availableBalance(params: params)
+            if amount > balance {
+                errors.append(.insufficientAmount(availableBalance: balance))
+            }
         }
 
         let ethereumBalance = balanceDecimal(balanceString: ethereumKit.balance, decimal: EthereumAdapter.decimal)
 
         let expectedFee = fee(params: params)
-        if ethereumBalance < fee {
+        if ethereumBalance < expectedFee {
             errors.append(.insufficientFeeBalance(fee: expectedFee))
         }
         return errors

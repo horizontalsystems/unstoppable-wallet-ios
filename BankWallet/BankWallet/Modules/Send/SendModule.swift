@@ -4,62 +4,40 @@ protocol ISendView: class {
     func build(modules: [ISendModule])
     func set(coin: Coin)
 
-    func showConfirmation(viewItem: SendConfirmationViewItem)
     func showCopied()
     func show(error: Error)
     func showProgress()
+    func dismissKeyboard()
     func dismissWithSuccess()
 }
 
 protocol ISendViewDelegate {
     func showKeyboard()
 
-    var isFeeAdjustable: Bool { get }
-
-    var sendItems: [SendItem] { get }
-
     func onViewDidLoad()
     func onClose()
 
-    func onAmountChanged(amount: Decimal)
-    func onSwitchClicked()
-
     func onConfirmClicked()
-
-    func onCopyAddress()
-    func onMaxClicked()
-
-    func onPasteAmountClicked()
-    func onFeePriorityChange(value: Int)
 }
 
 protocol ISendInteractor {
-    var defaultInputType: SendInputType { get }
     var coin: Coin { get }
-    var valueFromPasteboard: String? { get }
     func parse(paymentAddress: String) -> PaymentRequestAddress
-    func convertedAmount(forInputType inputType: SendInputType, amount: Decimal) -> Decimal?
-    func state(forUserInput input: SendUserInput) throws -> SendState
-    func totalBalanceMinusFee(forInputType input: SendInputType, address: String?, feeRatePriority: FeeRatePriority) throws -> Decimal
     func copy(address: String)
     func send(userInput: SendUserInput)
 
     func availableBalance(params: [String: Any]) throws -> Decimal
     func validate(params: [String: Any])
-    func fee(params: [String: Any]) throws -> Decimal
-
-    func set(inputType: SendInputType)
-    func retrieveRate()
+    func updateFee(params: [String: Any])
 }
 
 protocol ISendInteractorDelegate: class {
-    func didRetrieve(rate: Rate?)
-    func didRetrieveFeeRate()
     func didSend()
     func didFailToSend(error: Error)
     func onBecomeActive()
 
     func didValidate(with errors: [SendStateError])
+    func didUpdate(fee: Decimal)
 }
 
 protocol ISendRouter {

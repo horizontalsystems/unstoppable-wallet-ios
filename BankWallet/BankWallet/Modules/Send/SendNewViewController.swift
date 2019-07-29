@@ -106,11 +106,6 @@ extension SendNewViewController: ISendView {
         iconImageView.image = UIImage(named: "\(coin.code.lowercased())")?.withRenderingMode(.alwaysTemplate)
     }
 
-    func showConfirmation(viewItem: SendConfirmationViewItem) {
-        let confirmationController = SendConfirmationViewController(delegate: delegate, viewItem: viewItem)
-        present(confirmationController, animated: true)
-    }
-
     func showCopied() {
         HudHelper.instance.showSuccess(title: "alert.copied".localized)
     }
@@ -121,6 +116,10 @@ extension SendNewViewController: ISendView {
 
     func showProgress() {
         HudHelper.instance.showSpinner(userInteractionEnabled: false)
+    }
+
+    func dismissKeyboard() {
+        view.endEditing(true)
     }
 
     func dismissWithSuccess() {

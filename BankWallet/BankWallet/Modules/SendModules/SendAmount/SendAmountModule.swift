@@ -20,7 +20,8 @@ protocol ISendAmountViewDelegate {
 
 protocol ISendAmountPresenterDelegate: class {
     var availableBalance: Decimal { get }
-    func onChanged(amount: Decimal?)
+    func onChanged()
+    func onChanged(sendInputType: SendInputType)
 }
 
 protocol ISendAmountInteractor {
@@ -60,7 +61,7 @@ class SendAmountModule {
         let coinCode = adapter.wallet.coin.code
         let interactor = SendAmountInteractor(adapter: adapter, appConfigProvider: appConfigProvider, localStorage: localStorage, rateStorage: rateStorage)
 
-        let sendAmountPresenterHelper = SendAmountPresenterHelper(coinCode: coinCode, currency: currencyManager.baseCurrency)
+        let sendAmountPresenterHelper = SendAmountPresenterHelper(coinCode: coinCode, coinDecimal: adapter.decimal, currency: currencyManager.baseCurrency, currencyDecimal: App.shared.appConfigProvider.fiatDecimal)
         let presenter = SendAmountPresenter(interactor: interactor, sendAmountPresenterHelper: sendAmountPresenterHelper, coinCode: coinCode, coinDecimal: adapter.decimal, currencyCode: currencyManager.baseCurrency.code)
         sendView = SendAmountView(delegate: presenter)
 

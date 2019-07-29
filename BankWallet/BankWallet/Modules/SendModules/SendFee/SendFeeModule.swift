@@ -11,10 +11,11 @@ protocol ISendFeeViewDelegate {
 }
 
 protocol ISendFeePresenterDelegate: class {
-    var fee: Decimal { get }
+    func updateFee()
 }
 
 protocol ISendFeeInteractor {
+    func rate(coinCode: CoinCode, currencyCode: String) -> Rate?
 }
 
 protocol ISendFeeInteractorDelegate: class {
@@ -24,6 +25,8 @@ protocol ISendFeeModule: ISendModule {
     var feeRatePriority: FeeRatePriority { get }
 
     func update(fee: Decimal)
+    func insufficientFeeBalance(coinCode: CoinCode, fee: Decimal)
+    func update(sendInputType: SendInputType)
 }
 
 class SendFeeModule {
@@ -31,10 +34,13 @@ class SendFeeModule {
     private let presenter: SendFeePresenter
 
 
-    init(adapter: IAdapter, rateStorage: IRateStorage, delegate: ISendFeePresenterDelegate) {
+    init(adapter: IAdapter, rateStorage: IRateStorage, currencyManager: ICurrencyManager, delegate: ISendFeePresenterDelegate) {
+        let coinCode = adapter.feeCoinCode ?? adapter.wallet.coin.code
+
         let interactor = SendFeeInteractor(rateStorage: rateStorage)
 
-        presenter = SendFeePresenter(interactor: interactor, coinCode: adapter.feeCoinCode ?? adapter.wallet.coin.code)
+        let sendAmountPresenterHelper = SendAmountPresenterHelper(coinCode: coinCode, coinDecimal: adapter.decimal, currency: currencyManager.baseCurrency, currencyDecimal: App.shared.appConfigProvider.fiatDecimal)
+        presenter = SendFeePresenter(interactor: interactor, presenterHelper: sendAmountPresenterHelper, coinCode: coinCode, currencyCode: currencyManager.baseCurrency.code)
         sendView = SendFeeView(feeAdjustable: true, delegate: presenter)
 
         presenter.view = sendView
@@ -62,7 +68,15 @@ extension SendFeeModule: ISendModule {
 extension SendFeeModule: ISendFeeModule {
 
     func update(fee: Decimal) {
+        presenter.update(fee: fee)
+    }
 
+    func insufficientFeeBalance(coinCode: CoinCode, fee: Decimal) {
+        presenter.insufficientFeeBalance(coinCode: coinCode, fee: fee)
+    }
+
+    func update(sendInputType: SendInputType) {
+        presenter.update(sendInputType: sendInputType)
     }
 
     var feeRatePriority: FeeRatePriority {
