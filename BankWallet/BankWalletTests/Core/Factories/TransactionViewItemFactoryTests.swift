@@ -179,15 +179,6 @@ class TransactionViewItemFactoryTests: XCTestCase {
         XCTAssertEqual(viewItem.to, otherAddress1.address)
     }
 
-    func testFromTo_outgoing_allMine() {
-        let item = transactionItem(amount: -1, from: [mineAddress1], to: [mineAddress2])
-
-        let viewItem = factory.viewItem(fromItem: item)
-
-        XCTAssertEqual(viewItem.to, mineAddress2.address)
-        XCTAssertEqual(viewItem.from, mineAddress1.address)
-    }
-
     private func transactionItem(
             coin: Coin = Coin(title: "Bitcoin", code: "BTC", type: .bitcoin),
             transactionHash: String = "",
