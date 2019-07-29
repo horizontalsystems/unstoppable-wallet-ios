@@ -11,6 +11,11 @@ class AddressTextView: UITextView {
 }
 
 class AddressInputField: UIView {
+    public enum RightButtonMode {
+        case delete
+        case copy
+    }
+
     private let addressWrapperView = UIView()
     private let addressField = AddressTextView()
     private let placeholderLabel = UILabel()
@@ -20,18 +25,22 @@ class AddressInputField: UIView {
     private let deleteButton = RespondButton()
     private let deleteButtonIcon = UIImageView()
     private let pasteButton = RespondButton()
+    private let copyButton = RespondButton()
+    private let copyButtonIcon = UIImageView()
     private let textViewCenterFixOffset: CGFloat = 1
 
     private let placeholder: String?
     private let numberOfLines: Int
     private let showQrButton: Bool
     private let canEdit: Bool
+    private let rightButtonMode: RightButtonMode
 
-    init(frame: CGRect, placeholder: String?, numberOfLines: Int = 1, showQrButton: Bool, canEdit: Bool, lineBreakMode: NSLineBreakMode) {
+    init(frame: CGRect, placeholder: String?, numberOfLines: Int = 1, showQrButton: Bool, canEdit: Bool, lineBreakMode: NSLineBreakMode, rightButtonMode: RightButtonMode = .delete) {
         self.placeholder = placeholder
         self.numberOfLines = numberOfLines
         self.showQrButton = showQrButton
         self.canEdit = canEdit
+        self.rightButtonMode = rightButtonMode
         super.init(frame: frame)
 
         addSubview(addressWrapperView)
@@ -42,6 +51,8 @@ class AddressInputField: UIView {
         scanButton.addSubview(scanButtonIcon)
         addSubview(deleteButton)
         deleteButton.addSubview(deleteButtonIcon)
+        addSubview(copyButton)
+        copyButton.addSubview(copyButtonIcon)
         addSubview(pasteButton)
 
         layer.cornerRadius = SendTheme.holderCornerRadius
@@ -125,6 +136,19 @@ class AddressInputField: UIView {
             maker.center.equalToSuperview()
         }
 
+        copyButton.borderWidth = 1 / UIScreen.main.scale
+        copyButton.borderColor = SendTheme.buttonBorderColor
+        copyButton.cornerRadius = SendTheme.buttonCornerRadius
+        copyButton.backgrounds = SendTheme.buttonBackground
+        copyButton.snp.makeConstraints { maker in
+            maker.edges.equalTo(deleteButton)
+        }
+
+        copyButtonIcon.image = UIImage(named: "Address Field Copy Icon")?.tinted(with: SendTheme.buttonIconColor)
+        copyButtonIcon.snp.makeConstraints { maker in
+            maker.center.equalToSuperview()
+        }
+
         bind(address: nil, error: nil)
     }
 
@@ -147,6 +171,11 @@ class AddressInputField: UIView {
             deleteButton.onTap = onDelete
         }
     }
+    var onCopy: (() -> ())? {
+        didSet {
+            copyButton.onTap = onCopy
+        }
+    }
     var onTextChange: ((String?) -> ())?
 
     func bind(address: String?, error: String?) {
@@ -155,7 +184,8 @@ class AddressInputField: UIView {
             addressField.text = address
             pasteButton.isHidden = true
             scanButton.isHidden = true
-            deleteButton.isHidden = false
+            deleteButton.isHidden = rightButtonMode == .delete ? false : true
+            copyButton.isHidden = rightButtonMode == .copy ? false : true
 
             addressWrapperView.snp.remakeConstraints { maker in
                 maker.leading.equalToSuperview().offset(SendTheme.mediumMargin)
@@ -169,6 +199,7 @@ class AddressInputField: UIView {
             pasteButton.isHidden = false
             scanButton.isHidden = false || !showQrButton
             deleteButton.isHidden = true
+            copyButton.isHidden = true
 
             addressWrapperView.snp.remakeConstraints { maker in
                 maker.leading.equalToSuperview().offset(SendTheme.mediumMargin)

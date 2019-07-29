@@ -21,7 +21,8 @@ extension BackupEosRouter {
 
     static func module(delegate: IBackupDelegate, account: String, activePrivateKey: String) -> UIViewController {
         let router = BackupEosRouter(delegate: delegate)
-        let presenter = BackupEosPresenter(router: router, account: account, activePrivateKey: activePrivateKey)
+        let interactor = BackupEosInteractor(pasteboardManager: App.shared.pasteboardManager)
+        let presenter = BackupEosPresenter(interactor: interactor, router: router, account: account, activePrivateKey: activePrivateKey)
         let viewController = BackupEosViewController(delegate: presenter)
 
         router.viewController = viewController
