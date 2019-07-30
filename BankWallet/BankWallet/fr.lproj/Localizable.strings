@@ -27,6 +27,12 @@
 "access_camera.message" = "Unstoppable  porte-monnaie a besoin d’accéder à votre camerà pour scanner le code QR.\n\nAllez dans Paramètres - >  et permettez d’accéder à la caméra.";
 "access_camera.settings" = "Paramètres";
 
+// Welcome
+
+"welcome.new_wallet" = "New Wallet";
+"welcome.restore_wallet" = "Restore Wallet";
+"welcome.version" = "version %@";
+
 // Restore
 
 "restore.title" = "Restaurer";
@@ -36,6 +42,7 @@
 "restore.placeholder.private_key" = "Active Private Key";
 
 //Coin Sync Modes
+
 "coin_sync.title" = "Restaurer les options";
 "coin_sync.fast" = "Rapide";
 "coin_sync.recommended" = "0-2 heures (Recommandé)";
