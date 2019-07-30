@@ -2,8 +2,8 @@ import UIKit
 
 protocol ILaunchInteractor {
     var passcodeLocked: Bool { get }
-    var hasAccounts: Bool { get }
     var isPinSet: Bool { get }
+    var didMainShownOnce: Bool { get }
 }
 
 protocol ILaunchPresenter {

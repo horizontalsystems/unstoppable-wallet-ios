@@ -14,10 +14,10 @@ extension LaunchPresenter: ILaunchPresenter {
 
         if interactor.passcodeLocked {
             return .noPasscode
-        } else if !interactor.hasAccounts && !isPinSet {
-            return  .welcome
         } else if isPinSet {
             return .unlock
+        } else if !interactor.didMainShownOnce {
+            return  .welcome
         } else {
             return .main
         }

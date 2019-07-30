@@ -3,7 +3,7 @@ import UIKit
 class LaunchRouter {
 
     static func module() -> UIViewController {
-        let interactor: ILaunchInteractor = LaunchInteractor(accountManager: App.shared.accountManager, pinManager: App.shared.pinManager, passcodeLockManager: App.shared.passcodeLockManager)
+        let interactor: ILaunchInteractor = LaunchInteractor(pinManager: App.shared.pinManager, passcodeLockManager: App.shared.passcodeLockManager, localStorage: App.shared.localStorage)
         let presenter: ILaunchPresenter = LaunchPresenter(interactor: interactor)
 
         switch presenter.launchMode {

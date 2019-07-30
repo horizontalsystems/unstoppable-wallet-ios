@@ -16,6 +16,8 @@ class MainViewController: UITabBarController {
         }
 
         self.selectedIndex = selectedIndex
+
+        viewDelegate.viewDidLoad()
     }
 
     required init?(coder aDecoder: NSCoder) {

@@ -13,6 +13,7 @@ class UserDefaultsStorage {
     private let lastExitDateKey = "last_exit_date_key"
     private let didLaunchOnceKey = "did_launch_once_key"
     private let keySendInputType = "send_input_type_key"
+    private let didShowMainOnceKey = "did_show_main_once_key"
 
     private func getString(_ name: String) -> String? {
         return UserDefaults.standard.value(forKey: name) as? String
@@ -128,6 +129,11 @@ extension UserDefaultsStorage: ILocalStorage {
         set {
             setString(keySendInputType, value: newValue?.rawValue)
         }
+    }
+
+    var didShowMainOnce: Bool {
+        get { return bool(for: didShowMainOnceKey) ?? false }
+        set { set(newValue, for: didShowMainOnceKey) }
     }
 
 }
