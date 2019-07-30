@@ -36,7 +36,8 @@
 // Restore
 
 "restore.title" = "Восстановить";
-"restore.description" = "Введите ключ";
+"restore.description" = "To restore existing wallet you need to enter a private key for that wallet.\n\nOnce you restore one wallet you will be able to restore more wallets by going to Manage Keys section in app Settings.";
+"restore.words.description" = "Enter Key";
 "restore.validation_failed" = "Неверный Ключ";
 "restore.placeholder.account_name" = "Имя Пользователя";
 "restore.placeholder.private_key" = "Активировать приватный ключ";
