@@ -1,6 +1,7 @@
 import UIKit
 
 protocol ILaunchInteractor {
+    var hasAccounts: Bool { get }
     var passcodeLocked: Bool { get }
     var isPinSet: Bool { get }
     var mainShownOnce: Bool { get }
