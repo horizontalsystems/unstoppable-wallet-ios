@@ -27,6 +27,12 @@
 "access_camera.message" = "钱包需要接入照相机扫描二维码\n\n请在”设置”-“Unstoppable”中打开";
 "access_camera.settings" = "设置";
 
+// Welcome
+
+"welcome.new_wallet" = "New Wallet";
+"welcome.restore_wallet" = "Restore Wallet";
+"welcome.version" = "version %@";
+
 // Restore
 
 "restore.title" = "恢复";
@@ -36,6 +42,7 @@
 "restore.placeholder.private_key" = "Active Private Key";
 
 //Coin Sync Modes
+
 "coin_sync.title" = "恢复选项";
 "coin_sync.fast" = "过程最快";
 "coin_sync.recommended" = "0 小时 (推荐)";
