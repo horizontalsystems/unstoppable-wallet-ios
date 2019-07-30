@@ -27,6 +27,12 @@
 "access_camera.message" = "Unstoppable Cüzdan, QR Kodu okuyabilmek için Kameranıza ihtiyaç duyuyor.\n\nAyarlar - > Unstoppable'a gidip kamera erişimine izin verin.";
 "access_camera.settings" = "Ayarlar";
 
+// Welcome
+
+"welcome.new_wallet" = "New Wallet";
+"welcome.restore_wallet" = "Restore Wallet";
+"welcome.version" = "version %@";
+
 // Restore
 
 "restore.title" = "Geri Yükle";
@@ -36,6 +42,7 @@
 "restore.placeholder.private_key" = "Active Private Key";
 
 //Coin Sync Modes
+
 "coin_sync.title" = "Geri yükleme seçenekleri";
 "coin_sync.fast" = "Hızlı";
 "coin_sync.recommended" = "0-2 saat (Tavsiye edilen)";
