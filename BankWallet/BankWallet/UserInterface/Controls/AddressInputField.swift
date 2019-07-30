@@ -11,11 +11,6 @@ class AddressTextView: UITextView {
 }
 
 class AddressInputField: UIView {
-    public enum RightButtonMode {
-        case delete
-        case copy
-    }
-
     private let addressWrapperView = UIView()
     private let addressField = AddressTextView()
     private let placeholderLabel = UILabel()
@@ -254,4 +249,11 @@ extension AddressInputField: UITextViewDelegate {
         return true
     }
 
+}
+
+extension AddressInputField {
+    public enum RightButtonMode {
+        case delete
+        case copy
+    }
 }

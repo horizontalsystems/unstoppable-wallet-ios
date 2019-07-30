@@ -6,6 +6,8 @@ class BackupWordsController: WalletViewController {
 
     private let scrollView = UIScrollView()
     private let wordsLabel = UILabel()
+
+    private let proceedButtonHolder = GradientView(gradientHeight: BackupTheme.gradientHeight, viewHeight: BackupTheme.cancelHolderHeight, fromColor: BackupTheme.gradientTransparent, toColor: BackupTheme.gradientSolid)
     private let proceedButton = UIButton()
 
     init(delegate: IBackupWordsViewDelegate) {
@@ -24,7 +26,9 @@ class BackupWordsController: WalletViewController {
         title = "backup.words.title".localized
 
         view.addSubview(scrollView)
-        view.addSubview(proceedButton)
+
+        view.addSubview(proceedButtonHolder)
+        proceedButtonHolder.addSubview(proceedButton)
         scrollView.addSubview(wordsLabel)
 
         scrollView.showsVerticalScrollIndicator = false
@@ -32,12 +36,18 @@ class BackupWordsController: WalletViewController {
             maker.leading.equalToSuperview().offset(BackupTheme.sideMargin)
             maker.trailing.equalToSuperview().offset(-BackupTheme.sideMargin)
             maker.top.equalTo(self.view.snp.topMargin).offset(BackupTheme.wordsTopMargin)
-            maker.bottom.equalTo(self.proceedButton.snp.top).offset(-BackupTheme.wordsBottomMargin)
+            maker.bottom.equalToSuperview()
         }
 
         wordsLabel.numberOfLines = 0
         wordsLabel.snp.makeConstraints { maker in
             maker.edges.equalTo(self.scrollView.snp.edges)
+            maker.bottom.equalTo(self.scrollView.snp.bottom).offset(-BackupTheme.wordsBottomMargin - BackupTheme.cancelHolderHeight)
+        }
+
+        proceedButtonHolder.snp.makeConstraints { maker in
+            maker.leading.bottom.trailing.equalToSuperview()
+            maker.height.equalTo(BackupTheme.cancelHolderHeight)
         }
 
         proceedButton.setTitle(delegate.isBackedUp ? "backup.close".localized : "button.next".localized, for: .normal)

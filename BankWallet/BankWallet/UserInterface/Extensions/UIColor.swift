@@ -1,6 +1,7 @@
 import UIKit
 
 extension UIColor {
+    static var crypto_Dark_MidLightBackground: UIColor { return App.shared.localStorage.lightMode ? .cryptoMidLightBackground : .cryptoDark }
     static var crypto_Dark_LightBackground: UIColor { return App.shared.localStorage.lightMode ? .cryptoLightBackground : .cryptoDark }
     static var crypto_Dark_Bars: UIColor { return App.shared.localStorage.lightMode ? .cryptoBars : .cryptoDark }
     static var crypto_Bars_Dark: UIColor { return App.shared.localStorage.lightMode ? .cryptoDark : .cryptoBars }
@@ -39,6 +40,7 @@ extension UIColor {
     static let cryptoGreen50: UIColor = UIColor(named: "Green50") ?? .black
     static let cryptoGreenPressed: UIColor = UIColor(named: "GreenPressed") ?? .black
     static let cryptoGreen20: UIColor = UIColor(named: "Green20") ?? .black
+    static let cryptoMidLightBackground: UIColor = UIColor(named: "MidLightBackground") ?? .black
     static let cryptoLightBackground: UIColor = UIColor(named: "LightBackground") ?? .black
     static let cryptoLightGray: UIColor = UIColor(named: "LightGray") ?? .black
     static let cryptoRed: UIColor = UIColor(named: "Red") ?? .black

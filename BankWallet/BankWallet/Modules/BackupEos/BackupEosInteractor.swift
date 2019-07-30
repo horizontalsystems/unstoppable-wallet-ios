@@ -1,5 +1,3 @@
-import Foundation
-
 class BackupEosInteractor {
     private let pasteboardManager: IPasteboardManager
 
@@ -11,7 +9,7 @@ class BackupEosInteractor {
 
 extension BackupEosInteractor: IBackupEosInteractor {
 
-    func onCopy(string: String) {
+    func copyToClipboard(string: String) {
         pasteboardManager.set(value: string)
     }
 

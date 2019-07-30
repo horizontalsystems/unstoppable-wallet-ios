@@ -17,5 +17,5 @@ protocol IBackupEosRouter {
 }
 
 protocol IBackupEosInteractor {
-    func onCopy(string: String)
+    func copyToClipboard(string: String)
 }

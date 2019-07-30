@@ -21,11 +21,11 @@ extension BackupEosPresenter: IBackupEosViewDelegate {
     }
 
     func onCopyAddress() {
-        interactor.onCopy(string: account)
+        interactor.copyToClipboard(string: account)
     }
 
     func onCopyPrivateKey() {
-        interactor.onCopy(string: activePrivateKey)
+        interactor.copyToClipboard(string: activePrivateKey)
     }
 
 }

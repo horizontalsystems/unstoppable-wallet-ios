@@ -33,4 +33,9 @@ class BackupTheme {
     static let eosTextColor: UIColor = .cryptoGray
     static let eosQrCodeTopMargin: CGFloat = 24
     static let activePrivateKeyLabelTopMargin: CGFloat = 23
+
+    static let cancelHolderHeight: CGFloat = 126
+    static let gradientHeight: CGFloat = 16
+    static var gradientTransparent: UIColor { return UIColor.crypto_Dark_MidLightBackground.withAlphaComponent(0) }
+    static var gradientSolid: UIColor { return .crypto_Dark_MidLightBackground }
 }
