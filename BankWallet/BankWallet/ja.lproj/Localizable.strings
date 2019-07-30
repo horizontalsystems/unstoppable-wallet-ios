@@ -27,6 +27,12 @@
 "access_camera.message" = "Unstoppable needs access to your camera to scan QR code.\n\nGo to Settings - > Unstoppable and allow access to Camera.";
 "access_camera.settings" = "設定";
 
+// Welcome
+
+"welcome.new_wallet" = "New Wallet";
+"welcome.restore_wallet" = "Restore Wallet";
+"welcome.version" = "version %@";
+
 // Restore
 
 "restore.title" = "Restore";
@@ -36,6 +42,7 @@
 "restore.placeholder.private_key" = "Active Private Key";
 
 //Coin Sync Modes
+
 "coin_sync.title" = "Restore Options";
 "coin_sync.fast" = "Fast";
 "coin_sync.recommended" = "0-2 hours (Recommended)";
