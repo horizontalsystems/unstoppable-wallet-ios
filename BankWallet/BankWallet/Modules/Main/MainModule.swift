@@ -6,7 +6,7 @@ protocol IMainViewDelegate {
 }
 
 protocol IMainInteractor {
-    func setDidShowMainOnce()
+    func setMainShownOnce()
 }
 
 protocol IMainInteractorDelegate: class {

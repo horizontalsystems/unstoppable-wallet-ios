@@ -20,7 +20,7 @@ protocol ILocalStorage: class {
     var lastExitDate: Double { get set }
     var didLaunchOnce: Bool { get set }
     var sendInputType: SendInputType? { get set }
-    var didShowMainOnce: Bool { get set }
+    var mainShownOnce: Bool { get set }
 }
 
 protocol ISecureStorage: class {

@@ -16,8 +16,6 @@ class MainViewController: UITabBarController {
         }
 
         self.selectedIndex = selectedIndex
-
-        viewDelegate.viewDidLoad()
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -37,6 +35,8 @@ class MainViewController: UITabBarController {
 
         tabBar.tintColor = .cryptoYellow
         tabBar.unselectedItemTintColor = .cryptoGray
+
+        viewDelegate.viewDidLoad()
     }
 
     override var preferredStatusBarStyle: UIStatusBarStyle {

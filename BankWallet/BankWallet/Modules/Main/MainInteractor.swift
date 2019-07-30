@@ -13,9 +13,9 @@ class MainInteractor {
 
 extension MainInteractor: IMainInteractor {
 
-    func setDidShowMainOnce() {
+    func setMainShownOnce() {
         DispatchQueue.global(qos: .background).async {
-            self.localStorage.didShowMainOnce = true
+            self.localStorage.mainShownOnce = true
         }
     }
 

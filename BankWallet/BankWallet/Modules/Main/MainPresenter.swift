@@ -14,7 +14,7 @@ class MainPresenter {
 extension MainPresenter: IMainViewDelegate {
 
     func viewDidLoad() {
-        interactor.setDidShowMainOnce()
+        interactor.setMainShownOnce()
     }
 
 }

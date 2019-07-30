@@ -21,8 +21,8 @@ extension LaunchInteractor: ILaunchInteractor {
         return pinManager.isPinSet
     }
 
-    var didMainShownOnce: Bool {
-        return localStorage.didShowMainOnce
+    var mainShownOnce: Bool {
+        return localStorage.mainShownOnce
     }
 
 }

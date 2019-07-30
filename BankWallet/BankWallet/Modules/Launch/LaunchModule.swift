@@ -3,7 +3,7 @@ import UIKit
 protocol ILaunchInteractor {
     var passcodeLocked: Bool { get }
     var isPinSet: Bool { get }
-    var didMainShownOnce: Bool { get }
+    var mainShownOnce: Bool { get }
 }
 
 protocol ILaunchPresenter {
