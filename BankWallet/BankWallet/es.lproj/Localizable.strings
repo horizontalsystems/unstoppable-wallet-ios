@@ -27,6 +27,12 @@
 "access_camera.message" = "Unstoppable cartera necesita acceder a su cámara para escanear el código QR";
 "access_camera.settings" = "Configuración";
 
+// Welcome
+
+"welcome.new_wallet" = "New Wallet";
+"welcome.restore_wallet" = "Restore Wallet";
+"welcome.version" = "version %@";
+
 // Restore
 
 "restore.title" = "Restaurar";
@@ -36,6 +42,7 @@
 "restore.placeholder.private_key" = "Active Private Key";
 
 //Coin Sync Modes
+
 "coin_sync.title" = "Restaurar opciones";
 "coin_sync.fast" = "Rápido";
 "coin_sync.recommended" = "0-2 horas (Recomendado)";
