@@ -1,12 +1,12 @@
 class LaunchInteractor {
-    private let accountManager: IAccountManager
     private let pinManager: IPinManager
     private let passcodeLockManager: IPasscodeLockManager
+    private let localStorage: ILocalStorage
 
-    init(accountManager: IAccountManager, pinManager: IPinManager, passcodeLockManager: IPasscodeLockManager) {
-        self.accountManager = accountManager
+    init(pinManager: IPinManager, passcodeLockManager: IPasscodeLockManager, localStorage: ILocalStorage) {
         self.pinManager = pinManager
         self.passcodeLockManager = passcodeLockManager
+        self.localStorage = localStorage
     }
 
 }
@@ -17,12 +17,12 @@ extension LaunchInteractor: ILaunchInteractor {
         return passcodeLockManager.locked
     }
 
-    var hasAccounts: Bool {
-        return !accountManager.accounts.isEmpty
-    }
-
     var isPinSet: Bool {
         return pinManager.isPinSet
+    }
+
+    var mainShownOnce: Bool {
+        return localStorage.mainShownOnce
     }
 
 }

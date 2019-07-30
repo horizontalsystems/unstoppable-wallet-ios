@@ -15,7 +15,7 @@ extension MainRouter {
 
     static func module(selectedTab: Tab = .balance) -> UIViewController {
         let router = MainRouter()
-        let interactor = MainInteractor()
+        let interactor = MainInteractor(localStorage: App.shared.localStorage)
         let presenter = MainPresenter(interactor: interactor, router: router)
 
         let viewControllers = [

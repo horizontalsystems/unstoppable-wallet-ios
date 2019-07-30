@@ -29,6 +29,12 @@
 Go to Settings - > Unstoppable and allow access to Camera.";
 "access_camera.settings" = "Settings";
 
+// Welcome
+
+"welcome.new_wallet" = "New Wallet";
+"welcome.restore_wallet" = "Restore Wallet";
+"welcome.version" = "version %@";
+
 // Restore
 
 "restore.title" = "Restore";
@@ -38,6 +44,7 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 "restore.placeholder.private_key" = "Active Private Key";
 
 //Coin Sync Modes
+
 "coin_sync.title" = "Restore Options";
 "coin_sync.fast" = "Fast";
 "coin_sync.recommended" = "0-2 hours (Recommended)";

@@ -1,5 +1,3 @@
-import Foundation
-
 class MainPresenter {
 
     let interactor: IMainInteractor
@@ -13,8 +11,13 @@ class MainPresenter {
 
 }
 
-extension MainPresenter: IMainInteractorDelegate {
+extension MainPresenter: IMainViewDelegate {
+
+    func viewDidLoad() {
+        interactor.setMainShownOnce()
+    }
+
 }
 
-extension MainPresenter: IMainViewDelegate {
+extension MainPresenter: IMainInteractorDelegate {
 }
