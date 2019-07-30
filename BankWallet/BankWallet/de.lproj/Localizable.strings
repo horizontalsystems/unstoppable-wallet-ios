@@ -27,6 +27,12 @@
 "access_camera.message" = "Wir brauchen Zugriff auf deine Kamera um QR-code scannen.\nRufe die Einstellungen auf, um den Zugriff auf die Kamera zu erlauben";
 "access_camera.settings" = "Einstellungen";
 
+// Welcome
+
+"welcome.new_wallet" = "New Wallet";
+"welcome.restore_wallet" = "Restore Wallet";
+"welcome.version" = "version %@";
+
 // Restore
 
 "restore.title" = "Wiederherstellen";
@@ -36,6 +42,7 @@
 "restore.placeholder.private_key" = "Active Private Key";
 
 //Coin Sync Modes
+
 "coin_sync.title" = "Optionen Wiederherstellen";
 "coin_sync.fast" = "Schnell";
 "coin_sync.recommended" = "0-2 Stunden (empfohlen)";
