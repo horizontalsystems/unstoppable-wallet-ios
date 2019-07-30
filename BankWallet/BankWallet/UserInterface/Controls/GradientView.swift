@@ -1,7 +1,7 @@
 import UIKit
 
 class GradientView: UIView {
-    let gradientLayer = CAGradientLayer()
+    private let gradientLayer = CAGradientLayer()
 
     init(gradientHeight: CGFloat, viewHeight: CGFloat, fromColor: UIColor, toColor: UIColor) {
         super.init(frame: CGRect(x: 0, y: 0, width: 300, height: 300))
