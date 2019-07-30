@@ -6,6 +6,7 @@ class RestoreViewController: WalletViewController {
     private let delegate: IRestoreViewDelegate
 
     private let tableView = UITableView(frame: .zero, style: .grouped)
+    private let headerView = RestoreHeaderView()
 
     init(delegate: IRestoreViewDelegate) {
         self.delegate = delegate
@@ -73,7 +74,7 @@ extension RestoreViewController: UITableViewDataSource, UITableViewDelegate {
         }
     }
 
-    public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
 
         delegate.didSelect(index: indexPath.row)
@@ -81,6 +82,14 @@ extension RestoreViewController: UITableViewDataSource, UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return RestoreAccountsTheme.rowHeight
+    }
+
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        return headerView
+    }
+
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return RestoreHeaderView.height(containerWidth: tableView.bounds.width)
     }
 
 }
