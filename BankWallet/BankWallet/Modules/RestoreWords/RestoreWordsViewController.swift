@@ -7,7 +7,7 @@ class RestoreWordsViewController: WalletViewController {
     let disposeBag = DisposeBag()
     let delegate: IRestoreWordsViewDelegate
 
-    let restoreDescription = "restore.description".localized
+    let restoreDescription = "restore.words.description".localized
     var words: [String]
 
     let layout = UICollectionViewFlowLayout()
