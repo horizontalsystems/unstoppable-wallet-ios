@@ -29,15 +29,23 @@
 Go to Settings - > Unstoppable and allow access to Camera.";
 "access_camera.settings" = "Settings";
 
+// Welcome
+
+"welcome.new_wallet" = "New Wallet";
+"welcome.restore_wallet" = "Restore Wallet";
+"welcome.version" = "version %@";
+
 // Restore
 
 "restore.title" = "Restore";
-"restore.description" = "Enter Key";
+"restore.description" = "To restore existing wallet you need to enter a private key for that wallet.\n\nOnce you restore one wallet you will be able to restore more wallets by going to Manage Keys section in app Settings.";
+"restore.words.description" = "Enter Key";
 "restore.validation_failed" = "Incorrect Key";
 "restore.placeholder.account_name" = "Account Name";
 "restore.placeholder.private_key" = "Active Private Key";
 
 //Coin Sync Modes
+
 "coin_sync.title" = "Restore Options";
 "coin_sync.fast" = "Fast";
 "coin_sync.recommended" = "0-2 hours (Recommended)";

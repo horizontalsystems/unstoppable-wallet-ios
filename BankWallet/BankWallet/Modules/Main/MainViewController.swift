@@ -35,6 +35,8 @@ class MainViewController: UITabBarController {
 
         tabBar.tintColor = .cryptoYellow
         tabBar.unselectedItemTintColor = .cryptoGray
+
+        viewDelegate.viewDidLoad()
     }
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
