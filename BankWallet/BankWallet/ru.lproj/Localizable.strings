@@ -27,6 +27,12 @@
 "access_camera.message" = "Unstoppable Wallet необходим доступ к вашей камере для QR-код.\n\nПерейдите в \"Настройки\", чтобы разрешить доступ к камере.";
 "access_camera.settings" = "Настройки";
 
+// Welcome
+
+"welcome.new_wallet" = "New Wallet";
+"welcome.restore_wallet" = "Restore Wallet";
+"welcome.version" = "version %@";
+
 // Restore
 
 "restore.title" = "Восстановить";
@@ -36,6 +42,7 @@
 "restore.placeholder.private_key" = "Активировать приватный ключ";
 
 //Coin Sync Modes
+
 "coin_sync.title" = "Опции";
 "coin_sync.fast" = "Быстро";
 "coin_sync.recommended" = "0-2 часа (Рекомендуется)";
