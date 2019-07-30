@@ -1,7 +1,7 @@
 import UIKit
 import SnapKit
 
-class WelcomeScreenViewController: WalletViewController {
+class WelcomeScreenViewController: UIViewController {
     private let delegate: IWelcomeScreenViewDelegate
 
     private let backgroundImageView = UIImageView()
@@ -75,6 +75,10 @@ class WelcomeScreenViewController: WalletViewController {
         }
 
         delegate.viewDidLoad()
+    }
+
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
     }
 
     @objc func didTapNew() {
