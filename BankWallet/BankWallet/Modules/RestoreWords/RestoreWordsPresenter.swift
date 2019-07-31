@@ -26,7 +26,7 @@ extension RestoreWordsPresenter: IRestoreWordsViewDelegate {
             view?.showCancelButton()
         }
 
-        view?.show(defaultWords: appConfigProvider.defaultWords)
+        view?.show(defaultWords: appConfigProvider.defaultWords(count: wordsCount))
     }
 
     func didTapRestore(words: [String]) {

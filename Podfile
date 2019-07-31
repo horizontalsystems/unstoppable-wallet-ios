@@ -17,6 +17,8 @@ def appPods
   pod 'EosKit.swift', git: 'https://github.com/horizontalsystems/eos-kit-ios/'
   pod 'EosioSwift', git: 'https://github.com/horizontalsystems/eosio-swift'
 
+  pod 'BinanceChainKit.swift', git: 'https://github.com/horizontalsystems/binance-chain-kit-ios'
+
   pod 'FeeRateKit.swift', git: 'https://github.com/horizontalsystems/blockchain-fee-rate-kit-ios'
 
   pod 'Alamofire'

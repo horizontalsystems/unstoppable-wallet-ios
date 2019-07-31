@@ -18,8 +18,10 @@
 	<string>0.6.2</string>
 	<key>CFBundleVersion</key>
 	<string>1</string>
-	<key>DefaultWords</key>
-	<string>${default_words}</string>
+	<key>DefaultWords12</key>
+	<string>${default_words_12}</string>
+	<key>DefaultWords24</key>
+	<string>${default_words_24}</string>
 	<key>DisablePinLock</key>
 	<string>${disable_pin_lock}</string>
 	<key>EtherscanApiKey</key>

@@ -242,7 +242,7 @@ protocol IAppConfigProvider {
     var etherscanKey: String { get }
     var currencies: [Currency] { get }
 
-    var defaultWords: [String] { get }
+    func defaultWords(count: Int) -> [String]
     var disablePinLock: Bool { get }
 
     var defaultCoinCodes: [CoinCode] { get }
