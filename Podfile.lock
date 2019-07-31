@@ -6,6 +6,14 @@ PODS:
   - AlamofireImage (3.5.2):
     - Alamofire (~> 4.8)
   - BigInt (4.0.0)
+  - BinanceChainKit.swift (0.1):
+    - Alamofire (~> 4.0)
+    - GRDB.swift (~> 4.0)
+    - HSCryptoKit (~> 1.5)
+    - HSHDWalletKit (~> 1.1)
+    - RxSwift (~> 5.0)
+    - SwiftProtobuf (~> 1.6)
+    - SwiftyJSON (~> 4.3)
   - BitcoinCashKit.swift (0.7.0):
     - Alamofire (~> 4.0)
     - BigInt (~> 4.0)
@@ -34,7 +42,7 @@ PODS:
     - RxSwift (~> 5.0)
   - CryptoBLS.swift (1.1)
   - CryptoX11.swift (1.1)
-  - Cuckoo (1.1.0)
+  - Cuckoo (1.1.1)
   - DashKit.swift (0.7.0):
     - Alamofire (~> 4.0)
     - BigInt (~> 4.0)
@@ -86,9 +94,9 @@ PODS:
     - GRDB.swift/standard (= 4.1.1)
   - GRDB.swift/standard (4.1.1)
   - GRKOpenSSLFramework (1.0.2.16)
-  - HSCryptoKit (1.4.2)
-  - HSHDWalletKit (1.1):
-    - HSCryptoKit (~> 1.4)
+  - HSCryptoKit (1.5.0)
+  - HSHDWalletKit (1.1.1):
+    - HSCryptoKit (~> 1)
   - HUD.swift (1.0):
     - SnapKit (~> 5.0)
     - UIExtensions.swift
@@ -121,6 +129,8 @@ PODS:
     - SnapKit (~> 5.0)
     - UIExtensions.swift
   - SnapKit (5.0.0)
+  - SwiftProtobuf (1.6.0)
+  - SwiftyJSON (4.3.0)
   - UIExtensions.swift (1.0)
 
 DEPENDENCIES:
@@ -128,6 +138,7 @@ DEPENDENCIES:
   - Alamofire
   - AlamofireImage
   - BigInt
+  - BinanceChainKit.swift (from `https://github.com/horizontalsystems/binance-chain-kit-ios`)
   - BitcoinCashKit.swift (from `https://github.com/horizontalsystems/bitcoin-kit-ios/`)
   - BitcoinCore.swift (from `https://github.com/horizontalsystems/bitcoin-kit-ios/`)
   - BitcoinKit.swift (from `https://github.com/horizontalsystems/bitcoin-kit-ios/`)
@@ -178,10 +189,14 @@ SPEC REPOS:
     - RxRelay
     - RxSwift
     - SnapKit
+    - SwiftProtobuf
+    - SwiftyJSON
 
 EXTERNAL SOURCES:
   ActionSheet.swift:
     :git: https://github.com/horizontalsystems/gui-kit
+  BinanceChainKit.swift:
+    :git: https://github.com/horizontalsystems/binance-chain-kit-ios
   BitcoinCashKit.swift:
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios/
   BitcoinCore.swift:
@@ -211,6 +226,9 @@ CHECKOUT OPTIONS:
   ActionSheet.swift:
     :commit: 22d90aa409044e4ee82e4fcc3ec5a89e7066bf93
     :git: https://github.com/horizontalsystems/gui-kit
+  BinanceChainKit.swift:
+    :commit: 3bdb8b19cd96dbde373a74dd582d51bd05264610
+    :git: https://github.com/horizontalsystems/binance-chain-kit-ios
   BitcoinCashKit.swift:
     :commit: 89eadcd198235e81b768a224effcaa3e3f8273c8
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios/
@@ -253,12 +271,13 @@ SPEC CHECKSUMS:
   Alamofire: ae5c501addb7afdbb13687d7f2f722c78734c2d3
   AlamofireImage: 63cfe3baf1370be6c498149687cf6db3e3b00999
   BigInt: 2aad1a9942dc932ec8b84290d2c564a3d76f97ab
+  BinanceChainKit.swift: 1ae5d72ca818d457c35c5bc6d3a38689f0f54a5d
   BitcoinCashKit.swift: 88c873a444a954d2b6e485d2a8b9ea68a0e5b1b0
   BitcoinCore.swift: aae2002fb155c208e9d37296ae74b39d50ed20c9
   BitcoinKit.swift: 2d578cc38988f6c76848dfd29e301feb561ce29f
   CryptoBLS.swift: 89828d8e3013e45ce4f913d26008b91fc5d0f3a0
   CryptoX11.swift: 8f0ca5fbfefbe49126220ce23b5de106928cf0f0
-  Cuckoo: 6184a6bdc122b1a8e27b80198f76d1038ddbe861
+  Cuckoo: 6193c50e46403cc9417aa98752671a2a5ae6f3a6
   DashKit.swift: 7d20d23ab4329c0258d411e07a6334ec97cb3a5b
   DeepDiff: e329bc46dd14ca788d8ec08d34420799ba1d77f2
   EosioSwift: 4aa9a3a8b9ab58316e1874885e3e62e2766c441c
@@ -271,8 +290,8 @@ SPEC CHECKSUMS:
   FeeRateKit.swift: dd6bdac1ca89e7d4944f25f34a74046e176a6653
   GRDB.swift: 99b10e1afa666ff024d76e38b37fefd34b57def4
   GRKOpenSSLFramework: 35944e317e6336b2944ad70b059d84db6b2d8532
-  HSCryptoKit: 4dcb2506b5d8d85c4a31ab57734df3d1f7ea17f9
-  HSHDWalletKit: 1d946bd24bd307cc494141f4e518d25db814f050
+  HSCryptoKit: 514a3111fd37ad18b7261d4a55271daaba3b0eb9
+  HSHDWalletKit: 25d2eb6bc00b3c8728fa3eca07258142013a5a87
   HUD.swift: 006cc6e105bce8050c3c3f44d9111474c5c26c35
   KeychainAccess: 3b1bf8a77eb4c6ea1ce9404c292e48f948954c6b
   Nimble: 622629381bda1dd5678162f21f1368cec7cbba60
@@ -285,8 +304,10 @@ SPEC CHECKSUMS:
   RxSwift: 8b0671caa829a763bbce7271095859121cbd895f
   SectionsTableView.swift: 5ef2f3ae4a3b3aef91190cae7c0cb8655d4d8148
   SnapKit: fd22d10eb9aff484d79a8724eab922c1ddf89bcf
+  SwiftProtobuf: e905ca1366405696411aaf174411c4b19c0ef73d
+  SwiftyJSON: 6faa0040f8b59dead0ee07436cbf76b73c08fd08
   UIExtensions.swift: 9f5a209e4e30f1ccfbf3eab01f02ffd8a20365d0
 
-PODFILE CHECKSUM: 51538d72768d5fd94f1e7e4cb76edeb62002c3ad
+PODFILE CHECKSUM: 9420c3e00f2c33ce139d1835c7bb10d478e18448
 
 COCOAPODS: 1.7.1

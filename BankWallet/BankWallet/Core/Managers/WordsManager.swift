@@ -17,7 +17,7 @@ extension WordsManager: IWordsManager {
     }
 
     func validate(words: [String]) throws {
-        try Mnemonic.validate(words: words)
+        try Mnemonic.validate(words: words, strength: words.count == 24 ? .veryHigh : .default)
     }
 
 }

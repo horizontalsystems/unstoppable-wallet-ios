@@ -48,8 +48,6 @@ class RestoreWordsViewController: WalletViewController {
             maker.top.bottom.equalToSuperview()
         }
 
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.next".localized, style: .plain, target: self, action: #selector(restoreDidTap))
-
         collectionView.registerCell(forClass: RestoreWordCell.self)
         collectionView.registerView(forClass: DescriptionCollectionHeader.self, flowSupplementaryKind: .header)
 
@@ -126,6 +124,14 @@ extension RestoreWordsViewController: IRestoreWordsView {
 
     func showCancelButton() {
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "button.cancel".localized, style: .plain, target: self, action: #selector(cancelDidTap))
+    }
+
+    func showNextButton() {
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.next".localized, style: .plain, target: self, action: #selector(restoreDidTap))
+    }
+
+    func showRestoreButton() {
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.done".localized, style: .plain, target: self, action: #selector(restoreDidTap))
     }
 
     func show(defaultWords: [String]) {

@@ -33,6 +33,8 @@ class DefaultWalletCreator {
         case let .mnemonic(words, _, _):
             if words.count == 12 {
                 return ["BTC", "ETH"]
+            } else if words.count == 24 {
+                return ["BNB"]
             }
         case .eos:
             return ["EOS"]

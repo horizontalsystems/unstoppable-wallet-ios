@@ -7,6 +7,7 @@ enum CoinType {
     case ethereum
     case erc20(address: String, decimal: Int, fee: Decimal)
     case eos(token: String, symbol: String)
+    case binance(symbol: String)
 
     func canSupport(accountType: AccountType) -> Bool {
         switch self {
@@ -15,6 +16,9 @@ enum CoinType {
             return false
         case .eos:
             if case .eos = accountType { return true }
+            return false
+        case .binance:
+            if case let .mnemonic(words, derivation, salt) = accountType, words.count == 24, derivation == .bip44, salt == nil { return true }
             return false
         }
     }
@@ -25,6 +29,8 @@ enum CoinType {
             return .mnemonic(wordsCount: 12)
         case .eos:
             return .eos
+        case .binance:
+            return .mnemonic(wordsCount: 24)
         }
     }
 
@@ -42,6 +48,8 @@ extension CoinType: Equatable {
             return lhsAddress == rhsAddress && lhsDecimal == rhsDecimal && lhsFee == rhsFee
         case (.eos(let lhsToken, let lhsSymbol), .eos(let rhsToken, let rhsSymbol)):
             return lhsToken == rhsToken && lhsSymbol == rhsSymbol
+        case (.binance(let lhsSymbol), .binance(let rhsSymbol)):
+            return lhsSymbol == rhsSymbol
         default: return false
         }
     }

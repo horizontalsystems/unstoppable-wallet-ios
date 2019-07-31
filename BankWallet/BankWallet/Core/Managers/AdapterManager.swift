@@ -6,15 +6,17 @@ class AdapterManager {
     private let adapterFactory: IAdapterFactory
     private let ethereumKitManager: EthereumKitManager
     private let eosKitManager: EosKitManager
+    private let binanceKitManager: BinanceKitManager
     private let walletManager: IWalletManager
 
     private(set) var adapters: [IAdapter] = []
     let adaptersUpdatedSignal = Signal()
 
-    init(adapterFactory: IAdapterFactory, ethereumKitManager: EthereumKitManager, eosKitManager: EosKitManager, walletManager: IWalletManager) {
+    init(adapterFactory: IAdapterFactory, ethereumKitManager: EthereumKitManager, eosKitManager: EosKitManager, binanceKitManager: BinanceKitManager, walletManager: IWalletManager) {
         self.adapterFactory = adapterFactory
         self.ethereumKitManager = ethereumKitManager
         self.eosKitManager = eosKitManager
+        self.binanceKitManager = binanceKitManager
         self.walletManager = walletManager
 
         walletManager.walletsObservable
@@ -63,6 +65,7 @@ extension AdapterManager: IAdapterManager {
 
         ethereumKitManager.ethereumKit?.refresh()
         eosKitManager.eosKit?.refresh()
+        binanceKitManager.refresh()
     }
 
 }
