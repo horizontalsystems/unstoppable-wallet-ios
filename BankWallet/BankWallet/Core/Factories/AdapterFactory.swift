@@ -2,12 +2,14 @@ class AdapterFactory: IAdapterFactory {
     private let appConfigProvider: IAppConfigProvider
     private let ethereumKitManager: EthereumKitManager
     private let eosKitManager: EosKitManager
+    private let binanceKitManager: BinanceKitManager
     private let feeRateProvider: IFeeRateProvider
 
-    init(appConfigProvider: IAppConfigProvider, ethereumKitManager: EthereumKitManager, eosKitManager: EosKitManager, feeRateProvider: IFeeRateProvider) {
+    init(appConfigProvider: IAppConfigProvider, ethereumKitManager: EthereumKitManager, eosKitManager: EosKitManager, binanceKitManager: BinanceKitManager, feeRateProvider: IFeeRateProvider) {
         self.appConfigProvider = appConfigProvider
         self.ethereumKitManager = ethereumKitManager
         self.eosKitManager = eosKitManager
+        self.binanceKitManager = binanceKitManager
         self.feeRateProvider = feeRateProvider
     }
 
@@ -35,6 +37,10 @@ class AdapterFactory: IAdapterFactory {
         case let .eos(token, symbol):
             if let eosKit = try? eosKitManager.eosKit(account: wallet.account) {
                 return EosAdapter(wallet: wallet, eosKit: eosKit, token: token, symbol: symbol)
+            }
+        case let .binance(symbol):
+            if let binanceKit = try? binanceKitManager.binanceKit(account: wallet.account) {
+                return BinanceAdapter(wallet: wallet, binanceKit: binanceKit, symbol: symbol)
             }
         }
 

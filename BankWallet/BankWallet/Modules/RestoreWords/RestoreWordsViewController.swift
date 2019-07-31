@@ -7,8 +7,8 @@ class RestoreWordsViewController: WalletViewController {
     let disposeBag = DisposeBag()
     let delegate: IRestoreWordsViewDelegate
 
-    let restoreDescription = "restore.description".localized
-    var words = [String](repeating: "", count: 12)
+    let restoreDescription = "restore.words.description".localized
+    var words: [String]
 
     let layout = UICollectionViewFlowLayout()
     let collectionView: UICollectionView
@@ -20,6 +20,7 @@ class RestoreWordsViewController: WalletViewController {
         layout.scrollDirection = .vertical
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         self.delegate = delegate
+        words = [String](repeating: "", count: self.delegate.wordsCount)
 
         super.init(nibName: nil, bundle: nil)
 
@@ -33,6 +34,7 @@ class RestoreWordsViewController: WalletViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        title = "restore.title".localized
 
         subscribeKeyboard()
 
@@ -45,8 +47,6 @@ class RestoreWordsViewController: WalletViewController {
             maker.trailing.equalToSuperview().offset(-RestoreTheme.collectionSideMargin)
             maker.top.bottom.equalToSuperview()
         }
-
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.next".localized, style: .plain, target: self, action: #selector(restoreDidTap))
 
         collectionView.registerCell(forClass: RestoreWordCell.self)
         collectionView.registerView(forClass: DescriptionCollectionHeader.self, flowSupplementaryKind: .header)
@@ -126,6 +126,14 @@ extension RestoreWordsViewController: IRestoreWordsView {
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "button.cancel".localized, style: .plain, target: self, action: #selector(cancelDidTap))
     }
 
+    func showNextButton() {
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.next".localized, style: .plain, target: self, action: #selector(restoreDidTap))
+    }
+
+    func showRestoreButton() {
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.done".localized, style: .plain, target: self, action: #selector(restoreDidTap))
+    }
+
     func show(defaultWords: [String]) {
         for (index, defaultWord) in defaultWords.enumerated() {
             if index < words.count {
@@ -165,18 +173,18 @@ extension RestoreWordsViewController: UICollectionViewDelegateFlowLayout, UIColl
         }
     }
 
-    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: String(describing: DescriptionCollectionHeader.self), for: indexPath)
-        if let header = header as? DescriptionCollectionHeader {
-            header.bind(text: restoreDescription)
-        }
-        return header
-    }
+//    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+//        let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: String(describing: DescriptionCollectionHeader.self), for: indexPath)
+//        if let header = header as? DescriptionCollectionHeader {
+//            header.bind(text: restoreDescription)
+//        }
+//        return header
+//    }
 
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        let width = collectionView.bounds.width
-        let height = DescriptionCollectionHeader.height(forContainerWidth: width, text: restoreDescription)
-        return CGSize(width: width, height: height)
-    }
+//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+//        let width = collectionView.bounds.width
+//        let height = DescriptionCollectionHeader.height(forContainerWidth: width, text: restoreDescription)
+//        return CGSize(width: width, height: height)
+//    }
 
 }

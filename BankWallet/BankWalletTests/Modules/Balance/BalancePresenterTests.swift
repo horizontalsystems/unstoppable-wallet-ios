@@ -9,6 +9,7 @@ class BalancePresenterTests: XCTestCase {
     private var mockDataSource: MockIBalanceItemDataSource!
     private var mockFactory: MockIBalanceViewItemFactory!
     private var mockView: MockIBalanceView!
+    private var mockDiffer: MockIDiffer!
 
     private var presenter: BalancePresenter!
 
@@ -81,6 +82,7 @@ class BalancePresenterTests: XCTestCase {
         mockDataSource = MockIBalanceItemDataSource()
         mockFactory = MockIBalanceViewItemFactory()
         mockView = MockIBalanceView()
+        mockDiffer = MockIDiffer()
 
         stub(mockView) { mock in
 //            when(mock.set(title: any())).thenDoNothing()
@@ -111,7 +113,7 @@ class BalancePresenterTests: XCTestCase {
         }
 
 
-        presenter = BalancePresenter(interactor: mockInteractor, router: mockRouter, dataSource: mockDataSource, factory: mockFactory, sortingOnThreshold: sortingOnThreshold)
+        presenter = BalancePresenter(interactor: mockInteractor, router: mockRouter, dataSource: mockDataSource, factory: mockFactory, differ: mockDiffer, sortingOnThreshold: sortingOnThreshold)
         presenter.view = mockView
     }
 
@@ -121,6 +123,7 @@ class BalancePresenterTests: XCTestCase {
         mockDataSource = nil
         mockFactory = nil
         mockView = nil
+        mockDiffer = nil
 
         presenter = nil
 

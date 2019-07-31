@@ -1,5 +1,4 @@
 import RxSwift
-import BitcoinCore
 import GRDB
 
 typealias CoinCode = String
@@ -21,6 +20,7 @@ protocol ILocalStorage: class {
     var lastExitDate: Double { get set }
     var didLaunchOnce: Bool { get set }
     var sendInputType: SendInputType? { get set }
+    var mainShownOnce: Bool { get set }
 }
 
 protocol ISecureStorage: class {
@@ -78,33 +78,6 @@ protocol IWalletManager: class {
     func enable(wallets: [Wallet])
 }
 
-enum AdapterState {
-    case synced
-    case syncing(progress: Int, lastBlockDate: Date?)
-    case notSynced
-}
-
-enum SyncMode: String {
-    case fast = "fast"
-    case slow = "slow"
-    case new = "new"
-}
-
-enum FeeRatePriority: Int {
-    case lowest
-    case low
-    case medium
-    case high
-    case highest
-}
-
-enum AdapterFields: String {
-    case amount = "amount"
-    case address = "address"
-    case feeRateRriority = "fee_rate_priority"
-    case memo = "memo"
-}
-
 protocol IAdapter: class {
     var wallet: Wallet { get }
     var feeCoinCode: CoinCode? { get }
@@ -144,19 +117,6 @@ protocol IAdapter: class {
 
 extension IAdapter {
     var feeCoinCode: CoinCode? { return nil }
-}
-
-enum SendTransactionError: LocalizedError {
-    case connection
-    case unknown
-
-    public var errorDescription: String? {
-        switch self {
-        case .connection: return "alert.no_internet".localized
-        case .unknown: return "alert.network_issue".localized
-        }
-    }
-
 }
 
 protocol IWordsManager {
@@ -283,7 +243,7 @@ protocol IAppConfigProvider {
     var etherscanKey: String { get }
     var currencies: [Currency] { get }
 
-    var defaultWords: [String] { get }
+    func defaultWords(count: Int) -> [String]
     var disablePinLock: Bool { get }
 
     var defaultCoinCodes: [CoinCode] { get }
@@ -467,11 +427,6 @@ protocol IFeeRateProvider {
     func dashFeeRate(for priority: FeeRatePriority) -> Int
 }
 
-enum AdapterError: Error {
-    case wrongParameters
-    case unsupportedAccount
-}
-
 protocol IEncryptionManager {
     func encrypt(data: Data) throws -> Data
     func decrypt(data: Data) throws -> Data
@@ -493,11 +448,6 @@ protocol IPredefinedAccountType {
     var coinCodes: String { get }
     var defaultAccountType: DefaultAccountType { get }
     func supports(accountType: AccountType) -> Bool
-}
-
-enum DefaultAccountType {
-    case mnemonic(wordsCount: Int)
-    case eos
 }
 
 protocol IAppManager {

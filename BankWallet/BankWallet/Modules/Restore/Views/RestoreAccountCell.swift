@@ -5,6 +5,7 @@ class RestoreAccountCell: UITableViewCell {
     private let roundedBackground = UIView()
     private let clippingView = UIView()
 
+    private let keyIconImageView = UIImageView()
     private let nameLabel = UILabel()
     private let coinsLabel = UILabel()
 
@@ -36,29 +37,33 @@ class RestoreAccountCell: UITableViewCell {
             maker.edges.equalToSuperview()
         }
 
+        clippingView.addSubview(keyIconImageView)
         clippingView.addSubview(nameLabel)
-        nameLabel.snp.makeConstraints { maker in
+        clippingView.addSubview(coinsLabel)
+
+        keyIconImageView.image = UIImage(named: "Key Icon")?.withRenderingMode(.alwaysTemplate)
+        keyIconImageView.tintColor = RestoreAccountsTheme.keyImageColor
+        keyIconImageView.snp.makeConstraints { maker in
             maker.leading.equalToSuperview().offset(RestoreAccountsTheme.cellBigPadding)
-            maker.trailing.equalToSuperview().offset(-RestoreAccountsTheme.cellBigPadding)
-            maker.top.equalToSuperview().offset(RestoreAccountsTheme.cellBigPadding)
+            maker.top.equalToSuperview().offset(RestoreAccountsTheme.cellSmallPadding)
+            maker.size.equalTo(RestoreAccountsTheme.keyImageSize)
         }
-        nameLabel.textAlignment = .center
+
         nameLabel.font = RestoreAccountsTheme.cellTitleFont
         nameLabel.textColor = RestoreAccountsTheme.cellTitleColor
-        nameLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
-        nameLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+        nameLabel.snp.makeConstraints { maker in
+            maker.leading.equalTo(self.keyIconImageView.snp.trailing).offset(RestoreAccountsTheme.cellSmallPadding)
+            maker.trailing.equalToSuperview().offset(-RestoreAccountsTheme.cellBigPadding)
+            maker.top.equalToSuperview().offset(RestoreAccountsTheme.cellSmallPadding)
+        }
 
-        clippingView.addSubview(coinsLabel)
+        coinsLabel.font = RestoreAccountsTheme.coinsFont
+        coinsLabel.textColor = RestoreAccountsTheme.coinsColor
         coinsLabel.snp.makeConstraints { maker in
-            maker.leading.equalToSuperview().offset(RestoreAccountsTheme.cellBigPadding)
+            maker.leading.equalTo(self.nameLabel.snp.leading)
             maker.trailing.equalToSuperview().offset(-RestoreAccountsTheme.cellBigPadding)
             maker.top.equalTo(self.nameLabel.snp.bottom).offset(RestoreAccountsTheme.cellSmallPadding)
         }
-        coinsLabel.textAlignment = .center
-        coinsLabel.font = RestoreAccountsTheme.coinsFont
-        coinsLabel.textColor = RestoreAccountsTheme.coinsColor
-        coinsLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
-        coinsLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
     }
 
     required init?(coder aDecoder: NSCoder) {

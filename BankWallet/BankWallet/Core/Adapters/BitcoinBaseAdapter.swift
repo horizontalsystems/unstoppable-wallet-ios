@@ -36,9 +36,8 @@ class BitcoinBaseAdapter {
     }
 
     func transactionRecord(fromTransaction transaction: TransactionInfo) -> TransactionRecord {
-        let fromAddresses = transaction.from.map {
-            TransactionAddress(address: $0.address, mine: $0.mine)
-        }
+        // for Bitcoin based adapters "from" addresses should be hidden
+        let fromAddresses: [TransactionAddress] = []
 
         let toAddresses = transaction.to.map {
             TransactionAddress(address: $0.address, mine: $0.mine)
@@ -126,7 +125,7 @@ extension BitcoinBaseAdapter: IAdapter {
     }
 
     func validate(params: [String : Any]) throws -> [SendStateError] {
-        guard let amount: Decimal = params[AdapterFields.amount.rawValue] as? Decimal else {
+        guard let amount: Decimal = params[AdapterField.amount.rawValue] as? Decimal else {
             throw AdapterError.wrongParameters
         }
 
@@ -150,9 +149,9 @@ extension BitcoinBaseAdapter: IAdapter {
     }
 
     func sendSingle(params: [String : Any]) -> Single<Void> {
-        guard let amount: Decimal = params[AdapterFields.amount.rawValue] as? Decimal,
-              let address: String = params[AdapterFields.address.rawValue] as? String,
-              let feeRatePriority: FeeRatePriority = params[AdapterFields.feeRateRriority.rawValue] as? FeeRatePriority else {
+        guard let amount: Decimal = params[AdapterField.amount.rawValue] as? Decimal,
+              let address: String = params[AdapterField.address.rawValue] as? String,
+              let feeRatePriority: FeeRatePriority = params[AdapterField.feeRateRriority.rawValue] as? FeeRatePriority else {
             return Single.error(AdapterError.wrongParameters)
         }
 
@@ -173,16 +172,16 @@ extension BitcoinBaseAdapter: IAdapter {
 
     func availableBalance(params: [String : Any]) throws -> Decimal {
         var params = params
-        params[AdapterFields.amount.rawValue] = balance
+        params[AdapterField.amount.rawValue] = balance
         return try max(0, balance - fee(params: params))
     }
 
     func fee(params: [String : Any]) throws -> Decimal {
-        guard let amount: Decimal = params[AdapterFields.amount.rawValue] as? Decimal,
-              let feeRatePriority: FeeRatePriority = params[AdapterFields.feeRateRriority.rawValue] as? FeeRatePriority else {
+        guard let amount: Decimal = params[AdapterField.amount.rawValue] as? Decimal,
+              let feeRatePriority: FeeRatePriority = params[AdapterField.feeRateRriority.rawValue] as? FeeRatePriority else {
             throw AdapterError.wrongParameters
         }
-        let address: String? = params[AdapterFields.address.rawValue] as? String
+        let address: String? = params[AdapterField.address.rawValue] as? String
 
         do {
             let amount = convertToSatoshi(value: amount)

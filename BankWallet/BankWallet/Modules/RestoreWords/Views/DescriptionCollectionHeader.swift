@@ -2,7 +2,6 @@ import UIKit
 import SnapKit
 
 class DescriptionCollectionHeader: UICollectionReusableView {
-
     var label: UILabel = UILabel()
 
     override init(frame: CGRect) {
@@ -10,14 +9,12 @@ class DescriptionCollectionHeader: UICollectionReusableView {
         label.font = RestoreTheme.descriptionFont
         label.numberOfLines = 0
         label.textColor = RestoreTheme.descriptionTextColor
-        label.textAlignment = .center
 
         addSubview(label)
         label.snp.makeConstraints { maker in
-            maker.leading.equalToSuperview().offset(RestoreTheme.descriptionHorizontalMargin)
-            maker.trailing.equalToSuperview().offset(-RestoreTheme.descriptionHorizontalMargin)
+            maker.leading.equalToSuperview()
+            maker.trailing.equalToSuperview()
             maker.top.equalToSuperview().offset(RestoreTheme.descriptionTopMargin)
-            maker.bottom.equalToSuperview().offset(-RestoreTheme.descriptionBottomMargin)
         }
     }
 
@@ -30,7 +27,7 @@ class DescriptionCollectionHeader: UICollectionReusableView {
     }
 
     static func height(forContainerWidth containerWidth: CGFloat, text: String) -> CGFloat {
-        return ceil(text.height(forContainerWidth: containerWidth - 2 * RestoreTheme.descriptionHorizontalMargin, font: RestoreTheme.descriptionFont) + RestoreTheme.descriptionTopMargin + RestoreTheme.descriptionBottomMargin)
+        return ceil(text.height(forContainerWidth: containerWidth, font: RestoreTheme.descriptionFont) + RestoreTheme.descriptionTopMargin + RestoreTheme.descriptionBottomMargin)
     }
 
 }

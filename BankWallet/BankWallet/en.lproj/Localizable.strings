@@ -29,15 +29,23 @@
 Go to Settings - > Unstoppable and allow access to Camera.";
 "access_camera.settings" = "Settings";
 
+// Welcome
+
+"welcome.new_wallet" = "New Wallet";
+"welcome.restore_wallet" = "Restore Wallet";
+"welcome.version" = "version %@";
+
 // Restore
 
 "restore.title" = "Restore";
-"restore.description" = "Enter Key";
+"restore.description" = "To restore existing wallet you need to enter a private key for that wallet.\n\nOnce you restore one wallet you will be able to restore more wallets by going to Manage Keys section in app Settings.";
+"restore.words.description" = "Enter Key";
 "restore.validation_failed" = "Incorrect Key";
 "restore.placeholder.account_name" = "Account Name";
 "restore.placeholder.private_key" = "Active Private Key";
 
 //Coin Sync Modes
+
 "coin_sync.title" = "Restore Options";
 "coin_sync.fast" = "Fast";
 "coin_sync.recommended" = "0-2 hours (Recommended)";
@@ -59,7 +67,13 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 "backup.intro.later" = "Later";
 "backup.intro.backup_now" = "Backup";
 "backup.intro.show_key" = "Show Key";
+
 "backup.words.title" = "Secret Key";
+
+"backup.eos.title" = "EOS Key";
+"backup.eos.account_name" = "Account Name";
+"backup.eos.active_private_key" = "Active Private Key";
+"backup.eos.hint" = "Copying your key using “copy” action poses some risks if you use any clipboard management apps or some other apps that may access to clipboard data.";
 
 "backup.confirmation.title" = "Check ...";
 "backup.confirmation.description" = "Enter words from your secret key";
@@ -249,7 +263,7 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 
 // No Passcode
 
-"no_passcode.info_text" = "This app requires that phone has the passcode (screen lock) enabled.\nYou may enable it in iOS settings.";
+"no_passcode.info_text" = "This app requires that phone has the passcode (screen lock) enabled.\n\nYou may enable it in iOS settings.\n\nPlease note that when you disabled the PIN on the OS level the security measures in safe storage of your phonе made the previously stored data invalid. You will need to Restore your wallet keys to get back to your wallet.";
 
 //NumPad
 

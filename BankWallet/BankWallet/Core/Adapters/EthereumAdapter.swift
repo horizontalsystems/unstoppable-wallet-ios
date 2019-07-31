@@ -91,7 +91,7 @@ extension EthereumAdapter: IAdapter {
     }
 
     func fee(params: [String : Any]) throws -> Decimal {
-        guard let feeRatePriority: FeeRatePriority = params[AdapterFields.feeRateRriority.rawValue] as? FeeRatePriority else {
+        guard let feeRatePriority: FeeRatePriority = params[AdapterField.feeRateRriority.rawValue] as? FeeRatePriority else {
             throw AdapterError.wrongParameters
         }
 
@@ -99,7 +99,7 @@ extension EthereumAdapter: IAdapter {
     }
 
     func validate(params: [String : Any])throws -> [SendStateError] {
-        guard let amount: Decimal = params[AdapterFields.amount.rawValue] as? Decimal else {
+        guard let amount: Decimal = params[AdapterField.amount.rawValue] as? Decimal else {
             throw AdapterError.wrongParameters
         }
 

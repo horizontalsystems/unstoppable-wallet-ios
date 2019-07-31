@@ -11,6 +11,7 @@ class MainSettingsInteractorTests: XCTestCase {
     private var mockLanguageManager: MockILanguageManager!
     private var mockSystemInfoManager: MockISystemInfoManager!
     private var mockCurrencyManager: MockICurrencyManager!
+    private var mockAppConfigProvider: MockIAppConfigProvider!
 
     private var interactor: MainSettingsInteractor!
 
@@ -27,6 +28,7 @@ class MainSettingsInteractorTests: XCTestCase {
         mockLanguageManager = MockILanguageManager()
         mockSystemInfoManager = MockISystemInfoManager()
         mockCurrencyManager = MockICurrencyManager()
+        mockAppConfigProvider = MockIAppConfigProvider()
 
         stub(mockBackupManager) { mock in
             when(mock.nonBackedUpCountObservable.get).thenReturn(nonBackedUpCountSubject.asObservable())
@@ -35,7 +37,7 @@ class MainSettingsInteractorTests: XCTestCase {
             when(mock.baseCurrencyUpdatedSignal.get).thenReturn(baseCurrencyUpdatedSignal)
         }
 
-        interactor = MainSettingsInteractor(localStorage: mockLocalStorage, backupManager: mockBackupManager, languageManager: mockLanguageManager, systemInfoManager: mockSystemInfoManager, currencyManager: mockCurrencyManager, async: false)
+        interactor = MainSettingsInteractor(localStorage: mockLocalStorage, backupManager: mockBackupManager, languageManager: mockLanguageManager, systemInfoManager: mockSystemInfoManager, currencyManager: mockCurrencyManager, appConfigProvider: mockAppConfigProvider, async: false)
         interactor.delegate = mockDelegate
     }
 
@@ -47,6 +49,7 @@ class MainSettingsInteractorTests: XCTestCase {
         mockLanguageManager = nil
         mockSystemInfoManager = nil
         mockCurrencyManager = nil
+        mockAppConfigProvider = nil
 
         interactor = nil
 

@@ -66,7 +66,7 @@ extension EthereumBaseAdapter {
     }
 
     func sendSingle(params: [String: Any]) -> Single<Void> {
-        guard let amount: Decimal = params[AdapterFields.amount.rawValue] as? Decimal, let address: String = params[AdapterFields.address.rawValue] as? String, let feeRatePriority: FeeRatePriority = params[AdapterFields.feeRateRriority.rawValue] as? FeeRatePriority else {
+        guard let amount: Decimal = params[AdapterField.amount.rawValue] as? Decimal, let address: String = params[AdapterField.address.rawValue] as? String, let feeRatePriority: FeeRatePriority = params[AdapterField.feeRateRriority.rawValue] as? FeeRatePriority else {
             return Single.error(AdapterError.wrongParameters)
         }
 

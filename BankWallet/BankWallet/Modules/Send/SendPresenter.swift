@@ -26,9 +26,9 @@ class SendPresenter {
 
     private func updateModules() {
         var params = [String: Any]()
-        params[AdapterFields.amount.rawValue] = amountModule?.coinAmount.value
-        params[AdapterFields.address.rawValue] = addressModule?.address
-        params[AdapterFields.feeRateRriority.rawValue] = feeModule?.feeRatePriority
+        params[AdapterField.amount.rawValue] = amountModule?.coinAmount.value
+        params[AdapterField.address.rawValue] = addressModule?.address
+        params[AdapterField.feeRateRriority.rawValue] = feeModule?.feeRatePriority
 
         interactor.validate(params: params)
         interactor.updateFee(params: params)
@@ -147,8 +147,8 @@ extension SendPresenter: ISendAmountDelegate {
 
     var availableBalance: Decimal {
         var params = [String: Any]()
-        params[AdapterFields.address.rawValue] = addressModule?.address
-        params[AdapterFields.feeRateRriority.rawValue] = feeModule?.feeRatePriority
+        params[AdapterField.address.rawValue] = addressModule?.address
+        params[AdapterField.feeRateRriority.rawValue] = feeModule?.feeRatePriority
         do {
             return try interactor.availableBalance(params: params)
         } catch {

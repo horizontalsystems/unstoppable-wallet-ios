@@ -1,5 +1,5 @@
 class ManageWalletsPresenter {
-    private let popularCoinCodes = ["BTC", "BCH", "ETH", "DASH", "EOS"]
+    private let popularCoinCodes = ["BTC", "BCH", "ETH", "DASH", "EOS", "BNB"]
 
     weak var view: IManageWalletsView?
 

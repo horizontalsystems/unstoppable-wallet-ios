@@ -90,9 +90,9 @@ extension SendInteractor: ISendInteractor {
     func send(amount: Decimal, address: String, feeRatePriority: FeeRatePriority) {
 
         var params = [String: Any]()
-        params[AdapterFields.amount.rawValue] = amount
-        params[AdapterFields.address.rawValue] = address
-        params[AdapterFields.feeRateRriority.rawValue] = feeRatePriority
+        params[AdapterField.amount.rawValue] = amount
+        params[AdapterField.address.rawValue] = address
+        params[AdapterField.feeRateRriority.rawValue] = feeRatePriority
 
         var single = adapter.sendSingle(params: params)
         if async {

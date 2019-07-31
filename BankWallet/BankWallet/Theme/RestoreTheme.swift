@@ -3,9 +3,9 @@ import UIKit
 class RestoreTheme {
     static let descriptionFont = UIFont.cryptoCaption1
 
-    static let descriptionHorizontalMargin: CGFloat = 44
-    static let descriptionTopMargin: CGFloat = 4
-    static let descriptionBottomMargin: CGFloat = 8
+    static let descriptionHorizontalMargin: CGFloat = 24
+    static let descriptionTopMargin: CGFloat = 9
+    static let descriptionBottomMargin: CGFloat = 10
 
     static let descriptionTextColor = UIColor.cryptoGray
 

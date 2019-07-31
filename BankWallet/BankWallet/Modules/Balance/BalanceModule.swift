@@ -1,8 +1,9 @@
 import Foundation
+import DeepDiff
 
 protocol IBalanceView: class {
     func reload()
-    func updateItem(at index: Int)
+    func reload(with diff: [Change<BalanceItem>])
     func updateHeader()
     func didRefresh()
     func setSort(isOn: Bool)
@@ -57,6 +58,7 @@ protocol IBalanceItemDataSource {
     var coinCodes: [CoinCode] { get }
     func item(at index: Int) -> BalanceItem
     func index(for coinCode: CoinCode) -> Int?
+
     func set(balance: Decimal, index: Int)
     func set(state: AdapterState, index: Int)
     func set(rate: Rate, index: Int)

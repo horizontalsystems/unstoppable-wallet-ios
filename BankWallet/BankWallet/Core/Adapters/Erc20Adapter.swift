@@ -110,7 +110,7 @@ extension Erc20Adapter: IAdapter {
     }
 
     func fee(params: [String : Any]) -> Decimal {
-        let feeRatePriority: FeeRatePriority = (params[AdapterFields.feeRateRriority.rawValue] as? FeeRatePriority) ?? .medium
+        let feeRatePriority: FeeRatePriority = (params[AdapterField.feeRateRriority.rawValue] as? FeeRatePriority) ?? .medium
 
         return erc20Kit.fee(gasPrice: feeRateProvider.ethereumGasPrice(for: feeRatePriority)) / pow(10, EthereumAdapter.decimal)
     }
@@ -118,7 +118,7 @@ extension Erc20Adapter: IAdapter {
     func validate(params: [String : Any]) throws -> [SendStateError] {
         var errors = [SendStateError]()
 
-        if let amount: Decimal = params[AdapterFields.amount.rawValue] as? Decimal {
+        if let amount: Decimal = params[AdapterField.amount.rawValue] as? Decimal {
             let balance = availableBalance(params: params)
             if amount > balance {
                 errors.append(.insufficientAmount(availableBalance: balance))

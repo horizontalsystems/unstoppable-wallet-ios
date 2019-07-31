@@ -110,12 +110,12 @@ extension EosAdapter: IAdapter {
     }
 
     func sendSingle(params: [String : Any]) -> Single<Void> {
-        guard let amount: Decimal = params[AdapterFields.amount.rawValue] as? Decimal,
-              let address: String = params[AdapterFields.address.rawValue] as? String else {
+        guard let amount: Decimal = params[AdapterField.amount.rawValue] as? Decimal,
+              let address: String = params[AdapterField.address.rawValue] as? String else {
             return Single.error(AdapterError.wrongParameters)
         }
 
-        let memo = params[AdapterFields.memo.rawValue] as? String
+        let memo = params[AdapterField.memo.rawValue] as? String
         return eosKit.sendSingle(asset: asset, to: address, amount: amount, memo: memo ?? "from Unstoppable Wallet")
                 .map { _ in () }
     }
