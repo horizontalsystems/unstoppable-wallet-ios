@@ -5,7 +5,7 @@ class SendFeeRouter {
 
 extension SendFeeRouter {
 
-    static func module(coinCode: CoinCode, decimal: Int, delegate: ISendFeePresenterDelegate) -> (UIView, ISendFeeModule) {
+    static func module(coinCode: CoinCode, decimal: Int) -> (UIView, ISendFeeModule) {
 
         let interactor = SendFeeInteractor(rateStorage: App.shared.grdbStorage)
 
@@ -14,7 +14,6 @@ extension SendFeeRouter {
         let view = SendFeeView(feeAdjustable: true, delegate: presenter)
 
         presenter.view = view
-        presenter.presenterDelegate = delegate
 
         return (view, presenter)
     }

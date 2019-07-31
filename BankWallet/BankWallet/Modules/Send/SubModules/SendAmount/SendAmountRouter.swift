@@ -2,7 +2,7 @@ import UIKit
 
 class SendAmountRouter {
 
-    static func module(coinCode: CoinCode, decimal: Int, delegate: ISendAmountDelegate) -> (UIView, ISendAmountModule) {
+    static func module(coinCode: CoinCode, decimal: Int) -> (UIView, ISendAmountModule) {
         let interactor = SendAmountInteractor(appConfigProvider: App.shared.appConfigProvider, localStorage: App.shared.localStorage, rateStorage: App.shared.grdbStorage)
 
         let sendAmountPresenterHelper = SendFormatHelper(coinCode: coinCode, coinDecimal: decimal, currencyManager: App.shared.currencyManager, appConfigProvider: App.shared.appConfigProvider)
@@ -10,7 +10,6 @@ class SendAmountRouter {
         let sendView = SendAmountView(delegate: presenter)
 
         presenter.view = sendView
-        presenter.presenterDelegate = delegate
 
         return (sendView, presenter)
     }

@@ -9,7 +9,7 @@ class SendAmountPresenter {
     private let coinDecimal: Int
 
     weak var view: ISendAmountView?
-    weak var presenterDelegate: ISendAmountDelegate?
+    weak var delegate: ISendAmountDelegate?
 
     private var sendInputType: SendInputType = .coin
 
@@ -98,7 +98,7 @@ extension SendAmountPresenter: ISendAmountViewDelegate {
         rate = interactor.rate(coinCode: coinCode, currencyCode: currencyManager.baseCurrency.code)
         if rate != nil {
             sendInputType = interactor.defaultInputType
-            presenterDelegate?.onChanged(sendInputType: sendInputType)
+            delegate?.onChanged(sendInputType: sendInputType)
         }
 
         view?.set(switchButtonEnabled: rate != nil)
@@ -108,7 +108,7 @@ extension SendAmountPresenter: ISendAmountViewDelegate {
     func onSwitchClicked() {
         sendInputType = sendInputType.reversed
         interactor.set(inputType: sendInputType)
-        presenterDelegate?.onChanged(sendInputType: sendInputType)
+        delegate?.onChanged(sendInputType: sendInputType)
 
         update(coinAmount: amount)
 
@@ -134,19 +134,19 @@ extension SendAmountPresenter: ISendAmountViewDelegate {
         self.amount = coinAmount
 
         // send to delegate 0 to validate and change fee values
-        presenterDelegate?.onChanged()
+        delegate?.onChanged()
 
         view?.set(hint: formatHelper.formattedWithCode(value: coinAmount ?? 0, inputType: sendInputType.reversed, rate: rate))
     }
 
     func onMaxClicked() {
         // get maximum available balance from delegate
-        guard let availableBalance = presenterDelegate?.availableBalance else {
+        guard let availableBalance = delegate?.availableBalance else {
             return
         }
         // Update baseCoin value, UI and hide maxButton
         self.amount = availableBalance
-        presenterDelegate?.onChanged()
+        delegate?.onChanged()
 
         update(coinAmount: availableBalance)
         view?.maxButton(show: false)

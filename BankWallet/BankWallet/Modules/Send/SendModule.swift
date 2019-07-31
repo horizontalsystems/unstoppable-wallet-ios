@@ -10,11 +10,6 @@ protocol ISendView: class {
     func set(sendButtonEnabled: Bool)
     func dismissKeyboard()
     func dismissWithSuccess()
-
-    func addAmountModule(coinCode: CoinCode, decimal: Int, delegate: ISendAmountDelegate) -> ISendAmountModule
-    func addAddressModule(delegate: ISendAddressPresenterDelegate) -> ISendAddressModule
-    func addFeeModule(coinCode: CoinCode, decimal: Int, delegate: ISendFeePresenterDelegate) -> ISendFeeModule
-    func addSendButton()
 }
 
 protocol ISendViewDelegate {
@@ -52,7 +47,7 @@ protocol ISendInteractorDelegate: class {
 }
 
 protocol ISendRouter {
-    func scanQrCode(onCodeParse: ((String) -> ())?)
+    func scanQrCode(delegate: IScanQrCodeDelegate)
     func dismiss()
 }
 

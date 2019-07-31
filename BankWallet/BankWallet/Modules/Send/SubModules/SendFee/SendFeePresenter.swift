@@ -8,7 +8,7 @@ class SendFeePresenter {
     private let coinCode: CoinCode
 
     weak var view: ISendFeeView?
-    weak var presenterDelegate: ISendFeePresenterDelegate?
+    weak var delegate: ISendFeeDelegate?
 
     private var rate: Rate?
     private var sendInputType: SendInputType = .coin
@@ -75,7 +75,7 @@ extension SendFeePresenter: ISendFeeViewDelegate {
     func onFeePriorityChange(value: Int) {
         feeRatePriority = FeeRatePriority(rawValue: value) ?? .medium
 
-        presenterDelegate?.updateFeeRate()
+        delegate?.updateFeeRate()
     }
 
 }

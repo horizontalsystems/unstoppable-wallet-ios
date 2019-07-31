@@ -10,11 +10,13 @@ protocol ISendAddressViewDelegate {
     func onAddressDeleteClicked()
 }
 
-protocol ISendAddressPresenterDelegate: class {
+protocol ISendAddressDelegate: class {
     func parse(paymentAddress: String) -> PaymentRequestAddress
 
     func onAddressUpdate(address: String?)
     func onAmountUpdate(amount: Decimal)
+
+    func scanQrCode(delegate: IScanQrCodeDelegate)
 }
 
 protocol ISendAddressInteractor {
@@ -24,11 +26,9 @@ protocol ISendAddressInteractor {
 protocol ISendAddressInteractorDelegate: class {
 }
 
-protocol ISendAddressRouter {
-    func scanQrCode(onCodeParse: ((String) -> ())?)
-}
+protocol ISendAddressModule: AnyObject {
+    var delegate: ISendAddressDelegate? { get set }
 
-protocol ISendAddressModule {
     var address: String? { get }
     var validState: Bool { get }
 }
