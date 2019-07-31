@@ -26,6 +26,7 @@ extension BackupEosRouter {
         let viewController = BackupEosViewController(delegate: presenter)
 
         router.viewController = viewController
+        presenter.view = viewController
 
         return viewController
     }
