@@ -45,7 +45,7 @@ class BackupController: WalletViewController {
         cancelButton.titleLabel?.font = BackupTheme.buttonTitleFont
         cancelButton.snp.makeConstraints { maker in
             maker.leading.equalToSuperview().offset(BackupTheme.sideMargin)
-            maker.bottom.equalToSuperview().offset(-BackupTheme.sideMargin)
+            maker.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).offset(-BackupTheme.sideMargin)
             maker.size.equalTo(CGSize(width: BackupTheme.laterButtonWidth, height: BackupTheme.buttonHeight))
         }
 
@@ -59,7 +59,7 @@ class BackupController: WalletViewController {
         proceedButton.snp.makeConstraints { maker in
             maker.leading.equalTo(cancelButton.snp.trailing).offset(BackupTheme.buttonsGap)
             maker.trailing.equalToSuperview().offset(-BackupTheme.sideMargin)
-            maker.bottom.equalToSuperview().offset(-BackupTheme.sideMargin)
+            maker.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).offset(-BackupTheme.sideMargin)
             maker.height.equalTo(BackupTheme.buttonHeight)
         }
     }

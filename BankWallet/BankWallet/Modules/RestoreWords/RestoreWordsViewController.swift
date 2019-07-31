@@ -40,11 +40,12 @@ class RestoreWordsViewController: WalletViewController {
 
         view.addSubview(collectionView)
         collectionView.backgroundColor = .clear
+        layout.sectionInset = UIEdgeInsets(top: 0, left: RestoreTheme.collectionSideMargin, bottom: RestoreTheme.listBottomMargin, right: RestoreTheme.collectionSideMargin)
         layout.minimumInteritemSpacing = RestoreTheme.interItemSpacing
         layout.minimumLineSpacing = RestoreTheme.lineSpacing
         collectionView.snp.makeConstraints { maker in
-            maker.leading.equalToSuperview().offset(RestoreTheme.collectionSideMargin)
-            maker.trailing.equalToSuperview().offset(-RestoreTheme.collectionSideMargin)
+            maker.leading.equalToSuperview()
+            maker.trailing.equalToSuperview()
             maker.top.bottom.equalToSuperview()
         }
 
@@ -97,8 +98,9 @@ class RestoreWordsViewController: WalletViewController {
 
     private func updateUI(keyboardHeight: CGFloat, duration: TimeInterval, options: UIView.AnimationOptions, completion: (() -> ())? = nil) {
         var insets: UIEdgeInsets = collectionView.contentInset
-        insets.bottom = keyboardHeight + RestoreTheme.listBottomMargin
+        insets.bottom = keyboardHeight
         collectionView.contentInset = insets
+        collectionView.scrollIndicatorInsets = insets
     }
 
     private func becomeResponder(at indexPath: IndexPath) {
@@ -151,7 +153,7 @@ extension RestoreWordsViewController: IRestoreWordsView {
 extension RestoreWordsViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let width = collectionView.bounds.width - RestoreTheme.interItemSpacing
+        let width = collectionView.bounds.width - RestoreTheme.interItemSpacing - RestoreTheme.collectionSideMargin * 2
         return CGSize(width: width / 2, height: RestoreTheme.itemHeight)
     }
 

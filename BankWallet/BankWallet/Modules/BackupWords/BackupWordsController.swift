@@ -37,7 +37,7 @@ class BackupWordsController: WalletViewController {
             maker.top.equalToSuperview()
             maker.leading.equalToSuperview().offset(BackupTheme.sideMargin)
             maker.trailing.equalToSuperview().offset(-BackupTheme.sideMargin)
-            maker.bottom.equalToSuperview()
+            maker.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom)
         }
 
         wordsLabel.numberOfLines = 0
@@ -48,7 +48,8 @@ class BackupWordsController: WalletViewController {
         }
 
         proceedButtonHolder.snp.makeConstraints { maker in
-            maker.leading.bottom.trailing.equalToSuperview()
+            maker.leading.trailing.equalToSuperview()
+            maker.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom)
             maker.height.equalTo(BackupTheme.cancelHolderHeight)
         }
 

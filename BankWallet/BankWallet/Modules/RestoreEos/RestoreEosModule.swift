@@ -27,6 +27,7 @@ protocol IRestoreEosRouter {
 protocol IRestoreEosInteractor {
     var valueFromPasteboard: String? { get }
     func validate(privateKey: String) throws
+    func validate(account: String) throws
 }
 
 protocol IRestoreEosInteractorDelegate: class {

@@ -37,7 +37,8 @@ class BackupEosViewController: WalletViewController {
         scrollView.showsVerticalScrollIndicator = false
         scrollView.snp.makeConstraints { maker in
             maker.top.equalToSuperview()
-            maker.leading.trailing.bottom.equalToSuperview()
+            maker.leading.trailing.equalToSuperview()
+            maker.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom)
         }
         scrollView.addSubview(container)
         container.snp.makeConstraints { maker in
@@ -111,8 +112,9 @@ class BackupEosViewController: WalletViewController {
         }
 
         closeButtonHolder.snp.makeConstraints { maker in
-            maker.leading.bottom.trailing.equalToSuperview()
+            maker.leading.trailing.equalToSuperview()
             maker.height.equalTo(BackupTheme.cancelHolderHeight)
+            maker.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom)
         }
 
         closeButton.setTitle("backup.close".localized, for: .normal)

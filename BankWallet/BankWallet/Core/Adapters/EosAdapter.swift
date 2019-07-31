@@ -40,6 +40,13 @@ class EosAdapter {
         )
     }
 
+    static func validate(account: String) throws {
+        let regex = try! NSRegularExpression(pattern: "^[a-z1-5]{1,12}$")
+        guard regex.firstMatch(in: account, range: NSRange(location: 0, length: account.count)) != nil else {
+            throw RestoreEosValidationError.invalidAccount
+        }
+    }
+
     static func validate(privateKey: String) throws {
         try EosKit.validate(privateKey: privateKey)
     }
