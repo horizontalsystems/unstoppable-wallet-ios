@@ -48,3 +48,11 @@ extension SendTransactionError: LocalizedError {
         }
     }
 }
+
+extension EosAdapter.ValidationError: LocalizedError {
+    public var errorDescription: String? {
+        switch self {
+        case .invalidAccount: return "error.invalid_eos_account".localized
+        }
+    }
+}

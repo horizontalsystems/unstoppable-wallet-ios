@@ -18,4 +18,8 @@ extension RestoreEosInteractor: IRestoreEosInteractor {
         try EosAdapter.validate(privateKey: privateKey)
     }
 
+    func validate(account: String) throws {
+        try EosAdapter.validate(account: account)
+    }
+
 }

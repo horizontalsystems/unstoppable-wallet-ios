@@ -71,10 +71,11 @@ extension RestoreEosPresenter: IRestoreEosViewDelegate {
     }
 
     func didTapDone() {
-        guard let account = state.account?.trimmingCharacters(in: .whitespaces), let privateKey = state.privateKey?.trimmingCharacters(in: .whitespaces) else {
-            return
-        }
+        let account = (state.account ?? "").trimmingCharacters(in: .whitespaces).lowercased()
+        let privateKey = (state.privateKey ?? "").trimmingCharacters(in: .whitespaces).lowercased()
+
         do {
+            try interactor.validate(account: account)
             try interactor.validate(privateKey: privateKey)
 
             let accountType: AccountType = .eos(account: account, activePrivateKey: privateKey)
