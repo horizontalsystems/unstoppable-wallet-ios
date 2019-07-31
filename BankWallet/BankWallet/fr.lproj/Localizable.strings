@@ -233,6 +233,7 @@
 "error.cant_create_eos" = "At this point, the wallet is not able to create new EOS wallet accounts. You're only able to restore the existing one.";
 "settings_manage_keys.create.text" = "This action will generate a key(wallet) for the following coins:\n\n%@";
 "error.invalid_eos_key" = "Invalid key";
+"error.invalid_eos_account" = "Invalid account";
 
 // Set PIN
 
