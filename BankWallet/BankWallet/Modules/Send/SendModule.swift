@@ -31,6 +31,7 @@ protocol ISendViewDelegate {
 
 protocol ISendInteractor {
     var coin: Coin { get }
+    var decimal: Int { get }
     func availableBalance(params: [String: Any]) throws -> Decimal
 
     func copy(address: String)

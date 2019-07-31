@@ -12,9 +12,9 @@ class SendPresenter {
     private let router: ISendRouter
     private let factory: ISendConfirmationViewItemFactory
 
-    var amountModule: ISendAmountModule?
-    var addressModule: ISendAddressModule?
-    var feeModule: ISendFeeModule?
+    private var amountModule: ISendAmountModule?
+    private var addressModule: ISendAddressModule?
+    private var feeModule: ISendFeeModule?
 
     private var sendInputType: SendInputType = .coin
 
@@ -52,9 +52,9 @@ extension SendPresenter: ISendViewDelegate {
 
     func onViewDidLoad() {
         view?.set(coin: interactor.coin)
-        amountModule = view?.addAmountModule(coinCode: interactor.coin.code, decimal: 8, delegate: self)
+        amountModule = view?.addAmountModule(coinCode: interactor.coin.code, decimal: interactor.decimal, delegate: self)
         addressModule = view?.addAddressModule(delegate: self)
-        feeModule = view?.addFeeModule(coinCode: interactor.coin.code, decimal: 8, delegate: self)
+        feeModule = view?.addFeeModule(coinCode: interactor.coin.code, decimal: interactor.decimal, delegate: self)
         view?.addSendButton()
 
         updateModules()

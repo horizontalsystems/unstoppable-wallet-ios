@@ -29,6 +29,10 @@ extension SendInteractor: ISendInteractor {
         return adapter.wallet.coin
     }
 
+    var decimal: Int {
+        return adapter.decimal
+    }
+
     func availableBalance(params: [String: Any]) throws -> Decimal {
         return try adapter.availableBalance(params: params)
     }
