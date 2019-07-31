@@ -30,7 +30,7 @@ class BinanceAdapter {
                 transactionHash: transaction.hash,
                 transactionIndex: 0,
                 interTransactionIndex: 0,
-                blockHeight: transaction.blockNumber,
+                blockHeight: transaction.blockHeight,
                 amount: transaction.amount * (from.mine ? -1 : 1),
                 date: transaction.date,
                 from: [from],
