@@ -10,10 +10,12 @@ class SendViewController: UIViewController {
     private let iconImageView = UIImageView()
     private let sendButton = RespondButton()
 
+    private let views: [UIView]
     private var lastView: UIView?
 
-    init(delegate: ISendViewDelegate) {
+    init(delegate: ISendViewDelegate, views: [UIView]) {
         self.delegate = delegate
+        self.views = views
 
         super.init(nibName: nil, bundle: nil)
 
@@ -50,6 +52,8 @@ class SendViewController: UIViewController {
 
         sendButton.state = .disabled
 
+        buildViews()
+
         delegate.onViewDidLoad()
     }
 
@@ -61,6 +65,14 @@ class SendViewController: UIViewController {
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return AppTheme.statusBarStyle
+    }
+
+    private func buildViews() {
+        for view in views {
+            add(view: view)
+        }
+
+        add(view: sendButton, offset: SendTheme.margin)
     }
 
     private func add(view: UIView, offset: CGFloat = 0) {
@@ -124,31 +136,6 @@ extension SendViewController: ISendView {
             self?.dismiss(animated: true)
         })
         HudHelper.instance.showSuccess()
-    }
-
-    func addAmountModule(coinCode: CoinCode, decimal: Int, delegate: ISendAmountDelegate) -> ISendAmountModule {
-        let (view, module) = SendAmountRouter.module(coinCode: coinCode, decimal: decimal, delegate: delegate)
-        add(view: view)
-
-        return module
-    }
-
-    func addAddressModule(delegate: ISendAddressPresenterDelegate) -> ISendAddressModule {
-        let (view, module) = SendAddressRouter.module(viewController: self, delegate: delegate)
-        add(view: view)
-
-        return module
-    }
-
-    func addFeeModule(coinCode: CoinCode, decimal: Int, delegate: ISendFeePresenterDelegate) -> ISendFeeModule {
-        let (view, module) = SendFeeRouter.module(coinCode: coinCode, decimal: decimal, delegate: delegate)
-        add(view: view)
-
-        return module
-    }
-
-    func addSendButton() {
-        add(view: sendButton, offset: SendTheme.margin)
     }
 
 }

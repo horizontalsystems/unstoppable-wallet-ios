@@ -227,7 +227,7 @@ CHECKOUT OPTIONS:
     :commit: 22d90aa409044e4ee82e4fcc3ec5a89e7066bf93
     :git: https://github.com/horizontalsystems/gui-kit
   BinanceChainKit.swift:
-    :commit: 3bdb8b19cd96dbde373a74dd582d51bd05264610
+    :commit: c6824dc73d298125ab0aa93009642b787e780048
     :git: https://github.com/horizontalsystems/binance-chain-kit-ios
   BitcoinCashKit.swift:
     :commit: 89eadcd198235e81b768a224effcaa3e3f8273c8
@@ -310,4 +310,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 9420c3e00f2c33ce139d1835c7bb10d478e18448
 
-COCOAPODS: 1.7.4
+COCOAPODS: 1.7.5

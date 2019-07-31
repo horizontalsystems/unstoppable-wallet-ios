@@ -3,10 +3,20 @@ import AVFoundation
 import SnapKit
 
 class ScanQRController: UIViewController {
-    var onCodeParse: ((String) -> ())?
+    weak var delegate: IScanQrCodeDelegate?
 
     private var captureSession: AVCaptureSession!
     private var initiallySetUp = false
+
+    init(delegate: IScanQrCodeDelegate) {
+        self.delegate = delegate
+
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -114,7 +124,7 @@ class ScanQRController: UIViewController {
     }
 
     private func found(code: String) {
-        onCodeParse?(code)
+        delegate?.didScan(string: code)
     }
 
 }
@@ -135,4 +145,8 @@ extension ScanQRController: AVCaptureMetadataOutputObjectsDelegate {
         dismiss(animated: true)
     }
 
+}
+
+protocol IScanQrCodeDelegate: AnyObject {
+    func didScan(string: String)
 }

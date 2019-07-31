@@ -2,33 +2,31 @@ import Foundation
 
 class SendAddressPresenter {
     private let interactor: ISendAddressInteractor
-    private let router: ISendAddressRouter
 
     weak var view: ISendAddressView?
-    weak var presenterDelegate: ISendAddressPresenterDelegate?
+    weak var delegate: ISendAddressDelegate?
 
     var address: String?
     var invalidAddress: Error?
 
-    init(interactor: ISendAddressInteractor, router: ISendAddressRouter) {
+    init(interactor: ISendAddressInteractor) {
         self.interactor = interactor
-        self.router = router
     }
 
     private func onAddressEnter(address: String) {
-        let paymentAddress = presenterDelegate?.parse(paymentAddress: address)
+        let paymentAddress = delegate?.parse(paymentAddress: address)
         if paymentAddress?.error != nil {
             view?.set(address: paymentAddress?.address, error: "Invalid address".localized)
             invalidAddress = paymentAddress?.error
-            presenterDelegate?.onAddressUpdate(address: nil)
+            delegate?.onAddressUpdate(address: nil)
         } else {
             view?.set(address: paymentAddress?.address, error: nil)
             invalidAddress = nil
             self.address = address
 
-            presenterDelegate?.onAddressUpdate(address: paymentAddress?.address)
+            delegate?.onAddressUpdate(address: paymentAddress?.address)
             if let amount = paymentAddress?.amount {
-                presenterDelegate?.onAmountUpdate(amount: amount)
+                delegate?.onAmountUpdate(amount: amount)
             }
         }
     }
@@ -38,9 +36,7 @@ class SendAddressPresenter {
 extension SendAddressPresenter: ISendAddressViewDelegate {
 
     func onAddressScanClicked() {
-        router.scanQrCode(onCodeParse: { [weak self] address in
-            self?.onAddressEnter(address: address)
-        })
+        delegate?.scanQrCode(delegate: self)
     }
 
     func onAddressPasteClicked() {
@@ -53,7 +49,7 @@ extension SendAddressPresenter: ISendAddressViewDelegate {
         view?.set(address: nil, error: nil)
         address = nil
 
-        presenterDelegate?.onAddressUpdate(address: nil)
+        delegate?.onAddressUpdate(address: nil)
     }
 
 }
@@ -62,6 +58,14 @@ extension SendAddressPresenter: ISendAddressModule {
 
     var validState: Bool {
         return (address != nil) && (invalidAddress == nil)
+    }
+
+}
+
+extension SendAddressPresenter: IScanQrCodeDelegate {
+
+    func didScan(string: String) {
+        onAddressEnter(address: string)
     }
 
 }

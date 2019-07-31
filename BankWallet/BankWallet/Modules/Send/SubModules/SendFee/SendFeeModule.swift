@@ -11,7 +11,7 @@ protocol ISendFeeViewDelegate {
     func viewDidLoad()
 }
 
-protocol ISendFeePresenterDelegate: class {
+protocol ISendFeeDelegate: class {
     func updateFeeRate()
 }
 
@@ -19,7 +19,9 @@ protocol ISendFeeInteractor {
     func rate(coinCode: CoinCode, currencyCode: String) -> Rate?
 }
 
-protocol ISendFeeModule {
+protocol ISendFeeModule: AnyObject {
+    var delegate: ISendFeeDelegate? { get set }
+
     var coinFee: CoinValue { get }
     var fiatFee: CurrencyValue? { get }
 

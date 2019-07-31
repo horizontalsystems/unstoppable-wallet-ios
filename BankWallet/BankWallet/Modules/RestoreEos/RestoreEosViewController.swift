@@ -71,10 +71,7 @@ class RestoreEosViewController: WalletViewController {
     }
 
     private func onScanQrCode() {
-        let scanController = ScanQRController()
-        scanController.onCodeParse = { [weak self] key in
-            self?.delegate.onScan(key: key)
-        }
+        let scanController = ScanQRController(delegate: self)
         present(scanController, animated: true)
     }
 
@@ -96,6 +93,14 @@ extension RestoreEosViewController: IRestoreEosView {
 
     func show(error: Error) {
         HudHelper.instance.showError(title: error.localizedDescription)
+    }
+
+}
+
+extension RestoreEosViewController: IScanQrCodeDelegate {
+
+    func didScan(string: String) {
+        delegate.onScan(key: string)
     }
 
 }

@@ -12,32 +12,34 @@ class SendPresenter {
     private let router: ISendRouter
     private let factory: ISendConfirmationViewItemFactory
 
-    private var amountModule: ISendAmountModule?
-    private var addressModule: ISendAddressModule?
-    private var feeModule: ISendFeeModule?
+    private let amountModule: ISendAmountModule
+    private let addressModule: ISendAddressModule
+    private let feeModule: ISendFeeModule
 
     private var sendInputType: SendInputType = .coin
 
-    init(interactor: ISendInteractor, router: ISendRouter, factory: ISendConfirmationViewItemFactory) {
+    init(interactor: ISendInteractor, router: ISendRouter, factory: ISendConfirmationViewItemFactory, amountModule: ISendAmountModule, addressModule: ISendAddressModule, feeModule: ISendFeeModule) {
         self.interactor = interactor
         self.router = router
         self.factory = factory
+
+        self.amountModule = amountModule
+        self.addressModule = addressModule
+        self.feeModule = feeModule
     }
 
     private func updateModules() {
         var params = [String: Any]()
-        params[AdapterField.amount.rawValue] = amountModule?.coinAmount.value
-        params[AdapterField.address.rawValue] = addressModule?.address
-        params[AdapterField.feeRateRriority.rawValue] = feeModule?.feeRatePriority
+        params[AdapterField.amount.rawValue] = amountModule.coinAmount.value
+        params[AdapterField.address.rawValue] = addressModule.address
+        params[AdapterField.feeRateRriority.rawValue] = feeModule.feeRatePriority
 
         interactor.validate(params: params)
         interactor.updateFee(params: params)
     }
 
     private func updateSendButtonState() {
-        let enabled =   (amountModule?.validState ?? false) &&
-                        (addressModule?.validState ?? false) &&
-                        (feeModule?.validState ?? false)
+        let enabled = amountModule.validState && addressModule.validState && feeModule.validState
 
         view?.set(sendButtonEnabled: enabled)
     }
@@ -47,16 +49,11 @@ class SendPresenter {
 extension SendPresenter: ISendViewDelegate {
 
     func showKeyboard() {
-        amountModule?.showKeyboard()
+        amountModule.showKeyboard()
     }
 
     func onViewDidLoad() {
         view?.set(coin: interactor.coin)
-        amountModule = view?.addAmountModule(coinCode: interactor.coin.code, decimal: interactor.decimal, delegate: self)
-        addressModule = view?.addAddressModule(delegate: self)
-        feeModule = view?.addFeeModule(coinCode: interactor.coin.code, decimal: interactor.decimal, delegate: self)
-        view?.addSendButton()
-
         updateModules()
     }
 
@@ -66,7 +63,7 @@ extension SendPresenter: ISendViewDelegate {
     }
 
     func onCopyAddress() {
-        guard let address = addressModule?.address else {
+        guard let address = addressModule.address else {
             return
         }
 
@@ -75,15 +72,10 @@ extension SendPresenter: ISendViewDelegate {
     }
 
     func onSendClicked() {
-        guard let coinAmount = amountModule?.coinAmount,
-              let coinFee = feeModule?.coinFee else {
-            // todo: check modules existing!
-            return
-        }
         do {
-            let viewItem = try factory.confirmationViewItem(coin: interactor.coin, sendInputType: sendInputType, address: addressModule?.address,
-                    coinAmountValue: coinAmount, currencyAmountValue: amountModule?.fiatAmount,
-                    coinFeeValue: coinFee, currencyFeeValue: feeModule?.fiatFee)
+            let viewItem = try factory.confirmationViewItem(coin: interactor.coin, sendInputType: sendInputType, address: addressModule.address,
+                    coinAmountValue: amountModule.coinAmount, currencyAmountValue: amountModule.fiatAmount,
+                    coinFeeValue: feeModule.coinFee, currencyFeeValue: feeModule.fiatFee)
             view?.showConfirmation(viewItem: viewItem)
         } catch {
             view?.show(error: error)
@@ -91,16 +83,18 @@ extension SendPresenter: ISendViewDelegate {
     }
 
     func onConfirmClicked() {
-        guard let address = addressModule?.address else {
+        guard let address = addressModule.address else {
             view?.show(error: SendError.noAddress)
             return
         }
 
-        guard let amount = amountModule?.coinAmount.value, amount != 0 else {
+        let amount = amountModule.coinAmount.value
+
+        guard amount != 0 else {
             view?.show(error: SendError.noAmount)
             return
         }
-        interactor.send(amount: amount, address: address, feeRatePriority: feeModule?.feeRatePriority ?? .medium)
+        interactor.send(amount: amount, address: address, feeRatePriority: feeModule.feeRatePriority)
     }
 
 }
@@ -125,20 +119,20 @@ extension SendPresenter: ISendInteractorDelegate {
             switch($0) {
             case .insufficientAmount(availableBalance: let availableBalance):
                 amountValidationSuccess = false
-                amountModule?.insufficientAmount(availableBalance: availableBalance)
+                amountModule.insufficientAmount(availableBalance: availableBalance)
             case .insufficientFeeBalance(fee: let fee):
-                feeModule?.insufficientFeeBalance(coinCode: interactor.coin.code, fee: fee)
+                feeModule.insufficientFeeBalance(coinCode: interactor.coin.code, fee: fee)
             }
         }
         if amountValidationSuccess {
-            amountModule?.onValidationSuccess()
+            amountModule.onValidationSuccess()
         }
 
         updateSendButtonState()
     }
 
     func didUpdate(fee: Decimal) {
-        feeModule?.update(fee: fee)
+        feeModule.update(fee: fee)
     }
 
 }
@@ -147,8 +141,8 @@ extension SendPresenter: ISendAmountDelegate {
 
     var availableBalance: Decimal {
         var params = [String: Any]()
-        params[AdapterField.address.rawValue] = addressModule?.address
-        params[AdapterField.feeRateRriority.rawValue] = feeModule?.feeRatePriority
+        params[AdapterField.address.rawValue] = addressModule.address
+        params[AdapterField.feeRateRriority.rawValue] = feeModule.feeRatePriority
         do {
             return try interactor.availableBalance(params: params)
         } catch {
@@ -164,12 +158,12 @@ extension SendPresenter: ISendAmountDelegate {
     func onChanged(sendInputType: SendInputType) {
         self.sendInputType = sendInputType
 
-        feeModule?.update(sendInputType: sendInputType)
+        feeModule.update(sendInputType: sendInputType)
     }
 
 }
 
-extension SendPresenter: ISendAddressPresenterDelegate {
+extension SendPresenter: ISendAddressDelegate {
 
     func parse(paymentAddress: String) -> PaymentRequestAddress {
         return interactor.parse(paymentAddress: paymentAddress)
@@ -183,9 +177,13 @@ extension SendPresenter: ISendAddressPresenterDelegate {
         // todo:
     }
 
+    func scanQrCode(delegate: IScanQrCodeDelegate) {
+        router.scanQrCode(delegate: delegate)
+    }
+
 }
 
-extension SendPresenter: ISendFeePresenterDelegate {
+extension SendPresenter: ISendFeeDelegate {
 
     func updateFeeRate() {
         updateModules()

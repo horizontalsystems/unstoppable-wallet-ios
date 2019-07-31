@@ -12,9 +12,8 @@ extension SendRouter: ISendRouter {
         viewController?.present(confirmationController, animated: true)
     }
 
-    func scanQrCode(onCodeParse: ((String) -> ())?) {
-        let scanController = ScanQRController()
-        scanController.onCodeParse = onCodeParse
+    func scanQrCode(delegate: IScanQrCodeDelegate) {
+        let scanController = ScanQRController(delegate: delegate)
         viewController?.present(scanController, animated: true)
     }
 
@@ -36,11 +35,19 @@ extension SendRouter {
         let router = SendRouter()
         let interactor = SendInteractor(pasteboardManager: App.shared.pasteboardManager, adapter: adapter, backgroundManager: App.shared.backgroundManager)
 
-        let presenter = SendPresenter(interactor: interactor, router: router, factory: factory)
-        let viewController = SendViewController(delegate: presenter)
+        let (amountView, amountModule) = SendAmountRouter.module(coinCode: coinCode, decimal: adapter.decimal)
+        let (addressView, addressModule) = SendAddressRouter.module()
+        let (feeView, feeModule) = SendFeeRouter.module(coinCode: coinCode, decimal: adapter.decimal)
+
+        let presenter = SendPresenter(interactor: interactor, router: router, factory: factory, amountModule: amountModule, addressModule: addressModule, feeModule: feeModule)
+        let viewController = SendViewController(delegate: presenter, views: [amountView, addressView, feeView])
 
         interactor.delegate = presenter
         presenter.view = viewController
+
+        amountModule.delegate = presenter
+        addressModule.delegate = presenter
+        feeModule.delegate = presenter
 
         let navigationController = WalletNavigationController(rootViewController: viewController)
         router.viewController = navigationController

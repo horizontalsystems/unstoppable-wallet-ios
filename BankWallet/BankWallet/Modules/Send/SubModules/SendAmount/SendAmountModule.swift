@@ -35,7 +35,9 @@ protocol ISendAmountInteractor {
     func decimal(coinDecimal: Int, inputType: SendInputType) -> Int
 }
 
-protocol ISendAmountModule {
+protocol ISendAmountModule: AnyObject {
+    var delegate: ISendAmountDelegate? { get set }
+
     var coinAmount: CoinValue { get }
     var fiatAmount: CurrencyValue? { get }
 
