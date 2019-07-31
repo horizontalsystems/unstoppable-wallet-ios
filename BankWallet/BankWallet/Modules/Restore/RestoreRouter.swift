@@ -46,7 +46,9 @@ extension RestoreRouter {
 
     static func module(defaultAccountType: DefaultAccountType, mode: PresentationMode, delegate: IRestoreAccountTypeDelegate) -> UIViewController? {
         switch defaultAccountType {
-        case .mnemonic(let wordsCount): return RestoreWordsRouter.module(mode: mode, wordsCount: wordsCount, delegate: delegate)
+        case .mnemonic(let wordsCount):
+            let showSyncMode = wordsCount == 12
+            return RestoreWordsRouter.module(mode: mode, wordsCount: wordsCount, showSyncMode: showSyncMode, delegate: delegate)
         case .eos: return RestoreEosRouter.module(mode: mode, delegate: delegate)
         }
     }
