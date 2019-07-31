@@ -124,20 +124,37 @@ extension BitcoinBaseAdapter: IAdapter {
         try abstractKit.validate(address: address)
     }
 
-    func validate(amount: Decimal, address: String?, feeRatePriority: FeeRatePriority) -> [SendStateError] {
+    func validate(params: [String : Any]) throws -> [SendStateError] {
+        guard let amount: Decimal = params[AdapterField.amount.rawValue] as? Decimal else {
+            throw AdapterError.wrongParameters
+        }
+
+        let balance = try availableBalance(params: params)
         var errors = [SendStateError]()
-        if amount > availableBalance(for: address, feeRatePriority: feeRatePriority) {
-            errors.append(.insufficientAmount)
+        if amount > balance {
+            errors.append(.insufficientAmount(availableBalance: balance))
         }
         return errors
     }
 
     func parse(paymentAddress: String) -> PaymentRequestAddress {
         let paymentData = addressParser.parse(paymentAddress: paymentAddress)
-        return PaymentRequestAddress(address: paymentData.address, amount: paymentData.amount.map { Decimal($0) })
+        var validationError: Error?
+        do {
+            try validate(address: paymentData.address)
+        } catch {
+            validationError = error
+        }
+        return PaymentRequestAddress(address: paymentData.address, amount: paymentData.amount.map { Decimal($0) }, error: validationError)
     }
 
-    func sendSingle(to address: String, amount: Decimal, feeRatePriority: FeeRatePriority) -> Single<Void> {
+    func sendSingle(params: [String : Any]) -> Single<Void> {
+        guard let amount: Decimal = params[AdapterField.amount.rawValue] as? Decimal,
+              let address: String = params[AdapterField.address.rawValue] as? String,
+              let feeRatePriority: FeeRatePriority = params[AdapterField.feeRateRriority.rawValue] as? FeeRatePriority else {
+            return Single.error(AdapterError.wrongParameters)
+        }
+
         let satoshiAmount = convertToSatoshi(value: amount)
         let rate = feeRate(priority: feeRatePriority)
 
@@ -153,13 +170,21 @@ extension BitcoinBaseAdapter: IAdapter {
         }
     }
 
-    func availableBalance(for address: String?, feeRatePriority: FeeRatePriority) -> Decimal {
-        return max(0, balance - fee(for: balance, address: address, feeRatePriority: feeRatePriority))
+    func availableBalance(params: [String : Any]) throws -> Decimal {
+        var params = params
+        params[AdapterField.amount.rawValue] = balance
+        return try max(0, balance - fee(params: params))
     }
 
-    func fee(for value: Decimal, address: String?, feeRatePriority: FeeRatePriority) -> Decimal {
+    func fee(params: [String : Any]) throws -> Decimal {
+        guard let amount: Decimal = params[AdapterField.amount.rawValue] as? Decimal,
+              let feeRatePriority: FeeRatePriority = params[AdapterField.feeRateRriority.rawValue] as? FeeRatePriority else {
+            throw AdapterError.wrongParameters
+        }
+        let address: String? = params[AdapterField.address.rawValue] as? String
+
         do {
-            let amount = convertToSatoshi(value: value)
+            let amount = convertToSatoshi(value: amount)
             let fee = try abstractKit.fee(for: amount, toAddress: address, senderPay: true, feeRate: feeRate(priority: feeRatePriority))
             return Decimal(fee) / coinRate
         } catch BitcoinCoreErrors.UnspentOutputSelection.notEnough(let maxFee) {

@@ -7,6 +7,17 @@ class SendRouter {
 
 extension SendRouter: ISendRouter {
 
+    func showConfirmation(viewItem: SendConfirmationViewItem, delegate: ISendViewDelegate) {
+        let confirmationController = SendConfirmationViewController(delegate: delegate, viewItem: viewItem)
+        viewController?.present(confirmationController, animated: true)
+    }
+
+    func scanQrCode(onCodeParse: ((String) -> ())?) {
+        let scanController = ScanQRController()
+        scanController.onCodeParse = onCodeParse
+        viewController?.present(scanController, animated: true)
+    }
+
     func dismiss() {
         viewController?.dismiss(animated: true)
     }
@@ -15,25 +26,25 @@ extension SendRouter: ISendRouter {
 
 extension SendRouter {
 
-    static func module(coinCode: CoinCode) -> ActionSheetController? {
+    static func module(coinCode: CoinCode) -> UIViewController? {
         guard let adapter = App.shared.adapterManager.adapters.first(where: { $0.wallet.coin.code == coinCode }) else {
             return nil
         }
 
-        let interactorState = SendInteractorState(adapter: adapter)
-        let factory = SendStateViewItemFactory()
-        let userInput = SendUserInput()
+        let factory = SendConfirmationViewItemFactory()
 
         let router = SendRouter()
-        let interactor = SendInteractor(currencyManager: App.shared.currencyManager, rateStorage: App.shared.grdbStorage, localStorage: App.shared.localStorage, pasteboardManager: App.shared.pasteboardManager, state: interactorState, appConfigProvider: App.shared.appConfigProvider, backgroundManager: App.shared.backgroundManager)
-        let presenter = SendPresenter(interactor: interactor, router: router, factory: factory, userInput: userInput)
+        let interactor = SendInteractor(pasteboardManager: App.shared.pasteboardManager, adapter: adapter, backgroundManager: App.shared.backgroundManager)
+
+        let presenter = SendPresenter(interactor: interactor, router: router, factory: factory)
         let viewController = SendViewController(delegate: presenter)
 
         interactor.delegate = presenter
         presenter.view = viewController
-        router.viewController = viewController
 
-        return viewController
+        let navigationController = WalletNavigationController(rootViewController: viewController)
+        router.viewController = navigationController
+        return navigationController
     }
 
 }

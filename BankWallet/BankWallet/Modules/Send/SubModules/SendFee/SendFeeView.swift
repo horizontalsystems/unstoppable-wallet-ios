@@ -1,10 +1,9 @@
 import UIKit
-import UIExtensions
-import ActionSheet
-import SnapKit
-import AudioToolbox
 
-class SendFeeItemView: BaseActionItemView {
+class SendFeeView: UIView {
+    private let delegate: ISendFeeViewDelegate
+    private let feeAdjustable: Bool
+
     private let feeLabel = UILabel()
     private let convertedFeeLabel = UILabel()
     private let errorLabel = UILabel()
@@ -12,22 +11,26 @@ class SendFeeItemView: BaseActionItemView {
 
     private var previousValue: Int?
 
-    override var item: SendFeeItem? { return _item as? SendFeeItem }
+    public init(feeAdjustable: Bool, delegate: ISendFeeViewDelegate) {
+        self.feeAdjustable = feeAdjustable
+        self.delegate = delegate
 
-    override func initView() {
-        super.initView()
+        super.init(frame: .zero)
+
+        self.snp.makeConstraints { maker in
+            maker.height.equalTo(SendTheme.feeHeight)
+        }
+
+        backgroundColor = .clear
 
         addSubview(feeLabel)
         addSubview(errorLabel)
         addSubview(convertedFeeLabel)
         addSubview(feeSlider)
 
-        if let item = item {
-            feeSlider.isHidden = !item.isFeeAdjustable
-        }
         feeLabel.font = SendTheme.feeFont
         feeLabel.textColor = SendTheme.feeColor
-        let feeTitleTopMargin = (item?.isFeeAdjustable ?? false) ? SendTheme.feeTitleTopMargin : SendTheme.constantFeeTitleTopMargin
+        let feeTitleTopMargin = feeAdjustable ? SendTheme.feeTitleTopMargin : SendTheme.constantFeeTitleTopMargin
         feeLabel.snp.makeConstraints { maker in
             maker.leading.equalToSuperview().offset(SendTheme.margin)
             maker.top.equalToSuperview().offset(feeTitleTopMargin)
@@ -61,28 +64,20 @@ class SendFeeItemView: BaseActionItemView {
             maker.height.equalTo(SendTheme.feeSliderHeight)
         }
 
-        sliderShift(disableSend: true)
-
-        item?.bindFee = { [weak self] in
-            self?.feeLabel.text = $0.map { "send.fee".localized + ": \($0)" }
-        }
-        item?.bindConvertedFee = { [weak self] in
-            self?.convertedFeeLabel.text = $0
-        }
-        item?.bindError = { [weak self] in
-            self?.errorLabel.text = $0
-
-            self?.feeSlider.isHidden = $0 != nil
-        }
+        feeLabel.text = "Fee: "
     }
 
-    @objc func sliderShift(disableSend: Bool = false) {
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("not implemented")
+    }
+
+    @objc private func sliderShift() {
         let a = Int(feeSlider.value * 10)
         let b = Int(feeSlider.value) * 10
 
         let value = Int(floor(feeSlider.value))
-        if previousValue != value, !disableSend, a == b {
-            item?.onFeePriorityChange?(value)
+        if previousValue != value, a == b {
+            delegate.onFeePriorityChange(value: value)
 
             let generator = UIImpactFeedbackGenerator(style: .light)
             generator.prepare()
@@ -92,12 +87,40 @@ class SendFeeItemView: BaseActionItemView {
         }
     }
 
-    @objc func onFinishSliding() {
+    @objc private func onFinishSliding() {
         UIView.animate(withDuration: 0.2, animations: {
             self.feeSlider.setValue(Float(Int(round(self.feeSlider.value))), animated: true)
         }, completion: { _ in
             self.sliderShift()
         })
+    }
+
+    override func didMoveToSuperview() {
+        super.didMoveToSuperview()
+
+        delegate.viewDidLoad()
+    }
+
+}
+
+extension SendFeeView: ISendFeeView {
+
+    func set(fee: String?) {
+        feeLabel.text = fee
+    }
+
+    func set(convertedFee: String?) {
+        convertedFeeLabel.text = convertedFee
+    }
+
+    func set(error: String?) {
+        errorLabel.text = error
+
+        let hide = error != nil
+
+        feeLabel.isHidden = hide
+        convertedFeeLabel.isHidden = hide
+        feeSlider.isHidden = !feeAdjustable || hide
     }
 
 }

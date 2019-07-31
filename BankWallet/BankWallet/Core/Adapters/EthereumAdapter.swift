@@ -85,18 +85,28 @@ extension EthereumAdapter: IAdapter {
                 }
     }
 
-    func availableBalance(for address: String?, feeRatePriority: FeeRatePriority) -> Decimal {
-        return max(0, balance - fee(for: balance, address: address, feeRatePriority: feeRatePriority))
+    func availableBalance(params: [String : Any]) throws -> Decimal {
+
+        return try max(0, balance - fee(params: params))
     }
 
-    func fee(for value: Decimal, address: String?, feeRatePriority: FeeRatePriority) -> Decimal {
+    func fee(params: [String : Any]) throws -> Decimal {
+        guard let feeRatePriority: FeeRatePriority = params[AdapterField.feeRateRriority.rawValue] as? FeeRatePriority else {
+            throw AdapterError.wrongParameters
+        }
+
         return ethereumKit.fee(gasPrice: feeRateProvider.ethereumGasPrice(for: feeRatePriority)) / pow(10, EthereumAdapter.decimal)
     }
 
-    func validate(amount: Decimal, address: String?, feeRatePriority: FeeRatePriority) -> [SendStateError] {
+    func validate(params: [String : Any])throws -> [SendStateError] {
+        guard let amount: Decimal = params[AdapterField.amount.rawValue] as? Decimal else {
+            throw AdapterError.wrongParameters
+        }
+
         var errors = [SendStateError]()
-        if amount > availableBalance(for: address, feeRatePriority: feeRatePriority) {
-            errors.append(.insufficientAmount)
+        let balance = try availableBalance(params: params)
+        if amount > balance {
+            errors.append(.insufficientAmount(availableBalance: balance))
         }
         return errors
     }
