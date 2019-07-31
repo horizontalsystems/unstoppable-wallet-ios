@@ -1,13 +1,9 @@
-import Foundation
-
 class SendAmountInteractor {
-    private let adapter: IAdapter
     private let localStorage: ILocalStorage
     private let rateStorage: IRateStorage
     private let appConfigProvider: IAppConfigProvider
 
-    init(adapter: IAdapter, appConfigProvider: IAppConfigProvider, localStorage: ILocalStorage, rateStorage: IRateStorage) {
-        self.adapter = adapter
+    init(appConfigProvider: IAppConfigProvider, localStorage: ILocalStorage, rateStorage: IRateStorage) {
         self.appConfigProvider = appConfigProvider
         self.localStorage = localStorage
         self.rateStorage = rateStorage

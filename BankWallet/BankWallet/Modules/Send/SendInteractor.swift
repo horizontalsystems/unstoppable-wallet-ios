@@ -1,32 +1,19 @@
 import RxSwift
 
 class SendInteractor {
-    enum SendError: Error {
-        case noAddress
-        case noAmount
-    }
-
     private let disposeBag = DisposeBag()
     private var validateDisposable: Disposable?
     private var feeDisposable: Disposable?
 
     weak var delegate: ISendInteractorDelegate?
 
-    private let currencyManager: ICurrencyManager
-    private let rateStorage: IRateStorage
-    private let localStorage: ILocalStorage
     private let pasteboardManager: IPasteboardManager
-    private let appConfigProvider: IAppConfigProvider
-    private let state: SendInteractorState
+    private let adapter: IAdapter
     private let async: Bool
 
-    init(currencyManager: ICurrencyManager, rateStorage: IRateStorage, localStorage: ILocalStorage, pasteboardManager: IPasteboardManager, state: SendInteractorState, appConfigProvider: IAppConfigProvider, backgroundManager: BackgroundManager, async: Bool = true) {
-        self.currencyManager = currencyManager
-        self.rateStorage = rateStorage
-        self.localStorage = localStorage
+    init(pasteboardManager: IPasteboardManager, adapter: IAdapter, backgroundManager: BackgroundManager, async: Bool = true) {
         self.pasteboardManager = pasteboardManager
-        self.appConfigProvider = appConfigProvider
-        self.state = state
+        self.adapter = adapter
         self.async = async
 
         backgroundManager.didBecomeActiveSubject.subscribe(onNext: { [weak self] in
@@ -38,16 +25,20 @@ class SendInteractor {
 
 extension SendInteractor: ISendInteractor {
 
-    func availableBalance(params: [String: Any]) throws -> Decimal {
-        return try state.adapter.availableBalance(params: params)
+    var coin: Coin {
+        return adapter.wallet.coin
     }
 
-    var coin: Coin {
-        return state.adapter.wallet.coin
+    func availableBalance(params: [String: Any]) throws -> Decimal {
+        return try adapter.availableBalance(params: params)
+    }
+
+    func copy(address: String) {
+        pasteboardManager.set(value: address)
     }
 
     func parse(paymentAddress: String) -> PaymentRequestAddress {
-        return state.adapter.parse(paymentAddress: paymentAddress)
+        return adapter.parse(paymentAddress: paymentAddress)
     }
 
     func updateFee(params: [String: Any]) {
@@ -55,7 +46,7 @@ extension SendInteractor: ISendInteractor {
 
         var single = Single<Decimal>.create { observer in
             do {
-                let fee = try self.state.adapter.fee(params: params)
+                let fee = try self.adapter.fee(params: params)
                 observer(.success(fee))
             } catch {
                 observer(.error(error))
@@ -63,7 +54,7 @@ extension SendInteractor: ISendInteractor {
             return Disposables.create()
         }
         if async {
-            single = single.subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+            single = single.subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInteractive))
                     .observeOn(MainScheduler.instance)
         }
         feeDisposable = single.subscribe(onSuccess: { [weak self] fee in
@@ -78,7 +69,7 @@ extension SendInteractor: ISendInteractor {
 
         var single = Single<[SendStateError]>.create { observer in
             do {
-                let errors = try self.state.adapter.validate(params: params)
+                let errors = try self.adapter.validate(params: params)
                 observer(.success(errors))
             } catch {
                 observer(.error(error))
@@ -86,7 +77,7 @@ extension SendInteractor: ISendInteractor {
             return Disposables.create()
         }
         if async {
-            single = single.subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+            single = single.subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInteractive))
                     .observeOn(MainScheduler.instance)
         }
         validateDisposable = single.subscribe(onSuccess: { [weak self] errors in
@@ -96,35 +87,14 @@ extension SendInteractor: ISendInteractor {
         })
     }
 
-    func copy(address: String) {
-        pasteboardManager.set(value: address)
-    }
-
-    func send(userInput: SendUserInput) {
-        guard let address = userInput.address else {
-            delegate?.didFailToSend(error: SendError.noAddress)
-            return
-        }
-
-        var computedAmount: Decimal?
-
-        if userInput.inputType == .coin {
-            computedAmount = userInput.amount
-        } else if let rateValue = state.exchangeRate?.value {
-            computedAmount = userInput.amount / rateValue
-        }
-
-        guard let amount = computedAmount else {
-            delegate?.didFailToSend(error: SendError.noAmount)
-            return
-        }
+    func send(amount: Decimal, address: String, feeRatePriority: FeeRatePriority) {
 
         var params = [String: Any]()
         params[AdapterFields.amount.rawValue] = amount
-        params[AdapterFields.address.rawValue] = userInput.address
-        params[AdapterFields.feeRateRriority.rawValue] = userInput.feeRatePriority
+        params[AdapterFields.address.rawValue] = address
+        params[AdapterFields.feeRateRriority.rawValue] = feeRatePriority
 
-        var single = state.adapter.sendSingle(params: params)
+        var single = adapter.sendSingle(params: params)
         if async {
             single = single.subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
                     .observeOn(MainScheduler.instance)

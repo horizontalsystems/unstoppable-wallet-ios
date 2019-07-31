@@ -9,6 +9,10 @@ class SendAddressView: UIView {
         self.delegate = delegate
         super.init(frame: .zero)
 
+        self.snp.makeConstraints { maker in
+            maker.height.equalTo(SendTheme.addressHeight)
+        }
+
         backgroundColor = .clear
 
         addSubview(addressInputField)

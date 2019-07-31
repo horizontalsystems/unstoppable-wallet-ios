@@ -1,14 +1,20 @@
 import Foundation
 
 protocol ISendView: class {
-    func build(modules: [ISendModule])
     func set(coin: Coin)
 
     func showCopied()
     func show(error: Error)
     func showProgress()
+    func showConfirmation(viewItem: SendConfirmationViewItem)
+    func set(sendButtonEnabled: Bool)
     func dismissKeyboard()
     func dismissWithSuccess()
+
+    func addAmountModule(coinCode: CoinCode, decimal: Int, delegate: ISendAmountDelegate) -> ISendAmountModule
+    func addAddressModule(delegate: ISendAddressPresenterDelegate) -> ISendAddressModule
+    func addFeeModule(coinCode: CoinCode, decimal: Int, delegate: ISendFeePresenterDelegate) -> ISendFeeModule
+    func addSendButton()
 }
 
 protocol ISendViewDelegate {
@@ -17,16 +23,20 @@ protocol ISendViewDelegate {
     func onViewDidLoad()
     func onClose()
 
+    func onCopyAddress()
+
+    func onSendClicked()
     func onConfirmClicked()
 }
 
 protocol ISendInteractor {
     var coin: Coin { get }
-    func parse(paymentAddress: String) -> PaymentRequestAddress
-    func copy(address: String)
-    func send(userInput: SendUserInput)
-
     func availableBalance(params: [String: Any]) throws -> Decimal
+
+    func copy(address: String)
+    func parse(paymentAddress: String) -> PaymentRequestAddress
+
+    func send(amount: Decimal, address: String, feeRatePriority: FeeRatePriority)
     func validate(params: [String: Any])
     func updateFee(params: [String: Any])
 }
@@ -45,35 +55,24 @@ protocol ISendRouter {
     func dismiss()
 }
 
-protocol ISendStateViewItemFactory {
-    func viewItem(forState state: SendState, forceRoundDown: Bool) -> SendStateViewItem
-    func confirmationViewItem(forState state: SendState, coin: Coin) -> SendConfirmationViewItem?
+protocol ISendAmountFormatHelper {
+    func prefix(inputType: SendInputType, rate: Rate?) -> String?
+    func coinAmount(amountText: String, inputType: SendInputType, rate: Rate?) -> Decimal?
+    func convert(value: Decimal, currency: Currency, rate: Rate?) -> CurrencyValue?
+    func formatted(value: Decimal, inputType: SendInputType, rate: Rate?) -> String?
+    func formattedWithCode(value: Decimal, inputType: SendInputType, rate: Rate?) -> String?
+
+    func errorValue(availableBalance: Decimal, inputType: SendInputType, rate: Rate?) -> String?
 }
 
-protocol ISendAmountDelegate: class {
-    func onSwitchClicked()
-//    func onChanged(amount: Decimal)
-    func onMaxClicked()
-
-    func onPasteClicked()
+protocol ISendFeeFormatHelper {
+    func convert(value: Decimal, currency: Currency, rate: Rate?) -> CurrencyValue?
+    func formattedWithCode(value: Decimal, inputType: SendInputType, rate: Rate?) -> String?
+    func errorValue(fee: Decimal, coinCode: CoinCode) -> String
 }
 
-protocol ISendAmountListener: class {
-    func showKeyboard()
-}
-
-protocol ISendAddressDelegate: class {
-    func onAddressScanClicked()
-    func onAddressPasteClicked()
-    func onAddressDeleteClicked()
-}
-
-protocol ISendButtonDelegate: class {
-    func onSendClicked()
-}
-
-protocol ISendFeeDelegate: class {
-    func onFeePriorityChange(value: Int)
+protocol ISendConfirmationViewItemFactory {
+    func confirmationViewItem(coin: Coin, sendInputType: SendInputType, address: String?, coinAmountValue: CoinValue, currencyAmountValue: CurrencyValue?, coinFeeValue: CoinValue, currencyFeeValue: CurrencyValue?) throws -> SendConfirmationViewItem
 }
 
 enum SendInputType: String {
@@ -104,22 +103,6 @@ enum AddressError: Error {
     case invalidAddress
 }
 
-enum HintInfo {
-    case amount(amountInfo: AmountInfo)
-    case error(error: AmountInfo)
-}
-
-struct FeeInfo {
-    var primaryFeeInfo: AmountInfo?
-    var secondaryFeeInfo: AmountInfo?
-    var error: FeeError?
-}
-
-enum AddressInfo {
-    case address(address: String)
-    case invalidAddress(address: String, error: AddressError)
-}
-
 enum AmountInfo {
     case coinValue(coinValue: CoinValue)
     case currencyValue(currencyValue: CurrencyValue)
@@ -127,60 +110,6 @@ enum AmountInfo {
 
 enum FeeError {
     case erc20error(erc20CoinCode: String, fee: CoinValue)
-}
-
-class SendInteractorState {
-    let adapter: IAdapter
-    var exchangeRate: Rate?
-    var feeExchangeRate: Rate?
-
-    init(adapter: IAdapter) {
-        self.adapter = adapter
-    }
-}
-
-class SendUserInput {
-    var inputType: SendInputType = .coin
-    var amount: Decimal = 0
-    var address: String?
-    var feeRatePriority: FeeRatePriority = .medium
-}
-
-class EOSSendUserInput: SendUserInput {
-    var memo: String?
-}
-
-class SendState {
-    var decimal: Int
-    var inputType: SendInputType
-    var coinValue: CoinValue?
-    var currencyValue: CurrencyValue?
-    var amountError: AmountInfo?
-    var feeError: FeeError?
-    var address: String?
-    var addressError: AddressError?
-    var feeCoinValue: CoinValue?
-    var feeCurrencyValue: CurrencyValue?
-
-    init(decimal: Int, inputType: SendInputType) {
-        self.decimal = decimal
-        self.inputType = inputType
-    }
-}
-
-class SendStateViewItem {
-    var decimal: Int
-    var amountInfo: AmountInfo?
-    var switchButtonEnabled: Bool = false
-    var hintInfo: HintInfo?
-    var addressInfo: AddressInfo?
-    var feeInfo: FeeInfo?
-    var sendButtonEnabled: Bool = false
-
-    init(decimal: Int) {
-        self.decimal = decimal
-    }
-
 }
 
 class SendConfirmationViewItem {
@@ -191,9 +120,10 @@ class SendConfirmationViewItem {
     let feeInfo: AmountInfo
     let totalInfo: AmountInfo?
 
-    init(coin: Coin, primaryAmountInfo: AmountInfo, address: String, feeInfo: AmountInfo, totalInfo: AmountInfo?) {
+    init(coin: Coin, primaryAmountInfo: AmountInfo, secondaryAmountInfo: AmountInfo?, address: String, feeInfo: AmountInfo, totalInfo: AmountInfo?) {
         self.coin = coin
         self.primaryAmountInfo = primaryAmountInfo
+        self.secondaryAmountInfo = secondaryAmountInfo
         self.address = address
         self.feeInfo = feeInfo
         self.totalInfo = totalInfo

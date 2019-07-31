@@ -17,6 +17,10 @@ class SendFeeView: UIView {
 
         super.init(frame: .zero)
 
+        self.snp.makeConstraints { maker in
+            maker.height.equalTo(SendTheme.feeHeight)
+        }
+
         backgroundColor = .clear
 
         addSubview(feeLabel)
@@ -91,44 +95,10 @@ class SendFeeView: UIView {
         })
     }
 
-    private func set(primaryFeeInfo: AmountInfo?) {
-        guard let primaryFeeInfo = primaryFeeInfo else {
-            feeLabel.text = nil
-            return
-        }
+    override func didMoveToSuperview() {
+        super.didMoveToSuperview()
 
-        switch primaryFeeInfo {
-        case .coinValue(let coinValue):
-            feeLabel.text = ValueFormatter.instance.format(coinValue: coinValue)
-        case .currencyValue(let currencyValue):
-            feeLabel.text = ValueFormatter.instance.format(currencyValue: currencyValue, roundingMode: .up)
-        }
-    }
-
-    private func set(secondaryFeeInfo: AmountInfo?) {
-        guard let secondaryFeeInfo = secondaryFeeInfo else {
-            convertedFeeLabel.text = nil
-            return
-        }
-
-        switch secondaryFeeInfo {
-        case .coinValue(let coinValue):
-            convertedFeeLabel.text = ValueFormatter.instance.format(coinValue: coinValue)
-        case .currencyValue(let currencyValue):
-            convertedFeeLabel.text = ValueFormatter.instance.format(currencyValue: currencyValue, roundingMode: .up)
-        }
-    }
-
-    private func set(feeError: FeeError?) {
-        guard let error = feeError, case .erc20error(let erc20CoinCode, let fee) = error, let amount = ValueFormatter.instance.format(coinValue: fee) else {
-            errorLabel.text = nil
-
-            feeSlider.isHidden = !feeAdjustable
-            return
-        }
-
-        errorLabel.text = "send_erc.alert".localized(erc20CoinCode, amount)
-        feeSlider.isHidden = true
+        delegate.viewDidLoad()
     }
 
 }

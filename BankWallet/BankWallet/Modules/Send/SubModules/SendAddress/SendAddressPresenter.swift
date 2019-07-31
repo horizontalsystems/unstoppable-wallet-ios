@@ -8,6 +8,7 @@ class SendAddressPresenter {
     weak var presenterDelegate: ISendAddressPresenterDelegate?
 
     var address: String?
+    var invalidAddress: Error?
 
     init(interactor: ISendAddressInteractor, router: ISendAddressRouter) {
         self.interactor = interactor
@@ -18,9 +19,11 @@ class SendAddressPresenter {
         let paymentAddress = presenterDelegate?.parse(paymentAddress: address)
         if paymentAddress?.error != nil {
             view?.set(address: paymentAddress?.address, error: "Invalid address".localized)
+            invalidAddress = paymentAddress?.error
             presenterDelegate?.onAddressUpdate(address: nil)
         } else {
             view?.set(address: paymentAddress?.address, error: nil)
+            invalidAddress = nil
             self.address = address
 
             presenterDelegate?.onAddressUpdate(address: paymentAddress?.address)
@@ -51,6 +54,14 @@ extension SendAddressPresenter: ISendAddressViewDelegate {
         address = nil
 
         presenterDelegate?.onAddressUpdate(address: nil)
+    }
+
+}
+
+extension SendAddressPresenter: ISendAddressModule {
+
+    var validState: Bool {
+        return (address != nil) && (invalidAddress == nil)
     }
 
 }

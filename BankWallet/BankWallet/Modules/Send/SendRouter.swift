@@ -31,19 +31,13 @@ extension SendRouter {
             return nil
         }
 
-        let interactorState = SendInteractorState(adapter: adapter)
-        let factory = SendStateViewItemFactory()
-        let userInput = SendUserInput()
+        let factory = SendConfirmationViewItemFactory()
 
         let router = SendRouter()
-        let interactor = SendInteractor(currencyManager: App.shared.currencyManager, rateStorage: App.shared.grdbStorage, localStorage: App.shared.localStorage, pasteboardManager: App.shared.pasteboardManager, state: interactorState, appConfigProvider: App.shared.appConfigProvider, backgroundManager: App.shared.backgroundManager)
+        let interactor = SendInteractor(pasteboardManager: App.shared.pasteboardManager, adapter: adapter, backgroundManager: App.shared.backgroundManager)
 
-        let presenter = SendPresenter(interactor: interactor, router: router)
-        let viewController = SendNewViewController(delegate: presenter)
-
-        presenter.amountModule = SendAmountModule(adapter: adapter, appConfigProvider: App.shared.appConfigProvider, localStorage: App.shared.localStorage, rateStorage: App.shared.grdbStorage, currencyManager: App.shared.currencyManager, delegate: presenter)
-        presenter.addressModule = SendAddressModule(viewController: viewController, delegate: presenter)
-        presenter.feeModule = SendFeeModule(adapter: adapter, rateStorage: App.shared.grdbStorage, currencyManager: App.shared.currencyManager, delegate: presenter)
+        let presenter = SendPresenter(interactor: interactor, router: router, factory: factory)
+        let viewController = SendViewController(delegate: presenter)
 
         interactor.delegate = presenter
         presenter.view = viewController

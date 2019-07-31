@@ -110,9 +110,7 @@ extension Erc20Adapter: IAdapter {
     }
 
     func fee(params: [String : Any]) -> Decimal {
-        guard let feeRatePriority: FeeRatePriority = params[AdapterFields.feeRateRriority.rawValue] as? FeeRatePriority else {
-            return 0
-        }
+        let feeRatePriority: FeeRatePriority = (params[AdapterFields.feeRateRriority.rawValue] as? FeeRatePriority) ?? .medium
 
         return erc20Kit.fee(gasPrice: feeRateProvider.ethereumGasPrice(for: feeRatePriority)) / pow(10, EthereumAdapter.decimal)
     }

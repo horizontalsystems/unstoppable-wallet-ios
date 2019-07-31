@@ -35,7 +35,7 @@ class SendConfirmationViewController: ActionSheetController {
         model.addItemView(amountItem)
 
         addressItem.onHashTap = { [weak self] in
-//            self?.delegate.onCopyAddress()
+            self?.delegate.onCopyAddress()
         }
         model.addItemView(addressItem)
 
