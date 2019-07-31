@@ -101,12 +101,13 @@ protocol IAdapter: class {
     var transactionRecordsObservable: Observable<[TransactionRecord]> { get }
     func transactionsSingle(from: (hash: String, interTransactionIndex: Int)?, limit: Int) -> Single<[TransactionRecord]>
 
-    func sendSingle(to address: String, amount: Decimal, feeRatePriority: FeeRatePriority) -> Single<Void>
+    func sendSingle(params: [String : Any]) -> Single<Void>
 
-    func availableBalance(for address: String?, feeRatePriority: FeeRatePriority) -> Decimal
-    func fee(for value: Decimal, address: String?, feeRatePriority: FeeRatePriority) -> Decimal
+    func availableBalance(params: [String : Any]) throws -> Decimal
+    func fee(params: [String : Any]) throws -> Decimal
+    func validate(params: [String : Any]) throws -> [SendStateError]
+
     func validate(address: String) throws
-    func validate(amount: Decimal, address: String?, feeRatePriority: FeeRatePriority) -> [SendStateError]
     func parse(paymentAddress: String) -> PaymentRequestAddress
 
     var receiveAddress: String { get }
@@ -268,7 +269,7 @@ protocol IRateApiProvider {
 }
 
 protocol IRateStorage {
-    func nonExpiredLatestRateObservable(forCoinCode coinCode: CoinCode, currencyCode: String) -> Observable<Rate?>
+    func latestRate(coinCode: CoinCode, currencyCode: String) -> Rate?
     func latestRateObservable(forCoinCode coinCode: CoinCode, currencyCode: String) -> Observable<Rate>
     func timestampRateObservable(coinCode: CoinCode, currencyCode: String, date: Date) -> Observable<Rate?>
     func zeroValueTimestampRatesObservable(currencyCode: String) -> Observable<[Rate]>

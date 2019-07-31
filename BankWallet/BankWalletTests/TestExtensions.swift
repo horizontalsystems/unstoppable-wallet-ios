@@ -53,32 +53,6 @@ extension FeeError: Equatable {
     }
 }
 
-extension FeeInfo: Equatable {
-    public static func ==(lhs: FeeInfo, rhs: FeeInfo) -> Bool {
-        return lhs.primaryFeeInfo == rhs.primaryFeeInfo && lhs.secondaryFeeInfo == rhs.secondaryFeeInfo && lhs.error == rhs.error
-    }
-}
-
-extension HintInfo: Equatable {
-    public static func ==(lhs: HintInfo, rhs: HintInfo) -> Bool {
-        switch (lhs, rhs) {
-        case (let .amount(lhsAmountInfo), let .amount(rhsAmountInfo)): return lhsAmountInfo == rhsAmountInfo
-        case (let .error(lhsError), let .error(rhsError)): return lhsError == rhsError
-        default: return false
-        }
-    }
-}
-
-extension AddressInfo: Equatable {
-    public static func ==(lhs: AddressInfo, rhs: AddressInfo) -> Bool {
-        switch (lhs, rhs) {
-        case (let .address(lhsAddress), let .address(rhsAddress)): return lhsAddress == rhsAddress
-        case (let .invalidAddress(lhsAddress, lhsError), let .invalidAddress(rhsAddress, rhsError)): return lhsAddress == rhsAddress && lhsError == rhsError
-        default: return false
-        }
-    }
-}
-
 extension LockoutState: Equatable {
     public static func ==(lhs: LockoutState, rhs: LockoutState) -> Bool {
         switch (lhs, rhs) {

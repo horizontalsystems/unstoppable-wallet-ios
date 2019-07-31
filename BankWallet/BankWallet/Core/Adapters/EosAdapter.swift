@@ -116,23 +116,29 @@ extension EosAdapter: IAdapter {
                 }
     }
 
-    func sendSingle(to address: String, amount: Decimal, feeRatePriority: FeeRatePriority) -> Single<Void> {
-        return eosKit.sendSingle(asset: asset, to: address, amount: amount, memo: "from Unstoppable Wallet")
+    func sendSingle(params: [String : Any]) -> Single<Void> {
+        guard let amount: Decimal = params[AdapterField.amount.rawValue] as? Decimal,
+              let address: String = params[AdapterField.address.rawValue] as? String else {
+            return Single.error(AdapterError.wrongParameters)
+        }
+
+        let memo = params[AdapterField.memo.rawValue] as? String
+        return eosKit.sendSingle(asset: asset, to: address, amount: amount, memo: memo ?? "from Unstoppable Wallet")
                 .map { _ in () }
     }
 
-    func availableBalance(for address: String?, feeRatePriority: FeeRatePriority) -> Decimal {
+    func availableBalance(params: [String : Any]) -> Decimal {
         return asset.balance
     }
 
-    func fee(for value: Decimal, address: String?, feeRatePriority: FeeRatePriority) -> Decimal {
+    func fee(params: [String : Any]) -> Decimal {
         return 0
     }
 
     func validate(address: String) throws {
     }
 
-    func validate(amount: Decimal, address: String?, feeRatePriority: FeeRatePriority) -> [SendStateError] {
+    func validate(params: [String : Any]) -> [SendStateError] {
         return []
     }
 

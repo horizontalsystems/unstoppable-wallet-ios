@@ -65,7 +65,11 @@ extension EthereumBaseAdapter {
         return ethereumKit.lastBlockHeightObservable.map { _ in () }
     }
 
-    func sendSingle(to address: String, amount: Decimal, feeRatePriority: FeeRatePriority) -> Single<Void> {
+    func sendSingle(params: [String: Any]) -> Single<Void> {
+        guard let amount: Decimal = params[AdapterField.amount.rawValue] as? Decimal, let address: String = params[AdapterField.address.rawValue] as? String, let feeRatePriority: FeeRatePriority = params[AdapterField.feeRateRriority.rawValue] as? FeeRatePriority else {
+            return Single.error(AdapterError.wrongParameters)
+        }
+
         let poweredDecimal = amount * pow(10, decimal)
         let handler = NSDecimalNumberHandler(roundingMode: .plain, scale: 0, raiseOnExactness: false, raiseOnOverflow: false, raiseOnUnderflow: false, raiseOnDivideByZero: false)
         let roundedDecimal = NSDecimalNumber(decimal: poweredDecimal).rounding(accordingToBehavior: handler).decimalValue
@@ -81,7 +85,13 @@ extension EthereumBaseAdapter {
 
     func parse(paymentAddress: String) -> PaymentRequestAddress {
         let paymentData = addressParser.parse(paymentAddress: paymentAddress)
-        return PaymentRequestAddress(address: paymentData.address, amount: paymentData.amount.map { Decimal($0) })
+        var validationError: Error?
+        do {
+            try validate(address: paymentData.address)
+        } catch {
+            validationError = error
+        }
+        return PaymentRequestAddress(address: paymentData.address, amount: paymentData.amount.map { Decimal($0) }, error: validationError)
     }
 
     var receiveAddress: String {

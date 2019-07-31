@@ -1,63 +1,105 @@
 import Foundation
 
 class SendPresenter {
+    enum SendError: Error {
+        case noAddress
+        case noAmount
+    }
+
     weak var view: ISendView?
 
     private let interactor: ISendInteractor
     private let router: ISendRouter
-    private let factory: ISendStateViewItemFactory
-    private let userInput: SendUserInput
+    private let factory: ISendConfirmationViewItemFactory
 
-    init(interactor: ISendInteractor, router: ISendRouter, factory: ISendStateViewItemFactory, userInput: SendUserInput) {
+    private let amountModule: ISendAmountModule
+    private let addressModule: ISendAddressModule
+    private let feeModule: ISendFeeModule
+
+    private var sendInputType: SendInputType = .coin
+
+    init(interactor: ISendInteractor, router: ISendRouter, factory: ISendConfirmationViewItemFactory, amountModule: ISendAmountModule, addressModule: ISendAddressModule, feeModule: ISendFeeModule) {
         self.interactor = interactor
         self.router = router
         self.factory = factory
-        self.userInput = userInput
+
+        self.amountModule = amountModule
+        self.addressModule = addressModule
+        self.feeModule = feeModule
     }
 
-    private func onChange(address: String?) {
-        userInput.address = address
+    private func updateModules() {
+        var params = [String: Any]()
+        params[AdapterField.amount.rawValue] = amountModule.coinAmount.value
+        params[AdapterField.address.rawValue] = addressModule.address
+        params[AdapterField.feeRateRriority.rawValue] = feeModule.feeRatePriority
 
-        let state = interactor.state(forUserInput: userInput)
-        let viewItem = factory.viewItem(forState: state, forceRoundDown: false)
-
-        view?.set(addressInfo: viewItem.addressInfo)
-        view?.set(amountInfo: viewItem.amountInfo)
-        view?.set(feeInfo: viewItem.feeInfo)
-        view?.set(sendButtonEnabled: viewItem.sendButtonEnabled)
+        interactor.validate(params: params)
+        interactor.updateFee(params: params)
     }
 
-    private func updateViewItem() {
-        let state = interactor.state(forUserInput: userInput)
-        let viewItem = factory.viewItem(forState: state, forceRoundDown: false)
+    private func updateSendButtonState() {
+        let enabled = amountModule.validState && addressModule.validState && feeModule.validState
 
-        view?.set(decimal: viewItem.decimal)
-        view?.set(amountInfo: viewItem.amountInfo)
-        view?.set(switchButtonEnabled: viewItem.switchButtonEnabled)
-        view?.set(hintInfo: viewItem.hintInfo)
-        view?.set(feeInfo: viewItem.feeInfo)
+        view?.set(sendButtonEnabled: enabled)
+    }
+
+}
+
+extension SendPresenter: ISendViewDelegate {
+
+    func showKeyboard() {
+        amountModule.showKeyboard()
+    }
+
+    func onViewDidLoad() {
+        view?.set(coin: interactor.coin)
+        updateModules()
+    }
+
+    func onClose() {
+        view?.dismissKeyboard()
+        router.dismiss()
+    }
+
+    func onCopyAddress() {
+        guard let address = addressModule.address else {
+            return
+        }
+
+        interactor.copy(address: address)
+        view?.showCopied()
+    }
+
+    func onSendClicked() {
+        do {
+            let viewItem = try factory.confirmationViewItem(coin: interactor.coin, sendInputType: sendInputType, address: addressModule.address,
+                    coinAmountValue: amountModule.coinAmount, currencyAmountValue: amountModule.fiatAmount,
+                    coinFeeValue: feeModule.coinFee, currencyFeeValue: feeModule.fiatFee)
+            view?.showConfirmation(viewItem: viewItem)
+        } catch {
+            view?.show(error: error)
+        }
+    }
+
+    func onConfirmClicked() {
+        guard let address = addressModule.address else {
+            view?.show(error: SendError.noAddress)
+            return
+        }
+
+        let amount = amountModule.coinAmount.value
+
+        guard amount != 0 else {
+            view?.show(error: SendError.noAmount)
+            return
+        }
+        interactor.send(amount: amount, address: address, feeRatePriority: feeModule.feeRatePriority)
     }
 
 }
 
 extension SendPresenter: ISendInteractorDelegate {
-
-    func didRetrieve(rate: Rate?) {
-        if userInput.inputType == .currency && rate == nil {
-            router.dismiss()
-            return
-        }
-
-        if interactor.defaultInputType == .currency && userInput.amount == 0 {
-            userInput.inputType = interactor.defaultInputType
-        }
-
-        updateViewItem()
-    }
-
-    func didRetrieveFeeRate() {
-        updateViewItem()
-    }
 
     func didSend() {
         view?.dismissWithSuccess()
@@ -68,143 +110,83 @@ extension SendPresenter: ISendInteractorDelegate {
     }
 
     func onBecomeActive() {
-        interactor.retrieveRate()
+//        interactor.retrieveRate()
+    }
+
+    func didValidate(with errors: [SendStateError]) {
+        var amountValidationSuccess = true
+        errors.forEach {
+            switch($0) {
+            case .insufficientAmount(availableBalance: let availableBalance):
+                amountValidationSuccess = false
+                amountModule.insufficientAmount(availableBalance: availableBalance)
+            case .insufficientFeeBalance(fee: let fee):
+                feeModule.insufficientFeeBalance(coinCode: interactor.coin.code, fee: fee)
+            }
+        }
+        if amountValidationSuccess {
+            amountModule.onValidationSuccess()
+        }
+
+        updateSendButtonState()
+    }
+
+    func didUpdate(fee: Decimal) {
+        feeModule.update(fee: fee)
     }
 
 }
 
-extension SendPresenter: ISendViewDelegate {
+extension SendPresenter: ISendAmountDelegate {
 
-    var isFeeAdjustable: Bool {
-        return true
-    }
-
-    func onViewDidLoad() {
-        interactor.retrieveRate()
-
-        userInput.inputType = interactor.defaultInputType
-
-        let state = interactor.state(forUserInput: userInput)
-        let viewItem = factory.viewItem(forState: state, forceRoundDown: false)
-
-        view?.set(coin: interactor.coin)
-        view?.set(decimal: viewItem.decimal)
-        view?.set(amountInfo: viewItem.amountInfo)
-        view?.set(switchButtonEnabled: viewItem.switchButtonEnabled)
-        view?.set(hintInfo: viewItem.hintInfo)
-        view?.set(addressInfo: viewItem.addressInfo)
-        view?.set(feeInfo: viewItem.feeInfo)
-        view?.set(sendButtonEnabled: viewItem.sendButtonEnabled)
-    }
-
-    func onAmountChanged(amount: Decimal) {
-        userInput.amount = amount
-
-        let state = interactor.state(forUserInput: userInput)
-        let viewItem = factory.viewItem(forState: state, forceRoundDown: false)
-
-        view?.set(hintInfo: viewItem.hintInfo)
-        view?.set(feeInfo: viewItem.feeInfo)
-        view?.set(sendButtonEnabled: viewItem.sendButtonEnabled)
-    }
-
-    func onSwitchClicked() {
-        guard let convertedAmount = interactor.convertedAmount(forInputType: userInput.inputType, amount: userInput.amount) else {
-            return
+    var availableBalance: Decimal {
+        var params = [String: Any]()
+        params[AdapterField.address.rawValue] = addressModule.address
+        params[AdapterField.feeRateRriority.rawValue] = feeModule.feeRatePriority
+        do {
+            return try interactor.availableBalance(params: params)
+        } catch {
+            //
         }
-
-        let newInputType: SendInputType = userInput.inputType == .currency ? .coin : .currency
-
-        userInput.amount = convertedAmount
-        userInput.inputType = newInputType
-
-        let state = interactor.state(forUserInput: userInput)
-        let viewItem = factory.viewItem(forState: state, forceRoundDown: false)
-
-        view?.set(decimal: viewItem.decimal)
-        view?.set(amountInfo: viewItem.amountInfo)
-        view?.set(hintInfo: viewItem.hintInfo)
-        view?.set(feeInfo: viewItem.feeInfo)
-
-        interactor.set(inputType: newInputType)
+        return 0
     }
 
-    private func onAddressEnter(address: String) {
-        let paymentAddress = interactor.parse(paymentAddress: address)
-        if let amount = paymentAddress.amount {
-            userInput.amount = amount
-        }
-        onChange(address: paymentAddress.address)
+    func onChanged() {
+        updateModules()
     }
 
-    func onPasteAddressClicked() {
-        if let address = interactor.valueFromPasteboard {
-            onAddressEnter(address: address)
-        }
+    func onChanged(sendInputType: SendInputType) {
+        self.sendInputType = sendInputType
+
+        feeModule.update(sendInputType: sendInputType)
     }
 
-    func onScan(address: String) {
-        onAddressEnter(address: address)
+}
+
+extension SendPresenter: ISendAddressDelegate {
+
+    func parse(paymentAddress: String) -> PaymentRequestAddress {
+        return interactor.parse(paymentAddress: paymentAddress)
     }
 
-    func onDeleteClicked() {
-        onChange(address: nil)
+    func onAddressUpdate(address: String?) {
+        updateModules()
     }
 
-    func onSendClicked() {
-        let state = interactor.state(forUserInput: userInput)
-
-        guard let viewItem = factory.confirmationViewItem(forState: state, coin: interactor.coin) else {
-            return
-        }
-
-        view?.showConfirmation(viewItem: viewItem)
+    func onAmountUpdate(amount: Decimal) {
+        // todo:
     }
 
-    func onConfirmClicked() {
-        view?.showProgress()
-        interactor.send(userInput: userInput)
+    func scanQrCode(delegate: IScanQrCodeDelegate) {
+        router.scanQrCode(delegate: delegate)
     }
 
-    func onCopyAddress() {
-        guard let address = userInput.address else {
-            return
-        }
+}
 
-        interactor.copy(address: address)
-        view?.showCopied()
-    }
+extension SendPresenter: ISendFeeDelegate {
 
-    func onMaxClicked() {
-        let totalBalanceMinusFee = interactor.totalBalanceMinusFee(forInputType: userInput.inputType, address: userInput.address, feeRatePriority: userInput.feeRatePriority)
-        userInput.amount = totalBalanceMinusFee
-
-        let state = interactor.state(forUserInput: userInput)
-        let viewItem = factory.viewItem(forState: state, forceRoundDown: true)
-
-        view?.set(amountInfo: viewItem.amountInfo)
-    }
-
-    func onPasteAmountClicked() {
-        if let value = ValueFormatter.instance.parseAnyDecimal(from: interactor.valueFromPasteboard) {
-            userInput.amount = value
-
-            let state = interactor.state(forUserInput: userInput)
-            let viewItem = factory.viewItem(forState: state, forceRoundDown: false)
-
-            view?.set(amountInfo: viewItem.amountInfo)
-        }
-    }
-
-    func onFeePriorityChange(value: Int) {
-        userInput.feeRatePriority = FeeRatePriority(rawValue: value) ?? .medium
-
-        let state = interactor.state(forUserInput: userInput)
-        let viewItem = factory.viewItem(forState: state, forceRoundDown: false)
-
-        view?.set(hintInfo: viewItem.hintInfo)
-        view?.set(feeInfo: viewItem.feeInfo)
-        view?.set(sendButtonEnabled: viewItem.sendButtonEnabled)
+    func updateFeeRate() {
+        updateModules()
     }
 
 }

@@ -1,26 +1,16 @@
 import UIKit
-import UIExtensions
-import ActionSheet
 import SnapKit
 import RxSwift
-import RxCocoa
 
-class AmountTextField: UITextField {
-    var onPaste: (() -> ())?
+class SendAmountView: UIView {
+    private let delegate: ISendAmountViewDelegate
 
-    override func paste(_ sender: Any?) {
-        onPaste?()
-    }
-
-}
-
-class SendAmountItemView: BaseActionItemView {
-    private let disposeBag = DisposeBag()
+    private var disposeBag = DisposeBag()
 
     private let holderView = UIView()
 
     private let amountTypeLabel = UILabel()
-    private let inputField = AmountTextField()
+    private let inputField = UITextField()
     private let lineView = UIView()
     private let maxButton = RespondButton()
     private let hintLabel = UILabel()
@@ -28,12 +18,16 @@ class SendAmountItemView: BaseActionItemView {
     private let switchButton = RespondButton()
     private let switchButtonIcon = UIImageView()
 
-    override var item: SendAmountItem? { return _item as? SendAmountItem }
+    public init(delegate: ISendAmountViewDelegate) {
+        self.delegate = delegate
+        super.init(frame: .zero)
 
-    override func initView() {
-        super.initView()
+        self.snp.makeConstraints { maker in
+            maker.height.equalTo(SendTheme.amountHeight)
+        }
 
         backgroundColor = .clear
+
 
         addSubview(holderView)
 
@@ -71,9 +65,6 @@ class SendAmountItemView: BaseActionItemView {
             maker.height.equalTo(SendTheme.amountLineHeight)
         }
 
-        maxButton.onTap = { [weak self] in
-            self?.item?.onMaxClicked?()
-        }
         maxButton.titleLabel.text = "send.max_button".localized
         maxButton.borderWidth = 1 / UIScreen.main.scale
         maxButton.borderColor = SendTheme.buttonBorderColor
@@ -94,7 +85,7 @@ class SendAmountItemView: BaseActionItemView {
             maker.trailing.equalTo(switchButton.snp.leading).offset(-SendTheme.smallMargin)
         }
 
-        inputField.inputView = UIView()
+        inputField.delegate = self
         inputField.font = SendTheme.amountFont
         inputField.textColor = SendTheme.amountColor
         inputField.attributedPlaceholder = NSAttributedString(string: "send.amount_placeholder".localized, attributes: [NSAttributedString.Key.foregroundColor: SendTheme.amountPlaceholderColor])
@@ -133,80 +124,62 @@ class SendAmountItemView: BaseActionItemView {
 
         errorLabel.font = SendTheme.errorFont
         errorLabel.textColor = SendTheme.errorColor
+        errorLabel.backgroundColor = SendTheme.holderBackground
         errorLabel.snp.makeConstraints { maker in
             maker.leading.equalToSuperview().offset(SendTheme.holderLeadingPadding)
             maker.top.equalTo(lineView).offset(SendTheme.amountErrorLabelTopMargin)
             maker.trailing.equalTo(lineView)
         }
 
-        inputField.onPaste = { [weak self] in
-            self?.item?.onPasteClicked?()
-        }
         inputField.rx.controlEvent(.editingChanged)
                 .subscribe(onNext: { [weak self] _ in
-                    self?.updateUI()
-
-                    let amount: Decimal = ValueFormatter.instance.parseAnyDecimal(from: self?.inputField.text) ?? 0
-                    self?.item?.onAmountChanged?(amount)
+                    self?.delegate.onChanged(amountText: self?.inputField.text)
                 })
                 .disposed(by: disposeBag)
-        switchButton.onTap = item?.onSwitchClicked
 
-        item?.showKeyboard = { [weak self] in
-            DispatchQueue.main.async {
-                self?.inputField.becomeFirstResponder()
-            }
+        switchButton.onTap = { [weak self] in
+            self?.delegate.onSwitchClicked()
         }
-
-        item?.bindAmountType = { [weak self] in
-            self?.amountTypeLabel.text = $0
-        }
-        item?.bindAmount = { [weak self] in
-            let amount = $0 ?? 0
-            let formattedAmount = ValueFormatter.instance.format(amount: amount)
-            self?.inputField.text = amount == 0 ? nil : formattedAmount
-            self?.inputField.sendActions(for: .editingChanged)
-        }
-        item?.bindHint = { [weak self] in
-            self?.hintLabel.text = $0
-        }
-        item?.bindError = { [weak self] in
-            self?.errorLabel.text = $0
-        }
-        item?.bindSwitchEnabled = { [weak self] enabled in
-            self?.switchButton.state = enabled ? .active : .disabled
-            self?.switchButtonIcon.tintColor = enabled ? SendTheme.buttonIconColor : SendTheme.buttonIconColorDisabled
-        }
-
-        item?.addLetter = { [weak self] letter in
-            self?.addLetter(letter)
-        }
-        item?.removeLetter = { [weak self] in
-            self?.inputField.deleteBackward()
+        maxButton.onTap = { [weak self] in
+            self?.delegate.onMaxClicked()
         }
     }
 
-    func addLetter(_ letter: String) {
-        if let selectedRange = inputField.selectedTextRange, let text = inputField.text {
-            let cursorPosition = inputField.offset(from: inputField.beginningOfDocument, to: selectedRange.start)
-            let index = text.index(text.startIndex, offsetBy: cursorPosition)
-
-            var text = text
-            text.insert(Character(letter), at: index)
-            if let value = ValueFormatter.instance.parseAnyDecimal(from: text), value.decimalCount <= (item?.decimal ?? 0) {
-                inputField.insertText(letter)
-            } else {
-                inputField.shakeView()
-            }
-        } else {
-            inputField.insertText(letter)
-        }
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("not implemented")
     }
 
-    func updateUI() {
-        let text = inputField.text ?? ""
+    override func didMoveToSuperview() {
+        super.didMoveToSuperview()
+
+        delegate.viewDidLoad()
+    }
+}
+
+extension SendAmountView: ISendAmountView {
+
+    func set(hint: String?) {
+        hintLabel.text = hint
+    }
+
+    func set(error: String?) {
+        errorLabel.isHidden = error == nil
+        errorLabel.text = error
+    }
+
+    func set(type: String?, amount: String?) {
+        amountTypeLabel.text = type
+        inputField.text = amount
+    }
+
+    func set(switchButtonEnabled: Bool) {
+        switchButton.state = switchButtonEnabled ? .active : .disabled
+        switchButtonIcon.tintColor = switchButtonEnabled ? SendTheme.buttonIconColor : SendTheme.buttonIconColorDisabled
+    }
+
+    func maxButton(show: Bool) {
         maxButton.snp.remakeConstraints { maker in
-            if text.count == 0 {
+            if show {
                 maker.leading.equalTo(lineView.snp.trailing).offset(SendTheme.smallMargin)
                 maker.centerY.equalToSuperview()
                 maker.height.equalTo(SendTheme.buttonSize)
@@ -219,7 +192,7 @@ class SendAmountItemView: BaseActionItemView {
             maker.trailing.equalTo(switchButton.snp.leading).offset(-SendTheme.smallMargin)
 
             maxButton.wrapperView.snp.remakeConstraints { maker in
-                if text.count == 0 {
+                if show {
                     maker.leading.equalToSuperview().offset(SendTheme.smallMargin)
                     maker.trailing.equalToSuperview().offset(-SendTheme.smallMargin)
                 } else {
@@ -228,6 +201,37 @@ class SendAmountItemView: BaseActionItemView {
                 maker.top.bottom.equalToSuperview()
             }
         }
+
+    }
+
+    func showKeyboard() {
+        DispatchQueue.main.async {
+            self.inputField.becomeFirstResponder()
+        }
+    }
+
+}
+
+extension SendAmountView: UITextFieldDelegate {
+
+    private func validate(text: String) -> Bool {
+        if delegate.validateInputText(text: text) {
+            return true
+        } else {
+            inputField.shakeView()
+            return false
+        }
+    }
+
+    public func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        if let text = inputField.text, let textRange = Range(range, in: text) {
+            let text = text.replacingCharacters(in: textRange, with: string)
+            guard !text.isEmpty else {
+                return true
+            }
+            return validate(text: text)
+        }
+        return validate(text: string)
     }
 
 }
