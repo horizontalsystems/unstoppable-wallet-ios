@@ -41,9 +41,10 @@ class EosAdapter {
     }
 
     static func validate(account: String) throws {
-        let regex = try! NSRegularExpression(pattern: "^[a-z1-5]{1,12}$")
+        //regex taken from here: https://github.com/EOSIO/eos/issues/955#issuecomment-351866599
+        let regex = try! NSRegularExpression(pattern: "^[a-z][a-z1-5\\.]{0,10}([a-z1-5]|^\\.)[a-j1-5]?$")
         guard regex.firstMatch(in: account, range: NSRange(location: 0, length: account.count)) != nil else {
-            throw RestoreEosValidationError.invalidAccount
+            throw ValidationError.invalidAccount
         }
     }
 
@@ -154,4 +155,10 @@ extension EosAdapter: IAdapter {
         return ""
     }
 
+}
+
+extension EosAdapter {
+    enum ValidationError: Error {
+        case invalidAccount
+    }
 }

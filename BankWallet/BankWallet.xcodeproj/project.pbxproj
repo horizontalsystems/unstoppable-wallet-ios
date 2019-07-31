@@ -647,7 +647,6 @@
 		1A5648FE30868C38CBFEB362 /* UnlockPinModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564E017B299CF4BA6F337C /* UnlockPinModule.swift */; };
 		1A56490427A77496C63E08A7 /* TextSelectItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5648E17213DF77DCA2EE42 /* TextSelectItemView.swift */; };
 		1A56491DC545ED4F8A6E6D40 /* Decimal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564D5E55767404ED6C88E0 /* Decimal.swift */; };
-		1A56491E3AFB0DF2CCE3BC61 /* RestoreEosValidationError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56474CFEA10E3DB5C104D8 /* RestoreEosValidationError.swift */; };
 		1A564928A28CAA37F4F42FF1 /* SecuritySettingsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56446DB62F52AC4C3C2C30 /* SecuritySettingsPresenter.swift */; };
 		1A564929F1CECAA67987CBC4 /* AlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5642D6188D2E01E0EEC41C /* AlertViewController.swift */; };
 		1A56493305A34486152BEAB2 /* AddressParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564E38A79F3308EC1B437A /* AddressParser.swift */; };
@@ -711,7 +710,6 @@
 		1A564BEBE06DB3041F6B258B /* RestoreEosInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564E95E2CCF97680C920F0 /* RestoreEosInteractor.swift */; };
 		1A564BF5CEF2800EF05EAAB0 /* BalancePresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5646AB24E23765AD12C83E /* BalancePresenterTests.swift */; };
 		1A564C0371E9F37679565B67 /* WalletViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564DA86E84425C160C76C1 /* WalletViewController.swift */; };
-		1A564C0FF2FBAA879E6BAB89 /* RestoreEosValidationError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56474CFEA10E3DB5C104D8 /* RestoreEosValidationError.swift */; };
 		1A564C11B7785DCEA2472065 /* BitcoinCashAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564BF724C69C237E309C07 /* BitcoinCashAdapter.swift */; };
 		1A564C1405D8C21185B0D4C1 /* TransactionsCurrencyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5649C888E12C1A0B70EFA8 /* TransactionsCurrencyCell.swift */; };
 		1A564C152F6A439151E158C9 /* SortTypePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5643D429A9AF82758F1FB4 /* SortTypePresenter.swift */; };
@@ -779,7 +777,6 @@
 		1A564EC83C89E2261445AEE1 /* TransactionViewItemDataSourceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5647DAC1D6B533F8E5E298 /* TransactionViewItemDataSourceTests.swift */; };
 		1A564F0F3119055C658B78A7 /* LocalizationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564F49E3B187A3564C0561 /* LocalizationManager.swift */; };
 		1A564F222B7DA0AC1299BB4D /* AddressParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564E38A79F3308EC1B437A /* AddressParser.swift */; };
-		1A564F27882D3F5252ABA280 /* RestoreEosValidationError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56474CFEA10E3DB5C104D8 /* RestoreEosValidationError.swift */; };
 		1A564F2D363CB805A486F4A5 /* OneTimeTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56468BE2370BCAA8BDA2FC /* OneTimeTimer.swift */; };
 		1A564F41635CE7EB9B441040 /* LockoutUntilDateFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5641ABEF9064B6FCC8DF87 /* LockoutUntilDateFactory.swift */; };
 		1A564F47697F6E6CFEE3975E /* BackupTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5645D738FD93B79628E5E5 /* BackupTheme.swift */; };
@@ -1725,7 +1722,6 @@
 		1A5646F390EE2D74304C8CDA /* EditPinPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditPinPresenter.swift; sourceTree = "<group>"; };
 		1A56471ECC51CB5E5572DBD8 /* ManageWalletsRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManageWalletsRouter.swift; sourceTree = "<group>"; };
 		1A56474B516F0AFBAAFB3AE2 /* SendRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendRouter.swift; sourceTree = "<group>"; };
-		1A56474CFEA10E3DB5C104D8 /* RestoreEosValidationError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestoreEosValidationError.swift; sourceTree = "<group>"; };
 		1A56475812F17EAE44BF6D34 /* ERC20InputParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ERC20InputParser.swift; sourceTree = "<group>"; };
 		1A5647755D9C148EACC988CB /* AddressInputField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressInputField.swift; sourceTree = "<group>"; };
 		1A56478E08D96F36DD17D8C8 /* ManageWalletCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManageWalletCell.swift; sourceTree = "<group>"; };
@@ -2377,7 +2373,6 @@
 				1A56422C196B48931CDE1445 /* SendTransactionError.swift */,
 				1A564C3598A969F339EBB6D9 /* DefaultAccountType.swift */,
 				1A564504718E7D19F379A9F7 /* AdapterError.swift */,
-				1A56474CFEA10E3DB5C104D8 /* RestoreEosValidationError.swift */,
 				58AAA4C233DB595EEC12A8EA /* AdapterField.swift */,
 			);
 			path = Models;
@@ -4160,7 +4155,6 @@
 				11B354F07BBACA9BBA1E85D7 /* RestoreHeaderView.swift in Sources */,
 				11B35897228706209BB05CD7 /* BinanceAdapter.swift in Sources */,
 				11B354859C677ADA1F46D631 /* BinanceKitManager.swift in Sources */,
-				1A564F27882D3F5252ABA280 /* RestoreEosValidationError.swift in Sources */,
 				58AAA056B3E72CE031831FF2 /* SendViewController.swift in Sources */,
 				58AAA29CC634F3EDBCD11766 /* SendButtonItemView.swift in Sources */,
 				58AAA83CC93D4D519B8291B9 /* SendButtonItem.swift in Sources */,
@@ -4664,7 +4658,6 @@
 				11B3525D481A9C08EA2D60F0 /* RestoreHeaderView.swift in Sources */,
 				11B35B15B1815F7EEB128C5F /* BinanceAdapter.swift in Sources */,
 				11B35E42AF899376F8439FAA /* BinanceKitManager.swift in Sources */,
-				1A56491E3AFB0DF2CCE3BC61 /* RestoreEosValidationError.swift in Sources */,
 				58AAA2996E82186A803E7907 /* SendViewController.swift in Sources */,
 				58AAA1E24C00486985FD8048 /* SendButtonItemView.swift in Sources */,
 				58AAAF62478C908B459CCB41 /* SendButtonItem.swift in Sources */,
@@ -5117,7 +5110,6 @@
 				11B356BCDFFFD2EE9CB27968 /* RestoreHeaderView.swift in Sources */,
 				11B35BEC76717107193305A2 /* BinanceAdapter.swift in Sources */,
 				11B35D7D957404BF85E985CF /* BinanceKitManager.swift in Sources */,
-				1A564C0FF2FBAA879E6BAB89 /* RestoreEosValidationError.swift in Sources */,
 				58AAA83C17364F5FB220062A /* SendViewController.swift in Sources */,
 				58AAAEE4DC9F29794E2F558E /* SendButtonItemView.swift in Sources */,
 				58AAA4045599FC60E6E07F07 /* SendButtonItem.swift in Sources */,
