@@ -33,16 +33,17 @@ class BackupEosViewController: WalletViewController {
         title = "backup.eos.title".localized
 
         view.addSubview(scrollView)
+        scrollView.alwaysBounceVertical = true
         scrollView.showsVerticalScrollIndicator = false
         scrollView.snp.makeConstraints { maker in
-            maker.top.equalTo(self.view.snp.topMargin)
+            maker.top.equalToSuperview()
             maker.leading.trailing.bottom.equalToSuperview()
         }
         scrollView.addSubview(container)
         container.snp.makeConstraints { maker in
-            maker.edges.equalTo(self.scrollView.snp.edges)
+            maker.leading.trailing.equalTo(self.view)
+            maker.top.bottom.equalTo(self.scrollView)
         }
-
 
         container.addSubview(accountLabel)
         container.addSubview(accountField)
@@ -106,7 +107,7 @@ class BackupEosViewController: WalletViewController {
             maker.centerX.equalTo(self.view)
             maker.top.equalTo(hintLabel.snp.bottom).offset(BackupTheme.eosQrCodeTopMargin)
             maker.size.equalTo(BackupTheme.eosQrCodeSize)
-            maker.bottom.equalToSuperview().offset(-BackupTheme.eosQrCodeTopMargin - BackupTheme.cancelHolderHeight)
+            maker.bottom.equalToSuperview().offset(-BackupTheme.cancelHolderHeight)
         }
 
         closeButtonHolder.snp.makeConstraints { maker in
@@ -138,6 +139,14 @@ class BackupEosViewController: WalletViewController {
 
     @objc func didTapClose() {
         delegate.didTapClose()
+    }
+
+}
+
+extension BackupEosViewController: IBackupEosView {
+
+    func showCopied() {
+        HudHelper.instance.showSuccess(title: "alert.copied".localized)
     }
 
 }

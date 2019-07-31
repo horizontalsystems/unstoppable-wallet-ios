@@ -1,6 +1,7 @@
 class BackupEosPresenter: IBackupEosPresenter {
     private let router: IBackupEosRouter
     private let interactor: IBackupEosInteractor
+    weak var view: IBackupEosView?
 
     let account: String
     let activePrivateKey: String
@@ -22,10 +23,12 @@ extension BackupEosPresenter: IBackupEosViewDelegate {
 
     func onCopyAddress() {
         interactor.copyToClipboard(string: account)
+        view?.showCopied()
     }
 
     func onCopyPrivateKey() {
         interactor.copyToClipboard(string: activePrivateKey)
+        view?.showCopied()
     }
 
 }

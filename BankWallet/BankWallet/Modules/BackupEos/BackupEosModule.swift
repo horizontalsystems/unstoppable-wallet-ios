@@ -1,4 +1,5 @@
 protocol IBackupEosView: class {
+    func showCopied()
 }
 
 protocol IBackupEosViewDelegate {

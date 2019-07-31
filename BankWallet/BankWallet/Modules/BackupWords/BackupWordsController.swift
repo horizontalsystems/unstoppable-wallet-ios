@@ -32,17 +32,19 @@ class BackupWordsController: WalletViewController {
         scrollView.addSubview(wordsLabel)
 
         scrollView.showsVerticalScrollIndicator = false
+        scrollView.alwaysBounceVertical = true
         scrollView.snp.makeConstraints { maker in
+            maker.top.equalToSuperview()
             maker.leading.equalToSuperview().offset(BackupTheme.sideMargin)
             maker.trailing.equalToSuperview().offset(-BackupTheme.sideMargin)
-            maker.top.equalTo(self.view.snp.topMargin).offset(BackupTheme.wordsTopMargin)
             maker.bottom.equalToSuperview()
         }
 
         wordsLabel.numberOfLines = 0
         wordsLabel.snp.makeConstraints { maker in
-            maker.edges.equalTo(self.scrollView.snp.edges)
-            maker.bottom.equalTo(self.scrollView.snp.bottom).offset(-BackupTheme.wordsBottomMargin - BackupTheme.cancelHolderHeight)
+            maker.leading.trailing.equalTo(self.scrollView)
+            maker.top.equalTo(self.scrollView).offset(BackupTheme.wordsTopMargin)
+            maker.bottom.equalTo(self.scrollView.snp.bottom).offset(-BackupTheme.cancelHolderHeight)
         }
 
         proceedButtonHolder.snp.makeConstraints { maker in
