@@ -34,8 +34,7 @@ class BinanceTransactionInfoAdapter: IFullTransactionInfoAdapter {
         // Fee
 
         var feeGasItems = [FullTransactionItem]()
-        if let centValue = txResponse.fee {
-            let fee = centValue / pow(10, 8)
+        if let fee = txResponse.fee {
             let feeValue = CoinValue(coinCode: "BNB", value: fee)
             feeGasItems.append(FullTransactionItem(title: "full_info.fee".localized, value: ValueFormatter.instance.format(coinValue: feeValue)))
         }
