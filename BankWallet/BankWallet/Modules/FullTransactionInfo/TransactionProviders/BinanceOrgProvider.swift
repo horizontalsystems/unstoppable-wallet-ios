@@ -24,7 +24,7 @@ class BinanceOrgBinanceResponse: IBinanceResponse, ImmutableMappable {
     var txId: String?
     var blockHeight: Int?
 
-    let fee: Decimal? = 0.000375
+    let fee: Decimal? = BinanceAdapter.transferFee
     var value: Decimal?
 
     var from: String?

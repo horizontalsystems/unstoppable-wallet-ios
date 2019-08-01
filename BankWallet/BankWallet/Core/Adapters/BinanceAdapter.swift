@@ -2,7 +2,7 @@ import RxSwift
 import BinanceChainKit
 
 class BinanceAdapter {
-    private let transferFee: Decimal = 0.000375
+    static let transferFee: Decimal = 0.000375
 
     private let binanceKit: BinanceChainKit
     private let asset: Asset
@@ -127,11 +127,11 @@ extension BinanceAdapter: IAdapter {
     }
 
     func availableBalance(params: [String : Any]) -> Decimal {
-        return max(0, asset.balance - transferFee)
+        return max(0, asset.balance - BinanceAdapter.transferFee)
     }
 
     func fee(params: [String : Any]) -> Decimal {
-        return transferFee
+        return BinanceAdapter.transferFee
     }
 
     func validate(address: String) throws {
