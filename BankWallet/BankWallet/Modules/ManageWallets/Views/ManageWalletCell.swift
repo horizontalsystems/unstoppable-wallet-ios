@@ -74,7 +74,7 @@ class ManageWalletCell: UITableViewCell {
         titleLabel.text = coin.title
         coinLabel.text = coin.code
         coinImageView.bind(coin: coin)
-        toggleView.setOn(item.enabled, animated: true)
+        toggleView.setOn(item.enabled, animated: false)
 
         topSeparatorView.isHidden = !first
         bottomSeparatorView.backgroundColor = last ? AppTheme.darkSeparatorColor : AppTheme.separatorColor
