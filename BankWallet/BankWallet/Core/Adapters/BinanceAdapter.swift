@@ -27,13 +27,22 @@ class BinanceAdapter {
                 address: transaction.to,
                 mine: transaction.to == binanceKit.account
         )
+        
+        var amount: Decimal = 0
+        if from.mine {
+            amount -= transaction.amount
+            amount -= transaction.fee
+        }
+        if to.mine {
+            amount += transaction.amount
+        }
 
         return TransactionRecord(
                 transactionHash: transaction.hash,
                 transactionIndex: 0,
                 interTransactionIndex: 0,
                 blockHeight: transaction.blockHeight,
-                amount: transaction.amount * (from.mine ? -1 : 1),
+                amount: amount,
                 date: transaction.date,
                 from: [from],
                 to: [to]

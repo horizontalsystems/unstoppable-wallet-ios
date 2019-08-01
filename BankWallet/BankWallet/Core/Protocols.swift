@@ -11,6 +11,7 @@ protocol ILocalStorage: class {
     var baseCurrencyCode: String? { get set }
     var baseBitcoinProvider: String? { get set }
     var baseDashProvider: String? { get set }
+    var baseBinanceProvider: String? { get set }
     var baseEthereumProvider: String? { get set }
     var lightMode: Bool { get set }
     var agreementAccepted: Bool { get set }
@@ -331,6 +332,7 @@ protocol IFullTransactionDataProviderManager {
     func dash(for name: String) -> IBitcoinForksProvider
     func bitcoinCash(for name: String) -> IBitcoinForksProvider
     func ethereum(for name: String) -> IEthereumForksProvider
+    func binance(for name: String) -> IBinanceProvider
 }
 
 protocol IPingManager {
@@ -343,6 +345,10 @@ protocol IBitcoinForksProvider: IProvider {
 
 protocol IEthereumForksProvider: IProvider {
     func convert(json: [String: Any]) -> IEthereumResponse?
+}
+
+protocol IBinanceProvider: IProvider {
+    func convert(json: [String: Any]) -> IBinanceResponse?
 }
 
 protocol IReachabilityManager {
