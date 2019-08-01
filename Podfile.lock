@@ -42,7 +42,7 @@ PODS:
     - RxSwift (~> 5.0)
   - CryptoBLS.swift (1.1)
   - CryptoX11.swift (1.1)
-  - Cuckoo (1.1.0)
+  - Cuckoo (1.1.1)
   - DashKit.swift (0.7.0):
     - Alamofire (~> 4.0)
     - BigInt (~> 4.0)
@@ -277,7 +277,7 @@ SPEC CHECKSUMS:
   BitcoinKit.swift: 2d578cc38988f6c76848dfd29e301feb561ce29f
   CryptoBLS.swift: 89828d8e3013e45ce4f913d26008b91fc5d0f3a0
   CryptoX11.swift: 8f0ca5fbfefbe49126220ce23b5de106928cf0f0
-  Cuckoo: 6184a6bdc122b1a8e27b80198f76d1038ddbe861
+  Cuckoo: 6193c50e46403cc9417aa98752671a2a5ae6f3a6
   DashKit.swift: 7d20d23ab4329c0258d411e07a6334ec97cb3a5b
   DeepDiff: e329bc46dd14ca788d8ec08d34420799ba1d77f2
   EosioSwift: 4aa9a3a8b9ab58316e1874885e3e62e2766c441c

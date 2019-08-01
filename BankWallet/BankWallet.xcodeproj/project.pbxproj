@@ -793,8 +793,14 @@
 		1A564FEE11A00F6D86B5616D /* ManageWalletsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56471ECC51CB5E5572DBD8 /* ManageWalletsRouter.swift */; };
 		1A564FF3653D4DF42A180896 /* ManageWalletsTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564A860AD2DA3CFBF9C04A /* ManageWalletsTheme.swift */; };
 		2FA5D4562E12175B6044FDFD /* BlockdozerProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D82E6E66E2BB85636BD0 /* BlockdozerProvider.swift */; };
+		2FA5D6D4C198566D8AA50B7D /* BinanceTransactionInfoAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D2A075A681B3BFBF21F6 /* BinanceTransactionInfoAdapter.swift */; };
+		2FA5D9E360618E837ED018C1 /* BinanceOrgProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D2EEE72F93D0AD61C2BC /* BinanceOrgProvider.swift */; };
 		2FA5DA090638C6810DAE40F3 /* BlockdozerProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D82E6E66E2BB85636BD0 /* BlockdozerProvider.swift */; };
+		2FA5DB42B95BA19114F108C2 /* BinanceTransactionInfoAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D2A075A681B3BFBF21F6 /* BinanceTransactionInfoAdapter.swift */; };
 		2FA5DBAF03EAA20DC88BADE5 /* BlockdozerProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D82E6E66E2BB85636BD0 /* BlockdozerProvider.swift */; };
+		2FA5DD93A28FF177DC4918B0 /* BinanceTransactionInfoAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D2A075A681B3BFBF21F6 /* BinanceTransactionInfoAdapter.swift */; };
+		2FA5DF4D40DE4EA9E797F1BB /* BinanceOrgProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D2EEE72F93D0AD61C2BC /* BinanceOrgProvider.swift */; };
+		2FA5DFFB571221BD243E34E3 /* BinanceOrgProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D2EEE72F93D0AD61C2BC /* BinanceOrgProvider.swift */; };
 		3A472DAF220804AC0067B288 /* UIWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B358407DC8E2314E66124E /* UIWindow.swift */; };
 		3A472DB02208050D0067B288 /* UIWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B358407DC8E2314E66124E /* UIWindow.swift */; };
 		3A472DB1220805230067B288 /* UIWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B358407DC8E2314E66124E /* UIWindow.swift */; };
@@ -1826,6 +1832,8 @@
 		1A564FD2BE42EF4AADB0372C /* ManageWalletsModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManageWalletsModule.swift; sourceTree = "<group>"; };
 		1A564FE8D247C36C2478C6B5 /* TransactionCurrenciesHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionCurrenciesHeaderView.swift; sourceTree = "<group>"; };
 		2CDA251F7039B6388B930003 /* Pods_Bank_Dev.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Bank_Dev.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2FA5D2A075A681B3BFBF21F6 /* BinanceTransactionInfoAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BinanceTransactionInfoAdapter.swift; sourceTree = "<group>"; };
+		2FA5D2EEE72F93D0AD61C2BC /* BinanceOrgProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BinanceOrgProvider.swift; sourceTree = "<group>"; };
 		2FA5D82E6E66E2BB85636BD0 /* BlockdozerProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockdozerProvider.swift; sourceTree = "<group>"; };
 		3AF4739C21D38F380005A458 /* FullTransactionInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FullTransactionInfoViewController.swift; sourceTree = "<group>"; };
 		3C7B92FD9F4CEC1CBB31B5A7 /* WelcomeScreenModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WelcomeScreenModule.swift; sourceTree = "<group>"; };
@@ -2930,6 +2938,7 @@
 				58AAA985F8CC176A656051D9 /* DataProvider */,
 				58AAA15A8E53393FBBF20C29 /* TransactionProviders */,
 				1A564E6974FB8DFDB840ACF7 /* Views */,
+				2FA5D2A075A681B3BFBF21F6 /* BinanceTransactionInfoAdapter.swift */,
 				58AAA1C151E737B0B32208B4 /* BitcoinTransactionInfoAdapter.swift */,
 				58AAA01DEF6280C1A0F1DA2D /* EthereumTransactionInfoAdapter.swift */,
 				58AAA687FC0253AD175BA756 /* FullTransactionInfoInteractor.swift */,
@@ -3167,6 +3176,7 @@
 		58AAA15A8E53393FBBF20C29 /* TransactionProviders */ = {
 			isa = PBXGroup;
 			children = (
+				2FA5D2EEE72F93D0AD61C2BC /* BinanceOrgProvider.swift */,
 				58AAA839E98781BFF8AEB2B3 /* BlockChairProvider.swift */,
 				2FA5D82E6E66E2BB85636BD0 /* BlockdozerProvider.swift */,
 				58AAAEB2610B22FF5C9E9A41 /* BlockExplorerProvider.swift */,
@@ -4175,6 +4185,8 @@
 				58AAA6B67B8FD1ABBA513FEB /* SendAmountRouter.swift in Sources */,
 				58AAAF0EEB95FA98C6D2C8C3 /* SendFeeRouter.swift in Sources */,
 				58AAAB499019AB09FE801795 /* AdapterField.swift in Sources */,
+				2FA5DFFB571221BD243E34E3 /* BinanceOrgProvider.swift in Sources */,
+				2FA5DB42B95BA19114F108C2 /* BinanceTransactionInfoAdapter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4678,6 +4690,8 @@
 				58AAA6A986F3254E480B232E /* SendAmountRouter.swift in Sources */,
 				58AAA4578B59022BBFEC60A6 /* SendFeeRouter.swift in Sources */,
 				58AAA9DCD8C095DCC5577EF4 /* AdapterField.swift in Sources */,
+				2FA5D9E360618E837ED018C1 /* BinanceOrgProvider.swift in Sources */,
+				2FA5DD93A28FF177DC4918B0 /* BinanceTransactionInfoAdapter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5130,6 +5144,8 @@
 				58AAAC0899FF483A5FB40D2E /* SendAmountRouter.swift in Sources */,
 				58AAA377293C8A04C01B664E /* SendFeeRouter.swift in Sources */,
 				58AAAF088BFF5E8821D88CCE /* AdapterField.swift in Sources */,
+				2FA5DF4D40DE4EA9E797F1BB /* BinanceOrgProvider.swift in Sources */,
+				2FA5D6D4C198566D8AA50B7D /* BinanceTransactionInfoAdapter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
