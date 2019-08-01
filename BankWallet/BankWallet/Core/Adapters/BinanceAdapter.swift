@@ -2,6 +2,8 @@ import RxSwift
 import BinanceChainKit
 
 class BinanceAdapter {
+    private let transferFee: Decimal = 0.000375
+
     private let binanceKit: BinanceChainKit
     private let asset: Asset
 
@@ -43,8 +45,7 @@ class BinanceAdapter {
 extension BinanceAdapter: IAdapter {
 
     var confirmationsThreshold: Int {
-        // todo: set correct value
-        return 6
+        return 1
     }
 
     var refreshable: Bool {
@@ -64,7 +65,7 @@ extension BinanceAdapter: IAdapter {
     }
 
     var lastBlockHeight: Int? {
-        return binanceKit.latestBlockHeight
+        return binanceKit.lastBlockHeight
     }
 
     var lastBlockHeightUpdatedObservable: Observable<Void> {
@@ -117,22 +118,30 @@ extension BinanceAdapter: IAdapter {
     }
 
     func availableBalance(params: [String : Any]) -> Decimal {
-        // todo
-        return asset.balance
+        return max(0, asset.balance - transferFee)
     }
 
     func fee(params: [String : Any]) -> Decimal {
-        // todo
-        return 0
+        return transferFee
     }
 
     func validate(address: String) throws {
-        // todo
+        try binanceKit.validate(address: address)
     }
 
-    func validate(params: [String : Any]) -> [SendStateError] {
-        // todo
-        return []
+    func validate(params: [String : Any]) throws -> [SendStateError] {
+        guard let amount: Decimal = params[AdapterField.amount.rawValue] as? Decimal else {
+            throw AdapterError.wrongParameters
+        }
+
+        var errors = [SendStateError]()
+
+        let balance = availableBalance(params: params)
+        if amount > balance {
+            errors.append(.insufficientAmount(availableBalance: balance))
+        }
+
+        return errors
     }
 
     func parse(paymentAddress: String) -> PaymentRequestAddress {

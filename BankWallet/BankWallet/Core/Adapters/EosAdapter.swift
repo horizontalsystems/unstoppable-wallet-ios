@@ -131,8 +131,19 @@ extension EosAdapter: IAdapter {
     func validate(address: String) throws {
     }
 
-    func validate(params: [String : Any]) -> [SendStateError] {
-        return []
+    func validate(params: [String : Any]) throws -> [SendStateError] {
+        guard let amount: Decimal = params[AdapterField.amount.rawValue] as? Decimal else {
+            throw AdapterError.wrongParameters
+        }
+
+        var errors = [SendStateError]()
+
+        let balance = asset.balance
+        if amount > balance {
+            errors.append(.insufficientAmount(availableBalance: balance))
+        }
+
+        return errors
     }
 
     func parse(paymentAddress: String) -> PaymentRequestAddress {
