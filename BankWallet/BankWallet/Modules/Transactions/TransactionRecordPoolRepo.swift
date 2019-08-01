@@ -12,11 +12,11 @@ class TransactionRecordPoolRepo {
 
     func activatePools(coins: [Coin]) {
         // remove pools for unused coins
-        pools.keys.forEach({ poolCoin in
-            if (!coins.contains(poolCoin)) {
+        pools.keys.forEach { poolCoin in
+            if !coins.contains(poolCoin) {
                 pools.removeValue(forKey: poolCoin)
             }
-        })
+        }
 
         coins.forEach { coin in
             if pools[coin] == nil {
