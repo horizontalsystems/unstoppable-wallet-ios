@@ -50,7 +50,7 @@
 "coin_sync.fast.text" = "Restaura tus transacciones pasadas vía un tercer servidor seguro. Para usuarios con una larga historia de transacciones con grandes cantidades, éste método puede tener riesgos de privacidad.";
 "coin_sync.slow" = "Lento";
 "coin_sync.more_private" = "1-12 horas (Más Privado)";
-"coin_sync.slow.text" = "Restaura tus transacciones pasadas directamente de la red. Significativamente mayor privacidad pero muy lento. Si la restauración tarda demasiado ve a la sección de Seguridad en la pestaña de Ajustes y selecciona la opción “Desconectar este dispositivo” ";
+"coin_sync.slow.text" = "Restores your past transactions directly from the network. Significantly more private but very slow. If the restore takes way too much time go to Security section in Settings tab and select “Delete from Phone” option.";
 "coin_sync.alert.header" = "Atención";
 "coin_sync.alert.text" = "Esta acción se actualizará el saldo de su cartera para cada cadena de bloques. Puede tardar varias horas en completarse.";
 "coin_sync.erc20" = "Sincronizar el modo igual que Ethereum";
@@ -215,13 +215,13 @@
 "settings_security.change_pin" = "Editar el código ";
 "settings_security.touch_id" = "Touch ID";
 "settings_security.face_id" = "Face ID";
-"security_settings.unlink_alert_button" = "Desvincular";
+"security_settings.delete_alert_button" = "Delete from Phone";
 
 // Manage Keys
 
 "settings_manage_keys.title" = "Keys";
 "settings_manage_keys.description" = "Anyone with access to your Keys can steal your wallet funds. Store keys safely and never show them to anyone.\n\nBackup each key to be able to restore funds if you loose or break your phone, or simply the wallet app gets deleted.";
-"settings_manage_keys.delete" = "Delete from Phone";
+"settings_manage_keys.delete" = "Delete";
 "settings_manage_keys.backup" = "Backup";
 "settings_manage_keys.show" = "Show";
 "settings_manage_keys.create" = "Create";
@@ -275,6 +275,6 @@
 "key_type.12_words" = "12-words";
 "key_type.12_words.text" = "BTC, BCH, DASH, ETH, ERC-20";
 "key_type.eos" = "EOS Blockchain";
-"key_type.eos.text" = "EOS";
+"key_type.eos.text" = "EOS, EOS based Tokens";
 "key_type.binance" = "Binance Chain";
 "key_type.binance.text" = "BNB, BEP-2";
