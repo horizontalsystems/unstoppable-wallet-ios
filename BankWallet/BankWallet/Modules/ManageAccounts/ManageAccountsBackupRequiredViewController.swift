@@ -13,7 +13,7 @@ class ManageAccountsBackupRequiredViewController: ActionSheetController {
                 tag: 0
         )
 
-        textItem = AlertTextItem(text: "settings_manage_keys.unlink.cant_unlink".localized, tag: 1)
+        textItem = AlertTextItem(text: "settings_manage_keys.delete.cant_delete".localized, tag: 1)
 
         super.init(withModel: BaseAlertModel(), actionSheetThemeConfig: AppTheme.actionSheetConfig)
 
