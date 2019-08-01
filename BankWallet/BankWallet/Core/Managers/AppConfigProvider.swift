@@ -26,6 +26,14 @@ class AppConfigProvider: IAppConfigProvider {
         return wordsString.split(separator: " ", omittingEmptySubsequences: true).map(String.init)
     }
 
+    var defaultEosCredentials: (String, String) {
+        guard let account = Bundle.main.object(forInfoDictionaryKey: "DefaultEosAccount") as? String, let privateKey = Bundle.main.object(forInfoDictionaryKey: "DefaultEosPrivateKey") as? String else {
+            return ("", "")
+        }
+
+        return (account, privateKey)
+    }
+
     var infuraCredentials: (id: String, secret: String?) {
         let id = (Bundle.main.object(forInfoDictionaryKey: "InfuraProjectId") as? String) ?? ""
         let secret = Bundle.main.object(forInfoDictionaryKey: "InfuraProjectSecret") as? String

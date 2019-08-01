@@ -34,7 +34,7 @@ extension RestoreEosRouter {
 
     static func module(mode: RestoreRouter.PresentationMode, delegate: IRestoreAccountTypeDelegate) -> UIViewController {
         let router = RestoreEosRouter(delegate: delegate)
-        let interactor = RestoreEosInteractor(pasteboardManager: App.shared.pasteboardManager)
+        let interactor = RestoreEosInteractor(pasteboardManager: App.shared.pasteboardManager, appConfigProvider: App.shared.appConfigProvider)
         let presenter = RestoreEosPresenter(mode: mode, interactor: interactor, router: router, state: RestoreEosPresenterState())
         let viewController = RestoreEosViewController(delegate: presenter)
 
