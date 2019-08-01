@@ -36,6 +36,10 @@ extension RestoreEosPresenter: IRestoreEosViewDelegate {
         if mode == .presented {
             view?.showCancelButton()
         }
+
+        let (account, activePrivateKey) = interactor.defaultCredentials
+        onEnter(account: account)
+        onEnter(key: activePrivateKey)
     }
 
     func onPasteAccountClicked() {
@@ -72,7 +76,7 @@ extension RestoreEosPresenter: IRestoreEosViewDelegate {
 
     func didTapDone() {
         let account = (state.account ?? "").trimmingCharacters(in: .whitespaces).lowercased()
-        let privateKey = (state.privateKey ?? "").trimmingCharacters(in: .whitespaces).lowercased()
+        let privateKey = (state.privateKey ?? "").trimmingCharacters(in: .whitespaces)
 
         do {
             try interactor.validate(account: account)
@@ -92,5 +96,4 @@ extension RestoreEosPresenter: IRestoreEosViewDelegate {
 }
 
 extension RestoreEosPresenter: IRestoreEosInteractorDelegate {
-
 }

@@ -1,14 +1,20 @@
 class RestoreEosInteractor {
-    private let pasteboardManager: IPasteboardManager
-
     weak var delegate: IRestoreEosInteractorDelegate?
 
-    init(pasteboardManager: IPasteboardManager) {
+    private let pasteboardManager: IPasteboardManager
+    private let appConfigProvider: IAppConfigProvider
+
+    init(pasteboardManager: IPasteboardManager, appConfigProvider: IAppConfigProvider) {
         self.pasteboardManager = pasteboardManager
+        self.appConfigProvider = appConfigProvider
     }
 }
 
 extension RestoreEosInteractor: IRestoreEosInteractor {
+
+    var defaultCredentials: (String, String) {
+        return appConfigProvider.defaultEosCredentials
+    }
 
     var valueFromPasteboard: String? {
         return pasteboardManager.value

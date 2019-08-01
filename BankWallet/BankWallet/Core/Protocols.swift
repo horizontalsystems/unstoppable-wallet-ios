@@ -244,6 +244,7 @@ protocol IAppConfigProvider {
     var currencies: [Currency] { get }
 
     func defaultWords(count: Int) -> [String]
+    var defaultEosCredentials: (String, String) { get }
     var disablePinLock: Bool { get }
 
     var defaultCoinCodes: [CoinCode] { get }
