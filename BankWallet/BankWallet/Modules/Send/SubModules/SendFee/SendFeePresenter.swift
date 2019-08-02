@@ -14,6 +14,7 @@ class SendFeePresenter {
     private var sendInputType: SendInputType = .coin
 
     var feeRatePriority: FeeRatePriority = .medium
+    var feeRate: Int = 0
     private var fee: Decimal = 0
     private var insufficientFeeBalanceWithRequiredFee: Decimal?
 
@@ -68,12 +69,14 @@ extension SendFeePresenter: ISendFeeViewDelegate {
 
     func viewDidLoad() {
         rate = interactor.rate(coinCode: coinCode, currencyCode: currencyManager.baseCurrency.code)
+        feeRate = delegate?.feeRate(priority: feeRatePriority) ?? 0
 
         updateFeeLabels()
     }
 
     func onFeePriorityChange(value: Int) {
         feeRatePriority = FeeRatePriority(rawValue: value) ?? .medium
+        feeRate = delegate?.feeRate(priority: feeRatePriority) ?? 0
 
         delegate?.updateFeeRate()
     }

@@ -6,7 +6,6 @@ protocol ISendView: class {
     func showCopied()
     func show(error: Error)
     func showProgress()
-    func showConfirmation(viewItem: SendConfirmationViewItem)
     func set(sendButtonEnabled: Bool)
     func dismissKeyboard()
     func dismissWithSuccess()
@@ -21,7 +20,6 @@ protocol ISendViewDelegate {
     func onCopyAddress()
 
     func onSendClicked()
-    func onConfirmClicked()
 }
 
 protocol ISendInteractor {
@@ -32,9 +30,10 @@ protocol ISendInteractor {
     func copy(address: String)
     func parse(paymentAddress: String) -> PaymentRequestAddress
 
-    func send(amount: Decimal, address: String, feeRatePriority: FeeRatePriority)
+    func send(params: [String: Any])
     func validate(params: [String: Any])
     func updateFee(params: [String: Any])
+    func feeRate(priority: FeeRatePriority) -> Int
 }
 
 protocol ISendInteractorDelegate: class {
@@ -47,6 +46,7 @@ protocol ISendInteractorDelegate: class {
 }
 
 protocol ISendRouter {
+    func showConfirmation(item: SendConfirmationViewItem, delegate: ISendConfirmationDelegate)
     func scanQrCode(delegate: IScanQrCodeDelegate)
     func dismiss()
 }
@@ -67,8 +67,8 @@ protocol ISendFeeFormatHelper {
     func errorValue(fee: Decimal, coinCode: CoinCode) -> String
 }
 
-protocol ISendConfirmationViewItemFactory {
-    func confirmationViewItem(coin: Coin, sendInputType: SendInputType, address: String?, coinAmountValue: CoinValue, currencyAmountValue: CurrencyValue?, coinFeeValue: CoinValue, currencyFeeValue: CurrencyValue?) throws -> SendConfirmationViewItem
+protocol ISendConfirmationItemFactory {
+    func confirmationItem(sendInputType: SendInputType, receiver: String?, showMemo: Bool, coinAmountValue: CoinValue, currencyAmountValue: CurrencyValue?, coinFeeValue: CoinValue?, currencyFeeValue: CurrencyValue?, estimateTime: String?) throws -> SendConfirmationViewItem
 }
 
 enum SendInputType: String {
@@ -109,19 +109,22 @@ enum FeeError {
 }
 
 class SendConfirmationViewItem {
-    let coin: Coin
-    let primaryAmountInfo: AmountInfo
-    var secondaryAmountInfo: AmountInfo?
-    let address: String
-    let feeInfo: AmountInfo
-    let totalInfo: AmountInfo?
+    let primaryAmount: String
+    var secondaryAmount: String?
+    let receiver: String
+    let showMemo: Bool
+    let feeInfo: String?
+    let totalInfo: String?
+    let estimateTime: String?
 
-    init(coin: Coin, primaryAmountInfo: AmountInfo, secondaryAmountInfo: AmountInfo?, address: String, feeInfo: AmountInfo, totalInfo: AmountInfo?) {
-        self.coin = coin
-        self.primaryAmountInfo = primaryAmountInfo
-        self.secondaryAmountInfo = secondaryAmountInfo
-        self.address = address
+    init(primaryAmount: String, secondaryAmount: String?, receiver: String, showMemo: Bool, feeInfo: String?, totalInfo: String?, estimateTime: String?) {
+        self.primaryAmount = primaryAmount
+        self.secondaryAmount = secondaryAmount
+        self.receiver = receiver
+        self.showMemo = showMemo
         self.feeInfo = feeInfo
         self.totalInfo = totalInfo
+        self.estimateTime = estimateTime
     }
+
 }
