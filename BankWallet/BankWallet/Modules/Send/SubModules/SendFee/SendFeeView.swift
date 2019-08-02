@@ -1,6 +1,8 @@
 import UIKit
 
 class SendFeeView: UIView {
+    private let feePrefix = "send.fee".localized + " "
+
     private let delegate: ISendFeeViewDelegate
     private let feeAdjustable: Bool
 
@@ -64,7 +66,7 @@ class SendFeeView: UIView {
             maker.height.equalTo(SendTheme.feeSliderHeight)
         }
 
-        feeLabel.text = "Fee: "
+        feeLabel.text = feePrefix
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -106,7 +108,11 @@ class SendFeeView: UIView {
 extension SendFeeView: ISendFeeView {
 
     func set(fee: String?) {
-        feeLabel.text = fee
+        guard let fee = fee else {
+            feeLabel.text = nil
+            return
+        }
+        feeLabel.text = feePrefix + fee
     }
 
     func set(convertedFee: String?) {

@@ -90,8 +90,7 @@ extension SendFormatHelper: ISendAmountFormatHelper {
 extension SendFormatHelper: ISendFeeFormatHelper {
 
     func errorValue(fee: Decimal, coinCode: CoinCode) -> String {
-        let feeValue = CoinValue(coinCode: self.coinCode, value: fee)
-        return "send_erc.alert".localized(coinCode, ValueFormatter.instance.format(coinValue: feeValue) ?? "")
+        return "send_erc.alert".localized(coinCode, ValueFormatter.instance.format(amount: fee) ?? "")
     }
 
 }

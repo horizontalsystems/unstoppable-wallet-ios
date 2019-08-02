@@ -130,6 +130,10 @@ extension BinanceAdapter: IAdapter {
         return max(0, asset.balance - BinanceAdapter.transferFee)
     }
 
+    func feeRate(priority: FeeRatePriority) -> Int {
+        return 0
+    }
+
     func fee(params: [String : Any]) -> Decimal {
         return BinanceAdapter.transferFee
     }

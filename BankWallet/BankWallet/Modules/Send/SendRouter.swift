@@ -1,15 +1,14 @@
 import UIKit
-import ActionSheet
 
 class SendRouter {
-    weak var viewController: UIViewController?
+    weak var viewController: UINavigationController?
 }
 
 extension SendRouter: ISendRouter {
 
-    func showConfirmation(viewItem: SendConfirmationViewItem, delegate: ISendViewDelegate) {
-        let confirmationController = SendConfirmationViewController(delegate: delegate, viewItem: viewItem)
-        viewController?.present(confirmationController, animated: true)
+    func showConfirmation(item: SendConfirmationViewItem, delegate: ISendConfirmationDelegate) {
+        let confirmationController = SendConfirmationRouter.module(item: item, delegate: delegate)
+        viewController?.pushViewController(confirmationController, animated: true)
     }
 
     func scanQrCode(delegate: IScanQrCodeDelegate) {
@@ -30,14 +29,16 @@ extension SendRouter {
             return nil
         }
 
-        let factory = SendConfirmationViewItemFactory()
+        let factory = SendConfirmationItemFactory()
 
         let router = SendRouter()
         let interactor = SendInteractor(pasteboardManager: App.shared.pasteboardManager, adapter: adapter, backgroundManager: App.shared.backgroundManager)
 
+        let feeCoinCode = adapter.feeCoinCode ?? adapter.wallet.coin.code
+
         let (amountView, amountModule) = SendAmountRouter.module(coinCode: coinCode, decimal: adapter.decimal)
         let (addressView, addressModule) = SendAddressRouter.module()
-        let (feeView, feeModule) = SendFeeRouter.module(coinCode: coinCode, decimal: adapter.decimal)
+        let (feeView, feeModule) = SendFeeRouter.module(coinCode: feeCoinCode, decimal: adapter.decimal)
 
         let presenter = SendPresenter(interactor: interactor, router: router, factory: factory, amountModule: amountModule, addressModule: addressModule, feeModule: feeModule)
         let viewController = SendViewController(delegate: presenter, views: [amountView, addressView, feeView])
