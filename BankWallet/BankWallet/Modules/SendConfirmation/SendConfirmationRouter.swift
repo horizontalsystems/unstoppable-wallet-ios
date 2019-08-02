@@ -19,13 +19,13 @@ class SendConfirmationRouter {
 
         var textFields = [UIView]()
         if let feeInfo = item.feeInfo {
-            textFields.append(SendConfirmationFieldView(title: "send.fee", text: feeInfo))
+            textFields.append(SendConfirmationFieldView(title: "send.fee".localized, text: feeInfo))
         }
         if let totalInfo = item.totalInfo {
-            textFields.append(SendConfirmationFieldView(title: "send.confirmation.total", text: totalInfo))
+            textFields.append(SendConfirmationFieldView(title: "send.confirmation.total".localized, text: totalInfo))
         }
         if let estimateTime = item.estimateTime {
-            textFields.append(SendConfirmationFieldView(title: "send.confirmation.estimate_time", text: estimateTime))
+            textFields.append(SendConfirmationFieldView(title: "send.confirmation.estimate_time".localized, text: estimateTime))
         }
         if !textFields.isEmpty {
             let fieldSectionSeparatorView = SendConfirmationSeparatorView(height: SendTheme.confirmationFieldSectionTopMargin)
