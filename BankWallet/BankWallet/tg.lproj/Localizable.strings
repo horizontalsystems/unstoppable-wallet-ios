@@ -71,7 +71,7 @@
 "backup.eos.title" = "EOS Key";
 "backup.eos.account_name" = "Account Name";
 "backup.eos.active_private_key" = "Active Private Key";
-"backup.eos.hint" = "Copying your key using “copy” action poses some risks if you use any clipboard management apps or some other apps that may access to clipboard data.";
+"backup.eos.hint" = "Copying your key using “copy” action poses some risks if you use any clipboard management apps or some other apps that may have access to clipboard data.";
 
 "backup.confirmation.title" = "Check ...";
 "backup.confirmation.description" = "Enter words from your secret key";
