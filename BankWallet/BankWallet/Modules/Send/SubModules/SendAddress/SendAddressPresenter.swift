@@ -15,8 +15,8 @@ class SendAddressPresenter {
 
     private func onAddressEnter(address: String) {
         let paymentAddress = delegate?.parse(paymentAddress: address)
-        if paymentAddress?.error != nil {
-            view?.set(address: paymentAddress?.address, error: "Invalid address".localized)
+        if let error = paymentAddress?.error {
+            view?.set(address: paymentAddress?.address, error: error.localizedDescription)
             invalidAddress = paymentAddress?.error
             delegate?.onAddressUpdate(address: nil)
         } else {
@@ -29,6 +29,12 @@ class SendAddressPresenter {
                 delegate?.onAmountUpdate(amount: amount)
             }
         }
+    }
+    private func onClearAddress() {
+        view?.set(address: nil, error: nil)
+        address = nil
+
+        delegate?.onAddressUpdate(address: nil)
     }
 
 }
@@ -45,11 +51,16 @@ extension SendAddressPresenter: ISendAddressViewDelegate {
         }
     }
 
-    func onAddressDeleteClicked() {
-        view?.set(address: nil, error: nil)
-        address = nil
+    func onAddressChange(address: String?) {
+        guard let address = address, !address.isEmpty else {
+            onClearAddress()
+            return
+        }
+        onAddressEnter(address: address)
+    }
 
-        delegate?.onAddressUpdate(address: nil)
+    func onAddressDeleteClicked() {
+        onClearAddress()
     }
 
 }
