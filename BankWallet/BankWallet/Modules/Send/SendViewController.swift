@@ -28,7 +28,7 @@ class SendViewController: UIViewController {
 
         sendButton.backgrounds = ButtonTheme.yellowBackgroundDictionary
         sendButton.textColors = ButtonTheme.textColorDictionary
-        sendButton.titleLabel.text = "send.send_button".localized
+        sendButton.titleLabel.text = "send.confirmation.send_button".localized
         sendButton.cornerRadius = SendTheme.sendButtonCornerRadius
     }
 
