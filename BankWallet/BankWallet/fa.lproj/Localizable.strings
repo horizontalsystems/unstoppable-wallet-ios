@@ -105,14 +105,20 @@
 // Send
 
 "send.title" = "ارسال%@";
-"send.address_placeholder" = "آدرس";
-"send.amount_error.balance" = "مانده حساب %@";
-"send.send_button" = "ارسال";
 "send.amount_placeholder" = "مبلغ";
-"send.fee" = "هزينه";
-"send.total" = "مجموع";
+"send.address_placeholder" = "آدرس";
+"send.fee" = "Fee:";
 "send.max_button" = "حداکثر";
-"send_erc.alert" = "پرداخت هزینه های معامله برای %@ (ERC20) در Ethereum. شما نیاز به %@ ETH.";
+"send.next_button" = "Next";
+"send.confirmation.title" = "Confirm";
+"send.confirmation.to" = "To:";
+"send.confirmation.memo_placeholder" = "Memo";
+"send.confirmation.total" = "Total:";
+"send.confirmation.estimate_time" = "Estimate Time:";
+"send.confirmation.eos.account" = "Account";
+"send.confirmation.send_button" = "Send";
+"send.amount_error.balance" = "مانده حساب %@";
+"send_erc.alert" = "Transaction fees for %@ (ERC20) paid in Ethereum. You need %@ ETH.";
 
 // Transactions
 
