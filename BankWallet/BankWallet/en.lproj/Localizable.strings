@@ -192,10 +192,10 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 // Settings -> Manage Wallet
 
 "manage_coins.title" = "Coin Manager";
-"manage_coins.add_coin.title" = "Add Key for %@ Coin";
+"manage_coins.add_coin.title" = "Add %@ ";
 "manage_coins.add_coin.text" = "You don't have active key for use with %@. Use Create button below to generate a new key (wallet).\n\nYou may also use the existing key for the %@ if you already have it.";
-"manage_coins.add_coin.create" = "Create New";
-"manage_coins.add_coin.restore" = "I Already Have";
+"manage_coins.add_coin.create" = "Create";
+"manage_coins.add_coin.restore" = "Restore";
 
 // Settings -> About
 
