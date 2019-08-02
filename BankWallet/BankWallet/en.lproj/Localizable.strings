@@ -107,14 +107,20 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 // Send
 
 "send.title" = "Send %@";
-"send.address_placeholder" = "Address";
-"send.amount_error.balance" = "Balance %@";
-"send.send_button" = "Send";
 "send.amount_placeholder" = "Amount";
-"send.fee" = "Fee";
-"send.total" = "Total";
+"send.address_placeholder" = "Address";
+"send.fee" = "Fee:";
 "send.max_button" = "Max";
-"send_erc.alert" = "Transaction fees for %@ (ERC20) paid in Ethereum. You need %@.";
+"send.next_button" = "Next";
+"send.confirmation.title" = "Confirm";
+"send.confirmation.to" = "To:";
+"send.confirmation.memo_placeholder" = "Memo";
+"send.confirmation.total" = "Total:";
+"send.confirmation.estimate_time" = "Estimate Time:";
+"send.confirmation.eos.account" = "Account";
+"send.confirmation.send_button" = "Send";
+"send.amount_error.balance" = "Balance %@";
+"send_erc.alert" = "Transaction fees for %@ (ERC20) paid in Ethereum. You need %@ ETH.";
 
 // Transactions
 
