@@ -4,4 +4,6 @@ etherscan_api_key = GKNHXT22ED7PRVCKZATFZQD1YI7FK9AAYE
 
 default_words_12 =
 default_words_24 =
+default_eos_account =
+default_eos_private_key =
 disable_pin_lock = false

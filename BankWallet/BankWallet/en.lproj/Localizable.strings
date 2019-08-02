@@ -52,7 +52,7 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 "coin_sync.fast.text" = "Restores your past transactions via secure third party server. For users with a long history of transactions involving very large sums this method may pose privacy risks.";
 "coin_sync.slow" = "Slow";
 "coin_sync.more_private" = "1-12 hours (More Private)";
-"coin_sync.slow.text" = "Restores your past transactions directly from the network. Significantly more private but very slow. If the restore takes way too much time go to Security section in Settings tab and select “Unlink This Device” option.";
+"coin_sync.slow.text" = "Restores your past transactions directly from the network. Significantly more private but very slow. If the restore takes way too much time go to Security section in Settings tab and select “Delete from Phone” option.";
 "coin_sync.alert.header" = "Attention";
 "coin_sync.alert.text" = "This action will resync your wallet balance for each blockchain. It may take several hours to complete.";
 "coin_sync.erc20" = "Sync mode same as Ethereum";
@@ -107,14 +107,20 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 // Send
 
 "send.title" = "Send %@";
-"send.address_placeholder" = "Address";
-"send.amount_error.balance" = "Balance %@";
-"send.send_button" = "Send";
 "send.amount_placeholder" = "Amount";
-"send.fee" = "Fee";
-"send.total" = "Total";
+"send.address_placeholder" = "Address";
+"send.fee" = "Fee:";
 "send.max_button" = "Max";
-"send_erc.alert" = "Transaction fees for %@ (ERC20) paid in Ethereum. You need %@.";
+"send.next_button" = "Next";
+"send.confirmation.title" = "Confirm";
+"send.confirmation.to" = "To:";
+"send.confirmation.memo_placeholder" = "Memo";
+"send.confirmation.total" = "Total:";
+"send.confirmation.estimate_time" = "Estimate Time:";
+"send.confirmation.eos.account" = "Account";
+"send.confirmation.send_button" = "Send";
+"send.amount_error.balance" = "Balance %@";
+"send_erc.alert" = "Transaction fees for %@ (ERC20) paid in Ethereum. You need %@ ETH.";
 
 // Transactions
 
@@ -192,10 +198,10 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 // Settings -> Manage Wallet
 
 "manage_coins.title" = "Coin Manager";
-"manage_coins.add_coin.title" = "Add Key for %@ Coin";
+"manage_coins.add_coin.title" = "Add %@ ";
 "manage_coins.add_coin.text" = "You don't have active key for use with %@. Use Create button below to generate a new key (wallet).\n\nYou may also use the existing key for the %@ if you already have it.";
-"manage_coins.add_coin.create" = "Create New";
-"manage_coins.add_coin.restore" = "I Already Have";
+"manage_coins.add_coin.create" = "Create";
+"manage_coins.add_coin.restore" = "Restore";
 
 // Settings -> About
 
@@ -223,21 +229,22 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 "settings_security.change_pin" = "Edit Passcode";
 "settings_security.touch_id" = "Touch ID";
 "settings_security.face_id" = "Face ID";
-"security_settings.unlink_alert_button" = "Unlink";
+"security_settings.delete_alert_button" = "Delete from Phone";
 
 // Manage Keys
 
 "settings_manage_keys.title" = "Keys";
-"settings_manage_keys.description" = "Anyone with access to your Keys can steal your wallet funds. Store them safely and never show them to anyone.\n\nBackup each key to be able to restore funds if you loose or break your phone, or simply the wallet app gets deleted.";
-"settings_manage_keys.unlink" = "Unlink";
+"settings_manage_keys.description" = "Anyone with access to your Keys can steal your wallet funds. Store keys safely and never show them to anyone.\n\nBackup each key to be able to restore funds if you loose or break your phone, or simply the wallet app gets deleted.";
+"settings_manage_keys.delete" = "Delete";
 "settings_manage_keys.backup" = "Backup";
 "settings_manage_keys.show" = "Show";
 "settings_manage_keys.create" = "Create";
 "settings_manage_keys.restore" = "Restore";
-"settings_manage_keys.unlink.cant_unlink" = "You need to backup this key before you may unlink it.";
-"settings_manage_keys.unlink.confirmation_remove" = "This action will remove the %@ key (wallet) from this device.";
-"settings_manage_keys.unlink.confirmation_disable" = "Coins that will be disabled: %@";
-"settings_manage_keys.unlink.confirmation_loose" = "If you don't have a backup of this key you will loose the respective funds.";
+"settings_manage_keys.delete.cant_delete" = "You need to backup this key before you may unlink it.";
+"settings_manage_keys.delete.title" = "Delete Key";
+"settings_manage_keys.delete.confirmation_remove" = "This action will delete the %@ key (wallet) from this device.";
+"settings_manage_keys.delete.confirmation_disable" = "Coins that will be disabled: %@";
+"settings_manage_keys.delete.confirmation_loose" = "If you don't have a backup of this key you will loose the respective funds.";
 "error.cant_create_eos" = "At this point, the wallet is not able to create new EOS wallet accounts. You're only able to restore the existing one.";
 "settings_manage_keys.create.text" = "This action will generate a key(wallet) for the following coins:\n\n%@";
 "error.invalid_eos_key" = "Invalid key";
@@ -282,6 +289,6 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 "key_type.12_words" = "12-words";
 "key_type.12_words.text" = "BTC, BCH, DASH, ETH, ERC-20";
 "key_type.eos" = "EOS Blockchain";
-"key_type.eos.text" = "EOS";
+"key_type.eos.text" = "EOS, EOS based Tokens";
 "key_type.binance" = "Binance Chain";
 "key_type.binance.text" = "BNB, BEP-2";

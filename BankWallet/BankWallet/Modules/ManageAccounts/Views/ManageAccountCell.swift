@@ -121,7 +121,7 @@ class ManageAccountCell: UITableViewCell {
             roundedBackground.layer.shadowOpacity = ManageAccountsTheme.roundedBackgroundShadowOpacity
             clippingView.borderWidth = 2 / UIScreen.main.scale
 
-            leftButton.titleLabel.text = "settings_manage_keys.unlink".localized
+            leftButton.titleLabel.text = "settings_manage_keys.delete".localized
             rightButton.titleLabel.text = backedUp ? "settings_manage_keys.show".localized : "settings_manage_keys.backup".localized
             rightButton.image = backedUp ? nil : UIImage(named: "Attention Icon Small")?.tinted(with: ManageAccountsTheme.attentionColor)
 

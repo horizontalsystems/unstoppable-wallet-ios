@@ -18,15 +18,23 @@ class UnlinkViewController: ActionSheetController {
     }
 
     func initItems() {
+        let titleItem = AlertTitleItem(
+                title: "settings_manage_keys.delete.title".localized,
+                icon: UIImage(named: "Attention Icon")?.withRenderingMode(.alwaysTemplate),
+                iconTintColor: ManageAccountsTheme.attentionColor,
+                tag: 0
+        )
+        model.addItemView(titleItem)
+
         var texts = [NSAttributedString]()
 
         let attributes = [NSAttributedString.Key.foregroundColor: ConfirmationTheme.textColor, NSAttributedString.Key.font: ConfirmationTheme.regularFont]
-        texts.append(NSAttributedString(string: "settings_manage_keys.unlink.confirmation_remove".localized(delegate.title.localized), attributes: attributes))
-        texts.append(NSAttributedString(string: "settings_manage_keys.unlink.confirmation_disable".localized(delegate.coinCodes.localized), attributes: attributes))
-        texts.append(NSAttributedString(string: "settings_manage_keys.unlink.confirmation_loose".localized, attributes: attributes))
+        texts.append(NSAttributedString(string: "settings_manage_keys.delete.confirmation_remove".localized(delegate.title.localized), attributes: attributes))
+        texts.append(NSAttributedString(string: "settings_manage_keys.delete.confirmation_disable".localized(delegate.coinCodes.localized), attributes: attributes))
+        texts.append(NSAttributedString(string: "settings_manage_keys.delete.confirmation_loose".localized, attributes: attributes))
 
         for (index, text) in texts.enumerated() {
-            let item = ConfirmationCheckboxItem(descriptionText: text, tag: index) { [weak self] view in
+            let item = ConfirmationCheckboxItem(descriptionText: text, tag: index + 1) { [weak self] view in
                 self?.handleToggle(index: index)
             }
 
@@ -35,8 +43,8 @@ class UnlinkViewController: ActionSheetController {
         }
 
         let buttonItem = AlertButtonItem(
-                tag: texts.count,
-                title: "security_settings.unlink_alert_button".localized,
+                tag: texts.count + 1,
+                title: "security_settings.delete_alert_button".localized,
                 textStyle: ButtonTheme.whiteTextColorDictionary,
                 backgroundStyle: ButtonTheme.redBackgroundDictionary
         ) { [weak self] in

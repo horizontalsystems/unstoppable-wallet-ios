@@ -227,7 +227,7 @@ CHECKOUT OPTIONS:
     :commit: 22d90aa409044e4ee82e4fcc3ec5a89e7066bf93
     :git: https://github.com/horizontalsystems/gui-kit
   BinanceChainKit.swift:
-    :commit: c6824dc73d298125ab0aa93009642b787e780048
+    :commit: c04766675aa3e1f3eb01dab2b96ec278fa4a13eb
     :git: https://github.com/horizontalsystems/binance-chain-kit-ios
   BitcoinCashKit.swift:
     :commit: 89eadcd198235e81b768a224effcaa3e3f8273c8

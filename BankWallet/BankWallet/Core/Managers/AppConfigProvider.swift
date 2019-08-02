@@ -26,6 +26,14 @@ class AppConfigProvider: IAppConfigProvider {
         return wordsString.split(separator: " ", omittingEmptySubsequences: true).map(String.init)
     }
 
+    var defaultEosCredentials: (String, String) {
+        guard let account = Bundle.main.object(forInfoDictionaryKey: "DefaultEosAccount") as? String, let privateKey = Bundle.main.object(forInfoDictionaryKey: "DefaultEosPrivateKey") as? String else {
+            return ("", "")
+        }
+
+        return (account, privateKey)
+    }
+
     var infuraCredentials: (id: String, secret: String?) {
         let id = (Bundle.main.object(forInfoDictionaryKey: "InfuraProjectId") as? String) ?? ""
         let secret = Bundle.main.object(forInfoDictionaryKey: "InfuraProjectSecret") as? String
@@ -67,11 +75,15 @@ class AppConfigProvider: IAppConfigProvider {
         Coin(title: "Binance Chain",         code: "BNB",       type: .binance(symbol: "BNB")),
         Coin(title: "0x",                    code: "ZRX",       type: .erc20(address: "0xE41d2489571d322189246DaFA5ebDe1F4699F498", decimal: 18, fee: 0)),
         Coin(title: "Aelf",                  code: "ELF",       type: .erc20(address: "0xbf2179859fc6D5BEE9Bf9158632Dc51678a4100e", decimal: 18, fee: 0)),
+        Coin(title: "Ankr Network",          code: "ANKR",      type: .binance(symbol: "ANKR-E97")),
         Coin(title: "Aurora DAO",            code: "AURA",      type: .erc20(address: "0xCdCFc0f66c522Fd086A1b725ea3c0Eeb9F9e8814", decimal: 18, fee: 0)),
         Coin(title: "Bancor",                code: "BNT",       type: .erc20(address: "0x1F573D6Fb3F13d689FF844B4cE37794d79a7FF1C", decimal: 18, fee: 0)),
         Coin(title: "Basic Attention Token", code: "BAT",       type: .erc20(address: "0x0D8775F648430679A709E98d2b0Cb6250d2887EF", decimal: 18, fee: 0)),
         Coin(title: "Binance Coin",          code: "BNB-ERC20", type: .erc20(address: "0xB8c77482e45F1F44dE1745F52C74426C631bDD52", decimal: 18, fee: 0)),
+        Coin(title: "Bitcoin BEP2",          code: "BTCB",      type: .binance(symbol: "BTCB-1DE")),
+        Coin(title: "Cashaa",                code: "CAS",       type: .binance(symbol: "CAS-167")),
         Coin(title: "ChainLink",             code: "LINK",      type: .erc20(address: "0x514910771AF9Ca656af840dff83E8264EcF986CA", decimal: 18, fee: 0)),
+        Coin(title: "Crypterium",            code: "CRPT",      type: .binance(symbol: "CRPT-8C9")),
         Coin(title: "Crypto.com",            code: "MCO",       type: .erc20(address: "0xB63B606Ac810a52cCa15e44bB630fd42D8d1d83d", decimal: 8,  fee: 0)),
         Coin(title: "Crypto.com Chain",      code: "CRO",       type: .erc20(address: "0xA0b73E1Ff0B80914AB6fe0444E65848C4C34450b", decimal: 8,  fee: 0)),
         Coin(title: "Dai",                   code: "DAI",       type: .erc20(address: "0x89d24A6b4CcB1B6fAA2625fE562bDD9a23260359", decimal: 18, fee: 0)),
@@ -82,6 +94,7 @@ class AppConfigProvider: IAppConfigProvider {
         Coin(title: "EOSDT",                 code: "EOSDT",     type: .eos(token: "eosdtsttoken", symbol: "EOSDT")),
         Coin(title: "Everipedia",            code: "IQ",        type: .eos(token: "everipediaiq", symbol: "IQ")),
         Coin(title: "Gemini Dollar",         code: "GUSD",      type: .erc20(address: "0x056Fd409E1d7A124BD7017459dFEa2F387b6d5Cd", decimal: 2,  fee: 0)),
+        Coin(title: "Gifto",                 code: "GTO",       type: .binance(symbol: "GTO-908")),
         Coin(title: "Golem",                 code: "GNT",       type: .erc20(address: "0xa74476443119A942dE498590Fe1f2454d7D4aC0d", decimal: 18, fee: 0)),
         Coin(title: "Holo",                  code: "HOT",       type: .erc20(address: "0x6c6EE5e31d828De241282B9606C8e98Ea48526E2", decimal: 18, fee: 0)),
         Coin(title: "Huobi Token",           code: "HT",        type: .erc20(address: "0x6f259637dcD74C767781E37Bc6133cd6A68aa161", decimal: 18, fee: 0)),
