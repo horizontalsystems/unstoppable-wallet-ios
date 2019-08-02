@@ -5,6 +5,7 @@ class UserDefaultsStorage {
     private let keyBaseCurrencyCode = "base_currency_code"
     private let keyBaseBitcoinProvider = "base_bitcoin_provider"
     private let keyBaseDashProvider = "base_dash_provider"
+    private let keyBaseBinanceProvider = "base_binance_provider"
     private let keyBaseEosProvider = "base_eos_provider"
     private let keyBaseEthereumProvider = "base_ethereum_provider"
     private let keyLightMode = "light_mode"
@@ -83,10 +84,17 @@ extension UserDefaultsStorage: ILocalStorage {
         get { return getString(keyBaseDashProvider) }
         set { setString(keyBaseDashProvider, value: newValue) }
     }
+
+    var baseBinanceProvider: String? {
+        get { return getString(keyBaseBinanceProvider) }
+        set { setString(keyBaseBinanceProvider, value: newValue) }
+    }
+
     var baseEosProvider: String? {
         get { return getString(keyBaseEosProvider) }
         set { setString(keyBaseEosProvider, value: newValue) }
     }
+
     var baseEthereumProvider: String? {
         get { return getString(keyBaseEthereumProvider) }
         set { setString(keyBaseEthereumProvider, value: newValue) }

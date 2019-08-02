@@ -68,6 +68,10 @@ extension SendInteractor: ISendInteractor {
         })
     }
 
+    func feeRate(priority: FeeRatePriority) -> Int {
+        return adapter.feeRate(priority: priority)
+    }
+
     func validate(params: [String: Any]) {
         validateDisposable?.dispose()
 
@@ -91,13 +95,7 @@ extension SendInteractor: ISendInteractor {
         })
     }
 
-    func send(amount: Decimal, address: String, feeRatePriority: FeeRatePriority) {
-
-        var params = [String: Any]()
-        params[AdapterField.amount.rawValue] = amount
-        params[AdapterField.address.rawValue] = address
-        params[AdapterField.feeRateRriority.rawValue] = feeRatePriority
-
+    func send(params: [String: Any]) {
         var single = adapter.sendSingle(params: params)
         if async {
             single = single.subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))

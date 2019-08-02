@@ -69,6 +69,7 @@ class SendTheme {
     static let switchRightMargin: CGFloat = 6
 
     static let sendHeight: CGFloat = 81
+    static let sendButtonHolderHeight: CGFloat = 74
     static let sendButtonHeight: CGFloat = 50
     static let sendButtonCornerRadius: CGFloat = 8
 
@@ -77,12 +78,38 @@ class SendTheme {
     static let keyboardSideMargin: CGFloat = 17
     static let keyboardBottomMargin: CGFloat = 8
 
+    static let confirmationPrimaryHeight: CGFloat = 134
+    static let confirmationPrimaryRadius: CGFloat = 16
+    static let confirmationPrimaryMargin: CGFloat = 20
+    static let confirmationPrimaryLineTopMargin: CGFloat = 89
+    static let confirmationPrimaryAmountLineHeight: CGFloat = 1
+
+    static let confirmationMemoHeight: CGFloat = 56
+    static let confirmationMemoInputFieldMargin: CGFloat = 12
+    static let confirmationHolderTopMargin: CGFloat = 12
+
+    static let confirmationFieldSectionTopMargin: CGFloat = 4
+
+    static let confirmationFieldTopMargin: CGFloat = 8
+    static let confirmationFieldHeight: CGFloat = 24
+
+    static let confirmationButtonTopMargin: CGFloat = 24
+
     static let confirmationAmountHeight: CGFloat = 80
-    static let confirmationCurrencyAmountFont: UIFont = .cryptoTitle4
-    static let confirmationCurrencyAmountColor: UIColor = .cryptoYellow
-    static let confirmationAmountFont: UIFont = .cryptoSectionCaption
-    static let confirmationAmountColor: UIColor = .cryptoGray
-    static let confirmationAmountTopMargin: CGFloat = 4
+    static let confirmationPrimaryAmountFont: UIFont = .cryptoTitle4
+    static let confirmationPrimaryAmountColor: UIColor = .cryptoYellow
+    static let confirmationSecondaryFont: UIFont = .cryptoSectionCaption
+    static let confirmationSecondaryColor: UIColor = .crypto_Bars_Dark
+    static let confirmationSecondaryTopMargin: CGFloat = 8
+
+    static let confirmationToLabelFont: UIFont = .cryptoCaption1
+    static let confirmationToLabelColor: UIColor = .cryptoGray
+    static let confirmationToLabelTopMargin: CGFloat = 13
+    static let confirmationReceiverTopMargin: CGFloat = 8
+
+    static let confirmationMemoPlaceholderColor: UIColor = .cryptoSteel40
+    static let confirmationMemoInputTintColor: UIColor = .cryptoYellow
+
 
     static let confirmationAddressHeight: CGFloat = 44
 

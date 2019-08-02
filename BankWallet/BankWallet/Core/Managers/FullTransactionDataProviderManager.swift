@@ -44,6 +44,14 @@ class FullTransactionDataProviderManager {
         ]
     }
 
+    private var binanceProviders: [IBinanceProvider] {
+        return appConfigProvider.testMode ? [
+            BinanceOrgProvider(testMode: true),
+        ] : [
+            BinanceOrgProvider(testMode: false)
+        ]
+    }
+
     private let localStorage: ILocalStorage
     private let appConfigProvider: IAppConfigProvider
 
@@ -65,6 +73,8 @@ extension FullTransactionDataProviderManager: IFullTransactionDataProviderManage
             return bitcoinCashProviders
         } else if coin.type == .dash {
             return dashProviders
+        } else if case .binance = coin.type {
+            return binanceProviders
         } else if case .eos = coin.type {
             return eosProviders
         }
@@ -80,6 +90,10 @@ extension FullTransactionDataProviderManager: IFullTransactionDataProviderManage
             let name = localStorage.baseDashProvider ?? dashProviders[0].name
             return dash(for: name)
         }
+        if case .binance = coin.type {
+            let name = localStorage.baseBinanceProvider ?? binanceProviders[0].name
+            return dash(for: name)
+        }
         if case .eos = coin.type {
             let name = localStorage.baseEosProvider ?? eosProviders[0].name
             return eos(for: name)
@@ -93,6 +107,8 @@ extension FullTransactionDataProviderManager: IFullTransactionDataProviderManage
             localStorage.baseBitcoinProvider = name
         } else if coin.type == .dash {
             localStorage.baseDashProvider = name
+        } else if case .binance = coin.type {
+            localStorage.baseBinanceProvider = name
         } else {
             localStorage.baseEthereumProvider = name
         }
@@ -122,6 +138,11 @@ extension FullTransactionDataProviderManager: IFullTransactionDataProviderManage
 
     func ethereum(for name: String) -> IEthereumForksProvider {
         let providers = ethereumProviders
+        return providers.first(where: { provider in provider.name == name }) ?? providers[0]
+    }
+
+    func binance(for name: String) -> IBinanceProvider {
+        let providers = binanceProviders
         return providers.first(where: { provider in provider.name == name }) ?? providers[0]
     }
 

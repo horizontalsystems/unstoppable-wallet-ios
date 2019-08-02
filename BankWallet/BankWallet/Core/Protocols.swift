@@ -11,6 +11,7 @@ protocol ILocalStorage: class {
     var baseCurrencyCode: String? { get set }
     var baseBitcoinProvider: String? { get set }
     var baseDashProvider: String? { get set }
+    var baseBinanceProvider: String? { get set }
     var baseEosProvider: String? { get set }
     var baseEthereumProvider: String? { get set }
     var lightMode: Bool { get set }
@@ -106,6 +107,7 @@ protocol IAdapter: class {
 
     func availableBalance(params: [String : Any]) throws -> Decimal
     func fee(params: [String : Any]) throws -> Decimal
+    func feeRate(priority: FeeRatePriority) -> Int
     func validate(params: [String : Any]) throws -> [SendStateError]
 
     func validate(address: String) throws
@@ -333,6 +335,7 @@ protocol IFullTransactionDataProviderManager {
     func eos(for name: String) -> IEosProvider
     func bitcoinCash(for name: String) -> IBitcoinForksProvider
     func ethereum(for name: String) -> IEthereumForksProvider
+    func binance(for name: String) -> IBinanceProvider
 }
 
 protocol IPingManager {
@@ -349,6 +352,10 @@ protocol IBitcoinForksProvider: IProvider {
 
 protocol IEthereumForksProvider: IProvider {
     func convert(json: [String: Any]) -> IEthereumResponse?
+}
+
+protocol IBinanceProvider: IProvider {
+    func convert(json: [String: Any]) -> IBinanceResponse?
 }
 
 protocol IReachabilityManager {

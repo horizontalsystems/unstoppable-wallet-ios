@@ -1,7 +1,7 @@
 import RxSwift
 
 class RateSyncer {
-    private let refreshIntervalInMinutes = 3
+    private let refreshIntervalInMinutes = 5
 
     private let disposeBag = DisposeBag()
 

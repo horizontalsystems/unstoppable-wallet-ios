@@ -67,3 +67,14 @@ extension IEthereumResponse {
         return 1_000_000_000
     }
 }
+
+protocol IBinanceResponse {
+    var txId: String? { get }
+    var blockHeight: Int? { get }
+
+    var fee: Decimal? { get }
+    var value: Decimal? { get }
+
+    var from: String? { get }
+    var to: String? { get }
+}

@@ -132,6 +132,10 @@ extension EosAdapter: IAdapter {
         return asset.balance
     }
 
+    func feeRate(priority: FeeRatePriority) -> Int {
+        return 0
+    }
+
     func fee(params: [String : Any]) -> Decimal {
         return 0
     }

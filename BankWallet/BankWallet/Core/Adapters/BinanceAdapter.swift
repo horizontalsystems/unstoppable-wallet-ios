@@ -2,7 +2,7 @@ import RxSwift
 import BinanceChainKit
 
 class BinanceAdapter {
-    private let transferFee: Decimal = 0.000375
+    static let transferFee: Decimal = 0.000375
 
     private let binanceKit: BinanceChainKit
     private let asset: Asset
@@ -27,13 +27,22 @@ class BinanceAdapter {
                 address: transaction.to,
                 mine: transaction.to == binanceKit.account
         )
+        
+        var amount: Decimal = 0
+        if from.mine {
+            amount -= transaction.amount
+            amount -= transaction.fee
+        }
+        if to.mine {
+            amount += transaction.amount
+        }
 
         return TransactionRecord(
                 transactionHash: transaction.hash,
                 transactionIndex: 0,
                 interTransactionIndex: 0,
                 blockHeight: transaction.blockHeight,
-                amount: transaction.amount * (from.mine ? -1 : 1),
+                amount: amount,
                 date: transaction.date,
                 from: [from],
                 to: [to]
@@ -118,11 +127,15 @@ extension BinanceAdapter: IAdapter {
     }
 
     func availableBalance(params: [String : Any]) -> Decimal {
-        return max(0, asset.balance - transferFee)
+        return max(0, asset.balance - BinanceAdapter.transferFee)
+    }
+
+    func feeRate(priority: FeeRatePriority) -> Int {
+        return 0
     }
 
     func fee(params: [String : Any]) -> Decimal {
-        return transferFee
+        return BinanceAdapter.transferFee
     }
 
     func validate(address: String) throws {

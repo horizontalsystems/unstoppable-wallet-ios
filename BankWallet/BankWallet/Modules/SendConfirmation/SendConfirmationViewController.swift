@@ -1,23 +1,21 @@
 import UIKit
-import RxSwift
 import SnapKit
 
-class SendViewController: UIViewController {
-    private let disposeBag = DisposeBag()
+class SendConfirmationViewController: UIViewController {
+    private let delegate: ISendConfirmationViewDelegate
 
-    private let delegate: ISendViewDelegate
-
-    private let iconImageView = UIImageView()
     private let sendHolderView = UIView()
     private let sendButton = RespondButton()
 
     private let views: [UIView]
 
-    init(delegate: ISendViewDelegate, views: [UIView]) {
+    init(delegate: ISendConfirmationViewDelegate, views: [UIView]) {
         self.delegate = delegate
         self.views = views
 
         super.init(nibName: nil, bundle: nil)
+
+        title = "send.confirmation.title".localized
 
         sendHolderView.addSubview(sendButton)
         sendHolderView.backgroundColor = .clear
@@ -34,12 +32,12 @@ class SendViewController: UIViewController {
         }
         sendButton.backgrounds = ButtonTheme.yellowBackgroundDictionary
         sendButton.textColors = ButtonTheme.textColorDictionary
-        sendButton.titleLabel.text = "send.next_button".localized
+        sendButton.titleLabel.text = "send.confirmation.send_button".localized
         sendButton.cornerRadius = SendTheme.sendButtonCornerRadius
     }
 
     @objc func onClose() {
-        delegate.onClose()
+//        delegate.onClose()
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -51,22 +49,7 @@ class SendViewController: UIViewController {
 
         view.backgroundColor = AppTheme.controllerBackground
 
-        iconImageView.tintColor = .cryptoGray
-
-        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: iconImageView)
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "Close Full Transaction Icon"), style: .plain, target: self, action: #selector(onClose))
-
-        sendButton.state = .disabled
-
         buildViews()
-
-        delegate.onViewDidLoad()
-    }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-
-        delegate.showKeyboard()
     }
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -100,39 +83,16 @@ class SendViewController: UIViewController {
         }
     }
 
-
 }
 
-extension SendViewController: ISendView {
-
-    func set(coin: Coin) {
-        title = "send.title".localized(coin.title)
-        iconImageView.image = UIImage(named: "\(coin.code.lowercased())")?.withRenderingMode(.alwaysTemplate)
-    }
+extension SendConfirmationViewController: ISendConfirmationView {
 
     func showCopied() {
         HudHelper.instance.showSuccess(title: "alert.copied".localized)
     }
 
-    func show(error: Error) {
-        HudHelper.instance.showError(title: error.localizedDescription)
-    }
-
-    func showProgress() {
-        HudHelper.instance.showSpinner(userInteractionEnabled: false)
-    }
-
-    func set(sendButtonEnabled: Bool) {
-        sendButton.state = sendButtonEnabled ? .active : .disabled
-    }
-
     func dismissKeyboard() {
         view.endEditing(true)
-    }
-
-    func dismissWithSuccess() {
-        navigationController?.dismiss(animated: true)
-        HudHelper.instance.showSuccess()
     }
 
 }

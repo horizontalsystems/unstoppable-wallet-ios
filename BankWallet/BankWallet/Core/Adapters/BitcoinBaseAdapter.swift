@@ -3,6 +3,8 @@ import RxSwift
 
 class BitcoinBaseAdapter {
     let decimal = 8
+    var receiveAddressScriptType: ScriptType { return .p2pkh }
+    var changeAddressScriptType: ScriptType { return .p2pkh }
 
     let wallet: Wallet
 
@@ -18,7 +20,7 @@ class BitcoinBaseAdapter {
     private(set) var state: AdapterState
 
     var receiveAddress: String {
-        return abstractKit.receiveAddress(for: .p2pkh)
+        return abstractKit.receiveAddress(for: receiveAddressScriptType)
     }
 
     init(wallet: Wallet, abstractKit: AbstractKit, addressParser: IAddressParser) {
@@ -149,18 +151,18 @@ extension BitcoinBaseAdapter: IAdapter {
     }
 
     func sendSingle(params: [String : Any]) -> Single<Void> {
-        guard let amount: Decimal = params[AdapterField.amount.rawValue] as? Decimal,
-              let address: String = params[AdapterField.address.rawValue] as? String,
-              let feeRatePriority: FeeRatePriority = params[AdapterField.feeRateRriority.rawValue] as? FeeRatePriority else {
+        guard let amount = params[AdapterField.amount.rawValue] as? Decimal,
+              let address = params[AdapterField.address.rawValue] as? String,
+              let feeRate = params[AdapterField.feeRate.rawValue] as? Int else {
             return Single.error(AdapterError.wrongParameters)
         }
-
         let satoshiAmount = convertToSatoshi(value: amount)
-        let rate = feeRate(priority: feeRatePriority)
 
         return Single.create { [weak self] observer in
             do {
-                _ = try self?.abstractKit.send(to: address, value: satoshiAmount, feeRate: rate)
+                if let adapter = self {
+                    _ = try adapter.abstractKit.send(to: address, value: satoshiAmount, feeRate: feeRate, changeScriptType: adapter.changeAddressScriptType)
+                }
                 observer(.success(()))
             } catch {
                 observer(.error(self?.createSendError(from: error) ?? error))
@@ -177,15 +179,14 @@ extension BitcoinBaseAdapter: IAdapter {
     }
 
     func fee(params: [String : Any]) throws -> Decimal {
-        guard let amount: Decimal = params[AdapterField.amount.rawValue] as? Decimal,
-              let feeRatePriority: FeeRatePriority = params[AdapterField.feeRateRriority.rawValue] as? FeeRatePriority else {
+        guard let amount = params[AdapterField.amount.rawValue] as? Decimal,
+              let feeRate = params[AdapterField.feeRate.rawValue] as? Int, feeRate != 0 else {
             throw AdapterError.wrongParameters
         }
         let address: String? = params[AdapterField.address.rawValue] as? String
-
         do {
             let amount = convertToSatoshi(value: amount)
-            let fee = try abstractKit.fee(for: amount, toAddress: address, senderPay: true, feeRate: feeRate(priority: feeRatePriority))
+            let fee = try abstractKit.fee(for: amount, toAddress: address, senderPay: true, feeRate: feeRate, changeScriptType: changeAddressScriptType)
             return Decimal(fee) / coinRate
         } catch BitcoinCoreErrors.UnspentOutputSelection.notEnough(let maxFee) {
             return Decimal(maxFee) / coinRate

@@ -1,4 +1,4 @@
-import UIKit
+import Foundation
 
 protocol ISendAddressView: class {
     func set(address: String?, error: String?)
@@ -21,9 +21,6 @@ protocol ISendAddressDelegate: class {
 
 protocol ISendAddressInteractor {
     var valueFromPasteboard: String? { get }
-}
-
-protocol ISendAddressInteractorDelegate: class {
 }
 
 protocol ISendAddressModule: AnyObject {
