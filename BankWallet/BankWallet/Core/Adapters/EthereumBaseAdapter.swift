@@ -65,8 +65,14 @@ extension EthereumBaseAdapter {
         return ethereumKit.lastBlockHeightObservable.map { _ in () }
     }
 
+    func feeRate(priority: FeeRatePriority) -> Int {
+        return feeRateProvider.ethereumGasPrice(for: priority)
+    }
+
     func sendSingle(params: [String: Any]) -> Single<Void> {
-        guard let amount: Decimal = params[AdapterField.amount.rawValue] as? Decimal, let address: String = params[AdapterField.address.rawValue] as? String, let feeRatePriority: FeeRatePriority = params[AdapterField.feeRateRriority.rawValue] as? FeeRatePriority else {
+        guard let amount = params[AdapterField.amount.rawValue] as? Decimal,
+              let address = params[AdapterField.address.rawValue] as? String,
+              let feeRate = params[AdapterField.feeRate.rawValue] as? Int, feeRate != 0 else {
             return Single.error(AdapterError.wrongParameters)
         }
 
@@ -76,7 +82,7 @@ extension EthereumBaseAdapter {
 
         let amountString = String(describing: roundedDecimal)
 
-        return sendSingle(to: address, value: amountString, gasPrice: feeRateProvider.ethereumGasPrice(for: feeRatePriority))
+        return sendSingle(to: address, value: amountString, gasPrice: feeRate)
     }
 
     func validate(address: String) throws {

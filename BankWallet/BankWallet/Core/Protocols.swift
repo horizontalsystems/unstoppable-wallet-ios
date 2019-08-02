@@ -105,6 +105,7 @@ protocol IAdapter: class {
 
     func availableBalance(params: [String : Any]) throws -> Decimal
     func fee(params: [String : Any]) throws -> Decimal
+    func feeRate(priority: FeeRatePriority) -> Int
     func validate(params: [String : Any]) throws -> [SendStateError]
 
     func validate(address: String) throws

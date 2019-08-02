@@ -91,11 +91,11 @@ extension EthereumAdapter: IAdapter {
     }
 
     func fee(params: [String : Any]) throws -> Decimal {
-        guard let feeRatePriority: FeeRatePriority = params[AdapterField.feeRateRriority.rawValue] as? FeeRatePriority else {
+        guard let feeRate = params[AdapterField.feeRate.rawValue] as? Int, feeRate != 0 else {
             throw AdapterError.wrongParameters
         }
 
-        return ethereumKit.fee(gasPrice: feeRateProvider.ethereumGasPrice(for: feeRatePriority)) / pow(10, EthereumAdapter.decimal)
+        return ethereumKit.fee(gasPrice: feeRate) / pow(10, EthereumAdapter.decimal)
     }
 
     func validate(params: [String : Any])throws -> [SendStateError] {
