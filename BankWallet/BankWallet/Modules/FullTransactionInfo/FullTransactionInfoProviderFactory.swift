@@ -30,6 +30,10 @@ extension FullTransactionInfoProviderFactory: IFullTransactionInfoProviderFactor
             let dashProvider = dataProviderManager.dash(for: providerName)
             provider = dashProvider
             adapter = BitcoinTransactionInfoAdapter(provider: dashProvider, coin: coin, unitName: "duff")
+        } else if case .eos = coin.type {
+            let eosProvider = dataProviderManager.eos(for: providerName)
+            provider = eosProvider
+            adapter = EosTransactionInfoAdapter(provider: eosProvider, coin: coin)
         } else {
             let ethereumProvider = dataProviderManager.ethereum(for: providerName)
             provider = ethereumProvider

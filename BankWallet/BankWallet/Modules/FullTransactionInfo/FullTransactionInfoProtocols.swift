@@ -1,5 +1,20 @@
 import Foundation
 
+protocol IEosResponse {
+    var txId: String? { get }
+    var status: String? { get }
+    var cpuUsage: Int? { get }
+    var netUsage: Int? { get }
+    var blockNumber: Int? { get }
+    var blockTime: Date? { get }
+
+    var contract: String? { get }
+    var from: String? { get }
+    var to: String? { get }
+    var quantity: String? { get }
+    var memo: String? { get }
+}
+
 protocol IBitcoinResponse {
     var btcRate: Decimal { get }
 

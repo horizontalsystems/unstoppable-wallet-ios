@@ -11,6 +11,7 @@ protocol ILocalStorage: class {
     var baseCurrencyCode: String? { get set }
     var baseBitcoinProvider: String? { get set }
     var baseDashProvider: String? { get set }
+    var baseEosProvider: String? { get set }
     var baseEthereumProvider: String? { get set }
     var lightMode: Bool { get set }
     var agreementAccepted: Bool { get set }
@@ -299,7 +300,7 @@ protocol IAccountRecordStorage {
 }
 
 protocol IJsonApiProvider {
-    func getJson(urlString: String, parameters: [String: Any]?) -> Single<[String: Any]>
+    func getJson(requestObject: JsonApiProvider.RequestObject) -> Single<[String: Any]>
 }
 
 protocol ITransactionRecordStorage {
@@ -329,12 +330,17 @@ protocol IFullTransactionDataProviderManager {
 
     func bitcoin(for name: String) -> IBitcoinForksProvider
     func dash(for name: String) -> IBitcoinForksProvider
+    func eos(for name: String) -> IEosProvider
     func bitcoinCash(for name: String) -> IBitcoinForksProvider
     func ethereum(for name: String) -> IEthereumForksProvider
 }
 
 protocol IPingManager {
     func serverAvailable(url: String, timeoutInterval: TimeInterval) -> Observable<TimeInterval>
+}
+
+protocol IEosProvider: IProvider {
+    func convert(json: [String: Any]) -> IEosResponse?
 }
 
 protocol IBitcoinForksProvider: IProvider {
@@ -392,7 +398,8 @@ protocol ISettingsProviderMap {
 protocol IProvider {
     var name: String { get }
     func url(for hash: String) -> String
-    func apiUrl(for hash: String) -> String
+    func reachabilityUrl(for hash: String) -> String
+    func requestObject(for hash: String) -> JsonApiProvider.RequestObject
 }
 
 protocol ILockoutManager {

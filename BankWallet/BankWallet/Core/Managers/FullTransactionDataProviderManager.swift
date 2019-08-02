@@ -38,6 +38,12 @@ class FullTransactionDataProviderManager {
         ]
     }
 
+    private var eosProviders: [IEosProvider] {
+        return [
+            EosInfraProvider()
+        ]
+    }
+
     private let localStorage: ILocalStorage
     private let appConfigProvider: IAppConfigProvider
 
@@ -59,6 +65,8 @@ extension FullTransactionDataProviderManager: IFullTransactionDataProviderManage
             return bitcoinCashProviders
         } else if coin.type == .dash {
             return dashProviders
+        } else if case .eos = coin.type {
+            return eosProviders
         }
         return ethereumProviders
     }
@@ -71,6 +79,10 @@ extension FullTransactionDataProviderManager: IFullTransactionDataProviderManage
         if coin.type == .dash {
             let name = localStorage.baseDashProvider ?? dashProviders[0].name
             return dash(for: name)
+        }
+        if case .eos = coin.type {
+            let name = localStorage.baseEosProvider ?? eosProviders[0].name
+            return eos(for: name)
         }
         let name = localStorage.baseEthereumProvider ?? ethereumProviders[0].name
         return ethereum(for: name)
@@ -100,6 +112,11 @@ extension FullTransactionDataProviderManager: IFullTransactionDataProviderManage
 
     func dash(for name: String) -> IBitcoinForksProvider {
         let providers = dashProviders
+        return providers.first(where: { provider in provider.name == name }) ?? providers[0]
+    }
+
+    func eos(for name: String) -> IEosProvider {
+        let providers = eosProviders
         return providers.first(where: { provider in provider.name == name }) ?? providers[0]
     }
 

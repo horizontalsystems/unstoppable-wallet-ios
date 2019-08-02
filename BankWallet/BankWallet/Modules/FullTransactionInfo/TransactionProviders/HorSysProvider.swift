@@ -5,8 +5,17 @@ class HorSysBitcoinProvider: IBitcoinForksProvider {
     private let url: String
     private let apiUrl: String
 
-    func url(for hash: String) -> String { return url + hash }
-    func apiUrl(for hash: String) -> String { return apiUrl + hash }
+    func url(for hash: String) -> String {
+        return url + hash
+    }
+
+    func reachabilityUrl(for hash: String) -> String {
+        return apiUrl + hash
+    }
+
+    func requestObject(for hash: String) -> JsonApiProvider.RequestObject {
+        return .get(url: apiUrl + hash, params: nil)
+    }
 
     init(testMode: Bool) {
         url = testMode ? "http://btc-testnet.horizontalsystems.xyz/tx/" : "https://btc.horizontalsystems.xyz/tx/"
@@ -23,8 +32,17 @@ class HorSysBitcoinCashProvider: IBitcoinForksProvider {
     private let url: String
     private let apiUrl: String
 
-    func url(for hash: String) -> String { return url + hash }
-    func apiUrl(for hash: String) -> String { return apiUrl + hash }
+    func url(for hash: String) -> String {
+        return url + hash
+    }
+
+    func reachabilityUrl(for hash: String) -> String {
+        return apiUrl + hash
+    }
+
+    func requestObject(for hash: String) -> JsonApiProvider.RequestObject {
+        return .get(url: apiUrl + hash, params: nil)
+    }
 
     init(testMode: Bool) {
         url = testMode ? "http://bch-testnet.horizontalsystems.xyz/apg/tx/" : "https://bch.horizontalsystems.xyz/apg/tx/"
@@ -42,8 +60,17 @@ class HorSysDashProvider: IBitcoinForksProvider {
     private let url: String
     private let apiUrl: String
 
-    func url(for hash: String) -> String { return url + hash }
-    func apiUrl(for hash: String) -> String { return apiUrl + hash }
+    func url(for hash: String) -> String {
+        return url + hash
+    }
+
+    func reachabilityUrl(for hash: String) -> String {
+        return apiUrl + hash
+    }
+
+    func requestObject(for hash: String) -> JsonApiProvider.RequestObject {
+        return .get(url: apiUrl + hash, params: nil)
+    }
 
     init(testMode: Bool) {
         url = testMode ? "http://dash-testnet.horizontalsystems.xyz/insight/tx/" : "https://dash.horizontalsystems.xyz/insight/tx/"
@@ -60,8 +87,17 @@ class HorSysEthereumProvider: IEthereumForksProvider {
     private let url: String
     private let apiUrl: String
 
-    func url(for hash: String) -> String { return url + hash }
-    func apiUrl(for hash: String) -> String { return apiUrl + hash }
+    func url(for hash: String) -> String {
+        return url + hash
+    }
+
+    func reachabilityUrl(for hash: String) -> String {
+        return apiUrl + hash
+    }
+
+    func requestObject(for hash: String) -> JsonApiProvider.RequestObject {
+        return .get(url: apiUrl + hash, params: nil)
+    }
 
     init(testMode: Bool) {
         url = testMode ? "http://eth-ropsten.horizontalsystems.xyz/tx/" : "https://eth.horizontalsystems.xyz/tx/"
