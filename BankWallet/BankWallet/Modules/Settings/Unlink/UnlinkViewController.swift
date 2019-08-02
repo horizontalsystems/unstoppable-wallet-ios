@@ -18,6 +18,14 @@ class UnlinkViewController: ActionSheetController {
     }
 
     func initItems() {
+        let titleItem = AlertTitleItem(
+                title: "settings_manage_keys.delete.title".localized,
+                icon: UIImage(named: "Attention Icon")?.withRenderingMode(.alwaysTemplate),
+                iconTintColor: ManageAccountsTheme.attentionColor,
+                tag: 0
+        )
+        model.addItemView(titleItem)
+
         var texts = [NSAttributedString]()
 
         let attributes = [NSAttributedString.Key.foregroundColor: ConfirmationTheme.textColor, NSAttributedString.Key.font: ConfirmationTheme.regularFont]
@@ -26,7 +34,7 @@ class UnlinkViewController: ActionSheetController {
         texts.append(NSAttributedString(string: "settings_manage_keys.delete.confirmation_loose".localized, attributes: attributes))
 
         for (index, text) in texts.enumerated() {
-            let item = ConfirmationCheckboxItem(descriptionText: text, tag: index) { [weak self] view in
+            let item = ConfirmationCheckboxItem(descriptionText: text, tag: index + 1) { [weak self] view in
                 self?.handleToggle(index: index)
             }
 
@@ -35,7 +43,7 @@ class UnlinkViewController: ActionSheetController {
         }
 
         let buttonItem = AlertButtonItem(
-                tag: texts.count,
+                tag: texts.count + 1,
                 title: "security_settings.delete_alert_button".localized,
                 textStyle: ButtonTheme.whiteTextColorDictionary,
                 backgroundStyle: ButtonTheme.redBackgroundDictionary
