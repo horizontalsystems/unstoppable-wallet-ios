@@ -230,16 +230,16 @@ CHECKOUT OPTIONS:
     :commit: c04766675aa3e1f3eb01dab2b96ec278fa4a13eb
     :git: https://github.com/horizontalsystems/binance-chain-kit-ios
   BitcoinCashKit.swift:
-    :commit: 89eadcd198235e81b768a224effcaa3e3f8273c8
+    :commit: dc22694ad24da7f7bcff91e63a7fec0df6f2dec3
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios/
   BitcoinCore.swift:
-    :commit: 89eadcd198235e81b768a224effcaa3e3f8273c8
+    :commit: dc22694ad24da7f7bcff91e63a7fec0df6f2dec3
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios/
   BitcoinKit.swift:
-    :commit: 89eadcd198235e81b768a224effcaa3e3f8273c8
+    :commit: dc22694ad24da7f7bcff91e63a7fec0df6f2dec3
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios/
   DashKit.swift:
-    :commit: 89eadcd198235e81b768a224effcaa3e3f8273c8
+    :commit: dc22694ad24da7f7bcff91e63a7fec0df6f2dec3
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios/
   EosioSwift:
     :commit: bc0a1dc754be459031857678bbaceb27b3642aa3
