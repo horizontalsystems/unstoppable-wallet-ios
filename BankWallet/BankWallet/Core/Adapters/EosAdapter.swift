@@ -5,14 +5,16 @@ class EosAdapter {
     private let irreversibleThreshold = 330
 
     private let eosKit: EosKit
+    private let addressParser: IAddressParser
     private let asset: Asset
 
     let wallet: Wallet
     let decimal: Int = 4
 
-    init(wallet: Wallet, eosKit: EosKit, token: String, symbol: String) {
+    init(wallet: Wallet, eosKit: EosKit, addressParser: IAddressParser, token: String, symbol: String) {
         self.wallet = wallet
         self.eosKit = eosKit
+        self.addressParser = addressParser
 
         asset = eosKit.register(token: token, symbol: symbol)
     }
@@ -141,6 +143,7 @@ extension EosAdapter: IAdapter {
     }
 
     func validate(address: String) throws {
+        try EosAdapter.validate(account: address)
     }
 
     func validate(params: [String : Any]) throws -> [SendStateError] {
@@ -159,7 +162,14 @@ extension EosAdapter: IAdapter {
     }
 
     func parse(paymentAddress: String) -> PaymentRequestAddress {
-        return PaymentRequestAddress(address: paymentAddress, amount: nil)
+        let paymentData = addressParser.parse(paymentAddress: paymentAddress)
+        var validationError: Error?
+        do {
+            try validate(address: paymentData.address)
+        } catch {
+            validationError = error
+        }
+        return PaymentRequestAddress(address: paymentData.address, amount: paymentData.amount.map { Decimal($0) }, error: validationError)
     }
 
     var receiveAddress: String {

@@ -1,6 +1,7 @@
 import Foundation
 import HSHDWalletKit
 import EosKit
+import BitcoinCore
 
 extension WordsValidator.ValidationError: LocalizedError {
     public var errorDescription: String? {
@@ -36,6 +37,24 @@ extension EosKit.ValidationError: LocalizedError {
         switch self {
         case .invalidPrivateKey:
             return "error.invalid_eos_key".localized
+        }
+    }
+}
+
+extension BitcoinCoreErrors.AddressConversion: LocalizedError {
+    public var errorDescription: String? {
+        switch self {
+        default:
+            return "send.error.invalid_address".localized
+        }
+    }
+}
+
+extension EthereumBaseAdapter.AddressConversion: LocalizedError {
+    public var errorDescription: String? {
+        switch self {
+        default:
+            return "send.error.invalid_address".localized
         }
     }
 }

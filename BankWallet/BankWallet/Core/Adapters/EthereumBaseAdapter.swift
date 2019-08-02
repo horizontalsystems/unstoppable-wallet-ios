@@ -86,7 +86,12 @@ extension EthereumBaseAdapter {
     }
 
     func validate(address: String) throws {
-        try ethereumKit.validate(address: address)
+        //todo: remove when make errors public
+        do {
+            try ethereumKit.validate(address: address)
+        } catch {
+            throw AddressConversion.invalidAddress
+        }
     }
 
     func parse(paymentAddress: String) -> PaymentRequestAddress {
@@ -108,4 +113,11 @@ extension EthereumBaseAdapter {
         return ethereumKit.debugInfo
     }
 
+}
+
+extension EthereumBaseAdapter {
+    //todo: Make ethereumKit errors public!
+    enum AddressConversion: Error {
+        case invalidAddress
+    }
 }
