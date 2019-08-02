@@ -3,6 +3,8 @@ import RxSwift
 
 class BitcoinBaseAdapter {
     let decimal = 8
+    var receiveAddressScriptType: ScriptType { return .p2pkh }
+    var changeAddressScriptType: ScriptType { return .p2pkh }
 
     let wallet: Wallet
 
@@ -18,7 +20,7 @@ class BitcoinBaseAdapter {
     private(set) var state: AdapterState
 
     var receiveAddress: String {
-        return abstractKit.receiveAddress(for: .p2pkh)
+        return abstractKit.receiveAddress(for: receiveAddressScriptType)
     }
 
     init(wallet: Wallet, abstractKit: AbstractKit, addressParser: IAddressParser) {
@@ -158,7 +160,9 @@ extension BitcoinBaseAdapter: IAdapter {
 
         return Single.create { [weak self] observer in
             do {
-                _ = try self?.abstractKit.send(to: address, value: satoshiAmount, feeRate: feeRate)
+                if let adapter = self {
+                    _ = try adapter.abstractKit.send(to: address, value: satoshiAmount, feeRate: feeRate, changeScriptType: adapter.changeAddressScriptType)
+                }
                 observer(.success(()))
             } catch {
                 observer(.error(self?.createSendError(from: error) ?? error))
@@ -182,7 +186,7 @@ extension BitcoinBaseAdapter: IAdapter {
         let address: String? = params[AdapterField.address.rawValue] as? String
         do {
             let amount = convertToSatoshi(value: amount)
-            let fee = try abstractKit.fee(for: amount, toAddress: address, senderPay: true, feeRate: feeRate)
+            let fee = try abstractKit.fee(for: amount, toAddress: address, senderPay: true, feeRate: feeRate, changeScriptType: changeAddressScriptType)
             return Decimal(fee) / coinRate
         } catch BitcoinCoreErrors.UnspentOutputSelection.notEnough(let maxFee) {
             return Decimal(maxFee) / coinRate
