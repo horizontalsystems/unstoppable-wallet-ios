@@ -34,21 +34,39 @@ extension SendRouter {
         let router = SendRouter()
         let interactor = SendInteractor(pasteboardManager: App.shared.pasteboardManager, adapter: adapter, backgroundManager: App.shared.backgroundManager)
 
-        let feeCoinCode = adapter.feeCoinCode ?? adapter.wallet.coin.code
+        var views = [UIView]()
+        let viewController: UIViewController & ISendView
+        if case .eos = adapter.wallet.account.type {
+            let (amountView, amountModule) = SendAmountRouter.module(coinCode: coinCode, decimal: adapter.decimal)
+            let (addressView, addressModule) = SendAddressRouter.module(canEdit: true)
+            views.append(contentsOf: [amountView, addressView])
 
-        let (amountView, amountModule) = SendAmountRouter.module(coinCode: coinCode, decimal: adapter.decimal)
-        let (addressView, addressModule) = SendAddressRouter.module()
-        let (feeView, feeModule) = SendFeeRouter.module(coinCode: feeCoinCode, decimal: adapter.decimal)
+            let presenter = EOSSendPresenter(interactor: interactor, router: router, factory: factory, amountModule: amountModule, addressModule: addressModule)
+            viewController = SendViewController(delegate: presenter, views: views)
 
-        let presenter = SendPresenter(interactor: interactor, router: router, factory: factory, amountModule: amountModule, addressModule: addressModule, feeModule: feeModule)
-        let viewController = SendViewController(delegate: presenter, views: [amountView, addressView, feeView])
+            amountModule.delegate = presenter
+            addressModule.delegate = presenter
 
-        interactor.delegate = presenter
-        presenter.view = viewController
+            interactor.delegate = presenter
+            presenter.view = viewController
+        } else {
+            let feeCoinCode = adapter.feeCoinCode ?? adapter.wallet.coin.code
 
-        amountModule.delegate = presenter
-        addressModule.delegate = presenter
-        feeModule.delegate = presenter
+            let (amountView, amountModule) = SendAmountRouter.module(coinCode: coinCode, decimal: adapter.decimal)
+            let (addressView, addressModule) = SendAddressRouter.module()
+            let (feeView, feeModule) = SendFeeRouter.module(coinCode: feeCoinCode, decimal: adapter.decimal)
+            views.append(contentsOf: [amountView, addressView, feeView])
+
+            let presenter = SendPresenter(interactor: interactor, router: router, factory: factory, amountModule: amountModule, addressModule: addressModule, feeModule: feeModule)
+            viewController = SendViewController(delegate: presenter, views: views)
+
+            amountModule.delegate = presenter
+            addressModule.delegate = presenter
+            feeModule.delegate = presenter
+
+            interactor.delegate = presenter
+            presenter.view = viewController
+        }
 
         let navigationController = WalletNavigationController(rootViewController: viewController)
         router.viewController = navigationController

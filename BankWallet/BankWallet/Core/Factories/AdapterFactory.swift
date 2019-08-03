@@ -36,7 +36,8 @@ class AdapterFactory: IAdapterFactory {
             }
         case let .eos(token, symbol):
             if let eosKit = try? eosKitManager.eosKit(account: wallet.account) {
-                return EosAdapter(wallet: wallet, eosKit: eosKit, token: token, symbol: symbol)
+                let addressParser = AddressParser(validScheme: "eos", removeScheme: true)
+                return EosAdapter(wallet: wallet, eosKit: eosKit, addressParser: addressParser, token: token, symbol: symbol)
             }
         case let .binance(symbol):
             if let binanceKit = try? binanceKitManager.binanceKit(account: wallet.account) {

@@ -7,6 +7,7 @@ protocol ISendAddressView: class {
 protocol ISendAddressViewDelegate {
     func onAddressScanClicked()
     func onAddressPasteClicked()
+    func onAddressChange(address: String?)
     func onAddressDeleteClicked()
 }
 

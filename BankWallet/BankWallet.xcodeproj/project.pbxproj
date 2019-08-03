@@ -845,6 +845,7 @@
 		58AAA142672488EC001B2B37 /* FullTransactionInfoRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA842D6734B75D88E578C /* FullTransactionInfoRouter.swift */; };
 		58AAA158CE08BE54E4D5C412 /* SendAddressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAF5D0242DF2FE5D79926 /* SendAddressView.swift */; };
 		58AAA160B00C018EBE97CAFD /* RequestErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAF286BB3532AF94E4EB8 /* RequestErrorView.swift */; };
+		58AAA18A85E8B0067261E355 /* EOSSendPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA0592EB023442536D912 /* EOSSendPresenter.swift */; };
 		58AAA195158C63730EC59E9E /* SendConfirmationMemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAF88ECDA19F2EF3C0068 /* SendConfirmationMemoView.swift */; };
 		58AAA1A48D8DE495E3F773AB /* SendConfirmationMemoModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAFD2F3EF51CBF2828BE6 /* SendConfirmationMemoModule.swift */; };
 		58AAA1A770E5DD3B87EDD1A7 /* EtherscanProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA07E7147F10E59DC1CED /* EtherscanProvider.swift */; };
@@ -950,6 +951,7 @@
 		58AAA6ABD4F748833A6D1F09 /* SendConfirmationInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA7E197A27A5C394A51F9 /* SendConfirmationInteractor.swift */; };
 		58AAA6B67B8FD1ABBA513FEB /* SendAmountRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAEB485F977A3723BE738 /* SendAmountRouter.swift */; };
 		58AAA6D081B20EA97A0F3180 /* BackupWordsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAC411BF9546AD24CDE23 /* BackupWordsController.swift */; };
+		58AAA6EA0D064D143399705C /* EOSSendPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA0592EB023442536D912 /* EOSSendPresenter.swift */; };
 		58AAA6ECE042DAD0D4137ECA /* FullTransactionHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAC123E3138007B4D6E05 /* FullTransactionHeaderCell.swift */; };
 		58AAA6FD8C7EE715B791F566 /* SendFeeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA6205C47965E48E4BAC3 /* SendFeeView.swift */; };
 		58AAA70DA6DB5AE33CA2DBD9 /* FullTransactionInfoProviderFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA4D67CF8410B7F073319 /* FullTransactionInfoProviderFactoryTests.swift */; };
@@ -1094,6 +1096,7 @@
 		58AAAF6C6C0F967415083427 /* FullTransactionSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAC0A14CAF88B383C7857 /* FullTransactionSection.swift */; };
 		58AAAF85FC5ABDB36C0D08B2 /* SendFormatHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAADD7A1DBFBE55B80E550 /* SendFormatHelper.swift */; };
 		58AAAF8C7BE350256A86F681 /* TransactionInfoDescriptionTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA98833B2412BBE860CA5 /* TransactionInfoDescriptionTheme.swift */; };
+		58AAAFB108B10EC561438B9B /* EOSSendPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA0592EB023442536D912 /* EOSSendPresenter.swift */; };
 		58AAAFCEFA4528221CDF7A5C /* SendConfirmationPrimaryModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAE2EAA341EB3B4A0210D /* SendConfirmationPrimaryModule.swift */; };
 		58AAAFF746E489C4419778B3 /* DataProviderSettingsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA68D36E8424BBE757B88 /* DataProviderSettingsPresenter.swift */; };
 		D3285F4620BD158E00644076 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3285F4520BD158E00644076 /* AppDelegate.swift */; };
@@ -1891,6 +1894,7 @@
 		58AAA01DEF6280C1A0F1DA2D /* EthereumTransactionInfoAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EthereumTransactionInfoAdapter.swift; sourceTree = "<group>"; };
 		58AAA04194E7E2B466F92828 /* BackupInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackupInteractor.swift; sourceTree = "<group>"; };
 		58AAA047F8B03E37F51F6AC1 /* SendAddressRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendAddressRouter.swift; sourceTree = "<group>"; };
+		58AAA0592EB023442536D912 /* EOSSendPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EOSSendPresenter.swift; sourceTree = "<group>"; };
 		58AAA07E7147F10E59DC1CED /* EtherscanProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EtherscanProvider.swift; sourceTree = "<group>"; };
 		58AAA07EAD7DFA4B9CDA00C8 /* SendAddressModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendAddressModule.swift; sourceTree = "<group>"; };
 		58AAA0B54232818C798F546B /* SendConfirmationPrimaryRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendConfirmationPrimaryRouter.swift; sourceTree = "<group>"; };
@@ -2890,6 +2894,7 @@
 				58AAA89DB3DE36B5C227C1C1 /* SendViewController.swift */,
 				1A5647D980D08E2E4359861B /* ScanQRController.swift */,
 				11B35072A029200FB9F86BCB /* SendConfirmationItemFactory.swift */,
+				58AAA0592EB023442536D912 /* EOSSendPresenter.swift */,
 			);
 			path = Send;
 			sourceTree = "<group>";
@@ -4287,6 +4292,7 @@
 				58AAA51CBBC769865014BB9D /* ActionTitleItemView.swift in Sources */,
 				2FA5DFFB571221BD243E34E3 /* BinanceOrgProvider.swift in Sources */,
 				2FA5DB42B95BA19114F108C2 /* BinanceTransactionInfoAdapter.swift in Sources */,
+				58AAAFB108B10EC561438B9B /* EOSSendPresenter.swift in Sources */,
 				1A564CBB6D08E2C975181131 /* EosInfraProvider.swift in Sources */,
 				1A5644E20BE5CFDE9CF4CC76 /* EosTransactionInfoAdapter.swift in Sources */,
 			);
@@ -4801,6 +4807,7 @@
 				58AAAF4AE50022C404CA2F68 /* ActionTitleItemView.swift in Sources */,
 				2FA5D9E360618E837ED018C1 /* BinanceOrgProvider.swift in Sources */,
 				2FA5DD93A28FF177DC4918B0 /* BinanceTransactionInfoAdapter.swift in Sources */,
+				58AAA18A85E8B0067261E355 /* EOSSendPresenter.swift in Sources */,
 				1A564419CB78DB8E2F512CA8 /* EosInfraProvider.swift in Sources */,
 				1A56499D7B99E358826CF7F3 /* EosTransactionInfoAdapter.swift in Sources */,
 			);
@@ -5264,6 +5271,7 @@
 				58AAA2BCD7D6394F059BC420 /* ActionTitleItemView.swift in Sources */,
 				2FA5DF4D40DE4EA9E797F1BB /* BinanceOrgProvider.swift in Sources */,
 				2FA5D6D4C198566D8AA50B7D /* BinanceTransactionInfoAdapter.swift in Sources */,
+				58AAA6EA0D064D143399705C /* EOSSendPresenter.swift in Sources */,
 				1A564166E898429B13366134 /* EosInfraProvider.swift in Sources */,
 				1A564A5F8485ED64DC0DF184 /* EosTransactionInfoAdapter.swift in Sources */,
 			);
