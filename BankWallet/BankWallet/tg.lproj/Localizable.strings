@@ -161,6 +161,12 @@
 "full_info.to" = "To";
 "full_info.amount" = "Amount";
 "full_info.nonce" = "Nonce";
+"full_info.status" = "Status";
+"full_info.memo" = "Memo";
+"full_info.cpu" = "CPU Usage";
+"full_info.net" = "Net Usage";
+"full_info.milli_seconds" = "%@ μs";
+"full_info.bytes" = "%@ Bytes";
 
 "full_info.gas_limit" = "Gas Limit";
 "full_info.gas_used" = "Gas Used";
