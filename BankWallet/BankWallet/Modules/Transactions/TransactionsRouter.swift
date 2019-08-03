@@ -20,7 +20,7 @@ extension TransactionsRouter {
         let transactionViewItemLoader = TransactionViewItemLoader(state: TransactionViewItemLoaderState(), differ: Differ())
 
         let router = TransactionsRouter()
-        let interactor = TransactionsInteractor(adapterManager: App.shared.adapterManager, currencyManager: App.shared.currencyManager, rateManager: App.shared.rateManager, reachabilityManager: App.shared.reachabilityManager)
+        let interactor = TransactionsInteractor(adapterManager: App.shared.adapterManager, currencyManager: App.shared.currencyManager, rateManager: App.shared.rateManager, reachabilityManager: App.shared.reachabilityManager, accountManager: App.shared.accountManager)
         let presenter = TransactionsPresenter(interactor: interactor, router: router, factory: TransactionViewItemFactory(), loader: loader, dataSource: TransactionsMetadataDataSource(), viewItemLoader: transactionViewItemLoader)
         let viewController = TransactionsViewController(delegate: presenter)
 

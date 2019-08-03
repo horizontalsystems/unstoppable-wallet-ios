@@ -11,13 +11,6 @@ class TransactionRecordPoolRepo {
     }
 
     func activatePools(coins: [Coin]) {
-        // remove pools for unused coins
-        pools.keys.forEach { poolCoin in
-            if !coins.contains(poolCoin) {
-                pools.removeValue(forKey: poolCoin)
-            }
-        }
-
         coins.forEach { coin in
             if pools[coin] == nil {
                 pools[coin] = TransactionRecordPool(state: TransactionRecordPoolState(coin: coin))
@@ -33,6 +26,14 @@ class TransactionRecordPoolRepo {
 
     func isPoolActive(coin: Coin) -> Bool {
         return activePoolCoins.contains(coin)
+    }
+
+    func deactivate(accountType: AccountType) {
+        pools.keys.forEach { poolCoin in
+            if poolCoin.type.canSupport(accountType: accountType) {
+                pools.removeValue(forKey: poolCoin)
+            }
+        }
     }
 
 }

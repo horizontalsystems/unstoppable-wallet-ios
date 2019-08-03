@@ -126,4 +126,9 @@ class TransactionRecordDataSource {
         itemsDataSource.clear()
     }
 
+    func deactivate(accountType: AccountType) {
+        poolRepo.deactivate(accountType: accountType)
+        itemsDataSource.clear()
+    }
+
 }

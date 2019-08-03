@@ -13,14 +13,16 @@ class TransactionsInteractor {
     private let currencyManager: ICurrencyManager
     private let rateManager: IRateManager
     private let reachabilityManager: IReachabilityManager
+    private let accountManager: IAccountManager
 
     private var requestedTimestamps = [(Coin, Date)]()
 
-    init(adapterManager: IAdapterManager, currencyManager: ICurrencyManager, rateManager: IRateManager, reachabilityManager: IReachabilityManager) {
+    init(adapterManager: IAdapterManager, currencyManager: ICurrencyManager, rateManager: IRateManager, reachabilityManager: IReachabilityManager, accountManager: IAccountManager) {
         self.adapterManager = adapterManager
         self.currencyManager = currencyManager
         self.rateManager = rateManager
         self.reachabilityManager = reachabilityManager
+        self.accountManager = accountManager
     }
 
     private func onUpdateCoinsData() {
@@ -56,6 +58,7 @@ class TransactionsInteractor {
             delegate?.onConnectionRestore()
         }
     }
+
 }
 
 extension TransactionsInteractor: ITransactionsInteractor {
@@ -78,6 +81,13 @@ extension TransactionsInteractor: ITransactionsInteractor {
                     self?.ratesDisposeBag = DisposeBag()
                     self?.requestedTimestamps = []
                     self?.delegate?.onUpdateBaseCurrency()
+                })
+                .disposed(by: disposeBag)
+        accountManager.deleteAccountObservable
+                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
+                .observeOn(MainScheduler.instance)
+                .subscribe(onNext: { [weak self] account in
+                    self?.delegate?.onDelete(account: account)
                 })
                 .disposed(by: disposeBag)
 

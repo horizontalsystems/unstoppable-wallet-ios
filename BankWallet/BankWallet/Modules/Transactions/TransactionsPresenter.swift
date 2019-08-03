@@ -117,6 +117,11 @@ extension TransactionsPresenter: ITransactionsInteractorDelegate {
         loader.loadNext(initial: true)
     }
 
+    func onDelete(account: Account) {
+        loader.handleDelete(account: account)
+        loader.loadNext(initial: true)
+    }
+
     func onUpdateBaseCurrency() {
 //        print("Base Currency Updated")
 

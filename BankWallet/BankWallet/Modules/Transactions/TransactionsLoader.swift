@@ -95,9 +95,15 @@ class TransactionsLoader {
             } else {
                 delegate?.add(items: items)
             }
+        } else if initial {
+            delegate?.reload(with: dataSource.items, animated: true)
         }
 
         loading = false
+    }
+
+    func handleDelete(account: Account) {
+        dataSource.deactivate(accountType: account.type)
     }
 
 }
