@@ -6,8 +6,17 @@ class BinanceOrgProvider: IBinanceProvider {
     private let url: String
     private let apiUrl: String
 
-    func url(for hash: String) -> String { return url + hash }
-    func apiUrl(for hash: String) -> String { return apiUrl + hash + "?format=json" }
+    func url(for hash: String) -> String {
+        return url + hash
+    }
+
+    func reachabilityUrl(for hash: String) -> String {
+        return apiUrl + hash + "?format=json"
+    }
+
+    func requestObject(for hash: String) -> JsonApiProvider.RequestObject {
+        return .get(url: apiUrl + hash + "?format=json", params: nil)
+    }
 
     init(testMode: Bool) {
         url = testMode ? "https://testnet-explorer.binance.org/tx/" : "https://explorer.binance.org/tx/"
@@ -42,8 +51,8 @@ class BinanceOrgBinanceResponse: IBinanceResponse, ImmutableMappable {
             return
         }
 
-        if let anyInputs = msgValue["inputs"], let inputs = anyInputs as? [[String: Any]], let firstInput = inputs.first, 
-              let anyFromAddress = firstInput["address"], let fromAddress = anyFromAddress as? String {
+        if let anyInputs = msgValue["inputs"], let inputs = anyInputs as? [[String: Any]], let firstInput = inputs.first,
+           let anyFromAddress = firstInput["address"], let fromAddress = anyFromAddress as? String {
             from = fromAddress
 
             if let anyCoins = firstInput["coins"], let coins = anyCoins as? [[String: Any]], let coin = coins.first,
@@ -53,8 +62,8 @@ class BinanceOrgBinanceResponse: IBinanceResponse, ImmutableMappable {
             }
         }
 
-        if let anyOutputs = msgValue["outputs"], let outputs = anyOutputs as? [[String: Any]], let firstOutput = outputs.first, 
-              let anyToAddress = firstOutput["address"], let toAddress = anyToAddress as? String {
+        if let anyOutputs = msgValue["outputs"], let outputs = anyOutputs as? [[String: Any]], let firstOutput = outputs.first,
+           let anyToAddress = firstOutput["address"], let toAddress = anyToAddress as? String {
             to = toAddress
         }
     }

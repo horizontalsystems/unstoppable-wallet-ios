@@ -3,8 +3,17 @@ import ObjectMapper
 class BtcComBitcoinProvider: IBitcoinForksProvider {
     let name = "Btc.com"
 
-    func url(for hash: String) -> String { return "https://btc.com/" + hash }
-    func apiUrl(for hash: String) -> String { return "https://chain.api.btc.com/v3/tx/" + hash }
+    func url(for hash: String) -> String {
+        return "https://btc.com/" + hash 
+    }
+
+    func reachabilityUrl(for hash: String) -> String {
+        return "https://chain.api.btc.com/v3/tx/" + hash 
+    }
+
+    func requestObject(for hash: String) -> JsonApiProvider.RequestObject {
+        return .get(url: "https://chain.api.btc.com/v3/tx/" + hash, params: nil)
+    }
 
     func convert(json: [String: Any]) -> IBitcoinResponse? {
         return try? BtcComBitcoinResponse(JSONObject: json)
@@ -15,8 +24,17 @@ class BtcComBitcoinProvider: IBitcoinForksProvider {
 class BtcComBitcoinCashProvider: IBitcoinForksProvider {
     let name = "Btc.com"
 
-    func url(for hash: String) -> String { return "https://bch.btc.com/" + hash }
-    func apiUrl(for hash: String) -> String { return "https://bch-chain.api.btc.com/v3/tx/" + hash }
+    func url(for hash: String) -> String {
+        return "https://bch.btc.com/" + hash 
+    }
+
+    func reachabilityUrl(for hash: String) -> String {
+        return "https://bch-chain.api.btc.com/v3/tx/" + hash 
+    }
+
+    func requestObject(for hash: String) -> JsonApiProvider.RequestObject {
+        return .get(url: "https://bch-chain.api.btc.com/v3/tx/" + hash, params: nil)
+    }
 
     func convert(json: [String: Any]) -> IBitcoinResponse? {
         return try? BtcComBitcoinResponse(JSONObject: json)

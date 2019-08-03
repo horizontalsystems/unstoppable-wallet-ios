@@ -38,6 +38,13 @@ class FullTransactionDataProviderManager {
         ]
     }
 
+    private var eosProviders: [IEosProvider] {
+        return [
+            EosInfraProvider(),
+            EosGreymassProvider()
+        ]
+    }
+
     private var binanceProviders: [IBinanceProvider] {
         return appConfigProvider.testMode ? [
             BinanceOrgProvider(testMode: true),
@@ -69,6 +76,8 @@ extension FullTransactionDataProviderManager: IFullTransactionDataProviderManage
             return dashProviders
         } else if case .binance = coin.type {
             return binanceProviders
+        } else if case .eos = coin.type {
+            return eosProviders
         }
         return ethereumProviders
     }
@@ -86,6 +95,10 @@ extension FullTransactionDataProviderManager: IFullTransactionDataProviderManage
             let name = localStorage.baseBinanceProvider ?? binanceProviders[0].name
             return dash(for: name)
         }
+        if case .eos = coin.type {
+            let name = localStorage.baseEosProvider ?? eosProviders[0].name
+            return eos(for: name)
+        }
         let name = localStorage.baseEthereumProvider ?? ethereumProviders[0].name
         return ethereum(for: name)
     }
@@ -97,6 +110,8 @@ extension FullTransactionDataProviderManager: IFullTransactionDataProviderManage
             localStorage.baseDashProvider = name
         } else if case .binance = coin.type {
             localStorage.baseBinanceProvider = name
+        } else if case .eos = coin.type {
+            localStorage.baseEosProvider = name
         } else {
             localStorage.baseEthereumProvider = name
         }
@@ -116,6 +131,11 @@ extension FullTransactionDataProviderManager: IFullTransactionDataProviderManage
 
     func dash(for name: String) -> IBitcoinForksProvider {
         let providers = dashProviders
+        return providers.first(where: { provider in provider.name == name }) ?? providers[0]
+    }
+
+    func eos(for name: String) -> IEosProvider {
+        let providers = eosProviders
         return providers.first(where: { provider in provider.name == name }) ?? providers[0]
     }
 

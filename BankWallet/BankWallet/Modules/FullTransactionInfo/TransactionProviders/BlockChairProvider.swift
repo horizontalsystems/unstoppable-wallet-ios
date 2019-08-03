@@ -4,8 +4,17 @@ import BigInt
 class BlockChairBitcoinProvider: IBitcoinForksProvider {
     let name = "BlockChair.com"
 
-    func url(for hash: String) -> String { return "https://blockchair.com/bitcoin/transaction/" + hash }
-    func apiUrl(for hash: String) -> String { return "https://api.blockchair.com/bitcoin/dashboards/transaction/" + hash }
+    func url(for hash: String) -> String {
+        return "https://blockchair.com/bitcoin/transaction/" + hash
+    }
+
+    func reachabilityUrl(for hash: String) -> String {
+        return "https://api.blockchair.com/bitcoin/dashboards/transaction/" + hash
+    }
+
+    func requestObject(for hash: String) -> JsonApiProvider.RequestObject {
+        return .get(url: "https://api.blockchair.com/bitcoin/dashboards/transaction/" + hash, params: nil)
+    }
 
     func convert(json: [String: Any]) -> IBitcoinResponse? {
         return try? BlockChairBitcoinResponse(JSONObject: json)
@@ -16,8 +25,17 @@ class BlockChairBitcoinProvider: IBitcoinForksProvider {
 class BlockChairBitcoinCashProvider: IBitcoinForksProvider {
     let name = "BlockChair.com"
 
-    func url(for hash: String) -> String { return "https://blockchair.com/bitcoin-cash/transaction/" + hash }
-    func apiUrl(for hash: String) -> String { return "https://api.blockchair.com/bitcoin-cash/dashboards/transaction/" + hash }
+    func url(for hash: String) -> String {
+        return "https://blockchair.com/bitcoin-cash/transaction/" + hash
+    }
+
+    func reachabilityUrl(for hash: String) -> String {
+        return "https://api.blockchair.com/bitcoin-cash/dashboards/transaction/" + hash
+    }
+
+    func requestObject(for hash: String) -> JsonApiProvider.RequestObject {
+        return .get(url: "https://api.blockchair.com/bitcoin-cash/dashboards/transaction/" + hash, params: nil)
+    }
 
     func convert(json: [String: Any]) -> IBitcoinResponse? {
         return try? BlockChairBitcoinResponse(JSONObject: json)
@@ -28,8 +46,17 @@ class BlockChairBitcoinCashProvider: IBitcoinForksProvider {
 class BlockChairDashProvider: IBitcoinForksProvider {
     let name = "BlockChair.com"
 
-    func url(for hash: String) -> String { return "https://blockchair.com/dash/transaction/" + hash }
-    func apiUrl(for hash: String) -> String { return "https://api.blockchair.com/dash/dashboards/transaction/" + hash }
+    func url(for hash: String) -> String {
+        return "https://blockchair.com/dash/transaction/" + hash
+    }
+
+    func reachabilityUrl(for hash: String) -> String {
+        return "https://api.blockchair.com/dash/dashboards/transaction/" + hash
+    }
+
+    func requestObject(for hash: String) -> JsonApiProvider.RequestObject {
+        return .get(url: "https://api.blockchair.com/dash/dashboards/transaction/" + hash, params: nil)
+    }
 
     func convert(json: [String: Any]) -> IBitcoinResponse? {
         return try? BlockChairBitcoinResponse(JSONObject: json)
@@ -40,8 +67,17 @@ class BlockChairDashProvider: IBitcoinForksProvider {
 class BlockChairEthereumProvider: IEthereumForksProvider {
     let name = "BlockChair.com"
 
-    func url(for hash: String) -> String { return "https://blockchair.com/ethereum/transaction/" + hash }
-    func apiUrl(for hash: String) -> String { return "https://api.blockchair.com/ethereum/dashboards/transaction/" + hash }
+    func url(for hash: String) -> String {
+        return "https://blockchair.com/ethereum/transaction/" + hash
+    }
+
+    func reachabilityUrl(for hash: String) -> String {
+        return "https://api.blockchair.com/ethereum/dashboards/transaction/" + hash
+    }
+
+    func requestObject(for hash: String) -> JsonApiProvider.RequestObject {
+        return .get(url: "https://api.blockchair.com/ethereum/dashboards/transaction/" + hash, params: nil)
+    }
 
     func convert(json: [String: Any]) -> IEthereumResponse? {
         return try? BlockChairEthereumResponse(JSONObject: json)

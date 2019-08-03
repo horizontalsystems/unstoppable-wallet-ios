@@ -25,14 +25,14 @@ extension FullTransactionInfoProvider: IFullTransactionInfoProvider {
     func url(for hash: String) -> String { return provider.url(for: hash) }
 
     func retrieveTransactionInfo(transactionHash: String) -> Single<FullTransactionRecord?> {
-        var single = apiProvider.getJson(urlString: provider.apiUrl(for: transactionHash), parameters: nil)
+        var single = apiProvider.getJson(requestObject: provider.requestObject(for: transactionHash))
 
         if async {
             single = single.subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background)).observeOn(MainScheduler.instance)
         }
 
         return single.map { [weak self] jsonObject in
-            return self?.adapter.convert(json: jsonObject)
+            self?.adapter.convert(json: jsonObject)
         }
     }
 

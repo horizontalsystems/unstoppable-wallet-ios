@@ -3,8 +3,17 @@ import ObjectMapper
 class InsightDashProvider: IBitcoinForksProvider {
     let name = "Insight.dash.org"
 
-    func url(for hash: String) -> String { return "https://insight.dash.org/insight/tx/" + hash }
-    func apiUrl(for hash: String) -> String { return "https://insight.dash.org/insight-api/tx/" + hash }
+    func url(for hash: String) -> String {
+        return "https://insight.dash.org/insight/tx/" + hash 
+    }
+
+    func reachabilityUrl(for hash: String) -> String {
+        return "https://insight.dash.org/insight-api/tx/" + hash 
+    }
+
+    func requestObject(for hash: String) -> JsonApiProvider.RequestObject {
+        return .get(url: "https://insight.dash.org/insight-api/tx/" + hash, params: nil)
+    }
 
     func convert(json: [String: Any]) -> IBitcoinResponse? {
         return try? InsightResponse(JSONObject: json)
