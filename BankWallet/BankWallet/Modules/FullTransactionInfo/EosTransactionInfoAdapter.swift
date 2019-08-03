@@ -60,10 +60,10 @@ class EosTransactionInfoAdapter: IFullTransactionInfoAdapter {
 
         var netCpuItems = [FullTransactionItem]()
         if let cpu = txResponse.cpuUsage {
-            netCpuItems.append(FullTransactionItem(title: "full_info.cpu".localized, value: "\(cpu) μs"))
+            netCpuItems.append(FullTransactionItem(title: "full_info.cpu".localized, value: "full_info.milli_seconds".localized("\(cpu)")))
         }
         if let net = txResponse.netUsage {
-            netCpuItems.append(FullTransactionItem(title: "full_info.net".localized, value: "\(net * 8) Bytes"))
+            netCpuItems.append(FullTransactionItem(title: "full_info.net".localized, value: "full_info.bytes".localized("\(net * 8)")))
         }
         if !netCpuItems.isEmpty {
             sections.append(FullTransactionSection(title: nil, items: netCpuItems))
