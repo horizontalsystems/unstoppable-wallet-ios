@@ -48,6 +48,7 @@ protocol ITransactionsInteractor {
 protocol ITransactionsInteractorDelegate: class {
     func onUpdate(selectedCoins: [Coin])
     func onUpdate(coinsData: [(Coin, Int, Int?)])
+    func onDelete(account: Account)
     func onUpdateBaseCurrency()
 
     func onUpdate(lastBlockHeight: Int, coin: Coin)
