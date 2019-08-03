@@ -1,6 +1,7 @@
 import ObjectMapper
 
 class EosInfraProvider: IEosProvider {
+
     func convert(json: [String: Any]) -> IEosResponse? {
         return try? EosResponse(JSONObject: json)
     }
@@ -17,6 +18,28 @@ class EosInfraProvider: IEosProvider {
 
     func requestObject(for hash: String) -> JsonApiProvider.RequestObject {
         return .post(url: "https://public.eosinfra.io/v1/history/get_transaction", params: ["id": hash])
+    }
+
+}
+
+class EosGreymassProvider: IEosProvider {
+
+    func convert(json: [String: Any]) -> IEosResponse? {
+        return try? EosResponse(JSONObject: json)
+    }
+
+    var name: String = "Greymass"
+
+    func url(for hash: String) -> String {
+        return "https://bloks.io/transaction/\(hash)"
+    }
+
+    func reachabilityUrl(for hash: String) -> String {
+        return "https://eos.greymass.com"
+    }
+
+    func requestObject(for hash: String) -> JsonApiProvider.RequestObject {
+        return .post(url: "https://eos.greymass.com/v1/history/get_transaction", params: ["id": hash])
     }
 
 }

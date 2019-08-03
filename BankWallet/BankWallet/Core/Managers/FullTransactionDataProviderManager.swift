@@ -40,7 +40,8 @@ class FullTransactionDataProviderManager {
 
     private var eosProviders: [IEosProvider] {
         return [
-            EosInfraProvider()
+            EosInfraProvider(),
+            EosGreymassProvider()
         ]
     }
 
@@ -109,6 +110,8 @@ extension FullTransactionDataProviderManager: IFullTransactionDataProviderManage
             localStorage.baseDashProvider = name
         } else if case .binance = coin.type {
             localStorage.baseBinanceProvider = name
+        } else if case .eos = coin.type {
+            localStorage.baseEosProvider = name
         } else {
             localStorage.baseEthereumProvider = name
         }

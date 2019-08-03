@@ -41,7 +41,7 @@ class EosTransactionInfoAdapter: IFullTransactionInfoAdapter {
             inputOutputItems.append(FullTransactionItem(title: "full_info.contract".localized, value: contract, clickable: true, showExtra: .token))
         }
         if let quantity = txResponse.quantity {
-            topSectionItems.append(FullTransactionItem(title: "full_info.amount".localized, value: quantity))
+            inputOutputItems.append(FullTransactionItem(title: "full_info.amount".localized, value: quantity))
         }
         if let from = txResponse.from {
             inputOutputItems.append(FullTransactionItem(title: "full_info.from".localized, value: from, clickable: true, showExtra: .icon))
