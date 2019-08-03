@@ -133,7 +133,7 @@ extension RestoreWordsViewController: IRestoreWordsView {
     }
 
     func showRestoreButton() {
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.done".localized, style: .plain, target: self, action: #selector(restoreDidTap))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.restore".localized, style: .done, target: self, action: #selector(restoreDidTap))
     }
 
     func show(defaultWords: [String]) {
