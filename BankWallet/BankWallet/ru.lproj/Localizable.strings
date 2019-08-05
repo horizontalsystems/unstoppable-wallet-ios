@@ -68,6 +68,8 @@
 "backup.intro.show_key" = "Show Key";
 
 "backup.words.title" = "Секретный Ключ";
+"backup.12words.title" = "12-words Key";
+"backup.binance.title" = "Binance Key";
 
 "backup.eos.title" = "EOS Key";
 "backup.eos.account_name" = "Account Name";
