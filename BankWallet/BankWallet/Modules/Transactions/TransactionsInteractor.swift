@@ -13,16 +13,14 @@ class TransactionsInteractor {
     private let currencyManager: ICurrencyManager
     private let rateManager: IRateManager
     private let reachabilityManager: IReachabilityManager
-    private let accountManager: IAccountManager
 
     private var requestedTimestamps = [(Coin, Date)]()
 
-    init(adapterManager: IAdapterManager, currencyManager: ICurrencyManager, rateManager: IRateManager, reachabilityManager: IReachabilityManager, accountManager: IAccountManager) {
+    init(adapterManager: IAdapterManager, currencyManager: ICurrencyManager, rateManager: IRateManager, reachabilityManager: IReachabilityManager) {
         self.adapterManager = adapterManager
         self.currencyManager = currencyManager
         self.rateManager = rateManager
         self.reachabilityManager = reachabilityManager
-        self.accountManager = accountManager
     }
 
     private func onUpdateCoinsData() {

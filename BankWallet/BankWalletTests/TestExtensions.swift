@@ -158,3 +158,15 @@ extension ManageAccountViewItemState: Equatable {
     }
 
 }
+
+extension JsonApiProvider.RequestObject: Equatable {
+
+    public static func ==(lhs: JsonApiProvider.RequestObject, rhs: JsonApiProvider.RequestObject) -> Bool {
+        switch (lhs, rhs) {
+        case (.get(let lhsUrl, let lhsParams), .get(let rhsUrl, let rhsParams)): return lhsUrl == rhsUrl
+        case (.post(let lhsUrl, let lhsParams), .post(let rhsUrl, let rhsParams)): return lhsUrl == rhsUrl
+        default: return false
+        }
+    }
+
+}
