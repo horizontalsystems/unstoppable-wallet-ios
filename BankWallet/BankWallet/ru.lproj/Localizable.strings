@@ -9,6 +9,7 @@
 "button.cancel" = "Отмена";
 "button.confirm" = "Подтвердить";
 "button.done" = "Готово";
+"button.restore" = "Restore";
 "button.next" = "Далее";
 "button.remove" = "Откл.";
 "button.forward" = "Переслать";
