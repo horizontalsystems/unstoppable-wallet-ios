@@ -9,6 +9,7 @@
 "button.cancel" = "İptal";
 "button.confirm" = "Onayla";
 "button.done" = "Bitti";
+"button.restore" = "Restore";
 "button.next" = "İleri";
 "button.remove" = "Kaldır";
 "button.forward" = "İlet";
