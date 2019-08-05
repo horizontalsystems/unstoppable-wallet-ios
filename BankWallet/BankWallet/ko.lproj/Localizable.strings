@@ -9,6 +9,7 @@
 "button.cancel" = "취소";
 "button.confirm" = "확인";
 "button.done" = "완료";
+"button.restore" = "Restore";
 "button.next" = "다음";
 "button.remove" = "삭제";
 "button.forward" = "Forward";
