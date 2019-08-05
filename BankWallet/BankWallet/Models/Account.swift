@@ -15,10 +15,16 @@ class Account {
 
 }
 
-extension Account: Equatable {
+extension Account: Hashable {
 
     public static func ==(lhs: Account, rhs: Account) -> Bool {
         return lhs.id == rhs.id
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+        hasher.combine(name)
+        hasher.combine(type)
     }
 
 }

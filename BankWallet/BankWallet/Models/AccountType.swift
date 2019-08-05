@@ -7,7 +7,7 @@ enum AccountType {
     case eos(account: String, activePrivateKey: String)
 }
 
-extension AccountType: Equatable {
+extension AccountType: Hashable {
 
     public static func ==(lhs: AccountType, rhs: AccountType) -> Bool {
         switch (lhs, rhs) {
@@ -23,7 +23,25 @@ extension AccountType: Equatable {
         }
     }
 
+    public func hash(into hasher: inout Hasher) {
+        switch self {
+        case let .mnemonic(words, derivation, salt):
+            hasher.combine(words)
+            hasher.combine(derivation)
+            hasher.combine(salt)
+        case let .privateKey(data):
+            hasher.combine(data)
+        case let .hdMasterKey(data, derivation):
+            hasher.combine(data)
+            hasher.combine(derivation)
+        case let .eos(account, activePrivateKey):
+            hasher.combine(account)
+            hasher.combine(activePrivateKey)
+        }
+    }
+
 }
+
 
 enum MnemonicDerivation: String {
     case bip44
