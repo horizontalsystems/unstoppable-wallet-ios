@@ -33,7 +33,7 @@ class SyncModeViewController: WalletViewController, SectionsDataSource {
         }
         tableView.reload()
 
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.done".localized, style: .plain, target: self, action: #selector(onTapDone))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.done".localized, style: .done, target: self, action: #selector(onTapDone))
     }
 
     private func onTapFastSync() {

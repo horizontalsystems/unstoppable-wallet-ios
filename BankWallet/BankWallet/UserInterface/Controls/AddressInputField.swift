@@ -40,8 +40,8 @@ class AddressInputField: UIView {
 
         addSubview(addressWrapperView)
         addressWrapperView.addSubview(addressField)
-        addressField.addSubview(placeholderLabel)
         addressWrapperView.addSubview(errorLabel)
+        addressField.addSubview(placeholderLabel)
         addSubview(scanButton)
         scanButton.addSubview(scanButtonIcon)
         addSubview(deleteButton)
@@ -214,17 +214,18 @@ class AddressInputField: UIView {
 
             addressField.snp.remakeConstraints { maker in
                 maker.leading.top.trailing.equalToSuperview()
-                maker.height.equalTo(22 * numberOfLines)
+                maker.height.equalTo(SendTheme.addressTextViewLineHeight * numberOfLines)
             }
             errorLabel.snp.remakeConstraints { maker in
-                maker.leading.bottom.trailing.equalToSuperview()
+                maker.leading.trailing.equalToSuperview()
                 maker.top.equalTo(addressField.snp.bottom).offset(SendTheme.addressErrorTopMargin)
+                maker.bottom.equalToSuperview().offset(-SendTheme.addressErrorBottomMargin)
             }
         } else {
             errorLabel.isHidden = true
             addressField.snp.remakeConstraints { maker in
                 maker.leading.top.bottom.trailing.equalToSuperview()
-                maker.height.equalTo(22 * numberOfLines)
+                maker.height.equalTo(SendTheme.addressTextViewLineHeight * numberOfLines)
             }
         }
 
