@@ -56,6 +56,7 @@ class TransactionsInteractor {
             delegate?.onConnectionRestore()
         }
     }
+
 }
 
 extension TransactionsInteractor: ITransactionsInteractor {

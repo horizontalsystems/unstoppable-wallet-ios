@@ -113,7 +113,7 @@ extension TransactionsPresenter: ITransactionsInteractorDelegate {
             view?.show(filters: [nil] + coins)
         }
 
-        loader.set(coins: coins)
+        loader.handleUpdate(coins: coins)
         loader.loadNext(initial: true)
     }
 
