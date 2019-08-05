@@ -1,18 +1,21 @@
 protocol IUnlinkView: class {
+    func showSuccess()
 }
 
 protocol IUnlinkViewDelegate {
+    var title: String { get }
+    var coinCodes: String { get }
+
     func didTapUnlink()
 }
 
 protocol IUnlinkInteractor {
-    func unlink()
+    func unlink(account: Account)
 }
 
 protocol IUnlinkInteractorDelegate: class {
-    func didUnlink()
 }
 
 protocol IUnlinkRouter {
-    func showGuestModule()
+    func dismiss()
 }

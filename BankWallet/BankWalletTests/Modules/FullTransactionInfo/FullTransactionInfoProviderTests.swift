@@ -11,7 +11,7 @@ class FullTransactionInfoProviderTests: XCTestCase {
     private var provider: FullTransactionInfoProvider!
     private var transactionHash: String!
     private var url: String!
-    private var apiUrl: String!
+    private var requestObject: JsonApiProvider.RequestObject!
 
     private var transactionRecord: FullTransactionRecord!
 
@@ -20,7 +20,7 @@ class FullTransactionInfoProviderTests: XCTestCase {
 
         url = "test_url"
         transactionHash = "test_hash"
-        apiUrl = "test_url_" + transactionHash
+        requestObject = JsonApiProvider.RequestObject.get(url: "test_url_" + transactionHash, params: nil)
         let providerName = "test_provider"
         transactionRecord = FullTransactionRecord(providerName: providerName, sections: [
             FullTransactionSection(title: nil, items: [
@@ -37,7 +37,7 @@ class FullTransactionInfoProviderTests: XCTestCase {
 
         mockApiManager = MockIJsonApiProvider()
         stub(mockApiManager) { mock in
-            when(mock.getJson(urlString: any(), parameters: any())).thenReturn(Single.just([:]))
+            when(mock.getJson(requestObject: any())).thenReturn(Single.just([:]))
         }
         mockAdapter = MockIFullTransactionInfoAdapter()
         stub(mockAdapter) { mock in
@@ -47,14 +47,14 @@ class FullTransactionInfoProviderTests: XCTestCase {
         stub(mockProvider) { mock in
             when(mock.name.get).thenReturn(providerName)
             when(mock.url(for: any())).thenReturn(url)
-            when(mock.apiUrl(for: any())).thenReturn(apiUrl)
+            when(mock.requestObject(for: any())).thenReturn(requestObject)
         }
         provider = FullTransactionInfoProvider(apiProvider: mockApiManager, adapter: mockAdapter, provider: mockProvider, async: false)
     }
 
     override func tearDown() {
         url = nil
-        apiUrl = nil
+        requestObject = nil
         transactionHash = nil
         transactionRecord = nil
 
@@ -69,13 +69,13 @@ class FullTransactionInfoProviderTests: XCTestCase {
     func testRetrieveTransactionInfo() {
         let _ = provider.retrieveTransactionInfo(transactionHash: transactionHash)
 
-        verify(mockApiManager).getJson(urlString: equal(to: apiUrl), parameters: any())
+        verify(mockApiManager).getJson(requestObject: equal(to: requestObject))
     }
 
     func testRetrieveMapping() {
         let jsonSubject = PublishSubject<[String: Any]>()
         stub(mockApiManager) { mock in
-            when(mock.getJson(urlString: any(), parameters: any())).thenReturn(jsonSubject.asSingle())
+            when(mock.getJson(requestObject: any())).thenReturn(jsonSubject.asSingle())
         }
 
         let single = provider.retrieveTransactionInfo(transactionHash: transactionHash)

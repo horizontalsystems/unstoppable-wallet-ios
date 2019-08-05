@@ -1,12 +1,26 @@
 import Foundation
 
 class BalanceItemDataSource {
-    var items = [BalanceItem]()
+    private let sorter: IBalanceSorter
+
+    private var originalItems = [BalanceItem]()
+
+    var sortType: BalanceSortType {
+        didSet { items = sorter.sort(items: originalItems, sort: sortType) }
+    }
+    var items: [BalanceItem]
     var currency: Currency?
 
-    var count: Int {
-        return items.count
+    init(sorter: IBalanceSorter) {
+        self.sorter = sorter
+
+        items = [BalanceItem]()
+        sortType = .manual
     }
+
+}
+
+extension BalanceItemDataSource: IBalanceItemDataSource {
 
     var coinCodes: [CoinCode] {
         return items.map { $0.coin.code }
@@ -17,25 +31,34 @@ class BalanceItemDataSource {
     }
 
     func index(for coinCode: CoinCode) -> Int? {
-        return items.firstIndex(where: { $0.coin.code == coinCode })
+        return originalItems.firstIndex(where: { $0.coin.code == coinCode })
     }
 
     func set(balance: Decimal, index: Int) {
-        items[index].balance = balance
+        originalItems[index].balance = balance
+        items = sorter.sort(items: originalItems, sort: sortType)
     }
 
     func set(state: AdapterState, index: Int) {
-        items[index].state = state
+        originalItems[index].state = state
+        items = sorter.sort(items: originalItems, sort: sortType)
     }
 
     func set(rate: Rate, index: Int) {
-        items[index].rate = rate
+        originalItems[index].rate = rate
+        items = sorter.sort(items: originalItems, sort: sortType)
     }
 
     func clearRates() {
-        for i in 0..<items.count {
-            items[i].rate = nil
+        for i in 0..<originalItems.count {
+            originalItems[i].rate = nil
         }
+        items = sorter.sort(items: originalItems, sort: sortType)
+    }
+
+    func set(items: [BalanceItem]) {
+        self.originalItems = items
+        self.items = sorter.sort(items: originalItems, sort: sortType)
     }
 
 }

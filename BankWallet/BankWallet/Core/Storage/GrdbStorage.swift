@@ -1,6 +1,7 @@
 import RxSwift
 import GRDB
 import RxGRDB
+import KeychainAccess
 
 class GrdbStorage {
     private let dbPool: DatabasePool
@@ -12,7 +13,7 @@ class GrdbStorage {
 
         dbPool = try! DatabasePool(path: databaseURL.path)
 
-        try? migrator.migrate(dbPool)
+        try! migrator.migrate(dbPool)
     }
 
     var migrator: DatabaseMigrator {
@@ -33,13 +34,69 @@ class GrdbStorage {
             }
         }
 
-        migrator.registerMigration("createEnabledCoinsTable") { db in
-            try db.create(table: EnabledCoin.databaseTableName) { t in
-                t.column(EnabledCoin.Columns.coinCode.name, .text).notNull()
-                t.column(EnabledCoin.Columns.coinOrder.name, .integer).notNull()
+        migrator.registerMigration("createAccountRecordsTable") { db in
+            try db.create(table: AccountRecord.databaseTableName) { t in
+                t.column(AccountRecord.Columns.id.name, .text).notNull()
+                t.column(AccountRecord.Columns.name.name, .text).notNull()
+                t.column(AccountRecord.Columns.type.name, .integer).notNull()
+                t.column(AccountRecord.Columns.backedUp.name, .boolean).notNull()
+                t.column(AccountRecord.Columns.defaultSyncMode.name, .text)
+                t.column(AccountRecord.Columns.wordsKey.name, .text)
+                t.column(AccountRecord.Columns.derivation.name, .integer)
+                t.column(AccountRecord.Columns.saltKey.name, .text)
+                t.column(AccountRecord.Columns.dataKey.name, .text)
+                t.column(AccountRecord.Columns.eosAccount.name, .text)
 
-                t.primaryKey([EnabledCoin.Columns.coinCode.name], onConflict: .replace)
+                t.primaryKey([
+                    AccountRecord.Columns.id.name
+                ], onConflict: .replace)
             }
+        }
+
+        migrator.registerMigration("createEnabledWalletsTable") { db in
+            try db.create(table: EnabledWallet.databaseTableName) { t in
+                t.column(EnabledWallet.Columns.coinCode.name, .text).notNull()
+                t.column(EnabledWallet.Columns.accountId.name, .text).notNull()
+                t.column(EnabledWallet.Columns.syncMode.name, .text)
+                t.column(EnabledWallet.Columns.walletOrder.name, .integer).notNull()
+
+                t.primaryKey([EnabledWallet.Columns.coinCode.name, EnabledWallet.Columns.accountId.name], onConflict: .replace)
+            }
+        }
+
+        migrator.registerMigration("migrateAuthData") { db in
+            let keychain = Keychain(service: "io.horizontalsystems.bank.dev")
+            guard let data = try? keychain.getData("auth_data_keychain_key"), let authData = NSKeyedUnarchiver.unarchiveObject(with: data) as? AuthData else {
+                return
+            }
+            try? keychain.remove("auth_data_keychain_key")
+
+            let uuid = authData.walletId
+            let isBackedUp = UserDefaults.standard.bool(forKey: "is_backed_up")
+            let syncMode: SyncMode
+            switch UserDefaults.standard.string(forKey: "sync_mode_key") ?? "" {
+            case "fast": syncMode = .fast
+            case "slow": syncMode = .slow
+            case "new": syncMode = .new
+            default: syncMode = .fast
+            }
+
+            let wordsKey = "mnemonic_\(uuid)_words"
+            let accountRecord = AccountRecord(id: uuid, name: uuid, type: "mnemonic", backedUp: isBackedUp, defaultSyncMode: syncMode.rawValue, wordsKey: wordsKey, derivation: "bip44", saltKey: nil, dataKey: nil, eosAccount: nil)
+            try accountRecord.insert(db)
+
+            try? keychain.set(authData.words.joined(separator: ","), key: wordsKey)
+
+            guard try db.tableExists("enabled_coins") else {
+                return
+            }
+
+            let accountId = accountRecord.id
+            try db.execute(sql: """
+                                INSERT INTO \(EnabledWallet.databaseTableName)(`\(EnabledWallet.Columns.coinCode.name)`, `\(EnabledWallet.Columns.accountId.name)`, `\(EnabledWallet.Columns.syncMode.name)`, `\(EnabledWallet.Columns.walletOrder.name)`)
+                                SELECT `coinCode`, '\(accountId)', '\(syncMode)', `coinOrder` FROM enabled_coins
+                                """)
+            try db.drop(table: "enabled_coins")
         }
 
         migrator.registerMigration("timestampToDateRates") { db in
@@ -67,30 +124,27 @@ class GrdbStorage {
 
 extension GrdbStorage: IRateStorage {
 
-    func nonExpiredLatestRateObservable(forCoinCode coinCode: CoinCode, currencyCode: String) -> Observable<Rate?> {
-        return latestRateObservable(forCoinCode: coinCode, currencyCode: currencyCode)
-                .flatMap { rate -> Observable<Rate?> in
-                    guard !rate.expired else {
-                        return Observable.just(nil)
-                    }
-                    return Observable.just(rate)
-                }
+    func latestRate(coinCode: CoinCode, currencyCode: String) -> Rate? {
+        return try! dbPool.read { db in
+            let request = Rate.filter(Rate.Columns.coinCode == coinCode && Rate.Columns.currencyCode == currencyCode && Rate.Columns.isLatest == true)
+            return try request.fetchOne(db)
+        }
     }
 
     func latestRateObservable(forCoinCode coinCode: CoinCode, currencyCode: String) -> Observable<Rate> {
         let request = Rate.filter(Rate.Columns.coinCode == coinCode && Rate.Columns.currencyCode == currencyCode && Rate.Columns.isLatest == true)
-        return request.rx.fetchOne(in: dbPool)
+        return request.rx.observeFirst(in: dbPool)
                 .flatMap { $0.map(Observable.just) ?? Observable.empty() }
     }
 
     func timestampRateObservable(coinCode: CoinCode, currencyCode: String, date: Date) -> Observable<Rate?> {
         let request = Rate.filter(Rate.Columns.coinCode == coinCode && Rate.Columns.currencyCode == currencyCode && Rate.Columns.date == date && Rate.Columns.isLatest == false)
-        return request.rx.fetchOne(in: dbPool)
+        return request.rx.observeFirst(in: dbPool)
     }
 
     func zeroValueTimestampRatesObservable(currencyCode: String) -> Observable<[Rate]> {
         let request = Rate.filter(Rate.Columns.currencyCode == currencyCode && Rate.Columns.value == 0 && Rate.Columns.isLatest == false)
-        return request.rx.fetchAll(in: dbPool)
+        return request.rx.observeAll(in: dbPool)
     }
 
     func save(latestRate: Rate) {
@@ -114,26 +168,55 @@ extension GrdbStorage: IRateStorage {
 
 }
 
-extension GrdbStorage: IEnabledCoinStorage {
+extension GrdbStorage: IEnabledWalletStorage {
 
-    var enabledCoinsObservable: Observable<[EnabledCoin]> {
-        let request = EnabledCoin.order(EnabledCoin.Columns.coinOrder)
-        return request.rx.fetchAll(in: dbPool)
+    var enabledWallets: [EnabledWallet] {
+        return try! dbPool.read { db in
+            try EnabledWallet.order(EnabledWallet.Columns.walletOrder).fetchAll(db)
+        }
     }
 
-    func save(enabledCoins: [EnabledCoin]) {
+    func save(enabledWallets: [EnabledWallet]) {
         _ = try! dbPool.write { db in
-            try EnabledCoin.deleteAll(db)
+            try EnabledWallet.deleteAll(db)
 
-            for enabledCoin in enabledCoins {
-                try enabledCoin.insert(db)
+            for enabledWallet in enabledWallets {
+                try enabledWallet.insert(db)
             }
         }
     }
 
-    func clearEnabledCoins() {
+    func clearEnabledWallets() {
         _ = try! dbPool.write { db in
-            try EnabledCoin.deleteAll(db)
+            try EnabledWallet.deleteAll(db)
+        }
+    }
+
+}
+
+extension GrdbStorage: IAccountRecordStorage {
+
+    var allAccountRecords: [AccountRecord] {
+        return try! dbPool.read { db in
+            try AccountRecord.fetchAll(db)
+        }
+    }
+
+    func save(accountRecord: AccountRecord) {
+        _ = try! dbPool.write { db in
+            try accountRecord.insert(db)
+        }
+    }
+
+    func deleteAccountRecord(by id: String) {
+        _ = try! dbPool.write { db in
+            try AccountRecord.filter(AccountRecord.Columns.id == id).deleteAll(db)
+        }
+    }
+
+    func deleteAllAccountRecords() {
+        _ = try! dbPool.write { db in
+            try AccountRecord.deleteAll(db)
         }
     }
 

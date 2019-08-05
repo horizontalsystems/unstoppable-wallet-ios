@@ -17,7 +17,7 @@ class SystemInfoManager: ISystemInfoManager {
     }
 
     var biometryType: Single<BiometryType> {
-        return Observable<BiometryType>.create { observer in
+        return Single<BiometryType>.create { observer in
             var authError: NSError?
             let localAuthenticationContext = LAContext()
 
@@ -25,16 +25,20 @@ class SystemInfoManager: ISystemInfoManager {
             //Sending this request to background thread allows to show controller without biometric setting.
             if localAuthenticationContext.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &authError) {
                 switch localAuthenticationContext.biometryType {
-                case .faceID: observer.onNext(.faceId)
-                case .touchID: observer.onNext(.touchId)
-                default: observer.onNext(.none)
+                case .faceID: observer(.success(.faceId))
+                case .touchID: observer(.success(.touchId))
+                default: observer(.success(.none))
                 }
             } else {
-                observer.onNext(.none)
+                observer(.success(.none))
             }
-            observer.onCompleted()
+
             return Disposables.create()
-        }.asSingle()
+        }
+    }
+
+    var passcodeSet: Bool {
+        return LAContext().canEvaluatePolicy(.deviceOwnerAuthentication, error: nil)
     }
 
 }

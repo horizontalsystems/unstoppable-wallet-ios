@@ -1,30 +1,14 @@
 protocol ISyncModeView: class {
-    func showInvalidWordsError()
 }
 
-protocol ISyncModeViewDelegate: class {
-    func onSelectFast()
-    func onSelectSlow()
-    func onDone()
-}
-
-protocol ISyncModeInteractor {
-    func restore(with words: [String], syncMode: SyncMode)
-    func reSync(syncMode: SyncMode)
-}
-
-protocol ISyncModeInteractorDelegate: class {
-    func didRestore()
-    func didFailToRestore(withError error: Error)
-    func didConfirmAgreement()
+protocol ISyncModeViewDelegate {
+    func didSelectSyncMode(isFast: Bool)
 }
 
 protocol ISyncModeRouter {
-    func showAgreement()
-    func navigateToSetPin()
+    func notifyDelegate(isFast: Bool)
 }
 
-enum SyncModuleStartMode {
-    case initial(words: [String])
-    case settings
+protocol ISyncModeDelegate: class {
+    func onSelectSyncMode(isFast: Bool)
 }

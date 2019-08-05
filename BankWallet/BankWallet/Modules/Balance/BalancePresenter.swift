@@ -3,16 +3,20 @@ import RxSwift
 class BalancePresenter {
     private let interactor: IBalanceInteractor
     private let router: IBalanceRouter
-    private let dataSource: BalanceItemDataSource
-    private let factory: BalanceViewItemFactory
+    private var dataSource: IBalanceItemDataSource
+    private let factory: IBalanceViewItemFactory
+    private let differ: IDiffer
+    private let sortingOnThreshold: Int
 
     weak var view: IBalanceView?
 
-    init(interactor: IBalanceInteractor, router: IBalanceRouter, dataSource: BalanceItemDataSource, factory: BalanceViewItemFactory) {
+    init(interactor: IBalanceInteractor, router: IBalanceRouter, dataSource: IBalanceItemDataSource, factory: IBalanceViewItemFactory, differ: IDiffer, sortingOnThreshold: Int) {
         self.interactor = interactor
         self.router = router
         self.dataSource = dataSource
         self.factory = factory
+        self.differ = differ
+        self.sortingOnThreshold = sortingOnThreshold
     }
 
 }
@@ -20,31 +24,35 @@ class BalancePresenter {
 extension BalancePresenter: IBalanceInteractorDelegate {
 
     func didUpdate(adapters: [IAdapter]) {
-        dataSource.items = adapters.map { adapter in
-            BalanceItem(coin: adapter.coin, refreshable: adapter.refreshable)
+        let items = adapters.map { adapter in
+            BalanceItem(coin: adapter.wallet.coin)
         }
+        dataSource.set(items: items)
 
         if let currency = dataSource.currency {
             interactor.fetchRates(currencyCode: currency.code, coinCodes: dataSource.coinCodes)
         }
 
+        view?.setSort(isOn: dataSource.items.count > sortingOnThreshold)
         view?.reload()
     }
 
     func didUpdate(balance: Decimal, coinCode: CoinCode) {
         if let index = dataSource.index(for: coinCode) {
+            let oldItems = dataSource.items
             dataSource.set(balance: balance, index: index)
 
-            view?.updateItem(at: index)
+            view?.reload(with: differ.changes(old: oldItems, new: dataSource.items))
             view?.updateHeader()
         }
     }
 
     func didUpdate(state: AdapterState, coinCode: CoinCode) {
         if let index = dataSource.index(for: coinCode) {
+            let oldItems = dataSource.items
             dataSource.set(state: state, index: index)
 
-            view?.updateItem(at: index)
+            view?.reload(with: differ.changes(old: oldItems, new: dataSource.items))
             view?.updateHeader()
         }
     }
@@ -60,9 +68,10 @@ extension BalancePresenter: IBalanceInteractorDelegate {
 
     func didUpdate(rate: Rate) {
         if let index = dataSource.index(for: rate.coinCode) {
+            let oldItems = dataSource.items
             dataSource.set(rate: rate, index: index)
 
-            view?.updateItem(at: index)
+            view?.reload(with: differ.changes(old: oldItems, new: dataSource.items))
             view?.updateHeader()
         }
     }
@@ -76,11 +85,14 @@ extension BalancePresenter: IBalanceInteractorDelegate {
 extension BalancePresenter: IBalanceViewDelegate {
 
     func viewDidLoad() {
+        dataSource.sortType = interactor.sortType
+        view?.setSort(isOn: false)
+
         interactor.initAdapters()
     }
 
     var itemsCount: Int {
-        return dataSource.count
+        return dataSource.items.count
     }
 
     func viewItem(at index: Int) -> BalanceViewItem {
@@ -103,8 +115,21 @@ extension BalancePresenter: IBalanceViewDelegate {
         router.openSend(for: dataSource.item(at: index).coin.code)
     }
 
-    func onOpenManageCoins() {
-        router.openManageCoins()
+    func onOpenManageWallets() {
+        router.openManageWallets()
+    }
+
+    func onSortTypeChange() {
+        router.openSortType(selected: dataSource.sortType)
+    }
+
+}
+
+extension BalancePresenter: ISortTypeDelegate {
+
+    func onSelect(sort: BalanceSortType) {
+        dataSource.sortType = sort
+        view?.reload()
     }
 
 }

@@ -62,6 +62,7 @@ class IndexedInputField: UIView, UITextFieldDelegate {
 //    }
 
     var onReturn: (() -> ())?
+    var onSpaceKey: (() -> Bool)?
     var onTextChange: ((String?) -> ())?
 
     override init(frame: CGRect) {
@@ -121,6 +122,7 @@ class IndexedInputField: UIView, UITextFieldDelegate {
         textField.autocorrectionType = .yes
         textField.autocapitalizationType = .none
         textField.tintColor = AppTheme.textFieldTintColor
+        textField.font = InputFieldTheme.indexFont
 
         textField.addTarget(self, action: #selector(textChange), for: .editingChanged)
         textField.textColor = InputFieldTheme.textColor
@@ -140,7 +142,6 @@ class IndexedInputField: UIView, UITextFieldDelegate {
 
     @objc func textChange(textField: UITextField) {
         clearWrapperView.isHidden = _clearButtonIsHidden || (textField.text?.isEmpty ?? true)
-        onTextChange?(textField.text)
     }
 
     func textFieldDidBeginEditing(_ textField: UITextField) {
@@ -153,8 +154,16 @@ class IndexedInputField: UIView, UITextFieldDelegate {
     }
 
     func textFieldDidEndEditing(_ textField: UITextField) {
+        onTextChange?(textField.text)
         clearWrapperView.isHidden = true
     }
 
-
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        switch string {
+        case " ":
+            return onSpaceKey?() ?? true
+        default:
+            return true
+        }
+    }
 }

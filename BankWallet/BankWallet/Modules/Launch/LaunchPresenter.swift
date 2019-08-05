@@ -1,44 +1,27 @@
-import Foundation
-
 class LaunchPresenter {
     private let interactor: ILaunchInteractor
-    private let router: ILaunchRouter
 
-    init(interactor: ILaunchInteractor, router: ILaunchRouter) {
+    init(interactor: ILaunchInteractor) {
         self.interactor = interactor
-        self.router = router
     }
 
 }
 
 extension LaunchPresenter: ILaunchPresenter {
 
-    func launch() {
-        interactor.showLaunchModule()
-    }
+    var launchMode: LaunchMode {
+        let isPinSet = interactor.isPinSet
 
-}
+        if interactor.passcodeLocked {
+            return .noPasscode
+        } else if isPinSet {
+            return .unlock
+        } else if !interactor.hasAccounts && !interactor.mainShownOnce {
+            return  .welcome
+        } else {
+            return .main
+        }
 
-extension LaunchPresenter: ILaunchInteractorDelegate {
-
-    func showUnlockModule() {
-        router.showUnlockModule()
-    }
-
-    func showMainModule() {
-        router.showMainModule()
-    }
-
-    func showGuestModule() {
-        router.showGuestModule()
-    }
-
-    func showSetPinModule() {
-        router.showSetPinModule()
-    }
-
-    func showBackupModule() {
-        router.showBackupModule()
     }
 
 }

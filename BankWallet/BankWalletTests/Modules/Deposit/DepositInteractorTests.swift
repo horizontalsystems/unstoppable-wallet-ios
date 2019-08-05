@@ -24,10 +24,10 @@ class DepositInteractorTests: XCTestCase {
         mockPasteboardManager = MockIPasteboardManager()
 
         stub(mockBitcoinAdapter) { mock in
-            when(mock.coin.get).thenReturn(bitcoin)
+            when(mock.wallet.get).thenReturn(Wallet.mock(coin: bitcoin))
         }
         stub(mockEtherAdapter) { mock in
-            when(mock.coin.get).thenReturn(ether)
+            when(mock.wallet.get).thenReturn(Wallet.mock(coin: ether))
         }
         stub(mockAdapterManager) { mock in
             when(mock.adapters.get).thenReturn([mockBitcoinAdapter, mockEtherAdapter])

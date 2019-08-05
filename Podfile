@@ -1,4 +1,4 @@
-platform :ios, '11'
+platform :ios, '12'
 use_frameworks!
 
 inhibit_all_warnings!
@@ -13,6 +13,11 @@ def appPods
 
   pod 'EthereumKit.swift', git: 'https://github.com/horizontalsystems/ethereum-kit-ios/'
   pod 'Erc20Kit.swift', git: 'https://github.com/horizontalsystems/ethereum-kit-ios/'
+
+  pod 'EosKit.swift', git: 'https://github.com/horizontalsystems/eos-kit-ios/'
+  pod 'EosioSwift', git: 'https://github.com/horizontalsystems/eosio-swift'
+
+  pod 'BinanceChainKit.swift', git: 'https://github.com/horizontalsystems/binance-chain-kit-ios'
 
   pod 'FeeRateKit.swift', git: 'https://github.com/horizontalsystems/blockchain-fee-rate-kit-ios'
 
@@ -56,6 +61,8 @@ target 'Bank Tests' do
   pod 'DeepDiff'
   pod 'RxSwift'
   pod 'Cuckoo'
+  pod 'Quick'
+  pod 'Nimble'
 end
 
 post_install do |installer|

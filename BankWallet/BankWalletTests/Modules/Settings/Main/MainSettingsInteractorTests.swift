@@ -1,19 +1,21 @@
 import XCTest
 import Cuckoo
+import RxSwift
 @testable import Bank_Dev_T
 
 class MainSettingsInteractorTests: XCTestCase {
     private var mockDelegate: MockIMainSettingsInteractorDelegate!
 
     private var mockLocalStorage: MockILocalStorage!
-    private var mockWordsManager: MockIWordsManager!
+    private var mockBackupManager: MockIBackupManager!
     private var mockLanguageManager: MockILanguageManager!
     private var mockSystemInfoManager: MockISystemInfoManager!
     private var mockCurrencyManager: MockICurrencyManager!
+    private var mockAppConfigProvider: MockIAppConfigProvider!
 
     private var interactor: MainSettingsInteractor!
 
-    private let backedUpSignal = Signal()
+    private let nonBackedUpCountSubject = PublishSubject<Int>()
     private let baseCurrencyUpdatedSignal = Signal()
 
     override func setUp() {
@@ -22,19 +24,20 @@ class MainSettingsInteractorTests: XCTestCase {
         mockDelegate = MockIMainSettingsInteractorDelegate()
 
         mockLocalStorage = MockILocalStorage()
-        mockWordsManager = MockIWordsManager()
+        mockBackupManager = MockIBackupManager()
         mockLanguageManager = MockILanguageManager()
         mockSystemInfoManager = MockISystemInfoManager()
         mockCurrencyManager = MockICurrencyManager()
+        mockAppConfigProvider = MockIAppConfigProvider()
 
-        stub(mockWordsManager) { mock in
-            when(mock.backedUpSignal.get).thenReturn(backedUpSignal)
+        stub(mockBackupManager) { mock in
+            when(mock.nonBackedUpCountObservable.get).thenReturn(nonBackedUpCountSubject.asObservable())
         }
         stub(mockCurrencyManager) { mock in
             when(mock.baseCurrencyUpdatedSignal.get).thenReturn(baseCurrencyUpdatedSignal)
         }
 
-        interactor = MainSettingsInteractor(localStorage: mockLocalStorage, wordsManager: mockWordsManager, languageManager: mockLanguageManager, systemInfoManager: mockSystemInfoManager, currencyManager: mockCurrencyManager, async: false)
+        interactor = MainSettingsInteractor(localStorage: mockLocalStorage, backupManager: mockBackupManager, languageManager: mockLanguageManager, systemInfoManager: mockSystemInfoManager, currencyManager: mockCurrencyManager, appConfigProvider: mockAppConfigProvider, async: false)
         interactor.delegate = mockDelegate
     }
 
@@ -42,30 +45,25 @@ class MainSettingsInteractorTests: XCTestCase {
         mockDelegate = nil
 
         mockLocalStorage = nil
-        mockWordsManager = nil
+        mockBackupManager = nil
         mockLanguageManager = nil
         mockSystemInfoManager = nil
         mockCurrencyManager = nil
+        mockAppConfigProvider = nil
 
         interactor = nil
 
         super.tearDown()
     }
 
-    func testIsBackedUp() {
-        stub(mockWordsManager) { mock in
-            when(mock.isBackedUp.get).thenReturn(true)
+    func testNonBackedUpCount() {
+        let count = 2
+
+        stub(mockBackupManager) { mock in
+            when(mock.nonBackedUpCount.get).thenReturn(count)
         }
 
-        XCTAssertTrue(interactor.isBackedUp)
-    }
-
-    func testIsBackedUp_false() {
-        stub(mockWordsManager) { mock in
-            when(mock.isBackedUp.get).thenReturn(false)
-        }
-
-        XCTAssertFalse(interactor.isBackedUp)
+        XCTAssertEqual(interactor.nonBackedUpCount, count)
     }
 
     func testCurrentLanguage() {
@@ -142,27 +140,16 @@ class MainSettingsInteractorTests: XCTestCase {
         verify(mockDelegate).didUpdateLightMode()
     }
 
-    func testBackedUpSignal_true() {
-        stub(mockWordsManager) { mock in
-            when(mock.isBackedUp.get).thenReturn(true)
-        }
+    func testNonBackedUpCountObservable() {
+        let count = 3
+
         stub(mockDelegate) { mock in
-            when(mock.didBackup()).thenDoNothing()
+            when(mock.didUpdateNonBackedUp(count: any())).thenDoNothing()
         }
 
-        backedUpSignal.notify()
+        nonBackedUpCountSubject.onNext(count)
 
-        verify(mockDelegate).didBackup()
-    }
-
-    func testBackedUpSignal_false() {
-        stub(mockWordsManager) { mock in
-            when(mock.isBackedUp.get).thenReturn(false)
-        }
-
-        backedUpSignal.notify()
-
-        verify(mockDelegate, never()).didBackup()
+        verify(mockDelegate).didUpdateNonBackedUp(count: count)
     }
 
     func testBaseCurrencyUpdatedSignal() {

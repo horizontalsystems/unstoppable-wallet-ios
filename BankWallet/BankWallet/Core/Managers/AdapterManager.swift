@@ -4,58 +4,58 @@ class AdapterManager {
     private let disposeBag = DisposeBag()
 
     private let adapterFactory: IAdapterFactory
-    private let ethereumKitManager: IEthereumKitManager
-    private let authManager: IAuthManager
-    private let coinManager: ICoinManager
+    private let ethereumKitManager: EthereumKitManager
+    private let eosKitManager: EosKitManager
+    private let binanceKitManager: BinanceKitManager
+    private let walletManager: IWalletManager
 
     private(set) var adapters: [IAdapter] = []
     let adaptersUpdatedSignal = Signal()
 
-    init(adapterFactory: IAdapterFactory, ethereumKitManager: IEthereumKitManager, authManager: IAuthManager, coinManager: ICoinManager) {
+    init(adapterFactory: IAdapterFactory, ethereumKitManager: EthereumKitManager, eosKitManager: EosKitManager, binanceKitManager: BinanceKitManager, walletManager: IWalletManager) {
         self.adapterFactory = adapterFactory
         self.ethereumKitManager = ethereumKitManager
-        self.authManager = authManager
-        self.coinManager = coinManager
+        self.eosKitManager = eosKitManager
+        self.binanceKitManager = binanceKitManager
+        self.walletManager = walletManager
 
-        coinManager.coinsUpdatedSignal
-                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
-                .observeOn(ConcurrentDispatchQueueScheduler(qos: .userInteractive))
-                .subscribe(onNext: { [weak self] in
-                    self?.initAdapters()
+        walletManager.walletsObservable
+                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+                .observeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+                .subscribe(onNext: { [weak self] wallets in
+                    self?.initAdapters(wallets: wallets)
                 })
                 .disposed(by: disposeBag)
+    }
 
-        initAdapters()
+    private func initAdapters(wallets: [Wallet]) {
+        let oldAdapters = adapters
+
+        adapters = wallets.compactMap { wallet in
+            if let adapter = adapters.first(where: { $0.wallet == wallet }) {
+                return adapter
+            }
+
+            let adapter = adapterFactory.adapter(wallet: wallet)
+            adapter?.start()
+            return adapter
+        }
+
+        for oldAdapter in oldAdapters {
+            if !adapters.contains(where: { $0.wallet == oldAdapter.wallet }) {
+                oldAdapter.stop()
+            }
+        }
+
+        adaptersUpdatedSignal.notify()
     }
 
 }
 
 extension AdapterManager: IAdapterManager {
 
-    func initAdapters() {
-        guard let authData = authManager.authData else {
-            return
-        }
-
-        let oldAdapters = adapters
-
-        adapters = coinManager.coins.compactMap { coin in
-            if let adapter = adapters.first(where: { $0.coin == coin }) {
-                return adapter
-            }
-
-            let adapter = adapterFactory.adapter(forCoin: coin, authData: authData)
-            adapter?.start()
-            return adapter
-        }
-
-        for oldAdapter in oldAdapters {
-            if !adapters.contains(where: { $0.coin == oldAdapter.coin }) {
-                oldAdapter.stop()
-            }
-        }
-
-        adaptersUpdatedSignal.notify()
+    func preloadAdapters() {
+        initAdapters(wallets: walletManager.wallets)
     }
 
     func refresh() {
@@ -64,6 +64,8 @@ extension AdapterManager: IAdapterManager {
         }
 
         ethereumKitManager.ethereumKit?.refresh()
+        eosKitManager.eosKit?.refresh()
+        binanceKitManager.refresh()
     }
 
 }

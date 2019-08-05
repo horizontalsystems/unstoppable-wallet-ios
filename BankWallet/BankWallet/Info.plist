@@ -15,11 +15,17 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>0.6.2</string>
+	<string>0.7</string>
 	<key>CFBundleVersion</key>
 	<string>1</string>
-	<key>DefaultWords</key>
-	<string>${default_words}</string>
+	<key>DefaultWords12</key>
+	<string>${default_words_12}</string>
+	<key>DefaultWords24</key>
+	<string>${default_words_24}</string>
+	<key>DefaultEosAccount</key>
+	<string>${default_eos_account}</string>
+	<key>DefaultEosPrivateKey</key>
+	<string>${default_eos_private_key}</string>
 	<key>DisablePinLock</key>
 	<string>${disable_pin_lock}</string>
 	<key>EtherscanApiKey</key>

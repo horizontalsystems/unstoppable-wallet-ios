@@ -1,16 +1,12 @@
-import Foundation
-
 class SecuritySettingsPresenter {
     private let router: ISecuritySettingsRouter
     private let interactor: ISecuritySettingsInteractor
-    private var state: SecuritySettingsState
 
     weak var view: ISecuritySettingsView?
 
-    init(router: ISecuritySettingsRouter, interactor: ISecuritySettingsInteractor, state: SecuritySettingsState) {
+    init(router: ISecuritySettingsRouter, interactor: ISecuritySettingsInteractor) {
         self.router = router
         self.interactor = interactor
-        self.state = state
     }
 
 }
@@ -19,55 +15,77 @@ extension SecuritySettingsPresenter: ISecuritySettingsViewDelegate {
 
     func viewDidLoad() {
         view?.set(title: "settings_security.title")
+        view?.set(biometryType: interactor.biometryType)
 
+        view?.set(backedUp: interactor.nonBackedUpCount == 0)
+        view?.set(isPinSet: interactor.isPinSet)
         view?.set(biometricUnlockOn: interactor.isBiometricUnlockOn)
-        view?.set(backedUp: interactor.isBackedUp)
-
-        interactor.getBiometryType()
     }
 
-    func didSwitch(biometricUnlockOn: Bool) {
-        state.unlockType = .biometry(isOn: biometricUnlockOn)
-        router.showUnlock()
+    func didTapManageAccounts() {
+        router.showManageAccounts()
+    }
+
+    func didSwitch(isPinSet: Bool) {
+        if isPinSet {
+            router.showSetPin(delegate: self)
+        } else {
+            router.showUnlock(delegate: self)
+        }
     }
 
     func didTapEditPin() {
         router.showEditPin()
     }
 
-    func didTapBackupWallet() {
-        router.showSecretKey()
-    }
-
-    func didTapUnlink() {
-        router.showUnlink()
+    func didSwitch(biometricUnlockOn: Bool) {
+        interactor.set(biometricUnlockOn: biometricUnlockOn)
     }
 
 }
 
 extension SecuritySettingsPresenter: ISecuritySettingsInteractorDelegate {
 
-    func didBackup() {
-        view?.set(backedUp: true)
+    func didUpdateNonBackedUp(count: Int) {
+        view?.set(backedUp: count == 0)
     }
 
-    func didGetBiometry(type: BiometryType) {
-        view?.set(biometryType: type)
+    func didUpdate(isPinSet: Bool) {
+        view?.set(isPinSet: isPinSet)
     }
+
+    func didUpdate(biometryType: BiometryType) {
+        view?.set(biometryType: biometryType)
+    }
+
+}
+
+extension SecuritySettingsPresenter: ISetPinDelegate {
+
+    func didCancelSetPin() {
+        view?.set(isPinSet: false)
+    }
+
+}
+
+extension SecuritySettingsPresenter: IUnlockDelegate {
 
     func onUnlock() {
-        if let unlockType = state.unlockType {
-            switch unlockType {
-            case .biometry(let isOn):
-                interactor.set(biometricUnlockOn: isOn)
-            }
+        do {
+            try interactor.disablePin()
+            interactor.set(biometricUnlockOn: false)
+
+            view?.set(isPinSet: false)
+            view?.set(biometricUnlockOn: false)
+        } catch {
+            view?.show(error: error)
+            view?.set(isPinSet: true)
         }
-        state.unlockType = nil
+
     }
 
     func onCancelUnlock() {
-        view?.set(biometricUnlockOn: interactor.isBiometricUnlockOn)
-        state.unlockType = nil
+        view?.set(isPinSet: true)
     }
 
 }

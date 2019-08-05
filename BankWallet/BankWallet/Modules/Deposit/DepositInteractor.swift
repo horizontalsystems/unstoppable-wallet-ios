@@ -15,7 +15,7 @@ class DepositInteractor {
 extension DepositInteractor: IDepositInteractor {
 
     func adapters(forCoin coin: Coin?) -> [IAdapter] {
-        return adapterManager.adapters.filter { coin == nil || coin == $0.coin }
+        return adapterManager.adapters.filter { coin == nil || coin == $0.wallet.coin }
     }
 
     func copy(address: String) {

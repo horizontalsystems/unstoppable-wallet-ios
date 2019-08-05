@@ -1,5 +1,3 @@
-import Foundation
-
 class SetPinPresenter: ManagePinPresenter {
 
     private let router: ISetPinRouter
@@ -19,13 +17,17 @@ class SetPinPresenter: ManagePinPresenter {
             default: ()
             }
         }
+
+        view?.showCancel()
     }
 
     override func onCancel() {
+        router.notifyCancelled()
+        router.close()
     }
 
     override func didSavePin() {
-        router.navigateToMain()
+        router.close()
     }
 
 }

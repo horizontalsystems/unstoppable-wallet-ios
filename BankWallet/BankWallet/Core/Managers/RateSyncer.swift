@@ -1,7 +1,7 @@
 import RxSwift
 
 class RateSyncer {
-    private let refreshIntervalInMinutes = 3
+    private let refreshIntervalInMinutes = 5
 
     private let disposeBag = DisposeBag()
 
@@ -32,7 +32,7 @@ class RateSyncer {
         if reachabilityManager.isReachable {
             var coinCodes = Set<CoinCode>()
             for adapter in adapterManager.adapters {
-                coinCodes.insert(adapter.coin.code)
+                coinCodes.insert(adapter.wallet.coin.code)
                 if let feeCoinCode = adapter.feeCoinCode {
                     coinCodes.insert(feeCoinCode)
                 }

@@ -4,7 +4,7 @@ import SectionsTableView
 class SyncModeViewController: WalletViewController, SectionsDataSource {
     private let delegate: ISyncModeViewDelegate
 
-    let tableView = SectionsTableView(style: .grouped)
+    private let tableView = SectionsTableView(style: .grouped)
 
     private var isFast = true
 
@@ -33,23 +33,21 @@ class SyncModeViewController: WalletViewController, SectionsDataSource {
         }
         tableView.reload()
 
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.done".localized, style: .plain, target: self, action: #selector(onTapDone))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.done".localized, style: .done, target: self, action: #selector(onTapDone))
     }
 
-    func onTapFastSync() {
+    private func onTapFastSync() {
         isFast = true
-        delegate.onSelectFast()
         tableView.reload()
     }
 
-    func onTapSlowSync() {
+    private func onTapSlowSync() {
         isFast = false
-        delegate.onSelectSlow()
         tableView.reload()
     }
 
     @objc func onTapDone() {
-        delegate.onDone()
+        delegate.didSelectSyncMode(isFast: isFast)
     }
 
     func buildSections() -> [SectionProtocol] {
@@ -77,7 +75,7 @@ class SyncModeViewController: WalletViewController, SectionsDataSource {
         let slowFooter: ViewState<SyncModeSectionSeparator> = .cellType(hash: "sync_slow_footer", binder: { view in
             view.bind(description: "coin_sync.slow.text".localized, showTopSeparator: false, showBottomSeparator: false)
         }, dynamicHeight: { _ in
-            SyncModeSectionSeparator.height(for: "coin_sync.slow.text".localized, containerWidth: width) 
+            SyncModeSectionSeparator.height(for: "coin_sync.slow.text".localized, containerWidth: width)
         })
         sections.append(Section(id: "fast", footerState: slowFooter, rows: [slowRow]))
 
@@ -87,9 +85,4 @@ class SyncModeViewController: WalletViewController, SectionsDataSource {
 }
 
 extension SyncModeViewController: ISyncModeView {
-
-    func showInvalidWordsError() {
-        HudHelper.instance.showError(title: "restore.validation_failed".localized)
-    }
-
 }

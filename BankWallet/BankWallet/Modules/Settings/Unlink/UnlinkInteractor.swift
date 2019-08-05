@@ -1,23 +1,18 @@
 class UnlinkInteractor {
     weak var delegate: IUnlinkInteractorDelegate?
 
-    private let authManager: IAuthManager
+    private let accountManager: IAccountManager
 
-    init(authManager: IAuthManager) {
-        self.authManager = authManager
+    init(accountManager: IAccountManager) {
+        self.accountManager = accountManager
     }
 
 }
 
 extension UnlinkInteractor: IUnlinkInteractor {
 
-    func unlink() {
-        do {
-            try authManager.logout()
-            delegate?.didUnlink()
-        } catch {
-            // todo
-        }
+    func unlink(account: Account) {
+        accountManager.delete(account: account)
     }
 
 }

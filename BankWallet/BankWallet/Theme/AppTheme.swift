@@ -6,7 +6,7 @@ class AppTheme {
     static var actionSheetBlurStyle: UIBlurEffect.Style { return App.shared.localStorage.lightMode ? .dark : .light }
 
     static var keyboardAppearance: UIKeyboardAppearance { return App.shared.localStorage.lightMode ? .default : .dark }
-    static var textFieldTintColor: UIColor { return .crypto_White_Black }
+    static var textFieldTintColor: UIColor { return .cryptoYellow }
 
     public static let defaultAnimationDuration = 0.3
 
@@ -33,7 +33,35 @@ class AppTheme {
                     backgroundStyle: .blur(intensity: 0.55, style: AppTheme.actionSheetBlurStyle))
         }
     }
-    static let actionAlertConfig = ActionSheetThemeConfig(actionStyle: .alert, cornerRadius: 16)
+    static let alertSmallMargin: CGFloat = 8
+    static let alertMediumMargin: CGFloat = 12
+
+    static var alertBackgroundColor: UIColor { return .crypto_SteelDark_Bars }
+    static let alertHeaderHeight: CGFloat = 40
+    static let alertHeaderFont: UIFont = .cryptoSectionCaption
+    static let alertHeaderColor: UIColor = .cryptoGray
+
+    static let alertTitleHeight: CGFloat = 48
+    static let alertTitleFont: UIFont = .cryptoHeadline
+    static var alertTitleColor: UIColor { return .crypto_White_Black }
+
+    static let alertTextMargin: CGFloat = 16
+    static let alertTextFont: UIFont = .cryptoCaptionMedium
+    static var alertTextColor: UIColor = .cryptoGray
+
+    static let alertCellHeight: CGFloat = 53
+    static let alertCellFont: UIFont = .cryptoHeadline
+    static var alertCellHighlightColor: UIColor = .cryptoYellow
+    static var alertCellDefaultColor: UIColor { return .crypto_Bars_Dark }
+    static var alertConfig: ActionSheetThemeConfig {
+        return ActionSheetThemeConfig(
+                actionStyle: .alert,
+                sideMargin: 61,
+                cornerRadius: 16,
+                separatorColor: UIColor.cryptoBlack20,
+                backgroundStyle: .color(color: .cryptoBlack50)
+        )
+    }
 
     static let coinIconColor: UIColor = .cryptoGray
     static let coinIconSize: CGFloat = 24

@@ -1,90 +1,64 @@
-import Foundation
+class BackupPresenter: IBackupPresenter {
+    weak var view: IBackupWordsView? = nil
 
-class BackupPresenter {
-    enum Mode {
-        case initial
-        case regular
-    }
-
-    private let interactor: IBackupInteractor
     private let router: IBackupRouter
-    weak var view: IBackupView?
+    private let interactor: IBackupInteractor
+    private let account: Account
+    private let predefinedAccountType: IPredefinedAccountType
 
-    private let mode: Mode
-    private var validated = false
-
-    init(interactor: IBackupInteractor, router: IBackupRouter, mode: Mode) {
+    init(interactor: IBackupInteractor, router: IBackupRouter, account: Account, predefinedAccountType: IPredefinedAccountType) {
         self.interactor = interactor
         self.router = router
-        self.mode = mode
-    }
-
-}
-
-extension BackupPresenter: IBackupInteractorDelegate {
-
-    func didFetch(words: [String]) {
-        view?.show(words: words)
-    }
-
-    func didFetch(confirmationIndexes indexes: [Int]) {
-        view?.showConfirmation(withIndexes: indexes)
-    }
-
-    func didValidateSuccess() {
-        switch mode {
-        case .initial:
-            validated = true
-            router.showAgreement()
-        case .regular:
-            interactor.setBackedUp()
-            router.close()
-        }
-    }
-
-    func didValidateFailure() {
-        view?.showConfirmationError()
-    }
-
-    func showUnlock() {
-        router.showUnlock()
-    }
-
-    func onConfirmAgreement() {
-        if validated {
-            interactor.setBackedUp()
-        }
-
-        router.navigateToSetPin()
+        self.account = account
+        self.predefinedAccountType = predefinedAccountType
     }
 
 }
 
 extension BackupPresenter: IBackupViewDelegate {
 
+    var isBackedUp: Bool {
+        return account.backedUp
+    }
+
+    var coinCodes: String {
+        return predefinedAccountType.coinCodes
+    }
+
     func cancelDidClick() {
-        switch mode {
-        case .initial:
-            router.showAgreement()
-        case .regular:
-            router.close()
+        router.close()
+    }
+
+    func proceedDidTap() {
+        if interactor.isPinSet {
+            router.showUnlock()
+        } else {
+            router.showBackup(account: account, delegate: self)
         }
     }
 
-    func showWordsDidClick() {
-        interactor.lockIfRequired()
+}
+
+extension BackupPresenter: IUnlockDelegate {
+
+    func onUnlock() {
+        router.showBackup(account: account, delegate: self)
     }
 
-    func showConfirmationDidClick() {
-        interactor.fetchConfirmationIndexes()
+    func onCancelUnlock() {
     }
 
-    func hideConfirmationDidClick() {
-        view?.hideConfirmation()
+}
+
+extension BackupPresenter: IBackupDelegate {
+
+    func didBackUp() {
+        interactor.setBackedUp(accountId: account.id)
+        router.close()
     }
 
-    func validateDidClick(confirmationWords: [Int: String]) {
-        interactor.validate(confirmationWords: confirmationWords)
+    func didClose() {
+        router.close()
     }
 
 }

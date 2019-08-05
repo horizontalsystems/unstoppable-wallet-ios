@@ -13,7 +13,7 @@ class DepositPresenter {
         self.router = router
 
         addressItems = interactor.adapters(forCoin: coin).map {
-            AddressItem(coin: $0.coin, address: $0.receiveAddress)
+            AddressItem(coin: $0.wallet.coin, address: $0.receiveAddress)
         }
     }
 

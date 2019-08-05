@@ -2,28 +2,25 @@ import Foundation
 import KeychainAccess
 
 class KeychainStorage {
-    let keychain: Keychain
+    private let keychain: Keychain
 
     private let pinKey = "pin_keychain_key"
     private let authDataKey = "auth_data_keychain_key"
     private let unlockAttemptsKey = "unlock_attempts_keychain_key"
     private let lockTimestampKey = "lock_timestamp_keychain_key"
 
-    init(localStorage: ILocalStorage) {
-        keychain = Keychain(service: "io.horizontalsystems.bank.dev")
-        if !localStorage.didLaunchOnce {
-            clear()
-        }
+    init() {
+        keychain = Keychain(service: "io.horizontalsystems.bank.dev").accessibility(.whenPasscodeSetThisDeviceOnly)
     }
 
-    func getBool(forKey key: String) -> Bool? {
+    private func getBool(forKey key: String) -> Bool? {
         guard let string = keychain[key] else {
             return false
         }
         return Bool(string)
     }
 
-    func set(value: Bool?, forKey key: String) throws {
+    private func set(value: Bool?, forKey key: String) throws {
         guard let value = value else {
             try keychain.remove(key)
             return
@@ -43,14 +40,14 @@ class KeychainStorage {
         try keychain.set(value, key: key)
     }
 
-    func getInt(forKey key: String) -> Int? {
+    private func getInt(forKey key: String) -> Int? {
         guard let string = keychain[key] else {
             return nil
         }
         return Int(string)
     }
 
-    func set(value: Int?, forKey key: String) throws {
+    private func set(value: Int?, forKey key: String) throws {
         guard let value = value else {
             try keychain.remove(key)
             return
@@ -58,19 +55,31 @@ class KeychainStorage {
         try keychain.set("\(value)", key: key)
     }
 
-    func getDouble(forKey key: String) -> Double? {
+    private func getDouble(forKey key: String) -> Double? {
         guard let string = keychain[key] else {
             return nil
         }
         return Double(string)
     }
 
-    func set(value: Double?, forKey key: String) throws {
+    private func set(value: Double?, forKey key: String) throws {
         guard let value = value else {
             try keychain.remove(key)
             return
         }
         try keychain.set("\(value)", key: key)
+    }
+
+    func getData(forKey key: String) -> Data? {
+        return try? keychain.getData(key)
+    }
+
+    func set(value: Data?, forKey key: String) throws {
+        guard let value = value else {
+            try keychain.remove(key)
+            return
+        }
+        try keychain.set(value, key: key)
     }
 
     private func get<T: NSCoding>(forKey key: String) -> T? {
@@ -90,17 +99,13 @@ class KeychainStorage {
         }
     }
 
+    func remove(for key: String) throws {
+        try keychain.remove(key)
+    }
+
 }
 
 extension KeychainStorage: ISecureStorage {
-
-    var authData: AuthData? {
-        return get(forKey: authDataKey)
-    }
-
-    func set(authData: AuthData?) throws {
-        try set(value: authData, forKey: authDataKey)
-    }
 
     var pin: String? {
         return getString(forKey: pinKey)
@@ -129,11 +134,8 @@ extension KeychainStorage: ISecureStorage {
         try set(value: lockoutTimestamp, forKey: lockTimestampKey)
     }
 
-    func clear() {
-        try? set(authData: nil)
-        try? set(pin: nil)
-        try? set(unlockAttempts: nil)
-        try? set(lockoutTimestamp: nil)
+    func clear() throws {
+        try keychain.removeAll()
     }
 
 }

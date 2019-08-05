@@ -28,13 +28,15 @@ class SetPinPresenterTests: XCTestCase {
             when(mock.show(page: any())).thenDoNothing()
             when(mock.show(error: any(), forPage: any())).thenDoNothing()
             when(mock.show(error: any())).thenDoNothing()
+            when(mock.showCancel()).thenDoNothing()
         }
         stub(mockInteractor) { mock in
             when(mock.save(pin: any())).thenDoNothing()
             when(mock.set(pin: any())).thenDoNothing()
         }
         stub(mockRouter) { mock in
-            when(mock.navigateToMain()).thenDoNothing()
+            when(mock.notifyCancelled()).thenDoNothing()
+            when(mock.close()).thenDoNothing()
         }
     }
 
@@ -87,7 +89,7 @@ class SetPinPresenterTests: XCTestCase {
     func testDismissAfterSavePin() {
         presenter.didSavePin()
 
-        verify(mockRouter).navigateToMain()
+        verify(mockRouter).close()
     }
 
     func testInvalidConfirmPin() {
@@ -110,13 +112,6 @@ class SetPinPresenterTests: XCTestCase {
         verify(mockView).show(error: "unlock_pin.cant_save_pin")
         verify(mockView).show(page: enterPage)
         verify(mockInteractor).set(pin: equal(to: nil))
-    }
-
-    func testNeverDismiss() {
-        presenter.onCancel()
-
-        verify(mockRouter, never()).navigateToMain()
-
     }
 
 }

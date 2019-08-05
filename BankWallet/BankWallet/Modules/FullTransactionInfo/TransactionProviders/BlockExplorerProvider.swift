@@ -3,8 +3,17 @@ import ObjectMapper
 class BlockExplorerBitcoinProvider: IBitcoinForksProvider {
     let name = "BlockExplorer.com"
 
-    func url(for hash: String) -> String { return "https://blockexplorer.com/tx/" + hash }
-    func apiUrl(for hash: String) -> String { return "https://blockexplorer.com/api/tx/" + hash }
+    func url(for hash: String) -> String {
+        return "https://blockexplorer.com/tx/" + hash
+    }
+
+    func reachabilityUrl(for hash: String) -> String {
+        return "https://blockexplorer.com/api/tx/" + hash
+    }
+
+    func requestObject(for hash: String) -> JsonApiProvider.RequestObject {
+        return .get(url: "https://blockexplorer.com/api/tx/" + hash, params: nil)
+    }
 
     func convert(json: [String: Any]) -> IBitcoinResponse? {
         return try? BlockExplorerBitcoinResponse(JSONObject: json)
@@ -15,14 +24,24 @@ class BlockExplorerBitcoinProvider: IBitcoinForksProvider {
 class BlockExplorerBitcoinCashProvider: IBitcoinForksProvider {
     let name = "BlockExplorer.com"
 
-    func url(for hash: String) -> String { return "https://bitcoincash.blockexplorer.com/tx/" + hash }
-    func apiUrl(for hash: String) -> String { return "https://bitcoincash.blockexplorer.com/api/tx/" + hash }
+    func url(for hash: String) -> String {
+        return "https://bitcoincash.blockexplorer.com/tx/" + hash
+    }
+
+    func reachabilityUrl(for hash: String) -> String {
+        return "https://bitcoincash.blockexplorer.com/api/tx/" + hash
+    }
+
+    func requestObject(for hash: String) -> JsonApiProvider.RequestObject {
+        return .get(url: "https://bitcoincash.blockexplorer.com/api/tx/" + hash, params: nil)
+    }
 
     func convert(json: [String: Any]) -> IBitcoinResponse? {
         return try? BlockExplorerBitcoinResponse(JSONObject: json)
     }
 
 }
+
 class BlockExplorerBitcoinResponse: IBitcoinResponse, ImmutableMappable {
     var txId: String?
     var blockTime: Int?

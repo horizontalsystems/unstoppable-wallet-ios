@@ -39,8 +39,8 @@ extension TransactionsPresenter: ITransactionViewItemLoaderDelegate {
 
 extension TransactionsPresenter: ITransactionLoaderDelegate {
 
-    func fetchRecords(fetchDataList: [FetchData]) {
-        interactor.fetchRecords(fetchDataList: fetchDataList)
+    func fetchRecords(fetchDataList: [FetchData], initial: Bool) {
+        interactor.fetchRecords(fetchDataList: fetchDataList, initial: initial)
     }
 
     func reload(with newItems: [TransactionItem], animated: Bool) {
@@ -57,10 +57,6 @@ extension TransactionsPresenter: ITransactionsViewDelegate {
 
     func viewDidLoad() {
         interactor.initialFetch()
-    }
-
-    func onViewAppear() {
-        viewItemLoader.reloadAll()
     }
 
     func onFilterSelect(coin: Coin?) {
@@ -117,7 +113,7 @@ extension TransactionsPresenter: ITransactionsInteractorDelegate {
             view?.show(filters: [nil] + coins)
         }
 
-        loader.set(coins: coins)
+        loader.handleUpdate(coins: coins)
         loader.loadNext(initial: true)
     }
 
@@ -157,10 +153,10 @@ extension TransactionsPresenter: ITransactionsInteractorDelegate {
         }
     }
 
-    func didFetch(recordsData: [Coin: [TransactionRecord]]) {
+    func didFetch(recordsData: [Coin: [TransactionRecord]], initial: Bool) {
 //        print("Did Fetch Records: \(recordsData.map { key, value -> String in "\(key) - \(value.count)" })")
 
-        loader.didFetch(recordsData: recordsData)
+        loader.didFetch(recordsData: recordsData, initial: initial)
     }
 
     func onConnectionRestore() {

@@ -25,7 +25,7 @@ extension DataProviderSettingsPresenter: IDataProviderSettingsViewDelegate {
 
         let providers = interactor.providers(for: coin)
         providers.forEach { provider in
-            interactor.pingProvider(name: provider.name, url: provider.apiUrl(for: transactionHash))
+            interactor.pingProvider(name: provider.name, url: provider.reachabilityUrl(for: transactionHash))
         }
 
         items = providers.map { provider in

@@ -66,26 +66,34 @@ class MainSettingsViewController: WalletViewController, SectionsDataSource {
     func buildSections() -> [SectionProtocol] {
         var sections = [SectionProtocol]()
 
-        var appSettingsRows = [RowProtocol]()
+        var securitySettingsRows = [RowProtocol]()
         let securityAttentionImage = backedUp ? nil : UIImage(named: "Attention Icon")
-        appSettingsRows.append(Row<SettingsRightImageCell>(id: "security_center", hash: "security_center.\(backedUp)", height: SettingsTheme.cellHeight, bind: { cell, _ in
+        securitySettingsRows.append(Row<SettingsRightImageCell>(id: "security_center", hash: "security_center.\(backedUp)", height: SettingsTheme.cellHeight, bind: { cell, _ in
             cell.selectionStyle = .default
             cell.bind(titleIcon: UIImage(named: "Security Icon"), title: "settings.security_center".localized, rightImage: securityAttentionImage, rightImageTintColor: SettingsTheme.attentionIconTint, showDisclosure: true)
         }, action: { [weak self] _ in
             self?.delegate.didTapSecurity()
         }))
-        appSettingsRows.append(Row<SettingsRightLabelCell>(id: "base_currency", hash: "base_currency", height: SettingsTheme.cellHeight, bind: { [weak self] cell, _ in
+        securitySettingsRows.append(Row<SettingsRightImageCell>(id: "manage_coins", hash: "manage_coins", height: SettingsTheme.cellHeight, bind: { cell, _ in
             cell.selectionStyle = .default
-            cell.bind(titleIcon: UIImage(named: "Currency Icon"), title: "settings.base_currency".localized, rightText: self?.baseCurrency, showDisclosure: true, last: true)
+            cell.bind(titleIcon: UIImage(named: "Manage Coins Icon"), title: "settings.manage_coins".localized, showDisclosure: true, last: true)
         }, action: { [weak self] _ in
-            self?.delegate.didTapBaseCurrency()
+            DispatchQueue.main.async {
+                self?.delegate.didTapManageCoins()
+            }
         }))
         let settingsHeader: ViewState<SectionSeparator> = .cellType(hash: "settings_header", binder: { view in
             view.bind(showTopSeparator: false)
         }, dynamicHeight: { _ in SettingsTheme.topHeaderHeight })
-        sections.append(Section(id: "app_settings", headerState: settingsHeader, rows: appSettingsRows))
+        sections.append(Section(id: "app_settings", headerState: settingsHeader, rows: securitySettingsRows))
 
         var appearanceRows = [RowProtocol]()
+        appearanceRows.append(Row<SettingsRightLabelCell>(id: "base_currency", hash: "base_currency", height: SettingsTheme.cellHeight, bind: { [weak self] cell, _ in
+            cell.selectionStyle = .default
+            cell.bind(titleIcon: UIImage(named: "Currency Icon"), title: "settings.base_currency".localized, rightText: self?.baseCurrency, showDisclosure: true)
+        }, action: { [weak self] _ in
+            self?.delegate.didTapBaseCurrency()
+        }))
         appearanceRows.append(Row<SettingsRightLabelCell>(id: "language", hash: "language", height: SettingsTheme.cellHeight, bind: { [weak self] cell, _ in
             cell.selectionStyle = .default
             cell.bind(titleIcon: UIImage(named: "Language Icon"), title: "settings.language".localized, rightText: self?.language, showDisclosure: true)
@@ -100,18 +108,24 @@ class MainSettingsViewController: WalletViewController, SectionsDataSource {
         let appearanceHeader: ViewState<SectionSeparator> = .cellType(hash: "appearance_header", binder: nil, dynamicHeight: { _ in SettingsTheme.headerHeight })
         sections.append(Section(id: "appearance_settings", headerState: appearanceHeader, rows: appearanceRows))
 
-        var aboutRows = [RowProtocol]()
-        aboutRows.append(Row<SettingsCell>(id: "about", hash: "about", height: SettingsTheme.cellHeight, bind: { cell, _ in
+        var infoRows = [RowProtocol]()
+        infoRows.append(Row<SettingsCell>(id: "about", hash: "about", height: SettingsTheme.cellHeight, bind: { cell, _ in
             cell.selectionStyle = .default
-            cell.bind(titleIcon: UIImage(named: "About Icon"), title: "settings.about".localized, showDisclosure: true, last: true)
+            cell.bind(titleIcon: UIImage(named: "About Icon"), title: "settings.about".localized, showDisclosure: true)
         }, action: { [weak self] _ in
             self?.delegate.didTapAbout()
+        }))
+        infoRows.append(Row<SettingsCell>(id: "tell_friends", hash: "tell_friends", height: SettingsTheme.cellHeight, autoDeselect: true, bind: { cell, _ in
+            cell.selectionStyle = .default
+            cell.bind(titleIcon: UIImage(named: "Tell Friends Icon"), title: "settings.tell_friends".localized, showDisclosure: true, last: true)
+        }, action: { [weak self] _ in
+            self?.delegate.didTapTellFriends()
         }))
         let infoHeader: ViewState<SectionSeparator> = .cellType(hash: "info_header", binder: nil, dynamicHeight: { _ in SettingsTheme.headerHeight })
         let infoFooter: ViewState<SettingsInfoFooter> = .cellType(hash: "info_footer", binder: { [weak self] view in
             self?.bindFooter(view: view)
         }, dynamicHeight: { _ in SettingsTheme.infoFooterHeight })
-        sections.append(Section(id: "info_settings", headerState: infoHeader, footerState: infoFooter, rows: aboutRows))
+        sections.append(Section(id: "info_settings", headerState: infoHeader, footerState: infoFooter, rows: infoRows))
 
 #if DEBUG
         var debugRows = [RowProtocol]()
@@ -142,7 +156,7 @@ class MainSettingsViewController: WalletViewController, SectionsDataSource {
 
     private func showRealmInfo() {
         for adapter in App.shared.adapterManager.adapters {
-            print("\nINFO FOR \(adapter.coin.code):\n\(adapter.debugInfo)")
+            print("\nINFO FOR \(adapter.wallet.coin.code):\n\(adapter.debugInfo)")
         }
     }
 

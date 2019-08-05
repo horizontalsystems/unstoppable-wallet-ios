@@ -1,17 +1,13 @@
 class LaunchInteractor {
-    private let authManager: IAuthManager
-    private let lockManager: ILockManager
+    private let accountManager: IAccountManager
     private let pinManager: IPinManager
-    private let appConfigProvider: IAppConfigProvider
+    private let passcodeLockManager: IPasscodeLockManager
     private let localStorage: ILocalStorage
 
-    weak var delegate: ILaunchInteractorDelegate?
-
-    init(authManager: IAuthManager, lockManager: ILockManager, pinManager: IPinManager, appConfigProvider: IAppConfigProvider, localStorage: ILocalStorage) {
-        self.authManager = authManager
-        self.lockManager = lockManager
+    init(accountManager: IAccountManager, pinManager: IPinManager, passcodeLockManager: IPasscodeLockManager, localStorage: ILocalStorage) {
+        self.accountManager = accountManager
         self.pinManager = pinManager
-        self.appConfigProvider = appConfigProvider
+        self.passcodeLockManager = passcodeLockManager
         self.localStorage = localStorage
     }
 
@@ -19,18 +15,20 @@ class LaunchInteractor {
 
 extension LaunchInteractor: ILaunchInteractor {
 
-    func showLaunchModule() {
-        if !authManager.isLoggedIn {
-            delegate?.showGuestModule()
-        } else if !localStorage.agreementAccepted {
-            delegate?.showBackupModule()
-        } else if !pinManager.isPinSet {
-            delegate?.showSetPinModule()
-        } else if appConfigProvider.disablePinLock {
-            delegate?.showMainModule()
-        } else {
-            delegate?.showUnlockModule()
-        }
+    var hasAccounts: Bool {
+        return !accountManager.accounts.isEmpty
+    }
+
+    var passcodeLocked: Bool {
+        return passcodeLockManager.locked
+    }
+
+    var isPinSet: Bool {
+        return pinManager.isPinSet
+    }
+
+    var mainShownOnce: Bool {
+        return localStorage.mainShownOnce
     }
 
 }

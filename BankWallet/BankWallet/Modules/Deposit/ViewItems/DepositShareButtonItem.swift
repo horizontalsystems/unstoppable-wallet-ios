@@ -2,8 +2,8 @@ import UIKit
 import ActionSheet
 
 class DepositShareButtonItem: BaseButtonItem {
-    override var backgroundStyle: RespondButton.Style { return ButtonTheme.greenBackgroundOnWhiteBackgroundDictionary }
-    override var textStyle: RespondButton.Style { return ButtonTheme.textColorOnWhiteBackgroundDictionary }
+    override var backgroundStyle: RespondButton.Style { return ButtonTheme.greenBackgroundDictionary }
+    override var textStyle: RespondButton.Style { return ButtonTheme.textColorDictionary }
     override var title: String { return "button.forward".localized }
 
     init(tag: Int, onTap: @escaping (() -> ())) {

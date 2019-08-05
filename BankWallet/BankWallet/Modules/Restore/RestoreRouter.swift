@@ -2,12 +2,27 @@ import UIKit
 
 class RestoreRouter {
     weak var viewController: UIViewController?
+
+    private let delegate: IRestoreDelegate
+
+    init(delegate: IRestoreDelegate) {
+        self.delegate = delegate
+    }
+
 }
 
 extension RestoreRouter: IRestoreRouter {
 
-    func openSyncMode(with words: [String]) {
-        viewController?.navigationController?.pushViewController(SyncModeRouter.module(mode: .initial(words: words)), animated: true)
+    func showRestore(defaultAccountType: DefaultAccountType, delegate: IRestoreAccountTypeDelegate) {
+        guard let module = RestoreRouter.module(defaultAccountType: defaultAccountType, mode: .pushed, delegate: delegate) else {
+            return
+        }
+
+        viewController?.navigationController?.pushViewController(module, animated: true)
+    }
+
+    func notifyRestored(account: Account) {
+        delegate.didRestore(account: account)
     }
 
     func close() {
@@ -18,17 +33,29 @@ extension RestoreRouter: IRestoreRouter {
 
 extension RestoreRouter {
 
-    static func module() -> UIViewController {
-        let router = RestoreRouter()
-        let interactor = RestoreInteractor(wordsManager: App.shared.wordsManager, appConfigProvider: App.shared.appConfigProvider)
-        let presenter = RestorePresenter(interactor: interactor, router: router)
+    static func module(delegate: IRestoreDelegate) -> UIViewController {
+        let router = RestoreRouter(delegate: delegate)
+        let presenter = RestorePresenter(router: router, accountCreator: App.shared.accountCreator, predefinedAccountTypeManager: App.shared.predefinedAccountTypeManager)
         let viewController = RestoreViewController(delegate: presenter)
 
-        interactor.delegate = presenter
         presenter.view = viewController
         router.viewController = viewController
 
         return WalletNavigationController(rootViewController: viewController)
+    }
+
+    static func module(defaultAccountType: DefaultAccountType, mode: PresentationMode, delegate: IRestoreAccountTypeDelegate) -> UIViewController? {
+        switch defaultAccountType {
+        case .mnemonic(let wordsCount):
+            let showSyncMode = wordsCount == 12
+            return RestoreWordsRouter.module(mode: mode, wordsCount: wordsCount, showSyncMode: showSyncMode, delegate: delegate)
+        case .eos: return RestoreEosRouter.module(mode: mode, delegate: delegate)
+        }
+    }
+
+    enum PresentationMode {
+        case pushed
+        case presented
     }
 
 }

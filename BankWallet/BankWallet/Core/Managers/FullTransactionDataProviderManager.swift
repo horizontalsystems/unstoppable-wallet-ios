@@ -5,7 +5,7 @@ class FullTransactionDataProviderManager {
         return appConfigProvider.testMode ? [HorSysBitcoinProvider(testMode: true)] : [
             HorSysBitcoinProvider(testMode: false),
             BlockChairBitcoinProvider(),
-            BlockExplorerBitcoinProvider(),
+//            BlockExplorerBitcoinProvider(),
             BtcComBitcoinProvider()
         ]
     }
@@ -13,7 +13,7 @@ class FullTransactionDataProviderManager {
         return appConfigProvider.testMode ? [BlockdozerBitcoinCashProvider(testMode: true)] : [
             BlockdozerBitcoinCashProvider(testMode: false),
             BlockChairBitcoinCashProvider(),
-            BlockExplorerBitcoinCashProvider(),
+//            BlockExplorerBitcoinCashProvider(),
             BtcComBitcoinCashProvider()
         ]
     }
@@ -38,6 +38,21 @@ class FullTransactionDataProviderManager {
         ]
     }
 
+    private var eosProviders: [IEosProvider] {
+        return [
+            EosInfraProvider(),
+            EosGreymassProvider()
+        ]
+    }
+
+    private var binanceProviders: [IBinanceProvider] {
+        return appConfigProvider.testMode ? [
+            BinanceOrgProvider(testMode: true),
+        ] : [
+            BinanceOrgProvider(testMode: false)
+        ]
+    }
+
     private let localStorage: ILocalStorage
     private let appConfigProvider: IAppConfigProvider
 
@@ -59,6 +74,10 @@ extension FullTransactionDataProviderManager: IFullTransactionDataProviderManage
             return bitcoinCashProviders
         } else if coin.type == .dash {
             return dashProviders
+        } else if case .binance = coin.type {
+            return binanceProviders
+        } else if case .eos = coin.type {
+            return eosProviders
         }
         return ethereumProviders
     }
@@ -72,6 +91,14 @@ extension FullTransactionDataProviderManager: IFullTransactionDataProviderManage
             let name = localStorage.baseDashProvider ?? dashProviders[0].name
             return dash(for: name)
         }
+        if case .binance = coin.type {
+            let name = localStorage.baseBinanceProvider ?? binanceProviders[0].name
+            return dash(for: name)
+        }
+        if case .eos = coin.type {
+            let name = localStorage.baseEosProvider ?? eosProviders[0].name
+            return eos(for: name)
+        }
         let name = localStorage.baseEthereumProvider ?? ethereumProviders[0].name
         return ethereum(for: name)
     }
@@ -81,6 +108,10 @@ extension FullTransactionDataProviderManager: IFullTransactionDataProviderManage
             localStorage.baseBitcoinProvider = name
         } else if coin.type == .dash {
             localStorage.baseDashProvider = name
+        } else if case .binance = coin.type {
+            localStorage.baseBinanceProvider = name
+        } else if case .eos = coin.type {
+            localStorage.baseEosProvider = name
         } else {
             localStorage.baseEthereumProvider = name
         }
@@ -103,8 +134,18 @@ extension FullTransactionDataProviderManager: IFullTransactionDataProviderManage
         return providers.first(where: { provider in provider.name == name }) ?? providers[0]
     }
 
+    func eos(for name: String) -> IEosProvider {
+        let providers = eosProviders
+        return providers.first(where: { provider in provider.name == name }) ?? providers[0]
+    }
+
     func ethereum(for name: String) -> IEthereumForksProvider {
         let providers = ethereumProviders
+        return providers.first(where: { provider in provider.name == name }) ?? providers[0]
+    }
+
+    func binance(for name: String) -> IBinanceProvider {
+        let providers = binanceProviders
         return providers.first(where: { provider in provider.name == name }) ?? providers[0]
     }
 

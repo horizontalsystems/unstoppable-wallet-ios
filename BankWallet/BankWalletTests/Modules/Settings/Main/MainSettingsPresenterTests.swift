@@ -37,7 +37,7 @@ class MainSettingsPresenterTests: XCTestCase {
             when(mock.reloadAppInterface()).thenDoNothing()
         }
         stub(mockInteractor) { mock in
-            when(mock.isBackedUp.get).thenReturn(true)
+            when(mock.nonBackedUpCount.get).thenReturn(0)
             when(mock.currentLanguage.get).thenReturn(defaultLanguage)
             when(mock.baseCurrency.get).thenReturn(baseCurrency)
             when(mock.lightMode.get).thenReturn(true)
@@ -59,22 +59,28 @@ class MainSettingsPresenterTests: XCTestCase {
         super.tearDown()
     }
 
-    func testBackedUpOnLoad() {
+    func testNotBackedUpCountOnLoad_Zero() {
+        stub(mockInteractor) { mock in
+            when(mock.nonBackedUpCount.get).thenReturn(0)
+        }
+
         presenter.viewDidLoad()
 
         verify(mockView).set(backedUp: true)
         verify(mockView).setTabItemBadge(count: 0)
     }
 
-    func testNotBackedUpOnLoad() {
+    func testNotBackedUpCountOnLoad_NonZero() {
+        let count = 2
+
         stub(mockInteractor) { mock in
-            when(mock.isBackedUp.get).thenReturn(false)
+            when(mock.nonBackedUpCount.get).thenReturn(count)
         }
 
         presenter.viewDidLoad()
 
         verify(mockView).set(backedUp: false)
-        verify(mockView).setTabItemBadge(count: 1)
+        verify(mockView).setTabItemBadge(count: count)
     }
 
     func testShowCurrentLanguageOnLoad() {
@@ -110,11 +116,20 @@ class MainSettingsPresenterTests: XCTestCase {
         verify(mockView).set(appVersion: appVersion)
     }
 
-    func testDidBackup() {
-        presenter.didBackup()
+    func testDidUpdateNonBackedUp_Zero() {
+        presenter.didUpdateNonBackedUp(count: 0)
 
         verify(mockView).set(backedUp: true)
         verify(mockView).setTabItemBadge(count: 0)
+    }
+
+    func testDidUpdateNonBackedUp_NonZero() {
+        let count = 3
+
+        presenter.didUpdateNonBackedUp(count: count)
+
+        verify(mockView).set(backedUp: false)
+        verify(mockView).setTabItemBadge(count: count)
     }
 
     func testReloadAppInterfaceOnLightModeUpdate() {

@@ -2,25 +2,24 @@ import UIKit
 
 class SecuritySettingsRouter {
     weak var viewController: UIViewController?
-    weak var unlockDelegate: IUnlockDelegate?
 }
 
 extension SecuritySettingsRouter: ISecuritySettingsRouter {
+
+    func showManageAccounts() {
+        viewController?.navigationController?.pushViewController(ManageAccountsRouter.module(mode: .pushed), animated: true)
+    }
+
+    func showSetPin(delegate: ISetPinDelegate) {
+        viewController?.present(SetPinRouter.module(delegate: delegate), animated: true)
+    }
 
     func showEditPin() {
         viewController?.present(EditPinRouter.module(), animated: true)
     }
 
-    func showUnlock() {
-        viewController?.present(UnlockPinRouter.module(unlockDelegate: unlockDelegate, enableBiometry: false, cancelable: true), animated: true)
-    }
-
-    func showSecretKey() {
-        viewController?.present(BackupRouter.module(mode: .regular), animated: true)
-    }
-
-    func showUnlink() {
-        viewController?.present(UnlinkRouter.module(), animated: true)
+    func showUnlock(delegate: IUnlockDelegate) {
+        viewController?.present(UnlockPinRouter.module(delegate: delegate, enableBiometry: false, cancelable: true), animated: true)
     }
 
 }
@@ -29,14 +28,13 @@ extension SecuritySettingsRouter {
 
     static func module() -> UIViewController {
         let router = SecuritySettingsRouter()
-        let interactor = SecuritySettingsInteractor(localStorage: App.shared.localStorage, wordsManager: App.shared.wordsManager, systemInfoManager: App.shared.systemInfoManager)
-        let presenter = SecuritySettingsPresenter(router: router, interactor: interactor, state: SecuritySettingsState())
+        let interactor = SecuritySettingsInteractor(localStorage: App.shared.localStorage, backupManager: App.shared.backupManager, biometryManager: App.shared.biometryManager, pinManager: App.shared.pinManager)
+        let presenter = SecuritySettingsPresenter(router: router, interactor: interactor)
         let view = SecuritySettingsViewController(delegate: presenter)
 
         interactor.delegate = presenter
         presenter.view = view
         router.viewController = view
-        router.unlockDelegate = interactor
 
         return view
     }

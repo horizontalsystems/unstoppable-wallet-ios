@@ -1,20 +1,45 @@
 import UIKit
-import ActionSheet
+import RxSwift
+import SnapKit
 
-class SendViewController: ActionSheetController {
+class SendViewController: UIViewController {
+    private let disposeBag = DisposeBag()
+
     private let delegate: ISendViewDelegate
 
-    private let titleItem = ActionTitleItem(tag: 0)
-    private let amountItem = SendAmountItem(tag: 1)
-    private let addressItem = SendAddressItem(tag: 2)
-    private let feeItem: SendFeeItem
-    private let sendButtonItem = SendButtonItem(buttonTitle: "send.send_button".localized, tag: 4)
-    private let keyboardItem = SendKeyboardItem(tag: 5)
+    private let iconImageView = UIImageView()
+    private let sendHolderView = UIView()
+    private let sendButton = RespondButton()
 
-    init(delegate: ISendViewDelegate) {
+    private let views: [UIView]
+
+    init(delegate: ISendViewDelegate, views: [UIView]) {
         self.delegate = delegate
-        feeItem = SendFeeItem(tag: 3, isFeeAdjustable: delegate.isFeeAdjustable)
-        super.init(withModel: BaseAlertModel(), actionSheetThemeConfig: AppTheme.actionSheetConfig)
+        self.views = views
+
+        super.init(nibName: nil, bundle: nil)
+
+        sendHolderView.addSubview(sendButton)
+        sendHolderView.backgroundColor = .clear
+        sendHolderView.snp.makeConstraints { maker in
+            maker.height.equalTo(SendTheme.sendButtonHolderHeight)
+        }
+        sendButton.snp.makeConstraints { maker in
+            maker.leading.trailing.equalToSuperview().inset(SendTheme.margin)
+            maker.bottom.equalToSuperview()
+            maker.height.equalTo(SendTheme.sendButtonHeight)
+        }
+        sendButton.onTap = { [weak self] in
+            self?.delegate.onSendClicked()
+        }
+        sendButton.backgrounds = ButtonTheme.yellowBackgroundDictionary
+        sendButton.textColors = ButtonTheme.textColorDictionary
+        sendButton.titleLabel.text = "send.next_button".localized
+        sendButton.cornerRadius = SendTheme.sendButtonCornerRadius
+    }
+
+    @objc func onClose() {
+        delegate.onClose()
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -24,195 +49,65 @@ class SendViewController: ActionSheetController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        backgroundColor = .crypto_Dark_Bars
+        view.backgroundColor = AppTheme.controllerBackground
 
-        model.hideInBackground = false
+        iconImageView.tintColor = .cryptoGray
 
-        model.addItemView(titleItem)
-        model.addItemView(amountItem)
-        model.addItemView(addressItem)
-        model.addItemView(feeItem)
-        model.addItemView(sendButtonItem)
-        model.addItemView(keyboardItem)
+        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: iconImageView)
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "Close Full Transaction Icon"), style: .plain, target: self, action: #selector(onClose))
 
-        amountItem.onAmountChanged = { [weak self] in
-            self?.delegate.onAmountChanged(amount: $0)
-        }
-        amountItem.onSwitchClicked = { [weak self] in
-            self?.delegate.onSwitchClicked()
-        }
-        amountItem.onMaxClicked = { [weak self] in
-            self?.delegate.onMaxClicked()
-        }
-        amountItem.onPasteClicked = { [weak self] in
-            self?.delegate.onPasteAmountClicked()
-        }
+        sendButton.state = .disabled
 
-        addressItem.onPasteClicked = { [weak self] in
-            self?.delegate.onPasteAddressClicked()
-        }
-        addressItem.onScanClicked = { [weak self] in
-            self?.onScanQrCode()
-        }
-        addressItem.onDeleteClicked = { [weak self] in
-            self?.delegate.onDeleteClicked()
-        }
+        buildViews()
 
-        sendButtonItem.onClicked = { [weak self] in
-            self?.delegate.onSendClicked()
-        }
-        keyboardItem.addLetter = { [weak self] text in
-            self?.amountItem.addLetter?(text)
-        }
-        keyboardItem.removeLetter = { [weak self] in
-            self?.amountItem.removeLetter?()
-        }
-
-        feeItem.onFeePriorityChange = { [weak self] value in
-            self?.delegate.onFeePriorityChange(value: value)
-        }
-//        delegate.onViewDidLoad()
+        delegate.onViewDidLoad()
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-        delegate.onViewDidLoad()
-        amountItem.showKeyboard?()
+        delegate.showKeyboard()
     }
 
-    private func onScanQrCode() {
-        let scanController = ScanQRController()
-        scanController.onCodeParse = { [weak self] address in
-            self?.delegate.onScan(address: address)
-        }
-        present(scanController, animated: true)
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return AppTheme.statusBarStyle
     }
 
-    private func set(primaryFeeInfo: AmountInfo?) {
-        guard let primaryFeeInfo = primaryFeeInfo else {
-            feeItem.bindFee?(nil)
-            return
+    private func buildViews() {
+        var lastView: UIView?
+        for view in views {
+            add(view: view, lastView: lastView)
+            lastView = view
         }
 
-        switch primaryFeeInfo {
-        case .coinValue(let coinValue):
-            feeItem.bindFee?(ValueFormatter.instance.format(coinValue: coinValue))
-        case .currencyValue(let currencyValue):
-            feeItem.bindFee?(ValueFormatter.instance.format(currencyValue: currencyValue, roundingMode: .up))
-        }
+        add(view: sendHolderView, lastView: lastView)
     }
 
-    private func set(secondaryFeeInfo: AmountInfo?) {
-        guard let secondaryFeeInfo = secondaryFeeInfo else {
-            feeItem.bindConvertedFee?(nil)
-            return
-        }
-
-        switch secondaryFeeInfo {
-        case .coinValue(let coinValue):
-            feeItem.bindConvertedFee?(ValueFormatter.instance.format(coinValue: coinValue))
-        case .currencyValue(let currencyValue):
-            feeItem.bindConvertedFee?(ValueFormatter.instance.format(currencyValue: currencyValue, roundingMode: .up))
+    private func add(view: UIView, lastView: UIView?) {
+        self.view.addSubview(view)
+        if let lastView = lastView {
+            view.snp.makeConstraints { maker in
+                maker.leading.equalToSuperview()
+                maker.trailing.equalToSuperview()
+                maker.top.equalTo(lastView.snp.bottom)
+            }
+        } else {
+            view.snp.makeConstraints { maker in
+                maker.top.equalTo(self.view.snp.topMargin)
+                maker.leading.equalToSuperview()
+                maker.trailing.equalToSuperview()
+            }
         }
     }
 
-    private func set(feeError: FeeError?) {
-        guard let error = feeError, case .erc20error(let erc20CoinCode, let fee) = error, let amount = ValueFormatter.instance.format(coinValue: fee) else {
-            feeItem.bindError?(nil)
-            return
-        }
-
-        feeItem.bindError?("send_erc.alert".localized(erc20CoinCode, amount))
-    }
 
 }
 
 extension SendViewController: ISendView {
 
     func set(coin: Coin) {
-        titleItem.bindTitle?("send.title".localized(coin.title), coin)
-    }
-
-    func set(amountInfo: AmountInfo?) {
-        guard let amountInfo = amountInfo else {
-            amountItem.bindAmountType?(nil)
-            amountItem.bindAmount?(nil)
-            return
-        }
-
-        switch amountInfo {
-        case .coinValue(let coinValue):
-            amountItem.bindAmountType?(coinValue.coinCode)
-            amountItem.bindAmount?(coinValue.value)
-        case .currencyValue(let currencyValue):
-            amountItem.bindAmountType?(currencyValue.currency.symbol)
-            amountItem.bindAmount?(currencyValue.value)
-        }
-    }
-
-    func set(switchButtonEnabled: Bool) {
-        amountItem.bindSwitchEnabled?(switchButtonEnabled)
-    }
-
-    func set(hintInfo: HintInfo?) {
-        amountItem.bindHint?(nil)
-        amountItem.bindError?(nil)
-
-        if let hintInfo = hintInfo {
-            switch hintInfo {
-            case .amount(let amountInfo):
-                switch amountInfo {
-                case .coinValue(let coinValue):
-                    amountItem.bindHint?(ValueFormatter.instance.format(coinValue: coinValue))
-                case .currencyValue(let currencyValue):
-                    amountItem.bindHint?(ValueFormatter.instance.format(currencyValue: currencyValue))
-                }
-            case .error(let error):
-                switch error {
-                case .coinValue(let coinValue):
-                    amountItem.bindError?("send.amount_error.balance".localized(ValueFormatter.instance.format(coinValue: coinValue) ?? ""))
-                case .currencyValue(let currencyValue):
-                    amountItem.bindError?("send.amount_error.balance".localized(ValueFormatter.instance.format(currencyValue: currencyValue) ?? ""))
-                }
-            }
-        }
-    }
-
-    func set(addressInfo: AddressInfo?) {
-        if let addressInfo = addressInfo {
-            switch addressInfo {
-            case .address(let address):
-                addressItem.bindAddress?(address, nil)
-            case .invalidAddress(let address, _):
-                addressItem.bindAddress?(address, "Invalid address")
-            }
-        } else {
-            addressItem.bindAddress?(nil, nil)
-        }
-    }
-
-    func set(feeInfo: FeeInfo?) {
-        if let error = feeInfo?.error {
-            set(primaryFeeInfo: nil)
-            set(secondaryFeeInfo: nil)
-
-            set(feeError: error)
-        } else {
-            set(feeError: nil)
-
-            set(primaryFeeInfo: feeInfo?.primaryFeeInfo)
-            set(secondaryFeeInfo: feeInfo?.secondaryFeeInfo)
-        }
-    }
-
-    func set(sendButtonEnabled: Bool) {
-        sendButtonItem.isActive = sendButtonEnabled
-    }
-
-    func showConfirmation(viewItem: SendConfirmationViewItem) {
-        let confirmationController = SendConfirmationViewController(delegate: delegate, viewItem: viewItem)
-        present(confirmationController, animated: true)
+        title = "send.title".localized(coin.title)
+        iconImageView.image = UIImage(named: "\(coin.code.lowercased())")?.withRenderingMode(.alwaysTemplate)
     }
 
     func showCopied() {
@@ -227,15 +122,17 @@ extension SendViewController: ISendView {
         HudHelper.instance.showSpinner(userInteractionEnabled: false)
     }
 
-    func dismissWithSuccess() {
-        presentedViewController?.dismiss(animated: true, completion: { [weak self] in
-            self?.dismiss(animated: true)
-        })
-        HudHelper.instance.showSuccess()
+    func set(sendButtonEnabled: Bool) {
+        sendButton.state = sendButtonEnabled ? .active : .disabled
     }
 
-    func set(decimal: Int) {
-        amountItem.decimal = decimal
+    func dismissKeyboard() {
+        view.endEditing(true)
+    }
+
+    func dismissWithSuccess() {
+        navigationController?.dismiss(animated: true)
+        HudHelper.instance.showSuccess()
     }
 
 }

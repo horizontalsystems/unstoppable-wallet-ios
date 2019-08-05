@@ -58,17 +58,8 @@ extension Rate: CustomStringConvertible {
 
 }
 
-extension Decimal: DatabaseValueConvertible {
-
-    public var databaseValue: DatabaseValue {
-        return NSDecimalNumber(decimal: self).stringValue.databaseValue
+extension Rate: Equatable {
+    public static func ==(lhs: Rate, rhs: Rate) -> Bool {
+        return lhs.value == rhs.value && lhs.coinCode == rhs.coinCode && lhs.currencyCode == rhs.currencyCode && lhs.date == rhs.date && lhs.isLatest == rhs.isLatest
     }
-
-    public static func fromDatabaseValue(_ dbValue: DatabaseValue) -> Decimal? {
-        guard case .string(let rawValue) = dbValue.storage else {
-            return nil
-        }
-        return Decimal(string: rawValue)
-    }
-
 }

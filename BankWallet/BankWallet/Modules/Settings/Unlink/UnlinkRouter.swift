@@ -6,18 +6,18 @@ class UnlinkRouter {
 
 extension UnlinkRouter: IUnlinkRouter {
 
-    func showGuestModule() {
-        UIApplication.shared.keyWindow?.set(newRootController: GuestRouter.module())
+    func dismiss() {
+        viewController?.dismiss(animated: true)
     }
 
 }
 
 extension UnlinkRouter {
 
-    static func module() -> UIViewController {
+    static func module(account: Account, predefinedAccountType: IPredefinedAccountType) -> UIViewController {
         let router = UnlinkRouter()
-        let interactor = UnlinkInteractor(authManager: App.shared.authManager)
-        let presenter = UnlinkPresenter(router: router, interactor: interactor)
+        let interactor = UnlinkInteractor(accountManager: App.shared.accountManager)
+        let presenter = UnlinkPresenter(router: router, interactor: interactor, account: account, predefinedAccountType: predefinedAccountType)
         let viewController = UnlinkViewController(delegate: presenter)
 
         interactor.delegate = presenter

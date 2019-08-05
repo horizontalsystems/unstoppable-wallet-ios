@@ -12,6 +12,7 @@ class App {
     let appConfigProvider: IAppConfigProvider
     let systemInfoManager: ISystemInfoManager
     let backgroundManager: BackgroundManager
+    let biometryManager: IBiometryManager
 
     let localizationManager: LocalizationManager
     let languageManager: ILanguageManager
@@ -22,24 +23,41 @@ class App {
     let reachabilityManager: IReachabilityManager
 
     let grdbStorage: GrdbStorage
+    let accountStorage: IAccountStorage
 
     let pinManager: IPinManager
-    let coinManager: ICoinManager
+    let wordsManager: IWordsManager
+
+    let accountManager: IAccountManager
+    let backupManager: IBackupManager
+
+    let walletFactory: IWalletFactory
+    let walletStorage: IWalletStorage
+    let walletManager: IWalletManager
+    let defaultWalletCreator: IDefaultWalletCreator
+    let walletRemover: WalletRemover
+
+    let accountCreator: IAccountCreator
+    let predefinedAccountTypeManager: IPredefinedAccountTypeManager
+
     let rateManager: RateManager
     let currencyManager: ICurrencyManager
 
-    let authManager: AuthManager
-    let wordsManager: IWordsManager
-
     let feeRateProvider: IFeeRateProvider
 
-    let ethereumKitManager: IEthereumKitManager
+    let ethereumKitManager: EthereumKitManager
+    let eosKitManager: EosKitManager
+    let binanceKitManager: BinanceKitManager
+
     let adapterFactory: IAdapterFactory
     let adapterManager: IAdapterManager
 
     let lockRouter: LockRouter
     let lockManager: ILockManager
     let blurManager: IBlurManager
+
+    let passcodeLockRouter: IPasscodeLockRouter
+    let passcodeLockManager: IPasscodeLockManager
 
     let rateSyncer: RateSyncer
 
@@ -48,16 +66,19 @@ class App {
 
     private let testModeIndicator: TestModeIndicator
 
+    let appManager: IAppManager
+
     init() {
         pasteboardManager = PasteboardManager()
         randomManager = RandomManager()
 
         localStorage = UserDefaultsStorage()
-        secureStorage = KeychainStorage(localStorage: localStorage)
+        secureStorage = KeychainStorage()
 
         appConfigProvider = AppConfigProvider()
         systemInfoManager = SystemInfoManager()
         backgroundManager = BackgroundManager()
+        biometryManager = BiometryManager(systemInfoManager: systemInfoManager)
 
         localizationManager = LocalizationManager()
         languageManager = LanguageManager(localizationManager: localizationManager, localStorage: localStorage, fallbackLanguage: fallbackLanguage)
@@ -68,28 +89,42 @@ class App {
         reachabilityManager = ReachabilityManager(appConfigProvider: appConfigProvider)
 
         grdbStorage = GrdbStorage()
+        accountStorage = AccountStorage(secureStorage: secureStorage, storage: grdbStorage)
 
         pinManager = PinManager(secureStorage: secureStorage)
-        coinManager = CoinManager(appConfigProvider: appConfigProvider, storage: grdbStorage)
+        wordsManager = WordsManager(localStorage: localStorage)
+
+        accountManager = AccountManager(storage: accountStorage)
+        backupManager = BackupManager(accountManager: accountManager)
+
+        walletFactory = WalletFactory()
+        walletStorage = WalletStorage(appConfigProvider: appConfigProvider, walletFactory: walletFactory, storage: grdbStorage)
+        walletManager = WalletManager(accountManager: accountManager, walletFactory: walletFactory, storage: walletStorage)
+        defaultWalletCreator = DefaultWalletCreator(walletManager: walletManager, appConfigProvider: appConfigProvider, walletFactory: walletFactory)
+        walletRemover = WalletRemover(accountManager: accountManager, walletManager: walletManager)
+
+        accountCreator = AccountCreator(accountManager: accountManager, accountFactory: AccountFactory(), wordsManager: wordsManager, defaultWalletCreator: defaultWalletCreator)
+        predefinedAccountTypeManager = PredefinedAccountTypeManager(appConfigProvider: appConfigProvider, accountManager: accountManager, accountCreator: accountCreator)
 
         let rateApiProvider: IRateApiProvider = RateApiProvider(networkManager: networkManager, appConfigProvider: appConfigProvider)
         rateManager = RateManager(storage: grdbStorage, apiProvider: rateApiProvider)
-
         currencyManager = CurrencyManager(localStorage: localStorage, appConfigProvider: appConfigProvider)
 
         ethereumKitManager = EthereumKitManager(appConfigProvider: appConfigProvider)
-
-        authManager = AuthManager(secureStorage: secureStorage, localStorage: localStorage, pinManager: pinManager, coinManager: coinManager, rateManager: rateManager, ethereumKitManager: ethereumKitManager)
-        wordsManager = WordsManager(localStorage: localStorage)
+        eosKitManager = EosKitManager(appConfigProvider: appConfigProvider)
+        binanceKitManager = BinanceKitManager(appConfigProvider: appConfigProvider)
 
         feeRateProvider = FeeRateProvider()
 
-        adapterFactory = AdapterFactory(appConfigProvider: appConfigProvider, localStorage: localStorage, ethereumKitManager: ethereumKitManager, feeRateProvider: feeRateProvider)
-        adapterManager = AdapterManager(adapterFactory: adapterFactory, ethereumKitManager: ethereumKitManager, authManager: authManager, coinManager: coinManager)
+        adapterFactory = AdapterFactory(appConfigProvider: appConfigProvider, ethereumKitManager: ethereumKitManager, eosKitManager: eosKitManager, binanceKitManager: binanceKitManager, feeRateProvider: feeRateProvider)
+        adapterManager = AdapterManager(adapterFactory: adapterFactory, ethereumKitManager: ethereumKitManager, eosKitManager: eosKitManager, binanceKitManager: binanceKitManager, walletManager: walletManager)
 
         lockRouter = LockRouter()
-        lockManager = LockManager(localStorage: localStorage, authManager: authManager, appConfigProvider: appConfigProvider, lockRouter: lockRouter)
+        lockManager = LockManager(pinManager: pinManager, localStorage: localStorage, lockRouter: lockRouter)
         blurManager = BlurManager(lockManager: lockManager)
+
+        passcodeLockRouter = PasscodeLockRouter()
+        passcodeLockManager = PasscodeLockManager(systemInfoManager: systemInfoManager, accountManager: accountManager, walletManager: walletManager, router: passcodeLockRouter)
 
         rateSyncer = RateSyncer(rateManager: rateManager, adapterManager: adapterManager, currencyManager: currencyManager, reachabilityManager: reachabilityManager)
 
@@ -100,7 +135,17 @@ class App {
 
         testModeIndicator = TestModeIndicator(appConfigProvider: appConfigProvider)
 
-        authManager.adapterManager = adapterManager
+        appManager = AppManager(
+                accountManager: accountManager,
+                walletManager: walletManager,
+                adapterManager: adapterManager,
+                lockManager: lockManager,
+                passcodeLockManager: passcodeLockManager,
+                biometryManager: biometryManager,
+                blurManager: blurManager,
+                localStorage: localStorage,
+                secureStorage: secureStorage
+        )
     }
 
 }

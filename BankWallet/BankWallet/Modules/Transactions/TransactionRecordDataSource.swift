@@ -126,4 +126,15 @@ class TransactionRecordDataSource {
         itemsDataSource.clear()
     }
 
+    func handleUpdated(coins: [Coin]) {
+        let unusedCoins = poolRepo.allPools.filter { pool in
+            !coins.contains(pool.coin)
+        }.map { pool in
+            pool.coin
+        }
+        poolRepo.deactivate(coins: unusedCoins)
+
+        set(coins: coins)
+    }
+
 }

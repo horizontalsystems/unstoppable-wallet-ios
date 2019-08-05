@@ -26,12 +26,14 @@ class DataProviderSettingsPresenterTests: XCTestCase {
         firstProvider = MockIProvider()
         stub(firstProvider) { mock in
             when(mock.name.get).thenReturn(firstName)
-            when(mock.apiUrl(for: any())).thenReturn("first_url")
+            when(mock.requestObject(for: any())).thenReturn(JsonApiProvider.RequestObject.get(url: "first_url", params: nil))
+            when(mock.reachabilityUrl(for: any())).thenReturn("first_url")
         }
         secondProvider = MockIProvider()
         stub(secondProvider) { mock in
             when(mock.name.get).thenReturn(secondName)
-            when(mock.apiUrl(for: any())).thenReturn("second_url")
+            when(mock.requestObject(for: any())).thenReturn(JsonApiProvider.RequestObject.get(url: "second_url", params: nil))
+            when(mock.reachabilityUrl(for: any())).thenReturn("second_url")
         }
         providers = [firstProvider, secondProvider]
 

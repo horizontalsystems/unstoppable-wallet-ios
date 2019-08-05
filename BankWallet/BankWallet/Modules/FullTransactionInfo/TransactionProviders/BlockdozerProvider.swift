@@ -5,8 +5,17 @@ class BlockdozerBitcoinCashProvider: IBitcoinForksProvider {
     private let url: String
     private let apiUrl: String
 
-    func url(for hash: String) -> String { return url + hash }
-    func apiUrl(for hash: String) -> String { return apiUrl + hash }
+    func url(for hash: String) -> String {
+        return url + hash
+    }
+
+    func reachabilityUrl(for hash: String) -> String {
+        return apiUrl + hash
+    }
+
+    func requestObject(for hash: String) -> JsonApiProvider.RequestObject {
+        return .get(url: apiUrl + hash, params: nil)
+    }
 
     init(testMode: Bool) {
         let baseUrl = testMode ? "https://tbch.blockdozer.com" : "https://blockdozer.com" 

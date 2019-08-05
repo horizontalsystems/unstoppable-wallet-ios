@@ -1,36 +1,33 @@
 import UIKit
-import ActionSheet
 
 class SyncModeRouter {
     weak var viewController: UIViewController?
-    weak var agreementDelegate: IAgreementDelegate?
+
+    private let delegate: ISyncModeDelegate
+
+    init(delegate: ISyncModeDelegate) {
+        self.delegate = delegate
+    }
+
 }
 
 extension SyncModeRouter: ISyncModeRouter {
 
-    func showAgreement() {
-        viewController?.present(AgreementRouter.module(agreementDelegate: agreementDelegate), animated: true)
-    }
-
-    func navigateToSetPin() {
-        viewController?.present(SetPinRouter.module(), animated: true)
+    func notifyDelegate(isFast: Bool) {
+        delegate.onSelectSyncMode(isFast: isFast)
     }
 
 }
 
 extension SyncModeRouter {
 
-    static func module(mode: SyncModuleStartMode) -> UIViewController {
-        let router = SyncModeRouter()
-
-        let interactor = SyncModeInteractor(authManager: App.shared.authManager, wordsManager: App.shared.wordsManager)
-        let presenter = SyncModePresenter(interactor: interactor, router: router, state: SyncModeState(), mode: mode)
+    static func module(delegate: ISyncModeDelegate) -> UIViewController {
+        let router = SyncModeRouter(delegate: delegate)
+        let presenter = SyncModePresenter(router: router)
         let viewController = SyncModeViewController(delegate: presenter)
 
-        interactor.delegate = presenter
         presenter.view = viewController
         router.viewController = viewController
-        router.agreementDelegate = interactor
 
         return viewController
     }

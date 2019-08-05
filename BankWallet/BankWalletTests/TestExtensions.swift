@@ -53,32 +53,6 @@ extension FeeError: Equatable {
     }
 }
 
-extension FeeInfo: Equatable {
-    public static func ==(lhs: FeeInfo, rhs: FeeInfo) -> Bool {
-        return lhs.primaryFeeInfo == rhs.primaryFeeInfo && lhs.secondaryFeeInfo == rhs.secondaryFeeInfo && lhs.error == rhs.error
-    }
-}
-
-extension HintInfo: Equatable {
-    public static func ==(lhs: HintInfo, rhs: HintInfo) -> Bool {
-        switch (lhs, rhs) {
-        case (let .amount(lhsAmountInfo), let .amount(rhsAmountInfo)): return lhsAmountInfo == rhsAmountInfo
-        case (let .error(lhsError), let .error(rhsError)): return lhsError == rhsError
-        default: return false
-        }
-    }
-}
-
-extension AddressInfo: Equatable {
-    public static func ==(lhs: AddressInfo, rhs: AddressInfo) -> Bool {
-        switch (lhs, rhs) {
-        case (let .address(lhsAddress), let .address(rhsAddress)): return lhsAddress == rhsAddress
-        case (let .invalidAddress(lhsAddress, lhsError), let .invalidAddress(rhsAddress, rhsError)): return lhsAddress == rhsAddress && lhsError == rhsError
-        default: return false
-        }
-    }
-}
-
 extension LockoutState: Equatable {
     public static func ==(lhs: LockoutState, rhs: LockoutState) -> Bool {
         switch (lhs, rhs) {
@@ -120,15 +94,9 @@ extension FeeRatePriority {
     }
 }
 
-extension Rate: Equatable {
-    public static func ==(lhs: Rate, rhs: Rate) -> Bool {
-        return lhs.value == rhs.value && lhs.coinCode == rhs.coinCode && lhs.currencyCode == rhs.currencyCode && lhs.date == rhs.date && lhs.isLatest == rhs.isLatest
-    }
-}
+extension EnabledWallet: Equatable {
 
-extension EnabledCoin: Equatable {
-
-    public static func ==(lhs: EnabledCoin, rhs: EnabledCoin) -> Bool {
+    public static func ==(lhs: EnabledWallet, rhs: EnabledWallet) -> Bool {
         return lhs.coinCode == rhs.coinCode && lhs.order == rhs.order
     }
 
@@ -140,4 +108,65 @@ extension SecuritySettingsUnlockType: Equatable {
         case (.biometry(let lIsOn), .biometry(let rIsOn)): return lIsOn == rIsOn
         }
     }
+}
+
+extension BalanceHeaderViewItem: Equatable {
+    public static func ==(lhs: BalanceHeaderViewItem, rhs: BalanceHeaderViewItem) -> Bool {
+        return lhs.currencyValue == rhs.currencyValue && lhs.upToDate == rhs.upToDate
+    }
+}
+
+extension BalanceItem: Equatable {
+    public static func ==(lhs: BalanceItem, rhs: BalanceItem) -> Bool {
+        return lhs.state == rhs.state && lhs.balance == rhs.balance
+    }
+}
+
+extension Wallet {
+
+    static func mock(coin: Coin = Coin.mock(), account: Account = Account.mock(), syncMode: SyncMode? = nil) -> Wallet {
+        return Wallet(coin: coin, account: account, syncMode: syncMode)
+    }
+
+}
+
+extension Coin {
+
+    static func mock(title: String = "Bitcoin", code: CoinCode = "BTC", type: CoinType = .bitcoin) -> Coin {
+        return Coin(title: title, code: code, type: type)
+    }
+
+}
+
+extension Account {
+
+    static func mock(id: String? = nil, name: String? = nil, type: AccountType = .mnemonic(words: [], derivation: .bip44, salt: nil), backedUp: Bool = true, defaultSyncMode: SyncMode? = nil) -> Account {
+        let uuid = UUID().uuidString
+        return Account(id: id ?? uuid, name: name ?? uuid, type: type, backedUp: backedUp, defaultSyncMode: defaultSyncMode)
+    }
+
+}
+
+extension ManageAccountViewItemState: Equatable {
+
+    public static func ==(lhs: ManageAccountViewItemState, rhs: ManageAccountViewItemState) -> Bool {
+        switch (lhs, rhs) {
+        case (.linked(let lhsBackedUp), .linked(let rhsBackedUp)): return lhsBackedUp == rhsBackedUp
+        case (.notLinked, .notLinked): return true
+        default: return false
+        }
+    }
+
+}
+
+extension JsonApiProvider.RequestObject: Equatable {
+
+    public static func ==(lhs: JsonApiProvider.RequestObject, rhs: JsonApiProvider.RequestObject) -> Bool {
+        switch (lhs, rhs) {
+        case (.get(let lhsUrl, let lhsParams), .get(let rhsUrl, let rhsParams)): return lhsUrl == rhsUrl
+        case (.post(let lhsUrl, let lhsParams), .post(let rhsUrl, let rhsParams)): return lhsUrl == rhsUrl
+        default: return false
+        }
+    }
+
 }

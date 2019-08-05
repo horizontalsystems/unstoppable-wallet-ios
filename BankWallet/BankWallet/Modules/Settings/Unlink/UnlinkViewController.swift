@@ -9,26 +9,32 @@ class UnlinkViewController: ActionSheetController {
     init(delegate: IUnlinkViewDelegate) {
         self.delegate = delegate
         super.init(withModel: BaseAlertModel(), actionSheetThemeConfig: AppTheme.actionSheetConfig)
+
+        initItems()
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        backgroundColor = AppTheme.actionSheetBackgroundColor
-        contentBackgroundColor = .white
+    func initItems() {
+        let titleItem = AlertTitleItem(
+                title: "settings_manage_keys.delete.title".localized,
+                icon: UIImage(named: "Attention Icon")?.withRenderingMode(.alwaysTemplate),
+                iconTintColor: ManageAccountsTheme.attentionColor,
+                tag: 0
+        )
+        model.addItemView(titleItem)
 
         var texts = [NSAttributedString]()
 
         let attributes = [NSAttributedString.Key.foregroundColor: ConfirmationTheme.textColor, NSAttributedString.Key.font: ConfirmationTheme.regularFont]
-        texts.append(NSAttributedString(string: "settings_security.import_wallet_confirmation_1".localized, attributes: attributes))
-        texts.append(NSAttributedString(string: "settings_security.import_wallet_confirmation_2".localized, attributes: attributes))
+        texts.append(NSAttributedString(string: "settings_manage_keys.delete.confirmation_remove".localized(delegate.title.localized), attributes: attributes))
+        texts.append(NSAttributedString(string: "settings_manage_keys.delete.confirmation_disable".localized(delegate.coinCodes.localized), attributes: attributes))
+        texts.append(NSAttributedString(string: "settings_manage_keys.delete.confirmation_loose".localized, attributes: attributes))
 
         for (index, text) in texts.enumerated() {
-            let item = ConfirmationCheckboxItem(descriptionText: text, tag: index) { [weak self] view in
+            let item = ConfirmationCheckboxItem(descriptionText: text, tag: index + 1) { [weak self] view in
                 self?.handleToggle(index: index)
             }
 
@@ -37,16 +43,23 @@ class UnlinkViewController: ActionSheetController {
         }
 
         let buttonItem = AlertButtonItem(
-                tag: texts.count,
-                title: "security_settings.unlink_alert_button".localized,
-                textStyle: ButtonTheme.whiteTextColorOnDarkBackgroundDictionary,
-                backgroundStyle: ButtonTheme.redBackgroundOnWhiteBackgroundDictionary
+                tag: texts.count + 1,
+                title: "security_settings.delete_alert_button".localized,
+                textStyle: ButtonTheme.whiteTextColorDictionary,
+                backgroundStyle: ButtonTheme.redBackgroundDictionary
         ) { [weak self] in
             self?.delegate.didTapUnlink()
         }
 
         model.addItemView(buttonItem)
         self.buttonItem = buttonItem
+    }
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        backgroundColor = AppTheme.actionSheetBackgroundColor
+        contentBackgroundColor = .white
     }
 
     private func handleToggle(index: Int) {
@@ -58,4 +71,9 @@ class UnlinkViewController: ActionSheetController {
 }
 
 extension UnlinkViewController: IUnlinkView {
+
+    func showSuccess() {
+        HudHelper.instance.showSuccess()
+    }
+
 }

@@ -1,26 +1,16 @@
 class RestorePresenter {
-    private let interactor: IRestoreInteractor
-    private let router: IRestoreRouter
     weak var view: IRestoreView?
 
-    private var words = [String]()
+    private let router: IRestoreRouter
+    private let accountCreator: IAccountCreator
+    private let predefinedAccountTypeManager: IPredefinedAccountTypeManager
 
-    init(interactor: IRestoreInteractor, router: IRestoreRouter) {
-        self.interactor = interactor
+    private var predefinedAccountTypes = [IPredefinedAccountType]()
+
+    init(router: IRestoreRouter, accountCreator: IAccountCreator, predefinedAccountTypeManager: IPredefinedAccountTypeManager) {
         self.router = router
-    }
-
-}
-
-extension RestorePresenter: IRestoreInteractorDelegate {
-
-    func didValidate(words: [String]) {
-        self.words = words
-        router.openSyncMode(with: words)
-    }
-
-    func didFailToValidate(withError error: Error) {
-        view?.showInvalidWordsError()
+        self.accountCreator = accountCreator
+        self.predefinedAccountTypeManager = predefinedAccountTypeManager
     }
 
 }
@@ -28,14 +18,33 @@ extension RestorePresenter: IRestoreInteractorDelegate {
 extension RestorePresenter: IRestoreViewDelegate {
 
     func viewDidLoad() {
-        view?.set(defaultWords: interactor.defaultWords)
+        predefinedAccountTypes = predefinedAccountTypeManager.allTypes
     }
 
-    func restoreDidClick(withWords words: [String]) {
-        interactor.validate(words: words)
+    var typesCount: Int {
+        return predefinedAccountTypes.count
     }
 
-    func cancelDidClick() {
+    func type(index: Int) -> IPredefinedAccountType {
+        return predefinedAccountTypes[index]
+    }
+
+    func didSelect(index: Int) {
+        router.showRestore(defaultAccountType: predefinedAccountTypes[index].defaultAccountType, delegate: self)
+    }
+
+    func didTapCancel() {
+        router.close()
+    }
+
+}
+
+extension RestorePresenter: IRestoreAccountTypeDelegate {
+
+    func didRestore(accountType: AccountType, syncMode: SyncMode?) {
+        let account = accountCreator.createRestoredAccount(accountType: accountType, defaultSyncMode: syncMode, createDefaultWallets: true)
+
+        router.notifyRestored(account: account)
         router.close()
     }
 
