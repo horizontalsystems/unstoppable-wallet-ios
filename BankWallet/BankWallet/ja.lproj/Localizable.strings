@@ -126,7 +126,7 @@
 "send.confirmation.eos.account" = "Account";
 "send.confirmation.send_button" = "Send";
 "send.amount_error.balance" = "残高 %@";
-"send_erc.alert" = "Transaction fees for %@ (%@) paid in %@. You need %@.";
+"send.token.insufficient_fee_alert" = "Transaction fees for %@ (%@) paid in %@. You need %@.";
 
 // Transactions
 
