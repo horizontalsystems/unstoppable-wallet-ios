@@ -7,6 +7,7 @@ enum SendError: Error {
 
 class SendPresenter {
     weak var view: ISendView?
+    private let showMemo: Bool
 
     private let interactor: ISendInteractor
     private let router: ISendRouter
@@ -18,10 +19,12 @@ class SendPresenter {
 
     private var sendInputType: SendInputType = .coin
 
-    init(interactor: ISendInteractor, router: ISendRouter, factory: ISendConfirmationItemFactory, amountModule: ISendAmountModule, addressModule: ISendAddressModule, feeModule: ISendFeeModule) {
+    init(interactor: ISendInteractor, router: ISendRouter, factory: ISendConfirmationItemFactory, showMemo: Bool = false, amountModule: ISendAmountModule, addressModule: ISendAddressModule, feeModule: ISendFeeModule) {
         self.interactor = interactor
         self.router = router
         self.factory = factory
+
+        self.showMemo = showMemo
 
         self.amountModule = amountModule
         self.addressModule = addressModule
@@ -74,7 +77,7 @@ extension SendPresenter: ISendViewDelegate {
     func onSendClicked() {
         do {
             let item = try factory.confirmationItem(sendInputType: sendInputType, receiver: addressModule.address,
-                    showMemo: false, coinAmountValue: amountModule.coinAmount, currencyAmountValue: amountModule.fiatAmount,
+                    showMemo: showMemo, coinAmountValue: amountModule.coinAmount, currencyAmountValue: amountModule.fiatAmount,
                     coinFeeValue: feeModule.coinFee, currencyFeeValue: feeModule.fiatFee, estimateTime: nil)
             router.showConfirmation(item: item, delegate: self)
         } catch {
@@ -138,6 +141,7 @@ extension SendPresenter: ISendConfirmationDelegate {
         params[AdapterField.amount.rawValue] = amount
         params[AdapterField.address.rawValue] = address
         params[AdapterField.feeRate.rawValue] = feeModule.feeRate
+        params[AdapterField.memo.rawValue] = memo
 
         interactor.send(params: params)
     }
@@ -181,7 +185,7 @@ extension SendPresenter: ISendAddressDelegate {
     }
 
     func onAmountUpdate(amount: Decimal) {
-        // todo:
+        amountModule.set(amount: amount)
     }
 
     func scanQrCode(delegate: IScanQrCodeDelegate) {

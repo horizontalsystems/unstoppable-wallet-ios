@@ -20,7 +20,7 @@ class SendFeeView: UIView {
         super.init(frame: .zero)
 
         self.snp.makeConstraints { maker in
-            maker.height.equalTo(SendTheme.feeHeight)
+            maker.height.equalTo(feeAdjustable ? SendTheme.adjustableFeeHeight : SendTheme.feeHeight)
         }
 
         backgroundColor = .clear
@@ -28,14 +28,12 @@ class SendFeeView: UIView {
         addSubview(feeLabel)
         addSubview(errorLabel)
         addSubview(convertedFeeLabel)
-        addSubview(feeSlider)
 
         feeLabel.font = SendTheme.feeFont
         feeLabel.textColor = SendTheme.feeColor
-        let feeTitleTopMargin = feeAdjustable ? SendTheme.feeTitleTopMargin : SendTheme.constantFeeTitleTopMargin
         feeLabel.snp.makeConstraints { maker in
             maker.leading.equalToSuperview().offset(SendTheme.margin)
-            maker.top.equalToSuperview().offset(feeTitleTopMargin)
+            maker.top.equalToSuperview().offset(SendTheme.feeTitleTopMargin)
         }
 
         convertedFeeLabel.font = SendTheme.feeFont
@@ -52,21 +50,25 @@ class SendFeeView: UIView {
         errorLabel.textColor = SendTheme.errorColor
         errorLabel.snp.makeConstraints { maker in
             maker.leading.equalToSuperview().offset(SendTheme.margin)
-            maker.top.equalToSuperview().offset(SendTheme.smallMargin)
+            maker.top.equalToSuperview().offset(feeAdjustable ? SendTheme.adjustableFeeErrorTopMargin : SendTheme.smallMargin)
             maker.trailing.equalToSuperview().offset(-SendTheme.margin)
-            maker.bottom.equalToSuperview().offset(-SendTheme.smallMargin)
         }
 
-        feeSlider.addTarget(self, action: #selector(sliderShift), for: .valueChanged)
-        feeSlider.addTarget(self, action: #selector(onFinishSliding), for: [.touchUpOutside, .touchUpInside])
-        feeSlider.snp.makeConstraints { maker in
-            maker.leading.equalToSuperview().offset(SendTheme.feeSliderLeftMargin)
-            maker.top.equalTo(self.feeLabel.snp.bottom).offset(SendTheme.feeSliderTopMargin)
-            maker.trailing.equalToSuperview().offset(-SendTheme.feeSliderRightMargin)
-            maker.height.equalTo(SendTheme.feeSliderHeight)
-        }
+        if feeAdjustable {
+            addSubview(feeSlider)
 
+            feeSlider.addTarget(self, action: #selector(sliderShift), for: .valueChanged)
+            feeSlider.addTarget(self, action: #selector(onFinishSliding), for: [.touchUpOutside, .touchUpInside])
+            feeSlider.snp.makeConstraints { maker in
+                maker.leading.equalToSuperview().offset(SendTheme.feeSliderLeftMargin)
+                maker.top.equalTo(self.feeLabel.snp.bottom).offset(SendTheme.feeSliderTopMargin)
+                maker.trailing.equalToSuperview().offset(-SendTheme.feeSliderRightMargin)
+                maker.height.equalTo(SendTheme.feeSliderHeight)
+            }
+            feeSlider.isHidden = !feeAdjustable
+        }
         feeLabel.text = feePrefix
+
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -126,6 +128,7 @@ extension SendFeeView: ISendFeeView {
 
         feeLabel.isHidden = hide
         convertedFeeLabel.isHidden = hide
+
         feeSlider.isHidden = !feeAdjustable || hide
     }
 

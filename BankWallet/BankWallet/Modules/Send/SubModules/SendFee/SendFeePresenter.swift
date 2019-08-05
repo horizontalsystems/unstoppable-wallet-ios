@@ -5,7 +5,9 @@ class SendFeePresenter {
     private let formatHelper: ISendFeeFormatHelper
     private let currencyManager: ICurrencyManager
 
-    private let coinCode: CoinCode
+    private let feeCoinCode: CoinCode
+    private let coinProtocol: String
+    private let baseCoinName: String
 
     weak var view: ISendFeeView?
     weak var delegate: ISendFeeDelegate?
@@ -18,11 +20,13 @@ class SendFeePresenter {
     private var fee: Decimal = 0
     private var insufficientFeeBalanceWithRequiredFee: Decimal?
 
-    init(interactor: ISendFeeInteractor, formatHelper: ISendFeeFormatHelper, currencyManager: ICurrencyManager, coinCode: CoinCode) {
+    init(interactor: ISendFeeInteractor, formatHelper: ISendFeeFormatHelper, currencyManager: ICurrencyManager, coinCode: CoinCode, coinProtocol: String, baseCoinName: String) {
         self.interactor = interactor
         self.formatHelper = formatHelper
         self.currencyManager = currencyManager
-        self.coinCode = coinCode
+        self.feeCoinCode = coinCode
+        self.coinProtocol = coinProtocol
+        self.baseCoinName = baseCoinName
     }
 
     private func updateFeeLabels() {
@@ -35,7 +39,7 @@ class SendFeePresenter {
 extension SendFeePresenter: ISendFeeModule {
 
     var coinFee: CoinValue {
-        return CoinValue(coinCode: coinCode, value: fee)
+        return CoinValue(coinCode: feeCoinCode, value: fee)
     }
 
     var fiatFee: CurrencyValue? {
@@ -54,7 +58,8 @@ extension SendFeePresenter: ISendFeeModule {
 
     func insufficientFeeBalance(coinCode: CoinCode, fee: Decimal) {
         insufficientFeeBalanceWithRequiredFee = fee
-        view?.set(error: formatHelper.errorValue(fee: fee, coinCode: coinCode))
+        let feeValue = CoinValue(coinCode: feeCoinCode, value: fee)
+        view?.set(error: formatHelper.errorValue(feeValue: feeValue, coinProtocol: coinProtocol, baseCoinName: baseCoinName, coinCode: coinCode))
     }
 
     func update(sendInputType: SendInputType) {
@@ -68,7 +73,7 @@ extension SendFeePresenter: ISendFeeModule {
 extension SendFeePresenter: ISendFeeViewDelegate {
 
     func viewDidLoad() {
-        rate = interactor.rate(coinCode: coinCode, currencyCode: currencyManager.baseCurrency.code)
+        rate = interactor.rate(coinCode: feeCoinCode, currencyCode: currencyManager.baseCurrency.code)
         feeRate = delegate?.feeRate(priority: feeRatePriority) ?? 0
 
         updateFeeLabels()

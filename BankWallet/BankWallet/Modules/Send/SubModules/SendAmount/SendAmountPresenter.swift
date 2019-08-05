@@ -76,6 +76,13 @@ extension SendAmountPresenter: ISendAmountModule {
         return ((amount ?? 0) != 0) && (insufficientAmountWithAvailableBalance == nil)
     }
 
+    func set(amount: Decimal) {
+        self.amount = amount
+        update(coinAmount: amount)
+
+        delegate?.onChanged()
+    }
+
     func insufficientAmount(availableBalance: Decimal) {
         guard insufficientAmountWithAvailableBalance != availableBalance else {
             // already show this error

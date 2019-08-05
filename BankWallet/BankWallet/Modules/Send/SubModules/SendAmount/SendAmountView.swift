@@ -47,7 +47,7 @@ class SendAmountView: UIView {
         holderView.snp.makeConstraints { maker in
             maker.leading.equalToSuperview().offset(SendTheme.margin)
             maker.trailing.equalToSuperview().offset(-SendTheme.margin)
-            maker.top.equalToSuperview().offset(SendTheme.holderTopMargin)
+            maker.height.equalTo(SendTheme.amountHolderHeight)
             maker.bottom.equalToSuperview()
         }
 

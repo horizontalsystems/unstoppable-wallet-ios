@@ -2,6 +2,7 @@ import Foundation
 import HSHDWalletKit
 import EosKit
 import BitcoinCore
+import BinanceChainKit
 
 extension WordsValidator.ValidationError: LocalizedError {
     public var errorDescription: String? {
@@ -51,6 +52,15 @@ extension BitcoinCoreErrors.AddressConversion: LocalizedError {
 }
 
 extension EthereumBaseAdapter.AddressConversion: LocalizedError {
+    public var errorDescription: String? {
+        switch self {
+        default:
+            return "send.error.invalid_address".localized
+        }
+    }
+}
+
+extension BinanceAdapter.AddressConversion: LocalizedError {
     public var errorDescription: String? {
         switch self {
         default:

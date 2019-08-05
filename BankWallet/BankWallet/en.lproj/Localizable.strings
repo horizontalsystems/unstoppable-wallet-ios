@@ -126,7 +126,7 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 "send.confirmation.eos.account" = "Account";
 "send.confirmation.send_button" = "Send";
 "send.amount_error.balance" = "Balance %@";
-"send_erc.alert" = "Transaction fees for %@ (ERC20) paid in Ethereum. You need %@ ETH.";
+"send_erc.alert" = "Transaction fees for %@ (%@) paid in %@. You need %@.";
 
 // Transactions
 

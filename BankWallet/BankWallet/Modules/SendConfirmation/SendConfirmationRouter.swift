@@ -34,9 +34,6 @@ class SendConfirmationRouter {
             views.append(contentsOf: textFields)
         }
 
-        let bottomSeparatorView = SendConfirmationSeparatorView(height: SendTheme.confirmationButtonTopMargin)
-        views.append(bottomSeparatorView)
-
         let presenter = SendConfirmationPresenter(memoModule: memoModule)
         let viewController = SendConfirmationViewController(delegate: presenter, views: views)
 

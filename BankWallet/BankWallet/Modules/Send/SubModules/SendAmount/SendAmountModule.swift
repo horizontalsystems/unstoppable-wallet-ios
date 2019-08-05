@@ -45,6 +45,7 @@ protocol ISendAmountModule: AnyObject {
 
     func showKeyboard()
 
+    func set(amount: Decimal)
     func insufficientAmount(availableBalance: Decimal)
     func onValidationSuccess()
 }
