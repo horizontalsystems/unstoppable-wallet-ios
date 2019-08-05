@@ -9,6 +9,7 @@
 "button.cancel" = "Abbrechen";
 "button.confirm" = "Bestätigen";
 "button.done" = "Fertig";
+"button.restore" = "Restore";
 "button.next" = "Weiter";
 "button.remove" = "Entfernen";
 "button.forward" = "Teilen";
