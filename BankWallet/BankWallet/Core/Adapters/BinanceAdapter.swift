@@ -130,7 +130,11 @@ extension BinanceAdapter: IAdapter {
     }
 
     func availableBalance(params: [String : Any]) -> Decimal {
-        return max(0, asset.balance - BinanceAdapter.transferFee)
+        var balance = asset.balance
+        if asset.symbol == "BNB" {
+            balance -= BinanceAdapter.transferFee
+        }
+        return max(0, balance)
     }
 
     func feeRate(priority: FeeRatePriority) -> Int {
