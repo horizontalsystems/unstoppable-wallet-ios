@@ -28,11 +28,9 @@ class TransactionRecordPoolRepo {
         return activePoolCoins.contains(coin)
     }
 
-    func deactivate(accountType: AccountType) {
-        pools.keys.forEach { poolCoin in
-            if poolCoin.type.canSupport(accountType: accountType) {
-                pools.removeValue(forKey: poolCoin)
-            }
+    func deactivate(coins: [Coin]) {
+        coins.forEach { coin in
+            pools.removeValue(forKey: coin)
         }
     }
 

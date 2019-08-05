@@ -113,12 +113,7 @@ extension TransactionsPresenter: ITransactionsInteractorDelegate {
             view?.show(filters: [nil] + coins)
         }
 
-        loader.set(coins: coins)
-        loader.loadNext(initial: true)
-    }
-
-    func onDelete(account: Account) {
-        loader.handleDelete(account: account)
+        loader.handleUpdate(coins: coins)
         loader.loadNext(initial: true)
     }
 

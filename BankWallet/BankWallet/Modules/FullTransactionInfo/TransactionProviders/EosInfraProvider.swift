@@ -6,7 +6,7 @@ class EosInfraProvider: IEosProvider {
         return try? EosResponse(JSONObject: json)
     }
 
-    var name: String = "eosinfra"
+    var name: String = "Eosnode.tools"
 
     func url(for hash: String) -> String {
         return "https://bloks.io/transaction/\(hash)"
@@ -28,7 +28,7 @@ class EosGreymassProvider: IEosProvider {
         return try? EosResponse(JSONObject: json)
     }
 
-    var name: String = "Greymass"
+    var name: String = "Greymass.com"
 
     func url(for hash: String) -> String {
         return "https://bloks.io/transaction/\(hash)"

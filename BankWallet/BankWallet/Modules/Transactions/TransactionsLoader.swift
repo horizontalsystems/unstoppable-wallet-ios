@@ -102,8 +102,8 @@ class TransactionsLoader {
         loading = false
     }
 
-    func handleDelete(account: Account) {
-        dataSource.deactivate(accountType: account.type)
+    func handleUpdate(coins: [Coin]) {
+        dataSource.handleUpdated(coins: coins)
     }
 
 }

@@ -83,13 +83,6 @@ extension TransactionsInteractor: ITransactionsInteractor {
                     self?.delegate?.onUpdateBaseCurrency()
                 })
                 .disposed(by: disposeBag)
-        accountManager.deleteAccountObservable
-                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
-                .observeOn(MainScheduler.instance)
-                .subscribe(onNext: { [weak self] account in
-                    self?.delegate?.onDelete(account: account)
-                })
-                .disposed(by: disposeBag)
 
         reachabilityManager.reachabilitySignal
                 .subscribe(onNext: { [weak self] in
