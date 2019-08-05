@@ -5,14 +5,17 @@ class BinanceAdapter {
     static let transferFee: Decimal = 0.000375
 
     private let binanceKit: BinanceChainKit
+    private let addressParser: IAddressParser
     private let asset: Asset
 
     let wallet: Wallet
     let decimal: Int = 8
+    let feeCoinCode: CoinCode? = "BNB"
 
-    init(wallet: Wallet, binanceKit: BinanceChainKit, symbol: String) {
+    init(wallet: Wallet, binanceKit: BinanceChainKit, addressParser: IAddressParser, symbol: String) {
         self.wallet = wallet
         self.binanceKit = binanceKit
+        self.addressParser = addressParser
 
         asset = binanceKit.register(symbol: symbol)
     }
@@ -139,26 +142,40 @@ extension BinanceAdapter: IAdapter {
     }
 
     func validate(address: String) throws {
-        try binanceKit.validate(address: address)
-    }
-
-    func validate(params: [String : Any]) throws -> [SendStateError] {
-        guard let amount: Decimal = params[AdapterField.amount.rawValue] as? Decimal else {
-            throw AdapterError.wrongParameters
+        //todo: remove when make errors public
+        do {
+            try binanceKit.validate(address: address)
+        } catch {
+            throw AddressConversion.invalidAddress
         }
-
-        var errors = [SendStateError]()
-
-        let balance = availableBalance(params: params)
-        if amount > balance {
-            errors.append(.insufficientAmount(availableBalance: balance))
-        }
-
-        return errors
     }
 
     func parse(paymentAddress: String) -> PaymentRequestAddress {
-        return PaymentRequestAddress(address: paymentAddress, amount: nil)
+        let paymentData = addressParser.parse(paymentAddress: paymentAddress)
+        var validationError: Error?
+        do {
+            try validate(address: paymentData.address)
+        } catch {
+            validationError = error
+        }
+        return PaymentRequestAddress(address: paymentData.address, amount: paymentData.amount.map { Decimal($0) }, error: validationError)
+
+    }
+
+    func validate(params: [String : Any]) throws -> [SendStateError] {
+        var errors = [SendStateError]()
+
+        if let amount: Decimal = params[AdapterField.amount.rawValue] as? Decimal {
+            let balance = availableBalance(params: params)
+            if amount > balance {
+                errors.append(.insufficientAmount(availableBalance: balance))
+            }
+        }
+
+        if binanceKit.binanceBalance < BinanceAdapter.transferFee {
+            errors.append(.insufficientFeeBalance(fee: BinanceAdapter.transferFee))
+        }
+        return errors
     }
 
     var receiveAddress: String {
@@ -169,4 +186,11 @@ extension BinanceAdapter: IAdapter {
         return ""
     }
 
+}
+
+extension BinanceAdapter {
+    //todo: Make binanceKit errors public!
+    enum AddressConversion: Error {
+        case invalidAddress
+    }
 }

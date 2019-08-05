@@ -7,9 +7,6 @@ class SendTheme {
     static let smallMargin: CGFloat = 8
     static let tinyMargin: CGFloat = 5
 
-    static var itemBackground: UIColor { return .crypto_Steel20_White }
-
-    static let holderTopMargin: CGFloat = 12
     static let holderCornerRadius: CGFloat = 8
     static let holderBorderWidth: CGFloat = 1 / UIScreen.main.scale
     static let holderBorderColor: UIColor = .cryptoSteel20
@@ -33,6 +30,7 @@ class SendTheme {
     static var titleColor: UIColor { return .crypto_White_Black }
 
     static let amountHeight: CGFloat = 72
+    static let amountHolderHeight: CGFloat = 60
     static let amountFont: UIFont = .cryptoBody2
     static var amountColor: UIColor { return .crypto_Bars_Dark }
     static let amountPlaceholderColor: UIColor = .cryptoSteel40
@@ -46,6 +44,7 @@ class SendTheme {
     static let amountErrorLabelTopMargin: CGFloat = 4
 
     static let addressHeight: CGFloat = 56
+    static let addressHolderHeight: CGFloat = 44
     static let addressFont: UIFont = .cryptoBody2
     static var addressColor: UIColor { return .crypto_Bars_Dark }
     static let addressHintColor: UIColor = .cryptoSteel40
@@ -53,10 +52,9 @@ class SendTheme {
     static let addressErrorTopMargin: CGFloat = 1
     static let addressErrorBottomMargin: CGFloat = 4
 
-    static let constantFeeTitleTopMargin: CGFloat = 18
-    static let constantFeeHeight: CGFloat = 56
-    static let feeTitleTopMargin: CGFloat = 11
-    static let feeHeight: CGFloat = 80
+    static let adjustableFeeHeight: CGFloat = 64
+    static let feeHeight: CGFloat = 29
+    static let feeTitleTopMargin: CGFloat = 12
     static let feeFont: UIFont = .systemFont(ofSize: 14)
     static let feeColor: UIColor = .cryptoGray
     static var feeSliderTintColor: UIColor { return .crypto_LightGray_SteelDark }
@@ -67,24 +65,17 @@ class SendTheme {
     static let feeSliderLeftMargin: CGFloat = 19
     static let feeSliderRightMargin: CGFloat = 17
     static let feeSliderHeight: CGFloat = 50
+    static let adjustableFeeErrorTopMargin: CGFloat = 32
 
     static let switchRightMargin: CGFloat = 6
 
-    static let sendHeight: CGFloat = 81
     static let sendButtonHolderHeight: CGFloat = 74
     static let sendButtonHeight: CGFloat = 50
     static let sendButtonCornerRadius: CGFloat = 8
 
-    static let keyboardHeight: CGFloat = 209
-    static let keyboardTopMargin: CGFloat = 0
-    static let keyboardSideMargin: CGFloat = 17
-    static let keyboardBottomMargin: CGFloat = 8
-
     static let confirmationPrimaryHeight: CGFloat = 134
-    static let confirmationPrimaryRadius: CGFloat = 16
     static let confirmationPrimaryMargin: CGFloat = 20
     static let confirmationPrimaryLineTopMargin: CGFloat = 89
-    static let confirmationPrimaryAmountLineHeight: CGFloat = 1
 
     static let confirmationMemoHeight: CGFloat = 56
     static let confirmationMemoInputFieldMargin: CGFloat = 12
@@ -92,12 +83,8 @@ class SendTheme {
 
     static let confirmationFieldSectionTopMargin: CGFloat = 4
 
-    static let confirmationFieldTopMargin: CGFloat = 8
     static let confirmationFieldHeight: CGFloat = 24
 
-    static let confirmationButtonTopMargin: CGFloat = 24
-
-    static let confirmationAmountHeight: CGFloat = 80
     static let confirmationPrimaryAmountFont: UIFont = .cryptoTitle4
     static let confirmationPrimaryAmountColor: UIColor = .cryptoYellow
     static let confirmationSecondaryFont: UIFont = .cryptoSectionCaption
@@ -111,22 +98,4 @@ class SendTheme {
 
     static let confirmationMemoPlaceholderColor: UIColor = .cryptoSteel40
     static let confirmationMemoInputTintColor: UIColor = .cryptoYellow
-
-
-    static let confirmationAddressHeight: CGFloat = 44
-
-    static let confirmationFeeValueHeight: CGFloat = 28
-    static let confirmationTotalValueHeight: CGFloat = 21
-    static let valueFont: UIFont = .cryptoCaption1
-    static let valueColor: UIColor = .cryptoGray
-
-    static var confirmationSheetConfig: ActionSheetThemeConfig {
-        return ActionSheetThemeConfig(
-                actionStyle: .alert,
-                sideMargin: 30,
-                cornerRadius: 16,
-                separatorColor: UIColor.cryptoSteel20,
-                backgroundStyle: .blur(intensity: 0.55, style: AppTheme.actionSheetBlurStyle)
-        )
-    }
 }

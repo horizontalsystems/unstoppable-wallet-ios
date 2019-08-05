@@ -64,7 +64,7 @@ protocol ISendAmountFormatHelper {
 protocol ISendFeeFormatHelper {
     func convert(value: Decimal, currency: Currency, rate: Rate?) -> CurrencyValue?
     func formattedWithCode(value: Decimal, inputType: SendInputType, rate: Rate?) -> String?
-    func errorValue(fee: Decimal, coinCode: CoinCode) -> String
+    func errorValue(feeValue: CoinValue, coinProtocol: String, baseCoinName: String, coinCode: CoinCode) -> String
 }
 
 protocol ISendConfirmationItemFactory {

@@ -5,9 +5,9 @@ class SendAddressView: UIView {
     private let addressInputField: AddressInputField
     private let delegate: ISendAddressViewDelegate
 
-    public init(canEdit: Bool, delegate: ISendAddressViewDelegate) {
+    public init(canEdit: Bool, placeholder: String, delegate: ISendAddressViewDelegate) {
         self.delegate = delegate
-        addressInputField = AddressInputField(frame: .zero, placeholder: "send.address_placeholder".localized, showQrButton: true, canEdit: canEdit, lineBreakMode: .byTruncatingMiddle)
+        addressInputField = AddressInputField(frame: .zero, placeholder: placeholder.localized, showQrButton: true, canEdit: canEdit, lineBreakMode: .byTruncatingMiddle)
 
         super.init(frame: .zero)
 
@@ -21,7 +21,7 @@ class SendAddressView: UIView {
         addressInputField.snp.makeConstraints { maker in
             maker.leading.equalToSuperview().offset(SendTheme.margin)
             maker.trailing.equalToSuperview().offset(-SendTheme.margin)
-            maker.top.equalToSuperview().offset(SendTheme.holderTopMargin)
+            maker.height.equalTo(SendTheme.addressHolderHeight)
             maker.bottom.equalToSuperview()
         }
         addressInputField.onScan = { [weak self] in

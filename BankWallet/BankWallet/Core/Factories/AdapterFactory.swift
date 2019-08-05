@@ -40,8 +40,9 @@ class AdapterFactory: IAdapterFactory {
                 return EosAdapter(wallet: wallet, eosKit: eosKit, addressParser: addressParser, token: token, symbol: symbol)
             }
         case let .binance(symbol):
+            let addressParser = AddressParser(validScheme: "binance", removeScheme: true)
             if let binanceKit = try? binanceKitManager.binanceKit(account: wallet.account) {
-                return BinanceAdapter(wallet: wallet, binanceKit: binanceKit, symbol: symbol)
+                return BinanceAdapter(wallet: wallet, binanceKit: binanceKit, addressParser: addressParser, symbol: symbol)
             }
         }
 
