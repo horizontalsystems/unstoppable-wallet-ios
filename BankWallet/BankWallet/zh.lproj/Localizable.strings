@@ -9,6 +9,7 @@
 "button.cancel" = "取消";
 "button.confirm" = "确认";
 "button.done" = "完成";
+"button.restore" = "Restore";
 "button.next" = "继续";
 "button.remove" = "移除";
 "button.forward" = "转发";
