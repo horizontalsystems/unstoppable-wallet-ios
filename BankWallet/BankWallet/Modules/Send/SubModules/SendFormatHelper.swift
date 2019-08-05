@@ -90,7 +90,7 @@ extension SendFormatHelper: ISendAmountFormatHelper {
 extension SendFormatHelper: ISendFeeFormatHelper {
 
     func errorValue(feeValue: CoinValue, coinProtocol: String, baseCoinName: String, coinCode: CoinCode) -> String {
-        return "send_erc.alert".localized(coinCode, coinProtocol, baseCoinName, ValueFormatter.instance.format(coinValue: feeValue) ?? "")
+        return "send.token.insufficient_fee_alert".localized(coinCode, coinProtocol, baseCoinName, ValueFormatter.instance.format(coinValue: feeValue) ?? "")
     }
 
 }
