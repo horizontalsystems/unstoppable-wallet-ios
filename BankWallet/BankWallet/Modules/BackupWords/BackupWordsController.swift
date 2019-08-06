@@ -23,7 +23,7 @@ class BackupWordsController: WalletViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
-        title = "backup.words.title".localized
+        title = delegate.title.localized
 
         view.addSubview(scrollView)
 
