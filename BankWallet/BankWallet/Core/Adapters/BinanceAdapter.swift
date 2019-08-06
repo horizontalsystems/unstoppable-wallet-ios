@@ -34,7 +34,9 @@ class BinanceAdapter {
         var amount: Decimal = 0
         if from.mine {
             amount -= transaction.amount
-            amount -= transaction.fee
+            if transaction.symbol == feeCoinCode {
+                amount -= transaction.fee
+            }
         }
         if to.mine {
             amount += transaction.amount
