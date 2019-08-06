@@ -27,9 +27,9 @@ extension BackupWordsRouter: IBackupWordsRouter {
 
 extension BackupWordsRouter {
 
-    static func module(delegate: IBackupDelegate, words: [String], isBackedUp: Bool) -> UIViewController {
+    static func module(delegate: IBackupDelegate, predefinedAccountType: IPredefinedAccountType, words: [String], isBackedUp: Bool) -> UIViewController {
         let router = BackupWordsRouter(delegate: delegate)
-        let presenter = BackupWordsPresenter(router: router, words: words, isBackedUp: isBackedUp)
+        let presenter = BackupWordsPresenter(router: router, predefinedAccountType: predefinedAccountType, words: words, isBackedUp: isBackedUp)
 
         let viewController = BackupWordsController(delegate: presenter)
 

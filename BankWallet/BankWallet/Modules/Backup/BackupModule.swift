@@ -7,7 +7,7 @@ protocol IBackupViewDelegate {
 
 protocol IBackupRouter {
     func showUnlock()
-    func showBackup(account: Account, delegate: IBackupDelegate)
+    func showBackup(account: Account, predefinedAccountType: IPredefinedAccountType, delegate: IBackupDelegate)
     func close()
 }
 

@@ -70,6 +70,8 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 "backup.intro.show_key" = "Show Key";
 
 "backup.words.title" = "Secret Key";
+"backup.12words.title" = "12-words Key";
+"backup.binance.title" = "Binance Key";
 
 "backup.eos.title" = "EOS Key";
 "backup.eos.account_name" = "Account Name";
@@ -126,7 +128,7 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 "send.confirmation.eos.account" = "Account";
 "send.confirmation.send_button" = "Send";
 "send.amount_error.balance" = "Balance %@";
-"send_erc.alert" = "Transaction fees for %@ (%@) paid in %@. You need %@.";
+"send.token.insufficient_fee_alert" = "Transaction fees for %@ (%@) paid in %@. You need %@.";
 
 // Transactions
 
