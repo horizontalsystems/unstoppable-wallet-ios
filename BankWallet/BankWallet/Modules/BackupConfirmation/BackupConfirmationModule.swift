@@ -29,5 +29,6 @@ protocol IBackupConfirmationRouter {
 }
 
 protocol IBackupConfirmationDelegate {
+    var title: String
     func didValidate()
 }

@@ -459,6 +459,7 @@ protocol IPredefinedAccountTypeManager {
 }
 
 protocol IPredefinedAccountType {
+    let backupTitle: String { get }
     var title: String { get }
     var coinCodes: String { get }
     var defaultAccountType: DefaultAccountType { get }
