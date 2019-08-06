@@ -11,8 +11,8 @@ extension BackupRouter: IBackupRouter {
         viewController?.present(UnlockPinRouter.module(delegate: unlockDelegate, enableBiometry: false, cancelable: true), animated: true)
     }
 
-    func showBackup(account: Account, delegate: IBackupDelegate) {
-        guard let module = BackupRouter.module(account: account, delegate: delegate) else {
+    func showBackup(account: Account, predefinedAccountType: IPredefinedAccountType, delegate: IBackupDelegate) {
+        guard let module = BackupRouter.module(account: account, predefinedAccountType: predefinedAccountType, delegate: delegate) else {
             return
         }
 
@@ -41,10 +41,10 @@ extension BackupRouter {
         return navigationViewController
     }
 
-    static func module(account: Account, delegate: IBackupDelegate) -> UIViewController? {
+    static func module(account: Account, predefinedAccountType: IPredefinedAccountType, delegate: IBackupDelegate) -> UIViewController? {
         switch account.type {
         case let .mnemonic(words, _, _):
-            return BackupWordsRouter.module(delegate: delegate, words: words, isBackedUp: account.backedUp)
+            return BackupWordsRouter.module(delegate: delegate, predefinedAccountType: predefinedAccountType, words: words, isBackedUp: account.backedUp)
         case let .eos(account, activePrivateKey):
             return BackupEosRouter.module(delegate: delegate, account: account, activePrivateKey: activePrivateKey)
         default:
