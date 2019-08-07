@@ -78,5 +78,4 @@ protocol IBalanceSorter {
 enum BalanceSortType: Int {
     case value
     case name
-    case manual
 }
