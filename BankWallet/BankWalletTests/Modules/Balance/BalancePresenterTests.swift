@@ -133,7 +133,7 @@ class BalancePresenterTests: XCTestCase {
     func testDidLoad() {
         stub(mockInteractor) { mock in
             when(mock.initAdapters()).thenDoNothing()
-            when(mock.sortType.get).thenReturn(BalanceSortType.manual)
+            when(mock.sortType.get).thenReturn(BalanceSortType.name)
         }
         stub(mockView) { mock in
             when(mock.setSort(isOn: equal(to: false))).thenDoNothing()
@@ -145,7 +145,7 @@ class BalancePresenterTests: XCTestCase {
         presenter.viewDidLoad()
 
         verify(mockView).setSort(isOn: equal(to: false))
-        verify(mockDataSource).sortType.set(equal(to: BalanceSortType.manual))
+        verify(mockDataSource).sortType.set(equal(to: BalanceSortType.name))
         verify(mockInteractor).initAdapters()
     }
 
