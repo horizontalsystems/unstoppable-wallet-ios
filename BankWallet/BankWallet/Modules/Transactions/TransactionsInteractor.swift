@@ -23,6 +23,14 @@ class TransactionsInteractor {
         self.currencyManager = currencyManager
         self.rateManager = rateManager
         self.reachabilityManager = reachabilityManager
+
+        adapterManager.adapterCreationObservable
+                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
+                .observeOn(MainScheduler.instance)
+                .subscribe(onNext: { [weak self] wallet in
+                    self?.onUpdateCoinsData()
+                })
+                .disposed(by: disposeBag)
     }
 
     private func onUpdateCoinsData() {
