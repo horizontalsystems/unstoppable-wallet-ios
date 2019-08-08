@@ -143,6 +143,7 @@ extension SendPresenter: ISendConfirmationDelegate {
         params[AdapterField.feeRate.rawValue] = feeModule.feeRate
         params[AdapterField.memo.rawValue] = memo
 
+        view?.showProgress()
         interactor.send(params: params)
     }
 
