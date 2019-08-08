@@ -3,14 +3,14 @@ import DeepDiff
 
 // to support diff in balance presenter BalanceItem need to be struct
 struct BalanceItem {
-    let coin: Coin
+    let wallet: Wallet
 
     var balance: Decimal
     var state: AdapterState
     var rate: Rate?
 
-    init(coin: Coin, balance: Decimal = 0, state: AdapterState = .synced) {
-        self.coin = coin
+    init(wallet: Wallet, balance: Decimal = 0, state: AdapterState = .synced) {
+        self.wallet = wallet
         self.balance = balance
         self.state = state
     }
@@ -20,7 +20,7 @@ struct BalanceItem {
 extension BalanceItem: DiffAware {
 
     public var diffId: String {
-        return coin.code
+        return wallet.coin.code
     }
 
     static func compareContent(_ a: BalanceItem, _ b: BalanceItem) -> Bool {

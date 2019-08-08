@@ -26,7 +26,7 @@ extension BalancePresenter: IBalanceInteractorDelegate {
     func didUpdate(wallets: [Wallet]) {
         let items: [BalanceItem] = wallets.map { wallet in
             let adapter = self.interactor.adapter(for: wallet)
-            return BalanceItem(coin: wallet.coin, balance: adapter?.balance ?? 0, state: adapter?.state ?? .synced)
+            return BalanceItem(wallet: wallet, balance: adapter?.balance ?? 0, state: adapter?.state ?? .synced)
         }
 
         dataSource.set(items: items)
@@ -110,11 +110,11 @@ extension BalancePresenter: IBalanceViewDelegate {
     }
 
     func onReceive(index: Int) {
-        router.openReceive(for: dataSource.item(at: index).coin)
+        router.openReceive(for: dataSource.item(at: index).wallet.coin)
     }
 
     func onPay(index: Int) {
-        router.openSend(for: dataSource.item(at: index).coin.code)
+        router.openSend(for: dataSource.item(at: index).wallet.coin.code)
     }
 
     func onOpenManageWallets() {
