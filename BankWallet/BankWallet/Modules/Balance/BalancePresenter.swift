@@ -23,10 +23,12 @@ class BalancePresenter {
 
 extension BalancePresenter: IBalanceInteractorDelegate {
 
-    func didUpdate(adapters: [IAdapter]) {
-        let items = adapters.map { adapter in
-            BalanceItem(coin: adapter.wallet.coin)
+    func didUpdate(wallets: [Wallet]) {
+        let items: [BalanceItem] = wallets.map { wallet in
+            let adapter = self.interactor.adapter(for: wallet)
+            return BalanceItem(coin: wallet.coin, balance: adapter?.balance ?? 0, state: adapter?.state ?? .synced)
         }
+
         dataSource.set(items: items)
 
         if let currency = dataSource.currency {
@@ -88,7 +90,7 @@ extension BalancePresenter: IBalanceViewDelegate {
         dataSource.sortType = interactor.sortType
         view?.setSort(isOn: false)
 
-        interactor.initAdapters()
+        interactor.initWallets()
     }
 
     var itemsCount: Int {

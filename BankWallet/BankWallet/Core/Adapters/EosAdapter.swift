@@ -7,11 +7,9 @@ class EosAdapter {
     private let eosKit: EosKit
     private let asset: Asset
 
-    let wallet: Wallet
     let decimal: Int = 4
 
-    init(wallet: Wallet, eosKit: EosKit, token: String, symbol: String) {
-        self.wallet = wallet
+    init(eosKit: EosKit, token: String, symbol: String) {
         self.eosKit = eosKit
 
         asset = eosKit.register(token: token, symbol: symbol)

@@ -28,13 +28,14 @@ protocol IBalanceViewDelegate {
 
 protocol IBalanceInteractor {
     var sortType: BalanceSortType { get }
-    func initAdapters()
+    func adapter(for: Wallet) -> IAdapter?
+    func initWallets()
     func fetchRates(currencyCode: String, coinCodes: [CoinCode])
     func refresh()
 }
 
 protocol IBalanceInteractorDelegate: class {
-    func didUpdate(adapters: [IAdapter])
+    func didUpdate(wallets: [Wallet])
     func didUpdate(balance: Decimal, coinCode: CoinCode)
     func didUpdate(state: AdapterState, coinCode: CoinCode)
 

@@ -25,11 +25,10 @@ extension SendRouter: ISendRouter {
 extension SendRouter {
 
     static func module(coinCode: CoinCode) -> UIViewController? {
-        guard let adapter = App.shared.adapterManager.adapters.first(where: { $0.wallet.coin.code == coinCode }) else {
+        guard let wallet = App.shared.walletManager.wallets.first(where: { $0.coin.code == coinCode }),
+              let adapter = App.shared.adapterManager.adapter(for: wallet) else {
             return nil
         }
-
-        let wallet = adapter.wallet
 
         if let bitcoinAdapter = adapter as? ISendBitcoinAdapter {
             return SendRouter.module(wallet: wallet, adapter: bitcoinAdapter)

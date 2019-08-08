@@ -21,19 +21,19 @@ class AdapterFactory: IAdapterFactory {
             return try? DashAdapter(wallet: wallet, testMode: appConfigProvider.testMode)
         case .ethereum:
             if let ethereumKit = try? ethereumKitManager.ethereumKit(account: wallet.account) {
-                return EthereumAdapter(wallet: wallet, ethereumKit: ethereumKit)
+                return EthereumAdapter(ethereumKit: ethereumKit)
             }
         case let .erc20(address, decimal, fee):
             if let ethereumKit = try? ethereumKitManager.ethereumKit(account: wallet.account) {
-                return try? Erc20Adapter(wallet: wallet, ethereumKit: ethereumKit, contractAddress: address, decimal: decimal, fee: fee)
+                return try? Erc20Adapter(ethereumKit: ethereumKit, contractAddress: address, decimal: decimal, fee: fee)
             }
         case let .eos(token, symbol):
             if let eosKit = try? eosKitManager.eosKit(account: wallet.account) {
-                return EosAdapter(wallet: wallet, eosKit: eosKit, token: token, symbol: symbol)
+                return EosAdapter(eosKit: eosKit, token: token, symbol: symbol)
             }
         case let .binance(symbol):
             if let binanceKit = try? binanceKitManager.binanceKit(account: wallet.account) {
-                return BinanceAdapter(wallet: wallet, binanceKit: binanceKit, symbol: symbol)
+                return BinanceAdapter(binanceKit: binanceKit, symbol: symbol)
             }
         }
 

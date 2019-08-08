@@ -4,11 +4,9 @@ import RxSwift
 class EthereumBaseAdapter {
     let ethereumKit: EthereumKit
 
-    let wallet: Wallet
     let decimal: Int
 
-    init(wallet: Wallet, ethereumKit: EthereumKit, decimal: Int) {
-        self.wallet = wallet
+    init(ethereumKit: EthereumKit, decimal: Int) {
         self.ethereumKit = ethereumKit
         self.decimal = decimal
     }
