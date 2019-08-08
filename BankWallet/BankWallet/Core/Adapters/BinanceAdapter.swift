@@ -8,12 +8,10 @@ class BinanceAdapter {
     private let addressParser: IAddressParser
     private let asset: Asset
 
-    let wallet: Wallet
     let decimal: Int = 8
     let feeCoinCode: CoinCode? = "BNB"
 
-    init(wallet: Wallet, binanceKit: BinanceChainKit, addressParser: IAddressParser, symbol: String) {
-        self.wallet = wallet
+    init(binanceKit: BinanceChainKit, addressParser: IAddressParser, symbol: String) {
         self.binanceKit = binanceKit
         self.addressParser = addressParser
 

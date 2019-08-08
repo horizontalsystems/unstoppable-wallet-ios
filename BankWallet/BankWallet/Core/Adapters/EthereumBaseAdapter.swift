@@ -4,14 +4,12 @@ import RxSwift
 class EthereumBaseAdapter {
     let ethereumKit: EthereumKit
 
-    let wallet: Wallet
     let decimal: Int
 
     private let addressParser: IAddressParser
     let feeRateProvider: IFeeRateProvider
 
-    init(wallet: Wallet, ethereumKit: EthereumKit, decimal: Int, addressParser: IAddressParser, feeRateProvider: IFeeRateProvider) {
-        self.wallet = wallet
+    init(ethereumKit: EthereumKit, decimal: Int, addressParser: IAddressParser, feeRateProvider: IFeeRateProvider) {
         self.ethereumKit = ethereumKit
         self.decimal = decimal
         self.addressParser = addressParser

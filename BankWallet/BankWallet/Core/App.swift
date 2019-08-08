@@ -126,7 +126,7 @@ class App {
         passcodeLockRouter = PasscodeLockRouter()
         passcodeLockManager = PasscodeLockManager(systemInfoManager: systemInfoManager, accountManager: accountManager, walletManager: walletManager, router: passcodeLockRouter)
 
-        rateSyncer = RateSyncer(rateManager: rateManager, adapterManager: adapterManager, currencyManager: currencyManager, reachabilityManager: reachabilityManager)
+        rateSyncer = RateSyncer(rateManager: rateManager, walletManager: walletManager, adapterManager: adapterManager, currencyManager: currencyManager, reachabilityManager: reachabilityManager)
 
         dataProviderManager = FullTransactionDataProviderManager(localStorage: localStorage, appConfigProvider: appConfigProvider)
 

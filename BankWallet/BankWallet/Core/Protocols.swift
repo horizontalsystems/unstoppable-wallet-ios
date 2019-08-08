@@ -61,8 +61,8 @@ protocol ILocalizationManager {
 }
 
 protocol IAdapterManager: class {
-    var adapters: [IAdapter] { get }
-    var adaptersUpdatedSignal: Signal { get }
+    var adapterCreationObservable: Observable<Wallet> { get }
+    func adapter(for: Wallet) -> IAdapter?
     func preloadAdapters()
     func refresh()
 }
@@ -73,7 +73,7 @@ protocol IAdapterFactory {
 
 protocol IWalletManager: class {
     var wallets: [Wallet] { get }
-    var walletsObservable: Observable<[Wallet]> { get }
+    var walletsUpdatedSignal: Signal { get }
     func wallet(coin: Coin) -> Wallet?
 
     func preloadWallets()
@@ -81,7 +81,6 @@ protocol IWalletManager: class {
 }
 
 protocol IAdapter: class {
-    var wallet: Wallet { get }
     var feeCoinCode: CoinCode? { get }
 
     var decimal: Int { get }

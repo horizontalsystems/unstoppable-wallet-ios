@@ -5,12 +5,14 @@ import DeepDiff
 struct BalanceItem {
     let coin: Coin
 
-    var balance: Decimal = 0
-    var state: AdapterState = .synced
+    var balance: Decimal
+    var state: AdapterState
     var rate: Rate?
 
-    init(coin: Coin) {
+    init(coin: Coin, balance: Decimal = 0, state: AdapterState = .synced) {
         self.coin = coin
+        self.balance = balance
+        self.state = state
     }
 
 }

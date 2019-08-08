@@ -7,7 +7,7 @@ class WalletManager {
     private let cache: WalletsCache = WalletsCache()
 
     private let disposeBag = DisposeBag()
-    private let walletsSubject = PublishSubject<[Wallet]>()
+    let walletsUpdatedSignal = Signal()
 
     init(accountManager: IAccountManager, walletFactory: IWalletFactory, storage: IWalletStorage) {
         self.accountManager = accountManager
@@ -21,10 +21,6 @@ extension WalletManager: IWalletManager {
 
     var wallets: [Wallet] {
         return cache.wallets
-    }
-
-    var walletsObservable: Observable<[Wallet]> {
-        return walletsSubject.asObservable()
     }
 
     func wallet(coin: Coin) -> Wallet? {
@@ -42,7 +38,7 @@ extension WalletManager: IWalletManager {
     func enable(wallets: [Wallet]) {
         storage.save(wallets: wallets)
         cache.set(wallets: wallets)
-        walletsSubject.onNext(wallets)
+        walletsUpdatedSignal.notify()
     }
 
 }

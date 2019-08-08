@@ -4,8 +4,8 @@ import RxSwift
 class EthereumAdapter: EthereumBaseAdapter {
     static let decimal = 18
 
-    init(wallet: Wallet, ethereumKit: EthereumKit, addressParser: IAddressParser, feeRateProvider: IFeeRateProvider) {
-        super.init(wallet: wallet, ethereumKit: ethereumKit, decimal: EthereumAdapter.decimal, addressParser: addressParser, feeRateProvider: feeRateProvider)
+    init(ethereumKit: EthereumKit, addressParser: IAddressParser, feeRateProvider: IFeeRateProvider) {
+        super.init(ethereumKit: ethereumKit, decimal: EthereumAdapter.decimal, addressParser: addressParser, feeRateProvider: feeRateProvider)
     }
 
     private func transactionRecord(fromTransaction transaction: TransactionInfo) -> TransactionRecord {

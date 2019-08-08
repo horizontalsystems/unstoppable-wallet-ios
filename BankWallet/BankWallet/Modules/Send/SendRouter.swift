@@ -25,14 +25,15 @@ extension SendRouter: ISendRouter {
 extension SendRouter {
 
     static func module(coinCode: CoinCode) -> UIViewController? {
-        guard let adapter = App.shared.adapterManager.adapters.first(where: { $0.wallet.coin.code == coinCode }) else {
+        guard let wallet = App.shared.walletManager.wallets.first(where: { $0.coin.code == coinCode }),
+              let adapter = App.shared.adapterManager.adapter(for: wallet) else {
             return nil
         }
 
         let factory = SendConfirmationItemFactory()
 
         let router = SendRouter()
-        let interactor = SendInteractor(pasteboardManager: App.shared.pasteboardManager, adapter: adapter, backgroundManager: App.shared.backgroundManager)
+        let interactor = SendInteractor(pasteboardManager: App.shared.pasteboardManager, wallet: wallet, adapter: adapter, backgroundManager: App.shared.backgroundManager)
 
         var views = [UIView]()
         let viewController: UIViewController & ISendView
@@ -50,7 +51,7 @@ extension SendRouter {
             interactor.delegate = presenter
             presenter.view = viewController
         } else if adapter is BinanceAdapter {
-            let feeCoinCode = adapter.feeCoinCode ?? adapter.wallet.coin.code
+            let feeCoinCode = adapter.feeCoinCode ?? wallet.coin.code
 
             let (amountView, amountModule) = SendAmountRouter.module(coinCode: coinCode, decimal: adapter.decimal)
             let (addressView, addressModule) = SendAddressRouter.module()
@@ -67,7 +68,7 @@ extension SendRouter {
             interactor.delegate = presenter
             presenter.view = viewController
         } else {
-            let feeCoinCode = adapter.feeCoinCode ?? adapter.wallet.coin.code
+            let feeCoinCode = adapter.feeCoinCode ?? wallet.coin.code
 
             let (amountView, amountModule) = SendAmountRouter.module(coinCode: coinCode, decimal: adapter.decimal)
             let (addressView, addressModule) = SendAddressRouter.module()

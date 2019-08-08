@@ -9,11 +9,11 @@ class Erc20Adapter: EthereumBaseAdapter {
     private let erc20Kit: Erc20Kit
     private let fee: Decimal
 
-    init(wallet: Wallet, ethereumKit: EthereumKit, contractAddress: String, decimal: Int, fee: Decimal, addressParser: IAddressParser, feeRateProvider: IFeeRateProvider) throws {
+    init(ethereumKit: EthereumKit, contractAddress: String, decimal: Int, fee: Decimal, addressParser: IAddressParser, feeRateProvider: IFeeRateProvider) throws {
         self.erc20Kit = try Erc20Kit.instance(ethereumKit: ethereumKit, contractAddress: contractAddress)
         self.fee = fee
 
-        super.init(wallet: wallet, ethereumKit: ethereumKit, decimal: decimal, addressParser: addressParser, feeRateProvider: feeRateProvider)
+        super.init(ethereumKit: ethereumKit, decimal: decimal, addressParser: addressParser, feeRateProvider: feeRateProvider)
     }
 
     private func transactionRecord(fromTransaction transaction: TransactionInfo) -> TransactionRecord {

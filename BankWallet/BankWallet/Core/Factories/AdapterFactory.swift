@@ -27,22 +27,22 @@ class AdapterFactory: IAdapterFactory {
         case .ethereum:
             let addressParser = AddressParser(validScheme: "ethereum", removeScheme: true)
             if let ethereumKit = try? ethereumKitManager.ethereumKit(account: wallet.account) {
-                return EthereumAdapter(wallet: wallet, ethereumKit: ethereumKit, addressParser: addressParser, feeRateProvider: feeRateProvider)
+                return EthereumAdapter(ethereumKit: ethereumKit, addressParser: addressParser, feeRateProvider: feeRateProvider)
             }
         case let .erc20(address, decimal, fee):
             let addressParser = AddressParser(validScheme: "ethereum", removeScheme: true)
             if let ethereumKit = try? ethereumKitManager.ethereumKit(account: wallet.account) {
-                return try? Erc20Adapter(wallet: wallet, ethereumKit: ethereumKit, contractAddress: address, decimal: decimal, fee: fee, addressParser: addressParser, feeRateProvider: feeRateProvider)
+                return try? Erc20Adapter(ethereumKit: ethereumKit, contractAddress: address, decimal: decimal, fee: fee, addressParser: addressParser, feeRateProvider: feeRateProvider)
             }
         case let .eos(token, symbol):
             if let eosKit = try? eosKitManager.eosKit(account: wallet.account) {
                 let addressParser = AddressParser(validScheme: "eos", removeScheme: true)
-                return EosAdapter(wallet: wallet, eosKit: eosKit, addressParser: addressParser, token: token, symbol: symbol)
+                return EosAdapter(eosKit: eosKit, addressParser: addressParser, token: token, symbol: symbol)
             }
         case let .binance(symbol):
             let addressParser = AddressParser(validScheme: "binance", removeScheme: true)
             if let binanceKit = try? binanceKitManager.binanceKit(account: wallet.account) {
-                return BinanceAdapter(wallet: wallet, binanceKit: binanceKit, addressParser: addressParser, symbol: symbol)
+                return BinanceAdapter(binanceKit: binanceKit, addressParser: addressParser, symbol: symbol)
             }
         }
 

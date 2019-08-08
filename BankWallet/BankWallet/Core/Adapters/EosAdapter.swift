@@ -8,11 +8,9 @@ class EosAdapter {
     private let addressParser: IAddressParser
     private let asset: Asset
 
-    let wallet: Wallet
     let decimal: Int = 4
 
-    init(wallet: Wallet, eosKit: EosKit, addressParser: IAddressParser, token: String, symbol: String) {
-        self.wallet = wallet
+    init(eosKit: EosKit, addressParser: IAddressParser, token: String, symbol: String) {
         self.eosKit = eosKit
         self.addressParser = addressParser
 

@@ -9,7 +9,8 @@ protocol IDepositViewDelegate {
 }
 
 protocol IDepositInteractor {
-    func adapters(forCoin coin: Coin?) -> [IAdapter]
+    func wallets(forCoin coin: Coin?) -> [Wallet]
+    func adapter(forWallet: Wallet) -> IAdapter?
     func copy(address: String)
 }
 

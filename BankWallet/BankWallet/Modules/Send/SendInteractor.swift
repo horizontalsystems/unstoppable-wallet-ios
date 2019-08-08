@@ -8,11 +8,13 @@ class SendInteractor {
     weak var delegate: ISendInteractorDelegate?
 
     private let pasteboardManager: IPasteboardManager
+    private let wallet: Wallet
     private let adapter: IAdapter
     private let async: Bool
 
-    init(pasteboardManager: IPasteboardManager, adapter: IAdapter, backgroundManager: BackgroundManager, async: Bool = true) {
+    init(pasteboardManager: IPasteboardManager, wallet: Wallet, adapter: IAdapter, backgroundManager: BackgroundManager, async: Bool = true) {
         self.pasteboardManager = pasteboardManager
+        self.wallet = wallet
         self.adapter = adapter
         self.async = async
 
@@ -26,7 +28,7 @@ class SendInteractor {
 extension SendInteractor: ISendInteractor {
 
     var coin: Coin {
-        return adapter.wallet.coin
+        return wallet.coin
     }
 
     var decimal: Int {

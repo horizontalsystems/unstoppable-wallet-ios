@@ -6,8 +6,6 @@ class BitcoinBaseAdapter {
     var receiveAddressScriptType: ScriptType { return .p2pkh }
     var changeAddressScriptType: ScriptType { return .p2pkh }
 
-    let wallet: Wallet
-
     private let abstractKit: AbstractKit
     private let coinRate: Decimal
     private let addressParser: IAddressParser
@@ -23,8 +21,7 @@ class BitcoinBaseAdapter {
         return abstractKit.receiveAddress(for: receiveAddressScriptType)
     }
 
-    init(wallet: Wallet, abstractKit: AbstractKit, addressParser: IAddressParser) {
-        self.wallet = wallet
+    init(abstractKit: AbstractKit, addressParser: IAddressParser) {
         self.abstractKit = abstractKit
         self.addressParser = addressParser
 
