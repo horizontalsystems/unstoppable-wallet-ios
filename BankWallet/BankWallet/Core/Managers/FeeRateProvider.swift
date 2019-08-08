@@ -17,9 +17,6 @@ class FeeRateProvider {
             return feeRate.high
         }
     }
-}
-
-extension FeeRateProvider: IFeeRateProvider {
 
     func ethereumGasPrice(for priority: FeeRatePriority) -> Int {
         return feeRate(from: feeRateKit.ethereum, priority: priority)
@@ -35,6 +32,58 @@ extension FeeRateProvider: IFeeRateProvider {
 
     func dashFeeRate(for priority: FeeRatePriority) -> Int {
         return feeRate(from: feeRateKit.dash, priority: priority)
+    }
+
+}
+
+class BitcoinFeeRateProvider: IFeeRateProvider {
+    private let feeRateProvider: FeeRateProvider
+
+    init(feeRateProvider: FeeRateProvider) {
+        self.feeRateProvider = feeRateProvider
+    }
+
+    func feeRate(for priority: FeeRatePriority) -> Int {
+        return feeRateProvider.bitcoinFeeRate(for: priority)
+    }
+
+}
+
+class BitcoinCashFeeRateProvider: IFeeRateProvider {
+    private let feeRateProvider: FeeRateProvider
+
+    init(feeRateProvider: FeeRateProvider) {
+        self.feeRateProvider = feeRateProvider
+    }
+
+    func feeRate(for priority: FeeRatePriority) -> Int {
+        return feeRateProvider.bitcoinCashFeeRate(for: priority)
+    }
+
+}
+
+class EthereumFeeRateProvider: IFeeRateProvider {
+    private let feeRateProvider: FeeRateProvider
+
+    init(feeRateProvider: FeeRateProvider) {
+        self.feeRateProvider = feeRateProvider
+    }
+
+    func feeRate(for priority: FeeRatePriority) -> Int {
+        return feeRateProvider.ethereumGasPrice(for: priority)
+    }
+
+}
+
+class DashFeeRateProvider: IFeeRateProvider {
+    private let feeRateProvider: FeeRateProvider
+
+    init(feeRateProvider: FeeRateProvider) {
+        self.feeRateProvider = feeRateProvider
+    }
+
+    func feeRate(for priority: FeeRatePriority) -> Int {
+        return feeRateProvider.dashFeeRate(for: priority)
     }
 
 }

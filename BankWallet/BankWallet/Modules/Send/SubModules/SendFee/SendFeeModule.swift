@@ -7,13 +7,10 @@ protocol ISendFeeView: class {
 }
 
 protocol ISendFeeViewDelegate {
-    func onFeePriorityChange(value: Int)
     func viewDidLoad()
 }
 
 protocol ISendFeeDelegate: class {
-    func updateFeeRate()
-    func feeRate(priority: FeeRatePriority) -> Int
 }
 
 protocol ISendFeeInteractor {
@@ -26,11 +23,7 @@ protocol ISendFeeModule: AnyObject {
     var coinFee: CoinValue { get }
     var fiatFee: CurrencyValue? { get }
 
-    var feeRatePriority: FeeRatePriority { get }
-    var feeRate: Int { get }
-    var validState: Bool { get }
-
-    func update(fee: Decimal)
+    func set(fee: Decimal)
     func insufficientFeeBalance(coinCode: CoinCode, fee: Decimal)
     func update(sendInputType: SendInputType)
 }

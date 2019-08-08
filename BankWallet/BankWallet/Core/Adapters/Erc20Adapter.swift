@@ -9,11 +9,11 @@ class Erc20Adapter: EthereumBaseAdapter {
     private let erc20Kit: Erc20Kit
     private let fee: Decimal
 
-    init(wallet: Wallet, ethereumKit: EthereumKit, contractAddress: String, decimal: Int, fee: Decimal, addressParser: IAddressParser, feeRateProvider: IFeeRateProvider) throws {
+    init(wallet: Wallet, ethereumKit: EthereumKit, contractAddress: String, decimal: Int, fee: Decimal) throws {
         self.erc20Kit = try Erc20Kit.instance(ethereumKit: ethereumKit, contractAddress: contractAddress)
         self.fee = fee
 
-        super.init(wallet: wallet, ethereumKit: ethereumKit, decimal: decimal, addressParser: addressParser, feeRateProvider: feeRateProvider)
+        super.init(wallet: wallet, ethereumKit: ethereumKit, decimal: decimal)
     }
 
     private func transactionRecord(fromTransaction transaction: TransactionInfo) -> TransactionRecord {
@@ -105,36 +105,24 @@ extension Erc20Adapter: IAdapter {
         }
     }
 
-    func availableBalance(params: [String : Any]) -> Decimal {
-        return max(0, balance - fee)
-    }
-
-    func fee(params: [String : Any]) throws -> Decimal {
-        guard let feeRate = params[AdapterField.feeRate.rawValue] as? Int, feeRate != 0 else {
-            throw AdapterError.wrongParameters
-        }
-
-        return erc20Kit.fee(gasPrice: feeRate) / pow(10, EthereumAdapter.decimal)
-    }
-
-    func validate(params: [String : Any]) throws -> [SendStateError] {
-        var errors = [SendStateError]()
-
-        if let amount: Decimal = params[AdapterField.amount.rawValue] as? Decimal {
-            let balance = availableBalance(params: params)
-            if amount > balance {
-                errors.append(.insufficientAmount(availableBalance: balance))
-            }
-        }
-
-        let ethereumBalance = balanceDecimal(balanceString: ethereumKit.balance, decimal: EthereumAdapter.decimal)
-
-        let expectedFee = try fee(params: params)
-        if ethereumBalance < expectedFee {
-            errors.append(.insufficientFeeBalance(fee: expectedFee))
-        }
-        return errors
-    }
+//    func validate(params: [String : Any]) throws -> [SendStateError] {
+//        var errors = [SendStateError]()
+//
+//        if let amount: Decimal = params[AdapterField.amount.rawValue] as? Decimal {
+//            let balance = availableBalance(params: params)
+//            if amount > balance {
+//                errors.append(.insufficientAmount(availableBalance: balance))
+//            }
+//        }
+//
+//        let ethereumBalance = balanceDecimal(balanceString: ethereumKit.balance, decimal: EthereumAdapter.decimal)
+//
+//        let expectedFee = try fee(params: params)
+//        if ethereumBalance < expectedFee {
+//            errors.append(.insufficientFeeBalance(fee: expectedFee))
+//        }
+//        return errors
+//    }
 
 }
 
@@ -142,6 +130,18 @@ extension Erc20Adapter {
 
     static func clear() throws {
         try Erc20Kit.clear()
+    }
+
+}
+
+extension Erc20Adapter: ISendErc20Adapter {
+
+    var availableBalance: Decimal {
+        return max(0, balance - fee)
+    }
+
+    func fee(gasPrice: Int) -> Decimal {
+        return erc20Kit.fee(gasPrice: gasPrice) / pow(10, EthereumAdapter.decimal)
     }
 
 }

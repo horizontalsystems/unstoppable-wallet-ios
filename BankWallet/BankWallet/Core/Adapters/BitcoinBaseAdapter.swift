@@ -10,7 +10,6 @@ class BitcoinBaseAdapter {
 
     private let abstractKit: AbstractKit
     private let coinRate: Decimal
-    private let addressParser: IAddressParser
 
     private let lastBlockHeightUpdatedSignal = Signal()
     private let stateUpdatedSignal = Signal()
@@ -23,18 +22,13 @@ class BitcoinBaseAdapter {
         return abstractKit.receiveAddress(for: receiveAddressScriptType)
     }
 
-    init(wallet: Wallet, abstractKit: AbstractKit, addressParser: IAddressParser) {
+    init(wallet: Wallet, abstractKit: AbstractKit) {
         self.wallet = wallet
         self.abstractKit = abstractKit
-        self.addressParser = addressParser
 
         coinRate = pow(10, decimal)
 
         state = .syncing(progress: 0, lastBlockDate: nil)
-    }
-
-    func feeRate(priority: FeeRatePriority) -> Int {
-        fatalError("Method should be overridden in child class")
     }
 
     func transactionRecord(fromTransaction transaction: TransactionInfo) -> TransactionRecord {
@@ -126,36 +120,7 @@ extension BitcoinBaseAdapter: IAdapter {
         try abstractKit.validate(address: address)
     }
 
-    func validate(params: [String : Any]) throws -> [SendStateError] {
-        guard let amount: Decimal = params[AdapterField.amount.rawValue] as? Decimal else {
-            throw AdapterError.wrongParameters
-        }
-
-        let balance = try availableBalance(params: params)
-        var errors = [SendStateError]()
-        if amount > balance {
-            errors.append(.insufficientAmount(availableBalance: balance))
-        }
-        return errors
-    }
-
-    func parse(paymentAddress: String) -> PaymentRequestAddress {
-        let paymentData = addressParser.parse(paymentAddress: paymentAddress)
-        var validationError: Error?
-        do {
-            try validate(address: paymentData.address)
-        } catch {
-            validationError = error
-        }
-        return PaymentRequestAddress(address: paymentData.address, amount: paymentData.amount.map { Decimal($0) }, error: validationError)
-    }
-
-    func sendSingle(params: [String : Any]) -> Single<Void> {
-        guard let amount = params[AdapterField.amount.rawValue] as? Decimal,
-              let address = params[AdapterField.address.rawValue] as? String,
-              let feeRate = params[AdapterField.feeRate.rawValue] as? Int else {
-            return Single.error(AdapterError.wrongParameters)
-        }
+    func sendSingle(amount: Decimal, address: String, feeRate: Int) -> Single<Void> {
         let satoshiAmount = convertToSatoshi(value: amount)
 
         return Single.create { [weak self] observer in
@@ -172,18 +137,11 @@ extension BitcoinBaseAdapter: IAdapter {
         }
     }
 
-    func availableBalance(params: [String : Any]) throws -> Decimal {
-        var params = params
-        params[AdapterField.amount.rawValue] = balance
-        return try max(0, balance - fee(params: params))
+    func availableBalance(feeRate: Int, address: String?) -> Decimal {
+        return max(0, balance - fee(amount: balance, feeRate: feeRate, address: address))
     }
 
-    func fee(params: [String : Any]) throws -> Decimal {
-        guard let amount = params[AdapterField.amount.rawValue] as? Decimal,
-              let feeRate = params[AdapterField.feeRate.rawValue] as? Int, feeRate != 0 else {
-            throw AdapterError.wrongParameters
-        }
-        let address: String? = params[AdapterField.address.rawValue] as? String
+    func fee(amount: Decimal, feeRate: Int, address: String?) -> Decimal {
         do {
             let amount = convertToSatoshi(value: amount)
             let fee = try abstractKit.fee(for: amount, toAddress: address, senderPay: true, feeRate: feeRate, changeScriptType: changeAddressScriptType)

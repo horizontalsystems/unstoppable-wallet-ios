@@ -5,17 +5,15 @@ class BinanceAdapter {
     static let transferFee: Decimal = 0.000375
 
     private let binanceKit: BinanceChainKit
-    private let addressParser: IAddressParser
     private let asset: Asset
 
     let wallet: Wallet
     let decimal: Int = 8
     let feeCoinCode: CoinCode? = "BNB"
 
-    init(wallet: Wallet, binanceKit: BinanceChainKit, addressParser: IAddressParser, symbol: String) {
+    init(wallet: Wallet, binanceKit: BinanceChainKit, symbol: String) {
         self.wallet = wallet
         self.binanceKit = binanceKit
-        self.addressParser = addressParser
 
         asset = binanceKit.register(symbol: symbol)
     }
@@ -30,7 +28,7 @@ class BinanceAdapter {
                 address: transaction.to,
                 mine: transaction.to == binanceKit.account
         )
-        
+
         var amount: Decimal = 0
         if from.mine {
             amount -= transaction.amount
@@ -121,68 +119,21 @@ extension BinanceAdapter: IAdapter {
                 }
     }
 
-    func sendSingle(params: [String : Any]) -> Single<Void> {
-        guard let amount: Decimal = params[AdapterField.amount.rawValue] as? Decimal,
-              let address: String = params[AdapterField.address.rawValue] as? String else {
-            return Single.error(AdapterError.wrongParameters)
-        }
-        let memo: String? = params[AdapterField.memo.rawValue] as? String
-        return binanceKit.sendSingle(symbol: asset.symbol, to: address, amount: amount, memo: memo ?? "from Unstoppable Wallet")
-                .map { _ in () }
-    }
-
-    func availableBalance(params: [String : Any]) -> Decimal {
-        var balance = asset.balance
-        if asset.symbol == "BNB" {
-            balance -= BinanceAdapter.transferFee
-        }
-        return max(0, balance)
-    }
-
-    func feeRate(priority: FeeRatePriority) -> Int {
-        return 0
-    }
-
-    func fee(params: [String : Any]) -> Decimal {
-        return BinanceAdapter.transferFee
-    }
-
-    func validate(address: String) throws {
-        //todo: remove when make errors public
-        do {
-            try binanceKit.validate(address: address)
-        } catch {
-            throw AddressConversion.invalidAddress
-        }
-    }
-
-    func parse(paymentAddress: String) -> PaymentRequestAddress {
-        let paymentData = addressParser.parse(paymentAddress: paymentAddress)
-        var validationError: Error?
-        do {
-            try validate(address: paymentData.address)
-        } catch {
-            validationError = error
-        }
-        return PaymentRequestAddress(address: paymentData.address, amount: paymentData.amount.map { Decimal($0) }, error: validationError)
-
-    }
-
-    func validate(params: [String : Any]) throws -> [SendStateError] {
-        var errors = [SendStateError]()
-
-        if let amount: Decimal = params[AdapterField.amount.rawValue] as? Decimal {
-            let balance = availableBalance(params: params)
-            if amount > balance {
-                errors.append(.insufficientAmount(availableBalance: balance))
-            }
-        }
-
-        if binanceKit.binanceBalance < BinanceAdapter.transferFee {
-            errors.append(.insufficientFeeBalance(fee: BinanceAdapter.transferFee))
-        }
-        return errors
-    }
+//    func validate(params: [String : Any]) throws -> [SendStateError] {
+//        var errors = [SendStateError]()
+//
+//        if let amount: Decimal = params[AdapterField.amount.rawValue] as? Decimal {
+//            let balance = availableBalance(params: params)
+//            if amount > balance {
+//                errors.append(.insufficientAmount(availableBalance: balance))
+//            }
+//        }
+//
+//        if binanceKit.binanceBalance < BinanceAdapter.transferFee {
+//            errors.append(.insufficientFeeBalance(fee: BinanceAdapter.transferFee))
+//        }
+//        return errors
+//    }
 
     var receiveAddress: String {
         return binanceKit.account
@@ -199,4 +150,34 @@ extension BinanceAdapter {
     enum AddressConversion: Error {
         case invalidAddress
     }
+}
+
+extension BinanceAdapter: ISendBinanceAdapter {
+
+    var availableBalance: Decimal {
+        var balance = asset.balance
+        if asset.symbol == "BNB" {
+            balance -= BinanceAdapter.transferFee
+        }
+        return max(0, balance)
+    }
+
+    func validate(address: String) throws {
+        //todo: remove when make errors public
+        do {
+            try binanceKit.validate(address: address)
+        } catch {
+            throw AddressConversion.invalidAddress
+        }
+    }
+
+    var fee: Decimal {
+        return BinanceAdapter.transferFee
+    }
+
+    func sendSingle(amount: Decimal, address: String, memo: String?) -> Single<Void> {
+        return binanceKit.sendSingle(symbol: asset.symbol, to: address, amount: amount, memo: memo ?? "")
+                .map { _ in () }
+    }
+
 }

@@ -20,12 +20,6 @@ protocol ISendAmountViewDelegate {
     func onMaxClicked()
 }
 
-protocol ISendAmountDelegate: class {
-    var availableBalance: Decimal { get }
-    func onChanged()
-    func onChanged(sendInputType: SendInputType)
-}
-
 protocol ISendAmountInteractor {
     var defaultInputType: SendInputType { get }
 
@@ -38,14 +32,19 @@ protocol ISendAmountInteractor {
 protocol ISendAmountModule: AnyObject {
     var delegate: ISendAmountDelegate? { get set }
 
+    var validAmount: Decimal? { get }
+
+    var sendInputType: SendInputType { get }
     var coinAmount: CoinValue { get }
     var fiatAmount: CurrencyValue? { get }
-
-    var validState: Bool { get }
 
     func showKeyboard()
 
     func set(amount: Decimal)
-    func insufficientAmount(availableBalance: Decimal)
-    func onValidationSuccess()
+    func set(availableBalance: Decimal)
+}
+
+protocol ISendAmountDelegate: class {
+    func onChangeAmount()
+    func onChange(sendInputType: SendInputType)
 }

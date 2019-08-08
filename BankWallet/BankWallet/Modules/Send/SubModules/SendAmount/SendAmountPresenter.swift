@@ -11,12 +11,14 @@ class SendAmountPresenter {
     weak var view: ISendAmountView?
     weak var delegate: ISendAmountDelegate?
 
-    private var sendInputType: SendInputType = .coin
+    private(set) var sendInputType: SendInputType = .coin
 
+    private(set) var validAmount: Decimal?
     private var amount: Decimal?
     private var switchButtonEnabled: Bool = false
     private var rate: Rate?
-    private var insufficientAmountWithAvailableBalance: Decimal?
+
+    private var availableBalance: Decimal?
 
     init(interactor: ISendAmountInteractor, formatHelper: ISendAmountFormatHelper, currencyManager: ICurrencyManager, coinCode: CoinCode, coinDecimal: Int) {
         self.interactor = interactor
@@ -36,21 +38,25 @@ class SendAmountPresenter {
         }
         let subValue = formatHelper.formattedWithCode(value: coinAmount ?? 0, inputType: sendInputType.reversed, rate: rate)
 
-        view?.set(type: prefix,
-                amount: mainValue)
-
+        view?.set(type: prefix, amount: mainValue)
         view?.set(hint: subValue)
     }
 
-    private func updateError(withAvailableBalance availableBalance: Decimal?) {
-        self.insufficientAmountWithAvailableBalance = availableBalance
-
-        guard let availableBalance = availableBalance else {
+    private func validate() {
+        guard let amount = amount, let availableBalance = availableBalance else {
+            view?.set(error: nil)
+            validAmount = nil
             return
         }
 
-        let errorText = formatHelper.errorValue(availableBalance: availableBalance, inputType: sendInputType, rate: rate)
-        view?.set(error: errorText)
+        if availableBalance < amount {
+            let errorText = formatHelper.errorValue(availableBalance: availableBalance, inputType: sendInputType, rate: rate)
+            view?.set(error: errorText)
+            validAmount = nil
+        } else {
+            view?.set(error: nil)
+            validAmount = amount > 0 ? amount : nil
+        }
     }
 
 }
@@ -72,29 +78,18 @@ extension SendAmountPresenter: ISendAmountModule {
         view?.showKeyboard()
     }
 
-    var validState: Bool {
-        return ((amount ?? 0) != 0) && (insufficientAmountWithAvailableBalance == nil)
-    }
-
     func set(amount: Decimal) {
         self.amount = amount
         update(coinAmount: amount)
 
-        delegate?.onChanged()
+        validate()
+
+        delegate?.onChangeAmount()
     }
 
-    func insufficientAmount(availableBalance: Decimal) {
-        guard insufficientAmountWithAvailableBalance != availableBalance else {
-            // already show this error
-            return
-        }
-
-        updateError(withAvailableBalance: availableBalance)
-    }
-
-    func onValidationSuccess() {
-        insufficientAmountWithAvailableBalance = nil
-        view?.set(error: nil)
+    func set(availableBalance: Decimal) {
+        self.availableBalance = availableBalance
+        validate()
     }
 
 }
@@ -105,7 +100,7 @@ extension SendAmountPresenter: ISendAmountViewDelegate {
         rate = interactor.rate(coinCode: coinCode, currencyCode: currencyManager.baseCurrency.code)
         if rate != nil {
             sendInputType = interactor.defaultInputType
-            delegate?.onChanged(sendInputType: sendInputType)
+            delegate?.onChange(sendInputType: sendInputType)
         }
 
         view?.set(switchButtonEnabled: rate != nil)
@@ -115,12 +110,11 @@ extension SendAmountPresenter: ISendAmountViewDelegate {
     func onSwitchClicked() {
         sendInputType = sendInputType.reversed
         interactor.set(inputType: sendInputType)
-        delegate?.onChanged(sendInputType: sendInputType)
+        delegate?.onChange(sendInputType: sendInputType)
 
         update(coinAmount: amount)
 
-        // if has error, must update it
-        updateError(withAvailableBalance: insufficientAmountWithAvailableBalance)
+        validate()
     }
 
     func onChanged(amountText: String?) {
@@ -140,20 +134,25 @@ extension SendAmountPresenter: ISendAmountViewDelegate {
         }
         self.amount = coinAmount
 
-        // send to delegate 0 to validate and change fee values
-        delegate?.onChanged()
+        validate()
+
+        delegate?.onChangeAmount()
 
         view?.set(hint: formatHelper.formattedWithCode(value: coinAmount ?? 0, inputType: sendInputType.reversed, rate: rate))
+
     }
 
     func onMaxClicked() {
-        // get maximum available balance from delegate
-        guard let availableBalance = delegate?.availableBalance else {
+        guard let availableBalance = availableBalance else {
             return
         }
+
         // Update baseCoin value, UI and hide maxButton
         self.amount = availableBalance
-        delegate?.onChanged()
+
+        validate()
+
+        delegate?.onChangeAmount()
 
         update(coinAmount: availableBalance)
         view?.maxButton(show: false)

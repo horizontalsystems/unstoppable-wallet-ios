@@ -17,8 +17,6 @@ protocol ISendViewDelegate {
     func onViewDidLoad()
     func onClose()
 
-    func onCopyAddress()
-
     func onSendClicked()
 }
 
@@ -45,6 +43,34 @@ protocol ISendInteractorDelegate: class {
     func didUpdate(fee: Decimal)
 }
 
+protocol ISendBitcoinInteractor {
+    var coin: Coin { get }
+    func fetchAvailableBalance(feeRate: Int, address: String?)
+    func validate(address: String) throws
+    func fetchFee(amount: Decimal, feeRate: Int, address: String?)
+    func send(amount: Decimal, address: String, feeRate: Int)
+}
+
+protocol ISendBitcoinInteractorDelegate: class {
+    func didFetch(availableBalance: Decimal)
+    func didFetch(fee: Decimal)
+    func didSend()
+    func didFailToSend(error: Error)
+}
+
+protocol ISendEthereumInteractor {
+    var coin: Coin { get }
+    func availableBalance(gasPrice: Int) -> Decimal
+    func validate(address: String) throws
+    func fee(gasPrice: Int) -> Decimal
+    func send(amount: Decimal, address: String, gasPrice: Int)
+}
+
+protocol ISendEthereumInteractorDelegate: class {
+    func didSend()
+    func didFailToSend(error: Error)
+}
+
 protocol ISendRouter {
     func showConfirmation(item: SendConfirmationViewItem, delegate: ISendConfirmationDelegate)
     func scanQrCode(delegate: IScanQrCodeDelegate)
@@ -68,7 +94,7 @@ protocol ISendFeeFormatHelper {
 }
 
 protocol ISendConfirmationItemFactory {
-    func confirmationItem(sendInputType: SendInputType, receiver: String?, showMemo: Bool, coinAmountValue: CoinValue, currencyAmountValue: CurrencyValue?, coinFeeValue: CoinValue?, currencyFeeValue: CurrencyValue?, estimateTime: String?) throws -> SendConfirmationViewItem
+    func viewItem(sendInputType: SendInputType, coinAmountValue: CoinValue, currencyAmountValue: CurrencyValue?, receiver: String, showMemo: Bool, coinFeeValue: CoinValue?, currencyFeeValue: CurrencyValue?, estimateTime: String?) -> SendConfirmationViewItem?
 }
 
 enum SendInputType: String {

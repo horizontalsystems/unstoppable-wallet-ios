@@ -1,40 +1,42 @@
 import Foundation
 
 class SendAddressPresenter {
-    private let interactor: ISendAddressInteractor
-
     weak var view: ISendAddressView?
     weak var delegate: ISendAddressDelegate?
 
-    var address: String?
-    var invalidAddress: Error?
+    private let interactor: ISendAddressInteractor
+
+    var address: String? {
+        didSet {
+            delegate?.onUpdateAddress()
+        }
+    }
 
     init(interactor: ISendAddressInteractor) {
         self.interactor = interactor
     }
 
-    private func onAddressEnter(address: String) {
-        let paymentAddress = delegate?.parse(paymentAddress: address)
-        if let error = paymentAddress?.error {
-            view?.set(address: paymentAddress?.address, error: error.localizedDescription)
-            invalidAddress = paymentAddress?.error
-            delegate?.onAddressUpdate(address: nil)
-        } else {
-            view?.set(address: paymentAddress?.address, error: nil)
-            invalidAddress = nil
+    private func onEnter(address: String) {
+        let (parsedAddress, amount) = interactor.parse(address: address)
+
+        do {
+            try delegate?.validate(address: parsedAddress)
+
+            view?.set(address: parsedAddress, error: nil)
             self.address = address
 
-            delegate?.onAddressUpdate(address: paymentAddress?.address)
-            if let amount = paymentAddress?.amount {
-                delegate?.onAmountUpdate(amount: amount)
+            if let amount = amount {
+                delegate?.onUpdate(amount: amount)
             }
+        } catch {
+            view?.set(address: parsedAddress, error: error.localizedDescription)
+            self.address = nil
         }
     }
+
     private func onClearAddress() {
         view?.set(address: nil, error: nil)
         address = nil
-
-        delegate?.onAddressUpdate(address: nil)
     }
 
 }
@@ -47,7 +49,7 @@ extension SendAddressPresenter: ISendAddressViewDelegate {
 
     func onAddressPasteClicked() {
         if let address = interactor.valueFromPasteboard {
-            onAddressEnter(address: address)
+            onEnter(address: address)
         }
     }
 
@@ -56,7 +58,7 @@ extension SendAddressPresenter: ISendAddressViewDelegate {
             onClearAddress()
             return
         }
-        onAddressEnter(address: address)
+        onEnter(address: address)
     }
 
     func onAddressDeleteClicked() {
@@ -66,17 +68,12 @@ extension SendAddressPresenter: ISendAddressViewDelegate {
 }
 
 extension SendAddressPresenter: ISendAddressModule {
-
-    var validState: Bool {
-        return (address != nil) && (invalidAddress == nil)
-    }
-
 }
 
 extension SendAddressPresenter: IScanQrCodeDelegate {
 
     func didScan(string: String) {
-        onAddressEnter(address: string)
+        onEnter(address: string)
     }
 
 }
