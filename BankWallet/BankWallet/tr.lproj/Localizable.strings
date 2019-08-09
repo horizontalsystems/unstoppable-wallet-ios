@@ -48,7 +48,7 @@
 "coin_sync.title" = "Geri yükleme seçenekleri";
 "coin_sync.fast" = "Hızlı";
 "coin_sync.recommended" = "0-2 saat (Tavsiye edilen)";
-"coin_sync.fast.text" = "Geçmiş işlemlerinizi güvenilir üçüncü şahıs sunucularıyla geri yükleyin. Uzun işlem geçmişi olan ve büyük miktarda para işlemleri yapan kullanıcılar için bu yöntem güvenlik riski oluşturabilir.";
+"coin_sync.fast.text" = "Restores your past transactions directly from the network. Significantly more private but very slow. If the restore takes way too much time, go to Manage Keys section and reimport the Key for the wallet using the Fast Sync option.";
 "coin_sync.slow" = "Yavaş";
 "coin_sync.more_private" = "1-12 saat (Daha Gizli)";
 "coin_sync.slow.text" = "Restores your past transactions directly from the network. Significantly more private but very slow. If the restore takes way too much time go to Security section in Settings tab and select “Delete from Phone” option.";
