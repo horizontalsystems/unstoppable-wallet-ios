@@ -48,7 +48,7 @@
 "coin_sync.title" = "Restore Options";
 "coin_sync.fast" = "Fast";
 "coin_sync.recommended" = "0-2 hours (Recommended)";
-"coin_sync.fast.text" = "Restores your past transactions via secure third party server. For users with a long history of transactions involving very large sums this method may pose privacy risks.";
+"coin_sync.fast.text" = "Restores your past transactions directly from the network. Significantly more private but very slow. If the restore takes way too much time, go to Manage Keys section and reimport the Key for the wallet using the Fast Sync option.";
 "coin_sync.slow" = "Slow";
 "coin_sync.more_private" = "1-12 hours (More Private)";
 "coin_sync.slow.text" = "Restores your past transactions directly from the network. Significantly more private but very slow. If the restore takes way too much time go to Security section in Settings tab and select “Delete from Phone” option.";
