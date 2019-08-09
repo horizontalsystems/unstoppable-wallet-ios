@@ -25,9 +25,9 @@ class TransactionsPresenter {
 extension TransactionsPresenter: ITransactionViewItemLoaderDelegate {
 
     func createViewItem(for item: TransactionItem) -> TransactionViewItem {
-        let lastBlockHeight = dataSource.lastBlockHeight(coin: item.coin)
-        let threshold = dataSource.threshold(coin: item.coin)
-        let rate = dataSource.rate(coin: item.coin, date: item.record.date)
+        let lastBlockHeight = dataSource.lastBlockHeight(wallet: item.wallet)
+        let threshold = dataSource.threshold(wallet: item.wallet)
+        let rate = dataSource.rate(coin: item.wallet.coin, date: item.record.date)
         return factory.viewItem(fromItem: item, lastBlockHeight: lastBlockHeight, threshold: threshold, rate: rate)
     }
 
@@ -59,15 +59,13 @@ extension TransactionsPresenter: ITransactionsViewDelegate {
         interactor.initialFetch()
     }
 
-    func onFilterSelect(coin: Coin?) {
-        let coins = coin.map { [$0] } ?? []
-        interactor.set(selectedCoins: coins)
+    func onFilterSelect(wallet: Wallet?) {
+        let wallets = wallet.map { [$0] } ?? []
+        interactor.set(selectedWallets: wallets)
     }
 
     func onBottomReached() {
         DispatchQueue.main.async {
-//            print("On Bottom Reached")
-
             self.loader.loadNext()
         }
     }
@@ -78,7 +76,7 @@ extension TransactionsPresenter: ITransactionsViewDelegate {
 
     func willShow(item: TransactionViewItem) {
         if item.rate == nil {
-            interactor.fetchRate(coin: item.coin, date: item.date)
+            interactor.fetchRate(coin: item.wallet.coin, date: item.date)
         }
     }
 
@@ -86,52 +84,47 @@ extension TransactionsPresenter: ITransactionsViewDelegate {
 
 extension TransactionsPresenter: ITransactionsInteractorDelegate {
 
-    func onUpdate(selectedCoins: [Coin]) {
-//        print("Selected Coin Codes Updated: \(selectedCoins)")
-
-        loader.set(coins: selectedCoins)
+    func onUpdate(selectedCoins: [Wallet]) {
+        loader.set(wallets: selectedCoins)
         loader.loadNext(initial: true)
     }
 
-    func onUpdate(coinsData: [(Coin, Int, Int?)]) {
-        var coins = [Coin]()
+    func onUpdate(walletsData: [(Wallet, Int, Int?)]) {
+        var wallets = [Wallet]()
 
-        for (coin, threshold, lastBlockHeight) in coinsData {
-            coins.append(coin)
-            dataSource.set(threshold: threshold, coin: coin)
+        for (wallet, threshold, lastBlockHeight) in walletsData {
+            wallets.append(wallet)
+            dataSource.set(threshold: threshold, wallet: wallet)
 
             if let lastBlockHeight = lastBlockHeight {
-                dataSource.set(lastBlockHeight: lastBlockHeight, coin: coin)
+                dataSource.set(lastBlockHeight: lastBlockHeight, wallet: wallet)
             }
         }
 
         interactor.fetchLastBlockHeights()
 
-        if coins.count < 2 {
+        if wallets.count < 2 {
             view?.show(filters: [])
         } else {
-            view?.show(filters: [nil] + coins)
+            view?.show(filters: [nil] + wallets)
         }
 
-        loader.handleUpdate(coins: coins)
+        loader.handleUpdate(wallets: wallets)
         loader.loadNext(initial: true)
     }
 
     func onUpdateBaseCurrency() {
-//        print("Base Currency Updated")
-
         dataSource.clearRates()
         viewItemLoader.reloadAll()
     }
 
-    func onUpdate(lastBlockHeight: Int, coin: Coin) {
-//        print("Last Block Height Updated: \(coin) - \(lastBlockHeight)")
-        let oldLastBlockHeight = dataSource.lastBlockHeight(coin: coin)
+    func onUpdate(lastBlockHeight: Int, wallet: Wallet) {
+        let oldLastBlockHeight = dataSource.lastBlockHeight(wallet: wallet)
 
-        dataSource.set(lastBlockHeight: lastBlockHeight, coin: coin)
+        dataSource.set(lastBlockHeight: lastBlockHeight, wallet: wallet)
 
-        if let threshold = dataSource.threshold(coin: coin), let oldLastBlockHeight = oldLastBlockHeight {
-            let indexes = loader.itemIndexesForPending(coin: coin, blockHeight: oldLastBlockHeight - threshold)
+        if let threshold = dataSource.threshold(wallet: wallet), let oldLastBlockHeight = oldLastBlockHeight {
+            let indexes = loader.itemIndexesForPending(wallet: wallet, blockHeight: oldLastBlockHeight - threshold)
 
             if !indexes.isEmpty {
                 viewItemLoader.reload(indexes: indexes)
@@ -139,8 +132,8 @@ extension TransactionsPresenter: ITransactionsInteractorDelegate {
         }
     }
 
-    func didUpdate(records: [TransactionRecord], coin: Coin) {
-        loader.didUpdate(records: records, coin: coin)
+    func didUpdate(records: [TransactionRecord], wallet: Wallet) {
+        loader.didUpdate(records: records, wallet: wallet)
     }
 
     func didFetch(rateValue: Decimal, coin: Coin, currency: Currency, date: Date) {
@@ -153,9 +146,7 @@ extension TransactionsPresenter: ITransactionsInteractorDelegate {
         }
     }
 
-    func didFetch(recordsData: [Coin: [TransactionRecord]], initial: Bool) {
-//        print("Did Fetch Records: \(recordsData.map { key, value -> String in "\(key) - \(value.count)" })")
-
+    func didFetch(recordsData: [Wallet: [TransactionRecord]], initial: Bool) {
         loader.didFetch(recordsData: recordsData, initial: initial)
     }
 

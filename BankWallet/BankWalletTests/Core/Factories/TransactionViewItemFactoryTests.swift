@@ -189,7 +189,7 @@ class TransactionViewItemFactoryTests: XCTestCase {
             to: [TransactionAddress] = []
     ) -> TransactionItem {
         return TransactionItem(
-                coin: coin,
+                wallet: coin,
                 record: TransactionRecord(
                         transactionHash: transactionHash,
                         transactionIndex: 0,

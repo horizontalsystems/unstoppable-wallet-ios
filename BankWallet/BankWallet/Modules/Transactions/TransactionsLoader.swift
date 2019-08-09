@@ -19,7 +19,7 @@ class TransactionsLoader {
         return dataSource.item(forIndex: index)
     }
 
-    var allRecordsData: [Coin: [TransactionRecord]] {
+    var allRecordsData: [Wallet: [TransactionRecord]] {
         return dataSource.allRecordsData
     }
 
@@ -27,27 +27,22 @@ class TransactionsLoader {
         return dataSource.itemIndexes(coin: coin, date: date)
     }
 
-    func itemIndexesForPending(coin: Coin, blockHeight: Int) -> [Int] {
-        return dataSource.itemIndexesForPending(coin: coin, blockHeight: blockHeight)
+    func itemIndexesForPending(wallet: Wallet, blockHeight: Int) -> [Int] {
+        return dataSource.itemIndexesForPending(wallet: wallet, blockHeight: blockHeight)
     }
 
-    func set(coins: [Coin]) {
-        dataSource.set(coins: coins)
+    func set(wallets: [Wallet]) {
+        dataSource.set(wallets: wallets)
     }
 
     func loadNext(initial: Bool = false) {
         guard !loading else {
-//            print("Already Loading")
             return
         }
 
         loading = true
 
-//        print("Load Next: \(initial ? "initial" : "paging")")
-
         guard !dataSource.allShown else {
-//            print("Load Next: all shown")
-
             if initial {
                 //clear list on switch coins when data source has only one page
                 delegate?.reload(with: dataSource.items, animated: true)
@@ -61,8 +56,6 @@ class TransactionsLoader {
         let fetchDataList = dataSource.fetchDataList
 
         if fetchDataList.isEmpty {
-//            print("Load Next: fetch data list is empty")
-
             let newItems = dataSource.increasePage()
 
             if initial, newItems != nil {
@@ -73,19 +66,17 @@ class TransactionsLoader {
 
             loading = false
         } else {
-//            print("Load Next: fetch: \(fetchDataList.map { data -> String in "\(data.coin) -- \(data.limit) -- \(data.hashFrom ?? "nil")" })")
-
             delegate?.fetchRecords(fetchDataList: fetchDataList, initial: initial)
         }
     }
 
-    func didUpdate(records: [TransactionRecord], coin: Coin) {
-        if let updatedArray = dataSource.handleUpdated(records: records, coin: coin) {
+    func didUpdate(records: [TransactionRecord], wallet: Wallet) {
+        if let updatedArray = dataSource.handleUpdated(records: records, wallet: wallet) {
             delegate?.reload(with: updatedArray, animated: true)
         }
     }
 
-    func didFetch(recordsData: [Coin: [TransactionRecord]], initial: Bool) {
+    func didFetch(recordsData: [Wallet: [TransactionRecord]], initial: Bool) {
         dataSource.handleNext(recordsData: recordsData)
 
         // called after load next or when pool has not enough items
@@ -102,8 +93,8 @@ class TransactionsLoader {
         loading = false
     }
 
-    func handleUpdate(coins: [Coin]) {
-        dataSource.handleUpdated(coins: coins)
+    func handleUpdate(wallets: [Wallet]) {
+        dataSource.handleUpdated(wallets: wallets)
     }
 
 }

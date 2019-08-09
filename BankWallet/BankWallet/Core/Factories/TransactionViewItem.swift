@@ -2,7 +2,7 @@ import Foundation
 import DeepDiff
 
 class TransactionViewItem {
-    let coin: Coin
+    let wallet: Wallet
     let transactionHash: String
     let coinValue: CoinValue
     let currencyValue: CurrencyValue?
@@ -13,8 +13,8 @@ class TransactionViewItem {
     let status: TransactionStatus
     let rate: CurrencyValue?
 
-    init(coin: Coin, transactionHash: String, coinValue: CoinValue, currencyValue: CurrencyValue?, from: String?, to: String?, incoming: Bool, date: Date, status: TransactionStatus, rate: CurrencyValue?) {
-        self.coin = coin
+    init(wallet: Wallet, transactionHash: String, coinValue: CoinValue, currencyValue: CurrencyValue?, from: String?, to: String?, incoming: Bool, date: Date, status: TransactionStatus, rate: CurrencyValue?) {
+        self.wallet = wallet
         self.transactionHash = transactionHash
         self.coinValue = coinValue
         self.currencyValue = currencyValue

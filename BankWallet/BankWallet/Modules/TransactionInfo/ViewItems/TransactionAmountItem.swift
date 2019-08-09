@@ -14,7 +14,7 @@ class TransactionAmountItem: BaseActionItem {
         }
         currencyAmountColor = item.incoming ? TransactionInfoTheme.incomingAmountColor : TransactionInfoTheme.outgoingAmountColor
         amount = ValueFormatter.instance.format(coinValue: item.coinValue)
-        coinName = item.coin.title.localized
+        coinName = item.wallet.coin.title.localized
 
         super.init(cellType: TransactionAmountItemView.self, tag: tag, required: true)
 

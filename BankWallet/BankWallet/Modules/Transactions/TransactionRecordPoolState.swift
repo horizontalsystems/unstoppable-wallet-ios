@@ -1,12 +1,12 @@
 class TransactionRecordPoolState {
-    let coin: Coin
+    let wallet: Wallet
 
     var records = [TransactionRecord]()
     var firstUnusedIndex = 0
     var allLoaded = false
 
-    init(coin: Coin) {
-        self.coin = coin
+    init(wallet: Wallet) {
+        self.wallet = wallet
     }
 
     var unusedRecords: [TransactionRecord] {

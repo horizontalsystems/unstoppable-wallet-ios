@@ -35,23 +35,23 @@ class TransactionsInteractor {
 
     private func onUpdateCoinsData() {
         transactionRecordsDisposeBag = DisposeBag()
-        var coinsData = [(Coin, Int, Int?)]()
+        var walletsData = [(Wallet, Int, Int?)]()
 
         for wallet in walletManager.wallets {
             if let adapter = adapterManager.adapter(for: wallet) {
-                coinsData.append((wallet.coin, adapter.confirmationsThreshold, adapter.lastBlockHeight))
+                walletsData.append((wallet, adapter.confirmationsThreshold, adapter.lastBlockHeight))
 
                 adapter.transactionRecordsObservable
                         .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
                         .observeOn(MainScheduler.instance)
                         .subscribe(onNext: { [weak self] records in
-                            self?.delegate?.didUpdate(records: records, coin: wallet.coin)
+                            self?.delegate?.didUpdate(records: records, wallet: wallet)
                         })
                         .disposed(by: transactionRecordsDisposeBag)
             }
         }
 
-        delegate?.onUpdate(coinsData: coinsData)
+        delegate?.onUpdate(walletsData: walletsData)
     }
 
     private func onReachabilityChange() {
@@ -106,7 +106,7 @@ extension TransactionsInteractor: ITransactionsInteractor {
                     .observeOn(MainScheduler.instance)
                     .subscribe(onNext: { [weak self] in
                         if let lastBlockHeight = adapter.lastBlockHeight {
-                            self?.delegate?.onUpdate(lastBlockHeight: lastBlockHeight, coin: wallet.coin)
+                            self?.delegate?.onUpdate(lastBlockHeight: lastBlockHeight, wallet: wallet)
                         }
                     })
                     .disposed(by: lastBlockHeightsDisposeBag)
@@ -119,27 +119,27 @@ extension TransactionsInteractor: ITransactionsInteractor {
             return
         }
 
-        var singles = [Single<(Coin, [TransactionRecord])>]()
+        var singles = [Single<(Wallet, [TransactionRecord])>]()
 
         for fetchData in fetchDataList {
-            let wallet = walletManager.wallets.first(where: { $0.coin == fetchData.coin })
-            let single: Single<(Coin, [TransactionRecord])>
+            let wallet = walletManager.wallets.first(where: { $0 == fetchData.wallet })
+            let single: Single<(Wallet, [TransactionRecord])>
 
             if let wallet = wallet, let adapter = adapterManager.adapter(for: wallet) {
                 single = adapter.transactionsSingle(from: fetchData.from, limit: fetchData.limit)
-                        .map { records -> (Coin, [TransactionRecord]) in
-                            (fetchData.coin, records)
+                        .map { records -> (Wallet, [TransactionRecord]) in
+                            (fetchData.wallet, records)
                         }
             } else {
-                single = Single.just((fetchData.coin, []))
+                single = Single.just((fetchData.wallet, []))
             }
 
             singles.append(single)
         }
 
         Single.zip(singles)
-                { tuples -> [Coin: [TransactionRecord]] in
-                    var recordsData = [Coin: [TransactionRecord]]()
+                { tuples -> [Wallet: [TransactionRecord]] in
+                    var recordsData = [Wallet: [TransactionRecord]]()
 
                     for (coin, records) in tuples {
                         recordsData[coin] = records
@@ -155,9 +155,9 @@ extension TransactionsInteractor: ITransactionsInteractor {
                 .disposed(by: disposeBag)
     }
 
-    func set(selectedCoins: [Coin]) {
-        let allCoins = walletManager.wallets.map { $0.coin }
-        delegate?.onUpdate(selectedCoins: selectedCoins.isEmpty ? allCoins : selectedCoins)
+    func set(selectedWallets: [Wallet]) {
+        let allWallets = walletManager.wallets
+        delegate?.onUpdate(selectedCoins: selectedWallets.isEmpty ? allWallets : selectedWallets)
     }
 
     func fetchRate(coin: Coin, date: Date) {

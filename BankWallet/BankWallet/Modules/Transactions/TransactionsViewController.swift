@@ -33,8 +33,8 @@ class TransactionsViewController: WalletViewController {
 
         title = "transactions.title".localized
 
-        filterHeaderView.onSelectCoin = { [weak self] coin in
-            self?.delegate.onFilterSelect(coin: coin)
+        filterHeaderView.onSelectWallet = { [weak self] wallet in
+            self?.delegate.onFilterSelect(wallet: wallet)
         }
 
         view.addSubview(tableView)
@@ -94,7 +94,7 @@ class TransactionsViewController: WalletViewController {
 
 extension TransactionsViewController: ITransactionsView {
 
-    func show(filters: [Coin?]) {
+    func show(filters: [Wallet?]) {
         filterHeaderView.reload(filters: filters)
     }
 

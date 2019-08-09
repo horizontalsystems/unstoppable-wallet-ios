@@ -69,7 +69,7 @@ extension TransactionViewItemDataSourceTests {
     var originalItems: [TransactionItem] {
         return [
             TransactionItem(
-                    coin: bitcoin,
+                    wallet: bitcoin,
                     record: TransactionRecord(
                             transactionHash: "a",
                             transactionIndex: 0,
@@ -81,7 +81,7 @@ extension TransactionViewItemDataSourceTests {
                             to: [TransactionAddress(address: "asdf", mine: false)])
             ),
             TransactionItem(
-                    coin: bitcoin,
+                    wallet: bitcoin,
                     record: TransactionRecord(
                             transactionHash: "b",
                             transactionIndex: 0,
@@ -93,7 +93,7 @@ extension TransactionViewItemDataSourceTests {
                             to: [TransactionAddress(address: "asdf", mine: false)])
             ),
             TransactionItem(
-                    coin: bitcoin,
+                    wallet: bitcoin,
                     record: TransactionRecord(
                             transactionHash: "c",
                             transactionIndex: 0,
@@ -110,7 +110,7 @@ extension TransactionViewItemDataSourceTests {
     var originalViewItems: [TransactionViewItem] {
         return [
             TransactionViewItem(
-                    coin: bitcoin,
+                    wallet: bitcoin,
                     transactionHash: "a",
                     coinValue: CoinValue(coinCode: bitcoin.code, value: 2),
                     currencyValue: nil,
@@ -121,7 +121,7 @@ extension TransactionViewItemDataSourceTests {
                     status: .completed,
                     rate: nil),
             TransactionViewItem(
-                    coin: bitcoin,
+                    wallet: bitcoin,
                     transactionHash: "b",
                     coinValue: CoinValue(coinCode: bitcoin.code, value: 2),
                     currencyValue: nil,
@@ -132,7 +132,7 @@ extension TransactionViewItemDataSourceTests {
                     status: .completed,
                     rate: nil),
             TransactionViewItem(
-                    coin: bitcoin,
+                    wallet: bitcoin,
                     transactionHash: "c",
                     coinValue: CoinValue(coinCode: bitcoin.code, value: 2),
                     currencyValue: nil,

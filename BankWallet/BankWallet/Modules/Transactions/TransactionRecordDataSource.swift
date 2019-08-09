@@ -31,11 +31,11 @@ class TransactionRecordDataSource {
         return true
     }
 
-    var allRecordsData: [Coin: [TransactionRecord]] {
-        var recordsData = [Coin: [TransactionRecord]]()
+    var allRecordsData: [Wallet: [TransactionRecord]] {
+        var recordsData = [Wallet: [TransactionRecord]]()
 
         for pool in poolRepo.allPools {
-            recordsData[pool.coin] = pool.records
+            recordsData[pool.wallet] = pool.records
         }
 
         return recordsData
@@ -49,8 +49,8 @@ class TransactionRecordDataSource {
         return itemsDataSource.itemIndexes(coin: coin, date: date)
     }
 
-    func itemIndexesForPending(coin: Coin, blockHeight: Int) -> [Int] {
-        return itemsDataSource.recordIndexes(greaterThan: blockHeight, coin: coin)
+    func itemIndexesForPending(wallet: Wallet, blockHeight: Int) -> [Int] {
+        return itemsDataSource.recordIndexes(greaterThan: blockHeight, wallet: wallet)
     }
 
     var fetchDataList: [FetchData] {
@@ -59,14 +59,14 @@ class TransactionRecordDataSource {
         }
     }
 
-    func handleNext(recordsData: [Coin: [TransactionRecord]]) {
-        recordsData.forEach { coin, records in
-            poolRepo.pool(byCoin: coin)?.add(records: records)
+    func handleNext(recordsData: [Wallet: [TransactionRecord]]) {
+        recordsData.forEach { wallet, records in
+            poolRepo.pool(byWallet: wallet)?.add(records: records)
         }
     }
 
-    func handleUpdated(records: [TransactionRecord], coin: Coin) -> [TransactionItem]? {
-        guard let pool = poolRepo.pool(byCoin: coin) else {
+    func handleUpdated(records: [TransactionRecord], wallet: Wallet) -> [TransactionItem]? {
+        guard let pool = poolRepo.pool(byWallet: wallet) else {
             return nil
         }
 
@@ -82,11 +82,11 @@ class TransactionRecordDataSource {
             }
         }
 
-        guard poolRepo.isPoolActive(coin: coin) else {
+        guard poolRepo.isPoolActive(wallet: wallet) else {
             return nil
         }
 
-        let items = records.map { factory.create(coin: coin, record: $0) }
+        let items = records.map { factory.create(wallet: wallet, record: $0) }
         return itemsDataSource.handle(newItems: items)
     }
 
@@ -95,7 +95,7 @@ class TransactionRecordDataSource {
 
         poolRepo.activePools.forEach { pool in
             pool.unusedRecords.forEach { record in
-                unusedItems.append(factory.create(coin: pool.coin, record: record))
+                unusedItems.append(factory.create(wallet: pool.wallet, record: record))
             }
         }
 
@@ -111,30 +111,30 @@ class TransactionRecordDataSource {
         itemsDataSource.add(items: usedItems)
 
         usedItems.forEach { item in
-            poolRepo.pool(byCoin: item.coin)?.increaseFirstUnusedIndex()
+            poolRepo.pool(byWallet: item.wallet)?.increaseFirstUnusedIndex()
         }
 
         return usedItems
     }
 
-    func set(coins: [Coin]) {
+    func set(wallets: [Wallet]) {
         poolRepo.allPools.forEach { pool in
             pool.resetFirstUnusedIndex()
         }
 
-        poolRepo.activatePools(coins: coins)
+        poolRepo.activatePools(wallets: wallets)
         itemsDataSource.clear()
     }
 
-    func handleUpdated(coins: [Coin]) {
-        let unusedCoins = poolRepo.allPools.filter { pool in
-            !coins.contains(pool.coin)
+    func handleUpdated(wallets: [Wallet]) {
+        let unusedWallets = poolRepo.allPools.filter { pool in
+            !wallets.contains(pool.wallet)
         }.map { pool in
-            pool.coin
+            pool.wallet
         }
-        poolRepo.deactivate(coins: unusedCoins)
+        poolRepo.deactivate(wallets: unusedWallets)
 
-        set(coins: coins)
+        set(wallets: wallets)
     }
 
 }
