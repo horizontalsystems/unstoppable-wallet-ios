@@ -36,8 +36,8 @@ protocol IBalanceInteractor {
 
 protocol IBalanceInteractorDelegate: class {
     func didUpdate(wallets: [Wallet])
-    func didUpdate(balance: Decimal, coinCode: CoinCode)
-    func didUpdate(state: AdapterState, coinCode: CoinCode)
+    func didUpdate(balance: Decimal, wallet: Wallet)
+    func didUpdate(state: AdapterState, wallet: Wallet)
 
     func didUpdate(currency: Currency)
     func didUpdate(rate: Rate)
@@ -58,7 +58,8 @@ protocol IBalanceItemDataSource {
     var currency: Currency? { get set }
     var coinCodes: [CoinCode] { get }
     func item(at index: Int) -> BalanceItem
-    func index(for coinCode: CoinCode) -> Int?
+    func index(for wallet: Wallet) -> Int?
+    func indices(for: String) -> [Int]
 
     func set(balance: Decimal, index: Int)
     func set(state: AdapterState, index: Int)

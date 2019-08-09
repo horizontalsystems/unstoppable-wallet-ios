@@ -23,15 +23,27 @@ class BalanceItemDataSource {
 extension BalanceItemDataSource: IBalanceItemDataSource {
 
     var coinCodes: [CoinCode] {
-        return items.map { $0.wallet.coin.code }
+        return Array(Set(items.map { $0.wallet.coin.code }))
     }
 
     func item(at index: Int) -> BalanceItem {
         return items[index]
     }
 
-    func index(for coinCode: CoinCode) -> Int? {
-        return originalItems.firstIndex(where: { $0.wallet.coin.code == coinCode })
+    func index(for wallet: Wallet) -> Int? {
+        return originalItems.firstIndex(where: { $0.wallet == wallet })
+    }
+
+    func indices(for coinCode: String) -> [Int] {
+        var indices = [Int]()
+
+        for (index, item) in originalItems.enumerated() {
+            if item.wallet.coin.code == coinCode {
+                indices.append(index)
+            }
+        }
+
+        return indices
     }
 
     func set(balance: Decimal, index: Int) {

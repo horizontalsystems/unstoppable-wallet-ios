@@ -38,14 +38,14 @@ class BalanceInteractor {
             return
         }
 
-        delegate?.didUpdate(balance: adapter.balance, coinCode: wallet.coin.code)
-        delegate?.didUpdate(state: adapter.state, coinCode: wallet.coin.code)
+        delegate?.didUpdate(balance: adapter.balance, wallet: wallet)
+        delegate?.didUpdate(state: adapter.state, wallet: wallet)
 
         adapter.balanceUpdatedObservable
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
                 .observeOn(MainScheduler.instance)
                 .subscribe(onNext: { [weak self] in
-                    self?.delegate?.didUpdate(balance: adapter.balance, coinCode: wallet.coin.code)
+                    self?.delegate?.didUpdate(balance: adapter.balance, wallet: wallet)
                 })
                 .disposed(by: disposeBag)
 
@@ -53,7 +53,7 @@ class BalanceInteractor {
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
                 .observeOn(MainScheduler.instance)
                 .subscribe(onNext: { [weak self] in
-                    self?.delegate?.didUpdate(state: adapter.state, coinCode: wallet.coin.code)
+                    self?.delegate?.didUpdate(state: adapter.state, wallet: wallet)
                 })
                 .disposed(by: disposeBag)
     }

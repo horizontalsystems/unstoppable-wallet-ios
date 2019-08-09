@@ -39,8 +39,8 @@ extension BalancePresenter: IBalanceInteractorDelegate {
         view?.reload()
     }
 
-    func didUpdate(balance: Decimal, coinCode: CoinCode) {
-        if let index = dataSource.index(for: coinCode) {
+    func didUpdate(balance: Decimal, wallet: Wallet) {
+        if let index = dataSource.index(for: wallet) {
             let oldItems = dataSource.items
             dataSource.set(balance: balance, index: index)
 
@@ -49,8 +49,8 @@ extension BalancePresenter: IBalanceInteractorDelegate {
         }
     }
 
-    func didUpdate(state: AdapterState, coinCode: CoinCode) {
-        if let index = dataSource.index(for: coinCode) {
+    func didUpdate(state: AdapterState, wallet: Wallet) {
+        if let index = dataSource.index(for: wallet) {
             let oldItems = dataSource.items
             dataSource.set(state: state, index: index)
 
@@ -69,13 +69,19 @@ extension BalancePresenter: IBalanceInteractorDelegate {
     }
 
     func didUpdate(rate: Rate) {
-        if let index = dataSource.index(for: rate.coinCode) {
-            let oldItems = dataSource.items
-            dataSource.set(rate: rate, index: index)
+        let indices = dataSource.indices(for: rate.coinCode)
 
-            view?.reload(with: differ.changes(old: oldItems, new: dataSource.items))
-            view?.updateHeader()
+        guard indices.count > 0 else {
+            return
         }
+
+        let oldItems = dataSource.items
+        for index in indices {
+            dataSource.set(rate: rate, index: index)
+        }
+
+        view?.reload(with: differ.changes(old: oldItems, new: dataSource.items))
+        view?.updateHeader()
     }
 
     func didRefresh() {
