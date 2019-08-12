@@ -7,8 +7,6 @@ class EosAdapter {
     private let eosKit: EosKit
     private let asset: Asset
 
-    let decimal: Int = 4
-
     init(eosKit: EosKit, token: String, symbol: String) {
         self.eosKit = eosKit
 

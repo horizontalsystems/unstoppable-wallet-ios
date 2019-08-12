@@ -111,7 +111,6 @@ extension IAdapter {
 }
 
 protocol ISendBitcoinAdapter {
-    var decimal: Int { get }
     func availableBalance(feeRate: Int, address: String?) -> Decimal
     func validate(address: String) throws
     func fee(amount: Decimal, feeRate: Int, address: String?) -> Decimal
@@ -119,7 +118,6 @@ protocol ISendBitcoinAdapter {
 }
 
 protocol ISendEthereumAdapter {
-    var decimal: Int { get }
     func availableBalance(gasPrice: Int) -> Decimal
     func validate(address: String) throws
     func fee(gasPrice: Int) -> Decimal
@@ -127,7 +125,6 @@ protocol ISendEthereumAdapter {
 }
 
 protocol ISendErc20Adapter {
-    var decimal: Int { get }
     var availableBalance: Decimal { get }
     func validate(address: String) throws
     func fee(gasPrice: Int) -> Decimal
@@ -135,14 +132,12 @@ protocol ISendErc20Adapter {
 }
 
 protocol ISendEosAdapter {
-    var decimal: Int { get }
     var availableBalance: Decimal { get }
     func validate(account: String) throws
     func sendSingle(amount: Decimal, account: String, memo: String?) -> Single<Void>
 }
 
 protocol ISendBinanceAdapter {
-    var decimal: Int { get }
     var availableBalance: Decimal { get }
     func validate(address: String) throws
     var fee: Decimal { get }

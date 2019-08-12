@@ -7,7 +7,6 @@ class BinanceAdapter {
     private let binanceKit: BinanceChainKit
     private let asset: Asset
 
-    let decimal: Int = 8
     let feeCoinCode: CoinCode? = "BNB"
 
     init(binanceKit: BinanceChainKit, symbol: String) {

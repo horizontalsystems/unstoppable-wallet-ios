@@ -2,12 +2,11 @@ import BitcoinCore
 import RxSwift
 
 class BitcoinBaseAdapter {
-    let decimal = 8
     var receiveAddressScriptType: ScriptType { return .p2pkh }
     var changeAddressScriptType: ScriptType { return .p2pkh }
 
     private let abstractKit: AbstractKit
-    private let coinRate: Decimal
+    private let coinRate: Decimal = pow(10, 8)
 
     private let lastBlockHeightUpdatedSignal = Signal()
     private let stateUpdatedSignal = Signal()
@@ -22,8 +21,6 @@ class BitcoinBaseAdapter {
 
     init(abstractKit: AbstractKit) {
         self.abstractKit = abstractKit
-
-        coinRate = pow(10, decimal)
 
         state = .syncing(progress: 0, lastBlockDate: nil)
     }

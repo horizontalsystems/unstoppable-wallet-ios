@@ -32,12 +32,7 @@ class EthereumTransactionInfoAdapter: IFullTransactionInfoAdapter {
             topSectionItems.append(FullTransactionItem(icon: "Confirmations Icon", title: "full_info.confirmations".localized, value: "\(confirmations)"))
         }
         if let weiValue = txResponse.value {
-            var value: Decimal = 0
-            if case .erc20(_, let decimal, _) = coin.type {
-                value = weiValue / pow(10, decimal)
-            } else {
-                value = weiValue / pow(10, 18)
-            }
+            let value: Decimal = weiValue / pow(10, coin.decimal)
             let coinValue = CoinValue(coinCode: coin.code, value: value)
             topSectionItems.append(FullTransactionItem(title: "full_info.amount".localized, value: ValueFormatter.instance.format(coinValue: coinValue)))
         }
