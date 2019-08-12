@@ -9,13 +9,13 @@
 "button.cancel" = "İptal";
 "button.confirm" = "Onayla";
 "button.done" = "Bitti";
-"button.restore" = "Restore";
+"button.restore" = "Geri Yükle";
 "button.next" = "İleri";
 "button.remove" = "Kaldır";
 "button.forward" = "İlet";
 "button.save" = "Kaydet";
 "button.sync" = "Eşitle";
-"button.paste" = "Paste";
+"button.paste" = "Yapıştır";
 
 "alert.copied" = "Kopyalandı";
 "alert.no_internet" = "Internet Bağlantısı Yok";
@@ -30,9 +30,9 @@
 
 // Welcome
 
-"welcome.new_wallet" = "New Wallet";
-"welcome.restore_wallet" = "Restore Wallet";
-"welcome.version" = "version %@";
+"welcome.new_wallet" = "Yeni Cüzdan";
+"welcome.restore_wallet" = "Cüzdanı Geri Yükle";
+"welcome.version" = "sürüm %@";
 
 // Restore
 
@@ -58,10 +58,10 @@
 
 // Backup
 
-"backup.close" = "Close";
+"backup.close" = "Kapat";
 
-"backup.intro.title_backup" = "Backup";
-"backup.intro.title_show" = "Show Key";
+"backup.intro.title_backup" = "Yedekle";
+"backup.intro.title_show" = "Anahtarı Göster";
 "backup.intro.subtitle" = "The key that will be shown next is the only way to restore your funds, if your phone is ever lost, stolen, broken etc. Make sure that no one is watching your screen.\n\nThe coins controlled by this key: %@";
 "backup.intro.later" = "Sonra";
 "backup.intro.backup_now" = "Yedekle";
@@ -96,7 +96,7 @@
 "balance.syncing" = "Eşitleniyor...";
 "balance.add_coins" = "Add Coins";
 "balance.sort.header" = "Sort by";
-"balance.sort.valueHighToLow" = "Balance";
+"balance.sort.valueHighToLow" = "Bakiye";
 "balance.sort.az" = "Name";
 "balance.sort.manual" = "Default";
 
@@ -110,21 +110,21 @@
 "send.title" = "%@ gönder";
 "send.amount_placeholder" = "Tutar";
 "send.address_placeholder" = "Adres";
-"send.fee" = "Fee:";
+"send.fee" = "Masraf:";
 "send.max_button" = "Azami";
-"send.next_button" = "Next";
+"send.next_button" = "İleri";
 "send.error.invalid_address" = "Invalid Address";
 "send.error.invalid_account" = "Invalid Account";
 "send.error.no_address" = "No Address";
 "send.error.no_amount" = "No Amount";
 
-"send.confirmation.title" = "Confirm";
-"send.confirmation.to" = "To:";
+"send.confirmation.title" = "Onayla";
+"send.confirmation.to" = "Alan:";
 "send.confirmation.memo_placeholder" = "Memo";
-"send.confirmation.total" = "Total:";
+"send.confirmation.total" = "Toplam:";
 "send.confirmation.estimate_time" = "Estimate Time:";
 "send.confirmation.eos.account" = "Account";
-"send.confirmation.send_button" = "Send";
+"send.confirmation.send_button" = "Gönder";
 "send.amount_error.balance" = "%@ bakiye";
 "send.token.insufficient_fee_alert" = "Transaction fees for %@ (%@) paid in %@. You need %@.";
 
@@ -190,7 +190,7 @@
 "settings.tab_bar_item" = "Ayarlar";
 "settings.security_center" = "Güvenlik Merkezi";
 "settings.manage_coins" = "Manage Coins";
-"settings.restore_wallet" = "Restore Wallet";
+"settings.restore_wallet" = "Cüzdanı Geri Yükle";
 "settings.base_currency" = "Para birimi";
 "settings.language" = "Dil";
 "settings.about" = "Hakkında";
@@ -213,7 +213,7 @@
 "manage_coins.add_coin.title" = "Add %@ ";
 "manage_coins.add_coin.text" = "You don't have active key for use with %@. Use Create button below to generate a new key (wallet).\n\nYou may also use the existing key for the %@ if you already have it.";
 "manage_coins.add_coin.create" = "Create";
-"manage_coins.add_coin.restore" = "Restore";
+"manage_coins.add_coin.restore" = "Geri Yükle";
 
 // Settings -> About
 
@@ -231,7 +231,7 @@
 
 "settings_security.title" = "Güvenlik Merkezi";
 "settings_security.manage_accounts" = "Manage Keys";
-"settings_security.passcode" = "Passcode";
+"settings_security.passcode" = "Şifre";
 "settings_security.change_pin" = "Şifreyi Değiştir";
 "settings_security.touch_id" = "Touch ID";
 "settings_security.face_id" = "Face ID";
@@ -242,10 +242,10 @@
 "settings_manage_keys.title" = "Keys";
 "settings_manage_keys.description" = "Anyone with access to your Keys can steal your wallet funds. Store keys safely and never show them to anyone.\n\nBackup each key to be able to restore funds if you loose or break your phone, or simply the wallet app gets deleted.";
 "settings_manage_keys.delete" = "Delete";
-"settings_manage_keys.backup" = "Backup";
+"settings_manage_keys.backup" = "Yedekle";
 "settings_manage_keys.show" = "Show";
 "settings_manage_keys.create" = "Create";
-"settings_manage_keys.restore" = "Restore";
+"settings_manage_keys.restore" = "Geri Yükle";
 "settings_manage_keys.delete.cant_delete" = "You need to backup this key before you may unlink it.";
 "settings_manage_keys.delete.title" = "Delete Key";
 "settings_manage_keys.delete.confirmation_remove" = "This action will delete the %@ key (wallet) from this device.";
