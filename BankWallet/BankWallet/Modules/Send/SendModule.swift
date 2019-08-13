@@ -77,22 +77,6 @@ protocol ISendRouter {
     func dismiss()
 }
 
-protocol ISendAmountFormatHelper {
-    func prefix(inputType: SendInputType, rate: Rate?) -> String?
-    func coinAmount(amountText: String, inputType: SendInputType, rate: Rate?) -> Decimal?
-    func convert(value: Decimal, currency: Currency, rate: Rate?) -> CurrencyValue?
-    func formatted(value: Decimal, inputType: SendInputType, rate: Rate?) -> String?
-    func formattedWithCode(value: Decimal, inputType: SendInputType, rate: Rate?) -> String?
-
-    func errorValue(availableBalance: Decimal, inputType: SendInputType, rate: Rate?) -> String?
-}
-
-protocol ISendFeeFormatHelper {
-    func convert(value: Decimal, currency: Currency, rate: Rate?) -> CurrencyValue?
-    func formattedWithCode(value: Decimal, inputType: SendInputType, rate: Rate?) -> String?
-    func errorValue(feeValue: CoinValue, coinProtocol: String, baseCoinName: String, coinCode: CoinCode) -> String
-}
-
 protocol ISendConfirmationItemFactory {
     func viewItem(sendInputType: SendInputType, coinAmountValue: CoinValue, currencyAmountValue: CurrencyValue?, receiver: String, showMemo: Bool, coinFeeValue: CoinValue?, currencyFeeValue: CurrencyValue?, estimateTime: String?) -> SendConfirmationViewItem?
 }
@@ -128,6 +112,16 @@ enum AddressError: Error {
 enum AmountInfo {
     case coinValue(coinValue: CoinValue)
     case currencyValue(currencyValue: CurrencyValue)
+
+    var formattedString: String? {
+        switch self {
+        case .coinValue(let coinValue):
+            return ValueFormatter.instance.formatNew(coinValue: coinValue)
+        case .currencyValue(let currencyValue):
+            return ValueFormatter.instance.formatNew(currencyValue: currencyValue)
+        }
+    }
+
 }
 
 enum FeeError {

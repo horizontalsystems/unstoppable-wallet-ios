@@ -31,6 +31,13 @@ class ValueFormatter {
         return formatter
     }()
 
+    private let decimalFormatter: NumberFormatter = {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.groupingSeparator = ""
+        return formatter
+    }()
+
     private let twoDigitFormatter: NumberFormatter = {
         let formatter = NumberFormatter()
         formatter.maximumFractionDigits = 2
@@ -67,13 +74,24 @@ class ValueFormatter {
             return nil
         }
 
-        var result = "\(formattedValue) \(coinValue.coinCode)"
+        var result = "\(formattedValue) \(coinValue.coin.code)"
 
         if coinValue.value.isSignMinus {
             result = "- \(result)"
         }
 
         return result
+    }
+
+    func formatNew(coinValue: CoinValue) -> String? {
+        coinFormatter.roundingMode = .halfUp
+        coinFormatter.maximumFractionDigits = coinValue.coin.decimal
+
+        guard let formattedValue = coinFormatter.string(from: coinValue.value as NSNumber) else {
+            return nil
+        }
+
+        return "\(formattedValue) \(coinValue.coin.code)"
     }
 
     func format(currencyValue: CurrencyValue, fractionPolicy: FractionPolicy = .full, trimmable: Bool = true, roundingMode: NumberFormatter.RoundingMode = .halfUp) -> String? {
@@ -116,8 +134,28 @@ class ValueFormatter {
         return result
     }
 
+    func formatNew(currencyValue: CurrencyValue) -> String? {
+        currencyFormatter.roundingMode = .halfUp
+        currencyFormatter.currencyCode = currencyValue.currency.code
+        currencyFormatter.currencySymbol = currencyValue.currency.symbol
+        currencyFormatter.maximumFractionDigits = currencyValue.currency.decimal
+        currencyFormatter.minimumFractionDigits = 0
+
+        return currencyFormatter.string(from: currencyValue.value as NSNumber)
+    }
+
     func format(amount: Decimal) -> String? {
         return amountFormatter.string(from: amount as NSNumber)
+    }
+
+    func formatValue(coinValue: CoinValue) -> String? {
+        decimalFormatter.maximumFractionDigits = coinValue.coin.decimal
+        return decimalFormatter.string(from: coinValue.value as NSNumber)
+    }
+
+    func formatValue(currencyValue: CurrencyValue) -> String? {
+        decimalFormatter.maximumFractionDigits = currencyValue.currency.decimal
+        return decimalFormatter.string(from: currencyValue.value as NSNumber)
     }
 
     func format(twoDigitValue: Decimal) -> String? {

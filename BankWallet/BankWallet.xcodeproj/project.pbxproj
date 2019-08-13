@@ -77,9 +77,8 @@
 		11B3526683EE5472A6804235 /* BackupEosModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3531F23A4062CDD0E7617 /* BackupEosModule.swift */; };
 		11B35267BB7BFACBBF5C030F /* GrdbStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35A1AE56A94BEB52AC4D1 /* GrdbStorage.swift */; };
 		11B352783ABAB4B503FE6DC7 /* RateSyncer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B350C8341DFAF14D974ACC /* RateSyncer.swift */; };
-		11B352A99B39974BC9BDC839 /* Words24AccountType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35473B5D087C8C234D390 /* Words24AccountType.swift */; };
-		11B352AAEE59D383908B3E1C /* SendBitcoinInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B350097B17D90CD768125E /* SendBitcoinInteractor.swift */; };
 		11B352A99B39974BC9BDC839 /* BinanceAccountType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35473B5D087C8C234D390 /* BinanceAccountType.swift */; };
+		11B352AAEE59D383908B3E1C /* SendBitcoinInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B350097B17D90CD768125E /* SendBitcoinInteractor.swift */; };
 		11B352C0B06CE48E16B20BE9 /* BalanceItemDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35F79F5274A2603296EFF /* BalanceItemDataSource.swift */; };
 		11B352C17E4BB374BF10327A /* JsonApiProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B355AD0C896DBA7122F3DC /* JsonApiProvider.swift */; };
 		11B352DCCAD3FF8EC3585E6D /* BiometryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B352254688700E3FF9B59F /* BiometryManager.swift */; };
@@ -863,7 +862,6 @@
 		58AAA056B3E72CE031831FF2 /* SendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA89DB3DE36B5C227C1C1 /* SendViewController.swift */; };
 		58AAA05AF7F58059E50F601A /* DataProviderSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAB2A7397DE3BBC456E96 /* DataProviderSettingsViewController.swift */; };
 		58AAA073E5C5BCF6FB9A4F2D /* SendConfirmationMemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAF88ECDA19F2EF3C0068 /* SendConfirmationMemoView.swift */; };
-		58AAA0810981C61ED60ED778 /* SendFormatHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAADD7A1DBFBE55B80E550 /* SendFormatHelper.swift */; };
 		58AAA087BFA7A2609522E861 /* DataProviderSettingsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA56AA98F7B0DB2E97971 /* DataProviderSettingsRouter.swift */; };
 		58AAA09CAEB6AF43CA020636 /* FullTransactionInfoPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA823D090E4B3E0D03A91 /* FullTransactionInfoPresenter.swift */; };
 		58AAA0A54A64F5548C65F5F1 /* FullTransactionInfoInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA687FC0253AD175BA756 /* FullTransactionInfoInteractor.swift */; };
@@ -1080,7 +1078,6 @@
 		58AAACE27A231109F09B1276 /* DataProviderSettingsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA56AA98F7B0DB2E97971 /* DataProviderSettingsRouter.swift */; };
 		58AAACF69195400BFD9AE04E /* BackupModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA88D3ED8D5570474B589 /* BackupModule.swift */; };
 		58AAACF92468704BE366FFBC /* SendConfirmationMemoRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAD8A4C76ED2C8A2DD6A7 /* SendConfirmationMemoRouter.swift */; };
-		58AAAD016F653B2C77B842F5 /* SendFormatHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAADD7A1DBFBE55B80E550 /* SendFormatHelper.swift */; };
 		58AAAD265215F49A17256435 /* BackupConfirmationPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAE75A33F6C7304A3F8EE /* BackupConfirmationPresenter.swift */; };
 		58AAAD2BCB71E408D39D178D /* SendConfirmationPrimaryInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA7BCDE80A5B3262986C3 /* SendConfirmationPrimaryInteractor.swift */; };
 		58AAAD4B1F557C9B2BA30681 /* FullTransactionRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAADF00D642CB746C44C51 /* FullTransactionRecord.swift */; };
@@ -1125,7 +1122,6 @@
 		58AAAF60C09C70550BD437A9 /* SendAmountInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAD6F502BE56E4FECFBA0 /* SendAmountInteractor.swift */; };
 		58AAAF657CB1F0F0295E982E /* BackupPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA5F63E9C788A68C8AF5A /* BackupPresenter.swift */; };
 		58AAAF6C6C0F967415083427 /* FullTransactionSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAC0A14CAF88B383C7857 /* FullTransactionSection.swift */; };
-		58AAAF85FC5ABDB36C0D08B2 /* SendFormatHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAADD7A1DBFBE55B80E550 /* SendFormatHelper.swift */; };
 		58AAAF8C7BE350256A86F681 /* TransactionInfoDescriptionTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA98833B2412BBE860CA5 /* TransactionInfoDescriptionTheme.swift */; };
 		58AAAFB108B10EC561438B9B /* EOSSendPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA0592EB023442536D912 /* EOSSendPresenter.swift */; };
 		58AAAFCEFA4528221CDF7A5C /* SendConfirmationPrimaryModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAE2EAA341EB3B4A0210D /* SendConfirmationPrimaryModule.swift */; };
@@ -2016,7 +2012,6 @@
 		58AAAD6F502BE56E4FECFBA0 /* SendAmountInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendAmountInteractor.swift; sourceTree = "<group>"; };
 		58AAAD82EF02D5AA6E8ED4CB /* FullTransactionInfoProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FullTransactionInfoProvider.swift; sourceTree = "<group>"; };
 		58AAAD8A4C76ED2C8A2DD6A7 /* SendConfirmationMemoRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendConfirmationMemoRouter.swift; sourceTree = "<group>"; };
-		58AAADD7A1DBFBE55B80E550 /* SendFormatHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendFormatHelper.swift; sourceTree = "<group>"; };
 		58AAADF00D642CB746C44C51 /* FullTransactionRecord.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FullTransactionRecord.swift; sourceTree = "<group>"; };
 		58AAAE2EAA341EB3B4A0210D /* SendConfirmationPrimaryModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendConfirmationPrimaryModule.swift; sourceTree = "<group>"; };
 		58AAAE3DC0E909BC930D1B22 /* SendConfirmationPrimaryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendConfirmationPrimaryView.swift; sourceTree = "<group>"; };
@@ -3228,7 +3223,6 @@
 				58AAA8590689BD98CE171B0E /* SendAmount */,
 				58AAA6AFBB0742A3AE28F20D /* SendAddress */,
 				58AAA5A9AEAA713593820E5F /* SendFee */,
-				58AAADD7A1DBFBE55B80E550 /* SendFormatHelper.swift */,
 				11B35E09302A0C47B89EB045 /* SendFeeSlider */,
 			);
 			path = SubModules;
@@ -4327,7 +4321,6 @@
 				58AAA333A9EA37C6F2BA96FD /* SendFeeView.swift in Sources */,
 				58AAADD168939A9A7614EAD6 /* SendFeePresenter.swift in Sources */,
 				58AAA1FCADBF67D0BCD2F7EA /* SendFeeInteractor.swift in Sources */,
-				58AAA0810981C61ED60ED778 /* SendFormatHelper.swift in Sources */,
 				58AAA6B67B8FD1ABBA513FEB /* SendAmountRouter.swift in Sources */,
 				58AAAF0EEB95FA98C6D2C8C3 /* SendFeeRouter.swift in Sources */,
 				58AAA53C361658A83C658B86 /* SendConfirmationModule.swift in Sources */,
@@ -4852,7 +4845,6 @@
 				58AAA88B26D590A1BA7EA124 /* SendFeeView.swift in Sources */,
 				58AAAE4456D5FD8002A71F29 /* SendFeePresenter.swift in Sources */,
 				58AAA8477ED2E6AFD552813F /* SendFeeInteractor.swift in Sources */,
-				58AAAD016F653B2C77B842F5 /* SendFormatHelper.swift in Sources */,
 				58AAA6A986F3254E480B232E /* SendAmountRouter.swift in Sources */,
 				58AAA4578B59022BBFEC60A6 /* SendFeeRouter.swift in Sources */,
 				58AAA38CFBCC6D377BDE404E /* SendConfirmationModule.swift in Sources */,
@@ -5326,7 +5318,6 @@
 				58AAA6FD8C7EE715B791F566 /* SendFeeView.swift in Sources */,
 				58AAAD67C6EC277349D1D384 /* SendFeePresenter.swift in Sources */,
 				58AAAB5C64B4760282AD937E /* SendFeeInteractor.swift in Sources */,
-				58AAAF85FC5ABDB36C0D08B2 /* SendFormatHelper.swift in Sources */,
 				58AAAC0899FF483A5FB40D2E /* SendAmountRouter.swift in Sources */,
 				58AAA377293C8A04C01B664E /* SendFeeRouter.swift in Sources */,
 				58AAA2150F02CE149A62F27B /* SendConfirmationModule.swift in Sources */,

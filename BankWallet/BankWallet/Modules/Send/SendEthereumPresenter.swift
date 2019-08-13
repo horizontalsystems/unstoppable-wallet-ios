@@ -59,9 +59,9 @@ extension SendEthereumPresenter: ISendViewDelegate {
             return
         }
 
-        guard let item = confirmationFactory.viewItem(sendInputType: amountModule.sendInputType, coinAmountValue: amountModule.coinAmount,
-                currencyAmountValue: amountModule.fiatAmount, receiver: address, showMemo: false, coinFeeValue: feeModule.coinFee,
-                currencyFeeValue: feeModule.fiatFee, estimateTime: nil) else {
+        guard let item = confirmationFactory.viewItem(sendInputType: amountModule.inputType, coinAmountValue: amountModule.coinAmount,
+                currencyAmountValue: amountModule.fiatAmount, receiver: address, showMemo: false, coinFeeValue: feeModule.coinValue,
+                currencyFeeValue: feeModule.currencyValue, estimateTime: nil) else {
             return
         }
 
@@ -105,8 +105,8 @@ extension SendEthereumPresenter: ISendAmountDelegate {
         syncSendButton()
     }
 
-    func onChange(sendInputType: SendInputType) {
-        feeModule.update(sendInputType: sendInputType)
+    func onChange(inputType: SendInputType) {
+        feeModule.update(inputType: inputType)
     }
 
 }
@@ -132,6 +132,11 @@ extension SendEthereumPresenter: ISendAddressDelegate {
 }
 
 extension SendEthereumPresenter: ISendFeeDelegate {
+
+    var inputType: SendInputType {
+        return amountModule.inputType
+    }
+
 }
 
 extension SendEthereumPresenter: ISendFeeSliderDelegate {

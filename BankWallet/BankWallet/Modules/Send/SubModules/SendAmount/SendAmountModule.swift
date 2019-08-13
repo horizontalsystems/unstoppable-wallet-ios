@@ -1,32 +1,33 @@
 import UIKit
 
 protocol ISendAmountView: class {
-    func set(type: String?, amount: String?)
-    func set(hint: String?)
-    func set(error: String?)
-    func set(switchButtonEnabled: Bool)
+    func set(amountType: String)
+    func set(amount: AmountInfo?)
+    func set(hint: AmountInfo?)
+    func set(error: Error?)
 
-    func maxButton(show: Bool)
+    func set(switchButtonEnabled: Bool)
+    func set(maxButtonVisible: Bool)
+
     func showKeyboard()
 }
 
 protocol ISendAmountViewDelegate {
     func viewDidLoad()
 
-    func validateInputText(text: String) -> Bool
+    func isValid(text: String) -> Bool
+    func onChanged(amountText: String?)
 
     func onSwitchClicked()
-    func onChanged(amountText: String?)
     func onMaxClicked()
 }
 
 protocol ISendAmountInteractor {
     var defaultInputType: SendInputType { get }
-
     func set(inputType: SendInputType)
 
+    var baseCurrency: Currency { get }
     func rate(coinCode: CoinCode, currencyCode: String) -> Rate?
-    func decimal(coinDecimal: Int, inputType: SendInputType) -> Int
 }
 
 protocol ISendAmountModule: AnyObject {
@@ -34,7 +35,7 @@ protocol ISendAmountModule: AnyObject {
 
     var validAmount: Decimal? { get }
 
-    var sendInputType: SendInputType { get }
+    var inputType: SendInputType { get }
     var coinAmount: CoinValue { get }
     var fiatAmount: CurrencyValue? { get }
 
@@ -46,5 +47,5 @@ protocol ISendAmountModule: AnyObject {
 
 protocol ISendAmountDelegate: class {
     func onChangeAmount()
-    func onChange(sendInputType: SendInputType)
+    func onChange(inputType: SendInputType)
 }

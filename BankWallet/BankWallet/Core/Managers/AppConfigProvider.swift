@@ -49,17 +49,17 @@ class AppConfigProvider: IAppConfigProvider {
     }
 
     let currencies: [Currency] = [
-        Currency(code: "USD", symbol: "\u{0024}"),
-        Currency(code: "EUR", symbol: "\u{20AC}"),
-        Currency(code: "GBP", symbol: "\u{00A3}"),
-        Currency(code: "JPY", symbol: "\u{00A5}"),
-        Currency(code: "AUD", symbol: "\u{20B3}"),
-        Currency(code: "CAD", symbol: "\u{0024}"),
-        Currency(code: "CHF", symbol: "\u{20A3}"),
-        Currency(code: "CNY", symbol: "\u{00A5}"),
-        Currency(code: "KRW", symbol: "\u{20A9}"),
-        Currency(code: "RUB", symbol: "\u{20BD}"),
-        Currency(code: "TRY", symbol: "\u{20BA}")
+        Currency(code: "USD", symbol: "\u{0024}", decimal: 2),
+        Currency(code: "EUR", symbol: "\u{20AC}", decimal: 2),
+        Currency(code: "GBP", symbol: "\u{00A3}", decimal: 2),
+        Currency(code: "JPY", symbol: "\u{00A5}", decimal: 2),
+        Currency(code: "AUD", symbol: "\u{20B3}", decimal: 2),
+        Currency(code: "CAD", symbol: "\u{0024}", decimal: 2),
+        Currency(code: "CHF", symbol: "\u{20A3}", decimal: 2),
+        Currency(code: "CNY", symbol: "\u{00A5}", decimal: 2),
+        Currency(code: "KRW", symbol: "\u{20A9}", decimal: 2),
+        Currency(code: "RUB", symbol: "\u{20BD}", decimal: 2),
+        Currency(code: "TRY", symbol: "\u{20BA}", decimal: 2)
     ]
 
     var defaultCoinCodes: [CoinCode] {

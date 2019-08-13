@@ -66,20 +66,21 @@ class SendFeeView: UIView {
 
 extension SendFeeView: ISendFeeView {
 
-    func set(fee: String?) {
-        guard let fee = fee else {
+    func set(fee: AmountInfo?) {
+        guard let formattedString = fee?.formattedString else {
             feeLabel.text = nil
             return
         }
-        feeLabel.text = feePrefix + fee
+
+        feeLabel.text = feePrefix + formattedString
     }
 
-    func set(convertedFee: String?) {
-        convertedFeeLabel.text = convertedFee
+    func set(convertedFee: AmountInfo?) {
+        convertedFeeLabel.text = convertedFee?.formattedString
     }
 
-    func set(error: String?) {
-        errorLabel.text = error
+    func set(error: Error?) {
+        errorLabel.text = error?.localizedDescription
 
         let hide = error != nil
 

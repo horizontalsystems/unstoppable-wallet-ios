@@ -1,47 +1,59 @@
 import Foundation
 
 class SendFeePresenter {
-    private let interactor: ISendFeeInteractor
-    private let formatHelper: ISendFeeFormatHelper
-    private let currencyManager: ICurrencyManager
-
-    private let feeCoinCode: CoinCode
-    private let coinProtocol: String
-    private let baseCoinName: String
-
     weak var view: ISendFeeView?
     weak var delegate: ISendFeeDelegate?
 
-    private var rate: Rate?
-    private var sendInputType: SendInputType = .coin
+    private let interactor: ISendFeeInteractor
+
+    private let coin: Coin
+    private let currency: Currency
+    private let rate: Rate?
 
     private var fee: Decimal = 0
-    private var insufficientFeeBalanceWithRequiredFee: Decimal?
 
-    init(interactor: ISendFeeInteractor, formatHelper: ISendFeeFormatHelper, currencyManager: ICurrencyManager, coinCode: CoinCode, coinProtocol: String, baseCoinName: String) {
+    private(set) var inputType: SendInputType = .coin
+
+    init(coin: Coin, interactor: ISendFeeInteractor) {
+        self.coin = coin
         self.interactor = interactor
-        self.formatHelper = formatHelper
-        self.currencyManager = currencyManager
-        self.feeCoinCode = coinCode
-        self.coinProtocol = coinProtocol
-        self.baseCoinName = baseCoinName
+
+        currency = interactor.baseCurrency
+        rate = interactor.rate(coinCode: coin.code, currencyCode: currency.code)
     }
 
     private func updateFeeLabels() {
-        view?.set(fee: formatHelper.formattedWithCode(value: fee, inputType: sendInputType, rate: rate))
-        view?.set(convertedFee: formatHelper.formattedWithCode(value: fee, inputType: sendInputType.reversed, rate: rate))
+        let coinAmountInfo: AmountInfo = .coinValue(coinValue: CoinValue(coin: coin, value: fee))
+        var currencyAmountInfo: AmountInfo?
+
+        if let rate = rate {
+            currencyAmountInfo = .currencyValue(currencyValue: CurrencyValue(currency: currency, value: fee * rate.value))
+        }
+
+        switch inputType {
+        case .coin:
+            view?.set(fee: coinAmountInfo)
+            view?.set(convertedFee: currencyAmountInfo)
+        case .currency:
+            view?.set(fee: currencyAmountInfo)
+            view?.set(convertedFee: coinAmountInfo)
+        }
     }
 
 }
 
 extension SendFeePresenter: ISendFeeModule {
 
-    var coinFee: CoinValue {
-        return CoinValue(coinCode: feeCoinCode, value: fee)
+    var coinValue: CoinValue {
+        return CoinValue(coin: coin, value: fee)
     }
 
-    var fiatFee: CurrencyValue? {
-        return formatHelper.convert(value: fee, currency: currencyManager.baseCurrency, rate: rate)
+    var currencyValue: CurrencyValue? {
+        if let rate = rate {
+            return CurrencyValue(currency: currency, value: fee * rate.value)
+        } else {
+            return nil
+        }
     }
 
     func set(fee: Decimal) {
@@ -50,14 +62,13 @@ extension SendFeePresenter: ISendFeeModule {
     }
 
     func insufficientFeeBalance(coinCode: CoinCode, fee: Decimal) {
-        insufficientFeeBalanceWithRequiredFee = fee
-        let feeValue = CoinValue(coinCode: feeCoinCode, value: fee)
-        view?.set(error: formatHelper.errorValue(feeValue: feeValue, coinProtocol: coinProtocol, baseCoinName: baseCoinName, coinCode: coinCode))
+//        insufficientFeeBalanceWithRequiredFee = fee
+//        let feeValue = CoinValue(coinCode: feeCoinCode, value: fee)
+//        view?.set(error: formatHelper.errorValue(feeValue: feeValue, coinProtocol: coinProtocol, baseCoinName: baseCoinName, coinCode: coinCode))
     }
 
-    func update(sendInputType: SendInputType) {
-        self.sendInputType = sendInputType
-
+    func update(inputType: SendInputType) {
+        self.inputType = inputType
         updateFeeLabels()
     }
 
@@ -66,8 +77,7 @@ extension SendFeePresenter: ISendFeeModule {
 extension SendFeePresenter: ISendFeeViewDelegate {
 
     func viewDidLoad() {
-        rate = interactor.rate(coinCode: feeCoinCode, currencyCode: currencyManager.baseCurrency.code)
-
+        inputType = delegate?.inputType ?? .coin
         updateFeeLabels()
     }
 

@@ -193,7 +193,7 @@ class BalanceCell: UITableViewCell {
             }
             rateLabel.textColor = BalanceTheme.rateColor
         } else if let value = item.exchangeValue, let formattedValue = ValueFormatter.instance.format(currencyValue: value, fractionPolicy: .threshold(high: 1000, low: 0.1), trimmable: false) {
-            rateLabel.text = "balance.rate_per_coin".localized(formattedValue, item.coinValue.coinCode)
+            rateLabel.text = "balance.rate_per_coin".localized(formattedValue, item.coinValue.coin.code)
             rateLabel.textColor = item.rateExpired ? BalanceTheme.rateExpiredColor : BalanceTheme.rateColor
         } else {
             rateLabel.text = " " // space required for constraints

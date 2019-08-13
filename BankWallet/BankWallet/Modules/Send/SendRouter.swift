@@ -46,9 +46,9 @@ extension SendRouter {
             return nil
         }
 
-        let (amountView, amountModule) = SendAmountRouter.module(coinCode: wallet.coin.code, decimal: wallet.coin.decimal)
+        let (amountView, amountModule) = SendAmountRouter.module(coin: wallet.coin)
         let (addressView, addressModule) = SendAddressRouter.module(addressParser: App.shared.addressParserFactory.parser(coin: wallet.coin))
-        let (feeView, feeModule) = SendFeeRouter.module(feeCoinCode: wallet.coin.code, decimal: wallet.coin.decimal)
+        let (feeView, feeModule) = SendFeeRouter.module(coin: wallet.coin)
         let (feeSliderView, feeSliderModule) = SendFeeSliderRouter.module(feeRateProvider: feeRateProvider)
 
         let router = SendRouter()
@@ -75,9 +75,9 @@ extension SendRouter {
             return nil
         }
 
-        let (amountView, amountModule) = SendAmountRouter.module(coinCode: wallet.coin.code, decimal: wallet.coin.decimal)
+        let (amountView, amountModule) = SendAmountRouter.module(coin: wallet.coin)
         let (addressView, addressModule) = SendAddressRouter.module(addressParser: App.shared.addressParserFactory.parser(coin: wallet.coin))
-        let (feeView, feeModule) = SendFeeRouter.module(feeCoinCode: wallet.coin.code, decimal: wallet.coin.decimal)
+        let (feeView, feeModule) = SendFeeRouter.module(coin: wallet.coin)
         let (feeSliderView, feeSliderModule) = SendFeeSliderRouter.module(feeRateProvider: feeRateProvider)
 
         let router = SendRouter()

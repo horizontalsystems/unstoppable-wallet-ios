@@ -33,7 +33,7 @@ class EthereumTransactionInfoAdapter: IFullTransactionInfoAdapter {
         }
         if let weiValue = txResponse.value {
             let value: Decimal = weiValue / pow(10, coin.decimal)
-            let coinValue = CoinValue(coinCode: coin.code, value: value)
+            let coinValue = CoinValue(coin: coin, value: value)
             topSectionItems.append(FullTransactionItem(title: "full_info.amount".localized, value: ValueFormatter.instance.format(coinValue: coinValue)))
         }
         if let nonce = txResponse.nonce {
@@ -46,20 +46,24 @@ class EthereumTransactionInfoAdapter: IFullTransactionInfoAdapter {
         // Fee and Gas
 
         var feeGasItems = [FullTransactionItem]()
-        if let fee = txResponse.fee {
-            let feeValue = CoinValue(coinCode: "ETH", value: fee)
-            feeGasItems.append(FullTransactionItem(title: "full_info.fee".localized, value: ValueFormatter.instance.format(coinValue: feeValue)))
-        }
+
+        // todo: use coin instead of coin code
+//        if let fee = txResponse.fee {
+//            let feeValue = CoinValue(coin: "ETH", value: fee)
+//            feeGasItems.append(FullTransactionItem(title: "full_info.fee".localized, value: ValueFormatter.instance.format(coinValue: feeValue)))
+//        }
         if let size = txResponse.size {
             feeGasItems.append(FullTransactionItem(title: "full_info.size".localized, value: "\(size) (bytes)"))
         }
         if let gasLimit = txResponse.gasLimit {
             feeGasItems.append(FullTransactionItem(title: "full_info.gas_limit".localized, titleColor: .cryptoGray, value: "\(gasLimit)"))
         }
-        if let gasPrice = txResponse.gasPrice {
-            let gasValue = CoinValue(coinCode: EthereumTransactionInfoAdapter.gWeiCode, value: gasPrice)
-            feeGasItems.append(FullTransactionItem(title: "full_info.gas_price".localized, titleColor: .cryptoGray, value: ValueFormatter.instance.format(coinValue: gasValue)))
-        }
+
+        // todo: use coin instead of coin code
+//        if let gasPrice = txResponse.gasPrice {
+//            let gasValue = CoinValue(coin: EthereumTransactionInfoAdapter.gWeiCode, value: gasPrice)
+//            feeGasItems.append(FullTransactionItem(title: "full_info.gas_price".localized, titleColor: .cryptoGray, value: ValueFormatter.instance.format(coinValue: gasValue)))
+//        }
         if let gasUsed = txResponse.gasUsed {
             feeGasItems.append(FullTransactionItem(title: "full_info.gas_used".localized, titleColor: .cryptoGray, value: "\(gasUsed)"))
         }

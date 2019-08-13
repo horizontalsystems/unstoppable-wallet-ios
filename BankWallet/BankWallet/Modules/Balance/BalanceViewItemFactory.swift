@@ -13,7 +13,7 @@ class BalanceViewItemFactory: IBalanceViewItemFactory {
 
         return BalanceViewItem(
                 coin: item.wallet.coin,
-                coinValue: CoinValue(coinCode: item.wallet.coin.code, value: item.balance),
+                coinValue: CoinValue(coin: item.wallet.coin, value: item.balance),
                 exchangeValue: exchangeValue,
                 currencyValue: currencyValue,
                 state: item.state,
