@@ -16,10 +16,10 @@ extension DepositRouter: IDepositRouter {
 
 extension DepositRouter {
 
-    static func module(coin: Coin?) -> ActionSheetController {
+    static func module(wallet: Wallet?) -> ActionSheetController {
         let router = DepositRouter()
         let interactor = DepositInteractor(walletManager: App.shared.walletManager, adapterManager: App.shared.adapterManager, pasteboardManager: App.shared.pasteboardManager)
-        let presenter = DepositPresenter(interactor: interactor, router: router, coin: coin)
+        let presenter = DepositPresenter(interactor: interactor, router: router, wallet: wallet)
         let viewController = DepositViewController(delegate: presenter)
 
         interactor.delegate = presenter

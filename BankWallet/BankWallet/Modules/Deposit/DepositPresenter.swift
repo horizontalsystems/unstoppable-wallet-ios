@@ -8,11 +8,13 @@ class DepositPresenter {
 
     let addressItems: [AddressItem]
 
-    init(interactor: IDepositInteractor, router: IDepositRouter, coin: Coin?) {
+    init(interactor: IDepositInteractor, router: IDepositRouter, wallet: Wallet?) {
         self.interactor = interactor
         self.router = router
 
-        addressItems = interactor.wallets(forCoin: coin).compactMap { wallet in
+        let wallets = wallet.map{ [$0] } ?? interactor.wallets()
+
+        addressItems = wallets.compactMap { wallet in
             if let adapter = interactor.adapter(forWallet: wallet) {
                 return AddressItem(coin: wallet.coin, address: adapter.receiveAddress)
             }

@@ -116,7 +116,7 @@ extension BalancePresenter: IBalanceViewDelegate {
     }
 
     func onReceive(index: Int) {
-        router.openReceive(for: dataSource.item(at: index).wallet.coin)
+        router.openReceive(for: dataSource.item(at: index).wallet)
     }
 
     func onPay(index: Int) {

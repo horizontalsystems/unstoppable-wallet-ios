@@ -46,7 +46,7 @@ protocol IBalanceInteractorDelegate: class {
 }
 
 protocol IBalanceRouter {
-    func openReceive(for coin: Coin)
+    func openReceive(for wallet: Wallet)
     func openSend(for coinCode: CoinCode)
     func openManageWallets()
     func openSortType(selected sort: BalanceSortType)

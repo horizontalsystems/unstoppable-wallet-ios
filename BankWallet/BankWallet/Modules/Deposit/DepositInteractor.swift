@@ -16,8 +16,8 @@ class DepositInteractor {
 
 extension DepositInteractor: IDepositInteractor {
 
-    func wallets(forCoin coin: Coin?) -> [Wallet] {
-        return walletManager.wallets.filter { coin == nil || coin == $0.coin }
+    func wallets() -> [Wallet] {
+        return walletManager.wallets
     }
 
     func adapter(forWallet wallet: Wallet) -> IAdapter? {
