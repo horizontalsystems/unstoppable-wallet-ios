@@ -68,7 +68,7 @@
 "backup.intro.show_key" = "Mostrar clave";
 
 "backup.words.title" = "Clave secreta";
-"backup.12words.title" = "Clave de 12-palabras";
+"backup.12words.title" = "Clave de 12 palabras";
 "backup.binance.title" = "Clave de Binance";
 
 "backup.eos.title" = "Clave de EOS";
@@ -145,7 +145,7 @@
 "tx_info.from_hash" = "Desde ";
 "tx_info.to_hash" = "Para";
 "tx_info.button_verify" = "Verificar";
-"tx_info.rate" = "Estado histórico";
+"tx_info.rate" = "Tasa histórica";
 
 // Full Info
 
@@ -155,7 +155,7 @@
 "full_info.confirmations" = "Confirmaciones";
 "full_info.size" = "Tamaño";
 "full_info.fee" = "Comisión";
-"full_info.rate" = "Puntuación";
+"full_info.rate" = "Tasa";
 "full_info.inputs" = "Aportaciones";
 "full_info.outputs" = "Rendimientos";
 "full_info.source" = "Origen";
@@ -166,14 +166,14 @@
 "full_info.nonce" = "Nonce";
 "full_info.status" = "Estado";
 "full_info.memo" = "Memo";
-"full_info.cpu" = "CPU Usage";
-"full_info.net" = "Net Usage";
+"full_info.cpu" = "Uso de CPU";
+"full_info.net" = "Uso de red";
 "full_info.milli_seconds" = "%@ μs";
 "full_info.bytes" = "%@ Bytes";
 
-"full_info.gas_limit" = "Gas Limit";
-"full_info.gas_used" = "Gas Used";
-"full_info.gas_price" = "Gas Price";
+"full_info.gas_limit" = "Límite de gas";
+"full_info.gas_used" = "Gas utilizado";
+"full_info.gas_price" = "Precio del gas";
 
 "full_info.source.title" = "Origen";
 "full_info.source.online" = "en línea";
@@ -190,18 +190,18 @@
 "settings.tab_bar_item" = "Configuraciones";
 "settings.security_center" = "Centro de Seguridad";
 "settings.manage_coins" = "Gestionar monedas";
-"settings.restore_wallet" = "Restaurar cartera";
+"settings.restore_wallet" = "Restaurar monedero";
 "settings.base_currency" = "Divisa principal";
 "settings.language" = "Idioma";
 "settings.about" = "Acerca de";
 "settings.tell_friends" = "Recomendar a un amigo";
 "settings.light_mode" = "Modo de brillo";
-"settings.info_title" = "UNSTOPPABLE";
-"settings.info_subtitle" = "decentralized app";
+"settings.info_title" = "INDETENIBLE";
+"settings.info_subtitle" = "aplicación descentralizada";
 
 // Settings -> Base Currency
 
-"settings_base_currency.title" = "Divisa principal";
+"settings_base_currency.title" = "Divisa base";
 
 // Settings -> Language
 
@@ -218,7 +218,7 @@
 // Settings -> About
 
 "settings_about.title" = "Acerca de";
-"settings_about.app_title" = "Unstoppable";
+"settings_about.app_title" = "Indetenible";
 "settings_about.app_subtitle" = "Decentralized app";
 "settings_about.terms_privacy_subtitle" = "Términos y privacidad:";
 "settings_about.terms_privacy_text" = "Esta aplicación es de servidor a servidor. No depende de ninguna web o tecnología personal de apoyo a la función.\n\nFunciona en cualquier lugar siempre que haya conexión a internet. Ninguna entidad puede bloquear el funcionamiento de esta aplicación o impedir el acceso de un usuario.\n\nSus fondos son almacenados de forma segura únicamente en el teléfono, en ningún otro lugar.\n\nEs su responsabilidad recordar su clave secreta y mantenerla en privado. Nunca la muestre a nadie. Si la pierde, la olvida o es sustraída, sus fondos pueden ser utilizados por la persona que tiene su clave secreta.\n\nNo modifique la seguridad del software de su teléfono, no instale aplicaciones de orígenes desconocidos , no entregue su dispositivo a desconocidos y mantenga actualizado el sistema operativo de tu teléfono. La seguridad de su cartera depende de ello.\n\nLa totalidad del código que soporta esta aplicación está abierta al escrutinio público desde el inicio de la aplicación. Hemos intentado construir la cartera más segura y descentralizada posible; sin embargo, hay ninguna garantía de que no se produzca algún problema de software no deseado. Dicho esto, esta carpeta es probable que sea significativamente más segura que cualquier aplicación de gestión de cartera de smartphone del mercado\n\nAlgunos datos genéricos de carácter público de esta app se guardan en centros de almacenamiento descentralizado (IPFS).\n";
@@ -277,7 +277,7 @@
 
 // No Passcode
 
-"no_passcode.info_text" = "This app requires that phone has the passcode (screen lock) enabled.\n\nYou may enable it in iOS settings.\n\nPlease note that when you disabled the PIN on the OS level the security measures in safe storage of your phonе made the previously stored data invalid. You will need to Restore your wallet keys to get back to your wallet.";
+"no_passcode.info_text" = "Esta aplicación require que el teléfono tenga el código de acceso (bloqueo de pantalla) habilitado.\n\nLo puedes habilitar en los ajustes de iOS.\n\nToma en cuenta que cuando desahabilita el PIN en el nivel OS, las medidas de seguridad en el alacenamiento seguro de su teléfono hace que la información previamente almacenada no sea válida. Usted necesita restaurar sus claves de los monederos para poder volver a su monedero.";
 
 //NumPad
 
