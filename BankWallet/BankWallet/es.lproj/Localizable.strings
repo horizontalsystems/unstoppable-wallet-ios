@@ -240,17 +240,17 @@
 // Manage Keys
 
 "settings_manage_keys.title" = "Claves";
-"settings_manage_keys.description" = "Anyone with access to your Keys can steal your wallet funds. Store keys safely and never show them to anyone.\n\nBackup each key to be able to restore funds if you loose or break your phone, or simply the wallet app gets deleted.";
-"settings_manage_keys.delete" = "Delete";
+"settings_manage_keys.description" = "Respalde cada clave para poder restaurar los fondos en caso de que su teléfono se pierda, se averíe o en caso de que simplemente se borre la aplicación del monedero de su teléfono.";
+"settings_manage_keys.delete" = "Eliminar";
 "settings_manage_keys.backup" = "Copia de seguridad";
 "settings_manage_keys.show" = "Mostrar";
-"settings_manage_keys.create" = "Create";
+"settings_manage_keys.create" = "Crear";
 "settings_manage_keys.restore" = "Restaurar";
-"settings_manage_keys.delete.cant_delete" = "You need to backup this key before you may unlink it.";
-"settings_manage_keys.delete.title" = "Delete Key";
-"settings_manage_keys.delete.confirmation_remove" = "This action will delete the %@ key (wallet) from this device.";
-"settings_manage_keys.delete.confirmation_disable" = "Coins that will be disabled: %@";
-"settings_manage_keys.delete.confirmation_loose" = "If you don't have a backup of this key you will loose the respective funds.";
+"settings_manage_keys.delete.cant_delete" = "Necesita respaldar esta clave antes de que pueda desvincularla.";
+"settings_manage_keys.delete.title" = "Eliminar clave";
+"settings_manage_keys.delete.confirmation_remove" = "Esta acción eliminará la clave %@ (monedero) de este dispositivo.";
+"settings_manage_keys.delete.confirmation_disable" = "Monedas que serán deshabilitadas: %@";
+"settings_manage_keys.delete.confirmation_loose" = "Si usted no tiene un respaldo de esta clave, usted perderá los fondos respectivos.";
 "error.cant_create_eos" = "At this point, the wallet is not able to create new EOS wallet accounts. You're only able to restore the existing one.";
 "settings_manage_keys.create.text" = "This action will generate a key(wallet) for the following coins:\n\n%@";
 "error.invalid_eos_key" = "Invalid key";
