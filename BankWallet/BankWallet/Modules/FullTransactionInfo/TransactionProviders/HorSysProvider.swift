@@ -5,7 +5,7 @@ class HorSysBitcoinProvider: IBitcoinForksProvider {
     private let url: String
     private let apiUrl: String
 
-    func url(for hash: String) -> String {
+    func url(for hash: String) -> String? {
         return url + hash
     }
 
@@ -32,7 +32,7 @@ class HorSysBitcoinCashProvider: IBitcoinForksProvider {
     private let url: String
     private let apiUrl: String
 
-    func url(for hash: String) -> String {
+    func url(for hash: String) -> String? {
         return url + hash
     }
 
@@ -60,7 +60,7 @@ class HorSysDashProvider: IBitcoinForksProvider {
     private let url: String
     private let apiUrl: String
 
-    func url(for hash: String) -> String {
+    func url(for hash: String) -> String? {
         return url + hash
     }
 
@@ -87,7 +87,7 @@ class HorSysEthereumProvider: IEthereumForksProvider {
     private let url: String
     private let apiUrl: String
 
-    func url(for hash: String) -> String {
+    func url(for hash: String) -> String? {
         return url + hash
     }
 

@@ -4,7 +4,7 @@ import BigInt
 class BlockChairBitcoinProvider: IBitcoinForksProvider {
     let name = "BlockChair.com"
 
-    func url(for hash: String) -> String {
+    func url(for hash: String) -> String? {
         return "https://blockchair.com/bitcoin/transaction/" + hash
     }
 
@@ -25,7 +25,7 @@ class BlockChairBitcoinProvider: IBitcoinForksProvider {
 class BlockChairBitcoinCashProvider: IBitcoinForksProvider {
     let name = "BlockChair.com"
 
-    func url(for hash: String) -> String {
+    func url(for hash: String) -> String? {
         return "https://blockchair.com/bitcoin-cash/transaction/" + hash
     }
 
@@ -46,7 +46,7 @@ class BlockChairBitcoinCashProvider: IBitcoinForksProvider {
 class BlockChairDashProvider: IBitcoinForksProvider {
     let name = "BlockChair.com"
 
-    func url(for hash: String) -> String {
+    func url(for hash: String) -> String? {
         return "https://blockchair.com/dash/transaction/" + hash
     }
 
@@ -67,7 +67,7 @@ class BlockChairDashProvider: IBitcoinForksProvider {
 class BlockChairEthereumProvider: IEthereumForksProvider {
     let name = "BlockChair.com"
 
-    func url(for hash: String) -> String {
+    func url(for hash: String) -> String? {
         return "https://blockchair.com/ethereum/transaction/" + hash
     }
 

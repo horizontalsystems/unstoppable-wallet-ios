@@ -14,6 +14,7 @@ protocol IFullTransactionInfoViewDelegate {
     func viewDidLoad()
 
     var providerName: String? { get }
+    var haveBlockExplorer: Bool { get }
     func numberOfSections() -> Int
     func numberOfRows(inSection section: Int) -> Int
     func section(_ section: Int) -> FullTransactionSection?
