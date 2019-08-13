@@ -251,10 +251,10 @@
 "settings_manage_keys.delete.confirmation_remove" = "Esta acción eliminará la clave %@ (monedero) de este dispositivo.";
 "settings_manage_keys.delete.confirmation_disable" = "Monedas que serán deshabilitadas: %@";
 "settings_manage_keys.delete.confirmation_loose" = "Si usted no tiene un respaldo de esta clave, usted perderá los fondos respectivos.";
-"error.cant_create_eos" = "At this point, the wallet is not able to create new EOS wallet accounts. You're only able to restore the existing one.";
-"settings_manage_keys.create.text" = "This action will generate a key(wallet) for the following coins:\n\n%@";
-"error.invalid_eos_key" = "Invalid key";
-"error.invalid_eos_account" = "Invalid account";
+"error.cant_create_eos" = "En este momento, el monedero no es capaz de crear nuevas cuentas de monederos EOS. Solo puede restaurar la existente.";
+"settings_manage_keys.create.text" = "Esta acción generará una clave (monedero) para las siguientes monedas:\n\n%@";
+"error.invalid_eos_key" = "Clave inválida";
+"error.invalid_eos_account" = "Cuenta inválida";
 
 // Set PIN
 
