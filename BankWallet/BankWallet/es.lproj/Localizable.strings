@@ -37,9 +37,9 @@
 // Restore
 
 "restore.title" = "Restaurar";
-"restore.description" = "To restore existing wallet you need to enter a private key for that wallet.\n\nOnce you restore one wallet you will be able to restore more wallets by going to Manage Keys section in app Settings.";
-"restore.words.description" = "Enter Key";
-"restore.validation_failed" = "Incorrect Key";
+"restore.description" = "Para restaurar la cartera existente, es necesario introducir la clave privada para esa cartera.\n\nUna vez que restablezca una cartera podrá restaurar más carteras yendo a la sección Administrar Claves en Configuración de la aplicación.";
+"restore.words.description" = "Introduzca la clave";
+"restore.validation_failed" = "Clave incorrecta";
 "restore.placeholder.account_name" = "Account Name";
 "restore.placeholder.private_key" = "Active Private Key\n";
 
@@ -48,10 +48,10 @@
 "coin_sync.title" = "Restaurar opciones";
 "coin_sync.fast" = "Rápido";
 "coin_sync.recommended" = "0-2 horas (Recomendado)";
-"coin_sync.fast.text" = "Restores your past transactions directly from the network. Significantly more private but very slow. If the restore takes way too much time, go to Manage Keys section and reimport the Key for the wallet using the Fast Sync option.";
+"coin_sync.fast.text" = "Restaure sus transacciones pasadas directamente desde la red. Significativamente más privado pero muy lento. Si la restauración toma mucho tiempo, vaya a la sección Administrar claves y reimporte la Clave para la cartera utilizando la opción de Sincronización rápida.";
 "coin_sync.slow" = "Lento";
 "coin_sync.more_private" = "1-12 horas (Más Privado)";
-"coin_sync.slow.text" = "Restores your past transactions directly from the network. Significantly more private but very slow. If the restore takes way too much time go to Security section in Settings tab and select “Delete from Phone” option.";
+"coin_sync.slow.text" = "Restaure sus transacciones pasadas directamente desde la red. Significativamente más privado pero muy lento. Si la restauración toma mucho tiempo, vaya a la sección de Seguridad en la pestaña de Ajustes y seleccione la opción \"Borrar desde el teléfono\".";
 "coin_sync.alert.header" = "Atención";
 "coin_sync.alert.text" = "Esta acción se actualizará el saldo de su cartera para cada cadena de bloques. Puede tardar varias horas en completarse.";
 "coin_sync.erc20" = "Sincronizar el modo igual que Ethereum";
