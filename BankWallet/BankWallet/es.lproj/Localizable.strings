@@ -258,7 +258,7 @@
 
 // Set PIN
 
-"set_pin.title" = "Código";
+"set_pin.title" = "Código de acceso";
 "set_pin.info" = "Su código servirá para abrir su monedero y enviar dinero";
 "set_pin.confirm.info" = "Confirmar";
 "set_pin.wrong_confirmation" = "El código no coincide. Inténtelo de nuevo";
