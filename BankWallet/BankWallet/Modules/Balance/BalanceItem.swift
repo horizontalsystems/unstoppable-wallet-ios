@@ -9,7 +9,7 @@ struct BalanceItem {
     var state: AdapterState
     var rate: Rate?
 
-    init(wallet: Wallet, balance: Decimal = 0, state: AdapterState = .synced) {
+    init(wallet: Wallet, balance: Decimal = 0, state: AdapterState) {
         self.wallet = wallet
         self.balance = balance
         self.state = state
