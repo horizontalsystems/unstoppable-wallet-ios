@@ -20,29 +20,6 @@ protocol ISendViewDelegate {
     func onSendClicked()
 }
 
-protocol ISendInteractor {
-    var coin: Coin { get }
-    var decimal: Int { get }
-    func availableBalance(params: [String: Any]) throws -> Decimal
-
-    func copy(address: String)
-    func parse(paymentAddress: String) -> PaymentRequestAddress
-
-    func send(params: [String: Any])
-    func validate(params: [String: Any])
-    func updateFee(params: [String: Any])
-    func feeRate(priority: FeeRatePriority) -> Int
-}
-
-protocol ISendInteractorDelegate: class {
-    func didSend()
-    func didFailToSend(error: Error)
-    func onBecomeActive()
-
-    func didValidate(with errors: [SendStateError])
-    func didUpdate(fee: Decimal)
-}
-
 protocol ISendBitcoinInteractor {
     var coin: Coin { get }
     func fetchAvailableBalance(feeRate: Int, address: String?)
@@ -71,6 +48,20 @@ protocol ISendEthereumInteractorDelegate: class {
     func didFailToSend(error: Error)
 }
 
+protocol ISendErc20Interactor {
+    var coin: Coin { get }
+    var availableBalance: Decimal { get }
+    var availableEthereumBalance: Decimal { get }
+    func validate(address: String) throws
+    func fee(gasPrice: Int) -> Decimal
+    func send(amount: Decimal, address: String, gasPrice: Int)
+}
+
+protocol ISendErc20InteractorDelegate: class {
+    func didSend()
+    func didFailToSend(error: Error)
+}
+
 protocol ISendRouter {
     func showConfirmation(item: SendConfirmationViewItem, delegate: ISendConfirmationDelegate)
     func scanQrCode(delegate: IScanQrCodeDelegate)
@@ -88,27 +79,6 @@ enum SendInputType: String {
     var reversed: SendInputType { return self == .coin ? .currency : .coin }
 }
 
-enum SendStateError {
-    case insufficientAmount(availableBalance: Decimal)
-    case insufficientFeeBalance(fee: Decimal)
-}
-
-extension SendStateError: Equatable {
-
-    public static func ==(lhs: SendStateError, rhs: SendStateError) -> Bool {
-        switch (lhs, rhs) {
-        case (let .insufficientAmount(lhsBalance), let .insufficientAmount(rhsBalance)): return lhsBalance == rhsBalance
-        case (let .insufficientFeeBalance(lhsFee), let .insufficientFeeBalance(rhsFee)): return lhsFee == rhsFee
-        default: return false
-        }
-    }
-
-}
-
-enum AddressError: Error {
-    case invalidAddress
-}
-
 enum AmountInfo {
     case coinValue(coinValue: CoinValue)
     case currencyValue(currencyValue: CurrencyValue)
@@ -122,10 +92,6 @@ enum AmountInfo {
         }
     }
 
-}
-
-enum FeeError {
-    case erc20error(erc20CoinCode: String, fee: CoinValue)
 }
 
 class SendConfirmationViewItem {

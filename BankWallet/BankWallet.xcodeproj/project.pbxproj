@@ -53,6 +53,7 @@
 		11B351A72E87E6B529078BCE /* AlertTitleItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35B3B9EC0C5564314E2A3 /* AlertTitleItem.swift */; };
 		11B351A789BF89D32CC207C0 /* SendFeeSliderPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35F77ADC1D844A4A3390D /* SendFeeSliderPresenter.swift */; };
 		11B351B76E70E4D03CB0615D /* WalletFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B357A7F7FD0E4D2BDD8F49 /* WalletFactory.swift */; };
+		11B351BFEF2508F03638A016 /* SendErc20Presenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3551CD2E9F791509A2744 /* SendErc20Presenter.swift */; };
 		11B351C81028727569851233 /* EthereumAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B352D314A298B6B832F309 /* EthereumAdapter.swift */; };
 		11B351D63AD2497E9466DFE5 /* ManageAccountCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35D815F45FCFCE500E706 /* ManageAccountCell.swift */; };
 		11B351DBAFC2501DD8192791 /* UnlinkRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3539C11511DDEE1EACD1E /* UnlinkRouter.swift */; };
@@ -108,6 +109,7 @@
 		11B3538F8C8354B93C9EF6E8 /* ManageAccountsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B358B4DFC88B488F3BC039 /* ManageAccountsViewController.swift */; };
 		11B353A7F530336B1E15015E /* DepositViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35ED7203AD00030A8BA23 /* DepositViewController.swift */; };
 		11B353AA4AFFB020A68E09B6 /* AccountFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35C4D6F474C2EB3687EB4 /* AccountFactory.swift */; };
+		11B353B37E4387DD6C77DB79 /* SendErc20Interactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35FCB0C9375B426F06D95 /* SendErc20Interactor.swift */; };
 		11B353C550551A71D5AD3AAF /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3535DD03F9264351E13A9 /* NetworkManager.swift */; };
 		11B353CE3525B4AE83F0B993 /* DateHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35492B1162F69CA7A0597 /* DateHelper.swift */; };
 		11B353CE3E5D70C96DC069F3 /* AppManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B352884D47E0B23DCF2C2C /* AppManager.swift */; };
@@ -210,6 +212,7 @@
 		11B356BCDFFFD2EE9CB27968 /* RestoreHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B357930429D2D53F990B10 /* RestoreHeaderView.swift */; };
 		11B356C6FEEFD7A1B854FB46 /* AccountRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35E9B9C7A88B7584507DF /* AccountRecord.swift */; };
 		11B356CA54463B4740A9E3AA /* BaseCurrencySettingsInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3550630A9EC44B7157E6F /* BaseCurrencySettingsInteractor.swift */; };
+		11B356DB3835A587CE7495D9 /* SendErc20Interactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35FCB0C9375B426F06D95 /* SendErc20Interactor.swift */; };
 		11B356E2E8EC14DEF0D0028A /* NoPasscodeModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B359B977EC2537C7B5F86B /* NoPasscodeModule.swift */; };
 		11B356E34E90E8566545DED9 /* PredefinedAccountTypeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35981A2EDBC21C82D13A5 /* PredefinedAccountTypeManager.swift */; };
 		11B356E43B55B861493AEA87 /* DefaultWalletCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35264D93B6F4E120759E7 /* DefaultWalletCreator.swift */; };
@@ -259,6 +262,7 @@
 		11B35848297F392FE9F72BF2 /* SendConfirmationItemFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35072A029200FB9F86BCB /* SendConfirmationItemFactory.swift */; };
 		11B3584F38352B045CCBE958 /* BaseCurrencySettingsInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3550630A9EC44B7157E6F /* BaseCurrencySettingsInteractor.swift */; };
 		11B358516EEC6A747F29AB4E /* BackupEosPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35F3CC2990123CFF93106 /* BackupEosPresenter.swift */; };
+		11B358670F13FE515F41276F /* SendErc20Presenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3551CD2E9F791509A2744 /* SendErc20Presenter.swift */; };
 		11B3586B8B2C99BCFDF2C40B /* AccountCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35F26989959D83D337249 /* AccountCreator.swift */; };
 		11B358711BD2BF0C238F0F41 /* NoPasscodeTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3578C241CB83AF2FD50A9 /* NoPasscodeTheme.swift */; };
 		11B35877FB8483FFA1037F98 /* TransactionItemDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B350DFDC2CC98086520BFA /* TransactionItemDataSource.swift */; };
@@ -334,6 +338,7 @@
 		11B35ADC65D620B9F7C2608E /* CoinValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35B466B8FF6754E47DACD /* CoinValue.swift */; };
 		11B35AE6B9C546D84419F647 /* DoubleLineCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35B0378C5EA6E02CB2E37 /* DoubleLineCell.swift */; };
 		11B35AEA2BFBE165F797DCD2 /* RateSyncer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B350C8341DFAF14D974ACC /* RateSyncer.swift */; };
+		11B35AF198E802C3356834A5 /* SendErc20Interactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35FCB0C9375B426F06D95 /* SendErc20Interactor.swift */; };
 		11B35AFB02A7CC7A558A702E /* DefaultWalletCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35264D93B6F4E120759E7 /* DefaultWalletCreator.swift */; };
 		11B35B01618459D658E9A53F /* HudHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35C181EB4CA85BD80228C /* HudHelper.swift */; };
 		11B35B068DF7197164BDAD4B /* BackupEosRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3537D10E0DC42026B43EC /* BackupEosRouter.swift */; };
@@ -456,6 +461,7 @@
 		11B35EF35C59A81D62BCA81C /* SendBitcoinPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3552CDCF73BC9041AD0C0 /* SendBitcoinPresenter.swift */; };
 		11B35EF8F8B8F43987CC121C /* BaseCurrencySettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35E4481DCD98BF2074797 /* BaseCurrencySettingsViewController.swift */; };
 		11B35EFFC8EAF969B9A1A66A /* ManageAccountsTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B357C7F62B53F2AD89FBC6 /* ManageAccountsTheme.swift */; };
+		11B35F06AB23A13BF6675744 /* SendErc20Presenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3551CD2E9F791509A2744 /* SendErc20Presenter.swift */; };
 		11B35F09210E8E5EAFABEEA4 /* AboutSettingsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35BDC4FD741BE033D1956 /* AboutSettingsRouter.swift */; };
 		11B35F2057CF53136F954423 /* Words12AccountType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35F3A33D60A4A014DC920 /* Words12AccountType.swift */; };
 		11B35F21648179D3166B5538 /* ManageAccountsViewItemFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35987C48604FA6CB81C92 /* ManageAccountsViewItemFactory.swift */; };
@@ -1561,6 +1567,7 @@
 		11B354B43B5120F594318FDA /* PermissionsHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PermissionsHelper.swift; sourceTree = "<group>"; };
 		11B354EBB4D8C8618135258A /* ManageAccountsCreateAccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManageAccountsCreateAccountViewController.swift; sourceTree = "<group>"; };
 		11B3550630A9EC44B7157E6F /* BaseCurrencySettingsInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseCurrencySettingsInteractor.swift; sourceTree = "<group>"; };
+		11B3551CD2E9F791509A2744 /* SendErc20Presenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendErc20Presenter.swift; sourceTree = "<group>"; };
 		11B3552CDCF73BC9041AD0C0 /* SendBitcoinPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendBitcoinPresenter.swift; sourceTree = "<group>"; };
 		11B355330C2EB2870BD7087A /* ManageAccountsInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManageAccountsInteractor.swift; sourceTree = "<group>"; };
 		11B35542A7D7FE1BDC2E73E2 /* AccountType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountType.swift; sourceTree = "<group>"; };
@@ -1700,6 +1707,7 @@
 		11B35FA1C1FF965AA2EB6666 /* PeriodicTimer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PeriodicTimer.swift; sourceTree = "<group>"; };
 		11B35FAF942FA80752EDBFA7 /* SendInteractorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendInteractorTests.swift; sourceTree = "<group>"; };
 		11B35FC6F5CF6D888A05590B /* AgreementInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AgreementInteractor.swift; sourceTree = "<group>"; };
+		11B35FCB0C9375B426F06D95 /* SendErc20Interactor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendErc20Interactor.swift; sourceTree = "<group>"; };
 		11B35FD3263E331D704EA771 /* Signal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Signal.swift; sourceTree = "<group>"; };
 		1A56404690D0235A5183C12D /* Coin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Coin.swift; sourceTree = "<group>"; };
 		1A5640528EFD15137E218EA3 /* MainSettingsPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainSettingsPresenter.swift; sourceTree = "<group>"; };
@@ -2948,6 +2956,8 @@
 				11B350097B17D90CD768125E /* SendBitcoinInteractor.swift */,
 				11B35911EDC680E4DB54B33D /* SendEthereumPresenter.swift */,
 				11B35C3949C47632B29C1EB4 /* SendEthereumInteractor.swift */,
+				11B3551CD2E9F791509A2744 /* SendErc20Presenter.swift */,
+				11B35FCB0C9375B426F06D95 /* SendErc20Interactor.swift */,
 			);
 			path = Send;
 			sourceTree = "<group>";
@@ -4357,6 +4367,8 @@
 				11B357E1B3795D3D9A9C2C59 /* FeeRateProviderFactory.swift in Sources */,
 				11B3593279D2D19E7C930AC9 /* SendEthereumPresenter.swift in Sources */,
 				11B3510A050EEDDCF1C41695 /* SendEthereumInteractor.swift in Sources */,
+				11B358670F13FE515F41276F /* SendErc20Presenter.swift in Sources */,
+				11B35AF198E802C3356834A5 /* SendErc20Interactor.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4881,6 +4893,8 @@
 				11B35D4E566D1F5D24825050 /* FeeRateProviderFactory.swift in Sources */,
 				11B3575B96AD77C8A92F333D /* SendEthereumPresenter.swift in Sources */,
 				11B35496C3E51D0348A83B16 /* SendEthereumInteractor.swift in Sources */,
+				11B35F06AB23A13BF6675744 /* SendErc20Presenter.swift in Sources */,
+				11B353B37E4387DD6C77DB79 /* SendErc20Interactor.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5354,6 +5368,8 @@
 				11B3519B8645E4788A70E0A4 /* FeeRateProviderFactory.swift in Sources */,
 				11B3545B3347876D25D7D0DB /* SendEthereumPresenter.swift in Sources */,
 				11B35BB2CF54EF6AE15F03E5 /* SendEthereumInteractor.swift in Sources */,
+				11B351BFEF2508F03638A016 /* SendErc20Presenter.swift in Sources */,
+				11B356DB3835A587CE7495D9 /* SendErc20Interactor.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

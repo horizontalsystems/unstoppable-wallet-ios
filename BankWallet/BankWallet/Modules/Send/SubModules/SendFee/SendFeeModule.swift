@@ -22,10 +22,12 @@ protocol ISendFeeInteractor {
 protocol ISendFeeModule: AnyObject {
     var delegate: ISendFeeDelegate? { get set }
 
+    var isValid: Bool { get }
+
     var coinValue: CoinValue { get }
     var currencyValue: CurrencyValue? { get }
 
     func set(fee: Decimal)
-    func insufficientFeeBalance(coinCode: CoinCode, fee: Decimal)
+    func set(availableFeeBalance: Decimal)
     func update(inputType: SendInputType)
 }

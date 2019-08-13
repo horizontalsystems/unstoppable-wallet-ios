@@ -7,23 +7,28 @@ class SendFeePresenter {
     private let interactor: ISendFeeInteractor
 
     private let coin: Coin
+    private let feeCoin: Coin
+    private let coinProtocol: String
     private let currency: Currency
     private let rate: Rate?
 
     private var fee: Decimal = 0
+    private var availableFeeBalance: Decimal?
 
     private(set) var inputType: SendInputType = .coin
 
-    init(coin: Coin, interactor: ISendFeeInteractor) {
+    init(coin: Coin, feeCoin: Coin, coinProtocol: String, interactor: ISendFeeInteractor) {
         self.coin = coin
+        self.feeCoin = feeCoin
+        self.coinProtocol = coinProtocol
         self.interactor = interactor
 
         currency = interactor.baseCurrency
-        rate = interactor.rate(coinCode: coin.code, currencyCode: currency.code)
+        rate = interactor.rate(coinCode: feeCoin.code, currencyCode: currency.code)
     }
 
-    private func updateFeeLabels() {
-        let coinAmountInfo: AmountInfo = .coinValue(coinValue: CoinValue(coin: coin, value: fee))
+    private func syncFeeLabels() {
+        let coinAmountInfo: AmountInfo = .coinValue(coinValue: CoinValue(coin: feeCoin, value: fee))
         var currencyAmountInfo: AmountInfo?
 
         if let rate = rate {
@@ -40,12 +45,40 @@ class SendFeePresenter {
         }
     }
 
+    private func syncError() {
+        do {
+            try validate()
+            view?.set(error: nil)
+        } catch {
+            view?.set(error: error)
+        }
+    }
+
+    private func validate() throws {
+        guard let availableFeeBalance = availableFeeBalance else {
+            return
+        }
+
+        if availableFeeBalance < fee {
+            throw ValidationError.insufficientFeeBalance(coin: coin, coinProtocol: coinProtocol, feeCoin: feeCoin, fee: .coinValue(coinValue: CoinValue(coin: feeCoin, value: fee)))
+        }
+    }
+
 }
 
 extension SendFeePresenter: ISendFeeModule {
 
+    var isValid: Bool {
+        do {
+            try validate()
+            return true
+        } catch {
+            return false
+        }
+    }
+
     var coinValue: CoinValue {
-        return CoinValue(coin: coin, value: fee)
+        return CoinValue(coin: feeCoin, value: fee)
     }
 
     var currencyValue: CurrencyValue? {
@@ -58,18 +91,19 @@ extension SendFeePresenter: ISendFeeModule {
 
     func set(fee: Decimal) {
         self.fee = fee
-        updateFeeLabels()
+        syncFeeLabels()
+        syncError()
     }
 
-    func insufficientFeeBalance(coinCode: CoinCode, fee: Decimal) {
-//        insufficientFeeBalanceWithRequiredFee = fee
-//        let feeValue = CoinValue(coinCode: feeCoinCode, value: fee)
-//        view?.set(error: formatHelper.errorValue(feeValue: feeValue, coinProtocol: coinProtocol, baseCoinName: baseCoinName, coinCode: coinCode))
+    func set(availableFeeBalance: Decimal) {
+        self.availableFeeBalance = availableFeeBalance
+        syncError()
+
     }
 
     func update(inputType: SendInputType) {
         self.inputType = inputType
-        updateFeeLabels()
+        syncFeeLabels()
     }
 
 }
@@ -78,7 +112,23 @@ extension SendFeePresenter: ISendFeeViewDelegate {
 
     func viewDidLoad() {
         inputType = delegate?.inputType ?? .coin
-        updateFeeLabels()
+        syncFeeLabels()
+        syncError()
+    }
+
+}
+
+extension SendFeePresenter {
+
+    private enum ValidationError: Error, LocalizedError {
+        case insufficientFeeBalance(coin: Coin, coinProtocol: String, feeCoin: Coin, fee: AmountInfo)
+
+        var errorDescription: String? {
+            switch self {
+            case let .insufficientFeeBalance(coin, coinProtocol, feeCoin, fee):
+                return "send.token.insufficient_fee_alert".localized(coin.code, coinProtocol, feeCoin.title, fee.formattedString ?? "")
+            }
+        }
     }
 
 }

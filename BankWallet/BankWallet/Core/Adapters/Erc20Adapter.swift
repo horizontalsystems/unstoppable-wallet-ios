@@ -105,25 +105,6 @@ extension Erc20Adapter: IAdapter {
         }
     }
 
-//    func validate(params: [String : Any]) throws -> [SendStateError] {
-//        var errors = [SendStateError]()
-//
-//        if let amount: Decimal = params[AdapterField.amount.rawValue] as? Decimal {
-//            let balance = availableBalance(params: params)
-//            if amount > balance {
-//                errors.append(.insufficientAmount(availableBalance: balance))
-//            }
-//        }
-//
-//        let ethereumBalance = balanceDecimal(balanceString: ethereumKit.balance, decimal: EthereumAdapter.decimal)
-//
-//        let expectedFee = try fee(params: params)
-//        if ethereumBalance < expectedFee {
-//            errors.append(.insufficientFeeBalance(fee: expectedFee))
-//        }
-//        return errors
-//    }
-
 }
 
 extension Erc20Adapter {
@@ -138,6 +119,10 @@ extension Erc20Adapter: ISendErc20Adapter {
 
     var availableBalance: Decimal {
         return max(0, balance - fee)
+    }
+
+    var availableEthereumBalance: Decimal {
+        return balanceDecimal(balanceString: ethereumKit.balance, decimal: EthereumAdapter.decimal)
     }
 
     func fee(gasPrice: Int) -> Decimal {

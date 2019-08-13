@@ -85,7 +85,7 @@ class ValueFormatter {
 
     func formatNew(coinValue: CoinValue) -> String? {
         coinFormatter.roundingMode = .halfUp
-        coinFormatter.maximumFractionDigits = coinValue.coin.decimal
+        coinFormatter.maximumFractionDigits = min(coinValue.coin.decimal, 8)
 
         guard let formattedValue = coinFormatter.string(from: coinValue.value as NSNumber) else {
             return nil
@@ -149,7 +149,7 @@ class ValueFormatter {
     }
 
     func formatValue(coinValue: CoinValue) -> String? {
-        decimalFormatter.maximumFractionDigits = coinValue.coin.decimal
+        decimalFormatter.maximumFractionDigits = min(coinValue.coin.decimal, 8)
         return decimalFormatter.string(from: coinValue.value as NSNumber)
     }
 
