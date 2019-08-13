@@ -110,7 +110,7 @@
 "send.title" = "Отправить %@";
 "send.amount_placeholder" = "Сумма";
 "send.address_placeholder" = "Адрес";
-"send.fee" = "Fee:";
+"send.fee" = "Комиссия:";
 "send.max_button" = "Макс.";
 "send.next_button" = "Next";
 "send.error.invalid_address" = "Invalid Address";
@@ -119,14 +119,14 @@
 "send.error.no_amount" = "No Amount";
 
 "send.confirmation.title" = "Confirm";
-"send.confirmation.to" = "To:";
+"send.confirmation.to" = "Кому:";
 "send.confirmation.memo_placeholder" = "Memo";
-"send.confirmation.total" = "Total:";
+"send.confirmation.total" = "Итого:";
 "send.confirmation.estimate_time" = "Estimate Time:";
 "send.confirmation.eos.account" = "Account";
-"send.confirmation.send_button" = "Send";
+"send.confirmation.send_button" = "Отправить";
 "send.amount_error.balance" = "Баланс %@";
-"send.token.insufficient_fee_alert" = "Transaction fees for %@ (%@) paid in %@. You need %@.";
+"send.token.insufficient_fee_alert" = "Комиссия за отправку %@ %@ взимается в %@. Необходимо %@.\n\n";
 
 // Transactions
 
@@ -164,7 +164,7 @@
 "full_info.to" = "Кому";
 "full_info.amount" = "Сумма";
 "full_info.nonce" = "Nonce";
-"full_info.status" = "Status";
+"full_info.status" = "Статус";
 "full_info.memo" = "Memo";
 "full_info.cpu" = "CPU Usage";
 "full_info.net" = "Net Usage";
