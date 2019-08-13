@@ -9,13 +9,13 @@
 "button.cancel" = "Abbrechen";
 "button.confirm" = "Bestätigen";
 "button.done" = "Fertig";
-"button.restore" = "Restore";
+"button.restore" = "Wiederherstellen";
 "button.next" = "Weiter";
 "button.remove" = "Entfernen";
 "button.forward" = "Teilen";
 "button.save" = "Speichern";
 "button.sync" = "Sync";
-"button.paste" = "Paste";
+"button.paste" = "Einsetzen";
 
 "alert.copied" = "Kopiert";
 "alert.no_internet" = "Kein Internet";
@@ -30,9 +30,9 @@
 
 // Welcome
 
-"welcome.new_wallet" = "New Wallet";
-"welcome.restore_wallet" = "Restore Wallet";
-"welcome.version" = "version %@";
+"welcome.new_wallet" = "Wallet Erstellen";
+"welcome.restore_wallet" = "Wallet Wiederherstellen";
+"welcome.version" = "Version %@";
 
 // Restore
 
@@ -58,9 +58,9 @@
 
 // Backup
 
-"backup.close" = "Close";
+"backup.close" = "Schließen";
 
-"backup.intro.title_backup" = "Backup";
+"backup.intro.title_backup" = "Sicherung";
 "backup.intro.title_show" = "Show Key";
 "backup.intro.subtitle" = "The key that will be shown next is the only way to restore your funds, if your phone is ever lost, stolen, broken etc. Make sure that no one is watching your screen.\n\nThe coins controlled by this key: %@";
 "backup.intro.later" = "Später";
@@ -96,7 +96,7 @@
 "balance.syncing" = "Synchronisieren...";
 "balance.add_coins" = "Add Coins";
 "balance.sort.header" = "Sort by";
-"balance.sort.valueHighToLow" = "Balance";
+"balance.sort.valueHighToLow" = "Guthaben";
 "balance.sort.az" = "Name";
 "balance.sort.manual" = "Default";
 
@@ -110,23 +110,23 @@
 "send.title" = "Senden %@";
 "send.amount_placeholder" = "Betrag";
 "send.address_placeholder" = "Adresse";
-"send.fee" = "Fee:";
+"send.fee" = "Gebühr:";
 "send.max_button" = "Max.";
-"send.next_button" = "Next";
+"send.next_button" = "Weiter";
 "send.error.invalid_address" = "Invalid Address";
 "send.error.invalid_account" = "Invalid Account";
 "send.error.no_address" = "No Address";
 "send.error.no_amount" = "No Amount";
 
 "send.confirmation.title" = "Confirm";
-"send.confirmation.to" = "To:";
+"send.confirmation.to" = "An:";
 "send.confirmation.memo_placeholder" = "Memo";
-"send.confirmation.total" = "Total:";
+"send.confirmation.total" = "Insgesamt:";
 "send.confirmation.estimate_time" = "Estimate Time:";
 "send.confirmation.eos.account" = "Account";
-"send.confirmation.send_button" = "Send";
+"send.confirmation.send_button" = "Senden";
 "send.amount_error.balance" = "Guthaben %@";
-"send.token.insufficient_fee_alert" = "Transaction fees for %@ (%@) paid in %@. You need %@.";
+"send.token.insufficient_fee_alert" = "Transaktionsgebühren für %@ %@ in %@ bezahlt. Du brauchst %@.";
 
 // Transactions
 
@@ -168,7 +168,7 @@
 "full_info.memo" = "Memo";
 "full_info.cpu" = "CPU Usage";
 "full_info.net" = "Net Usage";
-"full_info.milli_seconds" = "%@ μs";
+"full_info.milli_seconds" = "%@ µs";
 "full_info.bytes" = "%@ Bytes";
 
 "full_info.gas_limit" = "Gas Limit";
@@ -190,7 +190,7 @@
 "settings.tab_bar_item" = "Einstellungen";
 "settings.security_center" = "Sicherheit";
 "settings.manage_coins" = "Manage Coins";
-"settings.restore_wallet" = "Restore Wallet";
+"settings.restore_wallet" = "Wallet Wiederherstellen";
 "settings.base_currency" = "Währung";
 "settings.language" = "Sprache";
 "settings.about" = "Info";
@@ -231,7 +231,7 @@
 
 "settings_security.title" = "Sicherheit";
 "settings_security.manage_accounts" = "Manage Keys";
-"settings_security.passcode" = "Passcode";
+"settings_security.passcode" = "Code";
 "settings_security.change_pin" = "Code bearbeiten";
 "settings_security.touch_id" = "Touch ID";
 "settings_security.face_id" = "Face ID";
@@ -242,7 +242,7 @@
 "settings_manage_keys.title" = "Keys";
 "settings_manage_keys.description" = "Anyone with access to your Keys can steal your wallet funds. Store keys safely and never show them to anyone.\n\nBackup each key to be able to restore funds if you loose or break your phone, or simply the wallet app gets deleted.";
 "settings_manage_keys.delete" = "Delete";
-"settings_manage_keys.backup" = "Backup";
+"settings_manage_keys.backup" = "Sicherung";
 "settings_manage_keys.show" = "Show";
 "settings_manage_keys.create" = "Create";
 "settings_manage_keys.restore" = "Restore";
@@ -293,7 +293,7 @@
 // Key Types
 
 "key_type.12_words" = "12-words";
-"key_type.12_words.text" = "BTC, BCH, DASH, ETH, ERC-20";
+"key_type.12_words.text" = "BTC, BCH, ETH, DASH, ETH, ERC-20";
 "key_type.eos" = "EOS Blockchain";
 "key_type.eos.text" = "EOS, EOS based Tokens";
 "key_type.binance" = "Binance Chain";
