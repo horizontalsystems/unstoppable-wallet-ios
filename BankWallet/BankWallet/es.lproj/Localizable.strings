@@ -225,21 +225,21 @@
 
 // Settings -> Tell Friends
 
-"settings_tell_friends.text" = "Be Free! Be Unstoppable!";
+"settings_tell_friends.text" = "¡Se libre! ¡Se indetenible!";
 
 // Settings -> Security
 
 "settings_security.title" = "Centro de Seguridad";
-"settings_security.manage_accounts" = "Manage Keys";
+"settings_security.manage_accounts" = "Gestionar claves";
 "settings_security.passcode" = "Código";
 "settings_security.change_pin" = "Editar el código ";
 "settings_security.touch_id" = "Touch ID";
 "settings_security.face_id" = "Face ID";
-"security_settings.delete_alert_button" = "Delete from Phone";
+"security_settings.delete_alert_button" = "Eliminar del teléfono";
 
 // Manage Keys
 
-"settings_manage_keys.title" = "Keys";
+"settings_manage_keys.title" = "Claves";
 "settings_manage_keys.description" = "Anyone with access to your Keys can steal your wallet funds. Store keys safely and never show them to anyone.\n\nBackup each key to be able to restore funds if you loose or break your phone, or simply the wallet app gets deleted.";
 "settings_manage_keys.delete" = "Delete";
 "settings_manage_keys.backup" = "Copia de seguridad";
