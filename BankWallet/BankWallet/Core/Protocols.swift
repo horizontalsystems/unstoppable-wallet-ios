@@ -61,7 +61,7 @@ protocol ILocalizationManager {
 }
 
 protocol IAdapterManager: class {
-    var adapterCreationObservable: Observable<Wallet> { get }
+    var adaptersCreationSignal: Signal { get }
     func adapter(for: Wallet) -> IAdapter?
     func preloadAdapters()
     func refresh()

@@ -10,7 +10,7 @@ class AdapterManager {
     private let walletManager: IWalletManager
 
     private var adaptersMap = [Wallet: IAdapter]()
-    private let adapterCreationSubject = PublishSubject<Wallet>()
+    let adaptersCreationSignal = Signal()
 
     init(adapterFactory: IAdapterFactory, ethereumKitManager: EthereumKitManager, eosKitManager: EosKitManager, binanceKitManager: BinanceKitManager, walletManager: IWalletManager) {
         self.adapterFactory = adapterFactory
@@ -39,10 +39,11 @@ class AdapterManager {
 
             if let adapter = adapterFactory.adapter(wallet: wallet) {
                 adaptersMap[wallet] = adapter
-                adapterCreationSubject.onNext(wallet)
                 adapter.start()
             }
         }
+
+        adaptersCreationSignal.notify()
 
         for oldWallet in oldWallets {
             if !wallets.contains(where: { $0 == oldWallet }) {
@@ -55,10 +56,6 @@ class AdapterManager {
 }
 
 extension AdapterManager: IAdapterManager {
-
-    var adapterCreationObservable: Observable<Wallet> {
-        return adapterCreationSubject.asObservable()
-    }
 
     func preloadAdapters() {
         initAdapters()
