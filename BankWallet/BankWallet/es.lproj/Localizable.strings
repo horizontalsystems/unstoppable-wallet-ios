@@ -9,13 +9,13 @@
 "button.cancel" = "Cancelar";
 "button.confirm" = "Confirmar";
 "button.done" = "Listo";
-"button.restore" = "Restore";
+"button.restore" = "Restaurar";
 "button.next" = "Siguiente";
 "button.remove" = "Eliminar";
 "button.forward" = "Reenviar";
 "button.save" = "Guardar";
 "button.sync" = "Sincronizar";
-"button.paste" = "Paste";
+"button.paste" = "Pegar";
 
 "alert.copied" = "Copiado";
 "alert.no_internet" = "Sin conexión a Internet";
@@ -30,9 +30,9 @@
 
 // Welcome
 
-"welcome.new_wallet" = "New Wallet";
-"welcome.restore_wallet" = "Restore Wallet";
-"welcome.version" = "version %@";
+"welcome.new_wallet" = "Nueva cartera";
+"welcome.restore_wallet" = "Restaurar cartera";
+"welcome.version" = "Versión %@";
 
 // Restore
 
@@ -41,7 +41,7 @@
 "restore.words.description" = "Enter Key";
 "restore.validation_failed" = "Incorrect Key";
 "restore.placeholder.account_name" = "Account Name";
-"restore.placeholder.private_key" = "Active Private Key";
+"restore.placeholder.private_key" = "Active Private Key\n";
 
 //Coin Sync Modes
 
@@ -58,9 +58,9 @@
 
 // Backup
 
-"backup.close" = "Close";
+"backup.close" = "Cerrar";
 
-"backup.intro.title_backup" = "Backup";
+"backup.intro.title_backup" = "Copia de seguridad";
 "backup.intro.title_show" = "Show Key";
 "backup.intro.subtitle" = "The key that will be shown next is the only way to restore your funds, if your phone is ever lost, stolen, broken etc. Make sure that no one is watching your screen.\n\nThe coins controlled by this key: %@";
 "backup.intro.later" = "Posterior";
@@ -73,7 +73,7 @@
 
 "backup.eos.title" = "EOS Key";
 "backup.eos.account_name" = "Account Name";
-"backup.eos.active_private_key" = "Active Private Key";
+"backup.eos.active_private_key" = "Active Private Key\n";
 "backup.eos.hint" = "Copying your key using “copy” action poses some risks if you use any clipboard management apps or some other apps that may have access to clipboard data.";
 
 "backup.confirmation.title" = "Comprobar";
@@ -96,7 +96,7 @@
 "balance.syncing" = "Sincronizando...";
 "balance.add_coins" = "Add Coins";
 "balance.sort.header" = "Sort by";
-"balance.sort.valueHighToLow" = "Balance";
+"balance.sort.valueHighToLow" = "Saldo";
 "balance.sort.az" = "Name";
 "balance.sort.manual" = "Default";
 
@@ -110,9 +110,9 @@
 "send.title" = "Enviar %@";
 "send.amount_placeholder" = "Importe";
 "send.address_placeholder" = "Dirección";
-"send.fee" = "Fee:";
+"send.fee" = "Comisión:";
 "send.max_button" = "Máx.";
-"send.next_button" = "Next";
+"send.next_button" = "Siguiente";
 "send.error.invalid_address" = "Invalid Address";
 "send.error.invalid_account" = "Invalid Account";
 "send.error.no_address" = "No Address";
