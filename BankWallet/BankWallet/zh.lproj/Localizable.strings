@@ -9,13 +9,13 @@
 "button.cancel" = "取消";
 "button.confirm" = "确认";
 "button.done" = "完成";
-"button.restore" = "Restore";
+"button.restore" = "恢复";
 "button.next" = "继续";
 "button.remove" = "移除";
 "button.forward" = "转发";
 "button.save" = "保存";
 "button.sync" = "Sync";
-"button.paste" = "Paste";
+"button.paste" = "粘帖";
 
 "alert.copied" = "复制成功";
 "alert.no_internet" = "没有网络连接";
@@ -30,9 +30,9 @@
 
 // Welcome
 
-"welcome.new_wallet" = "New Wallet";
-"welcome.restore_wallet" = "Restore Wallet";
-"welcome.version" = "version %@";
+"welcome.new_wallet" = "新的钱包";
+"welcome.restore_wallet" = "恢复钱包";
+"welcome.version" = "Version %@";
 
 // Restore
 
@@ -58,9 +58,9 @@
 
 // Backup
 
-"backup.close" = "Close";
+"backup.close" = "关闭";
 
-"backup.intro.title_backup" = "Backup";
+"backup.intro.title_backup" = "备份";
 "backup.intro.title_show" = "Show Key";
 "backup.intro.subtitle" = "The key that will be shown next is the only way to restore your funds, if your phone is ever lost, stolen, broken etc. Make sure that no one is watching your screen.\n\nThe coins controlled by this key: %@";
 "backup.intro.later" = "稍后";
@@ -110,23 +110,23 @@
 "send.title" = "发送%@";
 "send.amount_placeholder" = "金额";
 "send.address_placeholder" = "地址";
-"send.fee" = "Fee:";
+"send.fee" = "费用:";
 "send.max_button" = "最多";
-"send.next_button" = "Next";
+"send.next_button" = "继续";
 "send.error.invalid_address" = "Invalid Address";
 "send.error.invalid_account" = "Invalid Account";
 "send.error.no_address" = "No Address";
 "send.error.no_amount" = "No Amount";
 
-"send.confirmation.title" = "Confirm";
-"send.confirmation.to" = "To:";
+"send.confirmation.title" = "确认";
+"send.confirmation.to" = "收件人:";
 "send.confirmation.memo_placeholder" = "Memo";
-"send.confirmation.total" = "Total:";
+"send.confirmation.total" = "总额:";
 "send.confirmation.estimate_time" = "Estimate Time:";
 "send.confirmation.eos.account" = "Account";
-"send.confirmation.send_button" = "Send";
+"send.confirmation.send_button" = "发送​​";
 "send.amount_error.balance" = "余额%@";
-"send.token.insufficient_fee_alert" = "Transaction fees for %@ (%@) paid in %@. You need %@.";
+"send.token.insufficient_fee_alert" = "以 %@ 支付的 %@ (%@) 交易费用。你需要 %@ 。";
 
 // Transactions
 
@@ -164,7 +164,7 @@
 "full_info.to" = "收件人";
 "full_info.amount" = "金额";
 "full_info.nonce" = "Nonce";
-"full_info.status" = "Status";
+"full_info.status" = "状态";
 "full_info.memo" = "Memo";
 "full_info.cpu" = "CPU Usage";
 "full_info.net" = "Net Usage";
@@ -231,7 +231,7 @@
 
 "settings_security.title" = "安全中心";
 "settings_security.manage_accounts" = "Manage Keys";
-"settings_security.passcode" = "Passcode";
+"settings_security.passcode" = "密码";
 "settings_security.change_pin" = "修改密码";
 "settings_security.touch_id" = "Touch ID指纹识别";
 "settings_security.face_id" = "Face ID 面容识别";
@@ -242,10 +242,10 @@
 "settings_manage_keys.title" = "Keys";
 "settings_manage_keys.description" = "Anyone with access to your Keys can steal your wallet funds. Store keys safely and never show them to anyone.\n\nBackup each key to be able to restore funds if you loose or break your phone, or simply the wallet app gets deleted.";
 "settings_manage_keys.delete" = "Delete";
-"settings_manage_keys.backup" = "Backup";
+"settings_manage_keys.backup" = "备份";
 "settings_manage_keys.show" = "Show";
 "settings_manage_keys.create" = "Create";
-"settings_manage_keys.restore" = "Restore";
+"settings_manage_keys.restore" = "恢复";
 "settings_manage_keys.delete.cant_delete" = "You need to backup this key before you may unlink it.";
 "settings_manage_keys.delete.title" = "Delete Key";
 "settings_manage_keys.delete.confirmation_remove" = "This action will delete the %@ key (wallet) from this device.";
