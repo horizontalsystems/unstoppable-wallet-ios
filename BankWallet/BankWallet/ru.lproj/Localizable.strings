@@ -210,10 +210,10 @@
 // Settings -> Manage Wallet
 
 "manage_coins.title" = "Coin Manager";
-"manage_coins.add_coin.title" = "Add %@ ";
+"manage_coins.add_coin.title" = "Добавить %@";
 "manage_coins.add_coin.text" = "You don't have active key for use with %@. Use Create button below to generate a new key (wallet).\n\nYou may also use the existing key for the %@ if you already have it.";
-"manage_coins.add_coin.create" = "Create";
-"manage_coins.add_coin.restore" = "Restore";
+"manage_coins.add_coin.create" = "Создать";
+"manage_coins.add_coin.restore" = "Восстановить";
 
 // Settings -> About
 
@@ -235,13 +235,13 @@
 "settings_security.change_pin" = "Изменить Код";
 "settings_security.touch_id" = "Touch ID";
 "settings_security.face_id" = "Face ID";
-"security_settings.delete_alert_button" = "Delete from Phone";
+"security_settings.delete_alert_button" = "Удалить с устройства";
 
 // Manage Keys
 
 "settings_manage_keys.title" = "Ключи";
 "settings_manage_keys.description" = "Anyone with access to your Keys can steal your wallet funds. Store keys safely and never show them to anyone.\n\nBackup each key to be able to restore funds if you loose or break your phone, or simply the wallet app gets deleted.";
-"settings_manage_keys.delete" = "Delete";
+"settings_manage_keys.delete" = "Удалить";
 "settings_manage_keys.backup" = "Резервная копия";
 "settings_manage_keys.show" = "Показать";
 "settings_manage_keys.create" = "Создать";
