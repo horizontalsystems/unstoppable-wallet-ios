@@ -83,7 +83,7 @@
 "backup.confirmation.disclaimer" = "Entiendo que los desarrolladores de esta aplicación no pueden ser responsables de ningún error o problemas no intencionados que puedan surgir mientras se usa esta aplicación.";
 
 "words_validator.empty_words" = "No se han introducido todas las palabras";
-"words_validator.invalid_confirmation" = "Las contraseñas no coinciden";
+"words_validator.invalid_confirmation" = "Las palabras no coinciden";
 
 // Balance
 
@@ -123,7 +123,7 @@
 "send.confirmation.memo_placeholder" = "Memo";
 "send.confirmation.total" = "Total:";
 "send.confirmation.estimate_time" = "Tiempo estimado:";
-"send.confirmation.eos.account" = "Account";
+"send.confirmation.eos.account" = "Cuenta";
 "send.confirmation.send_button" = "Enviar";
 "send.amount_error.balance" = "Saldo %@";
 "send.token.insufficient_fee_alert" = "Tarifas de transacción para %@ (%@) pagado en %@. Es necesario %@.";
@@ -181,13 +181,13 @@
 
 "full_info.error.subtitle" = "desconectado";
 "full_info.error.retry" = "Reintentar";
-"full_info.error.change_source" = "Cambiar Origen";
-"full_info.no_address" = "Dirección Vacía";
+"full_info.error.change_source" = "Cambiar origen";
+"full_info.no_address" = "Dirección vacía";
 
 // Settings
 
-"settings.title" = "Configuración";
-"settings.tab_bar_item" = "Configuraciones";
+"settings.title" = "Ajustes";
+"settings.tab_bar_item" = "Ajustes";
 "settings.security_center" = "Centro de Seguridad";
 "settings.manage_coins" = "Gestionar monedas";
 "settings.restore_wallet" = "Restaurar monedero";
@@ -196,7 +196,7 @@
 "settings.about" = "Acerca de";
 "settings.tell_friends" = "Recomendar a un amigo";
 "settings.light_mode" = "Modo de brillo";
-"settings.info_title" = "INDETENIBLE";
+"settings.info_title" = "UNSTOPPABLE";
 "settings.info_subtitle" = "aplicación descentralizada";
 
 // Settings -> Base Currency
@@ -218,14 +218,14 @@
 // Settings -> About
 
 "settings_about.title" = "Acerca de";
-"settings_about.app_title" = "Indetenible";
+"settings_about.app_title" = "Unstoppable";
 "settings_about.app_subtitle" = "Decentralized app";
 "settings_about.terms_privacy_subtitle" = "Términos y privacidad:";
 "settings_about.terms_privacy_text" = "Esta aplicación es de servidor a servidor. No depende de ningún servidor web o personal de soporte técnico para funcionar.\n\nFunciona en todas partes mientras haya internet. Ninguna entidad puede bloquear esta aplicación para que funcione o bloquear a alguien de usarlo.\n\nSus fondos se almacenan de forma segura en el propio teléfono, no en ningún otro lugar.\n\nEs su responsabilidad hacer copias de seguridad de su Clave Secreta y mantenerla privada. Nunca lo muestre a nadie. Si se pierde, olvida o roba, la persona que tiene su clave secreta puede utilizar sus fondos.\n\nNo libere su teléfono, no instale aplicaciones de fuentes desconocidas (no confiables), no entregue su dispositivo a personas no confiables y mantenga el Sistema Operativo actualizado en su teléfono. La seguridad de su monedero depende de esto.\n\nEl código completo que alimenta esta aplicación ha sido abierto al escrutinio público desde el principio. Intentamos construir el monedero más seguro y descentralizado posible sin embargo, no hay garantías de que no haya problemas de software no intencionados. Dicho esto, es probable que este monedero sea significativamente más seguro que cualquier otra aplicación de monedero de smartphone disponible en este momento.\n\nAlgunos datos genéricos no privados de la aplicación, como tipos de cambio de divisas, se almacenan en el almacenamiento descentralizado (IPFS). ";
 
 // Settings -> Tell Friends
 
-"settings_tell_friends.text" = "¡Sea libre! ¡Sea indetenible!";
+"settings_tell_friends.text" = "¡Sea libre! ¡Sea Unstoppable!";
 
 // Settings -> Security
 
@@ -240,7 +240,7 @@
 // Manage Keys
 
 "settings_manage_keys.title" = "Claves";
-"settings_manage_keys.description" = "Cualquier con acceso a sus Claves puede robar los fondos de su monedero. Almacene las claves de forma segura y nunca se las muestre a nadie.\n\nRespalde cada clave para poder restaurar los fondos en caso de que su teléfono se pierda, se averíe o en caso de que simplemente se borre la aplicación del monedero de su teléfono.";
+"settings_manage_keys.description" = "Cualquiera con acceso a sus Claves puede robar los fondos de su monedero. Almacene las claves de forma segura y nunca se las muestre a nadie.\n\nRespalde cada clave para poder restaurar los fondos en caso de que su teléfono se pierda, se averíe o en caso de que simplemente se borre la aplicación del monedero de su teléfono.";
 "settings_manage_keys.delete" = "Eliminar";
 "settings_manage_keys.backup" = "Copia de seguridad";
 "settings_manage_keys.show" = "Mostrar";
