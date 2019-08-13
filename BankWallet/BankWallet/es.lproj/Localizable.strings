@@ -25,22 +25,22 @@
 
 // Access Camera
 
-"access_camera.message" = "Unstoppable cartera necesita acceder a su cámara para escanear el código QR";
-"access_camera.settings" = "Configuración";
+"access_camera.message" = "El monedero Unstoppable necesita acceder a su cámara para escanear el código QR.\n\nIr a Ajustes - > Unstoppable y permita el acceso a cámara.";
+"access_camera.settings" = "Ajustes";
 
 // Welcome
 
-"welcome.new_wallet" = "Nueva cartera";
-"welcome.restore_wallet" = "Restaurar cartera";
+"welcome.new_wallet" = "Nuevo monedero";
+"welcome.restore_wallet" = "Restaurar monedero";
 "welcome.version" = "Versión %@";
 
 // Restore
 
 "restore.title" = "Restaurar";
-"restore.description" = "Para restaurar la cartera existente, es necesario introducir la clave privada para esa cartera.\n\nUna vez que restablezca una cartera podrá restaurar más carteras yendo a la sección Administrar Claves en Configuración de la aplicación.";
+"restore.description" = "Para restaurar el monedero existente, es necesario introducir la clave privada para ese monedero.\n\nUna vez que restablezca un monedero podrá restaurar más monederos yendo a la sección Administrar Claves en Ajustes de la aplicación.";
 "restore.words.description" = "Introduzca la clave";
 "restore.validation_failed" = "Clave incorrecta";
-"restore.placeholder.account_name" = "Account Name";
+"restore.placeholder.account_name" = "Nombre de cuenta";
 "restore.placeholder.private_key" = "Active Private Key\n";
 
 //Coin Sync Modes
@@ -63,7 +63,7 @@
 "backup.intro.title_backup" = "Copia de seguridad";
 "backup.intro.title_show" = "Mostrar clave";
 "backup.intro.subtitle" = "La clave que se mostrará a continuación es la única forma de restaurar sus fondos en caso de que su teléfono se pierda, lo roben, se averie, etc. Asegúrese de que nadie esté viendo su pantalla. \n\nLas criptomonedas controladas por esta clave: %@";
-"backup.intro.later" = "Posterior";
+"backup.intro.later" = "Más tarde";
 "backup.intro.backup_now" = "Copia de seguridad";
 "backup.intro.show_key" = "Mostrar clave";
 
@@ -72,13 +72,13 @@
 "backup.binance.title" = "Clave de Binance";
 
 "backup.eos.title" = "Clave de EOS";
-"backup.eos.account_name" = "Account Name";
-"backup.eos.active_private_key" = "Active Private Key\n";
+"backup.eos.account_name" = "Nombre de cuenta";
+"backup.eos.active_private_key" = "Clave activa privada";
 "backup.eos.hint" = "Copiar su clave utilizando la acción \"copiar\" implica ciertos riesgos si utiliza aplicaciones de gestión de portapapeles u otra aplicación que pueda tener acceso a la información del portapapeles.";
 
 "backup.confirmation.title" = "Comprobar";
 "backup.confirmation.description" = "Insertar palabras de su clave secreta";
-"backup.confirmation.secret_key" = "Entiendo que soy un único propietario de una clave secreta privada de 12 palabras que se almacena de forma segura en mi teléfono y me permite controlar los fondos en mi cartera.";
+"backup.confirmation.secret_key" = "Entiendo que soy un único propietario de una clave secreta privada de 12 palabras que se almacena de forma segura en mi teléfono y me permite controlar los fondos en mi monedero.";
 "backup.confirmation.delete_app_warn" = "Entiendo que si esta aplicación se elimina o deja de funcionar por alguna razón, mi monedero sólo puede ser recuperado utilizando mi clave secreta.";
 "backup.confirmation.disclaimer" = "Entiendo que los desarrolladores de esta aplicación no pueden ser responsables de ningún error o problemas no intencionados que puedan surgir mientras se usa esta aplicación.";
 
@@ -221,26 +221,26 @@
 "settings_about.app_title" = "Indetenible";
 "settings_about.app_subtitle" = "Decentralized app";
 "settings_about.terms_privacy_subtitle" = "Términos y privacidad:";
-"settings_about.terms_privacy_text" = "Esta aplicación es de servidor a servidor. No depende de ninguna web o tecnología personal de apoyo a la función.\n\nFunciona en cualquier lugar siempre que haya conexión a internet. Ninguna entidad puede bloquear el funcionamiento de esta aplicación o impedir el acceso de un usuario.\n\nSus fondos son almacenados de forma segura únicamente en el teléfono, en ningún otro lugar.\n\nEs su responsabilidad recordar su clave secreta y mantenerla en privado. Nunca la muestre a nadie. Si la pierde, la olvida o es sustraída, sus fondos pueden ser utilizados por la persona que tiene su clave secreta.\n\nNo modifique la seguridad del software de su teléfono, no instale aplicaciones de orígenes desconocidos , no entregue su dispositivo a desconocidos y mantenga actualizado el sistema operativo de tu teléfono. La seguridad de su cartera depende de ello.\n\nLa totalidad del código que soporta esta aplicación está abierta al escrutinio público desde el inicio de la aplicación. Hemos intentado construir la cartera más segura y descentralizada posible; sin embargo, hay ninguna garantía de que no se produzca algún problema de software no deseado. Dicho esto, esta carpeta es probable que sea significativamente más segura que cualquier aplicación de gestión de cartera de smartphone del mercado\n\nAlgunos datos genéricos de carácter público de esta app se guardan en centros de almacenamiento descentralizado (IPFS).\n";
+"settings_about.terms_privacy_text" = "Esta aplicación es de servidor a servidor. No depende de ningún servidor web o personal de soporte técnico para funcionar.\n\nFunciona en todas partes mientras haya internet. Ninguna entidad puede bloquear esta aplicación para que funcione o bloquear a alguien de usarlo.\n\nSus fondos se almacenan de forma segura en el propio teléfono, no en ningún otro lugar.\n\nEs su responsabilidad hacer copias de seguridad de su Clave Secreta y mantenerla privada. Nunca lo muestre a nadie. Si se pierde, olvida o roba, la persona que tiene su clave secreta puede utilizar sus fondos.\n\nNo libere su teléfono, no instale aplicaciones de fuentes desconocidas (no confiables), no entregue su dispositivo a personas no confiables y mantenga el Sistema Operativo actualizado en su teléfono. La seguridad de su monedero depende de esto.\n\nEl código completo que alimenta esta aplicación ha sido abierto al escrutinio público desde el principio. Intentamos construir el monedero más seguro y descentralizado posible sin embargo, no hay garantías de que no haya problemas de software no intencionados. Dicho esto, es probable que este monedero sea significativamente más seguro que cualquier otra aplicación de monedero de smartphone disponible en este momento.\n\nAlgunos datos genéricos no privados de la aplicación, como tipos de cambio de divisas, se almacenan en el almacenamiento descentralizado (IPFS). ";
 
 // Settings -> Tell Friends
 
-"settings_tell_friends.text" = "¡Se libre! ¡Se indetenible!";
+"settings_tell_friends.text" = "¡Sea libre! ¡Sea indetenible!";
 
 // Settings -> Security
 
-"settings_security.title" = "Centro de Seguridad";
+"settings_security.title" = "Centro de seguridad";
 "settings_security.manage_accounts" = "Gestionar claves";
-"settings_security.passcode" = "Código";
+"settings_security.passcode" = "Código de acceso";
 "settings_security.change_pin" = "Editar el código ";
-"settings_security.touch_id" = "Touch ID";
-"settings_security.face_id" = "Face ID";
+"settings_security.touch_id" = "Identificación táctil";
+"settings_security.face_id" = "Identificación de caras";
 "security_settings.delete_alert_button" = "Eliminar del teléfono";
 
 // Manage Keys
 
 "settings_manage_keys.title" = "Claves";
-"settings_manage_keys.description" = "Respalde cada clave para poder restaurar los fondos en caso de que su teléfono se pierda, se averíe o en caso de que simplemente se borre la aplicación del monedero de su teléfono.";
+"settings_manage_keys.description" = "Cualquier con acceso a sus Claves puede robar los fondos de su monedero. Almacene las claves de forma segura y nunca se las muestre a nadie.\n\nRespalde cada clave para poder restaurar los fondos en caso de que su teléfono se pierda, se averíe o en caso de que simplemente se borre la aplicación del monedero de su teléfono.";
 "settings_manage_keys.delete" = "Eliminar";
 "settings_manage_keys.backup" = "Copia de seguridad";
 "settings_manage_keys.show" = "Mostrar";
@@ -277,7 +277,7 @@
 
 // No Passcode
 
-"no_passcode.info_text" = "Esta aplicación require que el teléfono tenga el código de acceso (bloqueo de pantalla) habilitado.\n\nLo puedes habilitar en los ajustes de iOS.\n\nToma en cuenta que cuando desahabilita el PIN en el nivel OS, las medidas de seguridad en el alacenamiento seguro de su teléfono hace que la información previamente almacenada no sea válida. Usted necesita restaurar sus claves de los monederos para poder volver a su monedero.";
+"no_passcode.info_text" = "Esta aplicación require que el teléfono tenga el código de acceso (bloqueo de pantalla) habilitado.\n\nLo puedes habilitar en los ajustes de iOS.\n\nTome en cuenta que cuando desahabilita el PIN en el nivel OS, las medidas de seguridad en el alacenamiento seguro de su teléfono hace que la información previamente almacenada no sea válida. Usted necesita restaurar sus claves de los monederos para poder volver a su monedero.";
 
 //NumPad
 
@@ -292,9 +292,9 @@
 
 // Key Types
 
-"key_type.12_words" = "12-words";
+"key_type.12_words" = "12-palabras";
 "key_type.12_words.text" = "BTC, BCH, DASH, ETH, ERC-20";
 "key_type.eos" = "EOS Blockchain";
-"key_type.eos.text" = "EOS, EOS based Tokens";
-"key_type.binance" = "Binance Chain";
+"key_type.eos.text" = "EOS, Tokens basados en EOS";
+"key_type.binance" = "Cadena de Binance";
 "key_type.binance.text" = "BNB, BEP-2";
