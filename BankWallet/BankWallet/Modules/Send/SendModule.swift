@@ -74,6 +74,20 @@ protocol ISendEosInteractorDelegate: class {
     func didFailToSend(error: Error)
 }
 
+protocol ISendBinanceInteractor {
+    var coin: Coin { get }
+    var availableBalance: Decimal { get }
+    var availableBinanceBalance: Decimal { get }
+    func validate(address: String) throws
+    var fee: Decimal { get }
+    func send(amount: Decimal, address: String, memo: String?)
+}
+
+protocol ISendBinanceInteractorDelegate: class {
+    func didSend()
+    func didFailToSend(error: Error)
+}
+
 protocol ISendRouter {
     func showConfirmation(item: SendConfirmationViewItem, delegate: ISendConfirmationDelegate)
     func scanQrCode(delegate: IScanQrCodeDelegate)

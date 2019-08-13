@@ -159,6 +159,10 @@ extension BinanceAdapter: ISendBinanceAdapter {
         return max(0, balance)
     }
 
+    var availableBinanceBalance: Decimal {
+        return binanceKit.binanceBalance
+    }
+
     func validate(address: String) throws {
         //todo: remove when make errors public
         do {

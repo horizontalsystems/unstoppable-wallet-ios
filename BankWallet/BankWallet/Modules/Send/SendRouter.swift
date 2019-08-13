@@ -46,6 +46,10 @@ extension SendRouter {
             return SendRouter.module(wallet: wallet, adapter: eosAdapter)
         }
 
+        if let binanceAdapter = adapter as? ISendBinanceAdapter {
+            return SendRouter.module(wallet: wallet, adapter: binanceAdapter)
+        }
+
         return nil
     }
 
@@ -155,6 +159,33 @@ extension SendRouter {
 
         amountModule.delegate = presenter
         accountModule.delegate = presenter
+
+        let navigationController = WalletNavigationController(rootViewController: viewController)
+        router.viewController = navigationController
+        return navigationController
+    }
+
+    private static func module(wallet: Wallet, adapter: ISendBinanceAdapter) -> UIViewController? {
+        guard let feeCoin = App.shared.appConfigProvider.coins.first(where: { $0.code == "BNB" }) else {
+            return nil
+        }
+
+        let (amountView, amountModule) = SendAmountRouter.module(coin: wallet.coin)
+        let (addressView, addressModule) = SendAddressRouter.module(addressParser: App.shared.addressParserFactory.parser(coin: wallet.coin))
+        let (feeView, feeModule) = SendFeeRouter.module(coin: wallet.coin, feeCoin: feeCoin, coinProtocol: "BEP-2")
+
+        let router = SendRouter()
+        let interactor = SendBinanceInteractor(wallet: wallet, adapter: adapter)
+        let presenter = SendBinancePresenter(interactor: interactor, router: router, confirmationFactory: SendConfirmationItemFactory(), amountModule: amountModule, addressModule: addressModule, feeModule: feeModule)
+
+        let viewController = SendViewController(delegate: presenter, views: [amountView, addressView, feeView])
+
+        presenter.view = viewController
+        interactor.delegate = presenter
+
+        amountModule.delegate = presenter
+        addressModule.delegate = presenter
+        feeModule.delegate = presenter
 
         let navigationController = WalletNavigationController(rootViewController: viewController)
         router.viewController = navigationController
