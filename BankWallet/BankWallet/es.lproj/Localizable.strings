@@ -261,17 +261,17 @@
 "set_pin.title" = "Código de acceso";
 "set_pin.info" = "Su código servirá para abrir su monedero y enviar dinero";
 "set_pin.confirm.info" = "Confirmar";
-"set_pin.wrong_confirmation" = "El código no coincide. Inténtelo de nuevo";
+"set_pin.wrong_confirmation" = "El código de acceso no coincide. Inténtelo de nuevo";
 
 // Edit PIN
 
-"edit_pin.title" = "Editar el código ";
+"edit_pin.title" = "Editar el código de acceso";
 "edit_pin.unlock_info" = "Código Actual";
-"edit_pin.new_pin_info" = "Código Nuevo";
+"edit_pin.new_pin_info" = "Código de acceso nuevo";
 
 // Unlock PIN
 
-"unlock_pin.info" = "Código";
+"unlock_pin.info" = "Código de acceso";
 "unlock_pin.cant_save_pin" = "¡Ups! No podemos guardar su código, póngase en contacto con nosotros lo antes posible";
 "unlock_pin.blocked_until" = "Inhabilitado hasta: %@";
 
