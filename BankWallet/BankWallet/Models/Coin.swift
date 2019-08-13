@@ -3,6 +3,7 @@ struct Coin {
     let code: CoinCode
     let decimal: Int
     let type: CoinType
+    let feeCoinCode: CoinCode? = nil
 }
 
 extension Coin: Hashable {

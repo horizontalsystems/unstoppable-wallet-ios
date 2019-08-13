@@ -81,8 +81,6 @@ protocol IWalletManager: class {
 }
 
 protocol IAdapter: class {
-    var feeCoinCode: CoinCode? { get }
-
     var confirmationsThreshold: Int { get }
 
     func start()

@@ -7,14 +7,12 @@ class RateSyncer {
 
     private let rateManager: IRateManager
     private let walletManager: IWalletManager
-    private let adapterManager: IAdapterManager
     private let currencyManager: ICurrencyManager
     private let reachabilityManager: IReachabilityManager
 
-    init(rateManager: IRateManager, walletManager: IWalletManager, adapterManager: IAdapterManager, currencyManager: ICurrencyManager, reachabilityManager: IReachabilityManager) {
+    init(rateManager: IRateManager, walletManager: IWalletManager, currencyManager: ICurrencyManager, reachabilityManager: IReachabilityManager) {
         self.rateManager = rateManager
         self.walletManager = walletManager
-        self.adapterManager = adapterManager
         self.currencyManager = currencyManager
         self.reachabilityManager = reachabilityManager
 
@@ -35,7 +33,7 @@ class RateSyncer {
             var coinCodes = Set<CoinCode>()
             for wallet in walletManager.wallets {
                 coinCodes.insert(wallet.coin.code)
-                if let adapter = adapterManager.adapter(for: wallet), let feeCoinCode = adapter.feeCoinCode {
+                if let feeCoinCode = wallet.coin.feeCoinCode {
                     coinCodes.insert(feeCoinCode)
                 }
             }
