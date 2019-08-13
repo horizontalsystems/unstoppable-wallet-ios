@@ -44,3 +44,6 @@ extension DashAdapter {
     }
 
 }
+
+extension DashAdapter: ISendBitcoinAdapter {
+}
