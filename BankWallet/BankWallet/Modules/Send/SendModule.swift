@@ -62,6 +62,18 @@ protocol ISendErc20InteractorDelegate: class {
     func didFailToSend(error: Error)
 }
 
+protocol ISendEosInteractor {
+    var coin: Coin { get }
+    var availableBalance: Decimal { get }
+    func validate(account: String) throws
+    func send(amount: Decimal, account: String, memo: String?)
+}
+
+protocol ISendEosInteractorDelegate: class {
+    func didSend()
+    func didFailToSend(error: Error)
+}
+
 protocol ISendRouter {
     func showConfirmation(item: SendConfirmationViewItem, delegate: ISendConfirmationDelegate)
     func scanQrCode(delegate: IScanQrCodeDelegate)

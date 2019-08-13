@@ -42,6 +42,10 @@ extension SendRouter {
             return SendRouter.module(wallet: wallet, adapter: erc20Adapter)
         }
 
+        if let eosAdapter = adapter as? ISendEosAdapter {
+            return SendRouter.module(wallet: wallet, adapter: eosAdapter)
+        }
+
         return nil
     }
 
@@ -130,6 +134,27 @@ extension SendRouter {
         addressModule.delegate = presenter
         feeModule.delegate = presenter
         feeSliderModule.delegate = presenter
+
+        let navigationController = WalletNavigationController(rootViewController: viewController)
+        router.viewController = navigationController
+        return navigationController
+    }
+
+    private static func module(wallet: Wallet, adapter: ISendEosAdapter) -> UIViewController? {
+        let (amountView, amountModule) = SendAmountRouter.module(coin: wallet.coin)
+        let (accountView, accountModule) = SendAccountRouter.module()
+
+        let router = SendRouter()
+        let interactor = SendEosInteractor(wallet: wallet, adapter: adapter)
+        let presenter = SendEosPresenter(interactor: interactor, router: router, confirmationFactory: SendConfirmationItemFactory(), amountModule: amountModule, accountModule: accountModule)
+
+        let viewController = SendViewController(delegate: presenter, views: [amountView, accountView])
+
+        presenter.view = viewController
+        interactor.delegate = presenter
+
+        amountModule.delegate = presenter
+        accountModule.delegate = presenter
 
         let navigationController = WalletNavigationController(rootViewController: viewController)
         router.viewController = navigationController

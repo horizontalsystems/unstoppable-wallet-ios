@@ -34,11 +34,6 @@ class SendAddressPresenter {
         }
     }
 
-    private func onClearAddress() {
-        view?.set(address: nil, error: nil)
-        address = nil
-    }
-
 }
 
 extension SendAddressPresenter: ISendAddressViewDelegate {
@@ -53,16 +48,9 @@ extension SendAddressPresenter: ISendAddressViewDelegate {
         }
     }
 
-    func onAddressChange(address: String?) {
-        guard let address = address, !address.isEmpty else {
-            onClearAddress()
-            return
-        }
-        onEnter(address: address)
-    }
-
     func onAddressDeleteClicked() {
-        onClearAddress()
+        view?.set(address: nil, error: nil)
+        address = nil
     }
 
 }

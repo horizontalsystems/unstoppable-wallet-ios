@@ -1,13 +1,13 @@
 import UIKit
 import RxSwift
 
-class SendAddressView: UIView {
+class SendAccountView: UIView {
     private let addressInputField: AddressInputField
-    private let delegate: ISendAddressViewDelegate
+    private let delegate: ISendAccountViewDelegate
 
-    public init(delegate: ISendAddressViewDelegate) {
+    public init(delegate: ISendAccountViewDelegate) {
         self.delegate = delegate
-        addressInputField = AddressInputField(frame: .zero, placeholder: "send.address_placeholder".localized, showQrButton: true, canEdit: false, lineBreakMode: .byTruncatingMiddle)
+        addressInputField = AddressInputField(frame: .zero, placeholder: "send.account_placeholder".localized, showQrButton: true, canEdit: true, lineBreakMode: .byTruncatingMiddle)
 
         super.init(frame: .zero)
 
@@ -25,13 +25,16 @@ class SendAddressView: UIView {
             maker.bottom.equalToSuperview()
         }
         addressInputField.onScan = { [weak self] in
-            self?.delegate.onAddressScanClicked()
+            self?.delegate.onScanClicked()
         }
         addressInputField.onPaste = { [weak self] in
-            self?.delegate.onAddressPasteClicked()
+            self?.delegate.onPasteClicked()
         }
         addressInputField.onDelete = { [weak self] in
-            self?.delegate.onAddressDeleteClicked()
+            self?.delegate.onDeleteClicked()
+        }
+        addressInputField.onTextChange = { [weak self] address in
+            self?.delegate.onChange(account: address)
         }
     }
 
@@ -41,10 +44,10 @@ class SendAddressView: UIView {
 
 }
 
-extension SendAddressView: ISendAddressView {
+extension SendAccountView: ISendAccountView {
 
-    func set(address: String?, error: String?) {
-        addressInputField.bind(address: address, error: error)
+    func set(account: String?, error: String?) {
+        addressInputField.bind(address: account, error: error)
     }
 
 }
