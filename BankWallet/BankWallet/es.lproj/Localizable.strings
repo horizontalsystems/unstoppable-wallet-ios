@@ -118,15 +118,15 @@
 "send.error.no_address" = "No Address";
 "send.error.no_amount" = "No Amount";
 
-"send.confirmation.title" = "Confirm";
-"send.confirmation.to" = "To:";
+"send.confirmation.title" = "Confirmar";
+"send.confirmation.to" = "Para:";
 "send.confirmation.memo_placeholder" = "Memo";
 "send.confirmation.total" = "Total:";
 "send.confirmation.estimate_time" = "Estimate Time:";
 "send.confirmation.eos.account" = "Account";
-"send.confirmation.send_button" = "Send";
+"send.confirmation.send_button" = "Enviar";
 "send.amount_error.balance" = "Saldo %@";
-"send.token.insufficient_fee_alert" = "Transaction fees for %@ (%@) paid in %@. You need %@.";
+"send.token.insufficient_fee_alert" = "Tarifas de transacción para %@ (%@) pagado en %@. Es necesario %@.";
 
 // Transactions
 
@@ -164,7 +164,7 @@
 "full_info.to" = "Para";
 "full_info.amount" = "Importe";
 "full_info.nonce" = "Nonce";
-"full_info.status" = "Status";
+"full_info.status" = "Estado";
 "full_info.memo" = "Memo";
 "full_info.cpu" = "CPU Usage";
 "full_info.net" = "Net Usage";
@@ -219,7 +219,7 @@
 
 "settings_about.title" = "Acerca de";
 "settings_about.app_title" = "Unstoppable";
-"settings_about.app_subtitle" = "Decentralized App";
+"settings_about.app_subtitle" = "Decentralized app";
 "settings_about.terms_privacy_subtitle" = "Términos y privacidad:";
 "settings_about.terms_privacy_text" = "Esta aplicación es de servidor a servidor. No depende de ninguna web o tecnología personal de apoyo a la función.\n\nFunciona en cualquier lugar siempre que haya conexión a internet. Ninguna entidad puede bloquear el funcionamiento de esta aplicación o impedir el acceso de un usuario.\n\nSus fondos son almacenados de forma segura únicamente en el teléfono, en ningún otro lugar.\n\nEs su responsabilidad recordar su clave secreta y mantenerla en privado. Nunca la muestre a nadie. Si la pierde, la olvida o es sustraída, sus fondos pueden ser utilizados por la persona que tiene su clave secreta.\n\nNo modifique la seguridad del software de su teléfono, no instale aplicaciones de orígenes desconocidos , no entregue su dispositivo a desconocidos y mantenga actualizado el sistema operativo de tu teléfono. La seguridad de su cartera depende de ello.\n\nLa totalidad del código que soporta esta aplicación está abierta al escrutinio público desde el inicio de la aplicación. Hemos intentado construir la cartera más segura y descentralizada posible; sin embargo, hay ninguna garantía de que no se produzca algún problema de software no deseado. Dicho esto, esta carpeta es probable que sea significativamente más segura que cualquier aplicación de gestión de cartera de smartphone del mercado\n\nAlgunos datos genéricos de carácter público de esta app se guardan en centros de almacenamiento descentralizado (IPFS).\n";
 
@@ -231,7 +231,7 @@
 
 "settings_security.title" = "Centro de Seguridad";
 "settings_security.manage_accounts" = "Manage Keys";
-"settings_security.passcode" = "Passcode";
+"settings_security.passcode" = "Código";
 "settings_security.change_pin" = "Editar el código ";
 "settings_security.touch_id" = "Touch ID";
 "settings_security.face_id" = "Face ID";
@@ -242,10 +242,10 @@
 "settings_manage_keys.title" = "Keys";
 "settings_manage_keys.description" = "Anyone with access to your Keys can steal your wallet funds. Store keys safely and never show them to anyone.\n\nBackup each key to be able to restore funds if you loose or break your phone, or simply the wallet app gets deleted.";
 "settings_manage_keys.delete" = "Delete";
-"settings_manage_keys.backup" = "Backup";
-"settings_manage_keys.show" = "Show";
+"settings_manage_keys.backup" = "Copia de seguridad";
+"settings_manage_keys.show" = "Mostrar";
 "settings_manage_keys.create" = "Create";
-"settings_manage_keys.restore" = "Restore";
+"settings_manage_keys.restore" = "Restaurar";
 "settings_manage_keys.delete.cant_delete" = "You need to backup this key before you may unlink it.";
 "settings_manage_keys.delete.title" = "Delete Key";
 "settings_manage_keys.delete.confirmation_remove" = "This action will delete the %@ key (wallet) from this device.";
