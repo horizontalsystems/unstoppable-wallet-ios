@@ -62,16 +62,16 @@
 
 "backup.intro.title_backup" = "Copia de seguridad";
 "backup.intro.title_show" = "Mostrar clave";
-"backup.intro.subtitle" = "The key that will be shown next is the only way to restore your funds, if your phone is ever lost, stolen, broken etc. Make sure that no one is watching your screen.\n\nThe coins controlled by this key: %@";
+"backup.intro.subtitle" = "La clave que se mostrará a continuación es la única forma de restaurar sus fondos en caso de que su teléfono se pierda, lo roben, se averie, etc. Asegúrese de que nadie esté viendo su pantalla. \n\nLas criptomonedas controladas por esta clave: %@";
 "backup.intro.later" = "Posterior";
 "backup.intro.backup_now" = "Copia de seguridad";
-"backup.intro.show_key" = "Show Key";
+"backup.intro.show_key" = "Mostrar clave";
 
 "backup.words.title" = "Clave secreta";
-"backup.12words.title" = "12-words Key";
-"backup.binance.title" = "Binance Key";
+"backup.12words.title" = "Clave de 12-palabras";
+"backup.binance.title" = "Clave de Binance";
 
-"backup.eos.title" = "EOS Key";
+"backup.eos.title" = "Clave de EOS";
 "backup.eos.account_name" = "Account Name";
 "backup.eos.active_private_key" = "Active Private Key\n";
 "backup.eos.hint" = "Copying your key using “copy” action poses some risks if you use any clipboard management apps or some other apps that may have access to clipboard data.";
