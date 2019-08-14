@@ -70,6 +70,8 @@
 "backup.words.title" = "Offlineschlüssel";
 "backup.12words.title" = "12-words Key";
 "backup.binance.title" = "Binance Key";
+"confirmation.binance.description" = "Enter words from your Binance Key";
+"confirmation.12words.description" = "Enter words from your 12-words Key";
 
 "backup.eos.title" = "EOS Key";
 "backup.eos.account_name" = "Account Name";
@@ -77,7 +79,6 @@
 "backup.eos.hint" = "Copying your key using “copy” action poses some risks if you use any clipboard management apps or some other apps that may have access to clipboard data.";
 
 "backup.confirmation.title" = "Prüfen …";
-"backup.confirmation.description" = "Gib bitte die Wörter deines Offlineschlüssels ein";
 "backup.confirmation.secret_key" = "Ich stimme zu, dass ich allein Inhaber eines privaten 12-Wort Offlineschlüssels bin, der sicher auf meinem Telefon gespeichert wird und mir ermöglicht, Geld auf meinem Wallet zu steuern.";
 "backup.confirmation.delete_app_warn" = "Ich stimme zu, dass bei einer Verschiebung oder Entfernung dieser App, der Zugang zu meinem Walletkonto nur bei Verwendung den Offlineschlüsseln erfolgt werden muss.";
 "backup.confirmation.disclaimer" = "Ich stimme zu, dass Entwickler dieser App nicht für unbeabsichtigte Fehler oder Probleme verantwortlich gemacht werden können, die bei der Verwendung dieser App auftreten können.";
