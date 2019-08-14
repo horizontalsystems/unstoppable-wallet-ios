@@ -9,7 +9,7 @@
 "button.cancel" = "취소";
 "button.confirm" = "확인";
 "button.done" = "완료";
-"button.restore" = "Restore";
+"button.restore" = "복구";
 "button.next" = "다음";
 "button.remove" = "삭제";
 "button.forward" = "Forward";
@@ -60,7 +60,7 @@
 
 "backup.close" = "Close";
 
-"backup.intro.title_backup" = "Backup";
+"backup.intro.title_backup" = "백업";
 "backup.intro.title_show" = "Show Key";
 "backup.intro.subtitle" = "The key that will be shown next is the only way to restore your funds, if your phone is ever lost, stolen, broken etc. Make sure that no one is watching your screen.\n\nThe coins controlled by this key: %@";
 "backup.intro.later" = "나중에";
@@ -97,7 +97,7 @@
 "balance.syncing" = "Syncing...";
 "balance.add_coins" = "Add Coins";
 "balance.sort.header" = "Sort by";
-"balance.sort.valueHighToLow" = "Balance";
+"balance.sort.valueHighToLow" = "잔액";
 "balance.sort.az" = "Name";
 "balance.sort.manual" = "Default";
 
@@ -122,10 +122,10 @@
 "send.confirmation.title" = "Confirm";
 "send.confirmation.to" = "To:";
 "send.confirmation.memo_placeholder" = "Memo";
-"send.confirmation.total" = "Total:";
+"send.confirmation.total" = "합계:";
 "send.confirmation.estimate_time" = "Estimate Time:";
 "send.confirmation.eos.account" = "Account";
-"send.confirmation.send_button" = "Send";
+"send.confirmation.send_button" = "전송";
 "send.amount_error.balance" = "잔액%@";
 "send.token.insufficient_fee_alert" = "Transaction fees for %@ (%@) paid in %@. You need %@.";
 
@@ -163,13 +163,13 @@
 "full_info.contract" = "Contract";
 "full_info.from" = "로 부터";
 "full_info.to" = "에게";
-"full_info.amount" = "Amount";
+"full_info.amount" = "양";
 "full_info.nonce" = "Nonce";
-"full_info.status" = "Status";
+"full_info.status" = "상태";
 "full_info.memo" = "Memo";
 "full_info.cpu" = "CPU Usage";
 "full_info.net" = "Net Usage";
-"full_info.milli_seconds" = "%@ μs";
+"full_info.milli_seconds" = "%@ μs\n";
 "full_info.bytes" = "%@ Bytes";
 
 "full_info.gas_limit" = "Gas Limit";
@@ -243,10 +243,10 @@
 "settings_manage_keys.title" = "Keys";
 "settings_manage_keys.description" = "Anyone with access to your Keys can steal your wallet funds. Store keys safely and never show them to anyone.\n\nBackup each key to be able to restore funds if you loose or break your phone, or simply the wallet app gets deleted.";
 "settings_manage_keys.delete" = "Delete";
-"settings_manage_keys.backup" = "Backup";
+"settings_manage_keys.backup" = "백업";
 "settings_manage_keys.show" = "Show";
 "settings_manage_keys.create" = "Create";
-"settings_manage_keys.restore" = "Restore";
+"settings_manage_keys.restore" = "복구";
 "settings_manage_keys.delete.cant_delete" = "You need to backup this key before you may unlink it.";
 "settings_manage_keys.delete.title" = "Delete Key";
 "settings_manage_keys.delete.confirmation_remove" = "This action will delete the %@ key (wallet) from this device.";
