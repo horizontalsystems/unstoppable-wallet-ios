@@ -111,6 +111,7 @@
 "send.title" = "전송 %@";
 "send.amount_placeholder" = "양";
 "send.address_placeholder" = "주소";
+"send.account_placeholder" = "Account";
 "send.fee" = "Fee:";
 "send.max_button" = "최대";
 "send.next_button" = "Next";
