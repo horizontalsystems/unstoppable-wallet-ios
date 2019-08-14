@@ -111,6 +111,7 @@
 "send.title" = "%@ gönder";
 "send.amount_placeholder" = "Tutar";
 "send.address_placeholder" = "Adres";
+"send.account_placeholder" = "Account";
 "send.fee" = "Masraf:";
 "send.max_button" = "Azami";
 "send.next_button" = "İleri";
