@@ -88,6 +88,10 @@ extension EthereumAdapter: ISendEthereumAdapter {
         return max(0, balance - fee(gasPrice: gasPrice))
     }
 
+    var ethereumBalance: Decimal {
+        return balance
+    }
+
     func fee(gasPrice: Int) -> Decimal {
         return ethereumKit.fee(gasPrice: gasPrice) / pow(10, EthereumAdapter.decimal)
     }

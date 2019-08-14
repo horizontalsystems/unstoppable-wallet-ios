@@ -38,26 +38,13 @@ protocol ISendBitcoinInteractorDelegate: class {
 protocol ISendEthereumInteractor {
     var coin: Coin { get }
     func availableBalance(gasPrice: Int) -> Decimal
+    var ethereumBalance: Decimal { get }
     func validate(address: String) throws
     func fee(gasPrice: Int) -> Decimal
     func send(amount: Decimal, address: String, gasPrice: Int)
 }
 
 protocol ISendEthereumInteractorDelegate: class {
-    func didSend()
-    func didFailToSend(error: Error)
-}
-
-protocol ISendErc20Interactor {
-    var coin: Coin { get }
-    var availableBalance: Decimal { get }
-    var availableEthereumBalance: Decimal { get }
-    func validate(address: String) throws
-    func fee(gasPrice: Int) -> Decimal
-    func send(amount: Decimal, address: String, gasPrice: Int)
-}
-
-protocol ISendErc20InteractorDelegate: class {
     func didSend()
     func didFailToSend(error: Error)
 }

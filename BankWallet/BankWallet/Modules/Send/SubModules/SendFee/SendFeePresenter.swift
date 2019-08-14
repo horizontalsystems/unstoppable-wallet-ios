@@ -55,6 +55,10 @@ class SendFeePresenter {
     }
 
     private func validate() throws {
+        guard coin != feeCoin else {
+            return
+        }
+
         guard let availableFeeBalance = availableFeeBalance else {
             return
         }

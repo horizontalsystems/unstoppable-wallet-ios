@@ -38,10 +38,6 @@ extension SendRouter {
             return SendRouter.module(wallet: wallet, adapter: ethereumAdapter)
         }
 
-        if let erc20Adapter = adapter as? ISendErc20Adapter {
-            return SendRouter.module(wallet: wallet, adapter: erc20Adapter)
-        }
-
         if let eosAdapter = adapter as? ISendEosAdapter {
             return SendRouter.module(wallet: wallet, adapter: eosAdapter)
         }
@@ -83,35 +79,6 @@ extension SendRouter {
     }
 
     private static func module(wallet: Wallet, adapter: ISendEthereumAdapter) -> UIViewController? {
-        guard let feeRateProvider = App.shared.feeRateProviderFactory.provider(coin: wallet.coin) else {
-            return nil
-        }
-
-        let (amountView, amountModule) = SendAmountRouter.module(coin: wallet.coin)
-        let (addressView, addressModule) = SendAddressRouter.module(addressParser: App.shared.addressParserFactory.parser(coin: wallet.coin))
-        let (feeView, feeModule) = SendFeeRouter.module(coin: wallet.coin)
-        let (feeSliderView, feeSliderModule) = SendFeeSliderRouter.module(feeRateProvider: feeRateProvider)
-
-        let router = SendRouter()
-        let interactor = SendEthereumInteractor(wallet: wallet, adapter: adapter)
-        let presenter = SendEthereumPresenter(interactor: interactor, router: router, confirmationFactory: SendConfirmationItemFactory(), amountModule: amountModule, addressModule: addressModule, feeModule: feeModule, feeSliderModule: feeSliderModule)
-
-        let viewController = SendViewController(delegate: presenter, views: [amountView, addressView, feeView, feeSliderView])
-
-        presenter.view = viewController
-        interactor.delegate = presenter
-
-        amountModule.delegate = presenter
-        addressModule.delegate = presenter
-        feeModule.delegate = presenter
-        feeSliderModule.delegate = presenter
-
-        let navigationController = WalletNavigationController(rootViewController: viewController)
-        router.viewController = navigationController
-        return navigationController
-    }
-
-    private static func module(wallet: Wallet, adapter: ISendErc20Adapter) -> UIViewController? {
         guard let feeCoin = App.shared.appConfigProvider.coins.first(where: { $0.type == .ethereum }) else {
             return nil
         }
@@ -126,8 +93,8 @@ extension SendRouter {
         let (feeSliderView, feeSliderModule) = SendFeeSliderRouter.module(feeRateProvider: feeRateProvider)
 
         let router = SendRouter()
-        let interactor = SendErc20Interactor(wallet: wallet, adapter: adapter)
-        let presenter = SendErc20Presenter(interactor: interactor, router: router, confirmationFactory: SendConfirmationItemFactory(), amountModule: amountModule, addressModule: addressModule, feeModule: feeModule, feeSliderModule: feeSliderModule)
+        let interactor = SendEthereumInteractor(wallet: wallet, adapter: adapter)
+        let presenter = SendEthereumPresenter(interactor: interactor, router: router, confirmationFactory: SendConfirmationItemFactory(), amountModule: amountModule, addressModule: addressModule, feeModule: feeModule, feeSliderModule: feeSliderModule)
 
         let viewController = SendViewController(delegate: presenter, views: [amountView, addressView, feeView, feeSliderView])
 

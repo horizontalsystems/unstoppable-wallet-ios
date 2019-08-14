@@ -25,6 +25,10 @@ extension SendEthereumInteractor: ISendEthereumInteractor {
         return adapter.availableBalance(gasPrice: gasPrice)
     }
 
+    var ethereumBalance: Decimal {
+        return adapter.ethereumBalance
+    }
+
     func validate(address: String) throws {
         try adapter.validate(address: address)
     }

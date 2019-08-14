@@ -96,13 +96,13 @@ extension Erc20Adapter {
 
 }
 
-extension Erc20Adapter: ISendErc20Adapter {
+extension Erc20Adapter: ISendEthereumAdapter {
 
-    var availableBalance: Decimal {
+    func availableBalance(gasPrice: Int) -> Decimal {
         return max(0, balance - fee)
     }
 
-    var availableEthereumBalance: Decimal {
+    var ethereumBalance: Decimal {
         return balanceDecimal(balanceString: ethereumKit.balance, decimal: EthereumAdapter.decimal)
     }
 

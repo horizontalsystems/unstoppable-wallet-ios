@@ -24,7 +24,7 @@ class SendEthereumPresenter {
     }
 
     private func syncSendButton() {
-        view?.set(sendButtonEnabled: amountModule.validAmount != nil && addressModule.address != nil)
+        view?.set(sendButtonEnabled: amountModule.validAmount != nil && addressModule.address != nil && feeModule.isValid)
     }
 
     private func syncAvailableBalance() {
@@ -46,6 +46,8 @@ extension SendEthereumPresenter: ISendViewDelegate {
     func onViewDidLoad() {
         view?.set(coin: interactor.coin)
         syncAvailableBalance()
+
+        feeModule.set(availableFeeBalance: interactor.ethereumBalance)
         syncFee()
     }
 
