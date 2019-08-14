@@ -9,7 +9,7 @@
 "button.cancel" = "Annuler";
 "button.confirm" = "Confirmer";
 "button.done" = "Fait";
-"button.restore" = "Restore";
+"button.restore" = "Restaurer";
 "button.next" = "Suivant";
 "button.remove" = "Supprimer";
 "button.forward" = "Transférer";
@@ -30,9 +30,9 @@
 
 // Welcome
 
-"welcome.new_wallet" = "New Wallet";
-"welcome.restore_wallet" = "Restore Wallet";
-"welcome.version" = "version %@";
+"welcome.new_wallet" = "Nouveau porte-monnaie";
+"welcome.restore_wallet" = "Restaurer le porte-monnaie";
+"welcome.version" = "Version %@";
 
 // Restore
 
@@ -58,14 +58,14 @@
 
 // Backup
 
-"backup.close" = "Close";
+"backup.close" = "Fermer";
 
-"backup.intro.title_backup" = "Backup";
-"backup.intro.title_show" = "Show Key";
+"backup.intro.title_backup" = "Sauvegarde";
+"backup.intro.title_show" = "Voir la clé";
 "backup.intro.subtitle" = "The key that will be shown next is the only way to restore your funds, if your phone is ever lost, stolen, broken etc. Make sure that no one is watching your screen.\n\nThe coins controlled by this key: %@";
 "backup.intro.later" = "Plus tard";
 "backup.intro.backup_now" = "Sauvegarde";
-"backup.intro.show_key" = "Show Key";
+"backup.intro.show_key" = "Voir la clé";
 
 "backup.words.title" = "Clé Secrete";
 "backup.12words.title" = "12-words Key";
@@ -84,7 +84,7 @@
 "backup.confirmation.disclaimer" = "Je comprends que les développeurs de cette application ne peuvent pas être responsables de tout bogue ou problème non désiré qui pourrait apparaître lors de l'utilisation de cette application.";
 
 "words_validator.empty_words" = "Not all words are entered";
-"words_validator.invalid_confirmation" = "Words do not match";
+"words_validator.invalid_confirmation" = "Les mots ne correspondent pas";
 
 // Balance
 
@@ -111,9 +111,9 @@
 "send.title" = "Envoyer %@";
 "send.amount_placeholder" = "Montant";
 "send.address_placeholder" = "Adresse";
-"send.fee" = "Fee:";
+"send.fee" = "Frais:";
 "send.max_button" = "Max";
-"send.next_button" = "Next";
+"send.next_button" = "Suivant";
 "send.error.invalid_address" = "Invalid Address";
 "send.error.invalid_account" = "Invalid Account";
 "send.error.no_address" = "No Address";
@@ -190,8 +190,8 @@
 "settings.title" = "Paramètres";
 "settings.tab_bar_item" = "Paramètres";
 "settings.security_center" = "Centre de Sécurité";
-"settings.manage_coins" = "Manage Coins";
-"settings.restore_wallet" = "Restore Wallet";
+"settings.manage_coins" = "Gérer les coins";
+"settings.restore_wallet" = "Restaurer le porte-monnaie";
 "settings.base_currency" = "Devise de Base";
 "settings.language" = "Langue";
 "settings.about" = "À propos de";
@@ -210,11 +210,11 @@
 
 // Settings -> Manage Wallet
 
-"manage_coins.title" = "Coin Manager";
+"manage_coins.title" = "Portefeuilles";
 "manage_coins.add_coin.title" = "Add %@ ";
 "manage_coins.add_coin.text" = "You don't have active key for use with %@. Use Create button below to generate a new key (wallet).\n\nYou may also use the existing key for the %@ if you already have it.";
 "manage_coins.add_coin.create" = "Create";
-"manage_coins.add_coin.restore" = "Restore";
+"manage_coins.add_coin.restore" = "Restaurer";
 
 // Settings -> About
 
@@ -232,7 +232,7 @@
 
 "settings_security.title" = "Centre de Sécurité";
 "settings_security.manage_accounts" = "Manage Keys";
-"settings_security.passcode" = "Passcode";
+"settings_security.passcode" = "Code";
 "settings_security.change_pin" = "Modifier le code ";
 "settings_security.touch_id" = "Touch ID";
 "settings_security.face_id" = "Face ID";
@@ -243,10 +243,10 @@
 "settings_manage_keys.title" = "Keys";
 "settings_manage_keys.description" = "Anyone with access to your Keys can steal your wallet funds. Store keys safely and never show them to anyone.\n\nBackup each key to be able to restore funds if you loose or break your phone, or simply the wallet app gets deleted.";
 "settings_manage_keys.delete" = "Delete";
-"settings_manage_keys.backup" = "Backup";
-"settings_manage_keys.show" = "Show";
+"settings_manage_keys.backup" = "Sauvegarde";
+"settings_manage_keys.show" = "Afficher";
 "settings_manage_keys.create" = "Create";
-"settings_manage_keys.restore" = "Restore";
+"settings_manage_keys.restore" = "Restaurer";
 "settings_manage_keys.delete.cant_delete" = "You need to backup this key before you may unlink it.";
 "settings_manage_keys.delete.title" = "Delete Key";
 "settings_manage_keys.delete.confirmation_remove" = "This action will delete the %@ key (wallet) from this device.";
