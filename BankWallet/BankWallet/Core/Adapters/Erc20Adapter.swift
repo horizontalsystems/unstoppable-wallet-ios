@@ -4,8 +4,6 @@ import RxSwift
 import class Erc20Kit.TransactionInfo
 
 class Erc20Adapter: EthereumBaseAdapter {
-    let feeCoinCode: CoinCode? = "ETH"
-
     private let erc20Kit: Erc20Kit
     private let fee: Decimal
 

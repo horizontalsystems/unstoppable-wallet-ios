@@ -7,8 +7,6 @@ class BinanceAdapter {
     private let binanceKit: BinanceChainKit
     private let asset: Asset
 
-    let feeCoinCode: CoinCode? = "BNB"
-
     init(binanceKit: BinanceChainKit, symbol: String) {
         self.binanceKit = binanceKit
 
@@ -29,9 +27,6 @@ class BinanceAdapter {
         var amount: Decimal = 0
         if from.mine {
             amount -= transaction.amount
-            if transaction.symbol == feeCoinCode {
-                amount -= transaction.fee
-            }
         }
         if to.mine {
             amount += transaction.amount

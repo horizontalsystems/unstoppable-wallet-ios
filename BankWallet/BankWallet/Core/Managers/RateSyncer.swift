@@ -33,9 +33,6 @@ class RateSyncer {
             var coinCodes = Set<CoinCode>()
             for wallet in walletManager.wallets {
                 coinCodes.insert(wallet.coin.code)
-                if let feeCoinCode = wallet.coin.feeCoinCode {
-                    coinCodes.insert(feeCoinCode)
-                }
             }
             rateManager.refreshLatestRates(coinCodes: Array(coinCodes), currencyCode: currencyManager.baseCurrency.code)
         }
