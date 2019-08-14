@@ -7,18 +7,22 @@ class BackupConfirmationPresenter: IBackupConfirmationPresenter {
     private let router: IBackupConfirmationRouter
 
     private let words: [String]
+    private let predefinedAccountType: IPredefinedAccountType
 
     private(set) var indexes = [Int]()
 
-    init(interactor: IBackupConfirmationInteractor, router: IBackupConfirmationRouter, words: [String]) {
+    init(interactor: IBackupConfirmationInteractor, router: IBackupConfirmationRouter, words: [String], predefinedAccountType: IPredefinedAccountType) {
         self.interactor = interactor
         self.router = router
         self.words = words
+        self.predefinedAccountType = predefinedAccountType
     }
 
 }
 
 extension BackupConfirmationPresenter: IBackupConfirmationViewDelegate {
+
+    var description: String { return predefinedAccountType.confirmationDescription }
 
     func generateNewIndexes() {
         indexes = interactor.fetchConfirmationIndexes(max: words.count, count: BackupConfirmationPresenter.confirmationWordsCount)

@@ -11,8 +11,8 @@ class BackupWordsRouter {
 
 extension BackupWordsRouter: IBackupWordsRouter {
 
-    func showConfirmation(delegate: IBackupConfirmationDelegate, words: [String]) {
-        viewController?.navigationController?.pushViewController(BackupConfirmationRouter.module(delegate: delegate, words: words), animated: true)
+    func showConfirmation(delegate: IBackupConfirmationDelegate, words: [String], predefinedAccountType: IPredefinedAccountType) {
+        viewController?.navigationController?.pushViewController(BackupConfirmationRouter.module(delegate: delegate, words: words, predefinedAccountType: predefinedAccountType), animated: true)
     }
 
     func notifyBackedUp() {
