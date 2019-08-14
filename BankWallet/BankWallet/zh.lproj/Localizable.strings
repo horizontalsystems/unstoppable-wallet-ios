@@ -48,7 +48,7 @@
 "coin_sync.title" = "恢复选项";
 "coin_sync.fast" = "过程最快";
 "coin_sync.recommended" = "0 小时 (推荐)";
-"coin_sync.fast.text" = "Restores your past transactions directly from the network. Significantly more private but very slow. If the restore takes way too much time, go to Manage Keys section and reimport the Key for the wallet using the Fast Sync option.";
+"coin_sync.fast.text" = "Restores your past transactions via secure third party server. For users with a long history of transactions involving very large sums this method may pose privacy risks";
 "coin_sync.slow" = "缓慢";
 "coin_sync.more_private" = "1 小时(更多隐私)";
 "coin_sync.slow.text" = "Restores your past transactions directly from the network. Significantly more private but very slow. If the restore takes way too much time go to Security section in Settings tab and select “Delete from Phone” option.";
