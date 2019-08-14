@@ -111,6 +111,7 @@
 "send.title" = "发送%@";
 "send.amount_placeholder" = "金额";
 "send.address_placeholder" = "地址";
+"send.account_placeholder" = "Account";
 "send.fee" = "费用:";
 "send.max_button" = "最多";
 "send.next_button" = "继续";
