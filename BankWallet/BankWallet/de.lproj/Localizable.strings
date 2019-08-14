@@ -111,6 +111,7 @@
 "send.title" = "Senden %@";
 "send.amount_placeholder" = "Betrag";
 "send.address_placeholder" = "Adresse";
+"send.account_placeholder" = "Account";
 "send.fee" = "Gebühr:";
 "send.max_button" = "Max.";
 "send.next_button" = "Weiter";
