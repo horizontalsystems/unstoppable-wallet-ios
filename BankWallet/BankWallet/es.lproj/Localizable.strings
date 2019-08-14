@@ -111,6 +111,7 @@
 "send.title" = "Enviar %@";
 "send.amount_placeholder" = "Importe";
 "send.address_placeholder" = "Dirección";
+"send.account_placeholder" = "Account";
 "send.fee" = "Comisión:";
 "send.max_button" = "Máx.";
 "send.next_button" = "Siguiente";
