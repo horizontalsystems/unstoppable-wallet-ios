@@ -70,6 +70,8 @@
 "backup.words.title" = "Clé Secrete";
 "backup.12words.title" = "12-words Key";
 "backup.binance.title" = "Binance Key";
+"confirmation.binance.description" = "Enter words from your Binance Key";
+"confirmation.12words.description" = "Enter words from your 12-words Key";
 
 "backup.eos.title" = "EOS Key";
 "backup.eos.account_name" = "Account Name";
@@ -77,7 +79,6 @@
 "backup.eos.hint" = "Copying your key using “copy” action poses some risks if you use any clipboard management apps or some other apps that may have access to clipboard data.";
 
 "backup.confirmation.title" = "Vérification...";
-"backup.confirmation.description" = "Entrez les mots de votre clé secrète";
 "backup.confirmation.secret_key" = "Je comprends que je suis propriétaire d'une clé secrète privée de 12 mots, qui est stockée en toute sécurité sur mon téléphone portable et me permet de contrôler les fonds sur mon porte-monnaie.";
 "backup.confirmation.delete_app_warn" = "Je comprends que si cette appli ne fonction plus, est déplacée vers un autre appareil ou supprimée, mon porte-monnaie ne peut être récupéré qu'avec la clé secrète.";
 "backup.confirmation.disclaimer" = "Je comprends que les développeurs de cette application ne peuvent pas être responsables de tout bogue ou problème non désiré qui pourrait apparaître lors de l'utilisation de cette application.";
