@@ -89,6 +89,7 @@
 		11B352783ABAB4B503FE6DC7 /* RateSyncer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B350C8341DFAF14D974ACC /* RateSyncer.swift */; };
 		11B352A99B39974BC9BDC839 /* BinanceAccountType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35473B5D087C8C234D390 /* BinanceAccountType.swift */; };
 		11B352AAEE59D383908B3E1C /* SendBitcoinInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B350097B17D90CD768125E /* SendBitcoinInteractor.swift */; };
+		11B352BB59CED57B0AD57937 /* FeeCoinProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35E3D5EA66F30E4307024 /* FeeCoinProvider.swift */; };
 		11B352C0B06CE48E16B20BE9 /* BalanceItemDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35F79F5274A2603296EFF /* BalanceItemDataSource.swift */; };
 		11B352C17E4BB374BF10327A /* JsonApiProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B355AD0C896DBA7122F3DC /* JsonApiProvider.swift */; };
 		11B352DCCAD3FF8EC3585E6D /* BiometryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B352254688700E3FF9B59F /* BiometryManager.swift */; };
@@ -265,6 +266,7 @@
 		11B3581B5F15B9F806F1CA8F /* BaseCurrencySettingsPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B359DA37B619C35AF93D2A /* BaseCurrencySettingsPresenterTests.swift */; };
 		11B3581D452FC3D2569BBA71 /* UIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B351E743E45282859B08D3 /* UIButton.swift */; };
 		11B3581EB0F56103624AEA83 /* SendAccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3587F4E2DDA3C7B401E0C /* SendAccountView.swift */; };
+		11B3582592F240FF00355740 /* FeeCoinProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35E3D5EA66F30E4307024 /* FeeCoinProvider.swift */; };
 		11B358279D59E7896705D1B1 /* WalletRemover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B351FBF486466DDD72E795 /* WalletRemover.swift */; };
 		11B3582F7FC7FA7F7626CBE3 /* RateApiProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35055FA381EE9CA438CB0 /* RateApiProvider.swift */; };
 		11B35840BDD568F67783A431 /* SendFeeSliderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35AD310E6EAFAA0A8DF84 /* SendFeeSliderView.swift */; };
@@ -331,6 +333,7 @@
 		11B35A37BC622612A85EF250 /* BaseButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3523AECA209106F192586 /* BaseButtonItem.swift */; };
 		11B35A41779B30FEA1E59914 /* SendStateViewItemFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B352A3792AA46E98DDE5B6 /* SendStateViewItemFactoryTests.swift */; };
 		11B35A4912C5B73767232C95 /* TestModeIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B353F97FB72582499D6663 /* TestModeIndicator.swift */; };
+		11B35A56479FF345FE35D5F1 /* FeeCoinProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35E3D5EA66F30E4307024 /* FeeCoinProvider.swift */; };
 		11B35A5B491C935030FCD1C5 /* WalletFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B357A7F7FD0E4D2BDD8F49 /* WalletFactory.swift */; };
 		11B35A5BA2E50CBE45580021 /* AgreementPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35563AD5480E74C3EE851 /* AgreementPresenter.swift */; };
 		11B35A6586FF799F6BB23261 /* SendAccountInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B359DB9EEA8DC030338FAC /* SendAccountInteractor.swift */; };
@@ -1701,6 +1704,7 @@
 		11B35DDCBD6107AD190ED580 /* ManageAccountsModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManageAccountsModule.swift; sourceTree = "<group>"; };
 		11B35DF67113314382E44FB6 /* NoPasscodeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoPasscodeViewController.swift; sourceTree = "<group>"; };
 		11B35E0A329C9A81552697DF /* SyncModeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SyncModeViewController.swift; sourceTree = "<group>"; };
+		11B35E3D5EA66F30E4307024 /* FeeCoinProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeeCoinProvider.swift; sourceTree = "<group>"; };
 		11B35E4481DCD98BF2074797 /* BaseCurrencySettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseCurrencySettingsViewController.swift; sourceTree = "<group>"; };
 		11B35E61992B00453B34887E /* SendAccountRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendAccountRouter.swift; sourceTree = "<group>"; };
 		11B35E81D848256AED44AFF3 /* RestoreWordsRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestoreWordsRouter.swift; sourceTree = "<group>"; };
@@ -2521,6 +2525,7 @@
 				11B357A7F7FD0E4D2BDD8F49 /* WalletFactory.swift */,
 				11B353450DED12F9F024BAD0 /* AddressParserFactory.swift */,
 				11B359D88585F2BBFA56CB77 /* FeeRateProviderFactory.swift */,
+				11B35E3D5EA66F30E4307024 /* FeeCoinProvider.swift */,
 			);
 			path = Factories;
 			sourceTree = "<group>";
@@ -4401,6 +4406,7 @@
 				11B3559B3F93D6808473D95F /* SendEosInteractor.swift in Sources */,
 				11B35FA20D697D600C27B330 /* SendBinancePresenter.swift in Sources */,
 				11B351E6226C2B0FFF4EF15F /* SendBinanceInteractor.swift in Sources */,
+				11B35A56479FF345FE35D5F1 /* FeeCoinProvider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4931,6 +4937,7 @@
 				11B3509C0A195996C3965404 /* SendEosInteractor.swift in Sources */,
 				11B351C173BF6DFC97292DB7 /* SendBinancePresenter.swift in Sources */,
 				11B35D15D4EA6B936A68809F /* SendBinanceInteractor.swift in Sources */,
+				11B352BB59CED57B0AD57937 /* FeeCoinProvider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5410,6 +5417,7 @@
 				11B3592828E390A4B61335EF /* SendEosInteractor.swift in Sources */,
 				11B35F6305DC6D459B9A4B6A /* SendBinancePresenter.swift in Sources */,
 				11B359A473A5A19D266A275E /* SendBinanceInteractor.swift in Sources */,
+				11B3582592F240FF00355740 /* FeeCoinProvider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

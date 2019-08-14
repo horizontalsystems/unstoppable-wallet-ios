@@ -6,29 +6,35 @@ class SendFeePresenter {
 
     private let interactor: ISendFeeInteractor
 
-    private let coin: Coin
-    private let feeCoin: Coin
-    private let coinProtocol: String
+    private let baseCoin: Coin
+    private let feeCoinData: (Coin, String)?
     private let currency: Currency
-    private let rate: Rate?
+    private var rate: Rate?
 
     private var fee: Decimal = 0
     private var availableFeeBalance: Decimal?
 
     private(set) var inputType: SendInputType = .coin
 
-    init(coin: Coin, feeCoin: Coin, coinProtocol: String, interactor: ISendFeeInteractor) {
-        self.coin = coin
-        self.feeCoin = feeCoin
-        self.coinProtocol = coinProtocol
+    init(coin: Coin, feeCoinData: (Coin, String)?, interactor: ISendFeeInteractor) {
+        baseCoin = coin
+        self.feeCoinData = feeCoinData
         self.interactor = interactor
 
         currency = interactor.baseCurrency
-        rate = interactor.rate(coinCode: feeCoin.code, currencyCode: currency.code)
+        rate = interactor.rate(coinCode: self.coin.code, currencyCode: currency.code)
+    }
+
+    private var coin: Coin {
+        if let (feeCoin, _) = feeCoinData {
+            return feeCoin
+        } else {
+            return baseCoin
+        }
     }
 
     private func syncFeeLabels() {
-        let coinAmountInfo: AmountInfo = .coinValue(coinValue: CoinValue(coin: feeCoin, value: fee))
+        let coinAmountInfo: AmountInfo = .coinValue(coinValue: CoinValue(coin: coin, value: fee))
         var currencyAmountInfo: AmountInfo?
 
         if let rate = rate {
@@ -55,7 +61,7 @@ class SendFeePresenter {
     }
 
     private func validate() throws {
-        guard coin != feeCoin else {
+        guard let (feeCoin, coinProtocol) = feeCoinData else {
             return
         }
 
@@ -64,7 +70,7 @@ class SendFeePresenter {
         }
 
         if availableFeeBalance < fee {
-            throw ValidationError.insufficientFeeBalance(coin: coin, coinProtocol: coinProtocol, feeCoin: feeCoin, fee: .coinValue(coinValue: CoinValue(coin: feeCoin, value: fee)))
+            throw ValidationError.insufficientFeeBalance(coin: baseCoin, coinProtocol: coinProtocol, feeCoin: feeCoin, fee: .coinValue(coinValue: CoinValue(coin: feeCoin, value: fee)))
         }
     }
 
@@ -82,7 +88,7 @@ extension SendFeePresenter: ISendFeeModule {
     }
 
     var coinValue: CoinValue {
-        return CoinValue(coin: feeCoin, value: fee)
+        return CoinValue(coin: coin, value: fee)
     }
 
     var currencyValue: CurrencyValue? {

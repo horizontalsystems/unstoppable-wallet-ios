@@ -3,6 +3,8 @@ import Foundation
 class SendEosPresenter {
     weak var view: ISendView?
 
+    private let coin: Coin
+
     private let interactor: ISendEosInteractor
     private let router: ISendRouter
     private let confirmationFactory: ISendConfirmationItemFactory
@@ -10,7 +12,9 @@ class SendEosPresenter {
     private let amountModule: ISendAmountModule
     private let accountModule: ISendAccountModule
 
-    init(interactor: ISendEosInteractor, router: ISendRouter, confirmationFactory: ISendConfirmationItemFactory, amountModule: ISendAmountModule, accountModule: ISendAccountModule) {
+    init(coin: Coin, interactor: ISendEosInteractor, router: ISendRouter, confirmationFactory: ISendConfirmationItemFactory, amountModule: ISendAmountModule, accountModule: ISendAccountModule) {
+        self.coin = coin
+
         self.interactor = interactor
         self.router = router
         self.confirmationFactory = confirmationFactory
@@ -36,7 +40,7 @@ extension SendEosPresenter: ISendViewDelegate {
     }
 
     func onViewDidLoad() {
-        view?.set(coin: interactor.coin)
+        view?.set(coin: coin)
         syncAvailableBalance()
     }
 

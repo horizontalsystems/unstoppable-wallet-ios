@@ -3,6 +3,8 @@ import Foundation
 class SendBitcoinPresenter {
     weak var view: ISendView?
 
+    private let coin: Coin
+
     private let interactor: ISendBitcoinInteractor
     private let router: ISendRouter
     private let confirmationFactory: ISendConfirmationItemFactory
@@ -12,7 +14,9 @@ class SendBitcoinPresenter {
     private let feeModule: ISendFeeModule
     private let feeSliderModule: ISendFeeSliderModule
 
-    init(interactor: ISendBitcoinInteractor, router: ISendRouter, confirmationFactory: ISendConfirmationItemFactory, amountModule: ISendAmountModule, addressModule: ISendAddressModule, feeModule: ISendFeeModule, feeSliderModule: ISendFeeSliderModule) {
+    init(coin: Coin, interactor: ISendBitcoinInteractor, router: ISendRouter, confirmationFactory: ISendConfirmationItemFactory, amountModule: ISendAmountModule, addressModule: ISendAddressModule, feeModule: ISendFeeModule, feeSliderModule: ISendFeeSliderModule) {
+        self.coin = coin
+
         self.interactor = interactor
         self.router = router
         self.confirmationFactory = confirmationFactory
@@ -44,7 +48,7 @@ extension SendBitcoinPresenter: ISendViewDelegate {
     }
 
     func onViewDidLoad() {
-        view?.set(coin: interactor.coin)
+        view?.set(coin: coin)
         syncAvailableBalance()
     }
 

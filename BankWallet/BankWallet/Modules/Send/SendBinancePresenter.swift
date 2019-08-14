@@ -3,6 +3,8 @@ import Foundation
 class SendBinancePresenter {
     weak var view: ISendView?
 
+    private let coin: Coin
+
     private let interactor: ISendBinanceInteractor
     private let router: ISendRouter
     private let confirmationFactory: ISendConfirmationItemFactory
@@ -11,7 +13,9 @@ class SendBinancePresenter {
     private let addressModule: ISendAddressModule
     private let feeModule: ISendFeeModule
 
-    init(interactor: ISendBinanceInteractor, router: ISendRouter, confirmationFactory: ISendConfirmationItemFactory, amountModule: ISendAmountModule, addressModule: ISendAddressModule, feeModule: ISendFeeModule) {
+    init(coin: Coin, interactor: ISendBinanceInteractor, router: ISendRouter, confirmationFactory: ISendConfirmationItemFactory, amountModule: ISendAmountModule, addressModule: ISendAddressModule, feeModule: ISendFeeModule) {
+        self.coin = coin
+
         self.interactor = interactor
         self.router = router
         self.confirmationFactory = confirmationFactory
@@ -34,7 +38,7 @@ extension SendBinancePresenter: ISendViewDelegate {
     }
 
     func onViewDidLoad() {
-        view?.set(coin: interactor.coin)
+        view?.set(coin: coin)
         amountModule.set(availableBalance: interactor.availableBalance)
         feeModule.set(fee: interactor.fee)
         feeModule.set(availableFeeBalance: interactor.availableBinanceBalance)

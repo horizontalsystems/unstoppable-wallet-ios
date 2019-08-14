@@ -11,7 +11,9 @@ protocol ISendView: class {
     func dismissWithSuccess()
 }
 
-protocol ISendViewDelegate {
+protocol ISendViewDelegate: AnyObject {
+    var view: ISendView? { get set }
+
     func showKeyboard()
 
     func onViewDidLoad()
@@ -21,7 +23,6 @@ protocol ISendViewDelegate {
 }
 
 protocol ISendBitcoinInteractor {
-    var coin: Coin { get }
     func fetchAvailableBalance(feeRate: Int, address: String?)
     func validate(address: String) throws
     func fetchFee(amount: Decimal, feeRate: Int, address: String?)
@@ -36,7 +37,6 @@ protocol ISendBitcoinInteractorDelegate: class {
 }
 
 protocol ISendEthereumInteractor {
-    var coin: Coin { get }
     func availableBalance(gasPrice: Int) -> Decimal
     var ethereumBalance: Decimal { get }
     func validate(address: String) throws
@@ -50,7 +50,6 @@ protocol ISendEthereumInteractorDelegate: class {
 }
 
 protocol ISendEosInteractor {
-    var coin: Coin { get }
     var availableBalance: Decimal { get }
     func validate(account: String) throws
     func send(amount: Decimal, account: String, memo: String?)
@@ -62,7 +61,6 @@ protocol ISendEosInteractorDelegate: class {
 }
 
 protocol ISendBinanceInteractor {
-    var coin: Coin { get }
     var availableBalance: Decimal { get }
     var availableBinanceBalance: Decimal { get }
     func validate(address: String) throws

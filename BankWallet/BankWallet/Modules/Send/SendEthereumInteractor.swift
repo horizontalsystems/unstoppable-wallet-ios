@@ -5,21 +5,15 @@ class SendEthereumInteractor {
 
     private let disposeBag = DisposeBag()
 
-    private let wallet: Wallet
     private let adapter: ISendEthereumAdapter
 
-    init(wallet: Wallet, adapter: ISendEthereumAdapter) {
-        self.wallet = wallet
+    init(adapter: ISendEthereumAdapter) {
         self.adapter = adapter
     }
 
 }
 
 extension SendEthereumInteractor: ISendEthereumInteractor {
-
-    var coin: Coin {
-        return wallet.coin
-    }
 
     func availableBalance(gasPrice: Int) -> Decimal {
         return adapter.availableBalance(gasPrice: gasPrice)

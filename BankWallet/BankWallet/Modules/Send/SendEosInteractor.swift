@@ -5,21 +5,15 @@ class SendEosInteractor {
 
     private let disposeBag = DisposeBag()
 
-    private let wallet: Wallet
     private let adapter: ISendEosAdapter
 
-    init(wallet: Wallet, adapter: ISendEosAdapter) {
-        self.wallet = wallet
+    init(adapter: ISendEosAdapter) {
         self.adapter = adapter
     }
 
 }
 
 extension SendEosInteractor: ISendEosInteractor {
-
-    var coin: Coin {
-        return wallet.coin
-    }
 
     var availableBalance: Decimal {
         return adapter.availableBalance

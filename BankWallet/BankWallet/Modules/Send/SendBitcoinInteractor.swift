@@ -5,21 +5,15 @@ class SendBitcoinInteractor {
 
     private let disposeBag = DisposeBag()
 
-    private let wallet: Wallet
     private let adapter: ISendBitcoinAdapter
 
-    init(wallet: Wallet, adapter: ISendBitcoinAdapter) {
-        self.wallet = wallet
+    init(adapter: ISendBitcoinAdapter) {
         self.adapter = adapter
     }
 
 }
 
 extension SendBitcoinInteractor: ISendBitcoinInteractor {
-
-    var coin: Coin {
-        return wallet.coin
-    }
 
     func fetchAvailableBalance(feeRate: Int, address: String?) {
         DispatchQueue.global(qos: .userInitiated).async {

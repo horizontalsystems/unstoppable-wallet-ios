@@ -43,6 +43,7 @@ class App {
     let rateManager: RateManager
     let currencyManager: ICurrencyManager
 
+    let feeCoinProvider: FeeCoinProvider
     let feeRateProviderFactory: FeeRateProviderFactory
     let addressParserFactory: AddressParserFactory
 
@@ -115,6 +116,7 @@ class App {
         eosKitManager = EosKitManager(appConfigProvider: appConfigProvider)
         binanceKitManager = BinanceKitManager(appConfigProvider: appConfigProvider)
 
+        feeCoinProvider = FeeCoinProvider(appConfigProvider: appConfigProvider)
         feeRateProviderFactory = FeeRateProviderFactory()
         addressParserFactory = AddressParserFactory()
 

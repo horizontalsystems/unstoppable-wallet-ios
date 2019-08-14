@@ -30,42 +30,47 @@ extension SendRouter {
             return nil
         }
 
-        if let bitcoinAdapter = adapter as? ISendBitcoinAdapter {
-            return SendRouter.module(wallet: wallet, adapter: bitcoinAdapter)
+        let router = SendRouter()
+
+        var partialModule: (ISendViewDelegate, [UIView])?
+
+        switch adapter {
+        case let adapter as ISendBitcoinAdapter:
+            partialModule = module(coin: wallet.coin, adapter: adapter, router: router)
+        case let adapter as ISendEthereumAdapter:
+            partialModule = module(coin: wallet.coin, adapter: adapter, router: router)
+        case let adapter as ISendEosAdapter:
+            partialModule = module(coin: wallet.coin, adapter: adapter, router: router)
+        case let adapter as ISendBinanceAdapter:
+            partialModule = module(coin: wallet.coin, adapter: adapter, router: router)
+        default: ()
         }
 
-        if let ethereumAdapter = adapter as? ISendEthereumAdapter {
-            return SendRouter.module(wallet: wallet, adapter: ethereumAdapter)
-        }
-
-        if let eosAdapter = adapter as? ISendEosAdapter {
-            return SendRouter.module(wallet: wallet, adapter: eosAdapter)
-        }
-
-        if let binanceAdapter = adapter as? ISendBinanceAdapter {
-            return SendRouter.module(wallet: wallet, adapter: binanceAdapter)
-        }
-
-        return nil
-    }
-
-    private static func module(wallet: Wallet, adapter: ISendBitcoinAdapter) -> UIViewController? {
-        guard let feeRateProvider = App.shared.feeRateProviderFactory.provider(coin: wallet.coin) else {
+        guard let (presenter, subViews) = partialModule else {
             return nil
         }
 
-        let (amountView, amountModule) = SendAmountRouter.module(coin: wallet.coin)
-        let (addressView, addressModule) = SendAddressRouter.module(addressParser: App.shared.addressParserFactory.parser(coin: wallet.coin))
-        let (feeView, feeModule) = SendFeeRouter.module(coin: wallet.coin)
-        let (feeSliderView, feeSliderModule) = SendFeeSliderRouter.module(feeRateProvider: feeRateProvider)
-
-        let router = SendRouter()
-        let interactor = SendBitcoinInteractor(wallet: wallet, adapter: adapter)
-        let presenter = SendBitcoinPresenter(interactor: interactor, router: router, confirmationFactory: SendConfirmationItemFactory(), amountModule: amountModule, addressModule: addressModule, feeModule: feeModule, feeSliderModule: feeSliderModule)
-
-        let viewController = SendViewController(delegate: presenter, views: [amountView, addressView, feeView, feeSliderView])
+        let viewController = SendViewController(delegate: presenter, views: subViews)
 
         presenter.view = viewController
+
+        let navigationController = WalletNavigationController(rootViewController: viewController)
+        router.viewController = navigationController
+        return navigationController
+    }
+
+    private static func module(coin: Coin, adapter: ISendBitcoinAdapter, router: ISendRouter) -> (ISendViewDelegate, [UIView])? {
+        let (amountView, amountModule) = SendAmountRouter.module(coin: coin)
+        let (addressView, addressModule) = SendAddressRouter.module(coin: coin)
+        let (feeView, feeModule) = SendFeeRouter.module(coin: coin)
+
+        guard let (feeSliderView, feeSliderModule) = SendFeeSliderRouter.module(coin: coin) else {
+            return nil
+        }
+
+        let interactor = SendBitcoinInteractor(adapter: adapter)
+        let presenter = SendBitcoinPresenter(coin: coin, interactor: interactor, router: router, confirmationFactory: SendConfirmationItemFactory(), amountModule: amountModule, addressModule: addressModule, feeModule: feeModule, feeSliderModule: feeSliderModule)
+
         interactor.delegate = presenter
 
         amountModule.delegate = presenter
@@ -73,32 +78,21 @@ extension SendRouter {
         feeModule.delegate = presenter
         feeSliderModule.delegate = presenter
 
-        let navigationController = WalletNavigationController(rootViewController: viewController)
-        router.viewController = navigationController
-        return navigationController
+        return (presenter, [amountView, addressView, feeView, feeSliderView])
     }
 
-    private static func module(wallet: Wallet, adapter: ISendEthereumAdapter) -> UIViewController? {
-        guard let feeCoin = App.shared.appConfigProvider.coins.first(where: { $0.type == .ethereum }) else {
+    private static func module(coin: Coin, adapter: ISendEthereumAdapter, router: ISendRouter) -> (ISendViewDelegate, [UIView])? {
+        let (amountView, amountModule) = SendAmountRouter.module(coin: coin)
+        let (addressView, addressModule) = SendAddressRouter.module(coin: coin)
+        let (feeView, feeModule) = SendFeeRouter.module(coin: coin)
+
+        guard let (feeSliderView, feeSliderModule) = SendFeeSliderRouter.module(coin: coin) else {
             return nil
         }
 
-        guard let feeRateProvider = App.shared.feeRateProviderFactory.provider(coin: wallet.coin) else {
-            return nil
-        }
+        let interactor = SendEthereumInteractor(adapter: adapter)
+        let presenter = SendEthereumPresenter(coin: coin, interactor: interactor, router: router, confirmationFactory: SendConfirmationItemFactory(), amountModule: amountModule, addressModule: addressModule, feeModule: feeModule, feeSliderModule: feeSliderModule)
 
-        let (amountView, amountModule) = SendAmountRouter.module(coin: wallet.coin)
-        let (addressView, addressModule) = SendAddressRouter.module(addressParser: App.shared.addressParserFactory.parser(coin: wallet.coin))
-        let (feeView, feeModule) = SendFeeRouter.module(coin: wallet.coin, feeCoin: feeCoin, coinProtocol: "ERC20")
-        let (feeSliderView, feeSliderModule) = SendFeeSliderRouter.module(feeRateProvider: feeRateProvider)
-
-        let router = SendRouter()
-        let interactor = SendEthereumInteractor(wallet: wallet, adapter: adapter)
-        let presenter = SendEthereumPresenter(interactor: interactor, router: router, confirmationFactory: SendConfirmationItemFactory(), amountModule: amountModule, addressModule: addressModule, feeModule: feeModule, feeSliderModule: feeSliderModule)
-
-        let viewController = SendViewController(delegate: presenter, views: [amountView, addressView, feeView, feeSliderView])
-
-        presenter.view = viewController
         interactor.delegate = presenter
 
         amountModule.delegate = presenter
@@ -106,57 +100,39 @@ extension SendRouter {
         feeModule.delegate = presenter
         feeSliderModule.delegate = presenter
 
-        let navigationController = WalletNavigationController(rootViewController: viewController)
-        router.viewController = navigationController
-        return navigationController
+        return (presenter, [amountView, addressView, feeView, feeSliderView])
     }
 
-    private static func module(wallet: Wallet, adapter: ISendEosAdapter) -> UIViewController? {
-        let (amountView, amountModule) = SendAmountRouter.module(coin: wallet.coin)
+    private static func module(coin: Coin, adapter: ISendEosAdapter, router: ISendRouter) -> (ISendViewDelegate, [UIView]) {
+        let (amountView, amountModule) = SendAmountRouter.module(coin: coin)
         let (accountView, accountModule) = SendAccountRouter.module()
 
-        let router = SendRouter()
-        let interactor = SendEosInteractor(wallet: wallet, adapter: adapter)
-        let presenter = SendEosPresenter(interactor: interactor, router: router, confirmationFactory: SendConfirmationItemFactory(), amountModule: amountModule, accountModule: accountModule)
+        let interactor = SendEosInteractor(adapter: adapter)
+        let presenter = SendEosPresenter(coin: coin, interactor: interactor, router: router, confirmationFactory: SendConfirmationItemFactory(), amountModule: amountModule, accountModule: accountModule)
 
-        let viewController = SendViewController(delegate: presenter, views: [amountView, accountView])
-
-        presenter.view = viewController
         interactor.delegate = presenter
 
         amountModule.delegate = presenter
         accountModule.delegate = presenter
 
-        let navigationController = WalletNavigationController(rootViewController: viewController)
-        router.viewController = navigationController
-        return navigationController
+        return (presenter, [amountView, accountView])
     }
 
-    private static func module(wallet: Wallet, adapter: ISendBinanceAdapter) -> UIViewController? {
-        guard let feeCoin = App.shared.appConfigProvider.coins.first(where: { $0.code == "BNB" }) else {
-            return nil
-        }
+    private static func module(coin: Coin, adapter: ISendBinanceAdapter, router: ISendRouter) -> (ISendViewDelegate, [UIView]) {
+        let (amountView, amountModule) = SendAmountRouter.module(coin: coin)
+        let (addressView, addressModule) = SendAddressRouter.module(coin: coin)
+        let (feeView, feeModule) = SendFeeRouter.module(coin: coin)
 
-        let (amountView, amountModule) = SendAmountRouter.module(coin: wallet.coin)
-        let (addressView, addressModule) = SendAddressRouter.module(addressParser: App.shared.addressParserFactory.parser(coin: wallet.coin))
-        let (feeView, feeModule) = SendFeeRouter.module(coin: wallet.coin, feeCoin: feeCoin, coinProtocol: "BEP-2")
+        let interactor = SendBinanceInteractor(adapter: adapter)
+        let presenter = SendBinancePresenter(coin: coin, interactor: interactor, router: router, confirmationFactory: SendConfirmationItemFactory(), amountModule: amountModule, addressModule: addressModule, feeModule: feeModule)
 
-        let router = SendRouter()
-        let interactor = SendBinanceInteractor(wallet: wallet, adapter: adapter)
-        let presenter = SendBinancePresenter(interactor: interactor, router: router, confirmationFactory: SendConfirmationItemFactory(), amountModule: amountModule, addressModule: addressModule, feeModule: feeModule)
-
-        let viewController = SendViewController(delegate: presenter, views: [amountView, addressView, feeView])
-
-        presenter.view = viewController
         interactor.delegate = presenter
 
         amountModule.delegate = presenter
         addressModule.delegate = presenter
         feeModule.delegate = presenter
 
-        let navigationController = WalletNavigationController(rootViewController: viewController)
-        router.viewController = navigationController
-        return navigationController
+        return (presenter, [amountView, addressView, feeView])
     }
 
 }

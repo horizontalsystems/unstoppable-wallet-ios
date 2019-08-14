@@ -5,21 +5,15 @@ class SendBinanceInteractor {
 
     private let disposeBag = DisposeBag()
 
-    private let wallet: Wallet
     private let adapter: ISendBinanceAdapter
 
-    init(wallet: Wallet, adapter: ISendBinanceAdapter) {
-        self.wallet = wallet
+    init(adapter: ISendBinanceAdapter) {
         self.adapter = adapter
     }
 
 }
 
 extension SendBinanceInteractor: ISendBinanceInteractor {
-
-    var coin: Coin {
-        return wallet.coin
-    }
 
     var availableBalance: Decimal {
         return adapter.availableBalance

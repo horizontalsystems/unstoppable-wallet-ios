@@ -2,8 +2,8 @@ import UIKit
 
 class SendAddressRouter {
 
-    static func module(addressParser: IAddressParser) -> (UIView, ISendAddressModule) {
-        let interactor = SendAddressInteractor(pasteboardManager: App.shared.pasteboardManager, addressParser: addressParser)
+    static func module(coin: Coin) -> (UIView, ISendAddressModule) {
+        let interactor = SendAddressInteractor(pasteboardManager: App.shared.pasteboardManager, addressParser: App.shared.addressParserFactory.parser(coin: coin))
 
         let presenter = SendAddressPresenter(interactor: interactor)
         let view = SendAddressView(delegate: presenter)
