@@ -5,7 +5,7 @@ class BlockdozerBitcoinCashProvider: IBitcoinForksProvider {
     private let url: String
     private let apiUrl: String
 
-    func url(for hash: String) -> String {
+    func url(for hash: String) -> String? {
         return url + hash
     }
 
