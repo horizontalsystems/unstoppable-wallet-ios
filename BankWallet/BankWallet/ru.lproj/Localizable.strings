@@ -111,6 +111,7 @@
 "send.title" = "Отправить %@";
 "send.amount_placeholder" = "Сумма";
 "send.address_placeholder" = "Адрес";
+"send.account_placeholder" = "Account";
 "send.fee" = "Комиссия:";
 "send.max_button" = "Макс.";
 "send.next_button" = "Далее";
