@@ -48,7 +48,7 @@
 "coin_sync.title" = "Опции";
 "coin_sync.fast" = "Быстро";
 "coin_sync.recommended" = "0-2 часа (Рекомендуется)";
-"coin_sync.fast.text" = "Восстановление ваших предыдущих транзакций будет непосредственно из сети. Это более приватно, но очень медленно. Чем больше монет вы восстанавливаете, тем больше времени потребуется. Если восстановление занимает слишком много времени, перейдите в раздел «Управление ключами» и повторно импортируйте ключ для кошелька с помощью опции «Быстрая синхронизация».";
+"coin_sync.fast.text" = "Restores your past transactions via secure third party server. For users with a long history of transactions involving very large sums this method may pose privacy risks";
 "coin_sync.slow" = "Медленно";
 "coin_sync.more_private" = "1-12 часов (Более Приватно)";
 "coin_sync.slow.text" = "Restores your past transactions directly from the network. Significantly more private but very slow. If the restore takes way too much time go to Security section in Settings tab and select “Delete from Phone” option.";
