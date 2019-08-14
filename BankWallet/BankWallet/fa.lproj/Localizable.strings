@@ -111,6 +111,7 @@
 "send.title" = "ارسال%@";
 "send.amount_placeholder" = "مبلغ";
 "send.address_placeholder" = "آدرس";
+"send.account_placeholder" = "Account";
 "send.fee" = "Fee:";
 "send.max_button" = "حداکثر";
 "send.next_button" = "Next";
