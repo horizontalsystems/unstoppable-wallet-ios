@@ -66,10 +66,6 @@ extension EthereumBaseAdapter {
         }
     }
 
-    var receiveAddress: String {
-        return ethereumKit.receiveAddress
-    }
-
     var debugInfo: String {
         return ethereumKit.debugInfo
     }
@@ -96,6 +92,14 @@ extension EthereumBaseAdapter {
 
     var lastBlockHeightUpdatedObservable: Observable<Void> {
         return ethereumKit.lastBlockHeightObservable.map { _ in () }
+    }
+
+}
+
+extension EthereumBaseAdapter: IDepositAdapter {
+
+    var receiveAddress: String {
+        return ethereumKit.receiveAddress
     }
 
 }

@@ -64,6 +64,7 @@ protocol IAdapterManager: class {
     var adaptersCreationSignal: Signal { get }
     func adapter(for: Wallet) -> IAdapter?
     func transactionsAdapter(for: Wallet) -> ITransactionsAdapter?
+    func depositAdapter(for wallet: Wallet) -> IDepositAdapter?
     func preloadAdapters()
     func refresh()
 }
@@ -92,12 +93,11 @@ protocol IAdapter: class {
     var balance: Decimal { get }
     var balanceUpdatedObservable: Observable<Void> { get }
 
-    var receiveAddress: String { get }
     var debugInfo: String { get }
 }
 
-extension IAdapter {
-    var feeCoinCode: CoinCode? { return nil }
+protocol IDepositAdapter {
+    var receiveAddress: String { get }
 }
 
 protocol ITransactionsAdapter {

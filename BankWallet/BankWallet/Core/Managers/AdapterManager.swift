@@ -73,6 +73,14 @@ extension AdapterManager: IAdapterManager {
         return nil
     }
 
+    func depositAdapter(for wallet: Wallet) -> IDepositAdapter? {
+        if let adapter = adaptersMap[wallet], let depositAdapter = adapter as? IDepositAdapter {
+            return depositAdapter
+        }
+
+        return nil
+    }
+
     func refresh() {
         for (_, adapter) in adaptersMap {
             adapter.refresh()

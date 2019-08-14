@@ -100,10 +100,6 @@ extension BinanceAdapter: IAdapter {
 //        return errors
 //    }
 
-    var receiveAddress: String {
-        return binanceKit.account
-    }
-
     var debugInfo: String {
         return ""
     }
@@ -177,6 +173,14 @@ extension BinanceAdapter: ITransactionsAdapter {
                 .map { [weak self] transactions -> [TransactionRecord] in
                     return transactions.compactMap { self?.transactionRecord(fromTransaction: $0) }
                 }
+    }
+
+}
+
+extension BinanceAdapter: IDepositAdapter {
+
+    var receiveAddress: String {
+        return binanceKit.account
     }
 
 }

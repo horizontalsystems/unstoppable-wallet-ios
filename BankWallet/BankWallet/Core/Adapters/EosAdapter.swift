@@ -52,10 +52,6 @@ class EosAdapter {
 
 extension EosAdapter: IAdapter {
 
-    var refreshable: Bool {
-        return true
-    }
-
     func start() {
         // started via EosKitManager
     }
@@ -86,10 +82,6 @@ extension EosAdapter: IAdapter {
 
     var balanceUpdatedObservable: Observable<Void> {
         return asset.balanceObservable.map { _ in () }
-    }
-
-    var receiveAddress: String {
-        return eosKit.account
     }
 
     var debugInfo: String {
@@ -146,6 +138,14 @@ extension EosAdapter: ITransactionsAdapter {
                 .map { [weak self] transactions -> [TransactionRecord] in
                     return transactions.compactMap { self?.transactionRecord(fromTransaction: $0) }
                 }
+    }
+
+}
+
+extension EosAdapter: IDepositAdapter {
+
+    var receiveAddress: String {
+        return eosKit.account
     }
 
 }

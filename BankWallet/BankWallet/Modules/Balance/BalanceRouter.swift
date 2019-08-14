@@ -8,7 +8,7 @@ class BalanceRouter {
 extension BalanceRouter: IBalanceRouter {
 
     func openReceive(for wallet: Wallet) {
-        DepositRouter.module(wallet: wallet).show(fromController: viewController)
+        DepositRouter.module(wallet: wallet)?.show(fromController: viewController)
     }
 
     func openSend(for coinCode: CoinCode) {

@@ -15,10 +15,6 @@ class BitcoinBaseAdapter {
 
     private(set) var state: AdapterState
 
-    var receiveAddress: String {
-        return abstractKit.receiveAddress(for: receiveAddressScriptType)
-    }
-
     init(abstractKit: AbstractKit) {
         self.abstractKit = abstractKit
 
@@ -217,6 +213,14 @@ extension BitcoinBaseAdapter: ITransactionsAdapter {
                         self?.transactionRecord(fromTransaction: $0)
                     }
                 }
+    }
+
+}
+
+extension BitcoinBaseAdapter: IDepositAdapter {
+
+    var receiveAddress: String {
+        return abstractKit.receiveAddress(for: receiveAddressScriptType)
     }
 
 }

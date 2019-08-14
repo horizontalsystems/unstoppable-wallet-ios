@@ -20,8 +20,8 @@ extension DepositInteractor: IDepositInteractor {
         return walletManager.wallets
     }
 
-    func adapter(forWallet wallet: Wallet) -> IAdapter? {
-        return adapterManager.adapter(for: wallet)
+    func adapter(forWallet wallet: Wallet) -> IDepositAdapter? {
+        return adapterManager.depositAdapter(for: wallet)
     }
 
     func copy(address: String) {
