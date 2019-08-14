@@ -133,7 +133,7 @@ class AppConfigProvider: IAppConfigProvider {
     let predefinedAccountTypes: [IPredefinedAccountType] = [
         Words12AccountType(),
         EosAccountType(),
-        Words24AccountType(),
+        BinanceAccountType(),
     ]
 
 }

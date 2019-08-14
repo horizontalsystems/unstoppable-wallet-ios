@@ -34,7 +34,9 @@ class BinanceAdapter {
         var amount: Decimal = 0
         if from.mine {
             amount -= transaction.amount
-            amount -= transaction.fee
+            if transaction.symbol == feeCoinCode {
+                amount -= transaction.fee
+            }
         }
         if to.mine {
             amount += transaction.amount
@@ -130,7 +132,11 @@ extension BinanceAdapter: IAdapter {
     }
 
     func availableBalance(params: [String : Any]) -> Decimal {
-        return max(0, asset.balance - BinanceAdapter.transferFee)
+        var balance = asset.balance
+        if asset.symbol == "BNB" {
+            balance -= BinanceAdapter.transferFee
+        }
+        return max(0, balance)
     }
 
     func feeRate(priority: FeeRatePriority) -> Int {
