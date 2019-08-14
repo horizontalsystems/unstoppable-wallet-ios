@@ -15,7 +15,7 @@
 "button.forward" = "Transférer";
 "button.save" = "Sauvegarder";
 "button.sync" = "Sync";
-"button.paste" = "Paste";
+"button.paste" = "Coller";
 
 "alert.copied" = "Copié";
 "alert.no_internet" = "Aucune connexion Internet";
