@@ -214,7 +214,7 @@
 "manage_coins.add_coin.title" = "Add %@ ";
 "manage_coins.add_coin.text" = "You don't have active key for use with %@. Use Create button below to generate a new key (wallet).\n\nYou may also use the existing key for the %@ if you already have it.";
 "manage_coins.add_coin.create" = "Create";
-"manage_coins.add_coin.restore" = "Restore";
+"manage_coins.add_coin.restore" = "복구";
 
 // Settings -> About
 
@@ -232,7 +232,7 @@
 
 "settings_security.title" = "보안 센터";
 "settings_security.manage_accounts" = "Manage Keys";
-"settings_security.passcode" = "Passcode";
+"settings_security.passcode" = "비밀번호";
 "settings_security.change_pin" = "비밀번호 변경";
 "settings_security.touch_id" = "터치 아이디";
 "settings_security.face_id" = "얼굴인식 아이디";
