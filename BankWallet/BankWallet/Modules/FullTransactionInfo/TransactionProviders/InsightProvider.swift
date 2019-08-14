@@ -3,7 +3,7 @@ import ObjectMapper
 class InsightDashProvider: IBitcoinForksProvider {
     let name = "Insight.dash.org"
 
-    func url(for hash: String) -> String {
+    func url(for hash: String) -> String? {
         return "https://insight.dash.org/insight/tx/" + hash 
     }
 

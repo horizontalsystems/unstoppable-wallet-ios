@@ -178,7 +178,7 @@ class FullTransactionInfoViewController: WalletViewController, SectionsDataSourc
             }
         }
 
-        if let providerName = delegate.providerName {
+        if let providerName = delegate.providerName, delegate.haveBlockExplorer {
             rows.append(Row<FullTransactionHeaderCell>(id: "provider_header", height: FullTransactionInfoTheme.sectionEmptyMargin, bind: { view, _ in
                 view.bind(showBottomSeparator: false)
             }))

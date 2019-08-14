@@ -69,6 +69,6 @@ class EosTransactionInfoAdapter: IFullTransactionInfoAdapter {
             sections.append(FullTransactionSection(title: nil, items: netCpuItems))
         }
 
-        return FullTransactionRecord(providerName: provider.name, sections: sections)
+        return FullTransactionRecord(providerName: provider.name, haveBlockExplorer: provider.url(for: "") != nil, sections: sections)
     }
 }
