@@ -52,10 +52,6 @@ class EosAdapter {
 
 extension EosAdapter: IAdapter {
 
-    var confirmationsThreshold: Int {
-        return irreversibleThreshold
-    }
-
     var refreshable: Bool {
         return true
     }
@@ -70,14 +66,6 @@ extension EosAdapter: IAdapter {
 
     func refresh() {
         // refreshed via EosKitManager
-    }
-
-    var lastBlockHeight: Int? {
-        return eosKit.irreversibleBlockHeight.map { $0 + irreversibleThreshold }
-    }
-
-    var lastBlockHeightUpdatedObservable: Observable<Void> {
-        return eosKit.irreversibleBlockHeightObservable.map { _ in () }
     }
 
     var state: AdapterState {
@@ -98,19 +86,6 @@ extension EosAdapter: IAdapter {
 
     var balanceUpdatedObservable: Observable<Void> {
         return asset.balanceObservable.map { _ in () }
-    }
-
-    var transactionRecordsObservable: Observable<[TransactionRecord]> {
-        return asset.transactionsObservable.map { [weak self] in
-            $0.compactMap { self?.transactionRecord(fromTransaction: $0) }
-        }
-    }
-
-    func transactionsSingle(from: (hash: String, interTransactionIndex: Int)?, limit: Int) -> Single<[TransactionRecord]> {
-        return eosKit.transactionsSingle(asset: asset, fromActionSequence: from?.interTransactionIndex, limit: limit)
-                .map { [weak self] transactions -> [TransactionRecord] in
-                    return transactions.compactMap { self?.transactionRecord(fromTransaction: $0) }
-                }
     }
 
     var receiveAddress: String {
@@ -142,6 +117,35 @@ extension EosAdapter: ISendEosAdapter {
     func sendSingle(amount: Decimal, account: String, memo: String?) -> Single<Void> {
         return eosKit.sendSingle(asset: asset, to: account, amount: amount, memo: memo ?? "")
                 .map { _ in () }
+    }
+
+}
+
+extension EosAdapter: ITransactionsAdapter {
+
+    var confirmationsThreshold: Int {
+        return irreversibleThreshold
+    }
+
+    var lastBlockHeight: Int? {
+        return eosKit.irreversibleBlockHeight.map { $0 + irreversibleThreshold }
+    }
+
+    var lastBlockHeightUpdatedObservable: Observable<Void> {
+        return eosKit.irreversibleBlockHeightObservable.map { _ in () }
+    }
+
+    var transactionRecordsObservable: Observable<[TransactionRecord]> {
+        return asset.transactionsObservable.map { [weak self] in
+            $0.compactMap { self?.transactionRecord(fromTransaction: $0) }
+        }
+    }
+
+    func transactionsSingle(from: (hash: String, interTransactionIndex: Int)?, limit: Int) -> Single<[TransactionRecord]> {
+        return eosKit.transactionsSingle(asset: asset, fromActionSequence: from?.interTransactionIndex, limit: limit)
+                .map { [weak self] transactions -> [TransactionRecord] in
+                    return transactions.compactMap { self?.transactionRecord(fromTransaction: $0) }
+                }
     }
 
 }

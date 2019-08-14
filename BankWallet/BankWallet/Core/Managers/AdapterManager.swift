@@ -65,6 +65,14 @@ extension AdapterManager: IAdapterManager {
         return adaptersMap[wallet]
     }
 
+    func transactionsAdapter(for wallet: Wallet) -> ITransactionsAdapter? {
+        if let adapter = adaptersMap[wallet], let transactionsAdapter = adapter as? ITransactionsAdapter {
+            return transactionsAdapter
+        }
+
+        return nil
+    }
+
     func refresh() {
         for (_, adapter) in adaptersMap {
             adapter.refresh()

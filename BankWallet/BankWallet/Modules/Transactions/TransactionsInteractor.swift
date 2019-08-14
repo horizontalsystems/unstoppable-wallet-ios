@@ -30,7 +30,7 @@ class TransactionsInteractor {
         var walletsData = [(Wallet, Int, Int?)]()
 
         for wallet in walletManager.wallets {
-            if let adapter = adapterManager.adapter(for: wallet) {
+            if let adapter = adapterManager.transactionsAdapter(for: wallet) {
                 walletsData.append((wallet, adapter.confirmationsThreshold, adapter.lastBlockHeight))
 
                 adapter.transactionRecordsObservable
@@ -87,7 +87,7 @@ extension TransactionsInteractor: ITransactionsInteractor {
         lastBlockHeightsDisposeBag = DisposeBag()
 
         for wallet in walletManager.wallets {
-            guard let adapter = adapterManager.adapter(for: wallet) else {
+            guard let adapter = adapterManager.transactionsAdapter(for: wallet) else {
                 continue
             }
 
@@ -116,7 +116,7 @@ extension TransactionsInteractor: ITransactionsInteractor {
             let wallet = walletManager.wallets.first(where: { $0 == fetchData.wallet })
             let single: Single<(Wallet, [TransactionRecord])>
 
-            if let wallet = wallet, let adapter = adapterManager.adapter(for: wallet) {
+            if let wallet = wallet, let adapter = adapterManager.transactionsAdapter(for: wallet) {
                 single = adapter.transactionsSingle(from: fetchData.from, limit: fetchData.limit)
                         .map { records -> (Wallet, [TransactionRecord]) in
                             (fetchData.wallet, records)

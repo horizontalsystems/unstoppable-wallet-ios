@@ -63,6 +63,7 @@ protocol ILocalizationManager {
 protocol IAdapterManager: class {
     var adaptersCreationSignal: Signal { get }
     func adapter(for: Wallet) -> IAdapter?
+    func transactionsAdapter(for: Wallet) -> ITransactionsAdapter?
     func preloadAdapters()
     func refresh()
 }
@@ -81,14 +82,9 @@ protocol IWalletManager: class {
 }
 
 protocol IAdapter: class {
-    var confirmationsThreshold: Int { get }
-
     func start()
     func stop()
     func refresh()
-
-    var lastBlockHeight: Int? { get }
-    var lastBlockHeightUpdatedObservable: Observable<Void> { get }
 
     var state: AdapterState { get }
     var stateUpdatedObservable: Observable<Void> { get }
@@ -96,16 +92,20 @@ protocol IAdapter: class {
     var balance: Decimal { get }
     var balanceUpdatedObservable: Observable<Void> { get }
 
-    var transactionRecordsObservable: Observable<[TransactionRecord]> { get }
-    func transactionsSingle(from: (hash: String, interTransactionIndex: Int)?, limit: Int) -> Single<[TransactionRecord]>
-
     var receiveAddress: String { get }
-
     var debugInfo: String { get }
 }
 
 extension IAdapter {
     var feeCoinCode: CoinCode? { return nil }
+}
+
+protocol ITransactionsAdapter {
+    var confirmationsThreshold: Int { get }
+    var lastBlockHeight: Int? { get }
+    var lastBlockHeightUpdatedObservable: Observable<Void> { get }
+    var transactionRecordsObservable: Observable<[TransactionRecord]> { get }
+    func transactionsSingle(from: (hash: String, interTransactionIndex: Int)?, limit: Int) -> Single<[TransactionRecord]>
 }
 
 protocol ISendBitcoinAdapter {

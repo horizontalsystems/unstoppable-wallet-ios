@@ -32,11 +32,8 @@ class EthereumBaseAdapter {
 
 }
 
+// IAdapter
 extension EthereumBaseAdapter {
-
-    var confirmationsThreshold: Int {
-        return 12
-    }
 
     func start() {
         // started via EthereumKitManager
@@ -48,14 +45,6 @@ extension EthereumBaseAdapter {
 
     func refresh() {
         // refreshed via EthereumKitManager
-    }
-
-    var lastBlockHeight: Int? {
-        return ethereumKit.lastBlockHeight
-    }
-
-    var lastBlockHeightUpdatedObservable: Observable<Void> {
-        return ethereumKit.lastBlockHeightObservable.map { _ in () }
     }
 
     func sendSingle(amount: Decimal, address: String, gasPrice: Int) -> Single<Void> {
@@ -92,4 +81,21 @@ extension EthereumBaseAdapter {
     enum AddressConversion: Error {
         case invalidAddress
     }
+}
+
+// ITransactionsAdapter
+extension EthereumBaseAdapter {
+
+    var confirmationsThreshold: Int {
+        return 12
+    }
+
+    var lastBlockHeight: Int? {
+        return ethereumKit.lastBlockHeight
+    }
+
+    var lastBlockHeightUpdatedObservable: Observable<Void> {
+        return ethereumKit.lastBlockHeightObservable.map { _ in () }
+    }
+
 }

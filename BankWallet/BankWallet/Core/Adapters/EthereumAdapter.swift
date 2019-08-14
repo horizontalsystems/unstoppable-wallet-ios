@@ -72,19 +72,6 @@ extension EthereumAdapter: IAdapter {
         return ethereumKit.balanceObservable.map { _ in () }
     }
 
-    var transactionRecordsObservable: Observable<[TransactionRecord]> {
-        return ethereumKit.transactionsObservable.map { [weak self] in
-            $0.compactMap { self?.transactionRecord(fromTransaction: $0) }
-        }
-    }
-
-    func transactionsSingle(from: (hash: String, interTransactionIndex: Int)?, limit: Int) -> Single<[TransactionRecord]> {
-        return ethereumKit.transactionsSingle(fromHash: from?.hash, limit: limit)
-                .map { [weak self] transactions -> [TransactionRecord] in
-                    return transactions.compactMap { self?.transactionRecord(fromTransaction: $0) }
-                }
-    }
-
 }
 
 extension EthereumAdapter {
@@ -103,6 +90,23 @@ extension EthereumAdapter: ISendEthereumAdapter {
 
     func fee(gasPrice: Int) -> Decimal {
         return ethereumKit.fee(gasPrice: gasPrice) / pow(10, EthereumAdapter.decimal)
+    }
+
+}
+
+extension EthereumAdapter: ITransactionsAdapter {
+
+    var transactionRecordsObservable: Observable<[TransactionRecord]> {
+        return ethereumKit.transactionsObservable.map { [weak self] in
+            $0.compactMap { self?.transactionRecord(fromTransaction: $0) }
+        }
+    }
+
+    func transactionsSingle(from: (hash: String, interTransactionIndex: Int)?, limit: Int) -> Single<[TransactionRecord]> {
+        return ethereumKit.transactionsSingle(fromHash: from?.hash, limit: limit)
+                .map { [weak self] transactions -> [TransactionRecord] in
+                    return transactions.compactMap { self?.transactionRecord(fromTransaction: $0) }
+                }
     }
 
 }

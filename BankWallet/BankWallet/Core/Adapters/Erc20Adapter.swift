@@ -86,23 +86,6 @@ extension Erc20Adapter: IAdapter {
         return erc20Kit.balanceObservable.map { _ in () }
     }
 
-    var transactionRecordsObservable: Observable<[TransactionRecord]> {
-        return erc20Kit.transactionsObservable.map { [weak self] in
-            $0.compactMap { self?.transactionRecord(fromTransaction: $0) }
-        }
-    }
-
-    func transactionsSingle(from: (hash: String, interTransactionIndex: Int)?, limit: Int) -> Single<[TransactionRecord]> {
-        do {
-            return try erc20Kit.transactionsSingle(from: from, limit: limit)
-                    .map { [weak self] transactions -> [TransactionRecord] in
-                        return transactions.compactMap { self?.transactionRecord(fromTransaction: $0) }
-                    }
-        } catch {
-            return Single.error(error)
-        }
-    }
-
 }
 
 extension Erc20Adapter {
@@ -125,6 +108,27 @@ extension Erc20Adapter: ISendErc20Adapter {
 
     func fee(gasPrice: Int) -> Decimal {
         return erc20Kit.fee(gasPrice: gasPrice) / pow(10, EthereumAdapter.decimal)
+    }
+
+}
+
+extension Erc20Adapter: ITransactionsAdapter {
+
+    var transactionRecordsObservable: Observable<[TransactionRecord]> {
+        return erc20Kit.transactionsObservable.map { [weak self] in
+            $0.compactMap { self?.transactionRecord(fromTransaction: $0) }
+        }
+    }
+
+    func transactionsSingle(from: (hash: String, interTransactionIndex: Int)?, limit: Int) -> Single<[TransactionRecord]> {
+        do {
+            return try erc20Kit.transactionsSingle(from: from, limit: limit)
+                    .map { [weak self] transactions -> [TransactionRecord] in
+                        return transactions.compactMap { self?.transactionRecord(fromTransaction: $0) }
+                    }
+        } catch {
+            return Single.error(error)
+        }
     }
 
 }

@@ -61,10 +61,6 @@ class BitcoinBaseAdapter {
 
 extension BitcoinBaseAdapter: IAdapter {
 
-    var lastBlockHeightUpdatedObservable: Observable<Void> {
-        return lastBlockHeightUpdatedSignal.asObservable()
-    }
-
     var stateUpdatedObservable: Observable<Void> {
         return stateUpdatedSignal.asObservable()
     }
@@ -73,20 +69,8 @@ extension BitcoinBaseAdapter: IAdapter {
         return balanceUpdatedSignal.asObservable()
     }
 
-    var transactionRecordsObservable: Observable<[TransactionRecord]> {
-        return transactionRecordsSubject.asObservable()
-    }
-
     var balance: Decimal {
         return Decimal(abstractKit.balance) / coinRate
-    }
-
-    var confirmationsThreshold: Int {
-        return 6
-    }
-
-    var lastBlockHeight: Int? {
-        return abstractKit.lastBlockInfo?.height
     }
 
     var debugInfo: String {
@@ -147,15 +131,6 @@ extension BitcoinBaseAdapter: IAdapter {
         }
     }
 
-    func transactionsSingle(from: (hash: String, interTransactionIndex: Int)?, limit: Int) -> Single<[TransactionRecord]> {
-        return abstractKit.transactions(fromHash: from?.hash, limit: limit)
-                .map { [weak self] transactions -> [TransactionRecord] in
-                    return transactions.compactMap {
-                        self?.transactionRecord(fromTransaction: $0)
-                    }
-                }
-    }
-
 }
 
 extension BitcoinBaseAdapter: BitcoinCoreDelegate {
@@ -213,6 +188,35 @@ extension BitcoinBaseAdapter: BitcoinCoreDelegate {
             self.state = .syncing(progress: newProgress, lastBlockDate: newDate)
             stateUpdatedSignal.notify()
         }
+    }
+
+}
+
+extension BitcoinBaseAdapter: ITransactionsAdapter {
+
+    var confirmationsThreshold: Int {
+        return 6
+    }
+
+    var lastBlockHeight: Int? {
+        return abstractKit.lastBlockInfo?.height
+    }
+
+    var lastBlockHeightUpdatedObservable: Observable<Void> {
+        return lastBlockHeightUpdatedSignal.asObservable()
+    }
+
+    var transactionRecordsObservable: Observable<[TransactionRecord]> {
+        return transactionRecordsSubject.asObservable()
+    }
+
+    func transactionsSingle(from: (hash: String, interTransactionIndex: Int)?, limit: Int) -> Single<[TransactionRecord]> {
+        return abstractKit.transactions(fromHash: from?.hash, limit: limit)
+                .map { [weak self] transactions -> [TransactionRecord] in
+                    return transactions.compactMap {
+                        self?.transactionRecord(fromTransaction: $0)
+                    }
+                }
     }
 
 }

@@ -48,10 +48,6 @@ class BinanceAdapter {
 
 extension BinanceAdapter: IAdapter {
 
-    var confirmationsThreshold: Int {
-        return 1
-    }
-
     var refreshable: Bool {
         return true
     }
@@ -66,14 +62,6 @@ extension BinanceAdapter: IAdapter {
 
     func refresh() {
         // refreshed via BinanceKitManager
-    }
-
-    var lastBlockHeight: Int? {
-        return binanceKit.lastBlockHeight
-    }
-
-    var lastBlockHeightUpdatedObservable: Observable<Void> {
-        return binanceKit.lastBlockHeightObservable.map { _ in () }
     }
 
     var state: AdapterState {
@@ -94,21 +82,6 @@ extension BinanceAdapter: IAdapter {
 
     var balanceUpdatedObservable: Observable<Void> {
         return asset.balanceObservable.map { _ in () }
-    }
-
-    var transactionRecordsObservable: Observable<[TransactionRecord]> {
-        return asset.transactionsObservable.map { [weak self] in
-            $0.compactMap {
-                self?.transactionRecord(fromTransaction: $0)
-            }
-        }
-    }
-
-    func transactionsSingle(from: (hash: String, interTransactionIndex: Int)?, limit: Int) -> Single<[TransactionRecord]> {
-        return binanceKit.transactionsSingle(symbol: asset.symbol, fromTransactionHash: from?.hash, limit: limit)
-                .map { [weak self] transactions -> [TransactionRecord] in
-                    return transactions.compactMap { self?.transactionRecord(fromTransaction: $0) }
-                }
     }
 
 //    func validate(params: [String : Any]) throws -> [SendStateError] {
@@ -174,6 +147,36 @@ extension BinanceAdapter: ISendBinanceAdapter {
     func sendSingle(amount: Decimal, address: String, memo: String?) -> Single<Void> {
         return binanceKit.sendSingle(symbol: asset.symbol, to: address, amount: amount, memo: memo ?? "")
                 .map { _ in () }
+    }
+
+}
+
+extension BinanceAdapter: ITransactionsAdapter {
+    var confirmationsThreshold: Int {
+        return 1
+    }
+
+    var lastBlockHeight: Int? {
+        return binanceKit.lastBlockHeight
+    }
+
+    var lastBlockHeightUpdatedObservable: Observable<Void> {
+        return binanceKit.lastBlockHeightObservable.map { _ in () }
+    }
+
+    var transactionRecordsObservable: Observable<[TransactionRecord]> {
+        return asset.transactionsObservable.map { [weak self] in
+            $0.compactMap {
+                self?.transactionRecord(fromTransaction: $0)
+            }
+        }
+    }
+
+    func transactionsSingle(from: (hash: String, interTransactionIndex: Int)?, limit: Int) -> Single<[TransactionRecord]> {
+        return binanceKit.transactionsSingle(symbol: asset.symbol, fromTransactionHash: from?.hash, limit: limit)
+                .map { [weak self] transactions -> [TransactionRecord] in
+                    return transactions.compactMap { self?.transactionRecord(fromTransaction: $0) }
+                }
     }
 
 }
