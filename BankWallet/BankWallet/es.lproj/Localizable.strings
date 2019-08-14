@@ -48,7 +48,7 @@
 "coin_sync.title" = "Restaurar opciones";
 "coin_sync.fast" = "Rápido";
 "coin_sync.recommended" = "0-2 horas (Recomendado)";
-"coin_sync.fast.text" = "Restaure sus transacciones pasadas directamente desde la red. Significativamente más privado pero muy lento. Si la restauración toma mucho tiempo, vaya a la sección Administrar claves y reimporte la Clave para la cartera utilizando la opción de Sincronización rápida.";
+"coin_sync.fast.text" = "Restores your past transactions via secure third party server. For users with a long history of transactions involving very large sums this method may pose privacy risks";
 "coin_sync.slow" = "Lento";
 "coin_sync.more_private" = "1-12 horas (Más Privado)";
 "coin_sync.slow.text" = "Restaure sus transacciones pasadas directamente desde la red. Significativamente más privado pero muy lento. Si la restauración toma mucho tiempo, vaya a la sección de Seguridad en la pestaña de Ajustes y seleccione la opción \"Borrar desde el teléfono\".";
