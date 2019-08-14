@@ -119,15 +119,15 @@
 "send.error.no_address" = "No Address";
 "send.error.no_amount" = "No Amount";
 
-"send.confirmation.title" = "Confirm";
-"send.confirmation.to" = "To:";
+"send.confirmation.title" = "Confirmer";
+"send.confirmation.to" = "À:";
 "send.confirmation.memo_placeholder" = "Memo";
 "send.confirmation.total" = "Total:";
 "send.confirmation.estimate_time" = "Estimate Time:";
 "send.confirmation.eos.account" = "Account";
-"send.confirmation.send_button" = "Send";
+"send.confirmation.send_button" = "Envoyer";
 "send.amount_error.balance" = "Balance %@";
-"send.token.insufficient_fee_alert" = "Transaction fees for %@ (%@) paid in %@. You need %@.";
+"send.token.insufficient_fee_alert" = "Frais de transaction pour %@ (%@) payé en %@. Il est nécessaire %@.";
 
 // Transactions
 
@@ -165,7 +165,7 @@
 "full_info.to" = "À";
 "full_info.amount" = "Montant";
 "full_info.nonce" = "Nonce";
-"full_info.status" = "Status";
+"full_info.status" = "Statut";
 "full_info.memo" = "Memo";
 "full_info.cpu" = "CPU Usage";
 "full_info.net" = "Net Usage";
