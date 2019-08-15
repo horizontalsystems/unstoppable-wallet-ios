@@ -249,11 +249,11 @@
 "settings_manage_keys.restore" = "복구";
 "settings_manage_keys.delete.cant_delete" = "암호를 삭제하기전 백업이 필요합니다.";
 "settings_manage_keys.delete.title" = "암호 삭제";
-"settings_manage_keys.delete.confirmation_remove" = "This action will delete the %@ key (wallet) from this device.";
-"settings_manage_keys.delete.confirmation_disable" = "Coins that will be disabled: %@";
-"settings_manage_keys.delete.confirmation_loose" = "If you don't have a backup of this key you will loose the respective funds.";
-"error.cant_create_eos" = "At this point, the wallet is not able to create new EOS wallet accounts. You're only able to restore the existing one.";
-"settings_manage_keys.create.text" = "This action will generate a key(wallet) for the following coins:\n\n%@";
+"settings_manage_keys.delete.confirmation_remove" = "이 작업은 %@ 암호(지갑)를 이 장치에서 삭제합니다.";
+"settings_manage_keys.delete.confirmation_disable" = "비활성화될 코인: %@";
+"settings_manage_keys.delete.confirmation_loose" = "이 암호를 백업하지 않으면 해당 자금을 잃게 됩니다.";
+"error.cant_create_eos" = "현재 지갑에서 새 EOS 지갑 계정을 만들 수 없습니다. 기존 파일만 복원할 수 있습니다.";
+"settings_manage_keys.create.text" = "이 작업은 다음 코인에 대한 암호(지갑) 를 생성합니다:\n\n%@";
 "error.invalid_eos_key" = "잘못된 암호입니다";
 "error.invalid_eos_account" = "계정이 존재하지 않습니다.";
 
@@ -278,7 +278,7 @@
 
 // No Passcode
 
-"no_passcode.info_text" = "This app requires that phone has the passcode (screen lock) enabled.\n\nYou may enable it in iOS settings.\n\nPlease note that when you disabled the PIN on the OS level the security measures in safe storage of your phonе made the previously stored data invalid. You will need to Restore your wallet keys to get back to your wallet.";
+"no_passcode.info_text" = "이 앱을 사용하려면 휴대전화에 암호(화면 잠금) 가 활성화되어 있어야 합니다. \n\niOS 설정에서 활성화할 수 있습니다. \n\nOS 수준에서 PIN을 비활성화하면 휴대기기의 안전한 저장에 대한 보안조치로 인해 이전에 저장된 데이터가 유효하지 않게 됩니다. 지갑으로 돌아가려면 지갑 암호를 복원하십시오.";
 
 //NumPad
 
