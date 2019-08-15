@@ -212,7 +212,7 @@
 
 "manage_coins.title" = "Coin Manager";
 "manage_coins.add_coin.title" = "%@ hinzufügen ";
-"manage_coins.add_coin.text" = "Sie haben keinen aktiven Schlüssel für die Verwendung mit %@. Nutzen Sie den Butten Erstellen unten, um einen neuen Schlüssel (Wallet) zu erstellen.\n\nSie können auch einen bestehenden Schlüssel für die %@ nutzen, wenn wie bereits einen haben.";
+"manage_coins.add_coin.text" = "Sie haben keinen aktiven Schlüssel für die Verwendung von %@. Nutzen Sie den unteren Button \"Erstellen\", um einen neuen Schlüssel (Wallet) zu erstellen.\n\nSie können auch einen bestehenden Schlüssel für die %@ nutzen, wenn wie bereits einen haben.";
 "manage_coins.add_coin.create" = "Erstellen";
 "manage_coins.add_coin.restore" = "Wiederherstellen";
 
@@ -222,7 +222,7 @@
 "settings_about.app_title" = "Unstoppable";
 "settings_about.app_subtitle" = "Decentralized App";
 "settings_about.terms_privacy_subtitle" = "ANB & Datenschutz:";
-"settings_about.terms_privacy_text" = "This app is peer-to-peer. It does not depend on any web server or tech support personnel to function.\n\nIt works everywhere as long as there is internet. No entity can block this app from working or to block someone from using it.\n\nYour funds are securely stored on the phone itself, not anywhere else.\n\nIt’s your responsibility to backup your Secret Key and keep it private. Never show it to anyone. If it’s lost, forgotten or stollen your funds can be used by the person who has your key.\n\nDo not jailbreak your phone, do not install apps from unknown (untrusted) sources, do not give your device to untrusted people, and keep the Operating System on your phone up to date. The security of your wallet depends on this.\n\nThe entire code powering this app been open to the public scrutiny since the beginning. We tried to build the most secure and decentralized wallet we could, however there are no guarantees that there are no unintended software issues. That said, this wallet is likely to be significantly more secure than any smartphone wallet app out there.\n\nSome generic non-private app data like currency exchange rates are stored on decentralized storage (IPFS). ";
+"settings_about.terms_privacy_text" = "Diese App ist Peer-to-Peer. Sie häng von keinem Webserver oder Tech-Support-Personal ab, um zu funktionierten.\n\nSie funktioniert überall, solang Sie Internetzugang haben. Niemand kann die App stoppen oder Sie davon abhalten, sie zu nutzen.\n\nIhre Guthaben sind sicher auf dem Telefon gespeichert, nirgendwo sonst.\n\nEs liegt in Ihrer Verantwortung, den geheimen Schlüssel zu sichern und ihn geheim aufzubewahren. Zeigen Sie ihn niemandem. Wenn er verloren geht, Sie ihn vergessen oder er gestohlen wird, kann Ihr Guthaben von demjenigen ausgegeben werden, der den Schlüssel hat.\n\nFühren Sie auf Ihrem Telefon keinen Jailbreak durch. Installieren Sie keine Apps von unbekannter (nicht vertrauenswürdiger) Quelle. Geben Sie das Telefon keiner nicht vertrauenswürdigen Person und aktualisieren Sie das Betriebssystem Ihres Telefons regelmäßig. Die Sicherheit Ihres Wallets hängt davon ab.\n\nDer gesamte Code dieser App ist seit Anfang an öffentlich einsehbar. Wir haben versucht, das sicherste und dezentralisierteste Wallet zu bauen. Allerdings gibt es keine Garantie, dass keine unvorhergesehenen Softwareprobleme auftreten. Trotzdem ist dieses Wallet wahrscheinlich deutlich sicherer als jede andere Smartphone-App.\n\nManche generischen, nicht geheimen App-Daten wie Währungswechselkurse werden in dezentralen Speichern (IPFS) gespeichert.";
 
 // Settings -> Tell Friends
 
@@ -241,13 +241,13 @@
 // Manage Keys
 
 "settings_manage_keys.title" = "Schlüssel";
-"settings_manage_keys.description" = "Jeder, der Ihre Schlüssel kennt, kann Ihr Wallet-Guthaben stehlen. Bewahren Sie die Schlüssel sicher auf und zeigen sie diese niemandem.\nSichern Sie jeden Schlüssel so, dass Sie auf das Guthaben zugreifen können, wenn Ihr Telefon kaputt geht oder die Wallet-App gelöscht wird.";
+"settings_manage_keys.description" = "Jeder, der Ihre Schlüssel kennt, kann Ihr Wallet-Guthaben stehlen. Bewahren Sie die Schlüssel sicher auf und zeigen Sie diese niemandem.\nSichern Sie jeden Schlüssel so, dass Sie auf das Guthaben zugreifen können, wenn Ihr Telefon kaputt geht oder die Wallet-App gelöscht wird.";
 "settings_manage_keys.delete" = "Löschen";
 "settings_manage_keys.backup" = "Sicherung";
 "settings_manage_keys.show" = "Anzeigen";
 "settings_manage_keys.create" = "Erstellen";
 "settings_manage_keys.restore" = "Wiederherstellen";
-"settings_manage_keys.delete.cant_delete" = "Sie müssen den Schlüssel sicher, bevor Sie ihn von dem Gerät löschen.";
+"settings_manage_keys.delete.cant_delete" = "Sie müssen den Schlüssel sichern, bevor Sie ihn von dem Gerät löschen.";
 "settings_manage_keys.delete.title" = "Schlüssel löschen";
 "settings_manage_keys.delete.confirmation_remove" = "Diese Aktion wird den %@-Schlüssel (Wallet) von diesem Gerät löschen.";
 "settings_manage_keys.delete.confirmation_disable" = "Coins, die entfernt werden: %@";
@@ -278,7 +278,7 @@
 
 // No Passcode
 
-"no_passcode.info_text" = "Diese App erfordert, dass Zugangsperre (Bildschirmsperre) aktiviert ist.\nSie können dies in den iOS-Einstellungen vornehmen.\nBitte beachten Sie, wenn Sie PIN auf dem OS ausgeschaltete haben, wurden die Sicherheitsmaßnahmen im Safe Storage Ihres Telefons für vorher gespeicherte Daten ungültig. Sie müssen Ihre Wallet-Schlüssel wiederherstellen, um an Ihr Wallet zu gelangen.";
+"no_passcode.info_text" = "Diese App erfordert, dass die Zugangssperre (Bildschirmsperre) aktiviert ist.\nSie können dies in den iOS-Einstellungen vornehmen.\nBitte beachten Sie, wenn Sie PIN auf dem OS ausgeschaltete haben, wurden die Sicherheitsmaßnahmen im Safe Storage Ihres Telefons für vorher gespeicherte Daten ungültig. Sie müssen Ihre Wallet-Schlüssel wiederherstellen, um an Ihr Wallet zu gelangen.";
 
 //NumPad
 
