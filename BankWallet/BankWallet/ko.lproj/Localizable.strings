@@ -51,7 +51,7 @@
 "coin_sync.fast.text" = "안전한 제3 서버를 통해 과거 거래를 복원합니다. 이 방법은 큰 액수와 긴 거래내역을 가지고 있는 사용자들에게 개인정보보호 침해의 위험을 야기할 수 있습니다";
 "coin_sync.slow" = "느리게";
 "coin_sync.more_private" = "1-12시간 (더욱 사적임)";
-"coin_sync.slow.text" = "Restores your past transactions directly from the network. Significantly more private but very slow. If the restore takes way too much time, go to Manage Keys section and reimport the Key for the wallet using the Fast Sync option.";
+"coin_sync.slow.text" = "네트워크에서 직접 거래를 복원하세요. 훨씬 더 사적이지만 속도는 매우 느립니다. 복원에 너무 많은 시간이 걸린다면 암호관리 섹션에서 빠른 동기화 옵션을 사용하여 지갑의 암호를 다시 가져오세요.";
 "coin_sync.alert.header" = "주목";
 "coin_sync.alert.text" = "이 작업은 각 블록체인의 지갑 잔액을 동기화합니다. 수행하는데 몇 시간 정도 걸릴 수 있습니다.";
 "coin_sync.erc20" = "Ethereum의 모드와 같이 동기화";
