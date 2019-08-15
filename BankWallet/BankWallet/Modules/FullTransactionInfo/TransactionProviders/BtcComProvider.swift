@@ -3,7 +3,7 @@ import ObjectMapper
 class BtcComBitcoinProvider: IBitcoinForksProvider {
     let name = "Btc.com"
 
-    func url(for hash: String) -> String {
+    func url(for hash: String) -> String? {
         return "https://btc.com/" + hash 
     }
 
@@ -24,7 +24,7 @@ class BtcComBitcoinProvider: IBitcoinForksProvider {
 class BtcComBitcoinCashProvider: IBitcoinForksProvider {
     let name = "Btc.com"
 
-    func url(for hash: String) -> String {
+    func url(for hash: String) -> String? {
         return "https://bch.btc.com/" + hash 
     }
 

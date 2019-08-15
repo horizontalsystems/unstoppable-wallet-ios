@@ -4,9 +4,11 @@ class BackupWordsPresenter: IBackupWordsPresenter {
 
     private(set) var words: [String]
     let isBackedUp: Bool
+    let predefinedAccountType: IPredefinedAccountType
 
-    init(router: IBackupWordsRouter, words: [String], isBackedUp: Bool) {
+    init(router: IBackupWordsRouter, predefinedAccountType: IPredefinedAccountType, words: [String], isBackedUp: Bool) {
         self.router = router
+        self.predefinedAccountType = predefinedAccountType
         self.words = words
         self.isBackedUp = isBackedUp
     }
@@ -15,11 +17,15 @@ class BackupWordsPresenter: IBackupWordsPresenter {
 
 extension BackupWordsPresenter: IBackupWordsViewDelegate {
 
+    var title: String {
+        return predefinedAccountType.backupTitle
+    }
+
     func didTapProceed() {
         if isBackedUp {
             router.notifyClosed()
         } else {
-            router.showConfirmation(delegate: self, words: words)
+            router.showConfirmation(delegate: self, words: words, predefinedAccountType: predefinedAccountType)
         }
     }
 

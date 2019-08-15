@@ -22,7 +22,7 @@ class FullTransactionInfoProvider {
 extension FullTransactionInfoProvider: IFullTransactionInfoProvider {
 
     var providerName: String { return provider.name }
-    func url(for hash: String) -> String { return provider.url(for: hash) }
+    func url(for hash: String) -> String? { return provider.url(for: hash) }
 
     func retrieveTransactionInfo(transactionHash: String) -> Single<FullTransactionRecord?> {
         var single = apiProvider.getJson(requestObject: provider.requestObject(for: transactionHash))

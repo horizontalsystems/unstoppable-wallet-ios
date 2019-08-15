@@ -31,6 +31,10 @@ extension FullTransactionInfoPresenter: IFullTransactionInfoViewDelegate {
         return state.transactionRecord?.providerName
     }
 
+    var haveBlockExplorer: Bool {
+        return state.transactionRecord?.haveBlockExplorer ?? false
+    }
+
     func numberOfSections() -> Int {
         return state.transactionRecord?.sections.count ?? 0
     }

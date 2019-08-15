@@ -1,4 +1,6 @@
 class Words12AccountType: IPredefinedAccountType {
+    let backupTitle = "backup.12words.title"
+    let confirmationDescription = "confirmation.12words.description"
     let title = "key_type.12_words"
     let coinCodes = "key_type.12_words.text"
 
