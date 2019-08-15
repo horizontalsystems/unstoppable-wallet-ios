@@ -51,7 +51,7 @@
 "coin_sync.fast.text" = "Geçmiş işlemlerinizi güvenilir üçüncü şahıs sunucularıyla geri yükleyin. Uzun işlem geçmişi olan ve büyük miktarda para işlemleri yapan kullanıcılar için bu yöntem güvenlik riski oluşturabilir";
 "coin_sync.slow" = "Yavaş";
 "coin_sync.more_private" = "1-12 saat (Daha Gizli)";
-"coin_sync.slow.text" = "Restores your past transactions directly from the network. Significantly more private but very slow. If the restore takes way too much time, go to Manage Keys section and reimport the Key for the wallet using the Fast Sync option.";
+"coin_sync.slow.text" = "Geçmiş hesap işlemlerinizi ağdan geri yükler. Çok daha güvenli ama yavaş. Eğer geri yükleme çok uzun zaman alıyorsa, Anahtarları Yönet ekranında cüzdan anahtarını Hızlı Eşle seçeneğiyle tekrar içe aktarın.";
 "coin_sync.alert.header" = "Dikkat";
 "coin_sync.alert.text" = "Bu eylem cüzdanınızı her blockchain ile tekrar eşliyecek. Tamamlanması birkaç saat sürebilir.";
 "coin_sync.erc20" = "Ethereum için geri yükle";
@@ -62,18 +62,18 @@
 
 "backup.intro.title_backup" = "Yedekle";
 "backup.intro.title_show" = "Anahtarı Göster";
-"backup.intro.subtitle" = "The key that will be shown next is the only way to restore your funds, if your phone is ever lost, stolen, broken etc. Make sure that no one is watching your screen.\n\nThe coins controlled by this key: %@";
+"backup.intro.subtitle" = "Az sonra görüceğiniz anahtar cihazınızın kaybolması, çalınması veya bozulması durumunda hesabı geri yüklemenin tek yoludur. Ekranınıza başka bir kişinin izlemediğinden emin olun.\n\nKurlar bu anahtar ile kontrol ediliyor: %@";
 "backup.intro.later" = "Sonra";
 "backup.intro.backup_now" = "Yedekle";
-"backup.intro.show_key" = "Show Key";
+"backup.intro.show_key" = "Anahtarı Göster";
 
 "backup.words.title" = "Gizli Anahtar";
-"backup.12words.title" = "12-words Key";
-"backup.binance.title" = "Binance Key";
-"confirmation.binance.description" = "Enter words from your Binance Key";
-"confirmation.12words.description" = "Enter words from your 12-words Key";
+"backup.12words.title" = "12-kelimeli Anahtar";
+"backup.binance.title" = "Binance Anahtarı";
+"confirmation.binance.description" = "Binance Anahtarınızda ki kelimeleri girin";
+"confirmation.12words.description" = "12-kelimeli Anahtarınızda ki kelimeleri girin";
 
-"backup.eos.title" = "EOS Key";
+"backup.eos.title" = "EOS Anahtarı";
 "backup.eos.account_name" = "Account Name";
 "backup.eos.active_private_key" = "Active Private Key";
 "backup.eos.hint" = "Copying your key using “copy” action poses some risks if you use any clipboard management apps or some other apps that may have access to clipboard data.";
@@ -213,7 +213,7 @@
 "manage_coins.title" = "Coin Manager";
 "manage_coins.add_coin.title" = "Add %@ ";
 "manage_coins.add_coin.text" = "You don't have active key for use with %@. Use Create button below to generate a new key (wallet).\n\nYou may also use the existing key for the %@ if you already have it.";
-"manage_coins.add_coin.create" = "Create";
+"manage_coins.add_coin.create" = "Oluştur";
 "manage_coins.add_coin.restore" = "Geri Yükle";
 
 // Settings -> About
@@ -226,7 +226,7 @@
 
 // Settings -> Tell Friends
 
-"settings_tell_friends.text" = "Be Free! Be Unstoppable!";
+"settings_tell_friends.text" = "Özgür Ol! Durdurulamaz Ol!";
 
 // Settings -> Security
 
@@ -236,26 +236,26 @@
 "settings_security.change_pin" = "Şifreyi Değiştir";
 "settings_security.touch_id" = "Touch ID";
 "settings_security.face_id" = "Face ID";
-"security_settings.delete_alert_button" = "Delete from Phone";
+"security_settings.delete_alert_button" = "Cihazdan sil";
 
 // Manage Keys
 
-"settings_manage_keys.title" = "Keys";
+"settings_manage_keys.title" = "Anahtarlar";
 "settings_manage_keys.description" = "Anyone with access to your Keys can steal your wallet funds. Store keys safely and never show them to anyone.\n\nBackup each key to be able to restore funds if you loose or break your phone, or simply the wallet app gets deleted.";
-"settings_manage_keys.delete" = "Delete";
+"settings_manage_keys.delete" = "Sil";
 "settings_manage_keys.backup" = "Yedekle";
-"settings_manage_keys.show" = "Show";
-"settings_manage_keys.create" = "Create";
+"settings_manage_keys.show" = "Göster";
+"settings_manage_keys.create" = "Oluştur";
 "settings_manage_keys.restore" = "Geri Yükle";
 "settings_manage_keys.delete.cant_delete" = "You need to backup this key before you may unlink it.";
-"settings_manage_keys.delete.title" = "Delete Key";
+"settings_manage_keys.delete.title" = "Anahtarı Sil";
 "settings_manage_keys.delete.confirmation_remove" = "This action will delete the %@ key (wallet) from this device.";
 "settings_manage_keys.delete.confirmation_disable" = "Coins that will be disabled: %@";
 "settings_manage_keys.delete.confirmation_loose" = "If you don't have a backup of this key you will loose the respective funds.";
 "error.cant_create_eos" = "At this point, the wallet is not able to create new EOS wallet accounts. You're only able to restore the existing one.";
 "settings_manage_keys.create.text" = "This action will generate a key(wallet) for the following coins:\n\n%@";
-"error.invalid_eos_key" = "Invalid key";
-"error.invalid_eos_account" = "Invalid account";
+"error.invalid_eos_key" = "Geçersiz anahtar";
+"error.invalid_eos_account" = "Geçersiz hesap";
 
 // Set PIN
 
