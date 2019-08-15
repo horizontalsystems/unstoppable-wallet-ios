@@ -114,16 +114,16 @@
 "send.fee" = "수수료:";
 "send.max_button" = "최대";
 "send.next_button" = "다음";
-"send.error.invalid_address" = "Invalid Address";
-"send.error.invalid_account" = "Invalid Account";
-"send.error.no_address" = "No Address";
-"send.error.no_amount" = "No Amount";
+"send.error.invalid_address" = "잘못된 주소";
+"send.error.invalid_account" = "계정이 존재하지 않습니다.";
+"send.error.no_address" = "주소 없음";
+"send.error.no_amount" = "금액 없음";
 
 "send.confirmation.title" = "확인";
 "send.confirmation.to" = "에게:";
 "send.confirmation.memo_placeholder" = "Memo";
 "send.confirmation.total" = "합계:";
-"send.confirmation.estimate_time" = "Estimate Time:";
+"send.confirmation.estimate_time" = "예상 소요시간:";
 "send.confirmation.eos.account" = "Account";
 "send.confirmation.send_button" = "전송";
 "send.amount_error.balance" = "잔액%@";
@@ -142,10 +142,10 @@
 "tx_info.time" = "시간";
 "tx_info.status" = "상태";
 "tx_info.status.pending" = "보류 중";
-"tx_info.status.confirmed" = "Confirmed";
+"tx_info.status.confirmed" = "확인";
 "tx_info.from_hash" = "로 부터";
 "tx_info.to_hash" = "에게";
-"tx_info.button_verify" = "Verify";
+"tx_info.button_verify" = "확인";
 "tx_info.rate" = "Historical Rate";
 
 // Full Info
@@ -160,7 +160,7 @@
 "full_info.inputs" = "입력값";
 "full_info.outputs" = "산출값";
 "full_info.source" = "원천, 자료";
-"full_info.contract" = "Contract";
+"full_info.contract" = "계약";
 "full_info.from" = "로 부터";
 "full_info.to" = "에게";
 "full_info.amount" = "양";
@@ -183,19 +183,19 @@
 "full_info.error.subtitle" = "오프라인";
 "full_info.error.retry" = "재시도";
 "full_info.error.change_source" = "출처를 변경하다";
-"full_info.no_address" = "Empty Address";
+"full_info.no_address" = "빈 주소";
 
 // Settings
 
 "settings.title" = "설정";
 "settings.tab_bar_item" = "설정";
 "settings.security_center" = "보안 센터";
-"settings.manage_coins" = "Manage Coins";
+"settings.manage_coins" = "코인 관리";
 "settings.restore_wallet" = "지갑 복원";
 "settings.base_currency" = "기초 통화";
 "settings.language" = "언어";
 "settings.about" = "에 대해";
-"settings.tell_friends" = "Tell Friends";
+"settings.tell_friends" = "친구에게 추천하기";
 "settings.light_mode" = "밝은 모드";
 "settings.info_title" = "UNSTOPPABLE";
 "settings.info_subtitle" = "decentralized app";
@@ -210,8 +210,8 @@
 
 // Settings -> Manage Wallet
 
-"manage_coins.title" = "Coin Manager";
-"manage_coins.add_coin.title" = "Add %@ ";
+"manage_coins.title" = "코인 매니저";
+"manage_coins.add_coin.title" = "%@ 추가 ";
 "manage_coins.add_coin.text" = "You don't have active key for use with %@. Use Create button below to generate a new key (wallet).\n\nYou may also use the existing key for the %@ if you already have it.";
 "manage_coins.add_coin.create" = "Create";
 "manage_coins.add_coin.restore" = "복구";
