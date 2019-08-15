@@ -247,13 +247,13 @@
 "settings_manage_keys.show" = "Göster";
 "settings_manage_keys.create" = "Oluştur";
 "settings_manage_keys.restore" = "Geri Yükle";
-"settings_manage_keys.delete.cant_delete" = "You need to backup this key before you may unlink it.";
+"settings_manage_keys.delete.cant_delete" = "Silmeden önce bu anahtarı yedeklemeniz gerekiyor.";
 "settings_manage_keys.delete.title" = "Anahtarı Sil";
-"settings_manage_keys.delete.confirmation_remove" = "This action will delete the %@ key (wallet) from this device.";
-"settings_manage_keys.delete.confirmation_disable" = "Coins that will be disabled: %@";
-"settings_manage_keys.delete.confirmation_loose" = "If you don't have a backup of this key you will loose the respective funds.";
-"error.cant_create_eos" = "At this point, the wallet is not able to create new EOS wallet accounts. You're only able to restore the existing one.";
-"settings_manage_keys.create.text" = "This action will generate a key(wallet) for the following coins:\n\n%@";
+"settings_manage_keys.delete.confirmation_remove" = "Bu işlem %@ anahtarını (cüzdanı) bu cihazdan kaldıracak.";
+"settings_manage_keys.delete.confirmation_disable" = "Etkisizleştirilecek cüzdanlar: %@";
+"settings_manage_keys.delete.confirmation_loose" = "Eğer anahtarın yedeğini saklamadıysanız, erişimi kaybedeceksiniz.";
+"error.cant_create_eos" = "Uygulama henüz EOS cüzdanı oluşturamamaktadır. Sadece var olan cüzda geri yüklenebilir.";
+"settings_manage_keys.create.text" = "Bu işlem, şu krediler için yeni anahtar(cüzdan) oluşturacak:\n\n%@";
 "error.invalid_eos_key" = "Geçersiz anahtar";
 "error.invalid_eos_account" = "Geçersiz hesap";
 
