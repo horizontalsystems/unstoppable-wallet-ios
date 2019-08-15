@@ -62,29 +62,29 @@
 
 "backup.intro.title_backup" = "Sicherung";
 "backup.intro.title_show" = "Schlüssel anzeigen";
-"backup.intro.subtitle" = "The key that will be shown next is the only way to restore your funds, if your phone is ever lost, stolen, broken etc. Make sure that no one is watching your screen.\n\nThe coins controlled by this key: %@";
+"backup.intro.subtitle" = "Der angezeigte Schlüssel ist die einzige Möglichkeit, Ihr Guthaben wiederherzustellen, wenn Ihr Telefon verloren geht, kaputt geht usw. Achten Sie darauf, dass niemand Ihren Bildschirm sieht.\nDie Coins, die von diesem Schlüssel kontrolliert werden: %@";
 "backup.intro.later" = "Später";
 "backup.intro.backup_now" = "Backup";
-"backup.intro.show_key" = "Show Key";
+"backup.intro.show_key" = "Schlüssel anzeigen";
 
 "backup.words.title" = "Offlineschlüssel";
-"backup.12words.title" = "12-words Key";
-"backup.binance.title" = "Binance Key";
-"confirmation.binance.description" = "Enter words from your Binance Key";
-"confirmation.12words.description" = "Enter words from your 12-words Key";
+"backup.12words.title" = "12-Wort-Schlüssel";
+"backup.binance.title" = "Binance Schlüssel";
+"confirmation.binance.description" = "Geben Sie die Worte Ihres Binance-Schlüssels ein";
+"confirmation.12words.description" = "Geben Sie die Worte Ihres 12-Wort-Schlüssels ein";
 
-"backup.eos.title" = "EOS Key";
+"backup.eos.title" = "EOS-Schlüssel";
 "backup.eos.account_name" = "Account Name";
 "backup.eos.active_private_key" = "Active Private Key";
-"backup.eos.hint" = "Copying your key using “copy” action poses some risks if you use any clipboard management apps or some other apps that may have access to clipboard data.";
+"backup.eos.hint" = "Den Schlüssel mit \"Kopieren\" zu kopieren, ist riskant, da Sie womöglich Zwischenablage-Management-Apps oder andere Apps nutzen, die Zugriff auf die Daten in der Zwischenablage haben.";
 
 "backup.confirmation.title" = "Prüfen …";
 "backup.confirmation.secret_key" = "Ich stimme zu, dass ich allein Inhaber eines privaten 12-Wort Offlineschlüssels bin, der sicher auf meinem Telefon gespeichert wird und mir ermöglicht, Geld auf meinem Wallet zu steuern.";
 "backup.confirmation.delete_app_warn" = "Ich stimme zu, dass bei einer Verschiebung oder Entfernung dieser App, der Zugang zu meinem Walletkonto nur bei Verwendung den Offlineschlüsseln erfolgt werden muss.";
 "backup.confirmation.disclaimer" = "Ich stimme zu, dass Entwickler dieser App nicht für unbeabsichtigte Fehler oder Probleme verantwortlich gemacht werden können, die bei der Verwendung dieser App auftreten können.";
 
-"words_validator.empty_words" = "Not all words are entered";
-"words_validator.invalid_confirmation" = "Words do not match";
+"words_validator.empty_words" = "Es wurden nicht alle Worte eingegeben";
+"words_validator.invalid_confirmation" = "Worte stimmen nicht überein";
 
 // Balance
 
@@ -95,11 +95,11 @@
 "balance.rate_per_coin" = "%@ pro %@";
 "balance.synced_through" = "bis: %@";
 "balance.syncing" = "Synchronisieren...";
-"balance.add_coins" = "Add Coins";
-"balance.sort.header" = "Sort by";
+"balance.add_coins" = "Coins hinzufügen";
+"balance.sort.header" = "Sortieren nach";
 "balance.sort.valueHighToLow" = "Guthaben";
 "balance.sort.az" = "Name";
-"balance.sort.manual" = "Default";
+"balance.sort.manual" = "Standard";
 
 // Deposit
 
@@ -115,16 +115,16 @@
 "send.fee" = "Gebühr:";
 "send.max_button" = "Max.";
 "send.next_button" = "Weiter";
-"send.error.invalid_address" = "Invalid Address";
-"send.error.invalid_account" = "Invalid Account";
-"send.error.no_address" = "No Address";
-"send.error.no_amount" = "No Amount";
+"send.error.invalid_address" = "Ungültige Adresse";
+"send.error.invalid_account" = "Ungültiger Account";
+"send.error.no_address" = "Keine Adresse";
+"send.error.no_amount" = "Kein Betrag";
 
-"send.confirmation.title" = "Confirm";
+"send.confirmation.title" = "Bestätigen";
 "send.confirmation.to" = "An:";
 "send.confirmation.memo_placeholder" = "Memo";
 "send.confirmation.total" = "Insgesamt:";
-"send.confirmation.estimate_time" = "Estimate Time:";
+"send.confirmation.estimate_time" = "Geschätzte Zeit:";
 "send.confirmation.eos.account" = "Account";
 "send.confirmation.send_button" = "Senden";
 "send.amount_error.balance" = "Guthaben %@";
@@ -191,12 +191,12 @@
 "settings.title" = "Einstellungen";
 "settings.tab_bar_item" = "Einstellungen";
 "settings.security_center" = "Sicherheit";
-"settings.manage_coins" = "Manage Coins";
+"settings.manage_coins" = "Coins Managen";
 "settings.restore_wallet" = "Wallet Wiederherstellen";
 "settings.base_currency" = "Währung";
 "settings.language" = "Sprache";
 "settings.about" = "Info";
-"settings.tell_friends" = "Tell Friends";
+"settings.tell_friends" = "Freunden erzählen";
 "settings.light_mode" = "Licht Modus";
 "settings.info_title" = "UNSTOPPABLE";
 "settings.info_subtitle" = "decentralized app";
@@ -212,7 +212,7 @@
 // Settings -> Manage Wallet
 
 "manage_coins.title" = "Coin Manager";
-"manage_coins.add_coin.title" = "Add %@ ";
+"manage_coins.add_coin.title" = "%@ hinzufügen ";
 "manage_coins.add_coin.text" = "You don't have active key for use with %@. Use Create button below to generate a new key (wallet).\n\nYou may also use the existing key for the %@ if you already have it.";
 "manage_coins.add_coin.create" = "Erstellen";
 "manage_coins.add_coin.restore" = "Wiederherstellen";
@@ -227,21 +227,21 @@
 
 // Settings -> Tell Friends
 
-"settings_tell_friends.text" = "Be Free! Be Unstoppable!";
+"settings_tell_friends.text" = "Sei Frei! Sei Unstoppbar!";
 
 // Settings -> Security
 
 "settings_security.title" = "Sicherheit";
-"settings_security.manage_accounts" = "Manage Keys";
+"settings_security.manage_accounts" = "Schlüssel Managen";
 "settings_security.passcode" = "Code";
 "settings_security.change_pin" = "Code bearbeiten";
 "settings_security.touch_id" = "Touch ID";
 "settings_security.face_id" = "Face ID";
-"security_settings.delete_alert_button" = "Delete from Phone";
+"security_settings.delete_alert_button" = "Von Telefon löschen";
 
 // Manage Keys
 
-"settings_manage_keys.title" = "Keys";
+"settings_manage_keys.title" = "Schlüssel";
 "settings_manage_keys.description" = "Jeder, der Ihre Schlüssel kennt, kann Ihr Wallet-Guthaben stehlen. Bewahren Sie die Schlüssel sicher auf und zeigen sie diese niemandem.\nSichern Sie jeden Schlüssel so, dass Sie auf das Guthaben zugreifen können, wenn Ihr Telefon kaputt geht oder die Wallet-App gelöscht wird.";
 "settings_manage_keys.delete" = "Löschen";
 "settings_manage_keys.backup" = "Sicherung";
@@ -252,11 +252,11 @@
 "settings_manage_keys.delete.title" = "Schlüssel löschen";
 "settings_manage_keys.delete.confirmation_remove" = "This action will delete the %@ key (wallet) from this device.";
 "settings_manage_keys.delete.confirmation_disable" = "Coins that will be disabled: %@";
-"settings_manage_keys.delete.confirmation_loose" = "If you don't have a backup of this key you will loose the respective funds.";
-"error.cant_create_eos" = "At this point, the wallet is not able to create new EOS wallet accounts. You're only able to restore the existing one.";
-"settings_manage_keys.create.text" = "This action will generate a key(wallet) for the following coins:\n\n%@";
-"error.invalid_eos_key" = "Invalid key";
-"error.invalid_eos_account" = "Invalid account";
+"settings_manage_keys.delete.confirmation_loose" = "Wenn Sie keine Sicherung von diesem Schlüssel haben, verlieren Sie das zugehörige Guthaben.";
+"error.cant_create_eos" = "Im Moment kann das Wallet keine neuen EOS-Wallet-Accounts anlegen. Sie können nur bestehende wiederherstellen.";
+"settings_manage_keys.create.text" = "Diese Aktion erzeugt einen Schlüssel (Wallet) für die folgenden Coins: %@";
+"error.invalid_eos_key" = "Ungültiger Schlüssel";
+"error.invalid_eos_account" = "Ungültiger Account";
 
 // Set PIN
 
