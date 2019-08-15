@@ -33,6 +33,7 @@ extension WalletManager: IWalletManager {
 
     func preloadWallets() {
         cache.set(wallets: storage.wallets(accounts: accountManager.accounts))
+        walletsUpdatedSignal.notify()
     }
 
     func enable(wallets: [Wallet]) {

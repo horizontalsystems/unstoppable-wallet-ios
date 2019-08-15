@@ -66,7 +66,6 @@ protocol IAdapterManager: class {
     func balanceAdapter(for: Wallet) -> IBalanceAdapter?
     func transactionsAdapter(for: Wallet) -> ITransactionsAdapter?
     func depositAdapter(for wallet: Wallet) -> IDepositAdapter?
-    func preloadAdapters()
     func refresh()
 }
 

@@ -38,7 +38,6 @@ extension AppManager: IAppManager {
         passcodeLockManager.didFinishLaunching()
         accountManager.preloadAccounts()
         walletManager.preloadWallets()
-        adapterManager.preloadAdapters()
         biometryManager.refresh()
     }
 
