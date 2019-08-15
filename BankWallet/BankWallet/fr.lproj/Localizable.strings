@@ -251,11 +251,11 @@
 "settings_manage_keys.delete.title" = "Supprimer la clé";
 "settings_manage_keys.delete.confirmation_remove" = "Cette action supprimera la clé %@ (porte-monnaie) de cet appareil.";
 "settings_manage_keys.delete.confirmation_disable" = "Coins qui seront désactivées : %@";
-"settings_manage_keys.delete.confirmation_loose" = "If you don't have a backup of this key you will loose the respective funds.";
-"error.cant_create_eos" = "At this point, the wallet is not able to create new EOS wallet accounts. You're only able to restore the existing one.";
-"settings_manage_keys.create.text" = "This action will generate a key(wallet) for the following coins:\n\n%@";
-"error.invalid_eos_key" = "Invalid key";
-"error.invalid_eos_account" = "Invalid account";
+"settings_manage_keys.delete.confirmation_loose" = "Si vous n'avez pas de sauvegarde de cette clé, vous perdrez les fonds respectifs.";
+"error.cant_create_eos" = "À cet étape, le porte-monnaie n'est pas capable de créer de nouveaux comptes de porte-monnaies EOS. Vous n'êtes que capable de restaurer celui existant.";
+"settings_manage_keys.create.text" = "Cette action générera une clé(porte-monnaie) pour les coins suivantes :\n\n%@";
+"error.invalid_eos_key" = "Clé invalide";
+"error.invalid_eos_account" = "Compte invalide";
 
 // Set PIN
 
@@ -278,7 +278,7 @@
 
 // No Passcode
 
-"no_passcode.info_text" = "This app requires that phone has the passcode (screen lock) enabled.\n\nYou may enable it in iOS settings.\n\nPlease note that when you disabled the PIN on the OS level the security measures in safe storage of your phonе made the previously stored data invalid. You will need to Restore your wallet keys to get back to your wallet.";
+"no_passcode.info_text" = "Cette application nécessite que le passcode (verrou d'écran) soit activé.\n\nVous pouvez l'activer dans les paramètres iOS.\n\nVeuillez noter que lorsque vous avez désactivé le code PIN au niveau de l'OS, les mesures de sécurité dans le stockage sûr de votre portable ont rendu les données précédemment stockées invalides. Vous devrez restaurer vos clés de porte-monnaies pour revenir à votre porte-monnaie.";
 
 //NumPad
 
