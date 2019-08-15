@@ -146,7 +146,7 @@
 "tx_info.from_hash" = "로 부터";
 "tx_info.to_hash" = "에게";
 "tx_info.button_verify" = "확인";
-"tx_info.rate" = "Historical Rate";
+"tx_info.rate" = "과거 환율";
 
 // Full Info
 
