@@ -37,7 +37,7 @@
 // Restore
 
 "restore.title" = "복구";
-"restore.description" = "기존 지갑을 복원하시려면 개인 암호를 입력해야 합니다. \n\n하나의 지갑을 복원하신 후엔 앱 설정의 Manage Keys(암호 관리) 섹션에서 더 많은 지갑들을 복원하실 수 있습니다.";
+"restore.description" = "기존 지갑을 복원하시려면 개인 암호를 입력해야 합니다. \n\n하나의 지갑을 복원하신 후엔 앱 Settings의 Manage Keys 섹션에서 더 많은 지갑들을 복원하실 수 있습니다.";
 "restore.words.description" = "암호를 입력하세요";
 "restore.validation_failed" = "틀린 암호 입니다";
 "restore.placeholder.account_name" = "Account Name";
@@ -53,38 +53,38 @@
 "coin_sync.more_private" = "1-12시간 (더욱 사적임)";
 "coin_sync.slow.text" = "네트워크에서 직접 과거 거래를 복구하세요. 훨씬 더 사적이지만 굉장히 느립니다. 복구하는데 너무 많은 시간이 걸린다면 Settings 탭의 Security 섹션에서 “Delete from Phone” 옵션을 선택하세요.";
 "coin_sync.alert.header" = "주목";
-"coin_sync.alert.text" = "This action will resync your wallet balance for each blockchain. It may take several hours to complete.";
-"coin_sync.erc20" = "Sync mode same as Ethereum";
+"coin_sync.alert.text" = "이 작업은 각 블록체인의 지갑 잔액을 동기화합니다. 수행하는데 몇 시간 정도 걸릴 수 있습니다.";
+"coin_sync.erc20" = "Ethereum의 모드와 같이 동기화";
 
 // Backup
 
-"backup.close" = "Close";
+"backup.close" = "가까운, 닫힌";
 
 "backup.intro.title_backup" = "백업";
-"backup.intro.title_show" = "Show Key";
-"backup.intro.subtitle" = "The key that will be shown next is the only way to restore your funds, if your phone is ever lost, stolen, broken etc. Make sure that no one is watching your screen.\n\nThe coins controlled by this key: %@";
+"backup.intro.title_show" = "암호 보이기";
+"backup.intro.subtitle" = "앞으로 표시될 암호는 귀하의 휴대전화가 분실, 도난, 파손당했을 경우에 펀드를 복구할 수 있는 유일한 방법입니다. 주변에 화면을 보고 있는 사람이 없는지 확인하세요.\n\n코인은 이 암호로 통제됩니다: %@";
 "backup.intro.later" = "나중에";
 "backup.intro.backup_now" = "백업";
-"backup.intro.show_key" = "Show Key";
+"backup.intro.show_key" = "암호 보이기";
 
 "backup.words.title" = "비밀 키";
-"backup.12words.title" = "12-words Key";
-"backup.binance.title" = "Binance Key";
-"confirmation.binance.description" = "Enter words from your Binance Key";
-"confirmation.12words.description" = "Enter words from your 12-words Key";
+"backup.12words.title" = "12자리 암호";
+"backup.binance.title" = "Binance 암호";
+"confirmation.binance.description" = "Binance 암호에서 단어를 입력하세요";
+"confirmation.12words.description" = "12자리 암호에서 단어를 입력하세요";
 
-"backup.eos.title" = "EOS Key";
+"backup.eos.title" = "EOS 암호";
 "backup.eos.account_name" = "Account Name";
 "backup.eos.active_private_key" = "Active Private Key";
-"backup.eos.hint" = "Copying your key using “copy” action poses some risks if you use any clipboard management apps or some other apps that may have access to clipboard data.";
+"backup.eos.hint" = "클립보드 관리 앱 또는 클립보드 데이터에 접근할 수 있는 다른 앱을 사용하고 있다면 \"복사\"작업을 사용하여 암호를 복사하는 것은 위험할 수 있습니다.";
 
 "backup.confirmation.title" = "확인 중...";
-"backup.confirmation.secret_key" = "I understand that I am a sole owner of a private 12-word Secret Key which is securely stored on my phone and enables me to control funds on my wallet.";
-"backup.confirmation.delete_app_warn" = "I understand that if this app is ever moved, deleted or malfunctions, the access to my wallet can be only recovered with that Secret Key.";
-"backup.confirmation.disclaimer" = "I understand that developers of this app can not be held responsible for any unintended bugs or issues that may arise while using this app.";
+"backup.confirmation.secret_key" = "본인은 본인의 휴대폰에 안전하게 저장되어 있으며 지갑에 있는 자금을 통제할 수 있는 사적인 12자리 비밀 암호의 유일한 소유자라는 것을 이해합니다.";
+"backup.confirmation.delete_app_warn" = "이 앱의 이동, 삭제 또는 오작동의 경우, 본인은 지갑에 대한 접근은 이 비밀 암호를 통해서만 복구될 수 있다는 점을 이해합니다.";
+"backup.confirmation.disclaimer" = "본인은 의도치 않은 버그나 앱을 사용하면서 일어날 수 있는 문제들에 대해서 이 앱의 계발자들은 어떠한 책임도 없다는 것을 이해합니다.";
 
-"words_validator.empty_words" = "Not all words are entered";
-"words_validator.invalid_confirmation" = "Words do not match";
+"words_validator.empty_words" = "모든 단어가 입력되지 않았습니다";
+"words_validator.invalid_confirmation" = "암호가 일치하지 않습니다";
 
 // Balance
 
@@ -93,12 +93,12 @@
 "balance.send" = "전송";
 "balance.deposit" = "수신";
 "balance.rate_per_coin" = "%@ 당 %@";
-"balance.synced_through" = "until: %@";
-"balance.syncing" = "Syncing...";
-"balance.add_coins" = "Add Coins";
-"balance.sort.header" = "Sort by";
+"balance.synced_through" = "%@ 까지";
+"balance.syncing" = "동기화 중입니다...";
+"balance.add_coins" = "코인 추가";
+"balance.sort.header" = "정렬 기준";
 "balance.sort.valueHighToLow" = "잔액";
-"balance.sort.az" = "Name";
+"balance.sort.az" = "이름";
 
 // Deposit
 
@@ -113,14 +113,14 @@
 "send.account_placeholder" = "Account";
 "send.fee" = "수수료:";
 "send.max_button" = "최대";
-"send.next_button" = "Next";
+"send.next_button" = "다음";
 "send.error.invalid_address" = "Invalid Address";
 "send.error.invalid_account" = "Invalid Account";
 "send.error.no_address" = "No Address";
 "send.error.no_amount" = "No Amount";
 
 "send.confirmation.title" = "확인";
-"send.confirmation.to" = "To:";
+"send.confirmation.to" = "에게:";
 "send.confirmation.memo_placeholder" = "Memo";
 "send.confirmation.total" = "합계:";
 "send.confirmation.estimate_time" = "Estimate Time:";
