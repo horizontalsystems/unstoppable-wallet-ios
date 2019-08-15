@@ -57,10 +57,6 @@ class AdapterManager {
 
 extension AdapterManager: IAdapterManager {
 
-    func preloadAdapters() {
-        initAdapters()
-    }
-
     func adapter(for wallet: Wallet) -> IAdapter? {
         return adaptersMap[wallet]
     }

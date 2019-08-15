@@ -108,7 +108,6 @@ extension SendFeePresenter: ISendFeeModule {
     func set(availableFeeBalance: Decimal) {
         self.availableFeeBalance = availableFeeBalance
         syncError()
-
     }
 
     func update(inputType: SendInputType) {
