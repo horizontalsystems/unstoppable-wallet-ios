@@ -212,7 +212,7 @@
 
 "manage_coins.title" = "코인 매니저";
 "manage_coins.add_coin.title" = "%@ 추가 ";
-"manage_coins.add_coin.text" = "You don't have active key for use with %@. Use Create button below to generate a new key (wallet).\n\nYou may also use the existing key for the %@ if you already have it.";
+"manage_coins.add_coin.text" = "%@에 사용할 활성화된 암호가 없습니다. 아래의 생성 버튼을 사용하여 새 암호 (지갑)를 만드세요. \n\n이미 있으시다면 %@에 기존의 암호를 사용할 수도 있습니다.";
 "manage_coins.add_coin.create" = "만들기";
 "manage_coins.add_coin.restore" = "복구";
 
@@ -226,7 +226,7 @@
 
 // Settings -> Tell Friends
 
-"settings_tell_friends.text" = "Be Free! Be Unstoppable!";
+"settings_tell_friends.text" = "Unstoppable과 함께 자유로워지세요!";
 
 // Settings -> Security
 
@@ -241,7 +241,7 @@
 // Manage Keys
 
 "settings_manage_keys.title" = "암호들";
-"settings_manage_keys.description" = "Anyone with access to your Keys can steal your wallet funds. Store keys safely and never show them to anyone.\n\nBackup each key to be able to restore funds if you loose or break your phone, or simply the wallet app gets deleted.";
+"settings_manage_keys.description" = "암호에 접근할 수 있는 사람은 누구나 지갑 자금을 훔칠 수 있습니다. 암호를 안전하게 보관하고 다른 사람에게 보여주지 마세요. \n\n휴대전화의 분실, 고장 또는 지갑 앱이 삭제된 경우 자금을 복원할 수 있도록 각 암호를 백업하세요.";
 "settings_manage_keys.delete" = "삭제";
 "settings_manage_keys.backup" = "백업";
 "settings_manage_keys.show" = "표시";
