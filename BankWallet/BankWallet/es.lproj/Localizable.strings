@@ -99,7 +99,6 @@
 "balance.sort.header" = "Ordenar por";
 "balance.sort.valueHighToLow" = "Saldo";
 "balance.sort.az" = "Nombre";
-"balance.sort.manual" = "Predefinido";
 
 // Deposit
 
