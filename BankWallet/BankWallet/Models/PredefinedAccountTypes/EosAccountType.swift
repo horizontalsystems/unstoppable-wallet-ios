@@ -1,5 +1,6 @@
 class EosAccountType: IPredefinedAccountType {
     let backupTitle = "backup.eos.title"
+    let confirmationDescription: String = ""
     let title = "key_type.eos"
     let coinCodes = "key_type.eos.text"
 

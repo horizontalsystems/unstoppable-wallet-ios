@@ -45,8 +45,4 @@ class BalanceSorterTests: XCTestCase {
         XCTAssertEqual([bitcoinItem, cashItem, ethereumItem], sorter.sort(items: [cashItem, ethereumItem, bitcoinItem], sort: .name))
     }
 
-    func testSort_Manual() {
-        XCTAssertEqual([bitcoinItem, cashItem, ethereumItem], sorter.sort(items: [bitcoinItem, cashItem, ethereumItem], sort: .manual))
-    }
-
 }

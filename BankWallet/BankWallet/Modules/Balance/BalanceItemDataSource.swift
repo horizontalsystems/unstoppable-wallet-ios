@@ -3,10 +3,8 @@ import Foundation
 class BalanceItemDataSource {
     private let sorter: IBalanceSorter
 
-    private var originalItems = [BalanceItem]()
-
     var sortType: BalanceSortType {
-        didSet { items = sorter.sort(items: originalItems, sort: sortType) }
+        didSet { items = sorter.sort(items: items, sort: sortType) }
     }
     var items: [BalanceItem]
     var currency: Currency?
@@ -15,7 +13,7 @@ class BalanceItemDataSource {
         self.sorter = sorter
 
         items = [BalanceItem]()
-        sortType = .manual
+        sortType = .name
     }
 
 }
@@ -31,13 +29,13 @@ extension BalanceItemDataSource: IBalanceItemDataSource {
     }
 
     func index(for wallet: Wallet) -> Int? {
-        return originalItems.firstIndex(where: { $0.wallet == wallet })
+        return items.firstIndex(where: { $0.wallet == wallet })
     }
 
     func indices(for coinCode: String) -> [Int] {
         var indices = [Int]()
 
-        for (index, item) in originalItems.enumerated() {
+        for (index, item) in items.enumerated() {
             if item.wallet.coin.code == coinCode {
                 indices.append(index)
             }
@@ -47,30 +45,33 @@ extension BalanceItemDataSource: IBalanceItemDataSource {
     }
 
     func set(balance: Decimal, index: Int) {
-        originalItems[index].balance = balance
-        items = sorter.sort(items: originalItems, sort: sortType)
+        items[index].balance = balance
     }
 
     func set(state: AdapterState, index: Int) {
-        originalItems[index].state = state
-        items = sorter.sort(items: originalItems, sort: sortType)
+        items[index].state = state
+
+        let canSort = items.filter {
+            $0.state != .synced
+        }.isEmpty
+        if canSort {
+            items = sorter.sort(items: items, sort: sortType)
+        }
     }
 
     func set(rate: Rate, index: Int) {
-        originalItems[index].rate = rate
-        items = sorter.sort(items: originalItems, sort: sortType)
+        items[index].rate = rate
+        items = sorter.sort(items: items, sort: sortType)
     }
 
     func clearRates() {
-        for i in 0..<originalItems.count {
-            originalItems[i].rate = nil
+        for i in 0..<items.count {
+            items[i].rate = nil
         }
-        items = sorter.sort(items: originalItems, sort: sortType)
     }
 
     func set(items: [BalanceItem]) {
-        self.originalItems = items
-        self.items = sorter.sort(items: originalItems, sort: sortType)
+        self.items = sorter.sort(items: items, sort: sortType)
     }
 
 }

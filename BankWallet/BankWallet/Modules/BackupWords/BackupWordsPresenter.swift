@@ -25,7 +25,7 @@ extension BackupWordsPresenter: IBackupWordsViewDelegate {
         if isBackedUp {
             router.notifyClosed()
         } else {
-            router.showConfirmation(delegate: self, words: words)
+            router.showConfirmation(delegate: self, words: words, predefinedAccountType: predefinedAccountType)
         }
     }
 

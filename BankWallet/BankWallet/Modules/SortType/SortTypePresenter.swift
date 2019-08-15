@@ -20,7 +20,6 @@ extension SortTypePresenter: IAlertViewDelegate {
             .header("balance.sort.header"),
             .row("balance.sort.valueHighToLow"),
             .row("balance.sort.az"),
-            .row("balance.sort.manual"),
         ]
     }
 
@@ -31,7 +30,7 @@ extension SortTypePresenter: IAlertViewDelegate {
     func onSelect(index: Int) {
         view?.setSelected(index: index)
 
-        let selectedSort = BalanceSortType(rawValue: index) ?? .manual
+        let selectedSort = BalanceSortType(rawValue: index) ?? .name
         interactor.set(sort: selectedSort)
         router.dismiss(with: selectedSort)
     }

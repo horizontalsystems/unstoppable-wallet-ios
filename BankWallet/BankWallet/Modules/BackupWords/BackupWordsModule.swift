@@ -13,7 +13,7 @@ protocol IBackupWordsPresenter {
 }
 
 protocol IBackupWordsRouter {
-    func showConfirmation(delegate: IBackupConfirmationDelegate, words: [String])
+    func showConfirmation(delegate: IBackupConfirmationDelegate, words: [String], predefinedAccountType: IPredefinedAccountType)
     func notifyBackedUp()
     func notifyClosed()
 }

@@ -16,8 +16,6 @@ class BalanceSorter: IBalanceSorter {
             return items.sorted { item, item2 in
                 item.wallet.coin.title.caseInsensitiveCompare(item2.wallet.coin.title) == .orderedAscending
             }
-        case .manual:
-            return items
         }
     }
 

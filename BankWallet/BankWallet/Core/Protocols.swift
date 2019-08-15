@@ -275,7 +275,7 @@ protocol IAppConfigProvider {
 
 protocol IFullTransactionInfoProvider {
     var providerName: String { get }
-    func url(for hash: String) -> String
+    func url(for hash: String) -> String?
 
     func retrieveTransactionInfo(transactionHash: String) -> Single<FullTransactionRecord?>
 }
@@ -421,7 +421,7 @@ protocol ISettingsProviderMap {
 
 protocol IProvider {
     var name: String { get }
-    func url(for hash: String) -> String
+    func url(for hash: String) -> String?
     func reachabilityUrl(for hash: String) -> String
     func requestObject(for hash: String) -> JsonApiProvider.RequestObject
 }
@@ -473,6 +473,7 @@ protocol IPredefinedAccountTypeManager {
 }
 
 protocol IPredefinedAccountType {
+    var confirmationDescription: String { get }
     var backupTitle: String { get }
     var title: String { get }
     var coinCodes: String { get }

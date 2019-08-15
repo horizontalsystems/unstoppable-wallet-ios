@@ -1,4 +1,5 @@
 class BinanceAccountType: IPredefinedAccountType {
+    let confirmationDescription = "confirmation.binance.description"
     let backupTitle = "backup.binance.title"
     let title = "key_type.binance"
     let coinCodes = "key_type.binance.text"

@@ -57,7 +57,7 @@ class BalanceInteractor {
 extension BalanceInteractor: IBalanceInteractor {
 
     var sortType: BalanceSortType {
-        return localStorage.balanceSortType ?? .manual
+        return localStorage.balanceSortType ?? .name
     }
 
     func adapter(for wallet: Wallet) -> IBalanceAdapter? {

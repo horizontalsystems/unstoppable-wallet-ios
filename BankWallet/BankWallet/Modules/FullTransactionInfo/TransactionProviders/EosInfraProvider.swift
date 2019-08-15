@@ -8,8 +8,9 @@ class EosInfraProvider: IEosProvider {
 
     var name: String = "Eosnode.tools"
 
-    func url(for hash: String) -> String {
-        return "https://bloks.io/transaction/\(hash)"
+    func url(for hash: String) -> String? {
+        return nil
+//        return "https://bloks.io/transaction/\(hash)"
     }
 
     func reachabilityUrl(for hash: String) -> String {
@@ -30,8 +31,9 @@ class EosGreymassProvider: IEosProvider {
 
     var name: String = "Greymass.com"
 
-    func url(for hash: String) -> String {
-        return "https://bloks.io/transaction/\(hash)"
+    func url(for hash: String) -> String? {
+        return nil
+//        return "https://bloks.io/transaction/\(hash)"
     }
 
     func reachabilityUrl(for hash: String) -> String {
