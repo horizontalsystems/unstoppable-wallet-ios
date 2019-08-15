@@ -12,14 +12,14 @@
 "button.restore" = "복구";
 "button.next" = "다음";
 "button.remove" = "삭제";
-"button.forward" = "Forward";
+"button.forward" = "앞으로";
 "button.save" = "저장";
-"button.sync" = "Sync";
-"button.paste" = "Paste";
+"button.sync" = "동기화";
+"button.paste" = "불여넣기";
 
 "alert.copied" = "복사됨";
 "alert.no_internet" = "인터넷에 연결되지 않음";
-"alert.network_issue" = "Network issues. Try again in a short moment";
+"alert.network_issue" = "네트워크에 문제가 있습니다. 잠시 후 다시 시도해 주세요";
 
 "biometric_usage_reason" = "지갑 잠금 해제";
 
