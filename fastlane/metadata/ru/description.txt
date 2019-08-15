@@ -1,42 +1,40 @@
-Если Вы являетесь лицом, который нуждается в неограниченном доступе для инвестирования в блокчейн и требует безусловного контроля над вашими криптовложениями - это кошелек для вас.
+If you’re a type of person who needs unrestricted access to invest in blockchains and require unconditional control over your crypto investments this wallet is for you.
 
-Этот кошелек был создан, чтобы позволить человеку свободно инвестировать и пополнять криптовалютный портфель без ограничений, независимо от регулирующего органа.
+This wallet was built to enable any freedom loving individual to invest and grow crypto currency portfolio without limitations, in a private manner, regardless of regulatory landscape.
 
-Имейте полный контроль над вашими средствами. Bitcoin, Bitcoin Cash, Ethereum, Dash.
+Exercise full unconditional control over your assets. Bitcoin, Ethereum, Dash and other crypto assets.
 
-Зачем Unstoppable Wallet
+ Why Unstoppable Wallet
 
-Безопасное хранение криптоактивов на вашем устройстве
+It keeps crypto assets safe on your device
+It can only be controlled by yourself
+It doesn’t know who you are
+It doesn’t collect any data
+It's easy to migrate to/from
+It’s not dependent on any entity to function
+It integrates blockchains in a decentralized manner
+It implements latest improvements for each blockchain
+It can’t be blocked or censored
+It provides real time transaction fees
+It’s fast and beautiful  
+It's the most advanced wallet to date
+(1) UNRESTRICTED CONTROL
 
-Только вы имеете контроль над вашими средствами
-Никто не знает кто вы
-Никакого сбора данных
-Легко перемещать
-Не зависит от чего-либо для полноценной работы
-Интегрирует блокчейны децентрализованно
-Реализует последние улучшения для каждого блокчейна
-Нельзя заблокировать или зацензурить
-Комиссия за транзакции в реальном времени
-Быстро и красиво
-Это самый продвинутый кошелек
-(1)НЕОГРАНИЧЕННЫЙ КОНТРОЛЬ
+  Transact freely and unconditionally regardless of where you live. No entity can stop you from sending/receiving crypto in Unstoppable wallet.   
 
-Транзакции свободны и независимы от местоположения. Никто не может остановить вас отправлять/получать средства в Unstoppable Walletю   
-
-Вы единственный человек с полным доступом и контролем к вашим криптосредствам. Секретный ключ (который дает вам право собственности на криптоактивы) никогда не покинет ваш телефон.
+You’re the only person with control and access to your crypto finances. The Secret Key (that give you ownership over crypto assets) never leaves your device.
 
 (2) GENUINE PRIVACY
 
-Будьте действительно приватным, никакого сбора персональных данных. Никаких подтверждений личности, учетных записей, электронных писем, номеров телефонов и сторонних серверов.
+  Stay truly private without revealing any personal data. There are no accounts, emails, phone numbers, identity checks or 3rd party servers storing your data.  
 
-В отличие от большинства кошельком, Unstoppable Wallet соединяет пользователей непосредственно с децентрализованными блокчейнами без каких-либо ограничений или посредников.
+Unlike most wallets in the market the Unstoppable wallet connects users directly to decentralized blockchains without any restrictions or intermediaries.
 
-(3) ВЫСОКАЯ БЕЗОПАСНОСТЬ
+(3) HIGHLY SECURE
 
-Держите ваши средства в безопасности на вашем устройстве с помощью безопасных механизмов хранения, предоставляемых операционной системой телефона. Ваши секретные ключи никогда не покинут ваше устройство.
+  Keep your crypto assets safe on your phone using safe storage mechanisms provided by phone's operating system. Your secret keys never leaves your device the device.
 
-
-В случае утери устройства или замены, вы можете легко восстановить ваш кошелек с помощью Секретного ключа. Unstoppable Wallet дает возможность переключаться на другой кошелек или переместить средства из другого кошелька.
+  In case of a device loss or replacement you may easily restore your wallet using Secret Key. Unstoppable Wallet дает возможность переключаться на другой кошелек или переместить средства из другого кошелька.
 
 ВСЕГДА ОНЛАЙН
 
