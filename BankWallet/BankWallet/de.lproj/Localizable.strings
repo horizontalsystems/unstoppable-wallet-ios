@@ -51,7 +51,7 @@
 "coin_sync.fast.text" = "Stellen Sie Ihre vergangenen Transaktionen via eines sicheren Dritt-Servers wieder her. Für Nutzer mit einer langen Transaktionshistorie, die große Summen umfasst, kann diese Methode Datenschutzrisiken bergen.";
 "coin_sync.slow" = "Langsam";
 "coin_sync.more_private" = "1-12 Stunden (mehr privat)";
-"coin_sync.slow.text" = "Restores your past transactions directly from the network. Significantly more private but very slow. If the restore takes way too much time, go to Manage Keys section and reimport the Key for the wallet using the Fast Sync option.";
+"coin_sync.slow.text" = "Stellt vergangene Transaktionen direkt aus dem Netzwerk wieder her. Das schützt die Privatsphäre deutlich besser, ist aber sehr langsam. Wenn die Wiederherstellung zu lange dauert, gehen Sie zu Schlüssel Verwalten und reimportieren Sie den Schlüssel für das Wallet, indem Sie die Fast Sync Option nutzen.";
 "coin_sync.alert.header" = "Achtung";
 "coin_sync.alert.text" = "Diese Aktion wird dein Wallet-Konto für jede Blockchain neu synchronisieren. Es kann mehrere Stunden dauern, um ihn abzuschließen.";
 "coin_sync.erc20" = "Sync-Modus wie Ethereum";
