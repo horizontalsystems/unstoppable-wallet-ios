@@ -25,29 +25,29 @@
 
 // Access Camera
 
-"access_camera.message" = "Unstoppable needs access to your camera to scan QR code.\n\nGo to Settings - > Unstoppable and allow access to Camera.";
+"access_camera.message" = "Unstoppable이 QR코드를 스캔하기 위해선 카메라에 대한 접근이 필요합니다. \n\n설정 -> Unstoppable으로 가서 카메라 접근을 허용해 주세요.";
 "access_camera.settings" = "설정";
 
 // Welcome
 
 "welcome.new_wallet" = "새 지갑";
 "welcome.restore_wallet" = "지갑 복원";
-"welcome.version" = "version %@";
+"welcome.version" = "버전 %@";
 
 // Restore
 
 "restore.title" = "복구";
-"restore.description" = "To restore existing wallet you need to enter a private key for that wallet.\n\nOnce you restore one wallet you will be able to restore more wallets by going to Manage Keys section in app Settings.";
-"restore.words.description" = "Enter Key";
-"restore.validation_failed" = "Incorrect Key";
+"restore.description" = "기존 지갑을 복원하시려면 개인 암호를 입력해야 합니다. \n\n하나의 지갑을 복원하신 후엔 앱 설정의 Manage Keys(암호 관리) 섹션에서 더 많은 지갑들을 복원하실 수 있습니다.";
+"restore.words.description" = "암호를 입력하세요";
+"restore.validation_failed" = "틀린 암호 입니다";
 "restore.placeholder.account_name" = "Account Name";
 "restore.placeholder.private_key" = "Active Private Key";
 
 //Coin Sync Modes
 
-"coin_sync.title" = "Restore Options";
-"coin_sync.fast" = "Fast";
-"coin_sync.recommended" = "0-2 hours (Recommended)";
+"coin_sync.title" = "옵션 복구";
+"coin_sync.fast" = "빠르게";
+"coin_sync.recommended" = "0-2시간 (권장)";
 "coin_sync.fast.text" = "Restores your past transactions via secure third party server. For users with a long history of transactions involving very large sums this method may pose privacy risks";
 "coin_sync.slow" = "Slow";
 "coin_sync.more_private" = "1-12 hours (More Private)";
@@ -99,7 +99,6 @@
 "balance.sort.header" = "Sort by";
 "balance.sort.valueHighToLow" = "잔액";
 "balance.sort.az" = "Name";
-"balance.sort.manual" = "Default";
 
 // Deposit
 
