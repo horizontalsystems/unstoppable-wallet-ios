@@ -4,14 +4,14 @@ This wallet was built to enable any freedom loving individual to invest and grow
 
 Exercise full unconditional control over your assets. Bitcoin, Ethereum, Dash and other crypto assets.
 
-Warum Unstoppable Wallet
+ Why Unstoppable Wallet
 
-Es hält kryptographische Anlagen auf Ihrem Gerät sicher
-Sie kann nur von sich selbst kontrolliert werden
-Wissen wir nicht, wer du bist
-es sammelt keine Daten
-Es ist einfach zu migrieren von/aus
-Es ist nicht von irgendeiner Entität abhängig, die funkrioniert
+It keeps crypto assets safe on your device
+It can only be controlled by yourself
+It doesn’t know who you are
+It doesn’t collect any data
+It's easy to migrate to/from
+It’s not dependent on any entity to function
 It integrates blockchains in a decentralized manner
 It implements latest improvements for each blockchain
 It can’t be blocked or censored
