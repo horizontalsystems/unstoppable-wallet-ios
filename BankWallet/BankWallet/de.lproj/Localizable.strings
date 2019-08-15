@@ -37,9 +37,9 @@
 // Restore
 
 "restore.title" = "Wiederherstellen";
-"restore.description" = "To restore existing wallet you need to enter a private key for that wallet.\n\nOnce you restore one wallet you will be able to restore more wallets by going to Manage Keys section in app Settings.";
-"restore.words.description" = "Enter Key";
-"restore.validation_failed" = "Incorrect Key";
+"restore.description" = "Um ein bestehendes Wallet wiederherzustellen, müssen Sie den privaten Schlüssel für dieses Wallet eingeben.\nSobald Sie ein Wallet wiederhergestellt haben, können Sie weitere Wallets wiederherstellen. Gehen Sie dazu in das Verzeichnis Manage Schlüssel in den App-Einstellungen.";
+"restore.words.description" = "Schlüssel Eingeben";
+"restore.validation_failed" = "Falscher Schlüssel";
 "restore.placeholder.account_name" = "Account Name";
 "restore.placeholder.private_key" = "Active Private Key";
 
@@ -48,10 +48,10 @@
 "coin_sync.title" = "Optionen Wiederherstellen";
 "coin_sync.fast" = "Schnell";
 "coin_sync.recommended" = "0-2 Stunden (empfohlen)";
-"coin_sync.fast.text" = "Restores your past transactions via secure third party server. For users with a long history of transactions involving very large sums this method may pose privacy risks";
+"coin_sync.fast.text" = "Stellen Sie Ihre vergangenen Transaktionen via eines sicheren Dritt-Servers wieder her. Für Nutzer mit einer langen Transaktionshistorie, die große Summen umfasst, kann diese Methode Datenschutzrisiken bergen.";
 "coin_sync.slow" = "Langsam";
 "coin_sync.more_private" = "1-12 Stunden (mehr privat)";
-"coin_sync.slow.text" = "Restores your past transactions directly from the network. Significantly more private but very slow. If the restore takes way too much time go to Security section in Settings tab and select “Delete from Phone” option.";
+"coin_sync.slow.text" = "Stellt Ihre vergangenen Transaktionen direkt aus dem Netzwerk wieder her. Das ist hinsichtlich des Datenschutzes deutlich besser, aber sehr langsam. Wenn die Wiederherstellung zu viel Zeit in Anspruch nimmt, gehen Sie zu den Sicherheitseinstellungen im Tab Einstellungen und wählen Sie \"Vom Telefon löschen\" aus.";
 "coin_sync.alert.header" = "Achtung";
 "coin_sync.alert.text" = "Diese Aktion wird dein Wallet-Konto für jede Blockchain neu synchronisieren. Es kann mehrere Stunden dauern, um ihn abzuschließen.";
 "coin_sync.erc20" = "Sync-Modus wie Ethereum";
@@ -61,7 +61,7 @@
 "backup.close" = "Schließen";
 
 "backup.intro.title_backup" = "Sicherung";
-"backup.intro.title_show" = "Show Key";
+"backup.intro.title_show" = "Schlüssel anzeigen";
 "backup.intro.subtitle" = "The key that will be shown next is the only way to restore your funds, if your phone is ever lost, stolen, broken etc. Make sure that no one is watching your screen.\n\nThe coins controlled by this key: %@";
 "backup.intro.later" = "Später";
 "backup.intro.backup_now" = "Backup";
@@ -242,14 +242,14 @@
 // Manage Keys
 
 "settings_manage_keys.title" = "Keys";
-"settings_manage_keys.description" = "Anyone with access to your Keys can steal your wallet funds. Store keys safely and never show them to anyone.\n\nBackup each key to be able to restore funds if you loose or break your phone, or simply the wallet app gets deleted.";
-"settings_manage_keys.delete" = "Delete";
+"settings_manage_keys.description" = "Jeder, der Ihre Schlüssel kennt, kann Ihr Wallet-Guthaben stehlen. Bewahren Sie die Schlüssel sicher auf und zeigen sie diese niemandem.\nSichern Sie jeden Schlüssel so, dass Sie auf das Guthaben zugreifen können, wenn Ihr Telefon kaputt geht oder die Wallet-App gelöscht wird.";
+"settings_manage_keys.delete" = "Löschen";
 "settings_manage_keys.backup" = "Sicherung";
 "settings_manage_keys.show" = "Anzeigen";
 "settings_manage_keys.create" = "Erstellen";
 "settings_manage_keys.restore" = "Wiederherstellen";
 "settings_manage_keys.delete.cant_delete" = "You need to backup this key before you may unlink it.";
-"settings_manage_keys.delete.title" = "Delete Key";
+"settings_manage_keys.delete.title" = "Schlüssel löschen";
 "settings_manage_keys.delete.confirmation_remove" = "This action will delete the %@ key (wallet) from this device.";
 "settings_manage_keys.delete.confirmation_disable" = "Coins that will be disabled: %@";
 "settings_manage_keys.delete.confirmation_loose" = "If you don't have a backup of this key you will loose the respective funds.";
