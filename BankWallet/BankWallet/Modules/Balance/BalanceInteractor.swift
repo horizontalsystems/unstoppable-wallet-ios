@@ -23,7 +23,7 @@ class BalanceInteractor {
     private func onUpdateWallets() {
         delegate?.didUpdate(wallets: walletManager.wallets)
         for wallet in walletManager.wallets {
-            guard let adapter = adapterManager.adapter(for: wallet) else {
+            guard let adapter = adapterManager.balanceAdapter(for: wallet) else {
                 continue
             }
 
@@ -60,8 +60,8 @@ extension BalanceInteractor: IBalanceInteractor {
         return localStorage.balanceSortType ?? .manual
     }
 
-    func adapter(for wallet: Wallet) -> IAdapter? {
-        return adapterManager.adapter(for: wallet)
+    func adapter(for wallet: Wallet) -> IBalanceAdapter? {
+        return adapterManager.balanceAdapter(for: wallet)
     }
 
     func initWallets() {

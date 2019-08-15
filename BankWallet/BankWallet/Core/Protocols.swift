@@ -63,6 +63,7 @@ protocol ILocalizationManager {
 protocol IAdapterManager: class {
     var adaptersCreationSignal: Signal { get }
     func adapter(for: Wallet) -> IAdapter?
+    func balanceAdapter(for: Wallet) -> IBalanceAdapter?
     func transactionsAdapter(for: Wallet) -> ITransactionsAdapter?
     func depositAdapter(for wallet: Wallet) -> IDepositAdapter?
     func preloadAdapters()
@@ -87,13 +88,14 @@ protocol IAdapter: class {
     func stop()
     func refresh()
 
+    var debugInfo: String { get }
+}
+
+protocol IBalanceAdapter {
     var state: AdapterState { get }
     var stateUpdatedObservable: Observable<Void> { get }
-
     var balance: Decimal { get }
     var balanceUpdatedObservable: Observable<Void> { get }
-
-    var debugInfo: String { get }
 }
 
 protocol IDepositAdapter {

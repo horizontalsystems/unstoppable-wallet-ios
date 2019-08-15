@@ -60,7 +60,15 @@ class Erc20Adapter: EthereumBaseAdapter {
 
 }
 
-extension Erc20Adapter: IAdapter {
+extension Erc20Adapter {
+
+    static func clear() throws {
+        try Erc20Kit.clear()
+    }
+
+}
+
+extension Erc20Adapter: IBalanceAdapter {
 
     var state: AdapterState {
         switch erc20Kit.syncState {
@@ -84,14 +92,6 @@ extension Erc20Adapter: IAdapter {
 
     var balanceUpdatedObservable: Observable<Void> {
         return erc20Kit.balanceObservable.map { _ in () }
-    }
-
-}
-
-extension Erc20Adapter {
-
-    static func clear() throws {
-        try Erc20Kit.clear()
     }
 
 }

@@ -64,6 +64,20 @@ extension EosAdapter: IAdapter {
         // refreshed via EosKitManager
     }
 
+    var debugInfo: String {
+        return ""
+    }
+
+}
+
+extension EosAdapter {
+    enum ValidationError: Error {
+        case invalidAccount
+    }
+}
+
+extension EosAdapter: IBalanceAdapter {
+
     var state: AdapterState {
         switch asset.syncState {
         case .synced: return .synced
@@ -84,16 +98,6 @@ extension EosAdapter: IAdapter {
         return asset.balanceObservable.map { _ in () }
     }
 
-    var debugInfo: String {
-        return ""
-    }
-
-}
-
-extension EosAdapter {
-    enum ValidationError: Error {
-        case invalidAccount
-    }
 }
 
 extension EosAdapter: ISendEosAdapter {

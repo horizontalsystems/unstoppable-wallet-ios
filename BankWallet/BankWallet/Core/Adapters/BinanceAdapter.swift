@@ -46,11 +46,14 @@ class BinanceAdapter {
 
 }
 
-extension BinanceAdapter: IAdapter {
-
-    var refreshable: Bool {
-        return true
+extension BinanceAdapter {
+    //todo: Make binanceKit errors public!
+    enum AddressConversion: Error {
+        case invalidAddress
     }
+}
+
+extension BinanceAdapter: IAdapter {
 
     func start() {
         // started via BinanceKitManager
@@ -63,6 +66,14 @@ extension BinanceAdapter: IAdapter {
     func refresh() {
         // refreshed via BinanceKitManager
     }
+
+    var debugInfo: String {
+        return ""
+    }
+
+}
+
+extension BinanceAdapter: IBalanceAdapter {
 
     var state: AdapterState {
         switch binanceKit.syncState {
@@ -84,33 +95,6 @@ extension BinanceAdapter: IAdapter {
         return asset.balanceObservable.map { _ in () }
     }
 
-//    func validate(params: [String : Any]) throws -> [SendStateError] {
-//        var errors = [SendStateError]()
-//
-//        if let amount: Decimal = params[AdapterField.amount.rawValue] as? Decimal {
-//            let balance = availableBalance(params: params)
-//            if amount > balance {
-//                errors.append(.insufficientAmount(availableBalance: balance))
-//            }
-//        }
-//
-//        if binanceKit.binanceBalance < BinanceAdapter.transferFee {
-//            errors.append(.insufficientFeeBalance(fee: BinanceAdapter.transferFee))
-//        }
-//        return errors
-//    }
-
-    var debugInfo: String {
-        return ""
-    }
-
-}
-
-extension BinanceAdapter {
-    //todo: Make binanceKit errors public!
-    enum AddressConversion: Error {
-        case invalidAddress
-    }
 }
 
 extension BinanceAdapter: ISendBinanceAdapter {

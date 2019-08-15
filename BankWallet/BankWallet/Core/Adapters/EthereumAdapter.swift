@@ -50,7 +50,15 @@ class EthereumAdapter: EthereumBaseAdapter {
 
 }
 
-extension EthereumAdapter: IAdapter {
+extension EthereumAdapter {
+
+    static func clear() throws {
+        try EthereumKit.clear()
+    }
+
+}
+
+extension EthereumAdapter: IBalanceAdapter {
 
     var state: AdapterState {
         switch ethereumKit.syncState {
@@ -70,14 +78,6 @@ extension EthereumAdapter: IAdapter {
 
     var balanceUpdatedObservable: Observable<Void> {
         return ethereumKit.balanceObservable.map { _ in () }
-    }
-
-}
-
-extension EthereumAdapter {
-
-    static func clear() throws {
-        try EthereumKit.clear()
     }
 
 }

@@ -33,7 +33,7 @@ class EthereumBaseAdapter {
 }
 
 // IAdapter
-extension EthereumBaseAdapter {
+extension EthereumBaseAdapter: IAdapter {
 
     func start() {
         // started via EthereumKitManager
@@ -46,6 +46,22 @@ extension EthereumBaseAdapter {
     func refresh() {
         // refreshed via EthereumKitManager
     }
+
+    var debugInfo: String {
+        return ethereumKit.debugInfo
+    }
+
+}
+
+extension EthereumBaseAdapter {
+    //todo: Make ethereumKit errors public!
+    enum AddressConversion: Error {
+        case invalidAddress
+    }
+}
+
+// ISendEthereumAdapter
+extension EthereumBaseAdapter {
 
     func sendSingle(amount: Decimal, address: String, gasPrice: Int) -> Single<Void> {
         let poweredDecimal = amount * pow(10, decimal)
@@ -66,17 +82,6 @@ extension EthereumBaseAdapter {
         }
     }
 
-    var debugInfo: String {
-        return ethereumKit.debugInfo
-    }
-
-}
-
-extension EthereumBaseAdapter {
-    //todo: Make ethereumKit errors public!
-    enum AddressConversion: Error {
-        case invalidAddress
-    }
 }
 
 // ITransactionsAdapter

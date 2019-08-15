@@ -22,7 +22,7 @@ class RateSyncer {
         Observable.merge(walletManager.walletsUpdatedSignal, currencyManager.baseCurrencyUpdatedSignal, reachabilityManager.reachabilitySignal, timer)
                 .subscribeOn(scheduler)
                 .observeOn(scheduler)
-                .subscribe(onNext: { [weak self] wallets in
+                .subscribe(onNext: { [weak self] in
                     self?.syncLatestRates()
                 })
                 .disposed(by: disposeBag)

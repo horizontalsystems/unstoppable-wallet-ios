@@ -29,6 +29,3 @@ extension BitcoinAdapter {
     }
 
 }
-
-extension BitcoinAdapter: ISendBitcoinAdapter {
-}
