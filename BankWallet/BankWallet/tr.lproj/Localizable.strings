@@ -241,7 +241,7 @@
 // Manage Keys
 
 "settings_manage_keys.title" = "Anahtarlar";
-"settings_manage_keys.description" = "Anyone with access to your Keys can steal your wallet funds. Store keys safely and never show them to anyone.\n\nBackup each key to be able to restore funds if you loose or break your phone, or simply the wallet app gets deleted.";
+"settings_manage_keys.description" = "Anahtarlarınıza ulaşabilen herkes cüzdanınızı kullanabilir. Anahtarları kimsenin bulamayacağı güvenli bir yerde tutun.\n\nCihazın bozulması, kaybolması veya uygulamanın silinmesi durumunda cüzdanınızı geri yükleyebilmeniz için her anahtarı yedekleyin.";
 "settings_manage_keys.delete" = "Sil";
 "settings_manage_keys.backup" = "Yedekle";
 "settings_manage_keys.show" = "Göster";
@@ -278,7 +278,7 @@
 
 // No Passcode
 
-"no_passcode.info_text" = "This app requires that phone has the passcode (screen lock) enabled.\n\nYou may enable it in iOS settings.\n\nPlease note that when you disabled the PIN on the OS level the security measures in safe storage of your phonе made the previously stored data invalid. You will need to Restore your wallet keys to get back to your wallet.";
+"no_passcode.info_text" = "Bu uygulamayı kullanabilmeniz için telefonun Ekran Kilidi (Şifre/PİN) etkinleştirilmeli.\n\niOS Ayarlarından etkinleştirebilirsiniz.\n\nŞifreyi kaldırdığınızda, kullanılmakta olan güvenli bilgi deposu sistem tarafından kaldırılır. Cüzdanlarınızı gizli anahtar ile geri yüklemeniz gerekecek.";
 
 //NumPad
 
