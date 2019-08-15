@@ -37,7 +37,7 @@
 // Restore
 
 "restore.title" = "Восстановить";
-"restore.description" = "To restore existing wallet you need to enter a private key for that wallet.\n\nOnce you restore one wallet you will be able to restore more wallets by going to Manage Keys section in app Settings.";
+"restore.description" = "Чтобы восстановить существующий кошелек вам нужно ввести приватный ключ для этого кошелька.\n\nКак только вы восстановите один кошелек, вы сможете восстановить больше кошельков, перейдя в раздел \"Управление Ключами\" в настройках приложения.";
 "restore.words.description" = "Введите ключ";
 "restore.validation_failed" = "Неверный Ключ";
 "restore.placeholder.account_name" = "Имя Пользователя";
@@ -48,10 +48,10 @@
 "coin_sync.title" = "Опции";
 "coin_sync.fast" = "Быстро";
 "coin_sync.recommended" = "0-2 часа (Рекомендуется)";
-"coin_sync.fast.text" = "Restores your past transactions via secure third party server. For users with a long history of transactions involving very large sums this method may pose privacy risks";
+"coin_sync.fast.text" = "Восстановление ваших предыдущих транзакций через сторонний защищенный сервер. Для пользователей с длинной историей транзакций и с очень большим суммами этот метод может представлять риски для конфиденциальности";
 "coin_sync.slow" = "Медленно";
 "coin_sync.more_private" = "1-12 часов (Более Приватно)";
-"coin_sync.slow.text" = "Restores your past transactions directly from the network. Significantly more private but very slow. If the restore takes way too much time, go to Manage Keys section and reimport the Key for the wallet using the Fast Sync option.";
+"coin_sync.slow.text" = "Восстановление ваших предыдущих транзакций будет непосредственно из сети. Это более приватно, но очень медленно. Чем больше монет вы восстанавливаете, тем больше времени потребуется. Если восстановление занимает слишком много времени, перейдите в раздел «Управление ключами» и повторно импортируйте ключ для кошелька с помощью опции «Быстрая синхронизация».";
 "coin_sync.alert.header" = "Внимание";
 "coin_sync.alert.text" = "Это действие синхронизирует баланс вашего кошелька для каждого блокчейна. Может потребоваться несколько часов.";
 "coin_sync.erc20" = "Режим синхронизации, подобно Ethereum";
@@ -62,7 +62,7 @@
 
 "backup.intro.title_backup" = "Записать ключ";
 "backup.intro.title_show" = "Показать Ключ";
-"backup.intro.subtitle" = "The key that will be shown next is the only way to restore your funds, if your phone is ever lost, stolen, broken etc. Make sure that no one is watching your screen.\n\nThe coins controlled by this key: %@";
+"backup.intro.subtitle" = "Ключ, который будет показан далее, - это единственный способ восстановить ваши средства, если ваш телефон потерян, украден, сломан и т.д. Убедитесь, что никто не смотрит на ваш экран.\n\nМонеты, контролируемые этим ключом: %@\n";
 "backup.intro.later" = "Позже";
 "backup.intro.backup_now" = "Резервная копия";
 "backup.intro.show_key" = "Показать Ключ";
@@ -76,7 +76,7 @@
 "backup.eos.title" = "EOS ключ";
 "backup.eos.account_name" = "Account Name";
 "backup.eos.active_private_key" = "Active Private Key";
-"backup.eos.hint" = "Copying your key using “copy” action poses some risks if you use any clipboard management apps or some other apps that may have access to clipboard data.";
+"backup.eos.hint" = "Копирование ключа с помощью действия «копировать» представляет определенный риск, если вы используете какие-либо приложения для управления буфером обмена или другие приложения, которые могут иметь доступ к данным буфера обмена.";
 
 "backup.confirmation.title" = "Проверка...";
 "backup.confirmation.secret_key" = "Я понимаю, что я единственный владелец  Секретного Ключа, который надежно хранится на моем телефоне и позволяет мне контролировать средства в моем кошельке.";
@@ -95,7 +95,7 @@
 "balance.rate_per_coin" = "%@ за %@";
 "balance.synced_through" = "до: %@";
 "balance.syncing" = "Синхронизация...";
-"balance.add_coins" = "Add Coins";
+"balance.add_coins" = "Добавить Монеты";
 "balance.sort.header" = "Сортировать по";
 "balance.sort.valueHighToLow" = "Баланс";
 "balance.sort.az" = "Название";
