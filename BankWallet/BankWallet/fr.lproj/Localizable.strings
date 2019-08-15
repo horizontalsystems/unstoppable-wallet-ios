@@ -51,7 +51,7 @@
 "coin_sync.fast.text" = "Restaure vos transactions passées via un serveur tiers sécurisé. Pour les utilisateurs ayant une longue histoire de transactions impliquant des sommes très importantes, cette méthode peut poser des risques de confidentialité";
 "coin_sync.slow" = "Lente";
 "coin_sync.more_private" = "1-12 heures (Plus Privé)";
-"coin_sync.slow.text" = "Restores your past transactions directly from the network. Significantly more private but very slow. If the restore takes way too much time, go to Manage Keys section and reimport the Key for the wallet using the Fast Sync option.";
+"coin_sync.slow.text" = "Restaurez vos transactions passées directement depuis le réseau. Significablement plus privées mais très lentes. Si la restauration prend beaucoup de temps, dirigez dans la section Manage Keys et ré-importez la clé d'un porte-monnaie dans en utilisant l'option Fast Sync.";
 "coin_sync.alert.header" = "Attention";
 "coin_sync.alert.text" = "Cette action va rééquilibrer votre solde de porte-monnaie pour chaque de blockchain. Elle peut prendre plusieurs heures pour terminer.";
 "coin_sync.erc20" = "Sync mode same as Ethereum";
@@ -62,7 +62,7 @@
 
 "backup.intro.title_backup" = "Sauvegarde";
 "backup.intro.title_show" = "Voir la clé";
-"backup.intro.subtitle" = "The key that will be shown next is the only way to restore your funds, if your phone is ever lost, stolen, broken etc. Make sure that no one is watching your screen.\n\nThe coins controlled by this key: %@";
+"backup.intro.subtitle" = "La clé qui sera affichée suivante est la seule façon de restaurer vos fonds, si votre téléphone est perdu, volé, cassé, etc. Assurez-vous que personne ne regarde votre écran.\n\nLes coins contrôlées par cette clé : %@";
 "backup.intro.later" = "Plus tard";
 "backup.intro.backup_now" = "Sauvegarde";
 "backup.intro.show_key" = "Voir la clé";
