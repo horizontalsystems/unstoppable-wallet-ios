@@ -76,14 +76,14 @@
 "backup.eos.title" = "Clé EOS";
 "backup.eos.account_name" = "Account Name";
 "backup.eos.active_private_key" = "Active Private Key";
-"backup.eos.hint" = "Copying your key using “copy” action poses some risks if you use any clipboard management apps or some other apps that may have access to clipboard data.";
+"backup.eos.hint" = "Copier votre clé en utilisant l'action « copier » apporte le des risques si vous utilisez des applications de gestion du presse-papiers ou d'autres applications qui peuvent avoir accès aux données du presse-papiers.";
 
 "backup.confirmation.title" = "Vérification...";
 "backup.confirmation.secret_key" = "Je comprends que je suis propriétaire d'une clé secrète privée de 12 mots, qui est stockée en toute sécurité sur mon téléphone portable et me permet de contrôler les fonds sur mon porte-monnaie.";
 "backup.confirmation.delete_app_warn" = "Je comprends que si cette appli ne fonction plus, est déplacée vers un autre appareil ou supprimée, mon porte-monnaie ne peut être récupéré qu'avec la clé secrète.";
 "backup.confirmation.disclaimer" = "Je comprends que les développeurs de cette application ne peuvent pas être responsables de tout bogue ou problème non désiré qui pourrait apparaître lors de l'utilisation de cette application.";
 
-"words_validator.empty_words" = "Not all words are entered";
+"words_validator.empty_words" = "Tous les mots ne sont pas entrés";
 "words_validator.invalid_confirmation" = "Les mots ne correspondent pas";
 
 // Balance
@@ -95,8 +95,8 @@
 "balance.rate_per_coin" = "%@ par %@";
 "balance.synced_through" = "jusqu'à: %@";
 "balance.syncing" = "Synchronisation...";
-"balance.add_coins" = "Add Coins";
-"balance.sort.header" = "Sort by";
+"balance.add_coins" = "Ajouter des coins";
+"balance.sort.header" = "Trier par";
 "balance.sort.valueHighToLow" = "Balance";
 "balance.sort.az" = "Nom";
 
@@ -114,16 +114,16 @@
 "send.fee" = "Frais:";
 "send.max_button" = "Max";
 "send.next_button" = "Suivant";
-"send.error.invalid_address" = "Invalid Address";
-"send.error.invalid_account" = "Invalid Account";
-"send.error.no_address" = "No Address";
-"send.error.no_amount" = "No Amount";
+"send.error.invalid_address" = "Addresse invalide";
+"send.error.invalid_account" = "Compte invalide";
+"send.error.no_address" = "Aucune adresse";
+"send.error.no_amount" = "Aucun montant";
 
 "send.confirmation.title" = "Confirmer";
 "send.confirmation.to" = "À:";
 "send.confirmation.memo_placeholder" = "Memo";
 "send.confirmation.total" = "Total:";
-"send.confirmation.estimate_time" = "Estimate Time:";
+"send.confirmation.estimate_time" = "Temps estimé :";
 "send.confirmation.eos.account" = "Account";
 "send.confirmation.send_button" = "Envoyer";
 "send.amount_error.balance" = "Balance %@";
@@ -195,7 +195,7 @@
 "settings.base_currency" = "Devise de Base";
 "settings.language" = "Langue";
 "settings.about" = "À propos de";
-"settings.tell_friends" = "Tell Friends";
+"settings.tell_friends" = "Partager avec ami";
 "settings.light_mode" = "Mode lumineux";
 "settings.info_title" = "UNSTOPPABLE";
 "settings.info_subtitle" = "decentralized app";
@@ -211,9 +211,9 @@
 // Settings -> Manage Wallet
 
 "manage_coins.title" = "Portefeuilles";
-"manage_coins.add_coin.title" = "Add %@ ";
-"manage_coins.add_coin.text" = "You don't have active key for use with %@. Use Create button below to generate a new key (wallet).\n\nYou may also use the existing key for the %@ if you already have it.";
-"manage_coins.add_coin.create" = "Create";
+"manage_coins.add_coin.title" = "Ajouter %@ ";
+"manage_coins.add_coin.text" = "Vous n'avez pas de clé active à utiliser avec %@. Utilisez le bouton Créer ci-dessous pour générer une nouvelle clé (porte-monnaie).\n\nVous pouvez également utiliser la clé existante pour le %@ si vous l'avez déjà.";
+"manage_coins.add_coin.create" = "Créer";
 "manage_coins.add_coin.restore" = "Restaurer";
 
 // Settings -> About
@@ -226,7 +226,7 @@
 
 // Settings -> Tell Friends
 
-"settings_tell_friends.text" = "Be Free! Be Unstoppable!";
+"settings_tell_friends.text" = "Soyez libre! Soyez inarretable!";
 
 // Settings -> Security
 
@@ -236,7 +236,7 @@
 "settings_security.change_pin" = "Modifier le code ";
 "settings_security.touch_id" = "Touch ID";
 "settings_security.face_id" = "Face ID";
-"security_settings.delete_alert_button" = "Delete from Phone";
+"security_settings.delete_alert_button" = "Supprimer de l'appareil";
 
 // Manage Keys
 
