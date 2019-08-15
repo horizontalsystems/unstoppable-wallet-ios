@@ -48,7 +48,7 @@
 "coin_sync.title" = "Restaurar opciones";
 "coin_sync.fast" = "Rápido";
 "coin_sync.recommended" = "0-2 horas (Recomendado)";
-"coin_sync.fast.text" = "Restores your past transactions via secure third party server. For users with a long history of transactions involving very large sums this method may pose privacy risks";
+"coin_sync.fast.text" = "Restaura tus transacciones pasadas vía un tercer servidor seguro. Para usuarios con una larga historia de transacciones con grandes cantidades, éste método puede tener riesgos de privacidad";
 "coin_sync.slow" = "Lento";
 "coin_sync.more_private" = "1-12 horas (Más Privado)";
 "coin_sync.slow.text" = "Restaure sus transacciones pasadas directamente desde la red. Significativamente más privado pero muy lento. Si la restauración toma mucho tiempo, vaya a la sección de Seguridad en la pestaña de Ajustes y seleccione la opción \"Borrar desde el teléfono\".";
@@ -70,8 +70,8 @@
 "backup.words.title" = "Clave secreta";
 "backup.12words.title" = "Clave de 12 palabras";
 "backup.binance.title" = "Clave de Binance";
-"confirmation.binance.description" = "Enter words from your Binance Key";
-"confirmation.12words.description" = "Enter words from your 12-words Key";
+"confirmation.binance.description" = "Insertar palabras de su clave Binance Key";
+"confirmation.12words.description" = "Insertar palabras de su clave 12-words Key";
 
 "backup.eos.title" = "Clave de EOS";
 "backup.eos.account_name" = "Nombre de cuenta";
