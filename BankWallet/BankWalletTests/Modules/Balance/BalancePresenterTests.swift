@@ -203,7 +203,7 @@ class BalancePresenterTests: XCTestCase {
         }
 
 
-        presenter.didUpdate(adapters: adapters)
+        presenter.didUpdate(wallets: adapters)
 
         verify(mockDataSource).set(items: equal(to: [expectedItem]))
     }

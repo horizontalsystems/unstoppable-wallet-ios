@@ -52,8 +52,8 @@ class SendTheme {
     static let addressErrorTopMargin: CGFloat = 1
     static let addressErrorBottomMargin: CGFloat = 4
 
-    static let adjustableFeeHeight: CGFloat = 64
     static let feeHeight: CGFloat = 29
+    static let feeSliderHeight: CGFloat = 50
     static let feeTitleTopMargin: CGFloat = 12
     static let feeFont: UIFont = .systemFont(ofSize: 14)
     static let feeColor: UIColor = .cryptoGray
@@ -64,8 +64,6 @@ class SendTheme {
     static let feeSliderTopMargin: CGFloat = -6
     static let feeSliderLeftMargin: CGFloat = 19
     static let feeSliderRightMargin: CGFloat = 17
-    static let feeSliderHeight: CGFloat = 50
-    static let adjustableFeeErrorTopMargin: CGFloat = 32
 
     static let switchRightMargin: CGFloat = 6
 

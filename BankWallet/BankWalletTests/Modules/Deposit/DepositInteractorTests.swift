@@ -51,7 +51,7 @@ class DepositInteractorTests: XCTestCase {
     }
 
     func testWalletsForCoin_AllCoins() {
-        let adapters = interactor.adapters(forCoin: nil)
+        let adapters = interactor.wallets(forCoin: nil)
 
         XCTAssertEqual(adapters.count, 2)
         XCTAssertTrue(adapters[0] === mockBitcoinAdapter)
@@ -59,7 +59,7 @@ class DepositInteractorTests: XCTestCase {
     }
 
     func testWalletsForCoin_DefiniteCoin() {
-        let adapters = interactor.adapters(forCoin: ether)
+        let adapters = interactor.wallets(forCoin: ether)
 
         XCTAssertEqual(adapters.count, 1)
         XCTAssertTrue(adapters[0] === mockEtherAdapter)

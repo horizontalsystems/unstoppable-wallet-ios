@@ -28,15 +28,16 @@ protocol IBalanceViewDelegate {
 
 protocol IBalanceInteractor {
     var sortType: BalanceSortType { get }
-    func initAdapters()
+    func adapter(for: Wallet) -> IBalanceAdapter?
+    func initWallets()
     func fetchRates(currencyCode: String, coinCodes: [CoinCode])
     func refresh()
 }
 
 protocol IBalanceInteractorDelegate: class {
-    func didUpdate(adapters: [IAdapter])
-    func didUpdate(balance: Decimal, coinCode: CoinCode)
-    func didUpdate(state: AdapterState, coinCode: CoinCode)
+    func didUpdate(wallets: [Wallet])
+    func didUpdate(balance: Decimal, wallet: Wallet)
+    func didUpdate(state: AdapterState, wallet: Wallet)
 
     func didUpdate(currency: Currency)
     func didUpdate(rate: Rate)
@@ -45,7 +46,7 @@ protocol IBalanceInteractorDelegate: class {
 }
 
 protocol IBalanceRouter {
-    func openReceive(for coin: Coin)
+    func openReceive(for wallet: Wallet)
     func openSend(for coinCode: CoinCode)
     func openManageWallets()
     func openSortType(selected sort: BalanceSortType)
@@ -57,7 +58,8 @@ protocol IBalanceItemDataSource {
     var currency: Currency? { get set }
     var coinCodes: [CoinCode] { get }
     func item(at index: Int) -> BalanceItem
-    func index(for coinCode: CoinCode) -> Int?
+    func index(for wallet: Wallet) -> Int?
+    func indices(for: String) -> [Int]
 
     func set(balance: Decimal, index: Int)
     func set(state: AdapterState, index: Int)

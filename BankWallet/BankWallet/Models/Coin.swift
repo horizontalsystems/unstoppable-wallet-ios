@@ -1,6 +1,7 @@
 struct Coin {
     let title: String
     let code: CoinCode
+    let decimal: Int
     let type: CoinType
 }
 
@@ -8,6 +9,7 @@ extension Coin: Hashable {
 
     public func hash(into hasher: inout Hasher) {
         hasher.combine(code)
+        // todo: add "type" to hash
     }
 
 }
@@ -15,7 +17,7 @@ extension Coin: Hashable {
 extension Coin: Equatable {
 
     public static func ==(lhs: Coin, rhs: Coin) -> Bool {
-        return lhs.code == rhs.code && lhs.title == rhs.title && lhs.type == rhs.type
+        return lhs.title == rhs.title && lhs.code == rhs.code && lhs.decimal == rhs.decimal && lhs.type == rhs.type
     }
 
 }

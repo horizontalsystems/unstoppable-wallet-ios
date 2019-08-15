@@ -38,7 +38,7 @@ class BitcoinTransactionInfoAdapter: IFullTransactionInfoAdapter {
         // TRANSACTION
         var transactionItems = [FullTransactionItem]()
         if let fee = txResponse.fee {
-            let feeValue = CoinValue(coinCode: coin.code, value: fee)
+            let feeValue = CoinValue(coin: coin, value: fee)
             transactionItems.append(FullTransactionItem(title: "full_info.fee".localized, value: ValueFormatter.instance.format(coinValue: feeValue)))
         }
         if let size = txResponse.size {
@@ -56,12 +56,12 @@ class BitcoinTransactionInfoAdapter: IFullTransactionInfoAdapter {
         var inputItems = [FullTransactionItem]()
         if !txResponse.inputs.isEmpty {
             let totalInputs = txResponse.inputs.reduce(0) { $0 + $1.value }
-            let totalValue = CoinValue(coinCode: coin.code, value: totalInputs)
+            let totalValue = CoinValue(coin: coin, value: totalInputs)
 
             inputItems.append(FullTransactionItem(title: "full_info.inputs".localized, value: ValueFormatter.instance.format(coinValue: totalValue)))
         }
         for input in txResponse.inputs {
-            guard let title = ValueFormatter.instance.format(coinValue: CoinValue(coinCode: coin.code, value: input.value)) else {
+            guard let title = ValueFormatter.instance.format(coinValue: CoinValue(coin: coin, value: input.value)) else {
                 continue
             }
             let clickable = input.address != nil
@@ -75,12 +75,12 @@ class BitcoinTransactionInfoAdapter: IFullTransactionInfoAdapter {
         var outputItems = [FullTransactionItem]()
         if !txResponse.outputs.isEmpty {
             let totalOutputs = txResponse.outputs.reduce(0) { $0 + $1.value }
-            let totalValue = CoinValue(coinCode: coin.code, value: totalOutputs)
+            let totalValue = CoinValue(coin: coin, value: totalOutputs)
 
             outputItems.append(FullTransactionItem(title: "full_info.outputs".localized, value: ValueFormatter.instance.format(coinValue: totalValue)))
         }
         for output in txResponse.outputs {
-            guard let title = ValueFormatter.instance.format(coinValue: CoinValue(coinCode: coin.code, value: output.value)) else {
+            guard let title = ValueFormatter.instance.format(coinValue: CoinValue(coin: coin, value: output.value)) else {
                 continue
             }
             let clickable = output.address != nil

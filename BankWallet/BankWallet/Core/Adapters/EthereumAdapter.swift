@@ -4,8 +4,8 @@ import RxSwift
 class EthereumAdapter: EthereumBaseAdapter {
     static let decimal = 18
 
-    init(wallet: Wallet, ethereumKit: EthereumKit, addressParser: IAddressParser, feeRateProvider: IFeeRateProvider) {
-        super.init(wallet: wallet, ethereumKit: ethereumKit, decimal: EthereumAdapter.decimal, addressParser: addressParser, feeRateProvider: feeRateProvider)
+    init(ethereumKit: EthereumKit) {
+        super.init(ethereumKit: ethereumKit, decimal: EthereumAdapter.decimal)
     }
 
     private func transactionRecord(fromTransaction transaction: TransactionInfo) -> TransactionRecord {
@@ -50,7 +50,15 @@ class EthereumAdapter: EthereumBaseAdapter {
 
 }
 
-extension EthereumAdapter: IAdapter {
+extension EthereumAdapter {
+
+    static func clear() throws {
+        try EthereumKit.clear()
+    }
+
+}
+
+extension EthereumAdapter: IBalanceAdapter {
 
     var state: AdapterState {
         switch ethereumKit.syncState {
@@ -72,6 +80,26 @@ extension EthereumAdapter: IAdapter {
         return ethereumKit.balanceObservable.map { _ in () }
     }
 
+}
+
+extension EthereumAdapter: ISendEthereumAdapter {
+
+    func availableBalance(gasPrice: Int) -> Decimal {
+        return max(0, balance - fee(gasPrice: gasPrice))
+    }
+
+    var ethereumBalance: Decimal {
+        return balance
+    }
+
+    func fee(gasPrice: Int) -> Decimal {
+        return ethereumKit.fee(gasPrice: gasPrice) / pow(10, EthereumAdapter.decimal)
+    }
+
+}
+
+extension EthereumAdapter: ITransactionsAdapter {
+
     var transactionRecordsObservable: Observable<[TransactionRecord]> {
         return ethereumKit.transactionsObservable.map { [weak self] in
             $0.compactMap { self?.transactionRecord(fromTransaction: $0) }
@@ -83,40 +111,6 @@ extension EthereumAdapter: IAdapter {
                 .map { [weak self] transactions -> [TransactionRecord] in
                     return transactions.compactMap { self?.transactionRecord(fromTransaction: $0) }
                 }
-    }
-
-    func availableBalance(params: [String : Any]) throws -> Decimal {
-
-        return try max(0, balance - fee(params: params))
-    }
-
-    func fee(params: [String : Any]) throws -> Decimal {
-        guard let feeRate = params[AdapterField.feeRate.rawValue] as? Int, feeRate != 0 else {
-            throw AdapterError.wrongParameters
-        }
-
-        return ethereumKit.fee(gasPrice: feeRate) / pow(10, EthereumAdapter.decimal)
-    }
-
-    func validate(params: [String : Any])throws -> [SendStateError] {
-        guard let amount: Decimal = params[AdapterField.amount.rawValue] as? Decimal else {
-            throw AdapterError.wrongParameters
-        }
-
-        var errors = [SendStateError]()
-        let balance = try availableBalance(params: params)
-        if amount > balance {
-            errors.append(.insufficientAmount(availableBalance: balance))
-        }
-        return errors
-    }
-
-}
-
-extension EthereumAdapter {
-
-    static func clear() throws {
-        try EthereumKit.clear()
     }
 
 }

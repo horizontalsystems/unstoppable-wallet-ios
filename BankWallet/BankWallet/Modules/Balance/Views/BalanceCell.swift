@@ -126,6 +126,7 @@ class BalanceCell: UITableViewCell {
         }
         receiveButton.onTap = { [weak self] in self?.receive() }
         receiveButton.backgrounds = ButtonTheme.greenBackgroundDictionary
+        receiveButton.textColors = ButtonTheme.textColorDictionary
         receiveButton.cornerRadius = BalanceTheme.buttonCornerRadius
         receiveButton.titleLabel.text = "balance.deposit".localized
 
@@ -164,7 +165,7 @@ class BalanceCell: UITableViewCell {
         receiveButton.set(hidden: !selected, animated: animated, duration: BalanceTheme.buttonsAnimationDuration)
         payButton.set(hidden: !selected, animated: animated, duration: BalanceTheme.buttonsAnimationDuration)
 
-        if case .synced = item.state {
+        if item.state == AdapterState.synced || item.state == AdapterState.notReady  {
             synced = true
             coinIconImageView.isHidden = false
         } else {
@@ -174,6 +175,11 @@ class BalanceCell: UITableViewCell {
             payButton.state = .active
         } else {
             payButton.state = .disabled
+        }
+        if case .notReady = item.state {
+            receiveButton.state = .disabled
+        } else {
+            receiveButton.state = .active
         }
 
         if case let .syncing(progress, _) = item.state {
@@ -193,7 +199,7 @@ class BalanceCell: UITableViewCell {
             }
             rateLabel.textColor = BalanceTheme.rateColor
         } else if let value = item.exchangeValue, let formattedValue = ValueFormatter.instance.format(currencyValue: value, fractionPolicy: .threshold(high: 1000, low: 0.1), trimmable: false) {
-            rateLabel.text = "balance.rate_per_coin".localized(formattedValue, item.coinValue.coinCode)
+            rateLabel.text = "balance.rate_per_coin".localized(formattedValue, item.coinValue.coin.code)
             rateLabel.textColor = item.rateExpired ? BalanceTheme.rateExpiredColor : BalanceTheme.rateColor
         } else {
             rateLabel.text = " " // space required for constraints

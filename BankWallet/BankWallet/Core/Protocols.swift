@@ -61,8 +61,11 @@ protocol ILocalizationManager {
 }
 
 protocol IAdapterManager: class {
-    var adapters: [IAdapter] { get }
-    var adaptersUpdatedSignal: Signal { get }
+    var adaptersCreationSignal: Signal { get }
+    func adapter(for: Wallet) -> IAdapter?
+    func balanceAdapter(for: Wallet) -> IBalanceAdapter?
+    func transactionsAdapter(for: Wallet) -> ITransactionsAdapter?
+    func depositAdapter(for wallet: Wallet) -> IDepositAdapter?
     func preloadAdapters()
     func refresh()
 }
@@ -73,7 +76,7 @@ protocol IAdapterFactory {
 
 protocol IWalletManager: class {
     var wallets: [Wallet] { get }
-    var walletsObservable: Observable<[Wallet]> { get }
+    var walletsUpdatedSignal: Signal { get }
     func wallet(coin: Coin) -> Wallet?
 
     func preloadWallets()
@@ -81,45 +84,59 @@ protocol IWalletManager: class {
 }
 
 protocol IAdapter: class {
-    var wallet: Wallet { get }
-    var feeCoinCode: CoinCode? { get }
-
-    var decimal: Int { get }
-    var confirmationsThreshold: Int { get }
-
     func start()
     func stop()
     func refresh()
 
-    var lastBlockHeight: Int? { get }
-    var lastBlockHeightUpdatedObservable: Observable<Void> { get }
-
-    var state: AdapterState { get }
-    var stateUpdatedObservable: Observable<Void> { get }
-
-    var balance: Decimal { get }
-    var balanceUpdatedObservable: Observable<Void> { get }
-
-    var transactionRecordsObservable: Observable<[TransactionRecord]> { get }
-    func transactionsSingle(from: (hash: String, interTransactionIndex: Int)?, limit: Int) -> Single<[TransactionRecord]>
-
-    func sendSingle(params: [String : Any]) -> Single<Void>
-
-    func availableBalance(params: [String : Any]) throws -> Decimal
-    func fee(params: [String : Any]) throws -> Decimal
-    func feeRate(priority: FeeRatePriority) -> Int
-    func validate(params: [String : Any]) throws -> [SendStateError]
-
-    func validate(address: String) throws
-    func parse(paymentAddress: String) -> PaymentRequestAddress
-
-    var receiveAddress: String { get }
-
     var debugInfo: String { get }
 }
 
-extension IAdapter {
-    var feeCoinCode: CoinCode? { return nil }
+protocol IBalanceAdapter {
+    var state: AdapterState { get }
+    var stateUpdatedObservable: Observable<Void> { get }
+    var balance: Decimal { get }
+    var balanceUpdatedObservable: Observable<Void> { get }
+}
+
+protocol IDepositAdapter {
+    var receiveAddress: String { get }
+}
+
+protocol ITransactionsAdapter {
+    var confirmationsThreshold: Int { get }
+    var lastBlockHeight: Int? { get }
+    var lastBlockHeightUpdatedObservable: Observable<Void> { get }
+    var transactionRecordsObservable: Observable<[TransactionRecord]> { get }
+    func transactionsSingle(from: (hash: String, interTransactionIndex: Int)?, limit: Int) -> Single<[TransactionRecord]>
+}
+
+protocol ISendBitcoinAdapter {
+    func availableBalance(feeRate: Int, address: String?) -> Decimal
+    func validate(address: String) throws
+    func fee(amount: Decimal, feeRate: Int, address: String?) -> Decimal
+    func sendSingle(amount: Decimal, address: String, feeRate: Int) -> Single<Void>
+}
+
+protocol ISendEthereumAdapter {
+    func availableBalance(gasPrice: Int) -> Decimal
+    var ethereumBalance: Decimal { get }
+    func validate(address: String) throws
+    func fee(gasPrice: Int) -> Decimal
+    func sendSingle(amount: Decimal, address: String, gasPrice: Int) -> Single<Void>
+}
+
+protocol ISendEosAdapter {
+    var availableBalance: Decimal { get }
+    func validate(account: String) throws
+    func sendSingle(amount: Decimal, account: String, memo: String?) -> Single<Void>
+}
+
+protocol ISendBinanceAdapter {
+    var availableBalance: Decimal { get }
+    var availableBinanceBalance: Decimal { get }
+    func validate(address: String) throws
+    var fee: Decimal { get }
+    func sendSingle(amount: Decimal, address: String, memo: String?) -> Single<Void>
 }
 
 protocol IWordsManager {
@@ -436,10 +453,7 @@ protocol IAddressParser {
 }
 
 protocol IFeeRateProvider {
-    func ethereumGasPrice(for priority: FeeRatePriority) -> Int
-    func bitcoinFeeRate(for priority: FeeRatePriority) -> Int
-    func bitcoinCashFeeRate(for priority: FeeRatePriority) -> Int
-    func dashFeeRate(for priority: FeeRatePriority) -> Int
+    func feeRate(for priority: FeeRatePriority) -> Int
 }
 
 protocol IEncryptionManager {

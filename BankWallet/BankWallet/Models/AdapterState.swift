@@ -4,6 +4,7 @@ enum AdapterState {
     case synced
     case syncing(progress: Int, lastBlockDate: Date?)
     case notSynced
+    case notReady
 }
 
 extension AdapterState: Equatable {
@@ -12,6 +13,7 @@ extension AdapterState: Equatable {
         case (.synced, .synced): return true
         case (.syncing(let lProgress, let lLastBlockDate), .syncing(let rProgress, let rLastBlockDate)): return lProgress == rProgress && lLastBlockDate == rLastBlockDate
         case (.notSynced, .notSynced): return true
+        case (.notReady, .notReady): return true
         default: return false
         }
     }

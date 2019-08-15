@@ -5,16 +5,10 @@ class EosAdapter {
     private let irreversibleThreshold = 330
 
     private let eosKit: EosKit
-    private let addressParser: IAddressParser
     private let asset: Asset
 
-    let wallet: Wallet
-    let decimal: Int = 4
-
-    init(wallet: Wallet, eosKit: EosKit, addressParser: IAddressParser, token: String, symbol: String) {
-        self.wallet = wallet
+    init(eosKit: EosKit, token: String, symbol: String) {
         self.eosKit = eosKit
-        self.addressParser = addressParser
 
         asset = eosKit.register(token: token, symbol: symbol)
     }
@@ -58,14 +52,6 @@ class EosAdapter {
 
 extension EosAdapter: IAdapter {
 
-    var confirmationsThreshold: Int {
-        return irreversibleThreshold
-    }
-
-    var refreshable: Bool {
-        return true
-    }
-
     func start() {
         // started via EosKitManager
     }
@@ -78,13 +64,19 @@ extension EosAdapter: IAdapter {
         // refreshed via EosKitManager
     }
 
-    var lastBlockHeight: Int? {
-        return eosKit.irreversibleBlockHeight.map { $0 + irreversibleThreshold }
+    var debugInfo: String {
+        return ""
     }
 
-    var lastBlockHeightUpdatedObservable: Observable<Void> {
-        return eosKit.irreversibleBlockHeightObservable.map { _ in () }
+}
+
+extension EosAdapter {
+    enum ValidationError: Error {
+        case invalidAccount
     }
+}
+
+extension EosAdapter: IBalanceAdapter {
 
     var state: AdapterState {
         switch asset.syncState {
@@ -106,6 +98,39 @@ extension EosAdapter: IAdapter {
         return asset.balanceObservable.map { _ in () }
     }
 
+}
+
+extension EosAdapter: ISendEosAdapter {
+
+    var availableBalance: Decimal {
+        return asset.balance
+    }
+
+    func validate(account: String) throws {
+        try EosAdapter.validate(account: account)
+    }
+
+    func sendSingle(amount: Decimal, account: String, memo: String?) -> Single<Void> {
+        return eosKit.sendSingle(asset: asset, to: account, amount: amount, memo: memo ?? "")
+                .map { _ in () }
+    }
+
+}
+
+extension EosAdapter: ITransactionsAdapter {
+
+    var confirmationsThreshold: Int {
+        return irreversibleThreshold
+    }
+
+    var lastBlockHeight: Int? {
+        return eosKit.irreversibleBlockHeight.map { $0 + irreversibleThreshold }
+    }
+
+    var lastBlockHeightUpdatedObservable: Observable<Void> {
+        return eosKit.irreversibleBlockHeightObservable.map { _ in () }
+    }
+
     var transactionRecordsObservable: Observable<[TransactionRecord]> {
         return asset.transactionsObservable.map { [weak self] in
             $0.compactMap { self?.transactionRecord(fromTransaction: $0) }
@@ -119,71 +144,12 @@ extension EosAdapter: IAdapter {
                 }
     }
 
-    func sendSingle(params: [String : Any]) -> Single<Void> {
-        guard let amount: Decimal = params[AdapterField.amount.rawValue] as? Decimal,
-              let address: String = params[AdapterField.address.rawValue] as? String else {
-            return Single.error(AdapterError.wrongParameters)
-        }
+}
 
-        let memo = params[AdapterField.memo.rawValue] as? String
-        return eosKit.sendSingle(asset: asset, to: address, amount: amount, memo: memo ?? "from Unstoppable Wallet")
-                .map { _ in () }
-    }
-
-    func availableBalance(params: [String : Any]) -> Decimal {
-        return asset.balance
-    }
-
-    func feeRate(priority: FeeRatePriority) -> Int {
-        return 0
-    }
-
-    func fee(params: [String : Any]) -> Decimal {
-        return 0
-    }
-
-    func validate(address: String) throws {
-        try EosAdapter.validate(account: address)
-    }
-
-    func validate(params: [String : Any]) throws -> [SendStateError] {
-        guard let amount: Decimal = params[AdapterField.amount.rawValue] as? Decimal else {
-            throw AdapterError.wrongParameters
-        }
-
-        var errors = [SendStateError]()
-
-        let balance = asset.balance
-        if amount > balance {
-            errors.append(.insufficientAmount(availableBalance: balance))
-        }
-
-        return errors
-    }
-
-    func parse(paymentAddress: String) -> PaymentRequestAddress {
-        let paymentData = addressParser.parse(paymentAddress: paymentAddress)
-        var validationError: Error?
-        do {
-            try validate(address: paymentData.address)
-        } catch {
-            validationError = error
-        }
-        return PaymentRequestAddress(address: paymentData.address, amount: paymentData.amount.map { Decimal($0) }, error: validationError)
-    }
+extension EosAdapter: IDepositAdapter {
 
     var receiveAddress: String {
         return eosKit.account
     }
 
-    var debugInfo: String {
-        return ""
-    }
-
-}
-
-extension EosAdapter {
-    enum ValidationError: Error {
-        case invalidAccount
-    }
 }

@@ -2,15 +2,11 @@ import BitcoinCore
 import RxSwift
 
 class BitcoinBaseAdapter {
-    let decimal = 8
     var receiveAddressScriptType: ScriptType { return .p2pkh }
     var changeAddressScriptType: ScriptType { return .p2pkh }
 
-    let wallet: Wallet
-
     private let abstractKit: AbstractKit
-    private let coinRate: Decimal
-    private let addressParser: IAddressParser
+    private let coinRate: Decimal = pow(10, 8)
 
     private let lastBlockHeightUpdatedSignal = Signal()
     private let stateUpdatedSignal = Signal()
@@ -19,22 +15,10 @@ class BitcoinBaseAdapter {
 
     private(set) var state: AdapterState
 
-    var receiveAddress: String {
-        return abstractKit.receiveAddress(for: receiveAddressScriptType)
-    }
-
-    init(wallet: Wallet, abstractKit: AbstractKit, addressParser: IAddressParser) {
-        self.wallet = wallet
+    init(abstractKit: AbstractKit) {
         self.abstractKit = abstractKit
-        self.addressParser = addressParser
-
-        coinRate = pow(10, decimal)
 
         state = .syncing(progress: 0, lastBlockDate: nil)
-    }
-
-    func feeRate(priority: FeeRatePriority) -> Int {
-        fatalError("Method should be overridden in child class")
     }
 
     func transactionRecord(fromTransaction transaction: TransactionInfo) -> TransactionRecord {
@@ -61,6 +45,11 @@ class BitcoinBaseAdapter {
         return SendTransactionError.connection
     }
 
+    private func convertToSatoshi(value: Decimal) -> Int {
+        let coinValue: Decimal = value * coinRate
+        return NSDecimalNumber(decimal: ValueFormatter.instance.round(value: coinValue, scale: 0, roundingMode: .plain)).intValue
+    }
+
     class func kitMode(from syncMode: SyncMode) -> BitcoinCore.SyncMode {
         switch syncMode {
         case .fast: return .api
@@ -72,34 +61,6 @@ class BitcoinBaseAdapter {
 }
 
 extension BitcoinBaseAdapter: IAdapter {
-
-    var lastBlockHeightUpdatedObservable: Observable<Void> {
-        return lastBlockHeightUpdatedSignal.asObservable()
-    }
-
-    var stateUpdatedObservable: Observable<Void> {
-        return stateUpdatedSignal.asObservable()
-    }
-
-    var balanceUpdatedObservable: Observable<Void> {
-        return balanceUpdatedSignal.asObservable()
-    }
-
-    var transactionRecordsObservable: Observable<[TransactionRecord]> {
-        return transactionRecordsSubject.asObservable()
-    }
-
-    var balance: Decimal {
-        return Decimal(abstractKit.balance) / coinRate
-    }
-
-    var confirmationsThreshold: Int {
-        return 6
-    }
-
-    var lastBlockHeight: Int? {
-        return abstractKit.lastBlockInfo?.height
-    }
 
     var debugInfo: String {
         return abstractKit.debugInfo
@@ -115,93 +76,6 @@ extension BitcoinBaseAdapter: IAdapter {
 
     func refresh() {
         // not called
-    }
-
-    private func convertToSatoshi(value: Decimal) -> Int {
-        let coinValue: Decimal = value * coinRate
-        return NSDecimalNumber(decimal: ValueFormatter.instance.round(value: coinValue, scale: 0, roundingMode: .plain)).intValue
-    }
-
-    func validate(address: String) throws {
-        try abstractKit.validate(address: address)
-    }
-
-    func validate(params: [String : Any]) throws -> [SendStateError] {
-        guard let amount: Decimal = params[AdapterField.amount.rawValue] as? Decimal else {
-            throw AdapterError.wrongParameters
-        }
-
-        let balance = try availableBalance(params: params)
-        var errors = [SendStateError]()
-        if amount > balance {
-            errors.append(.insufficientAmount(availableBalance: balance))
-        }
-        return errors
-    }
-
-    func parse(paymentAddress: String) -> PaymentRequestAddress {
-        let paymentData = addressParser.parse(paymentAddress: paymentAddress)
-        var validationError: Error?
-        do {
-            try validate(address: paymentData.address)
-        } catch {
-            validationError = error
-        }
-        return PaymentRequestAddress(address: paymentData.address, amount: paymentData.amount.map { Decimal($0) }, error: validationError)
-    }
-
-    func sendSingle(params: [String : Any]) -> Single<Void> {
-        guard let amount = params[AdapterField.amount.rawValue] as? Decimal,
-              let address = params[AdapterField.address.rawValue] as? String,
-              let feeRate = params[AdapterField.feeRate.rawValue] as? Int else {
-            return Single.error(AdapterError.wrongParameters)
-        }
-        let satoshiAmount = convertToSatoshi(value: amount)
-
-        return Single.create { [weak self] observer in
-            do {
-                if let adapter = self {
-                    _ = try adapter.abstractKit.send(to: address, value: satoshiAmount, feeRate: feeRate, changeScriptType: adapter.changeAddressScriptType)
-                }
-                observer(.success(()))
-            } catch {
-                observer(.error(self?.createSendError(from: error) ?? error))
-            }
-
-            return Disposables.create()
-        }
-    }
-
-    func availableBalance(params: [String : Any]) throws -> Decimal {
-        var params = params
-        params[AdapterField.amount.rawValue] = balance
-        return try max(0, balance - fee(params: params))
-    }
-
-    func fee(params: [String : Any]) throws -> Decimal {
-        guard let amount = params[AdapterField.amount.rawValue] as? Decimal,
-              let feeRate = params[AdapterField.feeRate.rawValue] as? Int, feeRate != 0 else {
-            throw AdapterError.wrongParameters
-        }
-        let address: String? = params[AdapterField.address.rawValue] as? String
-        do {
-            let amount = convertToSatoshi(value: amount)
-            let fee = try abstractKit.fee(for: amount, toAddress: address, senderPay: true, feeRate: feeRate, changeScriptType: changeAddressScriptType)
-            return Decimal(fee) / coinRate
-        } catch BitcoinCoreErrors.UnspentOutputSelection.notEnough(let maxFee) {
-            return Decimal(maxFee) / coinRate
-        } catch {
-            return 0
-        }
-    }
-
-    func transactionsSingle(from: (hash: String, interTransactionIndex: Int)?, limit: Int) -> Single<[TransactionRecord]> {
-        return abstractKit.transactions(fromHash: from?.hash, limit: limit)
-                .map { [weak self] transactions -> [TransactionRecord] in
-                    return transactions.compactMap {
-                        self?.transactionRecord(fromTransaction: $0)
-                    }
-                }
     }
 
 }
@@ -261,6 +135,100 @@ extension BitcoinBaseAdapter: BitcoinCoreDelegate {
             self.state = .syncing(progress: newProgress, lastBlockDate: newDate)
             stateUpdatedSignal.notify()
         }
+    }
+
+}
+
+extension BitcoinBaseAdapter: IBalanceAdapter {
+
+    var stateUpdatedObservable: Observable<Void> {
+        return stateUpdatedSignal.asObservable()
+    }
+
+    var balanceUpdatedObservable: Observable<Void> {
+        return balanceUpdatedSignal.asObservable()
+    }
+
+    var balance: Decimal {
+        return Decimal(abstractKit.balance) / coinRate
+    }
+
+}
+
+extension BitcoinBaseAdapter: ISendBitcoinAdapter {
+
+    func availableBalance(feeRate: Int, address: String?) -> Decimal {
+        return max(0, balance - fee(amount: balance, feeRate: feeRate, address: address))
+    }
+
+    func validate(address: String) throws {
+        try abstractKit.validate(address: address)
+    }
+
+    func fee(amount: Decimal, feeRate: Int, address: String?) -> Decimal {
+        do {
+            let amount = convertToSatoshi(value: amount)
+            let fee = try abstractKit.fee(for: amount, toAddress: address, senderPay: true, feeRate: feeRate, changeScriptType: changeAddressScriptType)
+            return Decimal(fee) / coinRate
+        } catch BitcoinCoreErrors.UnspentOutputSelection.notEnough(let maxFee) {
+            return Decimal(maxFee) / coinRate
+        } catch {
+            return 0
+        }
+    }
+
+    func sendSingle(amount: Decimal, address: String, feeRate: Int) -> Single<Void> {
+        let satoshiAmount = convertToSatoshi(value: amount)
+
+        return Single.create { [weak self] observer in
+            do {
+                if let adapter = self {
+                    _ = try adapter.abstractKit.send(to: address, value: satoshiAmount, feeRate: feeRate, changeScriptType: adapter.changeAddressScriptType)
+                }
+                observer(.success(()))
+            } catch {
+                observer(.error(self?.createSendError(from: error) ?? error))
+            }
+
+            return Disposables.create()
+        }
+    }
+
+}
+
+extension BitcoinBaseAdapter: ITransactionsAdapter {
+
+    var confirmationsThreshold: Int {
+        return 6
+    }
+
+    var lastBlockHeight: Int? {
+        return abstractKit.lastBlockInfo?.height
+    }
+
+    var lastBlockHeightUpdatedObservable: Observable<Void> {
+        return lastBlockHeightUpdatedSignal.asObservable()
+    }
+
+    var transactionRecordsObservable: Observable<[TransactionRecord]> {
+        return transactionRecordsSubject.asObservable()
+    }
+
+    func transactionsSingle(from: (hash: String, interTransactionIndex: Int)?, limit: Int) -> Single<[TransactionRecord]> {
+        return abstractKit.transactions(fromHash: from?.hash, limit: limit)
+                .map { [weak self] transactions -> [TransactionRecord] in
+                    return transactions.compactMap {
+                        self?.transactionRecord(fromTransaction: $0)
+                    }
+                }
+    }
+
+}
+
+extension BitcoinBaseAdapter: IDepositAdapter {
+
+    var receiveAddress: String {
+        return abstractKit.receiveAddress(for: receiveAddressScriptType)
     }
 
 }

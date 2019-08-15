@@ -43,7 +43,9 @@ class App {
     let rateManager: RateManager
     let currencyManager: ICurrencyManager
 
-    let feeRateProvider: IFeeRateProvider
+    let feeCoinProvider: FeeCoinProvider
+    let feeRateProviderFactory: FeeRateProviderFactory
+    let addressParserFactory: AddressParserFactory
 
     let ethereumKitManager: EthereumKitManager
     let eosKitManager: EosKitManager
@@ -114,9 +116,11 @@ class App {
         eosKitManager = EosKitManager(appConfigProvider: appConfigProvider)
         binanceKitManager = BinanceKitManager(appConfigProvider: appConfigProvider)
 
-        feeRateProvider = FeeRateProvider()
+        feeCoinProvider = FeeCoinProvider(appConfigProvider: appConfigProvider)
+        feeRateProviderFactory = FeeRateProviderFactory()
+        addressParserFactory = AddressParserFactory()
 
-        adapterFactory = AdapterFactory(appConfigProvider: appConfigProvider, ethereumKitManager: ethereumKitManager, eosKitManager: eosKitManager, binanceKitManager: binanceKitManager, feeRateProvider: feeRateProvider)
+        adapterFactory = AdapterFactory(appConfigProvider: appConfigProvider, ethereumKitManager: ethereumKitManager, eosKitManager: eosKitManager, binanceKitManager: binanceKitManager)
         adapterManager = AdapterManager(adapterFactory: adapterFactory, ethereumKitManager: ethereumKitManager, eosKitManager: eosKitManager, binanceKitManager: binanceKitManager, walletManager: walletManager)
 
         lockRouter = LockRouter()
@@ -126,7 +130,7 @@ class App {
         passcodeLockRouter = PasscodeLockRouter()
         passcodeLockManager = PasscodeLockManager(systemInfoManager: systemInfoManager, accountManager: accountManager, walletManager: walletManager, router: passcodeLockRouter)
 
-        rateSyncer = RateSyncer(rateManager: rateManager, adapterManager: adapterManager, currencyManager: currencyManager, reachabilityManager: reachabilityManager)
+        rateSyncer = RateSyncer(rateManager: rateManager, walletManager: walletManager, currencyManager: currencyManager, reachabilityManager: reachabilityManager)
 
         dataProviderManager = FullTransactionDataProviderManager(localStorage: localStorage, appConfigProvider: appConfigProvider)
 

@@ -5,9 +5,9 @@ class SendAddressView: UIView {
     private let addressInputField: AddressInputField
     private let delegate: ISendAddressViewDelegate
 
-    public init(canEdit: Bool, placeholder: String, delegate: ISendAddressViewDelegate) {
+    public init(delegate: ISendAddressViewDelegate) {
         self.delegate = delegate
-        addressInputField = AddressInputField(frame: .zero, placeholder: placeholder.localized, showQrButton: true, canEdit: canEdit, lineBreakMode: .byTruncatingMiddle)
+        addressInputField = AddressInputField(frame: .zero, placeholder: "send.address_placeholder".localized, showQrButton: true, canEdit: false, lineBreakMode: .byTruncatingMiddle)
 
         super.init(frame: .zero)
 
@@ -32,9 +32,6 @@ class SendAddressView: UIView {
         }
         addressInputField.onDelete = { [weak self] in
             self?.delegate.onAddressDeleteClicked()
-        }
-        addressInputField.onTextChange = { [weak self] address in
-            self?.delegate.onAddressChange(address: address)
         }
     }
 

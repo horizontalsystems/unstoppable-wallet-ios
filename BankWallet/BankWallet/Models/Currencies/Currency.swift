@@ -1,6 +1,7 @@
 struct Currency {
     let code: String
     let symbol: String
+    let decimal: Int
 }
 
 extension Currency: Equatable {

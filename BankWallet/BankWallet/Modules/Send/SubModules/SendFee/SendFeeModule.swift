@@ -1,36 +1,33 @@
 import UIKit
 
 protocol ISendFeeView: class {
-    func set(fee: String?)
-    func set(convertedFee: String?)
-    func set(error: String?)
+    func set(fee: AmountInfo?)
+    func set(convertedFee: AmountInfo?)
+    func set(error: Error?)
 }
 
 protocol ISendFeeViewDelegate {
-    func onFeePriorityChange(value: Int)
     func viewDidLoad()
 }
 
 protocol ISendFeeDelegate: class {
-    func updateFeeRate()
-    func feeRate(priority: FeeRatePriority) -> Int
+    var inputType: SendInputType { get }
 }
 
 protocol ISendFeeInteractor {
+    var baseCurrency: Currency { get }
     func rate(coinCode: CoinCode, currencyCode: String) -> Rate?
 }
 
 protocol ISendFeeModule: AnyObject {
     var delegate: ISendFeeDelegate? { get set }
 
-    var coinFee: CoinValue { get }
-    var fiatFee: CurrencyValue? { get }
+    var isValid: Bool { get }
 
-    var feeRatePriority: FeeRatePriority { get }
-    var feeRate: Int { get }
-    var validState: Bool { get }
+    var coinValue: CoinValue { get }
+    var currencyValue: CurrencyValue? { get }
 
-    func update(fee: Decimal)
-    func insufficientFeeBalance(coinCode: CoinCode, fee: Decimal)
-    func update(sendInputType: SendInputType)
+    func set(fee: Decimal)
+    func set(availableFeeBalance: Decimal)
+    func update(inputType: SendInputType)
 }

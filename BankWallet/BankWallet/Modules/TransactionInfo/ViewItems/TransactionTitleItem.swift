@@ -8,7 +8,7 @@ class TransactionTitleItem: BaseActionItem {
 
     init(item: TransactionViewItem, tag: Int? = nil, onIdTap: (() -> ())? = nil) {
         transactionHash = item.transactionHash
-        coin = item.coin
+        coin = item.wallet.coin
         self.onIdTap = onIdTap
 
         super.init(cellType: TransactionTitleItemView.self, tag: tag, required: true)

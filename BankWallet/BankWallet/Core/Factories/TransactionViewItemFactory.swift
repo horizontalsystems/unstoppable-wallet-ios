@@ -30,9 +30,9 @@ class TransactionViewItemFactory: ITransactionViewItemFactory {
         }
 
         return TransactionViewItem(
-                coin: item.coin,
+                wallet: item.wallet,
                 transactionHash: record.transactionHash,
-                coinValue: CoinValue(coinCode: item.coin.code, value: record.amount),
+                coinValue: CoinValue(coin: item.wallet.coin, value: record.amount),
                 currencyValue: currencyValue,
                 from: from,
                 to: to,

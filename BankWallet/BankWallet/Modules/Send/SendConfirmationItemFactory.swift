@@ -1,11 +1,8 @@
 class SendConfirmationItemFactory: ISendConfirmationItemFactory {
 
-    func confirmationItem(sendInputType: SendInputType, receiver: String?, showMemo: Bool, coinAmountValue: CoinValue, currencyAmountValue: CurrencyValue?, coinFeeValue: CoinValue?, currencyFeeValue: CurrencyValue?, estimateTime: String?) throws -> SendConfirmationViewItem {
-        guard let receiver = receiver else {
-            throw SendError.noAddress
-        }
+    func viewItem(sendInputType: SendInputType, coinAmountValue: CoinValue, currencyAmountValue: CurrencyValue?, receiver: String, showMemo: Bool, coinFeeValue: CoinValue?, currencyFeeValue: CurrencyValue?, estimateTime: String?) -> SendConfirmationViewItem? {
         guard let coinAmountString: String = ValueFormatter.instance.format(coinValue: coinAmountValue) else {
-            throw SendError.noAmount
+            return nil
         }
         var fiatAmountString: String? = nil
 

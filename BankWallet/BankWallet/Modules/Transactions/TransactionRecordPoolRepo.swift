@@ -1,36 +1,36 @@
 class TransactionRecordPoolRepo {
-    private var pools = [Coin: TransactionRecordPool]()
-    private var activePoolCoins = [Coin]()
+    private var pools = [Wallet: TransactionRecordPool]()
+    private var activePoolWallets = [Wallet]()
 
     var activePools: [TransactionRecordPool] {
-        return activePoolCoins.compactMap { pools[$0] }
+        return activePoolWallets.compactMap { pools[$0] }
     }
 
     var allPools: [TransactionRecordPool] {
         return Array(pools.values)
     }
 
-    func activatePools(coins: [Coin]) {
-        coins.forEach { coin in
-            if pools[coin] == nil {
-                pools[coin] = TransactionRecordPool(state: TransactionRecordPoolState(coin: coin))
+    func activatePools(wallets: [Wallet]) {
+        wallets.forEach { wallet in
+            if pools[wallet] == nil {
+                pools[wallet] = TransactionRecordPool(state: TransactionRecordPoolState(wallet: wallet))
             }
         }
 
-        activePoolCoins = coins
+        activePoolWallets = wallets
     }
 
-    func pool(byCoin coin: Coin) -> TransactionRecordPool? {
-        return pools[coin]
+    func pool(byWallet wallet: Wallet) -> TransactionRecordPool? {
+        return pools[wallet]
     }
 
-    func isPoolActive(coin: Coin) -> Bool {
-        return activePoolCoins.contains(coin)
+    func isPoolActive(wallet: Wallet) -> Bool {
+        return activePoolWallets.contains(wallet)
     }
 
-    func deactivate(coins: [Coin]) {
-        coins.forEach { coin in
-            pools.removeValue(forKey: coin)
+    func deactivate(wallets: [Wallet]) {
+        wallets.forEach { wallet in
+            pools.removeValue(forKey: wallet)
         }
     }
 

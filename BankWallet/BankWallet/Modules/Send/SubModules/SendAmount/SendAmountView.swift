@@ -158,18 +158,31 @@ class SendAmountView: UIView {
 
 extension SendAmountView: ISendAmountView {
 
-    func set(hint: String?) {
-        hintLabel.text = hint
+    func set(amountType: String) {
+        amountTypeLabel.text = amountType
     }
 
-    func set(error: String?) {
+    func set(amount: AmountInfo?) {
+        guard let amount = amount else {
+            inputField.text = nil
+            return
+        }
+
+        switch amount {
+        case .coinValue(let coinValue):
+            inputField.text = ValueFormatter.instance.formatValue(coinValue: coinValue)
+        case .currencyValue(let currencyValue):
+            inputField.text = ValueFormatter.instance.formatValue(currencyValue: currencyValue)
+        }
+    }
+
+    func set(hint: AmountInfo?) {
+        hintLabel.text = hint?.formattedString
+    }
+
+    func set(error: Error?) {
         errorLabel.isHidden = error == nil
-        errorLabel.text = error
-    }
-
-    func set(type: String?, amount: String?) {
-        amountTypeLabel.text = type
-        inputField.text = amount
+        errorLabel.text = error?.localizedDescription
     }
 
     func set(switchButtonEnabled: Bool) {
@@ -177,9 +190,9 @@ extension SendAmountView: ISendAmountView {
         switchButtonIcon.tintColor = switchButtonEnabled ? SendTheme.buttonIconColor : SendTheme.buttonIconColorDisabled
     }
 
-    func maxButton(show: Bool) {
+    func set(maxButtonVisible: Bool) {
         maxButton.snp.remakeConstraints { maker in
-            if show {
+            if maxButtonVisible {
                 maker.leading.equalTo(lineView.snp.trailing).offset(SendTheme.smallMargin)
                 maker.centerY.equalToSuperview()
                 maker.height.equalTo(SendTheme.buttonSize)
@@ -192,7 +205,7 @@ extension SendAmountView: ISendAmountView {
             maker.trailing.equalTo(switchButton.snp.leading).offset(-SendTheme.smallMargin)
 
             maxButton.wrapperView.snp.remakeConstraints { maker in
-                if show {
+                if maxButtonVisible {
                     maker.leading.equalToSuperview().offset(SendTheme.smallMargin)
                     maker.trailing.equalToSuperview().offset(-SendTheme.smallMargin)
                 } else {
@@ -201,7 +214,6 @@ extension SendAmountView: ISendAmountView {
                 maker.top.bottom.equalToSuperview()
             }
         }
-
     }
 
     func showKeyboard() {
@@ -215,7 +227,7 @@ extension SendAmountView: ISendAmountView {
 extension SendAmountView: UITextFieldDelegate {
 
     private func validate(text: String) -> Bool {
-        if delegate.validateInputText(text: text) {
+        if delegate.isValid(text: text) {
             return true
         } else {
             inputField.shakeView()

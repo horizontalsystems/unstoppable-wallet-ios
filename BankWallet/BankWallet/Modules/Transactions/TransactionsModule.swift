@@ -21,13 +21,13 @@ extension TransactionStatus: Equatable {
 }
 
 protocol ITransactionsView: class {
-    func show(filters: [Coin?])
+    func show(filters: [Wallet?])
     func reload(with diff: [Change<TransactionViewItem>], items: [TransactionViewItem], animated: Bool)
 }
 
 protocol ITransactionsViewDelegate {
     func viewDidLoad()
-    func onFilterSelect(coin: Coin?)
+    func onFilterSelect(wallet: Wallet?)
 
     func onBottomReached()
 
@@ -40,22 +40,22 @@ protocol ITransactionsInteractor {
     func fetchLastBlockHeights()
 
     func fetchRecords(fetchDataList: [FetchData], initial: Bool)
-    func set(selectedCoins: [Coin])
+    func set(selectedWallets: [Wallet])
 
     func fetchRate(coin: Coin, date: Date)
 }
 
 protocol ITransactionsInteractorDelegate: class {
-    func onUpdate(selectedCoins: [Coin])
-    func onUpdate(coinsData: [(Coin, Int, Int?)])
+    func onUpdate(selectedCoins: [Wallet])
+    func onUpdate(walletsData: [(Wallet, Int, Int?)])
     func onUpdateBaseCurrency()
 
-    func onUpdate(lastBlockHeight: Int, coin: Coin)
+    func onUpdate(lastBlockHeight: Int, wallet: Wallet)
 
-    func didUpdate(records: [TransactionRecord], coin: Coin)
+    func didUpdate(records: [TransactionRecord], wallet: Wallet)
 
     func didFetch(rateValue: Decimal, coin: Coin, currency: Currency, date: Date)
-    func didFetch(recordsData: [Coin: [TransactionRecord]], initial: Bool)
+    func didFetch(recordsData: [Wallet: [TransactionRecord]], initial: Bool)
     func onConnectionRestore()
 }
 
@@ -90,7 +90,7 @@ protocol IDiffer {
 }
 
 struct FetchData {
-    let coin: Coin
+    let wallet: Wallet
     let from: (hash: String, interTransactionIndex: Int)?
     let limit: Int
 }

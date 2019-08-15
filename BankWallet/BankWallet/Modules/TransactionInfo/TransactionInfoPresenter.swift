@@ -21,7 +21,7 @@ extension TransactionInfoPresenter: ITransactionInfoViewDelegate {
     }
 
     func openFullInfo() {
-        router.openFullInfo(transactionHash: viewItem.transactionHash, coin: viewItem.coin)
+        router.openFullInfo(transactionHash: viewItem.transactionHash, coin: viewItem.wallet.coin)
     }
 
 }

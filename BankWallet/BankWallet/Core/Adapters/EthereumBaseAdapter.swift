@@ -4,18 +4,11 @@ import RxSwift
 class EthereumBaseAdapter {
     let ethereumKit: EthereumKit
 
-    let wallet: Wallet
     let decimal: Int
 
-    private let addressParser: IAddressParser
-    let feeRateProvider: IFeeRateProvider
-
-    init(wallet: Wallet, ethereumKit: EthereumKit, decimal: Int, addressParser: IAddressParser, feeRateProvider: IFeeRateProvider) {
-        self.wallet = wallet
+    init(ethereumKit: EthereumKit, decimal: Int) {
         self.ethereumKit = ethereumKit
         self.decimal = decimal
-        self.addressParser = addressParser
-        self.feeRateProvider = feeRateProvider
     }
 
     func balanceDecimal(balanceString: String?, decimal: Int) -> Decimal {
@@ -39,11 +32,8 @@ class EthereumBaseAdapter {
 
 }
 
-extension EthereumBaseAdapter {
-
-    var confirmationsThreshold: Int {
-        return 12
-    }
+// IAdapter
+extension EthereumBaseAdapter: IAdapter {
 
     func start() {
         // started via EthereumKitManager
@@ -57,58 +47,6 @@ extension EthereumBaseAdapter {
         // refreshed via EthereumKitManager
     }
 
-    var lastBlockHeight: Int? {
-        return ethereumKit.lastBlockHeight
-    }
-
-    var lastBlockHeightUpdatedObservable: Observable<Void> {
-        return ethereumKit.lastBlockHeightObservable.map { _ in () }
-    }
-
-    func feeRate(priority: FeeRatePriority) -> Int {
-        return feeRateProvider.ethereumGasPrice(for: priority)
-    }
-
-    func sendSingle(params: [String: Any]) -> Single<Void> {
-        guard let amount = params[AdapterField.amount.rawValue] as? Decimal,
-              let address = params[AdapterField.address.rawValue] as? String,
-              let feeRate = params[AdapterField.feeRate.rawValue] as? Int, feeRate != 0 else {
-            return Single.error(AdapterError.wrongParameters)
-        }
-
-        let poweredDecimal = amount * pow(10, decimal)
-        let handler = NSDecimalNumberHandler(roundingMode: .plain, scale: 0, raiseOnExactness: false, raiseOnOverflow: false, raiseOnUnderflow: false, raiseOnDivideByZero: false)
-        let roundedDecimal = NSDecimalNumber(decimal: poweredDecimal).rounding(accordingToBehavior: handler).decimalValue
-
-        let amountString = String(describing: roundedDecimal)
-
-        return sendSingle(to: address, value: amountString, gasPrice: feeRate)
-    }
-
-    func validate(address: String) throws {
-        //todo: remove when make errors public
-        do {
-            try ethereumKit.validate(address: address)
-        } catch {
-            throw AddressConversion.invalidAddress
-        }
-    }
-
-    func parse(paymentAddress: String) -> PaymentRequestAddress {
-        let paymentData = addressParser.parse(paymentAddress: paymentAddress)
-        var validationError: Error?
-        do {
-            try validate(address: paymentData.address)
-        } catch {
-            validationError = error
-        }
-        return PaymentRequestAddress(address: paymentData.address, amount: paymentData.amount.map { Decimal($0) }, error: validationError)
-    }
-
-    var receiveAddress: String {
-        return ethereumKit.receiveAddress
-    }
-
     var debugInfo: String {
         return ethereumKit.debugInfo
     }
@@ -120,4 +58,53 @@ extension EthereumBaseAdapter {
     enum AddressConversion: Error {
         case invalidAddress
     }
+}
+
+// ISendEthereumAdapter
+extension EthereumBaseAdapter {
+
+    func sendSingle(amount: Decimal, address: String, gasPrice: Int) -> Single<Void> {
+        let poweredDecimal = amount * pow(10, decimal)
+        let handler = NSDecimalNumberHandler(roundingMode: .plain, scale: 0, raiseOnExactness: false, raiseOnOverflow: false, raiseOnUnderflow: false, raiseOnDivideByZero: false)
+        let roundedDecimal = NSDecimalNumber(decimal: poweredDecimal).rounding(accordingToBehavior: handler).decimalValue
+
+        let amountString = String(describing: roundedDecimal)
+
+        return sendSingle(to: address, value: amountString, gasPrice: gasPrice)
+    }
+
+    func validate(address: String) throws {
+        //todo: remove when make errors public
+        do {
+            try ethereumKit.validate(address: address)
+        } catch {
+            throw AddressConversion.invalidAddress
+        }
+    }
+
+}
+
+// ITransactionsAdapter
+extension EthereumBaseAdapter {
+
+    var confirmationsThreshold: Int {
+        return 12
+    }
+
+    var lastBlockHeight: Int? {
+        return ethereumKit.lastBlockHeight
+    }
+
+    var lastBlockHeightUpdatedObservable: Observable<Void> {
+        return ethereumKit.lastBlockHeightObservable.map { _ in () }
+    }
+
+}
+
+extension EthereumBaseAdapter: IDepositAdapter {
+
+    var receiveAddress: String {
+        return ethereumKit.receiveAddress
+    }
+
 }

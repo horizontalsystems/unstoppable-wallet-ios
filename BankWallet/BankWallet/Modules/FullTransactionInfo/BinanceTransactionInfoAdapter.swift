@@ -24,7 +24,7 @@ class BinanceTransactionInfoAdapter: IFullTransactionInfoAdapter {
         }
         if let centValue = txResponse.value {
             let value = centValue / pow(10, 8)
-            let coinValue = CoinValue(coinCode: coin.code, value: value)
+            let coinValue = CoinValue(coin: coin, value: value)
             topSectionItems.append(FullTransactionItem(title: "full_info.amount".localized, value: ValueFormatter.instance.format(coinValue: coinValue)))
         }
         if !topSectionItems.isEmpty {
@@ -33,14 +33,15 @@ class BinanceTransactionInfoAdapter: IFullTransactionInfoAdapter {
 
         // Fee
 
-        var feeGasItems = [FullTransactionItem]()
-        if let fee = txResponse.fee {
-            let feeValue = CoinValue(coinCode: "BNB", value: fee)
-            feeGasItems.append(FullTransactionItem(title: "full_info.fee".localized, value: ValueFormatter.instance.format(coinValue: feeValue)))
-        }
-        if !feeGasItems.isEmpty {
-            sections.append(FullTransactionSection(title: nil, items: feeGasItems))
-        }
+        // todo: use BNB coin instead of coin code
+//        var feeGasItems = [FullTransactionItem]()
+//        if let fee = txResponse.fee {
+//            let feeValue = CoinValue(coin: "BNB", value: fee)
+//            feeGasItems.append(FullTransactionItem(title: "full_info.fee".localized, value: ValueFormatter.instance.format(coinValue: feeValue)))
+//        }
+//        if !feeGasItems.isEmpty {
+//            sections.append(FullTransactionSection(title: nil, items: feeGasItems))
+//        }
 
         // From / To
 

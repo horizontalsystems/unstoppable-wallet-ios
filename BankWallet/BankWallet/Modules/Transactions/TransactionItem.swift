@@ -1,7 +1,7 @@
 import DeepDiff
 
 struct TransactionItem {
-    let coin: Coin
+    let wallet: Wallet
     let record: TransactionRecord
 }
 

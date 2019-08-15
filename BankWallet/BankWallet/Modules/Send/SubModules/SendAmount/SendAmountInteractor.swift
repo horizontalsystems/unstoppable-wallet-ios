@@ -1,12 +1,12 @@
 class SendAmountInteractor {
     private let localStorage: ILocalStorage
     private let rateStorage: IRateStorage
-    private let appConfigProvider: IAppConfigProvider
+    private let currencyManager: ICurrencyManager
 
-    init(appConfigProvider: IAppConfigProvider, localStorage: ILocalStorage, rateStorage: IRateStorage) {
-        self.appConfigProvider = appConfigProvider
+    init(localStorage: ILocalStorage, rateStorage: IRateStorage, currencyManager: ICurrencyManager) {
         self.localStorage = localStorage
         self.rateStorage = rateStorage
+        self.currencyManager = currencyManager
     }
 
 }
@@ -21,12 +21,12 @@ extension SendAmountInteractor: ISendAmountInteractor {
         localStorage.sendInputType = inputType
     }
 
-    func rate(coinCode: CoinCode, currencyCode: String) -> Rate? {
-        return rateStorage.latestRate(coinCode: coinCode, currencyCode: currencyCode)
+    var baseCurrency: Currency {
+        return currencyManager.baseCurrency
     }
 
-    func decimal(coinDecimal: Int, inputType: SendInputType) -> Int {
-        return inputType == .coin ? min(coinDecimal, appConfigProvider.maxDecimal) : appConfigProvider.fiatDecimal
+    func rate(coinCode: CoinCode, currencyCode: String) -> Rate? {
+        return rateStorage.latestRate(coinCode: coinCode, currencyCode: currencyCode)
     }
 
 }

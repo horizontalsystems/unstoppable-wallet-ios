@@ -9,6 +9,7 @@ class TransactionsInteractor {
 
     weak var delegate: ITransactionsInteractorDelegate?
 
+    private let walletManager: IWalletManager
     private let adapterManager: IAdapterManager
     private let currencyManager: ICurrencyManager
     private let rateManager: IRateManager
@@ -16,7 +17,8 @@ class TransactionsInteractor {
 
     private var requestedTimestamps = [(Coin, Date)]()
 
-    init(adapterManager: IAdapterManager, currencyManager: ICurrencyManager, rateManager: IRateManager, reachabilityManager: IReachabilityManager) {
+    init(walletManager: IWalletManager, adapterManager: IAdapterManager, currencyManager: ICurrencyManager, rateManager: IRateManager, reachabilityManager: IReachabilityManager) {
+        self.walletManager = walletManager
         self.adapterManager = adapterManager
         self.currencyManager = currencyManager
         self.rateManager = rateManager
@@ -24,31 +26,24 @@ class TransactionsInteractor {
     }
 
     private func onUpdateCoinsData() {
-        var coinsData = [(Coin, Int, Int?)]()
-
-        for adapter in adapterManager.adapters {
-            coinsData.append((adapter.wallet.coin, adapter.confirmationsThreshold, adapter.lastBlockHeight))
-        }
-
-        delegate?.onUpdate(coinsData: coinsData)
-
         transactionRecordsDisposeBag = DisposeBag()
+        var walletsData = [(Wallet, Int, Int?)]()
 
-        adapterManager.adapters.forEach { adapter in
-            adapter.transactionRecordsObservable
-                    .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
-                    .observeOn(MainScheduler.instance)
-                    .subscribe(onNext: { [weak self] records in
-                        self?.delegate?.didUpdate(records: records, coin: adapter.wallet.coin)
-                    })
-                    .disposed(by: transactionRecordsDisposeBag)
-        }
-    }
+        for wallet in walletManager.wallets {
+            if let adapter = adapterManager.transactionsAdapter(for: wallet) {
+                walletsData.append((wallet, adapter.confirmationsThreshold, adapter.lastBlockHeight))
 
-    private func onUpdateLastBlockHeight(adapter: IAdapter) {
-        if let lastBlockHeight = adapter.lastBlockHeight {
-            delegate?.onUpdate(lastBlockHeight: lastBlockHeight, coin: adapter.wallet.coin)
+                adapter.transactionRecordsObservable
+                        .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
+                        .observeOn(MainScheduler.instance)
+                        .subscribe(onNext: { [weak self] records in
+                            self?.delegate?.didUpdate(records: records, wallet: wallet)
+                        })
+                        .disposed(by: transactionRecordsDisposeBag)
+            }
         }
+
+        delegate?.onUpdate(walletsData: walletsData)
     }
 
     private func onReachabilityChange() {
@@ -64,8 +59,7 @@ extension TransactionsInteractor: ITransactionsInteractor {
     func initialFetch() {
         onUpdateCoinsData()
 
-        adapterManager.adaptersUpdatedSignal
-                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
+        adapterManager.adaptersCreationSignal
                 .observeOn(MainScheduler.instance)
                 .subscribe(onNext: { [weak self] in
                     self?.onUpdateCoinsData()
@@ -92,13 +86,19 @@ extension TransactionsInteractor: ITransactionsInteractor {
     func fetchLastBlockHeights() {
         lastBlockHeightsDisposeBag = DisposeBag()
 
-        adapterManager.adapters.forEach { adapter in
+        for wallet in walletManager.wallets {
+            guard let adapter = adapterManager.transactionsAdapter(for: wallet) else {
+                continue
+            }
+
             adapter.lastBlockHeightUpdatedObservable
                     .throttle(.seconds(3), latest: true, scheduler: ConcurrentDispatchQueueScheduler(qos: .background))
                     .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
                     .observeOn(MainScheduler.instance)
                     .subscribe(onNext: { [weak self] in
-                        self?.onUpdateLastBlockHeight(adapter: adapter)
+                        if let lastBlockHeight = adapter.lastBlockHeight {
+                            self?.delegate?.onUpdate(lastBlockHeight: lastBlockHeight, wallet: wallet)
+                        }
                     })
                     .disposed(by: lastBlockHeightsDisposeBag)
         }
@@ -110,27 +110,27 @@ extension TransactionsInteractor: ITransactionsInteractor {
             return
         }
 
-        var singles = [Single<(Coin, [TransactionRecord])>]()
+        var singles = [Single<(Wallet, [TransactionRecord])>]()
 
         for fetchData in fetchDataList {
-            let adapter = adapterManager.adapters.first(where: { $0.wallet.coin == fetchData.coin })
-            let single: Single<(Coin, [TransactionRecord])>
+            let wallet = walletManager.wallets.first(where: { $0 == fetchData.wallet })
+            let single: Single<(Wallet, [TransactionRecord])>
 
-            if let adapter = adapter {
+            if let wallet = wallet, let adapter = adapterManager.transactionsAdapter(for: wallet) {
                 single = adapter.transactionsSingle(from: fetchData.from, limit: fetchData.limit)
-                        .map { records -> (Coin, [TransactionRecord]) in
-                            (fetchData.coin, records)
+                        .map { records -> (Wallet, [TransactionRecord]) in
+                            (fetchData.wallet, records)
                         }
             } else {
-                single = Single.just((fetchData.coin, []))
+                single = Single.just((fetchData.wallet, []))
             }
 
             singles.append(single)
         }
 
         Single.zip(singles)
-                { tuples -> [Coin: [TransactionRecord]] in
-                    var recordsData = [Coin: [TransactionRecord]]()
+                { tuples -> [Wallet: [TransactionRecord]] in
+                    var recordsData = [Wallet: [TransactionRecord]]()
 
                     for (coin, records) in tuples {
                         recordsData[coin] = records
@@ -146,9 +146,9 @@ extension TransactionsInteractor: ITransactionsInteractor {
                 .disposed(by: disposeBag)
     }
 
-    func set(selectedCoins: [Coin]) {
-        let allCoins = adapterManager.adapters.map { $0.wallet.coin }
-        delegate?.onUpdate(selectedCoins: selectedCoins.isEmpty ? allCoins : selectedCoins)
+    func set(selectedWallets: [Wallet]) {
+        let allWallets = walletManager.wallets
+        delegate?.onUpdate(selectedCoins: selectedWallets.isEmpty ? allWallets : selectedWallets)
     }
 
     func fetchRate(coin: Coin, date: Date) {
