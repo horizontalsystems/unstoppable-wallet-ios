@@ -16,6 +16,7 @@
 "button.save" = "Kaydet";
 "button.sync" = "Eşitle";
 "button.paste" = "Yapıştır";
+"button.backup" = "Backup";
 
 "alert.copied" = "Kopyalandı";
 "alert.no_internet" = "Internet Bağlantısı Yok";
@@ -104,6 +105,7 @@
 
 "deposit.receive_coin" = "%@ al";
 "deposit.your_address" = "Adresiniz";
+"receive_alert.not_backed_up_description" = "You need to backup the keys for this wallet before you may receive funds on it.";
 
 // Send
 
