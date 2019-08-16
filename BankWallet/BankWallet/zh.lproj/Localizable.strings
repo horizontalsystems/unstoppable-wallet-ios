@@ -222,7 +222,7 @@
 "settings_about.app_title" = "Unstoppable";
 "settings_about.app_subtitle" = "Decentralized App";
 "settings_about.terms_privacy_subtitle" = "服务条款和隐私策略";
-"settings_about.terms_privacy_text" = "This app is peer-to-peer. It does not depend on any web server or tech support personnel to function.\n\nIt works everywhere as long as there is internet. No entity can block this app from working or to block someone from using it.\n\nYour funds are securely stored on the phone itself, not anywhere else.\n\nIt’s your responsibility to backup your Secret Key and keep it private. Never show it to anyone. If it’s lost, forgotten or stollen your funds can be used by the person who has your key.\n\nDo not jailbreak your phone, do not install apps from unknown (untrusted) sources, do not give your device to untrusted people, and keep the Operating System on your phone up to date. The security of your wallet depends on this.\n\nThe entire code powering this app been open to the public scrutiny since the beginning. We tried to build the most secure and decentralized wallet we could, however there are no guarantees that there are no unintended software issues. That said, this wallet is likely to be significantly more secure than any smartphone wallet app out there.\n\nSome generic non-private app data like currency exchange rates are stored on decentralized storage (IPFS). ";
+"settings_about.terms_privacy_text" = "此应用程序是对等的。它不依赖于任何 web 服务器或支持人员来运行的技术。只要有互联网, 它就可以被使用。任何实体都不能阻止此应用程序工作或阻止某人使用它。\n\n您的资金安全地存储在手机上, 而不是在其他任何地方。\n\n你有责任备份您的密钥, 并保持密钥的隐私。千万不要把它给任何人看。如果它被丢失, 遗忘或被偷, 您的资金都可用于持有您密钥的人。\n\n不要越狱您的手机, 不要安装来自未知 (不受信任) 来源的应用程序, 不要将您的设备交给不受信任的人, 并使您的手机上的系统保持最新。这是你的钱包安全的重点。\n\n从一开始，为该应用程序提供动力的整个代码就向公众开放。我们试图建立最安全和分散的钱包, 我们可以, 但没有保证没有意外的软件问题。也就是说, 这个钱包可能比任何智能手机钱包应用都要安全得多。\n\n一些通用的非私有应用程序数据 (如货币汇率) 存储在分散存储 (ipfs) 中。 ";
 
 // Settings -> Tell Friends
 
@@ -241,7 +241,7 @@
 // Manage Keys
 
 "settings_manage_keys.title" = "密钥";
-"settings_manage_keys.description" = "Anyone with access to your Keys can steal your wallet funds. Store keys safely and never show them to anyone.\n\nBackup each key to be able to restore funds if you loose or break your phone, or simply the wallet app gets deleted.";
+"settings_manage_keys.description" = "任何有权访问您密钥的人都可以窃取您的钱包资金。安全存放钥匙，不要让任何人看到。\n备份每个密钥，以便在您的手机松动或损坏时恢复资金，或者只是钱包应用程序被删除。\n\n";
 "settings_manage_keys.delete" = "删除";
 "settings_manage_keys.backup" = "备份";
 "settings_manage_keys.show" = "查看";
@@ -278,7 +278,7 @@
 
 // No Passcode
 
-"no_passcode.info_text" = "This app requires that phone has the passcode (screen lock) enabled.\n\nYou may enable it in iOS settings.\n\nPlease note that when you disabled the PIN on the OS level the security measures in safe storage of your phonе made the previously stored data invalid. You will need to Restore your wallet keys to get back to your wallet.";
+"no_passcode.info_text" = "此应用程序要求手机启用密码（屏幕锁定）。\n\n您可以在iOS设置中启用它。\n\n请注意，当您禁用操作系统级别的PIN时，您的电话安全存储中的安全措施使以前存储的数据无效。您需要恢复钱包密钥才能回到钱包。\n\n\n\n";
 
 //NumPad
 
