@@ -16,6 +16,7 @@
 "button.save" = "Сохранить";
 "button.sync" = "Синхр.";
 "button.paste" = "Вставить";
+"button.backup" = "Backup";
 
 "alert.copied" = "Скопировано";
 "alert.no_internet" = "Нет интернета";
@@ -104,6 +105,7 @@
 
 "deposit.receive_coin" = "Получить %@";
 "deposit.your_address" = "Ваш Адрес";
+"receive_alert.not_backed_up_description" = "You need to backup the keys for this wallet before you may receive funds on it.";
 
 // Send
 
