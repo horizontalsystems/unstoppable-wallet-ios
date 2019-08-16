@@ -1,6 +1,7 @@
 import UIKit
 import SnapKit
 import DeepDiff
+import ActionSheet
 
 class BalanceViewController: WalletViewController {
     private let numberOfSections = 2
@@ -221,6 +222,34 @@ extension BalanceViewController: IBalanceView {
 
     func setSort(isOn: Bool) {
         headerView.sortButton.isHidden = !isOn
+    }
+
+    func showBackupAlert(index: Int) {
+        let alert = AlertViewController(delegate: self, onDismiss: { [weak self] success in
+            if success {
+                self?.delegate.onBackup(index: index)
+            }
+        })
+        present(alert, animated: true)
+    }
+
+}
+
+extension BalanceViewController: IAlertViewDelegate {
+
+    var items: [AlertItem] {
+        return [
+            .message("receive_alert.not_backed_up_description"),
+            .row("button.backup")
+        ]
+    }
+
+    func onDidLoad(alert: IAlertViewController) {
+        alert.setSelected(index: 0)
+    }
+
+    func onSelect(alert: IAlertViewController, index: Int) {
+        alert.dismiss(state: true, byFade: true)
     }
 
 }

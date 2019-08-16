@@ -25,6 +25,10 @@ extension BalanceRouter: IBalanceRouter {
         viewController?.present(SortTypeRouter.module(sortTypeDelegate: sortTypeDelegate, sort: sort), animated: true)
     }
 
+    func openBackup(wallet: Wallet, predefinedAccountType: IPredefinedAccountType) {
+        viewController?.present(BackupRouter.module(account: wallet.account, predefinedAccountType: predefinedAccountType), animated: true)
+    }
+
 }
 
 extension BalanceRouter {
@@ -33,7 +37,7 @@ extension BalanceRouter {
         let router = BalanceRouter()
         let interactor = BalanceInteractor(walletManager: App.shared.walletManager, adapterManager: App.shared.adapterManager, rateStorage: App.shared.grdbStorage, currencyManager: App.shared.currencyManager, localStorage: App.shared.localStorage)
         let dataSource = BalanceItemDataSource(sorter: BalanceSorter())
-        let presenter = BalancePresenter(interactor: interactor, router: router, dataSource: dataSource, factory: BalanceViewItemFactory(), differ: Differ(), sortingOnThreshold: BalanceTheme.sortingOnThreshold)
+        let presenter = BalancePresenter(interactor: interactor, router: router, dataSource: dataSource, factory: BalanceViewItemFactory(), predefinedAccountTypeManager: App.shared.predefinedAccountTypeManager, differ: Differ(), sortingOnThreshold: BalanceTheme.sortingOnThreshold)
         let viewController = BalanceViewController(viewDelegate: presenter)
 
         interactor.delegate = presenter

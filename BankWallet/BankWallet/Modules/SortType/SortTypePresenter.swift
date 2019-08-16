@@ -4,7 +4,7 @@ class SortTypePresenter {
 
     private var sort: BalanceSortType
 
-    weak var view: IAlertView?
+    weak var view: IAlertViewController?
 
     init(router: ISortTypeRouter, interactor: ISortTypeInteractor, sort: BalanceSortType) {
         self.router = router
@@ -23,11 +23,11 @@ extension SortTypePresenter: IAlertViewDelegate {
         ]
     }
 
-    func onDidLoad() {
+    func onDidLoad(alert: IAlertViewController) {
         view?.setSelected(index: sort.rawValue)
     }
 
-    func onSelect(index: Int) {
+    func onSelect(alert: IAlertViewController, index: Int) {
         view?.setSelected(index: index)
 
         let selectedSort = BalanceSortType(rawValue: index) ?? .name

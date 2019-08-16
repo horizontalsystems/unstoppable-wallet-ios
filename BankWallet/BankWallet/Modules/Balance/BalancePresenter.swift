@@ -5,16 +5,18 @@ class BalancePresenter {
     private let router: IBalanceRouter
     private var dataSource: IBalanceItemDataSource
     private let factory: IBalanceViewItemFactory
+    private let predefinedAccountTypeManager: IPredefinedAccountTypeManager
     private let differ: IDiffer
     private let sortingOnThreshold: Int
 
     weak var view: IBalanceView?
 
-    init(interactor: IBalanceInteractor, router: IBalanceRouter, dataSource: IBalanceItemDataSource, factory: IBalanceViewItemFactory, differ: IDiffer, sortingOnThreshold: Int) {
+    init(interactor: IBalanceInteractor, router: IBalanceRouter, dataSource: IBalanceItemDataSource, factory: IBalanceViewItemFactory, predefinedAccountTypeManager: IPredefinedAccountTypeManager, differ: IDiffer, sortingOnThreshold: Int) {
         self.interactor = interactor
         self.router = router
         self.dataSource = dataSource
         self.factory = factory
+        self.predefinedAccountTypeManager = predefinedAccountTypeManager
         self.differ = differ
         self.sortingOnThreshold = sortingOnThreshold
     }
@@ -116,7 +118,12 @@ extension BalancePresenter: IBalanceViewDelegate {
     }
 
     func onReceive(index: Int) {
-        router.openReceive(for: dataSource.item(at: index).wallet)
+        let wallet = dataSource.item(at: index).wallet
+        if wallet.account.backedUp {
+            router.openReceive(for: wallet)
+        } else {
+            view?.showBackupAlert(index: index)
+        }
     }
 
     func onPay(index: Int) {
@@ -129,6 +136,14 @@ extension BalancePresenter: IBalanceViewDelegate {
 
     func onSortTypeChange() {
         router.openSortType(selected: dataSource.sortType)
+    }
+
+    func onBackup(index: Int) {
+        let wallet = dataSource.item(at: index).wallet
+        let pat = predefinedAccountTypeManager.allTypes.first { $0.supports(accountType: wallet.account.type) }
+        if let pat = pat {
+            router.openBackup(wallet: wallet, predefinedAccountType: pat)
+        }
     }
 
 }

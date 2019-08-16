@@ -35,6 +35,7 @@ class AppTheme {
     }
     static let alertSmallMargin: CGFloat = 8
     static let alertMediumMargin: CGFloat = 12
+    static let alertBigMargin: CGFloat = 20
 
     static var alertBackgroundColor: UIColor { return .crypto_SteelDark_Bars }
     static let alertHeaderHeight: CGFloat = 40
@@ -51,12 +52,16 @@ class AppTheme {
 
     static let alertCellHeight: CGFloat = 53
     static let alertCellFont: UIFont = .cryptoHeadline
+    static let alertMessageFont: UIFont = .cryptoCaptionMedium
     static var alertCellHighlightColor: UIColor = .cryptoYellow
     static var alertCellDefaultColor: UIColor { return .crypto_Bars_Dark }
+    static var alertMessageDefaultColor: UIColor { return .crypto_Bars_Black }
+
+    static let alertSideMargin: CGFloat = 61
     static var alertConfig: ActionSheetThemeConfig {
         return ActionSheetThemeConfig(
                 actionStyle: .alert,
-                sideMargin: 61,
+                sideMargin: AppTheme.alertSideMargin,
                 cornerRadius: 16,
                 separatorColor: UIColor.cryptoBlack20,
                 backgroundStyle: .color(color: .cryptoBlack50)
