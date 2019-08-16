@@ -37,9 +37,9 @@
 // Restore
 
 "restore.title" = "恢复";
-"restore.description" = "To restore existing wallet you need to enter a private key for that wallet.\n\nOnce you restore one wallet you will be able to restore more wallets by going to Manage Keys section in app Settings.";
+"restore.description" = "要恢复现有钱包，您需要输入该钱包的密钥。\n\n一旦你恢复了一个钱包，你就可以恢复更多的钱包，方法是进入“应用程序设置”中的“管理密钥”部分。";
 "restore.words.description" = "输入密钥";
-"restore.validation_failed" = "Incorrect Key";
+"restore.validation_failed" = "密钥不正确\n\n";
 "restore.placeholder.account_name" = "Account Name";
 "restore.placeholder.private_key" = "Active Private Key";
 
