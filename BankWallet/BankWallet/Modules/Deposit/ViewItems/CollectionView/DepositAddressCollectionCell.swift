@@ -69,10 +69,10 @@ class DepositAddressCollectionCell: UICollectionViewCell {
     func bind(address: AddressItem, onCopy: @escaping () -> ()) {
         iconImageView.bind(coin: address.coin)
         titleLabel.text = "deposit.receive_coin".localized(address.coin.title)
-        qrCodeImageView.backgroundColor = .lightGray
+        qrCodeImageView.backgroundColor = .white
         addressButton.bind(value: address.address, showExtra: .icon, onTap: onCopy)
 
-        qrCodeImageView.image = UIImage(qrCodeString: address.address, size: DepositTheme.qrCodeSideSize)
+        qrCodeImageView.asyncSetImage { UIImage(qrCodeString: address.address, size: DepositTheme.qrCodeSideSize) }
     }
 
 }
