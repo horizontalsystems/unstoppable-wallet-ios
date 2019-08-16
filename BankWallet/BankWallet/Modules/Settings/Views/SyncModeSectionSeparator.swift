@@ -31,7 +31,7 @@ class SyncModeSectionSeparator: SectionSeparator {
     }
 
     class func height(for description: String, containerWidth: CGFloat) -> CGFloat {
-        return ceil(description.height(forContainerWidth: containerWidth - 2 * SyncModeTheme.cellBigMargin, font: SyncModeTheme.separatorDescriptionFont) + SyncModeTheme.cellMediumMargin + SyncModeTheme.separatorBottomMargin)
+        return description.height(forContainerWidth: containerWidth - 2 * SyncModeTheme.cellBigMargin, font: SyncModeTheme.separatorDescriptionFont) + SyncModeTheme.cellMediumMargin + SyncModeTheme.separatorBottomMargin
     }
 
 }
