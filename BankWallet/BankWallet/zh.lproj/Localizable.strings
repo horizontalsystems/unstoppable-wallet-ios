@@ -48,10 +48,10 @@
 "coin_sync.title" = "恢复选项";
 "coin_sync.fast" = "过程最快";
 "coin_sync.recommended" = "0 小时 (推荐)";
-"coin_sync.fast.text" = "Restores your past transactions via secure third party server. For users with a long history of transactions involving very large sums this method may pose privacy risks";
+"coin_sync.fast.text" = "通过安全的第三方服务器可以恢复以前的事务。对于拥有大量交易历史的用户来说，这种方法可能会带来隐私风险。\n";
 "coin_sync.slow" = "缓慢";
 "coin_sync.more_private" = "1 小时(更多隐私)";
-"coin_sync.slow.text" = "Restores your past transactions directly from the network. Significantly more private but very slow. If the restore takes way too much time, go to Manage Keys section and reimport the Key for the wallet using the Fast Sync option.";
+"coin_sync.slow.text" = "直接从网络可以恢复以前的事务。明显更私密，但速度很慢。如果恢复时间过长，如果恢复时间过长，请转到“管理密钥”部分，然后选“快速同步”重新导入钱包密钥。\n";
 "coin_sync.alert.header" = "Attention";
 "coin_sync.alert.text" = "This action will resync your wallet balance for each blockchain. It may take several hours to complete.";
 "coin_sync.erc20" = "Sync mode same as Ethereum";
@@ -61,11 +61,11 @@
 "backup.close" = "关闭";
 
 "backup.intro.title_backup" = "备份";
-"backup.intro.title_show" = "Show Key";
-"backup.intro.subtitle" = "The key that will be shown next is the only way to restore your funds, if your phone is ever lost, stolen, broken etc. Make sure that no one is watching your screen.\n\nThe coins controlled by this key: %@";
+"backup.intro.title_show" = "显示密钥";
+"backup.intro.subtitle" = "如果您的手机曾经丢失、被盗、损坏等，下一步将显示的密钥是恢复资金的唯一方法。请确保没有人在监视您的屏幕。\n\n由此密钥控制的硬币：%@\n\n";
 "backup.intro.later" = "稍后";
 "backup.intro.backup_now" = "备份";
-"backup.intro.show_key" = "Show Key";
+"backup.intro.show_key" = "显示密钥";
 
 "backup.words.title" = "密钥";
 "backup.12words.title" = "12-words Key";
