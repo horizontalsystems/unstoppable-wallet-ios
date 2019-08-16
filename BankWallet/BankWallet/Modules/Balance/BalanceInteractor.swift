@@ -5,6 +5,7 @@ class BalanceInteractor {
 
     private var disposeBag = DisposeBag()
     private var ratesDisposeBag = DisposeBag()
+    private var adaptersDisposeBag = DisposeBag()
 
     private let walletManager: IWalletManager
     private let adapterManager: IAdapterManager
@@ -22,6 +23,9 @@ class BalanceInteractor {
 
     private func onUpdateWallets() {
         delegate?.didUpdate(wallets: walletManager.wallets)
+
+        adaptersDisposeBag = DisposeBag()
+
         for wallet in walletManager.wallets {
             guard let adapter = adapterManager.balanceAdapter(for: wallet) else {
                 continue
@@ -36,7 +40,7 @@ class BalanceInteractor {
                     .subscribe(onNext: { [weak self] in
                         self?.delegate?.didUpdate(balance: adapter.balance, wallet: wallet)
                     })
-                    .disposed(by: disposeBag)
+                    .disposed(by: adaptersDisposeBag)
 
             adapter.stateUpdatedObservable
                     .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
@@ -44,7 +48,7 @@ class BalanceInteractor {
                     .subscribe(onNext: { [weak self] in
                         self?.delegate?.didUpdate(state: adapter.state, wallet: wallet)
                     })
-                    .disposed(by: disposeBag)
+                    .disposed(by: adaptersDisposeBag)
         }
     }
 
