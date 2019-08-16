@@ -16,6 +16,7 @@
 "button.save" = "Save";
 "button.sync" = "Sync";
 "button.paste" = "Paste";
+"button.backup" = "Backup";
 
 "alert.copied" = "کپی انجام شد";
 "alert.no_internet" = "انترنت نداريد";
@@ -104,6 +105,7 @@
 
 "deposit.receive_coin" = "دریافت %@";
 "deposit.your_address" = "آدرس شما";
+"receive_alert.not_backed_up_description" = "You need to backup the keys for this wallet before you may receive funds on it.";
 
 // Send
 
