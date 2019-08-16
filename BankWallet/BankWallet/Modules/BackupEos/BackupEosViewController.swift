@@ -100,7 +100,7 @@ class BackupEosViewController: WalletViewController {
             maker.top.equalTo(self.activePrivateKeyField.snp.bottom).offset(BackupTheme.eosRegularMargin)
         }
 
-        qrCodeImageView.backgroundColor = .lightGray
+        qrCodeImageView.backgroundColor = .white
         qrCodeImageView.contentMode = .center
         qrCodeImageView.clipsToBounds = true
         qrCodeImageView.layer.cornerRadius = BackupTheme.eosQrCodeCornerRadius
@@ -130,9 +130,9 @@ class BackupEosViewController: WalletViewController {
             maker.height.equalTo(BackupTheme.buttonHeight)
         }
 
-        qrCodeImageView.image = UIImage(qrCodeString: delegate.activePrivateKey, size: BackupTheme.eosQrCodeSize)
         accountField.bind(address: delegate.account, error: nil)
         activePrivateKeyField.bind(address: delegate.activePrivateKey, error: nil)
+        qrCodeImageView.asyncSetImage { UIImage(qrCodeString: self.delegate.activePrivateKey, size: BackupTheme.eosQrCodeSize) }
     }
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
