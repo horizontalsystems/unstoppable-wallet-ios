@@ -40,8 +40,8 @@
 "restore.description" = "Чтобы восстановить существующий кошелек вам нужно ввести приватный ключ для этого кошелька.\n\nКак только вы восстановите один кошелек, вы сможете восстановить больше кошельков, перейдя в раздел \"Управление Ключами\" в настройках приложения.";
 "restore.words.description" = "Введите ключ";
 "restore.validation_failed" = "Неверный Ключ";
-"restore.placeholder.account_name" = "Имя Пользователя";
-"restore.placeholder.private_key" = "Активировать приватный ключ";
+"restore.placeholder.account_name" = "Account Name";
+"restore.placeholder.private_key" = "Active Private Key";
 
 //Coin Sync Modes
 
@@ -60,7 +60,7 @@
 
 "backup.close" = "Закрыть";
 
-"backup.intro.title_backup" = "Записать ключ";
+"backup.intro.title_backup" = "Резервная копия";
 "backup.intro.title_show" = "Показать Ключ";
 "backup.intro.subtitle" = "Ключ, который будет показан далее, - это единственный способ восстановить ваши средства, если ваш телефон потерян, украден, сломан и т.д. Убедитесь, что никто не смотрит на ваш экран.\n\nМонеты, контролируемые этим ключом: %@\n";
 "backup.intro.later" = "Позже";
@@ -226,7 +226,7 @@
 
 // Settings -> Tell Friends
 
-"settings_tell_friends.text" = "Be Free! Be Unstoppable!";
+"settings_tell_friends.text" = "Будь Свободным! Будь Неудеожимым!";
 
 // Settings -> Security
 
@@ -250,12 +250,12 @@
 "settings_manage_keys.delete.cant_delete" = "Вам нужно сделать резервную копию этого ключа, прежде чем вы можете его отсоединить.";
 "settings_manage_keys.delete.title" = "Удалить Ключ";
 "settings_manage_keys.delete.confirmation_remove" = "Это действие удалит ваш %@ ключ (кошелёк) с этого устройства.";
-"settings_manage_keys.delete.confirmation_disable" = "Coins that will be disabled: %@";
+"settings_manage_keys.delete.confirmation_disable" = "Монеты, которые будут отключены: %@";
 "settings_manage_keys.delete.confirmation_loose" = "Если у вас нет резервной копии этого ключа, то вы потеряете соответствующие средства.";
 "error.cant_create_eos" = "В данный момент кошелек не может создать новые учетные записи EOS. Вы можете восстановить существующий.";
 "settings_manage_keys.create.text" = "Это действие сгенерирует ключ(кошелек) для следующих монет:\n\n%@";
 "error.invalid_eos_key" = "Неверный ключ";
-"error.invalid_eos_account" = "Недопустимый аккаунт";
+"error.invalid_eos_account" = "Недействительный Аккаунт";
 
 // Set PIN
 
@@ -278,7 +278,7 @@
 
 // No Passcode
 
-"no_passcode.info_text" = "This app requires that phone has the passcode (screen lock) enabled.\n\nYou may enable it in iOS settings.\n\nPlease note that when you disabled the PIN on the OS level the security measures in safe storage of your phonе made the previously stored data invalid. You will need to Restore your wallet keys to get back to your wallet.";
+"no_passcode.info_text" = "Это приложение требует, чтобы на телефоне был включен пароль (экран блокировки).\n\nВы можете включить его в настройках iOS.\n\nПожалуйста, обратите внимание, что после того, как вы отключили PIN-код на уровне ОС,  в безопасном хранилище вашего телефона ранее сохраненные данные стали недействительными. Поэтому Вам нужно восстановить ключи, чтобы вернуться к вашему кошельку.";
 
 //NumPad
 
