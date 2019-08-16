@@ -37,9 +37,9 @@
 // Restore
 
 "restore.title" = "恢复";
-"restore.description" = "To restore existing wallet you need to enter a private key for that wallet.\n\nOnce you restore one wallet you will be able to restore more wallets by going to Manage Keys section in app Settings.";
+"restore.description" = "要恢复现有钱包，您需要输入该钱包的密钥。\n\n一旦你恢复了一个钱包，你就可以恢复更多的钱包，方法是进入“应用程序设置”中的“管理密钥”部分。";
 "restore.words.description" = "输入密钥";
-"restore.validation_failed" = "Incorrect Key";
+"restore.validation_failed" = "密钥不正确";
 "restore.placeholder.account_name" = "Account Name";
 "restore.placeholder.private_key" = "Active Private Key";
 
@@ -48,10 +48,10 @@
 "coin_sync.title" = "恢复选项";
 "coin_sync.fast" = "过程最快";
 "coin_sync.recommended" = "0 小时 (推荐)";
-"coin_sync.fast.text" = "Restores your past transactions via secure third party server. For users with a long history of transactions involving very large sums this method may pose privacy risks";
+"coin_sync.fast.text" = "通过安全的第三方服务器可以恢复以前的事务。对于拥有大量交易历史的用户来说，这种方法可能会带来隐私风险。\n";
 "coin_sync.slow" = "缓慢";
 "coin_sync.more_private" = "1 小时(更多隐私)";
-"coin_sync.slow.text" = "Restores your past transactions directly from the network. Significantly more private but very slow. If the restore takes way too much time, go to Manage Keys section and reimport the Key for the wallet using the Fast Sync option.";
+"coin_sync.slow.text" = "直接从网络可以恢复以前的事务。明显更私密，但速度很慢。如果恢复时间过长，如果恢复时间过长，请转到“管理密钥”部分，然后选“快速同步”重新导入钱包密钥。\n";
 "coin_sync.alert.header" = "Attention";
 "coin_sync.alert.text" = "This action will resync your wallet balance for each blockchain. It may take several hours to complete.";
 "coin_sync.erc20" = "Sync mode same as Ethereum";
@@ -61,30 +61,30 @@
 "backup.close" = "关闭";
 
 "backup.intro.title_backup" = "备份";
-"backup.intro.title_show" = "Show Key";
-"backup.intro.subtitle" = "The key that will be shown next is the only way to restore your funds, if your phone is ever lost, stolen, broken etc. Make sure that no one is watching your screen.\n\nThe coins controlled by this key: %@";
+"backup.intro.title_show" = "显示密钥";
+"backup.intro.subtitle" = "如果您的手机曾经丢失、被盗、损坏等，下一步将显示的密钥是恢复资金的唯一方法。请确保没有人在监视您的屏幕。\n\n由此密钥控制的硬币：%@\n\n";
 "backup.intro.later" = "稍后";
 "backup.intro.backup_now" = "备份";
-"backup.intro.show_key" = "Show Key";
+"backup.intro.show_key" = "显示密钥";
 
 "backup.words.title" = "密钥";
-"backup.12words.title" = "12-words Key";
-"backup.binance.title" = "Binance Key";
-"confirmation.binance.description" = "Enter words from your Binance Key";
-"confirmation.12words.description" = "Enter words from your 12-words Key";
+"backup.12words.title" = "12个字的密钥";
+"backup.binance.title" = "二进制的密钥";
+"confirmation.binance.description" = "请从你的二进制密钥中输入单词";
+"confirmation.12words.description" = "请从你的12个字的密钥中输入单词";
 
-"backup.eos.title" = "EOS Key";
+"backup.eos.title" = "EOS 密钥";
 "backup.eos.account_name" = "Account Name";
 "backup.eos.active_private_key" = "Active Private Key";
-"backup.eos.hint" = "Copying your key using “copy” action poses some risks if you use any clipboard management apps or some other apps that may have access to clipboard data.";
+"backup.eos.hint" = "如果您使用任何剪贴板管理应用程序或其他可以访问剪贴板数据的应用程序，则使用“复制”操作复制密钥会带来一些风险。\n\n";
 
 "backup.confirmation.title" = "正在检查...";
 "backup.confirmation.secret_key" = "我知道, 我是一个12个字的私人密钥的唯一拥有者，该密钥安全地存储在我的手机上，使我能够控制我钱包上的资金。";
 "backup.confirmation.delete_app_warn" = "我知道如果此APP被移动、删除或出现故障，只有用密钥才能恢复对我钱包的访问。";
 "backup.confirmation.disclaimer" = "我理解这个应用程序的开发人员对使用这个应用程序时可能出现的任何意外的错误或问题不负责任。\n";
 
-"words_validator.empty_words" = "Not all words are entered";
-"words_validator.invalid_confirmation" = "Words do not match";
+"words_validator.empty_words" = "并非所有单词都输入\n\n";
+"words_validator.invalid_confirmation" = "单词不匹配";
 
 // Balance
 
@@ -95,10 +95,10 @@
 "balance.rate_per_coin" = "%@ 每 %@";
 "balance.synced_through" = "直到 %@";
 "balance.syncing" = "正在同步...";
-"balance.add_coins" = "Add Coins";
-"balance.sort.header" = "Sort by";
-"balance.sort.valueHighToLow" = "Balance";
-"balance.sort.az" = "Name";
+"balance.add_coins" = "添加硬币";
+"balance.sort.header" = "排序方式";
+"balance.sort.valueHighToLow" = "余额";
+"balance.sort.az" = "应用名";
 
 // Deposit
 
@@ -114,16 +114,16 @@
 "send.fee" = "费用:";
 "send.max_button" = "最多";
 "send.next_button" = "继续";
-"send.error.invalid_address" = "Invalid Address";
-"send.error.invalid_account" = "Invalid Account";
-"send.error.no_address" = "No Address";
-"send.error.no_amount" = "No Amount";
+"send.error.invalid_address" = "无效的地址";
+"send.error.invalid_account" = "帐户无效";
+"send.error.no_address" = "没有地址\n\n";
+"send.error.no_amount" = "没有金额";
 
 "send.confirmation.title" = "确认";
 "send.confirmation.to" = "收件人:";
 "send.confirmation.memo_placeholder" = "Memo";
 "send.confirmation.total" = "总额:";
-"send.confirmation.estimate_time" = "Estimate Time:";
+"send.confirmation.estimate_time" = "预计时间:";
 "send.confirmation.eos.account" = "Account";
 "send.confirmation.send_button" = "发送​​";
 "send.amount_error.balance" = "余额%@";
@@ -190,12 +190,12 @@
 "settings.title" = "设置";
 "settings.tab_bar_item" = "设置";
 "settings.security_center" = "安全中心";
-"settings.manage_coins" = "Manage Coins";
-"settings.restore_wallet" = "Restore Wallet";
+"settings.manage_coins" = "管理Coins";
+"settings.restore_wallet" = "恢复钱包";
 "settings.base_currency" = "基本货币";
 "settings.language" = "语言";
 "settings.about" = "更多";
-"settings.tell_friends" = "Tell Friends";
+"settings.tell_friends" = "分享给好友";
 "settings.light_mode" = "简单模式";
 "settings.info_title" = "UNSTOPPABLE";
 "settings.info_subtitle" = "decentralized app";
@@ -210,10 +210,10 @@
 
 // Settings -> Manage Wallet
 
-"manage_coins.title" = "Coin Manager";
-"manage_coins.add_coin.title" = "Add %@ ";
-"manage_coins.add_coin.text" = "You don't have active key for use with %@. Use Create button below to generate a new key (wallet).\n\nYou may also use the existing key for the %@ if you already have it.";
-"manage_coins.add_coin.create" = "Create";
+"manage_coins.title" = "钱包";
+"manage_coins.add_coin.title" = "加%@ ";
+"manage_coins.add_coin.text" = "您没有与%@一起使用的活动密钥。 使用下面的“创建”按钮生成新密钥（钱包）。\n如果您已经拥有它，也可以使用%@的现有密钥。";
+"manage_coins.add_coin.create" = "创建";
 "manage_coins.add_coin.restore" = "恢复";
 
 // Settings -> About
@@ -222,40 +222,40 @@
 "settings_about.app_title" = "Unstoppable";
 "settings_about.app_subtitle" = "Decentralized App";
 "settings_about.terms_privacy_subtitle" = "服务条款和隐私策略";
-"settings_about.terms_privacy_text" = "This app is peer-to-peer. It does not depend on any web server or tech support personnel to function.\n\nIt works everywhere as long as there is internet. No entity can block this app from working or to block someone from using it.\n\nYour funds are securely stored on the phone itself, not anywhere else.\n\nIt’s your responsibility to backup your Secret Key and keep it private. Never show it to anyone. If it’s lost, forgotten or stollen your funds can be used by the person who has your key.\n\nDo not jailbreak your phone, do not install apps from unknown (untrusted) sources, do not give your device to untrusted people, and keep the Operating System on your phone up to date. The security of your wallet depends on this.\n\nThe entire code powering this app been open to the public scrutiny since the beginning. We tried to build the most secure and decentralized wallet we could, however there are no guarantees that there are no unintended software issues. That said, this wallet is likely to be significantly more secure than any smartphone wallet app out there.\n\nSome generic non-private app data like currency exchange rates are stored on decentralized storage (IPFS). ";
+"settings_about.terms_privacy_text" = "此应用程序是对等的。它不依赖于任何 web 服务器或支持人员来运行的技术。只要有互联网, 它就可以被使用。任何实体都不能阻止此应用程序工作或阻止某人使用它。\n\n您的资金安全地存储在手机上, 而不是在其他任何地方。\n\n你有责任备份您的密钥, 并保持密钥的隐私。千万不要把它给任何人看。如果它被丢失, 遗忘或被偷, 您的资金都可用于持有您密钥的人。\n\n不要越狱您的手机, 不要安装来自未知 (不受信任) 来源的应用程序, 不要将您的设备交给不受信任的人, 并使您的手机上的系统保持最新。这是你的钱包安全的重点。\n\n从一开始，为该应用程序提供动力的整个代码就向公众开放。我们试图建立最安全和分散的钱包, 我们可以, 但没有保证没有意外的软件问题。也就是说, 这个钱包可能比任何智能手机钱包应用都要安全得多。\n\n一些通用的非私有应用程序数据 (如货币汇率) 存储在分散存储 (ipfs) 中。 ";
 
 // Settings -> Tell Friends
 
-"settings_tell_friends.text" = "Be Free! Be Unstoppable!";
+"settings_tell_friends.text" = "自由点！势不可挡！";
 
 // Settings -> Security
 
 "settings_security.title" = "安全中心";
-"settings_security.manage_accounts" = "Manage Keys";
+"settings_security.manage_accounts" = "管理密钥";
 "settings_security.passcode" = "密码";
 "settings_security.change_pin" = "修改密码";
 "settings_security.touch_id" = "Touch ID指纹识别";
 "settings_security.face_id" = "Face ID 面容识别";
-"security_settings.delete_alert_button" = "Delete from Phone";
+"security_settings.delete_alert_button" = "从手机中删除";
 
 // Manage Keys
 
-"settings_manage_keys.title" = "Keys";
-"settings_manage_keys.description" = "Anyone with access to your Keys can steal your wallet funds. Store keys safely and never show them to anyone.\n\nBackup each key to be able to restore funds if you loose or break your phone, or simply the wallet app gets deleted.";
-"settings_manage_keys.delete" = "Delete";
+"settings_manage_keys.title" = "密钥";
+"settings_manage_keys.description" = "任何有权访问您密钥的人都可以窃取您的钱包资金。安全存放钥匙，不要让任何人看到。\n备份每个密钥，以便在您的手机松动或损坏时恢复资金，或者只是钱包应用程序被删除。\n\n";
+"settings_manage_keys.delete" = "删除";
 "settings_manage_keys.backup" = "备份";
 "settings_manage_keys.show" = "查看";
-"settings_manage_keys.create" = "Create";
+"settings_manage_keys.create" = "创建";
 "settings_manage_keys.restore" = "恢复";
-"settings_manage_keys.delete.cant_delete" = "You need to backup this key before you may unlink it.";
-"settings_manage_keys.delete.title" = "Delete Key";
-"settings_manage_keys.delete.confirmation_remove" = "This action will delete the %@ key (wallet) from this device.";
-"settings_manage_keys.delete.confirmation_disable" = "Coins that will be disabled: %@";
-"settings_manage_keys.delete.confirmation_loose" = "If you don't have a backup of this key you will loose the respective funds.";
-"error.cant_create_eos" = "At this point, the wallet is not able to create new EOS wallet accounts. You're only able to restore the existing one.";
-"settings_manage_keys.create.text" = "This action will generate a key(wallet) for the following coins:\n\n%@";
-"error.invalid_eos_key" = "Invalid key";
-"error.invalid_eos_account" = "Invalid account";
+"settings_manage_keys.delete.cant_delete" = "您需要备份此密钥才能取消链接。";
+"settings_manage_keys.delete.title" = "删除密钥";
+"settings_manage_keys.delete.confirmation_remove" = "此操作将从此设备中删除%@密钥（钱包）。\n\n";
+"settings_manage_keys.delete.confirmation_disable" = "将被禁用的硬币：%@";
+"settings_manage_keys.delete.confirmation_loose" = "如果你没有这把密钥的备份，你将失去相应的资金。\n";
+"error.cant_create_eos" = "此时，钱包无法创建新的EOS钱包帐户。您只能还原现有的。\n\n";
+"settings_manage_keys.create.text" = "此操作将为以下硬币生成密钥（钱包）：%@\n\n";
+"error.invalid_eos_key" = "无效的密钥";
+"error.invalid_eos_account" = "帐户无效";
 
 // Set PIN
 
@@ -278,7 +278,7 @@
 
 // No Passcode
 
-"no_passcode.info_text" = "This app requires that phone has the passcode (screen lock) enabled.\n\nYou may enable it in iOS settings.\n\nPlease note that when you disabled the PIN on the OS level the security measures in safe storage of your phonе made the previously stored data invalid. You will need to Restore your wallet keys to get back to your wallet.";
+"no_passcode.info_text" = "此应用程序要求手机启用密码（屏幕锁定）。\n\n您可以在iOS设置中启用它。\n\n请注意，当您禁用操作系统级别的PIN时，您的电话安全存储中的安全措施使以前存储的数据无效。您需要恢复钱包密钥才能回到钱包。\n\n\n\n";
 
 //NumPad
 
