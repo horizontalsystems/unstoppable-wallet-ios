@@ -39,7 +39,7 @@
 "restore.title" = "Restaurer";
 "restore.description" = "Pour restaurer le porte-monnaie existant, vous devez entrer une clé privée pour ce porte-monnaie.\n\nQuand vous restaurez un porte-monnaie vous pourrez restaurer plus de porte-monnaies en dirigeant dans la section Manage Keys dans les paramètres de l'application.";
 "restore.words.description" = "Entrez la clé";
-"restore.validation_failed" = "Pin incorrect";
+"restore.validation_failed" = "Clé incorrect";
 "restore.placeholder.account_name" = "Account Name";
 "restore.placeholder.private_key" = "Active Private Key";
 
