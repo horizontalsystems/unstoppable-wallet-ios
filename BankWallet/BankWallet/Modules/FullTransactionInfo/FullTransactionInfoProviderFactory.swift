@@ -33,7 +33,7 @@ extension FullTransactionInfoProviderFactory: IFullTransactionInfoProviderFactor
         } else if case .binance = coin.type {
             let binanceProvider = dataProviderManager.binance(for: providerName)
             provider = binanceProvider
-            adapter = BinanceTransactionInfoAdapter(provider: binanceProvider, coin: coin)
+            adapter = BinanceTransactionInfoAdapter(provider: binanceProvider, feeCoinProvider: App.shared.feeCoinProvider, coin: coin)
         } else if case .eos = coin.type {
             let eosProvider = dataProviderManager.eos(for: providerName)
             provider = eosProvider
@@ -41,7 +41,7 @@ extension FullTransactionInfoProviderFactory: IFullTransactionInfoProviderFactor
         } else {
             let ethereumProvider = dataProviderManager.ethereum(for: providerName)
             provider = ethereumProvider
-            adapter = EthereumTransactionInfoAdapter(provider: ethereumProvider, coin: coin)
+            adapter = EthereumTransactionInfoAdapter(provider: ethereumProvider, feeCoinProvider: App.shared.feeCoinProvider, coin: coin)
         }
         return FullTransactionInfoProvider(apiProvider: apiProvider, adapter: adapter, provider: provider)
     }

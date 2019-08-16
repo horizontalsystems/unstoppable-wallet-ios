@@ -2,10 +2,12 @@ import Foundation
 
 class BinanceTransactionInfoAdapter: IFullTransactionInfoAdapter {
     private let provider: IBinanceProvider
+    private let feeCoinProvider: FeeCoinProvider
     private let coin: Coin
 
-    init(provider: IBinanceProvider, coin: Coin) {
+    init(provider: IBinanceProvider, feeCoinProvider: FeeCoinProvider, coin: Coin) {
         self.provider = provider
+        self.feeCoinProvider = feeCoinProvider
         self.coin = coin
     }
 
@@ -33,15 +35,15 @@ class BinanceTransactionInfoAdapter: IFullTransactionInfoAdapter {
 
         // Fee
 
-        // todo: use BNB coin instead of coin code
-//        var feeGasItems = [FullTransactionItem]()
-//        if let fee = txResponse.fee {
-//            let feeValue = CoinValue(coin: "BNB", value: fee)
-//            feeGasItems.append(FullTransactionItem(title: "full_info.fee".localized, value: ValueFormatter.instance.format(coinValue: feeValue)))
-//        }
-//        if !feeGasItems.isEmpty {
-//            sections.append(FullTransactionSection(title: nil, items: feeGasItems))
-//        }
+        var feeItems = [FullTransactionItem]()
+        if let fee = txResponse.fee {
+            let feeCoin = feeCoinProvider.feeCoinData(coin: coin)?.0 ?? coin
+            let feeValue = CoinValue(coin: feeCoin, value: fee)
+            feeItems.append(FullTransactionItem(title: "full_info.fee".localized, value: ValueFormatter.instance.format(coinValue: feeValue)))
+        }
+        if !feeItems.isEmpty {
+            sections.append(FullTransactionSection(title: nil, items: feeItems))
+        }
 
         // From / To
 
