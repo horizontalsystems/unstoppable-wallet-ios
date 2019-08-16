@@ -7,7 +7,7 @@ protocol IBalanceView: class {
     func updateHeader()
     func didRefresh()
     func setSort(isOn: Bool)
-    func showBackupAlert(index: Int)
+    func showBackupAlert()
 }
 
 protocol IBalanceViewDelegate {
@@ -25,7 +25,7 @@ protocol IBalanceViewDelegate {
     func onOpenManageWallets()
 
     func onSortTypeChange()
-    func onBackup(index: Int)
+    func onBackup()
 }
 
 protocol IBalanceInteractor {

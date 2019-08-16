@@ -224,10 +224,10 @@ extension BalanceViewController: IBalanceView {
         headerView.sortButton.isHidden = !isOn
     }
 
-    func showBackupAlert(index: Int) {
+    func showBackupAlert() {
         let alert = AlertViewController(delegate: self, onDismiss: { [weak self] success in
             if success {
-                self?.delegate.onBackup(index: index)
+                self?.delegate.onBackup()
             }
         })
         present(alert, animated: true)
