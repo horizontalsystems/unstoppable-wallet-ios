@@ -16,6 +16,7 @@
 "button.save" = "Sauvegarder";
 "button.sync" = "Sync";
 "button.paste" = "Coller";
+"button.backup" = "Backup";
 
 "alert.copied" = "Copié";
 "alert.no_internet" = "Aucune connexion Internet";
@@ -104,6 +105,7 @@
 
 "deposit.receive_coin" = "Recevoir %@";
 "deposit.your_address" = "Votre address";
+"receive_alert.not_backed_up_description" = "You need to backup the keys for this wallet before you may receive funds on it.";
 
 // Send
 
