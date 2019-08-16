@@ -16,6 +16,7 @@
 "button.save" = "저장";
 "button.sync" = "동기화";
 "button.paste" = "불여넣기";
+"button.backup" = "Backup";
 
 "alert.copied" = "복사됨";
 "alert.no_internet" = "인터넷에 연결되지 않음";
@@ -104,6 +105,7 @@
 
 "deposit.receive_coin" = "수신%@";
 "deposit.your_address" = "당신의 주소";
+"receive_alert.not_backed_up_description" = "You need to backup the keys for this wallet before you may receive funds on it.";
 
 // Send
 
