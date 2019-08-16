@@ -9,11 +9,13 @@
 "button.cancel" = "Cancel";
 "button.confirm" = "Confirm";
 "button.done" = "Done";
+"button.restore" = "Restore";
 "button.next" = "Next";
 "button.remove" = "Remove";
 "button.forward" = "Forward";
 "button.save" = "Save";
 "button.sync" = "Sync";
+"button.paste" = "Paste";
 
 "alert.copied" = "کپی انجام شد";
 "alert.no_internet" = "انترنت نداريد";
@@ -26,49 +28,63 @@
 "access_camera.message" = "بانك ضرورت دسترسي به دوربين دارد بخاطر اسكن كردن QR كد.\nبرويد به تنظيمات -> اجازه دهيد تا بانك دسترسي به دوربين داشته باشد.";
 "access_camera.settings" = "تنظيمات";
 
-// Guest Page
+// Welcome
 
-"guest.title" = "Unstoppable";
-"guest.description" = "IN BLOCKCHAIN WE TRUST";
-"guest.subtitle" = "Decentralized app";
-"guest.create_wallet" = "Create Wallet";
-"guest.restore_wallet" = "Restore";
-"guest.version" = "نسخهٔ %@";
+"welcome.new_wallet" = "New Wallet";
+"welcome.restore_wallet" = "Restore Wallet";
+"welcome.version" = "version %@";
 
 // Restore
 
 "restore.title" = "بازیابی";
-"restore.description" = "Enter Secret Key";
-"restore.validation_failed" = "کلید مخفی نادرست";
+"restore.description" = "To restore existing wallet you need to enter a private key for that wallet.\n\nOnce you restore one wallet you will be able to restore more wallets by going to Manage Keys section in app Settings.";
+"restore.words.description" = "Enter Key";
+"restore.validation_failed" = "Incorrect Key";
+"restore.placeholder.account_name" = "Account Name";
+"restore.placeholder.private_key" = "Active Private Key";
 
 //Coin Sync Modes
+
 "coin_sync.title" = "Restore Options";
-"coin_sync.header" = "Syncing with blockchain";
 "coin_sync.fast" = "Fast";
 "coin_sync.recommended" = "0-2 hours (Recommended)";
-"coin_sync.fast.text" = "Restores your past transactions via secure third party server. For users with a long history of transactions involving very large sums this method may pose privacy risks.";
+"coin_sync.fast.text" = "Restores your past transactions via secure third party server. For users with a long history of transactions involving very large sums this method may pose privacy risks";
 "coin_sync.slow" = "Slow";
 "coin_sync.more_private" = "1-12 hours (More Private)";
-"coin_sync.slow.text" = "Restores your past transactions directly from the network. Significantly more private but very slow. If the restore takes way too much time go to Security section in Settings tab and select “Unlink This Device” option.";
-"coin_sync.disable" = "Disable Coin";
+"coin_sync.slow.text" = "Restores your past transactions directly from the network. Significantly more private but very slow. If the restore takes way too much time, go to Manage Keys section and reimport the Key for the wallet using the Fast Sync option.";
 "coin_sync.alert.header" = "Attention";
 "coin_sync.alert.text" = "This action will resync your wallet balance for each blockchain. It may take several hours to complete.";
 "coin_sync.erc20" = "Sync mode same as Ethereum";
 
 // Backup
 
-"backup.intro.title" = "پيشتيباني";
-"backup.intro.subtitle" = "رمز مخيفي شما ميتواند كيف پول شما را دوباره پروگرام كند اگر تيليفون شما گم شود،خراب شود يا دزدي شود پس هميشه رمز مخفي خود را پيش خود داشته باشد و فراموش نكيد. n\n\\ رمز مخفي ١٢ رقم ميخواهد.";
+"backup.close" = "Close";
+
+"backup.intro.title_backup" = "Backup";
+"backup.intro.title_show" = "Show Key";
+"backup.intro.subtitle" = "The key that will be shown next is the only way to restore your funds, if your phone is ever lost, stolen, broken etc. Make sure that no one is watching your screen.\n\nThe coins controlled by this key: %@";
 "backup.intro.later" = "بعداً";
 "backup.intro.backup_now" = "پيشتيباني";
+"backup.intro.show_key" = "Show Key";
+
 "backup.words.title" = "رقم مخفی";
+"backup.12words.title" = "12-words Key";
+"backup.binance.title" = "Binance Key";
+"confirmation.binance.description" = "Enter words from your Binance Key";
+"confirmation.12words.description" = "Enter words from your 12-words Key";
+
+"backup.eos.title" = "EOS Key";
+"backup.eos.account_name" = "Account Name";
+"backup.eos.active_private_key" = "Active Private Key";
+"backup.eos.hint" = "Copying your key using “copy” action poses some risks if you use any clipboard management apps or some other apps that may have access to clipboard data.";
 
 "backup.confirmation.title" = "برسي...";
-"backup.confirmation.description" = "حرف هاي رمز تات را وارد كنيد";
-"backup.confirmation.failure_alert.text" = "ارقام با هم شباهت ندارند";
 "backup.confirmation.secret_key" = "من قبول ميكنم كي تنها من صاحب اين ١٢ عدد مخفي ميباشم كي اين عداد در گوشي همراه من ميباشد و تنها من ميتوانم با اين عداد كيف پول و مقدار پول خود را فعال كنم.";
 "backup.confirmation.delete_app_warn" = "من قبول ميكنم كي اگر اين كاربرد تكان بخورد،حذف شود و يا اشكال در عملكرد به وحود بياد، فقط تنها رمز مخفي ميتواند دوباره بهبوديافت كند.";
 "backup.confirmation.disclaimer" = "من قبول ميكنم كي سازنده اين كاربرد هيچ نوع معصوليت در مقابل ويروس و ادم هاي تقلبي ندارد كي شما به ان متواجه شديد.";
+
+"words_validator.empty_words" = "Not all words are entered";
+"words_validator.invalid_confirmation" = "Words do not match";
 
 // Balance
 
@@ -79,6 +95,10 @@
 "balance.rate_per_coin" = "%@ به ازا %@";
 "balance.synced_through" = "تا: %@";
 "balance.syncing" = "در حال همگام سازی...";
+"balance.add_coins" = "Add Coins";
+"balance.sort.header" = "Sort by";
+"balance.sort.valueHighToLow" = "Balance";
+"balance.sort.az" = "Name";
 
 // Deposit
 
@@ -88,15 +108,26 @@
 // Send
 
 "send.title" = "ارسال%@";
-"send.address_placeholder" = "آدرس";
-"send.amount_error.balance" = "مانده حساب %@";
-"send.send_button" = "ارسال";
-"send.paste_button" = "جای‌گذاری";
 "send.amount_placeholder" = "مبلغ";
-"send.fee" = "هزينه";
-"send.total" = "مجموع";
+"send.address_placeholder" = "آدرس";
+"send.account_placeholder" = "Account";
+"send.fee" = "Fee:";
 "send.max_button" = "حداکثر";
-"send_erc.alert" = "پرداخت هزینه های معامله برای %@ (ERC20) در Ethereum. شما نیاز به %@ ETH.";
+"send.next_button" = "Next";
+"send.error.invalid_address" = "Invalid Address";
+"send.error.invalid_account" = "Invalid Account";
+"send.error.no_address" = "No Address";
+"send.error.no_amount" = "No Amount";
+
+"send.confirmation.title" = "Confirm";
+"send.confirmation.to" = "To:";
+"send.confirmation.memo_placeholder" = "Memo";
+"send.confirmation.total" = "Total:";
+"send.confirmation.estimate_time" = "Estimate Time:";
+"send.confirmation.eos.account" = "Account";
+"send.confirmation.send_button" = "Send";
+"send.amount_error.balance" = "مانده حساب %@";
+"send.token.insufficient_fee_alert" = "Transaction fees for %@ (%@) paid in %@. You need %@.";
 
 // Transactions
 
@@ -108,7 +139,6 @@
 // Transaction Info
 
 "tx_info.title" = "تراکنش";
-"tx_info.historical_rate" = "چارت هاي تاريخي";
 "tx_info.time" = "زمان";
 "tx_info.status" = "وضيعت";
 "tx_info.status.pending" = "در حالت انتظار";
@@ -135,6 +165,12 @@
 "full_info.to" = "به";
 "full_info.amount" = "مقدار";
 "full_info.nonce" = "Nonce";
+"full_info.status" = "Status";
+"full_info.memo" = "Memo";
+"full_info.cpu" = "CPU Usage";
+"full_info.net" = "Net Usage";
+"full_info.milli_seconds" = "%@ μs";
+"full_info.bytes" = "%@ Bytes";
 
 "full_info.gas_limit" = "Gas Limit";
 "full_info.gas_used" = "Gas Used";
@@ -154,10 +190,12 @@
 "settings.title" = "تنظيمات";
 "settings.tab_bar_item" = "تنظيمات";
 "settings.security_center" = "مرکز امنیت";
-"settings.advanced" = "Advanced Settings";
+"settings.manage_coins" = "Manage Coins";
+"settings.restore_wallet" = "Restore Wallet";
 "settings.base_currency" = "ارز مرجع";
 "settings.language" = "زبان";
 "settings.about" = "درباره";
+"settings.tell_friends" = "Tell Friends";
 "settings.light_mode" = "حالت روشن";
 "settings.info_title" = "UNSTOPPABLE";
 "settings.info_subtitle" = "decentralized app";
@@ -172,26 +210,52 @@
 
 // Settings -> Manage Wallet
 
-"settings_manage_wallet.title" = "مدريت سكه";
+"manage_coins.title" = "Coin Manager";
+"manage_coins.add_coin.title" = "Add %@ ";
+"manage_coins.add_coin.text" = "You don't have active key for use with %@. Use Create button below to generate a new key (wallet).\n\nYou may also use the existing key for the %@ if you already have it.";
+"manage_coins.add_coin.create" = "Create";
+"manage_coins.add_coin.restore" = "Restore";
 
 // Settings -> About
 
 "settings_about.title" = "درباره";
+"settings_about.app_title" = "Unstoppable";
+"settings_about.app_subtitle" = "Decentralized App";
 "settings_about.terms_privacy_subtitle" = "شرايط وحريم خصوصي:";
-"settings_about.terms_privacy_text" = "Your funds are securely stored on your device. Not on any external servers.\n\nThe app does not depend on any server or person to function.\n\nSome generic app data like exchange rates are stored on decentralized storage (IPFS).\n\nThe app works everywhere as long as there is an internet connection.\n\nIt is impossible for a third party to block this app from working.\n\nThe entire code powering this app is free and open to the public.\n\nThere may be bugs in the code. And while we tried to provide the most secure wallet we still can not guarantee the security of your funds. No one can.\n\nMake sure you backup a Secret Key for your wallet! Never show your secret key to anyone.\n\nDo not jailbreak your phone or install apps from unknown (untrusted) sources.\n\nDo not give your device to untrusted parties.\n\nYou are solely responsible for keeping your Secret Key and your device secure.";
+"settings_about.terms_privacy_text" = "This app is peer-to-peer. It does not depend on any web server or tech support personnel to function.\n\nIt works everywhere as long as there is internet. No entity can block this app from working or to block someone from using it.\n\nYour funds are securely stored on the phone itself, not anywhere else.\n\nIt’s your responsibility to backup your Secret Key and keep it private. Never show it to anyone. If it’s lost, forgotten or stollen your funds can be used by the person who has your key.\n\nDo not jailbreak your phone, do not install apps from unknown (untrusted) sources, do not give your device to untrusted people, and keep the Operating System on your phone up to date. The security of your wallet depends on this.\n\nThe entire code powering this app been open to the public scrutiny since the beginning. We tried to build the most secure and decentralized wallet we could, however there are no guarantees that there are no unintended software issues. That said, this wallet is likely to be significantly more secure than any smartphone wallet app out there.\n\nSome generic non-private app data like currency exchange rates are stored on decentralized storage (IPFS). ";
+
+// Settings -> Tell Friends
+
+"settings_tell_friends.text" = "Be Free! Be Unstoppable!";
 
 // Settings -> Security
 
 "settings_security.title" = "مركز امنيتي";
-"settings_security.backup_wallet" = "پيشتيبان گيري كيف پول";
-"settings_security.unlink_from_this_device" = "لغو پيوند ازين دست گاه";
-"settings_security.set_pin" = "رمز عبور";
+"settings_security.manage_accounts" = "Manage Keys";
+"settings_security.passcode" = "Passcode";
 "settings_security.change_pin" = "تعغير كد";
 "settings_security.touch_id" = "شناس نامه اثر انگشت";
 "settings_security.face_id" = "شناسنامه صروت";
-"security_settings.unlink_alert_button" = "جدا کردن";
-"settings_security.import_wallet_confirmation_1" = "این اقدام کیف پول نصب شده فعلی را از این دستگاه را حذف می کند.";
-"settings_security.import_wallet_confirmation_2" = "مطمعاً باشيد كي رمز مخفي را با خود داريد و گرنه شما در آينده توانايي دسترسي به منابع مالي نداريد.";
+"security_settings.delete_alert_button" = "Delete from Phone";
+
+// Manage Keys
+
+"settings_manage_keys.title" = "Keys";
+"settings_manage_keys.description" = "Anyone with access to your Keys can steal your wallet funds. Store keys safely and never show them to anyone.\n\nBackup each key to be able to restore funds if you loose or break your phone, or simply the wallet app gets deleted.";
+"settings_manage_keys.delete" = "Delete";
+"settings_manage_keys.backup" = "Backup";
+"settings_manage_keys.show" = "Show";
+"settings_manage_keys.create" = "Create";
+"settings_manage_keys.restore" = "Restore";
+"settings_manage_keys.delete.cant_delete" = "You need to backup this key before you may unlink it.";
+"settings_manage_keys.delete.title" = "Delete Key";
+"settings_manage_keys.delete.confirmation_remove" = "This action will delete the %@ key (wallet) from this device.";
+"settings_manage_keys.delete.confirmation_disable" = "Coins that will be disabled: %@";
+"settings_manage_keys.delete.confirmation_loose" = "If you don't have a backup of this key you will loose the respective funds.";
+"error.cant_create_eos" = "At this point, the wallet is not able to create new EOS wallet accounts. You're only able to restore the existing one.";
+"settings_manage_keys.create.text" = "This action will generate a key(wallet) for the following coins:\n\n%@";
+"error.invalid_eos_key" = "Invalid key";
+"error.invalid_eos_account" = "Invalid account";
 
 // Set PIN
 
@@ -212,6 +276,10 @@
 "unlock_pin.cant_save_pin" = "Ouch! ما نميتانيم پين شما را ذخيره كنيم, لطفاً با ما به تماس شويد asap!";
 "unlock_pin.blocked_until" = "معلول تا: %@";
 
+// No Passcode
+
+"no_passcode.info_text" = "This app requires that phone has the passcode (screen lock) enabled.\n\nYou may enable it in iOS settings.\n\nPlease note that when you disabled the PIN on the OS level the security measures in safe storage of your phonе made the previously stored data invalid. You will need to Restore your wallet keys to get back to your wallet.";
+
 //NumPad
 
 "numpad_2" = "الف ب ت";
@@ -222,3 +290,12 @@
 "numpad_7" = "ف ق ك گ ل";
 "numpad_8" = "ل م ن و";
 "numpad_9" = "م ن و ء ي";
+
+// Key Types
+
+"key_type.12_words" = "12-words";
+"key_type.12_words.text" = "BTC, BCH, DASH, ETH, ERC-20";
+"key_type.eos" = "EOS Blockchain";
+"key_type.eos.text" = "EOS, EOS based Tokens";
+"key_type.binance" = "Binance Chain";
+"key_type.binance.text" = "BNB, BEP-2";

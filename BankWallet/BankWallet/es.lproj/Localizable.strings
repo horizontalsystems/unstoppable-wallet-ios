@@ -9,11 +9,13 @@
 "button.cancel" = "Cancelar";
 "button.confirm" = "Confirmar";
 "button.done" = "Listo";
+"button.restore" = "Restaurar";
 "button.next" = "Siguiente";
 "button.remove" = "Eliminar";
 "button.forward" = "Reenviar";
 "button.save" = "Guardar";
 "button.sync" = "Sincronizar";
+"button.paste" = "Pegar";
 
 "alert.copied" = "Copiado";
 "alert.no_internet" = "Sin conexión a Internet";
@@ -23,52 +25,66 @@
 
 // Access Camera
 
-"access_camera.message" = "Unstoppable cartera necesita acceder a su cámara para escanear el código QR";
-"access_camera.settings" = "Configuración";
+"access_camera.message" = "El monedero Unstoppable necesita acceder a su cámara para escanear el código QR.\n\nIr a Ajustes - > Unstoppable y permita el acceso a cámara.";
+"access_camera.settings" = "Ajustes";
 
-// Guest Page
+// Welcome
 
-"guest.title" = "Unstoppable";
-"guest.description" = "CONFIAMOS EN LA CADENA DE BLOQUES";
-"guest.subtitle" = "Decentralized app";
-"guest.create_wallet" = "Crear cartera";
-"guest.restore_wallet" = "Restaurar";
-"guest.version" = "Versión %@";
+"welcome.new_wallet" = "Nuevo monedero";
+"welcome.restore_wallet" = "Restaurar monedero";
+"welcome.version" = "Versión %@";
 
 // Restore
 
 "restore.title" = "Restaurar";
-"restore.description" = "Ingresar clave secreta";
-"restore.validation_failed" = "Clave secreta incorrecta";
+"restore.description" = "Para restaurar el monedero existente, es necesario introducir la clave privada para ese monedero.\n\nUna vez que restablezca un monedero podrá restaurar más monederos yendo a la sección Administrar Claves en Ajustes de la aplicación.";
+"restore.words.description" = "Introduzca la clave";
+"restore.validation_failed" = "Clave incorrecta";
+"restore.placeholder.account_name" = "Nombre de cuenta";
+"restore.placeholder.private_key" = "Active Private Key\n";
 
 //Coin Sync Modes
+
 "coin_sync.title" = "Restaurar opciones";
-"coin_sync.header" = "Sincronizando la cadena de bloques";
 "coin_sync.fast" = "Rápido";
 "coin_sync.recommended" = "0-2 horas (Recomendado)";
-"coin_sync.fast.text" = "Restaura tus transacciones pasadas vía un tercer servidor seguro. Para usuarios con una larga historia de transacciones con grandes cantidades, éste método puede tener riesgos de privacidad.";
+"coin_sync.fast.text" = "Restaura tus transacciones pasadas vía un tercer servidor seguro. Para usuarios con una larga historia de transacciones con grandes cantidades, éste método puede tener riesgos de privacidad";
 "coin_sync.slow" = "Lento";
 "coin_sync.more_private" = "1-12 horas (Más Privado)";
-"coin_sync.slow.text" = "Restaura tus transacciones pasadas directamente de la red. Significativamente mayor privacidad pero muy lento. Si la restauración tarda demasiado ve a la sección de Seguridad en la pestaña de Ajustes y selecciona la opción “Desconectar este dispositivo” ";
-"coin_sync.disable" = "Desactivar Moneda";
+"coin_sync.slow.text" = "Restaure sus transacciones pasadas directamente desde la red. Significativamente más privado pero muy lento. Si la restauración toma mucho tiempo, vaya a la sección Administrar claves y reimporte la Clave para la cartera utilizando la opción de Sincronización rápida.";
 "coin_sync.alert.header" = "Atención";
 "coin_sync.alert.text" = "Esta acción se actualizará el saldo de su cartera para cada cadena de bloques. Puede tardar varias horas en completarse.";
 "coin_sync.erc20" = "Sincronizar el modo igual que Ethereum";
 
 // Backup
 
-"backup.intro.title" = "Copia de seguridad";
-"backup.intro.subtitle" = "Su clave secreta es la única manera de recuperar su cartera y otros fondos si su teléfono alguna vez se pierde, se rompe, es sustraído o se actualiza a otra versión.\n\nConsiste de 12 palabras. Almacen esta desconectado sin peligro.";
-"backup.intro.later" = "Posterior";
+"backup.close" = "Cerrar";
+
+"backup.intro.title_backup" = "Copia de seguridad";
+"backup.intro.title_show" = "Mostrar clave";
+"backup.intro.subtitle" = "La clave que se mostrará a continuación es la única forma de restaurar sus fondos en caso de que su teléfono se pierda, lo roben, se averie, etc. Asegúrese de que nadie esté viendo su pantalla. \n\nLas criptomonedas controladas por esta clave: %@";
+"backup.intro.later" = "Más tarde";
 "backup.intro.backup_now" = "Copia de seguridad";
+"backup.intro.show_key" = "Mostrar clave";
+
 "backup.words.title" = "Clave secreta";
+"backup.12words.title" = "Clave de 12 palabras";
+"backup.binance.title" = "Clave de Binance";
+"confirmation.binance.description" = "Insertar palabras de su clave Binance Key";
+"confirmation.12words.description" = "Insertar palabras de su clave 12-words Key";
+
+"backup.eos.title" = "Clave de EOS";
+"backup.eos.account_name" = "Nombre de cuenta";
+"backup.eos.active_private_key" = "Clave activa privada";
+"backup.eos.hint" = "Copiar su clave utilizando la acción \"copiar\" implica ciertos riesgos si utiliza aplicaciones de gestión de portapapeles u otra aplicación que pueda tener acceso a la información del portapapeles.";
 
 "backup.confirmation.title" = "Comprobar";
-"backup.confirmation.description" = "Insertar palabras de su clave secreta";
-"backup.confirmation.failure_alert.text" = "Las contraseñas no coinciden";
-"backup.confirmation.secret_key" = "Entiendo que soy un único propietario de una clave secreta privada de 12 palabras que se almacena de forma segura en mi teléfono y me permite controlar los fondos en mi cartera.";
+"backup.confirmation.secret_key" = "Entiendo que soy un único propietario de una clave secreta privada de 12 palabras que se almacena de forma segura en mi teléfono y me permite controlar los fondos en mi monedero.";
 "backup.confirmation.delete_app_warn" = "Entiendo que si esta aplicación se elimina o deja de funcionar por alguna razón, mi monedero sólo puede ser recuperado utilizando mi clave secreta.";
 "backup.confirmation.disclaimer" = "Entiendo que los desarrolladores de esta aplicación no pueden ser responsables de ningún error o problemas no intencionados que puedan surgir mientras se usa esta aplicación.";
+
+"words_validator.empty_words" = "No se han introducido todas las palabras";
+"words_validator.invalid_confirmation" = "Las palabras no coinciden";
 
 // Balance
 
@@ -79,6 +95,10 @@
 "balance.rate_per_coin" = "%@ por %@";
 "balance.synced_through" = "hasta: %@";
 "balance.syncing" = "Sincronizando...";
+"balance.add_coins" = "Añadir Monedas";
+"balance.sort.header" = "Ordenar por";
+"balance.sort.valueHighToLow" = "Saldo";
+"balance.sort.az" = "Nombre";
 
 // Deposit
 
@@ -88,15 +108,26 @@
 // Send
 
 "send.title" = "Enviar %@";
-"send.address_placeholder" = "Dirección";
-"send.amount_error.balance" = "Saldo %@";
-"send.send_button" = "Enviar";
-"send.paste_button" = "Pegar";
 "send.amount_placeholder" = "Importe";
-"send.fee" = "Comisión";
-"send.total" = "Total";
+"send.address_placeholder" = "Dirección";
+"send.account_placeholder" = "Account";
+"send.fee" = "Comisión:";
 "send.max_button" = "Máx.";
-"send_erc.alert" = "Tarifas de transacción para %@ (ERC20) pagado en Ethereum. Es necesario %@ ETH.";
+"send.next_button" = "Siguiente";
+"send.error.invalid_address" = "Dirección incorrecta";
+"send.error.invalid_account" = "Cuenta inválida";
+"send.error.no_address" = "Sin dirección";
+"send.error.no_amount" = "No hay cantidad";
+
+"send.confirmation.title" = "Confirmar";
+"send.confirmation.to" = "Para:";
+"send.confirmation.memo_placeholder" = "Memo";
+"send.confirmation.total" = "Total:";
+"send.confirmation.estimate_time" = "Tiempo estimado:";
+"send.confirmation.eos.account" = "Cuenta";
+"send.confirmation.send_button" = "Enviar";
+"send.amount_error.balance" = "Saldo %@";
+"send.token.insufficient_fee_alert" = "Tarifas de transacción para %@ (%@) pagado en %@. Es necesario %@.";
 
 // Transactions
 
@@ -108,7 +139,6 @@
 // Transaction Info
 
 "tx_info.title" = "Transacción";
-"tx_info.historical_rate" = "Estado histórico";
 "tx_info.time" = "Hora";
 "tx_info.status" = "Estado";
 "tx_info.status.pending" = "Pendiente";
@@ -116,7 +146,7 @@
 "tx_info.from_hash" = "Desde ";
 "tx_info.to_hash" = "Para";
 "tx_info.button_verify" = "Verificar";
-"tx_info.rate" = "Estado histórico";
+"tx_info.rate" = "Tasa histórica";
 
 // Full Info
 
@@ -126,7 +156,7 @@
 "full_info.confirmations" = "Confirmaciones";
 "full_info.size" = "Tamaño";
 "full_info.fee" = "Comisión";
-"full_info.rate" = "Puntuación";
+"full_info.rate" = "Tasa";
 "full_info.inputs" = "Aportaciones";
 "full_info.outputs" = "Rendimientos";
 "full_info.source" = "Origen";
@@ -135,10 +165,16 @@
 "full_info.to" = "Para";
 "full_info.amount" = "Importe";
 "full_info.nonce" = "Nonce";
+"full_info.status" = "Estado";
+"full_info.memo" = "Memo";
+"full_info.cpu" = "Uso de CPU";
+"full_info.net" = "Uso de red";
+"full_info.milli_seconds" = "%@ μs";
+"full_info.bytes" = "%@ Bytes";
 
-"full_info.gas_limit" = "Gas Limit";
-"full_info.gas_used" = "Gas Used";
-"full_info.gas_price" = "Gas Price";
+"full_info.gas_limit" = "Límite de gas";
+"full_info.gas_used" = "Gas utilizado";
+"full_info.gas_price" = "Precio del gas";
 
 "full_info.source.title" = "Origen";
 "full_info.source.online" = "en línea";
@@ -146,25 +182,27 @@
 
 "full_info.error.subtitle" = "desconectado";
 "full_info.error.retry" = "Reintentar";
-"full_info.error.change_source" = "Cambiar Origen";
-"full_info.no_address" = "Dirección Vacía";
+"full_info.error.change_source" = "Cambiar origen";
+"full_info.no_address" = "Dirección vacía";
 
 // Settings
 
-"settings.title" = "Configuración";
-"settings.tab_bar_item" = "Configuraciones";
+"settings.title" = "Ajustes";
+"settings.tab_bar_item" = "Ajustes";
 "settings.security_center" = "Centro de Seguridad";
-"settings.advanced" = "Configuración avanzada";
+"settings.manage_coins" = "Gestionar monedas";
+"settings.restore_wallet" = "Restaurar monedero";
 "settings.base_currency" = "Divisa principal";
 "settings.language" = "Idioma";
 "settings.about" = "Acerca de";
+"settings.tell_friends" = "Recomendar a un amigo";
 "settings.light_mode" = "Modo de brillo";
 "settings.info_title" = "UNSTOPPABLE";
-"settings.info_subtitle" = "decentralized app";
+"settings.info_subtitle" = "aplicación descentralizada";
 
 // Settings -> Base Currency
 
-"settings_base_currency.title" = "Divisa principal";
+"settings_base_currency.title" = "Divisa base";
 
 // Settings -> Language
 
@@ -172,45 +210,75 @@
 
 // Settings -> Manage Wallet
 
-"settings_manage_wallet.title" = "Monederos";
+"manage_coins.title" = "Gestor de monedas";
+"manage_coins.add_coin.title" = "Añadir %@ ";
+"manage_coins.add_coin.text" = "No tiene una clave activa para usar con %@. Use el botón Crear abajo para generar una nueva clave (monedero).\nTambién puede usar la clave existente para el %@ si ya la tiene.";
+"manage_coins.add_coin.create" = "Crear";
+"manage_coins.add_coin.restore" = "Restaurar";
 
 // Settings -> About
 
 "settings_about.title" = "Acerca de";
+"settings_about.app_title" = "Unstoppable";
+"settings_about.app_subtitle" = "Decentralized app";
 "settings_about.terms_privacy_subtitle" = "Términos y privacidad:";
-"settings_about.terms_privacy_text" = "Esta aplicación es de servidor a servidor. No depende de ninguna web o tecnología personal de apoyo a la función.\n\nFunciona en cualquier lugar siempre que haya conexión a internet. Ninguna entidad puede bloquear el funcionamiento de esta aplicación o impedir el acceso de un usuario.\n\nSus fondos son almacenados de forma segura únicamente en el teléfono, en ningún otro lugar.\n\nEs su responsabilidad recordar su clave secreta y mantenerla en privado. Nunca la muestre a nadie. Si la pierde, la olvida o es sustraída, sus fondos pueden ser utilizados por la persona que tiene su clave secreta.\n\nNo modifique la seguridad del software de su teléfono, no instale aplicaciones de orígenes desconocidos , no entregue su dispositivo a desconocidos y mantenga actualizado el sistema operativo de tu teléfono. La seguridad de su cartera depende de ello.\n\nLa totalidad del código que soporta esta aplicación está abierta al escrutinio público desde el inicio de la aplicación. Hemos intentado construir la cartera más segura y descentralizada posible; sin embargo, hay ninguna garantía de que no se produzca algún problema de software no deseado. Dicho esto, esta carpeta es probable que sea significativamente más segura que cualquier aplicación de gestión de cartera de smartphone del mercado\n\nAlgunos datos genéricos de carácter público de esta app se guardan en centros de almacenamiento descentralizado (IPFS).\n";
+"settings_about.terms_privacy_text" = "Esta aplicación es de servidor a servidor. No depende de ningún servidor web o personal de soporte técnico para funcionar.\n\nFunciona en todas partes mientras haya internet. Ninguna entidad puede bloquear esta aplicación para que funcione o bloquear a alguien de usarlo.\n\nSus fondos se almacenan de forma segura en el propio teléfono, no en ningún otro lugar.\n\nEs su responsabilidad hacer copias de seguridad de su Clave Secreta y mantenerla privada. Nunca lo muestre a nadie. Si se pierde, olvida o roba, la persona que tiene su clave secreta puede utilizar sus fondos.\n\nNo libere su teléfono, no instale aplicaciones de fuentes desconocidas (no confiables), no entregue su dispositivo a personas no confiables y mantenga el Sistema Operativo actualizado en su teléfono. La seguridad de su monedero depende de esto.\n\nEl código completo que alimenta esta aplicación ha sido abierto al escrutinio público desde el principio. Intentamos construir el monedero más seguro y descentralizado posible sin embargo, no hay garantías de que no haya problemas de software no intencionados. Dicho esto, es probable que este monedero sea significativamente más seguro que cualquier otra aplicación de monedero de smartphone disponible en este momento.\n\nAlgunos datos genéricos no privados de la aplicación, como tipos de cambio de divisas, se almacenan en el almacenamiento descentralizado (IPFS). ";
+
+// Settings -> Tell Friends
+
+"settings_tell_friends.text" = "¡Sea libre! ¡Sea Unstoppable!";
 
 // Settings -> Security
 
-"settings_security.title" = "Centro de Seguridad";
-"settings_security.backup_wallet" = "Copia de Seguridad de Cartera";
-"settings_security.unlink_from_this_device" = "Desvincular de este dispositivo";
-"settings_security.set_pin" = "Código";
+"settings_security.title" = "Centro de seguridad";
+"settings_security.manage_accounts" = "Gestionar claves";
+"settings_security.passcode" = "Código de acceso";
 "settings_security.change_pin" = "Editar el código ";
-"settings_security.touch_id" = "Touch ID";
-"settings_security.face_id" = "Face ID";
-"security_settings.unlink_alert_button" = "Desvincular";
-"settings_security.import_wallet_confirmation_1" = "Esta acción eliminará de este dispositivo la carpeta instalada actualmente ";
-"settings_security.import_wallet_confirmation_2" = "Asegúrese de que usted tiene su clave secreta o no podrá acceder a los fondos en el futuro.";
+"settings_security.touch_id" = "Identificación táctil";
+"settings_security.face_id" = "Identificación de caras";
+"security_settings.delete_alert_button" = "Eliminar del teléfono";
+
+// Manage Keys
+
+"settings_manage_keys.title" = "Claves";
+"settings_manage_keys.description" = "Cualquiera con acceso a sus Claves puede robar los fondos de su monedero. Almacene las claves de forma segura y nunca se las muestre a nadie.\n\nRespalde cada clave para poder restaurar los fondos en caso de que su teléfono se pierda, se averíe o en caso de que simplemente se borre la aplicación del monedero de su teléfono.";
+"settings_manage_keys.delete" = "Eliminar";
+"settings_manage_keys.backup" = "Copia de seguridad";
+"settings_manage_keys.show" = "Mostrar";
+"settings_manage_keys.create" = "Crear";
+"settings_manage_keys.restore" = "Restaurar";
+"settings_manage_keys.delete.cant_delete" = "Necesita respaldar esta clave antes de que pueda desvincularla.";
+"settings_manage_keys.delete.title" = "Eliminar clave";
+"settings_manage_keys.delete.confirmation_remove" = "Esta acción eliminará la clave %@ (monedero) de este dispositivo.";
+"settings_manage_keys.delete.confirmation_disable" = "Monedas que serán deshabilitadas: %@";
+"settings_manage_keys.delete.confirmation_loose" = "Si usted no tiene un respaldo de esta clave, usted perderá los fondos respectivos.";
+"error.cant_create_eos" = "En este momento, el monedero no es capaz de crear nuevas cuentas de monederos EOS. Solo puede restaurar la existente.";
+"settings_manage_keys.create.text" = "Esta acción generará una clave (monedero) para las siguientes monedas:\n\n%@";
+"error.invalid_eos_key" = "Clave inválida";
+"error.invalid_eos_account" = "Cuenta inválida";
 
 // Set PIN
 
-"set_pin.title" = "Código";
+"set_pin.title" = "Código de acceso";
 "set_pin.info" = "Su código servirá para abrir su monedero y enviar dinero";
 "set_pin.confirm.info" = "Confirmar";
-"set_pin.wrong_confirmation" = "El código no coincide. Inténtelo de nuevo";
+"set_pin.wrong_confirmation" = "El código de acceso no coincide. Inténtelo de nuevo";
 
 // Edit PIN
 
-"edit_pin.title" = "Editar el código ";
+"edit_pin.title" = "Editar el código de acceso";
 "edit_pin.unlock_info" = "Código Actual";
-"edit_pin.new_pin_info" = "Código Nuevo";
+"edit_pin.new_pin_info" = "Código de acceso nuevo";
 
 // Unlock PIN
 
-"unlock_pin.info" = "Código";
+"unlock_pin.info" = "Código de acceso";
 "unlock_pin.cant_save_pin" = "¡Ups! No podemos guardar su código, póngase en contacto con nosotros lo antes posible";
 "unlock_pin.blocked_until" = "Inhabilitado hasta: %@";
+
+// No Passcode
+
+"no_passcode.info_text" = "Esta aplicación require que el teléfono tenga el código de acceso (bloqueo de pantalla) habilitado.\n\nLo puedes habilitar en los ajustes de iOS.\n\nTome en cuenta que cuando desahabilita el PIN en el nivel OS, las medidas de seguridad en el alacenamiento seguro de su teléfono hace que la información previamente almacenada no sea válida. Usted necesita restaurar sus claves de los monederos para poder volver a su monedero.";
 
 //NumPad
 
@@ -222,3 +290,12 @@
 "numpad_7" = "P Q R S";
 "numpad_8" = "T U V";
 "numpad_9" = "W X Y Z";
+
+// Key Types
+
+"key_type.12_words" = "12-palabras";
+"key_type.12_words.text" = "BTC, BCH, DASH, ETH, ERC-20";
+"key_type.eos" = "EOS Blockchain";
+"key_type.eos.text" = "EOS, Tokens basados en EOS";
+"key_type.binance" = "Cadena de Binance";
+"key_type.binance.text" = "BNB, BEP-2";

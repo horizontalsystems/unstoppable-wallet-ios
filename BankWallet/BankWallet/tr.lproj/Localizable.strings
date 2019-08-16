@@ -9,11 +9,13 @@
 "button.cancel" = "İptal";
 "button.confirm" = "Onayla";
 "button.done" = "Bitti";
+"button.restore" = "Geri Yükle";
 "button.next" = "İleri";
 "button.remove" = "Kaldır";
 "button.forward" = "İlet";
 "button.save" = "Kaydet";
 "button.sync" = "Eşitle";
+"button.paste" = "Yapıştır";
 
 "alert.copied" = "Kopyalandı";
 "alert.no_internet" = "Internet Bağlantısı Yok";
@@ -26,49 +28,63 @@
 "access_camera.message" = "Unstoppable Cüzdan, QR Kodu okuyabilmek için Kameranıza ihtiyaç duyuyor.\n\nAyarlar - > Unstoppable'a gidip kamera erişimine izin verin.";
 "access_camera.settings" = "Ayarlar";
 
-// Guest Page
+// Welcome
 
-"guest.title" = "Unstoppable";
-"guest.description" = "BLOCKCHAIN'E EMANET";
-"guest.subtitle" = "Decentralized App";
-"guest.create_wallet" = "Cüzdan Oluştur";
-"guest.restore_wallet" = "Geri Yükle";
-"guest.version" = "sürüm %@";
+"welcome.new_wallet" = "Yeni Cüzdan";
+"welcome.restore_wallet" = "Cüzdanı Geri Yükle";
+"welcome.version" = "sürüm %@";
 
 // Restore
 
 "restore.title" = "Geri Yükle";
-"restore.description" = "Gizli Anahtarı Girin";
-"restore.validation_failed" = "Hatalı Gizli anahtar";
+"restore.description" = "Cüzdanı geri yüklemek için o cüzdanın gizli anahtarını gürmelisiniz.\n\nDaha fazla cüzdanı geri yüklemek için bir cüzdanı geri yükledikten sonra Ayarlardaki Anahtarları Yönet bölümüne gidin.";
+"restore.words.description" = "Anahtarı Girin";
+"restore.validation_failed" = "Yanlış Anahtar";
+"restore.placeholder.account_name" = "Account Name";
+"restore.placeholder.private_key" = "Active Private Key";
 
 //Coin Sync Modes
+
 "coin_sync.title" = "Geri yükleme seçenekleri";
-"coin_sync.header" = "Blockchain ile eşitleniyor";
 "coin_sync.fast" = "Hızlı";
 "coin_sync.recommended" = "0-2 saat (Tavsiye edilen)";
-"coin_sync.fast.text" = "Geçmiş işlemlerinizi güvenilir üçüncü şahıs sunucularıyla geri yükleyin. Uzun işlem geçmişi olan ve büyük miktarda para işlemleri yapan kullanıcılar için bu yöntem güvenlik riski oluşturabilir.";
+"coin_sync.fast.text" = "Geçmiş işlemlerinizi güvenilir üçüncü şahıs sunucularıyla geri yükleyin. Uzun işlem geçmişi olan ve büyük miktarda para işlemleri yapan kullanıcılar için bu yöntem güvenlik riski oluşturabilir";
 "coin_sync.slow" = "Yavaş";
 "coin_sync.more_private" = "1-12 saat (Daha Gizli)";
-"coin_sync.slow.text" = "İşlem geçmişinizi ağdan geri yükleyin. Çok daha güvenli ancak daha yavaş. Eğer gereğinden daha uzun sürerse, Ayarlardaki Güvenlik bölümünden \"Bu cihazla bağı kes\"i seçin.";
-"coin_sync.disable" = "Kuru Etkisizleştir";
+"coin_sync.slow.text" = "Geçmiş hesap işlemlerinizi ağdan geri yükler. Çok daha güvenli ama yavaş. Eğer geri yükleme çok uzun zaman alıyorsa, Anahtarları Yönet ekranında cüzdan anahtarını Hızlı Eşle seçeneğiyle tekrar içe aktarın.";
 "coin_sync.alert.header" = "Dikkat";
 "coin_sync.alert.text" = "Bu eylem cüzdanınızı her blockchain ile tekrar eşliyecek. Tamamlanması birkaç saat sürebilir.";
 "coin_sync.erc20" = "Ethereum için geri yükle";
 
 // Backup
 
-"backup.intro.title" = "Yedekle";
-"backup.intro.subtitle" = "Gizli Anahtar, telefonunuzun kaybolması, bozulması, çalınması ve güncelleme gibi herhangi bir sebepten dolayı hesabınıza ulaşamadığınızda hesabınıza tekrar erişim sağlamanın tek yoludur.\n\n 12 kelimeden oluşur. Internet ve telefon haricinde güvenli bir yerde saklayınız (misal: Çelik kasa).";
+"backup.close" = "Kapat";
+
+"backup.intro.title_backup" = "Yedekle";
+"backup.intro.title_show" = "Anahtarı Göster";
+"backup.intro.subtitle" = "Az sonra görüceğiniz anahtar cihazınızın kaybolması, çalınması veya bozulması durumunda hesabı geri yüklemenin tek yoludur. Ekranınıza başka bir kişinin izlemediğinden emin olun.\n\nKurlar bu anahtar ile kontrol ediliyor: %@";
 "backup.intro.later" = "Sonra";
 "backup.intro.backup_now" = "Yedekle";
+"backup.intro.show_key" = "Anahtarı Göster";
+
 "backup.words.title" = "Gizli Anahtar";
+"backup.12words.title" = "12-kelimeli Anahtar";
+"backup.binance.title" = "Binance Anahtarı";
+"confirmation.binance.description" = "Binance Anahtarınızda ki kelimeleri girin";
+"confirmation.12words.description" = "12-kelimeli Anahtarınızda ki kelimeleri girin";
+
+"backup.eos.title" = "EOS Anahtarı";
+"backup.eos.account_name" = "Account Name";
+"backup.eos.active_private_key" = "Active Private Key";
+"backup.eos.hint" = "Anahtarınızı \"Kopyala\" eylemiyle kopyalamanız anahtarınızın pano yöneticisine ve panoya erişimi olan diğer uygulamalara sızma riskini taşır.";
 
 "backup.confirmation.title" = "Kontrol etme ...";
-"backup.confirmation.description" = "Gizli Anahtarınızda ki kelimeleri girin";
-"backup.confirmation.failure_alert.text" = "Kelimeler eşleşmiyor";
 "backup.confirmation.secret_key" = "Cüzdanıma erişmemi sağlayan 12 kelimeli Gizli Anahtarın tek sahibinin olduğumu ve bu anahtarın telefonumun güvenli hafızasında tutulduğunu kabul ediyorum.";
 "backup.confirmation.delete_app_warn" = "Uygulamanın silinmesi, hatalı davranması, taşınması ve benzeri bir durumda hesabıma ulaşamadığımda, hesabımı kurtarmanın tek yolunun Gizli Anahtar olduğunu biliyourum.";
 "backup.confirmation.disclaimer" = "Uygulama geliştiricilerinin, istenmeyen herhangi bir hatadan veya bu uygulamayı kullanırken ortaya çıkabilecek sorunlardan sorumlu tutulamayacağını kabul ediyorum.";
+
+"words_validator.empty_words" = "Her kelime girilmedi";
+"words_validator.invalid_confirmation" = "Kelimeler eşleşmiyor";
 
 // Balance
 
@@ -79,6 +95,10 @@
 "balance.rate_per_coin" = "%@ için %@";
 "balance.synced_through" = "%@ kadar";
 "balance.syncing" = "Eşitleniyor...";
+"balance.add_coins" = "Kredi Ekle";
+"balance.sort.header" = "Sırala";
+"balance.sort.valueHighToLow" = "Bakiye";
+"balance.sort.az" = "İsim";
 
 // Deposit
 
@@ -88,15 +108,26 @@
 // Send
 
 "send.title" = "%@ gönder";
-"send.address_placeholder" = "Adres";
-"send.amount_error.balance" = "%@ bakiye";
-"send.send_button" = "Gönder";
-"send.paste_button" = "Yapıştır";
 "send.amount_placeholder" = "Tutar";
-"send.fee" = "Masraf";
-"send.total" = "Toplam";
+"send.address_placeholder" = "Adres";
+"send.account_placeholder" = "Hesap";
+"send.fee" = "Masraf:";
 "send.max_button" = "Azami";
-"send_erc.alert" = "%@ (ERC20) için ișlem ücreti Ethereum hesabından ödenir. Asgari %@ ETH gerekiyor\n";
+"send.next_button" = "İleri";
+"send.error.invalid_address" = "Geçersiz Adres";
+"send.error.invalid_account" = "Geçersiz Hesap";
+"send.error.no_address" = "Adres Yok";
+"send.error.no_amount" = "Miktar yok";
+
+"send.confirmation.title" = "Onayla";
+"send.confirmation.to" = "Alan:";
+"send.confirmation.memo_placeholder" = "Memo";
+"send.confirmation.total" = "Toplam:";
+"send.confirmation.estimate_time" = "Tahmini süre:";
+"send.confirmation.eos.account" = "Account";
+"send.confirmation.send_button" = "Gönder";
+"send.amount_error.balance" = "%@ bakiye";
+"send.token.insufficient_fee_alert" = "%@ (%@) için ișlem ücreti %@ hesabından ödenir. Asgari %@ gerekiyor.";
 
 // Transactions
 
@@ -108,7 +139,6 @@
 // Transaction Info
 
 "tx_info.title" = "Hesap işlemi";
-"tx_info.historical_rate" = "Geçmiş Kur";
 "tx_info.time" = "Tarih";
 "tx_info.status" = "Durum";
 "tx_info.status.pending" = "Devam ediyor";
@@ -135,6 +165,12 @@
 "full_info.to" = "Alan";
 "full_info.amount" = "Tutar";
 "full_info.nonce" = "Nonce";
+"full_info.status" = "Durum";
+"full_info.memo" = "Memo";
+"full_info.cpu" = "CPU Usage";
+"full_info.net" = "Net Usage";
+"full_info.milli_seconds" = "%@ μs";
+"full_info.bytes" = "%@ Bytes";
 
 "full_info.gas_limit" = "Gas Limit";
 "full_info.gas_used" = "Gas Used";
@@ -154,10 +190,12 @@
 "settings.title" = "Ayarlar";
 "settings.tab_bar_item" = "Ayarlar";
 "settings.security_center" = "Güvenlik Merkezi";
-"settings.advanced" = "Gelişmiş Ayarlar";
+"settings.manage_coins" = "Kredileri Yönet";
+"settings.restore_wallet" = "Cüzdanı Geri Yükle";
 "settings.base_currency" = "Para birimi";
 "settings.language" = "Dil";
 "settings.about" = "Hakkında";
+"settings.tell_friends" = "Arkadaşlarına bahset";
 "settings.light_mode" = "Aydınlık mod";
 "settings.info_title" = "UNSTOPPABLE";
 "settings.info_subtitle" = "decentralized App";
@@ -172,26 +210,52 @@
 
 // Settings -> Manage Wallet
 
-"settings_manage_wallet.title" = "Cüzdanlar";
+"manage_coins.title" = "Cüzdan yöneticisi";
+"manage_coins.add_coin.title" = "%@ ekle ";
+"manage_coins.add_coin.text" = "%@ için kullanılan aktif anahtar yok. Oluştura tıklayıp yeni anahtar (cüzdan) oluşturabilirsiniz.\n\n%@ için anahtarınız zaten varsa onu kullanabilirsiniz.";
+"manage_coins.add_coin.create" = "Oluştur";
+"manage_coins.add_coin.restore" = "Geri Yükle";
 
 // Settings -> About
 
 "settings_about.title" = "Hakkında";
+"settings_about.app_title" = "Unstoppable";
+"settings_about.app_subtitle" = "Decentralized App";
 "settings_about.terms_privacy_subtitle" = "Şartlar & Gizlilik Politikası:";
-"settings_about.terms_privacy_text" = "Bu uygulama uçtan uca bir ağdır. Herhangi bir web sunucusuna veya teknik destek personeline bağlı değildir. \n\nİnternet olduğu sürece her yerde çalışır. Hiç kimse bu uygulamanın çalışmasını veya birisinin programı kullanmasını engelleyemez. \n\nFonlarınız kendiliğinden telefonda güvenli bir şekilde saklanır, başka bir yerde değil. \n\nGizli Anahtarınızı yedeklemek ve gizli tutmak sizin sorumluluğunuzdadır. Asla kimseye göstermeyin. Kaybolursa, unutursanız veya çalınırsa fonlarınız Gizli Anahtarınıza sahip olan kişi tarafından kullanılabilir.\n\nTelefonunuzun yazılımını kırmayın, bilinmeyen (güvenilmeyen) kaynaklardan uygulamalar yüklemeyin, cihazınızı güvenilmeyen kişilere vermeyin ve İşletim Sistemini telefonunuzda güncel tutun. Cüzdanınızın güvenliği buna bağlı. \n\nBu uygulamayı destekleyen kodun tamamı, başından beri kamu denetimine açıktı. Yapabileceğimiz en güvenilir ve merkezi olmayan cüzdanı oluşturmaya çalıştık, yine de istenmeyen yazılım sorunu olmadığının garantisi yoktur. Bununla birlikte, bu cüzdanın herhangi bir akıllı telefon cüzdan uygulamasından çok daha güvenli olacağı muhtemel. \n\nDöviz kurları gibi bazı 	jenerik resmi olmayan uygulama verileri merkezi olmayan IPFS sisteminde depolanır.";
+"settings_about.terms_privacy_text" = "Bu uygulama uçtan uca bir ağdır. Herhangi bir web sunucusuna veya teknik destek personeline bağlı değildir. \n\nİnternet olduğu sürece her yerde çalışır. Hiç kimse bu uygulamanın çalışmasını veya birisinin programı kullanmasını engelleyemez. \n\nCüzdanlarınız telefonda güvenli bir şekilde saklanır, başka bir yerde değil. \n\nGizli Anahtarınızı yedeklemek ve gizli tutmak sizin sorumluluğunuz. Asla kimseye göstermeyin. Kaybolursa, unutursanız veya çalınırsa cüzdanlarınız Gizli Anahtarınıza ele geçiren kişi tarafından kullanılabilir.\n\nTelefonunuzun yazılımını kırmayın, bilinmeyen (güvenilmeyen) kaynaklardan uygulamalar yüklemeyin, cihazınızı güvenmediğiniz kişilere vermeyin ve İşletim Sistemini telefonunuzda güncel tutun. Cüzdalarınızın güvenliği buna bağlı. \n\nBu uygulamayı oluşturan kodun tamamı, başından beri kamu denetimine açıktı. Yapabileceğimiz en güvenilir ve merkezi olmayan cüzdanı oluşturmaya çalıştık, yine de istenmeyen yazılım sorunu olmadığının garantisi yoktur. Bununla birlikte, bu cüzdanın herhangi bir akıllı telefon cüzdan uygulamasından çok daha güvenli olacağı muhtemel. \n\nDöviz kurları gibi kişisel olmayan uygulama verileri merkezi olmayan (IPFS) sisteminde depolanır. ";
+
+// Settings -> Tell Friends
+
+"settings_tell_friends.text" = "Özgür Ol! Durdurulamaz Ol!";
 
 // Settings -> Security
 
 "settings_security.title" = "Güvenlik Merkezi";
-"settings_security.backup_wallet" = "Cüzdanı yedekle";
-"settings_security.unlink_from_this_device" = "Bu cihazla bağı kes";
-"settings_security.set_pin" = "Kod";
+"settings_security.manage_accounts" = "Anahtarları Yönet";
+"settings_security.passcode" = "Şifre";
 "settings_security.change_pin" = "Şifreyi Değiştir";
 "settings_security.touch_id" = "Touch ID";
 "settings_security.face_id" = "Face ID";
-"security_settings.unlink_alert_button" = "Ayır";
-"settings_security.import_wallet_confirmation_1" = "Bu işlemle, cüzdan cihazdan kaldırılacak.";
-"settings_security.import_wallet_confirmation_2" = "Gizli Anahtarı yedeklediğinizden emin olun. Yoksa, gelecekte hesabınıza ulaşamayabilirsiniz.";
+"security_settings.delete_alert_button" = "Cihazdan sil";
+
+// Manage Keys
+
+"settings_manage_keys.title" = "Anahtarlar";
+"settings_manage_keys.description" = "Anahtarlarınıza ulaşabilen herkes cüzdanınızı kullanabilir. Anahtarları kimsenin bulamayacağı güvenli bir yerde tutun.\n\nCihazın bozulması, kaybolması veya uygulamanın silinmesi durumunda cüzdanınızı geri yükleyebilmeniz için her anahtarı yedekleyin.";
+"settings_manage_keys.delete" = "Sil";
+"settings_manage_keys.backup" = "Yedekle";
+"settings_manage_keys.show" = "Göster";
+"settings_manage_keys.create" = "Oluştur";
+"settings_manage_keys.restore" = "Geri Yükle";
+"settings_manage_keys.delete.cant_delete" = "Silmeden önce bu anahtarı yedeklemeniz gerekiyor.";
+"settings_manage_keys.delete.title" = "Anahtarı Sil";
+"settings_manage_keys.delete.confirmation_remove" = "Bu işlem %@ anahtarını (cüzdanı) bu cihazdan kaldıracak.";
+"settings_manage_keys.delete.confirmation_disable" = "Etkisizleştirilecek cüzdanlar: %@";
+"settings_manage_keys.delete.confirmation_loose" = "Eğer anahtarın yedeğini saklamadıysanız, erişimi kaybedeceksiniz.";
+"error.cant_create_eos" = "Uygulama henüz EOS cüzdanı oluşturamamaktadır. Sadece var olan cüzda geri yüklenebilir.";
+"settings_manage_keys.create.text" = "Bu işlem, şu krediler için yeni anahtar(cüzdan) oluşturacak:\n\n%@";
+"error.invalid_eos_key" = "Geçersiz anahtar";
+"error.invalid_eos_account" = "Geçersiz hesap";
 
 // Set PIN
 
@@ -212,6 +276,10 @@
 "unlock_pin.cant_save_pin" = "Eyvah! Şifre çalışmadı, ACİLEN bize ulaşın!";
 "unlock_pin.blocked_until" = "Engellendi: %@";
 
+// No Passcode
+
+"no_passcode.info_text" = "Bu uygulamayı kullanabilmeniz için telefonun Ekran Kilidi (Şifre/PİN) etkinleştirilmeli.\n\niOS Ayarlarından etkinleştirebilirsiniz.\n\nŞifreyi kaldırdığınızda, kullanılmakta olan güvenli bilgi deposu sistem tarafından kaldırılır. Cüzdanlarınızı gizli anahtar ile geri yüklemeniz gerekecek.";
+
 //NumPad
 
 "numpad_2" = "A B C";
@@ -222,3 +290,12 @@
 "numpad_7" = "P Q R S";
 "numpad_8" = "T U V";
 "numpad_9" = "W X Y Z";
+
+// Key Types
+
+"key_type.12_words" = "12-words";
+"key_type.12_words.text" = "BTC, BCH, DASH, ETH, ERC-20";
+"key_type.eos" = "EOS Blockchain";
+"key_type.eos.text" = "EOS, EOS based Tokens";
+"key_type.binance" = "Binance Chain";
+"key_type.binance.text" = "BNB, BEP-2";

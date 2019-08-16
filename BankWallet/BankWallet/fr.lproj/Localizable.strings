@@ -9,11 +9,13 @@
 "button.cancel" = "Annuler";
 "button.confirm" = "Confirmer";
 "button.done" = "Fait";
+"button.restore" = "Restaurer";
 "button.next" = "Suivant";
 "button.remove" = "Supprimer";
 "button.forward" = "Transférer";
 "button.save" = "Sauvegarder";
 "button.sync" = "Sync";
+"button.paste" = "Coller";
 
 "alert.copied" = "Copié";
 "alert.no_internet" = "Aucune connexion Internet";
@@ -26,49 +28,63 @@
 "access_camera.message" = "Unstoppable  porte-monnaie a besoin d’accéder à votre camerà pour scanner le code QR.\n\nAllez dans Paramètres - >  et permettez d’accéder à la caméra.";
 "access_camera.settings" = "Paramètres";
 
-// Guest Page
+// Welcome
 
-"guest.title" = "Unstoppable";
-"guest.description" = "IN BLOCKCHAIN WE TRUST";
-"guest.subtitle" = "Decentralized app";
-"guest.create_wallet" = "Nouveu Porte-Monnaie";
-"guest.restore_wallet" = "Restaurer";
-"guest.version" = "Version %@";
+"welcome.new_wallet" = "Nouveau porte-monnaie";
+"welcome.restore_wallet" = "Restaurer le porte-monnaie";
+"welcome.version" = "Version %@";
 
 // Restore
 
 "restore.title" = "Restaurer";
-"restore.description" = "Entrez la clé secrete";
-"restore.validation_failed" = "Clé secrète incorrecte";
+"restore.description" = "Pour restaurer le porte-monnaie existant, vous devez entrer une clé privée pour ce porte-monnaie.\n\nQuand vous restaurez un porte-monnaie vous pourrez restaurer plus de porte-monnaies en dirigeant dans la section Manage Keys dans les paramètres de l'application.";
+"restore.words.description" = "Entrez la clé";
+"restore.validation_failed" = "Pin incorrect";
+"restore.placeholder.account_name" = "Account Name";
+"restore.placeholder.private_key" = "Active Private Key";
 
 //Coin Sync Modes
+
 "coin_sync.title" = "Restaurer les options";
-"coin_sync.header" = "Syncing with blockchain";
 "coin_sync.fast" = "Rapide";
 "coin_sync.recommended" = "0-2 heures (Recommandé)";
-"coin_sync.fast.text" = "Restaure vos transactions passées via un serveur tiers sécurisé. Pour les utilisateurs ayant une longue histoire de transactions impliquant des sommes très importantes, cette méthode peut poser des risques de confidentialité.";
+"coin_sync.fast.text" = "Restaure vos transactions passées via un serveur tiers sécurisé. Pour les utilisateurs ayant une longue histoire de transactions impliquant des sommes très importantes, cette méthode peut poser des risques de confidentialité";
 "coin_sync.slow" = "Lente";
 "coin_sync.more_private" = "1-12 heures (Plus Privé)";
-"coin_sync.slow.text" = "Restaure vos transactions passées directement depuis le réseau. Significablement plus privées mais très lentes. Si la restauration prend beaucoup de temps, allez dans la section Sécurité dans l'onglet Paramètres et sélectionnez l'option « Détacher cet appareil ».";
-"coin_sync.disable" = "Désactiver Coin";
+"coin_sync.slow.text" = "Restaurez vos transactions passées directement depuis le réseau. Significablement plus privées mais très lentes. Si la restauration prend beaucoup de temps, dirigez dans la section Manage Keys et ré-importez la clé d'un porte-monnaie dans en utilisant l'option Fast Sync.";
 "coin_sync.alert.header" = "Attention";
 "coin_sync.alert.text" = "Cette action va rééquilibrer votre solde de porte-monnaie pour chaque de blockchain. Elle peut prendre plusieurs heures pour terminer.";
 "coin_sync.erc20" = "Sync mode same as Ethereum";
 
 // Backup
 
-"backup.intro.title" = "Sauvegarde";
-"backup.intro.subtitle" = "Votre clé secrete est le seul moyen de restaurer votre porte-monnaie et vos fonds si votre téléphone est perdu, volé, cassé ou mis à jour.\n\nElle contient 12 mots. Stockez-le en toute sécurité hors ligne.";
+"backup.close" = "Fermer";
+
+"backup.intro.title_backup" = "Sauvegarde";
+"backup.intro.title_show" = "Voir la clé";
+"backup.intro.subtitle" = "La clé qui sera affichée suivante est la seule façon de restaurer vos fonds, si votre téléphone est perdu, volé, cassé, etc. Assurez-vous que personne ne regarde votre écran.\n\nLes coins contrôlées par cette clé : %@";
 "backup.intro.later" = "Plus tard";
 "backup.intro.backup_now" = "Sauvegarde";
+"backup.intro.show_key" = "Voir la clé";
+
 "backup.words.title" = "Clé Secrete";
+"backup.12words.title" = "Clé de 12-words";
+"backup.binance.title" = "Clé de Binance";
+"confirmation.binance.description" = "Entrez les mots de votre clé Binance";
+"confirmation.12words.description" = "Entrez les mots de votre clé 12-words";
+
+"backup.eos.title" = "Clé EOS";
+"backup.eos.account_name" = "Account Name";
+"backup.eos.active_private_key" = "Active Private Key";
+"backup.eos.hint" = "Copier votre clé en utilisant l'action « copier » apporte le des risques si vous utilisez des applications de gestion du presse-papiers ou d'autres applications qui peuvent avoir accès aux données du presse-papiers.";
 
 "backup.confirmation.title" = "Vérification...";
-"backup.confirmation.description" = "Entrez les mots de votre clé secrète";
-"backup.confirmation.failure_alert.text" = "Les mots ne correspondent pas";
 "backup.confirmation.secret_key" = "Je comprends que je suis propriétaire d'une clé secrète privée de 12 mots, qui est stockée en toute sécurité sur mon téléphone portable et me permet de contrôler les fonds sur mon porte-monnaie.";
 "backup.confirmation.delete_app_warn" = "Je comprends que si cette appli ne fonction plus, est déplacée vers un autre appareil ou supprimée, mon porte-monnaie ne peut être récupéré qu'avec la clé secrète.";
 "backup.confirmation.disclaimer" = "Je comprends que les développeurs de cette application ne peuvent pas être responsables de tout bogue ou problème non désiré qui pourrait apparaître lors de l'utilisation de cette application.";
+
+"words_validator.empty_words" = "Tous les mots ne sont pas entrés";
+"words_validator.invalid_confirmation" = "Les mots ne correspondent pas";
 
 // Balance
 
@@ -79,6 +95,10 @@
 "balance.rate_per_coin" = "%@ par %@";
 "balance.synced_through" = "jusqu'à: %@";
 "balance.syncing" = "Synchronisation...";
+"balance.add_coins" = "Ajouter des coins";
+"balance.sort.header" = "Trier par";
+"balance.sort.valueHighToLow" = "Balance";
+"balance.sort.az" = "Nom";
 
 // Deposit
 
@@ -88,15 +108,26 @@
 // Send
 
 "send.title" = "Envoyer %@";
-"send.address_placeholder" = "Adresse";
-"send.amount_error.balance" = "Balance %@";
-"send.send_button" = "Envoyer";
-"send.paste_button" = "Coller";
 "send.amount_placeholder" = "Montant";
-"send.fee" = "Frais";
-"send.total" = "Total";
+"send.address_placeholder" = "Adresse";
+"send.account_placeholder" = "Account";
+"send.fee" = "Frais:";
 "send.max_button" = "Max";
-"send_erc.alert" = "Frais de transaction pour %@ (ERC20) payé en Ethereum. Il est nécessaire %@ ETH.";
+"send.next_button" = "Suivant";
+"send.error.invalid_address" = "Addresse invalide";
+"send.error.invalid_account" = "Compte invalide";
+"send.error.no_address" = "Aucune adresse";
+"send.error.no_amount" = "Aucun montant";
+
+"send.confirmation.title" = "Confirmer";
+"send.confirmation.to" = "À:";
+"send.confirmation.memo_placeholder" = "Memo";
+"send.confirmation.total" = "Total:";
+"send.confirmation.estimate_time" = "Temps estimé :";
+"send.confirmation.eos.account" = "Account";
+"send.confirmation.send_button" = "Envoyer";
+"send.amount_error.balance" = "Balance %@";
+"send.token.insufficient_fee_alert" = "Frais de transaction pour %@ (%@) payé en %@. Il est nécessaire %@.";
 
 // Transactions
 
@@ -108,7 +139,6 @@
 // Transaction Info
 
 "tx_info.title" = "Transaction";
-"tx_info.historical_rate" = "Taux historique";
 "tx_info.time" = "Date";
 "tx_info.status" = "Statut";
 "tx_info.status.pending" = "En attente";
@@ -135,6 +165,12 @@
 "full_info.to" = "À";
 "full_info.amount" = "Montant";
 "full_info.nonce" = "Nonce";
+"full_info.status" = "Statut";
+"full_info.memo" = "Memo";
+"full_info.cpu" = "CPU Usage";
+"full_info.net" = "Net Usage";
+"full_info.milli_seconds" = "%@ μs";
+"full_info.bytes" = "%@ Bytes";
 
 "full_info.gas_limit" = "Gas Limit";
 "full_info.gas_used" = "Gas Used";
@@ -154,10 +190,12 @@
 "settings.title" = "Paramètres";
 "settings.tab_bar_item" = "Paramètres";
 "settings.security_center" = "Centre de Sécurité";
-"settings.advanced" = "Advanced Settings";
+"settings.manage_coins" = "Gérer les coins";
+"settings.restore_wallet" = "Restaurer le porte-monnaie";
 "settings.base_currency" = "Devise de Base";
 "settings.language" = "Langue";
 "settings.about" = "À propos de";
+"settings.tell_friends" = "Partager avec ami";
 "settings.light_mode" = "Mode lumineux";
 "settings.info_title" = "UNSTOPPABLE";
 "settings.info_subtitle" = "decentralized app";
@@ -172,26 +210,52 @@
 
 // Settings -> Manage Wallet
 
-"settings_manage_wallet.title" = "Portefeuilles";
+"manage_coins.title" = "Portefeuilles";
+"manage_coins.add_coin.title" = "Ajouter %@ ";
+"manage_coins.add_coin.text" = "Vous n'avez pas de clé active à utiliser avec %@. Utilisez le bouton Créer ci-dessous pour générer une nouvelle clé (porte-monnaie).\n\nVous pouvez également utiliser la clé existante pour le %@ si vous l'avez déjà.";
+"manage_coins.add_coin.create" = "Créer";
+"manage_coins.add_coin.restore" = "Restaurer";
 
 // Settings -> About
 
 "settings_about.title" = "À propos de";
+"settings_about.app_title" = "Unstoppable";
+"settings_about.app_subtitle" = "Decentralized App";
 "settings_about.terms_privacy_subtitle" = "Terms & Confidentialité:";
 "settings_about.terms_privacy_text" = "Cette application est décentralisé. Cela ne dépend pas du personnel du service d'assistance Web.\n\nCela fonctionne partout tant qu'il y a internet. Aucune entité ne peut empêcher cette application de fonctionner ou d'empêcher quelqu'un de l'utiliser.\n\nVos fonds stockés en sécurité sur votre portable, pas sur autres.\n\nIl est de votre responsabilité de sauvegarder votre clé secrète et de la garder privée. Ne le montre jamais à personne. En cas de perte, d’oubli ou de vol, vos fonds peuvent être utilisés par la personne qui détient votre clé secrète.\n\nNe piratez pas votre portable, n'installez pas d'applications de sources inconnues (non fiables), ne confiez pas votre appareil à des personnes non fiables et maintenez le système d'exploitation à jour. La sécurité de votre porte-monnaie dépend de tout cela.\n\nLe code alimentant cette application a été ouvert au public depuis le début. Nous avons essayé de créer le porte-monnaie le plus sécurisé et le plus décentralisé possible, mais rien ne garantit qu’il n’y ait pas de problèmes logiciels inattendus. Cela dit, ce porte-monnaie sera probablement beaucoup plus sécurisé que n'importe quelle application de porte-monnaie pour portable.\n\nCertaines données d'applications génériques non privées, telles que les taux de change, sont stockées dans un stockage décentralisé (IPFS). ";
+
+// Settings -> Tell Friends
+
+"settings_tell_friends.text" = "Soyez libre! Soyez inarretable!";
 
 // Settings -> Security
 
 "settings_security.title" = "Centre de Sécurité";
-"settings_security.backup_wallet" = "Porte-monnaie de Sauvegarde";
-"settings_security.unlink_from_this_device" = "Supprimer le lien de cet appareil";
-"settings_security.set_pin" = "Code";
+"settings_security.manage_accounts" = "Manage Keys";
+"settings_security.passcode" = "Code";
 "settings_security.change_pin" = "Modifier le code ";
 "settings_security.touch_id" = "Touch ID";
 "settings_security.face_id" = "Face ID";
-"security_settings.unlink_alert_button" = "Délier";
-"settings_security.import_wallet_confirmation_1" = "Cette action supprimera le porte-monnaie actuellement installé sur cet appareil.";
-"settings_security.import_wallet_confirmation_2" = "Assurez-vous de disposer de la clé secrète, sinon vous ne pourrez plus accéder aux fonds.";
+"security_settings.delete_alert_button" = "Supprimer de l'appareil";
+
+// Manage Keys
+
+"settings_manage_keys.title" = "Clés";
+"settings_manage_keys.description" = "Celui qui a l'accès à vos clés peut voler vos fonds de porte-monnaie. Stockez les clés en toute sécurité et ne les montrez jamais à quelqu'un.\n\nSauvegardez chaque clé pour pouvoir restaurer des fonds si vous perdez ou cassez votre portable, ou simplement l'application de portefeuille est supprimée.";
+"settings_manage_keys.delete" = "Supprimer";
+"settings_manage_keys.backup" = "Sauvegarde";
+"settings_manage_keys.show" = "Afficher";
+"settings_manage_keys.create" = "Créer";
+"settings_manage_keys.restore" = "Restaurer";
+"settings_manage_keys.delete.cant_delete" = "Vous devez sauvegarder cette clé avant de pouvoir la supprimer.";
+"settings_manage_keys.delete.title" = "Supprimer la clé";
+"settings_manage_keys.delete.confirmation_remove" = "Cette action supprimera la clé %@ (porte-monnaie) de cet appareil.";
+"settings_manage_keys.delete.confirmation_disable" = "Coins qui seront désactivées : %@";
+"settings_manage_keys.delete.confirmation_loose" = "Si vous n'avez pas de sauvegarde de cette clé, vous perdrez les fonds respectifs.";
+"error.cant_create_eos" = "À cet étape, le porte-monnaie n'est pas capable de créer de nouveaux comptes de porte-monnaies EOS. Vous n'êtes que capable de restaurer celui existant.";
+"settings_manage_keys.create.text" = "Cette action générera une clé(porte-monnaie) pour les coins suivantes :\n\n%@";
+"error.invalid_eos_key" = "Clé invalide";
+"error.invalid_eos_account" = "Compte invalide";
 
 // Set PIN
 
@@ -212,6 +276,10 @@
 "unlock_pin.cant_save_pin" = "Oops! Nous ne pouvons pas enregistrer votre code, veuillez nous contacter au plus vite!";
 "unlock_pin.blocked_until" = "Désactivé jusqu'à: %@";
 
+// No Passcode
+
+"no_passcode.info_text" = "Cette application nécessite que le passcode (verrou d'écran) soit activé.\n\nVous pouvez l'activer dans les paramètres iOS.\n\nVeuillez noter que lorsque vous avez désactivé le code PIN au niveau de l'OS, les mesures de sécurité dans le stockage sûr de votre portable ont rendu les données précédemment stockées invalides. Vous devrez restaurer vos clés de porte-monnaies pour revenir à votre porte-monnaie.";
+
 //NumPad
 
 "numpad_2" = "A B C";
@@ -222,3 +290,12 @@
 "numpad_7" = "P Q R S";
 "numpad_8" = "T U V";
 "numpad_9" = "W X Y Z";
+
+// Key Types
+
+"key_type.12_words" = "12-words";
+"key_type.12_words.text" = "BTC, BCH, DASH, ETH, ERC-20";
+"key_type.eos" = "EOS Blockchain";
+"key_type.eos.text" = "EOS, EOS based Tokens";
+"key_type.binance" = "Binance Chain";
+"key_type.binance.text" = "BNB, BEP-2";
