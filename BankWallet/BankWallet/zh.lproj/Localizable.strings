@@ -37,7 +37,7 @@
 // Restore
 
 "restore.title" = "恢复";
-"restore.description" = "要恢复现有钱包，您需要输入该钱包的密钥。一旦你恢复了一个钱包，你就可以恢复更多的钱包，方法是进入“应用程序设置”中的“管理密钥”部分。";
+"restore.description" = "要恢复现有钱包，您需要输入该钱包的密钥。\n\n一旦你恢复了一个钱包，你就可以恢复更多的钱包，方法是进入“应用程序设置”中的“管理密钥”部分。";
 "restore.words.description" = "输入密钥";
 "restore.validation_failed" = "密钥不正确";
 "restore.placeholder.account_name" = "Account Name";
@@ -48,10 +48,10 @@
 "coin_sync.title" = "恢复选项";
 "coin_sync.fast" = "过程最快";
 "coin_sync.recommended" = "0 小时 (推荐)";
-"coin_sync.fast.text" = "通过安全的第三方服务器可以恢复以前的事务。对于拥有大量交易历史的用户来说，这种方法可能会带来隐私风险。";
+"coin_sync.fast.text" = "通过安全的第三方服务器可以恢复以前的事务。对于拥有大量交易历史的用户来说，这种方法可能会带来隐私风险。\n";
 "coin_sync.slow" = "缓慢";
 "coin_sync.more_private" = "1 小时(更多隐私)";
-"coin_sync.slow.text" = "直接从网络可以恢复以前的事务。明显更私密，但速度很慢。如果恢复时间过长，如果恢复时间过长，请转到“管理密钥”部分，然后选“快速同步”重新导入钱包密钥。";
+"coin_sync.slow.text" = "直接从网络可以恢复以前的事务。明显更私密，但速度很慢。如果恢复时间过长，如果恢复时间过长，请转到“管理密钥”部分，然后选“快速同步”重新导入钱包密钥。\n";
 "coin_sync.alert.header" = "Attention";
 "coin_sync.alert.text" = "This action will resync your wallet balance for each blockchain. It may take several hours to complete.";
 "coin_sync.erc20" = "Sync mode same as Ethereum";
@@ -62,7 +62,7 @@
 
 "backup.intro.title_backup" = "备份";
 "backup.intro.title_show" = "显示密钥";
-"backup.intro.subtitle" = "如果您的手机曾经丢失、被盗、损坏等，下一步将显示的密钥是恢复资金的唯一方法。请确保没有人在监视您的屏幕。由此密钥控制的硬币：%@";
+"backup.intro.subtitle" = "如果您的手机曾经丢失、被盗、损坏等，下一步将显示的密钥是恢复资金的唯一方法。请确保没有人在监视您的屏幕。\n\n由此密钥控制的硬币：%@\n\n";
 "backup.intro.later" = "稍后";
 "backup.intro.backup_now" = "备份";
 "backup.intro.show_key" = "显示密钥";
@@ -76,14 +76,14 @@
 "backup.eos.title" = "EOS 密钥";
 "backup.eos.account_name" = "Account Name";
 "backup.eos.active_private_key" = "Active Private Key";
-"backup.eos.hint" = "如果您使用任何剪贴板管理应用程序或其他可以访问剪贴板数据的应用程序，则使用“复制”操作复制密钥会带来一些风险。";
+"backup.eos.hint" = "如果您使用任何剪贴板管理应用程序或其他可以访问剪贴板数据的应用程序，则使用“复制”操作复制密钥会带来一些风险。\n\n";
 
 "backup.confirmation.title" = "正在检查...";
 "backup.confirmation.secret_key" = "我知道, 我是一个12个字的私人密钥的唯一拥有者，该密钥安全地存储在我的手机上，使我能够控制我钱包上的资金。";
 "backup.confirmation.delete_app_warn" = "我知道如果此APP被移动、删除或出现故障，只有用密钥才能恢复对我钱包的访问。";
-"backup.confirmation.disclaimer" = "我理解这个应用程序的开发人员对使用这个应用程序时可能出现的任何意外的错误或问题不负责任。";
+"backup.confirmation.disclaimer" = "我理解这个应用程序的开发人员对使用这个应用程序时可能出现的任何意外的错误或问题不负责任。\n";
 
-"words_validator.empty_words" = "并非所有单词都输入";
+"words_validator.empty_words" = "并非所有单词都输入\n\n";
 "words_validator.invalid_confirmation" = "单词不匹配";
 
 // Balance
@@ -116,7 +116,7 @@
 "send.next_button" = "继续";
 "send.error.invalid_address" = "无效的地址";
 "send.error.invalid_account" = "帐户无效";
-"send.error.no_address" = "没有地址";
+"send.error.no_address" = "没有地址\n\n";
 "send.error.no_amount" = "没有金额";
 
 "send.confirmation.title" = "确认";
@@ -212,7 +212,7 @@
 
 "manage_coins.title" = "钱包";
 "manage_coins.add_coin.title" = "加%@ ";
-"manage_coins.add_coin.text" = "您没有与%@一起使用的活动密钥。 使用下面的“创建”按钮生成新密钥（钱包）。如果您已经拥有它，也可以使用%@的现有密钥。";
+"manage_coins.add_coin.text" = "您没有与%@一起使用的活动密钥。 使用下面的“创建”按钮生成新密钥（钱包）。\n如果您已经拥有它，也可以使用%@的现有密钥。";
 "manage_coins.add_coin.create" = "创建";
 "manage_coins.add_coin.restore" = "恢复";
 
@@ -222,7 +222,7 @@
 "settings_about.app_title" = "Unstoppable";
 "settings_about.app_subtitle" = "Decentralized App";
 "settings_about.terms_privacy_subtitle" = "服务条款和隐私策略";
-"settings_about.terms_privacy_text" = "此应用程序是对等的。它不依赖于任何 web 服务器或支持人员来运行的技术。只要有互联网, 它就可以被使用。任何实体都不能阻止此应用程序工作或阻止某人使用它。您的资金安全地存储在手机上, 而不是在其他任何地方。你有责任备份您的密钥, 并保持密钥的隐私。千万不要把它给任何人看。如果它被丢失, 遗忘或被偷, 您的资金都可用于持有您密钥的人。不要越狱您的手机, 不要安装来自未知 (不受信任) 来源的应用程序, 不要将您的设备交给不受信任的人, 并使您的手机上的系统保持最新。这是你的钱包安全的重点。从一开始，为该应用程序提供动力的整个代码就向公众开放。我们试图建立最安全和分散的钱包, 我们可以, 但没有保证没有意外的软件问题。也就是说, 这个钱包可能比任何智能手机钱包应用都要安全得多。一些通用的非私有应用程序数据 (如货币汇率) 存储在分散存储 (ipfs) 中。 ";
+"settings_about.terms_privacy_text" = "此应用程序是对等的。它不依赖于任何 web 服务器或支持人员来运行的技术。只要有互联网, 它就可以被使用。任何实体都不能阻止此应用程序工作或阻止某人使用它。\n\n您的资金安全地存储在手机上, 而不是在其他任何地方。\n\n你有责任备份您的密钥, 并保持密钥的隐私。千万不要把它给任何人看。如果它被丢失, 遗忘或被偷, 您的资金都可用于持有您密钥的人。\n\n不要越狱您的手机, 不要安装来自未知 (不受信任) 来源的应用程序, 不要将您的设备交给不受信任的人, 并使您的手机上的系统保持最新。这是你的钱包安全的重点。\n\n从一开始，为该应用程序提供动力的整个代码就向公众开放。我们试图建立最安全和分散的钱包, 我们可以, 但没有保证没有意外的软件问题。也就是说, 这个钱包可能比任何智能手机钱包应用都要安全得多。\n\n一些通用的非私有应用程序数据 (如货币汇率) 存储在分散存储 (ipfs) 中。 ";
 
 // Settings -> Tell Friends
 
@@ -241,7 +241,7 @@
 // Manage Keys
 
 "settings_manage_keys.title" = "密钥";
-"settings_manage_keys.description" = "任何有权访问您密钥的人都可以窃取您的钱包资金。安全存放钥匙，不要让任何人看到。备份每个密钥，以便在您的手机松动或损坏时恢复资金，或者只是钱包应用程序被删除。";
+"settings_manage_keys.description" = "任何有权访问您密钥的人都可以窃取您的钱包资金。安全存放钥匙，不要让任何人看到。\n备份每个密钥，以便在您的手机松动或损坏时恢复资金，或者只是钱包应用程序被删除。\n\n";
 "settings_manage_keys.delete" = "删除";
 "settings_manage_keys.backup" = "备份";
 "settings_manage_keys.show" = "查看";
@@ -249,11 +249,11 @@
 "settings_manage_keys.restore" = "恢复";
 "settings_manage_keys.delete.cant_delete" = "您需要备份此密钥才能取消链接。";
 "settings_manage_keys.delete.title" = "删除密钥";
-"settings_manage_keys.delete.confirmation_remove" = "此操作将从此设备中删除%@密钥（钱包）。";
+"settings_manage_keys.delete.confirmation_remove" = "此操作将从此设备中删除%@密钥（钱包）。\n\n";
 "settings_manage_keys.delete.confirmation_disable" = "将被禁用的硬币：%@";
-"settings_manage_keys.delete.confirmation_loose" = "如果你没有这把密钥的备份，你将失去相应的资金。";
-"error.cant_create_eos" = "此时，钱包无法创建新的EOS钱包帐户。您只能还原现有的。";
-"settings_manage_keys.create.text" = "此操作将为以下硬币生成密钥（钱包）：%@";
+"settings_manage_keys.delete.confirmation_loose" = "如果你没有这把密钥的备份，你将失去相应的资金。\n";
+"error.cant_create_eos" = "此时，钱包无法创建新的EOS钱包帐户。您只能还原现有的。\n\n";
+"settings_manage_keys.create.text" = "此操作将为以下硬币生成密钥（钱包）：%@\n\n";
 "error.invalid_eos_key" = "无效的密钥";
 "error.invalid_eos_account" = "帐户无效";
 
@@ -278,7 +278,7 @@
 
 // No Passcode
 
-"no_passcode.info_text" = "此应用程序要求手机启用密码（屏幕锁定）。您可以在iOS设置中启用它。请注意，当您禁用操作系统级别的PIN时，您的电话安全存储中的安全措施使以前存储的数据无效。您需要恢复钱包密钥才能回到钱包。";
+"no_passcode.info_text" = "此应用程序要求手机启用密码（屏幕锁定）。\n\n您可以在iOS设置中启用它。\n\n请注意，当您禁用操作系统级别的PIN时，您的电话安全存储中的安全措施使以前存储的数据无效。您需要恢复钱包密钥才能回到钱包。\n\n\n\n";
 
 //NumPad
 
