@@ -1,17 +1,19 @@
 import UIKit
 import ActionSheet
 
-enum AlertItem { case header(String), row(String) }
+enum AlertItem { case header(String), row(String), message(String) }
 
-protocol IAlertView: class {
+protocol IAlertViewController: class {
+    var model: BaseAlertModel { get }
+    func dismiss(state: Bool, byFade: Bool)
     func setSelected(index: Int)
 }
 
 protocol IAlertViewDelegate {
     var items: [AlertItem] { get }
 
-    func onDidLoad()
-    func onSelect(index: Int)
+    func onDidLoad(alert: IAlertViewController)
+    func onSelect(alert: IAlertViewController, index: Int)
 }
 
 class AlertViewController: ActionSheetController {
@@ -19,9 +21,10 @@ class AlertViewController: ActionSheetController {
 
     private var items = [TextSelectItem]()
 
-    init(delegate: IAlertViewDelegate) {
+    init(delegate: IAlertViewDelegate, onDismiss: ((Bool) -> ())? = nil) {
         self.delegate = delegate
         super.init(withModel: BaseAlertModel(), actionSheetThemeConfig: AppTheme.alertConfig)
+        self.onDismiss = onDismiss
 
         initItems()
     }
@@ -35,6 +38,7 @@ class AlertViewController: ActionSheetController {
             switch $0 {
             case .header(let title): addHeader(title: title)
             case .row(let title): addRow(title: title)
+            case .message(let text): addMessage(text: text)
             }
         }
     }
@@ -59,6 +63,10 @@ class AlertViewController: ActionSheetController {
         items.append(item)
     }
 
+    private func addMessage(text: String) {
+        let item = MessageItem(text: text.localized, font: AppTheme.alertMessageFont, color: AppTheme.alertMessageDefaultColor)
+        model.addItemView(item)
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -66,16 +74,16 @@ class AlertViewController: ActionSheetController {
         backgroundColor = AppTheme.alertBackgroundColor
         contentBackgroundColor = .white
 
-        delegate.onDidLoad()
+        delegate.onDidLoad(alert: self)
     }
 
     private func handleToggle(index: Int) {
-        delegate.onSelect(index: index)
+        delegate.onSelect(alert: self, index: index)
     }
 
 }
 
-extension AlertViewController: IAlertView {
+extension AlertViewController: IAlertViewController {
 
     func setSelected(index: Int) {
         items.forEach { $0.selected = false }
