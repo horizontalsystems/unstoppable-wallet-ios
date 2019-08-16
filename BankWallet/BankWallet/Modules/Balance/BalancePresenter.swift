@@ -11,6 +11,8 @@ class BalancePresenter {
 
     weak var view: IBalanceView?
 
+    var walletToBackup: Wallet?
+
     init(interactor: IBalanceInteractor, router: IBalanceRouter, dataSource: IBalanceItemDataSource, factory: IBalanceViewItemFactory, predefinedAccountTypeManager: IPredefinedAccountTypeManager, differ: IDiffer, sortingOnThreshold: Int) {
         self.interactor = interactor
         self.router = router
@@ -122,7 +124,8 @@ extension BalancePresenter: IBalanceViewDelegate {
         if wallet.account.backedUp {
             router.openReceive(for: wallet)
         } else {
-            view?.showBackupAlert(index: index)
+            walletToBackup = wallet
+            view?.showBackupAlert()
         }
     }
 
@@ -138,12 +141,11 @@ extension BalancePresenter: IBalanceViewDelegate {
         router.openSortType(selected: dataSource.sortType)
     }
 
-    func onBackup(index: Int) {
-        let wallet = dataSource.item(at: index).wallet
-        let pat = predefinedAccountTypeManager.allTypes.first { $0.supports(accountType: wallet.account.type) }
-        if let pat = pat {
-            router.openBackup(wallet: wallet, predefinedAccountType: pat)
+    func onBackup() {
+        guard let wallet = walletToBackup, let accountType = (predefinedAccountTypeManager.allTypes.first { $0.supports(accountType: wallet.account.type) }) else {
+            return
         }
+        router.openBackup(wallet: wallet, predefinedAccountType: accountType)
     }
 
 }
