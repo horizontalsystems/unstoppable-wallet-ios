@@ -27,7 +27,7 @@ class DescriptionCollectionHeader: UICollectionReusableView {
     }
 
     static func height(forContainerWidth containerWidth: CGFloat, text: String) -> CGFloat {
-        return ceil(text.height(forContainerWidth: containerWidth, font: RestoreTheme.descriptionFont) + RestoreTheme.descriptionTopMargin + RestoreTheme.descriptionBottomMargin)
+        return text.height(forContainerWidth: containerWidth, font: RestoreTheme.descriptionFont) + RestoreTheme.descriptionTopMargin + RestoreTheme.descriptionBottomMargin
     }
 
 }

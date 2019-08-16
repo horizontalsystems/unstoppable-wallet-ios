@@ -3,7 +3,8 @@ import UIKit
 extension String {
 
     public func height(forContainerWidth containerWidth: CGFloat, font: UIFont) -> CGFloat {
-        return size(containerWidth: containerWidth, font: font).height
+        let height = size(containerWidth: containerWidth, font: font).height
+        return ceil(height)
     }
 
     public func size(containerWidth: CGFloat, font: UIFont) -> CGSize {

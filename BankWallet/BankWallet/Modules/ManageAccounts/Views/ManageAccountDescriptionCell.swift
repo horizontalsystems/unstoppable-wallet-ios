@@ -26,7 +26,7 @@ class ManageAccountDescriptionCell: UITableViewCell {
 
     static func height(forContainerWidth containerWidth: CGFloat) -> CGFloat {
         let view = UIView()
-        return ceil(ManageAccountDescriptionCell.descriptionText.height(forContainerWidth: containerWidth - 2 * view.layoutMargins.left, font: ManageAccountsTheme.descriptionFont) + ManageAccountsTheme.cellBottomMargin)
+        return ManageAccountDescriptionCell.descriptionText.height(forContainerWidth: containerWidth - 2 * view.layoutMargins.left, font: ManageAccountsTheme.descriptionFont) + ManageAccountsTheme.cellBottomMargin
     }
 
     required init?(coder aDecoder: NSCoder) {

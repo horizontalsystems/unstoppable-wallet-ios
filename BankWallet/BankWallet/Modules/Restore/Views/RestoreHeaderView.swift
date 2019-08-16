@@ -32,7 +32,7 @@ class RestoreHeaderView: UIView {
 extension RestoreHeaderView {
 
     static func height(containerWidth: CGFloat) -> CGFloat {
-        return text.height(forContainerWidth: containerWidth, font: RestoreAccountsTheme.descriptionFont) + RestoreAccountsTheme.descriptionTopMargin + RestoreAccountsTheme.descriptionBottomMargin
+        return text.height(forContainerWidth: containerWidth - 2 * RestoreAccountsTheme.descriptionSideMargin, font: RestoreAccountsTheme.descriptionFont) + RestoreAccountsTheme.descriptionTopMargin + RestoreAccountsTheme.descriptionBottomMargin
     }
 
 }
