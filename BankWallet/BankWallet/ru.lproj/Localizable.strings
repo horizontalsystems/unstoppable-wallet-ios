@@ -114,8 +114,8 @@
 "send.fee" = "Комиссия:";
 "send.max_button" = "Макс.";
 "send.next_button" = "Далее";
-"send.error.invalid_address" = "Неверный адрес";
-"send.error.invalid_account" = "Неверный аккаунт";
+"send.error.invalid_address" = "Неверный Адрес";
+"send.error.invalid_account" = "Неверный Аккаунт";
 "send.error.no_address" = "Адрес не указан";
 "send.error.no_amount" = "Нет суммы";
 
@@ -127,7 +127,7 @@
 "send.confirmation.eos.account" = "Account";
 "send.confirmation.send_button" = "Отправить";
 "send.amount_error.balance" = "Баланс %@";
-"send.token.insufficient_fee_alert" = "Комиссия за отправку %@ %@ взимается в %@. Необходимо %@.\n\n";
+"send.token.insufficient_fee_alert" = "Комиссия за отправку %@ (%@) взимается в %@. Необходимо %@.";
 
 // Transactions
 
