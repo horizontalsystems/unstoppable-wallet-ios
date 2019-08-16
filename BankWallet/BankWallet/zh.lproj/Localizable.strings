@@ -16,6 +16,7 @@
 "button.save" = "保存";
 "button.sync" = "Sync";
 "button.paste" = "粘帖";
+"button.backup" = "Backup";
 
 "alert.copied" = "复制成功";
 "alert.no_internet" = "没有网络连接";
@@ -104,6 +105,7 @@
 
 "deposit.receive_coin" = "收到%@";
 "deposit.your_address" = "您的地址";
+"receive_alert.not_backed_up_description" = "You need to backup the keys for this wallet before you may receive funds on it.";
 
 // Send
 
