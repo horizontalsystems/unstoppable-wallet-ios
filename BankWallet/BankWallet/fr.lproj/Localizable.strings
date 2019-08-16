@@ -231,7 +231,7 @@
 // Settings -> Security
 
 "settings_security.title" = "Centre de Sécurité";
-"settings_security.manage_accounts" = "Manage Keys";
+"settings_security.manage_accounts" = "Gérer les clés";
 "settings_security.passcode" = "Code";
 "settings_security.change_pin" = "Modifier le code ";
 "settings_security.touch_id" = "Touch ID";
