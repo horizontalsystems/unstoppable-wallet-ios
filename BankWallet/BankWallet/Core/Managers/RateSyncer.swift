@@ -29,13 +29,20 @@ class RateSyncer {
     }
 
     private func syncLatestRates() {
-        if reachabilityManager.isReachable && walletManager.wallets.count > 0 {
-            var coinCodes = Set<CoinCode>()
-            for wallet in walletManager.wallets {
-                coinCodes.insert(wallet.coin.code)
-            }
-            rateManager.refreshLatestRates(coinCodes: Array(coinCodes), currencyCode: currencyManager.baseCurrency.code)
+        guard reachabilityManager.isReachable else {
+            return
         }
+
+        var coinCodes = Set<CoinCode>()
+        for wallet in walletManager.wallets {
+            coinCodes.insert(wallet.coin.code)
+        }
+
+        guard coinCodes.count > 0 else {
+            return
+        }
+
+        rateManager.refreshLatestRates(coinCodes: Array(coinCodes), currencyCode: currencyManager.baseCurrency.code)
     }
 
 }
