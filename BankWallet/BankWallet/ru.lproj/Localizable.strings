@@ -9,11 +9,13 @@
 "button.cancel" = "Отмена";
 "button.confirm" = "Подтвердить";
 "button.done" = "Готово";
+"button.restore" = "Восстановить";
 "button.next" = "Далее";
 "button.remove" = "Откл.";
 "button.forward" = "Переслать";
 "button.save" = "Сохранить";
 "button.sync" = "Синхр.";
+"button.paste" = "Вставить";
 
 "alert.copied" = "Скопировано";
 "alert.no_internet" = "Нет интернета";
@@ -26,49 +28,63 @@
 "access_camera.message" = "Unstoppable Wallet необходим доступ к вашей камере для QR-код.\n\nПерейдите в \"Настройки\", чтобы разрешить доступ к камере.";
 "access_camera.settings" = "Настройки";
 
-// Guest Page
+// Welcome
 
-"guest.title" = "Unstoppable";
-"guest.description" = "IN BLOCKCHAIN WE TRUST";
-"guest.subtitle" = "Decentralized app";
-"guest.create_wallet" = "Создать Кошелек";
-"guest.restore_wallet" = "Восстановить";
-"guest.version" = "версия %@";
+"welcome.new_wallet" = "Создать Кошелек";
+"welcome.restore_wallet" = "Восстановить Кошелек";
+"welcome.version" = "версия %@";
 
 // Restore
 
 "restore.title" = "Восстановить";
-"restore.description" = "Введите Секретный Ключ";
-"restore.validation_failed" = "Неверный Секретный Ключ";
+"restore.description" = "Чтобы восстановить существующий кошелек вам нужно ввести приватный ключ для этого кошелька.\n\nКак только вы восстановите один кошелек, вы сможете восстановить больше кошельков, перейдя в раздел \"Управление Ключами\" в настройках приложения.";
+"restore.words.description" = "Введите ключ";
+"restore.validation_failed" = "Неверный Ключ";
+"restore.placeholder.account_name" = "Account Name";
+"restore.placeholder.private_key" = "Active Private Key";
 
 //Coin Sync Modes
+
 "coin_sync.title" = "Опции";
-"coin_sync.header" = "Синхронизация с блокчейном";
 "coin_sync.fast" = "Быстро";
 "coin_sync.recommended" = "0-2 часа (Рекомендуется)";
-"coin_sync.fast.text" = "Восстановление ваших предыдущих транзакций через сторонний защищенный сервер. Для пользователей с длинной историей транзакций и с очень большим суммами этот метод может представлять риски для конфиденциальности.";
+"coin_sync.fast.text" = "Восстановление ваших предыдущих транзакций через сторонний защищенный сервер. Для пользователей с длинной историей транзакций и с очень большим суммами этот метод может представлять риски для конфиденциальности";
 "coin_sync.slow" = "Медленно";
 "coin_sync.more_private" = "1-12 часов (Более Приватно)";
-"coin_sync.slow.text" = "Восстановление ваших предыдущих транзакций будет непосредственно из сети. Это более приватно, но очень медленно. Чем больше монет вы восстанавливаете, тем больше времени потребуется. Если восстановление занимает слишком много времени, перейдите в раздел \"Безопасность\" в Настройках и выберите опцию «Отключить это устройство».";
-"coin_sync.disable" = "Откл. монету";
+"coin_sync.slow.text" = "Восстановление ваших предыдущих транзакций будет непосредственно из сети. Это более приватно, но очень медленно. Чем больше монет вы восстанавливаете, тем больше времени потребуется. Если восстановление занимает слишком много времени, перейдите в раздел «Управление ключами» и повторно импортируйте ключ для кошелька с помощью опции «Быстрая синхронизация».";
 "coin_sync.alert.header" = "Внимание";
 "coin_sync.alert.text" = "Это действие синхронизирует баланс вашего кошелька для каждого блокчейна. Может потребоваться несколько часов.";
 "coin_sync.erc20" = "Режим синхронизации, подобно Ethereum";
 
 // Backup
 
-"backup.intro.title" = "Резервная копия";
-"backup.intro.subtitle" = "Ваш секретный ключ является единственным способом для восстановления вашего кошелька.\n\nОн состоит из 12 слов. Храните его в безопасном месте.";
+"backup.close" = "Закрыть";
+
+"backup.intro.title_backup" = "Резервная копия";
+"backup.intro.title_show" = "Показать Ключ";
+"backup.intro.subtitle" = "Ключ, который будет показан далее, - это единственный способ восстановить ваши средства, если ваш телефон потерян, украден, сломан и т.д. Убедитесь, что никто не смотрит на ваш экран.\n\nМонеты, контролируемые этим ключом: %@\n";
 "backup.intro.later" = "Позже";
 "backup.intro.backup_now" = "Резервная копия";
+"backup.intro.show_key" = "Показать Ключ";
+
 "backup.words.title" = "Секретный Ключ";
+"backup.12words.title" = "12-words Ключ";
+"backup.binance.title" = "Binance Ключ";
+"confirmation.binance.description" = "Введите слова из вашего Binance ключа";
+"confirmation.12words.description" = "Введите слова из вашего 12-words ключа";
+
+"backup.eos.title" = "EOS ключ";
+"backup.eos.account_name" = "Account Name";
+"backup.eos.active_private_key" = "Active Private Key";
+"backup.eos.hint" = "Копирование ключа с помощью действия «копировать» представляет определенный риск, если вы используете какие-либо приложения для управления буфером обмена или другие приложения, которые могут иметь доступ к данным буфера обмена.";
 
 "backup.confirmation.title" = "Проверка...";
-"backup.confirmation.description" = "Введите слова из вашего секретного ключа";
-"backup.confirmation.failure_alert.text" = "Слова не совпадают";
 "backup.confirmation.secret_key" = "Я понимаю, что я единственный владелец  Секретного Ключа, который надежно хранится на моем телефоне и позволяет мне контролировать средства в моем кошельке.";
 "backup.confirmation.delete_app_warn" = "Я понимаю, что если это приложение удаляется или устанавливается на другое устройство, мой кошелек можно восстановить только с помощью Секретного Ключа.";
 "backup.confirmation.disclaimer" = "Я понимаю, что разработчики этого приложения не могут нести ответственность за любые непреднамеренные ошибки или проблемы, которые могут возникнуть при использовании этого приложения.";
+
+"words_validator.empty_words" = "Не все слова введены";
+"words_validator.invalid_confirmation" = "Введенные слова не совпадают";
 
 // Balance
 
@@ -79,6 +95,10 @@
 "balance.rate_per_coin" = "%@ за %@";
 "balance.synced_through" = "до: %@";
 "balance.syncing" = "Синхронизация...";
+"balance.add_coins" = "Добавить Монеты";
+"balance.sort.header" = "Сортировать по";
+"balance.sort.valueHighToLow" = "Баланс";
+"balance.sort.az" = "Название";
 
 // Deposit
 
@@ -88,15 +108,26 @@
 // Send
 
 "send.title" = "Отправить %@";
-"send.address_placeholder" = "Адрес";
-"send.amount_error.balance" = "Баланс %@";
-"send.send_button" = "Отправить";
-"send.paste_button" = "Вставить";
 "send.amount_placeholder" = "Сумма";
-"send.fee" = "Комиссия";
-"send.total" = "Итого";
+"send.address_placeholder" = "Адрес";
+"send.account_placeholder" = "Account";
+"send.fee" = "Комиссия:";
 "send.max_button" = "Макс.";
-"send_erc.alert" = "Комиссия за отправку %@ (ERC20) взимается в ETH. Необходимо %@ ETH.\n\n";
+"send.next_button" = "Далее";
+"send.error.invalid_address" = "Неверный Адрес";
+"send.error.invalid_account" = "Неверный Аккаунт";
+"send.error.no_address" = "Адрес не указан";
+"send.error.no_amount" = "Нет суммы";
+
+"send.confirmation.title" = "Подтвердить";
+"send.confirmation.to" = "Кому:";
+"send.confirmation.memo_placeholder" = "Memo";
+"send.confirmation.total" = "Итого:";
+"send.confirmation.estimate_time" = "Приблизительное время:";
+"send.confirmation.eos.account" = "Account";
+"send.confirmation.send_button" = "Отправить";
+"send.amount_error.balance" = "Баланс %@";
+"send.token.insufficient_fee_alert" = "Комиссия за отправку %@ (%@) взимается в %@. Необходимо %@.";
 
 // Transactions
 
@@ -108,7 +139,6 @@
 // Transaction Info
 
 "tx_info.title" = "Транзакция";
-"tx_info.historical_rate" = "Исторический Курс";
 "tx_info.time" = "Время";
 "tx_info.status" = "Статус";
 "tx_info.status.pending" = "В процессе";
@@ -135,6 +165,12 @@
 "full_info.to" = "Кому";
 "full_info.amount" = "Сумма";
 "full_info.nonce" = "Nonce";
+"full_info.status" = "Статус";
+"full_info.memo" = "Memo";
+"full_info.cpu" = "CPU Usage";
+"full_info.net" = "Net Usage";
+"full_info.milli_seconds" = "%@ μs";
+"full_info.bytes" = "%@ Bytes";
 
 "full_info.gas_limit" = "Gas Limit";
 "full_info.gas_used" = "Gas Used";
@@ -154,10 +190,12 @@
 "settings.title" = "Настройки";
 "settings.tab_bar_item" = "Настройки";
 "settings.security_center" = "Центр Безопасности";
-"settings.advanced" = "Дополнительные настройки";
+"settings.manage_coins" = "Управление Кошельками";
+"settings.restore_wallet" = "Восстановить Кошелек";
 "settings.base_currency" = "Базовая Валюта";
 "settings.language" = "Язык";
 "settings.about" = "О приложении";
+"settings.tell_friends" = "Рассказать Друзьям";
 "settings.light_mode" = "Светлый Режим";
 "settings.info_title" = "UNSTOPPABLE";
 "settings.info_subtitle" = "decentralized app";
@@ -172,26 +210,52 @@
 
 // Settings -> Manage Wallet
 
-"settings_manage_wallet.title" = "Кошельки";
+"manage_coins.title" = "Кошельки";
+"manage_coins.add_coin.title" = "Добавить %@";
+"manage_coins.add_coin.text" = "У вас нет активного ключа для использования  %@. Нажмите кнопку \"Создать\" ниже, чтобы создать новый ключ (кошелек).\n\nВы также можете использовать существующий ключ для %@ , если у вас уже есть.";
+"manage_coins.add_coin.create" = "Создать";
+"manage_coins.add_coin.restore" = "Восстановить";
 
 // Settings -> About
 
 "settings_about.title" = "О приложении";
+"settings_about.app_title" = "Unstoppable";
+"settings_about.app_subtitle" = "Decentralized App";
 "settings_about.terms_privacy_subtitle" = "Условия & Политика Конфиденциальности:";
-"settings_about.terms_privacy_text" = "Это приложение полностью децентрализовано. Работоспособность этого приложения не зависит от сторонних серверов или какой-либо команды тех. поддержки.\n\nПриложение работает везде, пока есть интернет. Этот кошелек или его пользователи не могут быть заблокированы кем-либо.\n\nВаши средства хранятся только на вашем телефоне.\n\nВы несëте полную ответственность за безопасное хранение секретного ключа. Никогда никому не показывайте ваш секретный ключ. Если ключ будет утерян, украден или забыт то контроль над вашими средствами попадет к тому у кого окажется ваш секретный ключ.\n\nНе взламывайте ваш телефон, не устанавливайте приложения из неофициальных источников и никогда не предоставляйте ваше устройство другим лицам. Безопасность вашего кошелька напрямую зависит от этого.\n\nВесь программный код этого приложения является бесплатным и открытым для общественности. Мы старались сделать самый безопасный и в то же время децентрализованный кошелек, но нет гарантий, что в коде приложения не имеется ошибок. Тем не менее, мы верим что по уровню безопасности этот кошелек значительно превосходит почти все доступные мобильные криптокошельки на сегодня.\n\nНекоторые публичные данные используемые приложением такие, как обменные курсы валют хранятся в децентрализованном хранилище (IPFS).";
+"settings_about.terms_privacy_text" = "Это приложение полностью децентрализовано. Работоспособность этого приложения не зависит от сторонних серверов или какой-либо команды тех. поддержки.\n\nПриложение работает везде, пока есть интернет. Этот кошелек или его пользователи не могут быть заблокированы кем-либо.\n\nВаши средства хранятся только на вашем телефоне.\n\nВы несëте полную ответственность за безопасное хранение секретного ключа. Никогда никому не показывайте ваш ключ. Если ключ будет утерян, украден или забыт то контроль над вашими средствами попадет к тому у кого окажется ваш ключ.\n\nНе взламывайте ваш телефон, не устанавливайте приложения из неофициальных источников и никогда не предоставляйте ваше устройство другим лицам. Безопасность вашего кошелька напрямую зависит от этого.\n\nВесь программный код этого приложения является бесплатным и открытым для общественности. Мы старались сделать самый безопасный и в то же время децентрализованный кошелек, но нет гарантий, что в коде приложения не имеется ошибок. Тем не менее, мы верим что по уровню безопасности этот кошелек значительно превосходит почти все доступные мобильные криптокошельки на сегодня.\n\nНекоторые публичные данные используемые приложением такие, как обменные курсы валют хранятся в децентрализованном хранилище (IPFS).";
+
+// Settings -> Tell Friends
+
+"settings_tell_friends.text" = "Будь Свободным! Будь Неудеожимым!";
 
 // Settings -> Security
 
 "settings_security.title" = "Безопасность";
-"settings_security.backup_wallet" = "Резервная копия";
-"settings_security.unlink_from_this_device" = "Отсоединить это устройство";
-"settings_security.set_pin" = "Код Доступа";
+"settings_security.manage_accounts" = "Управление Ключами";
+"settings_security.passcode" = "Код Доступа";
 "settings_security.change_pin" = "Изменить Код";
 "settings_security.touch_id" = "Touch ID";
 "settings_security.face_id" = "Face ID";
-"security_settings.unlink_alert_button" = "Отсоединить";
-"settings_security.import_wallet_confirmation_1" = "Это действие удалит ваш кошелёк с этого устройства.";
-"settings_security.import_wallet_confirmation_2" = "Убедитесь, что у вас есть свой Секретный Ключ, иначе вы не сможете получить доступ к денежным средствам.";
+"security_settings.delete_alert_button" = "Удалить с устройства";
+
+// Manage Keys
+
+"settings_manage_keys.title" = "Ключи";
+"settings_manage_keys.description" = "Любой, кто имеет доступ к вашим ключам, может украсть ваши средства. Храните ключи безопасно и не показывайте их никому.\n\nРезервное копирование каждого ключа необходимо доя того, чтобы иметь возможность восстановить средства, если вы потеряете или сломаете ваш телефон, или приложение кошелька будет удалено.";
+"settings_manage_keys.delete" = "Удалить";
+"settings_manage_keys.backup" = "Резервная копия";
+"settings_manage_keys.show" = "Показать";
+"settings_manage_keys.create" = "Создать";
+"settings_manage_keys.restore" = "Восстановить";
+"settings_manage_keys.delete.cant_delete" = "Вам нужно сделать резервную копию этого ключа, прежде чем вы можете его отсоединить.";
+"settings_manage_keys.delete.title" = "Удалить Ключ";
+"settings_manage_keys.delete.confirmation_remove" = "Это действие удалит ваш %@ ключ (кошелёк) с этого устройства.";
+"settings_manage_keys.delete.confirmation_disable" = "Монеты, которые будут отключены: %@";
+"settings_manage_keys.delete.confirmation_loose" = "Если у вас нет резервной копии этого ключа, то вы потеряете соответствующие средства.";
+"error.cant_create_eos" = "В данный момент кошелек не может создать новые учетные записи EOS. Вы можете восстановить существующий.";
+"settings_manage_keys.create.text" = "Это действие сгенерирует ключ(кошелек) для следующих монет:\n\n%@";
+"error.invalid_eos_key" = "Неверный ключ";
+"error.invalid_eos_account" = "Недействительный Аккаунт";
 
 // Set PIN
 
@@ -212,6 +276,10 @@
 "unlock_pin.cant_save_pin" = "Ой! Мы не можем сохранить ваш код. Пожалуйста, свяжитесь с нами как можно скорее!";
 "unlock_pin.blocked_until" = "Отключено до: %@";
 
+// No Passcode
+
+"no_passcode.info_text" = "Это приложение требует, чтобы на телефоне был включен пароль (экран блокировки).\n\nВы можете включить его в настройках iOS.\n\nПожалуйста, обратите внимание, что после того, как вы отключили PIN-код на уровне ОС,  в безопасном хранилище вашего телефона ранее сохраненные данные стали недействительными. Поэтому Вам нужно восстановить ключи, чтобы вернуться к вашему кошельку.";
+
 //NumPad
 
 "numpad_2" = "А Б В Г";
@@ -222,3 +290,12 @@
 "numpad_7" = "Ф Х Ц Ч";
 "numpad_8" = "Ш Щ Ъ Ы";
 "numpad_9" = "Ь Э Ю Я";
+
+// Key Types
+
+"key_type.12_words" = "12-words";
+"key_type.12_words.text" = "BTC, BCH, DASH, ETH, ERC-20";
+"key_type.eos" = "EOS Blockchain";
+"key_type.eos.text" = "EOS, EOS based Tokens";
+"key_type.binance" = "Binance Chain";
+"key_type.binance.text" = "BNB, BEP-2";

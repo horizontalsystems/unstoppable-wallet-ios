@@ -9,11 +9,13 @@
 "button.cancel" = "Abbrechen";
 "button.confirm" = "Bestätigen";
 "button.done" = "Fertig";
+"button.restore" = "Wiederherstellen";
 "button.next" = "Weiter";
 "button.remove" = "Entfernen";
 "button.forward" = "Teilen";
 "button.save" = "Speichern";
 "button.sync" = "Sync";
+"button.paste" = "Einsetzen";
 
 "alert.copied" = "Kopiert";
 "alert.no_internet" = "Kein Internet";
@@ -26,49 +28,63 @@
 "access_camera.message" = "Wir brauchen Zugriff auf deine Kamera um QR-code scannen.\nRufe die Einstellungen auf, um den Zugriff auf die Kamera zu erlauben";
 "access_camera.settings" = "Einstellungen";
 
-// Guest Page
+// Welcome
 
-"guest.title" = "Unstoppable";
-"guest.description" = "IN BLOCKCHAIN WE TRUST";
-"guest.subtitle" = "Decentralized App";
-"guest.create_wallet" = "Wallet Erstellen";
-"guest.restore_wallet" = "Wiederherstellen";
-"guest.version" = "Version %@";
+"welcome.new_wallet" = "Wallet Erstellen";
+"welcome.restore_wallet" = "Wallet Wiederherstellen";
+"welcome.version" = "Version %@";
 
 // Restore
 
 "restore.title" = "Wiederherstellen";
-"restore.description" = "Offlineschlüssel eingeben";
-"restore.validation_failed" = "Falscher Offlineschlüssel";
+"restore.description" = "Um ein bestehendes Wallet wiederherzustellen, müssen Sie den privaten Schlüssel für dieses Wallet eingeben.\nSobald Sie ein Wallet wiederhergestellt haben, können Sie weitere Wallets wiederherstellen. Gehen Sie dazu in das Verzeichnis Manage Schlüssel in den App-Einstellungen.";
+"restore.words.description" = "Schlüssel Eingeben";
+"restore.validation_failed" = "Falscher Schlüssel";
+"restore.placeholder.account_name" = "Account Name";
+"restore.placeholder.private_key" = "Active Private Key";
 
 //Coin Sync Modes
+
 "coin_sync.title" = "Optionen Wiederherstellen";
-"coin_sync.header" = "Synchronisierung mit der Blockchain";
 "coin_sync.fast" = "Schnell";
 "coin_sync.recommended" = "0-2 Stunden (empfohlen)";
-"coin_sync.fast.text" = "Stellt deine bisherigen Transaktionen über sicheren Drittanbieter-Server wieder her. Für Benutzer mit einer langen Geschichte von Transaktionen mit sehr großen Summen kann diese Methode die Privatsphäre-Risiken darstellen.";
+"coin_sync.fast.text" = "Stellen Sie Ihre vergangenen Transaktionen via eines sicheren Dritt-Servers wieder her. Für Nutzer mit einer langen Transaktionshistorie, die große Summen umfasst, kann diese Methode Datenschutzrisiken bergen.";
 "coin_sync.slow" = "Langsam";
 "coin_sync.more_private" = "1-12 Stunden (mehr privat)";
-"coin_sync.slow.text" = "Stellt deine bisherigen Transaktionen direkt aus dem Netzwerk her. Signifiziert mehr privat, aber sehr langsam. Wenn die Wiederherstellung zu viel Zeit in den Bereich Sicherheit in Einstellungen geht und wähle die Option „Dieses Gerät trennen“ aus.";
-"coin_sync.disable" = "Coin deaktivieren";
+"coin_sync.slow.text" = "Stellt vergangene Transaktionen direkt aus dem Netzwerk wieder her. Das schützt die Privatsphäre deutlich besser, ist aber sehr langsam. Wenn die Wiederherstellung zu lange dauert, gehen Sie zu Schlüssel Verwalten und reimportieren Sie den Schlüssel für das Wallet, indem Sie die Fast Sync Option nutzen.";
 "coin_sync.alert.header" = "Achtung";
 "coin_sync.alert.text" = "Diese Aktion wird dein Wallet-Konto für jede Blockchain neu synchronisieren. Es kann mehrere Stunden dauern, um ihn abzuschließen.";
 "coin_sync.erc20" = "Sync-Modus wie Ethereum";
 
 // Backup
 
-"backup.intro.title" = "Sicherung";
-"backup.intro.subtitle" = "Dein Offlineschlüssel ist die einzige Möglichkeit, dein Wallet wiederherzustellen, falls du dein Smartphone verlierst, austauscht, es gestohlen wird oder kaputtgeht. \n\nEs besteht aus 12 Wörtern. Speich es sicher offline.\n";
+"backup.close" = "Schließen";
+
+"backup.intro.title_backup" = "Sicherung";
+"backup.intro.title_show" = "Schlüssel anzeigen";
+"backup.intro.subtitle" = "Der angezeigte Schlüssel ist die einzige Möglichkeit, Ihr Guthaben wiederherzustellen, wenn Ihr Telefon verloren geht, kaputt geht usw. Achten Sie darauf, dass niemand Ihren Bildschirm sieht.\nDie Coins, die von diesem Schlüssel kontrolliert werden: %@";
 "backup.intro.later" = "Später";
 "backup.intro.backup_now" = "Backup";
+"backup.intro.show_key" = "Schlüssel anzeigen";
+
 "backup.words.title" = "Offlineschlüssel";
+"backup.12words.title" = "12-Wort-Schlüssel";
+"backup.binance.title" = "Binance Schlüssel";
+"confirmation.binance.description" = "Geben Sie die Worte Ihres Binance-Schlüssels ein";
+"confirmation.12words.description" = "Geben Sie die Worte Ihres 12-Wort-Schlüssels ein";
+
+"backup.eos.title" = "EOS-Schlüssel";
+"backup.eos.account_name" = "Account Name";
+"backup.eos.active_private_key" = "Active Private Key";
+"backup.eos.hint" = "Den Schlüssel mit \"Kopieren\" zu kopieren, ist riskant, da Sie womöglich Zwischenablage-Management-Apps oder andere Apps nutzen, die Zugriff auf die Daten in der Zwischenablage haben.";
 
 "backup.confirmation.title" = "Prüfen …";
-"backup.confirmation.description" = "Gib bitte die Wörter deines Offlineschlüssels ein";
-"backup.confirmation.failure_alert.text" = "Die Wörter stimmen nicht überein";
 "backup.confirmation.secret_key" = "Ich stimme zu, dass ich allein Inhaber eines privaten 12-Wort Offlineschlüssels bin, der sicher auf meinem Telefon gespeichert wird und mir ermöglicht, Geld auf meinem Wallet zu steuern.";
 "backup.confirmation.delete_app_warn" = "Ich stimme zu, dass bei einer Verschiebung oder Entfernung dieser App, der Zugang zu meinem Walletkonto nur bei Verwendung den Offlineschlüsseln erfolgt werden muss.";
 "backup.confirmation.disclaimer" = "Ich stimme zu, dass Entwickler dieser App nicht für unbeabsichtigte Fehler oder Probleme verantwortlich gemacht werden können, die bei der Verwendung dieser App auftreten können.";
+
+"words_validator.empty_words" = "Es wurden nicht alle Worte eingegeben";
+"words_validator.invalid_confirmation" = "Worte stimmen nicht überein";
 
 // Balance
 
@@ -79,6 +95,10 @@
 "balance.rate_per_coin" = "%@ pro %@";
 "balance.synced_through" = "bis: %@";
 "balance.syncing" = "Synchronisieren...";
+"balance.add_coins" = "Coins hinzufügen";
+"balance.sort.header" = "Sortieren nach";
+"balance.sort.valueHighToLow" = "Guthaben";
+"balance.sort.az" = "Name";
 
 // Deposit
 
@@ -88,15 +108,26 @@
 // Send
 
 "send.title" = "Senden %@";
-"send.address_placeholder" = "Adresse";
-"send.amount_error.balance" = "Guthaben %@";
-"send.send_button" = "Senden";
-"send.paste_button" = "Einfügen";
 "send.amount_placeholder" = "Betrag";
-"send.fee" = "Gebühr";
-"send.total" = "Insgesamt";
+"send.address_placeholder" = "Adresse";
+"send.account_placeholder" = "Account";
+"send.fee" = "Gebühr:";
 "send.max_button" = "Max.";
-"send_erc.alert" = "Transaktionsgebühren für %@ (ERC20) in Ethereum bezahlt. Du brauchst %@ ETH.";
+"send.next_button" = "Weiter";
+"send.error.invalid_address" = "Ungültige Adresse";
+"send.error.invalid_account" = "Ungültiger Account";
+"send.error.no_address" = "Keine Adresse";
+"send.error.no_amount" = "Kein Betrag";
+
+"send.confirmation.title" = "Bestätigen";
+"send.confirmation.to" = "An:";
+"send.confirmation.memo_placeholder" = "Memo";
+"send.confirmation.total" = "Insgesamt:";
+"send.confirmation.estimate_time" = "Geschätzte Zeit:";
+"send.confirmation.eos.account" = "Account";
+"send.confirmation.send_button" = "Senden";
+"send.amount_error.balance" = "Guthaben %@";
+"send.token.insufficient_fee_alert" = "Transaktionsgebühren für %@ %@ in %@ bezahlt. Du brauchst %@.";
 
 // Transactions
 
@@ -108,7 +139,6 @@
 // Transaction Info
 
 "tx_info.title" = "Transaktion";
-"tx_info.historical_rate" = "Historischer Rate";
 "tx_info.time" = "Zeit";
 "tx_info.status" = "Status";
 "tx_info.status.pending" = "Anstehend";
@@ -135,6 +165,12 @@
 "full_info.to" = "An";
 "full_info.amount" = "Betrag";
 "full_info.nonce" = "Nonce";
+"full_info.status" = "Status";
+"full_info.memo" = "Memo";
+"full_info.cpu" = "CPU Usage";
+"full_info.net" = "Net Usage";
+"full_info.milli_seconds" = "%@ µs";
+"full_info.bytes" = "%@ Bytes";
 
 "full_info.gas_limit" = "Gas Limit";
 "full_info.gas_used" = "Gas Used";
@@ -154,10 +190,12 @@
 "settings.title" = "Einstellungen";
 "settings.tab_bar_item" = "Einstellungen";
 "settings.security_center" = "Sicherheit";
-"settings.advanced" = "Erweiterte Einstellungen";
+"settings.manage_coins" = "Coins Managen";
+"settings.restore_wallet" = "Wallet Wiederherstellen";
 "settings.base_currency" = "Währung";
 "settings.language" = "Sprache";
 "settings.about" = "Info";
+"settings.tell_friends" = "Freunden erzählen";
 "settings.light_mode" = "Licht Modus";
 "settings.info_title" = "UNSTOPPABLE";
 "settings.info_subtitle" = "decentralized app";
@@ -172,26 +210,52 @@
 
 // Settings -> Manage Wallet
 
-"settings_manage_wallet.title" = "Wallets";
+"manage_coins.title" = "Coin Manager";
+"manage_coins.add_coin.title" = "%@ hinzufügen ";
+"manage_coins.add_coin.text" = "Sie haben keinen aktiven Schlüssel für die Verwendung von %@. Nutzen Sie den unteren Button \"Erstellen\", um einen neuen Schlüssel (Wallet) zu erstellen.\n\nSie können auch einen bestehenden Schlüssel für die %@ nutzen, wenn wie bereits einen haben.";
+"manage_coins.add_coin.create" = "Erstellen";
+"manage_coins.add_coin.restore" = "Wiederherstellen";
 
 // Settings -> About
 
 "settings_about.title" = "Info";
+"settings_about.app_title" = "Unstoppable";
+"settings_about.app_subtitle" = "Decentralized App";
 "settings_about.terms_privacy_subtitle" = "ANB & Datenschutz:";
-"settings_about.terms_privacy_text" = "Diese Anwendung ist vollständig dezentralisiert\n\nDie Leistung dieser Anwendung hängt nicht von Servern von Drittanbietern oder einem technischen Supportteam ab.\n\nDie Anwendung funktioniert überall, solange es Internet gibt. Dieser Wallet oder deren Benutzer können von niemandem blockiert werden.\n\nDein Geld wird nur auf Ihrem Telefon gespeichert.\n\nDu bist allein für die sichere Aufbewahrung des Offlineschlüssels verantwortlich. Teil deinen Offlineschlüssel nie mit jemandem. Wenn der Offlineschlüssel verloren geht, gestohlen oder vergessen wird, erhält derjenige, der über deinen Offlineschlüssel verfügt, die Kontrolle über dein Geld.\nHack dein Telefon nicht, installier keine Anwendungen von inoffiziellen Quellen und gib dein Telefon niemals den anderen. Die Sicherheit  deiner Wallet hängt direkt davon ab.\n\nDer gesamte Programmcode dieser Anwendung ist kostenlos und für die Öffentlichkeit zugänglich. Wir haben versucht, die sicherste und gleichzeitig dezentralisierte Wallet zu schaffen, aber es gibt keine Garantie dafür, dass der Anwendungscode fehlerfrei ist. Wir glauben jedoch, dass dieser Wallet in Bezug auf die Sicherheit fast alle heute verfügbare mobile Kryptobörsen deutlich übertrifft.\n\nEinige von der Anwendung verwendete öffentliche Daten, wie z. B. Wechselkurse, werden im dezentralen Repository (IPFS) gespeichert";
+"settings_about.terms_privacy_text" = "Diese App ist Peer-to-Peer. Sie häng von keinem Webserver oder Tech-Support-Personal ab, um zu funktionierten.\n\nSie funktioniert überall, solang Sie Internetzugang haben. Niemand kann die App stoppen oder Sie davon abhalten, sie zu nutzen.\n\nIhre Guthaben sind sicher auf dem Telefon gespeichert, nirgendwo sonst.\n\nEs liegt in Ihrer Verantwortung, den geheimen Schlüssel zu sichern und ihn geheim aufzubewahren. Zeigen Sie ihn niemandem. Wenn er verloren geht, Sie ihn vergessen oder er gestohlen wird, kann Ihr Guthaben von demjenigen ausgegeben werden, der den Schlüssel hat.\n\nFühren Sie auf Ihrem Telefon keinen Jailbreak durch. Installieren Sie keine Apps von unbekannter (nicht vertrauenswürdiger) Quelle. Geben Sie das Telefon keiner nicht vertrauenswürdigen Person und aktualisieren Sie das Betriebssystem Ihres Telefons regelmäßig. Die Sicherheit Ihres Wallets hängt davon ab.\n\nDer gesamte Code dieser App ist seit Anfang an öffentlich einsehbar. Wir haben versucht, das sicherste und dezentralisierteste Wallet zu bauen. Allerdings gibt es keine Garantie, dass keine unvorhergesehenen Softwareprobleme auftreten. Trotzdem ist dieses Wallet wahrscheinlich deutlich sicherer als jede andere Smartphone-App.\n\nManche generischen, nicht geheimen App-Daten wie Währungswechselkurse werden in dezentralen Speichern (IPFS) gespeichert.";
+
+// Settings -> Tell Friends
+
+"settings_tell_friends.text" = "Sei Frei! Sei Unstoppbar!";
 
 // Settings -> Security
 
 "settings_security.title" = "Sicherheit";
-"settings_security.backup_wallet" = "Wallet sichern";
-"settings_security.unlink_from_this_device" = "Verknüpfung mit diesem Gerät aufheben";
-"settings_security.set_pin" = "Code";
+"settings_security.manage_accounts" = "Schlüssel Managen";
+"settings_security.passcode" = "Code";
 "settings_security.change_pin" = "Code bearbeiten";
 "settings_security.touch_id" = "Touch ID";
 "settings_security.face_id" = "Face ID";
-"security_settings.unlink_alert_button" = "Verknüpfung trennen";
-"settings_security.import_wallet_confirmation_1" = "Diese Aktion entfernt dein Wallet von diesem Gerät.";
-"settings_security.import_wallet_confirmation_2" = "Stell sicher, du hast deine geheimen Offlineschlüssel oder du wirst nicht in der Lage, den Zugang zu Mitteln darauf in Zukunft.";
+"security_settings.delete_alert_button" = "Von Telefon löschen";
+
+// Manage Keys
+
+"settings_manage_keys.title" = "Schlüssel";
+"settings_manage_keys.description" = "Jeder, der Ihre Schlüssel kennt, kann Ihr Wallet-Guthaben stehlen. Bewahren Sie die Schlüssel sicher auf und zeigen Sie diese niemandem.\nSichern Sie jeden Schlüssel so, dass Sie auf das Guthaben zugreifen können, wenn Ihr Telefon kaputt geht oder die Wallet-App gelöscht wird.";
+"settings_manage_keys.delete" = "Löschen";
+"settings_manage_keys.backup" = "Sicherung";
+"settings_manage_keys.show" = "Anzeigen";
+"settings_manage_keys.create" = "Erstellen";
+"settings_manage_keys.restore" = "Wiederherstellen";
+"settings_manage_keys.delete.cant_delete" = "Sie müssen den Schlüssel sichern, bevor Sie ihn von dem Gerät löschen.";
+"settings_manage_keys.delete.title" = "Schlüssel löschen";
+"settings_manage_keys.delete.confirmation_remove" = "Diese Aktion wird den %@-Schlüssel (Wallet) von diesem Gerät löschen.";
+"settings_manage_keys.delete.confirmation_disable" = "Coins, die entfernt werden: %@";
+"settings_manage_keys.delete.confirmation_loose" = "Wenn Sie keine Sicherung von diesem Schlüssel haben, verlieren Sie das zugehörige Guthaben.";
+"error.cant_create_eos" = "Im Moment kann das Wallet keine neuen EOS-Wallet-Accounts anlegen. Sie können nur bestehende wiederherstellen.";
+"settings_manage_keys.create.text" = "Diese Aktion erzeugt einen Schlüssel (Wallet) für die folgenden Coins: %@";
+"error.invalid_eos_key" = "Ungültiger Schlüssel";
+"error.invalid_eos_account" = "Ungültiger Account";
 
 // Set PIN
 
@@ -212,6 +276,10 @@
 "unlock_pin.cant_save_pin" = "Autsch! Wir können den Code nicht speichern, kontaktier uns bitte so schnell wie möglich!";
 "unlock_pin.blocked_until" = "Deaktiviert bis: %@ ";
 
+// No Passcode
+
+"no_passcode.info_text" = "Diese App erfordert, dass die Zugangssperre (Bildschirmsperre) aktiviert ist.\nSie können dies in den iOS-Einstellungen vornehmen.\nBitte beachten Sie, wenn Sie PIN auf dem OS ausgeschaltete haben, wurden die Sicherheitsmaßnahmen im Safe Storage Ihres Telefons für vorher gespeicherte Daten ungültig. Sie müssen Ihre Wallet-Schlüssel wiederherstellen, um an Ihr Wallet zu gelangen.";
+
 //NumPad
 
 "numpad_2" = "A B C";
@@ -222,3 +290,12 @@
 "numpad_7" = "P Q R S";
 "numpad_8" = "T U V";
 "numpad_9" = "W X Y Z";
+
+// Key Types
+
+"key_type.12_words" = "12-words";
+"key_type.12_words.text" = "BTC, BCH, ETH, DASH, ETH, ERC-20";
+"key_type.eos" = "EOS Blockchain";
+"key_type.eos.text" = "EOS, EOS based Tokens";
+"key_type.binance" = "Binance Chain";
+"key_type.binance.text" = "BNB, BEP-2";
