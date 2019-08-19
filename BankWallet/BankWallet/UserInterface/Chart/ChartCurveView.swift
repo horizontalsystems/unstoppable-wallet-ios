@@ -2,7 +2,7 @@ import UIKit
 
 class ChartCurveView: UIView {
     private let configuration: ChartConfiguration
-    public weak var delegate: IChartDataSource?
+    public weak var dataSource: IChartDataSource?
     private let pointConverter: PointConverter
 
     private let linesLayer = CAShapeLayer()
@@ -39,7 +39,7 @@ class ChartCurveView: UIView {
     }
 
     func refreshCurve() {
-        guard !bounds.isEmpty, let delegate = delegate, !delegate.chartData.isEmpty else {
+        guard !bounds.isEmpty, let dataSource = dataSource, !dataSource.chartData.isEmpty else {
             return
         }
         let bottom = bounds.maxY - 0.5 / UIScreen.main.scale
@@ -92,7 +92,7 @@ class ChartCurveView: UIView {
     }
 
     private func convertChartDataToGraphicPoints(for bounds: CGRect, retinaShift: Bool) -> [CGPoint] {
-        guard let delegate = delegate else {
+        guard let delegate = dataSource else {
             return []
         }
         return delegate.chartData.map { pointConverter.convert(chartPoint: $0, viewBounds: bounds, chartFrame: delegate.chartFrame, retinaShift: retinaShift) }

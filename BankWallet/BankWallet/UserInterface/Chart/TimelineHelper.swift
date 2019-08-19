@@ -23,9 +23,9 @@ class TimelineHelper {
         let lastDate = Date(timeIntervalSince1970: frame.right)
         var lastTimestamp: TimeInterval
         switch type {
-        case .day: lastTimestamp = lastDate.startOfHour.timeIntervalSince1970
+        case .day: lastTimestamp = lastDate.startOfHour?.timeIntervalSince1970 ?? lastDate.timeIntervalSince1970
         case .week, .month: lastTimestamp = lastDate.startOfDay.timeIntervalSince1970
-        case .halfYear, .year: lastTimestamp = lastDate.startOfMonth.timeIntervalSince1970
+        case .halfYear, .year: lastTimestamp = lastDate.startOfMonth?.timeIntervalSince1970 ?? lastDate.timeIntervalSince1970
         }
 
         while lastTimestamp >= frame.left {
@@ -44,7 +44,7 @@ class TimelineHelper {
         case .halfYear, .year:
             let date = Date(timeIntervalSince1970: timestamp)
             let ago = date.startOfMonth(ago: Int(type.step))
-            return ago.timeIntervalSince1970
+            return ago?.timeIntervalSince1970 ?? timestamp
         }
     }
 
