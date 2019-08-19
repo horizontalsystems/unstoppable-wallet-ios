@@ -151,6 +151,7 @@ DEPENDENCIES:
   - EthereumKit.swift (from `https://github.com/horizontalsystems/ethereum-kit-ios/`)
   - FeeRateKit.swift (from `https://github.com/horizontalsystems/blockchain-fee-rate-kit-ios`)
   - GRDB.swift
+  - HSHDWalletKit (from `https://github.com/horizontalsystems/hd-wallet-kit-ios`)
   - HUD.swift (from `https://github.com/horizontalsystems/gui-kit`)
   - KeychainAccess
   - Nimble
@@ -178,7 +179,6 @@ SPEC REPOS:
     - GRDB.swift
     - GRKOpenSSLFramework
     - HSCryptoKit
-    - HSHDWalletKit
     - KeychainAccess
     - Nimble
     - ObjectMapper
@@ -215,6 +215,8 @@ EXTERNAL SOURCES:
     :git: https://github.com/horizontalsystems/ethereum-kit-ios/
   FeeRateKit.swift:
     :git: https://github.com/horizontalsystems/blockchain-fee-rate-kit-ios
+  HSHDWalletKit:
+    :git: https://github.com/horizontalsystems/hd-wallet-kit-ios
   HUD.swift:
     :git: https://github.com/horizontalsystems/gui-kit
   SectionsTableView.swift:
@@ -256,6 +258,9 @@ CHECKOUT OPTIONS:
   FeeRateKit.swift:
     :commit: 8dc099a657c3305529acd827d023a91530205f3b
     :git: https://github.com/horizontalsystems/blockchain-fee-rate-kit-ios
+  HSHDWalletKit:
+    :commit: f9853f801ae599dd76ee566d7a5613f633e14736
+    :git: https://github.com/horizontalsystems/hd-wallet-kit-ios
   HUD.swift:
     :commit: 22d90aa409044e4ee82e4fcc3ec5a89e7066bf93
     :git: https://github.com/horizontalsystems/gui-kit
@@ -308,6 +313,6 @@ SPEC CHECKSUMS:
   SwiftyJSON: 6faa0040f8b59dead0ee07436cbf76b73c08fd08
   UIExtensions.swift: 9f5a209e4e30f1ccfbf3eab01f02ffd8a20365d0
 
-PODFILE CHECKSUM: 9420c3e00f2c33ce139d1835c7bb10d478e18448
+PODFILE CHECKSUM: 69b31e46e8694604a1fa0365ce30555e96ccdfd3
 
 COCOAPODS: 1.7.5
