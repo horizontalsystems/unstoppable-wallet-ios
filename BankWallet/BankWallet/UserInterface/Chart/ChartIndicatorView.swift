@@ -3,7 +3,7 @@ import SnapKit
 
 class ChartIndicatorView: UIView {
     private weak var indicatorDelegate: IChartIndicatorDelegate?
-    weak var delegate: IChartDataSource?
+    weak var dataSource: IChartDataSource?
 
     private let configuration: ChartConfiguration
 
@@ -57,26 +57,26 @@ class ChartIndicatorView: UIView {
     }
 
     private func findPoint(x: CGFloat) -> ChartPoint? {
-        guard !bounds.isEmpty, let delegate = delegate, deltaTimestamp > .ulpOfOne else {
+        guard !bounds.isEmpty, let dataSource = dataSource, deltaTimestamp > .ulpOfOne else {
             return nil
         }
 
-        let chartFrame = delegate.chartFrame
+        let chartFrame = dataSource.chartFrame
         guard x > 0 else {
-            return delegate.chartData.first { point in point.timestamp == chartFrame.left }
+            return dataSource.chartData.first { point in point.timestamp == chartFrame.left }
         }
         guard x < bounds.width else {
-            return delegate.chartData.first { point in point.timestamp == chartFrame.right}
+            return dataSource.chartData.first { point in point.timestamp == chartFrame.right}
         }
 
         let currentTimestamp = TimeInterval(x * deltaTimestamp) + chartFrame.left
 
-        guard var nearestPoint = delegate.chartData.first(where: { point in point.timestamp == chartFrame.left }) else {
+        guard var nearestPoint = dataSource.chartData.first(where: { point in point.timestamp == chartFrame.left }) else {
             return nil
         }
         var delta = abs(currentTimestamp - nearestPoint.timestamp)
 
-        delegate.chartData.forEach { point in
+        dataSource.chartData.forEach { point in
             let newDelta: TimeInterval = abs(point.timestamp - currentTimestamp)
             if newDelta < delta {
                 nearestPoint = point
@@ -88,13 +88,13 @@ class ChartIndicatorView: UIView {
     }
 
     private func change(point: ChartPoint) {
-        guard selectedPoint != point, let delegate = delegate else {
+        guard selectedPoint != point, let dataSource = dataSource else {
             return
         }
         selectedPoint = point
         indicatorDelegate?.didTap(chartPoint: point)
 
-        let coordinates = pointConverter.convert(chartPoint: point, viewBounds: bounds, chartFrame: delegate.chartFrame, retinaShift: true)
+        let coordinates = pointConverter.convert(chartPoint: point, viewBounds: bounds, chartFrame: dataSource.chartFrame, retinaShift: true)
         indicatorLayer.refresh(point: coordinates)
     }
 
@@ -110,7 +110,7 @@ class ChartIndicatorView: UIView {
 
         indicatorLayer.frame = self.bounds
 
-        guard bounds.width > 0, let chartFrame = delegate?.chartFrame else {
+        guard bounds.width > 0, let chartFrame = dataSource?.chartFrame else {
             return
         }
         deltaTimestamp = CGFloat(chartFrame.width) / bounds.width

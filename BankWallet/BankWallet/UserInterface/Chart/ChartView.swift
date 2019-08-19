@@ -43,9 +43,9 @@ class ChartView: UIView {
             indicatorView = ChartIndicatorView(configuration: configuration, delegate: self)
         }
 
-        curveView.delegate = self
-        gridView?.delegate = self
-        indicatorView?.delegate = self
+        curveView.dataSource = self
+        gridView?.dataSource = self
+        indicatorView?.dataSource = self
         commonInit()
     }
 

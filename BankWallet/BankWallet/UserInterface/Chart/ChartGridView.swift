@@ -6,7 +6,7 @@ class GridView: UIView {
     private let timestampLinesLayer = TimestampLinesLayer()
     private let valueTextLayer = ValueTextLayer()
     private let timestampTextLayer = TimestampTextLayer()
-    weak var delegate: IChartDataSource?
+    weak var dataSource: IChartDataSource?
 
     private let configuration: ChartConfiguration
     var scaleOffsetSize: CGSize = .zero
@@ -34,10 +34,10 @@ class GridView: UIView {
         guard !bounds.isEmpty else {
             return
         }
-        guard let delegate = delegate, !delegate.chartData.isEmpty else {
+        guard let dataSource = dataSource, !dataSource.chartData.isEmpty else {
             return
         }
-        let chartFrame = delegate.chartFrame
+        let chartFrame = dataSource.chartFrame
 
         // value lines
         var insets = UIEdgeInsets.zero
@@ -55,12 +55,12 @@ class GridView: UIView {
         insets = UIEdgeInsets.zero
         insets.right = scaleOffsetSize.width
         insets.bottom = scaleOffsetSize.height
-        timestampLinesLayer.refresh(configuration: configuration, insets: insets, chartFrame: delegate.chartFrame, timestamps: timestamps)
+        timestampLinesLayer.refresh(configuration: configuration, insets: insets, chartFrame: dataSource.chartFrame, timestamps: timestamps)
 
         // timestamp texts
         insets = UIEdgeInsets.zero
         insets.right = scaleOffsetSize.width
-        timestampTextLayer.refresh(configuration: configuration, insets: insets, chartFrame: delegate.chartFrame, timestamps: timestamps)
+        timestampTextLayer.refresh(configuration: configuration, insets: insets, chartFrame: dataSource.chartFrame, timestamps: timestamps)
     }
 
     override func layoutSubviews() {
