@@ -90,9 +90,9 @@ PODS:
     - Alamofire (~> 4.0)
     - GRDB.swift (~> 4.0)
     - RxSwift (~> 5.0)
-  - GRDB.swift (4.1.1):
-    - GRDB.swift/standard (= 4.1.1)
-  - GRDB.swift/standard (4.1.1)
+  - GRDB.swift (4.2.1):
+    - GRDB.swift/standard (= 4.2.1)
+  - GRDB.swift/standard (4.2.1)
   - GRKOpenSSLFramework (1.0.2.16)
   - HSCryptoKit (1.5.0)
   - HSHDWalletKit (1.1.1):
@@ -128,7 +128,7 @@ PODS:
   - SectionsTableView.swift (1.0):
     - SnapKit (~> 5.0)
     - UIExtensions.swift
-  - SnapKit (5.0.0)
+  - SnapKit (5.0.1)
   - SwiftProtobuf (1.6.0)
   - SwiftyJSON (4.3.0)
   - UIExtensions.swift (1.0)
@@ -288,7 +288,7 @@ SPEC CHECKSUMS:
   Erc20Kit.swift: 80579e56957c3bca4ff04060cfd88a4ee74454b3
   EthereumKit.swift: 70ef9cbd4795a2f1c11b2767093a3365d55189b0
   FeeRateKit.swift: dd6bdac1ca89e7d4944f25f34a74046e176a6653
-  GRDB.swift: 99b10e1afa666ff024d76e38b37fefd34b57def4
+  GRDB.swift: a49090aa8adf889f251b04f71e8691c100a469d4
   GRKOpenSSLFramework: 35944e317e6336b2944ad70b059d84db6b2d8532
   HSCryptoKit: 514a3111fd37ad18b7261d4a55271daaba3b0eb9
   HSHDWalletKit: 25d2eb6bc00b3c8728fa3eca07258142013a5a87
@@ -303,7 +303,7 @@ SPEC CHECKSUMS:
   RxRelay: 4f7409406a51a55cd88483f21ed898c234d60f18
   RxSwift: 8b0671caa829a763bbce7271095859121cbd895f
   SectionsTableView.swift: 5ef2f3ae4a3b3aef91190cae7c0cb8655d4d8148
-  SnapKit: fd22d10eb9aff484d79a8724eab922c1ddf89bcf
+  SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
   SwiftProtobuf: e905ca1366405696411aaf174411c4b19c0ef73d
   SwiftyJSON: 6faa0040f8b59dead0ee07436cbf76b73c08fd08
   UIExtensions.swift: 9f5a209e4e30f1ccfbf3eab01f02ffd8a20365d0
