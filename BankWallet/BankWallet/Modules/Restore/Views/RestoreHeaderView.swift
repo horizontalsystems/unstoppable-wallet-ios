@@ -2,7 +2,9 @@ import UIKit
 import SnapKit
 
 class RestoreHeaderView: UIView {
-    private static let text = "restore.description".localized 
+    private static var text: String {
+        return "restore.description".localized
+    }
 
     private let label = UILabel()
 

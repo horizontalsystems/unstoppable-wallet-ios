@@ -2,7 +2,9 @@ import UIKit
 import SnapKit
 
 class ManageAccountDescriptionCell: UITableViewCell {
-    static let descriptionText = "settings_manage_keys.description".localized
+    static var descriptionText: String {
+        return "settings_manage_keys.description".localized
+    }
 
     private let label = UILabel()
 
