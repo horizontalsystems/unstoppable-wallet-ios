@@ -7,6 +7,7 @@ class SendAmountPresenter {
     weak var delegate: ISendAmountDelegate?
 
     private let interactor: ISendAmountInteractor
+    private let decimalParser: ISendAmountDecimalParser
 
     private let coin: Coin
     private let currency: Currency
@@ -17,9 +18,10 @@ class SendAmountPresenter {
 
     private(set) var inputType: SendInputType
 
-    init(coin: Coin, interactor: ISendAmountInteractor) {
+    init(coin: Coin, interactor: ISendAmountInteractor, decimalParser: ISendAmountDecimalParser) {
         self.coin = coin
         self.interactor = interactor
+        self.decimalParser = decimalParser
 
         currency = interactor.baseCurrency
         rate = interactor.rate(coinCode: coin.code, currencyCode: currency.code)
@@ -180,7 +182,7 @@ extension SendAmountPresenter: ISendAmountViewDelegate {
     }
 
     func onChanged(amountText: String?) {
-        let enteredAmount = ValueFormatter.instance.parseAnyDecimal(from: amountText)
+        let enteredAmount = decimalParser.parseAnyDecimal(from: amountText)
 
         switch inputType {
         case .coin:
@@ -220,7 +222,7 @@ extension SendAmountPresenter: ISendAmountViewDelegate {
     }
 
     func isValid(text: String) -> Bool {
-        guard let value = ValueFormatter.instance.parseAnyDecimal(from: text) else {
+        guard let value = decimalParser.parseAnyDecimal(from: text) else {
             return false
         }
 

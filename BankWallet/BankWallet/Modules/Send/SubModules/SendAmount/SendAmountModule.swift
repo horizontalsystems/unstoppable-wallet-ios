@@ -49,3 +49,7 @@ protocol ISendAmountDelegate: class {
     func onChangeAmount()
     func onChange(inputType: SendInputType)
 }
+
+protocol ISendAmountDecimalParser {
+    func parseAnyDecimal(from string: String?) -> Decimal?
+}
