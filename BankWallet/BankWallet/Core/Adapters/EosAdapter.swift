@@ -50,6 +50,17 @@ class EosAdapter {
 
 }
 
+extension EosAdapter {
+    enum ValidationError: Error {
+        case invalidAccount
+    }
+
+    public static func clear(except excludedWalletIds: [String]) throws {
+        try EosKit.clear(exceptFor: excludedWalletIds)
+    }
+
+}
+
 extension EosAdapter: IAdapter {
 
     func start() {
@@ -68,12 +79,6 @@ extension EosAdapter: IAdapter {
         return ""
     }
 
-}
-
-extension EosAdapter {
-    enum ValidationError: Error {
-        case invalidAccount
-    }
 }
 
 extension EosAdapter: IBalanceAdapter {

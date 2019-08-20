@@ -96,7 +96,7 @@ class App {
         pinManager = PinManager(secureStorage: secureStorage)
         wordsManager = WordsManager(localStorage: localStorage)
 
-        accountManager = AccountManager(storage: accountStorage)
+        accountManager = AccountManager(storage: accountStorage, accountCleaner: AccountCleaner())
         backupManager = BackupManager(accountManager: accountManager)
 
         walletFactory = WalletFactory()

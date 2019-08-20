@@ -39,8 +39,8 @@ extension DashAdapter: DashKitDelegate {
 
 extension DashAdapter {
 
-    static func clear() throws {
-        try DashKit.clear()
+    static func clear(except excludedWalletIds: [String]) throws {
+        try DashKit.clear(exceptFor: excludedWalletIds)
     }
 
 }

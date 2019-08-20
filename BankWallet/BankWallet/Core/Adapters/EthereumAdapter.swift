@@ -52,8 +52,8 @@ class EthereumAdapter: EthereumBaseAdapter {
 
 extension EthereumAdapter {
 
-    static func clear() throws {
-        try EthereumKit.clear()
+    static func clear(except excludedWalletIds: [String]) throws {
+        try EthereumKit.clear(exceptFor: excludedWalletIds)
     }
 
 }
