@@ -36,13 +36,6 @@ class ValueFormatter {
         return formatter
     }()
 
-    private let parseFormatter: NumberFormatter = {
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .decimal
-        formatter.usesGroupingSeparator = false
-        return formatter
-    }()
-
     func format(coinValue: CoinValue, fractionPolicy: FractionPolicy = .full) -> String? {
         let absoluteValue = abs(coinValue.value)
 
@@ -142,23 +135,6 @@ class ValueFormatter {
 
     func format(twoDigitValue: Decimal) -> String? {
         return twoDigitFormatter.string(from: twoDigitValue as NSNumber)
-    }
-
-    func parseAnyDecimal(from string: String?) -> Decimal? {
-        if let string = string {
-            for localeIdentifier in Locale.availableIdentifiers {
-                parseFormatter.locale = Locale(identifier: localeIdentifier)
-                if parseFormatter.number(from: "0\(string)") == nil {
-                    continue
-                }
-
-                let string = string.replacingOccurrences(of: parseFormatter.decimalSeparator, with: ".")
-                if let decimal = Decimal(string: string) {
-                    return decimal
-                }
-            }
-        }
-        return nil
     }
 
     func round(value: Decimal, scale: Int, roundingMode: NSDecimalNumber.RoundingMode) -> Decimal {
