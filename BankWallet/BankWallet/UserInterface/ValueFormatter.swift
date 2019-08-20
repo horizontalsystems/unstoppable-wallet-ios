@@ -21,13 +21,6 @@ class ValueFormatter {
         return formatter
     }()
 
-    private let decimalFormatter: NumberFormatter = {
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .decimal
-        formatter.groupingSeparator = ""
-        return formatter
-    }()
-
     func format(coinValue: CoinValue, fractionPolicy: FractionPolicy = .full) -> String? {
         let absoluteValue = abs(coinValue.value)
 
@@ -36,7 +29,7 @@ class ValueFormatter {
 
         switch fractionPolicy {
         case .full:
-            formatter.maximumFractionDigits = 8
+            formatter.maximumFractionDigits = min(coinValue.coin.decimal, 8)
         case let .threshold(high, _):
             formatter.maximumFractionDigits = absoluteValue > high ? 4 : 8
         }
@@ -54,17 +47,6 @@ class ValueFormatter {
         return result
     }
 
-    func formatNew(coinValue: CoinValue) -> String? {
-        coinFormatter.roundingMode = .halfUp
-        coinFormatter.maximumFractionDigits = min(coinValue.coin.decimal, 8)
-
-        guard let formattedValue = coinFormatter.string(from: coinValue.value as NSNumber) else {
-            return nil
-        }
-
-        return "\(formattedValue) \(coinValue.coin.code)"
-    }
-
     func format(currencyValue: CurrencyValue, fractionPolicy: FractionPolicy = .full, trimmable: Bool = true, roundingMode: NumberFormatter.RoundingMode = .halfUp) -> String? {
         var absoluteValue = abs(currencyValue.value)
 
@@ -77,8 +59,8 @@ class ValueFormatter {
 
         switch fractionPolicy {
         case .full:
-            formatter.maximumFractionDigits = 2
-            formatter.minimumFractionDigits = 2
+            formatter.maximumFractionDigits = currencyValue.currency.decimal
+            formatter.minimumFractionDigits = currencyValue.currency.decimal
         case let .threshold(high, low):
             formatter.maximumFractionDigits = absoluteValue > high ? 0 : 2
             formatter.maximumFractionDigits = !trimmable && absoluteValue < low ? 4 : formatter.maximumFractionDigits
@@ -103,26 +85,6 @@ class ValueFormatter {
         }
 
         return result
-    }
-
-    func formatNew(currencyValue: CurrencyValue) -> String? {
-        currencyFormatter.roundingMode = .halfUp
-        currencyFormatter.currencyCode = currencyValue.currency.code
-        currencyFormatter.currencySymbol = currencyValue.currency.symbol
-        currencyFormatter.maximumFractionDigits = currencyValue.currency.decimal
-        currencyFormatter.minimumFractionDigits = 0
-
-        return currencyFormatter.string(from: currencyValue.value as NSNumber)
-    }
-
-    func formatValue(coinValue: CoinValue) -> String? {
-        decimalFormatter.maximumFractionDigits = min(coinValue.coin.decimal, 8)
-        return decimalFormatter.string(from: coinValue.value as NSNumber)
-    }
-
-    func formatValue(currencyValue: CurrencyValue) -> String? {
-        decimalFormatter.maximumFractionDigits = currencyValue.currency.decimal
-        return decimalFormatter.string(from: currencyValue.value as NSNumber)
     }
 
 }

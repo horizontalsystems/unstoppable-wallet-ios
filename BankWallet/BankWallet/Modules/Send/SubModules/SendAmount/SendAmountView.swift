@@ -18,6 +18,13 @@ class SendAmountView: UIView {
     private let switchButton = RespondButton()
     private let switchButtonIcon = UIImageView()
 
+    private let decimalFormatter: NumberFormatter = {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.groupingSeparator = ""
+        return formatter
+    }()
+
     public init(delegate: ISendAmountViewDelegate) {
         self.delegate = delegate
         super.init(frame: .zero)
@@ -154,6 +161,17 @@ class SendAmountView: UIView {
 
         delegate.viewDidLoad()
     }
+
+    private func format(coinValue: CoinValue) -> String? {
+        decimalFormatter.maximumFractionDigits = min(coinValue.coin.decimal, 8)
+        return decimalFormatter.string(from: coinValue.value as NSNumber)
+    }
+
+    private func format(currencyValue: CurrencyValue) -> String? {
+        decimalFormatter.maximumFractionDigits = currencyValue.currency.decimal
+        return decimalFormatter.string(from: currencyValue.value as NSNumber)
+    }
+
 }
 
 extension SendAmountView: ISendAmountView {
@@ -170,9 +188,9 @@ extension SendAmountView: ISendAmountView {
 
         switch amount {
         case .coinValue(let coinValue):
-            inputField.text = ValueFormatter.instance.formatValue(coinValue: coinValue)
+            inputField.text = format(coinValue: coinValue)
         case .currencyValue(let currencyValue):
-            inputField.text = ValueFormatter.instance.formatValue(currencyValue: currencyValue)
+            inputField.text = format(currencyValue: currencyValue)
         }
     }
 

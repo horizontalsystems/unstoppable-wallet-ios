@@ -97,9 +97,9 @@ enum AmountInfo {
     var formattedString: String? {
         switch self {
         case .coinValue(let coinValue):
-            return ValueFormatter.instance.formatNew(coinValue: coinValue)
+            return ValueFormatter.instance.format(coinValue: coinValue)
         case .currencyValue(let currencyValue):
-            return ValueFormatter.instance.formatNew(currencyValue: currencyValue)
+            return ValueFormatter.instance.format(currencyValue: currencyValue)
         }
     }
 
