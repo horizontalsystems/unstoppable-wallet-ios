@@ -137,9 +137,4 @@ class ValueFormatter {
         return twoDigitFormatter.string(from: twoDigitValue as NSNumber)
     }
 
-    func round(value: Decimal, scale: Int, roundingMode: NSDecimalNumber.RoundingMode) -> Decimal {
-        let handler = NSDecimalNumberHandler(roundingMode: roundingMode, scale: Int16(truncatingIfNeeded: scale), raiseOnExactness: false, raiseOnOverflow: false, raiseOnUnderflow: false, raiseOnDivideByZero: false)
-        return NSDecimalNumber(decimal: value).rounding(accordingToBehavior: handler).decimalValue
-    }
-
 }
