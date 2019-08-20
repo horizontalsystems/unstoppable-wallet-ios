@@ -12,7 +12,7 @@
 "button.restore" = "Восстановить";
 "button.next" = "Далее";
 "button.remove" = "Откл.";
-"button.forward" = "Переслать";
+"button.share" = "Share";
 "button.save" = "Сохранить";
 "button.sync" = "Синхр.";
 "button.paste" = "Вставить";
