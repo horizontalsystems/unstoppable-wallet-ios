@@ -12,7 +12,7 @@
 "button.restore" = "복구";
 "button.next" = "다음";
 "button.remove" = "삭제";
-"button.forward" = "앞으로";
+"button.share" = "Share";
 "button.save" = "저장";
 "button.sync" = "동기화";
 "button.paste" = "불여넣기";
