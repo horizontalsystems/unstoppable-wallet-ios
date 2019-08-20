@@ -28,14 +28,6 @@ class ValueFormatter {
         return formatter
     }()
 
-    private let twoDigitFormatter: NumberFormatter = {
-        let formatter = NumberFormatter()
-        formatter.maximumFractionDigits = 2
-        formatter.numberStyle = .decimal
-        formatter.groupingSeparator = ""
-        return formatter
-    }()
-
     func format(coinValue: CoinValue, fractionPolicy: FractionPolicy = .full) -> String? {
         let absoluteValue = abs(coinValue.value)
 
@@ -131,10 +123,6 @@ class ValueFormatter {
     func formatValue(currencyValue: CurrencyValue) -> String? {
         decimalFormatter.maximumFractionDigits = currencyValue.currency.decimal
         return decimalFormatter.string(from: currencyValue.value as NSNumber)
-    }
-
-    func format(twoDigitValue: Decimal) -> String? {
-        return twoDigitFormatter.string(from: twoDigitValue as NSNumber)
     }
 
 }

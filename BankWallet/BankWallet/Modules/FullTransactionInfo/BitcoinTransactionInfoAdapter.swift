@@ -11,6 +11,14 @@ class BitcoinTransactionInfoAdapter: IFullTransactionInfoAdapter {
         self.unitName = unitName
     }
 
+    private static let feeRateFormatter: NumberFormatter = {
+        let formatter = NumberFormatter()
+        formatter.maximumFractionDigits = 2
+        formatter.numberStyle = .decimal
+        formatter.groupingSeparator = ""
+        return formatter
+    }()
+
     func convert(json: [String: Any]) -> FullTransactionRecord? {
         guard let txResponse = provider.convert(json: json) else {
             return nil
@@ -44,8 +52,8 @@ class BitcoinTransactionInfoAdapter: IFullTransactionInfoAdapter {
         if let size = txResponse.size {
             transactionItems.append(FullTransactionItem(title: "full_info.size".localized, titleColor: .cryptoGray, value: "\(size) (bytes)"))
         }
-        if let feeRate = txResponse.feePerByte {
-            let feeRateValue = (ValueFormatter.instance.format(twoDigitValue: feeRate) ?? "") + " (\(unitName))"
+        if let feeRate = txResponse.feePerByte, let formattedValue = BitcoinTransactionInfoAdapter.feeRateFormatter.string(from: feeRate as NSNumber) {
+            let feeRateValue = "\(formattedValue) (\(unitName))"
             transactionItems.append(FullTransactionItem(title: "full_info.rate".localized, titleColor: .cryptoGray, value: feeRateValue))
         }
         if !transactionItems.isEmpty {
@@ -93,4 +101,5 @@ class BitcoinTransactionInfoAdapter: IFullTransactionInfoAdapter {
 
         return FullTransactionRecord(providerName: provider.name, sections: sections)
     }
+
 }
