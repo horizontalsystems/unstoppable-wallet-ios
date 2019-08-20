@@ -62,8 +62,8 @@ class Erc20Adapter: EthereumBaseAdapter {
 
 extension Erc20Adapter {
 
-    static func clear() throws {
-        try Erc20Kit.clear()
+    static func clear(except excludedWalletIds: [String]) throws {
+        try Erc20Kit.clear(exceptFor: excludedWalletIds)
     }
 
 }

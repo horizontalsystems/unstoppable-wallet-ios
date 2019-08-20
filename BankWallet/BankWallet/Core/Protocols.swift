@@ -310,6 +310,10 @@ protocol IAccountStorage {
     func clear()
 }
 
+protocol IAccountCleaner {
+    func clearAll(except existingAccounts: [Account])
+}
+
 protocol IAccountRecordStorage {
     var allAccountRecords: [AccountRecord] { get }
     func save(accountRecord: AccountRecord)

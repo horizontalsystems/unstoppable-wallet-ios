@@ -2,13 +2,15 @@ import RxSwift
 
 class AccountManager {
     private let storage: IAccountStorage
+    private let accountCleaner: IAccountCleaner
     private let cache: AccountsCache = AccountsCache()
 
     private let accountsSubject = PublishSubject<[Account]>()
     private let deleteAccountSubject = PublishSubject<Account>()
 
-    init(storage: IAccountStorage) {
+    init(storage: IAccountStorage, accountCleaner: IAccountCleaner) {
         self.storage = storage
+        self.accountCleaner = accountCleaner
     }
 
 }
@@ -35,6 +37,7 @@ extension AccountManager: IAccountManager {
 
     func preloadAccounts() {
         cache.set(accounts: storage.allAccounts)
+        accountCleaner.clearAll(except: accounts)
     }
 
     func update(account: Account) {

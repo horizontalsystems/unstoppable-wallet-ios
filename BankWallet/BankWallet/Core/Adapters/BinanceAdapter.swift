@@ -51,6 +51,11 @@ extension BinanceAdapter {
     enum AddressConversion: Error {
         case invalidAddress
     }
+
+    public static func clear(except excludedWalletIds: [String]) throws {
+        try BinanceChainKit.clear(exceptFor: excludedWalletIds)
+    }
+
 }
 
 extension BinanceAdapter: IAdapter {
