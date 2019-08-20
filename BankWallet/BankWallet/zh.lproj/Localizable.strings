@@ -12,7 +12,7 @@
 "button.restore" = "恢复";
 "button.next" = "继续";
 "button.remove" = "移除";
-"button.forward" = "转发";
+"button.share" = "Share";
 "button.save" = "保存";
 "button.sync" = "Sync";
 "button.paste" = "粘帖";
