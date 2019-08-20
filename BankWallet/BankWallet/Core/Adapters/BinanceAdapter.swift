@@ -52,7 +52,7 @@ extension BinanceAdapter {
         case invalidAddress
     }
 
-    public static func clear(except excludedWalletIds: [String]) throws {
+    static func clear(except excludedWalletIds: [String]) throws {
         try BinanceChainKit.clear(exceptFor: excludedWalletIds)
     }
 

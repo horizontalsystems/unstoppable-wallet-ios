@@ -96,8 +96,9 @@ class App {
         pinManager = PinManager(secureStorage: secureStorage)
         wordsManager = WordsManager(localStorage: localStorage)
 
-        accountManager = AccountManager(storage: accountStorage, accountCleaner: AccountCleaner())
+        accountManager = AccountManager(storage: accountStorage)
         backupManager = BackupManager(accountManager: accountManager)
+        let kitCleaner = KitCleaner(accountManager: accountManager)
 
         walletFactory = WalletFactory()
         walletStorage = WalletStorage(appConfigProvider: appConfigProvider, walletFactory: walletFactory, storage: grdbStorage)
@@ -148,7 +149,8 @@ class App {
                 biometryManager: biometryManager,
                 blurManager: blurManager,
                 localStorage: localStorage,
-                secureStorage: secureStorage
+                secureStorage: secureStorage,
+                kitCleaner: kitCleaner
         )
     }
 

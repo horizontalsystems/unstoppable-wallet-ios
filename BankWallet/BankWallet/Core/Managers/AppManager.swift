@@ -8,8 +8,11 @@ class AppManager {
     private let blurManager: IBlurManager
     private let localStorage: ILocalStorage
     private let secureStorage: ISecureStorage
+    private let kitCleaner: IKitCleaner
 
-    init(accountManager: IAccountManager, walletManager: IWalletManager, adapterManager: IAdapterManager, lockManager: ILockManager, passcodeLockManager: IPasscodeLockManager, biometryManager: IBiometryManager, blurManager: IBlurManager, localStorage: ILocalStorage, secureStorage: ISecureStorage) {
+    init(accountManager: IAccountManager, walletManager: IWalletManager, adapterManager: IAdapterManager, lockManager: ILockManager,
+         passcodeLockManager: IPasscodeLockManager, biometryManager: IBiometryManager, blurManager: IBlurManager,
+         localStorage: ILocalStorage, secureStorage: ISecureStorage, kitCleaner: IKitCleaner) {
         self.accountManager = accountManager
         self.walletManager = walletManager
         self.adapterManager = adapterManager
@@ -19,6 +22,7 @@ class AppManager {
         self.blurManager = blurManager
         self.localStorage = localStorage
         self.secureStorage = secureStorage
+        self.kitCleaner = kitCleaner
     }
 
     private func handleFirstLaunch() {
@@ -39,6 +43,7 @@ extension AppManager: IAppManager {
         accountManager.preloadAccounts()
         walletManager.preloadWallets()
         biometryManager.refresh()
+        kitCleaner.clear()
     }
 
     func willResignActive() {
