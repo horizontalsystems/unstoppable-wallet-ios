@@ -12,7 +12,7 @@
 "button.restore" = "Wiederherstellen";
 "button.next" = "Weiter";
 "button.remove" = "Entfernen";
-"button.forward" = "Teilen";
+"button.share" = "Share";
 "button.save" = "Speichern";
 "button.sync" = "Sync";
 "button.paste" = "Einsetzen";
