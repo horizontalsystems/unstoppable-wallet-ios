@@ -18,8 +18,9 @@ class NumPad: UICollectionView {
     weak var numPadDelegate: NumPadDelegate?
     private let layout = UICollectionViewFlowLayout()
 
-    private var cells = [Cell]()
+    private let formatter = NumberFormatter()
 
+    private var cells = [Cell]()
     private var style: Style
 
     init(style: Style = []) {
@@ -29,6 +30,8 @@ class NumPad: UICollectionView {
 
         dataSource = self
         delegate = self
+
+        formatter.numberStyle = .decimal
 
         layout.minimumInteritemSpacing = NumPadTheme.itemSpacing
         layout.minimumLineSpacing = NumPadTheme.lineSpacing
@@ -46,8 +49,7 @@ class NumPad: UICollectionView {
             let localizedNumber = format(number: i)
             cells.append(.number(number: localizedNumber, letters: letters(for: i), filled: true, action: { [weak self] in self?.numPadDelegate?.numPadDidClick(digit: localizedNumber) }))
         }
-        if style.contains(.decimal) {
-            let decimalSeparator = ValueFormatter.instance.decimalSeparator
+        if style.contains(.decimal), let decimalSeparator = formatter.decimalSeparator {
             cells.append(.number(number: decimalSeparator, letters: nil, filled: false, action: { [weak self] in self?.numPadDelegate?.numPadDidClick(digit: decimalSeparator) }))
         } else {
             cells.append(.image(image: nil, pressedImage: nil, action: nil))
@@ -61,12 +63,12 @@ class NumPad: UICollectionView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func letters(for index: Int) -> String? {
+    private func letters(for index: Int) -> String? {
         return style.contains(.letters) ? "numpad_\(index)".localized : nil
     }
 
-    func format(number: Int) -> String {
-        return ValueFormatter.instance.format(number: number) ?? ""
+    private func format(number: Int) -> String {
+        return formatter.string(from: number as NSNumber) ?? ""
     }
 
 }

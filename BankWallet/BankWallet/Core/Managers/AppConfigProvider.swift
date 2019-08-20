@@ -9,9 +9,6 @@ class AppConfigProvider: IAppConfigProvider {
 
     let appWebPageLink: String = "https://unstoppable.money"
 
-    let fiatDecimal: Int = 2
-    let maxDecimal: Int = 8
-
     let reachabilityHost = "ipfs.horizontalsystems.xyz"
 
     var testMode: Bool {
