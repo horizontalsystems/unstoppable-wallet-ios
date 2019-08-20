@@ -47,7 +47,8 @@ class BitcoinBaseAdapter {
 
     private func convertToSatoshi(value: Decimal) -> Int {
         let coinValue: Decimal = value * coinRate
-        return NSDecimalNumber(decimal: ValueFormatter.instance.round(value: coinValue, scale: 0, roundingMode: .plain)).intValue
+        let handler = NSDecimalNumberHandler(roundingMode: .plain, scale: Int16(truncatingIfNeeded: 0), raiseOnExactness: false, raiseOnOverflow: false, raiseOnUnderflow: false, raiseOnDivideByZero: false)
+        return NSDecimalNumber(decimal: coinValue).rounding(accordingToBehavior: handler).intValue
     }
 
     class func kitMode(from syncMode: SyncMode) -> BitcoinCore.SyncMode {
