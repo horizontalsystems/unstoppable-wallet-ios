@@ -3,8 +3,6 @@ import Foundation
 class ValueFormatter {
     static let instance = ValueFormatter()
 
-    static private let fractionDigits = 8
-
     enum FractionPolicy {
         case full
         case threshold(high: Decimal, low: Decimal)
@@ -20,14 +18,6 @@ class ValueFormatter {
     private let currencyFormatter: NumberFormatter = {
         let formatter = NumberFormatter()
         formatter.numberStyle = .currency
-        return formatter
-    }()
-
-    private let amountFormatter: NumberFormatter = {
-        let formatter = NumberFormatter()
-        formatter.maximumFractionDigits = ValueFormatter.fractionDigits
-        formatter.numberStyle = .decimal
-        formatter.groupingSeparator = ""
         return formatter
     }()
 
@@ -52,10 +42,6 @@ class ValueFormatter {
         formatter.usesGroupingSeparator = false
         return formatter
     }()
-
-    var decimalSeparator: String {
-        return amountFormatter.decimalSeparator
-    }
 
     func format(coinValue: CoinValue, fractionPolicy: FractionPolicy = .full) -> String? {
         let absoluteValue = abs(coinValue.value)
@@ -144,10 +130,6 @@ class ValueFormatter {
         return currencyFormatter.string(from: currencyValue.value as NSNumber)
     }
 
-    func format(amount: Decimal) -> String? {
-        return amountFormatter.string(from: amount as NSNumber)
-    }
-
     func formatValue(coinValue: CoinValue) -> String? {
         decimalFormatter.maximumFractionDigits = min(coinValue.coin.decimal, 8)
         return decimalFormatter.string(from: coinValue.value as NSNumber)
@@ -177,10 +159,6 @@ class ValueFormatter {
             }
         }
         return nil
-    }
-
-    func format(number: Int) -> String? {//translator for numpad
-        return amountFormatter.string(from: number as NSNumber)
     }
 
     func round(value: Decimal, scale: Int, roundingMode: NSDecimalNumber.RoundingMode) -> Decimal {
