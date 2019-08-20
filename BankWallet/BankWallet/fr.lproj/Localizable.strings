@@ -105,6 +105,7 @@
 
 "deposit.receive_coin" = "Recevoir %@";
 "deposit.your_address" = "Votre address";
+"deposit.your_account" = "Your Account";
 "receive_alert.not_backed_up_description" = "You need to backup the keys for this wallet before you may receive funds on it.";
 
 // Send
