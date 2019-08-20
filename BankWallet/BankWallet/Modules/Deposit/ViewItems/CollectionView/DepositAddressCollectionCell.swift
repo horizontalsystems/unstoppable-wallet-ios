@@ -3,10 +3,11 @@ import SnapKit
 
 class DepositAddressCollectionCell: UICollectionViewCell {
     private let iconImageView = CoinIconImageView()
-    var titleLabel = UILabel()
-    var separatorView = UIView()
-    var qrCodeImageView = UIImageView()
-    var addressButton = HashView()
+    private let titleLabel = UILabel()
+    private let separatorView = UIView()
+    private let qrCodeImageView = UIImageView()
+    private let addressTitleLabel = UILabel()
+    private let addressButton = HashView()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -42,8 +43,6 @@ class DepositAddressCollectionCell: UICollectionViewCell {
             maker.size.equalTo(DepositTheme.qrCodeSideSize)
         }
 
-        let addressTitleLabel = UILabel()
-        addressTitleLabel.text = "deposit.your_address".localized
         addressTitleLabel.font = DepositTheme.addressTitleFont
         addressTitleLabel.textColor = DepositTheme.addressTitleColor
         addressTitleLabel.textAlignment = .center
@@ -70,9 +69,17 @@ class DepositAddressCollectionCell: UICollectionViewCell {
         iconImageView.bind(coin: address.coin)
         titleLabel.text = "deposit.receive_coin".localized(address.coin.title)
         qrCodeImageView.backgroundColor = .white
+        addressTitleLabel.text = addressTitle(coin: address.coin)
         addressButton.bind(value: address.address, showExtra: .icon, onTap: onCopy)
 
         qrCodeImageView.asyncSetImage { UIImage(qrCodeString: address.address, size: DepositTheme.qrCodeSideSize) }
+    }
+
+    private func addressTitle(coin: Coin) -> String {
+        switch coin.type {
+        case .eos: return "deposit.your_account".localized
+        default: return "deposit.your_address".localized
+        }
     }
 
 }
