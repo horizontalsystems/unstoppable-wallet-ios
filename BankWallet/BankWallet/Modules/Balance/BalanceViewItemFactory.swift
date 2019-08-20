@@ -35,8 +35,6 @@ class BalanceViewItemFactory: IBalanceViewItemFactory {
                     if rate.expired {
                         upToDate = false
                     }
-                } else {
-                    upToDate = false
                 }
 
                 if case .synced = item.state {
