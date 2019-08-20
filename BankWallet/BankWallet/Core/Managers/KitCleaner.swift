@@ -1,9 +1,18 @@
 import Foundation
 
-class AccountCleaner: IAccountCleaner {
+class KitCleaner {
+    private let accountManager: IAccountManager
 
-    func clearAll(except existingAccounts: [Account]) {
-        let accountIds = existingAccounts.map { $0.id }
+    init(accountManager: IAccountManager) {
+        self.accountManager = accountManager
+    }
+
+}
+
+extension KitCleaner: IKitCleaner {
+
+    func clear() {
+        let accountIds = accountManager.accounts.map { $0.id }
 
         DispatchQueue.global(qos: .background).async {
             try? BitcoinAdapter.clear(except: accountIds)

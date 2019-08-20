@@ -55,7 +55,7 @@ extension EosAdapter {
         case invalidAccount
     }
 
-    public static func clear(except excludedWalletIds: [String]) throws {
+    static func clear(except excludedWalletIds: [String]) throws {
         try EosKit.clear(exceptFor: excludedWalletIds)
     }
 

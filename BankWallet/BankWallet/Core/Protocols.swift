@@ -310,8 +310,8 @@ protocol IAccountStorage {
     func clear()
 }
 
-protocol IAccountCleaner {
-    func clearAll(except existingAccounts: [Account])
+protocol IKitCleaner {
+    func clear()
 }
 
 protocol IAccountRecordStorage {
