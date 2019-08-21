@@ -87,12 +87,16 @@ extension EosAdapter.ValidationError: LocalizedError {
 }
 
 extension BackendError: LocalizedError {
+    // not localized errors prevented via gui or business logic
     public var errorDescription: String? {
         switch self {
         case .selfTransfer: return "error.send_eos.self_transfer".localized
         case .accountNotExist: return "error.send_eos.account_not_exist".localized
         case .insufficientRam: return "error.send_eos.insufficient_ram".localized
-        case .overdrawn, .precisionMismatch, .wrongContract, .unknown: return "error.send_eos.unknown".localized //overdraw handled in send controller
+        case .overdrawn: return "error.send_eos.overdraw"
+        case .precisionMismatch: return "error.send_eos.precision_mismatch"
+        case .wrongContract: return "error.send_eos.wrong_contract"
+        case .unknown(let message): return "error.send_eos.unknown".localized(message)
         }
     }
 }

@@ -83,7 +83,7 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 "error.send_eos.self_transfer" = "Can't transfer token to own account";
 "error.send_eos.account_not_exist" = "Target account does not exist";
 "error.send_eos.insufficient_ram" = "Your account has not enough of ram";
-"error.send_eos.unknown" = "Something went wrong, check all details and try again";
+"error.send_eos.unknown" = "Something went wrong: %@";
 
 "backup.confirmation.title" = "Check ...";
 "backup.confirmation.secret_key" = "I understand that I am a sole owner of a private 12-word Secret Key which is securely stored on my phone and enables me to control funds on my wallet.";

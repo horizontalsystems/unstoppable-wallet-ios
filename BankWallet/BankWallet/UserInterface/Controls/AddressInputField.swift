@@ -223,6 +223,7 @@ class AddressInputField: UIView {
             }
         } else {
             errorLabel.isHidden = true
+            errorLabel.snp.removeConstraints()
             addressField.snp.remakeConstraints { maker in
                 maker.leading.top.bottom.trailing.equalToSuperview()
                 maker.height.equalTo(SendTheme.addressTextViewLineHeight * numberOfLines)
