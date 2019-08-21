@@ -195,8 +195,4 @@ extension MainSettingsViewController: IMainSettingsView {
         self.appVersion = appVersion
     }
 
-    func setTabItemBadge(count: Int) {
-        navigationController?.tabBarItem.badgeValue = count == 0 ? nil : "!"
-    }
-
 }

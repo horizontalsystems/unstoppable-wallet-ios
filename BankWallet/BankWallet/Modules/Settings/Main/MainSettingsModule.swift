@@ -6,7 +6,6 @@ protocol IMainSettingsView: class {
     func set(language: String)
     func set(lightMode: Bool)
     func set(appVersion: String)
-    func setTabItemBadge(count: Int)
 }
 
 protocol IMainSettingsViewDelegate {
