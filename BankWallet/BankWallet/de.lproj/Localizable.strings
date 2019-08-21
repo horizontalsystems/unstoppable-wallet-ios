@@ -60,6 +60,7 @@
 // Backup
 
 "backup.close" = "Schließen";
+"backup.backup_required" = "Backup Required";
 
 "backup.intro.title_backup" = "Sicherung";
 "backup.intro.title_show" = "Schlüssel anzeigen";
@@ -106,7 +107,7 @@
 "deposit.receive_coin" = "%@ Anfordern ";
 "deposit.your_address" = "Deine Adresse";
 "deposit.your_account" = "Your Account";
-"receive_alert.not_backed_up_description" = "You need to backup the keys for this wallet before you may receive funds on it.";
+"receive_alert.not_backed_up_description" = "You need to backup the %@ key before you may receive %@.";
 
 // Send
 
@@ -250,7 +251,7 @@
 "settings_manage_keys.show" = "Anzeigen";
 "settings_manage_keys.create" = "Erstellen";
 "settings_manage_keys.restore" = "Wiederherstellen";
-"settings_manage_keys.delete.cant_delete" = "Sie müssen den Schlüssel sichern, bevor Sie ihn von dem Gerät löschen.";
+"settings_manage_keys.delete.cant_delete" = "You need to backup %@ key before you may unlink it.";
 "settings_manage_keys.delete.title" = "Schlüssel löschen";
 "settings_manage_keys.delete.confirmation_remove" = "Diese Aktion wird den %@-Schlüssel (Wallet) von diesem Gerät löschen.";
 "settings_manage_keys.delete.confirmation_disable" = "Coins, die entfernt werden: %@";
