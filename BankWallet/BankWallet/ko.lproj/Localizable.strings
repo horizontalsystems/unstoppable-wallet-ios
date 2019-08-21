@@ -245,7 +245,7 @@
 // Manage Keys
 
 "settings_manage_keys.title" = "암호들";
-"settings_manage_keys.description" = "암호에 접근할 수 있는 사람은 누구나 지갑 자금을 훔칠 수 있습니다. 암호를 안전하게 보관하고 다른 사람에게 보여주지 마세요. \n\n휴대전화의 분실, 고장 또는 지갑 앱이 삭제된 경우 자금을 복원할 수 있도록 각 암호를 백업하세요.";
+"settings_manage_keys.description" = "Anyone with access to your Keys can steal your wallet funds. Store keys safely and never show them to anyone.\n\nBackup each key to be able to restore funds if you lose or break your phone, or simply the wallet app gets deleted.";
 "settings_manage_keys.delete" = "삭제";
 "settings_manage_keys.backup" = "백업";
 "settings_manage_keys.show" = "표시";
