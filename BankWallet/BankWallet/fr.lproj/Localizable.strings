@@ -79,6 +79,10 @@
 "backup.eos.account_name" = "Account Name";
 "backup.eos.active_private_key" = "Active Private Key";
 "backup.eos.hint" = "Copier votre clé en utilisant l'action « copier » apporte le des risques si vous utilisez des applications de gestion du presse-papiers ou d'autres applications qui peuvent avoir accès aux données du presse-papiers.";
+"error.send_eos.self_transfer" = "Can't transfer token to own account";
+"error.send_eos.account_not_exist" = "Target account does not exist";
+"error.send_eos.insufficient_ram" = "Your account has not enough of ram";
+"error.send_eos.unknown" = "Something went wrong: %@";
 
 "backup.confirmation.title" = "Vérification...";
 "backup.confirmation.secret_key" = "Je comprends que je suis propriétaire d'une clé secrète privée de 12 mots, qui est stockée en toute sécurité sur mon téléphone portable et me permet de contrôler les fonds sur mon porte-monnaie.";
