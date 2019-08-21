@@ -23,9 +23,9 @@ class ManageWalletsPresenter {
     private func enable(item: ManageWalletItem) {
         if let wallet = interactor.wallet(coin: item.coin) {
             item.wallet = wallet
-        } else {
+        } else if let predefinedAccountType = interactor.predefinedAccountType(coin: item.coin) {
             currentItem = item
-            view?.showNoAccount(coin: item.coin)
+            view?.showNoAccount(coin: item.coin, predefinedAccountType: predefinedAccountType)
         }
     }
 

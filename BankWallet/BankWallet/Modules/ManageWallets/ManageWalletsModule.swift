@@ -1,6 +1,6 @@
 protocol IManageWalletsView: class {
     func updateUI()
-    func showNoAccount(coin: Coin)
+    func showNoAccount(coin: Coin, predefinedAccountType: IPredefinedAccountType)
     func show(error: Error)
     func showSuccess()
 }
@@ -36,6 +36,7 @@ protocol IManageWalletsInteractor {
     func createAccount(defaultAccountType: DefaultAccountType) throws -> Account
     func createRestoredAccount(accountType: AccountType, defaultSyncMode: SyncMode?) -> Account
     func createWallet(coin: Coin, account: Account) -> Wallet
+    func predefinedAccountType(coin: Coin) -> IPredefinedAccountType?
 }
 
 protocol IManageWalletsInteractorDelegate: class {

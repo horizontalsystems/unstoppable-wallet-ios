@@ -5,12 +5,14 @@ class ManageWalletsInteractor {
     private let walletManager: IWalletManager
     private let walletFactory: IWalletFactory
     private let accountCreator: IAccountCreator
+    private let predefinedAccountTypeManager: IPredefinedAccountTypeManager
 
-    init(appConfigProvider: IAppConfigProvider, walletManager: IWalletManager, walletFactory: IWalletFactory, accountCreator: IAccountCreator) {
+    init(appConfigProvider: IAppConfigProvider, walletManager: IWalletManager, walletFactory: IWalletFactory, accountCreator: IAccountCreator, predefinedAccountTypeManager: IPredefinedAccountTypeManager) {
         self.appConfigProvider = appConfigProvider
         self.walletManager = walletManager
         self.walletFactory = walletFactory
         self.accountCreator = accountCreator
+        self.predefinedAccountTypeManager = predefinedAccountTypeManager
     }
 
 }
@@ -43,6 +45,10 @@ extension ManageWalletsInteractor: IManageWalletsInteractor {
 
     func createWallet(coin: Coin, account: Account) -> Wallet {
         return walletFactory.wallet(coin: coin, account: account, syncMode: account.defaultSyncMode)
+    }
+
+    func predefinedAccountType(coin: Coin) -> IPredefinedAccountType? {
+        return predefinedAccountTypeManager.predefinedAccountType(coin: coin)
     }
 
 }

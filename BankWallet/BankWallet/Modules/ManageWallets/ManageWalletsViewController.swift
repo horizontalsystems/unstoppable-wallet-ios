@@ -65,8 +65,8 @@ extension ManageWalletsViewController: IManageWalletsView {
         tableView.reloadData()
     }
 
-    func showNoAccount(coin: Coin) {
-        let controller = ManageWalletsNoAccountViewController(coin: coin, onSelectNew: { [weak self] in
+    func showNoAccount(coin: Coin, predefinedAccountType: IPredefinedAccountType) {
+        let controller = ManageWalletsNoAccountViewController(coin: coin, predefinedAccountType: predefinedAccountType, onSelectNew: { [weak self] in
             self?.delegate.didTapNew()
         }, onSelectRestore: { [weak self] in
             self?.delegate.didTapRestore()

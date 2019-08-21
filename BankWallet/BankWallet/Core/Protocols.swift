@@ -470,6 +470,7 @@ protocol IPredefinedAccountTypeManager {
     var allTypes: [IPredefinedAccountType] { get }
     func account(predefinedAccountType: IPredefinedAccountType) -> Account?
     func predefinedAccountType(accountType: AccountType) -> IPredefinedAccountType?
+    func predefinedAccountType(coin: Coin) -> IPredefinedAccountType?
     func createAccount(predefinedAccountType: IPredefinedAccountType) throws
     func createAllAccounts()
 }
