@@ -216,7 +216,7 @@
 
 "manage_coins.title" = "코인 매니저";
 "manage_coins.add_coin.title" = "%@ 추가 ";
-"manage_coins.add_coin.text" = "%@에 사용할 활성화된 암호가 없습니다. 아래의 생성 버튼을 사용하여 새 암호 (지갑)를 만드세요. \n\n이미 있으시다면 %@에 기존의 암호를 사용할 수도 있습니다.";
+"manage_coins.add_coin.text" = "You don't have key for %@ which requires a %@ key. The wallet can generate the key for you. Use the Create button below to generate a new key.\n\nYou may also use the existing %@ key for the %@ if you have one.";
 "manage_coins.add_coin.create" = "만들기";
 "manage_coins.add_coin.restore" = "복구";
 
