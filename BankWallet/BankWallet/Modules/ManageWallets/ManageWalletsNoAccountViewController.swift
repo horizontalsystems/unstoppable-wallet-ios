@@ -6,10 +6,10 @@ class ManageWalletsNoAccountViewController: ActionSheetController {
     private let textItem: AlertTextItem
     private let coin: Coin
 
-    init(coin: Coin, onSelectNew: @escaping () -> (), onSelectRestore: @escaping () -> ()) {
+    init(coin: Coin, predefinedAccountType: IPredefinedAccountType, onSelectNew: @escaping () -> (), onSelectRestore: @escaping () -> ()) {
         self.coin = coin
 
-        textItem = AlertTextItem(text: "manage_coins.add_coin.text".localized(coin.title, coin.title), tag: 1)
+        textItem = AlertTextItem(text: "manage_coins.add_coin.text".localized(coin.title, predefinedAccountType.title.localized, predefinedAccountType.title.localized, coin.title), tag: 1)
 
         super.init(withModel: BaseAlertModel(), actionSheetThemeConfig: AppTheme.actionSheetConfig)
 
