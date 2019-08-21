@@ -21,8 +21,6 @@ extension MainSettingsPresenter: IMainSettingsViewDelegate {
         view?.set(language: interactor.currentLanguage)
         view?.set(lightMode: interactor.lightMode)
         view?.set(appVersion: interactor.appVersion)
-
-        view?.setTabItemBadge(count: interactor.nonBackedUpCount)
     }
 
     func didTapSecurity() {
@@ -63,7 +61,6 @@ extension MainSettingsPresenter: IMainSettingsInteractorDelegate {
 
     func didUpdateNonBackedUp(count: Int) {
         view?.set(backedUp: count == 0)
-        view?.setTabItemBadge(count: count)
     }
 
     func didUpdateBaseCurrency() {
