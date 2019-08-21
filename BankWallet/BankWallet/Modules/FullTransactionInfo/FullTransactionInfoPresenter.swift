@@ -22,7 +22,7 @@ extension FullTransactionInfoPresenter: IFullTransactionInfoViewDelegate {
 
     func viewDidLoad() {
         interactor.didLoad()
-        interactor.updateProvider(for: state.coin)
+        interactor.updateProvider(for: state.wallet)
 
         tryLoadInfo()
     }
@@ -73,7 +73,7 @@ extension FullTransactionInfoPresenter: IFullTransactionInfoViewDelegate {
     }
 
     func onTapChangeResource() {
-        router.openProviderSettings(coin: state.coin, transactionHash: state.transactionHash)
+        router.openProviderSettings(coin: state.wallet.coin, transactionHash: state.transactionHash)
     }
 
     func onTapProviderLink() {
@@ -105,7 +105,7 @@ extension FullTransactionInfoPresenter: IFullTransactionInfoInteractorDelegate {
         state.set(transactionRecord: nil)
         view?.reload()
 
-        interactor.updateProvider(for: state.coin)
+        interactor.updateProvider(for: state.wallet)
         tryLoadInfo()
     }
 

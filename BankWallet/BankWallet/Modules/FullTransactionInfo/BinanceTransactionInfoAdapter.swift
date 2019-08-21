@@ -60,4 +60,5 @@ class BinanceTransactionInfoAdapter: IFullTransactionInfoAdapter {
 
         return FullTransactionRecord(providerName: provider.name, sections: sections)
     }
+
 }

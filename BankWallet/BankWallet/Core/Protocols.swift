@@ -361,7 +361,7 @@ protocol IPingManager {
 }
 
 protocol IEosProvider: IProvider {
-    func convert(json: [String: Any]) -> IEosResponse?
+    func convert(json: [String: Any], account: String) -> IEosResponse?
 }
 
 protocol IBitcoinForksProvider: IProvider {
@@ -410,7 +410,7 @@ protocol IUrlManager {
 }
 
 protocol IFullTransactionInfoProviderFactory {
-    func provider(`for` coin: Coin) -> IFullTransactionInfoProvider
+    func provider(`for` wallet: Wallet) -> IFullTransactionInfoProvider
 }
 
 protocol ISettingsProviderMap {

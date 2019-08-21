@@ -12,7 +12,8 @@ class FullTransactionInfoProviderFactory {
 
 extension FullTransactionInfoProviderFactory: IFullTransactionInfoProviderFactory {
 
-    func provider(for coin: Coin) -> IFullTransactionInfoProvider {
+    func provider(for wallet: Wallet) -> IFullTransactionInfoProvider {
+        let coin = wallet.coin
         let providerName = dataProviderManager.baseProvider(for: coin).name
 
         var provider: IProvider
@@ -37,7 +38,7 @@ extension FullTransactionInfoProviderFactory: IFullTransactionInfoProviderFactor
         } else if case .eos = coin.type {
             let eosProvider = dataProviderManager.eos(for: providerName)
             provider = eosProvider
-            adapter = EosTransactionInfoAdapter(provider: eosProvider, coin: coin)
+            adapter = EosTransactionInfoAdapter(provider: eosProvider, wallet: wallet)
         } else {
             let ethereumProvider = dataProviderManager.ethereum(for: providerName)
             provider = ethereumProvider

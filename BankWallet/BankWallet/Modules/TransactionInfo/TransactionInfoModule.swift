@@ -16,5 +16,5 @@ protocol ITransactionInfoInteractorDelegate: class {
 }
 
 protocol ITransactionInfoRouter {
-    func openFullInfo(transactionHash: String, coin: Coin)
+    func openFullInfo(transactionHash: String, wallet: Wallet)
 }
