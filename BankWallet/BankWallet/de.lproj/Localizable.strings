@@ -245,7 +245,7 @@
 // Manage Keys
 
 "settings_manage_keys.title" = "Schlüssel";
-"settings_manage_keys.description" = "Jeder, der Ihre Schlüssel kennt, kann Ihr Wallet-Guthaben stehlen. Bewahren Sie die Schlüssel sicher auf und zeigen Sie diese niemandem.\nSichern Sie jeden Schlüssel so, dass Sie auf das Guthaben zugreifen können, wenn Ihr Telefon kaputt geht oder die Wallet-App gelöscht wird.";
+"settings_manage_keys.description" = "Anyone with access to your Keys can steal your wallet funds. Store keys safely and never show them to anyone.\n\nBackup each key to be able to restore funds if you lose or break your phone, or simply the wallet app gets deleted.";
 "settings_manage_keys.delete" = "Löschen";
 "settings_manage_keys.backup" = "Sicherung";
 "settings_manage_keys.show" = "Anzeigen";
