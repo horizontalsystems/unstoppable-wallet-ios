@@ -60,6 +60,7 @@
 // Backup
 
 "backup.close" = "Закрыть";
+"backup.backup_required" = "Backup Required";
 
 "backup.intro.title_backup" = "Резервная копия";
 "backup.intro.title_show" = "Показать Ключ";
@@ -106,7 +107,7 @@
 "deposit.receive_coin" = "Получить %@";
 "deposit.your_address" = "Ваш Адрес";
 "deposit.your_account" = "Your Account";
-"receive_alert.not_backed_up_description" = "You need to backup the keys for this wallet before you may receive funds on it.";
+"receive_alert.not_backed_up_description" = "You need to backup the %@ key before you may receive %@.";
 
 // Send
 
@@ -250,7 +251,7 @@
 "settings_manage_keys.show" = "Показать";
 "settings_manage_keys.create" = "Создать";
 "settings_manage_keys.restore" = "Восстановить";
-"settings_manage_keys.delete.cant_delete" = "Вам нужно сделать резервную копию этого ключа, прежде чем вы можете его отсоединить.";
+"settings_manage_keys.delete.cant_delete" = "You need to backup %@ key before you may unlink it.";
 "settings_manage_keys.delete.title" = "Удалить Ключ";
 "settings_manage_keys.delete.confirmation_remove" = "Это действие удалит ваш %@ ключ (кошелёк) с этого устройства.";
 "settings_manage_keys.delete.confirmation_disable" = "Монеты, которые будут отключены: %@";
