@@ -60,6 +60,7 @@
 // Backup
 
 "backup.close" = "Kapat";
+"backup.backup_required" = "Backup Required";
 
 "backup.intro.title_backup" = "Yedekle";
 "backup.intro.title_show" = "Anahtarı Göster";
@@ -106,7 +107,7 @@
 "deposit.receive_coin" = "%@ al";
 "deposit.your_address" = "Adresiniz";
 "deposit.your_account" = "Your Account";
-"receive_alert.not_backed_up_description" = "Para almadan önce bu cüzdanın anahtarlarını yedeklemeniz gerekir.";
+"receive_alert.not_backed_up_description" = "You need to backup the %@ key before you may receive %@.";
 
 // Send
 
@@ -250,7 +251,7 @@
 "settings_manage_keys.show" = "Göster";
 "settings_manage_keys.create" = "Oluştur";
 "settings_manage_keys.restore" = "Geri Yükle";
-"settings_manage_keys.delete.cant_delete" = "Silmeden önce bu anahtarı yedeklemeniz gerekiyor.";
+"settings_manage_keys.delete.cant_delete" = "You need to backup %@ key before you may unlink it.";
 "settings_manage_keys.delete.title" = "Anahtarı Sil";
 "settings_manage_keys.delete.confirmation_remove" = "Bu işlem %@ anahtarını (cüzdanı) bu cihazdan kaldıracak.";
 "settings_manage_keys.delete.confirmation_disable" = "Etkisizleştirilecek cüzdanlar: %@";
