@@ -60,6 +60,7 @@
 // Backup
 
 "backup.close" = "가까운, 닫힌";
+"backup.backup_required" = "Backup Required";
 
 "backup.intro.title_backup" = "백업";
 "backup.intro.title_show" = "암호 보이기";
@@ -106,7 +107,7 @@
 "deposit.receive_coin" = "수신%@";
 "deposit.your_address" = "당신의 주소";
 "deposit.your_account" = "Your Account";
-"receive_alert.not_backed_up_description" = "You need to backup the keys for this wallet before you may receive funds on it.";
+"receive_alert.not_backed_up_description" = "You need to backup the %@ key before you may receive %@.";
 
 // Send
 
@@ -250,7 +251,7 @@
 "settings_manage_keys.show" = "표시";
 "settings_manage_keys.create" = "만들기";
 "settings_manage_keys.restore" = "복구";
-"settings_manage_keys.delete.cant_delete" = "암호를 삭제하기전 백업이 필요합니다.";
+"settings_manage_keys.delete.cant_delete" = "You need to backup %@ key before you may unlink it.";
 "settings_manage_keys.delete.title" = "암호 삭제";
 "settings_manage_keys.delete.confirmation_remove" = "이 작업은 %@ 암호(지갑)를 이 장치에서 삭제합니다.";
 "settings_manage_keys.delete.confirmation_disable" = "비활성화될 코인: %@";
