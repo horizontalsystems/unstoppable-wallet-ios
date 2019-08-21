@@ -245,7 +245,7 @@
 // Manage Keys
 
 "settings_manage_keys.title" = "密钥";
-"settings_manage_keys.description" = "任何有权访问您密钥的人都可以窃取您的钱包资金。安全存放钥匙，不要让任何人看到。\n备份每个密钥，以便在您的手机松动或损坏时恢复资金，或者只是钱包应用程序被删除。\n\n";
+"settings_manage_keys.description" = "Anyone with access to your Keys can steal your wallet funds. Store keys safely and never show them to anyone.\n\nBackup each key to be able to restore funds if you lose or break your phone, or simply the wallet app gets deleted.";
 "settings_manage_keys.delete" = "删除";
 "settings_manage_keys.backup" = "备份";
 "settings_manage_keys.show" = "查看";
