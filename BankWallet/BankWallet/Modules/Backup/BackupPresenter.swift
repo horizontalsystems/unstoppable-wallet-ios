@@ -1,5 +1,5 @@
 class BackupPresenter: IBackupPresenter {
-    weak var view: IBackupWordsView? = nil
+    weak var view: IBackupWordsView?
 
     private let router: IBackupRouter
     private let interactor: IBackupInteractor

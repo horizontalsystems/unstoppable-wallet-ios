@@ -5,7 +5,6 @@ class BalancePresenter {
     private let router: IBalanceRouter
     private var dataSource: IBalanceItemDataSource
     private let factory: IBalanceViewItemFactory
-    private let predefinedAccountTypeManager: IPredefinedAccountTypeManager
     private let differ: IDiffer
     private let sortingOnThreshold: Int
 
@@ -13,12 +12,11 @@ class BalancePresenter {
 
     var walletToBackup: Wallet?
 
-    init(interactor: IBalanceInteractor, router: IBalanceRouter, dataSource: IBalanceItemDataSource, factory: IBalanceViewItemFactory, predefinedAccountTypeManager: IPredefinedAccountTypeManager, differ: IDiffer, sortingOnThreshold: Int) {
+    init(interactor: IBalanceInteractor, router: IBalanceRouter, dataSource: IBalanceItemDataSource, factory: IBalanceViewItemFactory, differ: IDiffer, sortingOnThreshold: Int) {
         self.interactor = interactor
         self.router = router
         self.dataSource = dataSource
         self.factory = factory
-        self.predefinedAccountTypeManager = predefinedAccountTypeManager
         self.differ = differ
         self.sortingOnThreshold = sortingOnThreshold
     }
@@ -123,9 +121,9 @@ extension BalancePresenter: IBalanceViewDelegate {
         let wallet = dataSource.item(at: index).wallet
         if wallet.account.backedUp {
             router.openReceive(for: wallet)
-        } else {
+        } else if let predefinedAccountType = interactor.predefinedAccountType(wallet: wallet) {
             walletToBackup = wallet
-            view?.showBackupAlert()
+            view?.showBackupRequired(coin: wallet.coin, predefinedAccountType: predefinedAccountType)
         }
     }
 
@@ -141,11 +139,11 @@ extension BalancePresenter: IBalanceViewDelegate {
         router.openSortType(selected: dataSource.sortType)
     }
 
-    func onBackup() {
-        guard let wallet = walletToBackup, let accountType = (predefinedAccountTypeManager.allTypes.first { $0.supports(accountType: wallet.account.type) }) else {
+    func didRequestBackup() {
+        guard let wallet = walletToBackup, let predefinedAccountType = interactor.predefinedAccountType(wallet: wallet) else {
             return
         }
-        router.openBackup(wallet: wallet, predefinedAccountType: accountType)
+        router.openBackup(wallet: wallet, predefinedAccountType: predefinedAccountType)
     }
 
 }

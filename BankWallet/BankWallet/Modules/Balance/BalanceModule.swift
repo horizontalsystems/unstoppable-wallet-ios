@@ -7,7 +7,7 @@ protocol IBalanceView: class {
     func updateHeader()
     func didRefresh()
     func setSort(isOn: Bool)
-    func showBackupAlert()
+    func showBackupRequired(coin: Coin, predefinedAccountType: IPredefinedAccountType)
 }
 
 protocol IBalanceViewDelegate {
@@ -25,7 +25,7 @@ protocol IBalanceViewDelegate {
     func onOpenManageWallets()
 
     func onSortTypeChange()
-    func onBackup()
+    func didRequestBackup()
 }
 
 protocol IBalanceInteractor {
@@ -34,6 +34,7 @@ protocol IBalanceInteractor {
     func initWallets()
     func fetchRates(currencyCode: String, coinCodes: [CoinCode])
     func refresh()
+    func predefinedAccountType(wallet: Wallet) -> IPredefinedAccountType?
 }
 
 protocol IBalanceInteractorDelegate: class {

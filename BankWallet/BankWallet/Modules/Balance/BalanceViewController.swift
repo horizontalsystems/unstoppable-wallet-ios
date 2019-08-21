@@ -224,32 +224,12 @@ extension BalanceViewController: IBalanceView {
         headerView.sortButton.isHidden = !isOn
     }
 
-    func showBackupAlert() {
-        let alert = AlertViewController(delegate: self, onDismiss: { [weak self] success in
-            if success {
-                self?.delegate.onBackup()
-            }
+    func showBackupRequired(coin: Coin, predefinedAccountType: IPredefinedAccountType) {
+        let controller = BackupRequiredViewController(text: "receive_alert.not_backed_up_description".localized(predefinedAccountType.title.localized, coin.title), onBackup: { [weak self] in
+            self?.delegate.didRequestBackup()
         })
-        present(alert, animated: true)
-    }
 
-}
-
-extension BalanceViewController: IAlertViewDelegate {
-
-    var items: [AlertItem] {
-        return [
-            .message("receive_alert.not_backed_up_description"),
-            .row("button.backup")
-        ]
-    }
-
-    func onDidLoad(alert: IAlertViewController) {
-        alert.setSelected(index: 0)
-    }
-
-    func onSelect(alert: IAlertViewController, index: Int) {
-        alert.dismiss(state: true, byFade: true)
+        present(controller, animated: true)
     }
 
 }

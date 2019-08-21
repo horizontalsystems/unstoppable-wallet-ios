@@ -1,19 +1,19 @@
 import UIKit
 import ActionSheet
 
-class ManageAccountsBackupRequiredViewController: ActionSheetController {
+class BackupRequiredViewController: ActionSheetController {
     private let titleItem: AlertTitleItem
     private let textItem: AlertTextItem
 
-    init(title: String, onBackup: @escaping () -> ()) {
+    init(text: String, onBackup: @escaping () -> ()) {
         titleItem = AlertTitleItem(
-                title: title.localized,
-                icon: UIImage(named: "Key Icon")?.withRenderingMode(.alwaysTemplate),
-                iconTintColor: ManageAccountsTheme.alertKeyImageColor,
+                title: "backup.backup_required".localized,
+                icon: UIImage(named: "Attention Icon")?.withRenderingMode(.alwaysTemplate),
+                iconTintColor: BackupTheme.alertColor,
                 tag: 0
         )
 
-        textItem = AlertTextItem(text: "settings_manage_keys.delete.cant_delete".localized, tag: 1)
+        textItem = AlertTextItem(text: text, tag: 1)
 
         super.init(withModel: BaseAlertModel(), actionSheetThemeConfig: AppTheme.actionSheetConfig)
 

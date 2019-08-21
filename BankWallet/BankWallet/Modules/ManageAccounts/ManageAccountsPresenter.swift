@@ -53,7 +53,7 @@ extension ManageAccountsPresenter: IManageAccountsViewDelegate {
             router.showUnlink(account: account, predefinedAccountType: item.predefinedAccountType)
         } else {
             currentItem = item
-            view?.showBackupRequired(title: item.predefinedAccountType.title)
+            view?.showBackupRequired(predefinedAccountType: item.predefinedAccountType)
         }
     }
 
