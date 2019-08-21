@@ -5599,7 +5599,6 @@
 				58AAA8A820E6E4B95AC9A80F /* ChartView.swift in Sources */,
 				58AAA33FFCA61421C4E98E02 /* ChartPoint.swift in Sources */,
 				58AAAF5A0C5E84837CE8545D /* ChartBezierPath.swift in Sources */,
-				58AAA6D4023D70429F02C4C0,
 				58AAA42F7F1B4019CC7A3DBD /* ValueTextLayer.swift in Sources */,
 				58AAAD30F717C0483A5DE9A2 /* ValueLinesLayer.swift in Sources */,
 				58AAAA8BE9ED1A75634A85E8 /* TimestampTextLayer.swift in Sources */,

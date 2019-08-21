@@ -85,3 +85,14 @@ extension EosAdapter.ValidationError: LocalizedError {
         }
     }
 }
+
+extension BackendError: LocalizedError {
+    public var errorDescription: String? {
+        switch self {
+        case .selfTransfer: return "error.send_eos.self_transfer".localized
+        case .accountNotExist: return "error.send_eos.account_not_exist".localized
+        case .insufficientRam: return "error.send_eos.insufficient_ram".localized
+        case .overdrawn, .precisionMismatch, .wrongContract, .unknown: return "error.send_eos.unknown".localized //overdraw handled in send controller
+        }
+    }
+}
