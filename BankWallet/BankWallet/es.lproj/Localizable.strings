@@ -79,6 +79,10 @@
 "backup.eos.account_name" = "Nombre de cuenta";
 "backup.eos.active_private_key" = "Clave activa privada";
 "backup.eos.hint" = "Copiar su clave utilizando la acción \"copiar\" implica ciertos riesgos si utiliza aplicaciones de gestión de portapapeles u otra aplicación que pueda tener acceso a la información del portapapeles.";
+"error.send_eos.self_transfer" = "Can't transfer token to own account";
+"error.send_eos.account_not_exist" = "Target account does not exist";
+"error.send_eos.insufficient_ram" = "Your account has not enough of ram";
+"error.send_eos.unknown" = "Something went wrong: %@";
 
 "backup.confirmation.title" = "Comprobar";
 "backup.confirmation.secret_key" = "Entiendo que soy un único propietario de una clave secreta privada de 12 palabras que se almacena de forma segura en mi teléfono y me permite controlar los fondos en mi monedero.";
