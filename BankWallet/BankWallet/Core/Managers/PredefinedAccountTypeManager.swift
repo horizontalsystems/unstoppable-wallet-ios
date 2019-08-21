@@ -21,6 +21,10 @@ extension PredefinedAccountTypeManager: IPredefinedAccountTypeManager {
         return accountManager.accounts.first { predefinedAccountType.supports(accountType: $0.type) }
     }
 
+    func predefinedAccountType(accountType: AccountType) -> IPredefinedAccountType? {
+        return allTypes.first { $0.supports(accountType: accountType) }
+    }
+
     func createAccount(predefinedAccountType: IPredefinedAccountType) throws {
         _ = try accountCreator.createNewAccount(defaultAccountType: predefinedAccountType.defaultAccountType, createDefaultWallets: true)
     }

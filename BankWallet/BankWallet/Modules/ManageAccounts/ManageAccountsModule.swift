@@ -4,7 +4,7 @@ protocol IManageAccountsView: class {
     func reload()
     func showCreateConfirmation(title: String, coinCodes: String)
     func showSuccess()
-    func showBackupRequired(title: String)
+    func showBackupRequired(predefinedAccountType: IPredefinedAccountType)
 }
 
 protocol IManageAccountsViewDelegate {

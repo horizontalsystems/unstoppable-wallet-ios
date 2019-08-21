@@ -96,7 +96,6 @@
 		11B352DCC8C501739E2C4200 /* UIImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3570D7EEAB2DE4E6A5D74 /* UIImageView.swift */; };
 		11B352DCCAD3FF8EC3585E6D /* BiometryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B352254688700E3FF9B59F /* BiometryManager.swift */; };
 		11B352E00B6E0DF4F6D42486 /* DashAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B358CA18471A93188933B4 /* DashAdapter.swift */; };
-		11B352E0E5A144C62843BBD3 /* ManageAccountsBackupRequiredViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B352C8FAAA68BAED864DE2 /* ManageAccountsBackupRequiredViewController.swift */; };
 		11B352EEC1F6E90F09CC2C96 /* UnlinkModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3529D276325D741CAEEF5 /* UnlinkModule.swift */; };
 		11B352FCDB697DA5FB30E1FA /* PasscodeLockRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35223C65205606EB97AE4 /* PasscodeLockRouter.swift */; };
 		11B352FDD80F24D5EF340F80 /* EnabledWallet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35BDC2E3F845A52C442AD /* EnabledWallet.swift */; };
@@ -181,7 +180,6 @@
 		11B3555CA9B2F01358E055BE /* UnlinkPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35419B0C846238DDC50F3 /* UnlinkPresenter.swift */; };
 		11B35589969C6C5A0403F7B1 /* BaseCurrencySettingsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35F3E6B957ECFF5D1CE2E /* BaseCurrencySettingsRouter.swift */; };
 		11B3558BE4EB06B14132439E /* RateApiProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35055FA381EE9CA438CB0 /* RateApiProvider.swift */; };
-		11B3559016AF707C5DF29491 /* ManageAccountsBackupRequiredViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B352C8FAAA68BAED864DE2 /* ManageAccountsBackupRequiredViewController.swift */; };
 		11B35590A4DA4BCFB3D38DDF /* AppManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B352884D47E0B23DCF2C2C /* AppManager.swift */; };
 		11B355910DDDD9B57384518A /* AddressParserFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B353450DED12F9F024BAD0 /* AddressParserFactory.swift */; };
 		11B3559B3F93D6808473D95F /* SendEosInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35D43482DC6ECD766D51A /* SendEosInteractor.swift */; };
@@ -415,7 +413,6 @@
 		11B35C7079C3051F2D11ADFC /* SendAccountPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3522F4EC3F33A0801A017 /* SendAccountPresenter.swift */; };
 		11B35C7BC60C11F683675793 /* UnlinkInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B351A464627DCBABD1AC17 /* UnlinkInteractor.swift */; };
 		11B35C80FC14E7DAE4C78011 /* SendFeeSliderModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35324DB86C78E30BBA775 /* SendFeeSliderModule.swift */; };
-		11B35C83FDB61601DC197D11 /* ManageAccountsBackupRequiredViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B352C8FAAA68BAED864DE2 /* ManageAccountsBackupRequiredViewController.swift */; };
 		11B35C8621E221DA1F157A5B /* AccountFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35C4D6F474C2EB3687EB4 /* AccountFactory.swift */; };
 		11B35C9177E1FE3794E4F5A4 /* BaseCurrencySettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35E4481DCD98BF2074797 /* BaseCurrencySettingsViewController.swift */; };
 		11B35CA7604E5F25E639A9A9 /* AccountType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35542A7D7FE1BDC2E73E2 /* AccountType.swift */; };
@@ -474,6 +471,7 @@
 		11B35E63A1AA24A27A21C0C9 /* ReachabilityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35788190D05AF5DBB9072 /* ReachabilityManager.swift */; };
 		11B35E648E30317B55D112DC /* RestoreWordCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35590D7A207123A91E121 /* RestoreWordCell.swift */; };
 		11B35E6A69796E7DE9CE3623 /* WordsValidatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3532DFFBC8DCEEBDC19FB /* WordsValidatorTests.swift */; };
+		11B35E6F3CB74E991D0B49E4 /* BackupRequiredViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3561ABF4A7574A69F6796 /* BackupRequiredViewController.swift */; };
 		11B35E763604B66B7A134205 /* EosAccountType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3589F07BFA3626F5E41FD /* EosAccountType.swift */; };
 		11B35E831A2E06381231BBEB /* SyncModeModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B350A04B4D9122C9828EC6 /* SyncModeModule.swift */; };
 		11B35E83530D4ABA849384A3 /* PasscodeLockManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B354019EC5B2604E175F6E /* PasscodeLockManager.swift */; };
@@ -495,8 +493,10 @@
 		11B35F21648179D3166B5538 /* ManageAccountsViewItemFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35987C48604FA6CB81C92 /* ManageAccountsViewItemFactory.swift */; };
 		11B35F2D49204D34BA6C4EDB /* AlertButtonItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3566164D1D7C7898132E2 /* AlertButtonItemView.swift */; };
 		11B35F318E009D7BCCCE1E1B /* AdapterManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B357F5E2BDAAAE4E5446E3 /* AdapterManager.swift */; };
+		11B35F3BCA196DFB9F2A8CBA /* BackupRequiredViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3561ABF4A7574A69F6796 /* BackupRequiredViewController.swift */; };
 		11B35F3F5CD25FA39671E1A0 /* SendFeeSliderRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35D64EA4FDD339C8DC162 /* SendFeeSliderRouter.swift */; };
 		11B35F480494F2B42440272B /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B358B344E13290D77605E0 /* Logger.swift */; };
+		11B35F5116C53581FECADB3E /* BackupRequiredViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3561ABF4A7574A69F6796 /* BackupRequiredViewController.swift */; };
 		11B35F6305DC6D459B9A4B6A /* SendBinancePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35F571876EA99794DD145 /* SendBinancePresenter.swift */; };
 		11B35F663F7E12BFDDE3C88B /* AccountManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35872950C107E4810AB6B /* AccountManager.swift */; };
 		11B35F66D2561CD9555C8857 /* UnlinkModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3529D276325D741CAEEF5 /* UnlinkModule.swift */; };
@@ -1622,7 +1622,6 @@
 		11B352A3792AA46E98DDE5B6 /* SendStateViewItemFactoryTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendStateViewItemFactoryTests.swift; sourceTree = "<group>"; };
 		11B352A8C9C3AA2AB1776F3C /* UnlinkViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnlinkViewController.swift; sourceTree = "<group>"; };
 		11B352BAE51F541AB844EEDA /* ManageWalletsInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManageWalletsInteractor.swift; sourceTree = "<group>"; };
-		11B352C8FAAA68BAED864DE2 /* ManageAccountsBackupRequiredViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManageAccountsBackupRequiredViewController.swift; sourceTree = "<group>"; };
 		11B352D114BED753EEBA8B8D /* BitcoinAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BitcoinAdapter.swift; sourceTree = "<group>"; };
 		11B352D314A298B6B832F309 /* EthereumAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EthereumAdapter.swift; sourceTree = "<group>"; };
 		11B352D70D3A3A2851CCEDA3 /* AuthData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthData.swift; sourceTree = "<group>"; };
@@ -1660,6 +1659,7 @@
 		11B355AD0C896DBA7122F3DC /* JsonApiProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JsonApiProvider.swift; sourceTree = "<group>"; };
 		11B355E86612AEE00ED19CFE /* BackupManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackupManager.swift; sourceTree = "<group>"; };
 		11B35614C6E244926AF48701 /* Account.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Account.swift; sourceTree = "<group>"; };
+		11B3561ABF4A7574A69F6796 /* BackupRequiredViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackupRequiredViewController.swift; sourceTree = "<group>"; };
 		11B356347098BE98619962B4 /* LanguageManagerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LanguageManagerTests.swift; sourceTree = "<group>"; };
 		11B3564E0721887CEBDE39F2 /* BaseButtonItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseButtonItemView.swift; sourceTree = "<group>"; };
 		11B3566164D1D7C7898132E2 /* AlertButtonItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertButtonItemView.swift; sourceTree = "<group>"; };
@@ -2309,6 +2309,7 @@
 				58AAA04194E7E2B466F92828 /* BackupInteractor.swift */,
 				58AAA5F63E9C788A68C8AF5A /* BackupPresenter.swift */,
 				D348A77020C7C58900803B9E /* BackupController.swift */,
+				11B3561ABF4A7574A69F6796 /* BackupRequiredViewController.swift */,
 			);
 			path = Backup;
 			sourceTree = "<group>";
@@ -2345,7 +2346,6 @@
 				11B358B4DFC88B488F3BC039 /* ManageAccountsViewController.swift */,
 				11B35987C48604FA6CB81C92 /* ManageAccountsViewItemFactory.swift */,
 				11B354EBB4D8C8618135258A /* ManageAccountsCreateAccountViewController.swift */,
-				11B352C8FAAA68BAED864DE2 /* ManageAccountsBackupRequiredViewController.swift */,
 			);
 			path = ManageAccounts;
 			sourceTree = "<group>";
@@ -4454,7 +4454,6 @@
 				11B3551E2CFF0BC4FFB82572 /* AlertTitleItemView.swift in Sources */,
 				11B3563A09E7252148E0E698 /* AlertTextItem.swift in Sources */,
 				11B35E62A493AB4DDE36E0A1 /* AlertTextItemView.swift in Sources */,
-				11B352E0E5A144C62843BBD3 /* ManageAccountsBackupRequiredViewController.swift in Sources */,
 				1A564A07B3A2ECE3CF752A0F /* AdapterState.swift in Sources */,
 				1A564703555DD89136D915FE /* SyncMode.swift in Sources */,
 				1A564C1ED93BC9A50A72FE66 /* FeeRatePriority.swift in Sources */,
@@ -4554,6 +4553,7 @@
 				58AAAEFEC334FA5E1707CD54 /* ChartFrame.swift in Sources */,
 				11B35D744E68BD2134A82F51 /* SendAmountDecimalParser.swift in Sources */,
 				2FA5D3577AE809D563B14FB1 /* KitCleaner.swift in Sources */,
+				11B35F5116C53581FECADB3E /* BackupRequiredViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5007,7 +5007,6 @@
 				11B351A578F7905BE12C607D /* AlertTitleItemView.swift in Sources */,
 				11B35CB0AD76DDCF4C39A33D /* AlertTextItem.swift in Sources */,
 				11B3581976E9F03D1676B6DE /* AlertTextItemView.swift in Sources */,
-				11B35C83FDB61601DC197D11 /* ManageAccountsBackupRequiredViewController.swift in Sources */,
 				1A564C756284485E93C0F78D /* AdapterState.swift in Sources */,
 				1A5643C5A8BBFD6F2DC8C734 /* SyncMode.swift in Sources */,
 				1A56444542269713AFAFEAC1 /* FeeRatePriority.swift in Sources */,
@@ -5107,6 +5106,7 @@
 				58AAADB4BB2FF0CEB55EE73C /* ChartFrame.swift in Sources */,
 				11B35DAC19966754CD3DC184 /* SendAmountDecimalParser.swift in Sources */,
 				2FA5DB3B49EF898B63DD0F94 /* KitCleaner.swift in Sources */,
+				11B35E6F3CB74E991D0B49E4 /* BackupRequiredViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5509,7 +5509,6 @@
 				11B35322D2B437AF99146AB8 /* AlertTitleItemView.swift in Sources */,
 				11B350F09F8AD3A400A7050C /* AlertTextItem.swift in Sources */,
 				11B3513436F19369074E9CA8 /* AlertTextItemView.swift in Sources */,
-				11B3559016AF707C5DF29491 /* ManageAccountsBackupRequiredViewController.swift in Sources */,
 				1A56416B9DC6DA281AD34575 /* AdapterState.swift in Sources */,
 				1A564D53F049C4784CAC814D /* SyncMode.swift in Sources */,
 				1A56474706CAF9E9F46FC55E /* FeeRatePriority.swift in Sources */,
@@ -5609,6 +5608,7 @@
 				58AAA3F267161B59D5C34F97 /* ChartFrame.swift in Sources */,
 				11B35A7902BD6C980289F6B3 /* SendAmountDecimalParser.swift in Sources */,
 				2FA5DD18B3869199E0BEF72A /* KitCleaner.swift in Sources */,
+				11B35F3BCA196DFB9F2A8CBA /* BackupRequiredViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

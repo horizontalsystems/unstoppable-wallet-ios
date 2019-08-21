@@ -469,6 +469,7 @@ protocol IUUIDProvider {
 protocol IPredefinedAccountTypeManager {
     var allTypes: [IPredefinedAccountType] { get }
     func account(predefinedAccountType: IPredefinedAccountType) -> Account?
+    func predefinedAccountType(accountType: AccountType) -> IPredefinedAccountType?
     func createAccount(predefinedAccountType: IPredefinedAccountType) throws
     func createAllAccounts()
 }
