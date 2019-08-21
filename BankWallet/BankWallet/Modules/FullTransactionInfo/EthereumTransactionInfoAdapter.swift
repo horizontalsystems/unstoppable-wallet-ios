@@ -91,4 +91,5 @@ class EthereumTransactionInfoAdapter: IFullTransactionInfoAdapter {
 
         return FullTransactionRecord(providerName: provider.name, sections: sections)
     }
+
 }

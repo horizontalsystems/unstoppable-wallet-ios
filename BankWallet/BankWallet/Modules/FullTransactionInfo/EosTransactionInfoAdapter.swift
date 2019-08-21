@@ -4,15 +4,19 @@ class EosTransactionInfoAdapter: IFullTransactionInfoAdapter {
     private static let gWeiCode = "GWei"
 
     private let provider: IEosProvider
-    private let coin: Coin
+    private let wallet: Wallet
 
-    init(provider: IEosProvider, coin: Coin) {
+    init(provider: IEosProvider, wallet: Wallet) {
         self.provider = provider
-        self.coin = coin
+        self.wallet = wallet
     }
 
     func convert(json: [String: Any]) -> FullTransactionRecord? {
-        guard let txResponse = provider.convert(json: json) else {
+        guard case let .eos(account, _) = wallet.account.type else {
+            return nil
+        }
+
+        guard let txResponse = provider.convert(json: json, account: account) else {
             return nil
         }
 
@@ -71,4 +75,5 @@ class EosTransactionInfoAdapter: IFullTransactionInfoAdapter {
 
         return FullTransactionRecord(providerName: provider.name, haveBlockExplorer: provider.url(for: "") != nil, sections: sections)
     }
+
 }

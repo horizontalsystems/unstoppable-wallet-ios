@@ -2,8 +2,8 @@ import ObjectMapper
 
 class EosInfraProvider: IEosProvider {
 
-    func convert(json: [String: Any]) -> IEosResponse? {
-        return try? EosResponse(JSONObject: json)
+    func convert(json: [String: Any], account: String) -> IEosResponse? {
+        return try? EosResponse(JSONObject: json, context: EosResponse.AccountContext(account: account))
     }
 
     var name: String = "Eosnode.tools"
@@ -25,8 +25,8 @@ class EosInfraProvider: IEosProvider {
 
 class EosGreymassProvider: IEosProvider {
 
-    func convert(json: [String: Any]) -> IEosResponse? {
-        return try? EosResponse(JSONObject: json)
+    func convert(json: [String: Any], account: String) -> IEosResponse? {
+        return try? EosResponse(JSONObject: json, context: EosResponse.AccountContext(account: account))
     }
 
     var name: String = "Greymass.com"
@@ -77,16 +77,46 @@ class EosResponse: IEosResponse, ImmutableMappable {
             return formatter.date(from: stringDate)
         }, toJSON: { _ in nil }))
 
-        if let traces: [[String: Any]] = try? map.value("traces") {
-            let action = (traces.first { dictionary in
-                (dictionary["act"] as? [String: Any])?["name"] as? String == "transfer"
-            })?["act"] as? [String: Any]
-            contract = action?["account"] as? String
-            from = (action?["data"] as? [String: Any])?["from"] as? String
-            to = (action?["data"] as? [String: Any])?["to"] as? String
-            quantity = (action?["data"] as? [String: Any])?["quantity"] as? String
-            memo = (action?["data"] as? [String: Any])?["memo"] as? String
+        guard let traces: [[String: Any]] = try? map.value("traces") else {
+            return
         }
+
+        guard let accountContext = map.context as? AccountContext else {
+            return
+        }
+
+        guard let trace = traces.first(where: { trace in
+            guard let action = trace["act"] as? [String: Any], let receipt = trace["receipt"] as? [String: Any] else {
+                return false
+            }
+
+            return action["name"] as? String == "transfer" && receipt["receiver"] as? String == accountContext.account
+        }) else {
+            return
+        }
+
+        guard let action = trace["act"] as? [String: Any] else {
+            return
+        }
+
+        contract = action["account"] as? String
+
+        guard let actionData = action["data"] as? [String: Any] else {
+            return
+        }
+
+        from = actionData["from"] as? String
+        to = actionData["to"] as? String
+        quantity = actionData["quantity"] as? String
+        memo = actionData["memo"] as? String
+    }
+
+}
+
+extension EosResponse {
+
+    struct AccountContext: MapContext {
+        let account: String
     }
 
 }
