@@ -216,7 +216,7 @@
 
 "manage_coins.title" = "Portefeuilles";
 "manage_coins.add_coin.title" = "Ajouter %@ ";
-"manage_coins.add_coin.text" = "Vous n'avez pas de clé active à utiliser avec %@. Utilisez le bouton Créer ci-dessous pour générer une nouvelle clé (porte-monnaie).\n\nVous pouvez également utiliser la clé existante pour le %@ si vous l'avez déjà.";
+"manage_coins.add_coin.text" = "You don't have key for %@ which requires a %@ key. The wallet can generate the key for you. Use the Create button below to generate a new key.\n\nYou may also use the existing %@ key for the %@ if you have one.";
 "manage_coins.add_coin.create" = "Créer";
 "manage_coins.add_coin.restore" = "Restaurer";
 
