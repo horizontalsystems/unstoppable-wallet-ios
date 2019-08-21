@@ -79,6 +79,10 @@
 "backup.eos.account_name" = "Account Name";
 "backup.eos.active_private_key" = "Active Private Key";
 "backup.eos.hint" = "Copying your key using “copy” action poses some risks if you use any clipboard management apps or some other apps that may have access to clipboard data.";
+"error.send_eos.self_transfer" = "Can't transfer token to own account";
+"error.send_eos.account_not_exist" = "Target account does not exist";
+"error.send_eos.insufficient_ram" = "Your account has not enough of ram";
+"error.send_eos.unknown" = "Something went wrong: %@";
 
 "backup.confirmation.title" = "برسي...";
 "backup.confirmation.secret_key" = "من قبول ميكنم كي تنها من صاحب اين ١٢ عدد مخفي ميباشم كي اين عداد در گوشي همراه من ميباشد و تنها من ميتوانم با اين عداد كيف پول و مقدار پول خود را فعال كنم.";
