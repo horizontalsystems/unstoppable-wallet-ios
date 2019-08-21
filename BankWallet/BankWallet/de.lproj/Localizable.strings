@@ -216,7 +216,7 @@
 
 "manage_coins.title" = "Coin Manager";
 "manage_coins.add_coin.title" = "%@ hinzufügen ";
-"manage_coins.add_coin.text" = "Sie haben keinen aktiven Schlüssel für die Verwendung von %@. Nutzen Sie den unteren Button \"Erstellen\", um einen neuen Schlüssel (Wallet) zu erstellen.\n\nSie können auch einen bestehenden Schlüssel für die %@ nutzen, wenn wie bereits einen haben.";
+"manage_coins.add_coin.text" = "You don't have key for %@ which requires a %@ key. The wallet can generate the key for you. Use the Create button below to generate a new key.\n\nYou may also use the existing %@ key for the %@ if you have one.";
 "manage_coins.add_coin.create" = "Erstellen";
 "manage_coins.add_coin.restore" = "Wiederherstellen";
 
