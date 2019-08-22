@@ -2,20 +2,20 @@ import UIKit
 import ActionSheet
 
 class BackupRequiredViewController: ActionSheetController {
-    private let titleItem: AlertTitleItem
-    private let textItem: AlertTextItem
-
     init(text: String, onBackup: @escaping () -> ()) {
-        titleItem = AlertTitleItem(
+        super.init(withModel: BaseAlertModel(), actionSheetThemeConfig: AppTheme.actionSheetConfig)
+
+        let titleItem = AlertTitleItem(
                 title: "backup.backup_required".localized,
                 icon: UIImage(named: "Attention Icon")?.withRenderingMode(.alwaysTemplate),
                 iconTintColor: BackupTheme.alertColor,
-                tag: 0
+                tag: 0,
+                onClose: { [weak self] in
+                    self?.dismiss(animated: true)
+                }
         )
 
-        textItem = AlertTextItem(text: text, tag: 1)
-
-        super.init(withModel: BaseAlertModel(), actionSheetThemeConfig: AppTheme.actionSheetConfig)
+        let textItem = AlertTextItem(text: text, tag: 1)
 
         model.addItemView(titleItem)
         model.addItemView(textItem)
