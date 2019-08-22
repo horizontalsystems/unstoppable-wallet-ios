@@ -204,6 +204,7 @@
 "settings.language" = "Idioma";
 "settings.about" = "Acerca de";
 "settings.tell_friends" = "Recomendar a un amigo";
+"settings.report_problem" = "Report Problem";
 "settings.light_mode" = "Modo de brillo";
 "settings.info_title" = "UNSTOPPABLE";
 "settings.info_subtitle" = "aplicación descentralizada";
@@ -245,6 +246,12 @@
 "settings_security.touch_id" = "Identificación táctil";
 "settings_security.face_id" = "Identificación de caras";
 "security_settings.delete_alert_button" = "Eliminar del teléfono";
+
+// Settings -> Report Problem
+
+"settings.report_problem.title" = "Report Problem";
+"settings.report_problem.email" = "E-mail";
+"settings.report_problem.telegram" = "Telegram";
 
 // Manage Keys
 
