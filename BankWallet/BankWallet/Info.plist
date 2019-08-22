@@ -36,6 +36,10 @@
 	<string>${infura_project_id}</string>
 	<key>InfuraProjectSecret</key>
 	<string>${infura_project_secret}</string>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>tg</string>
+	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>

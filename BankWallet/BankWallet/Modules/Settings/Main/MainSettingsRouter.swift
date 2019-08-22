@@ -31,6 +31,10 @@ extension MainSettingsRouter: IMainSettingsRouter {
         viewController?.present(activityViewController, animated: true, completion: nil)
     }
 
+    func showReportProblem() {
+        viewController?.navigationController?.pushViewController(ReportRouter.module(), animated: true)
+    }
+
     func openAppLink() {
         if let url = URL(string: "http://horizontalsystems.io/") {
             UIApplication.shared.open(url)

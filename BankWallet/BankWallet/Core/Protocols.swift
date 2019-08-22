@@ -253,6 +253,8 @@ protocol IAppConfigProvider {
     var ipfsGateways: [String] { get }
 
     var appWebPageLink: String { get }
+    var reportEmail: String { get }
+    var reportTelegramGroup: String { get }
 
     var reachabilityHost: String { get }
     var testMode: Bool { get }

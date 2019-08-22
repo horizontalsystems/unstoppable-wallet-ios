@@ -8,6 +8,8 @@ class AppConfigProvider: IAppConfigProvider {
     ]
 
     let appWebPageLink: String = "https://unstoppable.money"
+    let reportEmail: String = "hsdao@protonmail.ch"
+    let reportTelegramGroup: String = "unstoppable_wallet"
 
     let reachabilityHost = "ipfs.horizontalsystems.xyz"
 
