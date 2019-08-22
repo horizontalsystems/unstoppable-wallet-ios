@@ -37,6 +37,8 @@ extension SendRouter {
         switch adapter {
         case let adapter as ISendBitcoinAdapter:
             partialModule = module(coin: wallet.coin, adapter: adapter, router: router)
+        case let adapter as ISendDashAdapter:
+            partialModule = module(coin: wallet.coin, adapter: adapter, router: router)
         case let adapter as ISendEthereumAdapter:
             partialModule = module(coin: wallet.coin, adapter: adapter, router: router)
         case let adapter as ISendEosAdapter:
@@ -79,6 +81,23 @@ extension SendRouter {
         feeSliderModule.delegate = presenter
 
         return (presenter, [amountView, addressView, feeView, feeSliderView])
+    }
+
+    private static func module(coin: Coin, adapter: ISendDashAdapter, router: ISendRouter) -> (ISendViewDelegate, [UIView]) {
+        let (amountView, amountModule) = SendAmountRouter.module(coin: coin)
+        let (addressView, addressModule) = SendAddressRouter.module(coin: coin)
+        let (feeView, feeModule) = SendFeeRouter.module(coin: coin)
+
+        let interactor = SendDashInteractor(adapter: adapter)
+        let presenter = SendDashPresenter(coin: coin, interactor: interactor, router: router, confirmationFactory: SendConfirmationItemFactory(), amountModule: amountModule, addressModule: addressModule, feeModule: feeModule)
+
+        interactor.delegate = presenter
+
+        amountModule.delegate = presenter
+        addressModule.delegate = presenter
+        feeModule.delegate = presenter
+
+        return (presenter, [amountView, addressView, feeView])
     }
 
     private static func module(coin: Coin, adapter: ISendEthereumAdapter, router: ISendRouter) -> (ISendViewDelegate, [UIView])? {

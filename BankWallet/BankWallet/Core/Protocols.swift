@@ -117,6 +117,13 @@ protocol ISendBitcoinAdapter {
     func sendSingle(amount: Decimal, address: String, feeRate: Int) -> Single<Void>
 }
 
+protocol ISendDashAdapter {
+    func availableBalance(address: String?) -> Decimal
+    func validate(address: String) throws
+    func fee(amount: Decimal, address: String?) -> Decimal
+    func sendSingle(amount: Decimal, address: String) -> Single<Void>
+}
+
 protocol ISendEthereumAdapter {
     func availableBalance(gasPrice: Int) -> Decimal
     var ethereumBalance: Decimal { get }

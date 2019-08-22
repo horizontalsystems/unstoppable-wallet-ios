@@ -22,6 +22,9 @@ class BitcoinAdapter: BitcoinBaseAdapter {
 
 }
 
+extension BitcoinAdapter: ISendBitcoinAdapter {
+}
+
 extension BitcoinAdapter {
 
     static func clear(except excludedWalletIds: [String]) throws {

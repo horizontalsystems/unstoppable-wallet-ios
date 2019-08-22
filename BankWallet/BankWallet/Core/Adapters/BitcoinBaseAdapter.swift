@@ -157,7 +157,7 @@ extension BitcoinBaseAdapter: IBalanceAdapter {
 
 }
 
-extension BitcoinBaseAdapter: ISendBitcoinAdapter {
+extension BitcoinBaseAdapter {
 
     func availableBalance(feeRate: Int, address: String?) -> Decimal {
         return max(0, balance - fee(amount: balance, feeRate: feeRate, address: address))
