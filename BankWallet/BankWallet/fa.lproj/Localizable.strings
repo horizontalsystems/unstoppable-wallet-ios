@@ -155,6 +155,8 @@
 "tx_info.to_hash" = "به";
 "tx_info.button_verify" = "تامين كنيد";
 "tx_info.rate" = "چارت هاي تاريخي";
+"tx_info.fee" = "Fee";
+"tx_info.note" = "* The value of this transaction appears as 0 because it was sent to your own address";
 
 // Full Info
 
