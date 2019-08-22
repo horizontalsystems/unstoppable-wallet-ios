@@ -7,10 +7,10 @@ class EosAdapter {
     private let eosKit: EosKit
     private let asset: Asset
 
-    init(eosKit: EosKit, token: String, symbol: String) {
+    init(eosKit: EosKit, token: String, symbol: String, decimal: Int) {
         self.eosKit = eosKit
 
-        asset = eosKit.register(token: token, symbol: symbol)
+        asset = eosKit.register(token: token, symbol: symbol, decimalCount: decimal)
     }
 
     private func transactionRecord(fromTransaction transaction: Transaction) -> TransactionRecord {

@@ -250,7 +250,7 @@ CHECKOUT OPTIONS:
     :commit: bc0a1dc754be459031857678bbaceb27b3642aa3
     :git: https://github.com/horizontalsystems/eosio-swift
   EosKit.swift:
-    :commit: a98a7436be6902791494d6c300f0fedb81356124
+    :commit: 8efea68172b0a83f9c80136797e9104fb8acaa14
     :git: https://github.com/horizontalsystems/eos-kit-ios/
   Erc20Kit.swift:
     :commit: 88915a50a5b18441175c65c28ea7a851203618d3
