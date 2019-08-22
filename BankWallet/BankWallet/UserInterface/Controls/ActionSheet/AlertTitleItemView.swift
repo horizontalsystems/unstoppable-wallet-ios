@@ -36,12 +36,14 @@ class AlertTitleItemView: BaseActionItemView {
             maker.centerY.equalToSuperview()
         }
 
-        iconImageView.image = item?.icon
         titleLabel.text = item?.title
 
+        var image = item?.icon
         if let color = item?.iconTintColor {
             iconImageView.tintColor = color
+            image = image?.withRenderingMode(.alwaysTemplate)
         }
+        iconImageView.image = image
     }
 
     @objc func onTapClose() {
