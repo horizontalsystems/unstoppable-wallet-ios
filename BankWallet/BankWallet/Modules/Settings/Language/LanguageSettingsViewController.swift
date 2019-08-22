@@ -50,8 +50,8 @@ class LanguageSettingsViewController: WalletViewController, SectionsDataSource {
 
         let itemsCount = items.count
         sections.append(Section(id: "languages", headerState: languagesHeader, footerState: languagesFooter, rows: items.enumerated().map { (index, item) in
-            Row<DoubleLineCell>(id: item.id, height: SettingsTheme.languageCellHeight, bind: { cell, _ in
-                cell.bind(flagImage: UIImage(named: item.id), title: item.title, subtitle: item.subtitle, selected: item.current, last: index == itemsCount - 1)
+            Row<DoubleLineCell>(id: item.id, height: SettingsTheme.doubleLineCellHeight, bind: { cell, _ in
+                cell.bind(icon: UIImage(named: item.id), title: item.title, subtitle: item.subtitle, selected: item.current, last: index == itemsCount - 1)
             }, action: { [weak self] _ in
                 self?.delegate.didSelect(item: item)
             })

@@ -17,6 +17,7 @@ protocol IMainSettingsViewDelegate {
     func didSwitch(lightMode: Bool)
     func didTapAbout()
     func didTapTellFriends()
+    func didTapReportProblem()
     func didTapAppLink()
 }
 
@@ -43,6 +44,7 @@ protocol IMainSettingsRouter {
     func showLanguageSettings()
     func showAbout()
     func showShare(text: String)
+    func showReportProblem()
     func openAppLink()
     func reloadAppInterface()
 }

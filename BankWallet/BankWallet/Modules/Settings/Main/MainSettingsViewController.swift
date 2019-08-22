@@ -117,9 +117,15 @@ class MainSettingsViewController: WalletViewController, SectionsDataSource {
         }))
         infoRows.append(Row<SettingsCell>(id: "tell_friends", hash: "tell_friends", height: SettingsTheme.cellHeight, autoDeselect: true, bind: { cell, _ in
             cell.selectionStyle = .default
-            cell.bind(titleIcon: UIImage(named: "Tell Friends Icon"), title: "settings.tell_friends".localized, showDisclosure: true, last: true)
+            cell.bind(titleIcon: UIImage(named: "Tell Friends Icon"), title: "settings.tell_friends".localized, showDisclosure: true)
         }, action: { [weak self] _ in
             self?.delegate.didTapTellFriends()
+        }))
+        infoRows.append(Row<SettingsCell>(id: "report_problem", hash: "report_problem", height: SettingsTheme.cellHeight, bind: { cell, _ in
+            cell.selectionStyle = .default
+            cell.bind(titleIcon: UIImage(named: "Report Problem Icon"), title: "settings.report_problem".localized, showDisclosure: true, last: true)
+        }, action: { [weak self] _ in
+            self?.delegate.didTapReportProblem()
         }))
         let infoHeader: ViewState<SectionSeparator> = .cellType(hash: "info_header", binder: nil, dynamicHeight: { _ in SettingsTheme.headerHeight })
         let infoFooter: ViewState<SettingsInfoFooter> = .cellType(hash: "info_footer", binder: { [weak self] view in

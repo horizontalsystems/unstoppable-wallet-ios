@@ -50,7 +50,7 @@ class DataProviderSettingsViewController: UIViewController, SectionsDataSource {
         var sections = [SectionProtocol]()
 
         sections.append(Section(id: "providers", headerState: .margin(height: SettingsTheme.subSettingsHeaderHeight), footerState: .margin(height: SettingsTheme.subSettingsHeaderHeight), rows: items.map { item in
-            Row<DataProviderCell>(id: item.name, height: SettingsTheme.providerCellHeight, bind: { cell, _ in
+            Row<DataProviderCell>(id: item.name, height: SettingsTheme.doubleLineCellHeight, bind: { cell, _ in
                 cell.bind(title: item.name, online: item.online, checking: item.checking, selected: item.selected)
             }, action: { [weak self] _ in
                 self?.delegate.didSelect(item: item)

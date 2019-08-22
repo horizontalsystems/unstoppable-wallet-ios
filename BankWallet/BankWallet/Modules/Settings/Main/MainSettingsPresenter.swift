@@ -51,6 +51,10 @@ extension MainSettingsPresenter: IMainSettingsViewDelegate {
         router.showShare(text: "settings_tell_friends.text".localized + "\n" + interactor.appWebPageLink)
     }
 
+    func didTapReportProblem() {
+        router.showReportProblem()
+    }
+
     func didTapAppLink() {
         router.openAppLink()
     }

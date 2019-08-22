@@ -33,9 +33,7 @@ class SettingsTheme {
     static let subtitleColor = UIColor.cryptoGray
     static let onlineSubtitleColor = UIColor.cryptoGreen
     static let offlineSubtitleColor = UIColor.cryptoRed
-    static let languageCellHeight: CGFloat = 60
-    static let currencyCellHeight: CGFloat = 60
-    static let providerCellHeight: CGFloat = 60
+    static let doubleLineCellHeight: CGFloat = 60
     static let infoFooterSeparatorColor = UIColor.cryptoGray
     static let successIconTint = UIColor.cryptoYellow
     static let infoImageTopMargin: CGFloat = 32
