@@ -155,6 +155,8 @@
 "tx_info.to_hash" = "收件人";
 "tx_info.button_verify" = "验证";
 "tx_info.rate" = "历史汇率";
+"tx_info.fee" = "Fee";
+"tx_info.note" = "* The value of this transaction appears as 0 because it was sent to your own address";
 
 // Full Info
 
