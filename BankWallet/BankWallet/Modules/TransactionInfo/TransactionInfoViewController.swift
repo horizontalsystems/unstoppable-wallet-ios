@@ -18,9 +18,15 @@ class TransactionInfoViewController: ActionSheetController {
     func initItems() {
         let item = delegate.viewItem
 
-        let titleItem = TransactionTitleItem(coin: item.wallet.coin, tag: 0, onClose: { [weak self] in
-            self?.dismiss(animated: true)
-        })
+        let titleItem = AlertTitleItem(
+                title: "tx_info.title".localized,
+                icon: UIImage(coin: item.wallet.coin),
+                iconTintColor: AppTheme.coinIconColor,
+                tag: 0,
+                onClose: { [weak self] in
+                    self?.dismiss(animated: true)
+                }
+        )
         model.addItemView(titleItem)
 
         let amountItem = TransactionAmountItem(item: item, tag: 1)

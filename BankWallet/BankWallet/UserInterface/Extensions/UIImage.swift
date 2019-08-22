@@ -61,4 +61,8 @@ extension UIImage {
         self.init(ciImage: scaledImage, scale: UIScreen.main.scale, orientation: .up)
     }
 
+    convenience init?(coin: Coin) {
+        self.init(named: "\(coin.code.lowercased())")
+    }
+
 }
