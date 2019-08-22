@@ -99,7 +99,7 @@ extension TransactionsViewController: ITransactionsView {
     }
 
     func reload(with diff: [Change<TransactionViewItem>], items: [TransactionViewItem], animated: Bool) {
-        if self.items == nil {
+        if (self.items == nil) || !(isViewLoaded && view.window != nil) {
             self.items = items
             tableView.reloadData()
             return
