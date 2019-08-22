@@ -22,7 +22,10 @@ class UnlinkViewController: ActionSheetController {
                 title: "settings_manage_keys.delete.title".localized,
                 icon: UIImage(named: "Attention Icon")?.withRenderingMode(.alwaysTemplate),
                 iconTintColor: ManageAccountsTheme.attentionColor,
-                tag: 0
+                tag: 0,
+                onClose: { [weak self] in
+                    self?.dismiss(animated: true)
+                }
         )
         model.addItemView(titleItem)
 
