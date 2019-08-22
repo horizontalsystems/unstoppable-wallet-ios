@@ -1,6 +1,12 @@
 import UIKit
 
 class ChartScaleHelper {
+    static let formatter: NumberFormatter = {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        return formatter
+    }()
+
     private let valueScaleLines: Int
     private let valueOffsetPercent: Decimal
     private let masScale: Int
@@ -76,16 +82,26 @@ class ChartScaleHelper {
 
 
     private func textHolderSize(max: Decimal, scale: Int) -> CGSize {
-        let integerCount = String("\(Int(truncating: max as NSNumber))").count
-        var patternString = String(repeating: "9", count: integerCount)
-        if scale != 0 {
-            patternString.append(".")
-            patternString.append(contentsOf: String(repeating: "9", count: scale))
+        let formatter = ChartScaleHelper.formatter
+        formatter.maximumFractionDigits = scale
+        formatter.minimumFractionDigits = scale
+
+        let formattedString: String
+        if let formatted = formatter.string(from: max as NSNumber) {
+            formattedString = formatted
+        } else {
+            let integerCount = String("\(Int(truncating: max as NSNumber))").count
+            var patternString = String(repeating: "9", count: integerCount)
+            if scale != 0 {
+                patternString.append(".")
+                patternString.append(contentsOf: String(repeating: "9", count: scale))
+            }
+            formattedString = patternString
         }
         let horizontalMargins = textLeftMargin + textRightMargin
         let verticalMargins = textVerticalMargin * 2
 
-        let textSize = (patternString as NSString).size(withAttributes: [NSAttributedString.Key.font: textFont])
+        let textSize = (formattedString as NSString).size(withAttributes: [NSAttributedString.Key.font: textFont])
         return CGSize(width: textSize.width + horizontalMargins, height: textSize.height + verticalMargins)
     }
 

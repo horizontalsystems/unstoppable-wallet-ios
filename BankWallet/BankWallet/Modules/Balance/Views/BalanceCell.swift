@@ -2,6 +2,7 @@ import UIKit
 import UIExtensions
 import HUD
 import RxSwift
+import SnapKit
 
 class BalanceCell: UITableViewCell {
     private static let minimumProgress = 10
@@ -28,9 +29,11 @@ class BalanceCell: UITableViewCell {
 
     private let receiveButton = RespondButton()
     private let payButton = RespondButton()
+    private let chartButton = RespondButton()
 
     private var onPay: (() -> ())?
     private var onReceive: (() -> ())?
+    private var onChart: (() -> ())?
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -134,7 +137,6 @@ class BalanceCell: UITableViewCell {
         payButton.snp.makeConstraints { maker in
             maker.leading.equalTo(receiveButton.snp.trailing).offset(BalanceTheme.cellSmallMargin)
             maker.top.equalTo(self.nameLabel.snp.bottom).offset(BalanceTheme.buttonsTopMargin)
-            maker.trailing.equalToSuperview().offset(-BalanceTheme.cellSmallMargin)
             maker.height.equalTo(BalanceTheme.buttonsHeight)
             maker.width.equalTo(receiveButton)
         }
@@ -143,15 +145,35 @@ class BalanceCell: UITableViewCell {
         payButton.textColors = ButtonTheme.textColorDictionary
         payButton.cornerRadius = BalanceTheme.buttonCornerRadius
         payButton.titleLabel.text = "balance.send".localized
+
+        clippingView.addSubview(chartButton)
+        chartButton.wrapperView.snp.remakeConstraints { maker in
+            maker.leading.equalToSuperview().offset(SendTheme.smallMargin)
+            maker.top.bottom.equalToSuperview()
+            maker.trailing.equalToSuperview().offset(-SendTheme.smallMargin)
+        }
+        chartButton.snp.makeConstraints { maker in
+            maker.leading.equalTo(payButton.snp.trailing).offset(BalanceTheme.cellSmallMargin)
+            maker.top.equalTo(self.nameLabel.snp.bottom).offset(BalanceTheme.buttonsTopMargin)
+            maker.trailing.equalToSuperview().offset(-BalanceTheme.cellSmallMargin)
+            maker.height.equalTo(BalanceTheme.buttonsHeight)
+            maker.width.equalTo(40)
+        }
+        chartButton.onTap = { [weak self] in self?.chart() }
+        chartButton.backgrounds = ButtonTheme.redBackgroundDictionary
+        chartButton.textColors = ButtonTheme.textColorDictionary
+        chartButton.cornerRadius = BalanceTheme.buttonCornerRadius
+        chartButton.titleLabel.text = "\u{20aa}"
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("not implemented")
     }
 
-    func bind(item: BalanceViewItem, selected: Bool, animated: Bool = false, onReceive: @escaping (() -> ()), onPay: @escaping (() -> ())) {
+    func bind(item: BalanceViewItem, selected: Bool, animated: Bool = false, onReceive: @escaping (() -> ()), onPay: @escaping (() -> ()), onChart: @escaping (() -> ())) {
         self.onPay = onPay
         self.onReceive = onReceive
+        self.onChart = onChart
 
         bindView(item: item, selected: selected, animated: animated)
     }
@@ -232,6 +254,10 @@ class BalanceCell: UITableViewCell {
 
     func pay() {
         onPay?()
+    }
+
+    func chart() {
+        onChart?()
     }
 
     deinit {

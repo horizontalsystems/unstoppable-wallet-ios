@@ -66,6 +66,8 @@ class App {
     let dataProviderManager: IFullTransactionDataProviderManager
     let fullTransactionInfoProviderFactory: IFullTransactionInfoProviderFactory
 
+    let chartApiProvider: RatesStatsApiProvider
+
     private let testModeIndicator: TestModeIndicator
 
     let appManager: IAppManager
@@ -109,7 +111,11 @@ class App {
         accountCreator = AccountCreator(accountManager: accountManager, accountFactory: AccountFactory(), wordsManager: wordsManager, defaultWalletCreator: defaultWalletCreator)
         predefinedAccountTypeManager = PredefinedAccountTypeManager(appConfigProvider: appConfigProvider, accountManager: accountManager, accountCreator: accountCreator)
 
-        let rateApiProvider: IRateApiProvider = RateApiProvider(networkManager: networkManager, appConfigProvider: appConfigProvider)
+        let ipfsApiProvider = IpfsApiProvider(appConfigProvider: appConfigProvider)
+        let rateApiProvider: IRateApiProvider = RateApiProvider(networkManager: networkManager, ipfsApiProvider: ipfsApiProvider)
+
+        chartApiProvider = RatesStatsApiProvider(networkManager: networkManager, ipfsApiProvider: ipfsApiProvider)
+
         rateManager = RateManager(storage: grdbStorage, apiProvider: rateApiProvider)
         currencyManager = CurrencyManager(localStorage: localStorage, appConfigProvider: appConfigProvider)
 

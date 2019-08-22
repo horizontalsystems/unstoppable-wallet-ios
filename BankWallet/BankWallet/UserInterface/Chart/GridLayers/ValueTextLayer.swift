@@ -12,6 +12,10 @@ class ValueTextLayer: CATextLayer {
         let delta = (bounds.height - insets.height) / CGFloat(configuration.gridHorizontalLineCount - 1)
         let valueDelta = (chartFrame.top - chartFrame.bottom) / Decimal(configuration.gridHorizontalLineCount - 1)
 
+        let formatter = ChartScaleHelper.formatter
+        formatter.minimumFractionDigits = 0
+        formatter.maximumFractionDigits = chartFrame.scale
+
         for i in 0..<(configuration.gridHorizontalLineCount - 1) {
             let height = floor(insets.top + delta * CGFloat(i)) + configuration.gridTextMargin
 
@@ -22,7 +26,8 @@ class ValueTextLayer: CATextLayer {
             textLayer.font = CTFontCreateWithName(configuration.gridTextFont.fontName as CFString, configuration.gridTextFont.pointSize, nil)
             textLayer.fontSize = configuration.gridTextFont.pointSize
 
-            textLayer.string = String(format: "%.\(chartFrame.scale)f", Float(truncating: (chartFrame.top - Decimal(i) * valueDelta) as NSNumber))
+            textLayer.string = formatter.string(from: (chartFrame.top - Decimal(i) * valueDelta) as NSNumber)
+                    //String(format: "%.\(chartFrame.scale)f", Float(truncating: (chartFrame.top - Decimal(i) * valueDelta) as NSNumber))
             textLayer.removeAllAnimations()
 
             addSublayer(textLayer)

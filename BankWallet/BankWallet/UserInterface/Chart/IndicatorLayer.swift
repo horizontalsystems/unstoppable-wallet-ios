@@ -39,7 +39,7 @@ class IndicatorLayer: CALayer {
 
             return
         }
-        configuration = ChartConfiguration(growing: true)
+        configuration = ChartConfiguration()
         super.init(layer: layer)
     }
 

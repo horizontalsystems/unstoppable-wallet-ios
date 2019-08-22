@@ -21,6 +21,7 @@ protocol IBalanceViewDelegate {
 
     func onReceive(index: Int)
     func onPay(index: Int)
+    func onChart(index: Int)
 
     func onOpenManageWallets()
 
@@ -51,6 +52,7 @@ protocol IBalanceInteractorDelegate: class {
 protocol IBalanceRouter {
     func openReceive(for wallet: Wallet)
     func openSend(for coinCode: CoinCode)
+    func showChart(for coinCode: CoinCode)
     func openManageWallets()
     func openSortType(selected sort: BalanceSortType)
     func openBackup(wallet: Wallet, predefinedAccountType: IPredefinedAccountType)

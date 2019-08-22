@@ -4,6 +4,7 @@ import SnapKit
 protocol IChartDataSource: class {
     var chartData: [ChartPoint] { get }
     var chartFrame: ChartFrame  { get }
+    var chartType: ChartType { get }
 }
 
 protocol IChartIndicatorDelegate: class {
@@ -12,6 +13,7 @@ protocol IChartIndicatorDelegate: class {
 }
 
 class ChartView: UIView {
+    private(set) var chartType: ChartType
     private let configuration: ChartConfiguration
     private let scaleHelper: ChartScaleHelper
 
@@ -25,11 +27,12 @@ class ChartView: UIView {
     private var gridView: GridView?
     private var indicatorView: ChartIndicatorView?
 
-    public init(configuration: ChartConfiguration, indicatorDelegate: IChartIndicatorDelegate? = nil) {
+    public init(configuration: ChartConfiguration, chartType: ChartType = .day, indicatorDelegate: IChartIndicatorDelegate? = nil) {
         self.configuration = configuration
+        self.chartType = chartType
         self.indicatorDelegate = indicatorDelegate
 
-        self.scaleHelper = ChartScaleHelper(valueScaleLines: configuration.gridHorizontalLineCount, valueOffsetPercent: configuration.curveVerticalOffset, maxScale: configuration.gridMaxScale, textFont: configuration.gridTextFont)
+        self.scaleHelper = ChartScaleHelper(valueScaleLines: configuration.gridHorizontalLineCount, valueOffsetPercent: configuration.curveVerticalOffset, maxScale: configuration.gridMaxScale, textFont: configuration.gridTextFont, textVerticalMargin: configuration.gridTextMargin, textLeftMargin: configuration.gridTextMargin, textRightMargin: configuration.gridTextRightMargin)
         self.curveView = ChartCurveView(configuration: configuration)
         if configuration.showGrid {
             self.gridView = GridView(configuration: configuration)
@@ -72,12 +75,16 @@ class ChartView: UIView {
         }
     }
 
-    public func set(data: [ChartPoint]) {
+    public func set(chartType: ChartType, data: [ChartPoint], animated: Bool = true) {
+        self.chartType = chartType
         self.chartData = data
 
         updateChartFrame()
         updateInsets()
-        curveView.refreshCurve()
+
+        curveView.refreshCurve(animated: animated)
+
+        indicatorView?.layoutSubviews()
         gridView?.refreshGrid()
     }
 
@@ -102,7 +109,8 @@ class ChartView: UIView {
         }
 
         let scale = scaleHelper.scale(minValue: minValue, maxValue: maxValue)
-        chartFrame = ChartFrame(left: minimumTimestamp, right: maximumTimestamp, top: scale.topValue, bottom: scale.topValue - Decimal(configuration.gridHorizontalLineCount - 1) * scale.delta, scale: scale.decimal)
+        let positive = (chartData.last?.value ?? 0) - (chartData.first?.value ?? 0) >= 0
+        chartFrame = ChartFrame(left: minimumTimestamp, right: maximumTimestamp, top: scale.topValue, bottom: scale.topValue - Decimal(configuration.gridHorizontalLineCount - 1) * scale.delta, scale: scale.decimal, positive: positive)
     }
 
     private func updateInsets() {
@@ -142,7 +150,7 @@ extension ChartView: IChartIndicatorDelegate {
 
     func didFinishTap() {
         indicatorDelegate?.didFinishTap()
-        curveView.set(curveColor: configuration.curveColor, gradientColor: configuration.gradientColor)
+        curveView.set(curveColor: chartFrame.positive ? configuration.curvePositiveColor : configuration.curveNegativeColor, gradientColor: chartFrame.positive ? configuration.gradientPositiveColor : configuration.gradientNegativeColor)
     }
 
 }

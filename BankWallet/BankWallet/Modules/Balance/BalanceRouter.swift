@@ -17,6 +17,10 @@ extension BalanceRouter: IBalanceRouter {
         }
     }
 
+    func showChart(for coinCode: CoinCode) {
+        ChartRouter.module(coinCode: coinCode)?.show(fromController: viewController)
+    }
+
     func openManageWallets() {
         viewController?.present(ManageWalletsRouter.module(), animated: true)
     }
