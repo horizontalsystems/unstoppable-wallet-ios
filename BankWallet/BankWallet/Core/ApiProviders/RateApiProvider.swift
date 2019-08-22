@@ -1,19 +1,16 @@
 import RxSwift
 
 class RateApiProvider {
-    private let timeoutInterval: TimeInterval = 10
-    private let lastTimeoutInterval: TimeInterval = 60
-
     private let networkManager: NetworkManager
-    private let appConfigProvider: IAppConfigProvider
+    private let ipfsApiProvider: IIpfsApiProvider
 
     private let ipfsDayFormatter = DateFormatter()
     private let ipfsHourFormatter = DateFormatter()
     private let ipfsMinuteFormatter = DateFormatter()
 
-    init(networkManager: NetworkManager, appConfigProvider: IAppConfigProvider) {
+    init(networkManager: NetworkManager, ipfsApiProvider: IIpfsApiProvider) {
         self.networkManager = networkManager
-        self.appConfigProvider = appConfigProvider
+        self.ipfsApiProvider = ipfsApiProvider
 
         ipfsHourFormatter.timeZone = TimeZone(abbreviation: "UTC")
         ipfsHourFormatter.dateFormat = "yyyy/MM/dd/HH"
@@ -23,27 +20,6 @@ class RateApiProvider {
 
         ipfsMinuteFormatter.timeZone = TimeZone(abbreviation: "UTC")
         ipfsMinuteFormatter.dateFormat = "mm"
-    }
-
-    private func gatewaysSingle<T>(singleProvider: @escaping (String, TimeInterval) -> Single<T>) -> Single<T> {
-        let gateways = appConfigProvider.ipfsGateways
-        return gatewaySingle(gateways: gateways, singleProvider: singleProvider)
-    }
-
-    private func gatewaySingle<T>(gateways: [String], singleProvider: @escaping (String, TimeInterval) -> Single<T>) -> Single<T> {
-        guard let gateway = gateways.first else {
-            return Single.error(ApiError.allGatewaysReturnedError)
-        }
-
-        let baseUrlString = "\(gateway)/ipns/\(appConfigProvider.ipfsId)"
-
-        let leftGateways = Array(gateways.dropFirst())
-
-        let timeout = leftGateways.isEmpty ? lastTimeoutInterval : timeoutInterval
-
-        return singleProvider(baseUrlString, timeout).catchError { [unowned self] _ in
-            return self.gatewaySingle(gateways: leftGateways, singleProvider: singleProvider)
-        }
     }
 
     private func getLatestRateData(baseUrlString: String, timeoutInterval: TimeInterval, currencyCode: String) -> Single<LatestRateData> {
@@ -66,11 +42,11 @@ class RateApiProvider {
             if let rate = rates[minuteString], let decimal = Decimal(string: rate) {
                 return Single.just(decimal)
             }
-            return Single.error(ApiError.noValueForHour)
+            return Single.error(RateApiError.noValueForHour)
         }.catchError { _ in
             return daySingle.flatMap { rate -> Single<Decimal> in
                 guard let decimal = Decimal(string: rate) else {
-                    return Single.error(ApiError.noValueForDay)
+                    return Single.error(RateApiError.noValueForDay)
                 }
                 return Single.just(decimal)
             }
@@ -82,13 +58,13 @@ class RateApiProvider {
 extension RateApiProvider: IRateApiProvider {
 
     func getLatestRateData(currencyCode: String) -> Single<LatestRateData> {
-        return gatewaysSingle { [unowned self] baseUrlString, timeoutInterval in
+        return ipfsApiProvider.gatewaysSingle { [unowned self] baseUrlString, timeoutInterval in
             return self.getLatestRateData(baseUrlString: baseUrlString, timeoutInterval: timeoutInterval, currencyCode: currencyCode)
         }
     }
 
     func getRate(coinCode: String, currencyCode: String, date: Date) -> Single<Decimal> {
-        return gatewaysSingle { [unowned self] baseUrlString, timeoutInterval in
+        return ipfsApiProvider.gatewaysSingle { [unowned self] baseUrlString, timeoutInterval in
             return self.getRate(baseUrlString: baseUrlString, timeoutInterval: timeoutInterval, coinCode: coinCode, currencyCode: currencyCode, date: date)
         }
     }
@@ -97,7 +73,7 @@ extension RateApiProvider: IRateApiProvider {
 
 extension RateApiProvider {
 
-    enum ApiError: Error {
+    enum RateApiError: Error {
         case noValueForHour
         case noValueForDay
         case allGatewaysReturnedError

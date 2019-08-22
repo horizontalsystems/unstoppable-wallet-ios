@@ -22,6 +22,7 @@ protocol ILocalStorage: class {
     var lastExitDate: Double { get set }
     var didLaunchOnce: Bool { get set }
     var sendInputType: SendInputType? { get set }
+    var chartType: ChartType? { get set }
     var mainShownOnce: Bool { get set }
 }
 
@@ -283,9 +284,18 @@ protocol IFullTransactionInfoAdapter {
     func convert(json: [String: Any]) -> FullTransactionRecord?
 }
 
+protocol IIpfsApiProvider {
+    func gatewaysSingle<T>(singleProvider: @escaping (String, TimeInterval) -> Single<T>) -> Single<T>
+}
+
 protocol IRateApiProvider {
     func getLatestRateData(currencyCode: String) -> Single<LatestRateData>
     func getRate(coinCode: String, currencyCode: String, date: Date) -> Single<Decimal>
+}
+
+protocol IRatesStatsApiProvider {
+    func getChartRateData(coinCode: String, currencyCode: String, chartType: ChartType) -> Single<ChartRateData>
+    func getMarketCapData() -> Single<MarketCapData>
 }
 
 protocol IRateStorage {

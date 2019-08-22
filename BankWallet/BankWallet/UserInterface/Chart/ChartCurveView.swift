@@ -8,6 +8,11 @@ class ChartCurveView: UIView {
     private let linesLayer = CAShapeLayer()
     private let gradientLayer = CAShapeLayer()
 
+    private var lastLinePoints: [CGPoint]? = nil
+    private var lastGradientPoints: [CGPoint]? = nil
+
+    private var animated: Bool = false
+
     public init(configuration: ChartConfiguration) {
         self.configuration = configuration
         self.pointConverter = PointConverter()
@@ -26,62 +31,83 @@ class ChartCurveView: UIView {
         layer.shouldRasterize = true
         layer.rasterizationScale = UIScreen.main.scale
 
-        linesLayer.strokeColor = configuration.curveColor.cgColor
         linesLayer.lineWidth = configuration.curveWidth
         linesLayer.fillColor = UIColor.clear.cgColor
 
-        gradientLayer.strokeColor = configuration.gradientColor.cgColor
-        gradientLayer.fillColor = configuration.gradientColor.cgColor
         gradientLayer.lineWidth = 1 / UIScreen.main.scale
 
         layer.addSublayer(linesLayer)
         layer.addSublayer(gradientLayer)
     }
 
-    func refreshCurve() {
+    func refreshCurve(animated: Bool) {
+        self.animated = animated
+
         guard !bounds.isEmpty, let dataSource = dataSource, !dataSource.chartData.isEmpty else {
             return
         }
+        if dataSource.chartFrame.positive {
+            linesLayer.strokeColor = configuration.curvePositiveColor.cgColor
+            gradientLayer.strokeColor = configuration.gradientPositiveColor.cgColor
+            gradientLayer.fillColor = configuration.gradientPositiveColor.cgColor
+        } else {
+            linesLayer.strokeColor = configuration.curveNegativeColor.cgColor
+            gradientLayer.strokeColor = configuration.gradientNegativeColor.cgColor
+            gradientLayer.fillColor = configuration.gradientNegativeColor.cgColor
+        }
         let bottom = bounds.maxY - 0.5 / UIScreen.main.scale
 
+        gradientLayer.mask = transparentMask()
+
         let linePoints = convertChartDataToGraphicPoints(for: bounds, retinaShift: true)
-        var startPoints = linePoints.map { CGPoint(x: $0.x, y: bottom) }
+        let startLinePoints = convert(curve: true, lastPoints: lastLinePoints, newPoints: linePoints)
+                //lastLinePoints ?? linePoints.map { CGPoint(x: $0.x, y: bottom) }
 
-        let finalPath = ChartBezierPath.path(for: linePoints).cgPath
-
-        if configuration.animated {
-            let animation = CABasicAnimation(keyPath: "path")
-            animation.fromValue = ChartBezierPath.path(for: startPoints).cgPath
-            animation.toValue = finalPath
-            animation.duration = configuration.animationDuration
-            animation.isRemovedOnCompletion = false
-            animation.fillMode = .both
-            linesLayer.add(animation, forKey: "curveAnimation")
-        } else {
-            linesLayer.path = finalPath
-        }
+        let startLinePath = ChartBezierPath.path(for: startLinePoints).cgPath
+        let finalLinePath = ChartBezierPath.path(for: linePoints).cgPath
 
         // add right-bottom and left-bottom points for gradient
         var gradientPoints = convertChartDataToGraphicPoints(for: bounds, retinaShift: false)
         if let firstPoint = gradientPoints.first, let lastPoint = gradientPoints.last {
+            gradientPoints.insert(CGPoint(x: firstPoint.x, y: bottom), at: 0)
             gradientPoints.append(CGPoint(x: lastPoint.x, y: bottom))
-            gradientPoints.append(CGPoint(x: firstPoint.x, y: bottom))
-
-            startPoints.append(CGPoint(x: lastPoint.x, y: bottom))
-            startPoints.append(CGPoint(x: firstPoint.x, y: bottom))
         }
-        gradientLayer.mask = transparentMask()
+        let startGradientPoints = convert(curve: false, lastPoints: lastGradientPoints, newPoints: gradientPoints)
+                //lastGradientPoints ?? gradientPoints.map { CGPoint(x: $0.x, y: bottom) }
 
-        if configuration.animated {
-            let animation = CABasicAnimation(keyPath: "path")
-            animation.fromValue = ChartBezierPath.path(for: startPoints).cgPath
-            animation.toValue = ChartBezierPath.path(for: gradientPoints).cgPath
-            animation.duration = configuration.animationDuration
-            animation.isRemovedOnCompletion = false
-            animation.fillMode = .both
-            gradientLayer.add(animation, forKey: "gradientAnimation")
+        let startGradientPath = ChartBezierPath.path(for: startGradientPoints).cgPath
+        let finalGradientPath = ChartBezierPath.path(for: gradientPoints).cgPath
+
+        if animated {
+            CATransaction.begin()
+            let lineAnimation = CABasicAnimation(keyPath: "path")
+            lineAnimation.fromValue = startLinePath
+            lineAnimation.toValue = finalLinePath
+            lineAnimation.duration = configuration.animationDuration
+            lineAnimation.isRemovedOnCompletion = false
+            lineAnimation.fillMode = .both
+            linesLayer.add(lineAnimation, forKey: "curveAnimation")
+
+            let gradientAnimation = CABasicAnimation(keyPath: "path")
+            gradientAnimation.fromValue = startGradientPath
+            gradientAnimation.toValue = finalGradientPath
+            gradientAnimation.duration = configuration.animationDuration
+            gradientAnimation.isRemovedOnCompletion = false
+            gradientAnimation.fillMode = .both
+            gradientLayer.add(gradientAnimation, forKey: "curveAnimation")
+
+            CATransaction.setCompletionBlock { [weak self] in
+                self?.lastLinePoints = linePoints
+                self?.lastGradientPoints = gradientPoints
+            }
+
+            CATransaction.commit()
         } else {
-            gradientLayer.path = ChartBezierPath.path(for: gradientPoints).cgPath
+            linesLayer.path = finalLinePath
+            linesLayer.removeAllAnimations()
+
+            gradientLayer.path = finalGradientPath
+            gradientLayer.removeAllAnimations()
         }
     }
 
@@ -96,6 +122,33 @@ class ChartCurveView: UIView {
             return []
         }
         return delegate.chartData.map { pointConverter.convert(chartPoint: $0, viewBounds: bounds, chartFrame: delegate.chartFrame, retinaShift: retinaShift) }
+    }
+
+    private func convert(curve: Bool, lastPoints: [CGPoint]?, newPoints: [CGPoint]) -> [CGPoint] {
+        guard let lastPoints = lastPoints else {
+            return newPoints.map { CGPoint(x: $0.x, y: bottom) }
+        }
+        var startPoints: [CGPoint]
+
+        if lastPoints.count > newPoints.count {
+            if curve {
+                startPoints = Array(lastPoints.prefix(newPoints.count))
+            } else {
+                startPoints = Array(lastPoints.prefix(newPoints.count - 1)) + [lastPoints[lastPoints.count - 1]]
+            }
+        } else if lastPoints.count < newPoints.count {
+            if curve {
+                let newPoints = newPoints.suffix(newPoints.count - lastPoints.count)
+                startPoints = lastPoints + newPoints.map { CGPoint(x: $0.x, y: bottom) }
+            } else {
+                let newPoints = newPoints.suffix(newPoints.count - lastPoints.count + 1)
+                startPoints = lastPoints.prefix(lastPoints.count - 1) + newPoints.map { CGPoint(x: $0.x, y: bottom) }
+            }
+        }  else {
+            startPoints = lastPoints
+        }
+
+        return startPoints
     }
 
     private func transparentMask() -> CAGradientLayer {
@@ -115,7 +168,7 @@ class ChartCurveView: UIView {
         linesLayer.frame = self.bounds
         linesLayer.removeAllAnimations()
 
-        refreshCurve()
+        refreshCurve(animated: animated)
     }
 
 }

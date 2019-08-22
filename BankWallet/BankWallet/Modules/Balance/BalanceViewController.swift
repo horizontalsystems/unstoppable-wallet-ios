@@ -113,6 +113,8 @@ extension BalanceViewController: UITableViewDelegate, UITableViewDataSource {
                 self?.delegate.onReceive(index: indexPath.row)
             }, onPay: { [weak self] in
                 self?.delegate.onPay(index: indexPath.row)
+            }, onChart: {[weak self] in
+                self?.delegate.onChart(index: indexPath.row)
             })
         } else if let cell = cell as? BalanceEditCell {
             cell.onTap = { [weak self] in

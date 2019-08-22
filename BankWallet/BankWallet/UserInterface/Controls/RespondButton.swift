@@ -10,6 +10,7 @@ class RespondButton: UIView, RespondViewDelegate {
     }
 
     var touchTransparent: Bool { return false }
+    var changeBackground: Bool = true
 
     private let view = RespondView()
     public let wrapperView = UIView()
@@ -87,16 +88,20 @@ class RespondButton: UIView, RespondViewDelegate {
     }
 
     func touchBegan() {
-        self.state = state == .disabled ? .disabled : .selected
+        if changeBackground {
+            self.state = state == .disabled ? .disabled : .selected
+        }
         updateUI()
     }
 
     func touchEnd() {
-        self.state = state == .disabled ? .disabled : .active
+        if changeBackground {
+            self.state = state == .disabled ? .disabled : .active
+        }
         updateUI()
     }
 
-    private func updateUI() {
+    public func updateUI() {
         titleLabel.textColor = textColors[state] ?? .black
         view.backgroundColor = backgrounds[state] ?? .clear
     }

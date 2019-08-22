@@ -15,6 +15,7 @@ class UserDefaultsStorage {
     private let lastExitDateKey = "last_exit_date_key"
     private let didLaunchOnceKey = "did_launch_once_key"
     private let keySendInputType = "send_input_type_key"
+    private let keyChartType = "chart_type_key"
     private let mainShownOnceKey = "main_shown_once_key"
 
     private func getString(_ name: String) -> String? {
@@ -140,6 +141,18 @@ extension UserDefaultsStorage: ILocalStorage {
         }
         set {
             setString(keySendInputType, value: newValue?.rawValue)
+        }
+    }
+
+    var chartType: ChartType? {
+        get {
+            if let rawValue = getString(keyChartType), let value = ChartType(rawValue: rawValue) {
+                return value
+            }
+            return nil
+        }
+        set {
+            setString(keyChartType, value: newValue?.rawValue)
         }
     }
 

@@ -2,7 +2,7 @@ import UIKit
 
 class TimestampTextLayer: CATextLayer {
 
-    func refresh(configuration: ChartConfiguration, insets: UIEdgeInsets, chartFrame: ChartFrame, timestamps: [TimeInterval]) {
+    func refresh(configuration: ChartConfiguration, chartType: ChartType, insets: UIEdgeInsets, chartFrame: ChartFrame, timestamps: [TimeInterval]) {
         guard !bounds.isEmpty else {
             return
         }
@@ -20,7 +20,7 @@ class TimestampTextLayer: CATextLayer {
                 pointOffsetX = width
             }
 
-            let text = TimestampFormatter.text(timestamp: timestamp, type: configuration.chartType)
+            let text = TimestampFormatter.text(timestamp: timestamp, type: chartType)
             let textSize = (text as NSString).size(withAttributes: [NSAttributedString.Key.font: configuration.gridTextFont])
 
             let textLayer = CATextLayer()

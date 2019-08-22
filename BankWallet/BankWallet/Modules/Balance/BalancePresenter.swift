@@ -131,6 +131,10 @@ extension BalancePresenter: IBalanceViewDelegate {
         router.openSend(for: dataSource.item(at: index).wallet.coin.code)
     }
 
+    func onChart(index: Int) {
+        router.showChart(for: dataSource.item(at: index).wallet.coin.code)
+    }
+
     func onOpenManageWallets() {
         router.openManageWallets()
     }
