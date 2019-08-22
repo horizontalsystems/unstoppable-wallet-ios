@@ -18,8 +18,8 @@ class TransactionInfoViewController: ActionSheetController {
     func initItems() {
         let item = delegate.viewItem
 
-        let titleItem = TransactionTitleItem(item: item, tag: 0, onIdTap: { [weak self] in
-            self?.delegate.onCopy(value: item.transactionHash)
+        let titleItem = TransactionTitleItem(coin: item.wallet.coin, tag: 0, onClose: { [weak self] in
+            self?.dismiss(animated: true)
         })
         model.addItemView(titleItem)
 
@@ -54,12 +54,16 @@ class TransactionInfoViewController: ActionSheetController {
             }))
         }
 
+        model.addItemView(TransactionIdItem(value: item.transactionHash, tag: 8, onHashTap: { [weak self] in
+            self?.delegate.onCopy(value: item.transactionHash)
+        }))
+
         if item.sentToSelf {
-            let infoItem = TransactionNoteItem(note: "tx_info.note".localized, tag: 8)
+            let infoItem = TransactionNoteItem(note: "tx_info.note".localized, tag: 9)
             model.addItemView(infoItem)
         }
 
-        let openFullInfoItem = TransactionOpenFullInfoItem(tag: 9, required: true, onTap: { [weak self] in
+        let openFullInfoItem = TransactionOpenFullInfoItem(tag: 10, required: true, onTap: { [weak self] in
             self?.delegate.openFullInfo()
         })
         model.addItemView(openFullInfoItem)

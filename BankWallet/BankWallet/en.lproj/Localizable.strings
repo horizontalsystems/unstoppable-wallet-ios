@@ -154,6 +154,7 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 "tx_info.status.pending" = "Pending";
 "tx_info.status.confirmed" = "Confirmed";
 "tx_info.from_hash" = "From";
+"tx_info.transaction_id" = "Transaction ID";
 "tx_info.to_hash" = "To";
 "tx_info.button_verify" = "Verify";
 "tx_info.rate" = "Historical Rate";
