@@ -6,6 +6,7 @@ struct TransactionRecord {
     let interTransactionIndex: Int
     let blockHeight: Int?
     let amount: Decimal
+    let fee: Decimal?
     let date: Date
 
     let from: [TransactionAddress]

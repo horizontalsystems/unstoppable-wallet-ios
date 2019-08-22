@@ -9,6 +9,7 @@ class TransactionInfoTheme {
     static let smallMargin: CGFloat = 4
 
     static let itemHeight: CGFloat = 44
+    static let itemNoteHeight: CGFloat = 60
 
     static let titleHeight: CGFloat = 48
     static let titleFont = UIFont.cryptoHeadline
@@ -19,8 +20,10 @@ class TransactionInfoTheme {
     static var itemBackground: UIColor { return .crypto_Steel20_White }
     static let coinIconLeftMargin: CGFloat = 12
     static let itemTitleFont: UIFont = .cryptoCaption1
+    static let itemNoteFont: UIFont = .cryptoCaption1
     static var completeStatusColor: UIColor { return .crypto_Bars_Dark }
     static let itemTitleColor = UIColor.cryptoGray
+    static let itemNoteColor = UIColor.cryptoYellow
     static let itemValueFont: UIFont = .cryptoCaptionMedium
     static var itemValueColor: UIColor { return .crypto_Bars_Dark }
     static let coinNameFont: UIFont = .cryptoCaption3
