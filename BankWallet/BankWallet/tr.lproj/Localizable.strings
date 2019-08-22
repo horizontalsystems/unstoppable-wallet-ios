@@ -204,6 +204,7 @@
 "settings.language" = "Dil";
 "settings.about" = "Hakkında";
 "settings.tell_friends" = "Arkadaşlarına bahset";
+"settings.report_problem" = "Report Problem";
 "settings.light_mode" = "Aydınlık mod";
 "settings.info_title" = "UNSTOPPABLE";
 "settings.info_subtitle" = "decentralized App";
@@ -245,6 +246,12 @@
 "settings_security.touch_id" = "Touch ID";
 "settings_security.face_id" = "Face ID";
 "security_settings.delete_alert_button" = "Cihazdan sil";
+
+// Settings -> Report Problem
+
+"settings.report_problem.title" = "Report Problem";
+"settings.report_problem.email" = "E-mail";
+"settings.report_problem.telegram" = "Telegram";
 
 // Manage Keys
 
