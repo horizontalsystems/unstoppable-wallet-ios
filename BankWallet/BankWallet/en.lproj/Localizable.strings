@@ -272,7 +272,7 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 "settings_manage_keys.show" = "Show";
 "settings_manage_keys.create" = "Create";
 "settings_manage_keys.restore" = "Restore";
-"settings_manage_keys.delete.cant_delete" = "You need to backup %@ key before you may unlink it.";
+"settings_manage_keys.delete.cant_delete" = "You need to backup %@ key before you may delete it from this phone.";
 "settings_manage_keys.delete.title" = "Delete Key";
 "settings_manage_keys.delete.confirmation_remove" = "This action will delete the %@ key (wallet) from this device.";
 "settings_manage_keys.delete.confirmation_disable" = "Coins that will be disabled: %@";
