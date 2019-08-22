@@ -24,7 +24,7 @@ class UnlinkViewController: ActionSheetController {
                 iconTintColor: ManageAccountsTheme.attentionColor,
                 tag: 0,
                 onClose: { [weak self] in
-                    self?.dismiss(animated: true)
+                    self?.dismiss(byFade: false)
                 }
         )
         model.addItemView(titleItem)

@@ -5,7 +5,7 @@ class ChartPresenter {
 
     private let interactor: IChartInteractor
     private let chartRateConverter: IChartRateConverter
-    private let coin: Coin
+    let coin: Coin
     private let currency: Currency
 
     private var chartType: ChartType
@@ -26,8 +26,6 @@ class ChartPresenter {
 extension ChartPresenter: IChartViewDelegate {
 
     func viewDidLoad() {
-        view?.bindTitle(coin: coin)
-
         if let rate = interactor.currentRate(coinCode: coin.code, currencyCode: currency.code) {
             view?.bind(currentRateValue: CurrencyValue(currency: currency, value: rate.value))
         }

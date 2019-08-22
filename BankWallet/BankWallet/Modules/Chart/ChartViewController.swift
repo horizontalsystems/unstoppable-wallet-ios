@@ -11,7 +11,6 @@ class ChartViewController: ActionSheetController {
         return formatter
     }()
 
-    private let titleItem = ActionTitleItem(tag: 0)
     private let currentRateItem = ChartCurrentRateItem(tag: 1)
     private let chartRateTypeItem = ChartRateTypeItem(tag: 2)
     private var chartRateItem: ChartRateItem?
@@ -29,6 +28,18 @@ class ChartViewController: ActionSheetController {
     }
 
     func initItems() {
+        let coin = delegate.coin
+
+        let titleItem = AlertTitleItem(
+                title: "%@ Rate".localized(coin.title),
+                icon: UIImage(coin: coin),
+                iconTintColor: AppTheme.coinIconColor,
+                tag: 0,
+                onClose: { [weak self] in
+                    self?.dismiss(byFade: false)
+                }
+        )
+
         model.addItemView(titleItem)
         model.addItemView(currentRateItem)
         model.addItemView(chartRateTypeItem)
@@ -52,10 +63,6 @@ class ChartViewController: ActionSheetController {
 }
 
 extension ChartViewController: IChartView {
-
-    public func bindTitle(coin: Coin) {
-        titleItem.bindTitle?("%@ Rate".localized(coin.title), coin)
-    }
 
     func bind(currentRateValue: CurrencyValue) {
         let formattedValue = ValueFormatter.instance.format(currencyValue: currentRateValue, fractionPolicy: .threshold(high: 1000, low: 0.1), trimmable: false)
