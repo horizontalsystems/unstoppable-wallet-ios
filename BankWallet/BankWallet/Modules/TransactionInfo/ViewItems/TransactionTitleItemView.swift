@@ -1,13 +1,11 @@
 import UIKit
-import UIExtensions
 import ActionSheet
 import SnapKit
 
 class TransactionTitleItemView: BaseActionItemView {
-
-    let iconImageView = CoinIconImageView()
-    let titleLabel = UILabel()
-    let hashView = HashView()
+    private let iconImageView = CoinIconImageView()
+    private let titleLabel = UILabel()
+    private let closeButton = UIButton()
 
     override var item: TransactionTitleItem? { return _item as? TransactionTitleItem }
 
@@ -29,10 +27,14 @@ class TransactionTitleItemView: BaseActionItemView {
             maker.centerY.equalToSuperview()
         }
 
-        addSubview(hashView)
-        hashView.snp.makeConstraints { maker in
+        closeButton.setImage(UIImage(named: "Close Icon")?.withRenderingMode(.alwaysTemplate), for: .normal)
+        closeButton.tintColor = AppTheme.closeButtonColor
+        closeButton.addTarget(self, action: #selector(onTapClose), for: .touchUpInside)
+
+        addSubview(closeButton)
+        closeButton.snp.makeConstraints { maker in
+            maker.leading.equalTo(self.titleLabel.snp.trailing).offset(TransactionInfoTheme.higherMiddleMargin)
             maker.trailing.equalToSuperview().offset(-TransactionInfoTheme.higherMiddleMargin)
-            maker.leading.equalTo(self.titleLabel.snp.trailing).offset(TransactionInfoTheme.hashViewMargin)
             maker.centerY.equalToSuperview()
         }
     }
@@ -43,9 +45,10 @@ class TransactionTitleItemView: BaseActionItemView {
         if let item = item {
             iconImageView.bind(coin: item.coin)
         }
-        hashView.bind(value: item?.transactionHash, showExtra: .hash, onTap: { [weak self] in
-            self?.item?.onIdTap?()
-        })
+    }
+
+    @objc func onTapClose() {
+        item?.onClose?()
     }
 
 }

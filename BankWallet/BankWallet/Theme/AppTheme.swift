@@ -71,5 +71,5 @@ class AppTheme {
     static let coinIconColor: UIColor = .cryptoGray
     static let coinIconSize: CGFloat = 24
 
-    static let closeButtonColor: UIColor = .cryptoYellow
+    static let closeButtonColor: UIColor = .cryptoGray
 }
