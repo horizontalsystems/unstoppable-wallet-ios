@@ -54,7 +54,7 @@ class SendViewController: UIViewController {
         iconImageView.tintColor = .cryptoGray
 
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: iconImageView)
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "Close Full Transaction Icon"), style: .plain, target: self, action: #selector(onClose))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "Close Icon"), style: .plain, target: self, action: #selector(onClose))
 
         sendButton.state = .disabled
 

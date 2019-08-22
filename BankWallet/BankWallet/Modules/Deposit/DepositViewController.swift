@@ -27,6 +27,8 @@ class DepositViewController: ActionSheetController {
             self?.pagingItem?.updateView?()
         }, onCopy: { [weak self] in
             self?.onCopy()
+        }, onClose: { [weak self] in
+            self?.dismiss(animated: true)
         })
         model.addItemView(depositItem)
 

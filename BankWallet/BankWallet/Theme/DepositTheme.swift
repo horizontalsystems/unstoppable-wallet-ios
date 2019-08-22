@@ -5,7 +5,7 @@ class DepositTheme {
     static let mediumMargin: CGFloat = 12
     static let regularMargin: CGFloat = 16
 
-    static let titleLeadingMargin: CGFloat = 10
+    static let titleHorizontalMargin: CGFloat = 10
     static let titleFont: UIFont = .cryptoHeadline
     static var titleColor: UIColor { return .crypto_White_Black }
 

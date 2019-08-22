@@ -7,7 +7,7 @@ import RxSwift
 
 class FullTransactionInfoViewController: WalletViewController, SectionsDataSource {
     private let cellName = String(describing: FullTransactionInfoTextCell.self)
-    private let closeButtonImage = UIImage(named: "Close Full Transaction Icon")
+    private let closeButtonImage = UIImage(named: "Close Icon")
     private let shareButtonImage = UIImage(named: "Share Full Transaction Icon")
 
     private let delegate: IFullTransactionInfoViewDelegate
