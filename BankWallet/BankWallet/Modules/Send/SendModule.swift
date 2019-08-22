@@ -36,6 +36,20 @@ protocol ISendBitcoinInteractorDelegate: class {
     func didFailToSend(error: Error)
 }
 
+protocol ISendDashInteractor {
+    func fetchAvailableBalance(address: String?)
+    func validate(address: String) throws
+    func fetchFee(amount: Decimal, address: String?)
+    func send(amount: Decimal, address: String)
+}
+
+protocol ISendDashInteractorDelegate: class {
+    func didFetch(availableBalance: Decimal)
+    func didFetch(fee: Decimal)
+    func didSend()
+    func didFailToSend(error: Error)
+}
+
 protocol ISendEthereumInteractor {
     func availableBalance(gasPrice: Int) -> Decimal
     var ethereumBalance: Decimal { get }

@@ -2,6 +2,8 @@ import DashKit
 import RxSwift
 
 class DashAdapter: BitcoinBaseAdapter {
+    private let feeRate = 1
+
     private let dashKit: DashKit
 
     init(wallet: Wallet, testMode: Bool) throws {
@@ -33,6 +35,22 @@ extension DashAdapter: DashKitDelegate {
         }
 
         transactionRecordsSubject.onNext(records)
+    }
+
+}
+
+extension DashAdapter: ISendDashAdapter {
+
+    func availableBalance(address: String?) -> Decimal {
+        return availableBalance(feeRate: feeRate, address: address)
+    }
+
+    func fee(amount: Decimal, address: String?) -> Decimal {
+        return fee(amount: amount, feeRate: feeRate, address: address)
+    }
+
+    func sendSingle(amount: Decimal, address: String) -> Single<Void> {
+        return sendSingle(amount: amount, address: address, feeRate: feeRate)
     }
 
 }
