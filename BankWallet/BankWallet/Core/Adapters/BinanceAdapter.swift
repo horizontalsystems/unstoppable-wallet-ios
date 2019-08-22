@@ -38,6 +38,7 @@ class BinanceAdapter {
                 interTransactionIndex: 0,
                 blockHeight: transaction.blockHeight,
                 amount: amount,
+                fee: BinanceAdapter.transferFee,
                 date: transaction.date,
                 from: [from],
                 to: [to]

@@ -31,25 +31,35 @@ class TransactionInfoViewController: ActionSheetController {
             model.addItemView(rateItem)
         }
 
-        let timeItem = TransactionValueItem(title: "tx_info.time".localized, value: DateHelper.instance.formatTransactionInfoTime(from: item.date), tag: 3)
+        if let feeCoinValue = item.feeCoinValue, let formattedValue = ValueFormatter.instance.format(coinValue: feeCoinValue) {
+            let feeItem = TransactionValueItem(title: "tx_info.fee".localized, value: formattedValue, tag: 3)
+            model.addItemView(feeItem)
+        }
+
+        let timeItem = TransactionValueItem(title: "tx_info.time".localized, value: DateHelper.instance.formatTransactionInfoTime(from: item.date), tag: 4)
         model.addItemView(timeItem)
 
-        let statusItem = TransactionStatusItem(item: item, tag: 4)
+        let statusItem = TransactionStatusItem(item: item, tag: 5)
         model.addItemView(statusItem)
 
         if let from = item.from {
-            model.addItemView(TransactionFromToHashItem(title: "tx_info.from_hash".localized, value: from, tag: 5, required: true, onHashTap: { [weak self] in
+            model.addItemView(TransactionFromToHashItem(title: "tx_info.from_hash".localized, value: from, tag: 6, required: true, onHashTap: { [weak self] in
                 self?.delegate.onCopy(value: from)
             }))
         }
 
         if let to = item.to {
-            model.addItemView(TransactionFromToHashItem(title: "tx_info.to_hash".localized, value: to, tag: 6, required: true, onHashTap: { [weak self] in
+            model.addItemView(TransactionFromToHashItem(title: "tx_info.to_hash".localized, value: to, tag: 7, required: true, onHashTap: { [weak self] in
                 self?.delegate.onCopy(value: to)
             }))
         }
 
-        let openFullInfoItem = TransactionOpenFullInfoItem(tag: 7, required: true, onTap: { [weak self] in
+        if item.sentToSelf {
+            let infoItem = TransactionNoteItem(note: "tx_info.note".localized, tag: 8)
+            model.addItemView(infoItem)
+        }
+
+        let openFullInfoItem = TransactionOpenFullInfoItem(tag: 9, required: true, onTap: { [weak self] in
             self?.delegate.openFullInfo()
         })
         model.addItemView(openFullInfoItem)

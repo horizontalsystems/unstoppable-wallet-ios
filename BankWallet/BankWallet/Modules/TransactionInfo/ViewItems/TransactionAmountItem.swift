@@ -11,6 +11,10 @@ class TransactionAmountItem: BaseActionItem {
     init(item: TransactionViewItem, tag: Int? = nil) {
         if let value = item.currencyValue, let formattedValue = ValueFormatter.instance.format(currencyValue: value) {
             currencyAmount = formattedValue
+
+            if item.sentToSelf {
+                currencyAmount = "\(formattedValue)*"
+            }
         }
         currencyAmountColor = item.incoming ? TransactionInfoTheme.incomingAmountColor : TransactionInfoTheme.outgoingAmountColor
         amount = ValueFormatter.instance.format(coinValue: item.coinValue)

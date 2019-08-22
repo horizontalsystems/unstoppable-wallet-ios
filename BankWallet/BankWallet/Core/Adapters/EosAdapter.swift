@@ -30,6 +30,7 @@ class EosAdapter {
                 interTransactionIndex: transaction.actionSequence,
                 blockHeight: transaction.blockNumber,
                 amount: transaction.quantity.amount * (from.mine ? -1 : 1),
+                fee: nil,
                 date: transaction.date,
                 from: [from],
                 to: [to]

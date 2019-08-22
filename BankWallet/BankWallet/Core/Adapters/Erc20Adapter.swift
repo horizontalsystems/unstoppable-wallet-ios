@@ -40,6 +40,7 @@ class Erc20Adapter: EthereumBaseAdapter {
                 interTransactionIndex: transaction.interTransactionIndex,
                 blockHeight: transaction.blockNumber,
                 amount: amount,
+                fee: nil,
                 date: Date(timeIntervalSince1970: transaction.timestamp),
                 from: [from],
                 to: [to]

@@ -35,6 +35,7 @@ class BitcoinBaseAdapter {
                 interTransactionIndex: 0,
                 blockHeight: transaction.blockHeight,
                 amount: Decimal(transaction.amount) / coinRate,
+                fee: transaction.fee.map { Decimal($0) / coinRate },
                 date: Date(timeIntervalSince1970: Double(transaction.timestamp)),
                 from: fromAddresses,
                 to: toAddresses
