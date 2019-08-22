@@ -86,6 +86,7 @@ class ChartCurveView: UIView {
             lineAnimation.duration = configuration.animationDuration
             lineAnimation.isRemovedOnCompletion = false
             lineAnimation.fillMode = .both
+            lineAnimation.timingFunction = CAMediaTimingFunction(name: .easeOut)
             linesLayer.add(lineAnimation, forKey: "curveAnimation")
 
             let gradientAnimation = CABasicAnimation(keyPath: "path")
@@ -94,6 +95,7 @@ class ChartCurveView: UIView {
             gradientAnimation.duration = configuration.animationDuration
             gradientAnimation.isRemovedOnCompletion = false
             gradientAnimation.fillMode = .both
+            gradientAnimation.timingFunction = CAMediaTimingFunction(name: .easeOut)
             gradientLayer.add(gradientAnimation, forKey: "curveAnimation")
 
             CATransaction.setCompletionBlock { [weak self] in
