@@ -29,7 +29,7 @@ class AdapterFactory: IAdapterFactory {
             }
         case let .eos(token, symbol):
             if let eosKit = try? eosKitManager.eosKit(account: wallet.account) {
-                return EosAdapter(eosKit: eosKit, token: token, symbol: symbol)
+                return EosAdapter(eosKit: eosKit, token: token, symbol: symbol, decimal: wallet.coin.decimal)
             }
         case let .binance(symbol):
             if let binanceKit = try? binanceKitManager.binanceKit(account: wallet.account) {
