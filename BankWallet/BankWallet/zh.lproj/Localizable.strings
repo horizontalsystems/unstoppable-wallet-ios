@@ -204,6 +204,7 @@
 "settings.language" = "语言";
 "settings.about" = "更多";
 "settings.tell_friends" = "分享给好友";
+"settings.report_problem" = "Report Problem";
 "settings.light_mode" = "简单模式";
 "settings.info_title" = "UNSTOPPABLE";
 "settings.info_subtitle" = "decentralized app";
@@ -245,6 +246,12 @@
 "settings_security.touch_id" = "Touch ID指纹识别";
 "settings_security.face_id" = "Face ID 面容识别";
 "security_settings.delete_alert_button" = "从手机中删除";
+
+// Settings -> Report Problem
+
+"settings.report_problem.title" = "Report Problem";
+"settings.report_problem.email" = "E-mail";
+"settings.report_problem.telegram" = "Telegram";
 
 // Manage Keys
 
