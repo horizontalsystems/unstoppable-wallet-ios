@@ -49,6 +49,8 @@ extension DepositCollectionItemView: UICollectionViewDataSource, UICollectionVie
         if let cell = cell as? DepositAddressCollectionCell, let address = item?.addresses[indexPath.item] {
             cell.bind(address: address, onCopy: { [weak self] in
                 self?.item?.onCopy?()
+            }, onClose: { [weak self] in
+                self?.item?.onClose?()
             })
         }
     }
