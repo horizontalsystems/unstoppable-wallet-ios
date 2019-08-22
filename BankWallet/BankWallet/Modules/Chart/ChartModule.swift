@@ -1,7 +1,6 @@
 import Foundation
 
 protocol IChartView: class {
-    func bindTitle(coin: Coin)
     func bind(currentRateValue: CurrencyValue)
     func bind(diff: Decimal?)
     func bind(type: ChartType, chartPoints: [ChartPoint], animated: Bool)
@@ -20,6 +19,8 @@ protocol IChartView: class {
 }
 
 protocol IChartViewDelegate {
+    var coin: Coin { get }
+
     func viewDidLoad()
 
     func didSelect(type: ChartType)

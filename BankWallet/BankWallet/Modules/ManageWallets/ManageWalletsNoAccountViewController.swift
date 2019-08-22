@@ -2,16 +2,21 @@ import UIKit
 import ActionSheet
 
 class ManageWalletsNoAccountViewController: ActionSheetController {
-    private let titleItem = ActionTitleItem(tag: 0)
-    private let textItem: AlertTextItem
-    private let coin: Coin
 
     init(coin: Coin, predefinedAccountType: IPredefinedAccountType, onSelectNew: @escaping () -> (), onSelectRestore: @escaping () -> ()) {
-        self.coin = coin
-
-        textItem = AlertTextItem(text: "manage_coins.add_coin.text".localized(coin.title, predefinedAccountType.title.localized, predefinedAccountType.title.localized, coin.title), tag: 1)
-
         super.init(withModel: BaseAlertModel(), actionSheetThemeConfig: AppTheme.actionSheetConfig)
+
+        let titleItem = AlertTitleItem(
+                title: "manage_coins.add_coin.title".localized(coin.title),
+                icon: UIImage(coin: coin),
+                iconTintColor: AppTheme.coinIconColor,
+                tag: 0,
+                onClose: { [weak self] in
+                    self?.dismiss(byFade: false)
+                }
+        )
+
+        let textItem = AlertTextItem(text: "manage_coins.add_coin.text".localized(coin.title, predefinedAccountType.title.localized, predefinedAccountType.title.localized, coin.title), tag: 1)
 
         model.addItemView(titleItem)
         model.addItemView(textItem)
@@ -56,8 +61,6 @@ class ManageWalletsNoAccountViewController: ActionSheetController {
 
         backgroundColor = AppTheme.actionSheetBackgroundColor
         contentBackgroundColor = .white
-
-        titleItem.bindTitle?("manage_coins.add_coin.title".localized(coin.title), coin)
     }
 
 }

@@ -11,7 +11,7 @@ class BackupRequiredViewController: ActionSheetController {
                 iconTintColor: BackupTheme.alertColor,
                 tag: 0,
                 onClose: { [weak self] in
-                    self?.dismiss(animated: true)
+                    self?.dismiss(byFade: false)
                 }
         )
 
