@@ -34,3 +34,17 @@ extension Date {
     }
 
 }
+
+extension Decimal {
+
+    var integerDigitCount: Int {
+        var value = abs(self)
+        var count = 1
+        while value >= 10 {
+            value /= 10
+            count += 1
+        }
+        return count
+    }
+
+}

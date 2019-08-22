@@ -9,7 +9,7 @@ class ChartScaleHelper {
 
     private let valueScaleLines: Int
     private let valueOffsetPercent: Decimal
-    private let masScale: Int
+    private let maxScale: Int
     private let textFont: UIFont
     private let textVerticalMargin: CGFloat
     private let textLeftMargin: CGFloat
@@ -18,7 +18,7 @@ class ChartScaleHelper {
     init(valueScaleLines: Int = 5, valueOffsetPercent: Decimal = 0.05, maxScale: Int = 4, textFont: UIFont, textVerticalMargin: CGFloat = 4, textLeftMargin: CGFloat = 4, textRightMargin: CGFloat = 16) {
         self.valueScaleLines = valueScaleLines
         self.valueOffsetPercent = valueOffsetPercent
-        self.masScale = maxScale
+        self.maxScale = maxScale
         self.textFont = textFont
         self.textVerticalMargin = textVerticalMargin
         self.textLeftMargin = textLeftMargin
@@ -27,7 +27,7 @@ class ChartScaleHelper {
 
     public func scaleSize(min: Decimal, max: Decimal) -> CGSize {
         let count = scale(min: min, max: max)
-        let holderSize = textHolderSize(max: max, scale: count)
+        let holderSize = textHolderSize(maxValue: max, scale: count)
 
         return holderSize
     }
@@ -49,9 +49,10 @@ class ChartScaleHelper {
     }
 
     private func scale(min: Decimal, max: Decimal) -> Int {
-        var min = min, max = max
-        var count = 0
-        while count < masScale {
+        let maxIntegerDigits = max.integerDigitCount
+        var min = min / pow(10, maxIntegerDigits), max = max / pow(10, maxIntegerDigits)
+        var count = -maxIntegerDigits
+        while count < maxScale {
             if Int(truncating: (max - min) as NSNumber) >= valueScaleLines {
                 return count + (count == 0 && max < 10 ? 1 : 0)
             } else {
@@ -60,18 +61,24 @@ class ChartScaleHelper {
                 max *= 10
             }
         }
-        return masScale
+        return maxScale
     }
 
     private func ceilValue(max: Decimal, scale: Int) -> Decimal {
-        let multipliedValue = max * pow(10, scale)
+        let scalePow: Decimal
+        if scale < 0 {
+            scalePow = 1 / pow(10, abs(scale))
+        } else {
+            scalePow = 1 * pow(10, abs(scale))
+        }
+        let multipliedValue = max * scalePow
         var multipliedIntegerValue = Decimal(Int(truncating: multipliedValue as NSNumber))
 
         if (multipliedValue - multipliedIntegerValue) > 0 {
             multipliedIntegerValue += 1
         }
 
-        return multipliedIntegerValue / pow(10, scale)
+        return multipliedIntegerValue / scalePow
     }
 
     private func deltaScaleValue(topValue: Decimal, min: Decimal, decimal: Int) -> Decimal {
@@ -81,18 +88,18 @@ class ChartScaleHelper {
     }
 
 
-    private func textHolderSize(max: Decimal, scale: Int) -> CGSize {
+    private func textHolderSize(maxValue: Decimal, scale: Int) -> CGSize {
         let formatter = ChartScaleHelper.formatter
-        formatter.maximumFractionDigits = scale
-        formatter.minimumFractionDigits = scale
+        formatter.maximumFractionDigits = max(0, scale)
+        formatter.minimumFractionDigits = max(0, scale)
 
         let formattedString: String
-        if let formatted = formatter.string(from: max as NSNumber) {
+        if let formatted = formatter.string(from: maxValue as NSNumber) {
             formattedString = formatted
         } else {
-            let integerCount = String("\(Int(truncating: max as NSNumber))").count
+            let integerCount = String("\(Int(truncating: maxValue as NSNumber))").count
             var patternString = String(repeating: "9", count: integerCount)
-            if scale != 0 {
+            if scale > 0 {
                 patternString.append(".")
                 patternString.append(contentsOf: String(repeating: "9", count: scale))
             }

@@ -14,7 +14,7 @@ class ValueTextLayer: CATextLayer {
 
         let formatter = ChartScaleHelper.formatter
         formatter.minimumFractionDigits = 0
-        formatter.maximumFractionDigits = chartFrame.scale
+        formatter.maximumFractionDigits = max(0, chartFrame.scale)
 
         for i in 0..<(configuration.gridHorizontalLineCount - 1) {
             let height = floor(insets.top + delta * CGFloat(i)) + configuration.gridTextMargin
@@ -27,7 +27,6 @@ class ValueTextLayer: CATextLayer {
             textLayer.fontSize = configuration.gridTextFont.pointSize
 
             textLayer.string = formatter.string(from: (chartFrame.top - Decimal(i) * valueDelta) as NSNumber)
-                    //String(format: "%.\(chartFrame.scale)f", Float(truncating: (chartFrame.top - Decimal(i) * valueDelta) as NSNumber))
             textLayer.removeAllAnimations()
 
             addSublayer(textLayer)

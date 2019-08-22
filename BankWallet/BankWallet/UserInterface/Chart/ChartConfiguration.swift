@@ -32,7 +32,7 @@ enum ChartType: String, CaseIterable {
 class ChartConfiguration {
     var showGrid: Bool = true
 
-    var animationDuration: TimeInterval = 1.3
+    var animationDuration: TimeInterval = 0.3
 
     var backgroundColor: UIColor = .clear
 

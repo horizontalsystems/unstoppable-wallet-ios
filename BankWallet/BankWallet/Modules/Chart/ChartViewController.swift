@@ -6,7 +6,6 @@ class ChartViewController: ActionSheetController {
 
     private static let diffFormatter: NumberFormatter = {
         let formatter = NumberFormatter()
-        formatter.maximumFractionDigits = 2
         formatter.numberStyle = .decimal
         formatter.groupingSeparator = ""
         return formatter
@@ -59,7 +58,7 @@ extension ChartViewController: IChartView {
     }
 
     func bind(currentRateValue: CurrencyValue) {
-        let formattedValue = ValueFormatter.instance.format(currencyValue: currentRateValue)
+        let formattedValue = ValueFormatter.instance.format(currencyValue: currentRateValue, fractionPolicy: .threshold(high: 1000, low: 0.1), trimmable: false)
         currentRateItem.bindRate?(formattedValue)
     }
 
@@ -68,7 +67,14 @@ extension ChartViewController: IChartView {
             currentRateItem.bindDiff?(nil, true)
             return
         }
-        let formattedDiff = ChartViewController.diffFormatter.string(from: diff as NSNumber)
+
+        let absoluteValue = abs(diff)
+        let formatter = ChartViewController.diffFormatter
+        formatter.maximumFractionDigits = absoluteValue > 1000 ? 0 : 2
+        formatter.maximumFractionDigits = absoluteValue < 0.1 ? 4 : formatter.maximumFractionDigits
+        formatter.minimumFractionDigits = 0
+
+        let formattedDiff = formatter.string(from: diff as NSNumber)
         currentRateItem.bindDiff?(formattedDiff, !diff.isSignMinus)
     }
 
@@ -106,7 +112,7 @@ extension ChartViewController: IChartView {
             marketCapItem.setLowText?(nil)
             return
         }
-        let formattedValue = ValueFormatter.instance.format(currencyValue: lowValue)
+        let formattedValue = ValueFormatter.instance.format(currencyValue: lowValue, fractionPolicy: .threshold(high: 1000, low: 0.1), trimmable: false)
         marketCapItem.setLowText?(formattedValue)
     }
 
@@ -117,14 +123,14 @@ extension ChartViewController: IChartView {
             marketCapItem.setHighText?(nil)
             return
         }
-        let formattedValue = ValueFormatter.instance.format(currencyValue: highValue)
+        let formattedValue = ValueFormatter.instance.format(currencyValue: highValue, fractionPolicy: .threshold(high: 1000, low: 0.1), trimmable: false)
         marketCapItem.setHighText?(formattedValue)
     }
 
     func showSelectedData(timestamp: TimeInterval, value: CurrencyValue) {
         let date = Date(timeIntervalSince1970: timestamp)
         let formattedDate = DateHelper.instance.formatTransactionInfoTime(from: date)
-        let formattedValue = ValueFormatter.instance.format(currencyValue: value)
+        let formattedValue = ValueFormatter.instance.format(currencyValue: value, fractionPolicy: .threshold(high: 1000, low: 0.1), trimmable: false)
 
         chartRateTypeItem.showPoint?(formattedDate, formattedValue)
     }
