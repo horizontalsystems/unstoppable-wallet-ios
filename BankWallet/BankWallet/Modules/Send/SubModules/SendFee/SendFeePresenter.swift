@@ -7,7 +7,8 @@ class SendFeePresenter {
     private let interactor: ISendFeeInteractor
 
     private let baseCoin: Coin
-    private let feeCoinData: (Coin, String)?
+    private let feeCoin: Coin?
+    private let feeCoinProtocol: String?
     private let currency: Currency
     private var rate: Rate?
 
@@ -16,21 +17,18 @@ class SendFeePresenter {
 
     private(set) var inputType: SendInputType = .coin
 
-    init(coin: Coin, feeCoinData: (Coin, String)?, interactor: ISendFeeInteractor) {
+    init(coin: Coin, interactor: ISendFeeInteractor) {
         baseCoin = coin
-        self.feeCoinData = feeCoinData
         self.interactor = interactor
 
+        feeCoin = interactor.feeCoin(coin: coin)
+        feeCoinProtocol = interactor.feeCoinProtocol(coin: coin)
         currency = interactor.baseCurrency
         rate = interactor.rate(coinCode: self.coin.code, currencyCode: currency.code)
     }
 
     private var coin: Coin {
-        if let (feeCoin, _) = feeCoinData {
-            return feeCoin
-        } else {
-            return baseCoin
-        }
+        return feeCoin ?? baseCoin
     }
 
     private func syncFeeLabels() {
@@ -61,7 +59,7 @@ class SendFeePresenter {
     }
 
     private func validate() throws {
-        guard let (feeCoin, coinProtocol) = feeCoinData else {
+        guard let feeCoin = feeCoin, let feeCoinProtocol = feeCoinProtocol else {
             return
         }
 
@@ -70,7 +68,7 @@ class SendFeePresenter {
         }
 
         if availableFeeBalance < fee {
-            throw ValidationError.insufficientFeeBalance(coin: baseCoin, coinProtocol: coinProtocol, feeCoin: feeCoin, fee: .coinValue(coinValue: CoinValue(coin: feeCoin, value: fee)))
+            throw ValidationError.insufficientFeeBalance(coin: baseCoin, coinProtocol: feeCoinProtocol, feeCoin: feeCoin, fee: .coinValue(coinValue: CoinValue(coin: feeCoin, value: fee)))
         }
     }
 

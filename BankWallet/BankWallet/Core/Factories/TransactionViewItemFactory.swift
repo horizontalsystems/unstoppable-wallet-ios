@@ -1,9 +1,9 @@
 import Foundation
 
 class TransactionViewItemFactory: ITransactionViewItemFactory {
-    private let feeCoinProvider: FeeCoinProvider
+    private let feeCoinProvider: IFeeCoinProvider
 
-    init(feeCoinProvider: FeeCoinProvider) {
+    init(feeCoinProvider: IFeeCoinProvider) {
         self.feeCoinProvider = feeCoinProvider
     }
 
@@ -12,7 +12,7 @@ class TransactionViewItemFactory: ITransactionViewItemFactory {
         let coin = item.wallet.coin
 
         let feeCoinValue: CoinValue? = item.record.fee.map {
-            let feeCoin = feeCoinProvider.feeCoinData(coin: coin)?.0 ?? coin
+            let feeCoin = feeCoinProvider.feeCoin(coin: coin) ?? coin
             return CoinValue(coin: feeCoin, value: $0)
         }
 

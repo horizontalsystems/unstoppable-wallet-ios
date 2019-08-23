@@ -4,10 +4,10 @@ class EthereumTransactionInfoAdapter: IFullTransactionInfoAdapter {
     private static let gWeiCode = "GWei"
 
     private let provider: IEthereumForksProvider
-    private let feeCoinProvider: FeeCoinProvider
+    private let feeCoinProvider: IFeeCoinProvider
     private let coin: Coin
 
-    init(provider: IEthereumForksProvider, feeCoinProvider: FeeCoinProvider, coin: Coin) {
+    init(provider: IEthereumForksProvider, feeCoinProvider: IFeeCoinProvider, coin: Coin) {
         self.provider = provider
         self.feeCoinProvider = feeCoinProvider
         self.coin = coin
@@ -50,7 +50,7 @@ class EthereumTransactionInfoAdapter: IFullTransactionInfoAdapter {
         var feeGasItems = [FullTransactionItem]()
 
         if let fee = txResponse.fee {
-            let feeCoin = feeCoinProvider.feeCoinData(coin: coin)?.0 ?? coin
+            let feeCoin = feeCoinProvider.feeCoin(coin: coin) ?? coin
             let feeValue = CoinValue(coin: feeCoin, value: fee)
             feeGasItems.append(FullTransactionItem(title: "full_info.fee".localized, value: ValueFormatter.instance.format(coinValue: feeValue)))
         }

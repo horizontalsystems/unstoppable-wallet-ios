@@ -5,40 +5,59 @@ class FeeCoinProvider {
         self.appConfigProvider = appConfigProvider
     }
 
-    func feeCoinData(coin: Coin) -> (Coin, String)? {
+    private var erc20FeeCoin: Coin? {
+        return appConfigProvider.coins.first(where: { $0.type == .ethereum })
+    }
+
+    private var erc20FeeCoinProtocol: String {
+        return "ERC20"
+    }
+
+    private func binanceFeeCoin(symbol: String) -> Coin? {
+        guard symbol != "BNB" else {
+            return nil
+        }
+
+        return appConfigProvider.coins.first(where: { coin in
+            if case let .binance(symbol) = coin.type {
+                return symbol == "BNB"
+            }
+            return false
+        })
+    }
+
+    private func binanceFeeCoinProtocol(symbol: String) -> String? {
+        guard symbol != "BNB" else {
+            return nil
+        }
+
+        return "BEP-2"
+    }
+
+}
+
+extension FeeCoinProvider: IFeeCoinProvider {
+
+    func feeCoin(coin: Coin) -> Coin? {
         switch coin.type {
         case .erc20:
-            return erc20()
+            return erc20FeeCoin
         case .binance(let symbol):
-            return binance(symbol: symbol)
+            return binanceFeeCoin(symbol: symbol)
         default:
             return nil
         }
     }
 
-    private func erc20() -> (Coin, String)? {
-        guard let coin = appConfigProvider.coins.first(where: { $0.type == .ethereum }) else {
+    func feeCoinProtocol(coin: Coin) -> String? {
+        switch coin.type {
+        case .erc20:
+            return erc20FeeCoinProtocol
+        case .binance(let symbol):
+            return binanceFeeCoinProtocol(symbol: symbol)
+        default:
             return nil
         }
-
-        return (coin, "ERC20")
-    }
-
-    private func binance(symbol: String) -> (Coin, String)? {
-        guard symbol != "BNB" else {
-            return nil
-        }
-
-        guard let coin = appConfigProvider.coins.first(where: { coin in
-            if case let .binance(symbol) = coin.type {
-                return symbol == "BNB"
-            }
-            return false
-        }) else {
-            return nil
-        }
-
-        return (coin, "BEP-2")
     }
 
 }

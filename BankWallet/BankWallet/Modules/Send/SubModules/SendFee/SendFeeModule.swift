@@ -17,6 +17,8 @@ protocol ISendFeeDelegate: class {
 protocol ISendFeeInteractor {
     var baseCurrency: Currency { get }
     func rate(coinCode: CoinCode, currencyCode: String) -> Rate?
+    func feeCoin(coin: Coin) -> Coin?
+    func feeCoinProtocol(coin: Coin) -> String?
 }
 
 protocol ISendFeeModule: AnyObject {
