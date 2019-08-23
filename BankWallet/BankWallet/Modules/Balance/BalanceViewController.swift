@@ -14,8 +14,10 @@ class BalanceViewController: WalletViewController {
 
     private let delegate: IBalanceViewDelegate
 
+    private var sortButton: UIBarButtonItem?
     private var headerView = BalanceHeaderView(frame: .zero)
     private var indexPathForSelectedRow: IndexPath?
+    private var isStatModeOn: Bool = false
 
     init(viewDelegate: IBalanceViewDelegate) {
         self.delegate = viewDelegate
@@ -52,9 +54,11 @@ class BalanceViewController: WalletViewController {
         refreshControl.addTarget(self, action: #selector(onRefresh), for: .valueChanged)
         tableView.refreshControl = refreshControl
 
-        headerView.onSortTypeChange = { [weak self] in
-            self?.delegate.onSortTypeChange()
+        headerView.onStatsSwitch = { [weak self] isOn in
+            self?.delegate.onStatsSwitch(on: isOn)
         }
+
+        sortButton = UIBarButtonItem(image: UIImage(named: "Balance Sort Icon"), style: .plain, target: self, action: #selector(onSortTypeChange))
 
         delegate.viewDidLoad()
     }
@@ -70,6 +74,10 @@ class BalanceViewController: WalletViewController {
 
     @objc func onRefresh() {
         delegate.refresh()
+    }
+
+    @objc private func onSortTypeChange() {
+        delegate.onSortTypeChange()
     }
 
 }
@@ -109,7 +117,7 @@ extension BalanceViewController: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if let cell = cell as? BalanceCell {
-            cell.bind(item: delegate.viewItem(at: indexPath.row), selected: indexPathForSelectedRow == indexPath, onReceive: { [weak self] in
+            cell.bind(item: delegate.viewItem(at: indexPath.row), isStatModeOn: isStatModeOn, selected: indexPathForSelectedRow == indexPath, onReceive: { [weak self] in
                 self?.delegate.onReceive(index: indexPath.row)
             }, onPay: { [weak self] in
                 self?.delegate.onPay(index: indexPath.row)
@@ -151,7 +159,7 @@ extension BalanceViewController: UITableViewDelegate, UITableViewDataSource {
 
     func bind(at indexPath: IndexPath, heightChange: Bool = false) {
         if let cell = tableView.cellForRow(at: indexPath) as? BalanceCell {
-            cell.bindView(item: delegate.viewItem(at: indexPath.row), selected: indexPathForSelectedRow == indexPath, animated: heightChange)
+            cell.bindView(item: delegate.viewItem(at: indexPath.row), isStatModeOn: isStatModeOn, selected: indexPathForSelectedRow == indexPath, animated: heightChange)
 
             if heightChange {
                 UIView.animate(withDuration: BalanceTheme.buttonsAnimationDuration) {
@@ -223,7 +231,11 @@ extension BalanceViewController: IBalanceView {
     }
 
     func setSort(isOn: Bool) {
-        headerView.sortButton.isHidden = !isOn
+        if isOn {
+            navigationItem.rightBarButtonItem = sortButton
+        } else {
+            navigationItem.rightBarButtonItem = nil
+        }
     }
 
     func showBackupRequired(coin: Coin, predefinedAccountType: IPredefinedAccountType) {
@@ -232,6 +244,11 @@ extension BalanceViewController: IBalanceView {
         })
 
         present(controller, animated: true)
+    }
+
+    func setStatMode(isOn: Bool) {
+        isStatModeOn = isOn
+        reload()
     }
 
 }

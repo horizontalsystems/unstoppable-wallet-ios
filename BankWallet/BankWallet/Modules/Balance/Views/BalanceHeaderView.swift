@@ -4,9 +4,10 @@ import SnapKit
 class BalanceHeaderView: UIView {
 
     let amountLabel = UILabel()
-    let sortButton = UIButton()
+    let statsSwitchButton = UIButton()
 
-    var onSortTypeChange: (() -> ())?
+    var onStatsSwitch: ((Bool) -> ())?
+    private var switchIsOn: Bool = false
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -23,14 +24,15 @@ class BalanceHeaderView: UIView {
 
         preservesSuperviewLayoutMargins = true
 
-        addSubview(sortButton)
-        sortButton.setImage(UIImage(named: "Balance Sort Icon")?.tinted(with: BalanceTheme.headerTintColor), for: .normal)
-        sortButton.setImage(UIImage(named: "Balance Sort Icon")?.tinted(with: BalanceTheme.headerTintColorSelected), for: .selected)
-        sortButton.snp.makeConstraints { maker in
+        addSubview(statsSwitchButton)
+        statsSwitchButton.setImage(UIImage(named: "Stats Switch Button")?.tinted(with: BalanceTheme.headerTintColorNormal), for: .normal)
+        statsSwitchButton.setImage(UIImage(named: "Stats Switch Button")?.tinted(with: BalanceTheme.headerTintColor), for: .selected)
+        statsSwitchButton.setImage(UIImage(named: "Stats Switch Button")?.tinted(with: BalanceTheme.headerTintColorSelected), for: .highlighted)
+        statsSwitchButton.snp.makeConstraints { maker in
             maker.trailingMargin.equalToSuperview().inset(self.layoutMargins)
             maker.centerY.equalToSuperview()
         }
-        sortButton.addTarget(self, action: #selector(onSortTap), for: .touchUpInside)
+        statsSwitchButton.addTarget(self, action: #selector(onSwitch), for: .touchUpInside)
 
         addSubview(amountLabel)
         amountLabel.font = BalanceTheme.amountFont
@@ -40,6 +42,8 @@ class BalanceHeaderView: UIView {
             maker.leadingMargin.equalToSuperview().inset(self.layoutMargins)
             maker.top.equalToSuperview().offset(BalanceTheme.cellSmallMargin)
         }
+
+        setSwitch(isOn: switchIsOn)
     }
 
     func bind(amount: String?, upToDate: Bool) {
@@ -47,8 +51,14 @@ class BalanceHeaderView: UIView {
         amountLabel.textColor = upToDate ? BalanceTheme.amountColor : BalanceTheme.amountColorSyncing
     }
 
-    @objc func onSortTap() {
-        onSortTypeChange?()
+    @objc func onSwitch() {
+        switchIsOn = !switchIsOn
+        setSwitch(isOn: switchIsOn)
+        onStatsSwitch?(switchIsOn)
+    }
+
+    private func setSwitch(isOn: Bool) {
+        statsSwitchButton.isSelected = isOn
     }
 
 }

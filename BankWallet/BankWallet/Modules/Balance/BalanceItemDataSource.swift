@@ -32,16 +32,16 @@ extension BalanceItemDataSource: IBalanceItemDataSource {
         return items.firstIndex(where: { $0.wallet == wallet })
     }
 
-    func indices(for coinCode: String) -> [Int] {
-        var indices = [Int]()
+    func indexes(for coinCode: String) -> [Int] {
+        var indexes = [Int]()
 
         for (index, item) in items.enumerated() {
             if item.wallet.coin.code == coinCode {
-                indices.append(index)
+                indexes.append(index)
             }
         }
 
-        return indices
+        return indexes
     }
 
     func set(balance: Decimal, index: Int) {

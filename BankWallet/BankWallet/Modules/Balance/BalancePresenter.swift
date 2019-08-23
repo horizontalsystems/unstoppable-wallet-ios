@@ -71,7 +71,7 @@ extension BalancePresenter: IBalanceInteractorDelegate {
     }
 
     func didUpdate(rate: Rate) {
-        let indices = dataSource.indices(for: rate.coinCode)
+        let indices = dataSource.indexes(for: rate.coinCode)
 
         guard indices.count > 0 else {
             return
@@ -148,6 +148,10 @@ extension BalancePresenter: IBalanceViewDelegate {
             return
         }
         router.openBackup(wallet: wallet, predefinedAccountType: predefinedAccountType)
+    }
+
+    func onStatsSwitch(on: Bool) {
+        view?.setStatMode(isOn: on)
     }
 
 }

@@ -9,6 +9,9 @@ struct BalanceItem {
     var state: AdapterState
     var rate: Rate?
 
+    var percentDelta: Decimal = 0
+    var chartData: [ChartPoint] = []
+
     init(wallet: Wallet, balance: Decimal = 0, state: AdapterState) {
         self.wallet = wallet
         self.balance = balance
@@ -27,7 +30,9 @@ extension BalanceItem: DiffAware {
         return
                 a.balance   == b.balance &&
                 a.state     == b.state &&
-                a.rate      == b.rate
+                a.rate      == b.rate &&
+                a.percentDelta == b.percentDelta &&
+                a.chartData.count == b.chartData.count
     }
 
 }
