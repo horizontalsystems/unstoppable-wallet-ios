@@ -102,14 +102,15 @@ extension ChartViewController: IChartView {
     }
 
     func bind(marketCapValue: CurrencyValue?, postfix: String?) {
-        marketCapItem.setMarketCapTitle?("M. CAP")
-
         guard let value = marketCapValue, let formattedValue = ValueFormatter.instance.format(currencyValue: value) else {
             marketCapItem.setMarketCapText?(nil)
+            marketCapItem.setMarketCapTitle?(nil)
+
             return
         }
         let formattedMarketCapString = [formattedValue, postfix].compactMap { $0 }.joined(separator: " ")
         marketCapItem.setMarketCapText?(formattedMarketCapString)
+        marketCapItem.setMarketCapTitle?("M. CAP")
     }
 
     func bind(type: ChartType, lowValue: CurrencyValue?) {

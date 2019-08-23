@@ -126,30 +126,37 @@ class ChartCurveView: UIView {
         return delegate.chartData.map { pointConverter.convert(chartPoint: $0, viewBounds: bounds, chartFrame: delegate.chartFrame, retinaShift: retinaShift) }
     }
 
+    private func indexes(count: Int, elementCount: Int) -> [Int] {
+        var arr = [Int]()
+        for i in 0..<count {
+            let index = i * elementCount / count + elementCount / (2 * count)
+            arr.append(index - 1)
+        }
+        return arr
+    }
+
     private func convert(curve: Bool, lastPoints: [CGPoint]?, newPoints: [CGPoint]) -> [CGPoint] {
         guard let lastPoints = lastPoints else {
             return newPoints.map { CGPoint(x: $0.x, y: bottom) }
         }
-        var startPoints: [CGPoint]
-
+        var startPoints = lastPoints
         if lastPoints.count > newPoints.count {
-            if curve {
-                startPoints = Array(lastPoints.prefix(newPoints.count))
-            } else {
-                startPoints = Array(lastPoints.prefix(newPoints.count - 1)) + [lastPoints[lastPoints.count - 1]]
+            startPoints = lastPoints
+            let diffCount = lastPoints.count - newPoints.count
+            let shift = min(diffCount, curve ? 2 : 4)
+            let removingIndexes = indexes(count: diffCount, elementCount: lastPoints.count - shift)
+
+            for index in removingIndexes.reversed() {
+                startPoints.remove(at: index + min(shift, curve ? 1 : 2))
             }
         } else if lastPoints.count < newPoints.count {
-            if curve {
-                let newPoints = newPoints.suffix(newPoints.count - lastPoints.count)
-                startPoints = lastPoints + newPoints.map { CGPoint(x: $0.x, y: bottom) }
-            } else {
-                let newPoints = newPoints.suffix(newPoints.count - lastPoints.count + 1)
-                startPoints = lastPoints.prefix(lastPoints.count - 1) + newPoints.map { CGPoint(x: $0.x, y: bottom) }
+            let diffCount = newPoints.count - lastPoints.count
+            let shift = min(diffCount, curve ? 2 : 4)
+            let appendingIndexes = indexes(count: diffCount, elementCount: lastPoints.count - shift)
+            for index in appendingIndexes.reversed() {
+                startPoints.insert(startPoints[index + min(shift, curve ? 1 : 2)], at: index + min(shift, curve ? 1 : 2))
             }
-        }  else {
-            startPoints = lastPoints
         }
-
         return startPoints
     }
 

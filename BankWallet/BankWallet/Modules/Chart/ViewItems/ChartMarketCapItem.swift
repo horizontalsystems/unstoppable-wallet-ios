@@ -2,7 +2,7 @@ import ActionSheet
 
 class ChartMarketCapItem: BaseActionItem {
 
-    var setMarketCapTitle: ((String) -> ())?
+    var setMarketCapTitle: ((String?) -> ())?
     var setMarketCapText: ((String?) -> ())?
     var setLowTitle: ((String) -> ())?
     var setLowText: ((String?) -> ())?
