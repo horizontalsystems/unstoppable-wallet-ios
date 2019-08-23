@@ -7,6 +7,7 @@
 
 "button.ok" = "OK";
 "button.cancel" = "Cancel";
+"button.close" = "Close";
 "button.confirm" = "Confirm";
 "button.done" = "Done";
 "button.restore" = "Restore";
