@@ -150,7 +150,7 @@ extension RestoreWordsViewController: IRestoreWordsView {
 
 }
 
-extension RestoreWordsViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
+extension RestoreWordsViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UICollectionViewDelegate {
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = collectionView.bounds.width - RestoreTheme.interItemSpacing - RestoreTheme.collectionSideMargin * 2
@@ -172,6 +172,14 @@ extension RestoreWordsViewController: UICollectionViewDelegateFlowLayout, UIColl
             }, onTextChange: { [weak self] string in
                 self?.onTextChange(word: string, at: indexPath)
             })
+        }
+    }
+
+    func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        if let cell = cell as? RestoreWordCell {
+            if cell.inputField.textField.isFirstResponder {
+                view.endEditing(true)
+            }
         }
     }
 
