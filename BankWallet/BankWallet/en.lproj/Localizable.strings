@@ -329,6 +329,7 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 
 // Key Types
 
+"chart.title" = "%@ Rate";
 "chart.time_duration.day" = "1D";
 "chart.time_duration.week" = "7D";
 "chart.time_duration.month" = "1M";
