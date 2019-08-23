@@ -37,7 +37,7 @@ extension BalancePresenter: IBalanceInteractorDelegate {
             interactor.fetchRates(currencyCode: currency.code, coinCodes: dataSource.coinCodes)
         }
 
-        view?.setSort(isOn: dataSource.items.count > sortingOnThreshold)
+        view?.setSort(isOn: dataSource.items.count >= sortingOnThreshold)
         view?.reload()
     }
 
