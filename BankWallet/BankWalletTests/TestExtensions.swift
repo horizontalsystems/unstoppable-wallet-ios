@@ -19,7 +19,7 @@ extension XCTestCase {
 
 extension CoinValue: Equatable {
     public static func ==(lhs: CoinValue, rhs: CoinValue) -> Bool {
-        return lhs.coinCode == rhs.coinCode && lhs.value == rhs.value
+        return lhs.coin == rhs.coin && lhs.value == rhs.value
     }
 }
 
@@ -124,8 +124,16 @@ extension Wallet {
 
 extension Coin {
 
-    static func mock(title: String = "Bitcoin", code: CoinCode = "BTC", type: CoinType = .bitcoin) -> Coin {
-        return Coin(title: title, code: code, type: type)
+    static func mock(title: String = "Bitcoin", code: CoinCode = "BTC", decimal: Int = 8, type: CoinType = .bitcoin) -> Coin {
+        return Coin(title: title, code: code, decimal: decimal, type: type)
+    }
+
+}
+
+extension Currency {
+
+    static func mock(code: String = "USD", symbol: String = "$", decimal: Int = 2) -> Currency {
+        return Currency(code: code, symbol: symbol, decimal: decimal)
     }
 
 }
@@ -155,8 +163,8 @@ extension JsonApiProvider.RequestObject: Equatable {
 
     public static func ==(lhs: JsonApiProvider.RequestObject, rhs: JsonApiProvider.RequestObject) -> Bool {
         switch (lhs, rhs) {
-        case (.get(let lhsUrl, let lhsParams), .get(let rhsUrl, let rhsParams)): return lhsUrl == rhsUrl
-        case (.post(let lhsUrl, let lhsParams), .post(let rhsUrl, let rhsParams)): return lhsUrl == rhsUrl
+        case (.get(let lhsUrl, _), .get(let rhsUrl, _)): return lhsUrl == rhsUrl
+        case (.post(let lhsUrl, _), .post(let rhsUrl, _)): return lhsUrl == rhsUrl
         default: return false
         }
     }

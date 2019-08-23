@@ -10,7 +10,7 @@ class DataProviderSettingsInteractorTests: XCTestCase {
 
     private var interactor: DataProviderSettingsInteractor!
 
-    private let coin = Coin(title: "Bitcoin", code: "BTC", type: .bitcoin)
+    private let coin = Coin.mock(title: "Bitcoin", code: "BTC", type: .bitcoin)
     private let firstName = "first_provider"
     private let secondName = "second_provider"
 

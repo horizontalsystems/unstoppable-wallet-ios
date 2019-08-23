@@ -58,13 +58,13 @@ class FullTransactionDataProviderManagerTests: XCTestCase {
     }
 
     func testProviders() {
-        var providerNames = manager.providers(for: Coin(title: "", code: "", type: .bitcoin)).map { $0.name }
+        var providerNames = manager.providers(for: Coin.mock(type: .bitcoin)).map { $0.name }
         XCTAssertEqual(providerNames, bitcoinProviderNames)
 
-        providerNames = manager.providers(for: Coin(title: "", code: "", type: .bitcoinCash)).map { $0.name }
+        providerNames = manager.providers(for: Coin.mock(type: .bitcoinCash)).map { $0.name }
         XCTAssertEqual(providerNames, bitcoinCashProviderNames)
 
-        providerNames = manager.providers(for: Coin(title: "", code: "", type: .ethereum)).map { $0.name }
+        providerNames = manager.providers(for: Coin.mock(type: .ethereum)).map { $0.name }
         XCTAssertEqual(providerNames, ethereumProviderNames)
     }
 
@@ -72,38 +72,38 @@ class FullTransactionDataProviderManagerTests: XCTestCase {
         stub(mockAppConfigProvider) { mock in
             when(mock.testMode.get).thenReturn(true)
         }
-        var providerUrls = manager.providers(for: Coin(title: "", code: "", type: .bitcoin)).map { $0.url(for: "test") }
+        var providerUrls = manager.providers(for: Coin.mock(type: .bitcoin)).map { $0.url(for: "test") }
         XCTAssertEqual(providerUrls, ["http://btc-testnet.horizontalsystems.xyz/tx/test"])
 
-        providerUrls = manager.providers(for: Coin(title: "", code: "", type: .bitcoinCash)).map { $0.url(for: "test") }
+        providerUrls = manager.providers(for: Coin.mock(type: .bitcoinCash)).map { $0.url(for: "test") }
         XCTAssertEqual(providerUrls, ["https://tbch.blockdozer.com/tx/test"])
 
-        providerUrls = manager.providers(for: Coin(title: "", code: "", type: .ethereum)).map { $0.url(for: "test") }
+        providerUrls = manager.providers(for: Coin.mock(type: .ethereum)).map { $0.url(for: "test") }
         XCTAssertEqual(providerUrls, ["https://ropsten.etherscan.io/tx/test"])
     }
 
     func testBaseProvider() {
-        var baseProviderName = manager.baseProvider(for: Coin(title: "", code: "", type: .bitcoin)).name
+        var baseProviderName = manager.baseProvider(for: Coin.mock(type: .bitcoin)).name
         XCTAssertEqual(baseProviderName, firstName)
 
-        baseProviderName = manager.baseProvider(for: Coin(title: "", code: "", type: .bitcoinCash)).name
+        baseProviderName = manager.baseProvider(for: Coin.mock(type: .bitcoinCash)).name
         XCTAssertEqual(baseProviderName, firstName)
 
-        baseProviderName = manager.baseProvider(for: Coin(title: "", code: "", type: .ethereum)).name
+        baseProviderName = manager.baseProvider(for: Coin.mock(type: .ethereum)).name
         XCTAssertEqual(baseProviderName, secondName)
     }
 
     func testSetBaseProvider() {
         let name = "test_provider"
-        manager.setBaseProvider(name: name, for: Coin(title: "", code: "", type: .bitcoin))
+        manager.setBaseProvider(name: name, for: Coin.mock(type: .bitcoin))
         verify(mockLocalStorage).baseBitcoinProvider.set(equal(to: name))
 
-        manager.setBaseProvider(name: name, for: Coin(title: "", code: "", type: .ethereum))
+        manager.setBaseProvider(name: name, for: Coin.mock(type: .ethereum))
         verify(mockLocalStorage).baseEthereumProvider.set(equal(to: name))
     }
 
     func testBitcoinProviders() {
-        let providers = manager.providers(for: Coin(title: "", code: "", type: .bitcoin))
+        let providers = manager.providers(for: Coin.mock(type: .bitcoin))
 
         for (index, provider) in providers.enumerated() {
             XCTAssertEqual(manager.bitcoin(for: bitcoinProviderNames[index]).name, provider.name)
@@ -111,7 +111,7 @@ class FullTransactionDataProviderManagerTests: XCTestCase {
     }
 
     func testBitcoinCashProviders() {
-        let providers = manager.providers(for: Coin(title: "", code: "", type: .bitcoinCash))
+        let providers = manager.providers(for: Coin.mock(type: .bitcoinCash))
 
         for (index, provider) in providers.enumerated() {
             XCTAssertEqual(manager.bitcoinCash(for: bitcoinCashProviderNames[index]).name, provider.name)
@@ -119,7 +119,7 @@ class FullTransactionDataProviderManagerTests: XCTestCase {
     }
 
     func testEthereumProviders() {
-        let providers = manager.providers(for: Coin(title: "", code: "", type: .ethereum))
+        let providers = manager.providers(for: Coin.mock(type: .ethereum))
 
         for (index, provider) in providers.enumerated() {
             XCTAssertEqual(manager.ethereum(for: ethereumProviderNames[index]).name, provider.name)

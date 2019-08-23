@@ -80,7 +80,7 @@ class MainSettingsInteractorTests: XCTestCase {
         let code = "USD"
 
         stub(mockCurrencyManager) { mock in
-            when(mock.baseCurrency.get).thenReturn(Currency(code: "USD", symbol: ""))
+            when(mock.baseCurrency.get).thenReturn(Currency(code: "USD", symbol: "", decimal: 2))
         }
 
         XCTAssertEqual(interactor.baseCurrency, code)

@@ -26,7 +26,6 @@ class MainSettingsPresenterTests: XCTestCase {
             when(mock.set(baseCurrency: any())).thenDoNothing()
             when(mock.set(lightMode: any())).thenDoNothing()
             when(mock.set(appVersion: any())).thenDoNothing()
-            when(mock.setTabItemBadge(count: any())).thenDoNothing()
         }
         stub(mockRouter) { mock in
             when(mock.showSecuritySettings()).thenDoNothing()
@@ -67,7 +66,6 @@ class MainSettingsPresenterTests: XCTestCase {
         presenter.viewDidLoad()
 
         verify(mockView).set(backedUp: true)
-        verify(mockView).setTabItemBadge(count: 0)
     }
 
     func testNotBackedUpCountOnLoad_NonZero() {
@@ -80,7 +78,6 @@ class MainSettingsPresenterTests: XCTestCase {
         presenter.viewDidLoad()
 
         verify(mockView).set(backedUp: false)
-        verify(mockView).setTabItemBadge(count: count)
     }
 
     func testShowCurrentLanguageOnLoad() {
@@ -120,7 +117,6 @@ class MainSettingsPresenterTests: XCTestCase {
         presenter.didUpdateNonBackedUp(count: 0)
 
         verify(mockView).set(backedUp: true)
-        verify(mockView).setTabItemBadge(count: 0)
     }
 
     func testDidUpdateNonBackedUp_NonZero() {
@@ -129,7 +125,6 @@ class MainSettingsPresenterTests: XCTestCase {
         presenter.didUpdateNonBackedUp(count: count)
 
         verify(mockView).set(backedUp: false)
-        verify(mockView).setTabItemBadge(count: count)
     }
 
     func testReloadAppInterfaceOnLightModeUpdate() {

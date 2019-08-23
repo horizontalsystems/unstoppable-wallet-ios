@@ -35,7 +35,7 @@ class FullTransactionInfoTextCell: SettingsCell {
     }
 
     func bind(item: FullTransactionItem, selectionStyle: SelectionStyle = .none, showDisclosure: Bool = false, last: Bool = false, showTopSeparator: Bool = false, onTap: (() -> ())? = nil) {
-        super.bind(titleIcon: UIImage(named: item.icon ?? ""), title: item.title, titleColor: FullTransactionInfoTheme.titleColor, showDisclosure: showDisclosure, last: last)
+        super.bind(titleIcon: item.icon.flatMap { UIImage(named: $0) }, title: item.title, titleColor: FullTransactionInfoTheme.titleColor, showDisclosure: showDisclosure, last: last)
         self.selectionStyle = selectionStyle
 
         topSeparatorView.isHidden = !showTopSeparator
