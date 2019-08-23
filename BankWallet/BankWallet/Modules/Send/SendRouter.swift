@@ -24,9 +24,8 @@ extension SendRouter: ISendRouter {
 
 extension SendRouter {
 
-    static func module(coinCode: CoinCode) -> UIViewController? {
-        guard let wallet = App.shared.walletManager.wallets.first(where: { $0.coin.code == coinCode }),
-              let adapter = App.shared.adapterManager.adapter(for: wallet) else {
+    static func module(wallet: Wallet) -> UIViewController? {
+        guard let adapter = App.shared.adapterManager.adapter(for: wallet) else {
             return nil
         }
 

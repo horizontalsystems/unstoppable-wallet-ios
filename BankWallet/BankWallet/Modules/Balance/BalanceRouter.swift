@@ -11,8 +11,8 @@ extension BalanceRouter: IBalanceRouter {
         DepositRouter.module(wallet: wallet)?.show(fromController: viewController)
     }
 
-    func openSend(for coinCode: CoinCode) {
-        if let module = SendRouter.module(coinCode: coinCode) {
+    func openSend(wallet: Wallet) {
+        if let module = SendRouter.module(wallet: wallet) {
             viewController?.present(module, animated: true)
         }
     }

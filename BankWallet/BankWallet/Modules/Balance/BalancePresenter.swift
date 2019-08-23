@@ -128,7 +128,7 @@ extension BalancePresenter: IBalanceViewDelegate {
     }
 
     func onPay(index: Int) {
-        router.openSend(for: dataSource.item(at: index).wallet.coin.code)
+        router.openSend(wallet: dataSource.item(at: index).wallet)
     }
 
     func onChart(index: Int) {
