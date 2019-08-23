@@ -7,6 +7,7 @@
 
 "button.ok" = "OK";
 "button.cancel" = "Отмена";
+"button.close" = "Close";
 "button.confirm" = "Подтвердить";
 "button.done" = "Готово";
 "button.restore" = "Восстановить";
@@ -152,6 +153,7 @@
 "tx_info.status.pending" = "В процессе";
 "tx_info.status.confirmed" = "Подтверждено";
 "tx_info.from_hash" = "От";
+"tx_info.transaction_id" = "Transaction ID";
 "tx_info.to_hash" = "Кому";
 "tx_info.button_verify" = "Проверить";
 "tx_info.rate" = "Исторический Курс";
@@ -264,7 +266,7 @@
 "settings_manage_keys.show" = "Показать";
 "settings_manage_keys.create" = "Создать";
 "settings_manage_keys.restore" = "Восстановить";
-"settings_manage_keys.delete.cant_delete" = "You need to backup %@ key before you may unlink it.";
+"settings_manage_keys.delete.cant_delete" = "You need to backup %@ key before you may delete it from this phone.";
 "settings_manage_keys.delete.title" = "Удалить Ключ";
 "settings_manage_keys.delete.confirmation_remove" = "Это действие удалит ваш %@ ключ (кошелёк) с этого устройства.";
 "settings_manage_keys.delete.confirmation_disable" = "Монеты, которые будут отключены: %@";
