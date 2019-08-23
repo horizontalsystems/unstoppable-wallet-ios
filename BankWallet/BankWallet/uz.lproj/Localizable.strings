@@ -7,6 +7,7 @@
 
 "button.ok" = "OK";
 "button.cancel" = "Cancel";
+"button.close" = "Close";
 "button.confirm" = "Confirm";
 "button.done" = "Done";
 "button.restore" = "Restore";
@@ -152,6 +153,7 @@
 "tx_info.status.pending" = "Pending";
 "tx_info.status.confirmed" = "Confirmed";
 "tx_info.from_hash" = "From";
+"tx_info.transaction_id" = "Transaction ID";
 "tx_info.to_hash" = "To";
 "tx_info.button_verify" = "Verify";
 "tx_info.rate" = "Historical Rate";
@@ -264,7 +266,7 @@
 "settings_manage_keys.show" = "Show";
 "settings_manage_keys.create" = "Create";
 "settings_manage_keys.restore" = "Restore";
-"settings_manage_keys.delete.cant_delete" = "You need to backup %@ key before you may unlink it.";
+"settings_manage_keys.delete.cant_delete" = "You need to backup %@ key before you may delete it from this phone.";
 "settings_manage_keys.delete.title" = "Delete Key";
 "settings_manage_keys.delete.confirmation_remove" = "This action will delete the %@ key (wallet) from this device.";
 "settings_manage_keys.delete.confirmation_disable" = "Coins that will be disabled: %@";
