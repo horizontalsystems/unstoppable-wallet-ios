@@ -7,6 +7,7 @@
 
 "button.ok" = "확인";
 "button.cancel" = "취소";
+"button.close" = "Close";
 "button.confirm" = "확인";
 "button.done" = "완료";
 "button.restore" = "복구";
@@ -152,6 +153,7 @@
 "tx_info.status.pending" = "보류 중";
 "tx_info.status.confirmed" = "확인";
 "tx_info.from_hash" = "로 부터";
+"tx_info.transaction_id" = "Transaction ID";
 "tx_info.to_hash" = "에게";
 "tx_info.button_verify" = "확인";
 "tx_info.rate" = "과거 환율";
@@ -264,7 +266,7 @@
 "settings_manage_keys.show" = "표시";
 "settings_manage_keys.create" = "만들기";
 "settings_manage_keys.restore" = "복구";
-"settings_manage_keys.delete.cant_delete" = "You need to backup %@ key before you may unlink it.";
+"settings_manage_keys.delete.cant_delete" = "You need to backup %@ key before you may delete it from this phone.";
 "settings_manage_keys.delete.title" = "암호 삭제";
 "settings_manage_keys.delete.confirmation_remove" = "이 작업은 %@ 암호(지갑)를 이 장치에서 삭제합니다.";
 "settings_manage_keys.delete.confirmation_disable" = "비활성화될 코인: %@";
