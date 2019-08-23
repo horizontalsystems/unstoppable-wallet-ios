@@ -7,6 +7,7 @@
 
 "button.ok" = "确定";
 "button.cancel" = "取消";
+"button.close" = "Close";
 "button.confirm" = "确认";
 "button.done" = "完成";
 "button.restore" = "恢复";
@@ -152,6 +153,7 @@
 "tx_info.status.pending" = "在过程中";
 "tx_info.status.confirmed" = "已确认";
 "tx_info.from_hash" = "发件人";
+"tx_info.transaction_id" = "Transaction ID";
 "tx_info.to_hash" = "收件人";
 "tx_info.button_verify" = "验证";
 "tx_info.rate" = "历史汇率";
@@ -264,7 +266,7 @@
 "settings_manage_keys.show" = "查看";
 "settings_manage_keys.create" = "创建";
 "settings_manage_keys.restore" = "恢复";
-"settings_manage_keys.delete.cant_delete" = "You need to backup %@ key before you may unlink it.";
+"settings_manage_keys.delete.cant_delete" = "You need to backup %@ key before you may delete it from this phone.";
 "settings_manage_keys.delete.title" = "删除密钥";
 "settings_manage_keys.delete.confirmation_remove" = "此操作将从此设备中删除%@密钥（钱包）。\n\n";
 "settings_manage_keys.delete.confirmation_disable" = "将被禁用的硬币：%@";
