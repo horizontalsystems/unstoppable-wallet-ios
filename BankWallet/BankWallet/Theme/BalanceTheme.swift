@@ -14,6 +14,7 @@ class BalanceTheme {
     static let sortLabelFont: UIFont = .cryptoCaption3
     static let sortLabelTextColor: UIColor = .cryptoGray
     static let headerTintColor: UIColor = .cryptoYellow
+    static let headerTintColorNormal: UIColor = .cryptoYellow40
     static let headerTintColorSelected: UIColor = .cryptoYellowPressed
     static let sortLabelSelectedTextColor: UIColor = .cryptoGray50
     static let headerTinyMargin: CGFloat = 4
@@ -75,4 +76,10 @@ class BalanceTheme {
     static let editTitleColor = UIColor.cryptoGray
     static var editTitleSelectedColor: UIColor { return UIColor.crypto_Steel40_LightGray }
 
+    static let chartWidth: CGFloat = 64
+    static let chartHeight: CGFloat = 30
+    static let chartCornerRadius: CGFloat = 8
+    static let percentDeltaFont: UIFont = .cryptoHeadline
+    static let percentDeltaDownColor: UIColor = .cryptoRed
+    static let percentDeltaUpColor: UIColor = .cryptoGreen
 }
