@@ -7,6 +7,7 @@
 
 "button.ok" = "OK";
 "button.cancel" = "Annuler";
+"button.close" = "Close";
 "button.confirm" = "Confirmer";
 "button.done" = "Fait";
 "button.restore" = "Restaurer";
@@ -152,6 +153,7 @@
 "tx_info.status.pending" = "En attente";
 "tx_info.status.confirmed" = "Confirmé";
 "tx_info.from_hash" = "De";
+"tx_info.transaction_id" = "Transaction ID";
 "tx_info.to_hash" = "À";
 "tx_info.button_verify" = "Vérifiez";
 "tx_info.rate" = "Taux historique";
@@ -264,7 +266,7 @@
 "settings_manage_keys.show" = "Afficher";
 "settings_manage_keys.create" = "Créer";
 "settings_manage_keys.restore" = "Restaurer";
-"settings_manage_keys.delete.cant_delete" = "You need to backup %@ key before you may unlink it.";
+"settings_manage_keys.delete.cant_delete" = "You need to backup %@ key before you may delete it from this phone.";
 "settings_manage_keys.delete.title" = "Supprimer la clé";
 "settings_manage_keys.delete.confirmation_remove" = "Cette action supprimera la clé %@ (porte-monnaie) de cet appareil.";
 "settings_manage_keys.delete.confirmation_disable" = "Coins qui seront désactivées : %@";
