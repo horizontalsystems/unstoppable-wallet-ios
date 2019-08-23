@@ -16,6 +16,9 @@ class BalanceCell: UITableViewCell {
     private let coinValueLabel = UILabel()
     private let rateLabel = UILabel()
 
+    private let chartView = UIView()
+    private let percentDeltaLabel = UILabel()
+
     private let syncSpinner = HUDProgressView(
             progress: Float(BalanceCell.minimumProgress) / 100,
             strokeLineWidth: BalanceTheme.spinnerLineWidth,
@@ -164,21 +167,37 @@ class BalanceCell: UITableViewCell {
         chartButton.textColors = ButtonTheme.textColorDictionary
         chartButton.cornerRadius = BalanceTheme.buttonCornerRadius
         chartButton.titleLabel.text = "\u{20aa}"
+
+        clippingView.addSubview(chartView)
+        chartView.layer.masksToBounds = true
+        chartView.layer.cornerRadius = BalanceTheme.chartCornerRadius
+        chartView.backgroundColor = .lightGray
+        chartView.snp.makeConstraints { maker in
+            maker.top.equalToSuperview().offset(BalanceTheme.cellSmallMargin)
+            maker.trailing.equalToSuperview().offset(-BalanceTheme.cellSmallMargin)
+            maker.size.equalTo(CGSize(width: BalanceTheme.chartWidth, height: BalanceTheme.chartHeight))
+        }
+        clippingView.addSubview(percentDeltaLabel)
+        percentDeltaLabel.font = BalanceTheme.percentDeltaFont
+        percentDeltaLabel.snp.makeConstraints { maker in
+            maker.top.equalTo(self.chartView.snp.bottom).offset(BalanceTheme.cellBigMargin)
+            maker.trailing.equalToSuperview().offset(-BalanceTheme.cellBigMargin)
+        }
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("not implemented")
     }
 
-    func bind(item: BalanceViewItem, selected: Bool, animated: Bool = false, onReceive: @escaping (() -> ()), onPay: @escaping (() -> ()), onChart: @escaping (() -> ())) {
+    func bind(item: BalanceViewItem, isStatModeOn: Bool, selected: Bool, animated: Bool = false, onReceive: @escaping (() -> ()), onPay: @escaping (() -> ()), onChart: @escaping (() -> ())) {
         self.onPay = onPay
         self.onReceive = onReceive
         self.onChart = onChart
 
-        bindView(item: item, selected: selected, animated: animated)
+        bindView(item: item, isStatModeOn: isStatModeOn, selected: selected, animated: animated)
     }
 
-    func bindView(item: BalanceViewItem, selected: Bool, animated: Bool = false) {
+    func bindView(item: BalanceViewItem, isStatModeOn: Bool, selected: Bool, animated: Bool = false) {
         var synced = false
 
         coinIconImageView.bind(coin: item.coin)
@@ -243,6 +262,15 @@ class BalanceCell: UITableViewCell {
         } else {
             failedImageView.isHidden = true
         }
+
+        currencyValueLabel.isHidden = isStatModeOn && !selected
+        coinValueLabel.isHidden = isStatModeOn && !selected
+        chartView.isHidden = !isStatModeOn || selected
+        percentDeltaLabel.isHidden = !isStatModeOn || selected
+
+        let fallDown = item.percentDelta < 0
+        percentDeltaLabel.textColor = fallDown ? BalanceTheme.percentDeltaDownColor : BalanceTheme.percentDeltaUpColor
+        percentDeltaLabel.text = "\(fallDown ? "" : "+")\(item.percentDelta)%"
     }
 
     func unbind() {

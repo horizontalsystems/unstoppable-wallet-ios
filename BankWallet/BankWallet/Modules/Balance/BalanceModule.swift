@@ -8,6 +8,7 @@ protocol IBalanceView: class {
     func didRefresh()
     func setSort(isOn: Bool)
     func showBackupRequired(coin: Coin, predefinedAccountType: IPredefinedAccountType)
+    func setStatMode(isOn: Bool)
 }
 
 protocol IBalanceViewDelegate {
@@ -27,6 +28,7 @@ protocol IBalanceViewDelegate {
 
     func onSortTypeChange()
     func didRequestBackup()
+    func onStatsSwitch(on: Bool)
 }
 
 protocol IBalanceInteractor {
@@ -65,7 +67,7 @@ protocol IBalanceItemDataSource {
     var coinCodes: [CoinCode] { get }
     func item(at index: Int) -> BalanceItem
     func index(for wallet: Wallet) -> Int?
-    func indices(for coinCode: String) -> [Int]
+    func indexes(for coinCode: String) -> [Int]
 
     func set(balance: Decimal, index: Int)
     func set(state: AdapterState, index: Int)
