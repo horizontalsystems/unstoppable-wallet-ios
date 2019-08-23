@@ -25,9 +25,6 @@ class FullTransactionInfoTheme {
     static let linkCellHeight: CGFloat = 20
     static let linkCellHorizontalMargin: CGFloat = 8
     static var cellBackground: UIColor { return .crypto_Steel20_White }
-    static let bottomBarHeight: CGFloat = 49
-    static let bottomBarTintColor = UIColor.cryptoYellow
-    static let bottomHighlightBarTintColor = UIColor.cryptoYellowPressed
 
     static let errorViewMargin: CGFloat = 24
 }

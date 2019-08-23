@@ -41,7 +41,10 @@ class FullTransactionInfoViewController: WalletViewController, SectionsDataSourc
         super.viewDidLoad()
 
         title = "full_info.title".localized
+
         navigationItem.backBarButtonItem = UIBarButtonItem(title: title, style: .plain, target: nil, action: nil)
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "button.share".localized, style: .plain, target: self, action: #selector(onShare))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.close".localized, style: .plain, target: self, action: #selector(onClose))
 
         view.addSubview(tableView)
         tableView.backgroundColor = .clear
@@ -56,67 +59,23 @@ class FullTransactionInfoViewController: WalletViewController, SectionsDataSourc
         tableView.registerHeaderFooter(forClass: FullTransactionHashHeaderView.self)
         tableView.sectionDataSource = self
         tableView.separatorColor = .clear
-        tableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: FullTransactionInfoTheme.bottomBarHeight))
 
-        let holderView = UIView()
-        holderView.backgroundColor = AppTheme.navigationBarBackgroundColor
-        view.addSubview(holderView)
-        holderView.snp.makeConstraints { maker in
-            maker.leading.trailing.bottom.equalToSuperview()
-        }
-        let holderSeparator = UIView()
-        holderSeparator.backgroundColor = AppTheme.separatorColor
-        holderView.addSubview(holderSeparator)
-        holderSeparator.snp.makeConstraints { maker in
-            maker.leading.top.trailing.equalToSuperview()
-            maker.height.equalTo(1 / UIScreen.main.scale)
-        }
-        let toolbar = UIView(frame: .zero)
-        holderView.addSubview(toolbar)
-
-        toolbar.snp.makeConstraints { maker in
-            maker.leading.trailing.top.equalToSuperview()
-            maker.bottom.equalTo(holderView.safeAreaLayoutGuide)
-            maker.height.equalTo(FullTransactionInfoTheme.bottomBarHeight)
-        }
-
-        toolbar.addSubview(closeButton)
-        closeButton.setImage(closeButtonImage?.tinted(with: FullTransactionInfoTheme.bottomBarTintColor), for: .normal)
-        closeButton.setImage(closeButtonImage?.tinted(with: FullTransactionInfoTheme.bottomHighlightBarTintColor), for: .highlighted)
-        closeButton.addTarget(self, action: #selector(onClose), for: .touchUpInside)
-        closeButton.snp.makeConstraints { maker in
-            maker.top.bottom.equalToSuperview()
-            maker.trailing.equalTo(toolbar.snp.trailingMargin)
-            maker.width.equalTo(closeButton.snp.height)
-        }
-
-        toolbar.addSubview(shareButton)
-        shareButton.setImage(shareButtonImage?.tinted(with: FullTransactionInfoTheme.bottomBarTintColor), for: .normal)
-        shareButton.setImage(shareButtonImage?.tinted(with: FullTransactionInfoTheme.bottomHighlightBarTintColor), for: .highlighted)
-        shareButton.addTarget(self, action: #selector(onShare), for: .touchUpInside)
-        shareButton.snp.makeConstraints { maker in
-            maker.top.bottom.equalToSuperview()
-            maker.leading.equalTo(toolbar.snp.leadingMargin)
-            maker.width.equalTo(shareButton.snp.height)
-        }
         view.addSubview(loadingView)
         loadingView.snp.makeConstraints { maker in
-            maker.top.equalToSuperview()
-            maker.leading.equalToSuperview()
-            maker.trailing.equalToSuperview()
-            maker.bottom.equalTo(toolbar.snp.top)
+            maker.edges.equalToSuperview()
         }
         loadingView.set(hidden: true)
+
         if let errorView = errorView {
             view.addSubview(errorView)
 
             errorView.snp.makeConstraints { maker in
                 maker.top.leading.equalToSuperview().offset(FullTransactionInfoTheme.errorViewMargin)
-                maker.trailing.equalToSuperview().offset(-FullTransactionInfoTheme.errorViewMargin)
-                maker.bottom.equalTo(toolbar.snp.top).offset(-FullTransactionInfoTheme.errorViewMargin)
+                maker.trailing.bottom.equalToSuperview().offset(-FullTransactionInfoTheme.errorViewMargin)
             }
             errorView.set(hidden: true)
         }
+
         delegate.viewDidLoad()
     }
 
