@@ -519,3 +519,8 @@ protocol IWalletStorage {
 protocol IDefaultWalletCreator {
     func createWallets(account: Account)
 }
+
+protocol IFeeCoinProvider {
+    func feeCoin(coin: Coin) -> Coin?
+    func feeCoinProtocol(coin: Coin) -> String?
+}

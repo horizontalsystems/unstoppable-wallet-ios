@@ -43,7 +43,7 @@ class App {
     let rateManager: RateManager
     let currencyManager: ICurrencyManager
 
-    let feeCoinProvider: FeeCoinProvider
+    let feeCoinProvider: IFeeCoinProvider
     let feeRateProviderFactory: FeeRateProviderFactory
     let addressParserFactory: AddressParserFactory
 
