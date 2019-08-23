@@ -10,8 +10,6 @@ class ChartPresenter {
 
     private var chartType: ChartType
 
-    private var animated: Bool = true
-
     init(interactor: IChartInteractor, chartRateConverter: IChartRateConverter, coin: Coin, currency: Currency) {
         self.interactor = interactor
         self.chartRateConverter = chartRateConverter
@@ -49,7 +47,6 @@ extension ChartPresenter: IChartViewDelegate {
         chartType = type
         interactor.set(chartType: type)
 
-        view?.showProgress()
         interactor.getRates(coinCode: coin.code, currencyCode: currency.code, chartType: chartType)
     }
 
@@ -81,9 +78,7 @@ extension ChartPresenter: IChartInteractorDelegate {
 
         view?.bind(type: chartType, lowValue: CurrencyValue(currency: currency, value: minimumValue))
         view?.bind(type: chartType, highValue: CurrencyValue(currency: currency, value: maximumValue))
-        view?.bind(type: chartType, chartPoints: points, animated: animated)
-
-        animated = false
+        view?.bind(type: chartType, chartPoints: points, animated: true)
     }
 
     func didReceive(marketCapData: MarketCapData) {
