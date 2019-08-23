@@ -327,7 +327,6 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 "key_type.binance" = "Binance Chain";
 "key_type.binance.text" = "BNB, BEP-2";
 
-
 // Key Types
 
 "chart.time_duration.day" = "1D";
