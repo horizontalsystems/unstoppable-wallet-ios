@@ -24,8 +24,8 @@ class BaseCurrencySettingsPresenterTests: XCTestCase {
     override func setUp() {
         super.setUp()
 
-        dollarCurrency = Currency(code: dollarCode, symbol: dollarSymbol)
-        rubleCurrency = Currency(code: rubleCode, symbol: rubleSymbol)
+        dollarCurrency = Currency.mock(code: dollarCode, symbol: dollarSymbol)
+        rubleCurrency = Currency.mock(code: rubleCode, symbol: rubleSymbol)
         currencies = [dollarCurrency, rubleCurrency]
 
         expectedItems = [

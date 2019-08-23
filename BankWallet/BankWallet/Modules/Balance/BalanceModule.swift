@@ -31,7 +31,7 @@ protocol IBalanceViewDelegate {
 
 protocol IBalanceInteractor {
     var sortType: BalanceSortType { get }
-    func adapter(for: Wallet) -> IBalanceAdapter?
+    func adapter(for wallet: Wallet) -> IBalanceAdapter?
     func initWallets()
     func fetchRates(currencyCode: String, coinCodes: [CoinCode])
     func refresh()
@@ -65,7 +65,7 @@ protocol IBalanceItemDataSource {
     var coinCodes: [CoinCode] { get }
     func item(at index: Int) -> BalanceItem
     func index(for wallet: Wallet) -> Int?
-    func indices(for: String) -> [Int]
+    func indices(for coinCode: String) -> [Int]
 
     func set(balance: Decimal, index: Int)
     func set(state: AdapterState, index: Int)

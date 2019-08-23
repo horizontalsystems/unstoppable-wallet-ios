@@ -9,7 +9,7 @@ class DataProviderSettingsPresenterTests: XCTestCase {
 
     private var presenter: DataProviderSettingsPresenter!
 
-    private let coin = Coin(title: "Bitcoin", code: "BTC", type: .bitcoin)
+    private let coin = Coin.mock(title: "Bitcoin", code: "BTC", type: .bitcoin)
     private let firstName = "first_provider"
     private let secondName = "second_provider"
     private let txHash = "tx_hash"

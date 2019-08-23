@@ -63,9 +63,9 @@ protocol ILocalizationManager {
 
 protocol IAdapterManager: class {
     var adaptersCreationSignal: Signal { get }
-    func adapter(for: Wallet) -> IAdapter?
-    func balanceAdapter(for: Wallet) -> IBalanceAdapter?
-    func transactionsAdapter(for: Wallet) -> ITransactionsAdapter?
+    func adapter(for wallet: Wallet) -> IAdapter?
+    func balanceAdapter(for wallet: Wallet) -> IBalanceAdapter?
+    func transactionsAdapter(for wallet: Wallet) -> ITransactionsAdapter?
     func depositAdapter(for wallet: Wallet) -> IDepositAdapter?
     func refresh()
 }
