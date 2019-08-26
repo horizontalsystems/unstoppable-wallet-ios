@@ -147,6 +147,9 @@ extension BalanceViewController: UITableViewDelegate, UITableViewDataSource {
             tableView.deselectRow(at: indexPathForSelectedRow, animated: true)
             bind(at: indexPath, heightChange: true)
             return nil
+        } else if let indexPathForSelectedRow = indexPathForSelectedRow {
+            self.indexPathForSelectedRow = nil
+            bind(at: indexPathForSelectedRow, heightChange: true)
         }
 
         indexPathForSelectedRow = indexPath
