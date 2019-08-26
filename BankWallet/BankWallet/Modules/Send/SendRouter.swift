@@ -31,7 +31,7 @@ extension SendRouter {
 
         let router = SendRouter()
 
-        var partialModule: (ISendViewDelegate, [UIView])?
+        var partialModule: (ISendViewDelegate, [UIView], [ISendSubRouter])?
 
         switch adapter {
         case let adapter as ISendBitcoinAdapter:
@@ -47,7 +47,7 @@ extension SendRouter {
         default: ()
         }
 
-        guard let (presenter, subViews) = partialModule else {
+        guard let (presenter, subViews, subRouters) = partialModule else {
             return nil
         }
 
@@ -57,15 +57,17 @@ extension SendRouter {
 
         let navigationController = WalletNavigationController(rootViewController: viewController)
         router.viewController = navigationController
+        subRouters.forEach { $0.viewController = navigationController }
+
         return navigationController
     }
 
-    private static func module(coin: Coin, adapter: ISendBitcoinAdapter, router: ISendRouter) -> (ISendViewDelegate, [UIView])? {
+    private static func module(coin: Coin, adapter: ISendBitcoinAdapter, router: ISendRouter) -> (ISendViewDelegate, [UIView], [ISendSubRouter])? {
         let (amountView, amountModule) = SendAmountRouter.module(coin: coin)
         let (addressView, addressModule) = SendAddressRouter.module(coin: coin)
         let (feeView, feeModule) = SendFeeRouter.module(coin: coin)
 
-        guard let (feePriorityView, feePriorityModule) = SendFeePriorityRouter.module(coin: coin, mainRouter: router) else {
+        guard let (feePriorityView, feePriorityModule, feePriorityRouter) = SendFeePriorityRouter.module(coin: coin) else {
             return nil
         }
 
@@ -79,10 +81,10 @@ extension SendRouter {
         feeModule.delegate = presenter
         feePriorityModule.delegate = presenter
 
-        return (presenter, [amountView, addressView, feePriorityView, feeView])
+        return (presenter, [amountView, addressView, feePriorityView, feeView], [feePriorityRouter])
     }
 
-    private static func module(coin: Coin, adapter: ISendDashAdapter, router: ISendRouter) -> (ISendViewDelegate, [UIView]) {
+    private static func module(coin: Coin, adapter: ISendDashAdapter, router: ISendRouter) -> (ISendViewDelegate, [UIView], [ISendSubRouter]) {
         let (amountView, amountModule) = SendAmountRouter.module(coin: coin)
         let (addressView, addressModule) = SendAddressRouter.module(coin: coin)
         let (feeView, feeModule) = SendFeeRouter.module(coin: coin)
@@ -96,15 +98,15 @@ extension SendRouter {
         addressModule.delegate = presenter
         feeModule.delegate = presenter
 
-        return (presenter, [amountView, addressView, feeView])
+        return (presenter, [amountView, addressView, feeView], [])
     }
 
-    private static func module(coin: Coin, adapter: ISendEthereumAdapter, router: ISendRouter) -> (ISendViewDelegate, [UIView])? {
+    private static func module(coin: Coin, adapter: ISendEthereumAdapter, router: ISendRouter) -> (ISendViewDelegate, [UIView], [ISendSubRouter])? {
         let (amountView, amountModule) = SendAmountRouter.module(coin: coin)
         let (addressView, addressModule) = SendAddressRouter.module(coin: coin)
         let (feeView, feeModule) = SendFeeRouter.module(coin: coin)
 
-        guard let (feePriorityView, feePriorityModule) = SendFeePriorityRouter.module(coin: coin, mainRouter: router) else {
+        guard let (feePriorityView, feePriorityModule, feePriorityRouter) = SendFeePriorityRouter.module(coin: coin) else {
             return nil
         }
 
@@ -118,10 +120,10 @@ extension SendRouter {
         feeModule.delegate = presenter
         feePriorityModule.delegate = presenter
 
-        return (presenter, [amountView, addressView, feePriorityView, feeView])
+        return (presenter, [amountView, addressView, feePriorityView, feeView], [feePriorityRouter])
     }
 
-    private static func module(coin: Coin, adapter: ISendEosAdapter, router: ISendRouter) -> (ISendViewDelegate, [UIView]) {
+    private static func module(coin: Coin, adapter: ISendEosAdapter, router: ISendRouter) -> (ISendViewDelegate, [UIView], [ISendSubRouter]) {
         let (amountView, amountModule) = SendAmountRouter.module(coin: coin)
         let (accountView, accountModule) = SendAccountRouter.module()
 
@@ -133,10 +135,10 @@ extension SendRouter {
         amountModule.delegate = presenter
         accountModule.delegate = presenter
 
-        return (presenter, [amountView, accountView])
+        return (presenter, [amountView, accountView], [])
     }
 
-    private static func module(coin: Coin, adapter: ISendBinanceAdapter, router: ISendRouter) -> (ISendViewDelegate, [UIView]) {
+    private static func module(coin: Coin, adapter: ISendBinanceAdapter, router: ISendRouter) -> (ISendViewDelegate, [UIView], [ISendSubRouter]) {
         let (amountView, amountModule) = SendAmountRouter.module(coin: coin)
         let (addressView, addressModule) = SendAddressRouter.module(coin: coin)
         let (feeView, feeModule) = SendFeeRouter.module(coin: coin)
@@ -150,7 +152,7 @@ extension SendRouter {
         addressModule.delegate = presenter
         feeModule.delegate = presenter
 
-        return (presenter, [amountView, addressView, feeView])
+        return (presenter, [amountView, addressView, feeView], [])
     }
 
 }
