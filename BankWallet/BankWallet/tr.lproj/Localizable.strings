@@ -121,6 +121,10 @@
 "send.address_placeholder" = "Adres";
 "send.account_placeholder" = "Hesap";
 "send.fee" = "Masraf:";
+"send.tx_speed" = "Transaction Speed";
+"send.tx_speed_low" = "Low";
+"send.tx_speed_medium" = "Medium";
+"send.tx_speed_high" = "High";
 "send.max_button" = "Azami";
 "send.next_button" = "İleri";
 "send.error.invalid_address" = "Geçersiz Adres";
