@@ -12,10 +12,12 @@ class BalanceCell: UITableViewCell {
 
     private let coinIconImageView = CoinIconImageView()
     private let nameLabel = UILabel()
-    private let currencyValueLabel = UILabel()
-    private let coinValueLabel = UILabel()
     private let rateLabel = UILabel()
 
+    private let currencyValueLabel = UILabel()
+    private let coinValueLabel = UILabel()
+
+    private let chartHolder = UIButton()
     private let chartView = UIView()
     private let percentDeltaLabel = UILabel()
 
@@ -32,7 +34,6 @@ class BalanceCell: UITableViewCell {
 
     private let receiveButton = RespondButton()
     private let payButton = RespondButton()
-    private let chartButton = RespondButton()
 
     private var onPay: (() -> ())?
     private var onReceive: (() -> ())?
@@ -91,6 +92,15 @@ class BalanceCell: UITableViewCell {
         rateLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         rateLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
 
+        clippingView.addSubview(currencyValueLabel)
+        currencyValueLabel.snp.makeConstraints { maker in
+            maker.leading.equalTo(self.rateLabel.snp.trailing).offset(BalanceTheme.cellSmallMargin)
+            maker.trailing.equalToSuperview().offset(-BalanceTheme.cellBigMargin)
+            maker.centerY.equalTo(self.rateLabel.snp.centerY)
+        }
+        currencyValueLabel.font = BalanceTheme.currencyValueFont
+        currencyValueLabel.textAlignment = .right
+
         clippingView.addSubview(coinValueLabel)
         coinValueLabel.snp.makeConstraints { maker in
             maker.leading.equalTo(self.nameLabel.snp.trailing).offset(BalanceTheme.cellSmallMargin)
@@ -100,15 +110,6 @@ class BalanceCell: UITableViewCell {
         coinValueLabel.font = BalanceTheme.coinValueFont
         coinValueLabel.textColor = BalanceTheme.coinValueColor
         coinValueLabel.textAlignment = .right
-
-        clippingView.addSubview(currencyValueLabel)
-        currencyValueLabel.snp.makeConstraints { maker in
-            maker.leading.equalTo(self.rateLabel.snp.trailing).offset(BalanceTheme.cellSmallMargin)
-            maker.trailing.equalToSuperview().offset(-BalanceTheme.cellBigMargin)
-            maker.centerY.equalTo(self.rateLabel.snp.centerY)
-        }
-        currencyValueLabel.font = BalanceTheme.currencyValueFont
-        currencyValueLabel.textAlignment = .right
 
         syncSpinner.backgroundColor = BalanceTheme.spinnerBackgroundColor
         syncSpinner.layer.cornerRadius = BalanceTheme.spinnerSideSize / 2
@@ -140,6 +141,7 @@ class BalanceCell: UITableViewCell {
         payButton.snp.makeConstraints { maker in
             maker.leading.equalTo(receiveButton.snp.trailing).offset(BalanceTheme.cellSmallMargin)
             maker.top.equalTo(self.nameLabel.snp.bottom).offset(BalanceTheme.buttonsTopMargin)
+            maker.trailing.equalToSuperview().offset(-BalanceTheme.cellSmallMargin)
             maker.height.equalTo(BalanceTheme.buttonsHeight)
             maker.width.equalTo(receiveButton)
         }
@@ -149,26 +151,15 @@ class BalanceCell: UITableViewCell {
         payButton.cornerRadius = BalanceTheme.buttonCornerRadius
         payButton.titleLabel.text = "balance.send".localized
 
-        clippingView.addSubview(chartButton)
-        chartButton.wrapperView.snp.remakeConstraints { maker in
-            maker.leading.equalToSuperview().offset(SendTheme.smallMargin)
-            maker.top.bottom.equalToSuperview()
-            maker.trailing.equalToSuperview().offset(-SendTheme.smallMargin)
-        }
-        chartButton.snp.makeConstraints { maker in
-            maker.leading.equalTo(payButton.snp.trailing).offset(BalanceTheme.cellSmallMargin)
-            maker.top.equalTo(self.nameLabel.snp.bottom).offset(BalanceTheme.buttonsTopMargin)
-            maker.trailing.equalToSuperview().offset(-BalanceTheme.cellSmallMargin)
-            maker.height.equalTo(BalanceTheme.buttonsHeight)
-            maker.width.equalTo(40)
-        }
-        chartButton.onTap = { [weak self] in self?.chart() }
-        chartButton.backgrounds = ButtonTheme.redBackgroundDictionary
-        chartButton.textColors = ButtonTheme.textColorDictionary
-        chartButton.cornerRadius = BalanceTheme.buttonCornerRadius
-        chartButton.titleLabel.text = "\u{20aa}"
+        clippingView.addSubview(chartHolder)
 
-        clippingView.addSubview(chartView)
+        chartHolder.snp.makeConstraints { maker in
+            maker.top.trailing.bottom.equalToSuperview()
+        }
+        chartHolder.addTarget(self, action: #selector(onChartTap), for: .touchUpInside)
+
+        chartHolder.addSubview(chartView)
+        chartView.isUserInteractionEnabled = false
         chartView.layer.masksToBounds = true
         chartView.layer.cornerRadius = BalanceTheme.chartCornerRadius
         chartView.backgroundColor = .lightGray
@@ -176,12 +167,14 @@ class BalanceCell: UITableViewCell {
             maker.top.equalToSuperview().offset(BalanceTheme.cellSmallMargin)
             maker.trailing.equalToSuperview().offset(-BalanceTheme.cellSmallMargin)
             maker.size.equalTo(CGSize(width: BalanceTheme.chartWidth, height: BalanceTheme.chartHeight))
+            maker.leading.greaterThanOrEqualToSuperview()
         }
-        clippingView.addSubview(percentDeltaLabel)
+        chartHolder.addSubview(percentDeltaLabel)
         percentDeltaLabel.font = BalanceTheme.percentDeltaFont
         percentDeltaLabel.snp.makeConstraints { maker in
             maker.top.equalTo(self.chartView.snp.bottom).offset(BalanceTheme.cellBigMargin)
             maker.trailing.equalToSuperview().offset(-BalanceTheme.cellBigMargin)
+            maker.leading.equalToSuperview()
         }
     }
 
@@ -265,8 +258,8 @@ class BalanceCell: UITableViewCell {
 
         currencyValueLabel.isHidden = isStatModeOn && !selected
         coinValueLabel.isHidden = isStatModeOn && !selected
-        chartView.isHidden = !isStatModeOn || selected
-        percentDeltaLabel.isHidden = !isStatModeOn || selected
+
+        chartHolder.isHidden = !isStatModeOn || selected
 
         let fallDown = item.percentDelta < 0
         percentDeltaLabel.textColor = fallDown ? BalanceTheme.percentDeltaDownColor : BalanceTheme.percentDeltaUpColor
@@ -284,7 +277,7 @@ class BalanceCell: UITableViewCell {
         onPay?()
     }
 
-    func chart() {
+    @objc func onChartTap() {
         onChart?()
     }
 
