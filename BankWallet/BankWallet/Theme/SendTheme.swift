@@ -53,17 +53,22 @@ class SendTheme {
     static let addressErrorBottomMargin: CGFloat = 4
 
     static let feeHeight: CGFloat = 29
-    static let feeSliderHeight: CGFloat = 50
     static let feeTitleTopMargin: CGFloat = 12
     static let feeFont: UIFont = .systemFont(ofSize: 14)
     static let feeColor: UIColor = .cryptoGray
-    static var feeSliderTintColor: UIColor { return .crypto_LightGray_SteelDark }
-    static let feeSliderThumbColor: UIColor = .cryptoGray
-    static let stepViewSideSize: CGFloat = 7
-    static let slideBarHeight: CGFloat = 2
-    static let feeSliderTopMargin: CGFloat = -6
-    static let feeSliderLeftMargin: CGFloat = 19
-    static let feeSliderRightMargin: CGFloat = 17
+
+    static let feePriorityHeight: CGFloat = 60.5
+    static let feePriorityTitleFont: UIFont = .systemFont(ofSize: 14)
+    static let feePriorityTitleColor: UIColor = .cryptoGray
+    static let feePriorityTitleTopMargin: CGFloat = 28
+    static let feePriorityValueFont: UIFont = .systemFont(ofSize: 14)
+    static let feePriorityValueColor: UIColor = .lightGray
+    static let feePriorityValueTopMargin: CGFloat = 29
+    static let feePriorityValueRightMargin: CGFloat = 8
+    static let feePriorityDropDownTopMargin: CGFloat = 32
+    static let feePriorityLineHeight: CGFloat = 0.5
+    static let feePriorityLineColor: UIColor = .cryptoSteel20
+    static let feePriorityLineTopMargin: CGFloat = 13
 
     static let switchRightMargin: CGFloat = 6
 

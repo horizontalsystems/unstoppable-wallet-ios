@@ -12,9 +12,9 @@ class SendBitcoinPresenter {
     private let amountModule: ISendAmountModule
     private let addressModule: ISendAddressModule
     private let feeModule: ISendFeeModule
-    private let feeSliderModule: ISendFeeSliderModule
+    private let feePriorityModule: ISendFeePriorityModule
 
-    init(coin: Coin, interactor: ISendBitcoinInteractor, router: ISendRouter, confirmationFactory: ISendConfirmationItemFactory, amountModule: ISendAmountModule, addressModule: ISendAddressModule, feeModule: ISendFeeModule, feeSliderModule: ISendFeeSliderModule) {
+    init(coin: Coin, interactor: ISendBitcoinInteractor, router: ISendRouter, confirmationFactory: ISendConfirmationItemFactory, amountModule: ISendAmountModule, addressModule: ISendAddressModule, feeModule: ISendFeeModule, feePriorityModule: ISendFeePriorityModule) {
         self.coin = coin
 
         self.interactor = interactor
@@ -24,7 +24,7 @@ class SendBitcoinPresenter {
         self.amountModule = amountModule
         self.addressModule = addressModule
         self.feeModule = feeModule
-        self.feeSliderModule = feeSliderModule
+        self.feePriorityModule = feePriorityModule
     }
 
     private func syncSendButton() {
@@ -32,11 +32,11 @@ class SendBitcoinPresenter {
     }
 
     private func syncAvailableBalance() {
-        interactor.fetchAvailableBalance(feeRate: feeSliderModule.feeRate, address: addressModule.address)
+        interactor.fetchAvailableBalance(feeRate: feePriorityModule.feeRate, address: addressModule.address)
     }
 
     private func syncFee() {
-        interactor.fetchFee(amount: amountModule.coinAmount.value, feeRate: feeSliderModule.feeRate, address: addressModule.address)
+        interactor.fetchFee(amount: amountModule.coinAmount.value, feeRate: feePriorityModule.feeRate, address: addressModule.address)
     }
 
 }
@@ -106,7 +106,7 @@ extension SendBitcoinPresenter: ISendConfirmationDelegate {
         }
 
         view?.showProgress()
-        interactor.send(amount: amount, address: address, feeRate: feeSliderModule.feeRate)
+        interactor.send(amount: amount, address: address, feeRate: feePriorityModule.feeRate)
     }
 
 }
@@ -153,7 +153,7 @@ extension SendBitcoinPresenter: ISendFeeDelegate {
 
 }
 
-extension SendBitcoinPresenter: ISendFeeSliderDelegate {
+extension SendBitcoinPresenter: ISendFeePriorityDelegate {
 
     func onUpdate(feeRate: Int) {
         syncAvailableBalance()

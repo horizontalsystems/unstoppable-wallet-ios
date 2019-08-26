@@ -5,15 +5,11 @@ class FeeRateProvider {
 
     private func feeRate(from feeRate: FeeRate, priority: FeeRatePriority) -> Int {
         switch priority {
-        case .lowest:
-            return feeRate.low
         case .low:
-            return (feeRate.low + feeRate.medium) / 2
+            return feeRate.low
         case .medium:
             return feeRate.medium
         case .high:
-            return (feeRate.medium + feeRate.high) / 2
-        case .highest:
             return feeRate.high
         }
     }

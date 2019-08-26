@@ -1,3 +1,4 @@
+import UIKit
 import Foundation
 
 protocol ISendView: class {
@@ -87,7 +88,8 @@ protocol ISendBinanceInteractorDelegate: class {
     func didFailToSend(error: Error)
 }
 
-protocol ISendRouter {
+protocol ISendRouter: class {
+    var viewController: UINavigationController? { get }
     func showConfirmation(item: SendConfirmationViewItem, delegate: ISendConfirmationDelegate)
     func scanQrCode(delegate: IScanQrCodeDelegate)
     func dismiss()
