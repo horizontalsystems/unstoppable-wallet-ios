@@ -121,6 +121,10 @@
 "send.address_placeholder" = "Адрес";
 "send.account_placeholder" = "Account";
 "send.fee" = "Комиссия:";
+"send.tx_speed" = "Transaction Speed";
+"send.tx_speed_low" = "Low";
+"send.tx_speed_medium" = "Medium";
+"send.tx_speed_high" = "High";
 "send.max_button" = "Макс.";
 "send.next_button" = "Далее";
 "send.error.invalid_address" = "Неверный Адрес";
