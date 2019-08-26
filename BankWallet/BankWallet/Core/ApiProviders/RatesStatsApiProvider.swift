@@ -17,6 +17,14 @@ class RatesStatsApiProvider {
         return urlSingle
     }
 
+    private func getRateStatistic2(baseUrlString: String, timeoutInterval: TimeInterval, coinCode: String, currencyCode: String) -> Single<RateStatsData> {
+        let urlString = "\(baseUrlString)/xrates/stats/\(currencyCode)/\(coinCode)/index.json"
+
+        let urlSingle: Single<RateStatsData> = networkManager.single(urlString: urlString, httpMethod: .get, timoutInterval: timeoutInterval)
+
+        return urlSingle
+    }
+
     private func getMarketCap(baseUrlString: String, timeoutInterval: TimeInterval) -> Single<MarketCapData> {
         let urlString = "\(baseUrlString)/xrates/stats/coininfo.json"
 
@@ -28,6 +36,12 @@ class RatesStatsApiProvider {
 }
 
 extension RatesStatsApiProvider: IRatesStatsApiProvider {
+
+    func getRateStatsData(coinCode: String, currencyCode: String) -> Single<RateStatsData> {
+        return ipfsApiProvider.gatewaysSingle { [unowned self] baseUrlString, timeoutInterval in
+            return self.getRateStatistic2(baseUrlString: baseUrlString, timeoutInterval: timeoutInterval, coinCode: coinCode, currencyCode: currencyCode)
+        }
+    }
 
     func getChartRateData(coinCode: String, currencyCode: String, chartType: ChartType) -> Single<ChartRateData> {
         return ipfsApiProvider.gatewaysSingle { [unowned self] baseUrlString, timeoutInterval in

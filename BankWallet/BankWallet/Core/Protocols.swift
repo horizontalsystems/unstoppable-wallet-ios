@@ -244,6 +244,10 @@ protocol IRateManager {
     func clear()
 }
 
+protocol IRateStatsManager {
+
+}
+
 protocol ISystemInfoManager {
     var appVersion: String { get }
     var biometryType: Single<BiometryType> { get }
@@ -301,6 +305,7 @@ protocol IRateApiProvider {
 }
 
 protocol IRatesStatsApiProvider {
+    func getRateStatsData(coinCode: String, currencyCode: String) -> Single<RateStatsData>
     func getChartRateData(coinCode: String, currencyCode: String, chartType: ChartType) -> Single<ChartRateData>
     func getMarketCapData() -> Single<MarketCapData>
 }

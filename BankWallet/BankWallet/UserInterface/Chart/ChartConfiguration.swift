@@ -1,11 +1,11 @@
 import UIKit
 
 enum ChartType: String, CaseIterable {
-    case day = "daily"
-    case week = "weekly"
-    case month = "monthly"
-    case halfYear = "monthly6"
-    case year = "annual"
+    case day = "DAILY"
+    case week = "WEEKLY"
+    case month = "MONTHLY"
+    case halfYear = "MONTHLY6"
+    case year = "MONTHLY18"
 
     var tag: Int {
         switch self {
@@ -19,11 +19,11 @@ enum ChartType: String, CaseIterable {
 
     var title: String {
         switch self {
-        case .day: return "1D"
-        case .week: return "1W"
-        case .month: return "1M"
-        case .halfYear: return "6M"
-        case .year: return "1Y"
+        case .day: return "chart.time_duration.day".localized
+        case .week: return "chart.time_duration.week".localized
+        case .month: return "chart.time_duration.month".localized
+        case .halfYear: return "chart.time_duration.halyear".localized
+        case .year: return "chart.time_duration.year".localized
         }
     }
 

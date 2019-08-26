@@ -1,21 +1,20 @@
 import Foundation
 
 protocol IChartView: class {
-    func bind(currentRateValue: CurrencyValue)
-    func bind(diff: Decimal?)
-    func bind(type: ChartType, chartPoints: [ChartPoint], animated: Bool)
-    func bind(marketCapValue: CurrencyValue?, postfix: String?)
-    func bind(type: ChartType, lowValue: CurrencyValue?)
-    func bind(type: ChartType, highValue: CurrencyValue?)
+    func showSpinner()
+    func hideSpinner()
 
-    func showSelectedData(timestamp: TimeInterval, value: CurrencyValue)
-    func showProgress()
+    func setChartType(tag: Int)
+    func setChartTypeEnabled(tag: Int)
+
+    func show(viewItem: ChartViewItem)
+
+    func showSelectedPoint(timestamp: TimeInterval, value: CurrencyValue)
+
     func show(error: String)
 
     func reloadAllModels()
-
     func addTypeButtons(types: [ChartType])
-    func setButtonSelected(tag: Int)
 }
 
 protocol IChartViewDelegate {
@@ -23,26 +22,26 @@ protocol IChartViewDelegate {
 
     func viewDidLoad()
 
-    func didSelect(type: ChartType)
-    func chartTap(point: ChartPoint)
+    func onSelect(type: ChartType)
+    func chartTouchSelect(point: ChartPoint)
 }
 
 protocol IChartInteractor {
     var defaultChartType: ChartType { get }
-    func set(chartType: ChartType)
+    func setDefault(chartType: ChartType)
 
-    func currentRate(coinCode: CoinCode, currencyCode: String) -> Rate?
-    func getRates(coinCode: String, currencyCode: String, chartType: ChartType)
-    func getMarketCap()
+    func getRateStats(coinCode: String, currencyCode: String)
 }
 
 protocol IChartInteractorDelegate: class {
-    func didReceive(chartData: ChartRateData)
-    func didReceive(marketCapData: MarketCapData)
-    func onChartError(_ error: Error)
-    func onMarketCapError(_ error: Error)
+    func didReceive(rateStats: RateStatsData, rate: Rate?)
+    func onError(_ error: Error)
 }
 
 protocol IChartRateConverter {
     func convert(chartRateData: ChartRateData) -> [ChartPoint]
+}
+
+protocol IChartRateFactory {
+    func chartViewItem(type: ChartType, rateStatsData: RateStatsData, rate: Rate?, currency: Currency) throws -> ChartViewItem
 }
