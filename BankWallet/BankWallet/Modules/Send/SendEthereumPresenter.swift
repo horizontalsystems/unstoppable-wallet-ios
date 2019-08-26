@@ -12,9 +12,9 @@ class SendEthereumPresenter {
     private let amountModule: ISendAmountModule
     private let addressModule: ISendAddressModule
     private let feeModule: ISendFeeModule
-    private let feeSliderModule: ISendFeeSliderModule
+    private let feePriorityModule: ISendFeePriorityModule
 
-    init(coin: Coin, interactor: ISendEthereumInteractor, router: ISendRouter, confirmationFactory: ISendConfirmationItemFactory, amountModule: ISendAmountModule, addressModule: ISendAddressModule, feeModule: ISendFeeModule, feeSliderModule: ISendFeeSliderModule) {
+    init(coin: Coin, interactor: ISendEthereumInteractor, router: ISendRouter, confirmationFactory: ISendConfirmationItemFactory, amountModule: ISendAmountModule, addressModule: ISendAddressModule, feeModule: ISendFeeModule, feePriorityModule: ISendFeePriorityModule) {
         self.coin = coin
 
         self.interactor = interactor
@@ -24,7 +24,7 @@ class SendEthereumPresenter {
         self.amountModule = amountModule
         self.addressModule = addressModule
         self.feeModule = feeModule
-        self.feeSliderModule = feeSliderModule
+        self.feePriorityModule = feePriorityModule
     }
 
     private func syncSendButton() {
@@ -32,11 +32,11 @@ class SendEthereumPresenter {
     }
 
     private func syncAvailableBalance() {
-        amountModule.set(availableBalance: interactor.availableBalance(gasPrice: feeSliderModule.feeRate))
+        amountModule.set(availableBalance: interactor.availableBalance(gasPrice: feePriorityModule.feeRate))
     }
 
     private func syncFee() {
-        feeModule.set(fee: interactor.fee(gasPrice: feeSliderModule.feeRate))
+        feeModule.set(fee: interactor.fee(gasPrice: feePriorityModule.feeRate))
     }
 
 }
@@ -100,7 +100,7 @@ extension SendEthereumPresenter: ISendConfirmationDelegate {
         }
 
         view?.showProgress()
-        interactor.send(amount: amount, address: address, gasPrice: feeSliderModule.feeRate)
+        interactor.send(amount: amount, address: address, gasPrice: feePriorityModule.feeRate)
     }
 
 }
@@ -145,7 +145,7 @@ extension SendEthereumPresenter: ISendFeeDelegate {
 
 }
 
-extension SendEthereumPresenter: ISendFeeSliderDelegate {
+extension SendEthereumPresenter: ISendFeePriorityDelegate {
 
     func onUpdate(feeRate: Int) {
         syncAvailableBalance()

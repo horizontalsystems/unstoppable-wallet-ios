@@ -1,4 +1,4 @@
-class SendFeeSliderInteractor {
+class SendFeePriorityInteractor {
     private let provider: IFeeRateProvider
 
     init(provider: IFeeRateProvider) {
@@ -7,7 +7,7 @@ class SendFeeSliderInteractor {
 
 }
 
-extension SendFeeSliderInteractor: ISendFeeSliderInteractor {
+extension SendFeePriorityInteractor: ISendFeePriorityInteractor {
 
     func feeRate(priority: FeeRatePriority) -> Int {
         return provider.feeRate(for: priority)

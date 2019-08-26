@@ -65,21 +65,21 @@ extension SendRouter {
         let (addressView, addressModule) = SendAddressRouter.module(coin: coin)
         let (feeView, feeModule) = SendFeeRouter.module(coin: coin)
 
-        guard let (feeSliderView, feeSliderModule) = SendFeeSliderRouter.module(coin: coin) else {
+        guard let (feePriorityView, feePriorityModule) = SendFeePriorityRouter.module(coin: coin, mainRouter: router) else {
             return nil
         }
 
         let interactor = SendBitcoinInteractor(adapter: adapter)
-        let presenter = SendBitcoinPresenter(coin: coin, interactor: interactor, router: router, confirmationFactory: SendConfirmationItemFactory(), amountModule: amountModule, addressModule: addressModule, feeModule: feeModule, feeSliderModule: feeSliderModule)
+        let presenter = SendBitcoinPresenter(coin: coin, interactor: interactor, router: router, confirmationFactory: SendConfirmationItemFactory(), amountModule: amountModule, addressModule: addressModule, feeModule: feeModule, feePriorityModule: feePriorityModule)
 
         interactor.delegate = presenter
 
         amountModule.delegate = presenter
         addressModule.delegate = presenter
         feeModule.delegate = presenter
-        feeSliderModule.delegate = presenter
+        feePriorityModule.delegate = presenter
 
-        return (presenter, [amountView, addressView, feeView, feeSliderView])
+        return (presenter, [amountView, addressView, feePriorityView, feeView])
     }
 
     private static func module(coin: Coin, adapter: ISendDashAdapter, router: ISendRouter) -> (ISendViewDelegate, [UIView]) {
@@ -104,21 +104,21 @@ extension SendRouter {
         let (addressView, addressModule) = SendAddressRouter.module(coin: coin)
         let (feeView, feeModule) = SendFeeRouter.module(coin: coin)
 
-        guard let (feeSliderView, feeSliderModule) = SendFeeSliderRouter.module(coin: coin) else {
+        guard let (feePriorityView, feePriorityModule) = SendFeePriorityRouter.module(coin: coin, mainRouter: router) else {
             return nil
         }
 
         let interactor = SendEthereumInteractor(adapter: adapter)
-        let presenter = SendEthereumPresenter(coin: coin, interactor: interactor, router: router, confirmationFactory: SendConfirmationItemFactory(), amountModule: amountModule, addressModule: addressModule, feeModule: feeModule, feeSliderModule: feeSliderModule)
+        let presenter = SendEthereumPresenter(coin: coin, interactor: interactor, router: router, confirmationFactory: SendConfirmationItemFactory(), amountModule: amountModule, addressModule: addressModule, feeModule: feeModule, feePriorityModule: feePriorityModule)
 
         interactor.delegate = presenter
 
         amountModule.delegate = presenter
         addressModule.delegate = presenter
         feeModule.delegate = presenter
-        feeSliderModule.delegate = presenter
+        feePriorityModule.delegate = presenter
 
-        return (presenter, [amountView, addressView, feeView, feeSliderView])
+        return (presenter, [amountView, addressView, feePriorityView, feeView])
     }
 
     private static func module(coin: Coin, adapter: ISendEosAdapter, router: ISendRouter) -> (ISendViewDelegate, [UIView]) {
