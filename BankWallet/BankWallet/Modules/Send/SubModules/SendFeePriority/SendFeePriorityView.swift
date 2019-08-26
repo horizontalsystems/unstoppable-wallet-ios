@@ -13,7 +13,7 @@ class SendFeePriorityView: UIView {
     private let dropDownImageView = UIImageView()
     private let lineView = UIView()
 
-    init(delegate: ISendFeePriorityViewDelegate, feeRatePriority: FeeRatePriority) {
+    init(delegate: ISendFeePriorityViewDelegate) {
         self.delegate = delegate
 
         super.init(frame: .zero)
@@ -44,7 +44,7 @@ class SendFeePriorityView: UIView {
             maker.centerY.equalTo(feePriorityTitleLabel.snp.centerY)
         }
 
-        set(priority: feeRatePriority)
+        setPriority()
         feePriorityValueLabel.font = SendTheme.feePriorityValueFont
         feePriorityValueLabel.textColor = SendTheme.feePriorityValueColor
         feePriorityValueLabel.snp.makeConstraints { maker in
@@ -89,8 +89,8 @@ class SendFeePriorityView: UIView {
 
 extension SendFeePriorityView: ISendFeePriorityView {
 
-    func set(priority: FeeRatePriority) {
-        feePriorityValueLabel.text = text(priority: priority)
+    func setPriority() {
+        feePriorityValueLabel.text = text(priority: delegate.feeRatePriority)
     }
 
 }

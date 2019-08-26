@@ -89,10 +89,13 @@ protocol ISendBinanceInteractorDelegate: class {
 }
 
 protocol ISendRouter: class {
-    var viewController: UINavigationController? { get }
     func showConfirmation(item: SendConfirmationViewItem, delegate: ISendConfirmationDelegate)
     func scanQrCode(delegate: IScanQrCodeDelegate)
     func dismiss()
+}
+
+protocol ISendSubRouter: AnyObject {
+    var viewController: UIViewController? { set get }
 }
 
 protocol ISendConfirmationItemFactory {
