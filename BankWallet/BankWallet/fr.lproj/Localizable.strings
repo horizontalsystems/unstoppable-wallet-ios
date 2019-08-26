@@ -121,6 +121,10 @@
 "send.address_placeholder" = "Adresse";
 "send.account_placeholder" = "Account";
 "send.fee" = "Frais:";
+"send.tx_speed" = "Transaction Speed";
+"send.tx_speed_low" = "Low";
+"send.tx_speed_medium" = "Medium";
+"send.tx_speed_high" = "High";
 "send.max_button" = "Max";
 "send.next_button" = "Suivant";
 "send.error.invalid_address" = "Addresse invalide";
