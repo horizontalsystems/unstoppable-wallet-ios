@@ -6,7 +6,8 @@ class ChartRateItem: BaseActionItem {
     weak var indicatorDelegate: IChartIndicatorDelegate?
 
     var bind: ((ChartType, [ChartPoint], Bool) -> ())?
-    var showProcess: (() -> ())?
+    var showSpinner: (() -> ())?
+    var hideSpinner: (() -> ())?
     var showError: ((String) -> ())?
 
     init(tag: Int, chartConfiguration: ChartConfiguration, indicatorDelegate: IChartIndicatorDelegate?) {

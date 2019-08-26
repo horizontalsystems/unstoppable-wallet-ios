@@ -53,8 +53,12 @@ class ChartRateItemView: BaseActionItemView {
             self?.showChart()
             self?.chartView?.set(chartType: type, data: points, animated: animated)
         }
-        item.showProcess = { [weak self] in
+        item.showSpinner = { [weak self] in
             self?.showSpinner()
+        }
+        item.hideSpinner = { [weak self] in
+            self?.processSpinner.isHidden = true
+            self?.processSpinner.stopAnimating()
         }
         item.showError = { [weak self] error in
             self?.errorLabel.text = error
@@ -73,17 +77,11 @@ class ChartRateItemView: BaseActionItemView {
     private func showChart() {
         chartView?.isHidden = false
         errorLabel.isHidden = true
-
-        processSpinner.isHidden = true
-        processSpinner.stopAnimating()
     }
 
     private func showError() {
         errorLabel.isHidden = false
         chartView?.isHidden = true
-
-        processSpinner.isHidden = true
-        processSpinner.stopAnimating()
     }
 
 }

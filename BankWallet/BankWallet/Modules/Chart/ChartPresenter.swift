@@ -4,19 +4,35 @@ class ChartPresenter {
     weak var view: IChartView?
 
     private let interactor: IChartInteractor
-    private let chartRateConverter: IChartRateConverter
-    let coin: Coin
+    private let factory: IChartRateFactory
     private let currency: Currency
+
+    private var rateStatsData: RateStatsData?
+    private var rate: Rate?
+
+    let coin: Coin
 
     private var chartType: ChartType
 
-    init(interactor: IChartInteractor, chartRateConverter: IChartRateConverter, coin: Coin, currency: Currency) {
+    init(interactor: IChartInteractor, factory: IChartRateFactory, coin: Coin, currency: Currency) {
         self.interactor = interactor
-        self.chartRateConverter = chartRateConverter
+        self.factory = factory
         self.coin = coin
         self.currency = currency
 
         chartType = interactor.defaultChartType
+    }
+
+    private func updateChart() {
+        guard let rateStatsData = rateStatsData else {
+            return
+        }
+        do {
+            let viewItem = try factory.chartViewItem(type: chartType, rateStatsData: rateStatsData, rate: rate, currency: currency)
+            view?.show(viewItem: viewItem)
+        } catch {
+            view?.show(error: error.localizedDescription)
+        }
     }
 
 }
@@ -24,83 +40,46 @@ class ChartPresenter {
 extension ChartPresenter: IChartViewDelegate {
 
     func viewDidLoad() {
-        if let rate = interactor.currentRate(coinCode: coin.code, currencyCode: currency.code) {
-            view?.bind(currentRateValue: CurrencyValue(currency: currency, value: rate.value))
-        }
-
         view?.addTypeButtons(types: ChartType.allCases)
-        view?.setButtonSelected(tag: interactor.defaultChartType.tag)
+        view?.setChartType(tag: interactor.defaultChartType.tag)
 
-        interactor.getMarketCap()
-
-        view?.showProgress()
-        interactor.getRates(coinCode: coin.code, currencyCode: currency.code, chartType: chartType)
+        view?.showSpinner()
+        interactor.getRateStats(coinCode: coin.code, currencyCode: currency.code)
 
         view?.reloadAllModels()
     }
 
-    func didSelect(type: ChartType) {
+    func onSelect(type: ChartType) {
         guard chartType != type else {
             return
         }
 
         chartType = type
-        interactor.set(chartType: type)
+        interactor.setDefault(chartType: type)
 
-        interactor.getRates(coinCode: coin.code, currencyCode: currency.code, chartType: chartType)
+        updateChart()
     }
 
-    func chartTap(point: ChartPoint) {
+    func chartTouchSelect(point: ChartPoint) {
         let currencyValue = CurrencyValue(currency: currency, value: point.value)
-        view?.showSelectedData(timestamp: point.timestamp, value: currencyValue)
+        view?.showSelectedPoint(timestamp: point.timestamp, value: currencyValue)
     }
 
 }
 
 extension ChartPresenter: IChartInteractorDelegate {
 
-    func didReceive(chartData: ChartRateData) {
-        let points = chartRateConverter.convert(chartRateData: chartData)
+    func didReceive(rateStats: RateStatsData, rate: Rate?) {
+        self.rateStatsData = rateStats
+        self.rate = rate
 
-        var minimumValue: Decimal = Decimal.greatestFiniteMagnitude
-        var maximumValue: Decimal = Decimal.zero
-        points.forEach { point in
-            minimumValue = min(minimumValue, point.value)
-            maximumValue = max(maximumValue, point.value)
-        }
-
-        if let first = points.first?.value,
-           let last = points.last?.value {
-            view?.bind(diff: last - first)
-        } else {
-            view?.bind(diff: nil)
-        }
-
-        view?.bind(type: chartType, lowValue: CurrencyValue(currency: currency, value: minimumValue))
-        view?.bind(type: chartType, highValue: CurrencyValue(currency: currency, value: maximumValue))
-        view?.bind(type: chartType, chartPoints: points, animated: true)
+        view?.hideSpinner()
+        updateChart()
     }
 
-    func didReceive(marketCapData: MarketCapData) {
-        guard let rate = interactor.currentRate(coinCode: coin.code, currencyCode: currency.code),
-              let coin = marketCapData.coins[coin.code] else {
-            view?.bind(marketCapValue: nil, postfix: nil)
-            return
-        }
-        do {
-            let marketCapData = try MarketCapFormatter.marketCap(circulatingSupply: Decimal(coin.supply), rate: rate.value)
-            view?.bind(marketCapValue: CurrencyValue(currency: currency, value: marketCapData.value), postfix: marketCapData.postfix)
-        } catch {
-            view?.bind(marketCapValue: nil, postfix: nil)
-        }
-    }
-
-    func onChartError(_ error: Error) {
-        view?.show(error: "Something wrong!")
-    }
-
-    func onMarketCapError(_ error: Error) {
-        view?.bind(marketCapValue: nil, postfix: nil)
+    func onError(_ error: Error) {
+        view?.hideSpinner()
+        view?.show(error: error.localizedDescription)
     }
 
 }

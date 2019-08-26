@@ -30,8 +30,9 @@ class ChartRateTheme {
     static let buttonBorderColor = UIColor.cryptoSteel20
     static let buttonCornerRadius: CGFloat = 4
     static let buttonFont: UIFont = .cryptoSectionCaption
-    static var buttonTextColor: UIColor { return .crypto_Bars_Dark }
-    static var buttonSelectedTextColor: UIColor { return .cryptoBars }
+    static var buttonTextColor: UIColor { return .cryptoGray }
+    static var buttonSelectedTextColor: UIColor { return .crypto_Bars_Dark }
+    static var buttonDisabledTextColor: UIColor { return .cryptoGray50 }
 
     static let customProgressRadius: CGFloat = 11
     static let spinnerLineWidth: CGFloat = 3

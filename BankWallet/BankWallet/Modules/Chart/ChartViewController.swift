@@ -7,6 +7,7 @@ class ChartViewController: ActionSheetController {
     private static let diffFormatter: NumberFormatter = {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
+        formatter.maximumFractionDigits = 2
         formatter.groupingSeparator = ""
         return formatter
     }()
@@ -31,7 +32,7 @@ class ChartViewController: ActionSheetController {
         let coin = delegate.coin
 
         let titleItem = AlertTitleItem(
-                title: "%@ Rate".localized(coin.title),
+                title: "chart.title".localized(coin.title),
                 icon: UIImage(coin: coin),
                 iconTintColor: AppTheme.coinIconColor,
                 tag: 0,
@@ -60,61 +61,46 @@ class ChartViewController: ActionSheetController {
         delegate.viewDidLoad()
     }
 
-}
-
-extension ChartViewController: IChartView {
-
-    func bind(currentRateValue: CurrencyValue) {
+    private func show(currentRateValue: CurrencyValue?) {
+        guard let currentRateValue = currentRateValue else {
+            currentRateItem.bindRate?(nil)
+            return
+        }
         let formattedValue = ValueFormatter.instance.format(currencyValue: currentRateValue, fractionPolicy: .threshold(high: 1000, low: 0.1), trimmable: false)
         currentRateItem.bindRate?(formattedValue)
     }
 
-    func bind(diff: Decimal?) {
-        guard let diff = diff else {
-            currentRateItem.bindDiff?(nil, true)
-            return
-        }
-
-        let absoluteValue = abs(diff)
+    private func show(diff: Decimal) {
         let formatter = ChartViewController.diffFormatter
-        formatter.maximumFractionDigits = absoluteValue > 1000 ? 0 : 2
-        formatter.maximumFractionDigits = absoluteValue < 0.1 ? 4 : formatter.maximumFractionDigits
-        formatter.minimumFractionDigits = 0
 
-        let formattedDiff = formatter.string(from: diff as NSNumber)
+        let formattedDiff = [formatter.string(from: diff as NSNumber), "%"].compactMap { $0 }.joined()
         currentRateItem.bindDiff?(formattedDiff, !diff.isSignMinus)
     }
 
-    func addTypeButtons(types: [ChartType]) {
-        for type in types {
-            chartRateTypeItem.bindButton?(type.title, type.tag) { [weak self] in
-                self?.delegate.didSelect(type: type)
-            }
-        }
-    }
-
-    func setButtonSelected(tag: Int) {
-        chartRateTypeItem.setSelected?(tag)
-    }
-
-    func bind(type: ChartType, chartPoints: [ChartPoint], animated: Bool) {
-        chartRateItem?.bind?(type, chartPoints, animated)
-    }
-
-    func bind(marketCapValue: CurrencyValue?, postfix: String?) {
-        guard let value = marketCapValue, let formattedValue = ValueFormatter.instance.format(currencyValue: value) else {
+    private func show(marketCapValue: CurrencyValue?) {
+        guard let marketCapValue = marketCapValue else {
             marketCapItem.setMarketCapText?(nil)
             marketCapItem.setMarketCapTitle?(nil)
-
             return
         }
-        let formattedMarketCapString = [formattedValue, postfix].compactMap { $0 }.joined(separator: " ")
-        marketCapItem.setMarketCapText?(formattedMarketCapString)
-        marketCapItem.setMarketCapTitle?("M. CAP")
+        do {
+            let marketCapData = try MarketCapFormatter.marketCap(value: marketCapValue.value)
+            guard let formattedValue = ValueFormatter.instance.format(currencyValue: CurrencyValue(currency: marketCapValue.currency, value: marketCapData.value)) else {
+                marketCapItem.setMarketCapText?(nil)
+                marketCapItem.setMarketCapTitle?(nil)
+                return
+            }
+
+            marketCapItem.setMarketCapText?(formattedValue)
+            marketCapItem.setMarketCapTitle?("chart.market_cap".localized)
+        } catch {
+            marketCapItem.setMarketCapText?(nil)
+            marketCapItem.setMarketCapTitle?(nil)
+        }
     }
 
-    func bind(type: ChartType, lowValue: CurrencyValue?) {
-        marketCapItem.setLowTitle?("\(type.title) Low")
+    private func show(type: ChartType, lowValue: CurrencyValue?) {
+        marketCapItem.setLowTitle?("chart.low".localized(type.title))
 
         guard let lowValue = lowValue else {
             marketCapItem.setLowText?(nil)
@@ -124,8 +110,8 @@ extension ChartViewController: IChartView {
         marketCapItem.setLowText?(formattedValue)
     }
 
-    func bind(type: ChartType, highValue: CurrencyValue?) {
-        marketCapItem.setHighTitle?("\(type.title) High")
+    private func show(type: ChartType, highValue: CurrencyValue?) {
+        marketCapItem.setHighTitle?("chart.high".localized(type.title))
 
         guard let highValue = highValue else {
             marketCapItem.setHighText?(nil)
@@ -135,7 +121,38 @@ extension ChartViewController: IChartView {
         marketCapItem.setHighText?(formattedValue)
     }
 
-    func showSelectedData(timestamp: TimeInterval, value: CurrencyValue) {
+}
+
+extension ChartViewController: IChartView {
+
+    func show(viewItem: ChartViewItem) {
+        show(currentRateValue: viewItem.rateValue)
+        show(diff: viewItem.diff)
+
+        chartRateItem?.bind?(viewItem.type, viewItem.points, true)
+
+        show(marketCapValue: viewItem.marketCapValue)
+        show(type: viewItem.type, highValue: viewItem.highValue)
+        show(type: viewItem.type, lowValue: viewItem.lowValue)
+    }
+
+    func addTypeButtons(types: [ChartType]) {
+        for type in types {
+            chartRateTypeItem.bindButton?(type.title, type.tag) { [weak self] in
+                self?.delegate.onSelect(type: type)
+            }
+        }
+    }
+
+    func setChartTypeEnabled(tag: Int) {
+    // todo:
+    }
+
+    func setChartType(tag: Int) {
+        chartRateTypeItem.setSelected?(tag)
+    }
+
+    func showSelectedPoint(timestamp: TimeInterval, value: CurrencyValue) {
         let date = Date(timeIntervalSince1970: timestamp)
         let formattedDate = DateHelper.instance.formatTransactionInfoTime(from: date)
         let formattedValue = ValueFormatter.instance.format(currencyValue: value, fractionPolicy: .threshold(high: 1000, low: 0.1), trimmable: false)
@@ -147,8 +164,12 @@ extension ChartViewController: IChartView {
         model.reload?()
     }
 
-    func showProgress() {
-        chartRateItem?.showProcess?()
+    func showSpinner() {
+        chartRateItem?.showSpinner?()
+    }
+
+    func hideSpinner() {
+        chartRateItem?.hideSpinner?()
     }
 
     func show(error: String) {
@@ -160,7 +181,7 @@ extension ChartViewController: IChartView {
 extension ChartViewController: IChartIndicatorDelegate {
 
     func didTap(chartPoint: ChartPoint) {
-        delegate.chartTap(point: chartPoint)
+        delegate.chartTouchSelect(point: chartPoint)
     }
 
     func didFinishTap() {

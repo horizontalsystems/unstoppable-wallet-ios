@@ -67,11 +67,7 @@ class ChartRateTypeItemView: BaseActionItemView {
         let button = RespondButton(onTap: toggleAction)
         button.changeBackground = false
         button.tag = tag
-        button.borderWidth = 1 / UIScreen.main.scale
-        button.borderColor = ChartRateTheme.buttonBorderColor
-        button.cornerRadius = ChartRateTheme.buttonCornerRadius
-        button.backgrounds = ChartRateTheme.buttonBackground
-        button.textColors = [.active: ChartRateTheme.buttonTextColor, .selected: ChartRateTheme.buttonSelectedTextColor]
+        button.textColors = [.active: ChartRateTheme.buttonTextColor, .selected: ChartRateTheme.buttonSelectedTextColor, .disabled: ChartRateTheme.buttonSelectedTextColor]
         button.titleLabel.text = title.localized
         button.titleLabel.font = ChartRateTheme.buttonFont
         button.titleLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)

@@ -100,3 +100,11 @@ extension BackendError: LocalizedError {
         }
     }
 }
+
+extension ChartRateFactory.FactoryError: LocalizedError {
+    public var errorDescription: String? {
+        switch self {
+        case .noRateStats: return "chart.error.no_statistics".localized
+        }
+    }
+}

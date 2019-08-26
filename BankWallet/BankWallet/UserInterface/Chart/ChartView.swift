@@ -64,14 +64,8 @@ class ChartView: UIView {
             }
         }
         addSubview(curveView)
-        curveView.snp.makeConstraints { maker in
-            maker.edges.equalToSuperview()
-        }
         if let indicatorView = indicatorView {
             addSubview(indicatorView)
-            indicatorView.snp.makeConstraints { maker in
-                maker.edges.equalTo(curveView.snp.edges)
-            }
         }
     }
 
@@ -122,11 +116,11 @@ class ChartView: UIView {
             gridView.scaleOffsetSize = textScaleSize
         }
 
-        curveInsets = UIEdgeInsets(top: 0, left: 0, bottom: textScaleSize.height, right: textScaleSize.width)
-        curveView.snp.remakeConstraints { maker in
-            maker.edges.equalToSuperview().inset(curveInsets)
-        }
-        curveView.layoutSubviews()
+        curveInsets = UIEdgeInsets(top: 0, left: 0, bottom: ceil(textScaleSize.height), right: ceil(textScaleSize.width))
+
+        curveView.frame = bounds.inset(by: curveInsets)
+        indicatorView?.frame = bounds.inset(by: curveInsets)
+
         gridView?.layoutSubviews()
     }
 

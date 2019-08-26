@@ -2,27 +2,30 @@ import Foundation
 
 class MarketCapFormatter {
     public enum FormatError: Error {
+        case isNull
         case lessOne
         case moreTrillions
     }
 
     private static let postfixes = ["k", "M", "B", "T"]
 
-    static func marketCap(circulatingSupply: Decimal, rate: Decimal) throws -> (value: Decimal, postfix: String?) {
-        let fullValue = circulatingSupply * rate
+    static func marketCap(value: Decimal?) throws -> (value: Decimal, postfix: String?) {
+        guard let value = value else {
+            throw FormatError.isNull
+        }
         let ten: Decimal = 10
 
         var index = 0
         var power: Decimal = 1
-        while fullValue >= power {
+        while value >= power {
             index += 1
             power = pow(ten, index * 3)
         }
         switch index {
         case 0: throw FormatError.lessOne
-        case 1: return (value: fullValue, postfix: nil)
+        case 1: return (value: value, postfix: nil)
         case (postfixes.count + 1)...Int.max: throw FormatError.moreTrillions
-        default: return (value: fullValue / pow(ten, (index - 1) * 3), postfix: MarketCapFormatter.postfixes[index - 2])
+        default: return (value: value / pow(ten, (index - 1) * 3), postfix: MarketCapFormatter.postfixes[index - 2])
         }
     }
 

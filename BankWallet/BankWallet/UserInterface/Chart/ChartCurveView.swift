@@ -25,6 +25,14 @@ class ChartCurveView: UIView {
         fatalError("Can't init with aDecoder")
     }
 
+    override var frame: CGRect {
+        didSet {
+            linesLayer.frame = bounds
+            gradientLayer.frame = bounds
+            refreshCurve(animated: animated)
+        }
+    }
+
     private func commonInit() {
         clipsToBounds = true
 
@@ -60,57 +68,58 @@ class ChartCurveView: UIView {
         gradientLayer.mask = transparentMask()
 
         let linePoints = convertChartDataToGraphicPoints(for: bounds, retinaShift: true)
-        let startLinePoints = convert(curve: true, lastPoints: lastLinePoints, newPoints: linePoints)
-                //lastLinePoints ?? linePoints.map { CGPoint(x: $0.x, y: bottom) }
 
-        let startLinePath = ChartBezierPath.path(for: startLinePoints).cgPath
-        let finalLinePath = ChartBezierPath.path(for: linePoints).cgPath
-
-        // add right-bottom and left-bottom points for gradient
         var gradientPoints = convertChartDataToGraphicPoints(for: bounds, retinaShift: false)
         if let firstPoint = gradientPoints.first, let lastPoint = gradientPoints.last {
             gradientPoints.insert(CGPoint(x: firstPoint.x, y: bottom), at: 0)
             gradientPoints.append(CGPoint(x: lastPoint.x, y: bottom))
         }
-        let startGradientPoints = convert(curve: false, lastPoints: lastGradientPoints, newPoints: gradientPoints)
-                //lastGradientPoints ?? gradientPoints.map { CGPoint(x: $0.x, y: bottom) }
 
-        let startGradientPath = ChartBezierPath.path(for: startGradientPoints).cgPath
-        let finalGradientPath = ChartBezierPath.path(for: gradientPoints).cgPath
-
-        if animated {
-            CATransaction.begin()
-            let lineAnimation = CABasicAnimation(keyPath: "path")
-            lineAnimation.fromValue = startLinePath
-            lineAnimation.toValue = finalLinePath
-            lineAnimation.duration = configuration.animationDuration
-            lineAnimation.isRemovedOnCompletion = false
-            lineAnimation.fillMode = .both
-            lineAnimation.timingFunction = CAMediaTimingFunction(name: .easeOut)
-            linesLayer.add(lineAnimation, forKey: "curveAnimation")
-
-            let gradientAnimation = CABasicAnimation(keyPath: "path")
-            gradientAnimation.fromValue = startGradientPath
-            gradientAnimation.toValue = finalGradientPath
-            gradientAnimation.duration = configuration.animationDuration
-            gradientAnimation.isRemovedOnCompletion = false
-            gradientAnimation.fillMode = .both
-            gradientAnimation.timingFunction = CAMediaTimingFunction(name: .easeOut)
-            gradientLayer.add(gradientAnimation, forKey: "curveAnimation")
-
-            CATransaction.setCompletionBlock { [weak self] in
-                self?.lastLinePoints = linePoints
-                self?.lastGradientPoints = gradientPoints
-            }
-
-            CATransaction.commit()
-        } else {
-            linesLayer.path = finalLinePath
+        guard animated else {
+            linesLayer.path = ChartBezierPath.path(for: linePoints).cgPath
             linesLayer.removeAllAnimations()
 
-            gradientLayer.path = finalGradientPath
+            gradientLayer.path = ChartBezierPath.path(for: gradientPoints).cgPath
             gradientLayer.removeAllAnimations()
+            return
         }
+        // animate
+
+        let startLinePoints = convert(curve: true, lastPoints: lastLinePoints, newPoints: linePoints)
+
+        // add right-bottom and left-bottom points for gradient
+        var startGradientPoints = startLinePoints
+        if let firstPoint = startGradientPoints.first, let lastPoint = startGradientPoints.last {
+            startGradientPoints.insert(CGPoint(x: firstPoint.x, y: bottom), at: 0)
+            startGradientPoints.append(CGPoint(x: lastPoint.x, y: bottom))
+        }
+
+        CATransaction.begin()
+
+        let lineAnimation = animation(startPoints: startLinePoints, finishPoints: linePoints)
+        let gradientAnimation = animation(startPoints: startGradientPoints, finishPoints: gradientPoints)
+
+        linesLayer.add(lineAnimation, forKey: "curveAnimation")
+        gradientLayer.add(gradientAnimation, forKey: "gradientAnimation")
+
+        CATransaction.setCompletionBlock { [weak self] in
+            self?.lastLinePoints = linePoints
+            self?.lastGradientPoints = gradientPoints
+        }
+
+        CATransaction.commit()
+    }
+
+    private func animation(startPoints: [CGPoint], finishPoints: [CGPoint]) -> CABasicAnimation {
+        let animation = CABasicAnimation(keyPath: "path")
+        animation.fromValue = ChartBezierPath.path(for: startPoints).cgPath
+        animation.toValue = ChartBezierPath.path(for: finishPoints).cgPath
+        animation.duration = configuration.animationDuration
+        animation.isRemovedOnCompletion = false
+        animation.fillMode = .both
+        animation.timingFunction = CAMediaTimingFunction(name: .easeOut)
+
+        return animation
     }
 
     func set(curveColor: UIColor, gradientColor: UIColor) {
@@ -169,15 +178,6 @@ class ChartCurveView: UIView {
         gradientTransparentMask.colors = [UIColor.black.withAlphaComponent(configuration.gradientStartTransparency), UIColor.black.withAlphaComponent(configuration.gradientFinishTransparency)].map { $0.cgColor }
 
         return gradientTransparentMask
-    }
-
-    override func layoutSubviews() {
-        super.layoutSubviews()
-
-        linesLayer.frame = self.bounds
-        linesLayer.removeAllAnimations()
-
-        refreshCurve(animated: animated)
     }
 
 }
