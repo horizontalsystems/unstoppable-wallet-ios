@@ -61,7 +61,7 @@
 // Backup
 
 "backup.close" = "가까운, 닫힌";
-"backup.backup_required" = "Backup Required";
+"backup.backup_required" = "백업이 필요합니다";
 
 "backup.intro.title_backup" = "백업";
 "backup.intro.title_show" = "암호 보이기";
@@ -80,10 +80,10 @@
 "backup.eos.account_name" = "Account Name";
 "backup.eos.active_private_key" = "Active Private Key";
 "backup.eos.hint" = "클립보드 관리 앱 또는 클립보드 데이터에 접근할 수 있는 다른 앱을 사용하고 있다면 \"복사\"작업을 사용하여 암호를 복사하는 것은 위험할 수 있습니다.";
-"error.send_eos.self_transfer" = "Can't transfer token to own account";
-"error.send_eos.account_not_exist" = "Target account does not exist";
-"error.send_eos.insufficient_ram" = "Your account has not enough of ram";
-"error.send_eos.unknown" = "Something went wrong: %@";
+"error.send_eos.self_transfer" = "토큰을 개인계정으로 옮길 수 없습니다";
+"error.send_eos.account_not_exist" = "회원 계정이 존재하지 않습니다";
+"error.send_eos.insufficient_ram" = "귀하의 계정에 램이 충분하지 않습니다";
+"error.send_eos.unknown" = "무언가 잘못 됐습니다: %@";
 
 "backup.confirmation.title" = "확인 중...";
 "backup.confirmation.secret_key" = "본인은 본인의 휴대폰에 안전하게 저장되어 있으며 지갑에 있는 자금을 통제할 수 있는 사적인 12자리 비밀 암호의 유일한 소유자라는 것을 이해합니다.";
@@ -111,8 +111,8 @@
 
 "deposit.receive_coin" = "수신%@";
 "deposit.your_address" = "당신의 주소";
-"deposit.your_account" = "Your Account";
-"receive_alert.not_backed_up_description" = "You need to backup the %@ key before you may receive %@.";
+"deposit.your_account" = "내 계정";
+"receive_alert.not_backed_up_description" = "%@ 를 받기전에 %@ 키의 백업이 필요합니다";
 
 // Send
 
@@ -121,10 +121,10 @@
 "send.address_placeholder" = "주소";
 "send.account_placeholder" = "Account";
 "send.fee" = "수수료:";
-"send.tx_speed" = "Transaction Speed";
-"send.tx_speed_low" = "Low";
-"send.tx_speed_medium" = "Medium";
-"send.tx_speed_high" = "High";
+"send.tx_speed" = "거래 속도";
+"send.tx_speed_low" = "낮음";
+"send.tx_speed_medium" = "보통";
+"send.tx_speed_high" = "높음";
 "send.max_button" = "최대";
 "send.next_button" = "다음";
 "send.error.invalid_address" = "잘못된 주소";
@@ -157,12 +157,12 @@
 "tx_info.status.pending" = "보류 중";
 "tx_info.status.confirmed" = "확인";
 "tx_info.from_hash" = "로 부터";
-"tx_info.transaction_id" = "Transaction ID";
+"tx_info.transaction_id" = "거래 ID";
 "tx_info.to_hash" = "에게";
 "tx_info.button_verify" = "확인";
 "tx_info.rate" = "과거 환율";
-"tx_info.fee" = "Fee";
-"tx_info.note" = "* The value of this transaction appears as 0 because it was sent to your own address";
+"tx_info.fee" = "수수료";
+"tx_info.note" = "* 이 거래의 가치는 귀하의 주소로 전송되었으므로 0으로 나타납니다";
 
 // Full Info
 
@@ -212,7 +212,7 @@
 "settings.language" = "언어";
 "settings.about" = "에 대해";
 "settings.tell_friends" = "친구에게 추천하기";
-"settings.report_problem" = "Report Problem";
+"settings.report_problem" = "문제점 보고";
 "settings.light_mode" = "밝은 모드";
 "settings.info_title" = "UNSTOPPABLE";
 "settings.info_subtitle" = "decentralized app";
@@ -257,7 +257,7 @@
 
 // Settings -> Report Problem
 
-"settings.report_problem.title" = "Report Problem";
+"settings.report_problem.title" = "문제점 보고";
 "settings.report_problem.email" = "E-mail";
 "settings.report_problem.telegram" = "Telegram";
 
@@ -270,7 +270,7 @@
 "settings_manage_keys.show" = "표시";
 "settings_manage_keys.create" = "만들기";
 "settings_manage_keys.restore" = "복구";
-"settings_manage_keys.delete.cant_delete" = "You need to backup %@ key before you may delete it from this phone.";
+"settings_manage_keys.delete.cant_delete" = "귀하의 핸드폰에서 삭제하기전 %@ 키의 백업이 필요합니다";
 "settings_manage_keys.delete.title" = "암호 삭제";
 "settings_manage_keys.delete.confirmation_remove" = "이 작업은 %@ 암호(지갑)를 이 장치에서 삭제합니다.";
 "settings_manage_keys.delete.confirmation_disable" = "비활성화될 코인: %@";
@@ -325,7 +325,7 @@
 
 // Key Types
 
-"chart.title" = "%@ Rate";
+"chart.title" = "%@ 률";
 "chart.time_duration.day" = "하루";
 "chart.time_duration.week" = "일주일";
 "chart.time_duration.month" = "한 달";
@@ -334,9 +334,9 @@
 "chart.time_duration.year" = "1년";
 
 "chart.market_cap" = "시가총액";
-"chart.market_cap.thousand" = "%@ 천";
+"chart.market_cap.thousand" = "%@ k";
 "chart.market_cap.million" = "%@ 백만";
-"chart.market_cap.billion" = "%@ B";
-"chart.high" = "%@ High";
-"chart.low" = "%@ Low";
-"chart.volume" = "Volume";
+"chart.market_cap.billion" = "%@ 십억";
+"chart.high" = "High";
+"chart.low" = "Low";
+"chart.volume" = "음량";
