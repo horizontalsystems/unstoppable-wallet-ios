@@ -334,9 +334,9 @@
 "chart.time_duration.year" = "1년";
 
 "chart.market_cap" = "시가총액";
-"chart.market_cap.thousand" = "%@ k";
+"chart.market_cap.thousand" = "%@ 천";
 "chart.market_cap.million" = "%@ 백만";
 "chart.market_cap.billion" = "%@ 십억";
-"chart.high" = "High";
-"chart.low" = "Low";
+"chart.high" = "높음";
+"chart.low" = "낮음";
 "chart.volume" = "음량";
