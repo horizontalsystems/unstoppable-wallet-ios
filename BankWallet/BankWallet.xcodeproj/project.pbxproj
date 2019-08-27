@@ -249,7 +249,6 @@
 		11B357034868970E339517A6 /* TransactionItemFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35082EB75323531F95A2F /* TransactionItemFactory.swift */; };
 		11B357097664B263F88E6B52 /* RestoreWordCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35590D7A207123A91E121 /* RestoreWordCell.swift */; };
 		11B3571626DB661F65B12A67 /* TransactionViewItemFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3569AD3ABD5F26CB51506 /* TransactionViewItemFactory.swift */; };
-		11B3571732539375DCFE67ED /* SendConfirmationItemFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35072A029200FB9F86BCB /* SendConfirmationItemFactory.swift */; };
 		11B357281ED1E4C7103A5804 /* AgreementRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3555B8A1BB021B722B1D6 /* AgreementRouter.swift */; };
 		11B3572CC263652049B64F92 /* JsonApiProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B355AD0C896DBA7122F3DC /* JsonApiProvider.swift */; };
 		11B357362D0B4F019677DD46 /* SyncModeModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B350A04B4D9122C9828EC6 /* SyncModeModule.swift */; };
@@ -292,7 +291,6 @@
 		11B35840BDD568F67783A431 /* SendFeePriorityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35AD310E6EAFAA0A8DF84 /* SendFeePriorityView.swift */; };
 		11B358445CEB60E238D62D43 /* SendBitcoinInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B350097B17D90CD768125E /* SendBitcoinInteractor.swift */; };
 		11B35844D6AE256B323382DB /* EosAccountType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3589F07BFA3626F5E41FD /* EosAccountType.swift */; };
-		11B35848297F392FE9F72BF2 /* SendConfirmationItemFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35072A029200FB9F86BCB /* SendConfirmationItemFactory.swift */; };
 		11B3584F38352B045CCBE958 /* BaseCurrencySettingsInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3550630A9EC44B7157E6F /* BaseCurrencySettingsInteractor.swift */; };
 		11B358516EEC6A747F29AB4E /* BackupEosPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35F3CC2990123CFF93106 /* BackupEosPresenter.swift */; };
 		11B358670F13FE515F41276F /* SendEthereumHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3551CD2E9F791509A2744 /* SendEthereumHandler.swift */; };
@@ -398,7 +396,6 @@
 		11B35B2FCB8583A6F1C2D005 /* NoPasscodeTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3578C241CB83AF2FD50A9 /* NoPasscodeTheme.swift */; };
 		11B35B32857AF891709857BD /* RandomManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35A65D7F2EADB3618DA64 /* RandomManager.swift */; };
 		11B35B3A72990A49C8DA4C8D /* AlertTitleItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35B3B9EC0C5564314E2A3 /* AlertTitleItem.swift */; };
-		11B35B3F32BFA82A66C4F797 /* SendConfirmationItemFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35072A029200FB9F86BCB /* SendConfirmationItemFactory.swift */; };
 		11B35B466C32DB144EA0E8CB /* ManageAccountsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35CDAE70C1D4C434FE954 /* ManageAccountsPresenter.swift */; };
 		11B35B550F8ACB190AFBA55C /* ConfirmationCheckboxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B350AD0C5D210E06600D3F /* ConfirmationCheckboxView.swift */; };
 		11B35B5F4B4DB1147E2080E7 /* WalletRemover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B351FBF486466DDD72E795 /* WalletRemover.swift */; };
@@ -1697,7 +1694,6 @@
 		11B35055FA381EE9CA438CB0 /* RateApiProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RateApiProvider.swift; sourceTree = "<group>"; };
 		11B3505BF644BCA7FD0F86F5 /* BaseTwinItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseTwinItem.swift; sourceTree = "<group>"; };
 		11B350682BC528FCB1B8AE0B /* TransactionIdItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionIdItem.swift; sourceTree = "<group>"; };
-		11B35072A029200FB9F86BCB /* SendConfirmationItemFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendConfirmationItemFactory.swift; sourceTree = "<group>"; };
 		11B35082EB75323531F95A2F /* TransactionItemFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionItemFactory.swift; sourceTree = "<group>"; };
 		11B350A04B4D9122C9828EC6 /* SyncModeModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SyncModeModule.swift; sourceTree = "<group>"; };
 		11B350AD0C5D210E06600D3F /* ConfirmationCheckboxView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfirmationCheckboxView.swift; sourceTree = "<group>"; };
@@ -3239,7 +3235,6 @@
 				1A56474B516F0AFBAAFB3AE2 /* SendRouter.swift */,
 				58AAA89DB3DE36B5C227C1C1 /* SendViewController.swift */,
 				1A5647D980D08E2E4359861B /* ScanQRController.swift */,
-				11B35072A029200FB9F86BCB /* SendConfirmationItemFactory.swift */,
 				11B3552CDCF73BC9041AD0C0 /* SendBitcoinHandler.swift */,
 				11B350097B17D90CD768125E /* SendBitcoinInteractor.swift */,
 				11B35B2DF1BF5BE1978B7617 /* SendDashHandler.swift */,
@@ -4446,7 +4441,6 @@
 				11B35B550F8ACB190AFBA55C /* ConfirmationCheckboxView.swift in Sources */,
 				11B358AFFB725B9F5C5E612D /* TransactionViewItemFactory.swift in Sources */,
 				11B3592A6233A57BED217BD8 /* TransactionViewItem.swift in Sources */,
-				11B35848297F392FE9F72BF2 /* SendConfirmationItemFactory.swift in Sources */,
 				1A564BDABCF8EA54F5599FF7 /* LatestRateData.swift in Sources */,
 				58AAA1AB2FD9FBA7801F830D /* PaymentRequestAddress.swift in Sources */,
 				11B35356482DC7860F552715 /* NumPad.swift in Sources */,
@@ -5032,7 +5026,6 @@
 				11B3567E18C314FB5793BBE5 /* ConfirmationCheckboxView.swift in Sources */,
 				11B3562C214D0245D43DFDE4 /* TransactionViewItemFactory.swift in Sources */,
 				11B358A543DE8BAC8A61C1A4 /* TransactionViewItem.swift in Sources */,
-				11B35B3F32BFA82A66C4F797 /* SendConfirmationItemFactory.swift in Sources */,
 				1A564D837A9AB8A7EA5EB71A /* LatestRateData.swift in Sources */,
 				58AAA8D40B3399937CFEB0F2 /* PaymentRequestAddress.swift in Sources */,
 				11B35DD248A04320CF13BCA2 /* NumPad.swift in Sources */,
@@ -5570,7 +5563,6 @@
 				11B35E0A834CFBCB0AB1D5E1 /* ConfirmationCheckboxView.swift in Sources */,
 				11B3571626DB661F65B12A67 /* TransactionViewItemFactory.swift in Sources */,
 				11B355B0F129C0E4B4731D3B /* TransactionViewItem.swift in Sources */,
-				11B3571732539375DCFE67ED /* SendConfirmationItemFactory.swift in Sources */,
 				1A5641EFE66E67F1FCFAABCF /* LatestRateData.swift in Sources */,
 				58AAA4E1C32E0B48A4CFECCD /* PaymentRequestAddress.swift in Sources */,
 				11B35942007821FA754B0ACE /* NumPad.swift in Sources */,

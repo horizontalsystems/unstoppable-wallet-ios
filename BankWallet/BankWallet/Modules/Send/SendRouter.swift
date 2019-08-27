@@ -47,7 +47,7 @@ extension SendRouter {
         }
 
         let interactor = SendInteractor()
-        let presenter = SendPresenter(coin: wallet.coin, handler: handler, interactor: interactor, router: router, confirmationFactory: SendConfirmationItemFactory())
+        let presenter = SendPresenter(coin: wallet.coin, handler: handler, interactor: interactor, router: router)
         let viewController = SendViewController(delegate: presenter, views: subViews)
 
         interactor.delegate = presenter
