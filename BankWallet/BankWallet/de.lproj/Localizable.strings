@@ -126,7 +126,7 @@
 "send.tx_speed_medium" = "Mittel";
 "send.tx_speed_high" = "Hoch";
 "send.tx_duration" = "Dauer";
-"send.instant" = "Instant";
+"send.instant" = "Sofort";
 "send.max_button" = "Max.";
 "send.next_button" = "Weiter";
 "send.error.invalid_address" = "Ungültige Adresse";
@@ -159,12 +159,12 @@
 "tx_info.status.pending" = "Anstehend";
 "tx_info.status.confirmed" = "Bestätigt";
 "tx_info.from_hash" = "Von";
-"tx_info.transaction_id" = "Transaction ID";
+"tx_info.transaction_id" = "Transaktion ID";
 "tx_info.to_hash" = "An";
 "tx_info.button_verify" = "Prüfen";
 "tx_info.rate" = "Historischer Rate";
-"tx_info.fee" = "Fee";
-"tx_info.note" = "* The value of this transaction appears as 0 because it was sent to your own address";
+"tx_info.fee" = "Gebühr";
+"tx_info.note" = "* Der Wert dieser Transaktion ist gleich 0, da die Transaktion an Ihre eigene Adresse gesendet wurde";
 
 // Full Info
 
@@ -214,7 +214,7 @@
 "settings.language" = "Sprache";
 "settings.about" = "Info";
 "settings.tell_friends" = "Freunden erzählen";
-"settings.report_problem" = "Report Problem";
+"settings.report_problem" = "Problem melden";
 "settings.light_mode" = "Licht Modus";
 "settings.info_title" = "UNSTOPPABLE";
 "settings.info_subtitle" = "decentralized app";
@@ -231,7 +231,7 @@
 
 "manage_coins.title" = "Coin Manager";
 "manage_coins.add_coin.title" = "%@ hinzufügen ";
-"manage_coins.add_coin.text" = "You don't have key for %@ which requires a %@ key. The wallet can generate the key for you. Use the Create button below to generate a new key.\n\nYou may also use the existing %@ key for the %@ if you have one.";
+"manage_coins.add_coin.text" = "Du verfügst nicht über einen Schlüssel für %@, der einen Schlüssel %@ erfordert. Die Wallet kann den Schlüssel für Sie generieren. Verwenden Sie die Taste Create unten, um einen neuen Schlüssel zu generieren.\n\nDu kannst auch den vorhandenen %@-Schlüssel für den %@ verwenden, falls du einen hast.";
 "manage_coins.add_coin.create" = "Erstellen";
 "manage_coins.add_coin.restore" = "Wiederherstellen";
 
@@ -259,20 +259,20 @@
 
 // Settings -> Report Problem
 
-"settings.report_problem.title" = "Report Problem";
+"settings.report_problem.title" = "Problem melden";
 "settings.report_problem.email" = "E-mail";
 "settings.report_problem.telegram" = "Telegram";
 
 // Manage Keys
 
 "settings_manage_keys.title" = "Schlüssel";
-"settings_manage_keys.description" = "Anyone with access to your Keys can steal your wallet funds. Store keys safely and never show them to anyone.\n\nBackup each key to be able to restore funds if you lose or break your phone, or simply the wallet app gets deleted.";
+"settings_manage_keys.description" = "Jedermann mit Zugang zu Ihren Schlüsseln kann Ihr Wallet Geldbetrag stehlen. Bewahren Sie den Schlüssel sicher auf und zeigen Sie ihn niemandem.\n\nErstellen Sie ein Backup für jeden Schlüssel, um bei Verlust oder Unterbrechung Ihres Handys, oder wenn einfach die Wallet-App gelöscht wird, das Geld wiederherstellen zu können.";
 "settings_manage_keys.delete" = "Löschen";
 "settings_manage_keys.backup" = "Sicherung";
 "settings_manage_keys.show" = "Anzeigen";
 "settings_manage_keys.create" = "Erstellen";
 "settings_manage_keys.restore" = "Wiederherstellen";
-"settings_manage_keys.delete.cant_delete" = "You need to backup %@ key before you may delete it from this phone.";
+"settings_manage_keys.delete.cant_delete" = "Sie müssen den %@-Schlüssel in einem Backup sichern, bevor Sie ihn von diesem Handy löschen können.";
 "settings_manage_keys.delete.title" = "Schlüssel löschen";
 "settings_manage_keys.delete.confirmation_remove" = "Diese Aktion wird den %@-Schlüssel (Wallet) von diesem Gerät löschen.";
 "settings_manage_keys.delete.confirmation_disable" = "Coins, die entfernt werden: %@";
@@ -339,6 +339,6 @@
 "chart.market_cap.thousand" = "%@ k";
 "chart.market_cap.million" = "%@ M";
 "chart.market_cap.billion" = "%@ B";
-"chart.high" = "High";
-"chart.low" = "Low";
+"chart.high" = "Hoch";
+"chart.low" = "Niedrig";
 "chart.volume" = "Lautstärke";
