@@ -4,7 +4,7 @@ Diese Wallet wurde entwickelt, damit jeder freiheitsliebende Individuum in das P
 
 Sie üben die bedingungslose Steuerung Ihres Vermögens aus. Bitcoin, Ethereum, Dash und andere Krypto-Assets.
 
-warum unaufhaltsame Wallet
+Warum Unstoppable Wallet
 
 Es gewährleistet die Sicherheit von Krypto-Assets auf Ihrem Gerät
 Es lässt sich nur von dir selbst steuern
@@ -24,13 +24,13 @@ Sie können frei und bedingungslos handeln, unabhängig von Ihrem Wohnort. Keine
 
 Sie sind die einzige Person mit der Möglichkeit der Kontrolle und des Zugangs zu Ihren Krypto-Finanzen. Der Secret Key (der Ihnen das Eigentumsrecht an Krypto-Assets gibt) bleibt immer auf Ihrem Gerät.
 
-(2) GENUINE PRIVACY
+(2) ECHTE PRIVATSPHÄRE
 
-  Stay truly private without revealing any personal data. There are no accounts, emails, phone numbers, identity checks or 3rd party servers storing your data.  
+Bleiben Sie völlig privat, ohne personenbezogene Daten anzugeben. Die Daten werden nicht von Konten, E-Mails, Telefonnummern, Identitätsprüfungen oder Servern von Drittanbietern erfasst.
 
-Unlike most wallets in the market the Unstoppable wallet connects users directly to decentralized blockchains without any restrictions or intermediaries.
+Im Unterschied zu den meisten Wallets auf dem Markt bietet die Unstoppable Wallet eine direkte Verbindung zwischen Benutzern und dezentralen Blockchains ohne Einschränkungen und Zwischenhändler.
 
-(3) HIGHLY SECURE
+(3) HOHE SICHERHEIT
 
   Keep your crypto assets safe on your phone using safe storage mechanisms provided by phone's operating system. Your secret keys never leaves your device the device.
 
