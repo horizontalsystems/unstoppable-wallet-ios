@@ -6,10 +6,10 @@ Varlıklarınız üzerinde tam koşulsuz kontrol uygulayın. Bitcoin, Ethereum, 
 
  Why Unstoppable Wallet
 
-It keeps crypto assets safe on your device
+Kripto varlıklarını cihazınızda güvenli tutar
 It can only be controlled by yourself
-It doesn’t know who you are
-It doesn’t collect any data
+Kim olunduğun bilinmiyor
+Hiçbir veri toplamaz
 It's easy to migrate to/from
 It’s not dependent on any entity to function
 It integrates blockchains in a decentralized manner
