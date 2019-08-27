@@ -342,6 +342,7 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 "chart.time_duration.year" = "1Y";
 
 "chart.market_cap" = "Mkt. Cap";
+"chart.market_cap.thousand" = "%@ K";
 "chart.market_cap.million" = "%@ M";
 "chart.market_cap.billion" = "%@ B";
 "chart.high" = "%@ High";
