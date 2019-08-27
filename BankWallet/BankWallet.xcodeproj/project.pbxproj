@@ -61,7 +61,7 @@
 		11B351A72E87E6B529078BCE /* AlertTitleItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35B3B9EC0C5564314E2A3 /* AlertTitleItem.swift */; };
 		11B351A789BF89D32CC207C0 /* SendFeePriorityPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35F77ADC1D844A4A3390D /* SendFeePriorityPresenter.swift */; };
 		11B351B76E70E4D03CB0615D /* WalletFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B357A7F7FD0E4D2BDD8F49 /* WalletFactory.swift */; };
-		11B351BFEF2508F03638A016 /* SendEthereumPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3551CD2E9F791509A2744 /* SendEthereumPresenter.swift */; };
+		11B351BFEF2508F03638A016 /* SendEthereumHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3551CD2E9F791509A2744 /* SendEthereumHandler.swift */; };
 		11B351C173BF6DFC97292DB7 /* SendBinancePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35F571876EA99794DD145 /* SendBinancePresenter.swift */; };
 		11B351C3F998A2081CFFCEDB /* TransactionIdItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B350682BC528FCB1B8AE0B /* TransactionIdItem.swift */; };
 		11B351C81028727569851233 /* EthereumAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B352D314A298B6B832F309 /* EthereumAdapter.swift */; };
@@ -295,7 +295,7 @@
 		11B35848297F392FE9F72BF2 /* SendConfirmationItemFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35072A029200FB9F86BCB /* SendConfirmationItemFactory.swift */; };
 		11B3584F38352B045CCBE958 /* BaseCurrencySettingsInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3550630A9EC44B7157E6F /* BaseCurrencySettingsInteractor.swift */; };
 		11B358516EEC6A747F29AB4E /* BackupEosPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35F3CC2990123CFF93106 /* BackupEosPresenter.swift */; };
-		11B358670F13FE515F41276F /* SendEthereumPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3551CD2E9F791509A2744 /* SendEthereumPresenter.swift */; };
+		11B358670F13FE515F41276F /* SendEthereumHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3551CD2E9F791509A2744 /* SendEthereumHandler.swift */; };
 		11B3586B8B2C99BCFDF2C40B /* AccountCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35F26989959D83D337249 /* AccountCreator.swift */; };
 		11B358711BD2BF0C238F0F41 /* NoPasscodeTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3578C241CB83AF2FD50A9 /* NoPasscodeTheme.swift */; };
 		11B35877FB8483FFA1037F98 /* TransactionItemDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B350DFDC2CC98086520BFA /* TransactionItemDataSource.swift */; };
@@ -520,7 +520,7 @@
 		11B35EF541B8F60359F37C61 /* SendEosPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B359581CE0F3CB9037BC04 /* SendEosPresenter.swift */; };
 		11B35EF8F8B8F43987CC121C /* BaseCurrencySettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35E4481DCD98BF2074797 /* BaseCurrencySettingsViewController.swift */; };
 		11B35EFFC8EAF969B9A1A66A /* ManageAccountsTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B357C7F62B53F2AD89FBC6 /* ManageAccountsTheme.swift */; };
-		11B35F06AB23A13BF6675744 /* SendEthereumPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3551CD2E9F791509A2744 /* SendEthereumPresenter.swift */; };
+		11B35F06AB23A13BF6675744 /* SendEthereumHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3551CD2E9F791509A2744 /* SendEthereumHandler.swift */; };
 		11B35F09210E8E5EAFABEEA4 /* AboutSettingsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35BDC4FD741BE033D1956 /* AboutSettingsRouter.swift */; };
 		11B35F2057CF53136F954423 /* Words12AccountType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35F3A33D60A4A014DC920 /* Words12AccountType.swift */; };
 		11B35F21648179D3166B5538 /* ManageAccountsViewItemFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35987C48604FA6CB81C92 /* ManageAccountsViewItemFactory.swift */; };
@@ -1759,7 +1759,7 @@
 		11B354B43B5120F594318FDA /* PermissionsHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PermissionsHelper.swift; sourceTree = "<group>"; };
 		11B354EBB4D8C8618135258A /* ManageAccountsCreateAccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManageAccountsCreateAccountViewController.swift; sourceTree = "<group>"; };
 		11B3550630A9EC44B7157E6F /* BaseCurrencySettingsInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseCurrencySettingsInteractor.swift; sourceTree = "<group>"; };
-		11B3551CD2E9F791509A2744 /* SendEthereumPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendEthereumPresenter.swift; sourceTree = "<group>"; };
+		11B3551CD2E9F791509A2744 /* SendEthereumHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendEthereumHandler.swift; sourceTree = "<group>"; };
 		11B3552CDCF73BC9041AD0C0 /* SendBitcoinHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendBitcoinHandler.swift; sourceTree = "<group>"; };
 		11B355330C2EB2870BD7087A /* ManageAccountsInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManageAccountsInteractor.swift; sourceTree = "<group>"; };
 		11B35542A7D7FE1BDC2E73E2 /* AccountType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountType.swift; sourceTree = "<group>"; };
@@ -3244,7 +3244,7 @@
 				11B350097B17D90CD768125E /* SendBitcoinInteractor.swift */,
 				11B35B2DF1BF5BE1978B7617 /* SendDashHandler.swift */,
 				11B35AAF764220A2156C4EB3 /* SendDashInteractor.swift */,
-				11B3551CD2E9F791509A2744 /* SendEthereumPresenter.swift */,
+				11B3551CD2E9F791509A2744 /* SendEthereumHandler.swift */,
 				11B35FCB0C9375B426F06D95 /* SendEthereumInteractor.swift */,
 				11B359581CE0F3CB9037BC04 /* SendEosPresenter.swift */,
 				11B35D43482DC6ECD766D51A /* SendEosInteractor.swift */,
@@ -4717,7 +4717,7 @@
 				11B35F679540B4226EA075AA /* SendFeePriorityInteractor.swift in Sources */,
 				11B355910DDDD9B57384518A /* AddressParserFactory.swift in Sources */,
 				11B357E1B3795D3D9A9C2C59 /* FeeRateProviderFactory.swift in Sources */,
-				11B358670F13FE515F41276F /* SendEthereumPresenter.swift in Sources */,
+				11B358670F13FE515F41276F /* SendEthereumHandler.swift in Sources */,
 				11B35AF198E802C3356834A5 /* SendEthereumInteractor.swift in Sources */,
 				11B350B0CB0D63DA6AA61249 /* SendAccountRouter.swift in Sources */,
 				11B351A14366E8A6A31A14A7 /* SendAccountInteractor.swift in Sources */,
@@ -5306,7 +5306,7 @@
 				11B350081FA306427997CEA7 /* SendFeePriorityInteractor.swift in Sources */,
 				11B355B7E336EB3AED69FA38 /* AddressParserFactory.swift in Sources */,
 				11B35D4E566D1F5D24825050 /* FeeRateProviderFactory.swift in Sources */,
-				11B35F06AB23A13BF6675744 /* SendEthereumPresenter.swift in Sources */,
+				11B35F06AB23A13BF6675744 /* SendEthereumHandler.swift in Sources */,
 				11B353B37E4387DD6C77DB79 /* SendEthereumInteractor.swift in Sources */,
 				11B351D315E4B83E3537DCE4 /* SendAccountRouter.swift in Sources */,
 				11B35D1519A5FA5E759628BE /* SendAccountInteractor.swift in Sources */,
@@ -5844,7 +5844,7 @@
 				11B353F2CA7828E73196415C /* SendFeePriorityInteractor.swift in Sources */,
 				11B35AB9EA64C5D3825DD44E /* AddressParserFactory.swift in Sources */,
 				11B3519B8645E4788A70E0A4 /* FeeRateProviderFactory.swift in Sources */,
-				11B351BFEF2508F03638A016 /* SendEthereumPresenter.swift in Sources */,
+				11B351BFEF2508F03638A016 /* SendEthereumHandler.swift in Sources */,
 				11B356DB3835A587CE7495D9 /* SendEthereumInteractor.swift in Sources */,
 				11B354874F95CC09A538E5FC /* SendAccountRouter.swift in Sources */,
 				11B35A6586FF799F6BB23261 /* SendAccountInteractor.swift in Sources */,

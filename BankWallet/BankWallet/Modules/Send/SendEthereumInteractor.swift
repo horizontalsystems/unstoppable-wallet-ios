@@ -1,10 +1,6 @@
 import RxSwift
 
 class SendEthereumInteractor {
-    weak var delegate: ISendEthereumInteractorDelegate?
-
-    private let disposeBag = DisposeBag()
-
     private let adapter: ISendEthereumAdapter
 
     init(adapter: ISendEthereumAdapter) {
@@ -31,16 +27,8 @@ extension SendEthereumInteractor: ISendEthereumInteractor {
         return adapter.fee(gasPrice: gasPrice)
     }
 
-    func send(amount: Decimal, address: String, gasPrice: Int) {
-        adapter.sendSingle(amount: amount, address: address, gasPrice: gasPrice)
-                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-                .observeOn(MainScheduler.instance)
-                .subscribe(onSuccess: { [weak self] in
-                    self?.delegate?.didSend()
-                }, onError: { [weak self] error in
-                    self?.delegate?.didFailToSend(error: error)
-                })
-                .disposed(by: disposeBag)
+    func sendSingle(amount: Decimal, address: String, gasPrice: Int) -> Single<Void> {
+        return adapter.sendSingle(amount: amount, address: address, gasPrice: gasPrice)
     }
 
 }
