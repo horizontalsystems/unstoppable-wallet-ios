@@ -81,12 +81,7 @@ protocol ISendEthereumInteractor {
 protocol ISendEosInteractor {
     var availableBalance: Decimal { get }
     func validate(account: String) throws
-    func send(amount: Decimal, account: String, memo: String?)
-}
-
-protocol ISendEosInteractorDelegate: class {
-    func didSend()
-    func didFailToSend(error: Error)
+    func sendSingle(amount: Decimal, account: String, memo: String?) -> Single<Void>
 }
 
 protocol ISendBinanceInteractor {

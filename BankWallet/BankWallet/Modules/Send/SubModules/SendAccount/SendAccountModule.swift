@@ -16,13 +16,16 @@ protocol ISendAccountInteractor {
 protocol ISendAccountModule: AnyObject {
     var delegate: ISendAccountDelegate? { get set }
 
-    var account: String? { get }
+    var currentAccount: String? { get }
+    func validAccount() throws -> String
 }
 
 protocol ISendAccountDelegate: class {
     func validate(account: String) throws
 
     func onUpdateAccount()
+}
 
+protocol ISendAccountRouter {
     func scanQrCode(delegate: IScanQrCodeDelegate)
 }
