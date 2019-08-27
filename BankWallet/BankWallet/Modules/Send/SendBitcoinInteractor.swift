@@ -3,8 +3,6 @@ import RxSwift
 class SendBitcoinInteractor {
     weak var delegate: ISendBitcoinInteractorDelegate?
 
-    private let disposeBag = DisposeBag()
-
     private let adapter: ISendBitcoinAdapter
 
     init(adapter: ISendBitcoinAdapter) {
