@@ -36,6 +36,9 @@ class ChartRateTypeItemView: BaseActionItemView {
         item?.setSelected = { [weak self] tag in
             self?.setSelected(tag: tag)
         }
+        item?.setEnabled = { [weak self] tag in
+            self?.setEnabled(tag: tag)
+        }
         item?.showPoint = { [weak self] date, value in
             self?.showPoint(date: date, value: value)
         }
@@ -55,7 +58,16 @@ class ChartRateTypeItemView: BaseActionItemView {
 
     private func setSelected(tag: Int) {
         buttons.forEach { button in
-            button.state = button.tag == tag ? .selected : .active
+            let nonSelectedState: RespondButton.State = button.state == .disabled ? .disabled : .active
+            button.state = button.tag == tag ? .selected : nonSelectedState
+        }
+    }
+
+    public func setEnabled(tag: Int) {
+        buttons.forEach { button in
+            if button.tag == tag {
+                button.state = button.state == .selected ? .selected : .active
+            }
         }
     }
 
@@ -67,7 +79,8 @@ class ChartRateTypeItemView: BaseActionItemView {
         let button = RespondButton(onTap: toggleAction)
         button.changeBackground = false
         button.tag = tag
-        button.textColors = [.active: ChartRateTheme.buttonTextColor, .selected: ChartRateTheme.buttonSelectedTextColor, .disabled: ChartRateTheme.buttonSelectedTextColor]
+        button.state = .disabled
+        button.textColors = [.active: ChartRateTheme.buttonTextColor, .selected: ChartRateTheme.buttonSelectedTextColor, .disabled: ChartRateTheme.buttonDisabledTextColor]
         button.titleLabel.text = title.localized
         button.titleLabel.font = ChartRateTheme.buttonFont
         button.titleLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
