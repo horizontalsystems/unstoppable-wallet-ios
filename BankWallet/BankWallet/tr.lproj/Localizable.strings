@@ -162,7 +162,7 @@
 "tx_info.button_verify" = "Doğrula";
 "tx_info.rate" = "Geçmiş Kur";
 "tx_info.fee" = "Ücret";
-"tx_info.note" = "* The value of this transaction appears as 0 because it was sent to your own address";
+"tx_info.note" = "* Kendi adresinize gönderildiğinden bu işlemin değeri 0 olarak görünür";
 
 // Full Info
 
@@ -264,7 +264,7 @@
 // Manage Keys
 
 "settings_manage_keys.title" = "Anahtarlar";
-"settings_manage_keys.description" = "Anyone with access to your Keys can steal your wallet funds. Store keys safely and never show them to anyone.\n\nBackup each key to be able to restore funds if you lose or break your phone, or simply the wallet app gets deleted.";
+"settings_manage_keys.description" = "Anahtarlarınıza erişimi olan herkes cüzdan paranızı çalabilir. Anahtarları güvenli bir şekilde saklayın ve asla kimseye göstermeyin.\n\nTelefonunuzu kaybederseniz veya kırdığınızda veya sadece cüzdan uygulaması silinirse para geri yükleyebilmek için her anahtarı yedekle.";
 "settings_manage_keys.delete" = "Sil";
 "settings_manage_keys.backup" = "Yedekle";
 "settings_manage_keys.show" = "Göster";
