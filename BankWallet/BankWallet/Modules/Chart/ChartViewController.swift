@@ -174,8 +174,8 @@ extension ChartViewController: IChartView {
         chartRateItem?.hideSpinner?()
     }
 
-    func show(error: String) {
-        chartRateItem?.showError?(error)
+    func showError() {
+        chartRateItem?.showError?("chart.error.not_available".localized)
     }
 
 }
