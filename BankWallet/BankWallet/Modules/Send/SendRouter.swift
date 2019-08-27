@@ -11,11 +11,6 @@ extension SendRouter: ISendRouter {
         viewController?.navigationController?.pushViewController(confirmationController, animated: true)
     }
 
-    func scanQrCode(delegate: IScanQrCodeDelegate) {
-        let scanController = ScanQRController(delegate: delegate)
-        viewController?.present(scanController, animated: true)
-    }
-
     func dismiss() {
         viewController?.dismiss(animated: true)
     }
@@ -67,7 +62,7 @@ extension SendRouter {
 
     private static func module(coin: Coin, adapter: ISendBitcoinAdapter) -> (ISendHandler, [UIView], [ISendSubRouter])? {
         let (amountView, amountModule) = SendAmountRouter.module(coin: coin)
-        let (addressView, addressModule) = SendAddressRouter.module(coin: coin)
+        let (addressView, addressModule, addressRouter) = SendAddressRouter.module(coin: coin)
         let (feeView, feeModule) = SendFeeRouter.module(coin: coin)
 
         guard let (feePriorityView, feePriorityModule, feePriorityRouter) = SendFeePriorityRouter.module(coin: coin) else {
@@ -84,7 +79,7 @@ extension SendRouter {
         feeModule.delegate = presenter
         feePriorityModule.delegate = presenter
 
-        return (presenter, [amountView, addressView, feePriorityView, feeView], [feePriorityRouter])
+        return (presenter, [amountView, addressView, feePriorityView, feeView], [addressRouter, feePriorityRouter])
     }
 
 //    private static func module(coin: Coin, adapter: ISendDashAdapter, router: ISendRouter) -> (ISendViewDelegate, [UIView], [ISendSubRouter]) {

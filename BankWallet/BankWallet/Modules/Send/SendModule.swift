@@ -111,7 +111,6 @@ protocol ISendBinanceInteractorDelegate: class {
 
 protocol ISendRouter: class {
     func showConfirmation(viewItems: [ISendConfirmationViewItemNew], delegate: ISendConfirmationDelegate)
-    func scanQrCode(delegate: IScanQrCodeDelegate)
     func dismiss()
 }
 

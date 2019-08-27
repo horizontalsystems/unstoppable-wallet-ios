@@ -20,7 +20,7 @@ class SendBitcoinHandler {
         self.feePriorityModule = feePriorityModule
     }
 
-    private func syncSendButton() {
+    private func syncValidation() {
         do {
             _ = try amountModule.validAmount()
             _ = try addressModule.validAddress()
@@ -68,7 +68,7 @@ extension SendBitcoinHandler: ISendBitcoinInteractorDelegate {
 
     func didFetch(availableBalance: Decimal) {
         amountModule.set(availableBalance: availableBalance)
-        syncSendButton()
+        syncValidation()
     }
 
     func didFetch(fee: Decimal) {
@@ -81,7 +81,7 @@ extension SendBitcoinHandler: ISendAmountDelegate {
 
     func onChangeAmount() {
         syncFee()
-        syncSendButton()
+        syncValidation()
     }
 
     func onChange(inputType: SendInputType) {
@@ -103,10 +103,6 @@ extension SendBitcoinHandler: ISendAddressDelegate {
 
     func onUpdate(amount: Decimal) {
         amountModule.set(amount: amount)
-    }
-
-    func scanQrCode(delegate: IScanQrCodeDelegate) {
-//        router.scanQrCode(delegate: delegate)
     }
 
 }

@@ -27,6 +27,8 @@ protocol ISendAddressDelegate: class {
 
     func onUpdateAddress()
     func onUpdate(amount: Decimal)
+}
 
+protocol ISendAddressRouter {
     func scanQrCode(delegate: IScanQrCodeDelegate)
 }

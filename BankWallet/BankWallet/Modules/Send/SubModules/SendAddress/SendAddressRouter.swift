@@ -1,16 +1,30 @@
 import UIKit
 
-class SendAddressRouter {
+class SendAddressRouter: ISendSubRouter {
+    weak var viewController: UIViewController?
+}
 
-    static func module(coin: Coin) -> (UIView, ISendAddressModule) {
+extension SendAddressRouter: ISendAddressRouter {
+
+    func scanQrCode(delegate: IScanQrCodeDelegate) {
+        let scanController = ScanQRController(delegate: delegate)
+        viewController?.present(scanController, animated: true)
+    }
+
+}
+
+extension SendAddressRouter {
+
+    static func module(coin: Coin) -> (UIView, ISendAddressModule, ISendSubRouter) {
+        let router = SendAddressRouter()
         let interactor = SendAddressInteractor(pasteboardManager: App.shared.pasteboardManager, addressParser: App.shared.addressParserFactory.parser(coin: coin))
 
-        let presenter = SendAddressPresenter(interactor: interactor)
+        let presenter = SendAddressPresenter(interactor: interactor, router: router)
         let view = SendAddressView(delegate: presenter)
 
         presenter.view = view
 
-        return (view, presenter)
+        return (view, presenter, router)
     }
 
 }
