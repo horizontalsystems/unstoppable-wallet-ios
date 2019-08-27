@@ -7,17 +7,17 @@
 
 "button.ok" = "확인";
 "button.cancel" = "취소";
-"button.close" = "Close";
+"button.close" = "가까운, 닫힌";
 "button.confirm" = "확인";
 "button.done" = "완료";
 "button.restore" = "복구";
 "button.next" = "다음";
 "button.remove" = "삭제";
-"button.share" = "Share";
+"button.share" = "공유";
 "button.save" = "저장";
 "button.sync" = "동기화";
 "button.paste" = "불여넣기";
-"button.backup" = "Backup";
+"button.backup" = "백업";
 
 "alert.copied" = "복사됨";
 "alert.no_internet" = "인터넷에 연결되지 않음";
@@ -334,6 +334,9 @@
 "chart.time_duration.year" = "1Y";
 
 "chart.market_cap" = "Mkt. Cap";
-"chart.high" = "High";
-"chart.low" = "Low";
+"chart.market_cap.thousand" = "%@ K";
+"chart.market_cap.million" = "%@ M";
+"chart.market_cap.billion" = "%@ B";
+"chart.high" = "%@ High";
+"chart.low" = "%@ Low";
 "chart.volume" = "Volume";
