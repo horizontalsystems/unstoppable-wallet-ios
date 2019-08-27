@@ -50,18 +50,8 @@ class SendAmountPresenter {
 
     private func syncHint() {
         let hintAmount = amount ?? 0
-        let hintInputType = inputType.reversed
 
-        switch hintInputType {
-        case .coin:
-            view?.set(hint: .coinValue(coinValue: CoinValue(coin: coin, value: hintAmount)))
-        case .currency:
-            if let rate = rate {
-                view?.set(hint: .currencyValue(currencyValue: CurrencyValue(currency: currency, value: hintAmount * rate.value)))
-            } else {
-                view?.set(hint: nil)
-            }
-        }
+        view?.set(hint: secondaryAmountInfo(amount: hintAmount))
     }
 
     private func syncAmount() {
@@ -70,14 +60,31 @@ class SendAmountPresenter {
             return
         }
 
+        view?.set(amount: primaryAmountInfo(amount: amount))
+    }
+
+    private func primaryAmountInfo(amount: Decimal) -> AmountInfo {
         switch inputType {
         case .coin:
-            view?.set(amount: .coinValue(coinValue: CoinValue(coin: coin, value: amount)))
+            return .coinValue(coinValue: CoinValue(coin: coin, value: amount))
         case .currency:
             if let rate = rate {
-                view?.set(amount: .currencyValue(currencyValue: CurrencyValue(currency: currency, value: amount * rate.value)))
+                return .currencyValue(currencyValue: CurrencyValue(currency: currency, value: amount * rate.value))
             } else {
                 fatalError("Invalid state")
+            }
+        }
+    }
+
+    private func secondaryAmountInfo(amount: Decimal) -> AmountInfo? {
+        switch inputType.reversed {
+        case .coin:
+            return .coinValue(coinValue: CoinValue(coin: coin, value: amount))
+        case .currency:
+            if let rate = rate {
+                return .currencyValue(currencyValue: CurrencyValue(currency: currency, value: amount * rate.value))
+            } else {
+                return nil
             }
         }
     }
@@ -115,29 +122,26 @@ class SendAmountPresenter {
 
 extension SendAmountPresenter: ISendAmountModule {
 
-    var validAmount: Decimal? {
+    func validAmount() throws -> Decimal {
         guard let amount = amount, amount > 0 else {
-            return nil
+            throw ValidationError.emptyValue
         }
 
-        do {
-            try validate()
-            return amount
-        } catch {
-            return nil
-        }
+        try validate()
+
+        return amount
     }
 
-    var coinAmount: CoinValue {
-        return CoinValue(coin: coin, value: amount ?? 0)
+    var currentAmount: Decimal {
+        return amount ?? 0
     }
 
-    var fiatAmount: CurrencyValue? {
-        if let rate = rate {
-            return CurrencyValue(currency: currency, value: (amount ?? 0) * rate.value)
-        } else {
-            return nil
-        }
+    func primaryAmountInfo() throws -> AmountInfo {
+        return primaryAmountInfo(amount: try validAmount())
+    }
+
+    func secondaryAmountInfo() throws -> AmountInfo? {
+        return secondaryAmountInfo(amount: try validAmount())
     }
 
     func showKeyboard() {
@@ -237,10 +241,13 @@ extension SendAmountPresenter: ISendAmountViewDelegate {
 extension SendAmountPresenter {
 
     private enum ValidationError: Error, LocalizedError {
+        case emptyValue
         case insufficientBalance(availableBalance: AmountInfo)
 
         var errorDescription: String? {
             switch self {
+            case .emptyValue:
+                return "send.amount_error.empty".localized
             case .insufficientBalance(let availableBalance):
                 return "send.amount_error.balance".localized(availableBalance.formattedString ?? "")
             }

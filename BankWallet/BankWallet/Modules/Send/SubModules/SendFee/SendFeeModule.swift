@@ -26,8 +26,8 @@ protocol ISendFeeModule: AnyObject {
 
     var isValid: Bool { get }
 
-    var coinValue: CoinValue { get }
-    var currencyValue: CurrencyValue? { get }
+    var primaryAmountInfo: AmountInfo { get }
+    var secondaryAmountInfo: AmountInfo? { get }
 
     func set(fee: Decimal)
     func set(availableFeeBalance: Decimal)

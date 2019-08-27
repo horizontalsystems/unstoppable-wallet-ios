@@ -32,21 +32,8 @@ class SendFeePresenter {
     }
 
     private func syncFeeLabels() {
-        let coinAmountInfo: AmountInfo = .coinValue(coinValue: CoinValue(coin: coin, value: fee))
-        var currencyAmountInfo: AmountInfo?
-
-        if let rate = rate {
-            currencyAmountInfo = .currencyValue(currencyValue: CurrencyValue(currency: currency, value: fee * rate.value))
-        }
-
-        switch inputType {
-        case .coin:
-            view?.set(fee: coinAmountInfo)
-            view?.set(convertedFee: currencyAmountInfo)
-        case .currency:
-            view?.set(fee: currencyAmountInfo)
-            view?.set(convertedFee: coinAmountInfo)
-        }
+        view?.set(fee: primaryAmountInfo)
+        view?.set(convertedFee: secondaryAmountInfo)
     }
 
     private func syncError() {
@@ -82,6 +69,32 @@ extension SendFeePresenter: ISendFeeModule {
             return true
         } catch {
             return false
+        }
+    }
+
+    var primaryAmountInfo: AmountInfo {
+        switch inputType {
+        case .coin:
+            return .coinValue(coinValue: CoinValue(coin: coin, value: fee))
+        case .currency:
+            if let rate = rate {
+                return .currencyValue(currencyValue: CurrencyValue(currency: currency, value: fee * rate.value))
+            } else {
+                fatalError("Invalid state")
+            }
+        }
+    }
+
+    var secondaryAmountInfo: AmountInfo? {
+        switch inputType.reversed {
+        case .coin:
+            return .coinValue(coinValue: CoinValue(coin: coin, value: fee))
+        case .currency:
+            if let rate = rate {
+                return .currencyValue(currencyValue: CurrencyValue(currency: currency, value: fee * rate.value))
+            } else {
+                return nil
+            }
         }
     }
 
