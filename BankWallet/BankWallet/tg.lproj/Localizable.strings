@@ -334,6 +334,9 @@
 "chart.time_duration.year" = "1Y";
 
 "chart.market_cap" = "Mkt. Cap";
-"chart.high" = "High";
-"chart.low" = "Low";
+"chart.market_cap.thousand" = "%@ K";
+"chart.market_cap.million" = "%@ M";
+"chart.market_cap.billion" = "%@ B";
+"chart.high" = "%@ High";
+"chart.low" = "%@ Low";
 "chart.volume" = "Volume";
