@@ -89,12 +89,7 @@ protocol ISendBinanceInteractor {
     var availableBinanceBalance: Decimal { get }
     func validate(address: String) throws
     var fee: Decimal { get }
-    func send(amount: Decimal, address: String, memo: String?)
-}
-
-protocol ISendBinanceInteractorDelegate: class {
-    func didSend()
-    func didFailToSend(error: Error)
+    func sendSingle(amount: Decimal, address: String, memo: String?) -> Single<Void>
 }
 
 protocol ISendRouter: class {
