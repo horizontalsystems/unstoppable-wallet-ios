@@ -8,12 +8,14 @@ class SendEosHandler {
 
     private let amountModule: ISendAmountModule
     private let accountModule: ISendAccountModule
+    private let memoModule: ISendMemoModule
 
-    init(interactor: ISendEosInteractor, amountModule: ISendAmountModule, accountModule: ISendAccountModule) {
+    init(interactor: ISendEosInteractor, amountModule: ISendAmountModule, accountModule: ISendAccountModule, memoModule: ISendMemoModule) {
         self.interactor = interactor
 
         self.amountModule = amountModule
         self.accountModule = accountModule
+        self.memoModule = memoModule
     }
 
     private func syncValidation() {
@@ -44,13 +46,19 @@ extension SendEosHandler: ISendHandler {
     }
 
     func confirmationViewItems() throws -> [ISendConfirmationViewItemNew] {
-        return [
-            SendConfirmationAmountViewItem(primaryInfo: try amountModule.primaryAmountInfo(), secondaryInfo: try amountModule.secondaryAmountInfo(), receiver: try accountModule.validAccount()),
+        var viewItems: [ISendConfirmationViewItemNew] = [
+            SendConfirmationAmountViewItem(primaryInfo: try amountModule.primaryAmountInfo(), secondaryInfo: try amountModule.secondaryAmountInfo(), receiver: try accountModule.validAccount())
         ]
+
+        if let memo = memoModule.memo {
+            viewItems.append(SendConfirmationMemoViewItem(memo: memo))
+        }
+
+        return viewItems
     }
 
     func sendSingle() throws -> Single<Void> {
-        return interactor.sendSingle(amount: try amountModule.validAmount(), account: try accountModule.validAccount(), memo: nil)
+        return interactor.sendSingle(amount: try amountModule.validAmount(), account: try accountModule.validAccount(), memo: memoModule.memo)
     }
 
 }

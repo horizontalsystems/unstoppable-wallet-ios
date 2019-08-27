@@ -8,13 +8,15 @@ class SendBinanceHandler {
 
     private let amountModule: ISendAmountModule
     private let addressModule: ISendAddressModule
+    private let memoModule: ISendMemoModule
     private let feeModule: ISendFeeModule
 
-    init(interactor: ISendBinanceInteractor, amountModule: ISendAmountModule, addressModule: ISendAddressModule, feeModule: ISendFeeModule) {
+    init(interactor: ISendBinanceInteractor, amountModule: ISendAmountModule, addressModule: ISendAddressModule, memoModule: ISendMemoModule, feeModule: ISendFeeModule) {
         self.interactor = interactor
 
         self.amountModule = amountModule
         self.addressModule = addressModule
+        self.memoModule = memoModule
         self.feeModule = feeModule
     }
 
@@ -44,14 +46,21 @@ extension SendBinanceHandler: ISendHandler {
     }
 
     func confirmationViewItems() throws -> [ISendConfirmationViewItemNew] {
-        return [
-            SendConfirmationAmountViewItem(primaryInfo: try amountModule.primaryAmountInfo(), secondaryInfo: try amountModule.secondaryAmountInfo(), receiver: try addressModule.validAddress()),
-            SendConfirmationFeeViewItem(primaryInfo: feeModule.primaryAmountInfo, secondaryInfo: feeModule.secondaryAmountInfo),
+        var viewItems: [ISendConfirmationViewItemNew] = [
+            SendConfirmationAmountViewItem(primaryInfo: try amountModule.primaryAmountInfo(), secondaryInfo: try amountModule.secondaryAmountInfo(), receiver: try addressModule.validAddress())
         ]
+
+        if let memo = memoModule.memo {
+            viewItems.append(SendConfirmationMemoViewItem(memo: memo))
+        }
+
+        viewItems.append(SendConfirmationFeeViewItem(primaryInfo: feeModule.primaryAmountInfo, secondaryInfo: feeModule.secondaryAmountInfo))
+
+        return viewItems
     }
 
     func sendSingle() throws -> Single<Void> {
-        return interactor.sendSingle(amount: try amountModule.validAmount(), address: try addressModule.validAddress(), memo: nil)
+        return interactor.sendSingle(amount: try amountModule.validAmount(), address: try addressModule.validAddress(), memo: memoModule.memo)
     }
 
 }
