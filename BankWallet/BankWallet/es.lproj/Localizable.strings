@@ -7,17 +7,17 @@
 
 "button.ok" = "Aceptar";
 "button.cancel" = "Cancelar";
-"button.close" = "Close";
+"button.close" = "Cerrar";
 "button.confirm" = "Confirmar";
 "button.done" = "Listo";
 "button.restore" = "Restaurar";
 "button.next" = "Siguiente";
 "button.remove" = "Eliminar";
-"button.share" = "Share";
+"button.share" = "Compartir";
 "button.save" = "Guardar";
 "button.sync" = "Sincronizar";
 "button.paste" = "Pegar";
-"button.backup" = "Backup";
+"button.backup" = "Copia de seguridad";
 
 "alert.copied" = "Copiado";
 "alert.no_internet" = "Sin conexión a Internet";
@@ -334,6 +334,9 @@
 "chart.time_duration.year" = "1Y";
 
 "chart.market_cap" = "Mkt. Cap";
-"chart.high" = "High";
-"chart.low" = "Low";
+"chart.market_cap.thousand" = "%@ K";
+"chart.market_cap.million" = "%@ M";
+"chart.market_cap.billion" = "%@ B";
+"chart.high" = "%@ High";
+"chart.low" = "%@ Low";
 "chart.volume" = "Volume";
