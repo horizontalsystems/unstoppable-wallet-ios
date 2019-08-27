@@ -33,11 +33,13 @@ protocol ISendAmountInteractor {
 protocol ISendAmountModule: AnyObject {
     var delegate: ISendAmountDelegate? { get set }
 
-    var validAmount: Decimal? { get }
+    var currentAmount: Decimal { get }
+    func validAmount() throws -> Decimal
 
     var inputType: SendInputType { get }
-    var coinAmount: CoinValue { get }
-    var fiatAmount: CurrencyValue? { get }
+
+    func primaryAmountInfo() throws -> AmountInfo
+    func secondaryAmountInfo() throws -> AmountInfo?
 
     func showKeyboard()
 

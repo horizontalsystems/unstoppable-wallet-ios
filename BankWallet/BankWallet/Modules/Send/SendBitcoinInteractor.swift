@@ -39,16 +39,8 @@ extension SendBitcoinInteractor: ISendBitcoinInteractor {
         }
     }
 
-    func send(amount: Decimal, address: String, feeRate: Int) {
-        adapter.sendSingle(amount: amount, address: address, feeRate: feeRate)
-                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-                .observeOn(MainScheduler.instance)
-                .subscribe(onSuccess: { [weak self] in
-                    self?.delegate?.didSend()
-                }, onError: { [weak self] error in
-                    self?.delegate?.didFailToSend(error: error)
-                })
-                .disposed(by: disposeBag)
+    func sendSingle(amount: Decimal, address: String, feeRate: Int) -> Single<Void> {
+        return adapter.sendSingle(amount: amount, address: address, feeRate: feeRate)
     }
 
 }

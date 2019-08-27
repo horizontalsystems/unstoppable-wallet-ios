@@ -1,5 +1,5 @@
 protocol ISendConfirmationDelegate: class {
-    func onSendClicked(memo: String?)
+    func onSendClicked()
 }
 
 protocol ISendConfirmationView: class {

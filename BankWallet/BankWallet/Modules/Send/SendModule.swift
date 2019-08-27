@@ -1,5 +1,6 @@
 import UIKit
 import Foundation
+import RxSwift
 
 protocol ISendView: class {
     func set(coin: Coin)
@@ -15,26 +16,46 @@ protocol ISendView: class {
 protocol ISendViewDelegate: AnyObject {
     var view: ISendView? { get set }
 
+    func onViewDidLoad()
     func showKeyboard()
 
-    func onViewDidLoad()
     func onClose()
 
-    func onSendClicked()
+    func onProceedClicked()
+}
+
+protocol ISendInteractor {
+    func send(single: Single<Void>)
+}
+
+protocol ISendInteractorDelegate: AnyObject {
+    func didSend()
+    func didFailToSend(error: Error)
+}
+
+protocol ISendHandler: AnyObject {
+    var delegate: ISendHandlerDelegate? { get set }
+    func onViewDidLoad()
+    func showKeyboard()
+
+    func confirmationViewItems() throws -> [ISendConfirmationViewItemNew]
+    func sendSingle() throws -> Single<Void>
+}
+
+protocol ISendHandlerDelegate: AnyObject {
+    func onChange(isValid: Bool)
 }
 
 protocol ISendBitcoinInteractor {
     func fetchAvailableBalance(feeRate: Int, address: String?)
     func validate(address: String) throws
     func fetchFee(amount: Decimal, feeRate: Int, address: String?)
-    func send(amount: Decimal, address: String, feeRate: Int)
+    func sendSingle(amount: Decimal, address: String, feeRate: Int) -> Single<Void>
 }
 
 protocol ISendBitcoinInteractorDelegate: class {
     func didFetch(availableBalance: Decimal)
     func didFetch(fee: Decimal)
-    func didSend()
-    func didFailToSend(error: Error)
 }
 
 protocol ISendDashInteractor {
@@ -89,7 +110,7 @@ protocol ISendBinanceInteractorDelegate: class {
 }
 
 protocol ISendRouter: class {
-    func showConfirmation(item: SendConfirmationViewItem, delegate: ISendConfirmationDelegate)
+    func showConfirmation(viewItems: [ISendConfirmationViewItemNew], delegate: ISendConfirmationDelegate)
     func scanQrCode(delegate: IScanQrCodeDelegate)
     func dismiss()
 }
@@ -144,3 +165,33 @@ class SendConfirmationViewItem {
     }
 
 }
+
+protocol ISendConfirmationViewItemNew {
+
+}
+
+struct SendConfirmationAmountViewItem: ISendConfirmationViewItemNew {
+    let primaryInfo: AmountInfo
+    var secondaryInfo: AmountInfo?
+    let receiver: String
+}
+
+struct SendConfirmationFeeViewItem: ISendConfirmationViewItemNew {
+    let primaryInfo: AmountInfo
+    var secondaryInfo: AmountInfo?
+}
+
+struct SendConfirmationTotalViewItem: ISendConfirmationViewItemNew {
+    let primaryInfo: AmountInfo
+    var secondaryInfo: AmountInfo?
+}
+
+struct SendConfirmationMemoViewItem: ISendConfirmationViewItemNew {
+    let memo: String
+}
+
+struct SendConfirmationDurationViewItem: ISendConfirmationViewItemNew {
+    let timeInterval: TimeInterval?
+}
+
+

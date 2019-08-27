@@ -18,7 +18,8 @@ protocol ISendAddressInteractor {
 protocol ISendAddressModule: AnyObject {
     var delegate: ISendAddressDelegate? { get set }
 
-    var address: String? { get }
+    var currentAddress: String? { get }
+    func validAddress() throws -> String
 }
 
 protocol ISendAddressDelegate: class {

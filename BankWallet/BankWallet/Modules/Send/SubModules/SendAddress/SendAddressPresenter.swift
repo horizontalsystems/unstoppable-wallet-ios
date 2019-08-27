@@ -6,7 +6,7 @@ class SendAddressPresenter {
 
     private let interactor: ISendAddressInteractor
 
-    var address: String? {
+    var currentAddress: String? {
         didSet {
             delegate?.onUpdateAddress()
         }
@@ -23,14 +23,14 @@ class SendAddressPresenter {
             try delegate?.validate(address: parsedAddress)
 
             view?.set(address: parsedAddress, error: nil)
-            self.address = address
+            self.currentAddress = address
 
             if let amount = amount {
                 delegate?.onUpdate(amount: amount)
             }
         } catch {
             view?.set(address: parsedAddress, error: error.localizedDescription)
-            self.address = nil
+            self.currentAddress = nil
         }
     }
 
@@ -50,18 +50,42 @@ extension SendAddressPresenter: ISendAddressViewDelegate {
 
     func onAddressDeleteClicked() {
         view?.set(address: nil, error: nil)
-        address = nil
+        currentAddress = nil
     }
 
 }
 
 extension SendAddressPresenter: ISendAddressModule {
+
+    func validAddress() throws -> String {
+        guard let validAddress = currentAddress else {
+            throw ValidationError.invalidAddress
+        }
+
+        return validAddress
+    }
+
 }
 
 extension SendAddressPresenter: IScanQrCodeDelegate {
 
     func didScan(string: String) {
         onEnter(address: string)
+    }
+
+}
+
+extension SendAddressPresenter {
+
+    private enum ValidationError: Error, LocalizedError {
+        case invalidAddress
+
+        var errorDescription: String? {
+            switch self {
+            case .invalidAddress:
+                return "send.address_error.invalid_address".localized
+            }
+        }
     }
 
 }

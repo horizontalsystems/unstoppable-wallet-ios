@@ -30,7 +30,7 @@ class SendViewController: UIViewController {
             maker.height.equalTo(SendTheme.sendButtonHeight)
         }
         sendButton.onTap = { [weak self] in
-            self?.delegate.onSendClicked()
+            self?.delegate.onProceedClicked()
         }
         sendButton.backgrounds = ButtonTheme.yellowBackgroundDictionary
         sendButton.textColors = ButtonTheme.textColorDictionary

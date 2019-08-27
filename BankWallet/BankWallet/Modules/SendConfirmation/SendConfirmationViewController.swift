@@ -7,11 +7,8 @@ class SendConfirmationViewController: UIViewController {
     private let sendHolderView = UIView()
     private let sendButton = RespondButton()
 
-    private let views: [UIView]
-
-    init(delegate: ISendConfirmationViewDelegate, views: [UIView]) {
+    init(delegate: ISendConfirmationViewDelegate) {
         self.delegate = delegate
-        self.views = views
 
         super.init(nibName: nil, bundle: nil)
 
@@ -49,22 +46,23 @@ class SendConfirmationViewController: UIViewController {
 
         view.backgroundColor = AppTheme.controllerBackground
 
-        buildViews()
+//        buildViews()
+        add(view: sendHolderView, lastView: nil)
     }
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return AppTheme.statusBarStyle
     }
 
-    private func buildViews() {
-        var lastView: UIView?
-        for view in views {
-            add(view: view, lastView: lastView)
-            lastView = view
-        }
-
-        add(view: sendHolderView, lastView: lastView)
-    }
+//    private func buildViews() {
+//        var lastView: UIView?
+//        for view in views {
+//            add(view: view, lastView: lastView)
+//            lastView = view
+//        }
+//
+//        add(view: sendHolderView, lastView: lastView)
+//    }
 
     private func add(view: UIView, lastView: UIView?) {
         self.view.addSubview(view)
