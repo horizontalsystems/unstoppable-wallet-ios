@@ -9,15 +9,13 @@ class SendPresenter {
     private let handler: ISendHandler
     private let interactor: ISendInteractor
     private let router: ISendRouter
-    private let confirmationFactory: ISendConfirmationItemFactory
 
-    init(coin: Coin, handler: ISendHandler, interactor: ISendInteractor, router: ISendRouter, confirmationFactory: ISendConfirmationItemFactory) {
+    init(coin: Coin, handler: ISendHandler, interactor: ISendInteractor, router: ISendRouter) {
         self.coin = coin
 
         self.handler = handler
         self.interactor = interactor
         self.router = router
-        self.confirmationFactory = confirmationFactory
     }
 
 }
