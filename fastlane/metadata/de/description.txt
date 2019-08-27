@@ -10,19 +10,19 @@ Es gewährleistet die Sicherheit von Krypto-Assets auf Ihrem Gerät
 Es lässt sich nur von dir selbst steuern
 Es weiß nicht, wer Sie sind
 Es sammelt keine Daten
-It's easy to migrate to/from
-It’s not dependent on any entity to function
-It integrates blockchains in a decentralized manner
-It implements latest improvements for each blockchain
-It can’t be blocked or censored
-It provides real time transaction fees
-It’s fast and beautiful  
-It's the most advanced wallet to date
-(1) UNRESTRICTED CONTROL
+Es ist leicht zu migrieren
+Es ist unabhängig von einer Entität, um zu funktionieren
+Es integriert Blockchains auf dezentrale Weise
+Es implementiert die aktuellsten Optimierungen für jede Blockchain
+Es kann nicht blockiert oder zensiert werden
+Es liefert die Transaktionsgebühren in Echtzeit
+Es ist schnell und schön
+Es ist die fortgeschrittenste Wallet, die es heute gibt
+(1) UNEINGESCHRÄNKTE STEUERUNG
 
-  Transact freely and unconditionally regardless of where you live. No entity can stop you from sending/receiving crypto in Unstoppable wallet.   
+Sie können frei und bedingungslos handeln, unabhängig von Ihrem Wohnort. Keine Entität kann Sie vom Senden/Empfangen von Kryptodaten in der unaufhaltsamen Wallet abhalten.   
 
-You’re the only person with control and access to your crypto finances. The Secret Key (that give you ownership over crypto assets) never leaves your device.
+Sie sind die einzige Person mit der Möglichkeit der Kontrolle und des Zugangs zu Ihren Krypto-Finanzen. Der Secret Key (der Ihnen das Eigentumsrecht an Krypto-Assets gibt) bleibt immer auf Ihrem Gerät.
 
 (2) GENUINE PRIVACY
 
