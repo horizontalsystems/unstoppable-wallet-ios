@@ -7,17 +7,17 @@
 
 "button.ok" = "OK";
 "button.cancel" = "Abbrechen";
-"button.close" = "Close";
+"button.close" = "Schließen";
 "button.confirm" = "Bestätigen";
 "button.done" = "Fertig";
 "button.restore" = "Wiederherstellen";
 "button.next" = "Weiter";
 "button.remove" = "Entfernen";
-"button.share" = "Share";
+"button.share" = "Teilen";
 "button.save" = "Speichern";
 "button.sync" = "Sync";
 "button.paste" = "Einsetzen";
-"button.backup" = "Backup";
+"button.backup" = "Sicherung";
 
 "alert.copied" = "Kopiert";
 "alert.no_internet" = "Kein Internet";
