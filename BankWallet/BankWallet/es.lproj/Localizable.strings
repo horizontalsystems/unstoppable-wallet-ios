@@ -119,7 +119,7 @@
 "send.title" = "Enviar %@";
 "send.amount_placeholder" = "Importe";
 "send.address_placeholder" = "Dirección";
-"send.account_placeholder" = "Account";
+"send.account_placeholder" = "Cuenta";
 "send.fee" = "Comisión:";
 "send.tx_speed" = "Velocidad de transacción";
 "send.tx_speed_low" = "Bajo";
@@ -129,7 +129,7 @@
 "send.instant" = "Inmediato";
 "send.max_button" = "Máx.";
 "send.next_button" = "Siguiente";
-"send.error.invalid_address" = "Dirección incorrecta";
+"send.error.invalid_address" = "Dirección inválida";
 "send.error.invalid_account" = "Cuenta inválida";
 "send.error.no_address" = "Sin dirección";
 "send.error.no_amount" = "No hay cantidad";
@@ -142,7 +142,7 @@
 "send.confirmation.eos.account" = "Cuenta";
 "send.confirmation.send_button" = "Enviar";
 "send.amount_error.balance" = "Saldo %@";
-"send.token.insufficient_fee_alert" = "Tarifas de transacción para %@ (%@) pagado en %@. Es necesario %@.";
+"send.token.insufficient_fee_alert" = "Las comisiones de transacción para %@ (%@) pagado en %@. Es necesario %@.";
 
 // Transactions
 
@@ -170,7 +170,7 @@
 
 "full_info.title" = "Transacción";
 "full_info.time" = "Hora";
-"full_info.block" = "Bloque";
+"full_info.block" = "Bloquear";
 "full_info.confirmations" = "Confirmaciones";
 "full_info.size" = "Tamaño";
 "full_info.fee" = "Comisión";
@@ -207,7 +207,7 @@
 
 "settings.title" = "Ajustes";
 "settings.tab_bar_item" = "Ajustes";
-"settings.security_center" = "Centro de Seguridad";
+"settings.security_center" = "Centro de seguridad";
 "settings.manage_coins" = "Gestionar monedas";
 "settings.restore_wallet" = "Restaurar monedero";
 "settings.base_currency" = "Divisa principal";
@@ -215,13 +215,13 @@
 "settings.about" = "Acerca de";
 "settings.tell_friends" = "Recomendar a un amigo";
 "settings.report_problem" = "Reportar el problema";
-"settings.light_mode" = "Modo de brillo";
+"settings.light_mode" = "Modo ligero";
 "settings.info_title" = "UNSTOPPABLE";
 "settings.info_subtitle" = "aplicación descentralizada";
 
 // Settings -> Base Currency
 
-"settings_base_currency.title" = "Divisa base";
+"settings_base_currency.title" = "Moneda principal";
 
 // Settings -> Language
 
@@ -276,7 +276,7 @@
 "settings_manage_keys.delete.title" = "Eliminar clave";
 "settings_manage_keys.delete.confirmation_remove" = "Esta acción eliminará la clave %@ (monedero) de este dispositivo.";
 "settings_manage_keys.delete.confirmation_disable" = "Monedas que serán deshabilitadas: %@";
-"settings_manage_keys.delete.confirmation_loose" = "Si usted no tiene un respaldo de esta clave, usted perderá los fondos respectivos.";
+"settings_manage_keys.delete.confirmation_loose" = "Si usted no tiene un respaldo de esta clave, usted perderá los respectivos fondos.";
 "error.cant_create_eos" = "En este momento, el monedero no es capaz de crear nuevas cuentas de monederos EOS. Solo puede restaurar la existente.";
 "settings_manage_keys.create.text" = "Esta acción generará una clave (monedero) para las siguientes monedas:\n\n%@";
 "error.invalid_eos_key" = "Clave inválida";
@@ -292,8 +292,8 @@
 // Edit PIN
 
 "edit_pin.title" = "Editar el código de acceso";
-"edit_pin.unlock_info" = "Código Actual";
-"edit_pin.new_pin_info" = "Código de acceso nuevo";
+"edit_pin.unlock_info" = "Código actual";
+"edit_pin.new_pin_info" = "Nuevo código de acceso";
 
 // Unlock PIN
 
@@ -303,7 +303,7 @@
 
 // No Passcode
 
-"no_passcode.info_text" = "Esta aplicación require que el teléfono tenga el código de acceso (bloqueo de pantalla) habilitado.\n\nLo puedes habilitar en los ajustes de iOS.\n\nTome en cuenta que cuando desahabilita el PIN en el nivel OS, las medidas de seguridad en el alacenamiento seguro de su teléfono hace que la información previamente almacenada no sea válida. Usted necesita restaurar sus claves de los monederos para poder volver a su monedero.";
+"no_passcode.info_text" = "Esta aplicación require que el teléfono tenga el código de acceso (bloqueo de pantalla) habilitado.\n\nLo puedes habilitar en los ajustes de iOS.\n\nTome en cuenta que cuando desahabilita el PIN en el nivel OS, las medidas de seguridad en el almacenamiento seguro de su teléfono hace que la información previamente almacenada no sea válida. Usted necesita restaurar las claves de sus monederos para poder volver a su monedero.";
 
 //NumPad
 
