@@ -75,12 +75,7 @@ protocol ISendEthereumInteractor {
     var ethereumBalance: Decimal { get }
     func validate(address: String) throws
     func fee(gasPrice: Int) -> Decimal
-    func send(amount: Decimal, address: String, gasPrice: Int)
-}
-
-protocol ISendEthereumInteractorDelegate: class {
-    func didSend()
-    func didFailToSend(error: Error)
+    func sendSingle(amount: Decimal, address: String, gasPrice: Int) -> Single<Void>
 }
 
 protocol ISendEosInteractor {
