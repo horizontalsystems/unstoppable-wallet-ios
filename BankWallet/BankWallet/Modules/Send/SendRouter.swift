@@ -37,8 +37,8 @@ extension SendRouter {
             partialModule = module(coin: wallet.coin, adapter: adapter)
         case let adapter as ISendEosAdapter:
             partialModule = module(coin: wallet.coin, adapter: adapter)
-//        case let adapter as ISendBinanceAdapter:
-//            partialModule = module(coin: wallet.coin, adapter: adapter, router: router)
+        case let adapter as ISendBinanceAdapter:
+            partialModule = module(coin: wallet.coin, adapter: adapter)
         default: ()
         }
 
@@ -132,21 +132,19 @@ extension SendRouter {
         return (presenter, [amountView, accountView], [accountRouter])
     }
 
-//    private static func module(coin: Coin, adapter: ISendBinanceAdapter, router: ISendRouter) -> (ISendViewDelegate, [UIView], [ISendSubRouter]) {
-//        let (amountView, amountModule) = SendAmountRouter.module(coin: coin)
-//        let (addressView, addressModule) = SendAddressRouter.module(coin: coin)
-//        let (feeView, feeModule) = SendFeeRouter.module(coin: coin)
-//
-//        let interactor = SendBinanceInteractor(adapter: adapter)
-//        let presenter = SendBinancePresenter(coin: coin, interactor: interactor, router: router, confirmationFactory: SendConfirmationItemFactory(), amountModule: amountModule, addressModule: addressModule, feeModule: feeModule)
-//
-//        interactor.delegate = presenter
-//
-//        amountModule.delegate = presenter
-//        addressModule.delegate = presenter
-//        feeModule.delegate = presenter
-//
-//        return (presenter, [amountView, addressView, feeView], [])
-//    }
+    private static func module(coin: Coin, adapter: ISendBinanceAdapter) -> (ISendHandler, [UIView], [ISendSubRouter]) {
+        let (amountView, amountModule) = SendAmountRouter.module(coin: coin)
+        let (addressView, addressModule, addressRouter) = SendAddressRouter.module(coin: coin)
+        let (feeView, feeModule) = SendFeeRouter.module(coin: coin)
+
+        let interactor = SendBinanceInteractor(adapter: adapter)
+        let presenter = SendBinanceHandler(interactor: interactor, amountModule: amountModule, addressModule: addressModule, feeModule: feeModule)
+
+        amountModule.delegate = presenter
+        addressModule.delegate = presenter
+        feeModule.delegate = presenter
+
+        return (presenter, [amountView, addressView, feeView], [addressRouter])
+    }
 
 }
