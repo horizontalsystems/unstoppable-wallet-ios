@@ -31,7 +31,7 @@ class ChartPresenter {
             let viewItem = try factory.chartViewItem(type: chartType, rateStatsData: rateStatsData, rate: rate, currency: currency)
             view?.show(viewItem: viewItem)
         } catch {
-            view?.show(error: error.localizedDescription)
+            view?.showError()
         }
     }
 
@@ -46,7 +46,7 @@ class ChartPresenter {
         }
         if !enabledTypes.contains(chartType) {
             guard let firstType = enabledTypes.first else {
-                view?.show(error: "No chart data!")
+                view?.showError()
                 return
             }
             chartType = firstType
@@ -99,7 +99,7 @@ extension ChartPresenter: IChartInteractorDelegate {
 
     func onError(_ error: Error) {
         view?.hideSpinner()
-        view?.show(error: error.localizedDescription)
+        view?.showError()
     }
 
 }

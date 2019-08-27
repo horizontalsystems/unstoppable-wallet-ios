@@ -11,7 +11,7 @@ protocol IChartView: class {
 
     func showSelectedPoint(timestamp: TimeInterval, value: CurrencyValue)
 
-    func show(error: String)
+    func showError()
 
     func reloadAllModels()
     func addTypeButtons(types: [ChartType])
