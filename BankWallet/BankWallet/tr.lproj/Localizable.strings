@@ -7,13 +7,13 @@
 
 "button.ok" = "Tamam";
 "button.cancel" = "İptal";
-"button.close" = "Close";
+"button.close" = "Kapat";
 "button.confirm" = "Onayla";
 "button.done" = "Bitti";
 "button.restore" = "Geri Yükle";
 "button.next" = "İleri";
 "button.remove" = "Kaldır";
-"button.share" = "Share";
+"button.share" = "Paylaş";
 "button.save" = "Kaydet";
 "button.sync" = "Eşitle";
 "button.paste" = "Yapıştır";
@@ -61,7 +61,7 @@
 // Backup
 
 "backup.close" = "Kapat";
-"backup.backup_required" = "Backup Required";
+"backup.backup_required" = "Yedekleme Gerekli";
 
 "backup.intro.title_backup" = "Yedekle";
 "backup.intro.title_show" = "Anahtarı Göster";
@@ -81,9 +81,9 @@
 "backup.eos.active_private_key" = "Active Private Key";
 "backup.eos.hint" = "Anahtarınızı \"Kopyala\" eylemiyle kopyalamanız anahtarınızın pano yöneticisine ve panoya erişimi olan diğer uygulamalara sızma riskini taşır.";
 "error.send_eos.self_transfer" = "Can't transfer token to own account";
-"error.send_eos.account_not_exist" = "Target account does not exist";
-"error.send_eos.insufficient_ram" = "Your account has not enough of ram";
-"error.send_eos.unknown" = "Something went wrong: %@";
+"error.send_eos.account_not_exist" = "Hedef hesap yok";
+"error.send_eos.insufficient_ram" = "Hesabınız için ram yeterli değil";
+"error.send_eos.unknown" = "Beklenmeyen bir hata oluştu: %@";
 
 "backup.confirmation.title" = "Kontrol etme ...";
 "backup.confirmation.secret_key" = "Cüzdanıma erişmemi sağlayan 12 kelimeli Gizli Anahtarın tek sahibinin olduğumu ve bu anahtarın telefonumun güvenli hafızasında tutulduğunu kabul ediyorum.";
@@ -111,7 +111,7 @@
 
 "deposit.receive_coin" = "%@ al";
 "deposit.your_address" = "Adresiniz";
-"deposit.your_account" = "Your Account";
+"deposit.your_account" = "Senin Hesabın";
 "receive_alert.not_backed_up_description" = "You need to backup the %@ key before you may receive %@.";
 
 // Send
@@ -121,10 +121,10 @@
 "send.address_placeholder" = "Adres";
 "send.account_placeholder" = "Hesap";
 "send.fee" = "Masraf:";
-"send.tx_speed" = "Transaction Speed";
-"send.tx_speed_low" = "Low";
-"send.tx_speed_medium" = "Medium";
-"send.tx_speed_high" = "High";
+"send.tx_speed" = "İşlem hızı";
+"send.tx_speed_low" = "Düşük";
+"send.tx_speed_medium" = "Orta";
+"send.tx_speed_high" = "Yüksek";
 "send.max_button" = "Azami";
 "send.next_button" = "İleri";
 "send.error.invalid_address" = "Geçersiz Adres";
@@ -157,11 +157,11 @@
 "tx_info.status.pending" = "Devam ediyor";
 "tx_info.status.confirmed" = "Onaylandı";
 "tx_info.from_hash" = "Gönderen";
-"tx_info.transaction_id" = "Transaction ID";
+"tx_info.transaction_id" = "İşlem ID'si";
 "tx_info.to_hash" = "Alan";
 "tx_info.button_verify" = "Doğrula";
 "tx_info.rate" = "Geçmiş Kur";
-"tx_info.fee" = "Fee";
+"tx_info.fee" = "Ücret";
 "tx_info.note" = "* The value of this transaction appears as 0 because it was sent to your own address";
 
 // Full Info
@@ -212,7 +212,7 @@
 "settings.language" = "Dil";
 "settings.about" = "Hakkında";
 "settings.tell_friends" = "Arkadaşlarına bahset";
-"settings.report_problem" = "Report Problem";
+"settings.report_problem" = "Sorunu Bildir";
 "settings.light_mode" = "Aydınlık mod";
 "settings.info_title" = "UNSTOPPABLE";
 "settings.info_subtitle" = "decentralized App";
@@ -257,8 +257,8 @@
 
 // Settings -> Report Problem
 
-"settings.report_problem.title" = "Report Problem";
-"settings.report_problem.email" = "E-mail";
+"settings.report_problem.title" = "Sorunu Bildir";
+"settings.report_problem.email" = "E-posta";
 "settings.report_problem.telegram" = "Telegram";
 
 // Manage Keys
@@ -326,17 +326,17 @@
 // Key Types
 
 "chart.title" = "%@ Rate";
-"chart.time_duration.day" = "1D";
-"chart.time_duration.week" = "7D";
-"chart.time_duration.month" = "1M";
-"chart.time_duration.quartal" = "3M";
-"chart.time_duration.halyear" = "6M";
-"chart.time_duration.year" = "1Y";
+"chart.time_duration.day" = "Gün";
+"chart.time_duration.week" = "Hafta";
+"chart.time_duration.month" = "Ay";
+"chart.time_duration.quartal" = "3 ay";
+"chart.time_duration.halyear" = "6 Ay";
+"chart.time_duration.year" = "1 Yıl";
 
 "chart.market_cap" = "Mkt. Cap";
 "chart.market_cap.thousand" = "%@ k";
 "chart.market_cap.million" = "%@ M";
 "chart.market_cap.billion" = "%@ B";
-"chart.high" = "High";
-"chart.low" = "Low";
-"chart.volume" = "Volume";
+"chart.high" = "Yüksek";
+"chart.low" = "Düşük";
+"chart.volume" = "Birim";
