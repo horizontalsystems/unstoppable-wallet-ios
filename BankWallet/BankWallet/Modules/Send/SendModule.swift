@@ -62,14 +62,12 @@ protocol ISendDashInteractor {
     func fetchAvailableBalance(address: String?)
     func validate(address: String) throws
     func fetchFee(amount: Decimal, address: String?)
-    func send(amount: Decimal, address: String)
+    func sendSingle(amount: Decimal, address: String) -> Single<Void>
 }
 
 protocol ISendDashInteractorDelegate: class {
     func didFetch(availableBalance: Decimal)
     func didFetch(fee: Decimal)
-    func didSend()
-    func didFailToSend(error: Error)
 }
 
 protocol ISendEthereumInteractor {
