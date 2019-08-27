@@ -35,8 +35,8 @@ extension SendRouter {
             partialModule = module(coin: wallet.coin, adapter: adapter)
         case let adapter as ISendEthereumAdapter:
             partialModule = module(coin: wallet.coin, adapter: adapter)
-//        case let adapter as ISendEosAdapter:
-//            partialModule = module(coin: wallet.coin, adapter: adapter, router: router)
+        case let adapter as ISendEosAdapter:
+            partialModule = module(coin: wallet.coin, adapter: adapter)
 //        case let adapter as ISendBinanceAdapter:
 //            partialModule = module(coin: wallet.coin, adapter: adapter, router: router)
         default: ()
@@ -119,21 +119,19 @@ extension SendRouter {
         return (presenter, [amountView, addressView, feePriorityView, feeView], [addressRouter, feePriorityRouter])
     }
 
-//    private static func module(coin: Coin, adapter: ISendEosAdapter, router: ISendRouter) -> (ISendViewDelegate, [UIView], [ISendSubRouter]) {
-//        let (amountView, amountModule) = SendAmountRouter.module(coin: coin)
-//        let (accountView, accountModule) = SendAccountRouter.module()
-//
-//        let interactor = SendEosInteractor(adapter: adapter)
-//        let presenter = SendEosPresenter(coin: coin, interactor: interactor, router: router, confirmationFactory: SendConfirmationItemFactory(), amountModule: amountModule, accountModule: accountModule)
-//
-//        interactor.delegate = presenter
-//
-//        amountModule.delegate = presenter
-//        accountModule.delegate = presenter
-//
-//        return (presenter, [amountView, accountView], [])
-//    }
-//
+    private static func module(coin: Coin, adapter: ISendEosAdapter) -> (ISendHandler, [UIView], [ISendSubRouter]) {
+        let (amountView, amountModule) = SendAmountRouter.module(coin: coin)
+        let (accountView, accountModule, accountRouter) = SendAccountRouter.module()
+
+        let interactor = SendEosInteractor(adapter: adapter)
+        let presenter = SendEosHandler(interactor: interactor, amountModule: amountModule, accountModule: accountModule)
+
+        amountModule.delegate = presenter
+        accountModule.delegate = presenter
+
+        return (presenter, [amountView, accountView], [accountRouter])
+    }
+
 //    private static func module(coin: Coin, adapter: ISendBinanceAdapter, router: ISendRouter) -> (ISendViewDelegate, [UIView], [ISendSubRouter]) {
 //        let (amountView, amountModule) = SendAmountRouter.module(coin: coin)
 //        let (addressView, addressModule) = SendAddressRouter.module(coin: coin)

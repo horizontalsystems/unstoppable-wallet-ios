@@ -1,10 +1,6 @@
 import RxSwift
 
 class SendEosInteractor {
-    weak var delegate: ISendEosInteractorDelegate?
-
-    private let disposeBag = DisposeBag()
-
     private let adapter: ISendEosAdapter
 
     init(adapter: ISendEosAdapter) {
@@ -23,16 +19,8 @@ extension SendEosInteractor: ISendEosInteractor {
         try adapter.validate(account: account)
     }
 
-    func send(amount: Decimal, account: String, memo: String?) {
-        adapter.sendSingle(amount: amount, account: account, memo: memo)
-                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-                .observeOn(MainScheduler.instance)
-                .subscribe(onSuccess: { [weak self] in
-                    self?.delegate?.didSend()
-                }, onError: { [weak self] error in
-                    self?.delegate?.didFailToSend(error: error)
-                })
-                .disposed(by: disposeBag)
+    func sendSingle(amount: Decimal, account: String, memo: String?) -> Single<Void> {
+        return adapter.sendSingle(amount: amount, account: account, memo: memo)
     }
 
 }
