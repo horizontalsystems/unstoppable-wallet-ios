@@ -125,6 +125,8 @@
 "send.tx_speed_low" = "Low";
 "send.tx_speed_medium" = "Medium";
 "send.tx_speed_high" = "High";
+"send.tx_duration" = "Duration";
+"send.instant" = "Instant";
 "send.max_button" = "Макс.";
 "send.next_button" = "Далее";
 "send.error.invalid_address" = "Неверный Адрес";
