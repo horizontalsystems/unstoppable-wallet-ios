@@ -35,13 +35,32 @@ class ChartPresenter {
         }
     }
 
+    private func updateButtons(rateStats: RateStatsData) {
+        var enabledTypes = [ChartType]()
+        ChartType.allCases.forEach { type in
+            let enabled = (rateStats.stats[type.rawValue]?.values.count ?? 0) > 10
+            if enabled {
+                enabledTypes.append(type)
+                view?.setChartTypeEnabled(tag: type.tag)
+            }
+        }
+        if !enabledTypes.contains(chartType) {
+            guard let firstType = enabledTypes.first else {
+                view?.show(error: "No chart data!")
+                return
+            }
+            chartType = firstType
+            interactor.setDefault(chartType: firstType)
+        }
+        view?.setChartType(tag: chartType.tag)
+    }
+
 }
 
 extension ChartPresenter: IChartViewDelegate {
 
     func viewDidLoad() {
         view?.addTypeButtons(types: ChartType.allCases)
-        view?.setChartType(tag: interactor.defaultChartType.tag)
 
         view?.showSpinner()
         interactor.getRateStats(coinCode: coin.code, currencyCode: currency.code)
@@ -74,6 +93,7 @@ extension ChartPresenter: IChartInteractorDelegate {
         self.rate = rate
 
         view?.hideSpinner()
+        updateButtons(rateStats: rateStats)
         updateChart()
     }
 

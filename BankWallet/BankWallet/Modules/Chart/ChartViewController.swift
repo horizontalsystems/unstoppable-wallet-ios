@@ -72,8 +72,9 @@ class ChartViewController: ActionSheetController {
 
     private func show(diff: Decimal) {
         let formatter = ChartViewController.diffFormatter
+        let sign = diff.isSignMinus ? "- " : "+ "
 
-        let formattedDiff = [formatter.string(from: diff as NSNumber), "%"].compactMap { $0 }.joined()
+        let formattedDiff = [sign, formatter.string(from: abs(diff) as NSNumber), "%"].compactMap { $0 }.joined()
         currentRateItem.bindDiff?(formattedDiff, !diff.isSignMinus)
     }
 
@@ -91,7 +92,8 @@ class ChartViewController: ActionSheetController {
                 return
             }
 
-            marketCapItem.setMarketCapText?(formattedValue)
+            let marketCapText = marketCapData.postfix?.localized(formattedValue) ?? formattedValue
+            marketCapItem.setMarketCapText?(marketCapText)
             marketCapItem.setMarketCapTitle?("chart.market_cap".localized)
         } catch {
             marketCapItem.setMarketCapText?(nil)
@@ -99,8 +101,8 @@ class ChartViewController: ActionSheetController {
         }
     }
 
-    private func show(type: ChartType, lowValue: CurrencyValue?) {
-        marketCapItem.setLowTitle?("chart.low".localized(type.title))
+    private func show(lowValue: CurrencyValue?) {
+        marketCapItem.setLowTitle?("chart.low".localized)
 
         guard let lowValue = lowValue else {
             marketCapItem.setLowText?(nil)
@@ -110,8 +112,8 @@ class ChartViewController: ActionSheetController {
         marketCapItem.setLowText?(formattedValue)
     }
 
-    private func show(type: ChartType, highValue: CurrencyValue?) {
-        marketCapItem.setHighTitle?("chart.high".localized(type.title))
+    private func show(highValue: CurrencyValue?) {
+        marketCapItem.setHighTitle?("chart.high".localized)
 
         guard let highValue = highValue else {
             marketCapItem.setHighText?(nil)
@@ -132,8 +134,8 @@ extension ChartViewController: IChartView {
         chartRateItem?.bind?(viewItem.type, viewItem.points, true)
 
         show(marketCapValue: viewItem.marketCapValue)
-        show(type: viewItem.type, highValue: viewItem.highValue)
-        show(type: viewItem.type, lowValue: viewItem.lowValue)
+        show(highValue: viewItem.highValue)
+        show(lowValue: viewItem.lowValue)
     }
 
     func addTypeButtons(types: [ChartType]) {
@@ -145,7 +147,7 @@ extension ChartViewController: IChartView {
     }
 
     func setChartTypeEnabled(tag: Int) {
-    // todo:
+        chartRateTypeItem.setEnabled?(tag)
     }
 
     func setChartType(tag: Int) {

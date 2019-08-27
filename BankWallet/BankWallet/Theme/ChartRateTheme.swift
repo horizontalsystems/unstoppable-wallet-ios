@@ -1,7 +1,7 @@
 import UIKit
 
 class ChartRateTheme {
-    static let currentRateHeight: CGFloat = 42
+    static let currentRateHeight: CGFloat = 44
     static let smallMargin: CGFloat = 10
     static let mediumMargin: CGFloat = 12
     static let margin: CGFloat = 16
@@ -30,8 +30,8 @@ class ChartRateTheme {
     static let buttonBorderColor = UIColor.cryptoSteel20
     static let buttonCornerRadius: CGFloat = 4
     static let buttonFont: UIFont = .cryptoSectionCaption
-    static var buttonTextColor: UIColor { return .cryptoGray }
-    static var buttonSelectedTextColor: UIColor { return .crypto_Bars_Dark }
+    static var buttonTextColor: UIColor { return .crypto_SteelDark_LightGray }
+    static var buttonSelectedTextColor: UIColor { return .cryptoYellow }
     static var buttonDisabledTextColor: UIColor { return .cryptoGray50 }
 
     static let customProgressRadius: CGFloat = 11
@@ -47,10 +47,10 @@ class ChartRateTheme {
     static let chartErrorMargin: CGFloat = 24
 
     static let chartMarketCapHeight: CGFloat = 44
-    static let marketCapTitleTopMargin: CGFloat = 14
+    static let marketCapTitleTopMargin: CGFloat = 16
     static let marketCapTitleFont = UIFont.cryptoCaption3
     static let marketCapTitleColor: UIColor = .cryptoGray
 
-    static let marketCapTextFont = UIFont.cryptoCaption3
+    static let marketCapTextFont = UIFont.cryptoCaption1
     static var marketCapTextColor: UIColor { return .crypto_Bars_Dark }
 }

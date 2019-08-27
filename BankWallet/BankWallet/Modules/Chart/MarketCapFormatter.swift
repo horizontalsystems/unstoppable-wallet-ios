@@ -7,7 +7,7 @@ class MarketCapFormatter {
         case moreTrillions
     }
 
-    private static let postfixes = ["k", "M", "B", "T"]
+    private static let postfixes = ["chart.market_cap.thousand", "chart.market_cap.million", "chart.market_cap.billion"]
 
     static func marketCap(value: Decimal?) throws -> (value: Decimal, postfix: String?) {
         guard let value = value else {
@@ -24,7 +24,7 @@ class MarketCapFormatter {
         switch index {
         case 0: throw FormatError.lessOne
         case 1: return (value: value, postfix: nil)
-        case (postfixes.count + 1)...Int.max: throw FormatError.moreTrillions
+        case (postfixes.count + 2)...Int.max: throw FormatError.moreTrillions
         default: return (value: value / pow(ten, (index - 1) * 3), postfix: MarketCapFormatter.postfixes[index - 2])
         }
     }
