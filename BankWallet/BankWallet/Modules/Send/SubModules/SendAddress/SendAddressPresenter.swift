@@ -5,6 +5,7 @@ class SendAddressPresenter {
     weak var delegate: ISendAddressDelegate?
 
     private let interactor: ISendAddressInteractor
+    private let router: ISendAddressRouter
 
     var currentAddress: String? {
         didSet {
@@ -12,8 +13,9 @@ class SendAddressPresenter {
         }
     }
 
-    init(interactor: ISendAddressInteractor) {
+    init(interactor: ISendAddressInteractor, router: ISendAddressRouter) {
         self.interactor = interactor
+        self.router = router
     }
 
     private func onEnter(address: String) {
@@ -39,7 +41,7 @@ class SendAddressPresenter {
 extension SendAddressPresenter: ISendAddressViewDelegate {
 
     func onAddressScanClicked() {
-        delegate?.scanQrCode(delegate: self)
+        router.scanQrCode(delegate: self)
     }
 
     func onAddressPasteClicked() {
