@@ -14,6 +14,20 @@ class FeeRateProvider {
         }
     }
 
+    private func transactionSendDuration(from feeRate: FeeRate, priority: FeeRatePriority) -> TimeInterval {
+        // TODO: FeeRate will store these values
+        switch priority {
+        case .low:
+            return 3600 * 12
+        case .medium:
+            return 3600 * 4
+        case .high:
+            return 3600
+        }
+    }
+
+    // Fee rates
+
     func ethereumGasPrice(for priority: FeeRatePriority) -> Int {
         return feeRate(from: feeRateKit.ethereum, priority: priority)
     }
@@ -30,6 +44,25 @@ class FeeRateProvider {
         return feeRate(from: feeRateKit.dash, priority: priority)
     }
 
+
+    // Transaction inclusion in block durations
+
+    func bitcoinTransactionSendDuration(for priority: FeeRatePriority) -> TimeInterval {
+        return transactionSendDuration(from: feeRateKit.bitcoin, priority: priority)
+    }
+
+    func bitcoinCashTransactionSendDuration(for priority: FeeRatePriority) -> TimeInterval {
+        return transactionSendDuration(from: feeRateKit.bitcoinCash, priority: priority)
+    }
+
+    func dashTransactionSendDuration(for priority: FeeRatePriority) -> TimeInterval {
+        return transactionSendDuration(from: feeRateKit.dash, priority: priority)
+    }
+
+    func ethereumTransactionSendDuration(for priority: FeeRatePriority) -> TimeInterval {
+        return transactionSendDuration(from: feeRateKit.ethereum, priority: priority)
+    }
+
 }
 
 class BitcoinFeeRateProvider: IFeeRateProvider {
@@ -41,6 +74,10 @@ class BitcoinFeeRateProvider: IFeeRateProvider {
 
     func feeRate(for priority: FeeRatePriority) -> Int {
         return feeRateProvider.bitcoinFeeRate(for: priority)
+    }
+
+    func duration(priority: FeeRatePriority) -> TimeInterval {
+        return feeRateProvider.bitcoinTransactionSendDuration(for: priority)
     }
 
 }
@@ -56,6 +93,10 @@ class BitcoinCashFeeRateProvider: IFeeRateProvider {
         return feeRateProvider.bitcoinCashFeeRate(for: priority)
     }
 
+    func duration(priority: FeeRatePriority) -> TimeInterval {
+        return feeRateProvider.bitcoinCashTransactionSendDuration(for: priority)
+    }
+
 }
 
 class EthereumFeeRateProvider: IFeeRateProvider {
@@ -69,6 +110,10 @@ class EthereumFeeRateProvider: IFeeRateProvider {
         return feeRateProvider.ethereumGasPrice(for: priority)
     }
 
+    func duration(priority: FeeRatePriority) -> TimeInterval {
+        return feeRateProvider.ethereumTransactionSendDuration(for: priority)
+    }
+
 }
 
 class DashFeeRateProvider: IFeeRateProvider {
@@ -80,6 +125,10 @@ class DashFeeRateProvider: IFeeRateProvider {
 
     func feeRate(for priority: FeeRatePriority) -> Int {
         return feeRateProvider.dashFeeRate(for: priority)
+    }
+
+    func duration(priority: FeeRatePriority) -> TimeInterval {
+        return feeRateProvider.dashTransactionSendDuration(for: priority)
     }
 
 }

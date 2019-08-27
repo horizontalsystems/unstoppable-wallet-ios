@@ -18,9 +18,15 @@ extension PriorityRouter: IPriorityRouter {
 
 extension PriorityRouter {
 
-    static func module(priorityDelegate: IPriorityDelegate?, priority: FeeRatePriority) -> UIViewController {
+    static func module(priorityDelegate: IPriorityDelegate?, coin: Coin, priority: FeeRatePriority) -> UIViewController? {
+        guard let feeRateProvider = App.shared.feeRateProviderFactory.provider(coin: coin) else {
+            return nil
+        }
+
+
         let router = PriorityRouter()
-        let presenter = PriorityPresenter(router: router, priority: priority)
+        let interactor = PriorityInteractor(feeRateProvider: feeRateProvider)
+        let presenter = PriorityPresenter(router: router, interactor: interactor, priority: priority)
         let viewController = AlertViewController(delegate: presenter)
 
         presenter.view = viewController

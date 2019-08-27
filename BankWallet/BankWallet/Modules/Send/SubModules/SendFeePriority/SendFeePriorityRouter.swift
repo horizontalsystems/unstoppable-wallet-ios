@@ -13,7 +13,7 @@ extension SendFeePriorityRouter {
 
         let router = SendFeePriorityRouter()
         let interactor = SendFeePriorityInteractor(provider: feeRateProvider)
-        let presenter = SendFeePriorityPresenter(interactor: interactor, router: router, feeRatePriority: .medium)
+        let presenter = SendFeePriorityPresenter(interactor: interactor, router: router, coin: coin, feeRatePriority: .medium)
         let view = SendFeePriorityView(delegate: presenter)
 
         presenter.view = view
@@ -25,8 +25,10 @@ extension SendFeePriorityRouter {
 
 extension SendFeePriorityRouter: ISendFeePriorityRouter {
 
-    func openPriorities(selected: FeeRatePriority, priorityDelegate: IPriorityDelegate) {
-        viewController?.present(PriorityRouter.module(priorityDelegate: priorityDelegate, priority: selected), animated: true)
+    func openPriorities(selected: FeeRatePriority, coin: Coin, priorityDelegate: IPriorityDelegate) {
+        PriorityRouter.module(priorityDelegate: priorityDelegate, coin: coin, priority: selected).map { viewController in
+            self.viewController?.present(viewController, animated: true)
+        }
     }
 
 }

@@ -1,12 +1,12 @@
 import UIKit
 
 class SendFeeView: UIView {
-    private let feePrefix = "send.fee".localized + " "
-
     private let delegate: ISendFeeViewDelegate
 
-    private let feeLabel = UILabel()
-    private let convertedFeeLabel = UILabel()
+    private let feeTitleLabel = UILabel()
+    private let feeValueLabel = UILabel()
+    private let durationTitleLabel = UILabel()
+    private let durationValueLabel = UILabel()
     private let errorLabel = UILabel()
 
     public init(delegate: ISendFeeViewDelegate) {
@@ -20,24 +20,44 @@ class SendFeeView: UIView {
 
         backgroundColor = .clear
 
-        addSubview(feeLabel)
+        addSubview(durationTitleLabel)
+        addSubview(durationValueLabel)
+        addSubview(feeTitleLabel)
         addSubview(errorLabel)
-        addSubview(convertedFeeLabel)
+        addSubview(feeValueLabel)
 
-        feeLabel.font = SendTheme.feeFont
-        feeLabel.textColor = SendTheme.feeColor
-        feeLabel.snp.makeConstraints { maker in
+        durationTitleLabel.text = "send.tx_duration".localized
+        durationTitleLabel.font = SendTheme.feeFont
+        durationTitleLabel.textColor = SendTheme.feeColor
+        durationTitleLabel.snp.makeConstraints { maker in
             maker.leading.equalToSuperview().offset(SendTheme.margin)
             maker.top.equalToSuperview().offset(SendTheme.feeTitleTopMargin)
         }
 
-        convertedFeeLabel.font = SendTheme.feeFont
-        convertedFeeLabel.textColor = SendTheme.feeColor
-        convertedFeeLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
-        convertedFeeLabel.snp.makeConstraints { maker in
-            maker.centerY.equalTo(feeLabel.snp.centerY)
+        durationValueLabel.font = SendTheme.feeFont
+        durationValueLabel.textColor = SendTheme.feeColor
+        durationValueLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+        durationValueLabel.snp.makeConstraints { maker in
+            maker.centerY.equalTo(durationTitleLabel.snp.centerY)
             maker.trailing.equalToSuperview().offset(-SendTheme.margin)
-            maker.leading.equalTo(feeLabel.snp.trailing).offset(SendTheme.margin)
+            maker.leading.equalTo(durationTitleLabel.snp.trailing).offset(SendTheme.margin)
+        }
+
+        feeTitleLabel.text = "send.fee".localized
+        feeTitleLabel.font = SendTheme.feeFont
+        feeTitleLabel.textColor = SendTheme.feeColor
+        feeTitleLabel.snp.makeConstraints { maker in
+            maker.leading.equalToSuperview().offset(SendTheme.margin)
+            maker.top.equalTo(durationTitleLabel.snp.bottom).offset(SendTheme.feeTitleTopMargin)
+        }
+
+        feeValueLabel.font = SendTheme.feeFont
+        feeValueLabel.textColor = SendTheme.feeColor
+        feeValueLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+        feeValueLabel.snp.makeConstraints { maker in
+            maker.centerY.equalTo(feeTitleLabel.snp.centerY)
+            maker.trailing.equalToSuperview().offset(-SendTheme.margin)
+            maker.leading.equalTo(feeTitleLabel.snp.trailing).offset(SendTheme.margin)
         }
 
         errorLabel.numberOfLines = 0
@@ -48,8 +68,6 @@ class SendFeeView: UIView {
             maker.top.equalToSuperview().offset(SendTheme.smallMargin)
             maker.trailing.equalToSuperview().offset(-SendTheme.margin)
         }
-
-        feeLabel.text = feePrefix
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -66,17 +84,22 @@ class SendFeeView: UIView {
 
 extension SendFeeView: ISendFeeView {
 
-    func set(fee: AmountInfo?) {
-        guard let formattedString = fee?.formattedString else {
-            feeLabel.text = nil
+    func set(fee: AmountInfo, convertedFee: AmountInfo?) {
+        guard let formattedFeeString = fee.formattedString else {
+            feeValueLabel.text = nil
             return
         }
 
-        feeLabel.text = feePrefix + formattedString
+        if let formattedConvertedFeeString = convertedFee?.formattedString {
+            feeValueLabel.text = "\(formattedFeeString) | \(formattedConvertedFeeString)"
+            return
+        }
+
+        feeValueLabel.text = "\(formattedFeeString)"
     }
 
-    func set(convertedFee: AmountInfo?) {
-        convertedFeeLabel.text = convertedFee?.formattedString
+    func set(duration: TimeInterval?) {
+        durationValueLabel.text = duration?.approximate_hours_or_minutes ?? "send.instant".localized
     }
 
     func set(error: Error?) {
@@ -84,8 +107,8 @@ extension SendFeeView: ISendFeeView {
 
         let hide = error != nil
 
-        feeLabel.isHidden = hide
-        convertedFeeLabel.isHidden = hide
+        feeTitleLabel.isHidden = hide
+        feeValueLabel.isHidden = hide
     }
 
 }

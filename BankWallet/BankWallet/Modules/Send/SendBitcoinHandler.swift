@@ -39,12 +39,17 @@ class SendBitcoinHandler {
         interactor.fetchFee(amount: amountModule.currentAmount, feeRate: feePriorityModule.feeRate, address: addressModule.currentAddress)
     }
 
+    private func syncFeeDuration() {
+        feeModule.set(duration: feePriorityModule.duration)
+    }
+
 }
 
 extension SendBitcoinHandler: ISendHandler {
 
     func onViewDidLoad() {
         syncAvailableBalance()
+        syncFeeDuration()
     }
 
     func showKeyboard() {
@@ -117,9 +122,10 @@ extension SendBitcoinHandler: ISendFeeDelegate {
 
 extension SendBitcoinHandler: ISendFeePriorityDelegate {
 
-    func onUpdate(feeRate: Int) {
+    func onUpdateFeePriority() {
         syncAvailableBalance()
         syncFee()
+        syncFeeDuration()
     }
 
 }

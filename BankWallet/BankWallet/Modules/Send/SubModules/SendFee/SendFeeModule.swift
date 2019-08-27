@@ -1,8 +1,8 @@
 import UIKit
 
 protocol ISendFeeView: class {
-    func set(fee: AmountInfo?)
-    func set(convertedFee: AmountInfo?)
+    func set(fee: AmountInfo, convertedFee: AmountInfo?)
+    func set(duration: TimeInterval?)
     func set(error: Error?)
 }
 
@@ -31,5 +31,6 @@ protocol ISendFeeModule: AnyObject {
 
     func set(fee: Decimal)
     func set(availableFeeBalance: Decimal)
+    func set(duration: TimeInterval)
     func update(inputType: SendInputType)
 }

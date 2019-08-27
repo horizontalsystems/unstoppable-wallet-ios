@@ -1,5 +1,7 @@
+import Foundation
+
 protocol IPriorityInteractor {
-    func set(priority: FeeRatePriority)
+    func duration(priority: FeeRatePriority) -> TimeInterval
 }
 
 protocol IPriorityRouter {

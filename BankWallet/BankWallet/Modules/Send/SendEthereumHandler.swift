@@ -39,6 +39,10 @@ class SendEthereumHandler {
         feeModule.set(fee: interactor.fee(gasPrice: feePriorityModule.feeRate))
     }
 
+    private func syncFeeDuration() {
+        feeModule.set(duration: feePriorityModule.duration)
+    }
+
 }
 
 extension SendEthereumHandler: ISendHandler {
@@ -48,6 +52,7 @@ extension SendEthereumHandler: ISendHandler {
 
         feeModule.set(availableFeeBalance: interactor.ethereumBalance)
         syncFee()
+        syncFeeDuration()
     }
 
     func showKeyboard() {
@@ -105,10 +110,11 @@ extension SendEthereumHandler: ISendFeeDelegate {
 
 extension SendEthereumHandler: ISendFeePriorityDelegate {
 
-    func onUpdate(feeRate: Int) {
+    func onUpdateFeePriority() {
         syncAvailableBalance()
         syncFee()
         syncValidation()
+        syncFeeDuration()
     }
 
 }
