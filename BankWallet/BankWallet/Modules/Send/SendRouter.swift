@@ -122,29 +122,31 @@ extension SendRouter {
     private static func module(coin: Coin, adapter: ISendEosAdapter) -> (ISendHandler, [UIView], [ISendSubRouter]) {
         let (amountView, amountModule) = SendAmountRouter.module(coin: coin)
         let (accountView, accountModule, accountRouter) = SendAccountRouter.module()
+        let (memoView, memoModule) = SendMemoRouter.module()
 
         let interactor = SendEosInteractor(adapter: adapter)
-        let presenter = SendEosHandler(interactor: interactor, amountModule: amountModule, accountModule: accountModule)
+        let presenter = SendEosHandler(interactor: interactor, amountModule: amountModule, accountModule: accountModule, memoModule: memoModule)
 
         amountModule.delegate = presenter
         accountModule.delegate = presenter
 
-        return (presenter, [amountView, accountView], [accountRouter])
+        return (presenter, [amountView, accountView, memoView], [accountRouter])
     }
 
     private static func module(coin: Coin, adapter: ISendBinanceAdapter) -> (ISendHandler, [UIView], [ISendSubRouter]) {
         let (amountView, amountModule) = SendAmountRouter.module(coin: coin)
         let (addressView, addressModule, addressRouter) = SendAddressRouter.module(coin: coin)
+        let (memoView, memoModule) = SendMemoRouter.module()
         let (feeView, feeModule) = SendFeeRouter.module(coin: coin)
 
         let interactor = SendBinanceInteractor(adapter: adapter)
-        let presenter = SendBinanceHandler(interactor: interactor, amountModule: amountModule, addressModule: addressModule, feeModule: feeModule)
+        let presenter = SendBinanceHandler(interactor: interactor, amountModule: amountModule, addressModule: addressModule, memoModule: memoModule, feeModule: feeModule)
 
         amountModule.delegate = presenter
         addressModule.delegate = presenter
         feeModule.delegate = presenter
 
-        return (presenter, [amountView, addressView, feeView], [addressRouter])
+        return (presenter, [amountView, addressView, memoView, feeView], [addressRouter])
     }
 
 }
