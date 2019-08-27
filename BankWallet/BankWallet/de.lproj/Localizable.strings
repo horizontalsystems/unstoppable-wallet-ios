@@ -61,7 +61,7 @@
 // Backup
 
 "backup.close" = "Schließen";
-"backup.backup_required" = "Backup Required";
+"backup.backup_required" = "Backup erforderlich";
 
 "backup.intro.title_backup" = "Sicherung";
 "backup.intro.title_show" = "Schlüssel anzeigen";
@@ -80,10 +80,10 @@
 "backup.eos.account_name" = "Account Name";
 "backup.eos.active_private_key" = "Active Private Key";
 "backup.eos.hint" = "Den Schlüssel mit \"Kopieren\" zu kopieren, ist riskant, da Sie womöglich Zwischenablage-Management-Apps oder andere Apps nutzen, die Zugriff auf die Daten in der Zwischenablage haben.";
-"error.send_eos.self_transfer" = "Can't transfer token to own account";
-"error.send_eos.account_not_exist" = "Target account does not exist";
-"error.send_eos.insufficient_ram" = "Your account has not enough of ram";
-"error.send_eos.unknown" = "Something went wrong: %@";
+"error.send_eos.self_transfer" = "Token kann nicht auf das eigene Konto übertragen werden";
+"error.send_eos.account_not_exist" = "Der Zielkonto existiert nicht";
+"error.send_eos.insufficient_ram" = "Dein Konto hat nicht genügend RAM";
+"error.send_eos.unknown" = "Etwas ist schief gelaufen: %@";
 
 "backup.confirmation.title" = "Prüfen …";
 "backup.confirmation.secret_key" = "Ich stimme zu, dass ich allein Inhaber eines privaten 12-Wort Offlineschlüssels bin, der sicher auf meinem Telefon gespeichert wird und mir ermöglicht, Geld auf meinem Wallet zu steuern.";
@@ -111,8 +111,8 @@
 
 "deposit.receive_coin" = "%@ Anfordern ";
 "deposit.your_address" = "Deine Adresse";
-"deposit.your_account" = "Your Account";
-"receive_alert.not_backed_up_description" = "You need to backup the %@ key before you may receive %@.";
+"deposit.your_account" = "Dein Konto";
+"receive_alert.not_backed_up_description" = "Du musst den Schlüssel %@ in einem Backup sichern, bevor du %@ erhalten kannst.";
 
 // Send
 
@@ -121,11 +121,11 @@
 "send.address_placeholder" = "Adresse";
 "send.account_placeholder" = "Account";
 "send.fee" = "Gebühr:";
-"send.tx_speed" = "Transaction Speed";
-"send.tx_speed_low" = "Low";
-"send.tx_speed_medium" = "Medium";
-"send.tx_speed_high" = "High";
-"send.tx_duration" = "Duration";
+"send.tx_speed" = "Transaktionsgeschwindigkeit";
+"send.tx_speed_low" = "Niedrig";
+"send.tx_speed_medium" = "Mittel";
+"send.tx_speed_high" = "Hoch";
+"send.tx_duration" = "Dauer";
 "send.instant" = "Instant";
 "send.max_button" = "Max.";
 "send.next_button" = "Weiter";
