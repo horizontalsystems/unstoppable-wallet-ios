@@ -1,6 +1,6 @@
 Wenn Sie eine Personenart sind, die unbeschränkten Zugriff benötigt, um in Blockchains zu investieren und die bedingnungslose Steuerung Ihrer Kryptoinvestitionen benötigen, ist diese Wallet genau das Richtige für Sie.
 
-Diese Wallet wurde entwickelt, damit jeder freiheitsliebende Individuum in das Portfolio von Krypto-Währungen ohne Einschränkungen und auf private Weise investieren und wachsen kann, unabhängig von der Regulierungslandschaft.
+Diese Wallet ermöglicht den freiheitsliebenden Menschen, ihr Krypto-Währungsportfolio ohne Einschränkungen, auf private Weise und unabhängig von der Regulierungslandschaft zu investieren und zu erweitern.
 
 Sie üben die bedingungslose Steuerung Ihres Vermögens aus. Bitcoin, Ethereum, Dash und andere Krypto-Assets.
 
@@ -38,7 +38,7 @@ Bei einem Geräteverlust oder -austausch können Sie Ihre Wallet mit dem Secret 
 
 (4) IMMER ONLINE
 
-Access your funds from anywhere at any time.   Unstoppable wallet was engineered to remain online and functional independent of any third party servers.   
+Sie haben jederzeit und überall Zugriff auf Ihr Geld. Die Unstoppable Wallet wurde entwickelt, um unabhängig von Servern von Drittanbietern online und funktionsfähig zu bleiben.   
 
 No single entity can take the wallet down and cause it's main features to malfunction. Not even the Horizontal Systems team able to interfere with it.
 
