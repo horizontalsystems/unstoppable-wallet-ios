@@ -14,6 +14,7 @@ class SendFeePresenter {
 
     private var fee: Decimal = 0
     private var availableFeeBalance: Decimal?
+    private var duration: TimeInterval?
 
     private(set) var inputType: SendInputType = .coin
 
@@ -32,8 +33,8 @@ class SendFeePresenter {
     }
 
     private func syncFeeLabels() {
-        view?.set(fee: primaryAmountInfo)
-        view?.set(convertedFee: secondaryAmountInfo)
+        view?.set(duration: duration)
+        view?.set(fee: primaryAmountInfo, convertedFee: secondaryAmountInfo)
     }
 
     private func syncError() {
@@ -119,6 +120,11 @@ extension SendFeePresenter: ISendFeeModule {
     func set(availableFeeBalance: Decimal) {
         self.availableFeeBalance = availableFeeBalance
         syncError()
+    }
+
+    func set(duration: TimeInterval) {
+        self.duration = duration
+        syncFeeLabels()
     }
 
     func update(inputType: SendInputType) {

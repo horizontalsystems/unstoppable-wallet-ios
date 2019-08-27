@@ -479,6 +479,7 @@ protocol IAddressParser {
 
 protocol IFeeRateProvider {
     func feeRate(for priority: FeeRatePriority) -> Int
+    func duration(priority: FeeRatePriority) -> TimeInterval
 }
 
 protocol IEncryptionManager {
