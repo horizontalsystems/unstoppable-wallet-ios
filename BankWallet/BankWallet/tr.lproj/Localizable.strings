@@ -112,7 +112,7 @@
 "deposit.receive_coin" = "%@ al";
 "deposit.your_address" = "Adresiniz";
 "deposit.your_account" = "Senin Hesabın";
-"receive_alert.not_backed_up_description" = "You need to backup the %@ key before you may receive %@.";
+"receive_alert.not_backed_up_description" = "%@ almadan önce %@ anahtarlarınızı yedeklemeniz gerekiyor.";
 
 // Send
 
@@ -125,7 +125,7 @@
 "send.tx_speed_low" = "Düşük";
 "send.tx_speed_medium" = "Orta";
 "send.tx_speed_high" = "Yüksek";
-"send.tx_duration" = "Süreç";
+"send.tx_duration" = "Süre";
 "send.instant" = "Anlık";
 "send.max_button" = "Azami";
 "send.next_button" = "İleri";
@@ -231,7 +231,7 @@
 
 "manage_coins.title" = "Kripto Para yöneticisi";
 "manage_coins.add_coin.title" = "%@ ekle ";
-"manage_coins.add_coin.text" = "You don't have key for %@ which requires a %@ key. The wallet can generate the key for you. Use the Create button below to generate a new key.\n\nYou may also use the existing %@ key for the %@ if you have one.";
+"manage_coins.add_coin.text" = "You don't have key for %@. The wallet can generate the key for you. Use the Create button below to generate a new key.\n\nYou may also use the existing %@ key for the %@ if you have one.";
 "manage_coins.add_coin.create" = "Oluştur";
 "manage_coins.add_coin.restore" = "Geri Yükle";
 
@@ -245,7 +245,7 @@
 
 // Settings -> Tell Friends
 
-"settings_tell_friends.text" = "Özgür Ol! Durdurulamaz Ol!";
+"settings_tell_friends.text" = "Unstoppable Wallet - a crypto wallet I recommend";
 
 // Settings -> Security
 
