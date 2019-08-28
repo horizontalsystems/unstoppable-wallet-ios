@@ -102,7 +102,7 @@
 "balance.rate_per_coin" = "%@ за %@";
 "balance.synced_through" = "до: %@";
 "balance.syncing" = "Синхронизация...";
-"balance.add_coins" = "Добавить Монеты";
+"balance.add_coins" = "Добавить Кошелек";
 "balance.sort.header" = "Сортировать по";
 "balance.sort.valueHighToLow" = "Балансу";
 "balance.sort.az" = "Названию";
