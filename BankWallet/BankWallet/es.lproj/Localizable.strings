@@ -231,7 +231,7 @@
 
 "manage_coins.title" = "Gestor de monedas";
 "manage_coins.add_coin.title" = "Añadir %@ ";
-"manage_coins.add_coin.text" = "Usted no tiene la clave para %@, el cual requiere una clave %@. El monedero puede generar una clave para usted. Use el botón de Crear que se encuentra más abajo para generar una nueva clave.\n\nTambién puede usar la clave %@existente para el %@ si ya tiene una.";
+"manage_coins.add_coin.text" = "You don't have key for %@. The wallet can generate the key for you. Use the Create button below to generate a new key.\n\nYou may also use the existing %@ key for the %@ if you have one.";
 "manage_coins.add_coin.create" = "Crear";
 "manage_coins.add_coin.restore" = "Restaurar";
 
@@ -245,7 +245,7 @@
 
 // Settings -> Tell Friends
 
-"settings_tell_friends.text" = "¡Sea libre! ¡Sea Unstoppable!";
+"settings_tell_friends.text" = "Unstoppable Wallet - a crypto wallet I recommend";
 
 // Settings -> Security
 
