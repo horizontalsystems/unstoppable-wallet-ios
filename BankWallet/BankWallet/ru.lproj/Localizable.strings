@@ -17,7 +17,7 @@
 "button.save" = "Сохранить";
 "button.sync" = "Синхр.";
 "button.paste" = "Вставить";
-"button.backup" = "Рез. копия";
+"button.backup" = "Резервная копия";
 
 "alert.copied" = "Скопировано";
 "alert.no_internet" = "Нет интернета";
@@ -268,7 +268,7 @@
 "settings_manage_keys.title" = "Ключи";
 "settings_manage_keys.description" = "Любой, кто имеет доступ к вашим ключам, может украсть ваши средства. Храните ключи безопасно и не показывайте их никому.\n\nРезервное копирование каждого ключа необходимо для того, чтобы иметь возможность восстановить средства, если вы потеряете или сломаете ваш телефон, или приложение кошелька будет удалено.";
 "settings_manage_keys.delete" = "Удалить";
-"settings_manage_keys.backup" = "Резервная копия";
+"settings_manage_keys.backup" = "Резерв. копия";
 "settings_manage_keys.show" = "Показать";
 "settings_manage_keys.create" = "Создать";
 "settings_manage_keys.restore" = "Восстановить";
