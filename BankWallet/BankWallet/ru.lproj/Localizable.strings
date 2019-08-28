@@ -339,6 +339,7 @@
 "chart.market_cap.thousand" = "%@ к";
 "chart.market_cap.million" = "%@ млн.";
 "chart.market_cap.billion" = "%@ млрд.";
+"chart.market_cap.trillion" = "%@ T";
 "chart.high" = "Макс.";
 "chart.low" = "Мин.";
 "chart.volume" = "Объём";
