@@ -1,26 +1,22 @@
 import UIKit
 import SnapKit
 
-class SendConfirmationFieldView: UIView {
-
+class SendConfirmationFieldCell: UITableViewCell {
     private let titleLabel = UILabel()
-    private let textLabel = UILabel()
+    private let fieldTextLabel = UILabel()
 
-    public init(title: String, text: String) {
-        super.init(frame: .zero)
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
 
+        contentView.backgroundColor = .clear
         backgroundColor = .clear
-
-        self.snp.makeConstraints { maker in
-            maker.height.equalTo(SendTheme.confirmationFieldHeight)
-        }
+        selectionStyle = .none
 
         addSubview(titleLabel)
-        addSubview(textLabel)
+        addSubview(fieldTextLabel)
 
         titleLabel.textColor = .cryptoGray
         titleLabel.font = .cryptoCaption1
-        titleLabel.text = title
 
         titleLabel.snp.makeConstraints { maker in
             maker.leading.equalToSuperview().offset(SendTheme.margin)
@@ -30,22 +26,26 @@ class SendConfirmationFieldView: UIView {
         titleLabel.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
         titleLabel.setContentHuggingPriority(.defaultLow, for: .horizontal)
 
-        textLabel.textColor = .cryptoGray
-        textLabel.font = .cryptoCaption1
-        textLabel.text = text
+        fieldTextLabel.textColor = .cryptoGray
+        fieldTextLabel.font = .cryptoCaption1
 
-        textLabel.snp.makeConstraints { maker in
+        fieldTextLabel.snp.makeConstraints { maker in
             maker.leading.equalTo(titleLabel.snp.trailing).offset(SendTheme.smallMargin)
             maker.trailing.equalToSuperview().offset(-SendTheme.margin)
             maker.bottom.equalToSuperview()
         }
 
-        textLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
-        textLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+        fieldTextLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+        fieldTextLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
     }
 
     required init?(coder aDecoder: NSCoder) {
-        fatalError("not implemented")
+        super.init(coder: aDecoder)
+    }
+
+    func bind(title: String, text: String) {
+        titleLabel.text = title
+        fieldTextLabel.text = text
     }
 
 }

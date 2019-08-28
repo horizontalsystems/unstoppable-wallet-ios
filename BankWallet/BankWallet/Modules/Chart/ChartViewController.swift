@@ -12,6 +12,12 @@ class ChartViewController: ActionSheetController {
         return formatter
     }()
 
+    private static let marketCapFormatter: NumberFormatter = {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .currency
+        return formatter
+    }()
+
     private let currentRateItem = ChartCurrentRateItem(tag: 1)
     private let chartRateTypeItem = ChartRateTypeItem(tag: 2)
     private var chartRateItem: ChartRateItem?
@@ -78,27 +84,31 @@ class ChartViewController: ActionSheetController {
         currentRateItem.bindDiff?(formattedDiff, !diff.isSignMinus)
     }
 
+    private func marketCapFormat(currencyValue: CurrencyValue) -> String? {
+        let formatter = ChartViewController.marketCapFormatter
+        formatter.currencyCode = currencyValue.currency.code
+        formatter.currencySymbol = currencyValue.currency.symbol
+        formatter.maximumFractionDigits = 1
+
+        return formatter.string(from: currencyValue.value as NSNumber)
+    }
+
     private func show(marketCapValue: CurrencyValue?) {
         guard let marketCapValue = marketCapValue else {
             marketCapItem.setMarketCapText?(nil)
             marketCapItem.setMarketCapTitle?(nil)
             return
         }
-        do {
-            let marketCapData = try MarketCapFormatter.marketCap(value: marketCapValue.value)
-            guard let formattedValue = ValueFormatter.instance.format(currencyValue: CurrencyValue(currency: marketCapValue.currency, value: marketCapData.value)) else {
-                marketCapItem.setMarketCapText?(nil)
-                marketCapItem.setMarketCapTitle?(nil)
-                return
-            }
-
-            let marketCapText = marketCapData.postfix?.localized(formattedValue) ?? formattedValue
-            marketCapItem.setMarketCapText?(marketCapText)
-            marketCapItem.setMarketCapTitle?("chart.market_cap".localized)
-        } catch {
+        let marketCapData = MarketCapFormatter.marketCap(value: marketCapValue.value)
+        guard let formattedValue = marketCapFormat(currencyValue: CurrencyValue(currency: marketCapValue.currency, value: marketCapData.value)) else {
             marketCapItem.setMarketCapText?(nil)
             marketCapItem.setMarketCapTitle?(nil)
+            return
         }
+
+        let marketCapText = marketCapData.postfix?.localized(formattedValue) ?? formattedValue
+        marketCapItem.setMarketCapText?(marketCapText)
+        marketCapItem.setMarketCapTitle?("chart.market_cap".localized)
     }
 
     private func show(lowValue: CurrencyValue?) {

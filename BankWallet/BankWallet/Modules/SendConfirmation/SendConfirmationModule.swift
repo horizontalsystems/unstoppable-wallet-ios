@@ -1,14 +1,24 @@
 protocol ISendConfirmationDelegate: class {
     func onSendClicked()
+    func onCancelClicked()
 }
 
 protocol ISendConfirmationView: class {
+    func show(viewItem: SendConfirmationAmountViewItem)
+    func show(viewItem: SendConfirmationMemoViewItem)
+    func show(viewItem: SendConfirmationFeeViewItem)
+    func show(viewItem: SendConfirmationTotalViewItem)
+    func show(viewItem: SendConfirmationDurationViewItem)
+
+    func buildData()
     func showCopied()
-    func dismissKeyboard()
 }
 
 protocol ISendConfirmationViewDelegate {
+    func viewDidLoad()
+    func onCopy(receiver: String)
     func onSendClicked()
+    func onCancelClicked()
 }
 
 protocol ISendConfirmationInteractor {

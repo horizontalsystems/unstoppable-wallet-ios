@@ -78,4 +78,8 @@ extension SendPresenter: ISendConfirmationDelegate {
         }
     }
 
+    func onCancelClicked() {
+        router.dismiss()
+    }
+
 }
