@@ -8,9 +8,8 @@ class ChartRouter {
             return nil
         }
 
-        let chartRateConverter = ChartRateDataConverter()
-        let chartRateFactory = ChartRateFactory(chartRateConverter: chartRateConverter)
-        let interactor = ChartInteractor(apiProvider: App.shared.chartApiProvider, localStorage: App.shared.localStorage, rateStorage: App.shared.grdbStorage)
+        let chartRateFactory = ChartRateFactory()
+        let interactor = ChartInteractor(manager: App.shared.rateStatsManager, localStorage: App.shared.localStorage, rateStorage: App.shared.grdbStorage)
         let presenter = ChartPresenter(interactor: interactor, factory: chartRateFactory, coin: wallet.coin, currency: App.shared.currencyManager.baseCurrency)
         let viewController = ChartViewController(delegate: presenter)
 

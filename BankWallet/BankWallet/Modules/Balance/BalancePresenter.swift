@@ -21,6 +21,12 @@ class BalancePresenter {
         self.sortingOnThreshold = sortingOnThreshold
     }
 
+    private func updateStats() {
+        dataSource.items.forEach { item in
+            interactor.getRateStats(coinCode: item.wallet.coin.code, currencyCode: dataSource.currency.code)
+        }
+    }
+
 }
 
 extension BalancePresenter: IBalanceInteractorDelegate {
@@ -33,8 +39,9 @@ extension BalancePresenter: IBalanceInteractorDelegate {
 
         dataSource.set(items: items)
 
-        if let currency = dataSource.currency {
-            interactor.fetchRates(currencyCode: currency.code, coinCodes: dataSource.coinCodes)
+        interactor.fetchRates(currencyCode: dataSource.currency.code, coinCodes: dataSource.coinCodes)
+        if dataSource.statsModeOn {
+            updateStats()
         }
 
         view?.setSort(isOn: dataSource.items.count >= sortingOnThreshold)
@@ -71,19 +78,36 @@ extension BalancePresenter: IBalanceInteractorDelegate {
     }
 
     func didUpdate(rate: Rate) {
-        let indices = dataSource.indexes(for: rate.coinCode)
+        let indexes = dataSource.indexes(for: rate.coinCode)
 
-        guard indices.count > 0 else {
+        guard indexes.count > 0 else {
             return
         }
 
         let oldItems = dataSource.items
-        for index in indices {
+        for index in indexes {
             dataSource.set(rate: rate, index: index)
         }
 
         view?.reload(with: differ.changes(old: oldItems, new: dataSource.items))
         view?.updateHeader()
+    }
+
+    func didReceive(coinCode: CoinCode, chartData: ChartData) {
+        guard let points = chartData.stats[.day] else {
+            return
+        }
+
+        let indexes = dataSource.indexes(for: coinCode)
+        guard indexes.count > 0 else {
+            return
+        }
+
+        let oldItems = dataSource.items
+        for index in indexes {
+            dataSource.set(chartPoints: points, index: index)
+        }
+        view?.reload(with: differ.changes(old: oldItems, new: dataSource.items))
     }
 
     func didRefresh() {
@@ -151,7 +175,11 @@ extension BalancePresenter: IBalanceViewDelegate {
     }
 
     func onStatsSwitch(on: Bool) {
+        dataSource.statsModeOn = on
         view?.setStatMode(isOn: on)
+        if on {
+            updateStats()
+        }
     }
 
 }

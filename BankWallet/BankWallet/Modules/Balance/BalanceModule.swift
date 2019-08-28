@@ -38,6 +38,7 @@ protocol IBalanceInteractor {
     func fetchRates(currencyCode: String, coinCodes: [CoinCode])
     func refresh()
     func predefinedAccountType(wallet: Wallet) -> IPredefinedAccountType?
+    func getRateStats(coinCode: String, currencyCode: String)
 }
 
 protocol IBalanceInteractorDelegate: class {
@@ -47,6 +48,8 @@ protocol IBalanceInteractorDelegate: class {
 
     func didUpdate(currency: Currency)
     func didUpdate(rate: Rate)
+
+    func didReceive(coinCode: CoinCode, chartData: ChartData)
 
     func didRefresh()
 }
@@ -63,7 +66,8 @@ protocol IBalanceRouter {
 protocol IBalanceItemDataSource {
     var sortType: BalanceSortType { get set }
     var items: [BalanceItem] { get }
-    var currency: Currency? { get set }
+    var currency: Currency { get set }
+    var statsModeOn: Bool { get set }
     var coinCodes: [CoinCode] { get }
     func item(at index: Int) -> BalanceItem
     func index(for wallet: Wallet) -> Int?
@@ -72,6 +76,7 @@ protocol IBalanceItemDataSource {
     func set(balance: Decimal, index: Int)
     func set(state: AdapterState, index: Int)
     func set(rate: Rate, index: Int)
+    func set(chartPoints: [ChartPoint], index: Int)
     func clearRates()
     func set(items: [BalanceItem])
 }

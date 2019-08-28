@@ -195,13 +195,13 @@ extension FullTransactionInfoViewController: IFullTransactionInfoView {
         loadingView.set(hidden: false)
         loadingView.startAnimating()
 
-        shareButton.isEnabled = false
+        navigationItem.leftBarButtonItem?.isEnabled = false
     }
 
     func hideLoading() {
         self.loadingView.set(hidden: true)
         loadingView.stopAnimating()
-        shareButton.isEnabled = true
+        navigationItem.leftBarButtonItem?.isEnabled = true
     }
 
     func showCopied() {
