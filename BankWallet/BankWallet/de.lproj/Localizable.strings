@@ -342,3 +342,4 @@
 "chart.high" = "Hoch";
 "chart.low" = "Niedrig";
 "chart.volume" = "Lautstärke";
+"chart.error.not_available" = "Chart not available";
