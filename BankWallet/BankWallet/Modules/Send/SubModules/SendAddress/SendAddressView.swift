@@ -43,7 +43,7 @@ class SendAddressView: UIView {
 
 extension SendAddressView: ISendAddressView {
 
-    func set(address: String?, error: String?) {
+    func set(address: String?, error: Error?) {
         addressInputField.bind(address: address, error: error)
     }
 

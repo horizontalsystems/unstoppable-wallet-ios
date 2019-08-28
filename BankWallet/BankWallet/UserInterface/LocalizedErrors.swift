@@ -42,33 +42,6 @@ extension EosKit.ValidationError: LocalizedError {
     }
 }
 
-extension BitcoinCoreErrors.AddressConversion: LocalizedError {
-    public var errorDescription: String? {
-        switch self {
-        default:
-            return "send.error.invalid_address".localized
-        }
-    }
-}
-
-extension EthereumBaseAdapter.AddressConversion: LocalizedError {
-    public var errorDescription: String? {
-        switch self {
-        default:
-            return "send.error.invalid_address".localized
-        }
-    }
-}
-
-extension BinanceAdapter.AddressConversion: LocalizedError {
-    public var errorDescription: String? {
-        switch self {
-        default:
-            return "send.error.invalid_address".localized
-        }
-    }
-}
-
 extension SendTransactionError: LocalizedError {
     public var errorDescription: String? {
         switch self {
