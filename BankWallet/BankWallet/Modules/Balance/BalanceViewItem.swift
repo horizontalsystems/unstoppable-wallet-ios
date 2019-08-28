@@ -9,4 +9,5 @@ struct BalanceViewItem {
     let rateExpired: Bool
     let percentDelta: Decimal
     let chartPoints: [ChartPoint]
+    let statLoadDidFail: Bool
 }

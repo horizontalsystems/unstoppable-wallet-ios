@@ -129,6 +129,8 @@ extension BalanceInteractor: IBalanceInteractor {
         rateStatsManager.rateStats(coinCode: coinCode, currencyCode: currencyCode)
                 .subscribe(onSuccess: { [weak self] rateStats in
                     self?.delegate?.didReceive(coinCode: coinCode, chartData: rateStats)
+                }, onError: { _ in
+                    self.delegate?.didFailStats(for: coinCode)
                 }).disposed(by: disposeBag)
     }
 

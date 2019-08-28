@@ -11,6 +11,7 @@ struct BalanceItem {
 
     var percentDelta: Decimal = 0
     var chartPoints: [ChartPoint] = []
+    var statLoadDidFail: Bool = false
 
     init(wallet: Wallet, balance: Decimal = 0, state: AdapterState) {
         self.wallet = wallet
