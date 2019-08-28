@@ -19,7 +19,8 @@ class BalanceViewItemFactory: IBalanceViewItemFactory {
                 state: item.state,
                 rateExpired: item.rate?.expired ?? false,
                 percentDelta: item.percentDelta,
-                chartPoints: item.chartPoints
+                chartPoints: item.chartPoints,
+                statLoadDidFail: item.statLoadDidFail
         )
     }
 

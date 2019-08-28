@@ -85,4 +85,5 @@ class BalanceTheme {
     static var chartBackground: UIColor { return App.shared.localStorage.lightMode ? .cryptoLightBackground : .cryptoSteel20 }
     static var chartBorderColor: UIColor { return App.shared.localStorage.lightMode ? .cryptoSteel20 : .clear }
     static let chartBorderWidth: CGFloat = 1 / UIScreen.main.scale
+    static let percentDeltaFailColor: UIColor = .cryptoGray50
 }
