@@ -7,15 +7,17 @@
 
 "button.ok" = "OK";
 "button.cancel" = "Cancel";
+"button.close" = "Close";
 "button.confirm" = "Confirm";
 "button.done" = "Done";
 "button.restore" = "Restore";
 "button.next" = "Next";
 "button.remove" = "Remove";
-"button.forward" = "Forward";
+"button.share" = "Share";
 "button.save" = "Save";
 "button.sync" = "Sync";
 "button.paste" = "Paste";
+"button.backup" = "Backup";
 
 "alert.copied" = "コピー完了";
 "alert.no_internet" = "No Internet";
@@ -59,6 +61,7 @@
 // Backup
 
 "backup.close" = "Close";
+"backup.backup_required" = "Backup Required";
 
 "backup.intro.title_backup" = "Backup";
 "backup.intro.title_show" = "Show Key";
@@ -77,6 +80,10 @@
 "backup.eos.account_name" = "Account Name";
 "backup.eos.active_private_key" = "Active Private Key";
 "backup.eos.hint" = "Copying your key using “copy” action poses some risks if you use any clipboard management apps or some other apps that may have access to clipboard data.";
+"error.send_eos.self_transfer" = "Can't transfer token to own account";
+"error.send_eos.account_not_exist" = "Target account does not exist";
+"error.send_eos.insufficient_ram" = "Your account has not enough of ram";
+"error.send_eos.unknown" = "Something went wrong: %@";
 
 "backup.confirmation.title" = "Check ...";
 "backup.confirmation.secret_key" = "I understand that I am a sole owner of a private 12-word Secret Key which is securely stored on my phone and enables me to control funds on my wallet.";
@@ -104,6 +111,8 @@
 
 "deposit.receive_coin" = "受取 %@";
 "deposit.your_address" = "お客様のアドレス";
+"deposit.your_account" = "Your Account";
+"receive_alert.not_backed_up_description" = "You need to backup the %@ key before you may receive %@.";
 
 // Send
 
@@ -112,6 +121,12 @@
 "send.address_placeholder" = "住所";
 "send.account_placeholder" = "Account";
 "send.fee" = "Fee:";
+"send.tx_speed" = "Transaction Speed";
+"send.tx_speed_low" = "Low";
+"send.tx_speed_medium" = "Medium";
+"send.tx_speed_high" = "High";
+"send.tx_duration" = "Duration";
+"send.instant" = "Instant";
 "send.max_button" = "最大";
 "send.next_button" = "Next";
 "send.error.invalid_address" = "Invalid Address";
@@ -144,9 +159,12 @@
 "tx_info.status.pending" = "ペンディング";
 "tx_info.status.confirmed" = "Confirmed";
 "tx_info.from_hash" = "差出人";
+"tx_info.transaction_id" = "Transaction ID";
 "tx_info.to_hash" = "宛先";
 "tx_info.button_verify" = "Verify";
 "tx_info.rate" = "Historical Rate";
+"tx_info.fee" = "Fee";
+"tx_info.note" = "* The value of this transaction appears as 0 because it was sent to your own address";
 
 // Full Info
 
@@ -196,6 +214,7 @@
 "settings.language" = "言語";
 "settings.about" = "について";
 "settings.tell_friends" = "Tell Friends";
+"settings.report_problem" = "Report Problem";
 "settings.light_mode" = "ライトモード";
 "settings.info_title" = "UNSTOPPABLE";
 "settings.info_subtitle" = "decentralized app";
@@ -212,7 +231,7 @@
 
 "manage_coins.title" = "Coin Manager";
 "manage_coins.add_coin.title" = "Add %@ ";
-"manage_coins.add_coin.text" = "You don't have active key for use with %@. Use Create button below to generate a new key (wallet).\n\nYou may also use the existing key for the %@ if you already have it.";
+"manage_coins.add_coin.text" = "You don't have key for %@ which requires a %@ key. The wallet can generate the key for you. Use the Create button below to generate a new key.\n\nYou may also use the existing %@ key for the %@ if you have one.";
 "manage_coins.add_coin.create" = "Create";
 "manage_coins.add_coin.restore" = "Restore";
 
@@ -238,16 +257,22 @@
 "settings_security.face_id" = "Face ID";
 "security_settings.delete_alert_button" = "Delete from Phone";
 
+// Settings -> Report Problem
+
+"settings.report_problem.title" = "Report Problem";
+"settings.report_problem.email" = "E-mail";
+"settings.report_problem.telegram" = "Telegram";
+
 // Manage Keys
 
 "settings_manage_keys.title" = "Keys";
-"settings_manage_keys.description" = "Anyone with access to your Keys can steal your wallet funds. Store keys safely and never show them to anyone.\n\nBackup each key to be able to restore funds if you loose or break your phone, or simply the wallet app gets deleted.";
+"settings_manage_keys.description" = "Anyone with access to your Keys can steal your wallet funds. Store keys safely and never show them to anyone.\n\nBackup each key to be able to restore funds if you lose or break your phone, or simply the wallet app gets deleted.";
 "settings_manage_keys.delete" = "Delete";
 "settings_manage_keys.backup" = "Backup";
 "settings_manage_keys.show" = "Show";
 "settings_manage_keys.create" = "Create";
 "settings_manage_keys.restore" = "Restore";
-"settings_manage_keys.delete.cant_delete" = "You need to backup this key before you may unlink it.";
+"settings_manage_keys.delete.cant_delete" = "You need to backup %@ key before you may delete it from this phone.";
 "settings_manage_keys.delete.title" = "Delete Key";
 "settings_manage_keys.delete.confirmation_remove" = "This action will delete the %@ key (wallet) from this device.";
 "settings_manage_keys.delete.confirmation_disable" = "Coins that will be disabled: %@";
@@ -299,3 +324,21 @@
 "key_type.eos.text" = "EOS, EOS based Tokens";
 "key_type.binance" = "Binance Chain";
 "key_type.binance.text" = "BNB, BEP-2";
+
+// Key Types
+
+"chart.title" = "%@ Rate";
+"chart.time_duration.day" = "1D";
+"chart.time_duration.week" = "7D";
+"chart.time_duration.month" = "1M";
+"chart.time_duration.quartal" = "3M";
+"chart.time_duration.halyear" = "6M";
+"chart.time_duration.year" = "1Y";
+
+"chart.market_cap" = "Mkt. Cap";
+"chart.market_cap.thousand" = "%@ k";
+"chart.market_cap.million" = "%@ M";
+"chart.market_cap.billion" = "%@ B";
+"chart.high" = "High";
+"chart.low" = "Low";
+"chart.volume" = "Volume";

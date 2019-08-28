@@ -7,15 +7,17 @@
 
 "button.ok" = "OK";
 "button.cancel" = "Отмена";
+"button.close" = "Закрыть";
 "button.confirm" = "Подтвердить";
 "button.done" = "Готово";
 "button.restore" = "Восстановить";
 "button.next" = "Далее";
 "button.remove" = "Откл.";
-"button.forward" = "Переслать";
+"button.share" = "Поделиться";
 "button.save" = "Сохранить";
 "button.sync" = "Синхр.";
 "button.paste" = "Вставить";
+"button.backup" = "Рез. копия";
 
 "alert.copied" = "Скопировано";
 "alert.no_internet" = "Нет интернета";
@@ -59,6 +61,7 @@
 // Backup
 
 "backup.close" = "Закрыть";
+"backup.backup_required" = "Необходима Резервная Копия";
 
 "backup.intro.title_backup" = "Резервная копия";
 "backup.intro.title_show" = "Показать Ключ";
@@ -77,6 +80,10 @@
 "backup.eos.account_name" = "Account Name";
 "backup.eos.active_private_key" = "Active Private Key";
 "backup.eos.hint" = "Копирование ключа с помощью действия «копировать» представляет определенный риск, если вы используете какие-либо приложения для управления буфером обмена или другие приложения, которые могут иметь доступ к данным буфера обмена.";
+"error.send_eos.self_transfer" = "Не удается отправить токен на свой аккаунт";
+"error.send_eos.account_not_exist" = "Этот аккаунт не существует";
+"error.send_eos.insufficient_ram" = "У вашего аккаунта недостаточно RAM";
+"error.send_eos.unknown" = "Что-то пошло не так: %@ ";
 
 "backup.confirmation.title" = "Проверка...";
 "backup.confirmation.secret_key" = "Я понимаю, что я единственный владелец  Секретного Ключа, который надежно хранится на моем телефоне и позволяет мне контролировать средства в моем кошельке.";
@@ -97,13 +104,15 @@
 "balance.syncing" = "Синхронизация...";
 "balance.add_coins" = "Добавить Монеты";
 "balance.sort.header" = "Сортировать по";
-"balance.sort.valueHighToLow" = "Баланс";
-"balance.sort.az" = "Название";
+"balance.sort.valueHighToLow" = "Балансу";
+"balance.sort.az" = "Названию";
 
 // Deposit
 
 "deposit.receive_coin" = "Получить %@";
 "deposit.your_address" = "Ваш Адрес";
+"deposit.your_account" = "Ваш Аккаунт";
+"receive_alert.not_backed_up_description" = "Вам нужно сделать резервную копию %@ ключа, прежде чем вы сможете получать %@.";
 
 // Send
 
@@ -112,6 +121,12 @@
 "send.address_placeholder" = "Адрес";
 "send.account_placeholder" = "Account";
 "send.fee" = "Комиссия:";
+"send.tx_speed" = "Скорость Транзакции";
+"send.tx_speed_low" = "Низкая";
+"send.tx_speed_medium" = "Средняя";
+"send.tx_speed_high" = "Высокая";
+"send.tx_duration" = "Продолжительность";
+"send.instant" = "Мгновенно";
 "send.max_button" = "Макс.";
 "send.next_button" = "Далее";
 "send.error.invalid_address" = "Неверный Адрес";
@@ -144,9 +159,12 @@
 "tx_info.status.pending" = "В процессе";
 "tx_info.status.confirmed" = "Подтверждено";
 "tx_info.from_hash" = "От";
+"tx_info.transaction_id" = "ID Транзакции";
 "tx_info.to_hash" = "Кому";
 "tx_info.button_verify" = "Проверить";
 "tx_info.rate" = "Исторический Курс";
+"tx_info.fee" = "Комиссия";
+"tx_info.note" = "*Значение этой транзакции выглядит как 0, потому что она была отправлена на свой собственный адрес";
 
 // Full Info
 
@@ -196,6 +214,7 @@
 "settings.language" = "Язык";
 "settings.about" = "О приложении";
 "settings.tell_friends" = "Рассказать Друзьям";
+"settings.report_problem" = "Сообщить о проблеме";
 "settings.light_mode" = "Светлый Режим";
 "settings.info_title" = "UNSTOPPABLE";
 "settings.info_subtitle" = "decentralized app";
@@ -212,7 +231,7 @@
 
 "manage_coins.title" = "Кошельки";
 "manage_coins.add_coin.title" = "Добавить %@";
-"manage_coins.add_coin.text" = "У вас нет активного ключа для использования  %@. Нажмите кнопку \"Создать\" ниже, чтобы создать новый ключ (кошелек).\n\nВы также можете использовать существующий ключ для %@ , если у вас уже есть.";
+"manage_coins.add_coin.text" = "You don't have key for %@ which requires a %@ key. The wallet can generate the key for you. Use the Create button below to generate a new key.\n\nYou may also use the existing %@ key for the %@ if you have one.";
 "manage_coins.add_coin.create" = "Создать";
 "manage_coins.add_coin.restore" = "Восстановить";
 
@@ -226,7 +245,7 @@
 
 // Settings -> Tell Friends
 
-"settings_tell_friends.text" = "Будь Свободным! Будь Неудеожимым!";
+"settings_tell_friends.text" = "Будь Свободным! Будь Неудержимым!";
 
 // Settings -> Security
 
@@ -238,16 +257,22 @@
 "settings_security.face_id" = "Face ID";
 "security_settings.delete_alert_button" = "Удалить с устройства";
 
+// Settings -> Report Problem
+
+"settings.report_problem.title" = "Сообщить о проблеме";
+"settings.report_problem.email" = "Эл. почта";
+"settings.report_problem.telegram" = "Telegram ";
+
 // Manage Keys
 
 "settings_manage_keys.title" = "Ключи";
-"settings_manage_keys.description" = "Любой, кто имеет доступ к вашим ключам, может украсть ваши средства. Храните ключи безопасно и не показывайте их никому.\n\nРезервное копирование каждого ключа необходимо доя того, чтобы иметь возможность восстановить средства, если вы потеряете или сломаете ваш телефон, или приложение кошелька будет удалено.";
+"settings_manage_keys.description" = "Любой, кто имеет доступ к вашим ключам, может украсть ваши средства. Храните ключи безопасно и не показывайте их никому.\n\nРезервное копирование каждого ключа необходимо для того, чтобы иметь возможность восстановить средства, если вы потеряете или сломаете ваш телефон, или приложение кошелька будет удалено.";
 "settings_manage_keys.delete" = "Удалить";
 "settings_manage_keys.backup" = "Резервная копия";
 "settings_manage_keys.show" = "Показать";
 "settings_manage_keys.create" = "Создать";
 "settings_manage_keys.restore" = "Восстановить";
-"settings_manage_keys.delete.cant_delete" = "Вам нужно сделать резервную копию этого ключа, прежде чем вы можете его отсоединить.";
+"settings_manage_keys.delete.cant_delete" = "Вам нужно сделать резервную копию %@ ключа, прежде чем вы его сможете отсоединить.";
 "settings_manage_keys.delete.title" = "Удалить Ключ";
 "settings_manage_keys.delete.confirmation_remove" = "Это действие удалит ваш %@ ключ (кошелёк) с этого устройства.";
 "settings_manage_keys.delete.confirmation_disable" = "Монеты, которые будут отключены: %@";
@@ -299,3 +324,21 @@
 "key_type.eos.text" = "EOS, EOS based Tokens";
 "key_type.binance" = "Binance Chain";
 "key_type.binance.text" = "BNB, BEP-2";
+
+// Key Types
+
+"chart.title" = "%@ Курс";
+"chart.time_duration.day" = "1Д";
+"chart.time_duration.week" = "7Д";
+"chart.time_duration.month" = "1М";
+"chart.time_duration.quartal" = "3М";
+"chart.time_duration.halyear" = "6М";
+"chart.time_duration.year" = "1Г";
+
+"chart.market_cap" = "Рын. Кап.";
+"chart.market_cap.thousand" = "%@ к";
+"chart.market_cap.million" = "%@ млн.";
+"chart.market_cap.billion" = "%@ млрд.";
+"chart.high" = "Макс.";
+"chart.low" = "Мин.";
+"chart.volume" = "Объём";

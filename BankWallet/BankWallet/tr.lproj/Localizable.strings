@@ -7,15 +7,17 @@
 
 "button.ok" = "Tamam";
 "button.cancel" = "İptal";
+"button.close" = "Kapat";
 "button.confirm" = "Onayla";
 "button.done" = "Bitti";
 "button.restore" = "Geri Yükle";
 "button.next" = "İleri";
 "button.remove" = "Kaldır";
-"button.forward" = "İlet";
+"button.share" = "Paylaş";
 "button.save" = "Kaydet";
 "button.sync" = "Eşitle";
 "button.paste" = "Yapıştır";
+"button.backup" = "Yedekle";
 
 "alert.copied" = "Kopyalandı";
 "alert.no_internet" = "Internet Bağlantısı Yok";
@@ -59,6 +61,7 @@
 // Backup
 
 "backup.close" = "Kapat";
+"backup.backup_required" = "Yedekleme Gerekli";
 
 "backup.intro.title_backup" = "Yedekle";
 "backup.intro.title_show" = "Anahtarı Göster";
@@ -77,6 +80,10 @@
 "backup.eos.account_name" = "Account Name";
 "backup.eos.active_private_key" = "Active Private Key";
 "backup.eos.hint" = "Anahtarınızı \"Kopyala\" eylemiyle kopyalamanız anahtarınızın pano yöneticisine ve panoya erişimi olan diğer uygulamalara sızma riskini taşır.";
+"error.send_eos.self_transfer" = "Can't transfer token to own account";
+"error.send_eos.account_not_exist" = "Hedef hesap yok";
+"error.send_eos.insufficient_ram" = "Hesabınız için ram yeterli değil";
+"error.send_eos.unknown" = "Beklenmeyen bir hata oluştu: %@";
 
 "backup.confirmation.title" = "Kontrol etme ...";
 "backup.confirmation.secret_key" = "Cüzdanıma erişmemi sağlayan 12 kelimeli Gizli Anahtarın tek sahibinin olduğumu ve bu anahtarın telefonumun güvenli hafızasında tutulduğunu kabul ediyorum.";
@@ -95,7 +102,7 @@
 "balance.rate_per_coin" = "%@ için %@";
 "balance.synced_through" = "%@ kadar";
 "balance.syncing" = "Eşitleniyor...";
-"balance.add_coins" = "Kredi Ekle";
+"balance.add_coins" = "Kripto Para Ekle";
 "balance.sort.header" = "Sırala";
 "balance.sort.valueHighToLow" = "Bakiye";
 "balance.sort.az" = "İsim";
@@ -104,6 +111,8 @@
 
 "deposit.receive_coin" = "%@ al";
 "deposit.your_address" = "Adresiniz";
+"deposit.your_account" = "Senin Hesabın";
+"receive_alert.not_backed_up_description" = "You need to backup the %@ key before you may receive %@.";
 
 // Send
 
@@ -112,6 +121,12 @@
 "send.address_placeholder" = "Adres";
 "send.account_placeholder" = "Hesap";
 "send.fee" = "Masraf:";
+"send.tx_speed" = "İşlem hızı";
+"send.tx_speed_low" = "Düşük";
+"send.tx_speed_medium" = "Orta";
+"send.tx_speed_high" = "Yüksek";
+"send.tx_duration" = "Duration";
+"send.instant" = "Instant";
 "send.max_button" = "Azami";
 "send.next_button" = "İleri";
 "send.error.invalid_address" = "Geçersiz Adres";
@@ -144,9 +159,12 @@
 "tx_info.status.pending" = "Devam ediyor";
 "tx_info.status.confirmed" = "Onaylandı";
 "tx_info.from_hash" = "Gönderen";
+"tx_info.transaction_id" = "İşlem ID'si";
 "tx_info.to_hash" = "Alan";
 "tx_info.button_verify" = "Doğrula";
 "tx_info.rate" = "Geçmiş Kur";
+"tx_info.fee" = "Ücret";
+"tx_info.note" = "* Kendi adresinize gönderildiğinden bu işlemin değeri 0 olarak görünür";
 
 // Full Info
 
@@ -196,6 +214,7 @@
 "settings.language" = "Dil";
 "settings.about" = "Hakkında";
 "settings.tell_friends" = "Arkadaşlarına bahset";
+"settings.report_problem" = "Sorunu Bildir";
 "settings.light_mode" = "Aydınlık mod";
 "settings.info_title" = "UNSTOPPABLE";
 "settings.info_subtitle" = "decentralized App";
@@ -210,9 +229,9 @@
 
 // Settings -> Manage Wallet
 
-"manage_coins.title" = "Cüzdan yöneticisi";
+"manage_coins.title" = "Kripto Para yöneticisi";
 "manage_coins.add_coin.title" = "%@ ekle ";
-"manage_coins.add_coin.text" = "%@ için kullanılan aktif anahtar yok. Oluştura tıklayıp yeni anahtar (cüzdan) oluşturabilirsiniz.\n\n%@ için anahtarınız zaten varsa onu kullanabilirsiniz.";
+"manage_coins.add_coin.text" = "You don't have key for %@ which requires a %@ key. The wallet can generate the key for you. Use the Create button below to generate a new key.\n\nYou may also use the existing %@ key for the %@ if you have one.";
 "manage_coins.add_coin.create" = "Oluştur";
 "manage_coins.add_coin.restore" = "Geri Yükle";
 
@@ -222,7 +241,7 @@
 "settings_about.app_title" = "Unstoppable";
 "settings_about.app_subtitle" = "Decentralized App";
 "settings_about.terms_privacy_subtitle" = "Şartlar & Gizlilik Politikası:";
-"settings_about.terms_privacy_text" = "Bu uygulama uçtan uca bir ağdır. Herhangi bir web sunucusuna veya teknik destek personeline bağlı değildir. \n\nİnternet olduğu sürece her yerde çalışır. Hiç kimse bu uygulamanın çalışmasını veya birisinin programı kullanmasını engelleyemez. \n\nCüzdanlarınız telefonda güvenli bir şekilde saklanır, başka bir yerde değil. \n\nGizli Anahtarınızı yedeklemek ve gizli tutmak sizin sorumluluğunuz. Asla kimseye göstermeyin. Kaybolursa, unutursanız veya çalınırsa cüzdanlarınız Gizli Anahtarınıza ele geçiren kişi tarafından kullanılabilir.\n\nTelefonunuzun yazılımını kırmayın, bilinmeyen (güvenilmeyen) kaynaklardan uygulamalar yüklemeyin, cihazınızı güvenmediğiniz kişilere vermeyin ve İşletim Sistemini telefonunuzda güncel tutun. Cüzdalarınızın güvenliği buna bağlı. \n\nBu uygulamayı oluşturan kodun tamamı, başından beri kamu denetimine açıktı. Yapabileceğimiz en güvenilir ve merkezi olmayan cüzdanı oluşturmaya çalıştık, yine de istenmeyen yazılım sorunu olmadığının garantisi yoktur. Bununla birlikte, bu cüzdanın herhangi bir akıllı telefon cüzdan uygulamasından çok daha güvenli olacağı muhtemel. \n\nDöviz kurları gibi kişisel olmayan uygulama verileri merkezi olmayan (IPFS) sisteminde depolanır. ";
+"settings_about.terms_privacy_text" = "Bu uygulama uçtan uca bir ağdır. Herhangi bir web sunucusuna veya teknik destek personeline bağlı değildir. \n\nİnternet olduğu sürece her yerde çalışır. Hiç kimse bu uygulamanın çalışmasını veya birisinin programı kullanmasını engelleyemez. \n\nCüzdanlarınız telefonda güvenli bir şekilde saklanır, başka bir yerde değil. \n\nGizli Anahtarınızı yedeklemek ve gizli tutmak sizin sorumluluğunuz. Asla kimseye göstermeyin. Kaybolursa, unutursanız veya çalınırsa cüzdanlarınız Gizli Anahtarınıza ele geçiren kişi tarafından kullanılabilir.\n\nTelefonunuzun yazılımını kırmayın, bilinmeyen (güvenilmeyen) kaynaklardan uygulamalar yüklemeyin, cihazınızı güvenmediğiniz kişilere vermeyin ve İşletim Sistemini telefonunuzda güncel tutun. Cüzdalarınızın güvenliği buna bağlı. \n\nBu uygulamayı oluşturan kodun tamamı, başından beri kamu denetimine açıktır. Yapabileceğimiz en güvenilir ve merkezi olmayan cüzdanı oluşturmaya çalıştık, yine de istenmeyen yazılım sorunu olmadığının garantisi yoktur. Bununla birlikte, bu cüzdanın herhangi bir akıllı telefon cüzdan uygulamasından çok daha güvenli olacağı muhtemel. \n\nDöviz kurları gibi kişisel olmayan uygulama verileri merkezi olmayan (IPFS) sisteminde depolanır. ";
 
 // Settings -> Tell Friends
 
@@ -238,16 +257,22 @@
 "settings_security.face_id" = "Face ID";
 "security_settings.delete_alert_button" = "Cihazdan sil";
 
+// Settings -> Report Problem
+
+"settings.report_problem.title" = "Sorunu Bildir";
+"settings.report_problem.email" = "E-posta";
+"settings.report_problem.telegram" = "Telegram";
+
 // Manage Keys
 
 "settings_manage_keys.title" = "Anahtarlar";
-"settings_manage_keys.description" = "Anahtarlarınıza ulaşabilen herkes cüzdanınızı kullanabilir. Anahtarları kimsenin bulamayacağı güvenli bir yerde tutun.\n\nCihazın bozulması, kaybolması veya uygulamanın silinmesi durumunda cüzdanınızı geri yükleyebilmeniz için her anahtarı yedekleyin.";
+"settings_manage_keys.description" = "Anahtarlarınıza erişimi olan herkes cüzdan paranızı çalabilir. Anahtarları güvenli bir şekilde saklayın ve asla kimseye göstermeyin.\n\nTelefonunuzu kaybederseniz veya kırdığınızda veya sadece cüzdan uygulaması silinirse para geri yükleyebilmek için her anahtarı yedekle.";
 "settings_manage_keys.delete" = "Sil";
 "settings_manage_keys.backup" = "Yedekle";
 "settings_manage_keys.show" = "Göster";
 "settings_manage_keys.create" = "Oluştur";
 "settings_manage_keys.restore" = "Geri Yükle";
-"settings_manage_keys.delete.cant_delete" = "Silmeden önce bu anahtarı yedeklemeniz gerekiyor.";
+"settings_manage_keys.delete.cant_delete" = "You need to backup %@ key before you may delete it from this phone.";
 "settings_manage_keys.delete.title" = "Anahtarı Sil";
 "settings_manage_keys.delete.confirmation_remove" = "Bu işlem %@ anahtarını (cüzdanı) bu cihazdan kaldıracak.";
 "settings_manage_keys.delete.confirmation_disable" = "Etkisizleştirilecek cüzdanlar: %@";
@@ -299,3 +324,21 @@
 "key_type.eos.text" = "EOS, EOS based Tokens";
 "key_type.binance" = "Binance Chain";
 "key_type.binance.text" = "BNB, BEP-2";
+
+// Key Types
+
+"chart.title" = "%@ Rate";
+"chart.time_duration.day" = "Gün";
+"chart.time_duration.week" = "Hafta";
+"chart.time_duration.month" = "Ay";
+"chart.time_duration.quartal" = "3 ay";
+"chart.time_duration.halyear" = "6 Ay";
+"chart.time_duration.year" = "1 Yıl";
+
+"chart.market_cap" = "Mkt. Cap";
+"chart.market_cap.thousand" = "%@ k";
+"chart.market_cap.million" = "%@ M";
+"chart.market_cap.billion" = "%@ B";
+"chart.high" = "Yüksek";
+"chart.low" = "Düşük";
+"chart.volume" = "Birim";
