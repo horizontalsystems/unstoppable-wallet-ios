@@ -339,6 +339,7 @@
 "chart.market_cap.thousand" = "%@ 천";
 "chart.market_cap.million" = "%@ 백만";
 "chart.market_cap.billion" = "%@ 십억";
+"chart.market_cap.trillion" = "%@ T";
 "chart.high" = "높음";
 "chart.low" = "낮음";
 "chart.volume" = "음량";
