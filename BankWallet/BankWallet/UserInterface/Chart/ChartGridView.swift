@@ -63,6 +63,13 @@ class GridView: UIView {
         timestampTextLayer.refresh(configuration: configuration, chartType: dataSource.chartType, insets: insets, chartFrame: dataSource.chartFrame, timestamps: timestamps)
     }
 
+    public func clear() {
+        timestampTextLayer.sublayers?.removeAll()
+        timestampLinesLayer.sublayers?.removeAll()
+        valueLinesLayer.sublayers?.removeAll()
+        valueTextLayer.sublayers?.removeAll()
+    }
+
     override func layoutSubviews() {
         super.layoutSubviews()
 

@@ -9,15 +9,7 @@ class RatesStatsApiProvider {
         self.ipfsApiProvider = ipfsApiProvider
     }
 
-    private func getRateStatistic(baseUrlString: String, timeoutInterval: TimeInterval, coinCode: String, currencyCode: String, chartType: ChartType) -> Single<ChartRateData> {
-        let urlString = "\(baseUrlString)/xrates/stats/\(currencyCode)/\(coinCode)/\(chartType.rawValue).json"
-
-        let urlSingle: Single<ChartRateData> = networkManager.single(urlString: urlString, httpMethod: .get, timoutInterval: timeoutInterval)
-
-        return urlSingle
-    }
-
-    private func getRateStatistic2(baseUrlString: String, timeoutInterval: TimeInterval, coinCode: String, currencyCode: String) -> Single<RateStatsData> {
+    private func getRateStatistic(baseUrlString: String, timeoutInterval: TimeInterval, coinCode: String, currencyCode: String) -> Single<RateStatsData> {
         let urlString = "\(baseUrlString)/xrates/stats/\(currencyCode)/\(coinCode)/index.json"
 
         let urlSingle: Single<RateStatsData> = networkManager.single(urlString: urlString, httpMethod: .get, timoutInterval: timeoutInterval)
@@ -39,19 +31,7 @@ extension RatesStatsApiProvider: IRatesStatsApiProvider {
 
     func getRateStatsData(coinCode: String, currencyCode: String) -> Single<RateStatsData> {
         return ipfsApiProvider.gatewaysSingle { [unowned self] baseUrlString, timeoutInterval in
-            return self.getRateStatistic2(baseUrlString: baseUrlString, timeoutInterval: timeoutInterval, coinCode: coinCode, currencyCode: currencyCode)
-        }
-    }
-
-    func getChartRateData(coinCode: String, currencyCode: String, chartType: ChartType) -> Single<ChartRateData> {
-        return ipfsApiProvider.gatewaysSingle { [unowned self] baseUrlString, timeoutInterval in
-            return self.getRateStatistic(baseUrlString: baseUrlString, timeoutInterval: timeoutInterval, coinCode: coinCode, currencyCode: currencyCode, chartType: chartType)
-        }
-    }
-
-    func getMarketCapData() -> Single<MarketCapData> {
-        return ipfsApiProvider.gatewaysSingle { [unowned self] baseUrlString, timeoutInterval in
-            return self.getMarketCap(baseUrlString: baseUrlString, timeoutInterval: timeoutInterval)
+            return self.getRateStatistic(baseUrlString: baseUrlString, timeoutInterval: timeoutInterval, coinCode: coinCode, currencyCode: currencyCode)
         }
     }
 

@@ -10,7 +10,7 @@ struct BalanceItem {
     var rate: Rate?
 
     var percentDelta: Decimal = 0
-    var chartData: [ChartPoint] = []
+    var chartPoints: [ChartPoint] = []
 
     init(wallet: Wallet, balance: Decimal = 0, state: AdapterState) {
         self.wallet = wallet
@@ -27,12 +27,14 @@ extension BalanceItem: DiffAware {
     }
 
     static func compareContent(_ a: BalanceItem, _ b: BalanceItem) -> Bool {
+        let aChartTimestamp = a.chartPoints.last?.timestamp ?? 0
+        let bChartTimestamp = b.chartPoints.last?.timestamp ?? 0
         return
                 a.balance   == b.balance &&
                 a.state     == b.state &&
                 a.rate      == b.rate &&
                 a.percentDelta == b.percentDelta &&
-                a.chartData.count == b.chartData.count
+                aChartTimestamp == bChartTimestamp
     }
 
 }

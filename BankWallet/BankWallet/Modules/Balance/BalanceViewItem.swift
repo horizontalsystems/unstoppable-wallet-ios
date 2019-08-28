@@ -8,5 +8,5 @@ struct BalanceViewItem {
     let state: AdapterState
     let rateExpired: Bool
     let percentDelta: Decimal
-    let chartData: [ChartPoint]
+    let chartPoints: [ChartPoint]
 }

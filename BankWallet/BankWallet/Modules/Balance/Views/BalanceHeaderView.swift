@@ -3,11 +3,12 @@ import SnapKit
 
 class BalanceHeaderView: UIView {
 
-    let amountLabel = UILabel()
-    let statsSwitchButton = UIButton()
+    private let amountLabel = UILabel()
+    private let statsSwitchButton = UIButton()
+
+    private var switchIsOn: Bool = false
 
     var onStatsSwitch: ((Bool) -> ())?
-    private var switchIsOn: Bool = false
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -52,12 +53,13 @@ class BalanceHeaderView: UIView {
     }
 
     @objc func onSwitch() {
-        switchIsOn = !switchIsOn
-        setSwitch(isOn: switchIsOn)
+        setSwitch(isOn: !switchIsOn)
+
         onStatsSwitch?(switchIsOn)
     }
 
-    private func setSwitch(isOn: Bool) {
+    func setSwitch(isOn: Bool) {
+        switchIsOn = isOn
         statsSwitchButton.isSelected = isOn
     }
 

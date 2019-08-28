@@ -7,7 +7,7 @@ class ChartPresenter {
     private let factory: IChartRateFactory
     private let currency: Currency
 
-    private var rateStatsData: RateStatsData?
+    private var chartData: ChartData?
     private var rate: Rate?
 
     let coin: Coin
@@ -24,11 +24,11 @@ class ChartPresenter {
     }
 
     private func updateChart() {
-        guard let rateStatsData = rateStatsData else {
+        guard let rateStatsData = chartData else {
             return
         }
         do {
-            let viewItem = try factory.chartViewItem(type: chartType, rateStatsData: rateStatsData, rate: rate, currency: currency)
+            let viewItem = try factory.chartViewItem(type: chartType, chartData: rateStatsData, rate: rate, currency: currency)
             view?.show(viewItem: viewItem)
         } catch {
             view?.showError()
@@ -88,8 +88,8 @@ extension ChartPresenter: IChartViewDelegate {
 
 extension ChartPresenter: IChartInteractorDelegate {
 
-    func didReceive(rateStats: RateStatsData, rate: Rate?) {
-        self.rateStatsData = rateStats
+    func didReceive(chartData: ChartData, rate: Rate?) {
+        self.chartData = chartData
         self.rate = rate
 
         view?.hideSpinner()

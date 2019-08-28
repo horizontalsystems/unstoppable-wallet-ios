@@ -36,6 +36,7 @@ class ChartConfiguration {
 
     var backgroundColor: UIColor = .clear
 
+    var chartInsets: UIEdgeInsets = .zero
     var curveWidth: CGFloat = 1
     var curvePositiveColor: UIColor = .cryptoGreen
     var curveNegativeColor: UIColor = .cryptoRed

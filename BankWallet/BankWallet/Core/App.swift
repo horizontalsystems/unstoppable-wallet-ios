@@ -66,7 +66,7 @@ class App {
     let dataProviderManager: IFullTransactionDataProviderManager
     let fullTransactionInfoProviderFactory: IFullTransactionInfoProviderFactory
 
-    let chartApiProvider: RatesStatsApiProvider
+    let rateStatsManager: IRateStatsManager
 
     private let testModeIndicator: TestModeIndicator
 
@@ -114,7 +114,9 @@ class App {
         let ipfsApiProvider = IpfsApiProvider(appConfigProvider: appConfigProvider)
         let rateApiProvider: IRateApiProvider = RateApiProvider(networkManager: networkManager, ipfsApiProvider: ipfsApiProvider)
 
-        chartApiProvider = RatesStatsApiProvider(networkManager: networkManager, ipfsApiProvider: ipfsApiProvider)
+        let chartApiProvider = RatesStatsApiProvider(networkManager: networkManager, ipfsApiProvider: ipfsApiProvider)
+        let chartRateConverter = ChartRateDataConverter()
+        rateStatsManager = RateStatsManager(apiProvider: chartApiProvider, rateStorage: grdbStorage, chartRateConverter: chartRateConverter)
 
         rateManager = RateManager(storage: grdbStorage, apiProvider: rateApiProvider)
         currencyManager = CurrencyManager(localStorage: localStorage, appConfigProvider: appConfigProvider)

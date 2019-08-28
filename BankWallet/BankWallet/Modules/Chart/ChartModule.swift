@@ -34,7 +34,7 @@ protocol IChartInteractor {
 }
 
 protocol IChartInteractorDelegate: class {
-    func didReceive(rateStats: RateStatsData, rate: Rate?)
+    func didReceive(chartData: ChartData, rate: Rate?)
     func onError(_ error: Error)
 }
 
@@ -43,5 +43,5 @@ protocol IChartRateConverter {
 }
 
 protocol IChartRateFactory {
-    func chartViewItem(type: ChartType, rateStatsData: RateStatsData, rate: Rate?, currency: Currency) throws -> ChartViewItem
+    func chartViewItem(type: ChartType, chartData: ChartData, rate: Rate?, currency: Currency) throws -> ChartViewItem
 }

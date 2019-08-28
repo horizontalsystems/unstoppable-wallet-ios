@@ -7,13 +7,16 @@ class BalanceItemDataSource {
         didSet { items = sorter.sort(items: items, sort: sortType) }
     }
     var items: [BalanceItem]
-    var currency: Currency?
+    var currency: Currency
+    var statsModeOn: Bool
 
-    init(sorter: IBalanceSorter) {
+    init(sorter: IBalanceSorter, baseCurrency: Currency) {
         self.sorter = sorter
+        self.currency = baseCurrency
 
         items = [BalanceItem]()
         sortType = .name
+        statsModeOn = false
     }
 
 }
@@ -62,6 +65,18 @@ extension BalanceItemDataSource: IBalanceItemDataSource {
     func set(rate: Rate, index: Int) {
         items[index].rate = rate
         items = sorter.sort(items: items, sort: sortType)
+    }
+
+    func set(chartPoints: [ChartPoint], index: Int) {
+        items[index].chartPoints = chartPoints
+        items[index].percentDelta = {
+            if let first = chartPoints.first, let last = chartPoints.last {
+                let deltaPercent = -(first.value - last.value) / last.value * 100
+                let handler = NSDecimalNumberHandler(roundingMode: .plain, scale: 2, raiseOnExactness: false, raiseOnOverflow: false, raiseOnUnderflow: false, raiseOnDivideByZero: false)
+                return NSDecimalNumber(decimal: deltaPercent).rounding(accordingToBehavior: handler).decimalValue
+            }
+            return 0
+        }()
     }
 
     func clearRates() {

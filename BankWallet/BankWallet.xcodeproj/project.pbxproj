@@ -583,6 +583,7 @@
 		1A5640B712A4253399F52A3B /* BalanceTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564243436E5185205D0359 /* BalanceTheme.swift */; };
 		1A5640E91AA1D79E1735F5FC /* TransactionStatusItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5646C9024F054AE8115A30 /* TransactionStatusItem.swift */; };
 		1A5640F71630B4F6A355752F /* MessageItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564BAA72DF141198FD5B86 /* MessageItem.swift */; };
+		1A5640FF11D49E87E7DA2089 /* ChartData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564A481A683B1A6FA774D2 /* ChartData.swift */; };
 		1A5640FFF39774DC371F61E7 /* BitcoinCashAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564BF724C69C237E309C07 /* BitcoinCashAdapter.swift */; };
 		1A5641061673702B10D858BF /* TransactionInfoTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5645F926B14580B1644164 /* TransactionInfoTheme.swift */; };
 		1A56410880DEEF4B91B3413A /* UptimeProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564F697ACF24DA968884EA /* UptimeProvider.swift */; };
@@ -718,6 +719,7 @@
 		1A5647C0909A28BECA342148 /* LockoutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564C329BD2549B51F93155 /* LockoutView.swift */; };
 		1A5647C94C737A83D85C6934 /* ManageWalletsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564B45A6BB5D38CE45C009 /* ManageWalletsPresenter.swift */; };
 		1A5647CE2220F4E29CA539C7 /* ManageWalletsTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564A860AD2DA3CFBF9C04A /* ManageWalletsTheme.swift */; };
+		1A5647DFE867E0474AA3C4E1 /* ChartData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564A481A683B1A6FA774D2 /* ChartData.swift */; };
 		1A5647E0E662CA7D27E931A6 /* TextSelectItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5648E17213DF77DCA2EE42 /* TextSelectItemView.swift */; };
 		1A5647ED2F029E0E8F63B591 /* ManageAccountDescriptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564952B280CC722F1B1621 /* ManageAccountDescriptionCell.swift */; };
 		1A5647F3635BCCAA32BF37F7 /* HashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56445B8B1F1C78E1DFC9F8 /* HashView.swift */; };
@@ -800,6 +802,7 @@
 		1A564B8F25AB6515F509B10D /* BackupTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5645D738FD93B79628E5E5 /* BackupTheme.swift */; };
 		1A564BC84E6A4F836994ABD3 /* AdapterError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564504718E7D19F379A9F7 /* AdapterError.swift */; };
 		1A564BD5E7709C07FD063961 /* TransactionsFilterTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5647CE5852E959DA7EB89A /* TransactionsFilterTheme.swift */; };
+		1A564BD87A3DD4FCC7B27B5E /* ChartData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564A481A683B1A6FA774D2 /* ChartData.swift */; };
 		1A564BDABCF8EA54F5599FF7 /* LatestRateData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5640AA47846498D56A36E6 /* LatestRateData.swift */; };
 		1A564BE00FB2C76EAA44A2E3 /* SettingsRightImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56499AAEEED9EA3CE9E0A7 /* SettingsRightImageCell.swift */; };
 		1A564BEBE06DB3041F6B258B /* RestoreEosInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564E95E2CCF97680C920F0 /* RestoreEosInteractor.swift */; };
@@ -2040,6 +2043,7 @@
 		1A5649DB879A57761C09842E /* AppTheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppTheme.swift; sourceTree = "<group>"; };
 		1A564A19508B4730BC016037 /* LockoutManagerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LockoutManagerTests.swift; sourceTree = "<group>"; };
 		1A564A3E6B23CF04ECEB40DC /* ManagePinPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManagePinPresenter.swift; sourceTree = "<group>"; };
+		1A564A481A683B1A6FA774D2 /* ChartData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChartData.swift; sourceTree = "<group>"; };
 		1A564A5CACB021B00AB026A1 /* SectionSeparator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionSeparator.swift; sourceTree = "<group>"; };
 		1A564A602609EF9DC0976C90 /* SyncModeRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SyncModeRouter.swift; sourceTree = "<group>"; };
 		1A564A6CCF1B907F25255D2E /* LockRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LockRouter.swift; sourceTree = "<group>"; };
@@ -3592,6 +3596,7 @@
 				58AAA84999D7232E186410A3 /* TimestampFormatter.swift */,
 				58AAA3EE682BFB88334E8CF9 /* ValueScaleHelper.swift */,
 				58AAA66548D415CFEDAE008C /* ChartFrame.swift */,
+				1A564A481A683B1A6FA774D2 /* ChartData.swift */,
 			);
 			path = Chart;
 			sourceTree = "<group>";
@@ -4752,6 +4757,7 @@
 				58AAA6D40A2C4447AB85A285 /* SendConfirmationPrimaryCell.swift in Sources */,
 				58AAAF5F0B8148F42BC494A3 /* SendConfirmationFieldCell.swift in Sources */,
 				58AAA854813B41785257B6B0 /* SendButtonCell.swift in Sources */,
+				1A5640FF11D49E87E7DA2089 /* ChartData.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5338,6 +5344,7 @@
 				58AAAC7F74556AB6B3AD9D63 /* SendConfirmationPrimaryCell.swift in Sources */,
 				58AAA7E280375B58308C839B /* SendConfirmationFieldCell.swift in Sources */,
 				58AAAAB80DA77E4F776870DC /* SendButtonCell.swift in Sources */,
+				1A5647DFE867E0474AA3C4E1 /* ChartData.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5872,6 +5879,7 @@
 				58AAAFEEC27E71FF55CBE115 /* SendConfirmationPrimaryCell.swift in Sources */,
 				58AAA5F9B6B9DCEB3C1DDF0C /* SendConfirmationFieldCell.swift in Sources */,
 				58AAABC88FD6E1B12EEE16C7 /* SendButtonCell.swift in Sources */,
+				1A564BD87A3DD4FCC7B27B5E /* ChartData.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
