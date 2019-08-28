@@ -231,7 +231,7 @@
 
 "manage_coins.title" = "코인 매니저";
 "manage_coins.add_coin.title" = "%@ 추가 ";
-"manage_coins.add_coin.text" = "%@ 암호를 얻기 위해 필요한 %@의 암호를 가지고 있지 않습니다. 지갑을 이용해 귀하의 암호를 생성할 수 있습니다. 아래의 생성 버튼을 사용하여 새 암호를 만드세요. %@를 위해 이미 존재하는 %@ 암호를 사용하실 수 도 있습니다.";
+"manage_coins.add_coin.text" = "You don't have key for %@. The wallet can generate the key for you. Use the Create button below to generate a new key.\n\nYou may also use the existing %@ key for the %@ if you have one.";
 "manage_coins.add_coin.create" = "만들기";
 "manage_coins.add_coin.restore" = "복구";
 
@@ -245,7 +245,7 @@
 
 // Settings -> Tell Friends
 
-"settings_tell_friends.text" = "Unstoppable과 함께 자유로워지세요!";
+"settings_tell_friends.text" = "Unstoppable Wallet - a crypto wallet I recommend";
 
 // Settings -> Security
 
