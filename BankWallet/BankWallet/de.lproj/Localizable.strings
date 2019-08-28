@@ -339,6 +339,7 @@
 "chart.market_cap.thousand" = "%@ k";
 "chart.market_cap.million" = "%@ M";
 "chart.market_cap.billion" = "%@ B";
+"chart.market_cap.trillion" = "%@ T";
 "chart.high" = "Hoch";
 "chart.low" = "Niedrig";
 "chart.volume" = "Lautstärke";
