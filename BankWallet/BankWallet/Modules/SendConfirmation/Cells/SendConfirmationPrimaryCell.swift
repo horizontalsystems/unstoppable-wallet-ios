@@ -1,8 +1,6 @@
 import UIKit
-import SnapKit
 
-class SendConfirmationPrimaryView: UIView {
-    private let delegate: ISendConfirmationPrimaryViewDelegate
+class SendConfirmationPrimaryCell: UITableViewCell {
 
     private let holderView = UIView()
 
@@ -11,16 +9,13 @@ class SendConfirmationPrimaryView: UIView {
     private let lineView = UIView()
     private let toLabel = UILabel()
     private let hashView = HashView()
-    private var onHashTap: (() -> ())?
 
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
 
-    public init(delegate: ISendConfirmationPrimaryViewDelegate) {
-        self.delegate = delegate
-        super.init(frame: .zero)
-
-        self.snp.makeConstraints { maker in
-            maker.height.equalTo(SendTheme.confirmationPrimaryHeight)
-        }
+        contentView.backgroundColor = .clear
+        backgroundColor = .clear
+        selectionStyle = .none
 
         addSubview(holderView)
 
@@ -64,7 +59,7 @@ class SendConfirmationPrimaryView: UIView {
 
         toLabel.font = SendTheme.confirmationToLabelFont
         toLabel.textColor = SendTheme.confirmationToLabelColor
-        toLabel.text = "send.confirmation.to".localized 
+        toLabel.text = "send.confirmation.to".localized
         toLabel.snp.makeConstraints { maker in
             maker.leading.equalToSuperview().offset(SendTheme.margin)
             maker.top.equalTo(lineView.snp.bottom).offset(SendTheme.confirmationToLabelTopMargin)
@@ -79,39 +74,16 @@ class SendConfirmationPrimaryView: UIView {
         }
         hashView.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         hashView.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
-        onHashTap = { [weak self] in
-            self?.delegate.onCopyReceiverClick()
-        }
     }
 
     required init?(coder aDecoder: NSCoder) {
-        fatalError("not implemented")
+        super.init(coder: aDecoder)
     }
 
-    override func didMoveToSuperview() {
-        super.didMoveToSuperview()
-
-        delegate.viewDidLoad()
-    }
-
-}
-
-extension SendConfirmationPrimaryView: ISendConfirmationPrimaryView {
-
-    func set(primaryAmount: String?) {
+    func bind(primaryAmount: String?, secondaryAmount: String?, receiver: String, onHashTap: (() -> ())?) {
         primaryAmountLabel.text = primaryAmount
-    }
-
-    func set(secondaryAmount: String?) {
         secondaryAmountLabel.text = secondaryAmount
-    }
-
-    func set(receiver: String) {
         hashView.bind(value: receiver, showExtra: .icon, onTap: onHashTap)
-    }
-
-    func showCopied() {
-        HudHelper.instance.showSuccess(title: "alert.copied".localized)
     }
 
 }
