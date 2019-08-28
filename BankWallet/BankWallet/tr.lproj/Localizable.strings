@@ -43,7 +43,7 @@
 "restore.words.description" = "Anahtarı Girin";
 "restore.validation_failed" = "Yanlış Anahtar";
 "restore.placeholder.account_name" = "Account Name";
-"restore.placeholder.private_key" = "Active Private Key";
+"restore.placeholder.private_key" = "Aktif özel anahtar";
 
 //Coin Sync Modes
 
