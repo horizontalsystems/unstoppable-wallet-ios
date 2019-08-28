@@ -342,3 +342,4 @@
 "chart.high" = "Alto";
 "chart.low" = "Bajo";
 "chart.volume" = "Volumen";
+"chart.error.not_available" = "Chart not available";
