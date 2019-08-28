@@ -266,13 +266,13 @@
 // Manage Keys
 
 "settings_manage_keys.title" = "Ключи";
-"settings_manage_keys.description" = "Anyone with access to your Keys can steal your wallet funds. Store keys safely and never show them to anyone.\n\nBackup each key to be able to restore funds if you lose or break your phone, or simply the wallet app gets deleted.";
+"settings_manage_keys.description" = "Любой, кто имеет доступ к вашим ключам, может украсть ваши средства. Храните ключи безопасно и не показывайте их никому.\n\nРезервное копирование каждого ключа необходимо для того, чтобы иметь возможность восстановить средства, если вы потеряете или сломаете ваш телефон, или приложение кошелька будет удалено.";
 "settings_manage_keys.delete" = "Удалить";
 "settings_manage_keys.backup" = "Резервная копия";
 "settings_manage_keys.show" = "Показать";
 "settings_manage_keys.create" = "Создать";
 "settings_manage_keys.restore" = "Восстановить";
-"settings_manage_keys.delete.cant_delete" = "You need to backup %@ key before you may delete it from this phone.";
+"settings_manage_keys.delete.cant_delete" = "Вам нужно сделать резервную копию %@ ключа, прежде чем вы его сможете отсоединить.";
 "settings_manage_keys.delete.title" = "Удалить Ключ";
 "settings_manage_keys.delete.confirmation_remove" = "Это действие удалит ваш %@ ключ (кошелёк) с этого устройства.";
 "settings_manage_keys.delete.confirmation_disable" = "Монеты, которые будут отключены: %@";
@@ -327,17 +327,17 @@
 
 // Key Types
 
-"chart.title" = "%@ Rate";
-"chart.time_duration.day" = "1D";
-"chart.time_duration.week" = "7D";
-"chart.time_duration.month" = "1M";
-"chart.time_duration.quartal" = "3M";
-"chart.time_duration.halyear" = "6M";
-"chart.time_duration.year" = "1Y";
+"chart.title" = "%@ Курс";
+"chart.time_duration.day" = "1Д";
+"chart.time_duration.week" = "7Д";
+"chart.time_duration.month" = "1М";
+"chart.time_duration.quartal" = "3М";
+"chart.time_duration.halyear" = "6М";
+"chart.time_duration.year" = "1Г";
 
-"chart.market_cap" = "Mkt. Cap";
-"chart.market_cap.thousand" = "%@ k";
-"chart.market_cap.million" = "%@ M";
+"chart.market_cap" = "Рын. Кап.";
+"chart.market_cap.thousand" = "%@ к";
+"chart.market_cap.million" = "%@ млн.";
 "chart.market_cap.billion" = "%@ B";
 "chart.high" = "High";
 "chart.low" = "Low";
