@@ -43,7 +43,6 @@ class FullTransactionInfoViewController: WalletViewController, SectionsDataSourc
         title = "full_info.title".localized
 
         navigationItem.backBarButtonItem = UIBarButtonItem(title: title, style: .plain, target: nil, action: nil)
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "button.share".localized, style: .plain, target: self, action: #selector(onShare))
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.close".localized, style: .plain, target: self, action: #selector(onClose))
 
         view.addSubview(tableView)
@@ -211,6 +210,12 @@ extension FullTransactionInfoViewController: IFullTransactionInfoView {
 
     func reload() {
         tableView.reload()
+
+        if delegate.haveBlockExplorer {
+            navigationItem.leftBarButtonItem = UIBarButtonItem(title: "button.share".localized, style: .plain, target: self, action: #selector(onShare))
+        } else {
+            navigationItem.leftBarButtonItem = nil
+        }
     }
 
     func showError(providerName: String?) {
