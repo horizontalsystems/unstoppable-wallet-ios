@@ -338,7 +338,7 @@
 "chart.market_cap" = "Рын. Кап.";
 "chart.market_cap.thousand" = "%@ к";
 "chart.market_cap.million" = "%@ млн.";
-"chart.market_cap.billion" = "%@ B";
-"chart.high" = "High";
-"chart.low" = "Low";
-"chart.volume" = "Volume";
+"chart.market_cap.billion" = "%@ млрд.";
+"chart.high" = "Макс.";
+"chart.low" = "Мин.";
+"chart.volume" = "Объём";
