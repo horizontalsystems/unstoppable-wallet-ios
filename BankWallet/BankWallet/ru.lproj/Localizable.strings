@@ -245,7 +245,7 @@
 
 // Settings -> Tell Friends
 
-"settings_tell_friends.text" = "Unstoppable Wallet - a crypto wallet I recommend";
+"settings_tell_friends.text" = "Unstoppable Wallet - криптокошелек, который я рекомендую";
 
 // Settings -> Security
 
@@ -338,7 +338,7 @@
 "chart.market_cap" = "Рын. Кап.";
 "chart.market_cap.thousand" = "%@ к";
 "chart.market_cap.million" = "%@ млн.";
-"chart.market_cap.billion" = "%@ млрд.";
+"chart.market_cap.billion" = "%@ млр.";
 "chart.market_cap.trillion" = "%@ трил.";
 "chart.high" = "Макс.";
 "chart.low" = "Мин.";
