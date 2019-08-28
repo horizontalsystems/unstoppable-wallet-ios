@@ -231,7 +231,7 @@
 
 "manage_coins.title" = "Portefeuilles";
 "manage_coins.add_coin.title" = "Ajouter %@ ";
-"manage_coins.add_coin.text" = "You don't have key for %@ which requires a %@ key. The wallet can generate the key for you. Use the Create button below to generate a new key.\n\nYou may also use the existing %@ key for the %@ if you have one.";
+"manage_coins.add_coin.text" = "You don't have key for %@. The wallet can generate the key for you. Use the Create button below to generate a new key.\n\nYou may also use the existing %@ key for the %@ if you have one.";
 "manage_coins.add_coin.create" = "Créer";
 "manage_coins.add_coin.restore" = "Restaurer";
 
@@ -245,7 +245,7 @@
 
 // Settings -> Tell Friends
 
-"settings_tell_friends.text" = "Soyez libre! Soyez inarretable!";
+"settings_tell_friends.text" = "Unstoppable Wallet - a crypto wallet I recommend";
 
 // Settings -> Security
 
