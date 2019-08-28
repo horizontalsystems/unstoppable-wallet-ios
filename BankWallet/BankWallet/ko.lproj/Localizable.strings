@@ -342,3 +342,4 @@
 "chart.high" = "높음";
 "chart.low" = "낮음";
 "chart.volume" = "음량";
+"chart.error.not_available" = "Chart not available";
