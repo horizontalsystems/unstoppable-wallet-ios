@@ -6,12 +6,12 @@ class ChartInteractor {
 
     private let disposeBag = DisposeBag()
 
-    private let apiProvider: IRatesStatsApiProvider
+    private let manager: IRateStatsManager
     private let localStorage: ILocalStorage
     private let rateStorage: IRateStorage
 
-    init(apiProvider: IRatesStatsApiProvider, localStorage: ILocalStorage, rateStorage: IRateStorage) {
-        self.apiProvider = apiProvider
+    init(manager: IRateStatsManager, localStorage: ILocalStorage, rateStorage: IRateStorage) {
+        self.manager = manager
         self.localStorage = localStorage
         self.rateStorage = rateStorage
     }
@@ -29,10 +29,9 @@ extension ChartInteractor: IChartInteractor {
     }
 
     func getRateStats(coinCode: String, currencyCode: String) {
-        apiProvider.getRateStatsData(coinCode: coinCode, currencyCode: currencyCode)
-                .observeOn(MainScheduler.instance)
+        manager.rateStats(coinCode: coinCode, currencyCode: currencyCode)
                 .subscribe(onSuccess: { [weak self] data in
-                    self?.delegate?.didReceive(rateStats: data, rate: self?.rateStorage.latestRate(coinCode: coinCode, currencyCode: currencyCode))
+                    self?.delegate?.didReceive(chartData: data, rate: self?.rateStorage.latestRate(coinCode: coinCode, currencyCode: currencyCode))
                 }, onError: { [weak self] error in
                 self?.delegate?.onError(error)
                 }).disposed(by: disposeBag)

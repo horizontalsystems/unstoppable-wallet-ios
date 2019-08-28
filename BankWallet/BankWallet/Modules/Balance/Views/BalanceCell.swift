@@ -18,7 +18,7 @@ class BalanceCell: UITableViewCell {
     private let coinValueLabel = UILabel()
 
     private let chartHolder = UIButton()
-    private let chartView = UIView()
+    private let chartView: ChartView
     private let percentDeltaLabel = UILabel()
 
     private let syncSpinner = HUDProgressView(
@@ -40,6 +40,11 @@ class BalanceCell: UITableViewCell {
     private var onChart: (() -> ())?
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        let configuration = ChartConfiguration()
+        configuration.showGrid = false
+        configuration.chartInsets = UIEdgeInsets(top: BalanceTheme.cellSmallMargin, left: 0, bottom: 0, right: 0)
+        chartView = ChartView(configuration: configuration)
+
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
         contentView.backgroundColor = .clear
@@ -162,7 +167,9 @@ class BalanceCell: UITableViewCell {
         chartView.isUserInteractionEnabled = false
         chartView.layer.masksToBounds = true
         chartView.layer.cornerRadius = BalanceTheme.chartCornerRadius
-        chartView.backgroundColor = .lightGray
+        chartView.layer.borderColor = BalanceTheme.chartBorderColor.cgColor
+        chartView.layer.borderWidth = BalanceTheme.chartBorderWidth
+        chartView.backgroundColor = BalanceTheme.chartBackground
         chartView.snp.makeConstraints { maker in
             maker.top.equalToSuperview().offset(BalanceTheme.cellSmallMargin)
             maker.trailing.equalToSuperview().offset(-BalanceTheme.cellSmallMargin)
@@ -171,6 +178,7 @@ class BalanceCell: UITableViewCell {
         }
         chartHolder.addSubview(percentDeltaLabel)
         percentDeltaLabel.font = BalanceTheme.percentDeltaFont
+        percentDeltaLabel.textAlignment = .right
         percentDeltaLabel.snp.makeConstraints { maker in
             maker.top.equalTo(self.chartView.snp.bottom).offset(BalanceTheme.cellBigMargin)
             maker.trailing.equalToSuperview().offset(-BalanceTheme.cellBigMargin)
@@ -261,9 +269,15 @@ class BalanceCell: UITableViewCell {
 
         chartHolder.isHidden = !isStatModeOn || selected
 
-        let fallDown = item.percentDelta < 0
+        let fallDown = item.percentDelta.isSignMinus
         percentDeltaLabel.textColor = fallDown ? BalanceTheme.percentDeltaDownColor : BalanceTheme.percentDeltaUpColor
         percentDeltaLabel.text = "\(fallDown ? "" : "+")\(item.percentDelta)%"
+
+        if item.chartPoints.isEmpty {
+            chartView.clear()
+        } else {
+            chartView.set(chartType: .day, data: item.chartPoints, animated: false)
+        }
     }
 
     func unbind() {

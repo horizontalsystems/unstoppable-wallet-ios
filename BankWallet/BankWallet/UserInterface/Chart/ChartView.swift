@@ -60,7 +60,10 @@ class ChartView: UIView {
         if let gridView = gridView {
             addSubview(gridView)
             gridView.snp.makeConstraints { maker in
-                maker.edges.equalToSuperview()
+                maker.top.equalToSuperview().offset(configuration.chartInsets.top)
+                maker.left.equalToSuperview().offset(configuration.chartInsets.left)
+                maker.bottom.equalToSuperview().offset(-configuration.chartInsets.bottom)
+                maker.right.equalToSuperview().offset(-configuration.chartInsets.right)
             }
         }
         addSubview(curveView)
@@ -80,6 +83,11 @@ class ChartView: UIView {
 
         indicatorView?.layoutSubviews()
         gridView?.refreshGrid()
+    }
+
+    public func clear() {
+        curveView.clear()
+        gridView?.clear()
     }
 
     private func updateChartFrame() {
@@ -118,8 +126,8 @@ class ChartView: UIView {
 
         curveInsets = UIEdgeInsets(top: 0, left: 0, bottom: ceil(textScaleSize.height), right: ceil(textScaleSize.width))
 
-        curveView.frame = bounds.inset(by: curveInsets)
-        indicatorView?.frame = bounds.inset(by: curveInsets)
+        curveView.frame = bounds.inset(by: curveInsets).inset(by: configuration.chartInsets)
+        indicatorView?.frame = bounds.inset(by: curveInsets).inset(by: configuration.chartInsets)
 
         gridView?.layoutSubviews()
     }

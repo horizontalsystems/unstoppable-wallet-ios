@@ -20,29 +20,20 @@ class ChartRateFactory: IChartRateFactory {
         case noRateStats
     }
 
-    private let chartRateConverter: IChartRateConverter
-
-    init(chartRateConverter: IChartRateConverter) {
-        self.chartRateConverter = chartRateConverter
+    init() {
     }
 
-    func chartViewItem(type: ChartType, rateStatsData: RateStatsData, rate: Rate?, currency: Currency) throws -> ChartViewItem {
-        guard let chartData = rateStatsData.stats[type.rawValue] else {
+    func chartViewItem(type: ChartType, chartData: ChartData, rate: Rate?, currency: Currency) throws -> ChartViewItem {
+        guard var points = chartData.stats[type] else {
             throw FactoryError.noRateStats
         }
 
-        var points = chartRateConverter.convert(chartRateData: chartData)
         if type == .year {
             points = Array(points.suffix(ChartRateFactory.yearPointCount))
         }
-        var rateValue: CurrencyValue? = nil
-        if let rate = rate {
-            points.append(ChartPoint(timestamp: rate.date.timeIntervalSince1970, value: rate.value))
-            rateValue = CurrencyValue(currency: currency, value: rate.value)
-        }
 
         var marketCapValue: CurrencyValue? = nil
-        if let marketCap = rateStatsData.marketCap {
+        if let marketCap = chartData.marketCap {
             marketCapValue = CurrencyValue(currency: currency, value: marketCap)
         }
         var minimumValue = Decimal.greatestFiniteMagnitude
@@ -61,6 +52,10 @@ class ChartRateFactory: IChartRateFactory {
             diff = (last - first) / first * 100
         }
 
+        var rateValue: CurrencyValue? = nil
+        if let rate = rate, !rate.expired {
+            rateValue = CurrencyValue(currency: currency, value: rate.value)
+        }
         return ChartViewItem(type: type, rateValue: rateValue, marketCapValue: marketCapValue, lowValue: lowValue, highValue: highValue, diff: diff, points: points)
     }
 

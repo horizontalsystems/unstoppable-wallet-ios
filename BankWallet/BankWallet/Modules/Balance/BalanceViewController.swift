@@ -46,7 +46,7 @@ class BalanceViewController: WalletViewController {
 
         tableView.separatorColor = .clear
         tableView.estimatedRowHeight = 0
-        tableView.delaysContentTouches = false
+        tableView.delaysContentTouches = true
 
         tableView.registerCell(forClass: BalanceCell.self)
         tableView.registerCell(forClass: BalanceEditCell.self)
@@ -251,6 +251,7 @@ extension BalanceViewController: IBalanceView {
 
     func setStatMode(isOn: Bool) {
         isStatModeOn = isOn
+        headerView.setSwitch(isOn: isOn)
         reload()
     }
 

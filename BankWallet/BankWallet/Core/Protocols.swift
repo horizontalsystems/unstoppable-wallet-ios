@@ -245,7 +245,7 @@ protocol IRateManager {
 }
 
 protocol IRateStatsManager {
-
+    func rateStats(coinCode: CoinCode, currencyCode: String) -> Single<ChartData>
 }
 
 protocol ISystemInfoManager {
@@ -306,8 +306,6 @@ protocol IRateApiProvider {
 
 protocol IRatesStatsApiProvider {
     func getRateStatsData(coinCode: String, currencyCode: String) -> Single<RateStatsData>
-    func getChartRateData(coinCode: String, currencyCode: String, chartType: ChartType) -> Single<ChartRateData>
-    func getMarketCapData() -> Single<MarketCapData>
 }
 
 protocol IRateStorage {

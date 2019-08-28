@@ -9,14 +9,16 @@ class BalanceInteractor {
 
     private let walletManager: IWalletManager
     private let adapterManager: IAdapterManager
+    private let rateStatsManager: IRateStatsManager
     private let rateStorage: IRateStorage
     private let currencyManager: ICurrencyManager
     private let localStorage: ILocalStorage
     private let predefinedAccountTypeManager: IPredefinedAccountTypeManager
 
-    init(walletManager: IWalletManager, adapterManager: IAdapterManager, rateStorage: IRateStorage, currencyManager: ICurrencyManager, localStorage: ILocalStorage, predefinedAccountTypeManager: IPredefinedAccountTypeManager) {
+    init(walletManager: IWalletManager, adapterManager: IAdapterManager, rateStatsManager: IRateStatsManager, rateStorage: IRateStorage, currencyManager: ICurrencyManager, localStorage: ILocalStorage, predefinedAccountTypeManager: IPredefinedAccountTypeManager) {
         self.walletManager = walletManager
         self.adapterManager = adapterManager
+        self.rateStatsManager = rateStatsManager
         self.rateStorage = rateStorage
         self.currencyManager = currencyManager
         self.localStorage = localStorage
@@ -121,6 +123,13 @@ extension BalanceInteractor: IBalanceInteractor {
 
     func predefinedAccountType(wallet: Wallet) -> IPredefinedAccountType? {
         return predefinedAccountTypeManager.predefinedAccountType(accountType: wallet.account.type)
+    }
+
+    func getRateStats(coinCode: String, currencyCode: String) {
+        rateStatsManager.rateStats(coinCode: coinCode, currencyCode: currencyCode)
+                .subscribe(onSuccess: { [weak self] rateStats in
+                    self?.delegate?.didReceive(coinCode: coinCode, chartData: rateStats)
+                }).disposed(by: disposeBag)
     }
 
 }

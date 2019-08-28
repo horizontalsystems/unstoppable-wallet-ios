@@ -110,6 +110,14 @@ class ChartCurveView: UIView {
         CATransaction.commit()
     }
 
+    public func clear() {
+        linesLayer.path = nil
+        linesLayer.removeAllAnimations()
+
+        gradientLayer.path = nil
+        gradientLayer.removeAllAnimations()
+    }
+
     private func animation(startPoints: [CGPoint], finishPoints: [CGPoint]) -> CABasicAnimation {
         let animation = CABasicAnimation(keyPath: "path")
         animation.fromValue = ChartBezierPath.path(for: startPoints).cgPath

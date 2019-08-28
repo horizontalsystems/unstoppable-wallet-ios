@@ -82,4 +82,7 @@ class BalanceTheme {
     static let percentDeltaFont: UIFont = .cryptoHeadline
     static let percentDeltaDownColor: UIColor = .cryptoRed
     static let percentDeltaUpColor: UIColor = .cryptoGreen
+    static var chartBackground: UIColor { return App.shared.localStorage.lightMode ? .cryptoLightBackground : .cryptoSteel20 }
+    static var chartBorderColor: UIColor { return App.shared.localStorage.lightMode ? .cryptoSteel20 : .clear }
+    static let chartBorderWidth: CGFloat = 1 / UIScreen.main.scale
 }
