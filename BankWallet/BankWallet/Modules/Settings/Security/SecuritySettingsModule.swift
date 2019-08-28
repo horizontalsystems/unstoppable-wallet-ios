@@ -1,5 +1,4 @@
 protocol ISecuritySettingsView: class {
-    func set(title: String)
     func set(biometryType: BiometryType)
     func set(backedUp: Bool)
     func set(isPinSet: Bool)

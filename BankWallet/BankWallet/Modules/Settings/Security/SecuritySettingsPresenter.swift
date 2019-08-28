@@ -14,7 +14,6 @@ class SecuritySettingsPresenter {
 extension SecuritySettingsPresenter: ISecuritySettingsViewDelegate {
 
     func viewDidLoad() {
-        view?.set(title: "settings_security.title")
         view?.set(biometryType: interactor.biometryType)
 
         view?.set(backedUp: interactor.nonBackedUpCount == 0)

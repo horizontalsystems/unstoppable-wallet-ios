@@ -20,13 +20,6 @@ class SecuritySettingsViewController: WalletViewController, SectionsDataSource {
 
         super.init(nibName: nil, bundle: nil)
 
-        tableView.registerCell(forClass: SettingsCell.self)
-        tableView.registerCell(forClass: SettingsRightImageCell.self)
-        tableView.registerCell(forClass: SettingsToggleCell.self)
-        tableView.registerHeaderFooter(forClass: SectionSeparator.self)
-        tableView.sectionDataSource = self
-        tableView.separatorColor = .clear
-
         hidesBottomBarWhenPushed = true
     }
 
@@ -37,7 +30,17 @@ class SecuritySettingsViewController: WalletViewController, SectionsDataSource {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        title = "settings_security.title".localized
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: title, style: .plain, target: nil, action: nil)
+
         tableView.backgroundColor = .clear
+        tableView.sectionDataSource = self
+        tableView.separatorColor = .clear
+
+        tableView.registerCell(forClass: SettingsCell.self)
+        tableView.registerCell(forClass: SettingsRightImageCell.self)
+        tableView.registerCell(forClass: SettingsToggleCell.self)
+        tableView.registerHeaderFooter(forClass: SectionSeparator.self)
 
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in
