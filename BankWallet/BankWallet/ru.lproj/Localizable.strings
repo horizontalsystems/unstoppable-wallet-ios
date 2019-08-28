@@ -7,17 +7,17 @@
 
 "button.ok" = "OK";
 "button.cancel" = "Отмена";
-"button.close" = "Close";
+"button.close" = "Закрыть";
 "button.confirm" = "Подтвердить";
 "button.done" = "Готово";
 "button.restore" = "Восстановить";
 "button.next" = "Далее";
 "button.remove" = "Откл.";
-"button.share" = "Share";
+"button.share" = "Поделиться";
 "button.save" = "Сохранить";
 "button.sync" = "Синхр.";
 "button.paste" = "Вставить";
-"button.backup" = "Backup";
+"button.backup" = "Рез. копия";
 
 "alert.copied" = "Скопировано";
 "alert.no_internet" = "Нет интернета";
@@ -61,7 +61,7 @@
 // Backup
 
 "backup.close" = "Закрыть";
-"backup.backup_required" = "Backup Required";
+"backup.backup_required" = "Необходима Резервная Копия";
 
 "backup.intro.title_backup" = "Резервная копия";
 "backup.intro.title_show" = "Показать Ключ";
@@ -80,10 +80,10 @@
 "backup.eos.account_name" = "Account Name";
 "backup.eos.active_private_key" = "Active Private Key";
 "backup.eos.hint" = "Копирование ключа с помощью действия «копировать» представляет определенный риск, если вы используете какие-либо приложения для управления буфером обмена или другие приложения, которые могут иметь доступ к данным буфера обмена.";
-"error.send_eos.self_transfer" = "Can't transfer token to own account";
-"error.send_eos.account_not_exist" = "Target account does not exist";
+"error.send_eos.self_transfer" = "Не удается отправить токен на свой аккаунт";
+"error.send_eos.account_not_exist" = "Этот аккаунт не существует";
 "error.send_eos.insufficient_ram" = "Your account has not enough of ram";
-"error.send_eos.unknown" = "Something went wrong: %@";
+"error.send_eos.unknown" = "Что-то пошло не так: %@ ";
 
 "backup.confirmation.title" = "Проверка...";
 "backup.confirmation.secret_key" = "Я понимаю, что я единственный владелец  Секретного Ключа, который надежно хранится на моем телефоне и позволяет мне контролировать средства в моем кошельке.";
@@ -111,8 +111,8 @@
 
 "deposit.receive_coin" = "Получить %@";
 "deposit.your_address" = "Ваш Адрес";
-"deposit.your_account" = "Your Account";
-"receive_alert.not_backed_up_description" = "You need to backup the %@ key before you may receive %@.";
+"deposit.your_account" = "Ваш Аккаунт";
+"receive_alert.not_backed_up_description" = "Вам нужно сделать резервную копию %@ ключа, прежде чем вы сможете получать %@.";
 
 // Send
 
@@ -121,12 +121,12 @@
 "send.address_placeholder" = "Адрес";
 "send.account_placeholder" = "Account";
 "send.fee" = "Комиссия:";
-"send.tx_speed" = "Transaction Speed";
-"send.tx_speed_low" = "Low";
-"send.tx_speed_medium" = "Medium";
-"send.tx_speed_high" = "High";
-"send.tx_duration" = "Duration";
-"send.instant" = "Instant";
+"send.tx_speed" = "Скорость Транзакции";
+"send.tx_speed_low" = "Низкая";
+"send.tx_speed_medium" = "Средняя";
+"send.tx_speed_high" = "Высокая";
+"send.tx_duration" = "Продолжительность";
+"send.instant" = "Мгновенно";
 "send.max_button" = "Макс.";
 "send.next_button" = "Далее";
 "send.error.invalid_address" = "Неверный Адрес";
@@ -159,12 +159,12 @@
 "tx_info.status.pending" = "В процессе";
 "tx_info.status.confirmed" = "Подтверждено";
 "tx_info.from_hash" = "От";
-"tx_info.transaction_id" = "Transaction ID";
+"tx_info.transaction_id" = "ID Транзакции";
 "tx_info.to_hash" = "Кому";
 "tx_info.button_verify" = "Проверить";
 "tx_info.rate" = "Исторический Курс";
-"tx_info.fee" = "Fee";
-"tx_info.note" = "* The value of this transaction appears as 0 because it was sent to your own address";
+"tx_info.fee" = "Комиссия";
+"tx_info.note" = "* Значение этой транзакции выглядит как 0, потому что она была отправлена на свой собственный адрес";
 
 // Full Info
 
@@ -214,7 +214,7 @@
 "settings.language" = "Язык";
 "settings.about" = "О приложении";
 "settings.tell_friends" = "Рассказать Друзьям";
-"settings.report_problem" = "Report Problem";
+"settings.report_problem" = "Сообщить о проблеме";
 "settings.light_mode" = "Светлый Режим";
 "settings.info_title" = "UNSTOPPABLE";
 "settings.info_subtitle" = "decentralized app";
@@ -259,9 +259,9 @@
 
 // Settings -> Report Problem
 
-"settings.report_problem.title" = "Report Problem";
-"settings.report_problem.email" = "E-mail";
-"settings.report_problem.telegram" = "Telegram";
+"settings.report_problem.title" = "Сообщить о проблеме";
+"settings.report_problem.email" = "Эл. почта";
+"settings.report_problem.telegram" = "Telegram ";
 
 // Manage Keys
 
