@@ -80,7 +80,7 @@
 "backup.eos.account_name" = "Account Name";
 "backup.eos.active_private_key" = "Active Private Key";
 "backup.eos.hint" = "Anahtarınızı \"Kopyala\" eylemiyle kopyalamanız anahtarınızın pano yöneticisine ve panoya erişimi olan diğer uygulamalara sızma riskini taşır.";
-"error.send_eos.self_transfer" = "Can't transfer token to own account";
+"error.send_eos.self_transfer" = "Bu kripto para kendi hesabınaza aktarılamıyor";
 "error.send_eos.account_not_exist" = "Hedef hesap yok";
 "error.send_eos.insufficient_ram" = "Hesabınız için ram yeterli değil";
 "error.send_eos.unknown" = "Beklenmeyen bir hata oluştu: %@";
