@@ -231,7 +231,7 @@
 
 "manage_coins.title" = "Кошельки";
 "manage_coins.add_coin.title" = "Добавить %@";
-"manage_coins.add_coin.text" = "You don't have key for %@. The wallet can generate the key for you. Use the Create button below to generate a new key.\n\nYou may also use the existing %@ key for the %@ if you have one.";
+"manage_coins.add_coin.text" = "У вас нет ключа для %@. Кошелек может сгенерировать ключ. Используйте кнопку \"Создать\" ниже, чтобы сгенерировать новый ключ.\n\nВы также можете использовать существующий %@ ключ для %@ , если он у вас есть.";
 "manage_coins.add_coin.create" = "Создать";
 "manage_coins.add_coin.restore" = "Восстановить";
 
@@ -339,8 +339,8 @@
 "chart.market_cap.thousand" = "%@ к";
 "chart.market_cap.million" = "%@ млн.";
 "chart.market_cap.billion" = "%@ млрд.";
-"chart.market_cap.trillion" = "%@ T";
+"chart.market_cap.trillion" = "%@ трил.";
 "chart.high" = "Макс.";
 "chart.low" = "Мин.";
 "chart.volume" = "Объём";
-"chart.error.not_available" = "Chart not available";
+"chart.error.not_available" = "График недоступен";
