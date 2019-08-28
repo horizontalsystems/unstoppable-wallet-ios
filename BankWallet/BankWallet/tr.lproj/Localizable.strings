@@ -125,8 +125,8 @@
 "send.tx_speed_low" = "Düşük";
 "send.tx_speed_medium" = "Orta";
 "send.tx_speed_high" = "Yüksek";
-"send.tx_duration" = "Duration";
-"send.instant" = "Instant";
+"send.tx_duration" = "Süreç";
+"send.instant" = "Anlık";
 "send.max_button" = "Azami";
 "send.next_button" = "İleri";
 "send.error.invalid_address" = "Geçersiz Adres";
