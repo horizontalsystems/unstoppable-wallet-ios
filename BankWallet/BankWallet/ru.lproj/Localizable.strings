@@ -342,3 +342,4 @@
 "chart.high" = "Макс.";
 "chart.low" = "Мин.";
 "chart.volume" = "Объём";
+"chart.error.not_available" = "Chart not available";
