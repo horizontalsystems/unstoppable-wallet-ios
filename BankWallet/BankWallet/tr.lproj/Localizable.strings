@@ -327,7 +327,7 @@
 
 // Key Types
 
-"chart.title" = "%@ Rate";
+"chart.title" = "%@ kur";
 "chart.time_duration.day" = "Gün";
 "chart.time_duration.week" = "Hafta";
 "chart.time_duration.month" = "Ay";
