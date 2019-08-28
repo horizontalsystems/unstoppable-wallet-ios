@@ -76,7 +76,7 @@ class SendConfirmationViewController: UIViewController, SectionsDataSource {
     }
 
     private func onSendTap() {
-
+        delegate.onSendClicked()
     }
 
     private func onHashTap(receiver: String) {
