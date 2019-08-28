@@ -11,11 +11,12 @@ class TransactionViewItem {
     let to: String?
     let incoming: Bool
     let sentToSelf: Bool
+    let showFromAddress: Bool
     let date: Date
     let status: TransactionStatus
     let rate: CurrencyValue?
 
-    init(wallet: Wallet, transactionHash: String, coinValue: CoinValue, feeCoinValue: CoinValue?, currencyValue: CurrencyValue?, from: String?, to: String?, incoming: Bool, sentToSelf: Bool, date: Date, status: TransactionStatus, rate: CurrencyValue?) {
+    init(wallet: Wallet, transactionHash: String, coinValue: CoinValue, feeCoinValue: CoinValue?, currencyValue: CurrencyValue?, from: String?, to: String?, incoming: Bool, sentToSelf: Bool, showFromAddress: Bool, date: Date, status: TransactionStatus, rate: CurrencyValue?) {
         self.wallet = wallet
         self.transactionHash = transactionHash
         self.coinValue = coinValue
@@ -25,6 +26,7 @@ class TransactionViewItem {
         self.to = to
         self.incoming = incoming
         self.sentToSelf = sentToSelf
+        self.showFromAddress = showFromAddress
         self.date = date
         self.status = status
         self.rate = rate
