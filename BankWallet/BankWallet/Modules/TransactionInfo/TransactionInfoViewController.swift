@@ -48,7 +48,7 @@ class TransactionInfoViewController: ActionSheetController {
         let statusItem = TransactionStatusItem(item: item, tag: 5)
         model.addItemView(statusItem)
 
-        if let from = item.from {
+        if item.showFromAddress, let from = item.from {
             model.addItemView(TransactionFromToHashItem(title: "tx_info.from_hash".localized, value: from, tag: 6, required: true, onHashTap: { [weak self] in
                 self?.delegate.onCopy(value: from)
             }))

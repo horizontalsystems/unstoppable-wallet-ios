@@ -51,10 +51,14 @@ class TransactionViewItemFactory: ITransactionViewItemFactory {
                 to: to,
                 incoming: incoming,
                 sentToSelf: sentToSelf,
+                showFromAddress: showFromAddress(for: coin.type),
                 date: record.date,
                 status: status,
                 rate: rate
         )
     }
 
+    private func showFromAddress(for type: CoinType) -> Bool {
+        return type == .bitcoin || type == .bitcoinCash || type == .dash
+    }
 }
