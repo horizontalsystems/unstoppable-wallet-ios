@@ -25,7 +25,7 @@ class SendAccountPresenter {
             view?.set(account: account, error: nil)
             self.currentAccount = account
         } catch {
-            view?.set(account: account, error: error.localizedDescription)
+            view?.set(account: account, error: error)
             self.currentAccount = nil
         }
     }

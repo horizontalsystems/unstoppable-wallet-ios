@@ -31,7 +31,7 @@ class SendAddressPresenter {
                 delegate?.onUpdate(amount: amount)
             }
         } catch {
-            view?.set(address: parsedAddress, error: error.localizedDescription)
+            view?.set(address: parsedAddress, error: ValidationError.invalidAddress)
             self.currentAddress = nil
         }
     }
@@ -85,7 +85,7 @@ extension SendAddressPresenter {
         var errorDescription: String? {
             switch self {
             case .invalidAddress:
-                return "send.address_error.invalid_address".localized
+                return "send.error.invalid_address".localized
             }
         }
     }

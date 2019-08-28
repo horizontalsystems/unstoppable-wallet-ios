@@ -46,7 +46,7 @@ class SendAccountView: UIView {
 
 extension SendAccountView: ISendAccountView {
 
-    func set(account: String?, error: String?) {
+    func set(account: String?, error: Error?) {
         addressInputField.bind(address: account, error: error)
     }
 

@@ -1,7 +1,7 @@
 import Foundation
 
 protocol ISendAddressView: class {
-    func set(address: String?, error: String?)
+    func set(address: String?, error: Error?)
 }
 
 protocol ISendAddressViewDelegate {

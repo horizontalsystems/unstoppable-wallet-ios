@@ -1,5 +1,5 @@
 protocol ISendAccountView: class {
-    func set(account: String?, error: String?)
+    func set(account: String?, error: Error?)
 }
 
 protocol ISendAccountViewDelegate {

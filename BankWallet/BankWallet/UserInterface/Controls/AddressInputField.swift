@@ -173,7 +173,7 @@ class AddressInputField: UIView {
     }
     var onTextChange: ((String?) -> ())?
 
-    func bind(address: String?, error: String?) {
+    func bind(address: String?, error: Error?) {
         if let address = address, !address.isEmpty {
             placeholderLabel.isHidden = true
             addressField.text = address
@@ -210,7 +210,7 @@ class AddressInputField: UIView {
 
         if let error = error {
             errorLabel.isHidden = false
-            errorLabel.text = error
+            errorLabel.text = error.localizedDescription
 
             addressField.snp.remakeConstraints { maker in
                 maker.leading.top.trailing.equalToSuperview()
