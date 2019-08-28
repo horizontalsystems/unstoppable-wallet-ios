@@ -350,5 +350,7 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 "chart.high" = "High";
 "chart.low" = "Low";
 "chart.volume" = "Volume";
+"chart.error.not_available" = "Chart not available";
+
 
 
