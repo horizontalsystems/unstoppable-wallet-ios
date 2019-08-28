@@ -272,7 +272,7 @@
 "settings_manage_keys.show" = "Göster";
 "settings_manage_keys.create" = "Oluştur";
 "settings_manage_keys.restore" = "Geri Yükle";
-"settings_manage_keys.delete.cant_delete" = "You need to backup %@ key before you may delete it from this phone.";
+"settings_manage_keys.delete.cant_delete" = "%@ anahtarınızı bu cihazdan silmeden önce yedeklemeniz gerekiyor.";
 "settings_manage_keys.delete.title" = "Anahtarı Sil";
 "settings_manage_keys.delete.confirmation_remove" = "Bu işlem %@ anahtarını (cüzdanı) bu cihazdan kaldıracak.";
 "settings_manage_keys.delete.confirmation_disable" = "Etkisizleştirilecek cüzdanlar: %@";
@@ -335,7 +335,7 @@
 "chart.time_duration.halyear" = "6 Ay";
 "chart.time_duration.year" = "1 Yıl";
 
-"chart.market_cap" = "Mkt. Cap";
+"chart.market_cap" = "P. Değeri";
 "chart.market_cap.thousand" = "%@ k";
 "chart.market_cap.million" = "%@ M";
 "chart.market_cap.billion" = "%@ B";
