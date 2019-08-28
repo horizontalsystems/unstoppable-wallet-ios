@@ -231,7 +231,7 @@
 
 "manage_coins.title" = "Kripto Para yöneticisi";
 "manage_coins.add_coin.title" = "%@ ekle ";
-"manage_coins.add_coin.text" = "You don't have key for %@. The wallet can generate the key for you. Use the Create button below to generate a new key.\n\nYou may also use the existing %@ key for the %@ if you have one.";
+"manage_coins.add_coin.text" = "%@ için Anahtarınız yok. Cüzdanınız, sizin için yeni anahtar oluşturabilir. Yeni bir anahtar oluşturmak için aşağıdaki Oluştur düğmesini tıklayın. \n\nMevcut %@ anahtarınız varsa onu %@ için kullanabilirsiniz.";
 "manage_coins.add_coin.create" = "Oluştur";
 "manage_coins.add_coin.restore" = "Geri Yükle";
 
