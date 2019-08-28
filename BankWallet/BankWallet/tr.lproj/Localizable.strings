@@ -245,7 +245,7 @@
 
 // Settings -> Tell Friends
 
-"settings_tell_friends.text" = "Unstoppable Wallet - a crypto wallet I recommend";
+"settings_tell_friends.text" = "Unstoppable Wallet - kullanmanız gereken kripto para cüzdanı";
 
 // Settings -> Security
 
@@ -343,4 +343,4 @@
 "chart.high" = "Yüksek";
 "chart.low" = "Düşük";
 "chart.volume" = "Birim";
-"chart.error.not_available" = "Chart not available";
+"chart.error.not_available" = "Grafik yok";
