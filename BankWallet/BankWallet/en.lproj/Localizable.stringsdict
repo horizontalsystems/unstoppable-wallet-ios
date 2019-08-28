@@ -15,11 +15,11 @@
 			<key>zero</key>
 			<string>Instant</string>
 			<key>one</key>
-			<string>~ %lu hour</string>
+			<string>%lu hour</string>
 			<key>many</key>
-			<string>~ %lu hours</string>
+			<string>%lu hours</string>
 			<key>other</key>
-			<string>~ %lu hours</string>
+			<string>%lu hours</string>
 		</dict>
 	</dict>
 	<key>send.duration_minutes</key>
@@ -35,11 +35,11 @@
 			<key>zero</key>
 			<string>Instant</string>
 			<key>one</key>
-			<string>~ %lu minute</string>
+			<string>%lu minute</string>
 			<key>many</key>
-			<string>~ %lu minutes</string>
+			<string>%lu minutes</string>
 			<key>other</key>
-			<string>~ %lu minutes</string>
+			<string>%lu minutes</string>
 		</dict>
 	</dict>
 </dict>

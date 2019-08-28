@@ -40,6 +40,7 @@ class SendFeePriorityView: UIView {
         }
 
         wrapperView.snp.makeConstraints { maker in
+            maker.height.equalTo(SendTheme.feePriorityWrapperHeight)
             maker.trailing.equalToSuperview().offset(-SendTheme.margin)
             maker.centerY.equalTo(feePriorityTitleLabel.snp.centerY)
         }
@@ -48,7 +49,7 @@ class SendFeePriorityView: UIView {
         feePriorityValueLabel.font = SendTheme.feePriorityValueFont
         feePriorityValueLabel.textColor = SendTheme.feePriorityValueColor
         feePriorityValueLabel.snp.makeConstraints { maker in
-            maker.leading.equalToSuperview()
+            maker.leading.equalToSuperview().offset(SendTheme.feePriorityValueLeftMargin)
             maker.trailing.equalTo(dropDownImageView.snp.leading).offset(-SendTheme.feePriorityValueRightMargin)
             maker.centerY.equalToSuperview()
             maker.height.equalToSuperview()

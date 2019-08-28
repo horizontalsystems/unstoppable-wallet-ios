@@ -99,7 +99,7 @@ extension SendFeeView: ISendFeeView {
     }
 
     func set(duration: TimeInterval?) {
-        durationValueLabel.text = duration?.approximate_hours_or_minutes ?? "send.instant".localized
+        durationValueLabel.text = duration.map { "send.duration.within".localized($0.approximateHoursOrMinutes) } ?? "send.duration.instant".localized
     }
 
     func set(error: Error?) {

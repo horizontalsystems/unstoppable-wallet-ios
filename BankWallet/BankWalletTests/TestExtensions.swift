@@ -76,11 +76,9 @@ extension FullTransactionItem: Equatable {
 extension FeeRatePriority {
     public static func ==(lhs: FeeRatePriority, rhs: FeeRatePriority) -> Bool {
         switch (lhs, rhs) {
-        case (.lowest, .lowest): return true
         case (.low, .low): return true
         case (.medium, .medium): return true
         case (.high, .high): return true
-        case (.highest, .highest): return true
         default: return false
         }
     }

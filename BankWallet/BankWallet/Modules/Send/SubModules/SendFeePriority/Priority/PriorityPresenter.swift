@@ -18,9 +18,9 @@ extension PriorityPresenter: IAlertViewDelegate {
     var items: [AlertItem] {
         return [
             .header("send.tx_speed"),
-            .row("\("send.tx_speed_low".localized) (\(interactor.duration(priority: .low).approximate_hours_or_minutes))"),
-            .row("\("send.tx_speed_medium".localized) (\(interactor.duration(priority: .medium).approximate_hours_or_minutes))"),
-            .row("\("send.tx_speed_high".localized) (\(interactor.duration(priority: .high).approximate_hours_or_minutes))"),
+            .row("\("send.tx_speed_low".localized) (< \(interactor.duration(priority: .low).approximateHoursOrMinutes))"),
+            .row("\("send.tx_speed_medium".localized) (< \(interactor.duration(priority: .medium).approximateHoursOrMinutes))"),
+            .row("\("send.tx_speed_high".localized) (< \(interactor.duration(priority: .high).approximateHoursOrMinutes))"),
         ]
     }
 
