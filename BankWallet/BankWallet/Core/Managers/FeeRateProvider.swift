@@ -15,14 +15,13 @@ class FeeRateProvider {
     }
 
     private func transactionSendDuration(from feeRate: FeeRate, priority: FeeRatePriority) -> TimeInterval {
-        // TODO: FeeRate will store these values
         switch priority {
         case .low:
-            return 3600 * 12
+            return feeRate.lowPriorityDuration
         case .medium:
-            return 3600 * 4
+            return feeRate.mediumPriorityDuration
         case .high:
-            return 3600
+            return feeRate.highPriorityDuration
         }
     }
 

@@ -15,13 +15,13 @@
 			<key>zero</key>
 			<string>Немедленно</string>
 			<key>one</key>
-			<string>~ %lu час</string>
+			<string>%lu час</string>
 			<key>few</key>
-			<string>~ %lu часа</string>
+			<string>%lu часа</string>
 			<key>many</key>
-			<string>~ %lu часов</string>
+			<string>%lu часов</string>
 			<key>other</key>
-			<string>~ %lu часов</string>
+			<string>%lu часов</string>
 		</dict>
 	</dict>
 	<key>send.duration_minutes</key>
@@ -37,13 +37,13 @@
 			<key>zero</key>
 			<string>Немедленно</string>
 			<key>one</key>
-			<string>~ %lu минута</string>
+			<string>%lu минута</string>
 			<key>few</key>
-			<string>~ %lu минуты</string>
+			<string>%lu минуты</string>
 			<key>many</key>
-			<string>~ %lu минут</string>
+			<string>%lu минут</string>
 			<key>other</key>
-			<string>~ %lu минут</string>
+			<string>%lu минут</string>
 		</dict>
 	</dict>
 </dict>
