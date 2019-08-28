@@ -82,7 +82,7 @@
 "backup.eos.hint" = "Копирование ключа с помощью действия «копировать» представляет определенный риск, если вы используете какие-либо приложения для управления буфером обмена или другие приложения, которые могут иметь доступ к данным буфера обмена.";
 "error.send_eos.self_transfer" = "Не удается отправить токен на свой аккаунт";
 "error.send_eos.account_not_exist" = "Этот аккаунт не существует";
-"error.send_eos.insufficient_ram" = "Your account has not enough of ram";
+"error.send_eos.insufficient_ram" = "У вашего аккаунта недостаточно RAM";
 "error.send_eos.unknown" = "Что-то пошло не так: %@ ";
 
 "backup.confirmation.title" = "Проверка...";
@@ -104,8 +104,8 @@
 "balance.syncing" = "Синхронизация...";
 "balance.add_coins" = "Добавить Монеты";
 "balance.sort.header" = "Сортировать по";
-"balance.sort.valueHighToLow" = "Баланс";
-"balance.sort.az" = "Название";
+"balance.sort.valueHighToLow" = "Балансу";
+"balance.sort.az" = "Названию";
 
 // Deposit
 
