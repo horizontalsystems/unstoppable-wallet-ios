@@ -270,8 +270,11 @@ class BalanceCell: UITableViewCell {
         chartHolder.isHidden = !isStatModeOn || selected
 
         let fallDown = item.percentDelta.isSignMinus
-        percentDeltaLabel.textColor = fallDown ? BalanceTheme.percentDeltaDownColor : BalanceTheme.percentDeltaUpColor
-        percentDeltaLabel.text = "\(fallDown ? "" : "+")\(item.percentDelta)%"
+        let successColor = fallDown ? BalanceTheme.percentDeltaDownColor : BalanceTheme.percentDeltaUpColor
+        percentDeltaLabel.textColor = item.statLoadDidFail ? BalanceTheme.percentDeltaFailColor : successColor
+
+        let successText = "\(fallDown ? "" : "+")\(item.percentDelta)%"
+        percentDeltaLabel.text = item.statLoadDidFail ? "n/a".localized : successText
 
         if item.chartPoints.isEmpty {
             chartView.clear()

@@ -35,10 +35,10 @@ class ChartPresenter {
         }
     }
 
-    private func updateButtons(rateStats: RateStatsData) {
+    private func updateButtons(chartData: ChartData) {
         var enabledTypes = [ChartType]()
         ChartType.allCases.forEach { type in
-            let enabled = (rateStats.stats[type.rawValue]?.values.count ?? 0) > 10
+            let enabled = (chartData.stats[type]?.count ?? 0) > 10
             if enabled {
                 enabledTypes.append(type)
                 view?.setChartTypeEnabled(tag: type.tag)
@@ -93,7 +93,7 @@ extension ChartPresenter: IChartInteractorDelegate {
         self.rate = rate
 
         view?.hideSpinner()
-        updateButtons(rateStats: rateStats)
+        updateButtons(chartData: chartData)
         updateChart()
     }
 

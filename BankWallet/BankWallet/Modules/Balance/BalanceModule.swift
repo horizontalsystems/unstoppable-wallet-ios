@@ -50,6 +50,7 @@ protocol IBalanceInteractorDelegate: class {
     func didUpdate(rate: Rate)
 
     func didReceive(coinCode: CoinCode, chartData: ChartData)
+    func didFailStats(for coinCode: CoinCode)
 
     func didRefresh()
 }
@@ -77,6 +78,7 @@ protocol IBalanceItemDataSource {
     func set(state: AdapterState, index: Int)
     func set(rate: Rate, index: Int)
     func set(chartPoints: [ChartPoint], index: Int)
+    func setStatsFailed(index: Int)
     func clearRates()
     func set(items: [BalanceItem])
 }

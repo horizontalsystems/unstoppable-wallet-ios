@@ -68,6 +68,7 @@ extension BalanceItemDataSource: IBalanceItemDataSource {
     }
 
     func set(chartPoints: [ChartPoint], index: Int) {
+        items[index].statLoadDidFail = false
         items[index].chartPoints = chartPoints
         items[index].percentDelta = {
             if let first = chartPoints.first, let last = chartPoints.last {
@@ -77,6 +78,12 @@ extension BalanceItemDataSource: IBalanceItemDataSource {
             }
             return 0
         }()
+    }
+
+    func setStatsFailed(index: Int) {
+        items[index].chartPoints = []
+        items[index].percentDelta = 0
+        items[index].statLoadDidFail = true
     }
 
     func clearRates() {

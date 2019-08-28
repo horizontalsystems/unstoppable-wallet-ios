@@ -110,6 +110,19 @@ extension BalancePresenter: IBalanceInteractorDelegate {
         view?.reload(with: differ.changes(old: oldItems, new: dataSource.items))
     }
 
+    func didFailStats(for coinCode: CoinCode) {
+        let indexes = dataSource.indexes(for: coinCode)
+        guard indexes.count > 0 else {
+            return
+        }
+
+        let oldItems = dataSource.items
+        for index in indexes {
+            dataSource.setStatsFailed(index: index)
+        }
+        view?.reload(with: differ.changes(old: oldItems, new: dataSource.items))
+    }
+
     func didRefresh() {
         view?.didRefresh()
     }
