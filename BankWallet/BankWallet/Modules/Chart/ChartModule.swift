@@ -9,7 +9,7 @@ protocol IChartView: class {
 
     func show(viewItem: ChartViewItem)
 
-    func showSelectedPoint(timestamp: TimeInterval, value: CurrencyValue)
+    func showSelectedPoint(chartType: ChartType, timestamp: TimeInterval, value: CurrencyValue)
 
     func showError()
 
