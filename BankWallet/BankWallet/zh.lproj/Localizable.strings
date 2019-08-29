@@ -108,7 +108,7 @@
 "balance.sort.header" = "排序方式";
 "balance.sort.valueHighToLow" = "余额";
 "balance.sort.az" = "名称";
-
+"balance.sort.24h_change" = "24h Change";
 // Deposit
 
 "deposit.receive_coin" = "收到%@";
