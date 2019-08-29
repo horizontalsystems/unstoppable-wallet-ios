@@ -11,6 +11,8 @@ struct StatsKey: Hashable {
 }
 
 class RateStatsManager {
+    private static let yearPointCount = 53
+
     private let disposeBag = DisposeBag()
     private let apiProvider: IRatesStatsApiProvider
     private let rateStorage: IRateStorage
@@ -23,12 +25,16 @@ class RateStatsManager {
         self.chartRateConverter = chartRateConverter
     }
 
-    private func convert(responseData: ChartRateData, coinCode: CoinCode, currencyCode: String) -> [ChartPoint] {
+    private func convert(responseData: ChartRateData, coinCode: CoinCode, currencyCode: String, type: ChartType) -> [ChartPoint] {
         var points = chartRateConverter.convert(chartRateData: responseData)
         if let rate = rateStorage.latestRate(coinCode: coinCode, currencyCode: currencyCode), rate.date.timeIntervalSince1970 > (points.last?.timestamp ?? 0) {
             points.append(ChartPoint(timestamp: rate.date.timeIntervalSince1970, value: rate.value))
         }
-        return points
+        if type == .year {
+            return Array(points.suffix(RateStatsManager.yearPointCount))
+        } else {
+            return points
+        }
     }
 
     private func calculateDiff(for data: ChartRateData) -> Decimal {
@@ -57,7 +63,7 @@ extension RateStatsManager: IRateStatsManager {
                     var diffs = [ChartType: Decimal]()
                     response.stats.forEach { key, value in
                         if let type = ChartType(rawValue: key) {
-                            stats[type] = self?.convert(responseData: value, coinCode: coinCode, currencyCode: currencyCode) ?? []
+                            stats[type] = self?.convert(responseData: value, coinCode: coinCode, currencyCode: currencyCode, type: type) ?? []
                             diffs[type] = self?.calculateDiff(for: value)
                         }
                     }

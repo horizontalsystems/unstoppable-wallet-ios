@@ -72,6 +72,9 @@ extension BalancePresenter: IBalanceInteractorDelegate {
         dataSource.currency = currency
         dataSource.clearRates()
 
+        if dataSource.statsModeOn {
+            updateStats()
+        }
         interactor.fetchRates(currencyCode: currency.code, coinCodes: dataSource.coinCodes)
 
         view?.reload()
@@ -207,6 +210,10 @@ extension BalancePresenter: ISortTypeDelegate {
 
     func onSelect(sort: BalanceSortType) {
         dataSource.sortType = sort
+        if sort == .percentGrowth {
+            dataSource.statsModeOn = true
+            updateStats()
+        }
         view?.reload()
     }
 
