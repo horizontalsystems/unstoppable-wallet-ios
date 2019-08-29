@@ -14,8 +14,6 @@ struct ChartViewItem {
 }
 
 class ChartRateFactory: IChartRateFactory {
-    private static let yearPointCount = 53
-
     enum FactoryError: Error {
         case noRateStats
         case noPercentDelta
@@ -25,15 +23,11 @@ class ChartRateFactory: IChartRateFactory {
     }
 
     func chartViewItem(type: ChartType, chartData: ChartData, rate: Rate?, currency: Currency) throws -> ChartViewItem {
-        guard var points = chartData.stats[type] else {
+        guard let points = chartData.stats[type] else {
             throw FactoryError.noRateStats
         }
         guard let diff = chartData.diffs[type] else {
             throw FactoryError.noPercentDelta
-        }
-
-        if type == .year {
-            points = Array(points.suffix(ChartRateFactory.yearPointCount))
         }
 
         var marketCapValue: CurrencyValue? = nil

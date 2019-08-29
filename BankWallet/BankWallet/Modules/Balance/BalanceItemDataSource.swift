@@ -71,6 +71,7 @@ extension BalanceItemDataSource: IBalanceItemDataSource {
         items[index].statLoadDidFail = false
         items[index].chartPoints = chartPoints
         items[index].percentDelta = percentDelta
+        items = sorter.sort(items: items, sort: sortType)
     }
 
     func setStatsFailed(index: Int) {
