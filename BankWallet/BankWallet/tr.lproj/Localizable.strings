@@ -173,7 +173,7 @@
 
 "full_info.title" = "Hesap işlemi";
 "full_info.time" = "Tarih";
-"full_info.block" = "Blok ";
+"full_info.block" = "Blok numarası";
 "full_info.confirmations" = "Onaylama";
 "full_info.size" = "Boyut";
 "full_info.fee" = "Masraf";
