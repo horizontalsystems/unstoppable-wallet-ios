@@ -23,6 +23,8 @@
 "alert.no_internet" = "No Internet";
 "alert.network_issue" = "Network issues. Try again in a short moment";
 
+"n/a" = "N/A";
+
 "biometric_usage_reason" = "Unlock wallet";
 
 // Access Camera
