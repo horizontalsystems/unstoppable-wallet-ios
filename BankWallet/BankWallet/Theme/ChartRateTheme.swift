@@ -53,4 +53,19 @@ class ChartRateTheme {
 
     static let marketCapTextFont = UIFont.cryptoCaption1
     static var marketCapTextColor: UIColor { return .crypto_Bars_Dark }
+
+    static let diffFormatter: NumberFormatter = {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.maximumFractionDigits = 2
+        formatter.groupingSeparator = ""
+        return formatter
+    }()
+
+    static func formatted(percentDelta: Decimal) -> String {
+        let formatter = ChartRateTheme.diffFormatter
+        let sign = percentDelta.isSignMinus ? "- " : "+ "
+        return [sign, formatter.string(from: abs(percentDelta) as NSNumber), "%"].compactMap { $0 }.joined()
+    }
+
 }

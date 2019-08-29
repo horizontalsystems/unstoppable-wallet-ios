@@ -4,14 +4,6 @@ import ActionSheet
 class ChartViewController: ActionSheetController {
     private let delegate: IChartViewDelegate
 
-    private static let diffFormatter: NumberFormatter = {
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .decimal
-        formatter.maximumFractionDigits = 2
-        formatter.groupingSeparator = ""
-        return formatter
-    }()
-
     private static let marketCapFormatter: NumberFormatter = {
         let formatter = NumberFormatter()
         formatter.numberStyle = .currency
@@ -77,11 +69,7 @@ class ChartViewController: ActionSheetController {
     }
 
     private func show(diff: Decimal) {
-        let formatter = ChartViewController.diffFormatter
-        let sign = diff.isSignMinus ? "- " : "+ "
-
-        let formattedDiff = [sign, formatter.string(from: abs(diff) as NSNumber), "%"].compactMap { $0 }.joined()
-        currentRateItem.bindDiff?(formattedDiff, !diff.isSignMinus)
+        currentRateItem.bindDiff?(ChartRateTheme.formatted(percentDelta: diff), !diff.isSignMinus)
     }
 
     private func marketCapFormat(currencyValue: CurrencyValue) -> String? {

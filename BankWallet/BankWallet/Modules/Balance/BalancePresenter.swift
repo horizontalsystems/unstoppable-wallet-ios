@@ -97,6 +97,9 @@ extension BalancePresenter: IBalanceInteractorDelegate {
         guard let points = chartData.stats[.day] else {
             return
         }
+        guard let percentDelta = chartData.diffs[.day] else {
+            return
+        }
 
         let indexes = dataSource.indexes(for: coinCode)
         guard indexes.count > 0 else {
@@ -105,7 +108,7 @@ extension BalancePresenter: IBalanceInteractorDelegate {
 
         let oldItems = dataSource.items
         for index in indexes {
-            dataSource.set(chartPoints: points, index: index)
+            dataSource.set(chartPoints: points, percentDelta: percentDelta, index: index)
         }
         view?.reload(with: differ.changes(old: oldItems, new: dataSource.items))
     }
@@ -130,6 +133,9 @@ extension BalancePresenter: IBalanceInteractorDelegate {
 }
 
 extension BalancePresenter: IBalanceViewDelegate {
+    var isStatsOn: Bool {
+        return dataSource.statsModeOn
+    }
 
     func viewDidLoad() {
         dataSource.sortType = interactor.sortType
@@ -187,10 +193,10 @@ extension BalancePresenter: IBalanceViewDelegate {
         router.openBackup(wallet: wallet, predefinedAccountType: predefinedAccountType)
     }
 
-    func onStatsSwitch(on: Bool) {
-        dataSource.statsModeOn = on
-        view?.setStatMode(isOn: on)
-        if on {
+    func onStatsSwitch() {
+        dataSource.statsModeOn = !dataSource.statsModeOn
+        view?.reload()
+        if dataSource.statsModeOn {
             updateStats()
         }
     }

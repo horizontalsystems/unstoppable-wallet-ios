@@ -17,7 +17,6 @@ class FullTransactionInfoViewController: WalletViewController, SectionsDataSourc
     private weak var hashHeaderView: FullTransactionHashHeaderView?
 
     private let closeButton = UIButton(frame: .zero)
-    private let shareButton = UIButton(frame: .zero)
 
     private var errorView: RequestErrorView?
     private let loadingView = HUDProgressView(strokeLineWidth: FullTransactionInfoTheme.spinnerLineWidth, radius: FullTransactionInfoTheme.spinnerSideSize / 2 - FullTransactionInfoTheme.spinnerLineWidth / 2, strokeColor: UIColor.cryptoGray)
@@ -194,14 +193,11 @@ extension FullTransactionInfoViewController: IFullTransactionInfoView {
     func showLoading() {
         loadingView.set(hidden: false)
         loadingView.startAnimating()
-
-        navigationItem.leftBarButtonItem?.isEnabled = false
     }
 
     func hideLoading() {
         self.loadingView.set(hidden: true)
         loadingView.stopAnimating()
-        navigationItem.leftBarButtonItem?.isEnabled = true
     }
 
     func showCopied() {

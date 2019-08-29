@@ -173,7 +173,7 @@ class BalanceCell: UITableViewCell {
         chartView.snp.makeConstraints { maker in
             maker.top.equalToSuperview().offset(BalanceTheme.cellSmallMargin)
             maker.trailing.equalToSuperview().offset(-BalanceTheme.cellSmallMargin)
-            maker.size.equalTo(CGSize(width: BalanceTheme.chartWidth, height: BalanceTheme.chartHeight))
+            maker.size.equalTo(BalanceTheme.chartSize)
             maker.leading.greaterThanOrEqualToSuperview()
         }
         chartHolder.addSubview(percentDeltaLabel)
@@ -273,7 +273,7 @@ class BalanceCell: UITableViewCell {
         let successColor = fallDown ? BalanceTheme.percentDeltaDownColor : BalanceTheme.percentDeltaUpColor
         percentDeltaLabel.textColor = item.statLoadDidFail ? BalanceTheme.percentDeltaFailColor : successColor
 
-        let successText = "\(fallDown ? "" : "+")\(item.percentDelta)%"
+        let successText = ChartRateTheme.formatted(percentDelta: item.percentDelta)
         percentDeltaLabel.text = item.statLoadDidFail ? "n/a".localized : successText
 
         if item.chartPoints.isEmpty {
