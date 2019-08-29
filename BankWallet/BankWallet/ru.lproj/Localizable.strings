@@ -259,7 +259,7 @@
 
 // Settings -> Report Problem
 
-"settings.report_problem.title" = "Report Problem";
+"settings.report_problem.title" = "Наши Контакты";
 "settings.report_problem.email" = "Эл. почта";
 "settings.report_problem.telegram" = "Telegram ";
 
