@@ -4,8 +4,6 @@ import RxSwift
 
 class BitcoinAdapter: BitcoinBaseAdapter {
     private let bitcoinKit: BitcoinKit
-    override var receiveAddressScriptType: ScriptType { return .p2wpkhSh }
-    override var changeAddressScriptType: ScriptType { return .p2wpkh }
 
     init(wallet: Wallet, testMode: Bool) throws {
         guard case let .mnemonic(words, _, _) = wallet.account.type else {
