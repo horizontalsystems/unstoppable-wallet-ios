@@ -23,6 +23,8 @@
 "alert.no_internet" = "Aucune connexion Internet";
 "alert.network_issue" = "Problèmes réseau. Réessayez";
 
+"n/a" = "N/A";
+
 "biometric_usage_reason" = "Déverrouiller le porte-monnaie";
 
 // Access Camera
