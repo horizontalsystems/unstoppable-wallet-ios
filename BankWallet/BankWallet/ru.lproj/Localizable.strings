@@ -6,7 +6,7 @@
 "coin.ETHt" = "Ethereum Т";
 
 "button.ok" = "OK";
-"button.cancel" = "Отмена";
+"button.cancel" = "Cancel";
 "button.close" = "Закрыть";
 "button.confirm" = "Подтвердить";
 "button.done" = "Готово";
@@ -40,7 +40,7 @@
 
 "restore.title" = "Восстановить";
 "restore.description" = "Чтобы восстановить существующий кошелек вам нужно ввести приватный ключ для этого кошелька.\n\nКак только вы восстановите один кошелек, вы сможете восстановить больше кошельков, перейдя в раздел \"Управление Ключами\" в настройках приложения.";
-"restore.words.description" = "Введите ключ";
+"restore.words.description" = "Введите Ключ";
 "restore.validation_failed" = "Неверный Ключ";
 "restore.placeholder.account_name" = "Account Name";
 "restore.placeholder.private_key" = "Active Private Key";
