@@ -23,6 +23,8 @@
 "alert.no_internet" = "没有网络";
 "alert.network_issue" = "网络问题。请稍后再试\n\n";
 
+"n/a" = "N/A";
+
 "biometric_usage_reason" = "解锁钱包";
 
 // Access Camera
