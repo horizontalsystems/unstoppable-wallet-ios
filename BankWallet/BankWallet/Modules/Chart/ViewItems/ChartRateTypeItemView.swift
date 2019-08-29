@@ -20,12 +20,12 @@ class ChartRateTypeItemView: BaseActionItemView {
         addSubview(valueLabel)
         valueLabel.font = ChartRateTheme.chartRateValueFont
         valueLabel.textColor = ChartRateTheme.chartRateValueColor
-        dateLabel.snp.makeConstraints { maker in
-            maker.top.equalToSuperview().offset(ChartRateTheme.chartRateDateTopMargin)
+        valueLabel.snp.makeConstraints { maker in
+            maker.top.equalToSuperview().offset(ChartRateTheme.chartRateValueTopMargin)
             maker.centerX.equalToSuperview()
         }
-        valueLabel.snp.makeConstraints { maker in
-            maker.top.equalTo(dateLabel.snp.bottom).offset(ChartRateTheme.chartRateValueTopMargin)
+        dateLabel.snp.makeConstraints { maker in
+            maker.top.equalTo(valueLabel.snp.bottom).offset(ChartRateTheme.chartRateDateTopMargin)
             maker.centerX.equalToSuperview()
         }
 

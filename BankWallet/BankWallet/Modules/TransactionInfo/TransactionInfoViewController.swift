@@ -42,7 +42,7 @@ class TransactionInfoViewController: ActionSheetController {
             model.addItemView(feeItem)
         }
 
-        let timeItem = TransactionValueItem(title: "tx_info.time".localized, value: DateHelper.instance.formatTransactionInfoTime(from: item.date), tag: 4)
+        let timeItem = TransactionValueItem(title: "tx_info.time".localized, value: DateHelper.instance.formatFullTime(from: item.date), tag: 4)
         model.addItemView(timeItem)
 
         let statusItem = TransactionStatusItem(item: item, tag: 5)

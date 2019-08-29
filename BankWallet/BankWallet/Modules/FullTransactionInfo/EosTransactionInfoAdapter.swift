@@ -26,7 +26,7 @@ class EosTransactionInfoAdapter: IFullTransactionInfoAdapter {
 
         var topSectionItems = [FullTransactionItem]()
         if let blockTime = txResponse.blockTime {
-            topSectionItems.append(FullTransactionItem(icon: "Date Icon", title: "full_info.time".localized, value: DateHelper.instance.formatTransactionInfoTime(from: blockTime)))
+            topSectionItems.append(FullTransactionItem(icon: "Date Icon", title: "full_info.time".localized, value: DateHelper.instance.formatFullTime(from: blockTime)))
         }
         if let blockNumber = txResponse.blockNumber {
             topSectionItems.append(FullTransactionItem(icon: "Block Icon", title: "full_info.block".localized, value: "#\(blockNumber)"))

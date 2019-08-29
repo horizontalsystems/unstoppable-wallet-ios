@@ -62,8 +62,13 @@ public class DateHelper {
         return getFormatter(forFormat: "\(DateHelper.correctedSystemHourFormat):mm").string(from: date)
     }
 
-    public func formatTransactionInfoTime(from date: Date) -> String {
+    public func formatFullTime(from date: Date) -> String {
         let formatter = getFormatter(forFormat: "MMM d, yyyy, \(DateHelper.correctedSystemHourFormat):mm")
+        return formatter.string(from: date)
+    }
+
+    public func formatFullDateOnly(from date: Date) -> String {
+        let formatter = getFormatter(forFormat: "MMM d, yyyy")
         return formatter.string(from: date)
     }
 

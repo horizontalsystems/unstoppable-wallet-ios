@@ -81,7 +81,7 @@ extension ChartPresenter: IChartViewDelegate {
 
     func chartTouchSelect(point: ChartPoint) {
         let currencyValue = CurrencyValue(currency: currency, value: point.value)
-        view?.showSelectedPoint(timestamp: point.timestamp, value: currencyValue)
+        view?.showSelectedPoint(chartType: chartType, timestamp: point.timestamp, value: currencyValue)
     }
 
 }

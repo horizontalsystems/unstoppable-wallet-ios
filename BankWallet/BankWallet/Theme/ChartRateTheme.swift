@@ -19,10 +19,10 @@ class ChartRateTheme {
 
     static let chartRateTypeHeight: CGFloat = 48
 
-    static let chartRateDateTopMargin: CGFloat = 6
+    static let chartRateValueTopMargin: CGFloat = 6
     static let chartRateDateFont = UIFont.cryptoCaption3
     static let chartRateDateColor: UIColor = .cryptoGray
-    static let chartRateValueTopMargin: CGFloat = 1
+    static let chartRateDateTopMargin: CGFloat = 1
     static let chartRateValueFont = UIFont.cryptoCaptionMedium
     static var chartRateValueColor: UIColor { return .crypto_Bars_Dark }
 

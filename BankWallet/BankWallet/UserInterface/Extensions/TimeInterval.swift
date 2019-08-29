@@ -7,11 +7,11 @@ extension TimeInterval {
         let hours = seconds / 3600
 
         if hours > 0 {
-            return "send.duration_hours".localized(hours)
+            return "send.duration.hours".localized(hours)
         }
 
         let minutes = seconds / 60
-        return "send.duration_minutes".localized(minutes)
+        return "send.duration.minutes".localized(minutes)
     }
 
 }
