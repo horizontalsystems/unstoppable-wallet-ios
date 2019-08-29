@@ -61,7 +61,7 @@
 // Backup
 
 "backup.close" = "关闭";
-"backup.backup_required" = "Backup Required";
+"backup.backup_required" = "需要备份";
 
 "backup.intro.title_backup" = "备份";
 "backup.intro.title_show" = "显示密钥";
@@ -80,8 +80,8 @@
 "backup.eos.account_name" = "Account Name";
 "backup.eos.active_private_key" = "Active Private Key";
 "backup.eos.hint" = "如果您使用任何剪贴板管理应用程序或其他可以访问剪贴板数据的应用程序，则使用“复制”操作复制密钥会带来一些风险。\n\n";
-"error.send_eos.self_transfer" = "Can't transfer token to own account";
-"error.send_eos.account_not_exist" = "Target account does not exist";
+"error.send_eos.self_transfer" = "无法将代币转入自己的账户";
+"error.send_eos.account_not_exist" = "目标账户不存在";
 "error.send_eos.insufficient_ram" = "Your account has not enough of ram";
 "error.send_eos.unknown" = "Something went wrong: %@";
 
@@ -111,7 +111,7 @@
 
 "deposit.receive_coin" = "收到%@";
 "deposit.your_address" = "您的地址";
-"deposit.your_account" = "Your Account";
+"deposit.your_account" = "您的账户";
 "receive_alert.not_backed_up_description" = "You need to backup the %@ key before you may receive %@.";
 
 // Send
@@ -122,7 +122,7 @@
 "send.account_placeholder" = "Account";
 "send.fee" = "费用:";
 "send.tx_speed" = "Transaction Speed:";
-"send.tx_speed_low" = "Low";
+"send.tx_speed_low" = "低";
 "send.tx_speed_medium" = "Medium";
 "send.tx_speed_high" = "High";
 "send.tx_duration" = "Duration:";
