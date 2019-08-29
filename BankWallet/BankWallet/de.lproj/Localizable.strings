@@ -23,6 +23,8 @@
 "alert.no_internet" = "Kein Internet";
 "alert.network_issue" = "Netzwerkprobleme. Bitte noch einmal versuchen.";
 
+"n/a" = "N/A";
+
 "biometric_usage_reason" = "Wallet entsperren";
 
 // Access Camera
@@ -39,7 +41,7 @@
 // Restore
 
 "restore.title" = "Wiederherstellen";
-"restore.description" = "To restore existing wallet you need to enter a secret key for that wallet.\n\nOnce you restore one wallet you will be able to restore more wallets by going to Manage Keys section in app Settings.";
+"restore.description" = "Um ein bestehendes Wallet wiederherzustellen, müssen Sie den Offlineschlüssel für dieses Wallet eingeben.\n\nSobald Sie ein Wallet wiederhergestellt haben, können Sie weitere Wallets wiederherstellen. Gehen Sie dazu in das Verzeichnis Manage Schlüssel in den App-Einstellungen.";
 "restore.words.description" = "Schlüssel Eingeben";
 "restore.validation_failed" = "Falscher Schlüssel";
 "restore.placeholder.account_name" = "Account Name";
@@ -126,10 +128,10 @@
 "send.tx_speed_medium" = "Mittel";
 "send.tx_speed_high" = "Hoch";
 "send.tx_duration" = "Duration:";
-"send.duration.instant" = "Instant";
+"send.duration.instant" = "Sofort";
 "send.duration.within" = "within %@";
-"send.duration.hours" = "%d h.";
-"send.duration.minutes" = "%d min.";
+"send.duration.hours" = "%d Std.";
+"send.duration.minutes" = "%d Min.";
 "send.max_button" = "Max.";
 "send.next_button" = "Weiter";
 "send.error.invalid_address" = "Ungültige Adresse";
@@ -331,12 +333,12 @@
 // Key Types
 
 "chart.title" = "%@ Rate";
-"chart.time_duration.day" = "1D";
-"chart.time_duration.week" = "7D";
+"chart.time_duration.day" = "1T";
+"chart.time_duration.week" = "7T";
 "chart.time_duration.month" = "1M";
 "chart.time_duration.quartal" = "3M";
 "chart.time_duration.halyear" = "6M";
-"chart.time_duration.year" = "1Y";
+"chart.time_duration.year" = "1J";
 
 "chart.market_cap" = "Mkt. Cap";
 "chart.market_cap.thousand" = "%@ k";
