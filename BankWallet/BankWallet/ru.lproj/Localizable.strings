@@ -23,7 +23,7 @@
 "alert.no_internet" = "Нет интернета";
 "alert.network_issue" = "Проблемы с сетью. Попробуйте еще раз ";
 
-"biometric_usage_reason" = "Разблокировать";
+"biometric_usage_reason" = "Разблокировать Кошелек";
 
 // Access Camera
 
@@ -47,7 +47,7 @@
 
 //Coin Sync Modes
 
-"coin_sync.title" = "Опции";
+"coin_sync.title" = "Опции Восстановления";
 "coin_sync.fast" = "Быстро";
 "coin_sync.recommended" = "0-2 часа (Рекомендуется)";
 "coin_sync.fast.text" = "Восстановление ваших предыдущих транзакций через сторонний защищенный сервер. Для пользователей с длинной историей транзакций и с очень большим суммами этот метод может представлять риски для конфиденциальности";
@@ -128,8 +128,8 @@
 "send.tx_duration" = "Продолжительность:";
 "send.duration.instant" = "Мгновенно";
 "send.duration.within" = "В течение %@";
-"send.duration.hours" = "%d h.";
-"send.duration.minutes" = "%d min.";
+"send.duration.hours" = "%d ч.";
+"send.duration.minutes" = "%d мин.";
 "send.max_button" = "Макс.";
 "send.next_button" = "Далее";
 "send.error.invalid_address" = "Неверный Адрес";
@@ -141,7 +141,7 @@
 "send.confirmation.to" = "Кому:";
 "send.confirmation.memo_placeholder" = "Memo";
 "send.confirmation.total" = "Итого:";
-"send.confirmation.estimate_time" = "Приблизительное время:";
+"send.confirmation.estimate_time" = "Приблизительное Время:";
 "send.confirmation.eos.account" = "Account";
 "send.confirmation.send_button" = "Отправить";
 "send.amount_error.balance" = "Баланс %@";
@@ -177,7 +177,7 @@
 "full_info.confirmations" = "Подтверждения";
 "full_info.size" = "Размер";
 "full_info.fee" = "Комиссия";
-"full_info.rate" = "Rate";
+"full_info.rate" = "Курс";
 "full_info.inputs" = "Входы";
 "full_info.outputs" = "Выходы";
 "full_info.source" = "Источник";
@@ -224,7 +224,7 @@
 
 // Settings -> Base Currency
 
-"settings_base_currency.title" = "Base Currency";
+"settings_base_currency.title" = "Базовая Валюта";
 
 // Settings -> Language
 
@@ -274,7 +274,7 @@
 "settings_manage_keys.backup" = "Резерв. копия";
 "settings_manage_keys.show" = "Показать";
 "settings_manage_keys.create" = "Создать";
-"settings_manage_keys.restore" = "Restore";
+"settings_manage_keys.restore" = "Восстановить";
 "settings_manage_keys.delete.cant_delete" = "Вам нужно сделать резервную копию %@ ключа, прежде чем вы его сможете отсоединить.";
 "settings_manage_keys.delete.title" = "Удалить Ключ";
 "settings_manage_keys.delete.confirmation_remove" = "Это действие удалит ваш %@ ключ (кошелёк) с этого устройства.";
@@ -282,8 +282,8 @@
 "settings_manage_keys.delete.confirmation_loose" = "Если у вас нет резервной копии этого ключа, то вы потеряете соответствующие средства.";
 "error.cant_create_eos" = "В данный момент кошелек не может создать новые учетные записи EOS. Вы можете восстановить существующий.";
 "settings_manage_keys.create.text" = "Это действие сгенерирует ключ(кошелек) для следующих монет:\n\n%@";
-"error.invalid_eos_key" = "Invalid key";
-"error.invalid_eos_account" = "Invalid account";
+"error.invalid_eos_key" = "Неверный Ключ";
+"error.invalid_eos_account" = "Неверный Аккаунт";
 
 // Set PIN
 
