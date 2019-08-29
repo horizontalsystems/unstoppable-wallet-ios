@@ -23,6 +23,8 @@
 "alert.no_internet" = "Internet Bağlantısı Yok";
 "alert.network_issue" = "Ağ sorunu. Tekrar deneyin.";
 
+"n/a" = "N/A";
+
 "biometric_usage_reason" = "Cüzdan kilidini aç";
 
 // Access Camera
@@ -79,10 +81,10 @@
 "backup.eos.title" = "EOS Anahtarı";
 "backup.eos.account_name" = "Account Name";
 "backup.eos.active_private_key" = "Active Private Key";
-"backup.eos.hint" = "Anahtarınızı \"Kopyala\" eylemiyle kopyalamanız anahtarınızın pano yöneticisine ve panoya erişimi olan diğer uygulamalara sızma riskini taşır.";
+"backup.eos.hint" = "Anahtarınızı \"Kopyala\" eylemiyle kopyalamanız anahtarınızın pano yönetisine ve panoya erişimi olan diğer uygulamalara sızma riskini taşır.";
 "error.send_eos.self_transfer" = "Bu kripto para kendi hesabınaza aktarılamıyor";
 "error.send_eos.account_not_exist" = "Hedef hesap yok";
-"error.send_eos.insufficient_ram" = "Your EOS account doesn't have enough RAM to send this token. You need to increase RAM stake to proceed.";
+"error.send_eos.insufficient_ram" = "EOS hesabınızda bu kripto parayı göndermek için yeterli RAM bulunmuyor. Devam etmek için EOS RAM hissenizi arttırmak gerekiyor.";
 "error.send_eos.unknown" = "Beklenmeyen bir hata oluştu: %@";
 
 "backup.confirmation.title" = "Kontrol etme ...";
@@ -103,7 +105,7 @@
 "balance.synced_through" = "%@ kadar";
 "balance.syncing" = "Eşitleniyor...";
 "balance.add_coins" = "Kripto Para Ekle";
-"balance.sort.header" = "Sırala";
+"balance.sort.header" = "Sıralama şekli";
 "balance.sort.valueHighToLow" = "Bakiye";
 "balance.sort.az" = "İsim";
 
@@ -121,12 +123,12 @@
 "send.address_placeholder" = "Adres";
 "send.account_placeholder" = "Account";
 "send.fee" = "Masraf:";
-"send.tx_speed" = "Transaction Speed:";
+"send.tx_speed" = "İşlem hızı:";
 "send.tx_speed_low" = "Düşük";
 "send.tx_speed_medium" = "Orta";
 "send.tx_speed_high" = "Yüksek";
-"send.tx_duration" = "Duration:";
-"send.duration.instant" = "Instant";
+"send.tx_duration" = "Süre:";
+"send.duration.instant" = "Anlık";
 "send.duration.within" = "within %@";
 "send.duration.hours" = "%d h.";
 "send.duration.minutes" = "%d min.";
