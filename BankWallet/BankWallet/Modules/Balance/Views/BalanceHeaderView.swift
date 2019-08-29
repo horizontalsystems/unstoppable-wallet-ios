@@ -6,9 +6,7 @@ class BalanceHeaderView: UIView {
     private let amountLabel = UILabel()
     private let statsSwitchButton = UIButton()
 
-    private var switchIsOn: Bool = false
-
-    var onStatsSwitch: ((Bool) -> ())?
+    var onStatsSwitch: (() -> ())?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -30,8 +28,10 @@ class BalanceHeaderView: UIView {
         statsSwitchButton.setImage(UIImage(named: "Stats Switch Button")?.tinted(with: BalanceTheme.headerTintColor), for: .selected)
         statsSwitchButton.setImage(UIImage(named: "Stats Switch Button")?.tinted(with: BalanceTheme.headerTintColorSelected), for: .highlighted)
         statsSwitchButton.snp.makeConstraints { maker in
-            maker.trailingMargin.equalToSuperview().inset(self.layoutMargins)
+            maker.top.bottom.equalToSuperview()
+            maker.trailing.equalToSuperview()
             maker.centerY.equalToSuperview()
+            maker.width.equalTo(BalanceTheme.statButtonWidth)
         }
         statsSwitchButton.addTarget(self, action: #selector(onSwitch), for: .touchUpInside)
 
@@ -43,24 +43,16 @@ class BalanceHeaderView: UIView {
             maker.leadingMargin.equalToSuperview().inset(self.layoutMargins)
             maker.top.equalToSuperview().offset(BalanceTheme.cellSmallMargin)
         }
-
-        setSwitch(isOn: switchIsOn)
     }
 
-    func bind(amount: String?, upToDate: Bool) {
+    func bind(amount: String?, upToDate: Bool, statsIsOn: Bool) {
         amountLabel.text = amount
         amountLabel.textColor = upToDate ? BalanceTheme.amountColor : BalanceTheme.amountColorSyncing
+        statsSwitchButton.isSelected = statsIsOn
     }
 
     @objc func onSwitch() {
-        setSwitch(isOn: !switchIsOn)
-
-        onStatsSwitch?(switchIsOn)
-    }
-
-    func setSwitch(isOn: Bool) {
-        switchIsOn = isOn
-        statsSwitchButton.isSelected = isOn
+        onStatsSwitch?()
     }
 
 }

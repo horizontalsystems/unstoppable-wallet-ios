@@ -18,6 +18,7 @@ class ChartRateFactory: IChartRateFactory {
 
     enum FactoryError: Error {
         case noRateStats
+        case noPercentDelta
     }
 
     init() {
@@ -26,6 +27,9 @@ class ChartRateFactory: IChartRateFactory {
     func chartViewItem(type: ChartType, chartData: ChartData, rate: Rate?, currency: Currency) throws -> ChartViewItem {
         guard var points = chartData.stats[type] else {
             throw FactoryError.noRateStats
+        }
+        guard let diff = chartData.diffs[type] else {
+            throw FactoryError.noPercentDelta
         }
 
         if type == .year {
@@ -45,12 +49,6 @@ class ChartRateFactory: IChartRateFactory {
 
         let lowValue = CurrencyValue(currency: currency, value: minimumValue)
         let highValue = CurrencyValue(currency: currency, value: maximumValue)
-
-        var diff: Decimal = 0
-        if let first = points.first(where: { point in return !point.value.isZero })?.value,
-           let last = points.last?.value {
-            diff = (last - first) / first * 100
-        }
 
         var rateValue: CurrencyValue? = nil
         if let rate = rate, !rate.expired {

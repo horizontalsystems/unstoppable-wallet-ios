@@ -8,10 +8,10 @@ protocol IBalanceView: class {
     func didRefresh()
     func setSort(isOn: Bool)
     func showBackupRequired(coin: Coin, predefinedAccountType: IPredefinedAccountType)
-    func setStatMode(isOn: Bool)
 }
 
 protocol IBalanceViewDelegate {
+    var isStatsOn: Bool { get }
     func viewDidLoad()
 
     var itemsCount: Int { get }
@@ -28,7 +28,7 @@ protocol IBalanceViewDelegate {
 
     func onSortTypeChange()
     func didRequestBackup()
-    func onStatsSwitch(on: Bool)
+    func onStatsSwitch()
 }
 
 protocol IBalanceInteractor {
@@ -77,7 +77,7 @@ protocol IBalanceItemDataSource {
     func set(balance: Decimal, index: Int)
     func set(state: AdapterState, index: Int)
     func set(rate: Rate, index: Int)
-    func set(chartPoints: [ChartPoint], index: Int)
+    func set(chartPoints: [ChartPoint], percentDelta: Decimal, index: Int)
     func setStatsFailed(index: Int)
     func clearRates()
     func set(items: [BalanceItem])
