@@ -19,9 +19,9 @@
 "button.paste" = "粘帖";
 "button.backup" = "备份";
 
-"alert.copied" = "复制成功";
-"alert.no_internet" = "没有网络连接";
-"alert.network_issue" = "网络问题。请再试一次。";
+"alert.copied" = "已复制";
+"alert.no_internet" = "没有网络";
+"alert.network_issue" = "网络问题。请稍后再试\n\n";
 
 "biometric_usage_reason" = "解锁钱包";
 
@@ -34,7 +34,7 @@
 
 "welcome.new_wallet" = "新的钱包";
 "welcome.restore_wallet" = "恢复钱包";
-"welcome.version" = "Version %@";
+"welcome.version" = "version %@";
 
 // Restore
 
@@ -48,12 +48,12 @@
 //Coin Sync Modes
 
 "coin_sync.title" = "恢复选项";
-"coin_sync.fast" = "过程最快";
+"coin_sync.fast" = "快";
 "coin_sync.recommended" = "0 小时 (推荐)";
-"coin_sync.fast.text" = "通过安全的第三方服务器可以恢复以前的事务。对于拥有大量交易历史的用户来说，这种方法可能会带来隐私风险。\n";
-"coin_sync.slow" = "缓慢";
+"coin_sync.fast.text" = "通过安全的第三方服务器恢复过往交易。对于具有大量涉及大额交易历史的用户，这种方法可能会带来隐私风险。";
+"coin_sync.slow" = "慢";
 "coin_sync.more_private" = "1 小时(更多隐私)";
-"coin_sync.slow.text" = "直接从网络可以恢复以前的事务。明显更私密，但速度很慢。如果恢复时间过长，如果恢复时间过长，请转到“管理密钥”部分，然后选“快速同步”重新导入钱包密钥。\n";
+"coin_sync.slow.text" = "直接通过网络恢复您的过往交易。更加私密，但非常缓慢。如果恢复过程耗时过长，请前往”管理密钥“部分并使用”快速同步“选项重新导入钱包密钥。";
 "coin_sync.alert.header" = "Attention";
 "coin_sync.alert.text" = "This action will resync your wallet balance for each blockchain. It may take several hours to complete.";
 "coin_sync.erc20" = "Sync mode same as Ethereum";
@@ -82,7 +82,7 @@
 "backup.eos.hint" = "如果您有使用任何剪贴板管理应用或其他可存取剪贴板数据的应用，那么适用”复制“操作复制您的密钥将会带来风险。";
 "error.send_eos.self_transfer" = "无法将代币转入自己的账户";
 "error.send_eos.account_not_exist" = "目标账户不存在";
-"error.send_eos.insufficient_ram" = "Your EOS account doesn't have enough RAM to send this token. You need to increase RAM stake to proceed.";
+"error.send_eos.insufficient_ram" = "您的EOS账户没有足够的RAM来发送此令牌。您必须增加RAM才能继续。";
 "error.send_eos.unknown" = "Something went wrong: %@";
 
 "backup.confirmation.title" = "正在检查...";
@@ -197,7 +197,7 @@
 "full_info.gas_used" = "Gas Used";
 "full_info.gas_price" = "Gas Price";
 
-"full_info.source.title" = "信息源";
+"full_info.source.title" = "源";
 "full_info.source.online" = "在线";
 "full_info.source.offline" = "离线";
 
@@ -275,7 +275,7 @@
 "settings_manage_keys.show" = "显示";
 "settings_manage_keys.create" = "创建";
 "settings_manage_keys.restore" = "恢复";
-"settings_manage_keys.delete.cant_delete" = "You need to backup %@ key before you may delete it from this phone.";
+"settings_manage_keys.delete.cant_delete" = "您必须在将其从电话上删除之前先备份%@密钥。";
 "settings_manage_keys.delete.title" = "删除密钥";
 "settings_manage_keys.delete.confirmation_remove" = "此操作将从此设备中删除%@密钥（钱包）。\n\n";
 "settings_manage_keys.delete.confirmation_disable" = "将被禁用的代币：%@";
@@ -296,7 +296,7 @@
 
 "edit_pin.title" = "编辑密码";
 "edit_pin.unlock_info" = "当前密码";
-"edit_pin.new_pin_info" = "新密碼";
+"edit_pin.new_pin_info" = "新密码";
 
 // Unlock PIN
 
@@ -306,7 +306,7 @@
 
 // No Passcode
 
-"no_passcode.info_text" = "此应用程序要求手机启用密码（屏幕锁定）。\n\n您可以在iOS设置中启用它。\n\n请注意，当您禁用操作系统级别的PIN时，您的电话安全存储中的安全措施使以前存储的数据无效。您需要恢复钱包密钥才能回到钱包。\n\n\n\n";
+"no_passcode.info_text" = "此应用要求电话已启用密码（屏幕锁定）。\n\n您可以在iOS设置中启用密码。\n\n请注意，禁用操作系统级别的PIN码后，电话的安全存储保障措施将使以前保存的数据无效。您必须恢复您的钱包密钥才能回到您的钱包。";
 
 //NumPad
 
