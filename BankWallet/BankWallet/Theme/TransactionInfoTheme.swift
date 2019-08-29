@@ -9,7 +9,6 @@ class TransactionInfoTheme {
     static let smallMargin: CGFloat = 4
 
     static let itemHeight: CGFloat = 44
-    static let itemNoteHeight: CGFloat = 60
 
     static let titleHeight: CGFloat = 48
     static let titleFont = UIFont.cryptoHeadline
