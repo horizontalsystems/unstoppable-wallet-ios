@@ -145,12 +145,12 @@
 "send.confirmation.eos.account" = "Account";
 "send.confirmation.send_button" = "发送​​";
 "send.amount_error.balance" = "余额%@";
-"send.token.insufficient_fee_alert" = "以 %@ 支付的 %@ (%@) 交易费用。你需要 %@ 。";
+"send.token.insufficient_fee_alert" = "%@（%@）的交易费用以%@支付。您需要%@。";
 
 // Transactions
 
 "transactions.title" = "交易";
-"transactions.tab_bar_item" = "交易记录";
+"transactions.tab_bar_item" = "交易";
 "transactions.filter_all" = "全部";
 "transactions.empty_text" = "您还没有任何待定或成功的交易";
 
@@ -159,13 +159,13 @@
 "tx_info.title" = "交易";
 "tx_info.time" = "时间";
 "tx_info.status" = "状态";
-"tx_info.status.pending" = "在过程中";
+"tx_info.status.pending" = "待处理";
 "tx_info.status.confirmed" = "已确认";
 "tx_info.from_hash" = "发件人";
 "tx_info.transaction_id" = "Transaction ID";
-"tx_info.to_hash" = "收件人";
+"tx_info.to_hash" = "接收人";
 "tx_info.button_verify" = "验证";
-"tx_info.rate" = "历史汇率";
+"tx_info.rate" = "历史价格";
 "tx_info.fee" = "费用";
 "tx_info.note" = "* 该交易的值似乎为0，因为它发送至您自己的地址";
 
@@ -215,7 +215,7 @@
 "settings.restore_wallet" = "恢复钱包";
 "settings.base_currency" = "基本货币";
 "settings.language" = "语言";
-"settings.about" = "更多";
+"settings.about" = "关于";
 "settings.tell_friends" = "分享给好友";
 "settings.report_problem" = "Report Problem";
 "settings.light_mode" = "简单模式";
@@ -232,19 +232,19 @@
 
 // Settings -> Manage Wallet
 
-"manage_coins.title" = "钱包";
-"manage_coins.add_coin.title" = "加%@ ";
+"manage_coins.title" = "代币管理器";
+"manage_coins.add_coin.title" = "添加%@ ";
 "manage_coins.add_coin.text" = "您没有%@的密钥。钱包可以为您生成密钥。使用下方的创建按钮生成新密钥。\n\n如果有的话，您也可以使用%@现有的%@密钥。";
 "manage_coins.add_coin.create" = "创建";
 "manage_coins.add_coin.restore" = "恢复";
 
 // Settings -> About
 
-"settings_about.title" = "更多";
+"settings_about.title" = "关于";
 "settings_about.app_title" = "Unstoppable";
 "settings_about.app_subtitle" = "Decentralized App";
-"settings_about.terms_privacy_subtitle" = "服务条款和隐私策略";
-"settings_about.terms_privacy_text" = "此应用程序是对等的。它不依赖于任何 web 服务器或支持人员来运行的技术。只要有互联网, 它就可以被使用。任何实体都不能阻止此应用程序工作或阻止某人使用它。\n\n您的资金安全地存储在手机上, 而不是在其他任何地方。\n\n你有责任备份您的密钥, 并保持密钥的隐私。千万不要把它给任何人看。如果它被丢失, 遗忘或被偷, 您的资金都可用于持有您密钥的人。\n\n不要越狱您的手机, 不要安装来自未知 (不受信任) 来源的应用程序, 不要将您的设备交给不受信任的人, 并使您的手机上的系统保持最新。这是你的钱包安全的重点。\n\n从一开始，为该应用程序提供动力的整个代码就向公众开放。我们试图建立最安全和分散的钱包, 我们可以, 但没有保证没有意外的软件问题。也就是说, 这个钱包可能比任何智能手机钱包应用都要安全得多。\n\n一些通用的非私有应用程序数据 (如货币汇率) 存储在分散存储 (ipfs) 中。 ";
+"settings_about.terms_privacy_subtitle" = "条款和隐私：";
+"settings_about.terms_privacy_text" = "此应用是一款点对点应用。其运作不依赖于任何网络服务器或技术支持人员。\n\n只要有网络它就能工作。没有实体能够阻止此应用工作或者阻止任何人使用它。\n\n您的资金安全地保存在电话上，而不是其他地方。\n\n您的职责是备份密钥并保证其安全。绝不要向任何人展示密钥。如果密钥丢失、遗忘或被盗，您的资金将会被拥有密钥的人使用。\n\n不要对您的电话进行越狱，不要安装来源不明（不可靠）的应用，不要把您的电话交给不可靠的人，保证电话的操作系统是最新版本。您钱包的安全将取决于此。\n\n支持此应用的完整代码从一开始就对公众监督开放。我们付出了最大努力以开发最安全的分散式钱包，但这不保证其中不会存在意外的软件问题。尽管如此，此钱包很可能还是比市面上的其他智能手机钱包更为安全。\n\n像货币汇率等通用非私有应用数据将保存在分散式存储系统（IPFS)。";
 
 // Settings -> Tell Friends
 
@@ -255,9 +255,9 @@
 "settings_security.title" = "安全中心";
 "settings_security.manage_accounts" = "管理密钥";
 "settings_security.passcode" = "密码";
-"settings_security.change_pin" = "修改密码";
-"settings_security.touch_id" = "Touch ID指纹识别";
-"settings_security.face_id" = "Face ID 面容识别";
+"settings_security.change_pin" = "编辑密码";
+"settings_security.touch_id" = "Touch ID";
+"settings_security.face_id" = "Face ID";
 "security_settings.delete_alert_button" = "从手机中删除";
 
 // Settings -> Report Problem
@@ -272,29 +272,29 @@
 "settings_manage_keys.description" = "任何能获取您密钥的人都能够窃取您钱包中的资金。保存好密钥且绝不能向任何人透露。\n\n保存每一个密钥将能够在手机丢失或出现故障，或者在钱包应用被删除的情况下恢复资金。";
 "settings_manage_keys.delete" = "删除";
 "settings_manage_keys.backup" = "备份";
-"settings_manage_keys.show" = "查看";
+"settings_manage_keys.show" = "显示";
 "settings_manage_keys.create" = "创建";
 "settings_manage_keys.restore" = "恢复";
 "settings_manage_keys.delete.cant_delete" = "You need to backup %@ key before you may delete it from this phone.";
 "settings_manage_keys.delete.title" = "删除密钥";
 "settings_manage_keys.delete.confirmation_remove" = "此操作将从此设备中删除%@密钥（钱包）。\n\n";
-"settings_manage_keys.delete.confirmation_disable" = "将被禁用的硬币：%@";
-"settings_manage_keys.delete.confirmation_loose" = "如果你没有这把密钥的备份，你将失去相应的资金。\n";
-"error.cant_create_eos" = "此时，钱包无法创建新的EOS钱包帐户。您只能还原现有的。\n\n";
-"settings_manage_keys.create.text" = "此操作将为以下硬币生成密钥（钱包）：%@\n\n";
-"error.invalid_eos_key" = "无效的密钥";
-"error.invalid_eos_account" = "帐户无效";
+"settings_manage_keys.delete.confirmation_disable" = "将被禁用的代币：%@";
+"settings_manage_keys.delete.confirmation_loose" = "如果您没有此密钥的备份，那么您将失去相关资金。";
+"error.cant_create_eos" = "此时，钱包无法创建新的EOS钱包帐户。您只能恢复现有账户。\n";
+"settings_manage_keys.create.text" = "此操作将生成以下代币的新密钥（钱包）：\n\n%@";
+"error.invalid_eos_key" = "错误密钥";
+"error.invalid_eos_account" = "无效账户";
 
 // Set PIN
 
 "set_pin.title" = "密码";
-"set_pin.info" = "您的密码将用于解锁钱包app。";
+"set_pin.info" = "您的密码将用于解锁钱包和发送资金";
 "set_pin.confirm.info" = "确认";
-"set_pin.wrong_confirmation" = "密码不匹配。请再试一次。";
+"set_pin.wrong_confirmation" = "密码不匹配。请重试。";
 
 // Edit PIN
 
-"edit_pin.title" = "修改密码";
+"edit_pin.title" = "编辑密码";
 "edit_pin.unlock_info" = "当前密码";
 "edit_pin.new_pin_info" = "新密碼";
 
@@ -321,9 +321,9 @@
 
 // Key Types
 
-"key_type.12_words" = "12-words";
+"key_type.12_words" = "12字";
 "key_type.12_words.text" = "BTC, BCH, DASH, ETH, ERC-20";
-"key_type.eos" = "EOS Blockchain";
+"key_type.eos" = "EOS区块链";
 "key_type.eos.text" = "EOS, EOS based Tokens";
 "key_type.binance" = "Binance Chain";
 "key_type.binance.text" = "BNB, BEP-2";
