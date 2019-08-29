@@ -7,17 +7,17 @@
 
 "button.ok" = "确定";
 "button.cancel" = "取消";
-"button.close" = "Close";
+"button.close" = "关闭";
 "button.confirm" = "确认";
 "button.done" = "完成";
 "button.restore" = "恢复";
-"button.next" = "继续";
+"button.next" = "下一步";
 "button.remove" = "移除";
-"button.share" = "Share";
+"button.share" = "分享";
 "button.save" = "保存";
 "button.sync" = "Sync";
 "button.paste" = "粘帖";
-"button.backup" = "Backup";
+"button.backup" = "备份";
 
 "alert.copied" = "复制成功";
 "alert.no_internet" = "没有网络连接";
@@ -39,7 +39,7 @@
 // Restore
 
 "restore.title" = "恢复";
-"restore.description" = "要恢复现有钱包，您需要输入该钱包的密钥。\n\n一旦你恢复了一个钱包，你就可以恢复更多的钱包，方法是进入“应用程序设置”中的“管理密钥”部分。";
+"restore.description" = "To restore existing wallet you need to enter a secret key for that wallet.\n\nOnce you restore one wallet you will be able to restore more wallets by going to Manage Keys section in app Settings.";
 "restore.words.description" = "输入密钥";
 "restore.validation_failed" = "密钥不正确";
 "restore.placeholder.account_name" = "Account Name";
@@ -71,41 +71,41 @@
 "backup.intro.show_key" = "显示密钥";
 
 "backup.words.title" = "密钥";
-"backup.12words.title" = "12个字的密钥";
-"backup.binance.title" = "二进制的密钥";
+"backup.12words.title" = "12字密钥";
+"backup.binance.title" = "Binance Key";
 "confirmation.binance.description" = "请从你的二进制密钥中输入单词";
 "confirmation.12words.description" = "请从你的12个字的密钥中输入单词";
 
-"backup.eos.title" = "EOS 密钥";
+"backup.eos.title" = "EOS密钥";
 "backup.eos.account_name" = "Account Name";
 "backup.eos.active_private_key" = "Active Private Key";
-"backup.eos.hint" = "如果您使用任何剪贴板管理应用程序或其他可以访问剪贴板数据的应用程序，则使用“复制”操作复制密钥会带来一些风险。\n\n";
+"backup.eos.hint" = "如果您有使用任何剪贴板管理应用或其他可存取剪贴板数据的应用，那么适用”复制“操作复制您的密钥将会带来风险。";
 "error.send_eos.self_transfer" = "无法将代币转入自己的账户";
 "error.send_eos.account_not_exist" = "目标账户不存在";
-"error.send_eos.insufficient_ram" = "Your account has not enough of ram";
+"error.send_eos.insufficient_ram" = "Your EOS account doesn't have enough RAM to send this token. You need to increase RAM stake to proceed.";
 "error.send_eos.unknown" = "Something went wrong: %@";
 
 "backup.confirmation.title" = "正在检查...";
-"backup.confirmation.secret_key" = "我知道, 我是一个12个字的私人密钥的唯一拥有者，该密钥安全地存储在我的手机上，使我能够控制我钱包上的资金。";
-"backup.confirmation.delete_app_warn" = "我知道如果此APP被移动、删除或出现故障，只有用密钥才能恢复对我钱包的访问。";
-"backup.confirmation.disclaimer" = "我理解这个应用程序的开发人员对使用这个应用程序时可能出现的任何意外的错误或问题不负责任。\n";
+"backup.confirmation.secret_key" = "我明白我是安全保存在我的电话中并能控制我钱包上的资金的12字私有密钥的唯一所有人。";
+"backup.confirmation.delete_app_warn" = "我明白如果此应用曾被移动、删除或出现故障，则只能通过该密钥恢复对我钱包的访问。";
+"backup.confirmation.disclaimer" = "我明白此应用的开发者不会对任何在使用此应用时出现的意外错误或问题负责。";
 
 "words_validator.empty_words" = "并非所有单词都输入\n\n";
-"words_validator.invalid_confirmation" = "单词不匹配";
+"words_validator.invalid_confirmation" = "文字不匹配";
 
 // Balance
 
 "balance.title" = "余额";
 "balance.tab_bar_item" = "余额";
 "balance.send" = "发送​​";
-"balance.deposit" = "收到";
-"balance.rate_per_coin" = "%@ 每 %@";
-"balance.synced_through" = "直到 %@";
+"balance.deposit" = "接收";
+"balance.rate_per_coin" = "%@ / %@";
+"balance.synced_through" = "直至：%@";
 "balance.syncing" = "正在同步...";
-"balance.add_coins" = "添加硬币";
+"balance.add_coins" = "添加代币";
 "balance.sort.header" = "排序方式";
 "balance.sort.valueHighToLow" = "余额";
-"balance.sort.az" = "应用名";
+"balance.sort.az" = "名称";
 
 // Deposit
 
@@ -123,13 +123,13 @@
 "send.fee" = "费用:";
 "send.tx_speed" = "交易速度:";
 "send.tx_speed_low" = "低";
-"send.tx_speed_medium" = "Medium";
-"send.tx_speed_high" = "High";
-"send.tx_duration" = "Duration:";
-"send.duration.instant" = "Instant";
+"send.tx_speed_medium" = "中";
+"send.tx_speed_high" = "高";
+"send.tx_duration" = "时长:";
+"send.duration.instant" = "即时";
 "send.duration.within" = "within %@";
-"send.duration.hours" = "%@ h.";
-"send.duration.minutes" = "%@ min.";
+"send.duration.hours" = "%d h.";
+"send.duration.minutes" = "%d min.";
 "send.max_button" = "最多";
 "send.next_button" = "继续";
 "send.error.invalid_address" = "无效的地址";
@@ -166,8 +166,8 @@
 "tx_info.to_hash" = "收件人";
 "tx_info.button_verify" = "验证";
 "tx_info.rate" = "历史汇率";
-"tx_info.fee" = "Fee";
-"tx_info.note" = "* The value of this transaction appears as 0 because it was sent to your own address";
+"tx_info.fee" = "费用";
+"tx_info.note" = "* 该交易的值似乎为0，因为它发送至您自己的地址";
 
 // Full Info
 
@@ -234,7 +234,7 @@
 
 "manage_coins.title" = "钱包";
 "manage_coins.add_coin.title" = "加%@ ";
-"manage_coins.add_coin.text" = "You don't have key for %@. The wallet can generate the key for you. Use the Create button below to generate a new key.\n\nYou may also use the existing %@ key for the %@ if you have one.";
+"manage_coins.add_coin.text" = "您没有%@的密钥。钱包可以为您生成密钥。使用下方的创建按钮生成新密钥。\n\n如果有的话，您也可以使用%@现有的%@密钥。";
 "manage_coins.add_coin.create" = "创建";
 "manage_coins.add_coin.restore" = "恢复";
 
@@ -248,7 +248,7 @@
 
 // Settings -> Tell Friends
 
-"settings_tell_friends.text" = "Unstoppable Wallet - a crypto wallet I recommend";
+"settings_tell_friends.text" = "Unstoppable Wallet——我强烈推荐的一款加密货币钱包";
 
 // Settings -> Security
 
@@ -264,12 +264,12 @@
 
 "settings.report_problem.title" = "Report Problem";
 "settings.report_problem.email" = "E-mail";
-"settings.report_problem.telegram" = "Telegram";
+"settings.report_problem.telegram" = "电报";
 
 // Manage Keys
 
 "settings_manage_keys.title" = "密钥";
-"settings_manage_keys.description" = "Anyone with access to your Keys can steal your wallet funds. Store keys safely and never show them to anyone.\n\nBackup each key to be able to restore funds if you lose or break your phone, or simply the wallet app gets deleted.";
+"settings_manage_keys.description" = "任何能获取您密钥的人都能够窃取您钱包中的资金。保存好密钥且绝不能向任何人透露。\n\n保存每一个密钥将能够在手机丢失或出现故障，或者在钱包应用被删除的情况下恢复资金。";
 "settings_manage_keys.delete" = "删除";
 "settings_manage_keys.backup" = "备份";
 "settings_manage_keys.show" = "查看";
@@ -330,20 +330,20 @@
 
 // Key Types
 
-"chart.title" = "%@ Rate";
-"chart.time_duration.day" = "1D";
-"chart.time_duration.week" = "7D";
-"chart.time_duration.month" = "1M";
-"chart.time_duration.quartal" = "3M";
-"chart.time_duration.halyear" = "6M";
-"chart.time_duration.year" = "1Y";
+"chart.title" = "%@价格";
+"chart.time_duration.day" = "1天";
+"chart.time_duration.week" = "7天";
+"chart.time_duration.month" = "1个月";
+"chart.time_duration.quartal" = "3个月";
+"chart.time_duration.halyear" = "6个月";
+"chart.time_duration.year" = "1年";
 
-"chart.market_cap" = "Mkt. Cap";
-"chart.market_cap.thousand" = "%@ k";
-"chart.market_cap.million" = "%@ M";
-"chart.market_cap.billion" = "%@ B";
+"chart.market_cap" = "市场价值";
+"chart.market_cap.thousand" = "%@千";
+"chart.market_cap.million" = "%@百万";
+"chart.market_cap.billion" = "%@十亿";
 "chart.market_cap.trillion" = "%@ T";
-"chart.high" = "High";
-"chart.low" = "Low";
-"chart.volume" = "Volume";
-"chart.error.not_available" = "Chart not available";
+"chart.high" = "高";
+"chart.low" = "低";
+"chart.volume" = "量";
+"chart.error.not_available" = "无可用图表";
