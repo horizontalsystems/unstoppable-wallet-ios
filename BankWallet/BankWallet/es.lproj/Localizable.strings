@@ -39,7 +39,7 @@
 // Restore
 
 "restore.title" = "Restaurar";
-"restore.description" = "Para restaurar el monedero existente, es necesario introducir la clave privada para ese monedero.\n\nUna vez que restablezca un monedero podrá restaurar más monederos yendo a la sección Administrar Claves en Ajustes de la aplicación.";
+"restore.description" = "To restore existing wallet you need to enter a secret key for that wallet.\n\nOnce you restore one wallet you will be able to restore more wallets by going to Manage Keys section in app Settings.";
 "restore.words.description" = "Introduzca la clave";
 "restore.validation_failed" = "Clave incorrecta";
 "restore.placeholder.account_name" = "Nombre de cuenta";
@@ -82,7 +82,7 @@
 "backup.eos.hint" = "Copiar su clave utilizando la acción \"copiar\" implica ciertos riesgos si utiliza aplicaciones de gestión de portapapeles u otra aplicación que pueda tener acceso a la información del portapapeles.";
 "error.send_eos.self_transfer" = "No se puede transferir el token a su propia cuenta";
 "error.send_eos.account_not_exist" = "La cuenta de destino no existe";
-"error.send_eos.insufficient_ram" = "Su cuenta no tiene suficiente memoria ram";
+"error.send_eos.insufficient_ram" = "Your EOS account doesn't have enough RAM to send this token. You need to increase RAM stake to proceed.";
 "error.send_eos.unknown" = "Algo ha fallado: %@";
 
 "backup.confirmation.title" = "Comprobar";
@@ -128,8 +128,8 @@
 "send.tx_duration" = "Duration:";
 "send.duration.instant" = "Instant";
 "send.duration.within" = "within %@";
-"send.duration.hours" = "%@ h.";
-"send.duration.minutes" = "%@ min.";
+"send.duration.hours" = "%d h.";
+"send.duration.minutes" = "%d min.";
 "send.max_button" = "Máx.";
 "send.next_button" = "Siguiente";
 "send.error.invalid_address" = "Dirección inválida";
