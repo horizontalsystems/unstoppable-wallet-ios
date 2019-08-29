@@ -23,6 +23,8 @@
 "alert.no_internet" = "Sin conexión a Internet";
 "alert.network_issue" = "Problemas de red. Inténtelo de nuevo";
 
+"n/a" = "N/A";
+
 "biometric_usage_reason" = "Desbloquear cartera";
 
 // Access Camera
