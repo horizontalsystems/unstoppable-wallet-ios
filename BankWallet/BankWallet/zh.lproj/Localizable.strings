@@ -131,9 +131,9 @@
 "send.duration.hours" = "%d h.";
 "send.duration.minutes" = "%d min.";
 "send.max_button" = "最多";
-"send.next_button" = "继续";
-"send.error.invalid_address" = "无效的地址";
-"send.error.invalid_account" = "帐户无效";
+"send.next_button" = "下一步";
+"send.error.invalid_address" = "错误地址";
+"send.error.invalid_account" = "无效账户";
 "send.error.no_address" = "没有地址\n\n";
 "send.error.no_amount" = "没有金额";
 
