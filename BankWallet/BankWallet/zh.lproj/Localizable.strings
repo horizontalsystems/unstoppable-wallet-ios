@@ -121,7 +121,7 @@
 "send.address_placeholder" = "地址";
 "send.account_placeholder" = "Account";
 "send.fee" = "费用:";
-"send.tx_speed" = "Transaction Speed:";
+"send.tx_speed" = "交易速度:";
 "send.tx_speed_low" = "低";
 "send.tx_speed_medium" = "Medium";
 "send.tx_speed_high" = "High";
