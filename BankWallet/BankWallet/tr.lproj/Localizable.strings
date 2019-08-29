@@ -119,7 +119,7 @@
 "send.title" = "%@ gönder";
 "send.amount_placeholder" = "Tutar";
 "send.address_placeholder" = "Adres";
-"send.account_placeholder" = "Hesap";
+"send.account_placeholder" = "Account";
 "send.fee" = "Masraf:";
 "send.tx_speed" = "Transaction Speed:";
 "send.tx_speed_low" = "Düşük";
@@ -144,7 +144,7 @@
 "send.confirmation.estimate_time" = "Tahmini süre:";
 "send.confirmation.eos.account" = "Account";
 "send.confirmation.send_button" = "Gönder";
-"send.amount_error.balance" = "%@ bakiye";
+"send.amount_error.balance" = "%@ Bakiye";
 "send.token.insufficient_fee_alert" = "%@ (%@) için ișlem ücreti %@ hesabından ödenir. Asgari %@ gerekiyor.";
 
 // Transactions
