@@ -108,7 +108,7 @@
 "balance.sort.header" = "Ordenar por";
 "balance.sort.valueHighToLow" = "Saldo";
 "balance.sort.az" = "Nombre";
-
+"balance.sort.24h_change" = "24h Change";
 // Deposit
 
 "deposit.receive_coin" = "Recibir %@";
