@@ -59,6 +59,6 @@ class TransactionViewItemFactory: ITransactionViewItemFactory {
     }
 
     private func showFromAddress(for type: CoinType) -> Bool {
-        return type == .bitcoin || type == .bitcoinCash || type == .dash
+        return !(type == .bitcoin || type == .bitcoinCash || type == .dash)
     }
 }
