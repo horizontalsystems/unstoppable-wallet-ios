@@ -67,17 +67,10 @@ extension BalanceItemDataSource: IBalanceItemDataSource {
         items = sorter.sort(items: items, sort: sortType)
     }
 
-    func set(chartPoints: [ChartPoint], index: Int) {
+    func set(chartPoints: [ChartPoint], percentDelta: Decimal, index: Int) {
         items[index].statLoadDidFail = false
         items[index].chartPoints = chartPoints
-        items[index].percentDelta = {
-            if let first = chartPoints.first, let last = chartPoints.last {
-                let deltaPercent = -(first.value - last.value) / last.value * 100
-                let handler = NSDecimalNumberHandler(roundingMode: .plain, scale: 2, raiseOnExactness: false, raiseOnOverflow: false, raiseOnUnderflow: false, raiseOnDivideByZero: false)
-                return NSDecimalNumber(decimal: deltaPercent).rounding(accordingToBehavior: handler).decimalValue
-            }
-            return 0
-        }()
+        items[index].percentDelta = percentDelta
     }
 
     func setStatsFailed(index: Int) {

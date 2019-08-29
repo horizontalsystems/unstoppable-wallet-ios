@@ -23,19 +23,19 @@ class RateStatsManager {
         self.chartRateConverter = chartRateConverter
     }
 
-    private func convert(responseData: [String: ChartRateData], coinCode: CoinCode, currencyCode: String) -> [ChartType: [ChartPoint]] {
-        var stats = [ChartType: [ChartPoint]]()
-        responseData.forEach { key, value in
-            if let type = ChartType(rawValue: key) {
-                let points = chartRateConverter.convert(chartRateData: value)
-                stats[type] = points
-
-            if let rate = rateStorage.latestRate(coinCode: coinCode, currencyCode: currencyCode), rate.date.timeIntervalSince1970 > (points.last?.timestamp ?? 0) {
-                    stats[type]?.append(ChartPoint(timestamp: rate.date.timeIntervalSince1970, value: rate.value))
-                }
-            }
+    private func convert(responseData: ChartRateData, coinCode: CoinCode, currencyCode: String) -> [ChartPoint] {
+        var points = chartRateConverter.convert(chartRateData: responseData)
+        if let rate = rateStorage.latestRate(coinCode: coinCode, currencyCode: currencyCode), rate.date.timeIntervalSince1970 > (points.last?.timestamp ?? 0) {
+            points.append(ChartPoint(timestamp: rate.date.timeIntervalSince1970, value: rate.value))
         }
-        return stats
+        return points
+    }
+
+    private func calculateDiff(for data: ChartRateData) -> Decimal {
+        if let first = data.values.first(where: { value in return !value.isZero }), let last = data.values.last {
+            return (last - first) / first * 100
+        }
+        return 0
     }
 
 }
@@ -47,21 +47,26 @@ extension RateStatsManager: IRateStatsManager {
 
         let key = StatsKey(coinCode: coinCode, currencyCode: currencyCode)
 
-        if let chartData = stats[key], let lastDayPoint = chartData.stats[.day]?.last, currentTimestamp - lastDayPoint.timestamp > 30 * 60 { // check whether the stats exceeded half an hour threshold
+        if let chartData = stats[key], let lastDayPoint = chartData.stats[.day]?.last, currentTimestamp - lastDayPoint.timestamp < 30 * 60 { // check whether the stats exceeded half an hour threshold
             return Single.just(chartData)
         }
 
         return apiProvider.getRateStatsData(coinCode: coinCode, currencyCode: currencyCode)
-                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
                 .map { [weak self] response -> ChartData in
-                    let stats: [ChartType: [ChartPoint]] = self?.convert(responseData: response.stats, coinCode: coinCode, currencyCode: currencyCode) ?? [:]
+                    var stats = [ChartType: [ChartPoint]]()
+                    var diffs = [ChartType: Decimal]()
+                    response.stats.forEach { key, value in
+                        if let type = ChartType(rawValue: key) {
+                            stats[type] = self?.convert(responseData: value, coinCode: coinCode, currencyCode: currencyCode) ?? []
+                            diffs[type] = self?.calculateDiff(for: value)
+                        }
+                    }
 
-                    return ChartData(marketCap: response.marketCap, stats: stats)
+                    return ChartData(marketCap: response.marketCap, stats: stats, diffs: diffs)
                 }
                 .do(onSuccess: { [weak self] chartData in
                     self?.stats[StatsKey(coinCode: coinCode, currencyCode: currencyCode)] = chartData
                 })
-                .observeOn(MainScheduler.instance)
     }
 
 }

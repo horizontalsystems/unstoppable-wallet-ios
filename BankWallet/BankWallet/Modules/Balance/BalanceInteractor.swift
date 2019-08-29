@@ -127,6 +127,8 @@ extension BalanceInteractor: IBalanceInteractor {
 
     func getRateStats(coinCode: String, currencyCode: String) {
         rateStatsManager.rateStats(coinCode: coinCode, currencyCode: currencyCode)
+                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
+                .observeOn(MainScheduler.instance)
                 .subscribe(onSuccess: { [weak self] rateStats in
                     self?.delegate?.didReceive(coinCode: coinCode, chartData: rateStats)
                 }, onError: { _ in
