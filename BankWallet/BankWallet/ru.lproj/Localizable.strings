@@ -23,6 +23,8 @@
 "alert.no_internet" = "Нет интернета";
 "alert.network_issue" = "Проблемы с сетью. Попробуйте еще раз ";
 
+"n/a" = "N/A";
+
 "biometric_usage_reason" = "Разблокировать Кошелек";
 
 // Access Camera
