@@ -23,6 +23,8 @@
 "alert.no_internet" = "인터넷에 연결되지 않음";
 "alert.network_issue" = "네트워크에 문제가 있습니다. 잠시 후 다시 시도해 주세요";
 
+"n/a" = "N/A";
+
 "biometric_usage_reason" = "지갑 잠금 해제";
 
 // Access Camera
