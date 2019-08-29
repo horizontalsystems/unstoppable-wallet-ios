@@ -23,6 +23,8 @@
 "alert.no_internet" = "انترنت نداريد";
 "alert.network_issue" = "مشكل انترنت. لطفاً چند دقيقه بعد كوشش كنيد";
 
+"n/a" = "N/A";
+
 "biometric_usage_reason" = "باز كردن كيف پول";
 
 // Access Camera
