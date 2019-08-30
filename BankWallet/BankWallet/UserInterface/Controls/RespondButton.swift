@@ -66,6 +66,7 @@ class RespondButton: UIView, RespondViewDelegate {
         }
         wrapperView.setContentHuggingPriority(.defaultHigh, for: .horizontal)
 
+        imageView.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
         titleLabel.textAlignment = .center
         titleLabel.font = ButtonTheme.font
         wrapperView.addSubview(titleLabel)
@@ -121,7 +122,7 @@ class RespondButton: UIView, RespondViewDelegate {
             }
         } else {
             titleLabel.snp.remakeConstraints { maker in
-                maker.edges.equalToSuperview().inset(UIEdgeInsets(top: 0, left: ButtonTheme.margin, bottom: 0, right: ButtonTheme.margin))
+                maker.edges.equalToSuperview()
             }
             imageView.removeFromSuperview()
         }

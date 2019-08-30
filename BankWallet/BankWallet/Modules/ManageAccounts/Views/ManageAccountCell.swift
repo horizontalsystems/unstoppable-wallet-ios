@@ -26,7 +26,7 @@ class ManageAccountCell: UITableViewCell {
         contentView.addSubview(roundedBackground)
         roundedBackground.snp.makeConstraints { maker in
             maker.top.equalToSuperview()
-            maker.leadingMargin.trailingMargin.equalToSuperview().inset(self.layoutMargins)
+            maker.leading.trailing.equalToSuperview().inset(AppTheme.viewMargin)
             maker.bottom.equalToSuperview().offset(-ManageAccountsTheme.cellBottomMargin)
         }
 
@@ -83,6 +83,11 @@ class ManageAccountCell: UITableViewCell {
             maker.top.equalTo(self.coinsLabel.snp.bottom).offset(ManageAccountsTheme.buttonsTopMargin)
             maker.height.equalTo(ManageAccountsTheme.buttonsHeight)
         }
+        leftButton.wrapperView.snp.remakeConstraints { maker in
+            maker.leading.equalToSuperview().offset(ManageAccountsTheme.cellSmallPadding)
+            maker.top.bottom.equalToSuperview()
+            maker.trailing.equalToSuperview().offset(-ManageAccountsTheme.cellSmallPadding)
+        }
         leftButton.onTap = { [weak self] in self?.onTapLeft?() }
         leftButton.borderWidth = 1 / UIScreen.main.scale
         leftButton.borderColor = ManageAccountsTheme.buttonsBorderColor
@@ -99,6 +104,11 @@ class ManageAccountCell: UITableViewCell {
             maker.trailing.equalToSuperview().offset(-ManageAccountsTheme.buttonsMargin)
             maker.height.equalTo(ManageAccountsTheme.buttonsHeight)
             maker.width.equalTo(leftButton)
+        }
+        rightButton.wrapperView.snp.remakeConstraints { maker in
+            maker.leading.equalToSuperview().offset(ManageAccountsTheme.cellSmallPadding)
+            maker.top.bottom.equalToSuperview()
+            maker.trailing.equalToSuperview().offset(-ManageAccountsTheme.cellSmallPadding)
         }
         rightButton.onTap = { [weak self] in self?.onTapRight?() }
         rightButton.borderWidth = 1 / UIScreen.main.scale

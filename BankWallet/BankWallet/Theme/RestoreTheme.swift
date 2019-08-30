@@ -9,7 +9,7 @@ class RestoreTheme {
 
     static let descriptionTextColor = UIColor.cryptoGray
 
-    static let listBottomMargin: CGFloat = 12
+    static let listMargin: CGFloat = 12
     static let interItemSpacing: CGFloat = 8
     static let lineSpacing: CGFloat = 8
     static let itemHeight: CGFloat = 44

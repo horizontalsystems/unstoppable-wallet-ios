@@ -1,6 +1,8 @@
 import UIKit
 
 class SyncModeTheme {
+    static let topMargin: CGFloat = 12
+
     static let cellSmallMargin: CGFloat = 3
     static let cellMediumMargin: CGFloat = 8
     static let cellBigMargin: CGFloat = 16
@@ -9,7 +11,7 @@ class SyncModeTheme {
     static var cellBackground: UIColor { return .crypto_SteelDark_White }
     static let cellHighlightBackgroundColor = UIColor.cryptoSteel20
     static let titleFont: UIFont = .cryptoBody2
-    static let titleColor: UIColor = .crypto_Bars_Dark
+    static var titleColor: UIColor { return .crypto_Bars_Dark }
     static let descriptionFont: UIFont = .cryptoCaption1
     static let descriptionColor: UIColor = .cryptoGray
 
