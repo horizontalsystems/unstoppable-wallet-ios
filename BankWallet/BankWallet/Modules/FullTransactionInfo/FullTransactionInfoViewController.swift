@@ -105,7 +105,7 @@ class FullTransactionInfoViewController: WalletViewController, SectionsDataSourc
             rows.append(
                 Row<FullTransactionInfoTextCell>(id: "resource", height: FullTransactionInfoTheme.cellHeight, autoDeselect: true, bind: { cell, _ in
                     let item = FullTransactionItem(title: "full_info.source.title".localized, value: providerName)
-                    cell.bind(item: item, selectionStyle: .default, showDisclosure: true, last: true, showTopSeparator: true)
+                    cell.bind(item: item, selectionStyle: .default, showDisclosure: true, last: true)
                 }, action: { [weak self] cell in
                     self?.onTapChangeResource()
                 })

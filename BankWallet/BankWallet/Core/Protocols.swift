@@ -264,6 +264,7 @@ protocol IAppConfigProvider {
     var ipfsId: String { get }
     var ipfsGateways: [String] { get }
 
+    var companyWebPageLink: String { get }
     var appWebPageLink: String { get }
     var reportEmail: String { get }
     var reportTelegramGroup: String { get }

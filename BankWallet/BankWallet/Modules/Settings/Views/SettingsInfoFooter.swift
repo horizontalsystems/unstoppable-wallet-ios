@@ -3,9 +3,8 @@ import UIExtensions
 import SnapKit
 
 class SettingsInfoFooter: UITableViewHeaderFooterView {
-
-    let versionLabel = UILabel()
-    let logoButton = RespondView()
+    private let versionLabel = UILabel()
+    private let logoButton = RespondView()
 
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
@@ -19,7 +18,6 @@ class SettingsInfoFooter: UITableViewHeaderFooterView {
         }
         versionLabel.textColor = SettingsTheme.versionColor
         versionLabel.font = SettingsTheme.versionFont
-        versionLabel.text = "settings.info_title".localized
 
         let separatorView = UIView()
         separatorView.backgroundColor = SettingsTheme.infoFooterSeparatorColor
@@ -52,22 +50,20 @@ class SettingsInfoFooter: UITableViewHeaderFooterView {
             maker.top.equalTo(titleLabel.snp.bottom).offset(SettingsTheme.infoImageTopMargin)
             maker.centerX.equalToSuperview()
         }
-
-        let topSeparatorView = UIView()
-        topSeparatorView.backgroundColor = AppTheme.darkSeparatorColor
-        contentView.addSubview(topSeparatorView)
-        topSeparatorView.snp.makeConstraints { maker in
-            maker.leading.top.trailing.equalToSuperview()
-            maker.height.equalTo(1 / UIScreen.main.scale)
-        }
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func bind(appVersion: String, handleTouch: (() -> ())? = nil) {
-        versionLabel.text = "settings.info_title".localized + " " + appVersion
+    func bind(appVersion: String?, handleTouch: (() -> ())? = nil) {
+        var versionText = "settings.info_title".localized
+
+        if let appVersion = appVersion {
+            versionText += " \(appVersion)"
+        }
+
+        versionLabel.text = versionText
         logoButton.handleTouch = handleTouch
     }
 

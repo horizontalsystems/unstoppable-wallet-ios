@@ -26,7 +26,8 @@ extension MainSettingsRouter: IMainSettingsRouter {
         viewController?.navigationController?.pushViewController(AboutSettingsRouter.module(), animated: true)
     }
 
-    func showShare(text: String) {
+    func showShare(appWebPageLink: String) {
+        let text = "settings_tell_friends.text".localized + "\n" + appWebPageLink
         let activityViewController = UIActivityViewController(activityItems: [text], applicationActivities: [])
         viewController?.present(activityViewController, animated: true, completion: nil)
     }
@@ -35,8 +36,8 @@ extension MainSettingsRouter: IMainSettingsRouter {
         viewController?.navigationController?.pushViewController(ReportRouter.module(), animated: true)
     }
 
-    func openAppLink() {
-        if let url = URL(string: "http://horizontalsystems.io/") {
+    func open(link: String) {
+        if let url = URL(string: link) {
             UIApplication.shared.open(url)
         }
     }

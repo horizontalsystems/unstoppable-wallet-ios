@@ -12,7 +12,7 @@ class MainSettingsInteractor {
     private let currencyManager: ICurrencyManager
     private let appConfigProvider: IAppConfigProvider
 
-    init(localStorage: ILocalStorage, backupManager: IBackupManager, languageManager: ILanguageManager, systemInfoManager: ISystemInfoManager, currencyManager: ICurrencyManager, appConfigProvider: IAppConfigProvider, async: Bool = true) {
+    init(localStorage: ILocalStorage, backupManager: IBackupManager, languageManager: ILanguageManager, systemInfoManager: ISystemInfoManager, currencyManager: ICurrencyManager, appConfigProvider: IAppConfigProvider) {
         self.localStorage = localStorage
         self.backupManager = backupManager
         self.languageManager = languageManager
@@ -20,25 +20,17 @@ class MainSettingsInteractor {
         self.currencyManager = currencyManager
         self.appConfigProvider = appConfigProvider
 
-        var nonBackedUpCountObservable = backupManager.nonBackedUpCountObservable
-        var baseCurrencyUpdatedSignal: Observable<Void> = currencyManager.baseCurrencyUpdatedSignal
-
-        if async {
-            nonBackedUpCountObservable = nonBackedUpCountObservable
-                    .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
-                    .observeOn(MainScheduler.instance)
-            baseCurrencyUpdatedSignal = baseCurrencyUpdatedSignal
-                    .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
-                    .observeOn(MainScheduler.instance)
-        }
-
-        nonBackedUpCountObservable
+        backupManager.nonBackedUpCountObservable
+                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
+                .observeOn(MainScheduler.instance)
                 .subscribe(onNext: { [weak self] count in
                     self?.delegate?.didUpdateNonBackedUp(count: count)
                 })
                 .disposed(by: disposeBag)
 
-        baseCurrencyUpdatedSignal
+        currencyManager.baseCurrencyUpdatedSignal
+                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
+                .observeOn(MainScheduler.instance)
                 .subscribe(onNext: { [weak self] in
                     self?.delegate?.didUpdateBaseCurrency()
                 })
@@ -49,6 +41,10 @@ class MainSettingsInteractor {
 
 extension MainSettingsInteractor: IMainSettingsInteractor {
 
+    var companyWebPageLink: String {
+        return appConfigProvider.companyWebPageLink
+    }
+
     var appWebPageLink: String {
         return appConfigProvider.appWebPageLink
     }
@@ -57,25 +53,25 @@ extension MainSettingsInteractor: IMainSettingsInteractor {
         return backupManager.nonBackedUpCount
     }
 
-    var currentLanguage: String {
+    var currentLanguageDisplayName: String {
         return languageManager.displayNameForCurrentLanguage
     }
 
-    var baseCurrency: String {
-        return currencyManager.baseCurrency.code
+    var baseCurrency: Currency {
+        return currencyManager.baseCurrency
     }
 
     var lightMode: Bool {
-        return localStorage.lightMode
+        get {
+            return localStorage.lightMode
+        }
+        set {
+            localStorage.lightMode = newValue
+        }
     }
 
     var appVersion: String {
         return systemInfoManager.appVersion
-    }
-
-    func set(lightMode: Bool) {
-        localStorage.lightMode = lightMode
-        delegate?.didUpdateLightMode()
     }
 
 }

@@ -3,7 +3,6 @@ import SnapKit
 
 class FullTransactionInfoTextCell: SettingsCell {
     private let descriptionView = HashView()
-    let topSeparatorView = UIView()
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -21,24 +20,15 @@ class FullTransactionInfoTextCell: SettingsCell {
             maker.centerY.equalToSuperview()
             maker.trailing.equalTo(self.disclosureImageView.snp.leading).offset(-SettingsTheme.cellBigMargin)
         }
-
-        topSeparatorView.backgroundColor = AppTheme.separatorColor
-        contentView.addSubview(topSeparatorView)
-        topSeparatorView.snp.makeConstraints { maker in
-            maker.leading.top.trailing.equalToSuperview()
-            maker.height.equalTo(1 / UIScreen.main.scale)
-        }
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func bind(item: FullTransactionItem, selectionStyle: SelectionStyle = .none, showDisclosure: Bool = false, last: Bool = false, showTopSeparator: Bool = false, onTap: (() -> ())? = nil) {
+    func bind(item: FullTransactionItem, selectionStyle: SelectionStyle = .none, showDisclosure: Bool = false, last: Bool = false, onTap: (() -> ())? = nil) {
         super.bind(titleIcon: item.icon.flatMap { UIImage(named: $0) }, title: item.title, titleColor: FullTransactionInfoTheme.titleColor, showDisclosure: showDisclosure, last: last)
         self.selectionStyle = selectionStyle
-
-        topSeparatorView.isHidden = !showTopSeparator
 
         descriptionView.snp.remakeConstraints { maker in
             maker.leading.equalTo(self.titleLabel.snp.trailing).offset(FullTransactionInfoTheme.margin)
