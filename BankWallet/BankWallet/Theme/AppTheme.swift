@@ -50,6 +50,10 @@ class AppTheme {
     static let alertTextFont: UIFont = .cryptoCaptionMedium
     static var alertTextColor: UIColor = .cryptoGray
 
+    static let footerTextMargin: CGFloat = 16
+    static let footerTextColor: UIColor = .cryptoGray
+    static let footerTextFont: UIFont = .cryptoCaption1
+
     static let alertCellHeight: CGFloat = 53
     static let alertCellFont: UIFont = .cryptoHeadline
     static let alertMessageFont: UIFont = .cryptoCaptionMedium

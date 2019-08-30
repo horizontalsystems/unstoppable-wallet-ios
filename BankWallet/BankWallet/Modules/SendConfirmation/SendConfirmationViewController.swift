@@ -38,7 +38,6 @@ class SendConfirmationViewController: UIViewController, SectionsDataSource {
         tableView.registerCell(forClass: SendConfirmationPrimaryCell.self)
         tableView.registerCell(forClass: SendConfirmationFieldCell.self)
         tableView.registerCell(forClass: SendButtonCell.self)
-        tableView.registerHeaderFooter(forClass: SyncModeSectionSeparator.self)
         tableView.sectionDataSource = self
         tableView.separatorColor = .clear
         tableView.backgroundColor = .clear
