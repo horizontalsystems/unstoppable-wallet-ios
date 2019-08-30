@@ -18,6 +18,7 @@
 "button.sync" = "Sync";
 "button.paste" = "粘帖";
 "button.backup" = "备份";
+"button.back" = "Back";
 
 "alert.copied" = "已复制";
 "alert.no_internet" = "没有网络";
