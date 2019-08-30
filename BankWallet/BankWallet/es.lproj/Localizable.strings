@@ -84,7 +84,7 @@
 "backup.eos.hint" = "Copiar su clave utilizando la acción \"copiar\" implica ciertos riesgos si utiliza aplicaciones de gestión de portapapeles u otra aplicación que pueda tener acceso a la información del portapapeles.";
 "error.send_eos.self_transfer" = "No se puede transferir el token a su propia cuenta";
 "error.send_eos.account_not_exist" = "La cuenta de destino no existe";
-"error.send_eos.insufficient_ram" = "Your EOS account doesn't have enough RAM to send this token. You need to increase RAM stake to proceed.";
+"error.send_eos.insufficient_ram" = "Su cuenta EOS no tiene suficiente memoria RAM para enviar este token. Necesita aumentar la participación en RAM para continuar.";
 "error.send_eos.unknown" = "Algo ha fallado: %@";
 
 "backup.confirmation.title" = "Comprobar";
