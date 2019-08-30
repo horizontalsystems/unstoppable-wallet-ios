@@ -5,6 +5,7 @@ class ManageAccountsTheme {
 
     static let cellBigPadding: CGFloat = 12
     static let cellSmallPadding: CGFloat = 8
+    static let cellTopMargin: CGFloat = 9
     static let cellBottomMargin: CGFloat = 8
 
     static var gradientRoundedBackgroundColor: UIColor? { return App.shared.localStorage.lightMode ? nil : .cryptoSteel20 }

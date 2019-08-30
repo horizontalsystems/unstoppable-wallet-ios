@@ -20,7 +20,7 @@ class ManageAccountDescriptionCell: UITableViewCell {
         label.numberOfLines = 0
         label.text = ManageAccountDescriptionCell.descriptionText
         label.snp.makeConstraints { maker in
-            maker.top.equalToSuperview()
+            maker.top.equalToSuperview().offset(ManageAccountsTheme.cellBottomMargin)
             maker.leadingMargin.trailingMargin.equalToSuperview().inset(self.layoutMargins)
             maker.bottom.equalToSuperview().offset(-ManageAccountsTheme.cellBottomMargin)
         }
@@ -28,7 +28,7 @@ class ManageAccountDescriptionCell: UITableViewCell {
 
     static func height(forContainerWidth containerWidth: CGFloat) -> CGFloat {
         let view = UIView()
-        return ManageAccountDescriptionCell.descriptionText.height(forContainerWidth: containerWidth - 2 * view.layoutMargins.left, font: ManageAccountsTheme.descriptionFont) + ManageAccountsTheme.cellBottomMargin
+        return ManageAccountDescriptionCell.descriptionText.height(forContainerWidth: containerWidth - 2 * view.layoutMargins.left, font: ManageAccountsTheme.descriptionFont) + ManageAccountsTheme.cellTopMargin + ManageAccountsTheme.cellBottomMargin
     }
 
     required init?(coder aDecoder: NSCoder) {
