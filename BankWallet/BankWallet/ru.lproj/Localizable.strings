@@ -23,7 +23,7 @@
 "alert.no_internet" = "Нет интернета";
 "alert.network_issue" = "Проблемы с сетью. Попробуйте еще раз ";
 
-"n/a" = "N/A";
+"n/a" = "Нет данных";
 
 "biometric_usage_reason" = "Разблокировать Кошелек";
 
@@ -108,7 +108,7 @@
 "balance.sort.header" = "Сортировать по";
 "balance.sort.valueHighToLow" = "Балансу";
 "balance.sort.az" = "Названию";
-"balance.sort.24h_change" = "24h Change";
+"balance.sort.24h_change" = "Изменение за 24 ч";
 // Deposit
 
 "deposit.receive_coin" = "Получить %@";
