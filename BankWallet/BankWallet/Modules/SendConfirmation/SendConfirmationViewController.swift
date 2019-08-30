@@ -160,7 +160,7 @@ extension SendConfirmationViewController: ISendConfirmationView {
         let text = [primaryText, formattedSecondary != nil ? "|" : nil, formattedSecondary].compactMap { $0 }.joined(separator: " ")
 
         let row = Row<SendConfirmationFieldCell>(id: "send_fee_row", height: SendTheme.confirmationFieldHeight, bind: { cell, _ in
-            cell.bind(title: "send.fee".localized, text: text)
+            cell.bind(title: "send.fee".localized + ":", text: text)
         })
 
         rows.append(row)
@@ -179,7 +179,7 @@ extension SendConfirmationViewController: ISendConfirmationView {
         guard let primaryText = formattedPrimary else { return }
 
         let row = Row<SendConfirmationFieldCell>(id: "send_total_row", height: SendTheme.confirmationFieldHeight, bind: { cell, _ in
-            cell.bind(title: "send.confirmation.total".localized, text: primaryText)
+            cell.bind(title: "send.confirmation.total".localized + ":", text: primaryText)
         })
         rows.append(row)
     }
@@ -187,7 +187,7 @@ extension SendConfirmationViewController: ISendConfirmationView {
     func show(viewItem: SendConfirmationDurationViewItem) {
 
         let row = Row<SendConfirmationFieldCell>(id: "send_duration_row", height: SendTheme.confirmationFieldHeight, bind: { cell, _ in
-            cell.bind(title: "send.tx_duration".localized, text: viewItem.timeInterval.map { "send.duration.within".localized($0.approximateHoursOrMinutes) } ?? "send.duration.instant".localized)
+            cell.bind(title: "send.tx_duration".localized + ":", text: viewItem.timeInterval.map { "send.duration.within".localized($0.approximateHoursOrMinutes) } ?? "send.duration.instant".localized)
         })
 
         rows.append(row)

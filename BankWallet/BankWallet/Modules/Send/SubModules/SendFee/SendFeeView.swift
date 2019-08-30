@@ -26,7 +26,7 @@ class SendFeeView: UIView {
         addSubview(errorLabel)
         addSubview(feeValueLabel)
 
-        durationTitleLabel.text = "send.tx_duration".localized
+        durationTitleLabel.text = "send.tx_duration".localized + ":"
         durationTitleLabel.font = SendTheme.feeFont
         durationTitleLabel.textColor = SendTheme.feeColor
         durationTitleLabel.snp.makeConstraints { maker in
@@ -43,7 +43,7 @@ class SendFeeView: UIView {
             maker.leading.equalTo(durationTitleLabel.snp.trailing).offset(SendTheme.margin)
         }
 
-        feeTitleLabel.text = "send.fee".localized
+        feeTitleLabel.text = "send.fee".localized + ":"
         feeTitleLabel.font = SendTheme.feeFont
         feeTitleLabel.textColor = SendTheme.feeColor
         feeTitleLabel.snp.makeConstraints { maker in
