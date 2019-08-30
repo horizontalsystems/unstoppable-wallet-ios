@@ -18,6 +18,7 @@
 "button.sync" = "Синхр.";
 "button.paste" = "Вставить";
 "button.backup" = "Резервная копия";
+"button.back" = "Back";
 
 "alert.copied" = "Скопировано";
 "alert.no_internet" = "Нет интернета";
