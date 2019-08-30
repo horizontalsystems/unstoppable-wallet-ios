@@ -18,6 +18,7 @@
 "button.sync" = "Eşitle";
 "button.paste" = "Yapıştır";
 "button.backup" = "Yedekle";
+"button.back" = "Back";
 
 "alert.copied" = "Kopyalandı";
 "alert.no_internet" = "Internet Bağlantısı Yok";
