@@ -30,8 +30,14 @@ class Erc20Adapter: EthereumBaseAdapter {
         var amount: Decimal = 0
 
         if let significand = Decimal(string: transaction.value) {
-            let sign: FloatingPointSign = from.mine ? .minus : .plus
-            amount = Decimal(sign: sign, exponent: -decimal, significand: significand)
+            let transactionAmount = Decimal(sign: .plus, exponent: -decimal, significand: significand)
+
+            if from.mine {
+                amount -= transactionAmount
+            }
+            if to.mine {
+                amount += transactionAmount
+            }
         }
 
         return TransactionRecord(
