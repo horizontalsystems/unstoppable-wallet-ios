@@ -214,7 +214,7 @@
 "settings.security_center" = "Centro de seguridad";
 "settings.manage_coins" = "Gestionar monedas";
 "settings.restore_wallet" = "Restaurar monedero";
-"settings.base_currency" = "Divisa principal";
+"settings.base_currency" = "Moneda principal";
 "settings.language" = "Idioma";
 "settings.about" = "Acerca de";
 "settings.tell_friends" = "Recomendar a un amigo";
