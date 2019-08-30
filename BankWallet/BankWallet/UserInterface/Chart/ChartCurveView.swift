@@ -6,7 +6,7 @@ class ChartCurveView: UIView {
     private let pointConverter: PointConverter
 
     private let linesLayer = CAShapeLayer()
-    private let gradientLayer = CAShapeLayer()
+    private let gradientLayer = CAGradientLayer()
 
     private var lastLinePoints: [CGPoint]? = nil
     private var lastGradientPoints: [CGPoint]? = nil
@@ -42,8 +42,6 @@ class ChartCurveView: UIView {
         linesLayer.lineWidth = configuration.curveWidth
         linesLayer.fillColor = UIColor.clear.cgColor
 
-        gradientLayer.lineWidth = 1 / UIScreen.main.scale
-
         layer.addSublayer(linesLayer)
         layer.addSublayer(gradientLayer)
     }
@@ -54,18 +52,14 @@ class ChartCurveView: UIView {
         guard !bounds.isEmpty, let dataSource = dataSource, !dataSource.chartData.isEmpty else {
             return
         }
-        if dataSource.chartFrame.positive {
-            linesLayer.strokeColor = configuration.curvePositiveColor.cgColor
-            gradientLayer.strokeColor = configuration.gradientPositiveColor.cgColor
-            gradientLayer.fillColor = configuration.gradientPositiveColor.cgColor
-        } else {
-            linesLayer.strokeColor = configuration.curveNegativeColor.cgColor
-            gradientLayer.strokeColor = configuration.gradientNegativeColor.cgColor
-            gradientLayer.fillColor = configuration.gradientNegativeColor.cgColor
-        }
-        let bottom = bounds.maxY - 0.5 / UIScreen.main.scale
+        gradientLayer.startPoint = CGPoint.zero
+        gradientLayer.endPoint = CGPoint(x: 0, y: 1)
 
-        gradientLayer.mask = transparentMask()
+        let color = dataSource.chartFrame.positive ? configuration.curvePositiveColor : configuration.gradientNegativeColor
+        linesLayer.strokeColor = color.cgColor
+        gradientLayer.colors = [color.withAlphaComponent(configuration.gradientStartTransparency).cgColor, color.withAlphaComponent(configuration.gradientFinishTransparency).cgColor]
+
+        let bottom = bounds.maxY - 0.5 / UIScreen.main.scale
 
         let linePoints = convertChartDataToGraphicPoints(for: bounds, retinaShift: true)
 
@@ -75,11 +69,14 @@ class ChartCurveView: UIView {
             gradientPoints.append(CGPoint(x: lastPoint.x, y: bottom))
         }
 
+        let shapeLayer = CAShapeLayer()
+        shapeLayer.path = ChartBezierPath.path(for: gradientPoints).cgPath
+        gradientLayer.mask = shapeLayer
+
         guard animated else {
             linesLayer.path = ChartBezierPath.path(for: linePoints).cgPath
             linesLayer.removeAllAnimations()
 
-            gradientLayer.path = ChartBezierPath.path(for: gradientPoints).cgPath
             gradientLayer.removeAllAnimations()
             return
         }
@@ -100,7 +97,7 @@ class ChartCurveView: UIView {
         let gradientAnimation = animation(startPoints: startGradientPoints, finishPoints: gradientPoints)
 
         linesLayer.add(lineAnimation, forKey: "curveAnimation")
-        gradientLayer.add(gradientAnimation, forKey: "gradientAnimation")
+        shapeLayer.add(gradientAnimation, forKey: "gradientAnimation")
 
         CATransaction.setCompletionBlock { [weak self] in
             self?.lastLinePoints = linePoints
@@ -114,7 +111,8 @@ class ChartCurveView: UIView {
         linesLayer.path = nil
         linesLayer.removeAllAnimations()
 
-        gradientLayer.path = nil
+        gradientLayer.mask = nil
+        gradientLayer.colors = []
         gradientLayer.removeAllAnimations()
     }
 
@@ -132,8 +130,8 @@ class ChartCurveView: UIView {
 
     func set(curveColor: UIColor, gradientColor: UIColor) {
         linesLayer.strokeColor = curveColor.cgColor
-        gradientLayer.strokeColor = gradientColor.cgColor
-        gradientLayer.fillColor = gradientColor.cgColor
+
+        gradientLayer.colors = [gradientColor.withAlphaComponent(configuration.gradientStartTransparency).cgColor, gradientColor.withAlphaComponent(configuration.gradientFinishTransparency).cgColor]
     }
 
     private func convertChartDataToGraphicPoints(for bounds: CGRect, retinaShift: Bool) -> [CGPoint] {
@@ -175,17 +173,6 @@ class ChartCurveView: UIView {
             }
         }
         return startPoints
-    }
-
-    private func transparentMask() -> CAGradientLayer {
-        let gradientTransparentMask = CAGradientLayer()
-        gradientTransparentMask.frame = bounds
-        gradientTransparentMask.startPoint = CGPoint(x: 0.5, y: 0)
-        gradientTransparentMask.endPoint = CGPoint(x: 0.5, y: 1)
-
-        gradientTransparentMask.colors = [UIColor.black.withAlphaComponent(configuration.gradientStartTransparency), UIColor.black.withAlphaComponent(configuration.gradientFinishTransparency)].map { $0.cgColor }
-
-        return gradientTransparentMask
     }
 
 }
