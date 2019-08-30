@@ -122,12 +122,12 @@
 "send.amount_placeholder" = "Tutar";
 "send.address_placeholder" = "Adres";
 "send.account_placeholder" = "Account";
-"send.fee" = "Fee";
-"send.tx_speed" = "Transaction Speed";
+"send.fee" = "Masraf";
+"send.tx_speed" = "İşlem hızı";
 "send.tx_speed_low" = "Düşük";
 "send.tx_speed_medium" = "Orta";
 "send.tx_speed_high" = "Yüksek";
-"send.tx_duration" = "Duration";
+"send.tx_duration" = "Süre";
 "send.duration.instant" = "Anlık";
 "send.duration.within" = "%@ içinde";
 "send.duration.hours" = "%d sa.";
@@ -140,9 +140,9 @@
 "send.error.no_amount" = "Miktar yok";
 
 "send.confirmation.title" = "Onayla";
-"send.confirmation.to" = "To";
+"send.confirmation.to" = "Alan";
 "send.confirmation.memo_placeholder" = "Memo";
-"send.confirmation.total" = "Total";
+"send.confirmation.total" = "Toplam";
 "send.confirmation.eos.account" = "Account";
 "send.confirmation.send_button" = "Gönder";
 "send.amount_error.balance" = "%@ Bakiye";
@@ -168,7 +168,7 @@
 "tx_info.button_verify" = "Doğrula";
 "tx_info.rate" = "Geçmiş Kur";
 "tx_info.fee" = "Ücret";
-"tx_info.note" = "The value of this transaction appears as 0 because it was sent to your own address";
+"tx_info.note" = "Kendi adresinize gönderildiğinden bu işlemin değeri 0 olarak görünür";
 
 // Full Info
 
