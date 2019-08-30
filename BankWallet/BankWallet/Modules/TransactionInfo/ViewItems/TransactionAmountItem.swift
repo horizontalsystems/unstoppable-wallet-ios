@@ -9,7 +9,7 @@ class TransactionAmountItem: BaseActionItem {
     var coinName: String?
 
     init(item: TransactionViewItem, tag: Int? = nil) {
-        if let value = item.currencyValue, let formattedValue = ValueFormatter.instance.format(currencyValue: value) {
+        if let value = item.currencyValue, let formattedValue = ValueFormatter.instance.format(currencyValue: value, fractionPolicy: .threshold(high: 1000, low: 0.01), trimmable: false) {
             currencyAmount = formattedValue
 
             if item.sentToSelf {
