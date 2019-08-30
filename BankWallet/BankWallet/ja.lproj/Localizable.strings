@@ -18,6 +18,7 @@
 "button.sync" = "Sync";
 "button.paste" = "Paste";
 "button.backup" = "Backup";
+"button.back" = "Back";
 
 "alert.copied" = "コピー完了";
 "alert.no_internet" = "No Internet";
