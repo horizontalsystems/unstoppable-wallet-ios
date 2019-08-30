@@ -122,13 +122,13 @@
 "send.amount_placeholder" = "Importe";
 "send.address_placeholder" = "Dirección";
 "send.account_placeholder" = "Account";
-"send.fee" = "Fee";
-"send.tx_speed" = "Transaction Speed";
+"send.fee" = "Comisión";
+"send.tx_speed" = "Velocidad de transacción";
 "send.tx_speed_low" = "Bajo";
 "send.tx_speed_medium" = "Medio";
 "send.tx_speed_high" = "Alto";
-"send.tx_duration" = "Duration";
-"send.duration.instant" = "Instant";
+"send.tx_duration" = "Duración";
+"send.duration.instant" = "Inmediato";
 "send.duration.within" = "within %@";
 "send.duration.hours" = "%d h.";
 "send.duration.minutes" = "%d min.";
@@ -168,7 +168,7 @@
 "tx_info.button_verify" = "Verificar";
 "tx_info.rate" = "Tasa histórica";
 "tx_info.fee" = "Comisión";
-"tx_info.note" = "The value of this transaction appears as 0 because it was sent to your own address";
+"tx_info.note" = "El valor de esta transacción aparece como 0 porque fue enviado a su propia dirección";
 
 // Full Info
 
