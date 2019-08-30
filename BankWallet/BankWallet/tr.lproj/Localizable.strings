@@ -334,7 +334,7 @@
 
 "chart.title" = "%@ kur";
 "chart.time_duration.day" = "Gün";
-"chart.time_duration.week" = "Hafta";
+"chart.time_duration.week" = "7G";
 "chart.time_duration.month" = "Ay";
 "chart.time_duration.quartal" = "3 ay";
 "chart.time_duration.halyear" = "6 Ay";
