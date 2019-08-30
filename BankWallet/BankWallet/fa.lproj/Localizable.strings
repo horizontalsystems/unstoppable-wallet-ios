@@ -18,6 +18,7 @@
 "button.sync" = "Sync";
 "button.paste" = "Paste";
 "button.backup" = "Backup";
+"button.back" = "Back";
 
 "alert.copied" = "کپی انجام شد";
 "alert.no_internet" = "انترنت نداريد";
