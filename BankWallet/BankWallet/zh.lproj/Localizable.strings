@@ -41,7 +41,7 @@
 // Restore
 
 "restore.title" = "恢复";
-"restore.description" = "To restore existing wallet you need to enter a secret key for that wallet.\n\nOnce you restore one wallet you will be able to restore more wallets by going to Manage Keys section in app Settings.";
+"restore.description" = "要恢复现有钱包，您必须输入该钱包的密钥。\n\n恢复一个钱包后，您可以前往应用设置中的“管理密钥”恢复更多钱包。";
 "restore.words.description" = "输入密钥";
 "restore.validation_failed" = "密钥不正确";
 "restore.placeholder.account_name" = "Account Name";
@@ -56,7 +56,7 @@
 "coin_sync.slow" = "慢";
 "coin_sync.more_private" = "1 小时(更多隐私)";
 "coin_sync.slow.text" = "直接通过网络恢复您的过往交易。更加私密，但非常缓慢。如果恢复过程耗时过长，请前往”管理密钥“部分并使用”快速同步“选项重新导入钱包密钥。";
-"coin_sync.alert.header" = "Attention";
+"coin_sync.alert.header" = "注意";
 "coin_sync.alert.text" = "This action will resync your wallet balance for each blockchain. It may take several hours to complete.";
 "coin_sync.erc20" = "Sync mode same as Ethereum";
 
@@ -74,8 +74,8 @@
 
 "backup.words.title" = "密钥";
 "backup.12words.title" = "12字密钥";
-"backup.binance.title" = "Binance Key";
-"confirmation.binance.description" = "请从你的二进制密钥中输入单词";
+"backup.binance.title" = "Binance密钥";
+"confirmation.binance.description" = "输入Binance密钥中的单字";
 "confirmation.12words.description" = "请从你的12个字的密钥中输入单词";
 
 "backup.eos.title" = "EOS密钥";
@@ -85,7 +85,7 @@
 "error.send_eos.self_transfer" = "无法将代币转入自己的账户";
 "error.send_eos.account_not_exist" = "目标账户不存在";
 "error.send_eos.insufficient_ram" = "您的EOS账户没有足够的RAM来发送此令牌。您必须增加RAM才能继续。";
-"error.send_eos.unknown" = "Something went wrong: %@";
+"error.send_eos.unknown" = "出错了：%@";
 
 "backup.confirmation.title" = "正在检查...";
 "backup.confirmation.secret_key" = "我明白我是安全保存在我的电话中并能控制我钱包上的资金的12字私有密钥的唯一所有人。";
@@ -108,13 +108,13 @@
 "balance.sort.header" = "排序方式";
 "balance.sort.valueHighToLow" = "余额";
 "balance.sort.az" = "名称";
-"balance.sort.24h_change" = "24h Change";
+"balance.sort.24h_change" = "24小时变更";
 // Deposit
 
 "deposit.receive_coin" = "收到%@";
 "deposit.your_address" = "您的地址";
 "deposit.your_account" = "您的账户";
-"receive_alert.not_backed_up_description" = "You need to backup the %@ key before you may receive %@.";
+"receive_alert.not_backed_up_description" = "您必须备份%@密钥才能收到%@。";
 
 // Send
 
@@ -129,9 +129,9 @@
 "send.tx_speed_high" = "高";
 "send.tx_duration" = "时长:";
 "send.duration.instant" = "即时";
-"send.duration.within" = "within %@";
-"send.duration.hours" = "%d h.";
-"send.duration.minutes" = "%d min.";
+"send.duration.within" = "在%@内";
+"send.duration.hours" = "%d小时。";
+"send.duration.minutes" = "%d分钟。";
 "send.max_button" = "最多";
 "send.next_button" = "下一步";
 "send.error.invalid_address" = "错误地址";
@@ -164,7 +164,7 @@
 "tx_info.status.pending" = "待处理";
 "tx_info.status.confirmed" = "已确认";
 "tx_info.from_hash" = "发件人";
-"tx_info.transaction_id" = "Transaction ID";
+"tx_info.transaction_id" = "交易ID";
 "tx_info.to_hash" = "接收人";
 "tx_info.button_verify" = "验证";
 "tx_info.rate" = "历史价格";
@@ -219,7 +219,7 @@
 "settings.language" = "语言";
 "settings.about" = "关于";
 "settings.tell_friends" = "分享给好友";
-"settings.report_problem" = "Report Problem";
+"settings.report_problem" = "报告问题";
 "settings.light_mode" = "简单模式";
 "settings.info_title" = "UNSTOPPABLE";
 "settings.info_subtitle" = "decentralized app";
@@ -258,14 +258,14 @@
 "settings_security.manage_accounts" = "管理密钥";
 "settings_security.passcode" = "密码";
 "settings_security.change_pin" = "编辑密码";
-"settings_security.touch_id" = "Touch ID";
-"settings_security.face_id" = "Face ID";
+"settings_security.touch_id" = "指纹识别";
+"settings_security.face_id" = "面部识别";
 "security_settings.delete_alert_button" = "从手机中删除";
 
 // Settings -> Report Problem
 
-"settings.report_problem.title" = "Report Problem";
-"settings.report_problem.email" = "E-mail";
+"settings.report_problem.title" = "报告问题";
+"settings.report_problem.email" = "电子邮箱";
 "settings.report_problem.telegram" = "电报";
 
 // Manage Keys
@@ -344,7 +344,7 @@
 "chart.market_cap.thousand" = "%@千";
 "chart.market_cap.million" = "%@百万";
 "chart.market_cap.billion" = "%@十亿";
-"chart.market_cap.trillion" = "%@ T";
+"chart.market_cap.trillion" = "%@万亿";
 "chart.high" = "高";
 "chart.low" = "低";
 "chart.volume" = "量";
