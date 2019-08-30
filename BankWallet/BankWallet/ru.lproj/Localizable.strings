@@ -276,7 +276,7 @@
 "settings_manage_keys.backup" = "Резерв. копия";
 "settings_manage_keys.show" = "Показать";
 "settings_manage_keys.create" = "Создать";
-"settings_manage_keys.restore" = "Восстановить";
+"settings_manage_keys.restore" = "Восстан-ть";
 "settings_manage_keys.delete.cant_delete" = "Вам нужно сделать резервную копию %@ ключа, прежде чем вы его сможете удалить с этого устройства.";
 "settings_manage_keys.delete.title" = "Удалить Ключ";
 "settings_manage_keys.delete.confirmation_remove" = "Это действие удалит ваш %@ ключ (кошелёк) с этого устройства.";
