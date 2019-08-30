@@ -35,7 +35,7 @@ class SecuritySettingsViewController: WalletViewController, SectionsDataSource {
 
         tableView.backgroundColor = .clear
         tableView.sectionDataSource = self
-        tableView.separatorColor = .clear
+        tableView.separatorStyle = .none
 
         tableView.registerCell(forClass: SettingsCell.self)
         tableView.registerCell(forClass: SettingsRightImageCell.self)
@@ -70,11 +70,7 @@ class SecuritySettingsViewController: WalletViewController, SectionsDataSource {
             self?.delegate.didTapManageAccounts()
         }))
 
-        let manageAccountsHeader: ViewState<SectionSeparator> = .cellType(hash: "manage_accounts_header", binder: { view in
-            view.bind(showTopSeparator: false)
-        }, dynamicHeight: { _ in SettingsTheme.subSettingsHeaderHeight })
-
-        sections.append(Section(id: "manage_accounts", headerState: manageAccountsHeader, rows: manageAccountsRows))
+        sections.append(Section(id: "manage_accounts", headerState: .margin(height: SettingsTheme.subSettingsHeaderHeight), rows: manageAccountsRows))
 
         var pinRows = [RowProtocol]()
 
@@ -94,13 +90,7 @@ class SecuritySettingsViewController: WalletViewController, SectionsDataSource {
             }))
         }
 
-        let pinHeader: ViewState<SectionSeparator> = .cellType(hash: "pin_header", binder: { view in
-            view.bind()
-        }, dynamicHeight: { _ in
-            SettingsTheme.headerHeight
-        })
-
-        sections.append(Section(id: "pin", headerState: pinHeader, rows: pinRows))
+        sections.append(Section(id: "pin", headerState: .margin(height: SettingsTheme.headerHeight), rows: pinRows))
 
         if isPinSet {
             var biometryRow: RowProtocol?
@@ -112,13 +102,7 @@ class SecuritySettingsViewController: WalletViewController, SectionsDataSource {
             }
 
             if let biometryRow = biometryRow {
-                let biometryHeader: ViewState<SectionSeparator> = .cellType(hash: "face_header", binder: { view in
-                    view.bind()
-                }, dynamicHeight: { _ in
-                    SettingsTheme.headerHeight
-                })
-
-                sections.append(Section(id: "biometry", headerState: biometryHeader, rows: [biometryRow]))
+                sections.append(Section(id: "biometry", headerState: .margin(height: SettingsTheme.headerHeight), rows: [biometryRow]))
             }
         }
 
