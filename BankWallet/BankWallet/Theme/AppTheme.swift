@@ -33,6 +33,8 @@ class AppTheme {
                     backgroundStyle: .blur(intensity: 0.55, style: AppTheme.actionSheetBlurStyle))
         }
     }
+    static let viewMargin: CGFloat = 16
+
     static let alertSmallMargin: CGFloat = 8
     static let alertMediumMargin: CGFloat = 12
     static let alertBigMargin: CGFloat = 20

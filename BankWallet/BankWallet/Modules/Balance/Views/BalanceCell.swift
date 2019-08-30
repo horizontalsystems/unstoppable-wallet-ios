@@ -54,7 +54,7 @@ class BalanceCell: UITableViewCell {
         contentView.addSubview(roundedBackground)
         roundedBackground.snp.makeConstraints { maker in
             maker.top.equalToSuperview().offset(BalanceTheme.cellPadding)
-            maker.leadingMargin.trailingMargin.equalToSuperview().inset(self.layoutMargins)
+            maker.leading.trailing.equalToSuperview().inset(AppTheme.viewMargin)
             maker.bottom.equalToSuperview()
         }
         roundedBackground.backgroundColor = BalanceTheme.roundedBackgroundColor

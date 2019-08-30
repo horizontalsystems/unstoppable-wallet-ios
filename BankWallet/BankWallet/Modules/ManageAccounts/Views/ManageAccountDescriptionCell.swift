@@ -21,14 +21,13 @@ class ManageAccountDescriptionCell: UITableViewCell {
         label.text = ManageAccountDescriptionCell.descriptionText
         label.snp.makeConstraints { maker in
             maker.top.equalToSuperview().offset(ManageAccountsTheme.cellBottomMargin)
-            maker.leadingMargin.trailingMargin.equalToSuperview().inset(self.layoutMargins)
+            maker.leading.trailing.equalToSuperview().inset(AppTheme.viewMargin)
             maker.bottom.equalToSuperview().offset(-ManageAccountsTheme.cellBottomMargin)
         }
     }
 
     static func height(forContainerWidth containerWidth: CGFloat) -> CGFloat {
-        let view = UIView()
-        return ManageAccountDescriptionCell.descriptionText.height(forContainerWidth: containerWidth - 2 * view.layoutMargins.left, font: ManageAccountsTheme.descriptionFont) + ManageAccountsTheme.cellTopMargin + ManageAccountsTheme.cellBottomMargin
+        return ManageAccountDescriptionCell.descriptionText.height(forContainerWidth: containerWidth - 2 * AppTheme.viewMargin, font: ManageAccountsTheme.descriptionFont) + ManageAccountsTheme.cellTopMargin + ManageAccountsTheme.cellBottomMargin
     }
 
     required init?(coder aDecoder: NSCoder) {

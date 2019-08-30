@@ -2,7 +2,7 @@ import UIKit
 import SnapKit
 
 public class SectionHeaderFooterTextView: UITableViewHeaderFooterView {
-    let label = UILabel()
+    private let label = UILabel()
 
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
@@ -32,8 +32,8 @@ public class SectionHeaderFooterTextView: UITableViewHeaderFooterView {
         label.setNeedsUpdateConstraints()
     }
 
-    static func height(forContainerWidth containerWidth: CGFloat, text: String, font: UIFont, additionalMargins: CGFloat) -> CGFloat {
-        return ceil(text.height(forContainerWidth: containerWidth - 2 * AppTheme.footerTextMargin, font: font) + additionalMargins)
+    static func textHeight(forContainerWidth containerWidth: CGFloat, text: String, font: UIFont = AppTheme.footerTextFont) -> CGFloat {
+        return ceil(text.height(forContainerWidth: containerWidth - 2 * AppTheme.footerTextMargin, font: font))
     }
 
 }

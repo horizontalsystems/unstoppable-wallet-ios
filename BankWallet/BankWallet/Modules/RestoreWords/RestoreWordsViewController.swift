@@ -40,7 +40,7 @@ class RestoreWordsViewController: WalletViewController {
 
         view.addSubview(collectionView)
         collectionView.backgroundColor = .clear
-        layout.sectionInset = UIEdgeInsets(top: 0, left: RestoreTheme.collectionSideMargin, bottom: RestoreTheme.listBottomMargin, right: RestoreTheme.collectionSideMargin)
+        layout.sectionInset = UIEdgeInsets(top: RestoreTheme.listMargin, left: RestoreTheme.collectionSideMargin, bottom: RestoreTheme.listMargin, right: RestoreTheme.collectionSideMargin)
         layout.minimumInteritemSpacing = RestoreTheme.interItemSpacing
         layout.minimumLineSpacing = RestoreTheme.lineSpacing
         collectionView.snp.makeConstraints { maker in

@@ -19,7 +19,7 @@ class RestoreAccountCell: UITableViewCell {
         contentView.addSubview(roundedBackground)
         roundedBackground.snp.makeConstraints { maker in
             maker.top.equalToSuperview()
-            maker.leadingMargin.trailingMargin.equalToSuperview().inset(self.layoutMargins)
+            maker.leading.trailing.equalToSuperview().inset(AppTheme.viewMargin)
             maker.bottom.equalToSuperview().offset(-RestoreAccountsTheme.cellBottomMargin)
         }
         roundedBackground.backgroundColor = RestoreAccountsTheme.roundedBackgroundColor

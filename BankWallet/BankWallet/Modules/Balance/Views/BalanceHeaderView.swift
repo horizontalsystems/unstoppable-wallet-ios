@@ -40,7 +40,7 @@ class BalanceHeaderView: UIView {
         amountLabel.preservesSuperviewLayoutMargins = true
 
         amountLabel.snp.makeConstraints { maker in
-            maker.leadingMargin.equalToSuperview().inset(self.layoutMargins)
+            maker.leading.equalToSuperview().inset(AppTheme.viewMargin)
             maker.top.equalToSuperview().offset(BalanceTheme.cellSmallMargin)
         }
     }
