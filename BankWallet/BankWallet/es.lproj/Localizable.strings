@@ -18,6 +18,7 @@
 "button.sync" = "Sincronizar";
 "button.paste" = "Pegar";
 "button.backup" = "Copia de seguridad";
+"button.back" = "Back";
 
 "alert.copied" = "Copiado";
 "alert.no_internet" = "Sin conexión a Internet";
