@@ -37,7 +37,6 @@ class MainSettingsViewController: WalletViewController {
         tableView.registerCell(forClass: SettingsRightImageCell.self)
         tableView.registerCell(forClass: SettingsRightLabelCell.self)
         tableView.registerCell(forClass: SettingsToggleCell.self)
-        tableView.registerHeaderFooter(forClass: SectionSeparator.self)
         tableView.registerHeaderFooter(forClass: SettingsInfoFooter.self)
 
         tableView.sectionDataSource = self
