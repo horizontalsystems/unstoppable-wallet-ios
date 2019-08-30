@@ -56,7 +56,7 @@ class FullTransactionInfoViewController: WalletViewController, SectionsDataSourc
         tableView.registerCell(forClass: FullTransactionHeaderCell.self)
         tableView.registerHeaderFooter(forClass: FullTransactionHashHeaderView.self)
         tableView.sectionDataSource = self
-        tableView.separatorColor = .clear
+        tableView.separatorStyle = .none
 
         view.addSubview(loadingView)
         loadingView.snp.makeConstraints { maker in
@@ -136,9 +136,7 @@ class FullTransactionInfoViewController: WalletViewController, SectionsDataSourc
         }
 
         if let providerName = delegate.providerName, delegate.haveBlockExplorer {
-            rows.append(Row<FullTransactionHeaderCell>(id: "provider_header", height: FullTransactionInfoTheme.sectionEmptyMargin, bind: { view, _ in
-                view.bind(showBottomSeparator: false)
-            }))
+            rows.append(Row<FullTransactionHeaderCell>(id: "provider_header", height: FullTransactionInfoTheme.sectionEmptyMargin))
             rows.append(
                     Row<FullTransactionProviderLinkCell>(id: "link_cell", height: FullTransactionInfoTheme.linkCellHeight, bind: { [weak self] cell, _ in
                     cell.bind(text: providerName) {
