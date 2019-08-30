@@ -7,9 +7,10 @@ class AppConfigProvider: IAppConfigProvider {
         "https://ipfs.io"
     ]
 
-    let appWebPageLink: String = "https://unstoppable.money"
-    let reportEmail: String = "hsdao@protonmail.ch"
-    let reportTelegramGroup: String = "unstoppable_wallet"
+    let companyWebPageLink = "https://horizontalsystems.io"
+    let appWebPageLink = "https://unstoppable.money"
+    let reportEmail = "hsdao@protonmail.ch"
+    let reportTelegramGroup = "unstoppable_wallet"
 
     let reachabilityHost = "ipfs.horizontalsystems.xyz"
 

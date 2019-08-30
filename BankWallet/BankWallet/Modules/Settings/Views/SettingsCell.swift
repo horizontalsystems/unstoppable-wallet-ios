@@ -8,18 +8,36 @@ class SettingsCell: UITableViewCell {
     var disclosureImageView = UIImageView(image: UIImage(named: "Disclosure Indicator"))
 
     var selectView = UIView()
+    let topSeparatorView = UIView()
     let bottomSeparatorView = UIView()
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+
         backgroundColor = SettingsTheme.cellBackground
         contentView.backgroundColor = .clear
         separatorInset.left = 0
 
+        topSeparatorView.backgroundColor = AppTheme.separatorColor
+        contentView.addSubview(topSeparatorView)
+        topSeparatorView.snp.makeConstraints { maker in
+            maker.leading.top.trailing.equalToSuperview()
+            maker.height.equalTo(1 / UIScreen.main.scale)
+        }
+
+        bottomSeparatorView.backgroundColor = AppTheme.darkSeparatorColor
+        contentView.addSubview(bottomSeparatorView)
+        bottomSeparatorView.snp.makeConstraints { maker in
+            maker.leading.bottom.trailing.equalToSuperview()
+            maker.height.equalTo(0)
+        }
+
         selectView.backgroundColor = SettingsTheme.cellSelectBackground
         contentView.addSubview(selectView)
         selectView.snp.makeConstraints { maker in
-            maker.edges.equalToSuperview()
+            maker.leading.trailing.equalToSuperview()
+            maker.top.equalTo(self.topSeparatorView.snp.bottom)
+            maker.bottom.equalTo(self.bottomSeparatorView.snp.top)
         }
         selectView.alpha = 0
 
@@ -38,13 +56,6 @@ class SettingsCell: UITableViewCell {
         }
 
         contentView.addSubview(disclosureImageView)
-
-        bottomSeparatorView.backgroundColor = AppTheme.separatorColor
-        addSubview(bottomSeparatorView)
-        bottomSeparatorView.snp.makeConstraints { maker in
-            maker.leading.bottom.trailing.equalToSuperview()
-            maker.height.equalTo(1 / UIScreen.main.scale)
-        }
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -77,7 +88,9 @@ class SettingsCell: UITableViewCell {
             maker.centerY.equalToSuperview()
         }
 
-        bottomSeparatorView.isHidden = last
+        bottomSeparatorView.snp.updateConstraints { maker in
+            maker.height.equalTo(last ? 1 / UIScreen.main.scale : 0)
+        }
     }
 
     override func setHighlighted(_ highlighted: Bool, animated: Bool) {

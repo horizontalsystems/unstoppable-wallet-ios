@@ -1,9 +1,7 @@
-import Foundation
-
 protocol IMainSettingsView: class {
     func set(backedUp: Bool)
-    func set(baseCurrency: String)
-    func set(language: String)
+    func set(currentBaseCurrency: String)
+    func set(currentLanguage: String)
     func set(lightMode: Bool)
     func set(appVersion: String)
 }
@@ -18,23 +16,22 @@ protocol IMainSettingsViewDelegate {
     func didTapAbout()
     func didTapTellFriends()
     func didTapReportProblem()
-    func didTapAppLink()
+    func didTapCompanyLink()
 }
 
-protocol IMainSettingsInteractor {
+protocol IMainSettingsInteractor: AnyObject {
+    var companyWebPageLink: String { get }
     var appWebPageLink: String { get }
     var nonBackedUpCount: Int { get }
-    var currentLanguage: String { get }
-    var baseCurrency: String { get }
-    var lightMode: Bool { get }
+    var currentLanguageDisplayName: String { get }
+    var baseCurrency: Currency { get }
+    var lightMode: Bool { get set }
     var appVersion: String { get }
-    func set(lightMode: Bool)
 }
 
 protocol IMainSettingsInteractorDelegate: class {
     func didUpdateNonBackedUp(count: Int)
     func didUpdateBaseCurrency()
-    func didUpdateLightMode()
 }
 
 protocol IMainSettingsRouter {
@@ -43,8 +40,8 @@ protocol IMainSettingsRouter {
     func showBaseCurrencySettings()
     func showLanguageSettings()
     func showAbout()
-    func showShare(text: String)
+    func showShare(appWebPageLink: String)
     func showReportProblem()
-    func openAppLink()
+    func open(link: String)
     func reloadAppInterface()
 }

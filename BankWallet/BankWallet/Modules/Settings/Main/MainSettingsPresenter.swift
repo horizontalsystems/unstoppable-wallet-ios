@@ -1,10 +1,10 @@
-import Foundation
-
 class MainSettingsPresenter {
+    weak var view: IMainSettingsView?
+
     private let router: IMainSettingsRouter
     private let interactor: IMainSettingsInteractor
 
-    weak var view: IMainSettingsView?
+    private let helper = MainSettingsHelper()
 
     init(router: IMainSettingsRouter, interactor: IMainSettingsInteractor) {
         self.router = router
@@ -16,9 +16,9 @@ class MainSettingsPresenter {
 extension MainSettingsPresenter: IMainSettingsViewDelegate {
 
     func viewDidLoad() {
-        view?.set(backedUp: interactor.nonBackedUpCount == 0)
-        view?.set(baseCurrency: interactor.baseCurrency)
-        view?.set(language: interactor.currentLanguage)
+        view?.set(backedUp: helper.isBackedUp(nonBackedUpCount: interactor.nonBackedUpCount))
+        view?.set(currentBaseCurrency: helper.displayName(baseCurrency: interactor.baseCurrency))
+        view?.set(currentLanguage: interactor.currentLanguageDisplayName)
         view?.set(lightMode: interactor.lightMode)
         view?.set(appVersion: interactor.appVersion)
     }
@@ -40,7 +40,8 @@ extension MainSettingsPresenter: IMainSettingsViewDelegate {
     }
 
     func didSwitch(lightMode: Bool) {
-        interactor.set(lightMode: lightMode)
+        interactor.lightMode = lightMode
+        router.reloadAppInterface()
     }
 
     func didTapAbout() {
@@ -48,15 +49,15 @@ extension MainSettingsPresenter: IMainSettingsViewDelegate {
     }
 
     func didTapTellFriends() {
-        router.showShare(text: "settings_tell_friends.text".localized + "\n" + interactor.appWebPageLink)
+        router.showShare(appWebPageLink: interactor.appWebPageLink)
     }
 
     func didTapReportProblem() {
         router.showReportProblem()
     }
 
-    func didTapAppLink() {
-        router.openAppLink()
+    func didTapCompanyLink() {
+        router.open(link: interactor.companyWebPageLink)
     }
 
 }
@@ -64,15 +65,11 @@ extension MainSettingsPresenter: IMainSettingsViewDelegate {
 extension MainSettingsPresenter: IMainSettingsInteractorDelegate {
 
     func didUpdateNonBackedUp(count: Int) {
-        view?.set(backedUp: count == 0)
+        view?.set(backedUp: helper.isBackedUp(nonBackedUpCount: count))
     }
 
     func didUpdateBaseCurrency() {
-        view?.set(baseCurrency: interactor.baseCurrency)
-    }
-
-    func didUpdateLightMode() {
-        router.reloadAppInterface()
+        view?.set(currentBaseCurrency: helper.displayName(baseCurrency: interactor.baseCurrency))
     }
 
 }

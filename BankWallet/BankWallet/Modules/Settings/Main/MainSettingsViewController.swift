@@ -1,25 +1,32 @@
 import UIKit
-import UIExtensions
 import SectionsTableView
 import SnapKit
 
-class MainSettingsViewController: WalletViewController, SectionsDataSource {
-    let delegate: IMainSettingsViewDelegate
+class MainSettingsViewController: WalletViewController {
+    private let delegate: IMainSettingsViewDelegate
 
-    let tableView = SectionsTableView(style: .grouped)
+    private let tableView = SectionsTableView(style: .grouped)
 
-    var backedUp = false
-    var baseCurrency = "n/a"
-    var language = ""
-    var lightMode = true
-    var appVersion = ""
+    private var backedUp: Bool = true
+    private var currentBaseCurrency: String?
+    private var currentLanguage: String?
+    private var lightMode: Bool = true
+    private var appVersion: String?
 
-    var didLoad = false
+    private var didLoad = false
 
     init(delegate: IMainSettingsViewDelegate) {
         self.delegate = delegate
 
         super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
 
         title = "settings.title".localized
         navigationItem.backBarButtonItem = UIBarButtonItem(title: title, style: .plain, target: nil, action: nil)
@@ -32,18 +39,12 @@ class MainSettingsViewController: WalletViewController, SectionsDataSource {
         tableView.registerCell(forClass: SettingsToggleCell.self)
         tableView.registerHeaderFooter(forClass: SectionSeparator.self)
         tableView.registerHeaderFooter(forClass: SettingsInfoFooter.self)
+
         tableView.sectionDataSource = self
-        tableView.separatorColor = .clear
-    }
 
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
+        tableView.separatorStyle = .none
         tableView.backgroundColor = .clear
+
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in
             maker.edges.equalToSuperview()
@@ -51,7 +52,8 @@ class MainSettingsViewController: WalletViewController, SectionsDataSource {
 
         delegate.viewDidLoad()
 
-        tableView.reload()
+        tableView.buildSections()
+
         didLoad = true
     }
 
@@ -63,101 +65,88 @@ class MainSettingsViewController: WalletViewController, SectionsDataSource {
         return AppTheme.statusBarStyle
     }
 
-    func buildSections() -> [SectionProtocol] {
-        var sections = [SectionProtocol]()
-
-        var securitySettingsRows = [RowProtocol]()
+    private var securityRows: [RowProtocol] {
         let securityAttentionImage = backedUp ? nil : UIImage(named: "Attention Icon")
-        securitySettingsRows.append(Row<SettingsRightImageCell>(id: "security_center", hash: "security_center.\(backedUp)", height: SettingsTheme.cellHeight, bind: { cell, _ in
-            cell.selectionStyle = .default
-            cell.bind(titleIcon: UIImage(named: "Security Icon"), title: "settings.security_center".localized, rightImage: securityAttentionImage, rightImageTintColor: SettingsTheme.attentionIconTint, showDisclosure: true)
-        }, action: { [weak self] _ in
-            self?.delegate.didTapSecurity()
-        }))
-        securitySettingsRows.append(Row<SettingsRightImageCell>(id: "manage_coins", hash: "manage_coins", height: SettingsTheme.cellHeight, bind: { cell, _ in
-            cell.selectionStyle = .default
-            cell.bind(titleIcon: UIImage(named: "Manage Coins Icon"), title: "settings.manage_coins".localized, showDisclosure: true, last: true)
-        }, action: { [weak self] _ in
-            DispatchQueue.main.async {
-                self?.delegate.didTapManageCoins()
-            }
-        }))
-        let settingsHeader: ViewState<SectionSeparator> = .cellType(hash: "settings_header", binder: { view in
-            view.bind(showTopSeparator: false)
-        }, dynamicHeight: { _ in SettingsTheme.topHeaderHeight })
-        sections.append(Section(id: "app_settings", headerState: settingsHeader, rows: securitySettingsRows))
 
-        var appearanceRows = [RowProtocol]()
-        appearanceRows.append(Row<SettingsRightLabelCell>(id: "base_currency", hash: "base_currency", height: SettingsTheme.cellHeight, bind: { [weak self] cell, _ in
-            cell.selectionStyle = .default
-            cell.bind(titleIcon: UIImage(named: "Currency Icon"), title: "settings.base_currency".localized, rightText: self?.baseCurrency, showDisclosure: true)
-        }, action: { [weak self] _ in
-            self?.delegate.didTapBaseCurrency()
-        }))
-        appearanceRows.append(Row<SettingsRightLabelCell>(id: "language", hash: "language", height: SettingsTheme.cellHeight, bind: { [weak self] cell, _ in
-            cell.selectionStyle = .default
-            cell.bind(titleIcon: UIImage(named: "Language Icon"), title: "settings.language".localized, rightText: self?.language, showDisclosure: true)
-        }, action: { [weak self] _ in
-            self?.delegate.didTapLanguage()
-        }))
-        appearanceRows.append(Row<SettingsToggleCell>(id: "light_mode", hash: "light_mode", height: SettingsTheme.cellHeight, bind: { [weak self] cell, _ in
-            cell.bind(titleIcon: UIImage(named: "Light Mode Icon"), title: "settings.light_mode".localized, isOn: self?.lightMode ?? false, showDisclosure: false, last: true, onToggle: { isOn in
-                self?.delegate.didSwitch(lightMode: isOn)
+        return [
+            Row<SettingsRightImageCell>(id: "security_center", hash: "security_center.\(backedUp)", height: SettingsTheme.cellHeight, bind: { cell, _ in
+                cell.bind(titleIcon: UIImage(named: "Security Icon"), title: "settings.security_center".localized, rightImage: securityAttentionImage, rightImageTintColor: SettingsTheme.attentionIconTint, showDisclosure: true)
+            }, action: { [weak self] _ in
+                self?.delegate.didTapSecurity()
+            }),
+
+            Row<SettingsRightImageCell>(id: "manage_coins", height: SettingsTheme.cellHeight, bind: { cell, _ in
+                cell.bind(titleIcon: UIImage(named: "Manage Coins Icon"), title: "settings.manage_coins".localized, showDisclosure: true, last: true)
+            }, action: { [weak self] _ in
+                DispatchQueue.main.async {
+                    self?.delegate.didTapManageCoins()
+                }
             })
-        }))
-        let appearanceHeader: ViewState<SectionSeparator> = .cellType(hash: "appearance_header", binder: nil, dynamicHeight: { _ in SettingsTheme.headerHeight })
-        sections.append(Section(id: "appearance_settings", headerState: appearanceHeader, rows: appearanceRows))
-
-        var infoRows = [RowProtocol]()
-        infoRows.append(Row<SettingsCell>(id: "about", hash: "about", height: SettingsTheme.cellHeight, bind: { cell, _ in
-            cell.selectionStyle = .default
-            cell.bind(titleIcon: UIImage(named: "About Icon"), title: "settings.about".localized, showDisclosure: true)
-        }, action: { [weak self] _ in
-            self?.delegate.didTapAbout()
-        }))
-        infoRows.append(Row<SettingsCell>(id: "tell_friends", hash: "tell_friends", height: SettingsTheme.cellHeight, autoDeselect: true, bind: { cell, _ in
-            cell.selectionStyle = .default
-            cell.bind(titleIcon: UIImage(named: "Tell Friends Icon"), title: "settings.tell_friends".localized, showDisclosure: true)
-        }, action: { [weak self] _ in
-            self?.delegate.didTapTellFriends()
-        }))
-        infoRows.append(Row<SettingsCell>(id: "report_problem", hash: "report_problem", height: SettingsTheme.cellHeight, bind: { cell, _ in
-            cell.selectionStyle = .default
-            cell.bind(titleIcon: UIImage(named: "Report Problem Icon"), title: "settings.report_problem".localized, showDisclosure: true, last: true)
-        }, action: { [weak self] _ in
-            self?.delegate.didTapReportProblem()
-        }))
-        let infoHeader: ViewState<SectionSeparator> = .cellType(hash: "info_header", binder: nil, dynamicHeight: { _ in SettingsTheme.headerHeight })
-        let infoFooter: ViewState<SettingsInfoFooter> = .cellType(hash: "info_footer", binder: { [weak self] view in
-            self?.bindFooter(view: view)
-        }, dynamicHeight: { _ in SettingsTheme.infoFooterHeight })
-        sections.append(Section(id: "info_settings", headerState: infoHeader, footerState: infoFooter, rows: infoRows))
-
-#if DEBUG
-        var debugRows = [RowProtocol]()
-        debugRows.append(Row<SettingsCell>(id: "debug_realm_info", hash: "debug_realm_info", height: SettingsTheme.cellHeight, autoDeselect: true, bind: { cell, _ in
-            cell.selectionStyle = .default
-            cell.bind(titleIcon: UIImage(named: "Bug Icon"), title: "Show Realm Info", showDisclosure: false)
-        }, action: { [weak self] _ in
-            self?.showRealmInfo()
-        }))
-//        debugRows.append(Row<SettingsCell>(id: "debug_drop_keychain", hash: "debug_drop_keychain", height: SettingsTheme.cellHeight, autoDeselect: true, bind: { cell, _ in
-//            cell.selectionStyle = .default
-//            cell.bind(titleIcon: UIImage(named: "Bug Icon"), title: "Drop Keychain", showDisclosure: false)
-//        }, action: { _ in
-//            App.shared.localStorage.isBackedUp = false
-//            try? App.shared.pinManager.store(pin: nil)
-//        }))
-        sections.append(Section(id: "debug_section", headerState: .marginColor(height: 50, color: .clear), footerState: .marginColor(height: 20, color: .clear), rows: debugRows))
-#endif
-
-        return sections
+        ]
     }
 
-    func bindFooter(view: SettingsInfoFooter) {
-        view.bind(appVersion: appVersion) { [weak self] in
-            self?.delegate.didTapAppLink()
-        }
+    private var appearanceRows: [RowProtocol] {
+        return [
+            Row<SettingsRightLabelCell>(id: "base_currency", height: SettingsTheme.cellHeight, bind: { [weak self] cell, _ in
+                cell.bind(titleIcon: UIImage(named: "Currency Icon"), title: "settings.base_currency".localized, rightText: self?.currentBaseCurrency, showDisclosure: true)
+            }, action: { [weak self] _ in
+                self?.delegate.didTapBaseCurrency()
+            }),
+
+            Row<SettingsRightLabelCell>(id: "language", height: SettingsTheme.cellHeight, bind: { [weak self] cell, _ in
+                cell.bind(titleIcon: UIImage(named: "Language Icon"), title: "settings.language".localized, rightText: self?.currentLanguage, showDisclosure: true)
+            }, action: { [weak self] _ in
+                self?.delegate.didTapLanguage()
+            }),
+
+            Row<SettingsToggleCell>(id: "light_mode", height: SettingsTheme.cellHeight, bind: { [unowned self] cell, _ in
+                cell.bind(titleIcon: UIImage(named: "Light Mode Icon"), title: "settings.light_mode".localized, isOn: self.lightMode, showDisclosure: false, last: true, onToggle: { [weak self ] isOn in
+                    self?.delegate.didSwitch(lightMode: isOn)
+                })
+            })
+        ]
+    }
+
+    private var aboutRows: [RowProtocol] {
+        return [
+            Row<SettingsCell>(id: "about", height: SettingsTheme.cellHeight, bind: { cell, _ in
+                cell.bind(titleIcon: UIImage(named: "About Icon"), title: "settings.about".localized, showDisclosure: true)
+            }, action: { [weak self] _ in
+                self?.delegate.didTapAbout()
+            }),
+
+            Row<SettingsCell>(id: "tell_friends", height: SettingsTheme.cellHeight, autoDeselect: true, bind: { cell, _ in
+                cell.bind(titleIcon: UIImage(named: "Tell Friends Icon"), title: "settings.tell_friends".localized, showDisclosure: true)
+            }, action: { [weak self] _ in
+                self?.delegate.didTapTellFriends()
+            }),
+
+            Row<SettingsCell>(id: "report_problem", height: SettingsTheme.cellHeight, bind: { cell, _ in
+                cell.bind(titleIcon: UIImage(named: "Report Problem Icon"), title: "settings.report_problem".localized, showDisclosure: true, last: true)
+            }, action: { [weak self] _ in
+                self?.delegate.didTapReportProblem()
+            })
+        ]
+    }
+
+    private var debugRows: [RowProtocol] {
+        return [
+            Row<SettingsCell>(id: "debug_realm_info", height: SettingsTheme.cellHeight, autoDeselect: true, bind: { cell, _ in
+                cell.bind(titleIcon: UIImage(named: "Bug Icon"), title: "Show Realm Info", showDisclosure: false, last: true)
+            }, action: { [weak self] _ in
+                self?.showRealmInfo()
+            })
+        ]
+    }
+
+    private var footer: ViewState<SettingsInfoFooter> {
+        return .cellType(hash: "about_footer", binder: { [weak self] view in
+            view.bind(appVersion: self?.appVersion) { [weak self] in
+                self?.delegate.didTapCompanyLink()
+            }
+        }, dynamicHeight: { _ in
+            SettingsTheme.infoFooterHeight
+        })
     }
 
     private func showRealmInfo() {
@@ -177,6 +166,24 @@ class MainSettingsViewController: WalletViewController, SectionsDataSource {
 
 }
 
+extension MainSettingsViewController: SectionsDataSource {
+
+    func buildSections() -> [SectionProtocol] {
+        var sections: [SectionProtocol] = [
+            Section(id: "security_settings", headerState: .margin(height: SettingsTheme.topHeaderHeight), rows: securityRows),
+            Section(id: "appearance_settings", headerState: .margin(height: SettingsTheme.headerHeight), rows: appearanceRows),
+            Section(id: "about", headerState: .margin(height: SettingsTheme.headerHeight), footerState: footer, rows: aboutRows)
+        ]
+
+        #if DEBUG
+        sections.append(Section(id: "debug", headerState: .margin(height: 50), footerState: .margin(height: 20), rows: debugRows))
+        #endif
+
+        return sections
+    }
+
+}
+
 extension MainSettingsViewController: IMainSettingsView {
 
     func set(backedUp: Bool) {
@@ -184,13 +191,13 @@ extension MainSettingsViewController: IMainSettingsView {
         reloadIfNeeded()
     }
 
-    func set(baseCurrency: String) {
-        self.baseCurrency = baseCurrency
+    func set(currentBaseCurrency: String) {
+        self.currentBaseCurrency = currentBaseCurrency
         reloadIfNeeded()
     }
 
-    func set(language: String) {
-        self.language = language
+    func set(currentLanguage: String) {
+        self.currentLanguage = currentLanguage
     }
 
     func set(lightMode: Bool) {
