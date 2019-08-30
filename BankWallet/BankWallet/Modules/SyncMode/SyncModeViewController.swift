@@ -23,7 +23,7 @@ class SyncModeViewController: WalletViewController, SectionsDataSource {
         title = "coin_sync.title".localized
 
         tableView.registerCell(forClass: SyncModeCell.self)
-        tableView.registerHeaderFooter(forClass: SyncModeSectionSeparator.self)
+        tableView.registerHeaderFooter(forClass: SectionHeaderFooterTextView.self)
         tableView.sectionDataSource = self
         tableView.separatorColor = .clear
         tableView.backgroundColor = .clear
@@ -60,10 +60,10 @@ class SyncModeViewController: WalletViewController, SectionsDataSource {
         }, action: { [weak self] _ in
             self?.onTapFastSync()
         })
-        let fastFooter: ViewState<SyncModeSectionSeparator> = .cellType(hash: "sync_fast_footer", binder: { view in
-            view.bind(description: "coin_sync.fast.text".localized, showTopSeparator: false, showBottomSeparator: false)
+        let fastFooter: ViewState<SectionHeaderFooterTextView> = .cellType(hash: "sync_fast_footer", binder: { view in
+            view.bind(title: "coin_sync.fast.text".localized, topMargin: SyncModeTheme.cellBigMargin, bottomMargin: SyncModeTheme.separatorBottomMargin)
         }, dynamicHeight: { _ in
-            SyncModeSectionSeparator.height(for: "coin_sync.fast.text".localized, containerWidth: width)
+            return SectionHeaderFooterTextView.height(forContainerWidth: width, text: "coin_sync.fast.text".localized, font: AppTheme.footerTextFont, additionalMargins: SyncModeTheme.cellBigMargin + SyncModeTheme.separatorBottomMargin)
         })
         sections.append(Section(id: "fast", footerState: fastFooter, rows: [fastRow]))
 
@@ -72,10 +72,10 @@ class SyncModeViewController: WalletViewController, SectionsDataSource {
         }, action: { [weak self] _ in
             self?.onTapSlowSync()
         })
-        let slowFooter: ViewState<SyncModeSectionSeparator> = .cellType(hash: "sync_slow_footer", binder: { view in
-            view.bind(description: "coin_sync.slow.text".localized, showTopSeparator: false, showBottomSeparator: false)
+        let slowFooter: ViewState<SectionHeaderFooterTextView> = .cellType(hash: "sync_slow_footer", binder: { view in
+            view.bind(title: "coin_sync.slow.text".localized, topMargin: SyncModeTheme.cellBigMargin, bottomMargin: SyncModeTheme.separatorBottomMargin)
         }, dynamicHeight: { _ in
-            SyncModeSectionSeparator.height(for: "coin_sync.slow.text".localized, containerWidth: width)
+            return SectionHeaderFooterTextView.height(forContainerWidth: width, text: "coin_sync.slow.text".localized, font: AppTheme.footerTextFont, additionalMargins: SyncModeTheme.cellBigMargin + SyncModeTheme.separatorBottomMargin)
         })
         sections.append(Section(id: "fast", footerState: slowFooter, rows: [slowRow]))
 
