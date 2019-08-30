@@ -122,12 +122,12 @@
 "send.amount_placeholder" = "양";
 "send.address_placeholder" = "주소";
 "send.account_placeholder" = "Account";
-"send.fee" = "수수료:";
-"send.tx_speed" = "Transaction Speed:";
+"send.fee" = "Fee";
+"send.tx_speed" = "Transaction Speed";
 "send.tx_speed_low" = "낮음";
 "send.tx_speed_medium" = "보통";
 "send.tx_speed_high" = "높음";
-"send.tx_duration" = "Duration:";
+"send.tx_duration" = "Duration";
 "send.duration.instant" = "Instant";
 "send.duration.within" = "within %@";
 "send.duration.hours" = "%d h.";
@@ -140,10 +140,9 @@
 "send.error.no_amount" = "금액 없음";
 
 "send.confirmation.title" = "확인";
-"send.confirmation.to" = "에게:";
+"send.confirmation.to" = "To";
 "send.confirmation.memo_placeholder" = "Memo";
-"send.confirmation.total" = "합계:";
-"send.confirmation.estimate_time" = "예상 소요시간:";
+"send.confirmation.total" = "Total";
 "send.confirmation.eos.account" = "Account";
 "send.confirmation.send_button" = "전송";
 "send.amount_error.balance" = "잔액%@";
@@ -169,7 +168,7 @@
 "tx_info.button_verify" = "확인";
 "tx_info.rate" = "과거 환율";
 "tx_info.fee" = "수수료";
-"tx_info.note" = "* 이 거래의 가치는 귀하의 주소로 전송되었으므로 0으로 나타납니다";
+"tx_info.note" = "The value of this transaction appears as 0 because it was sent to your own address";
 
 // Full Info
 
