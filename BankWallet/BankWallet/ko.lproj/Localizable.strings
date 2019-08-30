@@ -23,7 +23,7 @@
 "alert.no_internet" = "인터넷에 연결되지 않음";
 "alert.network_issue" = "네트워크에 문제가 있습니다. 잠시 후 다시 시도해 주세요";
 
-"n/a" = "N/A";
+"n/a" = "해당 없음 ";
 
 "biometric_usage_reason" = "지갑 잠금 해제";
 
@@ -84,7 +84,7 @@
 "backup.eos.hint" = "클립보드 관리 앱 또는 클립보드 데이터에 접근할 수 있는 다른 앱을 사용하고 있다면 \"복사\"작업을 사용하여 암호를 복사하는 것은 위험할 수 있습니다.";
 "error.send_eos.self_transfer" = "토큰을 개인계정으로 옮길 수 없습니다";
 "error.send_eos.account_not_exist" = "회원 계정이 존재하지 않습니다";
-"error.send_eos.insufficient_ram" = "Your EOS account doesn't have enough RAM to send this token. You need to increase RAM stake to proceed.";
+"error.send_eos.insufficient_ram" = "귀하의 EOS계정은 이 토큰을 보내기엔 RAM이 충분하지 않습니다. 진행하시려면 RAM량을 늘리셔야 합니다.";
 "error.send_eos.unknown" = "무언가 잘못 됐습니다: %@";
 
 "backup.confirmation.title" = "확인 중...";
@@ -108,7 +108,7 @@
 "balance.sort.header" = "정렬 기준";
 "balance.sort.valueHighToLow" = "잔액";
 "balance.sort.az" = "이름";
-"balance.sort.24h_change" = "24h Change";
+"balance.sort.24h_change" = "24h 변동";
 // Deposit
 
 "deposit.receive_coin" = "수신%@";
@@ -127,11 +127,11 @@
 "send.tx_speed_low" = "낮음";
 "send.tx_speed_medium" = "보통";
 "send.tx_speed_high" = "높음";
-"send.tx_duration" = "Duration";
-"send.duration.instant" = "Instant";
-"send.duration.within" = "within %@";
-"send.duration.hours" = "%d h.";
-"send.duration.minutes" = "%d min.";
+"send.tx_duration" = "기간";
+"send.duration.instant" = "즉시";
+"send.duration.within" = "%@ 안에";
+"send.duration.hours" = "%d 시";
+"send.duration.minutes" = "%d 분";
 "send.max_button" = "최대";
 "send.next_button" = "다음";
 "send.error.invalid_address" = "잘못된 주소";
@@ -249,7 +249,7 @@
 
 // Settings -> Tell Friends
 
-"settings_tell_friends.text" = "Unstoppable Wallet - a crypto wallet I recommend";
+"settings_tell_friends.text" = "Unstoppable 지갑 - 내가 추천하는 암호지갑";
 
 // Settings -> Security
 
@@ -347,4 +347,4 @@
 "chart.high" = "높음";
 "chart.low" = "낮음";
 "chart.volume" = "음량";
-"chart.error.not_available" = "Chart not available";
+"chart.error.not_available" = "차트 이용불가";
