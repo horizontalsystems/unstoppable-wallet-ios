@@ -24,11 +24,10 @@ class ReportViewController: WalletViewController, SectionsDataSource {
         title = "settings.report_problem.title".localized
 
         tableView.backgroundColor = .clear
-        tableView.separatorColor = .clear
+        tableView.separatorStyle = .none
 
         tableView.sectionDataSource = self
         tableView.registerCell(forClass: DoubleLineCell.self)
-        tableView.registerHeaderFooter(forClass: SectionSeparator.self)
 
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in
@@ -55,12 +54,7 @@ class ReportViewController: WalletViewController, SectionsDataSource {
             self?.delegate.didTapTelegram()
         }))
 
-        let sectionHeader: ViewState<SectionSeparator> = .cellType(hash: "section_header", binder: { view in
-            view.bind(showTopSeparator: false)
-        }, dynamicHeight: { _ in
-            SettingsTheme.subSettingsHeaderHeight
-        })
-        sections.append(Section(id: "section", headerState: sectionHeader, rows: rows))
+        sections.append(Section(id: "section", headerState: .margin(height: SettingsTheme.subSettingsHeaderHeight), rows: rows))
 
         return sections
     }

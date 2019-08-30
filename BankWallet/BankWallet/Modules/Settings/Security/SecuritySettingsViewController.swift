@@ -40,7 +40,6 @@ class SecuritySettingsViewController: WalletViewController, SectionsDataSource {
         tableView.registerCell(forClass: SettingsCell.self)
         tableView.registerCell(forClass: SettingsRightImageCell.self)
         tableView.registerCell(forClass: SettingsToggleCell.self)
-        tableView.registerHeaderFooter(forClass: SectionSeparator.self)
 
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in
