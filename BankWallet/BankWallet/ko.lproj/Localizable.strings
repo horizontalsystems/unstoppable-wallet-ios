@@ -18,6 +18,7 @@
 "button.sync" = "동기화";
 "button.paste" = "불여넣기";
 "button.backup" = "백업";
+"button.back" = "Back";
 
 "alert.copied" = "복사됨";
 "alert.no_internet" = "인터넷에 연결되지 않음";
