@@ -122,12 +122,12 @@
 "send.amount_placeholder" = "Сумма";
 "send.address_placeholder" = "Адрес";
 "send.account_placeholder" = "Account";
-"send.fee" = "Fee";
-"send.tx_speed" = "Transaction Speed";
+"send.fee" = "Комиссия";
+"send.tx_speed" = "Скорость Транзакции";
 "send.tx_speed_low" = "Низкая";
 "send.tx_speed_medium" = "Средняя";
 "send.tx_speed_high" = "Высокая";
-"send.tx_duration" = "Duration";
+"send.tx_duration" = "Продолжительность";
 "send.duration.instant" = "Мгновенно";
 "send.duration.within" = "В течение %@";
 "send.duration.hours" = "%d ч.";
@@ -140,9 +140,9 @@
 "send.error.no_amount" = "Нет суммы";
 
 "send.confirmation.title" = "Подтвердить";
-"send.confirmation.to" = "To";
+"send.confirmation.to" = "Кому";
 "send.confirmation.memo_placeholder" = "Memo";
-"send.confirmation.total" = "Total";
+"send.confirmation.total" = "Итого";
 "send.confirmation.eos.account" = "Account";
 "send.confirmation.send_button" = "Отправить";
 "send.amount_error.balance" = "Баланс %@";
@@ -168,7 +168,7 @@
 "tx_info.button_verify" = "Проверить";
 "tx_info.rate" = "Исторический Курс";
 "tx_info.fee" = "Комиссия";
-"tx_info.note" = "The value of this transaction appears as 0 because it was sent to your own address";
+"tx_info.note" = "Значение этой транзакции выглядит как 0, потому что она была отправлена на свой собственный адрес";
 
 // Full Info
 
