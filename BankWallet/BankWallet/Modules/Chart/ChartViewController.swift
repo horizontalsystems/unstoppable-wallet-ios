@@ -154,7 +154,7 @@ extension ChartViewController: IChartView {
 
     func showSelectedPoint(chartType: ChartType, timestamp: TimeInterval, value: CurrencyValue) {
         let date = Date(timeIntervalSince1970: timestamp)
-        let formattedDate = [ChartType.halfYear, ChartType.year].contains(chartType) ? DateHelper.instance.formatFullDateOnly(from: date) : DateHelper.instance.formatFullTime(from: date)
+        let formattedDate = [ChartType.month, ChartType.halfYear, ChartType.year].contains(chartType) ? DateHelper.instance.formatFullDateOnly(from: date) : DateHelper.instance.formatFullTime(from: date)
         let formattedValue = ValueFormatter.instance.format(currencyValue: value, fractionPolicy: .threshold(high: 1000, low: 0.1), trimmable: false)
 
         chartRateTypeItem.showPoint?(formattedDate, formattedValue)
