@@ -14,9 +14,8 @@ class BaseCurrencySettingsViewController: WalletViewController, SectionsDataSour
         super.init(nibName: nil, bundle: nil)
 
         tableView.registerCell(forClass: DoubleLineCell.self)
-        tableView.registerHeaderFooter(forClass: SectionSeparator.self)
         tableView.sectionDataSource = self
-        tableView.separatorColor = .clear
+        tableView.separatorStyle = .none
 
         hidesBottomBarWhenPushed = true
     }
@@ -42,15 +41,8 @@ class BaseCurrencySettingsViewController: WalletViewController, SectionsDataSour
     func buildSections() -> [SectionProtocol] {
         var sections = [SectionProtocol]()
 
-        let currenciesHeader: ViewState<SectionSeparator> = .cellType(hash: "currencies_header", binder: { view in
-            view.bind(showTopSeparator: false)
-        }, dynamicHeight: { _ in SettingsTheme.subSettingsHeaderHeight })
-        let currenciesFooter: ViewState<SectionSeparator> = .cellType(hash: "currencies_header", binder: { view in
-            view.bind(showBottomSeparator: false)
-        }, dynamicHeight: { _ in SettingsTheme.subSettingsHeaderHeight })
-
         let itemsCount = items.count
-        sections.append(Section(id: "currencies", headerState: currenciesHeader, footerState: currenciesFooter, rows: items.enumerated().map { (index, item) in
+        sections.append(Section(id: "currencies", headerState: .margin(height: SettingsTheme.subSettingsHeaderHeight), footerState: .margin(height: SettingsTheme.subSettingsHeaderHeight), rows: items.enumerated().map { (index, item) in
             Row<DoubleLineCell>(id: item.code, height: SettingsTheme.doubleLineCellHeight, bind: { cell, _ in
                 cell.bind(icon: UIImage(named: item.code), title: item.code, subtitle: item.symbol, selected: item.selected, last: index == itemsCount - 1)
             }, action: { [weak self] _ in
