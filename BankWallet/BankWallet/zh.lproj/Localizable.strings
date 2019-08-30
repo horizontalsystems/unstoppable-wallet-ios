@@ -122,12 +122,12 @@
 "send.amount_placeholder" = "金额";
 "send.address_placeholder" = "地址";
 "send.account_placeholder" = "Account";
-"send.fee" = "费用:";
-"send.tx_speed" = "交易速度:";
+"send.fee" = "Fee";
+"send.tx_speed" = "Transaction Speed";
 "send.tx_speed_low" = "低";
 "send.tx_speed_medium" = "中";
 "send.tx_speed_high" = "高";
-"send.tx_duration" = "时长:";
+"send.tx_duration" = "Duration";
 "send.duration.instant" = "即时";
 "send.duration.within" = "在%@内";
 "send.duration.hours" = "%d小时。";
@@ -140,10 +140,9 @@
 "send.error.no_amount" = "没有金额";
 
 "send.confirmation.title" = "确认";
-"send.confirmation.to" = "收件人:";
+"send.confirmation.to" = "To";
 "send.confirmation.memo_placeholder" = "Memo";
-"send.confirmation.total" = "总额:";
-"send.confirmation.estimate_time" = "预计时间:";
+"send.confirmation.total" = "Total";
 "send.confirmation.eos.account" = "Account";
 "send.confirmation.send_button" = "发送​​";
 "send.amount_error.balance" = "余额%@";
@@ -169,7 +168,7 @@
 "tx_info.button_verify" = "验证";
 "tx_info.rate" = "历史价格";
 "tx_info.fee" = "费用";
-"tx_info.note" = "* 该交易的值似乎为0，因为它发送至您自己的地址";
+"tx_info.note" = "The value of this transaction appears as 0 because it was sent to your own address";
 
 // Full Info
 
