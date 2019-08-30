@@ -59,7 +59,7 @@ class SendConfirmationPrimaryCell: UITableViewCell {
 
         toLabel.font = SendTheme.confirmationToLabelFont
         toLabel.textColor = SendTheme.confirmationToLabelColor
-        toLabel.text = "send.confirmation.to".localized
+        toLabel.text = "send.confirmation.to".localized + ":"
         toLabel.snp.makeConstraints { maker in
             maker.leading.equalToSuperview().offset(SendTheme.margin)
             maker.top.equalTo(lineView.snp.bottom).offset(SendTheme.confirmationToLabelTopMargin)

@@ -65,7 +65,7 @@ class TransactionInfoViewController: ActionSheetController {
         }))
 
         if item.sentToSelf {
-            let infoItem = TransactionNoteItem(note: "tx_info.note".localized, tag: 9)
+            let infoItem = TransactionNoteItem(note: "* " + "tx_info.note".localized, tag: 9)
             model.addItemView(infoItem)
         }
 

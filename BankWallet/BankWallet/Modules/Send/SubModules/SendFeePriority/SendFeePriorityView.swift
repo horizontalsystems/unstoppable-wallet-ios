@@ -31,7 +31,7 @@ class SendFeePriorityView: UIView {
         wrapperView.addSubview(feePriorityValueLabel)
         wrapperView.addSubview(dropDownImageView)
 
-        feePriorityTitleLabel.text = "send.tx_speed".localized
+        feePriorityTitleLabel.text = "send.tx_speed".localized + ":"
         feePriorityTitleLabel.font = SendTheme.feePriorityTitleFont
         feePriorityTitleLabel.textColor = SendTheme.feePriorityTitleColor
         feePriorityTitleLabel.snp.makeConstraints { maker in
