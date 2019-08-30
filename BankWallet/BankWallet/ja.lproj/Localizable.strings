@@ -23,6 +23,8 @@
 "alert.no_internet" = "No Internet";
 "alert.network_issue" = "Network issues. Try again in a short moment";
 
+"n/a" = "N/A";
+
 "biometric_usage_reason" = "Unlock wallet";
 
 // Access Camera
@@ -39,7 +41,7 @@
 // Restore
 
 "restore.title" = "Restore";
-"restore.description" = "To restore existing wallet you need to enter a private key for that wallet.\n\nOnce you restore one wallet you will be able to restore more wallets by going to Manage Keys section in app Settings.";
+"restore.description" = "To restore existing wallet you need to enter a secret key for that wallet.\n\nOnce you restore one wallet you will be able to restore more wallets by going to Manage Keys section in app Settings.";
 "restore.words.description" = "Enter Key";
 "restore.validation_failed" = "Incorrect Key";
 "restore.placeholder.account_name" = "Account Name";
@@ -82,7 +84,7 @@
 "backup.eos.hint" = "Copying your key using “copy” action poses some risks if you use any clipboard management apps or some other apps that may have access to clipboard data.";
 "error.send_eos.self_transfer" = "Can't transfer token to own account";
 "error.send_eos.account_not_exist" = "Target account does not exist";
-"error.send_eos.insufficient_ram" = "Your account has not enough of ram";
+"error.send_eos.insufficient_ram" = "Your EOS account doesn't have enough RAM to send this token. You need to increase RAM stake to proceed.";
 "error.send_eos.unknown" = "Something went wrong: %@";
 
 "backup.confirmation.title" = "Check ...";
@@ -106,7 +108,7 @@
 "balance.sort.header" = "Sort by";
 "balance.sort.valueHighToLow" = "Balance";
 "balance.sort.az" = "Name";
-
+"balance.sort.24h_change" = "24h Change";
 // Deposit
 
 "deposit.receive_coin" = "受取 %@";
@@ -121,12 +123,15 @@
 "send.address_placeholder" = "住所";
 "send.account_placeholder" = "Account";
 "send.fee" = "Fee:";
-"send.tx_speed" = "Transaction Speed";
+"send.tx_speed" = "Transaction Speed:";
 "send.tx_speed_low" = "Low";
 "send.tx_speed_medium" = "Medium";
 "send.tx_speed_high" = "High";
-"send.tx_duration" = "Duration";
-"send.instant" = "Instant";
+"send.tx_duration" = "Duration:";
+"send.duration.instant" = "Instant";
+"send.duration.within" = "within %@";
+"send.duration.hours" = "%d h.";
+"send.duration.minutes" = "%d min.";
 "send.max_button" = "最大";
 "send.next_button" = "Next";
 "send.error.invalid_address" = "Invalid Address";
@@ -231,7 +236,7 @@
 
 "manage_coins.title" = "Coin Manager";
 "manage_coins.add_coin.title" = "Add %@ ";
-"manage_coins.add_coin.text" = "You don't have key for %@ which requires a %@ key. The wallet can generate the key for you. Use the Create button below to generate a new key.\n\nYou may also use the existing %@ key for the %@ if you have one.";
+"manage_coins.add_coin.text" = "You don't have key for %@. The wallet can generate the key for you. Use the Create button below to generate a new key.\n\nYou may also use the existing %@ key for the %@ if you have one.";
 "manage_coins.add_coin.create" = "Create";
 "manage_coins.add_coin.restore" = "Restore";
 
@@ -245,7 +250,7 @@
 
 // Settings -> Tell Friends
 
-"settings_tell_friends.text" = "Be Free! Be Unstoppable!";
+"settings_tell_friends.text" = "Unstoppable Wallet - a crypto wallet I recommend";
 
 // Settings -> Security
 
@@ -339,6 +344,8 @@
 "chart.market_cap.thousand" = "%@ k";
 "chart.market_cap.million" = "%@ M";
 "chart.market_cap.billion" = "%@ B";
+"chart.market_cap.trillion" = "%@ T";
 "chart.high" = "High";
 "chart.low" = "Low";
 "chart.volume" = "Volume";
+"chart.error.not_available" = "Chart not available";

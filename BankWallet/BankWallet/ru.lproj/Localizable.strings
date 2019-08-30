@@ -6,7 +6,7 @@
 "coin.ETHt" = "Ethereum Т";
 
 "button.ok" = "OK";
-"button.cancel" = "Отмена";
+"button.cancel" = "Отменить";
 "button.close" = "Закрыть";
 "button.confirm" = "Подтвердить";
 "button.done" = "Готово";
@@ -17,13 +17,15 @@
 "button.save" = "Сохранить";
 "button.sync" = "Синхр.";
 "button.paste" = "Вставить";
-"button.backup" = "Рез. копия";
+"button.backup" = "Резервная копия";
 
 "alert.copied" = "Скопировано";
 "alert.no_internet" = "Нет интернета";
 "alert.network_issue" = "Проблемы с сетью. Попробуйте еще раз ";
 
-"biometric_usage_reason" = "Разблокировать";
+"n/a" = "Нет данных";
+
+"biometric_usage_reason" = "Разблокировать Кошелек";
 
 // Access Camera
 
@@ -39,15 +41,15 @@
 // Restore
 
 "restore.title" = "Восстановить";
-"restore.description" = "Чтобы восстановить существующий кошелек вам нужно ввести приватный ключ для этого кошелька.\n\nКак только вы восстановите один кошелек, вы сможете восстановить больше кошельков, перейдя в раздел \"Управление Ключами\" в настройках приложения.";
-"restore.words.description" = "Введите ключ";
+"restore.description" = "Чтобы восстановить существующий кошелек вам нужно ввести секретный ключ для этого кошелька.\n\nКак только вы восстановите один кошелек, вы сможете восстановить больше кошельков, перейдя в раздел \"Управление Ключами\" в настройках приложения.";
+"restore.words.description" = "Введите Ключ";
 "restore.validation_failed" = "Неверный Ключ";
 "restore.placeholder.account_name" = "Account Name";
 "restore.placeholder.private_key" = "Active Private Key";
 
 //Coin Sync Modes
 
-"coin_sync.title" = "Опции";
+"coin_sync.title" = "Опции Восстановления";
 "coin_sync.fast" = "Быстро";
 "coin_sync.recommended" = "0-2 часа (Рекомендуется)";
 "coin_sync.fast.text" = "Восстановление ваших предыдущих транзакций через сторонний защищенный сервер. Для пользователей с длинной историей транзакций и с очень большим суммами этот метод может представлять риски для конфиденциальности";
@@ -76,13 +78,13 @@
 "confirmation.binance.description" = "Введите слова из вашего Binance ключа";
 "confirmation.12words.description" = "Введите слова из вашего 12-words ключа";
 
-"backup.eos.title" = "EOS ключ";
+"backup.eos.title" = "EOS Ключ";
 "backup.eos.account_name" = "Account Name";
 "backup.eos.active_private_key" = "Active Private Key";
 "backup.eos.hint" = "Копирование ключа с помощью действия «копировать» представляет определенный риск, если вы используете какие-либо приложения для управления буфером обмена или другие приложения, которые могут иметь доступ к данным буфера обмена.";
 "error.send_eos.self_transfer" = "Не удается отправить токен на свой аккаунт";
 "error.send_eos.account_not_exist" = "Этот аккаунт не существует";
-"error.send_eos.insufficient_ram" = "У вашего аккаунта недостаточно RAM";
+"error.send_eos.insufficient_ram" = "У вашего аккаунта EOS недостаточно оперативной памяти для отправки этого токена. Для продолжения необходимо увеличить ставку RAM.";
 "error.send_eos.unknown" = "Что-то пошло не так: %@ ";
 
 "backup.confirmation.title" = "Проверка...";
@@ -102,11 +104,11 @@
 "balance.rate_per_coin" = "%@ за %@";
 "balance.synced_through" = "до: %@";
 "balance.syncing" = "Синхронизация...";
-"balance.add_coins" = "Добавить Монеты";
+"balance.add_coins" = "Добавить Кошелек";
 "balance.sort.header" = "Сортировать по";
 "balance.sort.valueHighToLow" = "Балансу";
 "balance.sort.az" = "Названию";
-
+"balance.sort.24h_change" = "Изменение за 24 ч";
 // Deposit
 
 "deposit.receive_coin" = "Получить %@";
@@ -121,12 +123,15 @@
 "send.address_placeholder" = "Адрес";
 "send.account_placeholder" = "Account";
 "send.fee" = "Комиссия:";
-"send.tx_speed" = "Скорость Транзакции";
+"send.tx_speed" = "Скорость Транзакции:";
 "send.tx_speed_low" = "Низкая";
 "send.tx_speed_medium" = "Средняя";
 "send.tx_speed_high" = "Высокая";
-"send.tx_duration" = "Продолжительность";
-"send.instant" = "Мгновенно";
+"send.tx_duration" = "Продолжительность:";
+"send.duration.instant" = "Мгновенно";
+"send.duration.within" = "В течение %@";
+"send.duration.hours" = "%d ч.";
+"send.duration.minutes" = "%d мин.";
 "send.max_button" = "Макс.";
 "send.next_button" = "Далее";
 "send.error.invalid_address" = "Неверный Адрес";
@@ -138,7 +143,7 @@
 "send.confirmation.to" = "Кому:";
 "send.confirmation.memo_placeholder" = "Memo";
 "send.confirmation.total" = "Итого:";
-"send.confirmation.estimate_time" = "Приблизительное время:";
+"send.confirmation.estimate_time" = "Приблизительное Время:";
 "send.confirmation.eos.account" = "Account";
 "send.confirmation.send_button" = "Отправить";
 "send.amount_error.balance" = "Баланс %@";
@@ -164,7 +169,7 @@
 "tx_info.button_verify" = "Проверить";
 "tx_info.rate" = "Исторический Курс";
 "tx_info.fee" = "Комиссия";
-"tx_info.note" = "*Значение этой транзакции выглядит как 0, потому что она была отправлена на свой собственный адрес";
+"tx_info.note" = "* Значение этой транзакции выглядит как 0, потому что она была отправлена на свой собственный адрес";
 
 // Full Info
 
@@ -174,7 +179,7 @@
 "full_info.confirmations" = "Подтверждения";
 "full_info.size" = "Размер";
 "full_info.fee" = "Комиссия";
-"full_info.rate" = "Ставка";
+"full_info.rate" = "Курс";
 "full_info.inputs" = "Входы";
 "full_info.outputs" = "Выходы";
 "full_info.source" = "Источник";
@@ -201,7 +206,7 @@
 "full_info.error.subtitle" = "недоступен";
 "full_info.error.retry" = "Повторить";
 "full_info.error.change_source" = "Сменить Источник";
-"full_info.no_address" = "Пустой адрес";
+"full_info.no_address" = "Пустой Адрес";
 
 // Settings
 
@@ -231,7 +236,7 @@
 
 "manage_coins.title" = "Кошельки";
 "manage_coins.add_coin.title" = "Добавить %@";
-"manage_coins.add_coin.text" = "You don't have key for %@ which requires a %@ key. The wallet can generate the key for you. Use the Create button below to generate a new key.\n\nYou may also use the existing %@ key for the %@ if you have one.";
+"manage_coins.add_coin.text" = "У вас нет ключа для %@. Кошелек может сгенерировать ключ. Используйте кнопку \"Создать\" ниже, чтобы сгенерировать новый ключ.\n\nВы также можете использовать существующий %@ ключ для %@ , если он у вас есть.";
 "manage_coins.add_coin.create" = "Создать";
 "manage_coins.add_coin.restore" = "Восстановить";
 
@@ -245,7 +250,7 @@
 
 // Settings -> Tell Friends
 
-"settings_tell_friends.text" = "Будь Свободным! Будь Неудержимым!";
+"settings_tell_friends.text" = "Unstoppable Wallet - криптокошелек, который я рекомендую";
 
 // Settings -> Security
 
@@ -259,7 +264,7 @@
 
 // Settings -> Report Problem
 
-"settings.report_problem.title" = "Сообщить о проблеме";
+"settings.report_problem.title" = "Наши Контакты";
 "settings.report_problem.email" = "Эл. почта";
 "settings.report_problem.telegram" = "Telegram ";
 
@@ -268,19 +273,19 @@
 "settings_manage_keys.title" = "Ключи";
 "settings_manage_keys.description" = "Любой, кто имеет доступ к вашим ключам, может украсть ваши средства. Храните ключи безопасно и не показывайте их никому.\n\nРезервное копирование каждого ключа необходимо для того, чтобы иметь возможность восстановить средства, если вы потеряете или сломаете ваш телефон, или приложение кошелька будет удалено.";
 "settings_manage_keys.delete" = "Удалить";
-"settings_manage_keys.backup" = "Резервная копия";
+"settings_manage_keys.backup" = "Резерв. копия";
 "settings_manage_keys.show" = "Показать";
 "settings_manage_keys.create" = "Создать";
-"settings_manage_keys.restore" = "Восстановить";
-"settings_manage_keys.delete.cant_delete" = "Вам нужно сделать резервную копию %@ ключа, прежде чем вы его сможете отсоединить.";
+"settings_manage_keys.restore" = "Восстан-ть";
+"settings_manage_keys.delete.cant_delete" = "Вам нужно сделать резервную копию %@ ключа, прежде чем вы его сможете удалить с этого устройства.";
 "settings_manage_keys.delete.title" = "Удалить Ключ";
 "settings_manage_keys.delete.confirmation_remove" = "Это действие удалит ваш %@ ключ (кошелёк) с этого устройства.";
 "settings_manage_keys.delete.confirmation_disable" = "Монеты, которые будут отключены: %@";
 "settings_manage_keys.delete.confirmation_loose" = "Если у вас нет резервной копии этого ключа, то вы потеряете соответствующие средства.";
 "error.cant_create_eos" = "В данный момент кошелек не может создать новые учетные записи EOS. Вы можете восстановить существующий.";
 "settings_manage_keys.create.text" = "Это действие сгенерирует ключ(кошелек) для следующих монет:\n\n%@";
-"error.invalid_eos_key" = "Неверный ключ";
-"error.invalid_eos_account" = "Недействительный Аккаунт";
+"error.invalid_eos_key" = "Неверный Ключ";
+"error.invalid_eos_account" = "Неверный Аккаунт";
 
 // Set PIN
 
@@ -291,7 +296,7 @@
 
 // Edit PIN
 
-"edit_pin.title" = "Код Доступа";
+"edit_pin.title" = "Изменить Код";
 "edit_pin.unlock_info" = "Текущий Код";
 "edit_pin.new_pin_info" = "Новый Код";
 
@@ -338,7 +343,9 @@
 "chart.market_cap" = "Рын. Кап.";
 "chart.market_cap.thousand" = "%@ к";
 "chart.market_cap.million" = "%@ млн.";
-"chart.market_cap.billion" = "%@ млрд.";
+"chart.market_cap.billion" = "%@ млр.";
+"chart.market_cap.trillion" = "%@ трил.";
 "chart.high" = "Макс.";
 "chart.low" = "Мин.";
 "chart.volume" = "Объём";
+"chart.error.not_available" = "График недоступен";

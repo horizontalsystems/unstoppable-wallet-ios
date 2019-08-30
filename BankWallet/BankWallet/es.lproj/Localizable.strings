@@ -23,6 +23,8 @@
 "alert.no_internet" = "Sin conexión a Internet";
 "alert.network_issue" = "Problemas de red. Inténtelo de nuevo";
 
+"n/a" = "N/A";
+
 "biometric_usage_reason" = "Desbloquear cartera";
 
 // Access Camera
@@ -39,10 +41,10 @@
 // Restore
 
 "restore.title" = "Restaurar";
-"restore.description" = "Para restaurar el monedero existente, es necesario introducir la clave privada para ese monedero.\n\nUna vez que restablezca un monedero podrá restaurar más monederos yendo a la sección Administrar Claves en Ajustes de la aplicación.";
+"restore.description" = "To restore existing wallet you need to enter a secret key for that wallet.\n\nOnce you restore one wallet you will be able to restore more wallets by going to Manage Keys section in app Settings.";
 "restore.words.description" = "Introduzca la clave";
 "restore.validation_failed" = "Clave incorrecta";
-"restore.placeholder.account_name" = "Nombre de cuenta";
+"restore.placeholder.account_name" = "Account Name";
 "restore.placeholder.private_key" = "Active Private Key\n";
 
 //Coin Sync Modes
@@ -82,7 +84,7 @@
 "backup.eos.hint" = "Copiar su clave utilizando la acción \"copiar\" implica ciertos riesgos si utiliza aplicaciones de gestión de portapapeles u otra aplicación que pueda tener acceso a la información del portapapeles.";
 "error.send_eos.self_transfer" = "No se puede transferir el token a su propia cuenta";
 "error.send_eos.account_not_exist" = "La cuenta de destino no existe";
-"error.send_eos.insufficient_ram" = "Su cuenta no tiene suficiente memoria ram";
+"error.send_eos.insufficient_ram" = "Your EOS account doesn't have enough RAM to send this token. You need to increase RAM stake to proceed.";
 "error.send_eos.unknown" = "Algo ha fallado: %@";
 
 "backup.confirmation.title" = "Comprobar";
@@ -106,7 +108,7 @@
 "balance.sort.header" = "Ordenar por";
 "balance.sort.valueHighToLow" = "Saldo";
 "balance.sort.az" = "Nombre";
-
+"balance.sort.24h_change" = "24h Change";
 // Deposit
 
 "deposit.receive_coin" = "Recibir %@";
@@ -119,14 +121,17 @@
 "send.title" = "Enviar %@";
 "send.amount_placeholder" = "Importe";
 "send.address_placeholder" = "Dirección";
-"send.account_placeholder" = "Cuenta";
+"send.account_placeholder" = "Account";
 "send.fee" = "Comisión:";
-"send.tx_speed" = "Velocidad de transacción";
+"send.tx_speed" = "Transaction Speed:";
 "send.tx_speed_low" = "Bajo";
 "send.tx_speed_medium" = "Medio";
 "send.tx_speed_high" = "Alto";
-"send.tx_duration" = "Duración";
-"send.instant" = "Inmediato";
+"send.tx_duration" = "Duración:";
+"send.duration.instant" = "Instant";
+"send.duration.within" = "within %@";
+"send.duration.hours" = "%d h.";
+"send.duration.minutes" = "%d min.";
 "send.max_button" = "Máx.";
 "send.next_button" = "Siguiente";
 "send.error.invalid_address" = "Dirección inválida";
@@ -139,7 +144,7 @@
 "send.confirmation.memo_placeholder" = "Memo";
 "send.confirmation.total" = "Total:";
 "send.confirmation.estimate_time" = "Tiempo estimado:";
-"send.confirmation.eos.account" = "Cuenta";
+"send.confirmation.eos.account" = "Account";
 "send.confirmation.send_button" = "Enviar";
 "send.amount_error.balance" = "Saldo %@";
 "send.token.insufficient_fee_alert" = "Las comisiones de transacción para %@ (%@) pagado en %@. Es necesario %@.";
@@ -231,7 +236,7 @@
 
 "manage_coins.title" = "Gestor de monedas";
 "manage_coins.add_coin.title" = "Añadir %@ ";
-"manage_coins.add_coin.text" = "Usted no tiene la clave para %@, el cual requiere una clave %@. El monedero puede generar una clave para usted. Use el botón de Crear que se encuentra más abajo para generar una nueva clave.\n\nTambién puede usar la clave %@existente para el %@ si ya tiene una.";
+"manage_coins.add_coin.text" = "You don't have key for %@. The wallet can generate the key for you. Use the Create button below to generate a new key.\n\nYou may also use the existing %@ key for the %@ if you have one.";
 "manage_coins.add_coin.create" = "Crear";
 "manage_coins.add_coin.restore" = "Restaurar";
 
@@ -245,7 +250,7 @@
 
 // Settings -> Tell Friends
 
-"settings_tell_friends.text" = "¡Sea libre! ¡Sea Unstoppable!";
+"settings_tell_friends.text" = "Unstoppable Wallet - a crypto wallet I recommend";
 
 // Settings -> Security
 
@@ -318,7 +323,7 @@
 
 // Key Types
 
-"key_type.12_words" = "12-palabras";
+"key_type.12_words" = "12-words";
 "key_type.12_words.text" = "BTC, BCH, DASH, ETH, ERC-20";
 "key_type.eos" = "EOS Blockchain";
 "key_type.eos.text" = "EOS, Tokens basados en EOS";
@@ -339,6 +344,8 @@
 "chart.market_cap.thousand" = "%@ k";
 "chart.market_cap.million" = "%@ M";
 "chart.market_cap.billion" = "%@ B";
+"chart.market_cap.trillion" = "%@ T";
 "chart.high" = "Alto";
 "chart.low" = "Bajo";
 "chart.volume" = "Volumen";
+"chart.error.not_available" = "Chart not available";

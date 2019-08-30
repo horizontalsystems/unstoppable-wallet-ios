@@ -23,6 +23,8 @@
 "alert.no_internet" = "Internet Bağlantısı Yok";
 "alert.network_issue" = "Ağ sorunu. Tekrar deneyin.";
 
+"n/a" = "N/A";
+
 "biometric_usage_reason" = "Cüzdan kilidini aç";
 
 // Access Camera
@@ -39,7 +41,7 @@
 // Restore
 
 "restore.title" = "Geri Yükle";
-"restore.description" = "Cüzdanı geri yüklemek için o cüzdanın gizli anahtarını gürmelisiniz.\n\nDaha fazla cüzdanı geri yüklemek için bir cüzdanı geri yükledikten sonra Ayarlardaki Anahtarları Yönet bölümüne gidin.";
+"restore.description" = "To restore existing wallet you need to enter a secret key for that wallet.\n\nOnce you restore one wallet you will be able to restore more wallets by going to Manage Keys section in app Settings.";
 "restore.words.description" = "Anahtarı Girin";
 "restore.validation_failed" = "Yanlış Anahtar";
 "restore.placeholder.account_name" = "Account Name";
@@ -79,10 +81,10 @@
 "backup.eos.title" = "EOS Anahtarı";
 "backup.eos.account_name" = "Account Name";
 "backup.eos.active_private_key" = "Active Private Key";
-"backup.eos.hint" = "Anahtarınızı \"Kopyala\" eylemiyle kopyalamanız anahtarınızın pano yöneticisine ve panoya erişimi olan diğer uygulamalara sızma riskini taşır.";
-"error.send_eos.self_transfer" = "Can't transfer token to own account";
+"backup.eos.hint" = "Anahtarınızı \"Kopyala\" eylemiyle kopyalamanız anahtarınızın pano yönetisine ve panoya erişimi olan diğer uygulamalara sızma riskini taşır.";
+"error.send_eos.self_transfer" = "Bu kripto para kendi hesabınaza aktarılamıyor";
 "error.send_eos.account_not_exist" = "Hedef hesap yok";
-"error.send_eos.insufficient_ram" = "Hesabınız için ram yeterli değil";
+"error.send_eos.insufficient_ram" = "EOS hesabınızda bu kripto parayı göndermek için yeterli RAM bulunmuyor. Devam etmek için EOS RAM hissenizi arttırmak gerekiyor.";
 "error.send_eos.unknown" = "Beklenmeyen bir hata oluştu: %@";
 
 "backup.confirmation.title" = "Kontrol etme ...";
@@ -103,30 +105,33 @@
 "balance.synced_through" = "%@ kadar";
 "balance.syncing" = "Eşitleniyor...";
 "balance.add_coins" = "Kripto Para Ekle";
-"balance.sort.header" = "Sırala";
+"balance.sort.header" = "Sıralama şekli";
 "balance.sort.valueHighToLow" = "Bakiye";
 "balance.sort.az" = "İsim";
-
+"balance.sort.24h_change" = "24h Change";
 // Deposit
 
 "deposit.receive_coin" = "%@ al";
 "deposit.your_address" = "Adresiniz";
 "deposit.your_account" = "Senin Hesabın";
-"receive_alert.not_backed_up_description" = "You need to backup the %@ key before you may receive %@.";
+"receive_alert.not_backed_up_description" = "%@ almadan önce %@ anahtarlarınızı yedeklemeniz gerekiyor.";
 
 // Send
 
 "send.title" = "%@ gönder";
 "send.amount_placeholder" = "Tutar";
 "send.address_placeholder" = "Adres";
-"send.account_placeholder" = "Hesap";
+"send.account_placeholder" = "Account";
 "send.fee" = "Masraf:";
-"send.tx_speed" = "İşlem hızı";
+"send.tx_speed" = "İşlem hızı:";
 "send.tx_speed_low" = "Düşük";
 "send.tx_speed_medium" = "Orta";
 "send.tx_speed_high" = "Yüksek";
-"send.tx_duration" = "Duration";
-"send.instant" = "Instant";
+"send.tx_duration" = "Süre:";
+"send.duration.instant" = "Anlık";
+"send.duration.within" = "within %@";
+"send.duration.hours" = "%d h.";
+"send.duration.minutes" = "%d min.";
 "send.max_button" = "Azami";
 "send.next_button" = "İleri";
 "send.error.invalid_address" = "Geçersiz Adres";
@@ -141,7 +146,7 @@
 "send.confirmation.estimate_time" = "Tahmini süre:";
 "send.confirmation.eos.account" = "Account";
 "send.confirmation.send_button" = "Gönder";
-"send.amount_error.balance" = "%@ bakiye";
+"send.amount_error.balance" = "%@ Bakiye";
 "send.token.insufficient_fee_alert" = "%@ (%@) için ișlem ücreti %@ hesabından ödenir. Asgari %@ gerekiyor.";
 
 // Transactions
@@ -170,7 +175,7 @@
 
 "full_info.title" = "Hesap işlemi";
 "full_info.time" = "Tarih";
-"full_info.block" = "Blok ";
+"full_info.block" = "Blok numarası";
 "full_info.confirmations" = "Onaylama";
 "full_info.size" = "Boyut";
 "full_info.fee" = "Masraf";
@@ -231,7 +236,7 @@
 
 "manage_coins.title" = "Kripto Para yöneticisi";
 "manage_coins.add_coin.title" = "%@ ekle ";
-"manage_coins.add_coin.text" = "You don't have key for %@ which requires a %@ key. The wallet can generate the key for you. Use the Create button below to generate a new key.\n\nYou may also use the existing %@ key for the %@ if you have one.";
+"manage_coins.add_coin.text" = "%@ için Anahtarınız yok. Cüzdanınız, sizin için yeni anahtar oluşturabilir. Yeni bir anahtar oluşturmak için aşağıdaki Oluştur düğmesini tıklayın. \n\nMevcut %@ anahtarınız varsa onu %@ için kullanabilirsiniz.";
 "manage_coins.add_coin.create" = "Oluştur";
 "manage_coins.add_coin.restore" = "Geri Yükle";
 
@@ -245,7 +250,7 @@
 
 // Settings -> Tell Friends
 
-"settings_tell_friends.text" = "Özgür Ol! Durdurulamaz Ol!";
+"settings_tell_friends.text" = "Unstoppable Wallet - kullanmanız gereken kripto para cüzdanı";
 
 // Settings -> Security
 
@@ -272,7 +277,7 @@
 "settings_manage_keys.show" = "Göster";
 "settings_manage_keys.create" = "Oluştur";
 "settings_manage_keys.restore" = "Geri Yükle";
-"settings_manage_keys.delete.cant_delete" = "You need to backup %@ key before you may delete it from this phone.";
+"settings_manage_keys.delete.cant_delete" = "%@ anahtarınızı bu cihazdan silmeden önce yedeklemeniz gerekiyor.";
 "settings_manage_keys.delete.title" = "Anahtarı Sil";
 "settings_manage_keys.delete.confirmation_remove" = "Bu işlem %@ anahtarını (cüzdanı) bu cihazdan kaldıracak.";
 "settings_manage_keys.delete.confirmation_disable" = "Etkisizleştirilecek cüzdanlar: %@";
@@ -327,7 +332,7 @@
 
 // Key Types
 
-"chart.title" = "%@ Rate";
+"chart.title" = "%@ kur";
 "chart.time_duration.day" = "Gün";
 "chart.time_duration.week" = "Hafta";
 "chart.time_duration.month" = "Ay";
@@ -335,10 +340,12 @@
 "chart.time_duration.halyear" = "6 Ay";
 "chart.time_duration.year" = "1 Yıl";
 
-"chart.market_cap" = "Mkt. Cap";
+"chart.market_cap" = "P. Değeri";
 "chart.market_cap.thousand" = "%@ k";
 "chart.market_cap.million" = "%@ M";
 "chart.market_cap.billion" = "%@ B";
+"chart.market_cap.trillion" = "%@ T";
 "chart.high" = "Yüksek";
 "chart.low" = "Düşük";
 "chart.volume" = "Birim";
+"chart.error.not_available" = "Grafik yok";
