@@ -140,7 +140,7 @@
 "send.error.no_amount" = "No hay cantidad";
 
 "send.confirmation.title" = "Confirmar";
-"send.confirmation.to" = "To";
+"send.confirmation.to" = "Para";
 "send.confirmation.memo_placeholder" = "Memo";
 "send.confirmation.total" = "Total";
 "send.confirmation.eos.account" = "Account";
