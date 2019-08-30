@@ -10,7 +10,8 @@ class AdapterManager {
     private let walletManager: IWalletManager
 
     private var adaptersMap = [Wallet: IAdapter]()
-    let adaptersCreationSignal = Signal()
+    private let adaptersQueue = DispatchQueue(label: "Adapters Queue", qos: .background)
+    let adaptersReadySignal = Signal()
 
     init(adapterFactory: IAdapterFactory, ethereumKitManager: EthereumKitManager, eosKitManager: EosKitManager, binanceKitManager: BinanceKitManager, walletManager: IWalletManager) {
         self.adapterFactory = adapterFactory
@@ -29,26 +30,28 @@ class AdapterManager {
     }
 
     private func initAdapters() {
-        let wallets = walletManager.wallets
-        let oldWallets = Array(adaptersMap.keys)
-
-        for wallet in wallets {
-            if adaptersMap[wallet] != nil {
-                continue
+        adaptersQueue.async {
+            let wallets = self.walletManager.wallets
+            let oldWallets = Array(self.adaptersMap.keys)
+            
+            for wallet in wallets {
+                if self.adaptersMap[wallet] != nil {
+                    continue
+                }
+                
+                if let adapter = self.adapterFactory.adapter(wallet: wallet) {
+                    self.adaptersMap[wallet] = adapter
+                    adapter.start()
+                }
             }
-
-            if let adapter = adapterFactory.adapter(wallet: wallet) {
-                adaptersMap[wallet] = adapter
-                adapter.start()
-            }
-        }
-
-        adaptersCreationSignal.notify()
-
-        for oldWallet in oldWallets {
-            if !wallets.contains(where: { $0 == oldWallet }) {
-                adaptersMap[oldWallet]?.stop()
-                adaptersMap.removeValue(forKey: oldWallet)
+            
+            self.adaptersReadySignal.notify()
+            
+            for oldWallet in oldWallets {
+                if !wallets.contains(where: { $0 == oldWallet }) {
+                    self.adaptersMap[oldWallet]?.stop()
+                    self.adaptersMap.removeValue(forKey: oldWallet)
+                }
             }
         }
     }
@@ -58,31 +61,37 @@ class AdapterManager {
 extension AdapterManager: IAdapterManager {
 
     func adapter(for wallet: Wallet) -> IAdapter? {
-        return adaptersMap[wallet]
+        return adaptersQueue.sync { adaptersMap[wallet] }
     }
 
     func balanceAdapter(for wallet: Wallet) -> IBalanceAdapter? {
-        if let adapter = adaptersMap[wallet], let balanceAdapter = adapter as? IBalanceAdapter {
-            return balanceAdapter
-        }
+        return adaptersQueue.sync {
+            if let adapter = adaptersMap[wallet], let balanceAdapter = adapter as? IBalanceAdapter {
+                return balanceAdapter
+            }
 
-        return nil
+            return nil
+        }
     }
 
     func transactionsAdapter(for wallet: Wallet) -> ITransactionsAdapter? {
-        if let adapter = adaptersMap[wallet], let transactionsAdapter = adapter as? ITransactionsAdapter {
-            return transactionsAdapter
-        }
+        return adaptersQueue.sync {
+            if let adapter = adaptersMap[wallet], let transactionsAdapter = adapter as? ITransactionsAdapter {
+                return transactionsAdapter
+            }
 
-        return nil
+            return nil
+        }
     }
 
     func depositAdapter(for wallet: Wallet) -> IDepositAdapter? {
-        if let adapter = adaptersMap[wallet], let depositAdapter = adapter as? IDepositAdapter {
-            return depositAdapter
-        }
+        return adaptersQueue.sync {
+            if let adapter = adaptersMap[wallet], let depositAdapter = adapter as? IDepositAdapter {
+                return depositAdapter
+            }
 
-        return nil
+            return nil
+        }
     }
 
     func refresh() {

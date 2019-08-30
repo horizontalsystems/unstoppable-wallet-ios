@@ -83,7 +83,7 @@ extension BalanceInteractor: IBalanceInteractor {
                 })
                 .disposed(by: disposeBag)
 
-        adapterManager.adaptersCreationSignal
+        adapterManager.adaptersReadySignal
                 .observeOn(MainScheduler.instance)
                 .subscribe(onNext: { [weak self] in
                     self?.onUpdateWallets()
@@ -91,7 +91,6 @@ extension BalanceInteractor: IBalanceInteractor {
                 .disposed(by: disposeBag)
 
         currencyManager.baseCurrencyUpdatedSignal
-                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
                 .observeOn(MainScheduler.instance)
                 .subscribe(onNext: { [weak self] in
                     self?.onUpdateCurrency()

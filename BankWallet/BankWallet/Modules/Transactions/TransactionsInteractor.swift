@@ -59,7 +59,7 @@ extension TransactionsInteractor: ITransactionsInteractor {
     func initialFetch() {
         onUpdateCoinsData()
 
-        adapterManager.adaptersCreationSignal
+        adapterManager.adaptersReadySignal
                 .observeOn(MainScheduler.instance)
                 .subscribe(onNext: { [weak self] in
                     self?.onUpdateCoinsData()
