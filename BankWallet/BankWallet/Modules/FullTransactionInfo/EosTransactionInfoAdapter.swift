@@ -38,28 +38,30 @@ class EosTransactionInfoAdapter: IFullTransactionInfoAdapter {
             sections.append(FullTransactionSection(title: nil, items: topSectionItems))
         }
 
-        // From / To
-
-        var inputOutputItems = [FullTransactionItem]()
-        if let contract = txResponse.contract {
-            inputOutputItems.append(FullTransactionItem(title: "full_info.contract".localized, value: contract, clickable: true, showExtra: .token))
+        // Actions
+        
+        for action in txResponse.actions {
+            var inputOutputItems = [FullTransactionItem]()
+            if let contract = action.contract {
+                inputOutputItems.append(FullTransactionItem(title: "full_info.contract".localized, value: contract, clickable: true, showExtra: .token))
+            }
+            if let quantity = action.quantity {
+                inputOutputItems.append(FullTransactionItem(title: "full_info.amount".localized, value: quantity))
+            }
+            if let from = action.from {
+                inputOutputItems.append(FullTransactionItem(title: "full_info.from".localized, value: from, clickable: true, showExtra: .icon))
+            }
+            if let to = action.to {
+                inputOutputItems.append(FullTransactionItem(title: "full_info.to".localized, value: to, clickable: true, showExtra: .icon))
+            }
+            if let memo = action.memo, !memo.isEmpty {
+                inputOutputItems.append(FullTransactionItem(title: "full_info.memo".localized, value: memo, clickable: true, showExtra: .none))
+            }
+            if !inputOutputItems.isEmpty {
+                sections.append(FullTransactionSection(title: nil, items: inputOutputItems))
+            }
         }
-        if let quantity = txResponse.quantity {
-            inputOutputItems.append(FullTransactionItem(title: "full_info.amount".localized, value: quantity))
-        }
-        if let from = txResponse.from {
-            inputOutputItems.append(FullTransactionItem(title: "full_info.from".localized, value: from, clickable: true, showExtra: .icon))
-        }
-        if let to = txResponse.to {
-            inputOutputItems.append(FullTransactionItem(title: "full_info.to".localized, value: to, clickable: true, showExtra: .icon))
-        }
-        if let memo = txResponse.memo, !memo.isEmpty {
-            inputOutputItems.append(FullTransactionItem(title: "full_info.memo".localized, value: memo, clickable: true, showExtra: .none))
-        }
-        if !inputOutputItems.isEmpty {
-            sections.append(FullTransactionSection(title: nil, items: inputOutputItems))
-        }
-
+        
         // net and cpu
 
         var netCpuItems = [FullTransactionItem]()
