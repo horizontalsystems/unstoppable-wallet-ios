@@ -54,11 +54,7 @@ class EosResponse: IEosResponse, ImmutableMappable {
     var blockNumber: Int?
     var blockTime: Date?
 
-    var contract: String?
-    var from: String?
-    var to: String?
-    var quantity: String?
-    var memo: String?
+    var actions = [EosAction]()
 
     required init(map: Map) throws {
         txId = try? map.value("id")
@@ -85,30 +81,33 @@ class EosResponse: IEosResponse, ImmutableMappable {
             return
         }
 
-        guard let trace = traces.first(where: { trace in
+        let transferTraces = traces.filter { trace in
             guard let action = trace["act"] as? [String: Any], let receipt = trace["receipt"] as? [String: Any] else {
                 return false
             }
 
             return action["name"] as? String == "transfer" && receipt["receiver"] as? String == accountContext.account
-        }) else {
-            return
         }
 
-        guard let action = trace["act"] as? [String: Any] else {
-            return
+        for trace in transferTraces {
+            guard var actionMap = trace["act"] as? [String: Any] else {
+                continue
+            }
+
+            let contract = actionMap["account"] as? String
+
+            guard var actionData = actionMap["data"] as? [String: Any] else {
+                continue
+            }
+            
+            let from = actionData["from"] as? String
+            let to = actionData["to"] as? String
+            let quantity = actionData["quantity"] as? String
+            let memo = actionData["memo"] as? String
+            
+            let action = EosAction(contract: contract, from: from, to: to, quantity: quantity, memo: memo)
+            actions.append(action)
         }
-
-        contract = action["account"] as? String
-
-        guard let actionData = action["data"] as? [String: Any] else {
-            return
-        }
-
-        from = actionData["from"] as? String
-        to = actionData["to"] as? String
-        quantity = actionData["quantity"] as? String
-        memo = actionData["memo"] as? String
     }
 
 }
@@ -119,4 +118,12 @@ extension EosResponse {
         let account: String
     }
 
+}
+
+struct EosAction {
+    let contract: String?
+    let from: String?
+    let to: String?
+    let quantity: String?
+    let memo: String?
 }

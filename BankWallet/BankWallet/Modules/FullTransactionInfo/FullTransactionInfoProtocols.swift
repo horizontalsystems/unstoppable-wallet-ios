@@ -8,11 +8,7 @@ protocol IEosResponse {
     var blockNumber: Int? { get }
     var blockTime: Date? { get }
 
-    var contract: String? { get }
-    var from: String? { get }
-    var to: String? { get }
-    var quantity: String? { get }
-    var memo: String? { get }
+    var actions: [EosAction] { get }
 }
 
 protocol IBitcoinResponse {
