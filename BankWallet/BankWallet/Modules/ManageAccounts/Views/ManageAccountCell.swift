@@ -106,9 +106,10 @@ class ManageAccountCell: UITableViewCell {
             maker.width.equalTo(leftButton)
         }
         rightButton.wrapperView.snp.remakeConstraints { maker in
-            maker.leading.equalToSuperview().offset(ManageAccountsTheme.cellSmallPadding)
             maker.top.bottom.equalToSuperview()
-            maker.trailing.equalToSuperview().offset(-ManageAccountsTheme.cellSmallPadding)
+            maker.center.equalToSuperview()
+            maker.trailing.lessThanOrEqualToSuperview().offset(-ManageAccountsTheme.cellSmallPadding)
+            maker.leading.greaterThanOrEqualToSuperview().offset(ManageAccountsTheme.cellSmallPadding)
         }
         rightButton.onTap = { [weak self] in self?.onTapRight?() }
         rightButton.borderWidth = 1 / UIScreen.main.scale
