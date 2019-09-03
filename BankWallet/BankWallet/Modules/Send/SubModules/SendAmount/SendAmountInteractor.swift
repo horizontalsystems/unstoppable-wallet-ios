@@ -1,11 +1,11 @@
 class SendAmountInteractor {
     private let localStorage: ILocalStorage
-    private let rateStorage: IRateStorage
+    private let rateManager: IRateManager
     private let currencyManager: ICurrencyManager
 
-    init(localStorage: ILocalStorage, rateStorage: IRateStorage, currencyManager: ICurrencyManager) {
+    init(localStorage: ILocalStorage, rateManager: IRateManager, currencyManager: ICurrencyManager) {
         self.localStorage = localStorage
-        self.rateStorage = rateStorage
+        self.rateManager = rateManager
         self.currencyManager = currencyManager
     }
 
@@ -26,7 +26,7 @@ extension SendAmountInteractor: ISendAmountInteractor {
     }
 
     func rate(coinCode: CoinCode, currencyCode: String) -> Rate? {
-        return rateStorage.latestRate(coinCode: coinCode, currencyCode: currencyCode)
+        return rateManager.nonExpiredLatestRate(coinCode: coinCode, currencyCode: currencyCode)
     }
 
 }

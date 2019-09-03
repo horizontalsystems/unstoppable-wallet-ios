@@ -5,8 +5,6 @@ class RateManager {
         case expired
     }
 
-    private let latestRateFallbackThreshold: Double = 10 // in minutes
-
     private let disposeBag = DisposeBag()
 
     private let storage: IRateStorage
@@ -21,7 +19,7 @@ class RateManager {
         let referenceTimestamp = date.timeIntervalSince1970
         let currentTimestamp = Date().timeIntervalSince1970
 
-        guard referenceTimestamp > currentTimestamp - 60 * latestRateFallbackThreshold else {
+        guard referenceTimestamp > currentTimestamp - Rate.latestRateFallbackThreshold else {
             return Single.error(RateError.expired)
         }
 
@@ -34,6 +32,12 @@ class RateManager {
 }
 
 extension RateManager: IRateManager {
+    
+    func nonExpiredLatestRate(coinCode: CoinCode, currencyCode: String) -> Rate? {
+        return storage.latestRate(coinCode: coinCode, currencyCode: currencyCode).flatMap { rate in
+            rate.expired ? nil : rate
+        }
+    }
 
     func refreshLatestRates(coinCodes: [CoinCode], currencyCode: String) {
         apiProvider.getLatestRateData(currencyCode: currencyCode)

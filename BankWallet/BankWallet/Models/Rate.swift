@@ -1,6 +1,8 @@
 import GRDB
 
 class Rate: Record {
+    static let latestRateFallbackThreshold: Double = 60 * 10 // in seconds
+    
     let coinCode: String
     let currencyCode: String
     let value: Decimal
@@ -19,7 +21,7 @@ class Rate: Record {
 
     var expired: Bool {
         let diff = Date().timeIntervalSince1970 - date.timeIntervalSince1970
-        return diff > 60 * 10
+        return diff > Rate.latestRateFallbackThreshold
     }
 
     override class var databaseTableName: String {
