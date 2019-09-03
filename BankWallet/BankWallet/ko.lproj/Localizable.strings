@@ -18,7 +18,7 @@
 "button.sync" = "동기화";
 "button.paste" = "불여넣기";
 "button.backup" = "백업";
-"button.back" = "Back";
+"button.back" = "뒤로";
 
 "alert.copied" = "복사됨";
 "alert.no_internet" = "인터넷에 연결되지 않음";
@@ -236,7 +236,7 @@
 
 "manage_coins.title" = "코인 매니저";
 "manage_coins.add_coin.title" = "%@ 추가 ";
-"manage_coins.add_coin.text" = "You don't have key for %@. The wallet can generate the key for you. Use the Create button below to generate a new key.\n\nYou may also use the existing %@ key for the %@ if you have one.";
+"manage_coins.add_coin.text" = "%@에 대한 암호가 없습니다. 지갑은 열쇠를 생성 할 수 있습니다. 아래의 생성 버튼을 사용하여 새 키를 만드세요. \n\n 기존에 가지고 있는 %@암호를 %@ 사용하실 수도 있습니다.";
 "manage_coins.add_coin.create" = "만들기";
 "manage_coins.add_coin.restore" = "복구";
 
@@ -344,7 +344,7 @@
 "chart.market_cap.thousand" = "%@ 천";
 "chart.market_cap.million" = "%@ 백만";
 "chart.market_cap.billion" = "%@ 십억";
-"chart.market_cap.trillion" = "%@ T";
+"chart.market_cap.trillion" = "%@ 조";
 "chart.high" = "높음";
 "chart.low" = "낮음";
 "chart.volume" = "음량";
