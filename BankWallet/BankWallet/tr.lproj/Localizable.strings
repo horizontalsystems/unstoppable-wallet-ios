@@ -18,6 +18,7 @@
 "button.sync" = "Eşitle";
 "button.paste" = "Yapıştır";
 "button.backup" = "Yedekle";
+"button.back" = "Geri";
 
 "alert.copied" = "Kopyalandı";
 "alert.no_internet" = "Internet Bağlantısı Yok";
@@ -41,7 +42,7 @@
 // Restore
 
 "restore.title" = "Geri Yükle";
-"restore.description" = "To restore existing wallet you need to enter a secret key for that wallet.\n\nOnce you restore one wallet you will be able to restore more wallets by going to Manage Keys section in app Settings.";
+"restore.description" = "Cüzdanı geri yüklemek için o cüzdanın gizli anahtarını gürmelisiniz.\n\nDaha fazla cüzdanı geri yüklemek için bir cüzdanı geri yükledikten sonra Ayarlardaki Anahtarları Yönet bölümüne gidin.";
 "restore.words.description" = "Anahtarı Girin";
 "restore.validation_failed" = "Yanlış Anahtar";
 "restore.placeholder.account_name" = "Account Name";
@@ -108,7 +109,7 @@
 "balance.sort.header" = "Sıralama şekli";
 "balance.sort.valueHighToLow" = "Bakiye";
 "balance.sort.az" = "İsim";
-"balance.sort.24h_change" = "24h Change";
+"balance.sort.24h_change" = "24 saat Değişiklik";
 // Deposit
 
 "deposit.receive_coin" = "%@ al";
@@ -122,16 +123,16 @@
 "send.amount_placeholder" = "Tutar";
 "send.address_placeholder" = "Adres";
 "send.account_placeholder" = "Account";
-"send.fee" = "Masraf:";
-"send.tx_speed" = "İşlem hızı:";
+"send.fee" = "Masraf";
+"send.tx_speed" = "İşlem hızı";
 "send.tx_speed_low" = "Düşük";
 "send.tx_speed_medium" = "Orta";
 "send.tx_speed_high" = "Yüksek";
-"send.tx_duration" = "Süre:";
+"send.tx_duration" = "Süre";
 "send.duration.instant" = "Anlık";
-"send.duration.within" = "within %@";
-"send.duration.hours" = "%d h.";
-"send.duration.minutes" = "%d min.";
+"send.duration.within" = "%@ içinde";
+"send.duration.hours" = "%d sa.";
+"send.duration.minutes" = "%d dk.";
 "send.max_button" = "Azami";
 "send.next_button" = "İleri";
 "send.error.invalid_address" = "Geçersiz Adres";
@@ -140,10 +141,9 @@
 "send.error.no_amount" = "Miktar yok";
 
 "send.confirmation.title" = "Onayla";
-"send.confirmation.to" = "Alan:";
+"send.confirmation.to" = "Alan";
 "send.confirmation.memo_placeholder" = "Memo";
-"send.confirmation.total" = "Toplam:";
-"send.confirmation.estimate_time" = "Tahmini süre:";
+"send.confirmation.total" = "Toplam";
 "send.confirmation.eos.account" = "Account";
 "send.confirmation.send_button" = "Gönder";
 "send.amount_error.balance" = "%@ Bakiye";
@@ -169,7 +169,7 @@
 "tx_info.button_verify" = "Doğrula";
 "tx_info.rate" = "Geçmiş Kur";
 "tx_info.fee" = "Ücret";
-"tx_info.note" = "* Kendi adresinize gönderildiğinden bu işlemin değeri 0 olarak görünür";
+"tx_info.note" = "Kendi adresinize gönderildiğinden bu işlemin değeri 0 olarak görünür";
 
 // Full Info
 
@@ -334,7 +334,7 @@
 
 "chart.title" = "%@ kur";
 "chart.time_duration.day" = "Gün";
-"chart.time_duration.week" = "Hafta";
+"chart.time_duration.week" = "7G";
 "chart.time_duration.month" = "Ay";
 "chart.time_duration.quartal" = "3 ay";
 "chart.time_duration.halyear" = "6 Ay";

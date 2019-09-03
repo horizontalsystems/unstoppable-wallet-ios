@@ -18,6 +18,7 @@
 "button.sync" = "Sync";
 "button.paste" = "Coller";
 "button.backup" = "Sauvegarde";
+"button.back" = "Back";
 
 "alert.copied" = "Copié";
 "alert.no_internet" = "Aucune connexion Internet";
@@ -122,12 +123,12 @@
 "send.amount_placeholder" = "Montant";
 "send.address_placeholder" = "Adresse";
 "send.account_placeholder" = "Account";
-"send.fee" = "Frais:";
-"send.tx_speed" = "Transaction Speed:";
+"send.fee" = "Fee";
+"send.tx_speed" = "Transaction Speed";
 "send.tx_speed_low" = "Low";
 "send.tx_speed_medium" = "Medium";
 "send.tx_speed_high" = "High";
-"send.tx_duration" = "Duration:";
+"send.tx_duration" = "Duration";
 "send.duration.instant" = "Instant";
 "send.duration.within" = "within %@";
 "send.duration.hours" = "%d h.";
@@ -140,10 +141,9 @@
 "send.error.no_amount" = "Aucun montant";
 
 "send.confirmation.title" = "Confirmer";
-"send.confirmation.to" = "À:";
+"send.confirmation.to" = "To";
 "send.confirmation.memo_placeholder" = "Memo";
-"send.confirmation.total" = "Total:";
-"send.confirmation.estimate_time" = "Temps estimé :";
+"send.confirmation.total" = "Total";
 "send.confirmation.eos.account" = "Account";
 "send.confirmation.send_button" = "Envoyer";
 "send.amount_error.balance" = "Balance %@";
@@ -169,7 +169,7 @@
 "tx_info.button_verify" = "Vérifiez";
 "tx_info.rate" = "Taux historique";
 "tx_info.fee" = "Fee";
-"tx_info.note" = "* The value of this transaction appears as 0 because it was sent to your own address";
+"tx_info.note" = "The value of this transaction appears as 0 because it was sent to your own address";
 
 // Full Info
 

@@ -18,6 +18,7 @@
 "button.sync" = "Sincronizar";
 "button.paste" = "Pegar";
 "button.backup" = "Copia de seguridad";
+"button.back" = "Atrás";
 
 "alert.copied" = "Copiado";
 "alert.no_internet" = "Sin conexión a Internet";
@@ -41,7 +42,7 @@
 // Restore
 
 "restore.title" = "Restaurar";
-"restore.description" = "To restore existing wallet you need to enter a secret key for that wallet.\n\nOnce you restore one wallet you will be able to restore more wallets by going to Manage Keys section in app Settings.";
+"restore.description" = "Para restaurar el monedero existente, es necesario introducir la clave privada para ese monedero.\n\nUna vez que restablezca un monedero podrá restaurar más monederos yendo a la sección Administrar Claves en Ajustes de la aplicación.";
 "restore.words.description" = "Introduzca la clave";
 "restore.validation_failed" = "Clave incorrecta";
 "restore.placeholder.account_name" = "Account Name";
@@ -79,12 +80,12 @@
 "confirmation.12words.description" = "Insertar palabras de su clave 12-palabras";
 
 "backup.eos.title" = "Clave de EOS";
-"backup.eos.account_name" = "Nombre de cuenta";
-"backup.eos.active_private_key" = "Clave activa privada";
+"backup.eos.account_name" = "Account Name";
+"backup.eos.active_private_key" = "Active Private Key\n";
 "backup.eos.hint" = "Copiar su clave utilizando la acción \"copiar\" implica ciertos riesgos si utiliza aplicaciones de gestión de portapapeles u otra aplicación que pueda tener acceso a la información del portapapeles.";
 "error.send_eos.self_transfer" = "No se puede transferir el token a su propia cuenta";
 "error.send_eos.account_not_exist" = "La cuenta de destino no existe";
-"error.send_eos.insufficient_ram" = "Your EOS account doesn't have enough RAM to send this token. You need to increase RAM stake to proceed.";
+"error.send_eos.insufficient_ram" = "Su cuenta EOS no tiene suficiente memoria RAM para enviar este token. Necesita aumentar la participación en RAM para continuar.";
 "error.send_eos.unknown" = "Algo ha fallado: %@";
 
 "backup.confirmation.title" = "Comprobar";
@@ -108,7 +109,7 @@
 "balance.sort.header" = "Ordenar por";
 "balance.sort.valueHighToLow" = "Saldo";
 "balance.sort.az" = "Nombre";
-"balance.sort.24h_change" = "24h Change";
+"balance.sort.24h_change" = "Precio 24h";
 // Deposit
 
 "deposit.receive_coin" = "Recibir %@";
@@ -122,14 +123,14 @@
 "send.amount_placeholder" = "Importe";
 "send.address_placeholder" = "Dirección";
 "send.account_placeholder" = "Account";
-"send.fee" = "Comisión:";
-"send.tx_speed" = "Transaction Speed:";
+"send.fee" = "Comisión";
+"send.tx_speed" = "Velocidad de transacción";
 "send.tx_speed_low" = "Bajo";
 "send.tx_speed_medium" = "Medio";
 "send.tx_speed_high" = "Alto";
-"send.tx_duration" = "Duración:";
-"send.duration.instant" = "Instant";
-"send.duration.within" = "within %@";
+"send.tx_duration" = "Duración";
+"send.duration.instant" = "Inmediato";
+"send.duration.within" = "dentro de %@";
 "send.duration.hours" = "%d h.";
 "send.duration.minutes" = "%d min.";
 "send.max_button" = "Máx.";
@@ -140,10 +141,9 @@
 "send.error.no_amount" = "No hay cantidad";
 
 "send.confirmation.title" = "Confirmar";
-"send.confirmation.to" = "Para:";
+"send.confirmation.to" = "Para";
 "send.confirmation.memo_placeholder" = "Memo";
-"send.confirmation.total" = "Total:";
-"send.confirmation.estimate_time" = "Tiempo estimado:";
+"send.confirmation.total" = "Total";
 "send.confirmation.eos.account" = "Account";
 "send.confirmation.send_button" = "Enviar";
 "send.amount_error.balance" = "Saldo %@";
@@ -169,7 +169,7 @@
 "tx_info.button_verify" = "Verificar";
 "tx_info.rate" = "Tasa histórica";
 "tx_info.fee" = "Comisión";
-"tx_info.note" = "* El valor de esta transacción aparece como 0 porque fue enviado a su propia dirección";
+"tx_info.note" = "El valor de esta transacción aparece como 0 porque fue enviado a su propia dirección";
 
 // Full Info
 
@@ -190,14 +190,14 @@
 "full_info.nonce" = "Nonce";
 "full_info.status" = "Estado";
 "full_info.memo" = "Memo";
-"full_info.cpu" = "Uso de CPU";
-"full_info.net" = "Uso de red";
+"full_info.cpu" = "CPU Usage";
+"full_info.net" = "Net Usage";
 "full_info.milli_seconds" = "%@ μs";
 "full_info.bytes" = "%@ Bytes";
 
-"full_info.gas_limit" = "Límite de gas";
-"full_info.gas_used" = "Gas utilizado";
-"full_info.gas_price" = "Precio del gas";
+"full_info.gas_limit" = "Gas Limit";
+"full_info.gas_used" = "Gas Used";
+"full_info.gas_price" = "Gas Price";
 
 "full_info.source.title" = "Origen";
 "full_info.source.online" = "en línea";
@@ -215,14 +215,14 @@
 "settings.security_center" = "Centro de seguridad";
 "settings.manage_coins" = "Gestionar monedas";
 "settings.restore_wallet" = "Restaurar monedero";
-"settings.base_currency" = "Divisa principal";
+"settings.base_currency" = "Moneda principal";
 "settings.language" = "Idioma";
 "settings.about" = "Acerca de";
 "settings.tell_friends" = "Recomendar a un amigo";
 "settings.report_problem" = "Reportar el problema";
 "settings.light_mode" = "Modo ligero";
 "settings.info_title" = "UNSTOPPABLE";
-"settings.info_subtitle" = "aplicación descentralizada";
+"settings.info_subtitle" = "decentralized app";
 
 // Settings -> Base Currency
 
@@ -236,7 +236,7 @@
 
 "manage_coins.title" = "Gestor de monedas";
 "manage_coins.add_coin.title" = "Añadir %@ ";
-"manage_coins.add_coin.text" = "You don't have key for %@. The wallet can generate the key for you. Use the Create button below to generate a new key.\n\nYou may also use the existing %@ key for the %@ if you have one.";
+"manage_coins.add_coin.text" = "Usted no tiene la clave para %@. El monedero puede generar una clave para usted. Use el botón de crear para generar una nueva clave. \n\nTambién puede usar la %@clave ya existente para el %@si tiene una.";
 "manage_coins.add_coin.create" = "Crear";
 "manage_coins.add_coin.restore" = "Restaurar";
 
@@ -250,7 +250,7 @@
 
 // Settings -> Tell Friends
 
-"settings_tell_friends.text" = "Unstoppable Wallet - a crypto wallet I recommend";
+"settings_tell_friends.text" = "Monedero Unstoppable - un monedero de criptomonedas que yo recomiendo";
 
 // Settings -> Security
 
@@ -340,7 +340,7 @@
 "chart.time_duration.halyear" = "6M";
 "chart.time_duration.year" = "1A";
 
-"chart.market_cap" = "Capitalización de mercado";
+"chart.market_cap" = "Cap. de Mercado";
 "chart.market_cap.thousand" = "%@ k";
 "chart.market_cap.million" = "%@ M";
 "chart.market_cap.billion" = "%@ B";
@@ -348,4 +348,4 @@
 "chart.high" = "Alto";
 "chart.low" = "Bajo";
 "chart.volume" = "Volumen";
-"chart.error.not_available" = "Chart not available";
+"chart.error.not_available" = "Gráfico no disponible";
