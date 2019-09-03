@@ -45,6 +45,7 @@ extension BalancePresenter: IBalanceInteractorDelegate {
         }
 
         view?.setSort(isOn: dataSource.items.count >= sortingOnThreshold)
+        view?.setStats(isOn: dataSource.items.count > 0)
         view?.reload()
     }
 
@@ -142,6 +143,7 @@ extension BalancePresenter: IBalanceViewDelegate {
 
     func viewDidLoad() {
         dataSource.sortType = interactor.sortType
+        view?.setStats(isOn: false)
         view?.setSort(isOn: false)
 
         interactor.initWallets()
