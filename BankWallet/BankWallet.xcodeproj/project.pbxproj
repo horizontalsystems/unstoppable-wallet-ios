@@ -1327,6 +1327,9 @@
 		58AAAFEEC27E71FF55CBE115 /* SendConfirmationPrimaryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAFA9479D63145A24BD9C /* SendConfirmationPrimaryCell.swift */; };
 		58AAAFF746E489C4419778B3 /* DataProviderSettingsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA68D36E8424BBE757B88 /* DataProviderSettingsPresenter.swift */; };
 		58AAAFFEF13F84A77250FA37 /* ChartGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAA0F723F2934E8274858 /* ChartGridView.swift */; };
+		D0E2C4DD231E29F3003010C0 /* EosAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E2C4DC231E29F3003010C0 /* EosAction.swift */; };
+		D0E2C4DE231E29F3003010C0 /* EosAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E2C4DC231E29F3003010C0 /* EosAction.swift */; };
+		D0E2C4DF231E29F3003010C0 /* EosAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E2C4DC231E29F3003010C0 /* EosAction.swift */; };
 		D3285F4620BD158E00644076 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3285F4520BD158E00644076 /* AppDelegate.swift */; };
 		D3373D9520BEC7B30082BC4A /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3373D9420BEC7B30082BC4A /* AVFoundation.framework */; };
 		D3373DB220C52F640082BC4A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = D3373DB120C52F640082BC4A /* LaunchScreen.xib */; };
@@ -2283,6 +2286,7 @@
 		7B87DD80F1B5F49E1A17D48A /* Pods-Bank.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bank.release.xcconfig"; path = "../Pods/Target Support Files/Pods-Bank/Pods-Bank.release.xcconfig"; sourceTree = "<group>"; };
 		A79CC9D3E472AD6CDB9E17EC /* Pods-Bank.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bank.debug.xcconfig"; path = "../Pods/Target Support Files/Pods-Bank/Pods-Bank.debug.xcconfig"; sourceTree = "<group>"; };
 		C34C463CE4115A838C13EA33 /* Pods_Bank_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Bank_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D0E2C4DC231E29F3003010C0 /* EosAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EosAction.swift; sourceTree = "<group>"; };
 		D24DBEAA7A654C8075B634B6 /* Pods-Bank Dev.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bank Dev.debug.xcconfig"; path = "../Pods/Target Support Files/Pods-Bank Dev/Pods-Bank Dev.debug.xcconfig"; sourceTree = "<group>"; };
 		D3285F4220BD158E00644076 /* Unstoppable DT.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Unstoppable DT.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D3285F4520BD158E00644076 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -3323,6 +3327,7 @@
 			isa = PBXGroup;
 			children = (
 				58AAA985F8CC176A656051D9 /* DataProvider */,
+				D0E2C4DB231E2988003010C0 /* Models */,
 				58AAA15A8E53393FBBF20C29 /* TransactionProviders */,
 				1A564E6974FB8DFDB840ACF7 /* Views */,
 				2FA5D2A075A681B3BFBF21F6 /* BinanceTransactionInfoAdapter.swift */,
@@ -3775,6 +3780,14 @@
 				2FA5D530E93384994D257E62 /* PriorityInteractor.swift */,
 			);
 			path = Priority;
+			sourceTree = "<group>";
+		};
+		D0E2C4DB231E2988003010C0 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				D0E2C4DC231E29F3003010C0 /* EosAction.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		D3285F3920BD158E00644076 = {
@@ -4328,6 +4341,7 @@
 				1A5647219D7DE64CE22C2B87 /* SetPinPresenter.swift in Sources */,
 				1A56483342FF07B40E53AD20 /* SetPinModule.swift in Sources */,
 				1A5641C3B8E88DA8E54FEFEB /* PinDotsView.swift in Sources */,
+				D0E2C4DD231E29F3003010C0 /* EosAction.swift in Sources */,
 				1A5642B379FFD0448FC18FB8 /* EditPinPresenter.swift in Sources */,
 				1A5642E42254187A5E8899DD /* EditPinRouter.swift in Sources */,
 				1A564EA01F3260DE1FB535EC /* EditPinModule.swift in Sources */,
@@ -4915,6 +4929,7 @@
 				D3840571218317DF007D50AD /* SetPinModule.swift in Sources */,
 				D3840572218317DF007D50AD /* PinDotsView.swift in Sources */,
 				D3840573218317DF007D50AD /* EditPinPresenter.swift in Sources */,
+				D0E2C4DE231E29F3003010C0 /* EosAction.swift in Sources */,
 				D3840574218317DF007D50AD /* EditPinRouter.swift in Sources */,
 				D3840575218317DF007D50AD /* EditPinModule.swift in Sources */,
 				D3840576218317DF007D50AD /* PinModule.swift in Sources */,
@@ -5717,6 +5732,7 @@
 				11B3538B8D39A0E918A9AB44 /* BiometryManager.swift in Sources */,
 				11B35BC6DFCA197FA842873B /* BackupManager.swift in Sources */,
 				11B35590A4DA4BCFB3D38DDF /* AppManager.swift in Sources */,
+				D0E2C4DF231E29F3003010C0 /* EosAction.swift in Sources */,
 				11B350C8CA6E260490BC9CA2 /* WalletStorage.swift in Sources */,
 				11B356E43B55B861493AEA87 /* DefaultWalletCreator.swift in Sources */,
 				11B35B5F4B4DB1147E2080E7 /* WalletRemover.swift in Sources */,
