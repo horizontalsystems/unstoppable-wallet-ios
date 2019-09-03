@@ -130,7 +130,7 @@
 "send.tx_speed_high" = "Высокая";
 "send.tx_duration" = "Продолжительность";
 "send.duration.instant" = "Мгновенно";
-"send.duration.within" = "В течение %@";
+"send.duration.within" = "в течение %@";
 "send.duration.hours" = "%d ч.";
 "send.duration.minutes" = "%d мин.";
 "send.max_button" = "Макс.";
@@ -273,7 +273,7 @@
 "settings_manage_keys.title" = "Ключи";
 "settings_manage_keys.description" = "Любой, кто имеет доступ к вашим ключам, может украсть ваши средства. Храните ключи безопасно и не показывайте их никому.\n\nРезервное копирование каждого ключа необходимо для того, чтобы иметь возможность восстановить средства, если вы потеряете или сломаете ваш телефон, или приложение кошелька будет удалено.";
 "settings_manage_keys.delete" = "Удалить";
-"settings_manage_keys.backup" = "Рез. копия";
+"settings_manage_keys.backup" = "Резерв. копия";
 "settings_manage_keys.show" = "Показать";
 "settings_manage_keys.create" = "Создать";
 "settings_manage_keys.restore" = "Восстан-ть";
