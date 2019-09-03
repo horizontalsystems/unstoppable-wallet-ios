@@ -108,7 +108,7 @@ class SendViewController: UIViewController {
 extension SendViewController: ISendView {
 
     func set(coin: Coin) {
-        title = "send.title".localized(coin.title)
+        title = "send.title".localized(coin.code)
         iconImageView.image = UIImage(named: "\(coin.code.lowercased())")?.withRenderingMode(.alwaysTemplate)
     }
 
