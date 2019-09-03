@@ -59,10 +59,10 @@ class SendTheme {
 
     static let feePriorityHeight: CGFloat = 60.5
     static let feePriorityWrapperHeight: CGFloat = 44
-    static let feePriorityTitleFont: UIFont = .systemFont(ofSize: 14)
+    static let feePriorityTitleFont: UIFont = UIFont.cryptoCaptionMedium
     static let feePriorityTitleColor: UIColor = .cryptoGray
     static let feePriorityTitleTopMargin: CGFloat = 28
-    static let feePriorityValueFont: UIFont = .systemFont(ofSize: 14)
+    static let feePriorityValueFont: UIFont = UIFont.cryptoCaptionMedium
     static var feePriorityValueColor: UIColor { return .crypto_SteelDark_LightGray }
     static let feePriorityValueTopMargin: CGFloat = 29
     static let feePriorityValueLeftMargin: CGFloat = 10
