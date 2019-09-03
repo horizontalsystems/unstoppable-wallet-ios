@@ -6,6 +6,7 @@ protocol IBalanceView: class {
     func reload(with diff: [Change<BalanceItem>])
     func updateHeader()
     func didRefresh()
+    func setStats(isOn: Bool)
     func setSort(isOn: Bool)
     func showBackupRequired(coin: Coin, predefinedAccountType: IPredefinedAccountType)
 }

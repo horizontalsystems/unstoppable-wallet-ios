@@ -8,6 +8,12 @@ class BalanceHeaderView: UIView {
 
     var onStatsSwitch: (() -> ())?
 
+    var isStatsSwitchHidden: Bool? {
+        didSet {
+            statsSwitchButton.isHidden = isStatsSwitchHidden ?? false
+        }
+    }
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         commonInit()

@@ -231,6 +231,10 @@ extension BalanceViewController: IBalanceView {
         refreshControl.endRefreshing()
     }
 
+    func setStats(isOn: Bool) {
+        headerView.isStatsSwitchHidden = !isOn
+    }
+
     func setSort(isOn: Bool) {
         if isOn {
             navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "Balance Sort Icon"), style: .plain, target: self, action: #selector(onSortTypeChange))
