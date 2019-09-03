@@ -45,7 +45,7 @@ extension BalancePresenter: IBalanceInteractorDelegate {
         }
 
         view?.setSort(isOn: dataSource.items.count >= sortingOnThreshold)
-        view?.setStats(isOn: dataSource.items.count > 0)
+        view?.setStats(isOn: !dataSource.items.isEmpty)
         view?.reload()
     }
 
