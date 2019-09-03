@@ -3,7 +3,7 @@ import UIKit
 class SendFeeRouter {
 
     static func module(coin: Coin) -> (UIView, ISendFeeModule) {
-        let interactor = SendFeeInteractor(rateStorage: App.shared.grdbStorage, currencyManager: App.shared.currencyManager, feeCoinProvider: App.shared.feeCoinProvider)
+        let interactor = SendFeeInteractor(rateManager: App.shared.rateManager, currencyManager: App.shared.currencyManager, feeCoinProvider: App.shared.feeCoinProvider)
         let presenter = SendFeePresenter(coin: coin, interactor: interactor)
         let view = SendFeeView(delegate: presenter)
 
