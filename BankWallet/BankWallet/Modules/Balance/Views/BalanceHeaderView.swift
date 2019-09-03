@@ -8,12 +8,6 @@ class BalanceHeaderView: UIView {
 
     var onStatsSwitch: (() -> ())?
 
-    var isStatsSwitchHidden: Bool? {
-        didSet {
-            statsSwitchButton.isHidden = isStatsSwitchHidden ?? false
-        }
-    }
-
     override init(frame: CGRect) {
         super.init(frame: frame)
         commonInit()
@@ -30,6 +24,7 @@ class BalanceHeaderView: UIView {
         preservesSuperviewLayoutMargins = true
 
         addSubview(statsSwitchButton)
+        statsSwitchButton.isHidden = true
         statsSwitchButton.setImage(UIImage(named: "Stats Switch Button")?.tinted(with: BalanceTheme.headerTintColorNormal), for: .normal)
         statsSwitchButton.setImage(UIImage(named: "Stats Switch Button")?.tinted(with: BalanceTheme.headerTintColor), for: .selected)
         statsSwitchButton.setImage(UIImage(named: "Stats Switch Button")?.tinted(with: BalanceTheme.headerTintColorSelected), for: .highlighted)
@@ -59,6 +54,10 @@ class BalanceHeaderView: UIView {
 
     @objc func onSwitch() {
         onStatsSwitch?()
+    }
+
+    func setStatSwitch(hidden: Bool) {
+        statsSwitchButton.isHidden = hidden
     }
 
 }
