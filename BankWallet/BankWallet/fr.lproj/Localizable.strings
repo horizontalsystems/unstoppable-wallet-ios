@@ -141,7 +141,7 @@
 "send.error.no_amount" = "Aucun montant";
 
 "send.confirmation.title" = "Confirmer";
-"send.confirmation.to" = "To";
+"send.confirmation.to" = "À";
 "send.confirmation.memo_placeholder" = "Memo";
 "send.confirmation.total" = "Total";
 "send.confirmation.eos.account" = "Account";
@@ -168,7 +168,7 @@
 "tx_info.to_hash" = "À";
 "tx_info.button_verify" = "Vérifiez";
 "tx_info.rate" = "Taux historique";
-"tx_info.fee" = "Fee";
+"tx_info.fee" = "Frais";
 "tx_info.note" = "The value of this transaction appears as 0 because it was sent to your own address";
 
 // Full Info
