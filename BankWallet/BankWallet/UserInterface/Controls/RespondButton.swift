@@ -67,6 +67,8 @@ class RespondButton: UIView, RespondViewDelegate {
         wrapperView.setContentHuggingPriority(.defaultHigh, for: .horizontal)
 
         imageView.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
+        imageView.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+        titleLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         titleLabel.textAlignment = .center
         titleLabel.font = ButtonTheme.font
         wrapperView.addSubview(titleLabel)
