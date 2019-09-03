@@ -232,7 +232,7 @@ extension BalanceViewController: IBalanceView {
     }
 
     func setStats(isOn: Bool) {
-        headerView.isStatsSwitchHidden = !isOn
+        headerView.setStatSwitch(hidden: !isOn)
     }
 
     func setSort(isOn: Bool) {
