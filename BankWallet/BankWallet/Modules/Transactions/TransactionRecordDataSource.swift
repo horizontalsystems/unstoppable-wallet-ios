@@ -69,13 +69,15 @@ class TransactionRecordDataSource {
         guard let pool = poolRepo.pool(byWallet: wallet) else {
             return nil
         }
+        var handledItems = [TransactionRecord]()
 
-        for record in records {
+        for record in records.sorted() {
             switch pool.handleUpdated(record: record) {
-            case .updated: ()
-            case .inserted: ()
+            case .updated: handledItems.append(record)
+            case .inserted: handledItems.append(record)
             case .newData:
                 if itemsDataSource.shouldInsert(record: record) {
+                    handledItems.append(record)
                     pool.increaseFirstUnusedIndex()
                 }
             case .ignored: ()
@@ -86,7 +88,7 @@ class TransactionRecordDataSource {
             return nil
         }
 
-        let items = records.map { factory.create(wallet: wallet, record: $0) }
+        let items = handledItems.map { factory.create(wallet: wallet, record: $0) }
         return itemsDataSource.handle(newItems: items)
     }
 
