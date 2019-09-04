@@ -327,7 +327,7 @@
 "key_type.12_words.text" = "BTC, BCH, DASH, ETH, ERC-20";
 "key_type.eos" = "EOS Blockchain";
 "key_type.eos.text" = "EOS, Tokens basados en EOS";
-"key_type.binance" = "Cadena de Binance";
+"key_type.binance" = "Binance Chain";
 "key_type.binance.text" = "BNB, BEP-2";
 
 // Key Types
