@@ -85,7 +85,7 @@
 "backup.eos.hint" = "Den Schlüssel mit \"Kopieren\" zu kopieren, ist riskant, da Sie womöglich Zwischenablage-Management-Apps oder andere Apps nutzen, die Zugriff auf die Daten in der Zwischenablage haben.";
 "error.send_eos.self_transfer" = "Token kann nicht auf das eigene Konto übertragen werden";
 "error.send_eos.account_not_exist" = "Der Zielkonto existiert nicht";
-"error.send_eos.insufficient_ram" = "Your EOS account doesn't have enough RAM to send this token. You need to increase RAM stake to proceed.";
+"error.send_eos.insufficient_ram" = "Ihr EOS-Konto hat nicht genügend RAM, um diesen Token zu senden. Sie müssen den RAM-Anteil erhöhen, um fortzufahren.";
 "error.send_eos.unknown" = "Etwas ist schief gelaufen: %@";
 
 "backup.confirmation.title" = "Prüfen …";
@@ -250,7 +250,7 @@
 
 // Settings -> Tell Friends
 
-"settings_tell_friends.text" = "Unstoppable Wallet - a crypto wallet I recommend";
+"settings_tell_friends.text" = "Unstoppable Wallet - eine krypto Wallet, die ich empfehle";
 
 // Settings -> Security
 
@@ -340,12 +340,12 @@
 "chart.time_duration.halyear" = "6M";
 "chart.time_duration.year" = "1J";
 
-"chart.market_cap" = "Mkt. Cap";
-"chart.market_cap.thousand" = "%@ k";
-"chart.market_cap.million" = "%@ M";
-"chart.market_cap.billion" = "%@ B";
-"chart.market_cap.trillion" = "%@ T";
+"chart.market_cap" = "Mkt. Kap.";
+"chart.market_cap.thousand" = "%@ tsd.";
+"chart.market_cap.million" = "%@ mill.";
+"chart.market_cap.billion" = "%@ mrd.";
+"chart.market_cap.trillion" = "%@ trill.";
 "chart.high" = "Hoch";
 "chart.low" = "Niedrig";
 "chart.volume" = "Lautstärke";
-"chart.error.not_available" = "Chart not available";
+"chart.error.not_available" = "Diagramm nicht verfügbar";
