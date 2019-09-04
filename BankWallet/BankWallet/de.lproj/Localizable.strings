@@ -85,7 +85,7 @@
 "backup.eos.hint" = "Den Schlüssel mit \"Kopieren\" zu kopieren, ist riskant, da Sie womöglich Zwischenablage-Management-Apps oder andere Apps nutzen, die Zugriff auf die Daten in der Zwischenablage haben.";
 "error.send_eos.self_transfer" = "Token kann nicht auf das eigene Konto übertragen werden";
 "error.send_eos.account_not_exist" = "Der Zielkonto existiert nicht";
-"error.send_eos.insufficient_ram" = "Your EOS account doesn't have enough RAM to send this token. You need to increase RAM stake to proceed.";
+"error.send_eos.insufficient_ram" = "Ihr EOS-Konto hat nicht genügend RAM, um diesen Token zu senden. Sie müssen den RAM-Anteil erhöhen, um fortzufahren.";
 "error.send_eos.unknown" = "Etwas ist schief gelaufen: %@";
 
 "backup.confirmation.title" = "Prüfen …";
@@ -109,7 +109,7 @@
 "balance.sort.header" = "Sortieren nach";
 "balance.sort.valueHighToLow" = "Guthaben";
 "balance.sort.az" = "Name";
-"balance.sort.24h_change" = "24h Change";
+"balance.sort.24h_change" = "24h Änderung";
 // Deposit
 
 "deposit.receive_coin" = "%@ Anfordern ";
@@ -130,7 +130,7 @@
 "send.tx_speed_high" = "Hoch";
 "send.tx_duration" = "Dauer";
 "send.duration.instant" = "Sofort";
-"send.duration.within" = "within %@";
+"send.duration.within" = "Innerhalb %@";
 "send.duration.hours" = "%d Std.";
 "send.duration.minutes" = "%d Min.";
 "send.max_button" = "Max.";
@@ -236,7 +236,7 @@
 
 "manage_coins.title" = "Coin Manager";
 "manage_coins.add_coin.title" = "%@ hinzufügen ";
-"manage_coins.add_coin.text" = "You don't have key for %@. The wallet can generate the key for you. Use the Create button below to generate a new key.\n\nYou may also use the existing %@ key for the %@ if you have one.";
+"manage_coins.add_coin.text" = "Du verfügst nicht über einen Schlüssel für , der einen Schlüssel %@ erfordert. Die Wallet kann den Schlüssel für Sie generieren. Verwenden Sie die Taste Create unten, um einen neuen Schlüssel zu generieren.\n\nDu kannst auch den vorhandenen %@-Schlüssel für den %@ verwenden, falls du einen hast.";
 "manage_coins.add_coin.create" = "Erstellen";
 "manage_coins.add_coin.restore" = "Wiederherstellen";
 
@@ -250,7 +250,7 @@
 
 // Settings -> Tell Friends
 
-"settings_tell_friends.text" = "Unstoppable Wallet - a crypto wallet I recommend";
+"settings_tell_friends.text" = "Unstoppable Wallet - eine krypto Wallet, die ich empfehle";
 
 // Settings -> Security
 
@@ -340,12 +340,12 @@
 "chart.time_duration.halyear" = "6M";
 "chart.time_duration.year" = "1J";
 
-"chart.market_cap" = "Mkt. Cap";
-"chart.market_cap.thousand" = "%@ k";
-"chart.market_cap.million" = "%@ M";
-"chart.market_cap.billion" = "%@ B";
-"chart.market_cap.trillion" = "%@ T";
+"chart.market_cap" = "Mkt. Kap.";
+"chart.market_cap.thousand" = "%@ tsd.";
+"chart.market_cap.million" = "%@ mill.";
+"chart.market_cap.billion" = "%@ mrd.";
+"chart.market_cap.trillion" = "%@ trill.";
 "chart.high" = "Hoch";
 "chart.low" = "Niedrig";
 "chart.volume" = "Lautstärke";
-"chart.error.not_available" = "Chart not available";
+"chart.error.not_available" = "Diagramm nicht verfügbar";
