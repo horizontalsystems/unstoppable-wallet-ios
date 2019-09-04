@@ -86,7 +86,7 @@
 "error.send_eos.self_transfer" = "Impossible de transférer des tokens sur votre propre compte";
 "error.send_eos.account_not_exist" = "Ce compte n'existe pas";
 "error.send_eos.insufficient_ram" = "Votre compte EOS ne dispose pas de suffisamment de RAM pour envoyer ce token. Vous devez augmenter la participation RAM pour continuer.";
-"error.send_eos.unknown" = "Something went wrong: %@";
+"error.send_eos.unknown" = "Quelque chose s'est mal passé: %@";
 
 "backup.confirmation.title" = "Vérification...";
 "backup.confirmation.secret_key" = "Je comprends que je suis propriétaire d'une clé secrète privée de 12 mots, qui est stockée en toute sécurité sur mon téléphone portable et me permet de contrôler les fonds sur mon porte-monnaie.";
@@ -109,13 +109,13 @@
 "balance.sort.header" = "Trier par";
 "balance.sort.valueHighToLow" = "Balance";
 "balance.sort.az" = "Nom";
-"balance.sort.24h_change" = "24h Change";
+"balance.sort.24h_change" = "Changement 24h";
 // Deposit
 
 "deposit.receive_coin" = "Recevoir %@";
 "deposit.your_address" = "Votre address";
 "deposit.your_account" = "Votre compte";
-"receive_alert.not_backed_up_description" = "You need to backup the %@ key before you may receive %@.";
+"receive_alert.not_backed_up_description" = "Vous devez sauvegarder %@ clés avant de pouvoir recevoir %@. ";
 
 // Send
 
@@ -164,7 +164,7 @@
 "tx_info.status.pending" = "En attente";
 "tx_info.status.confirmed" = "Confirmé";
 "tx_info.from_hash" = "De";
-"tx_info.transaction_id" = "Transaction ID";
+"tx_info.transaction_id" = "ID de transaction";
 "tx_info.to_hash" = "À";
 "tx_info.button_verify" = "Vérifiez";
 "tx_info.rate" = "Taux historique";
