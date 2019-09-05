@@ -37,9 +37,9 @@ class RateStatsManager {
         }
     }
 
-    private func calculateDiff(for data: ChartRateData) -> Decimal {
-        if let first = data.values.first(where: { value in return !value.isZero }), let last = data.values.last {
-            return (last - first) / first * 100
+    private func calculateDiff(for points: [ChartPoint]) -> Decimal {
+        if let first = points.first(where: { point in return !point.value.isZero }), let last = points.last {
+            return (last.value - first.value) / first.value * 100
         }
         return 0
     }
@@ -63,8 +63,10 @@ extension RateStatsManager: IRateStatsManager {
                     var diffs = [ChartType: Decimal]()
                     response.stats.forEach { key, value in
                         if let type = ChartType(rawValue: key) {
-                            stats[type] = self?.convert(responseData: value, coinCode: coinCode, currencyCode: currencyCode, type: type) ?? []
-                            diffs[type] = self?.calculateDiff(for: value)
+                            let points = self?.convert(responseData: value, coinCode: coinCode, currencyCode: currencyCode, type: type) ?? []
+
+                            stats[type] = points
+                            diffs[type] = self?.calculateDiff(for: points)
                         }
                     }
 
