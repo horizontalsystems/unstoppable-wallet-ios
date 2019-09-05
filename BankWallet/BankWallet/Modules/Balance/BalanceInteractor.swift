@@ -14,8 +14,9 @@ class BalanceInteractor {
     private let currencyManager: ICurrencyManager
     private let localStorage: ILocalStorage
     private let predefinedAccountTypeManager: IPredefinedAccountTypeManager
+    private let rateManager: IRateManager
 
-    init(walletManager: IWalletManager, adapterManager: IAdapterManager, rateStatsManager: IRateStatsManager, rateStorage: IRateStorage, currencyManager: ICurrencyManager, localStorage: ILocalStorage, predefinedAccountTypeManager: IPredefinedAccountTypeManager) {
+    init(walletManager: IWalletManager, adapterManager: IAdapterManager, rateStatsManager: IRateStatsManager, rateStorage: IRateStorage, currencyManager: ICurrencyManager, localStorage: ILocalStorage, predefinedAccountTypeManager: IPredefinedAccountTypeManager, rateManager: IRateManager) {
         self.walletManager = walletManager
         self.adapterManager = adapterManager
         self.rateStatsManager = rateStatsManager
@@ -23,6 +24,7 @@ class BalanceInteractor {
         self.currencyManager = currencyManager
         self.localStorage = localStorage
         self.predefinedAccountTypeManager = predefinedAccountTypeManager
+        self.rateManager = rateManager
     }
 
     private func onUpdateWallets() {
@@ -114,6 +116,7 @@ extension BalanceInteractor: IBalanceInteractor {
 
     func refresh() {
         adapterManager.refresh()
+        rateManager.syncLatestRates()
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             self.delegate?.didRefresh()

@@ -61,7 +61,7 @@ class App {
     let passcodeLockRouter: IPasscodeLockRouter
     let passcodeLockManager: IPasscodeLockManager
 
-    let rateSyncer: RateSyncer
+    let rateSyncScheduler: RateSyncScheduler
 
     let dataProviderManager: IFullTransactionDataProviderManager
     let fullTransactionInfoProviderFactory: IFullTransactionInfoProviderFactory
@@ -118,8 +118,8 @@ class App {
         let chartRateConverter = ChartRateDataConverter()
         rateStatsManager = RateStatsManager(apiProvider: chartApiProvider, rateStorage: grdbStorage, chartRateConverter: chartRateConverter)
 
-        rateManager = RateManager(storage: grdbStorage, apiProvider: rateApiProvider)
         currencyManager = CurrencyManager(localStorage: localStorage, appConfigProvider: appConfigProvider)
+        rateManager = RateManager(storage: grdbStorage, apiProvider: rateApiProvider, walletManager: walletManager, reachabilityManager: reachabilityManager, currencyManager: currencyManager)
 
         ethereumKitManager = EthereumKitManager(appConfigProvider: appConfigProvider)
         eosKitManager = EosKitManager(appConfigProvider: appConfigProvider)
@@ -139,7 +139,7 @@ class App {
         passcodeLockRouter = PasscodeLockRouter()
         passcodeLockManager = PasscodeLockManager(systemInfoManager: systemInfoManager, accountManager: accountManager, walletManager: walletManager, router: passcodeLockRouter)
 
-        rateSyncer = RateSyncer(rateManager: rateManager, walletManager: walletManager, currencyManager: currencyManager, reachabilityManager: reachabilityManager)
+        rateSyncScheduler = RateSyncScheduler(rateManager: rateManager, walletManager: walletManager, currencyManager: currencyManager, reachabilityManager: reachabilityManager)
 
         dataProviderManager = FullTransactionDataProviderManager(localStorage: localStorage, appConfigProvider: appConfigProvider)
 

@@ -9,10 +9,16 @@ class RateManager {
 
     private let storage: IRateStorage
     private let apiProvider: IRateApiProvider
+    private let walletManager: IWalletManager
+    private let reachabilityManager: IReachabilityManager
+    private let currencyManager: ICurrencyManager
 
-    init(storage: IRateStorage, apiProvider: IRateApiProvider) {
+    init(storage: IRateStorage, apiProvider: IRateApiProvider, walletManager: IWalletManager, reachabilityManager: IReachabilityManager, currencyManager: ICurrencyManager) {
         self.storage = storage
         self.apiProvider = apiProvider
+        self.walletManager = walletManager
+        self.reachabilityManager = reachabilityManager
+        self.currencyManager = currencyManager
     }
 
     private func nonExpiredLatestRateSingle(coinCode: CoinCode, currencyCode: String, date: Date) -> Single<Decimal> {
@@ -29,17 +35,7 @@ class RateManager {
                 .asSingle()
     }
 
-}
-
-extension RateManager: IRateManager {
-    
-    func nonExpiredLatestRate(coinCode: CoinCode, currencyCode: String) -> Rate? {
-        return storage.latestRate(coinCode: coinCode, currencyCode: currencyCode).flatMap { rate in
-            rate.expired ? nil : rate
-        }
-    }
-
-    func refreshLatestRates(coinCodes: [CoinCode], currencyCode: String) {
+    private func refreshLatestRates(coinCodes: [CoinCode], currencyCode: String) {
         apiProvider.getLatestRateData(currencyCode: currencyCode)
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
                 .observeOn(ConcurrentDispatchQueueScheduler(qos: .background))
@@ -54,6 +50,33 @@ extension RateManager: IRateManager {
                     }
                 })
                 .disposed(by: disposeBag)
+    }
+
+}
+
+extension RateManager: IRateManager {
+
+    func nonExpiredLatestRate(coinCode: CoinCode, currencyCode: String) -> Rate? {
+        return storage.latestRate(coinCode: coinCode, currencyCode: currencyCode).flatMap { rate in
+            rate.expired ? nil : rate
+        }
+    }
+
+    func syncLatestRates() {
+        guard reachabilityManager.isReachable else {
+            return
+        }
+
+        var coinCodes = Set<CoinCode>()
+        for wallet in walletManager.wallets {
+            coinCodes.insert(wallet.coin.code)
+        }
+
+        guard coinCodes.count > 0 else {
+            return
+        }
+
+        refreshLatestRates(coinCodes: Array(coinCodes), currencyCode: currencyManager.baseCurrency.code)
     }
 
     func timestampRateValueObservable(coinCode: CoinCode, currencyCode: String, date: Date) -> Single<Decimal> {
