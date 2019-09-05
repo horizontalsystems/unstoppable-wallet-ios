@@ -35,7 +35,8 @@ extension BalanceItem: DiffAware {
                 a.state     == b.state &&
                 a.rate      == b.rate &&
                 a.percentDelta == b.percentDelta &&
-                aChartTimestamp == bChartTimestamp
+                aChartTimestamp == bChartTimestamp &&
+                a.statLoadDidFail == b.statLoadDidFail
     }
 
 }
