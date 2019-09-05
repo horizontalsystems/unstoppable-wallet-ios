@@ -45,7 +45,7 @@ class ChartRateFactory: IChartRateFactory {
         let highValue = CurrencyValue(currency: currency, value: maximumValue)
 
         var rateValue: CurrencyValue? = nil
-        if let rate = rate, !rate.expired {
+        if let rate = rate {
             rateValue = CurrencyValue(currency: currency, value: rate.value)
         }
         return ChartViewItem(type: type, rateValue: rateValue, marketCapValue: marketCapValue, lowValue: lowValue, highValue: highValue, diff: diff, points: points)
