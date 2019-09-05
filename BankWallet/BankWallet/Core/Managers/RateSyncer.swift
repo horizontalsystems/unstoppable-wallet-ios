@@ -1,6 +1,6 @@
 import RxSwift
 
-class RateSyncer {
+class RateSyncScheduler {
     private let refreshIntervalInMinutes = 5
 
     private let disposeBag = DisposeBag()
@@ -23,26 +23,9 @@ class RateSyncer {
                 .subscribeOn(scheduler)
                 .observeOn(scheduler)
                 .subscribe(onNext: { [weak self] in
-                    self?.syncLatestRates()
+                    self?.rateManager.syncLatestRates()
                 })
                 .disposed(by: disposeBag)
-    }
-
-    private func syncLatestRates() {
-        guard reachabilityManager.isReachable else {
-            return
-        }
-
-        var coinCodes = Set<CoinCode>()
-        for wallet in walletManager.wallets {
-            coinCodes.insert(wallet.coin.code)
-        }
-
-        guard coinCodes.count > 0 else {
-            return
-        }
-
-        rateManager.refreshLatestRates(coinCodes: Array(coinCodes), currencyCode: currencyManager.baseCurrency.code)
     }
 
 }
