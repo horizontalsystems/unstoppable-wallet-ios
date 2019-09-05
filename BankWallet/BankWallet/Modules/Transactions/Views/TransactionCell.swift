@@ -5,6 +5,8 @@ import SnapKit
 class TransactionCell: UITableViewCell {
     var highlightBackground = UIView()
 
+    var inOutImageView = UIImageView()
+
     var dateLabel = UILabel()
     var timeLabel = UILabel()
 
@@ -30,12 +32,20 @@ class TransactionCell: UITableViewCell {
             maker.edges.equalToSuperview()
         }
 
+        contentView.addSubview(inOutImageView)
+        inOutImageView.snp.makeConstraints { maker in
+            maker.leading.equalToSuperview().offset(TransactionsTheme.cellMediumMargin)
+            maker.top.equalToSuperview().offset(TransactionsTheme.cellMediumMargin)
+        }
+        inOutImageView.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
+        inOutImageView.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+
         dateLabel.font = TransactionsTheme.dateLabelFont
         dateLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
         dateLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         contentView.addSubview(dateLabel)
         dateLabel.snp.makeConstraints { maker in
-            maker.leading.equalTo(contentView.snp.leadingMargin).offset(TransactionsTheme.leftAdditionalMargin)
+            maker.leading.equalTo(inOutImageView.snp.trailing).offset(TransactionsTheme.cellMediumMargin)
             maker.top.equalToSuperview().offset(TransactionsTheme.cellMediumMargin)
         }
         timeLabel.font = TransactionsTheme.timeLabelFont
@@ -43,7 +53,7 @@ class TransactionCell: UITableViewCell {
         timeLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         contentView.addSubview(timeLabel)
         timeLabel.snp.makeConstraints { maker in
-            maker.leading.equalTo(contentView.snp.leadingMargin).offset(TransactionsTheme.leftAdditionalMargin)
+            maker.leading.equalTo(inOutImageView.snp.trailing).offset(TransactionsTheme.cellMediumMargin)
             maker.bottom.equalToSuperview().offset(-TransactionsTheme.cellMediumMargin)
         }
 
@@ -70,7 +80,7 @@ class TransactionCell: UITableViewCell {
         contentView.addSubview(pendingImageView)
         pendingImageView.snp.makeConstraints { maker in
             maker.size.equalTo(TransactionsTheme.statusImageViewSize)
-            maker.leading.equalTo(contentView.snp.leadingMargin).offset(TransactionsTheme.leftAdditionalMargin)
+            maker.leading.equalTo(inOutImageView.snp.trailing).offset(TransactionsTheme.cellMediumMargin)
             maker.centerY.equalTo(self.amountLabel)
         }
 
@@ -115,6 +125,8 @@ class TransactionCell: UITableViewCell {
         timeLabel.text = DateHelper.instance.formatTransactionTime(from: item.date)
 
         amountLabel.text = ValueFormatter.instance.format(coinValue: item.coinValue, fractionPolicy: .threshold(high: 0.01, low: 0))
+
+        inOutImageView.image = item.incoming ? UIImage(named: "Transaction In Icon") : UIImage(named: "Transaction Out Icon")
 
         if let value = item.currencyValue, let formattedValue = ValueFormatter.instance.format(currencyValue: value, fractionPolicy: .threshold(high: 1000, low: 0.01)) {
             currencyAmountLabel.text = formattedValue

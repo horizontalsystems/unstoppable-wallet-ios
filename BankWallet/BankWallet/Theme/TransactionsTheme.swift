@@ -22,7 +22,6 @@ class TransactionsTheme {
     static let fiatAmountLabelColor50 = UIColor.cryptoGray50
     static let statusImageViewSize = CGSize(width: 13, height: 12)
     static let pendingIconTopMargin: CGFloat = 16
-    static let leftAdditionalMargin: CGFloat = 8
     static let avatarSize = CGSize(width: 40, height: 40)
     static let timeLabelFont = UIFont.cryptoCaption1
     static let timeLabelTextColor = UIColor.cryptoGray
