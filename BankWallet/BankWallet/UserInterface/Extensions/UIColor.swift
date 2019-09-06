@@ -62,3 +62,36 @@ extension UIColor {
     static let cryptoYellow40: UIColor = UIColor(named: "Yellow40") ?? .black
     static let cryptoYellowPressed: UIColor = UIColor(named: "YellowPressed") ?? .black
 }
+
+extension UIColor {
+    static var appJacob: UIColor { return App.shared.localStorage.lightMode ? .appYellowL : .appYellowD }
+    static var appRemus: UIColor { return App.shared.localStorage.lightMode ? .appGreenL : .appGreenD }
+    static var appLucian: UIColor { return App.shared.localStorage.lightMode ? .appRedL : .appRedD }
+    static var appOz: UIColor { return App.shared.localStorage.lightMode ? .appDark : .appLight }
+    static var appLeah: UIColor { return App.shared.localStorage.lightMode ? .appSteelDark : .appSteelLight }
+    static var appJeremy: UIColor { return App.shared.localStorage.lightMode ? .appSteelLight : .appSteel20 }
+    static var appElena: UIColor { return App.shared.localStorage.lightMode ? .appLightGrey : .appSteel20 }
+    static var appLawrence: UIColor { return App.shared.localStorage.lightMode ? .appWhite : .appSteel20 }
+    static var appClaude: UIColor { return App.shared.localStorage.lightMode ? .appWhite : .appDark }
+
+    static let appYellowD: UIColor = UIColor(named: "App Yellow D") ?? .black
+    static let appYellowL: UIColor = UIColor(named: "App Yellow L") ?? .black
+    static let appGreenD: UIColor = UIColor(named: "App Green D") ?? .black
+    static let appGreenL: UIColor = UIColor(named: "App Green L") ?? .black
+    static let appRedD: UIColor = UIColor(named: "App Red D") ?? .black
+    static let appRedL: UIColor = UIColor(named: "App Red L") ?? .black
+    static let appBlack: UIColor = UIColor(named: "App Black") ?? .black
+    static let appGrey: UIColor = UIColor(named: "App Grey") ?? .black
+    static let appLightGrey: UIColor = UIColor(named: "App Light Grey") ?? .black
+    static let appWhite: UIColor = UIColor(named: "App White") ?? .black
+    static let appSteelDark: UIColor = UIColor(named: "App Steel Dark") ?? .black
+    static let appSteelLight: UIColor = UIColor(named: "App Steel Light") ?? .black
+    static let appDark: UIColor = UIColor(named: "App Dark") ?? .black
+    static let appLight: UIColor = UIColor(named: "App Light") ?? .black
+    static let appBlack50: UIColor = UIColor(named: "App Black 50") ?? .black
+    static let appWhite50: UIColor = UIColor(named: "App White 50") ?? .black
+    static let appSteel20: UIColor = UIColor(named: "App Steel 20") ?? .black
+    static let appGrey50: UIColor = UIColor(named: "App Grey 50") ?? .black
+    static let appYellow50: UIColor = UIColor(named: "App Yellow 50") ?? .black
+    static let appGreen50: UIColor = UIColor(named: "App Green 50") ?? .black
+}
