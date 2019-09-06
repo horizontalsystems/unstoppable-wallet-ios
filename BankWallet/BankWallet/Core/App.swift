@@ -1,8 +1,6 @@
 class App {
     static let shared = App()
 
-    private let fallbackLanguage = "en"
-
     let pasteboardManager: IPasteboardManager
     let randomManager: IRandomManager
 
@@ -85,7 +83,7 @@ class App {
         biometryManager = BiometryManager(systemInfoManager: systemInfoManager)
 
         localizationManager = LocalizationManager()
-        languageManager = LanguageManager(localizationManager: localizationManager, localStorage: localStorage, fallbackLanguage: fallbackLanguage)
+        languageManager = LanguageManager(localizationManager: localizationManager, localStorage: localStorage)
 
         urlManager = UrlManager(inApp: true)
         pingManager = PingManager()

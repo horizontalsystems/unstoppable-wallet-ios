@@ -1,12 +1,11 @@
 class LanguageManager {
-
     private let localizationManager: ILocalizationManager
     private let localStorage: ILocalStorage
 
     private let fallbackLanguage: String
     private var language: String
 
-    init(localizationManager: ILocalizationManager, localStorage: ILocalStorage, fallbackLanguage: String) {
+    init(localizationManager: ILocalizationManager, localStorage: ILocalStorage, fallbackLanguage: String = "en") {
         self.localizationManager = localizationManager
         self.localStorage = localStorage
         self.fallbackLanguage = fallbackLanguage
