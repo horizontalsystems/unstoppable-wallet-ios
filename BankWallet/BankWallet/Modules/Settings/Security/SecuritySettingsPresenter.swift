@@ -1,12 +1,18 @@
 class SecuritySettingsPresenter {
+    weak var view: ISecuritySettingsView?
+
     private let router: ISecuritySettingsRouter
     private let interactor: ISecuritySettingsInteractor
-
-    weak var view: ISecuritySettingsView?
 
     init(router: ISecuritySettingsRouter, interactor: ISecuritySettingsInteractor) {
         self.router = router
         self.interactor = interactor
+    }
+
+    private func sync(pinSet: Bool) {
+        view?.toggle(pinSet: pinSet)
+        view?.set(editPinVisible: pinSet)
+        view?.set(biometryVisible: pinSet)
     }
 
 }
@@ -14,19 +20,18 @@ class SecuritySettingsPresenter {
 extension SecuritySettingsPresenter: ISecuritySettingsViewDelegate {
 
     func viewDidLoad() {
+        view?.set(backupAlertVisible: !interactor.allBackedUp)
+        sync(pinSet: interactor.pinSet)
         view?.set(biometryType: interactor.biometryType)
-
-        view?.set(backedUp: interactor.nonBackedUpCount == 0)
-        view?.set(isPinSet: interactor.isPinSet)
-        view?.set(biometricUnlockOn: interactor.isBiometricUnlockOn)
+        view?.toggle(biometryEnabled: interactor.biometryEnabled)
     }
 
     func didTapManageAccounts() {
         router.showManageAccounts()
     }
 
-    func didSwitch(isPinSet: Bool) {
-        if isPinSet {
+    func didSwitch(pinSet: Bool) {
+        if pinSet {
             router.showSetPin(delegate: self)
         } else {
             router.showUnlock(delegate: self)
@@ -37,24 +42,28 @@ extension SecuritySettingsPresenter: ISecuritySettingsViewDelegate {
         router.showEditPin()
     }
 
-    func didSwitch(biometricUnlockOn: Bool) {
-        interactor.set(biometricUnlockOn: biometricUnlockOn)
+    func didSwitch(biometryEnabled: Bool) {
+        interactor.biometryEnabled = biometryEnabled
     }
 
 }
 
 extension SecuritySettingsPresenter: ISecuritySettingsInteractorDelegate {
 
-    func didUpdateNonBackedUp(count: Int) {
-        view?.set(backedUp: count == 0)
+    func didUpdate(allBackedUp: Bool) {
+        view?.set(backupAlertVisible: !allBackedUp)
+        view?.refresh()
     }
 
-    func didUpdate(isPinSet: Bool) {
-        view?.set(isPinSet: isPinSet)
+    func didUpdate(pinSet: Bool) {
+        sync(pinSet: pinSet)
+        view?.toggle(biometryEnabled: interactor.biometryEnabled)
+        view?.refresh()
     }
 
     func didUpdate(biometryType: BiometryType) {
         view?.set(biometryType: biometryType)
+        view?.refresh()
     }
 
 }
@@ -62,7 +71,8 @@ extension SecuritySettingsPresenter: ISecuritySettingsInteractorDelegate {
 extension SecuritySettingsPresenter: ISetPinDelegate {
 
     func didCancelSetPin() {
-        view?.set(isPinSet: false)
+        view?.toggle(pinSet: false)
+        view?.refresh()
     }
 
 }
@@ -72,19 +82,19 @@ extension SecuritySettingsPresenter: IUnlockDelegate {
     func onUnlock() {
         do {
             try interactor.disablePin()
-            interactor.set(biometricUnlockOn: false)
 
-            view?.set(isPinSet: false)
-            view?.set(biometricUnlockOn: false)
+            sync(pinSet: false)
         } catch {
             view?.show(error: error)
-            view?.set(isPinSet: true)
+            view?.toggle(pinSet: true)
         }
 
+        view?.refresh()
     }
 
     func onCancelUnlock() {
-        view?.set(isPinSet: true)
+        view?.toggle(pinSet: true)
+        view?.refresh()
     }
 
 }

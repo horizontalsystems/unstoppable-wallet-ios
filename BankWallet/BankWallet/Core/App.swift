@@ -95,7 +95,7 @@ class App {
         grdbStorage = GrdbStorage()
         accountStorage = AccountStorage(secureStorage: secureStorage, storage: grdbStorage)
 
-        pinManager = PinManager(secureStorage: secureStorage)
+        pinManager = PinManager(secureStorage: secureStorage, localStorage: localStorage)
         wordsManager = WordsManager(localStorage: localStorage)
 
         accountManager = AccountManager(storage: accountStorage)

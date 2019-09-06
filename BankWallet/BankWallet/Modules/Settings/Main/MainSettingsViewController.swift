@@ -7,7 +7,7 @@ class MainSettingsViewController: WalletViewController {
 
     private let tableView = SectionsTableView(style: .grouped)
 
-    private var backedUp: Bool = true
+    private var allBackedUp: Bool = true
     private var currentBaseCurrency: String?
     private var currentLanguage: String?
     private var lightMode: Bool = true
@@ -60,15 +60,11 @@ class MainSettingsViewController: WalletViewController {
         tableView.deselectCell(withCoordinator: transitionCoordinator, animated: animated)
     }
 
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return AppTheme.statusBarStyle
-    }
-
     private var securityRows: [RowProtocol] {
-        let securityAttentionImage = backedUp ? nil : UIImage(named: "Attention Icon")
+        let securityAttentionImage = allBackedUp ? nil : UIImage(named: "Attention Icon")
 
         return [
-            Row<SettingsRightImageCell>(id: "security_center", hash: "security_center.\(backedUp)", height: SettingsTheme.cellHeight, bind: { cell, _ in
+            Row<SettingsRightImageCell>(id: "security_center", hash: "security_center.\(allBackedUp)", height: SettingsTheme.cellHeight, bind: { cell, _ in
                 cell.bind(titleIcon: UIImage(named: "Security Icon"), title: "settings.security_center".localized, rightImage: securityAttentionImage, rightImageTintColor: SettingsTheme.attentionIconTint, showDisclosure: true)
             }, action: { [weak self] _ in
                 self?.delegate.didTapSecurity()
@@ -185,8 +181,8 @@ extension MainSettingsViewController: SectionsDataSource {
 
 extension MainSettingsViewController: IMainSettingsView {
 
-    func set(backedUp: Bool) {
-        self.backedUp = backedUp
+    func set(allBackedUp: Bool) {
+        self.allBackedUp = allBackedUp
         reloadIfNeeded()
     }
 

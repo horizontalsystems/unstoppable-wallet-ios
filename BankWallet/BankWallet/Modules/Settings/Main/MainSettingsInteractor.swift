@@ -20,11 +20,11 @@ class MainSettingsInteractor {
         self.currencyManager = currencyManager
         self.appConfigProvider = appConfigProvider
 
-        backupManager.nonBackedUpCountObservable
+        backupManager.allBackedUpObservable
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
                 .observeOn(MainScheduler.instance)
-                .subscribe(onNext: { [weak self] count in
-                    self?.delegate?.didUpdateNonBackedUp(count: count)
+                .subscribe(onNext: { [weak self] allBackedUp in
+                    self?.delegate?.didUpdate(allBackedUp: allBackedUp)
                 })
                 .disposed(by: disposeBag)
 
@@ -49,8 +49,8 @@ extension MainSettingsInteractor: IMainSettingsInteractor {
         return appConfigProvider.appWebPageLink
     }
 
-    var nonBackedUpCount: Int {
-        return backupManager.nonBackedUpCount
+    var allBackedUp: Bool {
+        return backupManager.allBackedUp
     }
 
     var currentLanguageDisplayName: String {

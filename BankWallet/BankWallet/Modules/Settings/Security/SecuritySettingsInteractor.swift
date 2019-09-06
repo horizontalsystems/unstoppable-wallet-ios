@@ -5,28 +5,26 @@ class SecuritySettingsInteractor {
 
     weak var delegate: ISecuritySettingsInteractorDelegate?
 
-    private let localStorage: ILocalStorage
     private let backupManager: IBackupManager
     private let biometryManager: IBiometryManager
     private let pinManager: IPinManager
 
-    init(localStorage: ILocalStorage, backupManager: IBackupManager, biometryManager: IBiometryManager, pinManager: IPinManager) {
-        self.localStorage = localStorage
+    init(backupManager: IBackupManager, biometryManager: IBiometryManager, pinManager: IPinManager) {
         self.backupManager = backupManager
         self.biometryManager = biometryManager
         self.pinManager = pinManager
 
-        backupManager.nonBackedUpCountObservable
+        backupManager.allBackedUpObservable
                 .observeOn(MainScheduler.instance)
-                .subscribe(onNext: { [weak self] count in
-                    self?.delegate?.didUpdateNonBackedUp(count: count)
+                .subscribe(onNext: { [weak self] allBackedUp in
+                    self?.delegate?.didUpdate(allBackedUp: allBackedUp)
                 })
                 .disposed(by: disposeBag)
 
         pinManager.isPinSetObservable
                 .observeOn(MainScheduler.instance)
                 .subscribe(onNext: { [weak self] isPinSet in
-                    self?.delegate?.didUpdate(isPinSet: isPinSet)
+                    self?.delegate?.didUpdate(pinSet: isPinSet)
                 })
                 .disposed(by: disposeBag)
 
@@ -42,28 +40,29 @@ class SecuritySettingsInteractor {
 
 extension SecuritySettingsInteractor: ISecuritySettingsInteractor {
 
-    var nonBackedUpCount: Int {
-        return backupManager.nonBackedUpCount
+    var allBackedUp: Bool {
+        return backupManager.allBackedUp
     }
 
     var biometryType: BiometryType {
         return biometryManager.biometryType
     }
 
-    var isPinSet: Bool {
+    var pinSet: Bool {
         return pinManager.isPinSet
     }
 
-    var isBiometricUnlockOn: Bool {
-        return localStorage.isBiometricOn
+    var biometryEnabled: Bool {
+        get {
+            return pinManager.biometryEnabled
+        }
+        set {
+            pinManager.biometryEnabled = newValue
+        }
     }
 
     func disablePin() throws {
         try pinManager.clear()
-    }
-
-    func set(biometricUnlockOn: Bool) {
-        localStorage.isBiometricOn = biometricUnlockOn
     }
 
 }

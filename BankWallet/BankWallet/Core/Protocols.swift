@@ -171,8 +171,8 @@ protocol IAccountManager {
 }
 
 protocol IBackupManager {
-    var nonBackedUpCount: Int { get }
-    var nonBackedUpCountObservable: Observable<Int> { get }
+    var allBackedUp: Bool { get }
+    var allBackedUpObservable: Observable<Bool> { get }
     func setAccountBackedUp(id: String)
 }
 
@@ -213,6 +213,7 @@ protocol IBlurManager {
 
 protocol IPinManager: class {
     var isPinSet: Bool { get }
+    var biometryEnabled: Bool { get set }
     func store(pin: String) throws
     func validate(pin: String) -> Bool
     func clear() throws

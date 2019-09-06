@@ -1,5 +1,5 @@
 protocol IMainSettingsView: class {
-    func set(backedUp: Bool)
+    func set(allBackedUp: Bool)
     func set(currentBaseCurrency: String)
     func set(currentLanguage: String)
     func set(lightMode: Bool)
@@ -22,7 +22,7 @@ protocol IMainSettingsViewDelegate {
 protocol IMainSettingsInteractor: AnyObject {
     var companyWebPageLink: String { get }
     var appWebPageLink: String { get }
-    var nonBackedUpCount: Int { get }
+    var allBackedUp: Bool { get }
     var currentLanguageDisplayName: String { get }
     var baseCurrency: Currency { get }
     var lightMode: Bool { get set }
@@ -30,7 +30,7 @@ protocol IMainSettingsInteractor: AnyObject {
 }
 
 protocol IMainSettingsInteractorDelegate: class {
-    func didUpdateNonBackedUp(count: Int)
+    func didUpdate(allBackedUp: Bool)
     func didUpdateBaseCurrency()
 }
 

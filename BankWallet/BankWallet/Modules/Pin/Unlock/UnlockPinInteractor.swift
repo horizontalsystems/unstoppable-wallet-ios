@@ -5,15 +5,13 @@ class UnlockPinInteractor {
 
     private let pinManager: IPinManager
     private let biometricManager: IBiometricManager
-    private let localStorage: ILocalStorage
     private let lockoutManager: ILockoutManager
     private let secureStorage: ISecureStorage
     private var timer: IOneTimeTimer
 
-    init(pinManager: IPinManager, biometricManager: IBiometricManager, localStorage: ILocalStorage, lockoutManager: ILockoutManager, timer: IOneTimeTimer, secureStorage: ISecureStorage) {
+    init(pinManager: IPinManager, biometricManager: IBiometricManager, lockoutManager: ILockoutManager, timer: IOneTimeTimer, secureStorage: ISecureStorage) {
         self.pinManager = pinManager
         self.biometricManager = biometricManager
-        self.localStorage = localStorage
         self.lockoutManager = lockoutManager
         self.secureStorage = secureStorage
         self.timer = timer
@@ -51,7 +49,7 @@ extension UnlockPinInteractor: IUnlockPinInteractor {
     }
 
     func biometricUnlock() {
-        if localStorage.isBiometricOn {
+        if pinManager.biometryEnabled {
             biometricManager.validate(reason: "biometric_usage_reason")
         } else {
             delegate?.didFailBiometricUnlock()

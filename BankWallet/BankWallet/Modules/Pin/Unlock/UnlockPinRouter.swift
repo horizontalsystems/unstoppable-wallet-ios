@@ -44,7 +44,7 @@ extension UnlockPinRouter {
         let timer = OneTimeTimer()
 
         let router = UnlockPinRouter(appStart: appStart, delegate: delegate)
-        let interactor = UnlockPinInteractor(pinManager: App.shared.pinManager, biometricManager: biometricManager, localStorage: App.shared.localStorage, lockoutManager: lockoutManager, timer: timer, secureStorage: App.shared.secureStorage)
+        let interactor = UnlockPinInteractor(pinManager: App.shared.pinManager, biometricManager: biometricManager, lockoutManager: lockoutManager, timer: timer, secureStorage: App.shared.secureStorage)
         let presenter = UnlockPinPresenter(interactor: interactor, router: router, configuration: .init(cancellable: cancelable, enableBiometry: enableBiometry))
         let viewController = PinViewController(delegate: presenter)
 

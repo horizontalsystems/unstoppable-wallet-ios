@@ -7,21 +7,21 @@ class BackupManager {
         self.accountManager = accountManager
     }
 
-    private func getCount(accounts: [Account]) -> Int {
-        return accounts.filter { !$0.backedUp }.count
+    private func isAllBackedUp(accounts: [Account]) -> Bool {
+        return accounts.allSatisfy { $0.backedUp }
     }
 
 }
 
 extension BackupManager: IBackupManager {
 
-    var nonBackedUpCount: Int {
-        return getCount(accounts: accountManager.accounts)
+    var allBackedUp: Bool {
+        return isAllBackedUp(accounts: accountManager.accounts)
     }
 
-    var nonBackedUpCountObservable: Observable<Int> {
+    var allBackedUpObservable: Observable<Bool> {
         return accountManager.accountsObservable.map { [unowned self] accounts in
-            return self.getCount(accounts: accounts)
+            return self.isAllBackedUp(accounts: accounts)
         }
     }
 

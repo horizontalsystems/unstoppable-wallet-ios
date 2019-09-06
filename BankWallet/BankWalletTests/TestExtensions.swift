@@ -92,14 +92,6 @@ extension EnabledWallet: Equatable {
 
 }
 
-extension SecuritySettingsUnlockType: Equatable {
-    public static func ==(lhs: SecuritySettingsUnlockType, rhs: SecuritySettingsUnlockType) -> Bool {
-        switch (lhs, rhs) {
-        case (.biometry(let lIsOn), .biometry(let rIsOn)): return lIsOn == rIsOn
-        }
-    }
-}
-
 extension BalanceHeaderViewItem: Equatable {
     public static func ==(lhs: BalanceHeaderViewItem, rhs: BalanceHeaderViewItem) -> Bool {
         return lhs.currencyValue == rhs.currencyValue && lhs.upToDate == rhs.upToDate

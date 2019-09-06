@@ -23,7 +23,6 @@ class SettingsTheme {
     static var titleColor: UIColor { return .crypto_White_Black }
     static let versionLabelTopMargin: CGFloat = 32
     static let separatorInset: CGFloat = SettingsTheme.cellIconSize + SettingsTheme.cellBigMargin
-    static let securityCellHeight: CGFloat = 44
     static let versionFont = UIFont.cryptoCaption3
     static let versionColor = UIColor.cryptoGray
     static let topHeaderHeight: CGFloat = 16
