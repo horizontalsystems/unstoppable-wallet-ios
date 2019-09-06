@@ -4,8 +4,6 @@ class MainSettingsPresenter {
     private let router: IMainSettingsRouter
     private let interactor: IMainSettingsInteractor
 
-    private let helper = MainSettingsHelper()
-
     init(router: IMainSettingsRouter, interactor: IMainSettingsInteractor) {
         self.router = router
         self.interactor = interactor
@@ -16,8 +14,8 @@ class MainSettingsPresenter {
 extension MainSettingsPresenter: IMainSettingsViewDelegate {
 
     func viewDidLoad() {
-        view?.set(backedUp: helper.isBackedUp(nonBackedUpCount: interactor.nonBackedUpCount))
-        view?.set(currentBaseCurrency: helper.displayName(baseCurrency: interactor.baseCurrency))
+        view?.set(allBackedUp: interactor.allBackedUp)
+        view?.set(currentBaseCurrency: interactor.baseCurrency.code)
         view?.set(currentLanguage: interactor.currentLanguageDisplayName)
         view?.set(lightMode: interactor.lightMode)
         view?.set(appVersion: interactor.appVersion)
@@ -64,12 +62,12 @@ extension MainSettingsPresenter: IMainSettingsViewDelegate {
 
 extension MainSettingsPresenter: IMainSettingsInteractorDelegate {
 
-    func didUpdateNonBackedUp(count: Int) {
-        view?.set(backedUp: helper.isBackedUp(nonBackedUpCount: count))
+    func didUpdate(allBackedUp: Bool) {
+        view?.set(allBackedUp: allBackedUp)
     }
 
     func didUpdateBaseCurrency() {
-        view?.set(currentBaseCurrency: helper.displayName(baseCurrency: interactor.baseCurrency))
+        view?.set(currentBaseCurrency: interactor.baseCurrency.code)
     }
 
 }

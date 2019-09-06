@@ -6,7 +6,6 @@ class UnlockPinInteractorTests: XCTestCase {
     private var mockDelegate: MockIUnlockPinInteractorDelegate!
     private var mockPinManager: MockIPinManager!
     private var mockBiometricManager: MockIBiometricManager!
-    private var mockLocalStorage: MockILocalStorage!
     private var mockLockoutManager: MockILockoutManager!
     private var mockTimer: MockIOneTimeTimer!
     private var mockSecureStorage: MockISecureStorage!
@@ -18,7 +17,6 @@ class UnlockPinInteractorTests: XCTestCase {
         mockDelegate = MockIUnlockPinInteractorDelegate()
         mockPinManager = MockIPinManager()
         mockBiometricManager = MockIBiometricManager()
-        mockLocalStorage = MockILocalStorage()
         mockLockoutManager = MockILockoutManager()
         mockTimer = MockIOneTimeTimer()
         mockSecureStorage = MockISecureStorage()
@@ -44,7 +42,7 @@ class UnlockPinInteractorTests: XCTestCase {
             when(mock.schedule(date: any())).thenDoNothing()
         }
 
-        interactor = UnlockPinInteractor(pinManager: mockPinManager, biometricManager: mockBiometricManager, localStorage: mockLocalStorage, lockoutManager: mockLockoutManager, timer: mockTimer, secureStorage: mockSecureStorage)
+        interactor = UnlockPinInteractor(pinManager: mockPinManager, biometricManager: mockBiometricManager, lockoutManager: mockLockoutManager, timer: mockTimer, secureStorage: mockSecureStorage)
         interactor.delegate = mockDelegate
     }
 
@@ -52,7 +50,6 @@ class UnlockPinInteractorTests: XCTestCase {
         mockDelegate = nil
         mockPinManager = nil
         mockBiometricManager = nil
-        mockLocalStorage = nil
         mockLockoutManager = nil
         mockTimer = nil
         mockSecureStorage = nil
@@ -84,8 +81,8 @@ class UnlockPinInteractorTests: XCTestCase {
     }
 
     func testBiometricUnlockWhenEnabled() {
-        stub(mockLocalStorage) { mock in
-            when(mock.isBiometricOn.get).thenReturn(true)
+        stub(mockPinManager) { mock in
+            when(mock.biometryEnabled.get).thenReturn(true)
         }
 
         interactor.biometricUnlock()
@@ -94,8 +91,8 @@ class UnlockPinInteractorTests: XCTestCase {
     }
 
     func testBiometricUnlockWhenDisabled() {
-        stub(mockLocalStorage) { mock in
-            when(mock.isBiometricOn.get).thenReturn(false)
+        stub(mockPinManager) { mock in
+            when(mock.biometryEnabled.get).thenReturn(false)
         }
 
         interactor.biometricUnlock()

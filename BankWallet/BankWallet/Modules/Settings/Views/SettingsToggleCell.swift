@@ -24,7 +24,7 @@ class SettingsToggleCell: SettingsCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func bind(titleIcon: UIImage?, title: String, isOn: Bool, showDisclosure: Bool, last: Bool = false, onToggle: ((Bool) -> ())? = nil) {
+    func bind(titleIcon: UIImage?, title: String, isOn: Bool, showDisclosure: Bool = false, last: Bool = false, onToggle: ((Bool) -> ())? = nil) {
         super.bind(titleIcon: titleIcon, title: title, showDisclosure: showDisclosure, last: last)
         self.onToggle = onToggle
         toggleView.isOn = isOn
