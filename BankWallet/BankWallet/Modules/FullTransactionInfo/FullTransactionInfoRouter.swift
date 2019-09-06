@@ -38,7 +38,7 @@ extension FullTransactionInfoRouter: IFullTransactionInfoRouter {
 extension FullTransactionInfoRouter {
 
     static func module(transactionHash: String, wallet: Wallet) -> UIViewController {
-        let router = FullTransactionInfoRouter(urlManager: App.shared.urlManager)
+        let router = FullTransactionInfoRouter(urlManager: UrlManager(inApp: true))
 
         let interactor = FullTransactionInfoInteractor(providerFactory: App.shared.fullTransactionInfoProviderFactory, reachabilityManager: App.shared.reachabilityManager, dataProviderManager: App.shared.dataProviderManager, pasteboardManager: App.shared.pasteboardManager)
         let state = FullTransactionInfoState(wallet: wallet, transactionHash: transactionHash)
