@@ -1,27 +1,19 @@
 class App {
     static let shared = App()
 
-    let pasteboardManager: IPasteboardManager
-    let randomManager: IRandomManager
-
     let localStorage: ILocalStorage
     let secureStorage: ISecureStorage
+    let storage: IRateStorage & IEnabledWalletStorage & IAccountRecordStorage
 
     let appConfigProvider: IAppConfigProvider
     let systemInfoManager: ISystemInfoManager
-    let backgroundManager: BackgroundManager
     let biometryManager: IBiometryManager
 
-    let localizationManager: LocalizationManager
-    let languageManager: ILanguageManager
-
-    let urlManager: IUrlManager
-    let pingManager: IPingManager
-    let networkManager: NetworkManager
+    let pasteboardManager: IPasteboardManager
     let reachabilityManager: IReachabilityManager
 
-    let grdbStorage: GrdbStorage
-    let accountStorage: IAccountStorage
+    let localizationManager: ILocalizationManager
+    let languageManager: ILanguageManager
 
     let pinManager: IPinManager
     let wordsManager: IWordsManager
@@ -30,114 +22,92 @@ class App {
     let backupManager: IBackupManager
 
     let walletFactory: IWalletFactory
-    let walletStorage: IWalletStorage
     let walletManager: IWalletManager
-    let defaultWalletCreator: IDefaultWalletCreator
-    let walletRemover: WalletRemover
 
     let accountCreator: IAccountCreator
     let predefinedAccountTypeManager: IPredefinedAccountTypeManager
 
-    let rateManager: RateManager
     let currencyManager: ICurrencyManager
+
+    let rateManager: RateManager
+    let rateStatsManager: IRateStatsManager
 
     let feeCoinProvider: IFeeCoinProvider
     let feeRateProviderFactory: FeeRateProviderFactory
-    let addressParserFactory: AddressParserFactory
 
-    let ethereumKitManager: EthereumKitManager
-    let eosKitManager: EosKitManager
-    let binanceKitManager: BinanceKitManager
-
-    let adapterFactory: IAdapterFactory
     let adapterManager: IAdapterManager
 
     let lockRouter: LockRouter
-    let lockManager: ILockManager
-    let blurManager: IBlurManager
 
-    let passcodeLockRouter: IPasscodeLockRouter
     let passcodeLockManager: IPasscodeLockManager
-
-    let rateSyncScheduler: RateSyncScheduler
 
     let dataProviderManager: IFullTransactionDataProviderManager
     let fullTransactionInfoProviderFactory: IFullTransactionInfoProviderFactory
 
-    let rateStatsManager: IRateStatsManager
-
     private let testModeIndicator: TestModeIndicator
+    private let walletRemover: WalletRemover
+    private let rateSyncScheduler: RateSyncScheduler
 
-    let appManager: IAppManager
+    let appManager: AppManager
 
     init() {
-        pasteboardManager = PasteboardManager()
-        randomManager = RandomManager()
+        let networkManager = NetworkManager()
 
         localStorage = UserDefaultsStorage()
         secureStorage = KeychainStorage()
+        storage = GrdbStorage()
 
         appConfigProvider = AppConfigProvider()
         systemInfoManager = SystemInfoManager()
-        backgroundManager = BackgroundManager()
         biometryManager = BiometryManager(systemInfoManager: systemInfoManager)
+
+        pasteboardManager = PasteboardManager()
+        reachabilityManager = ReachabilityManager(appConfigProvider: appConfigProvider)
 
         localizationManager = LocalizationManager()
         languageManager = LanguageManager(localizationManager: localizationManager, localStorage: localStorage)
 
-        urlManager = UrlManager(inApp: true)
-        pingManager = PingManager()
-        networkManager = NetworkManager()
-        reachabilityManager = ReachabilityManager(appConfigProvider: appConfigProvider)
-
-        grdbStorage = GrdbStorage()
-        accountStorage = AccountStorage(secureStorage: secureStorage, storage: grdbStorage)
-
         pinManager = PinManager(secureStorage: secureStorage, localStorage: localStorage)
         wordsManager = WordsManager(localStorage: localStorage)
 
+        let accountStorage: IAccountStorage = AccountStorage(secureStorage: secureStorage, storage: storage)
         accountManager = AccountManager(storage: accountStorage)
         backupManager = BackupManager(accountManager: accountManager)
-        let kitCleaner = KitCleaner(accountManager: accountManager)
 
         walletFactory = WalletFactory()
-        walletStorage = WalletStorage(appConfigProvider: appConfigProvider, walletFactory: walletFactory, storage: grdbStorage)
+        let walletStorage: IWalletStorage = WalletStorage(appConfigProvider: appConfigProvider, walletFactory: walletFactory, storage: storage)
         walletManager = WalletManager(accountManager: accountManager, walletFactory: walletFactory, storage: walletStorage)
-        defaultWalletCreator = DefaultWalletCreator(walletManager: walletManager, appConfigProvider: appConfigProvider, walletFactory: walletFactory)
-        walletRemover = WalletRemover(accountManager: accountManager, walletManager: walletManager)
 
+        let defaultWalletCreator: IDefaultWalletCreator = DefaultWalletCreator(walletManager: walletManager, appConfigProvider: appConfigProvider, walletFactory: walletFactory)
         accountCreator = AccountCreator(accountManager: accountManager, accountFactory: AccountFactory(), wordsManager: wordsManager, defaultWalletCreator: defaultWalletCreator)
         predefinedAccountTypeManager = PredefinedAccountTypeManager(appConfigProvider: appConfigProvider, accountManager: accountManager, accountCreator: accountCreator)
 
+        currencyManager = CurrencyManager(localStorage: localStorage, appConfigProvider: appConfigProvider)
+
         let ipfsApiProvider = IpfsApiProvider(appConfigProvider: appConfigProvider)
         let rateApiProvider: IRateApiProvider = RateApiProvider(networkManager: networkManager, ipfsApiProvider: ipfsApiProvider)
+        rateManager = RateManager(storage: storage, apiProvider: rateApiProvider, walletManager: walletManager, reachabilityManager: reachabilityManager, currencyManager: currencyManager)
 
         let chartApiProvider = RatesStatsApiProvider(networkManager: networkManager, ipfsApiProvider: ipfsApiProvider)
         let chartRateConverter = ChartRateDataConverter()
-        rateStatsManager = RateStatsManager(apiProvider: chartApiProvider, rateStorage: grdbStorage, chartRateConverter: chartRateConverter)
-
-        currencyManager = CurrencyManager(localStorage: localStorage, appConfigProvider: appConfigProvider)
-        rateManager = RateManager(storage: grdbStorage, apiProvider: rateApiProvider, walletManager: walletManager, reachabilityManager: reachabilityManager, currencyManager: currencyManager)
-
-        ethereumKitManager = EthereumKitManager(appConfigProvider: appConfigProvider)
-        eosKitManager = EosKitManager(appConfigProvider: appConfigProvider)
-        binanceKitManager = BinanceKitManager(appConfigProvider: appConfigProvider)
+        rateStatsManager = RateStatsManager(apiProvider: chartApiProvider, rateStorage: storage, chartRateConverter: chartRateConverter)
 
         feeCoinProvider = FeeCoinProvider(appConfigProvider: appConfigProvider)
         feeRateProviderFactory = FeeRateProviderFactory()
-        addressParserFactory = AddressParserFactory()
 
-        adapterFactory = AdapterFactory(appConfigProvider: appConfigProvider, ethereumKitManager: ethereumKitManager, eosKitManager: eosKitManager, binanceKitManager: binanceKitManager)
+        let ethereumKitManager = EthereumKitManager(appConfigProvider: appConfigProvider)
+        let eosKitManager = EosKitManager(appConfigProvider: appConfigProvider)
+        let binanceKitManager = BinanceKitManager(appConfigProvider: appConfigProvider)
+
+        let adapterFactory: IAdapterFactory = AdapterFactory(appConfigProvider: appConfigProvider, ethereumKitManager: ethereumKitManager, eosKitManager: eosKitManager, binanceKitManager: binanceKitManager)
         adapterManager = AdapterManager(adapterFactory: adapterFactory, ethereumKitManager: ethereumKitManager, eosKitManager: eosKitManager, binanceKitManager: binanceKitManager, walletManager: walletManager)
 
         lockRouter = LockRouter()
-        lockManager = LockManager(pinManager: pinManager, localStorage: localStorage, lockRouter: lockRouter)
-        blurManager = BlurManager(lockManager: lockManager)
+        let lockManager: ILockManager = LockManager(pinManager: pinManager, localStorage: localStorage, lockRouter: lockRouter)
+        let blurManager: IBlurManager = BlurManager(lockManager: lockManager)
 
-        passcodeLockRouter = PasscodeLockRouter()
+        let passcodeLockRouter: IPasscodeLockRouter = PasscodeLockRouter()
         passcodeLockManager = PasscodeLockManager(systemInfoManager: systemInfoManager, accountManager: accountManager, walletManager: walletManager, router: passcodeLockRouter)
-
-        rateSyncScheduler = RateSyncScheduler(rateManager: rateManager, walletManager: walletManager, currencyManager: currencyManager, reachabilityManager: reachabilityManager)
 
         dataProviderManager = FullTransactionDataProviderManager(localStorage: localStorage, appConfigProvider: appConfigProvider)
 
@@ -145,7 +115,10 @@ class App {
         fullTransactionInfoProviderFactory = FullTransactionInfoProviderFactory(apiProvider: jsonApiProvider, dataProviderManager: dataProviderManager)
 
         testModeIndicator = TestModeIndicator(appConfigProvider: appConfigProvider)
+        walletRemover = WalletRemover(accountManager: accountManager, walletManager: walletManager)
+        rateSyncScheduler = RateSyncScheduler(rateManager: rateManager, walletManager: walletManager, currencyManager: currencyManager, reachabilityManager: reachabilityManager)
 
+        let kitCleaner = KitCleaner(accountManager: accountManager)
         appManager = AppManager(
                 accountManager: accountManager,
                 walletManager: walletManager,

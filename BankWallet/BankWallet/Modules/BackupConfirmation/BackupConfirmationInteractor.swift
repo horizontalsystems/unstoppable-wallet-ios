@@ -10,16 +10,17 @@ class BackupConfirmationInteractor: IBackupConfirmationInteractor {
 
     private let async: Bool
 
-
-    init(randomManager: IRandomManager, wordsValidator: WordsValidator, backgroundManager: BackgroundManager, async: Bool = true) {
+    init(randomManager: IRandomManager, wordsValidator: WordsValidator, appManager: IAppManager, async: Bool = true) {
         self.randomManager = randomManager
         self.wordsValidator = wordsValidator
 
         self.async = async
 
-        backgroundManager.didBecomeActiveSubject.subscribe(onNext: { [weak self] in
-            self?.delegate?.onBecomeActive()
-        }).disposed(by: disposeBag)
+        appManager.didBecomeActiveObservable
+                .subscribe(onNext: { [weak self] in
+                    self?.delegate?.onBecomeActive()
+                })
+                .disposed(by: disposeBag)
     }
 
     func fetchConfirmationIndexes(max: Int, count: Int) -> [Int] {

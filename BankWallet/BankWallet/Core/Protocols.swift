@@ -52,6 +52,7 @@ protocol ILanguageManager {
 }
 
 protocol ILocalizationManager {
+    var locale: Locale? { get }
     var preferredLanguage: String? { get }
     var availableLanguages: [String] { get }
     func displayName(forLanguage language: String, inLanguage: String) -> String
@@ -511,11 +512,7 @@ protocol IPredefinedAccountType {
 }
 
 protocol IAppManager {
-    func didFinishLaunching()
-    func willResignActive()
-    func didBecomeActive()
-    func didEnterBackground()
-    func willEnterForeground()
+    var didBecomeActiveObservable: Observable<()> { get }
 }
 
 protocol IWalletStorage {

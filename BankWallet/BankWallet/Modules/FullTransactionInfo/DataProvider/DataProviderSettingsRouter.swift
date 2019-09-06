@@ -16,7 +16,7 @@ extension DataProviderSettingsRouter {
 
     static func module(for coin: Coin, transactionHash: String) -> UIViewController {
         let router = DataProviderSettingsRouter()
-        let interactor = DataProviderSettingsInteractor(dataProviderManager: App.shared.dataProviderManager, pingManager: App.shared.pingManager)
+        let interactor = DataProviderSettingsInteractor(dataProviderManager: App.shared.dataProviderManager, pingManager: PingManager())
         let presenter = DataProviderSettingsPresenter(coin: coin, transactionHash: transactionHash, router: router, interactor: interactor)
         let view = DataProviderSettingsViewController(delegate: presenter)
 

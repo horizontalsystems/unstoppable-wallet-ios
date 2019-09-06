@@ -16,8 +16,10 @@ extension SendAddressRouter: ISendAddressRouter {
 extension SendAddressRouter {
 
     static func module(coin: Coin) -> (UIView, ISendAddressModule, ISendSubRouter) {
+        let addressParserFactory = AddressParserFactory()
+
         let router = SendAddressRouter()
-        let interactor = SendAddressInteractor(pasteboardManager: App.shared.pasteboardManager, addressParser: App.shared.addressParserFactory.parser(coin: coin))
+        let interactor = SendAddressInteractor(pasteboardManager: App.shared.pasteboardManager, addressParser: addressParserFactory.parser(coin: coin))
 
         let presenter = SendAddressPresenter(interactor: interactor, router: router)
         let view = SendAddressView(delegate: presenter)

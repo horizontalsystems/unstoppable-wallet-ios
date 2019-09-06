@@ -1,3 +1,5 @@
+import RxSwift
+
 class AppManager {
     private let accountManager: IAccountManager
     private let walletManager: IWalletManager
@@ -9,6 +11,8 @@ class AppManager {
     private let localStorage: ILocalStorage
     private let secureStorage: ISecureStorage
     private let kitCleaner: IKitCleaner
+
+    private let didBecomeActiveSubject = PublishSubject<()>()
 
     init(accountManager: IAccountManager, walletManager: IWalletManager, adapterManager: IAdapterManager, lockManager: ILockManager,
          passcodeLockManager: IPasscodeLockManager, biometryManager: IBiometryManager, blurManager: IBlurManager,
@@ -34,7 +38,7 @@ class AppManager {
 
 }
 
-extension AppManager: IAppManager {
+extension AppManager {
 
     func didFinishLaunching() {
         handleFirstLaunch()
@@ -51,6 +55,8 @@ extension AppManager: IAppManager {
     }
 
     func didBecomeActive() {
+        didBecomeActiveSubject.onNext(())
+
         blurManager.didBecomeActive()
     }
 
@@ -63,6 +69,14 @@ extension AppManager: IAppManager {
         lockManager.willEnterForeground()
         adapterManager.refresh()
         biometryManager.refresh()
+    }
+
+}
+
+extension AppManager: IAppManager {
+
+    var didBecomeActiveObservable: Observable<()> {
+        return didBecomeActiveSubject.asObservable()
     }
 
 }

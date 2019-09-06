@@ -759,12 +759,10 @@
 		1A56499D7B99E358826CF7F3 /* EosTransactionInfoAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5640C2D323C183A63D0319 /* EosTransactionInfoAdapter.swift */; };
 		1A5649A1763E1ADB6572ECBC /* UptimeProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564F697ACF24DA968884EA /* UptimeProvider.swift */; };
 		1A5649A92BA5A92EB2791B7F /* SettingsInfoFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56487BA5FFC1BC45D6F25C /* SettingsInfoFooter.swift */; };
-		1A5649AC4FC1D6DD5F82ABAB /* BackgroundManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564C2194BB0FA7D298FAB5 /* BackgroundManager.swift */; };
 		1A5649C5CA36C74FD2EF4BE9 /* ManageWalletsPresenterStateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5640FA19AF1EC2B9C0F407 /* ManageWalletsPresenterStateTests.swift */; };
 		1A5649D8F43E49F4EB5157F4 /* TextSelectItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5646B61624B1237B877D54 /* TextSelectItem.swift */; };
 		1A5649DD40A0CB7B12AACE90 /* SortTypeRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5648CC680C99EDBB1B3FAB /* SortTypeRouter.swift */; };
 		1A564A07B3A2ECE3CF752A0F /* AdapterState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5647ACB8A65C250F62E07D /* AdapterState.swift */; };
-		1A564A0D51FF6BEACA195CB7 /* BackgroundManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564C2194BB0FA7D298FAB5 /* BackgroundManager.swift */; };
 		1A564A0F7A969658D13D8EDE /* TransactionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5643AAE35C8D8C5DA5924C /* TransactionCell.swift */; };
 		1A564A1D5A4E50A8C5A86FEE /* UnlockPinPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5641742308EC67C1292980 /* UnlockPinPresenter.swift */; };
 		1A564A27A29C3AC7EF21B57D /* OneTimeTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56468BE2370BCAA8BDA2FC /* OneTimeTimer.swift */; };
@@ -817,7 +815,6 @@
 		1A564C756284485E93C0F78D /* AdapterState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5647ACB8A65C250F62E07D /* AdapterState.swift */; };
 		1A564CA2A36B55AC41BBA0F4 /* SendTransactionError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56422C196B48931CDE1445 /* SendTransactionError.swift */; };
 		1A564CA81DACF03EC41899A4 /* AddressInputField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5647755D9C148EACC988CB /* AddressInputField.swift */; };
-		1A564CB5C802EF80E184DCD4 /* BackgroundManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564C2194BB0FA7D298FAB5 /* BackgroundManager.swift */; };
 		1A564CBB6D08E2C975181131 /* EosInfraProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564AE1D7E6000C057642B7 /* EosInfraProvider.swift */; };
 		1A564CC0C92C44E29FEA6642 /* SetPinPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564E534927A26ACA3B1D83 /* SetPinPresenterTests.swift */; };
 		1A564CD685B7DE30A959A6D5 /* AlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5642D6188D2E01E0EEC41C /* AlertViewController.swift */; };
@@ -2060,7 +2057,6 @@
 		1A564BF724C69C237E309C07 /* BitcoinCashAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BitcoinCashAdapter.swift; sourceTree = "<group>"; };
 		1A564BFA2FB7E31EFFD11EAF /* MessageItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageItemView.swift; sourceTree = "<group>"; };
 		1A564C08421D093D6E445D3A /* EditPinRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditPinRouter.swift; sourceTree = "<group>"; };
-		1A564C2194BB0FA7D298FAB5 /* BackgroundManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackgroundManager.swift; sourceTree = "<group>"; };
 		1A564C329BD2549B51F93155 /* LockoutView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LockoutView.swift; sourceTree = "<group>"; };
 		1A564C3598A969F339EBB6D9 /* DefaultAccountType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultAccountType.swift; sourceTree = "<group>"; };
 		1A564C4771D7403A0D9E1F04 /* SyncModeCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SyncModeCell.swift; sourceTree = "<group>"; };
@@ -2606,7 +2602,6 @@
 				58AAA3CCBFC02D7F6438DE3E /* PingManager.swift */,
 				58AAAC5B00009B199A687EF3 /* EthereumKitManager.swift */,
 				1A564908ABD8BC8BB8713C2E /* FeeRateProvider.swift */,
-				1A564C2194BB0FA7D298FAB5 /* BackgroundManager.swift */,
 				11B35872950C107E4810AB6B /* AccountManager.swift */,
 				11B35F26989959D83D337249 /* AccountCreator.swift */,
 				11B35981A2EDBC21C82D13A5 /* PredefinedAccountTypeManager.swift */,
@@ -4505,7 +4500,6 @@
 				1A5640FFF39774DC371F61E7 /* BitcoinCashAdapter.swift in Sources */,
 				1A5647F3635BCCAA32BF37F7 /* HashView.swift in Sources */,
 				1A564FB6F3583480FA4FFA98 /* HashViewTheme.swift in Sources */,
-				1A5649AC4FC1D6DD5F82ABAB /* BackgroundManager.swift in Sources */,
 				11B358D149EE936C82ABE32E /* DashAdapter.swift in Sources */,
 				11B35B2DE07F24EC17758285 /* CoinType.swift in Sources */,
 				11B352FDD80F24D5EF340F80 /* EnabledWallet.swift in Sources */,
@@ -5090,7 +5084,6 @@
 				1A56475828E9121D78E02D67 /* BitcoinCashAdapter.swift in Sources */,
 				1A5644B7EC23015834F20579 /* HashView.swift in Sources */,
 				1A564689FA088738E660FF91 /* HashViewTheme.swift in Sources */,
-				1A564A0D51FF6BEACA195CB7 /* BackgroundManager.swift in Sources */,
 				11B352E00B6E0DF4F6D42486 /* DashAdapter.swift in Sources */,
 				11B35B670584B514DD0CFF35 /* CoinType.swift in Sources */,
 				11B359F074038D1507C23747 /* EnabledWallet.swift in Sources */,
@@ -5626,7 +5619,6 @@
 				1A564C11B7785DCEA2472065 /* BitcoinCashAdapter.swift in Sources */,
 				1A5646BCAA7FFC976BFC9E5E /* HashView.swift in Sources */,
 				1A5644F218D6B87BB27D5F8A /* HashViewTheme.swift in Sources */,
-				1A564CB5C802EF80E184DCD4 /* BackgroundManager.swift in Sources */,
 				11B3507DDEBA587C023CE898 /* DashAdapter.swift in Sources */,
 				11B35751F696373A51EE433E /* CoinType.swift in Sources */,
 				11B3577193A4BD719E12CE2E /* EnabledWallet.swift in Sources */,

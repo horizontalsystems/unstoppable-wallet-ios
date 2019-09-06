@@ -10,4 +10,5 @@ class AddressParserFactory {
         case .binance: return AddressParser(validScheme: "binance", removeScheme: true)
         }
     }
+
 }
