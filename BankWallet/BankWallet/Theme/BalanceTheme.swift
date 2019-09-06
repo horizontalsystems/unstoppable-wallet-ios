@@ -11,7 +11,7 @@ class BalanceTheme {
     static let headerSortBorderColor: UIColor = .cryptoSteel20
     static let headerSortBorderWidth: CGFloat = 1 / UIScreen.main.scale
     static let headerSortHeight: CGFloat = 28
-    static let sortLabelFont: UIFont = .cryptoCaption3
+    static let sortLabelFont: UIFont = .cryptoCaption
     static let sortLabelTextColor: UIColor = .cryptoGray
     static let headerTintColor: UIColor = .cryptoYellow
     static let headerTintColorNormal: UIColor = .cryptoGray
@@ -39,11 +39,11 @@ class BalanceTheme {
     static var roundedBackgroundShadowColor: UIColor { return .crypto_Black20_Steel20 }
     static var roundedBackgroundShadowOpacity: Float { return App.shared.localStorage.lightMode ? 0.8 : 1 }
 
-    static let cellTitleFont = UIFont.cryptoHeadline
+    static let cellTitleFont = UIFont.cryptoHeadline2
     static var cellTitleColor: UIColor { return .crypto_White_Black }
 
     static let rateTopMargin: CGFloat = 19
-    static let rateFont = UIFont.cryptoCaption1
+    static let rateFont = UIFont.cryptoSubhead2
     static let rateColor = UIColor.cryptoGray
     static let rateExpiredColor = UIColor.cryptoGray50
 
@@ -72,14 +72,14 @@ class BalanceTheme {
     static let buttonsAnimationDuration = 0.15
     static let editCellHeight: CGFloat = 96
 
-    static let editTitleFont = UIFont.cryptoCaptionMedium
+    static let editTitleFont = UIFont.cryptoSubhead1
     static let editTitleColor = UIColor.cryptoGray
     static var editTitleSelectedColor: UIColor { return UIColor.crypto_Steel40_LightGray }
 
     static let statButtonWidth: CGFloat = 57
     static let chartSize = CGSize(width: 64, height: 30)
     static let chartCornerRadius: CGFloat = 8
-    static let percentDeltaFont: UIFont = .cryptoHeadline
+    static let percentDeltaFont: UIFont = .cryptoHeadline2
     static let percentDeltaDownColor: UIColor = .cryptoRed
     static let percentDeltaUpColor: UIColor = .cryptoGreen
     static var chartBackground: UIColor { return App.shared.localStorage.lightMode ? .cryptoLightBackground : .cryptoSteel20 }

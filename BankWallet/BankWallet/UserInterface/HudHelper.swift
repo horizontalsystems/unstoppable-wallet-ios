@@ -92,10 +92,10 @@ class HudHelper {
 
     private func configStatusModel() -> HUDStatusModel {
         let config = HUDStatusFactory.instance.config
-        config.titleLabelFont = .cryptoSectionCaption
+        config.titleLabelFont = .cryptoSubhead1
         config.titleLabelColor = .crypto_Bars_Black
 
-        config.subtitleLabelFont = .cryptoSectionCaption
+        config.subtitleLabelFont = .cryptoSubhead1
         config.subtitleLabelColor = .crypto_Bars_Black
 
         return config
