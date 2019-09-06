@@ -57,7 +57,7 @@ class AddressInputField: UIView {
 
         addressField.delegate = self
         addressField.tintColor = AppTheme.textFieldTintColor
-        addressField.keyboardAppearance = AppTheme.keyboardAppearance
+        addressField.keyboardAppearance = App.theme.keyboardAppearance
         addressField.autocapitalizationType = .none
         addressField.isUserInteractionEnabled = canEdit
         addressField.textContainer.maximumNumberOfLines = numberOfLines

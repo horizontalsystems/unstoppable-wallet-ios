@@ -5,17 +5,17 @@ class MainSettingsInteractor {
 
     weak var delegate: IMainSettingsInteractorDelegate?
 
-    private let localStorage: ILocalStorage
     private let backupManager: IBackupManager
     private let languageManager: ILanguageManager
+    private let themeManager: IThemeManager
     private let systemInfoManager: ISystemInfoManager
     private let currencyManager: ICurrencyManager
     private let appConfigProvider: IAppConfigProvider
 
-    init(localStorage: ILocalStorage, backupManager: IBackupManager, languageManager: ILanguageManager, systemInfoManager: ISystemInfoManager, currencyManager: ICurrencyManager, appConfigProvider: IAppConfigProvider) {
-        self.localStorage = localStorage
+    init(backupManager: IBackupManager, languageManager: ILanguageManager, themeManager: IThemeManager, systemInfoManager: ISystemInfoManager, currencyManager: ICurrencyManager, appConfigProvider: IAppConfigProvider) {
         self.backupManager = backupManager
         self.languageManager = languageManager
+        self.themeManager = themeManager
         self.systemInfoManager = systemInfoManager
         self.currencyManager = currencyManager
         self.appConfigProvider = appConfigProvider
@@ -63,10 +63,10 @@ extension MainSettingsInteractor: IMainSettingsInteractor {
 
     var lightMode: Bool {
         get {
-            return localStorage.lightMode
+            return themeManager.lightMode
         }
         set {
-            localStorage.lightMode = newValue
+            themeManager.lightMode = newValue
         }
     }
 

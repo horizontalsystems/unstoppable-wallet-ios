@@ -85,7 +85,7 @@ class HudHelper {
         config.finishAdjustSize = 0.8
         config.preferredSize = CGSize(width: 146, height: 114)
         config.backgroundColor = UIColor.crypto_Black_Bars.withAlphaComponent(0.4)
-        config.blurEffectStyle = .cryptoStyle
+        config.blurEffectStyle = App.theme.hudBlurStyle
 
         return config
     }

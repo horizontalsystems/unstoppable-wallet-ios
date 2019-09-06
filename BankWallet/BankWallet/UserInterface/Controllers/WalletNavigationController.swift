@@ -18,7 +18,7 @@ class WalletNavigationController: UINavigationController {
     }
 
     private func commonInit() {
-        navigationBar.barStyle = AppTheme.navigationBarStyle
+        navigationBar.barStyle = App.theme.navigationBarStyle
         navigationBar.tintColor = AppTheme.navigationBarTintColor
         navigationBar.prefersLargeTitles = true
         navigationBar.shadowImage = UIImage()

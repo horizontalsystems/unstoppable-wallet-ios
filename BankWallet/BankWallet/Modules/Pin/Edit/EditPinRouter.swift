@@ -21,7 +21,7 @@ extension EditPinRouter {
         let controller = PinViewController(delegate: presenter)
 
         let navigationController = WalletNavigationController(rootViewController: controller)
-        navigationController.navigationBar.barStyle = AppTheme.navigationBarStyle
+        navigationController.navigationBar.barStyle = App.theme.navigationBarStyle
         navigationController.navigationBar.tintColor = AppTheme.navigationBarTintColor
         navigationController.navigationBar.prefersLargeTitles = true
 
