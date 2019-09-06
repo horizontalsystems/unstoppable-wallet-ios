@@ -1,4 +1,6 @@
 protocol IMainSettingsView: class {
+    func refresh()
+
     func set(allBackedUp: Bool)
     func set(currentBaseCurrency: String)
     func set(currentLanguage: String)

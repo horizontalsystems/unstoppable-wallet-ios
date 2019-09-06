@@ -9,13 +9,17 @@ class MainSettingsPresenter {
         self.interactor = interactor
     }
 
+    private func syncCurrentBaseCurrency() {
+        view?.set(currentBaseCurrency: interactor.baseCurrency.code)
+    }
+
 }
 
 extension MainSettingsPresenter: IMainSettingsViewDelegate {
 
     func viewDidLoad() {
         view?.set(allBackedUp: interactor.allBackedUp)
-        view?.set(currentBaseCurrency: interactor.baseCurrency.code)
+        syncCurrentBaseCurrency()
         view?.set(currentLanguage: interactor.currentLanguageDisplayName)
         view?.set(lightMode: interactor.lightMode)
         view?.set(appVersion: interactor.appVersion)
@@ -64,10 +68,12 @@ extension MainSettingsPresenter: IMainSettingsInteractorDelegate {
 
     func didUpdate(allBackedUp: Bool) {
         view?.set(allBackedUp: allBackedUp)
+        view?.refresh()
     }
 
     func didUpdateBaseCurrency() {
-        view?.set(currentBaseCurrency: interactor.baseCurrency.code)
+        syncCurrentBaseCurrency()
+        view?.refresh()
     }
 
 }
