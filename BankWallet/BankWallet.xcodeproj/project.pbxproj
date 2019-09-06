@@ -2974,13 +2974,13 @@
 		11B35E1EBCA59D0D1DD9ABCD /* Adapters */ = {
 			isa = PBXGroup;
 			children = (
-				11B352D114BED753EEBA8B8D /* BitcoinAdapter.swift */,
-				11B352D314A298B6B832F309 /* EthereumAdapter.swift */,
-				58AAA312DD0792117182B64E /* Erc20Adapter.swift */,
-				58AAA656A81B2C12F618FB44 /* EthereumBaseAdapter.swift */,
 				1A56450DA6DF97C9E1FFE987 /* BitcoinBaseAdapter.swift */,
+				11B352D114BED753EEBA8B8D /* BitcoinAdapter.swift */,
 				1A564BF724C69C237E309C07 /* BitcoinCashAdapter.swift */,
 				11B358CA18471A93188933B4 /* DashAdapter.swift */,
+				58AAA656A81B2C12F618FB44 /* EthereumBaseAdapter.swift */,
+				11B352D314A298B6B832F309 /* EthereumAdapter.swift */,
+				58AAA312DD0792117182B64E /* Erc20Adapter.swift */,
 				11B35232DF5270C6F48DDB7B /* EosAdapter.swift */,
 				11B35AAAC675987369F2DA1B /* BinanceAdapter.swift */,
 			);
