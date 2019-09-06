@@ -13,8 +13,6 @@ class MainSettingsViewController: WalletViewController {
     private var lightMode: Bool = true
     private var appVersion: String?
 
-    private var didLoad = false
-
     init(delegate: IMainSettingsViewDelegate) {
         self.delegate = delegate
 
@@ -52,8 +50,6 @@ class MainSettingsViewController: WalletViewController {
         delegate.viewDidLoad()
 
         tableView.buildSections()
-
-        didLoad = true
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -153,12 +149,6 @@ class MainSettingsViewController: WalletViewController {
         }
     }
 
-    private func reloadIfNeeded() {
-        if didLoad {
-            tableView.reload()
-        }
-    }
-
 }
 
 extension MainSettingsViewController: SectionsDataSource {
@@ -181,14 +171,16 @@ extension MainSettingsViewController: SectionsDataSource {
 
 extension MainSettingsViewController: IMainSettingsView {
 
+    func refresh() {
+        tableView.reload()
+    }
+
     func set(allBackedUp: Bool) {
         self.allBackedUp = allBackedUp
-        reloadIfNeeded()
     }
 
     func set(currentBaseCurrency: String) {
         self.currentBaseCurrency = currentBaseCurrency
-        reloadIfNeeded()
     }
 
     func set(currentLanguage: String) {
