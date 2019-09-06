@@ -78,7 +78,7 @@ class TransactionsViewController: WalletViewController {
     }
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
-        return AppTheme.statusBarStyle
+        return App.theme.statusBarStyle
     }
 
     private func reload(indexPaths: [IndexPath]) {

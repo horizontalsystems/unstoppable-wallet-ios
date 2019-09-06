@@ -5,6 +5,7 @@ class App {
     let secureStorage: ISecureStorage
     let storage: IRateStorage & IEnabledWalletStorage & IAccountRecordStorage
 
+    let themeManager: IThemeManager
     let appConfigProvider: IAppConfigProvider
     let systemInfoManager: ISystemInfoManager
     let biometryManager: IBiometryManager
@@ -57,6 +58,7 @@ class App {
         secureStorage = KeychainStorage()
         storage = GrdbStorage()
 
+        themeManager = ThemeManager(localStorage: localStorage)
         appConfigProvider = AppConfigProvider()
         systemInfoManager = SystemInfoManager()
         biometryManager = BiometryManager(systemInfoManager: systemInfoManager)
@@ -131,6 +133,14 @@ class App {
                 secureStorage: secureStorage,
                 kitCleaner: kitCleaner
         )
+    }
+
+}
+
+extension App {
+
+    static var theme: ITheme {
+        return App.shared.themeManager.currentTheme
     }
 
 }

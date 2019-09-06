@@ -72,7 +72,7 @@ class SendViewController: UIViewController {
     }
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
-        return AppTheme.statusBarStyle
+        return App.theme.statusBarStyle
     }
 
     private func buildViews() {

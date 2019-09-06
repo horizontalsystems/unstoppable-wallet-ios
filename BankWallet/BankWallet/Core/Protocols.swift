@@ -523,3 +523,8 @@ protocol IFeeCoinProvider {
     func feeCoin(coin: Coin) -> Coin?
     func feeCoinProtocol(coin: Coin) -> String?
 }
+
+protocol IThemeManager: AnyObject {
+    var currentTheme: ITheme { get }
+    var lightMode: Bool { get set }
+}

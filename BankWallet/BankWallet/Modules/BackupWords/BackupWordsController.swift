@@ -76,7 +76,7 @@ class BackupWordsController: WalletViewController {
     }
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
-        return AppTheme.statusBarStyle
+        return App.theme.statusBarStyle
     }
 
     @objc func nextDidTap() {

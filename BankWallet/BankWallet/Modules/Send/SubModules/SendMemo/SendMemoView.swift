@@ -37,7 +37,7 @@ class SendMemoView: UIView {
         memoInputField.textColor = .crypto_Bars_Dark
         memoInputField.font = .cryptoSubheadItalic
         memoInputField.attributedPlaceholder = NSAttributedString(string: "send.confirmation.memo_placeholder".localized, attributes: [NSAttributedString.Key.foregroundColor: SendTheme.confirmationMemoPlaceholderColor])
-        memoInputField.keyboardAppearance = AppTheme.keyboardAppearance
+        memoInputField.keyboardAppearance = App.theme.keyboardAppearance
         memoInputField.tintColor = SendTheme.confirmationMemoInputTintColor
 
         memoInputField.snp.makeConstraints { maker in

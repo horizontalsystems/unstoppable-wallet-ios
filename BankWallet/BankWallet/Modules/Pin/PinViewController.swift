@@ -65,7 +65,7 @@ class PinViewController: WalletViewController {
     }
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
-        return AppTheme.statusBarStyle
+        return App.theme.statusBarStyle
     }
 
 }
