@@ -407,11 +407,6 @@ protocol IReachabilityManager {
     var reachabilitySignal: Signal { get }
 }
 
-protocol IPeriodicTimer {
-    var delegate: IPeriodicTimerDelegate? { get set }
-    func schedule()
-}
-
 protocol IOneTimeTimer {
     var delegate: IPeriodicTimerDelegate? { get set }
     func schedule(date: Date)
