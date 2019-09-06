@@ -22,7 +22,7 @@ class ButtonTheme {
     static let textColorDictionary: RespondButton.Style = [.active: ButtonTheme.textColor, .selected: ButtonTheme.textColor, .disabled: ButtonTheme.textColorDisabledBackground]
     static let whiteTextColorDictionary: RespondButton.Style = [.active: .white, .selected: .white, .disabled: ButtonTheme.textColorDisabledBackground]
 
-    static let font = UIFont.cryptoHeadline
+    static let font = UIFont.cryptoHeadline2
     static let margin: CGFloat = 16
     static let imageMargin: CGFloat = 8
 

@@ -10,5 +10,5 @@ class InputFieldTheme {
     static let indexColor = UIColor.cryptoGray
     static var textColor: UIColor { return .crypto_White_Black }
     static let inputFieldRightMargin = 38
-    static let indexFont: UIFont = .cryptoBody2
+    static let indexFont: UIFont = .cryptoBody
 }

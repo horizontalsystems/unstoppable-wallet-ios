@@ -6,10 +6,10 @@ class ChartRateTheme {
     static let mediumMargin: CGFloat = 12
     static let margin: CGFloat = 16
 
-    static let currentRateFont = UIFont.cryptoHeadline
+    static let currentRateFont = UIFont.cryptoHeadline2
     static var currentRateColor: UIColor { return .crypto_Bars_Dark }
 
-    static let diffRateFont = UIFont.cryptoCaption3
+    static let diffRateFont = UIFont.cryptoCaption
     static var diffRatePositiveColor: UIColor { return .cryptoGreen }
     static var diffRateNegativeColor: UIColor { return .cryptoRed }
 
@@ -20,16 +20,16 @@ class ChartRateTheme {
     static let chartRateTypeHeight: CGFloat = 48
 
     static let chartRateValueTopMargin: CGFloat = 6
-    static let chartRateDateFont = UIFont.cryptoCaption3
+    static let chartRateDateFont = UIFont.cryptoCaption
     static let chartRateDateColor: UIColor = .cryptoGray
     static let chartRateDateTopMargin: CGFloat = 1
-    static let chartRateValueFont = UIFont.cryptoCaptionMedium
+    static let chartRateValueFont = UIFont.cryptoSubhead1
     static var chartRateValueColor: UIColor { return .crypto_Bars_Dark }
 
     static var buttonBackground: RespondButton.Style { return [.active: .crypto_Steel20_LightBackground, .selected: .cryptoGreen, .disabled: UIColor.crypto_Steel20_LightBackground] }
     static let buttonBorderColor = UIColor.cryptoSteel20
     static let buttonCornerRadius: CGFloat = 4
-    static let buttonFont: UIFont = .cryptoSectionCaption
+    static let buttonFont: UIFont = .cryptoSubhead1
     static var buttonTextColor: UIColor { return .crypto_SteelDark_LightGray }
     static var buttonSelectedTextColor: UIColor { return .cryptoYellow }
     static var buttonDisabledTextColor: UIColor { return .cryptoGray50 }
@@ -42,16 +42,16 @@ class ChartRateTheme {
     static let chartRateTopMargin: CGFloat = 8
     static let chartViewHeight: CGFloat = 210
 
-    static let chartErrorFont: UIFont = .cryptoSectionCaption
+    static let chartErrorFont: UIFont = .cryptoSubhead1
     static let chartErrorColor: UIColor = .cryptoGray
     static let chartErrorMargin: CGFloat = 24
 
     static let chartMarketCapHeight: CGFloat = 44
     static let marketCapTitleTopMargin: CGFloat = 16
-    static let marketCapTitleFont = UIFont.cryptoCaption3
+    static let marketCapTitleFont = UIFont.cryptoCaption
     static let marketCapTitleColor: UIColor = .cryptoGray
 
-    static let marketCapTextFont = UIFont.cryptoCaption1
+    static let marketCapTextFont = UIFont.cryptoSubhead2
     static var marketCapTextColor: UIColor { return .crypto_Bars_Dark }
 
     static let diffFormatter: NumberFormatter = {

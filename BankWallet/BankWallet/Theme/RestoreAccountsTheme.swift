@@ -13,7 +13,7 @@ class RestoreAccountsTheme {
     static var roundedBackgroundShadowColor: UIColor { return .crypto_Black20_Steel20 }
     static var roundedBackgroundShadowOpacity: Float { return App.shared.localStorage.lightMode ? 0.8 : 1 }
 
-    static let descriptionFont: UIFont = .cryptoCaptionMedium
+    static let descriptionFont: UIFont = .cryptoSubhead1
     static var descriptionColor: UIColor = .cryptoGray
     static var descriptionTopMargin: CGFloat = 12
     static var descriptionSideMargin: CGFloat = 16
@@ -22,9 +22,9 @@ class RestoreAccountsTheme {
     static let keyImageSize: CGFloat = 24
     static let keyImageColor: UIColor = .cryptoGray50
 
-    static let cellTitleFont: UIFont = .cryptoHeadline
+    static let cellTitleFont: UIFont = .cryptoHeadline2
     static var cellTitleColor: UIColor { return .crypto_Bars_Black }
 
-    static let coinsFont: UIFont = .cryptoCaption1
+    static let coinsFont: UIFont = .cryptoSubhead2
     static let coinsColor: UIColor = .cryptoGray
 }

@@ -41,24 +41,24 @@ class AppTheme {
 
     static var alertBackgroundColor: UIColor { return .crypto_SteelDark_Bars }
     static let alertHeaderHeight: CGFloat = 40
-    static let alertHeaderFont: UIFont = .cryptoSectionCaption
+    static let alertHeaderFont: UIFont = .cryptoSubhead1
     static let alertHeaderColor: UIColor = .cryptoGray
 
     static let alertTitleHeight: CGFloat = 48
-    static let alertTitleFont: UIFont = .cryptoHeadline
+    static let alertTitleFont: UIFont = .cryptoHeadline2
     static var alertTitleColor: UIColor { return .crypto_White_Black }
 
     static let alertTextMargin: CGFloat = 16
-    static let alertTextFont: UIFont = .cryptoCaptionMedium
+    static let alertTextFont: UIFont = .cryptoSubhead1
     static var alertTextColor: UIColor = .cryptoGray
 
     static let footerTextMargin: CGFloat = 16
     static let footerTextColor: UIColor = .cryptoGray
-    static let footerTextFont: UIFont = .cryptoCaption1
+    static let footerTextFont: UIFont = .cryptoSubhead2
 
     static let alertCellHeight: CGFloat = 53
-    static let alertCellFont: UIFont = .cryptoHeadline
-    static let alertMessageFont: UIFont = .cryptoCaptionMedium
+    static let alertCellFont: UIFont = .cryptoHeadline2
+    static let alertMessageFont: UIFont = .cryptoSubhead1
     static var alertCellHighlightColor: UIColor = .cryptoYellow
     static var alertCellDefaultColor: UIColor { return .crypto_Bars_Dark }
     static var alertMessageDefaultColor: UIColor { return .crypto_Bars_Black }

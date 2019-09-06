@@ -16,7 +16,7 @@ class SendConfirmationFieldCell: UITableViewCell {
         addSubview(fieldTextLabel)
 
         titleLabel.textColor = .cryptoGray
-        titleLabel.font = .cryptoCaption1
+        titleLabel.font = .cryptoSubhead2
 
         titleLabel.snp.makeConstraints { maker in
             maker.leading.equalToSuperview().offset(SendTheme.margin)
@@ -27,7 +27,7 @@ class SendConfirmationFieldCell: UITableViewCell {
         titleLabel.setContentHuggingPriority(.defaultLow, for: .horizontal)
 
         fieldTextLabel.textColor = .cryptoGray
-        fieldTextLabel.font = .cryptoCaption1
+        fieldTextLabel.font = .cryptoSubhead2
 
         fieldTextLabel.snp.makeConstraints { maker in
             maker.leading.equalTo(titleLabel.snp.trailing).offset(SendTheme.smallMargin)

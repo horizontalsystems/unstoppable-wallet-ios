@@ -16,5 +16,5 @@ class WelcomeTheme {
 
     static let versionLabelTextColor: UIColor = .cryptoGray
     static let versionBottomMargin: CGFloat = 12
-    static let versionLabelFont: UIFont = .cryptoCaption4
+    static let versionLabelFont: UIFont = .cryptoMicro
 }
