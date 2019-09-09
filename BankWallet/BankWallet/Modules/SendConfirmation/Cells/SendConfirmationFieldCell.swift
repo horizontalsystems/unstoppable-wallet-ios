@@ -43,7 +43,8 @@ class SendConfirmationFieldCell: UITableViewCell {
         super.init(coder: aDecoder)
     }
 
-    func bind(title: String, text: String) {
+    func bind(title: String, text: String, bColor: UIColor = .clear) {
+        contentView.backgroundColor = bColor
         titleLabel.text = title
         fieldTextLabel.text = text
     }

@@ -16,13 +16,21 @@ class SendConfirmationPresenter {
 extension SendConfirmationPresenter: ISendConfirmationViewDelegate {
 
     func viewDidLoad() {
+        let noMemo = viewItems.first(where: { $0 is SendConfirmationMemoViewItem }) == nil
+        var hasField = false
         viewItems.forEach { item in
             switch item {
-            case let item as SendConfirmationAmountViewItem: self.view?.show(viewItem: item)
+            case let item as SendConfirmationAmountViewItem: self.view?.show(viewItem: item, last: noMemo)
             case let item as SendConfirmationMemoViewItem: self.view?.show(viewItem: item)
-            case let item as SendConfirmationFeeViewItem: self.view?.show(viewItem: item)
-            case let item as SendConfirmationTotalViewItem: self.view?.show(viewItem: item)
-            case let item as SendConfirmationDurationViewItem: self.view?.show(viewItem: item)
+            case let item as SendConfirmationFeeViewItem:
+                self.view?.show(viewItem: item, first: !hasField)
+                hasField = true
+            case let item as SendConfirmationTotalViewItem:
+                self.view?.show(viewItem: item, first: !hasField)
+                hasField = true
+            case let item as SendConfirmationDurationViewItem:
+                self.view?.show(viewItem: item, first: !hasField)
+                hasField = true
             default: ()
             }
         }

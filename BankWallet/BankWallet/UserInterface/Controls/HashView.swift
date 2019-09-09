@@ -2,10 +2,12 @@ import UIKit
 import SnapKit
 
 class HashView: RespondButton {
+    static private let avatarWidth = UIImage(named: "Transaction Info Avatar Placeholder")?.size.width ?? 0 
+
     private let avatarImageView = UIImageView()
     private let valueLabel = UILabel()
 
-    init() {
+    init(singleLine: Bool = true) {
         super.init()
 
         let wrapperView = UIView()
@@ -14,22 +16,26 @@ class HashView: RespondButton {
         addSubview(wrapperView)
         wrapperView.snp.makeConstraints { maker in
             maker.edges.equalToSuperview()
-            maker.height.equalTo(HashViewTheme.height)
         }
 
         titleLabel.removeFromSuperview()
         wrapperView.addSubview(avatarImageView)
         avatarImageView.snp.makeConstraints { maker in
-            maker.leading.equalToSuperview().offset(TransactionInfoDescriptionTheme.horizontalMargin)
-            maker.centerY.equalToSuperview()
+            maker.top.leading.equalToSuperview().offset(TransactionInfoDescriptionTheme.margin)
         }
 
-        valueLabel.lineBreakMode = .byTruncatingMiddle
+        if singleLine {
+            valueLabel.lineBreakMode = .byTruncatingMiddle
+        } else {
+            valueLabel.lineBreakMode = .byCharWrapping
+            valueLabel.numberOfLines = 3
+        }
         wrapperView.addSubview(valueLabel)
         valueLabel.snp.makeConstraints { maker in
-            maker.centerY.equalToSuperview()
-            maker.leading.equalTo(self.avatarImageView.snp.trailing).offset(TransactionInfoDescriptionTheme.horizontalMargin)
-            maker.trailing.equalToSuperview().offset(-TransactionInfoDescriptionTheme.horizontalMargin)
+            maker.top.equalToSuperview().offset(TransactionInfoDescriptionTheme.textVerticalMargin)
+            maker.bottom.equalToSuperview().offset(-TransactionInfoDescriptionTheme.textVerticalMargin)
+            maker.leading.equalTo(self.avatarImageView.snp.trailing).offset(TransactionInfoDescriptionTheme.margin)
+            maker.trailing.equalToSuperview().offset(-TransactionInfoDescriptionTheme.margin)
         }
     }
 
@@ -76,9 +82,13 @@ class HashView: RespondButton {
             } else {
                 maker.width.equalTo(image?.size.width ?? 0)
             }
-            maker.leadingMargin.equalToSuperview().offset(showImage ? TransactionInfoDescriptionTheme.horizontalMargin : 0)
-            maker.centerY.equalToSuperview()
+            maker.leadingMargin.equalToSuperview().offset(showImage ? TransactionInfoDescriptionTheme.margin : 0)
+            maker.top.equalToSuperview().offset(TransactionInfoDescriptionTheme.margin)
         }
+    }
+
+    class var textInsets: UIEdgeInsets {
+        return UIEdgeInsets(top: TransactionInfoDescriptionTheme.textVerticalMargin, left: 2 * TransactionInfoDescriptionTheme.margin + HashView.avatarWidth, bottom: TransactionInfoDescriptionTheme.textVerticalMargin, right: TransactionInfoDescriptionTheme.margin)
     }
 
 }

@@ -4,11 +4,11 @@ protocol ISendConfirmationDelegate: class {
 }
 
 protocol ISendConfirmationView: class {
-    func show(viewItem: SendConfirmationAmountViewItem)
+    func show(viewItem: SendConfirmationAmountViewItem, last: Bool)
     func show(viewItem: SendConfirmationMemoViewItem)
-    func show(viewItem: SendConfirmationFeeViewItem)
-    func show(viewItem: SendConfirmationTotalViewItem)
-    func show(viewItem: SendConfirmationDurationViewItem)
+    func show(viewItem: SendConfirmationFeeViewItem, first: Bool)
+    func show(viewItem: SendConfirmationTotalViewItem, first: Bool)
+    func show(viewItem: SendConfirmationDurationViewItem, first: Bool)
 
     func buildData()
     func showCopied()
