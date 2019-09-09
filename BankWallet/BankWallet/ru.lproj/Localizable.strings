@@ -147,7 +147,7 @@
 "send.confirmation.eos.account" = "Account";
 "send.confirmation.send_button" = "Отправить";
 "send.amount_error.balance" = "Баланс %@";
-"send.token.insufficient_fee_alert" = "Комиссия за отправку %@ (%@) взимается в %@. Необходимо %@.";
+"send.token.insufficient_fee_alert" = "Комиссия за отправку %@ (%@) взымается в %@. Необходимо %@.";
 
 // Transactions
 
