@@ -34,7 +34,7 @@ class FullTransactionInfoTextCell: SettingsCell {
             maker.leading.equalTo(self.titleLabel.snp.trailing).offset(FullTransactionInfoTheme.margin)
             maker.centerY.equalToSuperview()
 
-            let descriptionBackgroundOffset = onTap == nil ? TransactionInfoDescriptionTheme.horizontalMargin : 0
+            let descriptionBackgroundOffset = onTap == nil ? TransactionInfoDescriptionTheme.margin : 0
             if showDisclosure {
                 maker.trailing.equalTo(self.disclosureImageView.snp.leading).offset(-FullTransactionInfoTheme.disclosureLeftMargin + descriptionBackgroundOffset)
             } else {

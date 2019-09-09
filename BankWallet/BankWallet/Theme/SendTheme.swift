@@ -78,23 +78,31 @@ class SendTheme {
     static let sendButtonHeight: CGFloat = 50
     static let sendButtonCornerRadius: CGFloat = 8
 
-    static let confirmationPrimaryHeight: CGFloat = 134
-    static let confirmationPrimaryMargin: CGFloat = 20
-    static let confirmationPrimaryLineTopMargin: CGFloat = 89
+    static let confirmationPrimaryHeight: CGFloat = 72
 
-    static let confirmationMemoHeight: CGFloat = 56
-    static let confirmationMemoInputFieldMargin: CGFloat = 12
-    static let confirmationHolderTopMargin: CGFloat = 12
+    static let memoHeight: CGFloat = 56
+    static let memoInputFieldMargin: CGFloat = 12
+    static let memoHolderTopMargin: CGFloat = 12
 
-    static let confirmationFieldSectionTopMargin: CGFloat = 4
-
+    static let confirmationAdditionalPadding: CGFloat = 4
     static let confirmationFieldHeight: CGFloat = 24
 
+    static let confirmationAmountVerticalMargin: CGFloat = 12
+
     static let confirmationPrimaryAmountFont: UIFont = .cryptoHeadline1
-    static let confirmationPrimaryAmountColor: UIColor = .cryptoYellow
-    static let confirmationSecondaryFont: UIFont = .cryptoSubhead1
-    static let confirmationSecondaryColor: UIColor = .crypto_Bars_Dark
-    static let confirmationSecondaryTopMargin: CGFloat = 8
+    static let confirmationPrimaryAmountColor: UIColor = .appJacob
+    static let confirmationSecondaryAmountTitleFont: UIFont = .cryptoHeadline2
+    static let confirmationSecondaryAmountTitleColor: UIColor = .appOz
+    static let confirmationBottomAmountFont: UIFont = .cryptoSubhead2
+    static let confirmationBottomAmountColor: UIColor = .appGrey
+
+    static let confirmationMemoVerticalMargin: CGFloat = 14
+
+    static let confirmationMemoHeight: CGFloat = 44
+    static let confirmationMemoTitleFont: UIFont = .cryptoSubhead1
+    static let confirmationMemoTitleColor: UIColor = .appGrey
+    static let confirmationMemoFont: UIFont = .cryptoSubhead1
+    static let confirmationMemoColor: UIColor = .appOz
 
     static let confirmationToLabelFont: UIFont = .cryptoSubhead2
     static let confirmationToLabelColor: UIColor = .cryptoGray

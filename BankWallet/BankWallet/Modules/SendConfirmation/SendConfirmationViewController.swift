@@ -35,11 +35,13 @@ class SendConfirmationViewController: UIViewController, SectionsDataSource {
         view.backgroundColor = AppTheme.controllerBackground
         title = "send.confirmation.title".localized
 
-        tableView.registerCell(forClass: SendConfirmationPrimaryCell.self)
+        tableView.registerCell(forClass: SendConfirmationAmountCell.self)
+        tableView.registerCell(forClass: SendConfirmationReceiverCell.self)
+        tableView.registerCell(forClass: SendConfirmationMemoCell.self)
         tableView.registerCell(forClass: SendConfirmationFieldCell.self)
         tableView.registerCell(forClass: SendButtonCell.self)
         tableView.sectionDataSource = self
-        tableView.separatorColor = .clear
+        tableView.separatorStyle = .none
         tableView.backgroundColor = .clear
         tableView.delaysContentTouches = false
         view.addSubview(tableView)
@@ -96,46 +98,55 @@ class SendConfirmationViewController: UIViewController, SectionsDataSource {
 
 extension SendConfirmationViewController: ISendConfirmationView {
 
-    func show(viewItem: SendConfirmationAmountViewItem) {
+    func show(viewItem: SendConfirmationAmountViewItem, last: Bool) {
         let primaryText: String?
+        let primaryTitleText: String?
         var secondaryText: String? = nil
+        var secondaryTitleText: String? = nil
 
         switch viewItem.primaryInfo {
         case .coinValue(let coinValue):
             primaryText = ValueFormatter.instance.format(coinValue: coinValue)
+            primaryTitleText = coinValue.coin.title
         case .currencyValue(let currencyValue):
             primaryText = ValueFormatter.instance.format(currencyValue: currencyValue)
+            primaryTitleText = currencyValue.currency.code
         }
 
         if let secondaryInfo = viewItem.secondaryInfo {
             switch secondaryInfo {
             case .coinValue(let coinValue):
                 secondaryText = ValueFormatter.instance.format(coinValue: coinValue)
+                secondaryTitleText = coinValue.coin.title
             case .currencyValue(let currencyValue):
                 secondaryText = ValueFormatter.instance.format(currencyValue: currencyValue)
+                secondaryTitleText = currencyValue.currency.code
             }
         }
-        let row = Row<SendConfirmationPrimaryCell>(id: "send_primary_row", height: SendTheme.confirmationPrimaryHeight, bind: { [weak self] cell, _ in
-            cell.bind(primaryAmount: primaryText, secondaryAmount: secondaryText, receiver: viewItem.receiver) { [weak self] in
+        let primaryRow = Row<SendConfirmationAmountCell>(id: "send_primary_row", height: SendTheme.confirmationPrimaryHeight, bind: { cell, _ in
+            cell.bind(primaryTitle: primaryTitleText, primaryAmount: primaryText, secondaryTitle: secondaryTitleText, secondaryAmount: secondaryText)
+        })
+        let receiverRow = Row<SendConfirmationReceiverCell>(id: "send_receiver_row", height: SendConfirmationReceiverCell.height(forContainerWidth: view.bounds.width, text: viewItem.receiver), bind: { [weak self] cell, _ in
+            cell.bind(receiver: viewItem.receiver, last: last) { [weak self] in
                 self?.onHashTap(receiver: viewItem.receiver)
             }
         })
-
-        rows.append(row)
+        rows.append(primaryRow)
+        rows.append(receiverRow)
     }
 
     func show(viewItem: SendConfirmationMemoViewItem) {
         guard !viewItem.memo.isEmpty else {
             return
         }
-        let row = Row<SendConfirmationFieldCell>(id: "send_memo_row", height: SendTheme.confirmationFieldHeight, bind: { cell, _ in
-            cell.bind(title: "send.confirmation.memo_placeholder".localized + ":", text: viewItem.memo)
+        let row = Row<SendConfirmationMemoCell>(id: "send_memo_row", height: SendTheme.confirmationMemoHeight, bind: { cell, _ in
+            cell.bind(memo: viewItem.memo)
         })
 
         rows.append(row)
     }
 
-    func show(viewItem: SendConfirmationFeeViewItem) {
+    func show(viewItem: SendConfirmationFeeViewItem, first: Bool) {
         let formattedPrimary: String?
         var formattedSecondary: String? = nil
 
@@ -158,14 +169,14 @@ extension SendConfirmationViewController: ISendConfirmationView {
         guard let primaryText = formattedPrimary else { return }
         let text = [primaryText, formattedSecondary != nil ? "|" : nil, formattedSecondary].compactMap { $0 }.joined(separator: " ")
 
-        let row = Row<SendConfirmationFieldCell>(id: "send_fee_row", height: SendTheme.confirmationFieldHeight, bind: { cell, _ in
+        let row = Row<SendConfirmationFieldCell>(id: "send_fee_row", height: SendTheme.confirmationFieldHeight + (first ? SendTheme.confirmationAdditionalPadding : 0), bind: { cell, _ in
             cell.bind(title: "send.fee".localized + ":", text: text)
         })
 
         rows.append(row)
     }
 
-    func show(viewItem: SendConfirmationTotalViewItem) {
+    func show(viewItem: SendConfirmationTotalViewItem, first: Bool) {
         let formattedPrimary: String?
 
         switch viewItem.primaryInfo {
@@ -177,15 +188,15 @@ extension SendConfirmationViewController: ISendConfirmationView {
 
         guard let primaryText = formattedPrimary else { return }
 
-        let row = Row<SendConfirmationFieldCell>(id: "send_total_row", height: SendTheme.confirmationFieldHeight, bind: { cell, _ in
+        let row = Row<SendConfirmationFieldCell>(id: "send_total_row", height: SendTheme.confirmationFieldHeight + (first ? SendTheme.confirmationAdditionalPadding : 0), bind: { cell, _ in
             cell.bind(title: "send.confirmation.total".localized + ":", text: primaryText)
         })
         rows.append(row)
     }
 
-    func show(viewItem: SendConfirmationDurationViewItem) {
+    func show(viewItem: SendConfirmationDurationViewItem, first: Bool) {
 
-        let row = Row<SendConfirmationFieldCell>(id: "send_duration_row", height: SendTheme.confirmationFieldHeight, bind: { cell, _ in
+        let row = Row<SendConfirmationFieldCell>(id: "send_duration_row", height: SendTheme.confirmationFieldHeight + (first ? SendTheme.confirmationAdditionalPadding : 0), bind: { cell, _ in
             cell.bind(title: "send.tx_duration".localized + ":", text: viewItem.timeInterval.map { "send.duration.within".localized($0.approximateHoursOrMinutes) } ?? "send.duration.instant".localized)
         })
 

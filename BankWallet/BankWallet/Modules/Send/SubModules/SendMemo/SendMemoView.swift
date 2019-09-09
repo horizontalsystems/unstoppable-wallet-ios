@@ -15,7 +15,7 @@ class SendMemoView: UIView {
         backgroundColor = .clear
 
         self.snp.makeConstraints { maker in
-            maker.height.equalTo(SendTheme.confirmationMemoHeight)
+            maker.height.equalTo(SendTheme.memoHeight)
         }
 
         addSubview(holderView)
@@ -24,7 +24,7 @@ class SendMemoView: UIView {
         holderView.snp.makeConstraints { maker in
             maker.leading.equalToSuperview().offset(SendTheme.margin)
             maker.trailing.equalToSuperview().offset(-SendTheme.margin)
-            maker.top.equalToSuperview().offset(SendTheme.confirmationHolderTopMargin)
+            maker.top.equalToSuperview().offset(SendTheme.memoHolderTopMargin)
             maker.bottom.equalToSuperview()
         }
 
@@ -41,8 +41,8 @@ class SendMemoView: UIView {
         memoInputField.tintColor = SendTheme.confirmationMemoInputTintColor
 
         memoInputField.snp.makeConstraints { maker in
-            maker.leading.equalToSuperview().offset(SendTheme.confirmationMemoInputFieldMargin)
-            maker.trailing.equalToSuperview().offset(-SendTheme.confirmationMemoInputFieldMargin)
+            maker.leading.equalToSuperview().offset(SendTheme.memoInputFieldMargin)
+            maker.trailing.equalToSuperview().offset(-SendTheme.memoInputFieldMargin)
             maker.centerY.equalToSuperview()
         }
         memoInputField.delegate = self
