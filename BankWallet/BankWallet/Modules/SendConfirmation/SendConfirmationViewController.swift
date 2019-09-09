@@ -7,6 +7,8 @@ class SendConfirmationViewController: UIViewController, SectionsDataSource {
 
     private let tableView = SectionsTableView(style: .grouped)
     private var rows = [RowProtocol]()
+    private var noMemo = true
+    private var cellPaddingAdded = false
 
     private let decimalFormatter: NumberFormatter = {
         let formatter = NumberFormatter()
@@ -98,7 +100,7 @@ class SendConfirmationViewController: UIViewController, SectionsDataSource {
 
 extension SendConfirmationViewController: ISendConfirmationView {
 
-    func show(viewItem: SendConfirmationAmountViewItem, last: Bool) {
+    func show(viewItem: SendConfirmationAmountViewItem) {
         let primaryText: String?
         let primaryTitleText: String?
         var secondaryText: String? = nil
@@ -127,7 +129,7 @@ extension SendConfirmationViewController: ISendConfirmationView {
             cell.bind(primaryTitle: primaryTitleText, primaryAmount: primaryText, secondaryTitle: secondaryTitleText, secondaryAmount: secondaryText)
         })
         let receiverRow = Row<SendConfirmationReceiverCell>(id: "send_receiver_row", height: SendConfirmationReceiverCell.height(forContainerWidth: view.bounds.width, text: viewItem.receiver), bind: { [weak self] cell, _ in
-            cell.bind(receiver: viewItem.receiver, last: last) { [weak self] in
+            cell.bind(receiver: viewItem.receiver, last: self?.noMemo ?? false) { [weak self] in
                 self?.onHashTap(receiver: viewItem.receiver)
             }
         })
@@ -139,6 +141,7 @@ extension SendConfirmationViewController: ISendConfirmationView {
         guard !viewItem.memo.isEmpty else {
             return
         }
+        noMemo = false
         let row = Row<SendConfirmationMemoCell>(id: "send_memo_row", height: SendTheme.confirmationMemoHeight, bind: { cell, _ in
             cell.bind(memo: viewItem.memo)
         })
@@ -146,7 +149,7 @@ extension SendConfirmationViewController: ISendConfirmationView {
         rows.append(row)
     }
 
-    func show(viewItem: SendConfirmationFeeViewItem, first: Bool) {
+    func show(viewItem: SendConfirmationFeeViewItem) {
         let formattedPrimary: String?
         var formattedSecondary: String? = nil
 
@@ -169,14 +172,17 @@ extension SendConfirmationViewController: ISendConfirmationView {
         guard let primaryText = formattedPrimary else { return }
         let text = [primaryText, formattedSecondary != nil ? "|" : nil, formattedSecondary].compactMap { $0 }.joined(separator: " ")
 
-        let row = Row<SendConfirmationFieldCell>(id: "send_fee_row", height: SendTheme.confirmationFieldHeight + (first ? SendTheme.confirmationAdditionalPadding : 0), bind: { cell, _ in
+        let additionalPadding = cellPaddingAdded ? 0 : SendTheme.confirmationAdditionalPadding
+        cellPaddingAdded = true
+
+        let row = Row<SendConfirmationFieldCell>(id: "send_fee_row", height: SendTheme.confirmationFieldHeight + additionalPadding, bind: { cell, _ in
             cell.bind(title: "send.fee".localized + ":", text: text)
         })
 
         rows.append(row)
     }
 
-    func show(viewItem: SendConfirmationTotalViewItem, first: Bool) {
+    func show(viewItem: SendConfirmationTotalViewItem) {
         let formattedPrimary: String?
 
         switch viewItem.primaryInfo {
@@ -188,15 +194,20 @@ extension SendConfirmationViewController: ISendConfirmationView {
 
         guard let primaryText = formattedPrimary else { return }
 
-        let row = Row<SendConfirmationFieldCell>(id: "send_total_row", height: SendTheme.confirmationFieldHeight + (first ? SendTheme.confirmationAdditionalPadding : 0), bind: { cell, _ in
+        let additionalPadding = cellPaddingAdded ? 0 : SendTheme.confirmationAdditionalPadding
+        cellPaddingAdded = true
+
+        let row = Row<SendConfirmationFieldCell>(id: "send_total_row", height: SendTheme.confirmationFieldHeight + additionalPadding, bind: { cell, _ in
             cell.bind(title: "send.confirmation.total".localized + ":", text: primaryText)
         })
         rows.append(row)
     }
 
-    func show(viewItem: SendConfirmationDurationViewItem, first: Bool) {
+    func show(viewItem: SendConfirmationDurationViewItem) {
+        let additionalPadding = cellPaddingAdded ? 0 : SendTheme.confirmationAdditionalPadding
+        cellPaddingAdded = true
 
-        let row = Row<SendConfirmationFieldCell>(id: "send_duration_row", height: SendTheme.confirmationFieldHeight + (first ? SendTheme.confirmationAdditionalPadding : 0), bind: { cell, _ in
+        let row = Row<SendConfirmationFieldCell>(id: "send_duration_row", height: SendTheme.confirmationFieldHeight + additionalPadding, bind: { cell, _ in
             cell.bind(title: "send.tx_duration".localized + ":", text: viewItem.timeInterval.map { "send.duration.within".localized($0.approximateHoursOrMinutes) } ?? "send.duration.instant".localized)
         })
 
