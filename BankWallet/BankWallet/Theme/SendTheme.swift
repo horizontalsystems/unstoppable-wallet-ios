@@ -8,7 +8,7 @@ class SendTheme {
     static let tinyMargin: CGFloat = 5
 
     static let holderCornerRadius: CGFloat = 8
-    static let holderBorderWidth: CGFloat = 1 / UIScreen.main.scale
+    static let holderBorderWidth: CGFloat = 1
     static let holderBorderColor: UIColor = .cryptoSteel20
     static var holderBackground: UIColor { return .crypto_SteelDark_White }
     static let holderLeadingPadding: CGFloat = 12
