@@ -65,7 +65,7 @@ class SendFeeView: UIView {
         errorLabel.textColor = SendTheme.errorColor
         errorLabel.snp.makeConstraints { maker in
             maker.leading.equalToSuperview().offset(SendTheme.margin)
-            maker.top.equalToSuperview().offset(SendTheme.smallMargin)
+            maker.top.equalTo(durationTitleLabel.snp.bottom).offset(SendTheme.smallMargin)
             maker.trailing.equalToSuperview().offset(-SendTheme.margin)
         }
     }
