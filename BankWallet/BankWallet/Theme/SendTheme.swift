@@ -101,7 +101,7 @@ class SendTheme {
     static let confirmationMemoHeight: CGFloat = 44
     static let confirmationMemoTitleFont: UIFont = .cryptoSubhead1
     static let confirmationMemoTitleColor: UIColor = .appGrey
-    static let confirmationMemoFont: UIFont = .cryptoSubhead1
+    static let confirmationMemoFont: UIFont = .cryptoSubheadItalic
     static let confirmationMemoColor: UIColor = .appOz
 
     static let confirmationToLabelFont: UIFont = .cryptoSubhead2

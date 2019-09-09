@@ -11,7 +11,7 @@ extension UIFont {
 
     static let cryptoSubhead1 = UIFont.systemFont(ofSize: 14, weight: .medium)
     static let cryptoSubhead2 = UIFont.systemFont(ofSize: 14, weight: .regular)
-    static let cryptoSubheadItalic = UIFont.systemFont(ofSize: 15, weight: .regular).with(traits: .traitItalic)
+    static let cryptoSubheadItalic = UIFont.systemFont(ofSize: 14, weight: .regular).with(traits: .traitItalic)
 
     static let cryptoCaption = UIFont.systemFont(ofSize: 12, weight: .regular)
     static let cryptoMicro = UIFont.systemFont(ofSize: 10, weight: .regular)

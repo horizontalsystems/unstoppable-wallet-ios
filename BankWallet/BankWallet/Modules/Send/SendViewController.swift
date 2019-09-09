@@ -7,6 +7,8 @@ class SendViewController: UIViewController {
 
     private let delegate: ISendViewDelegate
 
+    private let scrollView = UIScrollView()
+    private let container = UIView()
     private let iconImageView = UIImageView()
     private let sendHolderView = UIView()
     private let sendButton = RespondButton()
@@ -51,6 +53,21 @@ class SendViewController: UIViewController {
 
         view.backgroundColor = AppTheme.controllerBackground
 
+        view.addSubview(scrollView)
+        scrollView.alwaysBounceVertical = true
+        scrollView.showsVerticalScrollIndicator = false
+        scrollView.keyboardDismissMode = .onDrag
+        scrollView.snp.makeConstraints { maker in
+            maker.top.equalToSuperview()
+            maker.leading.trailing.equalToSuperview()
+            maker.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom)
+        }
+        scrollView.addSubview(container)
+        container.snp.makeConstraints { maker in
+            maker.leading.trailing.equalTo(self.view)
+            maker.top.bottom.equalTo(self.scrollView)
+        }
+
         iconImageView.tintColor = .cryptoGray
 
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: iconImageView)
@@ -82,22 +99,28 @@ class SendViewController: UIViewController {
             lastView = view
         }
 
-        add(view: sendHolderView, lastView: lastView)
+        add(view: sendHolderView, lastView: lastView, last: true)
     }
 
-    private func add(view: UIView, lastView: UIView?) {
-        self.view.addSubview(view)
+    private func add(view: UIView, lastView: UIView?, last: Bool = false) {
+        container.addSubview(view)
         if let lastView = lastView {
             view.snp.makeConstraints { maker in
-                maker.leading.equalToSuperview()
-                maker.trailing.equalToSuperview()
+                maker.leading.equalTo(self.view.snp.leading)
+                maker.trailing.equalTo(self.view.snp.trailing)
                 maker.top.equalTo(lastView.snp.bottom)
+                if last {
+                    maker.bottom.equalToSuperview()
+                }
             }
         } else {
             view.snp.makeConstraints { maker in
-                maker.top.equalTo(self.view.snp.topMargin)
-                maker.leading.equalToSuperview()
-                maker.trailing.equalToSuperview()
+                maker.top.equalToSuperview()
+                maker.leading.equalTo(self.view.snp.leading)
+                maker.trailing.equalTo(self.view.snp.trailing)
+                if last {
+                    maker.bottom.equalToSuperview()
+                }
             }
         }
     }
