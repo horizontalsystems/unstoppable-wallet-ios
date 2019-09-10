@@ -52,7 +52,7 @@ class FullTransactionInfoViewController: WalletViewController, SectionsDataSourc
 
         tableView.registerCell(forClass: FullTransactionInfoTextCell.self)
         tableView.registerCell(forClass: FullTransactionProviderLinkCell.self)
-        tableView.registerCell(forClass: SettingsRightLabelCell.self)
+        tableView.registerCell(forClass: RightLabelCell.self)
         tableView.registerCell(forClass: FullTransactionHeaderCell.self)
         tableView.registerHeaderFooter(forClass: FullTransactionHashHeaderView.self)
         tableView.sectionDataSource = self

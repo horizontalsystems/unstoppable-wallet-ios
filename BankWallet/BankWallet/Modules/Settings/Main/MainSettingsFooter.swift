@@ -2,7 +2,7 @@ import UIKit
 import UIExtensions
 import SnapKit
 
-class SettingsInfoFooter: UITableViewHeaderFooterView {
+class MainSettingsFooter: UITableViewHeaderFooterView {
     private let versionLabel = UILabel()
     private let logoButton = RespondView()
 
