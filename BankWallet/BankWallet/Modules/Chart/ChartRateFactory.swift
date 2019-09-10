@@ -1,6 +1,8 @@
 import Foundation
 
 struct ChartViewItem {
+    let latestRateDate: Date?
+
     let type: ChartType
 
     let rateValue: CurrencyValue?
@@ -48,7 +50,7 @@ class ChartRateFactory: IChartRateFactory {
         if let rate = rate {
             rateValue = CurrencyValue(currency: currency, value: rate.value)
         }
-        return ChartViewItem(type: type, rateValue: rateValue, marketCapValue: marketCapValue, lowValue: lowValue, highValue: highValue, diff: diff, points: points)
+        return ChartViewItem(latestRateDate: rate?.date, type: type, rateValue: rateValue, marketCapValue: marketCapValue, lowValue: lowValue, highValue: highValue, diff: diff, points: points)
     }
 
 }

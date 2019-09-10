@@ -2,47 +2,25 @@ import UIKit
 import SnapKit
 
 class DepositAddressCollectionCell: UICollectionViewCell {
-    private let iconImageView = CoinIconImageView()
-    private let titleLabel = UILabel()
-    private let closeButton = UIButton()
+    private let titleView = AlertTitleView(frame: .zero)
     private let separatorView = UIView()
+
     private let qrCodeImageView = UIImageView()
     private let addressTitleLabel = UILabel()
     private let addressButton = HashView()
 
-    private var onClose: (() -> ())?
-
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-        contentView.addSubview(iconImageView)
-        iconImageView.snp.makeConstraints { maker in
-            maker.leading.equalToSuperview().offset(DepositTheme.mediumMargin)
-            maker.top.equalToSuperview().offset(DepositTheme.mediumMargin)
+        contentView.addSubview(titleView)
+        titleView.snp.makeConstraints { maker in
+            maker.top.leading.trailing.equalToSuperview()
+            maker.height.equalTo(AppTheme.alertTitleHeight)
         }
-
-        titleLabel.font = DepositTheme.titleFont
-        titleLabel.textColor = DepositTheme.titleColor
-        contentView.addSubview(titleLabel)
-        titleLabel.snp.makeConstraints { maker in
-            maker.leading.equalTo(self.iconImageView.snp.trailing).offset(DepositTheme.titleHorizontalMargin)
-            maker.centerY.equalTo(self.iconImageView.snp.centerY)
-        }
-
-        closeButton.setImage(UIImage(named: "Close Icon")?.withRenderingMode(.alwaysTemplate), for: .normal)
-        closeButton.tintColor = AppTheme.closeButtonColor
-        closeButton.addTarget(self, action: #selector(onTapClose), for: .touchUpInside)
-        contentView.addSubview(closeButton)
-        closeButton.snp.makeConstraints { maker in
-            maker.leading.equalTo(self.titleLabel.snp.trailing).offset(DepositTheme.titleHorizontalMargin)
-            maker.trailing.equalToSuperview().offset(-DepositTheme.regularMargin)
-            maker.centerY.equalTo(self.iconImageView.snp.centerY)
-        }
-
         separatorView.backgroundColor = .cryptoSteel20
         contentView.addSubview(separatorView)
         separatorView.snp.makeConstraints { maker in
-            maker.top.equalTo(self.iconImageView.snp.bottom).offset(DepositTheme.mediumMargin)
+            maker.top.equalTo(self.titleView.snp.bottom)
             maker.left.right.equalToSuperview()
             maker.height.equalTo(0.5)
         }
@@ -79,15 +57,18 @@ class DepositAddressCollectionCell: UICollectionViewCell {
     }
 
     func bind(address: AddressItem, onCopy: @escaping () -> (), onClose: (() -> ())?) {
-        iconImageView.bind(coin: address.coin)
-        titleLabel.text = "deposit.receive_coin".localized(address.coin.title)
+        titleView.bind(
+                title: "deposit.receive_coin".localized(address.coin.code), 
+                subtitle: address.coin.title,
+                image: UIImage(coin: address.coin),
+                tintColor: nil,
+                onClose: onClose)
+
         qrCodeImageView.backgroundColor = .white
         addressTitleLabel.text = addressTitle(coin: address.coin)
         addressButton.bind(value: address.address, showExtra: .icon, onTap: onCopy)
 
         qrCodeImageView.asyncSetImage { UIImage(qrCodeString: address.address, size: DepositTheme.qrCodeSideSize) }
-
-        self.onClose = onClose
     }
 
     private func addressTitle(coin: Coin) -> String {
@@ -95,10 +76,6 @@ class DepositAddressCollectionCell: UICollectionViewCell {
         case .eos: return "deposit.your_account".localized
         default: return "deposit.your_address".localized
         }
-    }
-
-    @objc func onTapClose() {
-        onClose?()
     }
 
 }

@@ -2,12 +2,16 @@ import ActionSheet
 
 class AlertTitleItem: BaseActionItem {
     let title: String
+    var subtitle: String?
     var icon: UIImage?
     var iconTintColor: UIColor?
-    let onClose: () -> ()
+    var onClose: (() -> ())?
 
-    init(title: String, icon: UIImage?, iconTintColor: UIColor?, tag: Int, onClose: @escaping () -> ()) {
+    var bindSubtitle: ((String?) -> ())?
+
+    init(title: String, subtitle: String?, icon: UIImage?, iconTintColor: UIColor?, tag: Int, onClose: (() -> ())?) {
         self.title = title
+        self.subtitle = subtitle
         self.icon = icon
         self.iconTintColor = iconTintColor
         self.onClose = onClose

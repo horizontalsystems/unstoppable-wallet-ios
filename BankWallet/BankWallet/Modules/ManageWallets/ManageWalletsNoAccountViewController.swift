@@ -8,6 +8,7 @@ class ManageWalletsNoAccountViewController: ActionSheetController {
 
         let titleItem = AlertTitleItem(
                 title: "manage_coins.add_coin.title".localized(coin.title),
+                subtitle: predefinedAccountType.title.localized,
                 icon: UIImage(coin: coin),
                 iconTintColor: AppTheme.coinIconColor,
                 tag: 0,

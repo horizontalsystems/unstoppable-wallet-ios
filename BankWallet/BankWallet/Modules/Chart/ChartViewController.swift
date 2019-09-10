@@ -10,6 +10,7 @@ class ChartViewController: ActionSheetController {
         return formatter
     }()
 
+    private let titleItem: AlertTitleItem
     private let currentRateItem = ChartCurrentRateItem(tag: 1)
     private let chartRateTypeItem = ChartRateTypeItem(tag: 2)
     private var chartRateItem: ChartRateItem?
@@ -17,7 +18,22 @@ class ChartViewController: ActionSheetController {
 
     init(delegate: IChartViewDelegate) {
         self.delegate = delegate
+
+        let coin = delegate.coin
+        titleItem = AlertTitleItem(
+                title: "chart.title".localized(coin.title),
+                subtitle: nil,
+                icon: UIImage(coin: coin),
+                iconTintColor: AppTheme.coinIconColor,
+                tag: 0,
+                onClose: nil
+        )
+
         super.init(withModel: BaseAlertModel(), actionSheetThemeConfig: AppTheme.actionSheetConfig)
+
+        titleItem.onClose = { [weak self] in
+            self?.dismiss(byFade: false)
+        }
 
         initItems()
     }
@@ -27,18 +43,6 @@ class ChartViewController: ActionSheetController {
     }
 
     func initItems() {
-        let coin = delegate.coin
-
-        let titleItem = AlertTitleItem(
-                title: "chart.title".localized(coin.title),
-                icon: UIImage(coin: coin),
-                iconTintColor: AppTheme.coinIconColor,
-                tag: 0,
-                onClose: { [weak self] in
-                    self?.dismiss(byFade: false)
-                }
-        )
-
         model.addItemView(titleItem)
         model.addItemView(currentRateItem)
         model.addItemView(chartRateTypeItem)
@@ -57,6 +61,14 @@ class ChartViewController: ActionSheetController {
         model.hideInBackground = false
 
         delegate.viewDidLoad()
+    }
+
+    private func showSubtitle(for date: Date?) {
+        guard let date = date else {
+            titleItem.bindSubtitle?(nil)
+            return
+        }
+        titleItem.bindSubtitle?(DateHelper.instance.formatFullTime(from: date))
     }
 
     private func show(currentRateValue: CurrencyValue?) {
@@ -126,6 +138,7 @@ class ChartViewController: ActionSheetController {
 extension ChartViewController: IChartView {
 
     func show(viewItem: ChartViewItem) {
+        showSubtitle(for: viewItem.latestRateDate)
         show(currentRateValue: viewItem.rateValue)
         show(diff: viewItem.diff)
 
