@@ -1,20 +1,16 @@
 class BaseCurrencySettingsPresenter {
+    weak var view: IBaseCurrencySettingsView?
+
     private let router: IBaseCurrencySettingsRouter
     private let interactor: IBaseCurrencySettingsInteractor
 
-    weak var view: IBaseCurrencySettingsView?
+    private let currencies: [Currency]
 
     init(router: IBaseCurrencySettingsRouter, interactor: IBaseCurrencySettingsInteractor) {
         self.router = router
         self.interactor = interactor
-    }
 
-    private func showItems() {
-        let baseCurrencyCode = interactor.baseCurrency.code
-
-        view?.show(items: interactor.currencies.map { currency in
-            CurrencyItem(code: currency.code, symbol: currency.symbol, selected: currency.code == baseCurrencyCode)
-        })
+        currencies = interactor.currencies
     }
 
 }
@@ -22,22 +18,23 @@ class BaseCurrencySettingsPresenter {
 extension BaseCurrencySettingsPresenter: IBaseCurrencySettingsViewDelegate {
 
     func viewDidLoad() {
-        showItems()
-    }
+        let baseCurrency = interactor.baseCurrency
 
-    func didSelect(item: CurrencyItem) {
-        if !item.selected {
-            interactor.setBaseCurrency(code: item.code)
+        let viewItems = currencies.map { currency in
+            CurrencyViewItem(code: currency.code, symbol: currency.symbol, selected: currency == baseCurrency)
         }
-        router.dismiss()
+
+        view?.show(viewItems: viewItems)
     }
 
-}
+    func didSelect(index: Int) {
+        let selectedCurrency = currencies[index]
 
-extension BaseCurrencySettingsPresenter: IBaseCurrencySettingsInteractorDelegate {
+        if selectedCurrency != interactor.baseCurrency {
+            interactor.set(baseCurrency: selectedCurrency)
+        }
 
-    func didSetBaseCurrency() {
-        showItems()
+        router.dismiss()
     }
 
 }

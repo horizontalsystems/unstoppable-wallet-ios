@@ -1,6 +1,4 @@
 class BaseCurrencySettingsInteractor {
-    weak var delegate: IBaseCurrencySettingsInteractorDelegate?
-
     private let currencyManager: ICurrencyManager
 
     init(currencyManager: ICurrencyManager) {
@@ -19,9 +17,8 @@ extension BaseCurrencySettingsInteractor: IBaseCurrencySettingsInteractor {
         return currencyManager.baseCurrency
     }
 
-    func setBaseCurrency(code: String) {
-        currencyManager.setBaseCurrency(code: code)
-        delegate?.didSetBaseCurrency()
+    func set(baseCurrency: Currency) {
+        currencyManager.set(baseCurrency: baseCurrency)
     }
 
 }

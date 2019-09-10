@@ -20,7 +20,6 @@ extension BaseCurrencySettingsRouter {
         let presenter = BaseCurrencySettingsPresenter(router: router, interactor: interactor)
         let view = BaseCurrencySettingsViewController(delegate: presenter)
 
-        interactor.delegate = presenter
         presenter.view = view
         router.viewController = view
 
