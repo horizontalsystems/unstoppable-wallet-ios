@@ -2,7 +2,7 @@ import UIKit
 import UIExtensions
 import SnapKit
 
-class SettingsRightImageCell: SettingsCell {
+class RightImageCell: TitleCell {
     var rightImageView = TintImageView()
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {

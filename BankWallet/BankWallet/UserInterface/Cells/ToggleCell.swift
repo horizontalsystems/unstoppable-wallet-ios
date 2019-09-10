@@ -3,7 +3,7 @@ import SnapKit
 import RxSwift
 import RxCocoa
 
-class SettingsToggleCell: SettingsCell {
+class ToggleCell: TitleCell {
     var toggleView = UISwitch()
     var onToggle: ((Bool) -> ())?
 

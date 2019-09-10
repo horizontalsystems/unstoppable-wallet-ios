@@ -1,7 +1,7 @@
 import UIKit
 import SnapKit
 
-class SettingsRightLabelCell: SettingsCell {
+class RightLabelCell: TitleCell {
     var rightLabel = UILabel()
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {

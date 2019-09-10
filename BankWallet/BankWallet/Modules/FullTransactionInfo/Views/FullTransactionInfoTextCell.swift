@@ -1,7 +1,7 @@
 import UIKit
 import SnapKit
 
-class FullTransactionInfoTextCell: SettingsCell {
+class FullTransactionInfoTextCell: TitleCell {
     private let descriptionView = HashView()
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {

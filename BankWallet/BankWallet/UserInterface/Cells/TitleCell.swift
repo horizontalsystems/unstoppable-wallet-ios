@@ -2,7 +2,7 @@ import UIKit
 import UIExtensions
 import SnapKit
 
-class SettingsCell: AppCell {
+class TitleCell: AppCell {
     var iconImageView = TintImageView()
     var titleLabel = UILabel()
 
