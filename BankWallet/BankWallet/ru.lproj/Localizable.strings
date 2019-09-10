@@ -159,7 +159,6 @@
 // Transaction Info
 
 "tx_info.title" = "Транзакция";
-"tx_info.time" = "Время";
 "tx_info.status" = "Статус";
 "tx_info.status.pending" = "В процессе";
 "tx_info.status.confirmed" = "Подтверждено";
@@ -271,6 +270,7 @@
 // Manage Keys
 
 "settings_manage_keys.title" = "Ключи";
+"settings_manage_keys.add_key" = "Add Key";
 "settings_manage_keys.description" = "Любой, кто имеет доступ к вашим ключам, может украсть ваши средства. Храните ключи безопасно и не показывайте их никому.\n\nРезервное копирование каждого ключа необходимо для того, чтобы иметь возможность восстановить средства, если вы потеряете или сломаете ваш телефон, или приложение кошелька будет удалено.";
 "settings_manage_keys.delete" = "Удалить";
 "settings_manage_keys.backup" = "Резерв. копия";
