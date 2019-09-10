@@ -20,6 +20,7 @@ class TransactionInfoViewController: ActionSheetController {
 
         let titleItem = AlertTitleItem(
                 title: "tx_info.title".localized,
+                subtitle: DateHelper.instance.formatFullTime(from: item.date),
                 icon: UIImage(coin: item.wallet.coin),
                 iconTintColor: AppTheme.coinIconColor,
                 tag: 0,
@@ -41,9 +42,6 @@ class TransactionInfoViewController: ActionSheetController {
             let feeItem = TransactionValueItem(title: "tx_info.fee".localized, value: formattedValue, tag: 3)
             model.addItemView(feeItem)
         }
-
-        let timeItem = TransactionValueItem(title: "tx_info.time".localized, value: DateHelper.instance.formatFullTime(from: item.date), tag: 4)
-        model.addItemView(timeItem)
 
         let statusItem = TransactionStatusItem(item: item, tag: 5)
         model.addItemView(statusItem)

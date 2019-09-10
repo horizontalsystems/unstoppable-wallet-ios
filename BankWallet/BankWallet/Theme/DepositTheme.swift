@@ -1,7 +1,7 @@
 import UIKit
 
 class DepositTheme {
-    static let collectionHeight: CGFloat = 251
+    static let collectionHeight: CGFloat = 273
     static let mediumMargin: CGFloat = 12
     static let regularMargin: CGFloat = 16
 

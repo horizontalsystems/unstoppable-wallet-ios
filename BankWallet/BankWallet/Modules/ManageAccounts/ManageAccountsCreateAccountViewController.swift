@@ -2,11 +2,13 @@ import UIKit
 import ActionSheet
 
 class ManageAccountsCreateAccountViewController: ActionSheetController {
-    init(title: String, coinCodes: String, onCreate: @escaping () -> ()) {
+
+    init(title: String, subtitle: String, coinCodes: String, onCreate: @escaping () -> ()) {
         super.init(withModel: BaseAlertModel(), actionSheetThemeConfig: AppTheme.actionSheetConfig)
 
         let titleItem = AlertTitleItem(
                 title: title.localized,
+                subtitle: subtitle.localized,
                 icon: UIImage(named: "Key Icon")?.withRenderingMode(.alwaysTemplate),
                 iconTintColor: ManageAccountsTheme.alertKeyImageColor,
                 tag: 0,

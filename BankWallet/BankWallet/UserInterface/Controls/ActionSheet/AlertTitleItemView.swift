@@ -3,51 +3,24 @@ import ActionSheet
 import SnapKit
 
 class AlertTitleItemView: BaseActionItemView {
-    private let iconImageView = UIImageView()
-    private let titleLabel = UILabel()
-    private let closeButton = UIButton()
+    private let titleView = AlertTitleView(frame: .zero)
 
     override var item: AlertTitleItem? { return _item as? AlertTitleItem }
 
     override func initView() {
         super.initView()
 
-        addSubview(iconImageView)
-        iconImageView.snp.makeConstraints { maker in
-            maker.leading.top.equalToSuperview().offset(AppTheme.alertMediumMargin)
-            maker.size.equalTo(AppTheme.coinIconSize)
+        addSubview(titleView)
+        titleView.snp.makeConstraints { maker in
+            maker.edges.equalToSuperview()
         }
+        titleView.bind(title: item?.title, subtitle: item?.subtitle, image: item?.icon, tintColor: item?.iconTintColor, onClose: { [weak self] in
+            self?.item?.onClose?()
+        })
 
-        addSubview(titleLabel)
-        titleLabel.font = AppTheme.alertTitleFont
-        titleLabel.textColor = AppTheme.alertTitleColor
-        titleLabel.snp.makeConstraints { maker in
-            maker.leading.equalTo(self.iconImageView.snp.trailing).offset(AppTheme.alertSmallMargin)
-            maker.centerY.equalTo(self.iconImageView.snp.centerY)
+        item?.bindSubtitle = { [weak self] subtitle in
+            self?.titleView.bind(subtitle: subtitle)
         }
-
-        addSubview(closeButton)
-        closeButton.setImage(UIImage(named: "Close Icon")?.withRenderingMode(.alwaysTemplate), for: .normal)
-        closeButton.tintColor = AppTheme.closeButtonColor
-        closeButton.addTarget(self, action: #selector(onTapClose), for: .touchUpInside)
-        closeButton.snp.makeConstraints { maker in
-            maker.leading.equalTo(self.titleLabel.snp.trailing).offset(AppTheme.alertMediumMargin)
-            maker.trailing.equalToSuperview().offset(-AppTheme.alertMediumMargin)
-            maker.centerY.equalToSuperview()
-        }
-
-        titleLabel.text = item?.title
-
-        var image = item?.icon
-        if let color = item?.iconTintColor {
-            iconImageView.tintColor = color
-            image = image?.withRenderingMode(.alwaysTemplate)
-        }
-        iconImageView.image = image
-    }
-
-    @objc func onTapClose() {
-        item?.onClose()
     }
 
 }

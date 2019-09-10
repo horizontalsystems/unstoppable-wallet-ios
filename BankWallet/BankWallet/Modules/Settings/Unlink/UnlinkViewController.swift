@@ -20,6 +20,7 @@ class UnlinkViewController: ActionSheetController {
     func initItems() {
         let titleItem = AlertTitleItem(
                 title: "settings_manage_keys.delete.title".localized,
+                subtitle: delegate.title.localized,
                 icon: UIImage(named: "Attention Icon")?.withRenderingMode(.alwaysTemplate),
                 iconTintColor: ManageAccountsTheme.attentionColor,
                 tag: 0,

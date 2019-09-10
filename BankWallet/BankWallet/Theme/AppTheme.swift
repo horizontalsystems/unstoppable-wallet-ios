@@ -32,15 +32,19 @@ class AppTheme {
     static let alertSmallMargin: CGFloat = 8
     static let alertMediumMargin: CGFloat = 12
     static let alertBigMargin: CGFloat = 20
+    static let alertCloseWidth: CGFloat = 48
 
     static var alertBackgroundColor: UIColor { return .crypto_SteelDark_Bars }
     static let alertHeaderHeight: CGFloat = 40
     static let alertHeaderFont: UIFont = .cryptoSubhead1
     static let alertHeaderColor: UIColor = .cryptoGray
 
-    static let alertTitleHeight: CGFloat = 48
+    static let alertTitleHeight: CGFloat = 62
     static let alertTitleFont: UIFont = .cryptoHeadline2
     static var alertTitleColor: UIColor { return .crypto_White_Black }
+    static let alertSubtitleTopMargin: CGFloat = 3
+    static var alertSubtitleFont: UIFont = .cryptoCaption
+    static var alertSubtitleColor: UIColor  = .cryptoGray
 
     static let alertTextMargin: CGFloat = 16
     static let alertTextFont: UIFont = .cryptoSubhead1

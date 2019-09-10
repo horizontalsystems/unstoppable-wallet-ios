@@ -725,6 +725,7 @@
 		1A564594FC973AA332A7A9C9 /* ManageWalletsModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564FD2BE42EF4AADB0372C /* ManageWalletsModule.swift */; };
 		1A5645B889D5590A572E139A /* SyncModeTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564B3A9FB49DA8AA184B46 /* SyncModeTheme.swift */; };
 		1A5645DB413129670978BE82 /* RestoreEosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5642583B39220896DDDF98 /* RestoreEosViewController.swift */; };
+		1A5645DB43052217FAD01DB4 /* AlertTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564FE6E6C1D33D793A57FD /* AlertTitleView.swift */; };
 		1A5645E37330A25155134B58 /* SyncModeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564C4771D7403A0D9E1F04 /* SyncModeCell.swift */; };
 		1A5645EDCB2C77F13BFEB1E2 /* LockoutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564C329BD2549B51F93155 /* LockoutView.swift */; };
 		1A5645FBC36E2A73E24E3D2A /* SortTypeInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56468265EF90736E6BAEC6 /* SortTypeInteractor.swift */; };
@@ -829,6 +830,7 @@
 		1A564B57AF9E132BBE3DA4A0 /* BackupEosInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5648732652025B65889928 /* BackupEosInteractor.swift */; };
 		1A564B6E513269FED43EA6F2 /* ManageWalletsModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564FD2BE42EF4AADB0372C /* ManageWalletsModule.swift */; };
 		1A564B8F25AB6515F509B10D /* BackupTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5645D738FD93B79628E5E5 /* BackupTheme.swift */; };
+		1A564B90E3F1D1D7BB8F336D /* AlertTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564FE6E6C1D33D793A57FD /* AlertTitleView.swift */; };
 		1A564BC84E6A4F836994ABD3 /* AdapterError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564504718E7D19F379A9F7 /* AdapterError.swift */; };
 		1A564BD5E7709C07FD063961 /* TransactionsFilterTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5647CE5852E959DA7EB89A /* TransactionsFilterTheme.swift */; };
 		1A564BD87A3DD4FCC7B27B5E /* ChartData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564A481A683B1A6FA774D2 /* ChartData.swift */; };
@@ -859,6 +861,7 @@
 		1A564D2917CF5C38C84C031B /* BitcoinBaseAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56450DA6DF97C9E1FFE987 /* BitcoinBaseAdapter.swift */; };
 		1A564D29C715EE06C30C8B2B /* LaunchInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56458C7C29504755A09E00 /* LaunchInteractor.swift */; };
 		1A564D45DD956D909C7B6C16 /* OneTimeTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56468BE2370BCAA8BDA2FC /* OneTimeTimer.swift */; };
+		1A564D489283C96149A5A57A /* AlertTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564FE6E6C1D33D793A57FD /* AlertTitleView.swift */; };
 		1A564D53F049C4784CAC814D /* SyncMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564BE241BFC5DD59D0FB7C /* SyncMode.swift */; };
 		1A564D54DEE633D236F6AE38 /* TransactionViewItemLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5640AC869ADF30D3BCCAE0 /* TransactionViewItemLoader.swift */; };
 		1A564D5E4677AD5DC06ED542 /* SortTypeModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564162B152DDF4F51A713B /* SortTypeModule.swift */; };
@@ -2107,6 +2110,7 @@
 		1A564F9B9F89F533BC520074 /* BalanceSorterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BalanceSorterTests.swift; sourceTree = "<group>"; };
 		1A564FA5E8DDE76BF1257727 /* UnlockPinPresenterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnlockPinPresenterTests.swift; sourceTree = "<group>"; };
 		1A564FD2BE42EF4AADB0372C /* ManageWalletsModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManageWalletsModule.swift; sourceTree = "<group>"; };
+		1A564FE6E6C1D33D793A57FD /* AlertTitleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertTitleView.swift; sourceTree = "<group>"; };
 		1A564FE8D247C36C2478C6B5 /* TransactionCurrenciesHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionCurrenciesHeaderView.swift; sourceTree = "<group>"; };
 		2CDA251F7039B6388B930003 /* Pods_Bank_Dev.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Bank_Dev.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2FA5D02D8F5C2AE32C6FF923 /* KitCleaner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KitCleaner.swift; sourceTree = "<group>"; };
@@ -2773,6 +2777,7 @@
 				11B353C1CC41AC25C9E83EC1 /* AlertTextItemView.swift */,
 				1A564BAA72DF141198FD5B86 /* MessageItem.swift */,
 				1A564BFA2FB7E31EFFD11EAF /* MessageItemView.swift */,
+				1A564FE6E6C1D33D793A57FD /* AlertTitleView.swift */,
 			);
 			path = ActionSheet;
 			sourceTree = "<group>";
@@ -4746,6 +4751,7 @@
 				11B3518D5F8FD8E841F858B2 /* ToggleCell.swift in Sources */,
 				11B3568BE6C23380659D8510 /* MainSettingsFooter.swift in Sources */,
 				11B35A31F66F111C927A1583 /* DoubleLineCell.swift in Sources */,
+				1A5645DB43052217FAD01DB4 /* AlertTitleView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5331,6 +5337,7 @@
 				11B3586C81A2285407207ED0 /* ToggleCell.swift in Sources */,
 				11B35B3F384758B223A7218C /* MainSettingsFooter.swift in Sources */,
 				11B35314140335E6B8A84973 /* DoubleLineCell.swift in Sources */,
+				1A564B90E3F1D1D7BB8F336D /* AlertTitleView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5870,6 +5877,7 @@
 				11B3597E4E412BFE1645516D /* ToggleCell.swift in Sources */,
 				11B3540F182F3EDE74245EC7 /* MainSettingsFooter.swift in Sources */,
 				11B35607FC933B697407E976 /* DoubleLineCell.swift in Sources */,
+				1A564D489283C96149A5A57A /* AlertTitleView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
