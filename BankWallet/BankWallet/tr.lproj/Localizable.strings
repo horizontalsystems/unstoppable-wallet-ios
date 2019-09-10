@@ -159,7 +159,6 @@
 // Transaction Info
 
 "tx_info.title" = "Hesap işlemi";
-"tx_info.time" = "Tarih";
 "tx_info.status" = "Durum";
 "tx_info.status.pending" = "Devam ediyor";
 "tx_info.status.confirmed" = "Onaylandı";
@@ -271,6 +270,7 @@
 // Manage Keys
 
 "settings_manage_keys.title" = "Anahtarlar";
+"settings_manage_keys.add_key" = "Add Key";
 "settings_manage_keys.description" = "Anahtarlarınıza erişimi olan herkes cüzdan paranızı çalabilir. Anahtarları güvenli bir şekilde saklayın ve asla kimseye göstermeyin.\n\nTelefonunuzu kaybederseniz veya kırdığınızda veya sadece cüzdan uygulaması silinirse para geri yükleyebilmek için her anahtarı yedekle.";
 "settings_manage_keys.delete" = "Sil";
 "settings_manage_keys.backup" = "Yedekle";
