@@ -13,7 +13,7 @@ class DashAdapter: BitcoinBaseAdapter {
 
 
         let networkType: DashKit.NetworkType = testMode ? .testNet : .mainNet
-        dashKit = try DashKit(withWords: words, walletId: wallet.account.id, syncMode: BitcoinBaseAdapter.kitMode(from: wallet.syncMode ?? .fast), networkType: networkType, minLogLevel: .error)
+        dashKit = try DashKit(withWords: words, walletId: wallet.account.id, syncMode: BitcoinBaseAdapter.kitMode(from: wallet.syncMode ?? .fast), networkType: networkType, confirmationsThreshold: BitcoinBaseAdapter.defaultConfirmationsThreshold, minLogLevel: .error)
 
         super.init(abstractKit: dashKit)
 

@@ -76,4 +76,6 @@ class AppTheme {
     static let coinIconSize: CGFloat = 24
 
     static let closeButtonColor: UIColor = .cryptoGray
+
+    static let progressStepsCount = 3
 }
