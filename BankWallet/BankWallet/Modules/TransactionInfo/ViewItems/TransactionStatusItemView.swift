@@ -7,7 +7,7 @@ class TransactionStatusItemView: BaseActionItemView {
     let titleLabel = UILabel()
     let statusTextLabel = UILabel()
     let iconImageView = UIImageView()
-    let barsProgressView = BarsProgressView(count: 6, barWidth: TransactionInfoTheme.barsProgressBarWidth, color: TransactionInfoTheme.barsProgressColor, inactiveColor: TransactionInfoTheme.barsProgressInactiveColor)
+    let barsProgressView = BarsProgressView(count: AppTheme.progressStepsCount, barWidth: TransactionInfoTheme.barsProgressBarWidth, color: TransactionInfoTheme.barsProgressColor, inactiveColor: TransactionInfoTheme.barsProgressInactiveColor)
 
     override var item: TransactionStatusItem? { return _item as? TransactionStatusItem }
 
@@ -61,7 +61,7 @@ class TransactionStatusItemView: BaseActionItemView {
 
         if let progress = item?.progress {
             barsProgressView.isHidden = false
-            barsProgressView.filledCount = Int(floor(6 * progress))
+            barsProgressView.filledCount = Int(Double(AppTheme.progressStepsCount) * progress)
         } else {
             barsProgressView.isHidden = true
         }

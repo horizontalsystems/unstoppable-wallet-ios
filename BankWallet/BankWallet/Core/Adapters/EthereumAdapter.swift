@@ -25,7 +25,7 @@ class EthereumAdapter: EthereumBaseAdapter {
 
         if let significand = Decimal(string: transaction.value) {
             let transactionAmount = Decimal(sign: .plus, exponent: -decimal, significand: significand)
-            
+
             if from.mine {
                 amount -= transactionAmount
             }

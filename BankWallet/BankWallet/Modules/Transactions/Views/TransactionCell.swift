@@ -12,7 +12,7 @@ class TransactionCell: UITableViewCell {
 
     var pendingImageView = UIImageView()
     var completedImageView = UIImageView()
-    var barsProgressView = BarsProgressView(count: 6, barWidth: TransactionsTheme.barsProgressBarWidth, color: TransactionsTheme.barsProgressColor, inactiveColor: TransactionsTheme.barsProgressInactiveColor)
+    var barsProgressView = BarsProgressView(count: AppTheme.progressStepsCount, barWidth: TransactionsTheme.barsProgressBarWidth, color: TransactionsTheme.barsProgressColor, inactiveColor: TransactionsTheme.barsProgressInactiveColor)
 
     var currencyAmountLabel = UILabel()
     var amountLabel = UILabel()
@@ -148,7 +148,7 @@ class TransactionCell: UITableViewCell {
             completedImageView.isHidden = true
             timeLabel.isHidden = false
 
-            barsProgressView.filledCount = Int(floor(6 * progress))
+            barsProgressView.filledCount = Int(Double(AppTheme.progressStepsCount) * progress)
         case .completed:
             pendingImageView.isHidden = true
             barsProgressView.isHidden = true

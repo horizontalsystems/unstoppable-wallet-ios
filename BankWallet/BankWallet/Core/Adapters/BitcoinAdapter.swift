@@ -11,7 +11,7 @@ class BitcoinAdapter: BitcoinBaseAdapter {
         }
 
         let networkType: BitcoinKit.NetworkType = testMode ? .testNet : .mainNet
-        bitcoinKit = try BitcoinKit(withWords: words, walletId: wallet.account.id, syncMode: BitcoinBaseAdapter.kitMode(from: wallet.syncMode ?? .fast), networkType: networkType, minLogLevel: .error)
+        bitcoinKit = try BitcoinKit(withWords: words, walletId: wallet.account.id, syncMode: BitcoinBaseAdapter.kitMode(from: wallet.syncMode ?? .fast), networkType: networkType, confirmationsThreshold: BitcoinBaseAdapter.defaultConfirmationsThreshold, minLogLevel: .error)
 
         super.init(abstractKit: bitcoinKit)
 

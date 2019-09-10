@@ -2,6 +2,8 @@ import BitcoinCore
 import RxSwift
 
 class BitcoinBaseAdapter {
+    static let defaultConfirmationsThreshold = 3
+
     var receiveAddressScriptType: ScriptType { return .p2pkh }
     var changeAddressScriptType: ScriptType { return .p2pkh }
 
@@ -202,7 +204,7 @@ extension BitcoinBaseAdapter {
 extension BitcoinBaseAdapter: ITransactionsAdapter {
 
     var confirmationsThreshold: Int {
-        return 6
+        return BitcoinBaseAdapter.defaultConfirmationsThreshold
     }
 
     var lastBlockHeight: Int? {
