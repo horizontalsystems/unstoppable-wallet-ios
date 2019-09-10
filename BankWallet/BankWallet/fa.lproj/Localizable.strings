@@ -159,7 +159,6 @@
 // Transaction Info
 
 "tx_info.title" = "تراکنش";
-"tx_info.time" = "زمان";
 "tx_info.status" = "وضيعت";
 "tx_info.status.pending" = "در حالت انتظار";
 "tx_info.status.confirmed" = "تاييد شد";
@@ -271,6 +270,7 @@
 // Manage Keys
 
 "settings_manage_keys.title" = "Keys";
+"settings_manage_keys.add_key" = "Add Key";
 "settings_manage_keys.description" = "Anyone with access to your Keys can steal your wallet funds. Store keys safely and never show them to anyone.\n\nBackup each key to be able to restore funds if you lose or break your phone, or simply the wallet app gets deleted.";
 "settings_manage_keys.delete" = "Delete";
 "settings_manage_keys.backup" = "Backup";
