@@ -364,7 +364,7 @@ protocol ICurrencyManager {
     var baseCurrency: Currency { get }
     var baseCurrencyUpdatedSignal: Signal { get }
 
-    func setBaseCurrency(code: String)
+    func set(baseCurrency: Currency)
 }
 
 protocol IFullTransactionDataProviderManager {

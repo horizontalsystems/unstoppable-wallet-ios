@@ -1,21 +1,16 @@
 import UIKit
 import SectionsTableView
 
-class BaseCurrencySettingsViewController: WalletViewController, SectionsDataSource {
+class BaseCurrencySettingsViewController: WalletViewController {
     private let delegate: IBaseCurrencySettingsViewDelegate
 
-    private var items = [CurrencyItem]()
-
-    let tableView = SectionsTableView(style: .grouped)
+    private var items = [CurrencyViewItem]()
+    private let tableView = SectionsTableView(style: .grouped)
 
     init(delegate: IBaseCurrencySettingsViewDelegate) {
         self.delegate = delegate
 
         super.init(nibName: nil, bundle: nil)
-
-        tableView.registerCell(forClass: DoubleLineCell.self)
-        tableView.sectionDataSource = self
-        tableView.separatorStyle = .none
 
         hidesBottomBarWhenPushed = true
     }
@@ -29,37 +24,48 @@ class BaseCurrencySettingsViewController: WalletViewController, SectionsDataSour
 
         title = "settings_base_currency.title".localized
 
+        tableView.registerCell(forClass: DoubleLineCell.self)
+        tableView.sectionDataSource = self
+
         tableView.backgroundColor = .clear
+        tableView.separatorStyle = .none
+
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in
             maker.edges.equalToSuperview()
         }
 
         delegate.viewDidLoad()
+        tableView.buildSections()
     }
 
+}
+
+extension BaseCurrencySettingsViewController: SectionsDataSource {
+
     func buildSections() -> [SectionProtocol] {
-        var sections = [SectionProtocol]()
-
-        let itemsCount = items.count
-        sections.append(Section(id: "currencies", headerState: .margin(height: SettingsTheme.subSettingsHeaderHeight), footerState: .margin(height: SettingsTheme.subSettingsHeaderHeight), rows: items.enumerated().map { (index, item) in
-            Row<DoubleLineCell>(id: item.code, height: SettingsTheme.doubleLineCellHeight, bind: { cell, _ in
-                cell.bind(icon: UIImage(named: item.code), title: item.code, subtitle: item.symbol, selected: item.selected, last: index == itemsCount - 1)
-            }, action: { [weak self] _ in
-                self?.delegate.didSelect(item: item)
-            })
-        }))
-
-        return sections
+        return [
+            Section(
+                    id: "currencies",
+                    headerState: .margin(height: SettingsTheme.subSettingsHeaderHeight),
+                    footerState: .margin(height: SettingsTheme.subSettingsHeaderHeight),
+                    rows: items.enumerated().map { (index, item) in
+                        Row<DoubleLineCell>(id: item.code, height: SettingsTheme.doubleLineCellHeight, bind: { [unowned self] cell, _ in
+                            cell.bind(icon: UIImage(named: item.code), title: item.code, subtitle: item.symbol, selected: item.selected, last: index == self.items.count - 1)
+                        }, action: { [weak self] _ in
+                            self?.delegate.didSelect(index: index)
+                        })
+                    }
+            )
+        ]
     }
 
 }
 
 extension BaseCurrencySettingsViewController: IBaseCurrencySettingsView {
 
-    func show(items: [CurrencyItem]) {
-        self.items = items
-        tableView.reload()
+    func show(viewItems: [CurrencyViewItem]) {
+        self.items = viewItems
     }
 
 }

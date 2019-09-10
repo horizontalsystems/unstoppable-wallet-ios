@@ -29,8 +29,8 @@ extension CurrencyManager: ICurrencyManager {
         return currencies[0]
     }
 
-    func setBaseCurrency(code: String) {
-        localStorage.baseCurrencyCode = code
+    func set(baseCurrency: Currency) {
+        localStorage.baseCurrencyCode = baseCurrency.code
 
         baseCurrencyUpdatedSignal.notify()
     }
