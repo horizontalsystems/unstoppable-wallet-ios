@@ -159,7 +159,6 @@
 // Transaction Info
 
 "tx_info.title" = "Transacción";
-"tx_info.time" = "Hora";
 "tx_info.status" = "Estado";
 "tx_info.status.pending" = "Pendiente";
 "tx_info.status.confirmed" = "Confirmado";
@@ -271,6 +270,7 @@
 // Manage Keys
 
 "settings_manage_keys.title" = "Claves";
+"settings_manage_keys.add_key" = "Add Key";
 "settings_manage_keys.description" = "Cualquiera persona con acceso a sus claves puede robar los fondos de su monedero. Almacene las claves de forma segura y nunca se las muestre a nadie.\n\nRespalde cada clave para que pueda restaurar los fondos en caso de que su teléfono se pierda o se averíe, o por el simple hecho de que la aplicación se borre de su teléfono.";
 "settings_manage_keys.delete" = "Eliminar";
 "settings_manage_keys.backup" = "Copia de seguridad";
