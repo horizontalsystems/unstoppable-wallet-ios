@@ -159,7 +159,6 @@
 // Transaction Info
 
 "tx_info.title" = "Transaction";
-"tx_info.time" = "Date";
 "tx_info.status" = "Statut";
 "tx_info.status.pending" = "En attente";
 "tx_info.status.confirmed" = "Confirmé";
@@ -271,6 +270,7 @@
 // Manage Keys
 
 "settings_manage_keys.title" = "Clés";
+"settings_manage_keys.add_key" = "Add Key";
 "settings_manage_keys.description" = "Celui qui a l'accès à vos clés peut voler vos fonds de porte-monnaie. Stockez les clés en toute sécurité et ne les montrez jamais à quelqu'un.\n\nSauvegardez chaque clé pour pouvoir restaurer des fonds si vous perdez ou cassez votre portable, ou simplement l'application de portefeuille est supprimée.";
 "settings_manage_keys.delete" = "Supprimer";
 "settings_manage_keys.backup" = "Sauvegarde";
