@@ -159,7 +159,6 @@
 // Transaction Info
 
 "tx_info.title" = "Transaktion";
-"tx_info.time" = "Zeit";
 "tx_info.status" = "Status";
 "tx_info.status.pending" = "Anstehend";
 "tx_info.status.confirmed" = "Bestätigt";
@@ -271,6 +270,7 @@
 // Manage Keys
 
 "settings_manage_keys.title" = "Schlüssel";
+"settings_manage_keys.add_key" = "Add Key";
 "settings_manage_keys.description" = "Jedermann mit Zugang zu Ihren Schlüsseln kann Ihr Wallet Geldbetrag stehlen. Bewahren Sie den Schlüssel sicher auf und zeigen Sie ihn niemandem.\n\nErstellen Sie ein Backup für jeden Schlüssel, um bei Verlust oder Unterbrechung Ihres Handys, oder wenn einfach die Wallet-App gelöscht wird, das Geld wiederherstellen zu können.";
 "settings_manage_keys.delete" = "Löschen";
 "settings_manage_keys.backup" = "Sicherung";
