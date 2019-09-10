@@ -159,7 +159,6 @@
 // Transaction Info
 
 "tx_info.title" = "交易";
-"tx_info.time" = "时间";
 "tx_info.status" = "状态";
 "tx_info.status.pending" = "待处理";
 "tx_info.status.confirmed" = "已确认";
@@ -271,6 +270,7 @@
 // Manage Keys
 
 "settings_manage_keys.title" = "密钥";
+"settings_manage_keys.add_key" = "Add Key";
 "settings_manage_keys.description" = "任何能获取您密钥的人都能够窃取您钱包中的资金。保存好密钥且绝不能向任何人透露。\n\n保存每一个密钥将能够在手机丢失或出现故障，或者在钱包应用被删除的情况下恢复资金。";
 "settings_manage_keys.delete" = "删除";
 "settings_manage_keys.backup" = "备份";
