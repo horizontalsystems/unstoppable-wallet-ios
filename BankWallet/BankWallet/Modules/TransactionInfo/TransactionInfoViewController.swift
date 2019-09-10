@@ -43,31 +43,31 @@ class TransactionInfoViewController: ActionSheetController {
             model.addItemView(feeItem)
         }
 
-        let statusItem = TransactionStatusItem(item: item, tag: 5)
+        let statusItem = TransactionStatusItem(item: item, tag: 4)
         model.addItemView(statusItem)
 
         if item.showFromAddress, let from = item.from {
-            model.addItemView(TransactionFromToHashItem(title: "tx_info.from_hash".localized, value: from, tag: 6, required: true, onHashTap: { [weak self] in
+            model.addItemView(TransactionFromToHashItem(title: "tx_info.from_hash".localized, value: from, tag: 5, required: true, onHashTap: { [weak self] in
                 self?.delegate.onCopy(value: from)
             }))
         }
 
         if let to = item.to {
-            model.addItemView(TransactionFromToHashItem(title: "tx_info.to_hash".localized, value: to, tag: 7, required: true, onHashTap: { [weak self] in
+            model.addItemView(TransactionFromToHashItem(title: "tx_info.to_hash".localized, value: to, tag: 6, required: true, onHashTap: { [weak self] in
                 self?.delegate.onCopy(value: to)
             }))
         }
 
-        model.addItemView(TransactionIdItem(value: item.transactionHash, tag: 8, onHashTap: { [weak self] in
+        model.addItemView(TransactionIdItem(value: item.transactionHash, tag: 7, onHashTap: { [weak self] in
             self?.delegate.onCopy(value: item.transactionHash)
         }))
 
         if item.sentToSelf {
-            let infoItem = TransactionNoteItem(note: "* " + "tx_info.note".localized, tag: 9)
+            let infoItem = TransactionNoteItem(note: "* " + "tx_info.note".localized, tag: 8)
             model.addItemView(infoItem)
         }
 
-        let openFullInfoItem = TransactionOpenFullInfoItem(tag: 10, required: true, onTap: { [weak self] in
+        let openFullInfoItem = TransactionOpenFullInfoItem(tag: 9, required: true, onTap: { [weak self] in
             self?.delegate.openFullInfo()
         })
         model.addItemView(openFullInfoItem)

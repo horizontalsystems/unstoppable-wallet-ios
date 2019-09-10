@@ -22,11 +22,9 @@ class ChartViewController: ActionSheetController {
         let coin = delegate.coin
         titleItem = AlertTitleItem(
                 title: "chart.title".localized(coin.title),
-                subtitle: nil,
                 icon: UIImage(coin: coin),
                 iconTintColor: AppTheme.coinIconColor,
-                tag: 0,
-                onClose: nil
+                tag: 0
         )
 
         super.init(withModel: BaseAlertModel(), actionSheetThemeConfig: AppTheme.actionSheetConfig)

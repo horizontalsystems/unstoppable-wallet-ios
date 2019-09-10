@@ -9,7 +9,7 @@ class AlertTitleItem: BaseActionItem {
 
     var bindSubtitle: ((String?) -> ())?
 
-    init(title: String, subtitle: String?, icon: UIImage?, iconTintColor: UIColor?, tag: Int, onClose: (() -> ())?) {
+    init(title: String, subtitle: String? = nil, icon: UIImage? = nil, iconTintColor: UIColor? = nil, tag: Int, onClose: (() -> ())? = nil) {
         self.title = title
         self.subtitle = subtitle
         self.icon = icon
