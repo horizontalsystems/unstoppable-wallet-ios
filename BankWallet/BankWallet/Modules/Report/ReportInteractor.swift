@@ -1,6 +1,4 @@
 class ReportInteractor {
-    weak var delegate: IReportInteractorDelegate?
-
     private let appConfigProvider: IAppConfigProvider
     private let pasteboardManager: IPasteboardManager
 

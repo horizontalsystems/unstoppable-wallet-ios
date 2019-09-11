@@ -13,17 +13,14 @@ class ReportPresenter {
 
 extension ReportPresenter: IReportViewDelegate {
 
-    var email: String {
-        return interactor.email
-    }
-
-    var telegramGroup: String {
-        return "@\(interactor.telegramGroup)"
+    func viewDidLoad() {
+        view?.set(email: interactor.email)
+        view?.set(telegramGroup: "@\(interactor.telegramGroup)")
     }
 
     func didTapEmail() {
         if router.canSendMail {
-            router.openSendMail(recipient: email)
+            router.openSendMail(recipient: interactor.email)
         } else {
             interactor.copyToClipboard(string: interactor.email)
             view?.showCopied()
@@ -34,7 +31,4 @@ extension ReportPresenter: IReportViewDelegate {
         router.openTelegram(group: interactor.telegramGroup)
     }
 
-}
-
-extension ReportPresenter: IReportInteractorDelegate {
 }
