@@ -50,7 +50,6 @@ extension ReportRouter {
         let viewController = ReportViewController(delegate: presenter)
 
         presenter.view = viewController
-        interactor.delegate = presenter
         router.viewController = viewController
 
         return viewController

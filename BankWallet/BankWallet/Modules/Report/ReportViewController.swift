@@ -1,10 +1,13 @@
 import UIKit
 import SectionsTableView
 
-class ReportViewController: WalletViewController, SectionsDataSource {
+class ReportViewController: WalletViewController {
     private let delegate: IReportViewDelegate
 
     private let tableView = SectionsTableView(style: .grouped)
+
+    private var email: String?
+    private var telegramGroup: String?
 
     init(delegate: IReportViewDelegate) {
         self.delegate = delegate
@@ -23,45 +26,57 @@ class ReportViewController: WalletViewController, SectionsDataSource {
 
         title = "settings.report_problem.title".localized
 
+        tableView.registerCell(forClass: DoubleLineCell.self)
+        tableView.sectionDataSource = self
+
         tableView.backgroundColor = .clear
         tableView.separatorStyle = .none
-
-        tableView.sectionDataSource = self
-        tableView.registerCell(forClass: DoubleLineCell.self)
 
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in
             maker.edges.equalToSuperview()
         }
 
-        tableView.reload()
+        delegate.viewDidLoad()
+        tableView.buildSections()
     }
 
+}
+
+extension ReportViewController: SectionsDataSource {
+
     func buildSections() -> [SectionProtocol] {
-        var sections = [SectionProtocol]()
-
-        var rows = [RowProtocol]()
-
-        rows.append(Row<DoubleLineCell>(id: "email", hash: "email", height: SettingsTheme.doubleLineCellHeight, autoDeselect: true, bind: { [unowned self] cell, _ in
-            cell.bind(icon: UIImage(named: "Email Icon"), tintIcon: true, title: "settings.report_problem.email".localized, subtitle: self.delegate.email)
-        }, action: { [weak self] _ in
-            self?.delegate.didTapEmail()
-        }))
-
-        rows.append(Row<DoubleLineCell>(id: "telegram", hash: "telegram", height: SettingsTheme.doubleLineCellHeight, autoDeselect: true, bind: { [unowned self] cell, _ in
-            cell.bind(icon: UIImage(named: "Telegram Icon"), tintIcon: true, title: "settings.report_problem.telegram".localized, subtitle: self.delegate.telegramGroup, last: true)
-        }, action: { [weak self] _ in
-            self?.delegate.didTapTelegram()
-        }))
-
-        sections.append(Section(id: "section", headerState: .margin(height: SettingsTheme.subSettingsHeaderHeight), rows: rows))
-
-        return sections
+        return [
+            Section(
+                    id: "section",
+                    headerState: .margin(height: SettingsTheme.subSettingsHeaderHeight),
+                    rows: [
+                        Row<DoubleLineCell>(id: "email", hash: "email", height: SettingsTheme.doubleLineCellHeight, autoDeselect: true, bind: { [weak self] cell, _ in
+                            cell.bind(icon: UIImage(named: "Email Icon"), tintIcon: true, title: "settings.report_problem.email".localized, subtitle: self?.email)
+                        }, action: { [weak self] _ in
+                            self?.delegate.didTapEmail()
+                        }),
+                        Row<DoubleLineCell>(id: "telegram", hash: "telegram", height: SettingsTheme.doubleLineCellHeight, autoDeselect: true, bind: { [weak self] cell, _ in
+                            cell.bind(icon: UIImage(named: "Telegram Icon"), tintIcon: true, title: "settings.report_problem.telegram".localized, subtitle: self?.telegramGroup, last: true)
+                        }, action: { [weak self] _ in
+                            self?.delegate.didTapTelegram()
+                        })
+                    ]
+            )
+        ]
     }
 
 }
 
 extension ReportViewController: IReportView {
+
+    func set(email: String) {
+        self.email = email
+    }
+
+    func set(telegramGroup: String) {
+        self.telegramGroup = telegramGroup
+    }
 
     func showCopied() {
         HudHelper.instance.showSuccess(title: "alert.copied".localized)

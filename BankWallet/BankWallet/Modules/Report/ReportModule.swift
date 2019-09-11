@@ -1,10 +1,11 @@
 protocol IReportView: class {
+    func set(email: String)
+    func set(telegramGroup: String)
     func showCopied()
 }
 
 protocol IReportViewDelegate {
-    var email: String { get }
-    var telegramGroup: String { get }
+    func viewDidLoad()
     func didTapEmail()
     func didTapTelegram()
 }
@@ -13,9 +14,6 @@ protocol IReportInteractor {
     var email: String { get }
     var telegramGroup: String { get }
     func copyToClipboard(string: String)
-}
-
-protocol IReportInteractorDelegate: class {
 }
 
 protocol IReportRouter {

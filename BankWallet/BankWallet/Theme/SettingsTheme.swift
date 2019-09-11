@@ -28,7 +28,7 @@ class SettingsTheme {
     static let topHeaderHeight: CGFloat = 16
     static let subSettingsHeaderHeight: CGFloat = 16
     static let headerHeight: CGFloat = 32
-    static let subtitleFont = UIFont.cryptoBody
+    static let subtitleFont = UIFont.cryptoSubhead2
     static let subtitleColor = UIColor.cryptoGray
     static let onlineSubtitleColor = UIColor.cryptoGreen
     static let offlineSubtitleColor = UIColor.cryptoRed
