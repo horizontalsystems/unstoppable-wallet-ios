@@ -33,9 +33,6 @@ class NumPad: UICollectionView {
 
         formatter.numberStyle = .decimal
 
-        layout.minimumInteritemSpacing = NumPadTheme.itemSpacing
-        layout.minimumLineSpacing = NumPadTheme.lineSpacing
-
         register(NumPadNumberCell.self, forCellWithReuseIdentifier: String(describing: NumPadNumberCell.self))
         register(NumPadImageCell.self, forCellWithReuseIdentifier: String(describing: NumPadImageCell.self))
 
@@ -44,7 +41,7 @@ class NumPad: UICollectionView {
         isScrollEnabled = false
 
         let localizedOne = format(number: 1)
-        cells.append(.number(number: localizedOne, letters: style.contains(.letters) ? "" : nil, filled: true, action: { [weak self] in self?.numPadDelegate?.numPadDidClick(digit: localizedOne) }))
+        cells.append(.number(number: localizedOne, letters: style.contains(.letters) ? " " : nil, filled: true, action: { [weak self] in self?.numPadDelegate?.numPadDidClick(digit: localizedOne) }))
         for i in 2...9 {
             let localizedNumber = format(number: i)
             cells.append(.number(number: localizedNumber, letters: letters(for: i), filled: true, action: { [weak self] in self?.numPadDelegate?.numPadDidClick(digit: localizedNumber) }))
@@ -63,12 +60,28 @@ class NumPad: UICollectionView {
         fatalError("init(coder:) has not been implemented")
     }
 
+    private var itemWidth: CGFloat {
+        return floor(bounds.width / NumPadTheme.itemSizeRatio)
+    }
+
+    private var interitemSpacing: CGFloat {
+        return floor((bounds.width - 3 * bounds.width / NumPadTheme.itemSizeRatio) / 2)
+    }
+
+    private var lineSpacing: CGFloat {
+        return floor(bounds.width / NumPadTheme.itemSizeRatio / 5)
+    }
+
     private func letters(for index: Int) -> String? {
         return style.contains(.letters) ? "numpad_\(index)".localized : nil
     }
 
     private func format(number: Int) -> String {
         return formatter.string(from: number as NSNumber) ?? ""
+    }
+
+    public func height(for width: CGFloat) -> CGFloat {
+        return ceil(4.6 * width / NumPadTheme.itemSizeRatio)
     }
 
 }
@@ -98,7 +111,7 @@ extension NumPad: UICollectionViewDelegate {
         switch cells[indexPath.item] {
         case .number(let number, let letters, let filled, let action):
             if let cell = cell as? NumPadNumberCell {
-                cell.bind(number: number, letters: letters, filled: filled, onTap: action)
+                cell.bind(number: number, letters: letters, filled: filled, cornerRadius: ceil(itemWidth / 2), onTap: action)
             }
         case .image(let image, let pressedImage, let action):
             if let cell = cell as? NumPadImageCell {
@@ -112,9 +125,15 @@ extension NumPad: UICollectionViewDelegate {
 extension NumPad: UICollectionViewDelegateFlowLayout {
 
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        var width = Double((bounds.size.width - NumPadTheme.itemSpacing * 2) / 3)
-        width.round(.towardZero)
-        return CGSize(width: CGFloat(width), height: NumPadTheme.itemHeight)
+        return CGSize(width: itemWidth, height: itemWidth)
+    }
+
+    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return interitemSpacing
+    }
+
+    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return lineSpacing
     }
 
 }
@@ -122,6 +141,7 @@ extension NumPad: UICollectionViewDelegateFlowLayout {
 class NumPadNumberCell: UICollectionViewCell {
 
     private let button = UIButton()
+    private let textHolderView = UIView()
     private let numberLabel = UILabel()
     private let lettersLabel = UILabel()
     private var onTap: (() -> ())?
@@ -135,18 +155,20 @@ class NumPadNumberCell: UICollectionViewCell {
         button.snp.makeConstraints { maker in
             maker.edges.equalToSuperview()
         }
+        button.addSubview(textHolderView)
+        textHolderView.snp.makeConstraints { maker in
+            maker.center.equalToSuperview()
+            maker.leading.greaterThanOrEqualToSuperview()
+            maker.trailing.lessThanOrEqualToSuperview()
+        }
 
         numberLabel.font = NumPadTheme.numberFont
         numberLabel.textColor = NumPadTheme.numberColor
-        button.addSubview(numberLabel)
+        textHolderView.addSubview(numberLabel)
 
         lettersLabel.font = NumPadTheme.lettersFont
         lettersLabel.textColor = NumPadTheme.lettersColor
-        button.addSubview(lettersLabel)
-        lettersLabel.snp.makeConstraints { maker in
-            maker.centerX.equalToSuperview()
-            maker.top.equalTo(numberLabel.snp.bottom)
-        }
+        textHolderView.addSubview(lettersLabel)
 
         button.addTarget(self, action: #selector(didTapButton), for: .touchUpInside)
     }
@@ -155,7 +177,8 @@ class NumPadNumberCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func bind(number: String, letters: String?, filled: Bool, onTap: @escaping () -> ()) {
+    func bind(number: String, letters: String?, filled: Bool, cornerRadius: CGFloat, onTap: @escaping () -> ()) {
+        button.cornerRadius = cornerRadius
         if filled {
             button.borderColor = NumPadTheme.itemBorderColor
             button.setBackgroundColor(color: NumPadTheme.buttonBackgroundColor, forState: .normal)
@@ -176,9 +199,17 @@ class NumPadNumberCell: UICollectionViewCell {
             maker.centerX.equalToSuperview()
 
             if letters == nil {
-                maker.top.equalToSuperview().offset(NumPadTheme.numberTopMargin)
+                maker.centerY.equalToSuperview()
             } else {
-                maker.top.equalToSuperview().offset(NumPadTheme.letteredNumberTopMargin)
+                maker.top.equalToSuperview()
+            }
+        }
+        lettersLabel.snp.remakeConstraints { maker in
+            maker.centerX.equalToSuperview()
+
+            if letters != nil {
+                maker.top.equalTo(numberLabel.snp.bottom).offset(-NumPadTheme.letteredNumberTopMargin)
+                maker.bottom.equalToSuperview()
             }
         }
     }
