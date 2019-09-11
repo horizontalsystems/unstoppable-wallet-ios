@@ -1,14 +1,18 @@
 import UIKit
 
 class NumPadTheme {
-    static let itemSizeRatio: CGFloat = 3.6
+    static let columnCount: CGFloat = 3
+    static let rowCount: CGFloat = 4
+
+    static let itemSizeRatio: CGFloat = 1.2
+    static let itemLineSpacingRatio: CGFloat = 5
 
     static let itemBorderWidth: CGFloat = 1
-    static var itemBorderColor: UIColor { return .appSteel20 }
+    static let itemBorderColor: UIColor = .appSteel20
     static let itemCornerRadius: CGFloat = 36
 
-    static var buttonBackgroundColor: UIColor { return .crypto_Steel20_White }
-    static var buttonBackgroundColorHighlighted: UIColor { return .crypto_Steel20_Steel40 }
+    static let buttonBackgroundColor: UIColor = .clear
+    static var buttonBackgroundColorHighlighted: UIColor { return App.theme.colorLawrence }
 
     static let numberFont: UIFont = .cryptoTitle2Regular
     static var numberColor: UIColor { return App.theme.colorLeah }

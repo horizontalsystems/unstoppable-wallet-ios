@@ -61,15 +61,15 @@ class NumPad: UICollectionView {
     }
 
     private var itemWidth: CGFloat {
-        return floor(bounds.width / NumPadTheme.itemSizeRatio)
+        return floor(bounds.width / (NumPadTheme.columnCount * NumPadTheme.itemSizeRatio))      // Width for column count digit items
     }
 
     private var interitemSpacing: CGFloat {
-        return floor((bounds.width - 3 * bounds.width / NumPadTheme.itemSizeRatio) / 2)
+        return floor((bounds.width - NumPadTheme.columnCount * bounds.width / (NumPadTheme.columnCount * NumPadTheme.itemSizeRatio)) / (NumPadTheme.columnCount - 1)) // width witout items divided on interitem spacing count
     }
 
     private var lineSpacing: CGFloat {
-        return floor(bounds.width / NumPadTheme.itemSizeRatio / 5)
+        return floor(bounds.width / (NumPadTheme.columnCount * NumPadTheme.itemSizeRatio) / NumPadTheme.itemLineSpacingRatio)   // height for line spacing
     }
 
     private func letters(for index: Int) -> String? {
@@ -81,7 +81,7 @@ class NumPad: UICollectionView {
     }
 
     public func height(for width: CGFloat) -> CGFloat {
-        return ceil(4.6 * width / NumPadTheme.itemSizeRatio)
+        return ceil(NumPadTheme.rowCount * width / (NumPadTheme.columnCount * NumPadTheme.itemSizeRatio) + (NumPadTheme.rowCount - 1) * width / (NumPadTheme.columnCount * NumPadTheme.itemSizeRatio) /  NumPadTheme.itemLineSpacingRatio) // sum of item heights and line spacing between them
     }
 
 }
