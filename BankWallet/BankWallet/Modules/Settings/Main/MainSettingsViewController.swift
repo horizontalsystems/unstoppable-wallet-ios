@@ -183,7 +183,7 @@ extension MainSettingsViewController: IMainSettingsView {
         self.currentBaseCurrency = currentBaseCurrency
     }
 
-    func set(currentLanguage: String) {
+    func set(currentLanguage: String?) {
         self.currentLanguage = currentLanguage
     }
 

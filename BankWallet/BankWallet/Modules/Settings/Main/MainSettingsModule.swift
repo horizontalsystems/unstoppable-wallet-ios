@@ -3,7 +3,7 @@ protocol IMainSettingsView: class {
 
     func set(allBackedUp: Bool)
     func set(currentBaseCurrency: String)
-    func set(currentLanguage: String)
+    func set(currentLanguage: String?)
     func set(lightMode: Bool)
     func set(appVersion: String)
 }
@@ -25,7 +25,7 @@ protocol IMainSettingsInteractor: AnyObject {
     var companyWebPageLink: String { get }
     var appWebPageLink: String { get }
     var allBackedUp: Bool { get }
-    var currentLanguageDisplayName: String { get }
+    var currentLanguageDisplayName: String? { get }
     var baseCurrency: Currency { get }
     var lightMode: Bool { get set }
     var appVersion: String { get }

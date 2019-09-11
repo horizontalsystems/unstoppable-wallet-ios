@@ -1,36 +1,33 @@
 class LanguageSettingsInteractor {
-    weak var delegate: ILanguageSettingsInteractorDelegate?
-
     private var languageManager: ILanguageManager
-    private let localizationManager: ILocalizationManager
 
-    init(languageManager: ILanguageManager, localizationManager: ILocalizationManager) {
+    init(languageManager: ILanguageManager) {
         self.languageManager = languageManager
-        self.localizationManager = localizationManager
     }
 
 }
 
 extension LanguageSettingsInteractor: ILanguageSettingsInteractor {
 
-    var items: [LanguageItem] {
-        let currentLanguage = languageManager.currentLanguage
-
-        return localizationManager.availableLanguages
-                .map { language in
-                    LanguageItem(
-                            id: language,
-                            title: localizationManager.displayName(forLanguage: language, inLanguage: currentLanguage),
-                            subtitle: localizationManager.displayName(forLanguage: language, inLanguage: language),
-                            current: language == currentLanguage
-                    )
-                }
-                .sorted()
+    var currentLanguage: String {
+        get {
+            return languageManager.currentLanguage
+        }
+        set {
+            languageManager.currentLanguage = newValue
+        }
     }
 
-    func setCurrentLanguage(with item: LanguageItem) {
-        languageManager.currentLanguage = item.id
-        delegate?.didSetCurrentLanguage()
+    var availableLanguages: [String] {
+        return languageManager.availableLanguages
+    }
+
+    func displayName(language: String) -> String? {
+        return languageManager.displayName(language: language)
+    }
+
+    func nativeDisplayName(language: String) -> String? {
+        return languageManager.nativeDisplayName(language: language)
     }
 
 }

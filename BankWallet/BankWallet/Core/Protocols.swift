@@ -45,21 +45,10 @@ protocol ISecureStorage: class {
 
 protocol ILanguageManager {
     var currentLanguage: String { get set }
-    var displayNameForCurrentLanguage: String { get }
-
-    func localize(string: String) -> String
-    func localize(string: String, arguments: [CVarArg]) -> String
-}
-
-protocol ILocalizationManager {
-    var locale: Locale? { get }
-    var preferredLanguage: String? { get }
     var availableLanguages: [String] { get }
-    func displayName(forLanguage language: String, inLanguage: String) -> String
-
-    func setLocale(forLanguage language: String)
-    func localize(string: String, language: String) -> String?
-    func format(localizedString: String, arguments: [CVarArg]) -> String
+    var currentLanguageDisplayName: String? { get }
+    func displayName(language: String) -> String?
+    func nativeDisplayName(language: String) -> String?
 }
 
 protocol IAdapterManager: class {
@@ -359,12 +348,10 @@ protocol ITransactionRecordStorage {
     func clearRecords()
 }
 
-protocol ICurrencyManager {
+protocol ICurrencyManager: AnyObject {
+    var baseCurrency: Currency { get set }
     var currencies: [Currency] { get }
-    var baseCurrency: Currency { get }
     var baseCurrencyUpdatedSignal: Signal { get }
-
-    func set(baseCurrency: Currency)
 }
 
 protocol IFullTransactionDataProviderManager {

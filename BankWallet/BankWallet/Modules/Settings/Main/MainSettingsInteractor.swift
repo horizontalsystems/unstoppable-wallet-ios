@@ -53,8 +53,8 @@ extension MainSettingsInteractor: IMainSettingsInteractor {
         return backupManager.allBackedUp
     }
 
-    var currentLanguageDisplayName: String {
-        return languageManager.displayNameForCurrentLanguage
+    var currentLanguageDisplayName: String? {
+        return languageManager.currentLanguageDisplayName
     }
 
     var baseCurrency: Currency {
