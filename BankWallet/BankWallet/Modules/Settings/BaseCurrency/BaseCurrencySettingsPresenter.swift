@@ -31,7 +31,7 @@ extension BaseCurrencySettingsPresenter: IBaseCurrencySettingsViewDelegate {
         let selectedCurrency = currencies[index]
 
         if selectedCurrency != interactor.baseCurrency {
-            interactor.set(baseCurrency: selectedCurrency)
+            interactor.baseCurrency = selectedCurrency
         }
 
         router.dismiss()

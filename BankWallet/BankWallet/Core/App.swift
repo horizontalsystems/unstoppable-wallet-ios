@@ -13,8 +13,7 @@ class App {
     let pasteboardManager: IPasteboardManager
     let reachabilityManager: IReachabilityManager
 
-    let localizationManager: ILocalizationManager
-    let languageManager: ILanguageManager
+    let languageManager: LanguageManager
 
     let pinManager: IPinManager
     let wordsManager: IWordsManager
@@ -66,8 +65,7 @@ class App {
         pasteboardManager = PasteboardManager()
         reachabilityManager = ReachabilityManager(appConfigProvider: appConfigProvider)
 
-        localizationManager = LocalizationManager()
-        languageManager = LanguageManager(localizationManager: localizationManager, localStorage: localStorage)
+        languageManager = LanguageManager(localStorage: localStorage)
 
         pinManager = PinManager(secureStorage: secureStorage, localStorage: localStorage)
         wordsManager = WordsManager(localStorage: localStorage)

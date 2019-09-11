@@ -7,10 +7,9 @@ protocol IBaseCurrencySettingsViewDelegate {
     func didSelect(index: Int)
 }
 
-protocol IBaseCurrencySettingsInteractor {
+protocol IBaseCurrencySettingsInteractor: AnyObject {
+    var baseCurrency: Currency { get set }
     var currencies: [Currency] { get }
-    var baseCurrency: Currency { get }
-    func set(baseCurrency: Currency)
 }
 
 protocol IBaseCurrencySettingsRouter {

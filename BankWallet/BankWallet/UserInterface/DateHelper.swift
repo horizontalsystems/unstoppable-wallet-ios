@@ -24,7 +24,7 @@ public class DateHelper {
         }
 
         let formatter = DateFormatter()
-        formatter.locale = App.shared.localizationManager.locale ?? Locale.current
+        formatter.locale = Locale.appCurrent
         formatter.setLocalizedDateFormatFromTemplate(format)
 
         DateHelper.formatters[format] = formatter

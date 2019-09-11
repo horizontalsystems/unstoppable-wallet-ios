@@ -44,7 +44,7 @@ class DoubleLineCell: AppCell {
         fatalError()
     }
 
-    func bind(icon: UIImage?, tintIcon: Bool = false, title: String, subtitle: String, selected: Bool = false, last: Bool = false) {
+    func bind(icon: UIImage?, tintIcon: Bool = false, title: String?, subtitle: String?, selected: Bool = false, last: Bool = false) {
         super.bind(last: last)
 
         if tintIcon {

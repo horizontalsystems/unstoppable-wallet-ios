@@ -9,16 +9,17 @@ class BaseCurrencySettingsInteractor {
 
 extension BaseCurrencySettingsInteractor: IBaseCurrencySettingsInteractor {
 
+    var baseCurrency: Currency {
+        get {
+            return currencyManager.baseCurrency
+        }
+        set {
+            currencyManager.baseCurrency = newValue
+        }
+    }
+
     var currencies: [Currency] {
         return currencyManager.currencies
-    }
-
-    var baseCurrency: Currency {
-        return currencyManager.baseCurrency
-    }
-
-    func set(baseCurrency: Currency) {
-        currencyManager.set(baseCurrency: baseCurrency)
     }
 
 }

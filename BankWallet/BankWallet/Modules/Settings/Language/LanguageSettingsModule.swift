@@ -1,43 +1,27 @@
-struct LanguageItem: Equatable {
-    let id: String
-    let title: String
-    let subtitle: String
-    let current: Bool
-
-    static func ==(lhs: LanguageItem, rhs: LanguageItem) -> Bool {
-        return lhs.id == rhs.id
-    }
-}
-
-extension LanguageItem: Comparable {
-
-    public static func <(lhs: LanguageItem, rhs: LanguageItem) -> Bool {
-        if lhs.id == "en" { return true }
-        if rhs.id == "en" { return false }
-        return lhs.title < rhs.title
-    }
-
-}
-
 protocol ILanguageSettingsView: class {
-    func set(title: String)
-    func show(items: [LanguageItem])
+    func show(viewItems: [LanguageViewItem])
 }
 
 protocol ILanguageSettingsViewDelegate {
     func viewDidLoad()
-    func didSelect(item: LanguageItem)
+    func didSelect(index: Int)
 }
 
-protocol ILanguageSettingsInteractor {
-    var items: [LanguageItem] { get }
-    func setCurrentLanguage(with item: LanguageItem)
-}
-
-protocol ILanguageSettingsInteractorDelegate: class {
-    func didSetCurrentLanguage()
+protocol ILanguageSettingsInteractor: AnyObject {
+    var currentLanguage: String { get set }
+    var availableLanguages: [String] { get }
+    func displayName(language: String) -> String?
+    func nativeDisplayName(language: String) -> String?
 }
 
 protocol ILanguageSettingsRouter {
+    func dismiss()
     func reloadAppInterface()
+}
+
+struct LanguageViewItem {
+    let language: String
+    let name: String?
+    let nativeName: String?
+    let selected: Bool
 }
