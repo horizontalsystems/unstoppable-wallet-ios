@@ -40,7 +40,7 @@ class PinViewController: WalletViewController {
             maker.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).offset(-PinTheme.keyboardBottomMargin)
             maker.leading.equalToSuperview().offset(PinTheme.keyboardSideMargin)
             maker.trailing.equalToSuperview().offset(-PinTheme.keyboardSideMargin)
-            maker.height.equalTo(PinTheme.keyboardHeight)
+            maker.height.equalTo(numPad.height(for: view.bounds.width - 2 * PinTheme.keyboardSideMargin))
         }
 
         numPad.numPadDelegate = self

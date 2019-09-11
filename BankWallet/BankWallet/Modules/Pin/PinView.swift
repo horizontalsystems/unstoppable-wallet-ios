@@ -4,8 +4,7 @@ import SnapKit
 class PinView: UIView {
 
     let pinDotsView = PinDotsView()
-    private let descriptionLabel = UILabel()
-    private let errorLabel = UILabel()
+    private let topLabel = UILabel()
     private let cancelButtonView = UIView()
     private let cancelButton = UIButton()
 
@@ -15,25 +14,15 @@ class PinView: UIView {
         addSubview(pinDotsView)
         pinDotsView.snp.makeConstraints { maker in
             maker.centerX.equalToSuperview()
-            maker.centerY.equalToSuperview()
+            maker.centerY.equalToSuperview().offset(PinTheme.dotsVerticalMargin)
         }
 
-        descriptionLabel.lineBreakMode = .byWordWrapping
-        descriptionLabel.numberOfLines = 0
-        descriptionLabel.textAlignment = .center
-        addSubview(descriptionLabel)
-        descriptionLabel.snp.makeConstraints { maker in
+        topLabel.lineBreakMode = .byWordWrapping
+        topLabel.numberOfLines = 0
+        topLabel.textAlignment = .center
+        addSubview(topLabel)
+        topLabel.snp.makeConstraints { maker in
             maker.bottom.equalTo(self.pinDotsView.snp.top).offset(-PinTheme.infoVerticalMargin)
-            maker.leading.equalToSuperview().offset(PinTheme.infoHorizontalMargin)
-            maker.trailing.equalToSuperview().offset(-PinTheme.infoHorizontalMargin)
-        }
-
-        errorLabel.lineBreakMode = .byWordWrapping
-        errorLabel.numberOfLines = 0
-        errorLabel.textAlignment = .center
-        addSubview(errorLabel)
-        errorLabel.snp.makeConstraints { maker in
-            maker.top.equalTo(self.pinDotsView.snp.bottom).offset(PinTheme.infoVerticalMargin)
             maker.leading.equalToSuperview().offset(PinTheme.infoHorizontalMargin)
             maker.trailing.equalToSuperview().offset(-PinTheme.infoHorizontalMargin)
         }
@@ -59,26 +48,20 @@ class PinView: UIView {
     }
 
     func bind(page: PinPage, onPinChange: ((String) -> ())? = nil) {
+        let error = page.error?.localized ?? ""
+        let description = page.description?.localized ?? ""
+
         let style = NSMutableParagraphStyle()
         style.lineSpacing = 2.2
         style.alignment = .center
-        let descriptionAttributes: [NSAttributedString.Key: Any] = [
-            NSAttributedString.Key.foregroundColor: PinTheme.infoColor,
+        let attributes: [NSAttributedString.Key: Any] = [
+            NSAttributedString.Key.foregroundColor: error.isEmpty ? PinTheme.infoColor : PinTheme.errorColor,
             NSAttributedString.Key.font: PinTheme.infoFontRegular,
             NSAttributedString.Key.paragraphStyle: style,
             NSAttributedString.Key.kern: -0.1
         ]
-        let description = NSMutableAttributedString(string: page.description?.localized ?? "", attributes: descriptionAttributes)
-        descriptionLabel.attributedText = description
-
-        let errorAttributes: [NSAttributedString.Key: Any] = [
-            NSAttributedString.Key.foregroundColor: PinTheme.errorColor,
-            NSAttributedString.Key.font: PinTheme.infoFontRegular,
-            NSAttributedString.Key.paragraphStyle: style,
-            NSAttributedString.Key.kern: -0.1
-        ]
-        let error = NSMutableAttributedString(string: page.error?.localized ?? "", attributes: errorAttributes)
-        errorLabel.attributedText = error
+        let attributedDescription = NSMutableAttributedString(string:  error.isEmpty ? description : error, attributes: attributes)
+        topLabel.attributedText = attributedDescription
 
         pinDotsView.clean()
         pinDotsView.onPinEnter = onPinChange

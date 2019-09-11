@@ -4,6 +4,7 @@ extension UIFont {
 
     static let cryptoTitle1 = UIFont.systemFont(ofSize: 40, weight: .bold)
     static let cryptoTitle2 = UIFont.systemFont(ofSize: 34, weight: .bold)
+    static let cryptoTitle2Regular = UIFont.systemFont(ofSize: 34, weight: .regular)
     static let cryptoTitle3 = UIFont.systemFont(ofSize: 22, weight: .bold)
     static let cryptoHeadline1 = UIFont.systemFont(ofSize: 22, weight: .semibold)
     static let cryptoHeadline2 = UIFont.systemFont(ofSize: 17, weight: .semibold)
