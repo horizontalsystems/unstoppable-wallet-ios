@@ -6,13 +6,11 @@ protocol IRestoreViewDelegate {
     var typesCount: Int { get }
     func type(index: Int) -> IPredefinedAccountType
     func didSelect(index: Int)
-    func didTapCancel()
 }
 
 protocol IRestoreRouter {
     func showRestore(defaultAccountType: DefaultAccountType, delegate: IRestoreAccountTypeDelegate)
     func notifyRestored(account: Account)
-    func close()
 }
 
 protocol IRestoreDelegate: AnyObject {

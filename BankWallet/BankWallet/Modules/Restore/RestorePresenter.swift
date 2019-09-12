@@ -33,10 +33,6 @@ extension RestorePresenter: IRestoreViewDelegate {
         router.showRestore(defaultAccountType: predefinedAccountTypes[index].defaultAccountType, delegate: self)
     }
 
-    func didTapCancel() {
-        router.close()
-    }
-
 }
 
 extension RestorePresenter: IRestoreAccountTypeDelegate {
@@ -45,7 +41,6 @@ extension RestorePresenter: IRestoreAccountTypeDelegate {
         let account = accountCreator.createRestoredAccount(accountType: accountType, defaultSyncMode: syncMode, createDefaultWallets: true)
 
         router.notifyRestored(account: account)
-        router.close()
     }
 
 }

@@ -10,8 +10,12 @@ extension WelcomeScreenRouter: IWelcomeScreenRouter {
         UIApplication.shared.keyWindow?.set(newRootController: MainRouter.module(selectedTab: .balance))
     }
 
+    func showCreateWallet() {
+        viewController?.navigationController?.pushViewController(CreateWalletRouter.module(), animated: true)
+    }
+
     func showRestore(delegate: IRestoreDelegate) {
-        viewController?.present(RestoreRouter.module(delegate: delegate), animated: true)
+        viewController?.navigationController?.pushViewController(RestoreRouter.module(delegate: delegate), animated: true)
     }
 
 }
@@ -20,15 +24,14 @@ extension WelcomeScreenRouter {
 
     static func module() -> UIViewController {
         let router = WelcomeScreenRouter()
-        let interactor = WelcomeScreenInteractor(systemInfoManager: App.shared.systemInfoManager, predefinedAccountTypeManager: App.shared.predefinedAccountTypeManager)
+        let interactor = WelcomeScreenInteractor(systemInfoManager: App.shared.systemInfoManager)
         let presenter = WelcomeScreenPresenter(interactor: interactor, router: router)
         let viewController = WelcomeScreenViewController(delegate: presenter)
 
         presenter.view = viewController
-        interactor.delegate = presenter
         router.viewController = viewController
 
-        return viewController
+        return WalletNavigationController(rootViewController: viewController)
     }
 
 }
