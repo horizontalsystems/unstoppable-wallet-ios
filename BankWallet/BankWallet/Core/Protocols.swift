@@ -272,6 +272,7 @@ protocol IAppConfigProvider {
     var disablePinLock: Bool { get }
 
     var defaultCoinCodes: [CoinCode] { get }
+    var featureCoins: [FeaturedCoin] { get }
     var coins: [Coin] { get }
 
     var predefinedAccountTypes: [IPredefinedAccountType] { get }
