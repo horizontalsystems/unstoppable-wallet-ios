@@ -66,13 +66,24 @@ class AppConfigProvider: IAppConfigProvider {
         return ["BTC", "ETH"]
     }
 
+    var featureCoins: [FeaturedCoin] {
+        return [
+            FeaturedCoin(coin: coins[0], enabledByDefault: true),
+            FeaturedCoin(coin: coins[1], enabledByDefault: true),
+            FeaturedCoin(coin: coins[2], enabledByDefault: false),
+            FeaturedCoin(coin: coins[3], enabledByDefault: false),
+            FeaturedCoin(coin: coins[4], enabledByDefault: false),
+            FeaturedCoin(coin: coins[5], enabledByDefault: false),
+        ]
+    }
+
     let coins = [
         Coin(title: "Bitcoin",               code: "BTC",       decimal: 8,  type: .bitcoin),
-        Coin(title: "Bitcoin Cash",          code: "BCH",       decimal: 8,  type: .bitcoinCash),
         Coin(title: "Ethereum",              code: "ETH",       decimal: 18, type: .ethereum),
+        Coin(title: "Bitcoin Cash",          code: "BCH",       decimal: 8,  type: .bitcoinCash),
         Coin(title: "Dash",                  code: "DASH",      decimal: 8,  type: .dash),
-        Coin(title: "EOS",                   code: "EOS",       decimal: 4,  type: .eos(token: "eosio.token", symbol: "EOS")),
         Coin(title: "Binance Chain",         code: "BNB",       decimal: 8,  type: .binance(symbol: "BNB")),
+        Coin(title: "EOS",                   code: "EOS",       decimal: 4,  type: .eos(token: "eosio.token", symbol: "EOS")),
         Coin(title: "0x",                    code: "ZRX",       decimal: 18, type: .erc20(address: "0xE41d2489571d322189246DaFA5ebDe1F4699F498", fee: 0)),
         Coin(title: "Aelf",                  code: "ELF",       decimal: 18, type: .erc20(address: "0xbf2179859fc6D5BEE9Bf9158632Dc51678a4100e", fee: 0)),
         Coin(title: "Ankr Network",          code: "ANKR",      decimal: 8,  type: .binance(symbol: "ANKR-E97")),

@@ -31,6 +31,7 @@ class CreateWalletViewController: WalletViewController {
             maker.edges.equalToSuperview()
         }
 
+        delegate.viewDidLoad()
         tableView.buildSections()
     }
 
@@ -46,4 +47,11 @@ extension CreateWalletViewController: SectionsDataSource {
 }
 
 extension CreateWalletViewController: ICreateWalletView {
+
+    func set(viewItems: [CreateWalletViewItem]) {
+    }
+
+    func set(createButtonEnabled: Bool) {
+    }
+
 }

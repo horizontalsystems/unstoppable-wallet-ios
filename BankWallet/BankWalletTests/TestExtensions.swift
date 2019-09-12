@@ -114,8 +114,9 @@ extension Wallet {
 
 extension Coin {
 
-    static func mock(title: String = "Bitcoin", code: CoinCode = "BTC", decimal: Int = 8, type: CoinType = .bitcoin) -> Coin {
-        return Coin(title: title, code: code, decimal: decimal, type: type)
+    static func mock(title: String? = nil, code: CoinCode? = nil, decimal: Int = 8, type: CoinType = .bitcoin) -> Coin {
+        let randomNumber = Int.random(in: 0..<1000)
+        return Coin(title: title ?? "Bitcoin_\(randomNumber)", code: code ?? "BTC_\(randomNumber)", decimal: decimal, type: type)
     }
 
 }
@@ -157,6 +158,30 @@ extension JsonApiProvider.RequestObject: Equatable {
         case (.post(let lhsUrl, _), .post(let rhsUrl, _)): return lhsUrl == rhsUrl
         default: return false
         }
+    }
+
+}
+
+extension CreateWalletViewItem: Equatable {
+
+    public static func ==(lhs: CreateWalletViewItem, rhs: CreateWalletViewItem) -> Bool {
+        return lhs.title == rhs.title && lhs.code == rhs.code
+    }
+
+}
+
+extension FeaturedCoin {
+
+    static func mock(coin: Coin = Coin.mock(), enabledByDefault: Bool = false) -> FeaturedCoin {
+        return FeaturedCoin(coin: coin, enabledByDefault: enabledByDefault)
+    }
+
+}
+
+extension FeaturedCoin: Equatable {
+
+    public static func ==(lhs: FeaturedCoin, rhs: FeaturedCoin) -> Bool {
+        return lhs.coin == rhs.coin && lhs.enabledByDefault == rhs.enabledByDefault
     }
 
 }

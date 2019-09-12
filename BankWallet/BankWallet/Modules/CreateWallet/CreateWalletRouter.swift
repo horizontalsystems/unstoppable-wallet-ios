@@ -11,7 +11,7 @@ extension CreateWalletRouter {
 
     static func module() -> UIViewController {
         let router = CreateWalletRouter()
-        let interactor = CreateWalletInteractor()
+        let interactor = CreateWalletInteractor(appConfigProvider: App.shared.appConfigProvider)
         let presenter = CreateWalletPresenter(interactor: interactor, router: router)
         let viewController = CreateWalletViewController(delegate: presenter)
 
