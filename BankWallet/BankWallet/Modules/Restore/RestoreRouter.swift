@@ -25,10 +25,6 @@ extension RestoreRouter: IRestoreRouter {
         delegate.didRestore(account: account)
     }
 
-    func close() {
-        viewController?.dismiss(animated: true)
-    }
-
 }
 
 extension RestoreRouter {
@@ -41,7 +37,7 @@ extension RestoreRouter {
         presenter.view = viewController
         router.viewController = viewController
 
-        return WalletNavigationController(rootViewController: viewController)
+        return viewController
     }
 
     static func module(defaultAccountType: DefaultAccountType, mode: PresentationMode, delegate: IRestoreAccountTypeDelegate) -> UIViewController? {

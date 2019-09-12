@@ -18,20 +18,12 @@ extension WelcomeScreenPresenter: IWelcomeScreenViewDelegate {
     }
 
     func didTapCreate() {
-        interactor.createWallet()
+        router.showCreateWallet()
     }
 
     func didTapRestore() {
         router.showRestore(delegate: self)
     }
-}
-
-extension WelcomeScreenPresenter: IWelcomeScreenInteractorDelegate {
-
-    func didCreateWallet() {
-        router.showMain()
-    }
-
 }
 
 extension WelcomeScreenPresenter: IRestoreDelegate {

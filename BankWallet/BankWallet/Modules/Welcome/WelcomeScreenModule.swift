@@ -10,15 +10,10 @@ protocol IWelcomeScreenViewDelegate {
 
 protocol IWelcomeScreenInteractor {
     var appVersion: String { get }
-
-    func createWallet()
-}
-
-protocol IWelcomeScreenInteractorDelegate: class {
-    func didCreateWallet()
 }
 
 protocol IWelcomeScreenRouter {
     func showMain()
+    func showCreateWallet()
     func showRestore(delegate: IRestoreDelegate)
 }

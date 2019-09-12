@@ -23,8 +23,6 @@ class RestoreViewController: WalletViewController {
 
         title = "restore.title".localized
 
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "button.cancel".localized, style: .plain, target: self, action: #selector(cancelDidTap))
-
         tableView.delegate = self
         tableView.dataSource = self
 
@@ -43,10 +41,6 @@ class RestoreViewController: WalletViewController {
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return App.theme.statusBarStyle
-    }
-
-    @objc func cancelDidTap() {
-        delegate.didTapCancel()
     }
 
 }
