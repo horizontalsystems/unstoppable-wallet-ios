@@ -57,4 +57,17 @@ extension CreateWalletPresenter: ICreateWalletViewDelegate {
         state.enabledIndexes = enabledIndexes
     }
 
+    func didTapCreateButton() {
+        let coins = state.coins
+        var enabledCoins = [Coin]()
+
+        for index in state.enabledIndexes {
+            enabledCoins.append(coins[index])
+        }
+
+        interactor.createWallet(coins: enabledCoins)
+
+        router.showMain()
+    }
+
 }

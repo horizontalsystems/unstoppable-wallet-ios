@@ -1,10 +1,14 @@
 import UIKit
 
 class CreateWalletRouter {
-    weak var viewController: UIViewController?
 }
 
 extension CreateWalletRouter: ICreateWalletRouter {
+
+    func showMain() {
+        UIApplication.shared.keyWindow?.set(newRootController: MainRouter.module(selectedTab: .balance))
+    }
+
 }
 
 extension CreateWalletRouter {
@@ -16,7 +20,6 @@ extension CreateWalletRouter {
         let viewController = CreateWalletViewController(delegate: presenter)
 
         presenter.view = viewController
-        router.viewController = viewController
 
         return viewController
     }

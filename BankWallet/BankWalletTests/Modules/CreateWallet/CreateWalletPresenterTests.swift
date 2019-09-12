@@ -240,6 +240,35 @@ class CreateWalletPresenterTests: QuickSpec {
                     }
                 }
             }
+
+            describe("#didTapCreateButton") {
+                let coinBtc = Coin.mock()
+                let coinEth = Coin.mock()
+                let coinEos = Coin.mock()
+
+                beforeEach {
+                    stub(mockState) { mock in
+                        when(mock.coins.get).thenReturn([coinBtc, coinEth, coinEos])
+                        when(mock.enabledIndexes.get).thenReturn([0, 2])
+                    }
+                    stub(mockInteractor) { mock in
+                        when(mock.createWallet(coins: any())).thenDoNothing()
+                    }
+                    stub(mockRouter) { mock in
+                        when(mock.showMain()).thenDoNothing()
+                    }
+
+                    presenter.didTapCreateButton()
+                }
+
+                it("creates wallet with selected coins") {
+                    verify(mockInteractor).createWallet(coins: equal(to: [coinBtc, coinEos]))
+                }
+
+                it("shows Main module") {
+                    verify(mockRouter).showMain()
+                }
+            }
         }
     }
 }
