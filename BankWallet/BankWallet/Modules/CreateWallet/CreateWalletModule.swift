@@ -6,13 +6,16 @@ protocol ICreateWalletView: class {
 protocol ICreateWalletViewDelegate {
     func viewDidLoad()
     func didToggle(index: Int, isOn: Bool)
+    func didTapCreateButton()
 }
 
 protocol ICreateWalletInteractor {
     var featuredCoins: [FeaturedCoin] { get }
+    func createWallet(coins: [Coin])
 }
 
 protocol ICreateWalletRouter {
+    func showMain()
 }
 
 struct CreateWalletViewItem {

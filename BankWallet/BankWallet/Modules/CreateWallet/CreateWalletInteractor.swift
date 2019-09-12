@@ -13,4 +13,8 @@ extension CreateWalletInteractor: ICreateWalletInteractor {
         return appConfigProvider.featureCoins
     }
 
+    func createWallet(coins: [Coin]) {
+        // todo: implement this
+    }
+
 }
