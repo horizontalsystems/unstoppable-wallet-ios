@@ -25,7 +25,7 @@ class SettingsTheme {
     static let separatorInset: CGFloat = SettingsTheme.cellIconSize + SettingsTheme.cellBigMargin
     static let versionFont = UIFont.cryptoCaption
     static let versionColor = UIColor.cryptoGray
-    static let topHeaderHeight: CGFloat = 16
+    static let topHeaderHeight: CGFloat = 12
     static let subSettingsHeaderHeight: CGFloat = 16
     static let headerHeight: CGFloat = 32
     static let subtitleFont = UIFont.cryptoSubhead2

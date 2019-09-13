@@ -358,5 +358,8 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 "chart.volume" = "Volume";
 "chart.error.not_available" = "Chart not available";
 
+// Create Wallet
 
-
+"create_wallet.title" = "New Wallet";
+"create_wallet.create_button" = "Create";
+"create_wallet.description" = "Select crypto currencies your new wallet should support. You may do this later as well.";
