@@ -6,12 +6,14 @@ class ChartInteractor {
 
     private let disposeBag = DisposeBag()
 
-    private let manager: IRateStatsManager
+    private let rateStatsManager: IRateStatsManager
+    private var rateStatsSyncer: IRateStatsSyncer
     private let localStorage: ILocalStorage
     private let rateStorage: IRateStorage
 
-    init(manager: IRateStatsManager, localStorage: ILocalStorage, rateStorage: IRateStorage) {
-        self.manager = manager
+    init(rateStatsManager: IRateStatsManager, rateStatsSyncer: IRateStatsSyncer, localStorage: ILocalStorage, rateStorage: IRateStorage) {
+        self.rateStatsManager = rateStatsManager
+        self.rateStatsSyncer = rateStatsSyncer
         self.localStorage = localStorage
         self.rateStorage = rateStorage
     }
@@ -21,22 +23,43 @@ class ChartInteractor {
 extension ChartInteractor: IChartInteractor {
 
     var defaultChartType: ChartType {
-        return localStorage.chartType ?? .day
+        get {
+            return localStorage.chartType ?? .day
+        }
+        set {
+            localStorage.chartType = newValue
+        }
+    }
+    var chartEnabled: Bool {
+        get {
+            return rateStatsSyncer.chartShown
+        }
+        set {
+            rateStatsSyncer.chartShown = newValue
+        }
     }
 
-    func setDefault(chartType: ChartType) {
-        localStorage.chartType = chartType
-    }
-
-    func getRateStats(coinCode: String, currencyCode: String) {
-        manager.rateStats(coinCode: coinCode, currencyCode: currencyCode)
-                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
+    func subscribeToChartStats() {
+        rateStatsManager.statsObservable
                 .observeOn(MainScheduler.instance)
-                .subscribe(onSuccess: { [weak self] data in
-                    self?.delegate?.didReceive(chartData: data, rate: self?.rateStorage.latestRate(coinCode: coinCode, currencyCode: currencyCode))
-                }, onError: { [weak self] error in
-                    self?.delegate?.onError(error)
-                }).disposed(by: disposeBag)
+                .subscribe(onNext: { [weak self] in
+                    switch $0 {
+                    case .success(let data):
+                        self?.delegate?.didReceive(chartData: data)
+                    case .error:
+                        self?.delegate?.onError()
+                    }
+                })
+                .disposed(by: disposeBag)
+    }
+
+    func subscribeToLatestRate(coinCode: CoinCode, currencyCode: String) {
+        rateStorage.latestRateObservable(forCoinCode: coinCode, currencyCode: currencyCode)
+                .observeOn(MainScheduler.instance)
+                .subscribe(onNext: { [weak self] in
+                    self?.delegate?.didReceive(rate: $0)
+                })
+                .disposed(by: disposeBag)
     }
 
 }

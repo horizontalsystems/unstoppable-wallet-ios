@@ -17,6 +17,8 @@ class BalanceViewController: WalletViewController {
     private var headerView = BalanceHeaderView(frame: .zero)
     private var indexPathForSelectedRow: IndexPath?
 
+    private var chartEnabled: Bool = false
+
     init(viewDelegate: IBalanceViewDelegate) {
         self.delegate = viewDelegate
 
@@ -113,7 +115,7 @@ extension BalanceViewController: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if let cell = cell as? BalanceCell {
-            cell.bind(item: delegate.viewItem(at: indexPath.row), isStatModeOn: delegate.isStatsOn, selected: indexPathForSelectedRow == indexPath, onReceive: { [weak self] in
+            cell.bind(item: delegate.viewItem(at: indexPath.row), isStatModeOn: chartEnabled, selected: indexPathForSelectedRow == indexPath, onReceive: { [weak self] in
                 self?.delegate.onReceive(index: indexPath.row)
             }, onPay: { [weak self] in
                 self?.delegate.onPay(index: indexPath.row)
@@ -160,7 +162,7 @@ extension BalanceViewController: UITableViewDelegate, UITableViewDataSource {
 
     func bind(at indexPath: IndexPath, heightChange: Bool = false) {
         if let cell = tableView.cellForRow(at: indexPath) as? BalanceCell {
-            cell.bindView(item: delegate.viewItem(at: indexPath.row), isStatModeOn: delegate.isStatsOn, selected: indexPathForSelectedRow == indexPath, animated: heightChange)
+            cell.bindView(item: delegate.viewItem(at: indexPath.row), isStatModeOn: chartEnabled, selected: indexPathForSelectedRow == indexPath, animated: heightChange)
 
             if heightChange {
                 UIView.animate(withDuration: BalanceTheme.buttonsAnimationDuration) {
@@ -224,15 +226,19 @@ extension BalanceViewController: IBalanceView {
     func updateHeader() {
         let viewItem = delegate.headerViewItem()
         let amount = viewItem.currencyValue.flatMap { ValueFormatter.instance.format(currencyValue: $0) }
-        headerView.bind(amount: amount, upToDate: viewItem.upToDate, statsIsOn: delegate.isStatsOn)
+        headerView.bind(amount: amount, upToDate: viewItem.upToDate, statsIsOn: chartEnabled)
     }
 
     func didRefresh() {
         refreshControl.endRefreshing()
     }
 
-    func setStats(isOn: Bool) {
-        headerView.setStatSwitch(hidden: !isOn)
+    func setStatsButton(isHidden: Bool) {
+        headerView.setStatSwitch(hidden: !isHidden)
+    }
+
+    func setStatsButton(highlighted: Bool) {
+        chartEnabled = highlighted
     }
 
     func setSort(isOn: Bool) {

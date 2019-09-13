@@ -34,6 +34,10 @@ class ChartViewController: ActionSheetController {
         }
 
         initItems()
+
+        onDismiss = { [weak self] _ in
+            self?.delegate.onChartClosed()
+        }
     }
 
     required init?(coder aDecoder: NSCoder) {

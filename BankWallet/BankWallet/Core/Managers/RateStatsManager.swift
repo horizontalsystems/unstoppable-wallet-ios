@@ -19,10 +19,13 @@ class RateStatsManager {
     private static let yearPointCount = 53
 
     private let disposeBag = DisposeBag()
+
     private let apiProvider: IRatesStatsApiProvider
     private let rateStorage: IRateStorage
     private let chartRateConverter: IChartRateConverter
     private var cache = SynchronizedDictionary<StatsCacheKey, StatsCacheData>()
+
+    private let statsSubject = PublishSubject<StatsResponse>()
 
     init(apiProvider: IRatesStatsApiProvider, rateStorage: IRateStorage, chartRateConverter: IChartRateConverter) {
         self.apiProvider = apiProvider
@@ -68,8 +71,11 @@ class RateStatsManager {
 }
 
 extension RateStatsManager: IRateStatsManager {
+    var statsObservable: Observable<StatsResponse> {
+        return statsSubject.asObservable()
+    }
 
-    func rateStats(coinCode: CoinCode, currencyCode: String) -> Single<ChartData> {
+    func syncStats(coinCode: CoinCode, currencyCode: String) {
         let currentTimestamp = Date().timeIntervalSince1970
 
         let key = StatsCacheKey(coinCode: coinCode, currencyCode: currencyCode)
@@ -82,7 +88,7 @@ extension RateStatsManager: IRateStatsManager {
         }
         let rate = rateStorage.latestRate(coinCode: coinCode, currencyCode: currencyCode)
 
-        return dataRequest
+        dataRequest
                 .map { cacheData -> ChartData in
                     var stats = [ChartType: [ChartPoint]]()
                     var diffs = [ChartType: Decimal]()
@@ -96,8 +102,15 @@ extension RateStatsManager: IRateStatsManager {
                         diffs[type] = self?.calculateDiff(for: points)
                     }
 
-                    return ChartData(marketCap: cacheData.marketCap, stats: stats, diffs: diffs)
+                    return ChartData(coinCode: coinCode, marketCap: cacheData.marketCap, stats: stats, diffs: diffs)
                 }
+                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
+                .subscribe(onSuccess: { [weak self] in
+                    self?.statsSubject.onNext(.success($0))
+                }, onError: { [weak self] _ in
+                    self?.statsSubject.onNext(.error(coinCode))
+                })
+                .disposed(by: disposeBag)
     }
 
 }

@@ -238,7 +238,15 @@ protocol IRateManager {
 }
 
 protocol IRateStatsManager {
-    func rateStats(coinCode: CoinCode, currencyCode: String) -> Single<ChartData>
+    var statsObservable: Observable<StatsResponse> { get }
+    func syncStats(coinCode: CoinCode, currencyCode: String)
+}
+
+protocol IRateStatsSyncer {
+    var balanceStatsOn: Bool { get set }
+    var chartShown: Bool { get set }
+    var lockStatsOn: Bool { get set }
+    func syncStats()
 }
 
 protocol ISystemInfoManager {
