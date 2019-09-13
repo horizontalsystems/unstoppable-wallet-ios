@@ -78,4 +78,11 @@ class AppTheme {
     static let closeButtonColor: UIColor = .cryptoGray
 
     static let progressStepsCount = 3
+
+    // New styles
+
+    static let topDescriptionMargin: CGFloat = 24
+    static let topDescriptionSmallMargin: CGFloat = 12
+    static let topDescriptionFont: UIFont = .cryptoSubhead2
+    static let topDescriptionColor: UIColor = .cryptoGray
 }
