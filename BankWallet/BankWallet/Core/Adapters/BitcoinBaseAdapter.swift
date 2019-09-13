@@ -4,9 +4,6 @@ import RxSwift
 class BitcoinBaseAdapter {
     static let defaultConfirmationsThreshold = 3
 
-    var receiveAddressScriptType: ScriptType { return .p2pkh }
-    var changeAddressScriptType: ScriptType { return .p2pkh }
-
     private let abstractKit: AbstractKit
     private let coinRate: Decimal = pow(10, 8)
 
@@ -173,7 +170,7 @@ extension BitcoinBaseAdapter {
     func fee(amount: Decimal, feeRate: Int, address: String?) -> Decimal {
         do {
             let amount = convertToSatoshi(value: amount)
-            let fee = try abstractKit.fee(for: amount, toAddress: address, senderPay: true, feeRate: feeRate, changeScriptType: changeAddressScriptType)
+            let fee = try abstractKit.fee(for: amount, toAddress: address, senderPay: true, feeRate: feeRate)
             return Decimal(fee) / coinRate
         } catch BitcoinCoreErrors.UnspentOutputSelection.notEnough(let maxFee) {
             return Decimal(maxFee) / coinRate
@@ -188,7 +185,7 @@ extension BitcoinBaseAdapter {
         return Single.create { [weak self] observer in
             do {
                 if let adapter = self {
-                    _ = try adapter.abstractKit.send(to: address, value: satoshiAmount, feeRate: feeRate, changeScriptType: adapter.changeAddressScriptType)
+                    _ = try adapter.abstractKit.send(to: address, value: satoshiAmount, feeRate: feeRate)
                 }
                 observer(.success(()))
             } catch {
@@ -233,7 +230,7 @@ extension BitcoinBaseAdapter: ITransactionsAdapter {
 extension BitcoinBaseAdapter: IDepositAdapter {
 
     var receiveAddress: String {
-        return abstractKit.receiveAddress(for: receiveAddressScriptType)
+        return abstractKit.receiveAddress()
     }
 
 }
