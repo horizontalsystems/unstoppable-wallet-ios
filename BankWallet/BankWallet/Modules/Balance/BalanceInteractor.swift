@@ -10,16 +10,18 @@ class BalanceInteractor {
     private let walletManager: IWalletManager
     private let adapterManager: IAdapterManager
     private let rateStatsManager: IRateStatsManager
+    private var rateStatsSyncer: IRateStatsSyncer
     private let rateStorage: IRateStorage
     private let currencyManager: ICurrencyManager
     private let localStorage: ILocalStorage
     private let predefinedAccountTypeManager: IPredefinedAccountTypeManager
     private let rateManager: IRateManager
 
-    init(walletManager: IWalletManager, adapterManager: IAdapterManager, rateStatsManager: IRateStatsManager, rateStorage: IRateStorage, currencyManager: ICurrencyManager, localStorage: ILocalStorage, predefinedAccountTypeManager: IPredefinedAccountTypeManager, rateManager: IRateManager) {
+    init(walletManager: IWalletManager, adapterManager: IAdapterManager, rateStatsManager: IRateStatsManager, rateStatsSyncer: IRateStatsSyncer, rateStorage: IRateStorage, currencyManager: ICurrencyManager, localStorage: ILocalStorage, predefinedAccountTypeManager: IPredefinedAccountTypeManager, rateManager: IRateManager) {
         self.walletManager = walletManager
         self.adapterManager = adapterManager
         self.rateStatsManager = rateStatsManager
+        self.rateStatsSyncer = rateStatsSyncer
         self.rateStorage = rateStorage
         self.currencyManager = currencyManager
         self.localStorage = localStorage
@@ -70,6 +72,15 @@ extension BalanceInteractor: IBalanceInteractor {
         return localStorage.balanceSortType ?? .name
     }
 
+    var chartEnabled: Bool {
+        get {
+            return rateStatsSyncer.balanceStatsOn
+        }
+        set {
+            return rateStatsSyncer.balanceStatsOn = newValue
+        }
+    }
+
     func adapter(for wallet: Wallet) -> IBalanceAdapter? {
         return adapterManager.balanceAdapter(for: wallet)
     }
@@ -96,6 +107,18 @@ extension BalanceInteractor: IBalanceInteractor {
                 .observeOn(MainScheduler.instance)
                 .subscribe(onNext: { [weak self] in
                     self?.onUpdateCurrency()
+                })
+                .disposed(by: disposeBag)
+
+        rateStatsManager.statsObservable
+                .observeOn(MainScheduler.instance)
+                .subscribe(onNext: { [weak self] in
+                    switch $0 {
+                    case .success(let data):
+                        self?.delegate?.didReceive(chartData: data)
+                    case .error(let coinCode):
+                        self?.delegate?.didFailStats(for: coinCode)
+                    }
                 })
                 .disposed(by: disposeBag)
     }
@@ -125,17 +148,6 @@ extension BalanceInteractor: IBalanceInteractor {
 
     func predefinedAccountType(wallet: Wallet) -> IPredefinedAccountType? {
         return predefinedAccountTypeManager.predefinedAccountType(accountType: wallet.account.type)
-    }
-
-    func getRateStats(coinCode: String, currencyCode: String) {
-        rateStatsManager.rateStats(coinCode: coinCode, currencyCode: currencyCode)
-                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
-                .observeOn(MainScheduler.instance)
-                .subscribe(onSuccess: { [weak self] rateStats in
-                    self?.delegate?.didReceive(coinCode: coinCode, chartData: rateStats)
-                }, onError: { _ in
-                    self.delegate?.didFailStats(for: coinCode)
-                }).disposed(by: disposeBag)
     }
 
 }

@@ -24,18 +24,21 @@ protocol IChartViewDelegate {
 
     func onSelect(type: ChartType)
     func chartTouchSelect(point: ChartPoint)
+    func onChartClosed()
 }
 
 protocol IChartInteractor {
-    var defaultChartType: ChartType { get }
-    func setDefault(chartType: ChartType)
+    var defaultChartType: ChartType { get set }
+    var chartEnabled: Bool { get set }
 
-    func getRateStats(coinCode: String, currencyCode: String)
+    func subscribeToChartStats()
+    func subscribeToLatestRate(coinCode: CoinCode, currencyCode: String)
 }
 
 protocol IChartInteractorDelegate: class {
-    func didReceive(chartData: ChartData, rate: Rate?)
-    func onError(_ error: Error)
+    func didReceive(chartData: ChartData)
+    func didReceive(rate: Rate)
+    func onError()
 }
 
 protocol IChartRateConverter {

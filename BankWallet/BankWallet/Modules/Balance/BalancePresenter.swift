@@ -1,7 +1,7 @@
 import RxSwift
 
 class BalancePresenter {
-    private let interactor: IBalanceInteractor
+    private var interactor: IBalanceInteractor
     private let router: IBalanceRouter
     private var dataSource: IBalanceItemDataSource
     private let factory: IBalanceViewItemFactory
@@ -21,12 +21,6 @@ class BalancePresenter {
         self.sortingOnThreshold = sortingOnThreshold
     }
 
-    private func updateStats() {
-        dataSource.items.forEach { item in
-            interactor.getRateStats(coinCode: item.wallet.coin.code, currencyCode: dataSource.currency.code)
-        }
-    }
-
 }
 
 extension BalancePresenter: IBalanceInteractorDelegate {
@@ -40,12 +34,9 @@ extension BalancePresenter: IBalanceInteractorDelegate {
         dataSource.set(items: items)
 
         interactor.fetchRates(currencyCode: dataSource.currency.code, coinCodes: dataSource.coinCodes)
-        if dataSource.statsModeOn {
-            updateStats()
-        }
 
         view?.setSort(isOn: dataSource.items.count >= sortingOnThreshold)
-        view?.setStats(isOn: !dataSource.items.isEmpty)
+        view?.setStatsButton(isHidden: !dataSource.items.isEmpty)
         view?.reload()
     }
 
@@ -73,9 +64,6 @@ extension BalancePresenter: IBalanceInteractorDelegate {
         dataSource.currency = currency
         dataSource.clearRates()
 
-        if dataSource.statsModeOn {
-            updateStats()
-        }
         interactor.fetchRates(currencyCode: currency.code, coinCodes: dataSource.coinCodes)
 
         view?.reload()
@@ -97,7 +85,7 @@ extension BalancePresenter: IBalanceInteractorDelegate {
         view?.updateHeader()
     }
 
-    func didReceive(coinCode: CoinCode, chartData: ChartData) {
+    func didReceive(chartData: ChartData) {
         guard let points = chartData.stats[.day] else {
             return
         }
@@ -105,7 +93,7 @@ extension BalancePresenter: IBalanceInteractorDelegate {
             return
         }
 
-        let indexes = dataSource.indexes(for: coinCode)
+        let indexes = dataSource.indexes(for: chartData.coinCode)
         guard indexes.count > 0 else {
             return
         }
@@ -137,13 +125,12 @@ extension BalancePresenter: IBalanceInteractorDelegate {
 }
 
 extension BalancePresenter: IBalanceViewDelegate {
-    var isStatsOn: Bool {
-        return dataSource.statsModeOn
-    }
-
     func viewDidLoad() {
+        interactor.chartEnabled = false
+
         dataSource.sortType = interactor.sortType
         view?.setSort(isOn: false)
+        view?.setStatsButton(highlighted: interactor.chartEnabled)
 
         interactor.initWallets()
     }
@@ -198,11 +185,9 @@ extension BalancePresenter: IBalanceViewDelegate {
     }
 
     func onStatsSwitch() {
-        dataSource.statsModeOn = !dataSource.statsModeOn
+        interactor.chartEnabled = !interactor.chartEnabled
+        view?.setStatsButton(highlighted: interactor.chartEnabled)
         view?.reload()
-        if dataSource.statsModeOn {
-            updateStats()
-        }
     }
 
 }
@@ -212,8 +197,8 @@ extension BalancePresenter: ISortTypeDelegate {
     func onSelect(sort: BalanceSortType) {
         dataSource.sortType = sort
         if sort == .percentGrowth {
-            dataSource.statsModeOn = true
-            updateStats()
+            interactor.chartEnabled = true
+            view?.setStatsButton(highlighted: true)
         }
         view?.reload()
     }

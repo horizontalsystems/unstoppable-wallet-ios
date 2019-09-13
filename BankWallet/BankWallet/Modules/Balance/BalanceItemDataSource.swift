@@ -8,7 +8,6 @@ class BalanceItemDataSource {
     }
     var items: [BalanceItem]
     var currency: Currency
-    var statsModeOn: Bool
 
     init(sorter: IBalanceSorter, baseCurrency: Currency) {
         self.sorter = sorter
@@ -16,7 +15,6 @@ class BalanceItemDataSource {
 
         items = [BalanceItem]()
         sortType = .name
-        statsModeOn = false
     }
 
 }

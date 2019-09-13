@@ -11,12 +11,13 @@ class AppManager {
     private let localStorage: ILocalStorage
     private let secureStorage: ISecureStorage
     private let kitCleaner: IKitCleaner
+    private let rateStatsSyncer: IRateStatsSyncer
 
     private let didBecomeActiveSubject = PublishSubject<()>()
 
     init(accountManager: IAccountManager, walletManager: IWalletManager, adapterManager: IAdapterManager, lockManager: ILockManager,
          passcodeLockManager: IPasscodeLockManager, biometryManager: IBiometryManager, blurManager: IBlurManager,
-         localStorage: ILocalStorage, secureStorage: ISecureStorage, kitCleaner: IKitCleaner) {
+         localStorage: ILocalStorage, secureStorage: ISecureStorage, kitCleaner: IKitCleaner, rateStatsSyncer: IRateStatsSyncer) {
         self.accountManager = accountManager
         self.walletManager = walletManager
         self.adapterManager = adapterManager
@@ -27,6 +28,7 @@ class AppManager {
         self.localStorage = localStorage
         self.secureStorage = secureStorage
         self.kitCleaner = kitCleaner
+        self.rateStatsSyncer = rateStatsSyncer
     }
 
     private func handleFirstLaunch() {
@@ -58,6 +60,7 @@ extension AppManager {
         didBecomeActiveSubject.onNext(())
 
         blurManager.didBecomeActive()
+        rateStatsSyncer.syncStats()
     }
 
     func didEnterBackground() {

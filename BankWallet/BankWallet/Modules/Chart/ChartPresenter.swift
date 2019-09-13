@@ -3,7 +3,7 @@ import UIKit
 class ChartPresenter {
     weak var view: IChartView?
 
-    private let interactor: IChartInteractor
+    private var interactor: IChartInteractor
     private let factory: IChartRateFactory
     private let currency: Currency
 
@@ -50,7 +50,7 @@ class ChartPresenter {
                 return
             }
             chartType = firstType
-            interactor.setDefault(chartType: firstType)
+            interactor.defaultChartType = firstType
         }
         view?.setChartType(tag: chartType.tag)
     }
@@ -60,10 +60,13 @@ class ChartPresenter {
 extension ChartPresenter: IChartViewDelegate {
 
     func viewDidLoad() {
-        view?.addTypeButtons(types: ChartType.allCases)
-
         view?.showSpinner()
-        interactor.getRateStats(coinCode: coin.code, currencyCode: currency.code)
+
+        interactor.subscribeToChartStats()
+        interactor.subscribeToLatestRate(coinCode: coin.code, currencyCode: currency.code)
+        interactor.chartEnabled = true
+
+        view?.addTypeButtons(types: ChartType.allCases)
 
         view?.reloadAllModels()
     }
@@ -74,7 +77,7 @@ extension ChartPresenter: IChartViewDelegate {
         }
 
         chartType = type
-        interactor.setDefault(chartType: type)
+        interactor.defaultChartType = type
 
         updateChart()
     }
@@ -84,20 +87,32 @@ extension ChartPresenter: IChartViewDelegate {
         view?.showSelectedPoint(chartType: chartType, timestamp: point.timestamp, value: currencyValue)
     }
 
+    func onChartClosed() {
+        interactor.chartEnabled = false
+    }
+
 }
 
 extension ChartPresenter: IChartInteractorDelegate {
 
-    func didReceive(chartData: ChartData, rate: Rate?) {
+    func didReceive(chartData: ChartData) {
+        guard chartData.coinCode == coin.code else {
+            return
+        }
+
         self.chartData = chartData
-        self.rate = rate
 
         view?.hideSpinner()
         updateButtons(chartData: chartData)
         updateChart()
     }
 
-    func onError(_ error: Error) {
+    func didReceive(rate: Rate) {
+        self.rate = rate
+        updateChart()
+    }
+
+    func onError() {
         view?.hideSpinner()
         view?.showError()
     }
