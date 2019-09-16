@@ -1,5 +1,6 @@
 protocol ICreateWalletView: class {
     func set(viewItems: [CreateWalletViewItem])
+    func show(error: Error)
 }
 
 protocol ICreateWalletViewDelegate {
@@ -10,7 +11,7 @@ protocol ICreateWalletViewDelegate {
 
 protocol ICreateWalletInteractor {
     var featuredCoins: [Coin] { get }
-    func createWallet(coin: Coin)
+    func createWallet(coin: Coin) throws
 }
 
 protocol ICreateWalletRouter {

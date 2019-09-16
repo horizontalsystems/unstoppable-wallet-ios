@@ -33,10 +33,4 @@ extension PredefinedAccountTypeManager: IPredefinedAccountTypeManager {
         _ = try accountCreator.createNewAccount(defaultAccountType: predefinedAccountType.defaultAccountType, createDefaultWallets: true)
     }
 
-    func createAllAccounts() {
-        for predefinedAccountType in allTypes {
-            try? createAccount(predefinedAccountType: predefinedAccountType)
-        }
-    }
-
 }
