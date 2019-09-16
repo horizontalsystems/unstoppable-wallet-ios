@@ -169,19 +169,3 @@ extension CreateWalletViewItem: Equatable {
     }
 
 }
-
-extension FeaturedCoin {
-
-    static func mock(coin: Coin = Coin.mock(), enabledByDefault: Bool = false) -> FeaturedCoin {
-        return FeaturedCoin(coin: coin, enabledByDefault: enabledByDefault)
-    }
-
-}
-
-extension FeaturedCoin: Equatable {
-
-    public static func ==(lhs: FeaturedCoin, rhs: FeaturedCoin) -> Bool {
-        return lhs.coin == rhs.coin && lhs.enabledByDefault == rhs.enabledByDefault
-    }
-
-}

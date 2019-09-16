@@ -66,14 +66,14 @@ class AppConfigProvider: IAppConfigProvider {
         return ["BTC", "ETH"]
     }
 
-    var featureCoins: [FeaturedCoin] {
+    var featuredCoins: [Coin] {
         return [
-            FeaturedCoin(coin: coins[0], enabledByDefault: true),
-            FeaturedCoin(coin: coins[1], enabledByDefault: true),
-            FeaturedCoin(coin: coins[2], enabledByDefault: false),
-            FeaturedCoin(coin: coins[3], enabledByDefault: false),
-            FeaturedCoin(coin: coins[4], enabledByDefault: false),
-            FeaturedCoin(coin: coins[5], enabledByDefault: false),
+            coins[0],
+            coins[1],
+            coins[2],
+            coins[3],
+            coins[4],
+            coins[5],
         ]
     }
 

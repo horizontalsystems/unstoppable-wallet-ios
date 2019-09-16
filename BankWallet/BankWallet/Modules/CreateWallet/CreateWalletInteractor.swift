@@ -9,11 +9,11 @@ class CreateWalletInteractor {
 
 extension CreateWalletInteractor: ICreateWalletInteractor {
 
-    var featuredCoins: [FeaturedCoin] {
-        return appConfigProvider.featureCoins
+    var featuredCoins: [Coin] {
+        return appConfigProvider.featuredCoins
     }
 
-    func createWallet(coins: [Coin]) {
+    func createWallet(coin: Coin) {
         // todo: implement this
     }
 
