@@ -5,6 +5,7 @@ protocol ICreateWalletView: class {
 protocol ICreateWalletViewDelegate {
     func viewDidLoad()
     func didTap(index: Int)
+    func didTapCreateButton()
 }
 
 protocol ICreateWalletInteractor {
@@ -19,8 +20,10 @@ protocol ICreateWalletRouter {
 struct CreateWalletViewItem {
     let title: String
     let code: String
+    let selected: Bool
 }
 
 class CreateWalletState {
     var coins: [Coin] = []
+    var selectedIndex: Int = 0
 }
