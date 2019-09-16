@@ -21,14 +21,12 @@ class CreateWalletViewController: WalletViewController {
         super.viewDidLoad()
 
         title = "create_wallet.title".localized
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "create_wallet.create_button".localized, style: .plain, target: self, action: #selector(onTapCreate))
 
         tableView.registerCell(forClass: CreateWalletCell.self)
         tableView.registerHeaderFooter(forClass: TopDescriptionView.self)
         tableView.sectionDataSource = self
 
         tableView.backgroundColor = .clear
-        tableView.allowsSelection = false
         tableView.separatorStyle = .none
 
         view.addSubview(tableView)
@@ -38,10 +36,6 @@ class CreateWalletViewController: WalletViewController {
 
         delegate.viewDidLoad()
         tableView.buildSections()
-    }
-
-    @objc func onTapCreate() {
-        delegate.didTapCreateButton()
     }
 
 }
@@ -66,9 +60,10 @@ extension CreateWalletViewController: SectionsDataSource {
                                 id: "coin_\(viewItem.code)",
                                 height: SettingsTheme.doubleLineCellHeight,
                                 bind: { [unowned self] cell, _ in
-                                    cell.bind(viewItem: viewItem, last: index == self.viewItems.count - 1, onSwitch: { [weak self] isOn in
-                                        self?.delegate.didToggle(index: index, isOn: isOn)
-                                    })
+                                    cell.bind(viewItem: viewItem, last: index == self.viewItems.count - 1)
+                                },
+                                action: { [weak self] _ in
+                                    self?.delegate.didTap(index: index)
                                 }
                         )
                     }
@@ -82,10 +77,6 @@ extension CreateWalletViewController: ICreateWalletView {
 
     func set(viewItems: [CreateWalletViewItem]) {
         self.viewItems = viewItems
-    }
-
-    func set(createButtonEnabled: Bool) {
-        navigationItem.rightBarButtonItem?.isEnabled = createButtonEnabled
     }
 
 }

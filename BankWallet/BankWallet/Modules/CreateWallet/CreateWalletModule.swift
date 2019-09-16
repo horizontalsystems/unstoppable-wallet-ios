@@ -1,17 +1,15 @@
 protocol ICreateWalletView: class {
     func set(viewItems: [CreateWalletViewItem])
-    func set(createButtonEnabled: Bool)
 }
 
 protocol ICreateWalletViewDelegate {
     func viewDidLoad()
-    func didToggle(index: Int, isOn: Bool)
-    func didTapCreateButton()
+    func didTap(index: Int)
 }
 
 protocol ICreateWalletInteractor {
-    var featuredCoins: [FeaturedCoin] { get }
-    func createWallet(coins: [Coin])
+    var featuredCoins: [Coin] { get }
+    func createWallet(coin: Coin)
 }
 
 protocol ICreateWalletRouter {
@@ -21,10 +19,8 @@ protocol ICreateWalletRouter {
 struct CreateWalletViewItem {
     let title: String
     let code: String
-    let selected: Bool
 }
 
 class CreateWalletState {
     var coins: [Coin] = []
-    var enabledIndexes: Set<Int> = []
 }
