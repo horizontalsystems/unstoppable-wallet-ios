@@ -4,7 +4,7 @@ import ActionSheet
 class BalanceTheme {
     static let sortingOnThreshold: Int = 5
 
-    static let headerHeight: CGFloat = 44
+    static let headerHeight: CGFloat = 48
     static var headerSeparatorBackground: UIColor { return .cryptoSteel20 }
     static var headerSortBackground: UIColor { return .crypto_Steel20_LightBackground }
     static let headerSortCornerRadius: CGFloat = 14
@@ -42,7 +42,7 @@ class BalanceTheme {
     static let cellTitleFont = UIFont.cryptoHeadline2
     static var cellTitleColor: UIColor { return .crypto_White_Black }
 
-    static let rateTopMargin: CGFloat = 19
+    static let rateTopMargin: CGFloat = 20
     static let rateFont = UIFont.cryptoSubhead2
     static let rateColor = UIColor.cryptoGray
     static let rateExpiredColor = UIColor.cryptoGray50
@@ -77,7 +77,7 @@ class BalanceTheme {
     static var editTitleSelectedColor: UIColor { return UIColor.crypto_Steel40_LightGray }
 
     static let statButtonWidth: CGFloat = 57
-    static let chartSize = CGSize(width: 64, height: 30)
+    static let chartSize = CGSize(width: 72, height: 32)
     static let chartCornerRadius: CGFloat = 8
     static let percentDeltaFont: UIFont = .cryptoHeadline2
     static let percentDeltaDownColor: UIColor = .cryptoRed
@@ -86,4 +86,7 @@ class BalanceTheme {
     static var chartBorderColor: UIColor { return App.shared.localStorage.lightMode ? .cryptoSteel20 : .clear }
     static let chartBorderWidth: CGFloat = 1 / UIScreen.main.scale
     static let percentDeltaFailColor: UIColor = .cryptoGray50
+    static let inProgressLineColor: UIColor = .cryptoSteel20
+    static let failLabelColor: UIColor = .cryptoGray50
+    static let failLabelFont: UIFont = .cryptoSubhead2
 }
