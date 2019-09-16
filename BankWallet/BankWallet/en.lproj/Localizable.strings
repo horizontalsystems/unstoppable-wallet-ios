@@ -362,4 +362,4 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 
 "create_wallet.title" = "New Wallet";
 "create_wallet.create_button" = "Create";
-"create_wallet.description" = "Select crypto currencies your new wallet should support. You may do this later as well.";
+"create_wallet.description" = "Select one cryptocurrency to start. You will be able to add other cryptocurrencies later.";

@@ -62,4 +62,10 @@ extension DefaultWalletCreator: IDefaultWalletCreator {
         walletManager.enable(wallets: wallets)
     }
 
+    func createWallet(account: Account, coin: Coin) {
+        var wallets = walletManager.wallets
+        wallets.append(walletFactory.wallet(coin: coin, account: account, syncMode: account.defaultSyncMode))
+        walletManager.enable(wallets: wallets)
+    }
+
 }

@@ -11,7 +11,12 @@ class AccountCreator {
         self.defaultWalletCreator = defaultWalletCreator
     }
 
-    private func createAccount(accountType: AccountType, backedUp: Bool, defaultSyncMode: SyncMode?, createDefaultWallets: Bool) -> Account {
+    private func createNewAccount(defaultAccountType: DefaultAccountType) throws -> Account {
+        let accountType = try createAccountType(defaultAccountType: defaultAccountType)
+        return createAccount(accountType: accountType, backedUp: false, defaultSyncMode: .new)
+    }
+
+    private func createAccount(accountType: AccountType, backedUp: Bool, defaultSyncMode: SyncMode?) -> Account {
         let account = accountFactory.account(
                 type: accountType,
                 backedUp: backedUp,
@@ -19,10 +24,6 @@ class AccountCreator {
         )
 
         accountManager.create(account: account)
-
-        if createDefaultWallets {
-            defaultWalletCreator.createWallets(account: account)
-        }
 
         return account
     }
@@ -46,12 +47,29 @@ class AccountCreator {
 extension AccountCreator: IAccountCreator {
 
     func createNewAccount(defaultAccountType: DefaultAccountType, createDefaultWallets: Bool) throws -> Account {
-        let accountType = try createAccountType(defaultAccountType: defaultAccountType)
-        return createAccount(accountType: accountType, backedUp: false, defaultSyncMode: .new, createDefaultWallets: createDefaultWallets)
+        let account = try createNewAccount(defaultAccountType: defaultAccountType)
+
+        if createDefaultWallets {
+            defaultWalletCreator.createWallets(account: account)
+        }
+
+        return account
+    }
+
+    func createNewAccount(coin: Coin) throws {
+        let account = try createNewAccount(defaultAccountType: coin.type.defaultAccountType)
+
+        defaultWalletCreator.createWallet(account: account, coin: coin)
     }
 
     func createRestoredAccount(accountType: AccountType, defaultSyncMode: SyncMode?, createDefaultWallets: Bool) -> Account {
-        return createAccount(accountType: accountType, backedUp: true, defaultSyncMode: defaultSyncMode, createDefaultWallets: createDefaultWallets)
+        let account = createAccount(accountType: accountType, backedUp: true, defaultSyncMode: defaultSyncMode)
+
+        if createDefaultWallets {
+            defaultWalletCreator.createWallets(account: account)
+        }
+
+        return account
     }
 
 }

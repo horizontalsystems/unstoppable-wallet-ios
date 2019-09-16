@@ -122,22 +122,50 @@ class CreateWalletPresenterTests: QuickSpec {
                         when(mock.selectedIndex.get).thenReturn(selectedIndex)
                         when(mock.coins.get).thenReturn([Coin.mock(), coinAtSelectedIndex])
                     }
-                    stub(mockInteractor) { mock in
-                        when(mock.createWallet(coin: any())).thenDoNothing()
-                    }
-                    stub(mockRouter) { mock in
-                        when(mock.showMain()).thenDoNothing()
-                    }
-
-                    presenter.didTapCreateButton()
                 }
 
-                it("creates wallet with selected coin") {
-                    verify(mockInteractor).createWallet(coin: equal(to: coinAtSelectedIndex))
+                context("when wallet is created without errors") {
+                    beforeEach {
+                        stub(mockInteractor) { mock in
+                            when(mock.createWallet(coin: any())).thenDoNothing()
+                        }
+                        stub(mockRouter) { mock in
+                            when(mock.showMain()).thenDoNothing()
+                        }
+
+                        presenter.didTapCreateButton()
+                    }
+
+                    it("creates wallet with selected coin") {
+                        verify(mockInteractor).createWallet(coin: equal(to: coinAtSelectedIndex))
+                    }
+
+                    it("shows Main module") {
+                        verify(mockRouter).showMain()
+                    }
                 }
 
-                it("shows Main module") {
-                    verify(mockRouter).showMain()
+                context("when wallet is not created and error is thrown") {
+                    let error = TestError()
+
+                    beforeEach {
+                        stub(mockInteractor) { mock in
+                            when(mock.createWallet(coin: any())).thenThrow(error)
+                        }
+                        stub(mockView) { mock in
+                            when(mock.show(error: any())).thenDoNothing()
+                        }
+
+                        presenter.didTapCreateButton()
+                    }
+
+                    it("shows error in view") {
+                        verify(mockView).show(error: equal(to: error, type: TestError.self))
+                    }
+
+                    it("does not show Main module") {
+                        verify(mockRouter, never()).showMain()
+                    }
                 }
             }
         }

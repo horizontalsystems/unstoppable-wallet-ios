@@ -36,8 +36,12 @@ extension CreateWalletPresenter: ICreateWalletViewDelegate {
     }
 
     func didTapCreateButton() {
-        interactor.createWallet(coin: state.coins[state.selectedIndex])
-        router.showMain()
+        do {
+            try interactor.createWallet(coin: state.coins[state.selectedIndex])
+            router.showMain()
+        } catch {
+            view?.show(error: error)
+        }
     }
 
 }

@@ -168,6 +168,7 @@ protocol IBackupManager {
 
 protocol IAccountCreator {
     func createNewAccount(defaultAccountType: DefaultAccountType, createDefaultWallets: Bool) throws -> Account
+    func createNewAccount(coin: Coin) throws
     func createRestoredAccount(accountType: AccountType, defaultSyncMode: SyncMode?, createDefaultWallets: Bool) -> Account
 }
 
@@ -482,7 +483,6 @@ protocol IPredefinedAccountTypeManager {
     func predefinedAccountType(accountType: AccountType) -> IPredefinedAccountType?
     func predefinedAccountType(coin: Coin) -> IPredefinedAccountType?
     func createAccount(predefinedAccountType: IPredefinedAccountType) throws
-    func createAllAccounts()
 }
 
 protocol IPredefinedAccountType {
@@ -505,6 +505,7 @@ protocol IWalletStorage {
 
 protocol IDefaultWalletCreator {
     func createWallets(account: Account)
+    func createWallet(account: Account, coin: Coin)
 }
 
 protocol IFeeCoinProvider {

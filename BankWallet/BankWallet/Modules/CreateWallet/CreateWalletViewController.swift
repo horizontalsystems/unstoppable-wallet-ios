@@ -87,4 +87,8 @@ extension CreateWalletViewController: ICreateWalletView {
         tableView.reload(animated: true)
     }
 
+    func show(error: Error) {
+        HudHelper.instance.showError(title: error.localizedDescription)
+    }
+
 }
