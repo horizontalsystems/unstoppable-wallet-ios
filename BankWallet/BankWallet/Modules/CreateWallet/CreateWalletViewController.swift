@@ -21,6 +21,7 @@ class CreateWalletViewController: WalletViewController {
         super.viewDidLoad()
 
         title = "create_wallet.title".localized
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "create_wallet.create_button".localized, style: .done, target: self, action: #selector(onTapCreate))
 
         tableView.registerCell(forClass: CreateWalletCell.self)
         tableView.registerHeaderFooter(forClass: TopDescriptionView.self)
@@ -36,6 +37,10 @@ class CreateWalletViewController: WalletViewController {
 
         delegate.viewDidLoad()
         tableView.buildSections()
+    }
+
+    @objc func onTapCreate() {
+        delegate.didTapCreateButton()
     }
 
 }
@@ -58,7 +63,9 @@ extension CreateWalletViewController: SectionsDataSource {
                     rows: viewItems.enumerated().map { (index, viewItem) in
                         Row<CreateWalletCell>(
                                 id: "coin_\(viewItem.code)",
+                                hash: "coin_\(viewItem.selected)",
                                 height: SettingsTheme.doubleLineCellHeight,
+                                autoDeselect: true,
                                 bind: { [unowned self] cell, _ in
                                     cell.bind(viewItem: viewItem, last: index == self.viewItems.count - 1)
                                 },
@@ -77,6 +84,7 @@ extension CreateWalletViewController: ICreateWalletView {
 
     func set(viewItems: [CreateWalletViewItem]) {
         self.viewItems = viewItems
+        tableView.reload(animated: true)
     }
 
 }

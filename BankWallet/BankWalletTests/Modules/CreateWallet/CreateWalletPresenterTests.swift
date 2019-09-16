@@ -11,11 +11,19 @@ class CreateWalletPresenterTests: QuickSpec {
         let mockRouter = MockICreateWalletRouter()
         let mockView = MockICreateWalletView()
         let mockState = MockCreateWalletState()
+        let mockFactory = MockCreateWalletViewItemFactory()
 
-        let presenter = CreateWalletPresenter(interactor: mockInteractor, router: mockRouter, state: mockState)
+        let presenter = CreateWalletPresenter(interactor: mockInteractor, router: mockRouter, state: mockState, viewItemFactory: mockFactory)
 
         beforeEach {
             presenter.view = mockView
+
+            stub(mockView) { mock in
+                when(mock.set(viewItems: any())).thenDoNothing()
+            }
+            stub(mockState) { mock in
+                when(mock.selectedIndex.set(any())).thenDoNothing()
+            }
         }
 
         afterEach {
@@ -23,70 +31,96 @@ class CreateWalletPresenterTests: QuickSpec {
             reset(mockInteractor)
             reset(mockView)
             reset(mockState)
+            reset(mockFactory)
         }
 
         describe("ICreateWalletViewDelegate") {
 
             describe("#viewDidLoad") {
+                let initialSelectedIndex: Int = 0
+                let featuredCoins = [Coin.mock(), Coin.mock()]
 
                 beforeEach {
-                    stub(mockView) { mock in
-                        when(mock.set(viewItems: any())).thenDoNothing()
-                    }
                     stub(mockState) { mock in
                         when(mock.coins.set(any())).thenDoNothing()
+                    }
+                    stub(mockFactory) { mock in
+                        when(mock.viewItems(coins: any(), selectedIndex: any())).thenReturn([])
                     }
                 }
 
                 describe("view items") {
-                    let titleBtc = "Bitcoin"
-                    let codeBtc = "BTC"
-                    let titleEth = "Ethereum"
-                    let codeEth = "ETH"
-
-                    let coinBtc = Coin.mock(title: titleBtc, code: codeBtc)
-                    let coinEth = Coin.mock(title: titleEth, code: codeEth)
-
-                    let viewItemBtc = CreateWalletViewItem(title: titleBtc, code: codeBtc)
-                    let viewItemEth = CreateWalletViewItem(title: titleEth, code: codeEth)
+                    let viewItems = [CreateWalletViewItem.mock(), CreateWalletViewItem.mock()]
 
                     beforeEach {
                         stub(mockInteractor) { mock in
-                            when(mock.featuredCoins.get).thenReturn([coinBtc, coinEth])
+                            when(mock.featuredCoins.get).thenReturn(featuredCoins)
+                        }
+                        stub(mockFactory) { mock in
+                            when(mock.viewItems(coins: equal(to: featuredCoins), selectedIndex: initialSelectedIndex)).thenReturn(viewItems)
                         }
 
                         presenter.viewDidLoad()
                     }
 
                     it("sets view items to view") {
-                        verify(mockView).set(viewItems: equal(to: [viewItemBtc, viewItemEth]))
+                        verify(mockView).set(viewItems: equal(to: viewItems))
                     }
                 }
 
-                describe("coins to state") {
-                    let coinBtc = Coin.mock()
-                    let coinEth = Coin.mock()
+                describe("set data to state") {
 
                     beforeEach {
                         stub(mockInteractor) { mock in
-                            when(mock.featuredCoins.get).thenReturn([coinBtc, coinEth])
+                            when(mock.featuredCoins.get).thenReturn(featuredCoins)
                         }
 
                         presenter.viewDidLoad()
                     }
 
                     it("sets featured coins to state") {
-                        verify(mockState).coins.set(equal(to: [coinBtc, coinEth]))
+                        verify(mockState).coins.set(equal(to: featuredCoins))
+                    }
+
+                    it("sets initial selected index to state") {
+                        verify(mockState).selectedIndex.set(equal(to: initialSelectedIndex))
                     }
                 }
             }
 
             describe("#didTap") {
-                let selectedCoin = Coin.mock()
+                let index: Int = 1
+                let coins = [Coin.mock(), Coin.mock()]
+                let viewItems = [CreateWalletViewItem.mock(), CreateWalletViewItem.mock()]
 
                 beforeEach {
                     stub(mockState) { mock in
-                        when(mock.coins.get).thenReturn([Coin.mock(), selectedCoin])
+                        when(mock.coins.get).thenReturn(coins)
+                    }
+                    stub(mockFactory) { mock in
+                        when(mock.viewItems(coins: equal(to: coins), selectedIndex: index)).thenReturn(viewItems)
+                    }
+
+                    presenter.didTap(index: index)
+                }
+
+                it("sets new view items to view") {
+                    verify(mockView).set(viewItems: equal(to: viewItems))
+                }
+
+                it("sets new selected index to state") {
+                    verify(mockState).selectedIndex.set(equal(to: index))
+                }
+            }
+
+            describe("#didTapCreateButton") {
+                let selectedIndex = 1
+                let coinAtSelectedIndex = Coin.mock()
+
+                beforeEach {
+                    stub(mockState) { mock in
+                        when(mock.selectedIndex.get).thenReturn(selectedIndex)
+                        when(mock.coins.get).thenReturn([Coin.mock(), coinAtSelectedIndex])
                     }
                     stub(mockInteractor) { mock in
                         when(mock.createWallet(coin: any())).thenDoNothing()
@@ -95,11 +129,11 @@ class CreateWalletPresenterTests: QuickSpec {
                         when(mock.showMain()).thenDoNothing()
                     }
 
-                    presenter.didTap(index: 1)
+                    presenter.didTapCreateButton()
                 }
 
                 it("creates wallet with selected coin") {
-                    verify(mockInteractor).createWallet(coin: equal(to: selectedCoin))
+                    verify(mockInteractor).createWallet(coin: equal(to: coinAtSelectedIndex))
                 }
 
                 it("shows Main module") {

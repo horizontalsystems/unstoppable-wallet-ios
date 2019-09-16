@@ -162,6 +162,15 @@ extension JsonApiProvider.RequestObject: Equatable {
 
 }
 
+extension CreateWalletViewItem {
+
+    static func mock(title: String? = nil, code: String? = nil, selected: Bool = false) -> CreateWalletViewItem {
+        let randomNumber = Int.random(in: 0..<1000)
+        return CreateWalletViewItem(title: title ?? "Bitcoin_\(randomNumber)", code: code ?? "BTC_\(randomNumber)", selected: selected)
+    }
+
+}
+
 extension CreateWalletViewItem: Equatable {
 
     public static func ==(lhs: CreateWalletViewItem, rhs: CreateWalletViewItem) -> Bool {

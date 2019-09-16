@@ -3,13 +3,20 @@ import SnapKit
 
 class CreateWalletCell: AppCell {
     private let leftView = DoubleLineImageCellView()
+    private let rightView = CheckmarkCellView()
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
         contentView.addSubview(leftView)
         leftView.snp.makeConstraints { maker in
-            maker.edges.equalToSuperview()
+            maker.leading.top.bottom.equalToSuperview()
+        }
+
+        contentView.addSubview(rightView)
+        rightView.snp.makeConstraints { maker in
+            maker.trailing.top.bottom.equalToSuperview()
+            maker.leading.equalTo(leftView.snp.trailing)
         }
     }
 
@@ -22,9 +29,11 @@ class CreateWalletCell: AppCell {
 
         leftView.bind(
                 image: UIImage(named: "\(viewItem.code.lowercased())")?.tinted(with: AppTheme.coinIconColor),
-                title: viewItem.code,
-                subtitle: viewItem.title
+                title: viewItem.title,
+                subtitle: viewItem.code
         )
+
+        rightView.bind(visible: viewItem.selected)
     }
 
 }
