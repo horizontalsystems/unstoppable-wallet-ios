@@ -64,7 +64,8 @@ class ChartRateTheme {
 
     static func formatted(percentDelta: Decimal) -> String {
         let formatter = ChartRateTheme.diffFormatter
-        let sign = percentDelta.isSignMinus ? "- " : "+ "
+        var sign = percentDelta.isSignMinus ? "- " : "+ "
+        sign = percentDelta == 0 ? "" : sign
         return [sign, formatter.string(from: abs(percentDelta) as NSNumber), "%"].compactMap { $0 }.joined()
     }
 

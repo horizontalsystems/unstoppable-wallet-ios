@@ -20,6 +20,8 @@ class BalanceCell: UITableViewCell {
     private let chartHolder = UIButton()
     private let chartView: ChartView
     private let percentDeltaLabel = UILabel()
+    private let inProgressLine = UIView()
+    private let failLabel = UILabel()
 
     private let syncSpinner = HUDProgressView(
             progress: Float(BalanceCell.minimumProgress) / 100,
@@ -180,9 +182,24 @@ class BalanceCell: UITableViewCell {
         percentDeltaLabel.font = BalanceTheme.percentDeltaFont
         percentDeltaLabel.textAlignment = .right
         percentDeltaLabel.snp.makeConstraints { maker in
-            maker.top.equalTo(self.chartView.snp.bottom).offset(BalanceTheme.cellBigMargin)
+            maker.top.equalTo(self.chartView.snp.bottom).offset(BalanceTheme.cellSmallMargin)
             maker.trailing.equalToSuperview().offset(-BalanceTheme.cellBigMargin)
             maker.leading.equalToSuperview()
+        }
+
+        chartHolder.addSubview(inProgressLine)
+        inProgressLine.backgroundColor = BalanceTheme.inProgressLineColor
+        inProgressLine.snp.makeConstraints { maker in
+            maker.leading.trailing.equalTo(chartView)
+            maker.bottom.equalTo(chartView).offset(-BalanceTheme.cellSmallMargin)
+            maker.height.equalTo(1 / UIScreen.main.scale)
+        }
+        chartHolder.addSubview(failLabel)
+        failLabel.font = BalanceTheme.failLabelFont
+        failLabel.textColor = BalanceTheme.failLabelColor
+        failLabel.text = "n/a".localized
+        failLabel.snp.makeConstraints { maker in
+            maker.center.equalTo(chartView)
         }
     }
 
@@ -269,12 +286,19 @@ class BalanceCell: UITableViewCell {
 
         chartHolder.isHidden = !isStatModeOn || selected
 
+        let chartInProgress = item.chartPoints.isEmpty && !item.statLoadDidFail
+
         let fallDown = item.percentDelta.isSignMinus
-        let successColor = fallDown ? BalanceTheme.percentDeltaDownColor : BalanceTheme.percentDeltaUpColor
-        percentDeltaLabel.textColor = item.statLoadDidFail ? BalanceTheme.percentDeltaFailColor : successColor
+        let valueColor = fallDown ? BalanceTheme.percentDeltaDownColor : BalanceTheme.percentDeltaUpColor
+        let doneColor = item.statLoadDidFail ? BalanceTheme.percentDeltaFailColor : valueColor
+        let inProgressOrFailColor = BalanceTheme.failLabelColor
+        percentDeltaLabel.textColor = chartInProgress ? inProgressOrFailColor : doneColor
 
         let successText = ChartRateTheme.formatted(percentDelta: item.percentDelta)
-        percentDeltaLabel.text = item.statLoadDidFail ? "n/a".localized : successText
+        percentDeltaLabel.text = item.statLoadDidFail ?  "----" : successText
+
+        inProgressLine.isHidden = !chartInProgress
+        failLabel.isHidden = !item.statLoadDidFail
 
         if item.chartPoints.isEmpty {
             chartView.clear()
