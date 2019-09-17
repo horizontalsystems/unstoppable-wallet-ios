@@ -10,7 +10,7 @@ class BaseCurrencySettingsViewController: WalletViewController {
     init(delegate: IBaseCurrencySettingsViewDelegate) {
         self.delegate = delegate
 
-        super.init(nibName: nil, bundle: nil)
+        super.init()
 
         hidesBottomBarWhenPushed = true
     }

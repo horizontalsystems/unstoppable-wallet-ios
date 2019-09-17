@@ -20,7 +20,7 @@ class BalanceViewController: WalletViewController {
     init(viewDelegate: IBalanceViewDelegate) {
         self.delegate = viewDelegate
 
-        super.init(nibName: nil, bundle: nil)
+        super.init()
 
         tabBarItem = UITabBarItem(title: "balance.tab_bar_item".localized, image: UIImage(named: "balance.tab_bar_item"), tag: 0)
     }

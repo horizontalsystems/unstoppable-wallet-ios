@@ -18,7 +18,7 @@ class SecuritySettingsViewController: WalletViewController {
     init(delegate: ISecuritySettingsViewDelegate) {
         self.delegate = delegate
 
-        super.init(nibName: nil, bundle: nil)
+        super.init()
 
         hidesBottomBarWhenPushed = true
     }

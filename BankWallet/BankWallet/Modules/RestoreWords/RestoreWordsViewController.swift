@@ -22,7 +22,7 @@ class RestoreWordsViewController: WalletViewController {
         self.delegate = delegate
         words = [String](repeating: "", count: self.delegate.wordsCount)
 
-        super.init(nibName: nil, bundle: nil)
+        super.init()
 
         collectionView.delegate = self
         collectionView.dataSource = self

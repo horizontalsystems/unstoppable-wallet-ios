@@ -5,7 +5,7 @@ class AboutSettingsViewController: WalletViewController, UITableViewDataSource, 
     let tableView = UITableView()
 
     init() {
-        super.init(nibName: nil, bundle: nil)
+        super.init()
 
         hidesBottomBarWhenPushed = true
     }

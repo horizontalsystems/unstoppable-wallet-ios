@@ -23,7 +23,7 @@ class FullTransactionInfoViewController: WalletViewController, SectionsDataSourc
 
     init(delegate: IFullTransactionInfoViewDelegate) {
         self.delegate = delegate
-        super.init(nibName: nil, bundle: nil)
+        super.init()
 
         errorView = RequestErrorView(subtitle: "full_info.error.subtitle".localized, buttonText: "full_info.error.retry".localized, linkText: "full_info.error.change_source".localized, onTapButton: { [weak self] in
             self?.onRetry()
