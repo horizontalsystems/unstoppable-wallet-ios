@@ -1,14 +1,14 @@
 import UIKit
 import SectionsTableView
 
-class SyncModeViewController: WalletViewController, SectionsDataSource {
-    private let delegate: ISyncModeViewDelegate
+class RestoreOptionsViewController: WalletViewController, SectionsDataSource {
+    private let delegate: IRestoreOptionsViewDelegate
 
     private let tableView = SectionsTableView(style: .grouped)
 
     private var isFast = true
 
-    init(delegate: ISyncModeViewDelegate) {
+    init(delegate: IRestoreOptionsViewDelegate) {
         self.delegate = delegate
         super.init()
     }
@@ -20,9 +20,9 @@ class SyncModeViewController: WalletViewController, SectionsDataSource {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        title = "coin_sync.title".localized
+        title = "restore_options.title".localized
 
-        tableView.registerCell(forClass: SyncModeCell.self)
+        tableView.registerCell(forClass: RestoreOptionCell.self)
         tableView.registerHeaderFooter(forClass: SectionHeaderFooterTextView.self)
         tableView.sectionDataSource = self
         tableView.separatorColor = .clear
@@ -47,37 +47,37 @@ class SyncModeViewController: WalletViewController, SectionsDataSource {
     }
 
     @objc func onTapDone() {
-        delegate.didSelectSyncMode(isFast: isFast)
+        delegate.didSelectRestoreOptions(isFast: isFast)
     }
 
     func buildSections() -> [SectionProtocol] {
         let width = view.bounds.size.width
-        let footerMargins = SyncModeTheme.cellBigMargin + SyncModeTheme.separatorBottomMargin
+        let footerMargins = RestoreOptionsTheme.cellBigMargin + RestoreOptionsTheme.separatorBottomMargin
 
-        let fastText = "coin_sync.fast.text".localized
-        let slowText = "coin_sync.slow.text".localized
+        let fastText = "restore_options.sync.fast.text".localized
+        let slowText = "restore_options.sync.slow.text".localized
 
         var sections = [SectionProtocol]()
 
-        let fastRow = Row<SyncModeCell>(id: "fast_row", hash: "fast", height: SyncModeTheme.cellHeight, bind: { [weak self] cell, _ in
-            cell.bind(title: "coin_sync.fast".localized, description: "coin_sync.recommended".localized, selected: self?.isFast ?? true, first: true, last: true)
+        let fastRow = Row<RestoreOptionCell>(id: "fast_row", hash: "fast", height: RestoreOptionsTheme.cellHeight, bind: { [weak self] cell, _ in
+            cell.bind(title: "restore_options.sync.fast".localized, description: "restore_options.sync.recommended".localized, selected: self?.isFast ?? true, first: true, last: true)
         }, action: { [weak self] _ in
             self?.onTapFastSync()
         })
         let fastFooter: ViewState<SectionHeaderFooterTextView> = .cellType(hash: "sync_fast_footer", binder: { view in
-            view.bind(title: fastText, topMargin: SyncModeTheme.cellBigMargin, bottomMargin: SyncModeTheme.separatorBottomMargin)
+            view.bind(title: fastText, topMargin: RestoreOptionsTheme.cellBigMargin, bottomMargin: RestoreOptionsTheme.separatorBottomMargin)
         }, dynamicHeight: { _ in
             return SectionHeaderFooterTextView.textHeight(forContainerWidth: width, text: fastText, font: AppTheme.footerTextFont) + footerMargins
         })
-        sections.append(Section(id: "fast", headerState: .margin(height: SyncModeTheme.topMargin), footerState: fastFooter, rows: [fastRow]))
+        sections.append(Section(id: "fast", headerState: .margin(height: RestoreOptionsTheme.topMargin), footerState: fastFooter, rows: [fastRow]))
 
-        let slowRow = Row<SyncModeCell>(id: "slow_row", hash: "slow", height: SyncModeTheme.cellHeight, bind: { [weak self] cell, _ in
-            cell.bind(title: "coin_sync.slow".localized, description: "coin_sync.more_private".localized, selected: !(self?.isFast ?? true), first: true, last: true)
+        let slowRow = Row<RestoreOptionCell>(id: "slow_row", hash: "slow", height: RestoreOptionsTheme.cellHeight, bind: { [weak self] cell, _ in
+            cell.bind(title: "restore_options.sync.slow".localized, description: "restore_options.sync.more_private".localized, selected: !(self?.isFast ?? true), first: true, last: true)
         }, action: { [weak self] _ in
             self?.onTapSlowSync()
         })
         let slowFooter: ViewState<SectionHeaderFooterTextView> = .cellType(hash: "sync_slow_footer", binder: { view in
-            view.bind(title: slowText, topMargin: SyncModeTheme.cellBigMargin, bottomMargin: SyncModeTheme.separatorBottomMargin)
+            view.bind(title: slowText, topMargin: RestoreOptionsTheme.cellBigMargin, bottomMargin: RestoreOptionsTheme.separatorBottomMargin)
         }, dynamicHeight: { _ in
             return SectionHeaderFooterTextView.textHeight(forContainerWidth: width, text: slowText, font: AppTheme.footerTextFont) + footerMargins
         })
@@ -88,5 +88,5 @@ class SyncModeViewController: WalletViewController, SectionsDataSource {
 
 }
 
-extension SyncModeViewController: ISyncModeView {
+extension RestoreOptionsViewController: IRestoreOptionsView {
 }

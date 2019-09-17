@@ -50,16 +50,16 @@
 
 //Coin Sync Modes
 
-"coin_sync.title" = "Geri yükleme seçenekleri";
-"coin_sync.fast" = "Hızlı";
-"coin_sync.recommended" = "0-2 saat (Tavsiye edilen)";
-"coin_sync.fast.text" = "Geçmiş işlemlerinizi güvenilir üçüncü şahıs sunucularıyla geri yükleyin. Uzun işlem geçmişi olan ve büyük miktarda para işlemleri yapan kullanıcılar için bu yöntem güvenlik riski oluşturabilir";
-"coin_sync.slow" = "Yavaş";
-"coin_sync.more_private" = "1-12 saat (Daha Gizli)";
-"coin_sync.slow.text" = "Geçmiş hesap işlemlerinizi ağdan geri yükler. Çok daha güvenli ama yavaş. Eğer geri yükleme çok uzun zaman alıyorsa, Anahtarları Yönet ekranında cüzdan anahtarını Hızlı Eşle seçeneğiyle tekrar içe aktarın.";
-"coin_sync.alert.header" = "Dikkat";
-"coin_sync.alert.text" = "Bu eylem cüzdanınızı her blockchain ile tekrar eşliyecek. Tamamlanması birkaç saat sürebilir.";
-"coin_sync.erc20" = "Ethereum için geri yükle";
+"restore_options.title" = "Geri yükleme seçenekleri";
+"restore_options.sync.fast" = "Hızlı";
+"restore_options.sync.recommended" = "0-2 saat (Tavsiye edilen)";
+"restore_options.sync.fast.text" = "Geçmiş işlemlerinizi güvenilir üçüncü şahıs sunucularıyla geri yükleyin. Uzun işlem geçmişi olan ve büyük miktarda para işlemleri yapan kullanıcılar için bu yöntem güvenlik riski oluşturabilir";
+"restore_options.sync.slow" = "Yavaş";
+"restore_options.sync.more_private" = "1-12 saat (Daha Gizli)";
+"restore_options.sync.slow.text" = "Geçmiş hesap işlemlerinizi ağdan geri yükler. Çok daha güvenli ama yavaş. Eğer geri yükleme çok uzun zaman alıyorsa, Anahtarları Yönet ekranında cüzdan anahtarını Hızlı Eşle seçeneğiyle tekrar içe aktarın.";
+"restore_options.alert.header" = "Dikkat";
+"restore_options.alert.text" = "Bu eylem cüzdanınızı her blockchain ile tekrar eşliyecek. Tamamlanması birkaç saat sürebilir.";
+"restore_options.erc20" = "Ethereum için geri yükle";
 
 // Backup
 

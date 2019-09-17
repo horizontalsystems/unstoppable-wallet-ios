@@ -2,42 +2,42 @@ import UIKit
 import UIExtensions
 import SnapKit
 
-class SyncModeCell: UITableViewCell {
+class RestoreOptionCell: UITableViewCell {
     var highlightBackground = UIView()
 
     var titleLabel = UILabel()
     var descriptionLabel = UILabel()
 
-    var selectedImageView = UIImageView(image: UIImage(named: "Confirmations Icon")?.tinted(with: SyncModeTheme.selectedColor))
+    var selectedImageView = UIImageView(image: UIImage(named: "Confirmations Icon")?.tinted(with: RestoreOptionsTheme.selectedColor))
 
     let topSeparatorView = UIView()
     let bottomSeparatorView = UIView()
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        backgroundColor = SyncModeTheme.cellBackground
+        backgroundColor = RestoreOptionsTheme.cellBackground
         selectionStyle = .none
 
-        highlightBackground.backgroundColor = SyncModeTheme.cellHighlightBackgroundColor
+        highlightBackground.backgroundColor = RestoreOptionsTheme.cellHighlightBackgroundColor
         highlightBackground.alpha = 0
         contentView.addSubview(highlightBackground)
         highlightBackground.snp.makeConstraints { maker in
             maker.edges.equalToSuperview()
         }
 
-        titleLabel.font = SyncModeTheme.titleFont
-        titleLabel.textColor = SyncModeTheme.titleColor
+        titleLabel.font = RestoreOptionsTheme.titleFont
+        titleLabel.textColor = RestoreOptionsTheme.titleColor
         contentView.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { maker in
-            maker.leading.equalToSuperview().offset(SyncModeTheme.cellBigMargin)
-            maker.top.equalToSuperview().offset(SyncModeTheme.cellMediumMargin)
+            maker.leading.equalToSuperview().offset(RestoreOptionsTheme.cellBigMargin)
+            maker.top.equalToSuperview().offset(RestoreOptionsTheme.cellMediumMargin)
         }
-        descriptionLabel.font = SyncModeTheme.descriptionFont
-        descriptionLabel.textColor = SyncModeTheme.descriptionColor
+        descriptionLabel.font = RestoreOptionsTheme.descriptionFont
+        descriptionLabel.textColor = RestoreOptionsTheme.descriptionColor
         contentView.addSubview(descriptionLabel)
         descriptionLabel.snp.makeConstraints { maker in
-            maker.leading.equalToSuperview().offset(SyncModeTheme.cellBigMargin)
-            maker.top.equalTo(titleLabel.snp.bottom).offset(SyncModeTheme.cellSmallMargin)
+            maker.leading.equalToSuperview().offset(RestoreOptionsTheme.cellBigMargin)
+            maker.top.equalTo(titleLabel.snp.bottom).offset(RestoreOptionsTheme.cellSmallMargin)
         }
 
         contentView.addSubview(selectedImageView)

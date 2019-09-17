@@ -8,13 +8,13 @@ class RestoreWordsPresenter {
 
     private var words: [String]?
     var wordsCount: Int
-    private let showSyncMode: Bool
+    private let showRestoreOptions: Bool
 
-    init(mode: RestoreRouter.PresentationMode, router: IRestoreWordsRouter, wordsCount: Int, showSyncMode: Bool, wordsManager: IWordsManager, appConfigProvider: IAppConfigProvider) {
+    init(mode: RestoreRouter.PresentationMode, router: IRestoreWordsRouter, wordsCount: Int, showRestoreOptions: Bool, wordsManager: IWordsManager, appConfigProvider: IAppConfigProvider) {
         self.mode = mode
         self.router = router
         self.wordsCount = wordsCount
-        self.showSyncMode = showSyncMode
+        self.showRestoreOptions = showRestoreOptions
         self.wordsManager = wordsManager
         self.appConfigProvider = appConfigProvider
     }
@@ -36,7 +36,7 @@ extension RestoreWordsPresenter: IRestoreWordsViewDelegate {
             view?.showCancelButton()
         }
 
-        if showSyncMode {
+        if showRestoreOptions {
             view?.showNextButton()
         } else {
             view?.showRestoreButton()
@@ -49,9 +49,9 @@ extension RestoreWordsPresenter: IRestoreWordsViewDelegate {
         do {
             try wordsManager.validate(words: words)
 
-            if showSyncMode {
+            if showRestoreOptions {
                 self.words = words
-                router.showSyncMode(delegate: self)
+                router.showRestoreOptions(delegate: self)
             } else {
                 notify(words: words, syncMode: nil)
             }
@@ -66,9 +66,9 @@ extension RestoreWordsPresenter: IRestoreWordsViewDelegate {
 
 }
 
-extension RestoreWordsPresenter: ISyncModeDelegate {
+extension RestoreWordsPresenter: IRestoreOptionsDelegate {
 
-    func onSelectSyncMode(isFast: Bool) {
+    func onSelectRestoreOptions(isFast: Bool) {
         guard let words = words else { return }
         notify(words: words, syncMode: isFast ? .fast : .slow)
     }

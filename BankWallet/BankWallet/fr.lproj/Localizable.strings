@@ -50,16 +50,16 @@
 
 //Coin Sync Modes
 
-"coin_sync.title" = "Restaurer les options";
-"coin_sync.fast" = "Rapide";
-"coin_sync.recommended" = "0-2 heures (Recommandé)";
-"coin_sync.fast.text" = "Restaure vos transactions passées via un serveur tiers sécurisé. Pour les utilisateurs ayant une longue histoire de transactions impliquant des sommes très importantes, cette méthode peut poser des risques de confidentialité";
-"coin_sync.slow" = "Lente";
-"coin_sync.more_private" = "1-12 heures (Plus Privé)";
-"coin_sync.slow.text" = "Restaure vos transactions passées directement depuis le réseau. Beaucoup plus privé mais très lent. Si la restauration prend trop de temps, accédez à la section Gérer les clés et réimportez la clé du porte-monnaie à l'aide de l'option Synchronisation rapide.";
-"coin_sync.alert.header" = "Attention";
-"coin_sync.alert.text" = "Cette action va rééquilibrer votre solde de porte-monnaie pour chaque de blockchain. Elle peut prendre plusieurs heures pour terminer.";
-"coin_sync.erc20" = "Sync mode same as Ethereum";
+"restore_options.title" = "Restaurer les options";
+"restore_options.sync.fast" = "Rapide";
+"restore_options.sync.recommended" = "0-2 heures (Recommandé)";
+"restore_options.sync.fast.text" = "Restaure vos transactions passées via un serveur tiers sécurisé. Pour les utilisateurs ayant une longue histoire de transactions impliquant des sommes très importantes, cette méthode peut poser des risques de confidentialité";
+"restore_options.sync.slow" = "Lente";
+"restore_options.sync.more_private" = "1-12 heures (Plus Privé)";
+"restore_options.sync.slow.text" = "Restaure vos transactions passées directement depuis le réseau. Beaucoup plus privé mais très lent. Si la restauration prend trop de temps, accédez à la section Gérer les clés et réimportez la clé du porte-monnaie à l'aide de l'option Synchronisation rapide.";
+"restore_options.alert.header" = "Attention";
+"restore_options.alert.text" = "Cette action va rééquilibrer votre solde de porte-monnaie pour chaque de blockchain. Elle peut prendre plusieurs heures pour terminer.";
+"restore_options.erc20" = "Sync mode same as Ethereum";
 
 // Backup
 
