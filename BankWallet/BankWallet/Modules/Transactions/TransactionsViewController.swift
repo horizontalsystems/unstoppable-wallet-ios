@@ -19,7 +19,7 @@ class TransactionsViewController: WalletViewController {
     init(delegate: ITransactionsViewDelegate) {
         self.delegate = delegate
 
-        super.init(nibName: nil, bundle: nil)
+        super.init()
 
         tabBarItem = UITabBarItem(title: "transactions.tab_bar_item".localized, image: UIImage(named: "transactions.tab_bar_item"), tag: 0)
     }

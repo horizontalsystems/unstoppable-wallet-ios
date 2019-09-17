@@ -12,7 +12,7 @@ class ReportViewController: WalletViewController {
     init(delegate: IReportViewDelegate) {
         self.delegate = delegate
 
-        super.init(nibName: nil, bundle: nil)
+        super.init()
 
         hidesBottomBarWhenPushed = true
     }

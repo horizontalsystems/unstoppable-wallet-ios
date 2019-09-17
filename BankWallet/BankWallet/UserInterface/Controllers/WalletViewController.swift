@@ -1,9 +1,24 @@
 import UIKit
 
 class WalletViewController: UIViewController {
+    private let opaque: Bool
+
+    init(opaque: Bool = true) {
+        self.opaque = opaque
+
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        guard opaque else {
+            return
+        }
 
         let bounds = view.bounds
         let gradientStartY = 160 / bounds.height

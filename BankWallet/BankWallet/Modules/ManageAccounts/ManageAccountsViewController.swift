@@ -12,7 +12,7 @@ class ManageAccountsViewController: WalletViewController {
     init(delegate: IManageAccountsViewDelegate) {
         self.delegate = delegate
 
-        super.init(nibName: nil, bundle: nil)
+        super.init()
     }
 
     required init?(coder aDecoder: NSCoder) {
