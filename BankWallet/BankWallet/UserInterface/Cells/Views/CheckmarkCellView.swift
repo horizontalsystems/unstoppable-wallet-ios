@@ -8,13 +8,13 @@ class CheckmarkCellView: UIView {
         super.init(frame: frame)
 
         imageView.image = UIImage(named: "Confirmations Icon")?.withRenderingMode(.alwaysTemplate)
-        imageView.tintColor = SettingsTheme.checkmarkTintColor
+        imageView.tintColor = .cryptoYellow
         imageView.setContentHuggingPriority(.required, for: .horizontal)
         addSubview(imageView)
         imageView.snp.makeConstraints { maker in
             maker.centerY.equalToSuperview()
             maker.leading.equalToSuperview()
-            maker.trailing.equalToSuperview().offset(-SettingsTheme.cellBigMargin)
+            maker.trailing.equalToSuperview().offset(-AppTheme.margin4x)
         }
     }
 

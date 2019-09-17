@@ -81,8 +81,14 @@ class AppTheme {
 
     // New styles
 
-    static let topDescriptionMargin: CGFloat = 24
-    static let topDescriptionSmallMargin: CGFloat = 12
-    static let topDescriptionFont: UIFont = .cryptoSubhead2
-    static let topDescriptionColor: UIColor = .cryptoGray
+    static let margin1x: CGFloat = 4
+    static let margin2x: CGFloat = 8
+    static let margin3x: CGFloat = 12
+    static let margin4x: CGFloat = 16
+    static let margin6x: CGFloat = 24
+    static let margin8x: CGFloat = 32
+    static let margin10x: CGFloat = 40
+    static let margin12x: CGFloat = 48
+
+    static let heightDoubleLineCell: CGFloat = 60
 }

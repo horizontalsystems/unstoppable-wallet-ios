@@ -60,11 +60,12 @@ extension CreateWalletViewController: SectionsDataSource {
             Section(
                     id: "coins",
                     headerState: headerState,
+                    footerState: .margin(height: AppTheme.margin8x),
                     rows: viewItems.enumerated().map { (index, viewItem) in
                         Row<CreateWalletCell>(
                                 id: "coin_\(viewItem.code)",
                                 hash: "coin_\(viewItem.selected)",
-                                height: SettingsTheme.doubleLineCellHeight,
+                                height: AppTheme.heightDoubleLineCell,
                                 autoDeselect: true,
                                 bind: { [unowned self] cell, _ in
                                     cell.bind(viewItem: viewItem, last: index == self.viewItems.count - 1)

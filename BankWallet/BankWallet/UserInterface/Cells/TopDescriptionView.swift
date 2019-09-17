@@ -8,12 +8,12 @@ class TopDescriptionView: UITableViewHeaderFooterView {
         super.init(reuseIdentifier: reuseIdentifier)
 
         label.numberOfLines = 0
-        label.font = AppTheme.topDescriptionFont
-        label.textColor = AppTheme.topDescriptionColor
+        label.font = .cryptoSubhead2
+        label.textColor = .cryptoGray
         contentView.addSubview(label)
         label.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview().inset(AppTheme.topDescriptionMargin)
-            maker.top.equalToSuperview().offset(AppTheme.topDescriptionSmallMargin)
+            maker.leading.trailing.equalToSuperview().inset(AppTheme.margin6x)
+            maker.top.equalToSuperview().offset(AppTheme.margin3x)
         }
     }
 
@@ -30,8 +30,8 @@ class TopDescriptionView: UITableViewHeaderFooterView {
 extension TopDescriptionView {
 
     static func height(containerWidth: CGFloat, text: String) -> CGFloat {
-        let textHeight = ceil(text.height(forContainerWidth: containerWidth - 2 * AppTheme.topDescriptionMargin, font: AppTheme.topDescriptionFont))
-        return textHeight + AppTheme.topDescriptionMargin + AppTheme.topDescriptionSmallMargin
+        let textHeight = ceil(text.height(forContainerWidth: containerWidth - 2 * AppTheme.margin6x, font: .cryptoSubhead2))
+        return textHeight + AppTheme.margin6x + AppTheme.margin3x
     }
 
 }

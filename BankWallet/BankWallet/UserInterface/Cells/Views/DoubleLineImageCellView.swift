@@ -13,25 +13,25 @@ class DoubleLineImageCellView: UIView {
         imageView.setContentHuggingPriority(.required, for: .horizontal)
         imageView.snp.makeConstraints { maker in
             maker.centerY.equalToSuperview()
-            maker.leading.equalToSuperview().offset(SettingsTheme.cellBigMargin)
+            maker.leading.equalToSuperview().offset(AppTheme.margin4x)
         }
 
-        titleLabel.font = SettingsTheme.titleFont
-        titleLabel.textColor = SettingsTheme.titleColor
+        titleLabel.font = .cryptoBody
+        titleLabel.textColor = .appOz
         addSubview(titleLabel)
         titleLabel.snp.makeConstraints { maker in
-            maker.leading.equalTo(imageView.snp.trailing).offset(SettingsTheme.cellBigMargin)
-            maker.trailing.equalToSuperview().offset(-SettingsTheme.cellBigMargin)
-            maker.top.equalToSuperview().offset(SettingsTheme.cellMiddleMargin)
+            maker.leading.equalTo(imageView.snp.trailing).offset(AppTheme.margin4x)
+            maker.trailing.equalToSuperview().offset(-AppTheme.margin4x)
+            maker.top.equalToSuperview().offset(AppTheme.margin2x)
         }
 
-        subtitleLabel.font = SettingsTheme.subtitleFont
-        subtitleLabel.textColor = SettingsTheme.subtitleColor
+        subtitleLabel.font = .cryptoSubhead2
+        subtitleLabel.textColor = .cryptoGray
         addSubview(subtitleLabel)
         subtitleLabel.snp.makeConstraints { maker in
-            maker.leading.equalTo(imageView.snp.trailing).offset(SettingsTheme.cellBigMargin)
-            maker.trailing.equalToSuperview().offset(-SettingsTheme.cellBigMargin)
-            maker.top.equalTo(titleLabel.snp.bottom).offset(SettingsTheme.subtitleTopMargin)
+            maker.leading.equalTo(imageView.snp.trailing).offset(AppTheme.margin4x)
+            maker.trailing.equalToSuperview().offset(-AppTheme.margin4x)
+            maker.top.equalTo(titleLabel.snp.bottom).offset(5)
         }
     }
 
