@@ -12,17 +12,17 @@ class DoubleLineCellView: UIView {
         titleLabel.textColor = .appOz
         addSubview(titleLabel)
         titleLabel.snp.makeConstraints { maker in
-            maker.leading.equalToSuperview().offset(AppTheme.margin4x)
-            maker.trailing.equalToSuperview().offset(-AppTheme.margin4x)
-            maker.top.equalToSuperview().offset(AppTheme.margin2x)
+            maker.leading.equalToSuperview().offset(CGFloat.margin4x)
+            maker.trailing.equalToSuperview().offset(-CGFloat.margin4x)
+            maker.top.equalToSuperview().offset(CGFloat.margin2x)
         }
 
         subtitleLabel.font = .cryptoSubhead2
         subtitleLabel.textColor = .appGray
         addSubview(subtitleLabel)
         subtitleLabel.snp.makeConstraints { maker in
-            maker.leading.equalToSuperview().offset(AppTheme.margin4x)
-            maker.trailing.equalToSuperview().offset(-AppTheme.margin4x)
+            maker.leading.equalToSuperview().offset(CGFloat.margin4x)
+            maker.trailing.equalToSuperview().offset(-CGFloat.margin4x)
             maker.top.equalTo(titleLabel.snp.bottom).offset(5)
         }
     }
