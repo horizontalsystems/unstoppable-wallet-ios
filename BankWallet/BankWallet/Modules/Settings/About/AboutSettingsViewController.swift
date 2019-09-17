@@ -1,8 +1,7 @@
 import UIKit
 import SnapKit
 
-class AboutSettingsViewController: WalletViewController, UITableViewDataSource, UITableViewDelegate {
-    let tableView = UITableView()
+class AboutSettingsViewController: WalletViewController {
 
     init() {
         super.init()
@@ -16,32 +15,91 @@ class AboutSettingsViewController: WalletViewController, UITableViewDataSource, 
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
         title = "settings_about.title".localized
 
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.backgroundColor = .clear
-        view.addSubview(tableView)
-        tableView.snp.makeConstraints { maker in
-            maker.edges.equalToSuperview()
+        let scrollView = UIScrollView()
+
+        view.addSubview(scrollView)
+        scrollView.snp.makeConstraints { maker in
+            maker.top.leading.trailing.equalToSuperview()
+            maker.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
         }
-        tableView.register(UINib(nibName: String(describing: AboutCell.self), bundle: nil), forCellReuseIdentifier: String(describing: AboutCell.self))
 
-        tableView.tableFooterView = UIView(frame: .zero)
-        tableView.separatorStyle = .none
-        tableView.allowsSelection = false
-    }
+        let container = UIView()
 
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
+        scrollView.addSubview(container)
+        container.snp.makeConstraints { maker in
+            maker.top.bottom.equalTo(scrollView)
+            maker.leading.trailing.equalTo(view)
+        }
 
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
-    }
+        let imageView = UIImageView(image: UIImage(named: "App Icon"))
+        imageView.setContentHuggingPriority(.required, for: .horizontal)
 
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return tableView.dequeueReusableCell(withIdentifier: String(describing: AboutCell.self), for: indexPath)
+        container.addSubview(imageView)
+        imageView.snp.makeConstraints { maker in
+            maker.top.equalToSuperview().inset(AppTheme.margin3x)
+            maker.leading.equalToSuperview().inset(AppTheme.margin6x)
+        }
+
+        let titleLabel = UILabel()
+        titleLabel.text = "settings_about.app_title".localized
+        titleLabel.font = .cryptoHeadline1
+        titleLabel.textColor = .appOz
+
+        container.addSubview(titleLabel)
+        titleLabel.snp.makeConstraints { maker in
+            maker.top.equalTo(imageView.snp.top).inset(AppTheme.margin2x)
+            maker.leading.equalTo(imageView.snp.trailing).offset(AppTheme.margin4x)
+            maker.trailing.equalToSuperview().inset(AppTheme.margin6x)
+        }
+
+        let subtitleLabel = UILabel()
+        subtitleLabel.text = "settings_about.app_subtitle".localized
+        subtitleLabel.font = .cryptoSubhead2
+        subtitleLabel.textColor = .appGray
+
+        container.addSubview(subtitleLabel)
+        subtitleLabel.snp.makeConstraints { maker in
+            maker.top.equalTo(titleLabel.snp.bottom).offset(AppTheme.margin2x)
+            maker.leading.equalTo(imageView.snp.trailing).offset(AppTheme.margin4x)
+            maker.trailing.equalToSuperview().inset(AppTheme.margin6x)
+        }
+
+        let separatorView = UIView()
+        separatorView.backgroundColor = .appSteel20
+
+        container.addSubview(separatorView)
+        separatorView.snp.makeConstraints { maker in
+            maker.top.equalTo(imageView.snp.bottom).offset(AppTheme.margin6x)
+            maker.leading.trailing.equalToSuperview().inset(AppTheme.margin6x)
+            maker.height.equalTo(AppTheme.heightOnePixel)
+        }
+
+        let headerLabel = UILabel()
+        headerLabel.text = "settings_about.terms_privacy_subtitle".localized
+        headerLabel.font = .cryptoHeadline2
+        headerLabel.textColor = .appJacob
+
+        container.addSubview(headerLabel)
+        headerLabel.snp.makeConstraints { maker in
+            maker.top.equalTo(separatorView.snp.bottom).offset(AppTheme.margin6x)
+            maker.leading.trailing.equalToSuperview().inset(AppTheme.margin6x)
+        }
+
+        let textLabel = UILabel()
+        textLabel.text = "settings_about.terms_privacy_text".localized
+        textLabel.numberOfLines = 0
+        textLabel.font = .cryptoBody
+        textLabel.textColor = .appLeah
+
+        container.addSubview(textLabel)
+        textLabel.snp.makeConstraints { maker in
+            maker.top.equalTo(headerLabel.snp.bottom).offset(AppTheme.margin4x)
+            maker.bottom.equalToSuperview().inset(AppTheme.margin8x)
+            maker.leading.trailing.equalToSuperview().inset(AppTheme.margin6x)
+        }
     }
 
 }

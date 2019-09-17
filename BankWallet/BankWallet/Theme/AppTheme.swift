@@ -90,5 +90,6 @@ class AppTheme {
     static let margin10x: CGFloat = 40
     static let margin12x: CGFloat = 48
 
+    static var heightOnePixel: CGFloat { return 1 / UIScreen.main.scale }
     static let heightDoubleLineCell: CGFloat = 60
 }

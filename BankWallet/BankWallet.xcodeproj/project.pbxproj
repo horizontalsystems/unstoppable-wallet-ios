@@ -1695,12 +1695,6 @@
 		D38406C721832862007D50AD /* AppIconDevT.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D38406C621832862007D50AD /* AppIconDevT.xcassets */; };
 		D38406C921832968007D50AD /* AppIconDev.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D38406C821832968007D50AD /* AppIconDev.xcassets */; };
 		D3A298A64B963F9CD9841DBF /* Pods_Bank_Dev.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CDA251F7039B6388B930003 /* Pods_Bank_Dev.framework */; };
-		D3A6D6BB219430BA00D11AFE /* AboutCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3A6D6B9219430BA00D11AFE /* AboutCell.swift */; };
-		D3A6D6BC219430BA00D11AFE /* AboutCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3A6D6B9219430BA00D11AFE /* AboutCell.swift */; };
-		D3A6D6BD219430BA00D11AFE /* AboutCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3A6D6B9219430BA00D11AFE /* AboutCell.swift */; };
-		D3A6D6BE219430BA00D11AFE /* AboutCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D3A6D6BA219430BA00D11AFE /* AboutCell.xib */; };
-		D3A6D6BF219430BA00D11AFE /* AboutCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D3A6D6BA219430BA00D11AFE /* AboutCell.xib */; };
-		D3A6D6C0219430BA00D11AFE /* AboutCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D3A6D6BA219430BA00D11AFE /* AboutCell.xib */; };
 		D3B491E921F1ECC600DAE203 /* TransactionRecordPool.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3B491E521F1ECC600DAE203 /* TransactionRecordPool.swift */; };
 		D3B491EC21F1ECC600DAE203 /* TransactionsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3B491E621F1ECC600DAE203 /* TransactionsLoader.swift */; };
 		D3B491EF21F1ECC600DAE203 /* TransactionsMetadataDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3B491E721F1ECC600DAE203 /* TransactionsMetadataDataSource.swift */; };
@@ -2344,8 +2338,6 @@
 		D38406C3218327B1007D50AD /* AppIcon.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = AppIcon.xcassets; sourceTree = "<group>"; };
 		D38406C621832862007D50AD /* AppIconDevT.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = AppIconDevT.xcassets; sourceTree = "<group>"; };
 		D38406C821832968007D50AD /* AppIconDev.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = AppIconDev.xcassets; sourceTree = "<group>"; };
-		D3A6D6B9219430BA00D11AFE /* AboutCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutCell.swift; sourceTree = "<group>"; };
-		D3A6D6BA219430BA00D11AFE /* AboutCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AboutCell.xib; sourceTree = "<group>"; };
 		D3B476A321D0D64E008B0C3E /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		D3B476A421D0D64E008B0C3E /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
 		D3B476A521D0D659008B0C3E /* zh */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = zh; path = zh.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -3054,8 +3046,6 @@
 			children = (
 				11B35BDC4FD741BE033D1956 /* AboutSettingsRouter.swift */,
 				D35B518821942E7A00504FBA /* AboutSettingsViewController.swift */,
-				D3A6D6B9219430BA00D11AFE /* AboutCell.swift */,
-				D3A6D6BA219430BA00D11AFE /* AboutCell.xib */,
 			);
 			path = About;
 			sourceTree = "<group>";
@@ -4041,7 +4031,6 @@
 				D38406C721832862007D50AD /* AppIconDevT.xcassets in Resources */,
 				D3B62A9E20CA88BF005A9F80 /* Colors.xcassets in Resources */,
 				D3B62A8B20CA40DC005A9F80 /* MainViewController.xib in Resources */,
-				D3A6D6BE219430BA00D11AFE /* AboutCell.xib in Resources */,
 				D3B62A9A20CA73A0005A9F80 /* Localizable.strings in Resources */,
 				11B35ADC6467645C9545C89E /* BaseTwinItemView.xib in Resources */,
 			);
@@ -4064,7 +4053,6 @@
 				D38405C0218317DF007D50AD /* Colors.xcassets in Resources */,
 				D38405C1218317DF007D50AD /* MainViewController.xib in Resources */,
 				D38405C3218317DF007D50AD /* Localizable.strings in Resources */,
-				D3A6D6BF219430BA00D11AFE /* AboutCell.xib in Resources */,
 				D38406C921832968007D50AD /* AppIconDev.xcassets in Resources */,
 				D38405C9218317DF007D50AD /* BaseTwinItemView.xib in Resources */,
 			);
@@ -4080,7 +4068,6 @@
 				D38406C5218327E3007D50AD /* AppIcon.xcassets in Resources */,
 				D38406B121831B3D007D50AD /* MainViewController.xib in Resources */,
 				D38406B321831B3D007D50AD /* Localizable.strings in Resources */,
-				D3A6D6C0219430BA00D11AFE /* AboutCell.xib in Resources */,
 				D38406B521831B3D007D50AD /* Assets.xcassets in Resources */,
 				D38406B921831B3D007D50AD /* BaseTwinItemView.xib in Resources */,
 			);
@@ -4338,7 +4325,6 @@
 				1A5648F83FC5E3954E406849 /* DepositShareButtonItem.swift in Sources */,
 				1A564497DCA3CD398FFF0045 /* DepositShareButtonItemView.swift in Sources */,
 				1A56427D41F16B2D9C7B5F88 /* SendModule.swift in Sources */,
-				D3A6D6BB219430BA00D11AFE /* AboutCell.swift in Sources */,
 				1A564822346BD715C453E612 /* SendRouter.swift in Sources */,
 				1A564191A16F15B25768FF30 /* SendTheme.swift in Sources */,
 				D35B518A21942E7A00504FBA /* AboutSettingsViewController.swift in Sources */,
@@ -4932,7 +4918,6 @@
 				D3840531218317DF007D50AD /* DepositShareButtonItem.swift in Sources */,
 				D3840532218317DF007D50AD /* DepositShareButtonItemView.swift in Sources */,
 				D3840533218317DF007D50AD /* SendModule.swift in Sources */,
-				D3A6D6BC219430BA00D11AFE /* AboutCell.swift in Sources */,
 				D3840536218317DF007D50AD /* SendRouter.swift in Sources */,
 				D384053A218317DF007D50AD /* SendTheme.swift in Sources */,
 				D35B518B21942E7A00504FBA /* AboutSettingsViewController.swift in Sources */,
@@ -5482,7 +5467,6 @@
 				D384062021831B3D007D50AD /* DepositShareButtonItem.swift in Sources */,
 				D384062121831B3D007D50AD /* DepositShareButtonItemView.swift in Sources */,
 				D384062221831B3D007D50AD /* SendModule.swift in Sources */,
-				D3A6D6BD219430BA00D11AFE /* AboutCell.swift in Sources */,
 				D384062521831B3D007D50AD /* SendRouter.swift in Sources */,
 				D384062921831B3D007D50AD /* SendTheme.swift in Sources */,
 				D35B518C21942E7A00504FBA /* AboutSettingsViewController.swift in Sources */,
