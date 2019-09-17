@@ -24,15 +24,14 @@ protocol IChartViewDelegate {
 
     func onSelect(type: ChartType)
     func chartTouchSelect(point: ChartPoint)
-    func onChartClosed()
 }
 
 protocol IChartInteractor {
     var defaultChartType: ChartType { get set }
-    var chartEnabled: Bool { get set }
 
     func subscribeToChartStats()
     func subscribeToLatestRate(coinCode: CoinCode, currencyCode: String)
+    func syncStats(coinCode: CoinCode, currencyCode: String)
 }
 
 protocol IChartInteractorDelegate: class {

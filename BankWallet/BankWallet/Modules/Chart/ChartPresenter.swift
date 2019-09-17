@@ -64,7 +64,7 @@ extension ChartPresenter: IChartViewDelegate {
 
         interactor.subscribeToChartStats()
         interactor.subscribeToLatestRate(coinCode: coin.code, currencyCode: currency.code)
-        interactor.chartEnabled = true
+        interactor.syncStats(coinCode: coin.code, currencyCode: currency.code)
 
         view?.addTypeButtons(types: ChartType.allCases)
 
@@ -85,10 +85,6 @@ extension ChartPresenter: IChartViewDelegate {
     func chartTouchSelect(point: ChartPoint) {
         let currencyValue = CurrencyValue(currency: currency, value: point.value)
         view?.showSelectedPoint(chartType: chartType, timestamp: point.timestamp, value: currencyValue)
-    }
-
-    func onChartClosed() {
-        interactor.chartEnabled = false
     }
 
 }

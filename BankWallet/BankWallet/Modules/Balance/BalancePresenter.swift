@@ -21,6 +21,14 @@ class BalancePresenter {
         self.sortingOnThreshold = sortingOnThreshold
     }
 
+    private func updateStats() {
+        if dataSource.statsModeOn {
+            dataSource.items.forEach { item in
+                interactor.syncStats(coinCode: item.wallet.coin.code, currencyCode: dataSource.currency.code)
+            }
+        }
+    }
+
 }
 
 extension BalancePresenter: IBalanceInteractorDelegate {
@@ -34,6 +42,7 @@ extension BalancePresenter: IBalanceInteractorDelegate {
         dataSource.set(items: items)
 
         interactor.fetchRates(currencyCode: dataSource.currency.code, coinCodes: dataSource.coinCodes)
+        updateStats()
 
         view?.setSort(isOn: dataSource.items.count >= sortingOnThreshold)
         view?.setStatsButton(isHidden: !dataSource.items.isEmpty)
@@ -65,6 +74,7 @@ extension BalancePresenter: IBalanceInteractorDelegate {
         dataSource.clearRates()
 
         interactor.fetchRates(currencyCode: currency.code, coinCodes: dataSource.coinCodes)
+        updateStats()
 
         view?.reload()
     }
@@ -75,6 +85,8 @@ extension BalancePresenter: IBalanceInteractorDelegate {
         guard indexes.count > 0 else {
             return
         }
+
+        interactor.syncStats(coinCode: rate.coinCode, currencyCode: dataSource.currency.code)
 
         let oldItems = dataSource.items
         for index in indexes {
@@ -122,15 +134,18 @@ extension BalancePresenter: IBalanceInteractorDelegate {
         view?.didRefresh()
     }
 
+    func didBecomeActive() {
+        updateStats()
+    }
+
 }
 
 extension BalancePresenter: IBalanceViewDelegate {
-    func viewDidLoad() {
-        interactor.chartEnabled = false
 
+    func viewDidLoad() {
         dataSource.sortType = interactor.sortType
         view?.setSort(isOn: false)
-        view?.setStatsButton(highlighted: interactor.chartEnabled)
+        view?.setStatsButton(highlighted: dataSource.statsModeOn)
 
         interactor.initWallets()
     }
@@ -185,9 +200,10 @@ extension BalancePresenter: IBalanceViewDelegate {
     }
 
     func onStatsSwitch() {
-        interactor.chartEnabled = !interactor.chartEnabled
-        view?.setStatsButton(highlighted: interactor.chartEnabled)
+        dataSource.statsModeOn = !dataSource.statsModeOn
+        view?.setStatsButton(highlighted: dataSource.statsModeOn)
         view?.reload()
+        updateStats()
     }
 
 }
@@ -197,8 +213,9 @@ extension BalancePresenter: ISortTypeDelegate {
     func onSelect(sort: BalanceSortType) {
         dataSource.sortType = sort
         if sort == .percentGrowth {
-            interactor.chartEnabled = true
+            dataSource.statsModeOn = true
             view?.setStatsButton(highlighted: true)
+            updateStats()
         }
         view?.reload()
     }
