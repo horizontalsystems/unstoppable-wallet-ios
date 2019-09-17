@@ -13,7 +13,7 @@ class AppCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
-        backgroundColor = SettingsTheme.cellBackground
+        backgroundColor = .appLawrence
         contentView.backgroundColor = .clear
         separatorInset.left = 0
 
@@ -31,7 +31,7 @@ class AppCell: UITableViewCell {
             maker.height.equalTo(0)
         }
 
-        selectView.backgroundColor = SettingsTheme.cellSelectBackground
+        selectView.backgroundColor = .cryptoSteel20
         contentView.addSubview(selectView)
         selectView.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview()

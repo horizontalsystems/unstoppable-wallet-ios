@@ -8,14 +8,14 @@ class SwitchCellView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-        switchView.tintColor = SettingsTheme.switchTintColor
+        switchView.tintColor = .cryptoSteel20
         switchView.setContentCompressionResistancePriority(.required, for: .horizontal)
         switchView.addTarget(self, action: #selector(switchChanged), for: .valueChanged)
         addSubview(switchView)
         switchView.snp.makeConstraints { maker in
             maker.centerY.equalToSuperview()
             maker.leading.equalToSuperview()
-            maker.trailing.equalToSuperview().offset(-SettingsTheme.cellBigMargin)
+            maker.trailing.equalToSuperview().offset(-AppTheme.margin4x)
         }
     }
 
