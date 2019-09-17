@@ -78,9 +78,9 @@ class AppTheme {
     static let closeButtonColor: UIColor = .cryptoGray
 
     static let progressStepsCount = 3
+}
 
-    // New styles
-
+extension CGFloat {
     static let margin1x: CGFloat = 4
     static let margin2x: CGFloat = 8
     static let margin3x: CGFloat = 12
@@ -90,6 +90,6 @@ class AppTheme {
     static let margin10x: CGFloat = 40
     static let margin12x: CGFloat = 48
 
-    static var heightOnePixel: CGFloat { return 1 / UIScreen.main.scale }
+    static let heightOnePixel: CGFloat = 1 / UIScreen.main.scale
     static let heightDoubleLineCell: CGFloat = 60
 }

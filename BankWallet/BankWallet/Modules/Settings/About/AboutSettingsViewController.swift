@@ -39,8 +39,8 @@ class AboutSettingsViewController: WalletViewController {
 
         container.addSubview(imageView)
         imageView.snp.makeConstraints { maker in
-            maker.top.equalToSuperview().inset(AppTheme.margin3x)
-            maker.leading.equalToSuperview().inset(AppTheme.margin6x)
+            maker.top.equalToSuperview().inset(CGFloat.margin3x)
+            maker.leading.equalToSuperview().inset(CGFloat.margin6x)
         }
 
         let titleLabel = UILabel()
@@ -50,9 +50,9 @@ class AboutSettingsViewController: WalletViewController {
 
         container.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { maker in
-            maker.top.equalTo(imageView.snp.top).inset(AppTheme.margin2x)
-            maker.leading.equalTo(imageView.snp.trailing).offset(AppTheme.margin4x)
-            maker.trailing.equalToSuperview().inset(AppTheme.margin6x)
+            maker.top.equalTo(imageView.snp.top).inset(CGFloat.margin2x)
+            maker.leading.equalTo(imageView.snp.trailing).offset(CGFloat.margin4x)
+            maker.trailing.equalToSuperview().inset(CGFloat.margin6x)
         }
 
         let subtitleLabel = UILabel()
@@ -62,9 +62,9 @@ class AboutSettingsViewController: WalletViewController {
 
         container.addSubview(subtitleLabel)
         subtitleLabel.snp.makeConstraints { maker in
-            maker.top.equalTo(titleLabel.snp.bottom).offset(AppTheme.margin2x)
-            maker.leading.equalTo(imageView.snp.trailing).offset(AppTheme.margin4x)
-            maker.trailing.equalToSuperview().inset(AppTheme.margin6x)
+            maker.top.equalTo(titleLabel.snp.bottom).offset(CGFloat.margin2x)
+            maker.leading.equalTo(imageView.snp.trailing).offset(CGFloat.margin4x)
+            maker.trailing.equalToSuperview().inset(CGFloat.margin6x)
         }
 
         let separatorView = UIView()
@@ -72,9 +72,9 @@ class AboutSettingsViewController: WalletViewController {
 
         container.addSubview(separatorView)
         separatorView.snp.makeConstraints { maker in
-            maker.top.equalTo(imageView.snp.bottom).offset(AppTheme.margin6x)
-            maker.leading.trailing.equalToSuperview().inset(AppTheme.margin6x)
-            maker.height.equalTo(AppTheme.heightOnePixel)
+            maker.top.equalTo(imageView.snp.bottom).offset(CGFloat.margin6x)
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin6x)
+            maker.height.equalTo(CGFloat.heightOnePixel)
         }
 
         let headerLabel = UILabel()
@@ -84,8 +84,8 @@ class AboutSettingsViewController: WalletViewController {
 
         container.addSubview(headerLabel)
         headerLabel.snp.makeConstraints { maker in
-            maker.top.equalTo(separatorView.snp.bottom).offset(AppTheme.margin6x)
-            maker.leading.trailing.equalToSuperview().inset(AppTheme.margin6x)
+            maker.top.equalTo(separatorView.snp.bottom).offset(CGFloat.margin6x)
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin6x)
         }
 
         let textLabel = UILabel()
@@ -96,9 +96,9 @@ class AboutSettingsViewController: WalletViewController {
 
         container.addSubview(textLabel)
         textLabel.snp.makeConstraints { maker in
-            maker.top.equalTo(headerLabel.snp.bottom).offset(AppTheme.margin4x)
-            maker.bottom.equalToSuperview().inset(AppTheme.margin8x)
-            maker.leading.trailing.equalToSuperview().inset(AppTheme.margin6x)
+            maker.top.equalTo(headerLabel.snp.bottom).offset(CGFloat.margin4x)
+            maker.bottom.equalToSuperview().inset(CGFloat.margin8x)
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin6x)
         }
     }
 

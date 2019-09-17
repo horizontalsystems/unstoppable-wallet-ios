@@ -11,7 +11,7 @@ class LeftImageCellView: UIView {
         imageView.setContentHuggingPriority(.required, for: .horizontal)
         imageView.snp.makeConstraints { maker in
             maker.centerY.equalToSuperview()
-            maker.leading.equalToSuperview().offset(AppTheme.margin4x)
+            maker.leading.equalToSuperview().offset(CGFloat.margin4x)
             maker.trailing.equalToSuperview()
         }
     }

@@ -14,7 +14,7 @@ class CheckmarkCellView: UIView {
         imageView.snp.makeConstraints { maker in
             maker.centerY.equalToSuperview()
             maker.leading.equalToSuperview()
-            maker.trailing.equalToSuperview().offset(-AppTheme.margin4x)
+            maker.trailing.equalToSuperview().offset(-CGFloat.margin4x)
         }
     }
 
