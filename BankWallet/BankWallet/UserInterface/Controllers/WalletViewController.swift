@@ -1,10 +1,10 @@
 import UIKit
 
 class WalletViewController: UIViewController {
-    private let opaque: Bool
+    private let gradient: Bool
 
-    init(opaque: Bool = true) {
-        self.opaque = opaque
+    init(gradient: Bool = true) {
+        self.gradient = gradient
 
         super.init(nibName: nil, bundle: nil)
     }
@@ -16,7 +16,7 @@ class WalletViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        guard opaque else {
+        guard gradient else {
             return
         }
 
