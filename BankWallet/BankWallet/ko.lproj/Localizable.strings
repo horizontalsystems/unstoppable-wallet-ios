@@ -349,3 +349,9 @@
 "chart.low" = "낮음";
 "chart.volume" = "음량";
 "chart.error.not_available" = "차트 이용불가";
+
+// Create Wallet
+
+"create_wallet.title" = "New Wallet";
+"create_wallet.create_button" = "Create";
+"create_wallet.description" = "Select one cryptocurrency to start. You will be able to add other cryptocurrencies later.";
