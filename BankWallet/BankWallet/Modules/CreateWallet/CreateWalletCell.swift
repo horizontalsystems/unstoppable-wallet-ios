@@ -2,7 +2,8 @@ import UIKit
 import SnapKit
 
 class CreateWalletCell: AppCell {
-    private let leftView = DoubleLineImageCellView()
+    private let leftView = LeftImageCellView()
+    private let middleView = DoubleLineCellView()
     private let rightView = CheckmarkCellView()
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -13,10 +14,16 @@ class CreateWalletCell: AppCell {
             maker.leading.top.bottom.equalToSuperview()
         }
 
+        contentView.addSubview(middleView)
+        middleView.snp.makeConstraints { maker in
+            maker.top.bottom.equalToSuperview()
+            maker.leading.equalTo(leftView.snp.trailing)
+        }
+
         contentView.addSubview(rightView)
         rightView.snp.makeConstraints { maker in
             maker.trailing.top.bottom.equalToSuperview()
-            maker.leading.equalTo(leftView.snp.trailing)
+            maker.leading.equalTo(middleView.snp.trailing)
         }
     }
 
@@ -27,12 +34,8 @@ class CreateWalletCell: AppCell {
     func bind(viewItem: CreateWalletViewItem, last: Bool = false) {
         super.bind(last: last)
 
-        leftView.bind(
-                image: UIImage(named: "\(viewItem.code.lowercased())")?.tinted(with: AppTheme.coinIconColor),
-                title: viewItem.title,
-                subtitle: viewItem.code
-        )
-
+        leftView.bind(image: UIImage(named: "\(viewItem.code.lowercased())")?.tinted(with: AppTheme.coinIconColor))
+        middleView.bind(title: viewItem.title, subtitle: viewItem.code)
         rightView.bind(visible: viewItem.selected)
     }
 
