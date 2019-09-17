@@ -7,8 +7,8 @@ class Erc20Adapter: EthereumBaseAdapter {
     private let erc20Kit: Erc20Kit
     private let fee: Decimal
 
-    init(ethereumKit: EthereumKit, contractAddress: String, decimal: Int, fee: Decimal) throws {
-        self.erc20Kit = try Erc20Kit.instance(ethereumKit: ethereumKit, contractAddress: contractAddress)
+    init(ethereumKit: EthereumKit, contractAddress: String, decimal: Int, fee: Decimal, gasLimit: Int) throws {
+        self.erc20Kit = try Erc20Kit.instance(ethereumKit: ethereumKit, contractAddress: contractAddress, gasLimit: gasLimit)
         self.fee = fee
 
         super.init(ethereumKit: ethereumKit, decimal: decimal)
