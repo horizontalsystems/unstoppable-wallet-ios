@@ -94,13 +94,13 @@ class SendTheme {
     static let confirmationSecondaryAmountTitleFont: UIFont = .cryptoHeadline2
     static let confirmationSecondaryAmountTitleColor: UIColor = .appOz
     static let confirmationBottomAmountFont: UIFont = .cryptoSubhead2
-    static let confirmationBottomAmountColor: UIColor = .appGrey
+    static let confirmationBottomAmountColor: UIColor = .appGray
 
     static let confirmationMemoVerticalMargin: CGFloat = 14
 
     static let confirmationMemoHeight: CGFloat = 44
     static let confirmationMemoTitleFont: UIFont = .cryptoSubhead1
-    static let confirmationMemoTitleColor: UIColor = .appGrey
+    static let confirmationMemoTitleColor: UIColor = .appGray
     static let confirmationMemoFont: UIFont = .cryptoSubheadItalic
     static let confirmationMemoColor: UIColor = .appOz
 
