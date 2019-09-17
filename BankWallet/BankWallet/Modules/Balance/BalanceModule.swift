@@ -34,13 +34,13 @@ protocol IBalanceViewDelegate {
 
 protocol IBalanceInteractor {
     var sortType: BalanceSortType { get }
-    var chartEnabled: Bool { get set }
 
     func adapter(for wallet: Wallet) -> IBalanceAdapter?
     func initWallets()
     func fetchRates(currencyCode: String, coinCodes: [CoinCode])
     func refresh()
     func predefinedAccountType(wallet: Wallet) -> IPredefinedAccountType?
+    func syncStats(coinCode: CoinCode, currencyCode: String)
 }
 
 protocol IBalanceInteractorDelegate: class {
@@ -55,6 +55,7 @@ protocol IBalanceInteractorDelegate: class {
     func didFailStats(for coinCode: CoinCode)
 
     func didRefresh()
+    func didBecomeActive()
 }
 
 protocol IBalanceRouter {
@@ -67,6 +68,7 @@ protocol IBalanceRouter {
 }
 
 protocol IBalanceItemDataSource {
+    var statsModeOn: Bool { get set }
     var sortType: BalanceSortType { get set }
     var items: [BalanceItem] { get }
     var currency: Currency { get set }

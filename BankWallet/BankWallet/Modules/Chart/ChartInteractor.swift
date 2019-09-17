@@ -7,13 +7,11 @@ class ChartInteractor {
     private let disposeBag = DisposeBag()
 
     private let rateStatsManager: IRateStatsManager
-    private var rateStatsSyncer: IRateStatsSyncer
     private let localStorage: ILocalStorage
     private let rateStorage: IRateStorage
 
-    init(rateStatsManager: IRateStatsManager, rateStatsSyncer: IRateStatsSyncer, localStorage: ILocalStorage, rateStorage: IRateStorage) {
+    init(rateStatsManager: IRateStatsManager, localStorage: ILocalStorage, rateStorage: IRateStorage) {
         self.rateStatsManager = rateStatsManager
-        self.rateStatsSyncer = rateStatsSyncer
         self.localStorage = localStorage
         self.rateStorage = rateStorage
     }
@@ -28,14 +26,6 @@ extension ChartInteractor: IChartInteractor {
         }
         set {
             localStorage.chartType = newValue
-        }
-    }
-    var chartEnabled: Bool {
-        get {
-            return rateStatsSyncer.chartShown
-        }
-        set {
-            rateStatsSyncer.chartShown = newValue
         }
     }
 
@@ -60,6 +50,10 @@ extension ChartInteractor: IChartInteractor {
                     self?.delegate?.didReceive(rate: $0)
                 })
                 .disposed(by: disposeBag)
+    }
+
+    func syncStats(coinCode: CoinCode, currencyCode: String) {
+        rateStatsManager.syncStats(coinCode: coinCode, currencyCode: currencyCode)
     }
 
 }

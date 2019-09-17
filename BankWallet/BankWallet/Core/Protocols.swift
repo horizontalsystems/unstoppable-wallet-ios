@@ -242,13 +242,6 @@ protocol IRateStatsManager {
     func syncStats(coinCode: CoinCode, currencyCode: String)
 }
 
-protocol IRateStatsSyncer {
-    var balanceStatsOn: Bool { get set }
-    var chartShown: Bool { get set }
-    var lockStatsOn: Bool { get set }
-    func syncStats()
-}
-
 protocol ISystemInfoManager {
     var appVersion: String { get }
     var biometryType: Single<BiometryType> { get }

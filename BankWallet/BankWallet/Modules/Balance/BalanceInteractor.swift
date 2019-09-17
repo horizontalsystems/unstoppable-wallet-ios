@@ -10,23 +10,23 @@ class BalanceInteractor {
     private let walletManager: IWalletManager
     private let adapterManager: IAdapterManager
     private let rateStatsManager: IRateStatsManager
-    private var rateStatsSyncer: IRateStatsSyncer
     private let rateStorage: IRateStorage
     private let currencyManager: ICurrencyManager
     private let localStorage: ILocalStorage
     private let predefinedAccountTypeManager: IPredefinedAccountTypeManager
     private let rateManager: IRateManager
+    private let appManager: IAppManager
 
-    init(walletManager: IWalletManager, adapterManager: IAdapterManager, rateStatsManager: IRateStatsManager, rateStatsSyncer: IRateStatsSyncer, rateStorage: IRateStorage, currencyManager: ICurrencyManager, localStorage: ILocalStorage, predefinedAccountTypeManager: IPredefinedAccountTypeManager, rateManager: IRateManager) {
+    init(walletManager: IWalletManager, adapterManager: IAdapterManager, rateStatsManager: IRateStatsManager, rateStorage: IRateStorage, currencyManager: ICurrencyManager, localStorage: ILocalStorage, predefinedAccountTypeManager: IPredefinedAccountTypeManager, rateManager: IRateManager, appManager: IAppManager) {
         self.walletManager = walletManager
         self.adapterManager = adapterManager
         self.rateStatsManager = rateStatsManager
-        self.rateStatsSyncer = rateStatsSyncer
         self.rateStorage = rateStorage
         self.currencyManager = currencyManager
         self.localStorage = localStorage
         self.predefinedAccountTypeManager = predefinedAccountTypeManager
         self.rateManager = rateManager
+        self.appManager = appManager
     }
 
     private func onUpdateWallets() {
@@ -72,15 +72,6 @@ extension BalanceInteractor: IBalanceInteractor {
         return localStorage.balanceSortType ?? .name
     }
 
-    var chartEnabled: Bool {
-        get {
-            return rateStatsSyncer.balanceStatsOn
-        }
-        set {
-            return rateStatsSyncer.balanceStatsOn = newValue
-        }
-    }
-
     func adapter(for wallet: Wallet) -> IBalanceAdapter? {
         return adapterManager.balanceAdapter(for: wallet)
     }
@@ -121,6 +112,13 @@ extension BalanceInteractor: IBalanceInteractor {
                     }
                 })
                 .disposed(by: disposeBag)
+
+        appManager.didBecomeActiveObservable
+                .observeOn(MainScheduler.instance)
+                .subscribe(onNext: { [weak self] in
+                    self?.delegate?.didBecomeActive()
+                })
+                .disposed(by: disposeBag)
     }
 
     func fetchRates(currencyCode: String, coinCodes: [CoinCode]) {
@@ -148,6 +146,10 @@ extension BalanceInteractor: IBalanceInteractor {
 
     func predefinedAccountType(wallet: Wallet) -> IPredefinedAccountType? {
         return predefinedAccountTypeManager.predefinedAccountType(accountType: wallet.account.type)
+    }
+
+    func syncStats(coinCode: CoinCode, currencyCode: String) {
+        rateStatsManager.syncStats(coinCode: coinCode, currencyCode: currencyCode)
     }
 
 }
