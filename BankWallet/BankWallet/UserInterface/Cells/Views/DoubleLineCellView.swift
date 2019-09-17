@@ -1,26 +1,18 @@
 import UIKit
 import SnapKit
 
-class DoubleLineImageCellView: UIView {
-    private let imageView = UIImageView()
+class DoubleLineCellView: UIView {
     private let titleLabel = UILabel()
     private let subtitleLabel = UILabel()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-        addSubview(imageView)
-        imageView.setContentHuggingPriority(.required, for: .horizontal)
-        imageView.snp.makeConstraints { maker in
-            maker.centerY.equalToSuperview()
-            maker.leading.equalToSuperview().offset(AppTheme.margin4x)
-        }
-
         titleLabel.font = .cryptoBody
         titleLabel.textColor = .appOz
         addSubview(titleLabel)
         titleLabel.snp.makeConstraints { maker in
-            maker.leading.equalTo(imageView.snp.trailing).offset(AppTheme.margin4x)
+            maker.leading.equalToSuperview().offset(AppTheme.margin4x)
             maker.trailing.equalToSuperview().offset(-AppTheme.margin4x)
             maker.top.equalToSuperview().offset(AppTheme.margin2x)
         }
@@ -29,7 +21,7 @@ class DoubleLineImageCellView: UIView {
         subtitleLabel.textColor = .appGray
         addSubview(subtitleLabel)
         subtitleLabel.snp.makeConstraints { maker in
-            maker.leading.equalTo(imageView.snp.trailing).offset(AppTheme.margin4x)
+            maker.leading.equalToSuperview().offset(AppTheme.margin4x)
             maker.trailing.equalToSuperview().offset(-AppTheme.margin4x)
             maker.top.equalTo(titleLabel.snp.bottom).offset(5)
         }
@@ -39,8 +31,7 @@ class DoubleLineImageCellView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func bind(image: UIImage?, title: String?, subtitle: String?) {
-        imageView.image = image
+    func bind(title: String?, subtitle: String?) {
         titleLabel.text = title
         subtitleLabel.text = subtitle
     }
