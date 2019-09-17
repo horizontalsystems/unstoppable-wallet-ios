@@ -50,16 +50,16 @@
 
 //Coin Sync Modes
 
-"coin_sync.title" = "恢复选项";
-"coin_sync.fast" = "快";
-"coin_sync.recommended" = "0 小时 (推荐)";
-"coin_sync.fast.text" = "通过安全的第三方服务器恢复过往交易。对于具有大量涉及大额交易历史的用户，这种方法可能会带来隐私风险。";
-"coin_sync.slow" = "慢";
-"coin_sync.more_private" = "1 小时(更多隐私)";
-"coin_sync.slow.text" = "直接通过网络恢复您的过往交易。更加私密，但非常缓慢。如果恢复过程耗时过长，请前往”管理密钥“部分并使用”快速同步“选项重新导入钱包密钥。";
-"coin_sync.alert.header" = "注意";
-"coin_sync.alert.text" = "This action will resync your wallet balance for each blockchain. It may take several hours to complete.";
-"coin_sync.erc20" = "Sync mode same as Ethereum";
+"restore_options.title" = "恢复选项";
+"restore_options.sync.fast" = "快";
+"restore_options.sync.recommended" = "0 小时 (推荐)";
+"restore_options.sync.fast.text" = "通过安全的第三方服务器恢复过往交易。对于具有大量涉及大额交易历史的用户，这种方法可能会带来隐私风险。";
+"restore_options.sync.slow" = "慢";
+"restore_options.sync.more_private" = "1 小时(更多隐私)";
+"restore_options.sync.slow.text" = "直接通过网络恢复您的过往交易。更加私密，但非常缓慢。如果恢复过程耗时过长，请前往”管理密钥“部分并使用”快速同步“选项重新导入钱包密钥。";
+"restore_options.alert.header" = "注意";
+"restore_options.alert.text" = "This action will resync your wallet balance for each blockchain. It may take several hours to complete.";
+"restore_options.erc20" = "Sync mode same as Ethereum";
 
 // Backup
 

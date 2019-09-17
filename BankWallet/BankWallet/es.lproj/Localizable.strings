@@ -50,16 +50,16 @@
 
 //Coin Sync Modes
 
-"coin_sync.title" = "Restaurar opciones";
-"coin_sync.fast" = "Rápido";
-"coin_sync.recommended" = "0-2 horas (Recomendado)";
-"coin_sync.fast.text" = "Restaura tus transacciones pasadas vía un tercer servidor seguro. Para usuarios con una larga historia de transacciones con grandes cantidades, éste método puede tener riesgos de privacidad";
-"coin_sync.slow" = "Lento";
-"coin_sync.more_private" = "1-12 horas (Más Privado)";
-"coin_sync.slow.text" = "Restaure sus transacciones pasadas directamente desde la red. Significativamente más privado pero muy lento. Si la restauración toma mucho tiempo, vaya a la sección Administrar claves y reimporte la Clave para la cartera utilizando la opción de Sincronización rápida.";
-"coin_sync.alert.header" = "Atención";
-"coin_sync.alert.text" = "Esta acción se actualizará el saldo de su cartera para cada cadena de bloques. Puede tardar varias horas en completarse.";
-"coin_sync.erc20" = "Sincronizar el modo igual que Ethereum";
+"restore_options.title" = "Restaurar opciones";
+"restore_options.sync.fast" = "Rápido";
+"restore_options.sync.recommended" = "0-2 horas (Recomendado)";
+"restore_options.sync.fast.text" = "Restaura tus transacciones pasadas vía un tercer servidor seguro. Para usuarios con una larga historia de transacciones con grandes cantidades, éste método puede tener riesgos de privacidad";
+"restore_options.sync.slow" = "Lento";
+"restore_options.sync.more_private" = "1-12 horas (Más Privado)";
+"restore_options.sync.slow.text" = "Restaure sus transacciones pasadas directamente desde la red. Significativamente más privado pero muy lento. Si la restauración toma mucho tiempo, vaya a la sección Administrar claves y reimporte la Clave para la cartera utilizando la opción de Sincronización rápida.";
+"restore_options.alert.header" = "Atención";
+"restore_options.alert.text" = "Esta acción se actualizará el saldo de su cartera para cada cadena de bloques. Puede tardar varias horas en completarse.";
+"restore_options.erc20" = "Sincronizar el modo igual que Ethereum";
 
 // Backup
 

@@ -13,8 +13,8 @@ class RestoreWordsRouter {
 
 extension RestoreWordsRouter: IRestoreWordsRouter {
 
-    func showSyncMode(delegate: ISyncModeDelegate) {
-        viewController?.navigationController?.pushViewController(SyncModeRouter.module(delegate: delegate), animated: true)
+    func showRestoreOptions(delegate: IRestoreOptionsDelegate) {
+        viewController?.navigationController?.pushViewController(RestoreOptionsRouter.module(delegate: delegate), animated: true)
     }
 
     func notifyRestored(accountType: AccountType, syncMode: SyncMode?) {
@@ -36,9 +36,9 @@ extension RestoreWordsRouter: IRestoreWordsRouter {
 
 extension RestoreWordsRouter {
 
-    static func module(mode: RestoreRouter.PresentationMode, wordsCount: Int, showSyncMode: Bool, delegate: IRestoreAccountTypeDelegate) -> UIViewController {
+    static func module(mode: RestoreRouter.PresentationMode, wordsCount: Int, showRestoreOptions: Bool, delegate: IRestoreAccountTypeDelegate) -> UIViewController {
         let router = RestoreWordsRouter(delegate: delegate)
-        let presenter = RestoreWordsPresenter(mode: mode, router: router, wordsCount: wordsCount, showSyncMode: showSyncMode, wordsManager: App.shared.wordsManager, appConfigProvider: App.shared.appConfigProvider)
+        let presenter = RestoreWordsPresenter(mode: mode, router: router, wordsCount: wordsCount, showRestoreOptions: showRestoreOptions, wordsManager: App.shared.wordsManager, appConfigProvider: App.shared.appConfigProvider)
         let viewController = RestoreWordsViewController(delegate: presenter)
 
         presenter.view = viewController

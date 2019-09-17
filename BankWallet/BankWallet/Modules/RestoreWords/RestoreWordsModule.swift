@@ -15,7 +15,7 @@ protocol IRestoreWordsViewDelegate {
 }
 
 protocol IRestoreWordsRouter {
-    func showSyncMode(delegate: ISyncModeDelegate)
+    func showRestoreOptions(delegate: IRestoreOptionsDelegate)
     func notifyRestored(accountType: AccountType, syncMode: SyncMode?)
     func dismissAndNotify(accountType: AccountType, syncMode: SyncMode?)
     func dismiss()

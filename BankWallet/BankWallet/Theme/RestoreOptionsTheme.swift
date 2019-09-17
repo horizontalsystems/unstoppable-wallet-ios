@@ -1,6 +1,6 @@
 import UIKit
 
-class SyncModeTheme {
+class RestoreOptionsTheme {
     static let topMargin: CGFloat = 12
 
     static let cellSmallMargin: CGFloat = 3
