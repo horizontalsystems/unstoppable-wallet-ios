@@ -349,3 +349,9 @@
 "chart.low" = "低";
 "chart.volume" = "量";
 "chart.error.not_available" = "无可用图表";
+
+// Create Wallet
+
+"create_wallet.title" = "New Wallet";
+"create_wallet.create_button" = "Create";
+"create_wallet.description" = "Select one cryptocurrency to start. You will be able to add other cryptocurrencies later.";
