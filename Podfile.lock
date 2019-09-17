@@ -2,7 +2,7 @@ PODS:
   - ActionSheet.swift (1.0):
     - SnapKit (~> 5.0)
     - UIExtensions.swift
-  - Alamofire (4.8.2)
+  - Alamofire (4.9.0)
   - AlamofireImage (3.5.2):
     - Alamofire (~> 4.8)
   - BigInt (4.0.0)
@@ -43,7 +43,9 @@ PODS:
   - BlueSocket (1.0.49)
   - CryptoBLS.swift (1.1)
   - CryptoX11.swift (1.1)
-  - Cuckoo (1.1.1)
+  - Cuckoo (1.2.0):
+    - Cuckoo/Swift (= 1.2.0)
+  - Cuckoo/Swift (1.2.0)
   - DashKit.swift (0.8.0):
     - Alamofire (~> 4.0)
     - BigInt (~> 4.0)
@@ -92,10 +94,10 @@ PODS:
     - Alamofire (~> 4.0)
     - GRDB.swift (~> 4.0)
     - RxSwift (~> 5.0)
-  - GRDB.swift (4.3.0):
-    - GRDB.swift/standard (= 4.3.0)
-  - GRDB.swift/standard (4.3.0)
-  - GRKOpenSSLFramework (1.0.2.16)
+  - GRDB.swift (4.4.0):
+    - GRDB.swift/standard (= 4.4.0)
+  - GRDB.swift/standard (4.4.0)
+  - GRKOpenSSLFramework (1.0.2.19)
   - HSCryptoKit (1.5.0)
   - HSHDWalletKit (1.2.0):
     - HSCryptoKit (~> 1)
@@ -103,7 +105,7 @@ PODS:
     - SnapKit (~> 5.0)
     - UIExtensions.swift
   - KeychainAccess (3.2.0)
-  - Nimble (8.0.2)
+  - Nimble (8.0.4)
   - ObjectMapper (3.5.1)
   - PromiseKit (6.11.0):
     - PromiseKit/CorePromise (= 6.11.0)
@@ -114,7 +116,7 @@ PODS:
     - PromiseKit/CorePromise
   - PromiseKit/UIKit (6.11.0):
     - PromiseKit/CorePromise
-  - Quick (2.1.0)
+  - Quick (2.2.0)
   - RxCocoa (5.0.0):
     - RxRelay (~> 5)
     - RxSwift (~> 5)
@@ -253,10 +255,10 @@ CHECKOUT OPTIONS:
     :commit: 8efea68172b0a83f9c80136797e9104fb8acaa14
     :git: https://github.com/horizontalsystems/eos-kit-ios/
   Erc20Kit.swift:
-    :commit: 88915a50a5b18441175c65c28ea7a851203618d3
+    :commit: e9dbd3711aa6d66c4e70769dd5a3743defb95b5c
     :git: https://github.com/horizontalsystems/ethereum-kit-ios/
   EthereumKit.swift:
-    :commit: 88915a50a5b18441175c65c28ea7a851203618d3
+    :commit: e9dbd3711aa6d66c4e70769dd5a3743defb95b5c
     :git: https://github.com/horizontalsystems/ethereum-kit-ios/
   FeeRateKit.swift:
     :commit: faa6eafcce30b372ebda62e3d4ca51f07cb794ec
@@ -276,7 +278,7 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   ActionSheet.swift: 988572dd9330a64d2e461610bb73f5ff66a255e5
-  Alamofire: ae5c501addb7afdbb13687d7f2f722c78734c2d3
+  Alamofire: afc3e7c6db61476cb45cdd23fed06bad03bbc321
   AlamofireImage: 63cfe3baf1370be6c498149687cf6db3e3b00999
   BigInt: 2aad1a9942dc932ec8b84290d2c564a3d76f97ab
   BinanceChainKit.swift: e054bc79543e74f8f143306c5a2a1062555d2f65
@@ -286,7 +288,7 @@ SPEC CHECKSUMS:
   BlueSocket: 973993722fd579a62bb6469cdf7f1ccc8054796c
   CryptoBLS.swift: 89828d8e3013e45ce4f913d26008b91fc5d0f3a0
   CryptoX11.swift: 8f0ca5fbfefbe49126220ce23b5de106928cf0f0
-  Cuckoo: 6193c50e46403cc9417aa98752671a2a5ae6f3a6
+  Cuckoo: f5f4e7c308c512cc2dedbdce23f5dc6985cb5173
   DashKit.swift: 67635c462c4ceed06344751b30a03b377625deff
   DeepDiff: e329bc46dd14ca788d8ec08d34420799ba1d77f2
   EosioSwift: 4aa9a3a8b9ab58316e1874885e3e62e2766c441c
@@ -297,16 +299,16 @@ SPEC CHECKSUMS:
   Erc20Kit.swift: e1498e1f6f43bca28d1fd46e84bd44c496c30cc9
   EthereumKit.swift: 7b56ebc1f6358b83ef05cb5caac817eb56a2d29a
   FeeRateKit.swift: dd6bdac1ca89e7d4944f25f34a74046e176a6653
-  GRDB.swift: 083ec261ce573888d8ed2eae1b49bc0bf40d9e2c
-  GRKOpenSSLFramework: 35944e317e6336b2944ad70b059d84db6b2d8532
+  GRDB.swift: 4f9b6e7efc9470426f6a6de10ec1fee798ff7e43
+  GRKOpenSSLFramework: 4abc733a8fcbc37060619a86a54202d2938dd70e
   HSCryptoKit: 514a3111fd37ad18b7261d4a55271daaba3b0eb9
   HSHDWalletKit: 6f5d5b1f9b1f950c948bdff13f5f52e5c5bcb7bb
   HUD.swift: 006cc6e105bce8050c3c3f44d9111474c5c26c35
   KeychainAccess: 3b1bf8a77eb4c6ea1ce9404c292e48f948954c6b
-  Nimble: 622629381bda1dd5678162f21f1368cec7cbba60
+  Nimble: 18d5360282923225d62b09d781f63abc1a0111fc
   ObjectMapper: 70187b8941977c62ccfb423caf6b50be405cabf0
   PromiseKit: e4863d06976e7dee5e41c04fc7371c16b3600292
-  Quick: 4be43f6634acfa727dd106bdf3929ce125ffa79d
+  Quick: 7fb19e13be07b5dfb3b90d4f9824c855a11af40e
   RxCocoa: fcf32050ac00d801f34a7f71d5e8e7f23026dcd8
   RxGRDB: 5da4352c217300df8204faeb7881fc523161342b
   RxRelay: 4f7409406a51a55cd88483f21ed898c234d60f18
