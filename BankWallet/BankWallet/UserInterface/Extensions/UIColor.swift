@@ -81,8 +81,8 @@ extension UIColor {
     static let appRedD: UIColor = UIColor(named: "App Red D")!
     static let appRedL: UIColor = UIColor(named: "App Red L")!
     static let appBlack: UIColor = UIColor(named: "App Black")!
-    static let appGrey: UIColor = UIColor(named: "App Grey")!
-    static let appLightGrey: UIColor = UIColor(named: "App Light Grey")!
+    static let appGray: UIColor = UIColor(named: "App Gray")!
+    static let appLightGray: UIColor = UIColor(named: "App Light Gray")!
     static let appWhite: UIColor = UIColor(named: "App White")!
     static let appSteelDark: UIColor = UIColor(named: "App Steel Dark")!
     static let appSteelLight: UIColor = UIColor(named: "App Steel Light")!
@@ -91,7 +91,7 @@ extension UIColor {
     static let appBlack50: UIColor = UIColor(named: "App Black 50")!
     static let appWhite50: UIColor = UIColor(named: "App White 50")!
     static let appSteel20: UIColor = UIColor(named: "App Steel 20")!
-    static let appGrey50: UIColor = UIColor(named: "App Grey 50")!
+    static let appGray50: UIColor = UIColor(named: "App Gray 50")!
     static let appYellow50: UIColor = UIColor(named: "App Yellow 50")!
     static let appGreen50: UIColor = UIColor(named: "App Green 50")!
 }

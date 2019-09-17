@@ -26,7 +26,7 @@ class DoubleLineImageCellView: UIView {
         }
 
         subtitleLabel.font = .cryptoSubhead2
-        subtitleLabel.textColor = .cryptoGray
+        subtitleLabel.textColor = .appGray
         addSubview(subtitleLabel)
         subtitleLabel.snp.makeConstraints { maker in
             maker.leading.equalTo(imageView.snp.trailing).offset(AppTheme.margin4x)

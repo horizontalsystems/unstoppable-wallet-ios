@@ -8,7 +8,7 @@ class CheckmarkCellView: UIView {
         super.init(frame: frame)
 
         imageView.image = UIImage(named: "Confirmations Icon")?.withRenderingMode(.alwaysTemplate)
-        imageView.tintColor = .cryptoYellow
+        imageView.tintColor = .appJacob
         imageView.setContentHuggingPriority(.required, for: .horizontal)
         addSubview(imageView)
         imageView.snp.makeConstraints { maker in

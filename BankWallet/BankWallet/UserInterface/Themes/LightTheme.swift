@@ -13,7 +13,7 @@ class LightTheme: ITheme {
     let colorOz: UIColor = .appDark
     let colorLeah: UIColor = .appSteelDark
     let colorJeremy: UIColor = .appSteelLight
-    let colorElena: UIColor = .appLightGrey
+    let colorElena: UIColor = .appLightGray
     let colorLawrence: UIColor = .appWhite
     let colorClaude: UIColor = .appWhite
 }

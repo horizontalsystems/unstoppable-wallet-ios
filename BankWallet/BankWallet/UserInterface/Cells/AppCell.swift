@@ -31,7 +31,7 @@ class AppCell: UITableViewCell {
             maker.height.equalTo(0)
         }
 
-        selectView.backgroundColor = .cryptoSteel20
+        selectView.backgroundColor = .appSteel20
         contentView.addSubview(selectView)
         selectView.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview()
