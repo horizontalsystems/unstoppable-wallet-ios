@@ -7,6 +7,7 @@ class RestoreOptionsViewController: WalletViewController, SectionsDataSource {
     private let tableView = SectionsTableView(style: .grouped)
 
     private var isFast = true
+    private var derivation: MnemonicDerivation = .bip44
 
     init(delegate: IRestoreOptionsViewDelegate) {
         self.delegate = delegate
@@ -46,42 +47,63 @@ class RestoreOptionsViewController: WalletViewController, SectionsDataSource {
         tableView.reload()
     }
 
+    private func onTapBeforeUpdate() {
+        derivation = .bip44
+        tableView.reload()
+    }
+
+    private func onTapAfterUpdate() {
+        derivation = .bip49
+        tableView.reload()
+    }
+
     @objc func onTapDone() {
         delegate.didSelectRestoreOptions(isFast: isFast)
     }
 
     func buildSections() -> [SectionProtocol] {
         let width = view.bounds.size.width
-        let footerMargins = RestoreOptionsTheme.cellBigMargin + RestoreOptionsTheme.separatorBottomMargin
 
-        let fastText = "restore_options.sync.fast.text".localized
-        let slowText = "restore_options.sync.slow.text".localized
+        let derivationText = "restore_options.derivation.text".localized
+        let syncModeText = "restore_options.sync.text".localized
 
         var sections = [SectionProtocol]()
 
-        let fastRow = Row<RestoreOptionCell>(id: "fast_row", hash: "fast", height: RestoreOptionsTheme.cellHeight, bind: { [weak self] cell, _ in
-            cell.bind(title: "restore_options.sync.fast".localized, description: "restore_options.sync.recommended".localized, selected: self?.isFast ?? true, first: true, last: true)
+        // Derivations
+        let bip44 = Row<RestoreOptionCell>(id: "bip44_row", hash: "bip44", height: .heightDoubleLineCell, bind: { [weak self] cell, _ in
+            cell.bind(title: "restore_options.derivation.before_update".localized, subtitle: "restore_options.derivation.bip44".localized, selected: self?.isFast ?? true, last: true)
         }, action: { [weak self] _ in
             self?.onTapFastSync()
         })
-        let fastFooter: ViewState<SectionHeaderFooterTextView> = .cellType(hash: "sync_fast_footer", binder: { view in
-            view.bind(title: fastText, topMargin: RestoreOptionsTheme.cellBigMargin, bottomMargin: RestoreOptionsTheme.separatorBottomMargin)
-        }, dynamicHeight: { _ in
-            return SectionHeaderFooterTextView.textHeight(forContainerWidth: width, text: fastText, font: AppTheme.footerTextFont) + footerMargins
-        })
-        sections.append(Section(id: "fast", headerState: .margin(height: RestoreOptionsTheme.topMargin), footerState: fastFooter, rows: [fastRow]))
-
-        let slowRow = Row<RestoreOptionCell>(id: "slow_row", hash: "slow", height: RestoreOptionsTheme.cellHeight, bind: { [weak self] cell, _ in
-            cell.bind(title: "restore_options.sync.slow".localized, description: "restore_options.sync.more_private".localized, selected: !(self?.isFast ?? true), first: true, last: true)
+        let bip49 = Row<RestoreOptionCell>(id: "bip49_row", hash: "bip49", height: .heightDoubleLineCell, bind: { [weak self] cell, _ in
+            cell.bind(title: "restore_options.derivation.after_update".localized, subtitle: "restore_options.derivation.bip49".localized, selected: !(self?.isFast ?? true), last: true)
         }, action: { [weak self] _ in
             self?.onTapSlowSync()
         })
-        let slowFooter: ViewState<SectionHeaderFooterTextView> = .cellType(hash: "sync_slow_footer", binder: { view in
-            view.bind(title: slowText, topMargin: RestoreOptionsTheme.cellBigMargin, bottomMargin: RestoreOptionsTheme.separatorBottomMargin)
+        let derivationFooter: ViewState<SectionHeaderFooterTextView> = .cellType(hash: "derivation_footer", binder: { view in
+            view.bind(title: derivationText, topMargin: .margin4x, bottomMargin: .margin8x)
         }, dynamicHeight: { _ in
-            return SectionHeaderFooterTextView.textHeight(forContainerWidth: width, text: slowText, font: AppTheme.footerTextFont) + footerMargins
+            return SectionHeaderFooterTextView.textHeight(forContainerWidth: width, text: derivationText, font: .cryptoSubhead2) + .margin12x
         })
-        sections.append(Section(id: "fast", footerState: slowFooter, rows: [slowRow]))
+        sections.append(Section(id: "derivation", headerState: .margin(height: .margin3x), footerState: derivationFooter, rows: [bip44, bip49]))
+
+        // Sync Modes
+        let fastRow = Row<RestoreOptionCell>(id: "fast_row", hash: "fast", height: .heightDoubleLineCell, bind: { [weak self] cell, _ in
+            cell.bind(title: "restore_options.sync.fast".localized, subtitle: "restore_options.sync.recommended".localized, selected: self?.derivation == .bip44, last: true)
+        }, action: { [weak self] _ in
+            self?.onTapBeforeUpdate()
+        })
+        let slowRow = Row<RestoreOptionCell>(id: "slow_row", hash: "slow", height: .heightDoubleLineCell, bind: { [weak self] cell, _ in
+            cell.bind(title: "restore_options.sync.slow".localized, subtitle: "restore_options.sync.more_private".localized, selected: self?.derivation == .bip49, last: true)
+        }, action: { [weak self] _ in
+            self?.onTapAfterUpdate()
+        })
+        let syncModeFooter: ViewState<SectionHeaderFooterTextView> = .cellType(hash: "sync_mode_footer", binder: { view in
+            view.bind(title: syncModeText, topMargin: .margin4x, bottomMargin: .margin8x)
+        }, dynamicHeight: { _ in
+            return SectionHeaderFooterTextView.textHeight(forContainerWidth: width, text: syncModeText, font: .cryptoSubhead2) + .margin12x
+        })
+        sections.append(Section(id: "sync_mode", footerState: syncModeFooter, rows: [fastRow, slowRow]))
 
         return sections
     }
