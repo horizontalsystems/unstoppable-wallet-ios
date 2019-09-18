@@ -24,7 +24,7 @@ class BaseCurrencySettingsViewController: WalletViewController {
 
         title = "settings_base_currency.title".localized
 
-        tableView.registerCell(forClass: DoubleLineCell.self)
+        tableView.registerCell(forClass: ImageDoubleLineCheckmarkCell.self)
         tableView.sectionDataSource = self
 
         tableView.backgroundColor = .clear
@@ -47,14 +47,25 @@ extension BaseCurrencySettingsViewController: SectionsDataSource {
         return [
             Section(
                     id: "currencies",
-                    headerState: .margin(height: SettingsTheme.subSettingsHeaderHeight),
-                    footerState: .margin(height: SettingsTheme.subSettingsHeaderHeight),
+                    headerState: .margin(height: .margin3x),
+                    footerState: .margin(height: .margin8x),
                     rows: items.enumerated().map { (index, item) in
-                        Row<DoubleLineCell>(id: item.code, height: SettingsTheme.doubleLineCellHeight, bind: { [unowned self] cell, _ in
-                            cell.bind(icon: UIImage(named: item.code), title: item.code, subtitle: item.symbol, selected: item.selected, last: index == self.items.count - 1)
-                        }, action: { [weak self] _ in
-                            self?.delegate.didSelect(index: index)
-                        })
+                        Row<ImageDoubleLineCheckmarkCell>(
+                                id: item.code,
+                                height: .heightDoubleLineCell,
+                                bind: { [unowned self] cell, _ in
+                                    cell.bind(
+                                            image: UIImage(named: item.code),
+                                            title: item.code,
+                                            subtitle: item.symbol,
+                                            checkmarkVisible: item.selected,
+                                            last: index == self.items.count - 1
+                                    )
+                                },
+                                action: { [weak self] _ in
+                                    self?.delegate.didSelect(index: index)
+                                }
+                        )
                     }
             )
         ]

@@ -1,7 +1,7 @@
 import UIKit
 import SnapKit
 
-class CreateWalletCell: AppCell {
+class ImageDoubleLineCheckmarkCell: AppCell {
     private let leftView = LeftImageCellView()
     private let middleView = DoubleLineCellView()
     private let rightView = CheckmarkCellView()
@@ -31,12 +31,12 @@ class CreateWalletCell: AppCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func bind(viewItem: CreateWalletViewItem, last: Bool = false) {
+    func bind(image: UIImage?, title: String?, subtitle: String?, checkmarkVisible: Bool, last: Bool = false) {
         super.bind(last: last)
 
-        leftView.bind(image: UIImage(named: "\(viewItem.code.lowercased())")?.tinted(with: AppTheme.coinIconColor))
-        middleView.bind(title: viewItem.title, subtitle: viewItem.code)
-        rightView.bind(visible: viewItem.selected)
+        leftView.bind(image: image)
+        middleView.bind(title: title, subtitle: subtitle)
+        rightView.bind(visible: checkmarkVisible)
     }
 
 }

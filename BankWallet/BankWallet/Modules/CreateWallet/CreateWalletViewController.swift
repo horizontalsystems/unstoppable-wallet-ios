@@ -23,7 +23,7 @@ class CreateWalletViewController: WalletViewController {
         title = "create_wallet.title".localized
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "create_wallet.create_button".localized, style: .done, target: self, action: #selector(onTapCreate))
 
-        tableView.registerCell(forClass: CreateWalletCell.self)
+        tableView.registerCell(forClass: ImageDoubleLineCheckmarkCell.self)
         tableView.registerHeaderFooter(forClass: TopDescriptionView.self)
         tableView.sectionDataSource = self
 
@@ -62,13 +62,19 @@ extension CreateWalletViewController: SectionsDataSource {
                     headerState: headerState,
                     footerState: .margin(height: CGFloat.margin8x),
                     rows: viewItems.enumerated().map { (index, viewItem) in
-                        Row<CreateWalletCell>(
+                        Row<ImageDoubleLineCheckmarkCell>(
                                 id: "coin_\(viewItem.code)",
                                 hash: "coin_\(viewItem.selected)",
                                 height: CGFloat.heightDoubleLineCell,
                                 autoDeselect: true,
                                 bind: { [unowned self] cell, _ in
-                                    cell.bind(viewItem: viewItem, last: index == self.viewItems.count - 1)
+                                    cell.bind(
+                                            image: UIImage(named: "\(viewItem.code.lowercased())")?.tinted(with: AppTheme.coinIconColor),
+                                            title: viewItem.title,
+                                            subtitle: viewItem.code,
+                                            checkmarkVisible: viewItem.selected,
+                                            last: index == self.viewItems.count - 1
+                                    )
                                 },
                                 action: { [weak self] _ in
                                     self?.delegate.didTap(index: index)

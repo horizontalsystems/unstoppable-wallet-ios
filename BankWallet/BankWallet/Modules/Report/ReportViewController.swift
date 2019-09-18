@@ -26,7 +26,7 @@ class ReportViewController: WalletViewController {
 
         title = "settings.report_problem.title".localized
 
-        tableView.registerCell(forClass: DoubleLineCell.self)
+        tableView.registerCell(forClass: ImageDoubleLineCell.self)
         tableView.sectionDataSource = self
 
         tableView.backgroundColor = .clear
@@ -51,16 +51,37 @@ extension ReportViewController: SectionsDataSource {
                     id: "section",
                     headerState: .margin(height: SettingsTheme.subSettingsHeaderHeight),
                     rows: [
-                        Row<DoubleLineCell>(id: "email", hash: "email", height: SettingsTheme.doubleLineCellHeight, autoDeselect: true, bind: { [weak self] cell, _ in
-                            cell.bind(icon: UIImage(named: "Email Icon"), tintIcon: true, title: "settings.report_problem.email".localized, subtitle: self?.email)
-                        }, action: { [weak self] _ in
-                            self?.delegate.didTapEmail()
-                        }),
-                        Row<DoubleLineCell>(id: "telegram", hash: "telegram", height: SettingsTheme.doubleLineCellHeight, autoDeselect: true, bind: { [weak self] cell, _ in
-                            cell.bind(icon: UIImage(named: "Telegram Icon"), tintIcon: true, title: "settings.report_problem.telegram".localized, subtitle: self?.telegramGroup, last: true)
-                        }, action: { [weak self] _ in
-                            self?.delegate.didTapTelegram()
-                        })
+                        Row<ImageDoubleLineCell>(
+                                id: "email",
+                                height: SettingsTheme.doubleLineCellHeight,
+                                autoDeselect: true,
+                                bind: { [weak self] cell, _ in
+                                    cell.bind(
+                                            image: UIImage(named: "Email Icon")?.tinted(with: .appJacob),
+                                            title: "settings.report_problem.email".localized,
+                                            subtitle: self?.email
+                                    )
+                                },
+                                action: { [weak self] _ in
+                                    self?.delegate.didTapEmail()
+                                }
+                        ),
+                        Row<ImageDoubleLineCell>(
+                                id: "telegram",
+                                height: SettingsTheme.doubleLineCellHeight,
+                                autoDeselect: true,
+                                bind: { [weak self] cell, _ in
+                                    cell.bind(
+                                            image: UIImage(named: "Telegram Icon")?.tinted(with: .appJacob),
+                                            title: "settings.report_problem.telegram".localized,
+                                            subtitle: self?.telegramGroup,
+                                            last: true
+                                    )
+                                },
+                                action: { [weak self] _ in
+                                    self?.delegate.didTapTelegram()
+                                }
+                        )
                     ]
             )
         ]
