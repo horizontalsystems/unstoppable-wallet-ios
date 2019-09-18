@@ -13,8 +13,8 @@ class RestoreOptionsRouter {
 
 extension RestoreOptionsRouter: IRestoreOptionsRouter {
 
-    func notifyDelegate(isFast: Bool) {
-        delegate.onSelectRestoreOptions(isFast: isFast)
+    func notifyDelegate(syncMode: SyncMode, derivation: MnemonicDerivation) {
+        delegate.onSelectRestoreOptions(syncMode: syncMode, derivation: derivation)
     }
 
 }

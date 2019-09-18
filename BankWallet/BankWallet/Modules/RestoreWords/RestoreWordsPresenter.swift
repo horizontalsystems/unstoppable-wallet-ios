@@ -19,8 +19,8 @@ class RestoreWordsPresenter {
         self.appConfigProvider = appConfigProvider
     }
 
-    private func notify(words: [String], syncMode: SyncMode?) {
-        let accountType: AccountType = .mnemonic(words: words, derivation: .bip44, salt: nil)
+    private func notify(words: [String], syncMode: SyncMode?, derivation: MnemonicDerivation) {
+        let accountType: AccountType = .mnemonic(words: words, derivation: derivation, salt: nil)
 
         switch mode {
         case .pushed: router.notifyRestored(accountType: accountType, syncMode: syncMode)
@@ -53,7 +53,7 @@ extension RestoreWordsPresenter: IRestoreWordsViewDelegate {
                 self.words = words
                 router.showRestoreOptions(delegate: self)
             } else {
-                notify(words: words, syncMode: nil)
+                notify(words: words, syncMode: nil, derivation: .bip44)
             }
         } catch {
             view?.show(error: error)
@@ -68,9 +68,9 @@ extension RestoreWordsPresenter: IRestoreWordsViewDelegate {
 
 extension RestoreWordsPresenter: IRestoreOptionsDelegate {
 
-    func onSelectRestoreOptions(isFast: Bool) {
+    func onSelectRestoreOptions(syncMode: SyncMode, derivation: MnemonicDerivation) {
         guard let words = words else { return }
-        notify(words: words, syncMode: isFast ? .fast : .slow)
+        notify(words: words, syncMode: syncMode, derivation: derivation)
     }
 
 }

@@ -1,7 +1,7 @@
 import UIKit
 import SnapKit
 
-class TopDescriptionView: UITableViewHeaderFooterView {
+class DescriptionView: UITableViewHeaderFooterView {
     private let label = UILabel()
 
     override init(reuseIdentifier: String?) {
@@ -27,7 +27,7 @@ class TopDescriptionView: UITableViewHeaderFooterView {
 
 }
 
-extension TopDescriptionView {
+extension DescriptionView {
 
     static func height(containerWidth: CGFloat, text: String) -> CGFloat {
         let textHeight = ceil(text.height(forContainerWidth: containerWidth - 2 * CGFloat.margin6x, font: .cryptoSubhead2))
