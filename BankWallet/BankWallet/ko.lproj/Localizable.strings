@@ -68,7 +68,7 @@
 
 "backup.intro.title_backup" = "백업";
 "backup.intro.title_show" = "암호 보이기";
-"backup.intro.subtitle" = "앞으로 표시될 암호는 귀하의 휴대전화가 분실, 도난, 파손당했을 경우에 펀드를 복구할 수 있는 유일한 방법입니다. 주변에 화면을 보고 있는 사람이 없는지 확인하세요.\n\n코인은 이 암호로 통제됩니다: %@";
+"backup.intro.subtitle" = "The special key that will be shown next is the only way to restore your funds if your phone is ever lost, stolen, broken etc.\n\nMake sure that no one is watching your screen.\n\nThe coins controlled by this key: %@";
 "backup.intro.later" = "나중에";
 "backup.intro.backup_now" = "백업";
 "backup.intro.show_key" = "암호 보이기";
@@ -115,7 +115,7 @@
 "deposit.receive_coin" = "수신%@";
 "deposit.your_address" = "당신의 주소";
 "deposit.your_account" = "내 계정";
-"receive_alert.not_backed_up_description" = "%@ 를 받기전에 %@ 암호의 백업이 필요합니다";
+"receive_alert.not_backed_up_description" = "You need to backup the %@ Wallet before you may receive %@.";
 
 // Send
 
@@ -235,7 +235,7 @@
 
 "manage_coins.title" = "코인 매니저";
 "manage_coins.add_coin.title" = "%@ 추가 ";
-"manage_coins.add_coin.text" = "%@에 대한 암호가 없습니다. 지갑은 열쇠를 생성 할 수 있습니다. 아래의 생성 버튼을 사용하여 새 키를 만드세요. \n\n 기존에 가지고 있는 %@암호를 %@ 사용하실 수도 있습니다.";
+"manage_coins.add_coin.text" = "You don't have a wallet that can store %@. The app can generate a new wallet for you. Use the Create button below to generate a new wallet.\n\nYou will be able to use the new wallet for the following coins: %@.\n\nYou may also use the existing %@ Wallet key if you have one. Use the Restore button for that.";
 "manage_coins.add_coin.create" = "만들기";
 "manage_coins.add_coin.restore" = "복구";
 
@@ -254,7 +254,7 @@
 // Settings -> Security
 
 "settings_security.title" = "보안 센터";
-"settings_security.manage_accounts" = "암호 관리";
+"settings_security.manage_accounts" = "Manage Wallets";
 "settings_security.passcode" = "비밀번호";
 "settings_security.change_pin" = "비밀번호 변경";
 "settings_security.touch_id" = "터치 아이디";
@@ -269,21 +269,21 @@
 
 // Manage Keys
 
-"settings_manage_keys.title" = "암호들";
-"settings_manage_keys.add_key" = "Add Key";
-"settings_manage_keys.description" = "키에 액세스 할 수 있는 사람은 누구나 귀하의 지갑 자금을 훔칠 수 있습니다. 암호를 안전하게 보관하고 다른 사람에게 보여주지 마세요. \n\n휴대전화의 분실, 고장 또는 지갑 앱이 삭제되는 경우 자금을 복원할 수 있도록 각 암호를 백업하세요.";
+"settings_manage_keys.title" = "Manage Wallets";
+"settings_manage_keys.add_wallet" = "Add Wallet";
+"settings_manage_keys.description" = "Highlighted below are your active wallets where each wallet responsible for different set of crypto currencies.\n\nYou should backup each highlighted wallets by backing up the private key for that wallet. This key is the only way to restore your funds if your phone is ever lost, stolen, broken etc.";
 "settings_manage_keys.delete" = "삭제";
 "settings_manage_keys.backup" = "백업";
 "settings_manage_keys.show" = "표시";
 "settings_manage_keys.create" = "만들기";
 "settings_manage_keys.restore" = "복구";
-"settings_manage_keys.delete.cant_delete" = "귀하의 핸드폰에서 삭제하기전 %@ 암호의 백업이 필요합니다";
-"settings_manage_keys.delete.title" = "암호 삭제";
-"settings_manage_keys.delete.confirmation_remove" = "이 작업은 %@ 암호(지갑)를 이 장치에서 삭제합니다.";
+"settings_manage_keys.delete.cant_delete" = "You need to backup %@ Wallet before you may delete it from this phone.";
+"settings_manage_keys.delete.title" = "Delete Wallet";
+"settings_manage_keys.delete.confirmation_remove" = "This action will delete the %@ Wallet from this device.";
 "settings_manage_keys.delete.confirmation_disable" = "비활성화될 코인: %@";
-"settings_manage_keys.delete.confirmation_loose" = "이 암호를 백업하지 않으면 해당 자금을 잃게 됩니다.";
+"settings_manage_keys.delete.confirmation_loose" = "If you don't have a backup of the %@ Wallet key, you will loose the respective funds.";
 "error.cant_create_eos" = "현재 지갑에서 새 EOS 지갑 계정을 만들 수 없습니다. 기존 파일만 복원할 수 있습니다.";
-"settings_manage_keys.create.text" = "이 작업은 다음 코인에 대한 암호(지갑) 를 생성합니다:\n\n%@";
+"settings_manage_keys.create.text" = "This action will generate a new %@ Wallet for the following coins:\n\n%@";
 "error.invalid_eos_key" = "잘못된 암호입니다";
 "error.invalid_eos_account" = "계정이 존재하지 않습니다.";
 
