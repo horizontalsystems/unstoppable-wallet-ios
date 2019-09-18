@@ -233,12 +233,17 @@ extension BalanceViewController: IBalanceView {
         refreshControl.endRefreshing()
     }
 
-    func setStatsButton(isHidden: Bool) {
-        headerView.setStatSwitch(hidden: !isHidden)
-    }
-
-    func setStatsButton(highlighted: Bool) {
-        chartEnabled = highlighted
+    func setStatsButton(state: StatsButtonState) {
+        switch state {
+        case .normal:
+            headerView.setStatSwitch(hidden: false)
+            chartEnabled = false
+        case .hidden:
+            headerView.setStatSwitch(hidden: true)
+        case .selected:
+            headerView.setStatSwitch(hidden: false)
+            chartEnabled = true
+        }
     }
 
     func setSort(isOn: Bool) {

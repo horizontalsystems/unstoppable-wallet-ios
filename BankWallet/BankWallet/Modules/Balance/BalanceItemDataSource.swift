@@ -3,7 +3,8 @@ import Foundation
 class BalanceItemDataSource {
     private let sorter: IBalanceSorter
 
-    var statsModeOn: Bool = false
+    var statsButtonState: StatsButtonState = .hidden
+
     var sortType: BalanceSortType {
         didSet { items = sorter.sort(items: items, sort: sortType) }
     }

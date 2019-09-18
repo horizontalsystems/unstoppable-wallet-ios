@@ -113,7 +113,7 @@ extension BalanceInteractor: IBalanceInteractor {
                 })
                 .disposed(by: disposeBag)
 
-        appManager.didBecomeActiveObservable
+        appManager.willEnterForegroundObservable
                 .observeOn(MainScheduler.instance)
                 .subscribe(onNext: { [weak self] in
                     self?.delegate?.didBecomeActive()
