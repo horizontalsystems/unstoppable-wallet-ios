@@ -17,7 +17,7 @@ class ManageWalletsNoAccountViewController: ActionSheetController {
                 }
         )
 
-        let textItem = AlertTextItem(text: "manage_coins.add_coin.text".localized(coin.title, predefinedAccountType.title.localized, predefinedAccountType.title.localized, coin.title), tag: 1)
+        let textItem = AlertTextItem(text: "manage_coins.add_coin.text".localized(coin.title, predefinedAccountType.coinCodes.localized, predefinedAccountType.title.localized), tag: 1)
 
         model.addItemView(titleItem)
         model.addItemView(textItem)

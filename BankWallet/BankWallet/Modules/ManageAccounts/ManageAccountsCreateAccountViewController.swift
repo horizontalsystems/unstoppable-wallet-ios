@@ -17,7 +17,7 @@ class ManageAccountsCreateAccountViewController: ActionSheetController {
                 }
         )
 
-        let textItem = AlertTextItem(text: "settings_manage_keys.create.text".localized(coinCodes.localized), tag: 1)
+        let textItem = AlertTextItem(text: "settings_manage_keys.create.text".localized(subtitle.localized, coinCodes.localized), tag: 1)
 
         model.addItemView(titleItem)
         model.addItemView(textItem)
