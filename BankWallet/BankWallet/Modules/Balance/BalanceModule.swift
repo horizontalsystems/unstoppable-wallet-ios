@@ -6,8 +6,7 @@ protocol IBalanceView: class {
     func reload(with diff: [Change<BalanceItem>])
     func updateHeader()
     func didRefresh()
-    func setStatsButton(isHidden: Bool)
-    func setStatsButton(highlighted: Bool)
+    func setStatsButton(state: StatsButtonState)
     func setSort(isOn: Bool)
     func showBackupRequired(coin: Coin, predefinedAccountType: IPredefinedAccountType)
 }
@@ -68,7 +67,7 @@ protocol IBalanceRouter {
 }
 
 protocol IBalanceItemDataSource {
-    var statsModeOn: Bool { get set }
+    var statsButtonState: StatsButtonState { get set }
     var sortType: BalanceSortType { get set }
     var items: [BalanceItem] { get }
     var currency: Currency { get set }
@@ -99,4 +98,10 @@ enum BalanceSortType: Int {
     case value
     case name
     case percentGrowth
+}
+
+enum StatsButtonState {
+    case normal
+    case hidden
+    case selected
 }

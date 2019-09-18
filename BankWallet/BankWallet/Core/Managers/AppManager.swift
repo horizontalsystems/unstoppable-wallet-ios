@@ -13,6 +13,7 @@ class AppManager {
     private let kitCleaner: IKitCleaner
 
     private let didBecomeActiveSubject = PublishSubject<()>()
+    private let willEnterForegroundSubject = PublishSubject<()>()
 
     init(accountManager: IAccountManager, walletManager: IWalletManager, adapterManager: IAdapterManager, lockManager: ILockManager,
          passcodeLockManager: IPasscodeLockManager, biometryManager: IBiometryManager, blurManager: IBlurManager,
@@ -65,6 +66,8 @@ extension AppManager {
     }
 
     func willEnterForeground() {
+        willEnterForegroundSubject.onNext(())
+
         passcodeLockManager.willEnterForeground()
         lockManager.willEnterForeground()
         adapterManager.refresh()
@@ -77,6 +80,10 @@ extension AppManager: IAppManager {
 
     var didBecomeActiveObservable: Observable<()> {
         return didBecomeActiveSubject.asObservable()
+    }
+
+    var willEnterForegroundObservable: Observable<()> {
+        return willEnterForegroundSubject.asObservable()
     }
 
 }

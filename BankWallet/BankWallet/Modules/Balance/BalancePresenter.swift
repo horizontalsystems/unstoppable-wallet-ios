@@ -22,7 +22,7 @@ class BalancePresenter {
     }
 
     private func updateStats() {
-        if dataSource.statsModeOn {
+        if dataSource.statsButtonState == .selected {
             dataSource.items.forEach { item in
                 interactor.syncStats(coinCode: item.wallet.coin.code, currencyCode: dataSource.currency.code)
             }
@@ -44,8 +44,14 @@ extension BalancePresenter: IBalanceInteractorDelegate {
         interactor.fetchRates(currencyCode: dataSource.currency.code, coinCodes: dataSource.coinCodes)
         updateStats()
 
+        if dataSource.items.isEmpty {
+            dataSource.statsButtonState = .hidden
+        } else if dataSource.statsButtonState == .hidden {
+            dataSource.statsButtonState = .normal
+        }
+
         view?.setSort(isOn: dataSource.items.count >= sortingOnThreshold)
-        view?.setStatsButton(isHidden: !dataSource.items.isEmpty)
+        view?.setStatsButton(state: dataSource.statsButtonState)
         view?.reload()
     }
 
@@ -145,7 +151,7 @@ extension BalancePresenter: IBalanceViewDelegate {
     func viewDidLoad() {
         dataSource.sortType = interactor.sortType
         view?.setSort(isOn: false)
-        view?.setStatsButton(highlighted: dataSource.statsModeOn)
+        view?.setStatsButton(state: dataSource.statsButtonState)
 
         interactor.initWallets()
     }
@@ -200,10 +206,11 @@ extension BalancePresenter: IBalanceViewDelegate {
     }
 
     func onStatsSwitch() {
-        dataSource.statsModeOn = !dataSource.statsModeOn
-        view?.setStatsButton(highlighted: dataSource.statsModeOn)
-        view?.reload()
+        dataSource.statsButtonState = dataSource.statsButtonState == .selected ? .normal : .selected
         updateStats()
+
+        view?.setStatsButton(state: dataSource.statsButtonState)
+        view?.reload()
     }
 
 }
@@ -213,9 +220,10 @@ extension BalancePresenter: ISortTypeDelegate {
     func onSelect(sort: BalanceSortType) {
         dataSource.sortType = sort
         if sort == .percentGrowth {
-            dataSource.statsModeOn = true
-            view?.setStatsButton(highlighted: true)
+            dataSource.statsButtonState = .selected
             updateStats()
+
+            view?.setStatsButton(state: dataSource.statsButtonState)
         }
         view?.reload()
     }

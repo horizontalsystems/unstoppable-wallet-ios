@@ -497,6 +497,7 @@ protocol IPredefinedAccountType {
 
 protocol IAppManager {
     var didBecomeActiveObservable: Observable<()> { get }
+    var willEnterForegroundObservable: Observable<()> { get }
 }
 
 protocol IWalletStorage {
