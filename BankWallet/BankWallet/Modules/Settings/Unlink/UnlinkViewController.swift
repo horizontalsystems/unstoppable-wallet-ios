@@ -35,7 +35,7 @@ class UnlinkViewController: ActionSheetController {
         let attributes = [NSAttributedString.Key.foregroundColor: ConfirmationTheme.textColor, NSAttributedString.Key.font: ConfirmationTheme.regularFont]
         texts.append(NSAttributedString(string: "settings_manage_keys.delete.confirmation_remove".localized(delegate.title.localized), attributes: attributes))
         texts.append(NSAttributedString(string: "settings_manage_keys.delete.confirmation_disable".localized(delegate.coinCodes.localized), attributes: attributes))
-        texts.append(NSAttributedString(string: "settings_manage_keys.delete.confirmation_loose".localized, attributes: attributes))
+        texts.append(NSAttributedString(string: "settings_manage_keys.delete.confirmation_loose".localized(delegate.title.localized), attributes: attributes))
 
         for (index, text) in texts.enumerated() {
             let item = ConfirmationCheckboxItem(descriptionText: text, tag: index + 1) { [weak self] view in

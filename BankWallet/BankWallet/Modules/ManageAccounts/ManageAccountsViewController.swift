@@ -66,7 +66,7 @@ extension ManageAccountsViewController: IManageAccountsView {
     }
 
     func showCreateConfirmation(title: String, coinCodes: String) {
-        let controller = ManageAccountsCreateAccountViewController(title: "settings_manage_keys.add_key", subtitle: title, coinCodes: coinCodes, onCreate: { [weak self] in
+        let controller = ManageAccountsCreateAccountViewController(title: "settings_manage_keys.add_wallet", subtitle: title, coinCodes: coinCodes, onCreate: { [weak self] in
             self?.delegate.didConfirmCreate()
         })
 
