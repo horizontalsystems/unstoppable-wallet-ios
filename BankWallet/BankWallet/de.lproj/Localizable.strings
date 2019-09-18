@@ -68,7 +68,7 @@
 
 "backup.intro.title_backup" = "Sicherung";
 "backup.intro.title_show" = "Schlüssel anzeigen";
-"backup.intro.subtitle" = "Der angezeigte Schlüssel ist die einzige Möglichkeit, Ihr Guthaben wiederherzustellen, wenn Ihr Telefon verloren geht, kaputt geht usw. Achten Sie darauf, dass niemand Ihren Bildschirm sieht.\nDie Coins, die von diesem Schlüssel kontrolliert werden: %@";
+"backup.intro.subtitle" = "The special key that will be shown next is the only way to restore your funds if your phone is ever lost, stolen, broken etc.\n\nMake sure that no one is watching your screen.\n\nThe coins controlled by this key: %@";
 "backup.intro.later" = "Später";
 "backup.intro.backup_now" = "Backup";
 "backup.intro.show_key" = "Schlüssel anzeigen";
@@ -115,7 +115,7 @@
 "deposit.receive_coin" = "%@ Anfordern ";
 "deposit.your_address" = "Deine Adresse";
 "deposit.your_account" = "Dein Konto";
-"receive_alert.not_backed_up_description" = "Du musst den Schlüssel %@ in einem Backup sichern, bevor du %@ erhalten kannst.";
+"receive_alert.not_backed_up_description" = "You need to backup the %@ Wallet before you may receive %@.";
 
 // Send
 
@@ -235,7 +235,7 @@
 
 "manage_coins.title" = "Coin Manager";
 "manage_coins.add_coin.title" = "%@ hinzufügen ";
-"manage_coins.add_coin.text" = "Du verfügst nicht über einen Schlüssel für , der einen Schlüssel %@ erfordert. Die Wallet kann den Schlüssel für Sie generieren. Verwenden Sie die Taste Create unten, um einen neuen Schlüssel zu generieren.\n\nDu kannst auch den vorhandenen %@-Schlüssel für den %@ verwenden, falls du einen hast.";
+"manage_coins.add_coin.text" = "You don't have a wallet that can store %@. The app can generate a new wallet for you. Use the Create button below to generate a new wallet.\n\nYou will be able to use the new wallet for the following coins: %@.\n\nYou may also use the existing %@ Wallet key if you have one. Use the Restore button for that.";
 "manage_coins.add_coin.create" = "Erstellen";
 "manage_coins.add_coin.restore" = "Wiederherstellen";
 
@@ -254,7 +254,7 @@
 // Settings -> Security
 
 "settings_security.title" = "Sicherheit";
-"settings_security.manage_accounts" = "Schlüssel Managen";
+"settings_security.manage_accounts" = "Manage Wallets";
 "settings_security.passcode" = "Code";
 "settings_security.change_pin" = "Code bearbeiten";
 "settings_security.touch_id" = "Touch ID";
@@ -269,21 +269,21 @@
 
 // Manage Keys
 
-"settings_manage_keys.title" = "Schlüssel";
-"settings_manage_keys.add_key" = "Add Key";
-"settings_manage_keys.description" = "Jedermann mit Zugang zu Ihren Schlüsseln kann Ihr Wallet Geldbetrag stehlen. Bewahren Sie den Schlüssel sicher auf und zeigen Sie ihn niemandem.\n\nErstellen Sie ein Backup für jeden Schlüssel, um bei Verlust oder Unterbrechung Ihres Handys, oder wenn einfach die Wallet-App gelöscht wird, das Geld wiederherstellen zu können.";
+"settings_manage_keys.title" = "Manage Wallets";
+"settings_manage_keys.add_wallet" = "Add Wallet";
+"settings_manage_keys.description" = "Highlighted below are your active wallets where each wallet responsible for different set of crypto currencies.\n\nYou should backup each highlighted wallets by backing up the private key for that wallet. This key is the only way to restore your funds if your phone is ever lost, stolen, broken etc.";
 "settings_manage_keys.delete" = "Löschen";
 "settings_manage_keys.backup" = "Sicherung";
 "settings_manage_keys.show" = "Anzeigen";
 "settings_manage_keys.create" = "Erstellen";
 "settings_manage_keys.restore" = "Wiederherstellen";
-"settings_manage_keys.delete.cant_delete" = "Sie müssen den %@-Schlüssel in einem Backup sichern, bevor Sie ihn von diesem Handy löschen können.";
-"settings_manage_keys.delete.title" = "Schlüssel löschen";
-"settings_manage_keys.delete.confirmation_remove" = "Diese Aktion wird den %@-Schlüssel (Wallet) von diesem Gerät löschen.";
+"settings_manage_keys.delete.cant_delete" = "You need to backup %@ Wallet before you may delete it from this phone.";
+"settings_manage_keys.delete.title" = "Delete Wallet";
+"settings_manage_keys.delete.confirmation_remove" = "This action will delete the %@ Wallet from this device.";
 "settings_manage_keys.delete.confirmation_disable" = "Coins, die entfernt werden: %@";
-"settings_manage_keys.delete.confirmation_loose" = "Wenn Sie keine Sicherung von diesem Schlüssel haben, verlieren Sie das zugehörige Guthaben.";
+"settings_manage_keys.delete.confirmation_loose" = "If you don't have a backup of the %@ Wallet key, you will loose the respective funds.";
 "error.cant_create_eos" = "Im Moment kann das Wallet keine neuen EOS-Wallet-Accounts anlegen. Sie können nur bestehende wiederherstellen.";
-"settings_manage_keys.create.text" = "Diese Aktion erzeugt einen Schlüssel (Wallet) für die folgenden Coins: %@";
+"settings_manage_keys.create.text" = "This action will generate a new %@ Wallet for the following coins:\n\n%@";
 "error.invalid_eos_key" = "Ungültiger Schlüssel";
 "error.invalid_eos_account" = "Ungültiger Account";
 
