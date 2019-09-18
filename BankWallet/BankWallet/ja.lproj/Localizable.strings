@@ -68,7 +68,7 @@
 
 "backup.intro.title_backup" = "Backup";
 "backup.intro.title_show" = "Show Key";
-"backup.intro.subtitle" = "The key that will be shown next is the only way to restore your funds, if your phone is ever lost, stolen, broken etc. Make sure that no one is watching your screen.\n\nThe coins controlled by this key: %@";
+"backup.intro.subtitle" = "The special key that will be shown next is the only way to restore your funds if your phone is ever lost, stolen, broken etc.\n\nMake sure that no one is watching your screen.\n\nThe coins controlled by this key: %@";
 "backup.intro.later" = "後で";
 "backup.intro.backup_now" = "バックアップ";
 "backup.intro.show_key" = "Show Key";
@@ -115,7 +115,7 @@
 "deposit.receive_coin" = "受取 %@";
 "deposit.your_address" = "お客様のアドレス";
 "deposit.your_account" = "Your Account";
-"receive_alert.not_backed_up_description" = "You need to backup the %@ key before you may receive %@.";
+"receive_alert.not_backed_up_description" = "You need to backup the %@ Wallet before you may receive %@.";
 
 // Send
 
@@ -235,7 +235,7 @@
 
 "manage_coins.title" = "Coin Manager";
 "manage_coins.add_coin.title" = "Add %@ ";
-"manage_coins.add_coin.text" = "You don't have key for %@. The wallet can generate the key for you. Use the Create button below to generate a new key.\n\nYou may also use the existing %@ key for the %@ if you have one.";
+"manage_coins.add_coin.text" = "You don't have a wallet that can store %@. The app can generate a new wallet for you. Use the Create button below to generate a new wallet.\n\nYou will be able to use the new wallet for the following coins: %@.\n\nYou may also use the existing %@ Wallet key if you have one. Use the Restore button for that.";
 "manage_coins.add_coin.create" = "Create";
 "manage_coins.add_coin.restore" = "Restore";
 
@@ -254,7 +254,7 @@
 // Settings -> Security
 
 "settings_security.title" = "セキュリティ センター";
-"settings_security.manage_accounts" = "Manage Keys";
+"settings_security.manage_accounts" = "Manage Wallets";
 "settings_security.passcode" = "Passcode";
 "settings_security.change_pin" = "パスコードを編集";
 "settings_security.touch_id" = "Touch ID";
@@ -269,21 +269,21 @@
 
 // Manage Keys
 
-"settings_manage_keys.title" = "Keys";
-"settings_manage_keys.add_key" = "Add Key";
-"settings_manage_keys.description" = "Anyone with access to your Keys can steal your wallet funds. Store keys safely and never show them to anyone.\n\nBackup each key to be able to restore funds if you lose or break your phone, or simply the wallet app gets deleted.";
+"settings_manage_keys.title" = "Manage Wallets";
+"settings_manage_keys.add_wallet" = "Add Wallet";
+"settings_manage_keys.description" = "Highlighted below are your active wallets where each wallet responsible for different set of crypto currencies.\n\nYou should backup each highlighted wallets by backing up the private key for that wallet. This key is the only way to restore your funds if your phone is ever lost, stolen, broken etc.";
 "settings_manage_keys.delete" = "Delete";
 "settings_manage_keys.backup" = "Backup";
 "settings_manage_keys.show" = "Show";
 "settings_manage_keys.create" = "Create";
 "settings_manage_keys.restore" = "Restore";
-"settings_manage_keys.delete.cant_delete" = "You need to backup %@ key before you may delete it from this phone.";
-"settings_manage_keys.delete.title" = "Delete Key";
-"settings_manage_keys.delete.confirmation_remove" = "This action will delete the %@ key (wallet) from this device.";
+"settings_manage_keys.delete.cant_delete" = "You need to backup %@ Wallet before you may delete it from this phone.";
+"settings_manage_keys.delete.title" = "Delete Wallet";
+"settings_manage_keys.delete.confirmation_remove" = "This action will delete the %@ Wallet from this device.";
 "settings_manage_keys.delete.confirmation_disable" = "Coins that will be disabled: %@";
-"settings_manage_keys.delete.confirmation_loose" = "If you don't have a backup of this key you will loose the respective funds.";
+"settings_manage_keys.delete.confirmation_loose" = "If you don't have a backup of the %@ Wallet key, you will loose the respective funds.";
 "error.cant_create_eos" = "At this point, the wallet is not able to create new EOS wallet accounts. You're only able to restore the existing one.";
-"settings_manage_keys.create.text" = "This action will generate a key(wallet) for the following coins:\n\n%@";
+"settings_manage_keys.create.text" = "This action will generate a new %@ Wallet for the following coins:\n\n%@";
 "error.invalid_eos_key" = "Invalid key";
 "error.invalid_eos_account" = "Invalid account";
 
