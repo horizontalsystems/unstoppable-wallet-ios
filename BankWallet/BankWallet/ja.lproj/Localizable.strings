@@ -35,9 +35,9 @@
 
 // Welcome
 
-"welcome.new_wallet" = "New Wallet";
+"welcome.new_wallet" = "Create Wallet";
 "welcome.restore_wallet" = "Restore Wallet";
-"welcome.version" = "version %@";
+"welcome.version" = "Version %@";
 
 // Restore
 
