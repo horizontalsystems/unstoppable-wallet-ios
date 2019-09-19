@@ -35,9 +35,9 @@
 
 // Welcome
 
-"welcome.new_wallet" = "新的钱包";
+"welcome.new_wallet" = "Create Wallet";
 "welcome.restore_wallet" = "恢复钱包";
-"welcome.version" = "版本%@";
+"welcome.version" = "Version %@";
 
 // Restore
 
