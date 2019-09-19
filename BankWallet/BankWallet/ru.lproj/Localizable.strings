@@ -35,9 +35,9 @@
 
 // Welcome
 
-"welcome.new_wallet" = "Создать Кошелек";
+"welcome.new_wallet" = "Create Wallet";
 "welcome.restore_wallet" = "Восстановить Кошелек";
-"welcome.version" = "версия %@";
+"welcome.version" = "Version %@";
 
 // Restore
 
