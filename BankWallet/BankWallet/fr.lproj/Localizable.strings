@@ -35,7 +35,7 @@
 
 // Welcome
 
-"welcome.new_wallet" = "Nouveau porte-monnaie";
+"welcome.new_wallet" = "Create Wallet";
 "welcome.restore_wallet" = "Restaurer le porte-monnaie";
 "welcome.version" = "Version %@";
 
