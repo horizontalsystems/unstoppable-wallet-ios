@@ -35,9 +35,9 @@
 
 // Welcome
 
-"welcome.new_wallet" = "Yeni Cüzdan";
+"welcome.new_wallet" = "Create Wallet";
 "welcome.restore_wallet" = "Cüzdanı Geri Yükle";
-"welcome.version" = "sürüm %@";
+"welcome.version" = "Version %@";
 
 // Restore
 
