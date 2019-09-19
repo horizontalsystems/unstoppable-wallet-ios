@@ -81,6 +81,11 @@ class AppTheme {
 }
 
 extension CGFloat {
+    static let cornerRadius2: CGFloat = 2
+    static let cornerRadius4: CGFloat = 4
+    static let cornerRadius8: CGFloat = 8
+    static let cornerRadius16: CGFloat = 16
+
     static let margin1x: CGFloat = 4
     static let margin2x: CGFloat = 8
     static let margin3x: CGFloat = 12
@@ -90,6 +95,41 @@ extension CGFloat {
     static let margin10x: CGFloat = 40
     static let margin12x: CGFloat = 48
 
+    static let marginButtonSide: CGFloat = 44
+
     static let heightOnePixel: CGFloat = 1 / UIScreen.main.scale
     static let heightDoubleLineCell: CGFloat = 60
+    static let heightButton: CGFloat = 50
+}
+
+extension UIButton {
+
+    static var appYellow: UIButton {
+        let button = UIButton()
+
+        button.titleLabel?.font = .cryptoHeadline2
+        button.setTitleColor(.black, for: .normal)
+        button.setTitleColor(.appGray50, for: .disabled)
+        button.setBackgroundColor(color: .appJacob, gradient: (colors: [UIColor(white: 1, alpha: 0.5), UIColor(white: 1, alpha: 0)], height: .heightButton), forState: .normal)
+        button.setBackgroundColor(color: .appJacob, forState: .highlighted)
+        button.setBackgroundColor(color: .appSteel20, forState: .disabled)
+        button.cornerRadius = CGFloat.cornerRadius8
+
+        return button
+    }
+
+    static var appGray: UIButton {
+        let button = UIButton()
+
+        button.titleLabel?.font = .cryptoHeadline2
+        button.setTitleColor(.black, for: .normal)
+        button.setTitleColor(.appGray50, for: .disabled)
+        button.setBackgroundColor(color: .appLightGray, gradient: (colors: [UIColor(white: 1, alpha: 1), UIColor(white: 1, alpha: 0)], height: .heightButton), forState: .normal)
+        button.setBackgroundColor(color: .appLightGray, forState: .highlighted)
+        button.setBackgroundColor(color: .appSteel20, forState: .disabled)
+        button.cornerRadius = CGFloat.cornerRadius8
+
+        return button
+    }
+
 }

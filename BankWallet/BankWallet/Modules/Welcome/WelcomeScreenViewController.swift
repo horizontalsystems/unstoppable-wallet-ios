@@ -5,9 +5,8 @@ class WelcomeScreenViewController: UIViewController {
     private let delegate: IWelcomeScreenViewDelegate
 
     private let backgroundImageView = UIImageView()
-    private let logoImageView = UIImageView()
-    private let createButton = UIButton()
-    private let restoreButton = UIButton()
+    private let createButton = UIButton.appYellow
+    private let restoreButton = UIButton.appGray
     private let versionLabel = UILabel()
 
     init(delegate: IWelcomeScreenViewDelegate) {
@@ -23,55 +22,44 @@ class WelcomeScreenViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        let image = UIImage(named: "Welcome Background") ?? UIImage()
+        backgroundImageView.image = image
+        backgroundImageView.contentMode = .scaleAspectFit
+
         view.addSubview(backgroundImageView)
-        view.addSubview(logoImageView)
-        view.addSubview(createButton)
-        view.addSubview(restoreButton)
-        view.addSubview(versionLabel)
-
-        backgroundImageView.image = UIImage(named: "Welcome Background")
-        backgroundImageView.contentMode = .scaleAspectFill
         backgroundImageView.snp.makeConstraints { maker in
-            maker.edges.equalToSuperview()
-        }
-
-        logoImageView.image = UIImage(named: "Welcome Logo")
-        logoImageView.snp.makeConstraints { maker in
-            maker.centerX.equalToSuperview()
-            maker.bottom.equalTo(self.createButton.snp.top).offset(-WelcomeTheme.logoBottomMargin)
+            maker.top.equalTo(view.safeAreaLayoutGuide)
+            maker.leading.trailing.equalToSuperview()
+            maker.height.equalTo(view.bounds.size.width * image.size.height / image.size.width)
         }
 
         createButton.setTitle("welcome.new_wallet".localized, for: .normal)
-        createButton.titleLabel?.font = ButtonTheme.font
-        createButton.setBackgroundColor(color: WelcomeTheme.buttonBackground, forState: .normal)
-        createButton.setBackgroundColor(color: WelcomeTheme.buttonBackgroundHighlighted, forState: .highlighted)
-        createButton.cornerRadius = WelcomeTheme.buttonCornerRadius
-        createButton.addTarget(self, action: #selector(didTapNew), for: .touchUpInside)
+        createButton.addTarget(self, action: #selector(didTapCreate), for: .touchUpInside)
+
+        view.addSubview(createButton)
         createButton.snp.makeConstraints { maker in
-            maker.leading.equalToSuperview().offset(WelcomeTheme.buttonSideMargin)
-            maker.trailing.equalToSuperview().offset(-WelcomeTheme.buttonSideMargin)
-            maker.bottom.equalTo(self.restoreButton.snp.top).offset(-WelcomeTheme.createButtonBottomMargin)
-            maker.height.equalTo(WelcomeTheme.buttonHeight)
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.marginButtonSide)
+            maker.height.equalTo(CGFloat.heightButton)
         }
 
         restoreButton.setTitle("welcome.restore_wallet".localized, for: .normal)
-        restoreButton.titleLabel?.font = ButtonTheme.font
-        restoreButton.setBackgroundColor(color: WelcomeTheme.buttonBackground, forState: .normal)
-        restoreButton.setBackgroundColor(color: WelcomeTheme.buttonBackgroundHighlighted, forState: .highlighted)
-        restoreButton.cornerRadius = WelcomeTheme.buttonCornerRadius
         restoreButton.addTarget(self, action: #selector(didTapRestore), for: .touchUpInside)
+
+        view.addSubview(restoreButton)
         restoreButton.snp.makeConstraints { maker in
-            maker.leading.equalToSuperview().offset(WelcomeTheme.buttonSideMargin)
-            maker.trailing.equalToSuperview().offset(-WelcomeTheme.buttonSideMargin)
-            maker.bottom.equalTo(self.versionLabel.snp.top).offset(-WelcomeTheme.restoreButtonBottomMargin)
-            maker.height.equalTo(WelcomeTheme.buttonHeight)
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.marginButtonSide)
+            maker.top.equalTo(createButton.snp.bottom).offset(CGFloat.margin4x)
+            maker.height.equalTo(CGFloat.heightButton)
         }
 
-        versionLabel.textColor = WelcomeTheme.versionLabelTextColor
-        versionLabel.font = WelcomeTheme.versionLabelFont
+        versionLabel.textColor = .cryptoGray
+        versionLabel.font = .cryptoCaption
+
+        view.addSubview(versionLabel)
         versionLabel.snp.makeConstraints { maker in
+            maker.top.equalTo(restoreButton.snp.bottom).offset(CGFloat.margin4x)
+            maker.bottom.equalTo(view.safeAreaLayoutGuide).inset(CGFloat.margin4x)
             maker.centerX.equalToSuperview()
-            maker.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).offset(-WelcomeTheme.versionBottomMargin)
         }
 
         delegate.viewDidLoad()
@@ -81,7 +69,17 @@ class WelcomeScreenViewController: UIViewController {
         return .lightContent
     }
 
-    @objc func didTapNew() {
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: animated)
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: animated)
+    }
+
+    @objc func didTapCreate() {
         delegate.didTapCreate()
     }
 

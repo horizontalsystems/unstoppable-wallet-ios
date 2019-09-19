@@ -35,7 +35,7 @@ class RespondButton: UIView, RespondViewDelegate {
             updateUI()
         }
     }
-    public var textColors = Style(){
+    public var textColors = Style() {
         didSet {
             updateUI()
         }
