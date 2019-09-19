@@ -35,9 +35,9 @@
 
 // Welcome
 
-"welcome.new_wallet" = "새 지갑";
+"welcome.new_wallet" = "Create Wallet";
 "welcome.restore_wallet" = "지갑 복원";
-"welcome.version" = "버전 %@";
+"welcome.version" = "Version %@";
 
 // Restore
 
