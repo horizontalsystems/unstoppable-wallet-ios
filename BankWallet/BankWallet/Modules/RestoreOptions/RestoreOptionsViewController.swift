@@ -30,7 +30,7 @@ class RestoreOptionsViewController: WalletViewController {
         tableView.sectionDataSource = self
 
         tableView.backgroundColor = .clear
-        tableView.separatorColor = .clear
+        tableView.separatorStyle = .none
 
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in
