@@ -35,9 +35,9 @@
 
 // Welcome
 
-"welcome.new_wallet" = "Nuevo monedero";
+"welcome.new_wallet" = "Create Wallet";
 "welcome.restore_wallet" = "Restaurar monedero";
-"welcome.version" = "Versión %@";
+"welcome.version" = "Version %@";
 
 // Restore
 
