@@ -213,7 +213,7 @@
 "settings.tab_bar_item" = "설정";
 "settings.security_center" = "보안 센터";
 "settings.manage_coins" = "코인 관리";
-"settings.restore_wallet" = "지갑 복원";
+"settings.notifications" = "Notifications";
 "settings.base_currency" = "기초 통화";
 "settings.language" = "언어";
 "settings.about" = "에 대해";
@@ -222,6 +222,12 @@
 "settings.light_mode" = "밝은 모드";
 "settings.info_title" = "UNSTOPPABLE";
 "settings.info_subtitle" = "decentralized app";
+
+// Settings -> Notifications
+
+"settings_notifications.title" = "Notifications";
+"settings_notifications.description" = "Set price alerts for the coins you would like to watch";
+"settings_notifications.alert_off" = "Off";
 
 // Settings -> Base Currency
 
