@@ -14,7 +14,7 @@ class DoubleLineCellView: UIView {
         titleLabel.snp.makeConstraints { maker in
             maker.leading.equalToSuperview().offset(CGFloat.margin4x)
             maker.trailing.equalToSuperview().offset(-CGFloat.margin4x)
-            maker.top.equalToSuperview().offset(CGFloat.margin2x)
+            maker.top.equalToSuperview().offset(10)
         }
 
         subtitleLabel.font = .cryptoSubhead2
