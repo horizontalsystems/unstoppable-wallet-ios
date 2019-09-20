@@ -213,7 +213,7 @@
 "settings.tab_bar_item" = "Settings";
 "settings.security_center" = "Security Center";
 "settings.manage_coins" = "Manage Coins";
-"settings.restore_wallet" = "Restore Wallet";
+"settings.notifications" = "Notifications";
 "settings.base_currency" = "Base Currency";
 "settings.language" = "Language";
 "settings.about" = "About";
@@ -222,6 +222,12 @@
 "settings.light_mode" = "Light Mode";
 "settings.info_title" = "UNSTOPPABLE";
 "settings.info_subtitle" = "decentralized app";
+
+// Settings -> Notifications
+
+"settings_notifications.title" = "Notifications";
+"settings_notifications.description" = "Set price alerts for the coins you would like to watch";
+"settings_notifications.alert_off" = "Off";
 
 // Settings -> Base Currency
 
