@@ -1,5 +1,5 @@
 enum AlertState: Int, CaseIterable {
-    case off
+    case off = 0
     case percent2 = 2
     case percent3 = 3
     case percent5 = 5

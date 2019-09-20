@@ -9,6 +9,7 @@ protocol INotificationSettingsViewDelegate {
 
 protocol INotificationSettingsInteractor: AnyObject {
     var alerts: [PriceAlert] { get }
+    func save(priceAlert: PriceAlert)
 }
 
 protocol INotificationSettingsRouter {

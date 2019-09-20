@@ -117,6 +117,15 @@ class GrdbStorage {
             }
         }
 
+        migrator.registerMigration("createPriceAlertRecordsTable") { db in
+            try db.create(table: PriceAlertRecord.databaseTableName) { t in
+                t.column(PriceAlertRecord.Columns.coinCode.name, .text).notNull()
+                t.column(PriceAlertRecord.Columns.state.name, .integer).notNull()
+
+                t.primaryKey([PriceAlertRecord.Columns.coinCode.name], onConflict: .replace)
+            }
+        }
+
         return migrator
     }
 
@@ -217,6 +226,28 @@ extension GrdbStorage: IAccountRecordStorage {
     func deleteAllAccountRecords() {
         _ = try! dbPool.write { db in
             try AccountRecord.deleteAll(db)
+        }
+    }
+
+}
+
+extension GrdbStorage: IPriceAlertRecordStorage {
+
+    var priceAlertsRecords: [PriceAlertRecord] {
+        return try! dbPool.read { db in
+            try PriceAlertRecord.fetchAll(db)
+        }
+    }
+
+    func save(priceAlertRecord: PriceAlertRecord) {
+        _ = try! dbPool.write { db in
+            try priceAlertRecord.insert(db)
+        }
+    }
+
+    func deletePriceAlertRecord(coinCode: CoinCode) {
+        _ = try! dbPool.write { db in
+            try PriceAlertRecord.filter(PriceAlertRecord.Columns.coinCode == coinCode).deleteAll(db)
         }
     }
 

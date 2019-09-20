@@ -11,7 +11,7 @@ extension NotificationSettingsRouter {
 
     static func module() -> UIViewController {
         let router = NotificationSettingsRouter()
-        let interactor = NotificationSettingsInteractor(walletManager: App.shared.walletManager)
+        let interactor = NotificationSettingsInteractor(priceAlertManager: App.shared.priceAlertManager)
         let presenter = NotificationSettingsPresenter(router: router, interactor: interactor)
         let view = NotificationSettingsViewController(delegate: presenter)
 
