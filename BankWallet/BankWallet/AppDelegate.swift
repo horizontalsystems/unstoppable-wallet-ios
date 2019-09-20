@@ -15,6 +15,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.backgroundColor = AppTheme.controllerBackground
         window?.rootViewController = LaunchRouter.module()
 
+        UIApplication.shared.setMinimumBackgroundFetchInterval(3600)
+
         return true
     }
 
@@ -54,6 +56,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             return false
         }
         return true
+    }
+
+    func application(_ application: UIApplication, performFetchWithCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+        completionHandler(.noData)
     }
 
 }

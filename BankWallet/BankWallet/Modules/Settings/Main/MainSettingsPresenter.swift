@@ -33,6 +33,10 @@ extension MainSettingsPresenter: IMainSettingsViewDelegate {
         router.showManageCoins()
     }
 
+    func didTapNotifications() {
+        router.showNotificationSettings()
+    }
+
     func didTapBaseCurrency() {
         router.showBaseCurrencySettings()
     }

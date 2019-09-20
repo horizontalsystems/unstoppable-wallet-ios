@@ -519,3 +519,8 @@ protocol IThemeManager: AnyObject {
     var currentTheme: ITheme { get }
     var lightMode: Bool { get set }
 }
+
+protocol INotificationManager {
+    func requestPermission()
+    func showNotification(title: String, subtitle: String, body: String)
+}
