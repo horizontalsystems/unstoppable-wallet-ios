@@ -213,7 +213,7 @@
 "settings.tab_bar_item" = "Ayarlar";
 "settings.security_center" = "Güvenlik Merkezi";
 "settings.manage_coins" = "Kredileri Yönet";
-"settings.restore_wallet" = "Cüzdanı Geri Yükle";
+"settings.notifications" = "Notifications";
 "settings.base_currency" = "Para birimi";
 "settings.language" = "Dil";
 "settings.about" = "Hakkında";
@@ -222,6 +222,12 @@
 "settings.light_mode" = "Aydınlık mod";
 "settings.info_title" = "UNSTOPPABLE";
 "settings.info_subtitle" = "decentralized App";
+
+// Settings -> Notifications
+
+"settings_notifications.title" = "Notifications";
+"settings_notifications.description" = "Set price alerts for the coins you would like to watch";
+"settings_notifications.alert_off" = "Off";
 
 // Settings -> Base Currency
 
