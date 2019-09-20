@@ -12,13 +12,13 @@ enum CoinType {
     func canSupport(accountType: AccountType) -> Bool {
         switch self {
         case .bitcoin, .bitcoinCash, .dash, .ethereum, .erc20:
-            if case let .mnemonic(words, derivation, salt) = accountType, words.count == 12, derivation == .bip44, salt == nil { return true }
+            if case let .mnemonic(words, _, salt) = accountType, words.count == 12, salt == nil { return true }
             return false
         case .eos:
             if case .eos = accountType { return true }
             return false
         case .binance:
-            if case let .mnemonic(words, derivation, salt) = accountType, words.count == 24, derivation == .bip44, salt == nil { return true }
+            if case let .mnemonic(words, _, salt) = accountType, words.count == 24, salt == nil { return true }
             return false
         }
     }

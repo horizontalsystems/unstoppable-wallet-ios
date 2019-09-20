@@ -92,7 +92,9 @@ extension BalancePresenter: IBalanceInteractorDelegate {
             return
         }
 
-        interactor.syncStats(coinCode: rate.coinCode, currencyCode: dataSource.currency.code)
+        if dataSource.statsButtonState == .selected {
+            interactor.syncStats(coinCode: rate.coinCode, currencyCode: dataSource.currency.code)
+        }
 
         let oldItems = dataSource.items
         for index in indexes {
