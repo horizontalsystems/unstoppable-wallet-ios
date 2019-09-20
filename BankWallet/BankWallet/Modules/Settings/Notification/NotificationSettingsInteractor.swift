@@ -1,8 +1,8 @@
 class NotificationSettingsInteractor {
-    private let walletManager: IWalletManager
+    private let priceAlertManager: IPriceAlertManager
 
-    init(walletManager: IWalletManager) {
-        self.walletManager = walletManager
+    init(priceAlertManager: IPriceAlertManager) {
+        self.priceAlertManager = priceAlertManager
     }
 
 }
@@ -10,9 +10,11 @@ class NotificationSettingsInteractor {
 extension NotificationSettingsInteractor: INotificationSettingsInteractor {
 
     var alerts: [PriceAlert] {
-        return walletManager.wallets.map {
-            PriceAlert(coin: $0.coin, state: .off)
-        }
+        return priceAlertManager.priceAlerts
+    }
+
+    func save(priceAlert: PriceAlert) {
+        priceAlertManager.save(priceAlert: priceAlert)
     }
 
 }

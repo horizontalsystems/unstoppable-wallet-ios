@@ -73,6 +73,11 @@ protocol IWalletManager: class {
     func enable(wallets: [Wallet])
 }
 
+protocol IPriceAlertManager {
+    var priceAlerts: [PriceAlert] { get }
+    func save(priceAlert: PriceAlert)
+}
+
 protocol IAdapter: class {
     func start()
     func stop()
@@ -324,6 +329,18 @@ protocol IAccountStorage {
     func save(account: Account)
     func delete(account: Account)
     func clear()
+}
+
+protocol IPriceAlertStorage {
+    var priceAlerts: [PriceAlert] { get }
+    func save(priceAlert: PriceAlert)
+    func delete(priceAlert: PriceAlert)
+}
+
+protocol IPriceAlertRecordStorage {
+    var priceAlertsRecords: [PriceAlertRecord] { get }
+    func save(priceAlertRecord: PriceAlertRecord)
+    func deletePriceAlertRecord(coinCode: CoinCode)
 }
 
 protocol IKitCleaner {

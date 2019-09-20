@@ -3,7 +3,7 @@ class App {
 
     let localStorage: ILocalStorage
     let secureStorage: ISecureStorage
-    let storage: IRateStorage & IEnabledWalletStorage & IAccountRecordStorage
+    let storage: IRateStorage & IEnabledWalletStorage & IAccountRecordStorage & IPriceAlertRecordStorage
 
     let themeManager: IThemeManager
     let appConfigProvider: IAppConfigProvider
@@ -48,6 +48,7 @@ class App {
     private let walletRemover: WalletRemover
     private let rateSyncScheduler: RateSyncScheduler
 
+    let priceAlertManager: IPriceAlertManager
     let notificationManager: INotificationManager
 
     let appManager: AppManager
@@ -120,6 +121,8 @@ class App {
         walletRemover = WalletRemover(accountManager: accountManager, walletManager: walletManager)
         rateSyncScheduler = RateSyncScheduler(rateManager: rateManager, walletManager: walletManager, currencyManager: currencyManager, reachabilityManager: reachabilityManager)
 
+        let priceAlertStorage: IPriceAlertStorage = PriceAlertStorage(appConfigProvider: appConfigProvider, storage: storage)
+        priceAlertManager = PriceAlertManager(walletManager: walletManager, storage: priceAlertStorage)
         notificationManager = NotificationManager()
 
         let kitCleaner = KitCleaner(accountManager: accountManager)

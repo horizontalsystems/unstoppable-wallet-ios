@@ -28,7 +28,7 @@ extension NotificationSettingsPresenter: INotificationSettingsViewDelegate {
 
         alert.state = state
 
-        // save via interactor
+        interactor.save(priceAlert: alert)
 
         let viewItems = factory.viewItems(alerts: alerts)
         view?.set(viewItems: viewItems)
