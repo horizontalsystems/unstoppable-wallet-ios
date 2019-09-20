@@ -12,11 +12,17 @@ class PinViewController: WalletViewController {
 
     private let lockoutView = LockoutView()
 
+    private let insets: UIEdgeInsets
+    private let useSafeAreaLayoutGuide: Bool
+
     private var currentPage = 0
 
-    init(delegate: IPinViewDelegate) {
+    init(delegate: IPinViewDelegate, gradient: Bool = true, insets: UIEdgeInsets = .zero, useSafeAreaLayoutGuide: Bool = true) {
         self.delegate = delegate
-        super.init()
+        self.insets = insets
+        self.useSafeAreaLayoutGuide = useSafeAreaLayoutGuide
+
+        super.init(gradient: gradient)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -29,18 +35,21 @@ class PinViewController: WalletViewController {
         view.addSubview(holderView)
         holderView.isScrollEnabled = false
         holderView.snp.makeConstraints { maker in
-            maker.top.equalTo(self.view.safeAreaLayoutGuide.snp.top)
-            maker.leading.trailing.equalToSuperview()
+            let constraint: ConstraintRelatableTarget = self.useSafeAreaLayoutGuide ? self.view.safeAreaLayoutGuide.snp.top : self.view
+            maker.top.equalTo(constraint).offset(insets.top)
+            maker.leading.equalToSuperview().offset(insets.left)
+            maker.trailing.equalToSuperview().offset(-insets.right)
         }
         holderView.backgroundColor = .clear
 
         view.addSubview(numPad)
         numPad.snp.makeConstraints { maker in
+            let constraint: ConstraintRelatableTarget = self.useSafeAreaLayoutGuide ? self.view.safeAreaLayoutGuide.snp.bottom : self.view
             maker.top.equalTo(self.holderView.snp.bottom)
-            maker.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).offset(-PinTheme.keyboardBottomMargin)
-            maker.leading.equalToSuperview().offset(PinTheme.keyboardSideMargin)
-            maker.trailing.equalToSuperview().offset(-PinTheme.keyboardSideMargin)
-            maker.height.equalTo(numPad.height(for: view.bounds.width - 2 * PinTheme.keyboardSideMargin))
+            maker.bottom.equalTo(constraint).offset(-insets.bottom)
+            maker.leading.equalToSuperview().offset(PinTheme.keyboardSideMargin + insets.left)
+            maker.trailing.equalToSuperview().inset(PinTheme.keyboardSideMargin + insets.right)
+            maker.height.equalTo(numPad.height(for: view.bounds.width - 2 * PinTheme.keyboardSideMargin - insets.width))
         }
 
         numPad.numPadDelegate = self
