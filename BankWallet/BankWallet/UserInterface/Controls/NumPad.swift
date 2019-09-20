@@ -242,8 +242,8 @@ class NumPadImageCell: UICollectionViewCell {
 
     func bind(image: UIImage?, pressedImage: UIImage?, onTap: (() -> ())?) {
         self.onTap = onTap
-        button.setImage(image?.tinted(with: .crypto_White_Black), for: .normal)
-        button.setImage(pressedImage?.tinted(with: .crypto_White_Black), for: .highlighted)
+        button.setImage(image, for: .normal)
+        button.setImage(pressedImage, for: .highlighted)
     }
 
     @objc func didTapButton() {

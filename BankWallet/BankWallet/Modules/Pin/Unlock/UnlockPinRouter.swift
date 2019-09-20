@@ -36,7 +36,7 @@ extension UnlockPinRouter: IUnlockPinRouter {
 
 extension UnlockPinRouter {
 
-    static func module(delegate: IUnlockDelegate? = nil, enableBiometry: Bool = true, appStart: Bool = false, cancelable: Bool = false) -> UIViewController {
+    static func module(delegate: IUnlockDelegate? = nil, enableBiometry: Bool = true, appStart: Bool = false, unlockMode: UnlockMode = .complex) -> UIViewController {
         let biometricManager = BiometricManager()
         let lockoutUntilDateFactory = LockoutUntilDateFactory(currentDateProvider: CurrentDateProvider())
         let uptimeProvider = UptimeProvider()
@@ -45,8 +45,17 @@ extension UnlockPinRouter {
 
         let router = UnlockPinRouter(appStart: appStart, delegate: delegate)
         let interactor = UnlockPinInteractor(pinManager: App.shared.pinManager, biometricManager: biometricManager, lockoutManager: lockoutManager, timer: timer, secureStorage: App.shared.secureStorage)
-        let presenter = UnlockPinPresenter(interactor: interactor, router: router, configuration: .init(cancellable: cancelable, enableBiometry: enableBiometry))
-        let viewController = PinViewController(delegate: presenter)
+        let presenter = UnlockPinPresenter(interactor: interactor, router: router, configuration: .init(cancellable: unlockMode == .simple, enableBiometry: enableBiometry))
+
+        var insets = UIEdgeInsets.zero
+        var gradient = false
+        var useSafeAreaLayoutGuide = false
+        if unlockMode == .simple {
+            insets.bottom = PinTheme.keyboardBottomMargin
+            gradient = true
+            useSafeAreaLayoutGuide = true
+        }
+        let viewController = PinViewController(delegate: presenter, gradient: gradient, insets: insets, useSafeAreaLayoutGuide: useSafeAreaLayoutGuide)
 
         biometricManager.delegate = interactor
         interactor.delegate = presenter

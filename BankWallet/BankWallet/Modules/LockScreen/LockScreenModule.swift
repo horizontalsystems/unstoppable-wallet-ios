@@ -1,0 +1,3 @@
+protocol ILockScreenRouter {
+    func dismiss()
+}

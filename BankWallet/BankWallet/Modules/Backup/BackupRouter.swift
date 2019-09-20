@@ -8,7 +8,7 @@ class BackupRouter {
 extension BackupRouter: IBackupRouter {
 
     func showUnlock() {
-        viewController?.present(UnlockPinRouter.module(delegate: unlockDelegate, enableBiometry: false, cancelable: true), animated: true)
+        viewController?.present(UnlockPinRouter.module(delegate: unlockDelegate, enableBiometry: false, unlockMode: .simple), animated: true)
     }
 
     func showBackup(account: Account, predefinedAccountType: IPredefinedAccountType, delegate: IBackupDelegate) {

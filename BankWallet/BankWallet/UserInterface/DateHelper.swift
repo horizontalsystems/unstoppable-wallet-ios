@@ -62,6 +62,10 @@ public class DateHelper {
         return getFormatter(forFormat: "\(DateHelper.correctedSystemHourFormat):mm").string(from: date)
     }
 
+    public func formatRateListTitle(from date: Date) -> String {
+        return getFormatter(forFormat: "MMMM d").string(from: date)
+    }
+
     public func formatFullTime(from date: Date) -> String {
         let formatter = getFormatter(forFormat: "MMM d, yyyy, \(DateHelper.correctedSystemHourFormat):mm")
         return formatter.string(from: date)
