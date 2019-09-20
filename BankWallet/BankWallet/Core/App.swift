@@ -48,6 +48,8 @@ class App {
     private let walletRemover: WalletRemover
     private let rateSyncScheduler: RateSyncScheduler
 
+    let notificationManager: INotificationManager
+
     let appManager: AppManager
 
     init() {
@@ -117,6 +119,8 @@ class App {
         testModeIndicator = TestModeIndicator(appConfigProvider: appConfigProvider)
         walletRemover = WalletRemover(accountManager: accountManager, walletManager: walletManager)
         rateSyncScheduler = RateSyncScheduler(rateManager: rateManager, walletManager: walletManager, currencyManager: currencyManager, reachabilityManager: reachabilityManager)
+
+        notificationManager = NotificationManager()
 
         let kitCleaner = KitCleaner(accountManager: accountManager)
         appManager = AppManager(

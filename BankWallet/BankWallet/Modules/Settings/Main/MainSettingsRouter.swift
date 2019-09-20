@@ -14,6 +14,10 @@ extension MainSettingsRouter: IMainSettingsRouter {
         viewController?.present(ManageWalletsRouter.module(), animated: true)
     }
 
+    func showNotificationSettings() {
+        viewController?.navigationController?.pushViewController(NotificationSettingsRouter.module(), animated: true)
+    }
+
     func showBaseCurrencySettings() {
         viewController?.navigationController?.pushViewController(BaseCurrencySettingsRouter.module(), animated: true)
     }
