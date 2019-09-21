@@ -12,10 +12,8 @@ extension RateListRouter {
     static func module() -> UIViewController {
         let router = RateListRouter()
 
-        let coins = RateListSorter().smartSort(for: App.shared.walletManager.wallets.map { $0.coin }, featuredCoins: App.shared.appConfigProvider.featuredCoins)
-        let dataSource = RateListDataSource(currency: App.shared.currencyManager.baseCurrency, coins: coins)
-        let interactor = RateListInteractor(rateStatsManager: App.shared.rateStatsManager, appManager: App.shared.appManager, rateStorage: App.shared.storage, currentDateProvider: CurrentDateProvider())
-        let presenter = RateListPresenter(interactor: interactor, router: router, dataSource: dataSource)
+        let interactor = RateListInteractor(rateStatsManager: App.shared.rateStatsManager, appManager: App.shared.appManager, currencyManager: App.shared.currencyManager, walletManager: App.shared.walletManager, rateStorage: App.shared.storage, appConfigProvider: App.shared.appConfigProvider, rateListSorter: RateListSorter(), currentDateProvider: CurrentDateProvider())
+        let presenter = RateListPresenter(interactor: interactor, router: router, dataSource: RateListDataSource())
 
         let viewController = RateListViewController(delegate: presenter)
 

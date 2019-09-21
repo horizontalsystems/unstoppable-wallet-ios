@@ -22,6 +22,7 @@ class RateListViewController: WalletViewController {
 
         tableView.separatorStyle = .none
         tableView.backgroundColor = .clear
+        tableView.allowsSelection = false
 
         tableView.registerHeaderFooter(forClass: RateListHeaderView.self)
         tableView.registerCell(forClass: RateListCell.self)

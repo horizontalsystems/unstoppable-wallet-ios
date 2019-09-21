@@ -12,17 +12,14 @@ class PinViewController: WalletViewController {
 
     private let lockoutView = LockoutView()
 
-    private let insets: UIEdgeInsets
-    private let useSafeAreaLayoutGuide: Bool
-
+    private let unlockMode: UnlockMode
     private var currentPage = 0
 
-    init(delegate: IPinViewDelegate, gradient: Bool = true, insets: UIEdgeInsets = .zero, useSafeAreaLayoutGuide: Bool = true) {
+    init(delegate: IPinViewDelegate, unlockMode: UnlockMode = .simple) {
         self.delegate = delegate
-        self.insets = insets
-        self.useSafeAreaLayoutGuide = useSafeAreaLayoutGuide
+        self.unlockMode = unlockMode
 
-        super.init(gradient: gradient)
+        super.init(gradient: unlockMode == .simple)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -32,21 +29,24 @@ class PinViewController: WalletViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        let useSafeAreaLayoutGuide = unlockMode == .simple
+        let insets = UIEdgeInsets(top: 0, left: 0, bottom: useSafeAreaLayoutGuide ? PinTheme.keyboardBottomMargin : 0, right: 0)
+
         view.addSubview(holderView)
         holderView.isScrollEnabled = false
         holderView.snp.makeConstraints { maker in
-            let constraint: ConstraintRelatableTarget = self.useSafeAreaLayoutGuide ? self.view.safeAreaLayoutGuide.snp.top : self.view
+            let constraint: ConstraintRelatableTarget = useSafeAreaLayoutGuide ? self.view.safeAreaLayoutGuide.snp.top : self.view
             maker.top.equalTo(constraint).offset(insets.top)
             maker.leading.equalToSuperview().offset(insets.left)
-            maker.trailing.equalToSuperview().offset(-insets.right)
+            maker.trailing.equalToSuperview().inset(insets.right)
         }
         holderView.backgroundColor = .clear
 
         view.addSubview(numPad)
         numPad.snp.makeConstraints { maker in
-            let constraint: ConstraintRelatableTarget = self.useSafeAreaLayoutGuide ? self.view.safeAreaLayoutGuide.snp.bottom : self.view
+            let constraint: ConstraintRelatableTarget = useSafeAreaLayoutGuide ? self.view.safeAreaLayoutGuide.snp.bottom : self.view
             maker.top.equalTo(self.holderView.snp.bottom)
-            maker.bottom.equalTo(constraint).offset(-insets.bottom)
+            maker.bottom.equalTo(constraint).inset(insets.bottom)
             maker.leading.equalToSuperview().offset(PinTheme.keyboardSideMargin + insets.left)
             maker.trailing.equalToSuperview().inset(PinTheme.keyboardSideMargin + insets.right)
             maker.height.equalTo(numPad.height(for: view.bounds.width - 2 * PinTheme.keyboardSideMargin - insets.width))

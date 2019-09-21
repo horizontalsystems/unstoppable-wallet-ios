@@ -3,22 +3,17 @@ import Foundation
 class RateListDataSource {
     private static let rateListType: ChartType = .day
 
-    let currency: Currency
-
     var items = [RateViewItem]()
-
-    init(currency: Currency, coins: [Coin]) {
-        self.currency = currency
-
-        items = coins.map { RateViewItem(coin: $0, rateExpired: false, rate: nil, diff: nil, loadingStatus: .loading) }
-    }
-
 }
 
 extension RateListDataSource: IRateListItemDataSource {
 
     var coinCodes: [CoinCode] {
         return items.map { $0.coin.code }
+    }
+
+    func set(coins: [Coin]) {
+        items = coins.map { RateViewItem(coin: $0, rateExpired: false, rate: nil, diff: nil, loadingStatus: .loading) }
     }
 
     func set(chartData: ChartData) {
@@ -30,7 +25,7 @@ extension RateListDataSource: IRateListItemDataSource {
         items[coinIndex].loadingStatus = .loaded
     }
 
-    func set(rate: Rate) {
+    func set(rate: Rate, with currency: Currency) {
         guard let coinIndex = items.firstIndex(where: { $0.coin.code == rate.coinCode }) else {
             return
         }

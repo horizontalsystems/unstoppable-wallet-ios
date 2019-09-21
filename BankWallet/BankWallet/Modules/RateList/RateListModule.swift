@@ -13,9 +13,10 @@ protocol IRateListViewDelegate {
 }
 
 protocol IRateListInteractor {
+    var currency: Currency { get }
+    var coins: [Coin] { get }
     var currentDate: Date { get }
 
-    func initRateList()
     func fetchRates(currencyCode: String, coinCodes: [CoinCode])
     func getRateStats(currencyCode: String, coinCodes: [CoinCode])
 }
@@ -33,11 +34,11 @@ protocol IRateListRouter {
 
 protocol IRateListItemDataSource {
     var items: [RateViewItem] { get }
-    var currency: Currency { get }
     var coinCodes: [CoinCode] { get }
 
+    func set(coins: [Coin])
     func set(chartData: ChartData)
-    func set(rate: Rate)
+    func set(rate: Rate, with currency: Currency)
     func setStatsFailed(coinCode: CoinCode)
 }
 

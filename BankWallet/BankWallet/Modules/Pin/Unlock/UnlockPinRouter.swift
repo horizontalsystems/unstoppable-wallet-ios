@@ -47,15 +47,7 @@ extension UnlockPinRouter {
         let interactor = UnlockPinInteractor(pinManager: App.shared.pinManager, biometricManager: biometricManager, lockoutManager: lockoutManager, timer: timer, secureStorage: App.shared.secureStorage)
         let presenter = UnlockPinPresenter(interactor: interactor, router: router, configuration: .init(cancellable: unlockMode == .simple, enableBiometry: enableBiometry))
 
-        var insets = UIEdgeInsets.zero
-        var gradient = false
-        var useSafeAreaLayoutGuide = false
-        if unlockMode == .simple {
-            insets.bottom = PinTheme.keyboardBottomMargin
-            gradient = true
-            useSafeAreaLayoutGuide = true
-        }
-        let viewController = PinViewController(delegate: presenter, gradient: gradient, insets: insets, useSafeAreaLayoutGuide: useSafeAreaLayoutGuide)
+        let viewController = PinViewController(delegate: presenter, unlockMode: unlockMode)
 
         biometricManager.delegate = interactor
         interactor.delegate = presenter

@@ -10,7 +10,6 @@ class RateListCell: AppCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
         backgroundColor = .clear
-        selectionStyle = .none
 
         contentView.addSubview(leftView)
         leftView.snp.makeConstraints { maker in
@@ -39,21 +38,27 @@ class RateListCell: AppCell {
     func bind(viewItem: RateViewItem, last: Bool = false) {
         super.bind(last: last)
 
-        leftView.bind(image: UIImage(named: "\(viewItem.coin.code.lowercased())")?.tinted(with: AppTheme.coinIconColor))
+        leftView.bind(image: UIImage(named: "\(viewItem.coin.code.lowercased())")?.tinted(with: .cryptoGray))
         middleView.bind(title: viewItem.coin.code, subtitle: viewItem.coin.title)
 
-        var rateString: String? = viewItem.loadingStatus != .loading ? "n/a".localized : " "
-        var rateColor = UIColor.appGray50
+        let rateString: String?
+        let rateColor: UIColor
         if let rate = viewItem.rate {
             rateString = ValueFormatter.instance.format(currencyValue: rate)
             rateColor = .appLeah
+        } else {
+            rateString = viewItem.loadingStatus != .loading ? "n/a".localized : " "
+            rateColor = .appGray50
         }
 
-        var diffString: String = "----"
-        var diffColor = UIColor.appGray
+        let diffString: String
+        let diffColor: UIColor
         if let diff = viewItem.diff {
-            diffColor = diff.isSignMinus ? .appLucian : .appRemus
             diffString = ChartRateTheme.formatted(percentDelta: diff)
+            diffColor = diff.isSignMinus ? .appLucian : .appRemus
+        } else {
+            diffString = "----"
+            diffColor = .appGray
         }
         rightView.bind(loading: viewItem.loadingStatus == .loading, rate: rateString, rateColor: rateColor, diff: diffString, diffColor: diffColor)
     }
