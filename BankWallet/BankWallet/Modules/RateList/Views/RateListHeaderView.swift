@@ -1,17 +1,18 @@
 import UIKit
 
 class RateListHeaderView: UITableViewHeaderFooterView {
-    private let titleLabel = UILabel()
+    private let label = UILabel()
 
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
 
         backgroundColor = .clear
 
-        titleLabel.textColor = .appOz
-        titleLabel.font = .cryptoTitle1
-        contentView.addSubview(titleLabel)
-        titleLabel.snp.makeConstraints { maker in
+        label.textColor = .appOz
+        label.font = .cryptoTitle1
+
+        contentView.addSubview(label)
+        label.snp.makeConstraints { maker in
             maker.leading.equalToSuperview().offset(CGFloat.margin6x)
             maker.top.equalToSuperview().offset(CGFloat.margin6x)
         }
@@ -22,8 +23,12 @@ class RateListHeaderView: UITableViewHeaderFooterView {
     }
 
     func bind(title: String) {
-        titleLabel.text = title
+        label.text = title
     }
+
+}
+
+extension RateListHeaderView {
 
     static func height(forContainerWidth containerWidth: CGFloat, text: String) -> CGFloat {
         return text.height(forContainerWidth: containerWidth, font: .cryptoTitle1) + CGFloat.margin6x + CGFloat.margin4x

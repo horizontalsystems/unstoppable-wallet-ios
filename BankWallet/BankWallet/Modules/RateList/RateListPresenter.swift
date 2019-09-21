@@ -18,12 +18,12 @@ class RateListPresenter {
 extension RateListPresenter: IRateListViewDelegate {
 
     func viewDidLoad() {
-        interactor.initRateList()
+        dataSource.set(coins: interactor.coins)
 
         let coinCodes = dataSource.coinCodes
 
-        interactor.fetchRates(currencyCode: dataSource.currency.code, coinCodes: coinCodes)
-        interactor.getRateStats(currencyCode: dataSource.currency.code, coinCodes: coinCodes)
+        interactor.fetchRates(currencyCode: interactor.currency.code, coinCodes: coinCodes)
+        interactor.getRateStats(currencyCode: interactor.currency.code, coinCodes: coinCodes)
 
         view?.reload()
     }
@@ -45,11 +45,11 @@ extension RateListPresenter: IRateListViewDelegate {
 extension RateListPresenter: IRateListInteractorDelegate {
 
     func didBecomeActive() {
-        interactor.getRateStats(currencyCode: dataSource.currency.code, coinCodes: dataSource.coinCodes)
+        interactor.getRateStats(currencyCode: interactor.currency.code, coinCodes: dataSource.coinCodes)
     }
 
     func didUpdate(rate: Rate) {
-        dataSource.set(rate: rate)
+        dataSource.set(rate: rate, with: interactor.currency)
         view?.reload()
     }
 
