@@ -11,20 +11,30 @@ class MainSettingsInteractor {
     private let systemInfoManager: ISystemInfoManager
     private let currencyManager: ICurrencyManager
     private let appConfigProvider: IAppConfigProvider
+    private let priceAlertManager: IPriceAlertManager
 
-    init(backupManager: IBackupManager, languageManager: ILanguageManager, themeManager: IThemeManager, systemInfoManager: ISystemInfoManager, currencyManager: ICurrencyManager, appConfigProvider: IAppConfigProvider) {
+    init(backupManager: IBackupManager, languageManager: ILanguageManager, themeManager: IThemeManager, systemInfoManager: ISystemInfoManager, currencyManager: ICurrencyManager, appConfigProvider: IAppConfigProvider, priceAlertManager: IPriceAlertManager) {
         self.backupManager = backupManager
         self.languageManager = languageManager
         self.themeManager = themeManager
         self.systemInfoManager = systemInfoManager
         self.currencyManager = currencyManager
         self.appConfigProvider = appConfigProvider
+        self.priceAlertManager = priceAlertManager
 
         backupManager.allBackedUpObservable
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
                 .observeOn(MainScheduler.instance)
                 .subscribe(onNext: { [weak self] allBackedUp in
                     self?.delegate?.didUpdate(allBackedUp: allBackedUp)
+                })
+                .disposed(by: disposeBag)
+
+        priceAlertManager.priceAlertCountObservable
+                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
+                .observeOn(MainScheduler.instance)
+                .subscribe(onNext: { [weak self] priceAlertCount in
+                    self?.delegate?.didUpdate(priceAlertCount: priceAlertCount)
                 })
                 .disposed(by: disposeBag)
 
@@ -51,6 +61,10 @@ extension MainSettingsInteractor: IMainSettingsInteractor {
 
     var allBackedUp: Bool {
         return backupManager.allBackedUp
+    }
+
+    var priceAlertCount: Int {
+        return priceAlertManager.priceAlertCount
     }
 
     var currentLanguageDisplayName: String? {

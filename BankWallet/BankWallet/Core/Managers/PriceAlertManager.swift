@@ -4,6 +4,8 @@ class PriceAlertManager {
     private let walletManager: IWalletManager
     private let storage: IPriceAlertStorage
 
+    private let priceAlertCountSubject = PublishSubject<Int>()
+
     init(walletManager: IWalletManager, storage: IPriceAlertStorage) {
         self.walletManager = walletManager
         self.storage = storage
@@ -27,12 +29,22 @@ extension PriceAlertManager: IPriceAlertManager {
         }
     }
 
+    var priceAlertCount: Int {
+        return storage.priceAlertCount
+    }
+
+    var priceAlertCountObservable: Observable<Int> {
+        return priceAlertCountSubject.asObservable()
+    }
+
     func save(priceAlert: PriceAlert) {
         if priceAlert.state == .off {
             storage.delete(priceAlert: priceAlert)
         } else {
             storage.save(priceAlert: priceAlert)
         }
+
+        priceAlertCountSubject.onNext(storage.priceAlertCount)
     }
 
 }
