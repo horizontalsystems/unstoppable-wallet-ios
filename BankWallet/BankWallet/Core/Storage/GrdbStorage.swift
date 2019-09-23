@@ -257,4 +257,10 @@ extension GrdbStorage: IPriceAlertRecordStorage {
         }
     }
 
+    func deletePriceAlertsExcluding(coinCodes: [CoinCode]) {
+        _ = try! dbPool.write { db in
+            try PriceAlertRecord.filter(!coinCodes.contains(PriceAlertRecord.Columns.coinCode)).deleteAll(db)
+        }
+    }
+
 }

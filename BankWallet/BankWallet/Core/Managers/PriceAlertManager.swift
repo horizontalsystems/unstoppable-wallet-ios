@@ -1,6 +1,8 @@
 import RxSwift
 
 class PriceAlertManager {
+    private let disposeBag = DisposeBag()
+
     private let walletManager: IWalletManager
     private let storage: IPriceAlertStorage
 
@@ -9,6 +11,21 @@ class PriceAlertManager {
     init(walletManager: IWalletManager, storage: IPriceAlertStorage) {
         self.walletManager = walletManager
         self.storage = storage
+
+        walletManager.walletsUpdatedSignal
+                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
+                .observeOn(MainScheduler.instance)
+                .subscribe(onNext: { [weak self] in
+                    self?.onUpdateWallets()
+                })
+                .disposed(by: disposeBag)
+    }
+
+    private func onUpdateWallets() {
+        let coinCodes = walletManager.wallets.map { $0.coin.code }
+
+        storage.deleteExcluding(coinCodes: coinCodes)
+        priceAlertCountSubject.onNext(storage.priceAlertCount)
     }
 
 }

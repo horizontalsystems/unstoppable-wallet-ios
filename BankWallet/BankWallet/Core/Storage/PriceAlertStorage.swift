@@ -38,4 +38,8 @@ extension PriceAlertStorage: IPriceAlertStorage {
         storage.deletePriceAlertRecord(coinCode: priceAlert.coin.code)
     }
 
+    func deleteExcluding(coinCodes: [CoinCode]) {
+        storage.deletePriceAlertsExcluding(coinCodes: coinCodes)
+    }
+
 }
