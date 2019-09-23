@@ -338,6 +338,7 @@ protocol IPriceAlertStorage {
     var priceAlertCount: Int { get }
     func save(priceAlert: PriceAlert)
     func delete(priceAlert: PriceAlert)
+    func deleteExcluding(coinCodes: [CoinCode])
 }
 
 protocol IPriceAlertRecordStorage {
@@ -345,6 +346,7 @@ protocol IPriceAlertRecordStorage {
     var priceAlertRecordCount: Int { get }
     func save(priceAlertRecord: PriceAlertRecord)
     func deletePriceAlertRecord(coinCode: CoinCode)
+    func deletePriceAlertsExcluding(coinCodes: [CoinCode])
 }
 
 protocol IKitCleaner {
