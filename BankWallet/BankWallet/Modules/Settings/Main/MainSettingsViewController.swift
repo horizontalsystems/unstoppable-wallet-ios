@@ -8,6 +8,7 @@ class MainSettingsViewController: WalletViewController {
     private let tableView = SectionsTableView(style: .grouped)
 
     private var allBackedUp: Bool = true
+    private var priceAlertCount: Int?
     private var currentBaseCurrency: String?
     private var currentLanguage: String?
     private var lightMode: Bool = true
@@ -74,8 +75,8 @@ class MainSettingsViewController: WalletViewController {
                 }
             }),
 
-            Row<RightLabelCell>(id: "notifications", height: SettingsTheme.cellHeight, bind: { cell, _ in
-                cell.bind(titleIcon: UIImage(named: "Notification Icon"), title: "settings.notifications".localized, rightText: "", showDisclosure: true, last: true)
+            Row<RightLabelCell>(id: "notifications", height: SettingsTheme.cellHeight, bind: { [weak self] cell, _ in
+                cell.bind(titleIcon: UIImage(named: "Notification Icon"), title: "settings.notifications".localized, rightText: self?.priceAlertCount.flatMap { $0 > 0 ? "\($0)" : nil }, showDisclosure: true, last: true)
             }, action: { [weak self] _ in
                 self?.delegate.didTapNotifications()
             })
@@ -183,6 +184,10 @@ extension MainSettingsViewController: IMainSettingsView {
 
     func set(allBackedUp: Bool) {
         self.allBackedUp = allBackedUp
+    }
+
+    func set(priceAlertCount: Int) {
+        self.priceAlertCount = priceAlertCount
     }
 
     func set(currentBaseCurrency: String) {

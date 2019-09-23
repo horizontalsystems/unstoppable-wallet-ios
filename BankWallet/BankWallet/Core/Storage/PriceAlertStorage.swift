@@ -16,13 +16,17 @@ extension PriceAlertStorage: IPriceAlertStorage {
     var priceAlerts: [PriceAlert] {
         let coins = appConfigProvider.coins
 
-        return storage.priceAlertsRecords.compactMap { record in
+        return storage.priceAlertRecords.compactMap { record in
             guard let coin = coins.first(where: { $0.code == record.coinCode }) else {
                 return nil
             }
 
             return PriceAlert(coin: coin, state: record.state)
         }
+    }
+
+    var priceAlertCount: Int {
+        return storage.priceAlertRecordCount
     }
 
     func save(priceAlert: PriceAlert) {
