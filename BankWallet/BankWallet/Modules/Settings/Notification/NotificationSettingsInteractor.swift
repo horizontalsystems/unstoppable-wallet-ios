@@ -38,8 +38,8 @@ extension NotificationSettingsInteractor: INotificationSettingsInteractor {
         }
     }
 
-    func save(priceAlert: PriceAlert) {
-        priceAlertManager.save(priceAlert: priceAlert)
+    func save(priceAlerts: [PriceAlert]) {
+        priceAlertManager.save(priceAlerts: priceAlerts)
     }
 
 }

@@ -27,6 +27,7 @@ class NotificationSettingsViewController: WalletViewController {
         title = "settings_notifications.title".localized
 
         tableView.registerCell(forClass: ImageDoubleLineValueCell.self)
+        tableView.registerCell(forClass: SingleLineCell.self)
         tableView.registerHeaderFooter(forClass: DescriptionView.self)
         tableView.sectionDataSource = self
 
@@ -98,7 +99,6 @@ extension NotificationSettingsViewController: SectionsDataSource {
             Section(
                     id: "alerts",
                     headerState: headerState,
-                    footerState: .margin(height: .margin8x),
                     rows: viewItems.enumerated().map { (index, item) in
                         Row<ImageDoubleLineValueCell>(
                                 id: item.code,
@@ -119,6 +119,24 @@ extension NotificationSettingsViewController: SectionsDataSource {
                                 }
                         )
                     }
+            ),
+            Section(
+                    id: "deactivate",
+                    headerState: .margin(height: .margin8x),
+                    footerState: .margin(height: .margin8x),
+                    rows: [
+                        Row<SingleLineCell>(
+                                id: "deactivate_all",
+                                height: CGFloat.heightSingleLineCell,
+                                autoDeselect: true,
+                                bind: { cell, _ in
+                                    cell.bind(text: "settings.notifications.deactivate_all".localized, last: true)
+                                },
+                                action: { [weak self] _ in
+                                    self?.delegate.didTapDeactivateAll()
+                                }
+                        )
+                    ]
             )
         ]
     }

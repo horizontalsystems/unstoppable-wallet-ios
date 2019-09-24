@@ -12,6 +12,13 @@ class NotificationSettingsPresenter {
         self.interactor = interactor
     }
 
+    private func handleUpdated(alerts: [PriceAlert]) {
+        interactor.save(priceAlerts: alerts)
+
+        let viewItems = factory.viewItems(alerts: self.alerts)
+        view?.set(viewItems: viewItems)
+    }
+
 }
 
 extension NotificationSettingsPresenter: INotificationSettingsViewDelegate {
@@ -30,14 +37,21 @@ extension NotificationSettingsPresenter: INotificationSettingsViewDelegate {
 
         alert.state = state
 
-        interactor.save(priceAlert: alert)
-
-        let viewItems = factory.viewItems(alerts: alerts)
-        view?.set(viewItems: viewItems)
+        handleUpdated(alerts: [alert])
     }
 
     func didTapSettingsButton() {
         router.openSettings()
+    }
+
+    func didTapDeactivateAll() {
+        let activeAlerts = alerts.filter { $0.state != .off }
+
+        activeAlerts.forEach { alert in
+            alert.state = .off
+        }
+
+        handleUpdated(alerts: activeAlerts)
     }
 
 }

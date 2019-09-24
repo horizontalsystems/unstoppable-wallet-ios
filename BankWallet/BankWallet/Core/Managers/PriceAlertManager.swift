@@ -43,11 +43,24 @@ extension PriceAlertManager: IPriceAlertManager {
         }
     }
 
-    func save(priceAlert: PriceAlert) {
-        if priceAlert.state == .off {
-            storage.delete(priceAlert: priceAlert)
-        } else {
-            storage.save(priceAlert: priceAlert)
+    func save(priceAlerts: [PriceAlert]) {
+        var toBeSaved = [PriceAlert]()
+        var toBeDeleted = [PriceAlert]()
+
+        for priceAlert in priceAlerts {
+            if priceAlert.state == .off {
+                toBeDeleted.append(priceAlert)
+            } else {
+                toBeSaved.append(priceAlert)
+            }
+        }
+
+        if !toBeSaved.isEmpty {
+            storage.save(priceAlerts: toBeSaved)
+        }
+
+        if !toBeDeleted.isEmpty {
+            storage.delete(priceAlerts: toBeDeleted)
         }
     }
 
