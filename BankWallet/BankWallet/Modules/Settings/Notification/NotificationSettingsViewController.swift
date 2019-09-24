@@ -5,7 +5,9 @@ class NotificationSettingsViewController: WalletViewController {
     private let delegate: INotificationSettingsViewDelegate
 
     private var viewItems = [PriceAlertViewItem]()
+
     private let tableView = SectionsTableView(style: .grouped)
+    private let warningView = UIView()
 
     init(delegate: INotificationSettingsViewDelegate) {
         self.delegate = delegate
@@ -24,7 +26,7 @@ class NotificationSettingsViewController: WalletViewController {
 
         title = "settings_notifications.title".localized
 
-        tableView.registerCell(forClass: ImageSingleLineValueCell.self)
+        tableView.registerCell(forClass: ImageDoubleLineValueCell.self)
         tableView.registerHeaderFooter(forClass: DescriptionView.self)
         tableView.sectionDataSource = self
 
@@ -36,12 +38,47 @@ class NotificationSettingsViewController: WalletViewController {
             maker.edges.equalToSuperview()
         }
 
+        warningView.isHidden = true
+
+        view.addSubview(warningView)
+        warningView.snp.makeConstraints { maker in
+            maker.top.bottom.equalTo(view.safeAreaLayoutGuide)
+            maker.leading.trailing.equalToSuperview()
+        }
+
+        let warningLabel = UILabel()
+        warningLabel.numberOfLines = 0
+        warningLabel.font = .cryptoSubhead2
+        warningLabel.textColor = .appGray
+        warningLabel.text = "settings.notifications.disabled_text".localized
+
+        warningView.addSubview(warningLabel)
+        warningLabel.snp.makeConstraints { maker in
+            maker.top.equalToSuperview().inset(CGFloat.margin3x)
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin6x)
+        }
+
+        let settingsButton = UIButton.appSecondary
+        settingsButton.setTitle("settings.notifications.settings_button".localized, for: .normal)
+        settingsButton.addTarget(self, action: #selector(onTapSettingsButton), for: .touchUpInside)
+
+        warningView.addSubview(settingsButton)
+        settingsButton.snp.makeConstraints { maker in
+            maker.centerX.equalToSuperview()
+            maker.top.equalTo(warningLabel.snp.bottom).offset(CGFloat.margin8x)
+            maker.height.equalTo(CGFloat.heightButtonSecondary)
+        }
+
         delegate.viewDidLoad()
         tableView.buildSections()
     }
 
     override func viewWillAppear(_ animated: Bool) {
         tableView.deselectCell(withCoordinator: transitionCoordinator, animated: animated)
+    }
+
+    @objc func onTapSettingsButton() {
+        delegate.didTapSettingsButton()
     }
 
 }
@@ -63,15 +100,17 @@ extension NotificationSettingsViewController: SectionsDataSource {
                     headerState: headerState,
                     footerState: .margin(height: .margin8x),
                     rows: viewItems.enumerated().map { (index, item) in
-                        Row<ImageSingleLineValueCell>(
+                        Row<ImageDoubleLineValueCell>(
                                 id: item.code,
                                 hash: "\(item.state)",
-                                height: CGFloat.heightSingleLineCell,
+                                height: CGFloat.heightDoubleLineCell,
                                 bind: { [unowned self] cell, _ in
                                     cell.bind(
                                             image: UIImage(named: "\(item.code.lowercased())")?.tinted(with: .appGray),
                                             title: item.title,
+                                            subtitle: item.code,
                                             value: "\(item.state)",
+                                            valueHighlighted: item.state != .off,
                                             last: index == self.viewItems.count - 1
                                     )
                                 },
@@ -101,6 +140,16 @@ extension NotificationSettingsViewController: INotificationSettingsView {
     func set(viewItems: [PriceAlertViewItem]) {
         self.viewItems = viewItems
         tableView.reload(animated: true)
+    }
+
+    func showWarning() {
+        warningView.isHidden = false
+        tableView.isHidden = true
+    }
+
+    func hideWarning() {
+        warningView.isHidden = true
+        tableView.isHidden = false
     }
 
 }

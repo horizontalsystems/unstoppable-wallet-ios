@@ -21,6 +21,8 @@ extension NotificationSettingsPresenter: INotificationSettingsViewDelegate {
 
         let viewItems = factory.viewItems(alerts: alerts)
         view?.set(viewItems: viewItems)
+
+        interactor.requestPermission()
     }
 
     func didSelect(state: AlertState, index: Int) {
@@ -32,6 +34,26 @@ extension NotificationSettingsPresenter: INotificationSettingsViewDelegate {
 
         let viewItems = factory.viewItems(alerts: alerts)
         view?.set(viewItems: viewItems)
+    }
+
+    func didTapSettingsButton() {
+        router.openSettings()
+    }
+
+}
+
+extension NotificationSettingsPresenter: INotificationSettingsInteractorDelegate {
+
+    func didGrantPermission() {
+        view?.hideWarning()
+    }
+
+    func didDenyPermission() {
+        view?.showWarning()
+    }
+
+    func didEnterForeground() {
+        interactor.requestPermission()
     }
 
 }

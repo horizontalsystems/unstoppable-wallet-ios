@@ -16,4 +16,6 @@ protocol ITheme {
     var colorElena: UIColor { get }
     var colorLawrence: UIColor { get }
     var colorClaude: UIColor { get }
+
+    var alphaSecondaryButtonGradient: CGFloat { get }
 }

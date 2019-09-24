@@ -25,10 +25,6 @@ extension PriceAlertStorage: IPriceAlertStorage {
         }
     }
 
-    var priceAlertCount: Int {
-        return storage.priceAlertRecordCount
-    }
-
     func save(priceAlert: PriceAlert) {
         let record = PriceAlertRecord(coinCode: priceAlert.coin.code, state: priceAlert.state)
         storage.save(priceAlertRecord: record)

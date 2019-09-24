@@ -11,30 +11,20 @@ class MainSettingsInteractor {
     private let systemInfoManager: ISystemInfoManager
     private let currencyManager: ICurrencyManager
     private let appConfigProvider: IAppConfigProvider
-    private let priceAlertManager: IPriceAlertManager
 
-    init(backupManager: IBackupManager, languageManager: ILanguageManager, themeManager: IThemeManager, systemInfoManager: ISystemInfoManager, currencyManager: ICurrencyManager, appConfigProvider: IAppConfigProvider, priceAlertManager: IPriceAlertManager) {
+    init(backupManager: IBackupManager, languageManager: ILanguageManager, themeManager: IThemeManager, systemInfoManager: ISystemInfoManager, currencyManager: ICurrencyManager, appConfigProvider: IAppConfigProvider) {
         self.backupManager = backupManager
         self.languageManager = languageManager
         self.themeManager = themeManager
         self.systemInfoManager = systemInfoManager
         self.currencyManager = currencyManager
         self.appConfigProvider = appConfigProvider
-        self.priceAlertManager = priceAlertManager
 
         backupManager.allBackedUpObservable
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
                 .observeOn(MainScheduler.instance)
                 .subscribe(onNext: { [weak self] allBackedUp in
                     self?.delegate?.didUpdate(allBackedUp: allBackedUp)
-                })
-                .disposed(by: disposeBag)
-
-        priceAlertManager.priceAlertCountObservable
-                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
-                .observeOn(MainScheduler.instance)
-                .subscribe(onNext: { [weak self] priceAlertCount in
-                    self?.delegate?.didUpdate(priceAlertCount: priceAlertCount)
                 })
                 .disposed(by: disposeBag)
 
@@ -52,32 +42,28 @@ class MainSettingsInteractor {
 extension MainSettingsInteractor: IMainSettingsInteractor {
 
     var companyWebPageLink: String {
-        return appConfigProvider.companyWebPageLink
+        appConfigProvider.companyWebPageLink
     }
 
     var appWebPageLink: String {
-        return appConfigProvider.appWebPageLink
+        appConfigProvider.appWebPageLink
     }
 
     var allBackedUp: Bool {
-        return backupManager.allBackedUp
-    }
-
-    var priceAlertCount: Int {
-        return priceAlertManager.priceAlertCount
+        backupManager.allBackedUp
     }
 
     var currentLanguageDisplayName: String? {
-        return languageManager.currentLanguageDisplayName
+        languageManager.currentLanguageDisplayName
     }
 
     var baseCurrency: Currency {
-        return currencyManager.baseCurrency
+        currencyManager.baseCurrency
     }
 
     var lightMode: Bool {
         get {
-            return themeManager.lightMode
+            themeManager.lightMode
         }
         set {
             themeManager.lightMode = newValue
@@ -85,7 +71,7 @@ extension MainSettingsInteractor: IMainSettingsInteractor {
     }
 
     var appVersion: String {
-        return systemInfoManager.appVersion
+        systemInfoManager.appVersion
     }
 
 }

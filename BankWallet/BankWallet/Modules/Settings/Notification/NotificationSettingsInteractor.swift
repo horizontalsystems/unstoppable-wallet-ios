@@ -1,8 +1,23 @@
-class NotificationSettingsInteractor {
-    private let priceAlertManager: IPriceAlertManager
+import RxSwift
 
-    init(priceAlertManager: IPriceAlertManager) {
+class NotificationSettingsInteractor {
+    weak var delegate: INotificationSettingsInteractorDelegate?
+
+    private let disposeBag = DisposeBag()
+
+    private let priceAlertManager: IPriceAlertManager
+    private let notificationManager: INotificationManager
+
+    init(priceAlertManager: IPriceAlertManager, notificationManager: INotificationManager, appManager: IAppManager) {
         self.priceAlertManager = priceAlertManager
+        self.notificationManager = notificationManager
+
+        appManager.willEnterForegroundObservable
+                .observeOn(MainScheduler.instance)
+                .subscribe(onNext: { [weak self] in
+                    self?.delegate?.didEnterForeground()
+                })
+                .disposed(by: disposeBag)
     }
 
 }
@@ -10,7 +25,17 @@ class NotificationSettingsInteractor {
 extension NotificationSettingsInteractor: INotificationSettingsInteractor {
 
     var alerts: [PriceAlert] {
-        return priceAlertManager.priceAlerts
+        priceAlertManager.priceAlerts
+    }
+
+    func requestPermission() {
+        notificationManager.requestPermission { [weak self] granted in
+            if granted {
+                self?.delegate?.didGrantPermission()
+            } else {
+                self?.delegate?.didDenyPermission()
+            }
+        }
     }
 
     func save(priceAlert: PriceAlert) {

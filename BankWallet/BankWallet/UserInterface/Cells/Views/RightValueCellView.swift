@@ -8,7 +8,6 @@ class RightValueCellView: UIView {
         super.init(frame: frame)
 
         label.font = .cryptoSubhead1
-        label.textColor = .appGray
         label.setContentCompressionResistancePriority(.required, for: .horizontal)
         label.setContentHuggingPriority(.required, for: .horizontal)
 
@@ -23,8 +22,9 @@ class RightValueCellView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func bind(text: String?) {
+    func bind(text: String?, highlighted: Bool = false) {
         label.text = text
+        label.textColor = highlighted ? .appOz : .appGray
     }
 
 }

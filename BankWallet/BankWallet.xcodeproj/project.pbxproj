@@ -61,6 +61,7 @@
 		11B3515788E450B15F80E773 /* PriceAlertViewItemFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35500FBBBDCCF35143B4C /* PriceAlertViewItemFactory.swift */; };
 		11B3515869AD00251DF53B57 /* AlertButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35CFDC5BD98BA40682DBD /* AlertButtonItem.swift */; };
 		11B3515AAA8F57C367776EB4 /* SendAccountPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3522F4EC3F33A0801A017 /* SendAccountPresenter.swift */; };
+		11B3515D1FB789D319A40171 /* ImageDoubleLineValueCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35636BA6371E6177FA2D9 /* ImageDoubleLineValueCell.swift */; };
 		11B35168C51B17CF84AFBD1F /* RightImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3521B227C23BB7B4B91CF /* RightImageCell.swift */; };
 		11B3516E2546ADC95238BD6D /* AlertButtonItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3566164D1D7C7898132E2 /* AlertButtonItemView.swift */; };
 		11B35177B650540BCEA880B3 /* UnlinkInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B351A464627DCBABD1AC17 /* UnlinkInteractor.swift */; };
@@ -552,6 +553,7 @@
 		11B35CA7604E5F25E639A9A9 /* AccountType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35542A7D7FE1BDC2E73E2 /* AccountType.swift */; };
 		11B35CA86E20BDD8A1B2B415 /* SendMemoPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35083F44195FD466288EF /* SendMemoPresenter.swift */; };
 		11B35CB0AD76DDCF4C39A33D /* AlertTextItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3547BA779253655B4287D /* AlertTextItem.swift */; };
+		11B35CB2368C8A679C7CCAFC /* ImageDoubleLineValueCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35636BA6371E6177FA2D9 /* ImageDoubleLineValueCell.swift */; };
 		11B35CB4B41774128BB7034A /* BaseCurrencySettingsModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35C104035EBC5B0B13592 /* BaseCurrencySettingsModule.swift */; };
 		11B35CBAB5F1BF7AAF6543A3 /* BalancePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B356A624E0982E0D90F9BB /* BalancePresenter.swift */; };
 		11B35CBF70EA6A9DD83B2BAD /* BalanceViewItemFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35D7125090E2FF868F924 /* BalanceViewItemFactory.swift */; };
@@ -637,6 +639,7 @@
 		11B35E6A69796E7DE9CE3623 /* WordsValidatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3532DFFBC8DCEEBDC19FB /* WordsValidatorTests.swift */; };
 		11B35E6F3CB74E991D0B49E4 /* BackupRequiredViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3561ABF4A7574A69F6796 /* BackupRequiredViewController.swift */; };
 		11B35E763604B66B7A134205 /* EosAccountType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3589F07BFA3626F5E41FD /* EosAccountType.swift */; };
+		11B35E76392BFDE83FA7FC1F /* ImageDoubleLineValueCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35636BA6371E6177FA2D9 /* ImageDoubleLineValueCell.swift */; };
 		11B35E831A2E06381231BBEB /* RestoreOptionsModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B350A04B4D9122C9828EC6 /* RestoreOptionsModule.swift */; };
 		11B35E83530D4ABA849384A3 /* PasscodeLockManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B354019EC5B2604E175F6E /* PasscodeLockManager.swift */; };
 		11B35E8CA3464D60E7D3A79F /* NotificationSettingsSelectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B359C638A7FC7D2287850D /* NotificationSettingsSelectorViewController.swift */; };
@@ -1914,6 +1917,7 @@
 		11B35614C6E244926AF48701 /* Account.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Account.swift; sourceTree = "<group>"; };
 		11B3561ABF4A7574A69F6796 /* BackupRequiredViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackupRequiredViewController.swift; sourceTree = "<group>"; };
 		11B356267EA921272D50608A /* DarkTheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DarkTheme.swift; sourceTree = "<group>"; };
+		11B35636BA6371E6177FA2D9 /* ImageDoubleLineValueCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageDoubleLineValueCell.swift; sourceTree = "<group>"; };
 		11B3563B8B0C6FF4E1A068F4 /* SingleLineCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SingleLineCellView.swift; sourceTree = "<group>"; };
 		11B3563EDEB290E2496BD7B9 /* SingleLineCheckmarkCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SingleLineCheckmarkCell.swift; sourceTree = "<group>"; };
 		11B3564E0721887CEBDE39F2 /* BaseButtonItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseButtonItemView.swift; sourceTree = "<group>"; };
@@ -2663,6 +2667,7 @@
 				11B3592EB491AB45168780AC /* ImageDoubleLineCell.swift */,
 				11B3574E2E73D26B954E2732 /* ImageSingleLineValueCell.swift */,
 				11B3563EDEB290E2496BD7B9 /* SingleLineCheckmarkCell.swift */,
+				11B35636BA6371E6177FA2D9 /* ImageDoubleLineValueCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -5069,6 +5074,7 @@
 				58AAA1505E6201918A64A44F /* RateListCell.swift in Sources */,
 				58AAA66470395CBB69F801D6 /* RateListHeaderView.swift in Sources */,
 				58AAA24C74EAC7CD8814F20B /* RateListSorter.swift in Sources */,
+				11B35E76392BFDE83FA7FC1F /* ImageDoubleLineValueCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5697,6 +5703,7 @@
 				58AAA80C97CA1454B266DB3E /* RateListCell.swift in Sources */,
 				58AAAD3B54A979C5FA09F618 /* RateListHeaderView.swift in Sources */,
 				58AAA432BB373C262AAD2B16 /* RateListSorter.swift in Sources */,
+				11B35CB2368C8A679C7CCAFC /* ImageDoubleLineValueCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6279,6 +6286,7 @@
 				58AAA275C891E3E35BCF6BA9 /* RateListCell.swift in Sources */,
 				58AAA535ACC00D967B1F159A /* RateListHeaderView.swift in Sources */,
 				58AAABD09B36ED2E1F6DEC0B /* RateListSorter.swift in Sources */,
+				11B3515D1FB789D319A40171 /* ImageDoubleLineValueCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
