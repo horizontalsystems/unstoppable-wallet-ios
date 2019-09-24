@@ -33,10 +33,10 @@ extension LockScreenRouter {
         let router = LockScreenRouter(appStart: appStart, delegate: delegate)
         let presenter = LockScreenPresenter(router: router)
 
-        let unlockController = UnlockPinRouter.module(delegate: presenter, enableBiometry: enableBiometry, appStart: appStart)
         let rateListController = RateListRouter.module()
+        let unlockController = UnlockPinRouter.module(delegate: presenter, enableBiometry: enableBiometry, appStart: appStart)
 
-        let viewController = LockScreenController(viewControllers: [rateListController, unlockController])
+        let viewController = LockScreenController(viewControllers: [unlockController, rateListController])
         router.viewController = viewController
 
         viewController.modalTransitionStyle = .crossDissolve

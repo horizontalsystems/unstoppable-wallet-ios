@@ -7,7 +7,7 @@ class LockScreenController: UIPageViewController {
         controllers = viewControllers
         super.init(transitionStyle: .scroll, navigationOrientation: .horizontal)
 
-        guard let initialViewController = viewControllers.last else {
+        guard let initialViewController = viewControllers.first else {
             fatalError("PageViewController must has at least one initial controller")
         }
         setViewControllers([initialViewController], direction: .forward, animated: true)
@@ -55,12 +55,12 @@ extension LockScreenController: UIPageViewControllerDataSource {
     }
 
     public func presentationIndex(for pageViewController: UIPageViewController) -> Int {
-        guard let lastViewController = controllers.last,
-              let lastViewControllerIndex = controllers.lastIndex(of: lastViewController) else {
+        guard let firstViewController = controllers.first,
+              let firstViewControllerIndex = controllers.firstIndex(of: firstViewController) else {
             return 0
         }
 
-        return lastViewControllerIndex
+        return firstViewControllerIndex
     }
 
 }
