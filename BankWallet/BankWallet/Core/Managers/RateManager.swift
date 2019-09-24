@@ -4,6 +4,10 @@ class RateManager {
     enum RateError: Error {
         case expired
     }
+    enum SyncRateError: Error {
+        case noInternet
+        case noCoins
+    }
 
     private let disposeBag = DisposeBag()
 
@@ -35,11 +39,11 @@ class RateManager {
                 .asSingle()
     }
 
-    private func refreshLatestRates(coinCodes: [CoinCode], currencyCode: String) {
-        apiProvider.getLatestRateData(currencyCode: currencyCode)
+    private func refreshLatestRates(coinCodes: [CoinCode], currencyCode: String) -> Single<LatestRateData> {
+        return apiProvider.getLatestRateData(currencyCode: currencyCode)
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
                 .observeOn(ConcurrentDispatchQueueScheduler(qos: .background))
-                .subscribe(onSuccess: { [weak self] latestRateData in
+                .do(onSuccess: { [weak self] latestRateData in
                     for coinCode in coinCodes {
                         guard let rateValue = latestRateData.values[coinCode] else {
                             continue
@@ -49,7 +53,6 @@ class RateManager {
                         self?.storage.save(latestRate: rate)
                     }
                 })
-                .disposed(by: disposeBag)
     }
 
 }
@@ -62,9 +65,9 @@ extension RateManager: IRateManager {
         }
     }
 
-    func syncLatestRates() {
+    func syncLatestRatesSingle() -> Single<LatestRateData> {
         guard reachabilityManager.isReachable else {
-            return
+            return Single.error(SyncRateError.noInternet)
         }
 
         var coinCodes = Set<CoinCode>()
@@ -73,10 +76,16 @@ extension RateManager: IRateManager {
         }
 
         guard coinCodes.count > 0 else {
-            return
+            return Single.error(SyncRateError.noCoins)
         }
 
-        refreshLatestRates(coinCodes: Array(coinCodes), currencyCode: currencyManager.baseCurrency.code)
+        return refreshLatestRates(coinCodes: Array(coinCodes), currencyCode: currencyManager.baseCurrency.code)
+    }
+
+    func syncLatestRates() {
+        syncLatestRatesSingle()
+                .subscribe()
+                .disposed(by: disposeBag)
     }
 
     func timestampRateValueObservable(coinCode: CoinCode, currencyCode: String, date: Date) -> Single<Decimal> {

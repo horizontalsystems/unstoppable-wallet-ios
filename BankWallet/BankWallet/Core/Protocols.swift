@@ -237,6 +237,7 @@ protocol BiometricManagerDelegate: class {
 
 protocol IRateManager {
     func nonExpiredLatestRate(coinCode: CoinCode, currencyCode: String) -> Rate?
+    func syncLatestRatesSingle() -> Single<LatestRateData>
     func syncLatestRates()
     func timestampRateValueObservable(coinCode: CoinCode, currencyCode: String, date: Date) -> Single<Decimal>
     func clear()
@@ -343,6 +344,25 @@ protocol IPriceAlertRecordStorage {
     func save(priceAlertRecords: [PriceAlertRecord])
     func deletePriceAlertRecords(coinCodes: [CoinCode])
     func deletePriceAlertsExcluding(coinCodes: [CoinCode])
+}
+
+protocol IBackgroundPriceAlertManager {
+    func updateAlerts()
+    func fetchRates(completion: ((Bool) -> ())?)
+}
+
+protocol IPriceAlertHandler {
+    func handleAlerts(with latestRatesData: LatestRateData)
+}
+
+protocol INotificationFactory {
+    func notifications(forAlerts alertItems: [PriceAlertItem]) -> [AlertNotification]
+}
+
+protocol IEmojiHelper {
+    var multiAlerts: String { get }
+    func title(forState state: Int) -> String
+    func body(forState state: Int) -> String
 }
 
 protocol IKitCleaner {

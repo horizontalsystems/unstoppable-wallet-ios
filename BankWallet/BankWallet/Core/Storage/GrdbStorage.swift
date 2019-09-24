@@ -121,6 +121,7 @@ class GrdbStorage {
             try db.create(table: PriceAlertRecord.databaseTableName) { t in
                 t.column(PriceAlertRecord.Columns.coinCode.name, .text).notNull()
                 t.column(PriceAlertRecord.Columns.state.name, .integer).notNull()
+                t.column(PriceAlertRecord.Columns.latestRate.name, .text)
 
                 t.primaryKey([PriceAlertRecord.Columns.coinCode.name], onConflict: .replace)
             }
