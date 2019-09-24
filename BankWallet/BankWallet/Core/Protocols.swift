@@ -334,6 +334,7 @@ protocol IAccountStorage {
 
 protocol IPriceAlertStorage {
     var priceAlerts: [PriceAlert] { get }
+    var activePriceAlerts: [PriceAlert] { get }
     func save(priceAlerts: [PriceAlert])
     func delete(priceAlerts: [PriceAlert])
     func deleteExcluding(coinCodes: [CoinCode])
@@ -348,7 +349,7 @@ protocol IPriceAlertRecordStorage {
 
 protocol IBackgroundPriceAlertManager {
     func didEnterBackground()
-    func fetchRates(completion: ((Bool) -> ())?)
+    func fetchRates(onComplete: @escaping (Bool) -> ())
 }
 
 protocol IPriceAlertHandler {
@@ -561,5 +562,5 @@ protocol IThemeManager: AnyObject {
 
 protocol INotificationManager {
     func requestPermission(onComplete: @escaping (Bool) -> ())
-    func showNotification(title: String, subtitle: String, body: String)
+    func show(notification: AlertNotification)
 }

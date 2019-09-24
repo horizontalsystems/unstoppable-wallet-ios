@@ -13,14 +13,13 @@ extension NotificationManager: INotificationManager {
         }
     }
 
-    func showNotification(title: String, subtitle: String, body: String) {
+    func show(notification: AlertNotification) {
         let content = UNMutableNotificationContent()
-        content.title = title
-//        content.subtitle = subtitle
-        content.body = body
+        content.title = notification.title
+        content.body = notification.body
 
-        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
-        let request = UNNotificationRequest(identifier: "my_identifier", content: content, trigger: trigger)
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 1, repeats: false)
+        let request = UNNotificationRequest(identifier: "my_identifier_\(notification.title)", content: content, trigger: trigger)
 
         UNUserNotificationCenter.current().add(request)
     }

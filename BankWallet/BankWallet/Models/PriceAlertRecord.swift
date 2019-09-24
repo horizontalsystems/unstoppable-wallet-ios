@@ -14,19 +14,19 @@ class PriceAlertRecord: Record {
     }
 
     override class var databaseTableName: String {
-        return "price_alert_records"
+        "price_alert_records"
     }
 
     enum Columns: String, ColumnExpression {
         case coinCode
         case state
-        case latestRate
+        case lastRate
     }
 
     required init(row: Row) {
         coinCode = row[Columns.coinCode]
         state = row[Columns.state].flatMap { AlertState(rawValue: $0) } ?? .off
-        lastRate = row[Columns.latestRate]
+        lastRate = row[Columns.lastRate]
 
         super.init(row: row)
     }
@@ -34,7 +34,7 @@ class PriceAlertRecord: Record {
     override func encode(to container: inout PersistenceContainer) {
         container[Columns.coinCode] = coinCode
         container[Columns.state] = state.rawValue
-        container[Columns.latestRate] = lastRate
+        container[Columns.lastRate] = lastRate
     }
 
 }

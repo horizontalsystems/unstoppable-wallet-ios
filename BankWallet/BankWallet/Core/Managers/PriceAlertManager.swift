@@ -39,7 +39,7 @@ extension PriceAlertManager: IPriceAlertManager {
                 return alert
             }
 
-            return PriceAlert(coin: coin, state: .off, lastRate: nil)
+            return PriceAlert(coin: coin, state: .off)
         }
     }
 

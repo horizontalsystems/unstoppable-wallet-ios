@@ -25,9 +25,13 @@ extension PriceAlertStorage: IPriceAlertStorage {
         }
     }
 
+    var activePriceAlerts: [PriceAlert] {
+        priceAlerts.filter { $0.state != .off }
+    }
+
     func save(priceAlerts: [PriceAlert]) {
         let records = priceAlerts.map {
-            PriceAlertRecord(coinCode: $0.coin.code, state: $0.state, lastRate: priceAlert.lastRate)
+            PriceAlertRecord(coinCode: $0.coin.code, state: $0.state, lastRate: $0.lastRate)
         }
         storage.save(priceAlertRecords: records)
     }

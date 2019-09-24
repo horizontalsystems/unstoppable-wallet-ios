@@ -83,9 +83,9 @@ extension RateManager: IRateManager {
     }
 
     func syncLatestRates() {
-        syncLatestRatesSingle()
-                .subscribe()
-                .disposed(by: disposeBag)
+//        syncLatestRatesSingle()
+//                .subscribe()
+//                .disposed(by: disposeBag)
     }
 
     func timestampRateValueObservable(coinCode: CoinCode, currencyCode: String, date: Date) -> Single<Decimal> {

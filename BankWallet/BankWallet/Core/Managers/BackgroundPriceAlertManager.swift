@@ -2,6 +2,7 @@ import RxSwift
 
 class BackgroundPriceAlertManager {
     private let disposeBag = DisposeBag()
+
     private let rateManager: IRateManager
     private let currencyManager: ICurrencyManager
     private let rateStorage: IRateStorage
@@ -18,26 +19,30 @@ class BackgroundPriceAlertManager {
 
 }
 
-extension BackgroundPriceAlertManager : IBackgroundPriceAlertManager {
+extension BackgroundPriceAlertManager: IBackgroundPriceAlertManager {
 
     func didEnterBackground() {
-        let alerts = priceAlertStorage.priceAlerts
+        let alerts = priceAlertStorage.activePriceAlerts
         let currency = currencyManager.baseCurrency
+
         alerts.forEach { alert in
-            if alert.state != .off, let rate = rateStorage.latestRate(coinCode: alert.coin.code, currencyCode: currency.code) {
+            if let rate = rateStorage.latestRate(coinCode: alert.coin.code, currencyCode: currency.code) {
                 alert.lastRate = rate.value
-                priceAlertStorage.save(priceAlert: alert)
             }
         }
+
+        priceAlertStorage.save(priceAlerts: alerts)
     }
 
-    func fetchRates(completion: ((Bool) -> ())?) {
-        rateManager.syncLatestRatesSingle().subscribe(onSuccess: { [weak self] latestRatesData in
-            self?.priceAlertHandler.handleAlerts(with: latestRatesData)
-            completion?(true)
-        }, onError: { error in
-            completion?(false)
-        }).disposed(by: disposeBag)
+    func fetchRates(onComplete: @escaping (Bool) -> ()) {
+        rateManager.syncLatestRatesSingle()
+                .subscribe(onSuccess: { [weak self] latestRatesData in
+                    self?.priceAlertHandler.handleAlerts(with: latestRatesData)
+                    onComplete(true)
+                }, onError: { error in
+                    onComplete(false)
+                })
+                .disposed(by: disposeBag)
     }
 
 }

@@ -1123,7 +1123,7 @@
 		58AAA1E9B2B25CB475011DBE /* IpfsApiProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA67C8CDCEF467711963B /* IpfsApiProvider.swift */; };
 		58AAA1EE015E354E285FCCD3 /* FullTransactionInfoProviderFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA72A3BACDB574838A8CC /* FullTransactionInfoProviderFactory.swift */; };
 		58AAA1EF416629D78B67B7C6 /* WordsValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA901FEA7E5AFB0519C5C /* WordsValidator.swift */; };
-		58AAA1F3E19DEF2FD1194B5D /* PriceAlertNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAED670DAB78FB53C62A3 /* PriceAlertNotification.swift */; };
+		58AAA1F3E19DEF2FD1194B5D /* AlertNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAED670DAB78FB53C62A3 /* AlertNotification.swift */; };
 		58AAA1FCADBF67D0BCD2F7EA /* SendFeeInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAC59C52CC49964D03D08 /* SendFeeInteractor.swift */; };
 		58AAA205C9236EDC387A885B /* RateListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA31FF3C379E7AFD16C94 /* RateListViewController.swift */; };
 		58AAA2150F02CE149A62F27B /* SendConfirmationModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA0C4B0224DD8A8A57AD9 /* SendConfirmationModule.swift */; };
@@ -1208,7 +1208,7 @@
 		58AAA4A377F356194AE08055 /* EthereumBaseAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA656A81B2C12F618FB44 /* EthereumBaseAdapter.swift */; };
 		58AAA4AFCECC4C1867C09AB5 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA8C956C20DE7CDC22351 /* Extensions.swift */; };
 		58AAA4B833C09EADBF495AE3 /* InsightProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA168658F739D4AF36B7D /* InsightProvider.swift */; };
-		58AAA4C53E85573DE5F606F0 /* PriceAlertNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAED670DAB78FB53C62A3 /* PriceAlertNotification.swift */; };
+		58AAA4C53E85573DE5F606F0 /* AlertNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAED670DAB78FB53C62A3 /* AlertNotification.swift */; };
 		58AAA4CAD377D4B45AB4972A /* FullTransactionProviderLinkCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA330AD0FF6644BD4510C /* FullTransactionProviderLinkCell.swift */; };
 		58AAA4CE42E4E172AB4576A2 /* SendConfirmationRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAB2FE6078D42455148C5 /* SendConfirmationRouter.swift */; };
 		58AAA4D83BCA31D557D9CAC3 /* PingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA3CCBFC02D7F6438DE3E /* PingManager.swift */; };
@@ -1436,7 +1436,7 @@
 		58AAADC7A68B2EBEE20C8E10 /* SendConfirmationRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAB2FE6078D42455148C5 /* SendConfirmationRouter.swift */; };
 		58AAADD168939A9A7614EAD6 /* SendFeePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA6C29584EFCDD8209363 /* SendFeePresenter.swift */; };
 		58AAADD4A8BA1090780CEA11 /* FullTransactionInfoProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAD82EF02D5AA6E8ED4CB /* FullTransactionInfoProvider.swift */; };
-		58AAADD71BCA3F424677521C /* PriceAlertNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAED670DAB78FB53C62A3 /* PriceAlertNotification.swift */; };
+		58AAADD71BCA3F424677521C /* AlertNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAED670DAB78FB53C62A3 /* AlertNotification.swift */; };
 		58AAADF2C924F1E505506480 /* TimestampLinesLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA8426364CE906D4B6ADF /* TimestampLinesLayer.swift */; };
 		58AAADF829ECCF0C7D379F62 /* TimelineHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA6019104A6B70BD3523C /* TimelineHelper.swift */; };
 		58AAAE017EAE7ED3D0019E7E /* FullTransactionInfoRouterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA36F24D9B30298D67BCB /* FullTransactionInfoRouterTests.swift */; };
@@ -2473,7 +2473,7 @@
 		58AAAEB020125ED321E27178 /* MarketCapCoinData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarketCapCoinData.swift; sourceTree = "<group>"; };
 		58AAAEB2610B22FF5C9E9A41 /* BlockExplorerProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockExplorerProvider.swift; sourceTree = "<group>"; };
 		58AAAEB485F977A3723BE738 /* SendAmountRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendAmountRouter.swift; sourceTree = "<group>"; };
-		58AAAED670DAB78FB53C62A3 /* PriceAlertNotification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PriceAlertNotification.swift; sourceTree = "<group>"; };
+		58AAAED670DAB78FB53C62A3 /* AlertNotification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertNotification.swift; sourceTree = "<group>"; };
 		58AAAEDCECF106AFCCFFFC21 /* ChartRateItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChartRateItemView.swift; sourceTree = "<group>"; };
 		58AAAEFCF9B0CF6C069E826E /* RestoreAccountsTheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestoreAccountsTheme.swift; sourceTree = "<group>"; };
 		58AAAF286BB3532AF94E4EB8 /* RequestErrorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestErrorView.swift; sourceTree = "<group>"; };
@@ -3010,7 +3010,7 @@
 				11B35394931A964455585870 /* PriceAlert.swift */,
 				11B35C1528814607B0474707 /* PriceAlertRecord.swift */,
 				58AAA05B8CC14764E7FDF106 /* UnlockMode.swift */,
-				58AAAED670DAB78FB53C62A3 /* PriceAlertNotification.swift */,
+				58AAAED670DAB78FB53C62A3 /* AlertNotification.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -5121,7 +5121,7 @@
 				11B35E76392BFDE83FA7FC1F /* ImageDoubleLineValueCell.swift in Sources */,
 				11B35B6B708790BC904A201D /* SingleLineCell.swift in Sources */,
 				58AAA6F5DB8BF64CB8B3E51D /* BackgroundPriceAlertManager.swift in Sources */,
-				58AAA4C53E85573DE5F606F0 /* PriceAlertNotification.swift in Sources */,
+				58AAA4C53E85573DE5F606F0 /* AlertNotification.swift in Sources */,
 				58AAAA314057BB3F1AF02230 /* NotificationFactory.swift in Sources */,
 				58AAAA3F007166915B8B8824 /* EmojiHelper.swift in Sources */,
 				58AAA313B947364E8582520E /* PriceAlertHandler.swift in Sources */,
@@ -5758,7 +5758,7 @@
 				11B35CB2368C8A679C7CCAFC /* ImageDoubleLineValueCell.swift in Sources */,
 				11B353100A9AA582F07D190F /* SingleLineCell.swift in Sources */,
 				58AAAC44C3E3A78BF697C5A8 /* BackgroundPriceAlertManager.swift in Sources */,
-				58AAA1F3E19DEF2FD1194B5D /* PriceAlertNotification.swift in Sources */,
+				58AAA1F3E19DEF2FD1194B5D /* AlertNotification.swift in Sources */,
 				58AAAF9E09617E7035B2E279 /* NotificationFactory.swift in Sources */,
 				58AAAFB1E804E9F5FFF3E6D9 /* EmojiHelper.swift in Sources */,
 				58AAA253D944B14652441804 /* PriceAlertHandler.swift in Sources */,
@@ -6347,7 +6347,7 @@
 				11B3515D1FB789D319A40171 /* ImageDoubleLineValueCell.swift in Sources */,
 				11B35E34178B572C3E6B08E5 /* SingleLineCell.swift in Sources */,
 				58AAA5D8E8A7660DAEFDA0F5 /* BackgroundPriceAlertManager.swift in Sources */,
-				58AAADD71BCA3F424677521C /* PriceAlertNotification.swift in Sources */,
+				58AAADD71BCA3F424677521C /* AlertNotification.swift in Sources */,
 				58AAA8E997B19C006A245D6E /* NotificationFactory.swift in Sources */,
 				58AAA25ECC831BB4A80CA79E /* EmojiHelper.swift in Sources */,
 				58AAA8A8BC8A6C6616E12C2A /* PriceAlertHandler.swift in Sources */,
