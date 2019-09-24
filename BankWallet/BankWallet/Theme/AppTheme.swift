@@ -101,6 +101,7 @@ extension CGFloat {
     static let heightSingleLineCell: CGFloat = 44
     static let heightDoubleLineCell: CGFloat = 60
     static let heightButton: CGFloat = 50
+    static let heightButtonSecondary: CGFloat = 32
 }
 
 extension UIButton {
@@ -114,7 +115,7 @@ extension UIButton {
         button.setBackgroundColor(color: .appJacob, gradient: (colors: [UIColor(white: 1, alpha: 0.5), UIColor(white: 1, alpha: 0)], height: .heightButton), forState: .normal)
         button.setBackgroundColor(color: .appJacob, forState: .highlighted)
         button.setBackgroundColor(color: .appSteel20, forState: .disabled)
-        button.cornerRadius = CGFloat.cornerRadius8
+        button.cornerRadius = .cornerRadius8
 
         return button
     }
@@ -128,7 +129,25 @@ extension UIButton {
         button.setBackgroundColor(color: .appLightGray, gradient: (colors: [UIColor(white: 1, alpha: 1), UIColor(white: 1, alpha: 0)], height: .heightButton), forState: .normal)
         button.setBackgroundColor(color: .appLightGray, forState: .highlighted)
         button.setBackgroundColor(color: .appSteel20, forState: .disabled)
-        button.cornerRadius = CGFloat.cornerRadius8
+        button.cornerRadius = .cornerRadius8
+
+        return button
+    }
+
+    static var appSecondary: UIButton {
+        let button = UIButton()
+
+        button.titleLabel?.font = .cryptoSubhead1
+        button.setTitleColor(.appOz, for: .normal)
+        button.setTitleColor(.appGray50, for: .disabled)
+        button.setBackgroundColor(color: .appElena, gradient: (colors: [UIColor(white: 1, alpha: App.theme.alphaSecondaryButtonGradient), UIColor(white: 1, alpha: 0)], height: .heightButtonSecondary), forState: .normal)
+        button.setBackgroundColor(color: .appElena, forState: .highlighted)
+        button.setBackgroundColor(color: .appElena, forState: .disabled)
+        button.cornerRadius = .cornerRadius4
+        button.borderColor = .appSteel20
+        button.borderWidth = 1
+        button.contentEdgeInsets.left = .margin2x
+        button.contentEdgeInsets.right = .margin2x
 
         return button
     }

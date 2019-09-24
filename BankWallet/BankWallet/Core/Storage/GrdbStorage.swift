@@ -234,14 +234,8 @@ extension GrdbStorage: IAccountRecordStorage {
 extension GrdbStorage: IPriceAlertRecordStorage {
 
     var priceAlertRecords: [PriceAlertRecord] {
-        return try! dbPool.read { db in
+        try! dbPool.read { db in
             try PriceAlertRecord.fetchAll(db)
-        }
-    }
-
-    var priceAlertRecordCount: Int {
-        return try! dbPool.read { db in
-            try PriceAlertRecord.fetchAll(db).count
         }
     }
 

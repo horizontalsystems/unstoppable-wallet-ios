@@ -19,7 +19,6 @@ extension MainSettingsPresenter: IMainSettingsViewDelegate {
 
     func viewDidLoad() {
         view?.set(allBackedUp: interactor.allBackedUp)
-        view?.set(priceAlertCount: interactor.priceAlertCount)
         syncCurrentBaseCurrency()
         view?.set(currentLanguage: interactor.currentLanguageDisplayName)
         view?.set(lightMode: interactor.lightMode)
@@ -73,11 +72,6 @@ extension MainSettingsPresenter: IMainSettingsInteractorDelegate {
 
     func didUpdate(allBackedUp: Bool) {
         view?.set(allBackedUp: allBackedUp)
-        view?.refresh()
-    }
-
-    func didUpdate(priceAlertCount: Int) {
-        view?.set(priceAlertCount: priceAlertCount)
         view?.refresh()
     }
 
