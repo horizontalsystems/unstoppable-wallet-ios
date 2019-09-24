@@ -49,6 +49,7 @@ class App {
     private let rateSyncScheduler: RateSyncScheduler
 
     let priceAlertManager: IPriceAlertManager
+    let backgroundPriceAlertManager: IBackgroundPriceAlertManager
     let notificationManager: INotificationManager
 
     let appManager: AppManager
@@ -124,6 +125,10 @@ class App {
         let priceAlertStorage: IPriceAlertStorage = PriceAlertStorage(appConfigProvider: appConfigProvider, storage: storage)
         priceAlertManager = PriceAlertManager(walletManager: walletManager, storage: priceAlertStorage)
         notificationManager = NotificationManager()
+
+        let notificationFactory = NotificationFactory(emojiHelper: EmojiHelper())
+        let priceAlertHandler = PriceAlertHandler(priceAlertStorage: priceAlertStorage, notificationManager: notificationManager, notificationFactory: notificationFactory)
+        backgroundPriceAlertManager = BackgroundPriceAlertManager(rateManager: rateManager, currencyManager: currencyManager, rateStorage: storage, priceAlertStorage: priceAlertStorage, priceAlertHandler: priceAlertHandler)
 
         let kitCleaner = KitCleaner(accountManager: accountManager)
         appManager = AppManager(

@@ -21,13 +21,13 @@ extension PriceAlertStorage: IPriceAlertStorage {
                 return nil
             }
 
-            return PriceAlert(coin: coin, state: record.state)
+            return PriceAlert(coin: coin, state: record.state, lastRate: record.lastRate)
         }
     }
 
     func save(priceAlerts: [PriceAlert]) {
         let records = priceAlerts.map {
-            PriceAlertRecord(coinCode: $0.coin.code, state: $0.state)
+            PriceAlertRecord(coinCode: $0.coin.code, state: $0.state, lastRate: priceAlert.lastRate)
         }
         storage.save(priceAlertRecords: records)
     }
