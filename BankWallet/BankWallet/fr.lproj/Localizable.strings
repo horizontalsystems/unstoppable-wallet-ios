@@ -364,3 +364,7 @@
 "create_wallet.title" = "New Wallet";
 "create_wallet.create_button" = "Create";
 "create_wallet.description" = "Select one cryptocurrency to start. You will be able to add other cryptocurrencies later.";
+
+"price_notification.up" = "up";
+"price_notification.down" = "down";
+"price_notification.multi_title" = "Notifications";
