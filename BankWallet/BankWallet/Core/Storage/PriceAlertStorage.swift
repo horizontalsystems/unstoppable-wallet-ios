@@ -25,13 +25,16 @@ extension PriceAlertStorage: IPriceAlertStorage {
         }
     }
 
-    func save(priceAlert: PriceAlert) {
-        let record = PriceAlertRecord(coinCode: priceAlert.coin.code, state: priceAlert.state)
-        storage.save(priceAlertRecord: record)
+    func save(priceAlerts: [PriceAlert]) {
+        let records = priceAlerts.map {
+            PriceAlertRecord(coinCode: $0.coin.code, state: $0.state)
+        }
+        storage.save(priceAlertRecords: records)
     }
 
-    func delete(priceAlert: PriceAlert) {
-        storage.deletePriceAlertRecord(coinCode: priceAlert.coin.code)
+    func delete(priceAlerts: [PriceAlert]) {
+        let coinCodes = priceAlerts.map { $0.coin.code }
+        storage.deletePriceAlertRecords(coinCodes: coinCodes)
     }
 
     func deleteExcluding(coinCodes: [CoinCode]) {

@@ -239,15 +239,17 @@ extension GrdbStorage: IPriceAlertRecordStorage {
         }
     }
 
-    func save(priceAlertRecord: PriceAlertRecord) {
+    func save(priceAlertRecords: [PriceAlertRecord]) {
         _ = try! dbPool.write { db in
-            try priceAlertRecord.insert(db)
+            for record in priceAlertRecords {
+                try record.insert(db)
+            }
         }
     }
 
-    func deletePriceAlertRecord(coinCode: CoinCode) {
+    func deletePriceAlertRecords(coinCodes: [CoinCode]) {
         _ = try! dbPool.write { db in
-            try PriceAlertRecord.filter(PriceAlertRecord.Columns.coinCode == coinCode).deleteAll(db)
+            try PriceAlertRecord.filter(coinCodes.contains(PriceAlertRecord.Columns.coinCode)).deleteAll(db)
         }
     }
 

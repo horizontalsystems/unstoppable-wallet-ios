@@ -8,12 +8,13 @@ protocol INotificationSettingsViewDelegate {
     func viewDidLoad()
     func didSelect(state: AlertState, index: Int)
     func didTapSettingsButton()
+    func didTapDeactivateAll()
 }
 
 protocol INotificationSettingsInteractor {
     var alerts: [PriceAlert] { get }
     func requestPermission()
-    func save(priceAlert: PriceAlert)
+    func save(priceAlerts: [PriceAlert])
 }
 
 protocol INotificationSettingsInteractorDelegate: AnyObject {

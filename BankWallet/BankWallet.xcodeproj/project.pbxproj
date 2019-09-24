@@ -147,6 +147,7 @@
 		11B35308ACF4A963B6AEEE32 /* PasscodeLockManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B354019EC5B2604E175F6E /* PasscodeLockManager.swift */; };
 		11B3530A4D432EA0E27517C5 /* RightLabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35F5A5D8BA5DE52435CD0 /* RightLabelCell.swift */; };
 		11B3530B19A8D80E40AD75EE /* BalanceItemDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35F79F5274A2603296EFF /* BalanceItemDataSource.swift */; };
+		11B353100A9AA582F07D190F /* SingleLineCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35FD12A549055D69D3162 /* SingleLineCell.swift */; };
 		11B3531F0D90C639FBF7408E /* SendMemoModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3580B3D1353962FB5AD45 /* SendMemoModule.swift */; };
 		11B35322D2B437AF99146AB8 /* AlertTitleItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35B23A5C3EC1B05174C86 /* AlertTitleItemView.swift */; };
 		11B353245F3F303806ACD767 /* ReportInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35EA21D8C1130359E3F80 /* ReportInteractor.swift */; };
@@ -498,6 +499,7 @@
 		11B35B63066CCED71B06002F /* AgreementRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3555B8A1BB021B722B1D6 /* AgreementRouter.swift */; };
 		11B35B670584B514DD0CFF35 /* CoinType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35878592C2E37DA1EBE1E /* CoinType.swift */; };
 		11B35B69063AB2169EE50580 /* MainPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B359E7A75E6B92D1305F40 /* MainPresenter.swift */; };
+		11B35B6B708790BC904A201D /* SingleLineCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35FD12A549055D69D3162 /* SingleLineCell.swift */; };
 		11B35B708258FC9CB10E56B3 /* NotificationSettingsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B357023C453DC0EEC1910B /* NotificationSettingsRouter.swift */; };
 		11B35B79EDF41D1B2178AADD /* Signal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35FD3263E331D704EA771 /* Signal.swift */; };
 		11B35B7AB9A0F6780BDF3F2C /* TitleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B357B81AF8F623715AE7BD /* TitleCell.swift */; };
@@ -624,6 +626,7 @@
 		11B35E0C471DAC00FE6A8103 /* RestoreOptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35E0A329C9A81552697DF /* RestoreOptionsViewController.swift */; };
 		11B35E2185734D5564B6D0DE /* CreateWalletViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35A8171B7035E98628E26 /* CreateWalletViewController.swift */; };
 		11B35E23B09513FF84EA8F67 /* RestoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35BA0167A8A6B5AFEABAE /* RestoreViewController.swift */; };
+		11B35E34178B572C3E6B08E5 /* SingleLineCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35FD12A549055D69D3162 /* SingleLineCell.swift */; };
 		11B35E42AF899376F8439FAA /* BinanceKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35D0672D73C973EBE5E1B /* BinanceKitManager.swift */; };
 		11B35E433FEF9A8936784BAC /* TransactionRecordPoolState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3592889642D8823BEDAE2 /* TransactionRecordPoolState.swift */; };
 		11B35E470259C29CB7A4E122 /* SingleLineCheckmarkCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3563EDEB290E2496BD7B9 /* SingleLineCheckmarkCell.swift */; };
@@ -2093,6 +2096,7 @@
 		11B35FAF942FA80752EDBFA7 /* SendInteractorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendInteractorTests.swift; sourceTree = "<group>"; };
 		11B35FC6F5CF6D888A05590B /* AgreementInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AgreementInteractor.swift; sourceTree = "<group>"; };
 		11B35FCB0C9375B426F06D95 /* SendEthereumInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendEthereumInteractor.swift; sourceTree = "<group>"; };
+		11B35FD12A549055D69D3162 /* SingleLineCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SingleLineCell.swift; sourceTree = "<group>"; };
 		11B35FD3263E331D704EA771 /* Signal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Signal.swift; sourceTree = "<group>"; };
 		1A56404690D0235A5183C12D /* Coin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Coin.swift; sourceTree = "<group>"; };
 		1A5640528EFD15137E218EA3 /* MainSettingsPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainSettingsPresenter.swift; sourceTree = "<group>"; };
@@ -2668,6 +2672,7 @@
 				11B3574E2E73D26B954E2732 /* ImageSingleLineValueCell.swift */,
 				11B3563EDEB290E2496BD7B9 /* SingleLineCheckmarkCell.swift */,
 				11B35636BA6371E6177FA2D9 /* ImageDoubleLineValueCell.swift */,
+				11B35FD12A549055D69D3162 /* SingleLineCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -5075,6 +5080,7 @@
 				58AAA66470395CBB69F801D6 /* RateListHeaderView.swift in Sources */,
 				58AAA24C74EAC7CD8814F20B /* RateListSorter.swift in Sources */,
 				11B35E76392BFDE83FA7FC1F /* ImageDoubleLineValueCell.swift in Sources */,
+				11B35B6B708790BC904A201D /* SingleLineCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5704,6 +5710,7 @@
 				58AAAD3B54A979C5FA09F618 /* RateListHeaderView.swift in Sources */,
 				58AAA432BB373C262AAD2B16 /* RateListSorter.swift in Sources */,
 				11B35CB2368C8A679C7CCAFC /* ImageDoubleLineValueCell.swift in Sources */,
+				11B353100A9AA582F07D190F /* SingleLineCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6287,6 +6294,7 @@
 				58AAA535ACC00D967B1F159A /* RateListHeaderView.swift in Sources */,
 				58AAABD09B36ED2E1F6DEC0B /* RateListSorter.swift in Sources */,
 				11B3515D1FB789D319A40171 /* ImageDoubleLineValueCell.swift in Sources */,
+				11B35E34178B572C3E6B08E5 /* SingleLineCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
