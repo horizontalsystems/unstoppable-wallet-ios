@@ -54,8 +54,8 @@ class PinView: UIView {
         let style = NSMutableParagraphStyle()
         style.lineSpacing = 2.2
         style.alignment = .center
-        let font: UIFont = page.title ? .cryptoHeadline1 : .cryptoSubhead2
-        let color: UIColor = page.title ? .appOz : .cryptoGray
+        let font: UIFont = page.useTitleColorAndFontForPinPageLabel ? .cryptoHeadline1 : .cryptoSubhead2
+        let color: UIColor = page.useTitleColorAndFontForPinPageLabel ? .appOz : .cryptoGray
         let attributes: [NSAttributedString.Key: Any] = [
             NSAttributedString.Key.foregroundColor: error.isEmpty ? color : .cryptoRed,
             NSAttributedString.Key.font: font,

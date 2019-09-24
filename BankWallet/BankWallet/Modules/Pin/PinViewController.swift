@@ -98,7 +98,7 @@ extension PinViewController: IPinView {
     }
 
     func addPage(withDescription description: String) {
-        let page = PinPage(description: description, title: unlockMode == .complex)
+        let page = PinPage(description: description, useTitleColorAndFontForPinPageLabel: unlockMode == .complex)
         pages.append(page)
 
         let pinView = PinView()
@@ -174,11 +174,11 @@ extension PinViewController: IPinView {
 struct PinPage {
     var description: String?
     var error: String?
-    var title: Bool
+    var useTitleColorAndFontForPinPageLabel: Bool
 
-    init(description: String, title: Bool) {
+    init(description: String, useTitleColorAndFontForPinPageLabel: Bool) {
         self.description = description
-        self.title = title
+        self.useTitleColorAndFontForPinPageLabel = useTitleColorAndFontForPinPageLabel
     }
 
 }
