@@ -30,7 +30,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationDidEnterBackground(_ application: UIApplication) {
         App.shared.appManager.didEnterBackground()
-        App.shared.backgroundPriceAlertManager.updateAlerts()
 
         backgroundTask = UIApplication.shared.beginBackgroundTask {
             UIApplication.shared.endBackgroundTask(self.backgroundTask)
@@ -61,7 +60,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, performFetchWithCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
         App.shared.backgroundPriceAlertManager.fetchRates { success in
-            completionHandler(success ? .newData : .noData)
+            completionHandler(success ? .newData : .failed)
         }
     }
 

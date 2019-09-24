@@ -347,7 +347,7 @@ protocol IPriceAlertRecordStorage {
 }
 
 protocol IBackgroundPriceAlertManager {
-    func updateAlerts()
+    func didEnterBackground()
     func fetchRates(completion: ((Bool) -> ())?)
 }
 

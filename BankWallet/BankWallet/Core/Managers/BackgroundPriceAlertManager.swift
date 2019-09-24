@@ -20,7 +20,7 @@ class BackgroundPriceAlertManager {
 
 extension BackgroundPriceAlertManager : IBackgroundPriceAlertManager {
 
-    func updateAlerts() {
+    func didEnterBackground() {
         let alerts = priceAlertStorage.priceAlerts
         let currency = currencyManager.baseCurrency
         alerts.forEach { alert in

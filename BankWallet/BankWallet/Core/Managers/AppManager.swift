@@ -63,6 +63,7 @@ extension AppManager {
 
     func didEnterBackground() {
         lockManager.didEnterBackground()
+        App.shared.backgroundPriceAlertManager.didEnterBackground()
     }
 
     func willEnterForeground() {
