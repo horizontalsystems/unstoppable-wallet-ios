@@ -139,6 +139,7 @@ class App {
                 passcodeLockManager: passcodeLockManager,
                 biometryManager: biometryManager,
                 blurManager: blurManager,
+                backgroundPriceAlertManager: backgroundPriceAlertManager,
                 localStorage: localStorage,
                 secureStorage: secureStorage,
                 kitCleaner: kitCleaner

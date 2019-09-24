@@ -8,6 +8,7 @@ class AppManager {
     private let passcodeLockManager: IPasscodeLockManager
     private let biometryManager: IBiometryManager
     private let blurManager: IBlurManager
+    private let backgroundPriceAlertManager: IBackgroundPriceAlertManager
     private let localStorage: ILocalStorage
     private let secureStorage: ISecureStorage
     private let kitCleaner: IKitCleaner
@@ -16,7 +17,7 @@ class AppManager {
     private let willEnterForegroundSubject = PublishSubject<()>()
 
     init(accountManager: IAccountManager, walletManager: IWalletManager, adapterManager: IAdapterManager, lockManager: ILockManager,
-         passcodeLockManager: IPasscodeLockManager, biometryManager: IBiometryManager, blurManager: IBlurManager,
+         passcodeLockManager: IPasscodeLockManager, biometryManager: IBiometryManager, blurManager: IBlurManager, backgroundPriceAlertManager: IBackgroundPriceAlertManager,
          localStorage: ILocalStorage, secureStorage: ISecureStorage, kitCleaner: IKitCleaner) {
         self.accountManager = accountManager
         self.walletManager = walletManager
@@ -25,6 +26,7 @@ class AppManager {
         self.passcodeLockManager = passcodeLockManager
         self.biometryManager = biometryManager
         self.blurManager = blurManager
+        self.backgroundPriceAlertManager = backgroundPriceAlertManager
         self.localStorage = localStorage
         self.secureStorage = secureStorage
         self.kitCleaner = kitCleaner
@@ -63,7 +65,7 @@ extension AppManager {
 
     func didEnterBackground() {
         lockManager.didEnterBackground()
-        App.shared.backgroundPriceAlertManager.didEnterBackground()
+        backgroundPriceAlertManager.didEnterBackground()
     }
 
     func willEnterForeground() {
