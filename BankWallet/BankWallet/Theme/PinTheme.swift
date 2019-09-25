@@ -1,15 +1,12 @@
 import UIKit
 
 class PinTheme {
-    static var dotsMargin: CGFloat = 12
-    static var dotsVerticalMargin: CGFloat = 16
     static let infoHorizontalMargin: CGFloat = 44
     static let infoVerticalMargin: CGFloat = 16
     static let cancelColor = UIColor.cryptoYellow
     static let cancelSelectedColor = UIColor.cryptoYellowPressed
 
     static var keyboardSideMargin: CGFloat { return UIScreen.main.bounds.width <= 320 ? 32 : 48 } // decrease margin only for small screen
-    static let keyboardBottomMargin: CGFloat = 16
 
     static var lockoutIconBackground: UIColor { return App.shared.localStorage.lightMode ? .white : .cryptoGray50 }
     static let lockoutIconBackgroundSideSize: CGFloat = 94

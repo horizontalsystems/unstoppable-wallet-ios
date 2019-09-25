@@ -30,7 +30,7 @@ class PinViewController: WalletViewController {
         super.viewDidLoad()
 
         let useSafeAreaLayoutGuide = unlockMode == .simple
-        let insets = UIEdgeInsets(top: 0, left: 0, bottom: useSafeAreaLayoutGuide ? PinTheme.keyboardBottomMargin : 0, right: 0)
+        let insets = UIEdgeInsets(top: 0, left: 0, bottom: useSafeAreaLayoutGuide ? CGFloat.margin4x : CGFloat.margin1x, right: 0)
 
         view.addSubview(holderView)
         holderView.isScrollEnabled = false
@@ -98,7 +98,7 @@ extension PinViewController: IPinView {
     }
 
     func addPage(withDescription description: String) {
-        let page = PinPage(description: description, useTitleColorAndFontForPinPageLabel: unlockMode == .complex)
+        let page = PinPage(description: description, isTitle: unlockMode == .complex)
         pages.append(page)
 
         let pinView = PinView()
@@ -174,11 +174,11 @@ extension PinViewController: IPinView {
 struct PinPage {
     var description: String?
     var error: String?
-    var useTitleColorAndFontForPinPageLabel: Bool
+    var isTitle: Bool
 
-    init(description: String, useTitleColorAndFontForPinPageLabel: Bool) {
+    init(description: String, isTitle: Bool) {
         self.description = description
-        self.useTitleColorAndFontForPinPageLabel = useTitleColorAndFontForPinPageLabel
+        self.isTitle = isTitle
     }
 
 }

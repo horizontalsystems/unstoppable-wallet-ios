@@ -14,7 +14,7 @@ class PinView: UIView {
         addSubview(pinDotsView)
         pinDotsView.snp.makeConstraints { maker in
             maker.centerX.equalToSuperview()
-            maker.centerY.equalToSuperview().offset(PinTheme.dotsVerticalMargin)
+            maker.centerY.equalToSuperview().offset(CGFloat.margin6x)
         }
 
         topLabel.lineBreakMode = .byWordWrapping
@@ -54,8 +54,8 @@ class PinView: UIView {
         let style = NSMutableParagraphStyle()
         style.lineSpacing = 2.2
         style.alignment = .center
-        let font: UIFont = page.useTitleColorAndFontForPinPageLabel ? .cryptoHeadline1 : .cryptoSubhead2
-        let color: UIColor = page.useTitleColorAndFontForPinPageLabel ? .appOz : .cryptoGray
+        let font: UIFont = page.isTitle ? .cryptoHeadline1 : .cryptoSubhead2
+        let color: UIColor = page.isTitle ? .appOz : .cryptoGray
         let attributes: [NSAttributedString.Key: Any] = [
             NSAttributedString.Key.foregroundColor: error.isEmpty ? color : .cryptoRed,
             NSAttributedString.Key.font: font,
