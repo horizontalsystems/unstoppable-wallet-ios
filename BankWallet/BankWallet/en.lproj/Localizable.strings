@@ -298,13 +298,13 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 "settings_manage_keys.show" = "Show";
 "settings_manage_keys.create" = "Create";
 "settings_manage_keys.restore" = "Restore";
-"settings_manage_keys.delete.cant_delete" = "You need to backup %@ Wallet before you may delete it from this phone.";
+"settings_manage_keys.delete.cant_delete" = "You need to backup the private key for this wallet before it can be deleted from this phone.";
 "settings_manage_keys.delete.title" = "Delete Wallet";
-"settings_manage_keys.delete.confirmation_remove" = "This action will delete the %@ Wallet from this device.";
+"settings_manage_keys.delete.confirmation_remove" = "The action will delete the %@ Wallet from this device.";
 "settings_manage_keys.delete.confirmation_disable" = "Coins that will be disabled: %@";
-"settings_manage_keys.delete.confirmation_loose" = "If you don't have a backup of the %@ Wallet key, you will loose the respective funds.";
+"settings_manage_keys.delete.confirmation_loose" = "If you didn't backup the private key for this wallet, you will lose access to your funds.";
 "error.cant_create_eos" = "At this point, the wallet is not able to create new EOS wallet accounts. You're only able to restore the existing one.";
-"settings_manage_keys.create.text" = "This action will generate a new %@ Wallet for the following coins:\n\n%@";
+"settings_manage_keys.create.text" = "This action will generate a new wallet for the following coins:\n\n%@";
 "error.invalid_eos_key" = "Invalid key";
 "error.invalid_eos_account" = "Invalid account";
 
