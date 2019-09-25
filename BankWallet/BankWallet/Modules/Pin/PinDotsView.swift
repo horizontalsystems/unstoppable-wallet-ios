@@ -19,7 +19,7 @@ class PinDotsView: UIView {
         dotsHolder.axis = .horizontal
         dotsHolder.distribution = .equalSpacing
         dotsHolder.alignment = .center
-        dotsHolder.spacing = PinTheme.dotsMargin
+        dotsHolder.spacing = CGFloat.margin3x
         addSubview(dotsHolder)
         dotsHolder.snp.makeConstraints { maker in
             maker.edges.equalToSuperview()
