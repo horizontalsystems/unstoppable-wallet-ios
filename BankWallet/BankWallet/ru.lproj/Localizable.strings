@@ -242,7 +242,7 @@
 
 // Settings -> Manage Wallet
 
-"manage_coins.title" = "Кошельки";
+"manage_coins.title" = "Валюты";
 "manage_coins.add_coin.title" = "Добавить %@";
 "manage_coins.add_coin.text" = "You don't have a wallet that can store %@. The app can generate a new wallet for you. Use the Create button below to generate a new wallet.\n\nYou will be able to use the new wallet for the following coins: %@.\n\nYou may also use the existing %@ Wallet key if you have one. Use the Restore button for that.";
 "manage_coins.add_coin.create" = "Создать";
