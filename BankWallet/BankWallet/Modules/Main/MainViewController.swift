@@ -11,7 +11,6 @@ class MainViewController: UITabBarController {
 
         self.viewControllers = viewControllers
         self.viewControllers?.forEach {
-            ($0 as? UINavigationController)?.view.layoutIfNeeded()
             _ = ($0 as? UINavigationController)?.viewControllers.first?.view
         }
 

@@ -2,7 +2,7 @@ import UIKit
 import SnapKit
 import SectionsTableView
 
-class SendConfirmationViewController: UIViewController, SectionsDataSource {
+class SendConfirmationViewController: WalletViewController, SectionsDataSource {
     private let delegate: ISendConfirmationViewDelegate
 
     private let tableView = SectionsTableView(style: .grouped)
@@ -20,7 +20,7 @@ class SendConfirmationViewController: UIViewController, SectionsDataSource {
     init(delegate: ISendConfirmationViewDelegate) {
         self.delegate = delegate
 
-        super.init(nibName: nil, bundle: nil)
+        super.init()
     }
 
     @objc func onClose() {
@@ -34,7 +34,6 @@ class SendConfirmationViewController: UIViewController, SectionsDataSource {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        view.backgroundColor = AppTheme.controllerBackground
         title = "send.confirmation.title".localized
 
         tableView.registerCell(forClass: SendConfirmationAmountCell.self)

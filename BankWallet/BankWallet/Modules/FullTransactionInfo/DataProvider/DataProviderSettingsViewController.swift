@@ -1,7 +1,7 @@
 import UIKit
 import SectionsTableView
 
-class DataProviderSettingsViewController: UIViewController, SectionsDataSource {
+class DataProviderSettingsViewController: WalletViewController, SectionsDataSource {
     private let delegate: IDataProviderSettingsViewDelegate
 
     private var items = [DataProviderItem]()
@@ -11,7 +11,7 @@ class DataProviderSettingsViewController: UIViewController, SectionsDataSource {
     init(delegate: IDataProviderSettingsViewDelegate) {
         self.delegate = delegate
 
-        super.init(nibName: nil, bundle: nil)
+        super.init()
 
         tableView.registerCell(forClass: DataProviderCell.self)
         tableView.sectionDataSource = self
@@ -34,8 +34,6 @@ class DataProviderSettingsViewController: UIViewController, SectionsDataSource {
         tableView.snp.makeConstraints { maker in
             maker.edges.equalToSuperview()
         }
-
-        view.backgroundColor = AppTheme.controllerBackground
 
         delegate.viewDidLoad()
     }
