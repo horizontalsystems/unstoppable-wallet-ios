@@ -67,23 +67,23 @@ class MainSettingsViewController: WalletViewController {
             }),
 
             Row<TitleCell>(id: "manage_coins", height: SettingsTheme.cellHeight, bind: { cell, _ in
-                cell.bind(titleIcon: UIImage(named: "Manage Coins Icon"), title: "settings.manage_coins".localized, showDisclosure: true)
+                cell.bind(titleIcon: UIImage(named: "Manage Coins Icon"), title: "settings.manage_coins".localized, showDisclosure: true, last: true)
             }, action: { [weak self] _ in
                 DispatchQueue.main.async {
                     self?.delegate.didTapManageCoins()
                 }
-            }),
-
-            Row<TitleCell>(id: "notifications", height: SettingsTheme.cellHeight, bind: { cell, _ in
-                cell.bind(titleIcon: UIImage(named: "Notification Icon"), title: "settings.notifications".localized, showDisclosure: true, last: true)
-            }, action: { [weak self] _ in
-                self?.delegate.didTapNotifications()
             })
         ]
     }
 
     private var appearanceRows: [RowProtocol] {
-        return [
+        [
+            Row<TitleCell>(id: "notifications", height: SettingsTheme.cellHeight, bind: { cell, _ in
+                cell.bind(titleIcon: UIImage(named: "Notification Icon"), title: "settings.notifications".localized, showDisclosure: true)
+            }, action: { [weak self] _ in
+                self?.delegate.didTapNotifications()
+            }),
+
             Row<RightLabelCell>(id: "base_currency", height: SettingsTheme.cellHeight, bind: { [weak self] cell, _ in
                 cell.bind(titleIcon: UIImage(named: "Currency Icon"), title: "settings.base_currency".localized, rightText: self?.currentBaseCurrency, showDisclosure: true)
             }, action: { [weak self] _ in
@@ -97,7 +97,7 @@ class MainSettingsViewController: WalletViewController {
             }),
 
             Row<ToggleCell>(id: "light_mode", height: SettingsTheme.cellHeight, bind: { [unowned self] cell, _ in
-                cell.bind(titleIcon: UIImage(named: "Light Mode Icon"), title: "settings.light_mode".localized, isOn: self.lightMode, showDisclosure: false, last: true, onToggle: { [weak self ] isOn in
+                cell.bind(titleIcon: UIImage(named: "Light Mode Icon"), title: "settings.light_mode".localized, isOn: self.lightMode, showDisclosure: false, last: true, onToggle: { [weak self] isOn in
                     self?.delegate.didSwitch(lightMode: isOn)
                 })
             })
@@ -105,7 +105,7 @@ class MainSettingsViewController: WalletViewController {
     }
 
     private var aboutRows: [RowProtocol] {
-        return [
+        [
             Row<TitleCell>(id: "about", height: SettingsTheme.cellHeight, bind: { cell, _ in
                 cell.bind(titleIcon: UIImage(named: "About Icon"), title: "settings.about".localized, showDisclosure: true)
             }, action: { [weak self] _ in
@@ -127,7 +127,7 @@ class MainSettingsViewController: WalletViewController {
     }
 
     private var debugRows: [RowProtocol] {
-        return [
+        [
             Row<TitleCell>(id: "debug_realm_info", height: SettingsTheme.cellHeight, autoDeselect: true, bind: { cell, _ in
                 cell.bind(titleIcon: UIImage(named: "Bug Icon"), title: "Show Realm Info", showDisclosure: false, last: true)
             }, action: { [weak self] _ in
@@ -137,7 +137,7 @@ class MainSettingsViewController: WalletViewController {
     }
 
     private var footer: ViewState<MainSettingsFooter> {
-        return .cellType(hash: "about_footer", binder: { [weak self] view in
+        .cellType(hash: "about_footer", binder: { [weak self] view in
             view.bind(appVersion: self?.appVersion) { [weak self] in
                 self?.delegate.didTapCompanyLink()
             }

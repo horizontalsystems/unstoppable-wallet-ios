@@ -35,6 +35,10 @@ extension NotificationSettingsPresenter: INotificationSettingsViewDelegate {
     func didSelect(state: AlertState, index: Int) {
         let alert = alerts[index]
 
+        guard alert.state != state else {
+            return
+        }
+
         alert.state = state
 
         handleUpdated(alerts: [alert])

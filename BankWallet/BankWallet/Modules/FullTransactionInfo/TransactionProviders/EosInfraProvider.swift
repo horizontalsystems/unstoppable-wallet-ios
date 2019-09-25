@@ -90,13 +90,13 @@ class EosResponse: IEosResponse, ImmutableMappable {
         }
 
         for trace in transferTraces {
-            guard var actionMap = trace["act"] as? [String: Any] else {
+            guard let actionMap = trace["act"] as? [String: Any] else {
                 continue
             }
 
             let contract = actionMap["account"] as? String
 
-            guard var actionData = actionMap["data"] as? [String: Any] else {
+            guard let actionData = actionMap["data"] as? [String: Any] else {
                 continue
             }
             
