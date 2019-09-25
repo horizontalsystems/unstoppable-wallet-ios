@@ -12,6 +12,8 @@ class LockScreenController: UIPageViewController {
         }
         setViewControllers([initialViewController], direction: .forward, animated: true)
         dataSource = self
+
+        modalPresentationStyle = .overFullScreen
     }
 
     override func viewDidLoad() {

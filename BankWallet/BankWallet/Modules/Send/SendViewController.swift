@@ -2,7 +2,7 @@ import UIKit
 import RxSwift
 import SnapKit
 
-class SendViewController: UIViewController {
+class SendViewController: WalletViewController {
     private let disposeBag = DisposeBag()
 
     private let delegate: ISendViewDelegate
@@ -19,7 +19,7 @@ class SendViewController: UIViewController {
         self.delegate = delegate
         self.views = views
 
-        super.init(nibName: nil, bundle: nil)
+        super.init()
 
         sendHolderView.addSubview(sendButton)
         sendHolderView.backgroundColor = .clear
@@ -50,8 +50,6 @@ class SendViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        view.backgroundColor = AppTheme.controllerBackground
 
         view.addSubview(scrollView)
         scrollView.alwaysBounceVertical = true

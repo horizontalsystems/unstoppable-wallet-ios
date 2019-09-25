@@ -7,6 +7,8 @@ class WalletViewController: UIViewController {
         self.gradient = gradient
 
         super.init(nibName: nil, bundle: nil)
+
+        modalPresentationStyle = .overFullScreen
     }
 
     required init?(coder aDecoder: NSCoder) {
