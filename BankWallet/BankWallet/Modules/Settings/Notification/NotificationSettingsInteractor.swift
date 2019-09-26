@@ -28,6 +28,10 @@ extension NotificationSettingsInteractor: INotificationSettingsInteractor {
         priceAlertManager.priceAlerts
     }
 
+    var allowedBackgroundFetching: Bool {
+        UIApplication.shared.backgroundRefreshStatus == .available
+    }
+
     func requestPermission() {
         notificationManager.requestPermission { [weak self] granted in
             if granted {
