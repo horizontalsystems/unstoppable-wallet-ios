@@ -41,7 +41,7 @@
 
 // Restore
 
-"restore.title" = "بازیابی";
+"restore.title" = "Restore From";
 "restore.item_title" = "%@ Wallet";
 "restore.description" = "To restore existing wallet you need to enter a secret key for that wallet.\n\nOnce you restore one wallet you will be able to restore more wallets by going to Manage Keys section in app Settings.";
 "restore.words.description" = "Enter private key for %@ wallet";
@@ -330,8 +330,6 @@
 "numpad_9" = "م ن و ء ي";
 
 // Key Types
-// Key Types
-
 
 "chart.title" = "%@ Rate";
 "chart.time_duration.day" = "1D";
