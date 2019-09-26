@@ -559,6 +559,7 @@ protocol IThemeManager: AnyObject {
 }
 
 protocol INotificationManager {
+    var allowedBackgroundFetching: Bool { get }
     func requestPermission(onComplete: @escaping (Bool) -> ())
     func show(notification: AlertNotification)
     func removeNotifications()

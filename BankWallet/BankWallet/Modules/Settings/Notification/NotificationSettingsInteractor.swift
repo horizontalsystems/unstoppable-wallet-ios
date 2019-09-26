@@ -29,7 +29,7 @@ extension NotificationSettingsInteractor: INotificationSettingsInteractor {
     }
 
     var allowedBackgroundFetching: Bool {
-        UIApplication.shared.backgroundRefreshStatus == .available
+        notificationManager.allowedBackgroundFetching
     }
 
     func requestPermission() {
