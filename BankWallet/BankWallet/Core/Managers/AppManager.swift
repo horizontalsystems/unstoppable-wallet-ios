@@ -53,6 +53,7 @@ extension AppManager {
         accountManager.preloadAccounts()
         walletManager.preloadWallets()
         biometryManager.refresh()
+        notificationManager.removeNotifications()
         kitCleaner.clear()
     }
 
@@ -76,7 +77,7 @@ extension AppManager {
 
         passcodeLockManager.willEnterForeground()
         lockManager.willEnterForeground()
-        notificationManager.willEnterForeground()
+        notificationManager.removeNotifications()
         adapterManager.refresh()
         biometryManager.refresh()
     }
