@@ -41,7 +41,7 @@
 
 // Restore
 
-"restore.title" = "Restaurer";
+"restore.title" = "Restore From";
 "restore.item_title" = "%@ Wallet";
 "restore.description" = "Pour restaurer un porte-monnaie existant, vous devez entrer une clé secrète pour ce porte-monnaie. \n\nAprès avoir restauré un porte-monnaie, vous pourrez restaurer plus de porte-monnaies en accédant à la section Gérer les clés dans les Paramètres de l'application.";
 "restore.words.description" = "Enter private key for %@ wallet";
@@ -330,8 +330,6 @@
 "numpad_9" = "W X Y Z";
 
 // Key Types
-// Key Types
-
 
 "chart.title" = "Taux %@";
 "chart.time_duration.day" = "1J";
