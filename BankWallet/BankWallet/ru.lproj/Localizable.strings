@@ -42,8 +42,9 @@
 // Restore
 
 "restore.title" = "Восстановить";
+"restore.item_title" = "%@ Wallet";
 "restore.description" = "Чтобы восстановить существующий кошелек вам нужно ввести секретный ключ для этого кошелька.\n\nКак только вы восстановите один кошелек, вы сможете восстановить больше кошельков, перейдя в раздел \"Управление Ключами\" в настройках приложения.";
-"restore.words.description" = "Введите Ключ";
+"restore.words.description" = "Enter private key for %@ wallet";
 "restore.validation_failed" = "Неверный Ключ";
 "restore.placeholder.account_name" = "Account Name";
 "restore.placeholder.private_key" = "Active Private Key";
@@ -66,18 +67,15 @@
 "backup.close" = "Закрыть";
 "backup.backup_required" = "Необходима Резервная Копия";
 
-"backup.intro.title_backup" = "Резервная копия";
+"backup.intro.title_backup" = "Private Key";
 "backup.intro.title_show" = "Показать Ключ";
-"backup.intro.subtitle" = "The special key that will be shown next is the only way to restore your funds if your phone is ever lost, stolen, broken etc.\n\nMake sure that no one is watching your screen.\n\nThe coins controlled by this key: %@";
+"backup.intro.subtitle" = "The private key that will be shown next is the only way to restore your funds if your phone is ever lost, stolen, broken etc.\n\nMake sure that no one is watching your screen.\n\nThe coins controlled by this key: %@";
 "backup.intro.later" = "Позже";
 "backup.intro.backup_now" = "Резервная копия";
 "backup.intro.show_key" = "Показать Ключ";
 
-"backup.words.title" = "Секретный Ключ";
-"backup.12words.title" = "12-words Ключ";
-"backup.binance.title" = "Binance Ключ";
-"confirmation.binance.description" = "Введите слова из вашего Binance ключа";
-"confirmation.12words.description" = "Введите слова из вашего 12-words ключа";
+"backup.words.title" = "%@ Key";
+"backup.words.confirmation_description" = "Enter words from your %@ Key";
 
 "backup.eos.title" = "EOS Ключ";
 "backup.eos.account_name" = "Account Name";
@@ -279,6 +277,7 @@
 // Manage Keys
 
 "settings_manage_keys.title" = "Manage Wallets";
+"settings_manage_keys.item_title" = "%@ Wallet";
 "settings_manage_keys.add_wallet" = "Add Wallet";
 "settings_manage_keys.description" = "Highlighted below are your active wallets where each wallet responsible for different set of crypto currencies.\n\nYou should backup each highlighted wallets by backing up the private key for that wallet. This key is the only way to restore your funds if your phone is ever lost, stolen, broken etc.";
 "settings_manage_keys.delete" = "Удалить";
@@ -286,13 +285,13 @@
 "settings_manage_keys.show" = "Показать";
 "settings_manage_keys.create" = "Создать";
 "settings_manage_keys.restore" = "Восстан-ть";
-"settings_manage_keys.delete.cant_delete" = "You need to backup %@ Wallet before you may delete it from this phone.";
+"settings_manage_keys.delete.cant_delete" = "You need to backup the private key for this wallet before it can be deleted from this phone.";
 "settings_manage_keys.delete.title" = "Delete Wallet";
-"settings_manage_keys.delete.confirmation_remove" = "This action will delete the %@ Wallet from this device.";
+"settings_manage_keys.delete.confirmation_remove" = "The action will delete the %@ Wallet from this device.";
 "settings_manage_keys.delete.confirmation_disable" = "Монеты, которые будут отключены: %@";
-"settings_manage_keys.delete.confirmation_loose" = "If you don't have a backup of the %@ Wallet key, you will loose the respective funds.";
+"settings_manage_keys.delete.confirmation_loose" = "If you didn't backup the private key for this wallet, you will lose access to your funds.";
 "error.cant_create_eos" = "В данный момент кошелек не может создать новые учетные записи EOS. Вы можете восстановить существующий.";
-"settings_manage_keys.create.text" = "This action will generate a new %@ Wallet for the following coins:\n\n%@";
+"settings_manage_keys.create.text" = "This action will generate a new wallet for the following coins:\n\n%@";
 "error.invalid_eos_key" = "Неверный Ключ";
 "error.invalid_eos_account" = "Неверный Аккаунт";
 
@@ -331,15 +330,8 @@
 "numpad_9" = "Ь Э Ю Я";
 
 // Key Types
-
-"key_type.12_words" = "12-words";
-"key_type.12_words.text" = "BTC, BCH, DASH, ETH, ERC-20";
-"key_type.eos" = "EOS Blockchain";
-"key_type.eos.text" = "EOS, EOS based Tokens";
-"key_type.binance" = "Binance Chain";
-"key_type.binance.text" = "BNB, BEP-2";
-
 // Key Types
+
 
 "chart.title" = "%@ Курс";
 "chart.time_duration.day" = "1Д";
