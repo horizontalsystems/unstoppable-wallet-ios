@@ -41,7 +41,7 @@
 
 // Restore
 
-"restore.title" = "Wiederherstellen";
+"restore.title" = "Restore From";
 "restore.item_title" = "%@ Wallet";
 "restore.description" = "Um ein bestehendes Wallet wiederherzustellen, müssen Sie den Offlineschlüssel für dieses Wallet eingeben.\n\nSobald Sie ein Wallet wiederhergestellt haben, können Sie weitere Wallets wiederherstellen. Gehen Sie dazu in das Verzeichnis Manage Schlüssel in den App-Einstellungen.";
 "restore.words.description" = "Enter private key for %@ wallet";
@@ -330,8 +330,6 @@
 "numpad_9" = "W X Y Z";
 
 // Key Types
-// Key Types
-
 
 "chart.title" = "%@ Rate";
 "chart.time_duration.day" = "1T";
