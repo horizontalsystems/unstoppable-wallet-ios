@@ -42,8 +42,9 @@
 // Restore
 
 "restore.title" = "Restaurar";
+"restore.item_title" = "%@ Wallet";
 "restore.description" = "Para restaurar el monedero existente, es necesario introducir la clave privada para ese monedero.\n\nUna vez que restablezca un monedero podrá restaurar más monederos yendo a la sección Administrar Claves en Ajustes de la aplicación.";
-"restore.words.description" = "Introduzca la clave";
+"restore.words.description" = "Enter private key for %@ wallet";
 "restore.validation_failed" = "Clave incorrecta";
 "restore.placeholder.account_name" = "Account Name";
 "restore.placeholder.private_key" = "Active Private Key\n";
@@ -66,18 +67,15 @@
 "backup.close" = "Cerrar";
 "backup.backup_required" = "Se requiere una copia de seguridad";
 
-"backup.intro.title_backup" = "Copia de seguridad";
+"backup.intro.title_backup" = "Private Key";
 "backup.intro.title_show" = "Mostrar clave";
-"backup.intro.subtitle" = "The special key that will be shown next is the only way to restore your funds if your phone is ever lost, stolen, broken etc.\n\nMake sure that no one is watching your screen.\n\nThe coins controlled by this key: %@";
+"backup.intro.subtitle" = "The private key that will be shown next is the only way to restore your funds if your phone is ever lost, stolen, broken etc.\n\nMake sure that no one is watching your screen.\n\nThe coins controlled by this key: %@";
 "backup.intro.later" = "Más tarde";
 "backup.intro.backup_now" = "Copia de seguridad";
 "backup.intro.show_key" = "Mostrar clave";
 
-"backup.words.title" = "Clave secreta";
-"backup.12words.title" = "Clave de 12 palabras";
-"backup.binance.title" = "Clave de Binance";
-"confirmation.binance.description" = "Insertar palabras de su clave Binance";
-"confirmation.12words.description" = "Insertar palabras de su clave 12-palabras";
+"backup.words.title" = "%@ Key";
+"backup.words.confirmation_description" = "Enter words from your %@ Key";
 
 "backup.eos.title" = "Clave de EOS";
 "backup.eos.account_name" = "Account Name";
@@ -279,6 +277,7 @@
 // Manage Keys
 
 "settings_manage_keys.title" = "Manage Wallets";
+"settings_manage_keys.item_title" = "%@ Wallet";
 "settings_manage_keys.add_wallet" = "Add Wallet";
 "settings_manage_keys.description" = "Highlighted below are your active wallets where each wallet responsible for different set of crypto currencies.\n\nYou should backup each highlighted wallets by backing up the private key for that wallet. This key is the only way to restore your funds if your phone is ever lost, stolen, broken etc.";
 "settings_manage_keys.delete" = "Eliminar";
@@ -286,13 +285,13 @@
 "settings_manage_keys.show" = "Mostrar";
 "settings_manage_keys.create" = "Crear";
 "settings_manage_keys.restore" = "Restaurar";
-"settings_manage_keys.delete.cant_delete" = "You need to backup %@ Wallet before you may delete it from this phone.";
+"settings_manage_keys.delete.cant_delete" = "You need to backup the private key for this wallet before it can be deleted from this phone.";
 "settings_manage_keys.delete.title" = "Delete Wallet";
-"settings_manage_keys.delete.confirmation_remove" = "This action will delete the %@ Wallet from this device.";
+"settings_manage_keys.delete.confirmation_remove" = "The action will delete the %@ Wallet from this device.";
 "settings_manage_keys.delete.confirmation_disable" = "Monedas que serán deshabilitadas: %@";
-"settings_manage_keys.delete.confirmation_loose" = "If you don't have a backup of the %@ Wallet key, you will loose the respective funds.";
+"settings_manage_keys.delete.confirmation_loose" = "If you didn't backup the private key for this wallet, you will lose access to your funds.";
 "error.cant_create_eos" = "En este momento, el monedero no es capaz de crear nuevas cuentas de monederos EOS. Solo puede restaurar la existente.";
-"settings_manage_keys.create.text" = "This action will generate a new %@ Wallet for the following coins:\n\n%@";
+"settings_manage_keys.create.text" = "This action will generate a new wallet for the following coins:\n\n%@";
 "error.invalid_eos_key" = "Clave inválida";
 "error.invalid_eos_account" = "Cuenta inválida";
 
@@ -331,15 +330,8 @@
 "numpad_9" = "W X Y Z";
 
 // Key Types
-
-"key_type.12_words" = "12-words";
-"key_type.12_words.text" = "BTC, BCH, DASH, ETH, ERC-20";
-"key_type.eos" = "EOS Blockchain";
-"key_type.eos.text" = "EOS, Tokens basados en EOS";
-"key_type.binance" = "Binance Chain";
-"key_type.binance.text" = "BNB, BEP-2";
-
 // Key Types
+
 
 "chart.title" = "%@ Tarifa";
 "chart.time_duration.day" = "1 D";
