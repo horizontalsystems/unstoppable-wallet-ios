@@ -90,7 +90,7 @@ class AppConfigProvider: IAppConfigProvider {
         Coin(title: "Aurora DAO",            code: "AURA",      decimal: 18, type: .erc20(address: "0xCdCFc0f66c522Fd086A1b725ea3c0Eeb9F9e8814", fee: 0, gasLimit: 100_000)),
         Coin(title: "Bancor",                code: "BNT",       decimal: 18, type: .erc20(address: "0x1F573D6Fb3F13d689FF844B4cE37794d79a7FF1C", fee: 0, gasLimit: 100_000)),
         Coin(title: "Basic Attention Token", code: "BAT",       decimal: 18, type: .erc20(address: "0x0D8775F648430679A709E98d2b0Cb6250d2887EF", fee: 0, gasLimit: 100_000)),
-        Coin(title: "Binance Coin",          code: "BNB-ERC20", decimal: 18, type: .erc20(address: "0xB8c77482e45F1F44dE1745F52C74426C631bDD52", fee: 0, gasLimit: 100_000)),
+        Coin(title: "Binance Token",          code: "BNB-ERC20", decimal: 18, type: .erc20(address: "0xB8c77482e45F1F44dE1745F52C74426C631bDD52", fee: 0, gasLimit: 100_000)),
         Coin(title: "Bitcoin BEP2",          code: "BTCB",      decimal: 8,  type: .binance(symbol: "BTCB-1DE")),
         Coin(title: "Cashaa",                code: "CAS",       decimal: 8,  type: .binance(symbol: "CAS-167")),
         Coin(title: "ChainLink",             code: "LINK",      decimal: 18, type: .erc20(address: "0x514910771AF9Ca656af840dff83E8264EcF986CA", fee: 0, gasLimit: 100_000)),
