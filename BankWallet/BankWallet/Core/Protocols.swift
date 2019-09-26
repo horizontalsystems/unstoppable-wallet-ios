@@ -561,4 +561,5 @@ protocol IThemeManager: AnyObject {
 protocol INotificationManager {
     func requestPermission(onComplete: @escaping (Bool) -> ())
     func show(notification: AlertNotification)
+    func willEnterForeground()
 }
