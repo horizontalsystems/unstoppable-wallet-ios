@@ -7,8 +7,8 @@ class ManageAccountsCreateAccountViewController: ActionSheetController {
         super.init(withModel: BaseAlertModel(), actionSheetThemeConfig: AppTheme.actionSheetConfig)
 
         let titleItem = AlertTitleItem(
-                title: title.localized,
-                subtitle: subtitle.localized,
+                title: title,
+                subtitle: subtitle,
                 icon: UIImage(named: "Key Icon")?.withRenderingMode(.alwaysTemplate),
                 iconTintColor: ManageAccountsTheme.alertKeyImageColor,
                 tag: 0,
@@ -17,7 +17,7 @@ class ManageAccountsCreateAccountViewController: ActionSheetController {
                 }
         )
 
-        let textItem = AlertTextItem(text: "settings_manage_keys.create.text".localized(subtitle.localized, coinCodes.localized), tag: 1)
+        let textItem = AlertTextItem(text: "settings_manage_keys.create.text".localized(coinCodes), tag: 1)
 
         model.addItemView(titleItem)
         model.addItemView(textItem)

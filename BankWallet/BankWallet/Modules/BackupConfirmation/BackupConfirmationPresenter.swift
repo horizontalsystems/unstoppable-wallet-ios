@@ -22,7 +22,9 @@ class BackupConfirmationPresenter: IBackupConfirmationPresenter {
 
 extension BackupConfirmationPresenter: IBackupConfirmationViewDelegate {
 
-    var description: String { return predefinedAccountType.confirmationDescription }
+    var predefinedAccountTitle: String {
+        predefinedAccountType.title
+    }
 
     func generateNewIndexes() {
         indexes = interactor.fetchConfirmationIndexes(max: words.count, count: BackupConfirmationPresenter.confirmationWordsCount)

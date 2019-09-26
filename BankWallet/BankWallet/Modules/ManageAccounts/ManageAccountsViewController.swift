@@ -66,7 +66,7 @@ extension ManageAccountsViewController: IManageAccountsView {
     }
 
     func showCreateConfirmation(title: String, coinCodes: String) {
-        let controller = ManageAccountsCreateAccountViewController(title: "settings_manage_keys.add_wallet", subtitle: title, coinCodes: coinCodes, onCreate: { [weak self] in
+        let controller = ManageAccountsCreateAccountViewController(title: "settings_manage_keys.add_wallet".localized, subtitle: title, coinCodes: coinCodes, onCreate: { [weak self] in
             self?.delegate.didConfirmCreate()
         })
 
@@ -78,7 +78,7 @@ extension ManageAccountsViewController: IManageAccountsView {
     }
 
     func showBackupRequired(predefinedAccountType: IPredefinedAccountType) {
-        let controller = BackupRequiredViewController(subtitle: predefinedAccountType.title, text: "settings_manage_keys.delete.cant_delete".localized(predefinedAccountType.title.localized), onBackup: { [weak self] in
+        let controller = BackupRequiredViewController(subtitle: predefinedAccountType.title, text: "settings_manage_keys.delete.cant_delete".localized, onBackup: { [weak self] in
             self?.delegate.didRequestBackup()
         })
 

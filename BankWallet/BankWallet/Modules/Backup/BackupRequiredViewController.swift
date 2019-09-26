@@ -8,7 +8,7 @@ class BackupRequiredViewController: ActionSheetController {
 
         let titleItem = AlertTitleItem(
                 title: "backup.backup_required".localized,
-                subtitle: subtitle.localized,
+                subtitle: subtitle,
                 icon: UIImage(named: "Attention Icon")?.withRenderingMode(.alwaysTemplate),
                 iconTintColor: BackupTheme.alertColor,
                 tag: 0,

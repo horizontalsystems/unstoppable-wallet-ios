@@ -44,6 +44,7 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 // Restore
 
 "restore.title" = "Restore";
+"restore.item_title" = "%@ Wallet";
 "restore.description" = "To restore existing wallet you need to enter a secret key for that wallet.\n\nOnce you restore one wallet you will be able to restore more wallets by going to Manage Keys section in app Settings.";
 "restore.words.description" = "Enter private key for %@ wallet";
 "restore.validation_failed" = "Incorrect Key";
@@ -72,18 +73,15 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 "backup.close" = "Close";
 "backup.backup_required" = "Backup Required";
 
-"backup.intro.title_backup" = "Backup";
+"backup.intro.title_backup" = "Private Key";
 "backup.intro.title_show" = "Show Key";
 "backup.intro.subtitle" = "The private key that will be shown next is the only way to restore your funds if your phone is ever lost, stolen, broken etc.\n\nMake sure that no one is watching your screen.\n\nThe coins controlled by this key: %@";
 "backup.intro.later" = "Later";
 "backup.intro.backup_now" = "Backup";
 "backup.intro.show_key" = "Show Key";
 
-"backup.words.title" = "Secret Key";
-"backup.12words.title" = "12-words Key";
-"backup.binance.title" = "Binance Key";
-"confirmation.binance.description" = "Enter words from your Binance Key";
-"confirmation.12words.description" = "Enter words from your 12-words Key";
+"backup.words.title" = "%@ Key";
+"backup.words.confirmation_description" = "Enter words from your %@ Key";
 
 "backup.eos.title" = "EOS Key";
 "backup.eos.account_name" = "Account Name";
@@ -291,6 +289,7 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 // Manage Keys
 
 "settings_manage_keys.title" = "Manage Wallets";
+"settings_manage_keys.item_title" = "%@ Wallet";
 "settings_manage_keys.add_wallet" = "Add Wallet";
 "settings_manage_keys.description" = "Highlighted below are your active wallets where each wallet responsible for different set of crypto currencies.\n\nYou should backup each highlighted wallets by backing up the private key for that wallet. This key is the only way to restore your funds if your phone is ever lost, stolen, broken etc.";
 "settings_manage_keys.delete" = "Delete";
@@ -343,13 +342,6 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 "numpad_9" = "W X Y Z";
 
 // Key Types
-
-"key_type.12_words" = "Unstoppable";
-"key_type.12_words.text" = "BTC, BCH, DASH, ETH, ERC-20";
-"key_type.eos" = "EOS Blockchain";
-"key_type.eos.text" = "EOS, EOS based Tokens";
-"key_type.binance" = "Binance Chain";
-"key_type.binance.text" = "BNB, BEP-2";
 
 // Key Types
 
