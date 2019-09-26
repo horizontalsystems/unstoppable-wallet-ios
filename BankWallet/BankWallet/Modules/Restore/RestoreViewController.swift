@@ -1,16 +1,16 @@
 import UIKit
 import UIExtensions
 import SnapKit
+import SectionsTableView
 
 class RestoreViewController: WalletViewController {
     private let delegate: IRestoreViewDelegate
 
-    private let tableView = UITableView(frame: .zero, style: .grouped)
-    private let headerView = RestoreHeaderView()
+    private let tableView = SectionsTableView(style: .grouped)
+    private var accountTypes = [AccountTypeViewItem]()
 
     init(delegate: IRestoreViewDelegate) {
         self.delegate = delegate
-
         super.init()
     }
 
@@ -23,8 +23,9 @@ class RestoreViewController: WalletViewController {
 
         title = "restore.title".localized
 
-        tableView.delegate = self
-        tableView.dataSource = self
+        tableView.registerCell(forClass: RestoreAccountCell.self)
+        tableView.registerHeaderFooter(forClass: DescriptionView.self)
+        tableView.sectionDataSource = self
 
         tableView.separatorStyle = .none
         tableView.backgroundColor = .clear
@@ -34,56 +35,61 @@ class RestoreViewController: WalletViewController {
             maker.edges.equalToSuperview()
         }
 
-        tableView.registerCell(forClass: RestoreAccountCell.self)
-
         delegate.viewDidLoad()
     }
 
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return App.theme.statusBarStyle
+    private var walletRows: [RowProtocol] {
+        accountTypes.enumerated().map { (index, accountType) in
+            Row<RestoreAccountCell>(
+                    id: "wallet_\(index)_row",
+                    height: RestoreAccountsTheme.rowHeight,
+                    autoDeselect: true,
+                    bind: { cell, _ in
+                        cell.bind(accountType: accountType)
+                    },
+                    action: { [weak self] _ in
+                        self?.delegate.didSelect(index: index)
+                    }
+            )
+        }
+    }
+
+    private var header: ViewState<DescriptionView> {
+        let text = "restore.description".localized
+
+        return .cellType(
+                hash: "restore_footer",
+                binder: { view in
+                    view.bind(text: text)
+                },
+                dynamicHeight: { [unowned self] _ in
+                    return DescriptionView.height(containerWidth: self.tableView.bounds.width, text: text)
+                }
+        )
+    }
+
+}
+
+extension RestoreViewController: SectionsDataSource {
+
+    func buildSections() -> [SectionProtocol] {
+        [
+            Section(
+                    id: "wallets",
+                    headerState: header,
+                    rows: walletRows
+            )
+        ]
     }
 
 }
 
 extension RestoreViewController: IRestoreView {
-}
 
-extension RestoreViewController: UITableViewDataSource, UITableViewDelegate {
+    func set(accountTypes: [AccountTypeViewItem]) {
+        self.accountTypes = accountTypes
 
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
-
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return delegate.typesCount
-    }
-
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return tableView.dequeueReusableCell(withIdentifier: String(describing: RestoreAccountCell.self), for: indexPath)
-    }
-
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if let cell = cell as? RestoreAccountCell {
-            cell.bind(predefinedAccountType: delegate.type(index: indexPath.row))
-        }
-    }
-
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
-
-        delegate.didSelect(index: indexPath.row)
-    }
-
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return RestoreAccountsTheme.rowHeight
-    }
-
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        return headerView
-    }
-
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return RestoreHeaderView.height(containerWidth: tableView.bounds.width)
+        tableView.reload()
     }
 
 }

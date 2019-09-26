@@ -1,10 +1,9 @@
 protocol IRestoreView: class {
+    func set(accountTypes: [AccountTypeViewItem])
 }
 
 protocol IRestoreViewDelegate {
     func viewDidLoad()
-    var typesCount: Int { get }
-    func type(index: Int) -> IPredefinedAccountType
     func didSelect(index: Int)
 }
 

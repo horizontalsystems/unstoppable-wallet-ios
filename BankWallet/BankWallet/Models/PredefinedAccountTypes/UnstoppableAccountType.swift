@@ -1,4 +1,4 @@
-class Words12AccountType: IPredefinedAccountType {
+class UnstoppableAccountType: IPredefinedAccountType {
     let title = "Unstoppable"
     let coinCodes = "BTC, BCH, DASH, ETH, ERC-20"
 
