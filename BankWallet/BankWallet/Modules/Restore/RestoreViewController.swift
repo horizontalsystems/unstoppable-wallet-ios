@@ -42,8 +42,10 @@ class RestoreViewController: WalletViewController {
         accountTypes.enumerated().map { (index, accountType) in
             Row<RestoreAccountCell>(
                     id: "wallet_\(index)_row",
-                    height: RestoreAccountsTheme.rowHeight,
                     autoDeselect: true,
+                    dynamicHeight: { [unowned self] _ in
+                        RestoreAccountCell.height(containerWidth: self.tableView.bounds.width, accountType: accountType) + .margin2x
+                    },
                     bind: { cell, _ in
                         cell.bind(accountType: accountType)
                     },

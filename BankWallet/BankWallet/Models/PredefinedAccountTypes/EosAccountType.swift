@@ -1,6 +1,6 @@
 class EosAccountType: IPredefinedAccountType {
     let title = "EOS"
-    let coinCodes = "EOS, EOS based Tokens"
+    let coinCodes = "EOS, NDX, IQ, EOSDT, NUT"
 
     var defaultAccountType: DefaultAccountType {
         .eos

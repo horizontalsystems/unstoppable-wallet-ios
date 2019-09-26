@@ -73,6 +73,7 @@ extension UIColor {
     static var appElena: UIColor { return App.theme.colorElena }
     static var appLawrence: UIColor { return App.theme.colorLawrence }
     static var appClaude: UIColor { return App.theme.colorClaude }
+    static var appAndy: UIColor { return App.theme.colorAndy }
 
     static let appYellowD: UIColor = UIColor(named: "App Yellow D")!
     static let appYellowL: UIColor = UIColor(named: "App Yellow L")!
