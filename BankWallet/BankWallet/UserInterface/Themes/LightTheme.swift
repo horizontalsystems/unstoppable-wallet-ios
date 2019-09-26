@@ -16,6 +16,7 @@ class LightTheme: ITheme {
     let colorElena: UIColor = .appLightGray
     let colorLawrence: UIColor = .appWhite
     let colorClaude: UIColor = .appWhite
+    let colorAndy: UIColor = .appSteel20
 
     let alphaSecondaryButtonGradient: CGFloat = 1
 }
