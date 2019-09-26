@@ -24,7 +24,7 @@ extension NotificationManager: INotificationManager {
         UNUserNotificationCenter.current().add(request)
     }
 
-    func willEnterForeground() {
+    func removeNotifications() {
         UNUserNotificationCenter.current().removeAllDeliveredNotifications()
         UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
     }
