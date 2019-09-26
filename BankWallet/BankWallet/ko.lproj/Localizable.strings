@@ -41,7 +41,7 @@
 
 // Restore
 
-"restore.title" = "복구";
+"restore.title" = "Restore From";
 "restore.item_title" = "%@ Wallet";
 "restore.description" = "기존 지갑을 복원하시려면 개인 암호를 입력해야 합니다. \n\n하나의 지갑을 복원하신 후엔 앱 설정의 암호관리 섹션에서 더 많은 지갑들을 복원하실 수 있습니다.";
 "restore.words.description" = "Enter private key for %@ wallet";
@@ -330,8 +330,6 @@
 "numpad_9" = "W X Y Z";
 
 // Key Types
-// Key Types
-
 
 "chart.title" = "%@ 률";
 "chart.time_duration.day" = "하루";
