@@ -25,7 +25,7 @@ class WalletNavigationController: UINavigationController {
         let colorImage = UIImage(color: AppTheme.navigationBarBackgroundColor)
         navigationBar.setBackgroundImage(colorImage, for: .default)
 
-        modalPresentationStyle = .overFullScreen
+        modalPresentationStyle = .fullScreen
     }
 
 }

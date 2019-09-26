@@ -8,7 +8,7 @@ class WalletViewController: UIViewController {
 
         super.init(nibName: nil, bundle: nil)
 
-        modalPresentationStyle = .overFullScreen
+        modalPresentationStyle = .fullScreen
     }
 
     required init?(coder aDecoder: NSCoder) {
