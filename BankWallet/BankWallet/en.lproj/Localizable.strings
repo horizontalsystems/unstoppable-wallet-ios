@@ -43,7 +43,7 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 
 // Restore
 
-"restore.title" = "Restore";
+"restore.title" = "Restore From";
 "restore.item_title" = "%@ Wallet";
 "restore.description" = "To restore existing wallet you need to enter a secret key for that wallet.\n\nOnce you restore one wallet you will be able to restore more wallets by going to Manage Keys section in app Settings.";
 "restore.words.description" = "Enter private key for %@ wallet";
@@ -340,8 +340,6 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 "numpad_7" = "P Q R S";
 "numpad_8" = "T U V";
 "numpad_9" = "W X Y Z";
-
-// Key Types
 
 // Key Types
 
