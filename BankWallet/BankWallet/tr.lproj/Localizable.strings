@@ -41,7 +41,7 @@
 
 // Restore
 
-"restore.title" = "Geri Yükle";
+"restore.title" = "Restore From";
 "restore.item_title" = "%@ Wallet";
 "restore.description" = "Cüzdanı geri yüklemek için o cüzdanın gizli anahtarını gürmelisiniz.\n\nDaha fazla cüzdanı geri yüklemek için bir cüzdanı geri yükledikten sonra Ayarlardaki Anahtarları Yönet bölümüne gidin.";
 "restore.words.description" = "Enter private key for %@ wallet";
@@ -330,8 +330,6 @@
 "numpad_9" = "W X Y Z";
 
 // Key Types
-// Key Types
-
 
 "chart.title" = "%@ kur";
 "chart.time_duration.day" = "Gün";
