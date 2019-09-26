@@ -63,6 +63,11 @@ extension NotificationSettingsPresenter: INotificationSettingsViewDelegate {
 extension NotificationSettingsPresenter: INotificationSettingsInteractorDelegate {
 
     func didGrantPermission() {
+        guard interactor.allowedBackgroundFetching else {
+            view?.showWarning()
+            return
+        }
+
         view?.hideWarning()
     }
 

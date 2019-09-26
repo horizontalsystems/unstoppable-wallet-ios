@@ -13,6 +13,7 @@ protocol INotificationSettingsViewDelegate {
 
 protocol INotificationSettingsInteractor {
     var alerts: [PriceAlert] { get }
+    var allowedBackgroundFetching: Bool { get }
     func requestPermission()
     func save(priceAlerts: [PriceAlert])
 }
