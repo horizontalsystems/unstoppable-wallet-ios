@@ -1,9 +1,14 @@
 import UserNotifications
+import UIKit
 
 class NotificationManager {
 }
 
 extension NotificationManager: INotificationManager {
+
+    var allowedBackgroundFetching: Bool {
+        UIApplication.shared.backgroundRefreshStatus == .available
+    }
 
     func requestPermission(onComplete: @escaping (Bool) -> ()) {
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert]) { (granted, error) in
