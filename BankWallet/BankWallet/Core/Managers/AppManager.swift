@@ -8,6 +8,7 @@ class AppManager {
     private let passcodeLockManager: IPasscodeLockManager
     private let biometryManager: IBiometryManager
     private let blurManager: IBlurManager
+    private let notificationManager: INotificationManager
     private let backgroundPriceAlertManager: IBackgroundPriceAlertManager
     private let localStorage: ILocalStorage
     private let secureStorage: ISecureStorage
@@ -17,7 +18,8 @@ class AppManager {
     private let willEnterForegroundSubject = PublishSubject<()>()
 
     init(accountManager: IAccountManager, walletManager: IWalletManager, adapterManager: IAdapterManager, lockManager: ILockManager,
-         passcodeLockManager: IPasscodeLockManager, biometryManager: IBiometryManager, blurManager: IBlurManager, backgroundPriceAlertManager: IBackgroundPriceAlertManager,
+         passcodeLockManager: IPasscodeLockManager, biometryManager: IBiometryManager, blurManager: IBlurManager,
+         notificationManager: INotificationManager, backgroundPriceAlertManager: IBackgroundPriceAlertManager,
          localStorage: ILocalStorage, secureStorage: ISecureStorage, kitCleaner: IKitCleaner) {
         self.accountManager = accountManager
         self.walletManager = walletManager
@@ -26,6 +28,7 @@ class AppManager {
         self.passcodeLockManager = passcodeLockManager
         self.biometryManager = biometryManager
         self.blurManager = blurManager
+        self.notificationManager = notificationManager
         self.backgroundPriceAlertManager = backgroundPriceAlertManager
         self.localStorage = localStorage
         self.secureStorage = secureStorage
@@ -73,6 +76,7 @@ extension AppManager {
 
         passcodeLockManager.willEnterForeground()
         lockManager.willEnterForeground()
+        notificationManager.willEnterForeground()
         adapterManager.refresh()
         biometryManager.refresh()
     }
