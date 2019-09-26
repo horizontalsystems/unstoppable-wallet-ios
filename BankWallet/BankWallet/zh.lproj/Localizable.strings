@@ -41,7 +41,7 @@
 
 // Restore
 
-"restore.title" = "恢复";
+"restore.title" = "Restore From";
 "restore.item_title" = "%@ Wallet";
 "restore.description" = "要恢复现有钱包，您必须输入该钱包的密钥。\n\n恢复一个钱包后，您可以前往应用设置中的“管理密钥”恢复更多钱包。";
 "restore.words.description" = "Enter private key for %@ wallet";
@@ -330,8 +330,6 @@
 "numpad_9" = "W X Y Z";
 
 // Key Types
-// Key Types
-
 
 "chart.title" = "%@价格";
 "chart.time_duration.day" = "1天";
