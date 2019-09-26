@@ -158,8 +158,8 @@ class ManageAccountCell: UITableViewCell {
 
         gradientLayer.colors = [gradientColor.cgColor, UIColor.clear.cgColor]
 
-        nameLabel.text = viewItem.title.localized
-        coinsLabel.text = viewItem.coinCodes.localized
+        nameLabel.text = "settings_manage_keys.item_title".localized(viewItem.title)
+        coinsLabel.text = viewItem.coinCodes
 
         self.onTapLeft = onTapLeft
         self.onTapRight = onTapRight

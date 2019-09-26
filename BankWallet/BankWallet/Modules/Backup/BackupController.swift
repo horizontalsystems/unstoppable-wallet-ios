@@ -26,7 +26,7 @@ class BackupController: WalletViewController {
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
 
         view.addSubview(subtitleLabel)
-        subtitleLabel.text = "backup.intro.subtitle".localized(delegate.coinCodes.localized)
+        subtitleLabel.text = "backup.intro.subtitle".localized(delegate.coinCodes)
         subtitleLabel.font = BackupTheme.descriptionFont
         subtitleLabel.textColor = BackupTheme.descriptionColor
         subtitleLabel.numberOfLines = 0

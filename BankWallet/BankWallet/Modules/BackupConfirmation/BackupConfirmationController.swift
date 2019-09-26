@@ -27,7 +27,7 @@ class BackupConfirmationController: WalletViewController {
         title = "backup.confirmation.title".localized
 
         view.addSubview(descriptionLabel)
-        descriptionLabel.text = delegate.description.localized
+        descriptionLabel.text = "backup.words.confirmation_description".localized(delegate.predefinedAccountTitle)
         descriptionLabel.font = BackupTheme.confirmLabelFont
         descriptionLabel.textColor = BackupTheme.confirmLabelColor
         descriptionLabel.snp.makeConstraints { maker in

@@ -17,8 +17,8 @@ class BackupWordsPresenter: IBackupWordsPresenter {
 
 extension BackupWordsPresenter: IBackupWordsViewDelegate {
 
-    var title: String {
-        return predefinedAccountType.backupTitle
+    var predefinedAccountTitle: String {
+        predefinedAccountType.title
     }
 
     func didTapProceed() {

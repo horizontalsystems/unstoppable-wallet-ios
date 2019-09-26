@@ -5,7 +5,7 @@ protocol IBackupConfirmationView: class {
 }
 
 protocol IBackupConfirmationViewDelegate {
-    var description: String { get }
+    var predefinedAccountTitle: String { get }
     var indexes: [Int] { get }
 
     func generateNewIndexes()

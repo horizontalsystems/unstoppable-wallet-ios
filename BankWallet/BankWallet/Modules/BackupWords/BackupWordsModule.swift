@@ -3,7 +3,7 @@ protocol IBackupWordsView: class {
 }
 
 protocol IBackupWordsViewDelegate {
-    var title: String { get }
+    var predefinedAccountTitle: String { get }
     var isBackedUp: Bool { get }
     var words: [String] { get }
     func didTapProceed()

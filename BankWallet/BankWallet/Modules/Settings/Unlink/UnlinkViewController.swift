@@ -20,7 +20,7 @@ class UnlinkViewController: ActionSheetController {
     func initItems() {
         let titleItem = AlertTitleItem(
                 title: "settings_manage_keys.delete.title".localized,
-                subtitle: delegate.title.localized,
+                subtitle: delegate.title,
                 icon: UIImage(named: "Attention Icon")?.withRenderingMode(.alwaysTemplate),
                 iconTintColor: ManageAccountsTheme.attentionColor,
                 tag: 0,
@@ -33,9 +33,9 @@ class UnlinkViewController: ActionSheetController {
         var texts = [NSAttributedString]()
 
         let attributes = [NSAttributedString.Key.foregroundColor: ConfirmationTheme.textColor, NSAttributedString.Key.font: ConfirmationTheme.regularFont]
-        texts.append(NSAttributedString(string: "settings_manage_keys.delete.confirmation_remove".localized(delegate.title.localized), attributes: attributes))
-        texts.append(NSAttributedString(string: "settings_manage_keys.delete.confirmation_disable".localized(delegate.coinCodes.localized), attributes: attributes))
-        texts.append(NSAttributedString(string: "settings_manage_keys.delete.confirmation_loose".localized(delegate.title.localized), attributes: attributes))
+        texts.append(NSAttributedString(string: "settings_manage_keys.delete.confirmation_remove".localized(delegate.title), attributes: attributes))
+        texts.append(NSAttributedString(string: "settings_manage_keys.delete.confirmation_disable".localized(delegate.coinCodes), attributes: attributes))
+        texts.append(NSAttributedString(string: "settings_manage_keys.delete.confirmation_loose".localized(delegate.title), attributes: attributes))
 
         for (index, text) in texts.enumerated() {
             let item = ConfirmationCheckboxItem(descriptionText: text, tag: index + 1) { [weak self] view in

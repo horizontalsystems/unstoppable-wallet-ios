@@ -1,11 +1,9 @@
 class EosAccountType: IPredefinedAccountType {
-    let backupTitle = "backup.eos.title"
-    let confirmationDescription: String = ""
-    let title = "key_type.eos"
-    let coinCodes = "key_type.eos.text"
+    let title = "EOS"
+    let coinCodes = "EOS, EOS based Tokens"
 
     var defaultAccountType: DefaultAccountType {
-        return .eos
+        .eos
     }
 
     func supports(accountType: AccountType) -> Bool {

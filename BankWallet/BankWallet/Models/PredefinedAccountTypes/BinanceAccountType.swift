@@ -1,11 +1,9 @@
 class BinanceAccountType: IPredefinedAccountType {
-    let confirmationDescription = "confirmation.binance.description"
-    let backupTitle = "backup.binance.title"
-    let title = "key_type.binance"
-    let coinCodes = "key_type.binance.text"
+    let title = "Binance Chain"
+    let coinCodes = "BNB, BEP-2"
 
     var defaultAccountType: DefaultAccountType {
-        return .mnemonic(wordsCount: 24)
+        .mnemonic(wordsCount: 24)
     }
 
     func supports(accountType: AccountType) -> Bool {

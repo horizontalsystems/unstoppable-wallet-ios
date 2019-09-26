@@ -527,8 +527,6 @@ protocol IPredefinedAccountTypeManager {
 }
 
 protocol IPredefinedAccountType {
-    var confirmationDescription: String { get }
-    var backupTitle: String { get }
     var title: String { get }
     var coinCodes: String { get }
     var defaultAccountType: DefaultAccountType { get }
