@@ -2,31 +2,19 @@ import UIKit
 import SnapKit
 
 class RestoreAccountCell: CardCell {
-    private static let topMargin: CGFloat = 10
-    private static let bottomMargin = CGFloat.margin3x
-    private static let nameHeight: CGFloat = 20
+    private static let topPadding: CGFloat = 10
+    private static let bottomPadding: CGFloat = .margin3x
+    private static let horizontalPadding: CGFloat = .margin3x
 
-    private let nameLabel = UILabel()
-    private let coinsLabel = UILabel()
+    private let accountView = AccountDoubleLineCellView()
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
-        nameLabel.font = .cryptoHeadline2
-        nameLabel.textColor = .appOz
-        clippingView.addSubview(nameLabel)
-        nameLabel.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin3x)
-            maker.top.equalToSuperview().offset(RestoreAccountCell.topMargin)
-        }
-
-        coinsLabel.font = .cryptoSubhead2
-        coinsLabel.textColor = .appGray
-        coinsLabel.numberOfLines = 0
-        clippingView.addSubview(coinsLabel)
-        coinsLabel.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin3x)
-            maker.top.equalTo(nameLabel.snp.bottom).offset(CGFloat.margin2x)
+        clippingView.addSubview(accountView)
+        accountView.snp.makeConstraints { maker in
+            maker.leading.trailing.equalToSuperview().inset(RestoreAccountCell.horizontalPadding)
+            maker.top.equalToSuperview().offset(RestoreAccountCell.topPadding)
         }
     }
 
@@ -35,20 +23,23 @@ class RestoreAccountCell: CardCell {
     }
 
     func bind(accountType: AccountTypeViewItem) {
-        nameLabel.text = "restore.item_title".localized(accountType.title)
-        coinsLabel.text = accountType.coinCodes
+        accountView.bind(title: RestoreAccountCell.titleText(accountType: accountType), subtitle: accountType.coinCodes)
     }
 
 }
 
 extension RestoreAccountCell {
 
-    static func height(containerWidth: CGFloat, accountType: AccountTypeViewItem) -> CGFloat {
-        let coinCodesTextHeight = accountType.coinCodes.height(
-                forContainerWidth: containerWidth - CardCell.cardMargins - 2 * CGFloat.margin3x, font: .cryptoSubhead2
-        )
+    static func titleText(accountType: AccountTypeViewItem) -> String {
+        "restore.item_title".localized(accountType.title)
+    }
 
-        return RestoreAccountCell.topMargin + nameHeight + CGFloat.margin2x + coinCodesTextHeight + RestoreAccountCell.bottomMargin
+    static func height(containerWidth: CGFloat, accountType: AccountTypeViewItem) -> CGFloat {
+        let contentWidth = CardCell.contentWidth(containerWidth: containerWidth) - RestoreAccountCell.horizontalPadding * 2
+        let accountViewHeight = AccountDoubleLineCellView.height(containerWidth: contentWidth, title: RestoreAccountCell.titleText(accountType: accountType), subtitle: accountType.coinCodes)
+
+        let contentHeight = accountViewHeight + RestoreAccountCell.topPadding + RestoreAccountCell.bottomPadding
+        return CardCell.height(contentHeight: contentHeight)
     }
 
 }

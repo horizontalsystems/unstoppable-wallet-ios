@@ -102,7 +102,6 @@ extension CGFloat {
     static let heightDoubleLineCell: CGFloat = 60
     static let heightButton: CGFloat = 50
     static let heightButtonSecondary: CGFloat = 32
-    static let heightDoubleLineCardCell: CGFloat = 67
 }
 
 extension UIButton {
@@ -153,4 +152,8 @@ extension UIButton {
         return button
     }
 
+}
+
+extension TimeInterval {
+    static let defaultAnimationDuration: TimeInterval = 0.3
 }
