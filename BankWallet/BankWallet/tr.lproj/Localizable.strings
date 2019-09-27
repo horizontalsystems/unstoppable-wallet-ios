@@ -100,7 +100,7 @@
 "balance.tab_bar_item" = "Bakiye";
 "balance.send" = "Gönder";
 "balance.deposit" = "Al";
-"balance.rate_per_coin" = "%@ için %@";
+"balance.rate_per_coin" = "%@ = 1 %@";
 "balance.synced_through" = "%@ kadar";
 "balance.syncing" = "Eşitleniyor...";
 "balance.add_coins" = "Kripto Para Ekle";
