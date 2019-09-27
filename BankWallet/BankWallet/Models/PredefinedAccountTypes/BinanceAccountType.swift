@@ -1,6 +1,6 @@
 class BinanceAccountType: IPredefinedAccountType {
     let title = "Binance"
-    let coinCodes = "GTO, ANKR, BTCB, CRPT, CAS"
+    let coinCodes = "BNB, BEP-2 tokens"
 
     var defaultAccountType: DefaultAccountType {
         .mnemonic(wordsCount: 24)

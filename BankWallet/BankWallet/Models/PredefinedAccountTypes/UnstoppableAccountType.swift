@@ -1,6 +1,6 @@
 class UnstoppableAccountType: IPredefinedAccountType {
     let title = "Unstoppable"
-    let coinCodes = "BTC, BCH, DASH, ETH, ERC-20"
+    let coinCodes = "BTC, ETH, BCH, DASH, ERC20 tokens"
 
     var defaultAccountType: DefaultAccountType {
         .mnemonic(wordsCount: 12)

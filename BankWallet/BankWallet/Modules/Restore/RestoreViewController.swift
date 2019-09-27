@@ -44,7 +44,7 @@ class RestoreViewController: WalletViewController {
                     id: "wallet_\(index)_row",
                     autoDeselect: true,
                     dynamicHeight: { [unowned self] _ in
-                        RestoreAccountCell.height(containerWidth: self.tableView.bounds.width, accountType: accountType) + .margin2x
+                        RestoreAccountCell.height(containerWidth: self.tableView.bounds.width, accountType: accountType)
                     },
                     bind: { cell, _ in
                         cell.bind(accountType: accountType)
