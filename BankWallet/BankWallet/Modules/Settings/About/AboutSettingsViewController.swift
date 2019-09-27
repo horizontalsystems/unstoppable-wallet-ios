@@ -22,8 +22,7 @@ class AboutSettingsViewController: WalletViewController {
 
         view.addSubview(scrollView)
         scrollView.snp.makeConstraints { maker in
-            maker.top.leading.trailing.equalToSuperview()
-            maker.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
+            maker.leading.top.trailing.bottom.equalToSuperview()
         }
 
         let container = UIView()
