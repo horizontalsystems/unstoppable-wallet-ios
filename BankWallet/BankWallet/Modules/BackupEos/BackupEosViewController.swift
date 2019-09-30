@@ -30,7 +30,7 @@ class BackupEosViewController: WalletViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        title = "backup.eos.title".localized
+        title = "backup.private_key".localized
 
         view.addSubview(scrollView)
         scrollView.alwaysBounceVertical = true
