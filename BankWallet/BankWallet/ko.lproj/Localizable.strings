@@ -66,18 +66,17 @@
 
 "backup.close" = "가까운, 닫힌";
 "backup.backup_required" = "백업이 필요합니다";
+"backup.private_key" = "Private Key";
 
-"backup.intro.title_backup" = "Private Key";
+"backup.intro.title_backup" = "Backup";
 "backup.intro.title_show" = "암호 보이기";
 "backup.intro.subtitle" = "The private key that will be shown next is the only way to restore your funds if your phone is ever lost, stolen, broken etc.\n\nMake sure that no one is watching your screen.\n\nThe coins controlled by this key: %@";
 "backup.intro.later" = "나중에";
 "backup.intro.backup_now" = "백업";
 "backup.intro.show_key" = "암호 보이기";
 
-"backup.words.title" = "%@ Key";
 "backup.words.confirmation_description" = "Enter words from your %@ Key";
 
-"backup.eos.title" = "EOS 암호";
 "backup.eos.account_name" = "Account Name";
 "backup.eos.active_private_key" = "Active Private Key";
 "backup.eos.hint" = "클립보드 관리 앱 또는 클립보드 데이터에 접근할 수 있는 다른 앱을 사용하고 있다면 \"복사\"작업을 사용하여 암호를 복사하는 것은 위험할 수 있습니다.";
