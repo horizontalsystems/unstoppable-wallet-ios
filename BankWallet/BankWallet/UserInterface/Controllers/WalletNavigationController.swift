@@ -31,7 +31,6 @@ class WalletNavigationController: UINavigationController {
         }
     }
 
-        modalPresentationStyle = .fullScreen
     open override var childForStatusBarStyle: UIViewController? {
         self.topViewController
     }
