@@ -1,19 +1,19 @@
 import UIKit
 
 class FullTransactionInfoTheme {
-    static let font = UIFont.cryptoSubhead2
+    static let font = UIFont.appSubhead2
     static let titleColor = UIColor.cryptoGray
     static var descriptionColor: UIColor { return .crypto_Bars_Dark }
     static var linkLabelColor: UIColor { return .crypto_Bars_Dark }
     static let linkLabelUnderlineStyle: NSNumber = 1
-    static let linkLabelFont = UIFont.cryptoSubhead1
+    static let linkLabelFont = UIFont.appSubhead1
 
     static let spinnerLineWidth: CGFloat = 4
     static let spinnerSideSize: CGFloat = 32
 
     static let sectionEmptyMargin: CGFloat = 32
     static let sectionTitleTopMargin: CGFloat = 19
-    static let sectionTitleFont = UIFont.cryptoSubhead1
+    static let sectionTitleFont = UIFont.appSubhead1
     static let hashTopMargin: CGFloat = 8
     static let sectionTitleColor = UIColor.cryptoGray
     static let sectionHeight: CGFloat = 44

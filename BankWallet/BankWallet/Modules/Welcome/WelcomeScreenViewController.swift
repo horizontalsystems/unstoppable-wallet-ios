@@ -53,7 +53,7 @@ class WelcomeScreenViewController: UIViewController {
         }
 
         versionLabel.textColor = .cryptoGray
-        versionLabel.font = .cryptoCaption
+        versionLabel.font = .appCaption
 
         view.addSubview(versionLabel)
         versionLabel.snp.makeConstraints { maker in

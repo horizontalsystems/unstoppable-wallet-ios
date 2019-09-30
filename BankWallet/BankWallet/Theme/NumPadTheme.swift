@@ -14,7 +14,7 @@ class NumPadTheme {
     static let buttonBackgroundColor: UIColor = .clear
     static var buttonBackgroundColorHighlighted: UIColor { return App.theme.colorLawrence }
 
-    static let numberFont: UIFont = .cryptoTitle2Regular
+    static let numberFont: UIFont = .appTitle2R
     static var numberColor: UIColor { return App.theme.colorLeah }
     static let letteredNumberTopMargin: CGFloat = 3
 

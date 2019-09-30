@@ -9,7 +9,7 @@ class RateListHeaderView: UITableViewHeaderFooterView {
         backgroundColor = .clear
 
         label.textColor = .appOz
-        label.font = .cryptoTitle1
+        label.font = .appTitle1
 
         contentView.addSubview(label)
         label.snp.makeConstraints { maker in
@@ -31,7 +31,7 @@ class RateListHeaderView: UITableViewHeaderFooterView {
 extension RateListHeaderView {
 
     static func height(forContainerWidth containerWidth: CGFloat, text: String) -> CGFloat {
-        return text.height(forContainerWidth: containerWidth, font: .cryptoTitle1) + CGFloat.margin6x + CGFloat.margin4x
+        return text.height(forContainerWidth: containerWidth, font: .appTitle1) + CGFloat.margin6x + CGFloat.margin4x
     }
 
 }

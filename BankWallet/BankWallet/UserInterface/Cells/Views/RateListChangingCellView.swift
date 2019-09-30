@@ -15,7 +15,7 @@ class RateListChangingCellView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-        rateLabel.font = .cryptoSubhead1
+        rateLabel.font = .appSubhead1
         rateLabel.textAlignment = .right
         rateLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         rateLabel.setContentCompressionResistancePriority(.required, for: .horizontal)
@@ -27,7 +27,7 @@ class RateListChangingCellView: UIView {
             maker.trailing.equalToSuperview().inset(CGFloat.margin4x)
         }
 
-        diffLabel.font = .cryptoHeadline2
+        diffLabel.font = .appHeadline2
         diffLabel.textAlignment = .right
         diffLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         diffLabel.setContentCompressionResistancePriority(.required, for: .horizontal)

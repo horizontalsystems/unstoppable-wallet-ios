@@ -11,7 +11,7 @@ class BalanceTheme {
     static let headerSortBorderColor: UIColor = .cryptoSteel20
     static let headerSortBorderWidth: CGFloat = 1 / UIScreen.main.scale
     static let headerSortHeight: CGFloat = 28
-    static let sortLabelFont: UIFont = .cryptoCaption
+    static let sortLabelFont: UIFont = .appCaption
     static let sortLabelTextColor: UIColor = .cryptoGray
     static let headerTintColor: UIColor = .cryptoYellow
     static let headerTintColorNormal: UIColor = .cryptoGray
@@ -39,11 +39,11 @@ class BalanceTheme {
     static var roundedBackgroundShadowColor: UIColor { return .crypto_Black20_Steel20 }
     static var roundedBackgroundShadowOpacity: Float { return App.shared.localStorage.lightMode ? 0.8 : 1 }
 
-    static let cellTitleFont = UIFont.cryptoHeadline2
+    static let cellTitleFont = UIFont.appHeadline2
     static var cellTitleColor: UIColor { return .crypto_White_Black }
 
     static let rateTopMargin: CGFloat = 20
-    static let rateFont = UIFont.cryptoSubhead2
+    static let rateFont = UIFont.appSubhead2
     static let rateColor = UIColor.cryptoGray
     static let rateExpiredColor = UIColor.cryptoGray50
 
@@ -72,14 +72,14 @@ class BalanceTheme {
     static let buttonsAnimationDuration = 0.15
     static let editCellHeight: CGFloat = 96
 
-    static let editTitleFont = UIFont.cryptoSubhead1
+    static let editTitleFont = UIFont.appSubhead1
     static let editTitleColor = UIColor.cryptoGray
     static var editTitleSelectedColor: UIColor { return UIColor.crypto_Steel40_LightGray }
 
     static let statButtonWidth: CGFloat = 57
     static let chartSize = CGSize(width: 72, height: 32)
     static let chartCornerRadius: CGFloat = 8
-    static let percentDeltaFont: UIFont = .cryptoHeadline2
+    static let percentDeltaFont: UIFont = .appHeadline2
     static let percentDeltaDownColor: UIColor = .cryptoRed
     static let percentDeltaUpColor: UIColor = .cryptoGreen
     static var chartBackground: UIColor { return App.shared.localStorage.lightMode ? .cryptoLightBackground : .cryptoSteel20 }
@@ -88,5 +88,5 @@ class BalanceTheme {
     static let percentDeltaFailColor: UIColor = .cryptoGray50
     static let inProgressLineColor: UIColor = .cryptoSteel20
     static let failLabelColor: UIColor = .cryptoGray50
-    static let failLabelFont: UIFont = .cryptoSubhead2
+    static let failLabelFont: UIFont = .appSubhead2
 }

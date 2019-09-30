@@ -7,7 +7,7 @@ class SingleLineCellView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-        label.font = .cryptoBody
+        label.font = .appBody
         label.textColor = .appOz
 
         addSubview(label)

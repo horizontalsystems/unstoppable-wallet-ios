@@ -26,26 +26,26 @@ class SendTheme {
     static let errorColor: UIColor = .cryptoRed
 
     static let titleHeight: CGFloat = 48
-    static let titleFont = UIFont.cryptoHeadline2
+    static let titleFont = UIFont.appHeadline2
     static var titleColor: UIColor { return .crypto_White_Black }
 
     static let amountHeight: CGFloat = 72
     static let amountHolderHeight: CGFloat = 60
-    static let amountFont: UIFont = .cryptoBody
+    static let amountFont: UIFont = .appBody
     static var amountColor: UIColor { return .crypto_Bars_Dark }
     static let amountPlaceholderColor: UIColor = .cryptoSteel40
     static let amountLineColor: UIColor = .cryptoSteel20
     static let amountLineTopMargin: CGFloat = 5
     static let amountLineHeight: CGFloat = 1
     static let amountInputTintColor: UIColor = .cryptoYellow
-    static let amountHintFont: UIFont = .cryptoCaption
+    static let amountHintFont: UIFont = .appCaption
     static let amountHintColor: UIColor = .cryptoGray
     static let amountTopMargin: CGFloat = 5
     static let amountErrorLabelTopMargin: CGFloat = 4
 
     static let addressHeight: CGFloat = 56
     static let addressHolderHeight: CGFloat = 44
-    static let addressFont: UIFont = .cryptoBody
+    static let addressFont: UIFont = .appBody
     static var addressColor: UIColor { return .crypto_Bars_Dark }
     static let addressHintColor: UIColor = .cryptoSteel40
     static let addressTextViewLineHeight: Int = 22
@@ -59,10 +59,10 @@ class SendTheme {
 
     static let feePriorityHeight: CGFloat = 60.5
     static let feePriorityWrapperHeight: CGFloat = 44
-    static let feePriorityTitleFont: UIFont = UIFont.cryptoSubhead1
+    static let feePriorityTitleFont: UIFont = UIFont.appSubhead1
     static let feePriorityTitleColor: UIColor = .cryptoGray
     static let feePriorityTitleTopMargin: CGFloat = 28
-    static let feePriorityValueFont: UIFont = UIFont.cryptoSubhead1
+    static let feePriorityValueFont: UIFont = UIFont.appSubhead1
     static var feePriorityValueColor: UIColor { return .crypto_SteelDark_LightGray }
     static let feePriorityValueTopMargin: CGFloat = 29
     static let feePriorityValueLeftMargin: CGFloat = 10
@@ -89,22 +89,22 @@ class SendTheme {
 
     static let confirmationAmountVerticalMargin: CGFloat = 12
 
-    static let confirmationPrimaryAmountFont: UIFont = .cryptoHeadline1
+    static let confirmationPrimaryAmountFont: UIFont = .appHeadline1
     static let confirmationPrimaryAmountColor: UIColor = .appJacob
-    static let confirmationSecondaryAmountTitleFont: UIFont = .cryptoHeadline2
+    static let confirmationSecondaryAmountTitleFont: UIFont = .appHeadline2
     static let confirmationSecondaryAmountTitleColor: UIColor = .appOz
-    static let confirmationBottomAmountFont: UIFont = .cryptoSubhead2
+    static let confirmationBottomAmountFont: UIFont = .appSubhead2
     static let confirmationBottomAmountColor: UIColor = .appGray
 
     static let confirmationMemoVerticalMargin: CGFloat = 14
 
     static let confirmationMemoHeight: CGFloat = 44
-    static let confirmationMemoTitleFont: UIFont = .cryptoSubhead1
+    static let confirmationMemoTitleFont: UIFont = .appSubhead1
     static let confirmationMemoTitleColor: UIColor = .appGray
-    static let confirmationMemoFont: UIFont = .cryptoSubheadItalic
+    static let confirmationMemoFont: UIFont = .appSubhead1I
     static let confirmationMemoColor: UIColor = .appOz
 
-    static let confirmationToLabelFont: UIFont = .cryptoSubhead2
+    static let confirmationToLabelFont: UIFont = .appSubhead2
     static let confirmationToLabelColor: UIColor = .cryptoGray
     static let confirmationToLabelTopMargin: CGFloat = 13
     static let confirmationReceiverTopMargin: CGFloat = 8

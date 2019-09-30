@@ -9,7 +9,7 @@ class BackupTheme {
     static let wordsTopMargin: CGFloat = 8
     static let confirmLabelTopMargin: CGFloat = 4
 
-    static let descriptionFont: UIFont = .cryptoBody
+    static let descriptionFont: UIFont = .appBody
     static let descriptionColor: UIColor = .cryptoGray
     static let buttonsGap: CGFloat = 10
     static let backupButtonBackground: UIColor = .cryptoYellow
@@ -17,8 +17,8 @@ class BackupTheme {
     static let buttonHeight: CGFloat = 50
     static let buttonTitleColor: UIColor = .cryptoDark
     static let buttonCornerRadius: CGFloat = 8
-    static let buttonTitleFont: UIFont = .cryptoHeadline2
-    static let confirmLabelFont: UIFont = .cryptoSubhead2
+    static let buttonTitleFont: UIFont = .appHeadline2
+    static let confirmLabelFont: UIFont = .appSubhead2
     static let confirmLabelColor: UIColor = .cryptoGray
     static let confirmInputHeight: CGFloat = 44
     static let inputBorderColor: UIColor = .cryptoSteel20
@@ -29,7 +29,7 @@ class BackupTheme {
     static let eosRegularMargin: CGFloat = 24
     static let eosSmallMargin: CGFloat = 8
     static let eosSubtitleHorizontalMargin: CGFloat = 17
-    static let eosTextFont: UIFont = .cryptoSubhead1
+    static let eosTextFont: UIFont = .appSubhead1
     static let eosTextColor: UIColor = .cryptoGray
     static let eosQrCodeTopMargin: CGFloat = 24
     static let activePrivateKeyLabelTopMargin: CGFloat = 23
