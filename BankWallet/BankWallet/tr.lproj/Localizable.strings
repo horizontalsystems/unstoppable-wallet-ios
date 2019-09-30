@@ -66,18 +66,17 @@
 
 "backup.close" = "Kapat";
 "backup.backup_required" = "Yedekleme Gerekli";
+"backup.private_key" = "Private Key";
 
-"backup.intro.title_backup" = "Private Key";
+"backup.intro.title_backup" = "Backup";
 "backup.intro.title_show" = "Anahtarı Göster";
 "backup.intro.subtitle" = "The private key that will be shown next is the only way to restore your funds if your phone is ever lost, stolen, broken etc.\n\nMake sure that no one is watching your screen.\n\nThe coins controlled by this key: %@";
 "backup.intro.later" = "Sonra";
 "backup.intro.backup_now" = "Yedekle";
 "backup.intro.show_key" = "Anahtarı Göster";
 
-"backup.words.title" = "%@ Key";
 "backup.words.confirmation_description" = "Enter words from your %@ Key";
 
-"backup.eos.title" = "EOS Anahtarı";
 "backup.eos.account_name" = "Account Name";
 "backup.eos.active_private_key" = "Active Private Key";
 "backup.eos.hint" = "Anahtarınızı \"Kopyala\" eylemiyle kopyalamanız anahtarınızın pano yönetisine ve panoya erişimi olan diğer uygulamalara sızma riskini taşır.";
