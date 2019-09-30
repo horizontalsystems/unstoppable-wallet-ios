@@ -277,7 +277,7 @@
 // Manage Keys
 
 "settings_manage_keys.title" = "Manage Wallets";
-"settings_manage_keys.item_title" = "%@ Wallet";
+"settings_manage_keys.item_title" = "%@钱包";
 "settings_manage_keys.add_wallet" = "Add Wallet";
 "settings_manage_keys.description" = "Highlighted below are your active wallets where each wallet responsible for different set of crypto currencies.\n\nYou should backup each highlighted wallets by backing up the private key for that wallet. This key is the only way to restore your funds if your phone is ever lost, stolen, broken etc.";
 "settings_manage_keys.delete" = "删除";
@@ -351,8 +351,8 @@
 
 // Create Wallet
 
-"create_wallet.title" = "New Wallet";
-"create_wallet.create_button" = "Create";
+"create_wallet.title" = "新的钱包";
+"create_wallet.create_button" = "创建";
 "create_wallet.description" = "Select one cryptocurrency to start. You will be able to add other cryptocurrencies later.";
 
 "price_notification.up" = "up";
