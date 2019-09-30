@@ -13,7 +13,7 @@ class AppManager {
     private let localStorage: ILocalStorage
     private let secureStorage: ISecureStorage
     private let kitCleaner: IKitCleaner
-    private let debugBackgroundLogger: IDebugBackgroundLogger
+    private let debugBackgroundLogger: IDebugBackgroundLogger?
 
     private let didBecomeActiveSubject = PublishSubject<()>()
     private let willEnterForegroundSubject = PublishSubject<()>()
@@ -21,7 +21,7 @@ class AppManager {
     init(accountManager: IAccountManager, walletManager: IWalletManager, adapterManager: IAdapterManager, lockManager: ILockManager,
          passcodeLockManager: IPasscodeLockManager, biometryManager: IBiometryManager, blurManager: IBlurManager,
          notificationManager: INotificationManager, backgroundPriceAlertManager: IBackgroundPriceAlertManager,
-         localStorage: ILocalStorage, secureStorage: ISecureStorage, kitCleaner: IKitCleaner, debugBackgroundLogger: IDebugBackgroundLogger) {
+         localStorage: ILocalStorage, secureStorage: ISecureStorage, kitCleaner: IKitCleaner, debugBackgroundLogger: IDebugBackgroundLogger?) {
         self.accountManager = accountManager
         self.walletManager = walletManager
         self.adapterManager = adapterManager
@@ -49,7 +49,7 @@ class AppManager {
 extension AppManager {
 
     func didFinishLaunching() {
-        debugBackgroundLogger.logFinishLaunching()
+        debugBackgroundLogger?.logFinishLaunching()
         handleFirstLaunch()
 
         passcodeLockManager.didFinishLaunching()
@@ -71,14 +71,14 @@ extension AppManager {
     }
 
     func didEnterBackground() {
-        debugBackgroundLogger.logEnterBackground()
+        debugBackgroundLogger?.logEnterBackground()
 
         lockManager.didEnterBackground()
         backgroundPriceAlertManager.didEnterBackground()
     }
 
     func willEnterForeground() {
-        debugBackgroundLogger.logEnterForeground()
+        debugBackgroundLogger?.logEnterForeground()
         willEnterForegroundSubject.onNext(())
 
         passcodeLockManager.willEnterForeground()
@@ -89,7 +89,7 @@ extension AppManager {
     }
 
     func willTerminate() {
-        debugBackgroundLogger.logTerminate()
+        debugBackgroundLogger?.logTerminate()
     }
 
 }
