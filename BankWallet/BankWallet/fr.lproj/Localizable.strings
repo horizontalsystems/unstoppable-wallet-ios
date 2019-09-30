@@ -66,18 +66,17 @@
 
 "backup.close" = "Fermer";
 "backup.backup_required" = "Sauvegarde requise";
+"backup.private_key" = "Private Key";
 
-"backup.intro.title_backup" = "Private Key";
+"backup.intro.title_backup" = "Backup";
 "backup.intro.title_show" = "Voir la clé";
 "backup.intro.subtitle" = "The private key that will be shown next is the only way to restore your funds if your phone is ever lost, stolen, broken etc.\n\nMake sure that no one is watching your screen.\n\nThe coins controlled by this key: %@";
 "backup.intro.later" = "Plus tard";
 "backup.intro.backup_now" = "Sauvegarde";
 "backup.intro.show_key" = "Voir la clé";
 
-"backup.words.title" = "%@ Key";
 "backup.words.confirmation_description" = "Enter words from your %@ Key";
 
-"backup.eos.title" = "Clé de EOS";
 "backup.eos.account_name" = "Account Name";
 "backup.eos.active_private_key" = "Active Private Key";
 "backup.eos.hint" = "Copier votre clé en utilisant l'action « copier » apporte le des risques si vous utilisez des applications de gestion du presse-papiers ou d'autres applications qui peuvent avoir accès aux données du presse-papiers.";
