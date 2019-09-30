@@ -22,7 +22,7 @@ class DebugViewController: WalletViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        title = "Debug".localized
+        title = "Debug"
 
         view.addSubview(topView)
         topView.snp.makeConstraints { maker in
@@ -68,10 +68,6 @@ extension DebugViewController: IDebugView {
     func set(logs: [String]) {
         textView.text = logs.joined(separator: "\n")
         textView.setContentOffset(.zero, animated: true)
-    }
-
-    func showCopied() {
-        HudHelper.instance.showSuccess(title: "alert.copied".localized)
     }
 
 }
