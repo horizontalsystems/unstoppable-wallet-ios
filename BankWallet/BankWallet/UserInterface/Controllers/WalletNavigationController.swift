@@ -18,14 +18,26 @@ class WalletNavigationController: UINavigationController {
     }
 
     private func commonInit() {
-        navigationBar.barStyle = App.theme.navigationBarStyle
-        navigationBar.tintColor = AppTheme.navigationBarTintColor
         navigationBar.prefersLargeTitles = true
-        navigationBar.shadowImage = UIImage()
-        let colorImage = UIImage(color: AppTheme.navigationBarBackgroundColor)
-        navigationBar.setBackgroundImage(colorImage, for: .default)
+        modalPresentationStyle = .fullScreen
+        // set navigation theme for iOS less than 13
+        guard #available(iOS 13.0, *) else {
+            navigationBar.barStyle = App.theme.navigationBarStyle
+            navigationBar.tintColor = AppTheme.navigationBarTintColor
+            let colorImage = UIImage(color: AppTheme.navigationBarBackgroundColor)
+            navigationBar.setBackgroundImage(colorImage, for: .default)
+            navigationBar.shadowImage = UIImage()
+            return
+        }
+    }
 
         modalPresentationStyle = .fullScreen
+    open override var childForStatusBarStyle: UIViewController? {
+        self.topViewController
+    }
+
+    open override var childForStatusBarHidden: UIViewController? {
+        self.topViewController
     }
 
 }

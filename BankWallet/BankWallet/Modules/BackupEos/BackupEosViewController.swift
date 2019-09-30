@@ -135,10 +135,6 @@ class BackupEosViewController: WalletViewController {
         qrCodeImageView.asyncSetImage { UIImage(qrCodeString: self.delegate.activePrivateKey, size: BackupTheme.eosQrCodeSize) }
     }
 
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return App.theme.statusBarStyle
-    }
-
     @objc func didTapClose() {
         delegate.didTapClose()
     }

@@ -65,10 +65,6 @@ class RestoreWordsViewController: WalletViewController {
         }
     }
 
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return App.theme.statusBarStyle
-    }
-
     @objc func restoreDidTap() {
         view.endEditing(true)
 

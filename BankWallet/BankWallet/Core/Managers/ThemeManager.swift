@@ -15,11 +15,12 @@ extension ThemeManager: IThemeManager {
 
     var lightMode: Bool {
         get {
-            return localStorage.lightMode
+            localStorage.lightMode
         }
         set {
             localStorage.lightMode = newValue
             currentTheme = newValue ? LightTheme() : DarkTheme()
+            AppTheme.updateNavigationBarTheme()
         }
     }
 

@@ -64,10 +64,6 @@ class BackupController: WalletViewController {
         }
     }
 
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return App.theme.statusBarStyle
-    }
-
     @objc func proceedDidTap() {
         delegate.proceedDidTap()
     }

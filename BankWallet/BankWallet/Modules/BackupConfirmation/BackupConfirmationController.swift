@@ -77,10 +77,6 @@ class BackupConfirmationController: WalletViewController {
         super.viewDidAppear(animated)
     }
 
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return App.theme.statusBarStyle
-    }
-
     private func updateInputFields() {
         delegate.generateNewIndexes()
 

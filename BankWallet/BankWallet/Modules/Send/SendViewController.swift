@@ -86,10 +86,6 @@ class SendViewController: WalletViewController {
         delegate.showKeyboard()
     }
 
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return App.theme.statusBarStyle
-    }
-
     private func buildViews() {
         var lastView: UIView?
         for view in views {

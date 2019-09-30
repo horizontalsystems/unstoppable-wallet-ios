@@ -5,7 +5,12 @@ class LightTheme: ITheme {
     let hudBlurStyle: UIBlurEffect.Style = .extraLight
     let keyboardAppearance: UIKeyboardAppearance = .default
     let navigationBarStyle: UIBarStyle = .default
-    let statusBarStyle: UIStatusBarStyle = .default
+    var statusBarStyle: UIStatusBarStyle {
+        if #available(iOS 13.0, *) {
+            return .darkContent
+        }
+        return .default
+    }
 
     let colorJacob: UIColor = .appYellowL
     let colorRemus: UIColor = .appGreenL

@@ -33,4 +33,8 @@ class WalletViewController: UIViewController {
         gradientImageView.isUserInteractionEnabled = true
     }
 
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        App.theme.statusBarStyle
+    }
+
 }

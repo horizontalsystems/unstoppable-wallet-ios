@@ -45,10 +45,6 @@ class ManageWalletsViewController: WalletViewController {
         delegate.viewDidLoad()
     }
 
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return App.theme.statusBarStyle
-    }
-
     @objc func close() {
         delegate.close()
     }

@@ -86,10 +86,6 @@ class FullTransactionInfoViewController: WalletViewController, SectionsDataSourc
         headerBackgroundTriggerOffset = headerBackgroundTriggerOffset == nil ? tableView.contentOffset.y : headerBackgroundTriggerOffset
     }
 
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return App.theme.statusBarStyle
-    }
-
     func buildSections() -> [SectionProtocol] {
         var rows = [RowProtocol]()
 
