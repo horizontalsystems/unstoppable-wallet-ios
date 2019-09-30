@@ -69,13 +69,13 @@
 
 "backup.intro.title_backup" = "Private Key";
 "backup.intro.title_show" = "显示密钥";
-"backup.intro.subtitle" = "The private key that will be shown next is the only way to restore your funds if your phone is ever lost, stolen, broken etc.\n\nMake sure that no one is watching your screen.\n\nThe coins controlled by this key: %@";
+"backup.intro.subtitle" = "如果您的手机出现丢失、被盗或损坏等情况，那么在下一步显示的私钥将是恢复您资金的唯一方法。\n\n确保不会有任何人看到您的屏幕。\n\n此密钥控制的代币：%@";
 "backup.intro.later" = "稍后";
 "backup.intro.backup_now" = "备份";
 "backup.intro.show_key" = "显示密钥";
 
-"backup.words.title" = "%@ Key";
-"backup.words.confirmation_description" = "Enter words from your %@ Key";
+"backup.words.title" = "%@密钥";
+"backup.words.confirmation_description" = "输入您%@密钥中的文字";
 
 "backup.eos.title" = "EOS密钥";
 "backup.eos.account_name" = "Account Name";
@@ -113,7 +113,7 @@
 "deposit.receive_coin" = "收到%@";
 "deposit.your_address" = "您的地址";
 "deposit.your_account" = "您的账户";
-"receive_alert.not_backed_up_description" = "You need to backup the %@ Wallet before you may receive %@.";
+"receive_alert.not_backed_up_description" = "您必须在接收%@之前先备份%@钱包。";
 
 // Send
 
@@ -211,7 +211,7 @@
 "settings.tab_bar_item" = "设置";
 "settings.security_center" = "安全中心";
 "settings.manage_coins" = "管理Coins";
-"settings.notifications" = "Notifications";
+"settings.notifications" = "通知";
 "settings.base_currency" = "基本货币";
 "settings.language" = "语言";
 "settings.about" = "关于";
@@ -223,11 +223,11 @@
 
 // Settings -> Notifications
 
-"settings_notifications.title" = "Notifications";
-"settings_notifications.description" = "Set price change alerts for the coins you would like to watch.\n\nYou will be alerted when the change in price for the last 24 hours exceeds selected threshold.";
-"settings_notifications.alert_off" = "Off";
-"settings.notifications.deactivate_all" = "Deactivate All";
-"settings.notifications.disabled_text" = "The notifications for Unstoppable Wallet app are disabled. You need to turn on Notifications and allow background app refresh in order to be able to receive price change alerts.";
+"settings_notifications.title" = "通知";
+"settings_notifications.description" = "为您要监察的代币设置价格变更警报。";
+"settings_notifications.alert_off" = "关";
+"settings.notifications.deactivate_all" = "全部停用";
+"settings.notifications.disabled_text" = "已禁用Unstoppable钱包应用通知。您必须开启通知并允许后台应用刷新才能接收价格变更警报。";
 "settings.notifications.settings_button" = "Turn on in Settings";
 
 // Settings -> Base Currency
