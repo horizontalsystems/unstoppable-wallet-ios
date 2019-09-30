@@ -289,9 +289,9 @@
 "settings_manage_keys.delete.title" = "Delete Wallet";
 "settings_manage_keys.delete.confirmation_remove" = "The action will delete the %@ Wallet from this device.";
 "settings_manage_keys.delete.confirmation_disable" = "将被禁用的代币：%@";
-"settings_manage_keys.delete.confirmation_loose" = "If you didn't backup the private key for this wallet, you will lose access to your funds.";
+"settings_manage_keys.delete.confirmation_loose" = "如果您尚未对此钱包备份私钥，您将失去您的资金。";
 "error.cant_create_eos" = "此时，钱包无法创建新的EOS钱包帐户。您只能恢复现有账户。\n";
-"settings_manage_keys.create.text" = "This action will generate a new wallet for the following coins:\n\n%@";
+"settings_manage_keys.create.text" = "该操作将为以下代币生成新钱包：\n\n%@";
 "error.invalid_eos_key" = "错误密钥";
 "error.invalid_eos_account" = "无效账户";
 
@@ -351,10 +351,10 @@
 
 // Create Wallet
 
-"create_wallet.title" = "新的钱包";
+"create_wallet.title" = "新钱包";
 "create_wallet.create_button" = "创建";
-"create_wallet.description" = "Select one cryptocurrency to start. You will be able to add other cryptocurrencies later.";
+"create_wallet.description" = "选择一种加密货币开始使用。您可以在以后添加其他加密货币。";
 
-"price_notification.up" = "up";
-"price_notification.down" = "down";
-"price_notification.multi_title" = "Notifications";
+"price_notification.up" = "上";
+"price_notification.down" = "下";
+"price_notification.multi_title" = "通知";
