@@ -1,12 +1,10 @@
 class DebugPresenter {
     private let interactor: IDebugInteractor
-    private let router: IDebugRouter
 
     weak var view: IDebugView?
 
-    init(interactor: IDebugInteractor, router: IDebugRouter) {
+    init(interactor: IDebugInteractor) {
         self.interactor = interactor
-        self.router = router
     }
 
 }

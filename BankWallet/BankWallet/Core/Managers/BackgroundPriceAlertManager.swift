@@ -8,9 +8,9 @@ class BackgroundPriceAlertManager {
     private let rateStorage: IRateStorage
     private let priceAlertStorage: IPriceAlertStorage
     private let priceAlertHandler: IPriceAlertHandler
-    private let debugBackgroundLogger: IDebugBackgroundLogger
+    private let debugBackgroundLogger: IDebugBackgroundLogger?
 
-    init(rateManager: IRateManager, currencyManager: ICurrencyManager, rateStorage: IRateStorage, priceAlertStorage: IPriceAlertStorage, priceAlertHandler: IPriceAlertHandler, debugBackgroundLogger: IDebugBackgroundLogger) {
+    init(rateManager: IRateManager, currencyManager: ICurrencyManager, rateStorage: IRateStorage, priceAlertStorage: IPriceAlertStorage, priceAlertHandler: IPriceAlertHandler, debugBackgroundLogger: IDebugBackgroundLogger?) {
         self.rateManager = rateManager
         self.currencyManager = currencyManager
         self.rateStorage = rateStorage
@@ -37,7 +37,7 @@ extension BackgroundPriceAlertManager: IBackgroundPriceAlertManager {
     }
 
     func fetchRates(onComplete: @escaping (Bool) -> ()) {
-        debugBackgroundLogger.add(log: "did fetch rates")
+        debugBackgroundLogger?.add(log: "did fetch rates")
         rateManager.syncLatestRatesSingle()
                 .subscribe(onSuccess: { [weak self] latestRatesData in
                     self?.priceAlertHandler.handleAlerts(with: latestRatesData)

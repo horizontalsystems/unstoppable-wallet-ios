@@ -5,10 +5,10 @@ class DebugInteractor {
 
     private let disposeBag = DisposeBag()
 
-    private let debugBackgroundManager: IDebugBackgroundLogger
+    private let debugBackgroundManager: IDebugBackgroundLogger?
     private let pasteboardManager: IPasteboardManager
 
-    init(appManager: IAppManager, debugBackgroundManager: IDebugBackgroundLogger, pasteboardManager: IPasteboardManager) {
+    init(appManager: IAppManager, debugBackgroundManager: IDebugBackgroundLogger?, pasteboardManager: IPasteboardManager) {
         self.debugBackgroundManager = debugBackgroundManager
         self.pasteboardManager = pasteboardManager
 
@@ -25,12 +25,12 @@ class DebugInteractor {
 extension DebugInteractor: IDebugInteractor {
 
     var logs: [String] {
-        debugBackgroundManager.logs
+        debugBackgroundManager?.logs ?? ["not available!"]
     }
 
 
     func clearLogs() {
-        debugBackgroundManager.clearLogs()
+        debugBackgroundManager?.clearLogs()
         delegate?.didClearLogs()
     }
 
