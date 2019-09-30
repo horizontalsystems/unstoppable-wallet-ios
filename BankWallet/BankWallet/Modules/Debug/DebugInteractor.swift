@@ -28,10 +28,8 @@ extension DebugInteractor: IDebugInteractor {
         debugBackgroundManager?.logs ?? ["not available!"]
     }
 
-
     func clearLogs() {
         debugBackgroundManager?.clearLogs()
-        delegate?.didClearLogs()
     }
 
 }

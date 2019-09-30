@@ -17,6 +17,7 @@ extension DebugPresenter: IDebugViewDelegate {
 
     func didTapClear() {
         interactor.clearLogs()
+        view?.set(logs: interactor.logs)
     }
 
 }
@@ -24,10 +25,6 @@ extension DebugPresenter: IDebugViewDelegate {
 extension DebugPresenter: IDebugInteractorDelegate {
 
     func didEnterForeground() {
-        view?.set(logs: interactor.logs)
-    }
-
-    func didClearLogs() {
         view?.set(logs: interactor.logs)
     }
 
