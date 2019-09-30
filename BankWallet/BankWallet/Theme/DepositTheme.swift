@@ -6,13 +6,13 @@ class DepositTheme {
     static let regularMargin: CGFloat = 16
 
     static let titleHorizontalMargin: CGFloat = 10
-    static let titleFont: UIFont = .cryptoHeadline2
+    static let titleFont: UIFont = .appHeadline2
     static var titleColor: UIColor { return .crypto_White_Black }
 
     static let qrCodeSideSize: CGFloat = 120
     static let qrCornerRadius: CGFloat = 4
 
-    static let addressTitleFont: UIFont = .cryptoCaption
+    static let addressTitleFont: UIFont = .appCaption
     static var addressTitleColor: UIColor = .cryptoGray
 
     static let pagingHeight: CGFloat = 30

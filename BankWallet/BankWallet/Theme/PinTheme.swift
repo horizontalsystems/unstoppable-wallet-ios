@@ -11,7 +11,7 @@ class PinTheme {
     static var lockoutIconBackground: UIColor { return App.shared.localStorage.lightMode ? .white : .cryptoGray50 }
     static let lockoutIconBackgroundSideSize: CGFloat = 94
     static let lockoutLabelTopMargin: CGFloat = 24
-    static let lockoutLabelFont = UIFont.cryptoBody
+    static let lockoutLabelFont = UIFont.appBody
     static let lockoutLabelColor = UIColor.cryptoGray
     static let lockoutLabelSideMargin: CGFloat = 32
 

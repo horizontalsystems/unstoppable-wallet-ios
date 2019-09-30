@@ -6,5 +6,5 @@ class NoPasscodeTheme {
     static let iconColor: UIColor = .cryptoGray
     static let infoLabelHorizontalMargin: CGFloat = 42
     static let infoLabelTextColor: UIColor = .cryptoGray
-    static let infoLabelFont: UIFont = .cryptoBody
+    static let infoLabelFont: UIFont = .appBody
 }

@@ -44,7 +44,7 @@ class AboutSettingsViewController: WalletViewController {
 
         let titleLabel = UILabel()
         titleLabel.text = "settings_about.app_title".localized
-        titleLabel.font = .cryptoHeadline1
+        titleLabel.font = .appHeadline1
         titleLabel.textColor = .appOz
 
         container.addSubview(titleLabel)
@@ -56,7 +56,7 @@ class AboutSettingsViewController: WalletViewController {
 
         let subtitleLabel = UILabel()
         subtitleLabel.text = "settings_about.app_subtitle".localized
-        subtitleLabel.font = .cryptoSubhead2
+        subtitleLabel.font = .appSubhead2
         subtitleLabel.textColor = .appGray
 
         container.addSubview(subtitleLabel)
@@ -78,7 +78,7 @@ class AboutSettingsViewController: WalletViewController {
 
         let headerLabel = UILabel()
         headerLabel.text = "settings_about.terms_privacy_subtitle".localized
-        headerLabel.font = .cryptoHeadline2
+        headerLabel.font = .appHeadline2
         headerLabel.textColor = .appJacob
 
         container.addSubview(headerLabel)
@@ -90,7 +90,7 @@ class AboutSettingsViewController: WalletViewController {
         let textLabel = UILabel()
         textLabel.text = "settings_about.terms_privacy_text".localized
         textLabel.numberOfLines = 0
-        textLabel.font = .cryptoBody
+        textLabel.font = .appBody
         textLabel.textColor = .appLeah
 
         container.addSubview(textLabel)

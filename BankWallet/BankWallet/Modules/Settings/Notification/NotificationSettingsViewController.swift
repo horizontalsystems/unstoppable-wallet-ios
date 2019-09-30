@@ -49,7 +49,7 @@ class NotificationSettingsViewController: WalletViewController {
 
         let warningLabel = UILabel()
         warningLabel.numberOfLines = 0
-        warningLabel.font = .cryptoSubhead2
+        warningLabel.font = .appSubhead2
         warningLabel.textColor = .appGray
         warningLabel.text = "settings.notifications.disabled_text".localized
 

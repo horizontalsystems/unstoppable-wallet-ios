@@ -8,7 +8,7 @@ class DescriptionView: UITableViewHeaderFooterView {
         super.init(reuseIdentifier: reuseIdentifier)
 
         label.numberOfLines = 0
-        label.font = .cryptoSubhead2
+        label.font = .appSubhead2
         label.textColor = .cryptoGray
         contentView.addSubview(label)
         label.snp.makeConstraints { maker in
@@ -30,7 +30,7 @@ class DescriptionView: UITableViewHeaderFooterView {
 extension DescriptionView {
 
     static func height(containerWidth: CGFloat, text: String) -> CGFloat {
-        let textHeight = ceil(text.height(forContainerWidth: containerWidth - 2 * CGFloat.margin6x, font: .cryptoSubhead2))
+        let textHeight = ceil(text.height(forContainerWidth: containerWidth - 2 * CGFloat.margin6x, font: .appSubhead2))
         return textHeight + CGFloat.margin6x + CGFloat.margin3x
     }
 

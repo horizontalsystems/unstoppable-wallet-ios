@@ -7,7 +7,7 @@ class RightValueCellView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-        label.font = .cryptoSubhead1
+        label.font = .appSubhead1
         label.setContentCompressionResistancePriority(.required, for: .horizontal)
         label.setContentHuggingPriority(.required, for: .horizontal)
 

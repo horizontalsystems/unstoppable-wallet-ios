@@ -36,27 +36,27 @@ class AppTheme {
 
     static var alertBackgroundColor: UIColor { return .crypto_SteelDark_Bars }
     static let alertHeaderHeight: CGFloat = 40
-    static let alertHeaderFont: UIFont = .cryptoSubhead1
+    static let alertHeaderFont: UIFont = .appSubhead1
     static let alertHeaderColor: UIColor = .cryptoGray
 
     static let alertTitleHeight: CGFloat = 62
-    static let alertTitleFont: UIFont = .cryptoHeadline2
+    static let alertTitleFont: UIFont = .appHeadline2
     static var alertTitleColor: UIColor { return .crypto_White_Black }
     static let alertSubtitleTopMargin: CGFloat = 3
-    static var alertSubtitleFont: UIFont = .cryptoCaption
+    static var alertSubtitleFont: UIFont = .appCaption
     static var alertSubtitleColor: UIColor  = .cryptoGray
 
     static let alertTextMargin: CGFloat = 16
-    static let alertTextFont: UIFont = .cryptoSubhead1
+    static let alertTextFont: UIFont = .appSubhead1
     static var alertTextColor: UIColor = .cryptoGray
 
     static let footerTextMargin: CGFloat = 16
     static let footerTextColor: UIColor = .cryptoGray
-    static let footerTextFont: UIFont = .cryptoSubhead2
+    static let footerTextFont: UIFont = .appSubhead2
 
     static let alertCellHeight: CGFloat = 53
-    static let alertCellFont: UIFont = .cryptoHeadline2
-    static let alertMessageFont: UIFont = .cryptoSubhead1
+    static let alertCellFont: UIFont = .appHeadline2
+    static let alertMessageFont: UIFont = .appSubhead1
     static var alertCellHighlightColor: UIColor = .cryptoYellow
     static var alertCellDefaultColor: UIColor { return .crypto_Bars_Dark }
     static var alertMessageDefaultColor: UIColor { return .crypto_Bars_Black }
@@ -94,6 +94,21 @@ class AppTheme {
 
 }
 
+extension UIFont {
+    static let appTitle1: UIFont = .systemFont(ofSize: 40, weight: .bold)
+    static let appTitle2: UIFont = .systemFont(ofSize: 34, weight: .bold)
+    static let appTitle2R: UIFont = .systemFont(ofSize: 34, weight: .regular)
+    static let appTitle3: UIFont = .systemFont(ofSize: 22, weight: .bold)
+    static let appHeadline1: UIFont = .systemFont(ofSize: 22, weight: .semibold)
+    static let appHeadline2: UIFont = .systemFont(ofSize: 17, weight: .semibold)
+    static let appBody: UIFont = .systemFont(ofSize: 17, weight: .regular)
+    static let appSubhead1: UIFont = .systemFont(ofSize: 14, weight: .medium)
+    static let appSubhead1I: UIFont = UIFont.systemFont(ofSize: 14, weight: .medium).with(traits: .traitItalic)
+    static let appSubhead2: UIFont = .systemFont(ofSize: 14, weight: .regular)
+    static let appCaption: UIFont = .systemFont(ofSize: 12, weight: .regular)
+    static let appMicro: UIFont = .systemFont(ofSize: 10, weight: .regular)
+}
+
 extension CGFloat {
     static let cornerRadius2: CGFloat = 2
     static let cornerRadius4: CGFloat = 4
@@ -123,7 +138,7 @@ extension UIButton {
     static var appYellow: UIButton {
         let button = UIButton()
 
-        button.titleLabel?.font = .cryptoHeadline2
+        button.titleLabel?.font = .appHeadline2
         button.setTitleColor(.black, for: .normal)
         button.setTitleColor(.appGray50, for: .disabled)
         button.setBackgroundColor(color: .appJacob, gradient: (colors: [UIColor(white: 1, alpha: 0.5), UIColor(white: 1, alpha: 0)], height: .heightButton), forState: .normal)
@@ -137,7 +152,7 @@ extension UIButton {
     static var appGray: UIButton {
         let button = UIButton()
 
-        button.titleLabel?.font = .cryptoHeadline2
+        button.titleLabel?.font = .appHeadline2
         button.setTitleColor(.black, for: .normal)
         button.setTitleColor(.appGray50, for: .disabled)
         button.setBackgroundColor(color: .appLightGray, gradient: (colors: [UIColor(white: 1, alpha: 1), UIColor(white: 1, alpha: 0)], height: .heightButton), forState: .normal)
@@ -151,7 +166,7 @@ extension UIButton {
     static var appSecondary: UIButton {
         let button = UIButton()
 
-        button.titleLabel?.font = .cryptoSubhead1
+        button.titleLabel?.font = .appSubhead1
         button.setTitleColor(.appOz, for: .normal)
         button.setTitleColor(.appGray50, for: .disabled)
         button.setBackgroundColor(color: .appElena, gradient: (colors: [UIColor(white: 1, alpha: App.theme.alphaSecondaryButtonGradient), UIColor(white: 1, alpha: 0)], height: .heightButtonSecondary), forState: .normal)

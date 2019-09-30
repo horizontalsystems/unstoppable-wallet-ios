@@ -18,17 +18,17 @@ class SettingsTheme {
     static let cellSelectBackground = UIColor.cryptoSteel20
     static let infoTitleColor = UIColor.cryptoGray
     static let iconTintColor = UIColor.cryptoYellow
-    static let infoTitleFont = UIFont.cryptoCaption
-    static let titleFont = UIFont.cryptoBody
+    static let infoTitleFont = UIFont.appCaption
+    static let titleFont = UIFont.appBody
     static var titleColor: UIColor { return .crypto_White_Black }
     static let versionLabelTopMargin: CGFloat = 32
     static let separatorInset: CGFloat = SettingsTheme.cellIconSize + SettingsTheme.cellBigMargin
-    static let versionFont = UIFont.cryptoCaption
+    static let versionFont = UIFont.appCaption
     static let versionColor = UIColor.cryptoGray
     static let topHeaderHeight: CGFloat = 12
     static let subSettingsHeaderHeight: CGFloat = 16
     static let headerHeight: CGFloat = 32
-    static let subtitleFont = UIFont.cryptoSubhead2
+    static let subtitleFont = UIFont.appSubhead2
     static let subtitleColor = UIColor.cryptoGray
     static let onlineSubtitleColor = UIColor.cryptoGreen
     static let offlineSubtitleColor = UIColor.cryptoRed
@@ -41,7 +41,7 @@ class SettingsTheme {
     static let infoLinkColor = UIColor.cryptoGray
     static let infoFooterHeight: CGFloat = 194
     static let separatorMargin: CGFloat = 4
-    static let infoLinkFont = UIFont.cryptoBody
+    static let infoLinkFont = UIFont.appBody
     static let logoTintColor = UIColor.cryptoGray
     static let logoSelectedTintColor = UIColor.cryptoSilver
     static let attentionIconTint = UIColor.cryptoRed

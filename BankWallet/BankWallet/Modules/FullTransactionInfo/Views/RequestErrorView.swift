@@ -28,7 +28,7 @@ class RequestErrorView: UIView {
             maker.leading.trailing.equalToSuperview()
         }
         titleLabel.numberOfLines = 1
-        titleLabel.font = .cryptoBody
+        titleLabel.font = .appBody
         titleLabel.textColor = .crypto_White_Black
         titleLabel.textAlignment = .center
 
@@ -42,7 +42,7 @@ class RequestErrorView: UIView {
             }
 
             subtitleLabel.numberOfLines = 1
-            subtitleLabel.font = .cryptoBody
+            subtitleLabel.font = .appBody
             subtitleLabel.textColor = .cryptoRed
             subtitleLabel.textAlignment = .center
             subtitleLabel.text = subtitle

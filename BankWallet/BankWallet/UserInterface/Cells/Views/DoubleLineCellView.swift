@@ -8,7 +8,7 @@ class DoubleLineCellView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-        titleLabel.font = .cryptoBody
+        titleLabel.font = .appBody
         titleLabel.textColor = .appOz
         addSubview(titleLabel)
         titleLabel.snp.makeConstraints { maker in
@@ -17,7 +17,7 @@ class DoubleLineCellView: UIView {
             maker.top.equalToSuperview().offset(10)
         }
 
-        subtitleLabel.font = .cryptoSubhead2
+        subtitleLabel.font = .appSubhead2
         subtitleLabel.textColor = .appGray
         addSubview(subtitleLabel)
         subtitleLabel.snp.makeConstraints { maker in

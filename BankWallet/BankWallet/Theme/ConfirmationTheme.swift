@@ -9,8 +9,8 @@ class ConfirmationTheme {
     static let buttonHeight: CGFloat = 50
 
     static var textColor: UIColor { return .crypto_White_Black }
-    static let regularFont = UIFont.cryptoSubhead2
-    static let boldFont = UIFont.cryptoHeadline2
+    static let regularFont = UIFont.appSubhead2
+    static let boldFont = UIFont.appHeadline2
 
     static let cornerRadius: CGFloat = 8
 }

@@ -1,8 +1,8 @@
 import UIKit
 
 class AccountDoubleLineCellView: UIView {
-    private static let titleFont: UIFont = .cryptoHeadline2
-    private static let subtitleFont: UIFont = .cryptoSubhead2
+    private static let titleFont: UIFont = .appHeadline2
+    private static let subtitleFont: UIFont = .appSubhead2
     private static let verticalMargin: CGFloat = .margin2x
 
     private let titleLabel = UILabel()

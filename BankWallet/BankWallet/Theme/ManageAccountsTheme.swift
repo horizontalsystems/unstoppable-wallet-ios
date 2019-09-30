@@ -20,17 +20,17 @@ class ManageAccountsTheme {
     static let nonActiveKeyImageColor = UIColor.cryptoGray50
     static let alertKeyImageColor = UIColor.cryptoGray
 
-    static let cellTitleFont = UIFont.cryptoHeadline2
+    static let cellTitleFont = UIFont.appHeadline2
     static var cellTitleColor: UIColor { return .crypto_White_Black }
     static var nonActiveCellColor: UIColor { return .cryptoGray50 }
 
-    static let coinsFont = UIFont.cryptoSubhead2
+    static let coinsFont = UIFont.appSubhead2
     static let coinsColor = UIColor.cryptoGray
 
     static var buttonsBackgroundColorDictionary: RespondButton.Style  { return [.active: .crypto_Steel20_LightBackground, .selected: .crypto_Steel40_LightGray, .disabled: .crypto_Steel20_LightBackground] }
     static var buttonsTextColorDictionary: RespondButton.Style { return [.active: .crypto_Bars_Dark, .selected: .crypto_Bars_Dark, .disabled: UIColor.cryptoGray50] }
 
-    static let buttonsFont = UIFont.cryptoSubhead1
+    static let buttonsFont = UIFont.appSubhead1
     static let buttonsTopMargin: CGFloat = 16
     static let buttonsMargin: CGFloat = 16
     static let buttonsHeight: CGFloat = 32
@@ -38,5 +38,5 @@ class ManageAccountsTheme {
     static let buttonCornerRadius: CGFloat = 8
 
     static let descriptionColor: UIColor = .cryptoGray
-    static let descriptionFont: UIFont = .cryptoSubhead1
+    static let descriptionFont: UIFont = .appSubhead1
 }
