@@ -224,7 +224,7 @@
 // Settings -> Notifications
 
 "settings_notifications.title" = "通知";
-"settings_notifications.description" = "为您要监察的代币设置价格变更警报。";
+"settings_notifications.description" = "为您要监察的代币设置价格变更警报。\n\n当价格的变化在24小时内超出选定的临界值时，您将收到警报。";
 "settings_notifications.alert_off" = "关";
 "settings.notifications.deactivate_all" = "全部停用";
 "settings.notifications.disabled_text" = "已禁用Unstoppable钱包应用通知。您必须开启通知并允许后台应用刷新才能接收价格变更警报。";
