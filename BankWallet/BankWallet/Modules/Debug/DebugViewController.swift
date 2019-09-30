@@ -54,7 +54,6 @@ class DebugViewController: WalletViewController {
             maker.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).inset(CGFloat.margin8x)
         }
 
-
         delegate.viewDidLoad()
     }
 
@@ -70,8 +69,6 @@ extension DebugViewController: IDebugView {
         textView.text = logs.joined(separator: "\n")
         textView.setContentOffset(.zero, animated: true)
     }
-
-
 
     func showCopied() {
         HudHelper.instance.showSuccess(title: "alert.copied".localized)
