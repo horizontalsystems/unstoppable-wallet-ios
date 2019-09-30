@@ -14,7 +14,6 @@ protocol IDebugInteractor {
 
 protocol IDebugInteractorDelegate: class {
     func didEnterForeground()
-    func didClearLogs()
 }
 
 protocol IDebugRouter {
