@@ -33,7 +33,7 @@ public class DateHelper {
     }
 
     private func timeOnly() -> DateFormatter {
-        return getFormatter(forFormat: "\(DateHelper.correctedSystemHourFormat):mm")
+        getFormatter(forFormat: "\(DateHelper.correctedSystemHourFormat):mm")
     }
 
     private func dateOnly(forDate date: Date, short: Bool = true) -> DateFormatter {
@@ -59,11 +59,11 @@ public class DateHelper {
     }
 
     public func formatTransactionTime(from date: Date, useYesterday: Bool = false) -> String {
-        return getFormatter(forFormat: "\(DateHelper.correctedSystemHourFormat):mm").string(from: date)
+        getFormatter(forFormat: "\(DateHelper.correctedSystemHourFormat):mm").string(from: date)
     }
 
     public func formatRateListTitle(from date: Date) -> String {
-        return getFormatter(forFormat: "MMMM d").string(from: date)
+        getFormatter(forFormat: "MMMM d").string(from: date)
     }
 
     public func formatFullTime(from date: Date) -> String {
@@ -87,15 +87,15 @@ public class DateHelper {
     }
 
     func formatLockoutExpirationDate(from date: Date) -> String {
-        return getFormatter(forFormat: "\(DateHelper.correctedSystemHourFormat):mm:ss").string(from: date)
+        getFormatter(forFormat: "\(DateHelper.correctedSystemHourFormat):mm:ss").string(from: date)
     }
 
     func formatSyncedThroughDate(from date: Date) -> String {
-        return getFormatter(forFormat: "yyyy MMM d").string(from: date)
+        getFormatter(forFormat: "yyyy MMM d").string(from: date)
     }
 
     func formatDebug(date: Date) -> String {
-        return getFormatter(forFormat: "yyyy MMM d, HH:mm:ss").string(from: date)
+        getFormatter(forFormat: "MM/dd/yy, HH:mm:ss").string(from: date)
     }
 
 }

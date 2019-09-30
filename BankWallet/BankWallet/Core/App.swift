@@ -51,6 +51,7 @@ class App {
     let priceAlertManager: IPriceAlertManager
     let backgroundPriceAlertManager: IBackgroundPriceAlertManager
     let notificationManager: INotificationManager
+    let debugBackgroundLogger: IDebugBackgroundLogger
 
     let appManager: AppManager
 
@@ -128,7 +129,9 @@ class App {
 
         let notificationFactory = NotificationFactory(emojiHelper: EmojiHelper())
         let priceAlertHandler = PriceAlertHandler(priceAlertStorage: priceAlertStorage, notificationManager: notificationManager, notificationFactory: notificationFactory)
-        backgroundPriceAlertManager = BackgroundPriceAlertManager(rateManager: rateManager, currencyManager: currencyManager, rateStorage: storage, priceAlertStorage: priceAlertStorage, priceAlertHandler: priceAlertHandler)
+
+        debugBackgroundLogger = DebugBackgroundLogger(localStorage: localStorage, dateProvider: CurrentDateProvider())
+        backgroundPriceAlertManager = BackgroundPriceAlertManager(rateManager: rateManager, currencyManager: currencyManager, rateStorage: storage, priceAlertStorage: priceAlertStorage, priceAlertHandler: priceAlertHandler, debugBackgroundLogger: debugBackgroundLogger)
 
         let kitCleaner = KitCleaner(accountManager: accountManager)
         appManager = AppManager(
@@ -143,7 +146,8 @@ class App {
                 backgroundPriceAlertManager: backgroundPriceAlertManager,
                 localStorage: localStorage,
                 secureStorage: secureStorage,
-                kitCleaner: kitCleaner
+                kitCleaner: kitCleaner,
+                debugBackgroundLogger: debugBackgroundLogger
         )
     }
 
