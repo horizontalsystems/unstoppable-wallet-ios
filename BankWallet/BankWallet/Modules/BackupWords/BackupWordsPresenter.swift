@@ -17,10 +17,6 @@ class BackupWordsPresenter: IBackupWordsPresenter {
 
 extension BackupWordsPresenter: IBackupWordsViewDelegate {
 
-    var predefinedAccountTitle: String {
-        predefinedAccountType.title
-    }
-
     func didTapProceed() {
         if isBackedUp {
             router.notifyClosed()
