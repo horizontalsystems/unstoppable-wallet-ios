@@ -19,6 +19,7 @@ protocol ILocalStorage: class {
     var balanceSortType: BalanceSortType? { get set }
     var isBiometricOn: Bool { get set }
     var currentLanguage: String? { get set }
+    var backgroundFetchLog: String? { get set }
     var lastExitDate: Double { get set }
     var didLaunchOnce: Bool { get set }
     var sendInputType: SendInputType? { get set }
@@ -563,4 +564,16 @@ protocol INotificationManager {
     func requestPermission(onComplete: @escaping (Bool) -> ())
     func show(notification: AlertNotification)
     func removeNotifications()
+}
+
+protocol IDebugBackgroundLogger {
+    var logs: [String] { get }
+
+    func logFinishLaunching()
+    func logEnterBackground()
+    func logEnterForeground()
+    func logTerminate()
+
+    func add(log: String)
+    func clearLogs()
 }

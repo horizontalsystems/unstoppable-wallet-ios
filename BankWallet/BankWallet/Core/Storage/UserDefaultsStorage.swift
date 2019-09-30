@@ -17,9 +17,10 @@ class UserDefaultsStorage {
     private let keySendInputType = "send_input_type_key"
     private let keyChartType = "chart_type_key"
     private let mainShownOnceKey = "main_shown_once_key"
+    private let backgroundFetchLogKey = "background_fetch_key"
 
     private func getString(_ name: String) -> String? {
-        return UserDefaults.standard.value(forKey: name) as? String
+        UserDefaults.standard.value(forKey: name) as? String
     }
 
     private func setString(_ name: String, value: String?) {
@@ -32,7 +33,7 @@ class UserDefaultsStorage {
     }
 
     private func bool(for key: String) -> Bool? {
-        return UserDefaults.standard.value(forKey: key) as? Bool
+        UserDefaults.standard.value(forKey: key) as? Bool
     }
 
     private func set(_ value: Bool, for key: String) {
@@ -49,7 +50,7 @@ class UserDefaultsStorage {
     }
 
     private func double(for key: String) -> Double {
-        return UserDefaults.standard.double(forKey: key)
+        UserDefaults.standard.double(forKey: key)
     }
 
 }
@@ -57,57 +58,62 @@ class UserDefaultsStorage {
 extension UserDefaultsStorage: ILocalStorage {
 
     var currentLanguage: String? {
-        get { return getString(keyCurrentLanguage) }
+        get { getString(keyCurrentLanguage) }
         set { setString(keyCurrentLanguage, value: newValue) }
     }
 
+    var backgroundFetchLog: String? {
+        get { getString(backgroundFetchLogKey) }
+        set { setString(backgroundFetchLogKey, value: newValue) }
+    }
+
     var lastExitDate: Double {
-        get { return double(for: lastExitDateKey) }
+        get { double(for: lastExitDateKey) }
         set { set(newValue, for: lastExitDateKey) }
     }
 
     var didLaunchOnce: Bool {
-        get { return bool(for: didLaunchOnceKey) ?? false }
+        get { bool(for: didLaunchOnceKey) ?? false }
         set { set(newValue, for: didLaunchOnceKey) }
     }
 
     var baseCurrencyCode: String? {
-        get { return getString(keyBaseCurrencyCode) }
+        get { getString(keyBaseCurrencyCode) }
         set { setString(keyBaseCurrencyCode, value: newValue) }
     }
 
     var baseBitcoinProvider: String? {
-        get { return getString(keyBaseBitcoinProvider) }
+        get { getString(keyBaseBitcoinProvider) }
         set { setString(keyBaseBitcoinProvider, value: newValue) }
     }
 
     var baseDashProvider: String? {
-        get { return getString(keyBaseDashProvider) }
+        get { getString(keyBaseDashProvider) }
         set { setString(keyBaseDashProvider, value: newValue) }
     }
 
     var baseBinanceProvider: String? {
-        get { return getString(keyBaseBinanceProvider) }
+        get { getString(keyBaseBinanceProvider) }
         set { setString(keyBaseBinanceProvider, value: newValue) }
     }
 
     var baseEosProvider: String? {
-        get { return getString(keyBaseEosProvider) }
+        get { getString(keyBaseEosProvider) }
         set { setString(keyBaseEosProvider, value: newValue) }
     }
 
     var baseEthereumProvider: String? {
-        get { return getString(keyBaseEthereumProvider) }
+        get { getString(keyBaseEthereumProvider) }
         set { setString(keyBaseEthereumProvider, value: newValue) }
     }
 
     var lightMode: Bool {
-        get { return bool(for: keyLightMode) ?? false }
+        get { bool(for: keyLightMode) ?? false }
         set { set(newValue, for: keyLightMode) }
     }
 
     var agreementAccepted: Bool {
-        get { return bool(for: agreementAcceptedKey) ?? false }
+        get { bool(for: agreementAcceptedKey) ?? false }
         set { set(newValue, for: agreementAcceptedKey) }
     }
 
@@ -128,7 +134,7 @@ extension UserDefaultsStorage: ILocalStorage {
     }
 
     var isBiometricOn: Bool {
-        get { return bool(for: biometricOnKey) ?? false }
+        get { bool(for: biometricOnKey) ?? false }
         set { set(newValue, for: biometricOnKey) }
     }
 
@@ -157,7 +163,7 @@ extension UserDefaultsStorage: ILocalStorage {
     }
 
     var mainShownOnce: Bool {
-        get { return bool(for: mainShownOnceKey) ?? false }
+        get { bool(for: mainShownOnceKey) ?? false }
         set { set(newValue, for: mainShownOnceKey) }
     }
 

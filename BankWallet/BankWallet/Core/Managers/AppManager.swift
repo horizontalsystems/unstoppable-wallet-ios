@@ -13,6 +13,7 @@ class AppManager {
     private let localStorage: ILocalStorage
     private let secureStorage: ISecureStorage
     private let kitCleaner: IKitCleaner
+    private let debugBackgroundLogger: IDebugBackgroundLogger
 
     private let didBecomeActiveSubject = PublishSubject<()>()
     private let willEnterForegroundSubject = PublishSubject<()>()
@@ -20,7 +21,7 @@ class AppManager {
     init(accountManager: IAccountManager, walletManager: IWalletManager, adapterManager: IAdapterManager, lockManager: ILockManager,
          passcodeLockManager: IPasscodeLockManager, biometryManager: IBiometryManager, blurManager: IBlurManager,
          notificationManager: INotificationManager, backgroundPriceAlertManager: IBackgroundPriceAlertManager,
-         localStorage: ILocalStorage, secureStorage: ISecureStorage, kitCleaner: IKitCleaner) {
+         localStorage: ILocalStorage, secureStorage: ISecureStorage, kitCleaner: IKitCleaner, debugBackgroundLogger: IDebugBackgroundLogger) {
         self.accountManager = accountManager
         self.walletManager = walletManager
         self.adapterManager = adapterManager
@@ -33,6 +34,7 @@ class AppManager {
         self.localStorage = localStorage
         self.secureStorage = secureStorage
         self.kitCleaner = kitCleaner
+        self.debugBackgroundLogger = debugBackgroundLogger
     }
 
     private func handleFirstLaunch() {
@@ -47,6 +49,7 @@ class AppManager {
 extension AppManager {
 
     func didFinishLaunching() {
+        debugBackgroundLogger.logFinishLaunching()
         handleFirstLaunch()
 
         passcodeLockManager.didFinishLaunching()
@@ -68,11 +71,14 @@ extension AppManager {
     }
 
     func didEnterBackground() {
+        debugBackgroundLogger.logEnterBackground()
+
         lockManager.didEnterBackground()
         backgroundPriceAlertManager.didEnterBackground()
     }
 
     func willEnterForeground() {
+        debugBackgroundLogger.logEnterForeground()
         willEnterForegroundSubject.onNext(())
 
         passcodeLockManager.willEnterForeground()
@@ -80,6 +86,10 @@ extension AppManager {
         notificationManager.removeNotifications()
         adapterManager.refresh()
         biometryManager.refresh()
+    }
+
+    func willTerminate() {
+        debugBackgroundLogger.logTerminate()
     }
 
 }
