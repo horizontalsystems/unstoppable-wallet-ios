@@ -43,7 +43,7 @@
 
 "restore.title" = "Restore From";
 "restore.item_title" = "%@ Wallet";
-"restore.description" = "Cüzdanı geri yüklemek için o cüzdanın gizli anahtarını gürmelisiniz.\n\nDaha fazla cüzdanı geri yüklemek için bir cüzdanı geri yükledikten sonra Ayarlardaki Anahtarları Yönet bölümüne gidin.";
+"restore.description" = "To restore existing wallet you need to enter a secret key for that wallet.\n\nOnce you restore one wallet you will be able to restore other wallets via Manage Wallets section in Security settings of the app.";
 "restore.words.description" = "Enter private key for %@ wallet";
 "restore.validation_failed" = "Yanlış Anahtar";
 "restore.placeholder.account_name" = "Account Name";
