@@ -66,18 +66,17 @@
 
 "backup.close" = "Schließen";
 "backup.backup_required" = "Backup erforderlich";
+"backup.private_key" = "Private Key";
 
-"backup.intro.title_backup" = "Private Key";
+"backup.intro.title_backup" = "Backup";
 "backup.intro.title_show" = "Schlüssel anzeigen";
 "backup.intro.subtitle" = "The private key that will be shown next is the only way to restore your funds if your phone is ever lost, stolen, broken etc.\n\nMake sure that no one is watching your screen.\n\nThe coins controlled by this key: %@";
 "backup.intro.later" = "Später";
 "backup.intro.backup_now" = "Backup";
 "backup.intro.show_key" = "Schlüssel anzeigen";
 
-"backup.words.title" = "%@ Key";
 "backup.words.confirmation_description" = "Enter words from your %@ Key";
 
-"backup.eos.title" = "EOS-Schlüssel";
 "backup.eos.account_name" = "Account Name";
 "backup.eos.active_private_key" = "Active Private Key";
 "backup.eos.hint" = "Den Schlüssel mit \"Kopieren\" zu kopieren, ist riskant, da Sie womöglich Zwischenablage-Management-Apps oder andere Apps nutzen, die Zugriff auf die Daten in der Zwischenablage haben.";
