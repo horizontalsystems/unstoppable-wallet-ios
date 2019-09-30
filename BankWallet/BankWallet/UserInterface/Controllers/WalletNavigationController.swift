@@ -20,10 +20,10 @@ class WalletNavigationController: UINavigationController {
     private func commonInit() {
         navigationBar.prefersLargeTitles = true
         modalPresentationStyle = .fullScreen
+        navigationBar.tintColor = AppTheme.navigationBarTintColor
         // set navigation theme for iOS less than 13
         guard #available(iOS 13.0, *) else {
             navigationBar.barStyle = App.theme.navigationBarStyle
-            navigationBar.tintColor = AppTheme.navigationBarTintColor
             let colorImage = UIImage(color: AppTheme.navigationBarBackgroundColor)
             navigationBar.setBackgroundImage(colorImage, for: .default)
             navigationBar.shadowImage = UIImage()
