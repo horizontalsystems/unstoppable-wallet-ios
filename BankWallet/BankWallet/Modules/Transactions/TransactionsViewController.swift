@@ -77,10 +77,6 @@ class TransactionsViewController: WalletViewController {
         headerBackgroundTriggerOffset = headerBackgroundTriggerOffset == nil ? tableView.contentOffset.y : headerBackgroundTriggerOffset
     }
 
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return App.theme.statusBarStyle
-    }
-
     private func reload(indexPaths: [IndexPath]) {
         for indexPath in indexPaths {
             if let cell = tableView.cellForRow(at: indexPath) as? TransactionCell, let item = items?[indexPath.row] {

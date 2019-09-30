@@ -39,7 +39,7 @@ class MainViewController: UITabBarController {
     }
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
-        return App.theme.statusBarStyle
+        App.theme.statusBarStyle
     }
 
     override func viewWillAppear(_ animated: Bool) {

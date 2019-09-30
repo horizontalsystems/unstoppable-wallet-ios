@@ -78,6 +78,20 @@ class AppTheme {
     static let closeButtonColor: UIColor = .cryptoGray
 
     static let progressStepsCount = 3
+
+    static func updateNavigationBarTheme() {
+        if #available(iOS 13.0, *) {
+            let coloredAppearance = UINavigationBarAppearance()
+            coloredAppearance.configureWithTransparentBackground()
+            coloredAppearance.backgroundColor = AppTheme.navigationBarBackgroundColor
+            coloredAppearance.titleTextAttributes = [.foregroundColor: UIColor.appOz]
+            coloredAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.appOz]
+
+            UINavigationBar.appearance().standardAppearance = coloredAppearance
+            UINavigationBar.appearance().scrollEdgeAppearance = coloredAppearance
+        }
+    }
+
 }
 
 extension CGFloat {

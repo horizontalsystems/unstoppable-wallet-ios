@@ -41,10 +41,6 @@ class ManageAccountsViewController: WalletViewController {
         delegate.viewDidLoad()
     }
 
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return App.theme.statusBarStyle
-    }
-
     @objc func doneDidTap() {
         delegate.didTapDone()
     }

@@ -73,10 +73,6 @@ class PinViewController: WalletViewController {
         }
     }
 
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return App.theme.statusBarStyle
-    }
-
 }
 
 extension PinViewController: NumPadDelegate {

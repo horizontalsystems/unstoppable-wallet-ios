@@ -55,10 +55,6 @@ class SendConfirmationViewController: WalletViewController, SectionsDataSource {
         delegate.viewDidLoad()
     }
 
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return App.theme.statusBarStyle
-    }
-
     @objc private func onTapCancel() {
         delegate.onCancelClicked()
     }

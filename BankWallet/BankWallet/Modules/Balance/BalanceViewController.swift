@@ -66,10 +66,6 @@ class BalanceViewController: WalletViewController {
         headerBackgroundTriggerOffset = headerBackgroundTriggerOffset == nil ? tableView.contentOffset.y : headerBackgroundTriggerOffset
     }
 
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return App.theme.statusBarStyle
-    }
-
     @objc func onRefresh() {
         delegate.refresh()
     }
