@@ -51,10 +51,12 @@ struct ManageAccountItem {
 struct ManageAccountViewItem {
     let title: String
     let coinCodes: String
-    let state: ManageAccountViewItemState
+    let linked: Bool
+    let rightButtonState: ManageAccountRightButtonState
 }
 
-enum ManageAccountViewItemState {
-    case linked(backedUp: Bool)
-    case notLinked
+enum ManageAccountRightButtonState {
+    case backup
+    case show
+    case restore
 }
