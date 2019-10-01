@@ -58,22 +58,22 @@ PODS:
     - ObjectMapper (~> 3.0)
     - RxSwift (~> 5.0)
   - DeepDiff (2.2.0)
-  - EosioSwift (0.1.1):
+  - EosioSwift (0.1.3):
     - BigInt (~> 4.0)
     - PromiseKit (~> 6.8)
-  - EosioSwiftAbieosSerializationProvider (0.1.1):
-    - EosioSwift (~> 0.1.1)
-  - EosioSwiftEcc (0.1.1):
-    - EosioSwift (~> 0.1.1)
-    - GRKOpenSSLFramework (~> 1.0)
-  - EosioSwiftSoftkeySignatureProvider (0.1.1):
-    - EosioSwift (~> 0.1.1)
-    - EosioSwiftEcc (~> 0.1.1)
-  - EosKit.swift (0.1.1):
+  - EosioSwiftAbieosSerializationProvider (0.1.3):
+    - EosioSwift (~> 0.1.3)
+  - EosioSwiftEcc (0.1.3):
+    - EosioSwift (~> 0.1.3)
+    - GRKOpenSSLFramework (= 1.0.2.16)
+  - EosioSwiftSoftkeySignatureProvider (0.1.3):
+    - EosioSwift (~> 0.1.3)
+    - EosioSwiftEcc (~> 0.1.3)
+  - EosKit.swift (0.1.2):
     - Alamofire (~> 4.0)
-    - EosioSwift (~> 0.1.1)
-    - EosioSwiftAbieosSerializationProvider (~> 0.1.1)
-    - EosioSwiftSoftkeySignatureProvider (~> 0.1.1)
+    - EosioSwift (~> 0.1.3)
+    - EosioSwiftAbieosSerializationProvider (~> 0.1.3)
+    - EosioSwiftSoftkeySignatureProvider (~> 0.1.3)
     - GRDB.swift (~> 4.0)
     - RxSwift (~> 5.0)
   - Erc20Kit.swift (0.6.2):
@@ -97,7 +97,7 @@ PODS:
   - GRDB.swift (4.4.0):
     - GRDB.swift/standard (= 4.4.0)
   - GRDB.swift/standard (4.4.0)
-  - GRKOpenSSLFramework (1.0.2.19)
+  - GRKOpenSSLFramework (1.0.2.16)
   - HSCryptoKit (1.5.0)
   - HSHDWalletKit (1.2.0):
     - HSCryptoKit (~> 1)
@@ -133,7 +133,7 @@ PODS:
     - SnapKit (~> 5.0)
     - UIExtensions.swift
   - SnapKit (5.0.1)
-  - SwiftProtobuf (1.6.0)
+  - SwiftProtobuf (1.7.0)
   - SwiftyJSON (4.3.0)
   - UIExtensions.swift (1.0)
 
@@ -249,10 +249,10 @@ CHECKOUT OPTIONS:
     :commit: 5d02ef8ffa653c5ab9876d81bec0b73f1cf8c93e
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios/
   EosioSwift:
-    :commit: bc0a1dc754be459031857678bbaceb27b3642aa3
+    :commit: d181f4fcd4ca3d7e0254e40088ebeb083e24cec2
     :git: https://github.com/horizontalsystems/eosio-swift
   EosKit.swift:
-    :commit: 8efea68172b0a83f9c80136797e9104fb8acaa14
+    :commit: 111a9492e6d9953b5d2b7b4cb76cf2a0f2a3f138
     :git: https://github.com/horizontalsystems/eos-kit-ios/
   Erc20Kit.swift:
     :commit: e9dbd3711aa6d66c4e70769dd5a3743defb95b5c
@@ -291,16 +291,16 @@ SPEC CHECKSUMS:
   Cuckoo: f5f4e7c308c512cc2dedbdce23f5dc6985cb5173
   DashKit.swift: 67635c462c4ceed06344751b30a03b377625deff
   DeepDiff: e329bc46dd14ca788d8ec08d34420799ba1d77f2
-  EosioSwift: 4aa9a3a8b9ab58316e1874885e3e62e2766c441c
-  EosioSwiftAbieosSerializationProvider: 281b16b5fe0787aa1cf1c709d9ca3f5696b8ebba
-  EosioSwiftEcc: 24800b7d1577f13d64413ded2a36f6993ebf7896
-  EosioSwiftSoftkeySignatureProvider: d60802257e87ad3ff973c760a4b4620e246e485f
-  EosKit.swift: 5f1c3b05850cd71938ee1e8d715ef2481487c4be
+  EosioSwift: 629bb731f0c4121a7b54bd1a18dda87c19f08824
+  EosioSwiftAbieosSerializationProvider: 6726a56aedd9cc6b5ec3636dd68945f44a48e311
+  EosioSwiftEcc: 41934ba819a5bedb6563d58a6d08aa389fb5903a
+  EosioSwiftSoftkeySignatureProvider: dbbcc7f9cf170f801a13afb8f5a203699bd92621
+  EosKit.swift: 9d38eae6f07a0f8b012a51821b7e5b683fc56085
   Erc20Kit.swift: e1498e1f6f43bca28d1fd46e84bd44c496c30cc9
   EthereumKit.swift: 7b56ebc1f6358b83ef05cb5caac817eb56a2d29a
   FeeRateKit.swift: dd6bdac1ca89e7d4944f25f34a74046e176a6653
   GRDB.swift: 4f9b6e7efc9470426f6a6de10ec1fee798ff7e43
-  GRKOpenSSLFramework: 4abc733a8fcbc37060619a86a54202d2938dd70e
+  GRKOpenSSLFramework: 35944e317e6336b2944ad70b059d84db6b2d8532
   HSCryptoKit: 514a3111fd37ad18b7261d4a55271daaba3b0eb9
   HSHDWalletKit: 6f5d5b1f9b1f950c948bdff13f5f52e5c5bcb7bb
   HUD.swift: 006cc6e105bce8050c3c3f44d9111474c5c26c35
@@ -315,7 +315,7 @@ SPEC CHECKSUMS:
   RxSwift: 8b0671caa829a763bbce7271095859121cbd895f
   SectionsTableView.swift: 5ef2f3ae4a3b3aef91190cae7c0cb8655d4d8148
   SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
-  SwiftProtobuf: e905ca1366405696411aaf174411c4b19c0ef73d
+  SwiftProtobuf: 4fd9645e69b72cbae6ec8da5be0cdd20ca6565dd
   SwiftyJSON: 6faa0040f8b59dead0ee07436cbf76b73c08fd08
   UIExtensions.swift: 9f5a209e4e30f1ccfbf3eab01f02ffd8a20365d0
 
