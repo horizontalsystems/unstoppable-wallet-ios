@@ -47,7 +47,7 @@ class ManageAccountsViewItemFactoryTests: QuickSpec {
                     it("sets .notLinked") {
                         let viewItem = factory.viewItem(item: item)
 
-                        expect(viewItem.state).to(equal(ManageAccountViewItemState.notLinked))
+                        expect(viewItem.rightButtonState).to(equal(ManageAccountRightButtonState.restore))
                     }
                 }
 
@@ -59,7 +59,7 @@ class ManageAccountsViewItemFactoryTests: QuickSpec {
                         it("sets .linked with backedUp to be false") {
                             let viewItem = factory.viewItem(item: item)
 
-                            expect(viewItem.state).to(equal(ManageAccountViewItemState.linked(backedUp: false)))
+                            expect(viewItem.rightButtonState).to(equal(ManageAccountRightButtonState.backup))
                         }
                     }
 
@@ -69,7 +69,7 @@ class ManageAccountsViewItemFactoryTests: QuickSpec {
                         it("sets .linked with backedUp to be true") {
                             let viewItem = factory.viewItem(item: item)
 
-                            expect(viewItem.state).to(equal(ManageAccountViewItemState.linked(backedUp: true)))
+                            expect(viewItem.rightButtonState).to(equal(ManageAccountRightButtonState.show))
                         }
                     }
                 }

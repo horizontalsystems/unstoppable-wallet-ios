@@ -138,12 +138,13 @@ extension Account {
 
 }
 
-extension ManageAccountViewItemState: Equatable {
+extension ManageAccountRightButtonState: Equatable {
 
-    public static func ==(lhs: ManageAccountViewItemState, rhs: ManageAccountViewItemState) -> Bool {
+    public static func ==(lhs: ManageAccountRightButtonState, rhs: ManageAccountRightButtonState) -> Bool {
         switch (lhs, rhs) {
-        case (.linked(let lhsBackedUp), .linked(let rhsBackedUp)): return lhsBackedUp == rhsBackedUp
-        case (.notLinked, .notLinked): return true
+        case (.backup, .backup): return true
+        case (.show, .show): return true
+        case (.restore, .restore): return true
         default: return false
         }
     }

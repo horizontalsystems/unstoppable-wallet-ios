@@ -1,18 +1,19 @@
 class ManageAccountsViewItemFactory {
 
     func viewItem(item: ManageAccountItem) -> ManageAccountViewItem {
-        let state: ManageAccountViewItemState
+        let rightButtonState: ManageAccountRightButtonState
 
         if let account = item.account {
-            state = .linked(backedUp: account.backedUp)
+            rightButtonState = !account.backedUp ? .backup : .show
         } else {
-            state = .notLinked
+            rightButtonState = .restore
         }
 
         return ManageAccountViewItem(
                 title: item.predefinedAccountType.title,
                 coinCodes: item.predefinedAccountType.coinCodes,
-                state: state
+                linked: item.account != nil,
+                rightButtonState: rightButtonState
         )
     }
 

@@ -15,8 +15,13 @@ class ManageAccountCell: CardCell {
     private let leftButton = UIButton.appSecondary
     private let rightButton = UIButton.appSecondary
 
-    private var onTapLeft: (() -> ())?
-    private var onTapRight: (() -> ())?
+    private var onTapCreate: (() -> ())?
+    private var onTapRestore: (() -> ())?
+    private var onTapUnlink: (() -> ())?
+    private var onTapBackup: (() -> ())?
+
+    private var linked: Bool?
+    private var rightButtonState: ManageAccountRightButtonState?
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -54,6 +59,7 @@ class ManageAccountCell: CardCell {
         }
 
         rightButton.addTarget(self, action: #selector(tapRight), for: .touchUpInside)
+        rightButton.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 10)
 
         clippingView.addSubview(rightButton)
         rightButton.snp.makeConstraints { maker in
@@ -70,41 +76,67 @@ class ManageAccountCell: CardCell {
     }
 
     @objc private func tapLeft() {
-        onTapLeft?()
+        guard let linked = linked else {
+            return
+        }
+
+        if linked {
+            onTapUnlink?()
+        } else {
+            onTapCreate?()
+        }
     }
 
     @objc private func tapRight() {
-        onTapRight?()
+        guard let buttonState = rightButtonState else {
+            return
+        }
+
+        switch buttonState {
+        case .backup, .show:
+            onTapBackup?()
+        case .restore:
+            onTapRestore?()
+        }
     }
 
-    func bind(viewItem: ManageAccountViewItem, onTapLeft: @escaping () -> (), onTapRight: @escaping () -> ()) {
+    func bind(viewItem: ManageAccountViewItem, onTapCreate: (() -> ())?, onTapRestore: (() -> ())?, onTapUnlink: (() -> ())?, onTapBackup: (() -> ())?) {
+        linked = viewItem.linked
+        rightButtonState = viewItem.rightButtonState
+
         let titleText = ManageAccountCell.titleText(viewItem: viewItem)
         let coinsText = viewItem.coinCodes
 
-        switch viewItem.state {
-        case .linked(let backedUp):
+        if viewItem.linked {
             clippingView.borderWidth = 2 / UIScreen.main.scale
             activeKeyIcon.tintColor = .appJacob
 
-            leftButton.setTitle("settings_manage_keys.delete".localized, for: .normal)
-            rightButton.setTitle(backedUp ? "settings_manage_keys.show".localized : "settings_manage_keys.backup".localized, for: .normal)
-            rightButton.setImage(backedUp ? nil : UIImage(named: "Attention Icon Small")?.tinted(with: ManageAccountsTheme.attentionColor), for: .normal)
-            rightButton.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 10)
-
-            accountView.bind(title: titleText, subtitle: coinsText)
-        case .notLinked:
+            leftButton.setTitle("settings_manage_keys.delete".localized, for : .normal)
+        } else {
             clippingView.borderWidth = 0
             activeKeyIcon.tintColor = .appGray50
 
             leftButton.setTitle("settings_manage_keys.create".localized, for: .normal)
-            rightButton.setTitle("settings_manage_keys.restore".localized, for: .normal)
-            rightButton.setImage(nil, for: .normal)
-
-            accountView.bind(title: titleText, subtitle: coinsText)
         }
 
-        self.onTapLeft = onTapLeft
-        self.onTapRight = onTapRight
+        switch viewItem.rightButtonState {
+        case .backup:
+            rightButton.setTitle("settings_manage_keys.backup".localized, for: .normal)
+            rightButton.setImage(UIImage(named: "Attention Icon Small")?.tinted(with: ManageAccountsTheme.attentionColor), for: .normal)
+        case .show:
+            rightButton.setTitle("settings_manage_keys.show".localized, for: .normal)
+            rightButton.setImage(nil, for: .normal)
+        case .restore:
+            rightButton.setTitle("settings_manage_keys.restore".localized, for: .normal)
+            rightButton.setImage(nil, for: .normal)
+        }
+
+        accountView.bind(title: titleText, subtitle: coinsText)
+
+        self.onTapCreate = onTapCreate
+        self.onTapRestore = onTapRestore
+        self.onTapUnlink = onTapUnlink
+        self.onTapBackup = onTapBackup
     }
 
 }
