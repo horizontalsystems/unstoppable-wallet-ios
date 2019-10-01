@@ -129,7 +129,7 @@ extension ManageAccountsViewController: UITableViewDataSource, UITableViewDelega
         if indexPath.section == descriptionSectionIndex {
             return ManageAccountDescriptionCell.height(forContainerWidth: tableView.bounds.width)
         }
-        return ManageAccountsTheme.rowHeight
+        return ManageAccountCell.height(containerWidth: tableView.bounds.width, viewItem: delegate.item(index: indexPath.row))
     }
 
     public func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
