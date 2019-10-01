@@ -26,6 +26,8 @@ class DepositAddressCollectionCell: UICollectionViewCell {
         }
 
         contentView.addSubview(qrCodeImageView)
+        qrCodeImageView.backgroundColor = .white
+        qrCodeImageView.contentMode = .center
         qrCodeImageView.clipsToBounds = true
         qrCodeImageView.layer.cornerRadius = DepositTheme.qrCornerRadius
         qrCodeImageView.snp.makeConstraints { maker in
@@ -64,7 +66,6 @@ class DepositAddressCollectionCell: UICollectionViewCell {
                 tintColor: nil,
                 onClose: onClose)
 
-        qrCodeImageView.backgroundColor = .white
         addressTitleLabel.text = addressTitle(coin: address.coin)
         addressButton.bind(value: address.address, showExtra: .icon, onTap: onCopy)
 
