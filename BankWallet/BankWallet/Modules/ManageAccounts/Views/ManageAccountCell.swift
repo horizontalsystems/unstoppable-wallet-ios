@@ -1,17 +1,19 @@
 import UIKit
 import SnapKit
 
-class ManageAccountCell: UITableViewCell {
-    private let roundedBackground = UIView()
-    private let clippingView = UIView()
-    private var gradientLayer = CAGradientLayer()
+class ManageAccountCell: CardCell {
+    private static let topPadding: CGFloat = .margin2x
+    private static let bottomPadding: CGFloat = .margin3x
+    private static let horizontalPadding: CGFloat = .margin3x
+    private static let keyIconRightMargin: CGFloat = .margin2x
+    private static let accountViewTopPadding: CGFloat = 10
+    private static let buttonHeight: CGFloat = .heightButtonSecondary
+    private static let buttonTopMargin: CGFloat = .margin3x
 
+    private let accountView = AccountDoubleLineCellView()
     private let activeKeyIcon = UIImageView()
-    private let nameLabel = UILabel()
-    private let coinsLabel = UILabel()
-
-    private let leftButton = RespondButton()
-    private let rightButton = RespondButton()
+    private let leftButton = UIButton.appSecondary
+    private let rightButton = UIButton.appSecondary
 
     private var onTapLeft: (() -> ())?
     private var onTapRight: (() -> ())?
@@ -19,156 +21,107 @@ class ManageAccountCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
-        contentView.backgroundColor = .clear
-        backgroundColor = .clear
         selectionStyle = .none
 
-        contentView.addSubview(roundedBackground)
-        roundedBackground.snp.makeConstraints { maker in
-            maker.top.equalToSuperview()
-            maker.leading.trailing.equalToSuperview().inset(AppTheme.viewMargin)
-            maker.bottom.equalToSuperview().offset(-ManageAccountsTheme.cellBottomMargin)
-        }
-
-        roundedBackground.backgroundColor = ManageAccountsTheme.roundedBackgroundColor
-        roundedBackground.layer.cornerRadius = ManageAccountsTheme.roundedBackgroundCornerRadius
-        roundedBackground.layer.shadowColor = ManageAccountsTheme.roundedBackgroundShadowColor.cgColor
-        roundedBackground.layer.shadowRadius = 4
-        roundedBackground.layer.shadowOffset = CGSize(width: 0, height: 4)
-
-        roundedBackground.addSubview(clippingView)
-        clippingView.backgroundColor = .clear
-        clippingView.clipsToBounds = true
-        clippingView.layer.cornerRadius = ManageAccountsTheme.roundedBackgroundCornerRadius
-        clippingView.snp.makeConstraints { maker in
-            maker.edges.equalToSuperview()
-        }
-
-        clippingView.addSubview(activeKeyIcon)
         clippingView.layer.shouldRasterize = true
         clippingView.layer.rasterizationScale = UIScreen.main.scale
-        clippingView.borderColor = ManageAccountsTheme.keyImageColor
+        clippingView.borderColor = .appJacob
 
-        gradientLayer.locations = [0.0, 1.0]
-        clippingView.layer.addSublayer(gradientLayer)
-
-        activeKeyIcon.snp.makeConstraints { maker in
-            maker.leading.equalToSuperview().offset(ManageAccountsTheme.cellSmallPadding)
-            maker.top.equalToSuperview().offset(ManageAccountsTheme.cellSmallPadding)
-        }
         activeKeyIcon.image = UIImage(named: "Key Icon")?.withRenderingMode(.alwaysTemplate)
         activeKeyIcon.setContentHuggingPriority(.defaultHigh, for: .horizontal)
-        nameLabel.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
 
-        clippingView.addSubview(nameLabel)
-        nameLabel.snp.makeConstraints { maker in
-            maker.leading.equalTo(activeKeyIcon.snp.trailing).offset(ManageAccountsTheme.cellSmallPadding)
-            maker.trailing.equalToSuperview().offset(-ManageAccountsTheme.cellSmallPadding)
-            maker.top.equalToSuperview().offset(ManageAccountsTheme.cellSmallPadding)
+        clippingView.addSubview(activeKeyIcon)
+        activeKeyIcon.snp.makeConstraints { maker in
+            maker.leading.equalToSuperview().offset(ManageAccountCell.horizontalPadding)
+            maker.top.equalToSuperview().offset(ManageAccountCell.topPadding)
         }
-        nameLabel.font = ManageAccountsTheme.cellTitleFont
 
-        clippingView.addSubview(coinsLabel)
-        coinsLabel.snp.makeConstraints { maker in
-            maker.leading.equalTo(activeKeyIcon.snp.trailing).offset(ManageAccountsTheme.cellSmallPadding)
-            maker.trailing.equalToSuperview().offset(-ManageAccountsTheme.cellSmallPadding)
-            maker.top.equalTo(self.nameLabel.snp.bottom).offset(ManageAccountsTheme.cellSmallPadding)
+        clippingView.addSubview(accountView)
+        accountView.snp.makeConstraints { maker in
+            maker.leading.equalTo(activeKeyIcon.snp.trailing).offset(ManageAccountCell.keyIconRightMargin)
+            maker.trailing.equalToSuperview().inset(ManageAccountCell.horizontalPadding)
+            maker.top.equalToSuperview().offset(ManageAccountCell.accountViewTopPadding)
         }
-        coinsLabel.font = ManageAccountsTheme.coinsFont
-        coinsLabel.textColor = ManageAccountsTheme.coinsColor
+
+        leftButton.addTarget(self, action: #selector(tapLeft), for: .touchUpInside)
 
         clippingView.addSubview(leftButton)
         leftButton.snp.makeConstraints { maker in
-            maker.leading.equalToSuperview().offset(ManageAccountsTheme.buttonsMargin)
-            maker.top.equalTo(self.coinsLabel.snp.bottom).offset(ManageAccountsTheme.buttonsTopMargin)
-            maker.height.equalTo(ManageAccountsTheme.buttonsHeight)
+            maker.leading.equalToSuperview().offset(CGFloat.margin3x)
+            maker.top.equalTo(accountView.snp.bottom).offset(ManageAccountCell.buttonTopMargin)
+            maker.height.equalTo(CGFloat.heightButtonSecondary)
+            maker.bottom.equalToSuperview().inset(ManageAccountCell.bottomPadding)
         }
-        leftButton.wrapperView.snp.remakeConstraints { maker in
-            maker.leading.equalToSuperview().offset(ManageAccountsTheme.cellSmallPadding)
-            maker.top.bottom.equalToSuperview()
-            maker.trailing.equalToSuperview().offset(-ManageAccountsTheme.cellSmallPadding)
-        }
-        leftButton.onTap = { [weak self] in self?.onTapLeft?() }
-        leftButton.borderWidth = 1 / UIScreen.main.scale
-        leftButton.borderColor = ManageAccountsTheme.buttonsBorderColor
-        leftButton.borderColor  = ManageAccountsTheme.buttonsBorderColor
-        leftButton.backgrounds = ManageAccountsTheme.buttonsBackgroundColorDictionary
-        leftButton.textColors = ManageAccountsTheme.buttonsTextColorDictionary
-        leftButton.titleLabel.font = ManageAccountsTheme.buttonsFont
-        leftButton.cornerRadius = ManageAccountsTheme.buttonCornerRadius
+
+        rightButton.addTarget(self, action: #selector(tapRight), for: .touchUpInside)
 
         clippingView.addSubview(rightButton)
         rightButton.snp.makeConstraints { maker in
-            maker.leading.equalTo(leftButton.snp.trailing).offset(ManageAccountsTheme.cellSmallPadding)
-            maker.top.equalTo(self.coinsLabel.snp.bottom).offset(ManageAccountsTheme.buttonsTopMargin)
-            maker.trailing.equalToSuperview().offset(-ManageAccountsTheme.buttonsMargin)
-            maker.height.equalTo(ManageAccountsTheme.buttonsHeight)
+            maker.leading.equalTo(leftButton.snp.trailing).offset(CGFloat.margin2x)
+            maker.top.equalTo(accountView.snp.bottom).offset(ManageAccountCell.buttonTopMargin)
+            maker.trailing.equalToSuperview().inset(CGFloat.margin3x)
+            maker.height.equalTo(CGFloat.heightButtonSecondary)
             maker.width.equalTo(leftButton)
         }
-        rightButton.wrapperView.snp.remakeConstraints { maker in
-            maker.top.bottom.equalToSuperview()
-            maker.center.equalToSuperview()
-            maker.trailing.lessThanOrEqualToSuperview().offset(-ManageAccountsTheme.cellSmallPadding)
-            maker.leading.greaterThanOrEqualToSuperview().offset(ManageAccountsTheme.cellSmallPadding)
-        }
-        rightButton.onTap = { [weak self] in self?.onTapRight?() }
-        rightButton.borderWidth = 1 / UIScreen.main.scale
-        rightButton.borderColor = ManageAccountsTheme.buttonsBorderColor
-        rightButton.backgrounds = ManageAccountsTheme.buttonsBackgroundColorDictionary
-        rightButton.textColors = ManageAccountsTheme.buttonsTextColorDictionary
-        rightButton.titleLabel.font = ManageAccountsTheme.buttonsFont
-        rightButton.cornerRadius = ManageAccountsTheme.buttonCornerRadius
-
     }
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
 
+    @objc private func tapLeft() {
+        onTapLeft?()
+    }
+
+    @objc private func tapRight() {
+        onTapRight?()
+    }
+
     func bind(viewItem: ManageAccountViewItem, onTapLeft: @escaping () -> (), onTapRight: @escaping () -> ()) {
-        let gradientColor: UIColor
+        let titleText = ManageAccountCell.titleText(viewItem: viewItem)
+        let coinsText = viewItem.coinCodes
+
         switch viewItem.state {
         case .linked(let backedUp):
-            roundedBackground.layer.shadowOpacity = ManageAccountsTheme.roundedBackgroundShadowOpacity
             clippingView.borderWidth = 2 / UIScreen.main.scale
+            activeKeyIcon.tintColor = .appJacob
 
-            leftButton.titleLabel.text = "settings_manage_keys.delete".localized
-            rightButton.titleLabel.text = backedUp ? "settings_manage_keys.show".localized : "settings_manage_keys.backup".localized
-            rightButton.image = backedUp ? nil : UIImage(named: "Attention Icon Small")?.tinted(with: ManageAccountsTheme.attentionColor)
+            leftButton.setTitle("settings_manage_keys.delete".localized, for: .normal)
+            rightButton.setTitle(backedUp ? "settings_manage_keys.show".localized : "settings_manage_keys.backup".localized, for: .normal)
+            rightButton.setImage(backedUp ? nil : UIImage(named: "Attention Icon Small")?.tinted(with: ManageAccountsTheme.attentionColor), for: .normal)
+            rightButton.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 10)
 
-            activeKeyIcon.tintColor = ManageAccountsTheme.keyImageColor
-            nameLabel.textColor = ManageAccountsTheme.cellTitleColor
-            coinsLabel.textColor = ManageAccountsTheme.coinsColor
-
-            gradientColor = ManageAccountsTheme.gradientRoundedBackgroundColor ?? UIColor.clear
+            accountView.bind(title: titleText, subtitle: coinsText)
         case .notLinked:
-            roundedBackground.layer.shadowOpacity = 0
             clippingView.borderWidth = 0
+            activeKeyIcon.tintColor = .appGray50
 
-            leftButton.titleLabel.text = "settings_manage_keys.create".localized
-            rightButton.titleLabel.text = "settings_manage_keys.restore".localized
-            rightButton.image = nil
+            leftButton.setTitle("settings_manage_keys.create".localized, for: .normal)
+            rightButton.setTitle("settings_manage_keys.restore".localized, for: .normal)
+            rightButton.setImage(nil, for: .normal)
 
-            activeKeyIcon.tintColor = ManageAccountsTheme.nonActiveKeyImageColor
-            nameLabel.textColor = ManageAccountsTheme.nonActiveCellColor
-            coinsLabel.textColor = ManageAccountsTheme.nonActiveCellColor
-
-            gradientColor = .clear
+            accountView.bind(title: titleText, subtitle: coinsText)
         }
-
-        gradientLayer.colors = [gradientColor.cgColor, UIColor.clear.cgColor]
-
-        nameLabel.text = "settings_manage_keys.item_title".localized(viewItem.title)
-        coinsLabel.text = viewItem.coinCodes
 
         self.onTapLeft = onTapLeft
         self.onTapRight = onTapRight
     }
 
-    override func layoutSubviews() {
-        super.layoutSubviews()
+}
 
-        gradientLayer.frame = bounds
+extension ManageAccountCell {
+
+    static func titleText(viewItem: ManageAccountViewItem) -> String {
+        "settings_manage_keys.item_title".localized(viewItem.title)
+    }
+
+    static func height(containerWidth: CGFloat, viewItem: ManageAccountViewItem) -> CGFloat {
+        let iconWidth = UIImage(named: "Key Icon")?.size.width ?? 0
+        let contentWidth = CardCell.contentWidth(containerWidth: containerWidth) - ManageAccountCell.horizontalPadding * 2 - ManageAccountCell.keyIconRightMargin - iconWidth
+        let accountViewHeight = AccountDoubleLineCellView.height(containerWidth: contentWidth, title: ManageAccountCell.titleText(viewItem: viewItem), subtitle: viewItem.coinCodes)
+
+        let contentHeight = accountViewHeight + ManageAccountCell.accountViewTopPadding + ManageAccountCell.buttonTopMargin + ManageAccountCell.buttonHeight + ManageAccountCell.bottomPadding
+        return CardCell.height(contentHeight: contentHeight)
     }
 
 }
