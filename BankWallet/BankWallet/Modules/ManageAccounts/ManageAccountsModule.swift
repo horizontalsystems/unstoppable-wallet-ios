@@ -1,7 +1,7 @@
 protocol IManageAccountsView: class {
+    func set(viewItems: [ManageAccountViewItem])
     func showDoneButton()
     func show(error: Error)
-    func reload()
     func showCreateConfirmation(title: String, coinCodes: String)
     func showSuccess()
     func showBackupRequired(predefinedAccountType: IPredefinedAccountType)
@@ -9,8 +9,6 @@ protocol IManageAccountsView: class {
 
 protocol IManageAccountsViewDelegate {
     func viewDidLoad()
-    var itemsCount: Int { get }
-    func item(index: Int) -> ManageAccountViewItem
 
     func didTapUnlink(index: Int)
     func didTapBackup(index: Int)
