@@ -1,13 +1,11 @@
 import UIKit
-import UIExtensions
-import SnapKit
+import SectionsTableView
 
 class ManageAccountsViewController: WalletViewController {
-    private let descriptionSectionIndex = 0
-
     private let delegate: IManageAccountsViewDelegate
 
-    private let tableView = UITableView(frame: .zero, style: .grouped)
+    private let tableView = SectionsTableView(style: .grouped)
+    private var viewItems = [ManageAccountViewItem]()
 
     init(delegate: IManageAccountsViewDelegate) {
         self.delegate = delegate
@@ -24,19 +22,17 @@ class ManageAccountsViewController: WalletViewController {
 
         title = "settings_manage_keys.title".localized
 
-        tableView.delegate = self
-        tableView.dataSource = self
+        tableView.registerCell(forClass: ManageAccountCell.self)
+        tableView.registerHeaderFooter(forClass: DescriptionView.self)
+        tableView.sectionDataSource = self
 
-        tableView.separatorStyle = .none
         tableView.backgroundColor = .clear
+        tableView.separatorStyle = .none
 
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in
             maker.edges.equalToSuperview()
         }
-
-        tableView.registerCell(forClass: ManageAccountCell.self)
-        tableView.registerCell(forClass: ManageAccountDescriptionCell.self)
 
         delegate.viewDidLoad()
     }
@@ -45,9 +41,63 @@ class ManageAccountsViewController: WalletViewController {
         delegate.didTapDone()
     }
 
+    private var header: ViewState<DescriptionView> {
+        let descriptionText = "settings_manage_keys.description".localized
+
+        return .cellType(
+                hash: "top_description", 
+                binder: { view in
+                    view.bind(text: descriptionText)
+                }, dynamicHeight: { [unowned self] _ in
+                    DescriptionView.height(containerWidth: self.tableView.bounds.width, text: descriptionText)
+                }
+        )
+    }
+
+    private var rows: [RowProtocol] {
+        viewItems.enumerated().map { (index, viewItem) in
+            Row<ManageAccountCell>(
+                    id: "account_\(viewItem.title)",
+                    dynamicHeight: { [unowned self] _ in
+                        ManageAccountCell.height(containerWidth: self.tableView.bounds.width, viewItem: viewItem)
+                    },
+                    bind: { [unowned self] cell, _ in
+                        cell.bind(viewItem: viewItem, onTapCreate: { [weak self] in
+                            self?.delegate.didTapCreate(index: index)
+                        }, onTapRestore: { [weak self] in
+                            self?.delegate.didTapRestore(index: index)
+                        }, onTapUnlink: { [weak self] in
+                            self?.delegate.didTapUnlink(index: index)
+                        }, onTapBackup: { [weak self] in
+                            self?.delegate.didTapBackup(index: index)
+                        })
+                    }
+            )
+        }
+    }
+
+}
+
+extension ManageAccountsViewController: SectionsDataSource {
+
+    func buildSections() -> [SectionProtocol] {
+        [
+            Section(
+                    id: "wallets",
+                    headerState: header,
+                    rows: rows
+            )
+        ]
+    }
+
 }
 
 extension ManageAccountsViewController: IManageAccountsView {
+
+    func set(viewItems: [ManageAccountViewItem]) {
+        self.viewItems = viewItems
+        tableView.reload(animated: true)
+    }
 
     func showDoneButton() {
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.done".localized, style: .plain, target: self, action: #selector(doneDidTap))
@@ -55,10 +105,6 @@ extension ManageAccountsViewController: IManageAccountsView {
 
     func show(error: Error) {
         HudHelper.instance.showError(title: error.localizedDescription)
-    }
-
-    func reload() {
-        tableView.reloadData()
     }
 
     func showCreateConfirmation(title: String, coinCodes: String) {
@@ -79,64 +125,6 @@ extension ManageAccountsViewController: IManageAccountsView {
         })
 
         present(controller, animated: true)
-    }
-
-}
-
-extension ManageAccountsViewController: UITableViewDataSource, UITableViewDelegate {
-
-    public func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
-    }
-
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == descriptionSectionIndex {
-            return 1
-        }
-        return delegate.itemsCount
-    }
-
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.section == descriptionSectionIndex {
-            return tableView.dequeueReusableCell(withIdentifier: String(describing: ManageAccountDescriptionCell.self), for: indexPath)
-        }
-        return tableView.dequeueReusableCell(withIdentifier: String(describing: ManageAccountCell.self), for: indexPath)
-    }
-
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        guard let cell = cell as? ManageAccountCell else {
-            return
-        }
-
-        let item = delegate.item(index: indexPath.row)
-        cell.bind(viewItem: item, onTapCreate: { [weak self] in
-            self?.delegate.didTapCreate(index: indexPath.row)
-        }, onTapRestore: { [weak self] in
-            self?.delegate.didTapRestore(index: indexPath.row)
-        }, onTapUnlink: { [weak self] in
-            self?.delegate.didTapUnlink(index: indexPath.row)
-        }, onTapBackup: { [weak self] in
-            self?.delegate.didTapBackup(index: indexPath.row)
-        })
-    }
-
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.section == descriptionSectionIndex {
-            return ManageAccountDescriptionCell.height(forContainerWidth: tableView.bounds.width)
-        }
-        return ManageAccountCell.height(containerWidth: tableView.bounds.width, viewItem: delegate.item(index: indexPath.row))
-    }
-
-    public func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        return UIView()
-    }
-
-    public func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 0
-    }
-
-    public func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return 1
     }
 
 }

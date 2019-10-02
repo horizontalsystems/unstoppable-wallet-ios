@@ -22,6 +22,10 @@ class ManageAccountsPresenter {
         }
     }
 
+    private func updateView() {
+        view?.set(viewItems: items.map { self.viewItemFactory.viewItem(item: $0) })
+    }
+
 }
 
 extension ManageAccountsPresenter: IManageAccountsViewDelegate {
@@ -32,14 +36,7 @@ extension ManageAccountsPresenter: IManageAccountsViewDelegate {
         }
 
         buildItems()
-    }
-
-    var itemsCount: Int {
-        return items.count
-    }
-
-    func item(index: Int) -> ManageAccountViewItem {
-        return viewItemFactory.viewItem(item: items[index])
+        updateView()
     }
 
     func didTapUnlink(index: Int) {
@@ -116,7 +113,7 @@ extension ManageAccountsPresenter: IManageAccountsInteractorDelegate {
 
     func didUpdateAccounts() {
         buildItems()
-        view?.reload()
+        updateView()
     }
 
 }
