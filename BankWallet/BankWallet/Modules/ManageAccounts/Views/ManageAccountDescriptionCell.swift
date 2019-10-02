@@ -2,8 +2,13 @@ import UIKit
 import SnapKit
 
 class ManageAccountDescriptionCell: UITableViewCell {
+    static let topMargin: CGFloat = .margin3x
+    static let bottomMargin: CGFloat = .margin2x
+    static let sideMargin: CGFloat = .margin6x
+    static let descriptionFont: UIFont = .appSubhead2
+
     static var descriptionText: String {
-        return "settings_manage_keys.description".localized
+        "settings_manage_keys.description".localized
     }
 
     private let label = UILabel()
@@ -15,19 +20,19 @@ class ManageAccountDescriptionCell: UITableViewCell {
         selectionStyle = .none
 
         contentView.addSubview(label)
-        label.textColor = ManageAccountsTheme.descriptionColor
-        label.font = ManageAccountsTheme.descriptionFont
+        label.textColor = .appGray
+        label.font = ManageAccountDescriptionCell.descriptionFont
         label.numberOfLines = 0
         label.text = ManageAccountDescriptionCell.descriptionText
         label.snp.makeConstraints { maker in
-            maker.top.equalToSuperview().offset(ManageAccountsTheme.cellBottomMargin)
-            maker.leading.trailing.equalToSuperview().inset(AppTheme.viewMargin)
-            maker.bottom.equalToSuperview().offset(-ManageAccountsTheme.cellBottomMargin)
+            maker.top.equalToSuperview().offset(ManageAccountDescriptionCell.topMargin)
+            maker.leading.trailing.equalToSuperview().inset(ManageAccountDescriptionCell.sideMargin)
+            maker.bottom.equalToSuperview().inset(ManageAccountDescriptionCell.bottomMargin)
         }
     }
 
     static func height(forContainerWidth containerWidth: CGFloat) -> CGFloat {
-        return ManageAccountDescriptionCell.descriptionText.height(forContainerWidth: containerWidth - 2 * AppTheme.viewMargin, font: ManageAccountsTheme.descriptionFont) + ManageAccountsTheme.cellTopMargin + ManageAccountsTheme.cellBottomMargin
+        ManageAccountDescriptionCell.descriptionText.height(forContainerWidth: containerWidth - 2 * ManageAccountDescriptionCell.sideMargin, font: ManageAccountDescriptionCell.descriptionFont) + ManageAccountDescriptionCell.topMargin + ManageAccountDescriptionCell.bottomMargin
     }
 
     required init?(coder aDecoder: NSCoder) {

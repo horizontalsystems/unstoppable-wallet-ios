@@ -10,7 +10,7 @@ class ManageAccountsCreateAccountViewController: ActionSheetController {
                 title: title,
                 subtitle: subtitle,
                 icon: UIImage(named: "Key Icon")?.withRenderingMode(.alwaysTemplate),
-                iconTintColor: ManageAccountsTheme.alertKeyImageColor,
+                iconTintColor: .appGray,
                 tag: 0,
                 onClose: { [weak self] in
                     self?.dismiss(byFade: false)

@@ -60,7 +60,7 @@ class BalanceCell: UITableViewCell {
             maker.bottom.equalToSuperview()
         }
         roundedBackground.backgroundColor = BalanceTheme.roundedBackgroundColor
-        roundedBackground.layer.shadowOpacity = BalanceTheme.roundedBackgroundShadowOpacity
+        roundedBackground.layer.shadowOpacity = .roundedBackgroundShadowOpacity
         roundedBackground.layer.cornerRadius = BalanceTheme.roundedBackgroundCornerRadius
         roundedBackground.layer.shadowColor = BalanceTheme.roundedBackgroundShadowColor.cgColor
         roundedBackground.layer.shadowRadius = 4
