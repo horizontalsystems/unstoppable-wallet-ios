@@ -21,7 +21,7 @@ class CardCell: UITableViewCell {
         roundedBackground.layer.shadowColor = UIColor.appAndy.cgColor
         roundedBackground.layer.shadowRadius = .cornerRadius8
         roundedBackground.layer.shadowOffset = CGSize(width: 0, height: 4)
-        roundedBackground.layer.shadowOpacity = App.shared.localStorage.lightMode ? 0.8 : 1
+        roundedBackground.layer.shadowOpacity = .roundedBackgroundShadowOpacity
 
         contentView.addSubview(roundedBackground)
         roundedBackground.snp.makeConstraints { maker in

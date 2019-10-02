@@ -122,7 +122,7 @@ class ManageAccountCell: CardCell {
         switch viewItem.rightButtonState {
         case .backup:
             rightButton.setTitle("settings_manage_keys.backup".localized, for: .normal)
-            rightButton.setImage(UIImage(named: "Attention Icon Small")?.tinted(with: ManageAccountsTheme.attentionColor), for: .normal)
+            rightButton.setImage(UIImage(named: "Attention Icon Small")?.tinted(with: .appLucian), for: .normal)
         case .show:
             rightButton.setTitle("settings_manage_keys.show".localized, for: .normal)
             rightButton.setImage(nil, for: .normal)

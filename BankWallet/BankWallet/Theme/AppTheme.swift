@@ -109,6 +109,10 @@ extension UIFont {
     static let appMicro: UIFont = .systemFont(ofSize: 10, weight: .regular)
 }
 
+extension Float {
+    static var roundedBackgroundShadowOpacity: Float { App.shared.localStorage.lightMode ? 0.8 : 1 }
+}
+
 extension CGFloat {
     static let cornerRadius2: CGFloat = 2
     static let cornerRadius4: CGFloat = 4
