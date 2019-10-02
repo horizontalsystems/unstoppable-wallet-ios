@@ -112,7 +112,7 @@
 "deposit.receive_coin" = "Recevoir %@";
 "deposit.your_address" = "Votre address";
 "deposit.your_account" = "Votre compte";
-"receive_alert.not_backed_up_description" = "You need to backup the %@ Wallet before you may receive %@.";
+"receive_alert.not_backed_up_description" = "Vous devez sauvegarder le portefeuille %@ avant de recevoir %@.";
 
 // Send
 
