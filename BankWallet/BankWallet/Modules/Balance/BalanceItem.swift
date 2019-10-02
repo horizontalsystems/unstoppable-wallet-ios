@@ -23,8 +23,8 @@ struct BalanceItem {
 
 extension BalanceItem: DiffAware {
 
-    public var diffId: String {
-        return wallet.coin.code
+    public var diffId: Wallet {
+        wallet
     }
 
     static func compareContent(_ a: BalanceItem, _ b: BalanceItem) -> Bool {

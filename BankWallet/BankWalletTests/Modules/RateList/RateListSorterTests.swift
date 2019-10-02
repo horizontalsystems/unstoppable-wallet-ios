@@ -9,9 +9,9 @@ class RateListSorterTests: QuickSpec {
     override func spec() {
 
         let sorter = RateListSorter()
-        let featuredCoins = [Coin(title: "FCoin", code: "FC", decimal: 0, type: .bitcoin),
-                             Coin(title: "DCoin", code: "DC", decimal: 0, type: .bitcoin), 
-                             Coin(title: "BCoin", code: "DC", decimal: 0, type: .bitcoin), 
+        let featuredCoins = [Coin.mock(title: "FCoin", code: "FC"),
+                             Coin.mock(title: "DCoin", code: "DC"), 
+                             Coin.mock(title: "BCoin", code: "DC"), 
                             ]
 
         describe("#smart sort") {
@@ -26,10 +26,11 @@ class RateListSorterTests: QuickSpec {
                 expect(coins).to(equal([featuredCoins[1], featuredCoins[2]]))
             }
             it("use included featured coin then sorted by COINCODE other from coins") {
-                let userCoins = [Coin(title: "SUser", code: "AU", decimal: 0, type: .bitcoin),
-                                     featuredCoins[1],
-                                     Coin(title: "AUser", code: "ZU", decimal: 0, type: .bitcoin),
-                                     Coin(title: "SUser", code: "SU", decimal: 0, type: .bitcoin),
+                let userCoins = [
+                    Coin.mock(title: "SUser", code: "AU"),
+                    featuredCoins[1],
+                    Coin.mock(title: "AUser", code: "ZU"),
+                    Coin.mock(title: "SUser", code: "SU"),
                 ]
 
                 let coins = sorter.smartSort(for: userCoins, featuredCoins: featuredCoins)

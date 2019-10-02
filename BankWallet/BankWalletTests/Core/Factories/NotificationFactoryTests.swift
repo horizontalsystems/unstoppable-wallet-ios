@@ -26,9 +26,9 @@ class NotificationFactoryTests: QuickSpec {
             reset(mockHelper)
         }
 
-        let firstCoin = Coin(title: "First", code: "FRST", decimal: 0, type: .bitcoin)
-        let secondCoin = Coin(title: "Second", code: "SCND", decimal: 0, type: .bitcoin)
-        let thirdCoin = Coin(title: "Third", code: "THRD", decimal: 0, type: .bitcoin)
+        let firstCoin = Coin.mock(title: "First", code: "FRST")
+        let secondCoin = Coin.mock(title: "Second", code: "SCND")
+        let thirdCoin = Coin.mock(title: "Third", code: "THRD")
 
         describe("#notifications") {
             describe("make notification for 1 alert") {

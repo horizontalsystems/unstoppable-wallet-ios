@@ -1,5 +1,5 @@
 class ManageWalletsPresenter {
-    private let popularCoinCodes = ["BTC", "BCH", "ETH", "DASH", "EOS", "BNB"]
+    private let popularCoinIds = ["BTC", "BCH", "ETH", "DASH", "EOS", "BNB"]
 
     weak var view: IManageWalletsView?
 
@@ -36,8 +36,8 @@ extension ManageWalletsPresenter: IManageWalletsViewDelegate {
     func viewDidLoad() {
         let wallets = interactor.wallets
 
-        let popularCoins = interactor.coins.filter { popularCoinCodes.contains($0.code) }
-        let coins = interactor.coins.filter { !popularCoinCodes.contains($0.code) }
+        let popularCoins = interactor.coins.filter { popularCoinIds.contains($0.id) }
+        let coins = interactor.coins.filter { !popularCoinIds.contains($0.id) }
 
         popularItems = popularCoins.map { coin in
             ManageWalletItem(coin: coin, wallet: wallets.first(where: { $0.coin == coin }))

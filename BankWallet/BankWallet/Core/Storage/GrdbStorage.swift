@@ -55,12 +55,12 @@ class GrdbStorage {
 
         migrator.registerMigration("createEnabledWalletsTable") { db in
             try db.create(table: EnabledWallet.databaseTableName) { t in
-                t.column(EnabledWallet.Columns.coinCode.name, .text).notNull()
+                t.column("coinCode", .text).notNull()
                 t.column(EnabledWallet.Columns.accountId.name, .text).notNull()
                 t.column(EnabledWallet.Columns.syncMode.name, .text)
                 t.column(EnabledWallet.Columns.walletOrder.name, .integer).notNull()
 
-                t.primaryKey([EnabledWallet.Columns.coinCode.name, EnabledWallet.Columns.accountId.name], onConflict: .replace)
+                t.primaryKey(["coinCode", EnabledWallet.Columns.accountId.name], onConflict: .replace)
             }
         }
 
@@ -93,7 +93,7 @@ class GrdbStorage {
 
             let accountId = accountRecord.id
             try db.execute(sql: """
-                                INSERT INTO \(EnabledWallet.databaseTableName)(`\(EnabledWallet.Columns.coinCode.name)`, `\(EnabledWallet.Columns.accountId.name)`, `\(EnabledWallet.Columns.syncMode.name)`, `\(EnabledWallet.Columns.walletOrder.name)`)
+                                INSERT INTO \(EnabledWallet.databaseTableName)(`coinCode`, `\(EnabledWallet.Columns.accountId.name)`, `\(EnabledWallet.Columns.syncMode.name)`, `\(EnabledWallet.Columns.walletOrder.name)`)
                                 SELECT `coinCode`, '\(accountId)', '\(syncMode)', `coinOrder` FROM enabled_coins
                                 """)
             try db.drop(table: "enabled_coins")
@@ -125,6 +125,27 @@ class GrdbStorage {
 
                 t.primaryKey([PriceAlertRecord.Columns.coinCode.name], onConflict: .replace)
             }
+        }
+
+        migrator.registerMigration("renameCoinCodeToCoinIdInEnabledWallets") { db in
+            let tempTableName = "enabled_wallets_temp"
+
+            try db.create(table: tempTableName) { t in
+                t.column(EnabledWallet.Columns.coinId.name, .text).notNull()
+                t.column(EnabledWallet.Columns.accountId.name, .text).notNull()
+                t.column(EnabledWallet.Columns.syncMode.name, .text)
+                t.column(EnabledWallet.Columns.walletOrder.name, .integer).notNull()
+
+                t.primaryKey([EnabledWallet.Columns.coinId.name, EnabledWallet.Columns.accountId.name], onConflict: .replace)
+            }
+
+            try db.execute(sql: """
+                                INSERT INTO \(tempTableName)(`\(EnabledWallet.Columns.coinId.name)`, `\(EnabledWallet.Columns.accountId.name)`, `\(EnabledWallet.Columns.syncMode.name)`, `\(EnabledWallet.Columns.walletOrder.name)`)
+                                SELECT `coinCode`, `accountId`, `syncMode`, `walletOrder` FROM \(EnabledWallet.databaseTableName)
+                                """)
+
+            try db.drop(table: EnabledWallet.databaseTableName)
+            try db.rename(table: tempTableName, to: EnabledWallet.databaseTableName)
         }
 
         return migrator

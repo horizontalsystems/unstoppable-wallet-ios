@@ -19,7 +19,7 @@ extension WalletStorage: IWalletStorage {
         let coins = appConfigProvider.coins
 
         return storage.enabledWallets.compactMap { enabledWallet in
-            guard let coin = coins.first(where: { $0.code == enabledWallet.coinCode }) else {
+            guard let coin = coins.first(where: { $0.id == enabledWallet.coinId }) else {
                 return nil
             }
 
@@ -35,7 +35,7 @@ extension WalletStorage: IWalletStorage {
         var enabledWallets = [EnabledWallet]()
 
         for (order, wallet) in wallets.enumerated() {
-            enabledWallets.append(EnabledWallet(coinCode: wallet.coin.code, accountId: wallet.account.id, syncMode: wallet.syncMode, order: order))
+            enabledWallets.append(EnabledWallet(coinId: wallet.coin.id, accountId: wallet.account.id, syncMode: wallet.syncMode, order: order))
         }
 
         storage.save(enabledWallets: enabledWallets)

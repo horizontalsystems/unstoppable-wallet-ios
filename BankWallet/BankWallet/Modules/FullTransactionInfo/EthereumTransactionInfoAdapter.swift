@@ -62,7 +62,7 @@ class EthereumTransactionInfoAdapter: IFullTransactionInfoAdapter {
         }
 
         if let gasPrice = txResponse.gasPrice {
-            let gWeiCoin = Coin(title: "", code: "gWei", decimal: 0, type: .ethereum)
+            let gWeiCoin = Coin(id: "", title: "", code: "gWei", decimal: 0, type: .ethereum)
             let gasValue = CoinValue(coin: gWeiCoin, value: gasPrice)
             feeGasItems.append(FullTransactionItem(title: "full_info.gas_price".localized, titleColor: .cryptoGray, value: ValueFormatter.instance.format(coinValue: gasValue)))
         }
