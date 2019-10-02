@@ -138,19 +138,6 @@ extension Account {
 
 }
 
-extension ManageAccountRightButtonState: Equatable {
-
-    public static func ==(lhs: ManageAccountRightButtonState, rhs: ManageAccountRightButtonState) -> Bool {
-        switch (lhs, rhs) {
-        case (.backup, .backup): return true
-        case (.show, .show): return true
-        case (.restore, .restore): return true
-        default: return false
-        }
-    }
-
-}
-
 extension JsonApiProvider.RequestObject: Equatable {
 
     public static func ==(lhs: JsonApiProvider.RequestObject, rhs: JsonApiProvider.RequestObject) -> Bool {

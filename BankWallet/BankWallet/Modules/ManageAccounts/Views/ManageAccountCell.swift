@@ -15,13 +15,8 @@ class ManageAccountCell: CardCell {
     private let leftButton = UIButton.appSecondary
     private let rightButton = UIButton.appSecondary
 
-    private var onTapCreate: (() -> ())?
-    private var onTapRestore: (() -> ())?
-    private var onTapUnlink: (() -> ())?
-    private var onTapBackup: (() -> ())?
-
-    private var linked: Bool?
-    private var rightButtonState: ManageAccountRightButtonState?
+    private var onTapLeft: (() -> ())?
+    private var onTapRight: (() -> ())?
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -76,67 +71,61 @@ class ManageAccountCell: CardCell {
     }
 
     @objc private func tapLeft() {
-        guard let linked = linked else {
-            return
-        }
-
-        if linked {
-            onTapUnlink?()
-        } else {
-            onTapCreate?()
-        }
+        onTapLeft?()
     }
 
     @objc private func tapRight() {
-        guard let buttonState = rightButtonState else {
-            return
-        }
-
-        switch buttonState {
-        case .backup, .show:
-            onTapBackup?()
-        case .restore:
-            onTapRestore?()
-        }
+        onTapRight?()
     }
 
     func bind(viewItem: ManageAccountViewItem, onTapCreate: (() -> ())?, onTapRestore: (() -> ())?, onTapUnlink: (() -> ())?, onTapBackup: (() -> ())?) {
-        linked = viewItem.linked
-        rightButtonState = viewItem.rightButtonState
-
         let titleText = ManageAccountCell.titleText(viewItem: viewItem)
         let coinsText = viewItem.coinCodes
 
-        if viewItem.linked {
+        if viewItem.highlighted {
             clippingView.borderWidth = 2 / UIScreen.main.scale
             activeKeyIcon.tintColor = .appJacob
-
-            leftButton.setTitle("settings_manage_keys.delete".localized, for : .normal)
         } else {
             clippingView.borderWidth = 0
             activeKeyIcon.tintColor = .appGray50
 
+        }
+
+        switch viewItem.leftButtonState {
+        case .create:
             leftButton.setTitle("settings_manage_keys.create".localized, for: .normal)
+            onTapLeft = {
+                onTapCreate?()
+            }
+        case .delete:
+            leftButton.setTitle("settings_manage_keys.delete".localized, for : .normal)
+            onTapLeft = {
+                onTapUnlink?()
+            }
         }
 
         switch viewItem.rightButtonState {
         case .backup:
             rightButton.setTitle("settings_manage_keys.backup".localized, for: .normal)
             rightButton.setImage(UIImage(named: "Attention Icon Small")?.tinted(with: .appLucian), for: .normal)
+            onTapRight = {
+                onTapBackup?()
+            }
         case .show:
             rightButton.setTitle("settings_manage_keys.show".localized, for: .normal)
             rightButton.setImage(nil, for: .normal)
+            onTapRight = {
+                onTapBackup?()
+            }
         case .restore:
             rightButton.setTitle("settings_manage_keys.restore".localized, for: .normal)
             rightButton.setImage(nil, for: .normal)
+            onTapRight = {
+                onTapRestore?()
+            }
         }
 
         accountView.bind(title: titleText, subtitle: coinsText)
-
-        self.onTapCreate = onTapCreate
-        self.onTapRestore = onTapRestore
-        self.onTapUnlink = onTapUnlink
-        self.onTapBackup = onTapBackup
     }
 
 }

@@ -12,7 +12,8 @@ class ManageAccountsViewItemFactory {
         return ManageAccountViewItem(
                 title: item.predefinedAccountType.title,
                 coinCodes: item.predefinedAccountType.coinCodes,
-                linked: item.account != nil,
+                highlighted: item.account != nil,
+                leftButtonState: item.account == nil ? .create : .delete,
                 rightButtonState: rightButtonState
         )
     }
