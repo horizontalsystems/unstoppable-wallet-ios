@@ -226,7 +226,7 @@
 "settings_notifications.description" = "Set price change alerts for the coins you would like to watch.\n\nYou will be alerted when the change in price for the last 24 hours exceeds selected threshold.";
 "settings_notifications.alert_off" = "Kapat";
 "settings.notifications.deactivate_all" = "Etkisizleştir";
-"settings.notifications.disabled_text" = "The notifications for Unstoppable Wallet app are disabled. You need to turn on Notifications and allow background app refresh in order to be able to receive price change alerts.";
+"settings.notifications.disabled_text" = "Unstoppable Cüzdan uygulaması için bildirimler devre dışı bırakıldı. Fiyat değişikliği uyarıları alabilmek için Bildirimler'i açmanız ve arka plan uygulaması yenilemesine izin vermeniz gerekir.";
 "settings.notifications.settings_button" = "Ayarlardan aç";
 
 // Settings -> Base Currency
@@ -241,7 +241,7 @@
 
 "manage_coins.title" = "Kripto Para yöneticisi";
 "manage_coins.add_coin.title" = "%@ ekle ";
-"manage_coins.add_coin.text" = "You don't have a wallet that can store %@ (%@). The app can generate a new wallet for you. Use the Create button below to generate a new wallet.\n\nYou will be able to use the new wallet for the following coins: %@.\n\nYou may also use the existing %@ Wallet key if you have one. Use the Restore button for that.";
+"manage_coins.add_coin.text" = "%@ (%@) saklayabilen bir cüzdanınız yok. Uygulamanın sizin için yeni bir cüzdan oluşturabilir. Yeni bir cüzdan oluşturmak için aşağıdaki Oluştur düğmesini kullanın.\n\nYeni cüzdanı aşağıdaki paralar için kullanabileceksiniz: %@.\n\nVarsa, mevcut %@ Cüzdan anahtarını da kullanabilirsiniz. Bunun için Geri Yükle düğmesini kullanın.";
 "manage_coins.add_coin.create" = "Oluştur";
 "manage_coins.add_coin.restore" = "Geri Yükle";
 
