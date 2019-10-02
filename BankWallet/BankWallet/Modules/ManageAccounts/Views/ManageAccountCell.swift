@@ -9,6 +9,7 @@ class ManageAccountCell: CardCell {
     private static let accountViewTopPadding: CGFloat = 10
     private static let buttonHeight: CGFloat = .heightButtonSecondary
     private static let buttonTopMargin: CGFloat = .margin3x
+    private static let keyIcon: UIImage? = UIImage(named: "Key Icon")
 
     private let accountView = AccountDoubleLineCellView()
     private let activeKeyIcon = UIImageView()
@@ -27,7 +28,7 @@ class ManageAccountCell: CardCell {
         clippingView.layer.rasterizationScale = UIScreen.main.scale
         clippingView.borderColor = .appJacob
 
-        activeKeyIcon.image = UIImage(named: "Key Icon")?.withRenderingMode(.alwaysTemplate)
+        activeKeyIcon.image = ManageAccountCell.keyIcon?.withRenderingMode(.alwaysTemplate)
         activeKeyIcon.setContentHuggingPriority(.defaultHigh, for: .horizontal)
 
         clippingView.addSubview(activeKeyIcon)
@@ -94,35 +95,25 @@ class ManageAccountCell: CardCell {
         switch viewItem.leftButtonState {
         case .create:
             leftButton.setTitle("settings_manage_keys.create".localized, for: .normal)
-            onTapLeft = {
-                onTapCreate?()
-            }
+            onTapLeft = onTapCreate
         case .delete:
             leftButton.setTitle("settings_manage_keys.delete".localized, for : .normal)
-            onTapLeft = {
-                onTapUnlink?()
-            }
+            onTapLeft = onTapUnlink
         }
 
         switch viewItem.rightButtonState {
         case .backup:
             rightButton.setTitle("settings_manage_keys.backup".localized, for: .normal)
             rightButton.setImage(UIImage(named: "Attention Icon Small")?.tinted(with: .appLucian), for: .normal)
-            onTapRight = {
-                onTapBackup?()
-            }
+            onTapRight = onTapBackup
         case .show:
             rightButton.setTitle("settings_manage_keys.show".localized, for: .normal)
             rightButton.setImage(nil, for: .normal)
-            onTapRight = {
-                onTapBackup?()
-            }
+            onTapRight = onTapBackup
         case .restore:
             rightButton.setTitle("settings_manage_keys.restore".localized, for: .normal)
             rightButton.setImage(nil, for: .normal)
-            onTapRight = {
-                onTapRestore?()
-            }
+            onTapRight = onTapRestore
         }
 
         accountView.bind(title: titleText, subtitle: coinsText)
@@ -137,7 +128,7 @@ extension ManageAccountCell {
     }
 
     static func height(containerWidth: CGFloat, viewItem: ManageAccountViewItem) -> CGFloat {
-        let iconWidth = UIImage(named: "Key Icon")?.size.width ?? 0
+        let iconWidth = ManageAccountCell.keyIcon?.size.width ?? 0
         let contentWidth = CardCell.contentWidth(containerWidth: containerWidth) - ManageAccountCell.horizontalPadding * 2 - ManageAccountCell.keyIconRightMargin - iconWidth
         let accountViewHeight = AccountDoubleLineCellView.height(containerWidth: contentWidth, title: ManageAccountCell.titleText(viewItem: viewItem), subtitle: viewItem.coinCodes)
 
