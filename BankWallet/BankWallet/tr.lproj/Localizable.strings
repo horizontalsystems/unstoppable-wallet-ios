@@ -303,8 +303,8 @@
 
 // Edit PIN
 
-"edit_pin.title" = "Şifreyi Değiştir";
-"edit_pin.unlock_info" = "Şimdi ki Şifre";
+"edit_pin.title" = "Kod Değiştir";
+"edit_pin.unlock_info" = "Şimdiki Kod";
 "edit_pin.new_pin_info" = "Yeni Kod";
 
 // Unlock PIN
@@ -331,12 +331,12 @@
 // Key Types
 
 "chart.title" = "%@ kur";
-"chart.time_duration.day" = "Gün";
+"chart.time_duration.day" = "1G";
 "chart.time_duration.week" = "7G";
-"chart.time_duration.month" = "Ay";
-"chart.time_duration.quartal" = "3 ay";
-"chart.time_duration.halyear" = "6 Ay";
-"chart.time_duration.year" = "1 Yıl";
+"chart.time_duration.month" = "1Ay";
+"chart.time_duration.quartal" = "3Ay";
+"chart.time_duration.halyear" = "6Ay";
+"chart.time_duration.year" = "1Yıl";
 
 "chart.market_cap" = "P. Değeri";
 "chart.market_cap.thousand" = "%@ k";
