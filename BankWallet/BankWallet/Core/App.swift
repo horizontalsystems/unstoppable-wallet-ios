@@ -51,7 +51,7 @@ class App {
     let priceAlertManager: IPriceAlertManager
     let backgroundPriceAlertManager: IBackgroundPriceAlertManager
     let notificationManager: INotificationManager
-    let debugBackgroundLogger: IDebugBackgroundLogger?
+    var debugBackgroundLogger: IDebugBackgroundLogger?
 
     let appManager: AppManager
 
