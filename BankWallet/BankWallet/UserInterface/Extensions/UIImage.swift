@@ -55,10 +55,10 @@ extension UIImage {
             return nil
         }
 
-        let scaleFactor = size / outputImage.extent.width * UIScreen.main.scale
+        let scaleFactor = size / outputImage.extent.width
         let scaledImage = outputImage.transformed(by: CGAffineTransform(scaleX: scaleFactor, y: scaleFactor))
 
-        self.init(ciImage: scaledImage, scale: UIScreen.main.scale, orientation: .up)
+        self.init(ciImage: scaledImage)
     }
 
     convenience init?(coin: Coin) {
