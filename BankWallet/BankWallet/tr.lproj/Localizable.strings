@@ -70,7 +70,7 @@
 
 "backup.intro.title_backup" = "Backup";
 "backup.intro.title_show" = "Anahtarı Göster";
-"backup.intro.subtitle" = "Az sonra görüceğiniz anahtar cihazınızın kaybolması, çalınması veya bozulması durumunda hesabı geri yüklemenin tek yoludur. Ekranınıza başka bir kişinin izlemediğinden emin olun.\n\nKurlar bu anahtar ile kontrol ediliyor: %@";
+"backup.intro.subtitle" = "Az sonra görüceğiniz anahtar cihazınızın kaybolması, çalınması veya bozulması durumunda hesabı geri yüklemenin tek yoludur. \n\nEkranınıza başka bir kişinin izlemediğinden emin olun.\n\nKurlar bu anahtar ile kontrol ediliyor: %@";
 "backup.intro.later" = "Sonra";
 "backup.intro.backup_now" = "Yedekle";
 "backup.intro.show_key" = "Anahtarı Göster";
@@ -112,7 +112,7 @@
 "deposit.receive_coin" = "%@ al";
 "deposit.your_address" = "Adresiniz";
 "deposit.your_account" = "Senin Hesabın";
-"receive_alert.not_backed_up_description" = "%@ almadan önce %@ cüzdanınızı yedeklemeniz gerekiyor.";
+"receive_alert.not_backed_up_description" = "Öncelikle %@ cüzdanınızı yedeklemeniz gerekiyor daha sonra %@ kripto parasını alabilirsiniz.";
 
 // Send
 
@@ -278,7 +278,7 @@
 "settings_manage_keys.title" = "Cüzdanları yönet";
 "settings_manage_keys.item_title" = "%@ Cüzdanı";
 "settings_manage_keys.add_wallet" = "Cüzdan Ekle";
-"settings_manage_keys.description" = "Aşağıda vurgulanan, her cüzdanın farklı kripto para birimlerinden sorumlu olduğu aktif cüzdanlarınızdır.\nVurgulanan her cüzdanı, o cüzdanın özel anahtarını kesinlikte yedeklemelisiniz. Bu anahtar, telefonunuz kaybolur, çalınır yada kırılırsa, Kripto paranızı geri kazanmanın tek yoludur.";
+"settings_manage_keys.description" = "Aşağıda vurgulanan, her cüzdanın farklı kripto para birimlerinden sorumlu olduğu aktif cüzdanlarınızdır.\n\nVurgulanan her cüzdanı, o cüzdanın özel anahtarını kesinlikte yedeklemelisiniz. Bu anahtar, telefonunuz kaybolur, çalınır yada kırılırsa, Kripto paranızı geri kazanmanın tek yoludur.";
 "settings_manage_keys.delete" = "Sil";
 "settings_manage_keys.backup" = "Yedekle";
 "settings_manage_keys.show" = "Göster";
