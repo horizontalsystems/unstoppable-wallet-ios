@@ -87,7 +87,7 @@ extension FeeRatePriority {
 extension EnabledWallet: Equatable {
 
     public static func ==(lhs: EnabledWallet, rhs: EnabledWallet) -> Bool {
-        return lhs.coinCode == rhs.coinCode && lhs.order == rhs.order
+        lhs.coinId == rhs.coinId && lhs.order == rhs.order
     }
 
 }
@@ -114,9 +114,9 @@ extension Wallet {
 
 extension Coin {
 
-    static func mock(title: String? = nil, code: CoinCode? = nil, decimal: Int = 8, type: CoinType = .bitcoin) -> Coin {
+    static func mock(id: String? = nil, title: String? = nil, code: CoinCode? = nil, decimal: Int = 8, type: CoinType = .bitcoin) -> Coin {
         let randomNumber = Int.random(in: 0..<1000)
-        return Coin(title: title ?? "Bitcoin_\(randomNumber)", code: code ?? "BTC_\(randomNumber)", decimal: decimal, type: type)
+        return Coin(id: id ?? "BTC_\(randomNumber)", title: title ?? "Bitcoin_\(randomNumber)", code: code ?? "BTC_\(randomNumber)", decimal: decimal, type: type)
     }
 
 }
