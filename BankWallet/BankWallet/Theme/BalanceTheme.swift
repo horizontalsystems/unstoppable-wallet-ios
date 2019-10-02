@@ -36,7 +36,6 @@ class BalanceTheme {
 
     static var roundedBackgroundColor: UIColor { return .crypto_SteelDark_White }
     static let roundedBackgroundCornerRadius: CGFloat = 15
-    static var roundedBackgroundShadowColor: UIColor { return .crypto_Black20_Steel20 }
 
     static let cellTitleFont = UIFont.appHeadline2
     static var cellTitleColor: UIColor { return .crypto_White_Black }
