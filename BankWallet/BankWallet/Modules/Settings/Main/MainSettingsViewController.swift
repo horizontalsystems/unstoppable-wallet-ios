@@ -78,11 +78,11 @@ class MainSettingsViewController: WalletViewController {
 
     private var appearanceRows: [RowProtocol] {
         [
-            Row<TitleCell>(id: "notifications", height: SettingsTheme.cellHeight, bind: { cell, _ in
-                cell.bind(titleIcon: UIImage(named: "Notification Icon"), title: "settings.notifications".localized, showDisclosure: true)
-            }, action: { [weak self] _ in
-                self?.delegate.didTapNotifications()
-            }),
+//            Row<TitleCell>(id: "notifications", height: SettingsTheme.cellHeight, bind: { cell, _ in
+//                cell.bind(titleIcon: UIImage(named: "Notification Icon"), title: "settings.notifications".localized, showDisclosure: true)
+//            }, action: { [weak self] _ in
+//                self?.delegate.didTapNotifications()
+//            }),
 
             Row<RightLabelCell>(id: "base_currency", height: SettingsTheme.cellHeight, bind: { [weak self] cell, _ in
                 cell.bind(titleIcon: UIImage(named: "Currency Icon"), title: "settings.base_currency".localized, rightText: self?.currentBaseCurrency, showDisclosure: true)
