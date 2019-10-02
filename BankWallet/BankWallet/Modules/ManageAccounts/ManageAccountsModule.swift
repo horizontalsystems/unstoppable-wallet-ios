@@ -51,8 +51,14 @@ struct ManageAccountItem {
 struct ManageAccountViewItem {
     let title: String
     let coinCodes: String
-    let linked: Bool
+    let highlighted: Bool
+    let leftButtonState: ManageAccountLeftButtonState
     let rightButtonState: ManageAccountRightButtonState
+}
+
+enum ManageAccountLeftButtonState {
+    case create
+    case delete
 }
 
 enum ManageAccountRightButtonState {

@@ -39,7 +39,31 @@ class ManageAccountsViewItemFactoryTests: QuickSpec {
                 }
             }
 
-            describe("state") {
+            describe("highlighted state") {
+
+                context("when account does not exist") {
+                    let item = ManageAccountItem(predefinedAccountType: mockType, account: nil)
+
+                    it("sets false") {
+                        let viewItem = factory.viewItem(item: item)
+
+                        expect(viewItem.highlighted).to(equal(false))
+                    }
+                }
+
+                context("when account exists") {
+
+                    let item = ManageAccountItem(predefinedAccountType: mockType, account: Account.mock(backedUp: false))
+
+                    it("sets true") {
+                        let viewItem = factory.viewItem(item: item)
+
+                        expect(viewItem.highlighted).to(equal(true))
+                    }
+                }
+            }
+
+            describe("button states") {
 
                 context("when account does not exist") {
                     let item = ManageAccountItem(predefinedAccountType: mockType, account: nil)
@@ -47,6 +71,7 @@ class ManageAccountsViewItemFactoryTests: QuickSpec {
                     it("sets .notLinked") {
                         let viewItem = factory.viewItem(item: item)
 
+                        expect(viewItem.leftButtonState).to(equal(ManageAccountLeftButtonState.create))
                         expect(viewItem.rightButtonState).to(equal(ManageAccountRightButtonState.restore))
                     }
                 }
@@ -59,6 +84,7 @@ class ManageAccountsViewItemFactoryTests: QuickSpec {
                         it("sets .linked with backedUp to be false") {
                             let viewItem = factory.viewItem(item: item)
 
+                            expect(viewItem.leftButtonState).to(equal(ManageAccountLeftButtonState.delete))
                             expect(viewItem.rightButtonState).to(equal(ManageAccountRightButtonState.backup))
                         }
                     }
@@ -69,6 +95,7 @@ class ManageAccountsViewItemFactoryTests: QuickSpec {
                         it("sets .linked with backedUp to be true") {
                             let viewItem = factory.viewItem(item: item)
 
+                            expect(viewItem.leftButtonState).to(equal(ManageAccountLeftButtonState.delete))
                             expect(viewItem.rightButtonState).to(equal(ManageAccountRightButtonState.show))
                         }
                     }
