@@ -290,7 +290,7 @@
 "settings_manage_keys.delete.confirmation_disable" = "Etkisizleştirilecek cüzdanlar: %@";
 "settings_manage_keys.delete.confirmation_loose" = "If you didn't backup the private key for this wallet, you will lose access to your funds.";
 "error.cant_create_eos" = "Uygulama henüz EOS cüzdanı oluşturamamaktadır. Sadece var olan cüzda geri yüklenebilir.";
-"settings_manage_keys.create.text" = "This action will generate a new wallet for the following coins:\n\n%@";
+"settings_manage_keys.create.text" = "Bu işlem, şu kripto paralar için yeni Cüzdan oluşturacak:\n\n%@";
 "error.invalid_eos_key" = "Geçersiz anahtar";
 "error.invalid_eos_account" = "Geçersiz hesap";
 
@@ -350,7 +350,7 @@
 
 // Create Wallet
 
-"create_wallet.title" = "New Wallet";
+"create_wallet.title" = "Yeni Cüzdan";
 "create_wallet.create_button" = "Create";
 "create_wallet.description" = "Select one cryptocurrency to start. You will be able to add other cryptocurrencies later.";
 
