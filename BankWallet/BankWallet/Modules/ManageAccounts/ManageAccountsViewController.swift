@@ -96,7 +96,7 @@ extension ManageAccountsViewController: IManageAccountsView {
 
     func set(viewItems: [ManageAccountViewItem]) {
         self.viewItems = viewItems
-        tableView.reload(animated: true)
+        tableView.reload()
     }
 
     func showDoneButton() {
