@@ -69,7 +69,7 @@
 // Backup
 
 "backup.close" = "Cerrar";
-"backup.backup_required" = "Backup Required";
+"backup.backup_required" = "Se requiere una copia de seg.";
 "backup.private_key" = "Clave privada";
 
 "backup.intro.title_backup" = "Copia de seguridad";
@@ -288,7 +288,7 @@
 "settings_manage_keys.show" = "Mostrar";
 "settings_manage_keys.create" = "Crear";
 "settings_manage_keys.restore" = "Restaurar";
-"settings_manage_keys.delete.cant_delete" = "You need to backup the private key for this wallet before it can be deleted from this phone.";
+"settings_manage_keys.delete.cant_delete" = "Necesita respaldar esta clave privada antes de que pueda eliminarla de este teléfono.";
 "settings_manage_keys.delete.title" = "Eliminar Monedero";
 "settings_manage_keys.delete.confirmation_remove" = "Esta acción eliminará los monederos %@ de este dispositivo.";
 "settings_manage_keys.delete.confirmation_disable" = "Monedas que serán deshabilitadas: %@";
