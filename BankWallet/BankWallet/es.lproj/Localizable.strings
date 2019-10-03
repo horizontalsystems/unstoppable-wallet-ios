@@ -69,7 +69,7 @@
 // Backup
 
 "backup.close" = "Cerrar";
-"backup.backup_required" = "Se requiere una copia de seguridad";
+"backup.backup_required" = "Backup Required";
 "backup.private_key" = "Clave privada";
 
 "backup.intro.title_backup" = "Copia de seguridad";
@@ -79,7 +79,7 @@
 "backup.intro.backup_now" = "Copia de seguridad";
 "backup.intro.show_key" = "Mostrar clave";
 
-"backup.words.confirmation_description" = "Enter words from your %@ Key";
+"backup.words.confirmation_description" = "Insertar palabras de su clave %@";
 
 "backup.eos.account_name" = "Account Name";
 "backup.eos.active_private_key" = "Active Private Key\n";
