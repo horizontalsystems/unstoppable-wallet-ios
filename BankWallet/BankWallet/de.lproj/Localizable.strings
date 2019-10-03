@@ -51,8 +51,8 @@
 
 //Coin Sync Modes
 
-"restore_options.title" = "Optionen Wiederherstellen";
-"restore_options.sync.text" = "Schnell: Stellt Ihre vergangenen Transaktionen über einen sicheren Drittserver her. Für Nutzer, die Transaktionen mit großen Summen haben, könnte diese Methode Datenschutzrisiken bergen.\nLangsam: Stellt Ihre vergangenen Transaktionen direkt aus der Blockchain her. Mehr Datenschutz, aber sehr langsam. Wenn es zu lange dauert, gehen Sie in den Einstellungen zu Wallets verwalten und löschen Sie den Eintrag Unstoppable. Wiederholen Sie den Prozess mit der Option \"Schnell\".";
+"restore_options.title" = "Optionen ";
+"restore_options.sync.text" = "Schnell: Stellt Ihre vergangenen Transaktionen über einen sicheren Drittserver her. Für Nutzer, die Transaktionen mit großen Summen haben, könnte diese Methode Datenschutzrisiken bergen.\n\nLangsam: Stellt Ihre vergangenen Transaktionen direkt aus der Blockchain her. Mehr Datenschutz, aber sehr langsam. Wenn es zu lange dauert, gehen Sie in den Einstellungen zu Wallets verwalten und löschen Sie den Eintrag Unstoppable. Wiederholen Sie den Prozess mit der Option \"Schnell\".";
 "restore_options.sync.fast" = "Schnell";
 "restore_options.sync.recommended" = "0-2 Stunden (Empfohlen)";
 "restore_options.sync.slow" = "Langsam";
