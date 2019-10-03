@@ -35,15 +35,16 @@
 
 // Welcome
 
-"welcome.new_wallet" = "Nouveau porte-monnaie";
+"welcome.new_wallet" = "Nouveu Porte-Monnaie";
 "welcome.restore_wallet" = "Restaurer le porte-monnaie";
 "welcome.version" = "Version %@";
 
 // Restore
 
-"restore.title" = "Restaurer";
-"restore.description" = "Pour restaurer un porte-monnaie existant, vous devez entrer une clé secrète pour ce porte-monnaie. \n\nAprès avoir restauré un porte-monnaie, vous pourrez restaurer plus de porte-monnaies en accédant à la section Gérer les clés dans les Paramètres de l'application.";
-"restore.words.description" = "Entrez la clé";
+"restore.title" = "Restaurer à partir de";
+"restore.item_title" = "%@ Portefeuille";
+"restore.description" = "Pour restaurer un portefeuille existant, vous devez entrer une clé privée pour ce portefeuille.\n\nUne fois que vous avez restauré un portefeuille, vous pourrez en restaurer d'autres via la section Gérer les portefeuilles dans les paramètres Sécurité de l'application.";
+"restore.words.description" = "Entrez la clé privée pour le portefeuille %@";
 "restore.validation_failed" = "Clé incorrect";
 "restore.placeholder.account_name" = "Account Name";
 "restore.placeholder.private_key" = "Active Private Key";
@@ -51,12 +52,16 @@
 //Coin Sync Modes
 
 "restore_options.title" = "Restaurer les options";
+"restore_options.sync.text" = "Rapide : Restaure vos transactions passées via un serveur tiers sécurisé. Pour les utilisateurs dont les transactions portent sur des sommes importantes, cette méthode peut présenter des risques pour la protection de la confidentialité.\n\nLent : Restaure vos transactions passées directement à partir de la blockchain. Plus privé mais très lent. Si cela prend trop de temps, allez dans Gérer les portefeuilles dans Paramètres, supprimez l'entrée Inéluctable et répétez l'opération avec l'option Rapide.";
 "restore_options.sync.fast" = "Rapide";
 "restore_options.sync.recommended" = "0-2 heures (Recommandé)";
-"restore_options.sync.fast.text" = "Restaure vos transactions passées via un serveur tiers sécurisé. Pour les utilisateurs ayant une longue histoire de transactions impliquant des sommes très importantes, cette méthode peut poser des risques de confidentialité";
 "restore_options.sync.slow" = "Lente";
 "restore_options.sync.more_private" = "1-12 heures (Plus Privé)";
-"restore_options.sync.slow.text" = "Restaure vos transactions passées directement depuis le réseau. Beaucoup plus privé mais très lent. Si la restauration prend trop de temps, accédez à la section Gérer les clés et réimportez la clé du porte-monnaie à l'aide de l'option Synchronisation rapide.";
+"restore_options.derivation.text" = "Sélectionnez la période pendant laquelle vous avez créé le portefeuille pour la première fois dans Unstoppable.";
+"restore_options.derivation.before_update" = "Avant octobre 2019";
+"restore_options.derivation.after_update" = "Après octobre 2019";
+"restore_options.derivation.bip44" = "BIP-44";
+"restore_options.derivation.bip49" = "BIP-49";
 "restore_options.alert.header" = "Attention";
 "restore_options.alert.text" = "Cette action va rééquilibrer votre solde de porte-monnaie pour chaque de blockchain. Elle peut prendre plusieurs heures pour terminer.";
 "restore_options.erc20" = "Sync mode same as Ethereum";
@@ -65,21 +70,17 @@
 
 "backup.close" = "Fermer";
 "backup.backup_required" = "Sauvegarde requise";
+"backup.private_key" = "Clé privée";
 
 "backup.intro.title_backup" = "Sauvegarde";
 "backup.intro.title_show" = "Voir la clé";
-"backup.intro.subtitle" = "La clé qui sera affichée suivante est la seule façon de restaurer vos fonds, si votre téléphone est perdu, volé, cassé, etc. Assurez-vous que personne ne regarde votre écran.\n\nLes coins contrôlées par cette clé : %@";
+"backup.intro.subtitle" = "La clé privée qui va s'afficher est le seul moyen de restaurer vos fonds si votre téléphone est perdu, volé, endommagé, etc. \n\nAssurez-vous que personne ne regarde votre écran.\n\nLes pièces sont contrôlées grâce à cette clé : %@.";
 "backup.intro.later" = "Plus tard";
 "backup.intro.backup_now" = "Sauvegarde";
 "backup.intro.show_key" = "Voir la clé";
 
-"backup.words.title" = "Clé Secrete";
-"backup.12words.title" = "Clé de 12-words";
-"backup.binance.title" = "Clé de Binance";
-"confirmation.binance.description" = "Entrez les mots de votre clé Binance";
-"confirmation.12words.description" = "Entrez les mots de votre clé 12-words";
+"backup.words.confirmation_description" = "Entrez les mots de votre clé %@";
 
-"backup.eos.title" = "Clé de EOS";
 "backup.eos.account_name" = "Account Name";
 "backup.eos.active_private_key" = "Active Private Key";
 "backup.eos.hint" = "Copier votre clé en utilisant l'action « copier » apporte le des risques si vous utilisez des applications de gestion du presse-papiers ou d'autres applications qui peuvent avoir accès aux données du presse-papiers.";
@@ -115,7 +116,7 @@
 "deposit.receive_coin" = "Recevoir %@";
 "deposit.your_address" = "Votre address";
 "deposit.your_account" = "Votre compte";
-"receive_alert.not_backed_up_description" = "Vous devez sauvegarder %@ clés avant de pouvoir recevoir %@. ";
+"receive_alert.not_backed_up_description" = "Vous devez sauvegarder le portefeuille %@ avant de recevoir %@.";
 
 // Send
 
@@ -159,7 +160,6 @@
 // Transaction Info
 
 "tx_info.title" = "Transaction";
-"tx_info.time" = "Date";
 "tx_info.status" = "Statut";
 "tx_info.status.pending" = "En attente";
 "tx_info.status.confirmed" = "Confirmé";
@@ -214,7 +214,7 @@
 "settings.tab_bar_item" = "Paramètres";
 "settings.security_center" = "Centre de Sécurité";
 "settings.manage_coins" = "Gérer les coins";
-"settings.restore_wallet" = "Restaurer le porte-monnaie";
+"settings.notifications" = "Notifications";
 "settings.base_currency" = "Devise de Base";
 "settings.language" = "Langue";
 "settings.about" = "À propos de";
@@ -223,6 +223,15 @@
 "settings.light_mode" = "Mode lumineux";
 "settings.info_title" = "UNSTOPPABLE";
 "settings.info_subtitle" = "decentralized app";
+
+// Settings -> Notifications
+
+"settings_notifications.title" = "Notifications";
+"settings_notifications.description" = "Définissez des alertes de changement de prix pour les pièces que vous voulez surveiller. \n\nVous serez averti lorsque le changement de prix pour les dernières 24 heures dépasse le seuil sélectionné.";
+"settings_notifications.alert_off" = "Désactivé";
+"settings.notifications.deactivate_all" = "Tout désactiver";
+"settings.notifications.disabled_text" = "Les notifications pour l'application Unstoppable Wallet sont désactivées. Vous devez activer les notifications et autoriser le rafraîchissement de l'application en arrière-plan afin de pouvoir recevoir des alertes de changement de prix.";
+"settings.notifications.settings_button" = "Activer dans Paramètres";
 
 // Settings -> Base Currency
 
@@ -236,7 +245,7 @@
 
 "manage_coins.title" = "Portefeuilles";
 "manage_coins.add_coin.title" = "Ajouter %@ ";
-"manage_coins.add_coin.text" = "Vous n'avez pas de clé pour %@. Le porte-monnaie peut générer la clé pour vous. Utilisez le bouton Créer ci-dessous pour générer une nouvelle clé. \n\nVous pouvez également utiliser la clé %@ existante pour le %@ si vous en avez une.";
+"manage_coins.add_coin.text" = "Vous n'avez pas de portefeuille pouvant stocker %@ (%@). Vous pouvez générer un nouveau portefeuille avec l'application. Utilisez le bouton Créer ci-dessous pour générer un nouveau portefeuille.\n\nVous pourrez utiliser le nouveau portefeuille pour les pièces suivantes : %@. \n\nVous pouvez également utiliser la clé %@ existante si vous en avez une. Pour cela, utilisez le bouton de restauration.";
 "manage_coins.add_coin.create" = "Créer";
 "manage_coins.add_coin.restore" = "Restaurer";
 
@@ -255,7 +264,7 @@
 // Settings -> Security
 
 "settings_security.title" = "Centre de Sécurité";
-"settings_security.manage_accounts" = "Gérer les clés";
+"settings_security.manage_accounts" = "Gérer les portefeuilles";
 "settings_security.passcode" = "Code";
 "settings_security.change_pin" = "Modifier le code ";
 "settings_security.touch_id" = "Touch ID";
@@ -270,20 +279,22 @@
 
 // Manage Keys
 
-"settings_manage_keys.title" = "Clés";
-"settings_manage_keys.description" = "Celui qui a l'accès à vos clés peut voler vos fonds de porte-monnaie. Stockez les clés en toute sécurité et ne les montrez jamais à quelqu'un.\n\nSauvegardez chaque clé pour pouvoir restaurer des fonds si vous perdez ou cassez votre portable, ou simplement l'application de portefeuille est supprimée.";
+"settings_manage_keys.title" = "Gérer les portefeuilles";
+"settings_manage_keys.item_title" = "%@ Portefeuille";
+"settings_manage_keys.add_wallet" = "Ajouter le portefeuille";
+"settings_manage_keys.description" = "Ci-dessous vous trouverez vos portefeuilles actifs où chaque portefeuille contient un ensemble différent de cryptomonnaies. \n\nVous devriez sauvegarder chaque portefeuille surligné en sauvegardant la clé privée du portefeuille en question. Cette clé est le seul moyen de restaurer vos fonds si votre téléphone est perdu, volé, endommagé, etc.";
 "settings_manage_keys.delete" = "Supprimer";
 "settings_manage_keys.backup" = "Sauvegarde";
 "settings_manage_keys.show" = "Afficher";
 "settings_manage_keys.create" = "Créer";
 "settings_manage_keys.restore" = "Restaurer";
-"settings_manage_keys.delete.cant_delete" = "Vous devez sauvegarder la clé %@ avant de pouvoir la supprimer de ce téléphone.";
-"settings_manage_keys.delete.title" = "Supprimer la clé";
-"settings_manage_keys.delete.confirmation_remove" = "Cette action supprimera la clé %@ (porte-monnaie) de cet appareil.";
+"settings_manage_keys.delete.cant_delete" = "Vous devez sauvegarder la clé privée avant de pouvoir la supprimer de ce téléphone.";
+"settings_manage_keys.delete.title" = "Supprimer le portefeuille";
+"settings_manage_keys.delete.confirmation_remove" = "Cette action supprimera le portefeuille %@ de cet appareil.";
 "settings_manage_keys.delete.confirmation_disable" = "Coins qui seront désactivées : %@";
-"settings_manage_keys.delete.confirmation_loose" = "Si vous n'avez pas de sauvegarde de cette clé, vous perdrez les fonds respectifs.";
+"settings_manage_keys.delete.confirmation_loose" = "Si vous n'avez pas sauvegardé la clé privée de ce portefeuille, vous perdrez l'accès à vos fonds.";
 "error.cant_create_eos" = "À cet étape, le porte-monnaie n'est pas capable de créer de nouveaux comptes de porte-monnaies EOS. Vous n'êtes que capable de restaurer celui existant.";
-"settings_manage_keys.create.text" = "Cette action générera une clé(porte-monnaie) pour les coins suivantes :\n\n%@";
+"settings_manage_keys.create.text" = "Cette action générera un nouveau portefeuille pour les pièces suivantes: \n%@";
 "error.invalid_eos_key" = "Clé invalide";
 "error.invalid_eos_account" = "Compte invalide";
 
@@ -323,15 +334,6 @@
 
 // Key Types
 
-"key_type.12_words" = "12-words";
-"key_type.12_words.text" = "BTC, BCH, DASH, ETH, ERC-20";
-"key_type.eos" = "EOS Blockchain";
-"key_type.eos.text" = "EOS, EOS based Tokens";
-"key_type.binance" = "Binance Chain";
-"key_type.binance.text" = "BNB, BEP-2";
-
-// Key Types
-
 "chart.title" = "Taux %@";
 "chart.time_duration.day" = "1J";
 "chart.time_duration.week" = "7J";
@@ -349,3 +351,13 @@
 "chart.low" = "Faible";
 "chart.volume" = "Volume";
 "chart.error.not_available" = "Graphique non disponible";
+
+// Create Wallet
+
+"create_wallet.title" = "Nouveau porte-monnaie";
+"create_wallet.create_button" = "Créer";
+"create_wallet.description" = "Sélectionnez une cryptomonnaie pour commencer. Vous pourrez ajouter d'autres cryptomonnaies plus tard.";
+
+"price_notification.up" = "monter";
+"price_notification.down" = "descendre";
+"price_notification.multi_title" = "Notifications";
