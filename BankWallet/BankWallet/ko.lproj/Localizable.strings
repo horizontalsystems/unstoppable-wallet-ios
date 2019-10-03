@@ -41,7 +41,7 @@
 
 // Restore
 
-"restore.title" = "Restore From";
+"restore.title" = "다음에서 복원하기";
 "restore.item_title" = "%@ 지갑";
 "restore.description" = "기존으 지갑을 복원시키려면 귀하께서는 개인 암호를 입력 하셔야 합니다.\n\n하나의 지갑을 복원 시키시면 다른 지갑들도 앱의 보안 설정에서 지갑 관리 섹션을 통해 복원 하실 수 있습니다.";
 "restore.words.description" = "Enter private key for %@ wallet";
@@ -245,7 +245,7 @@
 
 "manage_coins.title" = "코인 매니저";
 "manage_coins.add_coin.title" = "%@ 추가 ";
-"manage_coins.add_coin.text" = "You don't have a wallet that can store %@ (%@). The app can generate a new wallet for you. Use the Create button below to generate a new wallet.\n\nYou will be able to use the new wallet for the following coins: %@.\n\nYou may also use the existing %@ Wallet key if you have one. Use the Restore button for that.";
+"manage_coins.add_coin.text" = "귀하께서는 %@(%@)를 저장할 수 있는 지갑을 가지고 계시지 않습니다. 이 앱은 귀하를 위해 새로운 지갑을 만들어 드릴 수 있습니다. 새로운 지갑을 만들기 위해 밑에있는 생성하기 버튼을 사용하십시오.\n\n귀하께서는 다음 %@에 대한 새로운 지갑을 사용 하실 수 있을 것 입니다.\n\n귀하께서는 또한 기존에 가지고 계셨던%@ 지갑 암호를 사용하실 수 있습니다. 복원하기 버튼을 누르십시오.";
 "manage_coins.add_coin.create" = "만들기";
 "manage_coins.add_coin.restore" = "복구";
 
