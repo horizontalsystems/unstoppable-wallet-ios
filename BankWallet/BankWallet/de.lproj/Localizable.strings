@@ -74,7 +74,7 @@
 
 "backup.intro.title_backup" = "Sicherung";
 "backup.intro.title_show" = "Schlüssel anzeigen";
-"backup.intro.subtitle" = "Der private Schlüssel, der als nächstes angezeigt wird, ist die einzige Möglichkeit, Ihr Guthaben wiederherzustellen, wenn Ihr Telefon verloren geht, gestohlen wird oder beschädigt wird. \nAchten Sie darauf, dass niemand Ihren Bildschirm sieht.\nDie Coins, die von diesem Schlüssel kontrolliert werden: %@";
+"backup.intro.subtitle" = "Der private Schlüssel, der als nächstes angezeigt wird, ist die einzige Möglichkeit, Ihr Guthaben wiederherzustellen, wenn Ihr Telefon verloren geht, gestohlen wird oder beschädigt wird. \n\nAchten Sie darauf, dass niemand Ihren Bildschirm sieht.\n\nDie Coins, die von diesem Schlüssel kontrolliert werden: %@";
 "backup.intro.later" = "Später";
 "backup.intro.backup_now" = "Backup";
 "backup.intro.show_key" = "Schlüssel anzeigen";
@@ -282,7 +282,7 @@
 "settings_manage_keys.title" = "Wallets verwalten";
 "settings_manage_keys.item_title" = "%@ Wallet";
 "settings_manage_keys.add_wallet" = "Wallet hinzufügen";
-"settings_manage_keys.description" = "Aktive Wallets sind hervorgehoben. Diese sind für verschiedene Kryptowährungen verantwortlich.\nSie sollten für jedes hervorgehobene Wallet den privaten Schlüssel sichern. Dieser Schlüssel ist die einzige Möglichkeit, Ihr Guthaben wiederherzustellen, wenn Ihr Telefon verloren geht, gestohlen wird oder kaputt geht.";
+"settings_manage_keys.description" = "Aktive Wallets sind hervorgehoben. Diese sind für verschiedene Kryptowährungen verantwortlich.\n\nSie sollten für jedes hervorgehobene Wallet den privaten Schlüssel sichern. \n\nDieser Schlüssel ist die einzige Möglichkeit, Ihr Guthaben wiederherzustellen, wenn Ihr Telefon verloren geht, gestohlen wird oder kaputt geht.";
 "settings_manage_keys.delete" = "Löschen";
 "settings_manage_keys.backup" = "Sicherung";
 "settings_manage_keys.show" = "Anzeigen";
@@ -294,7 +294,7 @@
 "settings_manage_keys.delete.confirmation_disable" = "Coins, die entfernt werden: %@";
 "settings_manage_keys.delete.confirmation_loose" = "Wenn Sie den privaten Schlüssel für dieses Wallet nicht gesichert haben, verlieren Sie den Zugang zu Ihrem Guthaben.";
 "error.cant_create_eos" = "Im Moment kann das Wallet keine neuen EOS-Wallet-Accounts anlegen. Sie können nur bestehende wiederherstellen.";
-"settings_manage_keys.create.text" = "Damit erzeugen Sie ein neues Wallet für folgende Coins: %@";
+"settings_manage_keys.create.text" = "Damit erzeugen Sie ein neues Wallet für folgende Coins:\n %@";
 "error.invalid_eos_key" = "Ungültiger Schlüssel";
 "error.invalid_eos_account" = "Ungültiger Account";
 
