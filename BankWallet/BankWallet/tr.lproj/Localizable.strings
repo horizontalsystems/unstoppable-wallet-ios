@@ -51,7 +51,7 @@
 
 //Coin Sync Modes
 
-"restore_options.title" = "Geri yükleme seçenekleri";
+"restore_options.title" = "Geri yüklemeyi seç";
 "restore_options.sync.text" = "Hızlı: Geçmişte yaptığınız işlemleri güvenli üçüncü taraf sunucu üzerinden geri yükler. Büyük meblağlar içeren işlemlere sahip kullanıcılar için bu yöntem gizlilik riskleri oluşturabilir.\n\nYavaş: Geçmiş işlemlerinizi doğrudan blok zincirinden geri yükler. Daha özel ve güvenli ama çok yavaş. Çok uzun sürerse, Ayarlar'daki Cüzdanları Yönet'e gidin, Unstoppable girişini silin ve Hızlı seçeneğiyle işlemi tekrarlayın.";
 "restore_options.sync.fast" = "Hızlı";
 "restore_options.sync.recommended" = "0-2 saat (Tavsiye edilen)";
