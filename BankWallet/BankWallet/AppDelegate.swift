@@ -59,10 +59,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
 
-    func application(_ application: UIApplication, performFetchWithCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
-        App.shared.backgroundPriceAlertManager.fetchRates { success in
-            completionHandler(success ? .newData : .failed)
-        }
-    }
+//    func application(_ application: UIApplication, performFetchWithCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+//        App.shared.backgroundPriceAlertManager.fetchRates { success in
+//            completionHandler(success ? .newData : .failed)
+//        }
+//    }
 
 }

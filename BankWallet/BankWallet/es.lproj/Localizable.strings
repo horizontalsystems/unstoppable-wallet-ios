@@ -35,15 +35,16 @@
 
 // Welcome
 
-"welcome.new_wallet" = "Nuevo monedero";
+"welcome.new_wallet" = "Crear cartera";
 "welcome.restore_wallet" = "Restaurar monedero";
 "welcome.version" = "Versión %@";
 
 // Restore
 
-"restore.title" = "Restaurar";
-"restore.description" = "Para restaurar el monedero existente, es necesario introducir la clave privada para ese monedero.\n\nUna vez que restablezca un monedero podrá restaurar más monederos yendo a la sección Administrar Claves en Ajustes de la aplicación.";
-"restore.words.description" = "Introduzca la clave";
+"restore.title" = "Restaurar desde";
+"restore.item_title" = "%@ Monedero";
+"restore.description" = "Para restaurar el monedero existente, usted necesita ingresar la clave privada para ese monedero.\n\nUna vez que restaure un monedero usted podrá restaurar otros monederos al acceder a la sección Gestionar Monederos en los ajustes de Seguridad de la aplicación.";
+"restore.words.description" = "Enter private key for %@ wallet";
 "restore.validation_failed" = "Clave incorrecta";
 "restore.placeholder.account_name" = "Account Name";
 "restore.placeholder.private_key" = "Active Private Key\n";
@@ -51,12 +52,16 @@
 //Coin Sync Modes
 
 "restore_options.title" = "Restaurar opciones";
+"restore_options.sync.text" = "Rápida: Restaura sus transacciones pasadas a través de un servidor de seguridad externo. Para usuarios con transacciones que involucren grandes sumas, este método posiblemente implique un riesgo en la privacidad.\n\nLento: Restaura sus transacciones pasadas directamente del blockchain. Más privado pero muy lento. Si toma mucho tiempo, vaya a Gestionar Monederos en Ajustes, elimine la entrada de Unstoppable y repita el proceso con la opción Rápida.";
 "restore_options.sync.fast" = "Rápido";
 "restore_options.sync.recommended" = "0-2 horas (Recomendado)";
-"restore_options.sync.fast.text" = "Restaura tus transacciones pasadas vía un tercer servidor seguro. Para usuarios con una larga historia de transacciones con grandes cantidades, éste método puede tener riesgos de privacidad";
 "restore_options.sync.slow" = "Lento";
 "restore_options.sync.more_private" = "1-12 horas (Más Privado)";
-"restore_options.sync.slow.text" = "Restaure sus transacciones pasadas directamente desde la red. Significativamente más privado pero muy lento. Si la restauración toma mucho tiempo, vaya a la sección Administrar claves y reimporte la Clave para la cartera utilizando la opción de Sincronización rápida.";
+"restore_options.derivation.text" = "Seleccione el período de tiempo de cuando creó por primera vez el monedero en Unstoppable.";
+"restore_options.derivation.before_update" = "Antes de Octubre de 2019";
+"restore_options.derivation.after_update" = "Después de Octubre de 2019";
+"restore_options.derivation.bip44" = "BIP-44";
+"restore_options.derivation.bip49" = "BIP-49";
 "restore_options.alert.header" = "Atención";
 "restore_options.alert.text" = "Esta acción se actualizará el saldo de su cartera para cada cadena de bloques. Puede tardar varias horas en completarse.";
 "restore_options.erc20" = "Sincronizar el modo igual que Ethereum";
@@ -65,21 +70,17 @@
 
 "backup.close" = "Cerrar";
 "backup.backup_required" = "Se requiere una copia de seguridad";
+"backup.private_key" = "Clave privada";
 
 "backup.intro.title_backup" = "Copia de seguridad";
 "backup.intro.title_show" = "Mostrar clave";
-"backup.intro.subtitle" = "La clave que se mostrará a continuación es la única forma de restaurar sus fondos en caso de que su teléfono se pierda, lo roben, se averie, etc. Asegúrese de que nadie esté viendo su pantalla. \n\nLas criptomonedas controladas por esta clave: %@";
+"backup.intro.subtitle" = "La clave privada que se mostrará a continuación es la única forma de restaurar sus fondos en caso de que su teléfono se pierda, lo roben, se averíe, etc.\n\nAsegúrese de que nadie está viendo su pantalla.\n\nLas monedas controladas por esta clave: %@";
 "backup.intro.later" = "Más tarde";
 "backup.intro.backup_now" = "Copia de seguridad";
 "backup.intro.show_key" = "Mostrar clave";
 
-"backup.words.title" = "Clave secreta";
-"backup.12words.title" = "Clave de 12 palabras";
-"backup.binance.title" = "Clave de Binance";
-"confirmation.binance.description" = "Insertar palabras de su clave Binance";
-"confirmation.12words.description" = "Insertar palabras de su clave 12-palabras";
+"backup.words.confirmation_description" = "Enter words from your %@ Key";
 
-"backup.eos.title" = "Clave de EOS";
 "backup.eos.account_name" = "Account Name";
 "backup.eos.active_private_key" = "Active Private Key\n";
 "backup.eos.hint" = "Copiar su clave utilizando la acción \"copiar\" implica ciertos riesgos si utiliza aplicaciones de gestión de portapapeles u otra aplicación que pueda tener acceso a la información del portapapeles.";
@@ -115,7 +116,7 @@
 "deposit.receive_coin" = "Recibir %@";
 "deposit.your_address" = "Su dirección";
 "deposit.your_account" = "Su cuenta";
-"receive_alert.not_backed_up_description" = "Necesita un respaldo de la clave %@ antes de poder recibir %@.";
+"receive_alert.not_backed_up_description" = "Necesita respaldar el monedero %@ antes de poder recibir %@.";
 
 // Send
 
@@ -159,7 +160,6 @@
 // Transaction Info
 
 "tx_info.title" = "Transacción";
-"tx_info.time" = "Hora";
 "tx_info.status" = "Estado";
 "tx_info.status.pending" = "Pendiente";
 "tx_info.status.confirmed" = "Confirmado";
@@ -214,7 +214,7 @@
 "settings.tab_bar_item" = "Ajustes";
 "settings.security_center" = "Centro de seguridad";
 "settings.manage_coins" = "Gestionar monedas";
-"settings.restore_wallet" = "Restaurar monedero";
+"settings.notifications" = "Notificaciones";
 "settings.base_currency" = "Moneda principal";
 "settings.language" = "Idioma";
 "settings.about" = "Acerca de";
@@ -223,6 +223,15 @@
 "settings.light_mode" = "Modo ligero";
 "settings.info_title" = "UNSTOPPABLE";
 "settings.info_subtitle" = "decentralized app";
+
+// Settings -> Notifications
+
+"settings_notifications.title" = "Notificaciones";
+"settings_notifications.description" = "Establecer alertas de cambio de precio para las monedas que desea ver.\n\nSe le avisará cuando el cambio de precio, durante las últimas 24 horas, supere el umbral seleccionado.";
+"settings_notifications.alert_off" = "Desactivado";
+"settings.notifications.deactivate_all" = "Desactivar todo";
+"settings.notifications.disabled_text" = "Las notificaciones para la aplicación del Monedero Unstoppable están desactivadas. Necesita activarlas para poder recibir alertas de cambio de precios.";
+"settings.notifications.settings_button" = "Activar en ajustes";
 
 // Settings -> Base Currency
 
@@ -236,7 +245,7 @@
 
 "manage_coins.title" = "Gestor de monedas";
 "manage_coins.add_coin.title" = "Añadir %@ ";
-"manage_coins.add_coin.text" = "Usted no tiene la clave para %@. El monedero puede generar una clave para usted. Use el botón de crear para generar una nueva clave. \n\nTambién puede usar la %@clave ya existente para el %@si tiene una.";
+"manage_coins.add_coin.text" = "Usted no tiene un monedero que pueda restaurar %@(%@). La aplicación puede generar un nuevo monedero para usted. Use el botón de crear, que se encuentra abajo, para generar un nuevo monedero.\n\nPodrá usar el nuevo monedero para las siguientes monedas: %@.\n\nUsted también piede utilizar el la clave existente del monedero %@ si ya tiene uno. Use el botón restaurar para hacerlo.";
 "manage_coins.add_coin.create" = "Crear";
 "manage_coins.add_coin.restore" = "Restaurar";
 
@@ -255,7 +264,7 @@
 // Settings -> Security
 
 "settings_security.title" = "Centro de seguridad";
-"settings_security.manage_accounts" = "Gestionar claves";
+"settings_security.manage_accounts" = "Gestionar Monederos";
 "settings_security.passcode" = "Código de acceso";
 "settings_security.change_pin" = "Editar el código ";
 "settings_security.touch_id" = "Identificación táctil";
@@ -270,20 +279,22 @@
 
 // Manage Keys
 
-"settings_manage_keys.title" = "Claves";
-"settings_manage_keys.description" = "Cualquiera persona con acceso a sus claves puede robar los fondos de su monedero. Almacene las claves de forma segura y nunca se las muestre a nadie.\n\nRespalde cada clave para que pueda restaurar los fondos en caso de que su teléfono se pierda o se averíe, o por el simple hecho de que la aplicación se borre de su teléfono.";
+"settings_manage_keys.title" = "Gestionar monederos";
+"settings_manage_keys.item_title" = "%@ Monedero";
+"settings_manage_keys.add_wallet" = "Añadir Monedero";
+"settings_manage_keys.description" = "A continuación se destacan sus monederos activos donde cada monedero es responsable de diferentes tipos de criptomonedas.\n\nDebería hacer copias de seguridad de cada monedero resaltado, respaldando la clave privada de esa cartera. Esta clave es la única manera de restaurar sus fondos si su teléfono se pierde, lo roban, se avería, etc.";
 "settings_manage_keys.delete" = "Eliminar";
 "settings_manage_keys.backup" = "Copia de seguridad";
 "settings_manage_keys.show" = "Mostrar";
 "settings_manage_keys.create" = "Crear";
 "settings_manage_keys.restore" = "Restaurar";
-"settings_manage_keys.delete.cant_delete" = "Necesita respaldar esta clave %@ antes de que pueda eliminarla de este teléfono.";
-"settings_manage_keys.delete.title" = "Eliminar clave";
-"settings_manage_keys.delete.confirmation_remove" = "Esta acción eliminará la clave %@ (monedero) de este dispositivo.";
+"settings_manage_keys.delete.cant_delete" = "You need to backup the private key for this wallet before it can be deleted from this phone.";
+"settings_manage_keys.delete.title" = "Eliminar Monedero";
+"settings_manage_keys.delete.confirmation_remove" = "Esta acción eliminará los monederos %@ de este dispositivo.";
 "settings_manage_keys.delete.confirmation_disable" = "Monedas que serán deshabilitadas: %@";
-"settings_manage_keys.delete.confirmation_loose" = "Si usted no tiene un respaldo de esta clave, usted perderá los respectivos fondos.";
+"settings_manage_keys.delete.confirmation_loose" = "Si usted no respaldó la clave privada para este monedero, perderá el acceso a sus fondos.";
 "error.cant_create_eos" = "En este momento, el monedero no es capaz de crear nuevas cuentas de monederos EOS. Solo puede restaurar la existente.";
-"settings_manage_keys.create.text" = "Esta acción generará una clave (monedero) para las siguientes monedas:\n\n%@";
+"settings_manage_keys.create.text" = "Esta acción generará un nuevo monedero para las siguientes monedas:\n\n%@";
 "error.invalid_eos_key" = "Clave inválida";
 "error.invalid_eos_account" = "Cuenta inválida";
 
@@ -323,15 +334,6 @@
 
 // Key Types
 
-"key_type.12_words" = "12-words";
-"key_type.12_words.text" = "BTC, BCH, DASH, ETH, ERC-20";
-"key_type.eos" = "EOS Blockchain";
-"key_type.eos.text" = "EOS, Tokens basados en EOS";
-"key_type.binance" = "Binance Chain";
-"key_type.binance.text" = "BNB, BEP-2";
-
-// Key Types
-
 "chart.title" = "%@ Tarifa";
 "chart.time_duration.day" = "1 D";
 "chart.time_duration.week" = "7 D";
@@ -349,3 +351,13 @@
 "chart.low" = "Bajo";
 "chart.volume" = "Volumen";
 "chart.error.not_available" = "Gráfico no disponible";
+
+// Create Wallet
+
+"create_wallet.title" = "Nueva cartera";
+"create_wallet.create_button" = "Crear";
+"create_wallet.description" = "Seleccione una criptomoneda para comenzar. Podrá añadir otras criptomonedas posteriormente.";
+
+"price_notification.up" = "arriba";
+"price_notification.down" = "abajo";
+"price_notification.multi_title" = "Notificaciones";

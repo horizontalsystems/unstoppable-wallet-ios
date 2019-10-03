@@ -74,7 +74,7 @@ extension AppManager {
         debugBackgroundLogger?.logEnterBackground()
 
         lockManager.didEnterBackground()
-        backgroundPriceAlertManager.didEnterBackground()
+//        backgroundPriceAlertManager.didEnterBackground()
     }
 
     func willEnterForeground() {
