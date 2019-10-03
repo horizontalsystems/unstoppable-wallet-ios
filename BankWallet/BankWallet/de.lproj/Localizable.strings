@@ -41,9 +41,10 @@
 
 // Restore
 
-"restore.title" = "Wiederherstellen";
-"restore.description" = "Um ein bestehendes Wallet wiederherzustellen, müssen Sie den Offlineschlüssel für dieses Wallet eingeben.\n\nSobald Sie ein Wallet wiederhergestellt haben, können Sie weitere Wallets wiederherstellen. Gehen Sie dazu in das Verzeichnis Manage Schlüssel in den App-Einstellungen.";
-"restore.words.description" = "Schlüssel Eingeben";
+"restore.title" = "Wiederherstellen aus";
+"restore.item_title" = "%@ Wallet";
+"restore.description" = "Um ein bestehendes Wallet wiederherzustellen, müssen Sie einen geheimen Schlüssel für das Wallet eingeben. \n\nSobald Sie ein Wallet wiederhergestellt haben, können Sie andere Wallete über den Abschnitt Wallet Manager in den Sicherheitseinstellungen der App wiederherstellen.";
+"restore.words.description" = "Geben Sie den privaten Schlüssel für %@ Wallet ein";
 "restore.validation_failed" = "Falscher Schlüssel";
 "restore.placeholder.account_name" = "Account Name";
 "restore.placeholder.private_key" = "Active Private Key";
@@ -51,12 +52,16 @@
 //Coin Sync Modes
 
 "restore_options.title" = "Optionen Wiederherstellen";
+"restore_options.sync.text" = "Schnell: Stellt Ihre vergangenen Transaktionen über einen sicheren Drittserver her. Für Nutzer, die Transaktionen mit großen Summen haben, könnte diese Methode Datenschutzrisiken bergen.\nLangsam: Stellt Ihre vergangenen Transaktionen direkt aus der Blockchain her. Mehr Datenschutz, aber sehr langsam. Wenn es zu lange dauert, gehen Sie in den Einstellungen zu Wallets verwalten und löschen Sie den Eintrag Unstoppable. Wiederholen Sie den Prozess mit der Option \"Schnell\".";
 "restore_options.sync.fast" = "Schnell";
-"restore_options.sync.recommended" = "0-2 Stunden (empfohlen)";
-"restore_options.sync.fast.text" = "Stellen Sie Ihre vergangenen Transaktionen via eines sicheren Dritt-Servers wieder her. Für Nutzer mit einer langen Transaktionshistorie, die große Summen umfasst, kann diese Methode Datenschutzrisiken bergen.";
+"restore_options.sync.recommended" = "0-2 Stunden (Empfohlen)";
 "restore_options.sync.slow" = "Langsam";
-"restore_options.sync.more_private" = "1-12 Stunden (mehr privat)";
-"restore_options.sync.slow.text" = "Stellt vergangene Transaktionen direkt aus dem Netzwerk wieder her. Das schützt die Privatsphäre deutlich besser, ist aber sehr langsam. Wenn die Wiederherstellung zu lange dauert, gehen Sie zu Schlüssel Verwalten und reimportieren Sie den Schlüssel für das Wallet, indem Sie die Fast Sync Option nutzen.";
+"restore_options.sync.more_private" = "1-12 Stunden (Mehr Datenschutz)";
+"restore_options.derivation.text" = "Wählen Sie den Zeitraum, in dem Sie Ihr Wallet im Unstoppable Wallet das erste Mal erstellt haben.";
+"restore_options.derivation.before_update" = "Vor Oktober 2019";
+"restore_options.derivation.after_update" = "Nach Oktober 2019";
+"restore_options.derivation.bip44" = "BIP-44";
+"restore_options.derivation.bip49" = "BIP-49";
 "restore_options.alert.header" = "Achtung";
 "restore_options.alert.text" = "Diese Aktion wird dein Wallet-Konto für jede Blockchain neu synchronisieren. Es kann mehrere Stunden dauern, um ihn abzuschließen.";
 "restore_options.erc20" = "Sync-Modus wie Ethereum";
@@ -65,21 +70,17 @@
 
 "backup.close" = "Schließen";
 "backup.backup_required" = "Backup erforderlich";
+"backup.private_key" = "Privater Schlüssel";
 
 "backup.intro.title_backup" = "Sicherung";
 "backup.intro.title_show" = "Schlüssel anzeigen";
-"backup.intro.subtitle" = "Der angezeigte Schlüssel ist die einzige Möglichkeit, Ihr Guthaben wiederherzustellen, wenn Ihr Telefon verloren geht, kaputt geht usw. Achten Sie darauf, dass niemand Ihren Bildschirm sieht.\nDie Coins, die von diesem Schlüssel kontrolliert werden: %@";
+"backup.intro.subtitle" = "Der private Schlüssel, der als nächstes angezeigt wird, ist die einzige Möglichkeit, Ihr Guthaben wiederherzustellen, wenn Ihr Telefon verloren geht, gestohlen wird oder beschädigt wird. \nAchten Sie darauf, dass niemand Ihren Bildschirm sieht.\nDie Coins, die von diesem Schlüssel kontrolliert werden: %@";
 "backup.intro.later" = "Später";
 "backup.intro.backup_now" = "Backup";
 "backup.intro.show_key" = "Schlüssel anzeigen";
 
-"backup.words.title" = "Offlineschlüssel";
-"backup.12words.title" = "12-Wort-Schlüssel";
-"backup.binance.title" = "Binance Schlüssel";
-"confirmation.binance.description" = "Geben Sie die Worte Ihres Binance-Schlüssels ein";
-"confirmation.12words.description" = "Geben Sie die Worte Ihres 12-Wort-Schlüssels ein";
+"backup.words.confirmation_description" = "Geben Sie die Worte Ihres %@ Schlüssels ein";
 
-"backup.eos.title" = "EOS-Schlüssel";
 "backup.eos.account_name" = "Account Name";
 "backup.eos.active_private_key" = "Active Private Key";
 "backup.eos.hint" = "Den Schlüssel mit \"Kopieren\" zu kopieren, ist riskant, da Sie womöglich Zwischenablage-Management-Apps oder andere Apps nutzen, die Zugriff auf die Daten in der Zwischenablage haben.";
@@ -115,7 +116,7 @@
 "deposit.receive_coin" = "%@ Anfordern ";
 "deposit.your_address" = "Deine Adresse";
 "deposit.your_account" = "Dein Konto";
-"receive_alert.not_backed_up_description" = "Du musst den Schlüssel %@ in einem Backup sichern, bevor du %@ erhalten kannst.";
+"receive_alert.not_backed_up_description" = "Sie müssen das %@ Wallet sichern, bevor Sie %@ erhalten können.";
 
 // Send
 
@@ -159,7 +160,6 @@
 // Transaction Info
 
 "tx_info.title" = "Transaktion";
-"tx_info.time" = "Zeit";
 "tx_info.status" = "Status";
 "tx_info.status.pending" = "Anstehend";
 "tx_info.status.confirmed" = "Bestätigt";
@@ -214,7 +214,7 @@
 "settings.tab_bar_item" = "Einstellungen";
 "settings.security_center" = "Sicherheit";
 "settings.manage_coins" = "Coins Managen";
-"settings.restore_wallet" = "Wallet Wiederherstellen";
+"settings.notifications" = "Benachrichtigungen";
 "settings.base_currency" = "Währung";
 "settings.language" = "Sprache";
 "settings.about" = "Info";
@@ -223,6 +223,15 @@
 "settings.light_mode" = "Licht Modus";
 "settings.info_title" = "UNSTOPPABLE";
 "settings.info_subtitle" = "decentralized app";
+
+// Settings -> Notifications
+
+"settings_notifications.title" = "Benachrichtigungen";
+"settings_notifications.description" = "Legen Sie einen Preisänderungsalarm für die Coins fest, die Sie beobachten möchten.\nSie werden benachrichtigt, wenn die Preisänderung in den letzten 24 die gewählte Grenze übersteigt.";
+"settings_notifications.alert_off" = "Aus";
+"settings.notifications.deactivate_all" = "Alle deaktivieren";
+"settings.notifications.disabled_text" = "Die Benachrichtigungen für das Unstoppable Wallet sind ausgeschaltet. Sie müssen die Benachrichtigungen einschalten und eine Aktualisierung im Hintergrund erlauben, um Benachrichtigungen bei Preisänderungn zu erhalten.";
+"settings.notifications.settings_button" = "In Einstellungen einschalten";
 
 // Settings -> Base Currency
 
@@ -236,7 +245,7 @@
 
 "manage_coins.title" = "Coin Manager";
 "manage_coins.add_coin.title" = "%@ hinzufügen ";
-"manage_coins.add_coin.text" = "Du verfügst nicht über einen Schlüssel für , der einen Schlüssel %@ erfordert. Die Wallet kann den Schlüssel für Sie generieren. Verwenden Sie die Taste Create unten, um einen neuen Schlüssel zu generieren.\n\nDu kannst auch den vorhandenen %@-Schlüssel für den %@ verwenden, falls du einen hast.";
+"manage_coins.add_coin.text" = "Sie haben kein Wallet, das %@ (%@) speichern kann. Die App kann ein neues Wallet für Sie anlegen. Nutzen Sie den \"Erstellen Button\" unten, um ein neues Wallet anzulegen.\nSie können das Wallet für die folgenden Coins verwenden: %@.\nSie können auch den bestehenden %@ Wallet-Schlüssel nehmen, wenn Sie einen besitzen. Nutzen sie den Button \"Wiederherstellen\" dafür.";
 "manage_coins.add_coin.create" = "Erstellen";
 "manage_coins.add_coin.restore" = "Wiederherstellen";
 
@@ -255,7 +264,7 @@
 // Settings -> Security
 
 "settings_security.title" = "Sicherheit";
-"settings_security.manage_accounts" = "Schlüssel Managen";
+"settings_security.manage_accounts" = "Wallets verwalten";
 "settings_security.passcode" = "Code";
 "settings_security.change_pin" = "Code bearbeiten";
 "settings_security.touch_id" = "Touch ID";
@@ -270,20 +279,22 @@
 
 // Manage Keys
 
-"settings_manage_keys.title" = "Schlüssel";
-"settings_manage_keys.description" = "Jedermann mit Zugang zu Ihren Schlüsseln kann Ihr Wallet Geldbetrag stehlen. Bewahren Sie den Schlüssel sicher auf und zeigen Sie ihn niemandem.\n\nErstellen Sie ein Backup für jeden Schlüssel, um bei Verlust oder Unterbrechung Ihres Handys, oder wenn einfach die Wallet-App gelöscht wird, das Geld wiederherstellen zu können.";
+"settings_manage_keys.title" = "Wallets verwalten";
+"settings_manage_keys.item_title" = "%@ Wallet";
+"settings_manage_keys.add_wallet" = "Wallet hinzufügen";
+"settings_manage_keys.description" = "Aktive Wallets sind hervorgehoben. Diese sind für verschiedene Kryptowährungen verantwortlich.\nSie sollten für jedes hervorgehobene Wallet den privaten Schlüssel sichern. Dieser Schlüssel ist die einzige Möglichkeit, Ihr Guthaben wiederherzustellen, wenn Ihr Telefon verloren geht, gestohlen wird oder kaputt geht.";
 "settings_manage_keys.delete" = "Löschen";
 "settings_manage_keys.backup" = "Sicherung";
 "settings_manage_keys.show" = "Anzeigen";
 "settings_manage_keys.create" = "Erstellen";
 "settings_manage_keys.restore" = "Wiederherstellen";
-"settings_manage_keys.delete.cant_delete" = "Sie müssen den %@-Schlüssel in einem Backup sichern, bevor Sie ihn von diesem Handy löschen können.";
-"settings_manage_keys.delete.title" = "Schlüssel löschen";
-"settings_manage_keys.delete.confirmation_remove" = "Diese Aktion wird den %@-Schlüssel (Wallet) von diesem Gerät löschen.";
+"settings_manage_keys.delete.cant_delete" = "Sie müssen den privaten Schlüssel für dieses Wallet sichern, bevor Sie es von diesem Telefon löschen können.";
+"settings_manage_keys.delete.title" = "Wallet löschen";
+"settings_manage_keys.delete.confirmation_remove" = "Damit wird das %@ Wallet von Ihrem Gerät gelöscht.";
 "settings_manage_keys.delete.confirmation_disable" = "Coins, die entfernt werden: %@";
-"settings_manage_keys.delete.confirmation_loose" = "Wenn Sie keine Sicherung von diesem Schlüssel haben, verlieren Sie das zugehörige Guthaben.";
+"settings_manage_keys.delete.confirmation_loose" = "Wenn Sie den privaten Schlüssel für dieses Wallet nicht gesichert haben, verlieren Sie den Zugang zu Ihrem Guthaben.";
 "error.cant_create_eos" = "Im Moment kann das Wallet keine neuen EOS-Wallet-Accounts anlegen. Sie können nur bestehende wiederherstellen.";
-"settings_manage_keys.create.text" = "Diese Aktion erzeugt einen Schlüssel (Wallet) für die folgenden Coins: %@";
+"settings_manage_keys.create.text" = "Damit erzeugen Sie ein neues Wallet für folgende Coins: %@";
 "error.invalid_eos_key" = "Ungültiger Schlüssel";
 "error.invalid_eos_account" = "Ungültiger Account";
 
@@ -323,15 +334,6 @@
 
 // Key Types
 
-"key_type.12_words" = "12-words";
-"key_type.12_words.text" = "BTC, BCH, ETH, DASH, ETH, ERC-20";
-"key_type.eos" = "EOS Blockchain";
-"key_type.eos.text" = "EOS, EOS based Tokens";
-"key_type.binance" = "Binance Chain";
-"key_type.binance.text" = "BNB, BEP-2";
-
-// Key Types
-
 "chart.title" = "%@ Rate";
 "chart.time_duration.day" = "1T";
 "chart.time_duration.week" = "7T";
@@ -349,3 +351,13 @@
 "chart.low" = "Niedrig";
 "chart.volume" = "Lautstärke";
 "chart.error.not_available" = "Diagramm nicht verfügbar";
+
+// Create Wallet
+
+"create_wallet.title" = "Neues Wallet";
+"create_wallet.create_button" = "Erstellen";
+"create_wallet.description" = "Wählen Sie eine Kryptowährung. Sie können später weitere Kryptowährungen hinzufügen.";
+
+"price_notification.up" = "hoch";
+"price_notification.down" = "runter";
+"price_notification.multi_title" = "Benachrichtigungen";
