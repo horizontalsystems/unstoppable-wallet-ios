@@ -26,7 +26,7 @@
 
 "n/a" = "N/A";
 
-"biometric_usage_reason" = "Desbloquear cartera";
+"biometric_usage_reason" = "Desbloquear monedero";
 
 // Access Camera
 
@@ -35,8 +35,8 @@
 
 // Welcome
 
-"welcome.new_wallet" = "Crear cartera";
-"welcome.restore_wallet" = "Restaurar monedero";
+"welcome.new_wallet" = "Crear Monedero";
+"welcome.restore_wallet" = "Restaurar Monedero";
 "welcome.version" = "Versión %@";
 
 // Restore
@@ -354,7 +354,7 @@
 
 // Create Wallet
 
-"create_wallet.title" = "Nueva cartera";
+"create_wallet.title" = "Nuevo Monedero";
 "create_wallet.create_button" = "Crear";
 "create_wallet.description" = "Seleccione una criptomoneda para comenzar. Podrá añadir otras criptomonedas posteriormente.";
 
