@@ -44,7 +44,7 @@
 "restore.title" = "다음에서 복원하기";
 "restore.item_title" = "%@ 지갑";
 "restore.description" = "기존으 지갑을 복원시키려면 귀하께서는 개인 암호를 입력 하셔야 합니다.\n\n하나의 지갑을 복원 시키시면 다른 지갑들도 앱의 보안 설정에서 지갑 관리 섹션을 통해 복원 하실 수 있습니다.";
-"restore.words.description" = "Enter private key for %@ wallet";
+"restore.words.description" = "개인 암호를 %@지갑에 입력해 주십시오";
 "restore.validation_failed" = "틀린 암호 입니다";
 "restore.placeholder.account_name" = "Account Name";
 "restore.placeholder.private_key" = "Active Private Key";
@@ -79,7 +79,7 @@
 "backup.intro.backup_now" = "백업";
 "backup.intro.show_key" = "암호 보이기";
 
-"backup.words.confirmation_description" = "Enter words from your %@ Key";
+"backup.words.confirmation_description" = "귀하의 %@암호에서 단어를 입력해 주십시오.";
 
 "backup.eos.account_name" = "Account Name";
 "backup.eos.active_private_key" = "Active Private Key";
