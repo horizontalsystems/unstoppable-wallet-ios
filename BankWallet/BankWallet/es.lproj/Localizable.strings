@@ -26,7 +26,7 @@
 
 "n/a" = "N/A";
 
-"biometric_usage_reason" = "Desbloquear cartera";
+"biometric_usage_reason" = "Desbloquear monedero";
 
 // Access Camera
 
@@ -35,8 +35,8 @@
 
 // Welcome
 
-"welcome.new_wallet" = "Crear cartera";
-"welcome.restore_wallet" = "Restaurar monedero";
+"welcome.new_wallet" = "Crear Monedero";
+"welcome.restore_wallet" = "Restaurar Monedero";
 "welcome.version" = "Versión %@";
 
 // Restore
@@ -44,7 +44,7 @@
 "restore.title" = "Restaurar desde";
 "restore.item_title" = "%@ Monedero";
 "restore.description" = "Para restaurar el monedero existente, usted necesita ingresar la clave privada para ese monedero.\n\nUna vez que restaure un monedero usted podrá restaurar otros monederos al acceder a la sección Gestionar Monederos en los ajustes de Seguridad de la aplicación.";
-"restore.words.description" = "Enter private key for %@ wallet";
+"restore.words.description" = "Insertar clave privada para el monedero %@";
 "restore.validation_failed" = "Clave incorrecta";
 "restore.placeholder.account_name" = "Account Name";
 "restore.placeholder.private_key" = "Active Private Key\n";
@@ -69,7 +69,7 @@
 // Backup
 
 "backup.close" = "Cerrar";
-"backup.backup_required" = "Se requiere una copia de seguridad";
+"backup.backup_required" = "Se requiere una copia de seg.";
 "backup.private_key" = "Clave privada";
 
 "backup.intro.title_backup" = "Copia de seguridad";
@@ -79,7 +79,7 @@
 "backup.intro.backup_now" = "Copia de seguridad";
 "backup.intro.show_key" = "Mostrar clave";
 
-"backup.words.confirmation_description" = "Enter words from your %@ Key";
+"backup.words.confirmation_description" = "Insertar palabras de su clave %@";
 
 "backup.eos.account_name" = "Account Name";
 "backup.eos.active_private_key" = "Active Private Key\n";
@@ -288,7 +288,7 @@
 "settings_manage_keys.show" = "Mostrar";
 "settings_manage_keys.create" = "Crear";
 "settings_manage_keys.restore" = "Restaurar";
-"settings_manage_keys.delete.cant_delete" = "You need to backup the private key for this wallet before it can be deleted from this phone.";
+"settings_manage_keys.delete.cant_delete" = "Necesita respaldar esta clave privada antes de que pueda eliminarla de este teléfono.";
 "settings_manage_keys.delete.title" = "Eliminar Monedero";
 "settings_manage_keys.delete.confirmation_remove" = "Esta acción eliminará los monederos %@ de este dispositivo.";
 "settings_manage_keys.delete.confirmation_disable" = "Monedas que serán deshabilitadas: %@";
@@ -354,7 +354,7 @@
 
 // Create Wallet
 
-"create_wallet.title" = "Nueva cartera";
+"create_wallet.title" = "Nuevo Monedero";
 "create_wallet.create_button" = "Crear";
 "create_wallet.description" = "Seleccione una criptomoneda para comenzar. Podrá añadir otras criptomonedas posteriormente.";
 

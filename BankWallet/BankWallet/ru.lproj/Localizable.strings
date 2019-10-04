@@ -51,7 +51,7 @@
 
 //Coin Sync Modes
 
-"restore_options.title" = "Параметры Восстановления";
+"restore_options.title" = "Параметры";
 "restore_options.sync.text" = "Быстро: Восстановление ваших предыдущих транзакций через сторонний защищенный сервер. Для пользователей с длинной историей транзакций и с очень большим суммами этот метод может представлять риски для конфиденциальности.\n\nМедленно: Восстановление ваших предыдущих транзакций будет непосредственно из блокчейна. Это более приватно, но очень медленно. Если это занимает слишком много времени, перейдите в раздел \"Управление Кошельками\"  в настройках, удалите незавершенную запись и повторите процесс с помощью Быстрой опции.";
 "restore_options.sync.fast" = "Быстро";
 "restore_options.sync.recommended" = "0-2 часа (Рекомендуется)";
@@ -69,7 +69,7 @@
 // Backup
 
 "backup.close" = "Закрыть";
-"backup.backup_required" = "Необходима Резервная Копия";
+"backup.backup_required" = "Необходима Резерв.Копия";
 "backup.private_key" = "Приватный Ключ";
 
 "backup.intro.title_backup" = "Резервная Копия";
@@ -106,11 +106,11 @@
 "balance.rate_per_coin" = "%@ за %@";
 "balance.synced_through" = "до: %@";
 "balance.syncing" = "Синхронизация...";
-"balance.add_coins" = "Добавить Кошелек";
+"balance.add_coins" = "Добавить Токен";
 "balance.sort.header" = "Сортировать по";
 "balance.sort.valueHighToLow" = "Балансу";
 "balance.sort.az" = "Названию";
-"balance.sort.24h_change" = "Изменение за 24 ч";
+"balance.sort.24h_change" = "цене(%) за 24 ч";
 // Deposit
 
 "deposit.receive_coin" = "Получить %@";
@@ -213,7 +213,7 @@
 "settings.title" = "Настройки";
 "settings.tab_bar_item" = "Настройки";
 "settings.security_center" = "Центр Безопасности";
-"settings.manage_coins" = "Управление Кошельками";
+"settings.manage_coins" = "Управление Токенами";
 "settings.notifications" = "Уведомления ";
 "settings.base_currency" = "Базовая Валюта";
 "settings.language" = "Язык";
@@ -243,7 +243,7 @@
 
 // Settings -> Manage Wallet
 
-"manage_coins.title" = "Валюты";
+"manage_coins.title" = "Токены";
 "manage_coins.add_coin.title" = "Добавить %@";
 "manage_coins.add_coin.text" = "У вас нет кошелька, который может хранить %@ (%@). Приложение может создать для вас новый кошелек. Используйте кнопку \"Создать\" ниже, чтобы создать новый кошелек.\n\nВы сможете использовать новый кошелек для следующих монет: %@.\n\nВы также можете использовать существующий ключ кошелька %@ , если он у вас есть. Используйте кнопку \"Восстановить\" для этого.";
 "manage_coins.add_coin.create" = "Создать";
@@ -281,7 +281,7 @@
 
 "settings_manage_keys.title" = "Управление Кошельками";
 "settings_manage_keys.item_title" = "%@ Кошелек";
-"settings_manage_keys.add_wallet" = "Добавить Кошелек";
+"settings_manage_keys.add_wallet" = "Добавить Токены";
 "settings_manage_keys.description" = "Ниже выделены ваши активные кошельки, где каждый кошелек отвечает за разный набор криптовалют.\n\nВы должны сделать резервную копию каждого выделенного кошелька, записав его приватный ключ. Этот ключ - единственный способ восстановить ваши средства, если ваш телефон потерян, украден, сломан и тд";
 "settings_manage_keys.delete" = "Удалить";
 "settings_manage_keys.backup" = "Резерв. копия";

@@ -35,51 +35,51 @@
 
 // Welcome
 
-"welcome.new_wallet" = "Create Wallet";
+"welcome.new_wallet" = "새 지갑";
 "welcome.restore_wallet" = "지갑 복원";
-"welcome.version" = "Version %@";
+"welcome.version" = "버전 %@";
 
 // Restore
 
-"restore.title" = "Restore From";
-"restore.item_title" = "%@ Wallet";
-"restore.description" = "To restore existing wallet you need to enter a private key for that wallet.\n\nOnce you restore one wallet you will be able to restore other wallets via Manage Wallets section in Security settings of the app.";
-"restore.words.description" = "Enter private key for %@ wallet";
+"restore.title" = "다음에서 복원하기";
+"restore.item_title" = "%@ 지갑";
+"restore.description" = "기존으 지갑을 복원시키려면 귀하께서는 개인 암호를 입력 하셔야 합니다.\n\n하나의 지갑을 복원 시키시면 다른 지갑들도 앱의 보안 설정에서 지갑 관리 섹션을 통해 복원 하실 수 있습니다.";
+"restore.words.description" = "개인 암호를 %@지갑에 입력해 주십시오";
 "restore.validation_failed" = "틀린 암호 입니다";
 "restore.placeholder.account_name" = "Account Name";
 "restore.placeholder.private_key" = "Active Private Key";
 
 //Coin Sync Modes
 
-"restore_options.title" = "Restore Options";
-"restore_options.sync.text" = "Fast: Restores your past transactions via secure third party server. For users with transactions involving large sums this method may pose privacy risks.\n\nSlow: Restores your past transactions directly from the blockchain. More private but very slow. If it takes too long, go to Manage Wallets in Settings, delete the the Unstoppable entry and repeat the process with Fast option.";
-"restore_options.sync.fast" = "Fast";
-"restore_options.sync.recommended" = "0-2 hours (Recommended)";
-"restore_options.sync.slow" = "Slow";
-"restore_options.sync.more_private" = "1-12 hours (More Private)";
-"restore_options.derivation.text" = "Select the time period when you first created the wallet in Unstoppable.";
-"restore_options.derivation.before_update" = "Before October 2019";
-"restore_options.derivation.after_update" = "After October 2019";
+"restore_options.title" = "옵션 복구";
+"restore_options.sync.text" = "빠른: 귀하의 과거 거래내역을 보안 암호와 서버를 통해 복원합니다. 많은 양의 거래내역을 가지고 계신 사용자께서는 이 방법은 개인정보보호 침해의 위험을 야기할 수 있습니다.\n\n느린: 블록 체인으로 부터 귀하의 과거 거래내역을 복원합니다. 더 사적이지만 굉장히 느립니다. 만약 너무 느리게 간다면, 설정에서 지갑 관리하기에 가신후, Unstoppable 입장을 삭제하시고 빠른 선택의 과정을 반복 하십시오.";
+"restore_options.sync.fast" = "빠르게";
+"restore_options.sync.recommended" = "0-2시간 (권장)";
+"restore_options.sync.slow" = "느리게";
+"restore_options.sync.more_private" = "1-12시간 (더욱 사적임)";
+"restore_options.derivation.text" = "귀하께서 처음으로 Unstoppable에서 지갑을 생성하셨을 때 시간 주기를 선택 하십시오.";
+"restore_options.derivation.before_update" = "2019년 10월 전에";
+"restore_options.derivation.after_update" = "2019년 10월 후에";
 "restore_options.derivation.bip44" = "BIP-44";
 "restore_options.derivation.bip49" = "BIP-49";
-"restore_options.alert.header" = "Attention";
-"restore_options.alert.text" = "This action will resync your wallet balance for each blockchain. It may take several hours to complete.";
-"restore_options.erc20" = "Sync mode same as Ethereum";
+"restore_options.alert.header" = "주목";
+"restore_options.alert.text" = "이 작업은 각 블록체인의 지갑 잔액을 동기화합니다. 수행하는데 몇 시간 정도 걸릴 수 있습니다.";
+"restore_options.erc20" = "Ethereum의 모드와 같이 동기화";
 
 // Backup
 
 "backup.close" = "가까운, 닫힌";
 "backup.backup_required" = "백업이 필요합니다";
-"backup.private_key" = "Private Key";
+"backup.private_key" = "개인 암호";
 
-"backup.intro.title_backup" = "Backup";
+"backup.intro.title_backup" = "백업";
 "backup.intro.title_show" = "암호 보이기";
-"backup.intro.subtitle" = "The private key that will be shown next is the only way to restore your funds if your phone is ever lost, stolen, broken etc.\n\nMake sure that no one is watching your screen.\n\nThe coins controlled by this key: %@";
+"backup.intro.subtitle" = "다음에 나오게될 개인 암호는 귀하께서 휴대폰 분실, 도난, 파손 등을 당하셨을 경우에 귀하의 자금을 복원시킬 유일한 방법입니다.\n\n다른 사람이 귀하의 화면을 보지 못하게 하십시오.\n\n코인들은 이 암호로 통제됩니다.%@";
 "backup.intro.later" = "나중에";
 "backup.intro.backup_now" = "백업";
 "backup.intro.show_key" = "암호 보이기";
 
-"backup.words.confirmation_description" = "Enter words from your %@ Key";
+"backup.words.confirmation_description" = "귀하의 %@암호에서 단어를 입력해 주십시오.";
 
 "backup.eos.account_name" = "Account Name";
 "backup.eos.active_private_key" = "Active Private Key";
@@ -116,7 +116,7 @@
 "deposit.receive_coin" = "수신%@";
 "deposit.your_address" = "당신의 주소";
 "deposit.your_account" = "내 계정";
-"receive_alert.not_backed_up_description" = "You need to backup the %@ Wallet before you may receive %@.";
+"receive_alert.not_backed_up_description" = "귀하께서 %@를 받기전에 %@ 지갑의 백업이 필요합니다.";
 
 // Send
 
@@ -214,7 +214,7 @@
 "settings.tab_bar_item" = "설정";
 "settings.security_center" = "보안 센터";
 "settings.manage_coins" = "코인 관리";
-"settings.notifications" = "Notifications";
+"settings.notifications" = "알림";
 "settings.base_currency" = "기초 통화";
 "settings.language" = "언어";
 "settings.about" = "에 대해";
@@ -226,12 +226,12 @@
 
 // Settings -> Notifications
 
-"settings_notifications.title" = "Notifications";
-"settings_notifications.description" = "Set price change alerts for the coins you would like to watch.\n\nYou will be alerted when the change in price for the last 24 hours exceeds selected threshold.";
-"settings_notifications.alert_off" = "Off";
-"settings.notifications.deactivate_all" = "Deactivate All";
-"settings.notifications.disabled_text" = "The notifications for Unstoppable Wallet app are disabled. You need to turn on Notifications and allow background app refresh in order to be able to receive price change alerts.";
-"settings.notifications.settings_button" = "Turn on in Settings";
+"settings_notifications.title" = "알림";
+"settings_notifications.description" = "귀하께서 보고싶으신 코인들의 가격 변동 설정 알람 설정을 하십시오.\n\n귀하께서는 24시간 전의 가격 변동이 선택하신 기대치에 도달할 경우에 알림을 받을 것 입니다.";
+"settings_notifications.alert_off" = "끄기";
+"settings.notifications.deactivate_all" = "전부 비활성화";
+"settings.notifications.disabled_text" = "Unstoppable 지갑 앱을 위한 알림이 불가능합니다. 귀하께서는 가격 변동 알림을 받으시려면 앱을 켜놓는걸 필요로 합니다.";
+"settings.notifications.settings_button" = "설정에서 켜십시오";
 
 // Settings -> Base Currency
 
@@ -245,7 +245,7 @@
 
 "manage_coins.title" = "코인 매니저";
 "manage_coins.add_coin.title" = "%@ 추가 ";
-"manage_coins.add_coin.text" = "You don't have a wallet that can store %@ (%@). The app can generate a new wallet for you. Use the Create button below to generate a new wallet.\n\nYou will be able to use the new wallet for the following coins: %@.\n\nYou may also use the existing %@ Wallet key if you have one. Use the Restore button for that.";
+"manage_coins.add_coin.text" = "귀하께서는 %@(%@)를 저장할 수 있는 지갑을 가지고 계시지 않습니다. 이 앱은 귀하를 위해 새로운 지갑을 만들어 드릴 수 있습니다. 새로운 지갑을 만들기 위해 밑에있는 생성하기 버튼을 사용하십시오.\n\n귀하께서는 다음 %@에 대한 새로운 지갑을 사용 하실 수 있을 것 입니다.\n\n귀하께서는 또한 기존에 가지고 계셨던%@ 지갑 암호를 사용하실 수 있습니다. 복원하기 버튼을 누르십시오.";
 "manage_coins.add_coin.create" = "만들기";
 "manage_coins.add_coin.restore" = "복구";
 
@@ -264,7 +264,7 @@
 // Settings -> Security
 
 "settings_security.title" = "보안 센터";
-"settings_security.manage_accounts" = "Manage Wallets";
+"settings_security.manage_accounts" = "지갑 관리하기";
 "settings_security.passcode" = "비밀번호";
 "settings_security.change_pin" = "비밀번호 변경";
 "settings_security.touch_id" = "터치 아이디";
@@ -279,22 +279,22 @@
 
 // Manage Keys
 
-"settings_manage_keys.title" = "Manage Wallets";
-"settings_manage_keys.item_title" = "%@ Wallet";
-"settings_manage_keys.add_wallet" = "Add Wallet";
-"settings_manage_keys.description" = "Highlighted below are your active wallets where each wallet responsible for different set of crypto currencies.\n\nYou should backup each highlighted wallets by backing up the private key for that wallet. This key is the only way to restore your funds if your phone is ever lost, stolen, broken etc.";
+"settings_manage_keys.title" = "지갑 관리하기";
+"settings_manage_keys.item_title" = "%@ 지갑";
+"settings_manage_keys.add_wallet" = "지갑 추가하기";
+"settings_manage_keys.description" = "아래 강조표시가 된부분은 각각의 지갑이 다른 세트의 가상화폐에 책임이 있는 귀하께서 사용중인 지갑입니다. \n\n귀하께서는 개인 암호를 백업 시킴으로써 각각의 강조표시된 지갑들도 백업을 하셔야 합니다. 이 암호는 귀하께서 휴대폰 분실, 도난, 파손 등을 당하셨을때 복원 할 수 있는 유일한 암호 입니다.";
 "settings_manage_keys.delete" = "삭제";
 "settings_manage_keys.backup" = "백업";
 "settings_manage_keys.show" = "표시";
 "settings_manage_keys.create" = "만들기";
 "settings_manage_keys.restore" = "복구";
-"settings_manage_keys.delete.cant_delete" = "You need to backup the private key for this wallet before it can be deleted from this phone.";
-"settings_manage_keys.delete.title" = "Delete Wallet";
-"settings_manage_keys.delete.confirmation_remove" = "The action will delete the %@ Wallet from this device.";
+"settings_manage_keys.delete.cant_delete" = "개인 암호가 휴대폰에서 지워질 수 있기 전에 귀하께서는 개인 암호를 백업 하셔야 합니다.";
+"settings_manage_keys.delete.title" = "지갑 삭제하기";
+"settings_manage_keys.delete.confirmation_remove" = "이 행동은 %@ 지갑을 장치에서 삭제합니다.";
 "settings_manage_keys.delete.confirmation_disable" = "비활성화될 코인: %@";
-"settings_manage_keys.delete.confirmation_loose" = "If you didn't backup the private key for this wallet, you will lose access to your funds.";
+"settings_manage_keys.delete.confirmation_loose" = "지갑에서 개인 암호를 백업 시키지 않으셨을 경우, 귀하께서는 자금 접근에 제한이 있을 것 입니다.";
 "error.cant_create_eos" = "현재 지갑에서 새 EOS 지갑 계정을 만들 수 없습니다. 기존 파일만 복원할 수 있습니다.";
-"settings_manage_keys.create.text" = "This action will generate a new wallet for the following coins:\n\n%@";
+"settings_manage_keys.create.text" = "이 행동은 다음 코인에 대한 새로운 지갑을 생성합니다:\n\n%@";
 "error.invalid_eos_key" = "잘못된 암호입니다";
 "error.invalid_eos_account" = "계정이 존재하지 않습니다.";
 
@@ -356,8 +356,8 @@
 
 "create_wallet.title" = "새 지갑";
 "create_wallet.create_button" = "만들기";
-"create_wallet.description" = "Select one cryptocurrency to start. You will be able to add other cryptocurrencies later.";
+"create_wallet.description" = "시작하려면 한가지의 가상화폐를 선택하십시오. 귀하께서는 나중에 다른 가상화폐를 추가하실 수 있습니다.";
 
-"price_notification.up" = "up";
-"price_notification.down" = "down";
-"price_notification.multi_title" = "Notifications";
+"price_notification.up" = "위로";
+"price_notification.down" = "아래로";
+"price_notification.multi_title" = "알림";
