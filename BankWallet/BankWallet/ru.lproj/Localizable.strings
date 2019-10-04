@@ -110,7 +110,7 @@
 "balance.sort.header" = "Сортировать по";
 "balance.sort.valueHighToLow" = "Балансу";
 "balance.sort.az" = "Названию";
-"balance.sort.24h_change" = "Изменение за 24 ч";
+"balance.sort.24h_change" = "цене (%) за 24 ч";
 // Deposit
 
 "deposit.receive_coin" = "Получить %@";
