@@ -213,7 +213,7 @@
 "settings.title" = "Настройки";
 "settings.tab_bar_item" = "Настройки";
 "settings.security_center" = "Центр Безопасности";
-"settings.manage_coins" = "Управление Кошельками";
+"settings.manage_coins" = "Управление Токенами";
 "settings.notifications" = "Уведомления ";
 "settings.base_currency" = "Базовая Валюта";
 "settings.language" = "Язык";
@@ -243,7 +243,7 @@
 
 // Settings -> Manage Wallet
 
-"manage_coins.title" = "Валюты";
+"manage_coins.title" = "Токены";
 "manage_coins.add_coin.title" = "Добавить %@";
 "manage_coins.add_coin.text" = "У вас нет кошелька, который может хранить %@ (%@). Приложение может создать для вас новый кошелек. Используйте кнопку \"Создать\" ниже, чтобы создать новый кошелек.\n\nВы сможете использовать новый кошелек для следующих монет: %@.\n\nВы также можете использовать существующий ключ кошелька %@ , если он у вас есть. Используйте кнопку \"Восстановить\" для этого.";
 "manage_coins.add_coin.create" = "Создать";
@@ -281,7 +281,7 @@
 
 "settings_manage_keys.title" = "Управление Кошельками";
 "settings_manage_keys.item_title" = "%@ Кошелек";
-"settings_manage_keys.add_wallet" = "Добавить Кошелек";
+"settings_manage_keys.add_wallet" = "Добавить Токены";
 "settings_manage_keys.description" = "Ниже выделены ваши активные кошельки, где каждый кошелек отвечает за разный набор криптовалют.\n\nВы должны сделать резервную копию каждого выделенного кошелька, записав его приватный ключ. Этот ключ - единственный способ восстановить ваши средства, если ваш телефон потерян, украден, сломан и тд";
 "settings_manage_keys.delete" = "Удалить";
 "settings_manage_keys.backup" = "Резерв. копия";
