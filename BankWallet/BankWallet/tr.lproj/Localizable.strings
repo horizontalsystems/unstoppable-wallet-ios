@@ -265,8 +265,8 @@
 
 "settings_security.title" = "Güvenlik Merkezi";
 "settings_security.manage_accounts" = "Cüzdanları yönet";
-"settings_security.passcode" = "Şifre";
-"settings_security.change_pin" = "Şifreyi Değiştir";
+"settings_security.passcode" = "Kod";
+"settings_security.change_pin" = "Kod Değiştir";
 "settings_security.touch_id" = "Touch ID";
 "settings_security.face_id" = "Face ID";
 "security_settings.delete_alert_button" = "Cihazdan sil";
