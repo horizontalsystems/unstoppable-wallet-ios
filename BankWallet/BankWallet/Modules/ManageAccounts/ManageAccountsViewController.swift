@@ -23,7 +23,7 @@ class ManageAccountsViewController: WalletViewController {
         title = "settings_manage_keys.title".localized
 
         tableView.registerCell(forClass: ManageAccountCell.self)
-        tableView.registerHeaderFooter(forClass: DescriptionView.self)
+        tableView.registerHeaderFooter(forClass: DescriptionHeaderFooterView.self)
         tableView.sectionDataSource = self
 
         tableView.backgroundColor = .clear
@@ -41,7 +41,7 @@ class ManageAccountsViewController: WalletViewController {
         delegate.didTapDone()
     }
 
-    private var header: ViewState<DescriptionView> {
+    private var header: ViewState<DescriptionHeaderFooterView> {
         let descriptionText = "settings_manage_keys.description".localized
 
         return .cellType(
@@ -49,7 +49,7 @@ class ManageAccountsViewController: WalletViewController {
                 binder: { view in
                     view.bind(text: descriptionText)
                 }, dynamicHeight: { [unowned self] _ in
-                    DescriptionView.height(containerWidth: self.tableView.bounds.width, text: descriptionText)
+                    DescriptionHeaderFooterView.height(containerWidth: self.tableView.bounds.width, text: descriptionText)
                 }
         )
     }

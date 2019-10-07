@@ -19,14 +19,26 @@ class RestoreEosViewController: WalletViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "restore.title".localized
+
+        title = "restore.enter_key".localized
+
+        // temp solution until multi-wallet feature is implemented
+        let predefinedAccountType: IPredefinedAccountType = EosAccountType()
+
+        let descriptionView = DescriptionView()
+        descriptionView.bind(text: "restore.eos.description".localized(predefinedAccountType.title))
+
+        view.addSubview(descriptionView)
+        descriptionView.snp.makeConstraints { maker in
+            maker.leading.trailing.equalToSuperview()
+            maker.top.equalTo(view.snp.topMargin)
+        }
 
         view.addSubview(accountNameField)
         accountNameField.snp.makeConstraints { maker in
-            maker.leading.equalToSuperview().offset(RestoreTheme.bigMargin)
-            maker.trailing.equalToSuperview().offset(-RestoreTheme.bigMargin)
-            maker.top.equalTo(view.snp.topMargin).offset(RestoreTheme.smallMargin)
-            maker.height.equalTo(RestoreTheme.accountNameHeight)
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
+            maker.top.equalTo(descriptionView.snp.bottom)
+            maker.height.equalTo(CGFloat.heightSingleLineInput)
         }
         accountNameField.onPaste = { [weak self] in
             self?.delegate.onPasteAccountClicked()
@@ -40,10 +52,9 @@ class RestoreEosViewController: WalletViewController {
 
         view.addSubview(accountPrivateKeyField)
         accountPrivateKeyField.snp.makeConstraints { maker in
-            maker.leading.equalToSuperview().offset(RestoreTheme.bigMargin)
-            maker.trailing.equalToSuperview().offset(-RestoreTheme.bigMargin)
-            maker.top.equalTo(accountNameField.snp.bottom).offset(RestoreTheme.mediumMargin)
-            maker.height.equalTo(RestoreTheme.accountPrivateKeyHeight)
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
+            maker.top.equalTo(accountNameField.snp.bottom).offset(CGFloat.margin4x)
+            maker.height.equalTo(CGFloat.heightDoubleLineInput)
         }
         accountPrivateKeyField.onPaste = { [weak self] in
             self?.delegate.onPasteKeyClicked()

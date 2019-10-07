@@ -43,10 +43,12 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 
 // Restore
 
-"restore.title" = "Restore From";
+"restore.title" = "Restore";
+"restore.enter_key" = "Enter Key";
 "restore.item_title" = "%@ Wallet";
 "restore.description" = "To restore existing wallet you need to enter a private key for that wallet.\n\nOnce you restore one wallet you will be able to restore other wallets via Manage Wallets section in Security settings of the app.";
-"restore.words.description" = "Enter private key for %@ wallet";
+"restore.words.description" = "Enter your private key for %@ wallet which consists of %@ words. The words needs to be entered in correct order and separated by spaces.";
+"restore.eos.description" = "Enter your private key for %@ wallet.";
 "restore.validation_failed" = "Incorrect Key";
 "restore.placeholder.account_name" = "Account Name";
 "restore.placeholder.private_key" = "Active Private Key";

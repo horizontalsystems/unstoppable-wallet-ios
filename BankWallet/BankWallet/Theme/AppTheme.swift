@@ -129,6 +129,8 @@ extension CGFloat {
     static let heightOnePixel: CGFloat = 1 / UIScreen.main.scale
     static let heightSingleLineCell: CGFloat = 44
     static let heightDoubleLineCell: CGFloat = 60
+    static let heightSingleLineInput: CGFloat = 44
+    static let heightDoubleLineInput: CGFloat = 66
     static let heightButton: CGFloat = 50
     static let heightButtonSecondary: CGFloat = 32
 }
