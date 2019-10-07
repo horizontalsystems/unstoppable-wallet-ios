@@ -28,7 +28,7 @@ class NotificationSettingsViewController: WalletViewController {
 
         tableView.registerCell(forClass: ImageDoubleLineValueCell.self)
         tableView.registerCell(forClass: SingleLineCell.self)
-        tableView.registerHeaderFooter(forClass: DescriptionHeaderFooterView.self)
+        tableView.registerHeaderFooter(forClass: TopDescriptionHeaderFooterView.self)
         tableView.sectionDataSource = self
 
         tableView.backgroundColor = .clear
@@ -89,10 +89,10 @@ extension NotificationSettingsViewController: SectionsDataSource {
     func buildSections() -> [SectionProtocol] {
         let descriptionText = "settings_notifications.description".localized
 
-        let headerState: ViewState<DescriptionHeaderFooterView> = .cellType(hash: "top_description", binder: { view in
+        let headerState: ViewState<TopDescriptionHeaderFooterView> = .cellType(hash: "top_description", binder: { view in
             view.bind(text: descriptionText)
         }, dynamicHeight: { [unowned self] _ in
-            DescriptionHeaderFooterView.height(containerWidth: self.tableView.bounds.width, text: descriptionText)
+            TopDescriptionHeaderFooterView.height(containerWidth: self.tableView.bounds.width, text: descriptionText)
         })
 
         return [

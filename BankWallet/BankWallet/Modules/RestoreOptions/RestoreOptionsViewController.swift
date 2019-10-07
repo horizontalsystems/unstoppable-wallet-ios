@@ -27,7 +27,7 @@ class RestoreOptionsViewController: WalletViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.done".localized, style: .done, target: self, action: #selector(onTapDone))
 
         tableView.registerCell(forClass: RestoreOptionCell.self)
-        tableView.registerHeaderFooter(forClass: DescriptionHeaderFooterView.self)
+        tableView.registerHeaderFooter(forClass: BottomDescriptionHeaderFooterView.self)
         tableView.sectionDataSource = self
 
         tableView.backgroundColor = .clear
@@ -112,14 +112,14 @@ class RestoreOptionsViewController: WalletViewController {
         ]
     }
 
-    private func footer(hash: String, text: String) -> ViewState<DescriptionHeaderFooterView> {
-        return .cellType(
+    private func footer(hash: String, text: String) -> ViewState<BottomDescriptionHeaderFooterView> {
+        .cellType(
                 hash: hash,
                 binder: { view in
                     view.bind(text: text)
                 },
                 dynamicHeight: { [unowned self] _ in
-                    return DescriptionHeaderFooterView.height(containerWidth: self.tableView.bounds.width, text: text)
+                    BottomDescriptionHeaderFooterView.height(containerWidth: self.tableView.bounds.width, text: text)
                 }
         )
     }
