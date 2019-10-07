@@ -24,7 +24,7 @@ class RestoreViewController: WalletViewController {
         title = "restore.title".localized
 
         tableView.registerCell(forClass: RestoreAccountCell.self)
-        tableView.registerHeaderFooter(forClass: DescriptionHeaderFooterView.self)
+        tableView.registerHeaderFooter(forClass: TopDescriptionHeaderFooterView.self)
         tableView.sectionDataSource = self
 
         tableView.separatorStyle = .none
@@ -56,7 +56,7 @@ class RestoreViewController: WalletViewController {
         }
     }
 
-    private var header: ViewState<DescriptionHeaderFooterView> {
+    private var header: ViewState<TopDescriptionHeaderFooterView> {
         let text = "restore.description".localized
 
         return .cellType(
@@ -65,7 +65,7 @@ class RestoreViewController: WalletViewController {
                     view.bind(text: text)
                 },
                 dynamicHeight: { [unowned self] _ in
-                    return DescriptionHeaderFooterView.height(containerWidth: self.tableView.bounds.width, text: text)
+                    return TopDescriptionHeaderFooterView.height(containerWidth: self.tableView.bounds.width, text: text)
                 }
         )
     }

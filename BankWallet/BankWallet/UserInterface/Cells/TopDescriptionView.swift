@@ -1,7 +1,7 @@
 import UIKit
 import SnapKit
 
-class DescriptionView: UIView {
+class TopDescriptionView: UIView {
     private static let sideMargin: CGFloat = .margin6x
     private static let topMargin: CGFloat = .margin3x
     private static let bottomMargin: CGFloat = .margin6x
@@ -13,14 +13,14 @@ class DescriptionView: UIView {
         super.init(frame: frame)
 
         label.numberOfLines = 0
-        label.font = DescriptionView.font
+        label.font = TopDescriptionView.font
         label.textColor = .cryptoGray
 
         addSubview(label)
         label.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview().inset(DescriptionView.sideMargin)
-            maker.top.equalToSuperview().offset(DescriptionView.topMargin)
-            maker.bottom.equalToSuperview().inset(DescriptionView.bottomMargin)
+            maker.leading.trailing.equalToSuperview().inset(TopDescriptionView.sideMargin)
+            maker.top.equalToSuperview().offset(TopDescriptionView.topMargin)
+            maker.bottom.equalToSuperview().inset(TopDescriptionView.bottomMargin)
         }
     }
 
@@ -34,11 +34,11 @@ class DescriptionView: UIView {
 
 }
 
-extension DescriptionView {
+extension TopDescriptionView {
 
     static func height(containerWidth: CGFloat, text: String) -> CGFloat {
-        let textHeight = text.height(forContainerWidth: containerWidth - 2 * DescriptionView.sideMargin, font: DescriptionView.font)
-        return textHeight + DescriptionView.topMargin + DescriptionView.bottomMargin
+        let textHeight = text.height(forContainerWidth: containerWidth - 2 * TopDescriptionView.sideMargin, font: TopDescriptionView.font)
+        return textHeight + TopDescriptionView.topMargin + TopDescriptionView.bottomMargin
     }
 
 }

@@ -1,8 +1,8 @@
 import UIKit
 import SnapKit
 
-class DescriptionHeaderFooterView: UITableViewHeaderFooterView {
-    private let descriptionView = DescriptionView()
+class TopDescriptionHeaderFooterView: UITableViewHeaderFooterView {
+    private let descriptionView = TopDescriptionView()
 
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
@@ -23,10 +23,10 @@ class DescriptionHeaderFooterView: UITableViewHeaderFooterView {
 
 }
 
-extension DescriptionHeaderFooterView {
+extension TopDescriptionHeaderFooterView {
 
     static func height(containerWidth: CGFloat, text: String) -> CGFloat {
-        DescriptionView.height(containerWidth: containerWidth, text: text)
+        TopDescriptionView.height(containerWidth: containerWidth, text: text)
     }
 
 }

@@ -22,18 +22,6 @@ class RestoreWordsViewController: WalletViewController {
 
         title = "restore.enter_key".localized
 
-        // temp solution until multi-wallet feature is implemented
-        let predefinedAccountType: IPredefinedAccountType = delegate.wordsCount == 12 ? UnstoppableAccountType() : BinanceAccountType()
-
-        let descriptionView = DescriptionView()
-        descriptionView.bind(text: "restore.words.description".localized(predefinedAccountType.title, String(delegate.wordsCount)))
-
-        view.addSubview(descriptionView)
-        descriptionView.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview()
-            maker.top.equalTo(view.snp.topMargin)
-        }
-
         let textViewFont: UIFont = .appBody
         let textViewMargin: CGFloat = .margin3x
 
@@ -48,13 +36,23 @@ class RestoreWordsViewController: WalletViewController {
         textView.textContainerInset = UIEdgeInsets(top: textViewMargin, left: textViewMargin, bottom: textViewMargin, right: textViewMargin)
         textView.autocapitalizationType = .none
 
-        let linesCount = delegate.wordsCount / 4
-
         view.addSubview(textView)
         textView.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
-            maker.top.equalTo(descriptionView.snp.bottom)
-            maker.height.equalTo(textViewMargin * 2 + textViewFont.lineHeight * CGFloat(linesCount))
+            maker.top.equalTo(view.snp.topMargin).offset(CGFloat.margin3x)
+            maker.height.equalTo(88)
+        }
+
+        // temp solution until multi-wallet feature is implemented
+        let predefinedAccountType: IPredefinedAccountType = delegate.wordsCount == 12 ? UnstoppableAccountType() : BinanceAccountType()
+
+        let descriptionView = BottomDescriptionView()
+        descriptionView.bind(text: "restore.words.description".localized(predefinedAccountType.title, String(delegate.wordsCount)))
+
+        view.addSubview(descriptionView)
+        descriptionView.snp.makeConstraints { maker in
+            maker.leading.trailing.equalToSuperview()
+            maker.top.equalTo(textView.snp.bottom)
         }
 
         delegate.viewDidLoad()

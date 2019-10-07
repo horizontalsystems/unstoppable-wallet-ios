@@ -22,22 +22,12 @@ class RestoreEosViewController: WalletViewController {
 
         title = "restore.enter_key".localized
 
-        // temp solution until multi-wallet feature is implemented
-        let predefinedAccountType: IPredefinedAccountType = EosAccountType()
-
-        let descriptionView = DescriptionView()
-        descriptionView.bind(text: "restore.eos.description".localized(predefinedAccountType.title))
-
-        view.addSubview(descriptionView)
-        descriptionView.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview()
-            maker.top.equalTo(view.snp.topMargin)
-        }
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.restore".localized, style: .done, target: self, action: #selector(doneDidTap))
 
         view.addSubview(accountNameField)
         accountNameField.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
-            maker.top.equalTo(descriptionView.snp.bottom)
+            maker.top.equalTo(view.snp.topMargin).offset(CGFloat.margin3x)
             maker.height.equalTo(CGFloat.heightSingleLineInput)
         }
         accountNameField.onPaste = { [weak self] in
@@ -66,7 +56,17 @@ class RestoreEosViewController: WalletViewController {
             self?.delegate.onDeleteKey()
         }
 
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.restore".localized, style: .done, target: self, action: #selector(doneDidTap))
+        // temp solution until multi-wallet feature is implemented
+        let predefinedAccountType: IPredefinedAccountType = EosAccountType()
+
+        let descriptionView = BottomDescriptionView()
+        descriptionView.bind(text: "restore.eos.description".localized(predefinedAccountType.title))
+
+        view.addSubview(descriptionView)
+        descriptionView.snp.makeConstraints { maker in
+            maker.leading.trailing.equalToSuperview()
+            maker.top.equalTo(accountPrivateKeyField.snp.bottom)
+        }
 
         delegate.viewDidLoad()
 
