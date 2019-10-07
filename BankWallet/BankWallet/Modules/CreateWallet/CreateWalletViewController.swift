@@ -24,7 +24,7 @@ class CreateWalletViewController: WalletViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "create_wallet.create_button".localized, style: .done, target: self, action: #selector(onTapCreate))
 
         tableView.registerCell(forClass: ImageDoubleLineCheckmarkCell.self)
-        tableView.registerHeaderFooter(forClass: DescriptionView.self)
+        tableView.registerHeaderFooter(forClass: DescriptionHeaderFooterView.self)
         tableView.sectionDataSource = self
 
         tableView.backgroundColor = .clear
@@ -50,10 +50,10 @@ extension CreateWalletViewController: SectionsDataSource {
     func buildSections() -> [SectionProtocol] {
         let descriptionText = "create_wallet.description".localized
 
-        let headerState: ViewState<DescriptionView> = .cellType(hash: "top_description", binder: { view in
+        let headerState: ViewState<DescriptionHeaderFooterView> = .cellType(hash: "top_description", binder: { view in
             view.bind(text: descriptionText)
         }, dynamicHeight: { [unowned self] _ in
-            DescriptionView.height(containerWidth: self.tableView.bounds.width, text: descriptionText)
+            DescriptionHeaderFooterView.height(containerWidth: self.tableView.bounds.width, text: descriptionText)
         })
 
         return [

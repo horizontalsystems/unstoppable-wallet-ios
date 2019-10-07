@@ -1,31 +1,16 @@
 import UIKit
 import RxSwift
 import SnapKit
-import HSHDWalletKit
 
 class RestoreWordsViewController: WalletViewController {
-    let disposeBag = DisposeBag()
-    let delegate: IRestoreWordsViewDelegate
+    private let delegate: IRestoreWordsViewDelegate
 
-    let restoreDescription = "restore.words.description".localized
-    var words: [String]
-
-    let layout = UICollectionViewFlowLayout()
-    let collectionView: UICollectionView
-    var onReturnSubject = PublishSubject<IndexPath>()
-
-    var keyboardFrameDisposable: Disposable?
+    private let textView = UITextView()
 
     init(delegate: IRestoreWordsViewDelegate) {
-        layout.scrollDirection = .vertical
-        collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         self.delegate = delegate
-        words = [String](repeating: "", count: self.delegate.wordsCount)
 
         super.init()
-
-        collectionView.delegate = self
-        collectionView.dataSource = self
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -34,34 +19,52 @@ class RestoreWordsViewController: WalletViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "restore.title".localized
 
-        subscribeKeyboard()
+        title = "restore.enter_key".localized
 
-        view.addSubview(collectionView)
-        collectionView.backgroundColor = .clear
-        layout.sectionInset = UIEdgeInsets(top: RestoreTheme.listMargin, left: RestoreTheme.collectionSideMargin, bottom: RestoreTheme.listMargin, right: RestoreTheme.collectionSideMargin)
-        layout.minimumInteritemSpacing = RestoreTheme.interItemSpacing
-        layout.minimumLineSpacing = RestoreTheme.lineSpacing
-        collectionView.snp.makeConstraints { maker in
-            maker.leading.equalToSuperview()
-            maker.trailing.equalToSuperview()
-            maker.top.bottom.equalToSuperview()
+        // temp solution until multi-wallet feature is implemented
+        let predefinedAccountType: IPredefinedAccountType = delegate.wordsCount == 12 ? UnstoppableAccountType() : BinanceAccountType()
+
+        let descriptionView = DescriptionView()
+        descriptionView.bind(text: "restore.words.description".localized(predefinedAccountType.title, String(delegate.wordsCount)))
+
+        view.addSubview(descriptionView)
+        descriptionView.snp.makeConstraints { maker in
+            maker.leading.trailing.equalToSuperview()
+            maker.top.equalTo(view.snp.topMargin)
         }
 
-        collectionView.registerCell(forClass: RestoreWordCell.self)
-        collectionView.registerView(forClass: DescriptionCollectionHeader.self, flowSupplementaryKind: .header)
+        let textViewFont: UIFont = .appBody
+        let textViewMargin: CGFloat = .margin3x
+
+        textView.keyboardAppearance = App.theme.keyboardAppearance
+        textView.backgroundColor = .crypto_SteelDark_White
+        textView.layer.cornerRadius = .cornerRadius8
+        textView.layer.borderWidth = .heightOnePixel
+        textView.layer.borderColor = UIColor.appSteel20.cgColor
+        textView.textColor = .appOz
+        textView.font = textViewFont
+        textView.tintColor = .appJacob
+        textView.textContainerInset = UIEdgeInsets(top: textViewMargin, left: textViewMargin, bottom: textViewMargin, right: textViewMargin)
+        textView.autocapitalizationType = .none
+
+        let linesCount = delegate.wordsCount / 4
+
+        view.addSubview(textView)
+        textView.snp.makeConstraints { maker in
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
+            maker.top.equalTo(descriptionView.snp.bottom)
+            maker.height.equalTo(textViewMargin * 2 + textViewFont.lineHeight * CGFloat(linesCount))
+        }
 
         delegate.viewDidLoad()
     }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        if keyboardFrameDisposable == nil {
-            subscribeKeyboard()
-        }
+
         DispatchQueue.main.async  {
-            self.becomeResponder(at: IndexPath(item: 0, section: 0))
+            self.textView.becomeFirstResponder()
         }
     }
 
@@ -71,49 +74,15 @@ class RestoreWordsViewController: WalletViewController {
         delegate.didTapRestore(words: words)
     }
 
-    private func subscribeKeyboard() {
-        keyboardFrameDisposable = NotificationCenter.default.rx.notification(UIResponder.keyboardWillChangeFrameNotification)
-            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
-            .observeOn(MainScheduler.instance)
-            .subscribe(onNext: { [weak self] notification in
-                self?.onKeyboardFrameChange(notification)
-            })
-        keyboardFrameDisposable?.disposed(by: disposeBag)
-    }
-
-    private func onKeyboardFrameChange(_ notification: Notification) {
-        let screenKeyboardFrame = (notification.userInfo![UIResponder.keyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
-        let height = view.height + view.y
-        let keyboardHeight = height - screenKeyboardFrame.origin.y
-
-        let duration = (notification.userInfo![UIResponder.keyboardAnimationDurationUserInfoKey] as! NSNumber).doubleValue
-        let curve = (notification.userInfo![UIResponder.keyboardAnimationCurveUserInfoKey] as! NSNumber).uintValue
-
-        updateUI(keyboardHeight: keyboardHeight, duration: duration, options: UIView.AnimationOptions(rawValue: curve << 16))
-    }
-
-    private func updateUI(keyboardHeight: CGFloat, duration: TimeInterval, options: UIView.AnimationOptions, completion: (() -> ())? = nil) {
-        var insets: UIEdgeInsets = collectionView.contentInset
-        insets.bottom = keyboardHeight
-        collectionView.contentInset = insets
-        collectionView.scrollIndicatorInsets = insets
-    }
-
-    private func becomeResponder(at indexPath: IndexPath) {
-        guard indexPath.row < words.count else {
-            restoreDidTap()
-            return
-        }
-
-        onReturnSubject.onNext(indexPath)
-    }
-
-    private func onTextChange(word: String?, at indexPath: IndexPath) {
-        words[indexPath.item] = word?.lowercased().trimmingCharacters(in: .whitespaces) ?? ""
-    }
-
     @objc func cancelDidTap() {
         delegate.didTapCancel()
+    }
+
+    private var words: [String] {
+        let text = textView.text ?? ""
+        let components = text.components(separatedBy: .whitespacesAndNewlines)
+
+        return components.filter { !$0.isEmpty }
     }
 
 }
@@ -133,64 +102,11 @@ extension RestoreWordsViewController: IRestoreWordsView {
     }
 
     func show(defaultWords: [String]) {
-        for (index, defaultWord) in defaultWords.enumerated() {
-            if index < words.count {
-                words[index] = defaultWord
-            }
-        }
+        textView.text = defaultWords.joined(separator: " ")
     }
 
     func show(error: Error) {
         HudHelper.instance.showError(title: error.localizedDescription)
     }
-
-}
-
-extension RestoreWordsViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UICollectionViewDelegate {
-
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let width = collectionView.bounds.width - RestoreTheme.interItemSpacing - RestoreTheme.collectionSideMargin * 2
-        return CGSize(width: width / 2, height: RestoreTheme.itemHeight)
-    }
-
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return words.count
-    }
-
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        return collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: RestoreWordCell.self), for: indexPath)
-    }
-
-    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        if let cell = cell as? RestoreWordCell {
-            cell.bind(onReturnSubject: onReturnSubject, indexPath: indexPath, index: indexPath.item + 1, word: words[indexPath.row], returnKeyType: indexPath.row + 1 < words.count ? .next : .done, onReturn: { [weak self] in
-                self?.becomeResponder(at: IndexPath(item: indexPath.item + 1, section: 0))
-            }, onTextChange: { [weak self] string in
-                self?.onTextChange(word: string, at: indexPath)
-            })
-        }
-    }
-
-    func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        if let cell = cell as? RestoreWordCell {
-            if cell.inputField.textField.isFirstResponder {
-                view.endEditing(true)
-            }
-        }
-    }
-
-//    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-//        let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: String(describing: DescriptionCollectionHeader.self), for: indexPath)
-//        if let header = header as? DescriptionCollectionHeader {
-//            header.bind(text: restoreDescription)
-//        }
-//        return header
-//    }
-
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-//        let width = collectionView.bounds.width
-//        let height = DescriptionCollectionHeader.height(forContainerWidth: width, text: restoreDescription)
-//        return CGSize(width: width, height: height)
-//    }
 
 }

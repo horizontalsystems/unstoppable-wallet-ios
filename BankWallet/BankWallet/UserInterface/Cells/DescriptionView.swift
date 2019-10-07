@@ -1,19 +1,26 @@
 import UIKit
 import SnapKit
 
-class DescriptionView: UITableViewHeaderFooterView {
+class DescriptionView: UIView {
+    private static let sideMargin: CGFloat = .margin6x
+    private static let topMargin: CGFloat = .margin3x
+    private static let bottomMargin: CGFloat = .margin6x
+    private static let font: UIFont = .appSubhead2
+
     private let label = UILabel()
 
-    override init(reuseIdentifier: String?) {
-        super.init(reuseIdentifier: reuseIdentifier)
+    override init(frame: CGRect) {
+        super.init(frame: frame)
 
         label.numberOfLines = 0
-        label.font = .appSubhead2
+        label.font = DescriptionView.font
         label.textColor = .cryptoGray
-        contentView.addSubview(label)
+
+        addSubview(label)
         label.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin6x)
-            maker.top.equalToSuperview().offset(CGFloat.margin3x)
+            maker.leading.trailing.equalToSuperview().inset(DescriptionView.sideMargin)
+            maker.top.equalToSuperview().offset(DescriptionView.topMargin)
+            maker.bottom.equalToSuperview().inset(DescriptionView.bottomMargin)
         }
     }
 
@@ -30,8 +37,8 @@ class DescriptionView: UITableViewHeaderFooterView {
 extension DescriptionView {
 
     static func height(containerWidth: CGFloat, text: String) -> CGFloat {
-        let textHeight = ceil(text.height(forContainerWidth: containerWidth - 2 * CGFloat.margin6x, font: .appSubhead2))
-        return textHeight + CGFloat.margin6x + CGFloat.margin3x
+        let textHeight = text.height(forContainerWidth: containerWidth - 2 * DescriptionView.sideMargin, font: DescriptionView.font)
+        return textHeight + DescriptionView.topMargin + DescriptionView.bottomMargin
     }
 
 }
