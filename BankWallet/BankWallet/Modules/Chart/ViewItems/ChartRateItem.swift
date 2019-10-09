@@ -17,7 +17,7 @@ class ChartRateItem: BaseActionItem {
         super.init(cellType: ChartRateItemView.self, tag: tag, required: true)
 
         showSeparator = false
-        height = ChartRateTheme.chartRateHeight
+        height = 218
     }
 
 }

@@ -5,11 +5,14 @@ import HUD
 import SnapKit
 
 class ChartRateItemView: BaseActionItemView {
+    private static let spinnerRadius: CGFloat = 11
+    private static let spinnerLineWidth: CGFloat = 3
+
     private var chartView: ChartView?
     private let processSpinner = HUDProgressView(
-            strokeLineWidth: ChartRateTheme.spinnerLineWidth,
-            radius: ChartRateTheme.customProgressRadius,
-            strokeColor: ChartRateTheme.spinnerLineColor
+            strokeLineWidth: ChartRateItemView.spinnerLineWidth,
+            radius: ChartRateItemView.spinnerRadius,
+            strokeColor: .appOz
     )
     private let errorLabel = UILabel()
 
@@ -27,15 +30,15 @@ class ChartRateItemView: BaseActionItemView {
         addSubview(chartView)
         chartView.snp.makeConstraints { maker in
             maker.top.equalToSuperview()
-            maker.left.equalToSuperview().offset(ChartRateTheme.margin)
-            maker.right.equalToSuperview()
-            maker.height.equalTo(ChartRateTheme.chartViewHeight)
+            maker.leading.equalToSuperview().offset(CGFloat.margin4x)
+            maker.trailing.equalToSuperview()
+            maker.height.equalTo(210)
         }
 
         addSubview(processSpinner)
         processSpinner.snp.makeConstraints { maker in
             maker.center.equalToSuperview()
-            maker.width.height.equalTo(ChartRateTheme.customProgressRadius * 2 + ChartRateTheme.spinnerLineWidth)
+            maker.width.height.equalTo(ChartRateItemView.spinnerRadius * 2 + ChartRateItemView.spinnerLineWidth)
         }
         processSpinner.isHidden = true
 
@@ -43,11 +46,11 @@ class ChartRateItemView: BaseActionItemView {
         errorLabel.contentMode = .center
         errorLabel.textAlignment = .center
         errorLabel.numberOfLines = 0
-        errorLabel.font = ChartRateTheme.chartErrorFont
-        errorLabel.textColor = ChartRateTheme.chartErrorColor
+        errorLabel.font = .appSubhead1
+        errorLabel.textColor = .cryptoGray
         errorLabel.snp.makeConstraints { maker in
             maker.center.equalToSuperview()
-            maker.width.equalToSuperview().inset(ChartRateTheme.chartErrorMargin)
+            maker.width.equalToSuperview().inset(CGFloat.margin6x)
         }
         item.bind = { [weak self] type, points, animated in
             self?.showChart()

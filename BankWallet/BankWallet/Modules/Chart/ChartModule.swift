@@ -4,7 +4,7 @@ protocol IChartView: class {
     func showSpinner()
     func hideSpinner()
 
-    func setChartType(tag: Int)
+    func set(chartType: ChartType)
     func setChartTypeEnabled(tag: Int)
 
     func show(viewItem: ChartViewItem)

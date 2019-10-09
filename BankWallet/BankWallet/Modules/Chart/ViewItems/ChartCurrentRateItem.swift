@@ -3,12 +3,12 @@ import ActionSheet
 class ChartCurrentRateItem: BaseActionItem {
 
     var bindRate: ((_ rate: String?) -> ())?
-    var bindDiff: ((_ diff: String?, _ positive: Bool) -> ())?
+    var bindDiff: ((Decimal) -> ())?
 
     init(tag: Int) {
         super.init(cellType: ChartCurrentRateItemView.self, tag: tag, required: true)
 
-        height = ChartRateTheme.currentRateHeight
+        height = .heightSingleLineCell
     }
 
 }

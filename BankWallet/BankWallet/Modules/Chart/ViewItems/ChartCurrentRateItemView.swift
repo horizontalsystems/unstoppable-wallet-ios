@@ -5,44 +5,39 @@ import SnapKit
 
 class ChartCurrentRateItemView: BaseActionItemView {
     private let currentRateLabel = UILabel()
-    private let diffLabel = UILabel()
+    private let rateDiffView = RateDiffView()
 
-    override var item: ChartCurrentRateItem? { return _item as? ChartCurrentRateItem }
+    override var item: ChartCurrentRateItem? {
+        _item as? ChartCurrentRateItem
+    }
 
     override func initView() {
         super.initView()
 
         addSubview(currentRateLabel)
-        currentRateLabel.font = ChartRateTheme.currentRateFont
-        currentRateLabel.textColor = ChartRateTheme.currentRateColor
+        currentRateLabel.font = .appHeadline2
+        currentRateLabel.textColor = .appOz
         currentRateLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
 
         currentRateLabel.snp.makeConstraints { maker in
-            maker.top.equalToSuperview().offset(ChartRateTheme.smallMargin)
-            maker.leading.equalToSuperview().offset(ChartRateTheme.margin)
+            maker.leading.equalToSuperview().offset(CGFloat.margin4x)
+            maker.top.equalToSuperview().offset(CGFloat.margin3x)
         }
 
-        addSubview(diffLabel)
-        diffLabel.font = ChartRateTheme.diffRateFont
-        diffLabel.textColor = ChartRateTheme.diffRatePositiveColor
+        rateDiffView.font = .appSubhead1
 
-        diffLabel.snp.makeConstraints { maker in
-            maker.top.equalToSuperview().offset(ChartRateTheme.margin)
-            maker.leading.equalTo(self.currentRateLabel.snp.trailing).offset(ChartRateTheme.mediumMargin)
-            maker.trailing.equalToSuperview().offset(-ChartRateTheme.margin)
+        addSubview(rateDiffView)
+        rateDiffView.snp.makeConstraints { maker in
+            maker.leading.equalTo(currentRateLabel.snp.trailing).offset(CGFloat.margin2x)
+            maker.centerY.equalTo(currentRateLabel.snp.centerY)
         }
 
         item?.bindRate = { [weak self] rate in
             self?.currentRateLabel.text = rate
         }
 
-        item?.bindDiff = { [weak self] diff, positive in
-            guard let diff = diff else {
-                self?.diffLabel.text = nil
-                return
-            }
-            self?.diffLabel.textColor = positive ? ChartRateTheme.diffRatePositiveColor : ChartRateTheme.diffRateNegativeColor
-            self?.diffLabel.text = diff
+        item?.bindDiff = { [weak self] diff in
+            self?.rateDiffView.set(value: diff)
         }
 
     }

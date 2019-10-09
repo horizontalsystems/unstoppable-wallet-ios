@@ -52,7 +52,7 @@ class ChartPresenter {
             chartType = firstType
             interactor.defaultChartType = firstType
         }
-        view?.setChartType(tag: chartType.tag)
+        view?.set(chartType: chartType)
     }
 
 }

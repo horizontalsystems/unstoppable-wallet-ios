@@ -23,7 +23,7 @@ class ValueTextLayer: CATextLayer {
             textLayer.contentsScale = UIScreen.main.scale
             textLayer.frame = CGRect(x: insets.left + configuration.gridTextMargin, y: height, width: bounds.width - configuration.gridTextMargin - insets.width, height: configuration.gridTextFont.lineHeight)
             textLayer.foregroundColor = configuration.gridTextColor.cgColor
-            textLayer.font = CTFontCreateWithName(configuration.gridTextFont.fontName as CFString, configuration.gridTextFont.pointSize, nil)
+            textLayer.font = CTFontCreateWithFontDescriptor(configuration.gridTextFont.fontDescriptor, configuration.gridTextFont.pointSize, nil)
             textLayer.fontSize = configuration.gridTextFont.pointSize
 
             textLayer.string = formatter.string(from: (chartFrame.top - Decimal(i) * valueDelta) as NSNumber)

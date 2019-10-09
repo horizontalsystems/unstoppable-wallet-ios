@@ -27,7 +27,7 @@ class TimestampTextLayer: CATextLayer {
             textLayer.contentsScale = UIScreen.main.scale
             textLayer.frame = CGRect(x: insets.left + pointOffsetX, y: configuration.gridTextMargin, width: textSize.width, height: textSize.height)
             textLayer.foregroundColor = configuration.gridTextColor.cgColor
-            textLayer.font = CTFontCreateWithName(configuration.gridTextFont.fontName as CFString, configuration.gridTextFont.pointSize, nil)
+            textLayer.font = CTFontCreateWithFontDescriptor(configuration.gridTextFont.fontDescriptor, configuration.gridTextFont.pointSize, nil)
             textLayer.fontSize = configuration.gridTextFont.pointSize
 
             textLayer.string = text

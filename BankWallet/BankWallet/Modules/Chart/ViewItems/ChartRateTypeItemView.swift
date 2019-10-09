@@ -4,31 +4,39 @@ import ActionSheet
 import SnapKit
 
 class ChartRateTypeItemView: BaseActionItemView {
+    private let buttonHeight: CGFloat = 24
+    private let buttonDefaultWidth: CGFloat = 60
+    private let buttonTopMargin: CGFloat = 10
+
     private var buttons = [RespondButton]()
 
     private let dateLabel = UILabel()
     private let valueLabel = UILabel()
 
-    override var item: ChartRateTypeItem? { return _item as? ChartRateTypeItem }
+    override var item: ChartRateTypeItem? {
+        _item as? ChartRateTypeItem
+    }
 
     override func initView() {
         super.initView()
 
-        addSubview(dateLabel)
-        dateLabel.font = ChartRateTheme.chartRateDateFont
-        dateLabel.textColor = ChartRateTheme.chartRateDateColor
+        valueLabel.font = .appSubhead1
+        valueLabel.textColor = .appOz
+
         addSubview(valueLabel)
-        valueLabel.font = ChartRateTheme.chartRateValueFont
-        valueLabel.textColor = ChartRateTheme.chartRateValueColor
         valueLabel.snp.makeConstraints { maker in
-            maker.top.equalToSuperview().offset(ChartRateTheme.chartRateValueTopMargin)
-            maker.centerX.equalToSuperview()
-        }
-        dateLabel.snp.makeConstraints { maker in
-            maker.top.equalTo(valueLabel.snp.bottom).offset(ChartRateTheme.chartRateDateTopMargin)
+            maker.top.equalToSuperview().offset(6)
             maker.centerX.equalToSuperview()
         }
 
+        dateLabel.font = .appCaption
+        dateLabel.textColor = .cryptoGray
+
+        addSubview(dateLabel)
+        dateLabel.snp.makeConstraints { maker in
+            maker.top.equalTo(valueLabel.snp.bottom).offset(1)
+            maker.centerX.equalToSuperview()
+        }
 
         item?.bindButton = { [weak self] (title, tag, action) in
             self?.addButton(title: title, tag: tag, action: action)
@@ -76,18 +84,20 @@ class ChartRateTypeItemView: BaseActionItemView {
             self?.setSelected(tag: tag)
             action?()
         }
+
         let button = RespondButton(onTap: toggleAction)
+        button.cornerRadius = .cornerRadius12
         button.changeBackground = false
         button.tag = tag
         button.state = .disabled
-        button.textColors = [.active: ChartRateTheme.buttonTextColor, .selected: ChartRateTheme.buttonSelectedTextColor, .disabled: ChartRateTheme.buttonDisabledTextColor]
+        button.textColors = [.active: .appLeah, .selected: .appJacob, .disabled: .appGray50]
+        button.backgrounds = [.selected: .appJeremy]
         button.titleLabel.text = title.localized
-        button.titleLabel.font = ChartRateTheme.buttonFont
+        button.titleLabel.font = .appSubhead1
         button.titleLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         button.wrapperView.snp.remakeConstraints { maker in
-            maker.leading.equalToSuperview().offset(ChartRateTheme.buttonMargin)
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin2x)
             maker.top.bottom.equalToSuperview()
-            maker.trailing.equalToSuperview().offset(-ChartRateTheme.buttonMargin)
         }
 
         addSubview(button)
@@ -103,21 +113,22 @@ class ChartRateTypeItemView: BaseActionItemView {
 
         var lastButton: UIView = buttons[0]
         lastButton.snp.remakeConstraints { maker in
-            maker.left.equalToSuperview().offset(ChartRateTheme.margin)
-            maker.top.equalToSuperview().offset(ChartRateTheme.buttonMargin)
-            maker.height.equalTo(ChartRateTheme.buttonHeight)
+            maker.leading.equalToSuperview().offset(CGFloat.margin4x)
+            maker.top.equalToSuperview().offset(buttonTopMargin)
+            maker.height.equalTo(buttonHeight)
             if buttons.count == 1 { // just one button
-                maker.width.equalTo(ChartRateTheme.buttonDefaultWidth)
+                maker.width.equalTo(buttonDefaultWidth)
             }
         }
+
         for i in 1..<buttons.count {
             buttons[i].snp.remakeConstraints { maker in
-                maker.left.equalTo(lastButton.snp.right).offset(ChartRateTheme.buttonMargin)
-                maker.top.equalToSuperview().offset(ChartRateTheme.buttonMargin)
-                maker.height.equalTo(ChartRateTheme.buttonHeight)
+                maker.leading.equalTo(lastButton.snp.trailing).offset(CGFloat.margin2x)
+                maker.top.equalToSuperview().offset(buttonTopMargin)
+                maker.height.equalTo(buttonHeight)
                 maker.width.equalTo(lastButton.snp.width)
                 if buttons.count == i + 1 { // last button right constraint
-                    maker.right.equalToSuperview().offset(-ChartRateTheme.margin)
+                    maker.right.equalToSuperview().inset(CGFloat.margin4x)
                 }
             }
             lastButton = buttons[i]

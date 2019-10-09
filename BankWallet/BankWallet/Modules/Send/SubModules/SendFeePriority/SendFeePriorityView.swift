@@ -55,7 +55,7 @@ class SendFeePriorityView: UIView {
             maker.height.equalToSuperview()
         }
 
-        dropDownImageView.image = UIImage(named: "Drop Down")
+        dropDownImageView.image = UIImage(named: "Down")
         dropDownImageView.snp.makeConstraints { maker in
             maker.trailing.equalToSuperview()
             maker.centerY.equalToSuperview()

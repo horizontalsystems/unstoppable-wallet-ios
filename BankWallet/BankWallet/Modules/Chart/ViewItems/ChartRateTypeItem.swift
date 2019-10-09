@@ -12,7 +12,7 @@ class ChartRateTypeItem: BaseActionItem {
         super.init(cellType: ChartRateTypeItemView.self, tag: tag, required: true)
 
         showSeparator = false
-        height = ChartRateTheme.chartRateTypeHeight
+        height = .heightSingleLineCell
     }
 
 }

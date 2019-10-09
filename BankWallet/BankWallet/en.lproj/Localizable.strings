@@ -352,14 +352,17 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 "chart.time_duration.halyear" = "6M";
 "chart.time_duration.year" = "1Y";
 
-"chart.market_cap" = "Mkt. Cap";
+"chart.market_cap" = "Market Cap";
 "chart.market_cap.thousand" = "%@ k";
 "chart.market_cap.million" = "%@ M";
 "chart.market_cap.billion" = "%@ B";
 "chart.market_cap.trillion" = "%@ T";
-"chart.high" = "High";
-"chart.low" = "Low";
+"chart.high" = "%@ High";
+"chart.low" = "%@ Low";
 "chart.volume" = "Volume";
+"chart.circulation" = "In Circulation";
+"chart.total" = "Total";
+"chart.source" = "Source";
 "chart.error.not_available" = "Chart not available";
 
 // Create Wallet
