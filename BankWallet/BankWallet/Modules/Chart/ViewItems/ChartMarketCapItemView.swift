@@ -1,90 +1,115 @@
 import UIKit
-import UIExtensions
 import ActionSheet
 import SnapKit
 
 class ChartMarketCapItemView: BaseActionItemView {
-    private let marketCapText = UILabel()
-    private let marketCapTitle = UILabel()
-    private let highText = UILabel()
-    private let highTitle = UILabel()
-    private let lowText = UILabel()
-    private let lowTitle = UILabel()
+    private let highView = CaptionValueView()
+    private let lowView = CaptionValueView()
+    private let separator = UIView()
+    private let volumeView = CaptionValueView()
+    private let marketCapView = CaptionValueView()
+    private let circulationView = CaptionValueView()
+    private let totalView = CaptionValueView()
+    private let sourceView = CaptionValueView()
 
-    override var item: ChartMarketCapItem? { return _item as? ChartMarketCapItem }
+    override var item: ChartMarketCapItem? {
+        _item as? ChartMarketCapItem
+    }
 
     override func initView() {
         super.initView()
 
-        addSubview(marketCapText)
-        marketCapText.font = ChartRateTheme.marketCapTextFont
-        marketCapText.textColor = ChartRateTheme.marketCapTextColor
-
-        marketCapText.snp.makeConstraints { maker in
-            maker.left.equalToSuperview().offset(ChartRateTheme.margin)
-            maker.top.equalToSuperview()
-        }
-        addSubview(highText)
-        highText.font = ChartRateTheme.marketCapTextFont
-        highText.textColor = ChartRateTheme.marketCapTextColor
-        highText.snp.makeConstraints { maker in
-            maker.left.equalTo(marketCapText.snp.right).offset(ChartRateTheme.margin)
-            maker.width.equalTo(marketCapText.snp.width)
-            maker.top.equalToSuperview()
-        }
-        addSubview(lowText)
-        lowText.font = ChartRateTheme.marketCapTextFont
-        lowText.textColor = ChartRateTheme.marketCapTextColor
-
-        lowText.snp.makeConstraints { maker in
-            maker.left.equalTo(highText.snp.right).offset(ChartRateTheme.margin)
-            maker.right.equalToSuperview().offset(-ChartRateTheme.margin)
-            maker.width.equalTo(marketCapText.snp.width)
+        addSubview(highView)
+        highView.snp.makeConstraints { maker in
+            maker.leading.equalToSuperview().offset(CGFloat.margin4x)
             maker.top.equalToSuperview()
         }
 
-        addSubview(marketCapTitle)
-        marketCapTitle.font = ChartRateTheme.marketCapTitleFont
-        marketCapTitle.textColor = ChartRateTheme.marketCapTitleColor
-        marketCapTitle.snp.makeConstraints { maker in
-            maker.left.equalToSuperview().offset(ChartRateTheme.margin)
-            maker.top.equalToSuperview().offset(ChartRateTheme.marketCapTitleTopMargin)
-        }
-        addSubview(highTitle)
-        highTitle.font = ChartRateTheme.marketCapTitleFont
-        highTitle.textColor = ChartRateTheme.marketCapTitleColor
-        highTitle.snp.makeConstraints { maker in
-            maker.left.equalTo(marketCapTitle.snp.right).offset(ChartRateTheme.margin)
-            maker.width.equalTo(marketCapTitle.snp.width)
-            maker.top.equalToSuperview().offset(ChartRateTheme.marketCapTitleTopMargin)
-        }
-        addSubview(lowTitle)
-        lowTitle.font = ChartRateTheme.marketCapTitleFont
-        lowTitle.textColor = ChartRateTheme.marketCapTitleColor
-        lowTitle.snp.makeConstraints { maker in
-            maker.left.equalTo(highTitle.snp.right).offset(ChartRateTheme.margin)
-            maker.right.equalToSuperview().offset(-ChartRateTheme.margin)
-            maker.width.equalTo(marketCapTitle.snp.width)
-            maker.top.equalToSuperview().offset(ChartRateTheme.marketCapTitleTopMargin)
+        addSubview(lowView)
+        lowView.snp.makeConstraints { maker in
+            maker.leading.equalTo(highView.snp.trailing).offset(CGFloat.margin6x)
+            maker.top.equalToSuperview()
+            maker.trailing.equalToSuperview().inset(CGFloat.margin4x)
+            maker.width.equalTo(highView.snp.width)
         }
 
-        item?.setMarketCapTitle = { [weak self] text in
-            self?.marketCapTitle.text = text
+        separator.backgroundColor = .appSteel20
+
+        addSubview(separator)
+        separator.snp.makeConstraints { maker in
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
+            maker.top.equalTo(highView.snp.bottom).offset(CGFloat.margin2x)
+            maker.height.equalTo(CGFloat.heightOnePixel)
         }
-        item?.setMarketCapText = { [weak self] text in
-            self?.marketCapText.text = text
+
+        volumeView.set(caption: "chart.volume".localized)
+
+        addSubview(volumeView)
+        volumeView.snp.makeConstraints { maker in
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
+            maker.top.equalTo(separator.snp.bottom).offset(CGFloat.margin2x)
         }
-        item?.setLowTitle = { [weak self] text in
-            self?.lowTitle.text = text
+
+        marketCapView.set(caption: "chart.market_cap".localized)
+
+        addSubview(marketCapView)
+        marketCapView.snp.makeConstraints { maker in
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
+            maker.top.equalTo(volumeView.snp.bottom).offset(CGFloat.margin2x)
         }
-        item?.setLowText = { [weak self] text in
-            self?.lowText.text = text
+
+        circulationView.set(caption: "chart.circulation".localized)
+
+        addSubview(circulationView)
+        circulationView.snp.makeConstraints { maker in
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
+            maker.top.equalTo(marketCapView.snp.bottom).offset(CGFloat.margin2x)
         }
-        item?.setHighTitle = { [weak self] text in
-            self?.highTitle.text = text
+
+        totalView.set(caption: "chart.total".localized)
+
+        addSubview(totalView)
+        totalView.snp.makeConstraints { maker in
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
+            maker.top.equalTo(circulationView.snp.bottom).offset(CGFloat.margin2x)
         }
-        item?.setHighText = { [weak self] text in
-            self?.highText.text = text
+
+        sourceView.set(caption: "chart.source".localized)
+        sourceView.set(value: "@CryptoCompare.com")
+
+        addSubview(sourceView)
+        sourceView.snp.makeConstraints { maker in
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
+            maker.top.equalTo(totalView.snp.bottom).offset(CGFloat.margin2x)
+        }
+
+        item?.setTypeTitle = { [weak self] title in
+            self?.highView.set(caption: "chart.high".localized(title))
+            self?.lowView.set(caption: "chart.low".localized(title))
+        }
+
+        item?.setHigh = { [weak self] value in
+            self?.highView.set(value: value, accent: true)
+        }
+
+        item?.setLow = { [weak self] value in
+            self?.lowView.set(value: value, accent: true)
+        }
+
+        item?.setVolume = { [weak self] value in
+            self?.volumeView.set(value: value, accent: true)
+        }
+
+        item?.setMarketCap = { [weak self] value in
+            self?.marketCapView.set(value: value, accent: true)
+        }
+
+        item?.setCirculation = { [weak self] value in
+            self?.circulationView.set(value: value, accent: true)
+        }
+
+        item?.setTotal = { [weak self] value in
+            self?.totalView.set(value: value, accent: true)
         }
     }
 

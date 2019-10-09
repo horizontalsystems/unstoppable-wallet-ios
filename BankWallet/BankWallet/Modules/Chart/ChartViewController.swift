@@ -79,7 +79,7 @@ class ChartViewController: ActionSheetController {
     }
 
     private func show(diff: Decimal) {
-        currentRateItem.bindDiff?(ChartRateTheme.formatted(percentDelta: diff), !diff.isSignMinus)
+        currentRateItem.bindDiff?(diff)
     }
 
     private func marketCapFormat(currencyValue: CurrencyValue) -> String? {
@@ -93,42 +93,37 @@ class ChartViewController: ActionSheetController {
 
     private func show(marketCapValue: CurrencyValue?) {
         guard let marketCapValue = marketCapValue else {
-            marketCapItem.setMarketCapText?(nil)
-            marketCapItem.setMarketCapTitle?(nil)
+            marketCapItem.setMarketCap?(nil)
             return
         }
+
         let marketCapData = MarketCapFormatter.marketCap(value: marketCapValue.value)
         guard let formattedValue = marketCapFormat(currencyValue: CurrencyValue(currency: marketCapValue.currency, value: marketCapData.value)) else {
-            marketCapItem.setMarketCapText?(nil)
-            marketCapItem.setMarketCapTitle?(nil)
+            marketCapItem.setMarketCap?(nil)
             return
         }
 
         let marketCapText = marketCapData.postfix?.localized(formattedValue) ?? formattedValue
-        marketCapItem.setMarketCapText?(marketCapText)
-        marketCapItem.setMarketCapTitle?("chart.market_cap".localized)
+        marketCapItem.setMarketCap?(marketCapText)
     }
 
     private func show(lowValue: CurrencyValue?) {
-        marketCapItem.setLowTitle?("chart.low".localized)
-
         guard let lowValue = lowValue else {
-            marketCapItem.setLowText?(nil)
+            marketCapItem.setLow?(nil)
             return
         }
+
         let formattedValue = ValueFormatter.instance.format(currencyValue: lowValue, fractionPolicy: .threshold(high: 1000, low: 0.1), trimmable: false)
-        marketCapItem.setLowText?(formattedValue)
+        marketCapItem.setLow?(formattedValue)
     }
 
     private func show(highValue: CurrencyValue?) {
-        marketCapItem.setHighTitle?("chart.high".localized)
-
         guard let highValue = highValue else {
-            marketCapItem.setHighText?(nil)
+            marketCapItem.setHigh?(nil)
             return
         }
         let formattedValue = ValueFormatter.instance.format(currencyValue: highValue, fractionPolicy: .threshold(high: 1000, low: 0.1), trimmable: false)
-        marketCapItem.setHighText?(formattedValue)
+        marketCapItem.setHigh?(formattedValue)
     }
 
 }
@@ -151,6 +146,7 @@ extension ChartViewController: IChartView {
         for type in types {
             chartRateTypeItem.bindButton?(type.title, type.tag) { [weak self] in
                 self?.delegate.onSelect(type: type)
+                self?.marketCapItem.setTypeTitle?(type.title)
             }
         }
     }
@@ -159,8 +155,9 @@ extension ChartViewController: IChartView {
         chartRateTypeItem.setEnabled?(tag)
     }
 
-    func setChartType(tag: Int) {
-        chartRateTypeItem.setSelected?(tag)
+    func set(chartType: ChartType) {
+        chartRateTypeItem.setSelected?(chartType.tag)
+        marketCapItem.setTypeTitle?(chartType.title)
     }
 
     func showSelectedPoint(chartType: ChartType, timestamp: TimeInterval, value: CurrencyValue) {
