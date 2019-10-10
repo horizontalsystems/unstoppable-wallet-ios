@@ -31,4 +31,8 @@ extension ReportPresenter: IReportViewDelegate {
         router.openTelegram(group: interactor.telegramGroup)
     }
 
+    func didTapStatus() {
+        router.openStatus()
+    }
+
 }

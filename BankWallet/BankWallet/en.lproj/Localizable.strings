@@ -19,6 +19,7 @@
 "button.paste" = "Paste";
 "button.backup" = "Backup";
 "button.back" = "Back";
+"button.copy" = "Copy";
 
 "alert.copied" = "Copied";
 "alert.no_internet" = "No Internet";
@@ -284,6 +285,7 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 // Settings -> Report Problem
 
 "settings.report_problem.title" = "Report Problem";
+"settings.report_problem.app_status" = "App Status";
 "settings.report_problem.email" = "E-mail";
 "settings.report_problem.telegram" = "Telegram";
 
