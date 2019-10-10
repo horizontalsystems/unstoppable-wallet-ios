@@ -577,3 +577,7 @@ protocol IDebugBackgroundLogger {
     func add(log: String)
     func clearLogs()
 }
+
+protocol IAppStatusManager {
+    var status: [(String, Any)] { get }
+}

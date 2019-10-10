@@ -27,6 +27,7 @@ class ReportViewController: WalletViewController {
         title = "settings.report_problem.title".localized
 
         tableView.registerCell(forClass: ImageDoubleLineCell.self)
+        tableView.registerCell(forClass: TitleCell.self)
         tableView.sectionDataSource = self
 
         tableView.backgroundColor = .clear
@@ -46,9 +47,9 @@ class ReportViewController: WalletViewController {
 extension ReportViewController: SectionsDataSource {
 
     func buildSections() -> [SectionProtocol] {
-        return [
+        [
             Section(
-                    id: "section",
+                    id: "report_section",
                     headerState: .margin(height: SettingsTheme.subSettingsHeaderHeight),
                     rows: [
                         Row<ImageDoubleLineCell>(
@@ -80,6 +81,23 @@ extension ReportViewController: SectionsDataSource {
                                 },
                                 action: { [weak self] _ in
                                     self?.delegate.didTapTelegram()
+                                }
+                        )
+                    ]
+            ),
+            Section(
+                    id: "status_section",
+                    headerState: .margin(height: SettingsTheme.headerHeight),
+                    rows: [
+                        Row<TitleCell>(
+                                id: "status",
+                                height: SettingsTheme.cellHeight,
+                                autoDeselect: true,
+                                bind: { cell, _ in
+                                    cell.bind(titleIcon: nil, title: "settings.report_problem.app_status".localized, showDisclosure: true, last: true)
+                                },
+                                action: { [weak self] _ in
+                                    self?.delegate.didTapStatus()
                                 }
                         )
                     ]
