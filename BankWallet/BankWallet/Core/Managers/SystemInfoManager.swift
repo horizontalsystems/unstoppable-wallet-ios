@@ -41,4 +41,12 @@ class SystemInfoManager: ISystemInfoManager {
         return LAContext().canEvaluatePolicy(.deviceOwnerAuthentication, error: nil)
     }
 
+    var deviceModel: String {
+        UIDevice.modelName
+    }
+
+    var osVersion: String {
+        UIDevice.current.systemVersion
+    }
+
 }

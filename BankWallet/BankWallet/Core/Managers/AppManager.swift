@@ -14,6 +14,7 @@ class AppManager {
     private let secureStorage: ISecureStorage
     private let kitCleaner: IKitCleaner
     private let debugBackgroundLogger: IDebugBackgroundLogger?
+    private let appVersionManager: IAppVersionManager
 
     private let didBecomeActiveSubject = PublishSubject<()>()
     private let willEnterForegroundSubject = PublishSubject<()>()
@@ -21,7 +22,9 @@ class AppManager {
     init(accountManager: IAccountManager, walletManager: IWalletManager, adapterManager: IAdapterManager, lockManager: ILockManager,
          passcodeLockManager: IPasscodeLockManager, biometryManager: IBiometryManager, blurManager: IBlurManager,
          notificationManager: INotificationManager, backgroundPriceAlertManager: IBackgroundPriceAlertManager,
-         localStorage: ILocalStorage, secureStorage: ISecureStorage, kitCleaner: IKitCleaner, debugBackgroundLogger: IDebugBackgroundLogger?) {
+         localStorage: ILocalStorage, secureStorage: ISecureStorage, kitCleaner: IKitCleaner, debugBackgroundLogger: IDebugBackgroundLogger?,
+         appVersionManager: IAppVersionManager
+    ) {
         self.accountManager = accountManager
         self.walletManager = walletManager
         self.adapterManager = adapterManager
@@ -35,6 +38,7 @@ class AppManager {
         self.secureStorage = secureStorage
         self.kitCleaner = kitCleaner
         self.debugBackgroundLogger = debugBackgroundLogger
+        self.appVersionManager = appVersionManager
     }
 
     private func handleFirstLaunch() {
@@ -58,6 +62,8 @@ extension AppManager {
         biometryManager.refresh()
         notificationManager.removeNotifications()
         kitCleaner.clear()
+
+        appVersionManager.checkLatestVersion()
     }
 
     func willResignActive() {

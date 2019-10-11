@@ -18,6 +18,7 @@ class UserDefaultsStorage {
     private let keyChartType = "chart_type_key"
     private let mainShownOnceKey = "main_shown_once_key"
     private let backgroundFetchLogKey = "background_fetch_key"
+    private let keyAppVersions = "app_versions"
 
     private func getString(_ name: String) -> String? {
         UserDefaults.standard.value(forKey: name) as? String
@@ -165,6 +166,18 @@ extension UserDefaultsStorage: ILocalStorage {
     var mainShownOnce: Bool {
         get { bool(for: mainShownOnceKey) ?? false }
         set { set(newValue, for: mainShownOnceKey) }
+    }
+
+    var appVersions: [AppVersion] {
+        get {
+            guard let data = UserDefaults.standard.data(forKey: keyAppVersions), let versions = try? JSONDecoder().decode([AppVersion].self, from: data) else {
+                return []
+            }
+            return versions
+        }
+        set {
+            UserDefaults.standard.set(try? JSONEncoder().encode(newValue), forKey: keyAppVersions)
+        }
     }
 
 }

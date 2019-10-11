@@ -53,6 +53,9 @@ class App {
     let notificationManager: INotificationManager
     var debugBackgroundLogger: IDebugBackgroundLogger?
 
+    let appStatusManager: IAppStatusManager
+    let appVersionManager: IAppVersionManager
+
     let appManager: AppManager
 
     init() {
@@ -135,6 +138,9 @@ class App {
         #endif
         backgroundPriceAlertManager = BackgroundPriceAlertManager(rateManager: rateManager, currencyManager: currencyManager, rateStorage: storage, priceAlertStorage: priceAlertStorage, priceAlertHandler: priceAlertHandler, debugBackgroundLogger: debugBackgroundLogger)
 
+        appStatusManager = AppStatusManager(systemInfoManager: systemInfoManager, localStorage: localStorage)
+        appVersionManager = AppVersionManager(systemInfoManager: systemInfoManager, localStorage: localStorage)
+
         let kitCleaner = KitCleaner(accountManager: accountManager)
         appManager = AppManager(
                 accountManager: accountManager,
@@ -149,7 +155,8 @@ class App {
                 localStorage: localStorage,
                 secureStorage: secureStorage,
                 kitCleaner: kitCleaner,
-                debugBackgroundLogger: debugBackgroundLogger
+                debugBackgroundLogger: debugBackgroundLogger,
+                appVersionManager: appVersionManager
         )
     }
 
