@@ -116,6 +116,7 @@ extension CGFloat {
     static let cornerRadius12: CGFloat = 12
     static let cornerRadius16: CGFloat = 16
 
+    static let margin05x: CGFloat = 2
     static let margin1x: CGFloat = 4
     static let margin2x: CGFloat = 8
     static let margin3x: CGFloat = 12
@@ -146,6 +147,20 @@ extension UIButton {
         button.setTitleColor(.appGray50, for: .disabled)
         button.setBackgroundColor(color: .appJacob, gradient: (colors: [UIColor(white: 1, alpha: 0.5), UIColor(white: 1, alpha: 0)], height: .heightButton), forState: .normal)
         button.setBackgroundColor(color: .appJacob, forState: .highlighted)
+        button.setBackgroundColor(color: .appSteel20, forState: .disabled)
+        button.cornerRadius = .cornerRadius8
+
+        return button
+    }
+
+    static var appGreen: UIButton {
+        let button = UIButton()
+
+        button.titleLabel?.font = .appHeadline2
+        button.setTitleColor(.black, for: .normal)
+        button.setTitleColor(.appGray50, for: .disabled)
+        button.setBackgroundColor(color: .appRemus, gradient: (colors: [UIColor(white: 1, alpha: 0.5), UIColor(white: 1, alpha: 0)], height: .heightButton), forState: .normal)
+        button.setBackgroundColor(color: .appRemus, forState: .highlighted)
         button.setBackgroundColor(color: .appSteel20, forState: .disabled)
         button.cornerRadius = .cornerRadius8
 

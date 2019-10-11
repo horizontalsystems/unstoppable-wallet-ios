@@ -1,41 +1,40 @@
 import UIKit
-import UIExtensions
 import HUD
 import RxSwift
 import SnapKit
 
-class BalanceCell: UITableViewCell {
+class BalanceCell: CardCell {
+    static let height: CGFloat = 100
+    static let expandedHeight: CGFloat = 160
+    static let animationDuration = 0.15
     private static let minimumProgress = 10
 
-    private let roundedBackground = UIView()
-    private let clippingView = UIView()
+    private let coinIconImageView = UIImageView()
+    private let syncSpinner = HUDProgressView(
+            progress: Float(BalanceCell.minimumProgress) / 100,
+            strokeLineWidth: 2,
+            radius: 15,
+            strokeColor: .appGray,
+            duration: 2
+    )
+    private let failedImageView = UIImageView()
 
-    private let coinIconImageView = CoinIconImageView()
     private let nameLabel = UILabel()
     private let rateLabel = UILabel()
+    private let rateDiffView = RateDiffView()
 
     private let currencyValueLabel = UILabel()
     private let coinValueLabel = UILabel()
 
+    private let syncingLabel = UILabel()
+    private let syncedUntilLabel = UILabel()
+
+    private let receiveButton = UIButton.appGreen
+    private let sendButton = UIButton.appYellow
+
     private let chartHolder = UIButton()
     private let chartView: ChartView
-    private let percentDeltaLabel = UILabel()
-    private let inProgressLine = UIView()
-    private let failLabel = UILabel()
-
-    private let syncSpinner = HUDProgressView(
-            progress: Float(BalanceCell.minimumProgress) / 100,
-            strokeLineWidth: BalanceTheme.spinnerLineWidth,
-            radius: BalanceTheme.spinnerDonutRadius,
-            strokeColor: BalanceTheme.spinnerLineColor,
-            donutColor: BalanceTheme.spinnerDonutColor,
-            duration: 2
-    )
-
-    private let failedImageView = UIImageView()
-
-    private let receiveButton = RespondButton()
-    private let payButton = RespondButton()
+    private let notAvailableLabel = UILabel()
 
     private var onPay: (() -> ())?
     private var onReceive: (() -> ())?
@@ -44,162 +43,167 @@ class BalanceCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         let configuration = ChartConfiguration()
         configuration.showGrid = false
-        configuration.chartInsets = UIEdgeInsets(top: BalanceTheme.cellSmallMargin, left: 0, bottom: 0, right: 0)
         chartView = ChartView(configuration: configuration)
 
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
-        contentView.backgroundColor = .clear
-        backgroundColor = .clear
         selectionStyle = .none
 
-        contentView.addSubview(roundedBackground)
-        roundedBackground.snp.makeConstraints { maker in
-            maker.top.equalToSuperview().offset(BalanceTheme.cellPadding)
-            maker.leading.trailing.equalToSuperview().inset(AppTheme.viewMargin)
-            maker.bottom.equalToSuperview()
-        }
-        roundedBackground.backgroundColor = BalanceTheme.roundedBackgroundColor
-        roundedBackground.layer.shadowOpacity = 1
-        roundedBackground.layer.cornerRadius = BalanceTheme.roundedBackgroundCornerRadius
-        roundedBackground.layer.shadowColor = UIColor.appAndy.cgColor
-        roundedBackground.layer.shadowRadius = 4
-        roundedBackground.layer.shadowOffset = CGSize(width: 0, height: 4)
+        let coinIconWrapper = UIView()
+        coinIconWrapper.backgroundColor = .appJeremy
+        coinIconWrapper.cornerRadius = .cornerRadius8
 
-        roundedBackground.addSubview(clippingView)
-        clippingView.backgroundColor = .clear
-        clippingView.clipsToBounds = true
-        clippingView.layer.cornerRadius = BalanceTheme.roundedBackgroundCornerRadius
-        clippingView.snp.makeConstraints { maker in
+        clippingView.addSubview(coinIconWrapper)
+        coinIconWrapper.snp.makeConstraints { maker in
+            maker.leading.top.equalToSuperview().offset(CGFloat.margin2x)
+            maker.width.height.equalTo(CGFloat.heightSingleLineCell)
+        }
+
+        coinIconImageView.tintColor = .appGray
+
+        coinIconWrapper.addSubview(coinIconImageView)
+        coinIconImageView.snp.makeConstraints { maker in
+            maker.center.equalToSuperview()
+        }
+
+        coinIconWrapper.addSubview(syncSpinner)
+        syncSpinner.snp.makeConstraints { maker in
             maker.edges.equalToSuperview()
         }
 
-        clippingView.addSubview(coinIconImageView)
-        coinIconImageView.snp.makeConstraints { maker in
-            maker.leading.equalToSuperview().offset(BalanceTheme.cellBigMargin)
-            maker.top.equalToSuperview().offset(BalanceTheme.cellSmallMargin)
+        failedImageView.image = UIImage(named: "Attention Icon")
+
+        coinIconWrapper.addSubview(failedImageView)
+        failedImageView.snp.makeConstraints { maker in
+            maker.center.equalToSuperview()
         }
 
-        clippingView.addSubview(nameLabel)
-        nameLabel.snp.makeConstraints { maker in
-            maker.leading.equalTo(self.coinIconImageView.snp.trailing).offset(BalanceTheme.cellSmallMargin)
-            maker.centerY.equalTo(self.coinIconImageView.snp.centerY)
-        }
-        nameLabel.font = BalanceTheme.cellTitleFont
-        nameLabel.textColor = BalanceTheme.cellTitleColor
+        nameLabel.font = .appHeadline2
+        nameLabel.textColor = .appLeah
         nameLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         nameLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
 
-        clippingView.addSubview(rateLabel)
-        rateLabel.snp.makeConstraints { maker in
-            maker.leading.equalToSuperview().offset(BalanceTheme.cellBigMargin)
-            maker.top.equalTo(self.nameLabel.snp.bottom).offset(BalanceTheme.rateTopMargin)
+        clippingView.addSubview(nameLabel)
+        nameLabel.snp.makeConstraints { maker in
+            maker.leading.equalTo(coinIconWrapper.snp.trailing).offset(CGFloat.margin2x)
+            maker.top.equalTo(coinIconWrapper.snp.top).offset(CGFloat.margin05x)
         }
-        rateLabel.font = BalanceTheme.rateFont
+
+        rateLabel.font = .appSubhead2
         rateLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         rateLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
 
-        clippingView.addSubview(currencyValueLabel)
-        currencyValueLabel.snp.makeConstraints { maker in
-            maker.leading.equalTo(self.rateLabel.snp.trailing).offset(BalanceTheme.cellSmallMargin)
-            maker.trailing.equalToSuperview().offset(-BalanceTheme.cellBigMargin)
-            maker.centerY.equalTo(self.rateLabel.snp.centerY)
+        clippingView.addSubview(rateLabel)
+        rateLabel.snp.makeConstraints { maker in
+            maker.leading.equalTo(nameLabel.snp.leading)
+            maker.top.equalTo(nameLabel.snp.bottom).offset(CGFloat.margin1x)
         }
-        currencyValueLabel.font = BalanceTheme.currencyValueFont
-        currencyValueLabel.textAlignment = .right
+
+        rateDiffView.font = .appSubhead2
+
+        clippingView.addSubview(rateDiffView)
+        rateDiffView.snp.makeConstraints { maker in
+            maker.leading.equalTo(rateLabel.snp.trailing).offset(CGFloat.margin1x)
+            maker.centerY.equalTo(rateLabel.snp.centerY)
+        }
+
+        let separatorView = UIView()
+        separatorView.backgroundColor = .appSteel20
+
+        clippingView.addSubview(separatorView)
+        separatorView.snp.makeConstraints { maker in
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin2x)
+            maker.top.equalTo(coinIconWrapper.snp.bottom).offset(CGFloat.margin2x)
+            maker.height.equalTo(CGFloat.heightOnePixel)
+        }
+
+        coinValueLabel.font = .appSubhead2
 
         clippingView.addSubview(coinValueLabel)
         coinValueLabel.snp.makeConstraints { maker in
-            maker.leading.equalTo(self.nameLabel.snp.trailing).offset(BalanceTheme.cellSmallMargin)
-            maker.trailing.equalToSuperview().offset(-BalanceTheme.cellBigMargin)
-            maker.centerY.equalTo(self.nameLabel.snp.centerY)
-        }
-        coinValueLabel.font = BalanceTheme.coinValueFont
-        coinValueLabel.textColor = BalanceTheme.coinValueColor
-        coinValueLabel.textAlignment = .right
-
-        syncSpinner.backgroundColor = BalanceTheme.spinnerBackgroundColor
-        syncSpinner.layer.cornerRadius = BalanceTheme.spinnerSideSize / 2
-        clippingView.addSubview(syncSpinner)
-        syncSpinner.snp.makeConstraints { maker in
-            maker.center.equalTo(self.coinIconImageView.snp.center)
-            maker.size.equalTo(BalanceTheme.spinnerSideSize)
+            maker.leading.equalToSuperview().offset(CGFloat.margin3x)
+            maker.top.equalTo(separatorView.snp.bottom).offset(CGFloat.margin3x)
         }
 
-        failedImageView.image = UIImage(named: "Attention Icon")
-        clippingView.addSubview(failedImageView)
-        failedImageView.snp.makeConstraints { maker in
-            maker.center.equalTo(self.coinIconImageView.snp.center)
+        currencyValueLabel.font = .appHeadline2
+        currencyValueLabel.textAlignment = .right
+
+        clippingView.addSubview(currencyValueLabel)
+        currencyValueLabel.snp.makeConstraints { maker in
+            maker.leading.equalTo(coinValueLabel.snp.trailing).offset(CGFloat.margin2x)
+            maker.trailing.equalToSuperview().inset(CGFloat.margin3x)
+            maker.bottom.equalTo(coinValueLabel.snp.bottom)
         }
+
+        syncingLabel.font = .appSubhead2
+        syncingLabel.textColor = .appGray
+
+        clippingView.addSubview(syncingLabel)
+        syncingLabel.snp.makeConstraints { maker in
+            maker.leading.equalToSuperview().offset(CGFloat.margin3x)
+            maker.top.equalTo(separatorView.snp.bottom).offset(CGFloat.margin3x)
+        }
+
+        syncedUntilLabel.font = .appSubhead2
+        syncedUntilLabel.textColor = .appGray
+        syncedUntilLabel.textAlignment = .right
+
+        clippingView.addSubview(syncedUntilLabel)
+        syncedUntilLabel.snp.makeConstraints { maker in
+            maker.leading.equalTo(syncingLabel.snp.trailing).offset(CGFloat.margin2x)
+            maker.trailing.equalToSuperview().inset(CGFloat.margin3x)
+            maker.bottom.equalTo(syncingLabel.snp.bottom)
+        }
+
+        receiveButton.setTitle("balance.deposit".localized, for: .normal)
+        receiveButton.addTarget(self, action: #selector(onTapReceive), for: .touchUpInside)
 
         clippingView.addSubview(receiveButton)
         receiveButton.snp.makeConstraints { maker in
-            maker.leading.equalToSuperview().offset(BalanceTheme.cellSmallMargin)
-            maker.top.equalTo(self.nameLabel.snp.bottom).offset(BalanceTheme.buttonsTopMargin)
-            maker.height.equalTo(BalanceTheme.buttonsHeight)
+            maker.leading.equalToSuperview().offset(CGFloat.margin2x)
+            maker.top.equalTo(coinValueLabel.snp.bottom).offset(CGFloat.margin3x)
+            maker.height.equalTo(CGFloat.heightButton)
         }
-        receiveButton.onTap = { [weak self] in self?.receive() }
-        receiveButton.backgrounds = ButtonTheme.greenBackgroundDictionary
-        receiveButton.textColors = ButtonTheme.textColorDictionary
-        receiveButton.cornerRadius = BalanceTheme.buttonCornerRadius
-        receiveButton.titleLabel.text = "balance.deposit".localized
 
-        clippingView.addSubview(payButton)
-        payButton.snp.makeConstraints { maker in
-            maker.leading.equalTo(receiveButton.snp.trailing).offset(BalanceTheme.cellSmallMargin)
-            maker.top.equalTo(self.nameLabel.snp.bottom).offset(BalanceTheme.buttonsTopMargin)
-            maker.trailing.equalToSuperview().offset(-BalanceTheme.cellSmallMargin)
-            maker.height.equalTo(BalanceTheme.buttonsHeight)
-            maker.width.equalTo(receiveButton)
+        sendButton.setTitle("balance.send".localized, for: .normal)
+        sendButton.addTarget(self, action: #selector(onTapSend), for: .touchUpInside)
+
+        clippingView.addSubview(sendButton)
+        sendButton.snp.makeConstraints { maker in
+            maker.leading.equalTo(receiveButton.snp.trailing).offset(CGFloat.margin2x)
+            maker.top.equalTo(receiveButton.snp.top)
+            maker.trailing.equalToSuperview().inset(CGFloat.margin2x)
+            maker.width.equalTo(receiveButton.snp.width)
+            maker.height.equalTo(CGFloat.heightButton)
         }
-        payButton.onTap = { [weak self] in self?.pay() }
-        payButton.backgrounds = ButtonTheme.yellowBackgroundDictionary
-        payButton.textColors = ButtonTheme.textColorDictionary
-        payButton.cornerRadius = BalanceTheme.buttonCornerRadius
-        payButton.titleLabel.text = "balance.send".localized
 
-        clippingView.addSubview(chartHolder)
-
-        chartHolder.snp.makeConstraints { maker in
-            maker.top.trailing.bottom.equalToSuperview()
-        }
         chartHolder.addTarget(self, action: #selector(onChartTap), for: .touchUpInside)
 
-        chartHolder.addSubview(chartView)
-        chartView.isUserInteractionEnabled = false
-        chartView.layer.masksToBounds = true
-        chartView.layer.cornerRadius = BalanceTheme.chartCornerRadius
-        chartView.layer.borderColor = BalanceTheme.chartBorderColor.cgColor
-        chartView.layer.borderWidth = BalanceTheme.chartBorderWidth
-        chartView.backgroundColor = BalanceTheme.chartBackground
-        chartView.snp.makeConstraints { maker in
-            maker.top.equalToSuperview().offset(BalanceTheme.cellSmallMargin)
-            maker.trailing.equalToSuperview().offset(-BalanceTheme.cellSmallMargin)
-            maker.size.equalTo(BalanceTheme.chartSize)
-            maker.leading.greaterThanOrEqualToSuperview()
-        }
-        chartHolder.addSubview(percentDeltaLabel)
-        percentDeltaLabel.font = BalanceTheme.percentDeltaFont
-        percentDeltaLabel.textAlignment = .right
-        percentDeltaLabel.snp.makeConstraints { maker in
-            maker.top.equalTo(self.chartView.snp.bottom).offset(BalanceTheme.cellSmallMargin)
-            maker.trailing.equalToSuperview().offset(-BalanceTheme.cellBigMargin)
-            maker.leading.equalToSuperview()
+        clippingView.addSubview(chartHolder)
+        chartHolder.snp.makeConstraints { maker in
+            maker.leading.equalTo(nameLabel.snp.trailing).offset(CGFloat.margin3x)
+            maker.top.equalToSuperview().offset(CGFloat.margin2x)
+            maker.trailing.equalToSuperview()
+            maker.height.equalTo(38)
+            maker.width.equalTo(0)
         }
 
-        chartHolder.addSubview(inProgressLine)
-        inProgressLine.backgroundColor = BalanceTheme.inProgressLineColor
-        inProgressLine.snp.makeConstraints { maker in
-            maker.leading.trailing.equalTo(chartView)
-            maker.bottom.equalTo(chartView).offset(-BalanceTheme.cellSmallMargin)
-            maker.height.equalTo(1 / UIScreen.main.scale)
+        chartView.isUserInteractionEnabled = false
+
+        chartHolder.addSubview(chartView)
+        chartView.snp.makeConstraints { maker in
+            maker.leading.top.bottom.equalToSuperview()
+            maker.trailing.equalToSuperview().inset(CGFloat.margin3x).priority(.low)
         }
-        chartHolder.addSubview(failLabel)
-        failLabel.font = BalanceTheme.failLabelFont
-        failLabel.textColor = BalanceTheme.failLabelColor
-        failLabel.text = "n/a".localized
-        failLabel.snp.makeConstraints { maker in
-            maker.center.equalTo(chartView)
+
+        notAvailableLabel.font = .appSubhead2
+        notAvailableLabel.textColor = .appGray50
+        notAvailableLabel.text = "n/a".localized
+
+        chartHolder.addSubview(notAvailableLabel)
+        notAvailableLabel.snp.makeConstraints { maker in
+            maker.top.equalToSuperview().inset(CGFloat.margin1x)
+            maker.trailing.equalToSuperview().inset(CGFloat.margin4x)
         }
     }
 
@@ -216,30 +220,8 @@ class BalanceCell: UITableViewCell {
     }
 
     func bindView(item: BalanceViewItem, isStatModeOn: Bool, selected: Bool, animated: Bool = false) {
-        var synced = false
-
-        coinIconImageView.bind(coin: item.coin)
-        nameLabel.text = item.coin.title.localized
-
-        receiveButton.set(hidden: !selected, animated: animated, duration: BalanceTheme.buttonsAnimationDuration)
-        payButton.set(hidden: !selected, animated: animated, duration: BalanceTheme.buttonsAnimationDuration)
-
-        if item.state == AdapterState.synced || item.state == AdapterState.notReady  {
-            synced = true
-            coinIconImageView.isHidden = false
-        } else {
-            coinIconImageView.isHidden = true
-        }
-        if case .synced = item.state, item.coinValue.value > 0 {
-            payButton.state = .active
-        } else {
-            payButton.state = .disabled
-        }
-        if case .notReady = item.state {
-            receiveButton.state = .disabled
-        } else {
-            receiveButton.state = .active
-        }
+        coinIconImageView.image = UIImage(coin: item.coin)?.withRenderingMode(.alwaysTemplate)
+        coinIconImageView.isHidden = item.state == .notSynced
 
         if case let .syncing(progress, _) = item.state {
             syncSpinner.isHidden = false
@@ -250,71 +232,92 @@ class BalanceCell: UITableViewCell {
             syncSpinner.stopAnimating()
         }
 
-        if case let .syncing(_, lastBlockDate) = item.state, selected {
-            if let lastBlockDate = lastBlockDate {
-                rateLabel.text = "balance.synced_through".localized(DateHelper.instance.formatSyncedThroughDate(from: lastBlockDate))
-            } else {
-                rateLabel.text = "balance.syncing".localized
-            }
-            rateLabel.textColor = BalanceTheme.rateColor
-        } else if let value = item.exchangeValue, let formattedValue = ValueFormatter.instance.format(currencyValue: value, fractionPolicy: .threshold(high: 1000, low: 0.1), trimmable: false) {
-            rateLabel.text = "balance.rate_per_coin".localized(formattedValue, item.coinValue.coin.code)
-            rateLabel.textColor = item.rateExpired ? BalanceTheme.rateExpiredColor : BalanceTheme.rateColor
+        failedImageView.isHidden = item.state != .notSynced
+
+        nameLabel.text = item.coin.title.localized
+
+        if let value = item.exchangeValue, let formattedValue = ValueFormatter.instance.format(currencyValue: value, fractionPolicy: .threshold(high: 1000, low: 0.1), trimmable: false) {
+            rateLabel.text = isStatModeOn ? formattedValue : "balance.rate_per_coin".localized(formattedValue, item.coinValue.coin.code)
+            rateLabel.textColor = item.rateExpired ? .appGray50 : .appGray
         } else {
             rateLabel.text = " " // space required for constraints
         }
 
-        if let value = item.currencyValue, value.value != 0 {
-            currencyValueLabel.text = ValueFormatter.instance.format(currencyValue: value, fractionPolicy: .threshold(high: 1000, low: 0.01))
-            let nonZeroBalanceTextColor = item.rateExpired || !synced ? BalanceTheme.nonZeroBalanceExpiredTextColor : BalanceTheme.nonZeroBalanceTextColor
-            currencyValueLabel.textColor = value.value > 0 ? nonZeroBalanceTextColor : BalanceTheme.zeroBalanceTextColor
+        if isStatModeOn && item.percentDelta != 0 {
+            rateDiffView.isHidden = false
+            rateDiffView.set(value: item.percentDelta)
         } else {
-            currencyValueLabel.text = nil
+            rateDiffView.isHidden = true
         }
 
-        coinValueLabel.text = ValueFormatter.instance.format(coinValue: item.coinValue, fractionPolicy: .threshold(high: 0.01, low: 0))
-        coinValueLabel.alpha = synced ? 1 : 0.3
+        if case let .syncing(progress, lastBlockDate) = item.state, !selected {
+            currencyValueLabel.isHidden = true
+            coinValueLabel.isHidden = true
+            syncingLabel.isHidden = false
+            syncedUntilLabel.isHidden = false
 
-        if case .notSynced = item.state {
-            failedImageView.isHidden = false
+            if let lastBlockDate = lastBlockDate {
+                syncingLabel.text = "balance.syncing_percent".localized("\(progress)%")
+                syncedUntilLabel.text = "balance.synced_through".localized(DateHelper.instance.formatSyncedThroughDate(from: lastBlockDate))
+            } else {
+                syncingLabel.text = "balance.syncing".localized
+                syncedUntilLabel.text = nil
+            }
         } else {
-            failedImageView.isHidden = true
+            currencyValueLabel.isHidden = false
+            coinValueLabel.isHidden = false
+            syncingLabel.isHidden = true
+            syncedUntilLabel.isHidden = true
+
+            let syncedBalance = item.state == .synced || item.state == .notReady
+
+            if let value = item.currencyValue, value.value != 0 {
+                currencyValueLabel.text = ValueFormatter.instance.format(currencyValue: value, fractionPolicy: .threshold(high: 1000, low: 0.01))
+                currencyValueLabel.textColor = item.rateExpired || !syncedBalance ? .appYellow50 : .appJacob
+            } else {
+                currencyValueLabel.text = nil
+            }
+
+            coinValueLabel.text = ValueFormatter.instance.format(coinValue: item.coinValue, fractionPolicy: .threshold(high: 0.01, low: 0))
+            coinValueLabel.textColor = syncedBalance ? .appLeah : .appGray50
         }
 
-        currencyValueLabel.isHidden = isStatModeOn && !selected
-        coinValueLabel.isHidden = isStatModeOn && !selected
+        receiveButton.set(hidden: !selected, animated: animated, duration: BalanceCell.animationDuration)
+        sendButton.set(hidden: !selected, animated: animated, duration: BalanceCell.animationDuration)
 
-        chartHolder.isHidden = !isStatModeOn || selected
+        sendButton.isEnabled = item.state == .synced && item.coinValue.value > 0
+        receiveButton.isEnabled = item.state != .notReady
 
-        let chartInProgress = item.chartPoints.isEmpty && !item.statLoadDidFail
+        if isStatModeOn {
+            chartHolder.isHidden = false
+            chartHolder.snp.updateConstraints { maker in
+                maker.width.equalTo(72)
+            }
 
-        let fallDown = item.percentDelta.isSignMinus
-        let valueColor = fallDown ? BalanceTheme.percentDeltaDownColor : BalanceTheme.percentDeltaUpColor
-        let doneColor = item.statLoadDidFail ? BalanceTheme.percentDeltaFailColor : valueColor
-        let inProgressOrFailColor = BalanceTheme.failLabelColor
-        percentDeltaLabel.textColor = chartInProgress ? inProgressOrFailColor : doneColor
+            if item.chartPoints.isEmpty {
+                chartView.clear()
+            } else {
+                chartView.set(chartType: .day, data: item.chartPoints, animated: false)
+            }
 
-        let successText = ChartRateTheme.formatted(percentDelta: item.percentDelta)
-        percentDeltaLabel.text = item.statLoadDidFail ?  "----" : successText
-
-        inProgressLine.isHidden = !chartInProgress
-        failLabel.isHidden = !item.statLoadDidFail
-
-        if item.chartPoints.isEmpty {
-            chartView.clear()
+            notAvailableLabel.isHidden = !item.statLoadDidFail
+            chartHolder.isUserInteractionEnabled = !item.statLoadDidFail && !item.chartPoints.isEmpty
         } else {
-            chartView.set(chartType: .day, data: item.chartPoints, animated: false)
+            chartHolder.isHidden = true
+            chartHolder.snp.updateConstraints { maker in
+                maker.width.equalTo(0)
+            }
         }
     }
 
     func unbind() {
     }
 
-    func receive() {
+    @objc func onTapReceive() {
         onReceive?()
     }
 
-    func pay() {
+    @objc func onTapSend() {
         onPay?()
     }
 
