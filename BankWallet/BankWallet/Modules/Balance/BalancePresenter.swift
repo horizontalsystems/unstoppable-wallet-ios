@@ -1,6 +1,8 @@
 import RxSwift
 
 class BalancePresenter {
+    private static let sortingOnThreshold: Int = 5
+
     private var interactor: IBalanceInteractor
     private let router: IBalanceRouter
     private var dataSource: IBalanceItemDataSource
@@ -12,7 +14,7 @@ class BalancePresenter {
 
     var walletToBackup: Wallet?
 
-    init(interactor: IBalanceInteractor, router: IBalanceRouter, dataSource: IBalanceItemDataSource, factory: IBalanceViewItemFactory, differ: IDiffer, sortingOnThreshold: Int) {
+    init(interactor: IBalanceInteractor, router: IBalanceRouter, dataSource: IBalanceItemDataSource, factory: IBalanceViewItemFactory, differ: IDiffer, sortingOnThreshold: Int = BalancePresenter.sortingOnThreshold) {
         self.interactor = interactor
         self.router = router
         self.dataSource = dataSource

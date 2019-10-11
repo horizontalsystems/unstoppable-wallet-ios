@@ -7,7 +7,6 @@ class BalanceViewController: WalletViewController {
     private let numberOfSections = 2
     private let balanceSection = 0
     private let editSection = 1
-    private var headerBackgroundTriggerOffset: CGFloat?
 
     let tableView = UITableView()
     let refreshControl = UIRefreshControl()
@@ -61,11 +60,6 @@ class BalanceViewController: WalletViewController {
         delegate.viewDidLoad()
     }
 
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        headerBackgroundTriggerOffset = headerBackgroundTriggerOffset == nil ? tableView.contentOffset.y : headerBackgroundTriggerOffset
-    }
-
     @objc func onRefresh() {
         delegate.refresh()
     }
@@ -93,9 +87,9 @@ extension BalanceViewController: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.section == balanceSection {
-            return (indexPathForSelectedRow == indexPath ? BalanceTheme.expandedCellHeight : BalanceTheme.cellHeight) + BalanceTheme.cellPadding
+            return (indexPathForSelectedRow == indexPath ? BalanceCell.expandedHeight : BalanceCell.height) + CGFloat.margin2x
         } else if indexPath.section == editSection {
-            return BalanceTheme.editCellHeight
+            return BalanceEditCell.height
         }
         return 0
     }
@@ -161,7 +155,7 @@ extension BalanceViewController: UITableViewDelegate, UITableViewDataSource {
             cell.bindView(item: delegate.viewItem(at: indexPath.row), isStatModeOn: chartEnabled, selected: indexPathForSelectedRow == indexPath, animated: heightChange)
 
             if heightChange {
-                UIView.animate(withDuration: BalanceTheme.buttonsAnimationDuration) {
+                UIView.animate(withDuration: BalanceCell.animationDuration) {
                     self.tableView.beginUpdates()
                     self.tableView.endUpdates()
                 }
@@ -171,7 +165,7 @@ extension BalanceViewController: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         if section == balanceSection {
-            return BalanceTheme.headerHeight
+            return BalanceHeaderView.height + CGFloat.margin2x
         }
         return 0
     }
@@ -181,12 +175,6 @@ extension BalanceViewController: UITableViewDelegate, UITableViewDataSource {
             return headerView
         }
         return nil
-    }
-
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if let headerBackgroundTriggerOffset = headerBackgroundTriggerOffset {
-            headerView.backgroundColor = scrollView.contentOffset.y > headerBackgroundTriggerOffset ? AppTheme.navigationBarBackgroundColor : .clear
-        }
     }
 
 }

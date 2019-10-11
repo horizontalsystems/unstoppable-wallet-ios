@@ -2,6 +2,7 @@ import UIKit
 import SnapKit
 
 class BalanceHeaderView: UIView {
+    static let height: CGFloat = .heightSingleLineCell
 
     private let amountLabel = UILabel()
     private let statsSwitchButton = UIButton()
@@ -10,45 +11,48 @@ class BalanceHeaderView: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        commonInit()
+
+        backgroundColor = .clear
+        preservesSuperviewLayoutMargins = true
+
+        let wrapperView = UIView()
+        wrapperView.backgroundColor = AppTheme.navigationBarBackgroundColor
+
+        addSubview(wrapperView)
+        wrapperView.snp.makeConstraints { maker in
+            maker.leading.top.trailing.equalToSuperview()
+            maker.height.equalTo(BalanceHeaderView.height)
+        }
+
+        amountLabel.font = .appTitle3
+        amountLabel.preservesSuperviewLayoutMargins = true
+
+        wrapperView.addSubview(amountLabel)
+        amountLabel.snp.makeConstraints { maker in
+            maker.leading.equalToSuperview().inset(CGFloat.margin4x)
+            maker.centerY.equalToSuperview()
+        }
+
+        statsSwitchButton.isHidden = true
+        statsSwitchButton.setImage(UIImage(named: "Stats Switch Button")?.tinted(with: .appGray), for: .normal)
+        statsSwitchButton.setImage(UIImage(named: "Stats Switch Button")?.tinted(with: .appJacob), for: .selected)
+        statsSwitchButton.setImage(UIImage(named: "Stats Switch Button")?.tinted(with: .appYellow50), for: .highlighted)
+        statsSwitchButton.addTarget(self, action: #selector(onSwitch), for: .touchUpInside)
+
+        wrapperView.addSubview(statsSwitchButton)
+        statsSwitchButton.snp.makeConstraints { maker in
+            maker.top.trailing.bottom.equalToSuperview()
+            maker.width.equalTo(60)
+        }
     }
 
     required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        commonInit()
-    }
-
-    func commonInit() {
-        backgroundColor = AppTheme.navigationBarBackgroundColor
-
-        preservesSuperviewLayoutMargins = true
-
-        addSubview(statsSwitchButton)
-        statsSwitchButton.isHidden = true
-        statsSwitchButton.setImage(UIImage(named: "Stats Switch Button")?.tinted(with: BalanceTheme.headerTintColorNormal), for: .normal)
-        statsSwitchButton.setImage(UIImage(named: "Stats Switch Button")?.tinted(with: BalanceTheme.headerTintColor), for: .selected)
-        statsSwitchButton.setImage(UIImage(named: "Stats Switch Button")?.tinted(with: BalanceTheme.headerTintColorSelected), for: .highlighted)
-        statsSwitchButton.snp.makeConstraints { maker in
-            maker.top.bottom.equalToSuperview()
-            maker.trailing.equalToSuperview()
-            maker.centerY.equalToSuperview()
-            maker.width.equalTo(BalanceTheme.statButtonWidth)
-        }
-        statsSwitchButton.addTarget(self, action: #selector(onSwitch), for: .touchUpInside)
-
-        addSubview(amountLabel)
-        amountLabel.font = BalanceTheme.amountFont
-        amountLabel.preservesSuperviewLayoutMargins = true
-
-        amountLabel.snp.makeConstraints { maker in
-            maker.leading.equalToSuperview().inset(AppTheme.viewMargin)
-            maker.top.equalToSuperview().offset(BalanceTheme.cellSmallMargin)
-        }
+        fatalError("init(coder:) has not been implemented")
     }
 
     func bind(amount: String?, upToDate: Bool, statsIsOn: Bool) {
         amountLabel.text = amount
-        amountLabel.textColor = upToDate ? BalanceTheme.amountColor : BalanceTheme.amountColorSyncing
+        amountLabel.textColor = upToDate ? .appJacob : .appYellow50
         statsSwitchButton.isSelected = statsIsOn
     }
 
