@@ -3,7 +3,7 @@ import UIKit
 class DebugViewController: WalletViewController {
     private let delegate: IDebugViewDelegate
 
-    private let textView = UITextView.debug
+    private let textView = UITextView.appDebug
 
     init(delegate: IDebugViewDelegate) {
         self.delegate = delegate

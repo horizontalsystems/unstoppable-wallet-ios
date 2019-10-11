@@ -3,7 +3,7 @@ import UIKit
 class AppStatusViewController: WalletViewController {
     private let delegate: IAppStatusViewDelegate
 
-    private let textView = UITextView.debug
+    private let textView = UITextView.appDebug
 
     private let dateFormatter = DateFormatter()
 

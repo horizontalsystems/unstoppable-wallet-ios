@@ -25,6 +25,7 @@ protocol ILocalStorage: class {
     var sendInputType: SendInputType? { get set }
     var chartType: ChartType? { get set }
     var mainShownOnce: Bool { get set }
+    var appVersions: [AppVersion] { get set }
 }
 
 protocol ISecureStorage: class {
@@ -253,6 +254,8 @@ protocol ISystemInfoManager {
     var appVersion: String { get }
     var biometryType: Single<BiometryType> { get }
     var passcodeSet: Bool { get }
+    var deviceModel: String { get }
+    var osVersion: String { get }
 }
 
 protocol IBiometryManager {
@@ -580,4 +583,8 @@ protocol IDebugBackgroundLogger {
 
 protocol IAppStatusManager {
     var status: [(String, Any)] { get }
+}
+
+protocol IAppVersionManager {
+    func checkLatestVersion()
 }

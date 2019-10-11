@@ -1,6 +1,14 @@
 import Foundation
 
 class AppStatusManager {
+    private let systemInfoManager: ISystemInfoManager
+    private let localStorage: ILocalStorage
+
+    init(systemInfoManager: ISystemInfoManager, localStorage: ILocalStorage) {
+        self.systemInfoManager = systemInfoManager
+        self.localStorage = localStorage
+    }
+
 }
 
 extension AppStatusManager: IAppStatusManager {
@@ -9,15 +17,11 @@ extension AppStatusManager: IAppStatusManager {
         [
             ("App Info", [
                 ("Current Time", Date()),
-                ("App Version", "0.10.0"),
-                ("Phone Model", "iPhone 6s"),
-                ("OS Version", "iOS 12")
+                ("App Version", systemInfoManager.appVersion),
+                ("Phone Model", systemInfoManager.deviceModel),
+                ("OS Version", systemInfoManager.osVersion)
             ]),
-            ("Version History", [
-                ("0.7.0", Date()),
-                ("0.8.0", Date()),
-                ("0.9.0", Date())
-            ]),
+            ("Version History", localStorage.appVersions.map { ($0.version, $0.date) }),
             ("Blockchains Status", [
                 ("Bitcoin", [
                     ("Synced Until", Date()),
