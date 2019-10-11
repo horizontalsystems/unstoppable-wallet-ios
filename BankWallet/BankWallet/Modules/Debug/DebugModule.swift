@@ -1,13 +1,10 @@
 protocol IDebugView: class {
-    func set(title: String)
-    func set(buttonTitle: String)
     func set(logs: [String])
-    func set(logs: [(String, Any)])
 }
 
 protocol IDebugViewDelegate {
     func viewDidLoad()
-    func didTapButton(text: String)
+    func onClear()
 }
 
 protocol IDebugInteractor {

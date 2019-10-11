@@ -1,0 +1,71 @@
+import UIKit
+
+class AppStatusViewController: WalletViewController {
+    private let delegate: IAppStatusViewDelegate
+
+    private let textView = UITextView.debug
+
+    private let dateFormatter = DateFormatter()
+
+    init(delegate: IAppStatusViewDelegate) {
+        self.delegate = delegate
+
+        super.init()
+
+        hidesBottomBarWhenPushed = true
+
+        dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
+        dateFormatter.dateFormat = "yyyy/MM/dd hh:mm"
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        title = "settings.report_problem.app_status".localized
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.copy".localized, style: .plain, target: self, action: #selector(didTapButton))
+
+        view.addSubview(textView)
+        textView.snp.makeConstraints { maker in
+            maker.edges.equalToSuperview()
+        }
+
+        delegate.viewDidLoad()
+    }
+
+    @objc private func didTapButton() {
+        delegate.onCopy(text: textView.text)
+    }
+
+    private func build(logs: [(String, Any)], indentation: String = "", bullet: String = "", level: Int = 0) -> String {
+        var result = ""
+
+        logs.forEach { key, value in
+            let key = indentation + bullet + key + ": "
+
+            if let date = value as? Date {
+                result += key + dateFormatter.string(from: date) + "\n"
+            } else if let string = value as? String {
+                result += key + string + "\n"
+            } else if let deep = value as? [(String, Any)] {
+                result += key + "\n" + build(logs: deep, indentation: "    " + indentation, bullet: " - ", level: level + 1) + (level < 2 ? "\n" : "")
+            }
+        }
+
+        return result
+    }
+
+}
+
+extension AppStatusViewController: IAppStatusView {
+
+    func set(logs: [(String, Any)]) {
+        DispatchQueue.main.async { //need to handle weird behaviour of large title in relation to UITextView
+            self.textView.text = self.build(logs: logs)
+        }
+    }
+
+}

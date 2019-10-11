@@ -1,6 +1,7 @@
 class AppStatusPresenter {
+    weak var view: IAppStatusView?
+
     private let interactor: IAppStatusInteractor
-    weak var view: IDebugView?
 
     init(interactor: IAppStatusInteractor) {
         self.interactor = interactor
@@ -8,16 +9,13 @@ class AppStatusPresenter {
 
 }
 
-extension AppStatusPresenter: IDebugViewDelegate {
+extension AppStatusPresenter: IAppStatusViewDelegate {
 
     func viewDidLoad() {
-        view?.set(title: "settings.report_problem.app_status")
-        view?.set(buttonTitle: "button.copy")
-
-        view?.set(logs: self.interactor.status)
+        view?.set(logs: interactor.status)
     }
 
-    func didTapButton(text: String) {
+    func onCopy(text: String) {
         interactor.copyToClipboard(string: text)
     }
 

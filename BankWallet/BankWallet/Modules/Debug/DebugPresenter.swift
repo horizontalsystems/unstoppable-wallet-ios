@@ -12,13 +12,10 @@ class DebugPresenter {
 extension DebugPresenter: IDebugViewDelegate {
 
     func viewDidLoad() {
-        view?.set(title: "Debug")
-        view?.set(buttonTitle: "Clear")
-
         view?.set(logs: interactor.logs)
     }
 
-    func didTapButton(text: String) {
+    func onClear() {
         interactor.clearLogs()
         view?.set(logs: interactor.logs)
     }
