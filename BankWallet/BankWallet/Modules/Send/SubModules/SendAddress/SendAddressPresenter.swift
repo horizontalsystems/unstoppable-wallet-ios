@@ -25,7 +25,7 @@ class SendAddressPresenter {
             try delegate?.validate(address: parsedAddress)
 
             view?.set(address: parsedAddress, error: nil)
-            self.currentAddress = address
+            self.currentAddress = parsedAddress
 
             if let amount = amount {
                 delegate?.onUpdate(amount: amount)
