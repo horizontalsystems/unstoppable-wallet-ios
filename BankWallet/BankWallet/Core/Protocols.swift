@@ -86,6 +86,7 @@ protocol IAdapter: class {
     func refresh()
 
     var debugInfo: String { get }
+    var statusInfo: [(String, Any)] { get }
 }
 
 protocol IBalanceAdapter {

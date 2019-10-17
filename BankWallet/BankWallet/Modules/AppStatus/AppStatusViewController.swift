@@ -15,7 +15,7 @@ class AppStatusViewController: WalletViewController {
         hidesBottomBarWhenPushed = true
 
         dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
-        dateFormatter.dateFormat = "yyyy/MM/dd hh:mm"
+        dateFormatter.dateFormat = "dd MMM yyyy, hh:mm"
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -50,6 +50,8 @@ class AppStatusViewController: WalletViewController {
                 result += key + dateFormatter.string(from: date) + "\n"
             } else if let string = value as? String {
                 result += key + string + "\n"
+            } else if let int = value as? Int {
+                result += key + "\(int)" + "\n"
             } else if let deep = value as? [(String, Any)] {
                 result += key + "\n" + build(logs: deep, indentation: "    " + indentation, bullet: " - ", level: level + 1) + (level < 2 ? "\n" : "")
             }

@@ -74,9 +74,12 @@ extension BinanceAdapter: IAdapter {
     }
 
     var debugInfo: String {
-        return ""
+        ""
     }
 
+    var statusInfo: [(String, Any)] {
+        []
+    }
 }
 
 extension BinanceAdapter: IBalanceAdapter {

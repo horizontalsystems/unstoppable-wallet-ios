@@ -65,7 +65,11 @@ class BitcoinBaseAdapter {
 extension BitcoinBaseAdapter: IAdapter {
 
     var debugInfo: String {
-        return abstractKit.debugInfo
+        abstractKit.debugInfo
+    }
+
+    var statusInfo: [(String, Any)] {
+        []
     }
 
     func start() {
