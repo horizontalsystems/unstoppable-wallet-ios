@@ -42,7 +42,6 @@ extension AccountType: Hashable {
 
 }
 
-
 enum MnemonicDerivation: String {
     case bip44
     case bip49
