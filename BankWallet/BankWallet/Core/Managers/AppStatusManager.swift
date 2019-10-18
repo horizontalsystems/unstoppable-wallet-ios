@@ -5,40 +5,38 @@ class AppStatusManager {
 
     private let systemInfoManager: ISystemInfoManager
     private let localStorage: ILocalStorage
-    private let accountManager: IAccountManager
     private let predefinedAccountTypeManager: IPredefinedAccountTypeManager
     private let walletManager: IWalletManager
     private let adapterManager: IAdapterManager
 
-    init(systemInfoManager: ISystemInfoManager, localStorage: ILocalStorage, accountManager: IAccountManager, predefinedAccountTypeManager: IPredefinedAccountTypeManager, walletManager: IWalletManager, adapterManager: IAdapterManager) {
+    init(systemInfoManager: ISystemInfoManager, localStorage: ILocalStorage, predefinedAccountTypeManager: IPredefinedAccountTypeManager, walletManager: IWalletManager, adapterManager: IAdapterManager) {
         self.systemInfoManager = systemInfoManager
         self.localStorage = localStorage
-        self.accountManager = accountManager
         self.predefinedAccountTypeManager = predefinedAccountTypeManager
         self.walletManager = walletManager
         self.adapterManager = adapterManager
     }
 
     private var accountStatus: [(String, Any)] {
-        accountManager.accounts.compactMap {
-            guard let predefinedAccountType = predefinedAccountTypeManager.predefinedAccountType(accountType: $0.type) else {
+        predefinedAccountTypeManager.allTypes.compactMap {
+            guard let account = predefinedAccountTypeManager.account(predefinedAccountType: $0) else {
                 return nil
             }
 
             var status = [(String, Any)]()
 
-            if case let .mnemonic(words, derivation, _) = $0.type {
+            if case let .mnemonic(words, derivation, _) = account.type {
                 status.append(("type", "mnemonic (\(words.count) words)"))
                 status.append(("derivation", derivation.rawValue))
             }
-            if case let .eos(account, _) = $0.type {
+            if case let .eos(account, _) = account.type {
                 status.append(("name", account))
             }
-            if let syncMode = $0.defaultSyncMode {
+            if let syncMode = account.defaultSyncMode {
                 status.append(("sync mode", syncMode.rawValue))
             }
 
-            return (predefinedAccountType.title, status)
+            return ($0.title, status)
         }
     }
 
@@ -49,7 +47,7 @@ class AppStatusManager {
             walletManager.wallets.first { $0.coin.id == coinId }
         }
         status.append(contentsOf: bitcoinBaseWallets.compactMap {
-            guard let adapter = adapterManager.adapter(for: $0) else {
+            guard let adapter = adapterManager.adapter(for: $0) as? BitcoinBaseAdapter else {
                 return nil
             }
             return ($0.coin.title, adapter.statusInfo)

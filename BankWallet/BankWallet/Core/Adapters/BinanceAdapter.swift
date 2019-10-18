@@ -77,9 +77,6 @@ extension BinanceAdapter: IAdapter {
         ""
     }
 
-    var statusInfo: [(String, Any)] {
-        []
-    }
 }
 
 extension BinanceAdapter: IBalanceAdapter {
