@@ -80,9 +80,6 @@ extension EosAdapter: IAdapter {
         return ""
     }
 
-    var statusInfo: [(String, Any)] {
-        []
-    }
 }
 
 extension EosAdapter: IBalanceAdapter {

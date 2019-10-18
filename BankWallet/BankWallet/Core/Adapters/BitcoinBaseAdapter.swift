@@ -68,10 +68,6 @@ extension BitcoinBaseAdapter: IAdapter {
         abstractKit.debugInfo
     }
 
-    var statusInfo: [(String, Any)] {
-        []
-    }
-
     func start() {
         abstractKit.start()
     }
@@ -198,6 +194,10 @@ extension BitcoinBaseAdapter {
 
             return Disposables.create()
         }
+    }
+
+    var statusInfo: [(String, Any)] {
+        abstractKit.statusInfo
     }
 
 }

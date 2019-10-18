@@ -138,7 +138,7 @@ class App {
         #endif
         backgroundPriceAlertManager = BackgroundPriceAlertManager(rateManager: rateManager, currencyManager: currencyManager, rateStorage: storage, priceAlertStorage: priceAlertStorage, priceAlertHandler: priceAlertHandler, debugBackgroundLogger: debugBackgroundLogger)
 
-        appStatusManager = AppStatusManager(systemInfoManager: systemInfoManager, localStorage: localStorage, accountManager: accountManager, predefinedAccountTypeManager: predefinedAccountTypeManager, walletManager: walletManager, adapterManager: adapterManager)
+        appStatusManager = AppStatusManager(systemInfoManager: systemInfoManager, localStorage: localStorage, predefinedAccountTypeManager: predefinedAccountTypeManager, walletManager: walletManager, adapterManager: adapterManager)
         appVersionManager = AppVersionManager(systemInfoManager: systemInfoManager, localStorage: localStorage)
 
         let kitCleaner = KitCleaner(accountManager: accountManager)

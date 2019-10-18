@@ -51,10 +51,6 @@ extension EthereumBaseAdapter: IAdapter {
         ethereumKit.debugInfo
     }
 
-    var statusInfo: [(String, Any)] {
-        ethereumKit.statusInfo()
-    }
-
 }
 
 extension EthereumBaseAdapter {
