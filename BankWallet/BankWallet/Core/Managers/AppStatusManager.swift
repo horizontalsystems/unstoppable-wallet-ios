@@ -8,13 +8,19 @@ class AppStatusManager {
     private let predefinedAccountTypeManager: IPredefinedAccountTypeManager
     private let walletManager: IWalletManager
     private let adapterManager: IAdapterManager
+    private let ethereumKitManager: EthereumKitManager
+    private let eosKitManager: EosKitManager
+    private let binanceKitManager: BinanceKitManager
 
-    init(systemInfoManager: ISystemInfoManager, localStorage: ILocalStorage, predefinedAccountTypeManager: IPredefinedAccountTypeManager, walletManager: IWalletManager, adapterManager: IAdapterManager) {
+    init(systemInfoManager: ISystemInfoManager, localStorage: ILocalStorage, predefinedAccountTypeManager: IPredefinedAccountTypeManager, walletManager: IWalletManager, adapterManager: IAdapterManager, ethereumKitManager: EthereumKitManager, eosKitManager: EosKitManager, binanceKitManager: BinanceKitManager) {
         self.systemInfoManager = systemInfoManager
         self.localStorage = localStorage
         self.predefinedAccountTypeManager = predefinedAccountTypeManager
         self.walletManager = walletManager
         self.adapterManager = adapterManager
+        self.ethereumKitManager = ethereumKitManager
+        self.eosKitManager = eosKitManager
+        self.binanceKitManager = binanceKitManager
     }
 
     private var accountStatus: [(String, Any)] {
@@ -52,7 +58,16 @@ class AppStatusManager {
             }
             return ($0.coin.title, adapter.statusInfo)
         })
-//todo add eth, binance and eos from kit managers
+
+        if let ethereumStatus = ethereumKitManager.statusInfo {
+            status.append(("Ethereum", ethereumStatus))
+        }
+        if let eosStatus = eosKitManager.statusInfo {
+            status.append(("EOS", eosStatus))
+        }
+        if let binanceStatus = binanceKitManager.statusInfo {
+            status.append(("Binance", binanceStatus))
+        }
 
         return status
     }

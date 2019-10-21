@@ -44,7 +44,7 @@ class AppStatusViewController: WalletViewController {
         var result = ""
 
         logs.forEach { key, value in
-            let key = indentation + bullet + key + ": "
+            let key = (indentation + bullet + key + ": ").capitalized
 
             if let date = value as? Date {
                 result += key + dateFormatter.string(from: date) + "\n"

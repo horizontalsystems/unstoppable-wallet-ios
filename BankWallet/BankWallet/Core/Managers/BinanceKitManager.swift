@@ -36,4 +36,8 @@ class BinanceKitManager {
         binanceKit?.refresh()
     }
 
+    var statusInfo: [(String, Any)]? {
+        binanceKit?.statusInfo
+    }
+
 }

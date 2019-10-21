@@ -33,4 +33,8 @@ class EosKitManager {
         return eosKit
     }
 
+    var statusInfo: [(String, Any)]? {
+        eosKit?.statusInfo
+    }
+
 }
