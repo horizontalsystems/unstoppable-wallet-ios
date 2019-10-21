@@ -44,11 +44,11 @@ class TransactionsViewController: WalletViewController {
         }
         tableView.dataSource = self
         tableView.delegate = self
+        tableView.separatorStyle = .none
         tableView.backgroundColor = .clear
         tableView.tableFooterView = UIView(frame: .zero)
 
         tableView.registerCell(forClass: TransactionCell.self)
-        tableView.separatorInset = UIEdgeInsets(top: 0, left: .greatestFiniteMagnitude, bottom: 0, right: 0)
         tableView.estimatedRowHeight = 0
         tableView.delaysContentTouches = false
 

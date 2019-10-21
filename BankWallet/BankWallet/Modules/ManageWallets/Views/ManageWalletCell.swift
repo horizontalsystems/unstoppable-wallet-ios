@@ -1,14 +1,11 @@
 import UIKit
 import SnapKit
 
-class ManageWalletCell: UITableViewCell {
+class ManageWalletCell: AppCell {
     private let coinImageView = CoinIconImageView()
     private let titleLabel = UILabel()
     private let coinLabel = UILabel()
     private let toggleView = UISwitch()
-
-    private let topSeparatorView = UIView()
-    private let bottomSeparatorView = UIView()
 
     private var onToggle: ((Bool) -> ())?
 
@@ -46,18 +43,6 @@ class ManageWalletCell: UITableViewCell {
             maker.trailing.equalToSuperview().offset(-ManageWalletsTheme.regularOffset)
             maker.centerY.equalToSuperview()
         }
-
-        topSeparatorView.backgroundColor = AppTheme.separatorColor
-        addSubview(topSeparatorView)
-        topSeparatorView.snp.makeConstraints { maker in
-            maker.leading.top.trailing.equalToSuperview()
-            maker.height.equalTo(1 / UIScreen.main.scale)
-        }
-        addSubview(bottomSeparatorView)
-        bottomSeparatorView.snp.makeConstraints { maker in
-            maker.leading.bottom.trailing.equalToSuperview()
-            maker.height.equalTo(1 / UIScreen.main.scale)
-        }
     }
 
     @objc func switchChanged() {
@@ -69,15 +54,14 @@ class ManageWalletCell: UITableViewCell {
     }
 
     func bind(item: ManageWalletViewItem, first: Bool, last: Bool, onToggle: @escaping (Bool) -> ()) {
+        super.bind(last: last)
+
         let coin = item.coin
 
         titleLabel.text = coin.title
         coinLabel.text = coin.code
         coinImageView.bind(coin: coin)
         toggleView.setOn(item.enabled, animated: false)
-
-        topSeparatorView.isHidden = !first
-        bottomSeparatorView.backgroundColor = last ? AppTheme.darkSeparatorColor : AppTheme.separatorColor
 
         self.onToggle = onToggle
     }

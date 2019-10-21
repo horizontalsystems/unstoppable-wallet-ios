@@ -15,7 +15,6 @@ class AppTheme {
     static var navigationBarBackgroundColor: UIColor { return .crypto_Dark96_Bars96 }
 
     static let separatorColor = UIColor.cryptoSteel20
-    static var darkSeparatorColor: UIColor { return .crypto_Black50_Steel20 }
 
     static var actionSheetConfig: ActionSheetThemeConfig {
         get {
@@ -32,7 +31,6 @@ class AppTheme {
     static let alertSmallMargin: CGFloat = 8
     static let alertMediumMargin: CGFloat = 12
     static let alertBigMargin: CGFloat = 20
-    static let alertCloseWidth: CGFloat = 48
 
     static var alertBackgroundColor: UIColor { return .crypto_SteelDark_Bars }
     static let alertHeaderHeight: CGFloat = 40
@@ -43,7 +41,7 @@ class AppTheme {
     static let alertTitleFont: UIFont = .appHeadline2
     static var alertTitleColor: UIColor { return .crypto_White_Black }
     static let alertSubtitleTopMargin: CGFloat = 3
-    static var alertSubtitleFont: UIFont = .appCaption
+    static var alertSubtitleFont: UIFont = .appSubhead2
     static var alertSubtitleColor: UIColor  = .cryptoGray
 
     static let alertTextMargin: CGFloat = 16

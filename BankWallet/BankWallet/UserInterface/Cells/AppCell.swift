@@ -24,7 +24,7 @@ class AppCell: UITableViewCell {
             maker.height.equalTo(1 / UIScreen.main.scale)
         }
 
-        bottomSeparatorView.backgroundColor = AppTheme.darkSeparatorColor
+        bottomSeparatorView.backgroundColor = AppTheme.separatorColor
         contentView.addSubview(bottomSeparatorView)
         bottomSeparatorView.snp.makeConstraints { maker in
             maker.leading.bottom.trailing.equalToSuperview()
