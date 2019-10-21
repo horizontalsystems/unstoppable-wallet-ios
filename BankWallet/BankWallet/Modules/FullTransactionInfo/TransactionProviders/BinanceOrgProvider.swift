@@ -39,6 +39,8 @@ class BinanceOrgBinanceResponse: IBinanceResponse, ImmutableMappable {
     var from: String?
     var to: String?
 
+    var memo: String?
+
     required init(map: Map) throws {
         txId = try? map.value("hash")
 
@@ -65,6 +67,10 @@ class BinanceOrgBinanceResponse: IBinanceResponse, ImmutableMappable {
         if let anyOutputs = msgValue["outputs"], let outputs = anyOutputs as? [[String: Any]], let firstOutput = outputs.first,
            let anyToAddress = firstOutput["address"], let toAddress = anyToAddress as? String {
             to = toAddress
+        }
+
+        if let memoString: String = try? map.value("tx.value.memo") {
+            memo = memoString
         }
     }
 

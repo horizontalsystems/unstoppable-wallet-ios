@@ -54,6 +54,9 @@ class BinanceTransactionInfoAdapter: IFullTransactionInfoAdapter {
         if let to = txResponse.to {
             inputOutputItems.append(FullTransactionItem(title: "full_info.to".localized, value: to, clickable: true, showExtra: .icon))
         }
+        if let memo = txResponse.memo, !memo.isEmpty {
+            inputOutputItems.append(FullTransactionItem(title: "full_info.memo".localized, value: memo, clickable: true, showExtra: .none))
+        }
         if !inputOutputItems.isEmpty {
             sections.append(FullTransactionSection(title: nil, items: inputOutputItems))
         }
