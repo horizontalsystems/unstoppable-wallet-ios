@@ -2,7 +2,7 @@ import UIKit
 import UIExtensions
 import SnapKit
 
-class TransactionCell: UITableViewCell {
+class TransactionCell: AppCell {
     var highlightBackground = UIView()
 
     var inOutImageView = UIImageView()
@@ -16,9 +16,6 @@ class TransactionCell: UITableViewCell {
 
     var currencyAmountLabel = UILabel()
     var amountLabel = UILabel()
-
-    let topSeparatorView = UIView()
-    let bottomSeparatorView = UIView()
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -93,19 +90,6 @@ class TransactionCell: UITableViewCell {
         }
 
         contentView.addSubview(barsProgressView)
-
-        topSeparatorView.backgroundColor = AppTheme.separatorColor
-        addSubview(topSeparatorView)
-        topSeparatorView.snp.makeConstraints { maker in
-            maker.leading.top.trailing.equalToSuperview()
-            maker.height.equalTo(1 / UIScreen.main.scale)
-        }
-        bottomSeparatorView.backgroundColor = AppTheme.separatorColor
-        addSubview(bottomSeparatorView)
-        bottomSeparatorView.snp.makeConstraints { maker in
-            maker.leading.bottom.trailing.equalToSuperview()
-            maker.height.equalTo(1 / UIScreen.main.scale)
-        }
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -113,6 +97,8 @@ class TransactionCell: UITableViewCell {
     }
 
     func bind(item: TransactionViewItem, first: Bool, last: Bool) {
+        super.bind(last: last)
+
         dateLabel.textColor = item.status == .pending ? TransactionsTheme.dateLabelTextColor50 : TransactionsTheme.dateLabelTextColor
         timeLabel.textColor = item.status == .pending ? TransactionsTheme.timeLabelTextColor50 : TransactionsTheme.timeLabelTextColor
         timeLabel.textColor = item.status == .pending ? TransactionsTheme.timeLabelTextColor50 : TransactionsTheme.timeLabelTextColor
@@ -166,9 +152,6 @@ class TransactionCell: UITableViewCell {
                 maker.leading.equalTo(self.pendingImageView.snp.trailing).offset(TransactionsTheme.cellSmallMargin)
             }
         }
-
-        topSeparatorView.isHidden = !first
-        bottomSeparatorView.backgroundColor = last ? AppTheme.darkSeparatorColor : AppTheme.separatorColor
     }
 
     override func setHighlighted(_ highlighted: Bool, animated: Bool) {

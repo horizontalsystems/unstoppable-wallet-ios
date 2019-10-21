@@ -33,8 +33,8 @@ class ManageWalletsViewController: WalletViewController {
         tableView.dataSource = self
         tableView.registerCell(forClass: ManageWalletCell.self)
         tableView.allowsSelection = false
-        tableView.separatorColor = .clear
         tableView.tableFooterView = UIView()
+        tableView.separatorStyle = .none
         tableView.backgroundColor = .clear
 
         view.addSubview(tableView)
