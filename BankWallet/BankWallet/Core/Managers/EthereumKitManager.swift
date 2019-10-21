@@ -36,4 +36,8 @@ class EthereumKitManager {
         return ethereumKit
     }
 
+    var statusInfo: [(String, Any)]? {
+        ethereumKit?.statusInfo()
+    }
+
 }
