@@ -73,4 +73,6 @@ protocol IBinanceResponse {
 
     var from: String? { get }
     var to: String? { get }
+
+    var memo: String? { get }
 }
