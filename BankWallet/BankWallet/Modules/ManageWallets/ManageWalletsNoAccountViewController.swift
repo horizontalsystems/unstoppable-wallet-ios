@@ -25,30 +25,28 @@ class ManageWalletsNoAccountViewController: ActionSheetController {
         let newItem = AlertButtonItem(
                 tag: 2,
                 title: "manage_coins.add_coin.create".localized,
-                textStyle: ButtonTheme.textColorDictionary,
-                backgroundStyle: ButtonTheme.yellowBackgroundDictionary,
+                createButton: { .appYellow },
                 insets: UIEdgeInsets(top: ButtonTheme.verticalMargin, left: ButtonTheme.margin, bottom: ButtonTheme.insideMargin, right: ButtonTheme.margin)
         ) { [weak self] in
             self?.dismiss(animated: true) {
                 onSelectNew()
             }
         }
-        newItem.isActive = true
+        newItem.isEnabled = true
 
         model.addItemView(newItem)
 
         let restoreItem = AlertButtonItem(
                 tag: 3,
                 title: "manage_coins.add_coin.restore".localized,
-                textStyle: ButtonTheme.textColorDictionary,
-                backgroundStyle: ButtonTheme.grayBackgroundDictionary,
+                createButton: { .appGray },
                 insets: UIEdgeInsets(top: ButtonTheme.insideMargin, left: ButtonTheme.margin, bottom: ButtonTheme.verticalMargin, right: ButtonTheme.margin)
         ) { [weak self] in
             self?.dismiss(animated: true) {
                 onSelectRestore()
             }
         }
-        restoreItem.isActive = true
+        restoreItem.isEnabled = true
 
         model.addItemView(restoreItem)
     }

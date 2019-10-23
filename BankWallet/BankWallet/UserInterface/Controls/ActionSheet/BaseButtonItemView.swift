@@ -3,8 +3,20 @@ import ActionSheet
 import SnapKit
 
 class BaseButtonItemView: BaseActionItemView {
-    override var item: BaseButtonItem? { return _item as? BaseButtonItem }
-    var button = RespondButton()
+    override var item: BaseButtonItem? { _item as? BaseButtonItem }
+    var button: UIButton
+
+    required init(item: BaseActionItem) {
+        button = (item as? BaseButtonItem)?.createButton ?? UIButton()
+
+        super.init(item: item)
+
+        button.addTarget(self, action: #selector(onTap), for: .touchUpInside)
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init with coder is not available")
+    }
 
     override func initView() {
         super.initView()
@@ -15,12 +27,13 @@ class BaseButtonItemView: BaseActionItemView {
     override func updateView() {
         super.updateView()
         if let item = item {
-            button.backgrounds = item.backgroundStyle
-            button.textColors = item.textStyle
-            button.titleLabel.text = item.title
-            button.onTap = item.onTap
-            button.state = item.isActive ? .active : .disabled
+            button.setTitle(item.title, for: .normal)
+            button.isEnabled = item.isEnabled
         }
+    }
+
+    @objc private func onTap() {
+        item?.onTap?()
     }
 
 }

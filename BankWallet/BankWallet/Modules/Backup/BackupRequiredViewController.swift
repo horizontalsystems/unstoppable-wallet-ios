@@ -25,8 +25,7 @@ class BackupRequiredViewController: ActionSheetController {
         let backupItem = AlertButtonItem(
                 tag: 2,
                 title: "settings_manage_keys.backup".localized,
-                textStyle: ButtonTheme.textColorDictionary,
-                backgroundStyle: ButtonTheme.yellowBackgroundDictionary,
+                createButton: { .appYellow },
                 insets: UIEdgeInsets(top: ButtonTheme.verticalMargin, left: ButtonTheme.margin, bottom: ButtonTheme.verticalMargin, right: ButtonTheme.margin)
         ) { [weak self] in
             self?.dismiss(animated: true) {
@@ -34,7 +33,7 @@ class BackupRequiredViewController: ActionSheetController {
             }
         }
 
-        backupItem.isActive = true
+        backupItem.isEnabled = true
         model.addItemView(backupItem)
     }
 

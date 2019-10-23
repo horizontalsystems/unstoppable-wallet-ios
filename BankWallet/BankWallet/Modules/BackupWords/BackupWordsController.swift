@@ -8,7 +8,7 @@ class BackupWordsController: WalletViewController {
     private let wordsLabel = UILabel()
 
     private let proceedButtonHolder = GradientView(gradientHeight: BackupTheme.gradientHeight, viewHeight: BackupTheme.cancelHolderHeight, fromColor: BackupTheme.gradientTransparent, toColor: BackupTheme.gradientSolid)
-    private let proceedButton = UIButton()
+    private let proceedButton: UIButton = .appYellow
 
     init(delegate: IBackupWordsViewDelegate) {
         self.delegate = delegate
@@ -55,10 +55,7 @@ class BackupWordsController: WalletViewController {
 
         proceedButton.setTitle(delegate.isBackedUp ? "backup.close".localized : "button.next".localized, for: .normal)
         proceedButton.addTarget(self, action: #selector(nextDidTap), for: .touchUpInside)
-        proceedButton.setBackgroundColor(color: BackupTheme.backupButtonBackground, forState: .normal)
-        proceedButton.setTitleColor(BackupTheme.buttonTitleColor, for: .normal)
-        proceedButton.titleLabel?.font = BackupTheme.buttonTitleFont
-        proceedButton.cornerRadius = BackupTheme.buttonCornerRadius
+
         proceedButton.snp.makeConstraints { maker in
             maker.leading.equalToSuperview().offset(BackupTheme.sideMargin)
             maker.trailing.equalToSuperview().offset(-BackupTheme.sideMargin)

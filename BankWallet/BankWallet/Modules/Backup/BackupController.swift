@@ -5,8 +5,8 @@ class BackupController: WalletViewController {
     private let delegate: IBackupViewDelegate
 
     private let subtitleLabel = UILabel()
-    private let cancelButton = UIButton()
-    private let proceedButton = UIButton()
+    private let cancelButton: UIButton = .appGray
+    private let proceedButton: UIButton = .appYellow
 
     init(delegate: IBackupViewDelegate) {
         self.delegate = delegate
@@ -38,11 +38,8 @@ class BackupController: WalletViewController {
 
         view.addSubview(cancelButton)
         cancelButton.setTitle(delegate.isBackedUp ? "backup.close".localized : "backup.intro.later".localized, for: .normal)
-        cancelButton.cornerRadius = BackupTheme.buttonCornerRadius
-        cancelButton.setBackgroundColor(color: BackupTheme.laterButtonBackground, forState: .normal)
         cancelButton.addTarget(self, action: #selector(cancelDidTap), for: .touchUpInside)
-        cancelButton.setTitleColor(BackupTheme.buttonTitleColor, for: .normal)
-        cancelButton.titleLabel?.font = BackupTheme.buttonTitleFont
+
         cancelButton.snp.makeConstraints { maker in
             maker.leading.equalToSuperview().offset(BackupTheme.sideMargin)
             maker.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).offset(-BackupTheme.sideMargin)
@@ -51,11 +48,8 @@ class BackupController: WalletViewController {
 
         view.addSubview(proceedButton)
         proceedButton.setTitle(delegate.isBackedUp ? "backup.intro.show_key".localized : "backup.intro.backup_now".localized, for: .normal)
-        proceedButton.cornerRadius = BackupTheme.buttonCornerRadius
-        proceedButton.setBackgroundColor(color: BackupTheme.backupButtonBackground, forState: .normal)
         proceedButton.addTarget(self, action: #selector(proceedDidTap), for: .touchUpInside)
-        proceedButton.setTitleColor(BackupTheme.buttonTitleColor, for: .normal)
-        proceedButton.titleLabel?.font = BackupTheme.buttonTitleFont
+
         proceedButton.snp.makeConstraints { maker in
             maker.leading.equalTo(cancelButton.snp.trailing).offset(BackupTheme.buttonsGap)
             maker.trailing.equalToSuperview().offset(-BackupTheme.sideMargin)
