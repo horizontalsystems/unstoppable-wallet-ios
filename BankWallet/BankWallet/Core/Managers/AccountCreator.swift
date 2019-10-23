@@ -39,7 +39,7 @@ class AccountCreator {
 
     private func createMnemonicAccountType(wordsCount: Int) throws -> AccountType {
         let words = try wordsManager.generateWords(count: wordsCount)
-        return .mnemonic(words: words, derivation: .bip44, salt: nil)
+        return .mnemonic(words: words, derivation: words.count == 12 ? .bip49 : .bip44, salt: nil)
     }
 
 }
