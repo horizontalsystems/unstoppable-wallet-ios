@@ -58,8 +58,8 @@
 "restore_options.sync.slow" = "Медленно";
 "restore_options.sync.more_private" = "1-12 часов (Более Приватно)";
 "restore_options.derivation.text" = "Выберите период времени, когда вы создали кошелек в Unstoppable.";
-"restore_options.derivation.before_update" = "До октября 2019 г.";
-"restore_options.derivation.after_update" = "После октября 2019 г.";
+"restore_options.derivation.before_update" = "Before November 2019";
+"restore_options.derivation.after_update" = "After November 2019";
 "restore_options.derivation.bip44" = "BIP-44";
 "restore_options.derivation.bip49" = "BIP-49";
 "restore_options.alert.header" = "Внимание";
