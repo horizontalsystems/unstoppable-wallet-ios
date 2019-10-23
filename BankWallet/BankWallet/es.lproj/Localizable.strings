@@ -58,8 +58,8 @@
 "restore_options.sync.slow" = "Lento";
 "restore_options.sync.more_private" = "1-12 horas (Más Privado)";
 "restore_options.derivation.text" = "Seleccione el período de tiempo de cuando creó por primera vez el monedero en Unstoppable.";
-"restore_options.derivation.before_update" = "Antes de Octubre de 2019";
-"restore_options.derivation.after_update" = "Después de Octubre de 2019";
+"restore_options.derivation.before_update" = "Before November 2019";
+"restore_options.derivation.after_update" = "After November 2019";
 "restore_options.derivation.bip44" = "BIP-44";
 "restore_options.derivation.bip49" = "BIP-49";
 "restore_options.alert.header" = "Atención";
