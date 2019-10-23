@@ -1,7 +1,8 @@
 import UIKit
 
 class SendButtonCell: UITableViewCell {
-    private let sendButton = RespondButton()
+    private let sendButton: UIButton = .appYellow
+    private var onTap: (() -> ())?
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -15,10 +16,8 @@ class SendButtonCell: UITableViewCell {
             maker.bottom.equalToSuperview()
             maker.height.equalTo(SendTheme.sendButtonHeight)
         }
-        sendButton.backgrounds = ButtonTheme.yellowBackgroundDictionary
-        sendButton.textColors = ButtonTheme.textColorDictionary
-        sendButton.titleLabel.text = "send.confirmation.send_button".localized
-        sendButton.cornerRadius = SendTheme.sendButtonCornerRadius
+        sendButton.setTitle("send.confirmation.send_button".localized, for: .normal)
+        sendButton.addTarget(self, action: #selector(onSendTouchUp), for: .touchUpInside)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -26,7 +25,11 @@ class SendButtonCell: UITableViewCell {
     }
 
     func bind(onTap: (() -> ())?) {
-        sendButton.onTap = onTap
+        self.onTap = onTap
+    }
+
+    @objc private func onSendTouchUp() {
+        onTap?()
     }
 
 }

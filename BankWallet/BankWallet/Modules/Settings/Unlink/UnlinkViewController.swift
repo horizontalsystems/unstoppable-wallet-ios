@@ -49,8 +49,7 @@ class UnlinkViewController: ActionSheetController {
         let buttonItem = AlertButtonItem(
                 tag: texts.count + 1,
                 title: "security_settings.delete_alert_button".localized,
-                textStyle: ButtonTheme.whiteTextColorDictionary,
-                backgroundStyle: ButtonTheme.redBackgroundDictionary
+                createButton: { .appRed }
         ) { [weak self] in
             self?.delegate.didTapUnlink()
         }
@@ -68,7 +67,7 @@ class UnlinkViewController: ActionSheetController {
 
     private func handleToggle(index: Int) {
         items[index].checked = !items[index].checked
-        buttonItem?.isActive = items.filter { $0.checked == false }.isEmpty
+        buttonItem?.isEnabled = items.filter { $0.checked == false }.isEmpty
         model.reload?()
     }
 

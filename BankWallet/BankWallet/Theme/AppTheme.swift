@@ -165,6 +165,20 @@ extension UIButton {
         return button
     }
 
+    static var appRed: UIButton {
+        let button = UIButton()
+
+        button.titleLabel?.font = .appHeadline2
+        button.setTitleColor(.white, for: .normal)
+        button.setTitleColor(.appGray50, for: .disabled)
+        button.setBackgroundColor(color: .appLucian, gradient: (colors: [UIColor(white: 1, alpha: 0.5), UIColor(white: 1, alpha: 0)], height: .heightButton), forState: .normal)
+        button.setBackgroundColor(color: .appLucian, forState: .highlighted)
+        button.setBackgroundColor(color: .appSteel20, forState: .disabled)
+        button.cornerRadius = .cornerRadius8
+
+        return button
+    }
+
     static var appGray: UIButton {
         let button = UIButton()
 
@@ -191,6 +205,20 @@ extension UIButton {
         button.cornerRadius = .cornerRadius4
         button.borderColor = .appSteel20
         button.borderWidth = 1
+        button.contentEdgeInsets.left = .margin2x
+        button.contentEdgeInsets.right = .margin2x
+
+        return button
+    }
+
+    static var appTertiary: UIButton {
+        let button = UIButton()
+
+        button.titleLabel?.font = .appHeadline2
+        button.setTitleColor(.appLeah, for: .normal)
+        button.setTitleColor(.appGray50, for: .highlighted)
+        button.setTitleColor(.appGray50, for: .disabled)
+        button.setBackgroundColor(color: .clear, forState: .normal)
         button.contentEdgeInsets.left = .margin2x
         button.contentEdgeInsets.right = .margin2x
 

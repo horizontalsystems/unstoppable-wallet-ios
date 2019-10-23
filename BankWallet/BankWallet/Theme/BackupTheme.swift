@@ -1,7 +1,6 @@
 import UIKit
 
 class BackupTheme {
-    static var laterButtonBackground: UIColor = .cryptoLightGray
     static let sideMargin: CGFloat = 44
     static let introDescriptionTopMargin: CGFloat = 24
     static let confirmSideMargin: CGFloat = 24

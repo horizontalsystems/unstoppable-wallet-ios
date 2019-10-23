@@ -11,7 +11,7 @@ class SendViewController: WalletViewController {
     private let container = UIView()
     private let iconImageView = UIImageView()
     private let sendHolderView = UIView()
-    private let sendButton = RespondButton()
+    private let sendButton: UIButton = .appYellow
 
     private let views: [UIView]
 
@@ -31,13 +31,8 @@ class SendViewController: WalletViewController {
             maker.bottom.equalToSuperview()
             maker.height.equalTo(SendTheme.sendButtonHeight)
         }
-        sendButton.onTap = { [weak self] in
-            self?.delegate.onProceedClicked()
-        }
-        sendButton.backgrounds = ButtonTheme.yellowBackgroundDictionary
-        sendButton.textColors = ButtonTheme.textColorDictionary
-        sendButton.titleLabel.text = "send.next_button".localized
-        sendButton.cornerRadius = SendTheme.sendButtonCornerRadius
+        sendButton.addTarget(self, action: #selector(onSendTouchUp), for: .touchUpInside)
+        sendButton.setTitle("send.next_button".localized, for: .normal)
     }
 
     @objc func onClose() {
@@ -73,7 +68,7 @@ class SendViewController: WalletViewController {
 
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
 
-        sendButton.state = .disabled
+        sendButton.isEnabled = false
 
         buildViews()
 
@@ -119,6 +114,9 @@ class SendViewController: WalletViewController {
         }
     }
 
+    @objc private func onSendTouchUp() {
+        delegate.onProceedClicked()
+    }
 
 }
 
@@ -142,7 +140,7 @@ extension SendViewController: ISendView {
     }
 
     func set(sendButtonEnabled: Bool) {
-        sendButton.state = sendButtonEnabled ? .active : .disabled
+        sendButton.isEnabled = sendButtonEnabled
     }
 
     func dismissKeyboard() {

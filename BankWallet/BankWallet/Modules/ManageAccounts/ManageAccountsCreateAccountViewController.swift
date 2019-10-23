@@ -25,8 +25,7 @@ class ManageAccountsCreateAccountViewController: ActionSheetController {
         let createItem = AlertButtonItem(
                 tag: 2,
                 title: "settings_manage_keys.create".localized,
-                textStyle: ButtonTheme.textColorDictionary,
-                backgroundStyle: ButtonTheme.yellowBackgroundDictionary,
+                createButton: { .appYellow },
                 insets: UIEdgeInsets(top: ButtonTheme.verticalMargin, left: ButtonTheme.margin, bottom: ButtonTheme.verticalMargin, right: ButtonTheme.margin)
         ) { [weak self] in
             self?.dismiss(animated: true) {
@@ -34,7 +33,7 @@ class ManageAccountsCreateAccountViewController: ActionSheetController {
             }
         }
 
-        createItem.isActive = true
+        createItem.isEnabled = true
         model.addItemView(createItem)
     }
 

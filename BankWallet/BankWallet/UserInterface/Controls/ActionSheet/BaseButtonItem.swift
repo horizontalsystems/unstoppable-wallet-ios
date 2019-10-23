@@ -2,10 +2,9 @@ import UIKit
 import ActionSheet
 
 class BaseButtonItem: BaseActionItem {
-    var backgroundStyle: RespondButton.Style { fatalError("not implemented") }
-    var textStyle: RespondButton.Style { fatalError("not implemented") }
+    var createButton: UIButton { fatalError("not implemented") }
     var title: String { fatalError("not implemented") }
     var insets: UIEdgeInsets { fatalError("not implemented") }
-    var isActive = true
+    var isEnabled = true
     var onTap: (() -> ())?
 }
