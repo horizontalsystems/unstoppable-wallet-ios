@@ -58,8 +58,8 @@
 "restore_options.sync.slow" = "慢";
 "restore_options.sync.more_private" = "1-12小时（更私密）";
 "restore_options.derivation.text" = "当首次在Unstoppable中创建钱包时选择时间周期。";
-"restore_options.derivation.before_update" = "在2019年10月之前";
-"restore_options.derivation.after_update" = "在2019年10月之后";
+"restore_options.derivation.before_update" = "Before November 2019";
+"restore_options.derivation.after_update" = "After November 2019";
 "restore_options.derivation.bip44" = "BIP-44";
 "restore_options.derivation.bip49" = "BIP-49";
 "restore_options.alert.header" = "注意";
