@@ -58,8 +58,8 @@
 "restore_options.sync.slow" = "느리게";
 "restore_options.sync.more_private" = "1-12시간 (더욱 사적임)";
 "restore_options.derivation.text" = "귀하께서 처음으로 Unstoppable에서 지갑을 생성하셨을 때 시간 주기를 선택 하십시오.";
-"restore_options.derivation.before_update" = "2019년 10월 전에";
-"restore_options.derivation.after_update" = "2019년 10월 후에";
+"restore_options.derivation.before_update" = "Before November 2019";
+"restore_options.derivation.after_update" = "After November 2019";
 "restore_options.derivation.bip44" = "BIP-44";
 "restore_options.derivation.bip49" = "BIP-49";
 "restore_options.alert.header" = "주목";
