@@ -255,7 +255,7 @@ CHECKOUT OPTIONS:
     :commit: 4970283803a29c25ce8e8f51ddd137dee224e185
     :git: https://github.com/horizontalsystems/eos-kit-ios/
   Erc20Kit.swift:
-    :commit: b239f289f6d6bf529211b5bcb6646b1799b59c65
+    :commit: f569f3fc8a95e49fad8c87cfd03d1ed36e64bca8
     :git: https://github.com/horizontalsystems/ethereum-kit-ios/
   EthereumKit.swift:
     :commit: b239f289f6d6bf529211b5bcb6646b1799b59c65
