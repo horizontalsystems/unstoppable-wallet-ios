@@ -58,8 +58,8 @@
 "restore_options.sync.slow" = "Langsam";
 "restore_options.sync.more_private" = "1-12 Stunden (Mehr Datenschutz)";
 "restore_options.derivation.text" = "Wählen Sie den Zeitraum, in dem Sie Ihr Wallet im Unstoppable Wallet das erste Mal erstellt haben.";
-"restore_options.derivation.before_update" = "Before November 2019";
-"restore_options.derivation.after_update" = "After November 2019";
+"restore_options.derivation.before_update" = "Vor November 2019";
+"restore_options.derivation.after_update" = "Nach November 2019";
 "restore_options.derivation.bip44" = "BIP-44";
 "restore_options.derivation.bip49" = "BIP-49";
 "restore_options.alert.header" = "Achtung";
