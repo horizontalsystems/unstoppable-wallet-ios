@@ -58,8 +58,8 @@
 "restore_options.sync.slow" = "Yavaş";
 "restore_options.sync.more_private" = "1-12 saat (Daha Gizli)";
 "restore_options.derivation.text" = "Unstoppable uygulamasında cüzdanı ilk oluşturduğunuz süreyi seçin.";
-"restore_options.derivation.before_update" = "Before November 2019";
-"restore_options.derivation.after_update" = "After November 2019";
+"restore_options.derivation.before_update" = "Kasım 2019’dan önce";
+"restore_options.derivation.after_update" = "Kasım 2019’dan sonra";
 "restore_options.derivation.bip44" = "BIP-44";
 "restore_options.derivation.bip49" = "BIP-49";
 "restore_options.alert.header" = "Dikkat";
