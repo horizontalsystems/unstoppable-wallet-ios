@@ -4,6 +4,8 @@ import SnapKit
 
 class RestoreWordsViewController: WalletViewController {
     private static let minimalTextViewHeight: CGFloat = 88
+    private static let textViewInset: CGFloat = .margin3x
+
     private let disposeBag = DisposeBag()
     private let delegate: IRestoreWordsViewDelegate
 
@@ -33,7 +35,6 @@ class RestoreWordsViewController: WalletViewController {
         }
 
         let textViewFont: UIFont = .appBody
-        let textViewMargin: CGFloat = .margin3x
 
         textView.keyboardAppearance = App.theme.keyboardAppearance
         textView.backgroundColor = .crypto_SteelDark_White
@@ -43,13 +44,19 @@ class RestoreWordsViewController: WalletViewController {
         textView.textColor = .appOz
         textView.font = textViewFont
         textView.tintColor = .appJacob
-        textView.textContainerInset = UIEdgeInsets(top: textViewMargin, left: textViewMargin, bottom: textViewMargin, right: textViewMargin)
+        textView.textContainerInset = UIEdgeInsets(top: RestoreWordsViewController.textViewInset, left: RestoreWordsViewController.textViewInset, bottom: RestoreWordsViewController.textViewInset, right: RestoreWordsViewController.textViewInset)
         textView.autocapitalizationType = .none
 
         textView.delegate = self
 
         containerView.addSubview(textView)
-        updateTextViewConstraints(for: "", animated: false)
+        textView.snp.remakeConstraints { maker in
+            maker.leading.trailing.equalTo(view).inset(CGFloat.margin4x)
+            maker.top.equalToSuperview().offset(CGFloat.margin3x)
+            maker.height.greaterThanOrEqualTo(RestoreWordsViewController.minimalTextViewHeight).priority(.required)
+            maker.height.equalTo(height(text: "")).priority(.low)
+        }
+        view.layoutIfNeeded()
 
         // temp solution until multi-wallet feature is implemented
         let predefinedAccountType: IPredefinedAccountType = delegate.wordsCount == 12 ? UnstoppableAccountType() : BinanceAccountType()
@@ -117,15 +124,12 @@ class RestoreWordsViewController: WalletViewController {
     }
 
     private func height(text: String) -> CGFloat {
-        let textHeight = text.height(forContainerWidth: textView.bounds.width - 2 * CGFloat.margin3x, font: UIFont.appBody)
-        return textHeight + 3 * CGFloat.margin3x
+        let textHeight = text.height(forContainerWidth: textView.bounds.width - 2 * RestoreWordsViewController.textViewInset, font: UIFont.appBody)
+        return textHeight + 3 * RestoreWordsViewController.textViewInset
     }
 
     private func updateTextViewConstraints(for text: String, animated: Bool = true) {
-        textView.snp.remakeConstraints { maker in
-            maker.leading.trailing.equalTo(view).inset(CGFloat.margin4x)
-            maker.top.equalToSuperview().offset(CGFloat.margin3x)
-            maker.height.greaterThanOrEqualTo(RestoreWordsViewController.minimalTextViewHeight).priority(.required)
+        textView.snp.updateConstraints { maker in
             maker.height.equalTo(height(text: text)).priority(.low)
         }
         if animated {
