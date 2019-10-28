@@ -20,7 +20,7 @@ class ChartInteractor {
 
 extension ChartInteractor: IChartInteractor {
 
-    var defaultChartType: ChartType {
+    var defaultChartType: ChartTypeOld {
         get {
             return localStorage.chartType ?? .day
         }

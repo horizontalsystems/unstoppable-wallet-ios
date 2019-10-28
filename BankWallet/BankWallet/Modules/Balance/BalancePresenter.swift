@@ -193,6 +193,7 @@ extension BalancePresenter: IBalanceInteractorDelegate {
     func didUpdate(currency: Currency) {
         self.currency = currency
         handleRates()
+        handleStats()
 
         updateViewItems()
         updateHeaderViewItem()
