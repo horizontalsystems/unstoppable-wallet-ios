@@ -13,7 +13,7 @@ class XRateManager {
         self.walletManager = walletManager
         self.currencyManager = currencyManager
 
-        kit = XRatesKit.instance(currencyCode: currencyManager.baseCurrency.code, minLogLevel: .verbose)
+        kit = XRatesKit.instance(currencyCode: currencyManager.baseCurrency.code)
 
         walletManager.walletsUpdatedSignal
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
