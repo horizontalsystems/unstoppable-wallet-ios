@@ -8,15 +8,15 @@ class BalanceViewController: WalletViewController {
     private let balanceSection = 0
     private let editSection = 1
 
-    let tableView = UITableView()
-    let refreshControl = UIRefreshControl()
-
     private let delegate: IBalanceViewDelegate
+
+    private let tableView = UITableView()
+    private let refreshControl = UIRefreshControl()
 
     private var headerView = BalanceHeaderView(frame: .zero)
     private var indexPathForSelectedRow: IndexPath?
 
-    private var chartEnabled: Bool = false
+    private var viewItems = [BalanceViewItem]()
 
     init(viewDelegate: IBalanceViewDelegate) {
         self.delegate = viewDelegate
@@ -35,18 +35,18 @@ class BalanceViewController: WalletViewController {
 
         title = "balance.title".localized
 
-        tableView.delegate = self
-        tableView.dataSource = self
         tableView.backgroundColor = .clear
+        tableView.separatorColor = .clear
+        tableView.estimatedRowHeight = 0
+        tableView.delaysContentTouches = true
+
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in
             maker.edges.equalToSuperview()
         }
 
-        tableView.separatorColor = .clear
-        tableView.estimatedRowHeight = 0
-        tableView.delaysContentTouches = true
-
+        tableView.delegate = self
+        tableView.dataSource = self
         tableView.registerCell(forClass: BalanceCell.self)
         tableView.registerCell(forClass: BalanceEditCell.self)
 
@@ -69,17 +69,38 @@ class BalanceViewController: WalletViewController {
         delegate.onSortTypeChange()
     }
 
+    private func reload(with diff: [Change<BalanceViewItem>]) {
+        let changes = IndexPathConverter().convert(changes: diff, section: 0)
+
+        guard changes.deletes.isEmpty && changes.inserts.isEmpty else {
+            tableView.reloadData()
+            return
+        }
+
+        var updateIndexes = changes.moves.reduce([Int]()) {
+            var updates = $0
+            updates.append($1.from.row)
+            updates.append($1.to.row)
+            return updates
+        }
+        updateIndexes.append(contentsOf: changes.replaces.map { $0.row })
+
+        updateIndexes.forEach {
+            bind(at: IndexPath(row: $0, section: balanceSection))
+        }
+    }
+
 }
 
 extension BalanceViewController: UITableViewDelegate, UITableViewDataSource {
 
     func numberOfSections(in tableView: UITableView) -> Int {
-        return numberOfSections
+        numberOfSections
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == balanceSection {
-            return delegate.itemsCount
+            return viewItems.count
         } else if section == editSection {
             return 1
         }
@@ -106,13 +127,19 @@ extension BalanceViewController: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if let cell = cell as? BalanceCell {
-            cell.bind(item: delegate.viewItem(at: indexPath.row), isStatModeOn: chartEnabled, selected: indexPathForSelectedRow == indexPath, onReceive: { [weak self] in
-                self?.delegate.onReceive(index: indexPath.row)
-            }, onPay: { [weak self] in
-                self?.delegate.onPay(index: indexPath.row)
-            }, onChart: {[weak self] in
-                self?.delegate.onChart(index: indexPath.row)
-            })
+            cell.bind(
+                    item: viewItems[indexPath.row],
+                    selected: indexPathForSelectedRow == indexPath,
+                    onReceive: { [weak self] in
+                        self?.delegate.onReceive(index: indexPath.row)
+                    },
+                    onPay: { [weak self] in
+                        self?.delegate.onPay(index: indexPath.row)
+                    },
+                    onChart: { [weak self] in
+                        self?.delegate.onChart(index: indexPath.row)
+                    }
+            )
         } else if let cell = cell as? BalanceEditCell {
             cell.onTap = { [weak self] in
                 self?.delegate.onOpenManageWallets()
@@ -153,7 +180,7 @@ extension BalanceViewController: UITableViewDelegate, UITableViewDataSource {
 
     func bind(at indexPath: IndexPath, heightChange: Bool = false) {
         if let cell = tableView.cellForRow(at: indexPath) as? BalanceCell {
-            cell.bindView(item: delegate.viewItem(at: indexPath.row), isStatModeOn: chartEnabled, selected: indexPathForSelectedRow == indexPath, animated: heightChange)
+            cell.bindView(item: viewItems[indexPath.row], selected: indexPathForSelectedRow == indexPath, animated: heightChange)
 
             if heightChange {
                 UIView.animate(withDuration: BalanceCell.animationDuration) {
@@ -182,57 +209,29 @@ extension BalanceViewController: UITableViewDelegate, UITableViewDataSource {
 
 extension BalanceViewController: IBalanceView {
 
-    func reload() {
-        tableView.reloadData()
-        updateHeader()
+    func set(viewItems: [BalanceViewItem]) {
+        let changes = diff(old: self.viewItems, new: viewItems)
+
+        self.viewItems = viewItems
+
+        reload(with: changes)
     }
 
-    func reload(with diff: [DeepDiff.Change<BalanceItem>]) {
-        let changes = IndexPathConverter().convert(changes: diff, section: 0)
-
-        guard changes.deletes.isEmpty || changes.inserts.isEmpty else {
-            tableView.reloadData()
-            return
-        }
-
-        var updateIndexes = changes.moves.reduce([Int]()) {
-            var updates = $0
-            updates.append($1.from.row)
-            updates.append($1.to.row)
-            return updates
-        }
-        updateIndexes.append(contentsOf: changes.replaces.map { $0.row })
-
-        updateIndexes.forEach {
-            bind(at: IndexPath(row: $0, section: balanceSection))
-        }
-    }
-
-    func updateHeader() {
-        let viewItem = delegate.headerViewItem()
-        let amount = viewItem.currencyValue.flatMap { ValueFormatter.instance.format(currencyValue: $0) }
-        headerView.bind(amount: amount, upToDate: viewItem.upToDate, statsIsOn: chartEnabled)
+    func set(headerViewItem: BalanceHeaderViewItem) {
+        let amount = ValueFormatter.instance.format(currencyValue: headerViewItem.currencyValue)
+        headerView.bind(amount: amount, upToDate: headerViewItem.upToDate, statsIsOn: false)
     }
 
     func didRefresh() {
         refreshControl.endRefreshing()
     }
 
-    func setStatsButton(state: StatsButtonState) {
-        switch state {
-        case .normal:
-            headerView.setStatSwitch(hidden: false)
-            chartEnabled = false
-        case .hidden:
-            headerView.setStatSwitch(hidden: true)
-        case .selected:
-            headerView.setStatSwitch(hidden: false)
-            chartEnabled = true
-        }
+    func set(statsButtonState: StatsButtonState) {
+        headerView.set(statsButtonState: statsButtonState)
     }
 
-    func setSort(isOn: Bool) {
-        if isOn {
+    func set(sortIsOn: Bool) {
+        if sortIsOn {
             navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "Balance Sort Icon"), style: .plain, target: self, action: #selector(onSortTypeChange))
         } else {
             navigationItem.rightBarButtonItem = nil

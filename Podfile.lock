@@ -104,7 +104,7 @@ PODS:
   - HUD.swift (1.0):
     - SnapKit (~> 5.0)
     - UIExtensions.swift
-  - KeychainAccess (3.2.0)
+  - KeychainAccess (3.2.1)
   - Nimble (8.0.4)
   - ObjectMapper (3.5.1)
   - PromiseKit (6.11.0):
@@ -136,6 +136,11 @@ PODS:
   - SwiftProtobuf (1.7.0)
   - SwiftyJSON (4.3.0)
   - UIExtensions.swift (1.0)
+  - XRatesKit.swift (0.3):
+    - Alamofire (~> 4.0)
+    - GRDB.swift (~> 4.0)
+    - ObjectMapper (~> 3.5)
+    - RxSwift (~> 5.0)
 
 DEPENDENCIES:
   - ActionSheet.swift (from `https://github.com/horizontalsystems/gui-kit`)
@@ -167,6 +172,7 @@ DEPENDENCIES:
   - SectionsTableView.swift (from `https://github.com/horizontalsystems/gui-kit`)
   - SnapKit
   - UIExtensions.swift (from `https://github.com/horizontalsystems/gui-kit`)
+  - XRatesKit.swift (from `https://github.com/horizontalsystems/xrates-kit-ios`)
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
@@ -228,6 +234,8 @@ EXTERNAL SOURCES:
     :git: https://github.com/horizontalsystems/gui-kit
   UIExtensions.swift:
     :git: https://github.com/horizontalsystems/gui-kit
+  XRatesKit.swift:
+    :git: https://github.com/horizontalsystems/xrates-kit-ios
 
 CHECKOUT OPTIONS:
   ActionSheet.swift:
@@ -275,6 +283,9 @@ CHECKOUT OPTIONS:
   UIExtensions.swift:
     :commit: 22d90aa409044e4ee82e4fcc3ec5a89e7066bf93
     :git: https://github.com/horizontalsystems/gui-kit
+  XRatesKit.swift:
+    :commit: e80675945e46e4fd072153cbb46469bd530809bd
+    :git: https://github.com/horizontalsystems/xrates-kit-ios
 
 SPEC CHECKSUMS:
   ActionSheet.swift: 988572dd9330a64d2e461610bb73f5ff66a255e5
@@ -304,7 +315,7 @@ SPEC CHECKSUMS:
   HSCryptoKit: 514a3111fd37ad18b7261d4a55271daaba3b0eb9
   HSHDWalletKit: 6f5d5b1f9b1f950c948bdff13f5f52e5c5bcb7bb
   HUD.swift: 006cc6e105bce8050c3c3f44d9111474c5c26c35
-  KeychainAccess: 3b1bf8a77eb4c6ea1ce9404c292e48f948954c6b
+  KeychainAccess: d5470352939ced6d6f7fb51cb2e67aae51fc294f
   Nimble: 18d5360282923225d62b09d781f63abc1a0111fc
   ObjectMapper: 70187b8941977c62ccfb423caf6b50be405cabf0
   PromiseKit: e4863d06976e7dee5e41c04fc7371c16b3600292
@@ -318,7 +329,8 @@ SPEC CHECKSUMS:
   SwiftProtobuf: 4fd9645e69b72cbae6ec8da5be0cdd20ca6565dd
   SwiftyJSON: 6faa0040f8b59dead0ee07436cbf76b73c08fd08
   UIExtensions.swift: 9f5a209e4e30f1ccfbf3eab01f02ffd8a20365d0
+  XRatesKit.swift: 8dbe5614295a5f9ef51c8ce13fc6c76d4c6e5681
 
-PODFILE CHECKSUM: 69b31e46e8694604a1fa0365ce30555e96ccdfd3
+PODFILE CHECKSUM: 4b3e69bb1fe5dd036f028c09f14a6ab6f26017ee
 
 COCOAPODS: 1.7.5

@@ -2,53 +2,52 @@ import Foundation
 
 class BalanceViewItemFactory: IBalanceViewItemFactory {
 
-    func viewItem(from item: BalanceItem, currency: Currency?) -> BalanceViewItem {
+    func viewItem(item: BalanceItem, currency: Currency, isStatsOn: Bool) -> BalanceViewItem {
         var exchangeValue: CurrencyValue?
         var currencyValue: CurrencyValue?
 
-        if let currency = currency, let rate = item.rate {
-            exchangeValue = CurrencyValue(currency: currency, value: rate.value)
-            currencyValue = CurrencyValue(currency: currency, value: item.balance * rate.value)
+        if let marketInfo = item.marketInfo {
+            exchangeValue = CurrencyValue(currency: currency, value: marketInfo.rate)
+
+            if let balance = item.balance {
+                currencyValue = CurrencyValue(currency: currency, value: balance * marketInfo.rate)
+            }
         }
 
         return BalanceViewItem(
+                wallet: item.wallet,
                 coin: item.wallet.coin,
-                coinValue: CoinValue(coin: item.wallet.coin, value: item.balance),
+                coinValue: CoinValue(coin: item.wallet.coin, value: item.balance ?? 0),
                 exchangeValue: exchangeValue,
+                diff: item.marketInfo?.diff,
                 currencyValue: currencyValue,
-                state: item.state,
-                rateExpired: item.rate?.expired ?? false,
-                percentDelta: item.percentDelta,
-                chartPoints: item.chartPoints,
-                statLoadDidFail: item.statLoadDidFail
+                state: item.state ?? .notReady,
+                marketInfoExpired: item.marketInfo?.expired ?? false,
+                chartInfo: isStatsOn ? item.chartInfo : nil
         )
     }
 
-    func headerViewItem(from items: [BalanceItem], currency: Currency?) -> BalanceHeaderViewItem {
-        var currencyValue: CurrencyValue?
+    func headerViewItem(items: [BalanceItem], currency: Currency) -> BalanceHeaderViewItem {
+        var total: Decimal = 0
         var upToDate = true
 
-        if let currency = currency {
-            var total: Decimal = 0
+        for item in items {
+            if let balance = item.balance, let marketInfo = item.marketInfo {
+                total += balance * marketInfo.rate
 
-            for item in items {
-                if let rate = item.rate {
-                    total += item.balance * rate.value
-
-                    if rate.expired {
-                        upToDate = false
-                    }
-                }
-
-                if case .synced = item.state {
-                    // do nothing
-                } else {
+                if marketInfo.expired {
                     upToDate = false
                 }
             }
 
-            currencyValue = CurrencyValue(currency: currency, value: total)
+            if case .synced = item.state {
+                // do nothing
+            } else {
+                upToDate = false
+            }
         }
+
+        let currencyValue = CurrencyValue(currency: currency, value: total)
 
         return BalanceHeaderViewItem(
                 currencyValue: currencyValue,

@@ -38,11 +38,9 @@ extension BalanceRouter: IBalanceRouter {
 extension BalanceRouter {
 
     static func module() -> UIViewController {
-        let baseCurrency = App.shared.currencyManager.baseCurrency
         let router = BalanceRouter()
-        let interactor = BalanceInteractor(walletManager: App.shared.walletManager, adapterManager: App.shared.adapterManager, rateStatsManager: App.shared.rateStatsManager, rateStorage: App.shared.storage, currencyManager: App.shared.currencyManager, localStorage: App.shared.localStorage, predefinedAccountTypeManager: App.shared.predefinedAccountTypeManager, rateManager: App.shared.rateManager, appManager: App.shared.appManager)
-        let dataSource = BalanceItemDataSource(sorter: BalanceSorter(), baseCurrency: baseCurrency)
-        let presenter = BalancePresenter(interactor: interactor, router: router, dataSource: dataSource, factory: BalanceViewItemFactory(), differ: Differ())
+        let interactor = BalanceInteractor(walletManager: App.shared.walletManager, adapterManager: App.shared.adapterManager, rateStatsManager: App.shared.rateStatsManager, currencyManager: App.shared.currencyManager, localStorage: App.shared.localStorage, predefinedAccountTypeManager: App.shared.predefinedAccountTypeManager, rateManager: App.shared.xRateManager)
+        let presenter = BalancePresenter(interactor: interactor, router: router, factory: BalanceViewItemFactory(), sorter: BalanceSorter())
         let viewController = BalanceViewController(viewDelegate: presenter)
 
         interactor.delegate = presenter

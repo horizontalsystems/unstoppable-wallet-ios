@@ -25,7 +25,7 @@ extension SendAmountInteractor: ISendAmountInteractor {
         return currencyManager.baseCurrency
     }
 
-    func rate(coinCode: CoinCode, currencyCode: String) -> Rate? {
+    func rate(coinCode: CoinCode, currencyCode: String) -> RateOld? {
         return rateManager.nonExpiredLatestRate(coinCode: coinCode, currencyCode: currencyCode)
     }
 

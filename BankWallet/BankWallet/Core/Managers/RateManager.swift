@@ -29,7 +29,7 @@ class RateManager {
         let referenceTimestamp = date.timeIntervalSince1970
         let currentTimestamp = Date().timeIntervalSince1970
 
-        guard referenceTimestamp > currentTimestamp - Rate.latestRateFallbackThreshold else {
+        guard referenceTimestamp > currentTimestamp - RateOld.latestRateFallbackThreshold else {
             return Single.error(RateError.expired)
         }
 
@@ -49,7 +49,7 @@ class RateManager {
                             continue
                         }
 
-                        let rate = Rate(coinCode: coinCode, currencyCode: currencyCode, value: rateValue, date: latestRateData.date, isLatest: true)
+                        let rate = RateOld(coinCode: coinCode, currencyCode: currencyCode, value: rateValue, date: latestRateData.date, isLatest: true)
                         self?.storage.save(latestRate: rate)
                     }
                 })
@@ -59,7 +59,7 @@ class RateManager {
 
 extension RateManager: IRateManager {
 
-    func nonExpiredLatestRate(coinCode: CoinCode, currencyCode: String) -> Rate? {
+    func nonExpiredLatestRate(coinCode: CoinCode, currencyCode: String) -> RateOld? {
         return storage.latestRate(coinCode: coinCode, currencyCode: currencyCode).flatMap { rate in
             rate.expired ? nil : rate
         }
@@ -98,7 +98,7 @@ extension RateManager: IRateManager {
                     } else {
                         let apiSingle = self.apiProvider.getRate(coinCode: coinCode, currencyCode: currencyCode, date: date)
                                 .do(onSuccess: { [weak self] value in
-                                    let rate = Rate(coinCode: coinCode, currencyCode: currencyCode, value: value, date: date, isLatest: false)
+                                    let rate = RateOld(coinCode: coinCode, currencyCode: currencyCode, value: value, date: date, isLatest: false)
                                     self?.storage.save(rate: rate)
                                 })
 

@@ -20,16 +20,16 @@ class GrdbStorage {
         var migrator = DatabaseMigrator()
 
         migrator.registerMigration("createRate") { db in
-            try db.create(table: Rate.databaseTableName) { t in
-                t.column(Rate.Columns.coinCode.name, .text).notNull()
-                t.column(Rate.Columns.currencyCode.name, .text).notNull()
-                t.column(Rate.Columns.value.name, .text).notNull()
-                t.column(Rate.Columns.isLatest.name, .boolean).notNull()
+            try db.create(table: RateOld.databaseTableName) { t in
+                t.column(RateOld.Columns.coinCode.name, .text).notNull()
+                t.column(RateOld.Columns.currencyCode.name, .text).notNull()
+                t.column(RateOld.Columns.value.name, .text).notNull()
+                t.column(RateOld.Columns.isLatest.name, .boolean).notNull()
 
                 t.primaryKey([
-                    Rate.Columns.coinCode.name,
-                    Rate.Columns.currencyCode.name,
-                    Rate.Columns.isLatest.name
+                    RateOld.Columns.coinCode.name,
+                    RateOld.Columns.currencyCode.name,
+                    RateOld.Columns.isLatest.name
                 ], onConflict: .replace)
             }
         }
@@ -100,19 +100,19 @@ class GrdbStorage {
         }
 
         migrator.registerMigration("timestampToDateRates") { db in
-            try db.drop(table: Rate.databaseTableName)
-            try db.create(table: Rate.databaseTableName) { t in
-                t.column(Rate.Columns.coinCode.name, .text).notNull()
-                t.column(Rate.Columns.currencyCode.name, .text).notNull()
-                t.column(Rate.Columns.value.name, .text).notNull()
-                t.column(Rate.Columns.date.name, .double).notNull()
-                t.column(Rate.Columns.isLatest.name, .boolean).notNull()
+            try db.drop(table: RateOld.databaseTableName)
+            try db.create(table: RateOld.databaseTableName) { t in
+                t.column(RateOld.Columns.coinCode.name, .text).notNull()
+                t.column(RateOld.Columns.currencyCode.name, .text).notNull()
+                t.column(RateOld.Columns.value.name, .text).notNull()
+                t.column(RateOld.Columns.date.name, .double).notNull()
+                t.column(RateOld.Columns.isLatest.name, .boolean).notNull()
 
                 t.primaryKey([
-                    Rate.Columns.coinCode.name,
-                    Rate.Columns.currencyCode.name,
-                    Rate.Columns.date.name,
-                    Rate.Columns.isLatest.name
+                    RateOld.Columns.coinCode.name,
+                    RateOld.Columns.currencyCode.name,
+                    RateOld.Columns.date.name,
+                    RateOld.Columns.isLatest.name
                 ], onConflict: .replace)
             }
         }
@@ -155,37 +155,37 @@ class GrdbStorage {
 
 extension GrdbStorage: IRateStorage {
 
-    func latestRate(coinCode: CoinCode, currencyCode: String) -> Rate? {
+    func latestRate(coinCode: CoinCode, currencyCode: String) -> RateOld? {
         return try! dbPool.read { db in
-            let request = Rate.filter(Rate.Columns.coinCode == coinCode && Rate.Columns.currencyCode == currencyCode && Rate.Columns.isLatest == true)
+            let request = RateOld.filter(RateOld.Columns.coinCode == coinCode && RateOld.Columns.currencyCode == currencyCode && RateOld.Columns.isLatest == true)
             return try request.fetchOne(db)
         }
     }
 
-    func latestRateObservable(forCoinCode coinCode: CoinCode, currencyCode: String) -> Observable<Rate> {
-        let request = Rate.filter(Rate.Columns.coinCode == coinCode && Rate.Columns.currencyCode == currencyCode && Rate.Columns.isLatest == true)
+    func latestRateObservable(forCoinCode coinCode: CoinCode, currencyCode: String) -> Observable<RateOld> {
+        let request = RateOld.filter(RateOld.Columns.coinCode == coinCode && RateOld.Columns.currencyCode == currencyCode && RateOld.Columns.isLatest == true)
         return request.rx.observeFirst(in: dbPool)
                 .flatMap { $0.map(Observable.just) ?? Observable.empty() }
     }
 
-    func timestampRateObservable(coinCode: CoinCode, currencyCode: String, date: Date) -> Observable<Rate?> {
-        let request = Rate.filter(Rate.Columns.coinCode == coinCode && Rate.Columns.currencyCode == currencyCode && Rate.Columns.date == date && Rate.Columns.isLatest == false)
+    func timestampRateObservable(coinCode: CoinCode, currencyCode: String, date: Date) -> Observable<RateOld?> {
+        let request = RateOld.filter(RateOld.Columns.coinCode == coinCode && RateOld.Columns.currencyCode == currencyCode && RateOld.Columns.date == date && RateOld.Columns.isLatest == false)
         return request.rx.observeFirst(in: dbPool)
     }
 
-    func zeroValueTimestampRatesObservable(currencyCode: String) -> Observable<[Rate]> {
-        let request = Rate.filter(Rate.Columns.currencyCode == currencyCode && Rate.Columns.value == 0 && Rate.Columns.isLatest == false)
+    func zeroValueTimestampRatesObservable(currencyCode: String) -> Observable<[RateOld]> {
+        let request = RateOld.filter(RateOld.Columns.currencyCode == currencyCode && RateOld.Columns.value == 0 && RateOld.Columns.isLatest == false)
         return request.rx.observeAll(in: dbPool)
     }
 
-    func save(latestRate: Rate) {
+    func save(latestRate: RateOld) {
         _ = try? dbPool.write { db in
-            try Rate.filter(Rate.Columns.coinCode == latestRate.coinCode && Rate.Columns.currencyCode == latestRate.currencyCode && Rate.Columns.isLatest == true).deleteAll(db)
+            try RateOld.filter(RateOld.Columns.coinCode == latestRate.coinCode && RateOld.Columns.currencyCode == latestRate.currencyCode && RateOld.Columns.isLatest == true).deleteAll(db)
             try latestRate.insert(db)
         }
     }
 
-    func save(rate: Rate) {
+    func save(rate: RateOld) {
         _ = try? dbPool.write { db in
             try rate.insert(db)
         }
@@ -193,7 +193,7 @@ extension GrdbStorage: IRateStorage {
 
     func clearRates() {
         _ = try? dbPool.write { db in
-            try Rate.deleteAll(db)
+            try RateOld.deleteAll(db)
         }
     }
 

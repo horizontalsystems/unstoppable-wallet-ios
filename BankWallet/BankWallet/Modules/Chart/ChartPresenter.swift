@@ -8,7 +8,7 @@ class ChartPresenter {
     private let currency: Currency
 
     private var chartData: ChartData?
-    private var rate: Rate?
+    private var rate: RateOld?
 
     let coin: Coin
 
@@ -103,7 +103,7 @@ extension ChartPresenter: IChartInteractorDelegate {
         updateChart()
     }
 
-    func didReceive(rate: Rate) {
+    func didReceive(rate: RateOld) {
         self.rate = rate
         updateChart()
     }

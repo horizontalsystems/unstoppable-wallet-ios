@@ -29,6 +29,7 @@ class App {
 
     let currencyManager: ICurrencyManager
 
+    let xRateManager: IXRateManager
     let rateManager: RateManager
     let rateStatsManager: IRateStatsManager
 
@@ -91,6 +92,8 @@ class App {
         predefinedAccountTypeManager = PredefinedAccountTypeManager(appConfigProvider: appConfigProvider, accountManager: accountManager, accountCreator: accountCreator)
 
         currencyManager = CurrencyManager(localStorage: localStorage, appConfigProvider: appConfigProvider)
+
+        xRateManager = XRateManager(walletManager: walletManager, currencyManager: currencyManager)
 
         let ipfsApiProvider = IpfsApiProvider(appConfigProvider: appConfigProvider)
         let rateApiProvider: IRateApiProvider = RateApiProvider(networkManager: networkManager, ipfsApiProvider: ipfsApiProvider)

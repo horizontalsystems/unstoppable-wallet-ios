@@ -1,6 +1,6 @@
 import GRDB
 
-class Rate: Record {
+class RateOld: Record {
     static let latestRateFallbackThreshold: Double = 60 * 10 // in seconds
     
     let coinCode: String
@@ -21,7 +21,7 @@ class Rate: Record {
 
     var expired: Bool {
         let diff = Date().timeIntervalSince1970 - date.timeIntervalSince1970
-        return diff > Rate.latestRateFallbackThreshold
+        return diff > RateOld.latestRateFallbackThreshold
     }
 
     override class var databaseTableName: String {
@@ -52,7 +52,7 @@ class Rate: Record {
 
 }
 
-extension Rate: CustomStringConvertible {
+extension RateOld: CustomStringConvertible {
 
     public var description: String {
         return "Rate [coinCode: \(coinCode); currencyCode: \(currencyCode); value: \(value); date: \(DateHelper.instance.formatDebug(date: date)); isLatest: \(isLatest)]"
@@ -60,8 +60,8 @@ extension Rate: CustomStringConvertible {
 
 }
 
-extension Rate: Equatable {
-    public static func ==(lhs: Rate, rhs: Rate) -> Bool {
+extension RateOld: Equatable {
+    public static func ==(lhs: RateOld, rhs: RateOld) -> Bool {
         return lhs.value == rhs.value && lhs.coinCode == rhs.coinCode && lhs.currencyCode == rhs.currencyCode && lhs.date == rhs.date && lhs.isLatest == rhs.isLatest
     }
 }
