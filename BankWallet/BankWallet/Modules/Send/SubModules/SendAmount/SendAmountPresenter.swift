@@ -11,7 +11,7 @@ class SendAmountPresenter {
 
     private let coin: Coin
     private let currency: Currency
-    private let rate: Rate?
+    private let rate: RateOld?
 
     private var amount: Decimal?
     private var availableBalance: Decimal?

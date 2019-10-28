@@ -24,7 +24,7 @@ class ChartRateFactory: IChartRateFactory {
     init() {
     }
 
-    func chartViewItem(type: ChartType, chartData: ChartData, rate: Rate?, currency: Currency) throws -> ChartViewItem {
+    func chartViewItem(type: ChartType, chartData: ChartData, rate: RateOld?, currency: Currency) throws -> ChartViewItem {
         guard let points = chartData.stats[type] else {
             throw FactoryError.noRateStats
         }

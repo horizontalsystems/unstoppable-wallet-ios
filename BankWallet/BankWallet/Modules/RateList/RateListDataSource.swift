@@ -25,7 +25,7 @@ extension RateListDataSource: IRateListItemDataSource {
         items[coinIndex].loadingStatus = .loaded
     }
 
-    func set(rate: Rate, with currency: Currency) {
+    func set(rate: RateOld, with currency: Currency) {
         guard let coinIndex = items.firstIndex(where: { $0.coin.code == rate.coinCode }) else {
             return
         }

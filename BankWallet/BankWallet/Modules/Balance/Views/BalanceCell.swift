@@ -211,15 +211,15 @@ class BalanceCell: CardCell {
         fatalError("not implemented")
     }
 
-    func bind(item: BalanceViewItem, isStatModeOn: Bool, selected: Bool, animated: Bool = false, onReceive: @escaping (() -> ()), onPay: @escaping (() -> ()), onChart: @escaping (() -> ())) {
+    func bind(item: BalanceViewItem, selected: Bool, animated: Bool = false, onReceive: @escaping (() -> ()), onPay: @escaping (() -> ()), onChart: @escaping (() -> ())) {
         self.onPay = onPay
         self.onReceive = onReceive
         self.onChart = onChart
 
-        bindView(item: item, isStatModeOn: isStatModeOn, selected: selected, animated: animated)
+        bindView(item: item, selected: selected, animated: animated)
     }
 
-    func bindView(item: BalanceViewItem, isStatModeOn: Bool, selected: Bool, animated: Bool = false) {
+    func bindView(item: BalanceViewItem, selected: Bool, animated: Bool = false) {
         coinIconImageView.image = UIImage(coin: item.coin)?.withRenderingMode(.alwaysTemplate)
         coinIconImageView.isHidden = item.state == .notSynced
 
@@ -237,15 +237,15 @@ class BalanceCell: CardCell {
         nameLabel.text = item.coin.title.localized
 
         if let value = item.exchangeValue, let formattedValue = ValueFormatter.instance.format(currencyValue: value, fractionPolicy: .threshold(high: 1000, low: 0.1), trimmable: false) {
-            rateLabel.text = isStatModeOn ? formattedValue : "balance.rate_per_coin".localized(formattedValue, item.coinValue.coin.code)
-            rateLabel.textColor = item.rateExpired ? .appGray50 : .appGray
+            rateLabel.text = item.diff != nil ? formattedValue : "balance.rate_per_coin".localized(formattedValue, item.coinValue.coin.code)
+            rateLabel.textColor = item.marketInfoExpired ? .appGray50 : .appGray
         } else {
             rateLabel.text = " " // space required for constraints
         }
 
-        if isStatModeOn && item.percentDelta != 0 {
+        if let diff = item.diff {
             rateDiffView.isHidden = false
-            rateDiffView.set(value: item.percentDelta)
+            rateDiffView.set(value: diff)
         } else {
             rateDiffView.isHidden = true
         }
@@ -273,7 +273,7 @@ class BalanceCell: CardCell {
 
             if let value = item.currencyValue, value.value != 0 {
                 currencyValueLabel.text = ValueFormatter.instance.format(currencyValue: value, fractionPolicy: .threshold(high: 1000, low: 0.01))
-                currencyValueLabel.textColor = item.rateExpired || !syncedBalance ? .appYellow50 : .appJacob
+                currencyValueLabel.textColor = item.marketInfoExpired || !syncedBalance ? .appYellow50 : .appJacob
             } else {
                 currencyValueLabel.text = nil
             }
@@ -288,20 +288,23 @@ class BalanceCell: CardCell {
         sendButton.isEnabled = item.state == .synced && item.coinValue.value > 0
         receiveButton.isEnabled = item.state != .notReady
 
-        if isStatModeOn {
+        if let chartInfo = item.chartInfo {
             chartHolder.isHidden = false
             chartHolder.snp.updateConstraints { maker in
                 maker.width.equalTo(72)
             }
 
-            if item.chartPoints.isEmpty {
+            if chartInfo.points.isEmpty {
                 chartView.clear()
             } else {
-                chartView.set(chartType: .day, data: item.chartPoints, animated: false)
+                let points = chartInfo.points.map {
+                    ChartPoint(timestamp: $0.timestamp, value: $0.value)
+                }
+                chartView.set(chartType: .day, data: points, animated: false)
             }
 
-            notAvailableLabel.isHidden = !item.statLoadDidFail
-            chartHolder.isUserInteractionEnabled = !item.statLoadDidFail && !item.chartPoints.isEmpty
+            notAvailableLabel.isHidden = !chartInfo.points.isEmpty
+            chartHolder.isUserInteractionEnabled = !chartInfo.points.isEmpty
         } else {
             chartHolder.isHidden = true
             chartHolder.snp.updateConstraints { maker in
@@ -323,9 +326,6 @@ class BalanceCell: CardCell {
 
     @objc func onChartTap() {
         onChart?()
-    }
-
-    deinit {
     }
 
 }

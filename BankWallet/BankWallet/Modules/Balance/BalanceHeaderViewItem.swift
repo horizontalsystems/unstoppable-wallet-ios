@@ -1,4 +1,4 @@
 struct BalanceHeaderViewItem {
-    let currencyValue: CurrencyValue?
+    let currencyValue: CurrencyValue
     let upToDate: Bool
 }

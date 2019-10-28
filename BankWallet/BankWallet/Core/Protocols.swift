@@ -1,5 +1,6 @@
 import RxSwift
 import GRDB
+import XRatesKit
 
 typealias CoinCode = String
 
@@ -238,11 +239,15 @@ protocol BiometricManagerDelegate: class {
 }
 
 protocol IRateManager {
-    func nonExpiredLatestRate(coinCode: CoinCode, currencyCode: String) -> Rate?
+    func nonExpiredLatestRate(coinCode: CoinCode, currencyCode: String) -> RateOld?
     func syncLatestRatesSingle() -> Single<LatestRateData>
     func syncLatestRates()
     func timestampRateValueObservable(coinCode: CoinCode, currencyCode: String, date: Date) -> Single<Decimal>
     func clear()
+}
+
+protocol IXRateManager {
+    var kit: XRatesKit { get }
 }
 
 protocol IRateStatsManager {
@@ -315,12 +320,12 @@ protocol IRatesStatsApiProvider {
 }
 
 protocol IRateStorage {
-    func latestRate(coinCode: CoinCode, currencyCode: String) -> Rate?
-    func latestRateObservable(forCoinCode coinCode: CoinCode, currencyCode: String) -> Observable<Rate>
-    func timestampRateObservable(coinCode: CoinCode, currencyCode: String, date: Date) -> Observable<Rate?>
-    func zeroValueTimestampRatesObservable(currencyCode: String) -> Observable<[Rate]>
-    func save(latestRate: Rate)
-    func save(rate: Rate)
+    func latestRate(coinCode: CoinCode, currencyCode: String) -> RateOld?
+    func latestRateObservable(forCoinCode coinCode: CoinCode, currencyCode: String) -> Observable<RateOld>
+    func timestampRateObservable(coinCode: CoinCode, currencyCode: String, date: Date) -> Observable<RateOld?>
+    func zeroValueTimestampRatesObservable(currencyCode: String) -> Observable<[RateOld]>
+    func save(latestRate: RateOld)
+    func save(rate: RateOld)
     func clearRates()
 }
 

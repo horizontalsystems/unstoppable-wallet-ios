@@ -10,7 +10,7 @@ class SendFeePresenter {
     private let feeCoin: Coin?
     private let feeCoinProtocol: String?
     private let currency: Currency
-    private var rate: Rate?
+    private var rate: RateOld?
 
     private var fee: Decimal = 0
     private var availableFeeBalance: Decimal?

@@ -53,15 +53,23 @@ class BalanceHeaderView: UIView {
     func bind(amount: String?, upToDate: Bool, statsIsOn: Bool) {
         amountLabel.text = amount
         amountLabel.textColor = upToDate ? .appJacob : .appYellow50
-        statsSwitchButton.isSelected = statsIsOn
     }
 
     @objc func onSwitch() {
         onStatsSwitch?()
     }
 
-    func setStatSwitch(hidden: Bool) {
-        statsSwitchButton.isHidden = hidden
+    func set(statsButtonState: StatsButtonState) {
+        switch statsButtonState {
+        case .normal:
+            statsSwitchButton.isHidden = false
+            statsSwitchButton.isSelected = false
+        case .selected:
+            statsSwitchButton.isHidden = false
+            statsSwitchButton.isSelected = true
+        case .hidden:
+            statsSwitchButton.isHidden = true
+        }
     }
 
 }

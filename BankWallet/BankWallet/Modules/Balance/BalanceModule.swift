@@ -1,22 +1,18 @@
 import Foundation
 import DeepDiff
+import XRatesKit
 
 protocol IBalanceView: class {
-    func reload()
-    func reload(with diff: [Change<BalanceItem>])
-    func updateHeader()
-    func didRefresh()
-    func setStatsButton(state: StatsButtonState)
-    func setSort(isOn: Bool)
+    func set(viewItems: [BalanceViewItem])
+    func set(headerViewItem: BalanceHeaderViewItem)
+    func set(statsButtonState: StatsButtonState)
+    func set(sortIsOn: Bool)
     func showBackupRequired(coin: Coin, predefinedAccountType: IPredefinedAccountType)
+    func didRefresh()
 }
 
 protocol IBalanceViewDelegate {
     func viewDidLoad()
-
-    var itemsCount: Int { get }
-    func viewItem(at index: Int) -> BalanceViewItem
-    func headerViewItem() -> BalanceHeaderViewItem
 
     func refresh()
 
@@ -32,14 +28,26 @@ protocol IBalanceViewDelegate {
 }
 
 protocol IBalanceInteractor {
+    var wallets: [Wallet] { get }
+    var baseCurrency: Currency { get }
+
+    func marketInfo(coinCode: CoinCode, currencyCode: String) -> MarketInfo?
+    func chartInfo(coinCode: CoinCode, currencyCode: String) -> ChartInfo?
+    func balance(wallet: Wallet) -> Decimal?
+    func state(wallet: Wallet) -> AdapterState?
+
+    func subscribeToWallets()
+    func subscribeToBaseCurrency()
+    func subscribeToAdapters(wallets: [Wallet])
+
+    func subscribeToMarketInfo(currencyCode: String)
+    func subscribeToChartInfo(coinCodes: [CoinCode], currencyCode: String)
+    func unsubscribeFromChartInfo()
+
     var sortType: BalanceSortType { get }
 
-    func adapter(for wallet: Wallet) -> IBalanceAdapter?
-    func initWallets()
-    func fetchRates(currencyCode: String, coinCodes: [CoinCode])
     func refresh()
     func predefinedAccountType(wallet: Wallet) -> IPredefinedAccountType?
-    func syncStats(coinCode: CoinCode, currencyCode: String)
 }
 
 protocol IBalanceInteractorDelegate: class {
@@ -48,13 +56,10 @@ protocol IBalanceInteractorDelegate: class {
     func didUpdate(state: AdapterState, wallet: Wallet)
 
     func didUpdate(currency: Currency)
-    func didUpdate(rate: Rate)
-
-    func didReceive(chartData: ChartData)
-    func didFailStats(for coinCode: CoinCode)
+    func didUpdate(marketInfos: [CoinCode: MarketInfo])
+    func didUpdate(chartInfo: ChartInfo, coinCode: CoinCode)
 
     func didRefresh()
-    func didBecomeActive()
 }
 
 protocol IBalanceRouter {
@@ -66,28 +71,9 @@ protocol IBalanceRouter {
     func openBackup(wallet: Wallet, predefinedAccountType: IPredefinedAccountType)
 }
 
-protocol IBalanceItemDataSource {
-    var statsButtonState: StatsButtonState { get set }
-    var sortType: BalanceSortType { get set }
-    var items: [BalanceItem] { get }
-    var currency: Currency { get set }
-    var coinCodes: [CoinCode] { get }
-    func item(at index: Int) -> BalanceItem
-    func index(for wallet: Wallet) -> Int?
-    func indexes(for coinCode: String) -> [Int]
-
-    func set(balance: Decimal, index: Int)
-    func set(state: AdapterState, index: Int)
-    func set(rate: Rate, index: Int)
-    func set(chartPoints: [ChartPoint], percentDelta: Decimal, index: Int)
-    func setStatsFailed(index: Int)
-    func clearRates()
-    func set(items: [BalanceItem])
-}
-
 protocol IBalanceViewItemFactory {
-    func viewItem(from item: BalanceItem, currency: Currency?) -> BalanceViewItem
-    func headerViewItem(from items: [BalanceItem], currency: Currency?) -> BalanceHeaderViewItem
+    func viewItem(item: BalanceItem, currency: Currency, isStatsOn: Bool) -> BalanceViewItem
+    func headerViewItem(items: [BalanceItem], currency: Currency) -> BalanceHeaderViewItem
 }
 
 protocol IBalanceSorter {

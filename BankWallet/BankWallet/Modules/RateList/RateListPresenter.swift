@@ -48,7 +48,7 @@ extension RateListPresenter: IRateListInteractorDelegate {
         interactor.getRateStats(currencyCode: interactor.currency.code, coinCodes: dataSource.coinCodes)
     }
 
-    func didUpdate(rate: Rate) {
+    func didUpdate(rate: RateOld) {
         dataSource.set(rate: rate, with: interactor.currency)
         view?.reload()
     }

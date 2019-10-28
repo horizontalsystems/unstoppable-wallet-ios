@@ -26,7 +26,7 @@ protocol IRateListInteractorDelegate: class {
 
     func didReceive(chartData: ChartData)
     func didFailStats(for coinCode: CoinCode)
-    func didUpdate(rate: Rate)
+    func didUpdate(rate: RateOld)
 }
 
 protocol IRateListRouter {
@@ -38,7 +38,7 @@ protocol IRateListItemDataSource {
 
     func set(coins: [Coin])
     func set(chartData: ChartData)
-    func set(rate: Rate, with currency: Currency)
+    func set(rate: RateOld, with currency: Currency)
     func setStatsFailed(coinCode: CoinCode)
 }
 
