@@ -8,11 +8,10 @@ class TransactionCell: AppCell {
     var inOutImageView = UIImageView()
 
     var dateLabel = UILabel()
-    var timeLabel = UILabel()
 
-    var pendingImageView = UIImageView()
-    var completedImageView = UIImageView()
-    var barsProgressView = BarsProgressView(count: AppTheme.progressStepsCount, barWidth: TransactionsTheme.barsProgressBarWidth, color: TransactionsTheme.barsProgressColor, inactiveColor: TransactionsTheme.barsProgressInactiveColor)
+    var pendingView = TransactionPendingView()
+    var processingView = TransactionProcessingView()
+    var completedView = TransactionCompletedView()
 
     var currencyAmountLabel = UILabel()
     var amountLabel = UILabel()
@@ -45,14 +44,6 @@ class TransactionCell: AppCell {
             maker.leading.equalTo(inOutImageView.snp.trailing).offset(TransactionsTheme.cellMediumMargin)
             maker.top.equalToSuperview().offset(TransactionsTheme.cellMediumMargin)
         }
-        timeLabel.font = TransactionsTheme.timeLabelFont
-        timeLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
-        timeLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
-        contentView.addSubview(timeLabel)
-        timeLabel.snp.makeConstraints { maker in
-            maker.leading.equalTo(inOutImageView.snp.trailing).offset(TransactionsTheme.cellMediumMargin)
-            maker.bottom.equalToSuperview().offset(-TransactionsTheme.cellMediumMargin)
-        }
 
         currencyAmountLabel.font = TransactionsTheme.currencyAmountLabelFont
         currencyAmountLabel.textAlignment = .right
@@ -67,29 +58,26 @@ class TransactionCell: AppCell {
         amountLabel.textAlignment = .right
         contentView.addSubview(amountLabel)
         amountLabel.snp.makeConstraints { maker in
-            maker.leading.equalTo(self.timeLabel.snp.trailing).offset(TransactionsTheme.cellMediumMargin)
             maker.bottom.equalToSuperview().offset(-TransactionsTheme.cellMediumMargin)
             maker.trailing.equalTo(contentView.snp.trailingMargin)
         }
 
-        pendingImageView.image = UIImage(named: "Transaction Processing Icon")
-        pendingImageView.alpha = TransactionsTheme.pendingStatusIconTransparency
-        contentView.addSubview(pendingImageView)
-        pendingImageView.snp.makeConstraints { maker in
-            maker.size.equalTo(TransactionsTheme.statusImageViewSize)
-            maker.leading.equalTo(inOutImageView.snp.trailing).offset(TransactionsTheme.cellMediumMargin)
-            maker.centerY.equalTo(self.amountLabel)
+        contentView.addSubview(pendingView)
+        pendingView.setContentHuggingPriority(.defaultHigh, for: .vertical)
+        pendingView.snp.makeConstraints { maker in
+            maker.leading.equalTo(inOutImageView.snp.trailing).offset(CGFloat.margin3x)
+            maker.centerY.equalTo(amountLabel)
         }
-
-        completedImageView.image = UIImage(named: "Transaction Success Icon")
-        contentView.addSubview(completedImageView)
-        completedImageView.snp.makeConstraints { maker in
-            maker.size.equalTo(TransactionsTheme.statusImageViewSize)
-            maker.leading.equalTo(self.timeLabel.snp.trailing).offset(TransactionsTheme.cellSmallMargin)
-            maker.centerY.equalTo(self.amountLabel)
+        contentView.addSubview(processingView)
+        processingView.snp.makeConstraints { maker in
+            maker.leading.equalTo(inOutImageView.snp.trailing).offset(CGFloat.margin3x)
+            maker.centerY.equalTo(amountLabel)
         }
-
-        contentView.addSubview(barsProgressView)
+        contentView.addSubview(completedView)
+        completedView.snp.makeConstraints { maker in
+            maker.leading.equalTo(inOutImageView.snp.trailing).offset(CGFloat.margin3x)
+            maker.centerY.equalTo(amountLabel)
+        }
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -99,17 +87,15 @@ class TransactionCell: AppCell {
     func bind(item: TransactionViewItem, first: Bool, last: Bool) {
         super.bind(last: last)
 
-        dateLabel.textColor = item.status == .pending ? TransactionsTheme.dateLabelTextColor50 : TransactionsTheme.dateLabelTextColor
-        timeLabel.textColor = item.status == .pending ? TransactionsTheme.timeLabelTextColor50 : TransactionsTheme.timeLabelTextColor
-        timeLabel.textColor = item.status == .pending ? TransactionsTheme.timeLabelTextColor50 : TransactionsTheme.timeLabelTextColor
-        let incomingTextColor = item.status == .pending ? TransactionsTheme.incomingTextColor50 : TransactionsTheme.incomingTextColor
-        let outgoingTextColor = item.status == .pending ? TransactionsTheme.outgoingTextColor50 : TransactionsTheme.outgoingTextColor
+        let status = item.status
+
+        dateLabel.textColor = status == .pending ? TransactionsTheme.dateLabelTextColor50 : TransactionsTheme.dateLabelTextColor
+        let incomingTextColor = status == .pending ? TransactionsTheme.incomingTextColor50 : TransactionsTheme.incomingTextColor
+        let outgoingTextColor = status == .pending ? TransactionsTheme.outgoingTextColor50 : TransactionsTheme.outgoingTextColor
         currencyAmountLabel.textColor = item.incoming ? incomingTextColor : outgoingTextColor
-        amountLabel.textColor = item.status == .pending ? TransactionsTheme.fiatAmountLabelColor50 : TransactionsTheme.fiatAmountLabelColor
+        amountLabel.textColor = status == .pending ? TransactionsTheme.fiatAmountLabelColor50 : TransactionsTheme.fiatAmountLabelColor
 
         dateLabel.text = DateHelper.instance.formatTransactionDate(from: item.date).uppercased()
-        timeLabel.text = DateHelper.instance.formatTransactionTime(from: item.date)
-
         amountLabel.text = ValueFormatter.instance.format(coinValue: item.coinValue, fractionPolicy: .threshold(high: 0.01, low: 0))
 
         inOutImageView.image = item.incoming ? UIImage(named: "Transaction In Icon") : UIImage(named: "Transaction Out Icon")
@@ -120,38 +106,9 @@ class TransactionCell: AppCell {
             currencyAmountLabel.text = nil
         }
 
-        switch item.status {
-        case .pending:
-            pendingImageView.isHidden = false
-            barsProgressView.isHidden = false
-            completedImageView.isHidden = true
-            timeLabel.isHidden = true
-
-            barsProgressView.filledCount = 0
-        case .processing(let progress):
-            pendingImageView.isHidden = true
-            barsProgressView.isHidden = false
-            completedImageView.isHidden = true
-            timeLabel.isHidden = false
-
-            barsProgressView.filledCount = Int(Double(AppTheme.progressStepsCount) * progress)
-        case .completed:
-            pendingImageView.isHidden = true
-            barsProgressView.isHidden = true
-            completedImageView.isHidden = false
-            timeLabel.isHidden = false
-        }
-
-        barsProgressView.snp.remakeConstraints { maker in
-            maker.height.equalTo(TransactionsTheme.barsProgressHeight)
-            maker.centerY.equalTo(self.amountLabel)
-
-            if self.pendingImageView.isHidden {
-                maker.leading.equalTo(self.timeLabel.snp.trailing).offset(TransactionsTheme.cellSmallMargin)
-            } else {
-                maker.leading.equalTo(self.pendingImageView.snp.trailing).offset(TransactionsTheme.cellSmallMargin)
-            }
-        }
+        pendingView.bind(status: status)
+        processingView.bind(status: status)
+        completedView.bind(status: status, date: item.date)
     }
 
     override func setHighlighted(_ highlighted: Bool, animated: Bool) {
