@@ -142,7 +142,7 @@ extension ChartViewController: IChartView {
         show(lowValue: viewItem.lowValue)
     }
 
-    func addTypeButtons(types: [ChartType]) {
+    func addTypeButtons(types: [ChartTypeOld]) {
         for type in types {
             chartRateTypeItem.bindButton?(type.title, type.tag) { [weak self] in
                 self?.delegate.onSelect(type: type)
@@ -155,14 +155,14 @@ extension ChartViewController: IChartView {
         chartRateTypeItem.setEnabled?(tag)
     }
 
-    func set(chartType: ChartType) {
+    func set(chartType: ChartTypeOld) {
         chartRateTypeItem.setSelected?(chartType.tag)
         marketCapItem.setTypeTitle?(chartType.title)
     }
 
-    func showSelectedPoint(chartType: ChartType, timestamp: TimeInterval, value: CurrencyValue) {
+    func showSelectedPoint(chartType: ChartTypeOld, timestamp: TimeInterval, value: CurrencyValue) {
         let date = Date(timeIntervalSince1970: timestamp)
-        let formattedDate = [ChartType.month, ChartType.halfYear, ChartType.year].contains(chartType) ? DateHelper.instance.formatFullDateOnly(from: date) : DateHelper.instance.formatFullTime(from: date)
+        let formattedDate = [ChartTypeOld.month, ChartTypeOld.halfYear, ChartTypeOld.year].contains(chartType) ? DateHelper.instance.formatFullDateOnly(from: date) : DateHelper.instance.formatFullTime(from: date)
         let formattedValue = ValueFormatter.instance.format(currencyValue: value, fractionPolicy: .threshold(high: 1000, low: 0.1), trimmable: false)
 
         chartRateTypeItem.showPoint?(formattedDate, formattedValue)

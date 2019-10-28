@@ -11,16 +11,14 @@ class BalanceInteractor {
 
     private let walletManager: IWalletManager
     private let adapterManager: IAdapterManager
-    private let rateStatsManager: IRateStatsManager
     private let currencyManager: ICurrencyManager
     private let localStorage: ILocalStorage
     private let predefinedAccountTypeManager: IPredefinedAccountTypeManager
     private let rateManager: IXRateManager
 
-    init(walletManager: IWalletManager, adapterManager: IAdapterManager, rateStatsManager: IRateStatsManager, currencyManager: ICurrencyManager, localStorage: ILocalStorage, predefinedAccountTypeManager: IPredefinedAccountTypeManager, rateManager: IXRateManager) {
+    init(walletManager: IWalletManager, adapterManager: IAdapterManager, currencyManager: ICurrencyManager, localStorage: ILocalStorage, predefinedAccountTypeManager: IPredefinedAccountTypeManager, rateManager: IXRateManager) {
         self.walletManager = walletManager
         self.adapterManager = adapterManager
-        self.rateStatsManager = rateStatsManager
         self.currencyManager = currencyManager
         self.localStorage = localStorage
         self.predefinedAccountTypeManager = predefinedAccountTypeManager
@@ -48,11 +46,11 @@ extension BalanceInteractor: IBalanceInteractor {
     }
 
     func marketInfo(coinCode: CoinCode, currencyCode: String) -> MarketInfo? {
-        rateManager.kit.marketInfo(coinCode: coinCode, currencyCode: currencyCode)
+        rateManager.marketInfo(coinCode: coinCode, currencyCode: currencyCode)
     }
 
     func chartInfo(coinCode: CoinCode, currencyCode: String) -> ChartInfo? {
-        rateManager.kit.chartInfo(coinCode: coinCode, currencyCode: currencyCode, chartType: .day)
+        rateManager.chartInfo(coinCode: coinCode, currencyCode: currencyCode, chartType: .day)
     }
 
     func balance(wallet: Wallet) -> Decimal? {
@@ -117,7 +115,7 @@ extension BalanceInteractor: IBalanceInteractor {
     func subscribeToMarketInfo(currencyCode: String) {
         marketInfoDisposeBag = DisposeBag()
 
-        rateManager.kit.marketInfosObservable(currencyCode: currencyCode)
+        rateManager.marketInfosObservable(currencyCode: currencyCode)
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
                 .observeOn(MainScheduler.instance)
                 .subscribe(onNext: { [weak self] marketInfos in
@@ -130,7 +128,7 @@ extension BalanceInteractor: IBalanceInteractor {
         chartsDisposeBag = DisposeBag()
 
         for coinCode in coinCodes {
-            rateManager.kit.chartInfoObservable(coinCode: coinCode, currencyCode: currencyCode, chartType: .day)
+            rateManager.chartInfoObservable(coinCode: coinCode, currencyCode: currencyCode, chartType: .day)
                     .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
                     .observeOn(MainScheduler.instance)
                     .subscribe(onNext: { [weak self] chartInfo in
@@ -150,7 +148,7 @@ extension BalanceInteractor: IBalanceInteractor {
 
     func refresh() {
         adapterManager.refresh()
-        rateManager.kit.refresh()
+        rateManager.refresh()
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             self.delegate?.didRefresh()

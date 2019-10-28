@@ -24,7 +24,7 @@ protocol ILocalStorage: class {
     var lastExitDate: Double { get set }
     var didLaunchOnce: Bool { get set }
     var sendInputType: SendInputType? { get set }
-    var chartType: ChartType? { get set }
+    var chartType: ChartTypeOld? { get set }
     var mainShownOnce: Bool { get set }
     var appVersions: [AppVersion] { get set }
 }
@@ -247,7 +247,13 @@ protocol IRateManager {
 }
 
 protocol IXRateManager {
-    var kit: XRatesKit { get }
+    func refresh()
+    func marketInfo(coinCode: String, currencyCode: String) -> MarketInfo?
+    func marketInfoObservable(coinCode: String, currencyCode: String) -> Observable<MarketInfo>
+    func marketInfosObservable(currencyCode: String) -> Observable<[String: MarketInfo]>
+    func historicalRate(coinCode: String, currencyCode: String, timestamp: TimeInterval) -> Single<Decimal>
+    func chartInfo(coinCode: String, currencyCode: String, chartType: ChartType) -> ChartInfo?
+    func chartInfoObservable(coinCode: String, currencyCode: String, chartType: ChartType) -> Observable<ChartInfo>
 }
 
 protocol IRateStatsManager {

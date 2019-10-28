@@ -4,17 +4,17 @@ protocol IChartView: class {
     func showSpinner()
     func hideSpinner()
 
-    func set(chartType: ChartType)
+    func set(chartType: ChartTypeOld)
     func setChartTypeEnabled(tag: Int)
 
     func show(viewItem: ChartViewItem)
 
-    func showSelectedPoint(chartType: ChartType, timestamp: TimeInterval, value: CurrencyValue)
+    func showSelectedPoint(chartType: ChartTypeOld, timestamp: TimeInterval, value: CurrencyValue)
 
     func showError()
 
     func reloadAllModels()
-    func addTypeButtons(types: [ChartType])
+    func addTypeButtons(types: [ChartTypeOld])
 }
 
 protocol IChartViewDelegate {
@@ -22,12 +22,12 @@ protocol IChartViewDelegate {
 
     func viewDidLoad()
 
-    func onSelect(type: ChartType)
+    func onSelect(type: ChartTypeOld)
     func chartTouchSelect(point: ChartPoint)
 }
 
 protocol IChartInteractor {
-    var defaultChartType: ChartType { get set }
+    var defaultChartType: ChartTypeOld { get set }
 
     func subscribeToChartStats()
     func subscribeToLatestRate(coinCode: CoinCode, currencyCode: String)
@@ -45,5 +45,5 @@ protocol IChartRateConverter {
 }
 
 protocol IChartRateFactory {
-    func chartViewItem(type: ChartType, chartData: ChartData, rate: RateOld?, currency: Currency) throws -> ChartViewItem
+    func chartViewItem(type: ChartTypeOld, chartData: ChartData, rate: RateOld?, currency: Currency) throws -> ChartViewItem
 }

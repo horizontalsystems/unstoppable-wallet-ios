@@ -1,6 +1,6 @@
 import UIKit
 
-enum ChartType: String, CaseIterable {
+enum ChartTypeOld: String, CaseIterable {
     case day = "DAILY"
     case week = "WEEKLY"
     case month = "MONTHLY"

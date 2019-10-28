@@ -12,7 +12,7 @@ struct StatsCacheKey: Hashable {
 
 struct StatsCacheData {
     var marketCap: Decimal?
-    var stats: [ChartType: [ChartPoint]]
+    var stats: [ChartTypeOld: [ChartPoint]]
 }
 
 class RateStatsManager {
@@ -33,7 +33,7 @@ class RateStatsManager {
         self.chartRateConverter = chartRateConverter
     }
 
-    private func convert(responseData: ChartRateData, coinCode: CoinCode, currencyCode: String, type: ChartType) -> [ChartPoint] {
+    private func convert(responseData: ChartRateData, coinCode: CoinCode, currencyCode: String, type: ChartTypeOld) -> [ChartPoint] {
         let points = chartRateConverter.convert(chartRateData: responseData)
         if type == .year {
             return Array(points.suffix(RateStatsManager.yearPointCount))
@@ -52,9 +52,9 @@ class RateStatsManager {
     private func requestPoints(for coinCode: CoinCode, currencyCode: String) -> Single<StatsCacheData> {
         return apiProvider.getRateStatsData(coinCode: coinCode, currencyCode: currencyCode)
                 .map { [weak self] response -> StatsCacheData in
-                    var stats = [ChartType: [ChartPoint]]()
+                    var stats = [ChartTypeOld: [ChartPoint]]()
                     response.stats.forEach { key, value in
-                        if let type = ChartType(rawValue: key) {
+                        if let type = ChartTypeOld(rawValue: key) {
                             let points = self?.convert(responseData: value, coinCode: coinCode, currencyCode: currencyCode, type: type) ?? []
 
                             stats[type] = points
@@ -90,8 +90,8 @@ extension RateStatsManager: IRateStatsManager {
 
         dataRequest
                 .map { cacheData -> ChartData in
-                    var stats = [ChartType: [ChartPoint]]()
-                    var diffs = [ChartType: Decimal]()
+                    var stats = [ChartTypeOld: [ChartPoint]]()
+                    var diffs = [ChartTypeOld: Decimal]()
                     cacheData.stats.forEach { [weak self] type, points in
                         var points = points
                         if let rate = rate, rate.date.timeIntervalSince1970 > (points.last?.timestamp ?? 0) {

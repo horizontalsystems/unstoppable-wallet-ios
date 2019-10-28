@@ -12,7 +12,7 @@ class ChartPresenter {
 
     let coin: Coin
 
-    private var chartType: ChartType
+    private var chartType: ChartTypeOld
 
     init(interactor: IChartInteractor, factory: IChartRateFactory, coin: Coin, currency: Currency) {
         self.interactor = interactor
@@ -36,8 +36,8 @@ class ChartPresenter {
     }
 
     private func updateButtons(chartData: ChartData) {
-        var enabledTypes = [ChartType]()
-        ChartType.allCases.forEach { type in
+        var enabledTypes = [ChartTypeOld]()
+        ChartTypeOld.allCases.forEach { type in
             let enabled = (chartData.stats[type]?.count ?? 0) > 10
             if enabled {
                 enabledTypes.append(type)
@@ -66,12 +66,12 @@ extension ChartPresenter: IChartViewDelegate {
         interactor.subscribeToLatestRate(coinCode: coin.code, currencyCode: currency.code)
         interactor.syncStats(coinCode: coin.code, currencyCode: currency.code)
 
-        view?.addTypeButtons(types: ChartType.allCases)
+        view?.addTypeButtons(types: ChartTypeOld.allCases)
 
         view?.reloadAllModels()
     }
 
-    func onSelect(type: ChartType) {
+    func onSelect(type: ChartTypeOld) {
         guard chartType != type else {
             return
         }

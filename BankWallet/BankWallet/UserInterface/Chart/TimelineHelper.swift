@@ -1,6 +1,6 @@
 import Foundation
 
-extension ChartType {
+extension ChartTypeOld {
 
     var step: TimeInterval {
         switch self {
@@ -17,7 +17,7 @@ extension ChartType {
 class TimelineHelper {
 
     // return timestamps in minutes for grid vertical lines
-    func timestamps(frame: ChartFrame, type: ChartType) -> [TimeInterval] {
+    func timestamps(frame: ChartFrame, type: ChartTypeOld) -> [TimeInterval] {
         var timestamps = [TimeInterval]()
 
         let lastDate = Date(timeIntervalSince1970: frame.right)
@@ -36,7 +36,7 @@ class TimelineHelper {
         return timestamps
     }
 
-    private func stepBack(for timestamp: TimeInterval, type: ChartType) -> TimeInterval {
+    private func stepBack(for timestamp: TimeInterval, type: ChartTypeOld) -> TimeInterval {
         let hourInSeconds: TimeInterval = 60 * 60
         switch type {
         case .day: return timestamp - type.step * hourInSeconds

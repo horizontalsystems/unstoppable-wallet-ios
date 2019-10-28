@@ -151,9 +151,9 @@ extension UserDefaultsStorage: ILocalStorage {
         }
     }
 
-    var chartType: ChartType? {
+    var chartType: ChartTypeOld? {
         get {
-            if let rawValue = getString(keyChartType), let value = ChartType(rawValue: rawValue) {
+            if let rawValue = getString(keyChartType), let value = ChartTypeOld(rawValue: rawValue) {
                 return value
             }
             return nil

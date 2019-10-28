@@ -2,7 +2,7 @@ import Foundation
 
 class TimestampFormatter {
 
-    static public func text(timestamp: TimeInterval, type: ChartType) -> String {
+    static public func text(timestamp: TimeInterval, type: ChartTypeOld) -> String {
         let date = Date(timeIntervalSince1970: timestamp)
         let components = Calendar.current.dateComponents([.year, .month, .day, .hour], from: date)
 

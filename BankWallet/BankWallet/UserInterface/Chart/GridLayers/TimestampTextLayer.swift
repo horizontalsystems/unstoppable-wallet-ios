@@ -2,7 +2,7 @@ import UIKit
 
 class TimestampTextLayer: CATextLayer {
 
-    func refresh(configuration: ChartConfiguration, chartType: ChartType, insets: UIEdgeInsets, chartFrame: ChartFrame, timestamps: [TimeInterval]) {
+    func refresh(configuration: ChartConfiguration, chartType: ChartTypeOld, insets: UIEdgeInsets, chartFrame: ChartFrame, timestamps: [TimeInterval]) {
         guard !bounds.isEmpty else {
             return
         }

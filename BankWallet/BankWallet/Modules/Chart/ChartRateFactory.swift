@@ -3,7 +3,7 @@ import Foundation
 struct ChartViewItem {
     let latestRateDate: Date?
 
-    let type: ChartType
+    let type: ChartTypeOld
 
     let rateValue: CurrencyValue?
     let marketCapValue: CurrencyValue?
@@ -24,7 +24,7 @@ class ChartRateFactory: IChartRateFactory {
     init() {
     }
 
-    func chartViewItem(type: ChartType, chartData: ChartData, rate: RateOld?, currency: Currency) throws -> ChartViewItem {
+    func chartViewItem(type: ChartTypeOld, chartData: ChartData, rate: RateOld?, currency: Currency) throws -> ChartViewItem {
         guard let points = chartData.stats[type] else {
             throw FactoryError.noRateStats
         }

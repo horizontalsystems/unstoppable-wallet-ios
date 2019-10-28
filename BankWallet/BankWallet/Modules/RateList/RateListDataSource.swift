@@ -1,7 +1,7 @@
 import Foundation
 
 class RateListDataSource {
-    private static let rateListType: ChartType = .day
+    private static let rateListType: ChartTypeOld = .day
 
     var items = [RateViewItem]()
 }

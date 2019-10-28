@@ -4,7 +4,7 @@ import SnapKit
 protocol IChartDataSource: class {
     var chartData: [ChartPoint] { get }
     var chartFrame: ChartFrame  { get }
-    var chartType: ChartType { get }
+    var chartType: ChartTypeOld { get }
 }
 
 protocol IChartIndicatorDelegate: class {
@@ -13,7 +13,7 @@ protocol IChartIndicatorDelegate: class {
 }
 
 class ChartView: UIView {
-    private(set) var chartType: ChartType
+    private(set) var chartType: ChartTypeOld
     private let configuration: ChartConfiguration
     private let scaleHelper: ChartScaleHelper
 
@@ -27,7 +27,7 @@ class ChartView: UIView {
     private var gridView: GridView?
     private var indicatorView: ChartIndicatorView?
 
-    public init(configuration: ChartConfiguration, chartType: ChartType = .day, indicatorDelegate: IChartIndicatorDelegate? = nil) {
+    public init(configuration: ChartConfiguration, chartType: ChartTypeOld = .day, indicatorDelegate: IChartIndicatorDelegate? = nil) {
         self.configuration = configuration
         self.chartType = chartType
         self.indicatorDelegate = indicatorDelegate
@@ -72,7 +72,7 @@ class ChartView: UIView {
         }
     }
 
-    public func set(chartType: ChartType, data: [ChartPoint], animated: Bool = true) {
+    public func set(chartType: ChartTypeOld, data: [ChartPoint], animated: Bool = true) {
         self.chartType = chartType
         self.chartData = data
 
