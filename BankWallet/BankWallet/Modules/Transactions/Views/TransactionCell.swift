@@ -106,9 +106,34 @@ class TransactionCell: AppCell {
             currencyAmountLabel.text = nil
         }
 
-        pendingView.bind(status: status)
-        processingView.bind(status: status)
-        completedView.bind(status: status, date: item.date)
+        switch status {
+        case .pending:
+            pendingView.startAnimating()
+            pendingView.isHidden = false
+
+            processingView.stopAnimating()
+            processingView.isHidden = true
+            completedView.isHidden = true
+
+        case .processing(let progress):
+            processingView.bind(filledCount: Int(Double(TransactionProcessingView.stepsCount) * progress))
+            processingView.startAnimating()
+            processingView.isHidden = false
+
+            pendingView.stopAnimating()
+            pendingView.isHidden = true
+            completedView.isHidden = true
+
+        case .completed:
+            completedView.bind(date: item.date)
+            completedView.isHidden = false
+
+            pendingView.stopAnimating()
+            pendingView.isHidden = true
+            processingView.stopAnimating()
+            processingView.isHidden = true
+
+        }
     }
 
     override func setHighlighted(_ highlighted: Bool, animated: Bool) {

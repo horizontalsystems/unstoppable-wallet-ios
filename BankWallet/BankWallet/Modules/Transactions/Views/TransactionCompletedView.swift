@@ -12,28 +12,24 @@ class TransactionCompletedView: UIView {
         timeLabel.snp.makeConstraints { maker in
             maker.leading.top.bottom.equalToSuperview()
         }
-        completedImageView.image = UIImage(named: "Transaction Success Icon")
+
         addSubview(completedImageView)
         completedImageView.snp.makeConstraints { maker in
             maker.leading.equalTo(timeLabel.snp.trailing).offset(CGFloat.margin2x)
             maker.centerY.equalTo(timeLabel)
         }
 
+        completedImageView.image = UIImage(named: "Transaction Success Icon")
+
         timeLabel.textColor = .appGray
         timeLabel.font = .appSubhead2
     }
 
-    required init?(coder: NSCoder) {
-        fatalError("not implemented")
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 
-    func bind(status: TransactionStatus, date: Date) {
-        guard status == .completed else {
-            isHidden = true
-            return
-        }
-
-        isHidden = false
+    func bind(date: Date) {
         timeLabel.text = DateHelper.instance.formatTransactionTime(from: date)
     }
 
