@@ -7,7 +7,7 @@ class TransactionStatusItemView: BaseActionItemView {
     let titleLabel = UILabel()
     let statusTextLabel = UILabel()
     let iconImageView = UIImageView()
-    let barsProgressView = BarsProgressView(count: AppTheme.progressStepsCount, barWidth: TransactionInfoTheme.barsProgressBarWidth, color: TransactionInfoTheme.barsProgressColor, inactiveColor: TransactionInfoTheme.barsProgressInactiveColor)
+    let barsProgressView = BarsProgressView(barWidth: TransactionInfoTheme.barsProgressBarWidth, color: TransactionInfoTheme.barsProgressColor, inactiveColor: TransactionInfoTheme.barsProgressInactiveColor)
 
     override var item: TransactionStatusItem? { return _item as? TransactionStatusItem }
 
@@ -43,6 +43,8 @@ class TransactionStatusItemView: BaseActionItemView {
             maker.trailing.equalToSuperview().offset(-TransactionInfoTheme.regularMargin)
             maker.height.equalTo(TransactionInfoTheme.barsProgressHeight)
         }
+
+        barsProgressView.set(barsCount: AppTheme.progressStepsCount)
     }
 
     override func updateView() {

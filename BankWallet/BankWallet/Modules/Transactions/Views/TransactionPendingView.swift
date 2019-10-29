@@ -6,7 +6,7 @@ class TransactionPendingView: UIView {
     private let animationDelay = 200
 
     private let disposeBag = DisposeBag()
-    private var timerDisposable: Disposable?
+    private var animationDisposable: Disposable?
 
     private let pendingImageView = UIImageView(image: UIImage(named: "Transaction Processing Icon"))
     private let pendingLabel = UILabel()
@@ -30,22 +30,24 @@ class TransactionPendingView: UIView {
         }
     }
 
-    required init?(coder: NSCoder) {
-        fatalError("not implemented")
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 
     func bind(status: TransactionStatus) {
-        guard status == .pending else {
-            isHidden = true
-            timerDisposable?.dispose()
-            return
-        }
 
-        if timerDisposable == nil {
+    }
+
+    private func updateText(forIndex index: Int) {
+        pendingLabel.text = "transactions.pending".localized + animatableStrings[index]
+    }
+
+    func startAnimating() {
+        if animationDisposable == nil {
             isHidden = false
             var index = 0
             let count = animatableStrings.count
-            timerDisposable = Observable<Int>
+            animationDisposable = Observable<Int>
                     .timer(.milliseconds(0), period: .milliseconds(animationDelay), scheduler: MainScheduler.instance)
                     .subscribe(onNext: { [weak self] _ in
                         self?.updateText(forIndex: index)
@@ -53,12 +55,12 @@ class TransactionPendingView: UIView {
                         index = index > count - 1 ? 0 : index
                     })
 
-            timerDisposable?.disposed(by: disposeBag)
+            animationDisposable?.disposed(by: disposeBag)
         }
     }
 
-    private func updateText(forIndex index: Int) {
-        pendingLabel.text = "transactions.pending".localized + animatableStrings[index]
+    func stopAnimating() {
+        animationDisposable?.dispose()
     }
 
 }

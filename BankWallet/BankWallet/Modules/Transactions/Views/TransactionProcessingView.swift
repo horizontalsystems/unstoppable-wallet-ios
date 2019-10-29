@@ -2,9 +2,9 @@ import UIKit
 import SnapKit
 
 class TransactionProcessingView: UIView {
-    private static let stepsCount = 3
+    static let stepsCount = 3
 
-    private let barsProgressView = BarsProgressView(count: TransactionProcessingView.stepsCount, barWidth: 4, color: .appGray50, inactiveColor: .appSteel20)
+    private let barsProgressView = BarsProgressView(barWidth: 4, color: .appGray50, inactiveColor: .appSteel20)
     private let processingLabel = UILabel()
 
     init() {
@@ -22,27 +22,27 @@ class TransactionProcessingView: UIView {
             maker.top.bottom.trailing.equalToSuperview()
         }
 
+        barsProgressView.set(barsCount: TransactionProcessingView.stepsCount)
+
         processingLabel.font = .appSubhead2
         processingLabel.textColor = .appGray
         processingLabel.text = "transactions.processing".localized
-        barsProgressView.configure()
     }
 
-    required init?(coder: NSCoder) {
-        fatalError("not implemented")
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 
-    func bind(status: TransactionStatus) {
-        guard case let .processing(progress) = status else {
-            isHidden = true
-            barsProgressView.isAnimating = false
+    func bind(filledCount: Int) {
+        barsProgressView.filledCount = filledCount
+    }
 
-            return
-        }
+    func startAnimating() {
+        barsProgressView.startAnimating()
+    }
 
-        isHidden = false
-        barsProgressView.filledCount = Int(Double(TransactionProcessingView.stepsCount) * progress)
-        barsProgressView.isAnimating = true
+    func stopAnimating() {
+        barsProgressView.stopAnimating()
     }
 
 }

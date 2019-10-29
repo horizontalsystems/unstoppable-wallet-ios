@@ -5,46 +5,22 @@ import RxSwift
 class BarsProgressView: UIView {
     private let animationDelay = 200
     private let disposeBag = DisposeBag()
-    private var timerDisposable: Disposable?
+    private var animateDisposable: Disposable?
 
-    private let bars: [UIView]
+    private var bars: [UIView] = []
     private let barWidth: CGFloat
     private let color: UIColor
     private let inactiveColor: UIColor
 
     var filledCount: Int = 0 {
         didSet {
-            if timerDisposable == nil {
-                updateBarsVisibility(forCount: bars.count)
+            if animateDisposable == nil {
+                updateFillColor(fullFillBefore: filledCount)
             }
         }
     }
 
-    var isAnimating: Bool = false {
-        didSet {
-            if isAnimating && timerDisposable == nil {
-                var visibleCount = 0
-                let count = bars.count
-                timerDisposable = Observable<Int>
-                        .timer(.milliseconds(0), period: .milliseconds(animationDelay), scheduler: MainScheduler.instance)
-                        .subscribe(onNext: { [weak self] _ in
-                            self?.updateBarsVisibility(forCount: visibleCount)
-                            visibleCount += 1
-                            visibleCount = visibleCount > count ? 0 : visibleCount
-                        })
-
-                timerDisposable?.disposed(by: disposeBag)
-            } else if !isAnimating {
-                updateBarsVisibility(forCount: bars.count)
-                timerDisposable?.dispose()
-            }
-        }
-    }
-
-    init(count: Int, barWidth: CGFloat, color: UIColor, inactiveColor: UIColor) {
-        bars = (0..<count).map { _ in
-            UIView(frame: .zero)
-        }
+    init(barWidth: CGFloat, color: UIColor, inactiveColor: UIColor) {
         self.barWidth = barWidth
         self.color = color
         self.inactiveColor = inactiveColor
@@ -56,7 +32,13 @@ class BarsProgressView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func configure() {
+    func set(barsCount count: Int) {
+        bars.forEach { $0.removeFromSuperview() }
+
+        bars = (0..<count).map { _ in
+            UIView(frame: .zero)
+        }
+
         for i in 0..<bars.count {
             addSubview(bars[i])
 
@@ -81,10 +63,31 @@ class BarsProgressView: UIView {
         }
     }
 
-    private func updateBarsVisibility(forCount count: Int) {
+    func startAnimating() {
+        if animateDisposable == nil {
+            var dx = 0
+            let count = bars.count
+            animateDisposable = Observable<Int>
+                    .timer(.milliseconds(0), period: .milliseconds(animationDelay), scheduler: MainScheduler.instance)
+                    .subscribe(onNext: { [weak self] _ in
+                        let startIndex = self?.filledCount ?? 0
+                        self?.updateFillColor(fullFillBefore: startIndex + dx)
+                        dx += 1
+                        dx = startIndex + dx > count ? 0 : dx
+                    })
+
+            animateDisposable?.disposed(by: disposeBag)
+        }
+    }
+
+    func stopAnimating() {
+        updateFillColor(fullFillBefore: filledCount)
+        animateDisposable?.dispose()
+    }
+
+    private func updateFillColor(fullFillBefore count: Int) {
         for (index, bar) in bars.enumerated() {
-            bar.backgroundColor = index < filledCount ? color : inactiveColor
-            bar.backgroundColor = index < count ? bar.backgroundColor : .clear
+            bar.backgroundColor = index < count ? color : inactiveColor
         }
     }
 
