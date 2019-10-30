@@ -2,8 +2,6 @@ import UIKit
 import SnapKit
 
 class TransactionProcessingView: UIView {
-    static let stepsCount = 3
-
     private let barsProgressView = BarsProgressView(barWidth: 4, color: .appGray50, inactiveColor: .appSteel20)
     private let processingLabel = UILabel()
 
@@ -12,6 +10,7 @@ class TransactionProcessingView: UIView {
 
         addSubview(barsProgressView)
         addSubview(processingLabel)
+
         barsProgressView.snp.makeConstraints { maker in
             maker.leading.equalToSuperview()
             maker.centerY.equalTo(processingLabel)
@@ -22,7 +21,7 @@ class TransactionProcessingView: UIView {
             maker.top.bottom.trailing.equalToSuperview()
         }
 
-        barsProgressView.set(barsCount: TransactionProcessingView.stepsCount)
+        barsProgressView.set(barsCount: AppTheme.progressStepsCount)
 
         processingLabel.font = .appSubhead2
         processingLabel.textColor = .appGray
