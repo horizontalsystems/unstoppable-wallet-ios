@@ -72,7 +72,7 @@ class ChartScaleHelper {
             scalePow = 1 * pow(10, abs(scale))
         }
         let multipliedValue = max * scalePow
-        var multipliedIntegerValue = Decimal(Int(truncating: multipliedValue as NSNumber))
+        var multipliedIntegerValue = Decimal(Int((multipliedValue as NSNumber).doubleValue))
 
         if (multipliedValue - multipliedIntegerValue) > 0 {
             multipliedIntegerValue += 1

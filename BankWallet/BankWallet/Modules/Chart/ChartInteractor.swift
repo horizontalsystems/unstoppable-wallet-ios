@@ -1,18 +1,20 @@
 import UIKit
 import RxSwift
+import XRatesKit
 
 class ChartInteractor {
     weak var delegate: IChartInteractorDelegate?
 
     private let disposeBag = DisposeBag()
+    private var chartsDisposeBag = DisposeBag()
 
-    private let rateStatsManager: IRateStatsManager
-    private let localStorage: ILocalStorage
+    private let rateManager: IXRateManager
+    private let chartTypeStorage: IChartTypeStorage
     private let rateStorage: IRateStorage
 
-    init(rateStatsManager: IRateStatsManager, localStorage: ILocalStorage, rateStorage: IRateStorage) {
-        self.rateStatsManager = rateStatsManager
-        self.localStorage = localStorage
+    init(rateManager: IXRateManager, chartTypeStorage: IChartTypeStorage, rateStorage: IRateStorage) {
+        self.rateManager = rateManager
+        self.chartTypeStorage = chartTypeStorage
         self.rateStorage = rateStorage
     }
 
@@ -20,40 +22,44 @@ class ChartInteractor {
 
 extension ChartInteractor: IChartInteractor {
 
-    var defaultChartType: ChartTypeOld {
+    var defaultChartType: ChartType? {
         get {
-            return localStorage.chartType ?? .day
+            chartTypeStorage.chartType
         }
         set {
-            localStorage.chartType = newValue
+            chartTypeStorage.chartType = newValue
         }
     }
 
-    func subscribeToChartStats() {
-        rateStatsManager.statsObservable
-                .observeOn(MainScheduler.instance)
-                .subscribe(onNext: { [weak self] in
-                    switch $0 {
-                    case .success(let data):
-                        self?.delegate?.didReceive(chartData: data)
-                    case .error:
-                        self?.delegate?.onError()
-                    }
-                })
-                .disposed(by: disposeBag)
+    func chartInfo(coinCode: CoinCode, currencyCode: String, chartType: ChartType) -> ChartInfo? {
+        rateManager.chartInfo(coinCode: coinCode, currencyCode: currencyCode, chartType: chartType)
     }
 
-    func subscribeToLatestRate(coinCode: CoinCode, currencyCode: String) {
-        rateStorage.latestRateObservable(forCoinCode: coinCode, currencyCode: currencyCode)
+    func subscribeToChartInfo(coinCode: CoinCode, currencyCode: String, chartType: ChartType) {
+        chartsDisposeBag = DisposeBag()
+
+        rateManager.chartInfoObservable(coinCode: coinCode, currencyCode: currencyCode, chartType: chartType)
+                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
                 .observeOn(MainScheduler.instance)
-                .subscribe(onNext: { [weak self] in
-                    self?.delegate?.didReceive(rate: $0)
+                .subscribe(onNext: { [weak self] chartInfo in
+                    self?.delegate?.didReceive(chartInfo: chartInfo, coinCode: coinCode)
+                }, onError: { [weak self] error in
+                    self?.delegate?.onError()
                 })
-                .disposed(by: disposeBag)
+                .disposed(by: chartsDisposeBag)
     }
 
-    func syncStats(coinCode: CoinCode, currencyCode: String) {
-        rateStatsManager.syncStats(coinCode: coinCode, currencyCode: currencyCode)
+    func marketInfo(coinCode: CoinCode, currencyCode: String) -> MarketInfo? {
+        rateManager.marketInfo(coinCode: coinCode, currencyCode: currencyCode)
+    }
+
+    func subscribeToMarketInfo(coinCode: CoinCode, currencyCode: String) {
+        rateManager.marketInfoObservable(coinCode: coinCode, currencyCode: currencyCode)
+                .observeOn(MainScheduler.instance)
+                .subscribe(onNext: { [weak self] marketInfo in
+                    self?.delegate?.didReceive(marketInfo: marketInfo)
+                })
+                .disposed(by: disposeBag)
     }
 
 }

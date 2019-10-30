@@ -5,7 +5,7 @@ class ChartRateItem: BaseActionItem {
     let chartConfiguration: ChartConfiguration
     weak var indicatorDelegate: IChartIndicatorDelegate?
 
-    var bind: ((ChartTypeOld, [ChartPoint], Bool) -> ())?
+    var bind: ((GridIntervalType, [ChartPointPosition], TimeInterval?, TimeInterval?, Bool) -> ())?
     var showSpinner: (() -> ())?
     var hideSpinner: (() -> ())?
     var showError: ((String) -> ())?

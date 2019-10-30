@@ -2,7 +2,7 @@ import UIKit
 
 class PointConverter {
 
-    func convert(chartPoint: ChartPoint, viewBounds: CGRect, chartFrame: ChartFrame, retinaShift: Bool) -> CGPoint {
+    func convert(chartPoint: ChartPointPosition, viewBounds: CGRect, chartFrame: ChartFrame, retinaShift: Bool) -> CGPoint {
         guard chartFrame.height != 0, chartFrame.width != 0 else {
             return .zero
         }

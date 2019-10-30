@@ -12,7 +12,7 @@ struct StatsCacheKey: Hashable {
 
 struct StatsCacheData {
     var marketCap: Decimal?
-    var stats: [ChartTypeOld: [ChartPoint]]
+    var stats: [ChartTypeOld: [ChartPointPosition]]
 }
 
 class RateStatsManager {
@@ -33,7 +33,7 @@ class RateStatsManager {
         self.chartRateConverter = chartRateConverter
     }
 
-    private func convert(responseData: ChartRateData, coinCode: CoinCode, currencyCode: String, type: ChartTypeOld) -> [ChartPoint] {
+    private func convert(responseData: ChartRateData, coinCode: CoinCode, currencyCode: String, type: ChartTypeOld) -> [ChartPointPosition] {
         let points = chartRateConverter.convert(chartRateData: responseData)
         if type == .year {
             return Array(points.suffix(RateStatsManager.yearPointCount))
@@ -42,7 +42,7 @@ class RateStatsManager {
         }
     }
 
-    private func calculateDiff(for points: [ChartPoint]) -> Decimal {
+    private func calculateDiff(for points: [ChartPointPosition]) -> Decimal {
         if let first = points.first(where: { point in return !point.value.isZero }), let last = points.last {
             return (last.value - first.value) / first.value * 100
         }
@@ -52,7 +52,7 @@ class RateStatsManager {
     private func requestPoints(for coinCode: CoinCode, currencyCode: String) -> Single<StatsCacheData> {
         return apiProvider.getRateStatsData(coinCode: coinCode, currencyCode: currencyCode)
                 .map { [weak self] response -> StatsCacheData in
-                    var stats = [ChartTypeOld: [ChartPoint]]()
+                    var stats = [ChartTypeOld: [ChartPointPosition]]()
                     response.stats.forEach { key, value in
                         if let type = ChartTypeOld(rawValue: key) {
                             let points = self?.convert(responseData: value, coinCode: coinCode, currencyCode: currencyCode, type: type) ?? []
@@ -76,41 +76,41 @@ extension RateStatsManager: IRateStatsManager {
     }
 
     func syncStats(coinCode: CoinCode, currencyCode: String) {
-        let currentTimestamp = Date().timeIntervalSince1970
-
-        let key = StatsCacheKey(coinCode: coinCode, currencyCode: currencyCode)
-
-        var dataRequest: Single<StatsCacheData>
-        if let cacheData = cache[key], let lastDayPoint = cacheData.stats[.day]?.last, currentTimestamp - lastDayPoint.timestamp < 30 * 60 { // check whether the stats exceeded half an hour threshold
-            dataRequest = Single.just(cacheData)
-        } else {
-            dataRequest = requestPoints(for: coinCode, currencyCode: currencyCode)
-        }
-        let rate = rateStorage.latestRate(coinCode: coinCode, currencyCode: currencyCode)
-
-        dataRequest
-                .map { cacheData -> ChartData in
-                    var stats = [ChartTypeOld: [ChartPoint]]()
-                    var diffs = [ChartTypeOld: Decimal]()
-                    cacheData.stats.forEach { [weak self] type, points in
-                        var points = points
-                        if let rate = rate, rate.date.timeIntervalSince1970 > (points.last?.timestamp ?? 0) {
-                            points.append(ChartPoint(timestamp: rate.date.timeIntervalSince1970, value: rate.value))
-                        }
-
-                        stats[type] = points
-                        diffs[type] = self?.calculateDiff(for: points)
-                    }
-
-                    return ChartData(coinCode: coinCode, marketCap: cacheData.marketCap, stats: stats, diffs: diffs)
-                }
-                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
-                .subscribe(onSuccess: { [weak self] in
-                    self?.statsSubject.onNext(.success($0))
-                }, onError: { [weak self] _ in
-                    self?.statsSubject.onNext(.error(coinCode))
-                })
-                .disposed(by: disposeBag)
+//        let currentTimestamp = Date().timeIntervalSince1970
+//
+//        let key = StatsCacheKey(coinCode: coinCode, currencyCode: currencyCode)
+//
+//        var dataRequest: Single<StatsCacheData>
+//        if let cacheData = cache[key], let lastDayPoint = cacheData.stats[.day]?.last, currentTimestamp - lastDayPoint.timestamp < 30 * 60 { // check whether the stats exceeded half an hour threshold
+//            dataRequest = Single.just(cacheData)
+//        } else {
+//            dataRequest = requestPoints(for: coinCode, currencyCode: currencyCode)
+//        }
+//        let rate = rateStorage.latestRate(coinCode: coinCode, currencyCode: currencyCode)
+//
+//        dataRequest
+//                .map { cacheData -> ChartData in
+//                    var stats = [ChartTypeOld: [ChartPoint2]]()
+//                    var diffs = [ChartTypeOld: Decimal]()
+//                    cacheData.stats.forEach { [weak self] type, points in
+//                        var points = points
+//                        if let rate = rate, rate.date.timeIntervalSince1970 > (points.last?.timestamp ?? 0) {
+//                            points.append(ChartPoint2(timestamp: rate.date.timeIntervalSince1970, value: rate.value))
+//                        }
+//
+//                        stats[type] = points
+//                        diffs[type] = self?.calculateDiff(for: points)
+//                    }
+//
+//                    return ChartData(coinCode: coinCode, marketCap: cacheData.marketCap, stats: stats, diffs: diffs)
+//                }
+//                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
+//                .subscribe(onSuccess: { [weak self] in
+//                    self?.statsSubject.onNext(.success($0))
+//                }, onError: { [weak self] _ in
+//                    self?.statsSubject.onNext(.error(coinCode))
+//                })
+//                .disposed(by: disposeBag)
     }
 
 }

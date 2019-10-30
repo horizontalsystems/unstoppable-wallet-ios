@@ -55,9 +55,21 @@ class ChartCurveView: UIView {
         gradientLayer.startPoint = CGPoint.zero
         gradientLayer.endPoint = CGPoint(x: 0, y: 1)
 
-        let color = dataSource.chartFrame.positive ? configuration.curvePositiveColor : configuration.gradientNegativeColor
-        linesLayer.strokeColor = color.cgColor
-        gradientLayer.colors = [color.withAlphaComponent(configuration.gradientStartTransparency).cgColor, color.withAlphaComponent(configuration.gradientFinishTransparency).cgColor]
+        let curveColor: UIColor
+        let gradientColor: UIColor
+        switch dataSource.chartFrame.chartColorType {
+        case .positive:
+            curveColor = configuration.curvePositiveColor
+            gradientColor = configuration.gradientPositiveColor
+        case .negative:
+            curveColor = configuration.curveNegativeColor
+            gradientColor = configuration.gradientNegativeColor
+        case .incomplete:
+            curveColor = configuration.curveIncompleteColor
+            gradientColor = configuration.gradientIncompleteColor
+        }
+        linesLayer.strokeColor = curveColor.cgColor
+        gradientLayer.colors = [gradientColor.withAlphaComponent(configuration.gradientStartTransparency).cgColor, gradientColor.withAlphaComponent(configuration.gradientFinishTransparency).cgColor]
 
         let bottom = bounds.maxY - 0.5 / UIScreen.main.scale
 

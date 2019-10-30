@@ -1,7 +1,7 @@
 class App {
     static let shared = App()
 
-    let localStorage: ILocalStorage
+    let localStorage: ILocalStorage & IChartTypeStorage
     let secureStorage: ISecureStorage
     let storage: IRateStorage & IEnabledWalletStorage & IAccountRecordStorage & IPriceAlertRecordStorage
 

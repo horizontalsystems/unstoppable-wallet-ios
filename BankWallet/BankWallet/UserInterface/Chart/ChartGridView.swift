@@ -49,7 +49,7 @@ class GridView: UIView {
         insets.bottom = scaleOffsetSize.height
         valueTextLayer.refresh(configuration: configuration, insets: insets, chartFrame: chartFrame)
 
-        let timestamps = timeLineHelper.timestamps(frame: chartFrame, type: dataSource.chartType)
+        let timestamps = timeLineHelper.timestamps(frame: chartFrame, gridIntervalType: dataSource.gridIntervalType)
 
         // timestamp lines
         insets = UIEdgeInsets.zero
@@ -60,7 +60,7 @@ class GridView: UIView {
         // timestamp texts
         insets = UIEdgeInsets.zero
         insets.right = scaleOffsetSize.width
-        timestampTextLayer.refresh(configuration: configuration, chartType: dataSource.chartType, insets: insets, chartFrame: dataSource.chartFrame, timestamps: timestamps)
+        timestampTextLayer.refresh(configuration: configuration, gridIntervalType: dataSource.gridIntervalType, insets: insets, chartFrame: dataSource.chartFrame, timestamps: timestamps)
     }
 
     public func clear() {

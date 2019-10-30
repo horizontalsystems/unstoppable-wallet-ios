@@ -1,20 +1,22 @@
 import Foundation
+import XRatesKit
 
 protocol IChartView: class {
     func showSpinner()
     func hideSpinner()
 
-    func set(chartType: ChartTypeOld)
+    func set(chartType: ChartType)
     func setChartTypeEnabled(tag: Int)
 
-    func show(viewItem: ChartViewItem)
+    func show(chartViewItem: ChartInfoViewItem)
+    func show(marketInfoViewItem: MarketInfoViewItem)
 
-    func showSelectedPoint(chartType: ChartTypeOld, timestamp: TimeInterval, value: CurrencyValue)
+    func showSelectedPoint(chartType: ChartType, timestamp: TimeInterval, value: CurrencyValue)
 
     func showError()
 
     func reloadAllModels()
-    func addTypeButtons(types: [ChartTypeOld])
+    func addTypeButtons(types: [ChartType])
 }
 
 protocol IChartViewDelegate {
@@ -22,28 +24,31 @@ protocol IChartViewDelegate {
 
     func viewDidLoad()
 
-    func onSelect(type: ChartTypeOld)
-    func chartTouchSelect(point: ChartPoint)
+    func onSelect(type: ChartType)
+    func chartTouchSelect(timestamp: TimeInterval, value: Decimal)
 }
 
 protocol IChartInteractor {
-    var defaultChartType: ChartTypeOld { get set }
+    var defaultChartType: ChartType? { get set }
 
-    func subscribeToChartStats()
-    func subscribeToLatestRate(coinCode: CoinCode, currencyCode: String)
-    func syncStats(coinCode: CoinCode, currencyCode: String)
+    func chartInfo(coinCode: CoinCode, currencyCode: String, chartType: ChartType) -> ChartInfo?
+    func subscribeToChartInfo(coinCode: CoinCode, currencyCode: String, chartType: ChartType)
+
+    func marketInfo(coinCode: CoinCode, currencyCode: String) -> MarketInfo?
+    func subscribeToMarketInfo(coinCode: CoinCode, currencyCode: String)
 }
 
 protocol IChartInteractorDelegate: class {
-    func didReceive(chartData: ChartData)
-    func didReceive(rate: RateOld)
+    func didReceive(chartInfo: ChartInfo, coinCode: CoinCode)
+    func didReceive(marketInfo: MarketInfo)
     func onError()
 }
 
 protocol IChartRateConverter {
-    func convert(chartRateData: ChartRateData) -> [ChartPoint]
+    func convert(chartRateData: ChartRateData) -> [ChartPointPosition]
 }
 
 protocol IChartRateFactory {
-    func chartViewItem(type: ChartTypeOld, chartData: ChartData, rate: RateOld?, currency: Currency) throws -> ChartViewItem
+    func chartViewItem(type: ChartType, chartInfo: ChartInfo, currency: Currency) throws -> ChartInfoViewItem
+    func marketInfoViewItem(marketInfo: MarketInfo, coin: Coin, currency: Currency) -> MarketInfoViewItem
 }

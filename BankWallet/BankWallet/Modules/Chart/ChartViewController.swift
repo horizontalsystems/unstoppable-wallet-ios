@@ -1,14 +1,9 @@
 import UIKit
 import ActionSheet
+import XRatesKit
 
 class ChartViewController: ActionSheetController {
     private let delegate: IChartViewDelegate
-
-    private static let marketCapFormatter: NumberFormatter = {
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .currency
-        return formatter
-    }()
 
     private let titleItem: AlertTitleItem
     private let currentRateItem = ChartCurrentRateItem(tag: 1)
@@ -61,12 +56,12 @@ class ChartViewController: ActionSheetController {
         delegate.viewDidLoad()
     }
 
-    private func showSubtitle(for date: Date?) {
-        guard let date = date else {
+    private func showSubtitle(for timestamp: TimeInterval?) {
+        guard let timestamp = timestamp else {
             titleItem.bindSubtitle?(nil)
             return
         }
-        titleItem.bindSubtitle?(DateHelper.instance.formatFullTime(from: date))
+        titleItem.bindSubtitle?(DateHelper.instance.formatFullTime(from: Date(timeIntervalSince1970: timestamp)))
     }
 
     private func show(currentRateValue: CurrencyValue?) {
@@ -78,33 +73,8 @@ class ChartViewController: ActionSheetController {
         currentRateItem.bindRate?(formattedValue)
     }
 
-    private func show(diff: Decimal) {
+    private func show(diff: Decimal?) {
         currentRateItem.bindDiff?(diff)
-    }
-
-    private func marketCapFormat(currencyValue: CurrencyValue) -> String? {
-        let formatter = ChartViewController.marketCapFormatter
-        formatter.currencyCode = currencyValue.currency.code
-        formatter.currencySymbol = currencyValue.currency.symbol
-        formatter.maximumFractionDigits = 1
-
-        return formatter.string(from: currencyValue.value as NSNumber)
-    }
-
-    private func show(marketCapValue: CurrencyValue?) {
-        guard let marketCapValue = marketCapValue else {
-            marketCapItem.setMarketCap?(nil)
-            return
-        }
-
-        let marketCapData = MarketCapFormatter.marketCap(value: marketCapValue.value)
-        guard let formattedValue = marketCapFormat(currencyValue: CurrencyValue(currency: marketCapValue.currency, value: marketCapData.value)) else {
-            marketCapItem.setMarketCap?(nil)
-            return
-        }
-
-        let marketCapText = marketCapData.postfix?.localized(formattedValue) ?? formattedValue
-        marketCapItem.setMarketCap?(marketCapText)
     }
 
     private func show(lowValue: CurrencyValue?) {
@@ -126,27 +96,59 @@ class ChartViewController: ActionSheetController {
         marketCapItem.setHigh?(formattedValue)
     }
 
+    private func show(marketCapValue: CurrencyValue?) {
+        marketCapItem.setMarketCap?(CurrencyCompactFormatter.instance.format(currencyValue: marketCapValue))
+    }
+
+    private func show(volumeValue: CurrencyValue?) {
+        marketCapItem.setVolume?(CurrencyCompactFormatter.instance.format(currencyValue: volumeValue))
+    }
+
+    private func show(supplyValue: CoinValue?) {
+        guard let supplyValue = supplyValue else {
+            marketCapItem.setCirculation?(nil)
+            return
+        }
+        marketCapItem.setCirculation?(ValueFormatter.instance.format(coinValue: supplyValue))
+    }
+
+    private func title(for chartType: ChartType) -> String {
+        switch chartType {
+        case .day: return "chart.time_duration.day".localized
+        case .week: return "chart.time_duration.week".localized
+        case .month: return "chart.time_duration.month".localized
+        case .halfYear: return "chart.time_duration.halyear".localized
+        case .year: return "chart.time_duration.year".localized
+        }
+    }
+
 }
 
 extension ChartViewController: IChartView {
 
-    func show(viewItem: ChartViewItem) {
-        showSubtitle(for: viewItem.latestRateDate)
-        show(currentRateValue: viewItem.rateValue)
+    func show(chartViewItem viewItem: ChartInfoViewItem) {
         show(diff: viewItem.diff)
+        chartRateItem?.bind?(viewItem.gridIntervalType, viewItem.points, viewItem.startTimestamp, viewItem.endTimestamp, true)
 
-        chartRateItem?.bind?(viewItem.type, viewItem.points, true)
-
-        show(marketCapValue: viewItem.marketCapValue)
         show(highValue: viewItem.highValue)
         show(lowValue: viewItem.lowValue)
     }
 
-    func addTypeButtons(types: [ChartTypeOld]) {
+    func show(marketInfoViewItem viewItem: MarketInfoViewItem) {
+        showSubtitle(for: viewItem.timestamp)
+        show(currentRateValue: viewItem.rateValue)
+
+        show(marketCapValue: viewItem.marketCapValue)
+        show(volumeValue: viewItem.volumeValue)
+        show(supplyValue: viewItem.supplyValue)
+    }
+
+    func addTypeButtons(types: [ChartType]) {
         for type in types {
-            chartRateTypeItem.bindButton?(type.title, type.tag) { [weak self] in
+            let typeTitle = title(for: type)
+            chartRateTypeItem.bindButton?(typeTitle, type.rawValue) { [weak self] in
                 self?.delegate.onSelect(type: type)
-                self?.marketCapItem.setTypeTitle?(type.title)
+                self?.marketCapItem.setTypeTitle?(typeTitle)
             }
         }
     }
@@ -155,14 +157,14 @@ extension ChartViewController: IChartView {
         chartRateTypeItem.setEnabled?(tag)
     }
 
-    func set(chartType: ChartTypeOld) {
-        chartRateTypeItem.setSelected?(chartType.tag)
-        marketCapItem.setTypeTitle?(chartType.title)
+    func set(chartType: ChartType) {
+        chartRateTypeItem.setSelected?(chartType.rawValue)
+        marketCapItem.setTypeTitle?(title(for: chartType))
     }
 
-    func showSelectedPoint(chartType: ChartTypeOld, timestamp: TimeInterval, value: CurrencyValue) {
+    func showSelectedPoint(chartType: ChartType, timestamp: TimeInterval, value: CurrencyValue) {
         let date = Date(timeIntervalSince1970: timestamp)
-        let formattedDate = [ChartTypeOld.month, ChartTypeOld.halfYear, ChartTypeOld.year].contains(chartType) ? DateHelper.instance.formatFullDateOnly(from: date) : DateHelper.instance.formatFullTime(from: date)
+        let formattedDate = [ChartType.month, ChartType.halfYear, ChartType.year].contains(chartType) ? DateHelper.instance.formatFullDateOnly(from: date) : DateHelper.instance.formatFullTime(from: date)
         let formattedValue = ValueFormatter.instance.format(currencyValue: value, fractionPolicy: .threshold(high: 1000, low: 0.1), trimmable: false)
 
         chartRateTypeItem.showPoint?(formattedDate, formattedValue)
@@ -188,8 +190,8 @@ extension ChartViewController: IChartView {
 
 extension ChartViewController: IChartIndicatorDelegate {
 
-    func didTap(chartPoint: ChartPoint) {
-        delegate.chartTouchSelect(point: chartPoint)
+    func didTap(chartPoint: ChartPointPosition) {
+        delegate.chartTouchSelect(timestamp: chartPoint.timestamp, value: chartPoint.value)
     }
 
     func didFinishTap() {

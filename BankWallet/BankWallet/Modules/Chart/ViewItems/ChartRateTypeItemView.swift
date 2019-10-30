@@ -89,7 +89,7 @@ class ChartRateTypeItemView: BaseActionItemView {
         button.cornerRadius = .cornerRadius12
         button.changeBackground = false
         button.tag = tag
-        button.state = .disabled
+        button.state = .active
         button.textColors = [.active: .appLeah, .selected: .appJacob, .disabled: .appGray50]
         button.backgrounds = [.selected: .appJeremy]
         button.titleLabel.text = title.localized

@@ -1,4 +1,5 @@
 import UIKit
+import XRatesKit
 
 class ChartPresenter {
     weak var view: IChartView?
@@ -7,12 +8,13 @@ class ChartPresenter {
     private let factory: IChartRateFactory
     private let currency: Currency
 
-    private var chartData: ChartData?
+    private var chartInfo: ChartInfo?
+    private var marketInfo: MarketInfo?
     private var rate: RateOld?
 
     let coin: Coin
 
-    private var chartType: ChartTypeOld
+    private var chartType: ChartType
 
     init(interactor: IChartInteractor, factory: IChartRateFactory, coin: Coin, currency: Currency) {
         self.interactor = interactor
@@ -20,39 +22,38 @@ class ChartPresenter {
         self.coin = coin
         self.currency = currency
 
-        chartType = interactor.defaultChartType
+        chartType = interactor.defaultChartType ?? .day
     }
 
-    private func updateChart() {
-        guard let rateStatsData = chartData else {
+    private func updateChartInfo() {
+        guard let chartInfo = chartInfo else {
             return
         }
+
+        view?.hideSpinner()
         do {
-            let viewItem = try factory.chartViewItem(type: chartType, chartData: rateStatsData, rate: rate, currency: currency)
-            view?.show(viewItem: viewItem)
+            let viewItem = try factory.chartViewItem(type: chartType, chartInfo: chartInfo, currency: currency)
+            view?.show(chartViewItem: viewItem)
         } catch {
             view?.showError()
         }
     }
 
-    private func updateButtons(chartData: ChartData) {
-        var enabledTypes = [ChartTypeOld]()
-        ChartTypeOld.allCases.forEach { type in
-            let enabled = (chartData.stats[type]?.count ?? 0) > 10
-            if enabled {
-                enabledTypes.append(type)
-                view?.setChartTypeEnabled(tag: type.tag)
-            }
+    private func updateMarketInfo() {
+        guard let marketInfo = marketInfo else {
+            return
         }
-        if !enabledTypes.contains(chartType) {
-            guard let firstType = enabledTypes.first else {
-                view?.showError()
-                return
-            }
-            chartType = firstType
-            interactor.defaultChartType = firstType
-        }
-        view?.set(chartType: chartType)
+        let marketInfoViewItem = factory.marketInfoViewItem(marketInfo: marketInfo, coin: coin, currency: currency)
+        view?.show(marketInfoViewItem: marketInfoViewItem)
+    }
+
+    private func fetchChartInfo() {
+        view?.showSpinner()
+
+        chartInfo = interactor.chartInfo(coinCode: coin.code, currencyCode: currency.code, chartType: chartType)
+        interactor.subscribeToChartInfo(coinCode: coin.code, currencyCode: currency.code, chartType: chartType)
+
+        updateChartInfo()
     }
 
 }
@@ -60,18 +61,19 @@ class ChartPresenter {
 extension ChartPresenter: IChartViewDelegate {
 
     func viewDidLoad() {
-        view?.showSpinner()
+        view?.addTypeButtons(types: ChartType.allCases)
+        view?.set(chartType: chartType)
 
-        interactor.subscribeToChartStats()
-        interactor.subscribeToLatestRate(coinCode: coin.code, currencyCode: currency.code)
-        interactor.syncStats(coinCode: coin.code, currencyCode: currency.code)
+        marketInfo = interactor.marketInfo(coinCode: coin.code, currencyCode: currency.code)
+        interactor.subscribeToMarketInfo(coinCode: coin.code, currencyCode: currency.code)
+        updateMarketInfo()
 
-        view?.addTypeButtons(types: ChartTypeOld.allCases)
+        fetchChartInfo()
 
         view?.reloadAllModels()
     }
 
-    func onSelect(type: ChartTypeOld) {
+    func onSelect(type: ChartType) {
         guard chartType != type else {
             return
         }
@@ -79,33 +81,30 @@ extension ChartPresenter: IChartViewDelegate {
         chartType = type
         interactor.defaultChartType = type
 
-        updateChart()
+        fetchChartInfo()
     }
 
-    func chartTouchSelect(point: ChartPoint) {
-        let currencyValue = CurrencyValue(currency: currency, value: point.value)
-        view?.showSelectedPoint(chartType: chartType, timestamp: point.timestamp, value: currencyValue)
+    func chartTouchSelect(timestamp: TimeInterval, value: Decimal) {
+        let currencyValue = CurrencyValue(currency: currency, value: value)
+        view?.showSelectedPoint(chartType: chartType, timestamp: timestamp, value: currencyValue)
     }
 
 }
 
 extension ChartPresenter: IChartInteractorDelegate {
 
-    func didReceive(chartData: ChartData) {
-        guard chartData.coinCode == coin.code else {
+    func didReceive(chartInfo: ChartInfo, coinCode: CoinCode) {
+        guard coinCode == coin.code else {
             return
         }
 
-        self.chartData = chartData
-
-        view?.hideSpinner()
-        updateButtons(chartData: chartData)
-        updateChart()
+        self.chartInfo = chartInfo
+        updateChartInfo()
     }
 
-    func didReceive(rate: RateOld) {
-        self.rate = rate
-        updateChart()
+    func didReceive(marketInfo: MarketInfo) {
+        self.marketInfo = marketInfo
+        updateMarketInfo()
     }
 
     func onError() {
