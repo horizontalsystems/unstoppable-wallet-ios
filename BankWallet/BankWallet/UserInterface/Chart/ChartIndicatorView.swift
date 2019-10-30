@@ -12,7 +12,7 @@ class ChartIndicatorView: UIView {
     private let indicatorLayer: IndicatorLayer
 
     private var deltaTimestamp: CGFloat = 0
-    private var selectedPoint: ChartPoint?
+    private var selectedPoint: ChartPointPosition?
 
     public init(configuration: ChartConfiguration, delegate: IChartIndicatorDelegate?) {
         self.indicatorDelegate = delegate
@@ -56,7 +56,7 @@ class ChartIndicatorView: UIView {
         }
     }
 
-    private func findPoint(x: CGFloat) -> ChartPoint? {
+    private func findPoint(x: CGFloat) -> ChartPointPosition? {
         guard !bounds.isEmpty, let dataSource = dataSource, deltaTimestamp > .ulpOfOne else {
             return nil
         }
@@ -71,7 +71,7 @@ class ChartIndicatorView: UIView {
 
         let currentTimestamp = TimeInterval(x * deltaTimestamp) + chartFrame.left
 
-        guard var nearestPoint = dataSource.chartData.first(where: { point in point.timestamp == chartFrame.left }) else {
+        guard var nearestPoint = dataSource.chartData.min(by: { $0.timestamp < $1.timestamp }) else {
             return nil
         }
         var delta = abs(currentTimestamp - nearestPoint.timestamp)
@@ -87,7 +87,7 @@ class ChartIndicatorView: UIView {
         return nearestPoint
     }
 
-    private func change(point: ChartPoint) {
+    private func change(point: ChartPointPosition) {
         guard selectedPoint != point, let dataSource = dataSource else {
             return
         }

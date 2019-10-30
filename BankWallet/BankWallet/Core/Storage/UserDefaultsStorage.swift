@@ -1,4 +1,5 @@
 import Foundation
+import XRatesKit
 
 class UserDefaultsStorage {
     private let keyCurrentLanguage = "current_language"
@@ -24,7 +25,20 @@ class UserDefaultsStorage {
         UserDefaults.standard.value(forKey: name) as? String
     }
 
+    private func getInt(_ name: String) -> Int? {
+        UserDefaults.standard.value(forKey: name) as? Int
+    }
+
     private func setString(_ name: String, value: String?) {
+        if let value = value {
+            UserDefaults.standard.set(value, forKey: name)
+        } else  {
+            UserDefaults.standard.removeObject(forKey: name)
+        }
+        UserDefaults.standard.synchronize()
+    }
+
+    private func setInt(_ name: String, value: Int?) {
         if let value = value {
             UserDefaults.standard.set(value, forKey: name)
         } else  {
@@ -151,18 +165,6 @@ extension UserDefaultsStorage: ILocalStorage {
         }
     }
 
-    var chartType: ChartTypeOld? {
-        get {
-            if let rawValue = getString(keyChartType), let value = ChartTypeOld(rawValue: rawValue) {
-                return value
-            }
-            return nil
-        }
-        set {
-            setString(keyChartType, value: newValue?.rawValue)
-        }
-    }
-
     var mainShownOnce: Bool {
         get { bool(for: mainShownOnceKey) ?? false }
         set { set(newValue, for: mainShownOnceKey) }
@@ -177,6 +179,22 @@ extension UserDefaultsStorage: ILocalStorage {
         }
         set {
             UserDefaults.standard.set(try? JSONEncoder().encode(newValue), forKey: keyAppVersions)
+        }
+    }
+
+}
+
+extension UserDefaultsStorage: IChartTypeStorage {
+
+    var chartType: ChartType? {
+        get {
+            if let rawValue = getInt(keyChartType), let type = ChartType(rawValue: rawValue) {
+                return type
+            }
+            return nil
+        }
+        set {
+            setInt(keyChartType, value: newValue?.rawValue)
         }
     }
 

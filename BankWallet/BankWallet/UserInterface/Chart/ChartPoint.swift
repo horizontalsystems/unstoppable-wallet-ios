@@ -1,6 +1,6 @@
 import Foundation
 
-struct ChartPoint {
+struct ChartPointPosition {
     let timestamp: TimeInterval
     let value: Decimal
 
@@ -10,10 +10,10 @@ struct ChartPoint {
     }
 }
 
-extension ChartPoint: Equatable {
+extension ChartPointPosition: Equatable {
 
-    public static func ==(lhs: ChartPoint, rhs: ChartPoint) -> Bool {
-        return lhs.timestamp == rhs.timestamp && lhs.value == rhs.value
+    public static func ==(lhs: ChartPointPosition, rhs: ChartPointPosition) -> Bool {
+        lhs.timestamp == rhs.timestamp && lhs.value == rhs.value
     }
 
 }

@@ -2,6 +2,7 @@ import UIKit
 import HUD
 import RxSwift
 import SnapKit
+import XRatesKit
 
 class BalanceCell: CardCell {
     static let height: CGFloat = 100
@@ -43,7 +44,7 @@ class BalanceCell: CardCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         let configuration = ChartConfiguration()
         configuration.showGrid = false
-        chartView = ChartView(configuration: configuration)
+        chartView = ChartView(configuration: configuration, gridIntervalType: GridIntervalConverter.convert(chartType: .day))
 
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
@@ -298,9 +299,9 @@ class BalanceCell: CardCell {
                 chartView.clear()
             } else {
                 let points = chartInfo.points.map {
-                    ChartPoint(timestamp: $0.timestamp, value: $0.value)
+                    ChartPointPosition(timestamp: $0.timestamp, value: $0.value)
                 }
-                chartView.set(chartType: .day, data: points, animated: false)
+                chartView.set(gridIntervalType: GridIntervalConverter.convert(chartType: ChartType.day), data: points, start: chartInfo.startTimestamp, end: chartInfo.endTimestamp, animated: false)
             }
 
             notAvailableLabel.isHidden = !chartInfo.points.isEmpty

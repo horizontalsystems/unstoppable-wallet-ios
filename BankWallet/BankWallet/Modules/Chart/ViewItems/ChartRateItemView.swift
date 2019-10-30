@@ -16,7 +16,7 @@ class ChartRateItemView: BaseActionItemView {
     )
     private let errorLabel = UILabel()
 
-    override var item: ChartRateItem? { return _item as? ChartRateItem }
+    override var item: ChartRateItem? { _item as? ChartRateItem }
 
     override func initView() {
         super.initView()
@@ -25,7 +25,7 @@ class ChartRateItemView: BaseActionItemView {
             return
         }
 
-        let chartView = ChartView(configuration: item.chartConfiguration, indicatorDelegate: item.indicatorDelegate)
+        let chartView = ChartView(configuration: item.chartConfiguration, gridIntervalType: GridIntervalConverter.convert(chartType: .day), indicatorDelegate: item.indicatorDelegate)
         self.chartView = chartView
         addSubview(chartView)
         chartView.snp.makeConstraints { maker in
@@ -52,9 +52,9 @@ class ChartRateItemView: BaseActionItemView {
             maker.center.equalToSuperview()
             maker.width.equalToSuperview().inset(CGFloat.margin6x)
         }
-        item.bind = { [weak self] type, points, animated in
+        item.bind = { [weak self] type, points, start, end, animated in
             self?.showChart()
-            self?.chartView?.set(chartType: type, data: points, animated: animated)
+            self?.chartView?.set(gridIntervalType: type, data: points, start: start, end: end, animated: animated)
         }
         item.showSpinner = { [weak self] in
             self?.showSpinner()

@@ -53,7 +53,7 @@ extension PriceAlertHandler: IPriceAlertHandler {
         if !changedAlerts.isEmpty {
             priceAlertStorage.save(priceAlerts: changedAlerts)
         }
-
+        // we must save only alerts which we show in notification
         let notifications = notificationFactory.notifications(forAlerts: significantAlerts)
         for notification in notifications {
             notificationManager.show(notification: notification)

@@ -1,7 +1,8 @@
 import Foundation
+import XRatesKit
 
 class RateListDataSource {
-    private static let rateListType: ChartTypeOld = .day
+    private static let rateListType: ChartType = .day
 
     var items = [RateViewItem]()
 }
@@ -9,7 +10,7 @@ class RateListDataSource {
 extension RateListDataSource: IRateListItemDataSource {
 
     var coinCodes: [CoinCode] {
-        return items.map { $0.coin.code }
+        items.map { $0.coin.code }
     }
 
     func set(coins: [Coin]) {

@@ -24,9 +24,12 @@ protocol ILocalStorage: class {
     var lastExitDate: Double { get set }
     var didLaunchOnce: Bool { get set }
     var sendInputType: SendInputType? { get set }
-    var chartType: ChartTypeOld? { get set }
     var mainShownOnce: Bool { get set }
     var appVersions: [AppVersion] { get set }
+}
+
+protocol IChartTypeStorage: class {
+    var chartType: ChartType? { get set }
 }
 
 protocol ISecureStorage: class {
