@@ -63,7 +63,7 @@ class TransactionStatusItemView: BaseActionItemView {
 
         if let progress = item?.progress {
             barsProgressView.isHidden = false
-            barsProgressView.filledCount = Int(Double(AppTheme.progressStepsCount) * progress)
+            barsProgressView.set(progress: progress)
         } else {
             barsProgressView.isHidden = true
         }

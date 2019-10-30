@@ -118,7 +118,7 @@ class TransactionCell: AppCell {
             completedView.isHidden = true
 
         case .processing(let progress):
-            processingView.bind(filledCount: Int(Double(AppTheme.progressStepsCount) * progress))
+            processingView.bind(progress: progress)
             processingView.startAnimating()
             processingView.isHidden = false
 
