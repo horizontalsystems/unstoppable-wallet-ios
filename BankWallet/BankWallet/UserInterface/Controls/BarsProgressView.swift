@@ -12,7 +12,8 @@ class BarsProgressView: UIView {
     private let color: UIColor
     private let inactiveColor: UIColor
 
-    var filledCount: Int = 0 {
+    private var progress: Double = 0
+    private var filledCount: Int = 0 {
         didSet {
             if animateDisposable == nil {
                 updateFillColor(fullFillBefore: filledCount)
@@ -30,6 +31,10 @@ class BarsProgressView: UIView {
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    func set(progress: Double) {
+        filledCount = Int(Double(bars.count) * progress)
     }
 
     func set(barsCount count: Int) {
@@ -61,6 +66,8 @@ class BarsProgressView: UIView {
         bars.last?.snp.makeConstraints { maker in
             maker.trailing.equalToSuperview()
         }
+
+        set(progress: progress)
     }
 
     func startAnimating() {

@@ -32,8 +32,8 @@ class TransactionProcessingView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func bind(filledCount: Int) {
-        barsProgressView.filledCount = filledCount
+    func bind(progress: Double) {
+        barsProgressView.set(progress: progress)
     }
 
     func startAnimating() {
