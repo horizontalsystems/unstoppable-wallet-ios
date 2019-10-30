@@ -15,11 +15,9 @@ class TransactionPendingView: UIView {
     init() {
         super.init(frame: .zero)
 
-        pendingLabel.font = .appSubhead2
-        pendingLabel.textColor = .appGray
-
         addSubview(pendingImageView)
         addSubview(pendingLabel)
+
         pendingImageView.snp.makeConstraints { maker in
             maker.leading.equalToSuperview()
             maker.centerY.equalTo(self.pendingLabel)
@@ -28,14 +26,13 @@ class TransactionPendingView: UIView {
             maker.leading.equalTo(self.pendingImageView.snp.trailing).offset(CGFloat.margin2x)
             maker.top.bottom.trailing.equalToSuperview()
         }
+
+        pendingLabel.font = .appSubhead2
+        pendingLabel.textColor = .appGray
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-
-    func bind(status: TransactionStatus) {
-
     }
 
     private func updateText(forIndex index: Int) {

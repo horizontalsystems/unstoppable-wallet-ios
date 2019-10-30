@@ -68,11 +68,13 @@ class TransactionCell: AppCell {
             maker.leading.equalTo(inOutImageView.snp.trailing).offset(CGFloat.margin3x)
             maker.centerY.equalTo(amountLabel)
         }
+
         contentView.addSubview(processingView)
         processingView.snp.makeConstraints { maker in
             maker.leading.equalTo(inOutImageView.snp.trailing).offset(CGFloat.margin3x)
             maker.centerY.equalTo(amountLabel)
         }
+
         contentView.addSubview(completedView)
         completedView.snp.makeConstraints { maker in
             maker.leading.equalTo(inOutImageView.snp.trailing).offset(CGFloat.margin3x)
@@ -116,7 +118,7 @@ class TransactionCell: AppCell {
             completedView.isHidden = true
 
         case .processing(let progress):
-            processingView.bind(filledCount: Int(Double(TransactionProcessingView.stepsCount) * progress))
+            processingView.bind(filledCount: Int(Double(AppTheme.progressStepsCount) * progress))
             processingView.startAnimating()
             processingView.isHidden = false
 
