@@ -21,51 +21,17 @@ class UserDefaultsStorage {
     private let backgroundFetchLogKey = "background_fetch_key"
     private let keyAppVersions = "app_versions"
 
-    private func getString(_ name: String) -> String? {
-        UserDefaults.standard.value(forKey: name) as? String
+    private func value<T>(for key: String) -> T? {
+        UserDefaults.standard.value(forKey: key) as? T
     }
 
-    private func getInt(_ name: String) -> Int? {
-        UserDefaults.standard.value(forKey: name) as? Int
-    }
-
-    private func setString(_ name: String, value: String?) {
-        if let value = value {
-            UserDefaults.standard.set(value, forKey: name)
-        } else  {
-            UserDefaults.standard.removeObject(forKey: name)
-        }
-        UserDefaults.standard.synchronize()
-    }
-
-    private func setInt(_ name: String, value: Int?) {
-        if let value = value {
-            UserDefaults.standard.set(value, forKey: name)
-        } else  {
-            UserDefaults.standard.removeObject(forKey: name)
-        }
-        UserDefaults.standard.synchronize()
-    }
-
-    private func bool(for key: String) -> Bool? {
-        UserDefaults.standard.value(forKey: key) as? Bool
-    }
-
-    private func set(_ value: Bool, for key: String) {
-        UserDefaults.standard.set(value, forKey: key)
-        UserDefaults.standard.synchronize()
-    }
-
-    private func set(_ value: Double?, for key: String) {
+    private func set<T>(value: T?, for key: String) {
         if let value = value {
             UserDefaults.standard.set(value, forKey: key)
-        } else {
+        } else  {
             UserDefaults.standard.removeObject(forKey: key)
         }
-    }
-
-    private func double(for key: String) -> Double {
-        UserDefaults.standard.double(forKey: key)
+        UserDefaults.standard.synchronize()
     }
 
 }
@@ -73,101 +39,97 @@ class UserDefaultsStorage {
 extension UserDefaultsStorage: ILocalStorage {
 
     var currentLanguage: String? {
-        get { getString(keyCurrentLanguage) }
-        set { setString(keyCurrentLanguage, value: newValue) }
+        get { value(for: keyCurrentLanguage) }
+        set { set(value: newValue, for: keyCurrentLanguage) }
     }
 
     var backgroundFetchLog: String? {
-        get { getString(backgroundFetchLogKey) }
-        set { setString(backgroundFetchLogKey, value: newValue) }
+        get { value(for: backgroundFetchLogKey) }
+        set { set(value: newValue, for: backgroundFetchLogKey) }
     }
 
     var lastExitDate: Double {
-        get { double(for: lastExitDateKey) }
-        set { set(newValue, for: lastExitDateKey) }
+        get { value(for: lastExitDateKey) ?? 0 }
+        set { set(value: newValue, for: lastExitDateKey) }
     }
 
     var didLaunchOnce: Bool {
-        get { bool(for: didLaunchOnceKey) ?? false }
-        set { set(newValue, for: didLaunchOnceKey) }
+        get { value(for: didLaunchOnceKey) ?? false }
+        set { set(value: newValue, for: didLaunchOnceKey) }
     }
 
     var baseCurrencyCode: String? {
-        get { getString(keyBaseCurrencyCode) }
-        set { setString(keyBaseCurrencyCode, value: newValue) }
+        get { value(for: keyBaseCurrencyCode) }
+        set { set(value: newValue, for: keyBaseCurrencyCode) }
     }
 
     var baseBitcoinProvider: String? {
-        get { getString(keyBaseBitcoinProvider) }
-        set { setString(keyBaseBitcoinProvider, value: newValue) }
+        get { value(for: keyBaseBitcoinProvider) }
+        set { set(value: newValue, for: keyBaseBitcoinProvider) }
     }
 
     var baseDashProvider: String? {
-        get { getString(keyBaseDashProvider) }
-        set { setString(keyBaseDashProvider, value: newValue) }
+        get { value(for: keyBaseDashProvider) }
+        set { set(value: newValue, for: keyBaseDashProvider) }
     }
 
     var baseBinanceProvider: String? {
-        get { getString(keyBaseBinanceProvider) }
-        set { setString(keyBaseBinanceProvider, value: newValue) }
+        get { value(for: keyBaseBinanceProvider) }
+        set { set(value: newValue, for: keyBaseBinanceProvider) }
     }
 
     var baseEosProvider: String? {
-        get { getString(keyBaseEosProvider) }
-        set { setString(keyBaseEosProvider, value: newValue) }
+        get { value(for: keyBaseEosProvider) }
+        set { set(value: newValue, for: keyBaseEosProvider) }
     }
 
     var baseEthereumProvider: String? {
-        get { getString(keyBaseEthereumProvider) }
-        set { setString(keyBaseEthereumProvider, value: newValue) }
+        get { value(for: keyBaseEthereumProvider) }
+        set { set(value: newValue, for: keyBaseEthereumProvider) }
     }
 
     var lightMode: Bool {
-        get { bool(for: keyLightMode) ?? false }
-        set { set(newValue, for: keyLightMode) }
+        get { value(for: keyLightMode) ?? false }
+        set { set(value: newValue, for: keyLightMode) }
     }
 
     var agreementAccepted: Bool {
-        get { bool(for: agreementAcceptedKey) ?? false }
-        set { set(newValue, for: agreementAcceptedKey) }
+        get { value(for: agreementAcceptedKey) ?? false }
+        set { set(value: newValue, for: agreementAcceptedKey) }
     }
 
     var balanceSortType: BalanceSortType? {
         get {
-            guard let stringSort = getString(balanceSortKey), let intSort = Int(stringSort) else {
+            guard let sortRawValue: Int = value(for: balanceSortKey) else {
                 return nil
             }
-            return BalanceSortType(rawValue: intSort)
+            return BalanceSortType(rawValue: sortRawValue)
         }
         set {
-            if let newValue = newValue?.rawValue {
-                setString(balanceSortKey, value: "\(newValue)")
-            } else {
-                setString(balanceSortKey, value: nil)
-            }
+            set(value: newValue?.rawValue, for: balanceSortKey)
         }
     }
 
     var isBiometricOn: Bool {
-        get { bool(for: biometricOnKey) ?? false }
-        set { set(newValue, for: biometricOnKey) }
+        get { value(for: biometricOnKey) ?? false }
+        set { set(value: newValue, for: biometricOnKey) }
     }
 
     var sendInputType: SendInputType? {
         get {
-            if let rawValue = getString(keySendInputType), let value = SendInputType(rawValue: rawValue) {
+            if let rawValue: String = value(for: keySendInputType), let value = SendInputType(rawValue: rawValue) {
                 return value
             }
             return nil
         }
         set {
-            setString(keySendInputType, value: newValue?.rawValue)
+            set(value: newValue?.rawValue, for: keySendInputType)
         }
     }
 
     var mainShownOnce: Bool {
-        get { bool(for: mainShownOnceKey) ?? false }
-        set { set(newValue, for: mainShownOnceKey) }
+        get { value(for: mainShownOnceKey) ?? false }
+        set { set(value: newValue, for: mainShownOnceKey) }
     }
 
     var appVersions: [AppVersion] {
@@ -188,13 +150,13 @@ extension UserDefaultsStorage: IChartTypeStorage {
 
     var chartType: ChartType? {
         get {
-            if let rawValue = getInt(keyChartType), let type = ChartType(rawValue: rawValue) {
+            if let rawValue: Int = value(for: keyChartType), let type = ChartType(rawValue: rawValue) {
                 return type
             }
             return nil
         }
         set {
-            setInt(keyChartType, value: newValue?.rawValue)
+            set(value: newValue?.rawValue, for: keyChartType)
         }
     }
 
