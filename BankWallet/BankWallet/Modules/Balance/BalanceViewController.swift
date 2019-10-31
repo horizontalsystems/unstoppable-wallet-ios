@@ -50,7 +50,8 @@ class BalanceViewController: WalletViewController {
         tableView.registerCell(forClass: BalanceCell.self)
         tableView.registerCell(forClass: BalanceEditCell.self)
 
-        refreshControl.tintColor = .appGray50
+        refreshControl.tintColor = .appLeah
+        refreshControl.alpha = 0.6
         refreshControl.addTarget(self, action: #selector(onRefresh), for: .valueChanged)
         tableView.refreshControl = refreshControl
 
