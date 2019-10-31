@@ -152,7 +152,7 @@ extension BitcoinBaseAdapter: IBalanceAdapter {
     }
 
     var balance: Decimal {
-        return Decimal(abstractKit.balance) / coinRate
+        return Decimal(abstractKit.balance.spendable) / coinRate
     }
 
 }
@@ -170,10 +170,8 @@ extension BitcoinBaseAdapter {
     func fee(amount: Decimal, feeRate: Int, address: String?) -> Decimal {
         do {
             let amount = convertToSatoshi(value: amount)
-            let fee = try abstractKit.fee(for: amount, toAddress: address, senderPay: true, feeRate: feeRate)
+            let fee = try abstractKit.fee(for: amount, toAddress: address, feeRate: feeRate)
             return Decimal(fee) / coinRate
-        } catch BitcoinCoreErrors.UnspentOutputSelection.notEnough(let maxFee) {
-            return Decimal(maxFee) / coinRate
         } catch {
             return 0
         }
